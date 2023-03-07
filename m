@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0120BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:23:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9F7C433D2;
-	Tue,  7 Mar 2023 18:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18768BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:23:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BF7C433EF;
+	Tue,  7 Mar 2023 18:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213419;
-	bh=Tp8INafFk55/n+e/TcfKI1TQO4+2M/nuxjuPHA7aHaI=;
+	s=korg; t=1678213422;
+	bh=65L7r7KkuKdNh2+PpDwe3TFSMNcLF7zCCeHEDyVM7io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q84W1caSoicSqkInI9GgSPcyMd6AtpyDAN3dW7cyofbjRuxbptpwbPbAEvv70QRyR
-	 EsFysvPLe802+bKlGF4oDQ/HSeSLtSKrUiZO9a4JQTmjJMvjeSv7m6PwGa6D5cs4bi
-	 as/cJCqAZoAqKBpYQGLGX+p4C0DROVAHq8J4PEKI=
+	b=RJtmgJKsYQ/HGyr2tYVzbrHE7NEWLhazHJQMmhu/JbnFkcJHkQUKUd5Xz1Vh717QF
+	 d/BBwdTntGwYMQqmNJqgJz8775it/soKP2rwJruD3ypOBRlqpsYCF0VxDPOPI4tASH
+	 IVQzjaFm9kqhg8bhn9aOUhX1Q0p7Nqdo2g22TBxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@google.com>,
-	Colin Foster <colin.foster@in-advantage.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Sasha Levin <sashal@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 6.1 473/885] driver core: fw_devlink: Improve check for fwnode with no device/driver
-Date: Tue,  7 Mar 2023 17:56:47 +0100
-Message-Id: <20230307170023.055516369@linuxfoundation.org>
+	Bastian Germann <bage@linutronix.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 500/885] builddeb: clean generated package content
+Date: Tue,  7 Mar 2023 17:57:14 +0100
+Message-Id: <20230307170024.182721485@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -39,89 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saravana Kannan <saravanak@google.com>
+From: Bastian Germann <bage@linutronix.de>
 
-[ Upstream commit 411c0d58ca6faa9bc4b9f5382118a31c7bb92a6f ]
+[ Upstream commit c9f9cf2560e40b62015c6c4a04be60f55ce5240e ]
 
-fw_devlink shouldn't defer the probe of a device to wait on a supplier
-that'll never have a struct device or will never be probed by a driver.
-We currently check if a supplier falls into this category, but don't
-check its ancestors. We need to check the ancestors too because if the
-ancestor will never probe, then the supplier will never probe either.
+For each binary Debian package, a directory with the package name is
+created in the debian directory. Correct the generated file matches in the
+package's clean target, which were renamed without adjusting the target.
 
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Tested-by: Colin Foster <colin.foster@in-advantage.com>
-Tested-by: Sudeep Holla <sudeep.holla@arm.com>
-Tested-by: Douglas Anderson <dianders@chromium.org>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
-Link: https://lore.kernel.org/r/20230207014207.1678715-3-saravanak@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 3fb16866b51d ("driver core: fw_devlink: Make cycle detection more robust")
+Fixes: 1694e94e4f46 ("builddeb: match temporary directory name to the package name")
+Signed-off-by: Bastian Germann <bage@linutronix.de>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c | 40 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 38 insertions(+), 2 deletions(-)
+ scripts/package/mkdebian | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index f623ebc131f8d..bf053e351a277 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -1907,6 +1907,35 @@ static int fw_devlink_relax_cycle(struct device *con, void *sup)
- 	return ret;
- }
+diff --git a/scripts/package/mkdebian b/scripts/package/mkdebian
+index a3ac5a716e9fc..5be7e627e7513 100755
+--- a/scripts/package/mkdebian
++++ b/scripts/package/mkdebian
+@@ -236,7 +236,7 @@ binary-arch: build-arch
+ 	KBUILD_BUILD_VERSION=${revision} -f \$(srctree)/Makefile intdeb-pkg
  
-+static bool fwnode_init_without_drv(struct fwnode_handle *fwnode)
-+{
-+	struct device *dev;
-+	bool ret;
-+
-+	if (!(fwnode->flags & FWNODE_FLAG_INITIALIZED))
-+		return false;
-+
-+	dev = get_dev_from_fwnode(fwnode);
-+	ret = !dev || dev->links.status == DL_DEV_NO_DRIVER;
-+	put_device(dev);
-+
-+	return ret;
-+}
-+
-+static bool fwnode_ancestor_init_without_drv(struct fwnode_handle *fwnode)
-+{
-+	struct fwnode_handle *parent;
-+
-+	fwnode_for_each_parent_node(fwnode, parent) {
-+		if (fwnode_init_without_drv(parent)) {
-+			fwnode_handle_put(parent);
-+			return true;
-+		}
-+	}
-+
-+	return false;
-+}
-+
- /**
-  * fw_devlink_create_devlink - Create a device link from a consumer to fwnode
-  * @con: consumer device for the device link
-@@ -1995,9 +2024,16 @@ static int fw_devlink_create_devlink(struct device *con,
- 		goto out;
- 	}
+ clean:
+-	rm -rf debian/*tmp debian/files
++	rm -rf debian/files debian/linux-*
+ 	\$(MAKE) clean
  
--	/* Supplier that's already initialized without a struct device. */
--	if (sup_handle->flags & FWNODE_FLAG_INITIALIZED)
-+	/*
-+	 * Supplier or supplier's ancestor already initialized without a struct
-+	 * device or being probed by a driver.
-+	 */
-+	if (fwnode_init_without_drv(sup_handle) ||
-+	    fwnode_ancestor_init_without_drv(sup_handle)) {
-+		dev_dbg(con, "Not linking %pfwP - Might never probe\n",
-+			sup_handle);
- 		return -EINVAL;
-+	}
- 
- 	/*
- 	 * DL_FLAG_SYNC_STATE_ONLY doesn't block probing and supports
+ binary: binary-arch
 -- 
 2.39.2
 
