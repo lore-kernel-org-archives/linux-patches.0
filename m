@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EA4BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88ED6C4339B;
-	Tue,  7 Mar 2023 18:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29232BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8295FC433D2;
+	Tue,  7 Mar 2023 18:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212334;
-	bh=anWK4BZaITy0XSARCu9RwGG+L/gUg3n2076L28i3ww0=;
+	s=korg; t=1678212338;
+	bh=03EQTWxR0qI+54e7iONSRt49fVN2k0TjCoLcc0zCwxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VJRNJn1H3cg1Lv9pW9kP4oIXH2sXH7ggaFSVDyF6XCDxkFPBD+U+Op+WvIANoWptF
-	 Eb6dtABRe1ugpHTzEH3uTE3tjHoOb8krUoW9dWKA0sYmNa5rWZeZoSliMeICNaOri3
-	 g/zomv8IrYAZkXzNToYMvY/B91CL4J4QUulGivnI=
+	b=HJC6XG8LbK4z+xSUC2jbIeoJms90cO3aIdFGBo7IL0Gti59I6oPA/+Z8VWjKG2aot
+	 v+qWurN4vP4jZ+ttBGb1PM1Z93bYBs2WeOL7iiQ4iVc/4OcO5EluJVXyQCV6cAdAmX
+	 NNmbA0vUY6oQU+BtOpO7wrdlgxs7GmgSGsoBucLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Lai Jiangshan <jiangshan.ljs@antgroup.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 153/885] kselftest/arm64: Fix syscall-abi for systems without 128 bit SME
-Date: Tue,  7 Mar 2023 17:51:27 +0100
-Message-Id: <20230307170008.552093263@linuxfoundation.org>
+Subject: [PATCH 6.1 154/885] workqueue: Protects wq_unbound_cpumask with wq_pool_attach_mutex
+Date: Tue,  7 Mar 2023 17:51:28 +0100
+Message-Id: <20230307170008.602794038@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,49 +36,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Lai Jiangshan <jiangshan.ljs@antgroup.com>
 
-[ Upstream commit 97ec597b26df774a257e3f8e97353fd1b4471615 ]
+[ Upstream commit 99c621ef243bda726fb8d982a274ded96570b410 ]
 
-SME does not mandate any specific VL so we may not have 128 bit SME but
-the algorithm used for enumerating VLs assumes that we will. Add the
-required check to ensure that the algorithm terminates.
+When unbind_workers() reads wq_unbound_cpumask to set the affinity of
+freshly-unbound kworkers, it only holds wq_pool_attach_mutex. This isn't
+sufficient as wq_unbound_cpumask is only protected by wq_pool_mutex.
 
-Fixes: 43e3f85523e4 ("kselftest/arm64: Add SME support to syscall ABI test")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20221223-arm64-syscall-abi-sme-only-v1-1-4fabfbd62087@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Make wq_unbound_cpumask protected with wq_pool_attach_mutex and also
+remove the need of temporary saved_cpumask.
+
+Fixes: 10a5a651e3af ("workqueue: Restrict kworker in the offline CPU pool running on housekeeping CPUs")
+Reported-by: Valentin Schneider <vschneid@redhat.com>
+Signed-off-by: Lai Jiangshan <jiangshan.ljs@antgroup.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/arm64/abi/syscall-abi.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/workqueue.c | 41 ++++++++++++++++-------------------------
+ 1 file changed, 16 insertions(+), 25 deletions(-)
 
-diff --git a/tools/testing/selftests/arm64/abi/syscall-abi.c b/tools/testing/selftests/arm64/abi/syscall-abi.c
-index dd7ebe536d05f..ffe719b50c215 100644
---- a/tools/testing/selftests/arm64/abi/syscall-abi.c
-+++ b/tools/testing/selftests/arm64/abi/syscall-abi.c
-@@ -390,6 +390,10 @@ static void test_one_syscall(struct syscall_cfg *cfg)
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index 7cd5f5e7e0a1b..8e21c352c1558 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -326,7 +326,7 @@ static struct rcuwait manager_wait = __RCUWAIT_INITIALIZER(manager_wait);
+ static LIST_HEAD(workqueues);		/* PR: list of all workqueues */
+ static bool workqueue_freezing;		/* PL: have wqs started freezing? */
  
- 			sme_vl &= PR_SME_VL_LEN_MASK;
+-/* PL: allowable cpus for unbound wqs and work items */
++/* PL&A: allowable cpus for unbound wqs and work items */
+ static cpumask_var_t wq_unbound_cpumask;
  
-+			/* Found lowest VL */
-+			if (sve_vq_from_vl(sme_vl) > sme_vq)
-+				break;
-+
- 			if (sme_vq != sve_vq_from_vl(sme_vl))
- 				sme_vq = sve_vq_from_vl(sme_vl);
+ /* CPU where unbound work was last round robin scheduled from this CPU */
+@@ -3952,7 +3952,8 @@ static void apply_wqattrs_cleanup(struct apply_wqattrs_ctx *ctx)
+ /* allocate the attrs and pwqs for later installation */
+ static struct apply_wqattrs_ctx *
+ apply_wqattrs_prepare(struct workqueue_struct *wq,
+-		      const struct workqueue_attrs *attrs)
++		      const struct workqueue_attrs *attrs,
++		      const cpumask_var_t unbound_cpumask)
+ {
+ 	struct apply_wqattrs_ctx *ctx;
+ 	struct workqueue_attrs *new_attrs, *tmp_attrs;
+@@ -3968,14 +3969,15 @@ apply_wqattrs_prepare(struct workqueue_struct *wq,
+ 		goto out_free;
  
-@@ -461,6 +465,10 @@ int sme_count_vls(void)
+ 	/*
+-	 * Calculate the attrs of the default pwq.
++	 * Calculate the attrs of the default pwq with unbound_cpumask
++	 * which is wq_unbound_cpumask or to set to wq_unbound_cpumask.
+ 	 * If the user configured cpumask doesn't overlap with the
+ 	 * wq_unbound_cpumask, we fallback to the wq_unbound_cpumask.
+ 	 */
+ 	copy_workqueue_attrs(new_attrs, attrs);
+-	cpumask_and(new_attrs->cpumask, new_attrs->cpumask, wq_unbound_cpumask);
++	cpumask_and(new_attrs->cpumask, new_attrs->cpumask, unbound_cpumask);
+ 	if (unlikely(cpumask_empty(new_attrs->cpumask)))
+-		cpumask_copy(new_attrs->cpumask, wq_unbound_cpumask);
++		cpumask_copy(new_attrs->cpumask, unbound_cpumask);
  
- 		vl &= PR_SME_VL_LEN_MASK;
+ 	/*
+ 	 * We may create multiple pwqs with differing cpumasks.  Make a
+@@ -4072,7 +4074,7 @@ static int apply_workqueue_attrs_locked(struct workqueue_struct *wq,
+ 		wq->flags &= ~__WQ_ORDERED;
+ 	}
  
-+		/* Found lowest VL */
-+		if (sve_vq_from_vl(vl) > vq)
-+			break;
-+
- 		if (vq != sve_vq_from_vl(vl))
- 			vq = sve_vq_from_vl(vl);
+-	ctx = apply_wqattrs_prepare(wq, attrs);
++	ctx = apply_wqattrs_prepare(wq, attrs, wq_unbound_cpumask);
+ 	if (!ctx)
+ 		return -ENOMEM;
  
+@@ -5334,7 +5336,7 @@ void thaw_workqueues(void)
+ }
+ #endif /* CONFIG_FREEZER */
+ 
+-static int workqueue_apply_unbound_cpumask(void)
++static int workqueue_apply_unbound_cpumask(const cpumask_var_t unbound_cpumask)
+ {
+ 	LIST_HEAD(ctxs);
+ 	int ret = 0;
+@@ -5350,7 +5352,7 @@ static int workqueue_apply_unbound_cpumask(void)
+ 		if (wq->flags & __WQ_ORDERED)
+ 			continue;
+ 
+-		ctx = apply_wqattrs_prepare(wq, wq->unbound_attrs);
++		ctx = apply_wqattrs_prepare(wq, wq->unbound_attrs, unbound_cpumask);
+ 		if (!ctx) {
+ 			ret = -ENOMEM;
+ 			break;
+@@ -5365,6 +5367,11 @@ static int workqueue_apply_unbound_cpumask(void)
+ 		apply_wqattrs_cleanup(ctx);
+ 	}
+ 
++	if (!ret) {
++		mutex_lock(&wq_pool_attach_mutex);
++		cpumask_copy(wq_unbound_cpumask, unbound_cpumask);
++		mutex_unlock(&wq_pool_attach_mutex);
++	}
+ 	return ret;
+ }
+ 
+@@ -5383,7 +5390,6 @@ static int workqueue_apply_unbound_cpumask(void)
+ int workqueue_set_unbound_cpumask(cpumask_var_t cpumask)
+ {
+ 	int ret = -EINVAL;
+-	cpumask_var_t saved_cpumask;
+ 
+ 	/*
+ 	 * Not excluding isolated cpus on purpose.
+@@ -5397,23 +5403,8 @@ int workqueue_set_unbound_cpumask(cpumask_var_t cpumask)
+ 			goto out_unlock;
+ 		}
+ 
+-		if (!zalloc_cpumask_var(&saved_cpumask, GFP_KERNEL)) {
+-			ret = -ENOMEM;
+-			goto out_unlock;
+-		}
+-
+-		/* save the old wq_unbound_cpumask. */
+-		cpumask_copy(saved_cpumask, wq_unbound_cpumask);
+-
+-		/* update wq_unbound_cpumask at first and apply it to wqs. */
+-		cpumask_copy(wq_unbound_cpumask, cpumask);
+-		ret = workqueue_apply_unbound_cpumask();
+-
+-		/* restore the wq_unbound_cpumask when failed. */
+-		if (ret < 0)
+-			cpumask_copy(wq_unbound_cpumask, saved_cpumask);
++		ret = workqueue_apply_unbound_cpumask(cpumask);
+ 
+-		free_cpumask_var(saved_cpumask);
+ out_unlock:
+ 		apply_wqattrs_unlock();
+ 	}
 -- 
 2.39.2
 
