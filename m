@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA29BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:07:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96847C433EF;
-	Tue,  7 Mar 2023 18:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68133BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:07:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B7EC433D2;
+	Tue,  7 Mar 2023 18:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212431;
-	bh=7iEq9fTjADDKa4i/09iLDgKPgEWaO2NEPHyRyctnIT0=;
+	s=korg; t=1678212434;
+	bh=XTErf9Aln/p/7tr6d/NCkem36TtCVxIr9dQxahm+ZAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=spF7OdH6uUJ4WNTB5gOjhdIeR6ExRW1H1s37PnSPMotR8l+4YrBO6G2NANwmXKW1X
-	 DAYTi2ZXXL0OiKBccvHdphmRAtbbfS6gQRvpkr2bfGYUUjXcZpQMMD2kc9bveCwId6
-	 RC2n/u00kb2pZzohw2vyubf/+lS2GYm1POENke2c=
+	b=Gsr7agxYc71/ZLVf0jJfOEtDx1IDZ2Qu8N05PnyYnqUwszgA7KXZr6P7F6DOIlAl/
+	 rzUJ07MAuyRCCWtJ2HFDyUx0tuEbP7Fua2NlWacCLqiMMk/cUOeo/FOqBJ4+f3HPcr
+	 PHg1n/RO+rIRHVvrSYL3E8jx+nhKes6lPelTO0y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 152/885] arm64/cpufeature: Fix field sign for DIT hwcap detection
-Date: Tue,  7 Mar 2023 17:51:26 +0100
-Message-Id: <20230307170008.500093060@linuxfoundation.org>
+Subject: [PATCH 6.1 143/885] rcu-tasks: Improve comments explaining tasks_rcu_exit_srcu purpose
+Date: Tue,  7 Mar 2023 17:51:17 +0100
+Message-Id: <20230307170008.076373636@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,45 +40,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 50daf5b7c4ec4efcaf49a4128930f872bec7dbc0 ]
+[ Upstream commit e4e1e8089c5fd948da12cb9f4adc93821036945f ]
 
-Since it was added our hwcap for DIT has specified that DIT is a signed
-field but this appears to be incorrect, the two values for the enumeration
-are:
+Make sure we don't need to look again into the depths of git blame in
+order not to miss a subtle part about how rcu-tasks is dealing with
+exiting tasks.
 
-	0b0000	NI
-	0b0001	IMP
-
-which look like a normal unsigned enumeration and the in-kernel DIT usage
-added by 01ab991fc0ee ("arm64: Enable data independent timing (DIT) in the
-kernel") detects the feature with an unsigned enum. Fix the hwcap to specify
-the field as unsigned.
-
-Fixes: 7206dc93a58f ("arm64: Expose Arm v8.4 features")
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20221207-arm64-sysreg-helpers-v3-1-0d71a7b174a8@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Suggested-by: Boqun Feng <boqun.feng@gmail.com>
+Suggested-by: Neeraj Upadhyay <quic_neeraju@quicinc.com>
+Suggested-by: Paul E. McKenney <paulmck@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Stable-dep-of: 28319d6dc5e2 ("rcu-tasks: Fix synchronize_rcu_tasks() VS zap_pid_ns_processes()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/cpufeature.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/rcu/tasks.h | 37 +++++++++++++++++++++++++++++--------
+ 1 file changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index b3f37e2209ad3..86b2f7ec6c67e 100644
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -2756,7 +2756,7 @@ static const struct arm64_cpu_capabilities arm64_elf_hwcaps[] = {
- 	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_FP_SHIFT, 4, FTR_SIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_FPHP),
- 	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_AdvSIMD_SHIFT, 4, FTR_SIGNED, 0, CAP_HWCAP, KERNEL_HWCAP_ASIMD),
- 	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_AdvSIMD_SHIFT, 4, FTR_SIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_ASIMDHP),
--	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_DIT_SHIFT, 4, FTR_SIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_DIT),
-+	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_DIT_SHIFT, 4, FTR_UNSIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_DIT),
- 	HWCAP_CAP(SYS_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_DPB_SHIFT, 4, FTR_UNSIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_DCPOP),
- 	HWCAP_CAP(SYS_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_DPB_SHIFT, 4, FTR_UNSIGNED, 2, CAP_HWCAP, KERNEL_HWCAP_DCPODP),
- 	HWCAP_CAP(SYS_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_JSCVT_SHIFT, 4, FTR_UNSIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_JSCVT),
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index f5bf6fb430dab..688c461036f57 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -827,11 +827,21 @@ static void rcu_tasks_pertask(struct task_struct *t, struct list_head *hop)
+ static void rcu_tasks_postscan(struct list_head *hop)
+ {
+ 	/*
+-	 * Wait for tasks that are in the process of exiting.  This
+-	 * does only part of the job, ensuring that all tasks that were
+-	 * previously exiting reach the point where they have disabled
+-	 * preemption, allowing the later synchronize_rcu() to finish
+-	 * the job.
++	 * Exiting tasks may escape the tasklist scan. Those are vulnerable
++	 * until their final schedule() with TASK_DEAD state. To cope with
++	 * this, divide the fragile exit path part in two intersecting
++	 * read side critical sections:
++	 *
++	 * 1) An _SRCU_ read side starting before calling exit_notify(),
++	 *    which may remove the task from the tasklist, and ending after
++	 *    the final preempt_disable() call in do_exit().
++	 *
++	 * 2) An _RCU_ read side starting with the final preempt_disable()
++	 *    call in do_exit() and ending with the final call to schedule()
++	 *    with TASK_DEAD state.
++	 *
++	 * This handles the part 1). And postgp will handle part 2) with a
++	 * call to synchronize_rcu().
+ 	 */
+ 	synchronize_srcu(&tasks_rcu_exit_srcu);
+ }
+@@ -898,7 +908,10 @@ static void rcu_tasks_postgp(struct rcu_tasks *rtp)
+ 	 *
+ 	 * In addition, this synchronize_rcu() waits for exiting tasks
+ 	 * to complete their final preempt_disable() region of execution,
+-	 * cleaning up after the synchronize_srcu() above.
++	 * cleaning up after synchronize_srcu(&tasks_rcu_exit_srcu),
++	 * enforcing the whole region before tasklist removal until
++	 * the final schedule() with TASK_DEAD state to be an RCU TASKS
++	 * read side critical section.
+ 	 */
+ 	synchronize_rcu();
+ }
+@@ -988,7 +1001,11 @@ void show_rcu_tasks_classic_gp_kthread(void)
+ EXPORT_SYMBOL_GPL(show_rcu_tasks_classic_gp_kthread);
+ #endif // !defined(CONFIG_TINY_RCU)
+ 
+-/* Do the srcu_read_lock() for the above synchronize_srcu().  */
++/*
++ * Contribute to protect against tasklist scan blind spot while the
++ * task is exiting and may be removed from the tasklist. See
++ * corresponding synchronize_srcu() for further details.
++ */
+ void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
+ {
+ 	preempt_disable();
+@@ -996,7 +1013,11 @@ void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
+ 	preempt_enable();
+ }
+ 
+-/* Do the srcu_read_unlock() for the above synchronize_srcu().  */
++/*
++ * Contribute to protect against tasklist scan blind spot while the
++ * task is exiting and may be removed from the tasklist. See
++ * corresponding synchronize_srcu() for further details.
++ */
+ void exit_tasks_rcu_finish(void) __releases(&tasks_rcu_exit_srcu)
+ {
+ 	struct task_struct *t = current;
 -- 
 2.39.2
 
