@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69E5BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:32:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2E5C433EF;
-	Tue,  7 Mar 2023 18:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64A9BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:32:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C27C433EF;
+	Tue,  7 Mar 2023 18:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213971;
-	bh=PWndWIZ5eDn4w4W07t6aKsMNnvxz/Hkrcq7axkgpe68=;
+	s=korg; t=1678213974;
+	bh=ADptdmh2tNWasfKW0aQORL4yIY4ow1X2A90pLbQUuE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=svsdUrdhNn8uMP0sIma0GDBXQB4oncg5x46II/36j3NbW1yifKpM2fVoEvdT6qYhC
-	 0jiKiNxP1BiARA5Ttqq629hOTEMi3ZhqmZnH9PBSai3CIVQSwlkAw+ROPru6ciKMvY
-	 diDKgJPFYJpoZ1SMgvFZVAILkwmBZn8I251B9o70=
+	b=OK/KkSP7pNJJe5fQ2ZZ3c5CbqJNOKTF7jpTbizpJ7UDIUz65q8+0LtCWYtLZiYnhf
+	 NCKeunEPXlOL742fvFevT2ZFrRd+oGenKTsL65FAaaxlu7BYV3R/X1EVUNrpMMS/sM
+	 ygRIjKCWo+pSIIh+on2ZBs+ZC+HZBZL76e2NK1qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 680/885] scsi: mpi3mr: Remove unnecessary memcpy() to alltgt_info->dmi
-Date: Tue,  7 Mar 2023 18:00:14 +0100
-Message-Id: <20230307170031.664532389@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 681/885] btrfs: hold block group refcount during async discard
+Date: Tue,  7 Mar 2023 18:00:15 +0100
+Message-Id: <20230307170031.706754885@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,71 +34,153 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Boris Burkov <boris@bur.io>
 
-commit eeb270aee3e085411399f129fc14fa04bd6d83cf upstream.
+commit 2b5463fcbdfb24e898916bcae2b1359042d26963 upstream.
 
-In the function mpi3mr_get_all_tgt_info(), devmap_info points to
-alltgt_info->dmi then there is no need to memcpy() data from devmap_info to
-alltgt_info->dmi. Remove the unnecessary memcpy(). This also allows to
-remove the local variable 'rval' and the goto label 'out'.
+Async discard does not acquire the block group reference count while it
+holds a reference on the discard list. This is generally OK, as the
+paths which destroy block groups tend to try to synchronize on
+cancelling async discard work. However, relying on cancelling work
+requires careful analysis to be sure it is safe from races with
+unpinning scheduling more work.
 
-Link: https://lore.kernel.org/r/20230214005019.1897251-3-shinichiro.kawasaki@wdc.com
-Cc: stable@vger.kernel.org
-Fixes: f5e6d5a34376 ("scsi: mpi3mr: Add support for driver commands")
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+While I am unable to find a race with unpinning in the current code for
+either the unused bgs or relocation paths, I believe we have one in an
+older version of auto relocation in a Meta internal build. This suggests
+that this is in fact an error prone model, and could be fragile to
+future changes to these bg deletion paths.
+
+To make this ownership more clear, add a refcount for async discard. If
+work is queued for a block group, its refcount should be incremented,
+and when work is completed or canceled, it should be decremented.
+
+CC: stable@vger.kernel.org # 5.15+
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_app.c | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ fs/btrfs/discard.c |   41 ++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 38 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
-index 72054e3a26cb..bff637702397 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -293,7 +293,6 @@ static long mpi3mr_bsg_pel_enable(struct mpi3mr_ioc *mrioc,
- static long mpi3mr_get_all_tgt_info(struct mpi3mr_ioc *mrioc,
- 	struct bsg_job *job)
+--- a/fs/btrfs/discard.c
++++ b/fs/btrfs/discard.c
+@@ -77,6 +77,7 @@ static struct list_head *get_discard_lis
+ static void __add_to_discard_list(struct btrfs_discard_ctl *discard_ctl,
+ 				  struct btrfs_block_group *block_group)
  {
--	long rval = -EINVAL;
- 	u16 num_devices = 0, i = 0, size;
- 	unsigned long flags;
- 	struct mpi3mr_tgt_dev *tgtdev;
-@@ -304,7 +303,7 @@ static long mpi3mr_get_all_tgt_info(struct mpi3mr_ioc *mrioc,
- 	if (job->request_payload.payload_len < sizeof(u32)) {
- 		dprint_bsg_err(mrioc, "%s: invalid size argument\n",
- 		    __func__);
--		return rval;
-+		return -EINVAL;
++	lockdep_assert_held(&discard_ctl->lock);
+ 	if (!btrfs_run_discard_work(discard_ctl))
+ 		return;
+ 
+@@ -88,6 +89,8 @@ static void __add_to_discard_list(struct
+ 						      BTRFS_DISCARD_DELAY);
+ 		block_group->discard_state = BTRFS_DISCARD_RESET_CURSOR;
+ 	}
++	if (list_empty(&block_group->discard_list))
++		btrfs_get_block_group(block_group);
+ 
+ 	list_move_tail(&block_group->discard_list,
+ 		       get_discard_list(discard_ctl, block_group));
+@@ -107,8 +110,12 @@ static void add_to_discard_list(struct b
+ static void add_to_discard_unused_list(struct btrfs_discard_ctl *discard_ctl,
+ 				       struct btrfs_block_group *block_group)
+ {
++	bool queued;
++
+ 	spin_lock(&discard_ctl->lock);
+ 
++	queued = !list_empty(&block_group->discard_list);
++
+ 	if (!btrfs_run_discard_work(discard_ctl)) {
+ 		spin_unlock(&discard_ctl->lock);
+ 		return;
+@@ -120,6 +127,8 @@ static void add_to_discard_unused_list(s
+ 	block_group->discard_eligible_time = (ktime_get_ns() +
+ 					      BTRFS_DISCARD_UNUSED_DELAY);
+ 	block_group->discard_state = BTRFS_DISCARD_RESET_CURSOR;
++	if (!queued)
++		btrfs_get_block_group(block_group);
+ 	list_add_tail(&block_group->discard_list,
+ 		      &discard_ctl->discard_list[BTRFS_DISCARD_INDEX_UNUSED]);
+ 
+@@ -130,6 +139,7 @@ static bool remove_from_discard_list(str
+ 				     struct btrfs_block_group *block_group)
+ {
+ 	bool running = false;
++	bool queued = false;
+ 
+ 	spin_lock(&discard_ctl->lock);
+ 
+@@ -139,7 +149,16 @@ static bool remove_from_discard_list(str
  	}
  
- 	spin_lock_irqsave(&mrioc->tgtdev_lock, flags);
-@@ -350,20 +349,12 @@ static long mpi3mr_get_all_tgt_info(struct mpi3mr_ioc *mrioc,
- 		sizeof(*devmap_info);
- 	usr_entrylen *= sizeof(*devmap_info);
- 	min_entrylen = min(usr_entrylen, kern_entrylen);
--	if (min_entrylen && (!memcpy(&alltgt_info->dmi, devmap_info, min_entrylen))) {
--		dprint_bsg_err(mrioc, "%s:%d: device map info copy failed\n",
--		    __func__, __LINE__);
--		rval = -EFAULT;
--		goto out;
--	}
+ 	block_group->discard_eligible_time = 0;
++	queued = !list_empty(&block_group->discard_list);
+ 	list_del_init(&block_group->discard_list);
++	/*
++	 * If the block group is currently running in the discard workfn, we
++	 * don't want to deref it, since it's still being used by the workfn.
++	 * The workfn will notice this case and deref the block group when it is
++	 * finished.
++	 */
++	if (queued && !running)
++		btrfs_put_block_group(block_group);
  
- 	sg_copy_from_buffer(job->request_payload.sg_list,
- 			    job->request_payload.sg_cnt,
- 			    alltgt_info, (min_entrylen + sizeof(u64)));
--	rval = 0;
--out:
- 	kfree(alltgt_info);
--	return rval;
-+	return 0;
+ 	spin_unlock(&discard_ctl->lock);
+ 
+@@ -212,10 +231,12 @@ again:
+ 	if (block_group && now >= block_group->discard_eligible_time) {
+ 		if (block_group->discard_index == BTRFS_DISCARD_INDEX_UNUSED &&
+ 		    block_group->used != 0) {
+-			if (btrfs_is_block_group_data_only(block_group))
++			if (btrfs_is_block_group_data_only(block_group)) {
+ 				__add_to_discard_list(discard_ctl, block_group);
+-			else
++			} else {
+ 				list_del_init(&block_group->discard_list);
++				btrfs_put_block_group(block_group);
++			}
+ 			goto again;
+ 		}
+ 		if (block_group->discard_state == BTRFS_DISCARD_RESET_CURSOR) {
+@@ -502,6 +523,15 @@ static void btrfs_discard_workfn(struct
+ 	spin_lock(&discard_ctl->lock);
+ 	discard_ctl->prev_discard = trimmed;
+ 	discard_ctl->prev_discard_time = now;
++	/*
++	 * If the block group was removed from the discard list while it was
++	 * running in this workfn, then we didn't deref it, since this function
++	 * still owned that reference. But we set the discard_ctl->block_group
++	 * back to NULL, so we can use that condition to know that now we need
++	 * to deref the block_group.
++	 */
++	if (discard_ctl->block_group == NULL)
++		btrfs_put_block_group(block_group);
+ 	discard_ctl->block_group = NULL;
+ 	__btrfs_discard_schedule_work(discard_ctl, now, false);
+ 	spin_unlock(&discard_ctl->lock);
+@@ -638,8 +668,12 @@ void btrfs_discard_punt_unused_bgs_list(
+ 	list_for_each_entry_safe(block_group, next, &fs_info->unused_bgs,
+ 				 bg_list) {
+ 		list_del_init(&block_group->bg_list);
+-		btrfs_put_block_group(block_group);
+ 		btrfs_discard_queue_work(&fs_info->discard_ctl, block_group);
++		/*
++		 * This put is for the get done by btrfs_mark_bg_unused.
++		 * Queueing discard incremented it for discard's reference.
++		 */
++		btrfs_put_block_group(block_group);
+ 	}
+ 	spin_unlock(&fs_info->unused_bgs_lock);
  }
- /**
-  * mpi3mr_get_change_count - Get topology change count
--- 
-2.39.2
-
+@@ -669,6 +703,7 @@ static void btrfs_discard_purge_list(str
+ 			if (block_group->used == 0)
+ 				btrfs_mark_bg_unused(block_group);
+ 			spin_lock(&discard_ctl->lock);
++			btrfs_put_block_group(block_group);
+ 		}
+ 	}
+ 	spin_unlock(&discard_ctl->lock);
 
 
