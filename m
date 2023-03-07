@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E35EBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:07:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E864C433EF;
-	Tue,  7 Mar 2023 18:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA29BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:07:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96847C433EF;
+	Tue,  7 Mar 2023 18:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212428;
-	bh=BIzull7AXdCQXeCc/4B5HvH5hmqczsOYPlNz0RzBPK8=;
+	s=korg; t=1678212431;
+	bh=7iEq9fTjADDKa4i/09iLDgKPgEWaO2NEPHyRyctnIT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0YWvTebNiTDuiA6PZaPjkCt9s3LBmx+czn3AxAXdChlBHPsgGPi0dpwlQvLyi2V/6
-	 uBpaNr6pBQ6tsVXQa6jsDj/8GbDcREaMYEbgYsPFQ3duK+rl3AKiJ2ag+ppeYmfX4J
-	 D4DNLUQII6NCgivWw1YucyfecvcPjSQ4qXUehp+0=
+	b=spF7OdH6uUJ4WNTB5gOjhdIeR6ExRW1H1s37PnSPMotR8l+4YrBO6G2NANwmXKW1X
+	 DAYTi2ZXXL0OiKBccvHdphmRAtbbfS6gQRvpkr2bfGYUUjXcZpQMMD2kc9bveCwId6
+	 RC2n/u00kb2pZzohw2vyubf/+lS2GYm1POENke2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 151/885] selftests/xsk: print correct error codes when exiting
-Date: Tue,  7 Mar 2023 17:51:25 +0100
-Message-Id: <20230307170008.451069373@linuxfoundation.org>
+Subject: [PATCH 6.1 152/885] arm64/cpufeature: Fix field sign for DIT hwcap detection
+Date: Tue,  7 Mar 2023 17:51:26 +0100
+Message-Id: <20230307170008.500093060@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,104 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Magnus Karlsson <magnus.karlsson@intel.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 085dcccfb7d3dc52ed708fc588587f319541bc83 ]
+[ Upstream commit 50daf5b7c4ec4efcaf49a4128930f872bec7dbc0 ]
 
-Print the correct error codes when exiting the test suite due to some
-terminal error. Some of these had a switched sign and some of them
-printed zero instead of errno.
+Since it was added our hwcap for DIT has specified that DIT is a signed
+field but this appears to be incorrect, the two values for the enumeration
+are:
 
-Fixes: facb7cb2e909 ("selftests/bpf: Xsk selftests - SKB POLL, NOPOLL")
-Signed-off-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://lore.kernel.org/r/20230111093526.11682-5-magnus.karlsson@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+	0b0000	NI
+	0b0001	IMP
+
+which look like a normal unsigned enumeration and the in-kernel DIT usage
+added by 01ab991fc0ee ("arm64: Enable data independent timing (DIT) in the
+kernel") detects the feature with an unsigned enum. Fix the hwcap to specify
+the field as unsigned.
+
+Fixes: 7206dc93a58f ("arm64: Expose Arm v8.4 features")
+Reviewed-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20221207-arm64-sysreg-helpers-v3-1-0d71a7b174a8@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/xskxceiver.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ arch/arm64/kernel/cpufeature.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/xskxceiver.c b/tools/testing/selftests/bpf/xskxceiver.c
-index 51e693318b3f0..8d5d9b94b020b 100644
---- a/tools/testing/selftests/bpf/xskxceiver.c
-+++ b/tools/testing/selftests/bpf/xskxceiver.c
-@@ -350,7 +350,7 @@ static bool ifobj_zc_avail(struct ifobject *ifobject)
- 	umem = calloc(1, sizeof(struct xsk_umem_info));
- 	if (!umem) {
- 		munmap(bufs, umem_sz);
--		exit_with_error(-ENOMEM);
-+		exit_with_error(ENOMEM);
- 	}
- 	umem->frame_size = XSK_UMEM__DEFAULT_FRAME_SIZE;
- 	ret = xsk_configure_umem(umem, bufs, umem_sz);
-@@ -936,7 +936,7 @@ static int receive_pkts(struct test_spec *test, struct pollfd *fds)
- 		if (ifobj->use_poll) {
- 			ret = poll(fds, 1, POLL_TMOUT);
- 			if (ret < 0)
--				exit_with_error(-ret);
-+				exit_with_error(errno);
- 
- 			if (!ret) {
- 				if (!is_umem_valid(test->ifobj_tx))
-@@ -963,7 +963,7 @@ static int receive_pkts(struct test_spec *test, struct pollfd *fds)
- 				if (xsk_ring_prod__needs_wakeup(&umem->fq)) {
- 					ret = poll(fds, 1, POLL_TMOUT);
- 					if (ret < 0)
--						exit_with_error(-ret);
-+						exit_with_error(errno);
- 				}
- 				ret = xsk_ring_prod__reserve(&umem->fq, rcvd, &idx_fq);
- 			}
-@@ -1014,7 +1014,7 @@ static int __send_pkts(struct ifobject *ifobject, u32 *pkt_nb, struct pollfd *fd
- 			if (timeout) {
- 				if (ret < 0) {
- 					ksft_print_msg("ERROR: [%s] Poll error %d\n",
--						       __func__, ret);
-+						       __func__, errno);
- 					return TEST_FAILURE;
- 				}
- 				if (ret == 0)
-@@ -1023,7 +1023,7 @@ static int __send_pkts(struct ifobject *ifobject, u32 *pkt_nb, struct pollfd *fd
- 			}
- 			if (ret <= 0) {
- 				ksft_print_msg("ERROR: [%s] Poll error %d\n",
--					       __func__, ret);
-+					       __func__, errno);
- 				return TEST_FAILURE;
- 			}
- 		}
-@@ -1322,18 +1322,18 @@ static void thread_common_ops(struct test_spec *test, struct ifobject *ifobject)
- 	if (ifobject->xdp_flags & XDP_FLAGS_SKB_MODE) {
- 		if (opts.attach_mode != XDP_ATTACHED_SKB) {
- 			ksft_print_msg("ERROR: [%s] XDP prog not in SKB mode\n");
--			exit_with_error(-EINVAL);
-+			exit_with_error(EINVAL);
- 		}
- 	} else if (ifobject->xdp_flags & XDP_FLAGS_DRV_MODE) {
- 		if (opts.attach_mode != XDP_ATTACHED_DRV) {
- 			ksft_print_msg("ERROR: [%s] XDP prog not in DRV mode\n");
--			exit_with_error(-EINVAL);
-+			exit_with_error(EINVAL);
- 		}
- 	}
- 
- 	ret = xsk_socket__update_xskmap(ifobject->xsk->xsk, ifobject->xsk_map_fd);
- 	if (ret)
--		exit_with_error(-ret);
-+		exit_with_error(errno);
- }
- 
- static void *worker_testapp_validate_tx(void *arg)
-@@ -1540,7 +1540,7 @@ static void swap_xsk_resources(struct ifobject *ifobj_tx, struct ifobject *ifobj
- 
- 	ret = xsk_socket__update_xskmap(ifobj_rx->xsk->xsk, ifobj_rx->xsk_map_fd);
- 	if (ret)
--		exit_with_error(-ret);
-+		exit_with_error(errno);
- }
- 
- static void testapp_bpf_res(struct test_spec *test)
+diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+index b3f37e2209ad3..86b2f7ec6c67e 100644
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -2756,7 +2756,7 @@ static const struct arm64_cpu_capabilities arm64_elf_hwcaps[] = {
+ 	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_FP_SHIFT, 4, FTR_SIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_FPHP),
+ 	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_AdvSIMD_SHIFT, 4, FTR_SIGNED, 0, CAP_HWCAP, KERNEL_HWCAP_ASIMD),
+ 	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_AdvSIMD_SHIFT, 4, FTR_SIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_ASIMDHP),
+-	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_DIT_SHIFT, 4, FTR_SIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_DIT),
++	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_DIT_SHIFT, 4, FTR_UNSIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_DIT),
+ 	HWCAP_CAP(SYS_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_DPB_SHIFT, 4, FTR_UNSIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_DCPOP),
+ 	HWCAP_CAP(SYS_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_DPB_SHIFT, 4, FTR_UNSIGNED, 2, CAP_HWCAP, KERNEL_HWCAP_DCPODP),
+ 	HWCAP_CAP(SYS_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_JSCVT_SHIFT, 4, FTR_UNSIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_JSCVT),
 -- 
 2.39.2
 
