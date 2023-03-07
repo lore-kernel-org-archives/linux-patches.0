@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC05CBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:06:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE87C433EF;
-	Tue,  7 Mar 2023 17:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227C0BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:06:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48667C433D2;
+	Tue,  7 Mar 2023 17:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678208788;
-	bh=wf38QDd2OYKI9xDGBcBXnxVnRUb8XvnV58YUUEfQt4g=;
+	s=korg; t=1678208791;
+	bh=9Ez6C5fwIk5S21phgouzUkN8/sz3xki7uuVphuyingc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NbslyvkFuYrV2fWxrB/zIz8IaKqw0NRk+13e7oAILDvxpjHlQ65vWG4MEu5xQ9Vzq
-	 yg2GxDwJph15kn+P8ULe4+dqvcEqpg7ZsBYTIeLhQCADy2vsumU4PlYoku3c0dtDZC
-	 dEt/hyqdqC2CuLy/dcKV3t5/HPKoXEO0uOu9E26o=
+	b=vw7vvWPyHIeyL2I74k1/JwrcwMHpADC77Rj999KoKMyI5X54w7UyzqXM+hZyr1LYP
+	 xDfHSHR4tSgOzigKhIC8zyNn+kn4cij3oOdfhxIyFyXRR67JUKfFYQxo1o0eGIJAfW
+	 wja/LQ/y7vXyqwQ9+l6qUNY62rM4vwIXrCMZAZ7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Iskren Chernev <me@iskren.info>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0011/1001] arm64: dts: qcom: msm8996-tone: Fix USB taking 6 minutes to wake up
-Date: Tue,  7 Mar 2023 17:46:23 +0100
-Message-Id: <20230307170022.633519847@linuxfoundation.org>
+Subject: [PATCH 6.2 0012/1001] arm64: dts: qcom: sm6115: Fix UFS node
+Date: Tue,  7 Mar 2023 17:46:24 +0100
+Message-Id: <20230307170022.672366381@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,47 +38,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 43069b9cd358aebc692e654de91ee06ff66e26af ]
+[ Upstream commit 01b6041454e8bc4f5feb76e6bcdc83a48cea21f2 ]
 
-The hardware turns out to be pretty sluggish at assuming it can only
-do USB2 with just a USB2 phy assigned to it - before it needed about
-6 minutes to acknowledge that.
+In its current form, UFS did not even probe successfully - it failed
+when trying to set XO (ref_clk) to 300 MHz instead of doing so to
+the ICE clk. Moreover, the missing reg-names prevented ICE from
+working or being discovered at all. Fix both of these issues.
 
-Limit it to USB-HS explicitly to make USB come up about 720x faster.
+As a sidenote, the log reveals that this SoC uses UFS ICE v3.1.0.
 
-Fixes: 9da65e441d4d ("arm64: dts: qcom: Add support for SONY Xperia X Performance / XZ / XZs (msm8996, Tone platform)")
+Fixes: 97e563bf5ba1 ("arm64: dts: qcom: sm6115: Add basic soc dtsi")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Iskren Chernev <me@iskren.info>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221124220147.102611-1-konrad.dybcio@linaro.org
+Link: https://lore.kernel.org/r/20221208201401.530555-1-konrad.dybcio@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-index dec361b93ccea..be62899edf8e3 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-@@ -943,10 +943,6 @@ touch_int_sleep: touch-int-sleep-state {
- 	};
- };
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 572bf04adf906..3f4017bc667d6 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -704,6 +704,7 @@ opp-202000000 {
+ 		ufs_mem_hc: ufs@4804000 {
+ 			compatible = "qcom,sm6115-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+ 			reg = <0x04804000 0x3000>, <0x04810000 0x8000>;
++			reg-names = "std", "ice";
+ 			interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+ 			phys = <&ufs_mem_phy_lanes>;
+ 			phy-names = "ufsphy";
+@@ -736,10 +737,10 @@ ufs_mem_hc: ufs@4804000 {
+ 					<0 0>,
+ 					<0 0>,
+ 					<37500000 150000000>,
+-					<75000000 300000000>,
+ 					<0 0>,
+ 					<0 0>,
+-					<0 0>;
++					<0 0>,
++					<75000000 300000000>;
  
--/*
-- * For reasons that are currently unknown (but probably related to fusb301), USB takes about
-- * 6 minutes to wake up (nothing interesting in kernel logs), but then it works as it should.
-- */
- &usb3 {
- 	status = "okay";
- 	qcom,select-utmi-as-pipe-clk;
-@@ -955,6 +951,7 @@ &usb3 {
- &usb3_dwc3 {
- 	extcon = <&usb3_id>;
- 	dr_mode = "peripheral";
-+	maximum-speed = "high-speed";
- 	phys = <&hsusb_phy1>;
- 	phy-names = "usb2-phy";
- 	snps,hird-threshold = /bits/ 8 <0>;
+ 			status = "disabled";
+ 		};
 -- 
 2.39.2
 
