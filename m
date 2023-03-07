@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65ECBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:12:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CDA4C433EF;
-	Tue,  7 Mar 2023 18:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2702BBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:12:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80641C433D2;
+	Tue,  7 Mar 2023 18:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212773;
-	bh=XLp4Iqj69xNIDXZULuLZOC9l4XqroUKX1pD8/YERI74=;
+	s=korg; t=1678212777;
+	bh=Ieevzb72Tp4clAm6jd3V2JofjiB9KvCO+j6nF8eOlM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Drk9Rkd3WO+Y3WpFxOYrA6JxD6M1SKT2UDwAv6cy0l/8EUeZQhLiOzh6tslOCaVIz
-	 e1elYlKIntiLPwQp53Mxy9RC4pKcmzACUsc3UmaIckgvGANIY0p+HhksbxI4CvOCeS
-	 0E33wC5U6RgJTPZ6ocvW7BdIQ2STek2VJ0PxGk8w=
+	b=Khb5PzeNXs4pb0Jup8QnexvXTFJIC9qu/gOe1Ycjgd7N3/ys7Ubrf3fKG+fjgZ9hH
+	 Tu85InPJtpgLH5uFsm4oL/YW9jS9W9A3WfI3YcjfUrpQlR8ZXhkbL+cC+hq5Jc3itR
+	 y1zbP2sE0Ev5jX/krhuqqzN2ei67OrwO2H448y2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Rob Clark <robdclark@chromium.org>,
+	Hui Tang <tanghui20@huawei.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 293/885] drm/msm/adreno: Fix null ptr access in adreno_gpu_cleanup()
-Date: Tue,  7 Mar 2023 17:53:47 +0100
-Message-Id: <20230307170014.807305718@linuxfoundation.org>
+Subject: [PATCH 6.1 276/885] drm/msm/dpu: check for null return of devm_kzalloc() in dpu_writeback_init()
+Date: Tue,  7 Mar 2023 17:53:30 +0100
+Message-Id: <20230307170013.999183932@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,84 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+From: Hui Tang <tanghui20@huawei.com>
 
-[ Upstream commit dbeedbcb268d055d8895aceca427f897e12c2b50 ]
+[ Upstream commit 21e9a838f505178e109ccb3bf19d7808eb0326f4 ]
 
-Fix the below kernel panic due to null pointer access:
-[   18.504431] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000048
-[   18.513464] Mem abort info:
-[   18.516346]   ESR = 0x0000000096000005
-[   18.520204]   EC = 0x25: DABT (current EL), IL = 32 bits
-[   18.525706]   SET = 0, FnV = 0
-[   18.528878]   EA = 0, S1PTW = 0
-[   18.532117]   FSC = 0x05: level 1 translation fault
-[   18.537138] Data abort info:
-[   18.540110]   ISV = 0, ISS = 0x00000005
-[   18.544060]   CM = 0, WnR = 0
-[   18.547109] user pgtable: 4k pages, 39-bit VAs, pgdp=0000000112826000
-[   18.553738] [0000000000000048] pgd=0000000000000000, p4d=0000000000000000, pud=0000000000000000
-[   18.562690] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
-**Snip**
-[   18.696758] Call trace:
-[   18.699278]  adreno_gpu_cleanup+0x30/0x88
-[   18.703396]  a6xx_destroy+0xc0/0x130
-[   18.707066]  a6xx_gpu_init+0x308/0x424
-[   18.710921]  adreno_bind+0x178/0x288
-[   18.714590]  component_bind_all+0xe0/0x214
-[   18.718797]  msm_drm_bind+0x1d4/0x614
-[   18.722566]  try_to_bring_up_aggregate_device+0x16c/0x1b8
-[   18.728105]  __component_add+0xa0/0x158
-[   18.732048]  component_add+0x20/0x2c
-[   18.735719]  adreno_probe+0x40/0xc0
-[   18.739300]  platform_probe+0xb4/0xd4
-[   18.743068]  really_probe+0xfc/0x284
-[   18.746738]  __driver_probe_device+0xc0/0xec
-[   18.751129]  driver_probe_device+0x48/0x110
-[   18.755421]  __device_attach_driver+0xa8/0xd0
-[   18.759900]  bus_for_each_drv+0x90/0xdc
-[   18.763843]  __device_attach+0xfc/0x174
-[   18.767786]  device_initial_probe+0x20/0x2c
-[   18.772090]  bus_probe_device+0x40/0xa0
-[   18.776032]  deferred_probe_work_func+0x94/0xd0
-[   18.780686]  process_one_work+0x190/0x3d0
-[   18.784805]  worker_thread+0x280/0x3d4
-[   18.788659]  kthread+0x104/0x1c0
-[   18.791981]  ret_from_fork+0x10/0x20
-[   18.795654] Code: f9400408 aa0003f3 aa1f03f4 91142015 (f9402516)
-[   18.801913] ---[ end trace 0000000000000000 ]---
-[   18.809039] Kernel panic - not syncing: Oops: Fatal exception
+Because of the possilble failure of devm_kzalloc(), dpu_wb_conn might
+be NULL and will cause null pointer dereference later.
 
-Fixes: 17e822f7591f ("drm/msm: fix unbalanced pm_runtime_enable in adreno_gpu_{init, cleanup}")
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/515605/
-Link: https://lore.kernel.org/r/20221221203925.v2.1.Ib978de92c4bd000b515486aad72e96c2481f84d0@changeid
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Therefore, it might be better to check it and directly return -ENOMEM.
+
+Fixes: 77b001acdcfe ("drm/msm/dpu: add the writeback connector layer")
+Signed-off-by: Hui Tang <tanghui20@huawei.com>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/512277/
+Link: https://lore.kernel.org/r/20221119055518.179937-1-tanghui20@huawei.com
+[DB: fixed typo in commit message]
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 2e7531d2a5d6e..dfd4eec217859 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -1082,13 +1082,13 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
- {
- 	struct msm_gpu *gpu = &adreno_gpu->base;
--	struct msm_drm_private *priv = gpu->dev->dev_private;
-+	struct msm_drm_private *priv = gpu->dev ? gpu->dev->dev_private : NULL;
- 	unsigned int i;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+index 088ec990a2f26..2a5a68366582b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+@@ -70,6 +70,8 @@ int dpu_writeback_init(struct drm_device *dev, struct drm_encoder *enc,
+ 	int rc = 0;
  
- 	for (i = 0; i < ARRAY_SIZE(adreno_gpu->info->fw); i++)
- 		release_firmware(adreno_gpu->fw[i]);
+ 	dpu_wb_conn = devm_kzalloc(dev->dev, sizeof(*dpu_wb_conn), GFP_KERNEL);
++	if (!dpu_wb_conn)
++		return -ENOMEM;
  
--	if (pm_runtime_enabled(&priv->gpu_pdev->dev))
-+	if (priv && pm_runtime_enabled(&priv->gpu_pdev->dev))
- 		pm_runtime_disable(&priv->gpu_pdev->dev);
+ 	drm_connector_helper_add(&dpu_wb_conn->base.base, &dpu_wb_conn_helper_funcs);
  
- 	msm_gpu_cleanup(&adreno_gpu->base);
 -- 
 2.39.2
 
