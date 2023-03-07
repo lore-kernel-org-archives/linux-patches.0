@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A17BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:12:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F702C433D2;
-	Tue,  7 Mar 2023 18:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57460BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:12:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD61C433EF;
+	Tue,  7 Mar 2023 18:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212748;
-	bh=Qn/1eki+HpSQZjjWOWL+jd3cW4/ZZA018T80PaadSus=;
+	s=korg; t=1678212751;
+	bh=UJdJdIk1sbDwHocVvrQhW3rwSxtZnabYMIcExhU07Vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yqv/sXbhtdcyk1HH0UeS8d70KOK/oDs1tip/eeLa9xkUQX71mU9VQvB/ZqJz8P43a
-	 c67nfGo/3mB68gDAsoZqvrM8Wv3Geh5LgSCjdUbCs8NTRvQvHPeo4YrEacB0tGcy5w
-	 7cWzFy8KL+L2s4DV/PN9sCBYkSCJ7+xpJl0k9nX0=
+	b=q9BR7J4P4x1jShhhSWDVnCU6vkuE7XoKjjkYUqPfARmyMcU8OBPhwGNcY2/UFrxow
+	 ayOKTZZ+Wnl418ZTERqVKYtYQ1y63v0WbarjnhPdfuuqw89fh0W1OoJCJFj9QyL3Tm
+	 7mNS5jSNfTM9sNLf0b7w2rv6U9C8ygdaQPr0yEhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Maxime Ripard <maxime@cerno.tech>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 285/885] drm/vc4: hdmi: Correct interlaced timings again
-Date: Tue,  7 Mar 2023 17:53:39 +0100
-Message-Id: <20230307170014.410382376@linuxfoundation.org>
+Subject: [PATCH 6.1 286/885] drm/msm: clean event_thread->worker in case of an error
+Date: Tue,  7 Mar 2023 17:53:40 +0100
+Message-Id: <20230307170014.459683089@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,42 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 771d6539f27bd55f43d8a95d53a7eeaaffa2681c ]
+[ Upstream commit c79bb6b92defdcb834ceeeed9c1cf591beb1b71a ]
 
-The back porch timings were correct, only the sync offset was wrong.
-Correct timing is now reported for 1080i and 576i, but the h offset is
-incorrect for 480i for non-obvious reasons.
+If worker creation fails, nullify the event_thread->worker, so that
+msm_drm_uninit() doesn't try accessing invalid memory location. While we
+are at it, remove duplicate assignment to the ret variable.
 
-Fixes: fb10dc451c0f ("drm/vc4: hdmi: Correct HDMI timing registers for interlaced modes")
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Link: https://lore.kernel.org/r/20221207-rpi-hvs-crtc-misc-v1-14-1f8e0770798b@cerno.tech
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Fixes: 1041dee2178f ("drm/msm: use kthread_create_worker instead of kthread_run")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/490106/
+Link: https://lore.kernel.org/r/20220617233328.1143665-2-dmitry.baryshkov@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 0d0b6df4df153..ea2eaf6032caa 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -1306,11 +1306,12 @@ static void vc5_hdmi_set_timings(struct vc4_hdmi *vc4_hdmi,
- 		     VC4_SET_FIELD(mode->crtc_vdisplay, VC5_HDMI_VERTA_VAL));
- 	u32 vertb = (VC4_SET_FIELD(mode->htotal >> (2 - pixel_rep),
- 				   VC5_HDMI_VERTB_VSPO) |
--		     VC4_SET_FIELD(mode->crtc_vtotal - mode->crtc_vsync_end,
-+		     VC4_SET_FIELD(mode->crtc_vtotal - mode->crtc_vsync_end +
-+				   interlaced,
- 				   VC4_HDMI_VERTB_VBP));
- 	u32 vertb_even = (VC4_SET_FIELD(0, VC5_HDMI_VERTB_VSPO) |
- 			  VC4_SET_FIELD(mode->crtc_vtotal -
--					mode->crtc_vsync_end - interlaced,
-+					mode->crtc_vsync_end,
- 					VC4_HDMI_VERTB_VBP));
- 	unsigned long flags;
- 	unsigned char gcp;
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 681c1b889b31a..5a0ff112634b7 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -494,7 +494,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+ 		if (IS_ERR(priv->event_thread[i].worker)) {
+ 			ret = PTR_ERR(priv->event_thread[i].worker);
+ 			DRM_DEV_ERROR(dev, "failed to create crtc_event kthread\n");
+-			ret = PTR_ERR(priv->event_thread[i].worker);
++			priv->event_thread[i].worker = NULL;
+ 			goto err_msm_uninit;
+ 		}
+ 
 -- 
 2.39.2
 
