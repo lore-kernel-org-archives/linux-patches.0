@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C80BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:26:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B01CC433A7;
-	Tue,  7 Mar 2023 17:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E64BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:26:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65693C433D2;
+	Tue,  7 Mar 2023 17:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209979;
-	bh=TmxFtEw7KhU1RzzrGh5HxGYCPOlDXYdhPs95T0EZ154=;
+	s=korg; t=1678209982;
+	bh=jpBP50eqTo7SSYBTia3Ca07dGzCXmu1FNczCPNMhzOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hfSDi1d7FQLvZeb0S67elFsxsPBqcGyNdX3tynq2jJR/p6fAZRvp++K9RXdJOOj9E
-	 WmthVrjQ0WXJOiJCHrewjS9lPUd2IHRxgfJ1NyqcZ9e60ICsVtt9FJ/UiDgIFFGD2H
-	 RxXhVq7ABKcVfEaQmFaugVf46ifidsSo4pq5Tck4=
+	b=N+0nkcEqrIs9YSAdNjyOFko8ZI5skJYCdcapV4spWYWRB8e31C3eM7SWy5DRuqk3Z
+	 OWU296L93MzZ/z5JGcXA+C+Ws+YGl7/Ba6xus6EfRXjVrW1FgTjoglvaJ/P5JJZ3Nv
+	 Og0VpMwjUtTPKWZxO3g7HfxjtHDo8ZEnCcsFgrts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Leo Liu <leo.liu@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0362/1001] ALSA: hda/ca0132: minor fix for allocation size
-Date: Tue,  7 Mar 2023 17:52:14 +0100
-Message-Id: <20230307170037.120361447@linuxfoundation.org>
+Subject: [PATCH 6.2 0363/1001] drm/amdgpu: Use the sched from entity for amdgpu_cs trace
+Date: Tue,  7 Mar 2023 17:52:15 +0100
+Message-Id: <20230307170037.152398597@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,38 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey V. Vissarionov <gremlin@altlinux.org>
+From: Leo Liu <leo.liu@amd.com>
 
-[ Upstream commit 3ee0fe7fa39b14d1cea455b7041f2df933bd97d2 ]
+[ Upstream commit cf22ef78f22ce4df4757472c5dbd33c430c5b659 ]
 
-Although the "dma_chan" pointer occupies more or equal space compared
-to "*dma_chan", the allocation size should use the size of variable
-itself.
+The problem is that base sched hasn't been assigned yet at this moment,
+causing something like "ring=0" all the time from trace.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+mpv:cs0-3473    [002] ..... 129.047431: amdgpu_cs: ring=0, dw=48, fences=0
+mpv:cs0-3473    [002] ..... 129.089125: amdgpu_cs: ring=0, dw=48, fences=0
+mpv:cs0-3473    [002] ..... 129.130987: amdgpu_cs: ring=0, dw=48, fences=0
+mpv:cs0-3473    [002] ..... 129.172478: amdgpu_cs: ring=0, dw=48, fences=0
 
-Fixes: 01ef7dbffb41 ("ALSA: hda - Update CA0132 codec to load DSP firmware binary")
-Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
-Link: https://lore.kernel.org/r/20230117111522.GA15213@altlinux.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 4624459c84d7 ("drm/amdgpu: add gang submit frontend v6")
+Signed-off-by: Leo Liu <leo.liu@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_ca0132.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_trace.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
-index 0a292bf271f2e..acde4cd58785e 100644
---- a/sound/pci/hda/patch_ca0132.c
-+++ b/sound/pci/hda/patch_ca0132.c
-@@ -2455,7 +2455,7 @@ static int dspio_set_uint_param(struct hda_codec *codec, int mod_id,
- static int dspio_alloc_dma_chan(struct hda_codec *codec, unsigned int *dma_chan)
- {
- 	int status = 0;
--	unsigned int size = sizeof(dma_chan);
-+	unsigned int size = sizeof(*dma_chan);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_trace.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_trace.h
+index 677ad2016976d..98d91ebf5c26b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_trace.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_trace.h
+@@ -153,10 +153,10 @@ TRACE_EVENT(amdgpu_cs,
  
- 	codec_dbg(codec, "     dspio_alloc_dma_chan() -- begin\n");
- 	status = dspio_scp(codec, MASTERCONTROL, 0x20,
+ 	    TP_fast_assign(
+ 			   __entry->bo_list = p->bo_list;
+-			   __entry->ring = to_amdgpu_ring(job->base.sched)->idx;
++			   __entry->ring = to_amdgpu_ring(job->base.entity->rq->sched)->idx;
+ 			   __entry->dw = ib->length_dw;
+ 			   __entry->fences = amdgpu_fence_count_emitted(
+-				to_amdgpu_ring(job->base.sched));
++				to_amdgpu_ring(job->base.entity->rq->sched));
+ 			   ),
+ 	    TP_printk("bo_list=%p, ring=%u, dw=%u, fences=%u",
+ 		      __entry->bo_list, __entry->ring, __entry->dw,
 -- 
 2.39.2
 
