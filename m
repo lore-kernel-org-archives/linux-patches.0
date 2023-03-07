@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B77BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:06:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44FA4C433D2;
-	Tue,  7 Mar 2023 19:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B35BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:06:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70172C433EF;
+	Tue,  7 Mar 2023 19:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215986;
-	bh=lX1KobrTflvWQnZeQwufnxX7sVZ0XDOpN260eJg/mhM=;
+	s=korg; t=1678215989;
+	bh=pk1fJ71Ws6Sna2RKK2QmJ6j3WF2xsqDP4/Xz52YcsH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TLlHugKdV1tmyyLV2QXBp9iFnUXeNJyx7dBBPNKGrvkNECTrkIpyuSDMpR8ufefQU
-	 WPMk0sTnNLWuBPxHRgb2sQLkjTwbhqj6mIAmwOtmSGXPlNlRE888kTTrrc13jMuhUd
-	 2eQXF7mc8xs1EF5dXAAMq28Vmq9z3uTTO7MfqqfI=
+	b=RhZLH6hfXxrRQAIQLHoNkD6ttCr8nbbsKKaASbTaThyjcg2BvEVNJ5YZv6ukHOhY1
+	 gGax2R7HlGi5YA2OH72P/qcoTzHc3S0V4n168LVy3XacfwNq6eulUCQdskgi1ohwa/
+	 3RxDou8HlnPgyu/wMnDGIY+R1id6goWq3HBeZFIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 396/567] s390/idle: mark arch_cpu_idle() noinstr
-Date: Tue,  7 Mar 2023 18:02:12 +0100
-Message-Id: <20230307165923.015806056@linuxfoundation.org>
+	Corey Minyard <cminyard@mvista.com>
+Subject: [PATCH 5.15 432/567] ipmi:ssif: resend_msg() cannot fail
+Date: Tue,  7 Mar 2023 18:02:48 +0100
+Message-Id: <20230307165924.624591164@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,68 +33,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Corey Minyard <cminyard@mvista.com>
 
-[ Upstream commit a9cbc1b471d291c865907542394f1c483b93a811 ]
+commit 95767ed78a181d5404202627499f9cde56053b96 upstream.
 
-linux-next commit ("cpuidle: tracing: Warn about !rcu_is_watching()")
-adds a new warning which hits on s390's arch_cpu_idle() function:
+The resend_msg() function cannot fail, but there was error handling
+around using it.  Rework the handling of the error, and fix the out of
+retries debug reporting that was wrong around this, too.
 
-RCU not on for: arch_cpu_idle+0x0/0x28
-WARNING: CPU: 2 PID: 0 at include/linux/trace_recursion.h:162 arch_ftrace_ops_list_func+0x24c/0x258
-Modules linked in:
-CPU: 2 PID: 0 Comm: swapper/2 Not tainted 6.2.0-rc6-next-20230202 #4
-Hardware name: IBM 8561 T01 703 (z/VM 7.3.0)
-Krnl PSW : 0404d00180000000 00000000002b55c0 (arch_ftrace_ops_list_func+0x250/0x258)
-           R:0 T:1 IO:0 EX:0 Key:0 M:1 W:0 P:0 AS:3 CC:1 PM:0 RI:0 EA:3
-Krnl GPRS: c0000000ffffbfff 0000000080000002 0000000000000026 0000000000000000
-           0000037ffffe3a28 0000037ffffe3a20 0000000000000000 0000000000000000
-           0000000000000000 0000000000f4acf6 00000000001044f0 0000037ffffe3cb0
-           0000000000000000 0000000000000000 00000000002b55bc 0000037ffffe3bb8
-Krnl Code: 00000000002b55b0: c02000840051        larl    %r2,0000000001335652
-           00000000002b55b6: c0e5fff512d1        brasl   %r14,0000000000157b58
-          #00000000002b55bc: af000000            mc      0,0
-          >00000000002b55c0: a7f4ffe7            brc     15,00000000002b558e
-           00000000002b55c4: 0707                bcr     0,%r7
-           00000000002b55c6: 0707                bcr     0,%r7
-           00000000002b55c8: eb6ff0480024        stmg    %r6,%r15,72(%r15)
-           00000000002b55ce: b90400ef            lgr     %r14,%r15
-Call Trace:
- [<00000000002b55c0>] arch_ftrace_ops_list_func+0x250/0x258
-([<00000000002b55bc>] arch_ftrace_ops_list_func+0x24c/0x258)
- [<0000000000f5f0fc>] ftrace_common+0x1c/0x20
- [<00000000001044f6>] arch_cpu_idle+0x6/0x28
- [<0000000000f4acf6>] default_idle_call+0x76/0x128
- [<00000000001cc374>] do_idle+0xf4/0x1b0
- [<00000000001cc6ce>] cpu_startup_entry+0x36/0x40
- [<0000000000119d00>] smp_start_secondary+0x140/0x150
- [<0000000000f5d2ae>] restart_int_handler+0x6e/0x90
-
-Mark arch_cpu_idle() noinstr like all other architectures with
-CONFIG_ARCH_WANTS_NO_INSTR (should) have it to fix this.
-
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/idle.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_ssif.c |   28 +++++++---------------------
+ 1 file changed, 7 insertions(+), 21 deletions(-)
 
-diff --git a/arch/s390/kernel/idle.c b/arch/s390/kernel/idle.c
-index 4bf1ee293f2b3..a0da049e73609 100644
---- a/arch/s390/kernel/idle.c
-+++ b/arch/s390/kernel/idle.c
-@@ -44,7 +44,7 @@ void account_idle_time_irq(void)
- 	S390_lowcore.last_update_timer = idle->timer_idle_exit;
+--- a/drivers/char/ipmi/ipmi_ssif.c
++++ b/drivers/char/ipmi/ipmi_ssif.c
+@@ -602,7 +602,7 @@ static void ssif_alert(struct i2c_client
+ 		start_get(ssif_info);
  }
  
--void arch_cpu_idle(void)
-+void noinstr arch_cpu_idle(void)
+-static int start_resend(struct ssif_info *ssif_info);
++static void start_resend(struct ssif_info *ssif_info);
+ 
+ static void msg_done_handler(struct ssif_info *ssif_info, int result,
+ 			     unsigned char *data, unsigned int len)
+@@ -909,31 +909,17 @@ static void msg_written_handler(struct s
+ 	if (result < 0) {
+ 		ssif_info->retries_left--;
+ 		if (ssif_info->retries_left > 0) {
+-			if (!start_resend(ssif_info)) {
+-				ssif_inc_stat(ssif_info, send_retries);
+-				return;
+-			}
+-			/* request failed, just return the error. */
+-			ssif_inc_stat(ssif_info, send_errors);
+-
+-			if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
+-				dev_dbg(&ssif_info->client->dev,
+-					"%s: Out of retries\n", __func__);
+-			msg_done_handler(ssif_info, -EIO, NULL, 0);
++			start_resend(ssif_info);
+ 			return;
+ 		}
+ 
+ 		ssif_inc_stat(ssif_info, send_errors);
+ 
+-		/*
+-		 * Got an error on transmit, let the done routine
+-		 * handle it.
+-		 */
+ 		if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
+ 			dev_dbg(&ssif_info->client->dev,
+-				"%s: Error  %d\n", __func__, result);
++				"%s: Out of retries\n", __func__);
+ 
+-		msg_done_handler(ssif_info, result, NULL, 0);
++		msg_done_handler(ssif_info, -EIO, NULL, 0);
+ 		return;
+ 	}
+ 
+@@ -996,7 +982,7 @@ static void msg_written_handler(struct s
+ 	}
+ }
+ 
+-static int start_resend(struct ssif_info *ssif_info)
++static void start_resend(struct ssif_info *ssif_info)
  {
- 	struct s390_idle_data *idle = this_cpu_ptr(&s390_idle);
- 	unsigned long idle_time;
--- 
-2.39.2
-
+ 	int command;
+ 
+@@ -1021,7 +1007,6 @@ static int start_resend(struct ssif_info
+ 
+ 	ssif_i2c_send(ssif_info, msg_written_handler, I2C_SMBUS_WRITE,
+ 		   command, ssif_info->data, I2C_SMBUS_BLOCK_DATA);
+-	return 0;
+ }
+ 
+ static int start_send(struct ssif_info *ssif_info,
+@@ -1036,7 +1021,8 @@ static int start_send(struct ssif_info *
+ 	ssif_info->retries_left = SSIF_SEND_RETRIES;
+ 	memcpy(ssif_info->data + 1, data, len);
+ 	ssif_info->data_len = len;
+-	return start_resend(ssif_info);
++	start_resend(ssif_info);
++	return 0;
+ }
+ 
+ /* Must be called with the message lock held. */
 
 
