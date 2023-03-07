@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD90FBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:16:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDF2C4339B;
-	Tue,  7 Mar 2023 17:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29A1BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:16:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3188DC433D2;
+	Tue,  7 Mar 2023 17:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209380;
-	bh=zw876mn9ig6HaA6vXp11658Mz38ymTCQR0zqRvMkjoE=;
+	s=korg; t=1678209383;
+	bh=PLzM6foLwHtW/crFKwdKer2GK2HnQ95h2CTp8J99KM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vxwccZDcg//nHflN7zH+azQ5AsFO4D7hDh95mE1+t2aOUsV6heVTuYIRnQYO7hCgD
-	 G89JIGkZuE+Xxm8E+HB2uDNQwSb1KyKboYsMFYZvdKBDQNt5UIDS1e+jZjhAnMVCC4
-	 o6HxNweHKwf0ULYPJdCoakX02NQTE6JGpFEh2QME=
+	b=N2F1397F0/FMslwgQji9EhXRpeK4p7bVQX+rm+czTyGMvFKbjCJ0lLrVYRxVWm118
+	 aPWcUFZ35LNI8EbAap1iupskBHYVXIcl1QlF1IXn+gh/zg+niP/k8a44pa2JRlFDC/
+	 i4h+mh6oNm4hl+rS/BMR9F/T3Z6NZZT/z8Hn3PU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	"Erhard F." <erhard_f@mailbox.org>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0201/1001] wifi: rtw89: Add missing check for alloc_workqueue
-Date: Tue,  7 Mar 2023 17:49:33 +0100
-Message-Id: <20230307170030.629451472@linuxfoundation.org>
+Subject: [PATCH 6.2 0202/1001] wifi: rtl8xxxu: Fix memory leaks with RTL8723BU, RTL8192EU
+Date: Tue,  7 Mar 2023 17:49:34 +0100
+Message-Id: <20230307170030.677409298@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,46 +37,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit ed9e6166eb0984b718facb7ca59296098cc3aa64 ]
+[ Upstream commit b39f662ce1648db0b9de32e6a849b098480793cb ]
 
-Add check for the return value of alloc_workqueue since it may return
-NULL pointer.
-Moreover, add destroy_workqueue when rtw89_load_firmware fails.
+The wifi + bluetooth combo chip RTL8723BU can leak memory (especially?)
+when it's connected to a bluetooth audio device. The busy bluetooth
+traffic generates lots of C2H (card to host) messages, which are not
+freed correctly.
 
-Fixes: e3ec7017f6a2 ("rtw89: add Realtek 802.11ax driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+To fix this, move the dev_kfree_skb() call in rtl8xxxu_c2hcmd_callback()
+inside the loop where skb_dequeue() is called.
+
+The RTL8192EU leaks memory because the C2H messages are added to the
+queue and left there forever. (This was fine in the past because it
+probably wasn't sending any C2H messages until commit e542e66b7c2e
+("wifi: rtl8xxxu: gen2: Turn on the rate control"). Since that commit
+it sends a C2H message when the TX rate changes.)
+
+To fix this, delete the check for rf_paths > 1 and the goto. Let the
+function process the C2H messages from RTL8192EU like the ones from
+the other chips.
+
+Theoretically the RTL8188FU could also leak like RTL8723BU, but it
+most likely doesn't send C2H messages frequently enough.
+
+This change was tested with RTL8723BU by Erhard F. I tested it with
+RTL8188FU and RTL8192EU.
+
+Reported-by: Erhard F. <erhard_f@mailbox.org>
+Tested-by: Erhard F. <erhard_f@mailbox.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=215197
+Fixes: e542e66b7c2e ("rtl8xxxu: add bluetooth co-existence support for single antenna")
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230104142901.1611-1-jiasheng@iscas.ac.cn
+Link: https://lore.kernel.org/r/03b099c1-c671-d252-36f4-57b70d721f9d@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index 931aff8b5dc95..e99eccf11c762 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -3124,6 +3124,8 @@ int rtw89_core_init(struct rtw89_dev *rtwdev)
- 	INIT_DELAYED_WORK(&rtwdev->cfo_track_work, rtw89_phy_cfo_track_work);
- 	INIT_DELAYED_WORK(&rtwdev->forbid_ba_work, rtw89_forbid_ba_work);
- 	rtwdev->txq_wq = alloc_workqueue("rtw89_tx_wq", WQ_UNBOUND | WQ_HIGHPRI, 0);
-+	if (!rtwdev->txq_wq)
-+		return -ENOMEM;
- 	spin_lock_init(&rtwdev->ba_lock);
- 	spin_lock_init(&rtwdev->rpwm_lock);
- 	mutex_init(&rtwdev->mutex);
-@@ -3149,6 +3151,7 @@ int rtw89_core_init(struct rtw89_dev *rtwdev)
- 	ret = rtw89_load_firmware(rtwdev);
- 	if (ret) {
- 		rtw89_warn(rtwdev, "no firmware loaded\n");
-+		destroy_workqueue(rtwdev->txq_wq);
- 		return ret;
- 	}
- 	rtw89_ser_init(rtwdev);
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index c8b82c5810111..75d393b5dbe5e 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -5552,9 +5552,6 @@ static void rtl8xxxu_c2hcmd_callback(struct work_struct *work)
+ 	btcoex = &priv->bt_coex;
+ 	rarpt = &priv->ra_report;
+ 
+-	if (priv->rf_paths > 1)
+-		goto out;
+-
+ 	while (!skb_queue_empty(&priv->c2hcmd_queue)) {
+ 		skb = skb_dequeue(&priv->c2hcmd_queue);
+ 
+@@ -5587,10 +5584,9 @@ static void rtl8xxxu_c2hcmd_callback(struct work_struct *work)
+ 		default:
+ 			break;
+ 		}
+-	}
+ 
+-out:
+-	dev_kfree_skb(skb);
++		dev_kfree_skb(skb);
++	}
+ }
+ 
+ static void rtl8723bu_handle_c2h(struct rtl8xxxu_priv *priv,
 -- 
 2.39.2
 
