@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97648BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:45:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1586FC433EF;
-	Tue,  7 Mar 2023 18:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8256BBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:45:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08222C433D2;
+	Tue,  7 Mar 2023 18:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214724;
-	bh=ZhmuM+tYlcBMNTlEU5kEyXztLi9XntWUsjgA9xywWO0=;
+	s=korg; t=1678214727;
+	bh=rNGADHJy3eePnzbqDz9rHr2kAkoEd4vGmPrPiHYlVXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlwjVen1c0+STXT8dIxhVkmdexOgA1Jrcjn3fns9W+TlVf6QHxgTtbgS7rYvDS1oU
-	 /il2OXArbsmjglB1wf3n9wA6XHCivqFf3qCcbRYn2QBIG/xF5xoATb/n4wrqjGBDjg
-	 Fy1wdKsMVOngoejMBdNmRf9yw8hWruu/+JQoSI/g=
+	b=uOCdJAS8o+Seqv/E6nVL77vLuqYYjiKEYq9HN6PKpOwpWFU55GCKapZuellrehRqk
+	 xbPc3/g/kxjQt9lls3HkuWzUdd+xEf0O5bRREaCNOGbKzQz9I1rxbvuVOB+wU15zoV
+	 IBhTGNWJRRLLo0/wFunEuryEyqDOQAFe6OBS9P4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hulk Robot <hulkci@huawei.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Stefan Wahren <stefan.wahren@i2se.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/567] ARM: OMAP1: call platform_device_put() in error case in omap1_dm_timer_init()
-Date: Tue,  7 Mar 2023 17:56:05 +0100
-Message-Id: <20230307165907.183054272@linuxfoundation.org>
+Subject: [PATCH 5.15 030/567] ARM: bcm2835_defconfig: Enable the framebuffer
+Date: Tue,  7 Mar 2023 17:56:06 +0100
+Message-Id: <20230307165907.233382424@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,36 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Stefan Wahren <stefan.wahren@i2se.com>
 
-[ Upstream commit 0414a100d6ab32721efa70ab55524540fdfe0ede ]
+[ Upstream commit afc8dd99840b7fb7190e769a893cda673bc3a907 ]
 
-If platform_device_add() is not called or failed, it should call
-platform_device_put() in error case.
+Booting Linux on a Raspberry Pi based on bcm2835_defconfig there is
+no display activity.
 
-Fixes: 97933d6ced60 ("ARM: OMAP1: dmtimer: conversion to platform devices")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Message-Id: <20220701094602.2365099-1-yangyingliang@huawei.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+Enable CONFIG_FB which is nowadays required for CONFIG_FB_SIMPLE
+and CONFIG_FRAMEBUFFER_CONSOLE.
+
+Fixes: f611b1e7624c ("drm: Avoid circular dependencies for CONFIG_FB")
+Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
+Link: https://lore.kernel.org/r/20230113205842.17051-1-stefan.wahren@i2se.com
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap1/timer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/configs/bcm2835_defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/mach-omap1/timer.c b/arch/arm/mach-omap1/timer.c
-index 0411d5508d637..7046d7fa7a0aa 100644
---- a/arch/arm/mach-omap1/timer.c
-+++ b/arch/arm/mach-omap1/timer.c
-@@ -165,7 +165,7 @@ static int __init omap1_dm_timer_init(void)
- 	kfree(pdata);
- 
- err_free_pdev:
--	platform_device_unregister(pdev);
-+	platform_device_put(pdev);
- 
- 	return ret;
- }
+diff --git a/arch/arm/configs/bcm2835_defconfig b/arch/arm/configs/bcm2835_defconfig
+index 383c632eba7bd..1e244a9287902 100644
+--- a/arch/arm/configs/bcm2835_defconfig
++++ b/arch/arm/configs/bcm2835_defconfig
+@@ -108,6 +108,7 @@ CONFIG_MEDIA_SUPPORT=y
+ CONFIG_MEDIA_CAMERA_SUPPORT=y
+ CONFIG_DRM=y
+ CONFIG_DRM_VC4=y
++CONFIG_FB=y
+ CONFIG_FB_SIMPLE=y
+ CONFIG_FRAMEBUFFER_CONSOLE=y
+ CONFIG_SOUND=y
 -- 
 2.39.2
 
