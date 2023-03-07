@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD07BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:53:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0FBC433D2;
-	Tue,  7 Mar 2023 17:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A184ABA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:53:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06CA0C433D2;
+	Tue,  7 Mar 2023 17:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211622;
-	bh=QZ/J5c16T3DlhoxUHH4nItPt0x0tksRPap4dyxd48Xg=;
+	s=korg; t=1678211625;
+	bh=Lr/k4R5Dqp1IQhSV4OfB8ht77k2DDGyB/TM5qz+sgMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jEwPcX0KwsLwwjmxIBc44dS8CLFQsDet6ESjjnsCtgOsP3kYkVfL8/9Hb0nqmBGvN
-	 8EPXsbbwvhbFg7X0XIyg3IFeEDXfcI79ELo0/xCiPBOyjPuexV11u7pLeGPJYy++h0
-	 8TfZjwtBLuzVJOl01jnEXHNUIN793nZsWCZtDzws=
+	b=afMTjjeGdcdeTdmk7Ag2DBC6zMHvXQ3r0GoJSixao5QEQMAgv12H96mfa344NT0aR
+	 ZLJ3YcPqluxRjAzyZQT97Vd3uOG4zAsRpOCIwFmYXzoo0s8ApOzE8eMxrVOeZb5Bq9
+	 b3GkV2S+GRpZe/Xeg2qP4lKTkgUkioznxpWlyw5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.2 0921/1001] ARM: dts: exynos: correct TMU phandle in Exynos4
-Date: Tue,  7 Mar 2023 18:01:33 +0100
-Message-Id: <20230307170102.056063435@linuxfoundation.org>
+Subject: [PATCH 6.2 0922/1001] ARM: dts: exynos: correct TMU phandle in Odroid XU3 family
+Date: Tue,  7 Mar 2023 18:01:34 +0100
+Message-Id: <20230307170102.104069585@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,30 +35,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 8e4505e617a80f601e2f53a917611777f128f925 upstream.
+commit a3583e92d188ec6c58c7f603ac5e72dd8a11c21a upstream.
 
 TMU node uses 0 as thermal-sensor-cells, thus thermal zone referencing
-it must not have an argument to phandle.
+it must not have an argument to phandle.  This was not critical before,
+but since rework of thermal Devicetree initialization in the
+commit 3fd6d6e2b4e8 ("thermal/of: Rework the thermal device tree
+initialization"), this leads to errors registering thermal zones other
+than first one:
 
-Fixes: 328829a6ad70 ("ARM: dts: define default thermal-zones for exynos4")
+  thermal_sys: cpu0-thermal: Failed to read thermal-sensors cells: -2
+  thermal_sys: Failed to find thermal zone for tmu id=0
+  exynos-tmu 10064000.tmu: Failed to register sensor: -2
+  exynos-tmu: probe of 10064000.tmu failed with error -2
+
+Fixes: f1722d7dd8b8 ("ARM: dts: Define default thermal-zones for exynos5422")
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230209105841.779596-1-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230209105841.779596-6-krzysztof.kozlowski@linaro.org
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/exynos4-cpu-thermal.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/arch/arm/boot/dts/exynos4-cpu-thermal.dtsi
-+++ b/arch/arm/boot/dts/exynos4-cpu-thermal.dtsi
-@@ -10,7 +10,7 @@
- / {
- thermal-zones {
- 	cpu_thermal: cpu-thermal {
--		thermal-sensors = <&tmu 0>;
-+		thermal-sensors = <&tmu>;
- 		polling-delay-passive = <0>;
- 		polling-delay = <0>;
- 		trips {
+--- a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
++++ b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
+@@ -50,7 +50,7 @@
+ 
+ 	thermal-zones {
+ 		cpu0_thermal: cpu0-thermal {
+-			thermal-sensors = <&tmu_cpu0 0>;
++			thermal-sensors = <&tmu_cpu0>;
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 			trips {
+@@ -139,7 +139,7 @@
+ 			};
+ 		};
+ 		cpu1_thermal: cpu1-thermal {
+-			thermal-sensors = <&tmu_cpu1 0>;
++			thermal-sensors = <&tmu_cpu1>;
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 			trips {
+@@ -212,7 +212,7 @@
+ 			};
+ 		};
+ 		cpu2_thermal: cpu2-thermal {
+-			thermal-sensors = <&tmu_cpu2 0>;
++			thermal-sensors = <&tmu_cpu2>;
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 			trips {
+@@ -285,7 +285,7 @@
+ 			};
+ 		};
+ 		cpu3_thermal: cpu3-thermal {
+-			thermal-sensors = <&tmu_cpu3 0>;
++			thermal-sensors = <&tmu_cpu3>;
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 			trips {
+@@ -358,7 +358,7 @@
+ 			};
+ 		};
+ 		gpu_thermal: gpu-thermal {
+-			thermal-sensors = <&tmu_gpu 0>;
++			thermal-sensors = <&tmu_gpu>;
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 			trips {
 
 
