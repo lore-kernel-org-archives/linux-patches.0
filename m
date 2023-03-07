@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D43CBA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:11:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BA4C433D2;
-	Tue,  7 Mar 2023 19:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68805BA52
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:11:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE50AC433D2;
+	Tue,  7 Mar 2023 19:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216316;
-	bh=v5ljIiQWZBHCGZvt3PnAC5FrftRBxOoDU6VDJZi+kH0=;
+	s=korg; t=1678216319;
+	bh=u8BGxXeNeMfTLDftDVe1tr5HTuXiSx3ka5bkHanXLEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b2hYuEonjBkucvhe6urCiYOMER6Lo+YZ59o9j+myS0nzWmLFqPVVSFdMcG1OdOQjc
-	 YmJ3kLzQoTi58sH5lJixjk4YAyqDRfajlJVTC/Y4VxuBU29VbHdIfkcUJ50j13UWSM
-	 PfOwyl6Ews/0fKgVS3hlQQljfVPDlFzBzSq/AgYE=
+	b=bU90sekOqOLkAcVWepQlCFO/TPhJKjsOR1Jiqz6ixzegzr8YOXZXE8Q+qMsSnszn1
+	 iFjHhpg9TLncSXhjV1e/uEW8KxnrwbvIADlKu/Sw0Eb9MVza+CnugyAQvXtkhenQFx
+	 t0fIQiKpAxMo7/ClAfYv3Kt9I/4aPTVsp9crQouo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ding Hui <dinghui@sangfor.com.cn>,
-	James Bottomley <James.Bottomley@HansenPartnership.com>,
+	Tomas Henzl <thenzl@redhat.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 545/567] scsi: ses: Dont attach if enclosure has no components
-Date: Tue,  7 Mar 2023 18:04:41 +0100
-Message-Id: <20230307165929.578555829@linuxfoundation.org>
+Subject: [PATCH 5.15 546/567] scsi: ses: Fix slab-out-of-bounds in ses_enclosure_data_process()
+Date: Tue,  7 Mar 2023 18:04:42 +0100
+Message-Id: <20230307165929.628621416@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,41 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Bottomley <jejb@linux.ibm.com>
+From: Tomas Henzl <thenzl@redhat.com>
 
-commit 3fe97ff3d94934649abb0652028dd7296170c8d0 upstream.
+commit 9b4f5028e493cb353a5c8f5c45073eeea0303abd upstream.
 
-An enclosure with no components can't usefully be operated by the driver
-(since effectively it has nothing to manage), so report the problem and
-don't attach. Not attaching also fixes an oops which could occur if the
-driver tries to manage a zero component enclosure.
+A fix for:
 
-[mkp: Switched to KERN_WARNING since this scenario is common]
+BUG: KASAN: slab-out-of-bounds in ses_enclosure_data_process+0x949/0xe30 [ses]
+Read of size 1 at addr ffff88a1b043a451 by task systemd-udevd/3271
 
-Link: https://lore.kernel.org/r/c5deac044ac409e32d9ad9968ce0dcbc996bfc7a.camel@linux.ibm.com
+Checking after (and before in next loop) addl_desc_ptr[1] is sufficient, we
+expect the size to be sanitized before first access to addl_desc_ptr[1].
+Make sure we don't walk beyond end of page.
+
+Link: https://lore.kernel.org/r/20230202162451.15346-2-thenzl@redhat.com
 Cc: stable@vger.kernel.org
-Reported-by: Ding Hui <dinghui@sangfor.com.cn>
-Signed-off-by: James Bottomley <James.Bottomley@HansenPartnership.com>
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/ses.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/scsi/ses.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 --- a/drivers/scsi/ses.c
 +++ b/drivers/scsi/ses.c
-@@ -704,6 +704,12 @@ static int ses_intf_add(struct device *c
- 		    type_ptr[0] == ENCLOSURE_COMPONENT_ARRAY_DEVICE)
- 			components += type_ptr[1];
+@@ -603,9 +603,11 @@ static void ses_enclosure_data_process(s
+ 			     /* these elements are optional */
+ 			     type_ptr[0] == ENCLOSURE_COMPONENT_SCSI_TARGET_PORT ||
+ 			     type_ptr[0] == ENCLOSURE_COMPONENT_SCSI_INITIATOR_PORT ||
+-			     type_ptr[0] == ENCLOSURE_COMPONENT_CONTROLLER_ELECTRONICS))
++			     type_ptr[0] == ENCLOSURE_COMPONENT_CONTROLLER_ELECTRONICS)) {
+ 				addl_desc_ptr += addl_desc_ptr[1] + 2;
+-
++				if (addl_desc_ptr + 1 >= ses_dev->page10 + ses_dev->page10_len)
++					addl_desc_ptr = NULL;
++			}
+ 		}
  	}
-+
-+	if (components == 0) {
-+		sdev_printk(KERN_WARNING, sdev, "enclosure has no enumerated components\n");
-+		goto err_free;
-+	}
-+
- 	ses_dev->page1 = buf;
- 	ses_dev->page1_len = len;
- 	buf = NULL;
+ 	kfree(buf);
 
 
