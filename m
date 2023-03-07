@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798FABA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:49:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59A7C433D2;
-	Tue,  7 Mar 2023 18:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AE9BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:49:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6443C433D2;
+	Tue,  7 Mar 2023 18:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214941;
-	bh=RrgCGftI/acaQ9WPr/6iB+li70yBZBi46xBicHDRSg4=;
+	s=korg; t=1678214944;
+	bh=BHKUmmH1uQuc+dsRin47O0oj/CdIqLOijuZB5LVslec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WV6rumqoHmB31meFLEFb/c0zqpMpAqRFKM8AcLtXbVU53N21je7vFYpewWFRSovR3
-	 6tcApl1y88MiXQayeIb0AuYVrSWgpZpUDM9N1ZH49C2U8SD9DRqm4mBqzJtjJmDniU
-	 4f6MfSQgVFe/zGdJwloGYxXaLuV8KD+33S07Y1p0=
+	b=Tg+uWbwscyL+rOkMAGwRjlhaChPNVp6qpiybeJVzzXyDyVhGpasbExzcip9pvAUiW
+	 MHuB2HqmrI4wd475/3SmxuHCNsavZbG6ue0qicpuYAwZAgsBYHrLAsG/bt2CWWRyaW
+	 cr4q9nZKyprSyxDVmMvDdshC6wAFAiTle2zU2p4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	syzbot+e008dccab31bd3647609@syzkaller.appspotmail.com,
+	syzbot+6692c72009680f7c4eb2@syzkaller.appspotmail.com,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 100/567] wifi: orinoco: check return value of hermes_write_wordrec()
-Date: Tue,  7 Mar 2023 17:57:16 +0100
-Message-Id: <20230307165910.209301756@linuxfoundation.org>
+Subject: [PATCH 5.15 101/567] wifi: ath9k: htc_hst: free skb in ath9k_htc_rx_msg() if there is no callback function
+Date: Tue,  7 Mar 2023 17:57:17 +0100
+Message-Id: <20230307165910.257627056@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,41 +39,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 1e346cbb096a5351a637ec1992beffbf330547f0 ]
+[ Upstream commit 9b25e3985477ac3f02eca5fc1e0cc6850a3f7e69 ]
 
-There is currently no return check for writing an authentication
-type (HERMES_AUTH_SHARED_KEY or HERMES_AUTH_OPEN). It looks like
-it was accidentally skipped.
+It is stated that ath9k_htc_rx_msg() either frees the provided skb or
+passes its management to another callback function. However, the skb is
+not freed in case there is no another callback function, and Syzkaller was
+able to cause a memory leak. Also minor comment fix.
 
-This patch adds a return check similar to the other checks in
-__orinoco_hw_setup_enc() for hermes_write_wordrec().
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Detected using the static analysis tool - Svace.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221227133306.201356-1-aleksei.kodanev@bell-sw.com
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Reported-by: syzbot+e008dccab31bd3647609@syzkaller.appspotmail.com
+Reported-by: syzbot+6692c72009680f7c4eb2@syzkaller.appspotmail.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230104123546.51427-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intersil/orinoco/hw.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/ath/ath9k/htc_hst.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intersil/orinoco/hw.c b/drivers/net/wireless/intersil/orinoco/hw.c
-index 0aea35c9c11c7..4fcca08e50de2 100644
---- a/drivers/net/wireless/intersil/orinoco/hw.c
-+++ b/drivers/net/wireless/intersil/orinoco/hw.c
-@@ -931,6 +931,8 @@ int __orinoco_hw_setup_enc(struct orinoco_private *priv)
- 			err = hermes_write_wordrec(hw, USER_BAP,
- 					HERMES_RID_CNFAUTHENTICATION_AGERE,
- 					auth_flag);
-+			if (err)
-+				return err;
- 		}
- 		err = hermes_write_wordrec(hw, USER_BAP,
- 					   HERMES_RID_CNFWEPENABLED_AGERE,
+diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
+index ca05b07a45e67..fe62ff668f757 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_hst.c
++++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
+@@ -391,7 +391,7 @@ static void ath9k_htc_fw_panic_report(struct htc_target *htc_handle,
+  * HTC Messages are handled directly here and the obtained SKB
+  * is freed.
+  *
+- * Service messages (Data, WMI) passed to the corresponding
++ * Service messages (Data, WMI) are passed to the corresponding
+  * endpoint RX handlers, which have to free the SKB.
+  */
+ void ath9k_htc_rx_msg(struct htc_target *htc_handle,
+@@ -478,6 +478,8 @@ void ath9k_htc_rx_msg(struct htc_target *htc_handle,
+ 		if (endpoint->ep_callbacks.rx)
+ 			endpoint->ep_callbacks.rx(endpoint->ep_callbacks.priv,
+ 						  skb, epid);
++		else
++			goto invalid;
+ 	}
+ }
+ 
 -- 
 2.39.2
 
