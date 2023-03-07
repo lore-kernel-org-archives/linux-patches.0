@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485C4BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:58:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAAF4C433D2;
-	Tue,  7 Mar 2023 17:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4ADBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:58:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6748C433EF;
+	Tue,  7 Mar 2023 17:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211887;
-	bh=Kf4U3z9o1Jis115Nt0QAsxq4847OoVkrqJJWO984S1M=;
+	s=korg; t=1678211890;
+	bh=QuEI/jPWvODry9fqYjg4qhqLTchsEg42O1nQRYOdlmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nUy7PD/EqMtNizg+d5bsx+5eoEzFKsXapZjSkZJZhKIfsqqO9EoBSTmB0GDJ3FkaE
-	 gidAUJtYwnS4bCTLL7LtPXOj/Mm57MbXmbQpsrWxdwYTGwEN1pVWBJBNP4tuwG7kKV
-	 fIZvwvKGHgZpKWYZWoy+0ExzQ/MgBAAXZpYj6ybY=
+	b=mIfgkTJ0GyiiDvk7HZB46AY801hPFlnIAxQADK77mSDppCAZ1rVfg1XecEXeV23fg
+	 b6CqA5uFGnlAJKIbaZcacVz6G5c/7XDcPos5RU5/ZAxBqNEI9IKAksByPyuIo9/L3n
+	 CEEI/FdfDHXU/VBA40kIVCdo2fXIVQQrjfAgrWgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Sistare <steven.sistare@oracle.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Alex Williamson <alex.williamson@redhat.com>
-Subject: [PATCH 6.2 0993/1001] vfio/type1: restore locked_vm
-Date: Tue,  7 Mar 2023 18:02:45 +0100
-Message-Id: <20230307170105.377939093@linuxfoundation.org>
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Stefan Ghinea <stefan.ghinea@windriver.com>
+Subject: [PATCH 6.1 001/885] HID: asus: use spinlock to protect concurrent accesses
+Date: Tue,  7 Mar 2023 17:48:55 +0100
+Message-Id: <20230307170001.683397773@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
-References: <20230307170022.094103862@linuxfoundation.org>
+In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
+References: <20230307170001.594919529@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,82 +37,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve Sistare <steven.sistare@oracle.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-commit 90fdd158a695d70403163f9a0e4efc5b20f3fd3e upstream.
+commit 315c537068a13f0b5681d33dd045a912f4bece6f upstream.
 
-When a vfio container is preserved across exec or fork-exec, the new
-task's mm has a locked_vm count of 0.  After a dma vaddr is updated using
-VFIO_DMA_MAP_FLAG_VADDR, locked_vm remains 0, and the pinned memory does
-not count against the task's RLIMIT_MEMLOCK.
+asus driver has a worker that may access data concurrently.
+Proct the accesses using a spinlock.
 
-To restore the correct locked_vm count, when VFIO_DMA_MAP_FLAG_VADDR is
-used and the dma's mm has changed, add the dma's locked_vm count to
-the new mm->locked_vm, subject to the rlimit, and subtract it from the
-old mm->locked_vm.
-
-Fixes: c3cbab24db38 ("vfio/type1: implement interfaces to update vaddr")
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/1675184289-267876-5-git-send-email-steven.sistare@oracle.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Fixes: af22a610bc38 ("HID: asus: support backlight on USB keyboards")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-4-7860c5763c38@diag.uniroma1.it
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/vfio_iommu_type1.c |   35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ drivers/hid/hid-asus.c |   22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
---- a/drivers/vfio/vfio_iommu_type1.c
-+++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -1591,6 +1591,38 @@ static bool vfio_iommu_iova_dma_valid(st
- 	return list_empty(iova);
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -98,6 +98,7 @@ struct asus_kbd_leds {
+ 	struct hid_device *hdev;
+ 	struct work_struct work;
+ 	unsigned int brightness;
++	spinlock_t lock;
+ 	bool removed;
+ };
+ 
+@@ -495,7 +496,12 @@ static void asus_kbd_backlight_set(struc
+ {
+ 	struct asus_kbd_leds *led = container_of(led_cdev, struct asus_kbd_leds,
+ 						 cdev);
++	unsigned long flags;
++
++	spin_lock_irqsave(&led->lock, flags);
+ 	led->brightness = brightness;
++	spin_unlock_irqrestore(&led->lock, flags);
++
+ 	schedule_work(&led->work);
  }
  
-+static int vfio_change_dma_owner(struct vfio_dma *dma)
-+{
-+	struct task_struct *task = current->group_leader;
-+	struct mm_struct *mm = current->mm;
-+	long npage = dma->locked_vm;
-+	bool lock_cap;
-+	int ret;
-+
-+	if (mm == dma->mm)
-+		return 0;
-+
-+	lock_cap = capable(CAP_IPC_LOCK);
-+	ret = mm_lock_acct(task, mm, lock_cap, npage);
-+	if (ret)
-+		return ret;
-+
-+	if (mmget_not_zero(dma->mm)) {
-+		mm_lock_acct(dma->task, dma->mm, dma->lock_cap, -npage);
-+		mmput(dma->mm);
-+	}
-+
-+	if (dma->task != task) {
-+		put_task_struct(dma->task);
-+		dma->task = get_task_struct(task);
-+	}
-+	mmdrop(dma->mm);
-+	dma->mm = mm;
-+	mmgrab(dma->mm);
-+	dma->lock_cap = lock_cap;
-+	return 0;
-+}
-+
- static int vfio_dma_do_map(struct vfio_iommu *iommu,
- 			   struct vfio_iommu_type1_dma_map *map)
+@@ -503,8 +509,14 @@ static enum led_brightness asus_kbd_back
  {
-@@ -1640,6 +1672,9 @@ static int vfio_dma_do_map(struct vfio_i
- 			   dma->size != size) {
- 			ret = -EINVAL;
- 		} else {
-+			ret = vfio_change_dma_owner(dma);
-+			if (ret)
-+				goto out_unlock;
- 			dma->vaddr = vaddr;
- 			dma->vaddr_invalid = false;
- 			iommu->vaddr_invalid_count--;
+ 	struct asus_kbd_leds *led = container_of(led_cdev, struct asus_kbd_leds,
+ 						 cdev);
++	enum led_brightness brightness;
++	unsigned long flags;
+ 
+-	return led->brightness;
++	spin_lock_irqsave(&led->lock, flags);
++	brightness = led->brightness;
++	spin_unlock_irqrestore(&led->lock, flags);
++
++	return brightness;
+ }
+ 
+ static void asus_kbd_backlight_work(struct work_struct *work)
+@@ -512,11 +524,14 @@ static void asus_kbd_backlight_work(stru
+ 	struct asus_kbd_leds *led = container_of(work, struct asus_kbd_leds, work);
+ 	u8 buf[] = { FEATURE_KBD_REPORT_ID, 0xba, 0xc5, 0xc4, 0x00 };
+ 	int ret;
++	unsigned long flags;
+ 
+ 	if (led->removed)
+ 		return;
+ 
++	spin_lock_irqsave(&led->lock, flags);
+ 	buf[4] = led->brightness;
++	spin_unlock_irqrestore(&led->lock, flags);
+ 
+ 	ret = asus_kbd_set_report(led->hdev, buf, sizeof(buf));
+ 	if (ret < 0)
+@@ -584,6 +599,7 @@ static int asus_kbd_register_leds(struct
+ 	drvdata->kbd_backlight->cdev.brightness_set = asus_kbd_backlight_set;
+ 	drvdata->kbd_backlight->cdev.brightness_get = asus_kbd_backlight_get;
+ 	INIT_WORK(&drvdata->kbd_backlight->work, asus_kbd_backlight_work);
++	spin_lock_init(&drvdata->kbd_backlight->lock);
+ 
+ 	ret = devm_led_classdev_register(&hdev->dev, &drvdata->kbd_backlight->cdev);
+ 	if (ret < 0) {
+@@ -1119,9 +1135,13 @@ err_stop_hw:
+ static void asus_remove(struct hid_device *hdev)
+ {
+ 	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
++	unsigned long flags;
+ 
+ 	if (drvdata->kbd_backlight) {
++		spin_lock_irqsave(&drvdata->kbd_backlight->lock, flags);
+ 		drvdata->kbd_backlight->removed = true;
++		spin_unlock_irqrestore(&drvdata->kbd_backlight->lock, flags);
++
+ 		cancel_work_sync(&drvdata->kbd_backlight->work);
+ 	}
+ 
 
 
