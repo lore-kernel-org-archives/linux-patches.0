@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D90BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:56:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC6EC433D2;
-	Tue,  7 Mar 2023 17:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1E2BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:56:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59A4C433D2;
+	Tue,  7 Mar 2023 17:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211801;
-	bh=SSnPTObeUNQGCJlJNgm4+SGXbivR3dGwCCQzoKJPELM=;
+	s=korg; t=1678211804;
+	bh=yXf+aPFI/AJXU7tbHHFYrZ37GFUxPR/coCUegubzZiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gCV5h6OcagEyNHGROUiS9lTLymgIF/dD/4Z11HLAPsIcU72Skp6MYmhOTljlJaXLO
-	 Cq+UuWXfYL+WjL2xG6wqITGTAllc21DRWhTBfi9BzNVbk+NceHLJAFOR6UqYPJ+/4L
-	 jehmPz2sqHPIP7a5T0YGV0W9LbS6OKY+A6nrZYYA=
+	b=SbiIcs8Dn7N6EjhyWEvNpTB174EHz8THVBKdrQepPeuUtZcHrbWTbbq6mOlhx2tAM
+	 6DSk6aY8yLj+AXxATK+TAJlT/HOWuoZjtRoQR5AFg/asQIG7SUGa6E1Ec6Q5r9J4z8
+	 1yZS6KsDIES46iIfoR7eb/dJzhIryCOb9q46yfFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.2 0981/1001] PCI: Avoid FLR for AMD FCH AHCI adapters
-Date: Tue,  7 Mar 2023 18:02:33 +0100
-Message-Id: <20230307170104.799164354@linuxfoundation.org>
+	Ravi Kishore Koppuravuri <ravi.kishore.koppuravuri@intel.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.2 0982/1001] PCI/DPC: Await readiness of secondary bus after reset
+Date: Tue,  7 Mar 2023 18:02:34 +0100
+Message-Id: <20230307170104.844482290@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,48 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 63ba51db24ed1b8f8088a897290eb6c036c5435d upstream.
+commit 53b54ad074de1896f8b021615f65b27f557ce874 upstream.
 
-PCI passthrough to VMs does not work with AMD FCH AHCI adapters: the guest
-OS fails to correctly probe devices attached to the controller due to FIS
-communication failures:
+pci_bridge_wait_for_secondary_bus() is called after a Secondary Bus
+Reset, but not after a DPC-induced Hot Reset.
 
-  ata4: softreset failed (1st FIS failed)
-  ...
-  ata4.00: qc timeout after 5000 msecs (cmd 0xec)
-  ata4.00: failed to IDENTIFY (I/O error, err_mask=0x4)
+As a result, the delays prescribed by PCIe r6.0 sec 6.6.1 are not
+observed and devices on the secondary bus may be accessed before
+they're ready.
 
-Forcing the "bus" reset method before unbinding & binding the adapter to
-the vfio-pci driver solves this issue, e.g.:
+One affected device is Intel's Ponte Vecchio HPC GPU.  It comprises a
+PCIe switch whose upstream port is not immediately ready after reset.
+Because its config space is restored too early, it remains in
+D0uninitialized, its subordinate devices remain inaccessible and DPC
+recovery fails with messages such as:
 
-  echo "bus" > /sys/bus/pci/devices/<ID>/reset_method
+  i915 0000:8c:00.0: can't change power state from D3cold to D0 (config space inaccessible)
+  intel_vsec 0000:8e:00.1: can't change power state from D3cold to D0 (config space inaccessible)
+  pcieport 0000:89:02.0: AER: device recovery failed
 
-gives a working guest OS, indicating that the default FLR reset method
-doesn't work correctly.
+Fix it.
 
-Apply quirk_no_flr() to AMD FCH AHCI devices to work around this issue.
-
-Link: https://lore.kernel.org/r/20230128013951.523247-1-damien.lemoal@opensource.wdc.com
-Reported-by: Niklas Cassel <niklas.cassel@wdc.com>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Link: https://lore.kernel.org/r/9f5ff00e1593d8d9a4b452398b98aa14d23fca11.1673769517.git.lukas@wunner.de
+Tested-by: Ravi Kishore Koppuravuri <ravi.kishore.koppuravuri@intel.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/pci.c      |    3 ---
+ drivers/pci/pci.h      |    6 ++++++
+ drivers/pci/pcie/dpc.c |    4 ++--
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5340,6 +5340,7 @@ static void quirk_no_flr(struct pci_dev
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x1487, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x148c, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x149c, quirk_no_flr);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x7901, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1502, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1503, quirk_no_flr);
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -167,9 +167,6 @@ static int __init pcie_port_pm_setup(cha
+ }
+ __setup("pcie_port_pm=", pcie_port_pm_setup);
  
+-/* Time to wait after a reset for device to become responsive */
+-#define PCIE_RESET_READY_POLL_MS 60000
+-
+ /**
+  * pci_bus_max_busnr - returns maximum PCI bus number of given bus' children
+  * @bus: pointer to PCI bus structure to search
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -70,6 +70,12 @@ struct pci_cap_saved_state *pci_find_sav
+  * Reset (PCIe r6.0 sec 5.8).
+  */
+ #define PCI_RESET_WAIT		1000	/* msec */
++/*
++ * Devices may extend the 1 sec period through Request Retry Status completions
++ * (PCIe r6.0 sec 2.3.1).  The spec does not provide an upper limit, but 60 sec
++ * ought to be enough for any device to become responsive.
++ */
++#define PCIE_RESET_READY_POLL_MS 60000	/* msec */
+ 
+ void pci_update_current_state(struct pci_dev *dev, pci_power_t state);
+ void pci_refresh_power_state(struct pci_dev *dev);
+--- a/drivers/pci/pcie/dpc.c
++++ b/drivers/pci/pcie/dpc.c
+@@ -170,8 +170,8 @@ pci_ers_result_t dpc_reset_link(struct p
+ 	pci_write_config_word(pdev, cap + PCI_EXP_DPC_STATUS,
+ 			      PCI_EXP_DPC_STATUS_TRIGGER);
+ 
+-	if (!pcie_wait_for_link(pdev, true)) {
+-		pci_info(pdev, "Data Link Layer Link Active not set in 1000 msec\n");
++	if (pci_bridge_wait_for_secondary_bus(pdev, "DPC",
++					      PCIE_RESET_READY_POLL_MS)) {
+ 		clear_bit(PCI_DPC_RECOVERED, &pdev->priv_flags);
+ 		ret = PCI_ERS_RESULT_DISCONNECT;
+ 	} else {
 
 
