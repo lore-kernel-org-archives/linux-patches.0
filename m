@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205BFBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:56:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D745C433D2;
-	Tue,  7 Mar 2023 17:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8D0BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:56:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75019C4339C;
+	Tue,  7 Mar 2023 17:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211772;
-	bh=yPOuzc+md8jm8p0ca7Ypz54Wmw9F1jEj7lpVEvbTQV4=;
+	s=korg; t=1678211774;
+	bh=SImXVM1pVWr+m/iM8SNl9XtBcn1kvgY9BQxWI+guvak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rAWQodFgt0GXKSqJ2bFQH7/1wICu0mmRVST/x7bKBMxSavDyPJRvNvp+Lm9RuZ334
-	 96lmo1iJYlpmiDqH8A6g47NHPswiNrvFHMOwRYAp66SqZ3ZrRXYlqFkZSv2lzoIDSe
-	 GlTTv18XaIOtNPQ7ydzspBxCxWBz7jiFoV6omlhQ=
+	b=iSHahpwWo55hJWhnogflx9ifeW1gwapssA7EMSskQd04qozZ2Mg2Mz7C5S0ra2RAE
+	 +mKH1yxbdVxDKXuF1trZZWHxZQ9xhNyheRJCP05YbU29aVJ5goZUtpw0qnRPuQbSHL
+	 FhXy9Sk2YMXATYqBIdJAmfsdomx4ME1cUtzhDSMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Greentime Hu <greentime.hu@sifive.com>,
 	Andy Chiu <andy.chiu@sifive.com>,
 	Guo Ren <guoren@kernel.org>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.2 0972/1001] riscv: jump_label: Fixup unaligned arch_static_branch function
-Date: Tue,  7 Mar 2023 18:02:24 +0100
-Message-Id: <20230307170104.402083564@linuxfoundation.org>
+Subject: [PATCH 6.2 0973/1001] riscv: ftrace: Fixup panic by disabling preemption
+Date: Tue,  7 Mar 2023 18:02:25 +0100
+Message-Id: <20230307170104.449974155@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,59 +37,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Chiu <andy.chiu@sifive.com>
 
-commit 9ddfc3cd806081ce1f6c9c2f988cbb031f35d28f upstream.
+commit 8547649981e6631328cd64f583667501ae385531 upstream.
 
-Runtime code patching must be done at a naturally aligned address, or we
-may execute on a partial instruction.
+In RISCV, we must use an AUIPC + JALR pair to encode an immediate,
+forming a jump that jumps to an address over 4K. This may cause errors
+if we want to enable kernel preemption and remove dependency from
+patching code with stop_machine(). For example, if a task was switched
+out on auipc. And, if we changed the ftrace function before it was
+switched back, then it would jump to an address that has updated 11:0
+bits mixing with previous XLEN:12 part.
 
-We have encountered problems traced back to static jump functions during
-the test. We switched the tracer randomly for every 1~5 seconds on a
-dual-core QEMU setup and found the kernel sucking at a static branch
-where it jumps to itself.
+p: patched area performed by dynamic ftrace
+ftrace_prologue:
+p|      REG_S   ra, -SZREG(sp)
+p|      auipc   ra, 0x? ------------> preempted
+					...
+				change ftrace function
+					...
+p|      jalr    -?(ra) <------------- switched back
+p|      REG_L   ra, -SZREG(sp)
+func:
+	xxx
+	ret
 
-The reason is that the static branch was 2-byte but not 4-byte aligned.
-Then, the kernel would patch the instruction, either J or NOP, with two
-half-word stores if the machine does not have efficient unaligned
-accesses. Thus, moments exist where half of the NOP mixes with the other
-half of the J when transitioning the branch. In our particular case, on
-a little-endian machine, the upper half of the NOP was mixed with the
-lower part of the J when enabling the branch, resulting in a jump that
-jumped to itself. Conversely, it would result in a HINT instruction when
-disabling the branch, but it might not be observable.
-
-ARM64 does not have this problem since all instructions must be 4-byte
-aligned.
-
-Fixes: ebc00dde8a97 ("riscv: Add jump-label implementation")
-Link: https://lore.kernel.org/linux-riscv/20220913094252.3555240-6-andy.chiu@sifive.com/
-Reviewed-by: Greentime Hu <greentime.hu@sifive.com>
+Fixes: afc76b8b8011 ("riscv: Using PATCHABLE_FUNCTION_ENTRY instead of MCOUNT")
 Signed-off-by: Andy Chiu <andy.chiu@sifive.com>
 Signed-off-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20230206090440.1255001-1-guoren@kernel.org
+Link: https://lore.kernel.org/r/20230112090603.1295340-2-guoren@kernel.org
 Cc: stable@vger.kernel.org
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/jump_label.h |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/riscv/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/include/asm/jump_label.h
-+++ b/arch/riscv/include/asm/jump_label.h
-@@ -18,6 +18,7 @@ static __always_inline bool arch_static_
- 					       const bool branch)
- {
- 	asm_volatile_goto(
-+		"	.align		2			\n\t"
- 		"	.option push				\n\t"
- 		"	.option norelax				\n\t"
- 		"	.option norvc				\n\t"
-@@ -39,6 +40,7 @@ static __always_inline bool arch_static_
- 						    const bool branch)
- {
- 	asm_volatile_goto(
-+		"	.align		2			\n\t"
- 		"	.option push				\n\t"
- 		"	.option norelax				\n\t"
- 		"	.option norvc				\n\t"
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -138,7 +138,7 @@ config RISCV
+ 	select HAVE_DYNAMIC_FTRACE_WITH_REGS if HAVE_DYNAMIC_FTRACE
+ 	select HAVE_FTRACE_MCOUNT_RECORD if !XIP_KERNEL
+ 	select HAVE_FUNCTION_GRAPH_TRACER
+-	select HAVE_FUNCTION_TRACER if !XIP_KERNEL
++	select HAVE_FUNCTION_TRACER if !XIP_KERNEL && !PREEMPTION
+ 
+ config ARCH_MMAP_RND_BITS_MIN
+ 	default 18 if 64BIT
 
 
