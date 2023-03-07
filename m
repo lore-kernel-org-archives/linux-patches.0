@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA90BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:07:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11159C433D2;
-	Tue,  7 Mar 2023 19:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50A5BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:07:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A9A3C433D2;
+	Tue,  7 Mar 2023 19:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216024;
-	bh=79FmrR3Q82FQL0xE0nOcZGIdgYLCYeHQcd09R0tUx0k=;
+	s=korg; t=1678216027;
+	bh=oZITP4/suD3CmMoRH/Cej2TC4XB7/KH60t3HZyQbbTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZYstl8Xuj56QTuBi8xW/UK/L8Dn7VbkAjJ4+auuhGZiN3EZCkl9+zsXlZJRz3PQ97
-	 HoXI2jF8H2lKJ4L9Dw2O5wmpLqyY8JDskHD0FTBzSkkGwi31+npG1jYYfwBBTsXJWq
-	 XXnKs9+5mGIFJYJ2U62+Bq3zRxBYiRk9jij4IstA=
+	b=aCuZ4oRiXPEt1cXa770TJextS22N9T9zYteGISQYE6tkh2sL9aAI0ZixkOEdIWA+c
+	 szdECKvWy1TITUJfti1lZcwXtwjz0UX0F8bttTLPravjHdWVsOOf+mK6GmEJm3HAAk
+	 kjmqLYLarEjZwJJ/NeAv61X42qgFbDVC9PgQVah4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH 5.15 433/567] ipmi_ssif: Rename idle state and check
-Date: Tue,  7 Mar 2023 18:02:49 +0100
-Message-Id: <20230307165924.673186395@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>
+Subject: [PATCH 5.15 451/567] fs: dlm: move sending fin message into state change handling
+Date: Tue,  7 Mar 2023 18:03:07 +0100
+Message-Id: <20230307165925.458265078@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -33,193 +34,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corey Minyard <cminyard@mvista.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-commit 8230831c43a328c2be6d28c65d3f77e14c59986b upstream.
+commit a58496361802070996f9bd76e941d109c4a85ebd upstream.
 
-Rename the SSIF_IDLE() to IS_SSIF_IDLE(), since that is more clear, and
-rename SSIF_NORMAL to SSIF_IDLE, since that's more accurate.
+This patch moves the send fin handling, which should appear in a specific
+state change, into the state change handling while the per node
+state_lock is held. I experienced issues with other messages because
+we changed the state and a fin message was sent out in a different state.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Fixes: 489d8e559c65 ("fs: dlm: add reliable connection if reconnect")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c |   46 +++++++++++++++++++++---------------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ fs/dlm/midcomms.c |   33 +++++++++------------------------
+ 1 file changed, 9 insertions(+), 24 deletions(-)
 
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -92,7 +92,7 @@
- #define SSIF_WATCH_WATCHDOG_TIMEOUT	msecs_to_jiffies(250)
+--- a/fs/dlm/midcomms.c
++++ b/fs/dlm/midcomms.c
+@@ -394,7 +394,7 @@ static int dlm_send_fin(struct midcomms_
+ 	struct dlm_mhandle *mh;
+ 	char *ppc;
  
- enum ssif_intf_state {
--	SSIF_NORMAL,
-+	SSIF_IDLE,
- 	SSIF_GETTING_FLAGS,
- 	SSIF_GETTING_EVENTS,
- 	SSIF_CLEARING_FLAGS,
-@@ -100,8 +100,8 @@ enum ssif_intf_state {
- 	/* FIXME - add watchdog stuff. */
- };
+-	mh = dlm_midcomms_get_mhandle(node->nodeid, mb_len, GFP_NOFS, &ppc);
++	mh = dlm_midcomms_get_mhandle(node->nodeid, mb_len, GFP_ATOMIC, &ppc);
+ 	if (!mh)
+ 		return -ENOMEM;
  
--#define SSIF_IDLE(ssif)	 ((ssif)->ssif_state == SSIF_NORMAL \
--			  && (ssif)->curr_msg == NULL)
-+#define IS_SSIF_IDLE(ssif) ((ssif)->ssif_state == SSIF_IDLE \
-+			    && (ssif)->curr_msg == NULL)
- 
- /*
-  * Indexes into stats[] in ssif_info below.
-@@ -348,9 +348,9 @@ static void return_hosed_msg(struct ssif
- 
- /*
-  * Must be called with the message lock held.  This will release the
-- * message lock.  Note that the caller will check SSIF_IDLE and start a
-- * new operation, so there is no need to check for new messages to
-- * start in here.
-+ * message lock.  Note that the caller will check IS_SSIF_IDLE and
-+ * start a new operation, so there is no need to check for new
-+ * messages to start in here.
-  */
- static void start_clear_flags(struct ssif_info *ssif_info, unsigned long *flags)
- {
-@@ -367,7 +367,7 @@ static void start_clear_flags(struct ssi
- 
- 	if (start_send(ssif_info, msg, 3) != 0) {
- 		/* Error, just go to normal state. */
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
+@@ -498,8 +498,8 @@ static void dlm_midcomms_receive_buffer(
+ 					node->state = DLM_LAST_ACK;
+ 					pr_debug("switch node %d to state %s case 1\n",
+ 						 node->nodeid, dlm_state_str(node->state));
+-					spin_unlock(&node->state_lock);
+-					goto send_fin;
++					set_bit(DLM_NODE_FLAG_STOP_RX, &node->flags);
++					dlm_send_fin(node, dlm_pas_fin_ack_rcv);
+ 				}
+ 				break;
+ 			case DLM_FIN_WAIT1:
+@@ -542,12 +542,6 @@ static void dlm_midcomms_receive_buffer(
+ 		log_print_ratelimited("ignore dlm msg because seq mismatch, seq: %u, expected: %u, nodeid: %d",
+ 				      seq, node->seq_next, node->nodeid);
  	}
+-
+-	return;
+-
+-send_fin:
+-	set_bit(DLM_NODE_FLAG_STOP_RX, &node->flags);
+-	dlm_send_fin(node, dlm_pas_fin_ack_rcv);
  }
  
-@@ -382,7 +382,7 @@ static void start_flag_fetch(struct ssif
- 	mb[0] = (IPMI_NETFN_APP_REQUEST << 2);
- 	mb[1] = IPMI_GET_MSG_FLAGS_CMD;
- 	if (start_send(ssif_info, mb, 2) != 0)
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- }
- 
- static void check_start_send(struct ssif_info *ssif_info, unsigned long *flags,
-@@ -393,7 +393,7 @@ static void check_start_send(struct ssif
- 
- 		flags = ipmi_ssif_lock_cond(ssif_info, &oflags);
- 		ssif_info->curr_msg = NULL;
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		ipmi_free_smi_msg(msg);
- 	}
-@@ -407,7 +407,7 @@ static void start_event_fetch(struct ssi
- 
- 	msg = ipmi_alloc_smi_msg();
- 	if (!msg) {
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		return;
- 	}
-@@ -430,7 +430,7 @@ static void start_recv_msg_fetch(struct
- 
- 	msg = ipmi_alloc_smi_msg();
- 	if (!msg) {
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		return;
- 	}
-@@ -448,9 +448,9 @@ static void start_recv_msg_fetch(struct
- 
- /*
-  * Must be called with the message lock held.  This will release the
-- * message lock.  Note that the caller will check SSIF_IDLE and start a
-- * new operation, so there is no need to check for new messages to
-- * start in here.
-+ * message lock.  Note that the caller will check IS_SSIF_IDLE and
-+ * start a new operation, so there is no need to check for new
-+ * messages to start in here.
-  */
- static void handle_flags(struct ssif_info *ssif_info, unsigned long *flags)
- {
-@@ -466,7 +466,7 @@ static void handle_flags(struct ssif_inf
- 		/* Events available. */
- 		start_event_fetch(ssif_info, flags);
- 	else {
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 	}
- }
-@@ -568,7 +568,7 @@ static void watch_timeout(struct timer_l
- 	if (ssif_info->watch_timeout) {
- 		mod_timer(&ssif_info->watch_timer,
- 			  jiffies + ssif_info->watch_timeout);
--		if (SSIF_IDLE(ssif_info)) {
-+		if (IS_SSIF_IDLE(ssif_info)) {
- 			start_flag_fetch(ssif_info, flags); /* Releases lock */
- 			return;
- 		}
-@@ -756,7 +756,7 @@ static void msg_done_handler(struct ssif
- 	}
- 
- 	switch (ssif_info->ssif_state) {
--	case SSIF_NORMAL:
-+	case SSIF_IDLE:
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		if (!msg)
+ static struct midcomms_node *
+@@ -1268,11 +1262,11 @@ void dlm_midcomms_remove_member(int node
+ 		case DLM_CLOSE_WAIT:
+ 			/* passive shutdown DLM_LAST_ACK case 2 */
+ 			node->state = DLM_LAST_ACK;
+-			spin_unlock(&node->state_lock);
+-
+ 			pr_debug("switch node %d to state %s case 2\n",
+ 				 node->nodeid, dlm_state_str(node->state));
+-			goto send_fin;
++			set_bit(DLM_NODE_FLAG_STOP_RX, &node->flags);
++			dlm_send_fin(node, dlm_pas_fin_ack_rcv);
++			break;
+ 		case DLM_LAST_ACK:
+ 			/* probably receive fin caught it, do nothing */
  			break;
-@@ -774,7 +774,7 @@ static void msg_done_handler(struct ssif
- 			 * Error fetching flags, or invalid length,
- 			 * just give up for now.
- 			 */
--			ssif_info->ssif_state = SSIF_NORMAL;
-+			ssif_info->ssif_state = SSIF_IDLE;
- 			ipmi_ssif_unlock_cond(ssif_info, flags);
- 			dev_warn(&ssif_info->client->dev,
- 				 "Error getting flags: %d %d, %x\n",
-@@ -809,7 +809,7 @@ static void msg_done_handler(struct ssif
- 				 "Invalid response clearing flags: %x %x\n",
- 				 data[0], data[1]);
- 		}
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
+@@ -1288,12 +1282,6 @@ void dlm_midcomms_remove_member(int node
+ 	spin_unlock(&node->state_lock);
+ 
+ 	srcu_read_unlock(&nodes_srcu, idx);
+-	return;
+-
+-send_fin:
+-	set_bit(DLM_NODE_FLAG_STOP_RX, &node->flags);
+-	dlm_send_fin(node, dlm_pas_fin_ack_rcv);
+-	srcu_read_unlock(&nodes_srcu, idx);
+ }
+ 
+ static void midcomms_node_release(struct rcu_head *rcu)
+@@ -1324,6 +1312,7 @@ static void midcomms_shutdown(struct mid
+ 		node->state = DLM_FIN_WAIT1;
+ 		pr_debug("switch node %d to state %s case 2\n",
+ 			 node->nodeid, dlm_state_str(node->state));
++		dlm_send_fin(node, dlm_act_fin_ack_rcv);
  		break;
- 
-@@ -887,7 +887,7 @@ static void msg_done_handler(struct ssif
+ 	case DLM_CLOSED:
+ 		/* we have what we want */
+@@ -1337,12 +1326,8 @@ static void midcomms_shutdown(struct mid
  	}
+ 	spin_unlock(&node->state_lock);
  
- 	flags = ipmi_ssif_lock_cond(ssif_info, &oflags);
--	if (SSIF_IDLE(ssif_info) && !ssif_info->stopping) {
-+	if (IS_SSIF_IDLE(ssif_info) && !ssif_info->stopping) {
- 		if (ssif_info->req_events)
- 			start_event_fetch(ssif_info, flags);
- 		else if (ssif_info->req_flags)
-@@ -1032,7 +1032,7 @@ static void start_next_msg(struct ssif_i
- 	unsigned long oflags;
+-	if (node->state == DLM_FIN_WAIT1) {
+-		dlm_send_fin(node, dlm_act_fin_ack_rcv);
+-
+-		if (DLM_DEBUG_FENCE_TERMINATION)
+-			msleep(5000);
+-	}
++	if (DLM_DEBUG_FENCE_TERMINATION)
++		msleep(5000);
  
-  restart:
--	if (!SSIF_IDLE(ssif_info)) {
-+	if (!IS_SSIF_IDLE(ssif_info)) {
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		return;
- 	}
-@@ -1255,7 +1255,7 @@ static void shutdown_ssif(void *send_inf
- 	dev_set_drvdata(&ssif_info->client->dev, NULL);
- 
- 	/* make sure the driver is not looking for flags any more. */
--	while (ssif_info->ssif_state != SSIF_NORMAL)
-+	while (ssif_info->ssif_state != SSIF_IDLE)
- 		schedule_timeout(1);
- 
- 	ssif_info->stopping = true;
-@@ -1827,7 +1827,7 @@ static int ssif_probe(struct i2c_client
- 	}
- 
- 	spin_lock_init(&ssif_info->lock);
--	ssif_info->ssif_state = SSIF_NORMAL;
-+	ssif_info->ssif_state = SSIF_IDLE;
- 	timer_setup(&ssif_info->retry_timer, retry_timeout, 0);
- 	timer_setup(&ssif_info->watch_timer, watch_timeout, 0);
- 
+ 	/* wait for other side dlm + fin */
+ 	ret = wait_event_timeout(node->shutdown_wait,
 
 
