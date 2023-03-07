@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75963BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:42:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECCC1C433D2;
-	Tue,  7 Mar 2023 17:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D80BBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:42:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F856C4339B;
+	Tue,  7 Mar 2023 17:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210941;
-	bh=a0cFAltp+eLQqk0uTpKIVk/zAurYpeThSXjM+yNoyrk=;
+	s=korg; t=1678210944;
+	bh=dX2NPGi4U+YhtsEQrRQyN91TLwfRtnsI1A/pYXW35Ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yoxt/D23bwedkpzIEYe7lomIC6k1N032N8/OUFbYVlugkowo7IB2w5v5RcZFB42gm
-	 FnBmPFQVOG8nrx60W2xLuMpIvXOlIwHSOzzHVfm3qNiAouZbEHUhcLkqGoFx1A9/gX
-	 dRf+MNE8dl+qZ19GhMvPgarYwaKCqAVzpZ1GSIpo=
+	b=xGqvQ6P0CmGJEz6VxU0i2FQGWfpKKVs+ZIdRc2uUt6TiELuC46y1QPQKwzGM1VgH3
+	 r+KDI8uEX+MzMKP4ac0wY7P8JGpx9j8GTTviVViCUNr+RAkOBYE+6aqFYpV28/C3nu
+	 J51/8zSJGIl/OocXJd8RRpGQ3ettrqlTCvy1ZWiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mia Kanashi <chad@redpilled.dev>,
-	Andreas Grosse <andig.mail@t-online.de>,
 	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
 	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0704/1001] HID: uclogic: Add battery quirk
-Date: Tue,  7 Mar 2023 17:57:56 +0100
-Message-Id: <20230307170052.165173407@linuxfoundation.org>
+Subject: [PATCH 6.2 0705/1001] HID: uclogic: Add support for XP-PEN Deco Pro SW
+Date: Tue,  7 Mar 2023 17:57:57 +0100
+Message-Id: <20230307170052.214019222@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -39,53 +37,82 @@ Content-Transfer-Encoding: 8bit
 
 From: José Expósito <jose.exposito89@gmail.com>
 
-[ Upstream commit f60c377f52de37f8705c5fc6d57737fdaf309ff9 ]
+[ Upstream commit 7744ca571af55b794595cff2da9d51a26904998f ]
 
-Some UGEE v2 tablets have a wireless version with an internal battery
-and their firmware is able to report their battery level.
+The XP-PEN Deco Pro SW is a UGEE v2 device with a frame with 8 buttons,
+a bitmap dial and a mouse; however, the UCLOGIC_MOUSE_FRAME_QUIRK is
+required because it reports an incorrect frame type. Its pen has 2
+buttons, supports tilt and pressure.
 
-However, there was not found a field on their descriptor indicating
-whether the tablet has battery or not, making it mandatory to classify
-such devices through the UCLOGIC_BATTERY_QUIRK quirk.
+It can be connected using a USB cable or, to use it in wireless mode,
+using a USB Bluetooth dongle. When it is connected in wireless mode the
+device battery is used to power it.
 
-Tested-by: Mia Kanashi <chad@redpilled.dev>
-Tested-by: Andreas Grosse <andig.mail@t-online.de>
+All the pieces to support it are already in place. Add its ID and
+quirks in order to support the device.
+
 Signed-off-by: José Expósito <jose.exposito89@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-uclogic-params.c | 5 +++++
- drivers/hid/hid-uclogic-params.h | 1 +
- 2 files changed, 6 insertions(+)
+ drivers/hid/hid-ids.h            | 1 +
+ drivers/hid/hid-input.c          | 2 ++
+ drivers/hid/hid-uclogic-core.c   | 3 +++
+ drivers/hid/hid-uclogic-params.c | 2 ++
+ 4 files changed, 8 insertions(+)
 
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 9e36b4cd905ee..c662994d73381 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -1300,6 +1300,7 @@
+ #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO01_V2	0x0905
+ #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_L	0x0935
+ #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_PRO_S	0x0909
++#define USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_PRO_SW	0x0933
+ #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_STAR06	0x0078
+ #define USB_DEVICE_ID_UGEE_TABLET_G5		0x0074
+ #define USB_DEVICE_ID_UGEE_TABLET_EX07S		0x0071
+diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
+index bd0cfccfb7a25..0f8a5152e48b1 100644
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -378,6 +378,8 @@ static const struct hid_device_id hid_battery_quirks[] = {
+ 	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE, USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_L),
+ 	  HID_BATTERY_QUIRK_AVOID_QUERY },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE, USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_PRO_SW),
++	  HID_BATTERY_QUIRK_AVOID_QUERY },
+ 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_15),
+ 	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_15T_DR100),
+diff --git a/drivers/hid/hid-uclogic-core.c b/drivers/hid/hid-uclogic-core.c
+index 739984b8fa1b8..7c05d38d3afad 100644
+--- a/drivers/hid/hid-uclogic-core.c
++++ b/drivers/hid/hid-uclogic-core.c
+@@ -513,6 +513,9 @@ static const struct hid_device_id uclogic_devices[] = {
+ 				USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_L) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE,
+ 				USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_PRO_S) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE,
++				USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_PRO_SW),
++		.driver_data = UCLOGIC_MOUSE_FRAME_QUIRK | UCLOGIC_BATTERY_QUIRK },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE,
+ 				USB_DEVICE_ID_UGEE_XPPEN_TABLET_STAR06) },
+ 	{ }
 diff --git a/drivers/hid/hid-uclogic-params.c b/drivers/hid/hid-uclogic-params.c
-index e052538a62fb3..23624d5b07b5a 100644
+index 23624d5b07b5a..492a30f83575a 100644
 --- a/drivers/hid/hid-uclogic-params.c
 +++ b/drivers/hid/hid-uclogic-params.c
-@@ -1222,6 +1222,11 @@ static int uclogic_params_ugee_v2_init_frame_mouse(struct uclogic_params *p)
-  */
- static bool uclogic_params_ugee_v2_has_battery(struct hid_device *hdev)
- {
-+	struct uclogic_drvdata *drvdata = hid_get_drvdata(hdev);
-+
-+	if (drvdata->quirks & UCLOGIC_BATTERY_QUIRK)
-+		return true;
-+
- 	/* The XP-PEN Deco LW vendor, product and version are identical to the
- 	 * Deco L. The only difference reported by their firmware is the product
- 	 * name. Add a quirk to support battery reporting on the wireless
-diff --git a/drivers/hid/hid-uclogic-params.h b/drivers/hid/hid-uclogic-params.h
-index 10a05c7fd9398..b0e7f3807939b 100644
---- a/drivers/hid/hid-uclogic-params.h
-+++ b/drivers/hid/hid-uclogic-params.h
-@@ -20,6 +20,7 @@
- #include <linux/hid.h>
- 
- #define UCLOGIC_MOUSE_FRAME_QUIRK	BIT(0)
-+#define UCLOGIC_BATTERY_QUIRK		BIT(1)
- 
- /* Types of pen in-range reporting */
- enum uclogic_params_pen_inrange {
+@@ -1671,6 +1671,8 @@ int uclogic_params_init(struct uclogic_params *params,
+ 		     USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_L):
+ 	case VID_PID(USB_VENDOR_ID_UGEE,
+ 		     USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_PRO_S):
++	case VID_PID(USB_VENDOR_ID_UGEE,
++		     USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_PRO_SW):
+ 		rc = uclogic_params_ugee_v2_init(&p, hdev);
+ 		if (rc != 0)
+ 			goto cleanup;
 -- 
 2.39.2
 
