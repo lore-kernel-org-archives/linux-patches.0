@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82932BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:37:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E80C4339B;
-	Tue,  7 Mar 2023 18:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6A2BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:37:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFACDC4339B;
+	Tue,  7 Mar 2023 18:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214230;
-	bh=xcrRjS4mv8SOU/BI53iJoGghNnS2rHgwDiF9lAMRO/I=;
+	s=korg; t=1678214233;
+	bh=u0KnnS8zf7G4eI8Q15FyLvP8DLzpXock4Y+8r2fLPb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SG3FpwYW5BuaGBgrxh2ev5D0KiQA1i5baEYOx/2yov+1irZMnlO2MfNAuFfX2ae79
-	 aZyniEk/X46PiAaOTML57qYO7BNIPAyWBeqSYPa2UwzmhIW3/st0C89yLfwZMlj6pK
-	 tAVN4arhzGd/tDSxDCGD3JurGOAEjg3lY+7OsZQs=
+	b=gszSK9hIRCIlyaMVsHJHpw2tYw696tBiSTCvR2FTrlDKYx/au2FiWNEs2W8IMTklY
+	 4N7YN2t10H8VHkMI6YV1VG6V1oVXEhME+lcfa2qhCWmQBCbgB74rMY8wjV1OCL+MXS
+	 wBwK9FjRRg2lO47zrvrix9PbbXnElBOB25Q6HzTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Shuah Khan <shuah@kernel.org>,
-	linux-kselftest@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.1 763/885] selftests: sync: Fix incorrect kernel headers search path
-Date: Tue,  7 Mar 2023 18:01:37 +0100
-Message-Id: <20230307170035.086155463@linuxfoundation.org>
+	Yang Jihong <yangjihong1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.1 735/885] x86/kprobes: Fix arch_check_optimized_kprobe check within optimized_kprobe range
+Date: Tue,  7 Mar 2023 18:01:09 +0100
+Message-Id: <20230307170033.908323684@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,36 +34,144 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-commit 5ad0c8e42c13623bd996e19ce76f2596e16eb0db upstream.
+commit f1c97a1b4ef709e3f066f82e3ba3108c3b133ae6 upstream.
 
-Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
-building against kernel headers from the build environment in scenarios
-where kernel headers are installed into a specific output directory
-(O=...).
+When arch_prepare_optimized_kprobe calculating jump destination address,
+it copies original instructions from jmp-optimized kprobe (see
+__recover_optprobed_insn), and calculated based on length of original
+instruction.
 
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: linux-kselftest@vger.kernel.org
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: <stable@vger.kernel.org>  # 5.18+
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+arch_check_optimized_kprobe does not check KPROBE_FLAG_OPTIMATED when
+checking whether jmp-optimized kprobe exists.
+As a result, setup_detour_execution may jump to a range that has been
+overwritten by jump destination address, resulting in an inval opcode error.
+
+For example, assume that register two kprobes whose addresses are
+<func+9> and <func+11> in "func" function.
+The original code of "func" function is as follows:
+
+   0xffffffff816cb5e9 <+9>:     push   %r12
+   0xffffffff816cb5eb <+11>:    xor    %r12d,%r12d
+   0xffffffff816cb5ee <+14>:    test   %rdi,%rdi
+   0xffffffff816cb5f1 <+17>:    setne  %r12b
+   0xffffffff816cb5f5 <+21>:    push   %rbp
+
+1.Register the kprobe for <func+11>, assume that is kp1, corresponding optimized_kprobe is op1.
+  After the optimization, "func" code changes to:
+
+   0xffffffff816cc079 <+9>:     push   %r12
+   0xffffffff816cc07b <+11>:    jmp    0xffffffffa0210000
+   0xffffffff816cc080 <+16>:    incl   0xf(%rcx)
+   0xffffffff816cc083 <+19>:    xchg   %eax,%ebp
+   0xffffffff816cc084 <+20>:    (bad)
+   0xffffffff816cc085 <+21>:    push   %rbp
+
+Now op1->flags == KPROBE_FLAG_OPTIMATED;
+
+2. Register the kprobe for <func+9>, assume that is kp2, corresponding optimized_kprobe is op2.
+
+register_kprobe(kp2)
+  register_aggr_kprobe
+    alloc_aggr_kprobe
+      __prepare_optimized_kprobe
+        arch_prepare_optimized_kprobe
+          __recover_optprobed_insn    // copy original bytes from kp1->optinsn.copied_insn,
+                                      // jump address = <func+14>
+
+3. disable kp1:
+
+disable_kprobe(kp1)
+  __disable_kprobe
+    ...
+    if (p == orig_p || aggr_kprobe_disabled(orig_p)) {
+      ret = disarm_kprobe(orig_p, true)       // add op1 in unoptimizing_list, not unoptimized
+      orig_p->flags |= KPROBE_FLAG_DISABLED;  // op1->flags ==  KPROBE_FLAG_OPTIMATED | KPROBE_FLAG_DISABLED
+    ...
+
+4. unregister kp2
+__unregister_kprobe_top
+  ...
+  if (!kprobe_disabled(ap) && !kprobes_all_disarmed) {
+    optimize_kprobe(op)
+      ...
+      if (arch_check_optimized_kprobe(op) < 0) // because op1 has KPROBE_FLAG_DISABLED, here not return
+        return;
+      p->kp.flags |= KPROBE_FLAG_OPTIMIZED;   //  now op2 has KPROBE_FLAG_OPTIMIZED
+  }
+
+"func" code now is:
+
+   0xffffffff816cc079 <+9>:     int3
+   0xffffffff816cc07a <+10>:    push   %rsp
+   0xffffffff816cc07b <+11>:    jmp    0xffffffffa0210000
+   0xffffffff816cc080 <+16>:    incl   0xf(%rcx)
+   0xffffffff816cc083 <+19>:    xchg   %eax,%ebp
+   0xffffffff816cc084 <+20>:    (bad)
+   0xffffffff816cc085 <+21>:    push   %rbp
+
+5. if call "func", int3 handler call setup_detour_execution:
+
+  if (p->flags & KPROBE_FLAG_OPTIMIZED) {
+    ...
+    regs->ip = (unsigned long)op->optinsn.insn + TMPL_END_IDX;
+    ...
+  }
+
+The code for the destination address is
+
+   0xffffffffa021072c:  push   %r12
+   0xffffffffa021072e:  xor    %r12d,%r12d
+   0xffffffffa0210731:  jmp    0xffffffff816cb5ee <func+14>
+
+However, <func+14> is not a valid start instruction address. As a result, an error occurs.
+
+Link: https://lore.kernel.org/all/20230216034247.32348-3-yangjihong1@huawei.com/
+
+Fixes: f66c0447cca1 ("kprobes: Set unoptimized flag after unoptimizing code")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Cc: stable@vger.kernel.org
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/sync/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/kprobes/opt.c |    2 +-
+ include/linux/kprobes.h       |    1 +
+ kernel/kprobes.c              |    2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/sync/Makefile
-+++ b/tools/testing/selftests/sync/Makefile
-@@ -1,6 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- CFLAGS += -O2 -g -std=gnu89 -pthread -Wall -Wextra
--CFLAGS += -I../../../../usr/include/
-+CFLAGS += $(KHDR_INCLUDES)
- LDFLAGS += -pthread
+--- a/arch/x86/kernel/kprobes/opt.c
++++ b/arch/x86/kernel/kprobes/opt.c
+@@ -353,7 +353,7 @@ int arch_check_optimized_kprobe(struct o
  
- .PHONY: all clean
+ 	for (i = 1; i < op->optinsn.size; i++) {
+ 		p = get_kprobe(op->kp.addr + i);
+-		if (p && !kprobe_disabled(p))
++		if (p && !kprobe_disarmed(p))
+ 			return -EEXIST;
+ 	}
+ 
+--- a/include/linux/kprobes.h
++++ b/include/linux/kprobes.h
+@@ -379,6 +379,7 @@ DEFINE_INSN_CACHE_OPS(optinsn);
+ 
+ extern void wait_for_kprobe_optimizer(void);
+ bool optprobe_queued_unopt(struct optimized_kprobe *op);
++bool kprobe_disarmed(struct kprobe *p);
+ #else /* !CONFIG_OPTPROBES */
+ static inline void wait_for_kprobe_optimizer(void) { }
+ #endif /* CONFIG_OPTPROBES */
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -458,7 +458,7 @@ static inline int kprobe_optready(struct
+ }
+ 
+ /* Return true if the kprobe is disarmed. Note: p must be on hash list */
+-static inline bool kprobe_disarmed(struct kprobe *p)
++bool kprobe_disarmed(struct kprobe *p)
+ {
+ 	struct optimized_kprobe *op;
+ 
 
 
