@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756D8BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B72C433D2;
-	Tue,  7 Mar 2023 17:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F81FBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07526C4339B;
+	Tue,  7 Mar 2023 17:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210146;
-	bh=QfYdUlt/Ld29B1iV2/oLizqH7hxUCn+kXz4e7A6sfX4=;
+	s=korg; t=1678210149;
+	bh=JL8FWiKFOfWk3h+VT1ug0sPxierfnzzUvRYELMr4JVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UCi3X0yqmiwbaPIasDASOkNyAQtj3QeDaMZzDQmQ8Vwf6h6OZJ938F57jIGbzaA4n
-	 VD2n9HXuOYBKu2yqWxC8yqJCfyXBwnYJMfgL8203cW3R0tEFQd68Zgu7oklx31Fvnd
-	 Wp+U5tuhOZ1zC9nLUgXecrIzjhZrtwmxjisE9MfI=
+	b=EMuPpmRzks3ueigl3Bqs1yrkz+3+7mUYnfljrfEE/F6AnFwY8T4z+RYBroQkLD0Vm
+	 kFokWXvtuLnIj6TtvL39AZ9UwAxuNWOyuwa5mp1HyWFxi1e03wdbqaupBgwVXPiv6+
+	 V/TtYidERND53cz0RVZLZJ254UD9/xLyF/CR352Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orlando Chamberlain <orlandoch.dev@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Asahi Lina <lina@asahilina.net>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0447/1001] ALSA: hda/hdmi: Register with vga_switcheroo on Dual GPU Macbooks
-Date: Tue,  7 Mar 2023 17:53:39 +0100
-Message-Id: <20230307170040.753617555@linuxfoundation.org>
+Subject: [PATCH 6.2 0448/1001] drm/shmem-helper: Fix locking for drm_gem_shmem_get_pages_sgt()
+Date: Tue,  7 Mar 2023 17:53:40 +0100
+Message-Id: <20230307170040.790340646@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,56 +35,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Orlando Chamberlain <orlandoch.dev@gmail.com>
+From: Asahi Lina <lina@asahilina.net>
 
-[ Upstream commit 5beb5627a2481aade9aa630b7ebb7f99442321b6 ]
+[ Upstream commit ddddedaa0db99481c5e5abe628ad54f65e8765bc ]
 
-Commit 586bc4aab878 ("ALSA: hda/hdmi - fix vgaswitcheroo detection for
-AMD") caused only AMD gpu's with PX to have their audio component register
-with vga_switcheroo. This meant that Apple Macbooks with apple-gmux as the
-gpu switcher no longer had the audio client registering, so when the gpu is
-powered off by vga_switcheroo snd_hda_intel is unaware that it should have
-suspended the device:
+Other functions touching shmem->sgt take the pages lock, so do that here
+too. drm_gem_shmem_get_pages() & co take the same lock, so move to the
+_locked() variants to avoid recursive locking.
 
-amdgpu: switched off
-snd_hda_intel 0000:03:00.1:
-    Unable to change power state from D3hot to D0, device inaccessible
-snd_hda_intel 0000:03:00.1: CORB reset timeout#2, CORBRP = 65535
+Discovered while auditing locking to write the Rust abstractions.
 
-To resolve this, we use apple_gmux_detect() and register a
-vga_switcheroo audio client when apple-gmux is detected.
-
-Fixes: 586bc4aab878 ("ALSA: hda/hdmi - fix vgaswitcheroo detection for AMD")
-Link: https://lore.kernel.org/all/20230210044826.9834-9-orlandoch.dev@gmail.com/
-Signed-off-by: Orlando Chamberlain <orlandoch.dev@gmail.com>
-Link: https://lore.kernel.org/r/20230216103450.12925-1-orlandoch.dev@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 2194a63a818d ("drm: Add library for shmem backed GEM objects")
+Fixes: 4fa3d66f132b ("drm/shmem: Do dma_unmap_sg before purging pages")
+Signed-off-by: Asahi Lina <lina@asahilina.net>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230205125124.2260-1-lina@asahilina.net
+(cherry picked from commit aa8c85affe3facd3842c8912186623415931cc72)
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_gem_shmem_helper.c | 54 ++++++++++++++++----------
+ 1 file changed, 34 insertions(+), 20 deletions(-)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 2dbc082076f69..81c4a45254ff2 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -50,6 +50,7 @@
- #include <sound/intel-dsp-config.h>
- #include <linux/vgaarb.h>
- #include <linux/vga_switcheroo.h>
-+#include <linux/apple-gmux.h>
- #include <linux/firmware.h>
- #include <sound/hda_codec.h>
- #include "hda_controller.h"
-@@ -1466,7 +1467,7 @@ static struct pci_dev *get_bound_vga(struct pci_dev *pci)
- 				 * vgaswitcheroo.
- 				 */
- 				if (((p->class >> 16) == PCI_BASE_CLASS_DISPLAY) &&
--				    atpx_present())
-+				    (atpx_present() || apple_gmux_detect(NULL, NULL)))
- 					return p;
- 				pci_dev_put(p);
- 			}
+diff --git a/drivers/gpu/drm/drm_gem_shmem_helper.c b/drivers/gpu/drm/drm_gem_shmem_helper.c
+index b602cd72a1205..2c559b310cad3 100644
+--- a/drivers/gpu/drm/drm_gem_shmem_helper.c
++++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
+@@ -681,23 +681,7 @@ struct sg_table *drm_gem_shmem_get_sg_table(struct drm_gem_shmem_object *shmem)
+ }
+ EXPORT_SYMBOL_GPL(drm_gem_shmem_get_sg_table);
+ 
+-/**
+- * drm_gem_shmem_get_pages_sgt - Pin pages, dma map them, and return a
+- *				 scatter/gather table for a shmem GEM object.
+- * @shmem: shmem GEM object
+- *
+- * This function returns a scatter/gather table suitable for driver usage. If
+- * the sg table doesn't exist, the pages are pinned, dma-mapped, and a sg
+- * table created.
+- *
+- * This is the main function for drivers to get at backing storage, and it hides
+- * and difference between dma-buf imported and natively allocated objects.
+- * drm_gem_shmem_get_sg_table() should not be directly called by drivers.
+- *
+- * Returns:
+- * A pointer to the scatter/gather table of pinned pages or errno on failure.
+- */
+-struct sg_table *drm_gem_shmem_get_pages_sgt(struct drm_gem_shmem_object *shmem)
++static struct sg_table *drm_gem_shmem_get_pages_sgt_locked(struct drm_gem_shmem_object *shmem)
+ {
+ 	struct drm_gem_object *obj = &shmem->base;
+ 	int ret;
+@@ -708,7 +692,7 @@ struct sg_table *drm_gem_shmem_get_pages_sgt(struct drm_gem_shmem_object *shmem)
+ 
+ 	WARN_ON(obj->import_attach);
+ 
+-	ret = drm_gem_shmem_get_pages(shmem);
++	ret = drm_gem_shmem_get_pages_locked(shmem);
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+@@ -730,10 +714,40 @@ struct sg_table *drm_gem_shmem_get_pages_sgt(struct drm_gem_shmem_object *shmem)
+ 	sg_free_table(sgt);
+ 	kfree(sgt);
+ err_put_pages:
+-	drm_gem_shmem_put_pages(shmem);
++	drm_gem_shmem_put_pages_locked(shmem);
+ 	return ERR_PTR(ret);
+ }
+-EXPORT_SYMBOL_GPL(drm_gem_shmem_get_pages_sgt);
++
++/**
++ * drm_gem_shmem_get_pages_sgt - Pin pages, dma map them, and return a
++ *				 scatter/gather table for a shmem GEM object.
++ * @shmem: shmem GEM object
++ *
++ * This function returns a scatter/gather table suitable for driver usage. If
++ * the sg table doesn't exist, the pages are pinned, dma-mapped, and a sg
++ * table created.
++ *
++ * This is the main function for drivers to get at backing storage, and it hides
++ * and difference between dma-buf imported and natively allocated objects.
++ * drm_gem_shmem_get_sg_table() should not be directly called by drivers.
++ *
++ * Returns:
++ * A pointer to the scatter/gather table of pinned pages or errno on failure.
++ */
++struct sg_table *drm_gem_shmem_get_pages_sgt(struct drm_gem_shmem_object *shmem)
++{
++	int ret;
++	struct sg_table *sgt;
++
++	ret = mutex_lock_interruptible(&shmem->pages_lock);
++	if (ret)
++		return ERR_PTR(ret);
++	sgt = drm_gem_shmem_get_pages_sgt_locked(shmem);
++	mutex_unlock(&shmem->pages_lock);
++
++	return sgt;
++}
++EXPORT_SYMBOL(drm_gem_shmem_get_pages_sgt);
+ 
+ /**
+  * drm_gem_shmem_prime_import_sg_table - Produce a shmem GEM object from
 -- 
 2.39.2
 
