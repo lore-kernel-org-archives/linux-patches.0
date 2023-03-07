@@ -1,32 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09EACBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:40:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB96C4339C;
-	Tue,  7 Mar 2023 18:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC18BBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:40:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD50C433D2;
+	Tue,  7 Mar 2023 18:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214443;
-	bh=SEtI9MUGDj0gwgKuv4oQRN4d4R7IA/Dn2Rz+Z8uaBO0=;
+	s=korg; t=1678214446;
+	bh=gq02DswUiICYcpZAVT4by6ofriE+TCB6Gbc1Uux5ID4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bKhTlRlCAMJ5/+t371JFt8pJFVsltQl/WEerAsJ/2pWb2+q2+k6U5BE7JKWhH+GdD
-	 PibKXMqGBiLCnlMrCxQqp4GOWwpcTxxOvIjsfVOxYeuPhwlK9XzSQ4jaQo2yWo57vy
-	 4kkypKKvKeGwymV64ia2fkTJ1WsYkuJFPDFfqGNw=
+	b=osGgO1SxVFbjGbBcq6axf9fZtLfjskB9K83ErreN7UTPfIpdQ4CKIWz4p8TVsAs9T
+	 RmKIPs+04UBd0Gb8JL4xgLTicsv1JfKI6fmysRqDqgKLrMwbvbztcJ1SJf6E3o4PiQ
+	 okNHAWw+oV4q4N1Eq90jX0lcwlGCamrqEZu8YANY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naoya Horiguchi <naoya.horiguchi@nec.com>,
-	David Hildenbrand <david@redhat.com>,
-	Hugh Dickins <hughd@google.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 824/885] mm/hwpoison: convert TTU_IGNORE_HWPOISON to TTU_HWPOISON
-Date: Tue,  7 Mar 2023 18:02:38 +0100
-Message-Id: <20230307170037.672858407@linuxfoundation.org>
+	Richard Henderson <rth@twiddle.net>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 6.1 825/885] alpha: fix FEN fault handling
+Date: Tue,  7 Mar 2023 18:02:39 +0100
+Message-Id: <20230307170037.716683808@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -40,106 +34,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Naoya Horiguchi <naoya.horiguchi@nec.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit 6da6b1d4a7df8c35770186b53ef65d388398e139 upstream.
+commit 977a3009547dad4a5bc95d91be4a58c9f7eedac0 upstream.
 
-After a memory error happens on a clean folio, a process unexpectedly
-receives SIGBUS when it accesses the error page.  This SIGBUS killing is
-pointless and simply degrades the level of RAS of the system, because the
-clean folio can be dropped without any data lost on memory error handling
-as we do for a clean pagecache.
+Type 3 instruction fault (FPU insn with FPU disabled) is handled
+by quietly enabling FPU and returning.  Which is fine, except that
+we need to do that both for fault in userland and in the kernel;
+the latter *can* legitimately happen - all it takes is this:
 
-When memory_failure() is called on a clean folio, try_to_unmap() is called
-twice (one from split_huge_page() and one from hwpoison_user_mappings()).
-The root cause of the issue is that pte conversion to hwpoisoned entry is
-now done in the first call of try_to_unmap() because PageHWPoison is
-already set at this point, while it's actually expected to be done in the
-second call.  This behavior disturbs the error handling operation like
-removing pagecache, which results in the malfunction described above.
+.global _start
+_start:
+        call_pal 0xae
+	lda $0, 0
+	ldq $0, 0($0)
 
-So convert TTU_IGNORE_HWPOISON into TTU_HWPOISON and set TTU_HWPOISON only
-when we really intend to convert pte to hwpoison entry.  This can prevent
-other callers of try_to_unmap() from accidentally converting to hwpoison
-entries.
+- call_pal CLRFEN to clear "FPU enabled" flag and arrange for
+a signal delivery (SIGSEGV in this case).
 
-Link: https://lkml.kernel.org/r/20230221085905.1465385-1-naoya.horiguchi@linux.dev
-Fixes: a42634a6c07d ("readahead: Use a folio in read_pages()")
-Signed-off-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixed by moving the handling of type 3 into the common part of
+do_entIF(), before we check for kernel vs. user mode.
+
+Incidentally, the check for kernel mode is unidiomatic; the normal
+way to do that is !user_mode(regs).  The difference is that
+the open-coded variant treats any of bits 63..3 of regs->ps being
+set as "it's user mode" while the normal approach is to check just
+the bit 3.  PS is a 4-bit register and regs->ps always will have
+bits 63..4 clear, so the open-coded variant here is actually equivalent
+to !user_mode(regs).  Harder to follow, though...
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Richard Henderson <rth@twiddle.net>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/rmap.h |    2 +-
- mm/memory-failure.c  |    8 ++++----
- mm/rmap.c            |    2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ arch/alpha/kernel/traps.c |   30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
---- a/include/linux/rmap.h
-+++ b/include/linux/rmap.h
-@@ -94,7 +94,7 @@ enum ttu_flags {
- 	TTU_SPLIT_HUGE_PMD	= 0x4,	/* split huge PMD if any */
- 	TTU_IGNORE_MLOCK	= 0x8,	/* ignore mlock */
- 	TTU_SYNC		= 0x10,	/* avoid racy checks with PVMW_SYNC */
--	TTU_IGNORE_HWPOISON	= 0x20,	/* corrupted page is recoverable */
-+	TTU_HWPOISON		= 0x20,	/* do convert pte to hwpoison entry */
- 	TTU_BATCH_FLUSH		= 0x40,	/* Batch TLB flushes where possible
- 					 * and caller guarantees they will
- 					 * do a final flush if necessary */
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -1020,7 +1020,7 @@ static int me_pagecache_dirty(struct pag
-  * cache and swap cache(ie. page is freshly swapped in). So it could be
-  * referenced concurrently by 2 types of PTEs:
-  * normal PTEs and swap PTEs. We try to handle them consistently by calling
-- * try_to_unmap(TTU_IGNORE_HWPOISON) to convert the normal PTEs to swap PTEs,
-+ * try_to_unmap(!TTU_HWPOISON) to convert the normal PTEs to swap PTEs,
-  * and then
-  *      - clear dirty bit to prevent IO
-  *      - remove from LRU
-@@ -1401,7 +1401,7 @@ static bool hwpoison_user_mappings(struc
- 				  int flags, struct page *hpage)
+--- a/arch/alpha/kernel/traps.c
++++ b/arch/alpha/kernel/traps.c
+@@ -233,7 +233,21 @@ do_entIF(unsigned long type, struct pt_r
  {
- 	struct folio *folio = page_folio(hpage);
--	enum ttu_flags ttu = TTU_IGNORE_MLOCK | TTU_SYNC;
-+	enum ttu_flags ttu = TTU_IGNORE_MLOCK | TTU_SYNC | TTU_HWPOISON;
- 	struct address_space *mapping;
- 	LIST_HEAD(tokill);
- 	bool unmap_success;
-@@ -1431,7 +1431,7 @@ static bool hwpoison_user_mappings(struc
+ 	int signo, code;
  
- 	if (PageSwapCache(p)) {
- 		pr_err("%#lx: keeping poisoned page in swap cache\n", pfn);
--		ttu |= TTU_IGNORE_HWPOISON;
-+		ttu &= ~TTU_HWPOISON;
- 	}
- 
- 	/*
-@@ -1446,7 +1446,7 @@ static bool hwpoison_user_mappings(struc
- 		if (page_mkclean(hpage)) {
- 			SetPageDirty(hpage);
- 		} else {
--			ttu |= TTU_IGNORE_HWPOISON;
-+			ttu &= ~TTU_HWPOISON;
- 			pr_info("%#lx: corrupted page was clean: dropped without side effects\n",
- 				pfn);
+-	if ((regs->ps & ~IPL_MAX) == 0) {
++	if (type == 3) { /* FEN fault */
++		/* Irritating users can call PAL_clrfen to disable the
++		   FPU for the process.  The kernel will then trap in
++		   do_switch_stack and undo_switch_stack when we try
++		   to save and restore the FP registers.
++
++		   Given that GCC by default generates code that uses the
++		   FP registers, PAL_clrfen is not useful except for DoS
++		   attacks.  So turn the bleeding FPU back on and be done
++		   with it.  */
++		current_thread_info()->pcb.flags |= 1;
++		__reload_thread(&current_thread_info()->pcb);
++		return;
++	}
++	if (!user_mode(regs)) {
+ 		if (type == 1) {
+ 			const unsigned int *data
+ 			  = (const unsigned int *) regs->pc;
+@@ -366,20 +380,6 @@ do_entIF(unsigned long type, struct pt_r
  		}
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -1623,7 +1623,7 @@ static bool try_to_unmap_one(struct foli
- 		/* Update high watermark before we lower rss */
- 		update_hiwater_rss(mm);
+ 		break;
  
--		if (PageHWPoison(subpage) && !(flags & TTU_IGNORE_HWPOISON)) {
-+		if (PageHWPoison(subpage) && (flags & TTU_HWPOISON)) {
- 			pteval = swp_entry_to_pte(make_hwpoison_entry(subpage));
- 			if (folio_test_hugetlb(folio)) {
- 				hugetlb_count_sub(folio_nr_pages(folio), mm);
+-	      case 3: /* FEN fault */
+-		/* Irritating users can call PAL_clrfen to disable the
+-		   FPU for the process.  The kernel will then trap in
+-		   do_switch_stack and undo_switch_stack when we try
+-		   to save and restore the FP registers.
+-
+-		   Given that GCC by default generates code that uses the
+-		   FP registers, PAL_clrfen is not useful except for DoS
+-		   attacks.  So turn the bleeding FPU back on and be done
+-		   with it.  */
+-		current_thread_info()->pcb.flags |= 1;
+-		__reload_thread(&current_thread_info()->pcb);
+-		return;
+-
+ 	      case 5: /* illoc */
+ 	      default: /* unexpected instruction-fault type */
+ 		      ;
 
 
