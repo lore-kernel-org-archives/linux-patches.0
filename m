@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB22BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80409C433D2;
-	Tue,  7 Mar 2023 17:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0730EBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79360C433D2;
+	Tue,  7 Mar 2023 17:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210508;
-	bh=gVK+vHDxhgfc05MESC6t6rqKAnLRDv5wRzzOFiCR5OI=;
+	s=korg; t=1678210510;
+	bh=7fymXT6a76Kfg39zLL2wxjZ6QOHP06Z+W0Vp4ZfdjD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XJ75aPFQgc5lCLYd9K65tRzky8UNJqZv+Lte4OeHC9pNUzIV6rDv/lY3lgGE4u2He
-	 C25bU6ykhGwgq0Rluu/LwaSaTDyJjHRMElfjfDI8gH1OcRBIZBKawO59SW3hPpKEEk
-	 Zxm2R0S5hjnyNOo57EG5LhlGb/GhiYbepA6w2/M4=
+	b=nw0+cG3MvfQ/aqyDxXtdHjSy0EuvVz4vfugCGkwkV/VjWxiTdnfMPfAtoLifCRZXx
+	 L6+Rv3cYsux6BFZImeIwihXfhXCmOPHqrqUqeyPZiDugt3/bgqFElubDpy0IfvhEi9
+	 QHGZiVn+n61wuXLIn2mNNcb7S6NqFUdY/Lq1LLD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Kiselev <bigunclemax@gmail.com>,
-	Saravana Kannan <saravanak@google.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Sasha Levin <sashal@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 6.2 0556/1001] mtd: mtdpart: Dont create platform device thatll never probe
-Date: Tue,  7 Mar 2023 17:55:28 +0100
-Message-Id: <20230307170045.610912755@linuxfoundation.org>
+	Shravan Chippa <shravan.chippa@microchip.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 0565/1001] dmaengine: sf-pdma: pdma_desc memory leak fix
+Date: Tue,  7 Mar 2023 17:55:37 +0100
+Message-Id: <20230307170045.997667637@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,61 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saravana Kannan <saravanak@google.com>
+From: Shravan Chippa <shravan.chippa@microchip.com>
 
-[ Upstream commit fb42378dcc7f247df56f0ecddfdae85487495fbc ]
+[ Upstream commit b02e07015a5ac7bbc029da931ae17914b8ae0339 ]
 
-These "nvmem-cells" platform devices never get probed because there's no
-platform driver for it and it's never used anywhere else. So it's a
-waste of memory. These devices also cause fw_devlink to block nvmem
-consumers of "nvmem-cells" partition from probing because the supplier
-device never probes.
+Commit b2cc5c465c2c ("dmaengine: sf-pdma: Add multithread support for a
+DMA channel") changed sf_pdma_prep_dma_memcpy() to unconditionally
+allocate a new sf_pdma_desc each time it is called.
 
-So stop creating platform devices for nvmem-cells partitions to avoid
-wasting memory and to avoid blocking probing of consumers.
+The driver previously recycled descs, by checking the in_use flag, only
+allocating additional descs if the existing one was in use. This logic
+was removed in commit b2cc5c465c2c ("dmaengine: sf-pdma: Add multithread
+support for a DMA channel"), but sf_pdma_free_desc() was not changed to
+handle the new behaviour.
 
-Reported-by: Maxim Kiselev <bigunclemax@gmail.com>
-Fixes: bcdf0315a61a ("mtd: call of_platform_populate() for MTD partitions")
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Tested-by: Maksim Kiselev <bigunclemax@gmail.com>
-Tested-by: Douglas Anderson <dianders@chromium.org>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
-Link: https://lore.kernel.org/r/20230207014207.1678715-13-saravanak@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+As a result, each time sf_pdma_prep_dma_memcpy() is called, the previous
+descriptor is leaked, over time leading to memory starvation:
+
+  unreferenced object 0xffffffe008447300 (size 192):
+  comm "irq/39-mchp_dsc", pid 343, jiffies 4294906910 (age 981.200s)
+  hex dump (first 32 bytes):
+    00 00 00 ff 00 00 00 00 b8 c1 00 00 00 00 00 00  ................
+    00 00 70 08 10 00 00 00 00 00 00 c0 00 00 00 00  ..p.............
+  backtrace:
+    [<00000000064a04f4>] kmemleak_alloc+0x1e/0x28
+    [<00000000018927a7>] kmem_cache_alloc+0x11e/0x178
+    [<000000002aea8d16>] sf_pdma_prep_dma_memcpy+0x40/0x112
+
+Add the missing kfree() to sf_pdma_free_desc(), and remove the redundant
+in_use flag.
+
+Fixes: b2cc5c465c2c ("dmaengine: sf-pdma: Add multithread support for a DMA channel")
+Signed-off-by: Shravan Chippa <shravan.chippa@microchip.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230120100623.3530634-1-shravan.chippa@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdpart.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/dma/sf-pdma/sf-pdma.c | 3 +--
+ drivers/dma/sf-pdma/sf-pdma.h | 1 -
+ 2 files changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/mtdpart.c b/drivers/mtd/mtdpart.c
-index d442fa94c8720..85f5ee6f06fc6 100644
---- a/drivers/mtd/mtdpart.c
-+++ b/drivers/mtd/mtdpart.c
-@@ -577,6 +577,7 @@ static int mtd_part_of_parse(struct mtd_info *master,
- {
- 	struct mtd_part_parser *parser;
- 	struct device_node *np;
-+	struct device_node *child;
- 	struct property *prop;
- 	struct device *dev;
- 	const char *compat;
-@@ -594,6 +595,15 @@ static int mtd_part_of_parse(struct mtd_info *master,
- 	else
- 		np = of_get_child_by_name(np, "partitions");
+diff --git a/drivers/dma/sf-pdma/sf-pdma.c b/drivers/dma/sf-pdma/sf-pdma.c
+index 6b524eb6bcf3a..e578ad5569494 100644
+--- a/drivers/dma/sf-pdma/sf-pdma.c
++++ b/drivers/dma/sf-pdma/sf-pdma.c
+@@ -96,7 +96,6 @@ sf_pdma_prep_dma_memcpy(struct dma_chan *dchan,	dma_addr_t dest, dma_addr_t src,
+ 	if (!desc)
+ 		return NULL;
  
-+	/*
-+	 * Don't create devices that are added to a bus but will never get
-+	 * probed. That'll cause fw_devlink to block probing of consumers of
-+	 * this partition until the partition device is probed.
-+	 */
-+	for_each_child_of_node(np, child)
-+		if (of_device_is_compatible(child, "nvmem-cells"))
-+			of_node_set_flag(child, OF_POPULATED);
-+
- 	of_property_for_each_string(np, "compatible", prop, compat) {
- 		parser = mtd_part_get_compatible_parser(compat);
- 		if (!parser)
+-	desc->in_use = true;
+ 	desc->dirn = DMA_MEM_TO_MEM;
+ 	desc->async_tx = vchan_tx_prep(&chan->vchan, &desc->vdesc, flags);
+ 
+@@ -290,7 +289,7 @@ static void sf_pdma_free_desc(struct virt_dma_desc *vdesc)
+ 	struct sf_pdma_desc *desc;
+ 
+ 	desc = to_sf_pdma_desc(vdesc);
+-	desc->in_use = false;
++	kfree(desc);
+ }
+ 
+ static void sf_pdma_donebh_tasklet(struct tasklet_struct *t)
+diff --git a/drivers/dma/sf-pdma/sf-pdma.h b/drivers/dma/sf-pdma/sf-pdma.h
+index dcb3687bd5da2..5c398a83b491a 100644
+--- a/drivers/dma/sf-pdma/sf-pdma.h
++++ b/drivers/dma/sf-pdma/sf-pdma.h
+@@ -78,7 +78,6 @@ struct sf_pdma_desc {
+ 	u64				src_addr;
+ 	struct virt_dma_desc		vdesc;
+ 	struct sf_pdma_chan		*chan;
+-	bool				in_use;
+ 	enum dma_transfer_direction	dirn;
+ 	struct dma_async_tx_descriptor *async_tx;
+ };
 -- 
 2.39.2
 
