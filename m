@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A690BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:44:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82A0C433EF;
-	Tue,  7 Mar 2023 17:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49480BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:44:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD22C433D2;
+	Tue,  7 Mar 2023 17:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211095;
-	bh=pk1fJ71Ws6Sna2RKK2QmJ6j3WF2xsqDP4/Xz52YcsH4=;
+	s=korg; t=1678211098;
+	bh=+3f8T4HSjcAE9HJ+B1k4HNRX0H7RQZejv7iygWq+upQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0SuHCQcQ8urOEAy8e5lg7ksoEhE/X0TmloBG9Syw+hoZQ1N7IMCgKsVQlxA19Zqa5
-	 nEKdcfXMdJmvbwpGs1uHyc0s/Gn24yHAMDo+TaYpDmr74lKihM1vKL/7TtTPYbyMWc
-	 eXiEksIzAL4xG1Kg0nGAHhti328yElO4Ff+RAflA=
+	b=nOw7Bius+/O9ChdbPySYwcntb1x4Dk3Z0BZ9ePbmLcdv8FJ1J9CnsKFgcLi8xytPz
+	 fNZltsoaPGHFkGamOdp2oMuM/XxsI+ldZLBVAHSISqvqwc7zkDV0GvEw6HLhnC+aSd
+	 EKyj92gmCJNY5tVKhUCzjv2uiO4wyQWYsrbE6CD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH 6.2 0751/1001] ipmi:ssif: resend_msg() cannot fail
-Date: Tue,  7 Mar 2023 17:58:43 +0100
-Message-Id: <20230307170054.304684749@linuxfoundation.org>
+	Denis Pauk <pauk.denis@gmail.com>,
+	Ahmad Khalifa <ahmad@khalifa.ws>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 0725/1001] hwmon: (nct6775) Directly call ASUS ACPI WMI method
+Date: Tue,  7 Mar 2023 17:58:17 +0100
+Message-Id: <20230307170053.161576088@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -33,93 +36,198 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corey Minyard <cminyard@mvista.com>
+From: Denis Pauk <pauk.denis@gmail.com>
 
-commit 95767ed78a181d5404202627499f9cde56053b96 upstream.
+[ Upstream commit c3b3747d02f571da2543e719066a50dd966989d8 ]
 
-The resend_msg() function cannot fail, but there was error handling
-around using it.  Rework the handling of the error, and fix the out of
-retries debug reporting that was wrong around this, too.
+New ASUS B650/B660/X670 boards firmware have not exposed WMI monitoring
+GUID  and entrypoint method WMBD could be implemented for different device
+UID.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Implement the direct call to entrypoint method for monitoring the device
+UID of B550/X570 boards.
+
+BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=204807
+Signed-off-by: Denis Pauk <pauk.denis@gmail.com>
+Co-developed-by: Ahmad Khalifa <ahmad@khalifa.ws>
+Signed-off-by: Ahmad Khalifa <ahmad@khalifa.ws>
+Link: https://lore.kernel.org/r/20230111212241.7456-1-pauk.denis@gmail.com
+[groeck: Fix multi-line formatting]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c |   28 +++++++---------------------
- 1 file changed, 7 insertions(+), 21 deletions(-)
+ drivers/hwmon/Kconfig            |  2 +-
+ drivers/hwmon/nct6775-platform.c | 98 ++++++++++++++++++++++----------
+ 2 files changed, 70 insertions(+), 30 deletions(-)
 
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -602,7 +602,7 @@ static void ssif_alert(struct i2c_client
- 		start_get(ssif_info);
- }
+diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+index 3176c33af6c69..300ce8115ce4f 100644
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -1516,7 +1516,7 @@ config SENSORS_NCT6775_CORE
+ config SENSORS_NCT6775
+ 	tristate "Platform driver for Nuvoton NCT6775F and compatibles"
+ 	depends on !PPC
+-	depends on ACPI_WMI || ACPI_WMI=n
++	depends on ACPI || ACPI=n
+ 	select HWMON_VID
+ 	select SENSORS_NCT6775_CORE
+ 	help
+diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
+index bf43f73dc835f..e5d4a79cd5f7d 100644
+--- a/drivers/hwmon/nct6775-platform.c
++++ b/drivers/hwmon/nct6775-platform.c
+@@ -17,7 +17,6 @@
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+-#include <linux/wmi.h>
  
--static int start_resend(struct ssif_info *ssif_info);
-+static void start_resend(struct ssif_info *ssif_info);
+ #include "nct6775.h"
  
- static void msg_done_handler(struct ssif_info *ssif_info, int result,
- 			     unsigned char *data, unsigned int len)
-@@ -909,31 +909,17 @@ static void msg_written_handler(struct s
- 	if (result < 0) {
- 		ssif_info->retries_left--;
- 		if (ssif_info->retries_left > 0) {
--			if (!start_resend(ssif_info)) {
--				ssif_inc_stat(ssif_info, send_retries);
--				return;
--			}
--			/* request failed, just return the error. */
--			ssif_inc_stat(ssif_info, send_errors);
--
--			if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
--				dev_dbg(&ssif_info->client->dev,
--					"%s: Out of retries\n", __func__);
--			msg_done_handler(ssif_info, -EIO, NULL, 0);
-+			start_resend(ssif_info);
- 			return;
- 		}
+@@ -107,40 +106,50 @@ struct nct6775_sio_data {
+ 	void (*sio_exit)(struct nct6775_sio_data *sio_data);
+ };
  
- 		ssif_inc_stat(ssif_info, send_errors);
+-#define ASUSWMI_MONITORING_GUID		"466747A0-70EC-11DE-8A39-0800200C9A66"
++#define ASUSWMI_METHOD			"WMBD"
+ #define ASUSWMI_METHODID_RSIO		0x5253494F
+ #define ASUSWMI_METHODID_WSIO		0x5753494F
+ #define ASUSWMI_METHODID_RHWM		0x5248574D
+ #define ASUSWMI_METHODID_WHWM		0x5748574D
+ #define ASUSWMI_UNSUPPORTED_METHOD	0xFFFFFFFE
++#define ASUSWMI_DEVICE_HID		"PNP0C14"
++#define ASUSWMI_DEVICE_UID		"ASUSWMI"
++
++#if IS_ENABLED(CONFIG_ACPI)
++/*
++ * ASUS boards have only one device with WMI "WMBD" method and have provided
++ * access to only one SuperIO chip at 0x0290.
++ */
++static struct acpi_device *asus_acpi_dev;
++#endif
  
--		/*
--		 * Got an error on transmit, let the done routine
--		 * handle it.
--		 */
- 		if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
- 			dev_dbg(&ssif_info->client->dev,
--				"%s: Error  %d\n", __func__, result);
-+				"%s: Out of retries\n", __func__);
- 
--		msg_done_handler(ssif_info, result, NULL, 0);
-+		msg_done_handler(ssif_info, -EIO, NULL, 0);
- 		return;
- 	}
- 
-@@ -996,7 +982,7 @@ static void msg_written_handler(struct s
- 	}
- }
- 
--static int start_resend(struct ssif_info *ssif_info)
-+static void start_resend(struct ssif_info *ssif_info)
+ static int nct6775_asuswmi_evaluate_method(u32 method_id, u8 bank, u8 reg, u8 val, u32 *retval)
  {
- 	int command;
+-#if IS_ENABLED(CONFIG_ACPI_WMI)
++#if IS_ENABLED(CONFIG_ACPI)
++	acpi_handle handle = acpi_device_handle(asus_acpi_dev);
+ 	u32 args = bank | (reg << 8) | (val << 16);
+-	struct acpi_buffer input = { (acpi_size) sizeof(args), &args };
+-	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
++	struct acpi_object_list input;
++	union acpi_object params[3];
++	unsigned long long result;
+ 	acpi_status status;
+-	union acpi_object *obj;
+-	u32 tmp = ASUSWMI_UNSUPPORTED_METHOD;
+-
+-	status = wmi_evaluate_method(ASUSWMI_MONITORING_GUID, 0,
+-				     method_id, &input, &output);
  
-@@ -1021,7 +1007,6 @@ static int start_resend(struct ssif_info
++	params[0].type = ACPI_TYPE_INTEGER;
++	params[0].integer.value = 0;
++	params[1].type = ACPI_TYPE_INTEGER;
++	params[1].integer.value = method_id;
++	params[2].type = ACPI_TYPE_BUFFER;
++	params[2].buffer.length = sizeof(args);
++	params[2].buffer.pointer = (void *)&args;
++	input.count = 3;
++	input.pointer = params;
++
++	status = acpi_evaluate_integer(handle, ASUSWMI_METHOD, &input, &result);
+ 	if (ACPI_FAILURE(status))
+ 		return -EIO;
  
- 	ssif_i2c_send(ssif_info, msg_written_handler, I2C_SMBUS_WRITE,
- 		   command, ssif_info->data, I2C_SMBUS_BLOCK_DATA);
--	return 0;
- }
+-	obj = output.pointer;
+-	if (obj && obj->type == ACPI_TYPE_INTEGER)
+-		tmp = obj->integer.value;
+-
+ 	if (retval)
+-		*retval = tmp;
++		*retval = (u32)result & 0xFFFFFFFF;
  
- static int start_send(struct ssif_info *ssif_info,
-@@ -1036,7 +1021,8 @@ static int start_send(struct ssif_info *
- 	ssif_info->retries_left = SSIF_SEND_RETRIES;
- 	memcpy(ssif_info->data + 1, data, len);
- 	ssif_info->data_len = len;
--	return start_resend(ssif_info);
-+	start_resend(ssif_info);
+-	kfree(obj);
+-
+-	if (tmp == ASUSWMI_UNSUPPORTED_METHOD)
+-		return -ENODEV;
+ 	return 0;
+ #else
+ 	return -EOPNOTSUPP;
+@@ -1099,6 +1108,45 @@ static const char * const asus_wmi_boards[] = {
+ 	"TUF GAMING Z490-PLUS (WI-FI)",
+ };
+ 
++#if IS_ENABLED(CONFIG_ACPI)
++/*
++ * Callback for acpi_bus_for_each_dev() to find the right device
++ * by _UID and _HID and return 1 to stop iteration.
++ */
++static int nct6775_asuswmi_device_match(struct device *dev, void *data)
++{
++	struct acpi_device *adev = to_acpi_device(dev);
++	const char *uid = acpi_device_uid(adev);
++	const char *hid = acpi_device_hid(adev);
++
++	if (hid && !strcmp(hid, ASUSWMI_DEVICE_HID) && uid && !strcmp(uid, data)) {
++		asus_acpi_dev = adev;
++		return 1;
++	}
++
 +	return 0;
- }
++}
++#endif
++
++static enum sensor_access nct6775_determine_access(const char *device_uid)
++{
++#if IS_ENABLED(CONFIG_ACPI)
++	u8 tmp;
++
++	acpi_bus_for_each_dev(nct6775_asuswmi_device_match, (void *)device_uid);
++	if (!asus_acpi_dev)
++		return access_direct;
++
++	/* if reading chip id via ACPI succeeds, use WMI "WMBD" method for access */
++	if (!nct6775_asuswmi_read(0, NCT6775_PORT_CHIPID, &tmp) && tmp) {
++		pr_debug("Using Asus WMBD method of %s to access %#x chip.\n", device_uid, tmp);
++		return access_asuswmi;
++	}
++#endif
++
++	return access_direct;
++}
++
+ static int __init sensors_nct6775_platform_init(void)
+ {
+ 	int i, err;
+@@ -1109,7 +1157,6 @@ static int __init sensors_nct6775_platform_init(void)
+ 	int sioaddr[2] = { 0x2e, 0x4e };
+ 	enum sensor_access access = access_direct;
+ 	const char *board_vendor, *board_name;
+-	u8 tmp;
  
- /* Must be called with the message lock held. */
+ 	err = platform_driver_register(&nct6775_driver);
+ 	if (err)
+@@ -1122,15 +1169,8 @@ static int __init sensors_nct6775_platform_init(void)
+ 	    !strcmp(board_vendor, "ASUSTeK COMPUTER INC.")) {
+ 		err = match_string(asus_wmi_boards, ARRAY_SIZE(asus_wmi_boards),
+ 				   board_name);
+-		if (err >= 0) {
+-			/* if reading chip id via WMI succeeds, use WMI */
+-			if (!nct6775_asuswmi_read(0, NCT6775_PORT_CHIPID, &tmp) && tmp) {
+-				pr_info("Using Asus WMI to access %#x chip.\n", tmp);
+-				access = access_asuswmi;
+-			} else {
+-				pr_err("Can't read ChipID by Asus WMI.\n");
+-			}
+-		}
++		if (err >= 0)
++			access = nct6775_determine_access(ASUSWMI_DEVICE_UID);
+ 	}
+ 
+ 	/*
+-- 
+2.39.2
+
 
 
