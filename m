@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7137BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B867C433D2;
-	Tue,  7 Mar 2023 17:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A6CBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA29C433A1;
+	Tue,  7 Mar 2023 17:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209469;
-	bh=OkEdYZYJeKxMTb4WHS+73ZwIwCTd68/c70t3CD3EedM=;
+	s=korg; t=1678209473;
+	bh=rI6vaB/t77bBlrJKEngq0yjTSkcBHkpEMeeLk6ovIa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sOqF588prvoXBfUQHWXln7V+NtDvLhXxi+htPgHpwjhMsR3QRgcyO3NCuF2RUWlm8
-	 fOG0IZ6aDeEb9Pn1Bm3mnNS1MD4kIeHZ0WB+h6h8khiu6nDhBcySU1wCqFlLc21cH1
-	 OvAi1WbgHZ26vufYKQgr8a9Dr6SaAj1B3yb8Dfeg=
+	b=TxsnZR5xieTYUbDkgEW7E65T4FwyYzGvzNx0tIbBSzPPab63rOVp9iKhirVWOWteQ
+	 ltoMU46g0O0Nutx//fVSA7fXvcdGZTgowqw/qLP8wyr7DQ7s21I+ec0MtKKq7kLakb
+	 UXW3kwIujv8xtKTdu/Q3qrYgdy+e1q7vpU6i0WcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0230/1001] wifi: iwlwifi: mei: fix compilation errors in rfkill()
-Date: Tue,  7 Mar 2023 17:50:02 +0100
-Message-Id: <20230307170031.838342143@linuxfoundation.org>
+Subject: [PATCH 6.2 0231/1001] kselftest/arm64: Fix enumeration of systems without 128 bit SME
+Date: Tue,  7 Mar 2023 17:50:03 +0100
+Message-Id: <20230307170031.884558972@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,55 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gregory Greenman <gregory.greenman@intel.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 9cbd5a8abca904441e36861e3a92961bec41d13f ]
+[ Upstream commit 5f389238534ac8ca4ee3ab12eeb89d3984d303a1 ]
 
-The rfkill() callback was invoked with wrong parameters.
-It was missed since MEI is defined now as depending on BROKEN.
-Fix that.
+The current signal handling tests for SME do not account for the fact that
+unlike SVE all SME vector lengths are optional so we can't guarantee that
+we will encounter the minimum possible VL, they will hang enumerating VLs
+on such systems. Abort enumeration when we find the lowest VL.
 
-Fixes: d288067ede4b ("wifi: iwlwifi: mei: avoid blocking sap messages handling due to rtnl lock")
-Fixes: 5aa7ce31bd84 ("wifi: iwlwifi: mei: make sure ownership confirmed message is sent")
-Fixes: 95170a46b7dd ("wifi: iwlwifi: mei: don't send SAP commands if AMT is disabled")
-Link: https://lore.kernel.org/r/20230126222821.305122-2-gregory.greenman@intel.com
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Fixes: 4963aeb35a9e ("kselftest/arm64: signal: Add SME signal handling tests")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20230131-arm64-kselftest-sig-sme-no-128-v1-1-d47c13dc8e1e@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mei/main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/arm64/signal/testcases/ssve_regs.c | 4 ++++
+ tools/testing/selftests/arm64/signal/testcases/za_regs.c   | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mei/main.c b/drivers/net/wireless/intel/iwlwifi/mei/main.c
-index f9d11935ed97e..67dfb77fedf79 100644
---- a/drivers/net/wireless/intel/iwlwifi/mei/main.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mei/main.c
-@@ -788,7 +788,7 @@ static void iwl_mei_handle_amt_state(struct mei_cl_device *cldev,
- 	if (mei->amt_enabled)
- 		iwl_mei_set_init_conf(mei);
- 	else if (iwl_mei_cache.ops)
--		iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, false, false);
-+		iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, false);
+diff --git a/tools/testing/selftests/arm64/signal/testcases/ssve_regs.c b/tools/testing/selftests/arm64/signal/testcases/ssve_regs.c
+index d0a178945b1a8..c6b17c47cac4c 100644
+--- a/tools/testing/selftests/arm64/signal/testcases/ssve_regs.c
++++ b/tools/testing/selftests/arm64/signal/testcases/ssve_regs.c
+@@ -34,6 +34,10 @@ static bool sme_get_vls(struct tdescr *td)
  
- 	schedule_work(&mei->netdev_work);
+ 		vl &= PR_SME_VL_LEN_MASK;
  
-@@ -829,7 +829,7 @@ static void iwl_mei_handle_csme_taking_ownership(struct mei_cl_device *cldev,
- 		 */
- 		mei->csme_taking_ownership = true;
++		/* Did we find the lowest supported VL? */
++		if (vq < sve_vq_from_vl(vl))
++			break;
++
+ 		/* Skip missing VLs */
+ 		vq = sve_vq_from_vl(vl);
  
--		iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, true, true);
-+		iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, true);
- 	} else {
- 		iwl_mei_send_sap_msg(cldev,
- 				     SAP_MSG_NOTIF_CSME_OWNERSHIP_CONFIRMED);
-@@ -1774,7 +1774,7 @@ int iwl_mei_register(void *priv, const struct iwl_mei_ops *ops)
- 			if (mei->amt_enabled)
- 				iwl_mei_send_sap_msg(mei->cldev,
- 						     SAP_MSG_NOTIF_WIFIDR_UP);
--			ops->rfkill(priv, mei->link_prot_state, false);
-+			ops->rfkill(priv, mei->link_prot_state);
- 		}
- 	}
- 	ret = 0;
+diff --git a/tools/testing/selftests/arm64/signal/testcases/za_regs.c b/tools/testing/selftests/arm64/signal/testcases/za_regs.c
+index ea45acb115d5b..174ad66566964 100644
+--- a/tools/testing/selftests/arm64/signal/testcases/za_regs.c
++++ b/tools/testing/selftests/arm64/signal/testcases/za_regs.c
+@@ -34,6 +34,10 @@ static bool sme_get_vls(struct tdescr *td)
+ 
+ 		vl &= PR_SME_VL_LEN_MASK;
+ 
++		/* Did we find the lowest supported VL? */
++		if (vq < sve_vq_from_vl(vl))
++			break;
++
+ 		/* Skip missing VLs */
+ 		vq = sve_vq_from_vl(vl);
+ 
 -- 
 2.39.2
 
