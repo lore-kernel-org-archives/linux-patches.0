@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D73BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:05:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C53EC433EF;
-	Tue,  7 Mar 2023 19:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0F1BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:05:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F4BC433D2;
+	Tue,  7 Mar 2023 19:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215901;
-	bh=nzCVmduNO2XbnJv1Bkkz/5jXF/dbaHjI8XHwH3/qFIE=;
+	s=korg; t=1678215904;
+	bh=AXhn53Mv5oynFtPaGVcwdkjI5eh85f9zlb7pW9OQjtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EoTrG7G5ZjInsdyCVHkAyuPui17dG/Zyk3PdgAj6pdsWND1YPV4/8Y7+9FaQaeVUC
-	 4dz4AvMNH9Np6miOnjrCoIdg0VLLmzgpjCg6KbY6gNo6xPgbZb2vW6ya1q1JM9jn9k
-	 R0oy7Cu8dc9BoLnaM8ORN/S9w1O4kh7YHkdfEiLQ=
+	b=1lcuAhOO9LON2rv8KTbHPCl2nbA/+iGdUbqIRofwI4IZUs1hXZEmsuGbzd1/whbmk
+	 nF0evQ+SVNazRek+pDCwozZ5MsoXPrCNNJ3prXKIvpUTD9TVyRyrMeZ44qMnbJ7p+L
+	 3Y+iKF3fCuoTTnMWKSv6DJIA68kK0X01XjJfaxfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 411/567] drm: amd: display: Fix memory leakage
-Date: Tue,  7 Mar 2023 18:02:27 +0100
-Message-Id: <20230307165923.677973779@linuxfoundation.org>
+Subject: [PATCH 5.15 412/567] drm/msm/dsi: Add missing check for alloc_ordered_workqueue
+Date: Tue,  7 Mar 2023 18:02:28 +0100
+Message-Id: <20230307165923.719574757@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,31 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 6b8701be1f66064ca72733c5f6e13748cdbf8397 ]
+[ Upstream commit 115906ca7b535afb1fe7b5406c566ccd3873f82b ]
 
-This commit fixes memory leakage in dc_construct_ctx() function.
+Add check for the return value of alloc_ordered_workqueue as it may return
+NULL pointer and cause NULL pointer dereference.
 
-Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/517646/
+Link: https://lore.kernel.org/r/20230110021651.12770-1-jiasheng@iscas.ac.cn
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 6c9378208127d..eca882438f6ef 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -771,6 +771,7 @@ static bool dc_construct_ctx(struct dc *dc,
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index eb60ce125a1fc..d3ec4d67a9a35 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1929,6 +1929,9 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
  
- 	dc_ctx->perf_trace = dc_perf_trace_create();
- 	if (!dc_ctx->perf_trace) {
-+		kfree(dc_ctx);
- 		ASSERT_CRITICAL(false);
- 		return false;
- 	}
+ 	/* setup workqueue */
+ 	msm_host->workqueue = alloc_ordered_workqueue("dsi_drm_work", 0);
++	if (!msm_host->workqueue)
++		return -ENOMEM;
++
+ 	INIT_WORK(&msm_host->err_work, dsi_err_worker);
+ 	INIT_WORK(&msm_host->hpd_work, dsi_hpd_worker);
+ 
 -- 
 2.39.2
 
