@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C6FBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D53C433D2;
-	Tue,  7 Mar 2023 18:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB518BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510CCC433D2;
+	Tue,  7 Mar 2023 18:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214185;
-	bh=+fVs9usZtIFnqGAOOm9jUMFZ7lqzeabQSEA/+2iYn+Q=;
+	s=korg; t=1678214188;
+	bh=/ooHOkNY9mnKWxMy7OT2dF9ymgmUJhRB6jQOXArb1YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SQUjJ4CIDnwyvWBLx7gCWziZRx+ukrtvfznKi9b0E7s1B1Y5r7DnvBuP/Nw8mnlIr
-	 kUk3jzMcRyc08tX6JeqLFtz9/IM8MplT7xi6sIMjdQ9mx3/Da4aMGgFv+i4qSGHBx1
-	 nlu5RBTBXgMx+MynQvu3cULt4f95RBuvAcSDYfW4=
+	b=EZL+lYtojRDSCeR7GPgFQ9Ti6zBXx18iqbrlV/weUD/xx2cf25LVHW/8tA//ps2m9
+	 w2DzLgMqmz3kW0ULuTK0q3KHFSAQ7NDR2RxtdyTex25mzn6UV2xx4fioLBzxrxP88H
+	 6MKD4rp0sonv4N8RzjIBuieNtcficigNWMdHJtcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 733/885] x86/reboot: Disable SVM, not just VMX, when stopping CPUs
-Date: Tue,  7 Mar 2023 18:01:07 +0100
-Message-Id: <20230307170033.835173607@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Shuah Khan <shuah@kernel.org>,
+	linux-kselftest@vger.kernel.org,
+	Ingo Molnar <mingo@redhat.com>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.1 751/885] selftests: core: Fix incorrect kernel headers search path
+Date: Tue,  7 Mar 2023 18:01:25 +0100
+Message-Id: <20230307170034.555445483@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,54 +37,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-commit a2b07fa7b93321c059af0c6d492cc9a4f1e390aa upstream.
+commit 145df2fdc38f24b3e52e4c2a59b02d874a074fbd upstream.
 
-Disable SVM and more importantly force GIF=1 when halting a CPU or
-rebooting the machine.  Similar to VMX, SVM allows software to block
-INITs via CLGI, and thus can be problematic for a crash/reboot.  The
-window for failure is smaller with SVM as INIT is only blocked while
-GIF=0, i.e. between CLGI and STGI, but the window does exist.
+Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
+building against kernel headers from the build environment in scenarios
+where kernel headers are installed into a specific output directory
+(O=...).
 
-Fixes: fba4f472b33a ("x86/reboot: Turn off KVM when halting a CPU")
-Cc: stable@vger.kernel.org
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221130233650.1404148-5-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: linux-kselftest@vger.kernel.org
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: <stable@vger.kernel.org> # 5.18+
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/smp.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/core/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/smp.c
-+++ b/arch/x86/kernel/smp.c
-@@ -32,7 +32,7 @@
- #include <asm/mce.h>
- #include <asm/trace/irq_vectors.h>
- #include <asm/kexec.h>
--#include <asm/virtext.h>
-+#include <asm/reboot.h>
+--- a/tools/testing/selftests/core/Makefile
++++ b/tools/testing/selftests/core/Makefile
+@@ -1,5 +1,5 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+-CFLAGS += -g -I../../../../usr/include/
++CFLAGS += -g $(KHDR_INCLUDES)
  
- /*
-  *	Some notes on x86 processor bugs affecting SMP operation:
-@@ -122,7 +122,7 @@ static int smp_stop_nmi_callback(unsigne
- 	if (raw_smp_processor_id() == atomic_read(&stopping_cpu))
- 		return NMI_HANDLED;
- 
--	cpu_emergency_vmxoff();
-+	cpu_emergency_disable_virtualization();
- 	stop_this_cpu(NULL);
- 
- 	return NMI_HANDLED;
-@@ -134,7 +134,7 @@ static int smp_stop_nmi_callback(unsigne
- DEFINE_IDTENTRY_SYSVEC(sysvec_reboot)
- {
- 	ack_APIC_irq();
--	cpu_emergency_vmxoff();
-+	cpu_emergency_disable_virtualization();
- 	stop_this_cpu(NULL);
- }
+ TEST_GEN_PROGS := close_range_test
  
 
 
