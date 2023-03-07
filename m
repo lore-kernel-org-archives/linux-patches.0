@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B86BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:47:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB83EC433EF;
-	Tue,  7 Mar 2023 17:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC95BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:47:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F929C433EF;
+	Tue,  7 Mar 2023 17:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211238;
-	bh=poVf9OJM0rm/t1qD/IVmJ2U4134Ns7Gc3xEKCJ1jw2Y=;
+	s=korg; t=1678211240;
+	bh=tvhcXCYADyb88in/1/EKCtCt2MTc0RUrAB+8FLj3HoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VU4yJw0kcuTuvZmqyQa8qg7uolNoF1G5h+ucic/n/QTqGKXNT0EHX2Si4dIcgDAJt
-	 FUMcqCKvqlMP7SKW1I1NHp0ij8HmvUHJ/QLTgZVrgC1yuRJe9J5jtKnCpBLkDjXJDB
-	 rO+0EYOhThsCbKfy/+nuOHCOvISpVZBVFvVJFODk=
+	b=ekf8c2tv3XEeMF9zjNCHnpFBdY1E9Jd1yh3ebO0BJM0iwoqheEpHqyQa4TcLlnvmY
+	 CAgIzGoA4VBQNhILAiVHvn5BNGEMSrFrZUn+aoBy9uMkuYALwHThhGhVtkwnYUtT+q
+	 mOd3WV5+dPPhsifUkw+bYxN2X94+Zh/rBBOUMO50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.2 0790/1001] io_uring: mark task TASK_RUNNING before handling resume/task work
-Date: Tue,  7 Mar 2023 17:59:22 +0100
-Message-Id: <20230307170056.039424328@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>
+Subject: [PATCH 6.2 0799/1001] fs: dlm: be sure to call dlm_send_queue_flush()
+Date: Tue,  7 Mar 2023 17:59:31 +0100
+Message-Id: <20230307170056.411709304@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,39 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Alexander Aring <aahringo@redhat.com>
 
-commit 2f2bb1ffc9983e227424d0787289da5483b0c74f upstream.
+commit 7354fa4ef697191effedc2ae9a8293427708bbf5 upstream.
 
-Just like for task_work, set the task mode to TASK_RUNNING before doing
-any potential resume work. We're not holding any locks at this point,
-but we may have already set the task state to TASK_INTERRUPTIBLE in
-preparation for going to sleep waiting for events. Ensure that we set it
-back to TASK_RUNNING if we have work to process, to avoid warnings on
-calling blocking operations with !TASK_RUNNING.
+If we release a midcomms node structure, there should be nothing left
+inside the dlm midcomms send queue. However, sometimes this is not true
+because I believe some DLM_FIN message was not acked... if we run
+into a shutdown timeout, then we should be sure there is no pending send
+dlm message inside this queue when releasing midcomms node structure.
 
-Fixes: b5d3ae202fbf ("io_uring: handle TIF_NOTIFY_RESUME when checking for task_work")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Link: https://lore.kernel.org/oe-lkp/202302062208.24d3e563-oliver.sang@intel.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org
+Fixes: 489d8e559c65 ("fs: dlm: add reliable connection if reconnect")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/dlm/midcomms.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -276,8 +276,10 @@ static inline int io_run_task_work(void)
- 	 * notify work that needs processing.
- 	 */
- 	if (current->flags & PF_IO_WORKER &&
--	    test_thread_flag(TIF_NOTIFY_RESUME))
-+	    test_thread_flag(TIF_NOTIFY_RESUME)) {
-+		__set_current_state(TASK_RUNNING);
- 		resume_user_mode_work(NULL);
-+	}
- 	if (task_work_pending(current)) {
- 		__set_current_state(TASK_RUNNING);
- 		task_work_run();
+--- a/fs/dlm/midcomms.c
++++ b/fs/dlm/midcomms.c
+@@ -1402,6 +1402,7 @@ static void midcomms_node_release(struct
+ 	struct midcomms_node *node = container_of(rcu, struct midcomms_node, rcu);
+ 
+ 	WARN_ON_ONCE(atomic_read(&node->send_queue_cnt));
++	dlm_send_queue_flush(node);
+ 	kfree(node);
+ }
+ 
 
 
