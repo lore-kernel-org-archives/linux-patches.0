@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DAFBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:14:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5585C433EF;
-	Tue,  7 Mar 2023 17:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78846BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:14:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA2BC433D2;
+	Tue,  7 Mar 2023 17:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209294;
-	bh=LwRoEihmQgjNMsHRYh2BOOgrKmHX/ZCPXO3Y7kKb6uU=;
+	s=korg; t=1678209297;
+	bh=Yh3YOoIk/i1ir3llnCsDc7kUCVZGRLH/MGwJG31ZoLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BatN/z8eGjNsQYkx3iIubJgZJww1aokH2OWzBjmRIk5TOQHD+/TQvUuTgqE/hKOHw
-	 2qFolDz8Y92pphESA9GA0y9gqXqpL3Z09NEhUH5VquOeQJ0nQCcBA3g2j1WWPFPUTF
-	 fXo9T5qdkgWJhqnALdw446KreOrRgJnAi8tx5zW8=
+	b=l2bijK0+hOwWBBtWm9V4exZiKJPEQh5lfISPH0L++qYiq49Xk2hjIkwz/cJ+xmuqr
+	 PmUUNaeyTx3FaORs4BtLrR+juELRicuBEgIVUAA4r9RSLPAWrZZyszRZLtKYyIbc0a
+	 JWoY6BeW3ACH4DzpJ6l1yECsblf/4wSDq0SRGe3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	"Daniel T. Lee" <danieltimlee@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0172/1001] wifi: wl3501_cs: dont call kfree_skb() under spin_lock_irqsave()
-Date: Tue,  7 Mar 2023 17:49:04 +0100
-Message-Id: <20230307170029.416198601@linuxfoundation.org>
+Subject: [PATCH 6.2 0173/1001] libbpf: Fix invalid return address register in s390
+Date: Tue,  7 Mar 2023 17:49:05 +0100
+Message-Id: <20230307170029.450567839@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,37 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Daniel T. Lee <danieltimlee@gmail.com>
 
-[ Upstream commit 44bacbdf9066c590423259dbd6d520baac99c1a8 ]
+[ Upstream commit 7244eb669397f309c3d014264823cdc9cb3f8e6b ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So replace kfree_skb()
-with dev_kfree_skb_irq() under spin_lock_irqsave(). Compile
-tested only.
+There is currently an invalid register mapping in the s390 return
+address register. As the manual[1] states, the return address can be
+found at r14. In bpf_tracing.h, the s390 registers were named
+gprs(general purpose registers). This commit fixes the problem by
+correcting the mistyped mapping.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221207150453.114742-1-yangyingliang@huawei.com
+[1]: https://uclibc.org/docs/psABI-s390x.pdf#page=14
+
+Fixes: 3cc31d794097 ("libbpf: Normalize PT_REGS_xxx() macro definitions")
+Signed-off-by: Daniel T. Lee <danieltimlee@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20221224071527.2292-7-danieltimlee@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/wl3501_cs.c | 2 +-
+ tools/lib/bpf/bpf_tracing.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/wl3501_cs.c b/drivers/net/wireless/wl3501_cs.c
-index 1b532e00a56fb..7fb2f95134760 100644
---- a/drivers/net/wireless/wl3501_cs.c
-+++ b/drivers/net/wireless/wl3501_cs.c
-@@ -1328,7 +1328,7 @@ static netdev_tx_t wl3501_hard_start_xmit(struct sk_buff *skb,
- 	} else {
- 		++dev->stats.tx_packets;
- 		dev->stats.tx_bytes += skb->len;
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 
- 		if (this->tx_buffer_cnt < 2)
- 			netif_stop_queue(dev);
+diff --git a/tools/lib/bpf/bpf_tracing.h b/tools/lib/bpf/bpf_tracing.h
+index 2972dc25ff722..9c1b1689068d1 100644
+--- a/tools/lib/bpf/bpf_tracing.h
++++ b/tools/lib/bpf/bpf_tracing.h
+@@ -137,7 +137,7 @@ struct pt_regs___s390 {
+ #define __PT_PARM3_REG gprs[4]
+ #define __PT_PARM4_REG gprs[5]
+ #define __PT_PARM5_REG gprs[6]
+-#define __PT_RET_REG grps[14]
++#define __PT_RET_REG gprs[14]
+ #define __PT_FP_REG gprs[11]	/* Works only with CONFIG_FRAME_POINTER */
+ #define __PT_RC_REG gprs[2]
+ #define __PT_SP_REG gprs[15]
 -- 
 2.39.2
 
