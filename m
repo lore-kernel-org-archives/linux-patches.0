@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC12BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:00:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36BAC433EF;
-	Tue,  7 Mar 2023 18:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70157BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:00:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0E3C433EF;
+	Tue,  7 Mar 2023 18:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212046;
-	bh=YTB2LrvUsAhC339pGmRR9hznggeunOXw8XVe3qIxNVE=;
+	s=korg; t=1678212049;
+	bh=XyyTOOZlVv3golpq97BNukYzBmNoAhmKQLeOCin9x9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OKKL4DIZWSyt8NZUd2kzyZ7TJCR3y/TmAbcRTkPMTfpu6zyRFvRYdnSTDoFgLqmSN
-	 OjboODTxl4uddlLxyNyMbV+FjRPWGyyAzjtTDEFPqWFYvmTn1gTwmvrjpEAK2WA6Jz
-	 +/5VTSHa+mZlXtZraItv/UC/RH1Qzc/H3dq6miEE=
+	b=tF09tBJ3bZCvsMYZ97deQXrAuH1UXLaGYVqcpt3Q8LOGSoL4xfE8q3oBpiecAvw1A
+	 9Q1uRQxla1hoBokKuDC3+pLPkliDDw+TnpCSzT1BUvpc5BGLyPkf310ruVz7q6cQ4C
+	 tdf535Q6ggP/omgNU4/HeyTk866MPzVsyc1+Rt3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/885] arm64: dts: amlogic: meson-gxl: add missing unit address to eth-phy-mux node name
-Date: Tue,  7 Mar 2023 17:49:54 +0100
-Message-Id: <20230307170004.373175526@linuxfoundation.org>
+Subject: [PATCH 6.1 061/885] arm64: dts: amlogic: meson-gx-libretech-pc: fix update button name
+Date: Tue,  7 Mar 2023 17:49:55 +0100
+Message-Id: <20230307170004.420130357@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,31 +36,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit d19189f70ba596798ea49166d2d1ef36a8df5289 ]
+[ Upstream commit 6bb506ed36968207a8832f0143ebc127f0770eef ]
 
 Fixes:
-bus@c8834000: eth-phy-mux: {...} should not be valid under {'type': 'object'}
+ adc-keys: 'update-button' does not match any of the regexes: '^button-', 'pinctrl-[0-9]+'
 
-Link: https://lore.kernel.org/r/20230124-b4-amlogic-bindings-fixups-v1-9-44351528957e@linaro.org
+Link: https://lore.kernel.org/r/20230124-b4-amlogic-bindings-fixups-v1-10-44351528957e@linaro.org
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-gxl.dtsi | 2 +-
+ arch/arm64/boot/dts/amlogic/meson-gx-libretech-pc.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
-index c3ac531c4f84a..3500229350522 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
-@@ -759,7 +759,7 @@ mux {
- 		};
- 	};
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gx-libretech-pc.dtsi b/arch/arm64/boot/dts/amlogic/meson-gx-libretech-pc.dtsi
+index bcdf55f48a831..4e84ab87cc7db 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gx-libretech-pc.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-gx-libretech-pc.dtsi
+@@ -17,7 +17,7 @@ adc-keys {
+ 		io-channel-names = "buttons";
+ 		keyup-threshold-microvolt = <1800000>;
  
--	eth-phy-mux {
-+	eth-phy-mux@55c {
- 		compatible = "mdio-mux-mmioreg", "mdio-mux";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
+-		update-button {
++		button-update {
+ 			label = "update";
+ 			linux,code = <KEY_VENDOR>;
+ 			press-threshold-microvolt = <1300000>;
 -- 
 2.39.2
 
