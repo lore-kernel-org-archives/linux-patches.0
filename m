@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FC9BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E0AC433AF;
-	Tue,  7 Mar 2023 17:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3313BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89B3C433D2;
+	Tue,  7 Mar 2023 17:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211687;
-	bh=5/vYxG0d0VhyuEeTFEEZ+72FTBcf0IzUA4kufOOhIWc=;
+	s=korg; t=1678211690;
+	bh=WkIg0ju4dYTrICm/AZnEQmw58BFhiMBugI/e0nsK6SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VOX755I/xqkEkaeZjYc3FGMazm/A7hQhQTVRPJr4M08W6gBaxv9l9GwwiI55MK0n3
-	 UBuRu8NM6uQ/o2xWvmmG3Vh8j0XZ7ojqsWB8TMEtRjcFpEwQHg32Qm+wIvC6VSJ1Q1
-	 SadubgomJlAim/K9UzgsiGlE+w5ZFo6tv8MCvXUQ=
+	b=QmkU1UWttinojixrd6mDHlstxqA4s2XwM8QbxOpXREyJOHXmwqhIcN3+VDLjXnh46
+	 2tyQ1Q0OlKSpvca8vLhx4GA+WCAUvFGJT0FETEtB8VGajJK6eKYCZMgl/yYKaHWH+H
+	 rMr1vP/cTDpwUW660RzI50VV2GqTaeHN6TOCuing=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>
-Subject: [PATCH 6.2 0944/1001] docs: gdbmacros: print newest record
-Date: Tue,  7 Mar 2023 18:01:56 +0100
-Message-Id: <20230307170103.103277514@linuxfoundation.org>
+	Muchun Song <muchun.song@linux.dev>,
+	Will Deacon <will@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.2 0927/1001] arm64: mm: hugetlb: Disable HUGETLB_PAGE_OPTIMIZE_VMEMMAP
+Date: Tue,  7 Mar 2023 18:01:39 +0100
+Message-Id: <20230307170102.323771061@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,42 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-commit f2e4cca2f670c8e52fbb551a295f2afc9aa2bd72 upstream.
+commit 060a2c92d1b627c86c5c42ca69baf00457c00c5a upstream.
 
-@head_id points to the newest record, but the printing loop
-exits when it increments to this value (before printing).
+Revert the HUGETLB_PAGE_FREE_VMEMMAP selection from commit 1e63ac088f20
+("arm64: mm: hugetlb: enable HUGETLB_PAGE_FREE_VMEMMAP for arm64") but
+keep the flush_dcache_page() compound_head() change as it aligns with
+the corresponding check in the __sync_icache_dcache() function.
 
-Exit the printing loop after the newest record has been printed.
+The original config option was renamed in commit 47010c040dec ("mm:
+hugetlb_vmemmap: cleanup CONFIG_HUGETLB_PAGE_FREE_VMEMMAP*") to
+HUGETLB_PAGE_OPTIMIZE_VMEMMAP and the flush_dcache_page() check was
+further simplified by commit 2da1c30929a2 ("mm: hugetlb_vmemmap: delete
+hugetlb_optimize_vmemmap_enabled()").
 
-The python-based function in scripts/gdb/linux/dmesg.py already
-does this correctly.
+The reason for the revert is that the generic vmemmap_remap_pte()
+function changes both the permissions (writeable to read-only) and the
+output address (pfn) of the vmemmap ptes. This is deemed UNPREDICTABLE
+by the Arm architecture without a break-before-make sequence (make the
+PTE invalid, TLBI, write the new valid PTE). However, such sequence is
+not possible since the vmemmap may be concurrently accessed by the
+kernel. Disable the optimisation until a better solution is found.
 
-Fixes: e60768311af8 ("scripts/gdb: update for lockless printk ringbuffer")
-Cc: stable@vger.kernel.org
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20221229134339.197627-1-john.ogness@linutronix.de
+Fixes: 1e63ac088f20 ("arm64: mm: hugetlb: enable HUGETLB_PAGE_FREE_VMEMMAP for arm64")
+Cc: <stable@vger.kernel.org> # 5.19.x
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Will Deacon <will@kernel.org>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/Y9pZALdn3pKiJUeQ@arm.com
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20230222175232.540851-1-catalin.marinas@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/kdump/gdbmacros.txt |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/Kconfig |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/Documentation/admin-guide/kdump/gdbmacros.txt
-+++ b/Documentation/admin-guide/kdump/gdbmacros.txt
-@@ -312,10 +312,10 @@ define dmesg
- 			set var $prev_flags = $info->flags
- 		end
- 
--		set var $id = ($id + 1) & $id_mask
- 		if ($id == $end_id)
- 			loop_break
- 		end
-+		set var $id = ($id + 1) & $id_mask
- 	end
- end
- document dmesg
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -100,7 +100,6 @@ config ARM64
+ 	select ARCH_WANT_DEFAULT_TOPDOWN_MMAP_LAYOUT
+ 	select ARCH_WANT_FRAME_POINTERS
+ 	select ARCH_WANT_HUGE_PMD_SHARE if ARM64_4K_PAGES || (ARM64_16K_PAGES && !ARM64_VA_BITS_36)
+-	select ARCH_WANT_HUGETLB_PAGE_OPTIMIZE_VMEMMAP
+ 	select ARCH_WANT_LD_ORPHAN_WARN
+ 	select ARCH_WANTS_NO_INSTR
+ 	select ARCH_WANTS_THP_SWAP if ARM64_4K_PAGES
 
 
