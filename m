@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB82DBA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:52:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B47C433D2;
-	Tue,  7 Mar 2023 17:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4953BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:52:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09844C433D2;
+	Tue,  7 Mar 2023 17:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211567;
-	bh=JCnY6fWj1Mw4hH8m+25swBiBUQgvT7porpghlKP5510=;
+	s=korg; t=1678211570;
+	bh=xbzf+g2vb/WKEsVaf8pcZPij54fkyJe4D16VvtKhRUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PUhsZxIftrqU2Sr/g1lRhBh2MFtW7cSHCE7x+YTR+vgDKRNfgBJs5OZ4Sht1og8xi
-	 FyRGps0nQzbizrT/XlZ+VADK46H5kUeKOqQO+nCiHt+47qWdlnNbhmMlBXFC7XtVZG
-	 cZScEThA2jXbo1Ij7Wo9afbctgbLQn8FwumjuQCY=
+	b=EPXfvFHb/9skGI8ogUeLnFrb0BhtL6HicEKmqBSGNTrrYWbCLr+l8Wv1obPK3Zels
+	 oBnByJTRM+5YZgSvyXetCua/T8kv8NOvNw0Kl/4TJFLxdARoZeNMRUJdovV99ol0e9
+	 pOLM79Nwh/brBVHwWBzd2M38bQELTpY/ixM4A9AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Len Brown <len.brown@intel.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.2 0905/1001] wifi: ath11k: allow system suspend to survive ath11k
-Date: Tue,  7 Mar 2023 18:01:17 +0100
-Message-Id: <20230307170101.294472510@linuxfoundation.org>
+	Alexander Wetzel <alexander@wetzel-home.de>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.2 0906/1001] wifi: cfg80211: Fix use after free for wext
+Date: Tue,  7 Mar 2023 18:01:18 +0100
+Message-Id: <20230307170101.338070161@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,48 +34,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Len Brown <len.brown@intel.com>
+From: Alexander Wetzel <alexander@wetzel-home.de>
 
-commit 7c15430822e71e90203d87e6d0cfe83fa058b0dc upstream.
+commit 015b8cc5e7c4d7bb671f1984d7b7338c310b185b upstream.
 
-When ath11k runs into internal errors upon suspend,
-it returns an error code to pci_pm_suspend, which
-aborts the entire system suspend.
+Key information in wext.connect is not reset on (re)connect and can hold
+data from a previous connection.
 
-The driver should not abort system suspend, but should
-keep its internal errors to itself, and allow the system
-to suspend.  Otherwise, a user can suspend a laptop
-by closing the lid and sealing it into a case, assuming
-that is will suspend, rather than heating up and draining
-the battery when in transit.
+Reset key data to avoid that drivers or mac80211 incorrectly detect a
+WEP connection request and access the freed or already reused memory.
 
-In practice, the ath11k device seems to have plenty of transient
-errors, and subsequent suspend cycles after this failure
-often succeed.
+Additionally optimize cfg80211_sme_connect() and avoid an useless
+schedule of conn_work.
 
-https://bugzilla.kernel.org/show_bug.cgi?id=216968
-
-Fixes: d1b0c33850d29 ("ath11k: implement suspend for QCA6390 PCI devices")
-
-Signed-off-by: Len Brown <len.brown@intel.com>
+Fixes: fffd0934b939 ("cfg80211: rework key operation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230201183201.14431-1-len.brown@intel.com
+Link: https://lore.kernel.org/r/20230124141856.356646-1-alexander@wetzel-home.de
+Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/pci.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/sme.c |   31 ++++++++++++++++++++++++++-----
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
---- a/drivers/net/wireless/ath/ath11k/pci.c
-+++ b/drivers/net/wireless/ath/ath11k/pci.c
-@@ -979,7 +979,7 @@ static __maybe_unused int ath11k_pci_pm_
- 	if (ret)
- 		ath11k_warn(ab, "failed to suspend core: %d\n", ret);
- 
--	return ret;
-+	return 0;
+--- a/net/wireless/sme.c
++++ b/net/wireless/sme.c
+@@ -285,6 +285,15 @@ void cfg80211_conn_work(struct work_stru
+ 	wiphy_unlock(&rdev->wiphy);
  }
  
- static __maybe_unused int ath11k_pci_pm_resume(struct device *dev)
++static void cfg80211_step_auth_next(struct cfg80211_conn *conn,
++				    struct cfg80211_bss *bss)
++{
++	memcpy(conn->bssid, bss->bssid, ETH_ALEN);
++	conn->params.bssid = conn->bssid;
++	conn->params.channel = bss->channel;
++	conn->state = CFG80211_CONN_AUTHENTICATE_NEXT;
++}
++
+ /* Returned bss is reference counted and must be cleaned up appropriately. */
+ static struct cfg80211_bss *cfg80211_get_conn_bss(struct wireless_dev *wdev)
+ {
+@@ -302,10 +311,7 @@ static struct cfg80211_bss *cfg80211_get
+ 	if (!bss)
+ 		return NULL;
+ 
+-	memcpy(wdev->conn->bssid, bss->bssid, ETH_ALEN);
+-	wdev->conn->params.bssid = wdev->conn->bssid;
+-	wdev->conn->params.channel = bss->channel;
+-	wdev->conn->state = CFG80211_CONN_AUTHENTICATE_NEXT;
++	cfg80211_step_auth_next(wdev->conn, bss);
+ 	schedule_work(&rdev->conn_work);
+ 
+ 	return bss;
+@@ -597,7 +603,12 @@ static int cfg80211_sme_connect(struct w
+ 	wdev->conn->params.ssid_len = wdev->u.client.ssid_len;
+ 
+ 	/* see if we have the bss already */
+-	bss = cfg80211_get_conn_bss(wdev);
++	bss = cfg80211_get_bss(wdev->wiphy, wdev->conn->params.channel,
++			       wdev->conn->params.bssid,
++			       wdev->conn->params.ssid,
++			       wdev->conn->params.ssid_len,
++			       wdev->conn_bss_type,
++			       IEEE80211_PRIVACY(wdev->conn->params.privacy));
+ 
+ 	if (prev_bssid) {
+ 		memcpy(wdev->conn->prev_bssid, prev_bssid, ETH_ALEN);
+@@ -608,6 +619,7 @@ static int cfg80211_sme_connect(struct w
+ 	if (bss) {
+ 		enum nl80211_timeout_reason treason;
+ 
++		cfg80211_step_auth_next(wdev->conn, bss);
+ 		err = cfg80211_conn_do_work(wdev, &treason);
+ 		cfg80211_put_bss(wdev->wiphy, bss);
+ 	} else {
+@@ -1468,6 +1480,15 @@ int cfg80211_connect(struct cfg80211_reg
+ 	} else {
+ 		if (WARN_ON(connkeys))
+ 			return -EINVAL;
++
++		/* connect can point to wdev->wext.connect which
++		 * can hold key data from a previous connection
++		 */
++		connect->key = NULL;
++		connect->key_len = 0;
++		connect->key_idx = 0;
++		connect->crypto.cipher_group = 0;
++		connect->crypto.n_ciphers_pairwise = 0;
+ 	}
+ 
+ 	wdev->connect_keys = connkeys;
 
 
