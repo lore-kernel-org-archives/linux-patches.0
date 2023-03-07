@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BAEBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:47:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D148EC433EF;
-	Tue,  7 Mar 2023 18:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D70BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:47:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0710BC433EF;
+	Tue,  7 Mar 2023 18:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214821;
-	bh=pnwr+5QkLJuEZdjhFK8OxgVxQsRPv5iJzk7gIcqY8k8=;
+	s=korg; t=1678214824;
+	bh=/CiLiZ4ZhIUoIABFC7/F5Aq1DKQhCCrH8EVglSmFoNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r7UaQQ6T5ga4OuBQWHF5iErNzV5sAHDZzfI7i1QxWIhh6fY3RuPB3J/1Gv6LOSw5s
-	 5LPd+dXLZUqNT81xdl4VCjTIjyQTTFbkljqolIY66lRDOibdvHXLTjGiJ9HMgoer6R
-	 B4Q9DBtGmV0prTLEA667p/l965JBB/fgE2+ot4bs=
+	b=Q+rpu+vls2BDP+8om/FuGm04KcGq78Y4DLpeK9ZPvjXNMUgI099FWDjDH/yK7N5n2
+	 o6G8Be4LvdsXREKlTkD5oQ3gAfJbfiXOIuQylHTuBF+l+IOokqMGdE+WvkVUlTj85X
+	 YiQf7hG40fodatzRlUAGD6csUb+a4dAAh4CVxOfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Denis Kenzior <denkenz@gmail.com>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 053/567] arm64: dts: mediatek: mt7622: Add missing pwm-cells to pwm node
-Date: Tue,  7 Mar 2023 17:56:29 +0100
-Message-Id: <20230307165908.204242298@linuxfoundation.org>
+Subject: [PATCH 5.15 062/567] KEYS: asymmetric: Fix ECDSA use via keyctl uapi
+Date: Tue,  7 Mar 2023 17:56:38 +0100
+Message-Id: <20230307165908.570413868@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,33 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Denis Kenzior <denkenz@gmail.com>
 
-[ Upstream commit 22925af785fa3470efdf566339616d801119d348 ]
+[ Upstream commit 10de7b54293995368c52d9aa153f3e7a359f04a1 ]
 
-Specify #pwm-cells on pwm@11006000 to make it actually usable.
+When support for ECDSA keys was added, constraints for data & signature
+sizes were never updated.  This makes it impossible to use such keys via
+keyctl API from userspace.
 
-Fixes: ae457b7679c4 ("arm64: dts: mt7622: add SoC and peripheral related device nodes")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221128112028.58021-2-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Update constraint on max_data_size to 64 bytes in order to support
+SHA512-based signatures. Also update the signature length constraints
+per ECDSA signature encoding described in RFC 5480.
+
+Fixes: 299f561a6693 ("x509: Add support for parsing x509 certs with ECDSA keys")
+Signed-off-by: Denis Kenzior <denkenz@gmail.com>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7622.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ crypto/asymmetric_keys/public_key.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt7622.dtsi b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-index 890a942ec6082..a4c48b2abd209 100644
---- a/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-@@ -428,6 +428,7 @@ uart3: serial@11005000 {
- 	pwm: pwm@11006000 {
- 		compatible = "mediatek,mt7622-pwm";
- 		reg = <0 0x11006000 0 0x1000>;
-+		#pwm-cells = <2>;
- 		interrupts = <GIC_SPI 77 IRQ_TYPE_LEVEL_LOW>;
- 		clocks = <&topckgen CLK_TOP_PWM_SEL>,
- 			 <&pericfg CLK_PERI_PWM_PD>,
+diff --git a/crypto/asymmetric_keys/public_key.c b/crypto/asymmetric_keys/public_key.c
+index 2f8352e888602..eca5671ad3f22 100644
+--- a/crypto/asymmetric_keys/public_key.c
++++ b/crypto/asymmetric_keys/public_key.c
+@@ -186,8 +186,28 @@ static int software_key_query(const struct kernel_pkey_params *params,
+ 
+ 	len = crypto_akcipher_maxsize(tfm);
+ 	info->key_size = len * 8;
+-	info->max_data_size = len;
+-	info->max_sig_size = len;
++
++	if (strncmp(pkey->pkey_algo, "ecdsa", 5) == 0) {
++		/*
++		 * ECDSA key sizes are much smaller than RSA, and thus could
++		 * operate on (hashed) inputs that are larger than key size.
++		 * For example SHA384-hashed input used with secp256r1
++		 * based keys.  Set max_data_size to be at least as large as
++		 * the largest supported hash size (SHA512)
++		 */
++		info->max_data_size = 64;
++
++		/*
++		 * Verify takes ECDSA-Sig (described in RFC 5480) as input,
++		 * which is actually 2 'key_size'-bit integers encoded in
++		 * ASN.1.  Account for the ASN.1 encoding overhead here.
++		 */
++		info->max_sig_size = 2 * (len + 3) + 2;
++	} else {
++		info->max_data_size = len;
++		info->max_sig_size = len;
++	}
++
+ 	info->max_enc_size = len;
+ 	info->max_dec_size = len;
+ 	info->supported_ops = (KEYCTL_SUPPORTS_ENCRYPT |
 -- 
 2.39.2
 
