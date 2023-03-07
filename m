@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8343CBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:36:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E20C433D2;
-	Tue,  7 Mar 2023 17:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7E1BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:36:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39F7C433EF;
+	Tue,  7 Mar 2023 17:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210579;
-	bh=cCqQIGm9fMkHgIyiODid/+uhkH9QJkxMWagOqX5XdTo=;
+	s=korg; t=1678210582;
+	bh=+LTA0n8ztw/j1cORx/hPzDCPRpiwl5uFEUaAES4uhUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=14dKHR0CsMDdHUDxhBJ0B87BGjOKnyOn9cKs+8g8bbTs6l3F0MZTjUewCVoZzRv23
-	 sHf67hgYFPk3dqp7bxxZdDxVnSvXBk2Pw2apdDl+BDw1Fk47atn7rwUOQJRTMZduaU
-	 dfEdRI6l9o3iR6tojW2b5MeRLIA2IBFU9GBwMKXQ=
+	b=U+ljAbUx/I/GBLikdU8HPQ06ZwMmG3CRV0dWtDSBbDHPaTHr6FhRLXYuDR2D+o05D
+	 mSizpS28UsOhi79vzxhBL0+XeW3e97aFti+t0pn6rpIQuvQ3FawWUSG63/7lsBkBft
+	 kz+7i9BDUNSyYxYSRphju6BEx2dA3q0dl3rWNvJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Rui Miguel Silva <rmfrfs@gmail.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0585/1001] media: imx: imx7-media-csi: fix missing clk_disable_unprepare() in imx7_csi_init()
-Date: Tue,  7 Mar 2023 17:55:57 +0100
-Message-Id: <20230307170046.873332102@linuxfoundation.org>
+Subject: [PATCH 6.2 0586/1001] powerpc: Remove linker flag from KBUILD_AFLAGS
+Date: Tue,  7 Mar 2023 17:55:58 +0100
+Message-Id: <20230307170046.920336372@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,39 +39,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit cea606d9e996a77eed57fc60709e0728341450e3 ]
+[ Upstream commit 31f48f16264bc70962fb3e7ec62da64d0a2ba04a ]
 
-Add missing clk_disable_unprepare(), if imx7_csi_dma_setup() fails
-in imx7_csi_init().
+When clang's -Qunused-arguments is dropped from KBUILD_CPPFLAGS, it
+points out that KBUILD_AFLAGS contains a linker flag, which will be
+unused:
 
-Fixes: ff43ca911978 ("media: imx: imx7-media-csi: Move CSI configuration before source start")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Rui Miguel Silva <rmfrfs@gmail.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+  clang: error: -Wl,-a32: 'linker' input unused [-Werror,-Wunused-command-line-argument]
+
+This was likely supposed to be '-Wa,-a$(BITS)'. However, this change is
+unnecessary, as all supported versions of clang and gcc will pass '-a64'
+or '-a32' to GNU as based on the value of '-m'; the behavior of the
+latest stable release of the oldest supported major version of each
+compiler is shown below and each compiler's latest release exhibits the
+same behavior (GCC 12.2.0 and Clang 15.0.6).
+
+  $ powerpc64-linux-gcc --version | head -1
+  powerpc64-linux-gcc (GCC) 5.5.0
+
+  $ powerpc64-linux-gcc -m64 -### -x assembler-with-cpp -c -o /dev/null /dev/null &| grep 'as '
+  .../as -a64 -mppc64 -many -mbig -o /dev/null /tmp/cctwuBzZ.s
+
+  $ powerpc64-linux-gcc -m32 -### -x assembler-with-cpp -c -o /dev/null /dev/null &| grep 'as '
+  .../as -a32 -mppc -many -mbig -o /dev/null /tmp/ccaZP4mF.sg
+
+  $ clang --version | head -1
+  Ubuntu clang version 11.1.0-++20211011094159+1fdec59bffc1-1~exp1~20211011214622.5
+
+  $ clang --target=powerpc64-linux-gnu -fno-integrated-as -m64 -### \
+    -x assembler-with-cpp -c -o /dev/null /dev/null &| grep gnu-as
+   "/usr/bin/powerpc64-linux-gnu-as" "-a64" "-mppc64" "-many" "-o" "/dev/null" "/tmp/null-80267c.s"
+
+  $ clang --target=powerpc64-linux-gnu -fno-integrated-as -m64 -### \
+    -x assembler-with-cpp -c -o /dev/null /dev/null &| grep gnu-as
+   "/usr/bin/powerpc64-linux-gnu-as" "-a32" "-mppc" "-many" "-o" "/dev/null" "/tmp/null-ab8f8d.s"
+
+Remove this flag altogether to avoid future issues.
+
+Fixes: 1421dc6d4829 ("powerpc/kbuild: Use flags variables rather than overriding LD/CC/AS")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Anders Roxell <anders.roxell@linaro.org>
+Acked-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/nxp/imx7-media-csi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/powerpc/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/nxp/imx7-media-csi.c b/drivers/media/platform/nxp/imx7-media-csi.c
-index 886374d3a6ff1..1ef92c8c0098c 100644
---- a/drivers/media/platform/nxp/imx7-media-csi.c
-+++ b/drivers/media/platform/nxp/imx7-media-csi.c
-@@ -638,8 +638,10 @@ static int imx7_csi_init(struct imx7_csi *csi)
- 	imx7_csi_configure(csi);
+diff --git a/arch/powerpc/Makefile b/arch/powerpc/Makefile
+index dc4cbf0a5ca95..4fd630efe39d3 100644
+--- a/arch/powerpc/Makefile
++++ b/arch/powerpc/Makefile
+@@ -90,7 +90,7 @@ aflags-$(CONFIG_CPU_LITTLE_ENDIAN)	+= -mlittle-endian
  
- 	ret = imx7_csi_dma_setup(csi);
--	if (ret < 0)
-+	if (ret < 0) {
-+		clk_disable_unprepare(csi->mclk);
- 		return ret;
-+	}
+ ifeq ($(HAS_BIARCH),y)
+ KBUILD_CFLAGS	+= -m$(BITS)
+-KBUILD_AFLAGS	+= -m$(BITS) -Wl,-a$(BITS)
++KBUILD_AFLAGS	+= -m$(BITS)
+ KBUILD_LDFLAGS	+= -m elf$(BITS)$(LDEMULATION)
+ endif
  
- 	return 0;
- }
 -- 
 2.39.2
 
