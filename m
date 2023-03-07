@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EEEBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA26AC433EF;
-	Tue,  7 Mar 2023 17:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC7DBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62F7C4339B;
+	Tue,  7 Mar 2023 17:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210520;
-	bh=a02lvWe/c8hK+o/yx98B+JMYtiHGutCBvoER+1onf8E=;
+	s=korg; t=1678210523;
+	bh=hp1GDTXDIT4zbBW6oQM2a5OSyzrk3SSlkDqAuSyprSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w0EB+xr4ua4DFN8fmCm5HgjPsAgoZr4K2X8pfTX5YcK7ucuEFc9M15exsB/5J88tZ
-	 x9UdqhHVt8jhJSc8SZukD4LBzarGTaNXeOgKLXY3jqaeG5m5Jjij4XEH0lEAoXP0hG
-	 l34gRMhVeDmR6Ua4XRvX2C6hIrKvStVngGKFyv8s=
+	b=hzy5bCZnw4YahC6cJpDnFzEZKVZUd7YjOvCzNFPgbYxANKQ7Qu4fZnu5dkzx99h2s
+	 JDUZpemlUKSG3pWGbj1qfWID4zqnvxp7vBOEfH19CH8sg3rLM2zmQ5+RclzOJaovAV
+	 JHBM5vbD8xEE0cWdYtfzEb63ZQ7E+s4PXatAyRLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sanjay Kumar <sanjay.k.kumar@intel.com>,
+	Tina Zhang <tina.zhang@intel.com>,
 	Kevin Tian <kevin.tian@intel.com>,
 	Lu Baolu <baolu.lu@linux.intel.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0568/1001] iommu/vt-d: Fix error handling in sva enable/disable paths
-Date: Tue,  7 Mar 2023 17:55:40 +0100
-Message-Id: <20230307170046.125356172@linuxfoundation.org>
+Subject: [PATCH 6.2 0569/1001] iommu/vt-d: Allow to use flush-queue when first level is default
+Date: Tue,  7 Mar 2023 17:55:41 +0100
+Message-Id: <20230307170046.174963858@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,57 +38,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Tina Zhang <tina.zhang@intel.com>
 
-[ Upstream commit 60b1daa3b168fbc648ae2ad28a84759223e49e18 ]
+[ Upstream commit 257ec290741924f8df678927d0dfecb1deebb9c5 ]
 
-Roll back all previous actions in error paths of intel_iommu_enable_sva()
-and intel_iommu_disable_sva().
+Commit 29b32839725f ("iommu/vt-d: Do not use flush-queue when caching-mode
+is on") forced default domains to be strict mode as long as IOMMU
+caching-mode is flagged. The reason for doing this is that when vIOMMU
+uses VT-d caching mode to synchronize shadowing page tables, the strict
+mode shows better performance.
 
-Fixes: d5b9e4bfe0d8 ("iommu/vt-d: Report prq to io-pgfault framework")
+However, this optimization is orthogonal to the first-level page table
+because the Intel VT-d architecture does not define the caching mode of
+the first-level page table. Refer to VT-d spec, section 6.1, "When the
+CM field is reported as Set, any software updates to remapping
+structures other than first-stage mapping (including updates to not-
+present entries or present entries whose programming resulted in
+translation faults) requires explicit invalidation of the caches."
+Exclude the first-level page table from this optimization.
+
+Generally using first-stage translation in vIOMMU implies nested
+translation enabled in the physical IOMMU. In this case the first-stage
+page table is wholly captured by the guest. The vIOMMU only needs to
+transfer the cache invalidations on vIOMMU to the physical IOMMU.
+Forcing the default domain to strict mode will cause more frequent
+cache invalidations, resulting in performance degradation. In a real
+performance benchmark test measured by iperf receive, the performance
+result on Sapphire Rapids 100Gb NIC shows:
+w/ this fix ~51 Gbits/s, w/o this fix ~39.3 Gbits/s.
+
+Theoretically a first-stage IOMMU page table can still be shadowed
+in absence of the caching mode, e.g. with host write-protecting guest
+IOMMU page table to synchronize changed PTEs with the physical
+IOMMU page table. In this case the shadowing overhead is decoupled
+from emulating IOTLB invalidation then the overhead of the latter part
+is solely decided by the frequency of IOTLB invalidations. Hence
+allowing guest default dma domain to be lazy can also benefit the
+overall performance by reducing the total VM-exit numbers.
+
+Fixes: 29b32839725f ("iommu/vt-d: Do not use flush-queue when caching-mode is on")
+Reported-by: Sanjay Kumar <sanjay.k.kumar@intel.com>
+Suggested-by: Sanjay Kumar <sanjay.k.kumar@intel.com>
+Signed-off-by: Tina Zhang <tina.zhang@intel.com>
 Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20230214025618.2292889-1-tina.zhang@intel.com
 Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20230208051559.700109-1-baolu.lu@linux.intel.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/iommu/intel/iommu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 59df7e42fd533..994dffa1db57a 100644
+index 994dffa1db57a..b40ef352b0efc 100644
 --- a/drivers/iommu/intel/iommu.c
 +++ b/drivers/iommu/intel/iommu.c
-@@ -4642,8 +4642,12 @@ static int intel_iommu_enable_sva(struct device *dev)
- 		return -EINVAL;
- 
- 	ret = iopf_queue_add_device(iommu->iopf_queue, dev);
--	if (!ret)
--		ret = iommu_register_device_fault_handler(dev, iommu_queue_iopf, dev);
-+	if (ret)
-+		return ret;
-+
-+	ret = iommu_register_device_fault_handler(dev, iommu_queue_iopf, dev);
-+	if (ret)
-+		iopf_queue_remove_device(iommu->iopf_queue, dev);
- 
- 	return ret;
- }
-@@ -4655,8 +4659,12 @@ static int intel_iommu_disable_sva(struct device *dev)
- 	int ret;
- 
- 	ret = iommu_unregister_device_fault_handler(dev);
--	if (!ret)
--		ret = iopf_queue_remove_device(iommu->iopf_queue, dev);
-+	if (ret)
-+		return ret;
-+
-+	ret = iopf_queue_remove_device(iommu->iopf_queue, dev);
-+	if (ret)
-+		iommu_register_device_fault_handler(dev, iommu_queue_iopf, dev);
- 
- 	return ret;
- }
+@@ -4005,7 +4005,8 @@ int __init intel_iommu_init(void)
+ 		 * is likely to be much lower than the overhead of synchronizing
+ 		 * the virtual and physical IOMMU page-tables.
+ 		 */
+-		if (cap_caching_mode(iommu->cap)) {
++		if (cap_caching_mode(iommu->cap) &&
++		    !first_level_by_default(IOMMU_DOMAIN_DMA)) {
+ 			pr_info_once("IOMMU batching disallowed due to virtualization\n");
+ 			iommu_set_dma_strict();
+ 		}
 -- 
 2.39.2
 
