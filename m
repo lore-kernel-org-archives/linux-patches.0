@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0306CBA52
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:11:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79128C433EF;
-	Tue,  7 Mar 2023 19:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED484BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:11:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1C4C433EF;
+	Tue,  7 Mar 2023 19:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216284;
-	bh=tq0xN++537YpytXOlsaff1G3Q1pz2bnuBKNcMw/s6DI=;
+	s=korg; t=1678216287;
+	bh=R5Mkg3aaao5rRO7lP+B2HKIZW/sCjd8uaip/12m9qZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I+tyrpcoGm1ECsuP7L0Q20F6OIpphFBArAblPbZ/RHqGRDxmoMp1iwg6K4XbeEkcg
-	 2c7PK3eP3NHY9zdKbIMKvScrE/InT5ndebaGcIUmmiLx9EgfiB6RINQzLOoXxatswv
-	 PucNotxYC/i6pw+kUGJlE6/7trxZpn7xd/rai19s=
+	b=PQ4WTlzOPNOpaIP/eYoLbE6GwdR8UNeVQwVb4wD/3NAOjBsYh8uA57G7DVQiCYm2t
+	 +WtRkhSaFxLh77YPROyVSS1i2zCIC3v5N0pfFmjA8u7JNmhKZTxSAPWsm30rOliwQc
+	 hijf7peWwb42VkaFAfifUGuHFdPqk8WjiSjIQ57I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.15 533/567] ktest.pl: Give back console on Ctrt^C on monitor
-Date: Tue,  7 Mar 2023 18:04:29 +0100
-Message-Id: <20230307165929.052295506@linuxfoundation.org>
+	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Dhruva Gole <d-gole@ti.com>,
+	Pratyush Yadav <ptyadav@amazon.de>
+Subject: [PATCH 5.15 503/567] mtd: spi-nor: spansion: Consider reserved bits in CFR5 register
+Date: Tue,  7 Mar 2023 18:03:59 +0100
+Message-Id: <20230307165927.776299175@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -33,36 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-commit 83d29d439cd3ef23041570d55841f814af2ecac0 upstream.
+commit 3f592a869f87723314f0cb1ac232bd3bf8245be8 upstream.
 
-When monitoring the console output, the stdout is being redirected to do
-so. If Ctrl^C is hit during this mode, the stdout is not back to the
-console, the user does not see anything they type (no echo).
+CFR5[6] is reserved bit and must be always 1. Set it to comply with flash
+requirements. While fixing SPINOR_REG_CYPRESS_CFR5V_OCT_DTR_{EN, DS}
+definition, stop using magic numbers and describe the missing bit fields
+in CFR5 register. This is useful for both readability and future possible
+addition of Octal STR mode support.
 
-Add "end_monitor" to the SIGINT interrupt handler to give back the console
-on Ctrl^C.
-
+Fixes: c3266af101f2 ("mtd: spi-nor: spansion: add support for Cypress Semper flash")
 Cc: stable@vger.kernel.org
-Fixes: 9f2cdcbbb90e7 ("ktest: Give console process a dedicated tty")
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Reported-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Reviewed-by: Pratyush Yadav <ptyadav@amazon.de>
+Tested-by: Dhruva Gole <d-gole@ti.com>
+Link: https://lore.kernel.org/linux-mtd/20230110164703.83413-1-tudor.ambarus@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/ktest/ktest.pl |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mtd/spi-nor/spansion.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -4193,6 +4193,9 @@ sub send_email {
- }
+--- a/drivers/mtd/spi-nor/spansion.c
++++ b/drivers/mtd/spi-nor/spansion.c
+@@ -15,8 +15,13 @@
+ #define SPINOR_REG_CYPRESS_CFR3V		0x00800004
+ #define SPINOR_REG_CYPRESS_CFR3V_PGSZ		BIT(4) /* Page size. */
+ #define SPINOR_REG_CYPRESS_CFR5V		0x00800006
+-#define SPINOR_REG_CYPRESS_CFR5V_OCT_DTR_EN	0x3
+-#define SPINOR_REG_CYPRESS_CFR5V_OCT_DTR_DS	0
++#define SPINOR_REG_CYPRESS_CFR5_BIT6		BIT(6)
++#define SPINOR_REG_CYPRESS_CFR5_DDR		BIT(1)
++#define SPINOR_REG_CYPRESS_CFR5_OPI		BIT(0)
++#define SPINOR_REG_CYPRESS_CFR5V_OCT_DTR_EN				\
++	(SPINOR_REG_CYPRESS_CFR5_BIT6 |	SPINOR_REG_CYPRESS_CFR5_DDR |	\
++	 SPINOR_REG_CYPRESS_CFR5_OPI)
++#define SPINOR_REG_CYPRESS_CFR5V_OCT_DTR_DS	SPINOR_REG_CYPRESS_CFR5_BIT6
+ #define SPINOR_OP_CYPRESS_RD_FAST		0xee
  
- sub cancel_test {
-+    if ($monitor_cnt) {
-+	end_monitor;
-+    }
-     if ($email_when_canceled) {
- 	my $name = get_test_name;
- 	send_email("KTEST: Your [$name] test was cancelled",
+ /**
 
 
