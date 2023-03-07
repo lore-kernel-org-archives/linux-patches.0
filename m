@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390FBBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92843C433EF;
-	Tue,  7 Mar 2023 17:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D59BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6121C433EF;
+	Tue,  7 Mar 2023 17:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210140;
-	bh=6/OwhqZEoCnWMvzWTG606iTH0y7ZrDpAltPe5w4+44o=;
+	s=korg; t=1678210143;
+	bh=w/OFUmNltoAFo66qK+uQlG9sHZGyUPwRkXH2JuihsB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GHbEbc3274JqQhhZK5E8uGQydRDvidTmeCNj2VHyZr4QyxHfh35G79jI8U7KS9592
-	 O+ZZ13t4X/ABg0hoXN4Aa5L8D2801z5RAdlUFyFS0fmRc7KsnjKmmDvJF/wizjAJwA
-	 7Xu2VQ3H6kZOYeDabqZ6B1qkAcqiZ2x4LajMkHts=
+	b=TqLY7Lx+diX9niwvBECV2k2IcT4PtzTL8GVUw/WcV1AbRtK15oOKHsVsNJQTf29mm
+	 apZTMd6KRmK1z3jyz1oUmWCJJkbcITPX+ap0+y4pGRAAsHbhblTYLo2QCF8J+iSagd
+	 OVZwqbpoNl76SbgUFigE9QUO3mEYEwFCFVDucKrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pietro Borrello <borrello@diag.uniroma1.it>,
 	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0445/1001] HID: bigben: use spinlock to safely schedule workers
-Date: Tue,  7 Mar 2023 17:53:37 +0100
-Message-Id: <20230307170040.665533798@linuxfoundation.org>
+Subject: [PATCH 6.2 0446/1001] hid: bigben_probe(): validate report count
+Date: Tue,  7 Mar 2023 17:53:38 +0100
+Message-Id: <20230307170040.705736423@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,79 +37,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 76ca8da989c7d97a7f76c75d475fe95a584439d7 ]
+[ Upstream commit b94335f899542a0da5fafc38af8edcaf90195843 ]
 
-Use spinlocks to deal with workers introducing a wrapper
-bigben_schedule_work(), and several spinlock checks.
-Otherwise, bigben_set_led() may schedule bigben->worker after the
-structure has been freed, causing a use-after-free.
+bigben_probe() does not validate that the output report has the
+needed report values in the first field.
+A malicious device registering a report with one field and a single
+value causes an head OOB write in bigben_worker() when
+accessing report_field->value[1] to report_field->value[7].
+Use hid_validate_values() which takes care of all the needed checks.
 
-Fixes: 4eb1b01de5b9 ("HID: hid-bigbenff: fix race condition for scheduled work during removal")
+Fixes: 256a90ed9e46 ("HID: hid-bigbenff: driver for BigBen Interactive PS3OFMINIPAD gamepad")
 Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-3-7860c5763c38@diag.uniroma1.it
+Link: https://lore.kernel.org/r/20230211-bigben-oob-v1-1-d2849688594c@diag.uniroma1.it
 Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-bigbenff.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/hid/hid-bigbenff.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/hid/hid-bigbenff.c b/drivers/hid/hid-bigbenff.c
-index b98c5f31c184b..9d6560db762b1 100644
+index 9d6560db762b1..a02cb517b4c47 100644
 --- a/drivers/hid/hid-bigbenff.c
 +++ b/drivers/hid/hid-bigbenff.c
-@@ -185,6 +185,15 @@ struct bigben_device {
- 	struct work_struct worker;
- };
- 
-+static inline void bigben_schedule_work(struct bigben_device *bigben)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&bigben->lock, flags);
-+	if (!bigben->removed)
-+		schedule_work(&bigben->worker);
-+	spin_unlock_irqrestore(&bigben->lock, flags);
-+}
- 
- static void bigben_worker(struct work_struct *work)
+@@ -371,7 +371,6 @@ static int bigben_probe(struct hid_device *hid,
  {
-@@ -197,9 +206,6 @@ static void bigben_worker(struct work_struct *work)
- 	u32 len;
- 	unsigned long flags;
- 
--	if (bigben->removed)
--		return;
--
- 	buf = hid_alloc_report_buf(bigben->report, GFP_KERNEL);
- 	if (!buf)
- 		return;
-@@ -285,7 +291,7 @@ static int hid_bigben_play_effect(struct input_dev *dev, void *data,
- 		bigben->work_ff = true;
- 		spin_unlock_irqrestore(&bigben->lock, flags);
- 
--		schedule_work(&bigben->worker);
-+		bigben_schedule_work(bigben);
+ 	struct bigben_device *bigben;
+ 	struct hid_input *hidinput;
+-	struct list_head *report_list;
+ 	struct led_classdev *led;
+ 	char *name;
+ 	size_t name_sz;
+@@ -396,14 +395,12 @@ static int bigben_probe(struct hid_device *hid,
+ 		return error;
  	}
  
- 	return 0;
-@@ -320,7 +326,7 @@ static void bigben_set_led(struct led_classdev *led,
+-	report_list = &hid->report_enum[HID_OUTPUT_REPORT].report_list;
+-	if (list_empty(report_list)) {
++	bigben->report = hid_validate_values(hid, HID_OUTPUT_REPORT, 0, 0, 8);
++	if (!bigben->report) {
+ 		hid_err(hid, "no output report found\n");
+ 		error = -ENODEV;
+ 		goto error_hw_stop;
+ 	}
+-	bigben->report = list_entry(report_list->next,
+-		struct hid_report, list);
  
- 			if (work) {
- 				bigben->work_led = true;
--				schedule_work(&bigben->worker);
-+				bigben_schedule_work(bigben);
- 			}
- 			return;
- 		}
-@@ -450,7 +456,7 @@ static int bigben_probe(struct hid_device *hid,
- 	bigben->left_motor_force = 0;
- 	bigben->work_led = true;
- 	bigben->work_ff = true;
--	schedule_work(&bigben->worker);
-+	bigben_schedule_work(bigben);
- 
- 	hid_info(hid, "LED and force feedback support for BigBen gamepad\n");
- 
+ 	if (list_empty(&hid->inputs)) {
+ 		hid_err(hid, "no inputs found\n");
 -- 
 2.39.2
 
