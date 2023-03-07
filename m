@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F98BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:34:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B65C433EF;
-	Tue,  7 Mar 2023 18:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C41BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:34:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C94C433D2;
+	Tue,  7 Mar 2023 18:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214091;
-	bh=vtvESFG5JfppKxtY/W8jRrAfMs3Hh0Qkutd20fRCSEo=;
+	s=korg; t=1678214094;
+	bh=IVflbQEsNbmzVde27EniVfya7sEajlwzUV+X3opTw0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pEyxle4K25ZIsRpDVh3+aq6BlVaTFCAMzOgz55CnMTiolejNXhGiURwQtUuHetmmE
-	 QRmJpQKZ/YJBxhrehSOCJZBpGve+jVa/tep+xEKq3XHrr2KuglyeqqOzRdtstYl6vq
-	 7QY0iCufwMoKF7QTG5+m6uWDZOPNv/0/fBmpCu5A=
+	b=c87EY1ERPeMDx+u9Sy/uh+gRuGN1Op+5JWuAu5VfyhjDnrWp28EBF4UhFwEW090si
+	 +mvcLsA3T7TAlcQwnwEc0bIhI20gOg/mDWz30ivH9hcF+AdKY4j3GTDG7i438pP48w
+	 Mh8K+dVzAoJ7oec4bltcMG3ShFp+bScxvpL3vAiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.1 701/885] f2fs: fix kernel crash due to null io->bio
-Date: Tue,  7 Mar 2023 18:00:35 +0100
-Message-Id: <20230307170032.544147156@linuxfoundation.org>
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.1 719/885] KVM: x86: Blindly get current x2APIC reg value on "nodecode write" traps
+Date: Tue,  7 Mar 2023 18:00:53 +0100
+Message-Id: <20230307170033.241526279@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,58 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 267c159f9c7bcb7009dae16889b880c5ed8759a8 upstream.
+commit 0a19807b464fb10aa79b9dd7f494bc317438fada upstream.
 
-We should return when io->bio is null before doing anything. Otherwise, panic.
+When emulating a x2APIC write in response to an APICv/AVIC trap, get the
+the written value from the vAPIC page without checking that reads are
+allowed for the target register.  AVIC can generate trap-like VM-Exits on
+writes to EOI, and so KVM needs to get the written value from the backing
+page without running afoul of EOI's write-only behavior.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000010
-RIP: 0010:__submit_merged_write_cond+0x164/0x240 [f2fs]
-Call Trace:
- <TASK>
- f2fs_submit_merged_write+0x1d/0x30 [f2fs]
- commit_checkpoint+0x110/0x1e0 [f2fs]
- f2fs_write_checkpoint+0x9f7/0xf00 [f2fs]
- ? __pfx_issue_checkpoint_thread+0x10/0x10 [f2fs]
- __checkpoint_and_complete_reqs+0x84/0x190 [f2fs]
- ? preempt_count_add+0x82/0xc0
- ? __pfx_issue_checkpoint_thread+0x10/0x10 [f2fs]
- issue_checkpoint_thread+0x4c/0xf0 [f2fs]
- ? __pfx_autoremove_wake_function+0x10/0x10
- kthread+0xff/0x130
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x2c/0x50
- </TASK>
+Alternatively, EOI could be special cased to always write '0', e.g. so
+that the sanity check could be preserved, but x2APIC on AMD is actually
+supposed to disallow non-zero writes (not emulated by KVM), and the
+sanity check was a byproduct of how the KVM code was written, i.e. wasn't
+added to guard against anything in particular.
 
-Cc: stable@vger.kernel.org # v5.18+
-Fixes: 64bf0eef0171 ("f2fs: pass the bio operation to bio_alloc_bioset")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 70c8327c11c6 ("KVM: x86: Bug the VM if an accelerated x2APIC trap occurs on a "bad" reg")
+Fixes: 1bd9dfec9fd4 ("KVM: x86: Do not block APIC write for non ICR registers")
+Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20230106011306.85230-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/kvm/lapic.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -640,6 +640,9 @@ static void __f2fs_submit_merged_write(s
+diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
+index 4efdb4a4d72c..5c0f93fc073a 100644
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -2284,23 +2284,18 @@ void kvm_apic_write_nodecode(struct kvm_vcpu *vcpu, u32 offset)
+ 	struct kvm_lapic *apic = vcpu->arch.apic;
+ 	u64 val;
  
- 	f2fs_down_write(&io->io_rwsem);
- 
-+	if (!io->bio)
-+		goto unlock_out;
-+
- 	/* change META to META_FLUSH in the checkpoint procedure */
- 	if (type >= META_FLUSH) {
- 		io->fio.type = META_FLUSH;
-@@ -648,6 +651,7 @@ static void __f2fs_submit_merged_write(s
- 			io->bio->bi_opf |= REQ_PREFLUSH | REQ_FUA;
+-	if (apic_x2apic_mode(apic)) {
+-		if (KVM_BUG_ON(kvm_lapic_msr_read(apic, offset, &val), vcpu->kvm))
+-			return;
+-	} else {
+-		val = kvm_lapic_get_reg(apic, offset);
+-	}
+-
+ 	/*
+ 	 * ICR is a single 64-bit register when x2APIC is enabled.  For legacy
+ 	 * xAPIC, ICR writes need to go down the common (slightly slower) path
+ 	 * to get the upper half from ICR2.
+ 	 */
+ 	if (apic_x2apic_mode(apic) && offset == APIC_ICR) {
++		val = kvm_lapic_get_reg64(apic, APIC_ICR);
+ 		kvm_apic_send_ipi(apic, (u32)val, (u32)(val >> 32));
+ 		trace_kvm_apic_write(APIC_ICR, val);
+ 	} else {
+ 		/* TODO: optimize to just emulate side effect w/o one more write */
++		val = kvm_lapic_get_reg(apic, offset);
+ 		kvm_lapic_reg_write(apic, offset, (u32)val);
  	}
- 	__submit_merged_bio(io);
-+unlock_out:
- 	f2fs_up_write(&io->io_rwsem);
  }
- 
+-- 
+2.39.2
+
 
 
