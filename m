@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6002ABA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:15:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8AEC433D2;
-	Tue,  7 Mar 2023 17:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E2EBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:15:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDA1C433D2;
+	Tue,  7 Mar 2023 17:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209328;
-	bh=PYtdjopN2UJp+2eK/CBZp6xShk+9Njdh/NTg5rBPIco=;
+	s=korg; t=1678209331;
+	bh=MyUA9rbAb493vf7H+6aUqbpXryh2hS5od6dCujTAE/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HkBiqVynGHhUdB8KlBkXFC/r+FfrBjB4QERj/MNhk4CuEqpIS/m4ZIR1+JH2RpwCW
-	 ADpx7g3825IPWj58g1XzyNshejVZzRIRrcwHwgVTWIcbAM1iIOQl0wrEocIxVw75Jm
-	 ZKSi/tCDkUR+OsZYlXYy72w5UfhXbNvM9pZMdplQ=
+	b=bgtWxK30bwU+PrirTf0agd/hQLU+HEOZ8Y5WjhM5axOfPM62tBbbCC/5P9JMJ/shD
+	 /8iCEL8ABRzPJiKkUF+Tcq/S7EgSr+oRmlwfsrGmnfb+7A4PjTiDfxhF3UWI+55HcO
+	 p5byO/avtpNjGFdGfVTbLOhioBUjNKJHzagm9kNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Nguyen <theflow@google.com>,
-	Peter Gonda <pgonda@google.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	David Rientjes <rientjes@google.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
+	Prashant Malani <pmalani@chromium.org>,
+	Benson Leung <bleung@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0182/1001] crypto: ccp - Avoid page allocation failure warning for SEV_GET_ID2
-Date: Tue,  7 Mar 2023 17:49:14 +0100
-Message-Id: <20230307170029.801106160@linuxfoundation.org>
+Subject: [PATCH 6.2 0183/1001] platform/chrome: cros_ec_typec: Update port DP VDO
+Date: Tue,  7 Mar 2023 17:49:15 +0100
+Message-Id: <20230307170029.835374328@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,50 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Rientjes <rientjes@google.com>
+From: Prashant Malani <pmalani@chromium.org>
 
-[ Upstream commit 91dfd98216d817ec5f1c55890bacb7b4fe9b068a ]
+[ Upstream commit 8d2b28df6c3dc1581d856f52d9f78059ef2a568f ]
 
-For SEV_GET_ID2, the user provided length does not have a specified
-limitation because the length of the ID may change in the future.  The
-kernel memory allocation, however, is implicitly limited to 4MB on x86 by
-the page allocator, otherwise the kzalloc() will fail.
+The port advertising DP support is a Type-C receptacle. Fix the port's
+DisplayPort VDO to reflect this.
 
-When this happens, it is best not to spam the kernel log with the warning.
-Simply fail the allocation and return ENOMEM to the user.
-
-Fixes: d6112ea0cb34 ("crypto: ccp - introduce SEV_GET_ID2 command")
-Reported-by: Andy Nguyen <theflow@google.com>
-Reported-by: Peter Gonda <pgonda@google.com>
-Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: David Rientjes <rientjes@google.com>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 1903adae0464 ("platform/chrome: cros_ec_typec: Add bit offset for DP VDO")
+Signed-off-by: Prashant Malani <pmalani@chromium.org>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221228004648.793339-6-pmalani@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sev-dev.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_typec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
-index 06fc7156c04f3..56998bc579d67 100644
---- a/drivers/crypto/ccp/sev-dev.c
-+++ b/drivers/crypto/ccp/sev-dev.c
-@@ -881,7 +881,14 @@ static int sev_ioctl_do_get_id2(struct sev_issue_cmd *argp)
- 	input_address = (void __user *)input.address;
+diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
+index 001b0de95a46e..d1714b5d085be 100644
+--- a/drivers/platform/chrome/cros_ec_typec.c
++++ b/drivers/platform/chrome/cros_ec_typec.c
+@@ -27,7 +27,7 @@
+ #define DRV_NAME "cros-ec-typec"
  
- 	if (input.address && input.length) {
--		id_blob = kzalloc(input.length, GFP_KERNEL);
-+		/*
-+		 * The length of the ID shouldn't be assumed by software since
-+		 * it may change in the future.  The allocation size is limited
-+		 * to 1 << (PAGE_SHIFT + MAX_ORDER - 1) by the page allocator.
-+		 * If the allocation fails, simply return ENOMEM rather than
-+		 * warning in the kernel log.
-+		 */
-+		id_blob = kzalloc(input.length, GFP_KERNEL | __GFP_NOWARN);
- 		if (!id_blob)
- 			return -ENOMEM;
+ #define DP_PORT_VDO	(DP_CONF_SET_PIN_ASSIGN(BIT(DP_PIN_ASSIGN_C) | BIT(DP_PIN_ASSIGN_D)) | \
+-				DP_CAP_DFP_D)
++				DP_CAP_DFP_D | DP_CAP_RECEPTACLE)
  
+ /* Supported alt modes. */
+ enum {
 -- 
 2.39.2
 
