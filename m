@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AA9BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F320C4339B;
-	Tue,  7 Mar 2023 17:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322E6BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF9CC433D2;
+	Tue,  7 Mar 2023 17:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211028;
-	bh=jYizG4zbqJ/kGkwODP79PkWkgViEfkvvGGIaT63G1MU=;
+	s=korg; t=1678211031;
+	bh=IEoJEMsWY7PKZET4BKF6xRhwGjFJQN23dUqxKr6quv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZBDZYPRqJ/1BjYB+uqgfWNy2BWn7sv+YY0PV2N8XmUW3Ui1bL9mChkf1sP7Bt8BB
-	 4FOrl53uXx3Nf+BGCjrqBiOGpREFuxdJsd4h7cRDTSeT9qv+qiyDv/Clqz1FifLEZ+
-	 AcazI/WLHNnlXlz9UDvxKvB2udwB6XGiMo1M5NPg=
+	b=Dywy12NjZwPD3Ztxt3/9RJE3XlSzKQjAuSpAvFpP/nGrhsQ5eRNYpowyRhb28eGxZ
+	 d7BBfrP7W6nUrX+gW7xxq4ZieNOjGXszZRNMZ6MLwzBmR+gBpHArpLW3cxkC655aUp
+	 VHuwBpaHLGh7GCQTfCHXhVCdTpzdA29OEc/p07j4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
-	syzbot+f51cb4b9afbd87ec06f2@syzkaller.appspotmail.com,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Hansen Dsouza <hansen.dsouza@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0723/1001] gfs2: Improve gfs2_make_fs_rw error handling
-Date: Tue,  7 Mar 2023 17:58:15 +0100
-Message-Id: <20230307170053.072578404@linuxfoundation.org>
+Subject: [PATCH 6.2 0732/1001] drm/amd/display: Enable P-state validation checks for DCN314
+Date: Tue,  7 Mar 2023 17:58:24 +0100
+Message-Id: <20230307170053.461634641@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,53 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit b66f723bb552ad59c2acb5d45ea45c890f84498b ]
+[ Upstream commit 37d184b548db0f64d4a878960b2c6988b38a3e7e ]
 
-In gfs2_make_fs_rw(), make sure to call gfs2_consist() to report an
-inconsistency and mark the filesystem as withdrawn when
-gfs2_find_jhead() fails.
+[Why]
+To align with DCN31 behavior. This helps avoid p-state hangs in
+the case where underflow does occur.
 
-At the end of gfs2_make_fs_rw(), when we discover that the filesystem
-has been withdrawn, make sure we report an error.  This also replaces
-the gfs2_withdrawn() check after gfs2_find_jhead().
+[How]
+Flip the bit to true.
 
-Reported-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
-Cc: syzbot+f51cb4b9afbd87ec06f2@syzkaller.appspotmail.com
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Reviewed-by: Hansen Dsouza <hansen.dsouza@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/super.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index 999cc146d7083..a07cf31f58ec3 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -138,8 +138,10 @@ int gfs2_make_fs_rw(struct gfs2_sbd *sdp)
- 		return -EIO;
- 
- 	error = gfs2_find_jhead(sdp->sd_jdesc, &head, false);
--	if (error || gfs2_withdrawn(sdp))
-+	if (error) {
-+		gfs2_consist(sdp);
- 		return error;
-+	}
- 
- 	if (!(head.lh_flags & GFS2_LOG_HEAD_UNMOUNT)) {
- 		gfs2_consist(sdp);
-@@ -151,7 +153,9 @@ int gfs2_make_fs_rw(struct gfs2_sbd *sdp)
- 	gfs2_log_pointers_init(sdp, head.lh_blkno);
- 
- 	error = gfs2_quota_init(sdp);
--	if (!error && !gfs2_withdrawn(sdp))
-+	if (!error && gfs2_withdrawn(sdp))
-+		error = -EIO;
-+	if (!error)
- 		set_bit(SDF_JOURNAL_LIVE, &sdp->sd_flags);
- 	return error;
- }
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
+index 79850a68f62ab..bc7f2b735327e 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
+@@ -901,7 +901,7 @@ static const struct dc_debug_options debug_defaults_drv = {
+ 	.max_downscale_src_width = 4096,/*upto true 4k*/
+ 	.disable_pplib_wm_range = false,
+ 	.scl_reset_length10 = true,
+-	.sanity_checks = false,
++	.sanity_checks = true,
+ 	.underflow_assert_delay_us = 0xFFFFFFFF,
+ 	.dwb_fi_phase = -1, // -1 = disable,
+ 	.dmub_command_table = true,
 -- 
 2.39.2
 
