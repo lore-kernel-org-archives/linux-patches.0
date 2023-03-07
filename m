@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B35BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:06:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70172C433EF;
-	Tue,  7 Mar 2023 19:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEF9BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:06:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2946C4339B;
+	Tue,  7 Mar 2023 19:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215989;
-	bh=pk1fJ71Ws6Sna2RKK2QmJ6j3WF2xsqDP4/Xz52YcsH4=;
+	s=korg; t=1678215993;
+	bh=3+hqFyXdgYMYYXh8L/weifftQoMrvDofd56QJCZw6VQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RhZLH6hfXxrRQAIQLHoNkD6ttCr8nbbsKKaASbTaThyjcg2BvEVNJ5YZv6ukHOhY1
-	 gGax2R7HlGi5YA2OH72P/qcoTzHc3S0V4n168LVy3XacfwNq6eulUCQdskgi1ohwa/
-	 3RxDou8HlnPgyu/wMnDGIY+R1id6goWq3HBeZFIc=
+	b=2iDyaihSt7wMuXyLGcO5WEvZCCmPMgo2G44lorlOsvO1KIj/qchnOETx9e/AayEnR
+	 mo6M0v5MOuMUnFPYxtPxVwPRiSLNPpSk+32IKna/3tQ85VreltatkTTSGdQZX+JmGX
+	 bMT4DrSJ+8rzkVwGpor6EvkGTdRg3FYrPHVOWXmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH 5.15 432/567] ipmi:ssif: resend_msg() cannot fail
-Date: Tue,  7 Mar 2023 18:02:48 +0100
-Message-Id: <20230307165924.624591164@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.15 441/567] ksmbd: fix wrong data area length for smb2 lock request
+Date: Tue,  7 Mar 2023 18:02:57 +0100
+Message-Id: <20230307165925.013453566@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -33,93 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corey Minyard <cminyard@mvista.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 95767ed78a181d5404202627499f9cde56053b96 upstream.
+commit 8f8c43b125882ac14372f8dca0c8e50a59e78d79 upstream.
 
-The resend_msg() function cannot fail, but there was error handling
-around using it.  Rework the handling of the error, and fix the out of
-retries debug reporting that was wrong around this, too.
+When turning debug mode on, The following error message from
+ksmbd_smb2_check_message() is coming.
 
+ksmbd: cli req padded more than expected. Length 112 not 88 for cmd:10 mid:14
+
+data area length calculation for smb2 lock request in smb2_get_data_area_len() is
+incorrect.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c |   28 +++++++---------------------
- 1 file changed, 7 insertions(+), 21 deletions(-)
+ fs/ksmbd/smb2misc.c |   10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -602,7 +602,7 @@ static void ssif_alert(struct i2c_client
- 		start_get(ssif_info);
- }
- 
--static int start_resend(struct ssif_info *ssif_info);
-+static void start_resend(struct ssif_info *ssif_info);
- 
- static void msg_done_handler(struct ssif_info *ssif_info, int result,
- 			     unsigned char *data, unsigned int len)
-@@ -909,31 +909,17 @@ static void msg_written_handler(struct s
- 	if (result < 0) {
- 		ssif_info->retries_left--;
- 		if (ssif_info->retries_left > 0) {
--			if (!start_resend(ssif_info)) {
--				ssif_inc_stat(ssif_info, send_retries);
--				return;
--			}
--			/* request failed, just return the error. */
--			ssif_inc_stat(ssif_info, send_errors);
--
--			if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
--				dev_dbg(&ssif_info->client->dev,
--					"%s: Out of retries\n", __func__);
--			msg_done_handler(ssif_info, -EIO, NULL, 0);
-+			start_resend(ssif_info);
- 			return;
- 		}
- 
- 		ssif_inc_stat(ssif_info, send_errors);
+--- a/fs/ksmbd/smb2misc.c
++++ b/fs/ksmbd/smb2misc.c
+@@ -150,15 +150,11 @@ static int smb2_get_data_area_len(unsign
+ 		break;
+ 	case SMB2_LOCK:
+ 	{
+-		int lock_count;
++		unsigned short lock_count;
  
 -		/*
--		 * Got an error on transmit, let the done routine
--		 * handle it.
+-		 * smb2_lock request size is 48 included single
+-		 * smb2_lock_element structure size.
 -		 */
- 		if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
- 			dev_dbg(&ssif_info->client->dev,
--				"%s: Error  %d\n", __func__, result);
-+				"%s: Out of retries\n", __func__);
- 
--		msg_done_handler(ssif_info, result, NULL, 0);
-+		msg_done_handler(ssif_info, -EIO, NULL, 0);
- 		return;
- 	}
- 
-@@ -996,7 +982,7 @@ static void msg_written_handler(struct s
- 	}
- }
- 
--static int start_resend(struct ssif_info *ssif_info)
-+static void start_resend(struct ssif_info *ssif_info)
- {
- 	int command;
- 
-@@ -1021,7 +1007,6 @@ static int start_resend(struct ssif_info
- 
- 	ssif_i2c_send(ssif_info, msg_written_handler, I2C_SMBUS_WRITE,
- 		   command, ssif_info->data, I2C_SMBUS_BLOCK_DATA);
--	return 0;
- }
- 
- static int start_send(struct ssif_info *ssif_info,
-@@ -1036,7 +1021,8 @@ static int start_send(struct ssif_info *
- 	ssif_info->retries_left = SSIF_SEND_RETRIES;
- 	memcpy(ssif_info->data + 1, data, len);
- 	ssif_info->data_len = len;
--	return start_resend(ssif_info);
-+	start_resend(ssif_info);
-+	return 0;
- }
- 
- /* Must be called with the message lock held. */
+-		lock_count = le16_to_cpu(((struct smb2_lock_req *)hdr)->LockCount) - 1;
++		lock_count = le16_to_cpu(((struct smb2_lock_req *)hdr)->LockCount);
+ 		if (lock_count > 0) {
+-			*off = __SMB2_HEADER_STRUCTURE_SIZE + 48;
++			*off = offsetof(struct smb2_lock_req, locks);
+ 			*len = sizeof(struct smb2_lock_element) * lock_count;
+ 		}
+ 		break;
 
 
