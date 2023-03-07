@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FFBBA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:06:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C159C433D2;
-	Tue,  7 Mar 2023 19:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE374BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:06:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6B2C433D2;
+	Tue,  7 Mar 2023 19:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215980;
-	bh=UvrPOu9wlWGFA9Yw9ZA1PLh3fPRmAwg8FF3Yz0xQDcU=;
+	s=korg; t=1678215983;
+	bh=rwaydBrBTESusfxaJTLDe1eN57wwv5EgzTWiK9et284=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=poXuKT8qG4eY9j2mNBxbg2rYhc0lGSLgltlasK6VsV+YBRf2KNxdMJMb9Y/nMCNCw
-	 a76IyDb3x+xBqPYM5zB+cILH+yDMrYfjkg4brTjnU2vFMTnrykTiPZ9L3+2UcgA+EY
-	 sY1o/1mV19oYpYrxsgFojfEv2rjkRTcyO+jXU6pY=
+	b=JZYzquP+rJg2hps2SKWjEbr6SB576mrTbs4NFX5oQ1Lvd+RFJocK2aUoz5qZ0nf/j
+	 zmKn4Fi/NuFXlCuSfMPA2OsRtM/5Vmor/buSHFPGR3wO8OKiFQSNEsqSLbz2FO3azX
+	 p0ospb8l5fVLbLUKfk/2CJmn2QR7Ra0q3xjSnqC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Jasdeep Dhillon <jdhillon@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 404/567] drm/amd/display: Fix potential null-deref in dm_resume
-Date: Tue,  7 Mar 2023 18:02:20 +0100
-Message-Id: <20230307165923.348583947@linuxfoundation.org>
+Subject: [PATCH 5.15 405/567] drm/omap: dsi: Fix excessive stack usage
+Date: Tue,  7 Mar 2023 18:02:21 +0100
+Message-Id: <20230307165923.388028906@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -39,51 +36,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roman Li <roman.li@amd.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 7a7175a2cd84b7874bebbf8e59f134557a34161b ]
+[ Upstream commit cfca78971b9233aef0891507a98fba62046d4542 ]
 
-[Why]
-Fixing smatch error:
-dm_resume() error: we previously assumed 'aconnector->dc_link' could be null
+dsi_dump_dsi_irqs(), a function used for debugfs prints, has a large
+struct in its frame, which can result in:
 
-[How]
-Check if dc_link null at the beginning of the loop,
-so further checks can be dropped.
+drivers/gpu/drm/omapdrm/dss/dsi.c:1126:1: warning: the frame size of 1060 bytes is larger than 1024 bytes [-Wframe-larger-than=]
 
+As the performance of the function is of no concern, let's allocate the
+struct with kmalloc instead.
+
+Compile-tested only.
+
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-
-Reviewed-by: Wayne Lin <Wayne.Lin@amd.com>
-Acked-by: Jasdeep Dhillon <jdhillon@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220916082206.167427-1-tomi.valkeinen@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/omapdrm/dss/dsi.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index b4293b5a82526..68c98e30fee71 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2687,12 +2687,14 @@ static int dm_resume(void *handle)
- 	drm_for_each_connector_iter(connector, &iter) {
- 		aconnector = to_amdgpu_dm_connector(connector);
- 
-+		if (!aconnector->dc_link)
-+			continue;
+diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.c b/drivers/gpu/drm/omapdrm/dss/dsi.c
+index 5f1722b040f46..41da86cd8b64c 100644
+--- a/drivers/gpu/drm/omapdrm/dss/dsi.c
++++ b/drivers/gpu/drm/omapdrm/dss/dsi.c
+@@ -1039,22 +1039,26 @@ static int dsi_dump_dsi_irqs(struct seq_file *s, void *p)
+ {
+ 	struct dsi_data *dsi = s->private;
+ 	unsigned long flags;
+-	struct dsi_irq_stats stats;
++	struct dsi_irq_stats *stats;
 +
- 		/*
- 		 * this is the case when traversing through already created
- 		 * MST connectors, should be skipped
- 		 */
--		if (aconnector->dc_link &&
--		    aconnector->dc_link->type == dc_connection_mst_branch)
-+		if (aconnector->dc_link->type == dc_connection_mst_branch)
- 			continue;
++	stats = kmalloc(sizeof(*stats), GFP_KERNEL);
++	if (!stats)
++		return -ENOMEM;
  
- 		mutex_lock(&aconnector->hpd_lock);
+ 	spin_lock_irqsave(&dsi->irq_stats_lock, flags);
+ 
+-	stats = dsi->irq_stats;
++	*stats = dsi->irq_stats;
+ 	memset(&dsi->irq_stats, 0, sizeof(dsi->irq_stats));
+ 	dsi->irq_stats.last_reset = jiffies;
+ 
+ 	spin_unlock_irqrestore(&dsi->irq_stats_lock, flags);
+ 
+ 	seq_printf(s, "period %u ms\n",
+-			jiffies_to_msecs(jiffies - stats.last_reset));
++			jiffies_to_msecs(jiffies - stats->last_reset));
+ 
+-	seq_printf(s, "irqs %d\n", stats.irq_count);
++	seq_printf(s, "irqs %d\n", stats->irq_count);
+ #define PIS(x) \
+-	seq_printf(s, "%-20s %10d\n", #x, stats.dsi_irqs[ffs(DSI_IRQ_##x)-1]);
++	seq_printf(s, "%-20s %10d\n", #x, stats->dsi_irqs[ffs(DSI_IRQ_##x)-1]);
+ 
+ 	seq_printf(s, "-- DSI%d interrupts --\n", dsi->module_id + 1);
+ 	PIS(VC0);
+@@ -1078,10 +1082,10 @@ static int dsi_dump_dsi_irqs(struct seq_file *s, void *p)
+ 
+ #define PIS(x) \
+ 	seq_printf(s, "%-20s %10d %10d %10d %10d\n", #x, \
+-			stats.vc_irqs[0][ffs(DSI_VC_IRQ_##x)-1], \
+-			stats.vc_irqs[1][ffs(DSI_VC_IRQ_##x)-1], \
+-			stats.vc_irqs[2][ffs(DSI_VC_IRQ_##x)-1], \
+-			stats.vc_irqs[3][ffs(DSI_VC_IRQ_##x)-1]);
++			stats->vc_irqs[0][ffs(DSI_VC_IRQ_##x)-1], \
++			stats->vc_irqs[1][ffs(DSI_VC_IRQ_##x)-1], \
++			stats->vc_irqs[2][ffs(DSI_VC_IRQ_##x)-1], \
++			stats->vc_irqs[3][ffs(DSI_VC_IRQ_##x)-1]);
+ 
+ 	seq_printf(s, "-- VC interrupts --\n");
+ 	PIS(CS);
+@@ -1097,7 +1101,7 @@ static int dsi_dump_dsi_irqs(struct seq_file *s, void *p)
+ 
+ #define PIS(x) \
+ 	seq_printf(s, "%-20s %10d\n", #x, \
+-			stats.cio_irqs[ffs(DSI_CIO_IRQ_##x)-1]);
++			stats->cio_irqs[ffs(DSI_CIO_IRQ_##x)-1]);
+ 
+ 	seq_printf(s, "-- CIO interrupts --\n");
+ 	PIS(ERRSYNCESC1);
+@@ -1122,6 +1126,8 @@ static int dsi_dump_dsi_irqs(struct seq_file *s, void *p)
+ 	PIS(ULPSACTIVENOT_ALL1);
+ #undef PIS
+ 
++	kfree(stats);
++
+ 	return 0;
+ }
+ #endif
 -- 
 2.39.2
 
