@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E19BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:37:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F066AC433A4;
-	Tue,  7 Mar 2023 18:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66F1BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:37:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467F3C4339E;
+	Tue,  7 Mar 2023 18:37:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214250;
-	bh=k5HQyqm0VGAfss/paDeflC6MNEUDpsDoCIgnT97MHH0=;
+	s=korg; t=1678214253;
+	bh=FmbJgTqrnsbqZkPopFSSY+q5DKC9h0kbwwT/rog53Tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3YvTEgvBOQ08U6mZnFLLXr3+66121hP25KwBkW7V+Q9v+88a3XC9WkB/c+8iBuT/
-	 WDqTtD9qQ3ekN9YdxoVkweaeIsy/HOckyYtsa82FFON2YBLpGVkU8ZkMNvmIQfrd6e
-	 mXOHE9+6K4RAdF7Ixb/A1cc7RpxRwMck7dw4kjOc=
+	b=b2nKP6OltZjf5U5tsGa76dolplZcKRTLZOK6/Qk0coNfYJofzpKfAcmmbWYWZQEmP
+	 4JOsEttYV+6Noi8t9MtSnVCgoDNPJzLv5tYwUqFAkMtz6EA6w8FgKLgBefcxkVOe1y
+	 B1114MNMg0Aj7UTMKgwBDalU1udFCFUbzyVKEsXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	KP Singh <kpsingh@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.1 740/885] Documentation/hw-vuln: Document the interaction between IBRS and STIBP
-Date: Tue,  7 Mar 2023 18:01:14 +0100
-Message-Id: <20230307170034.109641250@linuxfoundation.org>
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 731/885] x86/crash: Disable virt in core NMI crash handler to avoid double shootdown
+Date: Tue,  7 Mar 2023 18:01:05 +0100
+Message-Id: <20230307170033.746146645@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,58 +37,243 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: KP Singh <kpsingh@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit e02b50ca442e88122e1302d4dbc1b71a4808c13f upstream.
+commit 26044aff37a5455b19a91785086914fd33053ef4 upstream.
 
-Explain why STIBP is needed with legacy IBRS as currently implemented
-(KERNEL_IBRS) and why STIBP is not needed when enhanced IBRS is enabled.
+Disable virtualization in crash_nmi_callback() and rework the
+emergency_vmx_disable_all() path to do an NMI shootdown if and only if a
+shootdown has not already occurred.   NMI crash shootdown fundamentally
+can't support multiple invocations as responding CPUs are deliberately
+put into halt state without unblocking NMIs.  But, the emergency reboot
+path doesn't have any work of its own, it simply cares about disabling
+virtualization, i.e. so long as a shootdown occurred, emergency reboot
+doesn't care who initiated the shootdown, or when.
 
-Fixes: 7c693f54c873 ("x86/speculation: Add spectre_v2=ibrs option to support Kernel IBRS")
-Signed-off-by: KP Singh <kpsingh@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230227060541.1939092-2-kpsingh@kernel.org
+If "crash_kexec_post_notifiers" is specified on the kernel command line,
+panic() will invoke crash_smp_send_stop() and result in a second call to
+nmi_shootdown_cpus() during native_machine_emergency_restart().
+
+Invoke the callback _before_ disabling virtualization, as the current
+VMCS needs to be cleared before doing VMXOFF.  Note, this results in a
+subtle change in ordering between disabling virtualization and stopping
+Intel PT on the responding CPUs.  While VMX and Intel PT do interact,
+VMXOFF and writes to MSR_IA32_RTIT_CTL do not induce faults between one
+another, which is all that matters when panicking.
+
+Harden nmi_shootdown_cpus() against multiple invocations to try and
+capture any such kernel bugs via a WARN instead of hanging the system
+during a crash/dump, e.g. prior to the recent hardening of
+register_nmi_handler(), re-registering the NMI handler would trigger a
+double list_add() and hang the system if CONFIG_BUG_ON_DATA_CORRUPTION=y.
+
+ list_add double add: new=ffffffff82220800, prev=ffffffff8221cfe8, next=ffffffff82220800.
+ WARNING: CPU: 2 PID: 1319 at lib/list_debug.c:29 __list_add_valid+0x67/0x70
+ Call Trace:
+  __register_nmi_handler+0xcf/0x130
+  nmi_shootdown_cpus+0x39/0x90
+  native_machine_emergency_restart+0x1c9/0x1d0
+  panic+0x237/0x29b
+
+Extract the disabling logic to a common helper to deduplicate code, and
+to prepare for doing the shootdown in the emergency reboot path if SVM
+is supported.
+
+Note, prior to commit ed72736183c4 ("x86/reboot: Force all cpus to exit
+VMX root if VMX is supported"), nmi_shootdown_cpus() was subtly protected
+against a second invocation by a cpu_vmx_enabled() check as the kdump
+handler would disable VMX if it ran first.
+
+Fixes: ed72736183c4 ("x86/reboot: Force all cpus to exit VMX root if VMX is supported")
+Cc: stable@vger.kernel.org
+Reported-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/all/20220427224924.592546-2-gpiccoli@igalia.com
+Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20221130233650.1404148-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/hw-vuln/spectre.rst |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ arch/x86/include/asm/reboot.h |    2 +
+ arch/x86/kernel/crash.c       |   17 ----------
+ arch/x86/kernel/reboot.c      |   65 ++++++++++++++++++++++++++++++++++--------
+ 3 files changed, 56 insertions(+), 28 deletions(-)
 
---- a/Documentation/admin-guide/hw-vuln/spectre.rst
-+++ b/Documentation/admin-guide/hw-vuln/spectre.rst
-@@ -479,8 +479,16 @@ Spectre variant 2
-    On Intel Skylake-era systems the mitigation covers most, but not all,
-    cases. See :ref:`[3] <spec_ref3>` for more details.
+--- a/arch/x86/include/asm/reboot.h
++++ b/arch/x86/include/asm/reboot.h
+@@ -25,6 +25,8 @@ void __noreturn machine_real_restart(uns
+ #define MRR_BIOS	0
+ #define MRR_APM		1
  
--   On CPUs with hardware mitigation for Spectre variant 2 (e.g. Enhanced
--   IBRS on x86), retpoline is automatically disabled at run time.
-+   On CPUs with hardware mitigation for Spectre variant 2 (e.g. IBRS
-+   or enhanced IBRS on x86), retpoline is automatically disabled at run time.
++void cpu_emergency_disable_virtualization(void);
 +
-+   Systems which support enhanced IBRS (eIBRS) enable IBRS protection once at
-+   boot, by setting the IBRS bit, and they're automatically protected against
-+   Spectre v2 variant attacks, including cross-thread branch target injections
-+   on SMT systems (STIBP). In other words, eIBRS enables STIBP too.
-+
-+   Legacy IBRS systems clear the IBRS bit on exit to userspace and
-+   therefore explicitly enable STIBP for that
+ typedef void (*nmi_shootdown_cb)(int, struct pt_regs*);
+ void nmi_panic_self_stop(struct pt_regs *regs);
+ void nmi_shootdown_cpus(nmi_shootdown_cb callback);
+--- a/arch/x86/kernel/crash.c
++++ b/arch/x86/kernel/crash.c
+@@ -37,7 +37,6 @@
+ #include <linux/kdebug.h>
+ #include <asm/cpu.h>
+ #include <asm/reboot.h>
+-#include <asm/virtext.h>
+ #include <asm/intel_pt.h>
+ #include <asm/crash.h>
+ #include <asm/cmdline.h>
+@@ -81,15 +80,6 @@ static void kdump_nmi_callback(int cpu,
+ 	 */
+ 	cpu_crash_vmclear_loaded_vmcss();
  
-    The retpoline mitigation is turned on by default on vulnerable
-    CPUs. It can be forced on or off by the administrator
-@@ -504,9 +512,12 @@ Spectre variant 2
-    For Spectre variant 2 mitigation, individual user programs
-    can be compiled with return trampolines for indirect branches.
-    This protects them from consuming poisoned entries in the branch
--   target buffer left by malicious software.  Alternatively, the
--   programs can disable their indirect branch speculation via prctl()
--   (See :ref:`Documentation/userspace-api/spec_ctrl.rst <set_spec_ctrl>`).
-+   target buffer left by malicious software.
+-	/* Disable VMX or SVM if needed.
+-	 *
+-	 * We need to disable virtualization on all CPUs.
+-	 * Having VMX or SVM enabled on any CPU may break rebooting
+-	 * after the kdump kernel has finished its task.
+-	 */
+-	cpu_emergency_vmxoff();
+-	cpu_emergency_svm_disable();
+-
+ 	/*
+ 	 * Disable Intel PT to stop its logging
+ 	 */
+@@ -148,12 +138,7 @@ void native_machine_crash_shutdown(struc
+ 	 */
+ 	cpu_crash_vmclear_loaded_vmcss();
+ 
+-	/* Booting kdump kernel with VMX or SVM enabled won't work,
+-	 * because (among other limitations) we can't disable paging
+-	 * with the virt flags.
+-	 */
+-	cpu_emergency_vmxoff();
+-	cpu_emergency_svm_disable();
++	cpu_emergency_disable_virtualization();
+ 
+ 	/*
+ 	 * Disable Intel PT to stop its logging
+--- a/arch/x86/kernel/reboot.c
++++ b/arch/x86/kernel/reboot.c
+@@ -528,10 +528,7 @@ static inline void kb_wait(void)
+ 	}
+ }
+ 
+-static void vmxoff_nmi(int cpu, struct pt_regs *regs)
+-{
+-	cpu_emergency_vmxoff();
+-}
++static inline void nmi_shootdown_cpus_on_restart(void);
+ 
+ /* Use NMIs as IPIs to tell all CPUs to disable virtualization */
+ static void emergency_vmx_disable_all(void)
+@@ -554,7 +551,7 @@ static void emergency_vmx_disable_all(vo
+ 		__cpu_emergency_vmxoff();
+ 
+ 		/* Halt and exit VMX root operation on the other CPUs. */
+-		nmi_shootdown_cpus(vmxoff_nmi);
++		nmi_shootdown_cpus_on_restart();
+ 	}
+ }
+ 
+@@ -795,6 +792,17 @@ void machine_crash_shutdown(struct pt_re
+ /* This is the CPU performing the emergency shutdown work. */
+ int crashing_cpu = -1;
+ 
++/*
++ * Disable virtualization, i.e. VMX or SVM, to ensure INIT is recognized during
++ * reboot.  VMX blocks INIT if the CPU is post-VMXON, and SVM blocks INIT if
++ * GIF=0, i.e. if the crash occurred between CLGI and STGI.
++ */
++void cpu_emergency_disable_virtualization(void)
++{
++	cpu_emergency_vmxoff();
++	cpu_emergency_svm_disable();
++}
 +
-+   On legacy IBRS systems, at return to userspace, implicit STIBP is disabled
-+   because the kernel clears the IBRS bit. In this case, the userspace programs
-+   can disable indirect branch speculation via prctl() (See
-+   :ref:`Documentation/userspace-api/spec_ctrl.rst <set_spec_ctrl>`).
-    On x86, this will turn on STIBP to guard against attacks from the
-    sibling thread when the user program is running, and use IBPB to
-    flush the branch target buffer when switching to/from the program.
+ #if defined(CONFIG_SMP)
+ 
+ static nmi_shootdown_cb shootdown_callback;
+@@ -817,7 +825,14 @@ static int crash_nmi_callback(unsigned i
+ 		return NMI_HANDLED;
+ 	local_irq_disable();
+ 
+-	shootdown_callback(cpu, regs);
++	if (shootdown_callback)
++		shootdown_callback(cpu, regs);
++
++	/*
++	 * Prepare the CPU for reboot _after_ invoking the callback so that the
++	 * callback can safely use virtualization instructions, e.g. VMCLEAR.
++	 */
++	cpu_emergency_disable_virtualization();
+ 
+ 	atomic_dec(&waiting_for_crash_ipi);
+ 	/* Assume hlt works */
+@@ -828,18 +843,32 @@ static int crash_nmi_callback(unsigned i
+ 	return NMI_HANDLED;
+ }
+ 
+-/*
+- * Halt all other CPUs, calling the specified function on each of them
++/**
++ * nmi_shootdown_cpus - Stop other CPUs via NMI
++ * @callback:	Optional callback to be invoked from the NMI handler
++ *
++ * The NMI handler on the remote CPUs invokes @callback, if not
++ * NULL, first and then disables virtualization to ensure that
++ * INIT is recognized during reboot.
+  *
+- * This function can be used to halt all other CPUs on crash
+- * or emergency reboot time. The function passed as parameter
+- * will be called inside a NMI handler on all CPUs.
++ * nmi_shootdown_cpus() can only be invoked once. After the first
++ * invocation all other CPUs are stuck in crash_nmi_callback() and
++ * cannot respond to a second NMI.
+  */
+ void nmi_shootdown_cpus(nmi_shootdown_cb callback)
+ {
+ 	unsigned long msecs;
++
+ 	local_irq_disable();
+ 
++	/*
++	 * Avoid certain doom if a shootdown already occurred; re-registering
++	 * the NMI handler will cause list corruption, modifying the callback
++	 * will do who knows what, etc...
++	 */
++	if (WARN_ON_ONCE(crash_ipi_issued))
++		return;
++
+ 	/* Make a note of crashing cpu. Will be used in NMI callback. */
+ 	crashing_cpu = safe_smp_processor_id();
+ 
+@@ -867,7 +896,17 @@ void nmi_shootdown_cpus(nmi_shootdown_cb
+ 		msecs--;
+ 	}
+ 
+-	/* Leave the nmi callback set */
++	/*
++	 * Leave the nmi callback set, shootdown is a one-time thing.  Clearing
++	 * the callback could result in a NULL pointer dereference if a CPU
++	 * (finally) responds after the timeout expires.
++	 */
++}
++
++static inline void nmi_shootdown_cpus_on_restart(void)
++{
++	if (!crash_ipi_issued)
++		nmi_shootdown_cpus(NULL);
+ }
+ 
+ /*
+@@ -897,6 +936,8 @@ void nmi_shootdown_cpus(nmi_shootdown_cb
+ 	/* No other CPUs to shoot down */
+ }
+ 
++static inline void nmi_shootdown_cpus_on_restart(void) { }
++
+ void run_crash_ipi_callback(struct pt_regs *regs)
+ {
+ }
 
 
