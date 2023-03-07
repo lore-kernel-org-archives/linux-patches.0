@@ -1,36 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF69DBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:26:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD54C433EF;
-	Tue,  7 Mar 2023 18:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF781BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:26:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A46CC433EF;
+	Tue,  7 Mar 2023 18:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213614;
-	bh=9Rd0waOKcoTHm8nXq0CQ+JjvJSAFcyFasPghAfRA24Q=;
+	s=korg; t=1678213617;
+	bh=ei3myPUYHO43ooPPsEK8Ufm4tloujqlPCCmu7qPEaaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PWoErDlS171rDZXBk8GIXjkcm8vU1120CCDp7w4cMTwr8Wo/lk0sdT/oL0/wuZfnM
-	 NQD9sBWE7quFexzQEO43LK6axMVy3DXnTK1rPP+4K7s/PNuzx6kFgEyAvA2p0JryuE
-	 HlrXsNe+D/pQrxpqcRxM1c7VeJEmp2UutL+PcNGY=
+	b=D/NRjnzVVbzdGGWr9PCR/+VhJ+0WEicBLmMaNE6EtE+d2j8v+z2dmkc1LzIcDxuaW
+	 cQpYVpf3UcGhwpKBmL+hZMXKyc1JBxvL6X3TxNFpt/dpu7LypncASRhqRpihKKVwrV
+	 ux61+e6ypXBqhyBk2ZSBa/fzJvSo5J0VhPdAeYkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Florent Revest <revest@chromium.org>,
-	Len Brown <lenb@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Robert Moore <robert.moore@intel.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Steven Rostedt <rostedt@goodmis.org>,
-	Will Deacon <will@kernel.org>,
-	linux-acpi@vger.kernel.org,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	linux-block@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	Bart Van Assche <bvanassche@acm.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 563/885] ACPI: Dont build ACPICA with -Os
-Date: Tue,  7 Mar 2023 17:58:17 +0100
-Message-Id: <20230307170026.914609218@linuxfoundation.org>
+Subject: [PATCH 6.1 537/885] trace/blktrace: fix memory leak with using debugfs_lookup()
+Date: Tue,  7 Mar 2023 17:57:51 +0100
+Message-Id: <20230307170025.828526424@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -44,109 +40,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 8f9e0a52810dd83406c768972d022c37e7a18f1f ]
+[ Upstream commit 83e8864fee26f63a7435e941b7c36a20fd6fe93e ]
 
-The ACPICA code has been built with '-Os' since the beginning of git
-history, though there's no explanatory comment as to why.
+When calling debugfs_lookup() the result must have dput() called on it,
+otherwise the memory will leak over time.  To make things simpler, just
+call debugfs_lookup_and_remove() instead which handles all of the logic
+at once.
 
-This is unfortunate as GCC drops the alignment specificed by
-'-falign-functions=N' when '-Os' is used, as reported in GCC bug 88345:
-
-  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=88345
-
-This prevents CONFIG_FUNCTION_ALIGNMENT and
-CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B from having their expected effect
-on the ACPICA code. This is doubly unfortunate as in subsequent patches
-arm64 will depend upon CONFIG_FUNCTION_ALIGNMENT for its ftrace
-implementation.
-
-Drop the '-Os' flag when building the ACPICA code. With this removed,
-the code builds cleanly and works correctly in testing so far.
-
-I've tested this by selecting CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B=y,
-building and booting a kernel using ACPI, and looking for misaligned
-text symbols:
-
-* arm64:
-
-  Before, v6.2-rc3:
-    # uname -rm
-    6.2.0-rc3 aarch64
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
-    5009
-
-  Before, v6.2-rc3 + fixed __cold:
-    # uname -rm
-    6.2.0-rc3-00001-g2a2bedf8bfa9 aarch64
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
-    919
-
-  After:
-    # uname -rm
-    6.2.0-rc3-00002-g267bddc38572 aarch64
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
-    323
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | grep acpi | wc -l
-    0
-
-* x86_64:
-
-  Before, v6.2-rc3:
-    # uname -rm
-    6.2.0-rc3 x86_64
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
-    11537
-
-  Before, v6.2-rc3 + fixed __cold:
-    # uname -rm
-    6.2.0-rc3-00001-g2a2bedf8bfa9 x86_64
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
-    2805
-
-  After:
-    # uname -rm
-    6.2.0-rc3-00002-g267bddc38572 x86_64
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
-    1357
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | grep acpi | wc -l
-    0
-
-With the patch applied, the remaining unaligned text labels are a
-combination of static call trampolines and labels in assembly, which can
-be dealt with in subsequent patches.
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: Florent Revest <revest@chromium.org>
-Cc: Len Brown <lenb@kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Robert Moore <robert.moore@intel.com>
+Cc: Jens Axboe <axboe@kernel.dk>
 Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: linux-acpi@vger.kernel.org
-Link: https://lore.kernel.org/r/20230123134603.1064407-4-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: linux-block@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-trace-kernel@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230202141956.2299521-1-gregkh@linuxfoundation.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/blktrace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/acpica/Makefile b/drivers/acpi/acpica/Makefile
-index 59700433a96e5..f919811156b1f 100644
---- a/drivers/acpi/acpica/Makefile
-+++ b/drivers/acpi/acpica/Makefile
-@@ -3,7 +3,7 @@
- # Makefile for ACPICA Core interpreter
- #
- 
--ccflags-y			:= -Os -D_LINUX -DBUILDING_ACPICA
-+ccflags-y			:= -D_LINUX -DBUILDING_ACPICA
- ccflags-$(CONFIG_ACPI_DEBUG)	+= -DACPI_DEBUG_OUTPUT
- 
- # use acpi.o to put all files here into acpi.o modparam namespace
+diff --git a/kernel/trace/blktrace.c b/kernel/trace/blktrace.c
+index a66cff5a18579..a5b35bcfb0602 100644
+--- a/kernel/trace/blktrace.c
++++ b/kernel/trace/blktrace.c
+@@ -320,8 +320,8 @@ static void blk_trace_free(struct request_queue *q, struct blk_trace *bt)
+ 	 * under 'q->debugfs_dir', thus lookup and remove them.
+ 	 */
+ 	if (!bt->dir) {
+-		debugfs_remove(debugfs_lookup("dropped", q->debugfs_dir));
+-		debugfs_remove(debugfs_lookup("msg", q->debugfs_dir));
++		debugfs_lookup_and_remove("dropped", q->debugfs_dir);
++		debugfs_lookup_and_remove("msg", q->debugfs_dir);
+ 	} else {
+ 		debugfs_remove(bt->dir);
+ 	}
 -- 
 2.39.2
 
