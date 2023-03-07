@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7797BBA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:50:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7D6C433EF;
-	Tue,  7 Mar 2023 17:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B99BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:50:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92235C433D2;
+	Tue,  7 Mar 2023 17:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211414;
-	bh=rsc6DeU+Ch57SmvyZGQKPDccSe/DsX+OxfnQCkjRClk=;
+	s=korg; t=1678211418;
+	bh=AWoc/4xw+6X0y4pWdVbKPs0tp5lzvCX/NGbUuvJ/rP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=umQi2j542BJ8gsU0OB5Ljhea0+M58u6XexdlXYjpHHkUtMl+hjyinSKM73olPRzHf
-	 Hh/d2vCoyXmiogqSKe5ZGQlhDtGTHQpU1mXMJblNVYvwOaqbN0ax4t+yMizBJXbiu/
-	 TOpaUmJIg+qvC7GTkYTTnH6djgk/lrU9LScdjj64=
+	b=u6kJ1If++Pc92xpVCQCyNeWl7fgKmDSWbVR3VxhRo09jZp2ca+mNp41WDwztBTABy
+	 w/0mzfQ1iwbyvVfeWfM83dsPLEFByNi3ZQIGFx/GvhvngtxF+Jh1mbcYhbFcuIFL2E
+	 YOykh0NUre2Gv3k1Lf4hZhEd7EHVKOz7FF6ODOvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.2 0853/1001] powerpc/boot: Dont always pass -mcpu=powerpc when building 32-bit uImage
-Date: Tue,  7 Mar 2023 18:00:25 +0100
-Message-Id: <20230307170058.835639374@linuxfoundation.org>
+Subject: [PATCH 6.2 0854/1001] selftests/powerpc: Fix incorrect kernel headers search path
+Date: Tue,  7 Mar 2023 18:00:26 +0100
+Message-Id: <20230307170058.888247919@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,59 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-commit ff7c76f66d8bad4e694c264c789249e1d3a8205d upstream.
+commit 4f11410bf6da87defe8fd59b0413f0d9f71744da upstream.
 
-When CONFIG_TARGET_CPU is specified then pass its value to the compiler
--mcpu option. This fixes following build error when building kernel with
-powerpc e500 SPE capable cross compilers:
+Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
+building against kernel headers from the build environment in scenarios
+where kernel headers are installed into a specific output directory
+(O=...).
 
-    BOOTAS  arch/powerpc/boot/crt0.o
-  powerpc-linux-gnuspe-gcc: error: unrecognized argument in option ‘-mcpu=powerpc’
-  powerpc-linux-gnuspe-gcc: note: valid arguments to ‘-mcpu=’ are: 8540 8548 native
-  make[1]: *** [arch/powerpc/boot/Makefile:231: arch/powerpc/boot/crt0.o] Error 1
-
-Similar change was already introduced for the main powerpc Makefile in
-commit 446cda1b21d9 ("powerpc/32: Don't always pass -mcpu=powerpc to the
-compiler").
-
-Fixes: 40a75584e526 ("powerpc/boot: Build wrapper for an appropriate CPU")
-Cc: stable@vger.kernel.org # v5.19+
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: stable@vger.kernel.org # v5.18+
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/2ae3ae5887babfdacc34435bff0944b3f336100a.1674632329.git.christophe.leroy@csgroup.eu
+Link: https://lore.kernel.org/r/20230127135755.79929-22-mathieu.desnoyers@efficios.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/boot/Makefile |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ tools/testing/selftests/powerpc/ptrace/Makefile   |    2 +-
+ tools/testing/selftests/powerpc/security/Makefile |    2 +-
+ tools/testing/selftests/powerpc/syscalls/Makefile |    2 +-
+ tools/testing/selftests/powerpc/tm/Makefile       |    2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/powerpc/boot/Makefile
-+++ b/arch/powerpc/boot/Makefile
-@@ -39,13 +39,19 @@ BOOTCFLAGS    := -Wall -Wundef -Wstrict-
- 		 $(LINUXINCLUDE)
+--- a/tools/testing/selftests/powerpc/ptrace/Makefile
++++ b/tools/testing/selftests/powerpc/ptrace/Makefile
+@@ -33,7 +33,7 @@ TESTS_64 := $(patsubst %,$(OUTPUT)/%,$(T
+ $(TESTS_64): CFLAGS += -m64
+ $(TM_TESTS): CFLAGS += -I../tm -mhtm
  
- ifdef CONFIG_PPC64_BOOT_WRAPPER
--ifdef CONFIG_CPU_LITTLE_ENDIAN
--BOOTCFLAGS	+= -m64 -mcpu=powerpc64le
-+BOOTCFLAGS	+= -m64
- else
--BOOTCFLAGS	+= -m64 -mcpu=powerpc64
-+BOOTCFLAGS	+= -m32
- endif
-+
-+ifdef CONFIG_TARGET_CPU_BOOL
-+BOOTCFLAGS	+= -mcpu=$(CONFIG_TARGET_CPU)
-+else ifdef CONFIG_PPC64_BOOT_WRAPPER
-+ifdef CONFIG_CPU_LITTLE_ENDIAN
-+BOOTCFLAGS	+= -mcpu=powerpc64le
- else
--BOOTCFLAGS	+= -m32 -mcpu=powerpc
-+BOOTCFLAGS	+= -mcpu=powerpc64
-+endif
- endif
+-CFLAGS += -I../../../../../usr/include -fno-pie
++CFLAGS += $(KHDR_INCLUDES) -fno-pie
  
- BOOTCFLAGS	+= -isystem $(shell $(BOOTCC) -print-file-name=include)
+ $(OUTPUT)/ptrace-gpr: ptrace-gpr.S
+ $(OUTPUT)/ptrace-pkey $(OUTPUT)/core-pkey: LDLIBS += -pthread
+--- a/tools/testing/selftests/powerpc/security/Makefile
++++ b/tools/testing/selftests/powerpc/security/Makefile
+@@ -5,7 +5,7 @@ TEST_PROGS := mitigation-patching.sh
+ 
+ top_srcdir = ../../../../..
+ 
+-CFLAGS += -I../../../../../usr/include
++CFLAGS += $(KHDR_INCLUDES)
+ 
+ include ../../lib.mk
+ 
+--- a/tools/testing/selftests/powerpc/syscalls/Makefile
++++ b/tools/testing/selftests/powerpc/syscalls/Makefile
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ TEST_GEN_PROGS := ipc_unmuxed rtas_filter
+ 
+-CFLAGS += -I../../../../../usr/include
++CFLAGS += $(KHDR_INCLUDES)
+ 
+ top_srcdir = ../../../../..
+ include ../../lib.mk
+--- a/tools/testing/selftests/powerpc/tm/Makefile
++++ b/tools/testing/selftests/powerpc/tm/Makefile
+@@ -17,7 +17,7 @@ $(TEST_GEN_PROGS): ../harness.c ../utils
+ CFLAGS += -mhtm
+ 
+ $(OUTPUT)/tm-syscall: tm-syscall-asm.S
+-$(OUTPUT)/tm-syscall: CFLAGS += -I../../../../../usr/include
++$(OUTPUT)/tm-syscall: CFLAGS += $(KHDR_INCLUDES)
+ $(OUTPUT)/tm-tmspr: CFLAGS += -pthread
+ $(OUTPUT)/tm-vmx-unavail: CFLAGS += -pthread -m64
+ $(OUTPUT)/tm-resched-dscr: ../pmu/lib.c
 
 
