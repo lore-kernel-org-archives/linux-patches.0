@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD82BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:39:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F04C433D2;
-	Tue,  7 Mar 2023 17:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F5DBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:39:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D7CC433EF;
+	Tue,  7 Mar 2023 17:39:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210785;
-	bh=mYIdq+whuxiVkhdEJdGVKAT53v4l6PlAxzEhjEs4U7k=;
+	s=korg; t=1678210787;
+	bh=x4h/4QiR6u55F004R9yM1p/iYYYBNnG7GT6J/m9sEqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F8DlLx6KYFw5FecLJkd+lOK3pdCEoNIvfY8rmSxjZxFpZ7ZPpArWa1y7n/pq0ZSXL
-	 VQmS/W3QLH6IO/xlVvuVz42pp6xvSAj2rE0g5vr5MYCYSPkdqXqlkBqDu6eN/uaPgO
-	 XNKRirr/eHyizgq0Yme+pfjnxfMqxMYWjPAiP5Pc=
+	b=gzEUKZ8VgYn+KP8aWiWOI87DRNZoVgPPMzFRJbvI9DVSsjEiH308tLJSMST5PILdx
+	 54YYABpcVTEegEIaJiZlOtqeJbEtVlwT6zAguQeK0dJY/1D+kkAZN9y1qCExDUd8wq
+	 PxGJBmThJpgfqts8ameD0NSxEY8pCgNQKqGt3FXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0625/1001] blk-iocost: fix divide by 0 error in calc_lcoefs()
-Date: Tue,  7 Mar 2023 17:56:37 +0100
-Message-Id: <20230307170048.686263944@linuxfoundation.org>
+Subject: [PATCH 6.2 0652/1001] inet: fix fast path in __inet_hash_connect()
+Date: Tue,  7 Mar 2023 17:57:04 +0100
+Message-Id: <20230307170049.880694410@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,68 +37,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 984af1e66b4126cf145153661cc24c213e2ec231 ]
+[ Upstream commit 21cbd90a6fab7123905386985e3e4a80236b8714 ]
 
-echo max of u64 to cost.model can cause divide by 0 error.
+__inet_hash_connect() has a fast path taken if sk_head(&tb->owners) is
+equal to the sk parameter.
+sk_head() returns the hlist_entry() with respect to the sk_node field.
+However entries in the tb->owners list are inserted with respect to the
+sk_bind_node field with sk_add_bind_node().
+Thus the check would never pass and the fast path never execute.
 
-  # echo 8:0 rbps=18446744073709551615 > /sys/fs/cgroup/io.cost.model
+This fast path has never been executed or tested as this bug seems
+to be present since commit 1da177e4c3f4 ("Linux-2.6.12-rc2"), thus
+remove it to reduce code complexity.
 
-  divide error: 0000 [#1] PREEMPT SMP
-  RIP: 0010:calc_lcoefs+0x4c/0xc0
-  Call Trace:
-   <TASK>
-   ioc_refresh_params+0x2b3/0x4f0
-   ioc_cost_model_write+0x3cb/0x4c0
-   ? _copy_from_iter+0x6d/0x6c0
-   ? kernfs_fop_write_iter+0xfc/0x270
-   cgroup_file_write+0xa0/0x200
-   kernfs_fop_write_iter+0x17d/0x270
-   vfs_write+0x414/0x620
-   ksys_write+0x73/0x160
-   __x64_sys_write+0x1e/0x30
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-calc_lcoefs() uses the input value of cost.model in DIV_ROUND_UP_ULL,
-overflow would happen if bps plus IOC_PAGE_SIZE is greater than
-ULLONG_MAX, it can cause divide by 0 error.
-
-Fix the problem by setting basecost
-
-Signed-off-by: Li Nan <linan122@huawei.com>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230117070806.3857142-5-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230112-inet_hash_connect_bind_head-v3-1-b591fd212b93@diag.uniroma1.it
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/ipv4/inet_hashtables.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 6955605629e4f..ec7219caea165 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -866,9 +866,14 @@ static void calc_lcoefs(u64 bps, u64 seqiops, u64 randiops,
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index f58d73888638b..7a13dd7f546b6 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -1008,17 +1008,7 @@ int __inet_hash_connect(struct inet_timewait_death_row *death_row,
+ 	u32 index;
  
- 	*page = *seqio = *randio = 0;
- 
--	if (bps)
--		*page = DIV64_U64_ROUND_UP(VTIME_PER_SEC,
--					   DIV_ROUND_UP_ULL(bps, IOC_PAGE_SIZE));
-+	if (bps) {
-+		u64 bps_pages = DIV_ROUND_UP_ULL(bps, IOC_PAGE_SIZE);
-+
-+		if (bps_pages)
-+			*page = DIV64_U64_ROUND_UP(VTIME_PER_SEC, bps_pages);
-+		else
-+			*page = 1;
-+	}
- 
- 	if (seqiops) {
- 		v = DIV64_U64_ROUND_UP(VTIME_PER_SEC, seqiops);
+ 	if (port) {
+-		head = &hinfo->bhash[inet_bhashfn(net, port,
+-						  hinfo->bhash_size)];
+-		tb = inet_csk(sk)->icsk_bind_hash;
+-		spin_lock_bh(&head->lock);
+-		if (sk_head(&tb->owners) == sk && !sk->sk_bind_node.next) {
+-			inet_ehash_nolisten(sk, NULL, NULL);
+-			spin_unlock_bh(&head->lock);
+-			return 0;
+-		}
+-		spin_unlock(&head->lock);
+-		/* No definite answer... Walk to established hash table */
++		local_bh_disable();
+ 		ret = check_established(death_row, sk, port, NULL);
+ 		local_bh_enable();
+ 		return ret;
 -- 
 2.39.2
 
