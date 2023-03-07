@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924F8AD5F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:05:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36AFC433EF;
-	Tue,  7 Mar 2023 17:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB35AD5F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:06:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB6BC433D2;
+	Tue,  7 Mar 2023 17:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678208749;
-	bh=QuEI/jPWvODry9fqYjg4qhqLTchsEg42O1nQRYOdlmo=;
+	s=korg; t=1678208785;
+	bh=ST8dCG7vZmKlo5us2tUSvMoug+d0AKP+ryIb39k85YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kkrGnuOpz0iN2RqSJRO3+IwuThrDy5jqXcyAoDJyWaNd9SLJrk+YLP+xCssGGu/jQ
-	 GPlDPVLl2XJuFXfwTearzw003uVoduYRUiBI5KJpyCXI3f6YJRjEzdqrxgKBxQj5c/
-	 eR6t9wbVd8Tm2E8vkI6wjpkRYTrXdJFLyz907jD4=
+	b=g7xvUDbZGVhCTfvN14+6tpdN1QVuRYzJgv6pb1ekJxnv0KdVZ+PEMEo0AaJy78Laz
+	 u5OkHurRYQaGStwmy1HwBEHhZ+q5NFkg7mQSNmJTourtjpfMmdZ76zYf4nUUsLzvjI
+	 QtWc49Fs1bVpwTnBTbRVaDdIH0Vkk0ib+zdkQGg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Stefan Ghinea <stefan.ghinea@windriver.com>
-Subject: [PATCH 6.2 0001/1001] HID: asus: use spinlock to protect concurrent accesses
-Date: Tue,  7 Mar 2023 17:46:13 +0100
-Message-Id: <20230307170022.177492582@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 0010/1001] arm64: dts: qcom: qcs404: use symbol names for PCIe resets
+Date: Tue,  7 Mar 2023 17:46:22 +0100
+Message-Id: <20230307170022.587757393@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,98 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit 315c537068a13f0b5681d33dd045a912f4bece6f upstream.
+[ Upstream commit 41a37d157a613444c97e8f71a5fb2a21116b70d7 ]
 
-asus driver has a worker that may access data concurrently.
-Proct the accesses using a spinlock.
+The commit e5bbbff5b7d7 ("clk: gcc-qcs404: Add PCIe resets") added names
+for PCIe resets, but it did not change the existing qcs404.dtsi to use
+these names. Do it now and use symbol names to make it easier to check
+and modify the dtsi in future.
 
-Fixes: af22a610bc38 ("HID: asus: support backlight on USB keyboards")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-4-7860c5763c38@diag.uniroma1.it
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e5bbbff5b7d7 ("clk: gcc-qcs404: Add PCIe resets")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221226042154.2666748-14-dmitry.baryshkov@linaro.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-asus.c |   22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -98,6 +98,7 @@ struct asus_kbd_leds {
- 	struct hid_device *hdev;
- 	struct work_struct work;
- 	unsigned int brightness;
-+	spinlock_t lock;
- 	bool removed;
- };
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index a5324eecb50a9..502dd6db491e2 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -806,7 +806,7 @@ pcie_phy: phy@7786000 {
  
-@@ -495,7 +496,12 @@ static void asus_kbd_backlight_set(struc
- {
- 	struct asus_kbd_leds *led = container_of(led_cdev, struct asus_kbd_leds,
- 						 cdev);
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&led->lock, flags);
- 	led->brightness = brightness;
-+	spin_unlock_irqrestore(&led->lock, flags);
-+
- 	schedule_work(&led->work);
- }
+ 			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>;
+ 			resets = <&gcc GCC_PCIEPHY_0_PHY_BCR>,
+-				 <&gcc 21>;
++				 <&gcc GCC_PCIE_0_PIPE_ARES>;
+ 			reset-names = "phy", "pipe";
  
-@@ -503,8 +509,14 @@ static enum led_brightness asus_kbd_back
- {
- 	struct asus_kbd_leds *led = container_of(led_cdev, struct asus_kbd_leds,
- 						 cdev);
-+	enum led_brightness brightness;
-+	unsigned long flags;
+ 			clock-output-names = "pcie_0_pipe_clk";
+@@ -1336,12 +1336,12 @@ pcie: pci@10000000 {
+ 				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>;
+ 			clock-names = "iface", "aux", "master_bus", "slave_bus";
  
--	return led->brightness;
-+	spin_lock_irqsave(&led->lock, flags);
-+	brightness = led->brightness;
-+	spin_unlock_irqrestore(&led->lock, flags);
-+
-+	return brightness;
- }
- 
- static void asus_kbd_backlight_work(struct work_struct *work)
-@@ -512,11 +524,14 @@ static void asus_kbd_backlight_work(stru
- 	struct asus_kbd_leds *led = container_of(work, struct asus_kbd_leds, work);
- 	u8 buf[] = { FEATURE_KBD_REPORT_ID, 0xba, 0xc5, 0xc4, 0x00 };
- 	int ret;
-+	unsigned long flags;
- 
- 	if (led->removed)
- 		return;
- 
-+	spin_lock_irqsave(&led->lock, flags);
- 	buf[4] = led->brightness;
-+	spin_unlock_irqrestore(&led->lock, flags);
- 
- 	ret = asus_kbd_set_report(led->hdev, buf, sizeof(buf));
- 	if (ret < 0)
-@@ -584,6 +599,7 @@ static int asus_kbd_register_leds(struct
- 	drvdata->kbd_backlight->cdev.brightness_set = asus_kbd_backlight_set;
- 	drvdata->kbd_backlight->cdev.brightness_get = asus_kbd_backlight_get;
- 	INIT_WORK(&drvdata->kbd_backlight->work, asus_kbd_backlight_work);
-+	spin_lock_init(&drvdata->kbd_backlight->lock);
- 
- 	ret = devm_led_classdev_register(&hdev->dev, &drvdata->kbd_backlight->cdev);
- 	if (ret < 0) {
-@@ -1119,9 +1135,13 @@ err_stop_hw:
- static void asus_remove(struct hid_device *hdev)
- {
- 	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
-+	unsigned long flags;
- 
- 	if (drvdata->kbd_backlight) {
-+		spin_lock_irqsave(&drvdata->kbd_backlight->lock, flags);
- 		drvdata->kbd_backlight->removed = true;
-+		spin_unlock_irqrestore(&drvdata->kbd_backlight->lock, flags);
-+
- 		cancel_work_sync(&drvdata->kbd_backlight->work);
- 	}
- 
+-			resets = <&gcc 18>,
+-				 <&gcc 17>,
+-				 <&gcc 15>,
+-				 <&gcc 19>,
++			resets = <&gcc GCC_PCIE_0_AXI_MASTER_ARES>,
++				 <&gcc GCC_PCIE_0_AXI_SLAVE_ARES>,
++				 <&gcc GCC_PCIE_0_AXI_MASTER_STICKY_ARES>,
++				 <&gcc GCC_PCIE_0_CORE_STICKY_ARES>,
+ 				 <&gcc GCC_PCIE_0_BCR>,
+-				 <&gcc 16>;
++				 <&gcc GCC_PCIE_0_AHB_ARES>;
+ 			reset-names = "axi_m",
+ 				      "axi_s",
+ 				      "axi_m_sticky",
+-- 
+2.39.2
+
 
 
