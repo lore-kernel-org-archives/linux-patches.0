@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02E6BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:03:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F20C4339B;
-	Tue,  7 Mar 2023 18:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C360BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:03:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78AF2C4339B;
+	Tue,  7 Mar 2023 18:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212200;
-	bh=CnQo34brO7Gk1qTweuoQ/wz2ZvMjCScRvsLtOp2fd9I=;
+	s=korg; t=1678212204;
+	bh=ulycp4yw5PwKVEnBxrQjSQVmLYGzZJrd0p99qCkkJgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rMSqS90qgTVKKMb3GpPkqJgEJLqIUxnfQUh4zjp9ZqpkfCQQ35yeDzbh9bjNbg+lo
-	 uad+S4VbIRhTP06kKNOLW2cYsTQQbGsNZP+ftzQVb5ZFXnjgHslizGUfxau3X9n5zn
-	 svsAQENwCbh1OgijEYccwm1+vkSO5inn+0j1zAHE=
+	b=GJJ6tEl741hVy5t816BNCNWnQPHnutUnkeBoOscvMqxeo/4M+yECYvGqkRiYJ5wT/
+	 nDbOmvN6y99538mvOEG+o6I6cKLtNThniYrVjU1I8zGtTO1Jtr9rSiNGCJLqbZFILp
+	 8J+M9WPnYb4e1JrDrucvvYB+eVLmC0PLOCkgM/2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinke Han <hanjinke.666@bytedance.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Muchun Song <songmuchun@bytedance.com>,
+	Saurav Kashyap <skashyap@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/885] block: Fix io statistics for cgroup in throttle path
-Date: Tue,  7 Mar 2023 17:50:42 +0100
-Message-Id: <20230307170006.570679696@linuxfoundation.org>
+Subject: [PATCH 6.1 109/885] block: bio-integrity: Copy flags when bio_integrity_payload is cloned
+Date: Tue,  7 Mar 2023 17:50:43 +0100
+Message-Id: <20230307170006.616027538@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,67 +38,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jinke Han <hanjinke.666@bytedance.com>
+From: Martin K. Petersen <martin.petersen@oracle.com>
 
-[ Upstream commit 0f7c8f0f7934c389b0f9fa1f151e753d8de6348f ]
+[ Upstream commit b6a4bdcda430e3ca43bbb9cb1d4d4d34ebe15c40 ]
 
-In the current code, io statistics are missing for cgroup when bio
-was throttled by blk-throttle. Fix it by moving the unreaching code
-to submit_bio_noacct_nocheck.
+Make sure to copy the flags when a bio_integrity_payload is cloned.
+Otherwise per-I/O properties such as IP checksum flag will not be
+passed down to the HBA driver. Since the integrity buffer is owned by
+the original bio, the BIP_BLOCK_INTEGRITY flag needs to be masked off
+to avoid a double free in the completion path.
 
-Fixes: 3f98c753717c ("block: don't check bio in blk_throtl_dispatch_work_fn")
-Signed-off-by: Jinke Han <hanjinke.666@bytedance.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Acked-by: Muchun Song <songmuchun@bytedance.com>
+Fixes: aae7df50190a ("block: Integrity checksum flag")
+Fixes: b1f01388574c ("block: Relocate bio integrity flags")
+Reported-by: Saurav Kashyap <skashyap@marvell.com>
+Tested-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230216032250.74230-1-hanjinke.666@bytedance.com
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://lore.kernel.org/r/20230215171801.21062-1-martin.petersen@oracle.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-core.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ block/bio-integrity.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/blk-core.c b/block/blk-core.c
-index 5487912befe89..553afcdd638a6 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -672,6 +672,18 @@ static void __submit_bio_noacct_mq(struct bio *bio)
+diff --git a/block/bio-integrity.c b/block/bio-integrity.c
+index 3f5685c00e360..91ffee6fc8cb4 100644
+--- a/block/bio-integrity.c
++++ b/block/bio-integrity.c
+@@ -418,6 +418,7 @@ int bio_integrity_clone(struct bio *bio, struct bio *bio_src,
  
- void submit_bio_noacct_nocheck(struct bio *bio)
- {
-+	blk_cgroup_bio_start(bio);
-+	blkcg_bio_issue_init(bio);
-+
-+	if (!bio_flagged(bio, BIO_TRACE_COMPLETION)) {
-+		trace_block_bio_queue(bio);
-+		/*
-+		 * Now that enqueuing has been traced, we need to trace
-+		 * completion as well.
-+		 */
-+		bio_set_flag(bio, BIO_TRACE_COMPLETION);
-+	}
-+
- 	/*
- 	 * We only want one ->submit_bio to be active at a time, else stack
- 	 * usage with stacked devices could be a problem.  Use current->bio_list
-@@ -776,17 +788,6 @@ void submit_bio_noacct(struct bio *bio)
+ 	bip->bip_vcnt = bip_src->bip_vcnt;
+ 	bip->bip_iter = bip_src->bip_iter;
++	bip->bip_flags = bip_src->bip_flags & ~BIP_BLOCK_INTEGRITY;
  
- 	if (blk_throtl_bio(bio))
- 		return;
--
--	blk_cgroup_bio_start(bio);
--	blkcg_bio_issue_init(bio);
--
--	if (!bio_flagged(bio, BIO_TRACE_COMPLETION)) {
--		trace_block_bio_queue(bio);
--		/* Now that enqueuing has been traced, we need to trace
--		 * completion as well.
--		 */
--		bio_set_flag(bio, BIO_TRACE_COMPLETION);
--	}
- 	submit_bio_noacct_nocheck(bio);
- 	return;
- 
+ 	return 0;
+ }
 -- 
 2.39.2
 
