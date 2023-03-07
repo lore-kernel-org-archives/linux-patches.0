@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE582BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:13:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C4B8C433D2;
-	Tue,  7 Mar 2023 18:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D07BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:13:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263E5C433EF;
+	Tue,  7 Mar 2023 18:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212823;
-	bh=hEFn9n/9+hp/VLZHOweCo97ICRUH9F4WDcfe7yXqt2o=;
+	s=korg; t=1678212826;
+	bh=rkIUUQKZZ0ZJ6XWIzFg0s+PHN8hbgDdjJhcK2IiGOxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EiVp7YLpbbluWlLRR8JA2aef4V2jn4ZfiSgeVSRnvvkPHIuvaJQoDjvaNdrwS7W6p
-	 sWpt5WF0CLF5z99oz1JNIzl282HSvV4PipwbK0SlwsASGeull56YhdacwiCUDhR7e/
-	 KrfoFHz1RxR4dszOkcl8SWXaOdTEdjuk4lpagVX0=
+	b=aX+uCpfLXrPAIfo7GP7woNiiDACNTSbc+lFhB9adT6GQhCPKmT9Oz+sNWTdUAtHYH
+	 NKFD7qfjOYA6D68kuqc4u+AD55iTjemCoESruKom0adHLs/nmiTSHg7Bkl9Cg51g1i
+	 VEfeqF6cWp5OtSAR94DiY8j/8OGFCvlr5fLmq4qI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Miaoqian Lin <linmq006@gmail.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 279/885] pinctrl: stm32: Fix refcount leak in stm32_pctrl_get_irq_domain
-Date: Tue,  7 Mar 2023 17:53:33 +0100
-Message-Id: <20230307170014.134530398@linuxfoundation.org>
+Subject: [PATCH 6.1 280/885] pinctrl: rockchip: Fix refcount leak in rockchip_pinctrl_parse_groups
+Date: Tue,  7 Mar 2023 17:53:34 +0100
+Message-Id: <20230307170014.173683455@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,33 +37,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit dcef18c8ac40aa85bb339f64c1dd31dd458b06fb ]
+[ Upstream commit c818ae563bf99457f02e8170aabd6b174f629f65 ]
 
-of_irq_find_parent() returns a node pointer with refcount incremented,
+of_find_node_by_phandle() returns a node pointer with refcount incremented,
 We should use of_node_put() on it when not needed anymore.
 Add missing of_node_put() to avoid refcount leak.
 
-Fixes: d86f4d71e42a ("pinctrl: stm32: check irq controller availability at probe")
+Fixes: d3e5116119bd ("pinctrl: add pinctrl driver for Rockchip SoCs")
 Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20230102082503.3944927-1-linmq006@gmail.com
+Link: https://lore.kernel.org/r/20230102112845.3982407-1-linmq006@gmail.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 1 +
+ drivers/pinctrl/pinctrl-rockchip.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index e485506ea599c..e198233c10bad 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -1380,6 +1380,7 @@ static struct irq_domain *stm32_pctrl_get_irq_domain(struct platform_device *pde
- 		return ERR_PTR(-ENXIO);
- 
- 	domain = irq_find_host(parent);
-+	of_node_put(parent);
- 	if (!domain)
- 		/* domain not registered yet */
- 		return ERR_PTR(-EPROBE_DEFER);
+diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
+index 5eeac92f610a0..0276b52f37168 100644
+--- a/drivers/pinctrl/pinctrl-rockchip.c
++++ b/drivers/pinctrl/pinctrl-rockchip.c
+@@ -3045,6 +3045,7 @@ static int rockchip_pinctrl_parse_groups(struct device_node *np,
+ 		np_config = of_find_node_by_phandle(be32_to_cpup(phandle));
+ 		ret = pinconf_generic_parse_dt_config(np_config, NULL,
+ 				&grp->data[j].configs, &grp->data[j].nconfigs);
++		of_node_put(np_config);
+ 		if (ret)
+ 			return ret;
+ 	}
 -- 
 2.39.2
 
