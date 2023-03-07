@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613DBBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:15:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20BCC433D2;
-	Tue,  7 Mar 2023 17:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DE6BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:15:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF69C433D2;
+	Tue,  7 Mar 2023 17:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209316;
-	bh=06aAdmUsOD91mW3GI3vxntpTk6RpxZOxbnjk85Zb+3Q=;
+	s=korg; t=1678209319;
+	bh=penwWCLdpGLzqrPyXwCzb0zcD3nn12KTfrWpjjmxuEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J88l/37++jmrLrgn4cDCUhTm8wZBVjArktQxrSpMOtLA55atGKoRHtgn5d/6ZYIWy
-	 3YN2nSK9tgn+1bf+vq9iP8giM6mi2OAtp5wGfl3NE7CvAIKa97EahUxMiCg99Lq1zG
-	 tFXk6OOaLi7HkLb/tSQ2u06ejx1P7AMzAR5O0cJ8=
+	b=n8HeiK1SGny00I1NSdl/odSeXUcw8NojBL8513ILZ2vQzB23XkoWJwiDlVrLK6mN5
+	 af1vMat5WgZBRP9CO5hQ/5dQ6ALAm8yBvaK2g7tK/5rkgcViX2TExYzf5mnpz2uGeA
+	 Oyw0KmOiZ5EtJnxCLYQmyTUm0ox2itwHzuKyEUy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pengfei Xu <pengfei.xu@intel.com>,
 	Boqun Feng <boqun.feng@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
 	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
 	Lai Jiangshan <jiangshanlai@gmail.com>,
+	"Eric W . Biederman" <ebiederm@xmission.com>,
 	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0179/1001] rcu-tasks: Remove preemption disablement around srcu_read_[un]lock() calls
-Date: Tue,  7 Mar 2023 17:49:11 +0100
-Message-Id: <20230307170029.685993494@linuxfoundation.org>
+Subject: [PATCH 6.2 0180/1001] rcu-tasks: Fix synchronize_rcu_tasks() VS zap_pid_ns_processes()
+Date: Tue,  7 Mar 2023 17:49:12 +0100
+Message-Id: <20230307170029.727814610@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -40,55 +43,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 44757092958bdd749775022f915b7ac974384c2a ]
+[ Upstream commit 28319d6dc5e2ffefa452c2377dd0f71621b5bff0 ]
 
-Ever since the following commit:
+RCU Tasks and PID-namespace unshare can interact in do_exit() in a
+complicated circular dependency:
 
-	5a41344a3d83 ("srcu: Simplify __srcu_read_unlock() via this_cpu_dec()")
+1) TASK A calls unshare(CLONE_NEWPID), this creates a new PID namespace
+   that every subsequent child of TASK A will belong to. But TASK A
+   doesn't itself belong to that new PID namespace.
 
-SRCU doesn't rely anymore on preemption to be disabled in order to
-modify the per-CPU counter. And even then it used to be done from the API
-itself.
+2) TASK A forks() and creates TASK B. TASK A stays attached to its PID
+   namespace (let's say PID_NS1) and TASK B is the first task belonging
+   to the new PID namespace created by unshare()  (let's call it PID_NS2).
 
-Therefore and after checking further, it appears to be safe to remove
-the preemption disablement around __srcu_read_[un]lock() in
-exit_tasks_rcu_start() and exit_tasks_rcu_finish()
+3) Since TASK B is the first task attached to PID_NS2, it becomes the
+   PID_NS2 child reaper.
 
+4) TASK A forks() again and creates TASK C which get attached to PID_NS2.
+   Note how TASK C has TASK A as a parent (belonging to PID_NS1) but has
+   TASK B (belonging to PID_NS2) as a pid_namespace child_reaper.
+
+5) TASK B exits and since it is the child reaper for PID_NS2, it has to
+   kill all other tasks attached to PID_NS2, and wait for all of them to
+   die before getting reaped itself (zap_pid_ns_process()).
+
+6) TASK A calls synchronize_rcu_tasks() which leads to
+   synchronize_srcu(&tasks_rcu_exit_srcu).
+
+7) TASK B is waiting for TASK C to get reaped. But TASK B is under a
+   tasks_rcu_exit_srcu SRCU critical section (exit_notify() is between
+   exit_tasks_rcu_start() and exit_tasks_rcu_finish()), blocking TASK A.
+
+8) TASK C exits and since TASK A is its parent, it waits for it to reap
+   TASK C, but it can't because TASK A waits for TASK B that waits for
+   TASK C.
+
+Pid_namespace semantics can hardly be changed at this point. But the
+coverage of tasks_rcu_exit_srcu can be reduced instead.
+
+The current task is assumed not to be concurrently reapable at this
+stage of exit_notify() and therefore tasks_rcu_exit_srcu can be
+temporarily relaxed without breaking its constraints, providing a way
+out of the deadlock scenario.
+
+[ paulmck: Fix build failure by adding additional declaration. ]
+
+Fixes: 3f95aa81d265 ("rcu: Make TASKS_RCU handle tasks that are almost done exiting")
+Reported-by: Pengfei Xu <pengfei.xu@intel.com>
 Suggested-by: Boqun Feng <boqun.feng@gmail.com>
-Suggested-by: Paul E. McKenney <paulmck@kernel.org>
 Suggested-by: Neeraj Upadhyay <quic_neeraju@quicinc.com>
+Suggested-by: Paul E. McKenney <paulmck@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
 Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+Cc: Eric W . Biederman <ebiederm@xmission.com>
 Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Stable-dep-of: 28319d6dc5e2 ("rcu-tasks: Fix synchronize_rcu_tasks() VS zap_pid_ns_processes()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tasks.h | 4 ----
- 1 file changed, 4 deletions(-)
+ include/linux/rcupdate.h |  2 ++
+ kernel/pid_namespace.c   | 17 +++++++++++++++++
+ kernel/rcu/tasks.h       | 15 +++++++++++++--
+ 3 files changed, 32 insertions(+), 2 deletions(-)
 
+diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
+index 03abf883a281b..c0c79beac3fe6 100644
+--- a/include/linux/rcupdate.h
++++ b/include/linux/rcupdate.h
+@@ -238,6 +238,7 @@ void synchronize_rcu_tasks_rude(void);
+ 
+ #define rcu_note_voluntary_context_switch(t) rcu_tasks_qs(t, false)
+ void exit_tasks_rcu_start(void);
++void exit_tasks_rcu_stop(void);
+ void exit_tasks_rcu_finish(void);
+ #else /* #ifdef CONFIG_TASKS_RCU_GENERIC */
+ #define rcu_tasks_classic_qs(t, preempt) do { } while (0)
+@@ -246,6 +247,7 @@ void exit_tasks_rcu_finish(void);
+ #define call_rcu_tasks call_rcu
+ #define synchronize_rcu_tasks synchronize_rcu
+ static inline void exit_tasks_rcu_start(void) { }
++static inline void exit_tasks_rcu_stop(void) { }
+ static inline void exit_tasks_rcu_finish(void) { }
+ #endif /* #else #ifdef CONFIG_TASKS_RCU_GENERIC */
+ 
+diff --git a/kernel/pid_namespace.c b/kernel/pid_namespace.c
+index f4f8cb0435b45..fc21c5d5fd5de 100644
+--- a/kernel/pid_namespace.c
++++ b/kernel/pid_namespace.c
+@@ -244,7 +244,24 @@ void zap_pid_ns_processes(struct pid_namespace *pid_ns)
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		if (pid_ns->pid_allocated == init_pids)
+ 			break;
++		/*
++		 * Release tasks_rcu_exit_srcu to avoid following deadlock:
++		 *
++		 * 1) TASK A unshare(CLONE_NEWPID)
++		 * 2) TASK A fork() twice -> TASK B (child reaper for new ns)
++		 *    and TASK C
++		 * 3) TASK B exits, kills TASK C, waits for TASK A to reap it
++		 * 4) TASK A calls synchronize_rcu_tasks()
++		 *                   -> synchronize_srcu(tasks_rcu_exit_srcu)
++		 * 5) *DEADLOCK*
++		 *
++		 * It is considered safe to release tasks_rcu_exit_srcu here
++		 * because we assume the current task can not be concurrently
++		 * reaped at this point.
++		 */
++		exit_tasks_rcu_stop();
+ 		schedule();
++		exit_tasks_rcu_start();
+ 	}
+ 	__set_current_state(TASK_RUNNING);
+ 
 diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index 488ba8adf132c..20617a2d04ed9 100644
+index 20617a2d04ed9..03388e2e29df0 100644
 --- a/kernel/rcu/tasks.h
 +++ b/kernel/rcu/tasks.h
-@@ -1008,9 +1008,7 @@ EXPORT_SYMBOL_GPL(show_rcu_tasks_classic_gp_kthread);
+@@ -1016,16 +1016,27 @@ void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
+  * task is exiting and may be removed from the tasklist. See
+  * corresponding synchronize_srcu() for further details.
   */
- void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
- {
--	preempt_disable();
- 	current->rcu_tasks_idx = __srcu_read_lock(&tasks_rcu_exit_srcu);
--	preempt_enable();
- }
- 
- /*
-@@ -1022,9 +1020,7 @@ void exit_tasks_rcu_finish(void) __releases(&tasks_rcu_exit_srcu)
+-void exit_tasks_rcu_finish(void) __releases(&tasks_rcu_exit_srcu)
++void exit_tasks_rcu_stop(void) __releases(&tasks_rcu_exit_srcu)
  {
  	struct task_struct *t = current;
  
--	preempt_disable();
  	__srcu_read_unlock(&tasks_rcu_exit_srcu, t->rcu_tasks_idx);
--	preempt_enable();
- 	exit_tasks_rcu_finish_trace(t);
+-	exit_tasks_rcu_finish_trace(t);
++}
++
++/*
++ * Contribute to protect against tasklist scan blind spot while the
++ * task is exiting and may be removed from the tasklist. See
++ * corresponding synchronize_srcu() for further details.
++ */
++void exit_tasks_rcu_finish(void)
++{
++	exit_tasks_rcu_stop();
++	exit_tasks_rcu_finish_trace(current);
  }
+ 
+ #else /* #ifdef CONFIG_TASKS_RCU */
+ void exit_tasks_rcu_start(void) { }
++void exit_tasks_rcu_stop(void) { }
+ void exit_tasks_rcu_finish(void) { exit_tasks_rcu_finish_trace(current); }
+ #endif /* #else #ifdef CONFIG_TASKS_RCU */
  
 -- 
 2.39.2
