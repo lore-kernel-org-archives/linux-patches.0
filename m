@@ -1,94 +1,244 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35ABBA52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A716CBA4F
 	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:09:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 145FCC433EF;
-	Tue,  7 Mar 2023 19:09:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216178;
-	bh=KCEuBy+vQlq+l6jOKnFcuSzdCEdjOiwxyU8c70mIZxU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KdaElJu1QNRElKjtTpsvC90rKQfg66qf3Ta73+keqOuWlVanA9XibKrANe10ZZSOJ
-	 G1p45PV3UEVMoVaL7qj9CWJTDuZit1KuoHPY1OfyoLvdn6giyfPqwPgRK9JXE7ay9+
-	 y1Q0yuEdWG2aH5UKOKBpZzI+AN4Z06b9puxpGokQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Vineeth Pillai <viremana@linux.microsoft.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	kvm@vger.kernel.org,
-	Sean Christopherson <seanjc@google.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>
-Subject: [PATCH 5.15 469/567] KVM: SVM: hyper-v: placate modpost section mismatch error
-Date: Tue,  7 Mar 2023 18:03:25 +0100
-Message-Id: <20230307165926.208565593@linuxfoundation.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
-References: <20230307165905.838066027@linuxfoundation.org>
-User-Agent: quilt/0.67
+Received: by mail-pg1-f181.google.com with SMTP id z10so8228823pgr.8
+        for <patches@lists.linux.dev>; Tue, 07 Mar 2023 11:09:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112; t=1678216178;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XRRXK53jDGzKbqJ6qVuf5oPuz3OEKiwRmxooP50BqwU=;
+        b=C95LyP/OCNgLMK2gkpE2Tq+GV5LS0ZzrUM5vHN14SSaIVFPDJcJDkaY8pmmL5KbLHa
+         it523dGKZy/6Of9wX7Sk+aUqLP+9snIAyuvxDxibtDt9DsfMkvo65iNxlbjWpXdr69eD
+         PYk1lvGvuNA463TonRhWYlHewtMoHVfJmJXvVqSgezGk4x8+pH2QtydFCYL4sg4N162c
+         Fy5q4P2sU2b0pGpBJh3CUw/ekia1AXvns+GJP+WcRX9gqqIu2uB7RMNiIyFLEFNqEQk3
+         GfhGyHE77ttvEuzntKC/nn++g5bkRZQ8/Sfj3CvAMyHD3mNxSrYi0kkoz8JT17MgPAuR
+         B+BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678216178;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XRRXK53jDGzKbqJ6qVuf5oPuz3OEKiwRmxooP50BqwU=;
+        b=qYERkPqFFp+pNbYhM964dBIVbRAelgOPalPONxdVp7QWq1+mb8RBvJ6Q3hH3W6YY8P
+         uAbmxjhAJE5MfjKxEHliUBLCavTKRBaU44vBfzh28qGu96/vBnDEH7EmnPGubnYZX+9e
+         FzpXmLGlSjXmggapcop/sPBYu5OtlqawfJWRbybNKbOsKhaGMR+vyxJmYz2NyZsVi+EL
+         jKGMu3HPP7zqMXgx9+bStLB+FFdttN4+3flgkH67vJNEnGvgBwN5j9GoN0B5uPxEi+Et
+         bkAwyxBohi5Ma7k3Alyi08oV65OjQvUj1vt2gN5jpz77EyIpP/WKLiajhxYFdgc4AtJP
+         80xA==
+X-Gm-Message-State: AO0yUKVjzGzc5cncriUw+Emo2s64W9koXATibK85IgNcf6al9MA6SnbM
+	hWRxfRdietLB0l1XUPx7eBXaWAAS9ZqxN4+OBE7gSA==
+X-Google-Smtp-Source: AK7set/ujLaCC87ejtyPflmPHKLb1GCAa/9hnu7R3JDIfn6UfjhtH1nJ7GYgLehA51r1bZe2ytPOlGk+h6B0nfaflVM=
+X-Received: by 2002:a62:8607:0:b0:619:46b3:7903 with SMTP id
+ x7-20020a628607000000b0061946b37903mr5181811pfd.3.1678216177661; Tue, 07 Mar
+ 2023 11:09:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20230307165905.838066027@linuxfoundation.org> <20230307165920.205338995@linuxfoundation.org>
+In-Reply-To: <20230307165920.205338995@linuxfoundation.org>
+From: Saravana Kannan <saravanak@google.com>
+Date: Tue, 7 Mar 2023 11:09:01 -0800
+Message-ID: <CAGETcx-sDPx3HySkP-8Rb7TZLZUVP8xTK97Hi2ZJ7PcRva5xkQ@mail.gmail.com>
+Subject: Re: [PATCH 5.15 330/567] driver core: fw_devlink: Add DL_FLAG_CYCLE
+ support to device links
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Colin Foster <colin.foster@in-advantage.com>, Sudeep Holla <sudeep.holla@arm.com>, 
+	Douglas Anderson <dianders@chromium.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Sasha Levin <sashal@kernel.org>, Luca Weiss <luca.weiss@fairphone.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Randy Dunlap <rdunlap@infradead.org>
+On Tue, Mar 7, 2023 at 11:02=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> From: Saravana Kannan <saravanak@google.com>
+>
+> [ Upstream commit 67cad5c67019c38126b749621665b6723d3ae7e6 ]
+>
+> fw_devlink uses DL_FLAG_SYNC_STATE_ONLY device link flag for two
+> purposes:
+>
+> 1. To allow a parent device to proxy its child device's dependency on a
+>    supplier so that the supplier doesn't get its sync_state() callback
+>    before the child device/consumer can be added and probed. In this
+>    usage scenario, we need to ignore cycles for ensure correctness of
+>    sync_state() callbacks.
+>
+> 2. When there are dependency cycles in firmware, we don't know which of
+>    those dependencies are valid. So, we have to ignore them all wrt
+>    probe ordering while still making sure the sync_state() callbacks
+>    come correctly.
+>
+> However, when detecting dependency cycles, there can be multiple
+> dependency cycles between two devices that we need to detect. For
+> example:
+>
+> A -> B -> A and A -> C -> B -> A.
+>
+> To detect multiple cycles correct, we need to be able to differentiate
+> DL_FLAG_SYNC_STATE_ONLY device links used for (1) vs (2) above.
+>
+> To allow this differentiation, add a DL_FLAG_CYCLE that can be use to
+> mark use case (2). We can then use the DL_FLAG_CYCLE to decide which
+> DL_FLAG_SYNC_STATE_ONLY device links to follow when looking for
+> dependency cycles.
+>
+> Fixes: 2de9d8e0d2fe ("driver core: fw_devlink: Improve handling of cyclic=
+ dependencies")
+> Signed-off-by: Saravana Kannan <saravanak@google.com>
+> Tested-by: Colin Foster <colin.foster@in-advantage.com>
+> Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+> Tested-by: Douglas Anderson <dianders@chromium.org>
+> Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-=
+fp4
+> Link: https://lore.kernel.org/r/20230207014207.1678715-6-saravanak@google=
+.com
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
 
-commit 45dd9bc75d9adc9483f0c7d662ba6e73ed698a0b upstream.
+These fw_devlink patches weren't tested with 5.15. It's also an
+extensive refactor. So I'm a little worried if it'll be finicky and
+break things in a kernel that's a year old.
 
-modpost reports section mismatch errors/warnings:
-WARNING: modpost: vmlinux.o: section mismatch in reference: svm_hv_hardware_setup (section: .text) -> (unknown) (section: .init.data)
-WARNING: modpost: vmlinux.o: section mismatch in reference: svm_hv_hardware_setup (section: .text) -> (unknown) (section: .init.data)
-WARNING: modpost: vmlinux.o: section mismatch in reference: svm_hv_hardware_setup (section: .text) -> (unknown) (section: .init.data)
+Unless someone specifically wants these patches in 5.15, I'd prefer we
+don't pick it up in 5.15.
 
-This "(unknown) (section: .init.data)" all refer to svm_x86_ops.
+-Saravana
 
-Tag svm_hv_hardware_setup() with __init to fix a modpost warning as the
-non-stub implementation accesses __initdata (svm_x86_ops), i.e. would
-generate a use-after-free if svm_hv_hardware_setup() were actually invoked
-post-init.  The helper is only called from svm_hardware_setup(), which is
-also __init, i.e. lack of __init is benign other than the modpost warning.
-
-Fixes: 1e0c7d40758b ("KVM: SVM: hyper-v: Remote TLB flush for SVM")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Vineeth Pillai <viremana@linux.microsoft.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: kvm@vger.kernel.org
-Cc: stable@vger.kernel.org
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Message-Id: <20230222073315.9081-1-rdunlap@infradead.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/x86/kvm/svm/svm_onhyperv.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
---- a/arch/x86/kvm/svm/svm_onhyperv.h
-+++ b/arch/x86/kvm/svm/svm_onhyperv.h
-@@ -48,7 +48,7 @@ static inline void svm_hv_init_vmcb(stru
- 		hve->hv_enlightenments_control.enlightened_npt_tlb = 1;
- }
- 
--static inline void svm_hv_hardware_setup(void)
-+static inline __init void svm_hv_hardware_setup(void)
- {
- 	if (npt_enabled &&
- 	    ms_hyperv.nested_features & HV_X64_NESTED_ENLIGHTENED_TLB) {
-@@ -112,7 +112,7 @@ static inline void svm_hv_init_vmcb(stru
- {
- }
- 
--static inline void svm_hv_hardware_setup(void)
-+static inline __init void svm_hv_hardware_setup(void)
- {
- }
- 
-
-
+>  drivers/base/core.c    | 28 ++++++++++++++++++----------
+>  include/linux/device.h |  1 +
+>  2 files changed, 19 insertions(+), 10 deletions(-)
+>
+> diff --git a/drivers/base/core.c b/drivers/base/core.c
+> index adf003a7e8d6a..178a21e985197 100644
+> --- a/drivers/base/core.c
+> +++ b/drivers/base/core.c
+> @@ -269,6 +269,12 @@ static bool device_is_ancestor(struct device *dev, s=
+truct device *target)
+>         return false;
+>  }
+>
+> +static inline bool device_link_flag_is_sync_state_only(u32 flags)
+> +{
+> +       return (flags & ~(DL_FLAG_INFERRED | DL_FLAG_CYCLE)) =3D=3D
+> +               (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED);
+> +}
+> +
+>  /**
+>   * device_is_dependent - Check if one device depends on another one
+>   * @dev: Device to check dependencies for.
+> @@ -295,8 +301,7 @@ int device_is_dependent(struct device *dev, void *tar=
+get)
+>                 return ret;
+>
+>         list_for_each_entry(link, &dev->links.consumers, s_node) {
+> -               if ((link->flags & ~DL_FLAG_INFERRED) =3D=3D
+> -                   (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
+> +               if (device_link_flag_is_sync_state_only(link->flags))
+>                         continue;
+>
+>                 if (link->consumer =3D=3D target)
+> @@ -369,8 +374,7 @@ static int device_reorder_to_tail(struct device *dev,=
+ void *not_used)
+>
+>         device_for_each_child(dev, NULL, device_reorder_to_tail);
+>         list_for_each_entry(link, &dev->links.consumers, s_node) {
+> -               if ((link->flags & ~DL_FLAG_INFERRED) =3D=3D
+> -                   (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
+> +               if (device_link_flag_is_sync_state_only(link->flags))
+>                         continue;
+>                 device_reorder_to_tail(link->consumer, NULL);
+>         }
+> @@ -621,7 +625,8 @@ postcore_initcall(devlink_class_init);
+>                                DL_FLAG_AUTOREMOVE_SUPPLIER | \
+>                                DL_FLAG_AUTOPROBE_CONSUMER  | \
+>                                DL_FLAG_SYNC_STATE_ONLY | \
+> -                              DL_FLAG_INFERRED)
+> +                              DL_FLAG_INFERRED | \
+> +                              DL_FLAG_CYCLE)
+>
+>  #define DL_ADD_VALID_FLAGS (DL_MANAGED_LINK_FLAGS | DL_FLAG_STATELESS | =
+\
+>                             DL_FLAG_PM_RUNTIME | DL_FLAG_RPM_ACTIVE)
+> @@ -690,8 +695,6 @@ struct device_link *device_link_add(struct device *co=
+nsumer,
+>         if (!consumer || !supplier || consumer =3D=3D supplier ||
+>             flags & ~DL_ADD_VALID_FLAGS ||
+>             (flags & DL_FLAG_STATELESS && flags & DL_MANAGED_LINK_FLAGS) =
+||
+> -           (flags & DL_FLAG_SYNC_STATE_ONLY &&
+> -            (flags & ~DL_FLAG_INFERRED) !=3D DL_FLAG_SYNC_STATE_ONLY) ||
+>             (flags & DL_FLAG_AUTOPROBE_CONSUMER &&
+>              flags & (DL_FLAG_AUTOREMOVE_CONSUMER |
+>                       DL_FLAG_AUTOREMOVE_SUPPLIER)))
+> @@ -707,6 +710,10 @@ struct device_link *device_link_add(struct device *c=
+onsumer,
+>         if (!(flags & DL_FLAG_STATELESS))
+>                 flags |=3D DL_FLAG_MANAGED;
+>
+> +       if (flags & DL_FLAG_SYNC_STATE_ONLY &&
+> +           !device_link_flag_is_sync_state_only(flags))
+> +               return NULL;
+> +
+>         device_links_write_lock();
+>         device_pm_lock();
+>
+> @@ -1627,7 +1634,7 @@ static void fw_devlink_relax_link(struct device_lin=
+k *link)
+>         if (!(link->flags & DL_FLAG_INFERRED))
+>                 return;
+>
+> -       if (link->flags =3D=3D (DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMIS=
+SIVE))
+> +       if (device_link_flag_is_sync_state_only(link->flags))
+>                 return;
+>
+>         pm_runtime_drop_link(link);
+> @@ -1695,8 +1702,8 @@ static int fw_devlink_relax_cycle(struct device *co=
+n, void *sup)
+>                 return ret;
+>
+>         list_for_each_entry(link, &con->links.consumers, s_node) {
+> -               if ((link->flags & ~DL_FLAG_INFERRED) =3D=3D
+> -                   (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
+> +               if (!(link->flags & DL_FLAG_CYCLE) &&
+> +                   device_link_flag_is_sync_state_only(link->flags))
+>                         continue;
+>
+>                 if (!fw_devlink_relax_cycle(link->consumer, sup))
+> @@ -1705,6 +1712,7 @@ static int fw_devlink_relax_cycle(struct device *co=
+n, void *sup)
+>                 ret =3D 1;
+>
+>                 fw_devlink_relax_link(link);
+> +               link->flags |=3D DL_FLAG_CYCLE;
+>         }
+>         return ret;
+>  }
+> diff --git a/include/linux/device.h b/include/linux/device.h
+> index e270cb740b9e7..636ef7caa021d 100644
+> --- a/include/linux/device.h
+> +++ b/include/linux/device.h
+> @@ -326,6 +326,7 @@ enum device_link_state {
+>  #define DL_FLAG_MANAGED                        BIT(6)
+>  #define DL_FLAG_SYNC_STATE_ONLY                BIT(7)
+>  #define DL_FLAG_INFERRED               BIT(8)
+> +#define DL_FLAG_CYCLE                  BIT(9)
+>
+>  /**
+>   * enum dl_dev_state - Device driver presence tracking information.
+> --
+> 2.39.2
+>
+>
+>
