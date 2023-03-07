@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DB8BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:14:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD9BC433EF;
-	Tue,  7 Mar 2023 18:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F50BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:14:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29244C433EF;
+	Tue,  7 Mar 2023 18:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212875;
-	bh=cp1WTNH8NCKuZCAdIpnWWiih9OqgJnIfgLdj0K47gNY=;
+	s=korg; t=1678212878;
+	bh=E9SXwfCZWdXuG1K8tv+4K6jme0cg532nS4u7wFM3FD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zaC4VBGz+GAQAZzxvca36C3Jf9jhd+RnMhPjDe0i8PGJK7QlZ5g1GP+ruiTrWW3xE
-	 uRygT9JRoQJlvV1TuHwfBbF5A0mEndlvzpQOgnzMIJqBvZ/Uh54E8L2bYw0FWTgMD1
-	 qvwKAFUX3aourRO69C1Y0vbMNr4fV/fnyU5M9Shc=
+	b=z8j3rCA9KGUCmyT9xcKGaSKlcSkj93jzq5PZBCk+fk/8AqdHwtm4UH8/czq+IPGmy
+	 rdPbK+JmzMPhWAJ4MWntXf2wUNMOtxNXIhJBUPkMWU6HfCXYelL95EkVNwW8pKV8Pj
+	 9LQiuLasB9BRxefIcDDsPmya9RUJxT1kE+0YKWFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiwoong Kim <kwmad.kim@samsung.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	ruanjinjie <ruanjinjie@huawei.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 308/885] scsi: ufs: exynos: Fix DMA alignment for PAGE_SIZE != 4096
-Date: Tue,  7 Mar 2023 17:54:02 +0100
-Message-Id: <20230307170015.495106332@linuxfoundation.org>
+Subject: [PATCH 6.1 326/885] drm/mediatek: mtk_drm_crtc: Add checks for devm_kcalloc
+Date: Tue,  7 Mar 2023 17:54:20 +0100
+Message-Id: <20230307170016.349752033@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,72 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: ruanjinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 86bd0c4a2a5dc4265884648cb92c681646509692 ]
+[ Upstream commit 5bf1e3bd7da625ccf9a22c8cb7d65271e6e47f4c ]
 
-The Exynos UFS controller only supports scatter/gather list elements that
-are aligned on a 4 KiB boundary. Fix DMA alignment in case PAGE_SIZE !=
-4096. Rename UFSHCD_QUIRK_ALIGN_SG_WITH_PAGE_SIZE into
-UFSHCD_QUIRK_4KB_DMA_ALIGNMENT.
+As the devm_kcalloc may return NULL, the return value needs to be checked
+to avoid NULL poineter dereference.
 
-Cc: Kiwoong Kim <kwmad.kim@samsung.com>
-Fixes: 2b2bfc8aa519 ("scsi: ufs: Introduce a quirk to allow only page-aligned sg entries")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Tested-by: Alim Akhtar <alim.akhtar@samsung.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 31c5558dae05 ("drm/mediatek: Refactor plane init")
+Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20221205095115.2905090-1-ruanjinjie@huawei.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c     | 4 ++--
- drivers/ufs/host/ufs-exynos.c | 2 +-
- include/ufs/ufshcd.h          | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_crtc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index fb5c9e2fc5348..e08ce7f2ff3af 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -5068,8 +5068,8 @@ static int ufshcd_slave_configure(struct scsi_device *sdev)
- 	ufshcd_hpb_configure(hba, sdev);
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
+index 112615817dcbe..5071f1263216b 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
+@@ -945,6 +945,8 @@ int mtk_drm_crtc_create(struct drm_device *drm_dev,
  
- 	blk_queue_update_dma_pad(q, PRDT_DATA_BYTE_COUNT_PAD - 1);
--	if (hba->quirks & UFSHCD_QUIRK_ALIGN_SG_WITH_PAGE_SIZE)
--		blk_queue_update_dma_alignment(q, PAGE_SIZE - 1);
-+	if (hba->quirks & UFSHCD_QUIRK_4KB_DMA_ALIGNMENT)
-+		blk_queue_update_dma_alignment(q, 4096 - 1);
- 	/*
- 	 * Block runtime-pm until all consumers are added.
- 	 * Refer ufshcd_setup_links().
-diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
-index c3628a8645a56..3cdac89a28b81 100644
---- a/drivers/ufs/host/ufs-exynos.c
-+++ b/drivers/ufs/host/ufs-exynos.c
-@@ -1673,7 +1673,7 @@ static const struct exynos_ufs_drv_data exynos_ufs_drvs = {
- 				  UFSHCD_QUIRK_BROKEN_OCS_FATAL_ERROR |
- 				  UFSHCI_QUIRK_SKIP_MANUAL_WB_FLUSH_CTRL |
- 				  UFSHCD_QUIRK_SKIP_DEF_UNIPRO_TIMEOUT_SETTING |
--				  UFSHCD_QUIRK_ALIGN_SG_WITH_PAGE_SIZE,
-+				  UFSHCD_QUIRK_4KB_DMA_ALIGNMENT,
- 	.opts			= EXYNOS_UFS_OPT_HAS_APB_CLK_CTRL |
- 				  EXYNOS_UFS_OPT_BROKEN_AUTO_CLK_CTRL |
- 				  EXYNOS_UFS_OPT_BROKEN_RX_SEL_IDX |
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index 2bb89290da63c..b54f22840dabf 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -566,9 +566,9 @@ enum ufshcd_quirks {
- 	UFSHCD_QUIRK_SKIP_DEF_UNIPRO_TIMEOUT_SETTING = 1 << 13,
+ 	mtk_crtc->planes = devm_kcalloc(dev, num_comp_planes,
+ 					sizeof(struct drm_plane), GFP_KERNEL);
++	if (!mtk_crtc->planes)
++		return -ENOMEM;
  
- 	/*
--	 * This quirk allows only sg entries aligned with page size.
-+	 * Align DMA SG entries on a 4 KiB boundary.
- 	 */
--	UFSHCD_QUIRK_ALIGN_SG_WITH_PAGE_SIZE		= 1 << 14,
-+	UFSHCD_QUIRK_4KB_DMA_ALIGNMENT			= 1 << 14,
- 
- 	/*
- 	 * This quirk needs to be enabled if the host controller does not
+ 	for (i = 0; i < mtk_crtc->ddp_comp_nr; i++) {
+ 		ret = mtk_drm_crtc_init_comp_planes(drm_dev, mtk_crtc, i,
 -- 
 2.39.2
 
