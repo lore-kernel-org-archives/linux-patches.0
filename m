@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D852BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:09:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7DCAC433D2;
-	Tue,  7 Mar 2023 19:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A580BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:10:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2844C4339B;
+	Tue,  7 Mar 2023 19:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216197;
-	bh=Q6SBzlYL5SFhP1H7+YX4H5Mv1kMILOFMYuxwqpqj9dw=;
+	s=korg; t=1678216200;
+	bh=/AB8lLe797xuZkQqfz2Nwf4tUFQyMaiXEGMDWX7ZdMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWL2MgJa9cBxMhJ1cYRpywyXcMgSS3tOvgTWxp/y3j8qrSCuqJGKfWqpSuYyOO7Mh
-	 TG58IzCuooDGsL7XJXhlOtTjykaHEk8rotAERHCyV35zV9Uo97UsslBwxFt1/xaqqa
-	 ELk8ErwfTWlezNmlSITzgToEBGMqHC8Wo7owqhWk=
+	b=ojio313vKSK5QYdom+bKRlJaHcO3mD9l4Tog/ZUbG8ocoxVGWcm5w8s+Fq58HBoVT
+	 uSg7aoj4Q3byG9nw2XTU+0zfhR8mttDC+w37XD6mP9TvKK7Yan1oEestmpSCZtHd+G
+	 CsIFaHzoBwWjEAF77LsJmjeeE6+SWW+DDViMN/MU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 465/567] RDMA/siw: Fix user page pinning accounting
-Date: Tue,  7 Mar 2023 18:03:21 +0100
-Message-Id: <20230307165926.024373743@linuxfoundation.org>
+	syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Jun Nie <jun.nie@linaro.org>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 500/567] ext4: refuse to create ea block when umounted
+Date: Tue,  7 Mar 2023 18:03:56 +0100
+Message-Id: <20230307165927.634454633@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -37,90 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bernard Metzler <bmt@zurich.ibm.com>
+From: Jun Nie <jun.nie@linaro.org>
 
-[ Upstream commit 65a8fc30fb6722fc25adec6d7dd5b53b0bb85820 ]
+commit f31173c19901a96bb2ebf6bcfec8a08df7095c91 upstream.
 
-To avoid racing with other user memory reservations, immediately
-account full amount of pages to be pinned.
+The ea block expansion need to access s_root while it is
+already set as NULL when umount is triggered. Refuse this
+request to avoid panic.
 
-Fixes: 2251334dcac9 ("rdma/siw: application buffer management")
-Reported-by: Jason Gunthorpe <jgg@nvidia.com>
-Suggested-by: Alistair Popple <apopple@nvidia.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Signed-off-by: Bernard Metzler <bmt@zurich.ibm.com>
-Link: https://lore.kernel.org/r/20230202101000.402990-1-bmt@zurich.ibm.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=3613786cb88c93aa1c6a279b1df6a7b201347d08
+Link: https://lore.kernel.org/r/20230103014517.495275-3-jun.nie@linaro.org
+Cc: stable@kernel.org
+Signed-off-by: Jun Nie <jun.nie@linaro.org>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/siw/siw_mem.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ fs/ext4/xattr.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/infiniband/sw/siw/siw_mem.c b/drivers/infiniband/sw/siw/siw_mem.c
-index 61c17db70d658..bf69566e2eb63 100644
---- a/drivers/infiniband/sw/siw/siw_mem.c
-+++ b/drivers/infiniband/sw/siw/siw_mem.c
-@@ -398,7 +398,7 @@ struct siw_umem *siw_umem_get(u64 start, u64 len, bool writable)
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1422,6 +1422,13 @@ static struct inode *ext4_xattr_inode_cr
+ 	uid_t owner[2] = { i_uid_read(inode), i_gid_read(inode) };
+ 	int err;
  
- 	mlock_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
- 
--	if (num_pages + atomic64_read(&mm_s->pinned_vm) > mlock_limit) {
-+	if (atomic64_add_return(num_pages, &mm_s->pinned_vm) > mlock_limit) {
- 		rv = -ENOMEM;
- 		goto out_sem_up;
- 	}
-@@ -411,18 +411,16 @@ struct siw_umem *siw_umem_get(u64 start, u64 len, bool writable)
- 		goto out_sem_up;
- 	}
- 	for (i = 0; num_pages; i++) {
--		int got, nents = min_t(int, num_pages, PAGES_PER_CHUNK);
--
--		umem->page_chunk[i].plist =
-+		int nents = min_t(int, num_pages, PAGES_PER_CHUNK);
-+		struct page **plist =
- 			kcalloc(nents, sizeof(struct page *), GFP_KERNEL);
--		if (!umem->page_chunk[i].plist) {
++	if (inode->i_sb->s_root == NULL) {
++		ext4_warning(inode->i_sb,
++			     "refuse to create EA inode when umounting");
++		WARN_ON(1);
++		return ERR_PTR(-EINVAL);
++	}
 +
-+		if (!plist) {
- 			rv = -ENOMEM;
- 			goto out_sem_up;
- 		}
--		got = 0;
-+		umem->page_chunk[i].plist = plist;
- 		while (nents) {
--			struct page **plist = &umem->page_chunk[i].plist[got];
--
- 			rv = pin_user_pages(first_page_va, nents,
- 					    foll_flags | FOLL_LONGTERM,
- 					    plist, NULL);
-@@ -430,12 +428,11 @@ struct siw_umem *siw_umem_get(u64 start, u64 len, bool writable)
- 				goto out_sem_up;
- 
- 			umem->num_pages += rv;
--			atomic64_add(rv, &mm_s->pinned_vm);
- 			first_page_va += rv * PAGE_SIZE;
-+			plist += rv;
- 			nents -= rv;
--			got += rv;
-+			num_pages -= rv;
- 		}
--		num_pages -= got;
- 	}
- out_sem_up:
- 	mmap_read_unlock(mm_s);
-@@ -443,6 +440,10 @@ struct siw_umem *siw_umem_get(u64 start, u64 len, bool writable)
- 	if (rv > 0)
- 		return umem;
- 
-+	/* Adjust accounting for pages not pinned */
-+	if (num_pages)
-+		atomic64_sub(num_pages, &mm_s->pinned_vm);
-+
- 	siw_umem_release(umem, false);
- 
- 	return ERR_PTR(rv);
--- 
-2.39.2
-
+ 	/*
+ 	 * Let the next inode be the goal, so we try and allocate the EA inode
+ 	 * in the same group, or nearby one.
 
 
