@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874EEBA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:03:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8342C433EF;
-	Tue,  7 Mar 2023 19:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BA8BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:04:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F59C433D2;
+	Tue,  7 Mar 2023 19:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215837;
-	bh=prsMAXBLEpmcHoAVQhQ3yXiTOi7C3nvSr56IzG4XjhU=;
+	s=korg; t=1678215840;
+	bh=yxCCX4r0rR7HAMyQAMFgFWsROkAcPkruD8M7bfsRlAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DRmBRCbjS4n9NCkSvkuZ+5hGJ8xMQXSoH/3XrR/u1Wxupjc8i8WiHGgHUT55oZlT3
-	 rze0b+PX6WRsC9bFC/BbF0acSbY1yhlTpttgT+wuolVzvF1fwe7dSvN+cwrKJzFvmb
-	 t2/zOxK4mtuXvf3gZIcri+hS0R75Zc9ZXfLfXDRc=
+	b=PndbtWmKjt8vyKCe1sPnkBOElsPMwr3mi8XUbpBJBIWe8uwcw2T5+VP2tFqDVKpwq
+	 toxz3ENeRw1I/bQ5DCX9M0DJq+h3CkDX0Y8OUTKcRKv/0WvAn7KTefolbl53KASFU4
+	 6EgdZIidZeFgNen3P8JxNmSt+XT3NmQA2iTTSi5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tasos Sahanidis <tasos@tasossah.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 363/567] media: saa7134: Use video_unregister_device for radio_dev
-Date: Tue,  7 Mar 2023 18:01:39 +0100
-Message-Id: <20230307165921.591837766@linuxfoundation.org>
+Subject: [PATCH 5.15 390/567] tools/power/x86/intel-speed-select: Add Emerald Rapid quirk
+Date: Tue,  7 Mar 2023 18:02:06 +0100
+Message-Id: <20230307165922.735943611@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,37 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tasos Sahanidis <tasos@tasossah.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit bc7635c6435c77a0c168e2cc6535740adfaff4e4 ]
+[ Upstream commit 61f9fdcdcd01f9a996b6db4e7092fcdfe8414ad5 ]
 
-The radio device doesn't use vb2, thus calling vb2_video_unregister_device()
-which results in the following warning being printed on module unload.
+Need memory frequency quirk as Sapphire Rapids in Emerald Rapids.
+So add Emerald Rapids CPU model check in is_spr_platform().
 
-WARNING: CPU: 1 PID: 215963 at drivers/media/common/videobuf2/videobuf2-v4l2.c:1236 vb2_video_unregister_device+0xc6/0xe0 [videobuf2_v4l2]
-
-Fixes: 11788d9b7e91 ("media: media/pci: use vb2_video_unregister_device()")
-Signed-off-by: Tasos Sahanidis <tasos@tasossah.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+[srinivas.pandruvada@linux.intel.com: Subject, changelog and code edits]
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/saa7134/saa7134-core.c | 2 +-
+ tools/power/x86/intel-speed-select/isst-config.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/saa7134/saa7134-core.c b/drivers/media/pci/saa7134/saa7134-core.c
-index 96328b0af1641..cf2871306987c 100644
---- a/drivers/media/pci/saa7134/saa7134-core.c
-+++ b/drivers/media/pci/saa7134/saa7134-core.c
-@@ -978,7 +978,7 @@ static void saa7134_unregister_video(struct saa7134_dev *dev)
- 	}
- 	if (dev->radio_dev) {
- 		if (video_is_registered(dev->radio_dev))
--			vb2_video_unregister_device(dev->radio_dev);
-+			video_unregister_device(dev->radio_dev);
- 		else
- 			video_device_release(dev->radio_dev);
- 		dev->radio_dev = NULL;
+diff --git a/tools/power/x86/intel-speed-select/isst-config.c b/tools/power/x86/intel-speed-select/isst-config.c
+index bf9fd3549a1d5..cd08ffe0d62b0 100644
+--- a/tools/power/x86/intel-speed-select/isst-config.c
++++ b/tools/power/x86/intel-speed-select/isst-config.c
+@@ -108,7 +108,7 @@ int is_skx_based_platform(void)
+ 
+ int is_spr_platform(void)
+ {
+-	if (cpu_model == 0x8F)
++	if (cpu_model == 0x8F || cpu_model == 0xCF)
+ 		return 1;
+ 
+ 	return 0;
 -- 
 2.39.2
 
