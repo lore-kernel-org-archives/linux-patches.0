@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AC4BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:22:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D9BC433D2;
-	Tue,  7 Mar 2023 18:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA57BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:22:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3D0C433EF;
+	Tue,  7 Mar 2023 18:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213350;
-	bh=N8vrKFFhT3y4msk5YbwIAuLjAABV1gpk6Ml5L4OktDI=;
+	s=korg; t=1678213353;
+	bh=r74qzv206EakRA3oQ31TZZP6Q5nPJwU5jb7SK+MfzJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ayM83sqv14u6mdvodxwSXD7+rrzxAtACFRfZnRB3YxX/aHLXMzTYUcFZWG9mFVomz
-	 e6ZxJjtjwHySlHF3gdMK+1+ZV31e0YRzBsCMciOxjCqH40dhOFfiRaZB2dM8Ek4Qja
-	 SIkgU1yryPJxEw1iB8oig7qGCdhNy8gsEO8xrLeY=
+	b=XRD3qEsADVqDQkkqtK/BLcsfzzg6VsKypqH1V6omAKUtBK2uCGfDi2YNNTnoMpD9F
+	 zf9EVwk11EpIfmy/oDeWB3TNJG1y6Jt2s6knxK6Fs1akqc09EEvfl8Cbl74mZxbcHL
+	 uL/vDCyzNkm/VTm67kF3YleWGhDb/leljbhAFIEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 480/885] PCI: qcom: Fix host-init error handling
-Date: Tue,  7 Mar 2023 17:56:54 +0100
-Message-Id: <20230307170023.339855628@linuxfoundation.org>
+Subject: [PATCH 6.1 481/885] iw_cxgb4: Fix potential NULL dereference in c4iw_fill_res_cm_id_entry()
+Date: Tue,  7 Mar 2023 17:56:55 +0100
+Message-Id: <20230307170023.384056804@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,49 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 997e010de9134474dbfde52be03efd7d1bce902d ]
+[ Upstream commit 4ca446b127c568b59cb8d9748b6f70499624bb18 ]
 
-Implement the new host_deinit() callback so that the PHY is powered off
-and regulators and clocks are disabled also on late host-init errors.
+This condition needs to match the previous "if (epcp->state == LISTEN) {"
+exactly to avoid a NULL dereference of either "listen_ep" or "ep". The
+problem is that "epcp" has been re-assigned so just testing
+"if (epcp->state == LISTEN) {" a second time is not sufficient.
 
-Link: https://lore.kernel.org/r/20221017114705.8277-2-johan+linaro@kernel.org
-Fixes: 82a823833f4e ("PCI: qcom: Add Qualcomm PCIe controller driver")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Fixes: 116aeb887371 ("iw_cxgb4: provide detailed provider-specific CM_ID information")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/Y+usKuWIKr4dimZh@kili
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/cxgb4/restrack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index f711acacaeaf8..f8e512540fb85 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1527,8 +1527,19 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 	return ret;
- }
+diff --git a/drivers/infiniband/hw/cxgb4/restrack.c b/drivers/infiniband/hw/cxgb4/restrack.c
+index ff645b955a082..fd22c85d35f4f 100644
+--- a/drivers/infiniband/hw/cxgb4/restrack.c
++++ b/drivers/infiniband/hw/cxgb4/restrack.c
+@@ -238,7 +238,7 @@ int c4iw_fill_res_cm_id_entry(struct sk_buff *msg,
+ 	if (rdma_nl_put_driver_u64_hex(msg, "history", epcp->history))
+ 		goto err_cancel_table;
  
-+static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
-+{
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-+
-+	qcom_ep_reset_assert(pcie);
-+	phy_power_off(pcie->phy);
-+	pcie->cfg->ops->deinit(pcie);
-+}
-+
- static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
--	.host_init = qcom_pcie_host_init,
-+	.host_init	= qcom_pcie_host_init,
-+	.host_deinit	= qcom_pcie_host_deinit,
- };
- 
- /* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
+-	if (epcp->state == LISTEN) {
++	if (listen_ep) {
+ 		if (rdma_nl_put_driver_u32(msg, "stid", listen_ep->stid))
+ 			goto err_cancel_table;
+ 		if (rdma_nl_put_driver_u32(msg, "backlog", listen_ep->backlog))
 -- 
 2.39.2
 
