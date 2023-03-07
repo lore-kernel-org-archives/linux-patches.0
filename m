@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1025BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:39:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E67C433EF;
-	Tue,  7 Mar 2023 17:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74DFBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:39:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD96C433D2;
+	Tue,  7 Mar 2023 17:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210756;
-	bh=o4MKcGUBxONn/lqd4/ie1iTLm5VrChAuDMnutUA2/bc=;
+	s=korg; t=1678210759;
+	bh=PGeuw4/tK6uSQkbPtEUOYFSbv+BIBjlj//97dfq6118=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vaq/GUkTlGVeldWtLrijQp6zhjRd/MNVwkBW/UomqIREeni0vTOqUiYHMupNON8pr
-	 y5ZzvR8+9tnlhJtdHXS4jPXbfrxwtQmJIk/N+4e5eiwKY2TuLgw9McK7SQedoZ5xD4
-	 kM4UcDASmRZM1RIrxLlao8sZBXBImkiJzT331GdI=
+	b=u42Jo97zCoHJBAUxd54UJukKoVIt0rfdy58AePTyYkKils3/2qBJgzhp6j5Msaxbw
+	 M1PYiAMD33WY7ud8afqE3TLxtUjbOfhHEsfQl+gg+p2LqKOMYYHUrZoTB5SPXrshK1
+	 kylfddwX3D7yq/Ef9U/So75N1+6p2GNXfA8WQYSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang1.zhang@intel.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Robert Marko <robert.marko@sartura.hr>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0643/1001] rcu-tasks: Handle queue-shrink/callback-enqueue race condition
-Date: Tue,  7 Mar 2023 17:56:55 +0100
-Message-Id: <20230307170049.504048715@linuxfoundation.org>
+Subject: [PATCH 6.2 0644/1001] wifi: ath11k: debugfs: fix to work with multiple PCI devices
+Date: Tue,  7 Mar 2023 17:56:56 +0100
+Message-Id: <20230307170049.551285804@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,138 +35,149 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zqiang <qiang1.zhang@intel.com>
+From: Kalle Valo <quic_kvalo@quicinc.com>
 
-[ Upstream commit a4fcfbee8f6274f9b3f9a71dd5b03e6772ce33f3 ]
+[ Upstream commit 323d91d4684d238f6bc3693fed93caf795378fe0 ]
 
-The rcu_tasks_need_gpcb() determines whether or not: (1) There are
-callbacks needing another grace period, (2) There are callbacks ready
-to be invoked, and (3) It would be a good time to shrink back down to a
-single-CPU callback list.  This third case is interesting because some
-other CPU might be adding new callbacks, which might suddenly make this
-a very bad time to be shrinking.
+ath11k fails to load if there are multiple ath11k PCI devices with same name:
 
-This is currently handled by requiring call_rcu_tasks_generic() to
-enqueue callbacks under the protection of rcu_read_lock() and requiring
-rcu_tasks_need_gpcb() to wait for an RCU grace period to elapse before
-finalizing the transition.  This works well in practice.
+ ath11k_pci 0000:01:00.0: Hardware name qcn9074 hw1.0
+ debugfs: Directory 'ath11k' with parent '/' already present!
+ ath11k_pci 0000:01:00.0: failed to create ath11k debugfs
+ ath11k_pci 0000:01:00.0: failed to create soc core: -17
+ ath11k_pci 0000:01:00.0: failed to init core: -17
+ ath11k_pci: probe of 0000:01:00.0 failed with error -17
 
-Unfortunately, the current code assumes that a grace period whose end is
-detected by the poll_state_synchronize_rcu() in the second "if" condition
-actually ended before the earlier code counted the callbacks queued on
-CPUs other than CPU 0 (local variable "ncbsnz").  Given the current code,
-it is possible that a long-delayed call_rcu_tasks_generic() invocation
-will queue a callback on a non-zero CPU after these CPUs have had their
-callbacks counted and zero has been stored to ncbsnz.  Such a callback
-would trigger the WARN_ON_ONCE() in the second "if" statement.
+Fix this by creating a directory for each ath11k device using schema
+<bus>-<devname>, for example "pci-0000:06:00.0". This directory created under
+the top-level ath11k directory, for example /sys/kernel/debug/ath11k.
 
-To see this, consider the following sequence of events:
+The reference to the toplevel ath11k directory is not stored anymore within ath11k, instead
+it's retrieved using debugfs_lookup(). If the directory does not exist it will
+be created. After the last directory from the ath11k directory is removed, for
+example when doing rmmod ath11k, the empty ath11k directory is left in place,
+it's a minor cosmetic issue anyway.
 
-o	CPU 0 invokes rcu_tasks_one_gp(), and counts fewer than
-	rcu_task_collapse_lim callbacks.  It sees at least one
-	callback queued on some other CPU, thus setting ncbsnz
-	to a non-zero value.
+Here's an example hierarchy with one WCN6855:
 
-o	CPU 1 invokes call_rcu_tasks_generic() and loads 42 from
-	->percpu_enqueue_lim.  It therefore decides to enqueue its
-	callback onto CPU 1's callback list, but is delayed.
+ath11k
+`-- pci-0000:06:00.0
+    |-- mac0
+    |   |-- dfs_block_radar_events
+    |   |-- dfs_simulate_radar
+    |   |-- ext_rx_stats
+    |   |-- ext_tx_stats
+    |   |-- fw_dbglog_config
+    |   |-- fw_stats
+    |   |   |-- beacon_stats
+    |   |   |-- pdev_stats
+    |   |   `-- vdev_stats
+    |   |-- htt_stats
+    |   |-- htt_stats_reset
+    |   |-- htt_stats_type
+    |   `-- pktlog_filter
+    |-- simulate_fw_crash
+    `-- soc_dp_stats
 
-o	CPU 0 sees the rcu_task_cb_adjust is non-zero and that the number
-	of callbacks does not exceed rcu_task_collapse_lim.  It therefore
-	checks percpu_enqueue_lim, and sees that its value is greater
-	than the value one.  CPU 0 therefore  starts the shift back
-	to a single callback list.  It sets ->percpu_enqueue_lim to 1,
-	but CPU 1 has already read the old value of 42.  It also gets
-	a grace-period state value from get_state_synchronize_rcu().
+I didn't have a test setup where I could connect multiple ath11k devices to the
+same the host, so I have only tested this with one device.
 
-o	CPU 0 sees that ncbsnz is non-zero in its second "if" statement,
-	so it declines to finalize the shrink operation.
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.9
+Tested-on: IPQ8074 hw2.0 AHB WLAN.HK.2.5.0.1-01208-QCAHKSWPL_SILICONZ-1
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.5.0.1-01208-QCAHKSWPL_SILICONZ-1
 
-o	CPU 0 again invokes rcu_tasks_one_gp(), and counts fewer than
-	rcu_task_collapse_lim callbacks.  It also sees that there are
-	no callback queued on any other CPU, and thus sets ncbsnz to zero.
-
-o	CPU 1 resumes execution and enqueues its callback onto its own
-	list.  This invalidates the value of ncbsnz.
-
-o	CPU 0 sees the rcu_task_cb_adjust is non-zero and that the number
-	of callbacks does not exceed rcu_task_collapse_lim.  It therefore
-	checks percpu_enqueue_lim, but sees that its value is already
-	unity.	It therefore does not get a new grace-period state value.
-
-o	CPU 0 sees that rcu_task_cb_adjust is non-zero, ncbsnz is zero,
-	and that poll_state_synchronize_rcu() says that the grace period
-	has completed.  it therefore finalizes the shrink operation,
-	setting ->percpu_dequeue_lim to the value one.
-
-o	CPU 0 does a debug check, scanning the other CPUs' callback lists.
-	It sees that CPU 1's list has a callback, so it (rightly)
-	triggers the WARN_ON_ONCE().  After all, the new value of
-	->percpu_dequeue_lim says to not bother looking at CPU 1's
-	callback list, which means that this callback will never be
-	invoked.  This can result in hangs and maybe even OOMs.
-
-Based on long experience with rcutorture, this is an extremely
-low-probability race condition, but it really can happen, especially in
-preemptible kernels or within guest OSes.
-
-This commit therefore checks for completion of the grace period
-before counting callbacks.  With this change, in the above failure
-scenario CPU 0 would know not to prematurely end the shrink operation
-because the grace period would not have completed before the count
-operation started.
-
-[ paulmck: Adjust grace-period end rather than adding RCU reader. ]
-[ paulmck: Avoid spurious WARN_ON_ONCE() with ->percpu_dequeue_lim check. ]
-
-Signed-off-by: Zqiang <qiang1.zhang@intel.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Tested-by: Robert Marko <robert.marko@sartura.hr>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20221220121231.20120-1-kvalo@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tasks.h | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath11k/core.h    |  1 -
+ drivers/net/wireless/ath/ath11k/debugfs.c | 48 +++++++++++++++++++----
+ 2 files changed, 40 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index 947d0318b4a2d..d5a4a129a85e9 100644
---- a/kernel/rcu/tasks.h
-+++ b/kernel/rcu/tasks.h
-@@ -384,6 +384,7 @@ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
- {
- 	int cpu;
- 	unsigned long flags;
-+	bool gpdone = poll_state_synchronize_rcu(rtp->percpu_dequeue_gpseq);
- 	long n;
- 	long ncbs = 0;
- 	long ncbsnz = 0;
-@@ -425,21 +426,23 @@ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
- 			WRITE_ONCE(rtp->percpu_enqueue_shift, order_base_2(nr_cpu_ids));
- 			smp_store_release(&rtp->percpu_enqueue_lim, 1);
- 			rtp->percpu_dequeue_gpseq = get_state_synchronize_rcu();
-+			gpdone = false;
- 			pr_info("Starting switch %s to CPU-0 callback queuing.\n", rtp->name);
- 		}
- 		raw_spin_unlock_irqrestore(&rtp->cbs_gbl_lock, flags);
- 	}
--	if (rcu_task_cb_adjust && !ncbsnz &&
--	    poll_state_synchronize_rcu(rtp->percpu_dequeue_gpseq)) {
-+	if (rcu_task_cb_adjust && !ncbsnz && gpdone) {
- 		raw_spin_lock_irqsave(&rtp->cbs_gbl_lock, flags);
- 		if (rtp->percpu_enqueue_lim < rtp->percpu_dequeue_lim) {
- 			WRITE_ONCE(rtp->percpu_dequeue_lim, 1);
- 			pr_info("Completing switch %s to CPU-0 callback queuing.\n", rtp->name);
- 		}
--		for (cpu = rtp->percpu_dequeue_lim; cpu < nr_cpu_ids; cpu++) {
--			struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
-+		if (rtp->percpu_dequeue_lim == 1) {
-+			for (cpu = rtp->percpu_dequeue_lim; cpu < nr_cpu_ids; cpu++) {
-+				struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
+diff --git a/drivers/net/wireless/ath/ath11k/core.h b/drivers/net/wireless/ath/ath11k/core.h
+index 22460b0abf037..ac34c57e4bc69 100644
+--- a/drivers/net/wireless/ath/ath11k/core.h
++++ b/drivers/net/wireless/ath/ath11k/core.h
+@@ -912,7 +912,6 @@ struct ath11k_base {
+ 	enum ath11k_dfs_region dfs_region;
+ #ifdef CONFIG_ATH11K_DEBUGFS
+ 	struct dentry *debugfs_soc;
+-	struct dentry *debugfs_ath11k;
+ #endif
+ 	struct ath11k_soc_dp_stats soc_stats;
  
--			WARN_ON_ONCE(rcu_segcblist_n_cbs(&rtpcp->cblist));
-+				WARN_ON_ONCE(rcu_segcblist_n_cbs(&rtpcp->cblist));
-+			}
- 		}
- 		raw_spin_unlock_irqrestore(&rtp->cbs_gbl_lock, flags);
- 	}
+diff --git a/drivers/net/wireless/ath/ath11k/debugfs.c b/drivers/net/wireless/ath/ath11k/debugfs.c
+index ccdf3d5ba1ab6..5bb6fd17fdf6f 100644
+--- a/drivers/net/wireless/ath/ath11k/debugfs.c
++++ b/drivers/net/wireless/ath/ath11k/debugfs.c
+@@ -976,10 +976,6 @@ int ath11k_debugfs_pdev_create(struct ath11k_base *ab)
+ 	if (test_bit(ATH11K_FLAG_REGISTERED, &ab->dev_flags))
+ 		return 0;
+ 
+-	ab->debugfs_soc = debugfs_create_dir(ab->hw_params.name, ab->debugfs_ath11k);
+-	if (IS_ERR(ab->debugfs_soc))
+-		return PTR_ERR(ab->debugfs_soc);
+-
+ 	debugfs_create_file("simulate_fw_crash", 0600, ab->debugfs_soc, ab,
+ 			    &fops_simulate_fw_crash);
+ 
+@@ -1001,15 +997,51 @@ void ath11k_debugfs_pdev_destroy(struct ath11k_base *ab)
+ 
+ int ath11k_debugfs_soc_create(struct ath11k_base *ab)
+ {
+-	ab->debugfs_ath11k = debugfs_create_dir("ath11k", NULL);
++	struct dentry *root;
++	bool dput_needed;
++	char name[64];
++	int ret;
++
++	root = debugfs_lookup("ath11k", NULL);
++	if (!root) {
++		root = debugfs_create_dir("ath11k", NULL);
++		if (IS_ERR_OR_NULL(root))
++			return PTR_ERR(root);
++
++		dput_needed = false;
++	} else {
++		/* a dentry from lookup() needs dput() after we don't use it */
++		dput_needed = true;
++	}
++
++	scnprintf(name, sizeof(name), "%s-%s", ath11k_bus_str(ab->hif.bus),
++		  dev_name(ab->dev));
++
++	ab->debugfs_soc = debugfs_create_dir(name, root);
++	if (IS_ERR_OR_NULL(ab->debugfs_soc)) {
++		ret = PTR_ERR(ab->debugfs_soc);
++		goto out;
++	}
++
++	ret = 0;
+ 
+-	return PTR_ERR_OR_ZERO(ab->debugfs_ath11k);
++out:
++	if (dput_needed)
++		dput(root);
++
++	return ret;
+ }
+ 
+ void ath11k_debugfs_soc_destroy(struct ath11k_base *ab)
+ {
+-	debugfs_remove_recursive(ab->debugfs_ath11k);
+-	ab->debugfs_ath11k = NULL;
++	debugfs_remove_recursive(ab->debugfs_soc);
++	ab->debugfs_soc = NULL;
++
++	/* We are not removing ath11k directory on purpose, even if it
++	 * would be empty. This simplifies the directory handling and it's
++	 * a minor cosmetic issue to leave an empty ath11k directory to
++	 * debugfs.
++	 */
+ }
+ EXPORT_SYMBOL(ath11k_debugfs_soc_destroy);
+ 
 -- 
 2.39.2
 
