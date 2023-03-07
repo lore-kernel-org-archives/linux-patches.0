@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0891FBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:06:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4A7C433D2;
-	Tue,  7 Mar 2023 18:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1D2BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:06:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913D8C433EF;
+	Tue,  7 Mar 2023 18:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212380;
-	bh=pT08+Ag+ZJPUxmTHA6oYAUDsL2HMfkPh36QdEuKE48c=;
+	s=korg; t=1678212386;
+	bh=BHKUmmH1uQuc+dsRin47O0oj/CdIqLOijuZB5LVslec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=adUQTYvgafwn1xURI75cdXRGMyhvUVaGUjmLG+F6pDCgKE25JZ94LHfN28HIKUb2q
-	 R1K64ig9zGNMLA60GCq9VAV7erCQfqQvS3iULIeyNnL/0jLN+mu2kww59RU6+V4ciT
-	 OENUnKXdH7oOyjXJ7egSOV2lc6TUWM2NT7QOjkuA=
+	b=R9+LacH8rPwoq4y/B1Uep9/6y13FSsuizhDIyJlL5ln8jC0bgXbW71LVAHGRDyg9Y
+	 5iTYmq73H7UsycWHD7XLzJc8rb2aNu8L1DxxDd1KKcP8qbtqy1WY2LC70PxLqXZtD5
+	 yvaaF9648ITijoo1ezHpoYbpVElZIDYacppyQqLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viorel Suman <viorel.suman@nxp.com>,
-	Dong Aisheng <Aisheng.dong@nxp.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	syzbot+e008dccab31bd3647609@syzkaller.appspotmail.com,
+	syzbot+6692c72009680f7c4eb2@syzkaller.appspotmail.com,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 167/885] thermal/drivers/imx_sc_thermal: Fix the loop condition
-Date: Tue,  7 Mar 2023 17:51:41 +0100
-Message-Id: <20230307170009.187431572@linuxfoundation.org>
+Subject: [PATCH 6.1 168/885] wifi: ath9k: htc_hst: free skb in ath9k_htc_rx_msg() if there is no callback function
+Date: Tue,  7 Mar 2023 17:51:42 +0100
+Message-Id: <20230307170009.238483185@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,45 +39,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Viorel Suman <viorel.suman@nxp.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 4b26b7c9cdefdcb478047c30901d2379ef9e50fc ]
+[ Upstream commit 9b25e3985477ac3f02eca5fc1e0cc6850a3f7e69 ]
 
-The minimal resource ID is 0: IMX_SC_R_AP_0=0, so fix
-the loop condition. Aside of this - constify the array.
+It is stated that ath9k_htc_rx_msg() either frees the provided skb or
+passes its management to another callback function. However, the skb is
+not freed in case there is no another callback function, and Syzkaller was
+able to cause a memory leak. Also minor comment fix.
 
-Fixes: 31fd4b9db13b ("thermal/drivers/imx_sc: Rely on the platform data to get the resource id")
-Signed-off-by: Viorel Suman <viorel.suman@nxp.com>
-Reviewed-by: Dong Aisheng <Aisheng.dong@nxp.com>
-Link: https://lore.kernel.org/r/20230117091956.61729-1-viorel.suman@oss.nxp.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Reported-by: syzbot+e008dccab31bd3647609@syzkaller.appspotmail.com
+Reported-by: syzbot+6692c72009680f7c4eb2@syzkaller.appspotmail.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230104123546.51427-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/imx_sc_thermal.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath9k/htc_hst.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/imx_sc_thermal.c b/drivers/thermal/imx_sc_thermal.c
-index 4df925e3a80bd..dfadb03580ae1 100644
---- a/drivers/thermal/imx_sc_thermal.c
-+++ b/drivers/thermal/imx_sc_thermal.c
-@@ -88,7 +88,7 @@ static int imx_sc_thermal_probe(struct platform_device *pdev)
- 	if (!resource_id)
- 		return -EINVAL;
- 
--	for (i = 0; resource_id[i] > 0; i++) {
-+	for (i = 0; resource_id[i] >= 0; i++) {
- 
- 		sensor = devm_kzalloc(&pdev->dev, sizeof(*sensor), GFP_KERNEL);
- 		if (!sensor)
-@@ -127,7 +127,7 @@ static int imx_sc_thermal_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
+index ca05b07a45e67..fe62ff668f757 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_hst.c
++++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
+@@ -391,7 +391,7 @@ static void ath9k_htc_fw_panic_report(struct htc_target *htc_handle,
+  * HTC Messages are handled directly here and the obtained SKB
+  * is freed.
+  *
+- * Service messages (Data, WMI) passed to the corresponding
++ * Service messages (Data, WMI) are passed to the corresponding
+  * endpoint RX handlers, which have to free the SKB.
+  */
+ void ath9k_htc_rx_msg(struct htc_target *htc_handle,
+@@ -478,6 +478,8 @@ void ath9k_htc_rx_msg(struct htc_target *htc_handle,
+ 		if (endpoint->ep_callbacks.rx)
+ 			endpoint->ep_callbacks.rx(endpoint->ep_callbacks.priv,
+ 						  skb, epid);
++		else
++			goto invalid;
+ 	}
  }
  
--static int imx_sc_sensors[] = { IMX_SC_R_SYSTEM, IMX_SC_R_PMIC_0, -1 };
-+static const int imx_sc_sensors[] = { IMX_SC_R_SYSTEM, IMX_SC_R_PMIC_0, -1 };
- 
- static const struct of_device_id imx_sc_thermal_table[] = {
- 	{ .compatible = "fsl,imx-sc-thermal", .data =  imx_sc_sensors },
 -- 
 2.39.2
 
