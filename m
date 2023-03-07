@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532CEBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDD9C4339B;
-	Tue,  7 Mar 2023 17:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63532BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4FE2C433D2;
+	Tue,  7 Mar 2023 17:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209457;
-	bh=4v7exfyUa3oXfnZBBCYrlUFcD/YjWSf3Wx1LAxiJObE=;
+	s=korg; t=1678209460;
+	bh=pQY26jfvfFIOGMFGc90g3Wkh4YGJ8XBT1IuuUD/jXVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YEXtP0cmL2wyE1yiNNAAi32AXv6Hsvyeiu8OskUS6MJKezlb6G0yXsEoNkhb6hbqo
-	 TMfhxOZMBVh2IcXZx+e5HPXFXkyb1kUHKqhi3MtJDDVu+WV5Q5Xuvu2lLsfrS70yDd
-	 5hJCAw2GJZob/COR20wrYNdB+u3isJCvDzzYaKjQ=
+	b=JlaFG0SqY2Oz+RAgAYUkDgPL9bwtH7lPZs4TysnpceR37UNSZtCyZqD4I1v0FwTWj
+	 RCob/IZL21Pe9OWFB1ycgyGsabw3aC8AdGGU+QYJfJLRRl1EPxu+NT3UFwekQanvTP
+	 drP+aGHMUitlnq4odMubZgLdzuXmV1YFIMOdSgqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Ingo Molnar <mingo@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0195/1001] x86/signal: Fix the value returned by strict_sas_size()
-Date: Tue,  7 Mar 2023 17:49:27 +0100
-Message-Id: <20230307170030.361450849@linuxfoundation.org>
+Subject: [PATCH 6.2 0196/1001] thermal/drivers/tsens: Drop msm8976-specific defines
+Date: Tue,  7 Mar 2023 17:49:28 +0100
+Message-Id: <20230307170030.405829802@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,47 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit ef6dfc4b238a435ab552207ec09e4a82b6426d31 ]
+[ Upstream commit 3bf0ea99e2e32b0335106b86d84404cc85bcd113 ]
 
-Functions used with __setup() return 1 when the argument has been
-successfully parsed.
+Drop msm8976-specific defines, which duplicate generic ones.
 
-Reverse the returned value so that 1 is returned when kstrtobool() is
-successful (i.e. returns 0).
-
-My understanding of these __setup() functions is that returning 1 or 0
-does not change much anyway - so this is more of a cleanup than a
-functional fix.
-
-I spot it and found it spurious while looking at something else.
-Even if the output is not perfect, you'll get the idea with:
-
-   $ git grep -B2 -A10 retu.*kstrtobool | grep __setup -B10
-
-Fixes: 3aac3ebea08f ("x86/signal: Implement sigaltstack size validation")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/73882d43ebe420c9d8fb82d0560021722b243000.1673717552.git.christophe.jaillet@wanadoo.fr
+Fixes: 0e580290170d ("thermal: qcom: tsens-v1: Add support for MSM8956 and MSM8976")
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230101194034.831222-6-dmitry.baryshkov@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/signal.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thermal/qcom/tsens-v1.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/kernel/signal.c b/arch/x86/kernel/signal.c
-index 1504eb8d25aa6..004cb30b74198 100644
---- a/arch/x86/kernel/signal.c
-+++ b/arch/x86/kernel/signal.c
-@@ -360,7 +360,7 @@ static bool strict_sigaltstack_size __ro_after_init = false;
+diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
+index 1d7f8a80bd13a..a795b08bb017e 100644
+--- a/drivers/thermal/qcom/tsens-v1.c
++++ b/drivers/thermal/qcom/tsens-v1.c
+@@ -78,11 +78,6 @@
  
- static int __init strict_sas_size(char *arg)
- {
--	return kstrtobool(arg, &strict_sigaltstack_size);
-+	return kstrtobool(arg, &strict_sigaltstack_size) == 0;
+ #define MSM8976_CAL_SEL_MASK	0x3
+ 
+-#define MSM8976_CAL_DEGC_PT1	30
+-#define MSM8976_CAL_DEGC_PT2	120
+-#define MSM8976_SLOPE_FACTOR	1000
+-#define MSM8976_SLOPE_DEFAULT	3200
+-
+ /* eeprom layout data for qcs404/405 (v1) */
+ #define BASE0_MASK	0x000007f8
+ #define BASE1_MASK	0x0007f800
+@@ -160,8 +155,8 @@ static void compute_intercept_slope_8976(struct tsens_priv *priv,
+ 	priv->sensor[10].slope = 3286;
+ 
+ 	for (i = 0; i < priv->num_sensors; i++) {
+-		priv->sensor[i].offset = (p1[i] * MSM8976_SLOPE_FACTOR) -
+-				(MSM8976_CAL_DEGC_PT1 *
++		priv->sensor[i].offset = (p1[i] * SLOPE_FACTOR) -
++				(CAL_DEGC_PT1 *
+ 				priv->sensor[i].slope);
+ 	}
  }
- __setup("strict_sas_size", strict_sas_size);
- 
 -- 
 2.39.2
 
