@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A59BBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:06:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8365CC4339B;
-	Tue,  7 Mar 2023 18:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0891FBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:06:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4A7C433D2;
+	Tue,  7 Mar 2023 18:06:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212377;
-	bh=vfUAMRT1qE9J1/aqt0rnCESVFB3WSq9+Qg8UAOepUoQ=;
+	s=korg; t=1678212380;
+	bh=pT08+Ag+ZJPUxmTHA6oYAUDsL2HMfkPh36QdEuKE48c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sdPiElK0NrWtUq/bfiOqlvEFuFAqY0MT3ShKCwjJzZZP2ubVG6W6iVd3SgefZjVgF
-	 xfgKTH9qGYk+/P8zXvba+SgtgZLlQeC6lAvERRIA3PbbP3+Fn3V7WEKgBRnoe+JXgt
-	 oOt8zk+ctmmWV9DN2p2DD3sTWyQC7RmH5N5clCBM=
+	b=adUQTYvgafwn1xURI75cdXRGMyhvUVaGUjmLG+F6pDCgKE25JZ94LHfN28HIKUb2q
+	 R1K64ig9zGNMLA60GCq9VAV7erCQfqQvS3iULIeyNnL/0jLN+mu2kww59RU6+V4ciT
+	 OENUnKXdH7oOyjXJ7egSOV2lc6TUWM2NT7QOjkuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Viorel Suman <viorel.suman@nxp.com>,
+	Dong Aisheng <Aisheng.dong@nxp.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 166/885] thermal/drivers/imx_sc_thermal: Drop empty platform remove function
-Date: Tue,  7 Mar 2023 17:51:40 +0100
-Message-Id: <20230307170009.145303437@linuxfoundation.org>
+Subject: [PATCH 6.1 167/885] thermal/drivers/imx_sc_thermal: Fix the loop condition
+Date: Tue,  7 Mar 2023 17:51:41 +0100
+Message-Id: <20230307170009.187431572@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,46 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Viorel Suman <viorel.suman@nxp.com>
 
-[ Upstream commit 5011a110295d25418f5918a6af7bfcdb00dd4e34 ]
+[ Upstream commit 4b26b7c9cdefdcb478047c30901d2379ef9e50fc ]
 
-A remove callback just returning 0 is equivalent to no remove callback
-at all. So drop the useless function.
+The minimal resource ID is 0: IMX_SC_R_AP_0=0, so fix
+the loop condition. Aside of this - constify the array.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20221212220217.3777176-1-u.kleine-koenig@pengutronix.de
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Stable-dep-of: 4b26b7c9cdef ("thermal/drivers/imx_sc_thermal: Fix the loop condition")
+Fixes: 31fd4b9db13b ("thermal/drivers/imx_sc: Rely on the platform data to get the resource id")
+Signed-off-by: Viorel Suman <viorel.suman@nxp.com>
+Reviewed-by: Dong Aisheng <Aisheng.dong@nxp.com>
+Link: https://lore.kernel.org/r/20230117091956.61729-1-viorel.suman@oss.nxp.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/imx_sc_thermal.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/thermal/imx_sc_thermal.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/thermal/imx_sc_thermal.c b/drivers/thermal/imx_sc_thermal.c
-index 5d92b70a5d53a..4df925e3a80bd 100644
+index 4df925e3a80bd..dfadb03580ae1 100644
 --- a/drivers/thermal/imx_sc_thermal.c
 +++ b/drivers/thermal/imx_sc_thermal.c
-@@ -127,11 +127,6 @@ static int imx_sc_thermal_probe(struct platform_device *pdev)
+@@ -88,7 +88,7 @@ static int imx_sc_thermal_probe(struct platform_device *pdev)
+ 	if (!resource_id)
+ 		return -EINVAL;
+ 
+-	for (i = 0; resource_id[i] > 0; i++) {
++	for (i = 0; resource_id[i] >= 0; i++) {
+ 
+ 		sensor = devm_kzalloc(&pdev->dev, sizeof(*sensor), GFP_KERNEL);
+ 		if (!sensor)
+@@ -127,7 +127,7 @@ static int imx_sc_thermal_probe(struct platform_device *pdev)
  	return 0;
  }
  
--static int imx_sc_thermal_remove(struct platform_device *pdev)
--{
--	return 0;
--}
--
- static int imx_sc_sensors[] = { IMX_SC_R_SYSTEM, IMX_SC_R_PMIC_0, -1 };
+-static int imx_sc_sensors[] = { IMX_SC_R_SYSTEM, IMX_SC_R_PMIC_0, -1 };
++static const int imx_sc_sensors[] = { IMX_SC_R_SYSTEM, IMX_SC_R_PMIC_0, -1 };
  
  static const struct of_device_id imx_sc_thermal_table[] = {
-@@ -142,7 +137,6 @@ MODULE_DEVICE_TABLE(of, imx_sc_thermal_table);
- 
- static struct platform_driver imx_sc_thermal_driver = {
- 		.probe = imx_sc_thermal_probe,
--		.remove	= imx_sc_thermal_remove,
- 		.driver = {
- 			.name = "imx-sc-thermal",
- 			.of_match_table = imx_sc_thermal_table,
+ 	{ .compatible = "fsl,imx-sc-thermal", .data =  imx_sc_sensors },
 -- 
 2.39.2
 
