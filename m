@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1667CBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:42:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6587FC433EF;
-	Tue,  7 Mar 2023 18:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B105BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:42:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD2DC433D2;
+	Tue,  7 Mar 2023 18:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214567;
-	bh=txwgCUkEjGwACtdhd+vQYoGz1Go1Lauqqofk/lf6iVg=;
+	s=korg; t=1678214571;
+	bh=14hISBGJvZF3R4QDjMNXkLUzDv16EKeXHo8tygM2v8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AwKc92gI1dzRGg8jUE7+5kXGPuNnq14FQEs2ARdC+HcWQ3wnVyNn27+JTWBdu6cLk
-	 yEDWbRikBGlEUGrkEBwPhmehUcJ+yOByhKrLKTTRkeI5HbpsyEUvphUo3DomHSSwoK
-	 yCXhT1DzBJTj2TxTU7UJYaZmWXNE3iZRiJeFkqgg=
+	b=fBhl4uUrWgre2S8o8Q8f+RBTShozR7/p/gvlKoUbSvFtbm4DFapCHMPcOh2YZLCiS
+	 h8QfqlTPr2N/Nj+eeYBjsGX6u4EwXCMa12UwQpuRSjlJfuNe9Lgonso2D2s00cp7kT
+	 MDsRLSdINtAyMDS8RAOEjLFJzPPRApJm6JVgFE/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 834/885] kprobes: Fix to handle forcibly unoptimized kprobes on freeing_list
-Date: Tue,  7 Mar 2023 18:02:48 +0100
-Message-Id: <20230307170038.064194033@linuxfoundation.org>
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.1 835/885] ktest.pl: Fix missing "end_monitor" when machine check fails
+Date: Tue,  7 Mar 2023 18:02:49 +0100
+Message-Id: <20230307170038.113060215@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,92 +33,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 4fbd2f83fda0ca44a2ec6421ca3508b355b31858 upstream.
+commit e8bf9b98d40dbdf4e39362e3b85a70c61da68cb7 upstream.
 
-Since forcibly unoptimized kprobes will be put on the freeing_list directly
-in the unoptimize_kprobe(), do_unoptimize_kprobes() must continue to check
-the freeing_list even if unoptimizing_list is empty.
+In the "reboot" command, it does a check of the machine to see if it is
+still alive with a simple "ssh echo" command. If it fails, it will assume
+that a normal "ssh reboot" is not possible and force a power cycle.
 
-This bug can happen if a kprobe is put in an instruction which is in the
-middle of the jump-replaced instruction sequence of an optprobe, *and* the
-optprobe is recently unregistered and queued on unoptimizing_list.
-In this case, the optprobe will be unoptimized forcibly (means immediately)
-and put it into the freeing_list, expecting the optprobe will be handled in
-do_unoptimize_kprobe().
-But if there is no other optprobes on the unoptimizing_list, current code
-returns from the do_unoptimize_kprobe() soon and does not handle the
-optprobe which is on the freeing_list. Then the optprobe will hit the
-WARN_ON_ONCE() in the do_free_cleaned_kprobes(), because it is not handled
-in the latter loop of the do_unoptimize_kprobe().
+In this case, the "start_monitor" is executed, but the "end_monitor" is
+not, and this causes the screen will not be given back to the console. That
+is, after the test, a "reset" command needs to be performed, as "echo" is
+turned off.
 
-To solve this issue, do not return from do_unoptimize_kprobes() immediately
-even if unoptimizing_list is empty.
-
-Moreover, this change affects another case. kill_optimized_kprobes() expects
-kprobe_optimizer() will just free the optprobe on freeing_list.
-So I changed it to just do list_move() to freeing_list if optprobes are on
-unoptimizing list. And the do_unoptimize_kprobe() will skip
-arch_disarm_kprobe() if the probe on freeing_list has gone flag.
-
-Link: https://lore.kernel.org/all/Y8URdIfVr3pq2X8w@xpf.sh.intel.com/
-Link: https://lore.kernel.org/all/167448024501.3253718.13037333683110512967.stgit@devnote3/
-
-Fixes: e4add247789e ("kprobes: Fix optimize_kprobe()/unoptimize_kprobe() cancellation logic")
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 6474ace999edd ("ktest.pl: Powercycle the box on reboot if no connection can be made")
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kprobes.c |   23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ tools/testing/ktest/ktest.pl |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -555,17 +555,15 @@ static void do_unoptimize_kprobes(void)
- 	/* See comment in do_optimize_kprobes() */
- 	lockdep_assert_cpus_held();
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -1488,7 +1488,8 @@ sub reboot {
  
--	/* Unoptimization must be done anytime */
--	if (list_empty(&unoptimizing_list))
--		return;
-+	if (!list_empty(&unoptimizing_list))
-+		arch_unoptimize_kprobes(&unoptimizing_list, &freeing_list);
- 
--	arch_unoptimize_kprobes(&unoptimizing_list, &freeing_list);
--	/* Loop on 'freeing_list' for disarming */
-+	/* Loop on 'freeing_list' for disarming and removing from kprobe hash list */
- 	list_for_each_entry_safe(op, tmp, &freeing_list, list) {
- 		/* Switching from detour code to origin */
- 		op->kp.flags &= ~KPROBE_FLAG_OPTIMIZED;
--		/* Disarm probes if marked disabled */
--		if (kprobe_disabled(&op->kp))
-+		/* Disarm probes if marked disabled and not gone */
-+		if (kprobe_disabled(&op->kp) && !kprobe_gone(&op->kp))
- 			arch_disarm_kprobe(&op->kp);
- 		if (kprobe_unused(&op->kp)) {
- 			/*
-@@ -797,14 +795,13 @@ static void kill_optimized_kprobe(struct
- 	op->kp.flags &= ~KPROBE_FLAG_OPTIMIZED;
- 
- 	if (kprobe_unused(p)) {
--		/* Enqueue if it is unused */
--		list_add(&op->list, &freeing_list);
- 		/*
--		 * Remove unused probes from the hash list. After waiting
--		 * for synchronization, this probe is reclaimed.
--		 * (reclaiming is done by do_free_cleaned_kprobes().)
-+		 * Unused kprobe is on unoptimizing or freeing list. We move it
-+		 * to freeing_list and let the kprobe_optimizer() remove it from
-+		 * the kprobe hash list and free it.
- 		 */
--		hlist_del_rcu(&op->kp.hlist);
-+		if (optprobe_queued_unopt(op))
-+			list_move(&op->list, &freeing_list);
- 	}
- 
- 	/* Don't touch the code, because it is already freed. */
+ 	# Still need to wait for the reboot to finish
+ 	wait_for_monitor($time, $reboot_success_line);
+-
++    }
++    if ($powercycle || $time) {
+ 	end_monitor;
+     }
+ }
 
 
