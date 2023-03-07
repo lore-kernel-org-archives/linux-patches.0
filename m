@@ -1,36 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4349DBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:19:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C83C433D2;
-	Tue,  7 Mar 2023 17:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D34BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:19:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36D8C433D2;
+	Tue,  7 Mar 2023 17:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209595;
-	bh=JMLUAfksZAYlWBKrT4AhUj1YntkhyAno433wMClUZe4=;
+	s=korg; t=1678209598;
+	bh=B4v8ss9mSTnjQOjv/gcIDwpEMd8mh6X4to2b72ZZv70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UMz7GIWF5MMIgYvrl+4yaTQrEJnBTWSmdFlqwONY2b96BbkSVt3LyJws2pcDljqcs
-	 xBg/fQgfdZmcCZjWtwX5aZ8yyzJ5PuBFbN2UTxQKOOy65QEJ+W/uSRrOBalYMTv03W
-	 RrACKr6GCw61OEbb/kuqYbtJffHbbd32sfbFJP+Y=
+	b=LI8MmgY3cw6U2jm+OhfQQnGN+YUM0nw/OlEulL0TS7kKCO/PxLU2ZLTeCdV6eOOCM
+	 u3BNh7mCViAEobTJGModTZypX4rUkTXw40HeyPdZipoaV9e0aEI5NLD3xlINces7D9
+	 DZTGBdh4xJ88fGxTzkGiI0EFVRygFh2L/6+e6j6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alexander Coffin <alex.coffin@matician.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	linux-bluetooth@vger.kernel.org,
-	netdev@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
-	Simon Horman <simon.horman@corigine.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0270/1001] Bluetooth: hci_conn: Refactor hci_bind_bis() since it always succeeds
-Date: Tue,  7 Mar 2023 17:50:42 +0100
-Message-Id: <20230307170033.423462436@linuxfoundation.org>
+Subject: [PATCH 6.2 0271/1001] Bluetooth: L2CAP: Fix potential user-after-free
+Date: Tue,  7 Mar 2023 17:50:43 +0100
+Message-Id: <20230307170033.467054409@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -44,79 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit a00a29b0eeea6caaaf9edc3dd284f81b072ee343 ]
+[ Upstream commit df5703348813235874d851934e957c3723d71644 ]
 
-The compiler thinks "conn" might be NULL after a call to hci_bind_bis(),
-which cannot happen. Avoid any confusion by just making it not return a
-value since it cannot fail. Fixes the warnings seen with GCC 13:
+This fixes all instances of which requires to allocate a buffer calling
+alloc_skb which may release the chan lock and reacquire later which
+makes it possible that the chan is disconnected in the meantime.
 
-In function 'arch_atomic_dec_and_test',
-    inlined from 'atomic_dec_and_test' at ../include/linux/atomic/atomic-instrumented.h:576:9,
-    inlined from 'hci_conn_drop' at ../include/net/bluetooth/hci_core.h:1391:6,
-    inlined from 'hci_connect_bis' at ../net/bluetooth/hci_conn.c:2124:3:
-../arch/x86/include/asm/rmwcc.h:37:9: warning: array subscript 0 is outside array bounds of 'atomic_t[0]' [-Warray-bounds=]
-   37 |         asm volatile (fullop CC_SET(cc) \
-      |         ^~~
-...
-In function 'hci_connect_bis':
-cc1: note: source object is likely at address zero
-
-Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>
-Cc: Johan Hedberg <johan.hedberg@gmail.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: linux-bluetooth@vger.kernel.org
-Cc: netdev@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Fixes: a6a5568c03c4 ("Bluetooth: Lock the L2CAP channel when sending")
+Reported-by: Alexander Coffin <alex.coffin@matician.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ net/bluetooth/l2cap_core.c | 24 ------------------------
+ net/bluetooth/l2cap_sock.c |  8 ++++++++
+ 2 files changed, 8 insertions(+), 24 deletions(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index acf563fbdfd95..61a34801e61ea 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1981,16 +1981,14 @@ static void hci_iso_qos_setup(struct hci_dev *hdev, struct hci_conn *conn,
- 		qos->latency = conn->le_conn_latency;
- }
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index a3e0dc6a6e732..adfc3ea06d088 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -2683,14 +2683,6 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
+ 		if (IS_ERR(skb))
+ 			return PTR_ERR(skb);
  
--static struct hci_conn *hci_bind_bis(struct hci_conn *conn,
--				     struct bt_iso_qos *qos)
-+static void hci_bind_bis(struct hci_conn *conn,
-+			 struct bt_iso_qos *qos)
- {
- 	/* Update LINK PHYs according to QoS preference */
- 	conn->le_tx_phy = qos->out.phy;
- 	conn->le_tx_phy = qos->out.phy;
- 	conn->iso_qos = *qos;
- 	conn->state = BT_BOUND;
+-		/* Channel lock is released before requesting new skb and then
+-		 * reacquired thus we need to recheck channel state.
+-		 */
+-		if (chan->state != BT_CONNECTED) {
+-			kfree_skb(skb);
+-			return -ENOTCONN;
+-		}
 -
--	return conn;
- }
+ 		l2cap_do_send(chan, skb);
+ 		return len;
+ 	}
+@@ -2735,14 +2727,6 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
+ 		if (IS_ERR(skb))
+ 			return PTR_ERR(skb);
  
- static int create_big_sync(struct hci_dev *hdev, void *data)
-@@ -2119,11 +2117,7 @@ struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
- 	if (IS_ERR(conn))
- 		return conn;
+-		/* Channel lock is released before requesting new skb and then
+-		 * reacquired thus we need to recheck channel state.
+-		 */
+-		if (chan->state != BT_CONNECTED) {
+-			kfree_skb(skb);
+-			return -ENOTCONN;
+-		}
+-
+ 		l2cap_do_send(chan, skb);
+ 		err = len;
+ 		break;
+@@ -2763,14 +2747,6 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
+ 		 */
+ 		err = l2cap_segment_sdu(chan, &seg_queue, msg, len);
  
--	conn = hci_bind_bis(conn, qos);
--	if (!conn) {
--		hci_conn_drop(conn);
--		return ERR_PTR(-ENOMEM);
--	}
-+	hci_bind_bis(conn, qos);
+-		/* The channel could have been closed while segmenting,
+-		 * check that it is still connected.
+-		 */
+-		if (chan->state != BT_CONNECTED) {
+-			__skb_queue_purge(&seg_queue);
+-			err = -ENOTCONN;
+-		}
+-
+ 		if (err)
+ 			break;
  
- 	/* Add Basic Announcement into Peridic Adv Data if BASE is set */
- 	if (base_len && base) {
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index ca8f07f3542b8..eebe256104bc0 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1624,6 +1624,14 @@ static struct sk_buff *l2cap_sock_alloc_skb_cb(struct l2cap_chan *chan,
+ 	if (!skb)
+ 		return ERR_PTR(err);
+ 
++	/* Channel lock is released before requesting new skb and then
++	 * reacquired thus we need to recheck channel state.
++	 */
++	if (chan->state != BT_CONNECTED) {
++		kfree_skb(skb);
++		return ERR_PTR(-ENOTCONN);
++	}
++
+ 	skb->priority = sk->sk_priority;
+ 
+ 	bt_cb(skb)->l2cap.chan = chan;
 -- 
 2.39.2
 
