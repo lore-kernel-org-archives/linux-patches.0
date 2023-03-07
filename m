@@ -1,25 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4278ABA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE731C433D2;
-	Tue,  7 Mar 2023 17:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F51BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FF0C433EF;
+	Tue,  7 Mar 2023 17:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211104;
-	bh=w8mf7b/lIn8fDpmJwDEQoQ111ClNbVEW2QmL5/KYuME=;
+	s=korg; t=1678211107;
+	bh=a30CykW6YykybRzJUgVbj82sbmewX3xLsAzMmIApp0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiRmEG5LFbCoAlaUuchw9SWkzcsE4QZBrJknPloJGeylS/fA6PiCCc6Y40o4jDzAk
-	 obDJaOH7yhk+5+bzsdH3ZJ2eWweMgRIBGg/+ZcXI8cBXsxOXutDI+cQwvHf9mQH6s4
-	 V6w20zKBBNLs4lMhtxdlnPaDjREnxsHsN6nab/LA=
+	b=Lnq6eexuC/1lYjbrbFBGgU5ET9slJNY1aVY0jqSFvtpw9sZaI4078N+G5m0o2icxM
+	 QoxxB6CXwEgJcPb98RvC5SJJf6J5AUH2yq1KbG7pguZ6WcHJlmDPw7zwFhiJ1h3+Fk
+	 xiHDipz0uYWszdbTvqCDxWJfU84A2v4A/MPXjLYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH 6.2 0753/1001] ipmi:ssif: Add a timer between request retries
-Date: Tue,  7 Mar 2023 17:58:45 +0100
-Message-Id: <20230307170054.390670488@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	io-uring@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.2 0754/1001] io_uring: Replace 0-length array with flexible array
+Date: Tue,  7 Mar 2023 17:58:46 +0100
+Message-Id: <20230307170054.429075050@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -33,130 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corey Minyard <cminyard@mvista.com>
+From: Kees Cook <keescook@chromium.org>
 
-commit 00bb7e763ec9f384cb382455cb6ba5588b5375cf upstream.
+commit 36632d062975a9ff4410c90dd6d37922b68d0920 upstream.
 
-The IPMI spec has a time (T6) specified between request retries.  Add
-the handling for that.
+Zero-length arrays are deprecated[1]. Replace struct io_uring_buf_ring's
+"bufs" with a flexible array member. (How is the size of this array
+verified?) Detected with GCC 13, using -fstrict-flex-arrays=3:
 
-Reported by: Tony Camuso <tcamuso@redhat.com>
+In function 'io_ring_buffer_select',
+    inlined from 'io_buffer_select' at io_uring/kbuf.c:183:10:
+io_uring/kbuf.c:141:23: warning: array subscript 255 is outside the bounds of an interior zero-length array 'struct io_uring_buf[0]' [-Wzero-length-bounds]
+  141 |                 buf = &br->bufs[head];
+      |                       ^~~~~~~~~~~~~~~
+In file included from include/linux/io_uring.h:7,
+                 from io_uring/kbuf.c:10:
+include/uapi/linux/io_uring.h: In function 'io_buffer_select':
+include/uapi/linux/io_uring.h:628:41: note: while referencing 'bufs'
+  628 |                 struct io_uring_buf     bufs[0];
+      |                                         ^~~~
+
+[1] https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays
+
+Fixes: c7fb19428d67 ("io_uring: add support for ring mapped supplied buffers")
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Pavel Begunkov <asml.silence@gmail.com>
+Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Cc: io-uring@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/20230105190507.gonna.131-kees@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c |   34 +++++++++++++++++++++++++++-------
- 1 file changed, 27 insertions(+), 7 deletions(-)
+ include/uapi/linux/io_uring.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -74,7 +74,8 @@
- /*
-  * Timer values
-  */
--#define SSIF_MSG_USEC		60000	/* 60ms between message tries. */
-+#define SSIF_MSG_USEC		60000	/* 60ms between message tries (T3). */
-+#define SSIF_REQ_RETRY_USEC	60000	/* 60ms between send retries (T6). */
- #define SSIF_MSG_PART_USEC	5000	/* 5ms for a message part */
+--- a/include/uapi/linux/io_uring.h
++++ b/include/uapi/linux/io_uring.h
+@@ -625,7 +625,7 @@ struct io_uring_buf_ring {
+ 			__u16	resv3;
+ 			__u16	tail;
+ 		};
+-		struct io_uring_buf	bufs[0];
++		__DECLARE_FLEX_ARRAY(struct io_uring_buf, bufs);
+ 	};
+ };
  
- /* How many times to we retry sending/receiving the message. */
-@@ -82,7 +83,9 @@
- #define	SSIF_RECV_RETRIES	250
- 
- #define SSIF_MSG_MSEC		(SSIF_MSG_USEC / 1000)
-+#define SSIF_REQ_RETRY_MSEC	(SSIF_REQ_RETRY_USEC / 1000)
- #define SSIF_MSG_JIFFIES	((SSIF_MSG_USEC * 1000) / TICK_NSEC)
-+#define SSIF_REQ_RETRY_JIFFIES	((SSIF_REQ_RETRY_USEC * 1000) / TICK_NSEC)
- #define SSIF_MSG_PART_JIFFIES	((SSIF_MSG_PART_USEC * 1000) / TICK_NSEC)
- 
- /*
-@@ -229,6 +232,9 @@ struct ssif_info {
- 	bool		    got_alert;
- 	bool		    waiting_alert;
- 
-+	/* Used to inform the timeout that it should do a resend. */
-+	bool		    do_resend;
-+
- 	/*
- 	 * If set to true, this will request events the next time the
- 	 * state machine is idle.
-@@ -538,22 +544,28 @@ static void start_get(struct ssif_info *
- 		  ssif_info->recv, I2C_SMBUS_BLOCK_DATA);
- }
- 
-+static void start_resend(struct ssif_info *ssif_info);
-+
- static void retry_timeout(struct timer_list *t)
- {
- 	struct ssif_info *ssif_info = from_timer(ssif_info, t, retry_timer);
- 	unsigned long oflags, *flags;
--	bool waiting;
-+	bool waiting, resend;
- 
- 	if (ssif_info->stopping)
- 		return;
- 
- 	flags = ipmi_ssif_lock_cond(ssif_info, &oflags);
-+	resend = ssif_info->do_resend;
-+	ssif_info->do_resend = false;
- 	waiting = ssif_info->waiting_alert;
- 	ssif_info->waiting_alert = false;
- 	ipmi_ssif_unlock_cond(ssif_info, flags);
- 
- 	if (waiting)
- 		start_get(ssif_info);
-+	if (resend)
-+		start_resend(ssif_info);
- }
- 
- static void watch_timeout(struct timer_list *t)
-@@ -602,8 +614,6 @@ static void ssif_alert(struct i2c_client
- 		start_get(ssif_info);
- }
- 
--static void start_resend(struct ssif_info *ssif_info);
--
- static void msg_done_handler(struct ssif_info *ssif_info, int result,
- 			     unsigned char *data, unsigned int len)
- {
-@@ -909,7 +919,13 @@ static void msg_written_handler(struct s
- 	if (result < 0) {
- 		ssif_info->retries_left--;
- 		if (ssif_info->retries_left > 0) {
--			start_resend(ssif_info);
-+			/*
-+			 * Wait the retry timeout time per the spec,
-+			 * then redo the send.
-+			 */
-+			ssif_info->do_resend = true;
-+			mod_timer(&ssif_info->retry_timer,
-+				  jiffies + SSIF_REQ_RETRY_JIFFIES);
- 			return;
- 		}
- 
-@@ -1320,8 +1336,10 @@ static int do_cmd(struct i2c_client *cli
- 	ret = i2c_smbus_write_block_data(client, SSIF_IPMI_REQUEST, len, msg);
- 	if (ret) {
- 		retry_cnt--;
--		if (retry_cnt > 0)
-+		if (retry_cnt > 0) {
-+			msleep(SSIF_REQ_RETRY_MSEC);
- 			goto retry1;
-+		}
- 		return -ENODEV;
- 	}
- 
-@@ -1462,8 +1480,10 @@ retry_write:
- 					 32, msg);
- 	if (ret) {
- 		retry_cnt--;
--		if (retry_cnt > 0)
-+		if (retry_cnt > 0) {
-+			msleep(SSIF_REQ_RETRY_MSEC);
- 			goto retry_write;
-+		}
- 		dev_err(&client->dev, "Could not write multi-part start, though the BMC said it could handle it.  Just limit sends to one part.\n");
- 		return ret;
- 	}
 
 
