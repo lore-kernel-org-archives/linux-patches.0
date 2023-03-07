@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA607BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:29:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14254C433A1;
-	Tue,  7 Mar 2023 18:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFB2BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:29:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F22C433EF;
+	Tue,  7 Mar 2023 18:29:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213789;
-	bh=1YbItznJEmgglrfzidw+JXKVEAmyLXvaYxvdXQasq7Y=;
+	s=korg; t=1678213792;
+	bh=lEwzfpSD2IU7div+wZeU2a7iSTYXYJh1Caotb58PDtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UFWDOw6UFYF8PcrOIwC6Us42wtq6dWszP82z1iY5E8cArGau4c/xEPR4dRMKc7f7h
-	 5uK6i+mWWbPRNRVWkL/yc9FaMRUIWpZ6N0lsPAmRoUD9JICpoRyqFPiZPufJOcm0Qt
-	 ty43ynFKGYQNjXyZv1neLK2iMeq9A0ewc5x6H1pk=
+	b=E2DEVmO1ctMID+Yf/Q8H4TId1Zu0zdQJJEnfPd0UkekV5dfCZ0MT36HvyXaP315dd
+	 RJ/hN0Ld9Uk4L7GVVruN5MWn/jP75Qdt5Zr0rt10cbNDCmWtlCDpA1++rp/exMqLfe
+	 /5DRYWjjac1Crjmw44PoNwNbBmZxeXWlfkiNEsp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Jakob Koschel <jkl820.git@gmail.com>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 602/885] drm/amd: Avoid BUG() for case of SRIOV missing IP version
-Date: Tue,  7 Mar 2023 17:58:56 +0100
-Message-Id: <20230307170028.508391328@linuxfoundation.org>
+Subject: [PATCH 6.1 620/885] docs/scripts/gdb: add necessary make scripts_gdb step
+Date: Tue,  7 Mar 2023 17:59:14 +0100
+Message-Id: <20230307170029.196159374@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,34 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Jakob Koschel <jkl820.git@gmail.com>
 
-[ Upstream commit 93fec4f8c158584065134b4d45e875499bf517c8 ]
+[ Upstream commit 6b219431037bf98c9efd49716aea9b68440477a3 ]
 
-No need to crash the kernel.  AMDGPU will now fail to probe.
+In order to debug the kernel successfully with gdb you need to run
+'make scripts_gdb' nowadays.
 
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This was changed with the following commit:
+
+Commit 67274c083438340ad16c ("scripts/gdb: delay generation of gdb
+constants.py")
+
+In order to have a complete guide for beginners this remark
+should be added to the offial documentation.
+
+Signed-off-by: Jakob Koschel <jkl820.git@gmail.com>
+Link: https://lore.kernel.org/r/20230112-documentation-gdb-v2-1-292785c43dc9@gmail.com
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/dev-tools/gdb-kernel-debugging.rst | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-index 712dd72f3ccf2..087147f09933a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -354,7 +354,7 @@ static int psp_init_sriov_microcode(struct psp_context *psp)
- 		adev->virt.autoload_ucode_id = AMDGPU_UCODE_ID_CP_MES1_DATA;
- 		break;
- 	default:
--		BUG();
-+		ret = -EINVAL;
- 		break;
- 	}
- 	return ret;
+diff --git a/Documentation/dev-tools/gdb-kernel-debugging.rst b/Documentation/dev-tools/gdb-kernel-debugging.rst
+index 8e0f1fe8d17ad..895285c037c72 100644
+--- a/Documentation/dev-tools/gdb-kernel-debugging.rst
++++ b/Documentation/dev-tools/gdb-kernel-debugging.rst
+@@ -39,6 +39,10 @@ Setup
+   this mode. In this case, you should build the kernel with
+   CONFIG_RANDOMIZE_BASE disabled if the architecture supports KASLR.
+ 
++- Build the gdb scripts (required on kernels v5.1 and above)::
++
++    make scripts_gdb
++
+ - Enable the gdb stub of QEMU/KVM, either
+ 
+     - at VM startup time by appending "-s" to the QEMU command line
 -- 
 2.39.2
 
