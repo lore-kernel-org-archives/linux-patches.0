@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3287DBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:27:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5800EC433D2;
-	Tue,  7 Mar 2023 18:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA8BBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:27:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC91C433EF;
+	Tue,  7 Mar 2023 18:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213635;
-	bh=iOmt3RrNlbIEjx/KReScnh9+gup0ENoJQXZIu7UBVKU=;
+	s=korg; t=1678213639;
+	bh=MHvVvHcFFxtRpvQ1ATNLFyUwyZ4h6QIJd3v05fBfveY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NEq1zwOQCSUwB/HHXdxBb8Y2sfeUp5BMUNWWc4/QvjY8yRkWtuq4Oul95+JHxZm7M
-	 +YRfNyt2THFdOZis3dSSZgSESZaA2G3I2pJ5RsoKuKezsID6TKCnYuSNsjiCxyiNIA
-	 N+u1QNF7UYP+7t4G0uf6J2LhKigFuEtynJfh9MxI=
+	b=KrSXEx+xuL0xucAzgQOFJny8GRUUBba9r1vhEhbazOjWiF3xErmfgclfMfIxSHPlw
+	 8fXctPq5loI/AcXc4KmXqdNg4l8c1ydDyf4D7zUaW+Rk92teI5m9sg/ER/FBJSj+Jw
+	 x+GfRQn9dhATpk7SkD1wVguDAL2gjPTQ9oUqc1pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Ingo Molnar <mingo@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 540/885] cpuidle, intel_idle: Fix CPUIDLE_FLAG_INIT_XSTATE
-Date: Tue,  7 Mar 2023 17:57:54 +0100
-Message-Id: <20230307170025.957571795@linuxfoundation.org>
+Subject: [PATCH 6.1 541/885] x86/fpu: Dont set TIF_NEED_FPU_LOAD for PF_IO_WORKER threads
+Date: Tue,  7 Mar 2023 17:57:55 +0100
+Message-Id: <20230307170025.996416408@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -39,84 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 821ad23d0eaff73ef599ece39ecc77482df20a8c ]
+[ Upstream commit cb3ea4b7671b7cfbac3ee609976b790aebd0bbda ]
 
-Fix instrumentation bugs objtool found:
+We don't set it on PF_KTHREAD threads as they never return to userspace,
+and PF_IO_WORKER threads are identical in that regard. As they keep
+running in the kernel until they die, skip setting the FPU flag on them.
 
-  vmlinux.o: warning: objtool: intel_idle_s2idle+0xd5: call to fpu_idle_fpregs() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: intel_idle_xstate+0x11: call to fpu_idle_fpregs() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: fpu_idle_fpregs+0x9: call to xfeatures_in_use() leaves .noinstr.text section
+More of a cosmetic thing that was found while debugging and
+issue and pondering why the FPU flag is set on these threads.
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Tony Lindgren <tony@atomide.com>
-Tested-by: Ulf Hansson <ulf.hansson@linaro.org>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Acked-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/r/20230112195540.494977795@infradead.org
+Acked-by: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/560c844c-f128-555b-40c6-31baff27537f@kernel.dk
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/fpu/xcr.h       | 4 ++--
- arch/x86/include/asm/special_insns.h | 2 +-
- arch/x86/kernel/fpu/core.c           | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ arch/x86/include/asm/fpu/sched.h | 2 +-
+ arch/x86/kernel/fpu/context.h    | 2 +-
+ arch/x86/kernel/fpu/core.c       | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/include/asm/fpu/xcr.h b/arch/x86/include/asm/fpu/xcr.h
-index 9656a5bc6feae..9a710c0604457 100644
---- a/arch/x86/include/asm/fpu/xcr.h
-+++ b/arch/x86/include/asm/fpu/xcr.h
-@@ -5,7 +5,7 @@
- #define XCR_XFEATURE_ENABLED_MASK	0x00000000
- #define XCR_XFEATURE_IN_USE_MASK	0x00000001
- 
--static inline u64 xgetbv(u32 index)
-+static __always_inline u64 xgetbv(u32 index)
+diff --git a/arch/x86/include/asm/fpu/sched.h b/arch/x86/include/asm/fpu/sched.h
+index b2486b2cbc6e0..c2d6cd78ed0c2 100644
+--- a/arch/x86/include/asm/fpu/sched.h
++++ b/arch/x86/include/asm/fpu/sched.h
+@@ -39,7 +39,7 @@ extern void fpu_flush_thread(void);
+ static inline void switch_fpu_prepare(struct fpu *old_fpu, int cpu)
  {
- 	u32 eax, edx;
+ 	if (cpu_feature_enabled(X86_FEATURE_FPU) &&
+-	    !(current->flags & PF_KTHREAD)) {
++	    !(current->flags & (PF_KTHREAD | PF_IO_WORKER))) {
+ 		save_fpregs_to_fpstate(old_fpu);
+ 		/*
+ 		 * The save operation preserved register state, so the
+diff --git a/arch/x86/kernel/fpu/context.h b/arch/x86/kernel/fpu/context.h
+index 958accf2ccf07..9fcfa5c4dad79 100644
+--- a/arch/x86/kernel/fpu/context.h
++++ b/arch/x86/kernel/fpu/context.h
+@@ -57,7 +57,7 @@ static inline void fpregs_restore_userregs(void)
+ 	struct fpu *fpu = &current->thread.fpu;
+ 	int cpu = smp_processor_id();
  
-@@ -27,7 +27,7 @@ static inline void xsetbv(u32 index, u64 value)
-  *
-  * Callers should check X86_FEATURE_XGETBV1.
-  */
--static inline u64 xfeatures_in_use(void)
-+static __always_inline u64 xfeatures_in_use(void)
- {
- 	return xgetbv(XCR_XFEATURE_IN_USE_MASK);
- }
-diff --git a/arch/x86/include/asm/special_insns.h b/arch/x86/include/asm/special_insns.h
-index 35f709f619fb4..c2e322189f853 100644
---- a/arch/x86/include/asm/special_insns.h
-+++ b/arch/x86/include/asm/special_insns.h
-@@ -295,7 +295,7 @@ static inline int enqcmds(void __iomem *dst, const void *src)
- 	return 0;
- }
+-	if (WARN_ON_ONCE(current->flags & PF_KTHREAD))
++	if (WARN_ON_ONCE(current->flags & (PF_KTHREAD | PF_IO_WORKER)))
+ 		return;
  
--static inline void tile_release(void)
-+static __always_inline void tile_release(void)
- {
- 	/*
- 	 * Instruction opcode for TILERELEASE; supported in binutils
+ 	if (!fpregs_state_valid(fpu, cpu)) {
 diff --git a/arch/x86/kernel/fpu/core.c b/arch/x86/kernel/fpu/core.c
-index 9baa89a8877d0..dccce58201b7c 100644
+index dccce58201b7c..caf33486dc5ee 100644
 --- a/arch/x86/kernel/fpu/core.c
 +++ b/arch/x86/kernel/fpu/core.c
-@@ -853,12 +853,12 @@ int fpu__exception_code(struct fpu *fpu, int trap_nr)
-  * Initialize register state that may prevent from entering low-power idle.
-  * This function will be invoked from the cpuidle driver only when needed.
-  */
--void fpu_idle_fpregs(void)
-+noinstr void fpu_idle_fpregs(void)
- {
- 	/* Note: AMX_TILE being enabled implies XGETBV1 support */
- 	if (cpu_feature_enabled(X86_FEATURE_AMX_TILE) &&
- 	    (xfeatures_in_use() & XFEATURE_MASK_XTILE)) {
- 		tile_release();
--		fpregs_deactivate(&current->thread.fpu);
-+		__this_cpu_write(fpu_fpregs_owner_ctx, NULL);
- 	}
- }
+@@ -426,7 +426,7 @@ void kernel_fpu_begin_mask(unsigned int kfpu_mask)
+ 
+ 	this_cpu_write(in_kernel_fpu, true);
+ 
+-	if (!(current->flags & PF_KTHREAD) &&
++	if (!(current->flags & (PF_KTHREAD | PF_IO_WORKER)) &&
+ 	    !test_thread_flag(TIF_NEED_FPU_LOAD)) {
+ 		set_thread_flag(TIF_NEED_FPU_LOAD);
+ 		save_fpregs_to_fpstate(&current->thread.fpu);
 -- 
 2.39.2
 
