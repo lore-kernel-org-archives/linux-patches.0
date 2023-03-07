@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDA4BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:51:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E78C433A1;
-	Tue,  7 Mar 2023 18:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82197BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:51:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC584C433EF;
+	Tue,  7 Mar 2023 18:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215063;
-	bh=AM1/GlzEmac11IRA1ziyHXEiFDmUmATfMpQy7ZOE2/g=;
+	s=korg; t=1678215066;
+	bh=rKB0FxikJvQEdMDRr6dKmEejodVwNxIn9xdLwPhOZkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OrP8uMG/2CDml+x40aagFHaArO6NULcRhXFtQ40srf51rg52V9r476T0XiAVNcczN
-	 cEah0thrNZs5ew1pPgoCJMh4YgLY7GXEcVWOFNgPa+MhrEhF+6UPV2sh5l8PRSm0c8
-	 5C7Do8v6mY51W1wUNY3IKdWHI2lA+6gTt07V2xKg=
+	b=gxpxldwBQsOtw13fj6v7aKDeEmpSjKKKa/Kc5Ffcdth4tiGGVAzEBGvofrz6jD3/D
+	 EY5gSiQrDo/6L2CN6QWTluynQUoHlOMfoVH7CDnk7WvQjmnA+ewiSdubm+nLsRxbfv
+	 z26xhHMHoBoFY+z/XQ+tBE3+2erYKu6bFHC9Pvww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Halil Pasic <pasic@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
 	Harald Freudenberger <freude@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 139/567] s390/ap: fix status returned by ap_aqic()
-Date: Tue,  7 Mar 2023 17:57:55 +0100
-Message-Id: <20230307165911.924850883@linuxfoundation.org>
+Subject: [PATCH 5.15 140/567] s390/ap: fix status returned by ap_qact()
+Date: Tue,  7 Mar 2023 17:57:56 +0100
+Message-Id: <20230307165911.978458250@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -39,48 +38,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Halil Pasic <pasic@linux.ibm.com>
 
-[ Upstream commit 394740d7645ea767795074287769dd26dbd4d782 ]
+[ Upstream commit a2522c80f074c35254974fec39fffe8b8d75befe ]
 
-There function ap_aqic() tries to grab the status from the
-wrong part of the register. Thus we always end up with
-zeros. Which is wrong, among others, because we detect
-failures via status.response_code.
+Since commit 159491f3b509 ("s390/ap: rework assembler functions to use
+unions for in/out register variables") the  function ap_qact() tries to
+grab the status from the wrong part of the register. Thus we always end
+up with zeros. Which is wrong, among others, because we detect failures
+via status.response_code.
 
 Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
-Reported-by: Janosch Frank <frankja@linux.ibm.com>
+Reported-by: Harald Freudenberger <freude@linux.ibm.com>
 Fixes: 159491f3b509 ("s390/ap: rework assembler functions to use unions for in/out register variables")
 Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/ap.h | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/s390/include/asm/ap.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/arch/s390/include/asm/ap.h b/arch/s390/include/asm/ap.h
-index 3afbee21dc1f1..8a8c0b157b551 100644
+index 8a8c0b157b551..859e6d87b108b 100644
 --- a/arch/s390/include/asm/ap.h
 +++ b/arch/s390/include/asm/ap.h
-@@ -236,7 +236,10 @@ static inline struct ap_queue_status ap_aqic(ap_qid_t qid,
+@@ -290,7 +290,10 @@ static inline struct ap_queue_status ap_qact(ap_qid_t qid, int ifbit,
+ 	unsigned long reg0 = qid | (5UL << 24) | ((ifbit & 0x01) << 22);
  	union {
  		unsigned long value;
- 		struct ap_qirq_ctrl qirqctrl;
 -		struct ap_queue_status status;
 +		struct {
 +			u32 _pad;
 +			struct ap_queue_status status;
 +		};
  	} reg1;
- 	void *reg2 = ind;
+ 	unsigned long reg2;
  
-@@ -250,7 +253,7 @@ static inline struct ap_queue_status ap_aqic(ap_qid_t qid,
- 		"	lgr	%[reg1],1\n"   /* gr1 (status) into reg1 */
- 		: [reg1] "+&d" (reg1)
- 		: [reg0] "d" (reg0), [reg2] "d" (reg2)
--		: "cc", "0", "1", "2");
-+		: "cc", "memory", "0", "1", "2");
- 
- 	return reg1.status;
- }
 -- 
 2.39.2
 
