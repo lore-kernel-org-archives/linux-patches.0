@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86965BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:28:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71D1C433AF;
-	Tue,  7 Mar 2023 18:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98504BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:28:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36DFC433D2;
+	Tue,  7 Mar 2023 18:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213736;
-	bh=Gt5RttRD2uzBUsNCm618cpLLtdUwX0697o/p2YGOFh4=;
+	s=korg; t=1678213739;
+	bh=gqJnJUGl7wxn/SZ+P5h6Yr2ecI+jIRuAo9iv8iQb0mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NRhrb1yp8ES+5m0qMpEppDQZ995qeAi2vimnWx8ro4C0Fuk/B1fv3eipE/jN7J3cY
-	 CrARaZYm4aZ68PsFVdurrTh4x+ZyqcXeGBbWNAikOGNojnG7lz5YwrIOx07k0XRqIb
-	 HNofkKPdDMzGZhfiEt5y+UIbRIt9ytb3z+0ojo4Q=
+	b=2IEx4ONeohigFicR9Hv37jaBSAFHRm6Fs+sNEDaxXUOvzzemyAz2cXjGa4jdasNdl
+	 dLVDRmR4V8mP7FSt1mW7chCDJctIXZ7k5tcOTT0mPFdWokLcsXefCouJiNZN2f1ulq
+	 39ZEWa5b19kTpdEEVzCioqD616xjIpQXroy7bBVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5aed6c3aaba661f5b917@syzkaller.appspotmail.com,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sam James <sam@gentoo.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 572/885] can: isotp: check CAN address family in isotp_bind()
-Date: Tue,  7 Mar 2023 17:58:26 +0100
-Message-Id: <20230307170027.265096406@linuxfoundation.org>
+Subject: [PATCH 6.1 573/885] gcc-plugins: drop -std=gnu++11 to fix GCC 13 build
+Date: Tue,  7 Mar 2023 17:58:27 +0100
+Message-Id: <20230307170027.304717338@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,45 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Sam James <sam@gentoo.org>
 
-[ Upstream commit c6adf659a8ba85913e16a571d5a9bcd17d3d1234 ]
+[ Upstream commit 5a6b64adc18d9adfb497a529ff004d59b6df151f ]
 
-Add missing check to block non-AF_CAN binds.
+The latest GCC 13 snapshot (13.0.1 20230129) gives the following:
+```
+cc1: error: cannot load plugin ./scripts/gcc-plugins/randomize_layout_plugin.so
+ :./scripts/gcc-plugins/randomize_layout_plugin.so: undefined symbol: tree_code_type
+```
 
-Syzbot created some code which matched the right sockaddr struct size
-but used AF_XDP (0x2C) instead of AF_CAN (0x1D) in the address family
-field:
+This ends up being because of https://gcc.gnu.org/git/gitweb.cgi?p=gcc.git;h=b0241ce6e37031
+upstream in GCC which changes the visibility of some types used by the kernel's
+plugin infrastructure like tree_code_type.
 
-bind$xdp(r2, &(0x7f0000000540)={0x2c, 0x0, r4, 0x0, r2}, 0x10)
-                                ^^^^
-This has no funtional impact but the userspace should be notified about
-the wrong address family field content.
+After discussion with the GCC folks, we found that the kernel needs to be building
+plugins with the same flags used to build GCC - and GCC defaults to gnu++17
+right now. The minimum GCC version needed to build the kernel is GCC 5.1
+and GCC 5.1 already defaults to gnu++14 anyway, so just drop the flag, as
+all GCCs that could be used to build GCC already default to an acceptable
+version which was >= the version we forced via flags until now.
 
-Link: https://syzkaller.appspot.com/text?tag=CrashLog&x=11ff9d8c480000
-Reported-by: syzbot+5aed6c3aaba661f5b917@syzkaller.appspotmail.com
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/all/20230104201844.13168-1-socketcan@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108634
+Signed-off-by: Sam James <sam@gentoo.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230201230009.2252783-1-sam@gentoo.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ scripts/gcc-plugins/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/can/isotp.c b/net/can/isotp.c
-index fc81d77724a13..9bc344851704e 100644
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1220,6 +1220,9 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
- 	if (len < ISOTP_MIN_NAMELEN)
- 		return -EINVAL;
- 
-+	if (addr->can_family != AF_CAN)
-+		return -EINVAL;
-+
- 	/* sanitize tx CAN identifier */
- 	if (tx_id & CAN_EFF_FLAG)
- 		tx_id &= (CAN_EFF_FLAG | CAN_EFF_MASK);
+diff --git a/scripts/gcc-plugins/Makefile b/scripts/gcc-plugins/Makefile
+index b34d11e226366..320afd3cf8e82 100644
+--- a/scripts/gcc-plugins/Makefile
++++ b/scripts/gcc-plugins/Makefile
+@@ -29,7 +29,7 @@ GCC_PLUGINS_DIR = $(shell $(CC) -print-file-name=plugin)
+ plugin_cxxflags	= -Wp,-MMD,$(depfile) $(KBUILD_HOSTCXXFLAGS) -fPIC \
+ 		  -include $(srctree)/include/linux/compiler-version.h \
+ 		  -DPLUGIN_VERSION=$(call stringify,$(KERNELVERSION)) \
+-		  -I $(GCC_PLUGINS_DIR)/include -I $(obj) -std=gnu++11 \
++		  -I $(GCC_PLUGINS_DIR)/include -I $(obj) \
+ 		  -fno-rtti -fno-exceptions -fasynchronous-unwind-tables \
+ 		  -ggdb -Wno-narrowing -Wno-unused-variable \
+ 		  -Wno-format-diag
 -- 
 2.39.2
 
