@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFCABA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1ABCC433EF;
-	Tue,  7 Mar 2023 17:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41387BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E6AC433D2;
+	Tue,  7 Mar 2023 17:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211001;
-	bh=+9OuRYwPI54o/Fm7g7hAoBFrQ8pYFyaSyAT3RvzsrqY=;
+	s=korg; t=1678211004;
+	bh=DGCUR3TLQj8A7OnMuZuoCPX3cCaFxsO9s232lwSJgic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1tzAEK3yBuYiRT1ggY0dVp6engIpJE0j4kPNd11btCSlTpnFrNsI8/g80pCZGSOb
-	 GHWQWydnli9dHyFI09d00aQxDR9Bh+tYrkpgoq083QD8KF+JD1EpZyX534UqynsRXj
-	 Ft/+i5wTOELnJtBR0iQePf5v2vltrYcngj5HayX8=
+	b=BCIPHXqXsDZs7+meFF235ScLR9Z7QwVhm2f20dPPFEp3O6dAIy5f94fpKq/NhMCf1
+	 oyhKouAMqGJ2gPfsYyYCM21Lcan4VQzM/ch94k6jHDs0WryjfT+zMMpX2Bg6VBMYRD
+	 GZ7GBSanLCNCWzSQGoDlNmk/aEFSmVaQ2kWjmzXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	linux-samsung-soc@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0720/1001] regulator: s5m8767: Bounds check id indexing into arrays
-Date: Tue,  7 Mar 2023 17:58:12 +0100
-Message-Id: <20230307170052.923330055@linuxfoundation.org>
+Subject: [PATCH 6.2 0721/1001] Revert "drm/amdgpu: TA unload messages are not actually sent to psp when amdgpu is uninstalled"
+Date: Tue,  7 Mar 2023 17:58:13 +0100
+Message-Id: <20230307170052.972476359@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,53 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Vitaly Prosyak <vitaly.prosyak@amd.com>
 
-[ Upstream commit e314e15a0b58f9d051c00b25951073bcdae61953 ]
+[ Upstream commit 39934d3ed5725c5e3570ed1b67f612f1ea60ce03 ]
 
-The compiler has no way to know if "id" is within the array bounds of
-the regulators array. Add a check for this and a build-time check that
-the regulators and reg_voltage_map arrays are sized the same. Seen with
-GCC 13:
+This reverts commit fac53471d0ea9693d314aa2df08d62b2e7e3a0f8.
+The following change: move the drm_dev_unplug call after
+amdgpu_driver_unload_kms in amdgpu_pci_remove. The reason is
+the following: amdgpu_pci_remove calls drm_dev_unregister
+and it should be called first to ensure userspace can't access the
+device instance anymore. If we call drm_dev_unplug after
+amdgpu_driver_unload_kms then we observe IGT PCI software unplug
+test failure (kernel hung) for all ASICs. This is how this
+regression was found.
 
-../drivers/regulator/s5m8767.c: In function 's5m8767_pmic_probe':
-../drivers/regulator/s5m8767.c:936:35: warning: array subscript [0, 36] is outside array bounds of 'struct regulator_desc[37]' [-Warray-bounds=]
-  936 |                         regulators[id].vsel_reg =
-      |                         ~~~~~~~~~~^~~~
+After this revert, the following commands do work not, but it would
+be fixed in the next commit:
+ - sudo modprobe -r amdgpu
+ - sudo modprobe amdgpu
 
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: linux-samsung-soc@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230128005358.never.313-kees@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Reviewed-by Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/s5m8767.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c    | 4 ++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/regulator/s5m8767.c b/drivers/regulator/s5m8767.c
-index 35269f9982105..754c6fcc6e642 100644
---- a/drivers/regulator/s5m8767.c
-+++ b/drivers/regulator/s5m8767.c
-@@ -923,10 +923,14 @@ static int s5m8767_pmic_probe(struct platform_device *pdev)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index fbf2f24169eb5..d8e79de839d65 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4022,7 +4022,8 @@ void amdgpu_device_fini_hw(struct amdgpu_device *adev)
  
- 	for (i = 0; i < pdata->num_regulators; i++) {
- 		const struct sec_voltage_desc *desc;
--		int id = pdata->regulators[i].id;
-+		unsigned int id = pdata->regulators[i].id;
- 		int enable_reg, enable_val;
- 		struct regulator_dev *rdev;
+ 	amdgpu_gart_dummy_page_fini(adev);
  
-+		BUILD_BUG_ON(ARRAY_SIZE(regulators) != ARRAY_SIZE(reg_voltage_map));
-+		if (WARN_ON_ONCE(id >= ARRAY_SIZE(regulators)))
-+			continue;
+-	amdgpu_device_unmap_mmio(adev);
++	if (drm_dev_is_unplugged(adev_to_drm(adev)))
++		amdgpu_device_unmap_mmio(adev);
+ 
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 3fe277bc233f4..7f598977d6942 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2236,6 +2236,8 @@ amdgpu_pci_remove(struct pci_dev *pdev)
+ 	struct drm_device *dev = pci_get_drvdata(pdev);
+ 	struct amdgpu_device *adev = drm_to_adev(dev);
+ 
++	drm_dev_unplug(dev);
 +
- 		desc = reg_voltage_map[id];
- 		if (desc) {
- 			regulators[id].n_voltages =
+ 	if (adev->pm.rpm_mode != AMDGPU_RUNPM_NONE) {
+ 		pm_runtime_get_sync(dev->dev);
+ 		pm_runtime_forbid(dev->dev);
+@@ -2275,8 +2277,6 @@ amdgpu_pci_remove(struct pci_dev *pdev)
+ 
+ 	amdgpu_driver_unload_kms(dev);
+ 
+-	drm_dev_unplug(dev);
+-
+ 	/*
+ 	 * Flush any in flight DMA operations from device.
+ 	 * Clear the Bus Master Enable bit and then wait on the PCIe Device
 -- 
 2.39.2
 
