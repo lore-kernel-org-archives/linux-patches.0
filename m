@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA14BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:51:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8474DC433EF;
-	Tue,  7 Mar 2023 17:51:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536C0BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:51:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF166C433EF;
+	Tue,  7 Mar 2023 17:51:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211515;
-	bh=tO4logdoC5Brx41FVyy0YsJFB3DcPXXmPPfZbwtQ/BU=;
+	s=korg; t=1678211518;
+	bh=kAkpV4BHT0ZUmoGf3+Kp3ELCap5J8MQpgYU234/o4r4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M9pFFTxMeqAoj7BETqAOqj2qBEiF3aYKVbQZp8WjvNoqCJCFqr6qezbgviaXDzDUy
-	 FmFMOXzXWga65cqJ8bPks80qhd1tlvG2mnqkcOeW2I989/YVHa/l53NvYWl6YBiRUI
-	 IDXjl2iPgb6/JraoLiQVa8D3OXE0KPoFanbTY40k=
+	b=cV6VL3HLFyydi4UJaOZKq02K3JrtdBJRAdHUYqDoqt9rsCKQTh9dfv/+t54E3ZFNy
+	 J+mt8r3yRgQCafGp9+XQqk2WusNMAoTLVvXTBOJ3QegckhiQsmmejZR5dQS7XO34Bd
+	 ae8e2gRJLJoJe+8fZhGgLVxNvhq56K0darpfrXpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Shuah Khan <shuah@kernel.org>,
-	linux-kselftest@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.2 0860/1001] selftests: clone3: Fix incorrect kernel headers search path
-Date: Tue,  7 Mar 2023 18:00:32 +0100
-Message-Id: <20230307170059.158075370@linuxfoundation.org>
+	Vladis Dronov <vdronov@redhat.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Fiona Trahe <fiona.trahe@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.2 0887/1001] crypto: qat - fix out-of-bounds read
+Date: Tue,  7 Mar 2023 18:00:59 +0100
+Message-Id: <20230307170100.441673678@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,36 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-commit 612cf4d283414a5ee2733db6608d917deb45fa46 upstream.
+commit f6044cc3030e139f60c281386f28bda6e3049d66 upstream.
 
-Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
-building against kernel headers from the build environment in scenarios
-where kernel headers are installed into a specific output directory
-(O=...).
+When preparing an AER-CTR request, the driver copies the key provided by
+the user into a data structure that is accessible by the firmware.
+If the target device is QAT GEN4, the key size is rounded up by 16 since
+a rounded up size is expected by the device.
+If the key size is rounded up before the copy, the size used for copying
+the key might be bigger than the size of the region containing the key,
+causing an out-of-bounds read.
 
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: linux-kselftest@vger.kernel.org
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: <stable@vger.kernel.org>  # 5.18+
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Acked-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fix by doing the copy first and then update the keylen.
+
+This is to fix the following warning reported by KASAN:
+
+	[  138.150574] BUG: KASAN: global-out-of-bounds in qat_alg_skcipher_init_com.isra.0+0x197/0x250 [intel_qat]
+	[  138.150641] Read of size 32 at addr ffffffff88c402c0 by task cryptomgr_test/2340
+
+	[  138.150651] CPU: 15 PID: 2340 Comm: cryptomgr_test Not tainted 6.2.0-rc1+ #45
+	[  138.150659] Hardware name: Intel Corporation ArcherCity/ArcherCity, BIOS EGSDCRB1.86B.0087.D13.2208261706 08/26/2022
+	[  138.150663] Call Trace:
+	[  138.150668]  <TASK>
+	[  138.150922]  kasan_check_range+0x13a/0x1c0
+	[  138.150931]  memcpy+0x1f/0x60
+	[  138.150940]  qat_alg_skcipher_init_com.isra.0+0x197/0x250 [intel_qat]
+	[  138.151006]  qat_alg_skcipher_init_sessions+0xc1/0x240 [intel_qat]
+	[  138.151073]  crypto_skcipher_setkey+0x82/0x160
+	[  138.151085]  ? prepare_keybuf+0xa2/0xd0
+	[  138.151095]  test_skcipher_vec_cfg+0x2b8/0x800
+
+Fixes: 67916c951689 ("crypto: qat - add AES-CTR support for QAT GEN4 devices")
+Cc: <stable@vger.kernel.org>
+Reported-by: Vladis Dronov <vdronov@redhat.com>
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Fiona Trahe <fiona.trahe@intel.com>
+Reviewed-by: Vladis Dronov <vdronov@redhat.com>
+Tested-by: Vladis Dronov <vdronov@redhat.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/clone3/Makefile |    2 +-
+ drivers/crypto/qat/qat_common/qat_algs.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/clone3/Makefile
-+++ b/tools/testing/selftests/clone3/Makefile
-@@ -1,5 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0
--CFLAGS += -g -std=gnu99 -I../../../../usr/include/
-+CFLAGS += -g -std=gnu99 $(KHDR_INCLUDES)
- LDLIBS += -lcap
- 
- TEST_GEN_PROGS := clone3 clone3_clear_sighand clone3_set_tid \
+--- a/drivers/crypto/qat/qat_common/qat_algs.c
++++ b/drivers/crypto/qat/qat_common/qat_algs.c
+@@ -435,8 +435,8 @@ static void qat_alg_skcipher_init_com(st
+ 	} else if (aes_v2_capable && mode == ICP_QAT_HW_CIPHER_CTR_MODE) {
+ 		ICP_QAT_FW_LA_SLICE_TYPE_SET(header->serv_specif_flags,
+ 					     ICP_QAT_FW_LA_USE_UCS_SLICE_TYPE);
+-		keylen = round_up(keylen, 16);
+ 		memcpy(cd->ucs_aes.key, key, keylen);
++		keylen = round_up(keylen, 16);
+ 	} else {
+ 		memcpy(cd->aes.key, key, keylen);
+ 	}
 
 
