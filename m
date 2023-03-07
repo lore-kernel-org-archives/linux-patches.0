@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15ECDBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:40:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F101C433D2;
-	Tue,  7 Mar 2023 18:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF70BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:40:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D49C433D2;
+	Tue,  7 Mar 2023 18:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214449;
-	bh=8DKi6jLJWsddrL9oib5V4aPk3dIfsblAxqKeXaXfbN8=;
+	s=korg; t=1678214452;
+	bh=7N2pMwa4SDfRJ7shCeCE8DlvnepL3d6wkMGP3F6k94k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fg4EMmqXhYfaemx+OE00b9HPjq1WEE86yoI/wU4+NAYifPD1znOhwGDkCd0P6v/GR
-	 pMkJuO6RJ1y5JmkoU+LkQiRchWvkJ1FQVnmpy+Jad1C1tPgqL6grgzxRuHF7NT1cF5
-	 XRaSVdpm8mFAVesOsn32lwVFRZ+JQzuwFhOpukqU=
+	b=e3QpD5v5WCv8syGb4+I9J5qQ0IIFYC6i7rDTeSdzDta1CsJIARuGJGwrgG1Vs+jU8
+	 fSlc25X7vCS6GKTqGmROIlMgpBOb33BdMUDHv8I0EbtbXq23jlhX2GLyc2b1E15Rn6
+	 nectSSB5RiLLUp0EU0nxGCN183gVh7C+jerb+iOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oscar Salvador <osalvador@suse.de>,
-	David Hildenbrand <david@redhat.com>,
-	Pavel Tatashin <pasha.tatashin@soleen.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.1 826/885] dax/kmem: Fix leak of memory-hotplug resources
-Date: Tue,  7 Mar 2023 18:02:40 +0100
-Message-Id: <20230307170037.747894317@linuxfoundation.org>
+	Yohan Prodhomme <kernel@zoddo.fr>,
+	Marc Bornand <dev.mbornand@systemb.ch>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 800/885] wifi: cfg80211: Set SSID if it is not already set
+Date: Tue,  7 Mar 2023 18:02:14 +0100
+Message-Id: <20230307170036.656887462@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,136 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Marc Bornand <dev.mbornand@systemb.ch>
 
-commit e686c32590f40bffc45f105c04c836ffad3e531a upstream.
+commit c38c701851011c94ce3be1ccb3593678d2933fd8 upstream.
 
-While experimenting with CXL region removal the following corruption of
-/proc/iomem appeared.
+When a connection was established without going through
+NL80211_CMD_CONNECT, the ssid was never set in the wireless_dev struct.
+Now we set it in __cfg80211_connect_result() when it is not already set.
 
-Before:
-f010000000-f04fffffff : CXL Window 0
-  f010000000-f02fffffff : region4
-    f010000000-f02fffffff : dax4.0
-      f010000000-f02fffffff : System RAM (kmem)
+When using a userspace configuration that does not call
+cfg80211_connect() (can be checked with breakpoints in the kernel),
+this patch should allow `networkctl status device_name` to output the
+SSID instead of null.
 
-After (modprobe -r cxl_test):
-f010000000-f02fffffff : **redacted binary garbage**
-  f010000000-f02fffffff : System RAM (kmem)
-
-...and testing further the same is visible with persistent memory
-assigned to kmem:
-
-Before:
-480000000-243fffffff : Persistent Memory
-  480000000-57e1fffff : namespace3.0
-  580000000-243fffffff : dax3.0
-    580000000-243fffffff : System RAM (kmem)
-
-After (ndctl disable-region all):
-480000000-243fffffff : Persistent Memory
-  580000000-243fffffff : ***redacted binary garbage***
-    580000000-243fffffff : System RAM (kmem)
-
-The corrupted data is from a use-after-free of the "dax4.0" and "dax3.0"
-resources, and it also shows that the "System RAM (kmem)" resource is
-not being removed. The bug does not appear after "modprobe -r kmem", it
-requires the parent of "dax4.0" and "dax3.0" to be removed which
-re-parents the leaked "System RAM (kmem)" instances. Those in turn
-reference the freed resource as a parent.
-
-First up for the fix is release_mem_region_adjustable() needs to
-reliably delete the resource inserted by add_memory_driver_managed().
-That is thwarted by a check for IORESOURCE_SYSRAM that predates the
-dax/kmem driver, from commit:
-
-65c78784135f ("kernel, resource: check for IORESOURCE_SYSRAM in release_mem_region_adjustable")
-
-That appears to be working around the behavior of HMM's
-"MEMORY_DEVICE_PUBLIC" facility that has since been deleted. With that
-check removed the "System RAM (kmem)" resource gets removed, but
-corruption still occurs occasionally because the "dax" resource is not
-reliably removed.
-
-The dax range information is freed before the device is unregistered, so
-the driver can not reliably recall (another use after free) what it is
-meant to release. Lastly if that use after free got lucky, the driver
-was covering up the leak of "System RAM (kmem)" due to its use of
-release_resource() which detaches, but does not free, child resources.
-The switch to remove_resource() forces remove_memory() to be responsible
-for the deletion of the resource added by add_memory_driver_managed().
-
-Fixes: c2f3011ee697 ("device-dax: add an allocation interface for device-dax instances")
-Cc: <stable@vger.kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Pavel Tatashin <pasha.tatashin@soleen.com>
-Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
-Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/167653656244.3147810.5705900882794040229.stgit@dwillia2-xfh.jf.intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Cc: stable@vger.kernel.org
+Reported-by: Yohan Prod'homme <kernel@zoddo.fr>
+Fixes: 7b0a0e3c3a88 (wifi: cfg80211: do some rework towards MLO link APIs)
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216711
+Signed-off-by: Marc Bornand <dev.mbornand@systemb.ch>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dax/bus.c  |    2 +-
- drivers/dax/kmem.c |    4 ++--
- kernel/resource.c  |   14 --------------
- 3 files changed, 3 insertions(+), 17 deletions(-)
+ net/wireless/sme.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/dax/bus.c
-+++ b/drivers/dax/bus.c
-@@ -427,8 +427,8 @@ static void unregister_dev_dax(void *dev
- 	dev_dbg(dev, "%s\n", __func__);
+--- a/net/wireless/sme.c
++++ b/net/wireless/sme.c
+@@ -736,6 +736,7 @@ void __cfg80211_connect_result(struct ne
+ {
+ 	struct wireless_dev *wdev = dev->ieee80211_ptr;
+ 	const struct element *country_elem = NULL;
++	const struct element *ssid;
+ 	const u8 *country_data;
+ 	u8 country_datalen;
+ #ifdef CONFIG_CFG80211_WEXT
+@@ -881,6 +882,22 @@ void __cfg80211_connect_result(struct ne
+ 				   country_data, country_datalen);
+ 	kfree(country_data);
  
- 	kill_dev_dax(dev_dax);
--	free_dev_dax_ranges(dev_dax);
- 	device_del(dev);
-+	free_dev_dax_ranges(dev_dax);
- 	put_device(dev);
- }
- 
---- a/drivers/dax/kmem.c
-+++ b/drivers/dax/kmem.c
-@@ -146,7 +146,7 @@ static int dev_dax_kmem_probe(struct dev
- 		if (rc) {
- 			dev_warn(dev, "mapping%d: %#llx-%#llx memory add failed\n",
- 					i, range.start, range.end);
--			release_resource(res);
-+			remove_resource(res);
- 			kfree(res);
- 			data->res[i] = NULL;
- 			if (mapped)
-@@ -195,7 +195,7 @@ static void dev_dax_kmem_remove(struct d
- 
- 		rc = remove_memory(range.start, range_len(&range));
- 		if (rc == 0) {
--			release_resource(data->res[i]);
-+			remove_resource(data->res[i]);
- 			kfree(data->res[i]);
- 			data->res[i] = NULL;
- 			success++;
---- a/kernel/resource.c
-+++ b/kernel/resource.c
-@@ -1345,20 +1345,6 @@ retry:
- 			continue;
- 		}
- 
--		/*
--		 * All memory regions added from memory-hotplug path have the
--		 * flag IORESOURCE_SYSTEM_RAM. If the resource does not have
--		 * this flag, we know that we are dealing with a resource coming
--		 * from HMM/devm. HMM/devm use another mechanism to add/release
--		 * a resource. This goes via devm_request_mem_region and
--		 * devm_release_mem_region.
--		 * HMM/devm take care to release their resources when they want,
--		 * so if we are dealing with them, let us just back off here.
--		 */
--		if (!(res->flags & IORESOURCE_SYSRAM)) {
--			break;
--		}
--
- 		if (!(res->flags & IORESOURCE_MEM))
- 			break;
- 
++	if (!wdev->u.client.ssid_len) {
++		rcu_read_lock();
++		for_each_valid_link(cr, link) {
++			ssid = ieee80211_bss_get_elem(cr->links[link].bss,
++						      WLAN_EID_SSID);
++
++			if (!ssid || !ssid->datalen)
++				continue;
++
++			memcpy(wdev->u.client.ssid, ssid->data, ssid->datalen);
++			wdev->u.client.ssid_len = ssid->datalen;
++			break;
++		}
++		rcu_read_unlock();
++	}
++
+ 	return;
+ out:
+ 	for_each_valid_link(cr, link)
 
 
