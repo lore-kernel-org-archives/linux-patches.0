@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF85ABA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:33:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44760C433EF;
-	Tue,  7 Mar 2023 17:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF97CBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:33:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD8EC4339B;
+	Tue,  7 Mar 2023 17:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210424;
-	bh=nCgy3LUOP3yJeam8inpqFOBfdblksxUA3J4qWFGlPzA=;
+	s=korg; t=1678210427;
+	bh=PRPTphbTDeGzNC+HqY/fff9IX5Rp3zgmQxNjmjEB4NY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FzPo1YF3FXNYhbNY5YlgHnQ/LKRi/oBarDVAzwX2OGSGfYevIsALqAHoBYURtwfjA
-	 QZMrxe1BuC9eT7X0cIeYSOWNGJxmpk/ms9kQPa2rmKk7xdaBq4dRFON+wwz2fFDuZn
-	 oh6YgxaZ+aV+1fInQeLERZ6gY+Evxn7s56ATt4Vw=
+	b=gj2n0qh027V2tocGolE2tcZxNEuRofQYX80PmaNoVr+sqoEUCKXCmJ6MLltmALKOu
+	 rdHt6sMBtnpNcu/sgWDjkwvN5R88ZP7Grswag0410bC7y9OU0HsHOQivxNXscZuyIp
+	 uGTbZWg775XZARX+rGhz8gHlcdYU5Y5+zrgMEgeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Leon Romanovsky <leon@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0537/1001] RDMA/cxgb4: add null-ptr-check after ip_dev_find()
-Date: Tue,  7 Mar 2023 17:55:09 +0100
-Message-Id: <20230307170044.757533111@linuxfoundation.org>
+Subject: [PATCH 6.2 0538/1001] usb: musb: mediatek: dont unregister something that wasnt registered
+Date: Tue,  7 Mar 2023 17:55:10 +0100
+Message-Id: <20230307170044.806221680@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,41 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit ef42520240aacfc0d46c8d780c051d135a8dc9b7 ]
+[ Upstream commit ba883de971d1ad018f3083d9195b8abe54d87407 ]
 
-ip_dev_find() may return NULL and assign it to pdev which is
-dereferenced later.
-Fix this by checking the return value of ip_dev_find() for NULL
-similar to the way it is done with other instances of said function.
+This function only calls mtk_otg_switch_init() when the ->port_mode
+is MUSB_OTG so the clean up code should only call mtk_otg_switch_exit()
+for that mode.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 1cab775c3e75 ("RDMA/cxgb4: Fix LE hash collision bug for passive open connection")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://lore.kernel.org/r/20230201172103.17261-1-n.zhandarovich@fintech.ru
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 0990366bab3c ("usb: musb: Add support for MediaTek musb controller")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/Y8/3TqpqiSr0RxFH@kili
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/cxgb4/cm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/musb/mediatek.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
-index 499a425a33791..ea3ddf0d24114 100644
---- a/drivers/infiniband/hw/cxgb4/cm.c
-+++ b/drivers/infiniband/hw/cxgb4/cm.c
-@@ -4144,6 +4144,10 @@ static int rx_pkt(struct c4iw_dev *dev, struct sk_buff *skb)
+diff --git a/drivers/usb/musb/mediatek.c b/drivers/usb/musb/mediatek.c
+index cad991380b0cf..27b9bd2583400 100644
+--- a/drivers/usb/musb/mediatek.c
++++ b/drivers/usb/musb/mediatek.c
+@@ -294,7 +294,8 @@ static int mtk_musb_init(struct musb *musb)
+ err_phy_power_on:
+ 	phy_exit(glue->phy);
+ err_phy_init:
+-	mtk_otg_switch_exit(glue);
++	if (musb->port_mode == MUSB_OTG)
++		mtk_otg_switch_exit(glue);
+ 	return ret;
+ }
  
- 	if (neigh->dev->flags & IFF_LOOPBACK) {
- 		pdev = ip_dev_find(&init_net, iph->daddr);
-+		if (!pdev) {
-+			pr_err("%s - failed to find device!\n", __func__);
-+			goto free_dst;
-+		}
- 		e = cxgb4_l2t_get(dev->rdev.lldi.l2t, neigh,
- 				    pdev, 0);
- 		pi = (struct port_info *)netdev_priv(pdev);
 -- 
 2.39.2
 
