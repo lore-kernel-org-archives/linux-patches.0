@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0185BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:24:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16CE2C433EF;
-	Tue,  7 Mar 2023 17:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F8FBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:24:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16684C433D2;
+	Tue,  7 Mar 2023 17:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209889;
-	bh=4Zl7Vjb+b9Zc+NV8+EPuCobD8YlGBNB5G9VogX4vN8g=;
+	s=korg; t=1678209892;
+	bh=zjQJ37wesTy5MfybzEGPsH7AYE1h686Zma0+dUjBrFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ILC8x4Kc6ZxVDqpVLY8hHSZaBQWAFvIKm0n6TrC0AFiMoiXhLBQ6pV8NxeTbCP7M5
-	 Cc/rNmUbY4hSWzzKAZ9jbc8wwl4Ej76bSq5UpXrK3kWzDMgP25+eLh488wFRYgo+Ls
-	 qpUxsogZ63ybAURBjQK5nFKa95i29P5HGIk30OhU=
+	b=Io+TVDebSa65x8SLtKIBmjTLPR66zWRc/YiwZ4w8uQxvDprRuinRya9p/eOxxrVak
+	 FPwBsFUzJV48lFfOpmai23zUa52DnAMQDbLfYUOMvLze7VPUvlX+2djuUl9IeJv4pd
+	 Kxwg8Ces/es7/ITyv1wwqwdnOClvne2gK8ThKnmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0365/1001] drm/msm/dpu: Disallow unallocated resources to be returned
-Date: Tue,  7 Mar 2023 17:52:17 +0100
-Message-Id: <20230307170037.224866791@linuxfoundation.org>
+Subject: [PATCH 6.2 0366/1001] drm/bridge: lt9611: fix sleep mode setup
+Date: Tue,  7 Mar 2023 17:52:18 +0100
+Message-Id: <20230307170037.265776876@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,55 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit abc40122d9a69f56c04efb5a7485795f5ac799d1 ]
+[ Upstream commit ae2d329f104b75a0a78dcaded29fe6283289cdf9 ]
 
-In the event that the topology requests resources that have not been
-created by the system (because they are typically not represented in
-dpu_mdss_cfg ^1), the resource(s) in global_state (in this case DSC
-blocks, until their allocation/assignment is being sanity-checked in
-"drm/msm/dpu: Reject topologies for which no DSC blocks are available")
-remain NULL but will still be returned out of
-dpu_rm_get_assigned_resources, where the caller expects to get an array
-containing num_blks valid pointers (but instead gets these NULLs).
+On atomic_post_disable the bridge goes to the low power state. However
+the code disables too much of the chip, so the HPD event is not being
+detected and delivered to the host. Reduce the power saving in order to
+get the HPD event.
 
-To prevent this from happening, where null-pointer dereferences
-typically result in a hard-to-debug platform lockup, num_blks shouldn't
-increase past NULL blocks and will print an error and break instead.
-After all, max_blks represents the static size of the maximum number of
-blocks whereas the actual amount varies per platform.
-
-^1: which can happen after a git rebase ended up moving additions to
-_dpu_cfg to a different struct which has the same patch context.
-
-Fixes: bb00a452d6f7 ("drm/msm/dpu: Refactor resource manager")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/517636/
-Link: https://lore.kernel.org/r/20230109231556.344977-1-marijn.suijten@somainline.org
+Fixes: 23278bf54afe ("drm/bridge: Introduce LT9611 DSI to HDMI bridge")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230118081658.2198520-2-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/bridge/lontium-lt9611.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-index 73b3442e74679..7ada957adbbb8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -660,6 +660,11 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
- 				  blks_size, enc_id);
- 			break;
- 		}
-+		if (!hw_blks[i]) {
-+			DPU_ERROR("Allocated resource %d unavailable to assign to enc %d\n",
-+				  type, enc_id);
-+			break;
-+		}
- 		blks[num_blks++] = hw_blks[i];
- 	}
+diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
+index 7c0a99173b39f..2714184cc53f4 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt9611.c
++++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
+@@ -448,12 +448,11 @@ static void lt9611_sleep_setup(struct lt9611 *lt9611)
+ 		{ 0x8023, 0x01 },
+ 		{ 0x8157, 0x03 }, /* set addr pin as output */
+ 		{ 0x8149, 0x0b },
+-		{ 0x8151, 0x30 }, /* disable IRQ */
++
+ 		{ 0x8102, 0x48 }, /* MIPI Rx power down */
+ 		{ 0x8123, 0x80 },
+ 		{ 0x8130, 0x00 },
+-		{ 0x8100, 0x01 }, /* bandgap power down */
+-		{ 0x8101, 0x00 }, /* system clk power down */
++		{ 0x8011, 0x0a },
+ 	};
  
+ 	regmap_multi_reg_write(lt9611->regmap,
 -- 
 2.39.2
 
