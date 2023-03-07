@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7E5BA4C
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:01:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA59C433EF;
-	Tue,  7 Mar 2023 19:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B20BA4C
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:01:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07673C433EF;
+	Tue,  7 Mar 2023 19:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215661;
-	bh=Oj9JntBQWOhAYET4xyBqJrN3dmq8msvR8XKDcoS3vcQ=;
+	s=korg; t=1678215664;
+	bh=2HyyGHbU19N8wN7gwvdxhKw6EH96AyXcByLAHVbiGB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wh17R+D+YHEhApvYTdx6Dc4n5guv+UsmQfXrOWSdropZG5dFI7jH9rHhgVcgxR08V
-	 ieqnUMa2uuFgYcu1NNniUYk3arXoUHVAPgRKsM3j66vIP3ItXllnDz8yJE9E6OStrv
-	 hUMq0zpOquhC0Ton1LzY9UiRWzTXava8lrNYZknY=
+	b=zd/Z+Pa7jlrDjKgMv5JcmK8LAg0DLyWELFSzwdiFsQ1wyAGeR5BiA3BZzH/L0AeSC
+	 XQHLmhjTVLHptcaFAQCvyPa5Zl5lpK/GydkijjqjxWiTfoyg3WAgymNRZwsUyvU/VW
+	 tzMVK7hPUM/3iSluU63acgoI9pTNNLe53Sd+KPy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinlong Mao <quic_jinlmao@quicinc.com>,
-	James Clark <james.clark@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Sherry Sun <sherry.sun@nxp.com>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 291/567] coresight: cti: Prevent negative values of enable count
-Date: Tue,  7 Mar 2023 18:00:27 +0100
-Message-Id: <20230307165918.512833862@linuxfoundation.org>
+Subject: [PATCH 5.15 327/567] serial: fsl_lpuart: fix RS485 RTS polariy inverse issue
+Date: Tue,  7 Mar 2023 18:01:03 +0100
+Message-Id: <20230307165920.071655585@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -37,64 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Clark <james.clark@arm.com>
+From: Shenwei Wang <shenwei.wang@nxp.com>
 
-[ Upstream commit 3244fb6dbbf1ffc114cdf382cc167bdd8c18088a ]
+[ Upstream commit 3957b9501a5a8fa709ae4a47483714491471f6db ]
 
-Writing 0 to the enable control repeatedly results in a negative value
-for enable_req_count. After this, writing 1 to the enable control
-appears to not work until the count returns to positive.
+The previous 'commit 846651eca073 ("serial: fsl_lpuart: RS485 RTS
+polariy is inverse")' only fixed the inverse issue on lpuart 8bit
+platforms.
 
-Change it so that it's impossible for enable_req_count to be < 0.
-Return an error to indicate that the disable request was invalid.
+This is a follow-up patch to fix the RS485 polarity inverse
+issue on lpuart 32bit platforms.
 
-Fixes: 835d722ba10a ("coresight: cti: Initial CoreSight CTI Driver")
-Tested-by: Jinlong Mao <quic_jinlmao@quicinc.com>
-Signed-off-by: James Clark <james.clark@arm.com>
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20230110110736.2709917-2-james.clark@arm.com
+Fixes: 03895cf41d18 ("tty: serial: fsl_lpuart: Add support for RS-485")
+Reported-by: Sherry Sun <sherry.sun@nxp.com>
+Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
+Link: https://lore.kernel.org/r/20230207162420.3647904-1-shenwei.wang@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-cti-core.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/tty/serial/fsl_lpuart.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-cti-core.c b/drivers/hwtracing/coresight/coresight-cti-core.c
-index dcd607a0c41a1..932e17f00c0ba 100644
---- a/drivers/hwtracing/coresight/coresight-cti-core.c
-+++ b/drivers/hwtracing/coresight/coresight-cti-core.c
-@@ -151,9 +151,16 @@ static int cti_disable_hw(struct cti_drvdata *drvdata)
- {
- 	struct cti_config *config = &drvdata->config;
- 	struct coresight_device *csdev = drvdata->csdev;
-+	int ret = 0;
+diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
+index 08096d33af8a6..f4d9dc4648da4 100644
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -1406,9 +1406,9 @@ static int lpuart32_config_rs485(struct uart_port *port,
+ 		 * Note: UART is assumed to be active high.
+ 		 */
+ 		if (rs485->flags & SER_RS485_RTS_ON_SEND)
+-			modem &= ~UARTMODEM_TXRTSPOL;
+-		else if (rs485->flags & SER_RS485_RTS_AFTER_SEND)
+ 			modem |= UARTMODEM_TXRTSPOL;
++		else if (rs485->flags & SER_RS485_RTS_AFTER_SEND)
++			modem &= ~UARTMODEM_TXRTSPOL;
+ 	}
  
- 	spin_lock(&drvdata->spinlock);
- 
-+	/* don't allow negative refcounts, return an error */
-+	if (!atomic_read(&drvdata->config.enable_req_count)) {
-+		ret = -EINVAL;
-+		goto cti_not_disabled;
-+	}
-+
- 	/* check refcount - disable on 0 */
- 	if (atomic_dec_return(&drvdata->config.enable_req_count) > 0)
- 		goto cti_not_disabled;
-@@ -171,12 +178,12 @@ static int cti_disable_hw(struct cti_drvdata *drvdata)
- 	coresight_disclaim_device_unlocked(csdev);
- 	CS_LOCK(drvdata->base);
- 	spin_unlock(&drvdata->spinlock);
--	return 0;
-+	return ret;
- 
- 	/* not disabled this call */
- cti_not_disabled:
- 	spin_unlock(&drvdata->spinlock);
--	return 0;
-+	return ret;
- }
- 
- void cti_write_single_reg(struct cti_drvdata *drvdata, int offset, u32 value)
+ 	/* Store the new configuration */
 -- 
 2.39.2
 
