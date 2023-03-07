@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9664BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:00:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D80AC433D2;
-	Tue,  7 Mar 2023 18:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E791DBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:00:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D93C433EF;
+	Tue,  7 Mar 2023 18:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212020;
-	bh=xkcFN12T+VKdASzvMi9lXksazh6vkyk4ifLmLUeldd4=;
+	s=korg; t=1678212023;
+	bh=2ffYa7ngcYvWXBLSNtP0ED0LaLQDrXtCWsa1G8c8Izc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rpBSosjpbPaGTcPPlMnDwGgADaLE4TQ3W5q2DnjFA8g7xH06vI2FQHv5weTzq9A/q
-	 jU7mbi69Ef+n4qX3vtAsQzo+4GtFCXJhB4gfEji9uHg+0u0V8c9X/8Hjiu3NRaOiVC
-	 p5ObrHvA/0J6BxC3pG448DC8j3Y+/G8JYE1RA+tU=
+	b=gdP1WTodyvYC/WnQfwUOKeK5MmKE3cg4Mb1Zri4WeXiPNxqfWjXS8+U2a/XfQvu4W
+	 /kNko3TNivjTcZo7U8XNK+A5XnPBX6dat4s/iY8hzh1dNBhn22qrfPsrJ22PzD4bmu
+	 KjYNY4AhXH3u3W/Bx+w31DOWwwlDCIvjLJmLhLuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Hulk Robot <hulkci@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/885] arm64: dts: qcom: sm6125-seine: Clean up gpio-keys (volume down)
-Date: Tue,  7 Mar 2023 17:49:05 +0100
-Message-Id: <20230307170002.135074083@linuxfoundation.org>
+Subject: [PATCH 6.1 045/885] ARM: OMAP1: call platform_device_put() in error case in omap1_dm_timer_init()
+Date: Tue,  7 Mar 2023 17:49:39 +0100
+Message-Id: <20230307170003.644353740@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,73 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit a9f6a13da473bb6c7406d2784d9e3792f6763cba ]
+[ Upstream commit 0414a100d6ab32721efa70ab55524540fdfe0ede ]
 
-- Remove autorepeat (leave key repetition to userspace);
-- Remove unneeded status = "okay" (this is the default);
-- Remove unneeded linux,input-type <EV_KEY> (this is the default for
-  gpio-keys);
-- Allow the interrupt line for this button to be disabled;
-- Use a full, descriptive node name;
-- Set proper bias on the GPIO via pinctrl;
-- Sort properties;
-- Replace deprecated gpio-key,wakeup property with wakeup-source.
+If platform_device_add() is not called or failed, it should call
+platform_device_put() in error case.
 
-Fixes: 82e1783890b7 ("arm64: dts: qcom: sm6125: Add support for Sony Xperia 10II")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221222192443.119103-1-marijn.suijten@somainline.org
+Fixes: 97933d6ced60 ("ARM: OMAP1: dmtimer: conversion to platform devices")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Message-Id: <20220701094602.2365099-1-yangyingliang@huawei.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../qcom/sm6125-sony-xperia-seine-pdx201.dts  | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ arch/arm/mach-omap1/timer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-index 6a8b88cc43853..e1ab5b5189949 100644
---- a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-@@ -40,17 +40,18 @@ extcon_usb: extcon-usb {
- 	};
+diff --git a/arch/arm/mach-omap1/timer.c b/arch/arm/mach-omap1/timer.c
+index f5cd4bbf7566d..81a912c1145a9 100644
+--- a/arch/arm/mach-omap1/timer.c
++++ b/arch/arm/mach-omap1/timer.c
+@@ -158,7 +158,7 @@ static int __init omap1_dm_timer_init(void)
+ 	kfree(pdata);
  
- 	gpio-keys {
--		status = "okay";
- 		compatible = "gpio-keys";
--		autorepeat;
+ err_free_pdev:
+-	platform_device_unregister(pdev);
++	platform_device_put(pdev);
  
--		key-vol-dn {
-+		pinctrl-0 = <&vol_down_n>;
-+		pinctrl-names = "default";
-+
-+		key-volume-down {
- 			label = "Volume Down";
- 			gpios = <&tlmm 47 GPIO_ACTIVE_LOW>;
--			linux,input-type = <1>;
- 			linux,code = <KEY_VOLUMEDOWN>;
--			gpio-key,wakeup;
- 			debounce-interval = <15>;
-+			linux,can-disable;
-+			wakeup-source;
- 		};
- 	};
- 
-@@ -108,6 +109,14 @@ &sdhc_1 {
- 
- &tlmm {
- 	gpio-reserved-ranges = <22 2>, <28 6>;
-+
-+	vol_down_n: vol-down-n-state {
-+		pins = "gpio47";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		input-enable;
-+	};
- };
- 
- &usb3 {
+ 	return ret;
+ }
 -- 
 2.39.2
 
