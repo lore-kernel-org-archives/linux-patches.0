@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC20BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:50:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A98C433D2;
-	Tue,  7 Mar 2023 18:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEDFBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:50:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64B9C433D2;
+	Tue,  7 Mar 2023 18:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215045;
-	bh=ZIpNuULzftL8Fdon/rh2CxpefKTdPD1QcyxzP8E5EXU=;
+	s=korg; t=1678215048;
+	bh=idwDRTtznNP3pUepg9fUWVEQg0x44oku9KvgNC5P1g8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0q/WFfC38uH/c2Yh7YI8VxZInD3JnyHd+HYTt8oUQOvMHAt9Aq/6Dabg0n7uoeQV
-	 6FtLPvlCGJx2EOj/LnXbpHJXBEzt14RdisAW45TecLAyM5bTSmoW7HNzM/jHcvB0qq
-	 imt/0+1ALc5c/5IvKEr+ZnTjNI5PKS5uRLSeYCRg=
+	b=kT0hX1DB4Xs7VFhDt2p+sZ68kcvj0JEHhK0Sks2cjkFi4oxxBs3WFcg5enj+8fmXc
+	 Gnpwh80KdegTHy7+Nhg497CgbFCbWJN5VPTp+P1vaWqTzxj8sq8a3haw+OoPRmThpK
+	 21hMTlORPc08yWHBQ19QIpqcM5hNz76TGZehUKPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 134/567] tun: tun_chr_open(): correctly initialize socket uid
-Date: Tue,  7 Mar 2023 17:57:50 +0100
-Message-Id: <20230307165911.708313331@linuxfoundation.org>
+Subject: [PATCH 5.15 135/567] tap: tap_open(): correctly initialize socket uid
+Date: Tue,  7 Mar 2023 17:57:51 +0100
+Message-Id: <20230307165911.746045397@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -38,18 +38,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit a096ccca6e503a5c575717ff8a36ace27510ab0a ]
+[ Upstream commit 66b2c338adce580dfce2199591e65e2bab889cff ]
 
 sock_init_data() assumes that the `struct socket` passed in input is
 contained in a `struct socket_alloc` allocated with sock_alloc().
-However, tun_chr_open() passes a `struct socket` embedded in a `struct
-tun_file` allocated with sk_alloc().
+However, tap_open() passes a `struct socket` embedded in a `struct
+tap_queue` allocated with sk_alloc().
 This causes a type confusion when issuing a container_of() with
 SOCK_INODE() in sock_init_data() which results in assigning a wrong
 sk_uid to the `struct sock` in input.
-On default configuration, the type confused field overlaps with the
-high 4 bytes of `struct tun_struct __rcu *tun` of `struct tun_file`,
-NULL at the time of call, which makes the uid of all tun sockets 0,
+On default configuration, the type confused field overlaps with
+padding bytes between `int vnet_hdr_sz` and `struct tap_dev __rcu
+*tap` in `struct tap_queue`, which makes the uid of all tap sockets 0,
 i.e., the root one.
 Fix the assignment by using sock_init_data_uid().
 
@@ -59,22 +59,22 @@ Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 2 +-
+ drivers/net/tap.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index a1dda57c812dd..30eea8270c9b2 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -3411,7 +3411,7 @@ static int tun_chr_open(struct inode *inode, struct file * file)
- 	tfile->socket.file = file;
- 	tfile->socket.ops = &tun_socket_ops;
- 
--	sock_init_data(&tfile->socket, &tfile->sk);
-+	sock_init_data_uid(&tfile->socket, &tfile->sk, inode->i_uid);
- 
- 	tfile->sk.sk_write_space = tun_sock_write_space;
- 	tfile->sk.sk_sndbuf = INT_MAX;
+diff --git a/drivers/net/tap.c b/drivers/net/tap.c
+index ba2ef5437e167..854ed2f21d32c 100644
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -523,7 +523,7 @@ static int tap_open(struct inode *inode, struct file *file)
+ 	q->sock.state = SS_CONNECTED;
+ 	q->sock.file = file;
+ 	q->sock.ops = &tap_socket_ops;
+-	sock_init_data(&q->sock, &q->sk);
++	sock_init_data_uid(&q->sock, &q->sk, inode->i_uid);
+ 	q->sk.sk_write_space = tap_sock_write_space;
+ 	q->sk.sk_destruct = tap_sock_destruct;
+ 	q->flags = IFF_VNET_HDR | IFF_NO_PI | IFF_TAP;
 -- 
 2.39.2
 
