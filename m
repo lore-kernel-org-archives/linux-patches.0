@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D470BA46
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:10:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73DCC4339B;
-	Tue,  7 Mar 2023 18:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B334BBA46
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:10:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD01BC4339B;
+	Tue,  7 Mar 2023 18:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212635;
-	bh=guo0JD4nztg1lIPn7QFGXXnuDWf2Ws87y9oFWgkHy2M=;
+	s=korg; t=1678212638;
+	bh=74p5CosyWb5Wxz0lA/P5URPZ1cKl0QrpLYp1x+w71TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1EVqpDpuzQk8mBxuO3zeKri4/PcmwwSfM6MWBAG1IOcLZWEvwaEuiUm1YgkiaVU6d
-	 a03ec0ySSFdYrm2kVHFNVjAwDfGbVXAwEPbSb0c7B9jM8S0vPx7JKUvyxcqiV+BI+A
-	 ZeOxR/tMIeftJLNK6i7xdz5ZQoAOFDn02tco7Yck=
+	b=PF3+ktgsGxpociDYrXgRX2sF2tS4VjgPc+YEuvyMIo71mZhavfnD3pJheuN/Slmyg
+	 bUc0+WlNADW3MCDAN+8QGGtNNW700LFS+iQ/WL1ltE/KYbKqdlR0ikKvSFElzlN6fA
+	 ZV7rmKR84f3vuKg+vh+7VqAlfswUYzHHuGirY/4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
-	Tony Krowiak <akrowiak@linux.ibm.com>,
-	Pierre Morel <pmorel@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 217/885] s390: vfio-ap: tighten the NIB validity check
-Date: Tue,  7 Mar 2023 17:52:31 +0100
-Message-Id: <20230307170011.511873149@linuxfoundation.org>
+Subject: [PATCH 6.1 208/885] net: add sock_init_data_uid()
+Date: Tue,  7 Mar 2023 17:52:22 +0100
+Message-Id: <20230307170011.094411091@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,37 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Halil Pasic <pasic@linux.ibm.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit a64a6d23874c574d30a9816124b2dc37467f3811 ]
+[ Upstream commit 584f3742890e966d2f0a1f3c418c9ead70b2d99e ]
 
-The NIB is architecturally invalid if the address designates a
-storage location that is not installed or if it is zero.
+Add sock_init_data_uid() to explicitly initialize the socket uid.
+To initialise the socket uid, sock_init_data() assumes a the struct
+socket* sock is always embedded in a struct socket_alloc, used to
+access the corresponding inode uid. This may not be true.
+Examples are sockets created in tun_chr_open() and tap_open().
 
-Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
-Reported-by: Janosch Frank <frankja@linux.ibm.com>
-Fixes: ec89b55e3bce ("s390: ap: implement PAPQ AQIC interception in kernel")
-Reviewed-by: Tony Krowiak <akrowiak@linux.ibm.com>
-Reviewed-by: Pierre Morel <pmorel@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 86741ec25462 ("net: core: Add a UID field to struct sock.")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/net/sock.h |  7 ++++++-
+ net/core/sock.c    | 15 ++++++++++++---
+ 2 files changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
-index a109c59f18f78..934515959ebf4 100644
---- a/drivers/s390/crypto/vfio_ap_ops.c
-+++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -349,6 +349,8 @@ static int vfio_ap_validate_nib(struct kvm_vcpu *vcpu, dma_addr_t *nib)
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 1f868764575c3..832a4a51de4d9 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1952,7 +1952,12 @@ void sk_common_release(struct sock *sk);
+  *	Default socket callbacks and setup code
+  */
+ 
+-/* Initialise core socket variables */
++/* Initialise core socket variables using an explicit uid. */
++void sock_init_data_uid(struct socket *sock, struct sock *sk, kuid_t uid);
++
++/* Initialise core socket variables.
++ * Assumes struct socket *sock is embedded in a struct socket_alloc.
++ */
+ void sock_init_data(struct socket *sock, struct sock *sk);
+ 
+ /*
+diff --git a/net/core/sock.c b/net/core/sock.c
+index ba6ea61b3458b..4dfdcdfd00114 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3359,7 +3359,7 @@ void sk_stop_timer_sync(struct sock *sk, struct timer_list *timer)
+ }
+ EXPORT_SYMBOL(sk_stop_timer_sync);
+ 
+-void sock_init_data(struct socket *sock, struct sock *sk)
++void sock_init_data_uid(struct socket *sock, struct sock *sk, kuid_t uid)
  {
- 	*nib = vcpu->run->s.regs.gprs[2];
+ 	sk_init_common(sk);
+ 	sk->sk_send_head	=	NULL;
+@@ -3378,11 +3378,10 @@ void sock_init_data(struct socket *sock, struct sock *sk)
+ 		sk->sk_type	=	sock->type;
+ 		RCU_INIT_POINTER(sk->sk_wq, &sock->wq);
+ 		sock->sk	=	sk;
+-		sk->sk_uid	=	SOCK_INODE(sock)->i_uid;
+ 	} else {
+ 		RCU_INIT_POINTER(sk->sk_wq, NULL);
+-		sk->sk_uid	=	make_kuid(sock_net(sk)->user_ns, 0);
+ 	}
++	sk->sk_uid	=	uid;
  
-+	if (!*nib)
-+		return -EINVAL;
- 	if (kvm_is_error_hva(gfn_to_hva(vcpu->kvm, *nib >> PAGE_SHIFT)))
- 		return -EINVAL;
+ 	rwlock_init(&sk->sk_callback_lock);
+ 	if (sk->sk_kern_sock)
+@@ -3440,6 +3439,16 @@ void sock_init_data(struct socket *sock, struct sock *sk)
+ 	refcount_set(&sk->sk_refcnt, 1);
+ 	atomic_set(&sk->sk_drops, 0);
+ }
++EXPORT_SYMBOL(sock_init_data_uid);
++
++void sock_init_data(struct socket *sock, struct sock *sk)
++{
++	kuid_t uid = sock ?
++		SOCK_INODE(sock)->i_uid :
++		make_kuid(sock_net(sk)->user_ns, 0);
++
++	sock_init_data_uid(sock, sk, uid);
++}
+ EXPORT_SYMBOL(sock_init_data);
  
+ void lock_sock_nested(struct sock *sk, int subclass)
 -- 
 2.39.2
 
