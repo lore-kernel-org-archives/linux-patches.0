@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BCCBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D50C433D2;
-	Tue,  7 Mar 2023 17:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC92BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728F9C433D2;
+	Tue,  7 Mar 2023 17:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210174;
-	bh=VZ/vwcm5JhS6yaH2G3Xo+u5viGaJTkwIywCxN2PKKkk=;
+	s=korg; t=1678210176;
+	bh=BTM/18aUdxDLfWwmZakr41SnKfVD/IJ4AFPXF8ioH8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qmuOk/M00hQYjAjwgD0FbZxQkd4Sxp4fHp+HlA+QlgaJAKwEDtMTNWpgGj7H6pTmE
-	 WCAJUtJEfeZSYMUAbN/oQZqP36BjyIDjLedkovu2otc/n46dDF2dXU8IzxpsU+DCsS
-	 KZhogbXQYwsZ4ErZmBCz0gTqJbpPAwncAZYlq26U=
+	b=pt09fTv04hZhaAxhJl7nHqM2DmamrGrsT7xIUifoNAmB5wQCgM7CsUuWSL9ozdCtc
+	 V9jO4twxO8v+DrZIa1UVh2jxaDXfv26SWg6ZtNCXYcjhWzfGyZH8SFV1EqDroRSGC7
+	 9aKRiSsxDCksfjhpodGW6OKLhVCYOJ2+4BPN2gDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pierguido Lambri <plambri@redhat.com>
-Subject: [PATCH 6.2 0455/1001] nfsd: dont fsync nfsd_files on last close
-Date: Tue,  7 Mar 2023 17:53:47 +0100
-Message-Id: <20230307170041.109299206@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 0427/1001] ASoC: codecs: lpass: register mclk after runtime pm
+Date: Tue,  7 Mar 2023 17:53:19 +0100
+Message-Id: <20230307170039.878217445@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,174 +35,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit 4c475eee02375ade6e864f1db16976ba0d96a0a2 ]
+[ Upstream commit 1dc3459009c33e335f0d62b84dd39a6bbd7fd5d2 ]
 
-Most of the time, NFSv4 clients issue a COMMIT before the final CLOSE of
-an open stateid, so with NFSv4, the fsync in the nfsd_file_free path is
-usually a no-op and doesn't block.
+move mclk out registration after runtime pm is enabled so that the
+clk framework can resume the codec if it requires to enable the mclk out.
 
-We have a customer running knfsd over very slow storage (XFS over Ceph
-RBD). They were using the "async" export option because performance was
-more important than data integrity for this application. That export
-option turns NFSv4 COMMIT calls into no-ops. Due to the fsync in this
-codepath however, their final CLOSE calls would still stall (since a
-CLOSE effectively became a COMMIT).
-
-I think this fsync is not strictly necessary. We only use that result to
-reset the write verifier. Instead of fsync'ing all of the data when we
-free an nfsd_file, we can just check for writeback errors when one is
-acquired and when it is freed.
-
-If the client never comes back, then it'll never see the error anyway
-and there is no point in resetting it. If an error occurs after the
-nfsd_file is removed from the cache but before the inode is evicted,
-then it will reset the write verifier on the next nfsd_file_acquire,
-(since there will be an unseen error).
-
-The only exception here is if something else opens and fsyncs the file
-during that window. Given that local applications work with this
-limitation today, I don't see that as an issue.
-
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2166658
-Fixes: ac3a2585f018 ("nfsd: rework refcounting in filecache")
-Reported-and-tested-by: Pierguido Lambri <plambri@redhat.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: c96baa2949b2 ("ASoC: codecs: wsa-macro: add runtime pm support")
+Fixes: 72ad25eabda0 ("ASoC: codecs: va-macro: add runtime pm support")
+Fixes: 366ff79ed539 ("ASoC: codecs: rx-macro: add runtime pm support")
+Fixes: 1fb83bc5cf64 ("ASoC: codecs: tx-macro: add runtime pm support")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230209122806.18923-6-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 44 ++++++++++++--------------------------------
- fs/nfsd/trace.h     | 31 -------------------------------
- 2 files changed, 12 insertions(+), 63 deletions(-)
+ sound/soc/codecs/lpass-rx-macro.c  |  8 ++++----
+ sound/soc/codecs/lpass-tx-macro.c  |  8 ++++----
+ sound/soc/codecs/lpass-va-macro.c  | 20 ++++++++++----------
+ sound/soc/codecs/lpass-wsa-macro.c |  9 ++++-----
+ 4 files changed, 22 insertions(+), 23 deletions(-)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index c0950edb26b0d..697acf5c3c681 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -331,37 +331,27 @@ nfsd_file_alloc(struct nfsd_file_lookup_key *key, unsigned int may)
- 	return nf;
- }
+diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
+index a9ef9d5ffcc5c..dd6970d5eb8d1 100644
+--- a/sound/soc/codecs/lpass-rx-macro.c
++++ b/sound/soc/codecs/lpass-rx-macro.c
+@@ -3601,10 +3601,6 @@ static int rx_macro_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_fsgen;
  
-+/**
-+ * nfsd_file_check_write_error - check for writeback errors on a file
-+ * @nf: nfsd_file to check for writeback errors
-+ *
-+ * Check whether a nfsd_file has an unseen error. Reset the write
-+ * verifier if so.
-+ */
- static void
--nfsd_file_fsync(struct nfsd_file *nf)
--{
--	struct file *file = nf->nf_file;
--	int ret;
--
--	if (!file || !(file->f_mode & FMODE_WRITE))
--		return;
--	ret = vfs_fsync(file, 1);
--	trace_nfsd_file_fsync(nf, ret);
+-	ret = rx_macro_register_mclk_output(rx);
 -	if (ret)
--		nfsd_reset_write_verifier(net_generic(nf->nf_net, nfsd_net_id));
--}
+-		goto err_clkout;
 -
--static int
- nfsd_file_check_write_error(struct nfsd_file *nf)
- {
- 	struct file *file = nf->nf_file;
+ 	ret = devm_snd_soc_register_component(dev, &rx_macro_component_drv,
+ 					      rx_macro_dai,
+ 					      ARRAY_SIZE(rx_macro_dai));
+@@ -3618,6 +3614,10 @@ static int rx_macro_probe(struct platform_device *pdev)
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
  
--	if (!file || !(file->f_mode & FMODE_WRITE))
--		return 0;
--	return filemap_check_wb_err(file->f_mapping, READ_ONCE(file->f_wb_err));
-+	if ((file->f_mode & FMODE_WRITE) &&
-+	    filemap_check_wb_err(file->f_mapping, READ_ONCE(file->f_wb_err)))
-+		nfsd_reset_write_verifier(net_generic(nf->nf_net, nfsd_net_id));
- }
++	ret = rx_macro_register_mclk_output(rx);
++	if (ret)
++		goto err_clkout;
++
+ 	return 0;
  
- static void
- nfsd_file_hash_remove(struct nfsd_file *nf)
- {
- 	trace_nfsd_file_unhash(nf);
+ err_clkout:
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index 2ef62d6edc302..b9475ba55e203 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -2036,10 +2036,6 @@ static int tx_macro_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_fsgen;
+ 
+-	ret = tx_macro_register_mclk_output(tx);
+-	if (ret)
+-		goto err_clkout;
 -
--	if (nfsd_file_check_write_error(nf))
--		nfsd_reset_write_verifier(net_generic(nf->nf_net, nfsd_net_id));
- 	rhashtable_remove_fast(&nfsd_file_rhash_tbl, &nf->nf_rhash,
- 			       nfsd_file_rhash_params);
- }
-@@ -387,23 +377,12 @@ nfsd_file_free(struct nfsd_file *nf)
- 	this_cpu_add(nfsd_file_total_age, age);
+ 	ret = devm_snd_soc_register_component(dev, &tx_macro_component_drv,
+ 					      tx_macro_dai,
+ 					      ARRAY_SIZE(tx_macro_dai));
+@@ -2052,6 +2048,10 @@ static int tx_macro_probe(struct platform_device *pdev)
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
  
- 	nfsd_file_unhash(nf);
++	ret = tx_macro_register_mclk_output(tx);
++	if (ret)
++		goto err_clkout;
++
+ 	return 0;
+ 
+ err_clkout:
+diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
+index b0b6cf29cba30..1623ba78ddb3d 100644
+--- a/sound/soc/codecs/lpass-va-macro.c
++++ b/sound/soc/codecs/lpass-va-macro.c
+@@ -1524,16 +1524,6 @@ static int va_macro_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_mclk;
+ 
+-	ret = va_macro_register_fsgen_output(va);
+-	if (ret)
+-		goto err_clkout;
 -
--	/*
--	 * We call fsync here in order to catch writeback errors. It's not
--	 * strictly required by the protocol, but an nfsd_file could get
--	 * evicted from the cache before a COMMIT comes in. If another
--	 * task were to open that file in the interim and scrape the error,
--	 * then the client may never see it. By calling fsync here, we ensure
--	 * that writeback happens before the entry is freed, and that any
--	 * errors reported result in the write verifier changing.
--	 */
--	nfsd_file_fsync(nf);
+-	va->fsgen = clk_hw_get_clk(&va->hw, "fsgen");
+-	if (IS_ERR(va->fsgen)) {
+-		ret = PTR_ERR(va->fsgen);
+-		goto err_clkout;
+-	}
 -
- 	if (nf->nf_mark)
- 		nfsd_file_mark_put(nf->nf_mark);
- 	if (nf->nf_file) {
- 		get_file(nf->nf_file);
- 		filp_close(nf->nf_file, NULL);
-+		nfsd_file_check_write_error(nf);
- 		fput(nf->nf_file);
- 	}
+ 	if (va->has_swr_master) {
+ 		/* Set default CLK div to 1 */
+ 		regmap_update_bits(va->regmap, CDC_VA_TOP_CSR_SWR_MIC_CTL0,
+@@ -1560,6 +1550,16 @@ static int va_macro_probe(struct platform_device *pdev)
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
  
-@@ -1159,6 +1138,7 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- out:
- 	if (status == nfs_ok) {
- 		this_cpu_inc(nfsd_file_acquisitions);
-+		nfsd_file_check_write_error(nf);
- 		*pnf = nf;
- 	} else {
- 		if (refcount_dec_and_test(&nf->nf_ref))
-diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
-index 8f9c82d9e075b..4183819ea0829 100644
---- a/fs/nfsd/trace.h
-+++ b/fs/nfsd/trace.h
-@@ -1202,37 +1202,6 @@ TRACE_EVENT(nfsd_file_close,
- 	)
- );
++	ret = va_macro_register_fsgen_output(va);
++	if (ret)
++		goto err_clkout;
++
++	va->fsgen = clk_hw_get_clk(&va->hw, "fsgen");
++	if (IS_ERR(va->fsgen)) {
++		ret = PTR_ERR(va->fsgen);
++		goto err_clkout;
++	}
++
+ 	return 0;
  
--TRACE_EVENT(nfsd_file_fsync,
--	TP_PROTO(
--		const struct nfsd_file *nf,
--		int ret
--	),
--	TP_ARGS(nf, ret),
--	TP_STRUCT__entry(
--		__field(void *, nf_inode)
--		__field(int, nf_ref)
--		__field(int, ret)
--		__field(unsigned long, nf_flags)
--		__field(unsigned char, nf_may)
--		__field(struct file *, nf_file)
--	),
--	TP_fast_assign(
--		__entry->nf_inode = nf->nf_inode;
--		__entry->nf_ref = refcount_read(&nf->nf_ref);
--		__entry->ret = ret;
--		__entry->nf_flags = nf->nf_flags;
--		__entry->nf_may = nf->nf_may;
--		__entry->nf_file = nf->nf_file;
--	),
--	TP_printk("inode=%p ref=%d flags=%s may=%s nf_file=%p ret=%d",
--		__entry->nf_inode,
--		__entry->nf_ref,
--		show_nf_flags(__entry->nf_flags),
--		show_nfsd_may_flags(__entry->nf_may),
--		__entry->nf_file, __entry->ret
--	)
--);
+ err_clkout:
+diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
+index 5cfe96f6e430e..c0b86d69c72e3 100644
+--- a/sound/soc/codecs/lpass-wsa-macro.c
++++ b/sound/soc/codecs/lpass-wsa-macro.c
+@@ -2451,11 +2451,6 @@ static int wsa_macro_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_fsgen;
+ 
+-	ret = wsa_macro_register_mclk_output(wsa);
+-	if (ret)
+-		goto err_clkout;
 -
- #include "cache.h"
+-
+ 	ret = devm_snd_soc_register_component(dev, &wsa_macro_component_drv,
+ 					      wsa_macro_dai,
+ 					      ARRAY_SIZE(wsa_macro_dai));
+@@ -2468,6 +2463,10 @@ static int wsa_macro_probe(struct platform_device *pdev)
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
  
- TRACE_DEFINE_ENUM(RC_DROPIT);
++	ret = wsa_macro_register_mclk_output(wsa);
++	if (ret)
++		goto err_clkout;
++
+ 	return 0;
+ 
+ err_clkout:
 -- 
 2.39.2
 
