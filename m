@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B67BBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:07:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63537C433D2;
-	Tue,  7 Mar 2023 18:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A737BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:07:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FD1C433EF;
+	Tue,  7 Mar 2023 18:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212421;
-	bh=6um0Gxx64lpG2s6OKo6ioec+xFRQ0zfd9ZYtuoMKGdA=;
+	s=korg; t=1678212424;
+	bh=MXse3LNSgcA5exqHqF/A/wHsXvDDIiqZGvkyuljOO4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDGu3wE/NYFzOGflBTt1TD6bRyigTt0QZivZE51ucJWnRemtZUwOGdq5laOMpzRMQ
-	 N4XeKihq4J3b+H4NrTs/r1pRqizltgpje8c+6NRMipQYdpC4DljbKwIDZ07TSh74wk
-	 g/q1tkFovOIc0qsxRWUWkR2wX41vANJ8Zy1hV0AU=
+	b=1gl6b1jtnf2dXorlnTqNNXk7Gt7LXJPDZ+D2xK43wKFbTZDljOC3Vp6fybuB6oyLX
+	 mtbJ1ozHzXGz5F5XDqhtsXH4c2ves4S/WiR0tMhC+CMZxXmDcmBn46QqpAnYGsPMK4
+	 SvuFlPF1jGs8Oj9qWkhzJgReK8Ozp8dvA4vutr0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 149/885] ACPICA: nsrepair: handle cases without a return value correctly
-Date: Tue,  7 Mar 2023 17:51:23 +0100
-Message-Id: <20230307170008.362554107@linuxfoundation.org>
+Subject: [PATCH 6.1 150/885] selftests/xsk: print correct payload for packet dump
+Date: Tue,  7 Mar 2023 17:51:24 +0100
+Message-Id: <20230307170008.408687578@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,63 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Magnus Karlsson <magnus.karlsson@intel.com>
 
-[ Upstream commit ca843a4c79486e99a19b859ef0b9887854afe146 ]
+[ Upstream commit 2d0b2ae2871ae6d42a9f0a4280e0fb5bff8d38b8 ]
 
-Previously acpi_ns_simple_repair() would crash if expected_btypes
-contained any combination of ACPI_RTYPE_NONE with a different type,
-e.g | ACPI_RTYPE_INTEGER because of slightly incorrect logic in the
-!return_object branch, which wouldn't return AE_AML_NO_RETURN_VALUE
-for such cases.
+Print the correct payload when the packet dump option is selected. The
+network to host conversion was forgotten and the payload was
+erronously declared to be an int instead of an unsigned int.
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE
-static analysis tool.
-
-Link: https://github.com/acpica/acpica/pull/811
-Fixes: 61db45ca2163 ("ACPICA: Restore code that repairs NULL package elements in return values.")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: facb7cb2e909 ("selftests/bpf: Xsk selftests - SKB POLL, NOPOLL")
+Signed-off-by: Magnus Karlsson <magnus.karlsson@intel.com>
+Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Link: https://lore.kernel.org/r/20230111093526.11682-2-magnus.karlsson@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/nsrepair.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ tools/testing/selftests/bpf/xskxceiver.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/acpica/nsrepair.c b/drivers/acpi/acpica/nsrepair.c
-index 367fcd201f96e..ec512e06a48ed 100644
---- a/drivers/acpi/acpica/nsrepair.c
-+++ b/drivers/acpi/acpica/nsrepair.c
-@@ -181,8 +181,9 @@ acpi_ns_simple_repair(struct acpi_evaluate_info *info,
- 	 * Try to fix if there was no return object. Warning if failed to fix.
- 	 */
- 	if (!return_object) {
--		if (expected_btypes && (!(expected_btypes & ACPI_RTYPE_NONE))) {
--			if (package_index != ACPI_NOT_PACKAGE_ELEMENT) {
-+		if (expected_btypes) {
-+			if (!(expected_btypes & ACPI_RTYPE_NONE) &&
-+			    package_index != ACPI_NOT_PACKAGE_ELEMENT) {
- 				ACPI_WARN_PREDEFINED((AE_INFO,
- 						      info->full_pathname,
- 						      ACPI_WARN_ALWAYS,
-@@ -196,14 +197,15 @@ acpi_ns_simple_repair(struct acpi_evaluate_info *info,
- 				if (ACPI_SUCCESS(status)) {
- 					return (AE_OK);	/* Repair was successful */
- 				}
--			} else {
-+			}
-+
-+			if (expected_btypes != ACPI_RTYPE_NONE) {
- 				ACPI_WARN_PREDEFINED((AE_INFO,
- 						      info->full_pathname,
- 						      ACPI_WARN_ALWAYS,
- 						      "Missing expected return value"));
-+				return (AE_AML_NO_RETURN_VALUE);
- 			}
--
--			return (AE_AML_NO_RETURN_VALUE);
- 		}
- 	}
+diff --git a/tools/testing/selftests/bpf/xskxceiver.c b/tools/testing/selftests/bpf/xskxceiver.c
+index 681a5db80dae0..51e693318b3f0 100644
+--- a/tools/testing/selftests/bpf/xskxceiver.c
++++ b/tools/testing/selftests/bpf/xskxceiver.c
+@@ -767,7 +767,7 @@ static void pkt_dump(void *pkt, u32 len)
+ 	struct ethhdr *ethhdr;
+ 	struct udphdr *udphdr;
+ 	struct iphdr *iphdr;
+-	int payload, i;
++	u32 payload, i;
  
+ 	ethhdr = pkt;
+ 	iphdr = pkt + sizeof(*ethhdr);
+@@ -792,7 +792,7 @@ static void pkt_dump(void *pkt, u32 len)
+ 	fprintf(stdout, "DEBUG>> L4: udp_hdr->src: %d\n", ntohs(udphdr->source));
+ 	fprintf(stdout, "DEBUG>> L4: udp_hdr->dst: %d\n", ntohs(udphdr->dest));
+ 	/*extract L5 frame */
+-	payload = *((uint32_t *)(pkt + PKT_HDR_SIZE));
++	payload = ntohl(*((u32 *)(pkt + PKT_HDR_SIZE)));
+ 
+ 	fprintf(stdout, "DEBUG>> L5: payload: %d\n", payload);
+ 	fprintf(stdout, "---------------------------------------\n");
 -- 
 2.39.2
 
