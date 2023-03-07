@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FDBBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:47:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57851C433D2;
-	Tue,  7 Mar 2023 18:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11988BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A408C4339B;
+	Tue,  7 Mar 2023 18:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214876;
-	bh=eMY9JpNRiXmRbsWEZxavKJpM+sgPfTsdiqK2KeUxxTQ=;
+	s=korg; t=1678214879;
+	bh=pwznk9DKR30fbg46c7FPCaPKrTbXZEOcPEqs9gftHpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pROPo7DCFEGJV2PR7WeGgn9kY98N7aj5jEAWRboec4hhpn9NRMIC7807TABZPa2EY
-	 4bOoQJx3PrMv6TGgP9ixlEXcxT30ltpg8WmTh0a4RIduNAAHJ13FEb+xwwxBDnYpEE
-	 j49Zq49DC6KIpkO1WDflBviNp/SmqWp3lTZq4Ll4=
+	b=P7IcYLlNjfDFtGiKiZmUamNM+mdBmPYAYIQ7RgLRFTOI4hgznLJaf24sdDNJa/YQT
+	 wODfPTGsVgzKc0MNRSmqXbasDVKNFlRgp73ayXz7cKZif809HDQigCkWiliaYw3Bet
+	 5xBuV+LEh4XkSXQTelv6VYZf1x5CagmWjtCsP6qY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/567] wifi: brcmfmac: fix potential memory leak in brcmf_netdev_start_xmit()
-Date: Tue,  7 Mar 2023 17:56:54 +0100
-Message-Id: <20230307165909.270615505@linuxfoundation.org>
+Subject: [PATCH 5.15 079/567] wifi: brcmfmac: unmap dma buffer in brcmf_msgbuf_alloc_pktid()
+Date: Tue,  7 Mar 2023 17:56:55 +0100
+Message-Id: <20230307165909.309537500@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,36 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 212fde3fe76e962598ce1d47b97cc78afdfc71b3 ]
+[ Upstream commit b9f420032f2ba1e634b22ca7b433e5c40ea663af ]
 
-The brcmf_netdev_start_xmit() returns NETDEV_TX_OK without freeing skb
-in case of pskb_expand_head() fails, add dev_kfree_skb() to fix it.
-Compile tested only.
+After the DMA buffer is mapped to a physical address, address is stored
+in pktids in brcmf_msgbuf_alloc_pktid(). Then, pktids is parsed in
+brcmf_msgbuf_get_pktid()/brcmf_msgbuf_release_array() to obtain physaddr
+and later unmap the DMA buffer. But when count is always equal to
+pktids->array_size, physaddr isn't stored in pktids and the DMA buffer
+will not be unmapped anyway.
 
-Fixes: 270a6c1f65fe ("brcmfmac: rework headroom check in .start_xmit()")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Fixes: 9a1bb60250d2 ("brcmfmac: Adding msgbuf protocol.")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/1668684782-47422-1-git-send-email-zhangchangzhong@huawei.com
+Link: https://lore.kernel.org/r/20221207013114.1748936-1-shaozhengchao@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-index e5bae62245215..f03fc6f1f8333 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-@@ -338,6 +338,7 @@ static netdev_tx_t brcmf_netdev_start_xmit(struct sk_buff *skb,
- 			bphy_err(drvr, "%s: failed to expand headroom\n",
- 				 brcmf_ifname(ifp));
- 			atomic_inc(&drvr->bus_if->stats.pktcow_failed);
-+			dev_kfree_skb(skb);
- 			goto done;
- 		}
- 	}
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+index 7c8e08ee8f0ff..bd3b234b78038 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+@@ -346,8 +346,11 @@ brcmf_msgbuf_alloc_pktid(struct device *dev,
+ 		count++;
+ 	} while (count < pktids->array_size);
+ 
+-	if (count == pktids->array_size)
++	if (count == pktids->array_size) {
++		dma_unmap_single(dev, *physaddr, skb->len - data_offset,
++				 pktids->direction);
+ 		return -ENOMEM;
++	}
+ 
+ 	array[*idx].data_offset = data_offset;
+ 	array[*idx].physaddr = *physaddr;
 -- 
 2.39.2
 
