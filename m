@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9484BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:22:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEF3C433EF;
-	Tue,  7 Mar 2023 18:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055C2BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:22:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF42C433EF;
+	Tue,  7 Mar 2023 18:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213343;
-	bh=hSHw0+w3LFQi4ksALU05R/0a2ukRR5E/U/EYVxDLyQs=;
+	s=korg; t=1678213346;
+	bh=Nk5H0I7JPaC3ue5FS+EFek00NnTSwadlxPbiPou7tHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XGFhFrWmQRrnm3vvHe/m08K9H/03kNoyl+bSkiljl9oeagzF3CRqhKBATIILYFTLv
-	 pUUf2jkL5SkH7DDSNfuRTxP1qyjJtArmeA5hGzLb1eFbKsbG/3q799yhL5YtU9l9ET
-	 0EGGQLv6M/uEx/DR2J38usGWntkU5EMXZVIHNLYc=
+	b=Zx0jjV9mG3L+ACLvpWojBI2VaydP/XqUiiZoP2QdHLBHxQa6XrqUMij/rJQo9uiHv
+	 RYHoZ+mkM/INchFjrTnSjLV48hIKLgEQDqh0kvr1m5eL7qtyhHjJ0pALLzgc5/Vo5o
+	 v2bJSH/yTRw/zaRGEFylpswjITEB7/FGZE6/lddE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 437/885] firmware: stratix10-svc: fix error handle while alloc/add device failed
-Date: Tue,  7 Mar 2023 17:56:11 +0100
-Message-Id: <20230307170021.399763625@linuxfoundation.org>
+	Saravana Kannan <saravanak@google.com>,
+	Colin Foster <colin.foster@in-advantage.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sasha Levin <sashal@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 6.1 471/885] driver core: fw_devlink: Allow marking a fwnode link as being part of a cycle
+Date: Tue,  7 Mar 2023 17:56:45 +0100
+Message-Id: <20230307170022.964168381@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,63 +39,185 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit d66a4c20ae55ac88136b4a3befd944c093ffa677 ]
+[ Upstream commit 6a6dfdf8b3ff337be5a447e9f4e71969f18370ad ]
 
-If add device "stratix10-rsu" failed in stratix10_svc_drv_probe(),
-the 'svc_fifo' and 'genpool' need be freed in the error path.
+To improve detection and handling of dependency cycles, we need to be
+able to mark fwnode links as being part of cycles. fwnode links marked
+as being part of a cycle should not block their consumers from probing.
 
-If allocate or add device "intel-fcs" failed in stratix10_svc_drv_probe(),
-the device "stratix10-rsu" need be unregistered in the error path.
-
-Fixes: e6281c26674e ("firmware: stratix10-svc: Add support for FCS")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
-Link: https://lore.kernel.org/r/20221129163602.462369-2-dinguyen@kernel.org
+Fixes: 2de9d8e0d2fe ("driver core: fw_devlink: Improve handling of cyclic dependencies")
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Colin Foster <colin.foster@in-advantage.com>
+Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
+Link: https://lore.kernel.org/r/20230207014207.1678715-7-saravanak@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/stratix10-svc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/base/core.c    | 50 +++++++++++++++++++++++++++++++++---------
+ include/linux/fwnode.h | 11 +++++++++-
+ 2 files changed, 50 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
-index 1a5640b3ab422..bde1f543f5298 100644
---- a/drivers/firmware/stratix10-svc.c
-+++ b/drivers/firmware/stratix10-svc.c
-@@ -1202,19 +1202,20 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
- 	ret = platform_device_add(svc->stratix10_svc_rsu);
- 	if (ret) {
- 		platform_device_put(svc->stratix10_svc_rsu);
--		return ret;
-+		goto err_free_kfifo;
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index d74a07ca36dff..24c48fe3a0252 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -75,13 +75,15 @@ static bool fw_devlink_best_effort;
+  * are ignored and there is no reference counting.
+  */
+ static int __fwnode_link_add(struct fwnode_handle *con,
+-			     struct fwnode_handle *sup)
++			     struct fwnode_handle *sup, u8 flags)
+ {
+ 	struct fwnode_link *link;
+ 
+ 	list_for_each_entry(link, &sup->consumers, s_hook)
+-		if (link->consumer == con)
++		if (link->consumer == con) {
++			link->flags |= flags;
+ 			return 0;
++		}
+ 
+ 	link = kzalloc(sizeof(*link), GFP_KERNEL);
+ 	if (!link)
+@@ -91,6 +93,7 @@ static int __fwnode_link_add(struct fwnode_handle *con,
+ 	INIT_LIST_HEAD(&link->s_hook);
+ 	link->consumer = con;
+ 	INIT_LIST_HEAD(&link->c_hook);
++	link->flags = flags;
+ 
+ 	list_add(&link->s_hook, &sup->consumers);
+ 	list_add(&link->c_hook, &con->suppliers);
+@@ -105,7 +108,7 @@ int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup)
+ 	int ret;
+ 
+ 	mutex_lock(&fwnode_link_lock);
+-	ret = __fwnode_link_add(con, sup);
++	ret = __fwnode_link_add(con, sup, 0);
+ 	mutex_unlock(&fwnode_link_lock);
+ 	return ret;
+ }
+@@ -125,6 +128,19 @@ static void __fwnode_link_del(struct fwnode_link *link)
+ 	kfree(link);
+ }
+ 
++/**
++ * __fwnode_link_cycle - Mark a fwnode link as being part of a cycle.
++ * @link: the fwnode_link to be marked
++ *
++ * The fwnode_link_lock needs to be held when this function is called.
++ */
++static void __fwnode_link_cycle(struct fwnode_link *link)
++{
++	pr_debug("%pfwf: Relaxing link with %pfwf\n",
++		 link->consumer, link->supplier);
++	link->flags |= FWLINK_FLAG_CYCLE;
++}
++
+ /**
+  * fwnode_links_purge_suppliers - Delete all supplier links of fwnode_handle.
+  * @fwnode: fwnode whose supplier links need to be deleted
+@@ -198,7 +214,7 @@ static void __fwnode_links_move_consumers(struct fwnode_handle *from,
+ 	struct fwnode_link *link, *tmp;
+ 
+ 	list_for_each_entry_safe(link, tmp, &from->consumers, s_hook) {
+-		__fwnode_link_add(link->consumer, to);
++		__fwnode_link_add(link->consumer, to, link->flags);
+ 		__fwnode_link_del(link);
  	}
+ }
+@@ -1040,6 +1056,21 @@ static bool dev_is_best_effort(struct device *dev)
+ 		(dev->fwnode && (dev->fwnode->flags & FWNODE_FLAG_BEST_EFFORT));
+ }
  
- 	svc->intel_svc_fcs = platform_device_alloc(INTEL_FCS, 1);
- 	if (!svc->intel_svc_fcs) {
- 		dev_err(dev, "failed to allocate %s device\n", INTEL_FCS);
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto err_unregister_dev;
- 	}
++static struct fwnode_handle *fwnode_links_check_suppliers(
++						struct fwnode_handle *fwnode)
++{
++	struct fwnode_link *link;
++
++	if (!fwnode || fw_devlink_is_permissive())
++		return NULL;
++
++	list_for_each_entry(link, &fwnode->suppliers, c_hook)
++		if (!(link->flags & FWLINK_FLAG_CYCLE))
++			return link->supplier;
++
++	return NULL;
++}
++
+ /**
+  * device_links_check_suppliers - Check presence of supplier drivers.
+  * @dev: Consumer device.
+@@ -1067,11 +1098,8 @@ int device_links_check_suppliers(struct device *dev)
+ 	 * probe.
+ 	 */
+ 	mutex_lock(&fwnode_link_lock);
+-	if (dev->fwnode && !list_empty(&dev->fwnode->suppliers) &&
+-	    !fw_devlink_is_permissive()) {
+-		sup_fw = list_first_entry(&dev->fwnode->suppliers,
+-					  struct fwnode_link,
+-					  c_hook)->supplier;
++	sup_fw = fwnode_links_check_suppliers(dev->fwnode);
++	if (sup_fw) {
+ 		if (!dev_is_best_effort(dev)) {
+ 			fwnode_ret = -EPROBE_DEFER;
+ 			dev_err_probe(dev, -EPROBE_DEFER,
+@@ -1260,7 +1288,9 @@ static ssize_t waiting_for_supplier_show(struct device *dev,
+ 	bool val;
  
- 	ret = platform_device_add(svc->intel_svc_fcs);
- 	if (ret) {
- 		platform_device_put(svc->intel_svc_fcs);
--		return ret;
-+		goto err_unregister_dev;
- 	}
+ 	device_lock(dev);
+-	val = !list_empty(&dev->fwnode->suppliers);
++	mutex_lock(&fwnode_link_lock);
++	val = !!fwnode_links_check_suppliers(dev->fwnode);
++	mutex_unlock(&fwnode_link_lock);
+ 	device_unlock(dev);
+ 	return sysfs_emit(buf, "%u\n", val);
+ }
+diff --git a/include/linux/fwnode.h b/include/linux/fwnode.h
+index 89b9bdfca925c..fdf2ee0285b7a 100644
+--- a/include/linux/fwnode.h
++++ b/include/linux/fwnode.h
+@@ -18,7 +18,7 @@ struct fwnode_operations;
+ struct device;
  
- 	dev_set_drvdata(dev, svc);
-@@ -1223,6 +1224,8 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
+ /*
+- * fwnode link flags
++ * fwnode flags
+  *
+  * LINKS_ADDED:	The fwnode has already be parsed to add fwnode links.
+  * NOT_DEVICE:	The fwnode will never be populated as a struct device.
+@@ -36,6 +36,7 @@ struct device;
+ #define FWNODE_FLAG_INITIALIZED			BIT(2)
+ #define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	BIT(3)
+ #define FWNODE_FLAG_BEST_EFFORT			BIT(4)
++#define FWNODE_FLAG_VISITED			BIT(5)
  
- 	return 0;
+ struct fwnode_handle {
+ 	struct fwnode_handle *secondary;
+@@ -46,11 +47,19 @@ struct fwnode_handle {
+ 	u8 flags;
+ };
  
-+err_unregister_dev:
-+	platform_device_unregister(svc->stratix10_svc_rsu);
- err_free_kfifo:
- 	kfifo_free(&controller->svc_fifo);
- err_destroy_pool:
++/*
++ * fwnode link flags
++ *
++ * CYCLE:	The fwnode link is part of a cycle. Don't defer probe.
++ */
++#define FWLINK_FLAG_CYCLE			BIT(0)
++
+ struct fwnode_link {
+ 	struct fwnode_handle *supplier;
+ 	struct list_head s_hook;
+ 	struct fwnode_handle *consumer;
+ 	struct list_head c_hook;
++	u8 flags;
+ };
+ 
+ /**
 -- 
 2.39.2
 
