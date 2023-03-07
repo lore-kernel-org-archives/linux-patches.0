@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3862DBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:22:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A39C433D2;
-	Tue,  7 Mar 2023 17:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B438BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:22:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A99C4339B;
+	Tue,  7 Mar 2023 17:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209760;
-	bh=/Nm2FZxMhhAsoyv5uR7geReTFXAbOztRFiAs2dosC3M=;
+	s=korg; t=1678209763;
+	bh=oapv3UC2Tulzq57Eu2rSU4CcCx/Kq6Up+EC9oNW4Xu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zxWi20aBUSUGfabb3gcRUEhviZojJPvP/NSVZT+p5qsuXBTQAApr/kwwRw225Uhak
-	 fJFbgbAK/19OL062SvmXvQ3naihv2ivpOGGV9/r6Llnd/iJ7ua6AMA/eY3+D2B3rWz
-	 x/NAuDT9WERt2w7gJ8bdMKXPwiaS/Pl74BVuhNAM=
+	b=o+ccRY8ZhTJgUqGhf11Szc6qHSVgjm+hogxO9b3JZWm4LqkEH8ZtCd6ruYKbm2Wq9
+	 AzeodKvlY4NNVKJ51U6NVUpi4dwRbiI29tTHv08FCe30W+mcvuZAXLAEoVb6NV+tri
+	 ZDibgw0IPvtNLEEztn1Ddas0Gj+49XY+aeNRGHAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0321/1001] net: bcmgenet: fix MoCA LED control
-Date: Tue,  7 Mar 2023 17:51:33 +0100
-Message-Id: <20230307170035.461177903@linuxfoundation.org>
+Subject: [PATCH 6.2 0292/1001] selftests/bpf: Fix out-of-srctree build
+Date: Tue,  7 Mar 2023 17:51:04 +0100
+Message-Id: <20230307170034.286991783@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,52 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Doug Berger <opendmb@gmail.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit a7515af9fb8f0890fe540b108def4a86b9e8330a ]
+[ Upstream commit 0b0757244754ea1d0721195c824770f5576e119e ]
 
-When the bcmgenet_mii_config() code was refactored it was missed
-that the LED control for the MoCA interface got overwritten by
-the port_ctrl value. Its previous programming is restored here.
+Building BPF selftests out of srctree fails with:
 
-Fixes: 4f8d81b77e66 ("net: bcmgenet: Refactor register access in bcmgenet_mii_config")
-Signed-off-by: Doug Berger <opendmb@gmail.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+  make: *** No rule to make target '/linux-build//ima_setup.sh', needed by 'ima_setup.sh'.  Stop.
+
+The culprit is the rule that defines convenient shorthands like
+"make test_progs", which builds $(OUTPUT)/test_progs. These shorthands
+make sense only for binaries that are built though; scripts that live
+in the source tree do not end up in $(OUTPUT).
+
+Therefore drop $(TEST_PROGS) and $(TEST_PROGS_EXTENDED) from the rule.
+
+The issue exists for a while, but it became a problem only after commit
+d68ae4982cb7 ("selftests/bpf: Install all required files to run selftests"),
+which added dependencies on these scripts.
+
+Fixes: 03dcb78460c2 ("selftests/bpf: Add simple per-test targets to Makefile")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230208231211.283606-1-iii@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmmii.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ tools/testing/selftests/bpf/Makefile | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmmii.c b/drivers/net/ethernet/broadcom/genet/bcmmii.c
-index b615176338b26..be042905ada2a 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmmii.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmmii.c
-@@ -176,15 +176,6 @@ void bcmgenet_phy_power_set(struct net_device *dev, bool enable)
+diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
+index 2323a2b98b815..43c559b7729b5 100644
+--- a/tools/testing/selftests/bpf/Makefile
++++ b/tools/testing/selftests/bpf/Makefile
+@@ -149,8 +149,6 @@ endif
+ # NOTE: Semicolon at the end is critical to override lib.mk's default static
+ # rule for binaries.
+ $(notdir $(TEST_GEN_PROGS)						\
+-	 $(TEST_PROGS)							\
+-	 $(TEST_PROGS_EXTENDED)						\
+ 	 $(TEST_GEN_PROGS_EXTENDED)					\
+ 	 $(TEST_CUSTOM_PROGS)): %: $(OUTPUT)/% ;
  
- static void bcmgenet_moca_phy_setup(struct bcmgenet_priv *priv)
- {
--	u32 reg;
--
--	if (!GENET_IS_V5(priv)) {
--		/* Speed settings are set in bcmgenet_mii_setup() */
--		reg = bcmgenet_sys_readl(priv, SYS_PORT_CTRL);
--		reg |= LED_ACT_SOURCE_MAC;
--		bcmgenet_sys_writel(priv, reg, SYS_PORT_CTRL);
--	}
--
- 	if (priv->hw_params->flags & GENET_HAS_MOCA_LINK_DET)
- 		fixed_phy_set_link_update(priv->dev->phydev,
- 					  bcmgenet_fixed_phy_link_update);
-@@ -217,6 +208,8 @@ int bcmgenet_mii_config(struct net_device *dev, bool init)
- 
- 		if (!phy_name) {
- 			phy_name = "MoCA";
-+			if (!GENET_IS_V5(priv))
-+				port_ctrl |= LED_ACT_SOURCE_MAC;
- 			bcmgenet_moca_phy_setup(priv);
- 		}
- 		break;
 -- 
 2.39.2
 
