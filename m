@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D57CBA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:03:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C578FC433D2;
-	Tue,  7 Mar 2023 19:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696D1BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:03:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE6BC4339C;
+	Tue,  7 Mar 2023 19:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215800;
-	bh=mZFPa1JAGxMf3LpZ+MVuiwka0PpM6uVE2B+Mzn3FGeg=;
+	s=korg; t=1678215803;
+	bh=L6dZ9DK2vjYW+naee9kD7OPbixswnHJ1cr0RkXB0EEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKnYe0gxS8dVOdG6Zin3tx6FkmHoBE/DI52Cn+xAgEft2HogHtFoagh1Jn4NP/uuG
-	 5Gb2qmWs7yMJ+Oos1JA361ZnV+DUXfEytxA3f9ltPjK4RTjyOaHL4VdGdukv7dfTYK
-	 lLnKsexcRwuX8N4UjDDexbPXzyemp2IM6cn0uRUE=
+	b=dlC0k3gDge/TY7t65zOSrjWQnKDizSQl5bVRpnFaVfJeZNcSStEEBEv6HykLIG8KV
+	 RPrZVl5wpkRGbyMvHBzJFInG+d+aSxxY3FYumdvPYO0oTrNZoc0InYam5dmlbyabog
+	 FGI2fdMoz5PDy3qF4boFXsUn5noyH+DEWO8fuuns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 379/567] wifi: mt7601u: fix an integer underflow
-Date: Tue,  7 Mar 2023 18:01:55 +0100
-Message-Id: <20230307165922.276147945@linuxfoundation.org>
+Subject: [PATCH 5.15 362/567] media: usb: siano: Fix use after free bugs caused by do_submit_urb
+Date: Tue,  7 Mar 2023 18:01:38 +0100
+Message-Id: <20230307165921.551860006@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,100 +36,231 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 803f3176c5df3b5582c27ea690f204abb60b19b9 ]
+[ Upstream commit ebad8e731c1c06adf04621d6fd327b860c0861b5 ]
 
-Fix an integer underflow that leads to a null pointer dereference in
-'mt7601u_rx_skb_from_seg()'. The variable 'dma_len' in the URB packet
-could be manipulated, which could trigger an integer underflow of
-'seg_len' in 'mt7601u_rx_process_seg()'. This underflow subsequently
-causes the 'bad_frame' checks in 'mt7601u_rx_skb_from_seg()' to be
-bypassed, eventually leading to a dereference of the pointer 'p', which
-is a null pointer.
+There are UAF bugs caused by do_submit_urb(). One of the KASan reports
+is shown below:
 
-Ensure that 'dma_len' is greater than 'min_seg_len'.
+[   36.403605] BUG: KASAN: use-after-free in worker_thread+0x4a2/0x890
+[   36.406105] Read of size 8 at addr ffff8880059600e8 by task kworker/0:2/49
+[   36.408316]
+[   36.408867] CPU: 0 PID: 49 Comm: kworker/0:2 Not tainted 6.2.0-rc3-15798-g5a41237ad1d4-dir8
+[   36.411696] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g15584
+[   36.416157] Workqueue:  0x0 (events)
+[   36.417654] Call Trace:
+[   36.418546]  <TASK>
+[   36.419320]  dump_stack_lvl+0x96/0xd0
+[   36.420522]  print_address_description+0x75/0x350
+[   36.421992]  print_report+0x11b/0x250
+[   36.423174]  ? _raw_spin_lock_irqsave+0x87/0xd0
+[   36.424806]  ? __virt_addr_valid+0xcf/0x170
+[   36.426069]  ? worker_thread+0x4a2/0x890
+[   36.427355]  kasan_report+0x131/0x160
+[   36.428556]  ? worker_thread+0x4a2/0x890
+[   36.430053]  worker_thread+0x4a2/0x890
+[   36.431297]  ? worker_clr_flags+0x90/0x90
+[   36.432479]  kthread+0x166/0x190
+[   36.433493]  ? kthread_blkcg+0x50/0x50
+[   36.434669]  ret_from_fork+0x22/0x30
+[   36.435923]  </TASK>
+[   36.436684]
+[   36.437215] Allocated by task 24:
+[   36.438289]  kasan_set_track+0x50/0x80
+[   36.439436]  __kasan_kmalloc+0x89/0xa0
+[   36.440566]  smsusb_probe+0x374/0xc90
+[   36.441920]  usb_probe_interface+0x2d1/0x4c0
+[   36.443253]  really_probe+0x1d5/0x580
+[   36.444539]  __driver_probe_device+0xe3/0x130
+[   36.446085]  driver_probe_device+0x49/0x220
+[   36.447423]  __device_attach_driver+0x19e/0x1b0
+[   36.448931]  bus_for_each_drv+0xcb/0x110
+[   36.450217]  __device_attach+0x132/0x1f0
+[   36.451470]  bus_probe_device+0x59/0xf0
+[   36.452563]  device_add+0x4ec/0x7b0
+[   36.453830]  usb_set_configuration+0xc63/0xe10
+[   36.455230]  usb_generic_driver_probe+0x3b/0x80
+[   36.456166] printk: console [ttyGS0] disabled
+[   36.456569]  usb_probe_device+0x90/0x110
+[   36.459523]  really_probe+0x1d5/0x580
+[   36.461027]  __driver_probe_device+0xe3/0x130
+[   36.462465]  driver_probe_device+0x49/0x220
+[   36.463847]  __device_attach_driver+0x19e/0x1b0
+[   36.465229]  bus_for_each_drv+0xcb/0x110
+[   36.466466]  __device_attach+0x132/0x1f0
+[   36.467799]  bus_probe_device+0x59/0xf0
+[   36.469010]  device_add+0x4ec/0x7b0
+[   36.470125]  usb_new_device+0x863/0xa00
+[   36.471374]  hub_event+0x18c7/0x2220
+[   36.472746]  process_one_work+0x34c/0x5b0
+[   36.474041]  worker_thread+0x4b7/0x890
+[   36.475216]  kthread+0x166/0x190
+[   36.476267]  ret_from_fork+0x22/0x30
+[   36.477447]
+[   36.478160] Freed by task 24:
+[   36.479239]  kasan_set_track+0x50/0x80
+[   36.480512]  kasan_save_free_info+0x2b/0x40
+[   36.481808]  ____kasan_slab_free+0x122/0x1a0
+[   36.483173]  __kmem_cache_free+0xc4/0x200
+[   36.484563]  smsusb_term_device+0xcd/0xf0
+[   36.485896]  smsusb_probe+0xc85/0xc90
+[   36.486976]  usb_probe_interface+0x2d1/0x4c0
+[   36.488303]  really_probe+0x1d5/0x580
+[   36.489498]  __driver_probe_device+0xe3/0x130
+[   36.491140]  driver_probe_device+0x49/0x220
+[   36.492475]  __device_attach_driver+0x19e/0x1b0
+[   36.493988]  bus_for_each_drv+0xcb/0x110
+[   36.495171]  __device_attach+0x132/0x1f0
+[   36.496617]  bus_probe_device+0x59/0xf0
+[   36.497875]  device_add+0x4ec/0x7b0
+[   36.498972]  usb_set_configuration+0xc63/0xe10
+[   36.500264]  usb_generic_driver_probe+0x3b/0x80
+[   36.501740]  usb_probe_device+0x90/0x110
+[   36.503084]  really_probe+0x1d5/0x580
+[   36.504241]  __driver_probe_device+0xe3/0x130
+[   36.505548]  driver_probe_device+0x49/0x220
+[   36.506766]  __device_attach_driver+0x19e/0x1b0
+[   36.508368]  bus_for_each_drv+0xcb/0x110
+[   36.509646]  __device_attach+0x132/0x1f0
+[   36.510911]  bus_probe_device+0x59/0xf0
+[   36.512103]  device_add+0x4ec/0x7b0
+[   36.513215]  usb_new_device+0x863/0xa00
+[   36.514736]  hub_event+0x18c7/0x2220
+[   36.516130]  process_one_work+0x34c/0x5b0
+[   36.517396]  worker_thread+0x4b7/0x890
+[   36.518591]  kthread+0x166/0x190
+[   36.519599]  ret_from_fork+0x22/0x30
+[   36.520851]
+[   36.521405] Last potentially related work creation:
+[   36.523143]  kasan_save_stack+0x3f/0x60
+[   36.524275]  kasan_record_aux_stack_noalloc+0x9d/0xb0
+[   36.525831]  insert_work+0x25/0x130
+[   36.527039]  __queue_work+0x4d4/0x620
+[   36.528236]  queue_work_on+0x72/0xb0
+[   36.529344]  __usb_hcd_giveback_urb+0x13f/0x1b0
+[   36.530819]  dummy_timer+0x350/0x1a40
+[   36.532149]  call_timer_fn+0x2c/0x190
+[   36.533567]  expire_timers+0x69/0x1f0
+[   36.534736]  __run_timers+0x289/0x2d0
+[   36.535841]  run_timer_softirq+0x2d/0x60
+[   36.537110]  __do_softirq+0x116/0x380
+[   36.538377]
+[   36.538950] Second to last potentially related work creation:
+[   36.540855]  kasan_save_stack+0x3f/0x60
+[   36.542084]  kasan_record_aux_stack_noalloc+0x9d/0xb0
+[   36.543592]  insert_work+0x25/0x130
+[   36.544891]  __queue_work+0x4d4/0x620
+[   36.546168]  queue_work_on+0x72/0xb0
+[   36.547328]  __usb_hcd_giveback_urb+0x13f/0x1b0
+[   36.548805]  dummy_timer+0x350/0x1a40
+[   36.550116]  call_timer_fn+0x2c/0x190
+[   36.551570]  expire_timers+0x69/0x1f0
+[   36.552762]  __run_timers+0x289/0x2d0
+[   36.553916]  run_timer_softirq+0x2d/0x60
+[   36.555118]  __do_softirq+0x116/0x380
+[   36.556239]
+[   36.556807] The buggy address belongs to the object at ffff888005960000
+[   36.556807]  which belongs to the cache kmalloc-4k of size 4096
+[   36.560652] The buggy address is located 232 bytes inside of
+[   36.560652]  4096-byte region [ffff888005960000, ffff888005961000)
+[   36.564791]
+[   36.565355] The buggy address belongs to the physical page:
+[   36.567212] page:000000004f0a0731 refcount:1 mapcount:0 mapping:0000000000000000 index:0x00
+[   36.570534] head:000000004f0a0731 order:3 compound_mapcount:0 subpages_mapcount:0 compound0
+[   36.573717] flags: 0x100000000010200(slab|head|node=0|zone=1)
+[   36.575481] raw: 0100000000010200 ffff888001042140 dead000000000122 0000000000000000
+[   36.577842] raw: 0000000000000000 0000000000040004 00000001ffffffff 0000000000000000
+[   36.580175] page dumped because: kasan: bad access detected
+[   36.581994]
+[   36.582548] Memory state around the buggy address:
+[   36.583983]  ffff88800595ff80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   36.586240]  ffff888005960000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   36.588884] >ffff888005960080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   36.591071]                                                           ^
+[   36.593295]  ffff888005960100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   36.595705]  ffff888005960180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   36.598026] ==================================================================
+[   36.600224] Disabling lock debugging due to kernel taint
+[   36.602681] general protection fault, probably for non-canonical address 0x43600a000000060I
+[   36.607129] CPU: 0 PID: 49 Comm: kworker/0:2 Tainted: G    B              6.2.0-rc3-15798-8
+[   36.611115] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g15584
+[   36.615026] Workqueue: events do_submit_urb
+[   36.616290] RIP: 0010:_raw_spin_lock_irqsave+0x8a/0xd0
+[   36.618107] Code: 24 00 00 00 00 48 89 df be 04 00 00 00 e8 9e b5 c6 fe 48 89 ef be 04 00 5
+[   36.623522] RSP: 0018:ffff888004b6fcf0 EFLAGS: 00010046
+[   36.625072] RAX: 0000000000000000 RBX: 043600a000000060 RCX: ffffffff9fc0e0d7
+[   36.627206] RDX: 0000000000000000 RSI: dffffc0000000000 RDI: ffff888004b6fcf0
+[   36.629813] RBP: ffff888004b6fcf0 R08: dffffc0000000000 R09: ffffed100096df9f
+[   36.631974] R10: dfffe9100096dfa0 R11: 1ffff1100096df9e R12: ffff888005960020
+[   36.634285] R13: ffff8880059600f0 R14: 0000000000000246 R15: 0000000000000001
+[   36.636438] FS:  0000000000000000(0000) GS:ffff88806d600000(0000) knlGS:0000000000000000
+[   36.639092] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   36.640951] CR2: 00007f07476819a3 CR3: 0000000004a34000 CR4: 00000000000006f0
+[   36.643411] Call Trace:
+[   36.644215]  <TASK>
+[   36.644902]  smscore_getbuffer+0x3e/0x1e0
+[   36.646147]  do_submit_urb+0x4f/0x190
+[   36.647449]  process_one_work+0x34c/0x5b0
+[   36.648777]  worker_thread+0x4b7/0x890
+[   36.649984]  ? worker_clr_flags+0x90/0x90
+[   36.651166]  kthread+0x166/0x190
+[   36.652151]  ? kthread_blkcg+0x50/0x50
+[   36.653547]  ret_from_fork+0x22/0x30
+[   36.655051]  </TASK>
+[   36.655733] Modules linked in:
+[   36.656787] ---[ end trace 0000000000000000 ]---
+[   36.658328] RIP: 0010:_raw_spin_lock_irqsave+0x8a/0xd0
+[   36.660045] Code: 24 00 00 00 00 48 89 df be 04 00 00 00 e8 9e b5 c6 fe 48 89 ef be 04 00 5
+[   36.665730] RSP: 0018:ffff888004b6fcf0 EFLAGS: 00010046
+[   36.667448] RAX: 0000000000000000 RBX: 043600a000000060 RCX: ffffffff9fc0e0d7
+[   36.669675] RDX: 0000000000000000 RSI: dffffc0000000000 RDI: ffff888004b6fcf0
+[   36.672645] RBP: ffff888004b6fcf0 R08: dffffc0000000000 R09: ffffed100096df9f
+[   36.674921] R10: dfffe9100096dfa0 R11: 1ffff1100096df9e R12: ffff888005960020
+[   36.677034] R13: ffff8880059600f0 R14: 0000000000000246 R15: 0000000000000001
+[   36.679184] FS:  0000000000000000(0000) GS:ffff88806d600000(0000) knlGS:0000000000000000
+[   36.681655] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   36.683383] CR2: 00007f07476819a3 CR3: 0000000004a34000 CR4: 00000000000006f0
+[   36.685733] Kernel panic - not syncing: Fatal exception
+[   36.688585] Kernel Offset: 0x1d400000 from 0xffffffff81000000 (relocation range: 0xfffffff)
+[   36.692199] ---[ end Kernel panic - not syncing: Fatal exception ]---
 
-Found by a modified version of syzkaller.
+When the siano device is plugged in, it may call the following functions
+to initialize the device.
 
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 0 PID: 12 Comm: ksoftirqd/0 Tainted: G        W  O      5.14.0+
-#139
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
-RIP: 0010:skb_add_rx_frag+0x143/0x370
-Code: e2 07 83 c2 03 38 ca 7c 08 84 c9 0f 85 86 01 00 00 4c 8d 7d 08 44
-89 68 08 48 b8 00 00 00 00 00 fc ff df 4c 89 fa 48 c1 ea 03 <80> 3c 02
-00 0f 85 cd 01 00 00 48 8b 45 08 a8 01 0f 85 3d 01 00 00
-RSP: 0018:ffffc900000cfc90 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: ffff888115520dc0 RCX: 0000000000000000
-RDX: 0000000000000001 RSI: ffff8881118430c0 RDI: ffff8881118430f8
-RBP: 0000000000000000 R08: 0000000000000e09 R09: 0000000000000010
-R10: ffff888111843017 R11: ffffed1022308602 R12: 0000000000000000
-R13: 0000000000000e09 R14: 0000000000000010 R15: 0000000000000008
-FS:  0000000000000000(0000) GS:ffff88811a800000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000004035af40 CR3: 00000001157f2000 CR4: 0000000000750ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- mt7601u_rx_tasklet+0xc73/0x1270
- ? mt7601u_submit_rx_buf.isra.0+0x510/0x510
- ? tasklet_action_common.isra.0+0x79/0x2f0
- tasklet_action_common.isra.0+0x206/0x2f0
- __do_softirq+0x1b5/0x880
- ? tasklet_unlock+0x30/0x30
- run_ksoftirqd+0x26/0x50
- smpboot_thread_fn+0x34f/0x7d0
- ? smpboot_register_percpu_thread+0x370/0x370
- kthread+0x3a1/0x480
- ? set_kthread_struct+0x120/0x120
- ret_from_fork+0x1f/0x30
-Modules linked in: 88XXau(O) 88x2bu(O)
----[ end trace 57f34f93b4da0f9b ]---
-RIP: 0010:skb_add_rx_frag+0x143/0x370
-Code: e2 07 83 c2 03 38 ca 7c 08 84 c9 0f 85 86 01 00 00 4c 8d 7d 08 44
-89 68 08 48 b8 00 00 00 00 00 fc ff df 4c 89 fa 48 c1 ea 03 <80> 3c 02
-00 0f 85 cd 01 00 00 48 8b 45 08 a8 01 0f 85 3d 01 00 00
-RSP: 0018:ffffc900000cfc90 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: ffff888115520dc0 RCX: 0000000000000000
-RDX: 0000000000000001 RSI: ffff8881118430c0 RDI: ffff8881118430f8
-RBP: 0000000000000000 R08: 0000000000000e09 R09: 0000000000000010
-R10: ffff888111843017 R11: ffffed1022308602 R12: 0000000000000000
-R13: 0000000000000e09 R14: 0000000000000010 R15: 0000000000000008
-FS:  0000000000000000(0000) GS:ffff88811a800000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000004035af40 CR3: 00000001157f2000 CR4: 0000000000750ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
+smsusb_probe()-->smsusb_init_device()-->smscore_start_device().
 
-Signed-off-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221229092906.2328282-1-jisoo.jang@yonsei.ac.kr
+When smscore_start_device() gets failed, the function smsusb_term_device()
+will be called and smsusb_device_t will be deallocated. Although we use
+usb_kill_urb() in smsusb_stop_streaming() to cancel transfer requests
+and wait for them to finish, the worker threads that are scheduled by
+smsusb_onresponse() may be still running. As a result, the UAF bugs
+could happen.
+
+We add cancel_work_sync() in smsusb_stop_streaming() in order that the
+worker threads could finish before the smsusb_device_t is deallocated.
+
+Fixes: dd47fbd40e6e ("[media] smsusb: don't sleep while atomic")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt7601u/dma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/usb/siano/smsusb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt7601u/dma.c b/drivers/net/wireless/mediatek/mt7601u/dma.c
-index ed78d2cb35e3c..fd3b768ca92bd 100644
---- a/drivers/net/wireless/mediatek/mt7601u/dma.c
-+++ b/drivers/net/wireless/mediatek/mt7601u/dma.c
-@@ -123,7 +123,8 @@ static u16 mt7601u_rx_next_seg_len(u8 *data, u32 data_len)
- 	if (data_len < min_seg_len ||
- 	    WARN_ON_ONCE(!dma_len) ||
- 	    WARN_ON_ONCE(dma_len + MT_DMA_HDRS > data_len) ||
--	    WARN_ON_ONCE(dma_len & 0x3))
-+	    WARN_ON_ONCE(dma_len & 0x3) ||
-+	    WARN_ON_ONCE(dma_len < min_seg_len))
- 		return 0;
+diff --git a/drivers/media/usb/siano/smsusb.c b/drivers/media/usb/siano/smsusb.c
+index df4c5dcba39cd..1babfe6e2c361 100644
+--- a/drivers/media/usb/siano/smsusb.c
++++ b/drivers/media/usb/siano/smsusb.c
+@@ -179,6 +179,7 @@ static void smsusb_stop_streaming(struct smsusb_device_t *dev)
  
- 	return MT_DMA_HDRS + dma_len;
+ 	for (i = 0; i < MAX_URBS; i++) {
+ 		usb_kill_urb(&dev->surbs[i].urb);
++		cancel_work_sync(&dev->surbs[i].wq);
+ 
+ 		if (dev->surbs[i].cb) {
+ 			smscore_putbuffer(dev->coredev, dev->surbs[i].cb);
 -- 
 2.39.2
 
