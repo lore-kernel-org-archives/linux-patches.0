@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70157BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:00:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0E3C433EF;
-	Tue,  7 Mar 2023 18:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A09BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:00:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE4DC433D2;
+	Tue,  7 Mar 2023 18:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212049;
-	bh=XyyTOOZlVv3golpq97BNukYzBmNoAhmKQLeOCin9x9A=;
+	s=korg; t=1678212052;
+	bh=+rws6bpR+C+r6X1Nh5EPieRoYEXi11Jx82BT558iZSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tF09tBJ3bZCvsMYZ97deQXrAuH1UXLaGYVqcpt3Q8LOGSoL4xfE8q3oBpiecAvw1A
-	 9Q1uRQxla1hoBokKuDC3+pLPkliDDw+TnpCSzT1BUvpc5BGLyPkf310ruVz7q6cQ4C
-	 tdf535Q6ggP/omgNU4/HeyTk866MPzVsyc1+Rt3M=
+	b=UNYbLmFQijt6OqQQdN/laCuTrFtU3lmuWQkwge8YxLPmqyvqVVnyxx05nQB1BQjTV
+	 aIhdsYC9VocFVjIUhOh8r3sNZa1xTPUmcXYtzxeUdTBzUEqoQHaw7onEjXCqVCxOAX
+	 OOAB2K5rFPurf8ipfhwEwmfH+3/ZOEDexjm3sHSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/885] arm64: dts: amlogic: meson-gx-libretech-pc: fix update button name
-Date: Tue,  7 Mar 2023 17:49:55 +0100
-Message-Id: <20230307170004.420130357@linuxfoundation.org>
+Subject: [PATCH 6.1 062/885] arm64: dts: amlogic: meson-sm1-bananapi-m5: fix adc keys node names
+Date: Tue,  7 Mar 2023 17:49:56 +0100
+Message-Id: <20230307170004.469470786@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,31 +36,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 6bb506ed36968207a8832f0143ebc127f0770eef ]
+[ Upstream commit d519a73332b6c3d14e15f8fd20d7c6f29ed13d41 ]
 
 Fixes:
- adc-keys: 'update-button' does not match any of the regexes: '^button-', 'pinctrl-[0-9]+'
+adc_keys: 'key' does not match any of the regexes: '^button-', 'pinctrl-[0-9]+'
 
-Link: https://lore.kernel.org/r/20230124-b4-amlogic-bindings-fixups-v1-10-44351528957e@linaro.org
+Also fix the invalid "adc_keys" node name.
+
+Link: https://lore.kernel.org/r/20230124-b4-amlogic-bindings-fixups-v1-11-44351528957e@linaro.org
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-gx-libretech-pc.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gx-libretech-pc.dtsi b/arch/arm64/boot/dts/amlogic/meson-gx-libretech-pc.dtsi
-index bcdf55f48a831..4e84ab87cc7db 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gx-libretech-pc.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-gx-libretech-pc.dtsi
-@@ -17,7 +17,7 @@ adc-keys {
+diff --git a/arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts b/arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts
+index cadba194b149b..6d0db667581fa 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts
+@@ -17,13 +17,13 @@ / {
+ 	compatible = "bananapi,bpi-m5", "amlogic,sm1";
+ 	model = "Banana Pi BPI-M5";
+ 
+-	adc_keys {
++	adc-keys {
+ 		compatible = "adc-keys";
+ 		io-channels = <&saradc 2>;
  		io-channel-names = "buttons";
  		keyup-threshold-microvolt = <1800000>;
  
--		update-button {
-+		button-update {
- 			label = "update";
- 			linux,code = <KEY_VENDOR>;
- 			press-threshold-microvolt = <1300000>;
+-		key {
++		button-sw3 {
+ 			label = "SW3";
+ 			linux,code = <BTN_3>;
+ 			press-threshold-microvolt = <1700000>;
 -- 
 2.39.2
 
