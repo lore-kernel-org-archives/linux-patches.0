@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35CFBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:24:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42D7C433EF;
-	Tue,  7 Mar 2023 18:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB860BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:24:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE58C433D2;
+	Tue,  7 Mar 2023 18:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213472;
-	bh=dUpq22EcPIUXhWVJWeCv7GvmWOePXscZy5LHRVYAUE0=;
+	s=korg; t=1678213475;
+	bh=GxxFSXMNTqKtNsSPRZSLW+3w8I9CBF/zqPlg4wgMPYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jjE7JwZ8WYWW8dwWpDulm4/6V4NL4qUsFym3ZWoJS2kgJEylis/dbfkFlQHQfLhsN
-	 7P6V1oYkBVR6B3CM2vrREflpPINyBCQCVjbW9qU8BXG+ygFvRmh57p7ZfGCd+x/sio
-	 wFn+DoSkGg6jlLDrdoeExqkO7MdDu/EswZcrlHEU=
+	b=cV+tg4dA20BmBnooqlXqJh6uUA+0vdDgZzFvR/j5OCHzjx40ntx43um7BDn/NBcZx
+	 nMGj6XJl5iPK9oQoDkOg2O7ad0k0Durvt58N+WhYfG4Ls+mgj5QK5sROnb5CbrcjBf
+	 ny+HRMhvF7kfSDjVINTYgOf2/HndtjqooMhr87/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
+	Dong Chuanjian <chuanjian@nfschina.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 518/885] media: amphion: correct the unspecified color space
-Date: Tue,  7 Mar 2023 17:57:32 +0100
-Message-Id: <20230307170024.977948954@linuxfoundation.org>
+Subject: [PATCH 6.1 519/885] media: drivers/media/v4l2-core/v4l2-h264 : add detection of null pointers
+Date: Tue,  7 Mar 2023 17:57:33 +0100
+Message-Id: <20230307170025.021370090@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,57 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Dong Chuanjian <chuanjian@nfschina.com>
 
-[ Upstream commit 809060c8a357e020010dd8f797a5efd3c5432b13 ]
+[ Upstream commit be3ae7cf4326e95bb1d5413b63baabc26f4a1324 ]
 
-in the E.2.1 of Rec. ITU-T H.264 (06/2019),
-0 of colour primaries is reserved, and 2 is unspecified.
-driver can map V4L2_COLORSPACE_LAST to 0,
-and map V4L2_COLORSPACE_DEFAULT to 2.
+When the pointer variable is judged to be null, null is returned
+directly.
 
-v4l2_xfer_func and v4l2_ycbcr_encoding are similar case.
+[hverkuil: fix two checkpatch warnings]
 
-Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
+Signed-off-by: Dong Chuanjian <chuanjian@nfschina.com>
+Acked-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Fixes: d3f756ad629b ("media: v4l2: Trace calculated p/b0/b1 initial reflist")
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_color.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/v4l2-core/v4l2-h264.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/platform/amphion/vpu_color.c b/drivers/media/platform/amphion/vpu_color.c
-index 80b9a53fd1c14..4ae435cbc5cda 100644
---- a/drivers/media/platform/amphion/vpu_color.c
-+++ b/drivers/media/platform/amphion/vpu_color.c
-@@ -17,7 +17,7 @@
- #include "vpu_helpers.h"
+diff --git a/drivers/media/v4l2-core/v4l2-h264.c b/drivers/media/v4l2-core/v4l2-h264.c
+index 72bd64f651981..c00197d095e75 100644
+--- a/drivers/media/v4l2-core/v4l2-h264.c
++++ b/drivers/media/v4l2-core/v4l2-h264.c
+@@ -305,6 +305,8 @@ static const char *format_ref_list_p(const struct v4l2_h264_reflist_builder *bui
+ 	int n = 0, i;
  
- static const u8 colorprimaries[] = {
--	0,
-+	V4L2_COLORSPACE_LAST,
- 	V4L2_COLORSPACE_REC709,         /*Rec. ITU-R BT.709-6*/
- 	0,
- 	0,
-@@ -31,7 +31,7 @@ static const u8 colorprimaries[] = {
- };
+ 	*out_str = kmalloc(tmp_str_size, GFP_KERNEL);
++	if (!(*out_str))
++		return NULL;
  
- static const u8 colortransfers[] = {
--	0,
-+	V4L2_XFER_FUNC_LAST,
- 	V4L2_XFER_FUNC_709,             /*Rec. ITU-R BT.709-6*/
- 	0,
- 	0,
-@@ -53,7 +53,7 @@ static const u8 colortransfers[] = {
- };
+ 	n += snprintf(*out_str + n, tmp_str_size - n, "|");
  
- static const u8 colormatrixcoefs[] = {
--	0,
-+	V4L2_YCBCR_ENC_LAST,
- 	V4L2_YCBCR_ENC_709,              /*Rec. ITU-R BT.709-6*/
- 	0,
- 	0,
+@@ -343,6 +345,8 @@ static const char *format_ref_list_b(const struct v4l2_h264_reflist_builder *bui
+ 	int n = 0, i;
+ 
+ 	*out_str = kmalloc(tmp_str_size, GFP_KERNEL);
++	if (!(*out_str))
++		return NULL;
+ 
+ 	n += snprintf(*out_str + n, tmp_str_size - n, "|");
+ 
 -- 
 2.39.2
 
