@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E363CBA36
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:33:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4FDC433D2;
-	Tue,  7 Mar 2023 17:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D21BA35
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:33:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E22C4339B;
+	Tue,  7 Mar 2023 17:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210386;
-	bh=R8WRriDInyP6Dmq2ZbHt/uemX/Qx5RiTebLK2k9hehw=;
+	s=korg; t=1678210389;
+	bh=f89zt+GWq/gBP07AjQpUXgAS8lN7LySw7iSWOYP0dYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mdMxdJ0Mari1a6Oa5z72dPW7ujdNIUseaNz/HLLigZgW46/NF2p2jTp/fQ0WTYEPC
-	 v2GyhnUpCgViQDa9RhvtO5qeXJUQgNlAF6wi4/nFWuRqDPGuh8M7zj+oXB67tGS01s
-	 KAr0CvkTO96+j9rNkXPTr/viWNrqBrfPPUahM8p8=
+	b=xGL+xL7c1NacxwLkbOhbkOK2j5qNjsXvHhE4VjjGyK9I5teH19UptJ3mMkyn2Pv/0
+	 r3sK8LxBzVB04JDhBQciRdqMmq20ltePDReRgr4HRbVKcbn7jszY0x/bIe//WR0dfm
+	 +V1xildlGUvMj/WJic4+8CYreI9eOlRgWoytzB40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0493/1001] i2c: qcom-geni: change i2c_master_hub to static
-Date: Tue,  7 Mar 2023 17:54:25 +0100
-Message-Id: <20230307170042.770059985@linuxfoundation.org>
+Subject: [PATCH 6.2 0494/1001] soundwire: cadence: Dont overflow the command FIFOs
+Date: Tue,  7 Mar 2023 17:54:26 +0100
+Message-Id: <20230307170042.818512254@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,35 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 597688792c4d9939e1900f5840ca18804e9d4290 ]
+[ Upstream commit 7cbfee2e2e40d2be54196362a845a3ea0a3f877d ]
 
-i2c_master_hub is only used in i2c-qcom-geni.c now,
-change it to static.
+The command FIFOs in the Cadence IP can be configured during design
+up to 32 entries, and the code in cadence_master.c was assuming the
+full 32-entry FIFO. But all current Intel implementations use an 8-entry
+FIFO.
 
-Fixes: cacd9643eca7 ("i2c: qcom-geni: add support for I2C Master Hub variant")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Up to now the longest message used was 6 entries so this wasn't
+causing any problem. But future Cirrus Logic codecs have downloadable
+firmware or tuning blobs. It is more efficient for the codec driver to
+issue long transfers that can take advantage of any queuing in the
+Soundwire controller and avoid the overhead of repeatedly writing the
+page registers.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Fixes: 2f52a5177caa ("soundwire: cdns: Add cadence library")
+Link: https://lore.kernel.org/r/20221202161812.4186897-2-rf@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soundwire/cadence_master.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index fd70794bfceec..a378f679b499d 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -1025,7 +1025,7 @@ static const struct dev_pm_ops geni_i2c_pm_ops = {
- 									NULL)
- };
+diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
+index a1de363eba3ff..27699f341f2c5 100644
+--- a/drivers/soundwire/cadence_master.c
++++ b/drivers/soundwire/cadence_master.c
+@@ -127,7 +127,8 @@ MODULE_PARM_DESC(cdns_mcp_int_mask, "Cadence MCP IntMask");
  
--const struct geni_i2c_desc i2c_master_hub = {
-+static const struct geni_i2c_desc i2c_master_hub = {
- 	.has_core_clk = true,
- 	.icc_ddr = NULL,
- 	.no_dma_support = true,
+ #define CDNS_MCP_CMD_BASE			0x80
+ #define CDNS_MCP_RESP_BASE			0x80
+-#define CDNS_MCP_CMD_LEN			0x20
++/* FIFO can hold 8 commands */
++#define CDNS_MCP_CMD_LEN			8
+ #define CDNS_MCP_CMD_WORD_LEN			0x4
+ 
+ #define CDNS_MCP_CMD_SSP_TAG			BIT(31)
 -- 
 2.39.2
 
