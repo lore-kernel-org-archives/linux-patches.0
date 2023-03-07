@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7122BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:18:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E2EC433EF;
-	Tue,  7 Mar 2023 18:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9119BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:18:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27E1CC433EF;
+	Tue,  7 Mar 2023 18:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213082;
-	bh=dxFSj10K1gAdGhzhQE+cReJR7o4SDTExojXack2sgcc=;
+	s=korg; t=1678213085;
+	bh=+gG78ObpD8v6Uhmrv4zUkPa2t7eYN91BNznaEBr2Ekw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wk3R3wijWJ0QgjOtcQM1k3qMjrGUFazDtRYDOsK+QC2A9U8j20r6N3VZFfZ5/m2bz
-	 /5hxSZWM0yv3e0HvUasLI7dOAWKi3iF9N6Z7hCxmIR7cejX8V5LVjNNb0D230oK95T
-	 sdW6nhB7SNEPNCxwTOAeIk3ynsHkptTYEFVNjD+g=
+	b=1Zuv0NE/2uuzyEz5qiG2pS43kkzf+x/tfaG+dH3enf+essuToqZSABIdZkBN28pIk
+	 Q6+PGit4TDpDBWG8L2D9cew+nvuwPT6q1lxSHPypht0BP3fk4ImypExLl/1y8gBL/F
+	 xJSp6wWKF5GqnWI6W6d+k0T8UH2PtM7u1yMEDOfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Ian Rogers <irogers@google.com>,
 	James Clark <james.clark@arm.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jin Yao <yao.jin@linux.intel.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.vnet.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nageswara R Sastry <rnsastry@linux.ibm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Wang Nan <wangnan0@huawei.com>,
-	linuxppc-dev@lists.ozlabs.org,
+	Peter Zijlstra <peterz@infradead.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linuxarm@huawei.com,
+	prime.zeng@hisilicon.com,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 392/885] perf test bpf: Skip test if kernel-debuginfo is not present
-Date: Tue,  7 Mar 2023 17:55:26 +0100
-Message-Id: <20230307170019.411130641@linuxfoundation.org>
+Subject: [PATCH 6.1 393/885] perf tools: Fix auto-complete on aarch64
+Date: Tue,  7 Mar 2023 17:55:27 +0100
+Message-Id: <20230307170019.459167413@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -47,107 +46,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-[ Upstream commit 34266f904abd45731bdade2e92d0536c092ee9bc ]
+[ Upstream commit ffd1240e8f0814262ceb957dbe961f6e0aef1e7a ]
 
-Perf BPF filter test fails in environment where "kernel-debuginfo"
-is not installed.
+On aarch64 CPU related events are not under event_source/devices/cpu/events,
+they're under event_source/devices/armv8_pmuv3_0/events on my machine.
+Using current auto-complete script will generate below error:
 
-Test failure logs:
+  [root@localhost bin]# perf stat -e
+  ls: cannot access '/sys/bus/event_source/devices/cpu/events': No such file or directory
 
-  <<>>
-  42: BPF filter                            :
-  42.1: Basic BPF filtering                 : Ok
-  42.2: BPF pinning                         : Ok
-  42.3: BPF prologue generation             : FAILED!
-  <<>>
+Fix this by not testing /sys/bus/event_source/devices/cpu/events on
+aarch64 machine.
 
-Enabling verbose option provided debug logs, which says debuginfo
-needs to be installed. Snippet of verbose logs:
-
-  <<>>
-  42.3: BPF prologue generation                                       :
-  --- start ---
-  test child forked, pid 28218
-  <<>>
-  Rebuild with CONFIG_DEBUG_INFO=y, or install an appropriate debuginfo
-  package.
-  bpf_probe: failed to convert perf probe events
-  Failed to add events selected by BPF
-  test child finished with -1
-  ---- end ----
-  BPF filter subtest 3: FAILED!
-  <<>>
-
-Here the subtest "BPF prologue generation" failed and logs shows
-debuginfo is needed. After installing kernel-debuginfo package, testcase
-passes.
-
-The "BPF prologue generation" subtest failed because, the do_test()
-returns TEST_FAIL without checking the error type returned by
-parse_events_load_bpf_obj().
-
-parse_events_load_bpf_obj() can also return error of type -ENODATA
-incase kernel-debuginfo package is not installed. Fix this by adding
-check for -ENODATA error.
-
-Test result after the patch changes:
-
-Test failure logs:
-
-  <<>>
-  42: BPF filter                 :
-  42.1: Basic BPF filtering      : Ok
-  42.2: BPF pinning              : Ok
-  42.3: BPF prologue generation  : Skip (clang/debuginfo isn't installed or environment missing BPF support)
-  <<>>
-
-Fixes: ba1fae431e74bb42 ("perf test: Add 'perf test BPF'")
-Signed-off-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Disha Goel <disgoel@linux.ibm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: James Clark <james.clark@arm.com>
+Fixes: 74cd5815d9af6e6c ("perf tool: Improve bash command line auto-complete for multiple events with comma")
+Reviewed-by: James Clark <james.clark@arm.com>
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jin Yao <yao.jin@linux.intel.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Madhavan Srinivasan <maddy@linux.vnet.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nageswara R Sastry <rnsastry@linux.ibm.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Wang Nan <wangnan0@huawei.com>
-Cc: linuxppc-dev@lists.ozlabs.org
-Link: http://lore.kernel.org/linux-perf-users/Y7bIk77mdE4j8Jyi@kernel.org
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linuxarm@huawei.com
+Cc: prime.zeng@hisilicon.com
+Link: https://lore.kernel.org/r/20230207035057.43394-1-yangyicong@huawei.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/bpf.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ tools/perf/perf-completion.sh | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/tests/bpf.c b/tools/perf/tests/bpf.c
-index 17c023823713d..6a4235a9cf57e 100644
---- a/tools/perf/tests/bpf.c
-+++ b/tools/perf/tests/bpf.c
-@@ -126,6 +126,10 @@ static int do_test(struct bpf_object *obj, int (*func)(void),
+diff --git a/tools/perf/perf-completion.sh b/tools/perf/perf-completion.sh
+index fdf75d45efff7..978249d7868c2 100644
+--- a/tools/perf/perf-completion.sh
++++ b/tools/perf/perf-completion.sh
+@@ -165,7 +165,12 @@ __perf_main ()
  
- 	err = parse_events_load_bpf_obj(&parse_state, &parse_state.list, obj, NULL);
- 	parse_events_error__exit(&parse_error);
-+	if (err == -ENODATA) {
-+		pr_debug("Failed to add events selected by BPF, debuginfo package not installed\n");
-+		return TEST_SKIP;
-+	}
- 	if (err || list_empty(&parse_state.list)) {
- 		pr_debug("Failed to add events selected by BPF\n");
- 		return TEST_FAIL;
-@@ -368,7 +372,7 @@ static struct test_case bpf_tests[] = {
- 			"clang isn't installed or environment missing BPF support"),
- #ifdef HAVE_BPF_PROLOGUE
- 	TEST_CASE_REASON("BPF prologue generation", bpf_prologue_test,
--			"clang isn't installed or environment missing BPF support"),
-+			"clang/debuginfo isn't installed or environment missing BPF support"),
- #else
- 	TEST_CASE_REASON("BPF prologue generation", bpf_prologue_test, "not compiled in"),
- #endif
+ 		local cur1=${COMP_WORDS[COMP_CWORD]}
+ 		local raw_evts=$($cmd list --raw-dump)
+-		local arr s tmp result
++		local arr s tmp result cpu_evts
++
++		# aarch64 doesn't have /sys/bus/event_source/devices/cpu/events
++		if [[ `uname -m` != aarch64 ]]; then
++			cpu_evts=$(ls /sys/bus/event_source/devices/cpu/events)
++		fi
+ 
+ 		if [[ "$cur1" == */* && ${cur1#*/} =~ ^[A-Z] ]]; then
+ 			OLD_IFS="$IFS"
+@@ -183,9 +188,9 @@ __perf_main ()
+ 				fi
+ 			done
+ 
+-			evts=${result}" "$(ls /sys/bus/event_source/devices/cpu/events)
++			evts=${result}" "${cpu_evts}
+ 		else
+-			evts=${raw_evts}" "$(ls /sys/bus/event_source/devices/cpu/events)
++			evts=${raw_evts}" "${cpu_evts}
+ 		fi
+ 
+ 		if [[ "$cur1" == , ]]; then
 -- 
 2.39.2
 
