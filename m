@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11364BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:19:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522C1C433D2;
-	Tue,  7 Mar 2023 17:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4122CBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:19:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE66C433A8;
+	Tue,  7 Mar 2023 17:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209548;
-	bh=LGEzAMYWbYY42wr4lpgE8e5TWArRvlRd9jb6HRScyms=;
+	s=korg; t=1678209552;
+	bh=tOf2/A02JuPTdrXHDFh7J2qjHSVFBS/ForIMHDsIT1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZEfzpzeMQYLAt8DXFrYCCS0s+cQDLuS62IdHYp80P2ja0vfEDekQz9F2cVxFjarq
-	 aChaXau36N54AP53g7jaYS5GmxV3QkeF0K701vuqYkbr54DAFiStYvEyhwvdgb617z
-	 0vEMRqZ7VJOghH94UGBoXEe66G9gSdn0zJ9Il7hc=
+	b=2VIlrsbSw/rMZGJQ/zyOz3f7KqFJt9Y8jlkInvuiJcyZrR3WdUFxon4j6lX9H8MHw
+	 5mqKfJRnnNF/qlANrKG+oHqCONuaiHAviA71InhEbXYhXU0pvhCrn7ZYgoguXiAU3A
+	 8r3zkZzSnyxdvPLIUO7P9LJjeCiy/9U7bc7ot2GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0253/1001] wifi: mt76: mt7996: rely on mt76_connac2_mac_tx_rate_val
-Date: Tue,  7 Mar 2023 17:50:25 +0100
-Message-Id: <20230307170032.749480020@linuxfoundation.org>
+Subject: [PATCH 6.2 0224/1001] net: ethernet: ti: am65-cpsw/cpts: Fix CPTS release action
+Date: Tue,  7 Mar 2023 17:49:56 +0100
+Message-Id: <20230307170031.602236736@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,130 +38,132 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit 0b8e2d69467f78a7c9d87b452220e87012435e33 ]
+[ Upstream commit 4ad8766cd3982744e53f107f378d2c65b76ff9a8 ]
 
-In order to fix a possible NULL pointer dereference in
-mt7996_mac_write_txwi() of vif pointer, export
-mt76_connac2_mac_tx_rate_val utility routine and reuse it
-in mt7996 driver.
+The am65_cpts_release() function is registered as a devm_action in the
+am65_cpts_create() function in am65-cpts driver. When the am65-cpsw driver
+invokes am65_cpts_create(), am65_cpts_release() is added in the set of devm
+actions associated with the am65-cpsw driver's device.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+In the event of probe failure or probe deferral, the platform_drv_probe()
+function invokes dev_pm_domain_detach() which powers off the CPSW and the
+CPSW's CPTS hardware, both of which share the same power domain. Since the
+am65_cpts_disable() function invoked by the am65_cpts_release() function
+attempts to reset the CPTS hardware by writing to its registers, the CPTS
+hardware is assumed to be powered on at this point. However, the hardware
+is powered off before the devm actions are executed.
+
+Fix this by getting rid of the devm action for am65_cpts_release() and
+invoking it directly on the cleanup and exit paths.
+
+Fixes: f6bd59526ca5 ("net: ethernet: ti: introduce am654 common platform time sync driver")
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt76_connac.h  |  3 ++
- .../wireless/mediatek/mt76/mt76_connac_mac.c  |  7 +--
- .../net/wireless/mediatek/mt76/mt7996/mac.c   | 48 +------------------
- 3 files changed, 9 insertions(+), 49 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c |  2 ++
+ drivers/net/ethernet/ti/am65-cpts.c      | 15 +++++----------
+ drivers/net/ethernet/ti/am65-cpts.h      |  5 +++++
+ 3 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac.h b/drivers/net/wireless/mediatek/mt76/mt76_connac.h
-index 8ba883b03e500..2ee9a3c8e25c4 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac.h
-@@ -370,6 +370,9 @@ void mt76_connac2_mac_write_txwi(struct mt76_dev *dev, __le32 *txwi,
- 				 struct sk_buff *skb, struct mt76_wcid *wcid,
- 				 struct ieee80211_key_conf *key, int pid,
- 				 enum mt76_txq_id qid, u32 changed);
-+u16 mt76_connac2_mac_tx_rate_val(struct mt76_phy *mphy,
-+				 struct ieee80211_vif *vif,
-+				 bool beacon, bool mcast);
- bool mt76_connac2_mac_fill_txs(struct mt76_dev *dev, struct mt76_wcid *wcid,
- 			       __le32 *txs_data);
- bool mt76_connac2_mac_add_txs_skb(struct mt76_dev *dev, struct mt76_wcid *wcid,
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-index c8d0c84e688b8..aed4ee95fb2ec 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-@@ -267,9 +267,9 @@ int mt76_connac_init_tx_queues(struct mt76_phy *phy, int idx, int n_desc,
- }
- EXPORT_SYMBOL_GPL(mt76_connac_init_tx_queues);
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 6cda4b7c10cb6..3e17152798554 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2852,6 +2852,7 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
  
--static u16
--mt76_connac2_mac_tx_rate_val(struct mt76_phy *mphy, struct ieee80211_vif *vif,
--			     bool beacon, bool mcast)
-+u16 mt76_connac2_mac_tx_rate_val(struct mt76_phy *mphy,
-+				 struct ieee80211_vif *vif,
-+				 bool beacon, bool mcast)
+ err_free_phylink:
+ 	am65_cpsw_nuss_phylink_cleanup(common);
++	am65_cpts_release(common->cpts);
+ err_of_clear:
+ 	of_platform_device_destroy(common->mdio_dev, NULL);
+ err_pm_clear:
+@@ -2880,6 +2881,7 @@ static int am65_cpsw_nuss_remove(struct platform_device *pdev)
+ 	 */
+ 	am65_cpsw_nuss_cleanup_ndev(common);
+ 	am65_cpsw_nuss_phylink_cleanup(common);
++	am65_cpts_release(common->cpts);
+ 
+ 	of_platform_device_destroy(common->mdio_dev, NULL);
+ 
+diff --git a/drivers/net/ethernet/ti/am65-cpts.c b/drivers/net/ethernet/ti/am65-cpts.c
+index 9535396b28cd9..a297890152d92 100644
+--- a/drivers/net/ethernet/ti/am65-cpts.c
++++ b/drivers/net/ethernet/ti/am65-cpts.c
+@@ -929,14 +929,13 @@ static int am65_cpts_of_parse(struct am65_cpts *cpts, struct device_node *node)
+ 	return cpts_of_mux_clk_setup(cpts, node);
+ }
+ 
+-static void am65_cpts_release(void *data)
++void am65_cpts_release(struct am65_cpts *cpts)
  {
- 	u8 mode = 0, band = mphy->chandef.chan->band;
- 	int rateidx = 0, mcast_rate;
-@@ -319,6 +319,7 @@ mt76_connac2_mac_tx_rate_val(struct mt76_phy *mphy, struct ieee80211_vif *vif,
- 	return FIELD_PREP(MT_TX_RATE_IDX, rateidx) |
- 	       FIELD_PREP(MT_TX_RATE_MODE, mode);
+-	struct am65_cpts *cpts = data;
+-
+ 	ptp_clock_unregister(cpts->ptp_clock);
+ 	am65_cpts_disable(cpts);
+ 	clk_disable_unprepare(cpts->refclk);
  }
-+EXPORT_SYMBOL_GPL(mt76_connac2_mac_tx_rate_val);
++EXPORT_SYMBOL_GPL(am65_cpts_release);
  
- static void
- mt76_connac2_mac_write_txwi_8023(__le32 *txwi, struct sk_buff *skb,
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 96ced4c039ce1..0eb9e4d73f2c1 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -959,51 +959,6 @@ mt7996_mac_write_txwi_80211(struct mt7996_dev *dev, __le32 *txwi,
+ struct am65_cpts *am65_cpts_create(struct device *dev, void __iomem *regs,
+ 				   struct device_node *node)
+@@ -1014,18 +1013,12 @@ struct am65_cpts *am65_cpts_create(struct device *dev, void __iomem *regs,
  	}
- }
+ 	cpts->phc_index = ptp_clock_index(cpts->ptp_clock);
  
--static u16
--mt7996_mac_tx_rate_val(struct mt76_phy *mphy, struct ieee80211_vif *vif,
--		       bool beacon, bool mcast)
--{
--	u8 mode = 0, band = mphy->chandef.chan->band;
--	int rateidx = 0, mcast_rate;
--
--	if (beacon) {
--		struct cfg80211_bitrate_mask *mask;
--
--		mask = &vif->bss_conf.beacon_tx_rate;
--		if (hweight16(mask->control[band].he_mcs[0]) == 1) {
--			rateidx = ffs(mask->control[band].he_mcs[0]) - 1;
--			mode = MT_PHY_TYPE_HE_SU;
--			goto out;
--		} else if (hweight16(mask->control[band].vht_mcs[0]) == 1) {
--			rateidx = ffs(mask->control[band].vht_mcs[0]) - 1;
--			mode = MT_PHY_TYPE_VHT;
--			goto out;
--		} else if (hweight8(mask->control[band].ht_mcs[0]) == 1) {
--			rateidx = ffs(mask->control[band].ht_mcs[0]) - 1;
--			mode = MT_PHY_TYPE_HT;
--			goto out;
--		} else if (hweight32(mask->control[band].legacy) == 1) {
--			rateidx = ffs(mask->control[band].legacy) - 1;
--			goto legacy;
--		}
+-	ret = devm_add_action_or_reset(dev, am65_cpts_release, cpts);
+-	if (ret) {
+-		dev_err(dev, "failed to add ptpclk reset action %d", ret);
+-		return ERR_PTR(ret);
 -	}
 -
--	mcast_rate = vif->bss_conf.mcast_rate[band];
--	if (mcast && mcast_rate > 0)
--		rateidx = mcast_rate - 1;
--	else
--		rateidx = ffs(vif->bss_conf.basic_rates) - 1;
--
--legacy:
--	rateidx = mt76_calculate_default_rate(mphy, rateidx);
--	mode = rateidx >> 8;
--	rateidx &= GENMASK(7, 0);
--
--out:
--	return FIELD_PREP(MT_TX_RATE_IDX, rateidx) |
--	       FIELD_PREP(MT_TX_RATE_MODE, mode);
--}
--
- void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
- 			   struct sk_buff *skb, struct mt76_wcid *wcid, int pid,
- 			   struct ieee80211_key_conf *key, u32 changed)
-@@ -1091,7 +1046,8 @@ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
- 		/* Fixed rata is available just for 802.11 txd */
- 		struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
- 		bool multicast = is_multicast_ether_addr(hdr->addr1);
--		u16 rate = mt7996_mac_tx_rate_val(mphy, vif, beacon, multicast);
-+		u16 rate = mt76_connac2_mac_tx_rate_val(mphy, vif, beacon,
-+							multicast);
+ 	ret = devm_request_threaded_irq(dev, cpts->irq, NULL,
+ 					am65_cpts_interrupt,
+ 					IRQF_ONESHOT, dev_name(dev), cpts);
+ 	if (ret < 0) {
+ 		dev_err(cpts->dev, "error attaching irq %d\n", ret);
+-		return ERR_PTR(ret);
++		goto reset_ptpclk;
+ 	}
  
- 		/* fix to bw 20 */
- 		val = MT_TXD6_FIXED_BW |
+ 	dev_info(dev, "CPTS ver 0x%08x, freq:%u, add_val:%u\n",
+@@ -1034,6 +1027,8 @@ struct am65_cpts *am65_cpts_create(struct device *dev, void __iomem *regs,
+ 
+ 	return cpts;
+ 
++reset_ptpclk:
++	am65_cpts_release(cpts);
+ refclk_disable:
+ 	clk_disable_unprepare(cpts->refclk);
+ 	return ERR_PTR(ret);
+diff --git a/drivers/net/ethernet/ti/am65-cpts.h b/drivers/net/ethernet/ti/am65-cpts.h
+index bd08f4b2edd2d..6e14df0be1137 100644
+--- a/drivers/net/ethernet/ti/am65-cpts.h
++++ b/drivers/net/ethernet/ti/am65-cpts.h
+@@ -18,6 +18,7 @@ struct am65_cpts_estf_cfg {
+ };
+ 
+ #if IS_ENABLED(CONFIG_TI_K3_AM65_CPTS)
++void am65_cpts_release(struct am65_cpts *cpts);
+ struct am65_cpts *am65_cpts_create(struct device *dev, void __iomem *regs,
+ 				   struct device_node *node);
+ int am65_cpts_phc_index(struct am65_cpts *cpts);
+@@ -31,6 +32,10 @@ void am65_cpts_estf_disable(struct am65_cpts *cpts, int idx);
+ void am65_cpts_suspend(struct am65_cpts *cpts);
+ void am65_cpts_resume(struct am65_cpts *cpts);
+ #else
++static inline void am65_cpts_release(struct am65_cpts *cpts)
++{
++}
++
+ static inline struct am65_cpts *am65_cpts_create(struct device *dev,
+ 						 void __iomem *regs,
+ 						 struct device_node *node)
 -- 
 2.39.2
 
