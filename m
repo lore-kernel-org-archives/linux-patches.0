@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90647BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:47:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9E4C433D2;
-	Tue,  7 Mar 2023 18:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7BEBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:47:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D27C433EF;
+	Tue,  7 Mar 2023 18:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214855;
-	bh=U/8ae5hoKDIFCQhPdpeD7R5w2mssVhn6ZzxySlFKA50=;
+	s=korg; t=1678214858;
+	bh=CiU1PcPoQYDOibH6efvwYOA4yU55GzkveKdEFc7Tx/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BiW27w2MdrGrnsWOJ1hCpKNYWxMfKmmnW9tWtqnMfODQaz9HlHi2bzQvUkhy7AMOe
-	 kBwV7rk0bxpPZYohME8z5/OFDvZCKyxWPm5fH+ZmfqTngYR8B2l1Fc3MESc+mwTXP0
-	 fNX0GOt9qp6LZGvWgd446w/cowQ8XrxiB/fWN064=
+	b=ivgEW1FFFA9ynYmy7REO50l9ibC7/FT52FuSj1fzyqf6LDmG+JaD1BN2CWkSYqI6O
+	 uyT7Oi0ehk6UHLnXjkxO8LBAUC4Z2z7QDoOmYlY9MaO8tyHf0ssaht/jvRQPktGZaq
+	 zgtWDzdM5+lL2cAERtiZkmWEFGe9dYrMVCubw9zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/567] blk-mq: avoid sleep in blk_mq_alloc_request_hctx
-Date: Tue,  7 Mar 2023 17:56:30 +0100
-Message-Id: <20230307165908.254495328@linuxfoundation.org>
+Subject: [PATCH 5.15 072/567] wifi: rtl8xxxu: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Tue,  7 Mar 2023 17:56:48 +0100
+Message-Id: <20230307165909.008404136@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,51 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 6ee858a3d3270a68902d66bb47c151a83622535c ]
+[ Upstream commit 4c2005ac87685907b3719b4f40215b578efd27c4 ]
 
-Commit 1f5bd336b9150 ("blk-mq: add blk_mq_alloc_request_hctx") add
-blk_mq_alloc_request_hctx to send commands to a specific queue. If
-BLK_MQ_REQ_NOWAIT is not set in tag allocation, we may change to different
-hctx after sleep and get tag from unexpected hctx. So BLK_MQ_REQ_NOWAIT
-must be set in flags for blk_mq_alloc_request_hctx.
-After commit 600c3b0cea784 ("blk-mq: open code __blk_mq_alloc_request in
-blk_mq_alloc_request_hctx"), blk_mq_alloc_request_hctx return -EINVAL
-if both BLK_MQ_REQ_NOWAIT and BLK_MQ_REQ_RESERVED are not set instead of
-if BLK_MQ_REQ_NOWAIT is not set. So if BLK_MQ_REQ_NOWAIT is not set and
-BLK_MQ_REQ_RESERVED is set, blk_mq_alloc_request_hctx could alloc tag
-from unexpected hctx. I guess what we need here is that return -EINVAL
-if either BLK_MQ_REQ_NOWAIT or BLK_MQ_REQ_RESERVED is not set.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-Currently both BLK_MQ_REQ_NOWAIT and BLK_MQ_REQ_RESERVED will be set if
-specific hctx is needed in nvme_auth_submit, nvmf_connect_io_queue
-and nvmf_connect_admin_queue. Fix the potential BLK_MQ_REQ_NOWAIT missed
-case in future.
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
 
-Fixes: 600c3b0cea78 ("blk-mq: open code __blk_mq_alloc_request in blk_mq_alloc_request_hctx")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+In this case, dev_kfree_skb() is called to free and drop the SKB when
+it's shutdown, so replace it with dev_kfree_skb_irq(). Compile tested
+only.
+
+Fixes: 26f1fad29ad9 ("New driver: rtl8xxxu (mac80211)")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221208143517.2383424-1-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 9f53b4caf9772..01e281801453d 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -457,7 +457,8 @@ struct request *blk_mq_alloc_request_hctx(struct request_queue *q,
- 	 * allocator for this for the rare use case of a command tied to
- 	 * a specific queue.
- 	 */
--	if (WARN_ON_ONCE(!(flags & (BLK_MQ_REQ_NOWAIT | BLK_MQ_REQ_RESERVED))))
-+	if (WARN_ON_ONCE(!(flags & BLK_MQ_REQ_NOWAIT)) ||
-+	    WARN_ON_ONCE(!(flags & BLK_MQ_REQ_RESERVED)))
- 		return ERR_PTR(-EINVAL);
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index 3d3fa2b616a86..dc734e8fa0f1c 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -5184,7 +5184,7 @@ static void rtl8xxxu_queue_rx_urb(struct rtl8xxxu_priv *priv,
+ 		pending = priv->rx_urb_pending_count;
+ 	} else {
+ 		skb = (struct sk_buff *)rx_urb->urb.context;
+-		dev_kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 		usb_free_urb(&rx_urb->urb);
+ 	}
  
- 	if (hctx_idx >= q->nr_hw_queues)
 -- 
 2.39.2
 
