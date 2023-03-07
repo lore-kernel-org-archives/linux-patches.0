@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023B2BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:15:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75991C4339E;
-	Tue,  7 Mar 2023 18:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2760FBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:15:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8512AC433D2;
+	Tue,  7 Mar 2023 18:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212936;
-	bh=Jg/fMJnI3ke8gEvZQdHrTALGycE45S5Wfg+Cum6cCVo=;
+	s=korg; t=1678212940;
+	bh=46X7D2sW8optM+g2EHzOyHb4MN2Fe3Ss7mY5jmJgFTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eh9qKbczWyyHalscucMFb+gzkEiL4oxBReWIJhB6Ag8n6ImlwrRjQ22Ah7z9oQ4XL
-	 xnSRcptOQrSDMACV0drt0Xb0wPmGPVb/W/IAxc0bfOIOelIqyHzspSAImtvMJpp0WP
-	 FPifHPZFii1/2+8FbFpf2SSNTAQSFxFlwFs+ED5A=
+	b=D51va6EKGVitm0Ofm0fcUl6sCxYyrJNvlvg9OJZeROidh2NhGlKXnPR8k0nMS9/I9
+	 2VwZhdJWzEJSxWXrw+OjDMSCV0SN1QBkqsX+Y6xup6XJIwYyOwlYaORR2ElkHstsYv
+	 mce4j4oY673DFJn5m1eK59K5EpF6uENPkQSyW8KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Stefan Wahren <stefan.wahren@i2se.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Marek Vasut <marex@denx.de>,
+	Nicolas Boichat <drinkcat@chromium.org>,
+	=?UTF-8?q?S=C3=A9bastien=20Szymanski?= <sebastien.szymanski@armadeus.com>,
+	Jagan Teki <jagan@amarulasolutions.com>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 315/885] pinctrl: bcm2835: Remove of_node_put() in bcm2835_of_gpio_ranges_fallback()
-Date: Tue,  7 Mar 2023 17:54:09 +0100
-Message-Id: <20230307170015.826285990@linuxfoundation.org>
+Subject: [PATCH 6.1 306/885] drm: exynos: dsi: Fix MIPI_DSI*_NO_* mode flags
+Date: Tue,  7 Mar 2023 17:54:00 +0100
+Message-Id: <20230307170015.404565465@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,40 +38,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Jagan Teki <jagan@amarulasolutions.com>
 
-[ Upstream commit 2d578dd27871372f7159dd3206149ec616700d87 ]
+[ Upstream commit 996e1defca34485dd2bd70b173f069aab5f21a65 ]
 
-Remove wrong of_node_put() in bcm2835_of_gpio_ranges_fallback(),
-there is no counterpart of_node_get() for it.
+HFP/HBP/HSA/EOT_PACKET modes in Exynos DSI host specifies
+0 = Enable and 1 = Disable.
 
-Fixes: d2b67744fd99 ("pinctrl: bcm2835: implement hook for missing gpio-ranges")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Stefan Wahren <stefan.wahren@i2se.com>
-Tested-by: Stefan Wahren <stefan.wahren@i2se.com>
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Link: https://lore.kernel.org/r/20230113215352.44272-3-andriy.shevchenko@linux.intel.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+The logic for checking these mode flags was correct before
+the MIPI_DSI*_NO_* mode flag conversion.
+
+This patch is trying to fix this MIPI_DSI*_NO_* mode flags handling
+Exynos DSI host and update the mode_flags in relevant panel drivers.
+
+Fixes: 0f3b68b66a6d ("drm/dsi: Add _NO_ to MIPI_DSI_* flags disabling features")
+Reviewed-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Nicolas Boichat <drinkcat@chromium.org>
+Reported-by: Sébastien Szymanski <sebastien.szymanski@armadeus.com>
+Signed-off-by: Jagan Teki <jagan@amarulasolutions.com>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221212145745.15387-1-jagan@amarulasolutions.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/bcm/pinctrl-bcm2835.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_dsi.c          | 8 ++++----
+ drivers/gpu/drm/panel/panel-samsung-s6e3ha2.c    | 4 +++-
+ drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c | 3 ++-
+ drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c    | 2 --
+ 4 files changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pinctrl/bcm/pinctrl-bcm2835.c b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
-index 7857e612a1008..c7cdccdb4332a 100644
---- a/drivers/pinctrl/bcm/pinctrl-bcm2835.c
-+++ b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
-@@ -363,8 +363,6 @@ static int bcm2835_of_gpio_ranges_fallback(struct gpio_chip *gc,
- {
- 	struct pinctrl_dev *pctldev = of_pinctrl_get(np);
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_dsi.c b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
+index ec673223d6b7a..b5305b145ddbd 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
+@@ -805,15 +805,15 @@ static int exynos_dsi_init_link(struct exynos_dsi *dsi)
+ 			reg |= DSIM_AUTO_MODE;
+ 		if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HSE)
+ 			reg |= DSIM_HSE_MODE;
+-		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HFP))
++		if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HFP)
+ 			reg |= DSIM_HFP_MODE;
+-		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HBP))
++		if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HBP)
+ 			reg |= DSIM_HBP_MODE;
+-		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HSA))
++		if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HSA)
+ 			reg |= DSIM_HSA_MODE;
+ 	}
  
--	of_node_put(np);
--
- 	if (!pctldev)
- 		return 0;
+-	if (!(dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
++	if (dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
+ 		reg |= DSIM_EOT_DISABLE;
  
+ 	switch (dsi->format) {
+diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e3ha2.c b/drivers/gpu/drm/panel/panel-samsung-s6e3ha2.c
+index 5c621b15e84c2..439ef30735128 100644
+--- a/drivers/gpu/drm/panel/panel-samsung-s6e3ha2.c
++++ b/drivers/gpu/drm/panel/panel-samsung-s6e3ha2.c
+@@ -692,7 +692,9 @@ static int s6e3ha2_probe(struct mipi_dsi_device *dsi)
+ 
+ 	dsi->lanes = 4;
+ 	dsi->format = MIPI_DSI_FMT_RGB888;
+-	dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS;
++	dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS |
++		MIPI_DSI_MODE_VIDEO_NO_HFP | MIPI_DSI_MODE_VIDEO_NO_HBP |
++		MIPI_DSI_MODE_VIDEO_NO_HSA | MIPI_DSI_MODE_NO_EOT_PACKET;
+ 
+ 	ctx->supplies[0].supply = "vdd3";
+ 	ctx->supplies[1].supply = "vci";
+diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c b/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c
+index e06fd35de814b..9c3e76171759a 100644
+--- a/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c
++++ b/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c
+@@ -446,7 +446,8 @@ static int s6e63j0x03_probe(struct mipi_dsi_device *dsi)
+ 
+ 	dsi->lanes = 1;
+ 	dsi->format = MIPI_DSI_FMT_RGB888;
+-	dsi->mode_flags = MIPI_DSI_MODE_NO_EOT_PACKET;
++	dsi->mode_flags = MIPI_DSI_MODE_VIDEO_NO_HFP |
++		MIPI_DSI_MODE_VIDEO_NO_HBP | MIPI_DSI_MODE_VIDEO_NO_HSA;
+ 
+ 	ctx->supplies[0].supply = "vdd3";
+ 	ctx->supplies[1].supply = "vci";
+diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c b/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c
+index 54213beafaf5e..ebf4c2d39ea88 100644
+--- a/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c
++++ b/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c
+@@ -990,8 +990,6 @@ static int s6e8aa0_probe(struct mipi_dsi_device *dsi)
+ 	dsi->lanes = 4;
+ 	dsi->format = MIPI_DSI_FMT_RGB888;
+ 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST
+-		| MIPI_DSI_MODE_VIDEO_NO_HFP | MIPI_DSI_MODE_VIDEO_NO_HBP
+-		| MIPI_DSI_MODE_VIDEO_NO_HSA | MIPI_DSI_MODE_NO_EOT_PACKET
+ 		| MIPI_DSI_MODE_VSYNC_FLUSH | MIPI_DSI_MODE_VIDEO_AUTO_VERT;
+ 
+ 	ret = s6e8aa0_parse_dt(ctx);
 -- 
 2.39.2
 
