@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA54BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:01:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B1FC433EF;
-	Tue,  7 Mar 2023 18:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7899EBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:02:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB46C433D2;
+	Tue,  7 Mar 2023 18:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212117;
-	bh=AcD60RX1q4lVmqX8JiDo0x3dWwvyOY67zhOEU0KKQiM=;
+	s=korg; t=1678212120;
+	bh=3mATWO0moBeie8NAo/xmvW75efGUeS5ZhBayyR2luJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTevxt+4GpnQe/WRj+kja+ShvNgbQAZ05VUmsIwCtwCa5JonB+FXt9e9dzICYGfHg
-	 S7KMM5QI7ss8AHTDb16S4VZNDxTdIQP5UaZDqCk0fJzI9chAEccpSqbCF57vt1V4F2
-	 yv0KrTwwbaXIZ1IZgKB4JmsNAYKPbcQdqtimVfyw=
+	b=lxd972hdh5zKlnvKe+IjVLhwUcDUcc8o0Pll3mfoy2cXW0/E9H0lhAnUsiRX/6+xV
+	 AXyTdl1Y0f5BN732LQWHkGvMPn/GtK7+9l8KyW4H8HJy3dcC9/vb005UHatQ1uiRK0
+	 8UZqaW0i19SJxpCx/Wxf3f4I1HgCHvGGzUULhCh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/885] arm64: dts: amlogic: meson-gx: fix SCPI clock dvfs node name
-Date: Tue,  7 Mar 2023 17:49:46 +0100
-Message-Id: <20230307170003.987846656@linuxfoundation.org>
+Subject: [PATCH 6.1 053/885] arm64: dts: amlogic: meson-axg: fix SCPI clock dvfs node name
+Date: Tue,  7 Mar 2023 17:49:47 +0100
+Message-Id: <20230307170004.032924499@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,23 +36,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 127f79212b07c5d9a6657a87e3eafdd889335814 ]
+[ Upstream commit 5b7069d72f03c92a0ab919725017394ebce03a81 ]
 
 Fixes:
 scpi: clocks: 'clock-controller' does not match any of the regexes: '^clocks-[0-9a-f]+$', 'pinctrl-[0-9]+'
 
-Link: https://lore.kernel.org/r/20230124-b4-amlogic-bindings-fixups-v1-1-44351528957e@linaro.org
+Link: https://lore.kernel.org/r/20230124-b4-amlogic-bindings-fixups-v1-2-44351528957e@linaro.org
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-gx.dtsi | 2 +-
+ arch/arm64/boot/dts/amlogic/meson-axg.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-index 3a53398176b35..93e4190e5d88f 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-@@ -249,7 +249,7 @@ scpi {
+diff --git a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
+index 73cd1791a13fa..3885eccf6da42 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
+@@ -152,7 +152,7 @@ scpi {
  		scpi_clocks: clocks {
  			compatible = "arm,scpi-clocks";
  
