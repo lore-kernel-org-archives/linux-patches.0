@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46344BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F162C433EF;
-	Tue,  7 Mar 2023 18:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471E1BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8075DC4339B;
+	Tue,  7 Mar 2023 18:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212326;
-	bh=nfiPZBITQwwzYfDU1ad7LkVzxZhDOaYxUcVtx77DVUU=;
+	s=korg; t=1678212329;
+	bh=i4EQkBQjrY4UOYfGmyeCf48T6yASAB++zF052nG9G1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2c3Y+3JaQePzbc8lpXHrHbIcpUNDR7dHX+Rb+dXyePAFO1SEEo/Y35YH20HzxZ+Ge
-	 mS5rcBIvH/4sBH3JHveaE06YRhgM+iL8rdRoUhqQGZXuzgxvvIyBWJOEnBxOjIEy/j
-	 vTR4ttJVPSOkpUKLH5+VFvEzyyL9qOQDoDUy7ZCw=
+	b=JlBKAO+e7906ZZsy0FUWQhc0rKdG+L0N3pHgWDAcjSxqYDqb6xpypcDJyJztUP2GO
+	 O5Z0mRyZMVgUCkjoAJB67eUzz/zFOLBhApTwVaqmNv5+Zw/upTtlGWZZJRpQX59jXf
+	 RYNK8EAuZ7nM+8FoQdfE7glfIn8GxPSTjRBVYG74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/885] wifi: rtlwifi: rtl8188ee: dont call kfree_skb() under spin_lock_irqsave()
-Date: Tue,  7 Mar 2023 17:50:53 +0100
-Message-Id: <20230307170007.035960186@linuxfoundation.org>
+Subject: [PATCH 6.1 110/885] block: use proper return value from bio_failfast()
+Date: Tue,  7 Mar 2023 17:50:44 +0100
+Message-Id: <20230307170006.656770777@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,55 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 2611687fa7ffc84190f92292de0b80468de17220 ]
+[ Upstream commit f3ca73862453ac1e64fc6968a14bf66d839cd2d8 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. All the SKBs have
-been dequeued from the old queue, so it's safe to enqueue these
-SKBs to a free queue, then free them after spin_unlock_irqrestore()
-at once. Compile tested only.
+kernel test robot complains about a type mismatch:
 
-Fixes: 7fe3b3abb5da ("rtlwifi: rtl8188ee: rtl8821ae: Fix a queue locking problem")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221207141411.46098-3-yangyingliang@huawei.com
+   block/blk-merge.c:984:42: sparse:     expected restricted blk_opf_t const [usertype] ff
+   block/blk-merge.c:984:42: sparse:     got unsigned int
+   block/blk-merge.c:1010:42: sparse: sparse: incorrect type in initializer (different base types) @@     expected restricted blk_opf_t const [usertype] ff @@     got unsigned int @@
+   block/blk-merge.c:1010:42: sparse:     expected restricted blk_opf_t const [usertype] ff
+   block/blk-merge.c:1010:42: sparse:     got unsigned int
+
+because bio_failfast() is return an unsigned int rather than the
+appropriate blk_opt_f type. Fix it up.
+
+Fixes: 3ce6a115980c ("block: sync mixed merged request's failfast with 1st bio's")
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202302170743.GXypM9Rt-lkp@intel.com/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ block/blk-merge.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c
-index 58c2ab3d44bef..de61c9c0ddec4 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c
-@@ -68,8 +68,10 @@ static void _rtl88ee_return_beacon_queue_skb(struct ieee80211_hw *hw)
- 	struct rtl_priv *rtlpriv = rtl_priv(hw);
- 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
- 	struct rtl8192_tx_ring *ring = &rtlpci->tx_ring[BEACON_QUEUE];
-+	struct sk_buff_head free_list;
- 	unsigned long flags;
- 
-+	skb_queue_head_init(&free_list);
- 	spin_lock_irqsave(&rtlpriv->locks.irq_th_lock, flags);
- 	while (skb_queue_len(&ring->queue)) {
- 		struct rtl_tx_desc *entry = &ring->desc[ring->idx];
-@@ -79,10 +81,12 @@ static void _rtl88ee_return_beacon_queue_skb(struct ieee80211_hw *hw)
- 				 rtlpriv->cfg->ops->get_desc(hw, (u8 *)entry,
- 						true, HW_DESC_TXBUFF_ADDR),
- 				 skb->len, DMA_TO_DEVICE);
--		kfree_skb(skb);
-+		__skb_queue_tail(&free_list, skb);
- 		ring->idx = (ring->idx + 1) % ring->entries;
- 	}
- 	spin_unlock_irqrestore(&rtlpriv->locks.irq_th_lock, flags);
-+
-+	__skb_queue_purge(&free_list);
+diff --git a/block/blk-merge.c b/block/blk-merge.c
+index 914da38523b5a..17ac532105a97 100644
+--- a/block/blk-merge.c
++++ b/block/blk-merge.c
+@@ -747,7 +747,7 @@ void blk_rq_set_mixed_merge(struct request *rq)
+ 	rq->rq_flags |= RQF_MIXED_MERGE;
  }
  
- static void _rtl88ee_disable_bcn_sub_func(struct ieee80211_hw *hw)
+-static inline unsigned int bio_failfast(const struct bio *bio)
++static inline blk_opf_t bio_failfast(const struct bio *bio)
+ {
+ 	if (bio->bi_opf & REQ_RAHEAD)
+ 		return REQ_FAILFAST_MASK;
 -- 
 2.39.2
 
