@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D479BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13455C433D2;
-	Tue,  7 Mar 2023 18:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1511BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13871C433D2;
+	Tue,  7 Mar 2023 18:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214904;
-	bh=uYkOMHi0eqFSkhlHeL/TM7QsZ1IhpShGF8Xj+RTepc8=;
+	s=korg; t=1678214907;
+	bh=W/7wbdhA7bvRuCS4pSizIBPmFLWaFP8HK6UO60Mynqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FW4EKgCI7iIm3QyisS8WMx8vg+2JJ815hIxd+qn6mu3mDZqd4GXAEN4nBMzXDT3vx
-	 ZUfG15AMRIYq/wJsp/Vhg1Avg723GBFkJenBGNNDJhzYqtm4KcHJI+640Y++vJihjY
-	 vT4i4niaY/T2hC/4hY1DhMwwgjQY87mSnXKUjHwo=
+	b=0/Ec03kJzrLQPfg/VrSS5vJBv2D33zIhbnOxT5yq4T+Sqrsv5PPLy0jjVrUOHsZm8
+	 4ViiL8+E4s8LCl+Y4NI7+JORpc+EIvO9LJwLJBZKJ2q3H/IULZFRwJ+M8JUuv9sNoY
+	 ZX5laZOb8tvo+me2pGsh48uXSq7KCbj3e7ZuuNeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamie Douglass <jamiemdouglass@gmail.com>,
-	Petr Vorel <pvorel@suse.cz>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Qiheng Lin <linqiheng@huawei.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 057/567] arm64: dts: qcom: msm8992-lg-bullhead: Correct memory overlaps with the SMEM and MPSS memory regions
-Date: Tue,  7 Mar 2023 17:56:33 +0100
-Message-Id: <20230307165908.374036727@linuxfoundation.org>
+Subject: [PATCH 5.15 058/567] s390/dasd: Fix potential memleak in dasd_eckd_init()
+Date: Tue,  7 Mar 2023 17:56:34 +0100
+Message-Id: <20230307165908.414978801@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -37,59 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jamie Douglass <jamiemdouglass@gmail.com>
+From: Qiheng Lin <linqiheng@huawei.com>
 
-[ Upstream commit d44106883d74992343710f18c4aaae937c7cefab ]
+[ Upstream commit 460e9bed82e49db1b823dcb4e421783854d86c40 ]
 
-The memory region reserved by a previous commit (see fixes tag below)
-overlaps with the SMEM and MPSS memory regions, causing error messages in
-dmesg:
-	OF: reserved mem: OVERLAP DETECTED!
-	reserved@5000000 (0x0000000005000000--0x0000000007200000)
-	overlaps with smem_region@6a00000
-	(0x0000000006a00000--0x0000000006c00000)
+`dasd_reserve_req` is allocated before `dasd_vol_info_req`, and it
+also needs to be freed before the error returns, just like the other
+cases in this function.
 
-	OF: reserved mem: OVERLAP DETECTED!
-	reserved@6c00000 (0x0000000006c00000--0x0000000007200000)
-	overlaps with memory@7000000
-	(0x0000000007000000--0x000000000ca00000)
-
-This patch resolves both of these by splitting the previously reserved
-memory region into two sections either side of the SMEM region and by
-cutting off the second memory region to 0x7000000.
-
-Fixes: 22c7e1a0fa45 ("arm64: dts: msm8992-bullhead: add memory hole region")
-Signed-off-by: Jamie Douglass <jamiemdouglass@gmail.com>
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Tested-by: Petr Vorel <pvorel@suse.cz>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230202054819.16079-1-jamiemdouglass@gmail.com
+Fixes: 9e12e54c7a8f ("s390/dasd: Handle out-of-space constraint")
+Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
+Link: https://lore.kernel.org/r/20221208133809.16796-1-linqiheng@huawei.com
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230210000253.1644903-3-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/s390/block/dasd_eckd.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
-index 84ba740cb957b..60fcb024c8879 100644
---- a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
-@@ -55,8 +55,13 @@ cont_splash_mem: memory@3400000 {
- 			no-map;
- 		};
- 
--		removed_region: reserved@5000000 {
--			reg = <0 0x05000000 0 0x2200000>;
-+		reserved@5000000 {
-+			reg = <0x0 0x05000000 0x0 0x1a00000>;
-+			no-map;
-+		};
-+
-+		reserved@6c00000 {
-+			reg = <0x0 0x06c00000 0x0 0x400000>;
- 			no-map;
- 		};
- 	};
+diff --git a/drivers/s390/block/dasd_eckd.c b/drivers/s390/block/dasd_eckd.c
+index 57dfc92aa756f..56ab74aa07f42 100644
+--- a/drivers/s390/block/dasd_eckd.c
++++ b/drivers/s390/block/dasd_eckd.c
+@@ -6729,8 +6729,10 @@ dasd_eckd_init(void)
+ 		return -ENOMEM;
+ 	dasd_vol_info_req = kmalloc(sizeof(*dasd_vol_info_req),
+ 				    GFP_KERNEL | GFP_DMA);
+-	if (!dasd_vol_info_req)
++	if (!dasd_vol_info_req) {
++		kfree(dasd_reserve_req);
+ 		return -ENOMEM;
++	}
+ 	pe_handler_worker = kmalloc(sizeof(*pe_handler_worker),
+ 				    GFP_KERNEL | GFP_DMA);
+ 	if (!pe_handler_worker) {
 -- 
 2.39.2
 
