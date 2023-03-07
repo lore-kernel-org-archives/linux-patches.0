@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7853DBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:46:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A94C433EF;
-	Tue,  7 Mar 2023 18:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD19BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:46:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53FDC4339B;
+	Tue,  7 Mar 2023 18:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214787;
-	bh=u5bv5718quh7sauqTA9ZlkhxW/MbwIqa0JxHq8+TATU=;
+	s=korg; t=1678214790;
+	bh=D1RXHSyBNugUMbjzFdSlEhgSXSOV44lLHTee+kMtcSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XShl8ZFLeEfk4ppkgB/gwQgtFSzftoMQc8iaCdIB6oc6W4Mp1OM5yyJm4+X7NCPo2
-	 p+EQUMcTn4qaCcymn1AwaZrbeqAF8QSuiEuxZ82ztMKF89XmWmHGHa6v6cCE9slt0L
-	 6T/mQOFtAHnfqrC/fN8lffDuxrZeG1i/ca/dg2qo=
+	b=DvNZQga4niDz+GaXhKFZEz772KmBS4SWe9btB4X/zgRmiI48Hneir1vJRQSDGGNSP
+	 2AT2vOVc0eMQxG/kFaxGpyxmIz7AoiXTZB97D0eoL8lToEGqp9xFfu5PL12PcaFPOy
+	 ZgNn0yeoZW2U4oOYUpSExbIQyQXjRSkH0XQ3A9hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Christian Hewitt <christianshewitt@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 048/567] arm64: dts: renesas: beacon-renesom: Fix gpio expander reference
-Date: Tue,  7 Mar 2023 17:56:24 +0100
-Message-Id: <20230307165908.011096584@linuxfoundation.org>
+Subject: [PATCH 5.15 049/567] arm64: dts: meson: bananapi-m5: switch VDDIO_C pin to OPEN_DRAIN
+Date: Tue,  7 Mar 2023 17:56:25 +0100
+Message-Id: <20230307165908.043522795@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,74 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adam Ford <aford173@gmail.com>
+From: Christian Hewitt <christianshewitt@gmail.com>
 
-[ Upstream commit d7f9492dfc03153ac56ab59066a196558748f575 ]
+[ Upstream commit 856968e066bd77b113965f1a355ec7401edff65f ]
 
-The board used to originally introduce the Beacon Embedded RZ/G2[M/N/H]
-boards had a GPIO expander with address 20, but this was changed when
-the final board went to production.
+For proper warm (re)boot from SD card the BPI-M5 board requires TFLASH_VDD_EN
+and VDDIO_C pins to be switched to high impedance mode. This can be achieved
+using OPEN_DRAIN instead of ACTIVE_HIGH to leave the GPIO pins in input mode
+and retain high state (pin has the pull-up).
 
-The production boards changed both the part itself and the address.
-With the incorrect address, the LCD cannot come up.  If the LCD fails,
-the rcar-du driver fails to come up, and that also breaks HDMI.
+This change is inspired by meson-sm1-odroid.dtsi where OPEN_DRAIN has been
+used to resolve similar problems with the Odroid C4 board (TF_IO in the C4
+dts is the equivalent regulator).
 
-Pre-release board were not shipped to the general public, so it should
-be safe to push this as a fix.  Anyone with a production board would
-have video fail due to this GPIO expander change.
-
-Fixes: a1d8a344f1ca ("arm64: dts: renesas: Introduce r8a774a1-beacon-rzg2m-kit")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230114225647.227972-1-aford173@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 976e920183e4 ("arm64: dts: meson-sm1: add Banana PI BPI-M5 board dts")
+Suggested-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230127142221.3718184-2-christianshewitt@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/renesas/beacon-renesom-baseboard.dtsi | 24 ++++++++-----------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi b/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
-index 48e0c0494f6a0..f1ab4943c295c 100644
---- a/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
-+++ b/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
-@@ -432,20 +432,6 @@ wm8962_endpoint: endpoint {
- 		};
- 	};
+diff --git a/arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts b/arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts
+index 6d0db667581fa..38ebe98ba9c6b 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts
+@@ -123,7 +123,7 @@ vddio_c: regulator-vddio_c {
+ 		regulator-min-microvolt = <1800000>;
+ 		regulator-max-microvolt = <3300000>;
  
--	/* 0 - lcd_reset */
--	/* 1 - lcd_pwr */
--	/* 2 - lcd_select */
--	/* 3 - backlight-enable */
--	/* 4 - Touch_shdwn */
--	/* 5 - LCD_H_pol */
--	/* 6 - lcd_V_pol */
--	gpio_exp1: gpio@20 {
--		compatible = "onnn,pca9654";
--		reg = <0x20>;
--		gpio-controller;
--		#gpio-cells = <2>;
--	};
--
- 	touchscreen@26 {
- 		compatible = "ilitek,ili2117";
- 		reg = <0x26>;
-@@ -477,6 +463,16 @@ hd3ss3220_out_ep: endpoint {
- 			};
- 		};
- 	};
-+
-+	gpio_exp1: gpio@70 {
-+		compatible = "nxp,pca9538";
-+		reg = <0x70>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names = "lcd_reset", "lcd_pwr", "lcd_select",
-+				  "backlight-enable", "Touch_shdwn",
-+				  "LCD_H_pol", "lcd_V_pol";
-+	};
- };
+-		enable-gpio = <&gpio_ao GPIOE_2 GPIO_ACTIVE_HIGH>;
++		enable-gpio = <&gpio_ao GPIOE_2 GPIO_OPEN_DRAIN>;
+ 		enable-active-high;
+ 		regulator-always-on;
  
- &lvds0 {
 -- 
 2.39.2
 
