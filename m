@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F22FBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:21:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A324BC433EF;
-	Tue,  7 Mar 2023 18:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A72BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:21:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1F5C433D2;
+	Tue,  7 Mar 2023 18:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213316;
-	bh=yvIqd7aRh/IpyYsixqpnn74gWK8aqog/onCKbf1Zz1k=;
+	s=korg; t=1678213319;
+	bh=FLtrJxCU8svaKcDRb4gucpSxupy5YS++0q4zrd5VOKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eMoV6aIK/EOo5FEQyFQRggV4GHiG93AZbIBugHrHCqJ3moRUHVHoaStd/E9NjKFMT
-	 8ISKy71J0DWwlooP9jdDGCVefFjU+E62UDu7XYbvHFh94Mw5V+MQTZNewPcyujSXDS
-	 5Fz5hZYzvF3OgbGffrTadKrJdDBMGRdmvzkorM3I=
+	b=r9MJrvnW49rJXhnvCyZNUqvJBEHbdiyLOYle2f+GOPSE081CG5IZ/+T9iMHJVAfqS
+	 ortvLqS2rZlEP9L7H8xs62nig2bB6/n6C0t/L1NR4E5h52TcTs+/f63AdKRX/G93Ks
+	 YrHDOuiEBYbuSiV19kEHSxhI5rZoTgIhM0h3BIJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
-	Fabio Estevam <festevam@denx.de>,
-	Marek Vasut <marex@denx.de>,
+	Sherry Sun <sherry.sun@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Jason Liu <jason.hui.liu@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 467/885] tty: serial: imx: Handle RS485 DE signal active high
-Date: Tue,  7 Mar 2023 17:56:41 +0100
-Message-Id: <20230307170022.780118086@linuxfoundation.org>
+Subject: [PATCH 6.1 468/885] tty: serial: imx: disable Ageing Timer interrupt request irq
+Date: Tue,  7 Mar 2023 17:56:42 +0100
+Message-Id: <20230307170022.828287376@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,235 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 79d0224f6bf296d04cd843cfc49921b19c97bb09 ]
+[ Upstream commit ef25e16ea9674b713a68c3bda821556ce9901254 ]
 
-The default polarity of RS485 DE signal is active high. This driver does
-not handle such case properly. Currently, when a pin is multiplexed as a
-UART CTS_B on boot, this pin is pulled HIGH by the i.MX UART CTS circuit,
-which activates DE signal on the RS485 transceiver and thus behave as if
-the RS485 was transmitting data, so the system blocks the RS485 bus when
-it starts and until user application takes over. This behavior is not OK.
-The problem consists of two separate parts.
+There maybe pending USR interrupt before requesting irq, however
+uart_add_one_port has not executed, so there will be kernel panic:
+[    0.795668] Unable to handle kernel NULL pointer dereference at virtual addre
+ss 0000000000000080
+[    0.802701] Mem abort info:
+[    0.805367]   ESR = 0x0000000096000004
+[    0.808950]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    0.814033]   SET = 0, FnV = 0
+[    0.816950]   EA = 0, S1PTW = 0
+[    0.819950]   FSC = 0x04: level 0 translation fault
+[    0.824617] Data abort info:
+[    0.827367]   ISV = 0, ISS = 0x00000004
+[    0.831033]   CM = 0, WnR = 0
+[    0.833866] [0000000000000080] user address but active_mm is swapper
+[    0.839951] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+[    0.845953] Modules linked in:
+[    0.848869] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.1.1+g56321e101aca #1
+[    0.855617] Hardware name: Freescale i.MX8MP EVK (DT)
+[    0.860452] pstate: 000000c5 (nzcv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    0.867117] pc : __imx_uart_rxint.constprop.0+0x11c/0x2c0
+[    0.872283] lr : imx_uart_int+0xf8/0x1ec
 
-First, the i.MX UART IP requires UCR1 UARTEN and UCR2 RXEN to be set for
-UCR2 CTSC and CTS bits to have any effect. The UCR2 CTSC bit permits the
-driver to set CTS (RTS_B or RS485 DE signal) to either level sychronous
-to the internal UART IP clock. Compared to other options, like GPIO CTS
-control, this has the benefit of being synchronous to the UART IP clock
-and thus without glitches or bus delays. The reason for the CTS design
-is likely because when the Receiver is disabled, the UART IP can never
-indicate that it is ready to receive data by assering CTS signal, so
-the CTS is always pulled HIGH by default.
+The issue only happends in the inmate linux when Jailhouse hypervisor
+enabled. The test procedure is:
+while true; do
+	jailhouse enable imx8mp.cell
+	jailhouse cell linux xxxx
+	sleep 10
+	jailhouse cell destroy 1
+	jailhouse disable
+	sleep 5
+done
 
-When the port is closed by user space, imx_uart_stop_rx() clears UCR2
-RXEN bit, and imx_uart_shutdown() clears UCR1 UARTEN bit. This disables
-UART Receiver and UART itself, and forces CTS signal HIGH, which leads
-to the RS485 bus being blocked because RS485 DE is incorrectly active.
+And during the upper test, press keys to the 2nd linux console.
+When `jailhouse cell destroy 1`, the 2nd linux has no chance to put
+the uart to a quiese state, so USR1/2 may has pending interrupts. Then
+when `jailhosue cell linux xx` to start 2nd linux again, the issue
+trigger.
 
-The proposed solution for this problem is to keep the Receiver running
-even after the port is closed, but in loopback mode. This disconnects
-the RX FIFO input from the RXD external signal, and since UCR2 TXEN is
-cleared, the UART Transmitter is disabled, so nothing can feed data in
-the RX FIFO. Because the Receiver is still enabled, the UCR2 CTSC and
-CTS bits still have effect and the CTS (RS485 DE) control is retained.
+In order to disable irqs before requesting them, both UCR1 and UCR2 irqs
+should be disabled, so here fix that, disable the Ageing Timer interrupt
+in UCR2 as UCR1 does.
 
-Note that in case of RS485 DE signal active low, there is no problem and
-no special handling is necessary. The CTS signal defaults to HIGH, thus
-the RS485 is by default set to Receive and the bus is not blocked.
-
-Note that while there is the possibility to control CTS using GPIO with
-either CTS polarity, this has the downside of not being synchronous to
-the UART IP clock and thus glitchy and susceptible to slow DE switching.
-
-Second, on boot, before the UART driver probe callback is called, the
-driver core triggers pinctrl_init_done() and configures the IOMUXC to
-default state. At this point, UCR1 UARTEN and UCR2 RXEN are both still
-cleared, but UART CTS_B (RS485 DE) is configured as CTS function, thus
-the RTS signal is pulled HIGH by the UART IP CTS circuit.
-
-One part of the solution here is to enable UCR1 UARTEN and UCR2 RXEN and
-UTS loopback in this driver probe callback, thus unblocking the CTSC and
-CTS control early on. But this is still too late, since the pin control
-is already configured and CTS has been pulled HIGH for a short period
-of time.
-
-When Linux kernel boots and this driver is bound, the pin control is set
-to special "init" state if the state is available, and driver can switch
-the "default" state afterward when ready. This state can be used to set
-the CTS line as a GPIO in DT temporarily, and a GPIO hog can force such
-GPIO to LOW, thus keeping the RS485 DE line LOW early on boot. Once the
-driver takes over and UCR1 UARTEN and UCR2 RXEN and UTS loopback are all
-enabled, the driver can switch to "default" pin control state and control
-the CTS line as function instead. DT binding example is below:
-
-"
-&gpio6 {
-  rts-init-hog {
-    gpio-hog;
-    gpios = <5 0>;
-    output-low;
-    line-name = "rs485-de";
-  };
-};
-
-&uart5 { /* DHCOM UART2 */
-  pinctrl-0 = <&pinctrl_uart5>;
-  pinctrl-1 = <&pinctrl_uart5_init>;
-  pinctrl-names = "default", "init";
-  ...
-};
-pinctrl_uart5_init: uart5-init-grp {
-  fsl,pins = <
-...
-    MX6QDL_PAD_CSI0_DAT19__GPIO6_IO05       0x30b1
-  >;
-};
-
-pinctrl_uart5: uart5-grp {
-  fsl,pins = <
-...
-    MX6QDL_PAD_CSI0_DAT19__UART5_CTS_B      0x30b1
-  >;
-};
-"
-
-Tested-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
-Reviewed-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Marek Vasut <marex@denx.de>
-Link: https://lore.kernel.org/r/20220929144400.13571-1-marex@denx.de
+Fixes: 8a61f0c70ae6 ("serial: imx: Disable irqs before requesting them")
+Suggested-by: Sherry Sun <sherry.sun@nxp.com>
+Reviewed-by: Sherry Sun <sherry.sun@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Acked-by: Jason Liu <jason.hui.liu@nxp.com>
+Link: https://lore.kernel.org/r/20230206013016.29352-1-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: ef25e16ea967 ("tty: serial: imx: disable Ageing Timer interrupt request irq")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/imx.c | 64 ++++++++++++++++++++++++++++++++++++----
- 1 file changed, 58 insertions(+), 6 deletions(-)
+ drivers/tty/serial/imx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
-index aadda66405b47..f3f03cef3c7a9 100644
+index f3f03cef3c7a9..f07c4f9ff13c0 100644
 --- a/drivers/tty/serial/imx.c
 +++ b/drivers/tty/serial/imx.c
-@@ -489,7 +489,7 @@ static void imx_uart_stop_tx(struct uart_port *port)
- static void imx_uart_stop_rx(struct uart_port *port)
- {
- 	struct imx_port *sport = (struct imx_port *)port;
--	u32 ucr1, ucr2, ucr4;
-+	u32 ucr1, ucr2, ucr4, uts;
- 
- 	ucr1 = imx_uart_readl(sport, UCR1);
- 	ucr2 = imx_uart_readl(sport, UCR2);
-@@ -505,7 +505,18 @@ static void imx_uart_stop_rx(struct uart_port *port)
- 	imx_uart_writel(sport, ucr1, UCR1);
- 	imx_uart_writel(sport, ucr4, UCR4);
- 
--	ucr2 &= ~UCR2_RXEN;
-+	/* See SER_RS485_ENABLED/UTS_LOOP comment in imx_uart_probe() */
-+	if (port->rs485.flags & SER_RS485_ENABLED &&
-+	    port->rs485.flags & SER_RS485_RTS_ON_SEND &&
-+	    sport->have_rtscts && !sport->have_rtsgpio) {
-+		uts = imx_uart_readl(sport, imx_uart_uts_reg(sport));
-+		uts |= UTS_LOOP;
-+		imx_uart_writel(sport, uts, imx_uart_uts_reg(sport));
-+		ucr2 |= UCR2_RXEN;
-+	} else {
-+		ucr2 &= ~UCR2_RXEN;
-+	}
-+
- 	imx_uart_writel(sport, ucr2, UCR2);
- }
- 
-@@ -1393,7 +1404,7 @@ static int imx_uart_startup(struct uart_port *port)
- 	int retval, i;
- 	unsigned long flags;
- 	int dma_is_inited = 0;
--	u32 ucr1, ucr2, ucr3, ucr4;
-+	u32 ucr1, ucr2, ucr3, ucr4, uts;
- 
- 	retval = clk_prepare_enable(sport->clk_per);
- 	if (retval)
-@@ -1498,6 +1509,11 @@ static int imx_uart_startup(struct uart_port *port)
- 		imx_uart_writel(sport, ucr2, UCR2);
- 	}
- 
-+	/* See SER_RS485_ENABLED/UTS_LOOP comment in imx_uart_probe() */
-+	uts = imx_uart_readl(sport, imx_uart_uts_reg(sport));
-+	uts &= ~UTS_LOOP;
-+	imx_uart_writel(sport, uts, imx_uart_uts_reg(sport));
-+
- 	spin_unlock_irqrestore(&sport->port.lock, flags);
- 
- 	return 0;
-@@ -1507,7 +1523,7 @@ static void imx_uart_shutdown(struct uart_port *port)
- {
- 	struct imx_port *sport = (struct imx_port *)port;
- 	unsigned long flags;
--	u32 ucr1, ucr2, ucr4;
-+	u32 ucr1, ucr2, ucr4, uts;
- 
- 	if (sport->dma_is_enabled) {
- 		dmaengine_terminate_sync(sport->dma_chan_tx);
-@@ -1551,7 +1567,18 @@ static void imx_uart_shutdown(struct uart_port *port)
- 	spin_lock_irqsave(&sport->port.lock, flags);
- 
- 	ucr1 = imx_uart_readl(sport, UCR1);
--	ucr1 &= ~(UCR1_TRDYEN | UCR1_RRDYEN | UCR1_RTSDEN | UCR1_UARTEN | UCR1_RXDMAEN | UCR1_ATDMAEN);
-+	ucr1 &= ~(UCR1_TRDYEN | UCR1_RRDYEN | UCR1_RTSDEN | UCR1_RXDMAEN | UCR1_ATDMAEN);
-+	/* See SER_RS485_ENABLED/UTS_LOOP comment in imx_uart_probe() */
-+	if (port->rs485.flags & SER_RS485_ENABLED &&
-+	    port->rs485.flags & SER_RS485_RTS_ON_SEND &&
-+	    sport->have_rtscts && !sport->have_rtsgpio) {
-+		uts = imx_uart_readl(sport, imx_uart_uts_reg(sport));
-+		uts |= UTS_LOOP;
-+		imx_uart_writel(sport, uts, imx_uart_uts_reg(sport));
-+		ucr1 |= UCR1_UARTEN;
-+	} else {
-+		ucr1 &= ~UCR1_UARTEN;
-+	}
- 	imx_uart_writel(sport, ucr1, UCR1);
- 
- 	ucr4 = imx_uart_readl(sport, UCR4);
-@@ -2213,7 +2240,7 @@ static int imx_uart_probe(struct platform_device *pdev)
- 	void __iomem *base;
- 	u32 dma_buf_conf[2];
- 	int ret = 0;
--	u32 ucr1;
-+	u32 ucr1, ucr2, uts;
- 	struct resource *res;
- 	int txirq, rxirq, rtsirq;
- 
-@@ -2350,6 +2377,31 @@ static int imx_uart_probe(struct platform_device *pdev)
+@@ -2377,6 +2377,11 @@ static int imx_uart_probe(struct platform_device *pdev)
  	ucr1 &= ~(UCR1_ADEN | UCR1_TRDYEN | UCR1_IDEN | UCR1_RRDYEN | UCR1_RTSDEN);
  	imx_uart_writel(sport, ucr1, UCR1);
  
-+	/*
-+	 * In case RS485 is enabled without GPIO RTS control, the UART IP
-+	 * is used to control CTS signal. Keep both the UART and Receiver
-+	 * enabled, otherwise the UART IP pulls CTS signal always HIGH no
-+	 * matter how the UCR2 CTSC and CTS bits are set. To prevent any
-+	 * data from being fed into the RX FIFO, enable loopback mode in
-+	 * UTS register, which disconnects the RX path from external RXD
-+	 * pin and connects it to the Transceiver, which is disabled, so
-+	 * no data can be fed to the RX FIFO that way.
-+	 */
-+	if (sport->port.rs485.flags & SER_RS485_ENABLED &&
-+	    sport->have_rtscts && !sport->have_rtsgpio) {
-+		uts = imx_uart_readl(sport, imx_uart_uts_reg(sport));
-+		uts |= UTS_LOOP;
-+		imx_uart_writel(sport, uts, imx_uart_uts_reg(sport));
++	/* Disable Ageing Timer interrupt */
++	ucr2 = imx_uart_readl(sport, UCR2);
++	ucr2 &= ~UCR2_ATEN;
++	imx_uart_writel(sport, ucr2, UCR2);
 +
-+		ucr1 = imx_uart_readl(sport, UCR1);
-+		ucr1 |= UCR1_UARTEN;
-+		imx_uart_writel(sport, ucr1, UCR1);
-+
-+		ucr2 = imx_uart_readl(sport, UCR2);
-+		ucr2 |= UCR2_RXEN;
-+		imx_uart_writel(sport, ucr2, UCR2);
-+	}
-+
- 	if (!imx_uart_is_imx1(sport) && sport->dte_mode) {
- 		/*
- 		 * The DCEDTE bit changes the direction of DSR, DCD, DTR and RI
+ 	/*
+ 	 * In case RS485 is enabled without GPIO RTS control, the UART IP
+ 	 * is used to control CTS signal. Keep both the UART and Receiver
 -- 
 2.39.2
 
