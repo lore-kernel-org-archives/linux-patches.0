@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46EBBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:44:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C292C433D2;
-	Tue,  7 Mar 2023 17:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C563FBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:44:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49BACC433D2;
+	Tue,  7 Mar 2023 17:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211060;
-	bh=NFFJXp3s4WBX/KfIdWNIzALXqQfXwngcB8lNQx3nDL8=;
+	s=korg; t=1678211063;
+	bh=xey5SH/i9RLQ6CEcuELbYnSzWIy1nSOFkZeE9dMPwsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KNkXUya40xEY3fbmWhYChllvxrVL+5h/lVQgP1hRpvpdhmVHz6/Djl7ie15E0uYdC
-	 DeXbQKpx0Km4BTasCiltxQS8a1n25Ril7JBPzsot+Js2CsC+pwTobhXMLU1QleIezr
-	 YVGEadtUiYP3j25fapra43CjQfpuaKpdmD87tiRg=
+	b=hnuMmRQr6mD6k0qyzZy8JDQ3/dgbqSxlPhSgJZHchfQTg7i+naRBiySpGP2/A8vCT
+	 bo6uVxJp2lE4LMeQCk5zKj/EOAMwlOA0YhxODS7Wf6lppBh6vRk/2zVAXrCXcy9Va2
+	 DdF1bvhxiGZ77lAOPpUlWsc4o1dVSIB3A8uytb8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0741/1001] drm/i915/mtl: Correct implementation of Wa_18018781329
-Date: Tue,  7 Mar 2023 17:58:33 +0100
-Message-Id: <20230307170053.897471137@linuxfoundation.org>
+Subject: [PATCH 6.2 0724/1001] hwmon: (coretemp) Simplify platform device handling
+Date: Tue,  7 Mar 2023 17:58:16 +0100
+Message-Id: <20230307170053.111843785@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,145 +36,278 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit eda94a6e6a4f2d3d1574ff4f2bd4b9f844504f71 ]
+[ Upstream commit 6d03bbff456befeccdd4d663177c4d6c75d0c4ff ]
 
-Workaround Wa_18018781329 has applied to several recent Xe_HP-based
-platforms.  However there are some extra gotchas to implementing this
-properly for MTL that we need to take into account:
+Coretemp's platform driver is unconventional. All the real work is done
+globally by the initcall and CPU hotplug notifiers, while the "driver"
+effectively just wraps an allocation and the registration of the hwmon
+interface in a long-winded round-trip through the driver core.  The whole
+logic of dynamically creating and destroying platform devices to bring
+the interfaces up and down is error prone, since it assumes
+platform_device_add() will synchronously bind the driver and set drvdata
+before it returns, thus results in a NULL dereference if drivers_autoprobe
+is turned off for the platform bus. Furthermore, the unusual approach of
+doing that from within a CPU hotplug notifier, already commented in the
+code that it deadlocks suspend, also causes lockdep issues for other
+drivers or subsystems which may want to legitimately register a CPU
+hotplug notifier from a platform bus notifier.
 
- * Due to the separation of media and render/compute into separate GTs,
-   this workaround needs to be implemented on each GT, not just the
-   primary GT.  Since each class of register only exists on one of the
-   two GTs, we should program the appropriate registers on each GT.
+All of these issues can be solved by ripping this unusual behaviour out
+completely, simply tying the platform devices to the lifetime of the
+module itself, and directly managing the hwmon interfaces from the
+hotplug notifiers. There is a slight user-visible change in that
+/sys/bus/platform/drivers/coretemp will no longer appear, and
+/sys/devices/platform/coretemp.n will remain present if package n is
+hotplugged off, but hwmon users should really only be looking for the
+presence of the hwmon interfaces, whose behaviour remains unchanged.
 
- * As with past Xe_HP platforms, the registers on the primary GT (Xe_LPG
-   IP) are multicast/replicated registers and should be handled with the
-   MCR-aware functions.  However the registers on the media GT (Xe_LPM+
-   IP) are regular singleton registers and should _not_ use MCR
-   handling.  We need to create separate register definitions for the
-   Xe_HP multicast form and the Xe_LPM+ singleton form and use each in
-   the appropriate place.
-
- * Starting with MTL, workarounds documented by the hardware teams are
-   technically associated with IP versions/steppings rather than
-   top-level platforms.  That means we should take care to check the
-   media IP version rather than the graphics IP version when deciding
-   whether the workaround is needed on the Xe_LPM+ media GT (in this
-   case the workaround applies to both IPs and the stepping bounds are
-   identical, but we should still write the code appropriately to set a
-   proper precedent for future workaround implementations).
-
- * It's worth noting that the GSC register and the CCS register are
-   defined with the same MMIO offset (0xCF30).  Since the CCS is only
-   relevant to the primary GT and the GSC is only relevant to the media
-   GT there isn't actually a clash here (the media GT automatically adds
-   the additional 0x380000 GSI offset).  However there's currently a
-   glitch in the bspec where the CCS register doesn't show up at all and
-   the GSC register is listed as existing on both GTs.  That's a known
-   documentation problem for several registers with shared GSC/CCS
-   offsets; rest assured that the CCS register really does still exist.
-
-Cc: Gustavo Sousa <gustavo.sousa@intel.com>
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Fixes: 41bb543f5598 ("drm/i915/mtl: Add initial gt workarounds")
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230125234159.3015385-2-matthew.d.roper@intel.com
+Link: https://lore.kernel.org/lkml/20220922101036.87457-1-janusz.krzysztofik@linux.intel.com/
+Link: https://gitlab.freedesktop.org/drm/intel/issues/6641
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Link: https://lore.kernel.org/r/20230103114620.15319-1-janusz.krzysztofik@linux.intel.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_gt_regs.h     |  7 +++++--
- drivers/gpu/drm/i915/gt/intel_workarounds.c | 22 ++++++++++++++-------
- drivers/gpu/drm/i915/i915_drv.h             |  4 ++++
- 3 files changed, 24 insertions(+), 9 deletions(-)
+ drivers/hwmon/coretemp.c | 128 ++++++++++++++++++---------------------
+ 1 file changed, 58 insertions(+), 70 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt_regs.h b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-index 3b6ef0eb47e76..9758b0b635601 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-@@ -1087,8 +1087,11 @@
- #define XEHP_MERT_MOD_CTRL			MCR_REG(0xcf28)
- #define RENDER_MOD_CTRL				MCR_REG(0xcf2c)
- #define COMP_MOD_CTRL				MCR_REG(0xcf30)
--#define VDBX_MOD_CTRL				MCR_REG(0xcf34)
--#define VEBX_MOD_CTRL				MCR_REG(0xcf38)
-+#define XELPMP_GSC_MOD_CTRL			_MMIO(0xcf30)	/* media GT only */
-+#define XEHP_VDBX_MOD_CTRL			MCR_REG(0xcf34)
-+#define XELPMP_VDBX_MOD_CTRL			_MMIO(0xcf34)
-+#define XEHP_VEBX_MOD_CTRL			MCR_REG(0xcf38)
-+#define XELPMP_VEBX_MOD_CTRL			_MMIO(0xcf38)
- #define   FORCE_MISS_FTLB			REG_BIT(3)
- 
- #define XEHP_GAMSTLB_CTRL			MCR_REG(0xcf4c)
-diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-index d92b006d4cd2e..e13052c5dae19 100644
---- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
-+++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-@@ -1678,8 +1678,8 @@ dg2_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
- 	/* Wa_18018781329 */
- 	wa_mcr_write_or(wal, RENDER_MOD_CTRL, FORCE_MISS_FTLB);
- 	wa_mcr_write_or(wal, COMP_MOD_CTRL, FORCE_MISS_FTLB);
--	wa_mcr_write_or(wal, VDBX_MOD_CTRL, FORCE_MISS_FTLB);
--	wa_mcr_write_or(wal, VEBX_MOD_CTRL, FORCE_MISS_FTLB);
-+	wa_mcr_write_or(wal, XEHP_VDBX_MOD_CTRL, FORCE_MISS_FTLB);
-+	wa_mcr_write_or(wal, XEHP_VEBX_MOD_CTRL, FORCE_MISS_FTLB);
- 
- 	/* Wa_1509235366:dg2 */
- 	wa_mcr_write_or(wal, XEHP_GAMCNTRL_CTRL,
-@@ -1697,8 +1697,8 @@ pvc_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
- 	/* Wa_18018781329 */
- 	wa_mcr_write_or(wal, RENDER_MOD_CTRL, FORCE_MISS_FTLB);
- 	wa_mcr_write_or(wal, COMP_MOD_CTRL, FORCE_MISS_FTLB);
--	wa_mcr_write_or(wal, VDBX_MOD_CTRL, FORCE_MISS_FTLB);
--	wa_mcr_write_or(wal, VEBX_MOD_CTRL, FORCE_MISS_FTLB);
-+	wa_mcr_write_or(wal, XEHP_VDBX_MOD_CTRL, FORCE_MISS_FTLB);
-+	wa_mcr_write_or(wal, XEHP_VEBX_MOD_CTRL, FORCE_MISS_FTLB);
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index ca7a9b373bbd6..3e440ebe2508c 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -588,66 +588,49 @@ static void coretemp_remove_core(struct platform_data *pdata, int indx)
+ 		ida_free(&pdata->ida, indx - BASE_SYSFS_ATTR_NO);
  }
  
- static void
-@@ -1712,8 +1712,6 @@ xelpg_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
- 		/* Wa_18018781329 */
- 		wa_mcr_write_or(wal, RENDER_MOD_CTRL, FORCE_MISS_FTLB);
- 		wa_mcr_write_or(wal, COMP_MOD_CTRL, FORCE_MISS_FTLB);
--		wa_mcr_write_or(wal, VDBX_MOD_CTRL, FORCE_MISS_FTLB);
--		wa_mcr_write_or(wal, VEBX_MOD_CTRL, FORCE_MISS_FTLB);
+-static int coretemp_probe(struct platform_device *pdev)
++static int coretemp_device_add(int zoneid)
+ {
+-	struct device *dev = &pdev->dev;
++	struct platform_device *pdev;
+ 	struct platform_data *pdata;
++	int err;
+ 
+ 	/* Initialize the per-zone data structures */
+-	pdata = devm_kzalloc(dev, sizeof(struct platform_data), GFP_KERNEL);
++	pdata = kzalloc(sizeof(*pdata), GFP_KERNEL);
+ 	if (!pdata)
+ 		return -ENOMEM;
+ 
+-	pdata->pkg_id = pdev->id;
++	pdata->pkg_id = zoneid;
+ 	ida_init(&pdata->ida);
+-	platform_set_drvdata(pdev, pdata);
+ 
+-	pdata->hwmon_dev = devm_hwmon_device_register_with_groups(dev, DRVNAME,
+-								  pdata, NULL);
+-	return PTR_ERR_OR_ZERO(pdata->hwmon_dev);
+-}
+-
+-static int coretemp_remove(struct platform_device *pdev)
+-{
+-	struct platform_data *pdata = platform_get_drvdata(pdev);
+-	int i;
++	pdev = platform_device_alloc(DRVNAME, zoneid);
++	if (!pdev) {
++		err = -ENOMEM;
++		goto err_free_pdata;
++	}
+ 
+-	for (i = MAX_CORE_DATA - 1; i >= 0; --i)
+-		if (pdata->core_data[i])
+-			coretemp_remove_core(pdata, i);
++	err = platform_device_add(pdev);
++	if (err)
++		goto err_put_dev;
+ 
+-	ida_destroy(&pdata->ida);
++	platform_set_drvdata(pdev, pdata);
++	zone_devices[zoneid] = pdev;
+ 	return 0;
+-}
+ 
+-static struct platform_driver coretemp_driver = {
+-	.driver = {
+-		.name = DRVNAME,
+-	},
+-	.probe = coretemp_probe,
+-	.remove = coretemp_remove,
+-};
++err_put_dev:
++	platform_device_put(pdev);
++err_free_pdata:
++	kfree(pdata);
++	return err;
++}
+ 
+-static struct platform_device *coretemp_device_add(unsigned int cpu)
++static void coretemp_device_remove(int zoneid)
+ {
+-	int err, zoneid = topology_logical_die_id(cpu);
+-	struct platform_device *pdev;
+-
+-	if (zoneid < 0)
+-		return ERR_PTR(-ENOMEM);
+-
+-	pdev = platform_device_alloc(DRVNAME, zoneid);
+-	if (!pdev)
+-		return ERR_PTR(-ENOMEM);
+-
+-	err = platform_device_add(pdev);
+-	if (err) {
+-		platform_device_put(pdev);
+-		return ERR_PTR(err);
+-	}
++	struct platform_device *pdev = zone_devices[zoneid];
++	struct platform_data *pdata = platform_get_drvdata(pdev);
+ 
+-	zone_devices[zoneid] = pdev;
+-	return pdev;
++	ida_destroy(&pdata->ida);
++	kfree(pdata);
++	platform_device_unregister(pdev);
+ }
+ 
+ static int coretemp_cpu_online(unsigned int cpu)
+@@ -671,7 +654,10 @@ static int coretemp_cpu_online(unsigned int cpu)
+ 	if (!cpu_has(c, X86_FEATURE_DTHERM))
+ 		return -ENODEV;
+ 
+-	if (!pdev) {
++	pdata = platform_get_drvdata(pdev);
++	if (!pdata->hwmon_dev) {
++		struct device *hwmon;
++
+ 		/* Check the microcode version of the CPU */
+ 		if (chk_ucode_version(cpu))
+ 			return -EINVAL;
+@@ -682,9 +668,11 @@ static int coretemp_cpu_online(unsigned int cpu)
+ 		 * online. So, initialize per-pkg data structures and
+ 		 * then bring this core online.
+ 		 */
+-		pdev = coretemp_device_add(cpu);
+-		if (IS_ERR(pdev))
+-			return PTR_ERR(pdev);
++		hwmon = hwmon_device_register_with_groups(&pdev->dev, DRVNAME,
++							  pdata, NULL);
++		if (IS_ERR(hwmon))
++			return PTR_ERR(hwmon);
++		pdata->hwmon_dev = hwmon;
+ 
+ 		/*
+ 		 * Check whether pkgtemp support is available.
+@@ -694,7 +682,6 @@ static int coretemp_cpu_online(unsigned int cpu)
+ 			coretemp_add_core(pdev, cpu, 1);
+ 	}
+ 
+-	pdata = platform_get_drvdata(pdev);
+ 	/*
+ 	 * Check whether a thread sibling is already online. If not add the
+ 	 * interface for this CPU core.
+@@ -713,18 +700,14 @@ static int coretemp_cpu_offline(unsigned int cpu)
+ 	struct temp_data *tdata;
+ 	int i, indx = -1, target;
+ 
+-	/*
+-	 * Don't execute this on suspend as the device remove locks
+-	 * up the machine.
+-	 */
++	/* No need to tear down any interfaces for suspend */
+ 	if (cpuhp_tasks_frozen)
+ 		return 0;
+ 
+ 	/* If the physical CPU device does not exist, just return */
+-	if (!pdev)
+-		return 0;
+-
+ 	pd = platform_get_drvdata(pdev);
++	if (!pd->hwmon_dev)
++		return 0;
+ 
+ 	for (i = 0; i < NUM_REAL_CORES; i++) {
+ 		if (pd->cpu_map[i] == topology_core_id(cpu)) {
+@@ -756,13 +739,14 @@ static int coretemp_cpu_offline(unsigned int cpu)
  	}
  
  	/*
-@@ -1726,7 +1724,17 @@ xelpg_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
- static void
- xelpmp_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
+-	 * If all cores in this pkg are offline, remove the device. This
+-	 * will invoke the platform driver remove function, which cleans up
+-	 * the rest.
++	 * If all cores in this pkg are offline, remove the interface.
+ 	 */
++	tdata = pd->core_data[PKG_SYSFS_ATTR_NO];
+ 	if (cpumask_empty(&pd->cpumask)) {
+-		zone_devices[topology_logical_die_id(cpu)] = NULL;
+-		platform_device_unregister(pdev);
++		if (tdata)
++			coretemp_remove_core(pd, PKG_SYSFS_ATTR_NO);
++		hwmon_device_unregister(pd->hwmon_dev);
++		pd->hwmon_dev = NULL;
+ 		return 0;
+ 	}
+ 
+@@ -770,7 +754,6 @@ static int coretemp_cpu_offline(unsigned int cpu)
+ 	 * Check whether this core is the target for the package
+ 	 * interface. We need to assign it to some other cpu.
+ 	 */
+-	tdata = pd->core_data[PKG_SYSFS_ATTR_NO];
+ 	if (tdata && tdata->cpu == cpu) {
+ 		target = cpumask_first(&pd->cpumask);
+ 		mutex_lock(&tdata->update_lock);
+@@ -789,7 +772,7 @@ static enum cpuhp_state coretemp_hp_online;
+ 
+ static int __init coretemp_init(void)
  {
--	/* FIXME: Actual workarounds will be added in future patch(es) */
-+	if (IS_MTL_MEDIA_STEP(gt->i915, STEP_A0, STEP_B0)) {
-+		/*
-+		 * Wa_18018781329
-+		 *
-+		 * Note that although these registers are MCR on the primary
-+		 * GT, the media GT's versions are regular singleton registers.
-+		 */
-+		wa_write_or(wal, XELPMP_GSC_MOD_CTRL, FORCE_MISS_FTLB);
-+		wa_write_or(wal, XELPMP_VDBX_MOD_CTRL, FORCE_MISS_FTLB);
-+		wa_write_or(wal, XELPMP_VEBX_MOD_CTRL, FORCE_MISS_FTLB);
+-	int err;
++	int i, err;
+ 
+ 	/*
+ 	 * CPUID.06H.EAX[0] indicates whether the CPU has thermal
+@@ -805,20 +788,22 @@ static int __init coretemp_init(void)
+ 	if (!zone_devices)
+ 		return -ENOMEM;
+ 
+-	err = platform_driver_register(&coretemp_driver);
+-	if (err)
+-		goto outzone;
++	for (i = 0; i < max_zones; i++) {
++		err = coretemp_device_add(i);
++		if (err)
++			goto outzone;
 +	}
  
- 	debug_dump_steering(gt);
- }
-diff --git a/drivers/gpu/drm/i915/i915_drv.h b/drivers/gpu/drm/i915/i915_drv.h
-index a380db36d52c4..03c3a59d0939b 100644
---- a/drivers/gpu/drm/i915/i915_drv.h
-+++ b/drivers/gpu/drm/i915/i915_drv.h
-@@ -726,6 +726,10 @@ IS_SUBPLATFORM(const struct drm_i915_private *i915,
- 	(IS_SUBPLATFORM(__i915, INTEL_METEORLAKE, INTEL_SUBPLATFORM_##variant) && \
- 	 IS_GRAPHICS_STEP(__i915, since, until))
+ 	err = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "hwmon/coretemp:online",
+ 				coretemp_cpu_online, coretemp_cpu_offline);
+ 	if (err < 0)
+-		goto outdrv;
++		goto outzone;
+ 	coretemp_hp_online = err;
+ 	return 0;
  
-+#define IS_MTL_MEDIA_STEP(__i915, since, until) \
-+	(IS_METEORLAKE(__i915) && \
-+	 IS_MEDIA_STEP(__i915, since, until))
+-outdrv:
+-	platform_driver_unregister(&coretemp_driver);
+ outzone:
++	while (i--)
++		coretemp_device_remove(i);
+ 	kfree(zone_devices);
+ 	return err;
+ }
+@@ -826,8 +811,11 @@ module_init(coretemp_init)
+ 
+ static void __exit coretemp_exit(void)
+ {
++	int i;
 +
- /*
-  * DG2 hardware steppings are a bit unusual.  The hardware design was forked to
-  * create three variants (G10, G11, and G12) which each have distinct
+ 	cpuhp_remove_state(coretemp_hp_online);
+-	platform_driver_unregister(&coretemp_driver);
++	for (i = 0; i < max_zones; i++)
++		coretemp_device_remove(i);
+ 	kfree(zone_devices);
+ }
+ module_exit(coretemp_exit)
 -- 
 2.39.2
 
