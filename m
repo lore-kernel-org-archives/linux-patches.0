@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE692BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:13:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3200DC4339E;
-	Tue,  7 Mar 2023 18:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DABBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:13:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C66EC433D2;
+	Tue,  7 Mar 2023 18:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212835;
-	bh=YztqTdRYKo6cqEj+HtcKx/RTQmFLC3HRBXy6WYGoYwg=;
+	s=korg; t=1678212838;
+	bh=CwvJC1P2mP88Uf1pycLjJJqRKXaVTQUFbaVBEJxkmx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sYid810d26TwjFM9+AjSffFUlMpm5FWupRmgkMUIzxmh9liovtDb3Ravp0H29rCLR
-	 tv5I4Njlr3zXLdDnY2blxDJIF684F3gZf77QPQm7AudjyCBQfN+rkh715r+G3DS8rf
-	 lClvfvvedVOb0CKvUrmJGWi0ZFGrs28aQ2F78Q3w=
+	b=IfHN3wh0ouGUGRwOTkUwvTj31EMPT/DkemP2hIQwvLv8CnLfBOUzWMmJvFznGCj0S
+	 4P926pN+DVxZ0999sugZ4xe+1JMxg6hrHGrtzfOtOeWqBPOMZMNaUWDe4fF3ta/TLT
+	 2+wnF+1OaR5BRzZZaJvs8WWJmdJeeSym1NYBMrCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Stefan Wahren <stefan.wahren@i2se.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 283/885] drm/vc4: hvs: Correct interrupt masking bit assignment for HVS5
-Date: Tue,  7 Mar 2023 17:53:37 +0100
-Message-Id: <20230307170014.312516957@linuxfoundation.org>
+Subject: [PATCH 6.1 274/885] drm/vc4: drop all currently held locks if deadlock happens
+Date: Tue,  7 Mar 2023 17:53:28 +0100
+Message-Id: <20230307170013.918114190@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,145 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 87551ec650bb87d35f1b29bba6a2430896e08da0 ]
+[ Upstream commit 479d4f0be4237ba33bc9432787aeb62c90e30f95 ]
 
-HVS5 has moved the interrupt enable bits around within the
-DISPCTRL register, therefore the configuration has to be updated
-to account for this.
+If vc4_hdmi_reset_link() returns -EDEADLK, it means that a deadlock
+happened in the locking context. This situation should be addressed by
+dropping all currently held locks and block until the contended lock
+becomes available. Currently, vc4 is not dealing with the deadlock
+properly, producing the following output when PROVE_LOCKING is enabled:
 
-Fixes: c54619b0bfb3 ("drm/vc4: Add support for the BCM2711 HVS5")
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Link: https://lore.kernel.org/r/20221207-rpi-hvs-crtc-misc-v1-4-1f8e0770798b@cerno.tech
+[  825.612809] ------------[ cut here ]------------
+[  825.612852] WARNING: CPU: 1 PID: 116 at drivers/gpu/drm/drm_modeset_lock.c:276 drm_modeset_drop_locks+0x60/0x68 [drm]
+[  825.613458] Modules linked in: 8021q mrp garp stp llc
+raspberrypi_cpufreq brcmfmac brcmutil crct10dif_ce hci_uart cfg80211
+btqca btbcm bluetooth vc4 raspberrypi_hwmon snd_soc_hdmi_codec cec
+clk_raspberrypi ecdh_generic drm_display_helper ecc rfkill
+drm_dma_helper drm_kms_helper pwm_bcm2835 bcm2835_thermal bcm2835_rng
+rng_core i2c_bcm2835 drm fuse ip_tables x_tables ipv6
+[  825.613735] CPU: 1 PID: 116 Comm: kworker/1:2 Tainted: G        W 6.1.0-rc6-01399-g941aae326315 #3
+[  825.613759] Hardware name: Raspberry Pi 3 Model B Rev 1.2 (DT)
+[  825.613777] Workqueue: events output_poll_execute [drm_kms_helper]
+[  825.614038] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  825.614063] pc : drm_modeset_drop_locks+0x60/0x68 [drm]
+[  825.614603] lr : drm_helper_probe_detect+0x120/0x1b4 [drm_kms_helper]
+[  825.614829] sp : ffff800008313bf0
+[  825.614844] x29: ffff800008313bf0 x28: ffffcd7778b8b000 x27: 0000000000000000
+[  825.614883] x26: 0000000000000001 x25: 0000000000000001 x24: ffff677cc35c2758
+[  825.614920] x23: ffffcd7707d01430 x22: ffffcd7707c3edc7 x21: 0000000000000001
+[  825.614958] x20: 0000000000000000 x19: ffff800008313c10 x18: 000000000000b6d3
+[  825.614995] x17: ffffcd777835e214 x16: ffffcd7777cef870 x15: fffff81000000000
+[  825.615033] x14: 0000000000000000 x13: 0000000000000099 x12: 0000000000000002
+[  825.615070] x11: 72917988020af800 x10: 72917988020af800 x9 : 72917988020af800
+[  825.615108] x8 : ffff677cc665e0a8 x7 : d00a8c180000110c x6 : ffffcd77774c0054
+[  825.615145] x5 : 0000000000000000 x4 : 0000000000000001 x3 : 0000000000000000
+[  825.615181] x2 : ffff677cc55e1880 x1 : ffffcd7777cef8ec x0 : ffff800008313c10
+[  825.615219] Call trace:
+[  825.615232]  drm_modeset_drop_locks+0x60/0x68 [drm]
+[  825.615773]  drm_helper_probe_detect+0x120/0x1b4 [drm_kms_helper]
+[  825.616003]  output_poll_execute+0xe4/0x224 [drm_kms_helper]
+[  825.616233]  process_one_work+0x2b4/0x618
+[  825.616264]  worker_thread+0x24c/0x464
+[  825.616288]  kthread+0xec/0x110
+[  825.616310]  ret_from_fork+0x10/0x20
+[  825.616335] irq event stamp: 7634
+[  825.616349] hardirqs last  enabled at (7633): [<ffffcd777831ee90>] _raw_spin_unlock_irq+0x3c/0x78
+[  825.616384] hardirqs last disabled at (7634): [<ffffcd7778315a78>] __schedule+0x134/0x9f0
+[  825.616411] softirqs last  enabled at (7630): [<ffffcd7707aacea0>] local_bh_enable+0x4/0x30 [ipv6]
+[  825.617019] softirqs last disabled at (7618): [<ffffcd7707aace70>] local_bh_disable+0x4/0x30 [ipv6]
+[  825.617586] ---[ end trace 0000000000000000 ]---
+
+Therefore, deal with the deadlock as suggested by [1], using the
+function drm_modeset_backoff().
+
+[1] https://docs.kernel.org/gpu/drm-kms.html?highlight=kms#kms-locking
+
+Fixes: 6bed2ea3cb38 ("drm/vc4: hdmi: Reset link on hotplug")
+Reported-by: Stefan Wahren <stefan.wahren@i2se.com>
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Tested-by: Stefan Wahren <stefan.wahren@i2se.com>
 Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221229194638.178712-1-mcanal@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hvs.c  | 52 +++++++++++++++++++++++-----------
- drivers/gpu/drm/vc4/vc4_regs.h | 10 +++++--
- 2 files changed, 44 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
-index 413ebb6f56a23..47990ecbfc4df 100644
---- a/drivers/gpu/drm/vc4/vc4_hvs.c
-+++ b/drivers/gpu/drm/vc4/vc4_hvs.c
-@@ -658,7 +658,8 @@ void vc4_hvs_mask_underrun(struct vc4_hvs *hvs, int channel)
- 		return;
- 
- 	dispctrl = HVS_READ(SCALER_DISPCTRL);
--	dispctrl &= ~SCALER_DISPCTRL_DSPEISLUR(channel);
-+	dispctrl &= ~(hvs->vc4->is_vc5 ? SCALER5_DISPCTRL_DSPEISLUR(channel) :
-+					 SCALER_DISPCTRL_DSPEISLUR(channel));
- 
- 	HVS_WRITE(SCALER_DISPCTRL, dispctrl);
- 
-@@ -675,7 +676,8 @@ void vc4_hvs_unmask_underrun(struct vc4_hvs *hvs, int channel)
- 		return;
- 
- 	dispctrl = HVS_READ(SCALER_DISPCTRL);
--	dispctrl |= SCALER_DISPCTRL_DSPEISLUR(channel);
-+	dispctrl |= (hvs->vc4->is_vc5 ? SCALER5_DISPCTRL_DSPEISLUR(channel) :
-+					SCALER_DISPCTRL_DSPEISLUR(channel));
- 
- 	HVS_WRITE(SCALER_DISPSTAT,
- 		  SCALER_DISPSTAT_EUFLOW(channel));
-@@ -701,6 +703,7 @@ static irqreturn_t vc4_hvs_irq_handler(int irq, void *data)
- 	int channel;
- 	u32 control;
- 	u32 status;
-+	u32 dspeislur;
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index c4b73d9dd0409..0d0b6df4df153 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -402,6 +402,7 @@ static void vc4_hdmi_handle_hotplug(struct vc4_hdmi *vc4_hdmi,
+ {
+ 	struct drm_connector *connector = &vc4_hdmi->connector;
+ 	struct edid *edid;
++	int ret;
  
  	/*
- 	 * NOTE: We don't need to protect the register access using
-@@ -717,9 +720,11 @@ static irqreturn_t vc4_hvs_irq_handler(int irq, void *data)
- 	control = HVS_READ(SCALER_DISPCTRL);
+ 	 * NOTE: This function should really be called with
+@@ -430,7 +431,15 @@ static void vc4_hdmi_handle_hotplug(struct vc4_hdmi *vc4_hdmi,
+ 	cec_s_phys_addr_from_edid(vc4_hdmi->cec_adap, edid);
+ 	kfree(edid);
  
- 	for (channel = 0; channel < SCALER_CHANNELS_COUNT; channel++) {
-+		dspeislur = vc4->is_vc5 ? SCALER5_DISPCTRL_DSPEISLUR(channel) :
-+					  SCALER_DISPCTRL_DSPEISLUR(channel);
- 		/* Interrupt masking is not always honored, so check it here. */
- 		if (status & SCALER_DISPSTAT_EUFLOW(channel) &&
--		    control & SCALER_DISPCTRL_DSPEISLUR(channel)) {
-+		    control & dspeislur) {
- 			vc4_hvs_mask_underrun(hvs, channel);
- 			vc4_hvs_report_underrun(dev);
- 
-@@ -872,19 +877,34 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
- 		    SCALER_DISPCTRL_DISPEIRQ(1) |
- 		    SCALER_DISPCTRL_DISPEIRQ(2);
- 
--	dispctrl &= ~(SCALER_DISPCTRL_DMAEIRQ |
--		      SCALER_DISPCTRL_SLVWREIRQ |
--		      SCALER_DISPCTRL_SLVRDEIRQ |
--		      SCALER_DISPCTRL_DSPEIEOF(0) |
--		      SCALER_DISPCTRL_DSPEIEOF(1) |
--		      SCALER_DISPCTRL_DSPEIEOF(2) |
--		      SCALER_DISPCTRL_DSPEIEOLN(0) |
--		      SCALER_DISPCTRL_DSPEIEOLN(1) |
--		      SCALER_DISPCTRL_DSPEIEOLN(2) |
--		      SCALER_DISPCTRL_DSPEISLUR(0) |
--		      SCALER_DISPCTRL_DSPEISLUR(1) |
--		      SCALER_DISPCTRL_DSPEISLUR(2) |
--		      SCALER_DISPCTRL_SCLEIRQ);
-+	if (!vc4->is_vc5)
-+		dispctrl &= ~(SCALER_DISPCTRL_DMAEIRQ |
-+			      SCALER_DISPCTRL_SLVWREIRQ |
-+			      SCALER_DISPCTRL_SLVRDEIRQ |
-+			      SCALER_DISPCTRL_DSPEIEOF(0) |
-+			      SCALER_DISPCTRL_DSPEIEOF(1) |
-+			      SCALER_DISPCTRL_DSPEIEOF(2) |
-+			      SCALER_DISPCTRL_DSPEIEOLN(0) |
-+			      SCALER_DISPCTRL_DSPEIEOLN(1) |
-+			      SCALER_DISPCTRL_DSPEIEOLN(2) |
-+			      SCALER_DISPCTRL_DSPEISLUR(0) |
-+			      SCALER_DISPCTRL_DSPEISLUR(1) |
-+			      SCALER_DISPCTRL_DSPEISLUR(2) |
-+			      SCALER_DISPCTRL_SCLEIRQ);
-+	else
-+		dispctrl &= ~(SCALER_DISPCTRL_DMAEIRQ |
-+			      SCALER5_DISPCTRL_SLVEIRQ |
-+			      SCALER5_DISPCTRL_DSPEIEOF(0) |
-+			      SCALER5_DISPCTRL_DSPEIEOF(1) |
-+			      SCALER5_DISPCTRL_DSPEIEOF(2) |
-+			      SCALER5_DISPCTRL_DSPEIEOLN(0) |
-+			      SCALER5_DISPCTRL_DSPEIEOLN(1) |
-+			      SCALER5_DISPCTRL_DSPEIEOLN(2) |
-+			      SCALER5_DISPCTRL_DSPEISLUR(0) |
-+			      SCALER5_DISPCTRL_DSPEISLUR(1) |
-+			      SCALER5_DISPCTRL_DSPEISLUR(2) |
-+			      SCALER_DISPCTRL_SCLEIRQ);
+-	vc4_hdmi_reset_link(connector, ctx);
++	for (;;) {
++		ret = vc4_hdmi_reset_link(connector, ctx);
++		if (ret == -EDEADLK) {
++			drm_modeset_backoff(ctx);
++			continue;
++		}
 +
++		break;
++	}
+ }
  
- 	/* Set AXI panic mode.
- 	 * VC4 panics when < 2 lines in FIFO.
-diff --git a/drivers/gpu/drm/vc4/vc4_regs.h b/drivers/gpu/drm/vc4/vc4_regs.h
-index 95deacdc31e77..1256f0877ff66 100644
---- a/drivers/gpu/drm/vc4/vc4_regs.h
-+++ b/drivers/gpu/drm/vc4/vc4_regs.h
-@@ -234,15 +234,21 @@
-  * always enabled.
-  */
- # define SCALER_DISPCTRL_DSPEISLUR(x)		BIT(13 + (x))
-+# define SCALER5_DISPCTRL_DSPEISLUR(x)		BIT(9 + ((x) * 4))
- /* Enables Display 0 end-of-line-N contribution to
-  * SCALER_DISPSTAT_IRQDISP0
-  */
- # define SCALER_DISPCTRL_DSPEIEOLN(x)		BIT(8 + ((x) * 2))
-+# define SCALER5_DISPCTRL_DSPEIEOLN(x)		BIT(8 + ((x) * 4))
- /* Enables Display 0 EOF contribution to SCALER_DISPSTAT_IRQDISP0 */
- # define SCALER_DISPCTRL_DSPEIEOF(x)		BIT(7 + ((x) * 2))
-+# define SCALER5_DISPCTRL_DSPEIEOF(x)		BIT(7 + ((x) * 4))
- 
--# define SCALER_DISPCTRL_SLVRDEIRQ		BIT(6)
--# define SCALER_DISPCTRL_SLVWREIRQ		BIT(5)
-+# define SCALER5_DISPCTRL_DSPEIVST(x)		BIT(6 + ((x) * 4))
-+
-+# define SCALER_DISPCTRL_SLVRDEIRQ		BIT(6)	/* HVS4 only */
-+# define SCALER_DISPCTRL_SLVWREIRQ		BIT(5)	/* HVS4 only */
-+# define SCALER5_DISPCTRL_SLVEIRQ		BIT(5)
- # define SCALER_DISPCTRL_DMAEIRQ		BIT(4)
- /* Enables interrupt generation on the enabled EOF/EOLN/EISLUR
-  * bits and short frames..
+ static int vc4_hdmi_connector_detect_ctx(struct drm_connector *connector,
 -- 
 2.39.2
 
