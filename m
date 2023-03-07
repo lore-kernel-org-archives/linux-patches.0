@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B020BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA4EC4339B;
-	Tue,  7 Mar 2023 17:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A16BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C4CC4339B;
+	Tue,  7 Mar 2023 17:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209442;
-	bh=kdCXbO1/UDaqmhQBrSvPezFeYtS4OiSe2x/9xOO+gVc=;
+	s=korg; t=1678209445;
+	bh=anWK4BZaITy0XSARCu9RwGG+L/gUg3n2076L28i3ww0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=On0r6OBisJavOYpMQPBGVQ8JYK7SJBK7Ql3GGZZHn3X/c6AT1K1gNR8JYUSApi7TR
-	 90b9QWOAzOH1e7M9RwPsUwfOcahzd+uJfHV5QFxupxVBeErQMipqYRCCeq/3V9N6Hb
-	 bqtHiQFFdBXF7A8bJ+pCzQu7dSehikjrQG7d2zjg=
+	b=nX2KR4RZ96tK6abe514o4SIMA7W+QJUubpvSheWThmnr0t/1lK0jBFwI6F+n3nrAG
+	 PjxWXED2pK9n+GyjKFTE2r06kZX/Hc0j4qVPmPSUdKiwdHWd39UvP7tQggtxJBKe5i
+	 2EIxduVU9PGOM7dvD/8ZDk4bn5lev5VrALYrSdl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0219/1001] bpf: Fix missing var_off check for ARG_PTR_TO_DYNPTR
-Date: Tue,  7 Mar 2023 17:49:51 +0100
-Message-Id: <20230307170031.392208186@linuxfoundation.org>
+Subject: [PATCH 6.2 0191/1001] kselftest/arm64: Fix syscall-abi for systems without 128 bit SME
+Date: Tue,  7 Mar 2023 17:49:23 +0100
+Message-Id: <20230307170030.178011639@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,272 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 79168a669d8125453c8a271115f1ffd4294e61f6 ]
+[ Upstream commit 97ec597b26df774a257e3f8e97353fd1b4471615 ]
 
-Currently, the dynptr function is not checking the variable offset part
-of PTR_TO_STACK that it needs to check. The fixed offset is considered
-when computing the stack pointer index, but if the variable offset was
-not a constant (such that it could not be accumulated in reg->off), we
-will end up a discrepency where runtime pointer does not point to the
-actual stack slot we mark as STACK_DYNPTR.
+SME does not mandate any specific VL so we may not have 128 bit SME but
+the algorithm used for enumerating VLs assumes that we will. Add the
+required check to ensure that the algorithm terminates.
 
-It is impossible to precisely track dynptr state when variable offset is
-not constant, hence, just like bpf_timer, kptr, bpf_spin_lock, etc.
-simply reject the case where reg->var_off is not constant. Then,
-consider both reg->off and reg->var_off.value when computing the stack
-pointer index.
-
-A new helper dynptr_get_spi is introduced to hide over these details
-since the dynptr needs to be located in multiple places outside the
-process_dynptr_func checks, hence once we know it's a PTR_TO_STACK, we
-need to enforce these checks in all places.
-
-Note that it is disallowed for unprivileged users to have a non-constant
-var_off, so this problem should only be possible to trigger from
-programs having CAP_PERFMON. However, its effects can vary.
-
-Without the fix, it is possible to replace the contents of the dynptr
-arbitrarily by making verifier mark different stack slots than actual
-location and then doing writes to the actual stack address of dynptr at
-runtime.
-
-Fixes: 97e03f521050 ("bpf: Add verifier support for dynptrs")
-Acked-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20230121002241.2113993-3-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 43e3f85523e4 ("kselftest/arm64: Add SME support to syscall ABI test")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20221223-arm64-syscall-abi-sme-only-v1-1-4fabfbd62087@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                         | 84 +++++++++++++++----
- .../bpf/prog_tests/kfunc_dynptr_param.c       |  2 +-
- .../testing/selftests/bpf/progs/dynptr_fail.c |  4 +-
- 3 files changed, 69 insertions(+), 21 deletions(-)
+ tools/testing/selftests/arm64/abi/syscall-abi.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index c42cb70150e96..749e7f7a720f2 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -638,11 +638,34 @@ static void print_liveness(struct bpf_verifier_env *env,
- 		verbose(env, "D");
- }
+diff --git a/tools/testing/selftests/arm64/abi/syscall-abi.c b/tools/testing/selftests/arm64/abi/syscall-abi.c
+index dd7ebe536d05f..ffe719b50c215 100644
+--- a/tools/testing/selftests/arm64/abi/syscall-abi.c
++++ b/tools/testing/selftests/arm64/abi/syscall-abi.c
+@@ -390,6 +390,10 @@ static void test_one_syscall(struct syscall_cfg *cfg)
  
--static int get_spi(s32 off)
-+static int __get_spi(s32 off)
- {
- 	return (-off - 1) / BPF_REG_SIZE;
- }
+ 			sme_vl &= PR_SME_VL_LEN_MASK;
  
-+static int dynptr_get_spi(struct bpf_verifier_env *env, struct bpf_reg_state *reg)
-+{
-+	int off, spi;
++			/* Found lowest VL */
++			if (sve_vq_from_vl(sme_vl) > sme_vq)
++				break;
 +
-+	if (!tnum_is_const(reg->var_off)) {
-+		verbose(env, "dynptr has to be at a constant offset\n");
-+		return -EINVAL;
-+	}
+ 			if (sme_vq != sve_vq_from_vl(sme_vl))
+ 				sme_vq = sve_vq_from_vl(sme_vl);
+ 
+@@ -461,6 +465,10 @@ int sme_count_vls(void)
+ 
+ 		vl &= PR_SME_VL_LEN_MASK;
+ 
++		/* Found lowest VL */
++		if (sve_vq_from_vl(vl) > vq)
++			break;
 +
-+	off = reg->off + reg->var_off.value;
-+	if (off % BPF_REG_SIZE) {
-+		verbose(env, "cannot pass in dynptr at an offset=%d\n", off);
-+		return -EINVAL;
-+	}
-+
-+	spi = __get_spi(off);
-+	if (spi < 1) {
-+		verbose(env, "cannot pass in dynptr at an offset=%d\n", off);
-+		return -EINVAL;
-+	}
-+	return spi;
-+}
-+
- static bool is_spi_bounds_valid(struct bpf_func_state *state, int spi, int nr_slots)
- {
- 	int allocated_slots = state->allocated_stack / BPF_REG_SIZE;
-@@ -754,7 +777,9 @@ static int mark_stack_slots_dynptr(struct bpf_verifier_env *env, struct bpf_reg_
- 	enum bpf_dynptr_type type;
- 	int spi, i, id;
+ 		if (vq != sve_vq_from_vl(vl))
+ 			vq = sve_vq_from_vl(vl);
  
--	spi = get_spi(reg->off);
-+	spi = dynptr_get_spi(env, reg);
-+	if (spi < 0)
-+		return spi;
- 
- 	if (!is_spi_bounds_valid(state, spi, BPF_DYNPTR_NR_SLOTS))
- 		return -EINVAL;
-@@ -792,7 +817,9 @@ static int unmark_stack_slots_dynptr(struct bpf_verifier_env *env, struct bpf_re
- 	struct bpf_func_state *state = func(env, reg);
- 	int spi, i;
- 
--	spi = get_spi(reg->off);
-+	spi = dynptr_get_spi(env, reg);
-+	if (spi < 0)
-+		return spi;
- 
- 	if (!is_spi_bounds_valid(state, spi, BPF_DYNPTR_NR_SLOTS))
- 		return -EINVAL;
-@@ -844,7 +871,11 @@ static bool is_dynptr_reg_valid_uninit(struct bpf_verifier_env *env, struct bpf_
- 	if (reg->type == CONST_PTR_TO_DYNPTR)
- 		return false;
- 
--	spi = get_spi(reg->off);
-+	spi = dynptr_get_spi(env, reg);
-+	if (spi < 0)
-+		return false;
-+
-+	/* We will do check_mem_access to check and update stack bounds later */
- 	if (!is_spi_bounds_valid(state, spi, BPF_DYNPTR_NR_SLOTS))
- 		return true;
- 
-@@ -860,14 +891,15 @@ static bool is_dynptr_reg_valid_uninit(struct bpf_verifier_env *env, struct bpf_
- static bool is_dynptr_reg_valid_init(struct bpf_verifier_env *env, struct bpf_reg_state *reg)
- {
- 	struct bpf_func_state *state = func(env, reg);
--	int spi;
--	int i;
-+	int spi, i;
- 
- 	/* This already represents first slot of initialized bpf_dynptr */
- 	if (reg->type == CONST_PTR_TO_DYNPTR)
- 		return true;
- 
--	spi = get_spi(reg->off);
-+	spi = dynptr_get_spi(env, reg);
-+	if (spi < 0)
-+		return false;
- 	if (!is_spi_bounds_valid(state, spi, BPF_DYNPTR_NR_SLOTS) ||
- 	    !state->stack[spi].spilled_ptr.dynptr.first_slot)
- 		return false;
-@@ -896,7 +928,9 @@ static bool is_dynptr_type_expected(struct bpf_verifier_env *env, struct bpf_reg
- 	if (reg->type == CONST_PTR_TO_DYNPTR) {
- 		return reg->dynptr.type == dynptr_type;
- 	} else {
--		spi = get_spi(reg->off);
-+		spi = dynptr_get_spi(env, reg);
-+		if (spi < 0)
-+			return false;
- 		return state->stack[spi].spilled_ptr.dynptr.type == dynptr_type;
- 	}
- }
-@@ -2425,7 +2459,9 @@ static int mark_dynptr_read(struct bpf_verifier_env *env, struct bpf_reg_state *
- 	 */
- 	if (reg->type == CONST_PTR_TO_DYNPTR)
- 		return 0;
--	spi = get_spi(reg->off);
-+	spi = dynptr_get_spi(env, reg);
-+	if (spi < 0)
-+		return spi;
- 	/* Caller ensures dynptr is valid and initialized, which means spi is in
- 	 * bounds and spi is the first dynptr slot. Simply mark stack slot as
- 	 * read.
-@@ -6007,12 +6043,15 @@ int process_dynptr_func(struct bpf_verifier_env *env, int regno,
- 	}
- 	/* CONST_PTR_TO_DYNPTR already has fixed and var_off as 0 due to
- 	 * check_func_arg_reg_off's logic. We only need to check offset
--	 * alignment for PTR_TO_STACK.
-+	 * and its alignment for PTR_TO_STACK.
- 	 */
--	if (reg->type == PTR_TO_STACK && (reg->off % BPF_REG_SIZE)) {
--		verbose(env, "cannot pass in dynptr at an offset=%d\n", reg->off);
--		return -EINVAL;
-+	if (reg->type == PTR_TO_STACK) {
-+		int err = dynptr_get_spi(env, reg);
-+
-+		if (err < 0)
-+			return err;
- 	}
-+
- 	/*  MEM_UNINIT - Points to memory that is an appropriate candidate for
- 	 *		 constructing a mutable bpf_dynptr object.
- 	 *
-@@ -6420,15 +6459,16 @@ int check_func_arg_reg_off(struct bpf_verifier_env *env,
- 	}
- }
- 
--static u32 dynptr_ref_obj_id(struct bpf_verifier_env *env, struct bpf_reg_state *reg)
-+static int dynptr_ref_obj_id(struct bpf_verifier_env *env, struct bpf_reg_state *reg)
- {
- 	struct bpf_func_state *state = func(env, reg);
- 	int spi;
- 
- 	if (reg->type == CONST_PTR_TO_DYNPTR)
- 		return reg->ref_obj_id;
--
--	spi = get_spi(reg->off);
-+	spi = dynptr_get_spi(env, reg);
-+	if (spi < 0)
-+		return spi;
- 	return state->stack[spi].spilled_ptr.ref_obj_id;
- }
- 
-@@ -6502,7 +6542,9 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
- 			 * PTR_TO_STACK.
- 			 */
- 			if (reg->type == PTR_TO_STACK) {
--				spi = get_spi(reg->off);
-+				spi = dynptr_get_spi(env, reg);
-+				if (spi < 0)
-+					return spi;
- 				if (!is_spi_bounds_valid(state, spi, BPF_DYNPTR_NR_SLOTS) ||
- 				    !state->stack[spi].spilled_ptr.ref_obj_id) {
- 					verbose(env, "arg %d is an unacquired reference\n", regno);
-@@ -7991,13 +8033,19 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
- 		for (i = 0; i < MAX_BPF_FUNC_REG_ARGS; i++) {
- 			if (arg_type_is_dynptr(fn->arg_type[i])) {
- 				struct bpf_reg_state *reg = &regs[BPF_REG_1 + i];
-+				int ref_obj_id;
- 
- 				if (meta.ref_obj_id) {
- 					verbose(env, "verifier internal error: meta.ref_obj_id already set\n");
- 					return -EFAULT;
- 				}
- 
--				meta.ref_obj_id = dynptr_ref_obj_id(env, reg);
-+				ref_obj_id = dynptr_ref_obj_id(env, reg);
-+				if (ref_obj_id < 0) {
-+					verbose(env, "verifier internal error: failed to obtain dynptr ref_obj_id\n");
-+					return ref_obj_id;
-+				}
-+				meta.ref_obj_id = ref_obj_id;
- 				break;
- 			}
- 		}
-diff --git a/tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c b/tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c
-index a9229260a6cec..72800b1e8395a 100644
---- a/tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c
-+++ b/tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c
-@@ -18,7 +18,7 @@ static struct {
- 	const char *expected_verifier_err_msg;
- 	int expected_runtime_err;
- } kfunc_dynptr_tests[] = {
--	{"not_valid_dynptr", "Expected an initialized dynptr as arg #1", 0},
-+	{"not_valid_dynptr", "cannot pass in dynptr at an offset=-8", 0},
- 	{"not_ptr_to_stack", "arg#0 expected pointer to stack or dynptr_ptr", 0},
- 	{"dynptr_data_null", NULL, -EBADMSG},
- };
-diff --git a/tools/testing/selftests/bpf/progs/dynptr_fail.c b/tools/testing/selftests/bpf/progs/dynptr_fail.c
-index 78debc1b38207..02d57b95cf6ec 100644
---- a/tools/testing/selftests/bpf/progs/dynptr_fail.c
-+++ b/tools/testing/selftests/bpf/progs/dynptr_fail.c
-@@ -382,7 +382,7 @@ int invalid_helper1(void *ctx)
- 
- /* A dynptr can't be passed into a helper function at a non-zero offset */
- SEC("?raw_tp")
--__failure __msg("Expected an initialized dynptr as arg #3")
-+__failure __msg("cannot pass in dynptr at an offset=-8")
- int invalid_helper2(void *ctx)
- {
- 	struct bpf_dynptr ptr;
-@@ -584,7 +584,7 @@ int invalid_read4(void *ctx)
- 
- /* Initializing a dynptr on an offset should fail */
- SEC("?raw_tp")
--__failure __msg("invalid write to stack")
-+__failure __msg("cannot pass in dynptr at an offset=0")
- int invalid_offset(void *ctx)
- {
- 	struct bpf_dynptr ptr;
 -- 
 2.39.2
 
