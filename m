@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F1BBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:59:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76865C433D2;
-	Tue,  7 Mar 2023 18:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3D0BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:59:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D42C4339B;
+	Tue,  7 Mar 2023 18:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215585;
-	bh=yJRhdchdQW1Hbz7d3LrQvf6r0W4y+XiRojcqxOzKb6g=;
+	s=korg; t=1678215589;
+	bh=zFcTd643dyZEnOb+zT4R+fpPWmEFGBOWQY3ICI73bZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vUijcoyL0KQUlSzQPNlqSAWn5+FIiWdN/vbKEuM3aezypjuORkLR6Xl6wyhxyXLL+
-	 LxeSKNcZ7sV8WnTocL/d7IUMq0QmKRYYrSCzynR2I06qtK47qmxwqZZ2f62Kvv2Vxe
-	 6l9zLyp5AfBsStcEkSNJ5cxE0Ajo05by4mQ8XUtk=
+	b=YPi/KC9VKYTDsJeGYYUC+RsxTiYu1fBHHeIHNUFzS4BWhROMoVgRpA5op5oBSdNSp
+	 9RcFdsQKYaD3OafJDIC9l7KDz72AmRNXvrs9WC3TBXJGb/aYC4DCOaFTb4/cFVAAsL
+	 8H3uL08gIf0/1evF7RFt5lohn4tvSOzdIbnYuJ3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 310/567] drivers: base: transport_class: fix resource leak when transport_add_device() fails
-Date: Tue,  7 Mar 2023 18:00:46 +0100
-Message-Id: <20230307165919.300904881@linuxfoundation.org>
+Subject: [PATCH 5.15 293/567] ACPI: resource: Add helper function acpi_dev_get_memory_resources()
+Date: Tue,  7 Mar 2023 18:00:29 +0100
+Message-Id: <20230307165918.588528477@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -34,70 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-[ Upstream commit e5da06b27ff5a148e42265c8e306670a9d913969 ]
+[ Upstream commit 6bb057bfd9d509755349cd2a6ca5e5e6e6071304 ]
 
-The normal call sequence of using transport class is:
+Wrapper function that finds all memory type resources by
+using acpi_dev_get_resources(). It removes the need for the
+drivers to check the resource data type separately.
 
-Add path:
-transport_setup_device()
-  transport_setup_classdev()  // call sas_host_setup() here
-transport_add_device()	      // if fails, need call transport_destroy_device()
-transport_configure_device()
-
-Remove path:
-transport_remove_device()
-  transport_remove_classdev  // call sas_host_remove() here
-transport_destroy_device()
-
-If transport_add_device() fails, need call transport_destroy_device()
-to free memory, but in this case, ->remove() is not called, and the
-resources allocated in ->setup() are leaked. So fix these leaks by
-calling ->remove() in transport_add_class_device() if it returns error.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221115031638.3816551-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: c3194949ae8f ("usb: typec: intel_pmc_mux: Don't leak the ACPI device reference count")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/transport_class.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/acpi/resource.c | 17 +++++++++++++++++
+ include/linux/acpi.h    |  1 +
+ 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/base/transport_class.c b/drivers/base/transport_class.c
-index ccc86206e5087..09ee2a1e35bbd 100644
---- a/drivers/base/transport_class.c
-+++ b/drivers/base/transport_class.c
-@@ -155,12 +155,27 @@ static int transport_add_class_device(struct attribute_container *cont,
- 				      struct device *dev,
- 				      struct device *classdev)
- {
-+	struct transport_class *tclass = class_to_transport_class(cont->class);
- 	int error = attribute_container_add_class_device(classdev);
- 	struct transport_container *tcont = 
- 		attribute_container_to_transport_container(cont);
- 
--	if (!error && tcont->statistics)
-+	if (error)
-+		goto err_remove;
-+
-+	if (tcont->statistics) {
- 		error = sysfs_create_group(&classdev->kobj, tcont->statistics);
-+		if (error)
-+			goto err_del;
-+	}
-+
-+	return 0;
-+
-+err_del:
-+	attribute_container_class_device_del(classdev);
-+err_remove:
-+	if (tclass->remove)
-+		tclass->remove(tcont, dev, classdev);
- 
- 	return error;
+diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
+index f6317bc417ab1..3b9f894873365 100644
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -788,6 +788,23 @@ int acpi_dev_get_dma_resources(struct acpi_device *adev, struct list_head *list)
  }
+ EXPORT_SYMBOL_GPL(acpi_dev_get_dma_resources);
+ 
++/**
++ * acpi_dev_get_memory_resources - Get current memory resources of a device.
++ * @adev: ACPI device node to get the resources for.
++ * @list: Head of the resultant list of resources (must be empty).
++ *
++ * This is a helper function that locates all memory type resources of @adev
++ * with acpi_dev_get_resources().
++ *
++ * The number of resources in the output list is returned on success, an error
++ * code reflecting the error condition is returned otherwise.
++ */
++int acpi_dev_get_memory_resources(struct acpi_device *adev, struct list_head *list)
++{
++	return acpi_dev_get_resources(adev, list, is_memory, NULL);
++}
++EXPORT_SYMBOL_GPL(acpi_dev_get_memory_resources);
++
+ /**
+  * acpi_dev_filter_resource_type - Filter ACPI resource according to resource
+  *				   types
+diff --git a/include/linux/acpi.h b/include/linux/acpi.h
+index 2d7df5cea2494..a23a5aea9c817 100644
+--- a/include/linux/acpi.h
++++ b/include/linux/acpi.h
+@@ -484,6 +484,7 @@ int acpi_dev_get_resources(struct acpi_device *adev, struct list_head *list,
+ 			   void *preproc_data);
+ int acpi_dev_get_dma_resources(struct acpi_device *adev,
+ 			       struct list_head *list);
++int acpi_dev_get_memory_resources(struct acpi_device *adev, struct list_head *list);
+ int acpi_dev_filter_resource_type(struct acpi_resource *ares,
+ 				  unsigned long types);
+ 
 -- 
 2.39.2
 
