@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3324FBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:40:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E5DC433EF;
-	Tue,  7 Mar 2023 18:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A1FBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:40:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9707BC433D2;
+	Tue,  7 Mar 2023 18:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214420;
-	bh=zCLwfwvv0/sZeNCTmjnsn7akWD9gPBca5Mym8bKwRjo=;
+	s=korg; t=1678214423;
+	bh=P7l3hCwk6/SmIpaROSjikC3nQg9RFAAHyiph282nYOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XtbA0ikY6RculuBBHpNuygnlBSkyyu0EtGHszEwm2qEef1PbL+DJP02qyxMvXHKRQ
-	 UPdNmoOa1J38IVFgByjTS+hoERsW34Fe9L5inDziAwe2g7UgXZKJT5Ae+Qt/6/Yphx
-	 9LMA5vdDR/rUnB1ur7tNrddHIgO6AansGgtwO5wY=
+	b=cXSDBOE1IhjQTl15fjNOMMd/VHOU0t/JH/zycpJyhgMA1jWmYQNf7CH5oZkY8Z1Jb
+	 k+8/qq/TGi/9hGevkb5X66gh4EueRty43tdGefjEEidaU9ErRsian2TiCtNQsxcV6K
+	 L9aaMEpZIFpmvU0xpaODPEi5ZOLHUGw2fsvxvPlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Wetzel <alexander@wetzel-home.de>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 799/885] wifi: cfg80211: Fix use after free for wext
-Date: Tue,  7 Mar 2023 18:02:13 +0100
-Message-Id: <20230307170036.614492300@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.1 817/885] ARM: dts: exynos: correct TMU phandle in Odroid HC1
+Date: Tue,  7 Mar 2023 18:02:31 +0100
+Message-Id: <20230307170037.344439621@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,96 +33,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Wetzel <alexander@wetzel-home.de>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 015b8cc5e7c4d7bb671f1984d7b7338c310b185b upstream.
+commit 2e3d0e20d8456f876607a8af61fdb83dfbf98cb6 upstream.
 
-Key information in wext.connect is not reset on (re)connect and can hold
-data from a previous connection.
+TMU node uses 0 as thermal-sensor-cells, thus thermal zone referencing
+it must not have an argument to phandle.  This was not critical before,
+but since rework of thermal Devicetree initialization in the
+commit 3fd6d6e2b4e8 ("thermal/of: Rework the thermal device tree
+initialization"), this leads to errors registering thermal zones other
+than first one:
 
-Reset key data to avoid that drivers or mac80211 incorrectly detect a
-WEP connection request and access the freed or already reused memory.
+  thermal_sys: cpu0-thermal: Failed to read thermal-sensors cells: -2
+  thermal_sys: Failed to find thermal zone for tmu id=0
+  exynos-tmu 10064000.tmu: Failed to register sensor: -2
+  exynos-tmu: probe of 10064000.tmu failed with error -2
 
-Additionally optimize cfg80211_sme_connect() and avoid an useless
-schedule of conn_work.
-
-Fixes: fffd0934b939 ("cfg80211: rework key operation")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230124141856.356646-1-alexander@wetzel-home.de
-Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 1ac49427b566 ("ARM: dts: exynos: Add support for Hardkernel's Odroid HC1 board")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230209105841.779596-5-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/sme.c |   31 ++++++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ arch/arm/boot/dts/exynos5422-odroidhc1.dts |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/net/wireless/sme.c
-+++ b/net/wireless/sme.c
-@@ -285,6 +285,15 @@ void cfg80211_conn_work(struct work_stru
- 	wiphy_unlock(&rdev->wiphy);
- }
+--- a/arch/arm/boot/dts/exynos5422-odroidhc1.dts
++++ b/arch/arm/boot/dts/exynos5422-odroidhc1.dts
+@@ -31,7 +31,7 @@
  
-+static void cfg80211_step_auth_next(struct cfg80211_conn *conn,
-+				    struct cfg80211_bss *bss)
-+{
-+	memcpy(conn->bssid, bss->bssid, ETH_ALEN);
-+	conn->params.bssid = conn->bssid;
-+	conn->params.channel = bss->channel;
-+	conn->state = CFG80211_CONN_AUTHENTICATE_NEXT;
-+}
-+
- /* Returned bss is reference counted and must be cleaned up appropriately. */
- static struct cfg80211_bss *cfg80211_get_conn_bss(struct wireless_dev *wdev)
- {
-@@ -302,10 +311,7 @@ static struct cfg80211_bss *cfg80211_get
- 	if (!bss)
- 		return NULL;
- 
--	memcpy(wdev->conn->bssid, bss->bssid, ETH_ALEN);
--	wdev->conn->params.bssid = wdev->conn->bssid;
--	wdev->conn->params.channel = bss->channel;
--	wdev->conn->state = CFG80211_CONN_AUTHENTICATE_NEXT;
-+	cfg80211_step_auth_next(wdev->conn, bss);
- 	schedule_work(&rdev->conn_work);
- 
- 	return bss;
-@@ -597,7 +603,12 @@ static int cfg80211_sme_connect(struct w
- 	wdev->conn->params.ssid_len = wdev->u.client.ssid_len;
- 
- 	/* see if we have the bss already */
--	bss = cfg80211_get_conn_bss(wdev);
-+	bss = cfg80211_get_bss(wdev->wiphy, wdev->conn->params.channel,
-+			       wdev->conn->params.bssid,
-+			       wdev->conn->params.ssid,
-+			       wdev->conn->params.ssid_len,
-+			       wdev->conn_bss_type,
-+			       IEEE80211_PRIVACY(wdev->conn->params.privacy));
- 
- 	if (prev_bssid) {
- 		memcpy(wdev->conn->prev_bssid, prev_bssid, ETH_ALEN);
-@@ -608,6 +619,7 @@ static int cfg80211_sme_connect(struct w
- 	if (bss) {
- 		enum nl80211_timeout_reason treason;
- 
-+		cfg80211_step_auth_next(wdev->conn, bss);
- 		err = cfg80211_conn_do_work(wdev, &treason);
- 		cfg80211_put_bss(wdev->wiphy, bss);
- 	} else {
-@@ -1450,6 +1462,15 @@ int cfg80211_connect(struct cfg80211_reg
- 	} else {
- 		if (WARN_ON(connkeys))
- 			return -EINVAL;
-+
-+		/* connect can point to wdev->wext.connect which
-+		 * can hold key data from a previous connection
-+		 */
-+		connect->key = NULL;
-+		connect->key_len = 0;
-+		connect->key_idx = 0;
-+		connect->crypto.cipher_group = 0;
-+		connect->crypto.n_ciphers_pairwise = 0;
- 	}
- 
- 	wdev->connect_keys = connkeys;
+ 	thermal-zones {
+ 		cpu0_thermal: cpu0-thermal {
+-			thermal-sensors = <&tmu_cpu0 0>;
++			thermal-sensors = <&tmu_cpu0>;
+ 			trips {
+ 				cpu0_alert0: cpu-alert-0 {
+ 					temperature = <70000>; /* millicelsius */
+@@ -86,7 +86,7 @@
+ 			};
+ 		};
+ 		cpu1_thermal: cpu1-thermal {
+-			thermal-sensors = <&tmu_cpu1 0>;
++			thermal-sensors = <&tmu_cpu1>;
+ 			trips {
+ 				cpu1_alert0: cpu-alert-0 {
+ 					temperature = <70000>;
+@@ -130,7 +130,7 @@
+ 			};
+ 		};
+ 		cpu2_thermal: cpu2-thermal {
+-			thermal-sensors = <&tmu_cpu2 0>;
++			thermal-sensors = <&tmu_cpu2>;
+ 			trips {
+ 				cpu2_alert0: cpu-alert-0 {
+ 					temperature = <70000>;
+@@ -174,7 +174,7 @@
+ 			};
+ 		};
+ 		cpu3_thermal: cpu3-thermal {
+-			thermal-sensors = <&tmu_cpu3 0>;
++			thermal-sensors = <&tmu_cpu3>;
+ 			trips {
+ 				cpu3_alert0: cpu-alert-0 {
+ 					temperature = <70000>;
+@@ -218,7 +218,7 @@
+ 			};
+ 		};
+ 		gpu_thermal: gpu-thermal {
+-			thermal-sensors = <&tmu_gpu 0>;
++			thermal-sensors = <&tmu_gpu>;
+ 			trips {
+ 				gpu_alert0: gpu-alert-0 {
+ 					temperature = <70000>;
 
 
