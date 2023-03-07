@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6776DBA36
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:33:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3F8C4339B;
-	Tue,  7 Mar 2023 17:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64373BA35
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:33:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56A9C433D2;
+	Tue,  7 Mar 2023 17:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210393;
-	bh=rAfTvp/zOhvD7wyTYJAujxQudDl7HmMD/QhKJbxAtGg=;
+	s=korg; t=1678210396;
+	bh=GdBlhJ/snvFCqOM2/O9UwlEjnaEQy6gCZehggfshJIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ak5Pvv/98Wn87iatYg3Seg/HTgCYEdKM3zjoljFBeqQJOajsDhaW9rkyTT1u15f1o
-	 Sw6w46tj2MJEm/xmmG1bLndNp0M4nPmFSciiZv6uhigoylY9E9uNLGUwhQDkSH8pwl
-	 3OmHygjZNH44cdi45nqt1xof9Zdi5iiUn2rYvB4A=
+	b=AnLoheKdVqxvx1pjrs1gkBQuSIxwWuRPVchFVdn0z2Td/WthxDf9wFoEsbf8VZuHy
+	 YlvlhnEjmh4k6+MRBLSZq/m5wXyLYjaeOfC8ySWw3iA5plKLu+IVfHwTnCEVMRxPVN
+	 zTqnGMwiozYzE/j0cBR+SSGxHuUzCEzAbd9+J2ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Wang Hai <wanghai38@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0495/1001] driver core: fix potential null-ptr-deref in device_add()
-Date: Tue,  7 Mar 2023 17:54:27 +0100
-Message-Id: <20230307170042.860427575@linuxfoundation.org>
+Subject: [PATCH 6.2 0496/1001] kobject: Fix slab-out-of-bounds in fill_kobj_path()
+Date: Tue,  7 Mar 2023 17:54:28 +0100
+Message-Id: <20230307170042.910565233@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,70 +34,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit f6837f34a34973ef6600c08195ed300e24e97317 ]
+[ Upstream commit 3bb2a01caa813d3a1845d378bbe4169ef280d394 ]
 
-I got the following null-ptr-deref report while doing fault injection test:
+In kobject_get_path(), if kobj->name is changed between calls
+get_kobj_path_length() and fill_kobj_path() and the length becomes
+longer, then fill_kobj_path() will have an out-of-bounds bug.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000058
-CPU: 2 PID: 278 Comm: 37-i2c-ds2482 Tainted: G    B   W        N 6.1.0-rc3+
-RIP: 0010:klist_put+0x2d/0xd0
-Call Trace:
+The actual current problem occurs when the ixgbe probe.
+
+In ixgbe_mii_bus_init(), if the length of netdev->dev.kobj.name
+length becomes longer, out-of-bounds will occur.
+
+cpu0                                         cpu1
+ixgbe_probe
+ register_netdev(netdev)
+  netdev_register_kobject
+   device_add
+    kobject_uevent // Sending ADD events
+                                             systemd-udevd // rename netdev
+                                              dev_change_name
+                                               device_rename
+                                                kobject_rename
+ ixgbe_mii_bus_init                             |
+  mdiobus_register                              |
+   __mdiobus_register                           |
+    device_register                             |
+     device_add                                 |
+      kobject_uevent                            |
+       kobject_get_path                         |
+        len = get_kobj_path_length // old name  |
+        path = kzalloc(len, gfp_mask);          |
+                                                kobj->name = name;
+                                                /* name length becomes
+                                                 * longer
+                                                 */
+        fill_kobj_path /* kobj path length is
+                        * longer than path,
+                        * resulting in out of
+                        * bounds when filling path
+                        */
+
+This is the kasan report:
+
+==================================================================
+BUG: KASAN: slab-out-of-bounds in fill_kobj_path+0x50/0xc0
+Write of size 7 at addr ff1100090573d1fd by task kworker/28:1/673
+
+ Workqueue: events work_for_cpu_fn
+ Call Trace:
  <TASK>
- klist_remove+0xf1/0x1c0
- device_release_driver_internal+0x196/0x210
- bus_remove_device+0x1bd/0x240
- device_add+0xd3d/0x1100
- w1_add_master_device+0x476/0x490 [wire]
- ds2482_probe+0x303/0x3e0 [ds2482]
+ dump_stack_lvl+0x34/0x48
+ print_address_description.constprop.0+0x86/0x1e7
+ print_report+0x36/0x4f
+ kasan_report+0xad/0x130
+ kasan_check_range+0x35/0x1c0
+ memcpy+0x39/0x60
+ fill_kobj_path+0x50/0xc0
+ kobject_get_path+0x5a/0xc0
+ kobject_uevent_env+0x140/0x460
+ device_add+0x5c7/0x910
+ __mdiobus_register+0x14e/0x490
+ ixgbe_probe.cold+0x441/0x574 [ixgbe]
+ local_pci_probe+0x78/0xc0
+ work_for_cpu_fn+0x26/0x40
+ process_one_work+0x3b6/0x6a0
+ worker_thread+0x368/0x520
+ kthread+0x165/0x1a0
+ ret_from_fork+0x1f/0x30
 
-This is how it happened:
+This reproducer triggers that bug:
 
-w1_alloc_dev()
-  // The dev->driver is set to w1_master_driver.
-  memcpy(&dev->dev, device, sizeof(struct device));
-  device_add()
-    bus_add_device()
-    dpm_sysfs_add() // It fails, calls bus_remove_device.
+while:
+do
+    rmmod ixgbe
+    sleep 0.5
+    modprobe ixgbe
+    sleep 0.5
 
-    // error path
-    bus_remove_device()
-      // The dev->driver is not null, but driver is not bound.
-      __device_release_driver()
-        klist_remove(&dev->p->knode_driver) <-- It causes null-ptr-deref.
+When calling fill_kobj_path() to fill path, if the name length of
+kobj becomes longer, return failure and retry. This fixes the problem.
 
-    // normal path
-    bus_probe_device() // It's not called yet.
-      device_bind_driver()
-
-If dev->driver is set, in the error path after calling bus_add_device()
-in device_add(), bus_remove_device() is called, then the device will be
-detached from driver. But device_bind_driver() is not called yet, so it
-causes null-ptr-deref while access the 'knode_driver'. To fix this, set
-dev->driver to null in the error path before calling bus_remove_device().
-
-Fixes: 57eee3d23e88 ("Driver core: Call device_pm_add() after bus_add_device() in device_add()")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221205034904.2077765-1-yangyingliang@huawei.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Link: https://lore.kernel.org/r/20221220012143.52141-1-wanghai38@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ lib/kobject.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index a3e14143ec0cf..506289e6b04dd 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -3513,6 +3513,7 @@ int device_add(struct device *dev)
- 	device_pm_remove(dev);
- 	dpm_sysfs_remove(dev);
-  DPMError:
-+	dev->driver = NULL;
- 	bus_remove_device(dev);
-  BusError:
- 	device_remove_attrs(dev);
+diff --git a/lib/kobject.c b/lib/kobject.c
+index 985ee1c4f2c60..d20ce15eec2d0 100644
+--- a/lib/kobject.c
++++ b/lib/kobject.c
+@@ -112,7 +112,7 @@ static int get_kobj_path_length(const struct kobject *kobj)
+ 	return length;
+ }
+ 
+-static void fill_kobj_path(const struct kobject *kobj, char *path, int length)
++static int fill_kobj_path(const struct kobject *kobj, char *path, int length)
+ {
+ 	const struct kobject *parent;
+ 
+@@ -121,12 +121,16 @@ static void fill_kobj_path(const struct kobject *kobj, char *path, int length)
+ 		int cur = strlen(kobject_name(parent));
+ 		/* back up enough to print this name with '/' */
+ 		length -= cur;
++		if (length <= 0)
++			return -EINVAL;
+ 		memcpy(path + length, kobject_name(parent), cur);
+ 		*(path + --length) = '/';
+ 	}
+ 
+ 	pr_debug("kobject: '%s' (%p): %s: path = '%s'\n", kobject_name(kobj),
+ 		 kobj, __func__, path);
++
++	return 0;
+ }
+ 
+ /**
+@@ -141,13 +145,17 @@ char *kobject_get_path(const struct kobject *kobj, gfp_t gfp_mask)
+ 	char *path;
+ 	int len;
+ 
++retry:
+ 	len = get_kobj_path_length(kobj);
+ 	if (len == 0)
+ 		return NULL;
+ 	path = kzalloc(len, gfp_mask);
+ 	if (!path)
+ 		return NULL;
+-	fill_kobj_path(kobj, path, len);
++	if (fill_kobj_path(kobj, path, len)) {
++		kfree(path);
++		goto retry;
++	}
+ 
+ 	return path;
+ }
 -- 
 2.39.2
 
