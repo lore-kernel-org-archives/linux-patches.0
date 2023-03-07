@@ -1,35 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF221BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:27:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA875C4339B;
-	Tue,  7 Mar 2023 18:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51B6BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:27:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5470CC433D2;
+	Tue,  7 Mar 2023 18:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213661;
-	bh=DZyIsPkQES0QmFhuErpe1qZmb9SX+Y7DSi0AaVdU0Pc=;
+	s=korg; t=1678213664;
+	bh=lX1KobrTflvWQnZeQwufnxX7sVZ0XDOpN260eJg/mhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/ndcXA+ZlXVpZFUH8KoVO1vFaf6dL9qspZjwXzxfrVnBMANJbSrD8BI0BtwJd4ZB
-	 d9GwmqLgqEj+e1rAFoG20fUMMZyuxMg0gpCYxwkrTcN/WUZLMdl/uy/55ddVx28ig6
-	 OjUQOLLk6N/RF1FCPVWcGkyNgbTY8FpIS/LGUD7Q=
+	b=p+5MyAeuIPGLSNwns3Byx+MeXYlwkavV5qIoJDVqiz70wI2KbpKvdwmpUKZ4gJG6c
+	 zEH4chXYZktrdPZn+p/3lEXF0AAyRnYyshAWMwFX5D7Rr2puaSbfhfdI3m6MtuM+ph
+	 RpCOXqG9pyum0wTA7v7mYpURz/MfO/NyKIC8i+ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Alexander Potapenko <glider@google.com>,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Kees Cook <keescook@chromium.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 579/885] uaccess: Add minimum bounds check on kernel buffer size
-Date: Tue,  7 Mar 2023 17:58:33 +0100
-Message-Id: <20230307170027.528967543@linuxfoundation.org>
+Subject: [PATCH 6.1 580/885] s390/idle: mark arch_cpu_idle() noinstr
+Date: Tue,  7 Mar 2023 17:58:34 +0100
+Message-Id: <20230307170027.570199401@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -43,68 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 04ffde1319a715bd0550ded3580d4ea3bc003776 ]
+[ Upstream commit a9cbc1b471d291c865907542394f1c483b93a811 ]
 
-While there is logic about the difference between ksize and usize,
-copy_struct_from_user() didn't check the size of the destination buffer
-(when it was known) against ksize. Add this check so there is an upper
-bounds check on the possible memset() call, otherwise lower bounds
-checks made by callers will trigger bounds warnings under -Warray-bounds.
-Seen under GCC 13:
+linux-next commit ("cpuidle: tracing: Warn about !rcu_is_watching()")
+adds a new warning which hits on s390's arch_cpu_idle() function:
 
-In function 'copy_struct_from_user',
-    inlined from 'iommufd_fops_ioctl' at
-../drivers/iommu/iommufd/main.c:333:8:
-../include/linux/fortify-string.h:59:33: warning: '__builtin_memset' offset [57, 4294967294] is out of the bounds [0, 56] of object 'buf' with type 'union ucmd_buffer' [-Warray-bounds=]
-   59 | #define __underlying_memset     __builtin_memset
-      |                                 ^
-../include/linux/fortify-string.h:453:9: note: in expansion of macro '__underlying_memset'
-  453 |         __underlying_memset(p, c, __fortify_size); \
-      |         ^~~~~~~~~~~~~~~~~~~
-../include/linux/fortify-string.h:461:25: note: in expansion of macro '__fortify_memset_chk'
-  461 | #define memset(p, c, s) __fortify_memset_chk(p, c, s, \
-      |                         ^~~~~~~~~~~~~~~~~~~~
-../include/linux/uaccess.h:334:17: note: in expansion of macro 'memset'
-  334 |                 memset(dst + size, 0, rest);
-      |                 ^~~~~~
-../drivers/iommu/iommufd/main.c: In function 'iommufd_fops_ioctl':
-../drivers/iommu/iommufd/main.c:311:27: note: 'buf' declared here
-  311 |         union ucmd_buffer buf;
-      |                           ^~~
+RCU not on for: arch_cpu_idle+0x0/0x28
+WARNING: CPU: 2 PID: 0 at include/linux/trace_recursion.h:162 arch_ftrace_ops_list_func+0x24c/0x258
+Modules linked in:
+CPU: 2 PID: 0 Comm: swapper/2 Not tainted 6.2.0-rc6-next-20230202 #4
+Hardware name: IBM 8561 T01 703 (z/VM 7.3.0)
+Krnl PSW : 0404d00180000000 00000000002b55c0 (arch_ftrace_ops_list_func+0x250/0x258)
+           R:0 T:1 IO:0 EX:0 Key:0 M:1 W:0 P:0 AS:3 CC:1 PM:0 RI:0 EA:3
+Krnl GPRS: c0000000ffffbfff 0000000080000002 0000000000000026 0000000000000000
+           0000037ffffe3a28 0000037ffffe3a20 0000000000000000 0000000000000000
+           0000000000000000 0000000000f4acf6 00000000001044f0 0000037ffffe3cb0
+           0000000000000000 0000000000000000 00000000002b55bc 0000037ffffe3bb8
+Krnl Code: 00000000002b55b0: c02000840051        larl    %r2,0000000001335652
+           00000000002b55b6: c0e5fff512d1        brasl   %r14,0000000000157b58
+          #00000000002b55bc: af000000            mc      0,0
+          >00000000002b55c0: a7f4ffe7            brc     15,00000000002b558e
+           00000000002b55c4: 0707                bcr     0,%r7
+           00000000002b55c6: 0707                bcr     0,%r7
+           00000000002b55c8: eb6ff0480024        stmg    %r6,%r15,72(%r15)
+           00000000002b55ce: b90400ef            lgr     %r14,%r15
+Call Trace:
+ [<00000000002b55c0>] arch_ftrace_ops_list_func+0x250/0x258
+([<00000000002b55bc>] arch_ftrace_ops_list_func+0x24c/0x258)
+ [<0000000000f5f0fc>] ftrace_common+0x1c/0x20
+ [<00000000001044f6>] arch_cpu_idle+0x6/0x28
+ [<0000000000f4acf6>] default_idle_call+0x76/0x128
+ [<00000000001cc374>] do_idle+0xf4/0x1b0
+ [<00000000001cc6ce>] cpu_startup_entry+0x36/0x40
+ [<0000000000119d00>] smp_start_secondary+0x140/0x150
+ [<0000000000f5d2ae>] restart_int_handler+0x6e/0x90
 
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Dinh Nguyen <dinguyen@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Alexander Potapenko <glider@google.com>
-Acked-by: Aleksa Sarai <cyphar@cyphar.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/lkml/20230203193523.never.667-kees@kernel.org/
+Mark arch_cpu_idle() noinstr like all other architectures with
+CONFIG_ARCH_WANTS_NO_INSTR (should) have it to fix this.
+
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/uaccess.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/s390/kernel/idle.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/uaccess.h b/include/linux/uaccess.h
-index afb18f198843b..ab9728138ad67 100644
---- a/include/linux/uaccess.h
-+++ b/include/linux/uaccess.h
-@@ -329,6 +329,10 @@ copy_struct_from_user(void *dst, size_t ksize, const void __user *src,
- 	size_t size = min(ksize, usize);
- 	size_t rest = max(ksize, usize) - size;
+diff --git a/arch/s390/kernel/idle.c b/arch/s390/kernel/idle.c
+index 4bf1ee293f2b3..a0da049e73609 100644
+--- a/arch/s390/kernel/idle.c
++++ b/arch/s390/kernel/idle.c
+@@ -44,7 +44,7 @@ void account_idle_time_irq(void)
+ 	S390_lowcore.last_update_timer = idle->timer_idle_exit;
+ }
  
-+	/* Double check if ksize is larger than a known object size. */
-+	if (WARN_ON_ONCE(ksize > __builtin_object_size(dst, 1)))
-+		return -E2BIG;
-+
- 	/* Deal with trailing bytes. */
- 	if (usize < ksize) {
- 		memset(dst + size, 0, rest);
+-void arch_cpu_idle(void)
++void noinstr arch_cpu_idle(void)
+ {
+ 	struct s390_idle_data *idle = this_cpu_ptr(&s390_idle);
+ 	unsigned long idle_time;
 -- 
 2.39.2
 
