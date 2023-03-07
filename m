@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A7CBA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:07:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F385C433EF;
-	Tue,  7 Mar 2023 19:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2311BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:07:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1DCC433EF;
+	Tue,  7 Mar 2023 19:07:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216042;
-	bh=LzxOs5VMddDWhrTpVYqWpNappj6ZqW23t5B16fBvJY8=;
+	s=korg; t=1678216045;
+	bh=tWrxZm5sp9FheXzdVQaf6pRhAfFHsWhD/g6bWrw3Szg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WBi0V/yktNa6jk6/LpH7/qaTTVF2LH3tYv7HUg1KX5VQuQU8/Z9dV3kfTGxapiaKj
-	 n1Dqp8Z/gLIUkeouapGBlLcAprazsRjdfMlqxUNBbyKr5MACICFmjydlqVVBzzJVb4
-	 3q07cIfGWf0rYqdgwPSBenGw/jVM0sqgEVNBZc68=
+	b=l42GdEWf7+/5ysDLYzETUM04gTmca856vFrqeIQo9gDUxP+0owef8uiJ490ea6ISF
+	 2KoqsXENBbQytJhiuZB86cub8BC3NeLT9W1gcTZcGgyKS8EU2x0usNXe4BzRnJdc2U
+	 p0qZWUpXpR9Trn9Z3JZgkaTsDfH5IA3aVR7MTz7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 456/567] ocfs2: fix non-auto defrag path not working issue
-Date: Tue,  7 Mar 2023 18:03:12 +0100
-Message-Id: <20230307165925.676404793@linuxfoundation.org>
+	Jeff Xu <jeffxu@google.com>,
+	Guenter Roeck <groeck@chromium.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 5.15 457/567] selftests/landlock: Skip overlayfs tests when not supported
+Date: Tue,  7 Mar 2023 18:03:13 +0100
+Message-Id: <20230307165925.705784139@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -41,91 +35,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heming Zhao via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
+From: Jeff Xu <jeffxu@google.com>
 
-commit 236b9254f8d1edc273ad88b420aa85fbd84f492d upstream.
+commit 366617a69e60610912836570546f118006ebc7cb upstream.
 
-This fixes three issues on move extents ioctl without auto defrag:
+overlayfs may be disabled in the kernel configuration, causing related
+tests to fail.  Check that overlayfs is supported at runtime, so we can
+skip layout2_overlay.* accordingly.
 
-a) In ocfs2_find_victim_alloc_group(), we have to convert bits to block
-   first in case of global bitmap.
-
-b) In ocfs2_probe_alloc_group(), when finding enough bits in block
-   group bitmap, we have to back off move_len to start pos as well,
-   otherwise it may corrupt filesystem.
-
-c) In ocfs2_ioctl_move_extents(), set me_threshold both for non-auto
-   and auto defrag paths.  Otherwise it will set move_max_hop to 0 and
-   finally cause unexpectedly ENOSPC error.
-
-Currently there are no tools triggering the above issues since
-defragfs.ocfs2 enables auto defrag by default.  Tested with manually
-changing defragfs.ocfs2 to run non auto defrag path.
-
-Link: https://lkml.kernel.org/r/20230220050526.22020-1-heming.zhao@suse.com
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jeff Xu <jeffxu@google.com>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230113053229.1281774-2-jeffxu@google.com
+[mic: Reword comments and constify variables]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/move_extents.c |   24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ tools/testing/selftests/landlock/fs_test.c |   47 +++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
---- a/fs/ocfs2/move_extents.c
-+++ b/fs/ocfs2/move_extents.c
-@@ -434,7 +434,7 @@ static int ocfs2_find_victim_alloc_group
- 			bg = (struct ocfs2_group_desc *)gd_bh->b_data;
+--- a/tools/testing/selftests/landlock/fs_test.c
++++ b/tools/testing/selftests/landlock/fs_test.c
+@@ -11,6 +11,7 @@
+ #include <fcntl.h>
+ #include <linux/landlock.h>
+ #include <sched.h>
++#include <stdio.h>
+ #include <string.h>
+ #include <sys/capability.h>
+ #include <sys/mount.h>
+@@ -87,6 +88,40 @@ static const char dir_s3d3[] = TMP_DIR "
+  *         └── s3d3
+  */
  
- 			if (vict_blkno < (le64_to_cpu(bg->bg_blkno) +
--						le16_to_cpu(bg->bg_bits))) {
-+						(le16_to_cpu(bg->bg_bits) << bits_per_unit))) {
- 
- 				*ret_bh = gd_bh;
- 				*vict_bit = (vict_blkno - blkno) >>
-@@ -549,6 +549,7 @@ static void ocfs2_probe_alloc_group(stru
- 			last_free_bits++;
- 
- 		if (last_free_bits == move_len) {
-+			i -= move_len;
- 			*goal_bit = i;
- 			*phys_cpos = base_cpos + i;
- 			break;
-@@ -1020,18 +1021,19 @@ int ocfs2_ioctl_move_extents(struct file
- 
- 	context->range = &range;
- 
++static bool fgrep(FILE *const inf, const char *const str)
++{
++	char line[32];
++	const int slen = strlen(str);
++
++	while (!feof(inf)) {
++		if (!fgets(line, sizeof(line), inf))
++			break;
++		if (strncmp(line, str, slen))
++			continue;
++
++		return true;
++	}
++
++	return false;
++}
++
++static bool supports_overlayfs(void)
++{
++	bool res;
++	FILE *const inf = fopen("/proc/filesystems", "r");
++
 +	/*
-+	 * ok, the default theshold for the defragmentation
-+	 * is 1M, since our maximum clustersize was 1M also.
-+	 * any thought?
++	 * Consider that the filesystem is supported if we cannot get the
++	 * supported ones.
 +	 */
-+	if (!range.me_threshold)
-+		range.me_threshold = 1024 * 1024;
++	if (!inf)
++		return true;
 +
-+	if (range.me_threshold > i_size_read(inode))
-+		range.me_threshold = i_size_read(inode);
++	res = fgrep(inf, "nodev\toverlay\n");
++	fclose(inf);
++	return res;
++}
 +
- 	if (range.me_flags & OCFS2_MOVE_EXT_FL_AUTO_DEFRAG) {
- 		context->auto_defrag = 1;
--		/*
--		 * ok, the default theshold for the defragmentation
--		 * is 1M, since our maximum clustersize was 1M also.
--		 * any thought?
--		 */
--		if (!range.me_threshold)
--			range.me_threshold = 1024 * 1024;
--
--		if (range.me_threshold > i_size_read(inode))
--			range.me_threshold = i_size_read(inode);
+ static void mkdir_parents(struct __test_metadata *const _metadata,
+ 			  const char *const path)
+ {
+@@ -2650,6 +2685,9 @@ FIXTURE(layout2_overlay) {};
  
- 		if (range.me_flags & OCFS2_MOVE_EXT_FL_PART_DEFRAG)
- 			context->partial = 1;
+ FIXTURE_SETUP(layout2_overlay)
+ {
++	if (!supports_overlayfs())
++		SKIP(return, "overlayfs is not supported");
++
+ 	prepare_layout(_metadata);
+ 
+ 	create_directory(_metadata, LOWER_BASE);
+@@ -2686,6 +2724,9 @@ FIXTURE_SETUP(layout2_overlay)
+ 
+ FIXTURE_TEARDOWN(layout2_overlay)
+ {
++	if (!supports_overlayfs())
++		SKIP(return, "overlayfs is not supported");
++
+ 	EXPECT_EQ(0, remove_path(lower_do1_fl3));
+ 	EXPECT_EQ(0, remove_path(lower_dl1_fl2));
+ 	EXPECT_EQ(0, remove_path(lower_fl1));
+@@ -2717,6 +2758,9 @@ FIXTURE_TEARDOWN(layout2_overlay)
+ 
+ TEST_F_FORK(layout2_overlay, no_restriction)
+ {
++	if (!supports_overlayfs())
++		SKIP(return, "overlayfs is not supported");
++
+ 	ASSERT_EQ(0, test_open(lower_fl1, O_RDONLY));
+ 	ASSERT_EQ(0, test_open(lower_dl1, O_RDONLY));
+ 	ASSERT_EQ(0, test_open(lower_dl1_fl2, O_RDONLY));
+@@ -2880,6 +2924,9 @@ TEST_F_FORK(layout2_overlay, same_conten
+ 	size_t i;
+ 	const char *path_entry;
+ 
++	if (!supports_overlayfs())
++		SKIP(return, "overlayfs is not supported");
++
+ 	/* Sets rules on base directories (i.e. outside overlay scope). */
+ 	ruleset_fd = create_ruleset(_metadata, ACCESS_RW, layer1_base);
+ 	ASSERT_LE(0, ruleset_fd);
 
 
