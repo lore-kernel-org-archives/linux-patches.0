@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C95BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4857C433D2;
-	Tue,  7 Mar 2023 17:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C18BBA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52CCC433D2;
+	Tue,  7 Mar 2023 17:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211681;
-	bh=/VOYS5xwVDhIWJkey/rUzl/YEKnYN6PZoTXll3g8k0M=;
+	s=korg; t=1678211684;
+	bh=QDmSBcuuHKYL8R3kvia2vQJi88UAyL72m+Gws6HYhE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aXuF/ThGiP1RUC/WQJMbhji6v8AiRQQvgbO2OytMhmBB8/isWorNtKnMMt6bYcUYq
-	 bF3AVoNNGdjHpD2RLNb64MbtgkteMxEkIrby1Xd/h8m3zbAauX0bqa4oKwtv2Cy2TY
-	 dleuSoTtVYIeOgVUZlDWfmTAc1QlHyAjyvg4Klc8=
+	b=JEcSKd2aHroqZYe8Ffyk+CfsF3wFpvfVWCKk9ghglAZGOCS9ymau1Gr2PKQk/ffn+
+	 a57y/wc12S4ZWHacoaoA7FuV+tG1GgT2hjp2L1eS29cTMfYVEwsZmNScbusxyeklZF
+	 lRltzn/TmWUo1Tkhz3rdV6n5lFf2y5/VW+IcY62U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 6.2 0942/1001] remoteproc/mtk_scp: Move clk ops outside send_lock
-Date: Tue,  7 Mar 2023 18:01:54 +0100
-Message-Id: <20230307170103.013605100@linuxfoundation.org>
+	Yan Zhao <yan.y.zhao@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Alex Williamson <alex.williamson@redhat.com>
+Subject: [PATCH 6.2 0943/1001] vfio: Fix NULL pointer dereference caused by uninitialized group->iommufd
+Date: Tue,  7 Mar 2023 18:01:55 +0100
+Message-Id: <20230307170103.062777649@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,75 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Yan Zhao <yan.y.zhao@intel.com>
 
-commit e46ceea3148163166ef9b7bcac578e72dd30c064 upstream.
+commit d649c34cb916b015fdcb487e51409fcc5caeca8d upstream.
 
-Clocks are properly reference counted and do not need to be inside the
-lock range.
+group->iommufd is not initialized for the iommufd_ctx_put()
 
-Right now this triggers a false-positive lockdep warning on MT8192 based
-Chromebooks, through a combination of mtk-scp that has a cros-ec-rpmsg
-sub-device, the (actual) cros-ec I2C adapter registration, I2C client
-(not on cros-ec) probe doing i2c transfers and enabling clocks.
+[20018.331541] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[20018.377508] RIP: 0010:iommufd_ctx_put+0x5/0x10 [iommufd]
+...
+[20018.476483] Call Trace:
+[20018.479214]  <TASK>
+[20018.481555]  vfio_group_fops_unl_ioctl+0x506/0x690 [vfio]
+[20018.487586]  __x64_sys_ioctl+0x6a/0xb0
+[20018.491773]  ? trace_hardirqs_on+0xc5/0xe0
+[20018.496347]  do_syscall_64+0x67/0x90
+[20018.500340]  entry_SYSCALL_64_after_hwframe+0x4b/0xb5
 
-This is a false positive because the cros-ec-rpmsg under mtk-scp does
-not have an I2C adapter, and also each I2C adapter and cros-ec instance
-have their own mutex.
-
-Move the clk operations outside of the send_lock range.
-
-Fixes: 63c13d61eafe ("remoteproc/mediatek: add SCP support for mt8183")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 9eefba8002c2 ("vfio: Move vfio group specific code into group.c")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230104083110.736377-1-wenst@chromium.org
-[Fixed "Fixes:" tag line]
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Yan Zhao <yan.y.zhao@intel.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Link: https://lore.kernel.org/r/20230222074938.13681-1-yan.y.zhao@intel.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/mtk_scp_ipi.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/vfio/group.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/remoteproc/mtk_scp_ipi.c
-+++ b/drivers/remoteproc/mtk_scp_ipi.c
-@@ -164,21 +164,21 @@ int scp_ipi_send(struct mtk_scp *scp, u3
- 	    WARN_ON(len > sizeof(send_obj->share_buf)) || WARN_ON(!buf))
- 		return -EINVAL;
+diff --git a/drivers/vfio/group.c b/drivers/vfio/group.c
+index 0e9036e2b9c4..160deff6649b 100644
+--- a/drivers/vfio/group.c
++++ b/drivers/vfio/group.c
+@@ -137,7 +137,7 @@ static int vfio_group_ioctl_set_container(struct vfio_group *group,
  
--	mutex_lock(&scp->send_lock);
--
- 	ret = clk_prepare_enable(scp->clk);
- 	if (ret) {
- 		dev_err(scp->dev, "failed to enable clock\n");
--		goto unlock_mutex;
-+		return ret;
- 	}
- 
-+	mutex_lock(&scp->send_lock);
-+
- 	 /* Wait until SCP receives the last command */
- 	timeout = jiffies + msecs_to_jiffies(2000);
- 	do {
- 		if (time_after(jiffies, timeout)) {
- 			dev_err(scp->dev, "%s: IPI timeout!\n", __func__);
- 			ret = -ETIMEDOUT;
--			goto clock_disable;
-+			goto unlock_mutex;
+ 		ret = iommufd_vfio_compat_ioas_id(iommufd, &ioas_id);
+ 		if (ret) {
+-			iommufd_ctx_put(group->iommufd);
++			iommufd_ctx_put(iommufd);
+ 			goto out_unlock;
  		}
- 	} while (readl(scp->reg_base + scp->data->host_to_scp_reg));
  
-@@ -205,10 +205,9 @@ int scp_ipi_send(struct mtk_scp *scp, u3
- 			ret = 0;
- 	}
- 
--clock_disable:
--	clk_disable_unprepare(scp->clk);
- unlock_mutex:
- 	mutex_unlock(&scp->send_lock);
-+	clk_disable_unprepare(scp->clk);
- 
- 	return ret;
- }
+-- 
+2.39.2
+
 
 
