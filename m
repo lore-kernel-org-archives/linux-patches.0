@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFF1BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:34:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93933C433D2;
-	Tue,  7 Mar 2023 17:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258F0BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:34:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803B2C433D2;
+	Tue,  7 Mar 2023 17:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210491;
-	bh=ioQ4OXnLMYg0Q6kyleOzRK0onhEe8RavH2BtK4xtyOw=;
+	s=korg; t=1678210495;
+	bh=/GxsDY7jvjgHH/dQbFQCDMUFygABZuqR96LXXOnbeGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1zOYwgNxOq85xgXaDOuLBifahspESX/Lkhs+zBeYl2I+0iToDE1wGAynhzd+M7AZa
-	 uFQAI3OAmXetO/eR8//Uy8Qm9SQ3ReiT1pgBzOyZVEoUSaMub+M43i95HbHZ4PB1Wt
-	 gUYe8Otj7EBPLJtSiWzvDuTfakWezSNIDp6fl57A=
+	b=HcphxqDqo3ZZU0MGSHD3bcfg+ctaTovh9vtQxMjsk3TsV66ROkbWfomS+nGJ/AaCp
+	 P7z97aDGBUra5s8OTHx6H8OC5KQaEuYwY4F8cSWAJ7tfX0mOvHusBPS/lplYzFljb4
+	 SW0e4h92EDeu8fzvzqrxYvisA4Q0mRXQsmqcMt9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0528/1001] firmware: dmi-sysfs: Fix null-ptr-deref in dmi_sysfs_register_handle
-Date: Tue,  7 Mar 2023 17:55:00 +0100
-Message-Id: <20230307170044.365325474@linuxfoundation.org>
+Subject: [PATCH 6.2 0529/1001] selftests: iommu: Fix test_cmd_destroy_access() call in user_copy
+Date: Tue,  7 Mar 2023 17:55:01 +0100
+Message-Id: <20230307170044.416541358@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,73 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit 18e126e97c961f7a93823795c879d7c085fe5098 ]
+[ Upstream commit 9fabbdf338b701f2d763d9edbc3e82ce1e7fa1b4 ]
 
-KASAN reported a null-ptr-deref error:
+The test_cmd_destroy_access() should end with a semicolon, so add one.
+There is a test_ioctl_destroy(ioas_id) following already, so drop one.
 
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 0 PID: 1373 Comm: modprobe
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-RIP: 0010:dmi_sysfs_entry_release
-...
-Call Trace:
- <TASK>
- kobject_put
- dmi_sysfs_register_handle (drivers/firmware/dmi-sysfs.c:540) dmi_sysfs
- dmi_decode_table (drivers/firmware/dmi_scan.c:133)
- dmi_walk (drivers/firmware/dmi_scan.c:1115)
- dmi_sysfs_init (drivers/firmware/dmi-sysfs.c:149) dmi_sysfs
- do_one_initcall (init/main.c:1296)
- ...
-Kernel panic - not syncing: Fatal exception
-Kernel Offset: 0x4000000 from 0xffffffff81000000
----[ end Kernel panic - not syncing: Fatal exception ]---
-
-It is because previous patch added kobject_put() to release the memory
-which will call  dmi_sysfs_entry_release() and list_del().
-
-However, list_add_tail(entry->list) is called after the error block,
-so the list_head is uninitialized and cannot be deleted.
-
-Move error handling to after list_add_tail to fix this.
-
-Fixes: 660ba678f999 ("firmware: dmi-sysfs: Fix memory leak in dmi_sysfs_register_handle")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221111015326.251650-2-chenzhongjin@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 57f0988706fe ("iommufd: Add a selftest")
+Link: https://lore.kernel.org/r/20230120074204.1368-1-nicolinc@nvidia.com
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/dmi-sysfs.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tools/testing/selftests/iommu/iommufd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/dmi-sysfs.c b/drivers/firmware/dmi-sysfs.c
-index 66727ad3361b9..402217c570333 100644
---- a/drivers/firmware/dmi-sysfs.c
-+++ b/drivers/firmware/dmi-sysfs.c
-@@ -603,16 +603,16 @@ static void __init dmi_sysfs_register_handle(const struct dmi_header *dh,
- 	*ret = kobject_init_and_add(&entry->kobj, &dmi_sysfs_entry_ktype, NULL,
- 				    "%d-%d", dh->type, entry->instance);
+diff --git a/tools/testing/selftests/iommu/iommufd.c b/tools/testing/selftests/iommu/iommufd.c
+index 8aa8a346cf221..fa08209268c42 100644
+--- a/tools/testing/selftests/iommu/iommufd.c
++++ b/tools/testing/selftests/iommu/iommufd.c
+@@ -1259,7 +1259,7 @@ TEST_F(iommufd_mock_domain, user_copy)
  
--	if (*ret) {
--		kobject_put(&entry->kobj);
--		return;
--	}
--
- 	/* Thread on the global list for cleanup */
- 	spin_lock(&entry_list_lock);
- 	list_add_tail(&entry->list, &entry_list);
- 	spin_unlock(&entry_list_lock);
+ 	test_cmd_destroy_access_pages(
+ 		access_cmd.id, access_cmd.access_pages.out_access_pages_id);
+-	test_cmd_destroy_access(access_cmd.id) test_ioctl_destroy(ioas_id);
++	test_cmd_destroy_access(access_cmd.id);
  
-+	if (*ret) {
-+		kobject_put(&entry->kobj);
-+		return;
-+	}
-+
- 	/* Handle specializations by type */
- 	switch (dh->type) {
- 	case DMI_ENTRY_SYSTEM_EVENT_LOG:
+ 	test_ioctl_destroy(ioas_id);
+ }
 -- 
 2.39.2
 
