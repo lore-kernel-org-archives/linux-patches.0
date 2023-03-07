@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61284BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:07:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BFCC4339B;
-	Tue,  7 Mar 2023 18:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8B5BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:08:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D719FC433D2;
+	Tue,  7 Mar 2023 18:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212479;
-	bh=hUtFGrsj5y6R/DETVteMbuVvnY4+/QxaxD/UvEi1pvI=;
+	s=korg; t=1678212482;
+	bh=I543dr2jUFW6YibHtJ+Lgsrd2Bzm3TMfk2w4TydB5Tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGIv1crdh8ZxjdQEcTgmgXy64Hy1Ow4a0srwMo2EbZ7ZmPsMSL6urFr01R0Nn3ha4
-	 l0Kkm0aK8ml7Sdqkm77WrSQ86L6rpxw8fDYGIyxYmLGYKw6vJmQiVIXVwwXlESbib3
-	 dBj7sbAlddOU5bKZ2iTr549uavWLMlZnmUEjhHrY=
+	b=Sl1RZ9YYIAUX7e5rzzTR8dIYD18Fr5ritF751Pae1IfaWSXWpMX3urmyE2FyroXml
+	 EvujCR2pdDVZkAPnc0HeRQSAbPhI2akJRwBfHyhedXj6wKWA4j2S2wvR5y5EpOS5Qt
+	 f8RWnTfC0CVBjmaWlTlkLtAr4Y/LVJnigwmgxKjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deren Wu <deren.wu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Aaron Ma <aaron.ma@canonical.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 196/885] wifi: mt76: add memory barrier to SDIO queue kick
-Date: Tue,  7 Mar 2023 17:52:10 +0100
-Message-Id: <20230307170010.536143614@linuxfoundation.org>
+Subject: [PATCH 6.1 197/885] wifi: mt76: mt7921: fix error code of return in mt7921_acpi_read
+Date: Tue,  7 Mar 2023 17:52:11 +0100
+Message-Id: <20230307170010.579701997@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,38 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deren Wu <deren.wu@mediatek.com>
+From: Aaron Ma <aaron.ma@canonical.com>
 
-[ Upstream commit 5f54237ad798f41cb6a503271aa9ca47188cfb9b ]
+[ Upstream commit 888d89034f9eaeab9b5b75f13dbe35376c7dd471 ]
 
-Ensure the entry has been fully updated before SDIO bus worker access
-it. This patch would fix potential memory risk in both mt7663s and
-mt7921s.
+Kernel NULL pointer dereference when ACPI SAR table isn't implemented well.
+Fix the error code of return to mark the ACPI SAR table as invalid.
 
-Fixes: 764dee47e2c1 ("mt76: sdio: move common code in mt76_sdio module")
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+[    5.077128] mt7921e 0000:06:00.0: sar cnt = 0
+[    5.077381] BUG: kernel NULL pointer dereference, address:
+0000000000000004
+[    5.077630] #PF: supervisor read access in kernel mode
+[    5.077883] #PF: error_code(0x0000) - not-present page
+[    5.078138] PGD 0 P4D 0
+[    5.078398] Oops: 0000 [#1] PREEMPT SMP NOPTI
+[    5.079202] RIP: 0010:mt7921_init_acpi_sar+0x106/0x220
+[mt7921_common]
+...
+[    5.080786] Call Trace:
+[    5.080786]  <TASK>
+[    5.080786]  mt7921_register_device+0x37d/0x490 [mt7921_common]
+[    5.080786]  mt7921_pci_probe.part.0+0x2ee/0x310 [mt7921e]
+[    5.080786]  mt7921_pci_probe+0x52/0x70 [mt7921e]
+[    5.080786]  local_pci_probe+0x47/0x90
+[    5.080786]  pci_call_probe+0x55/0x190
+[    5.080786]  pci_device_probe+0x84/0x120
+
+Fixes: f965333e491e ("mt76: mt7921: introduce ACPI SAR support")
+Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/sdio.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/acpi_sar.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/sdio.c b/drivers/net/wireless/mediatek/mt76/sdio.c
-index 0ec308f99af5a..176207f3177c4 100644
---- a/drivers/net/wireless/mediatek/mt76/sdio.c
-+++ b/drivers/net/wireless/mediatek/mt76/sdio.c
-@@ -562,6 +562,10 @@ mt76s_tx_queue_skb_raw(struct mt76_dev *dev, struct mt76_queue *q,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/acpi_sar.c b/drivers/net/wireless/mediatek/mt76/mt7921/acpi_sar.c
+index 47e034a9b0037..ed9241d4aa641 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/acpi_sar.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/acpi_sar.c
+@@ -33,14 +33,17 @@ mt7921_acpi_read(struct mt7921_dev *dev, u8 *method, u8 **tbl, u32 *len)
+ 	    sar_root->package.elements[0].type != ACPI_TYPE_INTEGER) {
+ 		dev_err(mdev->dev, "sar cnt = %d\n",
+ 			sar_root->package.count);
++		ret = -EINVAL;
+ 		goto free;
+ 	}
  
- 	q->entry[q->head].buf_sz = len;
- 	q->entry[q->head].skb = skb;
-+
-+	/* ensure the entry fully updated before bus access */
-+	smp_wmb();
-+
- 	q->head = (q->head + 1) % q->ndesc;
- 	q->queued++;
+ 	if (!*tbl) {
+ 		*tbl = devm_kzalloc(mdev->dev, sar_root->package.count,
+ 				    GFP_KERNEL);
+-		if (!*tbl)
++		if (!*tbl) {
++			ret = -ENOMEM;
+ 			goto free;
++		}
+ 	}
+ 	if (len)
+ 		*len = sar_root->package.count;
+@@ -52,9 +55,9 @@ mt7921_acpi_read(struct mt7921_dev *dev, u8 *method, u8 **tbl, u32 *len)
+ 			break;
+ 		*(*tbl + i) = (u8)sar_unit->integer.value;
+ 	}
+-free:
+ 	ret = (i == sar_root->package.count) ? 0 : -EINVAL;
  
++free:
+ 	kfree(sar_root);
+ 
+ 	return ret;
 -- 
 2.39.2
 
