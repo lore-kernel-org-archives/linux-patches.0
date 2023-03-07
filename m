@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C597BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:16:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60ECDC433D2;
-	Tue,  7 Mar 2023 18:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13547BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:16:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F9BC433D2;
+	Tue,  7 Mar 2023 18:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212970;
-	bh=87tqBirv6wu16zT8oj1UBP8Bxh7d8Ck+gqxhsIHgjNA=;
+	s=korg; t=1678212973;
+	bh=JkcloqCC/Tql+86QrvcEC6ePPKVOvxwt3OC7b3rY9f4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4z79mIixkCQ3MXGrxTM3eJilph8cwT5OsNJcE4Y2evd+UAnKTHJZm1TPtMgLjhSW
-	 1S3TfPrDVv1iVq+SRXsjRBkyeuUQtHieTRXD8OA2UDa12g6nMNFGz+3GV2CJI36nGZ
-	 Xvl55bTmaUHXIC2W9IQg4//X4dlh+zAIB3xNRQxA=
+	b=Ty63PmXT7GpqKyAJYA3f1NpIJJ4D+F0RZZgJi0noEND1xqNyJhFg0xRRyRLHM3jUg
+	 JFp8zSF0S4T+8oucMC3JasdCaMqyZZyTdx8LY/ISOSrWjgLDJgeDeM4lsM9VE3O2P3
+	 ImZeLi6P+LQWTUb9VoqaFfCXmadoUySj9/1UY0Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Bastien Nocera <hadess@hadess.net>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 357/885] drm/amd/display: dont call dc_interrupt_set() for disabled crtcs
-Date: Tue,  7 Mar 2023 17:54:51 +0100
-Message-Id: <20230307170017.784490933@linuxfoundation.org>
+Subject: [PATCH 6.1 358/885] HID: logitech-hidpp: Hard-code HID++ 1.0 fast scroll support
+Date: Tue,  7 Mar 2023 17:54:52 +0100
+Message-Id: <20230307170017.832667916@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,57 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+From: Bastien Nocera <hadess@hadess.net>
 
-[ Upstream commit 4936458bf989d168f5a89015dd81067c4c2bdc64 ]
+[ Upstream commit 719acb4d3b7accc9cfbaf21c1c2d51dc7384aee2 ]
 
-As made mention of in commit 4ea7fc09539b ("drm/amd/display: Do not
-program interrupt status on disabled crtc"), we shouldn't program
-disabled crtcs. So, filter out disabled crtcs in dm_set_vupdate_irq()
-and dm_set_vblank().
+HID++ 1.0 devices only export whether Fast Scrolling is enabled, not
+whether they are capable of it. Reinstate the original quirks for the 3
+supported mice so fast scrolling works again on those devices.
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Fixes: 589d2739332d ("drm/amd/display: Use crtc enable/disable_vblank hooks")
-Fixes: d2574c33bb71 ("drm/amd/display: In VRR mode, do DRM core vblank handling at end of vblank. (v2)")
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 908d325e1665 ("HID: logitech-hidpp: Detect hi-res scrolling support")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216903
+Signed-off-by: Bastien Nocera <hadess@hadess.net>
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Link: https://lore.kernel.org/r/20230116130937.391441-1-hadess@hadess.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hid/hid-logitech-hidpp.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-index 64dd029702926..b87f50e8fa615 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-@@ -77,6 +77,9 @@ int dm_set_vupdate_irq(struct drm_crtc *crtc, bool enable)
- 	struct amdgpu_device *adev = drm_to_adev(crtc->dev);
- 	int rc;
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 07b8506eecc41..19fce82d03f02 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -77,6 +77,7 @@ MODULE_PARM_DESC(disable_tap_to_click,
+ #define HIDPP_QUIRK_HIDPP_WHEELS		BIT(26)
+ #define HIDPP_QUIRK_HIDPP_EXTRA_MOUSE_BTNS	BIT(27)
+ #define HIDPP_QUIRK_HIDPP_CONSUMER_VENDOR_KEYS	BIT(28)
++#define HIDPP_QUIRK_HI_RES_SCROLL_1P0		BIT(29)
  
-+	if (acrtc->otg_inst == -1)
-+		return 0;
-+
- 	irq_source = IRQ_TYPE_VUPDATE + acrtc->otg_inst;
- 
- 	rc = dc_interrupt_set(adev->dm.dc, irq_source, enable) ? 0 : -EBUSY;
-@@ -149,6 +152,9 @@ static inline int dm_set_vblank(struct drm_crtc *crtc, bool enable)
- 	struct vblank_control_work *work;
- 	int rc = 0;
- 
-+	if (acrtc->otg_inst == -1)
-+		goto skip;
-+
- 	if (enable) {
- 		/* vblank irq on -> Only need vupdate irq in vrr mode */
- 		if (amdgpu_dm_vrr_active(acrtc_state))
-@@ -166,6 +172,7 @@ static inline int dm_set_vblank(struct drm_crtc *crtc, bool enable)
- 	if (!dc_interrupt_set(adev->dm.dc, irq_source, enable))
- 		return -EBUSY;
- 
-+skip:
- 	if (amdgpu_in_reset(adev))
- 		return 0;
- 
+ /* These are just aliases for now */
+ #define HIDPP_QUIRK_KBD_SCROLL_WHEEL HIDPP_QUIRK_HIDPP_WHEELS
+@@ -3472,14 +3473,8 @@ static int hidpp_initialize_hires_scroll(struct hidpp_device *hidpp)
+ 			hid_dbg(hidpp->hid_dev, "Detected HID++ 2.0 hi-res scrolling\n");
+ 		}
+ 	} else {
+-		struct hidpp_report response;
+-
+-		ret = hidpp_send_rap_command_sync(hidpp,
+-						  REPORT_ID_HIDPP_SHORT,
+-						  HIDPP_GET_REGISTER,
+-						  HIDPP_ENABLE_FAST_SCROLL,
+-						  NULL, 0, &response);
+-		if (!ret) {
++		/* We cannot detect fast scrolling support on HID++ 1.0 devices */
++		if (hidpp->quirks & HIDPP_QUIRK_HI_RES_SCROLL_1P0) {
+ 			hidpp->capabilities |= HIDPP_CAPABILITY_HIDPP10_FAST_SCROLL;
+ 			hid_dbg(hidpp->hid_dev, "Detected HID++ 1.0 fast scroll\n");
+ 		}
+@@ -4297,9 +4292,15 @@ static const struct hid_device_id hidpp_devices[] = {
+ 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH,
+ 		USB_DEVICE_ID_LOGITECH_T651),
+ 	  .driver_data = HIDPP_QUIRK_CLASS_WTP },
++	{ /* Mouse Logitech Anywhere MX */
++	  LDJ_DEVICE(0x1017), .driver_data = HIDPP_QUIRK_HI_RES_SCROLL_1P0 },
+ 	{ /* Mouse logitech M560 */
+ 	  LDJ_DEVICE(0x402d),
+ 	  .driver_data = HIDPP_QUIRK_DELAYED_INIT | HIDPP_QUIRK_CLASS_M560 },
++	{ /* Mouse Logitech M705 (firmware RQM17) */
++	  LDJ_DEVICE(0x101b), .driver_data = HIDPP_QUIRK_HI_RES_SCROLL_1P0 },
++	{ /* Mouse Logitech Performance MX */
++	  LDJ_DEVICE(0x101a), .driver_data = HIDPP_QUIRK_HI_RES_SCROLL_1P0 },
+ 	{ /* Keyboard logitech K400 */
+ 	  LDJ_DEVICE(0x4024),
+ 	  .driver_data = HIDPP_QUIRK_CLASS_K400 },
 -- 
 2.39.2
 
