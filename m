@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2BDBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:59:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86BA0C4339B;
-	Tue,  7 Mar 2023 17:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265F6BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:59:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF69C433EF;
+	Tue,  7 Mar 2023 17:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211972;
-	bh=1jjYl03Ecp9nCYiEsfVilLgWW1IVgu1i3TwsDZsb17A=;
+	s=korg; t=1678211975;
+	bh=4DozbKI0FUWQU8XP0EuhZ/DwzDRBWm//qT9cRRjKkoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xZNXfPzGuI/drfmJLpJ5mbtDRtPGfRnpIs2L/RNrFxZbMX0YUBPYvWpRs3zDuu8nF
-	 ha1dnugCmu1boJKX1+PUjicRw9g/6yI1vxoN/h+wAn26gU5JMekIUPiiwaIrQPqp3K
-	 rmlR7SVMbKNaZigqGrIGeHXD8nwEUoQXd6QIA7q4=
+	b=LEuAxWKsf4PQxGD+ivru3uRbbOpxgtCfJc9sqWHfr204Y3BMSgI7sIN7Qi2P51NKi
+	 tNgDBx91GdOt19yxJgvMf4JQDhA7PZMNal2g0glxLjNBtVvrXtSncneVyhh2BsHpgX
+	 hgeErEasxqR7Z1sz/vYZkpPD4SW7SCn2JrojX4Zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Petr Vorel <petr.vorel@gmail.com>,
-	Dominik Kobinski <dominikkobinski314@gmail.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/885] arm64: dts: msm8992-bullhead: add memory hole region
-Date: Tue,  7 Mar 2023 17:49:29 +0100
-Message-Id: <20230307170003.185585716@linuxfoundation.org>
+Subject: [PATCH 6.1 036/885] arm64: dts: qcom: msm8992-bullhead: Fix cont_splash_mem size
+Date: Tue,  7 Mar 2023 17:49:30 +0100
+Message-Id: <20230307170003.225778386@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,49 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dominik Kobinski <dominikkobinski314@gmail.com>
+From: Petr Vorel <petr.vorel@gmail.com>
 
-[ Upstream commit 22c7e1a0fa45cd7d028d6b4117161fd0e3427fe0 ]
+[ Upstream commit 26a91359aea4d89e7d3646d806eed0f3755b74bd ]
 
-Add region for memory hole present on bullhead in order to
-fix a reboot issue on recent kernels
+Original google firmware reports 12 MiB:
+[    0.000000] cma: Found cont_splash_mem@0, memory base 0x0000000003400000, size 12 MiB, limit 0xffffffffffffffff
 
-Reported-by: Petr Vorel <petr.vorel@gmail.com>
-Signed-off-by: Dominik Kobinski <dominikkobinski314@gmail.com>
+which is actually 12*1024*1024 = 0xc00000.
+
+This matches the aosp source [1]:
+&cont_splash_mem {
+	reg = <0 0x03400000 0 0xc00000>;
+};
+
+Fixes: 3cb6a271f4b0 ("arm64: dts: qcom: msm8992-bullhead: Fix cont_splash_mem mapping")
+Fixes: 976d321f32dc ("arm64: dts: qcom: msm8992: Make the DT an overlay on top of 8994")
+
+[1] https://android.googlesource.com/kernel/msm.git/+/android-7.0.0_r0.17/arch/arm64/boot/dts/lge/msm8992-bullhead.dtsi#141
+
+Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Tested-by: Petr Vorel <petr.vorel@gmail.com>
-Reviewed-by: Petr Vorel <petr.vorel@gmail.com>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221211100501.82323-1-dominikkobinski314@gmail.com
-Stable-dep-of: 26a91359aea4 ("arm64: dts: qcom: msm8992-bullhead: Fix cont_splash_mem size")
+Link: https://lore.kernel.org/r/20221226185440.440968-2-pevik@seznam.cz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-index 71e373b11de9d..37bcbbc67be51 100644
+index 37bcbbc67be51..97f109cf82400 100644
 --- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-@@ -2,6 +2,7 @@
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
  /* Copyright (c) 2015, LGE Inc. All rights reserved.
   * Copyright (c) 2016, The Linux Foundation. All rights reserved.
-  * Copyright (c) 2021, Petr Vorel <petr.vorel@gmail.com>
-+ * Copyright (c) 2022, Dominik Kobinski <dominikkobinski314@gmail.com>
+- * Copyright (c) 2021, Petr Vorel <petr.vorel@gmail.com>
++ * Copyright (c) 2021-2022, Petr Vorel <petr.vorel@gmail.com>
+  * Copyright (c) 2022, Dominik Kobinski <dominikkobinski314@gmail.com>
   */
  
- /dts-v1/;
-@@ -50,6 +51,11 @@ cont_splash_mem: memory@3400000 {
- 			reg = <0 0x03400000 0 0x1200000>;
+@@ -48,7 +48,7 @@ ramoops@1ff00000 {
+ 		};
+ 
+ 		cont_splash_mem: memory@3400000 {
+-			reg = <0 0x03400000 0 0x1200000>;
++			reg = <0 0x03400000 0 0xc00000>;
  			no-map;
  		};
-+
-+		removed_region: reserved@5000000 {
-+			reg = <0 0x05000000 0 0x2200000>;
-+			no-map;
-+		};
- 	};
- };
  
 -- 
 2.39.2
