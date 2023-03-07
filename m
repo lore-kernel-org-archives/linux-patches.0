@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAA9BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:46:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7100DC433D2;
-	Tue,  7 Mar 2023 17:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B43BBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:46:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE47C433D2;
+	Tue,  7 Mar 2023 17:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211191;
-	bh=GGucEkcvEaFCkxv/33QDoMK1AuvOQ4g4wwPPDfNaldA=;
+	s=korg; t=1678211194;
+	bh=7CtELBry5mtomORHx/JS1mGjx/8sLFLfdBGQFqYYanw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=puoeVTRN7ttbqA+lyWla1YYcwfscI4KpxIwl7lZxbci6+qYpEMkM3W6kfULp4FlTl
-	 eck0vXtOTBJT6p9M1CdHnnvdoyE61dzYMRyTWOI1A5VLOBiE2wKgT0WJeC2WjOjiLO
-	 Oh8oRRESobRci81yuXGc/EM1vQoOKscHhye3SF5Q=
+	b=EU4IQKmcGkKeR3YSQ4XU7YyppFOLiJUIP/flUp3M8kHNF6LH5UA8Ijc3la1rDXSgV
+	 Ci9OHx7xKTdRxQSc1uqLUKLL3UFA+i8bcPIRWpY9JQKla0WLxTy8jWXCVUqSxqwZ36
+	 0ETvOMrE0KAyMDRCIWYG2qG2AtFA1MbpoGEYmlyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
+	Anand Jain <anand.jain@oracle.com>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.2 0782/1001] btrfs: hold block group refcount during async discard
-Date: Tue,  7 Mar 2023 17:59:14 +0100
-Message-Id: <20230307170055.676886772@linuxfoundation.org>
+Subject: [PATCH 6.2 0783/1001] btrfs: sysfs: update fs features directory asynchronously
+Date: Tue,  7 Mar 2023 17:59:15 +0100
+Message-Id: <20230307170055.725859565@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,153 +35,222 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Boris Burkov <boris@bur.io>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 2b5463fcbdfb24e898916bcae2b1359042d26963 upstream.
+commit b7625f461da6734a21c38ba6e7558538a116a2e3 upstream.
 
-Async discard does not acquire the block group reference count while it
-holds a reference on the discard list. This is generally OK, as the
-paths which destroy block groups tend to try to synchronize on
-cancelling async discard work. However, relying on cancelling work
-requires careful analysis to be sure it is safe from races with
-unpinning scheduling more work.
+[BUG]
+Since the introduction of per-fs feature sysfs interface
+(/sys/fs/btrfs/<UUID>/features/), the content of that directory is never
+updated.
 
-While I am unable to find a race with unpinning in the current code for
-either the unused bgs or relocation paths, I believe we have one in an
-older version of auto relocation in a Meta internal build. This suggests
-that this is in fact an error prone model, and could be fragile to
-future changes to these bg deletion paths.
+Thus for the following case, that directory will not show the new
+features like RAID56:
 
-To make this ownership more clear, add a refcount for async discard. If
-work is queued for a block group, its refcount should be incremented,
-and when work is completed or canceled, it should be decremented.
+  # mkfs.btrfs -f $dev1 $dev2 $dev3
+  # mount $dev1 $mnt
+  # btrfs balance start -f -mconvert=raid5 $mnt
+  # ls /sys/fs/btrfs/$uuid/features/
+  extended_iref  free_space_tree  no_holes  skinny_metadata
 
-CC: stable@vger.kernel.org # 5.15+
-Signed-off-by: Boris Burkov <boris@bur.io>
+While after unmount and mount, we got the correct features:
+
+  # umount $mnt
+  # mount $dev1 $mnt
+  # ls /sys/fs/btrfs/$uuid/features/
+  extended_iref  free_space_tree  no_holes  raid56 skinny_metadata
+
+[CAUSE]
+Because we never really try to update the content of per-fs features/
+directory.
+
+We had an attempt to update the features directory dynamically in commit
+14e46e04958d ("btrfs: synchronize incompat feature bits with sysfs
+files"), but unfortunately it get reverted in commit e410e34fad91
+("Revert "btrfs: synchronize incompat feature bits with sysfs files"").
+The problem in the original patch is, in the context of
+btrfs_create_chunk(), we can not afford to update the sysfs group.
+
+The exported but never utilized function, btrfs_sysfs_feature_update()
+is the leftover of such attempt.  As even if we go sysfs_update_group(),
+new files will need extra memory allocation, and we have no way to
+specify the sysfs update to go GFP_NOFS.
+
+[FIX]
+This patch will address the old problem by doing asynchronous sysfs
+update in the cleaner thread.
+
+This involves the following changes:
+
+- Make __btrfs_(set|clear)_fs_(incompat|compat_ro) helpers to set
+  BTRFS_FS_FEATURE_CHANGED flag when needed
+
+- Update btrfs_sysfs_feature_update() to use sysfs_update_group()
+  And drop unnecessary arguments.
+
+- Call btrfs_sysfs_feature_update() in cleaner_kthread
+  If we have the BTRFS_FS_FEATURE_CHANGED flag set.
+
+- Wake up cleaner_kthread in btrfs_commit_transaction if we have
+  BTRFS_FS_FEATURE_CHANGED flag
+
+By this, all the previously dangerous call sites like
+btrfs_create_chunk() need no new changes, as above helpers would
+have already set the BTRFS_FS_FEATURE_CHANGED flag.
+
+The real work happens at cleaner_kthread, thus we pay the cost of
+delaying the update to sysfs directory, but the delayed time should be
+small enough that end user can not distinguish though it might get
+delayed if the cleaner thread is busy with removing subvolumes or
+defrag.
+
+CC: stable@vger.kernel.org # 4.14+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/discard.c |   41 ++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 38 insertions(+), 3 deletions(-)
+ fs/btrfs/disk-io.c     |    3 +++
+ fs/btrfs/fs.c          |    4 ++++
+ fs/btrfs/fs.h          |    6 ++++++
+ fs/btrfs/sysfs.c       |   29 ++++++++---------------------
+ fs/btrfs/sysfs.h       |    3 +--
+ fs/btrfs/transaction.c |    5 +++++
+ 6 files changed, 27 insertions(+), 23 deletions(-)
 
---- a/fs/btrfs/discard.c
-+++ b/fs/btrfs/discard.c
-@@ -78,6 +78,7 @@ static struct list_head *get_discard_lis
- static void __add_to_discard_list(struct btrfs_discard_ctl *discard_ctl,
- 				  struct btrfs_block_group *block_group)
- {
-+	lockdep_assert_held(&discard_ctl->lock);
- 	if (!btrfs_run_discard_work(discard_ctl))
- 		return;
- 
-@@ -89,6 +90,8 @@ static void __add_to_discard_list(struct
- 						      BTRFS_DISCARD_DELAY);
- 		block_group->discard_state = BTRFS_DISCARD_RESET_CURSOR;
- 	}
-+	if (list_empty(&block_group->discard_list))
-+		btrfs_get_block_group(block_group);
- 
- 	list_move_tail(&block_group->discard_list,
- 		       get_discard_list(discard_ctl, block_group));
-@@ -108,8 +111,12 @@ static void add_to_discard_list(struct b
- static void add_to_discard_unused_list(struct btrfs_discard_ctl *discard_ctl,
- 				       struct btrfs_block_group *block_group)
- {
-+	bool queued;
-+
- 	spin_lock(&discard_ctl->lock);
- 
-+	queued = !list_empty(&block_group->discard_list);
-+
- 	if (!btrfs_run_discard_work(discard_ctl)) {
- 		spin_unlock(&discard_ctl->lock);
- 		return;
-@@ -121,6 +128,8 @@ static void add_to_discard_unused_list(s
- 	block_group->discard_eligible_time = (ktime_get_ns() +
- 					      BTRFS_DISCARD_UNUSED_DELAY);
- 	block_group->discard_state = BTRFS_DISCARD_RESET_CURSOR;
-+	if (!queued)
-+		btrfs_get_block_group(block_group);
- 	list_add_tail(&block_group->discard_list,
- 		      &discard_ctl->discard_list[BTRFS_DISCARD_INDEX_UNUSED]);
- 
-@@ -131,6 +140,7 @@ static bool remove_from_discard_list(str
- 				     struct btrfs_block_group *block_group)
- {
- 	bool running = false;
-+	bool queued = false;
- 
- 	spin_lock(&discard_ctl->lock);
- 
-@@ -140,7 +150,16 @@ static bool remove_from_discard_list(str
- 	}
- 
- 	block_group->discard_eligible_time = 0;
-+	queued = !list_empty(&block_group->discard_list);
- 	list_del_init(&block_group->discard_list);
-+	/*
-+	 * If the block group is currently running in the discard workfn, we
-+	 * don't want to deref it, since it's still being used by the workfn.
-+	 * The workfn will notice this case and deref the block group when it is
-+	 * finished.
-+	 */
-+	if (queued && !running)
-+		btrfs_put_block_group(block_group);
- 
- 	spin_unlock(&discard_ctl->lock);
- 
-@@ -214,10 +233,12 @@ again:
- 	if (block_group && now >= block_group->discard_eligible_time) {
- 		if (block_group->discard_index == BTRFS_DISCARD_INDEX_UNUSED &&
- 		    block_group->used != 0) {
--			if (btrfs_is_block_group_data_only(block_group))
-+			if (btrfs_is_block_group_data_only(block_group)) {
- 				__add_to_discard_list(discard_ctl, block_group);
--			else
-+			} else {
- 				list_del_init(&block_group->discard_list);
-+				btrfs_put_block_group(block_group);
-+			}
- 			goto again;
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -1910,6 +1910,9 @@ static int cleaner_kthread(void *arg)
+ 			goto sleep;
  		}
- 		if (block_group->discard_state == BTRFS_DISCARD_RESET_CURSOR) {
-@@ -511,6 +532,15 @@ static void btrfs_discard_workfn(struct
- 	spin_lock(&discard_ctl->lock);
- 	discard_ctl->prev_discard = trimmed;
- 	discard_ctl->prev_discard_time = now;
-+	/*
-+	 * If the block group was removed from the discard list while it was
-+	 * running in this workfn, then we didn't deref it, since this function
-+	 * still owned that reference. But we set the discard_ctl->block_group
-+	 * back to NULL, so we can use that condition to know that now we need
-+	 * to deref the block_group.
-+	 */
-+	if (discard_ctl->block_group == NULL)
-+		btrfs_put_block_group(block_group);
- 	discard_ctl->block_group = NULL;
- 	__btrfs_discard_schedule_work(discard_ctl, now, false);
- 	spin_unlock(&discard_ctl->lock);
-@@ -651,8 +681,12 @@ void btrfs_discard_punt_unused_bgs_list(
- 	list_for_each_entry_safe(block_group, next, &fs_info->unused_bgs,
- 				 bg_list) {
- 		list_del_init(&block_group->bg_list);
--		btrfs_put_block_group(block_group);
- 		btrfs_discard_queue_work(&fs_info->discard_ctl, block_group);
-+		/*
-+		 * This put is for the get done by btrfs_mark_bg_unused.
-+		 * Queueing discard incremented it for discard's reference.
-+		 */
-+		btrfs_put_block_group(block_group);
+ 
++		if (test_and_clear_bit(BTRFS_FS_FEATURE_CHANGED, &fs_info->flags))
++			btrfs_sysfs_feature_update(fs_info);
++
+ 		btrfs_run_delayed_iputs(fs_info);
+ 
+ 		again = btrfs_clean_one_deleted_snapshot(fs_info);
+--- a/fs/btrfs/fs.c
++++ b/fs/btrfs/fs.c
+@@ -24,6 +24,7 @@ void __btrfs_set_fs_incompat(struct btrf
+ 				name, flag);
+ 		}
+ 		spin_unlock(&fs_info->super_lock);
++		set_bit(BTRFS_FS_FEATURE_CHANGED, &fs_info->flags);
  	}
- 	spin_unlock(&fs_info->unused_bgs_lock);
  }
-@@ -683,6 +717,7 @@ static void btrfs_discard_purge_list(str
- 			if (block_group->used == 0)
- 				btrfs_mark_bg_unused(block_group);
- 			spin_lock(&discard_ctl->lock);
-+			btrfs_put_block_group(block_group);
+ 
+@@ -46,6 +47,7 @@ void __btrfs_clear_fs_incompat(struct bt
+ 				name, flag);
  		}
+ 		spin_unlock(&fs_info->super_lock);
++		set_bit(BTRFS_FS_FEATURE_CHANGED, &fs_info->flags);
  	}
- 	spin_unlock(&discard_ctl->lock);
+ }
+ 
+@@ -68,6 +70,7 @@ void __btrfs_set_fs_compat_ro(struct btr
+ 				name, flag);
+ 		}
+ 		spin_unlock(&fs_info->super_lock);
++		set_bit(BTRFS_FS_FEATURE_CHANGED, &fs_info->flags);
+ 	}
+ }
+ 
+@@ -90,5 +93,6 @@ void __btrfs_clear_fs_compat_ro(struct b
+ 				name, flag);
+ 		}
+ 		spin_unlock(&fs_info->super_lock);
++		set_bit(BTRFS_FS_FEATURE_CHANGED, &fs_info->flags);
+ 	}
+ }
+--- a/fs/btrfs/fs.h
++++ b/fs/btrfs/fs.h
+@@ -125,6 +125,12 @@ enum {
+ 	 */
+ 	BTRFS_FS_NO_OVERCOMMIT,
+ 
++	/*
++	 * Indicate if we have some features changed, this is mostly for
++	 * cleaner thread to update the sysfs interface.
++	 */
++	BTRFS_FS_FEATURE_CHANGED,
++
+ #if BITS_PER_LONG == 32
+ 	/* Indicate if we have error/warn message printed on 32bit systems */
+ 	BTRFS_FS_32BIT_ERROR,
+--- a/fs/btrfs/sysfs.c
++++ b/fs/btrfs/sysfs.c
+@@ -2272,36 +2272,23 @@ void btrfs_sysfs_del_one_qgroup(struct b
+  * Change per-fs features in /sys/fs/btrfs/UUID/features to match current
+  * values in superblock. Call after any changes to incompat/compat_ro flags
+  */
+-void btrfs_sysfs_feature_update(struct btrfs_fs_info *fs_info,
+-		u64 bit, enum btrfs_feature_set set)
++void btrfs_sysfs_feature_update(struct btrfs_fs_info *fs_info)
+ {
+-	struct btrfs_fs_devices *fs_devs;
+ 	struct kobject *fsid_kobj;
+-	u64 __maybe_unused features;
+-	int __maybe_unused ret;
++	int ret;
+ 
+ 	if (!fs_info)
+ 		return;
+ 
+-	/*
+-	 * See 14e46e04958df74 and e410e34fad913dd, feature bit updates are not
+-	 * safe when called from some contexts (eg. balance)
+-	 */
+-	features = get_features(fs_info, set);
+-	ASSERT(bit & supported_feature_masks[set]);
+-
+-	fs_devs = fs_info->fs_devices;
+-	fsid_kobj = &fs_devs->fsid_kobj;
+-
++	fsid_kobj = &fs_info->fs_devices->fsid_kobj;
+ 	if (!fsid_kobj->state_initialized)
+ 		return;
+ 
+-	/*
+-	 * FIXME: this is too heavy to update just one value, ideally we'd like
+-	 * to use sysfs_update_group but some refactoring is needed first.
+-	 */
+-	sysfs_remove_group(fsid_kobj, &btrfs_feature_attr_group);
+-	ret = sysfs_create_group(fsid_kobj, &btrfs_feature_attr_group);
++	ret = sysfs_update_group(fsid_kobj, &btrfs_feature_attr_group);
++	if (ret < 0)
++		btrfs_warn(fs_info,
++			   "failed to update /sys/fs/btrfs/%pU/features: %d",
++			   fs_info->fs_devices->fsid, ret);
+ }
+ 
+ int __init btrfs_init_sysfs(void)
+--- a/fs/btrfs/sysfs.h
++++ b/fs/btrfs/sysfs.h
+@@ -19,8 +19,7 @@ void btrfs_sysfs_remove_device(struct bt
+ int btrfs_sysfs_add_fsid(struct btrfs_fs_devices *fs_devs);
+ void btrfs_sysfs_remove_fsid(struct btrfs_fs_devices *fs_devs);
+ void btrfs_sysfs_update_sprout_fsid(struct btrfs_fs_devices *fs_devices);
+-void btrfs_sysfs_feature_update(struct btrfs_fs_info *fs_info,
+-		u64 bit, enum btrfs_feature_set set);
++void btrfs_sysfs_feature_update(struct btrfs_fs_info *fs_info);
+ void btrfs_kobject_uevent(struct block_device *bdev, enum kobject_action action);
+ 
+ int __init btrfs_init_sysfs(void);
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -2464,6 +2464,11 @@ int btrfs_commit_transaction(struct btrf
+ 	wake_up(&fs_info->transaction_wait);
+ 	btrfs_trans_state_lockdep_release(fs_info, BTRFS_LOCKDEP_TRANS_UNBLOCKED);
+ 
++	/* If we have features changed, wake up the cleaner to update sysfs. */
++	if (test_bit(BTRFS_FS_FEATURE_CHANGED, &fs_info->flags) &&
++	    fs_info->cleaner_kthread)
++		wake_up_process(fs_info->cleaner_kthread);
++
+ 	ret = btrfs_write_and_wait_transaction(trans);
+ 	if (ret) {
+ 		btrfs_handle_fs_error(fs_info, ret,
 
 
