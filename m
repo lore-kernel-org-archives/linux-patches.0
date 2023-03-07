@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5918BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:53:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37531C433D2;
-	Tue,  7 Mar 2023 18:53:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E641CBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:53:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49433C4339C;
+	Tue,  7 Mar 2023 18:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215233;
-	bh=efnEjqKVnr/KdPuNOmdr+o+2+lX01D2qmPN1uJ4cFvE=;
+	s=korg; t=1678215236;
+	bh=i9HiGPAw0P4mdSAJYS+B3ZFFFpAQNYgf1G4OjeLDTyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hOAyL+9rTD/z8mDbWgOUQ6u/YnY3PRtfJXI6QYaFCwBR7hujdWijf0DkL75D26GTv
-	 97w7otoNejaFocsvy8vF23agXVGe3xJKux3b6VCu+52Vk6yC4d/v2vfwS2FS/PfksU
-	 T2y1pDsJINMjHU803sUo8g6Z+9K/ZzVeSrjJKuWM=
+	b=PqnR/F2RjgTQAVePIuB6HRHT8VzgiYReBnZrBsYOP5j21pQf4T7RKmbS1Lbm8bYAc
+	 c7k+NCwxD8MtjBtYdm5nMqTKkcDA1HwWPvCx+2b2ZLSl+Cmq3X/VDiaf8VNn7lg5Q2
+	 772thQNl0GuSBkLKuaQFnzMw7CwA73jn8QxeuC/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roxana Nicolescu <roxana.nicolescu@canonical.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 162/567] selftest: fib_tests: Always cleanup before exit
-Date: Tue,  7 Mar 2023 17:58:18 +0100
-Message-Id: <20230307165912.955551236@linuxfoundation.org>
+Subject: [PATCH 5.15 153/567] wifi: mac80211: make rate u32 in sta_set_rate_info_rx()
+Date: Tue,  7 Mar 2023 17:58:09 +0100
+Message-Id: <20230307165912.576395851@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,40 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roxana Nicolescu <roxana.nicolescu@canonical.com>
+From: Shayne Chen <shayne.chen@mediatek.com>
 
-[ Upstream commit b60417a9f2b890a8094477b2204d4f73c535725e ]
+[ Upstream commit 59336e07b287d91dc4ec265e07724e8f7e3d0209 ]
 
-Usage of `set -e` before executing a command causes immediate exit
-on failure, without cleanup up the resources allocated at setup.
-This can affect the next tests that use the same resources,
-leading to a chain of failures.
+The value of last_rate in ieee80211_sta_rx_stats is degraded from u32 to
+u16 after being assigned to rate variable, which causes information loss
+in STA_STATS_FIELD_TYPE and later bitfields.
 
-A simple fix is to always call cleanup function when the script exists.
-This approach is already used by other existing tests.
-
-Fixes: 1056691b2680 ("selftests: fib_tests: Make test results more verbose")
-Signed-off-by: Roxana Nicolescu <roxana.nicolescu@canonical.com>
-Link: https://lore.kernel.org/r/20230220110400.26737-2-roxana.nicolescu@canonical.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://lore.kernel.org/r/20230209110659.25447-1-shayne.chen@mediatek.com
+Fixes: 41cbb0f5a295 ("mac80211: add support for HE")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/fib_tests.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/sta_info.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/fib_tests.sh b/tools/testing/selftests/net/fib_tests.sh
-index 7df066bf74b87..c64b0b1217621 100755
---- a/tools/testing/selftests/net/fib_tests.sh
-+++ b/tools/testing/selftests/net/fib_tests.sh
-@@ -1921,6 +1921,8 @@ EOF
- ################################################################################
- # main
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index f1e263b2c2957..14db465289c53 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -2190,7 +2190,7 @@ static void sta_stats_decode_rate(struct ieee80211_local *local, u32 rate,
  
-+trap cleanup EXIT
-+
- while getopts :t:pPhv o
- do
- 	case $o in
+ static int sta_set_rate_info_rx(struct sta_info *sta, struct rate_info *rinfo)
+ {
+-	u16 rate = READ_ONCE(sta_get_last_rx_stats(sta)->last_rate);
++	u32 rate = READ_ONCE(sta_get_last_rx_stats(sta)->last_rate);
+ 
+ 	if (rate == STA_STATS_RATE_INVALID)
+ 		return -EINVAL;
 -- 
 2.39.2
 
