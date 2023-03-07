@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2E4BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:26:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5F9C4339B;
-	Tue,  7 Mar 2023 18:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B32BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:26:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441A3C433EF;
+	Tue,  7 Mar 2023 18:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213590;
-	bh=EeunWjGsiz9MjtSyA2UnNOidt2ns6nEaHtnQBBQnWJg=;
+	s=korg; t=1678213593;
+	bh=27fOpds6Ip7VntPCFLTVHJxOgu+jN5PnaNHSytsiSyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hiwb4g245KPZtXaZUy+JAJqh7XjJX+vTNceHGwGPOXR6jw1+eiVBp/vmOG3jzcl8F
-	 gTBvHruaOhCc4qKtFWPTiBB2ImSxmli3sTtn5xS2Yus27rH41ClG1je/G9LsO4/U7y
-	 3j+YAe/EMcmIVBZhjlPKgZF60xDpVIpOf7Q39IwM=
+	b=lANkC/e9Sz4mhPomNZhBQty/Ia/xcRiMw9T7PF9AayFq3sE5f6EEIdP3pOeC/EG/N
+	 hrXEo9vLWjd3MEMyGJ7PQjkcn/TG0w2RlYK3I9vz+ukUn9+lStAbycwNs+teqnALvs
+	 V2O5WZNIgqcxs+dIwMJn4/bKnWLfLjoAMcwpIFB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Breno Leitao <leitao@debian.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 555/885] timers: Prevent union confusion from unexpected restart_syscall()
-Date: Tue,  7 Mar 2023 17:58:09 +0100
-Message-Id: <20230307170026.601827940@linuxfoundation.org>
+Subject: [PATCH 6.1 556/885] x86/bugs: Reset speculation control settings on init
+Date: Tue,  7 Mar 2023 17:58:10 +0100
+Message-Id: <20230307170026.631689196@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,106 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 9f76d59173d9d146e96c66886b671c1915a5c5e5 ]
+[ Upstream commit 0125acda7d76b943ca55811df40ed6ec0ecf670f ]
 
-The nanosleep syscalls use the restart_block mechanism, with a quirk:
-The `type` and `rmtp`/`compat_rmtp` fields are set up unconditionally on
-syscall entry, while the rest of the restart_block is only set up in the
-unlikely case that the syscall is actually interrupted by a signal (or
-pseudo-signal) that doesn't have a signal handler.
+Currently, x86_spec_ctrl_base is read at boot time and speculative bits
+are set if Kconfig items are enabled. For example, IBRS is enabled if
+CONFIG_CPU_IBRS_ENTRY is configured, etc. These MSR bits are not cleared
+if the mitigations are disabled.
 
-If the restart_block was set up by a previous syscall (futex(...,
-FUTEX_WAIT, ...) or poll()) and hasn't been invalidated somehow since then,
-this will clobber some of the union fields used by futex_wait_restart() and
-do_restart_poll().
+This is a problem when kexec-ing a kernel that has the mitigation
+disabled from a kernel that has the mitigation enabled. In this case,
+the MSR bits are not cleared during the new kernel boot. As a result,
+this might have some performance degradation that is hard to pinpoint.
 
-If userspace afterwards wrongly calls the restart_syscall syscall,
-futex_wait_restart()/do_restart_poll() will read struct fields that have
-been clobbered.
+This problem does not happen if the machine is (hard) rebooted because
+the bit will be cleared by default.
 
-This doesn't actually lead to anything particularly interesting because
-none of the union fields contain trusted kernel data, and
-futex(..., FUTEX_WAIT, ...) and poll() aren't syscalls where it makes much
-sense to apply seccomp filters to their arguments.
+  [ bp: Massage. ]
 
-So the current consequences are just of the "if userspace does bad stuff,
-it can damage itself, and that's not a problem" flavor.
-
-But still, it seems like a hazard for future developers, so invalidate the
-restart_block when partly setting it up in the nanosleep syscalls.
-
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20230105134403.754986-1-jannh@google.com
+Suggested-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20221128153148.1129350-1-leitao@debian.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/hrtimer.c      | 2 ++
- kernel/time/posix-stubs.c  | 2 ++
- kernel/time/posix-timers.c | 2 ++
- 3 files changed, 6 insertions(+)
+ arch/x86/include/asm/msr-index.h |  4 ++++
+ arch/x86/kernel/cpu/bugs.c       | 10 +++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 3ae661ab62603..e4f0e3b0c4f4f 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -2126,6 +2126,7 @@ SYSCALL_DEFINE2(nanosleep, struct __kernel_timespec __user *, rqtp,
- 	if (!timespec64_valid(&tu))
- 		return -EINVAL;
+diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
+index 91447f018f6e4..117e4e977b55d 100644
+--- a/arch/x86/include/asm/msr-index.h
++++ b/arch/x86/include/asm/msr-index.h
+@@ -54,6 +54,10 @@
+ #define SPEC_CTRL_RRSBA_DIS_S_SHIFT	6	   /* Disable RRSBA behavior */
+ #define SPEC_CTRL_RRSBA_DIS_S		BIT(SPEC_CTRL_RRSBA_DIS_S_SHIFT)
  
-+	current->restart_block.fn = do_no_restart_syscall;
- 	current->restart_block.nanosleep.type = rmtp ? TT_NATIVE : TT_NONE;
- 	current->restart_block.nanosleep.rmtp = rmtp;
- 	return hrtimer_nanosleep(timespec64_to_ktime(tu), HRTIMER_MODE_REL,
-@@ -2147,6 +2148,7 @@ SYSCALL_DEFINE2(nanosleep_time32, struct old_timespec32 __user *, rqtp,
- 	if (!timespec64_valid(&tu))
- 		return -EINVAL;
++/* A mask for bits which the kernel toggles when controlling mitigations */
++#define SPEC_CTRL_MITIGATIONS_MASK	(SPEC_CTRL_IBRS | SPEC_CTRL_STIBP | SPEC_CTRL_SSBD \
++							| SPEC_CTRL_RRSBA_DIS_S)
++
+ #define MSR_IA32_PRED_CMD		0x00000049 /* Prediction Command */
+ #define PRED_CMD_IBPB			BIT(0)	   /* Indirect Branch Prediction Barrier */
  
-+	current->restart_block.fn = do_no_restart_syscall;
- 	current->restart_block.nanosleep.type = rmtp ? TT_COMPAT : TT_NONE;
- 	current->restart_block.nanosleep.compat_rmtp = rmtp;
- 	return hrtimer_nanosleep(timespec64_to_ktime(tu), HRTIMER_MODE_REL,
-diff --git a/kernel/time/posix-stubs.c b/kernel/time/posix-stubs.c
-index 90ea5f373e50e..828aeecbd1e8a 100644
---- a/kernel/time/posix-stubs.c
-+++ b/kernel/time/posix-stubs.c
-@@ -147,6 +147,7 @@ SYSCALL_DEFINE4(clock_nanosleep, const clockid_t, which_clock, int, flags,
- 		return -EINVAL;
- 	if (flags & TIMER_ABSTIME)
- 		rmtp = NULL;
-+	current->restart_block.fn = do_no_restart_syscall;
- 	current->restart_block.nanosleep.type = rmtp ? TT_NATIVE : TT_NONE;
- 	current->restart_block.nanosleep.rmtp = rmtp;
- 	texp = timespec64_to_ktime(t);
-@@ -240,6 +241,7 @@ SYSCALL_DEFINE4(clock_nanosleep_time32, clockid_t, which_clock, int, flags,
- 		return -EINVAL;
- 	if (flags & TIMER_ABSTIME)
- 		rmtp = NULL;
-+	current->restart_block.fn = do_no_restart_syscall;
- 	current->restart_block.nanosleep.type = rmtp ? TT_COMPAT : TT_NONE;
- 	current->restart_block.nanosleep.compat_rmtp = rmtp;
- 	texp = timespec64_to_ktime(t);
-diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
-index 5dead89308b74..0c8a87a11b39d 100644
---- a/kernel/time/posix-timers.c
-+++ b/kernel/time/posix-timers.c
-@@ -1270,6 +1270,7 @@ SYSCALL_DEFINE4(clock_nanosleep, const clockid_t, which_clock, int, flags,
- 		return -EINVAL;
- 	if (flags & TIMER_ABSTIME)
- 		rmtp = NULL;
-+	current->restart_block.fn = do_no_restart_syscall;
- 	current->restart_block.nanosleep.type = rmtp ? TT_NATIVE : TT_NONE;
- 	current->restart_block.nanosleep.rmtp = rmtp;
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index 16d8e43be7758..c730b2911418a 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -144,9 +144,17 @@ void __init check_bugs(void)
+ 	 * have unknown values. AMD64_LS_CFG MSR is cached in the early AMD
+ 	 * init code as it is not enumerated and depends on the family.
+ 	 */
+-	if (boot_cpu_has(X86_FEATURE_MSR_SPEC_CTRL))
++	if (cpu_feature_enabled(X86_FEATURE_MSR_SPEC_CTRL)) {
+ 		rdmsrl(MSR_IA32_SPEC_CTRL, x86_spec_ctrl_base);
  
-@@ -1297,6 +1298,7 @@ SYSCALL_DEFINE4(clock_nanosleep_time32, clockid_t, which_clock, int, flags,
- 		return -EINVAL;
- 	if (flags & TIMER_ABSTIME)
- 		rmtp = NULL;
-+	current->restart_block.fn = do_no_restart_syscall;
- 	current->restart_block.nanosleep.type = rmtp ? TT_COMPAT : TT_NONE;
- 	current->restart_block.nanosleep.compat_rmtp = rmtp;
- 
++		/*
++		 * Previously running kernel (kexec), may have some controls
++		 * turned ON. Clear them and let the mitigations setup below
++		 * rediscover them based on configuration.
++		 */
++		x86_spec_ctrl_base &= ~SPEC_CTRL_MITIGATIONS_MASK;
++	}
++
+ 	/* Select the proper CPU mitigations before patching alternatives: */
+ 	spectre_v1_select_mitigation();
+ 	spectre_v2_select_mitigation();
 -- 
 2.39.2
 
