@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEC7BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1554FC433EF;
-	Tue,  7 Mar 2023 17:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6964BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA21C433D2;
+	Tue,  7 Mar 2023 17:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209824;
-	bh=Ieevzb72Tp4clAm6jd3V2JofjiB9KvCO+j6nF8eOlM4=;
+	s=korg; t=1678209827;
+	bh=02vWBm+mhOMDWp7RWBi6DfF/rLZdRClP5gSKOq/mbpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aHYnlIPJQHGNLdGuXjtnXh5IcQraJahMPIYZsKQWYbMD/ueiJXjvfoMeKchwUtg+u
-	 bW0G7MJD4in9FDbztfU4mX5oy9KnBmGa30Pr+5o3ATHICWG6vVinPSPaolhfhGZ3hy
-	 I+rL55xsuADnBuc12fiez6xtLMAInJx1wqLAZoTM=
+	b=DohE20YE7OhPUnW/QNtQk9CcLJfpfMjrBP/jWA5fdSxq7Qo5skfG5F/WnJiI9LeG2
+	 EEhLlvk8elGdK2XPfLhjwroofhOjn28am5s5jBN2IxwiYnyxpxMFXort15PQKJT64J
+	 0KJMlTuH6zL5lYhO9H6NNCwhm9irC25GwemYfnoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Tang <tanghui20@huawei.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0343/1001] drm/msm/dpu: check for null return of devm_kzalloc() in dpu_writeback_init()
-Date: Tue,  7 Mar 2023 17:51:55 +0100
-Message-Id: <20230307170036.344386568@linuxfoundation.org>
+Subject: [PATCH 6.2 0344/1001] drm/msm/hdmi: Add missing check for alloc_ordered_workqueue
+Date: Tue,  7 Mar 2023 17:51:56 +0100
+Message-Id: <20230307170036.390844043@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,40 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hui Tang <tanghui20@huawei.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 21e9a838f505178e109ccb3bf19d7808eb0326f4 ]
+[ Upstream commit afe4cb96153a0d8003e4e4ebd91b5c543e10df84 ]
 
-Because of the possilble failure of devm_kzalloc(), dpu_wb_conn might
-be NULL and will cause null pointer dereference later.
+Add check for the return value of alloc_ordered_workqueue as it may return
+NULL pointer and cause NULL pointer dereference in `hdmi_hdcp.c` and
+`hdmi_hpd.c`.
 
-Therefore, it might be better to check it and directly return -ENOMEM.
-
-Fixes: 77b001acdcfe ("drm/msm/dpu: add the writeback connector layer")
-Signed-off-by: Hui Tang <tanghui20@huawei.com>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/512277/
-Link: https://lore.kernel.org/r/20221119055518.179937-1-tanghui20@huawei.com
-[DB: fixed typo in commit message]
+Fixes: c6a57a50ad56 ("drm/msm/hdmi: add hdmi hdcp support (V3)")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/517211/
+Link: https://lore.kernel.org/r/20230106023011.3985-1-jiasheng@iscas.ac.cn
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/msm/hdmi/hdmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-index 088ec990a2f26..2a5a68366582b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-@@ -70,6 +70,8 @@ int dpu_writeback_init(struct drm_device *dev, struct drm_encoder *enc,
- 	int rc = 0;
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+index 97372bb241d89..4ad36bc8fe5ed 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+@@ -120,6 +120,10 @@ static int msm_hdmi_init(struct hdmi *hdmi)
+ 	int ret;
  
- 	dpu_wb_conn = devm_kzalloc(dev->dev, sizeof(*dpu_wb_conn), GFP_KERNEL);
-+	if (!dpu_wb_conn)
-+		return -ENOMEM;
+ 	hdmi->workq = alloc_ordered_workqueue("msm_hdmi", 0);
++	if (!hdmi->workq) {
++		ret = -ENOMEM;
++		goto fail;
++	}
  
- 	drm_connector_helper_add(&dpu_wb_conn->base.base, &dpu_wb_conn_helper_funcs);
- 
+ 	hdmi->i2c = msm_hdmi_i2c_init(hdmi);
+ 	if (IS_ERR(hdmi->i2c)) {
 -- 
 2.39.2
 
