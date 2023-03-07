@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E854ABA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:44:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374FFC433EF;
-	Tue,  7 Mar 2023 18:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3A4BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:44:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F086C433D2;
+	Tue,  7 Mar 2023 18:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214687;
-	bh=m17BleMR5AjiXHShhGteUZS5tpPRpTscg4P5EkdXnqs=;
+	s=korg; t=1678214690;
+	bh=sAf9SNd1MO+eyzbcjb3d0416BdmATY6A/pNsww4PXrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aigDSG1prv2ZZWPHhe0ruaHCK2wFuY7A9NytGGOrR8M9rk18T1HPQlesXP70UWeeq
-	 JDKJI3fMlt9lDP6/Lqg+e6xx4ibPNoeyr0d9g4WWsXr9edmG5gMEzGJQton014sM9q
-	 uuW150Byr8vda94BMBt62rZdmnFhTMTcPSpTTV2w=
+	b=eK8AGfQP3RNBRl9Kis1VnTCPdFX17glmT9Hb8lcUXk/kt1O52r1Rf1PfIC1eTbl3H
+	 2RKhPsMlTuYAuSB3nJGvAb0Qx2WresJqiuAmEOZ4onCXb0qgzTi3ZFt9fal6U55+Xs
+	 hykcSxw+/TVPxvreP6l7M7uasEp0CWXV7/vgvz68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/567] arm64: dts: meson-gx: Fix the SCPI DVFS node name and unit address
-Date: Tue,  7 Mar 2023 17:55:53 +0100
-Message-Id: <20230307165906.581812632@linuxfoundation.org>
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Stefan Ghinea <stefan.ghinea@windriver.com>
+Subject: [PATCH 5.15 002/567] HID: asus: use spinlock to safely schedule workers
+Date: Tue,  7 Mar 2023 17:55:38 +0100
+Message-Id: <20230307165905.934287273@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,40 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit f189c869ad92787ddd753558bcbae89d75825bb6 ]
+commit 4ab3a086d10eeec1424f2e8a968827a6336203df upstream.
 
-Node names should be generic and use hyphens instead of underscores to
-not cause warnings. Also nodes without a reg property should not have a
-unit-address. Change the scpi_dvfs node to use clock-controller as node
-name without a unit address (since it does not have a reg property).
+Use spinlocks to deal with workers introducing a wrapper
+asus_schedule_work(), and several spinlock checks.
+Otherwise, asus_kbd_backlight_set() may schedule led->work after the
+structure has been freed, causing a use-after-free.
 
-Fixes: 70db166a2baa ("ARM64: dts: meson-gxbb: Add SCPI with cpufreq & sensors Nodes")
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230111211350.1461860-7-martin.blumenstingl@googlemail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: af22a610bc38 ("HID: asus: support backlight on USB keyboards")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-5-7860c5763c38@diag.uniroma1.it
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-gx.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-asus.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-index f8d46588e582f..304f6b467de8b 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-@@ -249,7 +249,7 @@ scpi {
- 		scpi_clocks: clocks {
- 			compatible = "arm,scpi-clocks";
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -493,6 +493,16 @@ static int rog_nkey_led_init(struct hid_
+ 	return ret;
+ }
  
--			scpi_dvfs: scpi_clocks@0 {
-+			scpi_dvfs: clock-controller {
- 				compatible = "arm,scpi-dvfs-clocks";
- 				#clock-cells = <1>;
- 				clock-indices = <0>;
--- 
-2.39.2
-
++static void asus_schedule_work(struct asus_kbd_leds *led)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&led->lock, flags);
++	if (!led->removed)
++		schedule_work(&led->work);
++	spin_unlock_irqrestore(&led->lock, flags);
++}
++
+ static void asus_kbd_backlight_set(struct led_classdev *led_cdev,
+ 				   enum led_brightness brightness)
+ {
+@@ -504,7 +514,7 @@ static void asus_kbd_backlight_set(struc
+ 	led->brightness = brightness;
+ 	spin_unlock_irqrestore(&led->lock, flags);
+ 
+-	schedule_work(&led->work);
++	asus_schedule_work(led);
+ }
+ 
+ static enum led_brightness asus_kbd_backlight_get(struct led_classdev *led_cdev)
+@@ -528,9 +538,6 @@ static void asus_kbd_backlight_work(stru
+ 	int ret;
+ 	unsigned long flags;
+ 
+-	if (led->removed)
+-		return;
+-
+ 	spin_lock_irqsave(&led->lock, flags);
+ 	buf[4] = led->brightness;
+ 	spin_unlock_irqrestore(&led->lock, flags);
 
 
