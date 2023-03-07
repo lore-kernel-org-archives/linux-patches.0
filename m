@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C92BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:20:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F286C4339B;
-	Tue,  7 Mar 2023 17:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED8EBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:20:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C522C4339B;
+	Tue,  7 Mar 2023 17:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209616;
-	bh=jnSHuPMg5NCpgfM5FLzIyEv3LzUqrPtECnpS6f3ZFr8=;
+	s=korg; t=1678209619;
+	bh=7IDupy/uympF3yiDf3YB1jvkydvCTx1b3QoNG5dHuEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IeSekpYunDlfVCx25ekmLcnWOKVFybZoeGGc9nlc2m8Ln7K8UqI/EUQIhXlu2jNII
-	 vm2RbaqkQYIEIxG3jbKL69QFSOAO+STSgbTr3SzRazWMGJg5T8HKc+oTjImOgj9iNS
-	 2ufS16Moah/jmUpsXGDioBFRwtbKSBBZbR+n5Yfc=
+	b=dHEwfbUScKZQ2Q0mUD6o3e4fn+INktGNOyZ9lcwFQr3vYiWBQWbhKf5g2wyQvm430
+	 5cgUwKehPYXDKpm9CH9vs0yTcZAfWD3oBwxgKI1LCMlrWji3DJhaFlPDoPxiT8wVX6
+	 qJIPyTKOec6F1H66jDebk7hSbA/DlgGYbljr8K+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0276/1001] s390/ap: fix status returned by ap_qact()
-Date: Tue,  7 Mar 2023 17:50:48 +0100
-Message-Id: <20230307170033.641881937@linuxfoundation.org>
+Subject: [PATCH 6.2 0277/1001] libbpf: Fix alen calculation in libbpf_nla_dump_errormsg()
+Date: Tue,  7 Mar 2023 17:50:49 +0100
+Message-Id: <20230307170033.691100171@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,42 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Halil Pasic <pasic@linux.ibm.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit a2522c80f074c35254974fec39fffe8b8d75befe ]
+[ Upstream commit 17bcd27a08a21397698edf143084d7c87ce17946 ]
 
-Since commit 159491f3b509 ("s390/ap: rework assembler functions to use
-unions for in/out register variables") the  function ap_qact() tries to
-grab the status from the wrong part of the register. Thus we always end
-up with zeros. Which is wrong, among others, because we detect failures
-via status.response_code.
+The code assumes that everything that comes after nlmsgerr are nlattrs.
+When calculating their size, it does not account for the initial
+nlmsghdr. This may lead to accessing uninitialized memory.
 
-Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
-Reported-by: Harald Freudenberger <freude@linux.ibm.com>
-Fixes: 159491f3b509 ("s390/ap: rework assembler functions to use unions for in/out register variables")
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: bbf48c18ee0c ("libbpf: add error reporting in XDP")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20230210001210.395194-8-iii@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/ap.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/lib/bpf/nlattr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/include/asm/ap.h b/arch/s390/include/asm/ap.h
-index 876afe46f316d..57a2d6518d272 100644
---- a/arch/s390/include/asm/ap.h
-+++ b/arch/s390/include/asm/ap.h
-@@ -293,7 +293,10 @@ static inline struct ap_queue_status ap_qact(ap_qid_t qid, int ifbit,
- 	unsigned long reg0 = qid | (5UL << 24) | ((ifbit & 0x01) << 22);
- 	union {
- 		unsigned long value;
--		struct ap_queue_status status;
-+		struct {
-+			u32 _pad;
-+			struct ap_queue_status status;
-+		};
- 	} reg1;
- 	unsigned long reg2;
+diff --git a/tools/lib/bpf/nlattr.c b/tools/lib/bpf/nlattr.c
+index 3900d052ed19e..975e265eab3bf 100644
+--- a/tools/lib/bpf/nlattr.c
++++ b/tools/lib/bpf/nlattr.c
+@@ -178,7 +178,7 @@ int libbpf_nla_dump_errormsg(struct nlmsghdr *nlh)
+ 		hlen += nlmsg_len(&err->msg);
  
+ 	attr = (struct nlattr *) ((void *) err + hlen);
+-	alen = nlh->nlmsg_len - hlen;
++	alen = (void *)nlh + nlh->nlmsg_len - (void *)attr;
+ 
+ 	if (libbpf_nla_parse(tb, NLMSGERR_ATTR_MAX, attr, alen,
+ 			     extack_policy) != 0) {
 -- 
 2.39.2
 
