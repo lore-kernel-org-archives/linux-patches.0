@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429A9BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:46:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB6EDC433EF;
-	Tue,  7 Mar 2023 17:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27361BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:46:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A28C433D2;
+	Tue,  7 Mar 2023 17:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211178;
-	bh=V85SEr6Ec7BXA7mqt65Urq4W5Pj0GKvaHF6qJSUhH3w=;
+	s=korg; t=1678211183;
+	bh=F5++bf1knmKNFFjaAgCOOaiVC6PFMqAWS6Z0gfR4DFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AN7rg7mXKk2NsnvuAedHCG2OUGcCC3SvpES+eSasqCKnVGDrGb0jZ7fuxVZ9cyX5d
-	 AQ7JEBTdB/OfpR1BWmf881IGNxT8WtxIe67kwQaRQjDzHWToqu0mitalIeQsxOoJii
-	 CZdc842D8zAXX/ZFQ7uVzPHj/wCqmMlmKsqjs8cQ=
+	b=NU+/0kxywS/naPW0cMwSbnF+uhSY+0skHnwRJmy7dE96iV23IykCTkCo8c0OwmIxw
+	 ktMFnUgL/BDoItZ8HQpdwcf/3lcFvhxmbv6CV1dJHHwN+abgChEbl1OzHKSpQ4hSu2
+	 t8Wx6ijZ8SZJVH81qQPtQrNZRMNN/edg3mZHarZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronnie Sahlberg <lsahlber@redhat.com>,
-	Bharath SM <bharathsm@microsoft.com>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.2 0778/1001] cifs: return a single-use cfid if we did not get a lease
-Date: Tue,  7 Mar 2023 17:59:10 +0100
-Message-Id: <20230307170055.507544272@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.2 0779/1001] scsi: mpi3mr: Fix missing mrioc->evtack_cmds initialization
+Date: Tue,  7 Mar 2023 17:59:11 +0100
+Message-Id: <20230307170055.555760117@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,95 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ronnie Sahlberg <lsahlber@redhat.com>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-commit 8e843bf38f7be0766642a91523cfa65f2b021a8a upstream.
+commit e39ea831ebad4ab15c4748cb62a397a8abcca36e upstream.
 
-If we did not get a lease we can still return a single use cfid to the caller.
-The cfid will not have has_lease set and will thus not be shared with any
-other concurrent users and will be freed immediately when the caller
-drops the handle.
+Commit c1af985d27da ("scsi: mpi3mr: Add Event acknowledgment logic")
+introduced an array mrioc->evtack_cmds but initialization of the array
+elements was missed. They are just zero cleared. The function
+mpi3mr_complete_evt_ack() refers host_tag field of the elements. Due to the
+zero value of the host_tag field, the function calls clear_bit() for
+mrico->evtack_cmds_bitmap with wrong bit index. This results in memory
+access to invalid address and "BUG: KASAN: use-after-free". This BUG was
+observed at eHBA-9600 firmware update to version 8.3.1.0. To fix it, add
+the missing initialization of mrioc->evtack_cmds.
 
-This avoids extra roundtrips for servers that do not support directory leases
-where they would first fail to get a cfid with a lease and then fallback
-to try a normal SMB2_open()
-
-Signed-off-by: Ronnie Sahlberg <lsahlber@redhat.com>
+Link: https://lore.kernel.org/r/20230214005019.1897251-5-shinichiro.kawasaki@wdc.com
 Cc: stable@vger.kernel.org
-Reviewed-by: Bharath SM <bharathsm@microsoft.com>
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: c1af985d27da ("scsi: mpi3mr: Add Event acknowledgment logic")
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cached_dir.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/cifs/cached_dir.c
-+++ b/fs/cifs/cached_dir.c
-@@ -14,6 +14,7 @@
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -4952,6 +4952,10 @@ mpi3mr_probe(struct pci_dev *pdev, const
+ 		mpi3mr_init_drv_cmd(&mrioc->dev_rmhs_cmds[i],
+ 		    MPI3MR_HOSTTAG_DEVRMCMD_MIN + i);
  
- static struct cached_fid *init_cached_dir(const char *path);
- static void free_cached_dir(struct cached_fid *cfid);
-+static void smb2_close_cached_fid(struct kref *ref);
++	for (i = 0; i < MPI3MR_NUM_EVTACKCMD; i++)
++		mpi3mr_init_drv_cmd(&mrioc->evtack_cmds[i],
++				    MPI3MR_HOSTTAG_EVTACKCMD_MIN + i);
++
+ 	if (pdev->revision)
+ 		mrioc->enable_segqueue = true;
  
- static struct cached_fid *find_or_create_cached_dir(struct cached_fids *cfids,
- 						    const char *path,
-@@ -221,6 +222,7 @@ int open_cached_dir(unsigned int xid, st
- 		}
- 		goto oshr_free;
- 	}
-+	cfid->tcon = tcon;
- 	cfid->is_open = true;
- 
- 	o_rsp = (struct smb2_create_rsp *)rsp_iov[0].iov_base;
-@@ -233,7 +235,6 @@ int open_cached_dir(unsigned int xid, st
- 	if (o_rsp->OplockLevel != SMB2_OPLOCK_LEVEL_LEASE)
- 		goto oshr_free;
- 
--
- 	smb2_parse_contexts(server, o_rsp,
- 			    &oparms.fid->epoch,
- 			    oparms.fid->lease_key, &oplock,
-@@ -260,7 +261,6 @@ int open_cached_dir(unsigned int xid, st
- 		}
- 	}
- 	cfid->dentry = dentry;
--	cfid->tcon = tcon;
- 	cfid->time = jiffies;
- 	cfid->has_lease = true;
- 
-@@ -271,7 +271,7 @@ oshr_free:
- 	free_rsp_buf(resp_buftype[0], rsp_iov[0].iov_base);
- 	free_rsp_buf(resp_buftype[1], rsp_iov[1].iov_base);
- 	spin_lock(&cfids->cfid_list_lock);
--	if (!cfid->has_lease) {
-+	if (rc && !cfid->has_lease) {
- 		if (cfid->on_list) {
- 			list_del(&cfid->entry);
- 			cfid->on_list = false;
-@@ -280,6 +280,15 @@ oshr_free:
- 		rc = -ENOENT;
- 	}
- 	spin_unlock(&cfids->cfid_list_lock);
-+	if (!rc && !cfid->has_lease) {
-+		/*
-+		 * We are guaranteed to have two references at this point.
-+		 * One for the caller and one for a potential lease.
-+		 * Release the Lease-ref so that the directory will be closed
-+		 * when the caller closes the cached handle.
-+		 */
-+		kref_put(&cfid->refcount, smb2_close_cached_fid);
-+	}
- 	if (rc) {
- 		if (cfid->is_open)
- 			SMB2_close(0, cfid->tcon, cfid->fid.persistent_fid,
-@@ -340,6 +349,7 @@ smb2_close_cached_fid(struct kref *ref)
- 	if (cfid->is_open) {
- 		SMB2_close(0, cfid->tcon, cfid->fid.persistent_fid,
- 			   cfid->fid.volatile_fid);
-+		atomic_dec(&cfid->tcon->num_remote_opens);
- 	}
- 
- 	free_cached_dir(cfid);
 
 
