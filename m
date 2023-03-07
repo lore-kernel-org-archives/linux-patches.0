@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D337BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A33C433EF;
-	Tue,  7 Mar 2023 17:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED5EBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E757FC4339B;
+	Tue,  7 Mar 2023 17:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209793;
-	bh=0RILrug9CPsNV6eneLnJKVPkubAfdY0dts4gfDmTzaA=;
+	s=korg; t=1678209796;
+	bh=ZT3QbQgbpXkXnak01gpPhoP+vcBfgriVrJHuHi4dsKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zZYzTs8vCX59OIY7aEECMaJx0pZaOiQx1FwaA1WMytkiFTbibULyBJKmqRV4o01V+
-	 LJuL1cXIWKlrQ6wH3U3jbFUccOZzQINLaHywOF+927Vp2tUuT3hygV8Q7LbTvBMYvf
-	 folgsaAHhxSJ0ue/Uul1xjoQvhZBLHQmtZWgfBFA=
+	b=mbLEtS2yCjDkubwA6SMFFwJtB9ru9cr6fLBFAxt5Tr8dgowAjCrwVjE2aJmQ+eCco
+	 YIdYkuJaZ30NuHQS/WBG5O4jxSTkjAMOkZB7V/Vat/iePAz+X/RglQC2WmA78abevH
+	 X2B8J865GxHZUqP16S+FdUiX6ed4qE4DBvocweaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Melissa Wen <melissa.srw@gmail.com>,
+	coverity-bot <keescook+coverity-bot@chromium.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0334/1001] drm/vkms: Fix null-ptr-deref in vkms_release()
-Date: Tue,  7 Mar 2023 17:51:46 +0100
-Message-Id: <20230307170035.989237723@linuxfoundation.org>
+Subject: [PATCH 6.2 0335/1001] drm/modes: Use strscpy() to copy command-line mode name
+Date: Tue,  7 Mar 2023 17:51:47 +0100
+Message-Id: <20230307170036.022001470@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,77 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Maxime Ripard <maxime@cerno.tech>
 
-[ Upstream commit 2fe2a8f40c21161ffe7653cc234e7934db5b7cc5 ]
+[ Upstream commit 0f9aa074c92dd9274b811c1c3fa93736814a4b0d ]
 
-A null-ptr-deref is triggered when it tries to destroy the workqueue in
-vkms->output.composer_workq in vkms_release().
+The mode name in struct drm_cmdline_mode can hold 32 characters at most,
+which can easily get overrun. Switch to strscpy() to prevent such a
+thing.
 
- KASAN: null-ptr-deref in range [0x0000000000000118-0x000000000000011f]
- CPU: 5 PID: 17193 Comm: modprobe Not tainted 6.0.0-11331-gd465bff130bf #24
- RIP: 0010:destroy_workqueue+0x2f/0x710
- ...
- Call Trace:
-  <TASK>
-  ? vkms_config_debugfs_init+0x50/0x50 [vkms]
-  __devm_drm_dev_alloc+0x15a/0x1c0 [drm]
-  vkms_init+0x245/0x1000 [vkms]
-  do_one_initcall+0xd0/0x4f0
-  do_init_module+0x1a4/0x680
-  load_module+0x6249/0x7110
-  __do_sys_finit_module+0x140/0x200
-  do_syscall_64+0x35/0x80
-  entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-The reason is that an OOM happened which triggers the destroy of the
-workqueue, however, the workqueue is alloced in the later process,
-thus a null-ptr-deref happened. A simple call graph is shown as below:
-
- vkms_init()
-  vkms_create()
-    devm_drm_dev_alloc()
-      __devm_drm_dev_alloc()
-        devm_drm_dev_init()
-          devm_add_action_or_reset()
-            devm_add_action() # an error happened
-            devm_drm_dev_init_release()
-              drm_dev_put()
-                kref_put()
-                  drm_dev_release()
-                    vkms_release()
-                      destroy_workqueue() # null-ptr-deref happened
-    vkms_modeset_init()
-      vkms_output_init()
-        vkms_crtc_init() # where the workqueue get allocated
-
-Fix this by checking if composer_workq is NULL before passing it to
-the destroy_workqueue() in vkms_release().
-
-Fixes: 6c234fe37c57 ("drm/vkms: Implement CRC debugfs API")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Signed-off-by: Melissa Wen <melissa.srw@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221101065156.41584-3-yuancan@huawei.com
+Reported-by: coverity-bot <keescook+coverity-bot@chromium.org>
+Addresses-Coverity-ID: 1527354 ("Security best practices violations")
+Fixes: a7ab155397dd ("drm/modes: Switch to named mode descriptors")
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://lore.kernel.org/r/20221128081938.742410-2-maxime@cerno.tech
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vkms/vkms_drv.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_modes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vkms/vkms_drv.c b/drivers/gpu/drm/vkms/vkms_drv.c
-index 8a74f37d59123..69346906ec813 100644
---- a/drivers/gpu/drm/vkms/vkms_drv.c
-+++ b/drivers/gpu/drm/vkms/vkms_drv.c
-@@ -57,7 +57,8 @@ static void vkms_release(struct drm_device *dev)
- {
- 	struct vkms_device *vkms = drm_device_to_vkms_device(dev);
+diff --git a/drivers/gpu/drm/drm_modes.c b/drivers/gpu/drm/drm_modes.c
+index 3c8034a8c27bd..951afe8279da8 100644
+--- a/drivers/gpu/drm/drm_modes.c
++++ b/drivers/gpu/drm/drm_modes.c
+@@ -1809,7 +1809,7 @@ static int drm_mode_parse_cmdline_named_mode(const char *name,
+ 		if (ret != name_end)
+ 			continue;
  
--	destroy_workqueue(vkms->output.composer_workq);
-+	if (vkms->output.composer_workq)
-+		destroy_workqueue(vkms->output.composer_workq);
- }
- 
- static void vkms_atomic_commit_tail(struct drm_atomic_state *old_state)
+-		strcpy(cmdline_mode->name, mode->name);
++		strscpy(cmdline_mode->name, mode->name, sizeof(cmdline_mode->name));
+ 		cmdline_mode->pixel_clock = mode->pixel_clock_khz;
+ 		cmdline_mode->xres = mode->xres;
+ 		cmdline_mode->yres = mode->yres;
 -- 
 2.39.2
 
