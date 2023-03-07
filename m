@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185BEBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:00:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C636C4339B;
-	Tue,  7 Mar 2023 18:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9664BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:00:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D80AC433D2;
+	Tue,  7 Mar 2023 18:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212017;
-	bh=Ti9D8/N2bvprk1D2kU2ST7isFhuvl0uOeemMqS7HW0c=;
+	s=korg; t=1678212020;
+	bh=xkcFN12T+VKdASzvMi9lXksazh6vkyk4ifLmLUeldd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SCCBQZZHSs8R5SdNlys31R1BYDrH1R+xS5N8HXkkZRgP9zr6KOC2rsnNYCPkjLmQf
-	 hcYHXcXk07nbFtRd/mwZpZM70DVoSNv8SSXwrf/ONbDf4EKFA30grd/29obq9pgoNJ
-	 VbyVeBVVq+s/pcWJCmD2bYa+3FEtGYmzff0L3Mms=
+	b=rpBSosjpbPaGTcPPlMnDwGgADaLE4TQ3W5q2DnjFA8g7xH06vI2FQHv5weTzq9A/q
+	 jU7mbi69Ef+n4qX3vtAsQzo+4GtFCXJhB4gfEji9uHg+0u0V8c9X/8Hjiu3NRaOiVC
+	 p5ObrHvA/0J6BxC3pG448DC8j3Y+/G8JYE1RA+tU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Duran <leo.duran@amd.com>,
-	Kishon Vijay Abraham I <kvijayab@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 020/885] x86/acpi/boot: Do not register processors that cannot be onlined for x2APIC
-Date: Tue,  7 Mar 2023 17:49:14 +0100
-Message-Id: <20230307170002.516902305@linuxfoundation.org>
+Subject: [PATCH 6.1 011/885] arm64: dts: qcom: sm6125-seine: Clean up gpio-keys (volume down)
+Date: Tue,  7 Mar 2023 17:49:05 +0100
+Message-Id: <20230307170002.135074083@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,79 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kishon Vijay Abraham I <kvijayab@amd.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit e2869bd7af608c343988429ceb1c2fe99644a01f ]
+[ Upstream commit a9f6a13da473bb6c7406d2784d9e3792f6763cba ]
 
-Section 5.2.12.12 Processor Local x2APIC Structure in the ACPI v6.5
-spec mandates that both "enabled" and "online capable" Local APIC Flags
-should be used to determine if the processor is usable or not.
+- Remove autorepeat (leave key repetition to userspace);
+- Remove unneeded status = "okay" (this is the default);
+- Remove unneeded linux,input-type <EV_KEY> (this is the default for
+  gpio-keys);
+- Allow the interrupt line for this button to be disabled;
+- Use a full, descriptive node name;
+- Set proper bias on the GPIO via pinctrl;
+- Sort properties;
+- Replace deprecated gpio-key,wakeup property with wakeup-source.
 
-However, Linux doesn't use the "online capable" flag for x2APIC to
-determine if the processor is usable. As a result, cpu_possible_mask has
-incorrect value and results in more memory getting allocated for per_cpu
-variables than it is going to be used.
-
-Make sure Linux parses both "enabled" and "online capable" flags for
-x2APIC to correctly determine if the processor is usable.
-
-Fixes: aa06e20f1be6 ("x86/ACPI: Don't add CPUs that are not online capable")
-Reported-by: Leo Duran <leo.duran@amd.com>
-Signed-off-by: Kishon Vijay Abraham I <kvijayab@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://lore.kernel.org/r/20230105041059.39366-1-kvijayab@amd.com
+Fixes: 82e1783890b7 ("arm64: dts: qcom: sm6125: Add support for Sony Xperia 10II")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221222192443.119103-1-marijn.suijten@somainline.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/acpi/boot.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ .../qcom/sm6125-sony-xperia-seine-pdx201.dts  | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/kernel/acpi/boot.c b/arch/x86/kernel/acpi/boot.c
-index 907cc98b19380..518bda50068cb 100644
---- a/arch/x86/kernel/acpi/boot.c
-+++ b/arch/x86/kernel/acpi/boot.c
-@@ -188,6 +188,17 @@ static int acpi_register_lapic(int id, u32 acpiid, u8 enabled)
- 	return cpu;
- }
+diff --git a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
+index 6a8b88cc43853..e1ab5b5189949 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
++++ b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
+@@ -40,17 +40,18 @@ extcon_usb: extcon-usb {
+ 	};
  
-+static bool __init acpi_is_processor_usable(u32 lapic_flags)
-+{
-+	if (lapic_flags & ACPI_MADT_ENABLED)
-+		return true;
-+
-+	if (acpi_support_online_capable && (lapic_flags & ACPI_MADT_ONLINE_CAPABLE))
-+		return true;
-+
-+	return false;
-+}
-+
- static int __init
- acpi_parse_x2apic(union acpi_subtable_headers *header, const unsigned long end)
- {
-@@ -212,6 +223,10 @@ acpi_parse_x2apic(union acpi_subtable_headers *header, const unsigned long end)
- 	if (apic_id == 0xffffffff)
- 		return 0;
+ 	gpio-keys {
+-		status = "okay";
+ 		compatible = "gpio-keys";
+-		autorepeat;
  
-+	/* don't register processors that cannot be onlined */
-+	if (!acpi_is_processor_usable(processor->lapic_flags))
-+		return 0;
+-		key-vol-dn {
++		pinctrl-0 = <&vol_down_n>;
++		pinctrl-names = "default";
 +
- 	/*
- 	 * We need to register disabled CPU as well to permit
- 	 * counting disabled CPUs. This allows us to size
-@@ -250,9 +265,7 @@ acpi_parse_lapic(union acpi_subtable_headers * header, const unsigned long end)
- 		return 0;
++		key-volume-down {
+ 			label = "Volume Down";
+ 			gpios = <&tlmm 47 GPIO_ACTIVE_LOW>;
+-			linux,input-type = <1>;
+ 			linux,code = <KEY_VOLUMEDOWN>;
+-			gpio-key,wakeup;
+ 			debounce-interval = <15>;
++			linux,can-disable;
++			wakeup-source;
+ 		};
+ 	};
  
- 	/* don't register processors that can not be onlined */
--	if (acpi_support_online_capable &&
--	    !(processor->lapic_flags & ACPI_MADT_ENABLED) &&
--	    !(processor->lapic_flags & ACPI_MADT_ONLINE_CAPABLE))
-+	if (!acpi_is_processor_usable(processor->lapic_flags))
- 		return 0;
+@@ -108,6 +109,14 @@ &sdhc_1 {
  
- 	/*
+ &tlmm {
+ 	gpio-reserved-ranges = <22 2>, <28 6>;
++
++	vol_down_n: vol-down-n-state {
++		pins = "gpio47";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++		input-enable;
++	};
+ };
+ 
+ &usb3 {
 -- 
 2.39.2
 
