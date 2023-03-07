@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2760FBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:15:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8512AC433D2;
-	Tue,  7 Mar 2023 18:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56747BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:15:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970B6C433D2;
+	Tue,  7 Mar 2023 18:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212940;
-	bh=46X7D2sW8optM+g2EHzOyHb4MN2Fe3Ss7mY5jmJgFTk=;
+	s=korg; t=1678212943;
+	bh=HRuhTwIMZKalMbqJSBvzh0ZM8EGz5WmyxYuKzj/Ec18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D51va6EKGVitm0Ofm0fcUl6sCxYyrJNvlvg9OJZeROidh2NhGlKXnPR8k0nMS9/I9
-	 2VwZhdJWzEJSxWXrw+OjDMSCV0SN1QBkqsX+Y6xup6XJIwYyOwlYaORR2ElkHstsYv
-	 mce4j4oY673DFJn5m1eK59K5EpF6uENPkQSyW8KE=
+	b=kMgyPbIGYNGv+vTj18Vd0NtkwQJzHSNhFwvjQ5KL8iHOiq+ykyvHPS30Hn542zwpn
+	 wajw7pKjXqxR6Uw8SuxDtCFyTCc3yesyfEoJh4cGOz5UsTLpRSZN4BADGLuFDMLO6Q
+	 AwvaHswRBvDTIPJTFC7f27fPfTntA7JZUet8pGOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Nicolas Boichat <drinkcat@chromium.org>,
-	=?UTF-8?q?S=C3=A9bastien=20Szymanski?= <sebastien.szymanski@armadeus.com>,
-	Jagan Teki <jagan@amarulasolutions.com>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 306/885] drm: exynos: dsi: Fix MIPI_DSI*_NO_* mode flags
-Date: Tue,  7 Mar 2023 17:54:00 +0100
-Message-Id: <20230307170015.404565465@linuxfoundation.org>
+Subject: [PATCH 6.1 340/885] ASoC: mchp-spdifrx: Fix uninitialized use of mr in mchp_spdifrx_hw_params()
+Date: Tue,  7 Mar 2023 17:54:34 +0100
+Message-Id: <20230307170016.995510116@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,101 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jagan Teki <jagan@amarulasolutions.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 996e1defca34485dd2bd70b173f069aab5f21a65 ]
+[ Upstream commit 218674a45930c700486d27b765bf2f1b43f8cbf7 ]
 
-HFP/HBP/HSA/EOT_PACKET modes in Exynos DSI host specifies
-0 = Enable and 1 = Disable.
+Clang warns:
 
-The logic for checking these mode flags was correct before
-the MIPI_DSI*_NO_* mode flag conversion.
+  ../sound/soc/atmel/mchp-spdifrx.c:455:3: error: variable 'mr' is uninitialized when used here [-Werror,-Wuninitialized]
+                  mr |= SPDIFRX_MR_ENDIAN_BIG;
+                  ^~
+  ../sound/soc/atmel/mchp-spdifrx.c:432:8: note: initialize the variable 'mr' to silence this warning
+          u32 mr;
+                ^
+                 = 0
+  1 error generated.
 
-This patch is trying to fix this MIPI_DSI*_NO_* mode flags handling
-Exynos DSI host and update the mode_flags in relevant panel drivers.
+Zero initialize mr so that these bitwise OR and assignment operation
+works unconditionally.
 
-Fixes: 0f3b68b66a6d ("drm/dsi: Add _NO_ to MIPI_DSI_* flags disabling features")
-Reviewed-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Nicolas Boichat <drinkcat@chromium.org>
-Reported-by: Sébastien Szymanski <sebastien.szymanski@armadeus.com>
-Signed-off-by: Jagan Teki <jagan@amarulasolutions.com>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Signed-off-by: Marek Vasut <marex@denx.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221212145745.15387-1-jagan@amarulasolutions.com
+Fixes: fa09fa60385a ("ASoC: mchp-spdifrx: fix controls which rely on rsr register")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1797
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230202-mchp-spdifrx-fix-uninit-mr-v1-1-629a045d7a2f@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_dsi.c          | 8 ++++----
- drivers/gpu/drm/panel/panel-samsung-s6e3ha2.c    | 4 +++-
- drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c | 3 ++-
- drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c    | 2 --
- 4 files changed, 9 insertions(+), 8 deletions(-)
+ sound/soc/atmel/mchp-spdifrx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_dsi.c b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-index ec673223d6b7a..b5305b145ddbd 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-@@ -805,15 +805,15 @@ static int exynos_dsi_init_link(struct exynos_dsi *dsi)
- 			reg |= DSIM_AUTO_MODE;
- 		if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HSE)
- 			reg |= DSIM_HSE_MODE;
--		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HFP))
-+		if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HFP)
- 			reg |= DSIM_HFP_MODE;
--		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HBP))
-+		if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HBP)
- 			reg |= DSIM_HBP_MODE;
--		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HSA))
-+		if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HSA)
- 			reg |= DSIM_HSA_MODE;
- 	}
+diff --git a/sound/soc/atmel/mchp-spdifrx.c b/sound/soc/atmel/mchp-spdifrx.c
+index b81fc77728dfc..76ce37f641ebd 100644
+--- a/sound/soc/atmel/mchp-spdifrx.c
++++ b/sound/soc/atmel/mchp-spdifrx.c
+@@ -362,7 +362,7 @@ static int mchp_spdifrx_hw_params(struct snd_pcm_substream *substream,
+ 				  struct snd_soc_dai *dai)
+ {
+ 	struct mchp_spdifrx_dev *dev = snd_soc_dai_get_drvdata(dai);
+-	u32 mr;
++	u32 mr = 0;
+ 	int ret;
  
--	if (!(dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
-+	if (dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
- 		reg |= DSIM_EOT_DISABLE;
- 
- 	switch (dsi->format) {
-diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e3ha2.c b/drivers/gpu/drm/panel/panel-samsung-s6e3ha2.c
-index 5c621b15e84c2..439ef30735128 100644
---- a/drivers/gpu/drm/panel/panel-samsung-s6e3ha2.c
-+++ b/drivers/gpu/drm/panel/panel-samsung-s6e3ha2.c
-@@ -692,7 +692,9 @@ static int s6e3ha2_probe(struct mipi_dsi_device *dsi)
- 
- 	dsi->lanes = 4;
- 	dsi->format = MIPI_DSI_FMT_RGB888;
--	dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS;
-+	dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS |
-+		MIPI_DSI_MODE_VIDEO_NO_HFP | MIPI_DSI_MODE_VIDEO_NO_HBP |
-+		MIPI_DSI_MODE_VIDEO_NO_HSA | MIPI_DSI_MODE_NO_EOT_PACKET;
- 
- 	ctx->supplies[0].supply = "vdd3";
- 	ctx->supplies[1].supply = "vci";
-diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c b/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c
-index e06fd35de814b..9c3e76171759a 100644
---- a/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c
-+++ b/drivers/gpu/drm/panel/panel-samsung-s6e63j0x03.c
-@@ -446,7 +446,8 @@ static int s6e63j0x03_probe(struct mipi_dsi_device *dsi)
- 
- 	dsi->lanes = 1;
- 	dsi->format = MIPI_DSI_FMT_RGB888;
--	dsi->mode_flags = MIPI_DSI_MODE_NO_EOT_PACKET;
-+	dsi->mode_flags = MIPI_DSI_MODE_VIDEO_NO_HFP |
-+		MIPI_DSI_MODE_VIDEO_NO_HBP | MIPI_DSI_MODE_VIDEO_NO_HSA;
- 
- 	ctx->supplies[0].supply = "vdd3";
- 	ctx->supplies[1].supply = "vci";
-diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c b/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c
-index 54213beafaf5e..ebf4c2d39ea88 100644
---- a/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c
-+++ b/drivers/gpu/drm/panel/panel-samsung-s6e8aa0.c
-@@ -990,8 +990,6 @@ static int s6e8aa0_probe(struct mipi_dsi_device *dsi)
- 	dsi->lanes = 4;
- 	dsi->format = MIPI_DSI_FMT_RGB888;
- 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST
--		| MIPI_DSI_MODE_VIDEO_NO_HFP | MIPI_DSI_MODE_VIDEO_NO_HBP
--		| MIPI_DSI_MODE_VIDEO_NO_HSA | MIPI_DSI_MODE_NO_EOT_PACKET
- 		| MIPI_DSI_MODE_VSYNC_FLUSH | MIPI_DSI_MODE_VIDEO_AUTO_VERT;
- 
- 	ret = s6e8aa0_parse_dt(ctx);
+ 	dev_dbg(dev->dev, "%s() rate=%u format=%#x width=%u channels=%u\n",
 -- 
 2.39.2
 
