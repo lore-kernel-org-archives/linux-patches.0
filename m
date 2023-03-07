@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBED2BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:09:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223D2C433EF;
-	Tue,  7 Mar 2023 19:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62DCBA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:09:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347C4C433D2;
+	Tue,  7 Mar 2023 19:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216159;
-	bh=/jxPuTv27P59KL+EwiDRvAYucwe2S6B/YHaq1iIUcQ0=;
+	s=korg; t=1678216162;
+	bh=kv61pPeZdtdgwx4Z+2SU5Ux9voCWAYw/Wef2lFVUXR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0t+AXgh7is9Cvr+tD8piGIcnQQDoE4opflAhV7F6PWE0/huu0RyXlp8XbGwupWLGW
-	 kChQBChFnWwlyC51EGGQKiS3Gd1jdCKyTZU1E/+ztY/GEmkPA2v7W2YbfGbAfYC+u4
-	 h/4GtuiPJPdWmzSSSOqIBd2viG+/lM2BzRWKtqQo=
+	b=EwHS15YgmZfC7nWEekBy0VWecv4ceSu2Ii+YrBjksnSmkqlZTxIbjFmHlqXAL6VSj
+	 niwYQeuQ9wk9cFjthClMYiqoJlN3ItsZZhYBwzfsR54bcJY/qIFrhF7KM2D5sXDPyk
+	 VFPK7qAVGsDMXsjPQCcbKS65dp/gXshuxE1gPkyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lamparter <equinox@diac24.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 494/567] io_uring: remove MSG_NOSIGNAL from recvmsg
-Date: Tue,  7 Mar 2023 18:03:50 +0100
-Message-Id: <20230307165927.363866446@linuxfoundation.org>
+	Andy Nguyen <theflow@google.com>,
+	Thomas Lendacky <thomas.lendacky@amd.com>,
+	Peter Gonda <pgonda@google.com>,
+	David Rientjes <rientjes@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	kvm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 5.15 468/567] KVM: SVM: Fix potential overflow in SEVs send|receive_update_data()
+Date: Tue,  7 Mar 2023 18:03:24 +0100
+Message-Id: <20230307165926.158959863@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,39 +40,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Lamparter <equinox@diac24.ne>
+From: Peter Gonda <pgonda@google.com>
 
-commit 7605c43d67face310b4b87dee1a28bc0c8cd8c0f upstream.
+commit f94f053aa3a5d6ff17951870483d9eb9e13de2e2 upstream.
 
-MSG_NOSIGNAL is not applicable for the receiving side, SIGPIPE is
-generated when trying to write to a "broken pipe".  AF_PACKET's
-packet_recvmsg() does enforce this, giving back EINVAL when MSG_NOSIGNAL
-is set - making it unuseable in io_uring's recvmsg.
+KVM_SEV_SEND_UPDATE_DATA and KVM_SEV_RECEIVE_UPDATE_DATA have an integer
+overflow issue. Params.guest_len and offset are both 32 bits wide, with a
+large params.guest_len the check to confirm a page boundary is not
+crossed can falsely pass:
 
-Remove MSG_NOSIGNAL from io_recvmsg_prep().
+    /* Check if we are crossing the page boundary *
+    offset = params.guest_uaddr & (PAGE_SIZE - 1);
+    if ((params.guest_len + offset > PAGE_SIZE))
 
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: David Lamparter <equinox@diac24.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230224150123.128346-1-equinox@diac24.net
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Add an additional check to confirm that params.guest_len itself is not
+greater than PAGE_SIZE.
+
+Note, this isn't a security concern as overflow can happen if and only if
+params.guest_len is greater than 0xfffff000, and the FW spec says these
+commands fail with lengths greater than 16KB, i.e. the PSP will detect
+KVM's goof.
+
+Fixes: 15fb7de1a7f5 ("KVM: SVM: Add KVM_SEV_RECEIVE_UPDATE_DATA command")
+Fixes: d3d1af85e2c7 ("KVM: SVM: Add KVM_SEND_UPDATE_DATA command")
+Reported-by: Andy Nguyen <theflow@google.com>
+Suggested-by: Thomas Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Peter Gonda <pgonda@google.com>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: kvm@vger.kernel.org
+Cc: stable@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/20230207171354.4012821-1-pgonda@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/sev.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -5141,7 +5141,7 @@ static int io_recvmsg_prep(struct io_kio
- 	sr->umsg = u64_to_user_ptr(READ_ONCE(sqe->addr));
- 	sr->len = READ_ONCE(sqe->len);
- 	sr->bgid = READ_ONCE(sqe->buf_group);
--	sr->msg_flags = READ_ONCE(sqe->msg_flags) | MSG_NOSIGNAL;
-+	sr->msg_flags = READ_ONCE(sqe->msg_flags);
- 	if (sr->msg_flags & MSG_DONTWAIT)
- 		req->flags |= REQ_F_NOWAIT;
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -1277,7 +1277,7 @@ static int sev_send_update_data(struct k
  
+ 	/* Check if we are crossing the page boundary */
+ 	offset = params.guest_uaddr & (PAGE_SIZE - 1);
+-	if ((params.guest_len + offset > PAGE_SIZE))
++	if (params.guest_len > PAGE_SIZE || (params.guest_len + offset) > PAGE_SIZE)
+ 		return -EINVAL;
+ 
+ 	/* Pin guest memory */
+@@ -1457,7 +1457,7 @@ static int sev_receive_update_data(struc
+ 
+ 	/* Check if we are crossing the page boundary */
+ 	offset = params.guest_uaddr & (PAGE_SIZE - 1);
+-	if ((params.guest_len + offset > PAGE_SIZE))
++	if (params.guest_len > PAGE_SIZE || (params.guest_len + offset) > PAGE_SIZE)
+ 		return -EINVAL;
+ 
+ 	hdr = psp_copy_user_blob(params.hdr_uaddr, params.hdr_len);
 
 
