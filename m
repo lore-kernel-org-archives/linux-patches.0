@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69936BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:07:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0440C433EF;
-	Tue,  7 Mar 2023 19:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E80CBA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:07:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D5CC433D2;
+	Tue,  7 Mar 2023 19:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216055;
-	bh=Ljwq8bY827BH8isU9XavIxjsZnWl+5a0r7JlOvRTxMw=;
+	s=korg; t=1678216058;
+	bh=ZONAirZ6zfNf1iTb0FxKJx91w3mgVP51sUbKEawi4b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vc2J8pQ29ropACW5zlZSIZupA2pKZTAq9Z1LOAZnfkFFusmk1PXNx3+j2w4+HiWN9
-	 jVCb4nk7VYHOe2BDJaYafcloHw5RAvy5UJLBCSTtPzdrEtvb/ZAHWHFGCAlLoXWf2x
-	 9qXswIaSg/5zC3s8HGqzh8BMqoxvFG8lJiGhHmtE=
+	b=f+qe44Hcx2CwFzWv0OzHyp+bOnmsHzld4+p60PNr1ffuTrcKd/41DsV5eemitn5px
+	 a8y1z7LJNsWVgVHr3QCRg6f76x/G61LM+OKKD2Ok+OV9fuSsk818r2ALjzOTLiUia0
+	 BX5ClNkwalo2A1YM9zxhNcxTZdRGIYoWdbFw/MVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+60f291a24acecb3c2bd5@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.15 460/567] udf: Do not bother merging very long extents
-Date: Tue,  7 Mar 2023 18:03:16 +0100
-Message-Id: <20230307165925.809252796@linuxfoundation.org>
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 5.15 434/567] s390/extmem: return correct segment type in __segment_load()
+Date: Tue,  7 Mar 2023 18:02:50 +0100
+Message-Id: <20230307165924.721618457@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -34,52 +34,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
 
-commit 53cafe1d6d8ef9f93318e5bfccc0d24f27d41ced upstream.
+commit 8c42dd78df148c90e48efff204cce38743906a79 upstream.
 
-When merging very long extents we try to push as much length as possible
-to the first extent. However this is unnecessarily complicated and not
-really worth the trouble. Furthermore there was a bug in the logic
-resulting in corrupting extents in the file as syzbot reproducer shows.
-So just don't bother with the merging of extents that are too long
-together.
+Commit f05f62d04271f ("s390/vmem: get rid of memory segment list")
+reshuffled the call to vmem_add_mapping() in __segment_load(), which now
+overwrites rc after it was set to contain the segment type code.
 
-CC: stable@vger.kernel.org
-Reported-by: syzbot+60f291a24acecb3c2bd5@syzkaller.appspotmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+As result, __segment_load() will now always return 0 on success, which
+corresponds to the segment type code SEG_TYPE_SW, i.e. a writeable
+segment. This results in a kernel crash when loading a read-only segment
+as dcssblk block device, and trying to write to it.
+
+Instead of reshuffling code again, make sure to return the segment type
+on success, and also describe this rather delicate and unexpected logic
+in the function comment. Also initialize new segtype variable with
+invalid value, to prevent possible future confusion.
+
+Fixes: f05f62d04271 ("s390/vmem: get rid of memory segment list")
+Cc: <stable@vger.kernel.org> # 5.9+
+Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c |   19 ++-----------------
- 1 file changed, 2 insertions(+), 17 deletions(-)
+ arch/s390/mm/extmem.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -1093,23 +1093,8 @@ static void udf_merge_extents(struct ino
- 			blocksize - 1) >> blocksize_bits)))) {
+--- a/arch/s390/mm/extmem.c
++++ b/arch/s390/mm/extmem.c
+@@ -289,15 +289,17 @@ segment_overlaps_others (struct dcss_seg
  
- 			if (((li->extLength & UDF_EXTENT_LENGTH_MASK) +
--				(lip1->extLength & UDF_EXTENT_LENGTH_MASK) +
--				blocksize - 1) & ~UDF_EXTENT_LENGTH_MASK) {
--				lip1->extLength = (lip1->extLength -
--						  (li->extLength &
--						   UDF_EXTENT_LENGTH_MASK) +
--						   UDF_EXTENT_LENGTH_MASK) &
--							~(blocksize - 1);
--				li->extLength = (li->extLength &
--						 UDF_EXTENT_FLAG_MASK) +
--						(UDF_EXTENT_LENGTH_MASK + 1) -
--						blocksize;
--				lip1->extLocation.logicalBlockNum =
--					li->extLocation.logicalBlockNum +
--					((li->extLength &
--						UDF_EXTENT_LENGTH_MASK) >>
--						blocksize_bits);
--			} else {
-+			     (lip1->extLength & UDF_EXTENT_LENGTH_MASK) +
-+			     blocksize - 1) <= UDF_EXTENT_LENGTH_MASK) {
- 				li->extLength = lip1->extLength +
- 					(((li->extLength &
- 						UDF_EXTENT_LENGTH_MASK) +
+ /*
+  * real segment loading function, called from segment_load
++ * Must return either an error code < 0, or the segment type code >= 0
+  */
+ static int
+ __segment_load (char *name, int do_nonshared, unsigned long *addr, unsigned long *end)
+ {
+ 	unsigned long start_addr, end_addr, dummy;
+ 	struct dcss_segment *seg;
+-	int rc, diag_cc;
++	int rc, diag_cc, segtype;
+ 
+ 	start_addr = end_addr = 0;
++	segtype = -1;
+ 	seg = kmalloc(sizeof(*seg), GFP_KERNEL | GFP_DMA);
+ 	if (seg == NULL) {
+ 		rc = -ENOMEM;
+@@ -326,9 +328,9 @@ __segment_load (char *name, int do_nonsh
+ 	seg->res_name[8] = '\0';
+ 	strlcat(seg->res_name, " (DCSS)", sizeof(seg->res_name));
+ 	seg->res->name = seg->res_name;
+-	rc = seg->vm_segtype;
+-	if (rc == SEG_TYPE_SC ||
+-	    ((rc == SEG_TYPE_SR || rc == SEG_TYPE_ER) && !do_nonshared))
++	segtype = seg->vm_segtype;
++	if (segtype == SEG_TYPE_SC ||
++	    ((segtype == SEG_TYPE_SR || segtype == SEG_TYPE_ER) && !do_nonshared))
+ 		seg->res->flags |= IORESOURCE_READONLY;
+ 
+ 	/* Check for overlapping resources before adding the mapping. */
+@@ -386,7 +388,7 @@ __segment_load (char *name, int do_nonsh
+  out_free:
+ 	kfree(seg);
+  out:
+-	return rc;
++	return rc < 0 ? rc : segtype;
+ }
+ 
+ /*
 
 
