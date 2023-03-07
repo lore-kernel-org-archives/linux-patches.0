@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD96EBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:58:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35268C433D2;
-	Tue,  7 Mar 2023 17:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AFCBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:58:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45660C433D2;
+	Tue,  7 Mar 2023 17:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211893;
-	bh=Okf44i3LnSIAAmwAk9WzEWO281Aerk6KgKI/4YXcp+Q=;
+	s=korg; t=1678211896;
+	bh=OT4yHu1qPn+2rxL7m+FCZNHjNFEPX2XnlnWiFceUm1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UFpKoghuTek+hrY+Hb+9jPRWclsnRNn2Y2fjaRwUG3mhNHyMNByf/YfDvtsygWr4O
-	 wu8LStqbu1uKL52REvvBsqqYeQIaBwvYEqCJzIW5X5qBVPj6rsp0Xk3i6+GHzubRD/
-	 4UhjIyHDIAQjbNGhACMxFfaM5ow7mFPGScloQqU0=
+	b=sQWvCWv4n681yd08382GKPxBn1aJvy89w633aNiD8HLBH0pOLGTVFANgP7QThF3rF
+	 lu9/1gMYiIoq5CwSXBpC0sfvY/CHgxx/nAbFkFuLX/KETkj4rAdKnZiQwS82NeWgqW
+	 qPMk+A/hkTLzFd4J+ZEfWfr3MvgIN6/qB7So/gb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Martin Botka <martin.botka@somainline.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 010/885] arm64: dts: qcom: sm6125: Reorder HSUSB PHY clocks to match bindings
-Date: Tue,  7 Mar 2023 17:49:04 +0100
-Message-Id: <20230307170002.084924314@linuxfoundation.org>
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Stefan Ghinea <stefan.ghinea@windriver.com>
+Subject: [PATCH 6.1 002/885] HID: asus: use spinlock to safely schedule workers
+Date: Tue,  7 Mar 2023 17:48:56 +0100
+Message-Id: <20230307170001.732300523@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,48 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 8416262b0ea46d84767141b074748f4d4f37736a ]
+commit 4ab3a086d10eeec1424f2e8a968827a6336203df upstream.
 
-Reorder the clocks and corresponding names to match the QUSB2 phy
-schema, fixing the following CHECK_DTBS errors:
+Use spinlocks to deal with workers introducing a wrapper
+asus_schedule_work(), and several spinlock checks.
+Otherwise, asus_kbd_backlight_set() may schedule led->work after the
+structure has been freed, causing a use-after-free.
 
-    arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dtb: phy@1613000: clock-names:0: 'cfg_ahb' was expected
-            From schema: /newdata/aosp-r/kernel/mainline/kernel/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-    arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dtb: phy@1613000: clock-names:1: 'ref' was expected
-            From schema: /newdata/aosp-r/kernel/mainline/kernel/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-
-Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Martin Botka <martin.botka@somainline.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221216213343.1140143-1-marijn.suijten@somainline.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: af22a610bc38 ("HID: asus: support backlight on USB keyboards")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-5-7860c5763c38@diag.uniroma1.it
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm6125.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hid/hid-asus.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index 7818fb6c5a10a..271247b371759 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -442,9 +442,9 @@ hsusb_phy1: phy@1613000 {
- 			reg = <0x01613000 0x180>;
- 			#phy-cells = <0>;
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -491,6 +491,16 @@ static int rog_nkey_led_init(struct hid_
+ 	return ret;
+ }
  
--			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
--				 <&gcc GCC_AHB2PHY_USB_CLK>;
--			clock-names = "ref", "cfg_ahb";
-+			clocks = <&gcc GCC_AHB2PHY_USB_CLK>,
-+				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
-+			clock-names = "cfg_ahb", "ref";
++static void asus_schedule_work(struct asus_kbd_leds *led)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&led->lock, flags);
++	if (!led->removed)
++		schedule_work(&led->work);
++	spin_unlock_irqrestore(&led->lock, flags);
++}
++
+ static void asus_kbd_backlight_set(struct led_classdev *led_cdev,
+ 				   enum led_brightness brightness)
+ {
+@@ -502,7 +512,7 @@ static void asus_kbd_backlight_set(struc
+ 	led->brightness = brightness;
+ 	spin_unlock_irqrestore(&led->lock, flags);
  
- 			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
- 			status = "disabled";
--- 
-2.39.2
-
+-	schedule_work(&led->work);
++	asus_schedule_work(led);
+ }
+ 
+ static enum led_brightness asus_kbd_backlight_get(struct led_classdev *led_cdev)
+@@ -526,9 +536,6 @@ static void asus_kbd_backlight_work(stru
+ 	int ret;
+ 	unsigned long flags;
+ 
+-	if (led->removed)
+-		return;
+-
+ 	spin_lock_irqsave(&led->lock, flags);
+ 	buf[4] = led->brightness;
+ 	spin_unlock_irqrestore(&led->lock, flags);
 
 
