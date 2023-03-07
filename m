@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B870DBA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:53:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3E4C433EF;
-	Tue,  7 Mar 2023 17:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8221BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:53:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40074C433D2;
+	Tue,  7 Mar 2023 17:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211582;
-	bh=Slb1EbNJeRZfPyJ2hMNbgXRGYunRv4GUgNpaDaevwM0=;
+	s=korg; t=1678211585;
+	bh=TA04fN38rBXP0U/Lm6yi+PFs+bDE7FE+U+Zf3WspCsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GcQNtuGMhFZdUvc945/mxhcD1ptLTb3lpxMHGyHmqgs43Kxs/VL7DLhi7izmMklyA
-	 V8tx07EMWfOBXlu1GRLF3fqaFbau1VEn6VSAllbgISCL2sL6QoCs1aKXoxqhWDwBmG
-	 o9UPha+i/v0oZ7SRjDr3fk3s8NHMBHLt3a5ysC6w=
+	b=wJRa+gDu5bZ/NJVyovEhO7HDJDmcwLx3R69PN2wbu6f58SrvsucSuJ3/YSYUOme4z
+	 nCr3sfSQ7PkdHQzbJdE72T1FvGQ56N+GCsnM1cUzynCUaRSWd0fJMJRAaISuqaRMPT
+	 7X4vmY930XHGKOjAKas6uylAwCuzmLnjmcFDXI20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com,
-	stable@kernel.org,
-	Jun Nie <jun.nie@linaro.org>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.2 0892/1001] ext4: optimize ea_inode block expansion
-Date: Tue,  7 Mar 2023 18:01:04 +0100
-Message-Id: <20230307170100.667970785@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.2 0910/1001] thermal: intel: powerclamp: Fix cur_state for multi package system
+Date: Tue,  7 Mar 2023 18:01:22 +0100
+Message-Id: <20230307170101.530902007@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,95 +34,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jun Nie <jun.nie@linaro.org>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit 1e9d62d252812575ded7c620d8fc67c32ff06c16 upstream.
+commit 8e47363588377e1bdb65e2b020b409cfb44dd260 upstream.
 
-Copy ea data from inode entry when expanding ea block if possible.
-Then remove the ea entry if expansion success. Thus memcpy to a
-temporary buffer may be avoided.
+The powerclamp cooling device cur_state shows actual idle observed by
+package C-state idle counters. But the implementation is not sufficient
+for multi package or multi die system. The cur_state value is incorrect.
+On these systems, these counters must be read from each package/die and
+somehow aggregate them. But there is no good method for aggregation.
 
-If the expansion fails, we do not need to recovery the removed ea
-entry neither in this way.
+It was not a problem when explicit CPU model addition was required to
+enable intel powerclamp. In this way certain CPU models could have
+been avoided. But with the removal of CPU model check with the
+availability of Package C-state counters, the driver is loaded on most
+of the recent systems.
 
-Reported-by: syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=3613786cb88c93aa1c6a279b1df6a7b201347d08
-Link: https://lore.kernel.org/r/20230103014517.495275-2-jun.nie@linaro.org
-Cc: stable@kernel.org
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+For multi package/die systems, just show the actual target idle state,
+the system is trying to achieve. In powerclamp this is the user set
+state minus one.
+
+Also there is no use of starting a worker thread for polling package
+C-state counters and applying any compensation for multiple package
+or multiple die systems.
+
+Fixes: b721ca0d1927 ("thermal/powerclamp: remove cpu whitelist")
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: 4.14+ <stable@vger.kernel.org> # 4.14+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |   28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ drivers/thermal/intel/intel_powerclamp.c |   20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -2567,9 +2567,8 @@ static int ext4_xattr_move_to_block(hand
+--- a/drivers/thermal/intel/intel_powerclamp.c
++++ b/drivers/thermal/intel/intel_powerclamp.c
+@@ -57,6 +57,7 @@
  
- 	is = kzalloc(sizeof(struct ext4_xattr_ibody_find), GFP_NOFS);
- 	bs = kzalloc(sizeof(struct ext4_xattr_block_find), GFP_NOFS);
--	buffer = kvmalloc(value_size, GFP_NOFS);
- 	b_entry_name = kmalloc(entry->e_name_len + 1, GFP_NOFS);
--	if (!is || !bs || !buffer || !b_entry_name) {
-+	if (!is || !bs || !b_entry_name) {
- 		error = -ENOMEM;
- 		goto out;
+ static unsigned int target_mwait;
+ static struct dentry *debug_dir;
++static bool poll_pkg_cstate_enable;
+ 
+ /* user selected target */
+ static unsigned int set_target_ratio;
+@@ -261,6 +262,9 @@ static unsigned int get_compensation(int
+ {
+ 	unsigned int comp = 0;
+ 
++	if (!poll_pkg_cstate_enable)
++		return 0;
++
+ 	/* we only use compensation if all adjacent ones are good */
+ 	if (ratio == 1 &&
+ 		cal_data[ratio].confidence >= CONFIDENCE_OK &&
+@@ -519,7 +523,8 @@ static int start_power_clamp(void)
+ 	control_cpu = cpumask_first(cpu_online_mask);
+ 
+ 	clamping = true;
+-	schedule_delayed_work(&poll_pkg_cstate_work, 0);
++	if (poll_pkg_cstate_enable)
++		schedule_delayed_work(&poll_pkg_cstate_work, 0);
+ 
+ 	/* start one kthread worker per online cpu */
+ 	for_each_online_cpu(cpu) {
+@@ -585,11 +590,15 @@ static int powerclamp_get_max_state(stru
+ static int powerclamp_get_cur_state(struct thermal_cooling_device *cdev,
+ 				 unsigned long *state)
+ {
+-	if (true == clamping)
+-		*state = pkg_cstate_ratio_cur;
+-	else
++	if (clamping) {
++		if (poll_pkg_cstate_enable)
++			*state = pkg_cstate_ratio_cur;
++		else
++			*state = set_target_ratio;
++	} else {
+ 		/* to save power, do not poll idle ratio while not clamping */
+ 		*state = -1; /* indicates invalid state */
++	}
+ 
+ 	return 0;
+ }
+@@ -712,6 +721,9 @@ static int __init powerclamp_init(void)
+ 		goto exit_unregister;
  	}
-@@ -2581,12 +2580,18 @@ static int ext4_xattr_move_to_block(hand
  
- 	/* Save the entry name and the entry value */
- 	if (entry->e_value_inum) {
-+		buffer = kvmalloc(value_size, GFP_NOFS);
-+		if (!buffer) {
-+			error = -ENOMEM;
-+			goto out;
-+		}
++	if (topology_max_packages() == 1 && topology_max_die_per_package() == 1)
++		poll_pkg_cstate_enable = true;
 +
- 		error = ext4_xattr_inode_get(inode, entry, buffer, value_size);
- 		if (error)
- 			goto out;
- 	} else {
- 		size_t value_offs = le16_to_cpu(entry->e_value_offs);
--		memcpy(buffer, (void *)IFIRST(header) + value_offs, value_size);
-+		buffer = (void *)IFIRST(header) + value_offs;
- 	}
- 
- 	memcpy(b_entry_name, entry->e_name, entry->e_name_len);
-@@ -2601,25 +2606,26 @@ static int ext4_xattr_move_to_block(hand
- 	if (error)
- 		goto out;
- 
--	/* Remove the chosen entry from the inode */
--	error = ext4_xattr_ibody_set(handle, inode, &i, is);
--	if (error)
--		goto out;
--
- 	i.value = buffer;
- 	i.value_len = value_size;
- 	error = ext4_xattr_block_find(inode, &i, bs);
- 	if (error)
- 		goto out;
- 
--	/* Add entry which was removed from the inode into the block */
-+	/* Move ea entry from the inode into the block */
- 	error = ext4_xattr_block_set(handle, inode, &i, bs);
- 	if (error)
- 		goto out;
--	error = 0;
-+
-+	/* Remove the chosen entry from the inode */
-+	i.value = NULL;
-+	i.value_len = 0;
-+	error = ext4_xattr_ibody_set(handle, inode, &i, is);
-+
- out:
- 	kfree(b_entry_name);
--	kvfree(buffer);
-+	if (entry->e_value_inum && buffer)
-+		kvfree(buffer);
- 	if (is)
- 		brelse(is->iloc.bh);
- 	if (bs)
+ 	cooling_dev = thermal_cooling_device_register("intel_powerclamp", NULL,
+ 						&powerclamp_cooling_ops);
+ 	if (IS_ERR(cooling_dev)) {
 
 
