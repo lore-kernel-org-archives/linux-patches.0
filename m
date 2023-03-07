@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9156EBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:37:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98BCC433EF;
-	Tue,  7 Mar 2023 17:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8672CBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:37:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06720C433EF;
+	Tue,  7 Mar 2023 17:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210628;
-	bh=GsLA4w0BvTbWxC+Ki2Sv7W4m/dgFu9wCanHWZ42ARVM=;
+	s=korg; t=1678210631;
+	bh=EDnOlfdMO9WC1yJ+tYfhzS6owgNkEBOFpkRuKUwlRNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iW8iHvjXwQFKrR6/ddsoMXucna+wSxW1qYZ2+kTY1FRYBmMrPZkDECyAHFvZVxdx2
-	 DdckNB5Xe8n0cMQYw915QV0V9qQV+rF/EnlFG8e3leE5ZflHko1JCynbSmunFjN9hE
-	 Dt9RzpLyLD666BMRX+JF9+holCcpkkq3USnFv370=
+	b=KcqDxpfNIvWf44SS8qHGBcW3nfpHAvaE7zZppoDkwwbXz4s4xe8K7GYNHndYv9Bks
+	 8jue/H8fwBiQNrm5hEBUN6hEv6FjMNxvPHytgp+lsjI4Al86nh3Y7BpyEATPdpZt1K
+	 ekNrwfouTyXDSH2zGttffAYYmyMCuC7rnOn8Pk2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Ming Qian <ming.qian@nxp.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0603/1001] media: platform: mtk-mdp3: fix Kconfig dependencies
-Date: Tue,  7 Mar 2023 17:56:15 +0100
-Message-Id: <20230307170047.683258981@linuxfoundation.org>
+Subject: [PATCH 6.2 0604/1001] media: v4l2-jpeg: correct the skip count in jpeg_parse_app14_data
+Date: Tue,  7 Mar 2023 17:56:16 +0100
+Message-Id: <20230307170047.725586759@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,57 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit e3f7feb6d89311f369dd4ad903ea62e45328cdbe ]
+[ Upstream commit 41959c4f973b837a12061b84d3a436fc64c73a30 ]
 
-The new mdp3 driver uses 'select' to force-enable a couple of drivers
-it depends on. This is error-prone and likely to cause dependency
-loops as well as warnings like:
+The curr pointer has advanced 14 bytes in jpeg_parse_app14_data.
+1. jpeg_get_word_be(stream), it goes forward 2 bytes.
+2. jpeg_skip(stream, 11), it goes forward 11 bytes.
+3. jpeg_get_byte(stream), it goes forward 1 bytes.
 
-WARNING: unmet direct dependencies detected for VIDEO_MEDIATEK_VPU
-  Depends on [n]: MEDIA_SUPPORT [=m] && MEDIA_PLATFORM_SUPPORT [=y] && MEDIA_PLATFORM_DRIVERS [=y] && V4L_MEM2MEM_DRIVERS [=n] && VIDEO_DEV [=m] && (ARCH_MEDIATEK [=y] || COMPILE_TEST [=y])
-  Selected by [m]:
-  - VIDEO_MEDIATEK_MDP3 [=m] && MEDIA_SUPPORT [=m] && MEDIA_PLATFORM_SUPPORT [=y] && MEDIA_PLATFORM_DRIVERS [=y] && (MTK_IOMMU [=m] || COMPILE_TEST [=y]) && VIDEO_DEV [=m] && (ARCH_MEDIATEK [=y] || COMPILE_TEST [=y]) && HAS_DMA [=y] && REMOTEPROC [=y]
+so the remain bytes of this segment should be (lp - 2 - 11 - 1),
+but not (lp - 2 - 11).
 
-This specific warning was already addressed in a previous patch,
-but there are similar unnecessary 'select' statements, so turn those
-into 'depends on'. This also means the dependency on ARCH_MEDIATEK
-is redundant and can be dropped.
+if driver skip 1 extra bytes, the following parsing may go wrong.
 
-Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
-Fixes: 9195a860ef0a ("media: platform: mtk-mdp3: remove unused VIDEO_MEDIATEK_VPU config")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: b8035f7988a8 ("media: Add parsing for APP14 data segment in jpeg helpers")
+Signed-off-by: Ming Qian <ming.qian@nxp.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/mdp3/Kconfig | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/media/v4l2-core/v4l2-jpeg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/mediatek/mdp3/Kconfig b/drivers/media/platform/mediatek/mdp3/Kconfig
-index 846e759a8f6a9..602329c447501 100644
---- a/drivers/media/platform/mediatek/mdp3/Kconfig
-+++ b/drivers/media/platform/mediatek/mdp3/Kconfig
-@@ -3,14 +3,13 @@ config VIDEO_MEDIATEK_MDP3
- 	tristate "MediaTek MDP v3 driver"
- 	depends on MTK_IOMMU || COMPILE_TEST
- 	depends on VIDEO_DEV
--	depends on ARCH_MEDIATEK || COMPILE_TEST
- 	depends on HAS_DMA
- 	depends on REMOTEPROC
-+	depends on MTK_MMSYS
-+	depends on MTK_CMDQ
-+	depends on MTK_SCP
- 	select VIDEOBUF2_DMA_CONTIG
- 	select V4L2_MEM2MEM_DEV
--	select MTK_MMSYS
--	select MTK_CMDQ
--	select MTK_SCP
- 	default n
- 	help
- 	    It is a v4l2 driver and present in MediaTek MT8183 SoC.
+diff --git a/drivers/media/v4l2-core/v4l2-jpeg.c b/drivers/media/v4l2-core/v4l2-jpeg.c
+index c2513b775f6a7..75c2af763d55e 100644
+--- a/drivers/media/v4l2-core/v4l2-jpeg.c
++++ b/drivers/media/v4l2-core/v4l2-jpeg.c
+@@ -474,7 +474,7 @@ static int jpeg_parse_app14_data(struct jpeg_stream *stream,
+ 	*tf = ret;
+ 
+ 	/* skip the rest of the segment, this ensures at least it is complete */
+-	skip = lp - 2 - 11;
++	skip = lp - 2 - 11 - 1;
+ 	return jpeg_skip(stream, skip);
+ }
+ 
 -- 
 2.39.2
 
