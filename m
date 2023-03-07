@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4F1BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:46:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C280C433EF;
-	Tue,  7 Mar 2023 18:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435B9BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:46:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A57C433A0;
+	Tue,  7 Mar 2023 18:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214806;
-	bh=NbNEQjtG7NoY0Uc4i+KsWjJeYegPpHWlgnWbK8aDjEA=;
+	s=korg; t=1678214809;
+	bh=bS2CbbYqyX7PhEipPLkl0s3VwK+Y81ZWepLVivY0zZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OymAZqAUUo3Ep1A2/Zf/kwSTiwFgdzWKIkcvREsvNcVdS919sMGH6rwQJEWHzRuog
-	 pNpmwz9gjJ+BJEVbQHbmqXpfo3U98+89hkrv5ywW5pdA5MwSeI3oQsp1suZxQXAIlR
-	 Vzc7gWVrWuh15Hz+guM0Idr+Fjx4EkhR1c34Fbns=
+	b=xIym72IPK9kvElRZbUoQM+qDJ50+rVEhzQNIrsFs8AHw5xi8aedcNKxQNDEXN08+w
+	 VsY0ge7scX3kwP6MnALyuEVlFMKX+BzryGXMaOku9t/mWuoLwo+lv++Xn3qxo/Q0D4
+	 jbZ/en3ri4xqf7fgvMab0vPESRyfmWJzw8DOuwaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Robert Marko <robimarko@gmail.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/567] arm64: dts: qcom: ipq8074: fix Gen3 PCIe QMP PHY
-Date: Tue,  7 Mar 2023 17:56:00 +0100
-Message-Id: <20230307165906.964530741@linuxfoundation.org>
+Subject: [PATCH 5.15 025/567] arm64: dts: qcom: ipq8074: correct Gen2 PCIe ranges
+Date: Tue,  7 Mar 2023 17:56:01 +0100
+Message-Id: <20230307165907.014739632@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -37,63 +37,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Robert Marko <robimarko@gmail.com>
 
-[ Upstream commit 7ba33591b45f9d547a317e42f1c2acd19c925eb6 ]
+[ Upstream commit 2055cb7dccea16bafa3adf9c5e3216949512c34a ]
 
-IPQ8074 comes in 2 silicon versions:
-* v1 with 2x Gen2 PCIe ports and QMP PHY-s
-* v2 with 1x Gen3 and 1x Gen2 PCIe ports and QMP PHY-s
-
-v2 is the final and production version that is actually supported by the
-kernel, however it looks like PCIe related nodes were added for the v1 SoC.
-
-Now that we have Gen3 QMP PHY support, we can start fixing the PCIe support
-by fixing the Gen3 QMP PHY node first.
-
-Change the compatible to the Gen3 QMP PHY, correct the register space start
-and size, add the missing misc PCS register space.
+Current ranges property set in Gen2 PCIe node is incorrect, replace it
+with the downstream 5.4 QCA kernel value.
 
 Fixes: 33057e1672fe ("ARM: dts: ipq8074: Add pcie nodes")
 Signed-off-by: Robert Marko <robimarko@gmail.com>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230113164449.906002-2-robimarko@gmail.com
+Link: https://lore.kernel.org/r/20230113164449.906002-3-robimarko@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index a7ce999182e9e..6a095087bc64e 100644
+index 6a095087bc64e..fe0a4cdfe4e56 100644
 --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -174,9 +174,9 @@ qusb_phy_0: phy@79000 {
- 			status = "disabled";
- 		};
+@@ -662,9 +662,9 @@ pcie1: pci@10000000 {
+ 			phy-names = "pciephy";
  
--		pcie_qmp0: phy@86000 {
--			compatible = "qcom,ipq8074-qmp-pcie-phy";
--			reg = <0x00086000 0x1c4>;
-+		pcie_qmp0: phy@84000 {
-+			compatible = "qcom,ipq8074-qmp-gen3-pcie-phy";
-+			reg = <0x00084000 0x1bc>;
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			ranges;
-@@ -190,10 +190,11 @@ pcie_qmp0: phy@86000 {
- 				      "common";
- 			status = "disabled";
+ 			ranges = <0x81000000 0 0x10200000 0x10200000
+-				  0 0x100000   /* downstream I/O */
+-				  0x82000000 0 0x10300000 0x10300000
+-				  0 0xd00000>; /* non-prefetchable memory */
++				  0 0x10000>,   /* downstream I/O */
++				 <0x82000000 0 0x10220000 0x10220000
++				  0 0xfde0000>; /* non-prefetchable memory */
  
--			pcie_phy0: phy@86200 {
--				reg = <0x86200 0x16c>,
--				      <0x86400 0x200>,
--				      <0x86800 0x4f4>;
-+			pcie_phy0: phy@84200 {
-+				reg = <0x84200 0x16c>,
-+				      <0x84400 0x200>,
-+				      <0x84800 0x1f0>,
-+				      <0x84c00 0xf4>;
- 				#phy-cells = <0>;
- 				#clock-cells = <0>;
- 				clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
+ 			interrupts = <GIC_SPI 85 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "msi";
 -- 
 2.39.2
 
