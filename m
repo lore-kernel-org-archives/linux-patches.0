@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37696BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:26:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941F5C433EF;
-	Tue,  7 Mar 2023 17:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D7FBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:26:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF622C4339B;
+	Tue,  7 Mar 2023 17:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209961;
-	bh=mKWjptEvwkgkWXnqZmXIE43nr8ICtlDlOqa14lCg+eE=;
+	s=korg; t=1678209964;
+	bh=0MZmzu3ZgniHZsSQKhm9l8As2r21XFYi58o2yCCkRSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VrYd/4dr9ELNKFMV9KE3yYZ4EnJirLCNd00rb/hGMb9KBJsJoa/uz3yOew5moU4i1
-	 fOgS4v1pSL1ZdPR+9sdYFSGoWS/M7v586Hihcr9dtVvG/jsxqH3ZGMsGXuIgK/yoPA
-	 TVP4ljtrpn71NYBwarQtCPcitASp4RaVcuUABDK4=
+	b=qWc+GfhiHGnsIXGvSRPzNt8/ixFReXsJEj22AXo1Ua3pcQYTgp1QM3hpMm/iI+Ie0
+	 M5mKCHXrUszgs9pav6WERLZOmAkluIjP/eNW1CAT0ZJGLKZ7fjbctM8cP3RqyhOXMU
+	 +r2LxFxr9uhUt7wNMxDZQ7VeSl4yl4LMzZaygTVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mikko Perttunen <mperttunen@nvidia.com>,
 	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0386/1001] gpu: host1x: Fix mask for syncpoint increment register
-Date: Tue,  7 Mar 2023 17:52:38 +0100
-Message-Id: <20230307170038.139108604@linuxfoundation.org>
+Subject: [PATCH 6.2 0387/1001] gpu: host1x: Dont skip assigning syncpoints to channels
+Date: Tue,  7 Mar 2023 17:52:39 +0100
+Message-Id: <20230307170038.175830954@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,60 +37,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit 79aad29c7d2d2cd64790115d3a6ebac28c00a8ec ]
+[ Upstream commit eb258cc1fd458e584082be987dbc6ec42668c05e ]
 
-On Tegra186+, the syncpoint ID has 10 bits of space. To allow
-using more than 256 syncpoints, fix the mask.
+The code to write the syncpoint channel assignment register
+incorrectly skips the write if hypervisor registers are not available.
 
-Fixes: 9abdd497cd0a ("gpu: host1x: Tegra234 device data and headers")
+The register, however, is within the guest aperture so remove the
+check and assign syncpoints properly even on virtualized systems.
+
+Fixes: c3f52220f276 ("gpu: host1x: Enable Tegra186 syncpoint protection")
 Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
 Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/hw/hw_host1x06_uclass.h | 2 +-
- drivers/gpu/host1x/hw/hw_host1x07_uclass.h | 2 +-
- drivers/gpu/host1x/hw/hw_host1x08_uclass.h | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/host1x/hw/syncpt_hw.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/host1x/hw/hw_host1x06_uclass.h b/drivers/gpu/host1x/hw/hw_host1x06_uclass.h
-index 5f831438d19bb..50c32de452fb1 100644
---- a/drivers/gpu/host1x/hw/hw_host1x06_uclass.h
-+++ b/drivers/gpu/host1x/hw/hw_host1x06_uclass.h
-@@ -53,7 +53,7 @@ static inline u32 host1x_uclass_incr_syncpt_cond_f(u32 v)
- 	host1x_uclass_incr_syncpt_cond_f(v)
- static inline u32 host1x_uclass_incr_syncpt_indx_f(u32 v)
- {
--	return (v & 0xff) << 0;
-+	return (v & 0x3ff) << 0;
- }
- #define HOST1X_UCLASS_INCR_SYNCPT_INDX_F(v) \
- 	host1x_uclass_incr_syncpt_indx_f(v)
-diff --git a/drivers/gpu/host1x/hw/hw_host1x07_uclass.h b/drivers/gpu/host1x/hw/hw_host1x07_uclass.h
-index 8cd2ef087d5d0..887b878f92f79 100644
---- a/drivers/gpu/host1x/hw/hw_host1x07_uclass.h
-+++ b/drivers/gpu/host1x/hw/hw_host1x07_uclass.h
-@@ -53,7 +53,7 @@ static inline u32 host1x_uclass_incr_syncpt_cond_f(u32 v)
- 	host1x_uclass_incr_syncpt_cond_f(v)
- static inline u32 host1x_uclass_incr_syncpt_indx_f(u32 v)
- {
--	return (v & 0xff) << 0;
-+	return (v & 0x3ff) << 0;
- }
- #define HOST1X_UCLASS_INCR_SYNCPT_INDX_F(v) \
- 	host1x_uclass_incr_syncpt_indx_f(v)
-diff --git a/drivers/gpu/host1x/hw/hw_host1x08_uclass.h b/drivers/gpu/host1x/hw/hw_host1x08_uclass.h
-index 724cccd71aa1a..4fb1d090edae5 100644
---- a/drivers/gpu/host1x/hw/hw_host1x08_uclass.h
-+++ b/drivers/gpu/host1x/hw/hw_host1x08_uclass.h
-@@ -53,7 +53,7 @@ static inline u32 host1x_uclass_incr_syncpt_cond_f(u32 v)
- 	host1x_uclass_incr_syncpt_cond_f(v)
- static inline u32 host1x_uclass_incr_syncpt_indx_f(u32 v)
- {
--	return (v & 0xff) << 0;
-+	return (v & 0x3ff) << 0;
- }
- #define HOST1X_UCLASS_INCR_SYNCPT_INDX_F(v) \
- 	host1x_uclass_incr_syncpt_indx_f(v)
+diff --git a/drivers/gpu/host1x/hw/syncpt_hw.c b/drivers/gpu/host1x/hw/syncpt_hw.c
+index dd39d67ccec36..8cf35b2eff3db 100644
+--- a/drivers/gpu/host1x/hw/syncpt_hw.c
++++ b/drivers/gpu/host1x/hw/syncpt_hw.c
+@@ -106,9 +106,6 @@ static void syncpt_assign_to_channel(struct host1x_syncpt *sp,
+ #if HOST1X_HW >= 6
+ 	struct host1x *host = sp->host;
+ 
+-	if (!host->hv_regs)
+-		return;
+-
+ 	host1x_sync_writel(host,
+ 			   HOST1X_SYNC_SYNCPT_CH_APP_CH(ch ? ch->id : 0xff),
+ 			   HOST1X_SYNC_SYNCPT_CH_APP(sp->id));
 -- 
 2.39.2
 
