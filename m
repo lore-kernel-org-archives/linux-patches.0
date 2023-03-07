@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C60BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:36:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A985DC433D2;
-	Tue,  7 Mar 2023 17:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D40BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:36:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33C6C433EF;
+	Tue,  7 Mar 2023 17:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210613;
-	bh=8/rdtPe9n9y43FVsY++N0c1WC9ENPbCSQ7qnTrT30Ks=;
+	s=korg; t=1678210616;
+	bh=02XnPdONoiDs9LXoZYGirtykNmW01n2+STxeiUy/Xw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iNihrB1QcI6lfYfapVfwgwJgVONrM511LIBg3mGFjVsZ/LRRmXH1N0ocW17gUoryN
-	 sM+hhHtPhWTfx/Q8ahekDW8ExrycZleXsxmoqtYzsv+5c/SicqC4GX+k5p4edByR7u
-	 wfe+fRLmwk+Qct99VZ8wpeRU6VC3DTp+7awikyh0=
+	b=pFZ2i/yhMPahdvt24g+w9WxiLA4DUc8uX6BW63CY2RDADujsxRhx/dbo/L+nycz/2
+	 Hl8TcE96Ad8rJosVNYGoezMMxSLLvh7U0C8EgbE06yURwURajNW6Ne2zJKRwiKqELn
+	 0JebtZaZGsccxjL356Egzi4DS1zAsONo1t4aPFZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Adam Ford <aford173@gmail.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0590/1001] media: ov2740: Fix memleak in ov2740_init_controls()
-Date: Tue,  7 Mar 2023 17:56:02 +0100
-Message-Id: <20230307170047.105936299@linuxfoundation.org>
+Subject: [PATCH 6.2 0599/1001] media: i2c: imx219: Split common registers from mode tables
+Date: Tue,  7 Mar 2023 17:56:11 +0100
+Message-Id: <20230307170047.501609338@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,65 +37,312 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 2d899592ed7829d0d5140853bac4d58742a6b8af ]
+[ Upstream commit 8508455961d5a9e8907bcfd8dcd58f19d9b6ce47 ]
 
-There is a kmemleak when testing the media/i2c/ov2740.c with bpf mock
-device:
+There are four modes, and each mode has a table of registers.
+Some of the registers are common to all modes, so create new
+tables for these common registers to reduce duplicate code.
 
-unreferenced object 0xffff8881090e19e0 (size 16):
-  comm "51-i2c-ov2740", pid 278, jiffies 4294781584 (age 23.613s)
-  hex dump (first 16 bytes):
-    00 f3 7c 0b 81 88 ff ff 80 75 6a 09 81 88 ff ff  ..|......uj.....
-  backtrace:
-    [<000000004e9fad8f>] __kmalloc_node+0x44/0x1b0
-    [<0000000039c802f4>] kvmalloc_node+0x34/0x180
-    [<000000009b8b5c63>] v4l2_ctrl_handler_init_class+0x11d/0x180
-[videodev]
-    [<0000000038644056>] ov2740_probe+0x37d/0x84f [ov2740]
-    [<0000000092489f59>] i2c_device_probe+0x28d/0x680
-    [<000000001038babe>] really_probe+0x17c/0x3f0
-    [<0000000098c7af1c>] __driver_probe_device+0xe3/0x170
-    [<00000000e1b3dc24>] device_driver_attach+0x34/0x80
-    [<000000005a04a34d>] bind_store+0x10b/0x1a0
-    [<00000000ce25d4f2>] drv_attr_store+0x49/0x70
-    [<000000007d9f4e9a>] sysfs_kf_write+0x8c/0xb0
-    [<00000000be6cff0f>] kernfs_fop_write_iter+0x216/0x2e0
-    [<0000000031ddb40a>] vfs_write+0x658/0x810
-    [<0000000041beecdd>] ksys_write+0xd6/0x1b0
-    [<0000000023755840>] do_syscall_64+0x38/0x90
-    [<00000000b2cc2da2>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-ov2740_init_controls() won't clean all the allocated resources in fail
-path, which may causes the memleaks. Add v4l2_ctrl_handler_free() to
-prevent memleak.
-
-Fixes: 866edc895171 ("media: i2c: Add ov2740 image sensor driver")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Stable-dep-of: ef86447e775f ("media: i2c: imx219: Fix binning for RAW8 capture")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov2740.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/i2c/imx219.c | 206 +++++++++++--------------------------
+ 1 file changed, 59 insertions(+), 147 deletions(-)
 
-diff --git a/drivers/media/i2c/ov2740.c b/drivers/media/i2c/ov2740.c
-index f3731f932a946..89d126240c345 100644
---- a/drivers/media/i2c/ov2740.c
-+++ b/drivers/media/i2c/ov2740.c
-@@ -629,8 +629,10 @@ static int ov2740_init_controls(struct ov2740 *ov2740)
- 				     V4L2_CID_TEST_PATTERN,
- 				     ARRAY_SIZE(ov2740_test_pattern_menu) - 1,
- 				     0, 0, ov2740_test_pattern_menu);
--	if (ctrl_hdlr->error)
-+	if (ctrl_hdlr->error) {
-+		v4l2_ctrl_handler_free(ctrl_hdlr);
- 		return ctrl_hdlr->error;
+diff --git a/drivers/media/i2c/imx219.c b/drivers/media/i2c/imx219.c
+index 77bd79a5954ed..7f44d62047b67 100644
+--- a/drivers/media/i2c/imx219.c
++++ b/drivers/media/i2c/imx219.c
+@@ -145,23 +145,61 @@ struct imx219_mode {
+ 	struct imx219_reg_list reg_list;
+ };
+ 
+-/*
+- * Register sets lifted off the i2C interface from the Raspberry Pi firmware
+- * driver.
+- * 3280x2464 = mode 2, 1920x1080 = mode 1, 1640x1232 = mode 4, 640x480 = mode 7.
+- */
+-static const struct imx219_reg mode_3280x2464_regs[] = {
+-	{0x0100, 0x00},
++static const struct imx219_reg imx219_common_regs[] = {
++	{0x0100, 0x00},	/* Mode Select */
++
++	/* To Access Addresses 3000-5fff, send the following commands */
+ 	{0x30eb, 0x0c},
+ 	{0x30eb, 0x05},
+ 	{0x300a, 0xff},
+ 	{0x300b, 0xff},
+ 	{0x30eb, 0x05},
+ 	{0x30eb, 0x09},
+-	{0x0114, 0x01},
+-	{0x0128, 0x00},
+-	{0x012a, 0x18},
++
++	/* PLL Clock Table */
++	{0x0301, 0x05},	/* VTPXCK_DIV */
++	{0x0303, 0x01},	/* VTSYSCK_DIV */
++	{0x0304, 0x03},	/* PREPLLCK_VT_DIV 0x03 = AUTO set */
++	{0x0305, 0x03}, /* PREPLLCK_OP_DIV 0x03 = AUTO set */
++	{0x0306, 0x00},	/* PLL_VT_MPY */
++	{0x0307, 0x39},
++	{0x030b, 0x01},	/* OP_SYS_CLK_DIV */
++	{0x030c, 0x00},	/* PLL_OP_MPY */
++	{0x030d, 0x72},
++
++	/* Undocumented registers */
++	{0x455e, 0x00},
++	{0x471e, 0x4b},
++	{0x4767, 0x0f},
++	{0x4750, 0x14},
++	{0x4540, 0x00},
++	{0x47b4, 0x14},
++	{0x4713, 0x30},
++	{0x478b, 0x10},
++	{0x478f, 0x10},
++	{0x4793, 0x10},
++	{0x4797, 0x0e},
++	{0x479b, 0x0e},
++
++	/* Frame Bank Register Group "A" */
++	{0x0162, 0x0d},	/* Line_Length_A */
++	{0x0163, 0x78},
++	{0x0170, 0x01}, /* X_ODD_INC_A */
++	{0x0171, 0x01}, /* Y_ODD_INC_A */
++
++	/* Output setup registers */
++	{0x0114, 0x01},	/* CSI 2-Lane Mode */
++	{0x0128, 0x00},	/* DPHY Auto Mode */
++	{0x012a, 0x18},	/* EXCK_Freq */
+ 	{0x012b, 0x00},
++};
++
++/*
++ * Register sets lifted off the i2C interface from the Raspberry Pi firmware
++ * driver.
++ * 3280x2464 = mode 2, 1920x1080 = mode 1, 1640x1232 = mode 4, 640x480 = mode 7.
++ */
++static const struct imx219_reg mode_3280x2464_regs[] = {
+ 	{0x0164, 0x00},
+ 	{0x0165, 0x00},
+ 	{0x0166, 0x0c},
+@@ -174,53 +212,15 @@ static const struct imx219_reg mode_3280x2464_regs[] = {
+ 	{0x016d, 0xd0},
+ 	{0x016e, 0x09},
+ 	{0x016f, 0xa0},
+-	{0x0170, 0x01},
+-	{0x0171, 0x01},
+-	{0x0174, 0x00},
++	{0x0174, 0x00},	/* No-Binning */
+ 	{0x0175, 0x00},
+-	{0x0301, 0x05},
+-	{0x0303, 0x01},
+-	{0x0304, 0x03},
+-	{0x0305, 0x03},
+-	{0x0306, 0x00},
+-	{0x0307, 0x39},
+-	{0x030b, 0x01},
+-	{0x030c, 0x00},
+-	{0x030d, 0x72},
+ 	{0x0624, 0x0c},
+ 	{0x0625, 0xd0},
+ 	{0x0626, 0x09},
+ 	{0x0627, 0xa0},
+-	{0x455e, 0x00},
+-	{0x471e, 0x4b},
+-	{0x4767, 0x0f},
+-	{0x4750, 0x14},
+-	{0x4540, 0x00},
+-	{0x47b4, 0x14},
+-	{0x4713, 0x30},
+-	{0x478b, 0x10},
+-	{0x478f, 0x10},
+-	{0x4793, 0x10},
+-	{0x4797, 0x0e},
+-	{0x479b, 0x0e},
+-	{0x0162, 0x0d},
+-	{0x0163, 0x78},
+ };
+ 
+ static const struct imx219_reg mode_1920_1080_regs[] = {
+-	{0x0100, 0x00},
+-	{0x30eb, 0x05},
+-	{0x30eb, 0x0c},
+-	{0x300a, 0xff},
+-	{0x300b, 0xff},
+-	{0x30eb, 0x05},
+-	{0x30eb, 0x09},
+-	{0x0114, 0x01},
+-	{0x0128, 0x00},
+-	{0x012a, 0x18},
+-	{0x012b, 0x00},
+-	{0x0162, 0x0d},
+-	{0x0163, 0x78},
+ 	{0x0164, 0x02},
+ 	{0x0165, 0xa8},
+ 	{0x0166, 0x0a},
+@@ -233,49 +233,15 @@ static const struct imx219_reg mode_1920_1080_regs[] = {
+ 	{0x016d, 0x80},
+ 	{0x016e, 0x04},
+ 	{0x016f, 0x38},
+-	{0x0170, 0x01},
+-	{0x0171, 0x01},
+-	{0x0174, 0x00},
++	{0x0174, 0x00},	/* No-Binning */
+ 	{0x0175, 0x00},
+-	{0x0301, 0x05},
+-	{0x0303, 0x01},
+-	{0x0304, 0x03},
+-	{0x0305, 0x03},
+-	{0x0306, 0x00},
+-	{0x0307, 0x39},
+-	{0x030b, 0x01},
+-	{0x030c, 0x00},
+-	{0x030d, 0x72},
+ 	{0x0624, 0x07},
+ 	{0x0625, 0x80},
+ 	{0x0626, 0x04},
+ 	{0x0627, 0x38},
+-	{0x455e, 0x00},
+-	{0x471e, 0x4b},
+-	{0x4767, 0x0f},
+-	{0x4750, 0x14},
+-	{0x4540, 0x00},
+-	{0x47b4, 0x14},
+-	{0x4713, 0x30},
+-	{0x478b, 0x10},
+-	{0x478f, 0x10},
+-	{0x4793, 0x10},
+-	{0x4797, 0x0e},
+-	{0x479b, 0x0e},
+ };
+ 
+ static const struct imx219_reg mode_1640_1232_regs[] = {
+-	{0x0100, 0x00},
+-	{0x30eb, 0x0c},
+-	{0x30eb, 0x05},
+-	{0x300a, 0xff},
+-	{0x300b, 0xff},
+-	{0x30eb, 0x05},
+-	{0x30eb, 0x09},
+-	{0x0114, 0x01},
+-	{0x0128, 0x00},
+-	{0x012a, 0x18},
+-	{0x012b, 0x00},
+ 	{0x0164, 0x00},
+ 	{0x0165, 0x00},
+ 	{0x0166, 0x0c},
+@@ -288,53 +254,15 @@ static const struct imx219_reg mode_1640_1232_regs[] = {
+ 	{0x016d, 0x68},
+ 	{0x016e, 0x04},
+ 	{0x016f, 0xd0},
+-	{0x0170, 0x01},
+-	{0x0171, 0x01},
+-	{0x0174, 0x01},
++	{0x0174, 0x01},	/* x2-Binning */
+ 	{0x0175, 0x01},
+-	{0x0301, 0x05},
+-	{0x0303, 0x01},
+-	{0x0304, 0x03},
+-	{0x0305, 0x03},
+-	{0x0306, 0x00},
+-	{0x0307, 0x39},
+-	{0x030b, 0x01},
+-	{0x030c, 0x00},
+-	{0x030d, 0x72},
+ 	{0x0624, 0x06},
+ 	{0x0625, 0x68},
+ 	{0x0626, 0x04},
+ 	{0x0627, 0xd0},
+-	{0x455e, 0x00},
+-	{0x471e, 0x4b},
+-	{0x4767, 0x0f},
+-	{0x4750, 0x14},
+-	{0x4540, 0x00},
+-	{0x47b4, 0x14},
+-	{0x4713, 0x30},
+-	{0x478b, 0x10},
+-	{0x478f, 0x10},
+-	{0x4793, 0x10},
+-	{0x4797, 0x0e},
+-	{0x479b, 0x0e},
+-	{0x0162, 0x0d},
+-	{0x0163, 0x78},
+ };
+ 
+ static const struct imx219_reg mode_640_480_regs[] = {
+-	{0x0100, 0x00},
+-	{0x30eb, 0x05},
+-	{0x30eb, 0x0c},
+-	{0x300a, 0xff},
+-	{0x300b, 0xff},
+-	{0x30eb, 0x05},
+-	{0x30eb, 0x09},
+-	{0x0114, 0x01},
+-	{0x0128, 0x00},
+-	{0x012a, 0x18},
+-	{0x012b, 0x00},
+-	{0x0162, 0x0d},
+-	{0x0163, 0x78},
+ 	{0x0164, 0x03},
+ 	{0x0165, 0xe8},
+ 	{0x0166, 0x08},
+@@ -347,35 +275,12 @@ static const struct imx219_reg mode_640_480_regs[] = {
+ 	{0x016d, 0x80},
+ 	{0x016e, 0x01},
+ 	{0x016f, 0xe0},
+-	{0x0170, 0x01},
+-	{0x0171, 0x01},
+-	{0x0174, 0x03},
++	{0x0174, 0x03},	/* x2-analog binning */
+ 	{0x0175, 0x03},
+-	{0x0301, 0x05},
+-	{0x0303, 0x01},
+-	{0x0304, 0x03},
+-	{0x0305, 0x03},
+-	{0x0306, 0x00},
+-	{0x0307, 0x39},
+-	{0x030b, 0x01},
+-	{0x030c, 0x00},
+-	{0x030d, 0x72},
+ 	{0x0624, 0x06},
+ 	{0x0625, 0x68},
+ 	{0x0626, 0x04},
+ 	{0x0627, 0xd0},
+-	{0x455e, 0x00},
+-	{0x471e, 0x4b},
+-	{0x4767, 0x0f},
+-	{0x4750, 0x14},
+-	{0x4540, 0x00},
+-	{0x47b4, 0x14},
+-	{0x4713, 0x30},
+-	{0x478b, 0x10},
+-	{0x478f, 0x10},
+-	{0x4793, 0x10},
+-	{0x4797, 0x0e},
+-	{0x479b, 0x0e},
+ };
+ 
+ static const struct imx219_reg raw8_framefmt_regs[] = {
+@@ -1041,6 +946,13 @@ static int imx219_start_streaming(struct imx219 *imx219)
+ 	if (ret < 0)
+ 		return ret;
+ 
++	/* Send all registers that are common to all modes */
++	ret = imx219_write_regs(imx219, imx219_common_regs, ARRAY_SIZE(imx219_common_regs));
++	if (ret) {
++		dev_err(&client->dev, "%s failed to send mfg header\n", __func__);
++		goto err_rpm_put;
 +	}
- 
- 	ov2740->sd.ctrl_handler = ctrl_hdlr;
- 
++
+ 	/* Apply default values of current mode */
+ 	reg_list = &imx219->mode->reg_list;
+ 	ret = imx219_write_regs(imx219, reg_list->regs, reg_list->num_of_regs);
 -- 
 2.39.2
 
