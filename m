@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2146EBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:39:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9075CC433EF;
-	Tue,  7 Mar 2023 18:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF800BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:39:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AFEC433D2;
+	Tue,  7 Mar 2023 18:39:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214363;
-	bh=DL9zdsVcBkA+iysQ1e0QVDqz16DQQ4b/8I28LZ/+zsM=;
+	s=korg; t=1678214365;
+	bh=BRL9o4GMA03Od+W6mr3WvQm47Go0VaSPNiurBmTaY+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oIuaYBAYuG0bw6j57XyHXPgeXQlqxULknXJS0t1g1US/q8xBJ9QLiBcXiPZNGuhR0
-	 9TqZmg9tqIbZNHP272Dzv5nNbXB68tukTFXlpCkOJ7W6hUEJoZkQeMxRDETUQnxAIs
-	 eesr9MZ9fMtTTdrXVmPk3ujVjHuchEqeo4ya+8Cg=
+	b=0dDCYN/cCqaKTmTxo6lSx3fuUVIj/xagOMS9g6tHCQdmFpRwFvCDs89Wr8US6ctpn
+	 HeUt85oPhmqmS6Pe4YeVAxl3+c3vlAYJpXVja3zx473fhyf1xRmT5IMI+VtQ5RRGH1
+	 0Sk98UA3gqkGLTAhIsKxQLtavoY5V6Cbf12QpnzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Gover <pmw.gover@yahoo.co.uk>,
-	Stable@vger.kernel.org,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.1 796/885] wifi: rtw88: use RTW_FLAG_POWERON flag to prevent to power on/off twice
-Date: Tue,  7 Mar 2023 18:02:10 +0100
-Message-Id: <20230307170036.484906926@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Shuah Khan <shuah@kernel.org>,
+	linux-kselftest@vger.kernel.org,
+	Ingo Molnar <mingo@redhat.com>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.1 768/885] selftests: ipc: Fix incorrect kernel headers search path
+Date: Tue,  7 Mar 2023 18:01:42 +0100
+Message-Id: <20230307170035.321965682@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,125 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-commit 4a267bc5ea8f159b614d0549030216d0434eccca upstream.
+commit ecf9fdb5c2a9d63c732acccb6318feb73dd1589f upstream.
 
-Use power state to decide whether we can enter or leave IPS accurately,
-and then prevent to power on/off twice.
+Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
+building against kernel headers from the build environment in scenarios
+where kernel headers are installed into a specific output directory
+(O=...).
 
-The commit 6bf3a083407b ("wifi: rtw88: add flag check before enter or leave IPS")
-would like to prevent this as well, but it still can't entirely handle all
-cases. The exception is that WiFi gets connected and does suspend/resume,
-it will power on twice and cause it failed to power on after resuming,
-like:
-
-  rtw_8723de 0000:03:00.0: failed to poll offset=0x6 mask=0x2 value=0x2
-  rtw_8723de 0000:03:00.0: mac power on failed
-  rtw_8723de 0000:03:00.0: failed to power on mac
-  rtw_8723de 0000:03:00.0: leave idle state failed
-  rtw_8723de 0000:03:00.0: failed to leave ips state
-  rtw_8723de 0000:03:00.0: failed to leave idle state
-  rtw_8723de 0000:03:00.0: failed to send h2c command
-
-To fix this, introduce new flag RTW_FLAG_POWERON to reflect power state,
-and call rtw_mac_pre_system_cfg() to configure registers properly between
-power-off/-on.
-
-Reported-by: Paul Gover <pmw.gover@yahoo.co.uk>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217016
-Fixes: 6bf3a083407b ("wifi: rtw88: add flag check before enter or leave IPS")
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230216053633.20366-1-pkshih@realtek.com
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: linux-kselftest@vger.kernel.org
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: <stable@vger.kernel.org> # 5.18+
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/coex.c |    2 +-
- drivers/net/wireless/realtek/rtw88/mac.c  |   10 ++++++++++
- drivers/net/wireless/realtek/rtw88/main.h |    2 +-
- drivers/net/wireless/realtek/rtw88/ps.c   |    4 ++--
- drivers/net/wireless/realtek/rtw88/wow.c  |    2 +-
- 5 files changed, 15 insertions(+), 5 deletions(-)
+ tools/testing/selftests/ipc/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtw88/coex.c
-+++ b/drivers/net/wireless/realtek/rtw88/coex.c
-@@ -4057,7 +4057,7 @@ void rtw_coex_display_coex_info(struct r
- 		   rtwdev->stats.tx_throughput, rtwdev->stats.rx_throughput);
- 	seq_printf(m, "%-40s = %u/ %u/ %u\n",
- 		   "IPS/ Low Power/ PS mode",
--		   test_bit(RTW_FLAG_INACTIVE_PS, rtwdev->flags),
-+		   !test_bit(RTW_FLAG_POWERON, rtwdev->flags),
- 		   test_bit(RTW_FLAG_LEISURE_PS_DEEP, rtwdev->flags),
- 		   rtwdev->lps_conf.mode);
+--- a/tools/testing/selftests/ipc/Makefile
++++ b/tools/testing/selftests/ipc/Makefile
+@@ -10,7 +10,7 @@ ifeq ($(ARCH),x86_64)
+ 	CFLAGS := -DCONFIG_X86_64 -D__x86_64__
+ endif
  
---- a/drivers/net/wireless/realtek/rtw88/mac.c
-+++ b/drivers/net/wireless/realtek/rtw88/mac.c
-@@ -273,6 +273,11 @@ static int rtw_mac_power_switch(struct r
- 	if (rtw_pwr_seq_parser(rtwdev, pwr_seq))
- 		return -EINVAL;
+-CFLAGS += -I../../../../usr/include/
++CFLAGS += $(KHDR_INCLUDES)
  
-+	if (pwr_on)
-+		set_bit(RTW_FLAG_POWERON, rtwdev->flags);
-+	else
-+		clear_bit(RTW_FLAG_POWERON, rtwdev->flags);
-+
- 	return 0;
- }
+ TEST_GEN_PROGS := msgque
  
-@@ -335,6 +340,11 @@ int rtw_mac_power_on(struct rtw_dev *rtw
- 	ret = rtw_mac_power_switch(rtwdev, true);
- 	if (ret == -EALREADY) {
- 		rtw_mac_power_switch(rtwdev, false);
-+
-+		ret = rtw_mac_pre_system_cfg(rtwdev);
-+		if (ret)
-+			goto err;
-+
- 		ret = rtw_mac_power_switch(rtwdev, true);
- 		if (ret)
- 			goto err;
---- a/drivers/net/wireless/realtek/rtw88/main.h
-+++ b/drivers/net/wireless/realtek/rtw88/main.h
-@@ -356,7 +356,7 @@ enum rtw_flags {
- 	RTW_FLAG_RUNNING,
- 	RTW_FLAG_FW_RUNNING,
- 	RTW_FLAG_SCANNING,
--	RTW_FLAG_INACTIVE_PS,
-+	RTW_FLAG_POWERON,
- 	RTW_FLAG_LEISURE_PS,
- 	RTW_FLAG_LEISURE_PS_DEEP,
- 	RTW_FLAG_DIG_DISABLE,
---- a/drivers/net/wireless/realtek/rtw88/ps.c
-+++ b/drivers/net/wireless/realtek/rtw88/ps.c
-@@ -25,7 +25,7 @@ static int rtw_ips_pwr_up(struct rtw_dev
- 
- int rtw_enter_ips(struct rtw_dev *rtwdev)
- {
--	if (test_and_set_bit(RTW_FLAG_INACTIVE_PS, rtwdev->flags))
-+	if (!test_bit(RTW_FLAG_POWERON, rtwdev->flags))
- 		return 0;
- 
- 	rtw_coex_ips_notify(rtwdev, COEX_IPS_ENTER);
-@@ -50,7 +50,7 @@ int rtw_leave_ips(struct rtw_dev *rtwdev
- {
- 	int ret;
- 
--	if (!test_and_clear_bit(RTW_FLAG_INACTIVE_PS, rtwdev->flags))
-+	if (test_bit(RTW_FLAG_POWERON, rtwdev->flags))
- 		return 0;
- 
- 	rtw_hci_link_ps(rtwdev, false);
---- a/drivers/net/wireless/realtek/rtw88/wow.c
-+++ b/drivers/net/wireless/realtek/rtw88/wow.c
-@@ -592,7 +592,7 @@ static int rtw_wow_leave_no_link_ps(stru
- 		if (rtw_get_lps_deep_mode(rtwdev) != LPS_DEEP_MODE_NONE)
- 			rtw_leave_lps_deep(rtwdev);
- 	} else {
--		if (test_bit(RTW_FLAG_INACTIVE_PS, rtwdev->flags)) {
-+		if (!test_bit(RTW_FLAG_POWERON, rtwdev->flags)) {
- 			rtw_wow->ips_enabled = true;
- 			ret = rtw_leave_ips(rtwdev);
- 			if (ret)
 
 
