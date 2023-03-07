@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9ACBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:18:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ECC0C433EF;
-	Tue,  7 Mar 2023 17:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FE5BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:18:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F3EC4339B;
+	Tue,  7 Mar 2023 17:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209491;
-	bh=Ub4gL2SWRUQxDIbDVcCFnTHE8wFSikK5JXtvra/GilI=;
+	s=korg; t=1678209494;
+	bh=JEOQEUjjdwbB4mqUdUGq5hQYTdj1oNoOzvtqRQNMLl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEVh4klC6waORVvrY15awRtNZYcQMnUOEPGBBNydo+rmgYmGxZELl91E7df8JQaZ8
-	 gNhn1wKHpz7lXVGMBTtUscslF2ipiTEtA8rUeV/67ZGA+7SKh2vC/VEumF7bwjhPYy
-	 BPoie9OSoMy/MDgwBoMkHaeXkFqhRrDosnW3vlxk=
+	b=RH1OGsnsVTfJuQ2DyldagUqL5+bRjFdqsvwiOJWQW9ju2VH1etO1v48I53bQ34zKp
+	 CwTX5aCsA2dfmJ6P8f1+Cwo3Uma7V+99MeHjFr1htg6V+Vu/DUNhY8F7mEa50+++r/
+	 DHZmzn1Z1tVYR11ADWVRMcq+LZf7FAHHhMmynyQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Howard Hsu <howard-yh.hsu@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0237/1001] wifi: mt76: mt7921: fix deadlock in mt7921_abort_roc
-Date: Tue,  7 Mar 2023 17:50:09 +0100
-Message-Id: <20230307170032.125216943@linuxfoundation.org>
+Subject: [PATCH 6.2 0238/1001] wifi: mt76: mt7915: call mt7915_mcu_set_thermal_throttling() only after init_work
+Date: Tue,  7 Mar 2023 17:50:10 +0100
+Message-Id: <20230307170032.157243223@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,78 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Howard Hsu <howard-yh.hsu@mediatek.com>
 
-[ Upstream commit de19b9c83654e323d83f839a550ca4af37fea15b ]
+[ Upstream commit 7d12b38ab6f6b77198cd3a66db19587bbdd3308c ]
 
-When mt7921_abort_roc is called with dev->mutex held, it can deadlock while
-calling cancel_work_sync(&phy->roc_work), because the work function could
-be waiting to acquire the mutex.
+Enable thermal management by default shall not be executed during mcu
+init. This causes thermal configuration being reset to the firmware
+default settings.
 
-Fix this by flushing the work before taking the mutex
-
-Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Fixes: 034ae28b56f1 ("wifi: mt76: mt7921: introduce remain_on_channel support")
-Fixes: 41ac53c899bd ("wifi: mt76: mt7921: introduce chanctx support")
+Fixes: 0063b86c9120 ("mt76: mt7915e: Enable thermal management by default")
+Reviewed-by: Ryder Lee <ryder.lee@mediatek.com>
+Signed-off-by: Howard Hsu <howard-yh.hsu@mediatek.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7921/main.c  | 22 ++++++-------------
- 1 file changed, 7 insertions(+), 15 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/init.c | 3 +--
+ drivers/net/wireless/mediatek/mt76/mt7915/main.c | 6 ++++++
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-index 76ac5069638fe..722df8eea91f7 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -422,15 +422,15 @@ void mt7921_roc_timer(struct timer_list *timer)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+index c810c31fbd6e9..41019ba24a048 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+@@ -201,8 +201,7 @@ static int mt7915_thermal_init(struct mt7915_phy *phy)
+ 	phy->throttle_temp[0] = 110;
+ 	phy->throttle_temp[1] = 120;
  
- static int mt7921_abort_roc(struct mt7921_phy *phy, struct mt7921_vif *vif)
- {
--	int err;
--
--	if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
--		return 0;
-+	int err = 0;
+-	return mt7915_mcu_set_thermal_throttling(phy,
+-						 MT7915_THERMAL_THROTTLE_MAX);
++	return 0;
+ }
  
- 	del_timer_sync(&phy->roc_timer);
- 	cancel_work_sync(&phy->roc_work);
--	err = mt7921_mcu_abort_roc(phy, vif, phy->roc_token_id);
--	clear_bit(MT76_STATE_ROC, &phy->mt76->state);
+ static void mt7915_led_set_config(struct led_classdev *led_cdev,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+index 0511d6a505b09..98af032eba097 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+@@ -57,6 +57,12 @@ int mt7915_run(struct ieee80211_hw *hw)
+ 		mt7915_mac_enable_nf(dev, phy->mt76->band_idx);
+ 	}
+ 
++	ret = mt7915_mcu_set_thermal_throttling(phy,
++						MT7915_THERMAL_THROTTLE_MAX);
 +
-+	mt7921_mutex_acquire(phy->dev);
-+	if (test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
-+		err = mt7921_mcu_abort_roc(phy, vif, phy->roc_token_id);
-+	mt7921_mutex_release(phy->dev);
- 
- 	return err;
- }
-@@ -487,13 +487,8 @@ static int mt7921_cancel_remain_on_channel(struct ieee80211_hw *hw,
- {
- 	struct mt7921_vif *mvif = (struct mt7921_vif *)vif->drv_priv;
- 	struct mt7921_phy *phy = mt7921_hw_phy(hw);
--	int err;
- 
--	mt7921_mutex_acquire(phy->dev);
--	err = mt7921_abort_roc(phy, mvif);
--	mt7921_mutex_release(phy->dev);
--
--	return err;
-+	return mt7921_abort_roc(phy, mvif);
- }
- 
- static int mt7921_set_channel(struct mt7921_phy *phy)
-@@ -1778,11 +1773,8 @@ static void mt7921_mgd_complete_tx(struct ieee80211_hw *hw,
- 				   struct ieee80211_prep_tx_info *info)
- {
- 	struct mt7921_vif *mvif = (struct mt7921_vif *)vif->drv_priv;
--	struct mt7921_dev *dev = mt7921_hw_dev(hw);
- 
--	mt7921_mutex_acquire(dev);
- 	mt7921_abort_roc(mvif->phy, mvif);
--	mt7921_mutex_release(dev);
- }
- 
- const struct ieee80211_ops mt7921_ops = {
++	if (ret)
++		goto out;
++
+ 	ret = mt76_connac_mcu_set_rts_thresh(&dev->mt76, 0x92b,
+ 					     phy->mt76->band_idx);
+ 	if (ret)
 -- 
 2.39.2
 
