@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA1DBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:39:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2411C433D2;
-	Tue,  7 Mar 2023 17:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A640EBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:39:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A41C433D2;
+	Tue,  7 Mar 2023 17:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210746;
-	bh=hWe2l/o1GznVXKeO/+ViAHw8Q05kSTYwyh5HSlu8biI=;
+	s=korg; t=1678210749;
+	bh=pYmPZuIatWJIy9TjbQpRfMHAueHd4doPOek4LgFFMPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hFGKSvOFb06R3RyHo2KD2p3HXT+lwLixG95cNWaRsIkCRoemr+fwAMkv5YonS4kan
-	 uM9GM9l/Za542jXUzCZZk56j4o4gio7//lpctE67TjmrcvI/oPoRmt1/qk0kBp6REb
-	 xrpTnAZBe4j6QwZmp6R0ZQ5VKN8c9vjc0NmZA4vM=
+	b=K3UQRsZ7dNAfpJPCwSFlwG6uYsUOVHm/ZREhpacQQUipSgO8CYC8TnBd61RG7evED
+	 AE+mJwxmdho05K4MAKxjYHtS2mqRonJMxJ9oJgzrxsn8RXjETvnK+m0QGo4zlhDvFr
+	 qqX7XqiTgpe+LdZh8HKqsoXI8OW2/H7yp4VKiSjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	rcu@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pingfan Liu <kernelfans@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Jann Horn <jannh@google.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0641/1001] srcu: Delegate work to the boot cpu if using SRCU_SIZE_SMALL
-Date: Tue,  7 Mar 2023 17:56:53 +0100
-Message-Id: <20230307170049.414413899@linuxfoundation.org>
+Subject: [PATCH 6.2 0624/1001] fs: Use CHECK_DATA_CORRUPTION() when kernel bugs are detected
+Date: Tue,  7 Mar 2023 17:56:36 +0100
+Message-Id: <20230307170048.642209949@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -40,145 +36,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pingfan Liu <kernelfans@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 7f24626d6dd844bfc6d1f492d214d29c86d02550 ]
+[ Upstream commit 47d586913f2abec4d240bae33417f537fda987ec ]
 
-Commit 994f706872e6 ("srcu: Make Tree SRCU able to operate without
-snp_node array") assumes that cpu 0 is always online.  However, there
-really are situations when some other CPU is the boot CPU, for example,
-when booting a kdump kernel with the maxcpus=1 boot parameter.
+Currently, filp_close() and generic_shutdown_super() use printk() to log
+messages when bugs are detected. This is problematic because infrastructure
+like syzkaller has no idea that this message indicates a bug.
+In addition, some people explicitly want their kernels to BUG() when kernel
+data corruption has been detected (CONFIG_BUG_ON_DATA_CORRUPTION).
+And finally, when generic_shutdown_super() detects remaining inodes on a
+system without CONFIG_BUG_ON_DATA_CORRUPTION, it would be nice if later
+accesses to a busy inode would at least crash somewhat cleanly rather than
+walking through freed memory.
 
-On PowerPC, the kdump kernel can hang as follows:
-...
-[    1.740036] systemd[1]: Hostname set to <xyz.com>
-[  243.686240] INFO: task systemd:1 blocked for more than 122 seconds.
-[  243.686264]       Not tainted 6.1.0-rc1 #1
-[  243.686272] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-[  243.686281] task:systemd         state:D stack:0     pid:1     ppid:0      flags:0x00042000
-[  243.686296] Call Trace:
-[  243.686301] [c000000016657640] [c000000016657670] 0xc000000016657670 (unreliable)
-[  243.686317] [c000000016657830] [c00000001001dec0] __switch_to+0x130/0x220
-[  243.686333] [c000000016657890] [c000000010f607b8] __schedule+0x1f8/0x580
-[  243.686347] [c000000016657940] [c000000010f60bb4] schedule+0x74/0x140
-[  243.686361] [c0000000166579b0] [c000000010f699b8] schedule_timeout+0x168/0x1c0
-[  243.686374] [c000000016657a80] [c000000010f61de8] __wait_for_common+0x148/0x360
-[  243.686387] [c000000016657b20] [c000000010176bb0] __flush_work.isra.0+0x1c0/0x3d0
-[  243.686401] [c000000016657bb0] [c0000000105f2768] fsnotify_wait_marks_destroyed+0x28/0x40
-[  243.686415] [c000000016657bd0] [c0000000105f21b8] fsnotify_destroy_group+0x68/0x160
-[  243.686428] [c000000016657c40] [c0000000105f6500] inotify_release+0x30/0xa0
-[  243.686440] [c000000016657cb0] [c0000000105751a8] __fput+0xc8/0x350
-[  243.686452] [c000000016657d00] [c00000001017d524] task_work_run+0xe4/0x170
-[  243.686464] [c000000016657d50] [c000000010020e94] do_notify_resume+0x134/0x140
-[  243.686478] [c000000016657d80] [c00000001002eb18] interrupt_exit_user_prepare_main+0x198/0x270
-[  243.686493] [c000000016657de0] [c00000001002ec60] syscall_exit_prepare+0x70/0x180
-[  243.686505] [c000000016657e10] [c00000001000bf7c] system_call_vectored_common+0xfc/0x280
-[  243.686520] --- interrupt: 3000 at 0x7fffa47d5ba4
-[  243.686528] NIP:  00007fffa47d5ba4 LR: 0000000000000000 CTR: 0000000000000000
-[  243.686538] REGS: c000000016657e80 TRAP: 3000   Not tainted  (6.1.0-rc1)
-[  243.686548] MSR:  800000000000d033 <SF,EE,PR,ME,IR,DR,RI,LE>  CR: 42044440  XER: 00000000
-[  243.686572] IRQMASK: 0
-[  243.686572] GPR00: 0000000000000006 00007ffffa606710 00007fffa48e7200 0000000000000000
-[  243.686572] GPR04: 0000000000000002 000000000000000a 0000000000000000 0000000000000001
-[  243.686572] GPR08: 000001000c172dd0 0000000000000000 0000000000000000 0000000000000000
-[  243.686572] GPR12: 0000000000000000 00007fffa4ff4bc0 0000000000000000 0000000000000000
-[  243.686572] GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-[  243.686572] GPR20: 0000000132dfdc50 000000000000000e 0000000000189375 0000000000000000
-[  243.686572] GPR24: 00007ffffa606ae0 0000000000000005 000001000c185490 000001000c172570
-[  243.686572] GPR28: 000001000c172990 000001000c184850 000001000c172e00 00007fffa4fedd98
-[  243.686683] NIP [00007fffa47d5ba4] 0x7fffa47d5ba4
-[  243.686691] LR [0000000000000000] 0x0
-[  243.686698] --- interrupt: 3000
-[  243.686708] INFO: task kworker/u16:1:24 blocked for more than 122 seconds.
-[  243.686717]       Not tainted 6.1.0-rc1 #1
-[  243.686724] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-[  243.686733] task:kworker/u16:1   state:D stack:0     pid:24    ppid:2      flags:0x00000800
-[  243.686747] Workqueue: events_unbound fsnotify_mark_destroy_workfn
-[  243.686758] Call Trace:
-[  243.686762] [c0000000166736e0] [c00000004fd91000] 0xc00000004fd91000 (unreliable)
-[  243.686775] [c0000000166738d0] [c00000001001dec0] __switch_to+0x130/0x220
-[  243.686788] [c000000016673930] [c000000010f607b8] __schedule+0x1f8/0x580
-[  243.686801] [c0000000166739e0] [c000000010f60bb4] schedule+0x74/0x140
-[  243.686814] [c000000016673a50] [c000000010f699b8] schedule_timeout+0x168/0x1c0
-[  243.686827] [c000000016673b20] [c000000010f61de8] __wait_for_common+0x148/0x360
-[  243.686840] [c000000016673bc0] [c000000010210840] __synchronize_srcu.part.0+0xa0/0xe0
-[  243.686855] [c000000016673c30] [c0000000105f2c64] fsnotify_mark_destroy_workfn+0xc4/0x1a0
-[  243.686868] [c000000016673ca0] [c000000010174ea8] process_one_work+0x2a8/0x570
-[  243.686882] [c000000016673d40] [c000000010175208] worker_thread+0x98/0x5e0
-[  243.686895] [c000000016673dc0] [c0000000101828d4] kthread+0x124/0x130
-[  243.686908] [c000000016673e10] [c00000001000cd40] ret_from_kernel_thread+0x5c/0x64
-[  366.566274] INFO: task systemd:1 blocked for more than 245 seconds.
-[  366.566298]       Not tainted 6.1.0-rc1 #1
-[  366.566305] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-[  366.566314] task:systemd         state:D stack:0     pid:1     ppid:0      flags:0x00042000
-[  366.566329] Call Trace:
-...
+To address all three, use CHECK_DATA_CORRUPTION() when kernel bugs are
+detected.
 
-The above splat occurs because PowerPC really does use maxcpus=1
-instead of nr_cpus=1 in the kernel command line.  Consequently, the
-(quite possibly non-zero) kdump CPU is the only online CPU in the kdump
-kernel.  SRCU unconditionally queues a sdp->work on cpu 0, for which no
-worker thread has been created, so sdp->work will be never executed and
-__synchronize_srcu() will never be completed.
-
-This commit therefore replaces CPU ID 0 with get_boot_cpu_id() in key
-places in Tree SRCU.  Since the CPU indicated by get_boot_cpu_id()
-is guaranteed to be online, this avoids the above splat.
-
-Signed-off-by: Pingfan Liu <kernelfans@gmail.com>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-Cc: Josh Triplett <josh@joshtriplett.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-To: rcu@vger.kernel.org
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/srcutree.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/open.c              |  5 +++--
+ fs/super.c             | 21 +++++++++++++++++----
+ include/linux/poison.h |  3 +++
+ 3 files changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/rcu/srcutree.c b/kernel/rcu/srcutree.c
-index ca4b5dcec675b..16953784a0bdf 100644
---- a/kernel/rcu/srcutree.c
-+++ b/kernel/rcu/srcutree.c
-@@ -726,7 +726,7 @@ static void srcu_gp_start(struct srcu_struct *ssp)
- 	int state;
+diff --git a/fs/open.c b/fs/open.c
+index 82c1a28b33089..ceb88ac0ca3b2 100644
+--- a/fs/open.c
++++ b/fs/open.c
+@@ -1411,8 +1411,9 @@ int filp_close(struct file *filp, fl_owner_t id)
+ {
+ 	int retval = 0;
  
- 	if (smp_load_acquire(&ssp->srcu_size_state) < SRCU_SIZE_WAIT_BARRIER)
--		sdp = per_cpu_ptr(ssp->sda, 0);
-+		sdp = per_cpu_ptr(ssp->sda, get_boot_cpu_id());
- 	else
- 		sdp = this_cpu_ptr(ssp->sda);
- 	lockdep_assert_held(&ACCESS_PRIVATE(ssp, lock));
-@@ -837,7 +837,8 @@ static void srcu_gp_end(struct srcu_struct *ssp)
- 	/* Initiate callback invocation as needed. */
- 	ss_state = smp_load_acquire(&ssp->srcu_size_state);
- 	if (ss_state < SRCU_SIZE_WAIT_BARRIER) {
--		srcu_schedule_cbs_sdp(per_cpu_ptr(ssp->sda, 0), cbdelay);
-+		srcu_schedule_cbs_sdp(per_cpu_ptr(ssp->sda, get_boot_cpu_id()),
-+					cbdelay);
- 	} else {
- 		idx = rcu_seq_ctr(gpseq) % ARRAY_SIZE(snp->srcu_have_cbs);
- 		srcu_for_each_node_breadth_first(ssp, snp) {
-@@ -1161,7 +1162,7 @@ static unsigned long srcu_gp_start_if_needed(struct srcu_struct *ssp,
- 	idx = __srcu_read_lock_nmisafe(ssp);
- 	ss_state = smp_load_acquire(&ssp->srcu_size_state);
- 	if (ss_state < SRCU_SIZE_WAIT_CALL)
--		sdp = per_cpu_ptr(ssp->sda, 0);
-+		sdp = per_cpu_ptr(ssp->sda, get_boot_cpu_id());
- 	else
- 		sdp = raw_cpu_ptr(ssp->sda);
- 	spin_lock_irqsave_sdp_contention(sdp, &flags);
-@@ -1497,7 +1498,7 @@ void srcu_barrier(struct srcu_struct *ssp)
+-	if (!file_count(filp)) {
+-		printk(KERN_ERR "VFS: Close: file count is 0\n");
++	if (CHECK_DATA_CORRUPTION(file_count(filp) == 0,
++			"VFS: Close: file count is 0 (f_op=%ps)",
++			filp->f_op)) {
+ 		return 0;
+ 	}
  
- 	idx = __srcu_read_lock_nmisafe(ssp);
- 	if (smp_load_acquire(&ssp->srcu_size_state) < SRCU_SIZE_WAIT_BARRIER)
--		srcu_barrier_one_cpu(ssp, per_cpu_ptr(ssp->sda, 0));
-+		srcu_barrier_one_cpu(ssp, per_cpu_ptr(ssp->sda,	get_boot_cpu_id()));
- 	else
- 		for_each_possible_cpu(cpu)
- 			srcu_barrier_one_cpu(ssp, per_cpu_ptr(ssp->sda, cpu));
+diff --git a/fs/super.c b/fs/super.c
+index 12c08cb20405d..cf737ec2bd05c 100644
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -491,10 +491,23 @@ void generic_shutdown_super(struct super_block *sb)
+ 		if (sop->put_super)
+ 			sop->put_super(sb);
+ 
+-		if (!list_empty(&sb->s_inodes)) {
+-			printk("VFS: Busy inodes after unmount of %s. "
+-			   "Self-destruct in 5 seconds.  Have a nice day...\n",
+-			   sb->s_id);
++		if (CHECK_DATA_CORRUPTION(!list_empty(&sb->s_inodes),
++				"VFS: Busy inodes after unmount of %s (%s)",
++				sb->s_id, sb->s_type->name)) {
++			/*
++			 * Adding a proper bailout path here would be hard, but
++			 * we can at least make it more likely that a later
++			 * iput_final() or such crashes cleanly.
++			 */
++			struct inode *inode;
++
++			spin_lock(&sb->s_inode_list_lock);
++			list_for_each_entry(inode, &sb->s_inodes, i_sb_list) {
++				inode->i_op = VFS_PTR_POISON;
++				inode->i_sb = VFS_PTR_POISON;
++				inode->i_mapping = VFS_PTR_POISON;
++			}
++			spin_unlock(&sb->s_inode_list_lock);
+ 		}
+ 	}
+ 	spin_lock(&sb_lock);
+diff --git a/include/linux/poison.h b/include/linux/poison.h
+index 2d3249eb0e62d..0e8a1f2ceb2f1 100644
+--- a/include/linux/poison.h
++++ b/include/linux/poison.h
+@@ -84,4 +84,7 @@
+ /********** kernel/bpf/ **********/
+ #define BPF_PTR_POISON ((void *)(0xeB9FUL + POISON_POINTER_DELTA))
+ 
++/********** VFS **********/
++#define VFS_PTR_POISON ((void *)(0xF5 + POISON_POINTER_DELTA))
++
+ #endif
 -- 
 2.39.2
 
