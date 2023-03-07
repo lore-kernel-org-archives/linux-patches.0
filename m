@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B98BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395E8C433D2;
-	Tue,  7 Mar 2023 17:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37DABA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65065C433D2;
+	Tue,  7 Mar 2023 17:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209808;
-	bh=fDXQaiwd3L1K5OwugWn2eiInNuyj6M7dFn8Gu9ct/OA=;
+	s=korg; t=1678209811;
+	bh=5/a51Nfi6YYbil90NZNM0K4WgsFihGtPP9T9zaNPPhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L76G0Bz8hdavidFKptsfUNXVhxUMitRKW4v5kwi2QEDB7RssuTbYa1LGM9HH7SDcl
-	 PQn4n47NB0h8qohZUkgnfqvlVhlC/4iyE8/5x7igAwlv6B3DJKDY/Q4ubFjNpD/paF
-	 mzMLCSg3yJT9Lzs9UK5l0bIvht45r+0t81PF1P7I=
+	b=wPUL9cZVNOtWIb7o0R+paMBeDSzx3E9PSB/lWV7DFkc7nulqeE29nsVWSgEPMceto
+	 tiDD5EoB+CiZHmYdQmakM1c/xP7D4ap2oX+aj0ormyF07CdW1pW0G6wXhBWrRvk2uY
+	 05yLnDWh/+3MeLYQZOB2r/dq6ps81SpclngKmUw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	kernel test robot <lkp@intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Dave Airlie <airlied@redhat.com>,
+	dri-devel@lists.freedesktop.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0339/1001] gpu: ipu-v3: common: Add of_node_put() for reference returned by of_graph_get_port_by_id()
-Date: Tue,  7 Mar 2023 17:51:51 +0100
-Message-Id: <20230307170036.190888121@linuxfoundation.org>
+Subject: [PATCH 6.2 0340/1001] drm/ast: Init iosys_map pointer as I/O memory for damage handling
+Date: Tue,  7 Mar 2023 17:51:52 +0100
+Message-Id: <20230307170036.228522811@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,36 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 9afdf98cfdfa2ba8ec068cf08c5fcdc1ed8daf3f ]
+[ Upstream commit b1def7fadfa544bd2467581ce40b659583eb7e79 ]
 
-In ipu_add_client_devices(), we need to call of_node_put() for
-reference returned by of_graph_get_port_by_id() in fail path.
+Ast hardware scans out the primary plane from video memory, which
+is in I/O-memory space. Hence init the damage handler's iosys_map
+pointer as I/O memory.
 
-Fixes: 17e052175039 ("gpu: ipu-v3: Do not bail out on missing optional port nodes")
-Signed-off-by: Liang He <windhl@126.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://lore.kernel.org/r/20220720152227.1288413-1-windhl@126.com
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220720152227.1288413-1-windhl@126.com
+Not all platforms support accessing I/O memory as system memory,
+although it's usually not a problem in ast's x86-based systems.
+
+The error report is at [1].
+
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Fixes: f2fa5a99ca81 ("drm/ast: Convert ast to SHMEM")
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: dri-devel@lists.freedesktop.org
+Link: https://lore.kernel.org/lkml/202212170111.eInM0unS-lkp@intel.com/T/#u # 1
+Link: https://patchwork.freedesktop.org/patch/msgid/20221216193005.30280-1-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/ipu-v3/ipu-common.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/ast/ast_mode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/ipu-v3/ipu-common.c b/drivers/gpu/ipu-v3/ipu-common.c
-index 118318513e2d2..c35eac1116f5f 100644
---- a/drivers/gpu/ipu-v3/ipu-common.c
-+++ b/drivers/gpu/ipu-v3/ipu-common.c
-@@ -1165,6 +1165,7 @@ static int ipu_add_client_devices(struct ipu_soc *ipu, unsigned long ipu_base)
- 		pdev = platform_device_alloc(reg->name, id++);
- 		if (!pdev) {
- 			ret = -ENOMEM;
-+			of_node_put(of_node);
- 			goto err_register;
- 		}
+diff --git a/drivers/gpu/drm/ast/ast_mode.c b/drivers/gpu/drm/ast/ast_mode.c
+index 66a4a41c3fe94..d314b9e7c05f9 100644
+--- a/drivers/gpu/drm/ast/ast_mode.c
++++ b/drivers/gpu/drm/ast/ast_mode.c
+@@ -636,7 +636,7 @@ static void ast_handle_damage(struct ast_plane *ast_plane, struct iosys_map *src
+ 			      struct drm_framebuffer *fb,
+ 			      const struct drm_rect *clip)
+ {
+-	struct iosys_map dst = IOSYS_MAP_INIT_VADDR(ast_plane->vaddr);
++	struct iosys_map dst = IOSYS_MAP_INIT_VADDR_IOMEM(ast_plane->vaddr);
  
+ 	iosys_map_incr(&dst, drm_fb_clip_offset(fb->pitches[0], fb->format, clip));
+ 	drm_fb_memcpy(&dst, fb->pitches, src, fb, clip);
 -- 
 2.39.2
 
