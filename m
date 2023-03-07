@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A51BBA34
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:31:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630A8C433EF;
-	Tue,  7 Mar 2023 17:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335DABA34
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:31:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE1BC433A7;
+	Tue,  7 Mar 2023 17:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210263;
-	bh=IvegPonRFZ27fozfMfL+WMmN/6XRuSp+MW08wHsAWew=;
+	s=korg; t=1678210267;
+	bh=PDIVsOlCwFT1k3N3H3OIoDZhGVUi9IHilVno7x2T4ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jOD5wwEWGUCGQS2pxlFKrUjDMuK4rkRVNreuB0jsjIFsKvmgzJ0ftvnTpEHWn/RGu
-	 C0cWblJYhMko6y6TrmAcr+J6IdFOcT45n+pTbgdC54ByIQD0xm5wVZNcWoj+yFXyGC
-	 KcFHRGY1Dao/uGHBbl5/k0ezdPNWAz50W2Sx7cHo=
+	b=knmbKfDSY9sPkaSSbWiuG2tXdqTYLKFaH1aS6lj1wCckuwZw+zfj0wf9h6u5SHvbg
+	 Z3qxBkWCl6S03abnOkcMpIoBnb5O0629Nm75TIEIDMaR4OyfL/4X7pZZVwnmSV/3zz
+	 3rzK4YwGzG3vsHAzdwKXN7VD7u0DxM7GZekx05j0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiheng Lin <linqiheng@huawei.com>,
-	Lee Jones <lee@kernel.org>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0485/1001] mfd: pcf50633-adc: Fix potential memleak in pcf50633_adc_async_read()
-Date: Tue,  7 Mar 2023 17:54:17 +0100
-Message-Id: <20230307170042.447061635@linuxfoundation.org>
+Subject: [PATCH 6.2 0459/1001] cifs: use tcon allocation functions even for dummy tcon
+Date: Tue,  7 Mar 2023 17:53:51 +0100
+Message-Id: <20230307170041.302683781@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,48 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiheng Lin <linqiheng@huawei.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 8b450dcff23aa254844492831a8e2b508a9d522d ]
+[ Upstream commit df57109bd50b9ed6911f3c2aa914189fe4c1fe2c ]
 
-`req` is allocated in pcf50633_adc_async_read(), but
-adc_enqueue_request() could fail to insert the `req` into queue.
-We need to check the return value and free it in the case of failure.
+In smb2_reconnect_server, we allocate a dummy tcon for
+calling reconnect for just the session. This should be
+allocated using tconInfoAlloc, and not kmalloc.
 
-Fixes: 08c3e06a5eb2 ("mfd: PCF50633 adc driver")
-Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20221208061555.8776-1-linqiheng@huawei.com
+Fixes: 3663c9045f51 ("cifs: check reconnects for channels of active tcons too")
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/pcf50633-adc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/cifs/smb2pdu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mfd/pcf50633-adc.c b/drivers/mfd/pcf50633-adc.c
-index 5cd653e615125..191b1bc6141c2 100644
---- a/drivers/mfd/pcf50633-adc.c
-+++ b/drivers/mfd/pcf50633-adc.c
-@@ -136,6 +136,7 @@ int pcf50633_adc_async_read(struct pcf50633 *pcf, int mux, int avg,
- 			     void *callback_param)
- {
- 	struct pcf50633_adc_request *req;
-+	int ret;
+diff --git a/fs/cifs/smb2pdu.c b/fs/cifs/smb2pdu.c
+index 2c9ffa921e6f6..3b93680a319e4 100644
+--- a/fs/cifs/smb2pdu.c
++++ b/fs/cifs/smb2pdu.c
+@@ -3898,7 +3898,7 @@ void smb2_reconnect_server(struct work_struct *work)
+ 		goto done;
  
- 	/* req is freed when the result is ready, in interrupt handler */
- 	req = kmalloc(sizeof(*req), GFP_KERNEL);
-@@ -147,7 +148,11 @@ int pcf50633_adc_async_read(struct pcf50633 *pcf, int mux, int avg,
- 	req->callback = callback;
- 	req->callback_param = callback_param;
+ 	/* allocate a dummy tcon struct used for reconnect */
+-	tcon = kzalloc(sizeof(struct cifs_tcon), GFP_KERNEL);
++	tcon = tconInfoAlloc();
+ 	if (!tcon) {
+ 		resched = true;
+ 		list_for_each_entry_safe(ses, ses2, &tmp_ses_list, rlist) {
+@@ -3921,7 +3921,7 @@ void smb2_reconnect_server(struct work_struct *work)
+ 		list_del_init(&ses->rlist);
+ 		cifs_put_smb_ses(ses);
+ 	}
+-	kfree(tcon);
++	tconInfoFree(tcon);
  
--	return adc_enqueue_request(pcf, req);
-+	ret = adc_enqueue_request(pcf, req);
-+	if (ret)
-+		kfree(req);
-+
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(pcf50633_adc_async_read);
- 
+ done:
+ 	cifs_dbg(FYI, "Reconnecting tcons and channels finished\n");
 -- 
 2.39.2
 
