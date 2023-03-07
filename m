@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B59BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:56:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D358C433D2;
-	Tue,  7 Mar 2023 18:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F77FBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:56:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B5EC433D2;
+	Tue,  7 Mar 2023 18:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215371;
-	bh=fXzPbYK1dAhC782/uLVcdJd9IvDRrR+9sqOWzIGsKgE=;
+	s=korg; t=1678215374;
+	bh=Uqe88ZOiTAMwGWY9SJd3pNnDcjxhEl+vnrYP76spxsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HEQ3+CJbH8u3t+p/sOGPp1PzBvDXVxGisAlOMM/cLf6w6q4NIrUKseEhpdCHKdMqo
-	 SLGaojKeE0Ar0depja8zeMQo/roVmabAYnV3AQaHFIi3Pn9SY6U++Z1McJqIYihYDI
-	 IxINNUwFdDJL8QMVr0dCdF6v4pXdGyuUdLM8QpmA=
+	b=uaWI33vaYn02IU1PD9g32VeDcgIz9ykYZMw+nMwTqGAnxQMEwHPJnIx8xx0hoDPHL
+	 0jP9xEGXLA/xX8dY0G+4r2EfAh7y9BGCEGDxVwUK+TXjMHFqSp7uWn4jdAE8I84PzO
+	 Q8IhSbHtTN1liV113Qzz9FLgiuD6JPQXOI9LUCEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kursad Oney <kursad.oney@broadcom.com>,
 	William Zhang <william.zhang@broadcom.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 240/567] spi: bcm63xx-hsspi: Endianness fix for ARM based SoC
-Date: Tue,  7 Mar 2023 17:59:36 +0100
-Message-Id: <20230307165916.355041131@linuxfoundation.org>
+Subject: [PATCH 5.15 241/567] spi: bcm63xx-hsspi: Fix multi-bit mode setting
+Date: Tue,  7 Mar 2023 17:59:37 +0100
+Message-Id: <20230307165916.400031750@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -39,37 +37,57 @@ Content-Transfer-Encoding: 8bit
 
 From: William Zhang <william.zhang@broadcom.com>
 
-[ Upstream commit 85a84a61699990db6a025b5073f337f49933a875 ]
+[ Upstream commit 811ff802aaf878ebbbaeac0307a0164fa21e7d40 ]
 
-HSSPI controller uses big endian for the opcode in the message to the
-controller ping pong buffer. Use cpu_to_be16 to properly handle the
-endianness for both big and little endian host.
+Currently the driver always sets the controller to dual data bit mode
+for both tx and rx data in the profile mode control register even for
+single data bit transfer. Luckily the opcode is set correctly according
+to SPI transfer data bit width so it does not actually cause issues.
+
+This change fixes the problem by setting tx and rx data bit mode field
+correctly according to the actual SPI transfer tx and rx data bit width.
 
 Fixes: 142168eba9dc ("spi: bcm63xx-hsspi: add bcm63xx HSSPI driver")
-Signed-off-by: Kursad Oney <kursad.oney@broadcom.com>
 Signed-off-by: William Zhang <william.zhang@broadcom.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-
-Link: https://lore.kernel.org/r/20230207065826.285013-7-william.zhang@broadcom.com
+Link: https://lore.kernel.org/r/20230209200246.141520-11-william.zhang@broadcom.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm63xx-hsspi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-bcm63xx-hsspi.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
-index b871fd810d801..a74345ed0e2ff 100644
+index a74345ed0e2ff..9ec33745c1472 100644
 --- a/drivers/spi/spi-bcm63xx-hsspi.c
 +++ b/drivers/spi/spi-bcm63xx-hsspi.c
-@@ -194,7 +194,7 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
- 			tx += curr_step;
- 		}
+@@ -163,6 +163,7 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
+ 	int step_size = HSSPI_BUFFER_LEN;
+ 	const u8 *tx = t->tx_buf;
+ 	u8 *rx = t->rx_buf;
++	u32 val = 0;
  
--		__raw_writew(opcode | curr_step, bs->fifo);
-+		__raw_writew((u16)cpu_to_be16(opcode | curr_step), bs->fifo);
+ 	bcm63xx_hsspi_set_clk(bs, spi, t->speed_hz);
+ 	bcm63xx_hsspi_set_cs(bs, spi->chip_select, true);
+@@ -178,11 +179,16 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
+ 		step_size -= HSSPI_OPCODE_LEN;
  
- 		/* enable interrupt */
- 		__raw_writel(HSSPI_PINGx_CMD_DONE(0),
+ 	if ((opcode == HSSPI_OP_READ && t->rx_nbits == SPI_NBITS_DUAL) ||
+-	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL))
++	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL)) {
+ 		opcode |= HSSPI_OP_MULTIBIT;
+ 
+-	__raw_writel(1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT |
+-		     1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT | 0xff,
++		if (t->rx_nbits == SPI_NBITS_DUAL)
++			val |= 1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT;
++		if (t->tx_nbits == SPI_NBITS_DUAL)
++			val |= 1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT;
++	}
++
++	__raw_writel(val | 0xff,
+ 		     bs->regs + HSSPI_PROFILE_MODE_CTRL_REG(chip_select));
+ 
+ 	while (pending > 0) {
 -- 
 2.39.2
 
