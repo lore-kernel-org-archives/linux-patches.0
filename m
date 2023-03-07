@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E709BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:49:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED63C433D2;
-	Tue,  7 Mar 2023 17:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3079BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:49:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D09C433EF;
+	Tue,  7 Mar 2023 17:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211392;
-	bh=ix4XA8LgIeBUpIBPMcFU6UVI/cKS8WZK4a9MKCdJvEU=;
+	s=korg; t=1678211395;
+	bh=NhHFIaADgd7fgNQEZYy/GBvu5bD+BjYn9akLOa/HyXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nLTsgkCrJqgEZ3bSdQCWJfpuSmUFHbHYhP3cLhTh/fiUl518C5KFq8R3B3S57ehzO
-	 0Pcp5qBi3kgOZmm23eJbQzryyAgILPpWIoxjvlON/HUgZ0POcwhu+0EIMcpAv5t0k1
-	 hdY5XzMBberHe2iwNvVQRou8MFV/AS1mFpvpAI5U=
+	b=dKK/AvhqbXIzDBWPGy4JCJJY6RyA2V0TfW3VC1iu62VtpnhovBta9/2WiscOw/A1/
+	 ubfZWDTfc2rXwTjqmoGajjLjM8kzm4Ob4ZKnFdRDACF5qc0BfGOPPcPwY1+/lz+pvI
+	 s3dqa5FNZLGZR9OtRVpch2yh4AIJbtFjx7GinPHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Larry Dewey <larry.dewey@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.2 0847/1001] virt/sev-guest: Return -EIO if certificate buffer is not large enough
-Date: Tue,  7 Mar 2023 18:00:19 +0100
-Message-Id: <20230307170058.569605003@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.2 0848/1001] brd: mark as nowait compatible
+Date: Tue,  7 Mar 2023 18:00:20 +0100
+Message-Id: <20230307170058.621178860@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,71 +33,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Lendacky <thomas.lendacky@amd.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit dd093fb08e8f8a958fec4eef36f9f09eac047f60 upstream.
+commit 67205f80be9910207481406c47f7d85e703fb2e9 upstream.
 
-Commit
+By default, non-mq drivers do not support nowait. This causes io_uring
+to use a slower path as the driver cannot be trust not to block. brd
+can safely set the nowait flag, as worst case all it does is a NOIO
+allocation.
 
-  47894e0fa6a5 ("virt/sev-guest: Prevent IV reuse in the SNP guest driver")
+For io_uring, this makes a substantial difference. Before:
 
-changed the behavior associated with the return value when the caller
-does not supply a large enough certificate buffer. Prior to the commit a
-value of -EIO was returned. Now, 0 is returned.  This breaks the
-established ABI with the user.
+submitter=0, tid=453, file=/dev/ram0, node=-1
+polled=0, fixedbufs=1/0, register_files=1, buffered=0, QD=128
+Engine=io_uring, sq_ring=128, cq_ring=128
+IOPS=440.03K, BW=1718MiB/s, IOS/call=32/31
+IOPS=428.96K, BW=1675MiB/s, IOS/call=32/32
+IOPS=442.59K, BW=1728MiB/s, IOS/call=32/31
+IOPS=419.65K, BW=1639MiB/s, IOS/call=32/32
+IOPS=426.82K, BW=1667MiB/s, IOS/call=32/31
 
-Change the code to detect the buffer size error and return -EIO.
+and after:
 
-Fixes: 47894e0fa6a5 ("virt/sev-guest: Prevent IV reuse in the SNP guest driver")
-Reported-by: Larry Dewey <larry.dewey@amd.com>
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Larry Dewey <larry.dewey@amd.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/2afbcae6daf13f7ad5a4296692e0a0fe1bc1e4ee.1677083979.git.thomas.lendacky@amd.com
+submitter=0, tid=354, file=/dev/ram0, node=-1
+polled=0, fixedbufs=1/0, register_files=1, buffered=0, QD=128
+Engine=io_uring, sq_ring=128, cq_ring=128
+IOPS=3.37M, BW=13.15GiB/s, IOS/call=32/31
+IOPS=3.45M, BW=13.46GiB/s, IOS/call=32/31
+IOPS=3.43M, BW=13.42GiB/s, IOS/call=32/32
+IOPS=3.43M, BW=13.39GiB/s, IOS/call=32/31
+IOPS=3.43M, BW=13.38GiB/s, IOS/call=32/31
+
+or about an 8x in difference. Now that brd is prepared to deal with
+REQ_NOWAIT reads/writes, mark it as supporting that.
+
+Cc: stable@vger.kernel.org # 5.10+
+Link: https://lore.kernel.org/linux-block/20230203103005.31290-1-p.raghav@samsung.com/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virt/coco/sev-guest/sev-guest.c |   20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ drivers/block/brd.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/virt/coco/sev-guest/sev-guest.c
-+++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -377,9 +377,26 @@ static int handle_guest_request(struct s
- 		snp_dev->input.data_npages = certs_npages;
- 	}
- 
-+	/*
-+	 * Increment the message sequence number. There is no harm in doing
-+	 * this now because decryption uses the value stored in the response
-+	 * structure and any failure will wipe the VMPCK, preventing further
-+	 * use anyway.
-+	 */
-+	snp_inc_msg_seqno(snp_dev);
-+
- 	if (fw_err)
- 		*fw_err = err;
- 
-+	/*
-+	 * If an extended guest request was issued and the supplied certificate
-+	 * buffer was not large enough, a standard guest request was issued to
-+	 * prevent IV reuse. If the standard request was successful, return -EIO
-+	 * back to the caller as would have originally been returned.
-+	 */
-+	if (!rc && err == SNP_GUEST_REQ_INVALID_LEN)
-+		return -EIO;
-+
- 	if (rc) {
- 		dev_alert(snp_dev->dev,
- 			  "Detected error from ASP request. rc: %d, fw_err: %llu\n",
-@@ -395,9 +412,6 @@ static int handle_guest_request(struct s
- 		goto disable_vmpck;
- 	}
- 
--	/* Increment to new message sequence after payload decryption was successful. */
--	snp_inc_msg_seqno(snp_dev);
--
- 	return 0;
- 
- disable_vmpck:
+--- a/drivers/block/brd.c
++++ b/drivers/block/brd.c
+@@ -412,6 +412,7 @@ static int brd_alloc(int i)
+ 	/* Tell the block layer that this is not a rotational device */
+ 	blk_queue_flag_set(QUEUE_FLAG_NONROT, disk->queue);
+ 	blk_queue_flag_clear(QUEUE_FLAG_ADD_RANDOM, disk->queue);
++	blk_queue_flag_set(QUEUE_FLAG_NOWAIT, disk->queue);
+ 	err = add_disk(disk);
+ 	if (err)
+ 		goto out_cleanup_disk;
 
 
