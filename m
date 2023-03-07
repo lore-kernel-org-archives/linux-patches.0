@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78E0BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:19:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD00C433D2;
-	Tue,  7 Mar 2023 18:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF20BBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:19:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FEF3C433D2;
+	Tue,  7 Mar 2023 18:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213177;
-	bh=iTw/78BSAVpQZvd+pK66e2spGCGmHFO/fPM0Sq5d/68=;
+	s=korg; t=1678213180;
+	bh=SFqXgsn+8bOaD0r9xYRk1WjdzmAYRbBqIVh/vPS3q8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mdEWel26t92MmK2L7bGtcEkGdZo2co7z2fhb9zAH/lvWKCPmeO89qKWKBvK3YT2lF
-	 dtlMce6gdkYfD7iLMbrYwcHEus2G/j1Au0nB2DUD6KyN1fyKxt2cTSdx8B134rTqSZ
-	 5Mgi8jSRJFUZYY2TvdWoCh+woG+gIY96U4pWdOP0=
+	b=A/79XMt28yxFpNNvQfueQ8qi7+epPSAr5MG7cPtjPzy5P3iq3Zj2GxPXlU+6MLniq
+	 3gh7g72AnFCWBBWyHXvfwnHnfQmWU2+K1qICb2ySBoowT6GXXtMx44KJG1FJUbhOjL
+	 6UOoWr4rzoJ+4Q8a/jKOCceadJ2QLIFSUARmbbrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Vinod Koul <vkoul@kernel.org>,
+	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 406/885] dmaengine: HISI_DMA should depend on ARCH_HISI
-Date: Tue,  7 Mar 2023 17:55:40 +0100
-Message-Id: <20230307170020.045905196@linuxfoundation.org>
+Subject: [PATCH 6.1 424/885] PCI/IOV: Enlarge virtfn sysfs name buffer
+Date: Tue,  7 Mar 2023 17:55:58 +0100
+Message-Id: <20230307170020.841897008@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,36 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Alexey V. Vissarionov <gremlin@altlinux.org>
 
-[ Upstream commit dcca9d045c0852584ad092123c7f6e6526a633b1 ]
+[ Upstream commit ea0b5aa5f184cf8293c93163f0fb00505190d431 ]
 
-The HiSilicon DMA Engine is only present on HiSilicon SoCs.  Hence add a
-dependency on ARCH_HISI, to prevent asking the user about this driver
-when configuring a kernel without HiSilicon SoC support.
+The sysfs link name "virtfn%u" constructed by pci_iov_sysfs_link() requires
+17 bytes to contain the longest possible string.  Increase VIRTFN_ID_LEN to
+accommodate that.
 
-Fixes: e9f08b65250d73ab ("dmaengine: hisilicon: Add Kunpeng DMA engine support")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/363a1816d36cd3cf604d88ec90f97c75f604de64.1669044190.git.geert+renesas@glider.be
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+[bhelgaas: commit log, comment at #define]
+Fixes: dd7cc44d0bce ("PCI: add SR-IOV API for Physical Function driver")
+Link: https://lore.kernel.org/r/20221218033347.23743-1-gremlin@altlinux.org
+Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/Kconfig | 2 +-
+ drivers/pci/iov.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index 7524b62a8870a..b64ae02c26f8c 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -244,7 +244,7 @@ config FSL_RAID
+diff --git a/drivers/pci/iov.c b/drivers/pci/iov.c
+index 952217572113c..b2e8322755c17 100644
+--- a/drivers/pci/iov.c
++++ b/drivers/pci/iov.c
+@@ -14,7 +14,7 @@
+ #include <linux/delay.h>
+ #include "pci.h"
  
- config HISI_DMA
- 	tristate "HiSilicon DMA Engine support"
--	depends on ARM64 || COMPILE_TEST
-+	depends on ARCH_HISI || COMPILE_TEST
- 	depends on PCI_MSI
- 	select DMA_ENGINE
- 	select DMA_VIRTUAL_CHANNELS
+-#define VIRTFN_ID_LEN	16
++#define VIRTFN_ID_LEN	17	/* "virtfn%u\0" for 2^32 - 1 */
+ 
+ int pci_iov_virtfn_bus(struct pci_dev *dev, int vf_id)
+ {
 -- 
 2.39.2
 
