@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F77FBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:56:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B5EC433D2;
-	Tue,  7 Mar 2023 18:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E00BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:56:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC446C4339B;
+	Tue,  7 Mar 2023 18:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215374;
-	bh=Uqe88ZOiTAMwGWY9SJd3pNnDcjxhEl+vnrYP76spxsk=;
+	s=korg; t=1678215377;
+	bh=tQxWUhMtGZocqdaH3OUsIoDn8rImwPUraypacRo3TnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uaWI33vaYn02IU1PD9g32VeDcgIz9ykYZMw+nMwTqGAnxQMEwHPJnIx8xx0hoDPHL
-	 0jP9xEGXLA/xX8dY0G+4r2EfAh7y9BGCEGDxVwUK+TXjMHFqSp7uWn4jdAE8I84PzO
-	 Q8IhSbHtTN1liV113Qzz9FLgiuD6JPQXOI9LUCEU=
+	b=Ru+dswCFbvSRaUoIqsQKs4SWqtdO1TrFLUygzBOP6bcAFlQlBVuJ0+x25pPl/Ewrv
+	 rHVCD1Yk38ADQsI8AUHckhykI0R+oJadFX8ObCxNYLGYdEL2msqiBcakmjYb8yYGg7
+	 QFcMQFPL552fa+5bX+ouxMOaW6x8tw85TuynCU40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhang <william.zhang@broadcom.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 241/567] spi: bcm63xx-hsspi: Fix multi-bit mode setting
-Date: Tue,  7 Mar 2023 17:59:37 +0100
-Message-Id: <20230307165916.400031750@linuxfoundation.org>
+Subject: [PATCH 5.15 224/567] ASoC: mchp-spdifrx: disable all interrupts in mchp_spdifrx_dai_remove()
+Date: Tue,  7 Mar 2023 17:59:20 +0100
+Message-Id: <20230307165915.617918579@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,59 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: William Zhang <william.zhang@broadcom.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 811ff802aaf878ebbbaeac0307a0164fa21e7d40 ]
+[ Upstream commit aaecdc32b7e35b4f9b457fb3509414aa9a932589 ]
 
-Currently the driver always sets the controller to dual data bit mode
-for both tx and rx data in the profile mode control register even for
-single data bit transfer. Luckily the opcode is set correctly according
-to SPI transfer data bit width so it does not actually cause issues.
+CSC interrupts which might be used in controls are on bits 8 and 9 of
+SPDIFRX_IDR register. Thus disable all the interrupts that are exported
+by driver.
 
-This change fixes the problem by setting tx and rx data bit mode field
-correctly according to the actual SPI transfer tx and rx data bit width.
-
-Fixes: 142168eba9dc ("spi: bcm63xx-hsspi: add bcm63xx HSSPI driver")
-Signed-off-by: William Zhang <william.zhang@broadcom.com>
-Link: https://lore.kernel.org/r/20230209200246.141520-11-william.zhang@broadcom.com
+Fixes: ef265c55c1ac ("ASoC: mchp-spdifrx: add driver for SPDIF RX")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230130120647.638049-5-claudiu.beznea@microchip.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm63xx-hsspi.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ sound/soc/atmel/mchp-spdifrx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
-index a74345ed0e2ff..9ec33745c1472 100644
---- a/drivers/spi/spi-bcm63xx-hsspi.c
-+++ b/drivers/spi/spi-bcm63xx-hsspi.c
-@@ -163,6 +163,7 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
- 	int step_size = HSSPI_BUFFER_LEN;
- 	const u8 *tx = t->tx_buf;
- 	u8 *rx = t->rx_buf;
-+	u32 val = 0;
+diff --git a/sound/soc/atmel/mchp-spdifrx.c b/sound/soc/atmel/mchp-spdifrx.c
+index eb1b8724e11f4..03b7037239b85 100644
+--- a/sound/soc/atmel/mchp-spdifrx.c
++++ b/sound/soc/atmel/mchp-spdifrx.c
+@@ -921,7 +921,7 @@ static int mchp_spdifrx_dai_remove(struct snd_soc_dai *dai)
+ 	struct mchp_spdifrx_dev *dev = snd_soc_dai_get_drvdata(dai);
  
- 	bcm63xx_hsspi_set_clk(bs, spi, t->speed_hz);
- 	bcm63xx_hsspi_set_cs(bs, spi->chip_select, true);
-@@ -178,11 +179,16 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
- 		step_size -= HSSPI_OPCODE_LEN;
+ 	/* Disable interrupts */
+-	regmap_write(dev->regmap, SPDIFRX_IDR, 0xFF);
++	regmap_write(dev->regmap, SPDIFRX_IDR, GENMASK(14, 0));
  
- 	if ((opcode == HSSPI_OP_READ && t->rx_nbits == SPI_NBITS_DUAL) ||
--	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL))
-+	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL)) {
- 		opcode |= HSSPI_OP_MULTIBIT;
+ 	clk_disable_unprepare(dev->pclk);
  
--	__raw_writel(1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT |
--		     1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT | 0xff,
-+		if (t->rx_nbits == SPI_NBITS_DUAL)
-+			val |= 1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT;
-+		if (t->tx_nbits == SPI_NBITS_DUAL)
-+			val |= 1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT;
-+	}
-+
-+	__raw_writel(val | 0xff,
- 		     bs->regs + HSSPI_PROFILE_MODE_CTRL_REG(chip_select));
- 
- 	while (pending > 0) {
 -- 
 2.39.2
 
