@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCAEBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:04:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E7AC433EF;
-	Tue,  7 Mar 2023 18:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74698BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:04:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD5CC433D2;
+	Tue,  7 Mar 2023 18:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212241;
-	bh=uXL8tvDNL6joXIwJYPGmUQ3pc3WHA5dKKQuhqPkHH5g=;
+	s=korg; t=1678212244;
+	bh=jCRDyrOqSSYV9h9C9cXC43VRp+pQ1SJS4AyC4c+vCtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IspMPIgSH/rKcgABi1z48Xq0S1RTCcPzQ85WX9fga2GGWEsTevrsgsnDmRdFrdRUQ
-	 0mDWgPZyp6v4Gf+qDHXlpCpqPIHisi8KPRWHikJHvAPYfpwyl1cQN0H2YluKavimAE
-	 nZwLjA9lMKMcmYjo8xmJlaaHa9nD9absAlgK0rvs=
+	b=UPLiLdPbfbUYB9akv4CybYmICG8+o9pXu0Oc4nbExSILInEfh+F23C1H6iB8zWWHU
+	 wyCT48zhFnmyqKxJVHWbE8Enc9dBGR2v7L1j+3fDJmqQ5jmRgy0IOOZVwFRjfVf7l+
+	 u6gxBwdcIQKP+ZMc6NI+W9MME06u+u5C4aIe9FXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/885] wifi: rtl8xxxu: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Tue,  7 Mar 2023 17:50:57 +0100
-Message-Id: <20230307170007.192403726@linuxfoundation.org>
+Subject: [PATCH 6.1 124/885] wifi: rtw89: 8852c: rfk: correct DACK setting
+Date: Tue,  7 Mar 2023 17:50:58 +0100
+Message-Id: <20230307170007.227164612@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,45 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 4c2005ac87685907b3719b4f40215b578efd27c4 ]
+[ Upstream commit b2bab7b14098dcf5d405fa8c76b2c3f6ce9184f9 ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+After filling calibration parameters, set BIT(0) to enable the hardware
+circuit, but original set incorrect bit that affects a little TX
+performance.
 
-It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
-The difference between them is free reason, dev_kfree_skb_irq() means
-the SKB is dropped in error and dev_consume_skb_irq() means the SKB
-is consumed in normal.
-
-In this case, dev_kfree_skb() is called to free and drop the SKB when
-it's shutdown, so replace it with dev_kfree_skb_irq(). Compile tested
-only.
-
-Fixes: 26f1fad29ad9 ("New driver: rtl8xxxu (mac80211)")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Fixes: 76599a8d0b7d ("rtw89: 8852c: rfk: add DACK")
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221208143517.2383424-1-yangyingliang@huawei.com
+Link: https://lore.kernel.org/r/20221209020940.9573-2-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 2 +-
+ drivers/net/wireless/realtek/rtw89/rtw8852c_rfk.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-index e445084e358f9..8d91939dea8cf 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -5270,7 +5270,7 @@ static void rtl8xxxu_queue_rx_urb(struct rtl8xxxu_priv *priv,
- 		pending = priv->rx_urb_pending_count;
- 	} else {
- 		skb = (struct sk_buff *)rx_urb->urb.context;
--		dev_kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 		usb_free_urb(&rx_urb->urb);
- 	}
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852c_rfk.c b/drivers/net/wireless/realtek/rtw89/rtw8852c_rfk.c
+index 006c2cf931116..6387c834a73da 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852c_rfk.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852c_rfk.c
+@@ -338,7 +338,7 @@ static void _dack_reload_by_path(struct rtw89_dev *rtwdev,
+ 		(dack->dadck_d[path][index] << 14);
+ 	addr = 0xc210 + offset;
+ 	rtw89_phy_write32(rtwdev, addr, val32);
+-	rtw89_phy_write32_set(rtwdev, addr, BIT(1));
++	rtw89_phy_write32_set(rtwdev, addr, BIT(0));
+ }
  
+ static void _dack_reload(struct rtw89_dev *rtwdev, enum rtw89_rf_path path)
 -- 
 2.39.2
 
