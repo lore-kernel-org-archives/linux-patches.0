@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63532BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4FE2C433D2;
-	Tue,  7 Mar 2023 17:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCEEBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E571CC4339B;
+	Tue,  7 Mar 2023 17:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209460;
-	bh=pQY26jfvfFIOGMFGc90g3Wkh4YGJ8XBT1IuuUD/jXVs=;
+	s=korg; t=1678209463;
+	bh=/3hg6g45+p6O7dgA5fmmzauACZusRtsfj/LNV9NXtaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JlaFG0SqY2Oz+RAgAYUkDgPL9bwtH7lPZs4TysnpceR37UNSZtCyZqD4I1v0FwTWj
-	 RCob/IZL21Pe9OWFB1ycgyGsabw3aC8AdGGU+QYJfJLRRl1EPxu+NT3UFwekQanvTP
-	 drP+aGHMUitlnq4odMubZgLdzuXmV1YFIMOdSgqk=
+	b=Yp6GKge0lfBEeZ1XJi4zbfM2IceaSJ9FIb2UAQt8UiAcRLnAUhB+8pL3wkWPP1HRi
+	 WOC+f9XjUbiZ7OSjg8wQu+KOGOKxZU+yZNDl3tijwKIY1NnbXP3KW5ELQKktMV6ibb
+	 cBok0VZNQmlPW5LrXq8KyIB3x7bVHP3C35P6Lcgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0196/1001] thermal/drivers/tsens: Drop msm8976-specific defines
-Date: Tue,  7 Mar 2023 17:49:28 +0100
-Message-Id: <20230307170030.405829802@linuxfoundation.org>
+Subject: [PATCH 6.2 0187/1001] selftests/xsk: print correct payload for packet dump
+Date: Tue,  7 Mar 2023 17:49:19 +0100
+Message-Id: <20230307170030.010035134@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,50 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Magnus Karlsson <magnus.karlsson@intel.com>
 
-[ Upstream commit 3bf0ea99e2e32b0335106b86d84404cc85bcd113 ]
+[ Upstream commit 2d0b2ae2871ae6d42a9f0a4280e0fb5bff8d38b8 ]
 
-Drop msm8976-specific defines, which duplicate generic ones.
+Print the correct payload when the packet dump option is selected. The
+network to host conversion was forgotten and the payload was
+erronously declared to be an int instead of an unsigned int.
 
-Fixes: 0e580290170d ("thermal: qcom: tsens-v1: Add support for MSM8956 and MSM8976")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230101194034.831222-6-dmitry.baryshkov@linaro.org
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Fixes: facb7cb2e909 ("selftests/bpf: Xsk selftests - SKB POLL, NOPOLL")
+Signed-off-by: Magnus Karlsson <magnus.karlsson@intel.com>
+Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Link: https://lore.kernel.org/r/20230111093526.11682-2-magnus.karlsson@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/tsens-v1.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ tools/testing/selftests/bpf/xskxceiver.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-index 1d7f8a80bd13a..a795b08bb017e 100644
---- a/drivers/thermal/qcom/tsens-v1.c
-+++ b/drivers/thermal/qcom/tsens-v1.c
-@@ -78,11 +78,6 @@
+diff --git a/tools/testing/selftests/bpf/xskxceiver.c b/tools/testing/selftests/bpf/xskxceiver.c
+index 162d3a516f2ca..2ff43b22180fa 100644
+--- a/tools/testing/selftests/bpf/xskxceiver.c
++++ b/tools/testing/selftests/bpf/xskxceiver.c
+@@ -767,7 +767,7 @@ static void pkt_dump(void *pkt, u32 len)
+ 	struct ethhdr *ethhdr;
+ 	struct udphdr *udphdr;
+ 	struct iphdr *iphdr;
+-	int payload, i;
++	u32 payload, i;
  
- #define MSM8976_CAL_SEL_MASK	0x3
+ 	ethhdr = pkt;
+ 	iphdr = pkt + sizeof(*ethhdr);
+@@ -792,7 +792,7 @@ static void pkt_dump(void *pkt, u32 len)
+ 	fprintf(stdout, "DEBUG>> L4: udp_hdr->src: %d\n", ntohs(udphdr->source));
+ 	fprintf(stdout, "DEBUG>> L4: udp_hdr->dst: %d\n", ntohs(udphdr->dest));
+ 	/*extract L5 frame */
+-	payload = *((uint32_t *)(pkt + PKT_HDR_SIZE));
++	payload = ntohl(*((u32 *)(pkt + PKT_HDR_SIZE)));
  
--#define MSM8976_CAL_DEGC_PT1	30
--#define MSM8976_CAL_DEGC_PT2	120
--#define MSM8976_SLOPE_FACTOR	1000
--#define MSM8976_SLOPE_DEFAULT	3200
--
- /* eeprom layout data for qcs404/405 (v1) */
- #define BASE0_MASK	0x000007f8
- #define BASE1_MASK	0x0007f800
-@@ -160,8 +155,8 @@ static void compute_intercept_slope_8976(struct tsens_priv *priv,
- 	priv->sensor[10].slope = 3286;
- 
- 	for (i = 0; i < priv->num_sensors; i++) {
--		priv->sensor[i].offset = (p1[i] * MSM8976_SLOPE_FACTOR) -
--				(MSM8976_CAL_DEGC_PT1 *
-+		priv->sensor[i].offset = (p1[i] * SLOPE_FACTOR) -
-+				(CAL_DEGC_PT1 *
- 				priv->sensor[i].slope);
- 	}
- }
+ 	fprintf(stdout, "DEBUG>> L5: payload: %d\n", payload);
+ 	fprintf(stdout, "---------------------------------------\n");
 -- 
 2.39.2
 
