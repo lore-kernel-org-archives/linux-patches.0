@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665CDBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:49:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D99C433D2;
-	Tue,  7 Mar 2023 17:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E709BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:49:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED63C433D2;
+	Tue,  7 Mar 2023 17:49:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211389;
-	bh=k5HQyqm0VGAfss/paDeflC6MNEUDpsDoCIgnT97MHH0=;
+	s=korg; t=1678211392;
+	bh=ix4XA8LgIeBUpIBPMcFU6UVI/cKS8WZK4a9MKCdJvEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oOsb/m+ZSbKEOol9M4CS4RYCtQL6M9rJhdVAh/BZuFPUiEm3QY3foWx+i5q/T70Ih
-	 T/WdB0waHzpvFNWLEEoJ/VAi7gWUXTnivxFgNsV5pcL/Ss8SmJofCFWEQYsD5jOU2M
-	 ySGi0kZLfC99TuHWkSSrh6ThRZHRe1xfDx0wj7qc=
+	b=nLTsgkCrJqgEZ3bSdQCWJfpuSmUFHbHYhP3cLhTh/fiUl518C5KFq8R3B3S57ehzO
+	 0Pcp5qBi3kgOZmm23eJbQzryyAgILPpWIoxjvlON/HUgZ0POcwhu+0EIMcpAv5t0k1
+	 hdY5XzMBberHe2iwNvVQRou8MFV/AS1mFpvpAI5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	KP Singh <kpsingh@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.2 0846/1001] Documentation/hw-vuln: Document the interaction between IBRS and STIBP
-Date: Tue,  7 Mar 2023 18:00:18 +0100
-Message-Id: <20230307170058.520339762@linuxfoundation.org>
+	Larry Dewey <larry.dewey@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.2 0847/1001] virt/sev-guest: Return -EIO if certificate buffer is not large enough
+Date: Tue,  7 Mar 2023 18:00:19 +0100
+Message-Id: <20230307170058.569605003@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,58 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: KP Singh <kpsingh@kernel.org>
+From: Tom Lendacky <thomas.lendacky@amd.com>
 
-commit e02b50ca442e88122e1302d4dbc1b71a4808c13f upstream.
+commit dd093fb08e8f8a958fec4eef36f9f09eac047f60 upstream.
 
-Explain why STIBP is needed with legacy IBRS as currently implemented
-(KERNEL_IBRS) and why STIBP is not needed when enhanced IBRS is enabled.
+Commit
 
-Fixes: 7c693f54c873 ("x86/speculation: Add spectre_v2=ibrs option to support Kernel IBRS")
-Signed-off-by: KP Singh <kpsingh@kernel.org>
+  47894e0fa6a5 ("virt/sev-guest: Prevent IV reuse in the SNP guest driver")
+
+changed the behavior associated with the return value when the caller
+does not supply a large enough certificate buffer. Prior to the commit a
+value of -EIO was returned. Now, 0 is returned.  This breaks the
+established ABI with the user.
+
+Change the code to detect the buffer size error and return -EIO.
+
+Fixes: 47894e0fa6a5 ("virt/sev-guest: Prevent IV reuse in the SNP guest driver")
+Reported-by: Larry Dewey <larry.dewey@amd.com>
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230227060541.1939092-2-kpsingh@kernel.org
+Tested-by: Larry Dewey <larry.dewey@amd.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/2afbcae6daf13f7ad5a4296692e0a0fe1bc1e4ee.1677083979.git.thomas.lendacky@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/hw-vuln/spectre.rst |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/virt/coco/sev-guest/sev-guest.c |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/Documentation/admin-guide/hw-vuln/spectre.rst
-+++ b/Documentation/admin-guide/hw-vuln/spectre.rst
-@@ -479,8 +479,16 @@ Spectre variant 2
-    On Intel Skylake-era systems the mitigation covers most, but not all,
-    cases. See :ref:`[3] <spec_ref3>` for more details.
+--- a/drivers/virt/coco/sev-guest/sev-guest.c
++++ b/drivers/virt/coco/sev-guest/sev-guest.c
+@@ -377,9 +377,26 @@ static int handle_guest_request(struct s
+ 		snp_dev->input.data_npages = certs_npages;
+ 	}
  
--   On CPUs with hardware mitigation for Spectre variant 2 (e.g. Enhanced
--   IBRS on x86), retpoline is automatically disabled at run time.
-+   On CPUs with hardware mitigation for Spectre variant 2 (e.g. IBRS
-+   or enhanced IBRS on x86), retpoline is automatically disabled at run time.
++	/*
++	 * Increment the message sequence number. There is no harm in doing
++	 * this now because decryption uses the value stored in the response
++	 * structure and any failure will wipe the VMPCK, preventing further
++	 * use anyway.
++	 */
++	snp_inc_msg_seqno(snp_dev);
 +
-+   Systems which support enhanced IBRS (eIBRS) enable IBRS protection once at
-+   boot, by setting the IBRS bit, and they're automatically protected against
-+   Spectre v2 variant attacks, including cross-thread branch target injections
-+   on SMT systems (STIBP). In other words, eIBRS enables STIBP too.
-+
-+   Legacy IBRS systems clear the IBRS bit on exit to userspace and
-+   therefore explicitly enable STIBP for that
+ 	if (fw_err)
+ 		*fw_err = err;
  
-    The retpoline mitigation is turned on by default on vulnerable
-    CPUs. It can be forced on or off by the administrator
-@@ -504,9 +512,12 @@ Spectre variant 2
-    For Spectre variant 2 mitigation, individual user programs
-    can be compiled with return trampolines for indirect branches.
-    This protects them from consuming poisoned entries in the branch
--   target buffer left by malicious software.  Alternatively, the
--   programs can disable their indirect branch speculation via prctl()
--   (See :ref:`Documentation/userspace-api/spec_ctrl.rst <set_spec_ctrl>`).
-+   target buffer left by malicious software.
++	/*
++	 * If an extended guest request was issued and the supplied certificate
++	 * buffer was not large enough, a standard guest request was issued to
++	 * prevent IV reuse. If the standard request was successful, return -EIO
++	 * back to the caller as would have originally been returned.
++	 */
++	if (!rc && err == SNP_GUEST_REQ_INVALID_LEN)
++		return -EIO;
 +
-+   On legacy IBRS systems, at return to userspace, implicit STIBP is disabled
-+   because the kernel clears the IBRS bit. In this case, the userspace programs
-+   can disable indirect branch speculation via prctl() (See
-+   :ref:`Documentation/userspace-api/spec_ctrl.rst <set_spec_ctrl>`).
-    On x86, this will turn on STIBP to guard against attacks from the
-    sibling thread when the user program is running, and use IBPB to
-    flush the branch target buffer when switching to/from the program.
+ 	if (rc) {
+ 		dev_alert(snp_dev->dev,
+ 			  "Detected error from ASP request. rc: %d, fw_err: %llu\n",
+@@ -395,9 +412,6 @@ static int handle_guest_request(struct s
+ 		goto disable_vmpck;
+ 	}
+ 
+-	/* Increment to new message sequence after payload decryption was successful. */
+-	snp_inc_msg_seqno(snp_dev);
+-
+ 	return 0;
+ 
+ disable_vmpck:
 
 
