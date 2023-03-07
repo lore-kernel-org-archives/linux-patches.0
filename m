@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DE9BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:03:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8164CC433A7;
-	Tue,  7 Mar 2023 18:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC02BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:03:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A8EC433D2;
+	Tue,  7 Mar 2023 18:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212235;
-	bh=hi2VpWytuZfHF9xBNOLtFWOO7ClSa6tJaMqoauKp9IY=;
+	s=korg; t=1678212238;
+	bh=TjJOiZI3jDkhq6je2d/SoQI4Ey7mhrFqitTJvH+zlaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iRzNkMLdG7haS5MdxDDLKU3fE6dye0u/WbrOFYPCBtsZJ6rpmG6aCsb/ecbqwvJb0
-	 iPjHUXJi5h7O1cwWSwsit+JL9J5+gndxgpUH170jJlP5nCHwfTRTck4NgonCVNefzw
-	 5/owTsimLnqVRJLnx4ncJALPTPYMPQGYEUpSQZNc=
+	b=urhHvWbES041lbk+JbK1MFtENa69yTz8RiC3TZWcKn9KkZnwQJNNeZpM/IRWyK1eR
+	 Gc0MHQlNyiGSmfylNwsVyc45xBgdDKbxPjdRD23yN97uIi7/+TkBek04EKwyBsQzdJ
+	 lvqYuulBnzakRx27dpc1GPIlcAr32f1yPlKyrd7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Jiri Pirko <jiri@nvidia.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 121/885] wifi: iwlegacy: common: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Tue,  7 Mar 2023 17:50:55 +0100
-Message-Id: <20230307170007.120063768@linuxfoundation.org>
+Subject: [PATCH 6.1 122/885] wifi: libertas: fix memory leak in lbs_init_adapter()
+Date: Tue,  7 Mar 2023 17:50:56 +0100
+Message-Id: <20230307170007.152932917@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,46 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 0c1528675d7a9787cb516b64d8f6c0f6f8efcb48 ]
+[ Upstream commit 16a03958618fb91bb1bc7077cf3211055162cc2f ]
 
-It is not allowed to call consume_skb() from hardware interrupt context
-or with interrupts being disabled. So replace dev_kfree_skb() with
-dev_consume_skb_irq() under spin_lock_irqsave(). Compile tested only.
+When kfifo_alloc() failed in lbs_init_adapter(), cmd buffer is not
+released. Add free memory to processing error path.
 
-Fixes: 4bc85c1324aa ("Revert "iwlwifi: split the drivers for agn and legacy devices 3945/4965"")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Fixes: 7919b89c8276 ("libertas: convert libertas driver to use an event/cmdresp queue")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221207144013.70210-1-yangyingliang@huawei.com
+Link: https://lore.kernel.org/r/20221208121448.2845986-1-shaozhengchao@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlegacy/common.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/marvell/libertas/main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/iwlegacy/common.c b/drivers/net/wireless/intel/iwlegacy/common.c
-index 341c17fe2af4d..96002121bb8b2 100644
---- a/drivers/net/wireless/intel/iwlegacy/common.c
-+++ b/drivers/net/wireless/intel/iwlegacy/common.c
-@@ -5174,7 +5174,7 @@ il_mac_reset_tsf(struct ieee80211_hw *hw, struct ieee80211_vif *vif)
- 	memset(&il->current_ht_config, 0, sizeof(struct il_ht_config));
- 
- 	/* new association get rid of ibss beacon skb */
--	dev_kfree_skb(il->beacon_skb);
-+	dev_consume_skb_irq(il->beacon_skb);
- 	il->beacon_skb = NULL;
- 	il->timestamp = 0;
- 
-@@ -5293,7 +5293,7 @@ il_beacon_update(struct ieee80211_hw *hw, struct ieee80211_vif *vif)
+diff --git a/drivers/net/wireless/marvell/libertas/main.c b/drivers/net/wireless/marvell/libertas/main.c
+index 8f5220cee1123..ae975304cfcfa 100644
+--- a/drivers/net/wireless/marvell/libertas/main.c
++++ b/drivers/net/wireless/marvell/libertas/main.c
+@@ -869,6 +869,7 @@ static int lbs_init_adapter(struct lbs_private *priv)
+ 	ret = kfifo_alloc(&priv->event_fifo, sizeof(u32) * 16, GFP_KERNEL);
+ 	if (ret) {
+ 		pr_err("Out of memory allocating event FIFO buffer\n");
++		lbs_free_cmd_buffer(priv);
+ 		goto out;
  	}
  
- 	spin_lock_irqsave(&il->lock, flags);
--	dev_kfree_skb(il->beacon_skb);
-+	dev_consume_skb_irq(il->beacon_skb);
- 	il->beacon_skb = skb;
- 
- 	timestamp = ((struct ieee80211_mgmt *)skb->data)->u.beacon.timestamp;
 -- 
 2.39.2
 
