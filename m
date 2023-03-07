@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C4DBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:00:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB934C433EF;
-	Tue,  7 Mar 2023 18:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185BEBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:00:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C636C4339B;
+	Tue,  7 Mar 2023 18:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212015;
-	bh=c5FfrN+Y6lOcRmFQ2sQ1YYIYo8beOUAqM/jLiq7EQlA=;
+	s=korg; t=1678212017;
+	bh=Ti9D8/N2bvprk1D2kU2ST7isFhuvl0uOeemMqS7HW0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X+BOlqCEOOf+6Oa7E5eHrKe5hbUlzb+6jPdcMaASy10nsujv/HelikFHIKbRYFUto
-	 3aTEz8tytiUNUqkcJ1itdPSBaoVMPzbw+dYb+afzXLJu4HX9X6z1Q+V6SYLb3c+d87
-	 Z7x5s4oYULcrGxxy5xSl+0GmvI9b8XkQgqvWQUMs=
+	b=SCCBQZZHSs8R5SdNlys31R1BYDrH1R+xS5N8HXkkZRgP9zr6KOC2rsnNYCPkjLmQf
+	 hcYHXcXk07nbFtRd/mwZpZM70DVoSNv8SSXwrf/ONbDf4EKFA30grd/29obq9pgoNJ
+	 VbyVeBVVq+s/pcWJCmD2bYa+3FEtGYmzff0L3Mms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Anderson <dianders@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Leo Duran <leo.duran@amd.com>,
+	Kishon Vijay Abraham I <kvijayab@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Zhang Rui <rui.zhang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/885] arm64: dts: qcom: sdm845-db845c: fix audio codec interrupt pin name
-Date: Tue,  7 Mar 2023 17:49:13 +0100
-Message-Id: <20230307170002.468798265@linuxfoundation.org>
+Subject: [PATCH 6.1 020/885] x86/acpi/boot: Do not register processors that cannot be onlined for x2APIC
+Date: Tue,  7 Mar 2023 17:49:14 +0100
+Message-Id: <20230307170002.516902305@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,38 +38,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Kishon Vijay Abraham I <kvijayab@amd.com>
 
-[ Upstream commit 740862bb5f59b93efb390a417995f88a64bdc323 ]
+[ Upstream commit e2869bd7af608c343988429ceb1c2fe99644a01f ]
 
-The pin config entry should have a string, not number, for the GPIO used
-as WCD9340 audio codec interrupt.
+Section 5.2.12.12 Processor Local x2APIC Structure in the ACPI v6.5
+spec mandates that both "enabled" and "online capable" Local APIC Flags
+should be used to determine if the processor is usable or not.
 
-Fixes: 89a32a4e769c ("arm64: dts: qcom: db845c: add analog audio support")
-Reported-by: Doug Anderson <dianders@chromium.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221222151319.122398-1-krzysztof.kozlowski@linaro.org
+However, Linux doesn't use the "online capable" flag for x2APIC to
+determine if the processor is usable. As a result, cpu_possible_mask has
+incorrect value and results in more memory getting allocated for per_cpu
+variables than it is going to be used.
+
+Make sure Linux parses both "enabled" and "online capable" flags for
+x2APIC to correctly determine if the processor is usable.
+
+Fixes: aa06e20f1be6 ("x86/ACPI: Don't add CPUs that are not online capable")
+Reported-by: Leo Duran <leo.duran@amd.com>
+Signed-off-by: Kishon Vijay Abraham I <kvijayab@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/20230105041059.39366-1-kvijayab@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/acpi/boot.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index a3e15dedd60cb..c289bf0903b45 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -969,7 +969,7 @@ sdc2_card_det_n: sd-card-det-n {
- 	};
+diff --git a/arch/x86/kernel/acpi/boot.c b/arch/x86/kernel/acpi/boot.c
+index 907cc98b19380..518bda50068cb 100644
+--- a/arch/x86/kernel/acpi/boot.c
++++ b/arch/x86/kernel/acpi/boot.c
+@@ -188,6 +188,17 @@ static int acpi_register_lapic(int id, u32 acpiid, u8 enabled)
+ 	return cpu;
+ }
  
- 	wcd_intr_default: wcd_intr_default {
--		pins = <54>;
-+		pins = "gpio54";
- 		function = "gpio";
++static bool __init acpi_is_processor_usable(u32 lapic_flags)
++{
++	if (lapic_flags & ACPI_MADT_ENABLED)
++		return true;
++
++	if (acpi_support_online_capable && (lapic_flags & ACPI_MADT_ONLINE_CAPABLE))
++		return true;
++
++	return false;
++}
++
+ static int __init
+ acpi_parse_x2apic(union acpi_subtable_headers *header, const unsigned long end)
+ {
+@@ -212,6 +223,10 @@ acpi_parse_x2apic(union acpi_subtable_headers *header, const unsigned long end)
+ 	if (apic_id == 0xffffffff)
+ 		return 0;
  
- 		input-enable;
++	/* don't register processors that cannot be onlined */
++	if (!acpi_is_processor_usable(processor->lapic_flags))
++		return 0;
++
+ 	/*
+ 	 * We need to register disabled CPU as well to permit
+ 	 * counting disabled CPUs. This allows us to size
+@@ -250,9 +265,7 @@ acpi_parse_lapic(union acpi_subtable_headers * header, const unsigned long end)
+ 		return 0;
+ 
+ 	/* don't register processors that can not be onlined */
+-	if (acpi_support_online_capable &&
+-	    !(processor->lapic_flags & ACPI_MADT_ENABLED) &&
+-	    !(processor->lapic_flags & ACPI_MADT_ONLINE_CAPABLE))
++	if (!acpi_is_processor_usable(processor->lapic_flags))
+ 		return 0;
+ 
+ 	/*
 -- 
 2.39.2
 
