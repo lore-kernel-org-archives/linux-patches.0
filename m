@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB545BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:33:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32411C433EF;
-	Tue,  7 Mar 2023 18:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEEFBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:33:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53272C433EF;
+	Tue,  7 Mar 2023 18:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214006;
-	bh=HtEflstP9YVFSqBhKRZ5o60xntNJ2+/ynZx50FIm420=;
+	s=korg; t=1678214009;
+	bh=9q2CjSzVFzF+6ST2/NI9U+Wb5Hesf4447CQCQOBdN/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v6Fu2Kt2CH7AFE7GuzTE5ZmFBadQQb6u11hm45Wop0b8S1d/KXKbn2ZsU7a5sqFDQ
-	 +gnsXP3Px5pWFs2Rkn6TzfsAj0KSb+VOTyUbj6EIcNtjgBHvaObI7XGPr4pwqblvKD
-	 FbNAwOyp5mVGNU3Ey40Ada2jX7u4m8O7FxsBnjh4=
+	b=e3ZBnnf0e4Dsiru12uxS11/41aqu9/bXIcBJDWzrT0T2EZGVVIFKlX20z+i0ANiF8
+	 noTwvzWSLl61q1ygZ7mKv6XUyNJhQER3EE/9tg5KBIkbSrQRMZSBqoLQqub6sPV+b1
+	 ABYUkTNIOaqqgbVt9cGkmrOC0MC3tS5V96A1vSYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+57e3e98f7e3b80f64d56@syzkaller.appspotmail.com,
-	Dongliang Mu <mudongliangabcd@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	"Theodore Tso" <tytso@mit.edu>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 690/885] fs: hfsplus: fix UAF issue in hfsplus_put_super
-Date: Tue,  7 Mar 2023 18:00:24 +0100
-Message-Id: <20230307170032.093640491@linuxfoundation.org>
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Andy Wu <Andy.Wu@sony.com>,
+	Aoyama Wataru <wataru.aoyama@sony.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.1 691/885] exfat: fix reporting fs error when reading dir beyond EOF
+Date: Tue,  7 Mar 2023 18:00:25 +0100
+Message-Id: <20230307170032.130487134@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -40,52 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dongliang Mu <mudongliangabcd@gmail.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-commit 07db5e247ab5858439b14dd7cc1fe538b9efcf32 upstream.
+commit 706fdcac002316893434d753be8cfb549fe1d40d upstream.
 
-The current hfsplus_put_super first calls hfs_btree_close on
-sbi->ext_tree, then invokes iput on sbi->hidden_dir, resulting in an
-use-after-free issue in hfsplus_release_folio.
+Since seekdir() does not check whether the position is valid, the
+position may exceed the size of the directory. We found that for
+a directory with discontinuous clusters, if the position exceeds
+the size of the directory and the excess size is greater than or
+equal to the cluster size, exfat_readdir() will return -EIO,
+causing a file system error and making the file system unavailable.
 
-As shown in hfsplus_fill_super, the error handling code also calls iput
-before hfs_btree_close.
+Reproduce this bug by:
 
-To fix this error, we move all iput calls before hfsplus_btree_close.
+seekdir(dir, dir_size + cluster_size);
+dirent = readdir(dir);
 
-Note that this patch is tested on Syzbot.
+The following log will be printed if mount with 'errors=remount-ro'.
 
-Link: https://lkml.kernel.org/r/20230226124948.3175736-1-mudongliangabcd@gmail.com
-Reported-by: syzbot+57e3e98f7e3b80f64d56@syzkaller.appspotmail.com
-Tested-by: Dongliang Mu <mudongliangabcd@gmail.com>
-Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
-Cc: Bart Van Assche <bvanassche@acm.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: "Theodore Ts'o" <tytso@mit.edu>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[11166.712896] exFAT-fs (sdb1): error, invalid access to FAT (entry 0xffffffff)
+[11166.712905] exFAT-fs (sdb1): Filesystem has been set read-only
+
+Fixes: 1e5654de0f51 ("exfat: handle wrong stream entry size in exfat_readdir()")
+Cc: stable@vger.kernel.org # v5.7+
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Andy Wu <Andy.Wu@sony.com>
+Reviewed-by: Aoyama Wataru <wataru.aoyama@sony.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfsplus/super.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/exfat/dir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/hfsplus/super.c
-+++ b/fs/hfsplus/super.c
-@@ -295,11 +295,11 @@ static void hfsplus_put_super(struct sup
- 		hfsplus_sync_fs(sb, 1);
- 	}
+--- a/fs/exfat/dir.c
++++ b/fs/exfat/dir.c
+@@ -102,7 +102,7 @@ static int exfat_readdir(struct inode *i
+ 			clu.dir = ei->hint_bmap.clu;
+ 		}
  
-+	iput(sbi->alloc_file);
-+	iput(sbi->hidden_dir);
- 	hfs_btree_close(sbi->attr_tree);
- 	hfs_btree_close(sbi->cat_tree);
- 	hfs_btree_close(sbi->ext_tree);
--	iput(sbi->alloc_file);
--	iput(sbi->hidden_dir);
- 	kfree(sbi->s_vhdr_buf);
- 	kfree(sbi->s_backup_vhdr_buf);
- 	unload_nls(sbi->nls);
+-		while (clu_offset > 0) {
++		while (clu_offset > 0 && clu.dir != EXFAT_EOF_CLUSTER) {
+ 			if (exfat_get_next_cluster(sb, &(clu.dir)))
+ 				return -EIO;
+ 
 
 
