@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEDFBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:50:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64B9C433D2;
-	Tue,  7 Mar 2023 18:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FD2BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:50:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87A6C433EF;
+	Tue,  7 Mar 2023 18:50:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215048;
-	bh=idwDRTtznNP3pUepg9fUWVEQg0x44oku9KvgNC5P1g8=;
+	s=korg; t=1678215051;
+	bh=mtwwF1p3cwQQwwydNl4TwINE95vZ62i3LE2XQ20Zj+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kT0hX1DB4Xs7VFhDt2p+sZ68kcvj0JEHhK0Sks2cjkFi4oxxBs3WFcg5enj+8fmXc
-	 Gnpwh80KdegTHy7+Nhg497CgbFCbWJN5VPTp+P1vaWqTzxj8sq8a3haw+OoPRmThpK
-	 21hMTlORPc08yWHBQ19QIpqcM5hNz76TGZehUKPw=
+	b=vkxyD4PLRXyRF5VY/N8GhsrbSbb3RY3L+0Yy7TMC/EEN0AtXFT2H/mVFAiFkUgIUF
+	 hdGITounggohmgFPEs9D2Omq6uVt9tHyLrF4ZdiJ8BqLNvxTWD+YiGFGEzv8H24kRH
+	 XnuQjb7XGfWY3ga8RT13swNJS2DO8jVijkAJu2T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 135/567] tap: tap_open(): correctly initialize socket uid
-Date: Tue,  7 Mar 2023 17:57:51 +0100
-Message-Id: <20230307165911.746045397@linuxfoundation.org>
+Subject: [PATCH 5.15 136/567] OPP: fix error checking in opp_migrate_dentry()
+Date: Tue,  7 Mar 2023 17:57:52 +0100
+Message-Id: <20230307165911.786038602@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,45 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-[ Upstream commit 66b2c338adce580dfce2199591e65e2bab889cff ]
+[ Upstream commit eca4c0eea53432ec4b711b2a8ad282cbad231b4f ]
 
-sock_init_data() assumes that the `struct socket` passed in input is
-contained in a `struct socket_alloc` allocated with sock_alloc().
-However, tap_open() passes a `struct socket` embedded in a `struct
-tap_queue` allocated with sk_alloc().
-This causes a type confusion when issuing a container_of() with
-SOCK_INODE() in sock_init_data() which results in assigning a wrong
-sk_uid to the `struct sock` in input.
-On default configuration, the type confused field overlaps with
-padding bytes between `int vnet_hdr_sz` and `struct tap_dev __rcu
-*tap` in `struct tap_queue`, which makes the uid of all tap sockets 0,
-i.e., the root one.
-Fix the assignment by using sock_init_data_uid().
+Since commit ff9fb72bc077 ("debugfs: return error values,
+not NULL") changed return value of debugfs_rename() in
+error cases from %NULL to %ERR_PTR(-ERROR), we should
+also check error values instead of NULL.
 
-Fixes: 86741ec25462 ("net: core: Add a UID field to struct sock.")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: ff9fb72bc077 ("debugfs: return error values, not NULL")
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tap.c | 2 +-
+ drivers/opp/debugfs.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/tap.c b/drivers/net/tap.c
-index ba2ef5437e167..854ed2f21d32c 100644
---- a/drivers/net/tap.c
-+++ b/drivers/net/tap.c
-@@ -523,7 +523,7 @@ static int tap_open(struct inode *inode, struct file *file)
- 	q->sock.state = SS_CONNECTED;
- 	q->sock.file = file;
- 	q->sock.ops = &tap_socket_ops;
--	sock_init_data(&q->sock, &q->sk);
-+	sock_init_data_uid(&q->sock, &q->sk, inode->i_uid);
- 	q->sk.sk_write_space = tap_sock_write_space;
- 	q->sk.sk_destruct = tap_sock_destruct;
- 	q->flags = IFF_VNET_HDR | IFF_NO_PI | IFF_TAP;
+diff --git a/drivers/opp/debugfs.c b/drivers/opp/debugfs.c
+index b5f2f9f393926..9eb71f47487b2 100644
+--- a/drivers/opp/debugfs.c
++++ b/drivers/opp/debugfs.c
+@@ -209,7 +209,7 @@ static void opp_migrate_dentry(struct opp_device *opp_dev,
+ 
+ 	dentry = debugfs_rename(rootdir, opp_dev->dentry, rootdir,
+ 				opp_table->dentry_name);
+-	if (!dentry) {
++	if (IS_ERR(dentry)) {
+ 		dev_err(dev, "%s: Failed to rename link from: %s to %s\n",
+ 			__func__, dev_name(opp_dev->dev), dev_name(dev));
+ 		return;
 -- 
 2.39.2
 
