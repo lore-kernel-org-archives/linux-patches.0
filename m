@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCFCBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:28:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8DCC433D2;
-	Tue,  7 Mar 2023 17:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0303CBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:28:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D73C433D2;
+	Tue,  7 Mar 2023 17:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210130;
-	bh=NXGQ01tlgLQN7MbI9LHosK6ExbGw+zd4mydgOVcpzk4=;
+	s=korg; t=1678210133;
+	bh=7kLTaSQ8pxMlbLNsfKnicbmuYg/+q5pq/i7tK+wQkag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RdjYOK85ACdZi6FPXTLZe6VIi1d6C+sNIwy6pBw5a4x78MVnoQdHbkbMR7VK+gFvf
-	 P1Tof8c/ze5adgdIbSqBRtcYaLBipao2oAkjuFY6xDVEkpxs6uccewirB3FMPS8MEd
-	 Vr4PcTnfm1w7bMf0zcFfNa1KAf8EfuQSUqTG6Sgc=
+	b=k0/uNIhDwKTcVsNT8Xfa6Y/xXNZHEMOPlYoBMbaZYgEpPtKhjQiIOJIS4RLqNVbJW
+	 xM6YIJGsCuSl4KnE/5gUAgRRakaZKLZ5b2zDIhHl5iqZNVh/Uu5ZnVYWF9hozI8byp
+	 UDCLoQyBxhFayUt+rzV1C8pRRw3lnHzYWa4H6zPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0425/1001] ASoC: qcom: q6apm-dai: fix race condition while updating the position pointer
-Date: Tue,  7 Mar 2023 17:53:17 +0100
-Message-Id: <20230307170039.805975962@linuxfoundation.org>
+Subject: [PATCH 6.2 0443/1001] HID: bigben: use spinlock to protect concurrent accesses
+Date: Tue,  7 Mar 2023 17:53:35 +0100
+Message-Id: <20230307170040.564887901@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,97 +35,171 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 84222ef54bfd8f043c23c8603fd5257a64b00780 ]
+[ Upstream commit 9fefb6201c4f8dd9f58c581b2a66e5cde2895ea2 ]
 
-It is noticed that the position pointer value seems to get a get corrupted
-due to missing locking between updating and reading.
+bigben driver has a worker that may access data concurrently.
+Proct the accesses using a spinlock.
 
-Fix this by adding a spinlock around the position pointer.
-
-Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230209122806.18923-3-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 256a90ed9e46 ("HID: hid-bigbenff: driver for BigBen Interactive PS3OFMINIPAD gamepad")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-1-7860c5763c38@diag.uniroma1.it
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-dai.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/hid/hid-bigbenff.c | 52 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 50 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
-index ee59ef36b85a6..bd35067a40521 100644
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -8,6 +8,7 @@
- #include <linux/slab.h>
- #include <sound/soc.h>
- #include <sound/soc-dapm.h>
-+#include <linux/spinlock.h>
- #include <sound/pcm.h>
- #include <asm/dma.h>
- #include <linux/dma-mapping.h>
-@@ -53,6 +54,7 @@ struct q6apm_dai_rtd {
- 	uint16_t session_id;
- 	enum stream_state state;
- 	struct q6apm_graph *graph;
+diff --git a/drivers/hid/hid-bigbenff.c b/drivers/hid/hid-bigbenff.c
+index e8b16665860d6..ed3d2d7bc1dd4 100644
+--- a/drivers/hid/hid-bigbenff.c
++++ b/drivers/hid/hid-bigbenff.c
+@@ -174,6 +174,7 @@ static __u8 pid0902_rdesc_fixed[] = {
+ struct bigben_device {
+ 	struct hid_device *hid;
+ 	struct hid_report *report;
 +	spinlock_t lock;
- };
- 
- struct q6apm_dai_data {
-@@ -99,20 +101,25 @@ static void event_handler(uint32_t opcode, uint32_t token, uint32_t *payload, vo
- {
- 	struct q6apm_dai_rtd *prtd = priv;
- 	struct snd_pcm_substream *substream = prtd->substream;
+ 	bool removed;
+ 	u8 led_state;         /* LED1 = 1 .. LED4 = 8 */
+ 	u8 right_motor_on;    /* right motor off/on 0/1 */
+@@ -190,12 +191,27 @@ static void bigben_worker(struct work_struct *work)
+ 	struct bigben_device *bigben = container_of(work,
+ 		struct bigben_device, worker);
+ 	struct hid_field *report_field = bigben->report->field[0];
++	bool do_work_led = false;
++	bool do_work_ff = false;
++	u8 *buf;
++	u32 len;
 +	unsigned long flags;
  
- 	switch (opcode) {
- 	case APM_CLIENT_EVENT_CMD_EOS_DONE:
- 		prtd->state = Q6APM_STREAM_STOPPED;
- 		break;
- 	case APM_CLIENT_EVENT_DATA_WRITE_DONE:
-+	        spin_lock_irqsave(&prtd->lock, flags);
- 		prtd->pos += prtd->pcm_count;
-+		spin_unlock_irqrestore(&prtd->lock, flags);
- 		snd_pcm_period_elapsed(substream);
- 		if (prtd->state == Q6APM_STREAM_RUNNING)
- 			q6apm_write_async(prtd->graph, prtd->pcm_count, 0, 0, 0);
+ 	if (bigben->removed || !report_field)
+ 		return;
  
- 		break;
- 	case APM_CLIENT_EVENT_DATA_READ_DONE:
-+	        spin_lock_irqsave(&prtd->lock, flags);
- 		prtd->pos += prtd->pcm_count;
-+		spin_unlock_irqrestore(&prtd->lock, flags);
- 		snd_pcm_period_elapsed(substream);
- 		if (prtd->state == Q6APM_STREAM_RUNNING)
- 			q6apm_read(prtd->graph);
-@@ -253,6 +260,7 @@ static int q6apm_dai_open(struct snd_soc_component *component,
- 	if (prtd == NULL)
- 		return -ENOMEM;
- 
-+	spin_lock_init(&prtd->lock);
- 	prtd->substream = substream;
- 	prtd->graph = q6apm_graph_open(dev, (q6apm_cb)event_handler, prtd, graph_id);
- 	if (IS_ERR(prtd->graph)) {
-@@ -332,11 +340,17 @@ static snd_pcm_uframes_t q6apm_dai_pointer(struct snd_soc_component *component,
- {
- 	struct snd_pcm_runtime *runtime = substream->runtime;
- 	struct q6apm_dai_rtd *prtd = runtime->private_data;
-+	snd_pcm_uframes_t ptr;
-+	unsigned long flags;
- 
-+	spin_lock_irqsave(&prtd->lock, flags);
- 	if (prtd->pos == prtd->pcm_size)
- 		prtd->pos = 0;
- 
--	return bytes_to_frames(runtime, prtd->pos);
-+	ptr =  bytes_to_frames(runtime, prtd->pos);
-+	spin_unlock_irqrestore(&prtd->lock, flags);
++	buf = hid_alloc_report_buf(bigben->report, GFP_KERNEL);
++	if (!buf)
++		return;
 +
-+	return ptr;
++	len = hid_report_len(bigben->report);
++
++	/* LED work */
++	spin_lock_irqsave(&bigben->lock, flags);
++
+ 	if (bigben->work_led) {
+ 		bigben->work_led = false;
++		do_work_led = true;
+ 		report_field->value[0] = 0x01; /* 1 = led message */
+ 		report_field->value[1] = 0x08; /* reserved value, always 8 */
+ 		report_field->value[2] = bigben->led_state;
+@@ -204,11 +220,22 @@ static void bigben_worker(struct work_struct *work)
+ 		report_field->value[5] = 0x00; /* padding */
+ 		report_field->value[6] = 0x00; /* padding */
+ 		report_field->value[7] = 0x00; /* padding */
+-		hid_hw_request(bigben->hid, bigben->report, HID_REQ_SET_REPORT);
++		hid_output_report(bigben->report, buf);
++	}
++
++	spin_unlock_irqrestore(&bigben->lock, flags);
++
++	if (do_work_led) {
++		hid_hw_raw_request(bigben->hid, bigben->report->id, buf, len,
++				   bigben->report->type, HID_REQ_SET_REPORT);
+ 	}
+ 
++	/* FF work */
++	spin_lock_irqsave(&bigben->lock, flags);
++
+ 	if (bigben->work_ff) {
+ 		bigben->work_ff = false;
++		do_work_ff = true;
+ 		report_field->value[0] = 0x02; /* 2 = rumble effect message */
+ 		report_field->value[1] = 0x08; /* reserved value, always 8 */
+ 		report_field->value[2] = bigben->right_motor_on;
+@@ -217,8 +244,17 @@ static void bigben_worker(struct work_struct *work)
+ 		report_field->value[5] = 0x00; /* padding */
+ 		report_field->value[6] = 0x00; /* padding */
+ 		report_field->value[7] = 0x00; /* padding */
+-		hid_hw_request(bigben->hid, bigben->report, HID_REQ_SET_REPORT);
++		hid_output_report(bigben->report, buf);
++	}
++
++	spin_unlock_irqrestore(&bigben->lock, flags);
++
++	if (do_work_ff) {
++		hid_hw_raw_request(bigben->hid, bigben->report->id, buf, len,
++				   bigben->report->type, HID_REQ_SET_REPORT);
+ 	}
++
++	kfree(buf);
  }
  
- static int q6apm_dai_hw_params(struct snd_soc_component *component,
+ static int hid_bigben_play_effect(struct input_dev *dev, void *data,
+@@ -228,6 +264,7 @@ static int hid_bigben_play_effect(struct input_dev *dev, void *data,
+ 	struct bigben_device *bigben = hid_get_drvdata(hid);
+ 	u8 right_motor_on;
+ 	u8 left_motor_force;
++	unsigned long flags;
+ 
+ 	if (!bigben) {
+ 		hid_err(hid, "no device data\n");
+@@ -242,9 +279,12 @@ static int hid_bigben_play_effect(struct input_dev *dev, void *data,
+ 
+ 	if (right_motor_on != bigben->right_motor_on ||
+ 			left_motor_force != bigben->left_motor_force) {
++		spin_lock_irqsave(&bigben->lock, flags);
+ 		bigben->right_motor_on   = right_motor_on;
+ 		bigben->left_motor_force = left_motor_force;
+ 		bigben->work_ff = true;
++		spin_unlock_irqrestore(&bigben->lock, flags);
++
+ 		schedule_work(&bigben->worker);
+ 	}
+ 
+@@ -259,6 +299,7 @@ static void bigben_set_led(struct led_classdev *led,
+ 	struct bigben_device *bigben = hid_get_drvdata(hid);
+ 	int n;
+ 	bool work;
++	unsigned long flags;
+ 
+ 	if (!bigben) {
+ 		hid_err(hid, "no device data\n");
+@@ -267,6 +308,7 @@ static void bigben_set_led(struct led_classdev *led,
+ 
+ 	for (n = 0; n < NUM_LEDS; n++) {
+ 		if (led == bigben->leds[n]) {
++			spin_lock_irqsave(&bigben->lock, flags);
+ 			if (value == LED_OFF) {
+ 				work = (bigben->led_state & BIT(n));
+ 				bigben->led_state &= ~BIT(n);
+@@ -274,6 +316,7 @@ static void bigben_set_led(struct led_classdev *led,
+ 				work = !(bigben->led_state & BIT(n));
+ 				bigben->led_state |= BIT(n);
+ 			}
++			spin_unlock_irqrestore(&bigben->lock, flags);
+ 
+ 			if (work) {
+ 				bigben->work_led = true;
+@@ -307,8 +350,12 @@ static enum led_brightness bigben_get_led(struct led_classdev *led)
+ static void bigben_remove(struct hid_device *hid)
+ {
+ 	struct bigben_device *bigben = hid_get_drvdata(hid);
++	unsigned long flags;
+ 
++	spin_lock_irqsave(&bigben->lock, flags);
+ 	bigben->removed = true;
++	spin_unlock_irqrestore(&bigben->lock, flags);
++
+ 	cancel_work_sync(&bigben->worker);
+ 	hid_hw_stop(hid);
+ }
+@@ -362,6 +409,7 @@ static int bigben_probe(struct hid_device *hid,
+ 	set_bit(FF_RUMBLE, hidinput->input->ffbit);
+ 
+ 	INIT_WORK(&bigben->worker, bigben_worker);
++	spin_lock_init(&bigben->lock);
+ 
+ 	error = input_ff_create_memless(hidinput->input, NULL,
+ 		hid_bigben_play_effect);
 -- 
 2.39.2
 
