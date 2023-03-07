@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F8BBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:22:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD400C4339B;
-	Tue,  7 Mar 2023 17:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D890BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:22:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C5EC4339B;
+	Tue,  7 Mar 2023 17:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209732;
-	bh=DnzysaGZBjVQCIUX9rF6rBbtTkXGZeN4zPjwDCD6FxE=;
+	s=korg; t=1678209735;
+	bh=koPD8X5mai+o4kt34FR0C4NKCysYLV03bljqLhRc+KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xxAlmWih9g1FshUGHbgl3ACmXylujQiOKwxZe79quZlmhce9Jb52+I708gA0FaZiT
-	 MvY8UB4CNOZqCgAggdx/yeJsikNmYVnlUkTY6olmxofUhLzz1gEF/rCEGHJlxrJJKS
-	 F9rGUbuPTnAqpliziDx4ALimmcB+GZNL+tGABmSo=
+	b=SAP9nBIq0mWtS0sDp7sFiKk3vjOEPs9V1jADR5fZf2CEAfFZaBS90HY1l3HzhmnPl
+	 JzFudml0Z5cAKwaET5dwwPO6yVNsqyOam/zyePeeC/qnuUU/se3Vf9xpg9J3+VP3C5
+	 ycYa+FM7kKAJOEwB+36/ZGiNNpe9foyYwZyO+n7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hengqi Chen <hengqi.chen@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Stanislav Fomichev <sdf@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0313/1001] LoongArch, bpf: Use 4 instructions for function address in JIT
-Date: Tue,  7 Mar 2023 17:51:25 +0100
-Message-Id: <20230307170035.135545645@linuxfoundation.org>
+Subject: [PATCH 6.2 0314/1001] bpf: Fix global subprog context argument resolution logic
+Date: Tue,  7 Mar 2023 17:51:26 +0100
+Message-Id: <20230307170035.183931849@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,81 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hengqi Chen <hengqi.chen@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 64f50f6575721ef03d001e907455cbe3baa2a5b1 ]
+[ Upstream commit d384dce281ed1b504fae2e279507827638d56fa3 ]
 
-This patch fixes the following issue of function calls in JIT, like:
+KPROBE program's user-facing context type is defined as typedef
+bpf_user_pt_regs_t. This leads to a problem when trying to passing
+kprobe/uprobe/usdt context argument into global subprog, as kernel
+always strip away mods and typedefs of user-supplied type, but takes
+expected type from bpf_ctx_convert as is, which causes mismatch.
 
-  [   29.346981] multi-func JIT bug 105 != 103
+Current way to work around this is to define a fake struct with the same
+name as expected typedef:
 
-The issus can be reproduced by running the "inline simple bpf_loop call"
-verifier test.
+  struct bpf_user_pt_regs_t {};
 
-This is because we are emiting 2-4 instructions for 64-bit immediate moves.
-During the first pass of JIT, the placeholder address is zero, emiting two
-instructions for it. In the extra pass, the function address is in XKVRANGE,
-emiting four instructions for it. This change the instruction index in
-JIT context. Let's always use 4 instructions for function address in JIT.
-So that the instruction sequences don't change between the first pass and
-the extra pass for function calls.
+  __noinline my_global_subprog(struct bpf_user_pt_regs_t *ctx) { ... }
 
-Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
-Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
+This patch fixes the issue by resolving expected type, if it's not
+a struct. It still leaves the above work-around working for backwards
+compatibility.
+
+Fixes: 91cc1a99740e ("bpf: Annotate context types")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Link: https://lore.kernel.org/bpf/20230214152633.2265699-1-hengqi.chen@gmail.com
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/bpf/20230216045954.3002473-2-andrii@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/net/bpf_jit.c |  2 +-
- arch/loongarch/net/bpf_jit.h | 21 +++++++++++++++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ kernel/bpf/btf.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index c4b1947ebf768..288003a9f0cae 100644
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -841,7 +841,7 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
- 		if (ret < 0)
- 			return ret;
- 
--		move_imm(ctx, t1, func_addr, is32);
-+		move_addr(ctx, t1, func_addr);
- 		emit_insn(ctx, jirl, t1, LOONGARCH_GPR_RA, 0);
- 		move_reg(ctx, regmap[BPF_REG_0], LOONGARCH_GPR_A0);
- 		break;
-diff --git a/arch/loongarch/net/bpf_jit.h b/arch/loongarch/net/bpf_jit.h
-index ca708024fdd3e..c335dc4eed370 100644
---- a/arch/loongarch/net/bpf_jit.h
-+++ b/arch/loongarch/net/bpf_jit.h
-@@ -82,6 +82,27 @@ static inline void emit_sext_32(struct jit_ctx *ctx, enum loongarch_gpr reg, boo
- 	emit_insn(ctx, addiw, reg, reg, 0);
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index b7017cae6fd1e..530e200fbc477 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -5573,6 +5573,7 @@ btf_get_prog_ctx_type(struct bpf_verifier_log *log, const struct btf *btf,
+ 	if (!ctx_struct)
+ 		/* should not happen */
+ 		return NULL;
++again:
+ 	ctx_tname = btf_name_by_offset(btf_vmlinux, ctx_struct->name_off);
+ 	if (!ctx_tname) {
+ 		/* should not happen */
+@@ -5586,8 +5587,16 @@ btf_get_prog_ctx_type(struct bpf_verifier_log *log, const struct btf *btf,
+ 	 * int socket_filter_bpf_prog(struct __sk_buff *skb)
+ 	 * { // no fields of skb are ever used }
+ 	 */
+-	if (strcmp(ctx_tname, tname))
+-		return NULL;
++	if (strcmp(ctx_tname, tname)) {
++		/* bpf_user_pt_regs_t is a typedef, so resolve it to
++		 * underlying struct and check name again
++		 */
++		if (!btf_type_is_modifier(ctx_struct))
++			return NULL;
++		while (btf_type_is_modifier(ctx_struct))
++			ctx_struct = btf_type_by_id(btf_vmlinux, ctx_struct->type);
++		goto again;
++	}
+ 	return ctx_type;
  }
  
-+static inline void move_addr(struct jit_ctx *ctx, enum loongarch_gpr rd, u64 addr)
-+{
-+	u64 imm_11_0, imm_31_12, imm_51_32, imm_63_52;
-+
-+	/* lu12iw rd, imm_31_12 */
-+	imm_31_12 = (addr >> 12) & 0xfffff;
-+	emit_insn(ctx, lu12iw, rd, imm_31_12);
-+
-+	/* ori rd, rd, imm_11_0 */
-+	imm_11_0 = addr & 0xfff;
-+	emit_insn(ctx, ori, rd, rd, imm_11_0);
-+
-+	/* lu32id rd, imm_51_32 */
-+	imm_51_32 = (addr >> 32) & 0xfffff;
-+	emit_insn(ctx, lu32id, rd, imm_51_32);
-+
-+	/* lu52id rd, rd, imm_63_52 */
-+	imm_63_52 = (addr >> 52) & 0xfff;
-+	emit_insn(ctx, lu52id, rd, rd, imm_63_52);
-+}
-+
- static inline void move_imm(struct jit_ctx *ctx, enum loongarch_gpr rd, long imm, bool is32)
- {
- 	long imm_11_0, imm_31_12, imm_51_32, imm_63_52, imm_51_0, imm_51_31;
 -- 
 2.39.2
 
