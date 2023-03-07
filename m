@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B345BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:41:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6AB4C433A1;
-	Tue,  7 Mar 2023 18:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F47BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:41:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8256C433D2;
+	Tue,  7 Mar 2023 18:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214486;
-	bh=4ESyf6xhul6VZ8JrwY4WdLacfcd0MT65HXrkcNvlxVU=;
+	s=korg; t=1678214489;
+	bh=VNvO9JWcWvbsA+9KZxtEL+cDxpbfSNx7qWMsu7MNi18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j4v/sMw6umexvLn80U7xCohkbMTCg28ru2fykMondAWIjpqK9KZG+0ZR8YdfV40lr
-	 eBTz31n4KN5RDmQss6/Kmi9utsenIeO4g+YivlyIQEO7fC6HzVS17qEe76xNmz5cD3
-	 ZctDcO25u+T7layqXZE3mTaks/DnBPaPvGoFzPhI=
+	b=aQtDqH2j8hhYKKMhy0wbGkj6yQNtoCfqoKEkIF4IRJVWTTtiqif0Z9gYLq62Ecdwx
+	 KjkZVkPQN3/zLj1+De4INZ9PsBqUASav259ZTrJLDaMn4YZX+RmINOVDpz1n6BfUd+
+	 1W+GFU0XsdFm8OXyg0Q3xQ1dMKInH8q73nU5dfb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Shakeel Butt <shakeelb@google.com>,
-	Hugh Dickins <hughd@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 831/885] mm: memcontrol: deprecate charge moving
-Date: Tue,  7 Mar 2023 18:02:45 +0100
-Message-Id: <20230307170037.946609862@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 840/885] tracing/eprobe: Fix to add filter on eprobe description in README file
+Date: Tue,  7 Mar 2023 18:02:54 +0100
+Message-Id: <20230307170038.339396581@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -39,100 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit da34a8484d162585e22ed8c1e4114aa2f60e3567 upstream.
+commit 133921530c42960c07d25d12677f9e131a2b0cdf upstream.
 
-Charge moving mode in cgroup1 allows memory to follow tasks as they
-migrate between cgroups.  This is, and always has been, a questionable
-thing to do - for several reasons.
+Fix to add a description of the filter on eprobe in README file. This
+is required to identify the kernel supports the filter on eprobe or not.
 
-First, it's expensive.  Pages need to be identified, locked and isolated
-from various MM operations, and reassigned, one by one.
+Link: https://lore.kernel.org/all/167309833728.640500.12232259238201433587.stgit@devnote3/
 
-Second, it's unreliable.  Once pages are charged to a cgroup, there isn't
-always a clear owner task anymore.  Cache isn't moved at all, for example.
-Mapped memory is moved - but if trylocking or isolating a page fails,
-it's arbitrarily left behind.  Frequent moving between domains may leave a
-task's memory scattered all over the place.
-
-Third, it isn't really needed.  Launcher tasks can kick off workload tasks
-directly in their target cgroup.  Using dedicated per-workload groups
-allows fine-grained policy adjustments - no need to move tasks and their
-physical pages between control domains.  The feature was never
-forward-ported to cgroup2, and it hasn't been missed.
-
-Despite it being a niche usecase, the maintenance overhead of supporting
-it is enormous.  Because pages are moved while they are live and subject
-to various MM operations, the synchronization rules are complicated.
-There are lock_page_memcg() in MM and FS code, which non-cgroup people
-don't understand.  In some cases we've been able to shift code and cgroup
-API calls around such that we can rely on native locking as much as
-possible.  But that's fragile, and sometimes we need to hold MM locks for
-longer than we otherwise would (pte lock e.g.).
-
-Mark the feature deprecated. Hopefully we can remove it soon.
-
-And backport into -stable kernels so that people who develop against
-earlier kernels are warned about this deprecation as early as possible.
-
-[akpm@linux-foundation.org: fix memory.rst underlining]
-Link: https://lkml.kernel.org/r/Y5COd+qXwk/S+n8N@cmpxchg.org
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Acked-by: Hugh Dickins <hughd@google.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 752be5c5c910 ("tracing/eprobe: Add eprobe filter support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/cgroup-v1/memory.rst |   13 +++++++++++--
- mm/memcontrol.c                                |    4 ++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ kernel/trace/trace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/admin-guide/cgroup-v1/memory.rst
-+++ b/Documentation/admin-guide/cgroup-v1/memory.rst
-@@ -86,6 +86,8 @@ Brief summary of control files.
-  memory.swappiness		     set/show swappiness parameter of vmscan
- 				     (See sysctl's vm.swappiness)
-  memory.move_charge_at_immigrate     set/show controls of moving charges
-+                                     This knob is deprecated and shouldn't be
-+                                     used.
-  memory.oom_control		     set/show oom controls.
-  memory.numa_stat		     show the number of memory usage per numa
- 				     node
-@@ -716,8 +718,15 @@ NOTE2:
-        It is recommended to set the soft limit always below the hard limit,
-        otherwise the hard limit will take precedence.
- 
--8. Move charges at task migration
--=================================
-+8. Move charges at task migration (DEPRECATED!)
-+===============================================
-+
-+THIS IS DEPRECATED!
-+
-+It's expensive and unreliable! It's better practice to launch workload
-+tasks directly from inside their target cgroup. Use dedicated workload
-+cgroups to allow fine-grained policy adjustments without having to
-+move physical pages between control domains.
- 
- Users can move charges associated with a task along with task migration, that
- is, uncharge task's pages from the old cgroup and charge them to the new cgroup.
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -3910,6 +3910,10 @@ static int mem_cgroup_move_charge_write(
- {
- 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
- 
-+	pr_warn_once("Cgroup memory moving (move_charge_at_immigrate) is deprecated. "
-+		     "Please report your usecase to linux-mm@kvack.org if you "
-+		     "depend on this functionality.\n");
-+
- 	if (val & ~MOVE_MASK)
- 		return -EINVAL;
- 
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -5599,7 +5599,7 @@ static const char readme_msg[] =
+ #ifdef CONFIG_HIST_TRIGGERS
+ 	"\t           s:[synthetic/]<event> <field> [<field>]\n"
+ #endif
+-	"\t           e[:[<group>/][<event>]] <attached-group>.<attached-event> [<args>]\n"
++	"\t           e[:[<group>/][<event>]] <attached-group>.<attached-event> [<args>] [if <filter>]\n"
+ 	"\t           -:[<group>/][<event>]\n"
+ #ifdef CONFIG_KPROBE_EVENTS
+ 	"\t    place: [<module>:]<symbol>[+<offset>]|<memaddr>\n"
 
 
