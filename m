@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A08BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:19:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBCBC433D2;
-	Tue,  7 Mar 2023 17:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A003FBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:19:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FE1C433EF;
+	Tue,  7 Mar 2023 17:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209570;
-	bh=FkZQHV8xnKm7w4Fonmx6FrD6CN3XCE2VYReutJ3tMsw=;
+	s=korg; t=1678209573;
+	bh=adfI7gkBjRPe8wcG6BmEMiI08lGy4cdEBvKMLwubp/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WNb/HhY2NA9UoW4Jgmecj3aNr1s3QMHeMcg/uW8xnMCKApxWCzXpILuuReWg2RGW4
-	 gbOlvADJq9ZfGiNv9dky8JAAOLNZjU+fONHWeFOsd11v9GRf3kDbyaRd/s6JSTI0g9
-	 VrAyjoB+18i+rxL/GHp+p+i+AJ31uwZIc5HN869c=
+	b=Mu45ZZNhDziaJUAPjceMpVkDqmARRqevKD0+wO8v4Rw8yCzoB05atyL+p5fGX6KNK
+	 VsaDdNjJFLfRr9uvD0CaGUCXD3KISzhjvM/pBoVX0eKEfzkwHu6FTu1a27fOeFbXZg
+	 1d0yqu5JSEiG0xHBp74qAmpQc85Ewn8EbLPtudtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0220/1001] bpf: Fix partial dynptr stack slot reads/writes
-Date: Tue,  7 Mar 2023 17:49:52 +0100
-Message-Id: <20230307170031.437795228@linuxfoundation.org>
+Subject: [PATCH 6.2 0255/1001] irqchip: Fix refcount leak in platform_irqchip_probe
+Date: Tue,  7 Mar 2023 17:50:27 +0100
+Message-Id: <20230307170032.818608463@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,251 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit ef8fc7a07c0e161841779d6fe3f6acd5a05c547c ]
+[ Upstream commit 6caa5a2b78f5f53c433d3a3781e53325da22f0ac ]
 
-Currently, while reads are disallowed for dynptr stack slots, writes are
-not. Reads don't work from both direct access and helpers, while writes
-do work in both cases, but have the effect of overwriting the slot_type.
+of_irq_find_parent() returns a node pointer with refcount incremented,
+We should use of_node_put() on it when not needed anymore.
+Add missing of_node_put() to avoid refcount leak.
 
-While this is fine, handling for a few edge cases is missing. Firstly,
-a user can overwrite the stack slots of dynptr partially.
-
-Consider the following layout:
-spi: [d][d][?]
-      2  1  0
-
-First slot is at spi 2, second at spi 1.
-Now, do a write of 1 to 8 bytes for spi 1.
-
-This will essentially either write STACK_MISC for all slot_types or
-STACK_MISC and STACK_ZERO (in case of size < BPF_REG_SIZE partial write
-of zeroes). The end result is that slot is scrubbed.
-
-Now, the layout is:
-spi: [d][m][?]
-      2  1  0
-
-Suppose if user initializes spi = 1 as dynptr.
-We get:
-spi: [d][d][d]
-      2  1  0
-
-But this time, both spi 2 and spi 1 have first_slot = true.
-
-Now, when passing spi 2 to dynptr helper, it will consider it as
-initialized as it does not check whether second slot has first_slot ==
-false. And spi 1 should already work as normal.
-
-This effectively replaced size + offset of first dynptr, hence allowing
-invalid OOB reads and writes.
-
-Make a few changes to protect against this:
-When writing to PTR_TO_STACK using BPF insns, when we touch spi of a
-STACK_DYNPTR type, mark both first and second slot (regardless of which
-slot we touch) as STACK_INVALID. Reads are already prevented.
-
-Second, prevent writing	to stack memory from helpers if the range may
-contain any STACK_DYNPTR slots. Reads are already prevented.
-
-For helpers, we cannot allow it to destroy dynptrs from the writes as
-depending on arguments, helper may take uninit_mem and dynptr both at
-the same time. This would mean that helper may write to uninit_mem
-before it reads the dynptr, which would be bad.
-
-PTR_TO_MEM: [?????dd]
-
-Depending on the code inside the helper, it may end up overwriting the
-dynptr contents first and then read those as the dynptr argument.
-
-Verifier would only simulate destruction when it does byte by byte
-access simulation in check_helper_call for meta.access_size, and
-fail to catch this case, as it happens after argument checks.
-
-The same would need to be done for any other non-trivial objects created
-on the stack in the future, such as bpf_list_head on stack, or
-bpf_rb_root on stack.
-
-A common misunderstanding in the current code is that MEM_UNINIT means
-writes, but note that writes may also be performed even without
-MEM_UNINIT in case of helpers, in that case the code after handling meta
-&& meta->raw_mode will complain when it sees STACK_DYNPTR. So that
-invalid read case also covers writes to potential STACK_DYNPTR slots.
-The only loophole was in case of meta->raw_mode which simulated writes
-through instructions which could overwrite them.
-
-A future series sequenced after this will focus on the clean up of
-helper access checks and bugs around that.
-
-Fixes: 97e03f521050 ("bpf: Add verifier support for dynptrs")
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20230121002241.2113993-4-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: f8410e626569 ("irqchip: Add IRQCHIP_PLATFORM_DRIVER_BEGIN/END and IRQCHIP_MATCH helper macros")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230102121318.3990586-1-linmq006@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                         | 88 +++++++++++++++++++
- .../testing/selftests/bpf/progs/dynptr_fail.c |  6 +-
- 2 files changed, 91 insertions(+), 3 deletions(-)
+ drivers/irqchip/irqchip.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 749e7f7a720f2..68455fd56eea5 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -769,6 +769,8 @@ static void mark_dynptr_cb_reg(struct bpf_reg_state *reg,
- 	__mark_dynptr_reg(reg, type, true);
+diff --git a/drivers/irqchip/irqchip.c b/drivers/irqchip/irqchip.c
+index 3570f0a588c4b..7899607fbee8d 100644
+--- a/drivers/irqchip/irqchip.c
++++ b/drivers/irqchip/irqchip.c
+@@ -38,8 +38,10 @@ int platform_irqchip_probe(struct platform_device *pdev)
+ 	struct device_node *par_np = of_irq_find_parent(np);
+ 	of_irq_init_cb_t irq_init_cb = of_device_get_match_data(&pdev->dev);
+ 
+-	if (!irq_init_cb)
++	if (!irq_init_cb) {
++		of_node_put(par_np);
+ 		return -EINVAL;
++	}
+ 
+ 	if (par_np == np)
+ 		par_np = NULL;
+@@ -52,8 +54,10 @@ int platform_irqchip_probe(struct platform_device *pdev)
+ 	 * interrupt controller. The actual initialization callback of this
+ 	 * interrupt controller can check for specific domains as necessary.
+ 	 */
+-	if (par_np && !irq_find_matching_host(par_np, DOMAIN_BUS_ANY))
++	if (par_np && !irq_find_matching_host(par_np, DOMAIN_BUS_ANY)) {
++		of_node_put(par_np);
+ 		return -EPROBE_DEFER;
++	}
+ 
+ 	return irq_init_cb(np, par_np);
  }
- 
-+static int destroy_if_dynptr_stack_slot(struct bpf_verifier_env *env,
-+				        struct bpf_func_state *state, int spi);
- 
- static int mark_stack_slots_dynptr(struct bpf_verifier_env *env, struct bpf_reg_state *reg,
- 				   enum bpf_arg_type arg_type, int insn_idx)
-@@ -863,6 +865,55 @@ static int unmark_stack_slots_dynptr(struct bpf_verifier_env *env, struct bpf_re
- 	return 0;
- }
- 
-+static void __mark_reg_unknown(const struct bpf_verifier_env *env,
-+			       struct bpf_reg_state *reg);
-+
-+static int destroy_if_dynptr_stack_slot(struct bpf_verifier_env *env,
-+				        struct bpf_func_state *state, int spi)
-+{
-+	int i;
-+
-+	/* We always ensure that STACK_DYNPTR is never set partially,
-+	 * hence just checking for slot_type[0] is enough. This is
-+	 * different for STACK_SPILL, where it may be only set for
-+	 * 1 byte, so code has to use is_spilled_reg.
-+	 */
-+	if (state->stack[spi].slot_type[0] != STACK_DYNPTR)
-+		return 0;
-+
-+	/* Reposition spi to first slot */
-+	if (!state->stack[spi].spilled_ptr.dynptr.first_slot)
-+		spi = spi + 1;
-+
-+	if (dynptr_type_refcounted(state->stack[spi].spilled_ptr.dynptr.type)) {
-+		verbose(env, "cannot overwrite referenced dynptr\n");
-+		return -EINVAL;
-+	}
-+
-+	mark_stack_slot_scratched(env, spi);
-+	mark_stack_slot_scratched(env, spi - 1);
-+
-+	/* Writing partially to one dynptr stack slot destroys both. */
-+	for (i = 0; i < BPF_REG_SIZE; i++) {
-+		state->stack[spi].slot_type[i] = STACK_INVALID;
-+		state->stack[spi - 1].slot_type[i] = STACK_INVALID;
-+	}
-+
-+	/* TODO: Invalidate any slices associated with this dynptr */
-+
-+	/* Do not release reference state, we are destroying dynptr on stack,
-+	 * not using some helper to release it. Just reset register.
-+	 */
-+	__mark_reg_not_init(env, &state->stack[spi].spilled_ptr);
-+	__mark_reg_not_init(env, &state->stack[spi - 1].spilled_ptr);
-+
-+	/* Same reason as unmark_stack_slots_dynptr above */
-+	state->stack[spi].spilled_ptr.live |= REG_LIVE_WRITTEN;
-+	state->stack[spi - 1].spilled_ptr.live |= REG_LIVE_WRITTEN;
-+
-+	return 0;
-+}
-+
- static bool is_dynptr_reg_valid_uninit(struct bpf_verifier_env *env, struct bpf_reg_state *reg)
- {
- 	struct bpf_func_state *state = func(env, reg);
-@@ -3406,6 +3457,10 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 			env->insn_aux_data[insn_idx].sanitize_stack_spill = true;
- 	}
- 
-+	err = destroy_if_dynptr_stack_slot(env, state, spi);
-+	if (err)
-+		return err;
-+
- 	mark_stack_slot_scratched(env, spi);
- 	if (reg && !(off % BPF_REG_SIZE) && register_is_bounded(reg) &&
- 	    !register_is_null(reg) && env->bpf_capable) {
-@@ -3519,6 +3574,14 @@ static int check_stack_write_var_off(struct bpf_verifier_env *env,
- 	if (err)
- 		return err;
- 
-+	for (i = min_off; i < max_off; i++) {
-+		int spi;
-+
-+		spi = __get_spi(i);
-+		err = destroy_if_dynptr_stack_slot(env, state, spi);
-+		if (err)
-+			return err;
-+	}
- 
- 	/* Variable offset writes destroy any spilled pointers in range. */
- 	for (i = min_off; i < max_off; i++) {
-@@ -5546,6 +5609,31 @@ static int check_stack_range_initialized(
- 	}
- 
- 	if (meta && meta->raw_mode) {
-+		/* Ensure we won't be overwriting dynptrs when simulating byte
-+		 * by byte access in check_helper_call using meta.access_size.
-+		 * This would be a problem if we have a helper in the future
-+		 * which takes:
-+		 *
-+		 *	helper(uninit_mem, len, dynptr)
-+		 *
-+		 * Now, uninint_mem may overlap with dynptr pointer. Hence, it
-+		 * may end up writing to dynptr itself when touching memory from
-+		 * arg 1. This can be relaxed on a case by case basis for known
-+		 * safe cases, but reject due to the possibilitiy of aliasing by
-+		 * default.
-+		 */
-+		for (i = min_off; i < max_off + access_size; i++) {
-+			int stack_off = -i - 1;
-+
-+			spi = __get_spi(i);
-+			/* raw_mode may write past allocated_stack */
-+			if (state->allocated_stack <= stack_off)
-+				continue;
-+			if (state->stack[spi].slot_type[stack_off % BPF_REG_SIZE] == STACK_DYNPTR) {
-+				verbose(env, "potential write to dynptr at off=%d disallowed\n", i);
-+				return -EACCES;
-+			}
-+		}
- 		meta->access_size = access_size;
- 		meta->regno = regno;
- 		return 0;
-diff --git a/tools/testing/selftests/bpf/progs/dynptr_fail.c b/tools/testing/selftests/bpf/progs/dynptr_fail.c
-index 02d57b95cf6ec..9dc3f23a82707 100644
---- a/tools/testing/selftests/bpf/progs/dynptr_fail.c
-+++ b/tools/testing/selftests/bpf/progs/dynptr_fail.c
-@@ -420,7 +420,7 @@ int invalid_write1(void *ctx)
-  * offset
-  */
- SEC("?raw_tp")
--__failure __msg("Expected an initialized dynptr as arg #3")
-+__failure __msg("cannot overwrite referenced dynptr")
- int invalid_write2(void *ctx)
- {
- 	struct bpf_dynptr ptr;
-@@ -444,7 +444,7 @@ int invalid_write2(void *ctx)
-  * non-const offset
-  */
- SEC("?raw_tp")
--__failure __msg("Expected an initialized dynptr as arg #1")
-+__failure __msg("cannot overwrite referenced dynptr")
- int invalid_write3(void *ctx)
- {
- 	struct bpf_dynptr ptr;
-@@ -476,7 +476,7 @@ static int invalid_write4_callback(__u32 index, void *data)
-  * be invalidated as a dynptr
-  */
- SEC("?raw_tp")
--__failure __msg("arg 1 is an unacquired reference")
-+__failure __msg("cannot overwrite referenced dynptr")
- int invalid_write4(void *ctx)
- {
- 	struct bpf_dynptr ptr;
 -- 
 2.39.2
 
