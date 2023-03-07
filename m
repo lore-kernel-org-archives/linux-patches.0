@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9020BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:20:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF032C4339C;
-	Tue,  7 Mar 2023 17:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97424BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:20:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D7CC433EF;
+	Tue,  7 Mar 2023 17:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209607;
-	bh=HZIWujb/y2WJXh7im6m7dJaPfLpTd7Kwtf11QNvNkiw=;
+	s=korg; t=1678209610;
+	bh=P5HzVKcEUCVyb5REcopqsBZna/jJTH8Ems7YQtTQ/AE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nm7J009vLYxa3PAV5jbjG+JaQvKzOV31+ed9iz0XefJNLcQmz4aXx0ZZOPW7LXgi7
-	 CnJo7KG2NLdV7D0QEtSrRGNBupFQSE2VY7P4BCfUIlvQHzyFnulmko3FG7HKJHHKcd
-	 LXvILGVLgcn4UnQ/5D38AqoaItqsLG45T4NE/30I=
+	b=hrO0lgv51HKeJ8ZOimLwtVSys4rXlLo7zNg0FIA3uYgfUP1y5jDUfo4YRX/ynXvhu
+	 CmxDJ2fbP9Zyp1KXDjbpNqhat5lSCV5E5Zk2YCwQgKudn+gf03sF2jEkINI3k25vhi
+	 zjO5cyBjPV8W851sMD4AI9e95lEyBy+RrbmaSIWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Halil Pasic <pasic@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Tony Krowiak <akrowiak@linux.ibm.com>,
+	Pierre Morel <pmorel@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0256/1001] irqchip/alpine-msi: Fix refcount leak in alpine_msix_init_domains
-Date: Tue,  7 Mar 2023 17:50:28 +0100
-Message-Id: <20230307170032.852205391@linuxfoundation.org>
+Subject: [PATCH 6.2 0274/1001] s390: vfio-ap: tighten the NIB validity check
+Date: Tue,  7 Mar 2023 17:50:46 +0100
+Message-Id: <20230307170033.568930511@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,35 +38,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Halil Pasic <pasic@linux.ibm.com>
 
-[ Upstream commit 071d068b89e95d1b078aa6bbcb9d0961b77d6aa1 ]
+[ Upstream commit a64a6d23874c574d30a9816124b2dc37467f3811 ]
 
-of_irq_find_parent() returns a node pointer with refcount incremented,
-We should use of_node_put() on it when not needed anymore.
-Add missing of_node_put() to avoid refcount leak.
+The NIB is architecturally invalid if the address designates a
+storage location that is not installed or if it is zero.
 
-Fixes: e6b78f2c3e14 ("irqchip: Add the Alpine MSIX interrupt controller")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230102082811.3947760-1-linmq006@gmail.com
+Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
+Reported-by: Janosch Frank <frankja@linux.ibm.com>
+Fixes: ec89b55e3bce ("s390: ap: implement PAPQ AQIC interception in kernel")
+Reviewed-by: Tony Krowiak <akrowiak@linux.ibm.com>
+Reviewed-by: Pierre Morel <pmorel@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-alpine-msi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/s390/crypto/vfio_ap_ops.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/irqchip/irq-alpine-msi.c b/drivers/irqchip/irq-alpine-msi.c
-index 5ddb8e578ac6a..fc1ef7de37973 100644
---- a/drivers/irqchip/irq-alpine-msi.c
-+++ b/drivers/irqchip/irq-alpine-msi.c
-@@ -199,6 +199,7 @@ static int alpine_msix_init_domains(struct alpine_msix_data *priv,
- 	}
+diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
+index b0b25bc95985b..2bba5ed83dfcf 100644
+--- a/drivers/s390/crypto/vfio_ap_ops.c
++++ b/drivers/s390/crypto/vfio_ap_ops.c
+@@ -349,6 +349,8 @@ static int vfio_ap_validate_nib(struct kvm_vcpu *vcpu, dma_addr_t *nib)
+ {
+ 	*nib = vcpu->run->s.regs.gprs[2];
  
- 	gic_domain = irq_find_host(gic_node);
-+	of_node_put(gic_node);
- 	if (!gic_domain) {
- 		pr_err("Failed to find the GIC domain\n");
- 		return -ENXIO;
++	if (!*nib)
++		return -EINVAL;
+ 	if (kvm_is_error_hva(gfn_to_hva(vcpu->kvm, *nib >> PAGE_SHIFT)))
+ 		return -EINVAL;
+ 
 -- 
 2.39.2
 
