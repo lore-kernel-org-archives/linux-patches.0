@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399F3BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:13:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934C4C433D2;
-	Tue,  7 Mar 2023 17:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8F5BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:13:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4406C433EF;
+	Tue,  7 Mar 2023 17:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209223;
-	bh=S2Ja300QGTOErBuiTNojxjZrLn3DgQEMRUIelYKT3VM=;
+	s=korg; t=1678209226;
+	bh=5my6dgkuuYSKfA6rE2eruJaJ5gs0EbpqmNhky81/p8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LYKqsJJZeXuwCO8rZstwcQoSDke2+bg97P6xp8h4SDiu3SufX0OO3i6wWoxMehHGT
-	 AEmsZ+90Gur0TYC2AByotPkv+BOhXIU/6bs0XNfnKSw6n70+gamQLI2Squa3Y3pfZe
-	 MKUBqJ0+ajBmfeaocYsO9+sMfBoRZf1GFJWGZ7TI=
+	b=Wm+oDu/Zj/bKEmnLAtF4+SGYesXufvxIldVA7PopxqfR7fzZQJePTOiUnn/0j87Yv
+	 t4/rGIDCqq6zlI4d2UZKS4ufQRSjcPBW+5D83LZ06kLNdNiw0D5sTbM4RisBQwdGsQ
+	 d7xre5in7gr87oCr3Bwfq40VLCkf6E1yH7h6JISg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0122/1001] perf/x86/intel/ds: Fix the conversion from TSC to perf time
-Date: Tue,  7 Mar 2023 17:48:14 +0100
-Message-Id: <20230307170027.375506152@linuxfoundation.org>
+Subject: [PATCH 6.2 0149/1001] wifi: rtlwifi: rtl8821ae: dont call kfree_skb() under spin_lock_irqsave()
+Date: Tue,  7 Mar 2023 17:48:41 +0100
+Message-Id: <20230307170028.514626029@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,116 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 89e97eb8cec0f1af5ebf2380308913256ca7915a ]
+[ Upstream commit 106031c1f4a850915190d7ec1026696282f9359b ]
 
-The time order is incorrect when the TSC in a PEBS record is used.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. All the SKBs have
+been dequeued from the old queue, so it's safe to enqueue these
+SKBs to a free queue, then free them after spin_unlock_irqrestore()
+at once. Compile tested only.
 
- $perf record -e cycles:upp dd if=/dev/zero of=/dev/null
-  count=10000
- $ perf script --show-task-events
-       perf-exec     0     0.000000: PERF_RECORD_COMM: perf-exec:915/915
-              dd   915   106.479872: PERF_RECORD_COMM exec: dd:915/915
-              dd   915   106.483270: PERF_RECORD_EXIT(915:915):(914:914)
-              dd   915   106.512429:          1 cycles:upp:
- ffffffff96c011b7 [unknown] ([unknown])
- ... ...
-
-The perf time is from sched_clock_cpu(). The current PEBS code
-unconditionally convert the TSC to native_sched_clock(). There is a
-shift between the two clocks. If the TSC is stable, the shift is
-consistent, __sched_clock_offset. If the TSC is unstable, the shift has
-to be calculated at runtime.
-
-This patch doesn't support the conversion when the TSC is unstable. The
-TSC unstable case is a corner case and very unlikely to happen. If it
-happens, the TSC in a PEBS record will be dropped and fall back to
-perf_event_clock().
-
-Fixes: 47a3aeb39e8d ("perf/x86/intel/pebs: Fix PEBS timestamps overwritten")
-Reported-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/all/CAM9d7cgWDVAq8-11RbJ2uGfwkKD6fA-OMwOKDrNUrU_=8MgEjg@mail.gmail.com/
+Fixes: 5c99f04fec93 ("rtlwifi: rtl8723be: Update driver to match Realtek release of 06/28/14")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221207141411.46098-2-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/ds.c | 35 ++++++++++++++++++++++++++---------
- 1 file changed, 26 insertions(+), 9 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8821ae/hw.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/ds.c b/arch/x86/events/intel/ds.c
-index 88e58b6ee73c0..91b214231e03c 100644
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -2,12 +2,14 @@
- #include <linux/bitops.h>
- #include <linux/types.h>
- #include <linux/slab.h>
-+#include <linux/sched/clock.h>
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/hw.c b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/hw.c
+index 7e0f62d59fe17..a7e3250957dc9 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/hw.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/hw.c
+@@ -26,8 +26,10 @@ static void _rtl8821ae_return_beacon_queue_skb(struct ieee80211_hw *hw)
+ 	struct rtl_priv *rtlpriv = rtl_priv(hw);
+ 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
+ 	struct rtl8192_tx_ring *ring = &rtlpci->tx_ring[BEACON_QUEUE];
++	struct sk_buff_head free_list;
+ 	unsigned long flags;
  
- #include <asm/cpu_entry_area.h>
- #include <asm/perf_event.h>
- #include <asm/tlbflush.h>
- #include <asm/insn.h>
- #include <asm/io.h>
-+#include <asm/timer.h>
- 
- #include "../perf_event.h"
- 
-@@ -1519,6 +1521,27 @@ static u64 get_data_src(struct perf_event *event, u64 aux)
- 	return val;
++	skb_queue_head_init(&free_list);
+ 	spin_lock_irqsave(&rtlpriv->locks.irq_th_lock, flags);
+ 	while (skb_queue_len(&ring->queue)) {
+ 		struct rtl_tx_desc *entry = &ring->desc[ring->idx];
+@@ -37,10 +39,12 @@ static void _rtl8821ae_return_beacon_queue_skb(struct ieee80211_hw *hw)
+ 				 rtlpriv->cfg->ops->get_desc(hw, (u8 *)entry,
+ 						true, HW_DESC_TXBUFF_ADDR),
+ 				 skb->len, DMA_TO_DEVICE);
+-		kfree_skb(skb);
++		__skb_queue_tail(&free_list, skb);
+ 		ring->idx = (ring->idx + 1) % ring->entries;
+ 	}
+ 	spin_unlock_irqrestore(&rtlpriv->locks.irq_th_lock, flags);
++
++	__skb_queue_purge(&free_list);
  }
  
-+static void setup_pebs_time(struct perf_event *event,
-+			    struct perf_sample_data *data,
-+			    u64 tsc)
-+{
-+	/* Converting to a user-defined clock is not supported yet. */
-+	if (event->attr.use_clockid != 0)
-+		return;
-+
-+	/*
-+	 * Doesn't support the conversion when the TSC is unstable.
-+	 * The TSC unstable case is a corner case and very unlikely to
-+	 * happen. If it happens, the TSC in a PEBS record will be
-+	 * dropped and fall back to perf_event_clock().
-+	 */
-+	if (!using_native_sched_clock() || !sched_clock_stable())
-+		return;
-+
-+	data->time = native_sched_clock_from_tsc(tsc) + __sched_clock_offset;
-+	data->sample_flags |= PERF_SAMPLE_TIME;
-+}
-+
- #define PERF_SAMPLE_ADDR_TYPE	(PERF_SAMPLE_ADDR |		\
- 				 PERF_SAMPLE_PHYS_ADDR |	\
- 				 PERF_SAMPLE_DATA_PAGE_SIZE)
-@@ -1668,11 +1691,8 @@ static void setup_pebs_fixed_sample_data(struct perf_event *event,
- 	 *
- 	 * We can only do this for the default trace clock.
- 	 */
--	if (x86_pmu.intel_cap.pebs_format >= 3 &&
--		event->attr.use_clockid == 0) {
--		data->time = native_sched_clock_from_tsc(pebs->tsc);
--		data->sample_flags |= PERF_SAMPLE_TIME;
--	}
-+	if (x86_pmu.intel_cap.pebs_format >= 3)
-+		setup_pebs_time(event, data, pebs->tsc);
- 
- 	if (has_branch_stack(event)) {
- 		data->br_stack = &cpuc->lbr_stack;
-@@ -1735,10 +1755,7 @@ static void setup_pebs_adaptive_sample_data(struct perf_event *event,
- 	perf_sample_data_init(data, 0, event->hw.last_period);
- 	data->period = event->hw.last_period;
- 
--	if (event->attr.use_clockid == 0) {
--		data->time = native_sched_clock_from_tsc(basic->tsc);
--		data->sample_flags |= PERF_SAMPLE_TIME;
--	}
-+	setup_pebs_time(event, data, basic->tsc);
- 
- 	/*
- 	 * We must however always use iregs for the unwinder to stay sane; the
+ static void _rtl8821ae_set_bcn_ctrl_reg(struct ieee80211_hw *hw,
 -- 
 2.39.2
 
