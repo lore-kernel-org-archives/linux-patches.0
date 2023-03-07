@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E8EBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:58:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7662CC433D2;
-	Tue,  7 Mar 2023 17:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485C4BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:58:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAAF4C433D2;
+	Tue,  7 Mar 2023 17:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211884;
-	bh=NlbxwG6eUCX4juJ50RjoPsRPj/g18EsVLrVnO1RNEic=;
+	s=korg; t=1678211887;
+	bh=Kf4U3z9o1Jis115Nt0QAsxq4847OoVkrqJJWO984S1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KbEYZdHIOtHOv3gCvo2VAZYeZGanyJSOh2b32JoKjpkzOo09wUef/ivtx/UF2HTn4
-	 LOtzg/CQ7l7rWUf2RXbtqigbIC1gzsucIkbZ6nWEny90TCVKm2BJBPfK+Xgi7a++1I
-	 Et1c1nZqvzVjjLbeU3HWa1IFP66aGoY70YMswyQA=
+	b=nUy7PD/EqMtNizg+d5bsx+5eoEzFKsXapZjSkZJZhKIfsqqO9EoBSTmB0GDJ3FkaE
+	 gidAUJtYwnS4bCTLL7LtPXOj/Mm57MbXmbQpsrWxdwYTGwEN1pVWBJBNP4tuwG7kKV
+	 fIZvwvKGHgZpKWYZWoy+0ExzQ/MgBAAXZpYj6ybY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.2 1001/1001] drm/edid: fix parsing of 3D modes from HDMI VSDB
-Date: Tue,  7 Mar 2023 18:02:53 +0100
-Message-Id: <20230307170105.748347529@linuxfoundation.org>
+	Steve Sistare <steven.sistare@oracle.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex.williamson@redhat.com>
+Subject: [PATCH 6.2 0993/1001] vfio/type1: restore locked_vm
+Date: Tue,  7 Mar 2023 18:02:45 +0100
+Message-Id: <20230307170105.377939093@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,76 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Steve Sistare <steven.sistare@oracle.com>
 
-commit 72794d16bd535a984e6653a18f5862405b49b5f9 upstream.
+commit 90fdd158a695d70403163f9a0e4efc5b20f3fd3e upstream.
 
-Commit 537d9ed2f6c1 ("drm/edid: convert add_cea_modes() to use cea db
-iter") inadvertently moved the do_hdmi_vsdb_modes() call within the db
-iteration loop, always passing NULL as the CTA VDB to
-do_hdmi_vsdb_modes(), skipping a lot of stereo modes.
+When a vfio container is preserved across exec or fork-exec, the new
+task's mm has a locked_vm count of 0.  After a dma vaddr is updated using
+VFIO_DMA_MAP_FLAG_VADDR, locked_vm remains 0, and the pinned memory does
+not count against the task's RLIMIT_MEMLOCK.
 
-Move the call back outside of the loop.
+To restore the correct locked_vm count, when VFIO_DMA_MAP_FLAG_VADDR is
+used and the dma's mm has changed, add the dma's locked_vm count to
+the new mm->locked_vm, subject to the rlimit, and subtract it from the
+old mm->locked_vm.
 
-This does mean only one CTA VDB and HDMI VSDB combination will be
-handled, but it's an unlikely scenario to have more than one of either
-block, and it was not accounted for before the regression either.
-
-Fixes: 537d9ed2f6c1 ("drm/edid: convert add_cea_modes() to use cea db iter")
-Cc: <stable@vger.kernel.org> # v6.0+
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/cf159b8816191ed595a3cb954acaf189c4528cc7.1672826282.git.jani.nikula@intel.com
+Fixes: c3cbab24db38 ("vfio/type1: implement interfaces to update vaddr")
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/1675184289-267876-5-git-send-email-steven.sistare@oracle.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_edid.c |   22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ drivers/vfio/vfio_iommu_type1.c |   35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
---- a/drivers/gpu/drm/drm_edid.c
-+++ b/drivers/gpu/drm/drm_edid.c
-@@ -5249,13 +5249,12 @@ static int add_cea_modes(struct drm_conn
- {
- 	const struct cea_db *db;
- 	struct cea_db_iter iter;
-+	const u8 *hdmi = NULL, *video = NULL;
-+	u8 hdmi_len = 0, video_len = 0;
- 	int modes = 0;
- 
- 	cea_db_iter_edid_begin(drm_edid, &iter);
- 	cea_db_iter_for_each(db, &iter) {
--		const u8 *hdmi = NULL, *video = NULL;
--		u8 hdmi_len = 0, video_len = 0;
--
- 		if (cea_db_tag(db) == CTA_DB_VIDEO) {
- 			video = cea_db_data(db);
- 			video_len = cea_db_payload_len(db);
-@@ -5271,18 +5270,17 @@ static int add_cea_modes(struct drm_conn
- 			modes += do_y420vdb_modes(connector, vdb420,
- 						  cea_db_payload_len(db) - 1);
- 		}
--
--		/*
--		 * We parse the HDMI VSDB after having added the cea modes as we
--		 * will be patching their flags when the sink supports stereo
--		 * 3D.
--		 */
--		if (hdmi)
--			modes += do_hdmi_vsdb_modes(connector, hdmi, hdmi_len,
--						    video, video_len);
- 	}
- 	cea_db_iter_end(&iter);
- 
-+	/*
-+	 * We parse the HDMI VSDB after having added the cea modes as we will be
-+	 * patching their flags when the sink supports stereo 3D.
-+	 */
-+	if (hdmi)
-+		modes += do_hdmi_vsdb_modes(connector, hdmi, hdmi_len,
-+					    video, video_len);
-+
- 	return modes;
+--- a/drivers/vfio/vfio_iommu_type1.c
++++ b/drivers/vfio/vfio_iommu_type1.c
+@@ -1591,6 +1591,38 @@ static bool vfio_iommu_iova_dma_valid(st
+ 	return list_empty(iova);
  }
  
++static int vfio_change_dma_owner(struct vfio_dma *dma)
++{
++	struct task_struct *task = current->group_leader;
++	struct mm_struct *mm = current->mm;
++	long npage = dma->locked_vm;
++	bool lock_cap;
++	int ret;
++
++	if (mm == dma->mm)
++		return 0;
++
++	lock_cap = capable(CAP_IPC_LOCK);
++	ret = mm_lock_acct(task, mm, lock_cap, npage);
++	if (ret)
++		return ret;
++
++	if (mmget_not_zero(dma->mm)) {
++		mm_lock_acct(dma->task, dma->mm, dma->lock_cap, -npage);
++		mmput(dma->mm);
++	}
++
++	if (dma->task != task) {
++		put_task_struct(dma->task);
++		dma->task = get_task_struct(task);
++	}
++	mmdrop(dma->mm);
++	dma->mm = mm;
++	mmgrab(dma->mm);
++	dma->lock_cap = lock_cap;
++	return 0;
++}
++
+ static int vfio_dma_do_map(struct vfio_iommu *iommu,
+ 			   struct vfio_iommu_type1_dma_map *map)
+ {
+@@ -1640,6 +1672,9 @@ static int vfio_dma_do_map(struct vfio_i
+ 			   dma->size != size) {
+ 			ret = -EINVAL;
+ 		} else {
++			ret = vfio_change_dma_owner(dma);
++			if (ret)
++				goto out_unlock;
+ 			dma->vaddr = vaddr;
+ 			dma->vaddr_invalid = false;
+ 			iommu->vaddr_invalid_count--;
 
 
