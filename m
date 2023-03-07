@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B94CBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:40:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F0BC433EF;
-	Tue,  7 Mar 2023 17:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FCDBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:40:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE6EC433EF;
+	Tue,  7 Mar 2023 17:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210811;
-	bh=iOmt3RrNlbIEjx/KReScnh9+gup0ENoJQXZIu7UBVKU=;
+	s=korg; t=1678210815;
+	bh=W0X+bglo/2EJq1DlaNXfa7q21jxRw4oo7JaOBAQ6veU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbgdVg8jWjh3Fh3Vgn7miS+bWRika9Hn0Nq38SS4I+xW+Pe5FzL5CyAqJDhpp2Ps+
-	 iL5LEPEkxJ/01oeeDyjTBWNduNo1xWcvkS79CQgAc3SPKhTRBup2ScEl9mHejGPl1M
-	 wHSySxzTUcu+P486GCrjeJRXE0mAXlJ2q2RMnD20=
+	b=Rp+0lpJDyN8EtLoj11MKeJCh7y5FbfmW0q8KheBHkYiQc0sAObhBD7DCuSkNUI+er
+	 x6ABSb3KXSlbmgG4auNEnkAPuC7mlaGvoo2fR8cPlZCQQLWRNik1kCuwETt0d/t9rF
+	 S/E5ZqjbveKwrIEbiQlbbXgZxUg2Ufa+e3pp300A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0631/1001] cpuidle, intel_idle: Fix CPUIDLE_FLAG_INIT_XSTATE
-Date: Tue,  7 Mar 2023 17:56:43 +0100
-Message-Id: <20230307170048.952561140@linuxfoundation.org>
+Subject: [PATCH 6.2 0622/1001] exit: Detect and fix irq disabled state in oops
+Date: Tue,  7 Mar 2023 17:56:34 +0100
+Message-Id: <20230307170048.557339503@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -39,84 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-[ Upstream commit 821ad23d0eaff73ef599ece39ecc77482df20a8c ]
+[ Upstream commit 001c28e57187570e4b5aa4492c7a957fb6d65d7b ]
 
-Fix instrumentation bugs objtool found:
+If a task oopses with irqs disabled, this can cause various cascading
+problems in the oops path such as sleep-from-invalid warnings, and
+potentially worse.
 
-  vmlinux.o: warning: objtool: intel_idle_s2idle+0xd5: call to fpu_idle_fpregs() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: intel_idle_xstate+0x11: call to fpu_idle_fpregs() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: fpu_idle_fpregs+0x9: call to xfeatures_in_use() leaves .noinstr.text section
+Since commit 0258b5fd7c712 ("coredump: Limit coredumps to a single
+thread group"), the unconditional irq enable in coredump_task_exit()
+will "fix" the irq state to be enabled early in do_exit(), so currently
+this may not be triggerable, but that is coincidental and fragile.
 
+Detect and fix the irqs_disabled() condition in the oops path before
+calling do_exit(), similarly to the way in_atomic() is handled.
+
+Reported-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Tony Lindgren <tony@atomide.com>
-Tested-by: Ulf Hansson <ulf.hansson@linaro.org>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Acked-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/r/20230112195540.494977795@infradead.org
+Acked-by: "Eric W. Biederman" <ebiederm@xmission.com>
+Link: https://lore.kernel.org/lkml/20221004094401.708299-1-npiggin@gmail.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/fpu/xcr.h       | 4 ++--
- arch/x86/include/asm/special_insns.h | 2 +-
- arch/x86/kernel/fpu/core.c           | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ kernel/exit.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/x86/include/asm/fpu/xcr.h b/arch/x86/include/asm/fpu/xcr.h
-index 9656a5bc6feae..9a710c0604457 100644
---- a/arch/x86/include/asm/fpu/xcr.h
-+++ b/arch/x86/include/asm/fpu/xcr.h
-@@ -5,7 +5,7 @@
- #define XCR_XFEATURE_ENABLED_MASK	0x00000000
- #define XCR_XFEATURE_IN_USE_MASK	0x00000001
+diff --git a/kernel/exit.c b/kernel/exit.c
+index 15dc2ec80c467..bccfa4218356e 100644
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -807,6 +807,8 @@ void __noreturn do_exit(long code)
+ 	struct task_struct *tsk = current;
+ 	int group_dead;
  
--static inline u64 xgetbv(u32 index)
-+static __always_inline u64 xgetbv(u32 index)
- {
- 	u32 eax, edx;
++	WARN_ON(irqs_disabled());
++
+ 	synchronize_group_exit(tsk, code);
  
-@@ -27,7 +27,7 @@ static inline void xsetbv(u32 index, u64 value)
-  *
-  * Callers should check X86_FEATURE_XGETBV1.
-  */
--static inline u64 xfeatures_in_use(void)
-+static __always_inline u64 xfeatures_in_use(void)
- {
- 	return xgetbv(XCR_XFEATURE_IN_USE_MASK);
- }
-diff --git a/arch/x86/include/asm/special_insns.h b/arch/x86/include/asm/special_insns.h
-index 35f709f619fb4..c2e322189f853 100644
---- a/arch/x86/include/asm/special_insns.h
-+++ b/arch/x86/include/asm/special_insns.h
-@@ -295,7 +295,7 @@ static inline int enqcmds(void __iomem *dst, const void *src)
- 	return 0;
- }
+ 	WARN_ON(tsk->plug);
+@@ -938,6 +940,11 @@ void __noreturn make_task_dead(int signr)
+ 	if (unlikely(!tsk->pid))
+ 		panic("Attempted to kill the idle task!");
  
--static inline void tile_release(void)
-+static __always_inline void tile_release(void)
- {
- 	/*
- 	 * Instruction opcode for TILERELEASE; supported in binutils
-diff --git a/arch/x86/kernel/fpu/core.c b/arch/x86/kernel/fpu/core.c
-index 9baa89a8877d0..dccce58201b7c 100644
---- a/arch/x86/kernel/fpu/core.c
-+++ b/arch/x86/kernel/fpu/core.c
-@@ -853,12 +853,12 @@ int fpu__exception_code(struct fpu *fpu, int trap_nr)
-  * Initialize register state that may prevent from entering low-power idle.
-  * This function will be invoked from the cpuidle driver only when needed.
-  */
--void fpu_idle_fpregs(void)
-+noinstr void fpu_idle_fpregs(void)
- {
- 	/* Note: AMX_TILE being enabled implies XGETBV1 support */
- 	if (cpu_feature_enabled(X86_FEATURE_AMX_TILE) &&
- 	    (xfeatures_in_use() & XFEATURE_MASK_XTILE)) {
- 		tile_release();
--		fpregs_deactivate(&current->thread.fpu);
-+		__this_cpu_write(fpu_fpregs_owner_ctx, NULL);
- 	}
- }
++	if (unlikely(irqs_disabled())) {
++		pr_info("note: %s[%d] exited with irqs disabled\n",
++			current->comm, task_pid_nr(current));
++		local_irq_enable();
++	}
+ 	if (unlikely(in_atomic())) {
+ 		pr_info("note: %s[%d] exited with preempt_count %d\n",
+ 			current->comm, task_pid_nr(current),
 -- 
 2.39.2
 
