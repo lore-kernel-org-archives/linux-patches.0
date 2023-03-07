@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C3FBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BCDFC433EF;
-	Tue,  7 Mar 2023 17:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3CABA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43707C433EF;
+	Tue,  7 Mar 2023 17:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210161;
-	bh=7gqh2N3Os5LFfKO1I2aB9zj0npN4q/VBQicsSbaUyKk=;
+	s=korg; t=1678210164;
+	bh=NhGsBGoqTdT0I8zUJPQxubvxLRtXHbikPeSRWymwZAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xgVnCS665/ADXxcZPpjfErIPpu76ctWVidxJUZHycg/Ur6h7v6BCsywm6y3NRZ0iW
-	 Dcew4yjL9HZsEryUKWuKsyGVpmn5Zfk4nIxSrWQU77nHHHSSUrUgqPpydUiH2jnDUQ
-	 d6GB+OGsnqpQaM6paAdGskSUV/INPymFnR61Sd9o=
+	b=z/J7RrmuK33F0e2yjqvfwBvd1yHGjsuMcWYTbeSNTLgKjRJFRWzR1YNzNC+r2DivQ
+	 4PMyDONoLZ9SuSYC/qATuuCwyNPdrviZqBqE/zN+EdtCcECsifQAmLJWg6ofjUmgJ2
+	 PgpUg4vzSKmUWwVVxMR7Jn6XWt/ZidNtrs10ZxtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0452/1001] nfsd: clean up potential nfsd_file refcount leaks in COPY codepath
-Date: Tue,  7 Mar 2023 17:53:44 +0100
-Message-Id: <20230307170040.964428592@linuxfoundation.org>
+Subject: [PATCH 6.2 0426/1001] ASoC: qcom: q6apm-dai: Add SNDRV_PCM_INFO_BATCH flag
+Date: Tue,  7 Mar 2023 17:53:18 +0100
+Message-Id: <20230307170039.845280458@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,107 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit 6ba434cb1a8d403ea9aad1b667c3ea3ad8b3191f ]
+[ Upstream commit aa759f3f9f4394a3af65ad1772fca6cb9dd9e4cc ]
 
-There are two different flavors of the nfsd4_copy struct. One is
-embedded in the compound and is used directly in synchronous copies. The
-other is dynamically allocated, refcounted and tracked in the client
-struture. For the embedded one, the cleanup just involves releasing any
-nfsd_files held on its behalf. For the async one, the cleanup is a bit
-more involved, and we need to dequeue it from lists, unhash it, etc.
+At the moment, playing audio with PulseAudio with the qdsp6 driver
+results in distorted sound. It seems like its timer-based scheduling
+does not work properly with qdsp6 since setting tsched=0 in
+the PulseAudio configuration avoids the issue.
 
-There is at least one potential refcount leak in this code now. If the
-kthread_create call fails, then both the src and dst nfsd_files in the
-original nfsd4_copy object are leaked.
+Apparently this happens when the pointer() callback is not accurate
+enough. There is a SNDRV_PCM_INFO_BATCH flag that can be used to stop
+PulseAudio from using timer-based scheduling by default.
 
-The cleanup in this codepath is also sort of weird. In the async copy
-case, we'll have up to four nfsd_file references (src and dst for both
-flavors of copy structure). They are both put at the end of
-nfsd4_do_async_copy, even though the ones held on behalf of the embedded
-one outlive that structure.
+According to https://www.alsa-project.org/pipermail/alsa-devel/2014-March/073816.html:
 
-Change it so that we always clean up the nfsd_file refs held by the
-embedded copy structure before nfsd4_copy returns. Rework
-cleanup_async_copy to handle both inter and intra copies. Eliminate
-nfsd4_cleanup_intra_ssc since it now becomes a no-op.
+The flag is being used in the sense explained in the previous audio
+meeting -- the data transfer granularity isn't fine enough but aligned
+to the period size (or less).
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Stable-dep-of: 81e722978ad2 ("NFSD: fix problems with cleanup on errors in nfsd4_copy")
+q6apm-dai reports the position as multiple of
+
+prtd->pcm_count = snd_pcm_lib_period_bytes(substream)
+
+so it indeed just a multiple of the period size.
+
+Therefore adding the flag here seems appropriate and makes audio
+work out of the box.
+
+Comment log inspired by Stephan Gerhold sent for q6asm-dai.c few years back.
+
+Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230209122806.18923-4-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ sound/soc/qcom/qdsp6/q6apm-dai.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index e2dde8a1837be..b74cbc9a0e7f3 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1510,7 +1510,6 @@ nfsd4_cleanup_inter_ssc(struct nfsd4_ssc_umount_item *nsui, struct file *filp,
- 	long timeout = msecs_to_jiffies(nfsd4_ssc_umount_timeout);
- 
- 	nfs42_ssc_close(filp);
--	nfsd_file_put(dst);
- 	fput(filp);
- 
- 	spin_lock(&nn->nfsd_ssc_lock);
-@@ -1560,13 +1559,6 @@ nfsd4_setup_intra_ssc(struct svc_rqst *rqstp,
- 				 &copy->nf_dst);
- }
- 
--static void
--nfsd4_cleanup_intra_ssc(struct nfsd_file *src, struct nfsd_file *dst)
--{
--	nfsd_file_put(src);
--	nfsd_file_put(dst);
--}
--
- static void nfsd4_cb_offload_release(struct nfsd4_callback *cb)
- {
- 	struct nfsd4_cb_offload *cbo =
-@@ -1681,12 +1673,18 @@ static void dup_copy_fields(struct nfsd4_copy *src, struct nfsd4_copy *dst)
- 	dst->ss_nsui = src->ss_nsui;
- }
- 
-+static void release_copy_files(struct nfsd4_copy *copy)
-+{
-+	if (copy->nf_src)
-+		nfsd_file_put(copy->nf_src);
-+	if (copy->nf_dst)
-+		nfsd_file_put(copy->nf_dst);
-+}
-+
- static void cleanup_async_copy(struct nfsd4_copy *copy)
- {
- 	nfs4_free_copy_state(copy);
--	nfsd_file_put(copy->nf_dst);
--	if (!nfsd4_ssc_is_inter(copy))
--		nfsd_file_put(copy->nf_src);
-+	release_copy_files(copy);
- 	spin_lock(&copy->cp_clp->async_lock);
- 	list_del(&copy->copies);
- 	spin_unlock(&copy->cp_clp->async_lock);
-@@ -1746,7 +1744,6 @@ static int nfsd4_do_async_copy(void *data)
- 	} else {
- 		nfserr = nfsd4_do_copy(copy, copy->nf_src->nf_file,
- 				       copy->nf_dst->nf_file, false);
--		nfsd4_cleanup_intra_ssc(copy->nf_src, copy->nf_dst);
- 	}
- 
- do_callback:
-@@ -1809,9 +1806,9 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	} else {
- 		status = nfsd4_do_copy(copy, copy->nf_src->nf_file,
- 				       copy->nf_dst->nf_file, true);
--		nfsd4_cleanup_intra_ssc(copy->nf_src, copy->nf_dst);
- 	}
- out:
-+	release_copy_files(copy);
- 	return status;
- out_err:
- 	if (nfsd4_ssc_is_inter(copy)) {
+diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
+index bd35067a40521..7f02f5b2c33fd 100644
+--- a/sound/soc/qcom/qdsp6/q6apm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
+@@ -64,7 +64,8 @@ struct q6apm_dai_data {
+ static struct snd_pcm_hardware q6apm_dai_hardware_capture = {
+ 	.info =                 (SNDRV_PCM_INFO_MMAP | SNDRV_PCM_INFO_BLOCK_TRANSFER |
+ 				 SNDRV_PCM_INFO_MMAP_VALID | SNDRV_PCM_INFO_INTERLEAVED |
+-				 SNDRV_PCM_INFO_PAUSE | SNDRV_PCM_INFO_RESUME),
++				 SNDRV_PCM_INFO_PAUSE | SNDRV_PCM_INFO_RESUME |
++				 SNDRV_PCM_INFO_BATCH),
+ 	.formats =              (SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE),
+ 	.rates =                SNDRV_PCM_RATE_8000_48000,
+ 	.rate_min =             8000,
+@@ -82,7 +83,8 @@ static struct snd_pcm_hardware q6apm_dai_hardware_capture = {
+ static struct snd_pcm_hardware q6apm_dai_hardware_playback = {
+ 	.info =                 (SNDRV_PCM_INFO_MMAP | SNDRV_PCM_INFO_BLOCK_TRANSFER |
+ 				 SNDRV_PCM_INFO_MMAP_VALID | SNDRV_PCM_INFO_INTERLEAVED |
+-				 SNDRV_PCM_INFO_PAUSE | SNDRV_PCM_INFO_RESUME),
++				 SNDRV_PCM_INFO_PAUSE | SNDRV_PCM_INFO_RESUME |
++				 SNDRV_PCM_INFO_BATCH),
+ 	.formats =              (SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE),
+ 	.rates =                SNDRV_PCM_RATE_8000_192000,
+ 	.rate_min =             8000,
 -- 
 2.39.2
 
