@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2B6BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:46:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11375C433D2;
-	Tue,  7 Mar 2023 18:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB81BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:46:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0EAFC433EF;
+	Tue,  7 Mar 2023 18:46:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214778;
-	bh=aG5Ig2FjgXz/1maXj9nMIkqgq0zjMr11Ud+b4ihSXfw=;
+	s=korg; t=1678214781;
+	bh=2YW5azqXnLgUujBzR/jXRwcNd/I7Sr7yDfOGI8OjIIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FA1kuFAZnjpMihooJMfY5tqSVUMm6vIlCuMpUNBJykZ8D+U2DUp0NF7rBUUyEST0C
-	 RcdIKsucI42v3av+lLgmCALAbRwulnVGYpKqC6Um1oIS/Dd3LpF+Ygaboo9n0fxqSQ
-	 UdZVLFLU7JOzsoPbPFu0Rk4r747Xku8IWxIfSUTk=
+	b=FCPb+wuEBPokmpkxdMyrz/iZTKUaTgSe1OyaWmf8e5i64ApwMsJz5Q+KjlePJus4o
+	 5Tk39yRra3GTae2Jcg8nOL260ybLADWpjT8leW66q+VIoSivG/2FGnUtOc17WTPATG
+	 ztm9B4BqJ7f5HNo2wp6SR7EjdfcIyxW9ESglKSkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Waiman Long <longman@redhat.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 046/567] locking/rwsem: Optimize down_read_trylock() under highly contended case
-Date: Tue,  7 Mar 2023 17:56:22 +0100
-Message-Id: <20230307165907.916612391@linuxfoundation.org>
+Subject: [PATCH 5.15 047/567] locking/rwsem: Disable preemption in all down_read*() and up_read() code paths
+Date: Tue,  7 Mar 2023 17:56:23 +0100
+Message-Id: <20230307165907.965374092@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,173 +37,132 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 14c24048841151548a3f4d9e218510c844c1b737 ]
+[ Upstream commit 3f5245538a1964ae186ab7e1636020a41aa63143 ]
 
-We found that a process with 10 thousnads threads has been encountered
-a regression problem from Linux-v4.14 to Linux-v5.4. It is a kind of
-workload which will concurrently allocate lots of memory in different
-threads sometimes. In this case, we will see the down_read_trylock()
-with a high hotspot. Therefore, we suppose that rwsem has a regression
-at least since Linux-v5.4. In order to easily debug this problem, we
-write a simply benchmark to create the similar situation lile the
-following.
+Commit:
 
-  ```c++
-  #include <sys/mman.h>
-  #include <sys/time.h>
-  #include <sys/resource.h>
-  #include <sched.h>
+  91d2a812dfb9 ("locking/rwsem: Make handoff writer optimistically spin on owner")
 
-  #include <cstdio>
-  #include <cassert>
-  #include <thread>
-  #include <vector>
-  #include <chrono>
+... assumes that when the owner field is changed to NULL, the lock will
+become free soon. But commit:
 
-  volatile int mutex;
+  48dfb5d2560d ("locking/rwsem: Disable preemption while trying for rwsem lock")
 
-  void trigger(int cpu, char* ptr, std::size_t sz)
-  {
-  	cpu_set_t set;
-  	CPU_ZERO(&set);
-  	CPU_SET(cpu, &set);
-  	assert(pthread_setaffinity_np(pthread_self(), sizeof(set), &set) == 0);
+... disabled preemption when acquiring rwsem for write.
 
-  	while (mutex);
+However, preemption has not yet been disabled when acquiring a read lock
+on a rwsem.  So a reader can add a RWSEM_READER_BIAS to count without
+setting owner to signal a reader, got preempted out by a RT task which
+then spins in the writer slowpath as owner remains NULL leading to live lock.
 
-  	for (std::size_t i = 0; i < sz; i += 4096) {
-  		*ptr = '\0';
-  		ptr += 4096;
-  	}
-  }
+One easy way to fix this problem is to disable preemption at all the
+down_read*() and up_read() code paths as implemented in this patch.
 
-  int main(int argc, char* argv[])
-  {
-  	std::size_t sz = 100;
-
-  	if (argc > 1)
-  		sz = atoi(argv[1]);
-
-  	auto nproc = std::thread::hardware_concurrency();
-  	std::vector<std::thread> thr;
-  	sz <<= 30;
-  	auto* ptr = mmap(nullptr, sz, PROT_READ | PROT_WRITE, MAP_ANON |
-			 MAP_PRIVATE, -1, 0);
-  	assert(ptr != MAP_FAILED);
-  	char* cptr = static_cast<char*>(ptr);
-  	auto run = sz / nproc;
-  	run = (run >> 12) << 12;
-
-  	mutex = 1;
-
-  	for (auto i = 0U; i < nproc; ++i) {
-  		thr.emplace_back(std::thread([i, cptr, run]() { trigger(i, cptr, run); }));
-  		cptr += run;
-  	}
-
-  	rusage usage_start;
-  	getrusage(RUSAGE_SELF, &usage_start);
-  	auto start = std::chrono::system_clock::now();
-
-  	mutex = 0;
-
-  	for (auto& t : thr)
-  		t.join();
-
-  	rusage usage_end;
-  	getrusage(RUSAGE_SELF, &usage_end);
-  	auto end = std::chrono::system_clock::now();
-  	timeval utime;
-  	timeval stime;
-  	timersub(&usage_end.ru_utime, &usage_start.ru_utime, &utime);
-  	timersub(&usage_end.ru_stime, &usage_start.ru_stime, &stime);
-  	printf("usr: %ld.%06ld\n", utime.tv_sec, utime.tv_usec);
-  	printf("sys: %ld.%06ld\n", stime.tv_sec, stime.tv_usec);
-  	printf("real: %lu\n",
-  	       std::chrono::duration_cast<std::chrono::milliseconds>(end -
-  	       start).count());
-
-  	return 0;
-  }
-  ```
-
-The functionality of above program is simply which creates `nproc`
-threads and each of them are trying to touch memory (trigger page
-fault) on different CPU. Then we will see the similar profile by
-`perf top`.
-
-  25.55%  [kernel]                  [k] down_read_trylock
-  14.78%  [kernel]                  [k] handle_mm_fault
-  13.45%  [kernel]                  [k] up_read
-   8.61%  [kernel]                  [k] clear_page_erms
-   3.89%  [kernel]                  [k] __do_page_fault
-
-The highest hot instruction, which accounts for about 92%, in
-down_read_trylock() is cmpxchg like the following.
-
-  91.89 │      lock   cmpxchg %rdx,(%rdi)
-
-Sice the problem is found by migrating from Linux-v4.14 to Linux-v5.4,
-so we easily found that the commit ddb20d1d3aed ("locking/rwsem: Optimize
-down_read_trylock()") caused the regression. The reason is that the
-commit assumes the rwsem is not contended at all. But it is not always
-true for mmap lock which could be contended with thousands threads.
-So most threads almost need to run at least 2 times of "cmpxchg" to
-acquire the lock. The overhead of atomic operation is higher than
-non-atomic instructions, which caused the regression.
-
-By using the above benchmark, the real executing time on a x86-64 system
-before and after the patch were:
-
-                  Before Patch  After Patch
-   # of Threads      real          real     reduced by
-   ------------     ------        ------    ----------
-         1          65,373        65,206       ~0.0%
-         4          15,467        15,378       ~0.5%
-        40           6,214         5,528      ~11.0%
-
-For the uncontended case, the new down_read_trylock() is the same as
-before. For the contended cases, the new down_read_trylock() is faster
-than before. The more contended, the more fast.
-
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Waiman Long <longman@redhat.com>
-Link: https://lore.kernel.org/r/20211118094455.9068-1-songmuchun@bytedance.com
-Stable-dep-of: 3f5245538a19 ("locking/rwsem: Disable preemption in all down_read*() and up_read() code paths")
+Fixes: 91d2a812dfb9 ("locking/rwsem: Make handoff writer optimistically spin on owner")
+Reported-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20230126003628.365092-3-longman@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/rwsem.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ kernel/locking/rwsem.c | 30 ++++++++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
 diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
-index 4cc73e6f8974b..73cff464dde00 100644
+index 73cff464dde00..bd1d714a7ea08 100644
 --- a/kernel/locking/rwsem.c
 +++ b/kernel/locking/rwsem.c
-@@ -1255,17 +1255,14 @@ static inline int __down_read_trylock(struct rw_semaphore *sem)
+@@ -1045,7 +1045,7 @@ rwsem_down_read_slowpath(struct rw_semaphore *sem, long count, unsigned int stat
+ 			/* Ordered by sem->wait_lock against rwsem_mark_wake(). */
+ 			break;
+ 		}
+-		schedule();
++		schedule_preempt_disabled();
+ 		lockevent_inc(rwsem_sleep_reader);
+ 	}
+ 
+@@ -1224,14 +1224,20 @@ static struct rw_semaphore *rwsem_downgrade_wake(struct rw_semaphore *sem)
+  */
+ static inline int __down_read_common(struct rw_semaphore *sem, int state)
+ {
++	int ret = 0;
+ 	long count;
+ 
++	preempt_disable();
+ 	if (!rwsem_read_trylock(sem, &count)) {
+-		if (IS_ERR(rwsem_down_read_slowpath(sem, count, state)))
+-			return -EINTR;
++		if (IS_ERR(rwsem_down_read_slowpath(sem, count, state))) {
++			ret = -EINTR;
++			goto out;
++		}
+ 		DEBUG_RWSEMS_WARN_ON(!is_rwsem_reader_owned(sem), sem);
+ 	}
+-	return 0;
++out:
++	preempt_enable();
++	return ret;
+ }
+ 
+ static inline void __down_read(struct rw_semaphore *sem)
+@@ -1251,19 +1257,23 @@ static inline int __down_read_killable(struct rw_semaphore *sem)
+ 
+ static inline int __down_read_trylock(struct rw_semaphore *sem)
+ {
++	int ret = 0;
+ 	long tmp;
  
  	DEBUG_RWSEMS_WARN_ON(sem->magic != sem, sem);
  
--	/*
--	 * Optimize for the case when the rwsem is not locked at all.
--	 */
--	tmp = RWSEM_UNLOCKED_VALUE;
--	do {
-+	tmp = atomic_long_read(&sem->count);
-+	while (!(tmp & RWSEM_READ_FAILED_MASK)) {
++	preempt_disable();
+ 	tmp = atomic_long_read(&sem->count);
+ 	while (!(tmp & RWSEM_READ_FAILED_MASK)) {
  		if (atomic_long_try_cmpxchg_acquire(&sem->count, &tmp,
--					tmp + RWSEM_READER_BIAS)) {
-+						    tmp + RWSEM_READER_BIAS)) {
+ 						    tmp + RWSEM_READER_BIAS)) {
  			rwsem_set_reader_owned(sem);
- 			return 1;
+-			return 1;
++			ret = 1;
++			break;
  		}
--	} while (!(tmp & RWSEM_READ_FAILED_MASK));
-+	}
- 	return 0;
+ 	}
+-	return 0;
++	preempt_enable();
++	return ret;
  }
  
+ /*
+@@ -1305,6 +1315,7 @@ static inline void __up_read(struct rw_semaphore *sem)
+ 	DEBUG_RWSEMS_WARN_ON(sem->magic != sem, sem);
+ 	DEBUG_RWSEMS_WARN_ON(!is_rwsem_reader_owned(sem), sem);
+ 
++	preempt_disable();
+ 	rwsem_clear_reader_owned(sem);
+ 	tmp = atomic_long_add_return_release(-RWSEM_READER_BIAS, &sem->count);
+ 	DEBUG_RWSEMS_WARN_ON(tmp < 0, sem);
+@@ -1313,6 +1324,7 @@ static inline void __up_read(struct rw_semaphore *sem)
+ 		clear_nonspinnable(sem);
+ 		rwsem_wake(sem);
+ 	}
++	preempt_enable();
+ }
+ 
+ /*
+@@ -1630,6 +1642,12 @@ void down_read_non_owner(struct rw_semaphore *sem)
+ {
+ 	might_sleep();
+ 	__down_read(sem);
++	/*
++	 * The owner value for a reader-owned lock is mostly for debugging
++	 * purpose only and is not critical to the correct functioning of
++	 * rwsem. So it is perfectly fine to set it in a preempt-enabled
++	 * context here.
++	 */
+ 	__rwsem_set_reader_owned(sem, NULL);
+ }
+ EXPORT_SYMBOL(down_read_non_owner);
 -- 
 2.39.2
 
