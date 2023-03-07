@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3ADBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:02:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E28C433A1;
-	Tue,  7 Mar 2023 18:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A653BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:02:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E638C433D2;
+	Tue,  7 Mar 2023 18:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212147;
-	bh=PcZSRsWSHYg4FQQtNrTGlFRopGyPj9eX2UDEeyBmugo=;
+	s=korg; t=1678212151;
+	bh=Qpo+mdHi3VPJd+6/dhlUEoEDTnOv/1zRW9w+U4yzKUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mqCWb63Rer4tA+7utUSy8pFPixAuUxT6dUBv3jECClNouwXZM0P30aVzwDgNFGNtg
-	 4P0Y4gsSd5hc85oA3ey213ySnPqvZ/WLN90i6e0dn8BJP1pp4g+dGzUPPrJsxaYmgY
-	 wKR9jJ4LTOkJX36oQUDQritOWL/id+KTWLehIV2c=
+	b=HtS/2laJXpdCWK1/ot9QhSwXdRnWzyNK5C1ziO6hKA5JCcR3ZSC6H3XI21K0CPdA/
+	 /tg8MvH6pTgU4RQKa8ag1ems+aJG/X1BvhBn4EqFx4nkIucUcJIY88EikuzTBBx7u6
+	 ci5GsnlfYRZ2lauKNeQNfBhlrLVa+Xu/FmmRmn34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jamie Douglass <jamiemdouglass@gmail.com>,
+	Petr Vorel <pvorel@suse.cz>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/885] arm64: dts: qcom: sm8450: drop incorrect cells from serial
-Date: Tue,  7 Mar 2023 17:50:27 +0100
-Message-Id: <20230307170005.872379749@linuxfoundation.org>
+Subject: [PATCH 6.1 094/885] arm64: dts: qcom: msm8992-lg-bullhead: Correct memory overlaps with the SMEM and MPSS memory regions
+Date: Tue,  7 Mar 2023 17:50:28 +0100
+Message-Id: <20230307170005.920092419@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,46 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jamie Douglass <jamiemdouglass@gmail.com>
 
-[ Upstream commit 60d2da2c916956535cf37b7bf1ae8fefbf432e55 ]
+[ Upstream commit d44106883d74992343710f18c4aaae937c7cefab ]
 
-The serial/UART device node does not have children with unit addresses,
-so address/size cells are not correct.
+The memory region reserved by a previous commit (see fixes tag below)
+overlaps with the SMEM and MPSS memory regions, causing error messages in
+dmesg:
+	OF: reserved mem: OVERLAP DETECTED!
+	reserved@5000000 (0x0000000005000000--0x0000000007200000)
+	overlaps with smem_region@6a00000
+	(0x0000000006a00000--0x0000000006c00000)
 
-Fixes: f5837418479a ("arm64: dts: qcom: sm8450: add uart20 node")
-Fixes: 5188049c9b36 ("arm64: dts: qcom: Add base SM8450 DTSI")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+	OF: reserved mem: OVERLAP DETECTED!
+	reserved@6c00000 (0x0000000006c00000--0x0000000007200000)
+	overlaps with memory@7000000
+	(0x0000000007000000--0x000000000ca00000)
+
+This patch resolves both of these by splitting the previously reserved
+memory region into two sections either side of the SMEM region and by
+cutting off the second memory region to 0x7000000.
+
+Fixes: 22c7e1a0fa45 ("arm64: dts: msm8992-bullhead: add memory hole region")
+Signed-off-by: Jamie Douglass <jamiemdouglass@gmail.com>
+Reviewed-by: Petr Vorel <pvorel@suse.cz>
+Tested-by: Petr Vorel <pvorel@suse.cz>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230124084951.38195-3-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230202054819.16079-1-jamiemdouglass@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 4 ----
- 1 file changed, 4 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 32a37c878a34c..df0d888ffc008 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -991,8 +991,6 @@ uart20: serial@894000 {
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart20_default>;
- 				interrupts = <GIC_SPI 587 IRQ_TYPE_LEVEL_HIGH>;
--				#address-cells = <1>;
--				#size-cells = <0>;
- 				status = "disabled";
- 			};
- 
-@@ -1387,8 +1385,6 @@ uart7: serial@99c000 {
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart7_tx>, <&qup_uart7_rx>;
- 				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
--				#address-cells = <1>;
--				#size-cells = <0>;
- 				status = "disabled";
- 			};
+diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+index 49f30efdbe656..d1962dc24bb7e 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+@@ -55,8 +55,13 @@ cont_splash_mem: memory@3400000 {
+ 			no-map;
  		};
+ 
+-		removed_region: reserved@5000000 {
+-			reg = <0 0x05000000 0 0x2200000>;
++		reserved@5000000 {
++			reg = <0x0 0x05000000 0x0 0x1a00000>;
++			no-map;
++		};
++
++		reserved@6c00000 {
++			reg = <0x0 0x06c00000 0x0 0x400000>;
+ 			no-map;
+ 		};
+ 	};
 -- 
 2.39.2
 
