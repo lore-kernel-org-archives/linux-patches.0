@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBE6BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104FBC433EF;
-	Tue,  7 Mar 2023 17:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF25BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234EAC433D2;
+	Tue,  7 Mar 2023 17:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211665;
-	bh=/ua/swVXMWEQW3uEKX2NhCvSMZh/xus9H/iyTUGrLsQ=;
+	s=korg; t=1678211668;
+	bh=gq02DswUiICYcpZAVT4by6ofriE+TCB6Gbc1Uux5ID4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VvnmC/EzdIVgljntTzKX+mfHbWHUheZxiaAzhnNdKhftKHNUmR6sTfCARAgu/P01J
-	 F63FlcCnfVx+e8o2Nz4F+dVDJccYaYCAo+kbz8KlzMRws/KzIARBLSWGfQluYwt2TZ
-	 9Lx/qg+wMlnaJj8nfmtB2q0dtaYOBD/u5gIuz2m4=
+	b=YFp5LesgVcViSEleL3FuthnJJUbPuQ0P2mIY9rhFJk8/5veaGGCj4ITo9nla/nlE2
+	 rsohCxu4vNvs4uXPKx6Eg3q/zPNCBIoHQ6co31Ib3C8wDUwxRVr4W6SGjsGPlUNeeH
+	 VayXwAC1paxkBRhf6fUH5qVLF48YUs0rECNfoIKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Binderman <dcb314@hotmail.com>,
-	Dhruva Gole <d-gole@ti.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.2 0937/1001] spi: spi-sn-f-ospi: fix duplicate flag while assigning to mode_bits
-Date: Tue,  7 Mar 2023 18:01:49 +0100
-Message-Id: <20230307170102.770683367@linuxfoundation.org>
+	Richard Henderson <rth@twiddle.net>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 6.2 0938/1001] alpha: fix FEN fault handling
+Date: Tue,  7 Mar 2023 18:01:50 +0100
+Message-Id: <20230307170102.816454533@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,42 +34,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dhruva Gole <d-gole@ti.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit 078a5517d22342eb0474046d3e891427a2552e3c upstream.
+commit 977a3009547dad4a5bc95d91be4a58c9f7eedac0 upstream.
 
-Replace the SPI_TX_OCTAL flag that appeared two time with SPI_RX_OCTAL
-in the chain of '|' operators while assigning to mode_bits
+Type 3 instruction fault (FPU insn with FPU disabled) is handled
+by quietly enabling FPU and returning.  Which is fine, except that
+we need to do that both for fault in userland and in the kernel;
+the latter *can* legitimately happen - all it takes is this:
 
-Fixes: 1b74dd64c861 ("spi: Add Socionext F_OSPI SPI flash controller driver")
+.global _start
+_start:
+        call_pal 0xae
+	lda $0, 0
+	ldq $0, 0($0)
 
-Reported-by: David Binderman <dcb314@hotmail.com>
-Link: https://lore.kernel.org/all/DB6P189MB0568F3BE9384315F5C8C1A3E9CA49@DB6P189MB0568.EURP189.PROD.OUTLOOK.COM/
+- call_pal CLRFEN to clear "FPU enabled" flag and arrange for
+a signal delivery (SIGSEGV in this case).
+
+Fixed by moving the handling of type 3 into the common part of
+do_entIF(), before we check for kernel vs. user mode.
+
+Incidentally, the check for kernel mode is unidiomatic; the normal
+way to do that is !user_mode(regs).  The difference is that
+the open-coded variant treats any of bits 63..3 of regs->ps being
+set as "it's user mode" while the normal approach is to check just
+the bit 3.  PS is a 4-bit register and regs->ps always will have
+bits 63..4 clear, so the open-coded variant here is actually equivalent
+to !user_mode(regs).  Harder to follow, though...
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Dhruva Gole <d-gole@ti.com>
-Link: https://lore.kernel.org/r/20230223095202.924626-1-d-gole@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Richard Henderson <rth@twiddle.net>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-sn-f-ospi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/alpha/kernel/traps.c |   30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/spi/spi-sn-f-ospi.c b/drivers/spi/spi-sn-f-ospi.c
-index 348c6e1edd38..333b22dfd8db 100644
---- a/drivers/spi/spi-sn-f-ospi.c
-+++ b/drivers/spi/spi-sn-f-ospi.c
-@@ -611,7 +611,7 @@ static int f_ospi_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+--- a/arch/alpha/kernel/traps.c
++++ b/arch/alpha/kernel/traps.c
+@@ -233,7 +233,21 @@ do_entIF(unsigned long type, struct pt_r
+ {
+ 	int signo, code;
  
- 	ctlr->mode_bits = SPI_TX_DUAL | SPI_TX_QUAD | SPI_TX_OCTAL
--		| SPI_RX_DUAL | SPI_RX_QUAD | SPI_TX_OCTAL
-+		| SPI_RX_DUAL | SPI_RX_QUAD | SPI_RX_OCTAL
- 		| SPI_MODE_0 | SPI_MODE_1 | SPI_LSB_FIRST;
- 	ctlr->mem_ops = &f_ospi_mem_ops;
- 	ctlr->bus_num = -1;
--- 
-2.39.2
-
+-	if ((regs->ps & ~IPL_MAX) == 0) {
++	if (type == 3) { /* FEN fault */
++		/* Irritating users can call PAL_clrfen to disable the
++		   FPU for the process.  The kernel will then trap in
++		   do_switch_stack and undo_switch_stack when we try
++		   to save and restore the FP registers.
++
++		   Given that GCC by default generates code that uses the
++		   FP registers, PAL_clrfen is not useful except for DoS
++		   attacks.  So turn the bleeding FPU back on and be done
++		   with it.  */
++		current_thread_info()->pcb.flags |= 1;
++		__reload_thread(&current_thread_info()->pcb);
++		return;
++	}
++	if (!user_mode(regs)) {
+ 		if (type == 1) {
+ 			const unsigned int *data
+ 			  = (const unsigned int *) regs->pc;
+@@ -366,20 +380,6 @@ do_entIF(unsigned long type, struct pt_r
+ 		}
+ 		break;
+ 
+-	      case 3: /* FEN fault */
+-		/* Irritating users can call PAL_clrfen to disable the
+-		   FPU for the process.  The kernel will then trap in
+-		   do_switch_stack and undo_switch_stack when we try
+-		   to save and restore the FP registers.
+-
+-		   Given that GCC by default generates code that uses the
+-		   FP registers, PAL_clrfen is not useful except for DoS
+-		   attacks.  So turn the bleeding FPU back on and be done
+-		   with it.  */
+-		current_thread_info()->pcb.flags |= 1;
+-		__reload_thread(&current_thread_info()->pcb);
+-		return;
+-
+ 	      case 5: /* illoc */
+ 	      default: /* unexpected instruction-fault type */
+ 		      ;
 
 
