@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E2EBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:15:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDA1C433D2;
-	Tue,  7 Mar 2023 17:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75037BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:15:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE779C433D2;
+	Tue,  7 Mar 2023 17:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209331;
-	bh=MyUA9rbAb493vf7H+6aUqbpXryh2hS5od6dCujTAE/o=;
+	s=korg; t=1678209334;
+	bh=6um0Gxx64lpG2s6OKo6ioec+xFRQ0zfd9ZYtuoMKGdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bgtWxK30bwU+PrirTf0agd/hQLU+HEOZ8Y5WjhM5axOfPM62tBbbCC/5P9JMJ/shD
-	 /8iCEL8ABRzPJiKkUF+Tcq/S7EgSr+oRmlwfsrGmnfb+7A4PjTiDfxhF3UWI+55HcO
-	 p5byO/avtpNjGFdGfVTbLOhioBUjNKJHzagm9kNA=
+	b=XN9q0WayZHQWXdFpFAAdb+IdnL2w/c0Sc/aQgbqSX51UCo0Mrmci1X2F3g4WTnXDZ
+	 jCBN3vhlH7g2zblbtU9wwpBscn0TkZf9xYaa/Tcn9CyPw8N/ZX0FFHmaYb/kdxbGEj
+	 mcdlPLSvhvKrYk/IRxCWyZ6BWQ/3OeuxunSgFbhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashant Malani <pmalani@chromium.org>,
-	Benson Leung <bleung@chromium.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0183/1001] platform/chrome: cros_ec_typec: Update port DP VDO
-Date: Tue,  7 Mar 2023 17:49:15 +0100
-Message-Id: <20230307170029.835374328@linuxfoundation.org>
+Subject: [PATCH 6.2 0184/1001] ACPICA: nsrepair: handle cases without a return value correctly
+Date: Tue,  7 Mar 2023 17:49:16 +0100
+Message-Id: <20230307170029.883800925@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,36 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prashant Malani <pmalani@chromium.org>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-[ Upstream commit 8d2b28df6c3dc1581d856f52d9f78059ef2a568f ]
+[ Upstream commit ca843a4c79486e99a19b859ef0b9887854afe146 ]
 
-The port advertising DP support is a Type-C receptacle. Fix the port's
-DisplayPort VDO to reflect this.
+Previously acpi_ns_simple_repair() would crash if expected_btypes
+contained any combination of ACPI_RTYPE_NONE with a different type,
+e.g | ACPI_RTYPE_INTEGER because of slightly incorrect logic in the
+!return_object branch, which wouldn't return AE_AML_NO_RETURN_VALUE
+for such cases.
 
-Fixes: 1903adae0464 ("platform/chrome: cros_ec_typec: Add bit offset for DP VDO")
-Signed-off-by: Prashant Malani <pmalani@chromium.org>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20221228004648.793339-6-pmalani@chromium.org
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
+
+Link: https://github.com/acpica/acpica/pull/811
+Fixes: 61db45ca2163 ("ACPICA: Restore code that repairs NULL package elements in return values.")
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_typec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpica/nsrepair.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
-index 001b0de95a46e..d1714b5d085be 100644
---- a/drivers/platform/chrome/cros_ec_typec.c
-+++ b/drivers/platform/chrome/cros_ec_typec.c
-@@ -27,7 +27,7 @@
- #define DRV_NAME "cros-ec-typec"
+diff --git a/drivers/acpi/acpica/nsrepair.c b/drivers/acpi/acpica/nsrepair.c
+index 367fcd201f96e..ec512e06a48ed 100644
+--- a/drivers/acpi/acpica/nsrepair.c
++++ b/drivers/acpi/acpica/nsrepair.c
+@@ -181,8 +181,9 @@ acpi_ns_simple_repair(struct acpi_evaluate_info *info,
+ 	 * Try to fix if there was no return object. Warning if failed to fix.
+ 	 */
+ 	if (!return_object) {
+-		if (expected_btypes && (!(expected_btypes & ACPI_RTYPE_NONE))) {
+-			if (package_index != ACPI_NOT_PACKAGE_ELEMENT) {
++		if (expected_btypes) {
++			if (!(expected_btypes & ACPI_RTYPE_NONE) &&
++			    package_index != ACPI_NOT_PACKAGE_ELEMENT) {
+ 				ACPI_WARN_PREDEFINED((AE_INFO,
+ 						      info->full_pathname,
+ 						      ACPI_WARN_ALWAYS,
+@@ -196,14 +197,15 @@ acpi_ns_simple_repair(struct acpi_evaluate_info *info,
+ 				if (ACPI_SUCCESS(status)) {
+ 					return (AE_OK);	/* Repair was successful */
+ 				}
+-			} else {
++			}
++
++			if (expected_btypes != ACPI_RTYPE_NONE) {
+ 				ACPI_WARN_PREDEFINED((AE_INFO,
+ 						      info->full_pathname,
+ 						      ACPI_WARN_ALWAYS,
+ 						      "Missing expected return value"));
++				return (AE_AML_NO_RETURN_VALUE);
+ 			}
+-
+-			return (AE_AML_NO_RETURN_VALUE);
+ 		}
+ 	}
  
- #define DP_PORT_VDO	(DP_CONF_SET_PIN_ASSIGN(BIT(DP_PIN_ASSIGN_C) | BIT(DP_PIN_ASSIGN_D)) | \
--				DP_CAP_DFP_D)
-+				DP_CAP_DFP_D | DP_CAP_RECEPTACLE)
- 
- /* Supported alt modes. */
- enum {
 -- 
 2.39.2
 
