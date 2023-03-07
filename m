@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263D8BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:19:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A127DC433D2;
-	Tue,  7 Mar 2023 18:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725B7BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:19:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB163C433EF;
+	Tue,  7 Mar 2023 18:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213162;
-	bh=3Hk0oLE080UUn6XbA/aaTA3N+mz0pW5XSHn6TQK/scs=;
+	s=korg; t=1678213165;
+	bh=A+h3dc8XfRhEAWNacLa/Q01En3HasFvCGIPgoyoT7NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aBxUsO9MyOtaPbTVKF2YbICUFTii9mZ/4dFpvOCGPOjYSns2B87vYLFM5U2X6+q/f
-	 Jxai3esrBlPKWeLT+UFdtjOdtKp2P5nFyB6DY6hdTfZa/qW99+OCxIRYrsKozfJQGh
-	 cTZgG7GZRj4I0D85MDsdwYJJRjZkzt2o6xiZ9eTI=
+	b=XSfmKjQdFt3O1r0+4/OT71XvHl8ivYrTrHsXOa99ukZbLyntxM9x3qJ09ERDguZGo
+	 vhbGnzMFor/oQwsT4LBPQp7wYtVGtPZeeMHWkLRFo5BjBvdmB8BteAjI29L5J7sSyn
+	 SHVUbDor3Buvr0Q6Xhp+LVuNGJ0EZsjGmqwKTM/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Junhao He <hejunhao3@huawei.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 419/885] media: uvcvideo: Refactor power_line_frequency_controls_limited
-Date: Tue,  7 Mar 2023 17:55:53 +0100
-Message-Id: <20230307170020.632220697@linuxfoundation.org>
+Subject: [PATCH 6.1 420/885] coresight: etm4x: Fix accesses to TRCSEQRSTEVR and TRCSEQSTR
+Date: Tue,  7 Mar 2023 17:55:54 +0100
+Message-Id: <20230307170020.672737868@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,96 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Junhao He <hejunhao3@huawei.com>
 
-[ Upstream commit 3aa8628eb78a63d0bf93e159846e9c92bccc8f69 ]
+[ Upstream commit 589d928248b72f8377d45904a14bcf686aa8bbeb ]
 
-Move the control mapping to uvc_ctrl.c. This way we do not have
-references to UVC controls or V4L2 controls in uvc_driver.c.
+The TRCSEQRSTEVR and TRCSEQSTR registers are not implemented if the
+TRCIDR5.NUMSEQSTATE == 0. Skip accessing the registers in such cases.
 
-This also fixes a bug introduced in commit 382075604a68 ("media:
-uvcvideo: Limit power line control for Quanta UVC Webcam"). The
-offending commit caused the power line control menu entries to have
-incorrect indices compared to the V4L2_CID_POWER_LINE_FREQUENCY_*
-enumeration. Now that the limited mapping reuses the correct menu_info
-array, the indices correctly map to the V4L2 control specification.
-
-Fixes: 382075604a68 ("media: uvcvideo: Limit power line control for Quanta UVC Webcam")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: 2e1cdfe184b5 ("coresight-etm4x: Adding CoreSight ETM4x driver")
+Signed-off-by: Junhao He <hejunhao3@huawei.com>
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20230114091632.60095-1-hejunhao3@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c   | 13 +++++++++++++
- drivers/media/usb/uvc/uvc_driver.c | 18 ------------------
- drivers/media/usb/uvc/uvcvideo.h   |  1 +
- 3 files changed, 14 insertions(+), 18 deletions(-)
+ .../hwtracing/coresight/coresight-etm4x-core.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index 3c46c33b9e571..44b0cfb8ee1c7 100644
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -723,6 +723,19 @@ static const struct uvc_control_mapping uvc_ctrl_mappings[] = {
- 	},
- };
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 80fefaba58eeb..c7a65d1524fcb 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -424,8 +424,10 @@ static int etm4_enable_hw(struct etmv4_drvdata *drvdata)
+ 		etm4x_relaxed_write32(csa, config->vipcssctlr, TRCVIPCSSCTLR);
+ 	for (i = 0; i < drvdata->nrseqstate - 1; i++)
+ 		etm4x_relaxed_write32(csa, config->seq_ctrl[i], TRCSEQEVRn(i));
+-	etm4x_relaxed_write32(csa, config->seq_rst, TRCSEQRSTEVR);
+-	etm4x_relaxed_write32(csa, config->seq_state, TRCSEQSTR);
++	if (drvdata->nrseqstate) {
++		etm4x_relaxed_write32(csa, config->seq_rst, TRCSEQRSTEVR);
++		etm4x_relaxed_write32(csa, config->seq_state, TRCSEQSTR);
++	}
+ 	etm4x_relaxed_write32(csa, config->ext_inp, TRCEXTINSELR);
+ 	for (i = 0; i < drvdata->nr_cntr; i++) {
+ 		etm4x_relaxed_write32(csa, config->cntrldvr[i], TRCCNTRLDVRn(i));
+@@ -1631,8 +1633,10 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
+ 	for (i = 0; i < drvdata->nrseqstate - 1; i++)
+ 		state->trcseqevr[i] = etm4x_read32(csa, TRCSEQEVRn(i));
  
-+const struct uvc_control_mapping uvc_ctrl_power_line_mapping_limited = {
-+	.id		= V4L2_CID_POWER_LINE_FREQUENCY,
-+	.entity		= UVC_GUID_UVC_PROCESSING,
-+	.selector	= UVC_PU_POWER_LINE_FREQUENCY_CONTROL,
-+	.size		= 2,
-+	.offset		= 0,
-+	.v4l2_type	= V4L2_CTRL_TYPE_MENU,
-+	.data_type	= UVC_CTRL_DATA_TYPE_ENUM,
-+	.menu_info	= power_line_frequency_controls,
-+	.menu_mask	= GENMASK(V4L2_CID_POWER_LINE_FREQUENCY_60HZ,
-+				  V4L2_CID_POWER_LINE_FREQUENCY_50HZ),
-+};
-+
- static const struct uvc_control_mapping uvc_ctrl_power_line_mapping_uvc11 = {
- 	.id		= V4L2_CID_POWER_LINE_FREQUENCY,
- 	.entity		= UVC_GUID_UVC_PROCESSING,
-diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index d6dcd78b434ac..abfe735f6ea30 100644
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -2374,24 +2374,6 @@ MODULE_PARM_DESC(timeout, "Streaming control requests timeout");
-  * Driver initialization and cleanup
-  */
+-	state->trcseqrstevr = etm4x_read32(csa, TRCSEQRSTEVR);
+-	state->trcseqstr = etm4x_read32(csa, TRCSEQSTR);
++	if (drvdata->nrseqstate) {
++		state->trcseqrstevr = etm4x_read32(csa, TRCSEQRSTEVR);
++		state->trcseqstr = etm4x_read32(csa, TRCSEQSTR);
++	}
+ 	state->trcextinselr = etm4x_read32(csa, TRCEXTINSELR);
  
--static const struct uvc_menu_info power_line_frequency_controls_limited[] = {
--	{ 1, "50 Hz" },
--	{ 2, "60 Hz" },
--};
--
--static const struct uvc_control_mapping uvc_ctrl_power_line_mapping_limited = {
--	.id		= V4L2_CID_POWER_LINE_FREQUENCY,
--	.entity		= UVC_GUID_UVC_PROCESSING,
--	.selector	= UVC_PU_POWER_LINE_FREQUENCY_CONTROL,
--	.size		= 2,
--	.offset		= 0,
--	.v4l2_type	= V4L2_CTRL_TYPE_MENU,
--	.data_type	= UVC_CTRL_DATA_TYPE_ENUM,
--	.menu_info	= power_line_frequency_controls_limited,
--	.menu_mask	=
--		GENMASK(ARRAY_SIZE(power_line_frequency_controls_limited) - 1, 0),
--};
--
- static const struct uvc_device_info uvc_ctrl_power_line_limited = {
- 	.mappings = (const struct uvc_control_mapping *[]) {
- 		&uvc_ctrl_power_line_mapping_limited,
-diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index f75e5864bbf72..1227ae63f85b7 100644
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -728,6 +728,7 @@ int uvc_status_start(struct uvc_device *dev, gfp_t flags);
- void uvc_status_stop(struct uvc_device *dev);
+ 	for (i = 0; i < drvdata->nr_cntr; i++) {
+@@ -1760,8 +1764,10 @@ static void __etm4_cpu_restore(struct etmv4_drvdata *drvdata)
+ 	for (i = 0; i < drvdata->nrseqstate - 1; i++)
+ 		etm4x_relaxed_write32(csa, state->trcseqevr[i], TRCSEQEVRn(i));
  
- /* Controls */
-+extern const struct uvc_control_mapping uvc_ctrl_power_line_mapping_limited;
- extern const struct v4l2_subscribed_event_ops uvc_ctrl_sub_ev_ops;
+-	etm4x_relaxed_write32(csa, state->trcseqrstevr, TRCSEQRSTEVR);
+-	etm4x_relaxed_write32(csa, state->trcseqstr, TRCSEQSTR);
++	if (drvdata->nrseqstate) {
++		etm4x_relaxed_write32(csa, state->trcseqrstevr, TRCSEQRSTEVR);
++		etm4x_relaxed_write32(csa, state->trcseqstr, TRCSEQSTR);
++	}
+ 	etm4x_relaxed_write32(csa, state->trcextinselr, TRCEXTINSELR);
  
- int uvc_query_v4l2_ctrl(struct uvc_video_chain *chain,
+ 	for (i = 0; i < drvdata->nr_cntr; i++) {
 -- 
 2.39.2
 
