@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5E1BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:10:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB6BC4339B;
-	Tue,  7 Mar 2023 17:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00C1BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:10:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2187DC433EF;
+	Tue,  7 Mar 2023 17:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209054;
-	bh=ZfM7LHh3djO84w/6Deze6YHGLWE+Oyp/78kHfsEM1A4=;
+	s=korg; t=1678209057;
+	bh=PaLDjaHcgVwd2yErWQmz17o4YHZ2P0IOJLtzWuIPu7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DmOppI6cOOr/9cx8d8ee/B+BQKE8ENcmfgtXp4J3RhG5eYlmWlDpPSDnuPma6JWd4
-	 nXh4CrwD1UoDARZaO7In/DIPEjAqUP9tzWSWdFsgDgx4e8i0TdjdmUSO/fnxQiiBeo
-	 W9NbS+ywq5BccFVttodqHpTFJ41wT7bYDArNsKWQ=
+	b=xbwQsP8bx6fQH36MkPlVnbT2Xa6/UM/QsE6LFWxy8vlAY96RqfsAmgbymLvCGB3V8
+	 fl2Likd9tC8dMa3vYq2fsSWGk+5ptoXkBjt8iX8wIAU1mV93yfdD6kqd+FRiCk4vNf
+	 GBx9ea17dacDso+xaCOBN8t42vmckT51Ge2zHBmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0088/1001] arm64: dts: renesas: beacon-renesom: Fix gpio expander reference
-Date: Tue,  7 Mar 2023 17:47:40 +0100
-Message-Id: <20230307170025.976691057@linuxfoundation.org>
+Subject: [PATCH 6.2 0097/1001] arm64: dts: mt8195: Fix CPU map for single-cluster SoC
+Date: Tue,  7 Mar 2023 17:47:49 +0100
+Message-Id: <20230307170026.380436239@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,74 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adam Ford <aford173@gmail.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit d7f9492dfc03153ac56ab59066a196558748f575 ]
+[ Upstream commit cc4f0b13a887b483faa45084616998a21b63889d ]
 
-The board used to originally introduce the Beacon Embedded RZ/G2[M/N/H]
-boards had a GPIO expander with address 20, but this was changed when
-the final board went to production.
+MT8195 features the ARM DynamIQ technology and combines both four
+Cortex-A78 (big) and four Cortex-A55 (LITTLE) CPUs in one cluster:
+fix the CPU map to reflect that.
 
-The production boards changed both the part itself and the address.
-With the incorrect address, the LCD cannot come up.  If the LCD fails,
-the rcar-du driver fails to come up, and that also breaks HDMI.
-
-Pre-release board were not shipped to the general public, so it should
-be safe to push this as a fix.  Anyone with a production board would
-have video fail due to this GPIO expander change.
-
-Fixes: a1d8a344f1ca ("arm64: dts: renesas: Introduce r8a774a1-beacon-rzg2m-kit")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230114225647.227972-1-aford173@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 37f2582883be ("arm64: dts: Add mediatek SoC mt8195 and evaluation board")
+Link: https://lore.kernel.org/r/20230126103526.417039-2-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/renesas/beacon-renesom-baseboard.dtsi | 24 ++++++++-----------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi b/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
-index 8166e3c1ff4e5..cafde91b4721b 100644
---- a/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
-+++ b/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
-@@ -437,20 +437,6 @@ wm8962_endpoint: endpoint {
- 		};
- 	};
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index d8d846a57d97f..f0bd5754d19d0 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -151,22 +151,20 @@ core2 {
+ 				core3 {
+ 					cpu = <&cpu3>;
+ 				};
+-			};
  
--	/* 0 - lcd_reset */
--	/* 1 - lcd_pwr */
--	/* 2 - lcd_select */
--	/* 3 - backlight-enable */
--	/* 4 - Touch_shdwn */
--	/* 5 - LCD_H_pol */
--	/* 6 - lcd_V_pol */
--	gpio_exp1: gpio@20 {
--		compatible = "onnn,pca9654";
--		reg = <0x20>;
--		gpio-controller;
--		#gpio-cells = <2>;
--	};
--
- 	touchscreen@26 {
- 		compatible = "ilitek,ili2117";
- 		reg = <0x26>;
-@@ -482,6 +468,16 @@ hd3ss3220_out_ep: endpoint {
+-			cluster1 {
+-				core0 {
++				core4 {
+ 					cpu = <&cpu4>;
+ 				};
+ 
+-				core1 {
++				core5 {
+ 					cpu = <&cpu5>;
+ 				};
+ 
+-				core2 {
++				core6 {
+ 					cpu = <&cpu6>;
+ 				};
+ 
+-				core3 {
++				core7 {
+ 					cpu = <&cpu7>;
+ 				};
  			};
- 		};
- 	};
-+
-+	gpio_exp1: gpio@70 {
-+		compatible = "nxp,pca9538";
-+		reg = <0x70>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names = "lcd_reset", "lcd_pwr", "lcd_select",
-+				  "backlight-enable", "Touch_shdwn",
-+				  "LCD_H_pol", "lcd_V_pol";
-+	};
- };
- 
- &lvds0 {
 -- 
 2.39.2
 
