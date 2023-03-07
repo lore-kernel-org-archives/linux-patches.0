@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C94BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA441C433A1;
-	Tue,  7 Mar 2023 18:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EA4BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88ED6C4339B;
+	Tue,  7 Mar 2023 18:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212332;
-	bh=FOu70jAGzI1lAzqTxLOg7F2OGehloLP0dQguDprPLjI=;
+	s=korg; t=1678212334;
+	bh=anWK4BZaITy0XSARCu9RwGG+L/gUg3n2076L28i3ww0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TK7mNgaBrjFqWm6lw9H7EGizRtfyW3jkBaB2QkSamd1Srw5tFbYg7HpI4Pd8TipGn
-	 CT6mERD/FSTkM8BlxfOXrVg6Z4Swlgh8aExlFHOaYOmDN2C4vGIDEUjXzFo+uk3FSu
-	 +TU51k211fV2rBrQQjqIhpQQMu+RE8IguxsAiOco=
+	b=VJRNJn1H3cg1Lv9pW9kP4oIXH2sXH7ggaFSVDyF6XCDxkFPBD+U+Op+WvIANoWptF
+	 Eb6dtABRe1ugpHTzEH3uTE3tjHoOb8krUoW9dWKA0sYmNa5rWZeZoSliMeICNaOri3
+	 g/zomv8IrYAZkXzNToYMvY/B91CL4J4QUulGivnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boqun Feng <boqun.feng@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/885] rcu-tasks: Remove preemption disablement around srcu_read_[un]lock() calls
-Date: Tue,  7 Mar 2023 17:51:18 +0100
-Message-Id: <20230307170008.129576397@linuxfoundation.org>
+Subject: [PATCH 6.1 153/885] kselftest/arm64: Fix syscall-abi for systems without 128 bit SME
+Date: Tue,  7 Mar 2023 17:51:27 +0100
+Message-Id: <20230307170008.552093263@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,57 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 44757092958bdd749775022f915b7ac974384c2a ]
+[ Upstream commit 97ec597b26df774a257e3f8e97353fd1b4471615 ]
 
-Ever since the following commit:
+SME does not mandate any specific VL so we may not have 128 bit SME but
+the algorithm used for enumerating VLs assumes that we will. Add the
+required check to ensure that the algorithm terminates.
 
-	5a41344a3d83 ("srcu: Simplify __srcu_read_unlock() via this_cpu_dec()")
-
-SRCU doesn't rely anymore on preemption to be disabled in order to
-modify the per-CPU counter. And even then it used to be done from the API
-itself.
-
-Therefore and after checking further, it appears to be safe to remove
-the preemption disablement around __srcu_read_[un]lock() in
-exit_tasks_rcu_start() and exit_tasks_rcu_finish()
-
-Suggested-by: Boqun Feng <boqun.feng@gmail.com>
-Suggested-by: Paul E. McKenney <paulmck@kernel.org>
-Suggested-by: Neeraj Upadhyay <quic_neeraju@quicinc.com>
-Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Stable-dep-of: 28319d6dc5e2 ("rcu-tasks: Fix synchronize_rcu_tasks() VS zap_pid_ns_processes()")
+Fixes: 43e3f85523e4 ("kselftest/arm64: Add SME support to syscall ABI test")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20221223-arm64-syscall-abi-sme-only-v1-1-4fabfbd62087@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tasks.h | 4 ----
- 1 file changed, 4 deletions(-)
+ tools/testing/selftests/arm64/abi/syscall-abi.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index 688c461036f57..80e75e7926cc6 100644
---- a/kernel/rcu/tasks.h
-+++ b/kernel/rcu/tasks.h
-@@ -1008,9 +1008,7 @@ EXPORT_SYMBOL_GPL(show_rcu_tasks_classic_gp_kthread);
-  */
- void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
- {
--	preempt_disable();
- 	current->rcu_tasks_idx = __srcu_read_lock(&tasks_rcu_exit_srcu);
--	preempt_enable();
- }
+diff --git a/tools/testing/selftests/arm64/abi/syscall-abi.c b/tools/testing/selftests/arm64/abi/syscall-abi.c
+index dd7ebe536d05f..ffe719b50c215 100644
+--- a/tools/testing/selftests/arm64/abi/syscall-abi.c
++++ b/tools/testing/selftests/arm64/abi/syscall-abi.c
+@@ -390,6 +390,10 @@ static void test_one_syscall(struct syscall_cfg *cfg)
  
- /*
-@@ -1022,9 +1020,7 @@ void exit_tasks_rcu_finish(void) __releases(&tasks_rcu_exit_srcu)
- {
- 	struct task_struct *t = current;
+ 			sme_vl &= PR_SME_VL_LEN_MASK;
  
--	preempt_disable();
- 	__srcu_read_unlock(&tasks_rcu_exit_srcu, t->rcu_tasks_idx);
--	preempt_enable();
- 	exit_tasks_rcu_finish_trace(t);
- }
++			/* Found lowest VL */
++			if (sve_vq_from_vl(sme_vl) > sme_vq)
++				break;
++
+ 			if (sme_vq != sve_vq_from_vl(sme_vl))
+ 				sme_vq = sve_vq_from_vl(sme_vl);
+ 
+@@ -461,6 +465,10 @@ int sme_count_vls(void)
+ 
+ 		vl &= PR_SME_VL_LEN_MASK;
+ 
++		/* Found lowest VL */
++		if (sve_vq_from_vl(vl) > vq)
++			break;
++
+ 		if (vq != sve_vq_from_vl(vl))
+ 			vq = sve_vq_from_vl(vl);
  
 -- 
 2.39.2
