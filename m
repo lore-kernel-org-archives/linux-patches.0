@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E340BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:24:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15915C433EF;
-	Tue,  7 Mar 2023 18:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58E8BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:24:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B48DC433D2;
+	Tue,  7 Mar 2023 18:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213444;
-	bh=7yWxaMxHdI68XXXm8a7ajbUrP39xIKgSSg6qiaqnVr8=;
+	s=korg; t=1678213447;
+	bh=Y9H0vfzBfuRJlO5+f3HU3XYFQBL4lVqLRRUyYSIzmbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBxmEY87sH4kOLlNAJgT/h5+o/N1e2owI+pWT4FbVwLBSqqKVCMwjhj3V9c+j/D6m
-	 HjI/FMpHlwN70y5kQvcsGBORpM5iRVac3HPf6frnKiRlLOY1SErIMxglo94bWYjkOk
-	 yPzABaTXT5WKMQtN3lRhhOgBIy8RqxeXoOJI65wU=
+	b=XeWMloSMjToKIRqDWR1TItEiS1SoMUjUhId4xpnnDvZ9iApn9AklQqQW9fycD/Hhy
+	 t3qoKIwBLPDyg9redfiEQg+v50mC/x0nrKnkufv1Xy8aXbKfxYfRi00JDF9vQEAPVp
+	 IKhC/1IZXuAkWOw44jF+O5WqKwwo4Ka3q5z0mmTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neill Kapron <nkapron@google.com>,
-	Lee Jones <lee@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 479/885] phy: rockchip-typec: fix tcphy_get_mode error case
-Date: Tue,  7 Mar 2023 17:56:53 +0100
-Message-Id: <20230307170023.293754404@linuxfoundation.org>
+	Saravana Kannan <saravanak@google.com>,
+	Colin Foster <colin.foster@in-advantage.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sasha Levin <sashal@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 6.1 470/885] driver core: fw_devlink: Dont purge child fwnodes consumer links
+Date: Tue,  7 Mar 2023 17:56:44 +0100
+Message-Id: <20230307170022.920618564@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,52 +39,197 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Neill Kapron <nkapron@google.com>
+From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit 4ca651df07183e29cdad7272255e23aec0169a1b ]
+[ Upstream commit 3a2dbc510c437ca392516b0105bad8e7970e6614 ]
 
-The existing logic in tcphy_get_mode() can cause the phy to be
-incorrectly configured to USB UFP or DisplayPort mode when
-extcon_get_state returns an error code.
+When a device X is bound successfully to a driver, if it has a child
+firmware node Y that doesn't have a struct device created by then, we
+delete fwnode links where the child firmware node Y is the supplier. We
+did this to avoid blocking the consumers of the child firmware node Y
+from deferring probe indefinitely.
 
-extcon_get_state() can return 0, 1, or a negative error code.
+While that a step in the right direction, it's better to make the
+consumers of the child firmware node Y to be consumers of the device X
+because device X is probably implementing whatever functionality is
+represented by child firmware node Y. By doing this, we capture the
+device dependencies more accurately and ensure better
+probe/suspend/resume ordering.
 
-It is possible to get into the failing state with an extcon driver
-which does not support the extcon connector id specified as the
-second argument to extcon_get_state().
-
-tcphy_get_mode()
-->extcon_get_state()
--->find_cable_index_by_id()
---->return -EINVAL;
-
-Fixes: e96be45cb84e ("phy: Add USB Type-C PHY driver for rk3399")
-Signed-off-by: Neill Kapron <nkapron@google.com>
-Reviewed-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230126001013.3707873-1-nkapron@google.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Colin Foster <colin.foster@in-advantage.com>
+Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
+Link: https://lore.kernel.org/r/20230207014207.1678715-2-saravanak@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 6a6dfdf8b3ff ("driver core: fw_devlink: Allow marking a fwnode link as being part of a cycle")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-typec.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/base/core.c | 97 ++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 79 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-typec.c b/drivers/phy/rockchip/phy-rockchip-typec.c
-index d76440ae10ff4..6aea512e5d4ee 100644
---- a/drivers/phy/rockchip/phy-rockchip-typec.c
-+++ b/drivers/phy/rockchip/phy-rockchip-typec.c
-@@ -821,10 +821,10 @@ static int tcphy_get_mode(struct rockchip_typec_phy *tcphy)
- 	mode = MODE_DFP_USB;
- 	id = EXTCON_USB_HOST;
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index 816b0288579fd..d74a07ca36dff 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -53,11 +53,12 @@ static LIST_HEAD(deferred_sync);
+ static unsigned int defer_sync_state_count = 1;
+ static DEFINE_MUTEX(fwnode_link_lock);
+ static bool fw_devlink_is_permissive(void);
++static void __fw_devlink_link_to_consumers(struct device *dev);
+ static bool fw_devlink_drv_reg_done;
+ static bool fw_devlink_best_effort;
  
--	if (ufp) {
-+	if (ufp > 0) {
- 		mode = MODE_UFP_USB;
- 		id = EXTCON_USB;
--	} else if (dp) {
-+	} else if (dp > 0) {
- 		mode = MODE_DFP_DP;
- 		id = EXTCON_DISP_DP;
+ /**
+- * fwnode_link_add - Create a link between two fwnode_handles.
++ * __fwnode_link_add - Create a link between two fwnode_handles.
+  * @con: Consumer end of the link.
+  * @sup: Supplier end of the link.
+  *
+@@ -73,22 +74,18 @@ static bool fw_devlink_best_effort;
+  * Attempts to create duplicate links between the same pair of fwnode handles
+  * are ignored and there is no reference counting.
+  */
+-int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup)
++static int __fwnode_link_add(struct fwnode_handle *con,
++			     struct fwnode_handle *sup)
+ {
+ 	struct fwnode_link *link;
+-	int ret = 0;
+-
+-	mutex_lock(&fwnode_link_lock);
  
+ 	list_for_each_entry(link, &sup->consumers, s_hook)
+ 		if (link->consumer == con)
+-			goto out;
++			return 0;
+ 
+ 	link = kzalloc(sizeof(*link), GFP_KERNEL);
+-	if (!link) {
+-		ret = -ENOMEM;
+-		goto out;
+-	}
++	if (!link)
++		return -ENOMEM;
+ 
+ 	link->supplier = sup;
+ 	INIT_LIST_HEAD(&link->s_hook);
+@@ -99,9 +96,17 @@ int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup)
+ 	list_add(&link->c_hook, &con->suppliers);
+ 	pr_debug("%pfwP Linked as a fwnode consumer to %pfwP\n",
+ 		 con, sup);
+-out:
+-	mutex_unlock(&fwnode_link_lock);
+ 
++	return 0;
++}
++
++int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup)
++{
++	int ret;
++
++	mutex_lock(&fwnode_link_lock);
++	ret = __fwnode_link_add(con, sup);
++	mutex_unlock(&fwnode_link_lock);
+ 	return ret;
+ }
+ 
+@@ -180,6 +185,51 @@ void fw_devlink_purge_absent_suppliers(struct fwnode_handle *fwnode)
+ }
+ EXPORT_SYMBOL_GPL(fw_devlink_purge_absent_suppliers);
+ 
++/**
++ * __fwnode_links_move_consumers - Move consumer from @from to @to fwnode_handle
++ * @from: move consumers away from this fwnode
++ * @to: move consumers to this fwnode
++ *
++ * Move all consumer links from @from fwnode to @to fwnode.
++ */
++static void __fwnode_links_move_consumers(struct fwnode_handle *from,
++					  struct fwnode_handle *to)
++{
++	struct fwnode_link *link, *tmp;
++
++	list_for_each_entry_safe(link, tmp, &from->consumers, s_hook) {
++		__fwnode_link_add(link->consumer, to);
++		__fwnode_link_del(link);
++	}
++}
++
++/**
++ * __fw_devlink_pickup_dangling_consumers - Pick up dangling consumers
++ * @fwnode: fwnode from which to pick up dangling consumers
++ * @new_sup: fwnode of new supplier
++ *
++ * If the @fwnode has a corresponding struct device and the device supports
++ * probing (that is, added to a bus), then we want to let fw_devlink create
++ * MANAGED device links to this device, so leave @fwnode and its descendant's
++ * fwnode links alone.
++ *
++ * Otherwise, move its consumers to the new supplier @new_sup.
++ */
++static void __fw_devlink_pickup_dangling_consumers(struct fwnode_handle *fwnode,
++						   struct fwnode_handle *new_sup)
++{
++	struct fwnode_handle *child;
++
++	if (fwnode->dev && fwnode->dev->bus)
++		return;
++
++	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
++	__fwnode_links_move_consumers(fwnode, new_sup);
++
++	fwnode_for_each_available_child_node(fwnode, child)
++		__fw_devlink_pickup_dangling_consumers(child, new_sup);
++}
++
+ #ifdef CONFIG_SRCU
+ static DEFINE_MUTEX(device_links_lock);
+ DEFINE_STATIC_SRCU(device_links_srcu);
+@@ -1273,16 +1323,23 @@ void device_links_driver_bound(struct device *dev)
+ 	 * them. So, fw_devlink no longer needs to create device links to any
+ 	 * of the device's suppliers.
+ 	 *
+-	 * Also, if a child firmware node of this bound device is not added as
+-	 * a device by now, assume it is never going to be added and make sure
+-	 * other devices don't defer probe indefinitely by waiting for such a
+-	 * child device.
++	 * Also, if a child firmware node of this bound device is not added as a
++	 * device by now, assume it is never going to be added. Make this bound
++	 * device the fallback supplier to the dangling consumers of the child
++	 * firmware node because this bound device is probably implementing the
++	 * child firmware node functionality and we don't want the dangling
++	 * consumers to defer probe indefinitely waiting for a device for the
++	 * child firmware node.
+ 	 */
+ 	if (dev->fwnode && dev->fwnode->dev == dev) {
+ 		struct fwnode_handle *child;
+ 		fwnode_links_purge_suppliers(dev->fwnode);
++		mutex_lock(&fwnode_link_lock);
+ 		fwnode_for_each_available_child_node(dev->fwnode, child)
+-			fw_devlink_purge_absent_suppliers(child);
++			__fw_devlink_pickup_dangling_consumers(child,
++							       dev->fwnode);
++		__fw_devlink_link_to_consumers(dev);
++		mutex_unlock(&fwnode_link_lock);
+ 	}
+ 	device_remove_file(dev, &dev_attr_waiting_for_supplier);
+ 
+@@ -1862,7 +1919,11 @@ static int fw_devlink_create_devlink(struct device *con,
+ 	    fwnode_is_ancestor_of(sup_handle, con->fwnode))
+ 		return -EINVAL;
+ 
+-	sup_dev = get_dev_from_fwnode(sup_handle);
++	if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
++		sup_dev = fwnode_get_next_parent_dev(sup_handle);
++	else
++		sup_dev = get_dev_from_fwnode(sup_handle);
++
+ 	if (sup_dev) {
+ 		/*
+ 		 * If it's one of those drivers that don't actually bind to
 -- 
 2.39.2
 
