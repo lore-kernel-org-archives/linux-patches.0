@@ -1,26 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6910BBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:58:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E320AC433EF;
-	Tue,  7 Mar 2023 18:58:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7D2BA49;
+	Tue,  7 Mar 2023 18:58:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC910C433D2;
+	Tue,  7 Mar 2023 18:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215481;
-	bh=WyC1qIlx4sbfkyTYX64GbyX9+UosiYajlzxK/B4nv3U=;
+	s=korg; t=1678215484;
+	bh=JN+PH1NmuC42Ae/UZeVPJKaF8s2n1S6+4ls8J7Zf/iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HFIsbLyWyctDTl9h7lorNr69vrub7k+ATl+f3+rAvcBVnJ05ClQcoRRklDrT+ZnQW
-	 HT2jNoZmCvps4BZgwcb+5Ggfs/s161e5wml9fNaLb6mxaXbAk+ROkQJTRHKbRwBIGd
-	 7+EU5ETiN8peK5xay/FXa6z5DZ5D4lb8SzLZlVh8=
+	b=KC4FzVnwY3avFldOLdHjvL3pZL/CtHxnL+nFiGBRW3DrhxtiF0lWNO6o8fbblLj/I
+	 3jPFTDvrC73hYg4sQTB+0tCW8Ne35ZKHs1wP+Oc07/x1+6F2HEQBs2nF0ZSr6WxoHY
+	 iVUwR3BWel/v7h6deNvpsphaEKcn1a4sn0qkVnX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Ian Rogers <irogers@google.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	bpf@vger.kernel.org,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	llvm@lists.linux.dev,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Tom Rix <trix@redhat.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 276/567] usb: gadget: fusb300_udc: free irq on the error path in fusb300_probe()
-Date: Tue,  7 Mar 2023 18:00:12 +0100
-Message-Id: <20230307165917.863373209@linuxfoundation.org>
+Subject: [PATCH 5.15 259/567] perf llvm: Fix inadvertent file creation
+Date: Tue,  7 Mar 2023 17:59:55 +0100
+Message-Id: <20230307165917.149823095@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -34,70 +47,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit a8d3392e0e5cfeb03f0cea1f2bc3f5f183c1deb4 ]
+[ Upstream commit 9f19aab47ced012eddef1e2bc96007efc7713b61 ]
 
-When request_irq(ires1->start) failed in w5300_hw_probe(), irq
-ires->start has not been freed, and on the clean_up3 error path,
-we also need to free ires1->start irq, fix it.
+The LLVM template is first echo-ed into command_out and then
+command_out executed. The echo surrounds the template with double
+quotes, however, the template itself may contain quotes. This is
+generally innocuous but in tools/perf/tests/bpf-script-test-prologue.c
+we see:
+...
+SEC("func=null_lseek file->f_mode offset orig")
+...
+where the first double quote ends the double quote of the echo, then
+the > redirects output into a file called f_mode.
 
-In addition, We should add free_irq in fusb300_remove(), and give
-the lables a proper name so that they can be understood easily,
-so add free_irq in fusb300_remove(), and update clean_up3 to
-err_alloc_request.
+To avoid this inadvertent behavior substitute redirects and similar
+characters to be ASCII control codes, then substitute the output in
+the echo back again.
 
-Fixes: 0fe6f1d1f612 ("usb: udc: add Faraday fusb300 driver")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221123014121.1989721-1-cuigaosheng1@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5eab5a7ee032acaa ("perf llvm: Display eBPF compiling command in debug output")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: bpf@vger.kernel.org
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: llvm@lists.linux.dev
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Tom Rix <trix@redhat.com>
+Link: https://lore.kernel.org/r/20230105082609.344538-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/fusb300_udc.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ tools/perf/util/llvm-utils.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/fusb300_udc.c b/drivers/usb/gadget/udc/fusb300_udc.c
-index 9af8b415f303b..5e9e8e56e2d09 100644
---- a/drivers/usb/gadget/udc/fusb300_udc.c
-+++ b/drivers/usb/gadget/udc/fusb300_udc.c
-@@ -1347,6 +1347,7 @@ static int fusb300_remove(struct platform_device *pdev)
- 	usb_del_gadget_udc(&fusb300->gadget);
- 	iounmap(fusb300->reg);
- 	free_irq(platform_get_irq(pdev, 0), fusb300);
-+	free_irq(platform_get_irq(pdev, 1), fusb300);
+diff --git a/tools/perf/util/llvm-utils.c b/tools/perf/util/llvm-utils.c
+index 96c8ef60f4f84..8ee3a947b1599 100644
+--- a/tools/perf/util/llvm-utils.c
++++ b/tools/perf/util/llvm-utils.c
+@@ -531,14 +531,37 @@ int llvm__compile_bpf(const char *path, void **p_obj_buf,
  
- 	fusb300_free_request(&fusb300->ep[0]->ep, fusb300->ep0_req);
- 	for (i = 0; i < FUSB300_MAX_NUM_EP; i++)
-@@ -1432,7 +1433,7 @@ static int fusb300_probe(struct platform_device *pdev)
- 			IRQF_SHARED, udc_name, fusb300);
- 	if (ret < 0) {
- 		pr_err("request_irq1 error (%d)\n", ret);
--		goto clean_up;
-+		goto err_request_irq1;
- 	}
+ 	pr_debug("llvm compiling command template: %s\n", template);
  
- 	INIT_LIST_HEAD(&fusb300->gadget.ep_list);
-@@ -1471,7 +1472,7 @@ static int fusb300_probe(struct platform_device *pdev)
- 				GFP_KERNEL);
- 	if (fusb300->ep0_req == NULL) {
- 		ret = -ENOMEM;
--		goto clean_up3;
-+		goto err_alloc_request;
- 	}
++	/*
++	 * Below, substitute control characters for values that can cause the
++	 * echo to misbehave, then substitute the values back.
++	 */
+ 	err = -ENOMEM;
+-	if (asprintf(&command_echo, "echo -n \"%s\"", template) < 0)
++	if (asprintf(&command_echo, "echo -n \a%s\a", template) < 0)
+ 		goto errout;
  
- 	init_controller(fusb300);
-@@ -1486,7 +1487,10 @@ static int fusb300_probe(struct platform_device *pdev)
- err_add_udc:
- 	fusb300_free_request(&fusb300->ep[0]->ep, fusb300->ep0_req);
++#define SWAP_CHAR(a, b) do { if (*p == a) *p = b; } while (0)
++	for (char *p = command_echo; *p; p++) {
++		SWAP_CHAR('<', '\001');
++		SWAP_CHAR('>', '\002');
++		SWAP_CHAR('"', '\003');
++		SWAP_CHAR('\'', '\004');
++		SWAP_CHAR('|', '\005');
++		SWAP_CHAR('&', '\006');
++		SWAP_CHAR('\a', '"');
++	}
+ 	err = read_from_pipe(command_echo, (void **) &command_out, NULL);
+ 	if (err)
+ 		goto errout;
  
--clean_up3:
-+err_alloc_request:
-+	free_irq(ires1->start, fusb300);
-+
-+err_request_irq1:
- 	free_irq(ires->start, fusb300);
++	for (char *p = command_out; *p; p++) {
++		SWAP_CHAR('\001', '<');
++		SWAP_CHAR('\002', '>');
++		SWAP_CHAR('\003', '"');
++		SWAP_CHAR('\004', '\'');
++		SWAP_CHAR('\005', '|');
++		SWAP_CHAR('\006', '&');
++	}
++#undef SWAP_CHAR
+ 	pr_debug("llvm compiling command : %s\n", command_out);
  
- clean_up:
+ 	err = read_from_pipe(template, &obj_buf, &obj_buf_sz);
 -- 
 2.39.2
 
