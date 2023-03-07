@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D28BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:06:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D8CC433EF;
-	Tue,  7 Mar 2023 17:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5B8BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:07:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B1DC433D2;
+	Tue,  7 Mar 2023 17:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678208817;
-	bh=OT4yHu1qPn+2rxL7m+FCZNHjNFEPX2XnlnWiFceUm1s=;
+	s=korg; t=1678208820;
+	bh=aj/sAXKFQTIUwIpn5FAXll2+DdjymBaHdhQIeOBPHMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ngPk8cFOb7BxB5rjp3ownTl5i5qKYa2hsAEs4psh9ljKM8nNu5i0pHMS6wOTTfh7I
-	 EYsCGfqglZomrQ0ReNTE/X1og5/JzD8XiRQeO1PMKq2UVEpGEQZSneEpkCHC/9FbfM
-	 gXrd9QokhRQKzlb9zVrdhne0RvCOPgFHcNij/bE0=
+	b=SClbSbDt4QvtPCSE2tiLjgUE/iodPkp7g08ACZ4ouDeNuGssljn8frEJ0LFL59wpw
+	 2RVNRhYl3yLEv/FlM9nAVkB952w3y7GSIEI9Gzv6amZTWkDVc7Qhs3OEWxJdofpSwh
+	 J0oTXc2ZSw7+yIuUs2klSbzJvqEnLOrWUGP3H/Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Stefan Ghinea <stefan.ghinea@windriver.com>
-Subject: [PATCH 6.2 0002/1001] HID: asus: use spinlock to safely schedule workers
-Date: Tue,  7 Mar 2023 17:46:14 +0100
-Message-Id: <20230307170022.226212353@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 0020/1001] arm64: dts: qcom: sm8350-sagami: Add GPIO line names for PMIC GPIOs
+Date: Tue,  7 Mar 2023 17:46:32 +0100
+Message-Id: <20230307170023.024800483@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,62 +35,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-commit 4ab3a086d10eeec1424f2e8a968827a6336203df upstream.
+[ Upstream commit 7c679f2a2af84edbec0c28171af8c42c6da9af14 ]
 
-Use spinlocks to deal with workers introducing a wrapper
-asus_schedule_work(), and several spinlock checks.
-Otherwise, asus_kbd_backlight_set() may schedule led->work after the
-structure has been freed, causing a use-after-free.
+Sony ever so graciously provides GPIO line names in their downstream
+kernel (though sometimes they are not 100% accurate and you can judge
+that by simply looking at them and with what drivers they are used).
 
-Fixes: af22a610bc38 ("HID: asus: support backlight on USB keyboards")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-5-7860c5763c38@diag.uniroma1.it
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add these to the PDX213&214 DTSIs to better document the hardware.
+
+Diff between 223 and 224:
+
+pm8350b
+< 	gpio-line-names = "NC", /* GPIO_1 */
+> 	gpio-line-names = "CAM_PWR_A_CS", /* GPIO_1 */
+< 			  "NC",
+> 			  "CAM_PWR_LD_EN",
+
+pm8350c
+< 			  "NC",
+> 			  "WLC_TXPWR_EN",
+
+Which is due to different camera power wiring on 213 and lack of an
+additional SLG51000 PMIC on 214.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221118152028.59312-3-konrad.dybcio@linaro.org
+Stable-dep-of: dcc7cd5c46ca ("arm64: dts: qcom: sm8350-sagami: Rectify GPIO keys")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-asus.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ .../qcom/sm8350-sony-xperia-sagami-pdx214.dts | 23 +++++++++++++++++++
+ .../qcom/sm8350-sony-xperia-sagami-pdx215.dts | 21 +++++++++++++++++
+ .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 20 ++++++++++++++++
+ 3 files changed, 64 insertions(+)
 
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -491,6 +491,16 @@ static int rog_nkey_led_init(struct hid_
- 	return ret;
- }
- 
-+static void asus_schedule_work(struct asus_kbd_leds *led)
-+{
-+	unsigned long flags;
+diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
+index cc650508dc2d6..e6824c8c2774d 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
++++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
+@@ -17,3 +17,26 @@ &framebuffer {
+ 	height = <2520>;
+ 	stride = <(1080 * 4)>;
+ };
 +
-+	spin_lock_irqsave(&led->lock, flags);
-+	if (!led->removed)
-+		schedule_work(&led->work);
-+	spin_unlock_irqrestore(&led->lock, flags);
-+}
++&pm8350b_gpios {
++	gpio-line-names = "NC", /* GPIO_1 */
++			  "NC",
++			  "NC",
++			  "NC",
++			  "SNAPSHOT_N",
++			  "NC",
++			  "NC",
++			  "FOCUS_N";
++};
 +
- static void asus_kbd_backlight_set(struct led_classdev *led_cdev,
- 				   enum led_brightness brightness)
- {
-@@ -502,7 +512,7 @@ static void asus_kbd_backlight_set(struc
- 	led->brightness = brightness;
- 	spin_unlock_irqrestore(&led->lock, flags);
++&pm8350c_gpios {
++	gpio-line-names = "FL_STROBE_TRIG_WIDE", /* GPIO_1 */
++			  "FL_STROBE_TRIG_TELE",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "RGBC_IR_PWR_EN",
++			  "NC",
++			  "NC",
++			  "WIDEC_PWR_EN";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dts b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dts
+index d4afaa393c9a9..c6f402c3ef352 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dts
++++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dts
+@@ -68,6 +68,15 @@ slg51000_a_ldo7: ldo7 {
+ };
  
--	schedule_work(&led->work);
-+	asus_schedule_work(led);
- }
+ &pm8350b_gpios {
++	gpio-line-names = "CAM_PWR_A_CS", /* GPIO_1 */
++			  "NC",
++			  "NC",
++			  "NC",
++			  "SNAPSHOT_N",
++			  "CAM_PWR_LD_EN",
++			  "NC",
++			  "FOCUS_N";
++
+ 	cam_pwr_a_cs: cam-pwr-a-cs-state {
+ 		pins = "gpio1";
+ 		function = "normal";
+@@ -78,6 +87,18 @@ cam_pwr_a_cs: cam-pwr-a-cs-state {
+ 	};
+ };
  
- static enum led_brightness asus_kbd_backlight_get(struct led_classdev *led_cdev)
-@@ -526,9 +536,6 @@ static void asus_kbd_backlight_work(stru
- 	int ret;
- 	unsigned long flags;
++&pm8350c_gpios {
++	gpio-line-names = "FL_STROBE_TRIG_WIDE", /* GPIO_1 */
++			  "FL_STROBE_TRIG_TELE",
++			  "NC",
++			  "WLC_TXPWR_EN",
++			  "NC",
++			  "RGBC_IR_PWR_EN",
++			  "NC",
++			  "NC",
++			  "WIDEC_PWR_EN";
++};
++
+ &tlmm {
+ 	gpio-line-names = "APPS_I2C_0_SDA", /* GPIO_0 */
+ 			  "APPS_I2C_0_SCL",
+diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+index a10306d82a3a1..41c4101ec8f08 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+@@ -534,6 +534,26 @@ &mpss {
+ 	firmware-name = "qcom/sm8350/Sony/sagami/modem.mbn";
+ };
  
--	if (led->removed)
--		return;
--
- 	spin_lock_irqsave(&led->lock, flags);
- 	buf[4] = led->brightness;
- 	spin_unlock_irqrestore(&led->lock, flags);
++&pm8350_gpios {
++	gpio-line-names = "ASSIGN1_THERM", /* GPIO_1 */
++			  "LCD_ID",
++			  "SDR_MMW_THERM",
++			  "RF_ID",
++			  "NC",
++			  "FP_LDO_EN",
++			  "SP_ARI_PWR_ALARM",
++			  "NC",
++			  "G_ASSIST_N",
++			  "PM8350_OPTION"; /* GPIO_10 */
++};
++
++&pmk8350_gpios {
++	gpio-line-names = "NC", /* GPIO_1 */
++			  "NC",
++			  "VOL_DOWN_N",
++			  "PMK8350_OPTION";
++};
++
+ &pmk8350_rtc {
+ 	status = "okay";
+ };
+-- 
+2.39.2
+
 
 
