@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6485BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B40BC433EF;
-	Tue,  7 Mar 2023 17:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B23BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BACC433EF;
+	Tue,  7 Mar 2023 17:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211659;
-	bh=XiBngLPm0sTkZGrpgalvbiWmOGeMLl/W4nCs4fI+Cz0=;
+	s=korg; t=1678211662;
+	bh=grH1rfzk8g0jf2veuTXxDUMi5VAYKpNfinzHX7O3uoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GGVIdN1lb6JdlANLjLCKN80M+aYCeIK5Gl2dAmHhRCy4WVcVfI6yevb+3/UM0odgR
-	 NcjP1lyvFhV1hJ4dnK5R2uoP0mRu8yARtlZq32RbrLcxpH96OD4bam7zQBvAlA3Ynw
-	 yRawkeiRKUN6O3RChW/pVH5EmpJE1u34k9xAFub8=
+	b=ANhWB0r/8ASBzQDK0swzXnLujuJahXpiCeWAqo/geUexX/xpWY5oTbmW8apwKWOrd
+	 9yfdoU1A5seF5dU6BlqkL0Bu+MhmuMI7Nyh5Urp4xVbDijCQoRk75c06K9t0EL9yCB
+	 tsPyTPcNHEBXio145bn223YubGP2ws51W5bS1tCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.2 0935/1001] genirq/msi, platform-msi: Ensure that MSI descriptors are unreferenced
-Date: Tue,  7 Mar 2023 18:01:47 +0100
-Message-Id: <20230307170102.674982114@linuxfoundation.org>
+	"Russell King (Oracle)" <linux@armlinux.org.uk>,
+	Marc Zyngier <maz@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 6.2 0936/1001] genirq/msi: Take the per-device MSI lock before validating the control structure
+Date: Tue,  7 Mar 2023 18:01:48 +0100
+Message-Id: <20230307170102.723833693@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,105 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 0fb7fb713461e44b12e72c292bf90ee300f40710 upstream.
+commit 0af2795f936f1ea1f9f1497447145dfcc7ed2823 upstream.
 
-Miquel reported a warning in the MSI core which is triggered when
-interrupts are freed via platform_msi_device_domain_free().
+Calling msi_ctrl_valid() ultimately results in calling
+msi_get_device_domain(), which requires holding the device MSI lock.
 
-This code got reworked to use core functions for freeing the MSI
-descriptors, but nothing took care to clear the msi_desc->irq entry, which
-then triggers the warning in msi_free_msi_desc() which uses desc->irq to
-validate that the descriptor has been torn down. The same issue exists in
-msi_domain_populate_irqs().
+However, in msi_domain_populate_irqs() the lock is taken right after having
+called msi_ctrl_valid(), which is just a tad too late.
 
-Up to the point that msi_free_msi_descs() grew a warning for this case,
-this went un-noticed.
+Take the lock before invoking msi_ctrl_valid().
 
-Provide the counterpart of msi_domain_populate_irqs() and invoke it in
-platform_msi_device_domain_free() before freeing the interrupts and MSI
-descriptors and also in the error path of msi_domain_populate_irqs().
-
-Fixes: 2f2940d16823 ("genirq/msi: Remove filter from msi_free_descs_free_range()")
-Reported-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 40742716f294 ("genirq/msi: Make msi_add_simple_msi_descs() device domain aware")
+Reported-by: "Russell King (Oracle)" <linux@armlinux.org.uk>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Tested-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/87mt4wkwnv.ffs@tglx
+Link: https://lore.kernel.org/r/Y/Opu6ETe3ZzZ/8E@shell.armlinux.org.uk
+Link: https://lore.kernel.org/r/20230220190101.314446-1-maz@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/platform-msi.c |  1 +
- include/linux/msi.h         |  2 ++
- kernel/irq/msi.c            | 23 ++++++++++++++++++++++-
- 3 files changed, 25 insertions(+), 1 deletion(-)
+ kernel/irq/msi.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/platform-msi.c b/drivers/base/platform-msi.c
-index 5883e7634a2b..f37ad34c80ec 100644
---- a/drivers/base/platform-msi.c
-+++ b/drivers/base/platform-msi.c
-@@ -324,6 +324,7 @@ void platform_msi_device_domain_free(struct irq_domain *domain, unsigned int vir
- 	struct platform_msi_priv_data *data = domain->host_data;
- 
- 	msi_lock_descs(data->dev);
-+	msi_domain_depopulate_descs(data->dev, virq, nr_irqs);
- 	irq_domain_free_irqs_common(domain, virq, nr_irqs);
- 	msi_free_msi_descs_range(data->dev, virq, virq + nr_irqs - 1);
- 	msi_unlock_descs(data->dev);
-diff --git a/include/linux/msi.h b/include/linux/msi.h
-index a112b913fff9..15dd71817996 100644
---- a/include/linux/msi.h
-+++ b/include/linux/msi.h
-@@ -631,6 +631,8 @@ int msi_domain_prepare_irqs(struct irq_domain *domain, struct device *dev,
- 			    int nvec, msi_alloc_info_t *args);
- int msi_domain_populate_irqs(struct irq_domain *domain, struct device *dev,
- 			     int virq, int nvec, msi_alloc_info_t *args);
-+void msi_domain_depopulate_descs(struct device *dev, int virq, int nvec);
-+
- struct irq_domain *
- __platform_msi_create_device_domain(struct device *dev,
- 				    unsigned int nvec,
 diff --git a/kernel/irq/msi.c b/kernel/irq/msi.c
-index efd21b79bf32..d169ee0c1799 100644
+index 783a3e6a0b10..13d96495e6d0 100644
 --- a/kernel/irq/msi.c
 +++ b/kernel/irq/msi.c
-@@ -1109,14 +1109,35 @@ int msi_domain_populate_irqs(struct irq_domain *domain, struct device *dev,
- 	return 0;
+@@ -1084,10 +1084,13 @@ int msi_domain_populate_irqs(struct irq_domain *domain, struct device *dev,
+ 	struct xarray *xa;
+ 	int ret, virq;
  
- fail:
--	for (--virq; virq >= virq_base; virq--)
-+	for (--virq; virq >= virq_base; virq--) {
-+		msi_domain_depopulate_descs(dev, virq, 1);
- 		irq_domain_free_irqs_common(domain, virq, 1);
+-	if (!msi_ctrl_valid(dev, &ctrl))
+-		return -EINVAL;
+-
+ 	msi_lock_descs(dev);
++
++	if (!msi_ctrl_valid(dev, &ctrl)) {
++		ret = -EINVAL;
++		goto unlock;
 +	}
- 	msi_domain_free_descs(dev, &ctrl);
- unlock:
- 	msi_unlock_descs(dev);
- 	return ret;
- }
- 
-+void msi_domain_depopulate_descs(struct device *dev, int virq_base, int nvec)
-+{
-+	struct msi_ctrl ctrl = {
-+		.domid	= MSI_DEFAULT_DOMAIN,
-+		.first  = virq_base,
-+		.last	= virq_base + nvec - 1,
-+	};
-+	struct msi_desc *desc;
-+	struct xarray *xa;
-+	unsigned long idx;
 +
-+	if (!msi_ctrl_valid(dev, &ctrl))
-+		return;
-+
-+	xa = &dev->msi.data->__domains[ctrl.domid].store;
-+	xa_for_each_range(xa, idx, desc, ctrl.first, ctrl.last)
-+		desc->irq = 0;
-+}
-+
- /*
-  * Carefully check whether the device can use reservation mode. If
-  * reservation mode is enabled then the early activation will assign a
+ 	ret = msi_domain_add_simple_msi_descs(dev, &ctrl);
+ 	if (ret)
+ 		goto unlock;
 -- 
 2.39.2
 
