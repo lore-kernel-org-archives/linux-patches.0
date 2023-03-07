@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA88BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:38:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6801AC433D2;
-	Tue,  7 Mar 2023 18:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5E5BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:38:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7841CC4339B;
+	Tue,  7 Mar 2023 18:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214320;
-	bh=Ms3gbSBbMqCSWQcS8gEEyyvP3WZ+LWK6odpq2UfHPTM=;
+	s=korg; t=1678214324;
+	bh=ytVc7YHJCWb9B5abHN3PSefGPQK17tv8/pSOJl/ooOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j5ZvJmM/9VAA02a4ke+c6OYD2J+N75GP2MPIEtSvc0W1/hyVeibegh5gHMaXGWEyw
-	 DxvDQN/G1iu061NwnG/1F4FxZzSV+gMlCwNiOEeYwkBvewAOyfzNQLEzD0O7+EpRDf
-	 qAeqytA2NKL/POo3pqBABVSRRfU3O2+7Uha4/5hA=
+	b=lCXuAroIKVGAAnkYc91XzAS4FWPTlljFuvQxvX1QPpmUsZ8N5/uUAEc0ymWm7kcY8
+	 dDWXf/VW9TZO28X7rIKHSrNKG5jwwt/zPUgRuFNPU/2PJfAIcvZK7VMFmRTiZ5Rkd0
+	 2QtpQCYNIpv1O2zmDA/tAKy3FeoUMa2BK+eiTw78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 784/885] ALSA: hda/realtek: Add quirk for HP EliteDesk 800 G6 Tower PC
-Date: Tue,  7 Mar 2023 18:01:58 +0100
-Message-Id: <20230307170035.978037080@linuxfoundation.org>
+	stable@kernel.org,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	zhanchengbin <zhanchengbin1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 785/885] jbd2: fix data missing when reusing bh which is ready to be checkpointed
+Date: Tue,  7 Mar 2023 18:01:59 +0100
+Message-Id: <20230307170036.009575990@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,32 +37,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Łukasz Stelmach <l.stelmach@samsung.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit ea24b9953bcd3889f77a66e7f1d7e86e995dd9c3 upstream.
+commit e6b9bd7290d334451ce054e98e752abc055e0034 upstream.
 
-HP EliteDesk 800 G6 Tower PC (103c:870c) requires a quirk for enabling
-headset-mic.
+Following process will make data lost and could lead to a filesystem
+corrupted problem:
 
-Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
-Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217008
-Link: https://lore.kernel.org/r/20230223074749.1026060-1-l.stelmach@samsung.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+1. jh(bh) is inserted into T1->t_checkpoint_list, bh is dirty, and
+   jh->b_transaction = NULL
+2. T1 is added into journal->j_checkpoint_transactions.
+3. Get bh prepare to write while doing checkpoing:
+           PA				    PB
+   do_get_write_access             jbd2_log_do_checkpoint
+    spin_lock(&jh->b_state_lock)
+     if (buffer_dirty(bh))
+      clear_buffer_dirty(bh)   // clear buffer dirty
+       set_buffer_jbddirty(bh)
+				    transaction =
+				    journal->j_checkpoint_transactions
+				    jh = transaction->t_checkpoint_list
+				    if (!buffer_dirty(bh))
+		                      __jbd2_journal_remove_checkpoint(jh)
+				      // bh won't be flushed
+		                    jbd2_cleanup_journal_tail
+    __jbd2_journal_file_buffer(jh, transaction, BJ_Reserved)
+4. Aborting journal/Power-cut before writing latest bh on journal area.
+
+In this way we get a corrupted filesystem with bh's data lost.
+
+Fix it by moving the clearing of buffer_dirty bit just before the call
+to __jbd2_journal_file_buffer(), both bit clearing and jh->b_transaction
+assignment are under journal->j_list_lock locked, so that
+jbd2_log_do_checkpoint() will wait until jh's new transaction fininshed
+even bh is currently not dirty. And journal_shrink_one_cp_list() won't
+remove jh from checkpoint list if the buffer head is reused in
+do_get_write_access().
+
+Fetch a reproducer in [Link].
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216898
+Cc: <stable@kernel.org>
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: zhanchengbin <zhanchengbin1@huawei.com>
+Suggested-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230110015327.1181863-1-chengzhihao1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/jbd2/transaction.c |   50 +++++++++++++++++++++++++++++---------------------
+ 1 file changed, 29 insertions(+), 21 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11617,6 +11617,7 @@ static const struct snd_pci_quirk alc662
- 	SND_PCI_QUIRK(0x1028, 0x0698, "Dell", ALC668_FIXUP_DELL_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1028, 0x069f, "Dell", ALC668_FIXUP_DELL_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x1632, "HP RP5800", ALC662_FIXUP_HP_RP5800),
-+	SND_PCI_QUIRK(0x103c, 0x870c, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
- 	SND_PCI_QUIRK(0x103c, 0x8719, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
- 	SND_PCI_QUIRK(0x103c, 0x873e, "HP", ALC671_FIXUP_HP_HEADSET_MIC2),
- 	SND_PCI_QUIRK(0x103c, 0x877e, "HP 288 Pro G6", ALC671_FIXUP_HP_HEADSET_MIC2),
+--- a/fs/jbd2/transaction.c
++++ b/fs/jbd2/transaction.c
+@@ -1010,36 +1010,28 @@ repeat:
+ 	 * ie. locked but not dirty) or tune2fs (which may actually have
+ 	 * the buffer dirtied, ugh.)  */
+ 
+-	if (buffer_dirty(bh)) {
++	if (buffer_dirty(bh) && jh->b_transaction) {
++		warn_dirty_buffer(bh);
+ 		/*
+-		 * First question: is this buffer already part of the current
+-		 * transaction or the existing committing transaction?
+-		 */
+-		if (jh->b_transaction) {
+-			J_ASSERT_JH(jh,
+-				jh->b_transaction == transaction ||
+-				jh->b_transaction ==
+-					journal->j_committing_transaction);
+-			if (jh->b_next_transaction)
+-				J_ASSERT_JH(jh, jh->b_next_transaction ==
+-							transaction);
+-			warn_dirty_buffer(bh);
+-		}
+-		/*
+-		 * In any case we need to clean the dirty flag and we must
+-		 * do it under the buffer lock to be sure we don't race
+-		 * with running write-out.
++		 * We need to clean the dirty flag and we must do it under the
++		 * buffer lock to be sure we don't race with running write-out.
+ 		 */
+ 		JBUFFER_TRACE(jh, "Journalling dirty buffer");
+ 		clear_buffer_dirty(bh);
++		/*
++		 * The buffer is going to be added to BJ_Reserved list now and
++		 * nothing guarantees jbd2_journal_dirty_metadata() will be
++		 * ever called for it. So we need to set jbddirty bit here to
++		 * make sure the buffer is dirtied and written out when the
++		 * journaling machinery is done with it.
++		 */
+ 		set_buffer_jbddirty(bh);
+ 	}
+ 
+-	unlock_buffer(bh);
+-
+ 	error = -EROFS;
+ 	if (is_handle_aborted(handle)) {
+ 		spin_unlock(&jh->b_state_lock);
++		unlock_buffer(bh);
+ 		goto out;
+ 	}
+ 	error = 0;
+@@ -1049,8 +1041,10 @@ repeat:
+ 	 * b_next_transaction points to it
+ 	 */
+ 	if (jh->b_transaction == transaction ||
+-	    jh->b_next_transaction == transaction)
++	    jh->b_next_transaction == transaction) {
++		unlock_buffer(bh);
+ 		goto done;
++	}
+ 
+ 	/*
+ 	 * this is the first time this transaction is touching this buffer,
+@@ -1074,10 +1068,24 @@ repeat:
+ 		 */
+ 		smp_wmb();
+ 		spin_lock(&journal->j_list_lock);
++		if (test_clear_buffer_dirty(bh)) {
++			/*
++			 * Execute buffer dirty clearing and jh->b_transaction
++			 * assignment under journal->j_list_lock locked to
++			 * prevent bh being removed from checkpoint list if
++			 * the buffer is in an intermediate state (not dirty
++			 * and jh->b_transaction is NULL).
++			 */
++			JBUFFER_TRACE(jh, "Journalling dirty buffer");
++			set_buffer_jbddirty(bh);
++		}
+ 		__jbd2_journal_file_buffer(jh, transaction, BJ_Reserved);
+ 		spin_unlock(&journal->j_list_lock);
++		unlock_buffer(bh);
+ 		goto done;
+ 	}
++	unlock_buffer(bh);
++
+ 	/*
+ 	 * If there is already a copy-out version of this buffer, then we don't
+ 	 * need to make another one
 
 
