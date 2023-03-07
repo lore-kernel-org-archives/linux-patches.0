@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AB7BA34
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:31:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086C1C433D2;
-	Tue,  7 Mar 2023 17:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21EABA34
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:31:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491B3C433EF;
+	Tue,  7 Mar 2023 17:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210294;
-	bh=t+sx0BVTR0Go1P6U7jNoGbVyXib9607yhBQNUQ0/FmY=;
+	s=korg; t=1678210297;
+	bh=r57Ea5GmEX0qfEv3DD/ciDbNj4bijMfTV9RcavoDFvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BkCo4VigxQTwkqx2jTyvuJcux144OZibc6StvrYXHSahtmUEvKNZWzk3H+VhrRgss
-	 IEZrtKFbHI03kYakre2OMdTnVH878MkhKpdadIEx2kZha1FGwZd7id/gGNQmhaqFJ/
-	 mSTUya1+D9MM9YU99vtenq+am/DtX4LWyD3y3eb8=
+	b=2EZrxj44taBFHEfuL+DIHRe4bmaWWz1wEszQ3DOrmm8ne7DDRQ7FRQVdaPCOTA4og
+	 uloLloajZkfW3n6zl6eegBsPJ8p88iclT7eHwN9GQdXsi7BxZtWfflJHeP1bVccvKD
+	 9HuH8+YYl+pRcYzAtWkaDfize3re2L8U2zs2q/aI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0456/1001] NFSD: copy the whole verifier in nfsd_copy_write_verifier
-Date: Tue,  7 Mar 2023 17:53:48 +0100
-Message-Id: <20230307170041.152004336@linuxfoundation.org>
+Subject: [PATCH 6.2 0489/1001] RDMA/hns: Fix refcount leak in hns_roce_mmap
+Date: Tue,  7 Mar 2023 17:54:21 +0100
+Message-Id: <20230307170042.605296735@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,34 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 90d2175572470ba7f55da8447c72ddd4942923c4 ]
+[ Upstream commit cf6a05c8494a8ae7fec8e5f1229b45ca5b4bcd30 ]
 
-Currently, we're only memcpy'ing the first __be32. Ensure we copy into
-both words.
+rdma_user_mmap_entry_get_pgoff() takes the reference.
+Add missing rdma_user_mmap_entry_put() to release the reference.
 
-Fixes: 91d2e9b56cf5 ("NFSD: Clean up the nfsd_net::nfssvc_boot field")
-Reported-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 0045e0d3f42e ("RDMA/hns: Support direct wqe of userspace")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Acked-by Haoyue Xu <xuhaoyue1@hisilicon.com>
+Link: https://lore.kernel.org/r/20221223072900.802728-1-linmq006@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfssvc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index 325d3d3f12110..a0ecec54d3d7d 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -363,7 +363,7 @@ void nfsd_copy_write_verifier(__be32 verf[2], struct nfsd_net *nn)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
+index 8ba68ac12388d..946ba1109e878 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_main.c
++++ b/drivers/infiniband/hw/hns/hns_roce_main.c
+@@ -443,14 +443,15 @@ static int hns_roce_mmap(struct ib_ucontext *uctx, struct vm_area_struct *vma)
+ 		prot = pgprot_device(vma->vm_page_prot);
+ 		break;
+ 	default:
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
+ 	}
  
- 	do {
- 		read_seqbegin_or_lock(&nn->writeverf_lock, &seq);
--		memcpy(verf, nn->writeverf, sizeof(*verf));
-+		memcpy(verf, nn->writeverf, sizeof(nn->writeverf));
- 	} while (need_seqretry(&nn->writeverf_lock, seq));
- 	done_seqretry(&nn->writeverf_lock, seq);
+ 	ret = rdma_user_mmap_io(uctx, vma, pfn, rdma_entry->npages * PAGE_SIZE,
+ 				prot, rdma_entry);
+ 
++out:
+ 	rdma_user_mmap_entry_put(rdma_entry);
+-
+ 	return ret;
  }
+ 
 -- 
 2.39.2
 
