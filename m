@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7713DBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:27:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D241AC433EF;
-	Tue,  7 Mar 2023 17:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C573BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:27:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E4FC433EF;
+	Tue,  7 Mar 2023 17:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210035;
-	bh=bCzAuCAgaC0sTsd1MhZmDi2ES+iEdRG6AWUPKt701qA=;
+	s=korg; t=1678210038;
+	bh=Ed/Gnb6Dioor4lM/pwGnTJjJuZQFFzidX40torlALKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ellKwmwruptQkaRh4retA5a7CLSoOg0BWoKaOSDKgWCYYGenMXNrX58AjeONlj9No
-	 syanX1/TTe4nqQAYkSxIP991sUThXLsJ/HpQTc1YZ/fN97lA10qGp8a/vGKmj9IZ/u
-	 w9HLMCEbTUy5CqgOEYGAnjvnrg5agYc1vdPKKTTw=
+	b=lsLxLTzNJr3jO1X0hP72x7qJIsY0qkSQLTnILC39A7haHEgtZc2HdYsaPhjGl/nvA
+	 JH8RybrJi/W/przVZlI8/tC0jhyGGM2n4g8uG2TsRV/wyZC5mDG4mu1VnLWZv9DmCX
+	 M/Ig0/pNxTnAllE7tjJPLwxSPScKPLb4MLGrHiBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Oded Gabbay <ogabbay@kernel.org>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0411/1001] accel: fix CONFIG_DRM dependencies
-Date: Tue,  7 Mar 2023 17:53:03 +0100
-Message-Id: <20230307170039.169223149@linuxfoundation.org>
+Subject: [PATCH 6.2 0412/1001] ASoC: rsnd: fixup #endif position
+Date: Tue,  7 Mar 2023 17:53:04 +0100
+Message-Id: <20230307170039.211505411@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -39,64 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 9f20c9f4b1e17e83e9ccc247cfdc0b61041bff3d ]
+[ Upstream commit 49123b51cd896e00b256a27c2ce9e6bfe1bbc22f ]
 
-At the moment, accel drivers can be built-in even with CONFIG_DRM=m,
-but this causes a link failure:
+commit 1f9c82b5ab83ff2 ("ASoC: rsnd: add debugfs support") added
+CONFIG_DEBUG_FS related definitions on rsnd.h, but it should be
+added inside of RSND_H. This patch fixup it.
 
-x86_64-linux-ld: drivers/accel/ivpu/ivpu_drv.o: in function `ivpu_dev_init':
-ivpu_drv.c:(.text+0x1535): undefined reference to `drmm_kmalloc'
-x86_64-linux-ld: ivpu_drv.c:(.text+0x1562): undefined reference to `drmm_kmalloc'
-x86_64-linux-ld: drivers/accel/ivpu/ivpu_drv.o: in function `ivpu_remove':
-ivpu_drv.c:(.text+0x1faa): undefined reference to `drm_dev_unregister'
-x86_64-linux-ld: drivers/accel/ivpu/ivpu_drv.o: in function `ivpu_probe':
-ivpu_drv.c:(.text+0x1fef): undefined reference to `__devm_drm_dev_alloc'
-
-The problem is that DRM_ACCEL is a 'bool' symbol, so driver that
-only depend on DRM_ACCEL but not also on DRM do not see the restriction
-to =m configs.
-
-To ensure that each accel driver has an implied dependency on CONFIG_DRM,
-enclose the entire Kconfig file in an if/endif check.
-
-Fixes: 8bf4889762a8 ("drivers/accel: define kconfig and register a new major")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Oded Gabbay <ogabbay@kernel.org>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230127221504.2522909-1-arnd@kernel.org
-(cherry picked from commit 3524c96a121952f214271622bb372661ced86101)
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 1f9c82b5ab83 ("ASoC: rsnd: add debugfs support")
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/877cx26t7r.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/Kconfig | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/soc/sh/rcar/rsnd.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/accel/Kconfig b/drivers/accel/Kconfig
-index c9ce849b2984a..c8177ae415b8b 100644
---- a/drivers/accel/Kconfig
-+++ b/drivers/accel/Kconfig
-@@ -6,9 +6,10 @@
- # as, but not limited to, Machine-Learning and Deep-Learning acceleration
- # devices
- #
-+if DRM
+diff --git a/sound/soc/sh/rcar/rsnd.h b/sound/soc/sh/rcar/rsnd.h
+index d9cd190d7e198..f8ef6836ef84e 100644
+--- a/sound/soc/sh/rcar/rsnd.h
++++ b/sound/soc/sh/rcar/rsnd.h
+@@ -901,8 +901,6 @@ void rsnd_mod_make_sure(struct rsnd_mod *mod, enum rsnd_mod_type type);
+ 	if (!IS_BUILTIN(RSND_DEBUG_NO_DAI_CALL))	\
+ 		dev_dbg(dev, param)
+ 
+-#endif
+-
+ #ifdef CONFIG_DEBUG_FS
+ int rsnd_debugfs_probe(struct snd_soc_component *component);
+ void rsnd_debugfs_reg_show(struct seq_file *m, phys_addr_t _addr,
+@@ -913,3 +911,5 @@ void rsnd_debugfs_mod_reg_show(struct seq_file *m, struct rsnd_mod *mod,
+ #else
+ #define rsnd_debugfs_probe  NULL
+ #endif
 +
- menuconfig DRM_ACCEL
- 	bool "Compute Acceleration Framework"
--	depends on DRM
- 	help
- 	  Framework for device drivers of compute acceleration devices, such
- 	  as, but not limited to, Machine-Learning and Deep-Learning
-@@ -22,3 +23,5 @@ menuconfig DRM_ACCEL
- 	  major number than GPUs, and will be exposed to user-space using
- 	  different device files, called accel/accel* (in /dev, sysfs
- 	  and debugfs).
-+
-+endif
++#endif /* RSND_H */
 -- 
 2.39.2
 
