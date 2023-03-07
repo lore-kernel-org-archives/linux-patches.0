@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70371BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:09:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC3D8C433EF;
-	Tue,  7 Mar 2023 17:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4A7BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:09:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57B1C433D2;
+	Tue,  7 Mar 2023 17:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678208954;
-	bh=lkMmKqgQxNZWcSW/Ey9R8pBfJOSXKZvGqkUWuwaDhOY=;
+	s=korg; t=1678208957;
+	bh=AVQJGKVHr3r+Rt0ku7YpVWMS0+tSxIJnMQyS+7jsB1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QzkdBGrGb8XjEjrgTI8qeYKwyh8b5vqeWhfSojAQmFpZs22oE6atzptpg1ugPP7LL
-	 hF/N2AHJhV5B7ihj06nsOM5NsEfwfU1XvXy2J4XgKC6Z6tzJI3OpdebrSPtcQ9zbh5
-	 zILHVJlRCv0JBvmj58DnSXUZpl57R7cuCzN/PVtM=
+	b=2jC2ZUZQm7vaFqneMMBkQR9nJRQBrZJPUWd9ClmgUXWsIXBtMIfsoSQRx75aXcf6D
+	 ct/b9n8nlFUFXt5OEWTeDY5YKXLeZnv4DOqKpH2RxIlkliczGeS1vPHr87mCEJA0mB
+	 mY+PfbUnew4c8OH/X3UnFpLbQ489LOxlatf+4yTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robimarko@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0056/1001] arm64: dts: qcom: ipq8074: fix Gen2 PCIe QMP PHY
-Date: Tue,  7 Mar 2023 17:47:08 +0100
-Message-Id: <20230307170024.548019181@linuxfoundation.org>
+Subject: [PATCH 6.2 0065/1001] ARM: s3c: fix s3c64xx_set_timer_source prototype
+Date: Tue,  7 Mar 2023 17:47:17 +0100
+Message-Id: <20230307170024.928468646@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,38 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Marko <robimarko@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 100d9c94ccf15b02742c326cd04f422ab729153b ]
+[ Upstream commit 5bf52f5e4d12b8109f348cab60cb7d51092c4270 ]
 
-Serdes register space sizes are incorrect, update them to match the
-actual sizes from downstream QCA 5.4 kernel.
+The prototype does not match the definition, as gcc-13 points
+out:
 
-Fixes: 942bcd33ed45 ("arm64: dts: qcom: Fix IPQ8074 PCIe PHY nodes")
-Signed-off-by: Robert Marko <robimarko@gmail.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230113164449.906002-1-robimarko@gmail.com
+arch/arm/mach-s3c/s3c64xx.c:169:13: error: conflicting types for 's3c64xx_set_timer_source' due to enum/integer mismatch; have 'void(unsigned int,  unsigned int)' [-Werror=enum-int-mismatch]
+  169 | void __init s3c64xx_set_timer_source(unsigned int event, unsigned int source)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from arch/arm/mach-s3c/s3c64xx.c:50:
+arch/arm/mach-s3c/s3c64xx.h:62:20: note: previous declaration of 's3c64xx_set_timer_source' with type 'void(enum s3c64xx_timer_mode,  enum s3c64xx_timer_mode)'
+   62 | extern void __init s3c64xx_set_timer_source(enum s3c64xx_timer_mode event,
+      |                    ^~~~~~~~~~~~~~~~~~~~~~~~
+
+Fixes: 4280506ac9bb ("ARM: SAMSUNG: Move all platforms to new clocksource driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230118090224.2162863-1-arnd@kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/mach-s3c/s3c64xx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 9dcb48ebc4661..90b0abf8bbbcd 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -242,9 +242,9 @@ pcie_qmp1: phy@8e000 {
- 			status = "disabled";
+diff --git a/arch/arm/mach-s3c/s3c64xx.c b/arch/arm/mach-s3c/s3c64xx.c
+index 0a8116c108fe4..dce2b0e953088 100644
+--- a/arch/arm/mach-s3c/s3c64xx.c
++++ b/arch/arm/mach-s3c/s3c64xx.c
+@@ -173,7 +173,8 @@ static struct samsung_pwm_variant s3c64xx_pwm_variant = {
+ 	.tclk_mask	= (1 << 7) | (1 << 6) | (1 << 5),
+ };
  
- 			pcie_phy1: phy@8e200 {
--				reg = <0x8e200 0x16c>,
-+				reg = <0x8e200 0x130>,
- 				      <0x8e400 0x200>,
--				      <0x8e800 0x4f4>;
-+				      <0x8e800 0x1f8>;
- 				#phy-cells = <0>;
- 				#clock-cells = <0>;
- 				clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
+-void __init s3c64xx_set_timer_source(unsigned int event, unsigned int source)
++void __init s3c64xx_set_timer_source(enum s3c64xx_timer_mode event,
++				     enum s3c64xx_timer_mode source)
+ {
+ 	s3c64xx_pwm_variant.output_mask = BIT(SAMSUNG_PWM_NUM) - 1;
+ 	s3c64xx_pwm_variant.output_mask &= ~(BIT(event) | BIT(source));
 -- 
 2.39.2
 
