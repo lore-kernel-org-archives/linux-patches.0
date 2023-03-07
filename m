@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7197BBA34
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:31:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA108C433D2;
-	Tue,  7 Mar 2023 17:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8179CBA34
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:31:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC41AC433D2;
+	Tue,  7 Mar 2023 17:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210273;
-	bh=f6W7bCcTSiDUU65TmuctwK2LGw8w6jQmgWm8k5T/kqc=;
+	s=korg; t=1678210276;
+	bh=magvKc9oqzhBIkVOZeadV4RVHiBsvGCswlVrCNyeDcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SXXiQCfeUG+aHt28ghZjiOzYVmfkkXmdYfTpt1UebqLdWTduc2kdDIrFq/TLmAeWz
-	 +88Gc+9ZRZQthezXnmPwKryjTQuSHsfjULUEHU6+Xzl7OWLicLmylV3qOcYOAVn4lh
-	 W9/G5tARKc39P6gg3NIIElOPKX+wij6/MqK8IxSo=
+	b=EerPGRg3iJHqROTOoja++VwlmeR0sBZW650XHJEdDFt7Gk/w+Zj/9G3P2+J41XWaD
+	 yBJFGExNh9gVlWsBOoxnzVD/jDzcQJARTxbOJixePiJmN4ZV4EKLBB0pzFWRyNO2M/
+	 qUb4y0pLhYomzPGkT9h5bPU5QuJZr8YypD7l0ges=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Cheng Xu <chengyou@linux.alibaba.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0487/1001] RDMA/erdma: Fix refcount leak in erdma_mmap
-Date: Tue,  7 Mar 2023 17:54:19 +0100
-Message-Id: <20230307170042.524346399@linuxfoundation.org>
+Subject: [PATCH 6.2 0460/1001] gfs2: jdata writepage fix
+Date: Tue,  7 Mar 2023 17:53:52 +0100
+Message-Id: <20230307170041.352618068@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,43 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit ee84146c05ad2316b9a7222d0ec4413e0bf30eeb ]
+[ Upstream commit cbb60951ce18c9b6e91d2eb97deb41d8ff616622 ]
 
-rdma_user_mmap_entry_get() take reference, we should release it when not
-need anymore, add the missing rdma_user_mmap_entry_put() in the error
-path to fix it.
+The ->writepage() and ->writepages() operations are supposed to write
+entire pages.  However, on filesystems with a block size smaller than
+PAGE_SIZE, __gfs2_jdata_writepage() only adds the first block to the
+current transaction instead of adding the entire page.  Fix that.
 
-Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20221220121139.1540564-1-linmq006@gmail.com
-Acked-by: Cheng Xu <chengyou@linux.alibaba.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 18ec7d5c3f43 ("[GFS2] Make journaled data files identical to normal files on disk")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_verbs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/gfs2/aops.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
-index 5dab1e87975ba..9c30d78730aa1 100644
---- a/drivers/infiniband/hw/erdma/erdma_verbs.c
-+++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
-@@ -1110,12 +1110,14 @@ int erdma_mmap(struct ib_ucontext *ctx, struct vm_area_struct *vma)
- 		prot = pgprot_device(vma->vm_page_prot);
- 		break;
- 	default:
--		return -EINVAL;
-+		err = -EINVAL;
-+		goto put_entry;
+diff --git a/fs/gfs2/aops.c b/fs/gfs2/aops.c
+index e782b4f1d1043..2f04c0ff7470b 100644
+--- a/fs/gfs2/aops.c
++++ b/fs/gfs2/aops.c
+@@ -127,7 +127,6 @@ static int __gfs2_jdata_writepage(struct page *page, struct writeback_control *w
+ {
+ 	struct inode *inode = page->mapping->host;
+ 	struct gfs2_inode *ip = GFS2_I(inode);
+-	struct gfs2_sbd *sdp = GFS2_SB(inode);
+ 
+ 	if (PageChecked(page)) {
+ 		ClearPageChecked(page);
+@@ -135,7 +134,7 @@ static int __gfs2_jdata_writepage(struct page *page, struct writeback_control *w
+ 			create_empty_buffers(page, inode->i_sb->s_blocksize,
+ 					     BIT(BH_Dirty)|BIT(BH_Uptodate));
+ 		}
+-		gfs2_page_add_databufs(ip, page, 0, sdp->sd_vfs->s_blocksize);
++		gfs2_page_add_databufs(ip, page, 0, PAGE_SIZE);
  	}
- 
- 	err = rdma_user_mmap_io(ctx, vma, PFN_DOWN(entry->address), PAGE_SIZE,
- 				prot, rdma_entry);
- 
-+put_entry:
- 	rdma_user_mmap_entry_put(rdma_entry);
- 	return err;
+ 	return gfs2_write_jdata_page(page, wbc);
  }
 -- 
 2.39.2
