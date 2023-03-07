@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0D8BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:27:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40741C433EF;
-	Tue,  7 Mar 2023 17:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC90BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:28:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522B2C433D2;
+	Tue,  7 Mar 2023 17:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210078;
-	bh=f5J37dESYii2tVEkMMjeMd59dxVSpsWEBQ67HUFONh0=;
+	s=korg; t=1678210081;
+	bh=bgJat9e200h2YSsyIdzGEs6f6MG3hxGIJfbxabKFI2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yiygQBmXKm5e4xjUhqKEVijN0sBdYSzSzXQsPfEEtMbmMUVH3TJsQcZrQf+sWGOf2
-	 EnD9Cwg72UtZRXPqSkKHXwykHH6N0/h8ZIG6GSqb8MTwLee1nseuvNWIEtzdicmTyM
-	 OVOeFHvlNsFg1ls4qT59kt2TiG1qCNdHZbYS/Z70=
+	b=UueabdkEm6xnWAUJzf0H0VwaG/YxQeD8uczP2/m1dUGMY5+fe38Gyg5F/AW7oE5hr
+	 QskS9Jllyqm6enwJXVDVRBcSE58vSzRWBhcet/WB6yAlNihJ/JhZSGZDYw1cTkM5vm
+	 NI/kUUzfBlWjhgwUDDciZlTaTPhjh8oXwFVsNjbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xinlei Lee <xinlei.lee@mediatek.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
+	Miles Chen <miles.chen@mediatek.com>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0394/1001] drm/mediatek: dsi: Reduce the time of dsi from LP11 to sending cmd
-Date: Tue,  7 Mar 2023 17:52:46 +0100
-Message-Id: <20230307170038.443323546@linuxfoundation.org>
+Subject: [PATCH 6.2 0395/1001] drm/mediatek: Use NULL instead of 0 for NULL pointer
+Date: Tue,  7 Mar 2023 17:52:47 +0100
+Message-Id: <20230307170038.491216659@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,48 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xinlei Lee <xinlei.lee@mediatek.com>
+From: Miles Chen <miles.chen@mediatek.com>
 
-[ Upstream commit 91aeaed2c1147e3b1157dc084d23f190856a6c23 ]
+[ Upstream commit 4744cde06f57dd6fbaac468663b1fe2f653eaa16 ]
 
-According to Figure 16 Turnaround Procedure on page 36 in [1], you
-can see the status of LP-00 -> LP10 -> LP11. This state can correspond
-to the state of DSI from LP00 -> LP11 in mtk_dsi_lane_ready function
-in mtk_dsi.c.
+Use NULL for NULL pointer to fix the following sparse warning:
+drivers/gpu/drm/mediatek/mtk_drm_gem.c:265:27: sparse: warning: Using plain integer as NULL pointer
 
-LP-00 -> LP10 -> LP11 takes about 2*TLPX time (refer to [1] page 51
-to see that TLPX is 50ns)
-
-The delay at the end of the mtk_dsi_lane_ready function should be
-greater than the 2*TLPX specified by the DSI spec, and less than
-the time specified by the DSI_RX (generally 6ms to 40ms), to avoid
-problems caused by the RX specification
-
-[1]:mipi_D-PHY_specification_v1-1
-
-Fixes: 39e8d062b03c ("drm/mediatek: Keep dsi as LP00 before dcs cmds transfer")
-Signed-off-by: Xinlei Lee <xinlei.lee@mediatek.com>
-Acked-by: Sam Ravnborg <sam@ravnborg.org>
+Fixes: 3df64d7b0a4f ("drm/mediatek: Implement gem prime vmap/vunmap function")
+Signed-off-by: Miles Chen <miles.chen@mediatek.com>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/1673330093-6771-2-git-send-email-xinlei.lee@mediatek.com/
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20230111024443.24559-1-miles.chen@mediatek.com/
 Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dsi.c | 2 +-
+ drivers/gpu/drm/mediatek/mtk_drm_gem.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dsi.c b/drivers/gpu/drm/mediatek/mtk_dsi.c
-index 3b7d13028fb6b..9e1363c9fcdb4 100644
---- a/drivers/gpu/drm/mediatek/mtk_dsi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dsi.c
-@@ -721,7 +721,7 @@ static void mtk_dsi_lane_ready(struct mtk_dsi *dsi)
- 		mtk_dsi_clk_ulp_mode_leave(dsi);
- 		mtk_dsi_lane0_ulp_mode_leave(dsi);
- 		mtk_dsi_clk_hs_mode(dsi, 0);
--		msleep(20);
-+		usleep_range(1000, 3000);
- 		/* The reaction time after pulling up the mipi signal for dsi_rx */
- 	}
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+index 47e96b0289f98..06aadd5e7f5ba 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+@@ -262,6 +262,6 @@ void mtk_drm_gem_prime_vunmap(struct drm_gem_object *obj,
+ 		return;
+ 
+ 	vunmap(vaddr);
+-	mtk_gem->kvaddr = 0;
++	mtk_gem->kvaddr = NULL;
+ 	kfree(mtk_gem->pages);
  }
 -- 
 2.39.2
