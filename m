@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A7EBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2759C433A1;
-	Tue,  7 Mar 2023 17:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB30DBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A64C433EF;
+	Tue,  7 Mar 2023 17:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210192;
-	bh=Uqe88ZOiTAMwGWY9SJd3pNnDcjxhEl+vnrYP76spxsk=;
+	s=korg; t=1678210195;
+	bh=AcDp9LQUBtZa3+moX70IIoOJD5ydcRRg+8BbioeOs3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xRfFkLvUpMKTC9Dx7zJyGqzJRetauYoa0Ao0CWFitKKAvRjr64c0qdMgWZwaYz0dR
-	 u+WcHgHvnHu0Bl6Jcw1P2mk43IQl7K7bnNw6Xz8htdxKIcfQza4Hv65+onDzjP+H/P
-	 l9zcS/YZCIix9XWJWfr7EDnLZ+RvPnph8xnflEE8=
+	b=1pVmgDsXC4sf1CRjP4obZMmUB+FF/TY7DQNDUD8RB19AZFkwf8zovxD9pn/rha8J9
+	 49zwTc8ZayKmG4ra7MttYa1hr7zwQC71eFohgkEhE9cXfYkBLyTEE8I3SfmJha7dxr
+	 PSMynvJbfwRonqNs0ycICyiH1S0EP8bmWwfaK8l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhang <william.zhang@broadcom.com>,
-	Mark Brown <broonie@kernel.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	Allen Ballway <ballway@chromium.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Alistair Francis <alistair@alistair23.me>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0432/1001] spi: bcm63xx-hsspi: Fix multi-bit mode setting
-Date: Tue,  7 Mar 2023 17:53:24 +0100
-Message-Id: <20230307170040.115008992@linuxfoundation.org>
+Subject: [PATCH 6.2 0423/1001] HID: retain initial quirks set up when creating HID devices
+Date: Tue,  7 Mar 2023 17:53:15 +0100
+Message-Id: <20230307170039.704926195@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,59 +38,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: William Zhang <william.zhang@broadcom.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 811ff802aaf878ebbbaeac0307a0164fa21e7d40 ]
+[ Upstream commit 03a86105556e23650e4470c09f91cf7c360d5e28 ]
 
-Currently the driver always sets the controller to dual data bit mode
-for both tx and rx data in the profile mode control register even for
-single data bit transfer. Luckily the opcode is set correctly according
-to SPI transfer data bit width so it does not actually cause issues.
+In certain circumstances, such as when creating I2C-connected HID
+devices, we want to pass and retain some quirks (axis inversion, etc).
+The source of such quirks may be device tree, or DMI data, or something
+else not readily available to the HID core itself and therefore cannot
+be reconstructed easily. To allow this, introduce "initial_quirks" field
+in hid_device structure and use it when determining the final set of
+quirks.
 
-This change fixes the problem by setting tx and rx data bit mode field
-correctly according to the actual SPI transfer tx and rx data bit width.
+This fixes the problem with i2c-hid setting up device-tree sourced
+quirks too late and losing them on device rebind, and also allows to
+sever the tie between hid-code and i2c-hid when applying DMI-based
+quirks.
 
-Fixes: 142168eba9dc ("spi: bcm63xx-hsspi: add bcm63xx HSSPI driver")
-Signed-off-by: William Zhang <william.zhang@broadcom.com>
-Link: https://lore.kernel.org/r/20230209200246.141520-11-william.zhang@broadcom.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b60d3c803d76 ("HID: i2c-hid-of: Expose the touchscreen-inverted properties")
+Fixes: a2f416bf062a ("HID: multitouch: Add quirks for flipped axes")
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Tested-by: Allen Ballway <ballway@chromium.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Alistair Francis <alistair@alistair23.me>
+Link: https://lore.kernel.org/r/Y+LYwu3Zs13hdVDy@google.com
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm63xx-hsspi.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/hid/hid-quirks.c                 | 8 +-------
+ drivers/hid/i2c-hid/i2c-hid-core.c       | 6 ++++--
+ drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c | 1 -
+ include/linux/hid.h                      | 1 +
+ 4 files changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
-index a74345ed0e2ff..9ec33745c1472 100644
---- a/drivers/spi/spi-bcm63xx-hsspi.c
-+++ b/drivers/spi/spi-bcm63xx-hsspi.c
-@@ -163,6 +163,7 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
- 	int step_size = HSSPI_BUFFER_LEN;
- 	const u8 *tx = t->tx_buf;
- 	u8 *rx = t->rx_buf;
-+	u32 val = 0;
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 30e35f79def47..66e64350f1386 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -19,7 +19,6 @@
+ #include <linux/input/elan-i2c-ids.h>
  
- 	bcm63xx_hsspi_set_clk(bs, spi, t->speed_hz);
- 	bcm63xx_hsspi_set_cs(bs, spi->chip_select, true);
-@@ -178,11 +179,16 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
- 		step_size -= HSSPI_OPCODE_LEN;
+ #include "hid-ids.h"
+-#include "i2c-hid/i2c-hid.h"
  
- 	if ((opcode == HSSPI_OP_READ && t->rx_nbits == SPI_NBITS_DUAL) ||
--	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL))
-+	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL)) {
- 		opcode |= HSSPI_OP_MULTIBIT;
+ /*
+  * Alphabetically sorted by vendor then product.
+@@ -1238,7 +1237,7 @@ EXPORT_SYMBOL_GPL(hid_quirks_exit);
+ static unsigned long hid_gets_squirk(const struct hid_device *hdev)
+ {
+ 	const struct hid_device_id *bl_entry;
+-	unsigned long quirks = 0;
++	unsigned long quirks = hdev->initial_quirks;
  
--	__raw_writel(1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT |
--		     1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT | 0xff,
-+		if (t->rx_nbits == SPI_NBITS_DUAL)
-+			val |= 1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT;
-+		if (t->tx_nbits == SPI_NBITS_DUAL)
-+			val |= 1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT;
-+	}
+ 	if (hid_match_id(hdev, hid_ignore_list))
+ 		quirks |= HID_QUIRK_IGNORE;
+@@ -1299,11 +1298,6 @@ unsigned long hid_lookup_quirk(const struct hid_device *hdev)
+ 		quirks = hid_gets_squirk(hdev);
+ 	mutex_unlock(&dquirks_lock);
+ 
+-	/* Get quirks specific to I2C devices */
+-	if (IS_ENABLED(CONFIG_I2C_DMI_CORE) && IS_ENABLED(CONFIG_DMI) &&
+-	    hdev->bus == BUS_I2C)
+-		quirks |= i2c_hid_get_dmi_quirks(hdev->vendor, hdev->product);
+-
+ 	return quirks;
+ }
+ EXPORT_SYMBOL_GPL(hid_lookup_quirk);
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index b86b62f971080..72f2c379812c7 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -1035,6 +1035,10 @@ int i2c_hid_core_probe(struct i2c_client *client, struct i2chid_ops *ops,
+ 	hid->vendor = le16_to_cpu(ihid->hdesc.wVendorID);
+ 	hid->product = le16_to_cpu(ihid->hdesc.wProductID);
+ 
++	hid->initial_quirks = quirks;
++	hid->initial_quirks |= i2c_hid_get_dmi_quirks(hid->vendor,
++						      hid->product);
 +
-+	__raw_writel(val | 0xff,
- 		     bs->regs + HSSPI_PROFILE_MODE_CTRL_REG(chip_select));
+ 	snprintf(hid->name, sizeof(hid->name), "%s %04X:%04X",
+ 		 client->name, (u16)hid->vendor, (u16)hid->product);
+ 	strscpy(hid->phys, dev_name(&client->dev), sizeof(hid->phys));
+@@ -1048,8 +1052,6 @@ int i2c_hid_core_probe(struct i2c_client *client, struct i2chid_ops *ops,
+ 		goto err_mem_free;
+ 	}
  
- 	while (pending > 0) {
+-	hid->quirks |= quirks;
+-
+ 	return 0;
+ 
+ err_mem_free:
+diff --git a/drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c b/drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c
+index 554a7dc285365..210f17c3a0be0 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c
++++ b/drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c
+@@ -492,4 +492,3 @@ u32 i2c_hid_get_dmi_quirks(const u16 vendor, const u16 product)
+ 
+ 	return quirks;
+ }
+-EXPORT_SYMBOL_GPL(i2c_hid_get_dmi_quirks);
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index 8677ae38599e4..48563dc09e171 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -619,6 +619,7 @@ struct hid_device {							/* device report descriptor */
+ 	unsigned long status;						/* see STAT flags above */
+ 	unsigned claimed;						/* Claimed by hidinput, hiddev? */
+ 	unsigned quirks;						/* Various quirks the device can pull on us */
++	unsigned initial_quirks;					/* Initial set of quirks supplied when creating device */
+ 	bool io_started;						/* If IO has started */
+ 
+ 	struct list_head inputs;					/* The list of inputs */
 -- 
 2.39.2
 
