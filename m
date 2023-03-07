@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74666BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:40:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF7BC433EF;
-	Tue,  7 Mar 2023 18:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B13DBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:40:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C55DEC433EF;
+	Tue,  7 Mar 2023 18:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214432;
-	bh=pST1bKbo1q/X/hceyGz2GuL3cZmdS24p7e079zCmXXA=;
+	s=korg; t=1678214435;
+	bh=RZ5bfbO1ah2+t1w4mLCtDOfadBmUwEphvgprnu5E+o4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lf+pxMEbMlQCcM/9HnPx4Qcpd00jFzGiQn1js57XkOkFmC6P0Q7ZBOeXFbX3/IuZN
-	 GcF3HJzJX0OfUdAlNzeVqzQTc2wAzs7B+1GPwNrF/k2slE6nyXLAhKHoTlpaRq1Xbr
-	 amG9QCI9u/kJtJUc5N+EoaBBRgbYUisp1GZP/sGc=
+	b=kV1M5FQxGvYNAsEh9H9uSe/T0hI9QlZEsVy8GbvMWV5Drkj8yg5HDlL6Bvtlftllj
+	 D4Ghp5ZS6kMq3D7mgUSLfRLLuvJibLms/njWqd0lkmSsXEpSF0bry5t/ZMotLRZGS8
+	 8GbCkuvSHc6B/riw8QSm0fpsarBqjBX7BYzCUf5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Xiubo Li <xiubli@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.1 820/885] rbd: avoid use-after-free in do_rbd_add() when rbd_dev_create() fails
-Date: Tue,  7 Mar 2023 18:02:34 +0100
-Message-Id: <20230307170037.483342079@linuxfoundation.org>
+Subject: [PATCH 6.1 821/885] ceph: update the time stamps and try to drop the suid/sgid
+Date: Tue,  7 Mar 2023 18:02:35 +0100
+Message-Id: <20230307170037.531393552@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -33,94 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-commit f7c4d9b133c7a04ca619355574e96b6abf209fba upstream.
+commit e027253c4b77d395798600a90b6a96fe4adf4d5e upstream.
 
-If getting an ID or setting up a work queue in rbd_dev_create() fails,
-use-after-free on rbd_dev->rbd_client, rbd_dev->spec and rbd_dev->opts
-is triggered in do_rbd_add().  The root cause is that the ownership of
-these structures is transfered to rbd_dev prematurely and they all end
-up getting freed when rbd_dev_create() calls rbd_dev_free() prior to
-returning to do_rbd_add().
+The fallocate will try to clear the suid/sgid if a unprevileged user
+changed the file.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE, an
-incomplete patch submitted by Natalia Petrova <n.petrova@fintech.ru>.
+There is no POSIX item requires that we should clear the suid/sgid
+in fallocate code path but this is the default behaviour for most of
+the filesystems and the VFS layer. And also the same for the write
+code path, which have already support it.
+
+And also we need to update the time stamps since the fallocate will
+change the file contents.
 
 Cc: stable@vger.kernel.org
-Fixes: 1643dfa4c2c8 ("rbd: introduce a per-device ordered workqueue")
+Link: https://tracker.ceph.com/issues/58054
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ fs/ceph/file.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -5292,8 +5292,7 @@ static void rbd_dev_release(struct devic
- 		module_put(THIS_MODULE);
- }
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -2095,6 +2095,9 @@ static long ceph_fallocate(struct file *
+ 	loff_t endoff = 0;
+ 	loff_t size;
  
--static struct rbd_device *__rbd_dev_create(struct rbd_client *rbdc,
--					   struct rbd_spec *spec)
-+static struct rbd_device *__rbd_dev_create(struct rbd_spec *spec)
- {
- 	struct rbd_device *rbd_dev;
- 
-@@ -5338,9 +5337,6 @@ static struct rbd_device *__rbd_dev_crea
- 	rbd_dev->dev.parent = &rbd_root_dev;
- 	device_initialize(&rbd_dev->dev);
- 
--	rbd_dev->rbd_client = rbdc;
--	rbd_dev->spec = spec;
--
- 	return rbd_dev;
- }
- 
-@@ -5353,12 +5349,10 @@ static struct rbd_device *rbd_dev_create
- {
- 	struct rbd_device *rbd_dev;
- 
--	rbd_dev = __rbd_dev_create(rbdc, spec);
-+	rbd_dev = __rbd_dev_create(spec);
- 	if (!rbd_dev)
- 		return NULL;
- 
--	rbd_dev->opts = opts;
--
- 	/* get an id and fill in device name */
- 	rbd_dev->dev_id = ida_simple_get(&rbd_dev_id_ida, 0,
- 					 minor_to_rbd_dev_id(1 << MINORBITS),
-@@ -5375,6 +5369,10 @@ static struct rbd_device *rbd_dev_create
- 	/* we have a ref from do_rbd_add() */
- 	__module_get(THIS_MODULE);
- 
-+	rbd_dev->rbd_client = rbdc;
-+	rbd_dev->spec = spec;
-+	rbd_dev->opts = opts;
++	dout("%s %p %llx.%llx mode %x, offset %llu length %llu\n", __func__,
++	     inode, ceph_vinop(inode), mode, offset, length);
 +
- 	dout("%s rbd_dev %p dev_id %d\n", __func__, rbd_dev, rbd_dev->dev_id);
- 	return rbd_dev;
+ 	if (mode != (FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE))
+ 		return -EOPNOTSUPP;
  
-@@ -6736,7 +6734,7 @@ static int rbd_dev_probe_parent(struct r
- 		goto out_err;
+@@ -2129,6 +2132,10 @@ static long ceph_fallocate(struct file *
+ 	if (ret < 0)
+ 		goto unlock;
+ 
++	ret = file_modified(file);
++	if (ret)
++		goto put_caps;
++
+ 	filemap_invalidate_lock(inode->i_mapping);
+ 	ceph_fscache_invalidate(inode, false);
+ 	ceph_zero_pagecache_range(inode, offset, length);
+@@ -2144,6 +2151,7 @@ static long ceph_fallocate(struct file *
  	}
+ 	filemap_invalidate_unlock(inode->i_mapping);
  
--	parent = __rbd_dev_create(rbd_dev->rbd_client, rbd_dev->parent_spec);
-+	parent = __rbd_dev_create(rbd_dev->parent_spec);
- 	if (!parent) {
- 		ret = -ENOMEM;
- 		goto out_err;
-@@ -6746,8 +6744,8 @@ static int rbd_dev_probe_parent(struct r
- 	 * Images related by parent/child relationships always share
- 	 * rbd_client and spec/parent_spec, so bump their refcounts.
- 	 */
--	__rbd_get_client(rbd_dev->rbd_client);
--	rbd_spec_get(rbd_dev->parent_spec);
-+	parent->rbd_client = __rbd_get_client(rbd_dev->rbd_client);
-+	parent->spec = rbd_spec_get(rbd_dev->parent_spec);
- 
- 	__set_bit(RBD_DEV_FLAG_READONLY, &parent->flags);
- 
++put_caps:
+ 	ceph_put_cap_refs(ci, got);
+ unlock:
+ 	inode_unlock(inode);
 
 
