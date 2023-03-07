@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00C1BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:10:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2187DC433EF;
-	Tue,  7 Mar 2023 17:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E228EBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:11:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490F1C433EF;
+	Tue,  7 Mar 2023 17:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209057;
-	bh=PaLDjaHcgVwd2yErWQmz17o4YHZ2P0IOJLtzWuIPu7o=;
+	s=korg; t=1678209060;
+	bh=WYywzug2xXiQyWH0zAKhx83L4SXAYhqcMDKlPETsb/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbwQsP8bx6fQH36MkPlVnbT2Xa6/UM/QsE6LFWxy8vlAY96RqfsAmgbymLvCGB3V8
-	 fl2Likd9tC8dMa3vYq2fsSWGk+5ptoXkBjt8iX8wIAU1mV93yfdD6kqd+FRiCk4vNf
-	 GBx9ea17dacDso+xaCOBN8t42vmckT51Ge2zHBmQ=
+	b=oa8WUf9RGKoMsz8OC+PoKH++9sZ4PaQIkRH8j6kQw3S2GhX9PH7bKvaA55nXj3hD2
+	 b+vGYn/90/vHah9jGNcITNmZFhWlF64hLPikbIbw37/1eEu4uiXg1iasqC0r9nGo39
+	 xfDZ3kv7nTPA3eKp/0kaBSHMGxQ1wkA8m0zhcXWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0097/1001] arm64: dts: mt8195: Fix CPU map for single-cluster SoC
-Date: Tue,  7 Mar 2023 17:47:49 +0100
-Message-Id: <20230307170026.380436239@linuxfoundation.org>
+Subject: [PATCH 6.2 0098/1001] arm64: dts: mt8192: Fix CPU map for single-cluster SoC
+Date: Tue,  7 Mar 2023 17:47:50 +0100
+Message-Id: <20230307170026.425015543@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,47 +37,44 @@ Content-Transfer-Encoding: 8bit
 
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit cc4f0b13a887b483faa45084616998a21b63889d ]
+[ Upstream commit 160ce54d635455ffb5e9b42c5ba9cb9aaa98cdb2 ]
 
-MT8195 features the ARM DynamIQ technology and combines both four
-Cortex-A78 (big) and four Cortex-A55 (LITTLE) CPUs in one cluster:
+MT8192 features the ARM DynamIQ technology and combines both four
+Cortex-A76 (big) and four Cortex-A55 (LITTLE) CPUs in one cluster:
 fix the CPU map to reflect that.
 
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Fixes: 37f2582883be ("arm64: dts: Add mediatek SoC mt8195 and evaluation board")
-Link: https://lore.kernel.org/r/20230126103526.417039-2-angelogioacchino.delregno@collabora.com
+Fixes: 48489980e27e ("arm64: dts: Add Mediatek SoC MT8192 and evaluation board dts and Makefile")
+Link: https://lore.kernel.org/r/20230126103526.417039-3-angelogioacchino.delregno@collabora.com
 Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8192.dtsi | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index d8d846a57d97f..f0bd5754d19d0 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -151,22 +151,20 @@ core2 {
+diff --git a/arch/arm64/boot/dts/mediatek/mt8192.dtsi b/arch/arm64/boot/dts/mediatek/mt8192.dtsi
+index 46a1e457fab45..627e3bf1c544b 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8192.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8192.dtsi
+@@ -158,19 +158,16 @@ core2 {
  				core3 {
  					cpu = <&cpu3>;
  				};
 -			};
- 
+-
 -			cluster1 {
 -				core0 {
 +				core4 {
  					cpu = <&cpu4>;
  				};
- 
 -				core1 {
 +				core5 {
  					cpu = <&cpu5>;
  				};
- 
 -				core2 {
 +				core6 {
  					cpu = <&cpu6>;
  				};
- 
 -				core3 {
 +				core7 {
  					cpu = <&cpu7>;
