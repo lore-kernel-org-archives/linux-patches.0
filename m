@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03516BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:04:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47362C433D2;
-	Tue,  7 Mar 2023 18:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0044BBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A357C433D2;
+	Tue,  7 Mar 2023 18:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212297;
-	bh=Le0XJppRH2Gh/YcCBkNWHfu3aHGKcvhNtp2U/9r1+8M=;
+	s=korg; t=1678212300;
+	bh=3DwLHOYp38wdLyy+Ft282z31473iRxPK0HdVsTsI04U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=riDDvux53KxFQlQWeZrXLSTQ29p2qKFaw2UefpfKBRAjxzKO6Z7FjNabyyMg760sb
-	 zHNLomEAADkBoDV8y8d8hpMELHq3aRaAOPn+vCdUUd3Ph+3vj2eGqzT7Puv2BONynX
-	 VzmPo71ZWScRNGnw9O0KxS7h+IB1xF+TE71jxrHc=
+	b=H+EpMxRYwIpop+1Jyxec645RLudcjIrPsm+4hy8wvL5F6LSpc1LriQFmICNSPAhIF
+	 vmIYqDBjPbbtSRXtuOaZVmD5TaWdowwHQ9ze1cdscyF3T7JTFOHXscmutVkKFazpVP
+	 7DebBTo+o260AAVoTuT3G02G3KguzQCcI7ExAeL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryder Lee <ryder.lee@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Eric Biggers <ebiggers@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/885] wifi: mt76: mt7915: check return value before accessing free_block_num
-Date: Tue,  7 Mar 2023 17:50:47 +0100
-Message-Id: <20230307170006.783131837@linuxfoundation.org>
+Subject: [PATCH 6.1 140/885] crypto: x86/ghash - fix unaligned access in ghash_setkey()
+Date: Tue,  7 Mar 2023 17:51:14 +0100
+Message-Id: <20230307170007.937934874@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,85 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryder Lee <ryder.lee@mediatek.com>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 59b27a7d472f100ac8998e15a63c47a03cced12a ]
+[ Upstream commit 116db2704c193fff6d73ea6c2219625f0c9bdfc8 ]
 
-Check return value of mt7915_mcu_get_eeprom_free_block() first before
-accessing free_block_num.
+The key can be unaligned, so use the unaligned memory access helpers.
 
-Fixes: bbc1d4154ec1 ("mt76: mt7915: add default calibrated data support")
-Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 8ceee72808d1 ("crypto: ghash-clmulni-intel - use C implementation for setkey()")
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt7915/eeprom.c    | 19 ++++++++++++-------
- .../net/wireless/mediatek/mt76/mt7915/mcu.c   | 10 ++++++----
- 2 files changed, 18 insertions(+), 11 deletions(-)
+ arch/x86/crypto/ghash-clmulni-intel_glue.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-index 0bce0ce51be00..f0ec000d46cf7 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-@@ -110,18 +110,23 @@ static int mt7915_eeprom_load(struct mt7915_dev *dev)
- 	} else {
- 		u8 free_block_num;
- 		u32 block_num, i;
-+		u32 eeprom_blk_size = MT7915_EEPROM_BLOCK_SIZE;
+diff --git a/arch/x86/crypto/ghash-clmulni-intel_glue.c b/arch/x86/crypto/ghash-clmulni-intel_glue.c
+index 1f1a95f3dd0ca..c0ab0ff4af655 100644
+--- a/arch/x86/crypto/ghash-clmulni-intel_glue.c
++++ b/arch/x86/crypto/ghash-clmulni-intel_glue.c
+@@ -19,6 +19,7 @@
+ #include <crypto/internal/simd.h>
+ #include <asm/cpu_device_id.h>
+ #include <asm/simd.h>
++#include <asm/unaligned.h>
  
--		mt7915_mcu_get_eeprom_free_block(dev, &free_block_num);
--		/* efuse info not enough */
-+		ret = mt7915_mcu_get_eeprom_free_block(dev, &free_block_num);
-+		if (ret < 0)
-+			return ret;
-+
-+		/* efuse info isn't enough */
- 		if (free_block_num >= 29)
- 			return -EINVAL;
+ #define GHASH_BLOCK_SIZE	16
+ #define GHASH_DIGEST_SIZE	16
+@@ -54,15 +55,14 @@ static int ghash_setkey(struct crypto_shash *tfm,
+ 			const u8 *key, unsigned int keylen)
+ {
+ 	struct ghash_ctx *ctx = crypto_shash_ctx(tfm);
+-	be128 *x = (be128 *)key;
+ 	u64 a, b;
  
- 		/* read eeprom data from efuse */
--		block_num = DIV_ROUND_UP(eeprom_size,
--					 MT7915_EEPROM_BLOCK_SIZE);
--		for (i = 0; i < block_num; i++)
--			mt7915_mcu_get_eeprom(dev,
--					      i * MT7915_EEPROM_BLOCK_SIZE);
-+		block_num = DIV_ROUND_UP(eeprom_size, eeprom_blk_size);
-+		for (i = 0; i < block_num; i++) {
-+			ret = mt7915_mcu_get_eeprom(dev, i * eeprom_blk_size);
-+			if (ret < 0)
-+				return ret;
-+		}
- 	}
+ 	if (keylen != GHASH_BLOCK_SIZE)
+ 		return -EINVAL;
  
- 	return mt7915_check_eeprom(dev);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-index 8d297e4aa7d43..c4843f4de34ff 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-@@ -2743,8 +2743,9 @@ int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset)
- 	int ret;
- 	u8 *buf;
+ 	/* perform multiplication by 'x' in GF(2^128) */
+-	a = be64_to_cpu(x->a);
+-	b = be64_to_cpu(x->b);
++	a = get_unaligned_be64(key);
++	b = get_unaligned_be64(key + 8);
  
--	ret = mt76_mcu_send_and_get_msg(&dev->mt76, MCU_EXT_QUERY(EFUSE_ACCESS), &req,
--				sizeof(req), true, &skb);
-+	ret = mt76_mcu_send_and_get_msg(&dev->mt76,
-+					MCU_EXT_QUERY(EFUSE_ACCESS),
-+					&req, sizeof(req), true, &skb);
- 	if (ret)
- 		return ret;
- 
-@@ -2769,8 +2770,9 @@ int mt7915_mcu_get_eeprom_free_block(struct mt7915_dev *dev, u8 *block_num)
- 	struct sk_buff *skb;
- 	int ret;
- 
--	ret = mt76_mcu_send_and_get_msg(&dev->mt76, MCU_EXT_QUERY(EFUSE_FREE_BLOCK), &req,
--					sizeof(req), true, &skb);
-+	ret = mt76_mcu_send_and_get_msg(&dev->mt76,
-+					MCU_EXT_QUERY(EFUSE_FREE_BLOCK),
-+					&req, sizeof(req), true, &skb);
- 	if (ret)
- 		return ret;
- 
+ 	ctx->shash.a = (b << 1) | (a >> 63);
+ 	ctx->shash.b = (a << 1) | (b >> 63);
 -- 
 2.39.2
 
