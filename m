@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853FFBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:22:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D820EC433D2;
-	Tue,  7 Mar 2023 18:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EADFBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:22:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9966C433EF;
+	Tue,  7 Mar 2023 18:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213325;
-	bh=kxyWRbwOrMsaR1MkwOzO/TcOcPQYENZ5YzewcG8QVLI=;
+	s=korg; t=1678213328;
+	bh=QRGl7fXeWIu6gR1tYWtmt3+i2PPoawwV5CI74lPQsxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQIb/S1QO5+BcTdNw4E4VM3qaZIEjvjuWL6ciFdDKtfFHEZTNQHmGDFhUeQSxyxke
-	 7suIWB7rtZ15CQyYdOqrxYtxV6w7hvm1m+J5/2gG3EjUGF5P7Ye5foFill+/SwTW8D
-	 Qr37uW2kRaNPXbIlGaXHWBBz/YwLSJY9wTcOsEJQ=
+	b=k183g3sJtDh6GWwutl/i4Ev7J7qw1rEeFWMB5PXih990ExaEMZOqiu+muGCY/kb2T
+	 VfGBed9+ugp90BTnusYpHGsx3wYuGHvofSiMNVYWAU+z31GOJXtJ3zL8OwJTMRMC1+
+	 1QopuS7wA9iy+eB2Pv5O6gxFX5I4oa+vD1CofN2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 441/885] misc: fastrpc: Fix an error handling path in fastrpc_rpmsg_probe()
-Date: Tue,  7 Mar 2023 17:56:15 +0100
-Message-Id: <20230307170021.578901099@linuxfoundation.org>
+Subject: [PATCH 6.1 442/885] driver core: fix resource leak in device_add()
+Date: Tue,  7 Mar 2023 17:56:16 +0100
+Message-Id: <20230307170021.629372627@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,47 +34,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 11819ed2b70da94acc41fec34178a011c4d3d25d ]
+[ Upstream commit 6977b1a5d67097eaa4d02b0c126c04cc6e8917c0 ]
 
-If of_platform_populate() fails, some resources need to be freed as already
-done in the other error handling paths.
+When calling kobject_add() failed in device_add(), it will call
+cleanup_glue_dir() to free resource. But in kobject_add(),
+dev->kobj.parent has been set to NULL. This will cause resource leak.
 
-Fixes: 278d56f970ae ("misc: fastrpc: Reference count channel context")
-Fixes: 3abe3ab3cdab ("misc: fastrpc: add secure domain support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/b909d2f3273b794ea0f1f78d14bc24affb08ea5f.1669398274.git.christophe.jaillet@wanadoo.fr
+The process is as follows:
+device_add()
+	get_device_parent()
+		class_dir_create_and_add()
+			kobject_add()		//kobject_get()
+	...
+	dev->kobj.parent = kobj;
+	...
+	kobject_add()		//failed, but set dev->kobj.parent = NULL
+	...
+	glue_dir = get_glue_dir(dev)	//glue_dir = NULL, and goto
+					//"Error" label
+	...
+	cleanup_glue_dir()	//becaues glue_dir is NULL, not call
+				//kobject_put()
+
+The preceding problem may cause insmod mac80211_hwsim.ko to failed.
+sysfs: cannot create duplicate filename '/devices/virtual/mac80211_hwsim'
+Call Trace:
+<TASK>
+dump_stack_lvl+0x8e/0xd1
+sysfs_warn_dup.cold+0x1c/0x29
+sysfs_create_dir_ns+0x224/0x280
+kobject_add_internal+0x2aa/0x880
+kobject_add+0x135/0x1a0
+get_device_parent+0x3d7/0x590
+device_add+0x2aa/0x1cb0
+device_create_groups_vargs+0x1eb/0x260
+device_create+0xdc/0x110
+mac80211_hwsim_new_radio+0x31e/0x4790 [mac80211_hwsim]
+init_mac80211_hwsim+0x48d/0x1000 [mac80211_hwsim]
+do_one_initcall+0x10f/0x630
+do_init_module+0x19f/0x5e0
+load_module+0x64b7/0x6eb0
+__do_sys_finit_module+0x140/0x200
+do_syscall_64+0x35/0x80
+entry_SYSCALL_64_after_hwframe+0x46/0xb0
+</TASK>
+kobject_add_internal failed for mac80211_hwsim with -EEXIST, don't try to
+register things with the same name in the same directory.
+
+Fixes: cebf8fd16900 ("driver core: fix race between creating/querying glue dir and its cleanup")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://lore.kernel.org/r/20221123012042.335252-1-shaozhengchao@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/fastrpc.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/base/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 80811e852d8fd..02d26160c64e6 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -2127,7 +2127,18 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 	data->domain_id = domain_id;
- 	data->rpdev = rpdev;
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index e5c15061070b7..9019b81405bf2 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -3451,7 +3451,7 @@ int device_add(struct device *dev)
+ 	/* we require the name to be set before, and pass NULL */
+ 	error = kobject_add(&dev->kobj, dev->kobj.parent, NULL);
+ 	if (error) {
+-		glue_dir = get_glue_dir(dev);
++		glue_dir = kobj;
+ 		goto Error;
+ 	}
  
--	return of_platform_populate(rdev->of_node, NULL, NULL, rdev);
-+	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
-+	if (err)
-+		goto populate_error;
-+
-+	return 0;
-+
-+populate_error:
-+	if (data->fdevice)
-+		misc_deregister(&data->fdevice->miscdev);
-+	if (data->secure_fdevice)
-+		misc_deregister(&data->secure_fdevice->miscdev);
-+
- fdev_error:
- 	kfree(data);
- 	return err;
 -- 
 2.39.2
 
