@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22964BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F84C433EF;
-	Tue,  7 Mar 2023 17:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334F3BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:18:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7D5C433D2;
+	Tue,  7 Mar 2023 17:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209479;
-	bh=hoSc0VdRNM7fDuJchJMIQKZgiu+Yw+kBVWg9XM+ctBw=;
+	s=korg; t=1678209482;
+	bh=YPgh0AhVMBwuvC1FB1jKznntH8Jwwl3qVXSAGKpY0Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7ILmYVRdFZqAfV4CnlrvxSo1Zozdn3XPmGRdA5zXowg/uqoOhYyZ/Dwv7KSERGX0
-	 qYqAp+9XycNUxw5qylVwqJz8ahUb7NfBzYE4xEpWpkVXj3/T7575RywPEPY4zNC/ab
-	 6qptCiBHB/M5ujJVbKmp2liEp8x17xf30OKAJE6k=
+	b=Gf1Ey/iI9peO09WVdZveucda7roWrUn0B9Th+ibJ/LCXEYqyIHDILFDd4aHFiwMYp
+	 2OYV7F5gve5QC1WGcYEEKnUUu/Un8BzY6SLucn6Gi/5fZmhMW6hDmlc/4akpojIb1T
+	 Pghkeirbys52TGqSWBZbkRjFnHvTXWMabaDUFfnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0233/1001] can: rcar_canfd: Fix R-Car V3U GAFLCFG field accesses
-Date: Tue,  7 Mar 2023 17:50:05 +0100
-Message-Id: <20230307170031.961282775@linuxfoundation.org>
+Subject: [PATCH 6.2 0234/1001] selftests/bpf: Initialize tc in xdp_synproxy
+Date: Tue,  7 Mar 2023 17:50:06 +0100
+Message-Id: <20230307170032.006594156@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,44 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit 9be8c5583581244d8a77e41afa16b8b0a5ddabc0 ]
+[ Upstream commit 354bb4a0e0b6be8f55bacbe7f08c94b4741f5658 ]
 
-Each Global Acceptance Filter List Configuration Register (GAFLCFG)
-contains two fields, and stores the number of channel rules for one
-channel pair.
+xdp_synproxy/xdp fails in CI with:
 
-As R-Car V3U and later can have more than 2 channels, the field
-selection should be based on the LSB (even or odd) of the channel
-number, instead of on the full channel number.
+    Error: bpf_tc_hook_create: File exists
 
-Fixes: 45721c406dcf50d4 ("can: rcar_canfd: Add support for r8a779a0 SoC")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/all/36bcf0ffb96d6aaed970751f9546b901af638bcf.1674499048.git.geert+renesas@glider.be
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+The XDP version of the test should not be calling bpf_tc_hook_create();
+the reason it's happening anyway is that if we don't specify --tc on the
+command line, tc variable remains uninitialized.
+
+Fixes: 784d5dc0efc2 ("selftests/bpf: Add selftests for raw syncookie helpers in TC mode")
+Reported-by: Alexei Starovoitov <ast@kernel.org>
+Reported-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230202235335.3403781-1-iii@linux.ibm.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/rcar/rcar_canfd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/xdp_synproxy.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/can/rcar/rcar_canfd.c b/drivers/net/can/rcar/rcar_canfd.c
-index 88de17d0bd79d..77b21c82faf38 100644
---- a/drivers/net/can/rcar/rcar_canfd.c
-+++ b/drivers/net/can/rcar/rcar_canfd.c
-@@ -92,10 +92,10 @@
- /* RSCFDnCFDGAFLCFG0 / RSCFDnGAFLCFG0 */
- #define RCANFD_GAFLCFG_SETRNC(gpriv, n, x) \
- 	(((x) & reg_v3u(gpriv, 0x1ff, 0xff)) << \
--	 (reg_v3u(gpriv, 16, 24) - (n) * reg_v3u(gpriv, 16, 8)))
-+	 (reg_v3u(gpriv, 16, 24) - ((n) & 1) * reg_v3u(gpriv, 16, 8)))
+diff --git a/tools/testing/selftests/bpf/xdp_synproxy.c b/tools/testing/selftests/bpf/xdp_synproxy.c
+index 410a1385a01dd..6dbe0b7451985 100644
+--- a/tools/testing/selftests/bpf/xdp_synproxy.c
++++ b/tools/testing/selftests/bpf/xdp_synproxy.c
+@@ -116,6 +116,7 @@ static void parse_options(int argc, char *argv[], unsigned int *ifindex, __u32 *
+ 	*tcpipopts = 0;
+ 	*ports = NULL;
+ 	*single = false;
++	*tc = false;
  
- #define RCANFD_GAFLCFG_GETRNC(gpriv, n, x) \
--	(((x) >> (reg_v3u(gpriv, 16, 24) - (n) * reg_v3u(gpriv, 16, 8))) & \
-+	(((x) >> (reg_v3u(gpriv, 16, 24) - ((n) & 1) * reg_v3u(gpriv, 16, 8))) & \
- 	 reg_v3u(gpriv, 0x1ff, 0xff))
- 
- /* RSCFDnCFDGAFLECTR / RSCFDnGAFLECTR */
+ 	while (true) {
+ 		int opt;
 -- 
 2.39.2
 
