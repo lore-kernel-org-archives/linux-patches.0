@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABFCBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:09:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0AD6C433D2;
-	Tue,  7 Mar 2023 17:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE14BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:09:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C2CC433D2;
+	Tue,  7 Mar 2023 17:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678208948;
-	bh=1HkcaeOabBwUzuEJBbsS4DSpkxh8B/TmSi9hwkShGVU=;
+	s=korg; t=1678208951;
+	bh=ce5JmmYaCoMghz6MBMrjjAiI1Yrg6eqnGO7c5KDynWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AvlRGXGk1HGutrtikjWxGHQhqstPC4FlTRZrJt3X6xjtn+moZFTYWpBSsUigImFu0
-	 Yqg2qv74/roQNVT3dq/GfCrHZiVHvpq3QCGJrCKX7jdE/e8dg/JjUMBFvnFEpEm+oJ
-	 ljb1U83KfGfKOgPPshojUkMIYtmUBZ/rl3UU3xvo=
+	b=0EIC6WMTrKH3LhBm6U/n26ww6B4xtGP7JGhu0cb/b6FkVVXmNjGmUnuofHgZS/2GR
+	 HRZaBlzugndVBPL3PIelrVofo8w9gGA5sgwL5BZ/YlPXVPQBP0TR+xEIh2ICZvgEsJ
+	 Ow9NbvtnJPW1HvjUhpw1vgfC3SUVObwsRSn4tLN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0031/1001] arm64: dts: mediatek: mt8195: Fix systimer 13 MHz clock description
-Date: Tue,  7 Mar 2023 17:46:43 +0100
-Message-Id: <20230307170023.482678351@linuxfoundation.org>
+Subject: [PATCH 6.2 0022/1001] arm64: dts: qcom: sm6350-lena: Flatten gpio-keys pinctrl state
+Date: Tue,  7 Mar 2023 17:46:34 +0100
+Message-Id: <20230307170023.122952101@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,62 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit 0f1c806b65d136a5fe0b88adad5ff1cb451fc401 ]
+[ Upstream commit a40f5ae1ea64ab9e981faf47c31817dc4d7923e4 ]
 
-The systimer block derives its 13 MHz clock by dividing the main 26 MHz
-oscillator clock by 2 internally, not through the TOPCKGEN clock
-controller.
+Pinctrl states typically collate multiple related pins.  In the case of
+gpio-keys there's no hardware-defined relation at all except all pins
+representing a key; and especially on Sony's lena board there's only one
+pin regardless. Flatten it similar to other boards [1].
 
-On the MT8195 this divider is set either by power-on-reset or by the
-bootloader. The bootloader may then make the divider unconfigurable to,
-but can be read out by, the operating system.
+As a drive-by fix, clean up the label string.
 
-Making the systimer block take the 26 MHz clock directly requires
-changing the implementations. As an ABI compatible fix, change the
-input clock of the systimer block a fixed factor divide-by-2 clock
-that takes the 26 MHz oscillator as its input.
+[1]: https://lore.kernel.org/linux-arm-msm/11174eb6-0a9d-7df1-6f06-da4010f76453@linaro.org/
 
-Fixes: 37f2582883be ("arm64: dts: Add mediatek SoC mt8195 and evaluation board")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221201084229.3464449-4-wenst@chromium.org
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Fixes: 2b8bbe985659 ("arm64: dts: qcom: sm6350-lena: Include pm6350 and configure buttons")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221222215906.324092-1-marijn.suijten@somainline.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ .../qcom/sm6350-sony-xperia-lena-pdx213.dts    | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index d6856691fc385..d8d846a57d97f 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -248,6 +248,15 @@ sound: mt8195-sound {
- 		status = "disabled";
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/sm6350-sony-xperia-lena-pdx213.dts b/arch/arm64/boot/dts/qcom/sm6350-sony-xperia-lena-pdx213.dts
+index 94f77d376662e..4916d0db5b47f 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350-sony-xperia-lena-pdx213.dts
++++ b/arch/arm64/boot/dts/qcom/sm6350-sony-xperia-lena-pdx213.dts
+@@ -35,10 +35,10 @@ framebuffer: framebuffer@a0000000 {
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&gpio_keys_state>;
++		pinctrl-0 = <&vol_down_n>;
  
-+	clk13m: fixed-factor-clock-13m {
-+		compatible = "fixed-factor-clock";
-+		#clock-cells = <0>;
-+		clocks = <&clk26m>;
-+		clock-div = <2>;
-+		clock-mult = <1>;
-+		clock-output-names = "clk13m";
-+	};
-+
- 	clk26m: oscillator-26m {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
-@@ -705,7 +714,7 @@ systimer: timer@10017000 {
- 				     "mediatek,mt6765-timer";
- 			reg = <0 0x10017000 0 0x1000>;
- 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH 0>;
--			clocks = <&topckgen CLK_TOP_CLK26M_D2>;
-+			clocks = <&clk13m>;
+ 		key-volume-down {
+-			label = "volume_down";
++			label = "Volume Down";
+ 			linux,code = <KEY_VOLUMEDOWN>;
+ 			gpios = <&pm6350_gpios 2 GPIO_ACTIVE_LOW>;
  		};
+@@ -305,14 +305,12 @@ touchscreen@48 {
+ };
  
- 		pwrap: pwrap@10024000 {
+ &pm6350_gpios {
+-	gpio_keys_state: gpio-keys-state {
+-		key-volume-down-pins {
+-			pins = "gpio2";
+-			function = PMIC_GPIO_FUNC_NORMAL;
+-			power-source = <0>;
+-			bias-disable;
+-			input-enable;
+-		};
++	vol_down_n: vol-down-n-state {
++		pins = "gpio2";
++		function = PMIC_GPIO_FUNC_NORMAL;
++		power-source = <0>;
++		bias-disable;
++		input-enable;
+ 	};
+ };
+ 
 -- 
 2.39.2
 
