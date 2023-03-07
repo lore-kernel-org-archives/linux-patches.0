@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BCABA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:25:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F076AC433D2;
-	Tue,  7 Mar 2023 18:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AA7BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:25:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9FAC433D2;
+	Tue,  7 Mar 2023 18:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213504;
-	bh=P4tDWW0Z0TMN3K+XqbQ72yqJtZe9x/jttgJIqnVgMI8=;
+	s=korg; t=1678213507;
+	bh=vvC37eYtey1frg/71k28DRfDY7sOqExWkwRqFW8oqZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VKOxqzagyqx13bHLPk6DCaezqlrQshm6SJrj6rS5BMzSh1/2Cyt2HNpQFObVbvWFw
-	 M924xPGexxMWr2WhuE/h1DcdRQaikaCC/0ynMYapn+4kV07bck8f5nN/seLdcFFfW/
-	 ns0fz8sfXL6hrO53kg+3Q6JuaeoAMtfp2MqX/IvA=
+	b=rMtGQ0ueuTJAeW+Qyv+1O0ck6sXvogpwXxBm9svZEUgiJTaIgEhH5BaPYr6/QFAnY
+	 IB+qe1d0qfUp/zsPv1DZK1Tm5WY+jNJb/hc0pCQQSHxZwErQfSM/M5DaoL0Cggmysn
+	 dl04il+O2z2GeGAYfHC21iu2RtYNX69xr3RBTSQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 527/885] ARM: OMAP2+: omap4-common: Fix refcount leak bug
-Date: Tue,  7 Mar 2023 17:57:41 +0100
-Message-Id: <20230307170025.362870118@linuxfoundation.org>
+Subject: [PATCH 6.1 528/885] arm64: dts: qcom: msm8996: Add additional A2NoC clocks
+Date: Tue,  7 Mar 2023 17:57:42 +0100
+Message-Id: <20230307170025.412426127@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,34 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 7c32919a378782c95c72bc028b5c30dfe8c11f82 ]
+[ Upstream commit 67fb53745e0b38275fa0b422b6a3c6c1c028c9a2 ]
 
-In omap4_sram_init(), of_find_compatible_node() will return a node
-pointer with refcount incremented. We should use of_node_put() when
-it is not used anymore.
+On eMMC devices, the UFS clocks aren't started in the bootloader (or well,
+at least it should not be, as that would just leak power..), which results
+in platform reboots when trying to access the unclocked UFS hardware,
+which unfortunately happens on each and every boot, as interconnect calls
+sync_state and goes over each and every path.
 
-Signed-off-by: Liang He <windhl@126.com>
-Message-Id: <20220628112939.160737-1-windhl@126.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> #db820c
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221210200353.418391-6-konrad.dybcio@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/omap4-common.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-omap2/omap4-common.c b/arch/arm/mach-omap2/omap4-common.c
-index 6d1eb4eefefe5..d9ed2a5dcd5ef 100644
---- a/arch/arm/mach-omap2/omap4-common.c
-+++ b/arch/arm/mach-omap2/omap4-common.c
-@@ -140,6 +140,7 @@ static int __init omap4_sram_init(void)
- 			__func__);
- 	else
- 		sram_sync = (void __iomem *)gen_pool_alloc(sram_pool, PAGE_SIZE);
-+	of_node_put(np);
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 36af4fea38e73..c103034372fd7 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -829,9 +829,11 @@ a2noc: interconnect@583000 {
+ 			compatible = "qcom,msm8996-a2noc";
+ 			reg = <0x00583000 0x7000>;
+ 			#interconnect-cells = <1>;
+-			clock-names = "bus", "bus_a";
++			clock-names = "bus", "bus_a", "aggre2_ufs_axi", "ufs_axi";
+ 			clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
+-				 <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
++				 <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>,
++				 <&gcc GCC_AGGRE2_UFS_AXI_CLK>,
++				 <&gcc GCC_UFS_AXI_CLK>;
+ 		};
  
- 	return 0;
- }
+ 		mnoc: interconnect@5a4000 {
 -- 
 2.39.2
 
