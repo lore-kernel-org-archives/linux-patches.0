@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60C1BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:34:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C680C433EF;
-	Tue,  7 Mar 2023 17:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CE0BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:34:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3545DC433D2;
+	Tue,  7 Mar 2023 17:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210467;
-	bh=C8Rv+P01xgWKOI0r79vc2rx+4roCz6LOsJh/keIkZak=;
+	s=korg; t=1678210470;
+	bh=73/jf5tayVahqmoE7BYGHFk8bN8s9t7hPJj2tipDwgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vEFVW98cUhU4h0Pb/cyhVFJ9bzohPFHJ2yK7Ei4Hm1wQN6m02CRHqzr8LjyyZebFw
-	 yBUEg6Z+v/xmHHFbGcyrsxkBJ0oCMliJOyHyOLkLNBYU/knUHTkYIPry/8OX+QkDAV
-	 OD7FuNEQHzOpgUvJcB5F8jdODb7FT9htP738ds28=
+	b=ffhXQrb3RXAZOLk8X3PaV8hYIln3LZptk8tvB95x0P2IK581D44jaJfZj0Cun+fYb
+	 ZHC4L6hij3hJB/PvDStZPlbk2q/eC8kaYpuYZzPJIU5GI1C/uNWz1MgBuCmDdkppwD
+	 RigOlkoV5+qyX+Bv+1iQ5RqNgtSt84lj0KZgWJjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>,
 	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 6.2 0550/1001] driver core: fw_devlink: Add DL_FLAG_CYCLE support to device links
-Date: Tue,  7 Mar 2023 17:55:22 +0100
-Message-Id: <20230307170045.335749825@linuxfoundation.org>
+Subject: [PATCH 6.2 0551/1001] driver core: fw_devlink: Dont purge child fwnodes consumer links
+Date: Tue,  7 Mar 2023 17:55:23 +0100
+Message-Id: <20230307170045.379172082@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -41,158 +41,195 @@ Content-Transfer-Encoding: 8bit
 
 From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit 67cad5c67019c38126b749621665b6723d3ae7e6 ]
+[ Upstream commit 3a2dbc510c437ca392516b0105bad8e7970e6614 ]
 
-fw_devlink uses DL_FLAG_SYNC_STATE_ONLY device link flag for two
-purposes:
+When a device X is bound successfully to a driver, if it has a child
+firmware node Y that doesn't have a struct device created by then, we
+delete fwnode links where the child firmware node Y is the supplier. We
+did this to avoid blocking the consumers of the child firmware node Y
+from deferring probe indefinitely.
 
-1. To allow a parent device to proxy its child device's dependency on a
-   supplier so that the supplier doesn't get its sync_state() callback
-   before the child device/consumer can be added and probed. In this
-   usage scenario, we need to ignore cycles for ensure correctness of
-   sync_state() callbacks.
+While that a step in the right direction, it's better to make the
+consumers of the child firmware node Y to be consumers of the device X
+because device X is probably implementing whatever functionality is
+represented by child firmware node Y. By doing this, we capture the
+device dependencies more accurately and ensure better
+probe/suspend/resume ordering.
 
-2. When there are dependency cycles in firmware, we don't know which of
-   those dependencies are valid. So, we have to ignore them all wrt
-   probe ordering while still making sure the sync_state() callbacks
-   come correctly.
-
-However, when detecting dependency cycles, there can be multiple
-dependency cycles between two devices that we need to detect. For
-example:
-
-A -> B -> A and A -> C -> B -> A.
-
-To detect multiple cycles correct, we need to be able to differentiate
-DL_FLAG_SYNC_STATE_ONLY device links used for (1) vs (2) above.
-
-To allow this differentiation, add a DL_FLAG_CYCLE that can be use to
-mark use case (2). We can then use the DL_FLAG_CYCLE to decide which
-DL_FLAG_SYNC_STATE_ONLY device links to follow when looking for
-dependency cycles.
-
-Fixes: 2de9d8e0d2fe ("driver core: fw_devlink: Improve handling of cyclic dependencies")
 Signed-off-by: Saravana Kannan <saravanak@google.com>
 Tested-by: Colin Foster <colin.foster@in-advantage.com>
 Tested-by: Sudeep Holla <sudeep.holla@arm.com>
 Tested-by: Douglas Anderson <dianders@chromium.org>
 Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
-Link: https://lore.kernel.org/r/20230207014207.1678715-6-saravanak@google.com
+Link: https://lore.kernel.org/r/20230207014207.1678715-2-saravanak@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 6a6dfdf8b3ff ("driver core: fw_devlink: Allow marking a fwnode link as being part of a cycle")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c    | 28 ++++++++++++++++++----------
- include/linux/device.h |  1 +
- 2 files changed, 19 insertions(+), 10 deletions(-)
+ drivers/base/core.c | 97 ++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 79 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 9fccf7b4e7ea3..609d1b04ee75a 100644
+index 609d1b04ee75a..b29c483e9ca7b 100644
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -272,6 +272,12 @@ static bool device_is_ancestor(struct device *dev, struct device *target)
- 	return false;
- }
+@@ -54,11 +54,12 @@ static LIST_HEAD(deferred_sync);
+ static unsigned int defer_sync_state_count = 1;
+ static DEFINE_MUTEX(fwnode_link_lock);
+ static bool fw_devlink_is_permissive(void);
++static void __fw_devlink_link_to_consumers(struct device *dev);
+ static bool fw_devlink_drv_reg_done;
+ static bool fw_devlink_best_effort;
  
-+static inline bool device_link_flag_is_sync_state_only(u32 flags)
-+{
-+	return (flags & ~(DL_FLAG_INFERRED | DL_FLAG_CYCLE)) ==
-+		(DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED);
+ /**
+- * fwnode_link_add - Create a link between two fwnode_handles.
++ * __fwnode_link_add - Create a link between two fwnode_handles.
+  * @con: Consumer end of the link.
+  * @sup: Supplier end of the link.
+  *
+@@ -74,22 +75,18 @@ static bool fw_devlink_best_effort;
+  * Attempts to create duplicate links between the same pair of fwnode handles
+  * are ignored and there is no reference counting.
+  */
+-int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup)
++static int __fwnode_link_add(struct fwnode_handle *con,
++			     struct fwnode_handle *sup)
+ {
+ 	struct fwnode_link *link;
+-	int ret = 0;
+-
+-	mutex_lock(&fwnode_link_lock);
+ 
+ 	list_for_each_entry(link, &sup->consumers, s_hook)
+ 		if (link->consumer == con)
+-			goto out;
++			return 0;
+ 
+ 	link = kzalloc(sizeof(*link), GFP_KERNEL);
+-	if (!link) {
+-		ret = -ENOMEM;
+-		goto out;
+-	}
++	if (!link)
++		return -ENOMEM;
+ 
+ 	link->supplier = sup;
+ 	INIT_LIST_HEAD(&link->s_hook);
+@@ -100,9 +97,17 @@ int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup)
+ 	list_add(&link->c_hook, &con->suppliers);
+ 	pr_debug("%pfwP Linked as a fwnode consumer to %pfwP\n",
+ 		 con, sup);
+-out:
+-	mutex_unlock(&fwnode_link_lock);
+ 
++	return 0;
 +}
 +
- /**
-  * device_is_dependent - Check if one device depends on another one
-  * @dev: Device to check dependencies for.
-@@ -298,8 +304,7 @@ int device_is_dependent(struct device *dev, void *target)
- 		return ret;
- 
- 	list_for_each_entry(link, &dev->links.consumers, s_node) {
--		if ((link->flags & ~DL_FLAG_INFERRED) ==
--		    (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
-+		if (device_link_flag_is_sync_state_only(link->flags))
- 			continue;
- 
- 		if (link->consumer == target)
-@@ -372,8 +377,7 @@ static int device_reorder_to_tail(struct device *dev, void *not_used)
- 
- 	device_for_each_child(dev, NULL, device_reorder_to_tail);
- 	list_for_each_entry(link, &dev->links.consumers, s_node) {
--		if ((link->flags & ~DL_FLAG_INFERRED) ==
--		    (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
-+		if (device_link_flag_is_sync_state_only(link->flags))
- 			continue;
- 		device_reorder_to_tail(link->consumer, NULL);
- 	}
-@@ -634,7 +638,8 @@ postcore_initcall(devlink_class_init);
- 			       DL_FLAG_AUTOREMOVE_SUPPLIER | \
- 			       DL_FLAG_AUTOPROBE_CONSUMER  | \
- 			       DL_FLAG_SYNC_STATE_ONLY | \
--			       DL_FLAG_INFERRED)
-+			       DL_FLAG_INFERRED | \
-+			       DL_FLAG_CYCLE)
- 
- #define DL_ADD_VALID_FLAGS (DL_MANAGED_LINK_FLAGS | DL_FLAG_STATELESS | \
- 			    DL_FLAG_PM_RUNTIME | DL_FLAG_RPM_ACTIVE)
-@@ -703,8 +708,6 @@ struct device_link *device_link_add(struct device *consumer,
- 	if (!consumer || !supplier || consumer == supplier ||
- 	    flags & ~DL_ADD_VALID_FLAGS ||
- 	    (flags & DL_FLAG_STATELESS && flags & DL_MANAGED_LINK_FLAGS) ||
--	    (flags & DL_FLAG_SYNC_STATE_ONLY &&
--	     (flags & ~DL_FLAG_INFERRED) != DL_FLAG_SYNC_STATE_ONLY) ||
- 	    (flags & DL_FLAG_AUTOPROBE_CONSUMER &&
- 	     flags & (DL_FLAG_AUTOREMOVE_CONSUMER |
- 		      DL_FLAG_AUTOREMOVE_SUPPLIER)))
-@@ -720,6 +723,10 @@ struct device_link *device_link_add(struct device *consumer,
- 	if (!(flags & DL_FLAG_STATELESS))
- 		flags |= DL_FLAG_MANAGED;
- 
-+	if (flags & DL_FLAG_SYNC_STATE_ONLY &&
-+	    !device_link_flag_is_sync_state_only(flags))
-+		return NULL;
++int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup)
++{
++	int ret;
 +
- 	device_links_write_lock();
- 	device_pm_lock();
- 
-@@ -1672,7 +1679,7 @@ static void fw_devlink_relax_link(struct device_link *link)
- 	if (!(link->flags & DL_FLAG_INFERRED))
- 		return;
- 
--	if (link->flags == (DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE))
-+	if (device_link_flag_is_sync_state_only(link->flags))
- 		return;
- 
- 	pm_runtime_drop_link(link);
-@@ -1796,8 +1803,8 @@ static int fw_devlink_relax_cycle(struct device *con, void *sup)
- 		return ret;
- 
- 	list_for_each_entry(link, &con->links.consumers, s_node) {
--		if ((link->flags & ~DL_FLAG_INFERRED) ==
--		    (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
-+		if (!(link->flags & DL_FLAG_CYCLE) &&
-+		    device_link_flag_is_sync_state_only(link->flags))
- 			continue;
- 
- 		if (!fw_devlink_relax_cycle(link->consumer, sup))
-@@ -1806,6 +1813,7 @@ static int fw_devlink_relax_cycle(struct device *con, void *sup)
- 		ret = 1;
- 
- 		fw_devlink_relax_link(link);
-+		link->flags |= DL_FLAG_CYCLE;
- 	}
++	mutex_lock(&fwnode_link_lock);
++	ret = __fwnode_link_add(con, sup);
++	mutex_unlock(&fwnode_link_lock);
  	return ret;
  }
-diff --git a/include/linux/device.h b/include/linux/device.h
-index 44e3acae7b36e..f4d20655d2d7e 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -328,6 +328,7 @@ enum device_link_state {
- #define DL_FLAG_MANAGED			BIT(6)
- #define DL_FLAG_SYNC_STATE_ONLY		BIT(7)
- #define DL_FLAG_INFERRED		BIT(8)
-+#define DL_FLAG_CYCLE			BIT(9)
  
- /**
-  * enum dl_dev_state - Device driver presence tracking information.
+@@ -181,6 +186,51 @@ void fw_devlink_purge_absent_suppliers(struct fwnode_handle *fwnode)
+ }
+ EXPORT_SYMBOL_GPL(fw_devlink_purge_absent_suppliers);
+ 
++/**
++ * __fwnode_links_move_consumers - Move consumer from @from to @to fwnode_handle
++ * @from: move consumers away from this fwnode
++ * @to: move consumers to this fwnode
++ *
++ * Move all consumer links from @from fwnode to @to fwnode.
++ */
++static void __fwnode_links_move_consumers(struct fwnode_handle *from,
++					  struct fwnode_handle *to)
++{
++	struct fwnode_link *link, *tmp;
++
++	list_for_each_entry_safe(link, tmp, &from->consumers, s_hook) {
++		__fwnode_link_add(link->consumer, to);
++		__fwnode_link_del(link);
++	}
++}
++
++/**
++ * __fw_devlink_pickup_dangling_consumers - Pick up dangling consumers
++ * @fwnode: fwnode from which to pick up dangling consumers
++ * @new_sup: fwnode of new supplier
++ *
++ * If the @fwnode has a corresponding struct device and the device supports
++ * probing (that is, added to a bus), then we want to let fw_devlink create
++ * MANAGED device links to this device, so leave @fwnode and its descendant's
++ * fwnode links alone.
++ *
++ * Otherwise, move its consumers to the new supplier @new_sup.
++ */
++static void __fw_devlink_pickup_dangling_consumers(struct fwnode_handle *fwnode,
++						   struct fwnode_handle *new_sup)
++{
++	struct fwnode_handle *child;
++
++	if (fwnode->dev && fwnode->dev->bus)
++		return;
++
++	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
++	__fwnode_links_move_consumers(fwnode, new_sup);
++
++	fwnode_for_each_available_child_node(fwnode, child)
++		__fw_devlink_pickup_dangling_consumers(child, new_sup);
++}
++
+ #ifdef CONFIG_SRCU
+ static DEFINE_MUTEX(device_links_lock);
+ DEFINE_STATIC_SRCU(device_links_srcu);
+@@ -1274,16 +1324,23 @@ void device_links_driver_bound(struct device *dev)
+ 	 * them. So, fw_devlink no longer needs to create device links to any
+ 	 * of the device's suppliers.
+ 	 *
+-	 * Also, if a child firmware node of this bound device is not added as
+-	 * a device by now, assume it is never going to be added and make sure
+-	 * other devices don't defer probe indefinitely by waiting for such a
+-	 * child device.
++	 * Also, if a child firmware node of this bound device is not added as a
++	 * device by now, assume it is never going to be added. Make this bound
++	 * device the fallback supplier to the dangling consumers of the child
++	 * firmware node because this bound device is probably implementing the
++	 * child firmware node functionality and we don't want the dangling
++	 * consumers to defer probe indefinitely waiting for a device for the
++	 * child firmware node.
+ 	 */
+ 	if (dev->fwnode && dev->fwnode->dev == dev) {
+ 		struct fwnode_handle *child;
+ 		fwnode_links_purge_suppliers(dev->fwnode);
++		mutex_lock(&fwnode_link_lock);
+ 		fwnode_for_each_available_child_node(dev->fwnode, child)
+-			fw_devlink_purge_absent_suppliers(child);
++			__fw_devlink_pickup_dangling_consumers(child,
++							       dev->fwnode);
++		__fw_devlink_link_to_consumers(dev);
++		mutex_unlock(&fwnode_link_lock);
+ 	}
+ 	device_remove_file(dev, &dev_attr_waiting_for_supplier);
+ 
+@@ -1863,7 +1920,11 @@ static int fw_devlink_create_devlink(struct device *con,
+ 	    fwnode_is_ancestor_of(sup_handle, con->fwnode))
+ 		return -EINVAL;
+ 
+-	sup_dev = get_dev_from_fwnode(sup_handle);
++	if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
++		sup_dev = fwnode_get_next_parent_dev(sup_handle);
++	else
++		sup_dev = get_dev_from_fwnode(sup_handle);
++
+ 	if (sup_dev) {
+ 		/*
+ 		 * If it's one of those drivers that don't actually bind to
 -- 
 2.39.2
 
