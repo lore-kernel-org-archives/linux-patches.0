@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3AEBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:03:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4134C433D2;
-	Tue,  7 Mar 2023 18:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE88BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:03:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F75C433D2;
+	Tue,  7 Mar 2023 18:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212191;
-	bh=s11hswL2oJ7Z+VbMcKZPSGudY23IvsWh97b9d22EjRs=;
+	s=korg; t=1678212194;
+	bh=uqI6aRolVZjlzdegOLfEgpqZ5KEAX980zGV5Qb490Og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ChQVgS67ok+DeXdwZlc8gwd92GN7vNzPHCFEthCqsewuXi3MPy4E6uFCBQw74wsFI
-	 7gGW3J+jEGyczqLKy+rmq55siIujyYU0Ta4YRewdwzX+p5dPGcGBEjNAwY6h4/BU1t
-	 Z0y0k21atGU2QmiLk6jLvBXPFd7Eg6OTXMa6Ul2w=
+	b=HDhLlHzrnwmgpXuD89orkd2rf/F9/L7lXn2QKJjji5uFZ3hGiSVHcGz/lWFA/T7wD
+	 +zFCB2Gt6a2OZ/N4UYOyulf8vs6U7IZ60ZTNulxwa6NvZZAkai+csLI9xtluAwkkBg
+	 6/zZHwNM+JNHmRkyj+CemdXe0i8I+EbkWQot5yjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Jia Zhu <zhujia.zj@bytedance.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/885] erofs: relinquish volume with mutex held
-Date: Tue,  7 Mar 2023 17:50:40 +0100
-Message-Id: <20230307170006.489732629@linuxfoundation.org>
+Subject: [PATCH 6.1 080/885] arm64: dts: mediatek: mt7622: Add missing pwm-cells to pwm node
+Date: Tue,  7 Mar 2023 17:50:14 +0100
+Message-Id: <20230307170005.279658604@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,38 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jingbo Xu <jefflexu@linux.alibaba.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 7032809a44d752b9e2275833787e0aa88a7540af ]
+[ Upstream commit 22925af785fa3470efdf566339616d801119d348 ]
 
-Relinquish fscache volume with mutex held.  Otherwise if a new domain is
-registered when the old domain with the same name gets removed from the
-list but not relinquished yet, fscache may complain the collision.
+Specify #pwm-cells on pwm@11006000 to make it actually usable.
 
-Fixes: 8b7adf1dff3d ("erofs: introduce fscache-based domain")
-Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Reviewed-by: Jia Zhu <zhujia.zj@bytedance.com>
-Link: https://lore.kernel.org/r/20230209063913.46341-4-jefflexu@linux.alibaba.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: ae457b7679c4 ("arm64: dts: mt7622: add SoC and peripheral related device nodes")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221128112028.58021-2-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/fscache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt7622.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/erofs/fscache.c b/fs/erofs/fscache.c
-index b04f93bc062a8..076cf8a149ef3 100644
---- a/fs/erofs/fscache.c
-+++ b/fs/erofs/fscache.c
-@@ -398,8 +398,8 @@ static void erofs_fscache_domain_put(struct erofs_domain *domain)
- 			kern_unmount(erofs_pseudo_mnt);
- 			erofs_pseudo_mnt = NULL;
- 		}
--		mutex_unlock(&erofs_domain_list_lock);
- 		fscache_relinquish_volume(domain->volume, NULL, false);
-+		mutex_unlock(&erofs_domain_list_lock);
- 		kfree(domain->domain_id);
- 		kfree(domain);
- 		return;
+diff --git a/arch/arm64/boot/dts/mediatek/mt7622.dtsi b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
+index 146e18b5b1f46..7bb316922a3a9 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7622.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
+@@ -435,6 +435,7 @@ uart3: serial@11005000 {
+ 	pwm: pwm@11006000 {
+ 		compatible = "mediatek,mt7622-pwm";
+ 		reg = <0 0x11006000 0 0x1000>;
++		#pwm-cells = <2>;
+ 		interrupts = <GIC_SPI 77 IRQ_TYPE_LEVEL_LOW>;
+ 		clocks = <&topckgen CLK_TOP_PWM_SEL>,
+ 			 <&pericfg CLK_PERI_PWM_PD>,
 -- 
 2.39.2
 
