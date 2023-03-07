@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C418BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E74C433EF;
-	Tue,  7 Mar 2023 17:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B487FBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE2BC433D2;
+	Tue,  7 Mar 2023 17:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211129;
-	bh=9OWi7NA5eMncjP13xlNe+5vhe34NkMWh01NIgNVOiOg=;
+	s=korg; t=1678211132;
+	bh=t+4hWRgPBkMiuxmmLtp2VfPE3wCIQ9FXt6SPS5DfwPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LuKN5n5y0/N9l3QIihe5rvuIpld8xvPLGQzx0HmTSS3BgWSB+RBNDypYfH0owccTk
-	 fjtSpkjpGHrvEE2/GDVuNnajIUgU2zdLeKNgK0n6cz9BTeU2WhNGiUtIVGHcIhc/Po
-	 pALvEWhwo6LBjNfrmWqUNhZTHAoZ8Tc/yvHIGK14=
+	b=l86/2DIMcqLOktg6/bTF96blXvhj3A9PDhbuUNkINackw3xtl8vqtzBmD38rvaZJB
+	 uwAZpJGwC9ZxSadyyCUbMdLTcyGcfk9AyumGvlAAPy7K92gJyXenYvYgDb4m+Klyy5
+	 nMMqfwKrq3PKS898wc5/v4XmQ1BGhmM759tX9Tzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bastien Nocera <hadess@hadess.net>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Nevenko Stupar <Nevenko.Stupar@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Vladimir Stempen <vladimir.stempen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0731/1001] HID: logitech-hidpp: Dont restart communication if not necessary
-Date: Tue,  7 Mar 2023 17:58:23 +0100
-Message-Id: <20230307170053.416260141@linuxfoundation.org>
+Subject: [PATCH 6.2 0722/1001] drm/amd/display: fix FCLK pstate change underflow
+Date: Tue,  7 Mar 2023 17:58:14 +0100
+Message-Id: <20230307170053.021347694@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,94 +38,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bastien Nocera <hadess@hadess.net>
+From: Vladimir Stempen <vladimir.stempen@amd.com>
 
-[ Upstream commit 498ba20690357691103de0f766960355247c78be ]
+[ Upstream commit 972243f973eb0821084e5833d5f7f4ed025f42da ]
 
-Don't stop and restart communication with the device unless we need to
-modify the connect flags used because of a device quirk.
+[Why]
+Currently we set FCLK p-state change
+watermark calculated based on dummy
+p-state latency when UCLK p-state is
+not supported
 
-Signed-off-by: Bastien Nocera <hadess@hadess.net>
-Link: https://lore.kernel.org/r/20230125121723.3122-1-hadess@hadess.net
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+[How]
+Calculate FCLK p-state change watermark
+based on on FCLK pstate change latency
+in case UCLK p-state is not supported
+
+Reviewed-by: Nevenko Stupar <Nevenko.Stupar@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Vladimir Stempen <vladimir.stempen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 0c024ec1452cd..5efc591a02a03 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4102,6 +4102,7 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	bool connected;
- 	unsigned int connect_mask = HID_CONNECT_DEFAULT;
- 	struct hidpp_ff_private_data data;
-+	bool will_restart = false;
- 
- 	/* report_fixup needs drvdata to be set before we call hid_parse */
- 	hidpp = devm_kzalloc(&hdev->dev, sizeof(*hidpp), GFP_KERNEL);
-@@ -4157,6 +4158,10 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 			return ret;
- 	}
- 
-+	if (hidpp->quirks & HIDPP_QUIRK_DELAYED_INIT ||
-+	    hidpp->quirks & HIDPP_QUIRK_UNIFYING)
-+		will_restart = true;
-+
- 	INIT_WORK(&hidpp->work, delayed_work_cb);
- 	mutex_init(&hidpp->send_mutex);
- 	init_waitqueue_head(&hidpp->wait);
-@@ -4171,7 +4176,7 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	 * Plain USB connections need to actually call start and open
- 	 * on the transport driver to allow incoming data.
- 	 */
--	ret = hid_hw_start(hdev, 0);
-+	ret = hid_hw_start(hdev, will_restart ? 0 : connect_mask);
- 	if (ret) {
- 		hid_err(hdev, "hw start failed\n");
- 		goto hid_hw_start_fail;
-@@ -4208,6 +4213,7 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 			hidpp->wireless_feature_index = 0;
- 		else if (ret)
- 			goto hid_hw_init_fail;
-+		ret = 0;
- 	}
- 
- 	if (connected && (hidpp->quirks & HIDPP_QUIRK_CLASS_WTP)) {
-@@ -4222,19 +4228,21 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 
- 	hidpp_connect_event(hidpp);
- 
--	/* Reset the HID node state */
--	hid_device_io_stop(hdev);
--	hid_hw_close(hdev);
--	hid_hw_stop(hdev);
-+	if (will_restart) {
-+		/* Reset the HID node state */
-+		hid_device_io_stop(hdev);
-+		hid_hw_close(hdev);
-+		hid_hw_stop(hdev);
- 
--	if (hidpp->quirks & HIDPP_QUIRK_NO_HIDINPUT)
--		connect_mask &= ~HID_CONNECT_HIDINPUT;
-+		if (hidpp->quirks & HIDPP_QUIRK_NO_HIDINPUT)
-+			connect_mask &= ~HID_CONNECT_HIDINPUT;
- 
--	/* Now export the actual inputs and hidraw nodes to the world */
--	ret = hid_hw_start(hdev, connect_mask);
--	if (ret) {
--		hid_err(hdev, "%s:hid_hw_start returned error\n", __func__);
--		goto hid_hw_start_fail;
-+		/* Now export the actual inputs and hidraw nodes to the world */
-+		ret = hid_hw_start(hdev, connect_mask);
-+		if (ret) {
-+			hid_err(hdev, "%s:hid_hw_start returned error\n", __func__);
-+			goto hid_hw_start_fail;
-+		}
- 	}
- 
- 	if (hidpp->quirks & HIDPP_QUIRK_CLASS_G920) {
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index f94abd124021e..8450f59c26186 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -2038,6 +2038,10 @@ void dcn32_calculate_wm_and_dlg_fpu(struct dc *dc, struct dc_state *context,
+ 		 */
+ 		context->bw_ctx.bw.dcn.watermarks.a = context->bw_ctx.bw.dcn.watermarks.c;
+ 		context->bw_ctx.bw.dcn.watermarks.a.cstate_pstate.pstate_change_ns = 0;
++		/* Calculate FCLK p-state change watermark based on FCLK pstate change latency in case
++		 * UCLK p-state is not supported, to avoid underflow in case FCLK pstate is supported
++		 */
++		context->bw_ctx.bw.dcn.watermarks.a.cstate_pstate.fclk_pstate_change_ns = get_fclk_watermark(&context->bw_ctx.dml, pipes, pipe_cnt) * 1000;
+ 	} else {
+ 		/* Set A:
+ 		 * All clocks min.
 -- 
 2.39.2
 
