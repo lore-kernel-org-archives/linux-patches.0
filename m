@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B714BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:21:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6574C433EF;
-	Tue,  7 Mar 2023 17:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF0CBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:21:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C727AC433EF;
+	Tue,  7 Mar 2023 17:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209698;
-	bh=ZhR24g26aXXEXnsxxf6/w5Ej8tWNPt5zoAXsd/nSJfw=;
+	s=korg; t=1678209701;
+	bh=OZdwRaIXCowRIk33gj614RkTEgt+m/8idpbUsFriHok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TzCN2cuqehxfdL3uyNY2O61LxdxXBinEV6sYmTNYO5YbTxYnze3Y+R69TZJWXZ7Hg
-	 TUqFPMqKhNQFwW/X8tfeeRpgmsT9mLyMf+ddnkGh1fgYZEGh3G6ctlbDas5jVSXeOj
-	 YEWWaoRDG+TEfyWHkNwREmpIQ/IKSuPiOoPbafOU=
+	b=YO7a94jsHtcYtHA9DukVLnfOGoSldbZvl7//HaG3xrLG2v31Zp+rLHRVlmD7h0GuX
+	 /7IKFskCdIgEEuQ1VTRZjap1LPsL4gBxLJu30YzMlLTst25aKdNoDJm5C7xvKdWHTK
+	 oETVzFzzppw+0fMdmpqwIiLvLkr3CydwQUY4YnhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Lobakin <alexandr.lobakin@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0303/1001] wifi: mac80211: fix off-by-one link setting
-Date: Tue,  7 Mar 2023 17:51:15 +0100
-Message-Id: <20230307170034.715947692@linuxfoundation.org>
+Subject: [PATCH 6.2 0304/1001] tools/lib/thermal: Fix thermal_sampling_exit()
+Date: Tue,  7 Mar 2023 17:51:16 +0100
+Message-Id: <20230307170034.760724162@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,36 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit cf08e29db760b144bde51e2444f3430c75763e26 ]
+[ Upstream commit a29cbd76aaf63f5493e962aa2fbaadcdc4615143 ]
 
-The convention for find_first_bit() is 0-based, while ffs()
-is 1-based, so this is now off-by-one. I cannot reproduce the
-gcc-9 problem, but since the -1 is now removed, I'm hoping it
-will still avoid the original issue.
+thermal_sampling_init() suscribes to THERMAL_GENL_SAMPLING_GROUP_NAME group
+so thermal_sampling_exit() should unsubscribe from the same group.
 
-Reported-by: Alexander Lobakin <alexandr.lobakin@intel.com>
-Fixes: 1d8d4af43474 ("wifi: mac80211: avoid u32_encode_bits() warning")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 47c4b0de080a ("tools/lib/thermal: Add a thermal library")
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20230202102812.453357-1-vincent.guittot@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 2 +-
+ tools/lib/thermal/sampling.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 118648af979c7..7699fb4106701 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -4434,7 +4434,7 @@ static void ieee80211_mlo_multicast_tx(struct net_device *dev,
- 	u32 ctrl_flags = IEEE80211_TX_CTRL_MCAST_MLO_FIRST_TX;
+diff --git a/tools/lib/thermal/sampling.c b/tools/lib/thermal/sampling.c
+index ee818f4e9654d..70577423a9f0c 100644
+--- a/tools/lib/thermal/sampling.c
++++ b/tools/lib/thermal/sampling.c
+@@ -54,7 +54,7 @@ int thermal_sampling_fd(struct thermal_handler *th)
+ thermal_error_t thermal_sampling_exit(struct thermal_handler *th)
+ {
+ 	if (nl_unsubscribe_thermal(th->sk_sampling, th->cb_sampling,
+-				   THERMAL_GENL_EVENT_GROUP_NAME))
++				   THERMAL_GENL_SAMPLING_GROUP_NAME))
+ 		return THERMAL_ERROR;
  
- 	if (hweight16(links) == 1) {
--		ctrl_flags |= u32_encode_bits(find_first_bit(&links, 16) - 1,
-+		ctrl_flags |= u32_encode_bits(__ffs(links),
- 					      IEEE80211_TX_CTRL_MLO_LINK);
- 
- 		__ieee80211_subif_start_xmit(skb, sdata->dev, 0, ctrl_flags,
+ 	nl_thermal_disconnect(th->sk_sampling, th->cb_sampling);
 -- 
 2.39.2
 
