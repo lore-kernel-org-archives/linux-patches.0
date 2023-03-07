@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8735DBA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:10:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05110C433D2;
-	Tue,  7 Mar 2023 19:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9847ABA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:10:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF72AC433D2;
+	Tue,  7 Mar 2023 19:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216218;
-	bh=TX69eYVPL/l2Cr7xqU38S5xKf1yGcR63b2Li+V9I49E=;
+	s=korg; t=1678216221;
+	bh=RXPKakEOhR6VtTF/YgobRKHOU/nTQ9TSFfq6mEMKwuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X3Vy3Mc86zWlvPJOn4hUO255RLxZ6nq1D5fRB0/6wDI6pOdMz+xSBhkUhIWwXTfak
-	 wnWbrkvLmoiW2aWStGAVbQl9ZfYb9AACpk0NxQMs7NE31K8t3nuD6Yrai7WHScgsTs
-	 1RTfB3VWctZ2Dzz40Zw2aLeUybiziTR8YmcEI5FY=
+	b=lA+p3wFVdoGhLHyO85bgs9jk35COilQz3LAzlywjW4jhGGzfAEBKBUtLOSHX6Qlmg
+	 rM5neSOLFDwkBdYtoLpdlJEYlsnMHPu0hjPMI8oAqcHwTOyA9kT1lkrevoeUaTj9zO
+	 RrUtd4TTzdHqH6VaOUAZfk/e8AhgYLUXd+KxZhMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.15 514/567] dm flakey: fix a bug with 32-bit highmem systems
-Date: Tue,  7 Mar 2023 18:04:10 +0100
-Message-Id: <20230307165928.245824274@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.15 515/567] ARM: dts: qcom: sdx55: Add Qcom SMMU-500 as the fallback for IOMMU node
+Date: Tue,  7 Mar 2023 18:04:11 +0100
+Message-Id: <20230307165928.289051918@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,34 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 8eb29c4fbf9661e6bd4dd86197a37ffe0ecc9d50 upstream.
+commit af4ab377543853b690cc85b4c46cf976ab560dc2 upstream.
 
-The function page_address does not work with 32-bit systems with high
-memory. Use bvec_kmap_local/kunmap_local instead.
+SDX55 uses the Qcom version of the SMMU-500 IP. So use "qcom,smmu-500"
+compatible as the fallback to the SoC specific compatible.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.12
+Fixes: a2bdfdfba2af ("ARM: dts: qcom: sdx55: Enable ARM SMMU")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230123131931.263024-3-manivannan.sadhasivam@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-flakey.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/qcom-sdx55.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-flakey.c
-+++ b/drivers/md/dm-flakey.c
-@@ -305,8 +305,9 @@ static void corrupt_bio_data(struct bio
- 			struct page *page = bio_iter_page(bio, iter);
- 			if (unlikely(page == ZERO_PAGE(0)))
- 				break;
--			segment = (page_address(page) + bio_iter_offset(bio, iter));
-+			segment = bvec_kmap_local(&bvec);
- 			segment[corrupt_bio_byte] = fc->corrupt_bio_value;
-+			kunmap_local(segment);
- 			DMDEBUG("Corrupting data bio=%p by writing %u to byte %u "
- 				"(rw=%c bi_opf=%u bi_sector=%llu size=%u)\n",
- 				bio, fc->corrupt_bio_value, fc->corrupt_bio_byte,
+--- a/arch/arm/boot/dts/qcom-sdx55.dtsi
++++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
+@@ -502,7 +502,7 @@
+ 		};
+ 
+ 		apps_smmu: iommu@15000000 {
+-			compatible = "qcom,sdx55-smmu-500", "arm,mmu-500";
++			compatible = "qcom,sdx55-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+ 			reg = <0x15000000 0x20000>;
+ 			#iommu-cells = <2>;
+ 			#global-interrupts = <1>;
 
 
