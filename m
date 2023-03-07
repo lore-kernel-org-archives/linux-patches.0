@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E80CBA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:07:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D5CC433D2;
-	Tue,  7 Mar 2023 19:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA0EBA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:07:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F35C433EF;
+	Tue,  7 Mar 2023 19:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216058;
-	bh=ZONAirZ6zfNf1iTb0FxKJx91w3mgVP51sUbKEawi4b4=;
+	s=korg; t=1678216061;
+	bh=MvdYw3jbdfjJE1iBHegemyYKVmUMm17bIwoW/vTva/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f+qe44Hcx2CwFzWv0OzHyp+bOnmsHzld4+p60PNr1ffuTrcKd/41DsV5eemitn5px
-	 a8y1z7LJNsWVgVHr3QCRg6f76x/G61LM+OKKD2Ok+OV9fuSsk818r2ALjzOTLiUia0
-	 BX5ClNkwalo2A1YM9zxhNcxTZdRGIYoWdbFw/MVs=
+	b=Jtz+EgGgCFqmC5FwpqGER1+midUaiQGNdmLKE7G6YnHFfafb9hdfeFGqq8vzz6qAU
+	 YR/ttES8wQH33Sj1UvtR8sgftMzFR1YhdjN1eHm8utT+DC3wRUdIezTEoVUlRc7Efa
+	 T0KCU5cnIrYqNqcOLZKrpZKH5Uu9OkSyeJ3O+Ea4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 5.15 434/567] s390/extmem: return correct segment type in __segment_load()
-Date: Tue,  7 Mar 2023 18:02:50 +0100
-Message-Id: <20230307165924.721618457@linuxfoundation.org>
+	syzbot+0937935b993956ba28ab@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.15 461/567] udf: Do not update file length for failed writes to inline files
+Date: Tue,  7 Mar 2023 18:03:17 +0100
+Message-Id: <20230307165925.850081224@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -34,76 +34,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+From: Jan Kara <jack@suse.cz>
 
-commit 8c42dd78df148c90e48efff204cce38743906a79 upstream.
+commit 256fe4162f8b5a1625b8603ca5f7ff79725bfb47 upstream.
 
-Commit f05f62d04271f ("s390/vmem: get rid of memory segment list")
-reshuffled the call to vmem_add_mapping() in __segment_load(), which now
-overwrites rc after it was set to contain the segment type code.
+When write to inline file fails (or happens only partly), we still
+updated length of inline data as if the whole write succeeded. Fix the
+update of length of inline data to happen only if the write succeeds.
 
-As result, __segment_load() will now always return 0 on success, which
-corresponds to the segment type code SEG_TYPE_SW, i.e. a writeable
-segment. This results in a kernel crash when loading a read-only segment
-as dcssblk block device, and trying to write to it.
-
-Instead of reshuffling code again, make sure to return the segment type
-on success, and also describe this rather delicate and unexpected logic
-in the function comment. Also initialize new segtype variable with
-invalid value, to prevent possible future confusion.
-
-Fixes: f05f62d04271 ("s390/vmem: get rid of memory segment list")
-Cc: <stable@vger.kernel.org> # 5.9+
-Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reported-by: syzbot+0937935b993956ba28ab@syzkaller.appspotmail.com
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/mm/extmem.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/udf/file.c |   26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
---- a/arch/s390/mm/extmem.c
-+++ b/arch/s390/mm/extmem.c
-@@ -289,15 +289,17 @@ segment_overlaps_others (struct dcss_seg
+--- a/fs/udf/file.c
++++ b/fs/udf/file.c
+@@ -148,26 +148,24 @@ static ssize_t udf_file_write_iter(struc
+ 		goto out;
  
- /*
-  * real segment loading function, called from segment_load
-+ * Must return either an error code < 0, or the segment type code >= 0
-  */
- static int
- __segment_load (char *name, int do_nonshared, unsigned long *addr, unsigned long *end)
- {
- 	unsigned long start_addr, end_addr, dummy;
- 	struct dcss_segment *seg;
--	int rc, diag_cc;
-+	int rc, diag_cc, segtype;
+ 	down_write(&iinfo->i_data_sem);
+-	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB) {
+-		loff_t end = iocb->ki_pos + iov_iter_count(from);
+-
+-		if (inode->i_sb->s_blocksize <
+-				(udf_file_entry_alloc_offset(inode) + end)) {
+-			err = udf_expand_file_adinicb(inode);
+-			if (err) {
+-				inode_unlock(inode);
+-				udf_debug("udf_expand_adinicb: err=%d\n", err);
+-				return err;
+-			}
+-		} else {
+-			iinfo->i_lenAlloc = max(end, inode->i_size);
+-			up_write(&iinfo->i_data_sem);
++	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB &&
++	    inode->i_sb->s_blocksize < (udf_file_entry_alloc_offset(inode) +
++				 iocb->ki_pos + iov_iter_count(from))) {
++		err = udf_expand_file_adinicb(inode);
++		if (err) {
++			inode_unlock(inode);
++			udf_debug("udf_expand_adinicb: err=%d\n", err);
++			return err;
+ 		}
+ 	} else
+ 		up_write(&iinfo->i_data_sem);
  
- 	start_addr = end_addr = 0;
-+	segtype = -1;
- 	seg = kmalloc(sizeof(*seg), GFP_KERNEL | GFP_DMA);
- 	if (seg == NULL) {
- 		rc = -ENOMEM;
-@@ -326,9 +328,9 @@ __segment_load (char *name, int do_nonsh
- 	seg->res_name[8] = '\0';
- 	strlcat(seg->res_name, " (DCSS)", sizeof(seg->res_name));
- 	seg->res->name = seg->res_name;
--	rc = seg->vm_segtype;
--	if (rc == SEG_TYPE_SC ||
--	    ((rc == SEG_TYPE_SR || rc == SEG_TYPE_ER) && !do_nonshared))
-+	segtype = seg->vm_segtype;
-+	if (segtype == SEG_TYPE_SC ||
-+	    ((segtype == SEG_TYPE_SR || segtype == SEG_TYPE_ER) && !do_nonshared))
- 		seg->res->flags |= IORESOURCE_READONLY;
+ 	retval = __generic_file_write_iter(iocb, from);
+ out:
++	down_write(&iinfo->i_data_sem);
++	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB && retval > 0)
++		iinfo->i_lenAlloc = inode->i_size;
++	up_write(&iinfo->i_data_sem);
+ 	inode_unlock(inode);
  
- 	/* Check for overlapping resources before adding the mapping. */
-@@ -386,7 +388,7 @@ __segment_load (char *name, int do_nonsh
-  out_free:
- 	kfree(seg);
-  out:
--	return rc;
-+	return rc < 0 ? rc : segtype;
- }
- 
- /*
+ 	if (retval > 0) {
 
 
