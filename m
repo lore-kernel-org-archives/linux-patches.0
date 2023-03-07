@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E366DBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:18:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4961AC433EF;
-	Tue,  7 Mar 2023 18:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17521BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:18:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E3DC4339B;
+	Tue,  7 Mar 2023 18:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213112;
-	bh=l7Z9bg4jndwu55P5yd249FYeJsfy6mqswdoxI3LJqDQ=;
+	s=korg; t=1678213115;
+	bh=dLnBd8m2sHtyvrbi06Qh9FkF0uC0oP2HFD+PAPkN4J4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=05c0kvuaj9TskMrGw1FELaSWZ3jV+423MtecM4dkjQRC6sWh1z2x0SzwIvLqL0EXo
-	 b50cpCmXK6peDHvQtzs6tYOLRTSi1HG1FkhJhwswdqLmEAhuMsLV/b64xKETLVtDeI
-	 0zJf2VeODIuqiPexdT1Jvm/erS5/Y+uz9bW8DMgA=
+	b=YwvVot+YsAs9j2QFOyvgbyZbk2cCFJ0FQj9UJPV9e2Yjf2Ve9+zgf5tQiAYADW3vS
+	 k3YvAEXRbDTrTqo66akIXEZsQKpUqEManfoJKxfTk5SWCQkyrHqUw/65UjG1wQ0Gtc
+	 /IodszkX6ywM5IDdBPa7xhGK8JRPrEZh3/cNP3f8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 375/885] nfsd: fix race to check ls_layouts
-Date: Tue,  7 Mar 2023 17:55:09 +0100
-Message-Id: <20230307170018.623103374@linuxfoundation.org>
+Subject: [PATCH 6.1 402/885] mfd: cs5535: Dont build on UML
+Date: Tue,  7 Mar 2023 17:55:36 +0100
+Message-Id: <20230307170019.872234641@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,44 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit fb610c4dbc996415d57d7090957ecddd4fd64fb6 ]
+[ Upstream commit 5ec32a3e4053c1a726b45381d56aa9e39eaf3911 ]
 
-Its possible for __break_lease to find the layout's lease before we've
-added the layout to the owner's ls_layouts list.  In that case, setting
-ls_recalled = true without actually recalling the layout will cause the
-server to never send a recall callback.
+The cs5535-mfd driver uses CPU-specific data that is not available
+for ARCH=um builds, so don't allow it to be built for UML.
 
-Move the check for ls_layouts before setting ls_recalled.
+Prevents these build errors:
 
-Fixes: c5c707f96fc9 ("nfsd: implement pNFS layout recalls")
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+In file included from ../arch/x86/include/asm/olpc.h:7,
+                 from ../drivers/mfd/cs5535-mfd.c:17:
+../arch/x86/include/asm/geode.h: In function ‘is_geode_gx’:
+../arch/x86/include/asm/geode.h:16:31: error: ‘struct cpuinfo_um’ has no member named ‘x86_vendor’
+   16 |         return ((boot_cpu_data.x86_vendor == X86_VENDOR_NSC) &&
+../arch/x86/include/asm/geode.h:16:46: error: ‘X86_VENDOR_NSC’ undeclared (first use in this function); did you mean ‘X86_VENDOR_ANY’?
+   16 |         return ((boot_cpu_data.x86_vendor == X86_VENDOR_NSC) &&
+../arch/x86/include/asm/geode.h:17:31: error: ‘struct cpuinfo_um’ has no member named ‘x86’
+   17 |                 (boot_cpu_data.x86 == 5) &&
+../arch/x86/include/asm/geode.h:18:31: error: ‘struct cpuinfo_um’ has no member named ‘x86_model’
+   18 |                 (boot_cpu_data.x86_model == 5));
+../arch/x86/include/asm/geode.h: In function ‘is_geode_lx’:
+../arch/x86/include/asm/geode.h:23:31: error: ‘struct cpuinfo_um’ has no member named ‘x86_vendor’
+   23 |         return ((boot_cpu_data.x86_vendor == X86_VENDOR_AMD) &&
+../arch/x86/include/asm/geode.h:23:46: error: ‘X86_VENDOR_AMD’ undeclared (first use in this function); did you mean ‘X86_VENDOR_ANY’?
+   23 |         return ((boot_cpu_data.x86_vendor == X86_VENDOR_AMD) &&
+../arch/x86/include/asm/geode.h:24:31: error: ‘struct cpuinfo_um’ has no member named ‘x86’
+   24 |                 (boot_cpu_data.x86 == 5) &&
+../arch/x86/include/asm/geode.h:25:31: error: ‘struct cpuinfo_um’ has no member named ‘x86_model’
+   25 |                 (boot_cpu_data.x86_model == 10));
+
+Fixes: 68f5d3f3b654 ("um: add PCI over virtio emulation driver")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20221201012541.11809-1-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4layouts.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mfd/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
-index 3564d1c6f6104..e8a80052cb1ba 100644
---- a/fs/nfsd/nfs4layouts.c
-+++ b/fs/nfsd/nfs4layouts.c
-@@ -323,11 +323,11 @@ nfsd4_recall_file_layout(struct nfs4_layout_stateid *ls)
- 	if (ls->ls_recalled)
- 		goto out_unlock;
- 
--	ls->ls_recalled = true;
--	atomic_inc(&ls->ls_stid.sc_file->fi_lo_recalls);
- 	if (list_empty(&ls->ls_layouts))
- 		goto out_unlock;
- 
-+	ls->ls_recalled = true;
-+	atomic_inc(&ls->ls_stid.sc_file->fi_lo_recalls);
- 	trace_nfsd_layout_recall(&ls->ls_stid.sc_stateid);
- 
- 	refcount_inc(&ls->ls_stid.sc_count);
+diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+index 9940e2724c05d..9da8235cb6900 100644
+--- a/drivers/mfd/Kconfig
++++ b/drivers/mfd/Kconfig
+@@ -15,6 +15,7 @@ config MFD_CS5535
+ 	tristate "AMD CS5535 and CS5536 southbridge core functions"
+ 	select MFD_CORE
+ 	depends on PCI && (X86_32 || (X86 && COMPILE_TEST))
++	depends on !UML
+ 	help
+ 	  This is the core driver for CS5535/CS5536 MFD functions.  This is
+ 	  necessary for using the board's GPIO and MFGPT functionality.
 -- 
 2.39.2
 
