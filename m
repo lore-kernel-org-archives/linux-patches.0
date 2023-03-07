@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D4BBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF69C433D2;
-	Tue,  7 Mar 2023 18:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B959BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5AFC433D2;
+	Tue,  7 Mar 2023 18:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212344;
-	bh=Ko8Vc2wcTXVRbVNhsuUQyIMOvOZVz6s0vDZ+OtsHBjI=;
+	s=korg; t=1678212347;
+	bh=W8wNhwf0e2XJd0PsTiU0DgU7Btwmrn3F433F+gB5/XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p1lRaL5iWvA68gPcKLwhaXmFBW7lt/3nEQABes7qSL0I7/wMvdo1/MdE/hI1bAv+z
-	 zkHyDqgMc+t7E3Ru9Tmy/9K6H/i+0kvKOG0lNNc8gTl5pILZDUDALBKTNOD+yWrSCd
-	 mQcEIE8dYO1/uGOrJkD+KtBcBbPPDEdl7xRbAgMs=
+	b=YrOtsPJKlmIY7YU5znBH7Lx0IJ+XIcRrJU1r6pTdb5pIQezH2FHe/LtzIOD0vyKnE
+	 lkvNZ2/gFD1d58LYxe/VLnLIFwFdfPERZ8TESRhhfN+oJvrTHg6oylhI27BIXjl3BL
+	 Rppp9XeUuEXEDfa7FGTQqHJC7ckvxIFF97i+Z5pA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 156/885] s390/vfio-ap: fix an error handling path in vfio_ap_mdev_probe_queue()
-Date: Tue,  7 Mar 2023 17:51:30 +0100
-Message-Id: <20230307170008.691323033@linuxfoundation.org>
+Subject: [PATCH 6.1 157/885] x86/signal: Fix the value returned by strict_sas_size()
+Date: Tue,  7 Mar 2023 17:51:31 +0100
+Message-Id: <20230307170008.741054300@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,54 +37,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 08866d34c7099e981918d34aab5d6a437436628f ]
+[ Upstream commit ef6dfc4b238a435ab552207ec09e4a82b6426d31 ]
 
-The commit in Fixes: has switch the order of a sysfs_create_group() and a
-kzalloc().
+Functions used with __setup() return 1 when the argument has been
+successfully parsed.
 
-It correctly removed the now useless kfree() but forgot to add a
-sysfs_remove_group() in case of (unlikely) memory allocation failure.
+Reverse the returned value so that 1 is returned when kstrtobool() is
+successful (i.e. returns 0).
 
-Add it now.
+My understanding of these __setup() functions is that returning 1 or 0
+does not change much anyway - so this is more of a cleanup than a
+functional fix.
 
-Fixes: 260f3ea14138 ("s390/vfio-ap: move probe and remove callbacks to vfio_ap_ops.c")
+I spot it and found it spurious while looking at something else.
+Even if the output is not perfect, you'll get the idea with:
+
+   $ git grep -B2 -A10 retu.*kstrtobool | grep __setup -B10
+
+Fixes: 3aac3ebea08f ("x86/signal: Implement sigaltstack size validation")
 Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Link: https://lore.kernel.org/r/d0c0a35eec4fa87cb7f3910d8ac4dc0f7dc9008a.1659283738.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/73882d43ebe420c9d8fb82d0560021722b243000.1673717552.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/x86/kernel/signal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
-index 0b4cc8c597ae6..a109c59f18f78 100644
---- a/drivers/s390/crypto/vfio_ap_ops.c
-+++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -1844,8 +1844,10 @@ int vfio_ap_mdev_probe_queue(struct ap_device *apdev)
- 		return ret;
+diff --git a/arch/x86/kernel/signal.c b/arch/x86/kernel/signal.c
+index 9c7265b524c73..82c562e2cc982 100644
+--- a/arch/x86/kernel/signal.c
++++ b/arch/x86/kernel/signal.c
+@@ -923,7 +923,7 @@ static bool strict_sigaltstack_size __ro_after_init = false;
  
- 	q = kzalloc(sizeof(*q), GFP_KERNEL);
--	if (!q)
--		return -ENOMEM;
-+	if (!q) {
-+		ret = -ENOMEM;
-+		goto err_remove_group;
-+	}
- 
- 	q->apqn = to_ap_queue(&apdev->device)->qid;
- 	q->saved_isc = VFIO_AP_ISC_INVALID;
-@@ -1863,6 +1865,10 @@ int vfio_ap_mdev_probe_queue(struct ap_device *apdev)
- 	release_update_locks_for_mdev(matrix_mdev);
- 
- 	return 0;
-+
-+err_remove_group:
-+	sysfs_remove_group(&apdev->device.kobj, &vfio_queue_attr_group);
-+	return ret;
+ static int __init strict_sas_size(char *arg)
+ {
+-	return kstrtobool(arg, &strict_sigaltstack_size);
++	return kstrtobool(arg, &strict_sigaltstack_size) == 0;
  }
+ __setup("strict_sas_size", strict_sas_size);
  
- void vfio_ap_mdev_remove_queue(struct ap_device *apdev)
 -- 
 2.39.2
 
