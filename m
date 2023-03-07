@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5FFBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:24:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727C3C433D2;
-	Tue,  7 Mar 2023 17:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1DBBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:24:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC29C4339B;
+	Tue,  7 Mar 2023 17:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209852;
-	bh=jW4Y9TXlQhbpL9v7g6GLu3u6A9yrmtr49rqyXC7ej3I=;
+	s=korg; t=1678209855;
+	bh=9Nbl8rfhaLXstv6j/2ZkYsMU+w3WrUpmptMBzfRlC6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WMPyw+e2jwsS6nEkdhIMCmsREAncS21Zt+WEO07gsarN3BQtKx3JjlNHPPyRfIBwj
-	 wrwHKbyl63gYJpCkiz06aOygFrg3Png8HWY1eH/0ZMzR1dckMCgFkZtPYsbA+7gEis
-	 ZQ5Frhj6aY/f+PjIo46OACDwi42hb6SrQSllPe54=
+	b=qEXniGnunQGEh9l9Z0x8I98yZKQaHJtE3OaRayk7sDnspX6S6h98uxhWZ2FdncSXg
+	 fFPXWCQ/A3jkDFBLs7TIz/sD3ciEL5ctfnJkDi2NRuxkNlGYKVo5MDACUiM27GClEZ
+	 vSTjMCIFPhSLRn42Pajk6E5N3DSu5WFSMUOTtuTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roxana Nicolescu <roxana.nicolescu@canonical.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0325/1001] selftest: fib_tests: Always cleanup before exit
-Date: Tue,  7 Mar 2023 17:51:37 +0100
-Message-Id: <20230307170035.621542541@linuxfoundation.org>
+Subject: [PATCH 6.2 0352/1001] drm/vc4: hvs: Fix colour order for xRGB1555 on HVS5
+Date: Tue,  7 Mar 2023 17:52:04 +0100
+Message-Id: <20230307170036.724648556@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,40 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roxana Nicolescu <roxana.nicolescu@canonical.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-[ Upstream commit b60417a9f2b890a8094477b2204d4f73c535725e ]
+[ Upstream commit 902973dc1a049c0d7bf0c222b8f2b3876f01b4a2 ]
 
-Usage of `set -e` before executing a command causes immediate exit
-on failure, without cleanup up the resources allocated at setup.
-This can affect the next tests that use the same resources,
-leading to a chain of failures.
+Same as the xRGB8888 formats, HVS5 has managed to swap the colour
+channels for the xRGB1555 formats as well. Add the relevant
+config for pixel_order_hvs5.
 
-A simple fix is to always call cleanup function when the script exists.
-This approach is already used by other existing tests.
-
-Fixes: 1056691b2680 ("selftests: fib_tests: Make test results more verbose")
-Signed-off-by: Roxana Nicolescu <roxana.nicolescu@canonical.com>
-Link: https://lore.kernel.org/r/20230220110400.26737-2-roxana.nicolescu@canonical.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c54619b0bfb3 ("drm/vc4: Add support for the BCM2711 HVS5")
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Link: https://lore.kernel.org/r/20221207-rpi-hvs-crtc-misc-v1-6-1f8e0770798b@cerno.tech
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/fib_tests.sh | 2 ++
+ drivers/gpu/drm/vc4/vc4_plane.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/net/fib_tests.sh b/tools/testing/selftests/net/fib_tests.sh
-index 5637b5dadabdb..70ea8798b1f60 100755
---- a/tools/testing/selftests/net/fib_tests.sh
-+++ b/tools/testing/selftests/net/fib_tests.sh
-@@ -2065,6 +2065,8 @@ EOF
- ################################################################################
- # main
- 
-+trap cleanup EXIT
-+
- while getopts :t:pPhv o
- do
- 	case $o in
+diff --git a/drivers/gpu/drm/vc4/vc4_plane.c b/drivers/gpu/drm/vc4/vc4_plane.c
+index bd5acc4a86876..eb08020154f30 100644
+--- a/drivers/gpu/drm/vc4/vc4_plane.c
++++ b/drivers/gpu/drm/vc4/vc4_plane.c
+@@ -75,11 +75,13 @@ static const struct hvs_format {
+ 		.drm = DRM_FORMAT_ARGB1555,
+ 		.hvs = HVS_PIXEL_FORMAT_RGBA5551,
+ 		.pixel_order = HVS_PIXEL_ORDER_ABGR,
++		.pixel_order_hvs5 = HVS_PIXEL_ORDER_ARGB,
+ 	},
+ 	{
+ 		.drm = DRM_FORMAT_XRGB1555,
+ 		.hvs = HVS_PIXEL_FORMAT_RGBA5551,
+ 		.pixel_order = HVS_PIXEL_ORDER_ABGR,
++		.pixel_order_hvs5 = HVS_PIXEL_ORDER_ARGB,
+ 	},
+ 	{
+ 		.drm = DRM_FORMAT_RGB888,
 -- 
 2.39.2
 
