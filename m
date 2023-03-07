@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6208BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:12:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF39C433EF;
-	Tue,  7 Mar 2023 17:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D005CBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:12:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E14AC433EF;
+	Tue,  7 Mar 2023 17:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209132;
-	bh=IkgaqJ6tWn/Y6CKKfbRR7bpP2chwRFsSEYUHUiZhBqs=;
+	s=korg; t=1678209135;
+	bh=xcGvdYIi3xBUtI7d3Mwlb1YERsxmBuvYnxyI5IQxoOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jyO8/26AwS76RSHL1D1ZakosqSZxn2PQ6qjDTC6yJJQ3YF/liHMkd3qymO3WstBFM
-	 GDsoA2/xlPRD9XfNAsZ1WN7k11hWqt/HtCalc29hla2ekkNzWsiasOUr1WoyQ/dL9b
-	 oLiQQbiLgY7dhb4B+aOq5EwJPB1S4pt1zFJHkEXM=
+	b=IILp2qihx2zlMBtJ7WrwYCXD28DmqAjiaoYdRNAjNi+FLtRhwqVFZIQz68/fAyyG/
+	 i7ssK00gprY0YTaBWAjUbPkKe1NFApYyncn6LMwxlxNDVdEbRqFosAm4wCGwrjq217
+	 D0Gyi7A5hQqR8VM7fvcIGin2v0ctqNT/Nuu11VIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
+	ZiyangZhang <ZiyangZhang@linux.alibaba.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0091/1001] ARM: dts: sun8i: nanopi-duo2: Fix regulator GPIO reference
-Date: Tue,  7 Mar 2023 17:47:43 +0100
-Message-Id: <20230307170026.113871753@linuxfoundation.org>
+Subject: [PATCH 6.2 0092/1001] ublk_drv: remove nr_aborted_queues from ublk_device
+Date: Tue,  7 Mar 2023 17:47:44 +0100
+Message-Id: <20230307170026.165085967@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,38 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samuel Holland <samuel@sholland.org>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 2177d4ae971f79b4a9a3c411f2fb8ae6113d1430 ]
+[ Upstream commit ed878d1c1c641c4a6bd366658fc8e6bc842b80d1 ]
 
-The property named in the schema is 'enable-gpios', not 'enable-gpio'.
-This makes no difference at runtime, because the regulator is marked as
-always-on, but it breaks validation.
+No one uses 'nr_aborted_queues' any more, so remove it.
 
-Fixes: 4701fc6e5dd9 ("ARM: dts: sun8i: add FriendlyARM NanoPi Duo2")
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Signed-off-by: Samuel Holland <samuel@sholland.org>
-Link: https://lore.kernel.org/r/20221231225854.16320-2-samuel@sholland.org
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: ZiyangZhang <ZiyangZhang@linux.alibaba.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20230106041711.914434-2-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 73a166d97492 ("ublk_drv: don't probe partitions if the ubq daemon isn't trusted")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/sun8i-h3-nanopi-duo2.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/ublk_drv.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/sun8i-h3-nanopi-duo2.dts b/arch/arm/boot/dts/sun8i-h3-nanopi-duo2.dts
-index 43641cb82398f..343b02b971555 100644
---- a/arch/arm/boot/dts/sun8i-h3-nanopi-duo2.dts
-+++ b/arch/arm/boot/dts/sun8i-h3-nanopi-duo2.dts
-@@ -57,7 +57,7 @@ reg_vdd_cpux: vdd-cpux-regulator {
- 		regulator-ramp-delay = <50>; /* 4ms */
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 6368b56eacf11..f44b9467720c9 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -159,7 +159,6 @@ struct ublk_device {
  
- 		enable-active-high;
--		enable-gpio = <&r_pio 0 8 GPIO_ACTIVE_HIGH>; /* PL8 */
-+		enable-gpios = <&r_pio 0 8 GPIO_ACTIVE_HIGH>; /* PL8 */
- 		gpios = <&r_pio 0 6 GPIO_ACTIVE_HIGH>; /* PL6 */
- 		gpios-states = <0x1>;
- 		states = <1100000 0>, <1300000 1>;
+ 	struct completion	completion;
+ 	unsigned int		nr_queues_ready;
+-	atomic_t		nr_aborted_queues;
+ 
+ 	/*
+ 	 * Our ubq->daemon may be killed without any notification, so
 -- 
 2.39.2
 
