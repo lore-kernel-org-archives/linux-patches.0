@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3B2BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:00:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D32DC433EF;
-	Tue,  7 Mar 2023 19:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC426BA4C
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:00:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239D9C433D2;
+	Tue,  7 Mar 2023 19:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215607;
-	bh=oP8ORRjr5X4Rl3p67WgpExTczobI/iUv6ge9a4IZnhI=;
+	s=korg; t=1678215613;
+	bh=DMHfgvn16lsUelSb+tjsuqRW5hv8aZv8AokspayJkVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JnNA60If/gL3NxCH/+lYznt7px4g9XrJb6R02dzwIyWPEN9ObbOanBmkT60TtB1U/
-	 ue7QNQNgtDFPYCtP95J6JCl2ahA6jR+a8sX7PT1LAT1wb+kEqTofWTzb6+XQaTeYGE
-	 8pF9mcseMug3XAjOHG4tiafa3Z7lhHrGYWPuXJdw=
+	b=r4IEcbXLRbhXSNRHcgxo8lnKfUUNDL7oqz1xOfDNd/J1bUjTjLVtGoupan9G7aY0O
+	 cARX1dXCKutyAnP8e6qRNhJcLL9PDDPOFVfRv8udIFHffemTUfqpFbg0Ms1L0A717c
+	 gOjMhxnzxYFKQEDNc5OWfcVctXtT2TtUqmndPfe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jack Pham <quic_jackp@quicinc.com>,
+	Linyu Yuan <quic_linyyuan@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 316/567] RDMA/cxgb4: add null-ptr-check after ip_dev_find()
-Date: Tue,  7 Mar 2023 18:00:52 +0100
-Message-Id: <20230307165919.565560916@linuxfoundation.org>
+Subject: [PATCH 5.15 318/567] usb: gadget: configfs: use to_config_usb_cfg() in os_desc_link()
+Date: Tue,  7 Mar 2023 18:00:54 +0100
+Message-Id: <20230307165919.653061942@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,41 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Linyu Yuan <quic_linyyuan@quicinc.com>
 
-[ Upstream commit ef42520240aacfc0d46c8d780c051d135a8dc9b7 ]
+[ Upstream commit 5d143ec451429891385a21617b292f2ceaa684ea ]
 
-ip_dev_find() may return NULL and assign it to pdev which is
-dereferenced later.
-Fix this by checking the return value of ip_dev_find() for NULL
-similar to the way it is done with other instances of said function.
+replace open-coded container_of() with to_config_usb_cfg() helper.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 1cab775c3e75 ("RDMA/cxgb4: Fix LE hash collision bug for passive open connection")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://lore.kernel.org/r/20230201172103.17261-1-n.zhandarovich@fintech.ru
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reviewed-by: Jack Pham <quic_jackp@quicinc.com>
+Signed-off-by: Linyu Yuan <quic_linyyuan@quicinc.com>
+Link: https://lore.kernel.org/r/1637211213-16400-4-git-send-email-quic_linyyuan@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 89e7252d6c7e ("usb: gadget: configfs: Restrict symlink creation is UDC already binded")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/cxgb4/cm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/gadget/configfs.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
-index 291471d12197f..56f46a16e6575 100644
---- a/drivers/infiniband/hw/cxgb4/cm.c
-+++ b/drivers/infiniband/hw/cxgb4/cm.c
-@@ -4150,6 +4150,10 @@ static int rx_pkt(struct c4iw_dev *dev, struct sk_buff *skb)
+diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
+index 5ade844db4046..7d3b93dc154fe 100644
+--- a/drivers/usb/gadget/configfs.c
++++ b/drivers/usb/gadget/configfs.c
+@@ -890,9 +890,7 @@ static int os_desc_link(struct config_item *os_desc_ci,
+ 	struct gadget_info *gi = container_of(to_config_group(os_desc_ci),
+ 					struct gadget_info, os_desc_group);
+ 	struct usb_composite_dev *cdev = &gi->cdev;
+-	struct config_usb_cfg *c_target =
+-		container_of(to_config_group(usb_cfg_ci),
+-			     struct config_usb_cfg, group);
++	struct config_usb_cfg *c_target = to_config_usb_cfg(usb_cfg_ci);
+ 	struct usb_configuration *c;
+ 	int ret;
  
- 	if (neigh->dev->flags & IFF_LOOPBACK) {
- 		pdev = ip_dev_find(&init_net, iph->daddr);
-+		if (!pdev) {
-+			pr_err("%s - failed to find device!\n", __func__);
-+			goto free_dst;
-+		}
- 		e = cxgb4_l2t_get(dev->rdev.lldi.l2t, neigh,
- 				    pdev, 0);
- 		pi = (struct port_info *)netdev_priv(pdev);
 -- 
 2.39.2
 
