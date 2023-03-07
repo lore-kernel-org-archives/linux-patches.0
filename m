@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2AB0BA35
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:32:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEFEC4339B;
-	Tue,  7 Mar 2023 17:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E89BA35
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:32:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A54C433D2;
+	Tue,  7 Mar 2023 17:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210367;
-	bh=sy24AILUPaEfYDFT/WeQ+y/AMwpO/G8nbiq+P1kbGls=;
+	s=korg; t=1678210370;
+	bh=hSHw0+w3LFQi4ksALU05R/0a2ukRR5E/U/EYVxDLyQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CPTBeeiMpoFgLdzo9z3LMr0mpawqSOPssyN5ShuaZ69f2v+XveAe+pTO5He6WDf35
-	 REEye1QMVnmoDyjT9Qa82QpdA2JWGziP5QOY2Jx/A+rEcpCUhXRSc0XFu0sSpaFbEN
-	 xf0MHhkrFbjNm3dRC6dvAdhb4ZXsXKa34OU0UgVM=
+	b=v9j+1+bS1Npd4njQCl0JD4Jda3TPeByYwtFOW7uNyI9P28mW08AfvJZ7LtF0F5G9F
+	 HPTX7ZHIcHZ74AtMD3lnrAD/OcOxGh1vFexDWhNRH4iAHy4m3FX1rZWuEgv4a292w+
+	 IlMviKxNXbjTLxkAebA6Kz1okVwCLhAqS0ldPkyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0491/1001] usb: gadget: fusb300_udc: free irq on the error path in fusb300_probe()
-Date: Tue,  7 Mar 2023 17:54:23 +0100
-Message-Id: <20230307170042.699054231@linuxfoundation.org>
+Subject: [PATCH 6.2 0518/1001] firmware: stratix10-svc: fix error handle while alloc/add device failed
+Date: Tue,  7 Mar 2023 17:54:50 +0100
+Message-Id: <20230307170043.921825951@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,70 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit a8d3392e0e5cfeb03f0cea1f2bc3f5f183c1deb4 ]
+[ Upstream commit d66a4c20ae55ac88136b4a3befd944c093ffa677 ]
 
-When request_irq(ires1->start) failed in w5300_hw_probe(), irq
-ires->start has not been freed, and on the clean_up3 error path,
-we also need to free ires1->start irq, fix it.
+If add device "stratix10-rsu" failed in stratix10_svc_drv_probe(),
+the 'svc_fifo' and 'genpool' need be freed in the error path.
 
-In addition, We should add free_irq in fusb300_remove(), and give
-the lables a proper name so that they can be understood easily,
-so add free_irq in fusb300_remove(), and update clean_up3 to
-err_alloc_request.
+If allocate or add device "intel-fcs" failed in stratix10_svc_drv_probe(),
+the device "stratix10-rsu" need be unregistered in the error path.
 
-Fixes: 0fe6f1d1f612 ("usb: udc: add Faraday fusb300 driver")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221123014121.1989721-1-cuigaosheng1@huawei.com
+Fixes: e6281c26674e ("firmware: stratix10-svc: Add support for FCS")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Link: https://lore.kernel.org/r/20221129163602.462369-2-dinguyen@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/fusb300_udc.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/firmware/stratix10-svc.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/fusb300_udc.c b/drivers/usb/gadget/udc/fusb300_udc.c
-index 5954800d652ca..08ba9c8c1e677 100644
---- a/drivers/usb/gadget/udc/fusb300_udc.c
-+++ b/drivers/usb/gadget/udc/fusb300_udc.c
-@@ -1346,6 +1346,7 @@ static int fusb300_remove(struct platform_device *pdev)
- 	usb_del_gadget_udc(&fusb300->gadget);
- 	iounmap(fusb300->reg);
- 	free_irq(platform_get_irq(pdev, 0), fusb300);
-+	free_irq(platform_get_irq(pdev, 1), fusb300);
- 
- 	fusb300_free_request(&fusb300->ep[0]->ep, fusb300->ep0_req);
- 	for (i = 0; i < FUSB300_MAX_NUM_EP; i++)
-@@ -1431,7 +1432,7 @@ static int fusb300_probe(struct platform_device *pdev)
- 			IRQF_SHARED, udc_name, fusb300);
- 	if (ret < 0) {
- 		pr_err("request_irq1 error (%d)\n", ret);
--		goto clean_up;
-+		goto err_request_irq1;
+diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
+index 1a5640b3ab422..bde1f543f5298 100644
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -1202,19 +1202,20 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
+ 	ret = platform_device_add(svc->stratix10_svc_rsu);
+ 	if (ret) {
+ 		platform_device_put(svc->stratix10_svc_rsu);
+-		return ret;
++		goto err_free_kfifo;
  	}
  
- 	INIT_LIST_HEAD(&fusb300->gadget.ep_list);
-@@ -1470,7 +1471,7 @@ static int fusb300_probe(struct platform_device *pdev)
- 				GFP_KERNEL);
- 	if (fusb300->ep0_req == NULL) {
- 		ret = -ENOMEM;
--		goto clean_up3;
-+		goto err_alloc_request;
+ 	svc->intel_svc_fcs = platform_device_alloc(INTEL_FCS, 1);
+ 	if (!svc->intel_svc_fcs) {
+ 		dev_err(dev, "failed to allocate %s device\n", INTEL_FCS);
+-		return -ENOMEM;
++		ret = -ENOMEM;
++		goto err_unregister_dev;
  	}
  
- 	init_controller(fusb300);
-@@ -1485,7 +1486,10 @@ static int fusb300_probe(struct platform_device *pdev)
- err_add_udc:
- 	fusb300_free_request(&fusb300->ep[0]->ep, fusb300->ep0_req);
+ 	ret = platform_device_add(svc->intel_svc_fcs);
+ 	if (ret) {
+ 		platform_device_put(svc->intel_svc_fcs);
+-		return ret;
++		goto err_unregister_dev;
+ 	}
  
--clean_up3:
-+err_alloc_request:
-+	free_irq(ires1->start, fusb300);
-+
-+err_request_irq1:
- 	free_irq(ires->start, fusb300);
+ 	dev_set_drvdata(dev, svc);
+@@ -1223,6 +1224,8 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
  
- clean_up:
+ 	return 0;
+ 
++err_unregister_dev:
++	platform_device_unregister(svc->stratix10_svc_rsu);
+ err_free_kfifo:
+ 	kfifo_free(&controller->svc_fifo);
+ err_destroy_pool:
 -- 
 2.39.2
 
