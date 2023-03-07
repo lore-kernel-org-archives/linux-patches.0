@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDFDBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:28:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF01C433D2;
-	Tue,  7 Mar 2023 18:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4C3BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:28:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B743EC433D2;
+	Tue,  7 Mar 2023 18:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213730;
-	bh=NTH7bEIuBhfMIsRmMqTcqs5kGEJz5qrkruxMHAdQ5DY=;
+	s=korg; t=1678213733;
+	bh=EUyNvDeFWrG6W1xOY+kVNZE3Pw1IZF0ChRwVu9OwwSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dC7QjGBmd/6JpeNy6XL6YC6UVeYF4wLs2vmA0J+YksNBxP0FiAr0dFd6DvOvTMf9i
-	 GqX9b77isS8ngcFrkGUj6HhucPVEUYNZPlGaGOqVGyd18nMdDduU/ukZDCoso9R8l8
-	 8cRo4SNJjRFqI7PvCm1gpPLSug4qRzZ0O/zTHcPg=
+	b=oLJBDb7Fk6979d3SvToVp0G45vRKbJ86GfWkWqurqKU0Xh+1fiYZKqccAblX2qe/z
+	 7g3nc1ZHw/kLaJ7zcfRRN4U9OnZMZo31gJPMjE7AMicbCs9nmMdSkDfyH28nwTbwdv
+	 P547LVu+1xa+ntkWC5/+njuXkam87Nl/Gu1DSLC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Carlo Caione <ccaione@baylibre.com>,
-	Kamlesh Gurudasani <kamlesh.gurudasani@gmail.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 599/885] drm/tiny: ili9486: Do not assume 8-bit only SPI controllers
-Date: Tue,  7 Mar 2023 17:58:53 +0100
-Message-Id: <20230307170028.372971391@linuxfoundation.org>
+Subject: [PATCH 6.1 571/885] netfilter: nf_tables: NULL pointer dereference in nf_tables_updobj()
+Date: Tue,  7 Mar 2023 17:58:25 +0100
+Message-Id: <20230307170027.234861051@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,83 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlo Caione <ccaione@baylibre.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 77772e607522daa61f3af74df018559db75c43d6 ]
+[ Upstream commit dac7f50a45216d652887fb92d6cd3b7ca7f006ea ]
 
-The pixel data for the ILI9486 is always 16-bits wide and it must be
-sent over the SPI bus. When the controller is only able to deal with
-8-bit transfers, this 16-bits data needs to be swapped before the
-sending to account for the big endian bus, this is on the contrary not
-needed when the SPI controller already supports 16-bits transfers.
+static analyzer detect null pointer dereference case for 'type'
+function __nft_obj_type_get() can return NULL value which require to handle
+if type is NULL pointer return -ENOENT.
 
-The decision about swapping the pixel data or not is taken in the MIPI
-DBI code by probing the controller capabilities: if the controller only
-suppors 8-bit transfers the data is swapped, otherwise it is not.
+This is a theoretical issue, since an existing object has a type, but
+better add this failsafe check.
 
-This swapping/non-swapping is relying on the assumption that when the
-controller does support 16-bit transactions then the data is sent
-unswapped in 16-bits-per-word over SPI.
-
-The problem with the ILI9486 driver is that it is forcing 8-bit
-transactions also for controllers supporting 16-bits, violating the
-assumption and corrupting the pixel data.
-
-Align the driver to what is done in the MIPI DBI code by adjusting the
-transfer size to the maximum allowed by the SPI controller.
-
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Carlo Caione <ccaione@baylibre.com>
-Reviewed-by: Kamlesh Gurudasani <kamlesh.gurudasani@gmail.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221116-s905x_spi_ili9486-v4-2-f86b4463b9e4@baylibre.com
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/ili9486.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/netfilter/nf_tables_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/tiny/ili9486.c b/drivers/gpu/drm/tiny/ili9486.c
-index c80028bb1d110..7b3048a3d9086 100644
---- a/drivers/gpu/drm/tiny/ili9486.c
-+++ b/drivers/gpu/drm/tiny/ili9486.c
-@@ -43,6 +43,7 @@ static int waveshare_command(struct mipi_dbi *mipi, u8 *cmd, u8 *par,
- 			     size_t num)
- {
- 	struct spi_device *spi = mipi->spi;
-+	unsigned int bpw = 8;
- 	void *data = par;
- 	u32 speed_hz;
- 	int i, ret;
-@@ -56,8 +57,6 @@ static int waveshare_command(struct mipi_dbi *mipi, u8 *cmd, u8 *par,
- 	 * The displays are Raspberry Pi HATs and connected to the 8-bit only
- 	 * SPI controller, so 16-bit command and parameters need byte swapping
- 	 * before being transferred as 8-bit on the big endian SPI bus.
--	 * Pixel data bytes have already been swapped before this function is
--	 * called.
- 	 */
- 	buf[0] = cpu_to_be16(*cmd);
- 	gpiod_set_value_cansleep(mipi->dc, 0);
-@@ -71,12 +70,18 @@ static int waveshare_command(struct mipi_dbi *mipi, u8 *cmd, u8 *par,
- 		for (i = 0; i < num; i++)
- 			buf[i] = cpu_to_be16(par[i]);
- 		num *= 2;
--		speed_hz = mipi_dbi_spi_cmd_max_speed(spi, num);
- 		data = buf;
- 	}
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 3ba8c291fcaa7..dca5352bdf3d7 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6951,6 +6951,9 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
+ 			return -EOPNOTSUPP;
  
-+	/*
-+	 * Check whether pixel data bytes needs to be swapped or not
-+	 */
-+	if (*cmd == MIPI_DCS_WRITE_MEMORY_START && !mipi->swap_bytes)
-+		bpw = 16;
+ 		type = __nft_obj_type_get(objtype);
++		if (WARN_ON_ONCE(!type))
++			return -ENOENT;
 +
- 	gpiod_set_value_cansleep(mipi->dc, 1);
--	ret = mipi_dbi_spi_transfer(spi, speed_hz, 8, data, num);
-+	speed_hz = mipi_dbi_spi_cmd_max_speed(spi, num);
-+	ret = mipi_dbi_spi_transfer(spi, speed_hz, bpw, data, num);
-  free:
- 	kfree(buf);
+ 		nft_ctx_init(&ctx, net, skb, info->nlh, family, table, NULL, nla);
  
+ 		return nf_tables_updobj(&ctx, type, nla[NFTA_OBJ_DATA], obj);
 -- 
 2.39.2
 
