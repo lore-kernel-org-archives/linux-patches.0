@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4108BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:21:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A288C433EF;
-	Tue,  7 Mar 2023 18:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B86BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:21:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD13C433EF;
+	Tue,  7 Mar 2023 18:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213297;
-	bh=NuieW/v4bv9NRwaR+QVw32Gntlai0UJKZaL/Upa7UU0=;
+	s=korg; t=1678213301;
+	bh=KbrNRuD8hH7gOnI1vOCWblkMpwXAwaBhdipgrDChGLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZmcWbphirC5jsGdCV6zhsImiiY4bs1Ai9tr6UI8yra7mHyIvalsGyGEEMCYTbQ+F2
-	 eRNAMO1YACrYn66l2U55Hr+4kQ+YsFcycclL96kgXuGLGGPZVcQeznpV5lQcdGOPyl
-	 Qr8wcsZ0jHqnehd5bpnsS09TXVHu+gxf1/v5tR1g=
+	b=w5q02uUuVx2yiIYcTh4A1rCRvt/KhfxUbmz6XB6z52uPGYhlmgsz6cnB7P0X8XljZ
+	 HzWyOcHV5YyHf4zNUB24VTeBJsy75s7I7ybXRU6cAO5RmgIWPETLTRCBLng0qCZHJG
+	 jOtALp7HJ/Tdfgh0eS00rJwiKZIblL7bMOOYQRKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 462/885] power: supply: remove faulty cooling logic
-Date: Tue,  7 Mar 2023 17:56:36 +0100
-Message-Id: <20230307170022.579701593@linuxfoundation.org>
+Subject: [PATCH 6.1 463/885] RDMA/cxgb4: Fix potential null-ptr-deref in pass_establish()
+Date: Tue,  7 Mar 2023 17:56:37 +0100
+Message-Id: <20230307170022.617922519@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,177 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit c85c191694cb1cf290b11059b3d2de8a2732ffd0 ]
+[ Upstream commit 283861a4c52c1ea4df3dd1b6fc75a50796ce3524 ]
 
-The rn5t618 power driver fails to register
-a cooling device because POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT_MAX
-is missing but availability is not checked before registering
-cooling device. After improved error checking in the thermal
-code, the registration of the power supply fails entirely.
+If get_ep_from_tid() fails to lookup non-NULL value for ep, ep is
+dereferenced later regardless of whether it is empty.
+This patch adds a simple sanity check to fix the issue.
 
-Checking for availability of _MAX before registering cooling device
-fixes the rn5t618 problem. But the whole logic feels questionable.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-First, the logic is inverted here:
-the code tells: max_current = max_cooling but
-0 = max_cooling, so there needs to be some inversion
-in the code which cannot be found. Comparing with other
-cooling devices, it can be found that value for fan speed is not
-inverted, value for cpufreq cooling is inverted (similar situation
-as here lowest frequency = max cooling)
-
-Second, analyzing usage of _MAX: it is seems that maximum capabilities
-of charging controller are specified and not of the battery. Probably
-there is not too much mismatch in the drivers actually implementing
-that. So nothing has exploded yet.  So there is no easy and safe way
-to specifify a max cooling value now.
-
-Conclusion for now (as a regression fix) just remove the cooling device
-registration and do it properly later on.
-
-Fixes: e49a1e1ee078 ("thermal/core: fix error code in __thermal_cooling_device_register()")
-Fixes: 952aeeb3ee28 ("power_supply: Register power supply for thermal cooling device")
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 944661dd97f4 ("RDMA/iw_cxgb4: atomically lookup ep and get a reference")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20230202184850.29882-1-n.zhandarovich@fintech.ru
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 93 ------------------------
- 1 file changed, 93 deletions(-)
+ drivers/infiniband/hw/cxgb4/cm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index 01d1ac79d982e..8382be867d274 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -1187,83 +1187,6 @@ static void psy_unregister_thermal(struct power_supply *psy)
- 	thermal_zone_device_unregister(psy->tzd);
- }
+diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
+index ea3ddf0d24114..ced615b5ea096 100644
+--- a/drivers/infiniband/hw/cxgb4/cm.c
++++ b/drivers/infiniband/hw/cxgb4/cm.c
+@@ -2676,6 +2676,9 @@ static int pass_establish(struct c4iw_dev *dev, struct sk_buff *skb)
+ 	u16 tcp_opt = ntohs(req->tcp_opt);
  
--/* thermal cooling device callbacks */
--static int ps_get_max_charge_cntl_limit(struct thermal_cooling_device *tcd,
--					unsigned long *state)
--{
--	struct power_supply *psy;
--	union power_supply_propval val;
--	int ret;
--
--	psy = tcd->devdata;
--	ret = power_supply_get_property(psy,
--			POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT_MAX, &val);
--	if (ret)
--		return ret;
--
--	*state = val.intval;
--
--	return ret;
--}
--
--static int ps_get_cur_charge_cntl_limit(struct thermal_cooling_device *tcd,
--					unsigned long *state)
--{
--	struct power_supply *psy;
--	union power_supply_propval val;
--	int ret;
--
--	psy = tcd->devdata;
--	ret = power_supply_get_property(psy,
--			POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT, &val);
--	if (ret)
--		return ret;
--
--	*state = val.intval;
--
--	return ret;
--}
--
--static int ps_set_cur_charge_cntl_limit(struct thermal_cooling_device *tcd,
--					unsigned long state)
--{
--	struct power_supply *psy;
--	union power_supply_propval val;
--	int ret;
--
--	psy = tcd->devdata;
--	val.intval = state;
--	ret = psy->desc->set_property(psy,
--		POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT, &val);
--
--	return ret;
--}
--
--static const struct thermal_cooling_device_ops psy_tcd_ops = {
--	.get_max_state = ps_get_max_charge_cntl_limit,
--	.get_cur_state = ps_get_cur_charge_cntl_limit,
--	.set_cur_state = ps_set_cur_charge_cntl_limit,
--};
--
--static int psy_register_cooler(struct power_supply *psy)
--{
--	/* Register for cooling device if psy can control charging */
--	if (psy_has_property(psy->desc, POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT)) {
--		psy->tcd = thermal_cooling_device_register(
--			(char *)psy->desc->name,
--			psy, &psy_tcd_ops);
--		return PTR_ERR_OR_ZERO(psy->tcd);
--	}
--
--	return 0;
--}
--
--static void psy_unregister_cooler(struct power_supply *psy)
--{
--	if (IS_ERR_OR_NULL(psy->tcd))
--		return;
--	thermal_cooling_device_unregister(psy->tcd);
--}
- #else
- static int psy_register_thermal(struct power_supply *psy)
- {
-@@ -1273,15 +1196,6 @@ static int psy_register_thermal(struct power_supply *psy)
- static void psy_unregister_thermal(struct power_supply *psy)
- {
- }
--
--static int psy_register_cooler(struct power_supply *psy)
--{
--	return 0;
--}
--
--static void psy_unregister_cooler(struct power_supply *psy)
--{
--}
- #endif
- 
- static struct power_supply *__must_check
-@@ -1355,10 +1269,6 @@ __power_supply_register(struct device *parent,
- 	if (rc)
- 		goto register_thermal_failed;
- 
--	rc = psy_register_cooler(psy);
--	if (rc)
--		goto register_cooler_failed;
--
- 	rc = power_supply_create_triggers(psy);
- 	if (rc)
- 		goto create_triggers_failed;
-@@ -1388,8 +1298,6 @@ __power_supply_register(struct device *parent,
- add_hwmon_sysfs_failed:
- 	power_supply_remove_triggers(psy);
- create_triggers_failed:
--	psy_unregister_cooler(psy);
--register_cooler_failed:
- 	psy_unregister_thermal(psy);
- register_thermal_failed:
- wakeup_init_failed:
-@@ -1541,7 +1449,6 @@ void power_supply_unregister(struct power_supply *psy)
- 	sysfs_remove_link(&psy->dev.kobj, "powers");
- 	power_supply_remove_hwmon_sysfs(psy);
- 	power_supply_remove_triggers(psy);
--	psy_unregister_cooler(psy);
- 	psy_unregister_thermal(psy);
- 	device_init_wakeup(&psy->dev, false);
- 	device_unregister(&psy->dev);
+ 	ep = get_ep_from_tid(dev, tid);
++	if (!ep)
++		return 0;
++
+ 	pr_debug("ep %p tid %u\n", ep, ep->hwtid);
+ 	ep->snd_seq = be32_to_cpu(req->snd_isn);
+ 	ep->rcv_seq = be32_to_cpu(req->rcv_isn);
 -- 
 2.39.2
 
