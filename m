@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5B9BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:26:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD56C433EF;
-	Tue,  7 Mar 2023 17:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19786BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:26:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA24C4339E;
+	Tue,  7 Mar 2023 17:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209985;
-	bh=dm0pW1bKmQiIbknL9mOJFspkh7fXLhI9MgEMSWyiESY=;
+	s=korg; t=1678209988;
+	bh=FvEl1Q8ErGKGiCOg5wgqLkzdK1EW1aYIcBHkpOsoiHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AdKKRDr6ZaRh7iw47I7kRgv5s7i61CTl5kFZyMnAxmT6oyqPBbWBmyDVFEDLOFgNY
-	 PeH0pLE5KcXeE1++uazZmHl+uxZ2j0PnHxssAHfUw25CVTfsZmxY1xPxMbkIiqEEm2
-	 2U1e2OSJnAnrmDUxIbQe64QmjnJ2pyaRnjEkiSM0=
+	b=M49+4o1T3KaHeNG0dBrEaCxaNTdXjjZKAsuOlcJZ4YPfs3xY37HJEzEyaN9qEdQMq
+	 IsapuJpVTxEIUesQ+21wr503jTWInPq3z5auDCVeJ3uO+zPz4MN8BxvPAgHp8KAiUt
+	 AoKNJWO8cNb29LWYP6FBXYZPsPwoHYfp/xqeqtx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Steev Klimaszewski <steev@kali.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0364/1001] drm/msm/gem: Add check for kmalloc
-Date: Tue,  7 Mar 2023 17:52:16 +0100
-Message-Id: <20230307170037.187615340@linuxfoundation.org>
+Subject: [PATCH 6.2 0355/1001] drm/panel-edp: fix name for IVO product id 854b
+Date: Tue,  7 Mar 2023 17:52:07 +0100
+Message-Id: <20230307170036.847399491@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,39 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit d839f0811a31322c087a859c2b181e2383daa7be ]
+[ Upstream commit 9cce08cadc6ce8670280d0a042cf0b6d2987d9f9 ]
 
-Add the check for the return value of kmalloc in order to avoid
-NULL pointer dereference in copy_from_user.
+The actual name is R133NW4K-R0.
 
-Fixes: 20224d715a88 ("drm/msm/submit: Move copy_from_user ahead of locking bos")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/514678/
-Link: https://lore.kernel.org/r/20221212091117.43511-1-jiasheng@iscas.ac.cn
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 0f9fa5f58c78 ("drm/panel-edp: add IVO M133NW4J-R3 panel entry")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221231142721.338643-1-abel.vesa@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem_submit.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/panel/panel-edp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 73a2ca122c570..1c4be193fd23f 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -209,6 +209,10 @@ static int submit_lookup_cmds(struct msm_gem_submit *submit,
- 			goto out;
- 		}
- 		submit->cmd[i].relocs = kmalloc(sz, GFP_KERNEL);
-+		if (!submit->cmd[i].relocs) {
-+			ret = -ENOMEM;
-+			goto out;
-+		}
- 		ret = copy_from_user(submit->cmd[i].relocs, userptr, sz);
- 		if (ret) {
- 			ret = -EFAULT;
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 5cb8dc2ebe184..ef70928c3ccbc 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1891,7 +1891,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('C', 'M', 'N', 0x1247, &delay_200_500_e80_d50, "N120ACA-EA1"),
+ 
+ 	EDP_PANEL_ENTRY('I', 'V', 'O', 0x057d, &delay_200_500_e200, "R140NWF5 RH"),
+-	EDP_PANEL_ENTRY('I', 'V', 'O', 0x854b, &delay_200_500_p2e100, "M133NW4J-R3"),
++	EDP_PANEL_ENTRY('I', 'V', 'O', 0x854b, &delay_200_500_p2e100, "R133NW4K-R0"),
+ 
+ 	EDP_PANEL_ENTRY('K', 'D', 'B', 0x0624, &kingdisplay_kd116n21_30nv_a010.delay, "116N21-30NV-A010"),
+ 	EDP_PANEL_ENTRY('K', 'D', 'B', 0x1120, &delay_200_500_e80_d50, "116N29-30NK-C007"),
 -- 
 2.39.2
 
