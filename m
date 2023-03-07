@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CC2BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:06:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC14C433EF;
-	Tue,  7 Mar 2023 18:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EA9BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:06:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60835C4339B;
+	Tue,  7 Mar 2023 18:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212403;
-	bh=uw+d/MGSWEKxdDrXow9nFnZ5jR24MWhjnbMpVFslErw=;
+	s=korg; t=1678212409;
+	bh=cegYx0cWUNTy3wCL6/RqqFojrJ0GVY2kK39OgrQ698U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XHxIe+Jccw1Uhft+e1GZ/GebuZRqUOQDsbQoMmyZzmmeuKJf1Y5tAKs3ICMKWakKN
-	 rDqOprPHQUuVHbEpqYMef/JI5DjX/tGImvv6sIRE6yiPEaD5IvWNGDnHrjZdmzwKxm
-	 uOje4aEVMnMH5q/i+LoUum8H5SzcfT1I/q26Ysiw=
+	b=uG8mhPH20zGOxAzD8MMdCplQz/BVNErmpl+z7gJROxsOGXCsg2Y+Zig0lbPjQGB0J
+	 iGPKZ6tyYTl/EG4v3r5fPFthP0i5D5lCX6S5ZQq7NcPKbYk8rLLjCdzHW+rqPpCdMf
+	 3ThEujqnxgnd7yiiAzocTnXCAj7bOqUmSvY9fIXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huaweicloud.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Eric Biggers <ebiggers@google.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 146/885] lib/mpi: Fix buffer overrun when SG is too long
-Date: Tue,  7 Mar 2023 17:51:20 +0100
-Message-Id: <20230307170008.217272954@linuxfoundation.org>
+Subject: [PATCH 6.1 173/885] ACPI: battery: Fix missing NUL-termination with large strings
+Date: Tue,  7 Mar 2023 17:51:47 +0100
+Message-Id: <20230307170009.475696627@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,39 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 7361d1bc307b926cbca214ab67b641123c2d6357 ]
+[ Upstream commit f2ac14b5f197e4a2dec51e5ceaa56682ff1592bc ]
 
-The helper mpi_read_raw_from_sgl sets the number of entries in
-the SG list according to nbytes.  However, if the last entry
-in the SG list contains more data than nbytes, then it may overrun
-the buffer because it only allocates enough memory for nbytes.
+When encountering a string bigger than the destination buffer (32 bytes),
+the string is not properly NUL-terminated, causing buffer overreads later.
 
-Fixes: 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers")
-Reported-by: Roberto Sassu <roberto.sassu@huaweicloud.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+This for example happens on the Inspiron 3505, where the battery
+model name is larger than 32 bytes, which leads to sysfs showing
+the model name together with the serial number string (which is
+NUL-terminated and thus prevents worse).
+
+Fix this by using strscpy() which ensures that the result is
+always NUL-terminated.
+
+Fixes: 106449e870b3 ("ACPI: Battery: Allow extract string from integer")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/mpi/mpicoder.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/battery.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/mpi/mpicoder.c b/lib/mpi/mpicoder.c
-index 39c4c67310946..3cb6bd148fa9e 100644
---- a/lib/mpi/mpicoder.c
-+++ b/lib/mpi/mpicoder.c
-@@ -504,7 +504,8 @@ MPI mpi_read_raw_from_sgl(struct scatterlist *sgl, unsigned int nbytes)
+diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
+index 306513fec1e1f..084f156bdfbc4 100644
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -440,7 +440,7 @@ static int extract_package(struct acpi_battery *battery,
  
- 	while (sg_miter_next(&miter)) {
- 		buff = miter.addr;
--		len = miter.length;
-+		len = min_t(unsigned, miter.length, nbytes);
-+		nbytes -= len;
- 
- 		for (x = 0; x < len; x++) {
- 			a <<= 8;
+ 			if (element->type == ACPI_TYPE_STRING ||
+ 			    element->type == ACPI_TYPE_BUFFER)
+-				strncpy(ptr, element->string.pointer, 32);
++				strscpy(ptr, element->string.pointer, 32);
+ 			else if (element->type == ACPI_TYPE_INTEGER) {
+ 				strncpy(ptr, (u8 *)&element->integer.value,
+ 					sizeof(u64));
 -- 
 2.39.2
 
