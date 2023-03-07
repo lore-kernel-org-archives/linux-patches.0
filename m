@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB11BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:15:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91E1C433D2;
-	Tue,  7 Mar 2023 18:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D647BBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:15:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2BDC433EF;
+	Tue,  7 Mar 2023 18:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212912;
-	bh=z84F0HEu790UqBUHkBsNtX8uxxqN9Hq53NDjpScuJDo=;
+	s=korg; t=1678212915;
+	bh=6G+VIzKg1PHJBK14HvEtewtSzQQiPdhtE/ZCInoYTrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UD3nE8cYN4MDvHi/enLvHey8feCHL/2+bgouAsRR76L3ClHQxpW9FDDoq6jbCTwqH
-	 Ugpscxf1IyM5Kb0NagW/n40jNWTsfd8taZwCUXC9IzM5hrHmlXKFisU3y4KOsMb0g7
-	 yTsFSJsuRWS0/mHcrmB7Xd5iJyGnJ/TW0xaagZMA=
+	b=uf0cVySrcCBXb27IYvoe27BDO3BL0GIe8NOnW4P8x/jwq3OqU8Og4c8dSQlZz+W78
+	 wWqF+Xpl2JwQOequJav9BZbVS7SUZUf60AI24jwapgE6Lx1wV2BYADrbtCUXTIF4l+
+	 GwML9FytQOGMS5lcjQZeGM6BmwNsHFUbZjGxDVKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 336/885] ASoC: mchp-spdifrx: disable all interrupts in mchp_spdifrx_dai_remove()
-Date: Tue,  7 Mar 2023 17:54:30 +0100
-Message-Id: <20230307170016.794364621@linuxfoundation.org>
+Subject: [PATCH 6.1 337/885] dm: improve shrinker debug names
+Date: Tue,  7 Mar 2023 17:54:31 +0100
+Message-Id: <20230307170016.846132690@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,36 +33,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit aaecdc32b7e35b4f9b457fb3509414aa9a932589 ]
+[ Upstream commit c87791bcc455a91e51ca9800faaacc21c8d67785 ]
 
-CSC interrupts which might be used in controls are on bits 8 and 9 of
-SPDIFRX_IDR register. Thus disable all the interrupts that are exported
-by driver.
+Commit e33c267ab70d ("mm: shrinkers: provide shrinkers with names")
+chose some fairly bad names for DM's shrinkers.
 
-Fixes: ef265c55c1ac ("ASoC: mchp-spdifrx: add driver for SPDIF RX")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230130120647.638049-5-claudiu.beznea@microchip.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e33c267ab70d ("mm: shrinkers: provide shrinkers with names")
+Signed-off-by : Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/atmel/mchp-spdifrx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-bufio.c          | 2 +-
+ drivers/md/dm-zoned-metadata.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/atmel/mchp-spdifrx.c b/sound/soc/atmel/mchp-spdifrx.c
-index 31ffaaf46dec0..b81fc77728dfc 100644
---- a/sound/soc/atmel/mchp-spdifrx.c
-+++ b/sound/soc/atmel/mchp-spdifrx.c
-@@ -921,7 +921,7 @@ static int mchp_spdifrx_dai_remove(struct snd_soc_dai *dai)
- 	struct mchp_spdifrx_dev *dev = snd_soc_dai_get_drvdata(dai);
+diff --git a/drivers/md/dm-bufio.c b/drivers/md/dm-bufio.c
+index bb786c39545ec..19caaf684ee34 100644
+--- a/drivers/md/dm-bufio.c
++++ b/drivers/md/dm-bufio.c
+@@ -1833,7 +1833,7 @@ struct dm_bufio_client *dm_bufio_client_create(struct block_device *bdev, unsign
+ 	c->shrinker.scan_objects = dm_bufio_shrink_scan;
+ 	c->shrinker.seeks = 1;
+ 	c->shrinker.batch = 0;
+-	r = register_shrinker(&c->shrinker, "md-%s:(%u:%u)", slab_name,
++	r = register_shrinker(&c->shrinker, "dm-bufio:(%u:%u)",
+ 			      MAJOR(bdev->bd_dev), MINOR(bdev->bd_dev));
+ 	if (r)
+ 		goto bad;
+diff --git a/drivers/md/dm-zoned-metadata.c b/drivers/md/dm-zoned-metadata.c
+index 0278482fac94a..c795ea7da7917 100644
+--- a/drivers/md/dm-zoned-metadata.c
++++ b/drivers/md/dm-zoned-metadata.c
+@@ -2945,7 +2945,7 @@ int dmz_ctr_metadata(struct dmz_dev *dev, int num_dev,
+ 	zmd->mblk_shrinker.seeks = DEFAULT_SEEKS;
  
- 	/* Disable interrupts */
--	regmap_write(dev->regmap, SPDIFRX_IDR, 0xFF);
-+	regmap_write(dev->regmap, SPDIFRX_IDR, GENMASK(14, 0));
- 
- 	clk_disable_unprepare(dev->pclk);
- 
+ 	/* Metadata cache shrinker */
+-	ret = register_shrinker(&zmd->mblk_shrinker, "md-meta:(%u:%u)",
++	ret = register_shrinker(&zmd->mblk_shrinker, "dm-zoned-meta:(%u:%u)",
+ 				MAJOR(dev->bdev->bd_dev),
+ 				MINOR(dev->bdev->bd_dev));
+ 	if (ret) {
 -- 
 2.39.2
 
