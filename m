@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C974DBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:32:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51198C433D2;
-	Tue,  7 Mar 2023 18:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5ED1BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:32:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D703C433D2;
+	Tue,  7 Mar 2023 18:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213956;
-	bh=ptb83JVrntvT8Vw9FjW97tAMlq5XwpLq2q1J/IyQVRs=;
+	s=korg; t=1678213959;
+	bh=WxYwa2Cc30nYji1sh4OZhymFEFDeZ8K9EQ836M/pyes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2s4qV6tpjyvyj7PYbsS8MRrD3ElmJxq7awvxMPqns+im4Z8wk71P1k+LaQN2r5GM6
-	 /5RpOUJExKkzYU7NYY3wT0kw5eUDapb+2CHiCPuZ37R5cDSpV5VWIackVv+fO/OWUA
-	 wSGaR3X60SVvGdC9EHGJ2q6GI4lQeuKSTY8pXXGQ=
+	b=Fo9GDKxsSOTs94wYkjQoMbPHqnu8MGUNMVDOfouT+G0anAxTy0epAewlNDfii+X8F
+	 dd4CebsM9FW1XxCY/8IuWzQkAEmLxKX8cVmkc2Cv1iZhPBQmD6S4Ifu1ZTtVOsIAFM
+	 02C5yzO1lLeJFk6MmIGYl6uWDIZkZ6V/zkJfO0oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.1 667/885] s390/kprobes: fix irq mask clobbering on kprobe reenter from post_handler
-Date: Tue,  7 Mar 2023 18:00:01 +0100
-Message-Id: <20230307170031.153213323@linuxfoundation.org>
+	Ronnie Sahlberg <lsahlber@redhat.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 676/885] cifs: Check the lease context if we actually got a lease
+Date: Tue,  7 Mar 2023 18:00:10 +0100
+Message-Id: <20230307170031.503938135@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,80 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Ronnie Sahlberg <lsahlber@redhat.com>
 
-commit 42e19e6f04984088b6f9f0507c4c89a8152d9730 upstream.
+commit 66d45ca1350a3bb8d5f4db8879ccad3ed492337a upstream.
 
-Recent test_kprobe_missed kprobes kunit test uncovers the following error
-(reported when CONFIG_DEBUG_ATOMIC_SLEEP is enabled):
+Some servers may return that we got a lease in rsp->OplockLevel
+but then in the lease context contradict this and say we got no lease
+at all.  Thus we need to check the context if we have a lease.
+Additionally, If we do not get a lease we need to make sure we close
+the handle before we return an error to the caller.
 
-BUG: sleeping function called from invalid context at kernel/locking/mutex.c:580
-in_atomic(): 0, irqs_disabled(): 1, non_block: 0, pid: 662, name: kunit_try_catch
-preempt_count: 0, expected: 0
-RCU nest depth: 0, expected: 0
-no locks held by kunit_try_catch/662.
-irq event stamp: 280
-hardirqs last  enabled at (279): [<00000003e60a3d42>] __do_pgm_check+0x17a/0x1c0
-hardirqs last disabled at (280): [<00000003e3bd774a>] kprobe_exceptions_notify+0x27a/0x318
-softirqs last  enabled at (0): [<00000003e3c5c890>] copy_process+0x14a8/0x4c80
-softirqs last disabled at (0): [<0000000000000000>] 0x0
-CPU: 46 PID: 662 Comm: kunit_try_catch Tainted: G                 N 6.2.0-173644-g44c18d77f0c0 #2
-Hardware name: IBM 3931 A01 704 (LPAR)
-Call Trace:
- [<00000003e60a3a00>] dump_stack_lvl+0x120/0x198
- [<00000003e3d02e82>] __might_resched+0x60a/0x668
- [<00000003e60b9908>] __mutex_lock+0xc0/0x14e0
- [<00000003e60bad5a>] mutex_lock_nested+0x32/0x40
- [<00000003e3f7b460>] unregister_kprobe+0x30/0xd8
- [<00000003e51b2602>] test_kprobe_missed+0xf2/0x268
- [<00000003e51b5406>] kunit_try_run_case+0x10e/0x290
- [<00000003e51b7dfa>] kunit_generic_run_threadfn_adapter+0x62/0xb8
- [<00000003e3ce30f8>] kthread+0x2d0/0x398
- [<00000003e3b96afa>] __ret_from_fork+0x8a/0xe8
- [<00000003e60ccada>] ret_from_fork+0xa/0x40
-
-The reason for this error report is that kprobes handling code failed
-to restore irqs.
-
-The problem is that when kprobe is triggered from another kprobe
-post_handler current sequence of enable_singlestep / disable_singlestep
-is the following:
-enable_singlestep  <- original kprobe (saves kprobe_saved_imask)
-enable_singlestep  <- kprobe triggered from post_handler (clobbers kprobe_saved_imask)
-disable_singlestep <- kprobe triggered from post_handler (restores kprobe_saved_imask)
-disable_singlestep <- original kprobe (restores wrong clobbered kprobe_saved_imask)
-
-There is just one kprobe_ctlblk per cpu and both calls saves and
-loads irq mask to kprobe_saved_imask. To fix the problem simply move
-resume_execution (which calls disable_singlestep) before calling
-post_handler. This also fixes the problem that post_handler is called
-with pt_regs which were not yet adjusted after single-stepping.
-
+Signed-off-by: Ronnie Sahlberg <lsahlber@redhat.com>
 Cc: stable@vger.kernel.org
-Fixes: 4ba069b802c2 ("[S390] add kprobes support.")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/kprobes.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/cifs/cached_dir.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/arch/s390/kernel/kprobes.c
-+++ b/arch/s390/kernel/kprobes.c
-@@ -433,12 +433,11 @@ static int post_kprobe_handler(struct pt
- 	if (!p)
- 		return 0;
- 
-+	resume_execution(p, regs);
- 	if (kcb->kprobe_status != KPROBE_REENTER && p->post_handler) {
- 		kcb->kprobe_status = KPROBE_HIT_SSDONE;
- 		p->post_handler(p, regs, 0);
+--- a/fs/cifs/cached_dir.c
++++ b/fs/cifs/cached_dir.c
+@@ -221,8 +221,7 @@ int open_cached_dir(unsigned int xid, st
+ 		}
+ 		goto oshr_free;
  	}
 -
--	resume_execution(p, regs);
- 	pop_kprobe(kcb);
- 	preempt_enable_no_resched();
+-	atomic_inc(&tcon->num_remote_opens);
++	cfid->is_open = true;
  
+ 	o_rsp = (struct smb2_create_rsp *)rsp_iov[0].iov_base;
+ 	oparms.fid->persistent_fid = o_rsp->PersistentFileId;
+@@ -239,7 +238,8 @@ int open_cached_dir(unsigned int xid, st
+ 			    &oparms.fid->epoch,
+ 			    oparms.fid->lease_key, &oplock,
+ 			    NULL, NULL);
+-
++	if (!(oplock & SMB2_LEASE_READ_CACHING_HE))
++		goto oshr_free;
+ 	qi_rsp = (struct smb2_query_info_rsp *)rsp_iov[1].iov_base;
+ 	if (le32_to_cpu(qi_rsp->OutputBufferLength) < sizeof(struct smb2_file_all_info))
+ 		goto oshr_free;
+@@ -262,7 +262,6 @@ int open_cached_dir(unsigned int xid, st
+ 	cfid->dentry = dentry;
+ 	cfid->tcon = tcon;
+ 	cfid->time = jiffies;
+-	cfid->is_open = true;
+ 	cfid->has_lease = true;
+ 
+ oshr_free:
+@@ -282,12 +281,17 @@ oshr_free:
+ 	}
+ 	spin_unlock(&cfids->cfid_list_lock);
+ 	if (rc) {
++		if (cfid->is_open)
++			SMB2_close(0, cfid->tcon, cfid->fid.persistent_fid,
++				   cfid->fid.volatile_fid);
+ 		free_cached_dir(cfid);
+ 		cfid = NULL;
+ 	}
+ 
+-	if (rc == 0)
++	if (rc == 0) {
+ 		*ret_cfid = cfid;
++		atomic_inc(&tcon->num_remote_opens);
++	}
+ 
+ 	return rc;
+ }
 
 
