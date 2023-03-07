@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9DDBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:20:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA47C4339B;
-	Tue,  7 Mar 2023 18:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0D4BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:20:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43CCC4339B;
+	Tue,  7 Mar 2023 18:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213204;
-	bh=0pE87RiyZMep/b+1Fh5ZG2RRKfHzq6oBN7PTl9rMKXc=;
+	s=korg; t=1678213207;
+	bh=Dr4UgnbPZavGc00jvzwSHphBvr4c9pRFkQ2wVVRoK8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y+PX0WQlUS+aMrxbczWifK2yFwk6GzTnPP9txmBhQC69v1RZHheL11FUrKYHLnXeX
-	 w1d5VzV7HMps8+Ex7NxRTlrDDC0WMB2P0hjisxnjbCzDjSV2Qpkmf7kHw872OWWk46
-	 NBJDVhraAm2RqpBB25Z7Ep8GTKfEonbPZ62LKzWg=
+	b=hXzSd1m012cnymK06aVmrV1WYmMysukV06vn5J7DjVNPRYUuGWBWw5crsDj0xK8lm
+	 joHqlqLoUEpPQibwZydtsfMWam8o3PQ/jHtCEfJFM1ru8ZZ0rvI4vNM9sckIaiFIsf
+	 w4EnyHppE7eg2n45pwp93GkpJugi0jo5DTwNu7TQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 432/885] serial: tegra: Add missing clk_disable_unprepare() in tegra_uart_hw_init()
-Date: Tue,  7 Mar 2023 17:56:06 +0100
-Message-Id: <20230307170021.188253087@linuxfoundation.org>
+Subject: [PATCH 6.1 433/885] Revert "char: pcmcia: cm4000_cs: Replace mdelay with usleep_range in set_protocol"
+Date: Tue,  7 Mar 2023 17:56:07 +0100
+Message-Id: <20230307170021.228464299@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,60 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 38f28cfe9d08e3a47ef008798b275fef8118fc20 ]
+[ Upstream commit 70fae37a09268455b8ab4f64647086b61da6f39c ]
 
-Add the missing clk_disable_unprepare() before return from
-tegra_uart_hw_init() in the error handling path.
-When request_irq() fails in tegra_uart_startup(), 'tup->uart_clk'
-has been enabled, fix it by adding clk_disable_unprepare().
+This reverts commit be826ada52f1fcabed5b5217c94609ebf5967211.
 
-Fixes: cc9ca4d95846 ("serial: tegra: Only print FIFO error message when an error occurs")
-Fixes: d781ec21bae6 ("serial: tegra: report clk rate errors")
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Link: https://lore.kernel.org/r/20221126020852.113378-1-yiyang13@huawei.com
+The function monitor_card() is a timer handler that runs in an
+atomic context, but it calls usleep_range() that can sleep.
+As a result, the sleep-in-atomic-context bugs will happen.
+The process is shown below:
+
+    (atomic context)
+monitor_card()
+  set_protocol()
+    usleep_range() //sleep
+
+The origin commit c1986ee9bea3 ("[PATCH] New Omnikey Cardman
+4000 driver") works fine.
+
+Fixes: be826ada52f1 ("char: pcmcia: cm4000_cs: Replace mdelay with usleep_range in set_protocol")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Link: https://lore.kernel.org/r/20230118141000.5580-1-duoming@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial-tegra.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/char/pcmcia/cm4000_cs.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/serial-tegra.c b/drivers/tty/serial/serial-tegra.c
-index cda9cd4fa92c8..c08360212aa20 100644
---- a/drivers/tty/serial/serial-tegra.c
-+++ b/drivers/tty/serial/serial-tegra.c
-@@ -1047,6 +1047,7 @@ static int tegra_uart_hw_init(struct tegra_uart_port *tup)
- 	if (tup->cdata->fifo_mode_enable_status) {
- 		ret = tegra_uart_wait_fifo_mode_enabled(tup);
- 		if (ret < 0) {
-+			clk_disable_unprepare(tup->uart_clk);
- 			dev_err(tup->uport.dev,
- 				"Failed to enable FIFO mode: %d\n", ret);
- 			return ret;
-@@ -1068,6 +1069,7 @@ static int tegra_uart_hw_init(struct tegra_uart_port *tup)
- 	 */
- 	ret = tegra_set_baudrate(tup, TEGRA_UART_DEFAULT_BAUD);
- 	if (ret < 0) {
-+		clk_disable_unprepare(tup->uart_clk);
- 		dev_err(tup->uport.dev, "Failed to set baud rate\n");
- 		return ret;
+diff --git a/drivers/char/pcmcia/cm4000_cs.c b/drivers/char/pcmcia/cm4000_cs.c
+index adaec8fd4b16c..e656f42a28ac2 100644
+--- a/drivers/char/pcmcia/cm4000_cs.c
++++ b/drivers/char/pcmcia/cm4000_cs.c
+@@ -529,7 +529,8 @@ static int set_protocol(struct cm4000_dev *dev, struct ptsreq *ptsreq)
+ 			DEBUGP(5, dev, "NumRecBytes is valid\n");
+ 			break;
+ 		}
+-		usleep_range(10000, 11000);
++		/* can not sleep as this is in atomic context */
++		mdelay(10);
  	}
-@@ -1227,10 +1229,13 @@ static int tegra_uart_startup(struct uart_port *u)
- 				dev_name(u->dev), tup);
- 	if (ret < 0) {
- 		dev_err(u->dev, "Failed to register ISR for IRQ %d\n", u->irq);
--		goto fail_hw_init;
-+		goto fail_request_irq;
+ 	if (i == 100) {
+ 		DEBUGP(5, dev, "Timeout waiting for NumRecBytes getting "
+@@ -549,7 +550,8 @@ static int set_protocol(struct cm4000_dev *dev, struct ptsreq *ptsreq)
+ 			}
+ 			break;
+ 		}
+-		usleep_range(10000, 11000);
++		/* can not sleep as this is in atomic context */
++		mdelay(10);
  	}
- 	return 0;
  
-+fail_request_irq:
-+	/* tup->uart_clk is already enabled in tegra_uart_hw_init */
-+	clk_disable_unprepare(tup->uart_clk);
- fail_hw_init:
- 	if (!tup->use_rx_pio)
- 		tegra_uart_dma_channel_free(tup, true);
+ 	/* check whether it is a short PTS reply? */
 -- 
 2.39.2
 
