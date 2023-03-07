@@ -1,37 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3A6BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:51:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8809BC433EF;
-	Tue,  7 Mar 2023 18:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587E0BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:51:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0871C433D2;
+	Tue,  7 Mar 2023 18:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215094;
-	bh=j4WV0doVcqcXU/GoQxcUE4PFr43m0wuP6FLx2M2TvIA=;
+	s=korg; t=1678215097;
+	bh=55/Yf58UEJWDSFb/0U6fV8hj7XVEB6mxgYcUaTK40TM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zCGCEZrflMf84XHxAMAsfLG9jd+V5D7ubfppyEFQQizWSwGsDtOK1ahi3hNtS483U
-	 hUfw03oabzYt6f1+qI2Rg9QccWCJZzD7Uo1PKkL1TON64ui85fwENpBIvoPbAZIJUj
-	 uyruVmuEGW6lmZFwoh586aQ/RrArX900/V4t6bL4=
+	b=rDPY2ZEVr4qls2ahB9sZuLIqoYSZ4g4h3m34GNOnKFeCm1nzJK+r6hCX6rRp19L7T
+	 r6fs/Cudos8F6wZlPiRhGg7luWYXlb9DAr9qt1qWVPLRuytNCdPnuARNylUt02sR2b
+	 8VKSRuSgk39pL5Acm25vTQ0gsYY8sR5+WvSFKipQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Gonda <pgonda@google.com>,
-	Marc Orr <marcorr@google.com>,
-	David Rientjes <rientjes@google.com>,
-	Brijesh Singh <brijesh.singh@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	John Allen <john.allen@amd.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	linux-crypto@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 122/567] crypto: ccp - Refactor out sev_fw_alloc()
-Date: Tue,  7 Mar 2023 17:57:38 +0100
-Message-Id: <20230307165911.189186313@linuxfoundation.org>
+Subject: [PATCH 5.15 149/567] selftests/bpf: Fix out-of-srctree build
+Date: Tue,  7 Mar 2023 17:58:05 +0100
+Message-Id: <20230307165912.397022918@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -45,84 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Gonda <pgonda@google.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit cc17982d58d1e67eab831e7023ede999dda56173 ]
+[ Upstream commit 0b0757244754ea1d0721195c824770f5576e119e ]
 
-Create a helper function sev_fw_alloc() which can be used to allocate
-aligned memory regions for use by the PSP firmware. Currently only used
-for the SEV-ES TMR region but will be used for the SEV_INIT_EX NV memory
-region.
+Building BPF selftests out of srctree fails with:
 
-Signed-off-by: Peter Gonda <pgonda@google.com>
-Reviewed-by: Marc Orr <marcorr@google.com>
-Acked-by: David Rientjes <rientjes@google.com>
-Acked-by: Brijesh Singh <brijesh.singh@amd.com>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: Brijesh Singh <brijesh.singh@amd.com>
-Cc: Marc Orr <marcorr@google.com>
-Cc: Joerg Roedel <jroedel@suse.de>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: David Rientjes <rientjes@google.com>
-Cc: John Allen <john.allen@amd.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: linux-crypto@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 46a334a98f58 ("crypto: ccp - Flush the SEV-ES TMR memory before giving it to firmware")
+  make: *** No rule to make target '/linux-build//ima_setup.sh', needed by 'ima_setup.sh'.  Stop.
+
+The culprit is the rule that defines convenient shorthands like
+"make test_progs", which builds $(OUTPUT)/test_progs. These shorthands
+make sense only for binaries that are built though; scripts that live
+in the source tree do not end up in $(OUTPUT).
+
+Therefore drop $(TEST_PROGS) and $(TEST_PROGS_EXTENDED) from the rule.
+
+The issue exists for a while, but it became a problem only after commit
+d68ae4982cb7 ("selftests/bpf: Install all required files to run selftests"),
+which added dependencies on these scripts.
+
+Fixes: 03dcb78460c2 ("selftests/bpf: Add simple per-test targets to Makefile")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230208231211.283606-1-iii@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sev-dev.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ tools/testing/selftests/bpf/Makefile | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
-index 15ef60cd4b149..7c9149492970d 100644
---- a/drivers/crypto/ccp/sev-dev.c
-+++ b/drivers/crypto/ccp/sev-dev.c
-@@ -141,6 +141,17 @@ static int sev_cmd_buffer_len(int cmd)
- 	return 0;
- }
+diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
+index 638966ae8ad97..0d845a0c8599a 100644
+--- a/tools/testing/selftests/bpf/Makefile
++++ b/tools/testing/selftests/bpf/Makefile
+@@ -144,8 +144,6 @@ endif
+ # NOTE: Semicolon at the end is critical to override lib.mk's default static
+ # rule for binaries.
+ $(notdir $(TEST_GEN_PROGS)						\
+-	 $(TEST_PROGS)							\
+-	 $(TEST_PROGS_EXTENDED)						\
+ 	 $(TEST_GEN_PROGS_EXTENDED)					\
+ 	 $(TEST_CUSTOM_PROGS)): %: $(OUTPUT)/% ;
  
-+static void *sev_fw_alloc(unsigned long len)
-+{
-+	struct page *page;
-+
-+	page = alloc_pages(GFP_KERNEL, get_order(len));
-+	if (!page)
-+		return NULL;
-+
-+	return page_address(page);
-+}
-+
- static int __sev_do_cmd_locked(int cmd, void *data, int *psp_ret)
- {
- 	struct psp_device *psp = psp_master;
-@@ -1087,7 +1098,6 @@ EXPORT_SYMBOL_GPL(sev_issue_cmd_external_user);
- void sev_pci_init(void)
- {
- 	struct sev_device *sev = psp_master->sev_data;
--	struct page *tmr_page;
- 	int error, rc;
- 
- 	if (!sev)
-@@ -1103,14 +1113,10 @@ void sev_pci_init(void)
- 		sev_get_api_version();
- 
- 	/* Obtain the TMR memory area for SEV-ES use */
--	tmr_page = alloc_pages(GFP_KERNEL, get_order(SEV_ES_TMR_SIZE));
--	if (tmr_page) {
--		sev_es_tmr = page_address(tmr_page);
--	} else {
--		sev_es_tmr = NULL;
-+	sev_es_tmr = sev_fw_alloc(SEV_ES_TMR_SIZE);
-+	if (!sev_es_tmr)
- 		dev_warn(sev->dev,
- 			 "SEV: TMR allocation failed, SEV-ES support unavailable\n");
--	}
- 
- 	/* Initialize the platform */
- 	rc = sev_platform_init(&error);
 -- 
 2.39.2
 
