@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF87DBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58360C4339C;
-	Tue,  7 Mar 2023 18:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C6FBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D53C433D2;
+	Tue,  7 Mar 2023 18:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214182;
-	bh=aWg/qU5o6Sw8Q6J7igmSt3Xd3GDSXy1kR0Y0PIvOOKg=;
+	s=korg; t=1678214185;
+	bh=+fVs9usZtIFnqGAOOm9jUMFZ7lqzeabQSEA/+2iYn+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KrttxfHcCt64jDv+jne4jxv9xsF9UU9FtHudurT/disAaDIl4+6U6/Y2pJimnoKW5
-	 OKra3VNHrADaVjq5GxDJ8XlSVNA5jlkGanfvL7mAGiirYwByvqVxQJ2mFc0BFB6wSy
-	 sLkdaaUhEewXQPorfKRpa1TecrAvj/lPRGZwAqEc=
+	b=SQUjJ4CIDnwyvWBLx7gCWziZRx+ukrtvfznKi9b0E7s1B1Y5r7DnvBuP/Nw8mnlIr
+	 kUk3jzMcRyc08tX6JeqLFtz9/IM8MplT7xi6sIMjdQ9mx3/Da4aMGgFv+i4qSGHBx1
+	 nlu5RBTBXgMx+MynQvu3cULt4f95RBuvAcSDYfW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Shuah Khan <shuah@kernel.org>,
-	linux-kselftest@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.1 750/885] selftests: sched: Fix incorrect kernel headers search path
-Date: Tue,  7 Mar 2023 18:01:24 +0100
-Message-Id: <20230307170034.511772652@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 733/885] x86/reboot: Disable SVM, not just VMX, when stopping CPUs
+Date: Tue,  7 Mar 2023 18:01:07 +0100
+Message-Id: <20230307170033.835173607@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,41 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 0d2cace5af50806a6b32ab73d367b80e46acda0f upstream.
+commit a2b07fa7b93321c059af0c6d492cc9a4f1e390aa upstream.
 
-Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
-building against kernel headers from the build environment in scenarios
-where kernel headers are installed into a specific output directory
-(O=...).
+Disable SVM and more importantly force GIF=1 when halting a CPU or
+rebooting the machine.  Similar to VMX, SVM allows software to block
+INITs via CLGI, and thus can be problematic for a crash/reboot.  The
+window for failure is smaller with SVM as INIT is only blocked while
+GIF=0, i.e. between CLGI and STGI, but the window does exist.
 
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: linux-kselftest@vger.kernel.org
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: <stable@vger.kernel.org>  # 5.18+
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: fba4f472b33a ("x86/reboot: Turn off KVM when halting a CPU")
+Cc: stable@vger.kernel.org
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20221130233650.1404148-5-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/sched/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/smp.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/sched/Makefile b/tools/testing/selftests/sched/Makefile
-index 10c72f14fea9..099ee9213557 100644
---- a/tools/testing/selftests/sched/Makefile
-+++ b/tools/testing/selftests/sched/Makefile
-@@ -4,7 +4,7 @@ ifneq ($(shell $(CC) --version 2>&1 | head -n 1 | grep clang),)
- CLANG_FLAGS += -no-integrated-as
- endif
+--- a/arch/x86/kernel/smp.c
++++ b/arch/x86/kernel/smp.c
+@@ -32,7 +32,7 @@
+ #include <asm/mce.h>
+ #include <asm/trace/irq_vectors.h>
+ #include <asm/kexec.h>
+-#include <asm/virtext.h>
++#include <asm/reboot.h>
  
--CFLAGS += -O2 -Wall -g -I./ -I../../../../usr/include/  -Wl,-rpath=./ \
-+CFLAGS += -O2 -Wall -g -I./ $(KHDR_INCLUDES) -Wl,-rpath=./ \
- 	  $(CLANG_FLAGS)
- LDLIBS += -lpthread
+ /*
+  *	Some notes on x86 processor bugs affecting SMP operation:
+@@ -122,7 +122,7 @@ static int smp_stop_nmi_callback(unsigne
+ 	if (raw_smp_processor_id() == atomic_read(&stopping_cpu))
+ 		return NMI_HANDLED;
  
--- 
-2.39.2
-
+-	cpu_emergency_vmxoff();
++	cpu_emergency_disable_virtualization();
+ 	stop_this_cpu(NULL);
+ 
+ 	return NMI_HANDLED;
+@@ -134,7 +134,7 @@ static int smp_stop_nmi_callback(unsigne
+ DEFINE_IDTENTRY_SYSVEC(sysvec_reboot)
+ {
+ 	ack_APIC_irq();
+-	cpu_emergency_vmxoff();
++	cpu_emergency_disable_virtualization();
+ 	stop_this_cpu(NULL);
+ }
+ 
 
 
