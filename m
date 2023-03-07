@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB3DBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:49:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96B1C433EF;
-	Tue,  7 Mar 2023 17:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665CDBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:49:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D99C433D2;
+	Tue,  7 Mar 2023 17:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211386;
-	bh=q1gw+2yAbb/FwwN9EEEJWlrw8wb7LbQjVIVPSGV7sb4=;
+	s=korg; t=1678211389;
+	bh=k5HQyqm0VGAfss/paDeflC6MNEUDpsDoCIgnT97MHH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZYJZBZ5iLgrQLq1waTNa42BkOzIKGGJEzCA0T/2sg3v/S7axpPWJOAT+akeyxqz2z
-	 o6ckREY/aKFB/dx1DOwOdsvzYatqzELXG34UFeKXQuyBZgOOHHadjPSDZ3TNP2oaks
-	 kF3VBIP9ZYK+kvb+xsZEmc9PwN+4rTBhAjaR48LQ=
+	b=oOsb/m+ZSbKEOol9M4CS4RYCtQL6M9rJhdVAh/BZuFPUiEm3QY3foWx+i5q/T70Ih
+	 T/WdB0waHzpvFNWLEEoJ/VAi7gWUXTnivxFgNsV5pcL/Ss8SmJofCFWEQYsD5jOU2M
+	 ySGi0kZLfC99TuHWkSSrh6ThRZHRe1xfDx0wj7qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jos=C3=A9=20Oliveira?= <joseloliveira11@gmail.com>,
-	Rodrigo Branco <rodrigo@kernelhacking.com>,
 	KP Singh <kpsingh@kernel.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.2 0845/1001] x86/speculation: Allow enabling STIBP with legacy IBRS
-Date: Tue,  7 Mar 2023 18:00:17 +0100
-Message-Id: <20230307170058.469920143@linuxfoundation.org>
+Subject: [PATCH 6.2 0846/1001] Documentation/hw-vuln: Document the interaction between IBRS and STIBP
+Date: Tue,  7 Mar 2023 18:00:18 +0100
+Message-Id: <20230307170058.520339762@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,91 +36,56 @@ Content-Transfer-Encoding: 8bit
 
 From: KP Singh <kpsingh@kernel.org>
 
-commit 6921ed9049bc7457f66c1596c5b78aec0dae4a9d upstream.
+commit e02b50ca442e88122e1302d4dbc1b71a4808c13f upstream.
 
-When plain IBRS is enabled (not enhanced IBRS), the logic in
-spectre_v2_user_select_mitigation() determines that STIBP is not needed.
-
-The IBRS bit implicitly protects against cross-thread branch target
-injection. However, with legacy IBRS, the IBRS bit is cleared on
-returning to userspace for performance reasons which leaves userspace
-threads vulnerable to cross-thread branch target injection against which
-STIBP protects.
-
-Exclude IBRS from the spectre_v2_in_ibrs_mode() check to allow for
-enabling STIBP (through seccomp/prctl() by default or always-on, if
-selected by spectre_v2_user kernel cmdline parameter).
-
-  [ bp: Massage. ]
+Explain why STIBP is needed with legacy IBRS as currently implemented
+(KERNEL_IBRS) and why STIBP is not needed when enhanced IBRS is enabled.
 
 Fixes: 7c693f54c873 ("x86/speculation: Add spectre_v2=ibrs option to support Kernel IBRS")
-Reported-by: José Oliveira <joseloliveira11@gmail.com>
-Reported-by: Rodrigo Branco <rodrigo@kernelhacking.com>
 Signed-off-by: KP Singh <kpsingh@kernel.org>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230220120127.1975241-1-kpsingh@kernel.org
-Link: https://lore.kernel.org/r/20230221184908.2349578-1-kpsingh@kernel.org
+Link: https://lore.kernel.org/r/20230227060541.1939092-2-kpsingh@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/bugs.c |   25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ Documentation/admin-guide/hw-vuln/spectre.rst |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1132,14 +1132,18 @@ spectre_v2_parse_user_cmdline(void)
- 	return SPECTRE_V2_USER_CMD_AUTO;
- }
+--- a/Documentation/admin-guide/hw-vuln/spectre.rst
++++ b/Documentation/admin-guide/hw-vuln/spectre.rst
+@@ -479,8 +479,16 @@ Spectre variant 2
+    On Intel Skylake-era systems the mitigation covers most, but not all,
+    cases. See :ref:`[3] <spec_ref3>` for more details.
  
--static inline bool spectre_v2_in_ibrs_mode(enum spectre_v2_mitigation mode)
-+static inline bool spectre_v2_in_eibrs_mode(enum spectre_v2_mitigation mode)
- {
--	return mode == SPECTRE_V2_IBRS ||
--	       mode == SPECTRE_V2_EIBRS ||
-+	return mode == SPECTRE_V2_EIBRS ||
- 	       mode == SPECTRE_V2_EIBRS_RETPOLINE ||
- 	       mode == SPECTRE_V2_EIBRS_LFENCE;
- }
- 
-+static inline bool spectre_v2_in_ibrs_mode(enum spectre_v2_mitigation mode)
-+{
-+	return spectre_v2_in_eibrs_mode(mode) || mode == SPECTRE_V2_IBRS;
-+}
+-   On CPUs with hardware mitigation for Spectre variant 2 (e.g. Enhanced
+-   IBRS on x86), retpoline is automatically disabled at run time.
++   On CPUs with hardware mitigation for Spectre variant 2 (e.g. IBRS
++   or enhanced IBRS on x86), retpoline is automatically disabled at run time.
 +
- static void __init
- spectre_v2_user_select_mitigation(void)
- {
-@@ -1202,12 +1206,19 @@ spectre_v2_user_select_mitigation(void)
- 	}
++   Systems which support enhanced IBRS (eIBRS) enable IBRS protection once at
++   boot, by setting the IBRS bit, and they're automatically protected against
++   Spectre v2 variant attacks, including cross-thread branch target injections
++   on SMT systems (STIBP). In other words, eIBRS enables STIBP too.
++
++   Legacy IBRS systems clear the IBRS bit on exit to userspace and
++   therefore explicitly enable STIBP for that
  
- 	/*
--	 * If no STIBP, IBRS or enhanced IBRS is enabled, or SMT impossible,
--	 * STIBP is not required.
-+	 * If no STIBP, enhanced IBRS is enabled, or SMT impossible, STIBP
-+	 * is not required.
-+	 *
-+	 * Enhanced IBRS also protects against cross-thread branch target
-+	 * injection in user-mode as the IBRS bit remains always set which
-+	 * implicitly enables cross-thread protections.  However, in legacy IBRS
-+	 * mode, the IBRS bit is set only on kernel entry and cleared on return
-+	 * to userspace. This disables the implicit cross-thread protection,
-+	 * so allow for STIBP to be selected in that case.
- 	 */
- 	if (!boot_cpu_has(X86_FEATURE_STIBP) ||
- 	    !smt_possible ||
--	    spectre_v2_in_ibrs_mode(spectre_v2_enabled))
-+	    spectre_v2_in_eibrs_mode(spectre_v2_enabled))
- 		return;
- 
- 	/*
-@@ -2335,7 +2346,7 @@ static ssize_t mmio_stale_data_show_stat
- 
- static char *stibp_state(void)
- {
--	if (spectre_v2_in_ibrs_mode(spectre_v2_enabled))
-+	if (spectre_v2_in_eibrs_mode(spectre_v2_enabled))
- 		return "";
- 
- 	switch (spectre_v2_user_stibp) {
+    The retpoline mitigation is turned on by default on vulnerable
+    CPUs. It can be forced on or off by the administrator
+@@ -504,9 +512,12 @@ Spectre variant 2
+    For Spectre variant 2 mitigation, individual user programs
+    can be compiled with return trampolines for indirect branches.
+    This protects them from consuming poisoned entries in the branch
+-   target buffer left by malicious software.  Alternatively, the
+-   programs can disable their indirect branch speculation via prctl()
+-   (See :ref:`Documentation/userspace-api/spec_ctrl.rst <set_spec_ctrl>`).
++   target buffer left by malicious software.
++
++   On legacy IBRS systems, at return to userspace, implicit STIBP is disabled
++   because the kernel clears the IBRS bit. In this case, the userspace programs
++   can disable indirect branch speculation via prctl() (See
++   :ref:`Documentation/userspace-api/spec_ctrl.rst <set_spec_ctrl>`).
+    On x86, this will turn on STIBP to guard against attacks from the
+    sibling thread when the user program is running, and use IBPB to
+    flush the branch target buffer when switching to/from the program.
 
 
