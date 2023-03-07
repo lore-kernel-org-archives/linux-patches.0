@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2604BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:37:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0A9C433A0;
-	Tue,  7 Mar 2023 17:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DF5BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:37:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C53C4339B;
+	Tue,  7 Mar 2023 17:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210649;
-	bh=GxxFSXMNTqKtNsSPRZSLW+3w8I9CBF/zqPlg4wgMPYg=;
+	s=korg; t=1678210652;
+	bh=15sDA5DKukliQb3d+h19ZtlO5w0AT0Qz8DpjVraT9rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jnARjzm8x3O4xFVdr/h8n2VcNVVn6yPW5/9r/HlDgiVfzQJ4eMRjQGsEWdT3tcOxA
-	 sQvdUvDtJeKxZ4FVnpx/dIVTdLOZThZVHQLvAIA5tJrdBiFiGusMJTYNPjQgEDi8Lr
-	 xaOL1CbezR/3YcIdv07egOtfJYApQ1E0qEAWjAj8=
+	b=RwFZT5eP4I+omQQ173po0smiIwGbXB6ocBMk7LWqC2ii/yHZIH+hAtujnayi6kDRs
+	 ukQSetRGJmTu4ySTauFiQjRkqKX/TjjRs/rhQlE/F7Iwd/fjVSW81LfhPfYY8o4RG6
+	 W8v8+HegPDwkyscdnHOeSADw5OtT0jgINSrXoqIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dong Chuanjian <chuanjian@nfschina.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Sean Young <sean@mess.org>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0609/1001] media: drivers/media/v4l2-core/v4l2-h264 : add detection of null pointers
-Date: Tue,  7 Mar 2023 17:56:21 +0100
-Message-Id: <20230307170047.935274353@linuxfoundation.org>
+Subject: [PATCH 6.2 0610/1001] media: rc: Fix use-after-free bugs caused by ene_tx_irqsim()
+Date: Tue,  7 Mar 2023 17:56:22 +0100
+Message-Id: <20230307170047.983019663@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,46 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dong Chuanjian <chuanjian@nfschina.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit be3ae7cf4326e95bb1d5413b63baabc26f4a1324 ]
+[ Upstream commit 29b0589a865b6f66d141d79b2dd1373e4e50fe17 ]
 
-When the pointer variable is judged to be null, null is returned
-directly.
+When the ene device is detaching, function ene_remove() will
+be called. But there is no function to cancel tx_sim_timer
+in ene_remove(), the timer handler ene_tx_irqsim() could race
+with ene_remove(). As a result, the UAF bugs could happen,
+the process is shown below.
 
-[hverkuil: fix two checkpatch warnings]
+    (cleanup routine)          |        (timer routine)
+                               | mod_timer(&dev->tx_sim_timer, ..)
+ene_remove()                   | (wait a time)
+                               | ene_tx_irqsim()
+                               |   dev->hw_lock //USE
+                               |   ene_tx_sample(dev) //USE
 
-Signed-off-by: Dong Chuanjian <chuanjian@nfschina.com>
-Acked-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Fixes: d3f756ad629b ("media: v4l2: Trace calculated p/b0/b1 initial reflist")
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fix by adding del_timer_sync(&dev->tx_sim_timer) in ene_remove(),
+The tx_sim_timer could stop before ene device is deallocated.
+
+What's more, The rc_unregister_device() and del_timer_sync()
+should be called first in ene_remove() and the deallocated
+functions such as free_irq(), release_region() and so on
+should be called behind them. Because the rc_unregister_device()
+is well synchronized. Otherwise, race conditions may happen. The
+situations that may lead to race conditions are shown below.
+
+Firstly, the rx receiver is disabled with ene_rx_disable()
+before rc_unregister_device() in ene_remove(), which means it
+can be enabled again if a process opens /dev/lirc0 between
+ene_rx_disable() and rc_unregister_device().
+
+Secondly, the irqaction descriptor is freed by free_irq()
+before the rc device is unregistered, which means irqaction
+descriptor may be accessed again after it is deallocated.
+
+Thirdly, the timer can call ene_tx_sample() that can write
+to the io ports, which means the io ports could be accessed
+again after they are deallocated by release_region().
+
+Therefore, the rc_unregister_device() and del_timer_sync()
+should be called first in ene_remove().
+
+Suggested by: Sean Young <sean@mess.org>
+
+Fixes: 9ea53b74df9c ("V4L/DVB: STAGING: remove lirc_ene0100 driver")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-h264.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/rc/ene_ir.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-h264.c b/drivers/media/v4l2-core/v4l2-h264.c
-index 72bd64f651981..c00197d095e75 100644
---- a/drivers/media/v4l2-core/v4l2-h264.c
-+++ b/drivers/media/v4l2-core/v4l2-h264.c
-@@ -305,6 +305,8 @@ static const char *format_ref_list_p(const struct v4l2_h264_reflist_builder *bui
- 	int n = 0, i;
+diff --git a/drivers/media/rc/ene_ir.c b/drivers/media/rc/ene_ir.c
+index e09270916fbca..11ee21a7db8f0 100644
+--- a/drivers/media/rc/ene_ir.c
++++ b/drivers/media/rc/ene_ir.c
+@@ -1106,6 +1106,8 @@ static void ene_remove(struct pnp_dev *pnp_dev)
+ 	struct ene_device *dev = pnp_get_drvdata(pnp_dev);
+ 	unsigned long flags;
  
- 	*out_str = kmalloc(tmp_str_size, GFP_KERNEL);
-+	if (!(*out_str))
-+		return NULL;
++	rc_unregister_device(dev->rdev);
++	del_timer_sync(&dev->tx_sim_timer);
+ 	spin_lock_irqsave(&dev->hw_lock, flags);
+ 	ene_rx_disable(dev);
+ 	ene_rx_restore_hw_buffer(dev);
+@@ -1113,7 +1115,6 @@ static void ene_remove(struct pnp_dev *pnp_dev)
  
- 	n += snprintf(*out_str + n, tmp_str_size - n, "|");
- 
-@@ -343,6 +345,8 @@ static const char *format_ref_list_b(const struct v4l2_h264_reflist_builder *bui
- 	int n = 0, i;
- 
- 	*out_str = kmalloc(tmp_str_size, GFP_KERNEL);
-+	if (!(*out_str))
-+		return NULL;
- 
- 	n += snprintf(*out_str + n, tmp_str_size - n, "|");
+ 	free_irq(dev->irq, dev);
+ 	release_region(dev->hw_io, ENE_IO_SIZE);
+-	rc_unregister_device(dev->rdev);
+ 	kfree(dev);
+ }
  
 -- 
 2.39.2
