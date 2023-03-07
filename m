@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0D4BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:20:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43CCC4339B;
-	Tue,  7 Mar 2023 18:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D16BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:20:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818C5C433EF;
+	Tue,  7 Mar 2023 18:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213207;
-	bh=Dr4UgnbPZavGc00jvzwSHphBvr4c9pRFkQ2wVVRoK8o=;
+	s=korg; t=1678213209;
+	bh=r57Ea5GmEX0qfEv3DD/ciDbNj4bijMfTV9RcavoDFvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hXzSd1m012cnymK06aVmrV1WYmMysukV06vn5J7DjVNPRYUuGWBWw5crsDj0xK8lm
-	 joHqlqLoUEpPQibwZydtsfMWam8o3PQ/jHtCEfJFM1ru8ZZ0rvI4vNM9sckIaiFIsf
-	 w4EnyHppE7eg2n45pwp93GkpJugi0jo5DTwNu7TQ=
+	b=AtFMbqlXwvXI/oXvUDGIKqYZmx+76jMv6ky9NAXi5wJrrMRK48lfMQMaqGtvLs/GS
+	 djwsifYkxJSqz0r72tYKnNZ+7PRxizTdiys9Sots7pn1f6yNYXXXoFayaPVXcrtb/8
+	 gG37CBS29ETmwTwXEoyKfQQzkXE8TSBcZQelrYas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 433/885] Revert "char: pcmcia: cm4000_cs: Replace mdelay with usleep_range in set_protocol"
-Date: Tue,  7 Mar 2023 17:56:07 +0100
-Message-Id: <20230307170021.228464299@linuxfoundation.org>
+Subject: [PATCH 6.1 407/885] RDMA/hns: Fix refcount leak in hns_roce_mmap
+Date: Tue,  7 Mar 2023 17:55:41 +0100
+Message-Id: <20230307170020.095171797@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,58 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 70fae37a09268455b8ab4f64647086b61da6f39c ]
+[ Upstream commit cf6a05c8494a8ae7fec8e5f1229b45ca5b4bcd30 ]
 
-This reverts commit be826ada52f1fcabed5b5217c94609ebf5967211.
+rdma_user_mmap_entry_get_pgoff() takes the reference.
+Add missing rdma_user_mmap_entry_put() to release the reference.
 
-The function monitor_card() is a timer handler that runs in an
-atomic context, but it calls usleep_range() that can sleep.
-As a result, the sleep-in-atomic-context bugs will happen.
-The process is shown below:
-
-    (atomic context)
-monitor_card()
-  set_protocol()
-    usleep_range() //sleep
-
-The origin commit c1986ee9bea3 ("[PATCH] New Omnikey Cardman
-4000 driver") works fine.
-
-Fixes: be826ada52f1 ("char: pcmcia: cm4000_cs: Replace mdelay with usleep_range in set_protocol")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230118141000.5580-1-duoming@zju.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0045e0d3f42e ("RDMA/hns: Support direct wqe of userspace")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Acked-by Haoyue Xu <xuhaoyue1@hisilicon.com>
+Link: https://lore.kernel.org/r/20221223072900.802728-1-linmq006@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/pcmcia/cm4000_cs.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/pcmcia/cm4000_cs.c b/drivers/char/pcmcia/cm4000_cs.c
-index adaec8fd4b16c..e656f42a28ac2 100644
---- a/drivers/char/pcmcia/cm4000_cs.c
-+++ b/drivers/char/pcmcia/cm4000_cs.c
-@@ -529,7 +529,8 @@ static int set_protocol(struct cm4000_dev *dev, struct ptsreq *ptsreq)
- 			DEBUGP(5, dev, "NumRecBytes is valid\n");
- 			break;
- 		}
--		usleep_range(10000, 11000);
-+		/* can not sleep as this is in atomic context */
-+		mdelay(10);
- 	}
- 	if (i == 100) {
- 		DEBUGP(5, dev, "Timeout waiting for NumRecBytes getting "
-@@ -549,7 +550,8 @@ static int set_protocol(struct cm4000_dev *dev, struct ptsreq *ptsreq)
- 			}
- 			break;
- 		}
--		usleep_range(10000, 11000);
-+		/* can not sleep as this is in atomic context */
-+		mdelay(10);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
+index 8ba68ac12388d..946ba1109e878 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_main.c
++++ b/drivers/infiniband/hw/hns/hns_roce_main.c
+@@ -443,14 +443,15 @@ static int hns_roce_mmap(struct ib_ucontext *uctx, struct vm_area_struct *vma)
+ 		prot = pgprot_device(vma->vm_page_prot);
+ 		break;
+ 	default:
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
  	}
  
- 	/* check whether it is a short PTS reply? */
+ 	ret = rdma_user_mmap_io(uctx, vma, pfn, rdma_entry->npages * PAGE_SIZE,
+ 				prot, rdma_entry);
+ 
++out:
+ 	rdma_user_mmap_entry_put(rdma_entry);
+-
+ 	return ret;
+ }
+ 
 -- 
 2.39.2
 
