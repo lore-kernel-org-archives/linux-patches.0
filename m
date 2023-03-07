@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AB9BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:02:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AFB3C433EF;
-	Tue,  7 Mar 2023 19:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34ED3BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:02:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEDDC433EF;
+	Tue,  7 Mar 2023 19:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215766;
-	bh=84aRRsaT2T0YSguVF4SlhMBlWRKeCvVPUY9n3w4+1Mo=;
+	s=korg; t=1678215769;
+	bh=q0nFyrzsLbQmiMt/l6yAOyLLyMfS4CsnyJcwzRzVrBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nD2KPjZCLWY69Owe7V4k/2lfL7scA9vd5rrIbpQVYZxryFqPkjdQLSmBaB00/98o4
-	 alJS99oc86TAgbWMlHmfyPhi7AMQ1sTwRlHKNqVhvREsHzGTj8f3Yop29WcHOo9KZl
-	 xHYP8x9g1X+BY3339nyYfiN9jg0EfYL4hyZMT3as=
+	b=beELCouxz3vWhl7+p76qlUsycnPRK7fHyX231pVSUz2fILG8lmtApza6QUjGbg+jc
+	 Vjc+QzwKTQDd13o5O08Pr56BqcepMIGI664ucXL30yYFItBQ3qX6m6W21pHZ4f7mfX
+	 FTGuE98m6xHr92rU9QQDA2GTcAVyTrv4Q1cBcFBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mustafa Ismail <mustafa.ismail@intel.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Sindhu Devale <sindhu.devale@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 326/567] RDMA/irdma: Cap MSIX used to online CPUs + 1
-Date: Tue,  7 Mar 2023 18:01:02 +0100
-Message-Id: <20230307165920.027054638@linuxfoundation.org>
+Subject: [PATCH 5.15 361/567] media: i2c: ov7670: 0 instead of -EINVAL was returned
+Date: Tue,  7 Mar 2023 18:01:37 +0100
+Message-Id: <20230307165921.512884936@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -37,94 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mustafa Ismail <mustafa.ismail@intel.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 9cd9842c46996ef62173c36619c746f57416bcb0 ]
+[ Upstream commit 6a4c664539e6de9b32b65ddcf767ec1bcc1d7f8a ]
 
-The irdma driver can use a maximum number of msix vectors equal
-to num_online_cpus() + 1 and the kernel warning stack below is shown
-if that number is exceeded.
+If the media bus is unsupported, then return -EINVAL. Instead it
+returned 'ret' which happened to be 0.
 
-The kernel throws a warning as the driver tries to update the affinity
-hint with a CPU mask greater than the max CPU IDs. Fix this by capping
-the MSIX vectors to num_online_cpus() + 1.
+This fixes a smatch warning:
 
- WARNING: CPU: 7 PID: 23655 at include/linux/cpumask.h:106 irdma_cfg_ceq_vector+0x34c/0x3f0 [irdma]
- RIP: 0010:irdma_cfg_ceq_vector+0x34c/0x3f0 [irdma]
- Call Trace:
- irdma_rt_init_hw+0xa62/0x1290 [irdma]
- ? irdma_alloc_local_mac_entry+0x1a0/0x1a0 [irdma]
- ? __is_kernel_percpu_address+0x63/0x310
- ? rcu_read_lock_held_common+0xe/0xb0
- ? irdma_lan_unregister_qset+0x280/0x280 [irdma]
- ? irdma_request_reset+0x80/0x80 [irdma]
- ? ice_get_qos_params+0x84/0x390 [ice]
- irdma_probe+0xa40/0xfc0 [irdma]
- ? rcu_read_lock_bh_held+0xd0/0xd0
- ? irdma_remove+0x140/0x140 [irdma]
- ? rcu_read_lock_sched_held+0x62/0xe0
- ? down_write+0x187/0x3d0
- ? auxiliary_match_id+0xf0/0x1a0
- ? irdma_remove+0x140/0x140 [irdma]
- auxiliary_bus_probe+0xa6/0x100
- __driver_probe_device+0x4a4/0xd50
- ? __device_attach_driver+0x2c0/0x2c0
- driver_probe_device+0x4a/0x110
- __driver_attach+0x1aa/0x350
- bus_for_each_dev+0x11d/0x1b0
- ? subsys_dev_iter_init+0xe0/0xe0
- bus_add_driver+0x3b1/0x610
- driver_register+0x18e/0x410
- ? 0xffffffffc0b88000
- irdma_init_module+0x50/0xaa [irdma]
- do_one_initcall+0x103/0x5f0
- ? perf_trace_initcall_level+0x420/0x420
- ? do_init_module+0x4e/0x700
- ? __kasan_kmalloc+0x7d/0xa0
- ? kmem_cache_alloc_trace+0x188/0x2b0
- ? kasan_unpoison+0x21/0x50
- do_init_module+0x1d1/0x700
- load_module+0x3867/0x5260
- ? layout_and_allocate+0x3990/0x3990
- ? rcu_read_lock_held_common+0xe/0xb0
- ? rcu_read_lock_sched_held+0x62/0xe0
- ? rcu_read_lock_bh_held+0xd0/0xd0
- ? __vmalloc_node_range+0x46b/0x890
- ? lock_release+0x5c8/0xba0
- ? alloc_vm_area+0x120/0x120
- ? selinux_kernel_module_from_file+0x2a5/0x300
- ? __inode_security_revalidate+0xf0/0xf0
- ? __do_sys_init_module+0x1db/0x260
- __do_sys_init_module+0x1db/0x260
- ? load_module+0x5260/0x5260
- ? do_syscall_64+0x22/0x450
- do_syscall_64+0xa5/0x450
- entry_SYSCALL_64_after_hwframe+0x66/0xdb
+ov7670.c:1843 ov7670_parse_dt() warn: missing error code? 'ret'
 
-Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
-Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Signed-off-by: Sindhu Devale <sindhu.devale@intel.com>
-Link: https://lore.kernel.org/r/20230207201938.1329-1-sindhu.devale@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 01b8444828fc ("media: v4l2: i2c: ov7670: Implement OF mbus configuration")
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/hw.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/i2c/ov7670.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
-index c14f19cff5343..b918f80d2e2c6 100644
---- a/drivers/infiniband/hw/irdma/hw.c
-+++ b/drivers/infiniband/hw/irdma/hw.c
-@@ -483,6 +483,8 @@ static enum irdma_status_code irdma_save_msix_info(struct irdma_pci_f *rf)
- 	iw_qvlist->num_vectors = rf->msix_count;
- 	if (rf->msix_count <= num_online_cpus())
- 		rf->msix_shared = true;
-+	else if (rf->msix_count > num_online_cpus() + 1)
-+		rf->msix_count = num_online_cpus() + 1;
+diff --git a/drivers/media/i2c/ov7670.c b/drivers/media/i2c/ov7670.c
+index 1be2c0e5bdc15..23001ede138c1 100644
+--- a/drivers/media/i2c/ov7670.c
++++ b/drivers/media/i2c/ov7670.c
+@@ -1841,7 +1841,7 @@ static int ov7670_parse_dt(struct device *dev,
  
- 	pmsix = rf->msix_entries;
- 	for (i = 0, ceq_idx = 0; i < rf->msix_count; i++, iw_qvinfo++) {
+ 	if (bus_cfg.bus_type != V4L2_MBUS_PARALLEL) {
+ 		dev_err(dev, "Unsupported media bus type\n");
+-		return ret;
++		return -EINVAL;
+ 	}
+ 	info->mbus_config = bus_cfg.bus.parallel.flags;
+ 
 -- 
 2.39.2
 
