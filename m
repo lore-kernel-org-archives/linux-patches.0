@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622F2BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:31:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB3EC4339B;
-	Tue,  7 Mar 2023 18:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6A1BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:31:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB90C433D2;
+	Tue,  7 Mar 2023 18:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213863;
-	bh=x8QQC8Sso74aHc/fshn/Nnjs36aQLerzYq2RGzsexfQ=;
+	s=korg; t=1678213866;
+	bh=yNPdvSlvwnp472yH/0FNF5wu39G6ekhcKcjp2QiyD9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lb+oWsjzBCHX+my3H4T2IYQ5/wJlc7O40aVAjpMYK4I/DIH8KejeXkjieDOkQzeaJ
-	 oqiVY5EWQTBmBgOrC4YN9/H89aKBU4BwKkZgn3myMaVw0l4PMy9AM3piY2DwUU9MW3
-	 OyUuMbZ/PRT8MBAqNenm56Oygyfus8cLUotA+ltc=
+	b=ITkjW4+S7faDc31xjTS3M3f7EvtMjj9qs1m0EIE9bojm4lbYSmYHsUtzmObD6mHV3
+	 OTViWSv3LrKEW+NxqzWHja4aC8bBtKaq8m9M3H2BaUK//CVCVCHTmNPsR8FQmkHaJX
+	 h7x+8K9LMa1qpbM8YD4iejqNQb5+OZD0fegTBzHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Asahi Lina <lina@asahilina.net>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 644/885] cifs: prevent data race in smb2_reconnect()
-Date: Tue,  7 Mar 2023 17:59:38 +0100
-Message-Id: <20230307170030.136011022@linuxfoundation.org>
+Subject: [PATCH 6.1 645/885] drm/shmem-helper: Revert accidental non-GPL export
+Date: Tue,  7 Mar 2023 17:59:39 +0100
+Message-Id: <20230307170030.181148844@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,167 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@cjr.nz>
+From: Asahi Lina <lina@asahilina.net>
 
-[ Upstream commit 3c0070f54b3128de498c2dd9934a21f0dd867111 ]
+[ Upstream commit 047a754558d640eaa080fce3b22ca9f3d4e04626 ]
 
-Make sure to get an up-to-date TCP_Server_Info::nr_targets value prior
-to waiting the server to be reconnected in smb2_reconnect().  It is
-set in cifs_tcp_ses_needs_reconnect() and protected by
-TCP_Server_Info::srv_lock.
+The referenced commit added a wrapper for drm_gem_shmem_get_pages_sgt(),
+but in the process it accidentally changed the export type from GPL to
+non-GPL. Switch it back to GPL.
 
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Fixes: ddddedaa0db9 ("drm/shmem-helper: Fix locking for drm_gem_shmem_get_pages_sgt()")
+Signed-off-by: Asahi Lina <lina@asahilina.net>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230227-shmem-export-fix-v1-1-8880b2c25e81@asahilina.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2pdu.c | 119 +++++++++++++++++++++++++---------------------
- 1 file changed, 64 insertions(+), 55 deletions(-)
+ drivers/gpu/drm/drm_gem_shmem_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/cifs/smb2pdu.c b/fs/cifs/smb2pdu.c
-index 3b93680a319e4..5a063af8a094e 100644
---- a/fs/cifs/smb2pdu.c
-+++ b/fs/cifs/smb2pdu.c
-@@ -139,6 +139,66 @@ smb2_hdr_assemble(struct smb2_hdr *shdr, __le16 smb2_cmd,
- 	return;
+diff --git a/drivers/gpu/drm/drm_gem_shmem_helper.c b/drivers/gpu/drm/drm_gem_shmem_helper.c
+index 2c559b310cad3..7af9da886d4e5 100644
+--- a/drivers/gpu/drm/drm_gem_shmem_helper.c
++++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
+@@ -747,7 +747,7 @@ struct sg_table *drm_gem_shmem_get_pages_sgt(struct drm_gem_shmem_object *shmem)
+ 
+ 	return sgt;
  }
+-EXPORT_SYMBOL(drm_gem_shmem_get_pages_sgt);
++EXPORT_SYMBOL_GPL(drm_gem_shmem_get_pages_sgt);
  
-+static int wait_for_server_reconnect(struct TCP_Server_Info *server,
-+				     __le16 smb2_command, bool retry)
-+{
-+	int timeout = 10;
-+	int rc;
-+
-+	spin_lock(&server->srv_lock);
-+	if (server->tcpStatus != CifsNeedReconnect) {
-+		spin_unlock(&server->srv_lock);
-+		return 0;
-+	}
-+	timeout *= server->nr_targets;
-+	spin_unlock(&server->srv_lock);
-+
-+	/*
-+	 * Return to caller for TREE_DISCONNECT and LOGOFF and CLOSE
-+	 * here since they are implicitly done when session drops.
-+	 */
-+	switch (smb2_command) {
-+	/*
-+	 * BB Should we keep oplock break and add flush to exceptions?
-+	 */
-+	case SMB2_TREE_DISCONNECT:
-+	case SMB2_CANCEL:
-+	case SMB2_CLOSE:
-+	case SMB2_OPLOCK_BREAK:
-+		return -EAGAIN;
-+	}
-+
-+	/*
-+	 * Give demultiplex thread up to 10 seconds to each target available for
-+	 * reconnect -- should be greater than cifs socket timeout which is 7
-+	 * seconds.
-+	 *
-+	 * On "soft" mounts we wait once. Hard mounts keep retrying until
-+	 * process is killed or server comes back on-line.
-+	 */
-+	do {
-+		rc = wait_event_interruptible_timeout(server->response_q,
-+						      (server->tcpStatus != CifsNeedReconnect),
-+						      timeout * HZ);
-+		if (rc < 0) {
-+			cifs_dbg(FYI, "%s: aborting reconnect due to received signal\n",
-+				 __func__);
-+			return -ERESTARTSYS;
-+		}
-+
-+		/* are we still trying to reconnect? */
-+		spin_lock(&server->srv_lock);
-+		if (server->tcpStatus != CifsNeedReconnect) {
-+			spin_unlock(&server->srv_lock);
-+			return 0;
-+		}
-+		spin_unlock(&server->srv_lock);
-+	} while (retry);
-+
-+	cifs_dbg(FYI, "%s: gave up waiting on reconnect\n", __func__);
-+	return -EHOSTDOWN;
-+}
-+
- static int
- smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
- 	       struct TCP_Server_Info *server)
-@@ -146,7 +206,6 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
- 	int rc = 0;
- 	struct nls_table *nls_codepage;
- 	struct cifs_ses *ses;
--	int retries;
- 
- 	/*
- 	 * SMB2s NegProt, SessSetup, Logoff do not have tcon yet so
-@@ -184,61 +243,11 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
- 	    (!tcon->ses->server) || !server)
- 		return -EIO;
- 
--	ses = tcon->ses;
--	retries = server->nr_targets;
--
--	/*
--	 * Give demultiplex thread up to 10 seconds to each target available for
--	 * reconnect -- should be greater than cifs socket timeout which is 7
--	 * seconds.
--	 */
--	while (server->tcpStatus == CifsNeedReconnect) {
--		/*
--		 * Return to caller for TREE_DISCONNECT and LOGOFF and CLOSE
--		 * here since they are implicitly done when session drops.
--		 */
--		switch (smb2_command) {
--		/*
--		 * BB Should we keep oplock break and add flush to exceptions?
--		 */
--		case SMB2_TREE_DISCONNECT:
--		case SMB2_CANCEL:
--		case SMB2_CLOSE:
--		case SMB2_OPLOCK_BREAK:
--			return -EAGAIN;
--		}
--
--		rc = wait_event_interruptible_timeout(server->response_q,
--						      (server->tcpStatus != CifsNeedReconnect),
--						      10 * HZ);
--		if (rc < 0) {
--			cifs_dbg(FYI, "%s: aborting reconnect due to a received signal by the process\n",
--				 __func__);
--			return -ERESTARTSYS;
--		}
--
--		/* are we still trying to reconnect? */
--		spin_lock(&server->srv_lock);
--		if (server->tcpStatus != CifsNeedReconnect) {
--			spin_unlock(&server->srv_lock);
--			break;
--		}
--		spin_unlock(&server->srv_lock);
--
--		if (retries && --retries)
--			continue;
-+	rc = wait_for_server_reconnect(server, smb2_command, tcon->retry);
-+	if (rc)
-+		return rc;
- 
--		/*
--		 * on "soft" mounts we wait once. Hard mounts keep
--		 * retrying until process is killed or server comes
--		 * back on-line
--		 */
--		if (!tcon->retry) {
--			cifs_dbg(FYI, "gave up waiting on reconnect in smb_init\n");
--			return -EHOSTDOWN;
--		}
--		retries = server->nr_targets;
--	}
-+	ses = tcon->ses;
- 
- 	spin_lock(&ses->chan_lock);
- 	if (!cifs_chan_needs_reconnect(ses, server) && !tcon->need_reconnect) {
+ /**
+  * drm_gem_shmem_prime_import_sg_table - Produce a shmem GEM object from
 -- 
 2.39.2
 
