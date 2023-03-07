@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACE3BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:18:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75871C433EF;
-	Tue,  7 Mar 2023 18:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD354BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:18:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A08C433EF;
+	Tue,  7 Mar 2023 18:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213094;
-	bh=QgSKdgfyBaZC9v2Vz815Nf4v+VhdFygQ1/YbWpmzEww=;
+	s=korg; t=1678213097;
+	bh=I46RAPOT1C6yO8uEpNetw6qOsclVEkCPFiZUDGa4KBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fvJHKssMcvzU66YG9v59YGBjTpiB/Ee7AT9I3fntxDOM361jamL7qr7D31teJEzkD
-	 t0V0+0PL/DxsVBThwRDY8/NtYAYREKBG+jUGEgMqEVTKXh+EkM3GJ8gXL3ppCkrbVg
-	 xggN1pJ3ili0FzQ4MlOU7OCciGYuTKh2DNnBcCmo=
+	b=2vtqtwOS+GWVWWSe33Qrfg/BW7BPG/RrHYxQraTDVoPeIHDGvMKbmbBKKNA3nNGnd
+	 ERvTNOE6mnvh6mH2PlDMFstf/pli+CAKqM2X0GJkZQAH+z71azgY1J/ejpyS1bMdE1
+	 AJ99yqkSVr8eiH4mtQf7/UYLJhJ56whnoyQaEqmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"kernelci.org bot" <bot@kernelci.org>,
+	David Laight <David.Laight@ACULAB.COM>,
+	Guillaume Tucker <guillaume.tucker@collabora.com>,
+	Guenter Roeck <groeck@chromium.org>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 396/885] selftests/ftrace: Fix bash specific "==" operator
-Date: Tue,  7 Mar 2023 17:55:30 +0100
-Message-Id: <20230307170019.603429750@linuxfoundation.org>
+Subject: [PATCH 6.1 397/885] selftests: use printf instead of echo -ne
+Date: Tue,  7 Mar 2023 17:55:31 +0100
+Message-Id: <20230307170019.644662732@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,42 +38,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Guillaume Tucker <guillaume.tucker@collabora.com>
 
-[ Upstream commit 1e6b485c922fbedf41d5a9f4e6449c5aeb923a32 ]
+[ Upstream commit 9e34fad00fc889abbb99d751a4c22cf2bded10df ]
 
-Since commit a1d6cd88c897 ("selftests/ftrace: event_triggers: wait
-longer for test_event_enable") introduced bash specific "=="
-comparation operator, that test will fail when we run it on a
-posix-shell. `checkbashisms` warned it as below.
+Rather than trying to guess which implementation of "echo" to run with
+support for "-ne" options, use "printf" instead of "echo -ne".  It
+handles escape characters as a standard feature and it is widespread
+among modern shells.
 
-possible bashism in ftrace/func_event_triggers.tc line 45 (should be 'b = a'):
-        if [ "$e" == $val ]; then
-
-This replaces it with "=".
-
-Fixes: a1d6cd88c897 ("selftests/ftrace: event_triggers: wait longer for test_event_enable")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reported-by: "kernelci.org bot" <bot@kernelci.org>
+Suggested-by: David Laight <David.Laight@ACULAB.COM>
+Fixes: 3297a4df805d ("kselftests: Enable the echo command to print newlines in Makefile")
+Fixes: 79c16b1120fe ("selftests: find echo binary to use -ne options")
+Signed-off-by: Guillaume Tucker <guillaume.tucker@collabora.com>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/ftrace/test.d/ftrace/func_event_triggers.tc       | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/Makefile | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-index 3eea2abf68f9e..2ad7d4b501cc1 100644
---- a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-+++ b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-@@ -42,7 +42,7 @@ test_event_enabled() {
- 
-     while [ $check_times -ne 0 ]; do
- 	e=`cat $EVENT_ENABLE`
--	if [ "$e" == $val ]; then
-+	if [ "$e" = $val ]; then
- 	    return 0
- 	fi
- 	sleep $SLEEP_TIME
+diff --git a/tools/testing/selftests/Makefile b/tools/testing/selftests/Makefile
+index 253596a1cb69c..aae64eb2ae737 100644
+--- a/tools/testing/selftests/Makefile
++++ b/tools/testing/selftests/Makefile
+@@ -231,11 +231,10 @@ ifdef INSTALL_PATH
+ 	@# While building kselftest-list.text skip also non-existent TARGET dirs:
+ 	@# they could be the result of a build failure and should NOT be
+ 	@# included in the generated runlist.
+-	ECHO=`which echo`; \
+ 	for TARGET in $(TARGETS); do \
+ 		BUILD_TARGET=$$BUILD/$$TARGET;	\
+-		[ ! -d $(INSTALL_PATH)/$$TARGET ] && $$ECHO "Skipping non-existent dir: $$TARGET" && continue; \
+-		$$ECHO -ne "Emit Tests for $$TARGET\n"; \
++		[ ! -d $(INSTALL_PATH)/$$TARGET ] && printf "Skipping non-existent dir: $$TARGET\n" && continue; \
++		printf "Emit Tests for $$TARGET\n"; \
+ 		$(MAKE) -s --no-print-directory OUTPUT=$$BUILD_TARGET COLLECTION=$$TARGET \
+ 			-C $$TARGET emit_tests >> $(TEST_LIST); \
+ 	done;
 -- 
 2.39.2
 
