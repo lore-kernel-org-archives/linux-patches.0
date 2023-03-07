@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68133BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:07:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B7EC433D2;
-	Tue,  7 Mar 2023 18:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C557BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:07:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDCBC433D2;
+	Tue,  7 Mar 2023 18:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212434;
-	bh=XTErf9Aln/p/7tr6d/NCkem36TtCVxIr9dQxahm+ZAs=;
+	s=korg; t=1678212437;
+	bh=azLNAWPSkYBgVh05FKqO6gjThzNWw3HWekS3UUwrBNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gsr7agxYc71/ZLVf0jJfOEtDx1IDZ2Qu8N05PnyYnqUwszgA7KXZr6P7F6DOIlAl/
-	 rzUJ07MAuyRCCWtJ2HFDyUx0tuEbP7Fua2NlWacCLqiMMk/cUOeo/FOqBJ4+f3HPcr
-	 PHg1n/RO+rIRHVvrSYL3E8jx+nhKes6lPelTO0y4=
+	b=GucKbWiXldfqnig5+mEFnnj97qrCCS4WUnd6oaJpwj4+vmYw5MA3mCf+8ffIVl27b
+	 GJnyuvubDWWBiqmQyYcM9SWwqobwuRJhaGEA1feEoIfr/jUCsXTeN8f2nnU146+lYV
+	 v2U5A3g6+ceupwSk5vPgbgYS+KSjZhMdfe6GuNsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 143/885] rcu-tasks: Improve comments explaining tasks_rcu_exit_srcu purpose
-Date: Tue,  7 Mar 2023 17:51:17 +0100
-Message-Id: <20230307170008.076373636@linuxfoundation.org>
+Subject: [PATCH 6.1 176/885] crypto: essiv - Handle EBUSY correctly
+Date: Tue,  7 Mar 2023 17:51:50 +0100
+Message-Id: <20230307170009.615640456@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -40,97 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit e4e1e8089c5fd948da12cb9f4adc93821036945f ]
+[ Upstream commit b5a772adf45a32c68bef28e60621f12617161556 ]
 
-Make sure we don't need to look again into the depths of git blame in
-order not to miss a subtle part about how rcu-tasks is dealing with
-exiting tasks.
+As it is essiv only handles the special return value of EINPROGERSS,
+which means that in all other cases it will free data related to the
+request.
 
-Suggested-by: Boqun Feng <boqun.feng@gmail.com>
-Suggested-by: Neeraj Upadhyay <quic_neeraju@quicinc.com>
-Suggested-by: Paul E. McKenney <paulmck@kernel.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Stable-dep-of: 28319d6dc5e2 ("rcu-tasks: Fix synchronize_rcu_tasks() VS zap_pid_ns_processes()")
+However, as the caller of essiv may specify MAY_BACKLOG, we also need
+to expect EBUSY and treat it in the same way.  Otherwise backlogged
+requests will trigger a use-after-free.
+
+Fixes: be1eb7f78aa8 ("crypto: essiv - create wrapper template...")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tasks.h | 37 +++++++++++++++++++++++++++++--------
- 1 file changed, 29 insertions(+), 8 deletions(-)
+ crypto/essiv.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index f5bf6fb430dab..688c461036f57 100644
---- a/kernel/rcu/tasks.h
-+++ b/kernel/rcu/tasks.h
-@@ -827,11 +827,21 @@ static void rcu_tasks_pertask(struct task_struct *t, struct list_head *hop)
- static void rcu_tasks_postscan(struct list_head *hop)
- {
- 	/*
--	 * Wait for tasks that are in the process of exiting.  This
--	 * does only part of the job, ensuring that all tasks that were
--	 * previously exiting reach the point where they have disabled
--	 * preemption, allowing the later synchronize_rcu() to finish
--	 * the job.
-+	 * Exiting tasks may escape the tasklist scan. Those are vulnerable
-+	 * until their final schedule() with TASK_DEAD state. To cope with
-+	 * this, divide the fragile exit path part in two intersecting
-+	 * read side critical sections:
-+	 *
-+	 * 1) An _SRCU_ read side starting before calling exit_notify(),
-+	 *    which may remove the task from the tasklist, and ending after
-+	 *    the final preempt_disable() call in do_exit().
-+	 *
-+	 * 2) An _RCU_ read side starting with the final preempt_disable()
-+	 *    call in do_exit() and ending with the final call to schedule()
-+	 *    with TASK_DEAD state.
-+	 *
-+	 * This handles the part 1). And postgp will handle part 2) with a
-+	 * call to synchronize_rcu().
- 	 */
- 	synchronize_srcu(&tasks_rcu_exit_srcu);
- }
-@@ -898,7 +908,10 @@ static void rcu_tasks_postgp(struct rcu_tasks *rtp)
- 	 *
- 	 * In addition, this synchronize_rcu() waits for exiting tasks
- 	 * to complete their final preempt_disable() region of execution,
--	 * cleaning up after the synchronize_srcu() above.
-+	 * cleaning up after synchronize_srcu(&tasks_rcu_exit_srcu),
-+	 * enforcing the whole region before tasklist removal until
-+	 * the final schedule() with TASK_DEAD state to be an RCU TASKS
-+	 * read side critical section.
- 	 */
- 	synchronize_rcu();
- }
-@@ -988,7 +1001,11 @@ void show_rcu_tasks_classic_gp_kthread(void)
- EXPORT_SYMBOL_GPL(show_rcu_tasks_classic_gp_kthread);
- #endif // !defined(CONFIG_TINY_RCU)
+diff --git a/crypto/essiv.c b/crypto/essiv.c
+index e33369df90344..307eba74b901e 100644
+--- a/crypto/essiv.c
++++ b/crypto/essiv.c
+@@ -171,7 +171,12 @@ static void essiv_aead_done(struct crypto_async_request *areq, int err)
+ 	struct aead_request *req = areq->data;
+ 	struct essiv_aead_request_ctx *rctx = aead_request_ctx(req);
  
--/* Do the srcu_read_lock() for the above synchronize_srcu().  */
-+/*
-+ * Contribute to protect against tasklist scan blind spot while the
-+ * task is exiting and may be removed from the tasklist. See
-+ * corresponding synchronize_srcu() for further details.
-+ */
- void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
- {
- 	preempt_disable();
-@@ -996,7 +1013,11 @@ void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
- 	preempt_enable();
++	if (err == -EINPROGRESS)
++		goto out;
++
+ 	kfree(rctx->assoc);
++
++out:
+ 	aead_request_complete(req, err);
  }
  
--/* Do the srcu_read_unlock() for the above synchronize_srcu().  */
-+/*
-+ * Contribute to protect against tasklist scan blind spot while the
-+ * task is exiting and may be removed from the tasklist. See
-+ * corresponding synchronize_srcu() for further details.
-+ */
- void exit_tasks_rcu_finish(void) __releases(&tasks_rcu_exit_srcu)
- {
- 	struct task_struct *t = current;
+@@ -247,7 +252,7 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
+ 	err = enc ? crypto_aead_encrypt(subreq) :
+ 		    crypto_aead_decrypt(subreq);
+ 
+-	if (rctx->assoc && err != -EINPROGRESS)
++	if (rctx->assoc && err != -EINPROGRESS && err != -EBUSY)
+ 		kfree(rctx->assoc);
+ 	return err;
+ }
 -- 
 2.39.2
 
