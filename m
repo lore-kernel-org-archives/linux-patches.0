@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AC4BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D899C4339B;
-	Tue,  7 Mar 2023 18:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB5ABA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94DFAC433D2;
+	Tue,  7 Mar 2023 18:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214923;
-	bh=kSNXJmxxfKkTzrW2svLlyiqkbdqEYdpCACCoqNOj1PU=;
+	s=korg; t=1678214926;
+	bh=K7CWgWiOKS4AZXvQTaolyPtkfXtKFglhHGIvay7/64o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=msaTktvDdA/MV2fdJVcMacmQYRa6iGFm6NM1nToq1drxOCezkHpkuBbQIDYyzLA2W
-	 8BITQ39vRXMdQs+RLAO7yUUPn6P+UqoodhXT6i72D1uGMgL3oX+YEmBBV0yqQUGC+J
-	 NtMDcC4KS/1c+5BM1hwYU8O3pLQAfpuKy4V0KgQ0=
+	b=iTybuAiMFEJSzE4qbO2wFKQVvp2pj+tttOQv7UxhDzeDfEhAT3vkpfYndXbVHdR65
+	 n14Rf+x1a838phK/Bw6jKphNm5msX1/PzFXwJq0rdqrFdTSaZfGkT+j3x+1lxIIm/m
+	 d9MGGSfxdjDG9OoCNOp9J0r0mE57W3GS8oS8qQx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 086/567] ACPICA: Drop port I/O validation for some regions
-Date: Tue,  7 Mar 2023 17:57:02 +0100
-Message-Id: <20230307165909.606313589@linuxfoundation.org>
+Subject: [PATCH 5.15 095/567] thermal/drivers/tsens: Add compat string for the qcom,msm8960
+Date: Tue,  7 Mar 2023 17:57:11 +0100
+Message-Id: <20230307165910.000360057@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,73 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit e1d9148582ab2c3dada5c5cf8ca7531ca269fee5 ]
+[ Upstream commit 2caf73969de6675318a711d0622406c8c66afc03 ]
 
-Microsoft introduced support in Windows XP for blocking port I/O
-to various regions.  For Windows compatibility ACPICA has adopted
-the same protections and will disallow writes to those
-(presumably) the same regions.
+On apq8064 (msm8960) platforms the tsens device is created manually by
+the gcc driver. Prepare the tsens driver for the qcom,msm8960-tsens
+device instantiated from the device tree.
 
-On some systems the AML included with the firmware will issue 4 byte
-long writes to 0x80.  These writes aren't making it over because of this
-blockage. The first 4 byte write attempt is rejected, and then
-subsequently 1 byte at a time each offset is tried. The first at 0x80
-works, but then the next 3 bytes are rejected.
-
-This manifests in bizarre failures for devices that expected the AML to
-write all 4 bytes.  Trying the same AML on Windows 10 or 11 doesn't hit
-this failure and all 4 bytes are written.
-
-Either some of these regions were wrong or some point after Windows XP
-some of these regions blocks have been lifted.
-
-In the last 15 years there doesn't seem to be any reports popping up of
-this error in the Windows event viewer anymore.  There is no documentation
-at Microsoft's developer site indicating that Windows ACPI interpreter
-blocks these regions. Between the lack of documentation and the fact that
-the writes actually do work in Windows 10 and 11, it's quite likely
-Windows doesn't actually enforce this anymore.
-
-So to help the issue, only enforce Windows XP specific entries if the
-latest _OSI supported is Windows XP. Continue to enforce the
-ALWAYS_ILLEGAL entries.
-
-Link: https://github.com/acpica/acpica/pull/817
-Fixes: 7f0719039085 ("ACPICA: New: I/O port protection")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20220406002648.393486-3-dmitry.baryshkov@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Stable-dep-of: a7d3006be5ca ("thermal/drivers/tsens: Sort out msm8976 vs msm8956 data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/hwvalid.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/thermal/qcom/tsens.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/acpi/acpica/hwvalid.c b/drivers/acpi/acpica/hwvalid.c
-index e15badf4077aa..c6716f90e013a 100644
---- a/drivers/acpi/acpica/hwvalid.c
-+++ b/drivers/acpi/acpica/hwvalid.c
-@@ -23,8 +23,8 @@ acpi_hw_validate_io_request(acpi_io_address address, u32 bit_width);
-  *
-  * The table is used to implement the Microsoft port access rules that
-  * first appeared in Windows XP. Some ports are always illegal, and some
-- * ports are only illegal if the BIOS calls _OSI with a win_XP string or
-- * later (meaning that the BIOS itelf is post-XP.)
-+ * ports are only illegal if the BIOS calls _OSI with nothing newer than
-+ * the specific _OSI strings.
-  *
-  * This provides ACPICA with the desired port protections and
-  * Microsoft compatibility.
-@@ -145,7 +145,8 @@ acpi_hw_validate_io_request(acpi_io_address address, u32 bit_width)
- 
- 			/* Port illegality may depend on the _OSI calls made by the BIOS */
- 
--			if (acpi_gbl_osi_data >= port_info->osi_dependency) {
-+			if (port_info->osi_dependency == ACPI_ALWAYS_ILLEGAL ||
-+			    acpi_gbl_osi_data == port_info->osi_dependency) {
- 				ACPI_DEBUG_PRINT((ACPI_DB_VALUES,
- 						  "Denied AML access to port 0x%8.8X%8.8X/%X (%s 0x%.4X-0x%.4X)\n",
- 						  ACPI_FORMAT_UINT64(address),
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index 99a8d9f3e03ca..cef1cbcf03f41 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -978,6 +978,9 @@ static const struct of_device_id tsens_table[] = {
+ 	}, {
+ 		.compatible = "qcom,msm8939-tsens",
+ 		.data = &data_8939,
++	}, {
++		.compatible = "qcom,msm8960-tsens",
++		.data = &data_8960,
+ 	}, {
+ 		.compatible = "qcom,msm8974-tsens",
+ 		.data = &data_8974,
 -- 
 2.39.2
 
