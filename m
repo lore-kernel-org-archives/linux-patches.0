@@ -1,25 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC321BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:31:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED20C433EF;
-	Tue,  7 Mar 2023 18:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E364CBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:31:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607BEC433EF;
+	Tue,  7 Mar 2023 18:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213902;
-	bh=euUxiKwP+1pbufyhQM4OyDNkBa6a7IsDvu6FGiGWhWQ=;
+	s=korg; t=1678213905;
+	bh=LPvGUOx4vbuVPSChpeYRsdIAvq8Y0LaeGGQd+K6MXfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E9jHOvaf0eQNSnK5iRXfHZQD6f/0TAB6eCPEr/1YcC8UK5iOoX26SiuObRovZQ6Lf
-	 GAN3fIk+LolRaoB/tpgO7L97Jw3uOq2Sm8pbDE8HiPjwBo6mFpPzYorKW+3aWI46KI
-	 +144FoA0bfzC52Zp3zySxPNuDP5q0j7yTYMuotQw=
+	b=A5nqBJiPfzsf4eLK9PK5LgeIk3gFaM7iDGFKCRoMDMH6LWJ2n7GQLXjh5fSAE175s
+	 VN9rV9fhG7Ie8Zfc4Xp3ezmZUgPZkdcNz/dn7QqxaNcmTU79yFp9tzUT5FS1F1zYbi
+	 V7R3Ygtg1pjV9hB/FH9nORYJ/amBRAb9chC2PqhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH 6.1 656/885] ipmi_ssif: Rename idle state and check
-Date: Tue,  7 Mar 2023 17:59:50 +0100
-Message-Id: <20230307170030.654703233@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	io-uring@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 657/885] io_uring: Replace 0-length array with flexible array
+Date: Tue,  7 Mar 2023 17:59:51 +0100
+Message-Id: <20230307170030.702826839@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -33,193 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corey Minyard <cminyard@mvista.com>
+From: Kees Cook <keescook@chromium.org>
 
-commit 8230831c43a328c2be6d28c65d3f77e14c59986b upstream.
+commit 36632d062975a9ff4410c90dd6d37922b68d0920 upstream.
 
-Rename the SSIF_IDLE() to IS_SSIF_IDLE(), since that is more clear, and
-rename SSIF_NORMAL to SSIF_IDLE, since that's more accurate.
+Zero-length arrays are deprecated[1]. Replace struct io_uring_buf_ring's
+"bufs" with a flexible array member. (How is the size of this array
+verified?) Detected with GCC 13, using -fstrict-flex-arrays=3:
 
+In function 'io_ring_buffer_select',
+    inlined from 'io_buffer_select' at io_uring/kbuf.c:183:10:
+io_uring/kbuf.c:141:23: warning: array subscript 255 is outside the bounds of an interior zero-length array 'struct io_uring_buf[0]' [-Wzero-length-bounds]
+  141 |                 buf = &br->bufs[head];
+      |                       ^~~~~~~~~~~~~~~
+In file included from include/linux/io_uring.h:7,
+                 from io_uring/kbuf.c:10:
+include/uapi/linux/io_uring.h: In function 'io_buffer_select':
+include/uapi/linux/io_uring.h:628:41: note: while referencing 'bufs'
+  628 |                 struct io_uring_buf     bufs[0];
+      |                                         ^~~~
+
+[1] https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays
+
+Fixes: c7fb19428d67 ("io_uring: add support for ring mapped supplied buffers")
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Pavel Begunkov <asml.silence@gmail.com>
+Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Cc: io-uring@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/20230105190507.gonna.131-kees@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c |   46 +++++++++++++++++++++---------------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ include/uapi/linux/io_uring.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -92,7 +92,7 @@
- #define SSIF_WATCH_WATCHDOG_TIMEOUT	msecs_to_jiffies(250)
- 
- enum ssif_intf_state {
--	SSIF_NORMAL,
-+	SSIF_IDLE,
- 	SSIF_GETTING_FLAGS,
- 	SSIF_GETTING_EVENTS,
- 	SSIF_CLEARING_FLAGS,
-@@ -100,8 +100,8 @@ enum ssif_intf_state {
- 	/* FIXME - add watchdog stuff. */
+--- a/include/uapi/linux/io_uring.h
++++ b/include/uapi/linux/io_uring.h
+@@ -617,7 +617,7 @@ struct io_uring_buf_ring {
+ 			__u16	resv3;
+ 			__u16	tail;
+ 		};
+-		struct io_uring_buf	bufs[0];
++		__DECLARE_FLEX_ARRAY(struct io_uring_buf, bufs);
+ 	};
  };
- 
--#define SSIF_IDLE(ssif)	 ((ssif)->ssif_state == SSIF_NORMAL \
--			  && (ssif)->curr_msg == NULL)
-+#define IS_SSIF_IDLE(ssif) ((ssif)->ssif_state == SSIF_IDLE \
-+			    && (ssif)->curr_msg == NULL)
- 
- /*
-  * Indexes into stats[] in ssif_info below.
-@@ -348,9 +348,9 @@ static void return_hosed_msg(struct ssif
- 
- /*
-  * Must be called with the message lock held.  This will release the
-- * message lock.  Note that the caller will check SSIF_IDLE and start a
-- * new operation, so there is no need to check for new messages to
-- * start in here.
-+ * message lock.  Note that the caller will check IS_SSIF_IDLE and
-+ * start a new operation, so there is no need to check for new
-+ * messages to start in here.
-  */
- static void start_clear_flags(struct ssif_info *ssif_info, unsigned long *flags)
- {
-@@ -367,7 +367,7 @@ static void start_clear_flags(struct ssi
- 
- 	if (start_send(ssif_info, msg, 3) != 0) {
- 		/* Error, just go to normal state. */
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 	}
- }
- 
-@@ -382,7 +382,7 @@ static void start_flag_fetch(struct ssif
- 	mb[0] = (IPMI_NETFN_APP_REQUEST << 2);
- 	mb[1] = IPMI_GET_MSG_FLAGS_CMD;
- 	if (start_send(ssif_info, mb, 2) != 0)
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- }
- 
- static void check_start_send(struct ssif_info *ssif_info, unsigned long *flags,
-@@ -393,7 +393,7 @@ static void check_start_send(struct ssif
- 
- 		flags = ipmi_ssif_lock_cond(ssif_info, &oflags);
- 		ssif_info->curr_msg = NULL;
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		ipmi_free_smi_msg(msg);
- 	}
-@@ -407,7 +407,7 @@ static void start_event_fetch(struct ssi
- 
- 	msg = ipmi_alloc_smi_msg();
- 	if (!msg) {
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		return;
- 	}
-@@ -430,7 +430,7 @@ static void start_recv_msg_fetch(struct
- 
- 	msg = ipmi_alloc_smi_msg();
- 	if (!msg) {
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		return;
- 	}
-@@ -448,9 +448,9 @@ static void start_recv_msg_fetch(struct
- 
- /*
-  * Must be called with the message lock held.  This will release the
-- * message lock.  Note that the caller will check SSIF_IDLE and start a
-- * new operation, so there is no need to check for new messages to
-- * start in here.
-+ * message lock.  Note that the caller will check IS_SSIF_IDLE and
-+ * start a new operation, so there is no need to check for new
-+ * messages to start in here.
-  */
- static void handle_flags(struct ssif_info *ssif_info, unsigned long *flags)
- {
-@@ -466,7 +466,7 @@ static void handle_flags(struct ssif_inf
- 		/* Events available. */
- 		start_event_fetch(ssif_info, flags);
- 	else {
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 	}
- }
-@@ -568,7 +568,7 @@ static void watch_timeout(struct timer_l
- 	if (ssif_info->watch_timeout) {
- 		mod_timer(&ssif_info->watch_timer,
- 			  jiffies + ssif_info->watch_timeout);
--		if (SSIF_IDLE(ssif_info)) {
-+		if (IS_SSIF_IDLE(ssif_info)) {
- 			start_flag_fetch(ssif_info, flags); /* Releases lock */
- 			return;
- 		}
-@@ -756,7 +756,7 @@ static void msg_done_handler(struct ssif
- 	}
- 
- 	switch (ssif_info->ssif_state) {
--	case SSIF_NORMAL:
-+	case SSIF_IDLE:
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		if (!msg)
- 			break;
-@@ -774,7 +774,7 @@ static void msg_done_handler(struct ssif
- 			 * Error fetching flags, or invalid length,
- 			 * just give up for now.
- 			 */
--			ssif_info->ssif_state = SSIF_NORMAL;
-+			ssif_info->ssif_state = SSIF_IDLE;
- 			ipmi_ssif_unlock_cond(ssif_info, flags);
- 			dev_warn(&ssif_info->client->dev,
- 				 "Error getting flags: %d %d, %x\n",
-@@ -809,7 +809,7 @@ static void msg_done_handler(struct ssif
- 				 "Invalid response clearing flags: %x %x\n",
- 				 data[0], data[1]);
- 		}
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		break;
- 
-@@ -887,7 +887,7 @@ static void msg_done_handler(struct ssif
- 	}
- 
- 	flags = ipmi_ssif_lock_cond(ssif_info, &oflags);
--	if (SSIF_IDLE(ssif_info) && !ssif_info->stopping) {
-+	if (IS_SSIF_IDLE(ssif_info) && !ssif_info->stopping) {
- 		if (ssif_info->req_events)
- 			start_event_fetch(ssif_info, flags);
- 		else if (ssif_info->req_flags)
-@@ -1032,7 +1032,7 @@ static void start_next_msg(struct ssif_i
- 	unsigned long oflags;
- 
-  restart:
--	if (!SSIF_IDLE(ssif_info)) {
-+	if (!IS_SSIF_IDLE(ssif_info)) {
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		return;
- 	}
-@@ -1255,7 +1255,7 @@ static void shutdown_ssif(void *send_inf
- 	dev_set_drvdata(&ssif_info->client->dev, NULL);
- 
- 	/* make sure the driver is not looking for flags any more. */
--	while (ssif_info->ssif_state != SSIF_NORMAL)
-+	while (ssif_info->ssif_state != SSIF_IDLE)
- 		schedule_timeout(1);
- 
- 	ssif_info->stopping = true;
-@@ -1825,7 +1825,7 @@ static int ssif_probe(struct i2c_client
- 	}
- 
- 	spin_lock_init(&ssif_info->lock);
--	ssif_info->ssif_state = SSIF_NORMAL;
-+	ssif_info->ssif_state = SSIF_IDLE;
- 	timer_setup(&ssif_info->retry_timer, retry_timeout, 0);
- 	timer_setup(&ssif_info->watch_timer, watch_timeout, 0);
  
 
 
