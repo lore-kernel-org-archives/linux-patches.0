@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BC8BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:16:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28AD2C433EF;
-	Tue,  7 Mar 2023 18:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8D7BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:16:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A595C433EF;
+	Tue,  7 Mar 2023 18:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213010;
-	bh=hNvETghRVz4SEq0n1aQcQLBjG7OwrPLlrJwjTSqg3J4=;
+	s=korg; t=1678213013;
+	bh=6/OwhqZEoCnWMvzWTG606iTH0y7ZrDpAltPe5w4+44o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sEYHo5mvfmiCIH+NY0suiuCbyX/VCXTRh6v4El4EnHDF6SVvDxdK8kUX+sFHgdOrx
-	 GYYydSBoymjLEWvuWERjOO8sdaeYHhmM83Mk3GkqocVbVVjnZKoi+Khn4x6Xx+tH4H
-	 /eN5BKNhe6apWHW/Efjuw7e2UWhZsYBzkOAviLUE=
+	b=unbHrlHosG8d64NP/qu8Xy97yp3k6Eid1UN+sJf5fZQKElGK1q/hwkbnaxXJz1KyV
+	 j3qCrf7YqfvenVkw5IpvIXkuVAezau9r/iIt4s0JmBy9B8Ueb2PEI2sg0dmNCpzqxo
+	 Satt8gAH3FXS2d/5HbYHFJl4Om/DnpmV2xsFg+Qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Neanne <jneanne@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 342/885] regulator: tps65219: use generic set_bypass()
-Date: Tue,  7 Mar 2023 17:54:36 +0100
-Message-Id: <20230307170017.079788528@linuxfoundation.org>
+Subject: [PATCH 6.1 369/885] HID: bigben: use spinlock to safely schedule workers
+Date: Tue,  7 Mar 2023 17:55:03 +0100
+Message-Id: <20230307170018.348332828@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,63 +35,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jerome Neanne <jneanne@baylibre.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 0365df81145a4cfaae5f4da896160de512256e6d ]
+[ Upstream commit 76ca8da989c7d97a7f76c75d475fe95a584439d7 ]
 
-Due to wrong interpretation of the specification,
-custom implementation was used instead of standard regmap helper.
-LINK: https://lore.kernel.org/all/c2014039-f1e8-6976-33d6-52e2dd4e7b66@baylibre.com/
+Use spinlocks to deal with workers introducing a wrapper
+bigben_schedule_work(), and several spinlock checks.
+Otherwise, bigben_set_led() may schedule bigben->worker after the
+structure has been freed, causing a use-after-free.
 
-Fixes: c12ac5fc3e0a ("regulator: drivers: Add TI TPS65219 PMIC regulators support")
-
-Regulator does NOT require to be off to be switched to bypass mode.
-
-Signed-off-by: Jerome Neanne <jneanne@baylibre.com>
-Link: https://lore.kernel.org/r/20230203140119.13029-1-jneanne@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 4eb1b01de5b9 ("HID: hid-bigbenff: fix race condition for scheduled work during removal")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-3-7860c5763c38@diag.uniroma1.it
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/tps65219-regulator.c | 20 +-------------------
- 1 file changed, 1 insertion(+), 19 deletions(-)
+ drivers/hid/hid-bigbenff.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/regulator/tps65219-regulator.c b/drivers/regulator/tps65219-regulator.c
-index 070159cb5f094..58f6541b6417b 100644
---- a/drivers/regulator/tps65219-regulator.c
-+++ b/drivers/regulator/tps65219-regulator.c
-@@ -173,24 +173,6 @@ static unsigned int tps65219_get_mode(struct regulator_dev *dev)
- 		return REGULATOR_MODE_NORMAL;
- }
- 
--/*
-- * generic regulator_set_bypass_regmap does not fully match requirements
-- * TPS65219 Requires explicitly that regulator is disabled before switch
-- */
--static int tps65219_set_bypass(struct regulator_dev *dev, bool enable)
--{
--	struct tps65219 *tps = rdev_get_drvdata(dev);
--	unsigned int rid = rdev_get_id(dev);
--
--	if (dev->desc->ops->is_enabled(dev)) {
--		dev_err(tps->dev,
--			"%s LDO%d enabled, must be shut down to set bypass ",
--			__func__, rid);
--		return -EBUSY;
--	}
--	return regulator_set_bypass_regmap(dev, enable);
--}
--
- /* Operations permitted on BUCK1/2/3 */
- static const struct regulator_ops tps65219_bucks_ops = {
- 	.is_enabled		= regulator_is_enabled_regmap,
-@@ -217,7 +199,7 @@ static const struct regulator_ops tps65219_ldos_1_2_ops = {
- 	.set_voltage_sel	= regulator_set_voltage_sel_regmap,
- 	.list_voltage		= regulator_list_voltage_linear_range,
- 	.map_voltage		= regulator_map_voltage_linear_range,
--	.set_bypass		= tps65219_set_bypass,
-+	.set_bypass		= regulator_set_bypass_regmap,
- 	.get_bypass		= regulator_get_bypass_regmap,
+diff --git a/drivers/hid/hid-bigbenff.c b/drivers/hid/hid-bigbenff.c
+index b98c5f31c184b..9d6560db762b1 100644
+--- a/drivers/hid/hid-bigbenff.c
++++ b/drivers/hid/hid-bigbenff.c
+@@ -185,6 +185,15 @@ struct bigben_device {
+ 	struct work_struct worker;
  };
+ 
++static inline void bigben_schedule_work(struct bigben_device *bigben)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&bigben->lock, flags);
++	if (!bigben->removed)
++		schedule_work(&bigben->worker);
++	spin_unlock_irqrestore(&bigben->lock, flags);
++}
+ 
+ static void bigben_worker(struct work_struct *work)
+ {
+@@ -197,9 +206,6 @@ static void bigben_worker(struct work_struct *work)
+ 	u32 len;
+ 	unsigned long flags;
+ 
+-	if (bigben->removed)
+-		return;
+-
+ 	buf = hid_alloc_report_buf(bigben->report, GFP_KERNEL);
+ 	if (!buf)
+ 		return;
+@@ -285,7 +291,7 @@ static int hid_bigben_play_effect(struct input_dev *dev, void *data,
+ 		bigben->work_ff = true;
+ 		spin_unlock_irqrestore(&bigben->lock, flags);
+ 
+-		schedule_work(&bigben->worker);
++		bigben_schedule_work(bigben);
+ 	}
+ 
+ 	return 0;
+@@ -320,7 +326,7 @@ static void bigben_set_led(struct led_classdev *led,
+ 
+ 			if (work) {
+ 				bigben->work_led = true;
+-				schedule_work(&bigben->worker);
++				bigben_schedule_work(bigben);
+ 			}
+ 			return;
+ 		}
+@@ -450,7 +456,7 @@ static int bigben_probe(struct hid_device *hid,
+ 	bigben->left_motor_force = 0;
+ 	bigben->work_led = true;
+ 	bigben->work_ff = true;
+-	schedule_work(&bigben->worker);
++	bigben_schedule_work(bigben);
+ 
+ 	hid_info(hid, "LED and force feedback support for BigBen gamepad\n");
  
 -- 
 2.39.2
