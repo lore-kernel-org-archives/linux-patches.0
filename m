@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9DFBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:22:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2B9C433A8;
-	Tue,  7 Mar 2023 17:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D04BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:22:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C418C4339C;
+	Tue,  7 Mar 2023 17:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209766;
-	bh=dcmblC/SePZoK3dQ7BTm3TrmLyO1R9FmNJq34zUxykk=;
+	s=korg; t=1678209768;
+	bh=yLqsfe9OFdEr0APCOAWlSxF1+L2TAlIwQnIaPFRvmss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TG+M2Qnaq2zaDRxpZwzq9DkuhsNF0H6Nn88La/VRnPVNalVywVDzhr2YENbAyiDSN
-	 Fmkn0kVp71BQOOUaI0xhWxEFCE74kV9AwjeqTKYEJKcCYyZDHw7jyLEqg8IkzPv+vM
-	 3BBkadFIsVT12ex8Ow0LkncvOHs68hoNQJ77Tyxo=
+	b=RrEqq2YtN0kucZm8cyuJ7quqAJ6cVFDvrGO6JilEyjs9iJdWFFuFmK1r7eU+xyFRX
+	 Oy+wSVW4c2ePJa+IF+rjjbRl93rKY6MemIYdtRoqn3Tk+iBfu4D9o25QbonxgAiUPA
+	 AiHButImFRvb80nzfTmeynuUxY/2f9XzkWWYipIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Niederer <adam.niederer@gmail.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0293/1001] ACPI: resource: Add IRQ overrides for MAINGEAR Vector Pro 2 models
-Date: Tue,  7 Mar 2023 17:51:05 +0100
-Message-Id: <20230307170034.318491014@linuxfoundation.org>
+Subject: [PATCH 6.2 0294/1001] ACPI: resource: Do IRQ override on all TongFang GMxRGxx
+Date: Tue,  7 Mar 2023 17:51:06 +0100
+Message-Id: <20230307170034.350238744@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,65 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adam Niederer <adam.niederer@gmail.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-[ Upstream commit cb18703c179713056bd7e3bdfc2260ab4e8658f0 ]
+[ Upstream commit 17bb7046e7ce038a73ee97eaa804e0300c5199e2 ]
 
-Fix a regression introduced by commit 9946e39fe8d0 ("ACPI: resource: skip
-IRQ override on AMD Zen platforms") on MAINGEAR Vector Pro 2 systems, which
-causes the built-in keyboard to not work. This restores the functionality
-by adding an IRQ override.
+Apply commit 7592b79ba4a9 ("ACPI: resource: do IRQ override on XMG Core 15")
+override for all vendors using this mainboard.
 
-No other IRQs were being overridden before, so this should be all that is
-needed for these systems. I have personally tested this on the 15" model
-(MG-VCP2-15A3070T), and I have confirmation that the issue is present on
-the 17" model (MG-VCP2-17A3070T).
-
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Fixes: 9946e39fe8d0 ("ACPI: resource: skip IRQ override on AMD Zen platforms")
-Signed-off-by: Adam Niederer <adam.niederer@gmail.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/acpi/resource.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index 192d1784e409b..1d9d3364bc2b5 100644
+index 1d9d3364bc2b5..a222bda7e15b0 100644
 --- a/drivers/acpi/resource.c
 +++ b/drivers/acpi/resource.c
-@@ -478,6 +478,24 @@ static const struct dmi_system_id schenker_gm_rg[] = {
+@@ -467,11 +467,10 @@ static const struct dmi_system_id lenovo_laptop[] = {
  	{ }
  };
  
-+static const struct dmi_system_id maingear_laptop[] = {
-+	{
-+		.ident = "MAINGEAR Vector Pro 2 15",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Micro Electronics Inc"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "MG-VCP2-15A3070T"),
-+		}
-+	},
-+	{
-+		.ident = "MAINGEAR Vector Pro 2 17",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Micro Electronics Inc"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "MG-VCP2-17A3070T"),
-+		},
-+	},
-+	{ }
-+};
-+
- struct irq_override_cmp {
- 	const struct dmi_system_id *system;
- 	unsigned char irq;
-@@ -493,6 +511,7 @@ static const struct irq_override_cmp override_table[] = {
+-static const struct dmi_system_id schenker_gm_rg[] = {
++static const struct dmi_system_id tongfang_gm_rg[] = {
+ 	{
+-		.ident = "XMG CORE 15 (M22)",
++		.ident = "TongFang GMxRGxx/XMG CORE 15 (M22)/TUXEDO Stellaris 15 Gen4 AMD",
+ 		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "SchenkerTechnologiesGmbH"),
+ 			DMI_MATCH(DMI_BOARD_NAME, "GMxRGxx"),
+ 		},
+ 	},
+@@ -510,7 +509,7 @@ static const struct irq_override_cmp override_table[] = {
+ 	{ asus_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, false },
  	{ lenovo_laptop, 6, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, true },
  	{ lenovo_laptop, 10, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, true },
- 	{ schenker_gm_rg, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
-+	{ maingear_laptop, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
+-	{ schenker_gm_rg, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
++	{ tongfang_gm_rg, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
+ 	{ maingear_laptop, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
  };
  
- static bool acpi_dev_irq_override(u32 gsi, u8 triggering, u8 polarity,
 -- 
 2.39.2
 
