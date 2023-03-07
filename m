@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCA3BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A339C433EF;
-	Tue,  7 Mar 2023 18:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DBBBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D63BC433A1;
+	Tue,  7 Mar 2023 18:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214192;
-	bh=/nqLP+XkAp/8WIlHNv/XY1EMyQbwVdU9UA+mbYz5OYM=;
+	s=korg; t=1678214195;
+	bh=eP+73pVJN2JOL4/U1n4qAQhINBuvjQM1H1Ib7gZxDEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FXJ+Hc8GMIHL2W1u7wGSQ4X7MrtyOG5Wl89yt8I3mTSpo4qdVhWPeDhyKe9Oufgcj
-	 CRNHnbCYNX+Z84shbtvM11ja7tW4XGPb1oi6EswDAf8xbsasxu/5RztKR6+uHB7KGX
-	 n7/Yc0UuKf+8NGy5B++Ewu6XtM7pQUnBN92r52JU=
+	b=pV7RVjzu706uaZPD6c4uDjvNv2qsZMzvCYhxsShJyg0CpkehLSA0fUq8pRzTNIIEM
+	 vetpgESKGVsisjYgTKKI06CwQYI9Mtggz66qHuJKNqdKBy8OWzubzGq030fpU1uuuo
+	 Qfp39trUcw9kfnVsY/dqEbFfHh4ZhrWdSXlcXRFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,10 +20,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shuah Khan <shuah@kernel.org>,
 	linux-kselftest@vger.kernel.org,
 	Ingo Molnar <mingo@redhat.com>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.1 752/885] selftests: pid_namespace: Fix incorrect kernel headers search path
-Date: Tue,  7 Mar 2023 18:01:26 +0100
-Message-Id: <20230307170034.603339908@linuxfoundation.org>
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.1 753/885] selftests: arm64: Fix incorrect kernel headers search path
+Date: Tue,  7 Mar 2023 18:01:27 +0100
+Message-Id: <20230307170034.650240255@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -39,7 +40,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-commit e81ff69f66969a16a98a2e0977c1860f1c182c74 upstream.
+commit 7482c19173b7eb044d476b3444d7ee55bc669d03 upstream.
 
 Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
 building against kernel headers from the build environment in scenarios
@@ -51,20 +52,35 @@ Cc: Shuah Khan <shuah@kernel.org>
 Cc: linux-kselftest@vger.kernel.org
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: <stable@vger.kernel.org>  # 5.18+
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/pid_namespace/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/arm64/fp/Makefile   |    2 +-
+ tools/testing/selftests/arm64/tags/Makefile |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/pid_namespace/Makefile
-+++ b/tools/testing/selftests/pid_namespace/Makefile
-@@ -1,5 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0
--CFLAGS += -g -I../../../../usr/include/
-+CFLAGS += -g $(KHDR_INCLUDES)
+--- a/tools/testing/selftests/arm64/fp/Makefile
++++ b/tools/testing/selftests/arm64/fp/Makefile
+@@ -3,7 +3,7 @@
+ # A proper top_srcdir is needed by KSFT(lib.mk)
+ top_srcdir = $(realpath ../../../../../)
  
- TEST_GEN_PROGS = regression_enomem
+-CFLAGS += -I$(top_srcdir)/usr/include/
++CFLAGS += $(KHDR_INCLUDES)
+ 
+ TEST_GEN_PROGS := fp-stress \
+ 	sve-ptrace sve-probe-vls \
+--- a/tools/testing/selftests/arm64/tags/Makefile
++++ b/tools/testing/selftests/arm64/tags/Makefile
+@@ -1,6 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
+ 
+-CFLAGS += -I../../../../../usr/include/
++CFLAGS += $(KHDR_INCLUDES)
+ TEST_GEN_PROGS := tags_test
+ TEST_PROGS := run_tags_test.sh
  
 
 
