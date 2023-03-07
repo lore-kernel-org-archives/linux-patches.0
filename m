@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C81BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:20:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E71DCC4339B;
-	Tue,  7 Mar 2023 18:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2B6BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:20:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9322C4339B;
+	Tue,  7 Mar 2023 18:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213229;
-	bh=/55D4IlGGGL6+GREfVl+Vyvoo7MmRdzj7+9QD8ANrLQ=;
+	s=korg; t=1678213232;
+	bh=zwCp/TzFBxOCChyKuqfzhPCVZOcORZurrqr9VlFjAqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t6WGJpW8RZlmUbXUWWBtqLd2FHK+iSP9E/i24J+yfffVAihq7miqnCww95jXaFJ2p
-	 22DDxtEuHQ8SLzGdmn3leKhVtHpJ5VEKT4nlJE4YCHL6zKMIB0Gm/kuRhAa6N/U3XH
-	 IfGsGGAH1fVMYpdnEAnC1LiZIIbQJfqutqcCrRfc=
+	b=MJdJbKq+V8+Qd3i9FJsHdEC5dxMfzsLQEPW2OBZUtNG2j9hEq1i71mgl4vg5DGpAT
+	 uqw0Rfb5qdwl7Wy6HFSQ7xP2QqxxOaLmSN+huymsyxSIGDdY/KtwlLfh1xuDwgW9Zo
+	 U4snfq1SwlhBiu+P3AZPth3W5KQ3UuJmptviCzeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hanna Hawa <hhhawa@amazon.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 410/885] i2c: designware: fix i2c_dw_clk_rate() return size to be u32
-Date: Tue,  7 Mar 2023 17:55:44 +0100
-Message-Id: <20230307170020.237475505@linuxfoundation.org>
+Subject: [PATCH 6.1 411/885] soundwire: cadence: Dont overflow the command FIFOs
+Date: Tue,  7 Mar 2023 17:55:45 +0100
+Message-Id: <20230307170020.286460296@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,50 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hanna Hawa <hhhawa@amazon.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit f2e1fa99550dd7a882229e2c2cd9ecab4ce773d0 ]
+[ Upstream commit 7cbfee2e2e40d2be54196362a845a3ea0a3f877d ]
 
-Make i2c_dw_clk_rate() to return u32 instead of unsigned long, as the
-function return the value of get_clk_rate_khz() which returns u32.
+The command FIFOs in the Cadence IP can be configured during design
+up to 32 entries, and the code in cadence_master.c was assuming the
+full 32-entry FIFO. But all current Intel implementations use an 8-entry
+FIFO.
 
-Fixes: b33af11de236 ("i2c: designware: Do not require clock when SSCN and FFCN are provided")
-Signed-off-by: Hanna Hawa <hhhawa@amazon.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Up to now the longest message used was 6 entries so this wasn't
+causing any problem. But future Cirrus Logic codecs have downloadable
+firmware or tuning blobs. It is more efficient for the codec driver to
+issue long transfers that can take advantage of any queuing in the
+Soundwire controller and avoid the overhead of repeatedly writing the
+page registers.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Fixes: 2f52a5177caa ("soundwire: cdns: Add cadence library")
+Link: https://lore.kernel.org/r/20221202161812.4186897-2-rf@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-common.c | 2 +-
- drivers/i2c/busses/i2c-designware-core.h   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/soundwire/cadence_master.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-designware-common.c b/drivers/i2c/busses/i2c-designware-common.c
-index bceaf70f4e237..6fdb25a5f8016 100644
---- a/drivers/i2c/busses/i2c-designware-common.c
-+++ b/drivers/i2c/busses/i2c-designware-common.c
-@@ -465,7 +465,7 @@ void __i2c_dw_disable(struct dw_i2c_dev *dev)
- 	dev_warn(dev->dev, "timeout in disabling adapter\n");
- }
+diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
+index 93929f19d0831..b65cdf2a7593e 100644
+--- a/drivers/soundwire/cadence_master.c
++++ b/drivers/soundwire/cadence_master.c
+@@ -127,7 +127,8 @@ MODULE_PARM_DESC(cdns_mcp_int_mask, "Cadence MCP IntMask");
  
--unsigned long i2c_dw_clk_rate(struct dw_i2c_dev *dev)
-+u32 i2c_dw_clk_rate(struct dw_i2c_dev *dev)
- {
- 	/*
- 	 * Clock is not necessary if we got LCNT/HCNT values directly from
-diff --git a/drivers/i2c/busses/i2c-designware-core.h b/drivers/i2c/busses/i2c-designware-core.h
-index 4d3a3b464ecd8..56a029da448a7 100644
---- a/drivers/i2c/busses/i2c-designware-core.h
-+++ b/drivers/i2c/busses/i2c-designware-core.h
-@@ -322,7 +322,7 @@ int i2c_dw_init_regmap(struct dw_i2c_dev *dev);
- u32 i2c_dw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond, int offset);
- u32 i2c_dw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset);
- int i2c_dw_set_sda_hold(struct dw_i2c_dev *dev);
--unsigned long i2c_dw_clk_rate(struct dw_i2c_dev *dev);
-+u32 i2c_dw_clk_rate(struct dw_i2c_dev *dev);
- int i2c_dw_prepare_clk(struct dw_i2c_dev *dev, bool prepare);
- int i2c_dw_acquire_lock(struct dw_i2c_dev *dev);
- void i2c_dw_release_lock(struct dw_i2c_dev *dev);
+ #define CDNS_MCP_CMD_BASE			0x80
+ #define CDNS_MCP_RESP_BASE			0x80
+-#define CDNS_MCP_CMD_LEN			0x20
++/* FIFO can hold 8 commands */
++#define CDNS_MCP_CMD_LEN			8
+ #define CDNS_MCP_CMD_WORD_LEN			0x4
+ 
+ #define CDNS_MCP_CMD_SSP_TAG			BIT(31)
 -- 
 2.39.2
 
