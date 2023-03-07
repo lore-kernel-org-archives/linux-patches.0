@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EADBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09D6C433D2;
-	Tue,  7 Mar 2023 17:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F98BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE53C433EF;
+	Tue,  7 Mar 2023 17:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210555;
-	bh=L5xP3TpICXv78Q6qrmzbR0pmltXMM8uBDSlrAcI9J4I=;
+	s=korg; t=1678210557;
+	bh=SqsO+dNSrha6bEz5DkV35TiHBZEQJowDcfNfTh1nQbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LbAf49XjT73z/IIyulKB1xr8T10g1PZ2bnwvaCrfsWze08kUCppE+4F645xDCzIY7
-	 rqpt8k85rPZN536m9gzHmndkAXl9btWautLdLjU7qQ4UN4432ZJXYayeZ6NwD0zE4Z
-	 aUzRhBx9Pcda3A0SNUfLTnjsv4yAYLrTHNfI6UZc=
+	b=pCrkUlrxOOC95ijgXnEi+Zw6ybN7DlkrmcPCnQsap4M4oGm/ntZt1dcPny03ieGuE
+	 Bg5EVssGPaXQr4+3bYeDgQZ5FWjG8eANnfPrJee8n/KZV9HFQNHMiSdp6Abr9Vlnnl
+	 3Bcd1TWqSIJrXCyhqUQhbGV33d+cIbzAB3kYMagY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Pearson <rpearsonhpe@gmail.com>,
+	Brendan Cunningham <bcunningham@cornelisnetworks.com>,
+	Patrick Kelsey <pat.kelsey@cornelisnetworks.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0578/1001] RDMA/rxe: Fix missing memory barriers in rxe_queue.h
-Date: Tue,  7 Mar 2023 17:55:50 +0100
-Message-Id: <20230307170046.553685040@linuxfoundation.org>
+Subject: [PATCH 6.2 0579/1001] IB/hfi1: Fix math bugs in hfi1_can_pin_pages()
+Date: Tue,  7 Mar 2023 17:55:51 +0100
+Message-Id: <20230307170046.600859000@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,326 +37,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Pearson <rpearsonhpe@gmail.com>
+From: Patrick Kelsey <pat.kelsey@cornelisnetworks.com>
 
-[ Upstream commit a77a52385e9a761f896a88a4162e69fb7ccafe3f ]
+[ Upstream commit a0d198f79a8d033bd46605b779859193649f1f99 ]
 
-An earlier patch which introduced smp_load_acquire/smp_store_release
-into rxe_queue.h incorrectly assumed that surrounding spin-locks in
-rxe_verbs.c around queue updates for kernel ulps was sufficient to
-protect the passing of data through the queues between the ulp and
-the rxe tasklets. But this was incorrect. The typical sequence was
+Fix arithmetic and logic errors in hfi1_can_pin_pages() that  would allow
+hfi1 to attempt pinning pages in cases where it should not because of
+resource limits or lack of required capability.
 
-	ulp				rxe requester tasklet
-	------------------------	---------------------
-	spin_lock_irqsave()		wqe = queue_head(queue)
-	if (!queue_full(q)) {		if (!wqe)
-		spin_unlock_irqrestore		return;
-		return -ENOMEM
-	}				<process wqe>
-	wqe = queue_producer_addr(q)
-	<fill in wqe>			queue_advance_consumer(queue)
-	queue_advance_producer(q)
-	spin_unlock_irqrestore()
-
-queue_head() calls queue_empty() which calls smp_load_acquire()
-For user space apps queue_advance_producer() calls smp_store_release()
-so that there is a memory barrier between the producer and the
-consumer but for kernel ulps queue_advance_produce() just incremented
-the producer index because the lock function is a release function.
-But to work the barrier has to come between filling in the wqe and
-updating the producer index. This patch adds the missing barriers.
-It also changes the enum names for the ulp queue types to
-	QUEUE_TYPE_FROM/TO_ULP instead of QUEUE_TYPE_TO/FROM_DRIVER
-which is very ambiguous. This bug is suspected as the cause of very
-rare lockups in a very high scale storage application. It is a bug
-in any case and should be corrected.
-
-Fixes: 0a67c46d2e99 ("RDMA/rxe: Protect user space index loads/stores")
-Link: https://lore.kernel.org/r/20230214071053.5395-1-rpearsonhpe@gmail.com
-Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Fixes: 2c97ce4f3c29 ("IB/hfi1: Add pin query function")
+Link: https://lore.kernel.org/r/167656658362.2223096.10954762619837718026.stgit@awfm-02.cornelisnetworks.com
+Signed-off-by: Brendan Cunningham <bcunningham@cornelisnetworks.com>
+Signed-off-by: Patrick Kelsey <pat.kelsey@cornelisnetworks.com>
+Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_queue.h | 108 ++++++++++++++++----------
- drivers/infiniband/sw/rxe/rxe_verbs.c |  20 ++---
- 2 files changed, 76 insertions(+), 52 deletions(-)
+ drivers/infiniband/hw/hfi1/user_pages.c | 61 ++++++++++++++++---------
+ 1 file changed, 40 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_queue.h b/drivers/infiniband/sw/rxe/rxe_queue.h
-index ed44042782fa7..c711cb98b9496 100644
---- a/drivers/infiniband/sw/rxe/rxe_queue.h
-+++ b/drivers/infiniband/sw/rxe/rxe_queue.h
-@@ -35,19 +35,26 @@
- /**
-  * enum queue_type - type of queue
-  * @QUEUE_TYPE_TO_CLIENT:	Queue is written by rxe driver and
-- *				read by client. Used by rxe driver only.
-+ *				read by client which may be a user space
-+ *				application or a kernel ulp.
-+ *				Used by rxe internals only.
-  * @QUEUE_TYPE_FROM_CLIENT:	Queue is written by client and
-- *				read by rxe driver. Used by rxe driver only.
-- * @QUEUE_TYPE_TO_DRIVER:	Queue is written by client and
-- *				read by rxe driver. Used by kernel client only.
-- * @QUEUE_TYPE_FROM_DRIVER:	Queue is written by rxe driver and
-- *				read by client. Used by kernel client only.
-+ *				read by rxe driver.
-+ *				Used by rxe internals only.
-+ * @QUEUE_TYPE_FROM_ULP:	Queue is written by kernel ulp and
-+ *				read by rxe driver.
-+ *				Used by kernel verbs APIs only on
-+ *				behalf of ulps.
-+ * @QUEUE_TYPE_TO_ULP:		Queue is written by rxe driver and
-+ *				read by kernel ulp.
-+ *				Used by kernel verbs APIs only on
-+ *				behalf of ulps.
-  */
- enum queue_type {
- 	QUEUE_TYPE_TO_CLIENT,
- 	QUEUE_TYPE_FROM_CLIENT,
--	QUEUE_TYPE_TO_DRIVER,
--	QUEUE_TYPE_FROM_DRIVER,
-+	QUEUE_TYPE_FROM_ULP,
-+	QUEUE_TYPE_TO_ULP,
- };
+diff --git a/drivers/infiniband/hw/hfi1/user_pages.c b/drivers/infiniband/hw/hfi1/user_pages.c
+index 7bce963e2ae69..36aaedc651456 100644
+--- a/drivers/infiniband/hw/hfi1/user_pages.c
++++ b/drivers/infiniband/hw/hfi1/user_pages.c
+@@ -29,33 +29,52 @@ MODULE_PARM_DESC(cache_size, "Send and receive side cache size limit (in MB)");
+ bool hfi1_can_pin_pages(struct hfi1_devdata *dd, struct mm_struct *mm,
+ 			u32 nlocked, u32 npages)
+ {
+-	unsigned long ulimit = rlimit(RLIMIT_MEMLOCK), pinned, cache_limit,
+-		size = (cache_size * (1UL << 20)); /* convert to bytes */
+-	unsigned int usr_ctxts =
+-			dd->num_rcv_contexts - dd->first_dyn_alloc_ctxt;
+-	bool can_lock = capable(CAP_IPC_LOCK);
++	unsigned long ulimit_pages;
++	unsigned long cache_limit_pages;
++	unsigned int usr_ctxts;
  
- struct rxe_queue_buf;
-@@ -62,9 +69,9 @@ struct rxe_queue {
- 	u32			index_mask;
- 	enum queue_type		type;
- 	/* private copy of index for shared queues between
--	 * kernel space and user space. Kernel reads and writes
-+	 * driver and clients. Driver reads and writes
- 	 * this copy and then replicates to rxe_queue_buf
--	 * for read access by user space.
-+	 * for read access by clients.
+ 	/*
+-	 * Calculate per-cache size. The calculation below uses only a quarter
+-	 * of the available per-context limit. This leaves space for other
+-	 * pinning. Should we worry about shared ctxts?
++	 * Perform RLIMIT_MEMLOCK based checks unless CAP_IPC_LOCK is present.
  	 */
- 	u32			index;
- };
-@@ -97,19 +104,21 @@ static inline u32 queue_get_producer(const struct rxe_queue *q,
+-	cache_limit = (ulimit / usr_ctxts) / 4;
+-
+-	/* If ulimit isn't set to "unlimited" and is smaller than cache_size. */
+-	if (ulimit != (-1UL) && size > cache_limit)
+-		size = cache_limit;
+-
+-	/* Convert to number of pages */
+-	size = DIV_ROUND_UP(size, PAGE_SIZE);
+-
+-	pinned = atomic64_read(&mm->pinned_vm);
++	if (!capable(CAP_IPC_LOCK)) {
++		ulimit_pages =
++			DIV_ROUND_DOWN_ULL(rlimit(RLIMIT_MEMLOCK), PAGE_SIZE);
++
++		/*
++		 * Pinning these pages would exceed this process's locked memory
++		 * limit.
++		 */
++		if (atomic64_read(&mm->pinned_vm) + npages > ulimit_pages)
++			return false;
++
++		/*
++		 * Only allow 1/4 of the user's RLIMIT_MEMLOCK to be used for HFI
++		 * caches.  This fraction is then equally distributed among all
++		 * existing user contexts.  Note that if RLIMIT_MEMLOCK is
++		 * 'unlimited' (-1), the value of this limit will be > 2^42 pages
++		 * (2^64 / 2^12 / 2^8 / 2^2).
++		 *
++		 * The effectiveness of this check may be reduced if I/O occurs on
++		 * some user contexts before all user contexts are created.  This
++		 * check assumes that this process is the only one using this
++		 * context (e.g., the corresponding fd was not passed to another
++		 * process for concurrent access) as there is no per-context,
++		 * per-process tracking of pinned pages.  It also assumes that each
++		 * user context has only one cache to limit.
++		 */
++		usr_ctxts = dd->num_rcv_contexts - dd->first_dyn_alloc_ctxt;
++		if (nlocked + npages > (ulimit_pages / usr_ctxts / 4))
++			return false;
++	}
  
- 	switch (type) {
- 	case QUEUE_TYPE_FROM_CLIENT:
--		/* protect user index */
-+		/* used by rxe, client owns the index */
- 		prod = smp_load_acquire(&q->buf->producer_index);
- 		break;
- 	case QUEUE_TYPE_TO_CLIENT:
-+		/* used by rxe which owns the index */
- 		prod = q->index;
- 		break;
--	case QUEUE_TYPE_FROM_DRIVER:
--		/* protect driver index */
--		prod = smp_load_acquire(&q->buf->producer_index);
--		break;
--	case QUEUE_TYPE_TO_DRIVER:
-+	case QUEUE_TYPE_FROM_ULP:
-+		/* used by ulp which owns the index */
- 		prod = q->buf->producer_index;
- 		break;
-+	case QUEUE_TYPE_TO_ULP:
-+		/* used by ulp, rxe owns the index */
-+		prod = smp_load_acquire(&q->buf->producer_index);
-+		break;
- 	}
+-	/* First, check the absolute limit against all pinned pages. */
+-	if (pinned + npages >= ulimit && !can_lock)
++	/*
++	 * Pinning these pages would exceed the size limit for this cache.
++	 */
++	cache_limit_pages = cache_size * (1024 * 1024) / PAGE_SIZE;
++	if (nlocked + npages > cache_limit_pages)
+ 		return false;
  
- 	return prod;
-@@ -122,19 +131,21 @@ static inline u32 queue_get_consumer(const struct rxe_queue *q,
- 
- 	switch (type) {
- 	case QUEUE_TYPE_FROM_CLIENT:
-+		/* used by rxe which owns the index */
- 		cons = q->index;
- 		break;
- 	case QUEUE_TYPE_TO_CLIENT:
--		/* protect user index */
-+		/* used by rxe, client owns the index */
- 		cons = smp_load_acquire(&q->buf->consumer_index);
- 		break;
--	case QUEUE_TYPE_FROM_DRIVER:
--		cons = q->buf->consumer_index;
--		break;
--	case QUEUE_TYPE_TO_DRIVER:
--		/* protect driver index */
-+	case QUEUE_TYPE_FROM_ULP:
-+		/* used by ulp, rxe owns the index */
- 		cons = smp_load_acquire(&q->buf->consumer_index);
- 		break;
-+	case QUEUE_TYPE_TO_ULP:
-+		/* used by ulp which owns the index */
-+		cons = q->buf->consumer_index;
-+		break;
- 	}
- 
- 	return cons;
-@@ -172,24 +183,31 @@ static inline void queue_advance_producer(struct rxe_queue *q,
- 
- 	switch (type) {
- 	case QUEUE_TYPE_FROM_CLIENT:
--		pr_warn("%s: attempt to advance client index\n",
--			__func__);
-+		/* used by rxe, client owns the index */
-+		if (WARN_ON(1))
-+			pr_warn("%s: attempt to advance client index\n",
-+				__func__);
- 		break;
- 	case QUEUE_TYPE_TO_CLIENT:
-+		/* used by rxe which owns the index */
- 		prod = q->index;
- 		prod = (prod + 1) & q->index_mask;
- 		q->index = prod;
--		/* protect user index */
-+		/* release so client can read it safely */
- 		smp_store_release(&q->buf->producer_index, prod);
- 		break;
--	case QUEUE_TYPE_FROM_DRIVER:
--		pr_warn("%s: attempt to advance driver index\n",
--			__func__);
--		break;
--	case QUEUE_TYPE_TO_DRIVER:
-+	case QUEUE_TYPE_FROM_ULP:
-+		/* used by ulp which owns the index */
- 		prod = q->buf->producer_index;
- 		prod = (prod + 1) & q->index_mask;
--		q->buf->producer_index = prod;
-+		/* release so rxe can read it safely */
-+		smp_store_release(&q->buf->producer_index, prod);
-+		break;
-+	case QUEUE_TYPE_TO_ULP:
-+		/* used by ulp, rxe owns the index */
-+		if (WARN_ON(1))
-+			pr_warn("%s: attempt to advance driver index\n",
-+				__func__);
- 		break;
- 	}
+-	return ((nlocked + npages) <= size) || can_lock;
++	return true;
  }
-@@ -201,24 +219,30 @@ static inline void queue_advance_consumer(struct rxe_queue *q,
  
- 	switch (type) {
- 	case QUEUE_TYPE_FROM_CLIENT:
--		cons = q->index;
--		cons = (cons + 1) & q->index_mask;
-+		/* used by rxe which owns the index */
-+		cons = (q->index + 1) & q->index_mask;
- 		q->index = cons;
--		/* protect user index */
-+		/* release so client can read it safely */
- 		smp_store_release(&q->buf->consumer_index, cons);
- 		break;
- 	case QUEUE_TYPE_TO_CLIENT:
--		pr_warn("%s: attempt to advance client index\n",
--			__func__);
-+		/* used by rxe, client owns the index */
-+		if (WARN_ON(1))
-+			pr_warn("%s: attempt to advance client index\n",
-+				__func__);
-+		break;
-+	case QUEUE_TYPE_FROM_ULP:
-+		/* used by ulp, rxe owns the index */
-+		if (WARN_ON(1))
-+			pr_warn("%s: attempt to advance driver index\n",
-+				__func__);
- 		break;
--	case QUEUE_TYPE_FROM_DRIVER:
-+	case QUEUE_TYPE_TO_ULP:
-+		/* used by ulp which owns the index */
- 		cons = q->buf->consumer_index;
- 		cons = (cons + 1) & q->index_mask;
--		q->buf->consumer_index = cons;
--		break;
--	case QUEUE_TYPE_TO_DRIVER:
--		pr_warn("%s: attempt to advance driver index\n",
--			__func__);
-+		/* release so rxe can read it safely */
-+		smp_store_release(&q->buf->consumer_index, cons);
- 		break;
- 	}
- }
-diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
-index 7a902e0a0607d..a3aee247aa157 100644
---- a/drivers/infiniband/sw/rxe/rxe_verbs.c
-+++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
-@@ -245,7 +245,7 @@ static int post_one_recv(struct rxe_rq *rq, const struct ib_recv_wr *ibwr)
- 	int num_sge = ibwr->num_sge;
- 	int full;
- 
--	full = queue_full(rq->queue, QUEUE_TYPE_TO_DRIVER);
-+	full = queue_full(rq->queue, QUEUE_TYPE_FROM_ULP);
- 	if (unlikely(full))
- 		return -ENOMEM;
- 
-@@ -256,7 +256,7 @@ static int post_one_recv(struct rxe_rq *rq, const struct ib_recv_wr *ibwr)
- 	for (i = 0; i < num_sge; i++)
- 		length += ibwr->sg_list[i].length;
- 
--	recv_wqe = queue_producer_addr(rq->queue, QUEUE_TYPE_TO_DRIVER);
-+	recv_wqe = queue_producer_addr(rq->queue, QUEUE_TYPE_FROM_ULP);
- 	recv_wqe->wr_id = ibwr->wr_id;
- 
- 	memcpy(recv_wqe->dma.sge, ibwr->sg_list,
-@@ -268,7 +268,7 @@ static int post_one_recv(struct rxe_rq *rq, const struct ib_recv_wr *ibwr)
- 	recv_wqe->dma.cur_sge		= 0;
- 	recv_wqe->dma.sge_offset	= 0;
- 
--	queue_advance_producer(rq->queue, QUEUE_TYPE_TO_DRIVER);
-+	queue_advance_producer(rq->queue, QUEUE_TYPE_FROM_ULP);
- 
- 	return 0;
- }
-@@ -623,17 +623,17 @@ static int post_one_send(struct rxe_qp *qp, const struct ib_send_wr *ibwr,
- 
- 	spin_lock_irqsave(&qp->sq.sq_lock, flags);
- 
--	full = queue_full(sq->queue, QUEUE_TYPE_TO_DRIVER);
-+	full = queue_full(sq->queue, QUEUE_TYPE_FROM_ULP);
- 
- 	if (unlikely(full)) {
- 		spin_unlock_irqrestore(&qp->sq.sq_lock, flags);
- 		return -ENOMEM;
- 	}
- 
--	send_wqe = queue_producer_addr(sq->queue, QUEUE_TYPE_TO_DRIVER);
-+	send_wqe = queue_producer_addr(sq->queue, QUEUE_TYPE_FROM_ULP);
- 	init_send_wqe(qp, ibwr, mask, length, send_wqe);
- 
--	queue_advance_producer(sq->queue, QUEUE_TYPE_TO_DRIVER);
-+	queue_advance_producer(sq->queue, QUEUE_TYPE_FROM_ULP);
- 
- 	spin_unlock_irqrestore(&qp->sq.sq_lock, flags);
- 
-@@ -821,12 +821,12 @@ static int rxe_poll_cq(struct ib_cq *ibcq, int num_entries, struct ib_wc *wc)
- 
- 	spin_lock_irqsave(&cq->cq_lock, flags);
- 	for (i = 0; i < num_entries; i++) {
--		cqe = queue_head(cq->queue, QUEUE_TYPE_FROM_DRIVER);
-+		cqe = queue_head(cq->queue, QUEUE_TYPE_TO_ULP);
- 		if (!cqe)
- 			break;
- 
- 		memcpy(wc++, &cqe->ibwc, sizeof(*wc));
--		queue_advance_consumer(cq->queue, QUEUE_TYPE_FROM_DRIVER);
-+		queue_advance_consumer(cq->queue, QUEUE_TYPE_TO_ULP);
- 	}
- 	spin_unlock_irqrestore(&cq->cq_lock, flags);
- 
-@@ -838,7 +838,7 @@ static int rxe_peek_cq(struct ib_cq *ibcq, int wc_cnt)
- 	struct rxe_cq *cq = to_rcq(ibcq);
- 	int count;
- 
--	count = queue_count(cq->queue, QUEUE_TYPE_FROM_DRIVER);
-+	count = queue_count(cq->queue, QUEUE_TYPE_TO_ULP);
- 
- 	return (count > wc_cnt) ? wc_cnt : count;
- }
-@@ -854,7 +854,7 @@ static int rxe_req_notify_cq(struct ib_cq *ibcq, enum ib_cq_notify_flags flags)
- 	if (cq->notify != IB_CQ_NEXT_COMP)
- 		cq->notify = flags & IB_CQ_SOLICITED_MASK;
- 
--	empty = queue_empty(cq->queue, QUEUE_TYPE_FROM_DRIVER);
-+	empty = queue_empty(cq->queue, QUEUE_TYPE_TO_ULP);
- 
- 	if ((flags & IB_CQ_REPORT_MISSED_EVENTS) && !empty)
- 		ret = 1;
+ int hfi1_acquire_user_pages(struct mm_struct *mm, unsigned long vaddr, size_t npages,
 -- 
 2.39.2
 
