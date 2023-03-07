@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C520DBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:55:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A3EFC433D2;
-	Tue,  7 Mar 2023 18:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6D3BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:55:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428A1C433EF;
+	Tue,  7 Mar 2023 18:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215343;
-	bh=7GWW2dr4UU2iFyBQtgJFcHrBC/VvbQ6cRQs97tZ9Cyg=;
+	s=korg; t=1678215346;
+	bh=0n9czdKISxurp1VKl89g+IVHi5zZ4EEr7nbD/+gto8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MzIokD0UpwCqdC3tQb01Uzg/Pv4EQHp23EDHHXzPFgi9V+pB8jlWoAbP8R+Nbdprk
-	 cLysNE7GbtlpoFTGl+UrbYpjFfrUUkIgqZ6EPt4WLSKHYu1ES9ATkrUoo/83jHwNtE
-	 XxEo81H0qil3YBGw2zSZeGyIBSNoK6TEXd+MzD+k=
+	b=oICkaDLQnI4kTznXOsJIAWWbCTLmKKIzgjaD4/fDaddGWVHB3OfGtVVHXsJGGf+bC
+	 tZ8Vh7KK0Ido+WvVA9KMkvr9Pzl3X+ngP+yjiw5EFUM+pdPP2kZxhEPw0KnzMuL0Dr
+	 VWZLilHmH3IrxjZlI/fT1KPWeA6vLdgX9DqGKF8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Mark Brown <broonie@kernel.org>,
+	Allen Ballway <ballway@chromium.org>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 223/567] ASoC: mchp-spdifrx: fix controls that works with completion mechanism
-Date: Tue,  7 Mar 2023 17:59:19 +0100
-Message-Id: <20230307165915.569997902@linuxfoundation.org>
+Subject: [PATCH 5.15 232/567] HID: multitouch: Add quirks for flipped axes
+Date: Tue,  7 Mar 2023 17:59:28 +0100
+Message-Id: <20230307165915.980014661@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,280 +35,226 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Allen Ballway <ballway@chromium.org>
 
-[ Upstream commit d3681df44e856aab523a6eb7ba15b5e41efcbb1c ]
+[ Upstream commit a2f416bf062a38bb76cccd526d2d286b8e4db4d9 ]
 
-Channel status get and channel subcode get controls relies on data
-returned by controls when certain IRQs are raised. To achieve that
-completions are used b/w controls and interrupt service routine. The
-concurrent accesses to these controls are protected by
-struct snd_card::controls_rwsem.
+Certain touchscreen devices, such as the ELAN9034, are oriented
+incorrectly and report touches on opposite points on the X and Y axes.
+For example, a 100x200 screen touched at (10,20) would report (90, 180)
+and vice versa.
 
-Issues identified:
-- reinit_completion() may be called while waiting for completion
-  which should be avoided
-- in case of multiple threads waiting, the complete() call in interrupt
-  will signal only one waiting thread per interrupt which may lead to
-  timeout for the others
-- in case of channel status get as the CSC interrupt is not refcounted
-  ISR may disable interrupt for threads that were just enabled it.
+This is fixed by adding device quirks to transform the touch points
+into the correct spaces, from X -> MAX(X) - X, and Y -> MAX(Y) - Y.
 
-To solve these the access to controls were protected by a mutex. Along
-with this there is no need for spinlock to protect the software cache
-reads/updates b/w controls and ISR as the update is happening only when
-requested from control, and only one reader can reach the control.
-
-Fixes: ef265c55c1ac ("ASoC: mchp-spdifrx: add driver for SPDIF RX")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230130120647.638049-4-claudiu.beznea@microchip.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Allen Ballway <ballway@chromium.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Stable-dep-of: 03a86105556e ("HID: retain initial quirks set up when creating HID devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/atmel/mchp-spdifrx.c | 143 ++++++++++++++++++---------------
- 1 file changed, 77 insertions(+), 66 deletions(-)
+ drivers/hid/hid-multitouch.c             | 39 ++++++++++++++++++---
+ drivers/hid/hid-quirks.c                 |  6 ++++
+ drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c | 43 ++++++++++++++++++++++++
+ drivers/hid/i2c-hid/i2c-hid.h            |  3 ++
+ 4 files changed, 87 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/atmel/mchp-spdifrx.c b/sound/soc/atmel/mchp-spdifrx.c
-index 076a78fd0b125..eb1b8724e11f4 100644
---- a/sound/soc/atmel/mchp-spdifrx.c
-+++ b/sound/soc/atmel/mchp-spdifrx.c
-@@ -217,7 +217,6 @@ struct mchp_spdifrx_ch_stat {
- struct mchp_spdifrx_user_data {
- 	unsigned char data[SPDIFRX_UD_BITS / 8];
- 	struct completion done;
--	spinlock_t lock;	/* protect access to user data */
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 6b86d368d5e74..592ffdd546fb4 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -71,6 +71,7 @@ MODULE_LICENSE("GPL");
+ #define MT_QUIRK_SEPARATE_APP_REPORT	BIT(19)
+ #define MT_QUIRK_FORCE_MULTI_INPUT	BIT(20)
+ #define MT_QUIRK_DISABLE_WAKEUP		BIT(21)
++#define MT_QUIRK_ORIENTATION_INVERT	BIT(22)
+ 
+ #define MT_INPUTMODE_TOUCHSCREEN	0x02
+ #define MT_INPUTMODE_TOUCHPAD		0x03
+@@ -1009,6 +1010,7 @@ static int mt_process_slot(struct mt_device *td, struct input_dev *input,
+ 			    struct mt_usages *slot)
+ {
+ 	struct input_mt *mt = input->mt;
++	struct hid_device *hdev = td->hdev;
+ 	__s32 quirks = app->quirks;
+ 	bool valid = true;
+ 	bool confidence_state = true;
+@@ -1086,6 +1088,10 @@ static int mt_process_slot(struct mt_device *td, struct input_dev *input,
+ 		int orientation = wide;
+ 		int max_azimuth;
+ 		int azimuth;
++		int x;
++		int y;
++		int cx;
++		int cy;
+ 
+ 		if (slot->a != DEFAULT_ZERO) {
+ 			/*
+@@ -1104,6 +1110,9 @@ static int mt_process_slot(struct mt_device *td, struct input_dev *input,
+ 			if (azimuth > max_azimuth * 2)
+ 				azimuth -= max_azimuth * 4;
+ 			orientation = -azimuth;
++			if (quirks & MT_QUIRK_ORIENTATION_INVERT)
++				orientation = -orientation;
++
+ 		}
+ 
+ 		if (quirks & MT_QUIRK_TOUCH_SIZE_SCALING) {
+@@ -1115,10 +1124,23 @@ static int mt_process_slot(struct mt_device *td, struct input_dev *input,
+ 			minor = minor >> 1;
+ 		}
+ 
+-		input_event(input, EV_ABS, ABS_MT_POSITION_X, *slot->x);
+-		input_event(input, EV_ABS, ABS_MT_POSITION_Y, *slot->y);
+-		input_event(input, EV_ABS, ABS_MT_TOOL_X, *slot->cx);
+-		input_event(input, EV_ABS, ABS_MT_TOOL_Y, *slot->cy);
++		x = hdev->quirks & HID_QUIRK_X_INVERT ?
++			input_abs_get_max(input, ABS_MT_POSITION_X) - *slot->x :
++			*slot->x;
++		y = hdev->quirks & HID_QUIRK_Y_INVERT ?
++			input_abs_get_max(input, ABS_MT_POSITION_Y) - *slot->y :
++			*slot->y;
++		cx = hdev->quirks & HID_QUIRK_X_INVERT ?
++			input_abs_get_max(input, ABS_MT_POSITION_X) - *slot->cx :
++			*slot->cx;
++		cy = hdev->quirks & HID_QUIRK_Y_INVERT ?
++			input_abs_get_max(input, ABS_MT_POSITION_Y) - *slot->cy :
++			*slot->cy;
++
++		input_event(input, EV_ABS, ABS_MT_POSITION_X, x);
++		input_event(input, EV_ABS, ABS_MT_POSITION_Y, y);
++		input_event(input, EV_ABS, ABS_MT_TOOL_X, cx);
++		input_event(input, EV_ABS, ABS_MT_TOOL_Y, cy);
+ 		input_event(input, EV_ABS, ABS_MT_DISTANCE, !*slot->tip_state);
+ 		input_event(input, EV_ABS, ABS_MT_ORIENTATION, orientation);
+ 		input_event(input, EV_ABS, ABS_MT_PRESSURE, *slot->p);
+@@ -1738,6 +1760,15 @@ static int mt_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	if (id->vendor == HID_ANY_ID && id->product == HID_ANY_ID)
+ 		td->serial_maybe = true;
+ 
++
++	/* Orientation is inverted if the X or Y axes are
++	 * flipped, but normalized if both are inverted.
++	 */
++	if (hdev->quirks & (HID_QUIRK_X_INVERT | HID_QUIRK_Y_INVERT) &&
++	    !((hdev->quirks & HID_QUIRK_X_INVERT)
++	      && (hdev->quirks & HID_QUIRK_Y_INVERT)))
++		td->mtclass.quirks = MT_QUIRK_ORIENTATION_INVERT;
++
+ 	/* This allows the driver to correctly support devices
+ 	 * that emit events over several HID messages.
+ 	 */
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 4a8c32148e58f..bad1c1e3adec4 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -19,6 +19,7 @@
+ #include <linux/input/elan-i2c-ids.h>
+ 
+ #include "hid-ids.h"
++#include "i2c-hid/i2c-hid.h"
+ 
+ /*
+  * Alphabetically sorted by vendor then product.
+@@ -1278,6 +1279,11 @@ unsigned long hid_lookup_quirk(const struct hid_device *hdev)
+ 		quirks = hid_gets_squirk(hdev);
+ 	mutex_unlock(&dquirks_lock);
+ 
++	/* Get quirks specific to I2C devices */
++	if (IS_ENABLED(CONFIG_I2C_DMI_CORE) && IS_ENABLED(CONFIG_DMI) &&
++	    hdev->bus == BUS_I2C)
++		quirks |= i2c_hid_get_dmi_quirks(hdev->vendor, hdev->product);
++
+ 	return quirks;
+ }
+ EXPORT_SYMBOL_GPL(hid_lookup_quirk);
+diff --git a/drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c b/drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c
+index 8e0f67455c098..554a7dc285365 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c
++++ b/drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c
+@@ -10,8 +10,10 @@
+ #include <linux/types.h>
+ #include <linux/dmi.h>
+ #include <linux/mod_devicetable.h>
++#include <linux/hid.h>
+ 
+ #include "i2c-hid.h"
++#include "../hid-ids.h"
+ 
+ 
+ struct i2c_hid_desc_override {
+@@ -416,6 +418,28 @@ static const struct dmi_system_id i2c_hid_dmi_desc_override_table[] = {
+ 	{ }	/* Terminate list */
  };
  
- struct mchp_spdifrx_mixer_control {
-@@ -231,8 +230,6 @@ struct mchp_spdifrx_mixer_control {
- struct mchp_spdifrx_dev {
- 	struct snd_dmaengine_dai_dma_data	capture;
- 	struct mchp_spdifrx_mixer_control	control;
--	spinlock_t				blockend_lock;	/* protect access to blockend_refcount */
--	int					blockend_refcount;
- 	struct mutex				mlock;
- 	struct device				*dev;
- 	struct regmap				*regmap;
-@@ -277,37 +274,11 @@ static void mchp_spdifrx_channel_user_data_read(struct mchp_spdifrx_dev *dev,
- 	}
- }
++static const struct hid_device_id i2c_hid_elan_flipped_quirks = {
++	HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8, USB_VENDOR_ID_ELAN, 0x2dcd),
++		HID_QUIRK_X_INVERT | HID_QUIRK_Y_INVERT
++};
++
++/*
++ * This list contains devices which have specific issues based on the system
++ * they're on and not just the device itself. The driver_data will have a
++ * specific hid device to match against.
++ */
++static const struct dmi_system_id i2c_hid_dmi_quirk_table[] = {
++	{
++		.ident = "DynaBook K50/FR",
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Dynabook Inc."),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "dynabook K50/FR"),
++		},
++		.driver_data = (void *)&i2c_hid_elan_flipped_quirks,
++	},
++	{ }	/* Terminate list */
++};
++
  
--/* called from non-atomic context only */
--static void mchp_spdifrx_isr_blockend_en(struct mchp_spdifrx_dev *dev)
--{
--	unsigned long flags;
--
--	spin_lock_irqsave(&dev->blockend_lock, flags);
--	dev->blockend_refcount++;
--	/* don't enable BLOCKEND interrupt if it's already enabled */
--	if (dev->blockend_refcount == 1)
--		regmap_write(dev->regmap, SPDIFRX_IER, SPDIFRX_IR_BLOCKEND);
--	spin_unlock_irqrestore(&dev->blockend_lock, flags);
--}
--
--/* called from atomic/non-atomic context */
--static void mchp_spdifrx_isr_blockend_dis(struct mchp_spdifrx_dev *dev)
--{
--	unsigned long flags;
--
--	spin_lock_irqsave(&dev->blockend_lock, flags);
--	dev->blockend_refcount--;
--	/* don't enable BLOCKEND interrupt if it's already enabled */
--	if (dev->blockend_refcount == 0)
--		regmap_write(dev->regmap, SPDIFRX_IDR, SPDIFRX_IR_BLOCKEND);
--	spin_unlock_irqrestore(&dev->blockend_lock, flags);
--}
--
- static irqreturn_t mchp_spdif_interrupt(int irq, void *dev_id)
+ struct i2c_hid_desc *i2c_hid_get_dmi_i2c_hid_desc_override(uint8_t *i2c_name)
  {
- 	struct mchp_spdifrx_dev *dev = dev_id;
- 	struct mchp_spdifrx_mixer_control *ctrl = &dev->control;
--	u32 sr, imr, pending, idr = 0;
-+	u32 sr, imr, pending;
- 	irqreturn_t ret = IRQ_NONE;
- 	int ch;
- 
-@@ -322,13 +293,10 @@ static irqreturn_t mchp_spdif_interrupt(int irq, void *dev_id)
- 
- 	if (pending & SPDIFRX_IR_BLOCKEND) {
- 		for (ch = 0; ch < SPDIFRX_CHANNELS; ch++) {
--			spin_lock(&ctrl->user_data[ch].lock);
- 			mchp_spdifrx_channel_user_data_read(dev, ch);
--			spin_unlock(&ctrl->user_data[ch].lock);
--
- 			complete(&ctrl->user_data[ch].done);
- 		}
--		mchp_spdifrx_isr_blockend_dis(dev);
-+		regmap_write(dev->regmap, SPDIFRX_IDR, SPDIFRX_IR_BLOCKEND);
- 		ret = IRQ_HANDLED;
- 	}
- 
-@@ -336,7 +304,7 @@ static irqreturn_t mchp_spdif_interrupt(int irq, void *dev_id)
- 		if (pending & SPDIFRX_IR_CSC(ch)) {
- 			mchp_spdifrx_channel_status_read(dev, ch);
- 			complete(&ctrl->ch_stat[ch].done);
--			idr |= SPDIFRX_IR_CSC(ch);
-+			regmap_write(dev->regmap, SPDIFRX_IDR, SPDIFRX_IR_CSC(ch));
- 			ret = IRQ_HANDLED;
- 		}
- 	}
-@@ -346,8 +314,6 @@ static irqreturn_t mchp_spdif_interrupt(int irq, void *dev_id)
- 		ret = IRQ_HANDLED;
- 	}
- 
--	regmap_write(dev->regmap, SPDIFRX_IDR, idr);
--
- 	return ret;
+@@ -450,3 +474,22 @@ char *i2c_hid_get_dmi_hid_report_desc_override(uint8_t *i2c_name,
+ 	*size = override->hid_report_desc_size;
+ 	return override->hid_report_desc;
  }
- 
-@@ -517,23 +483,51 @@ static int mchp_spdifrx_cs_get(struct mchp_spdifrx_dev *dev,
- {
- 	struct mchp_spdifrx_mixer_control *ctrl = &dev->control;
- 	struct mchp_spdifrx_ch_stat *ch_stat = &ctrl->ch_stat[channel];
--	int ret;
-+	int ret = 0;
 +
-+	mutex_lock(&dev->mlock);
- 
--	regmap_write(dev->regmap, SPDIFRX_IER, SPDIFRX_IR_CSC(channel));
--	/* check for new data available */
--	ret = wait_for_completion_interruptible_timeout(&ch_stat->done,
--							msecs_to_jiffies(100));
--	/* IP might not be started or valid stream might not be present */
--	if (ret <= 0) {
--		dev_dbg(dev->dev, "channel status for channel %d timeout\n",
--			channel);
--		return ret ? : -ETIMEDOUT;
-+	/*
-+	 * We may reach this point with both clocks enabled but the receiver
-+	 * still disabled. To void waiting for completion and return with
-+	 * timeout check the dev->trigger_enabled.
-+	 *
-+	 * To retrieve data:
-+	 * - if the receiver is enabled CSC IRQ will update the data in software
-+	 *   caches (ch_stat->data)
-+	 * - otherwise we just update it here the software caches with latest
-+	 *   available information and return it; in this case we don't need
-+	 *   spin locking as the IRQ is disabled and will not be raised from
-+	 *   anywhere else.
-+	 */
++u32 i2c_hid_get_dmi_quirks(const u16 vendor, const u16 product)
++{
++	u32 quirks = 0;
++	const struct dmi_system_id *system_id =
++			dmi_first_match(i2c_hid_dmi_quirk_table);
 +
-+	if (dev->trigger_enabled) {
-+		reinit_completion(&ch_stat->done);
-+		regmap_write(dev->regmap, SPDIFRX_IER, SPDIFRX_IR_CSC(channel));
-+		/* Check for new data available */
-+		ret = wait_for_completion_interruptible_timeout(&ch_stat->done,
-+								msecs_to_jiffies(100));
-+		/* Valid stream might not be present */
-+		if (ret <= 0) {
-+			dev_dbg(dev->dev, "channel status for channel %d timeout\n",
-+				channel);
-+			regmap_write(dev->regmap, SPDIFRX_IDR, SPDIFRX_IR_CSC(channel));
-+			ret = ret ? : -ETIMEDOUT;
-+			goto unlock;
-+		} else {
-+			ret = 0;
-+		}
-+	} else {
-+		/* Update software cache with latest channel status. */
-+		mchp_spdifrx_channel_status_read(dev, channel);
- 	}
- 
- 	memcpy(uvalue->value.iec958.status, ch_stat->data,
- 	       sizeof(ch_stat->data));
- 
--	return 0;
-+unlock:
-+	mutex_unlock(&dev->mlock);
-+	return ret;
- }
- 
- static int mchp_spdifrx_cs1_get(struct snd_kcontrol *kcontrol,
-@@ -567,29 +561,49 @@ static int mchp_spdifrx_subcode_ch_get(struct mchp_spdifrx_dev *dev,
- 				       int channel,
- 				       struct snd_ctl_elem_value *uvalue)
- {
--	unsigned long flags;
- 	struct mchp_spdifrx_mixer_control *ctrl = &dev->control;
- 	struct mchp_spdifrx_user_data *user_data = &ctrl->user_data[channel];
--	int ret;
-+	int ret = 0;
++	if (system_id) {
++		const struct hid_device_id *device_id =
++				(struct hid_device_id *)(system_id->driver_data);
 +
-+	mutex_lock(&dev->mlock);
++		if (device_id && device_id->vendor == vendor &&
++		    device_id->product == product)
++			quirks = device_id->driver_data;
++	}
 +
-+	/*
-+	 * We may reach this point with both clocks enabled but the receiver
-+	 * still disabled. To void waiting for completion to just timeout we
-+	 * check here the dev->trigger_enabled flag.
-+	 *
-+	 * To retrieve data:
-+	 * - if the receiver is enabled we need to wait for blockend IRQ to read
-+	 *   data to and update it for us in software caches
-+	 * - otherwise reading the SPDIFRX_CHUD() registers is enough.
-+	 */
++	return quirks;
++}
++EXPORT_SYMBOL_GPL(i2c_hid_get_dmi_quirks);
+diff --git a/drivers/hid/i2c-hid/i2c-hid.h b/drivers/hid/i2c-hid/i2c-hid.h
+index 236cc062d5ef8..7b93b6c21f126 100644
+--- a/drivers/hid/i2c-hid/i2c-hid.h
++++ b/drivers/hid/i2c-hid/i2c-hid.h
+@@ -9,6 +9,7 @@
+ struct i2c_hid_desc *i2c_hid_get_dmi_i2c_hid_desc_override(uint8_t *i2c_name);
+ char *i2c_hid_get_dmi_hid_report_desc_override(uint8_t *i2c_name,
+ 					       unsigned int *size);
++u32 i2c_hid_get_dmi_quirks(const u16 vendor, const u16 product);
+ #else
+ static inline struct i2c_hid_desc
+ 		   *i2c_hid_get_dmi_i2c_hid_desc_override(uint8_t *i2c_name)
+@@ -16,6 +17,8 @@ static inline struct i2c_hid_desc
+ static inline char *i2c_hid_get_dmi_hid_report_desc_override(uint8_t *i2c_name,
+ 							     unsigned int *size)
+ { return NULL; }
++static inline u32 i2c_hid_get_dmi_quirks(const u16 vendor, const u16 product)
++{ return 0; }
+ #endif
  
--	reinit_completion(&user_data->done);
--	mchp_spdifrx_isr_blockend_en(dev);
--	ret = wait_for_completion_interruptible_timeout(&user_data->done,
--							msecs_to_jiffies(100));
--	/* IP might not be started or valid stream might not be present */
--	if (ret <= 0) {
--		dev_dbg(dev->dev, "user data for channel %d timeout\n",
--			channel);
--		mchp_spdifrx_isr_blockend_dis(dev);
--		return ret ? : -ETIMEDOUT;
-+	if (dev->trigger_enabled) {
-+		reinit_completion(&user_data->done);
-+		regmap_write(dev->regmap, SPDIFRX_IER, SPDIFRX_IR_BLOCKEND);
-+		ret = wait_for_completion_interruptible_timeout(&user_data->done,
-+								msecs_to_jiffies(100));
-+		/* Valid stream might not be present. */
-+		if (ret <= 0) {
-+			dev_dbg(dev->dev, "user data for channel %d timeout\n",
-+				channel);
-+			regmap_write(dev->regmap, SPDIFRX_IDR, SPDIFRX_IR_BLOCKEND);
-+			ret = ret ? : -ETIMEDOUT;
-+			goto unlock;
-+		} else {
-+			ret = 0;
-+		}
-+	} else {
-+		/* Update software cache with last available data. */
-+		mchp_spdifrx_channel_user_data_read(dev, channel);
- 	}
- 
--	spin_lock_irqsave(&user_data->lock, flags);
- 	memcpy(uvalue->value.iec958.subcode, user_data->data,
- 	       sizeof(user_data->data));
--	spin_unlock_irqrestore(&user_data->lock, flags);
- 
--	return 0;
-+unlock:
-+	mutex_unlock(&dev->mlock);
-+	return ret;
- }
- 
- static int mchp_spdifrx_subcode_ch1_get(struct snd_kcontrol *kcontrol,
-@@ -890,11 +904,9 @@ static int mchp_spdifrx_dai_probe(struct snd_soc_dai *dai)
- 		     SPDIFRX_MR_AUTORST_NOACTION |
- 		     SPDIFRX_MR_PACK_DISABLED);
- 
--	dev->blockend_refcount = 0;
- 	for (ch = 0; ch < SPDIFRX_CHANNELS; ch++) {
- 		init_completion(&ctrl->ch_stat[ch].done);
- 		init_completion(&ctrl->user_data[ch].done);
--		spin_lock_init(&ctrl->user_data[ch].lock);
- 	}
- 
- 	/* Add controls */
-@@ -1004,7 +1016,6 @@ static int mchp_spdifrx_probe(struct platform_device *pdev)
- 	 */
- 	clk_set_min_rate(dev->gclk, 48000 * SPDIFRX_GCLK_RATIO_MIN + 1);
- 
--	spin_lock_init(&dev->blockend_lock);
- 	mutex_init(&dev->mlock);
- 
- 	dev->dev = &pdev->dev;
+ /**
 -- 
 2.39.2
 
