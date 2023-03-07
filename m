@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D3ABA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:31:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D918EC433D2;
-	Tue,  7 Mar 2023 18:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D91BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:31:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB51BC433EF;
+	Tue,  7 Mar 2023 18:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213884;
-	bh=iekUbFaHy0iI7ba32ARR5AJyI2XPJiiHfOfw7/xv9UU=;
+	s=korg; t=1678213887;
+	bh=eZhh6BSFQ1k6BW1csQ0X36HHVeHgWxg0M5U+VtotJqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJJOfVpxBNlL89EHhVzdosYjtYsH757y7lOn1gbccJRk0j4mxr2f0C+Y8l8irBRXE
-	 7u+uPh2o/rhTwdXaVKNrAiB7kgMb0LzPHtdRqAWRrQpWe+jx2NRfCn4HW0uRoffJ/U
-	 vWx0arwwDs68HDKNcLJaWFh5VhjXHG4mVRCLVDtA=
+	b=xPQ09NJwiGTfbVouSOI96LYXp5y1gNSVE+/2JjcJVk6gfdLpA0SnDlXk3qehBljwQ
+	 D4bZBbAAsrDF7myMOy+1WUCzEoYMf8LmSJ0GFjGUpH6AgUVRRtVkyXFIywPOdq5Md3
+	 /SSd5SbexvYhjbiFghLDUwWpxYrooAutcyJAbr2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 651/885] block: clear bio->bi_bdev when putting a bio back in the cache
-Date: Tue,  7 Mar 2023 17:59:45 +0100
-Message-Id: <20230307170030.427928548@linuxfoundation.org>
+	Karan Tilak Kumar <kartilak@cisco.com>,
+	Sesidhar Baddela <sebaddel@cisco.com>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 634/885] scsi: snic: Fix memory leak with using debugfs_lookup()
+Date: Tue,  7 Mar 2023 17:59:28 +0100
+Message-Id: <20230307170029.727556491@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,32 +39,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 11eb695feb636fa5211067189cad25ac073e7fe5 upstream.
+[ Upstream commit ad0e4e2fab928477f74d742e6e77d79245d3d3e7 ]
 
-This isn't strictly needed in terms of correctness, but it does allow
-polling to know if the bio has been put already by a different task
-and hence avoid polling something that we don't need to.
+When calling debugfs_lookup() the result must have dput() called on it,
+otherwise the memory will leak over time.  To make things simpler, just
+call debugfs_lookup_and_remove() instead which handles all of the logic at
+once.
 
-Cc: stable@vger.kernel.org
-Fixes: be4d234d7aeb ("bio: add allocation cache abstraction")
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/r/20230202141009.2290380-1-gregkh@linuxfoundation.org
+Cc: Karan Tilak Kumar <kartilak@cisco.com>
+Cc: Sesidhar Baddela <sebaddel@cisco.com>
+Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
+Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: linux-scsi@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bio.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/snic/snic_debugfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -747,6 +747,7 @@ void bio_put(struct bio *bio)
- 		bio_uninit(bio);
- 		cache = per_cpu_ptr(bio->bi_pool->cache, get_cpu());
- 		bio->bi_next = cache->free_list;
-+		bio->bi_bdev = NULL;
- 		cache->free_list = bio;
- 		if (++cache->nr > ALLOC_CACHE_MAX + ALLOC_CACHE_SLACK)
- 			bio_alloc_cache_prune(cache, ALLOC_CACHE_SLACK);
+diff --git a/drivers/scsi/snic/snic_debugfs.c b/drivers/scsi/snic/snic_debugfs.c
+index 57bdc3ba49d9c..9dd975b36b5bd 100644
+--- a/drivers/scsi/snic/snic_debugfs.c
++++ b/drivers/scsi/snic/snic_debugfs.c
+@@ -437,6 +437,6 @@ void snic_trc_debugfs_init(void)
+ void
+ snic_trc_debugfs_term(void)
+ {
+-	debugfs_remove(debugfs_lookup(TRC_FILE, snic_glob->trc_root));
+-	debugfs_remove(debugfs_lookup(TRC_ENABLE_FILE, snic_glob->trc_root));
++	debugfs_lookup_and_remove(TRC_FILE, snic_glob->trc_root);
++	debugfs_lookup_and_remove(TRC_ENABLE_FILE, snic_glob->trc_root);
+ }
+-- 
+2.39.2
+
 
 
