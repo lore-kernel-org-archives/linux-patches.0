@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045E6BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:06:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236FFC433D2;
-	Tue,  7 Mar 2023 18:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AB8BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:06:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72415C433EF;
+	Tue,  7 Mar 2023 18:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212365;
-	bh=Iyhf51g5a9I6KplE2RMvVJY5NM14P+x6dyI4q1VvT2c=;
+	s=korg; t=1678212368;
+	bh=IL+h7VUD0AKuHdBsR7HmpKcPYtGDT3B4VFw9NcL415U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=az0ezARKm0lk27R0arbtDiMVj2uy+2baLO94DMJy4wVyaHi9rD3zNeO6+1Dl3f6t7
-	 9yUT3Rzn2TORnilvzheBZtfIDRn535i9lOo4KvxlXreFsKtE3IyJ4/tdSHV7MycYPc
-	 by1nvI0eWWU/YIIrBtVPfICNiedfbTsKAp32OUaM=
+	b=zUl3x734SOjixXEd4fD5t1Fq4VpGRKBukoJh6/1ERlNpaQiNkaYuwP6NyHVr/FB12
+	 X4sjSdfxEAJYwXdZovPGl0s7EmNGx3L/y7hagQb2B2/NSBud927aqPVgE7y3C/H3Ot
+	 b+gxLHLnI2qkH1QRnRE2X3nIY2zxaLvB9AayleLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	"Eric W . Biederman" <ebiederm@xmission.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 145/885] rcu-tasks: Fix synchronize_rcu_tasks() VS zap_pid_ns_processes()
-Date: Tue,  7 Mar 2023 17:51:19 +0100
-Message-Id: <20230307170008.179387463@linuxfoundation.org>
+Subject: [PATCH 6.1 163/885] wifi: rtw89: Add missing check for alloc_workqueue
+Date: Tue,  7 Mar 2023 17:51:37 +0100
+Message-Id: <20230307170009.008391824@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -41,153 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 28319d6dc5e2ffefa452c2377dd0f71621b5bff0 ]
+[ Upstream commit ed9e6166eb0984b718facb7ca59296098cc3aa64 ]
 
-RCU Tasks and PID-namespace unshare can interact in do_exit() in a
-complicated circular dependency:
+Add check for the return value of alloc_workqueue since it may return
+NULL pointer.
+Moreover, add destroy_workqueue when rtw89_load_firmware fails.
 
-1) TASK A calls unshare(CLONE_NEWPID), this creates a new PID namespace
-   that every subsequent child of TASK A will belong to. But TASK A
-   doesn't itself belong to that new PID namespace.
-
-2) TASK A forks() and creates TASK B. TASK A stays attached to its PID
-   namespace (let's say PID_NS1) and TASK B is the first task belonging
-   to the new PID namespace created by unshare()  (let's call it PID_NS2).
-
-3) Since TASK B is the first task attached to PID_NS2, it becomes the
-   PID_NS2 child reaper.
-
-4) TASK A forks() again and creates TASK C which get attached to PID_NS2.
-   Note how TASK C has TASK A as a parent (belonging to PID_NS1) but has
-   TASK B (belonging to PID_NS2) as a pid_namespace child_reaper.
-
-5) TASK B exits and since it is the child reaper for PID_NS2, it has to
-   kill all other tasks attached to PID_NS2, and wait for all of them to
-   die before getting reaped itself (zap_pid_ns_process()).
-
-6) TASK A calls synchronize_rcu_tasks() which leads to
-   synchronize_srcu(&tasks_rcu_exit_srcu).
-
-7) TASK B is waiting for TASK C to get reaped. But TASK B is under a
-   tasks_rcu_exit_srcu SRCU critical section (exit_notify() is between
-   exit_tasks_rcu_start() and exit_tasks_rcu_finish()), blocking TASK A.
-
-8) TASK C exits and since TASK A is its parent, it waits for it to reap
-   TASK C, but it can't because TASK A waits for TASK B that waits for
-   TASK C.
-
-Pid_namespace semantics can hardly be changed at this point. But the
-coverage of tasks_rcu_exit_srcu can be reduced instead.
-
-The current task is assumed not to be concurrently reapable at this
-stage of exit_notify() and therefore tasks_rcu_exit_srcu can be
-temporarily relaxed without breaking its constraints, providing a way
-out of the deadlock scenario.
-
-[ paulmck: Fix build failure by adding additional declaration. ]
-
-Fixes: 3f95aa81d265 ("rcu: Make TASKS_RCU handle tasks that are almost done exiting")
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-Suggested-by: Boqun Feng <boqun.feng@gmail.com>
-Suggested-by: Neeraj Upadhyay <quic_neeraju@quicinc.com>
-Suggested-by: Paul E. McKenney <paulmck@kernel.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-Cc: Eric W . Biederman <ebiederm@xmission.com>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: e3ec7017f6a2 ("rtw89: add Realtek 802.11ax driver")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230104142901.1611-1-jiasheng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rcupdate.h |  2 ++
- kernel/pid_namespace.c   | 17 +++++++++++++++++
- kernel/rcu/tasks.h       | 15 +++++++++++++--
- 3 files changed, 32 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
-index 08605ce7379d7..4a3fd3404ad0c 100644
---- a/include/linux/rcupdate.h
-+++ b/include/linux/rcupdate.h
-@@ -229,6 +229,7 @@ void synchronize_rcu_tasks_rude(void);
- 
- #define rcu_note_voluntary_context_switch(t) rcu_tasks_qs(t, false)
- void exit_tasks_rcu_start(void);
-+void exit_tasks_rcu_stop(void);
- void exit_tasks_rcu_finish(void);
- #else /* #ifdef CONFIG_TASKS_RCU_GENERIC */
- #define rcu_tasks_classic_qs(t, preempt) do { } while (0)
-@@ -237,6 +238,7 @@ void exit_tasks_rcu_finish(void);
- #define call_rcu_tasks call_rcu
- #define synchronize_rcu_tasks synchronize_rcu
- static inline void exit_tasks_rcu_start(void) { }
-+static inline void exit_tasks_rcu_stop(void) { }
- static inline void exit_tasks_rcu_finish(void) { }
- #endif /* #else #ifdef CONFIG_TASKS_RCU_GENERIC */
- 
-diff --git a/kernel/pid_namespace.c b/kernel/pid_namespace.c
-index f4f8cb0435b45..fc21c5d5fd5de 100644
---- a/kernel/pid_namespace.c
-+++ b/kernel/pid_namespace.c
-@@ -244,7 +244,24 @@ void zap_pid_ns_processes(struct pid_namespace *pid_ns)
- 		set_current_state(TASK_INTERRUPTIBLE);
- 		if (pid_ns->pid_allocated == init_pids)
- 			break;
-+		/*
-+		 * Release tasks_rcu_exit_srcu to avoid following deadlock:
-+		 *
-+		 * 1) TASK A unshare(CLONE_NEWPID)
-+		 * 2) TASK A fork() twice -> TASK B (child reaper for new ns)
-+		 *    and TASK C
-+		 * 3) TASK B exits, kills TASK C, waits for TASK A to reap it
-+		 * 4) TASK A calls synchronize_rcu_tasks()
-+		 *                   -> synchronize_srcu(tasks_rcu_exit_srcu)
-+		 * 5) *DEADLOCK*
-+		 *
-+		 * It is considered safe to release tasks_rcu_exit_srcu here
-+		 * because we assume the current task can not be concurrently
-+		 * reaped at this point.
-+		 */
-+		exit_tasks_rcu_stop();
- 		schedule();
-+		exit_tasks_rcu_start();
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index ad420d7ec8af9..a703bb70b8f55 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -3047,6 +3047,8 @@ int rtw89_core_init(struct rtw89_dev *rtwdev)
+ 	INIT_DELAYED_WORK(&rtwdev->cfo_track_work, rtw89_phy_cfo_track_work);
+ 	INIT_DELAYED_WORK(&rtwdev->forbid_ba_work, rtw89_forbid_ba_work);
+ 	rtwdev->txq_wq = alloc_workqueue("rtw89_tx_wq", WQ_UNBOUND | WQ_HIGHPRI, 0);
++	if (!rtwdev->txq_wq)
++		return -ENOMEM;
+ 	spin_lock_init(&rtwdev->ba_lock);
+ 	spin_lock_init(&rtwdev->rpwm_lock);
+ 	mutex_init(&rtwdev->mutex);
+@@ -3070,6 +3072,7 @@ int rtw89_core_init(struct rtw89_dev *rtwdev)
+ 	ret = rtw89_load_firmware(rtwdev);
+ 	if (ret) {
+ 		rtw89_warn(rtwdev, "no firmware loaded\n");
++		destroy_workqueue(rtwdev->txq_wq);
+ 		return ret;
  	}
- 	__set_current_state(TASK_RUNNING);
- 
-diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index 80e75e7926cc6..a701001e8b321 100644
---- a/kernel/rcu/tasks.h
-+++ b/kernel/rcu/tasks.h
-@@ -1016,16 +1016,27 @@ void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
-  * task is exiting and may be removed from the tasklist. See
-  * corresponding synchronize_srcu() for further details.
-  */
--void exit_tasks_rcu_finish(void) __releases(&tasks_rcu_exit_srcu)
-+void exit_tasks_rcu_stop(void) __releases(&tasks_rcu_exit_srcu)
- {
- 	struct task_struct *t = current;
- 
- 	__srcu_read_unlock(&tasks_rcu_exit_srcu, t->rcu_tasks_idx);
--	exit_tasks_rcu_finish_trace(t);
-+}
-+
-+/*
-+ * Contribute to protect against tasklist scan blind spot while the
-+ * task is exiting and may be removed from the tasklist. See
-+ * corresponding synchronize_srcu() for further details.
-+ */
-+void exit_tasks_rcu_finish(void)
-+{
-+	exit_tasks_rcu_stop();
-+	exit_tasks_rcu_finish_trace(current);
- }
- 
- #else /* #ifdef CONFIG_TASKS_RCU */
- void exit_tasks_rcu_start(void) { }
-+void exit_tasks_rcu_stop(void) { }
- void exit_tasks_rcu_finish(void) { exit_tasks_rcu_finish_trace(current); }
- #endif /* #else #ifdef CONFIG_TASKS_RCU */
- 
+ 	rtw89_ser_init(rtwdev);
 -- 
 2.39.2
 
