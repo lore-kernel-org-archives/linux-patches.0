@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69DABA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:13:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B7FC433EF;
-	Tue,  7 Mar 2023 18:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E597BBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:13:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF67C433EF;
+	Tue,  7 Mar 2023 18:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212798;
-	bh=zFAorT+IOu+4gFGbK5U/9e2NMRt9kL8BcwcCqVzl6v8=;
+	s=korg; t=1678212801;
+	bh=7W5jGb9b5LZt03E4If3VJss6LKD8D6n1PMG0qhaKjPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LnU4ivRHfPdWOz6dlOZw8zIFM4WAsg27Ps+tPflWn84WA6aT0SbWNLlx0pJZ8inYj
-	 3q8fFNrMTjZ/WKrtOuvwr3FKPyOM3p6nwIJQC5oengo6+EYKV1HBZaqjdMrsJI2vRq
-	 JLHudtiN05IDdGvC3rx4QpP1FziMP/+ImDj9UoJU=
+	b=IYnYrN8dUlH9jw3SgZZPC8jRa8K6YKWEDU8QiLUA33OLwhJDZSv4F226/L9o78Gd6
+	 zR3IP+xxwDhqU32Z2g5nptOsMgMqfkTf+ryahAcA/QP56u3w+DRUxSbeeN6wQDmzPe
+	 Exi0TvtcIqPxSQGFnhPtNbllos5J83oRgDQjeReU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 300/885] drm/bridge: lt9611: fix polarity programming
-Date: Tue,  7 Mar 2023 17:53:54 +0100
-Message-Id: <20230307170015.126696995@linuxfoundation.org>
+Subject: [PATCH 6.1 301/885] drm/bridge: lt9611: fix programming of video modes
+Date: Tue,  7 Mar 2023 17:53:55 +0100
+Message-Id: <20230307170015.164748182@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,63 +37,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 0b157efa384ea417304b1da284ee2f603c607fc3 ]
+[ Upstream commit ad188aa47edaa033a270e1a3efae43836ff47569 ]
 
-Fix programming of hsync and vsync polarities
+Program the upper part of the hfront_porch into the proper register.
 
 Fixes: 23278bf54afe ("drm/bridge: Introduce LT9611 DSI to HDMI bridge")
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230118081658.2198520-4-dmitry.baryshkov@linaro.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20230118081658.2198520-5-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/bridge/lontium-lt9611.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-index 58f39b2792179..deb503ca956af 100644
+index deb503ca956af..f377052a45a44 100644
 --- a/drivers/gpu/drm/bridge/lontium-lt9611.c
 +++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -207,7 +207,6 @@ static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mod
+@@ -187,7 +187,8 @@ static void lt9611_mipi_video_setup(struct lt9611 *lt9611,
  
- 		/* stage 2 */
- 		{ 0x834a, 0x40 },
--		{ 0x831d, 0x10 },
+ 	regmap_write(lt9611->regmap, 0x8319, (u8)(hfront_porch % 256));
  
- 		/* MK limit */
- 		{ 0x832d, 0x38 },
-@@ -222,11 +221,19 @@ static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mod
- 		{ 0x8325, 0x00 },
- 		{ 0x832a, 0x01 },
- 		{ 0x834a, 0x10 },
--		{ 0x831d, 0x10 },
--		{ 0x8326, 0x37 },
- 	};
-+	u8 pol = 0x10;
- 
--	regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
-+	if (mode->flags & DRM_MODE_FLAG_NHSYNC)
-+		pol |= 0x2;
-+	if (mode->flags & DRM_MODE_FLAG_NVSYNC)
-+		pol |= 0x1;
-+	regmap_write(lt9611->regmap, 0x831d, pol);
-+
-+	if (mode->hdisplay == 3840)
-+		regmap_multi_reg_write(lt9611->regmap, reg_cfg2, ARRAY_SIZE(reg_cfg2));
-+	else
-+		regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
- 
- 	switch (mode->hdisplay) {
- 	case 640:
-@@ -236,7 +243,7 @@ static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mod
- 		regmap_write(lt9611->regmap, 0x8326, 0x37);
- 		break;
- 	case 3840:
--		regmap_multi_reg_write(lt9611->regmap, reg_cfg2, ARRAY_SIZE(reg_cfg2));
-+		regmap_write(lt9611->regmap, 0x8326, 0x37);
- 		break;
- 	}
+-	regmap_write(lt9611->regmap, 0x831a, (u8)(hsync_porch / 256));
++	regmap_write(lt9611->regmap, 0x831a, (u8)(hsync_porch / 256) |
++						((hfront_porch / 256) << 4));
+ 	regmap_write(lt9611->regmap, 0x831b, (u8)(hsync_porch % 256));
+ }
  
 -- 
 2.39.2
