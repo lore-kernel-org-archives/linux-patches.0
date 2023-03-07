@@ -1,32 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A25BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:39:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDEB3C4339B;
-	Tue,  7 Mar 2023 17:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BA0BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:39:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE468C433D2;
+	Tue,  7 Mar 2023 17:39:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210740;
-	bh=QvmsV90LPrsXMW/6rZ7xTmTRqzPKzLnOAZqUW0GR0cM=;
+	s=korg; t=1678210743;
+	bh=nt8qevdm9MKP8Zuhidf146WHwAMz6rf41y0GSmmipy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yikYg938ZHbc3fWmu+VDIMDo63SJW32DuyL++BxX1PnbhM9e/X+gBruh8aLqL+WNJ
-	 ZrFmYVFcuiOdGdDjt0+1MDoIEIMQzAvPlskOCxZ2sS4TVOG8F4vGPhP35wsLbZL2Ol
-	 bqkE/3C+t1Giw6/PNFUesF+jCNWdLl/9RHwKmhbU=
+	b=UrCbBLiD5szbFp6LzIVjkZRUF1XgYZsdSp4C3F48J2HAZfvvlFH3P5iqR9ccFSvQi
+	 JYcAsb8Ui5sI8b7nLHcOfqOru+tTRLz8TPlwdVLX3H+9dpqgIwNz1Ke93o/5xFxBwp
+	 Jcdbndu/IultEvMxurHgIMbCYMkmC+oVN/MkiUz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0639/1001] rcu: Make RCU_LOCKDEP_WARN() avoid early lockdep checks
-Date: Tue,  7 Mar 2023 17:56:51 +0100
-Message-Id: <20230307170049.320793400@linuxfoundation.org>
+Subject: [PATCH 6.2 0640/1001] rcu: Suppress smp_processor_id() complaint in synchronize_rcu_expedited_wait()
+Date: Tue,  7 Mar 2023 17:56:52 +0100
+Message-Id: <20230307170049.369987155@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -42,54 +36,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit 0cae5ded535c3a80aed94f119bbd4ee3ae284a65 ]
+[ Upstream commit 2d7f00b2f01301d6e41fd4a28030dab0442265be ]
 
-Currently, RCU_LOCKDEP_WARN() checks the condition before checking
-to see if lockdep is still enabled.  This is necessary to avoid the
-false-positive splats fixed by commit 3066820034b5dd ("rcu: Reject
-RCU_LOCKDEP_WARN() false positives").  However, the current state can
-result in false-positive splats during early boot before lockdep is fully
-initialized.  This commit therefore checks debug_lockdep_rcu_enabled()
-both before and after checking the condition, thus avoiding both sets
-of false-positive error reports.
+The normal grace period's RCU CPU stall warnings are invoked from the
+scheduling-clock interrupt handler, and can thus invoke smp_processor_id()
+with impunity, which allows them to directly invoke dump_cpu_task().
+In contrast, the expedited grace period's RCU CPU stall warnings are
+invoked from process context, which causes the dump_cpu_task() function's
+calls to smp_processor_id() to complain bitterly in debug kernels.
 
-Reported-by: Steven Rostedt <rostedt@goodmis.org>
-Reported-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reported-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+This commit therefore causes synchronize_rcu_expedited_wait() to disable
+preemption around its call to dump_cpu_task().
+
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rcupdate.h | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ kernel/rcu/tree_exp.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
-index c0c79beac3fe6..8d4bf695e7666 100644
---- a/include/linux/rcupdate.h
-+++ b/include/linux/rcupdate.h
-@@ -376,11 +376,18 @@ static inline int debug_lockdep_rcu_enabled(void)
-  * RCU_LOCKDEP_WARN - emit lockdep splat if specified condition is met
-  * @c: condition to check
-  * @s: informative message
-+ *
-+ * This checks debug_lockdep_rcu_enabled() before checking (c) to
-+ * prevent early boot splats due to lockdep not yet being initialized,
-+ * and rechecks it after checking (c) to prevent false-positive splats
-+ * due to races with lockdep being disabled.  See commit 3066820034b5dd
-+ * ("rcu: Reject RCU_LOCKDEP_WARN() false positives") for more detail.
-  */
- #define RCU_LOCKDEP_WARN(c, s)						\
- 	do {								\
- 		static bool __section(".data.unlikely") __warned;	\
--		if ((c) && debug_lockdep_rcu_enabled() && !__warned) {	\
-+		if (debug_lockdep_rcu_enabled() && (c) &&		\
-+		    debug_lockdep_rcu_enabled() && !__warned) {		\
- 			__warned = true;				\
- 			lockdep_rcu_suspicious(__FILE__, __LINE__, s);	\
- 		}							\
+diff --git a/kernel/rcu/tree_exp.h b/kernel/rcu/tree_exp.h
+index ed6c3cce28f23..927abaf6c822e 100644
+--- a/kernel/rcu/tree_exp.h
++++ b/kernel/rcu/tree_exp.h
+@@ -667,7 +667,9 @@ static void synchronize_rcu_expedited_wait(void)
+ 				mask = leaf_node_cpu_bit(rnp, cpu);
+ 				if (!(READ_ONCE(rnp->expmask) & mask))
+ 					continue;
++				preempt_disable(); // For smp_processor_id() in dump_cpu_task().
+ 				dump_cpu_task(cpu);
++				preempt_enable();
+ 			}
+ 		}
+ 		jiffies_stall = 3 * rcu_exp_jiffies_till_stall_check() + 3;
 -- 
 2.39.2
 
