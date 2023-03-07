@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76E7BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:56:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2234FC433EF;
-	Tue,  7 Mar 2023 17:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59E1BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:56:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B19EC433EF;
+	Tue,  7 Mar 2023 17:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211813;
-	bh=DAPalmKRd3jRAbkx9AfPcgoQr/ovQMCcdn9B9eZpwjk=;
+	s=korg; t=1678211816;
+	bh=keH2jQv69hRTq6n45bANhD2TgPHB6HNnodc9IvO/bds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJacVKmC732VOiZZtQmULnCixNF5DTt/E/IsszWG+5F8RBBr0dGv/pTrGP/IukhUd
-	 WfjK1eEa8JuATpmKYcOfnNWNr+teW4ojzLm91ZlxgvsTfO8ya89f+4HJ6q57ypT8oq
-	 geNpza+GR+DTC9GaWZCvs/nbpBlhVuyM1UdHtFNM=
+	b=rhAGRIY1pGaA0OvI8OQ56sX4SpfKaSZYguuA8WTd1n64A7DaYgy5/+vHSFbu+7jWv
+	 ofdX2MJboVIx91twl50YUFJgukIj5qFed9ycVEorJX1IPCSgfg/LJPDgvmxGMlO54u
+	 bpvIlTWHSo6j60vdLPehnlcgVvOueZblqSoXbMhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.2 0985/1001] bus: mhi: ep: Save channel state locally during suspend and resume
-Date: Tue,  7 Mar 2023 18:02:37 +0100
-Message-Id: <20230307170104.978284720@linuxfoundation.org>
+	Kevin Tian <kevin.tian@intel.com>,
+	syzbot+cb1e0978f6bf46b83a58@syzkaller.appspotmail.com,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.2 0986/1001] iommufd: Make sure to zero vfio_iommu_type1_info before copying to user
+Date: Tue,  7 Mar 2023 18:02:38 +0100
+Message-Id: <20230307170105.028544697@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -33,44 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 8a1c24bb908f9ecbc4be0fea014df67d43161551 upstream.
+commit b3551ead616318ea155558cdbe7e91495b8d9b33 upstream.
 
-During suspend and resume, the channel state needs to be saved locally.
-Otherwise, the endpoint may access the channels while they were being
-suspended and causing access violations.
+Missed a zero initialization here. Most of the struct is filled with
+a copy_from_user(), however minsz for that copy is smaller than the
+actual struct by 8 bytes, thus we don't fill the padding.
 
-Fix it by saving the channel state locally during suspend and resume.
-
-Cc: <stable@vger.kernel.org> # 5.19
-Fixes: e4b7b5f0f30a ("bus: mhi: ep: Add support for suspending and resuming channels")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com)
-Link: https://lore.kernel.org/r/20221228161704.255268-7-manivannan.sadhasivam@linaro.org
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: stable@vger.kernel.org # 6.1+
+Fixes: d624d6652a65 ("iommufd: vfio container FD ioctl compatibility")
+Link: https://lore.kernel.org/r/0-v1-a74499ece799+1a-iommufd_get_info_leak_jgg@nvidia.com
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reported-by: syzbot+cb1e0978f6bf46b83a58@syzkaller.appspotmail.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/ep/main.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/iommufd/vfio_compat.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -1136,6 +1136,7 @@ void mhi_ep_suspend_channels(struct mhi_
- 
- 		dev_dbg(&mhi_chan->mhi_dev->dev, "Suspending channel\n");
- 		/* Set channel state to SUSPENDED */
-+		mhi_chan->state = MHI_CH_STATE_SUSPENDED;
- 		tmp &= ~CHAN_CTX_CHSTATE_MASK;
- 		tmp |= FIELD_PREP(CHAN_CTX_CHSTATE_MASK, MHI_CH_STATE_SUSPENDED);
- 		mhi_cntrl->ch_ctx_cache[i].chcfg = cpu_to_le32(tmp);
-@@ -1165,6 +1166,7 @@ void mhi_ep_resume_channels(struct mhi_e
- 
- 		dev_dbg(&mhi_chan->mhi_dev->dev, "Resuming channel\n");
- 		/* Set channel state to RUNNING */
-+		mhi_chan->state = MHI_CH_STATE_RUNNING;
- 		tmp &= ~CHAN_CTX_CHSTATE_MASK;
- 		tmp |= FIELD_PREP(CHAN_CTX_CHSTATE_MASK, MHI_CH_STATE_RUNNING);
- 		mhi_cntrl->ch_ctx_cache[i].chcfg = cpu_to_le32(tmp);
+--- a/drivers/iommu/iommufd/vfio_compat.c
++++ b/drivers/iommu/iommufd/vfio_compat.c
+@@ -381,7 +381,7 @@ static int iommufd_vfio_iommu_get_info(s
+ 	};
+ 	size_t minsz = offsetofend(struct vfio_iommu_type1_info, iova_pgsizes);
+ 	struct vfio_info_cap_header __user *last_cap = NULL;
+-	struct vfio_iommu_type1_info info;
++	struct vfio_iommu_type1_info info = {};
+ 	struct iommufd_ioas *ioas;
+ 	size_t total_cap_size;
+ 	int rc;
 
 
