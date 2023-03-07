@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A640EBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:39:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A41C433D2;
-	Tue,  7 Mar 2023 17:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB81BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:39:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A33DC4339C;
+	Tue,  7 Mar 2023 17:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210749;
-	bh=pYmPZuIatWJIy9TjbQpRfMHAueHd4doPOek4LgFFMPE=;
+	s=korg; t=1678210752;
+	bh=2QZWvot1GdxwZFYKmnzrSw8xLFSfODApSNqHrU1SkiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K3UQRsZ7dNAfpJPCwSFlwG6uYsUOVHm/ZREhpacQQUipSgO8CYC8TnBd61RG7evED
-	 AE+mJwxmdho05K4MAKxjYHtS2mqRonJMxJ9oJgzrxsn8RXjETvnK+m0QGo4zlhDvFr
-	 qqX7XqiTgpe+LdZh8HKqsoXI8OW2/H7yp4VKiSjE=
+	b=Rv/QIInuavOigKz71ReaVRd/koYD4kVgFEfwB4gNpmo2LmkaMpsOsvzYntQgS+s5a
+	 naWkJ8QrL/l1JqXWdyAYspI7eFxiKLNss/Xo8RJAXMXoIeNuL8GqKaod32yDZswdng
+	 aGrtSPOn1J7AcHg0lrUXhGwBQI70Pp4SxhcnxcKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	Zqiang <qiang1.zhang@intel.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0624/1001] fs: Use CHECK_DATA_CORRUPTION() when kernel bugs are detected
-Date: Tue,  7 Mar 2023 17:56:36 +0100
-Message-Id: <20230307170048.642209949@linuxfoundation.org>
+Subject: [PATCH 6.2 0642/1001] rcu-tasks: Make rude RCU-Tasks work well with CPU hotplug
+Date: Tue,  7 Mar 2023 17:56:54 +0100
+Message-Id: <20230307170049.463104906@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,94 +35,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Zqiang <qiang1.zhang@intel.com>
 
-[ Upstream commit 47d586913f2abec4d240bae33417f537fda987ec ]
+[ Upstream commit ea5c8987fef20a8cca07e428aa28bc64649c5104 ]
 
-Currently, filp_close() and generic_shutdown_super() use printk() to log
-messages when bugs are detected. This is problematic because infrastructure
-like syzkaller has no idea that this message indicates a bug.
-In addition, some people explicitly want their kernels to BUG() when kernel
-data corruption has been detected (CONFIG_BUG_ON_DATA_CORRUPTION).
-And finally, when generic_shutdown_super() detects remaining inodes on a
-system without CONFIG_BUG_ON_DATA_CORRUPTION, it would be nice if later
-accesses to a busy inode would at least crash somewhat cleanly rather than
-walking through freed memory.
+The synchronize_rcu_tasks_rude() function invokes rcu_tasks_rude_wait_gp()
+to wait one rude RCU-tasks grace period.  The rcu_tasks_rude_wait_gp()
+function in turn checks if there is only a single online CPU.  If so, it
+will immediately return, because a call to synchronize_rcu_tasks_rude()
+is by definition a grace period on a single-CPU system.  (We could
+have blocked!)
 
-To address all three, use CHECK_DATA_CORRUPTION() when kernel bugs are
-detected.
+Unfortunately, this check uses num_online_cpus() without synchronization,
+which can result in too-short grace periods.  To see this, consider the
+following scenario:
 
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+        CPU0                                   CPU1 (going offline)
+                                          migration/1 task:
+                                      cpu_stopper_thread
+                                       -> take_cpu_down
+                                          -> _cpu_disable
+                                           (dec __num_online_cpus)
+                                          ->cpuhp_invoke_callback
+                                                preempt_disable
+                                                access old_data0
+           task1
+ del old_data0                                  .....
+ synchronize_rcu_tasks_rude()
+ task1 schedule out
+ ....
+ task2 schedule in
+ rcu_tasks_rude_wait_gp()
+     ->__num_online_cpus == 1
+       ->return
+ ....
+ task1 schedule in
+ ->free old_data0
+                                                preempt_enable
+
+When CPU1 decrements __num_online_cpus, its value becomes 1.  However,
+CPU1 has not finished going offline, and will take one last trip through
+the scheduler and the idle loop before it actually stops executing
+instructions.  Because synchronize_rcu_tasks_rude() is mostly used for
+tracing, and because both the scheduler and the idle loop can be traced,
+this means that CPU0's prematurely ended grace period might disrupt the
+tracing on CPU1.  Given that this disruption might include CPU1 executing
+instructions in memory that was just now freed (and maybe reallocated),
+this is a matter of some concern.
+
+This commit therefore removes that problematic single-CPU check from the
+rcu_tasks_rude_wait_gp() function.  This dispenses with the single-CPU
+optimization, but there is no evidence indicating that this optimization
+is important.  In addition, synchronize_rcu_tasks_generic() contains a
+similar optimization (albeit only for early boot), which also splats.
+(As in exactly why are you invoking synchronize_rcu_tasks_rude() so
+early in boot, anyway???)
+
+It is OK for the synchronize_rcu_tasks_rude() function's check to be
+unsynchronized because the only times that this check can evaluate to
+true is when there is only a single CPU running with preemption
+disabled.
+
+While in the area, this commit also fixes a minor bug in which a
+call to synchronize_rcu_tasks_rude() would instead be attributed to
+synchronize_rcu_tasks().
+
+[ paulmck: Add "synchronize_" prefix and "()" suffix. ]
+
+Signed-off-by: Zqiang <qiang1.zhang@intel.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/open.c              |  5 +++--
- fs/super.c             | 21 +++++++++++++++++----
- include/linux/poison.h |  3 +++
- 3 files changed, 23 insertions(+), 6 deletions(-)
+ kernel/rcu/tasks.h | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/fs/open.c b/fs/open.c
-index 82c1a28b33089..ceb88ac0ca3b2 100644
---- a/fs/open.c
-+++ b/fs/open.c
-@@ -1411,8 +1411,9 @@ int filp_close(struct file *filp, fl_owner_t id)
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index 03388e2e29df0..947d0318b4a2d 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -560,8 +560,9 @@ static int __noreturn rcu_tasks_kthread(void *arg)
+ static void synchronize_rcu_tasks_generic(struct rcu_tasks *rtp)
  {
- 	int retval = 0;
+ 	/* Complain if the scheduler has not started.  */
+-	WARN_ONCE(rcu_scheduler_active == RCU_SCHEDULER_INACTIVE,
+-			 "synchronize_rcu_tasks called too soon");
++	if (WARN_ONCE(rcu_scheduler_active == RCU_SCHEDULER_INACTIVE,
++			 "synchronize_%s() called too soon", rtp->name))
++		return;
  
--	if (!file_count(filp)) {
--		printk(KERN_ERR "VFS: Close: file count is 0\n");
-+	if (CHECK_DATA_CORRUPTION(file_count(filp) == 0,
-+			"VFS: Close: file count is 0 (f_op=%ps)",
-+			filp->f_op)) {
- 		return 0;
- 	}
- 
-diff --git a/fs/super.c b/fs/super.c
-index 12c08cb20405d..cf737ec2bd05c 100644
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -491,10 +491,23 @@ void generic_shutdown_super(struct super_block *sb)
- 		if (sop->put_super)
- 			sop->put_super(sb);
- 
--		if (!list_empty(&sb->s_inodes)) {
--			printk("VFS: Busy inodes after unmount of %s. "
--			   "Self-destruct in 5 seconds.  Have a nice day...\n",
--			   sb->s_id);
-+		if (CHECK_DATA_CORRUPTION(!list_empty(&sb->s_inodes),
-+				"VFS: Busy inodes after unmount of %s (%s)",
-+				sb->s_id, sb->s_type->name)) {
-+			/*
-+			 * Adding a proper bailout path here would be hard, but
-+			 * we can at least make it more likely that a later
-+			 * iput_final() or such crashes cleanly.
-+			 */
-+			struct inode *inode;
-+
-+			spin_lock(&sb->s_inode_list_lock);
-+			list_for_each_entry(inode, &sb->s_inodes, i_sb_list) {
-+				inode->i_op = VFS_PTR_POISON;
-+				inode->i_sb = VFS_PTR_POISON;
-+				inode->i_mapping = VFS_PTR_POISON;
-+			}
-+			spin_unlock(&sb->s_inode_list_lock);
- 		}
- 	}
- 	spin_lock(&sb_lock);
-diff --git a/include/linux/poison.h b/include/linux/poison.h
-index 2d3249eb0e62d..0e8a1f2ceb2f1 100644
---- a/include/linux/poison.h
-+++ b/include/linux/poison.h
-@@ -84,4 +84,7 @@
- /********** kernel/bpf/ **********/
- #define BPF_PTR_POISON ((void *)(0xeB9FUL + POISON_POINTER_DELTA))
- 
-+/********** VFS **********/
-+#define VFS_PTR_POISON ((void *)(0xF5 + POISON_POINTER_DELTA))
-+
- #endif
+ 	// If the grace-period kthread is running, use it.
+ 	if (READ_ONCE(rtp->kthread_ptr)) {
+@@ -1064,9 +1065,6 @@ static void rcu_tasks_be_rude(struct work_struct *work)
+ // Wait for one rude RCU-tasks grace period.
+ static void rcu_tasks_rude_wait_gp(struct rcu_tasks *rtp)
+ {
+-	if (num_online_cpus() <= 1)
+-		return;	// Fastpath for only one CPU.
+-
+ 	rtp->n_ipis += cpumask_weight(cpu_online_mask);
+ 	schedule_on_each_cpu(rcu_tasks_be_rude);
+ }
 -- 
 2.39.2
 
