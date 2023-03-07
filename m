@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6F7BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:48:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D5EC433EF;
-	Tue,  7 Mar 2023 17:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD12BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:48:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E98C433EF;
+	Tue,  7 Mar 2023 17:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211280;
-	bh=677UT4I/CLXlegLuqMbLqsmZcPjmlOw8mlXK7LME8uQ=;
+	s=korg; t=1678211283;
+	bh=6RiuVxm1ckJPj1lb3/aC73hUaJ0bYWX3wRCxTn1qEVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gNX9x/q39SMMaCeGfqqjv7RcVuTyFKydG6TRh6fb7u4+2B/02ZztjTEU9m1wX1hbM
-	 vgLUo7yTkIORjalQ6WEhGbzaHnmCyTntBuaRhdKMssavqwdAVeMl+zi3UtEvf2Y4c+
-	 LaT5f3QCk+eKpMrIAIkDCM8PgSwcj6SFsVjPNdCE=
+	b=IAe35EnMavkz1QozBG7RYxm/Q8fopIHQUZvf/az/Xd3Y+tlPrSn65Dho5+9xfC/3C
+	 d+weMWu0RP2nb2ZPFetQz+TDVv2LkcTZK6p/W51J7qlwnkTNw9gBFwD6gE+pbRpRfI
+	 LhMFic3hh4FSLEQABvv+BO0mS5Br25YW4talhz3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+8ce7f8308d91e6b8bbe2@syzkaller.appspotmail.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 0811/1001] fs/cramfs/inode.c: initialize file_ra_state
-Date: Tue,  7 Mar 2023 17:59:43 +0100
-Message-Id: <20230307170056.939038073@linuxfoundation.org>
+	Jeff Xu <jeffxu@google.com>,
+	Guenter Roeck <groeck@chromium.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 6.2 0812/1001] selftests/landlock: Skip overlayfs tests when not supported
+Date: Tue,  7 Mar 2023 17:59:44 +0100
+Message-Id: <20230307170056.990619761@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,35 +35,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Morton <akpm@linux-foundation.org>
+From: Jeff Xu <jeffxu@google.com>
 
-commit 3e35102666f873a135d31a726ac1ec8af4905206 upstream.
+commit 366617a69e60610912836570546f118006ebc7cb upstream.
 
-file_ra_state_init() assumes that the file_ra_state has been zeroed out.
-Fixes a KMSAN used-unintialized issue (at least).
+overlayfs may be disabled in the kernel configuration, causing related
+tests to fail.  Check that overlayfs is supported at runtime, so we can
+skip layout2_overlay.* accordingly.
 
-Fixes: cf948cbc35e80 ("cramfs: read_mapping_page() is synchronous")
-Reported-by: syzbot <syzbot+8ce7f8308d91e6b8bbe2@syzkaller.appspotmail.com>
-  Link: https://lkml.kernel.org/r/0000000000008f74e905f56df987@google.com
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Nicolas Pitre <nico@fluxnic.net>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jeff Xu <jeffxu@google.com>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230113053229.1281774-2-jeffxu@google.com
+[mic: Reword comments and constify variables]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cramfs/inode.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/landlock/fs_test.c |   47 +++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
---- a/fs/cramfs/inode.c
-+++ b/fs/cramfs/inode.c
-@@ -183,7 +183,7 @@ static void *cramfs_blkdev_read(struct s
- 				unsigned int len)
+--- a/tools/testing/selftests/landlock/fs_test.c
++++ b/tools/testing/selftests/landlock/fs_test.c
+@@ -11,6 +11,7 @@
+ #include <fcntl.h>
+ #include <linux/landlock.h>
+ #include <sched.h>
++#include <stdio.h>
+ #include <string.h>
+ #include <sys/capability.h>
+ #include <sys/mount.h>
+@@ -89,6 +90,40 @@ static const char dir_s3d3[] = TMP_DIR "
+  *         └── s3d3
+  */
+ 
++static bool fgrep(FILE *const inf, const char *const str)
++{
++	char line[32];
++	const int slen = strlen(str);
++
++	while (!feof(inf)) {
++		if (!fgets(line, sizeof(line), inf))
++			break;
++		if (strncmp(line, str, slen))
++			continue;
++
++		return true;
++	}
++
++	return false;
++}
++
++static bool supports_overlayfs(void)
++{
++	bool res;
++	FILE *const inf = fopen("/proc/filesystems", "r");
++
++	/*
++	 * Consider that the filesystem is supported if we cannot get the
++	 * supported ones.
++	 */
++	if (!inf)
++		return true;
++
++	res = fgrep(inf, "nodev\toverlay\n");
++	fclose(inf);
++	return res;
++}
++
+ static void mkdir_parents(struct __test_metadata *const _metadata,
+ 			  const char *const path)
  {
- 	struct address_space *mapping = sb->s_bdev->bd_inode->i_mapping;
--	struct file_ra_state ra;
-+	struct file_ra_state ra = {};
- 	struct page *pages[BLKS_PER_BUF];
- 	unsigned i, blocknr, buffer;
- 	unsigned long devsize;
+@@ -4001,6 +4036,9 @@ FIXTURE(layout2_overlay) {};
+ 
+ FIXTURE_SETUP(layout2_overlay)
+ {
++	if (!supports_overlayfs())
++		SKIP(return, "overlayfs is not supported");
++
+ 	prepare_layout(_metadata);
+ 
+ 	create_directory(_metadata, LOWER_BASE);
+@@ -4037,6 +4075,9 @@ FIXTURE_SETUP(layout2_overlay)
+ 
+ FIXTURE_TEARDOWN(layout2_overlay)
+ {
++	if (!supports_overlayfs())
++		SKIP(return, "overlayfs is not supported");
++
+ 	EXPECT_EQ(0, remove_path(lower_do1_fl3));
+ 	EXPECT_EQ(0, remove_path(lower_dl1_fl2));
+ 	EXPECT_EQ(0, remove_path(lower_fl1));
+@@ -4068,6 +4109,9 @@ FIXTURE_TEARDOWN(layout2_overlay)
+ 
+ TEST_F_FORK(layout2_overlay, no_restriction)
+ {
++	if (!supports_overlayfs())
++		SKIP(return, "overlayfs is not supported");
++
+ 	ASSERT_EQ(0, test_open(lower_fl1, O_RDONLY));
+ 	ASSERT_EQ(0, test_open(lower_dl1, O_RDONLY));
+ 	ASSERT_EQ(0, test_open(lower_dl1_fl2, O_RDONLY));
+@@ -4231,6 +4275,9 @@ TEST_F_FORK(layout2_overlay, same_conten
+ 	size_t i;
+ 	const char *path_entry;
+ 
++	if (!supports_overlayfs())
++		SKIP(return, "overlayfs is not supported");
++
+ 	/* Sets rules on base directories (i.e. outside overlay scope). */
+ 	ruleset_fd = create_ruleset(_metadata, ACCESS_RW, layer1_base);
+ 	ASSERT_LE(0, ruleset_fd);
 
 
