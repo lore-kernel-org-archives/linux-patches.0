@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202AABA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:34:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72983C433A4;
-	Tue,  7 Mar 2023 17:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29726BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:34:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE92C433EF;
+	Tue,  7 Mar 2023 17:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210479;
-	bh=vP5xQh6kFrlHr21SGXbaOzuh2hkmJnfheFpnzcDTdcE=;
+	s=korg; t=1678210483;
+	bh=REW6aO2v/aelZGSE6c2tOk8tsu4KVA/BLgyud6ijnUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rw0BsyzFNRxG4crBx72SqL3Uo7TSMWzSPOJSXJ/1VKeeLdutsq2+onVB2cZpbj75K
-	 ahHdDSjl8mUPh0iHJmRPJ0hHawnE4tG7ESuZORs0Yzv63OIifUj23cb79NIgOqd8xV
-	 YtSnFo90gmQtRzU6nQsvo+p5W6/xMY/BjQ04ADjE=
+	b=g1/6cwqYz8Yedqdp5HoAOtie+I4xnD1lA6RCewfXz1ZoVYM9uOY37yJtnIhRSGJIr
+	 JiOOwKacYORuYqzb879Q8uHreYBg4bgR41crvC5dbyNS9D3ozOHGW5IKmDfr3h69T+
+	 GgO9hjZPYwCySdEQa5mzwr7+V9fZeFxVMT1tsFRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>,
 	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 6.2 0553/1001] driver core: fw_devlink: Consolidate device link flag computation
-Date: Tue,  7 Mar 2023 17:55:25 +0100
-Message-Id: <20230307170045.478367457@linuxfoundation.org>
+Subject: [PATCH 6.2 0554/1001] driver core: fw_devlink: Improve check for fwnode with no device/driver
+Date: Tue,  7 Mar 2023 17:55:26 +0100
+Message-Id: <20230307170045.529111631@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -41,128 +41,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit cd115c0409f283edde94bd5a9a42dc42bee0aba8 ]
+[ Upstream commit 411c0d58ca6faa9bc4b9f5382118a31c7bb92a6f ]
 
-Consolidate the code that computes the flags to be used when creating a
-device link from a fwnode link.
+fw_devlink shouldn't defer the probe of a device to wait on a supplier
+that'll never have a struct device or will never be probed by a driver.
+We currently check if a supplier falls into this category, but don't
+check its ancestors. We need to check the ancestors too because if the
+ancestor will never probe, then the supplier will never probe either.
 
-Fixes: 2de9d8e0d2fe ("driver core: fw_devlink: Improve handling of cyclic dependencies")
 Signed-off-by: Saravana Kannan <saravanak@google.com>
 Tested-by: Colin Foster <colin.foster@in-advantage.com>
 Tested-by: Sudeep Holla <sudeep.holla@arm.com>
 Tested-by: Douglas Anderson <dianders@chromium.org>
 Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
-Link: https://lore.kernel.org/r/20230207014207.1678715-8-saravanak@google.com
+Link: https://lore.kernel.org/r/20230207014207.1678715-3-saravanak@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 3fb16866b51d ("driver core: fw_devlink: Make cycle detection more robust")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c    | 28 +++++++++++++++-------------
- include/linux/fwnode.h |  1 -
- 2 files changed, 15 insertions(+), 14 deletions(-)
+ drivers/base/core.c | 40 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 38 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/base/core.c b/drivers/base/core.c
-index bd8ae74e5cdcb..05c3e9a09b323 100644
+index 05c3e9a09b323..8f32e2cbcc63a 100644
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -1727,8 +1727,11 @@ static int __init fw_devlink_strict_setup(char *arg)
+@@ -1908,6 +1908,35 @@ static int fw_devlink_relax_cycle(struct device *con, void *sup)
+ 	return ret;
  }
- early_param("fw_devlink.strict", fw_devlink_strict_setup);
  
--u32 fw_devlink_get_flags(void)
-+static inline u32 fw_devlink_get_flags(u8 fwlink_flags)
- {
-+	if (fwlink_flags & FWLINK_FLAG_CYCLE)
-+		return FW_DEVLINK_FLAGS_PERMISSIVE | DL_FLAG_CYCLE;
++static bool fwnode_init_without_drv(struct fwnode_handle *fwnode)
++{
++	struct device *dev;
++	bool ret;
 +
- 	return fw_devlink_flags;
- }
- 
-@@ -1909,7 +1912,7 @@ static int fw_devlink_relax_cycle(struct device *con, void *sup)
++	if (!(fwnode->flags & FWNODE_FLAG_INITIALIZED))
++		return false;
++
++	dev = get_dev_from_fwnode(fwnode);
++	ret = !dev || dev->links.status == DL_DEV_NO_DRIVER;
++	put_device(dev);
++
++	return ret;
++}
++
++static bool fwnode_ancestor_init_without_drv(struct fwnode_handle *fwnode)
++{
++	struct fwnode_handle *parent;
++
++	fwnode_for_each_parent_node(fwnode, parent) {
++		if (fwnode_init_without_drv(parent)) {
++			fwnode_handle_put(parent);
++			return true;
++		}
++	}
++
++	return false;
++}
++
+ /**
   * fw_devlink_create_devlink - Create a device link from a consumer to fwnode
   * @con: consumer device for the device link
-  * @sup_handle: fwnode handle of supplier
-- * @flags: devlink flags
-+ * @link: fwnode link that's being converted to a device link
-  *
-  * This function will try to create a device link between the consumer device
-  * @con and the supplier device represented by @sup_handle.
-@@ -1926,10 +1929,17 @@ static int fw_devlink_relax_cycle(struct device *con, void *sup)
-  *  possible to do that in the future
-  */
- static int fw_devlink_create_devlink(struct device *con,
--				     struct fwnode_handle *sup_handle, u32 flags)
-+				     struct fwnode_handle *sup_handle,
-+				     struct fwnode_link *link)
- {
- 	struct device *sup_dev;
- 	int ret = 0;
-+	u32 flags;
-+
-+	if (con->fwnode == link->consumer)
-+		flags = fw_devlink_get_flags(link->flags);
-+	else
-+		flags = FW_DEVLINK_FLAGS_PERMISSIVE;
+@@ -1996,9 +2025,16 @@ static int fw_devlink_create_devlink(struct device *con,
+ 		goto out;
+ 	}
+ 
+-	/* Supplier that's already initialized without a struct device. */
+-	if (sup_handle->flags & FWNODE_FLAG_INITIALIZED)
++	/*
++	 * Supplier or supplier's ancestor already initialized without a struct
++	 * device or being probed by a driver.
++	 */
++	if (fwnode_init_without_drv(sup_handle) ||
++	    fwnode_ancestor_init_without_drv(sup_handle)) {
++		dev_dbg(con, "Not linking %pfwP - Might never probe\n",
++			sup_handle);
+ 		return -EINVAL;
++	}
  
  	/*
- 	 * In some cases, a device P might also be a supplier to its child node
-@@ -2055,7 +2065,6 @@ static void __fw_devlink_link_to_consumers(struct device *dev)
- 	struct fwnode_link *link, *tmp;
- 
- 	list_for_each_entry_safe(link, tmp, &fwnode->consumers, s_hook) {
--		u32 dl_flags = fw_devlink_get_flags();
- 		struct device *con_dev;
- 		bool own_link = true;
- 		int ret;
-@@ -2085,14 +2094,13 @@ static void __fw_devlink_link_to_consumers(struct device *dev)
- 				con_dev = NULL;
- 			} else {
- 				own_link = false;
--				dl_flags = FW_DEVLINK_FLAGS_PERMISSIVE;
- 			}
- 		}
- 
- 		if (!con_dev)
- 			continue;
- 
--		ret = fw_devlink_create_devlink(con_dev, fwnode, dl_flags);
-+		ret = fw_devlink_create_devlink(con_dev, fwnode, link);
- 		put_device(con_dev);
- 		if (!own_link || ret == -EAGAIN)
- 			continue;
-@@ -2133,19 +2141,13 @@ static void __fw_devlink_link_to_suppliers(struct device *dev,
- 	bool own_link = (dev->fwnode == fwnode);
- 	struct fwnode_link *link, *tmp;
- 	struct fwnode_handle *child = NULL;
--	u32 dl_flags;
--
--	if (own_link)
--		dl_flags = fw_devlink_get_flags();
--	else
--		dl_flags = FW_DEVLINK_FLAGS_PERMISSIVE;
- 
- 	list_for_each_entry_safe(link, tmp, &fwnode->suppliers, c_hook) {
- 		int ret;
- 		struct device *sup_dev;
- 		struct fwnode_handle *sup = link->supplier;
- 
--		ret = fw_devlink_create_devlink(dev, sup, dl_flags);
-+		ret = fw_devlink_create_devlink(dev, sup, link);
- 		if (!own_link || ret == -EAGAIN)
- 			continue;
- 
-diff --git a/include/linux/fwnode.h b/include/linux/fwnode.h
-index fdf2ee0285b7a..5700451b300fb 100644
---- a/include/linux/fwnode.h
-+++ b/include/linux/fwnode.h
-@@ -207,7 +207,6 @@ static inline void fwnode_dev_initialized(struct fwnode_handle *fwnode,
- 		fwnode->flags &= ~FWNODE_FLAG_INITIALIZED;
- }
- 
--extern u32 fw_devlink_get_flags(void);
- extern bool fw_devlink_is_strict(void);
- int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup);
- void fwnode_links_purge(struct fwnode_handle *fwnode);
+ 	 * DL_FLAG_SYNC_STATE_ONLY doesn't block probing and supports
 -- 
 2.39.2
 
