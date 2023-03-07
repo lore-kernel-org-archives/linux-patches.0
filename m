@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5E8BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:47:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753CEC433D2;
-	Tue,  7 Mar 2023 17:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B86BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:47:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB83EC433EF;
+	Tue,  7 Mar 2023 17:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211234;
-	bh=gb6m6q7eJ7vrIpStGuM1hl7wRfb5hqwy+aLdckHBeXA=;
+	s=korg; t=1678211238;
+	bh=poVf9OJM0rm/t1qD/IVmJ2U4134Ns7Gc3xEKCJ1jw2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kAMAjWW/cL2F1hd6ddVpkv3HfP2WMduCYPNtgPo+SzRQMfrq0lzcbwawYCeHpZXXx
-	 8x4zK/ivMwt76iC+5qS2ZL/b0CWsanBGDhc7bhagsfSX7v0A6z5v20plS7Frz9RxaZ
-	 0Y0E/DU6HrUT3UebO1IsJb+hdE7Pd1BirrnhAjhw=
+	b=VU4yJw0kcuTuvZmqyQa8qg7uolNoF1G5h+ucic/n/QTqGKXNT0EHX2Si4dIcgDAJt
+	 FUMcqCKvqlMP7SKW1I1NHp0ij8HmvUHJ/QLTgZVrgC1yuRJe9J5jtKnCpBLkDjXJDB
+	 rO+0EYOhThsCbKfy/+nuOHCOvISpVZBVFvVJFODk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <oliver.sang@intel.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.2 0756/1001] io_uring: handle TIF_NOTIFY_RESUME when checking for task_work
-Date: Tue,  7 Mar 2023 17:58:48 +0100
-Message-Id: <20230307170054.526787657@linuxfoundation.org>
+Subject: [PATCH 6.2 0790/1001] io_uring: mark task TASK_RUNNING before handling resume/task work
+Date: Tue,  7 Mar 2023 17:59:22 +0100
+Message-Id: <20230307170056.039424328@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,42 +36,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-commit b5d3ae202fbfe055aa2a8ae8524531ee1dcab717 upstream.
+commit 2f2bb1ffc9983e227424d0787289da5483b0c74f upstream.
 
-If TIF_NOTIFY_RESUME is set, then we need to call resume_user_mode_work()
-for PF_IO_WORKER threads. They never return to usermode, hence never get
-a chance to process any items that are marked by this flag. Most notably
-this includes the final put of files, but also any throttling markers set
-by block cgroups.
+Just like for task_work, set the task mode to TASK_RUNNING before doing
+any potential resume work. We're not holding any locks at this point,
+but we may have already set the task state to TASK_INTERRUPTIBLE in
+preparation for going to sleep waiting for events. Ensure that we set it
+back to TASK_RUNNING if we have work to process, to avoid warnings on
+calling blocking operations with !TASK_RUNNING.
 
-Cc: stable@vger.kernel.org # 5.10+
+Fixes: b5d3ae202fbf ("io_uring: handle TIF_NOTIFY_RESUME when checking for task_work")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Link: https://lore.kernel.org/oe-lkp/202302062208.24d3e563-oliver.sang@intel.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.h |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ io_uring/io_uring.h |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/io_uring/io_uring.h
 +++ b/io_uring/io_uring.h
-@@ -3,6 +3,7 @@
- 
- #include <linux/errno.h>
- #include <linux/lockdep.h>
-+#include <linux/resume_user_mode.h>
- #include <linux/io_uring_types.h>
- #include <uapi/linux/eventpoll.h>
- #include "io-wq.h"
-@@ -270,6 +271,13 @@ static inline int io_run_task_work(void)
+@@ -276,8 +276,10 @@ static inline int io_run_task_work(void)
+ 	 * notify work that needs processing.
  	 */
- 	if (test_thread_flag(TIF_NOTIFY_SIGNAL))
- 		clear_notify_signal();
-+	/*
-+	 * PF_IO_WORKER never returns to userspace, so check here if we have
-+	 * notify work that needs processing.
-+	 */
-+	if (current->flags & PF_IO_WORKER &&
-+	    test_thread_flag(TIF_NOTIFY_RESUME))
-+		resume_user_mode_work(NULL);
+ 	if (current->flags & PF_IO_WORKER &&
+-	    test_thread_flag(TIF_NOTIFY_RESUME))
++	    test_thread_flag(TIF_NOTIFY_RESUME)) {
++		__set_current_state(TASK_RUNNING);
+ 		resume_user_mode_work(NULL);
++	}
  	if (task_work_pending(current)) {
  		__set_current_state(TASK_RUNNING);
  		task_work_run();
