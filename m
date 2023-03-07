@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217EABA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5B4C433EF;
-	Tue,  7 Mar 2023 18:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D4BBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF69C433D2;
+	Tue,  7 Mar 2023 18:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212341;
-	bh=29HGd5KTll93Lf8nwVm2rZKkYRRQ+4eN2imPDMKg5kw=;
+	s=korg; t=1678212344;
+	bh=Ko8Vc2wcTXVRbVNhsuUQyIMOvOZVz6s0vDZ+OtsHBjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=drCLELX0YKTV06tBafqwHj+jPDlWTY1YosgDB6R+wBpF5CwW2+gU9sl1MAbUTTOG/
-	 HsSRlOzGuAzkd6HHA78MzjIE8MwK1fMEm+9MqIqF9arWRWFTiYiGHfgBYFCmHuuFgW
-	 WH8gc5xcIgIGGpxUHl5CgsFBySWduk3RKp5rx2As=
+	b=p1lRaL5iWvA68gPcKLwhaXmFBW7lt/3nEQABes7qSL0I7/wMvdo1/MdE/hI1bAv+z
+	 zkHyDqgMc+t7E3Ru9Tmy/9K6H/i+0kvKOG0lNNc8gTl5pILZDUDALBKTNOD+yWrSCd
+	 mQcEIE8dYO1/uGOrJkD+KtBcBbPPDEdl7xRbAgMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 155/885] s390/early: fix sclp_early_sccb variable lifetime
-Date: Tue,  7 Mar 2023 17:51:29 +0100
-Message-Id: <20230307170008.650944535@linuxfoundation.org>
+Subject: [PATCH 6.1 156/885] s390/vfio-ap: fix an error handling path in vfio_ap_mdev_probe_queue()
+Date: Tue,  7 Mar 2023 17:51:30 +0100
+Message-Id: <20230307170008.691323033@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,69 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 639886b71ddef085a0e7bb1f225b8ae3eda5c06f ]
+[ Upstream commit 08866d34c7099e981918d34aab5d6a437436628f ]
 
-Commit ada1da31ce34 ("s390/sclp: sort out physical vs
-virtual pointers usage") fixed the notion of virtual
-address for sclp_early_sccb pointer. However, it did
-not take into account that kasan_early_init() can also
-output messages and sclp_early_sccb should be adjusted
-by the time kasan_early_init() is called.
+The commit in Fixes: has switch the order of a sysfs_create_group() and a
+kzalloc().
 
-Currently it is not a problem, since virtual and physical
-addresses on s390 are the same. Nevertheless, should they
-ever differ, this would cause an invalid pointer access.
+It correctly removed the now useless kfree() but forgot to add a
+sysfs_remove_group() in case of (unlikely) memory allocation failure.
 
-Fixes: ada1da31ce34 ("s390/sclp: sort out physical vs virtual pointers usage")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Add it now.
+
+Fixes: 260f3ea14138 ("s390/vfio-ap: move probe and remove callbacks to vfio_ap_ops.c")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Link: https://lore.kernel.org/r/d0c0a35eec4fa87cb7f3910d8ac4dc0f7dc9008a.1659283738.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/early.c       | 1 -
- arch/s390/kernel/head64.S      | 1 +
- drivers/s390/char/sclp_early.c | 2 +-
- 3 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/s390/crypto/vfio_ap_ops.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/kernel/early.c b/arch/s390/kernel/early.c
-index 6030fdd6997bc..9693c8630e73f 100644
---- a/arch/s390/kernel/early.c
-+++ b/arch/s390/kernel/early.c
-@@ -288,7 +288,6 @@ static void __init sort_amode31_extable(void)
+diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
+index 0b4cc8c597ae6..a109c59f18f78 100644
+--- a/drivers/s390/crypto/vfio_ap_ops.c
++++ b/drivers/s390/crypto/vfio_ap_ops.c
+@@ -1844,8 +1844,10 @@ int vfio_ap_mdev_probe_queue(struct ap_device *apdev)
+ 		return ret;
  
- void __init startup_init(void)
- {
--	sclp_early_adjust_va();
- 	reset_tod_clock();
- 	check_image_bootable();
- 	time_early_init();
-diff --git a/arch/s390/kernel/head64.S b/arch/s390/kernel/head64.S
-index d7b8b6ad574dc..3b3bf8329e6c1 100644
---- a/arch/s390/kernel/head64.S
-+++ b/arch/s390/kernel/head64.S
-@@ -25,6 +25,7 @@ ENTRY(startup_continue)
- 	larl	%r14,init_task
- 	stg	%r14,__LC_CURRENT
- 	larl	%r15,init_thread_union+THREAD_SIZE-STACK_FRAME_OVERHEAD-__PT_SIZE
-+	brasl	%r14,sclp_early_adjust_va	# allow sclp_early_printk
- #ifdef CONFIG_KASAN
- 	brasl	%r14,kasan_early_init
- #endif
-diff --git a/drivers/s390/char/sclp_early.c b/drivers/s390/char/sclp_early.c
-index d15b0d541de36..140d4ee29105c 100644
---- a/drivers/s390/char/sclp_early.c
-+++ b/drivers/s390/char/sclp_early.c
-@@ -161,7 +161,7 @@ static void __init sclp_early_console_detect(struct init_sccb *sccb)
- 		sclp.has_linemode = 1;
+ 	q = kzalloc(sizeof(*q), GFP_KERNEL);
+-	if (!q)
+-		return -ENOMEM;
++	if (!q) {
++		ret = -ENOMEM;
++		goto err_remove_group;
++	}
+ 
+ 	q->apqn = to_ap_queue(&apdev->device)->qid;
+ 	q->saved_isc = VFIO_AP_ISC_INVALID;
+@@ -1863,6 +1865,10 @@ int vfio_ap_mdev_probe_queue(struct ap_device *apdev)
+ 	release_update_locks_for_mdev(matrix_mdev);
+ 
+ 	return 0;
++
++err_remove_group:
++	sysfs_remove_group(&apdev->device.kobj, &vfio_queue_attr_group);
++	return ret;
  }
  
--void __init sclp_early_adjust_va(void)
-+void __init __no_sanitize_address sclp_early_adjust_va(void)
- {
- 	sclp_early_sccb = __va((unsigned long)sclp_early_sccb);
- }
+ void vfio_ap_mdev_remove_queue(struct ap_device *apdev)
 -- 
 2.39.2
 
