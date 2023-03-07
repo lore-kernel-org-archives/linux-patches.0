@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74791BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:28:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0B2C433EF;
-	Tue,  7 Mar 2023 18:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0CBBBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:28:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F88C433D2;
+	Tue,  7 Mar 2023 18:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213686;
-	bh=o1mbBWOICduY/K2bLxsvWMhD/MK/iWmEUzzvf4AsKrU=;
+	s=korg; t=1678213689;
+	bh=5RL0GqMdf3jzFmUMakrlGo00EiTjcWwEOi0v3a7tL3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r85xDzhbm9GNloXenS3b5mfgYPjwFlFjftfNrfeH8DtUBaz3BOAOC86KaznFMUbKK
-	 evW3VGpZx2Le8ZmzTwtji0oomWoIiPJt4SGnECbz8lF6LfxXrDoGs/hIL+7t22p/0A
-	 jBNO902VmAev8e0kFzLbOcVjv0eeYaKWgpWEv9No=
+	b=YvhjsPx4uwkodn8OMsWvsOVjleJk3v/CuAxH4jiqtLfsNtUcKDxfHACsPEg9YSy7X
+	 egbvSJMB/FCBn93s0b7bxbKS53YaLl/tHGGI6/rKw1BBtgVtOtGGdM2vZYX4t5FRx3
+	 oMSHp4vqINgQtGudek6SZk3VHYaIkLpqbEofl1XA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 569/885] m68k: Check syscall_trace_enter() return code
-Date: Tue,  7 Mar 2023 17:58:23 +0100
-Message-Id: <20230307170027.154152662@linuxfoundation.org>
+Subject: [PATCH 6.1 587/885] wifi: rtw89: debug: avoid invalid access on RTW89_DBG_SEL_MAC_30
+Date: Tue,  7 Mar 2023 17:58:41 +0100
+Message-Id: <20230307170027.885129933@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,70 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Zong-Zhe Yang <kevin_yang@realtek.com>
 
-[ Upstream commit 2ca8a1de4437f21562e57f9ac123914747a8e7a1 ]
+[ Upstream commit c074da21dd346e0cfef5d08b0715078d7aea7f8d ]
 
-Check return code of syscall_trace_enter(), and skip syscall
-if -1. Return code will be left at what had been set by
-ptrace or seccomp (in regs->d0).
+Only 8852C chip has valid pages on RTW89_DBG_SEL_MAC_30. To other chips,
+this section is an address hole. It will lead to crash if trying to access
+this section on chips except for 8852C. So, we avoid that.
 
-No regression seen in testing with strace on ARAnyM.
-
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20230112035529.13521-2-schmitzmic@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230119063529.61563-2-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/68000/entry.S    | 2 ++
- arch/m68k/coldfire/entry.S | 2 ++
- arch/m68k/kernel/entry.S   | 3 +++
- 3 files changed, 7 insertions(+)
+ drivers/net/wireless/realtek/rtw89/debug.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/m68k/68000/entry.S b/arch/m68k/68000/entry.S
-index 997b549330156..7d63e2f1555a0 100644
---- a/arch/m68k/68000/entry.S
-+++ b/arch/m68k/68000/entry.S
-@@ -45,6 +45,8 @@ do_trace:
- 	jbsr	syscall_trace_enter
- 	RESTORE_SWITCH_STACK
- 	addql	#4,%sp
-+	addql	#1,%d0
-+	jeq	ret_from_exception
- 	movel	%sp@(PT_OFF_ORIG_D0),%d1
- 	movel	#-ENOSYS,%d0
- 	cmpl	#NR_syscalls,%d1
-diff --git a/arch/m68k/coldfire/entry.S b/arch/m68k/coldfire/entry.S
-index 9f337c70243a3..35104c5417ff4 100644
---- a/arch/m68k/coldfire/entry.S
-+++ b/arch/m68k/coldfire/entry.S
-@@ -90,6 +90,8 @@ ENTRY(system_call)
- 	jbsr	syscall_trace_enter
- 	RESTORE_SWITCH_STACK
- 	addql	#4,%sp
-+	addql	#1,%d0
-+	jeq	ret_from_exception
- 	movel	%d3,%a0
- 	jbsr	%a0@
- 	movel	%d0,%sp@(PT_OFF_D0)		/* save the return value */
-diff --git a/arch/m68k/kernel/entry.S b/arch/m68k/kernel/entry.S
-index 18f278bdbd218..42879e6eb651d 100644
---- a/arch/m68k/kernel/entry.S
-+++ b/arch/m68k/kernel/entry.S
-@@ -184,9 +184,12 @@ do_trace_entry:
- 	jbsr	syscall_trace_enter
- 	RESTORE_SWITCH_STACK
- 	addql	#4,%sp
-+	addql	#1,%d0			| optimization for cmpil #-1,%d0
-+	jeq	ret_from_syscall
- 	movel	%sp@(PT_OFF_ORIG_D0),%d0
- 	cmpl	#NR_syscalls,%d0
- 	jcs	syscall
-+	jra	ret_from_syscall
- badsys:
- 	movel	#-ENOSYS,%sp@(PT_OFF_D0)
- 	jra	ret_from_syscall
+diff --git a/drivers/net/wireless/realtek/rtw89/debug.c b/drivers/net/wireless/realtek/rtw89/debug.c
+index 730e83d54257f..50701c55ed602 100644
+--- a/drivers/net/wireless/realtek/rtw89/debug.c
++++ b/drivers/net/wireless/realtek/rtw89/debug.c
+@@ -594,6 +594,7 @@ rtw89_debug_priv_mac_reg_dump_select(struct file *filp,
+ 	struct seq_file *m = (struct seq_file *)filp->private_data;
+ 	struct rtw89_debugfs_priv *debugfs_priv = m->private;
+ 	struct rtw89_dev *rtwdev = debugfs_priv->rtwdev;
++	const struct rtw89_chip_info *chip = rtwdev->chip;
+ 	char buf[32];
+ 	size_t buf_size;
+ 	int sel;
+@@ -613,6 +614,12 @@ rtw89_debug_priv_mac_reg_dump_select(struct file *filp,
+ 		return -EINVAL;
+ 	}
+ 
++	if (sel == RTW89_DBG_SEL_MAC_30 && chip->chip_id != RTL8852C) {
++		rtw89_info(rtwdev, "sel %d is address hole on chip %d\n", sel,
++			   chip->chip_id);
++		return -EINVAL;
++	}
++
+ 	debugfs_priv->cb_data = sel;
+ 	rtw89_info(rtwdev, "select mac page dump %d\n", debugfs_priv->cb_data);
+ 
 -- 
 2.39.2
 
