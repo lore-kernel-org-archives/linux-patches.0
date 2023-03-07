@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C0ABA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDCAC433EF;
-	Tue,  7 Mar 2023 18:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5A2BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37306C433EF;
+	Tue,  7 Mar 2023 18:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214165;
-	bh=4kE2uW3RXaMUo4vk3LtW5hwFku4qjjG9WOutV27XEJs=;
+	s=korg; t=1678214168;
+	bh=lq1G/BUXca+EVp2xghk6QquWsZc28y79mR+IG24iFZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ap6pCVrvM0RU6UO39cTKwQ3l+PbPc+DAXpg6EQkWP0iLGvbac7B6Rb9xkV7xbQGut
-	 vwtn1zplE5MaPOlB9aVhXixQsfIySqkRlBuBrCx5zPLpZjf3O3eAd+GZF7RejdbKss
-	 k89GOgOA6Zw4VEYjWhfNiahehI1CGMOOlFrXctTA=
+	b=ldvOlHeISK86jhAl89unt4V8py0N4XgRgyWHvWWbS9IvJNWoyen3aYPUfmq47iKVe
+	 HcJxdmR+fAPj5F4wZGJhhz2yG6vPBJpu2c7n6Q4WFZ2HgvB5eaZ3rREeZNObUYwVB4
+	 6gGGQbhq0f5Z5q1NBaGSMXcmPv2z1jvHj8f0GXio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 744/885] brd: check for REQ_NOWAIT and set correct page allocation mask
-Date: Tue,  7 Mar 2023 18:01:18 +0100
-Message-Id: <20230307170034.249009552@linuxfoundation.org>
+	Matt Bobrowski <mattbobrowski@google.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.1 745/885] ima: fix error handling logic when file measurement failed
+Date: Tue,  7 Mar 2023 18:01:19 +0100
+Message-Id: <20230307170034.289346309@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,154 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Matt Bobrowski <mattbobrowski@google.com>
 
-commit 6ded703c56c21bfb259725d4f1831a5feb563e9b upstream.
+commit 6dc387d52eb67f45d68caa263704fa4e39ef8e76 upstream.
 
-If REQ_NOWAIT is set, then do a non-blocking allocation if the operation
-is a write and we need to insert a new page. Currently REQ_NOWAIT cannot
-be set as the queue isn't marked as supporting nowait, this change is in
-preparation for allowing that.
+Restore the error handling logic so that when file measurement fails,
+the respective iint entry is not left with the digest data being
+populated with zeroes.
 
-radix_tree_preload() warns on attempting to call it with an allocation
-mask that doesn't allow blocking. While that warning could arguably
-be removed, we need to handle radix insertion failures anyway as they
-are more likely if we cannot block to get memory.
-
-Remove legacy BUG_ON()'s and turn them into proper errors instead, one
-for the allocation failure and one for finding a page that doesn't
-match the correct index.
-
-Cc: stable@vger.kernel.org # 5.10+
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 54f03916fb89 ("ima: permit fsverity's file digests in the IMA measurement list")
+Cc: stable@vger.kernel.org	# 5.19
+Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/brd.c |   48 ++++++++++++++++++++++++++++--------------------
- 1 file changed, 28 insertions(+), 20 deletions(-)
+ security/integrity/ima/ima_api.c  |    2 +-
+ security/integrity/ima/ima_main.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/block/brd.c
-+++ b/drivers/block/brd.c
-@@ -80,26 +80,21 @@ static struct page *brd_lookup_page(stru
- /*
-  * Insert a new page for a given sector, if one does not already exist.
-  */
--static int brd_insert_page(struct brd_device *brd, sector_t sector)
-+static int brd_insert_page(struct brd_device *brd, sector_t sector, gfp_t gfp)
- {
- 	pgoff_t idx;
- 	struct page *page;
--	gfp_t gfp_flags;
-+	int ret = 0;
- 
- 	page = brd_lookup_page(brd, sector);
- 	if (page)
- 		return 0;
- 
--	/*
--	 * Must use NOIO because we don't want to recurse back into the
--	 * block or filesystem layers from page reclaim.
--	 */
--	gfp_flags = GFP_NOIO | __GFP_ZERO | __GFP_HIGHMEM;
--	page = alloc_page(gfp_flags);
-+	page = alloc_page(gfp | __GFP_ZERO | __GFP_HIGHMEM);
- 	if (!page)
- 		return -ENOMEM;
- 
--	if (radix_tree_preload(GFP_NOIO)) {
-+	if (gfpflags_allow_blocking(gfp) && radix_tree_preload(gfp)) {
- 		__free_page(page);
- 		return -ENOMEM;
- 	}
-@@ -110,15 +105,17 @@ static int brd_insert_page(struct brd_de
- 	if (radix_tree_insert(&brd->brd_pages, idx, page)) {
- 		__free_page(page);
- 		page = radix_tree_lookup(&brd->brd_pages, idx);
--		BUG_ON(!page);
--		BUG_ON(page->index != idx);
-+		if (!page)
-+			ret = -ENOMEM;
-+		else if (page->index != idx)
-+			ret = -EIO;
- 	} else {
- 		brd->brd_nr_pages++;
- 	}
- 	spin_unlock(&brd->brd_lock);
- 
- 	radix_tree_preload_end();
--	return 0;
-+	return ret;
- }
- 
- /*
-@@ -167,19 +164,20 @@ static void brd_free_pages(struct brd_de
- /*
-  * copy_to_brd_setup must be called before copy_to_brd. It may sleep.
-  */
--static int copy_to_brd_setup(struct brd_device *brd, sector_t sector, size_t n)
-+static int copy_to_brd_setup(struct brd_device *brd, sector_t sector, size_t n,
-+			     gfp_t gfp)
- {
- 	unsigned int offset = (sector & (PAGE_SECTORS-1)) << SECTOR_SHIFT;
- 	size_t copy;
- 	int ret;
- 
- 	copy = min_t(size_t, n, PAGE_SIZE - offset);
--	ret = brd_insert_page(brd, sector);
-+	ret = brd_insert_page(brd, sector, gfp);
- 	if (ret)
- 		return ret;
- 	if (copy < n) {
- 		sector += copy >> SECTOR_SHIFT;
--		ret = brd_insert_page(brd, sector);
-+		ret = brd_insert_page(brd, sector, gfp);
- 	}
- 	return ret;
- }
-@@ -254,20 +252,26 @@ static void copy_from_brd(void *dst, str
-  * Process a single bvec of a bio.
-  */
- static int brd_do_bvec(struct brd_device *brd, struct page *page,
--			unsigned int len, unsigned int off, enum req_op op,
-+			unsigned int len, unsigned int off, blk_opf_t opf,
- 			sector_t sector)
- {
- 	void *mem;
- 	int err = 0;
- 
--	if (op_is_write(op)) {
--		err = copy_to_brd_setup(brd, sector, len);
-+	if (op_is_write(opf)) {
-+		/*
-+		 * Must use NOIO because we don't want to recurse back into the
-+		 * block or filesystem layers from page reclaim.
-+		 */
-+		gfp_t gfp = opf & REQ_NOWAIT ? GFP_NOWAIT : GFP_NOIO;
-+
-+		err = copy_to_brd_setup(brd, sector, len, gfp);
- 		if (err)
- 			goto out;
+--- a/security/integrity/ima/ima_api.c
++++ b/security/integrity/ima/ima_api.c
+@@ -292,7 +292,7 @@ int ima_collect_measurement(struct integ
+ 		result = ima_calc_file_hash(file, &hash.hdr);
  	}
  
- 	mem = kmap_atomic(page);
--	if (!op_is_write(op)) {
-+	if (!op_is_write(opf)) {
- 		copy_from_brd(mem + off, brd, sector, len);
- 		flush_dcache_page(page);
- 	} else {
-@@ -296,8 +300,12 @@ static void brd_submit_bio(struct bio *b
- 				(len & (SECTOR_SIZE - 1)));
+-	if (result == -ENOMEM)
++	if (result && result != -EBADF && result != -EINVAL)
+ 		goto out;
  
- 		err = brd_do_bvec(brd, bvec.bv_page, len, bvec.bv_offset,
--				  bio_op(bio), sector);
-+				  bio->bi_opf, sector);
- 		if (err) {
-+			if (err == -ENOMEM && bio->bi_opf & REQ_NOWAIT) {
-+				bio_wouldblock_error(bio);
-+				return;
-+			}
- 			bio_io_error(bio);
- 			return;
- 		}
+ 	length = sizeof(hash.hdr) + hash.hdr.length;
+--- a/security/integrity/ima/ima_main.c
++++ b/security/integrity/ima/ima_main.c
+@@ -335,7 +335,7 @@ static int process_measurement(struct fi
+ 	hash_algo = ima_get_hash_algo(xattr_value, xattr_len);
+ 
+ 	rc = ima_collect_measurement(iint, file, buf, size, hash_algo, modsig);
+-	if (rc == -ENOMEM)
++	if (rc != 0 && rc != -EBADF && rc != -EINVAL)
+ 		goto out_locked;
+ 
+ 	if (!pathbuf)	/* ima_rdwr_violation possibly pre-fetched */
 
 
