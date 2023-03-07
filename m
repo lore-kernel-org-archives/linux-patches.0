@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F56BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:16:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E251C433EF;
-	Tue,  7 Mar 2023 17:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AE5BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:16:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5B2C433EF;
+	Tue,  7 Mar 2023 17:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209411;
-	bh=O+yygR2JX2Xz6oXdCSgYNx81NXO5p7ba0VVcb20jmtA=;
+	s=korg; t=1678209414;
+	bh=dg2uGb66nUgR7L9Jjq8PbY3a0g0AV5oNw5kOTumhD+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0GEO3Kx4tTVcTAabcQJJHAIltOS+kpco0D330y9arngMXfLqvFFtQuL0+LIztku0R
-	 Pta9aPC80CuoX6mu7MnjSnXvA00V7iB410HyEv7nuHOz0RiVvH5OTFFwlxNcdV1NpZ
-	 ikTbQyHT6VZ3n0N/eH9BES51R5dqmxG5k7/YNXxc=
+	b=YoZg0dKSrC5qaYWz31jiaJQ3h98WJIQ7dn+cjHHXZPssPp027ZLx8YzNnsi7A3GJg
+	 b+vzpDKgPmwpJ4wXo6wMgIBvd9ccZYbQ3WKUb7vNiP1qXp4Ea+9s6BV/hosUoONrKo
+	 pe5IIlNNzPCoV2IcLvTQ8wUjxXpFI7O49xP91OYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Shivani Baranwal <quic_shivbara@quicinc.com>,
+	Veerendranath Jakkam <quic_vjakkam@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0210/1001] wifi: ath11k: Fix memory leak in ath11k_peer_rx_frag_setup
-Date: Tue,  7 Mar 2023 17:49:42 +0100
-Message-Id: <20230307170031.009281083@linuxfoundation.org>
+Subject: [PATCH 6.2 0211/1001] wifi: cfg80211: Fix extended KCK key length check in nl80211_set_rekey_data()
+Date: Tue,  7 Mar 2023 17:49:43 +0100
+Message-Id: <20230307170031.054756824@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,36 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Shivani Baranwal <quic_shivbara@quicinc.com>
 
-[ Upstream commit ed3f83b3459a67a3ab9d806490ac304b567b1c2d ]
+[ Upstream commit df4969ca135b9b3b2c38c07514aaa775112ac835 ]
 
-crypto_alloc_shash() allocates resources, which should be released by
-crypto_free_shash(). When ath11k_peer_find() fails, there has memory
-leak. Add missing crypto_free_shash() to fix this.
+The extended KCK key length check wrongly using the KEK key attribute
+for validation. Due to this GTK rekey offload is failing when the KCK
+key length is 24 bytes even though the driver advertising
+WIPHY_FLAG_SUPPORTS_EXT_KEK_KCK flag. Use correct attribute to fix the
+same.
 
-Fixes: 243874c64c81 ("ath11k: handle RX fragments")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230102081142.3937570-1-linmq006@gmail.com
+Fixes: 093a48d2aa4b ("cfg80211: support bigger kek/kck key length")
+Signed-off-by: Shivani Baranwal <quic_shivbara@quicinc.com>
+Signed-off-by: Veerendranath Jakkam <quic_vjakkam@quicinc.com>
+Link: https://lore.kernel.org/r/20221206143715.1802987-2-quic_vjakkam@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/nl80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index c5a4c34d77499..0c53d88293eb7 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -3126,6 +3126,7 @@ int ath11k_peer_rx_frag_setup(struct ath11k *ar, const u8 *peer_mac, int vdev_id
- 	if (!peer) {
- 		ath11k_warn(ab, "failed to find the peer to set up fragment info\n");
- 		spin_unlock_bh(&ab->base_lock);
-+		crypto_free_shash(tfm);
- 		return -ENOENT;
- 	}
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 33a82ecab9d56..02b9a0280896c 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -13809,7 +13809,7 @@ static int nl80211_set_rekey_data(struct sk_buff *skb, struct genl_info *info)
+ 		return -ERANGE;
+ 	if (nla_len(tb[NL80211_REKEY_DATA_KCK]) != NL80211_KCK_LEN &&
+ 	    !(rdev->wiphy.flags & WIPHY_FLAG_SUPPORTS_EXT_KEK_KCK &&
+-	      nla_len(tb[NL80211_REKEY_DATA_KEK]) == NL80211_KCK_EXT_LEN))
++	      nla_len(tb[NL80211_REKEY_DATA_KCK]) == NL80211_KCK_EXT_LEN))
+ 		return -ERANGE;
  
+ 	rekey_data.kek = nla_data(tb[NL80211_REKEY_DATA_KEK]);
 -- 
 2.39.2
 
