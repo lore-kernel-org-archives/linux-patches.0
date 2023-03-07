@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7638ABA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:49:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0409C433EF;
-	Tue,  7 Mar 2023 18:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88898BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:49:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1804C433D2;
+	Tue,  7 Mar 2023 18:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214987;
-	bh=7jJBllfddU9d+icJLBF9xUNOfsKc23VPluoMBBSbsh0=;
+	s=korg; t=1678214990;
+	bh=e/Pre2imnpWXGVk6zzLY2qTyBv+tmMkJDbggQiyPIfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vf4gZiOgLujmG09YEgpFhVhIKfwFdQrC0PEsKiB+cse5MbTMNHCR0MEyLko0t34w3
-	 3kUVWXWDvSSed7hHRQ/FtyLktm44ix9jDOmAGMgbdDyVmnfa0GqGTKVcyg0RoUKDFo
-	 j1V0ONTGfaVgbeHREQOZQOn+Qv0XfkLKOiyar4mE=
+	b=s+zB58my8QWDvVl224/KuilYX6l0K9FIsCG+29d3x5WEGk312e9AwjNenaz03DILU
+	 c9hsjgYTGIzxQBUzbVqeeri528mLgqjDcOFQvD6zQFuoLUM+XOx+nqs5ZrSy1WXslj
+	 +Cm02jkc5PmBgPqPb3szHfFXWYiODEr/HjngZOCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@suse.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 114/567] x86/microcode: Rip out the OLD_INTERFACE
-Date: Tue,  7 Mar 2023 17:57:30 +0100
-Message-Id: <20230307165910.859875051@linuxfoundation.org>
+Subject: [PATCH 5.15 088/567] rcu-tasks: Improve comments explaining tasks_rcu_exit_srcu purpose
+Date: Tue,  7 Mar 2023 17:57:04 +0100
+Message-Id: <20230307165909.700070962@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,170 +40,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Borislav Petkov <bp@suse.de>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 181b6f40e9ea80c76756d4d0cdeed396016c487e ]
+[ Upstream commit e4e1e8089c5fd948da12cb9f4adc93821036945f ]
 
-Everything should be using the early initrd loading by now.
+Make sure we don't need to look again into the depths of git blame in
+order not to miss a subtle part about how rcu-tasks is dealing with
+exiting tasks.
 
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20220525161232.14924-2-bp@alien8.de
-Stable-dep-of: c0dd9245aa9e ("x86/microcode: Check CPU capabilities after late microcode update correctly")
+Suggested-by: Boqun Feng <boqun.feng@gmail.com>
+Suggested-by: Neeraj Upadhyay <quic_neeraju@quicinc.com>
+Suggested-by: Paul E. McKenney <paulmck@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Stable-dep-of: 28319d6dc5e2 ("rcu-tasks: Fix synchronize_rcu_tasks() VS zap_pid_ns_processes()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Kconfig                     |  12 ----
- arch/x86/kernel/cpu/microcode/core.c | 100 ---------------------------
- 2 files changed, 112 deletions(-)
+ kernel/rcu/tasks.h | 37 +++++++++++++++++++++++++++++--------
+ 1 file changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 0f2234cd8453c..da87b3bfc9132 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -1320,18 +1320,6 @@ config MICROCODE_AMD
- 	  If you select this option, microcode patch loading support for AMD
- 	  processors will be enabled.
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index 4bd07cc3c0eab..d937bacf27b68 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -451,11 +451,21 @@ static void rcu_tasks_pertask(struct task_struct *t, struct list_head *hop)
+ static void rcu_tasks_postscan(struct list_head *hop)
+ {
+ 	/*
+-	 * Wait for tasks that are in the process of exiting.  This
+-	 * does only part of the job, ensuring that all tasks that were
+-	 * previously exiting reach the point where they have disabled
+-	 * preemption, allowing the later synchronize_rcu() to finish
+-	 * the job.
++	 * Exiting tasks may escape the tasklist scan. Those are vulnerable
++	 * until their final schedule() with TASK_DEAD state. To cope with
++	 * this, divide the fragile exit path part in two intersecting
++	 * read side critical sections:
++	 *
++	 * 1) An _SRCU_ read side starting before calling exit_notify(),
++	 *    which may remove the task from the tasklist, and ending after
++	 *    the final preempt_disable() call in do_exit().
++	 *
++	 * 2) An _RCU_ read side starting with the final preempt_disable()
++	 *    call in do_exit() and ending with the final call to schedule()
++	 *    with TASK_DEAD state.
++	 *
++	 * This handles the part 1). And postgp will handle part 2) with a
++	 * call to synchronize_rcu().
+ 	 */
+ 	synchronize_srcu(&tasks_rcu_exit_srcu);
+ }
+@@ -522,7 +532,10 @@ static void rcu_tasks_postgp(struct rcu_tasks *rtp)
+ 	 *
+ 	 * In addition, this synchronize_rcu() waits for exiting tasks
+ 	 * to complete their final preempt_disable() region of execution,
+-	 * cleaning up after the synchronize_srcu() above.
++	 * cleaning up after synchronize_srcu(&tasks_rcu_exit_srcu),
++	 * enforcing the whole region before tasklist removal until
++	 * the final schedule() with TASK_DEAD state to be an RCU TASKS
++	 * read side critical section.
+ 	 */
+ 	synchronize_rcu();
+ }
+@@ -612,7 +625,11 @@ void show_rcu_tasks_classic_gp_kthread(void)
+ EXPORT_SYMBOL_GPL(show_rcu_tasks_classic_gp_kthread);
+ #endif // !defined(CONFIG_TINY_RCU)
  
--config MICROCODE_OLD_INTERFACE
--	bool "Ancient loading interface (DEPRECATED)"
--	default n
--	depends on MICROCODE
--	help
--	  DO NOT USE THIS! This is the ancient /dev/cpu/microcode interface
--	  which was used by userspace tools like iucode_tool and microcode.ctl.
--	  It is inadequate because it runs too late to be able to properly
--	  load microcode on a machine and it needs special tools. Instead, you
--	  should've switched to the early loading method with the initrd or
--	  builtin microcode by now: Documentation/x86/microcode.rst
--
- config X86_MSR
- 	tristate "/dev/cpu/*/msr - Model-specific register support"
- 	help
-diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index 150ebfb8c12ed..951677121c77d 100644
---- a/arch/x86/kernel/cpu/microcode/core.c
-+++ b/arch/x86/kernel/cpu/microcode/core.c
-@@ -390,98 +390,6 @@ static int apply_microcode_on_target(int cpu)
- 	return ret;
+-/* Do the srcu_read_lock() for the above synchronize_srcu().  */
++/*
++ * Contribute to protect against tasklist scan blind spot while the
++ * task is exiting and may be removed from the tasklist. See
++ * corresponding synchronize_srcu() for further details.
++ */
+ void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
+ {
+ 	preempt_disable();
+@@ -620,7 +637,11 @@ void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
+ 	preempt_enable();
  }
  
--#ifdef CONFIG_MICROCODE_OLD_INTERFACE
--static int do_microcode_update(const void __user *buf, size_t size)
--{
--	int error = 0;
--	int cpu;
--
--	for_each_online_cpu(cpu) {
--		struct ucode_cpu_info *uci = ucode_cpu_info + cpu;
--		enum ucode_state ustate;
--
--		if (!uci->valid)
--			continue;
--
--		ustate = microcode_ops->request_microcode_user(cpu, buf, size);
--		if (ustate == UCODE_ERROR) {
--			error = -1;
--			break;
--		} else if (ustate == UCODE_NEW) {
--			apply_microcode_on_target(cpu);
--		}
--	}
--
--	return error;
--}
--
--static int microcode_open(struct inode *inode, struct file *file)
--{
--	return capable(CAP_SYS_RAWIO) ? stream_open(inode, file) : -EPERM;
--}
--
--static ssize_t microcode_write(struct file *file, const char __user *buf,
--			       size_t len, loff_t *ppos)
--{
--	ssize_t ret = -EINVAL;
--	unsigned long nr_pages = totalram_pages();
--
--	if ((len >> PAGE_SHIFT) > nr_pages) {
--		pr_err("too much data (max %ld pages)\n", nr_pages);
--		return ret;
--	}
--
--	cpus_read_lock();
--	mutex_lock(&microcode_mutex);
--
--	if (do_microcode_update(buf, len) == 0)
--		ret = (ssize_t)len;
--
--	if (ret > 0)
--		perf_check_microcode();
--
--	mutex_unlock(&microcode_mutex);
--	cpus_read_unlock();
--
--	return ret;
--}
--
--static const struct file_operations microcode_fops = {
--	.owner			= THIS_MODULE,
--	.write			= microcode_write,
--	.open			= microcode_open,
--	.llseek		= no_llseek,
--};
--
--static struct miscdevice microcode_dev = {
--	.minor			= MICROCODE_MINOR,
--	.name			= "microcode",
--	.nodename		= "cpu/microcode",
--	.fops			= &microcode_fops,
--};
--
--static int __init microcode_dev_init(void)
--{
--	int error;
--
--	error = misc_register(&microcode_dev);
--	if (error) {
--		pr_err("can't misc_register on minor=%d\n", MICROCODE_MINOR);
--		return error;
--	}
--
--	return 0;
--}
--
--static void __exit microcode_dev_exit(void)
--{
--	misc_deregister(&microcode_dev);
--}
--#else
--#define microcode_dev_init()	0
--#define microcode_dev_exit()	do { } while (0)
--#endif
--
- /* fake device for request_firmware */
- static struct platform_device	*microcode_pdev;
- 
-@@ -873,10 +781,6 @@ static int __init microcode_init(void)
- 		goto out_driver;
- 	}
- 
--	error = microcode_dev_init();
--	if (error)
--		goto out_ucode_group;
--
- 	register_syscore_ops(&mc_syscore_ops);
- 	cpuhp_setup_state_nocalls(CPUHP_AP_MICROCODE_LOADER, "x86/microcode:starting",
- 				  mc_cpu_starting, NULL);
-@@ -887,10 +791,6 @@ static int __init microcode_init(void)
- 
- 	return 0;
- 
-- out_ucode_group:
--	sysfs_remove_group(&cpu_subsys.dev_root->kobj,
--			   &cpu_root_microcode_group);
--
-  out_driver:
- 	cpus_read_lock();
- 	mutex_lock(&microcode_mutex);
+-/* Do the srcu_read_unlock() for the above synchronize_srcu().  */
++/*
++ * Contribute to protect against tasklist scan blind spot while the
++ * task is exiting and may be removed from the tasklist. See
++ * corresponding synchronize_srcu() for further details.
++ */
+ void exit_tasks_rcu_finish(void) __releases(&tasks_rcu_exit_srcu)
+ {
+ 	struct task_struct *t = current;
 -- 
 2.39.2
 
