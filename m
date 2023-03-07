@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34053BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:20:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEE3C433A1;
-	Tue,  7 Mar 2023 17:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805DBBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:20:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE553C433EF;
+	Tue,  7 Mar 2023 17:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209629;
-	bh=IMXOWoJD0298unORnK19UBG+gE1ieNZwNvx6iPCTP2M=;
+	s=korg; t=1678209632;
+	bh=QWiufvSY18xyAYhN9U/7BhkGAcbUi0Aa4xBhKUhlFrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bzg8oGvNxGiZFQilANbESlNAHceubsXpVMnNv/wW4evPNHK1eVTFlysr3lCFGI4CV
-	 OhDTdf5qDq9MPtm1df/HdjM6gPj2l4hoKDHlBxeyACMIMYBYKEtQ51KPggagBnjbbi
-	 mdnECb9Twdu0QfJMNJ1xiAxqSRZBaekkWpC38tWI=
+	b=UwDv0GOJkItx1Bz6lJvNB1vJ4C92usypbbtbKsX3+YhJGY3BB7Pbsx4tmWob8s3K1
+	 hpUQLITiDa/bKwWkF7T7NYVfyxOjATu8JOf7KNyt1Ty7s2B0CD254PzOO4abdo+4wq
+	 xUndelzSkEVOLq4PwFndTokgQlJuOsHLY3v0ec3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0280/1001] crypto: rsa-pkcs1pad - Use akcipher_request_complete
-Date: Tue,  7 Mar 2023 17:50:52 +0100
-Message-Id: <20230307170033.808296129@linuxfoundation.org>
+Subject: [PATCH 6.2 0281/1001] m68k: /proc/hardware should depend on PROC_FS
+Date: Tue,  7 Mar 2023 17:50:53 +0100
+Message-Id: <20230307170033.854707667@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,89 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 564cabc0ca0bdfa8f0fc1ae74b24d0a7554522c5 ]
+[ Upstream commit 1e5b5df65af99013b4d31607ddb3ca5731dbe44d ]
 
-Use the akcipher_request_complete helper instead of calling the
-completion function directly.  In fact the previous code was buggy
-in that EINPROGRESS was never passed back to the original caller.
+When CONFIG_PROC_FS is not set, there is a build error for an unused
+function. Make PROC_HARDWARE depend on PROC_FS to prevent this error.
 
-Fixes: 3d5b1ecdea6f ("crypto: rsa - RSA padding algorithm")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+In file included from ../arch/m68k/kernel/setup.c:3:
+../arch/m68k/kernel/setup_mm.c:477:12: error: 'hardware_proc_show' defined but not used [-Werror=unused-function]
+  477 | static int hardware_proc_show(struct seq_file *m, void *v)
+      |            ^~~~~~~~~~~~~~~~~~
+
+Fixes: 66d857b08b8c ("m68k: merge m68k and m68knommu arch directories") # v3.0
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20230209010825.24136-1-rdunlap@infradead.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/rsa-pkcs1pad.c | 34 +++++++++++++++-------------------
- 1 file changed, 15 insertions(+), 19 deletions(-)
+ arch/m68k/Kconfig.devices | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/crypto/rsa-pkcs1pad.c b/crypto/rsa-pkcs1pad.c
-index 6ee5b8a060c06..4e9d2244ee317 100644
---- a/crypto/rsa-pkcs1pad.c
-+++ b/crypto/rsa-pkcs1pad.c
-@@ -214,16 +214,14 @@ static void pkcs1pad_encrypt_sign_complete_cb(
- 		struct crypto_async_request *child_async_req, int err)
- {
- 	struct akcipher_request *req = child_async_req->data;
--	struct crypto_async_request async_req;
- 
- 	if (err == -EINPROGRESS)
--		return;
-+		goto out;
-+
-+	err = pkcs1pad_encrypt_sign_complete(req, err);
- 
--	async_req.data = req->base.data;
--	async_req.tfm = crypto_akcipher_tfm(crypto_akcipher_reqtfm(req));
--	async_req.flags = child_async_req->flags;
--	req->base.complete(&async_req,
--			pkcs1pad_encrypt_sign_complete(req, err));
-+out:
-+	akcipher_request_complete(req, err);
- }
- 
- static int pkcs1pad_encrypt(struct akcipher_request *req)
-@@ -332,15 +330,14 @@ static void pkcs1pad_decrypt_complete_cb(
- 		struct crypto_async_request *child_async_req, int err)
- {
- 	struct akcipher_request *req = child_async_req->data;
--	struct crypto_async_request async_req;
- 
- 	if (err == -EINPROGRESS)
--		return;
-+		goto out;
-+
-+	err = pkcs1pad_decrypt_complete(req, err);
- 
--	async_req.data = req->base.data;
--	async_req.tfm = crypto_akcipher_tfm(crypto_akcipher_reqtfm(req));
--	async_req.flags = child_async_req->flags;
--	req->base.complete(&async_req, pkcs1pad_decrypt_complete(req, err));
-+out:
-+	akcipher_request_complete(req, err);
- }
- 
- static int pkcs1pad_decrypt(struct akcipher_request *req)
-@@ -513,15 +510,14 @@ static void pkcs1pad_verify_complete_cb(
- 		struct crypto_async_request *child_async_req, int err)
- {
- 	struct akcipher_request *req = child_async_req->data;
--	struct crypto_async_request async_req;
- 
- 	if (err == -EINPROGRESS)
--		return;
-+		goto out;
- 
--	async_req.data = req->base.data;
--	async_req.tfm = crypto_akcipher_tfm(crypto_akcipher_reqtfm(req));
--	async_req.flags = child_async_req->flags;
--	req->base.complete(&async_req, pkcs1pad_verify_complete(req, err));
-+	err = pkcs1pad_verify_complete(req, err);
-+
-+out:
-+	akcipher_request_complete(req, err);
- }
- 
- /*
+diff --git a/arch/m68k/Kconfig.devices b/arch/m68k/Kconfig.devices
+index 6a87b4a5fcac2..e6e3efac18407 100644
+--- a/arch/m68k/Kconfig.devices
++++ b/arch/m68k/Kconfig.devices
+@@ -19,6 +19,7 @@ config HEARTBEAT
+ # We have a dedicated heartbeat LED. :-)
+ config PROC_HARDWARE
+ 	bool "/proc/hardware support"
++	depends on PROC_FS
+ 	help
+ 	  Say Y here to support the /proc/hardware file, which gives you
+ 	  access to information about the machine you're running on,
 -- 
 2.39.2
 
