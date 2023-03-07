@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D8DBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:06:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF00C4339B;
-	Tue,  7 Mar 2023 18:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF67EBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:06:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258B0C433D2;
+	Tue,  7 Mar 2023 18:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212412;
-	bh=GmB9KFYceQ46sbtpBtqOU8knNaz81MKg4wNl6eq06vg=;
+	s=korg; t=1678212415;
+	bh=PYtdjopN2UJp+2eK/CBZp6xShk+9Njdh/NTg5rBPIco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FPkNi5DMC1g9kWRDBXCoKwQncjHwz3+qLFywZSHQKCmhocYL0DmrygHneZN7RDzIP
-	 MRJJKJSCzIV+TjfV693Kk+ScUxh4OQqdn+6wSEEXlykoust/NvLucbUpzRc+LMcB8M
-	 frHI3KrZydihcBSwI8vI2rZiDkzdAGD1SABeeyQQ=
+	b=lR4+rLB9BPl9wPjNUrcCrGpv5EM6Xf4urhyAYx6uf9L4Awc9ePfWROLjtPSJb4yfO
+	 zII2RA6p+LR2uv0u1+VL9KuHpvsLQICsb/hjbEwX5f/6j9xhwTldt79NG+jFmZR0PG
+	 edkkF9ECkk3INxfGNa5dO7cr2Ze1Kwni5JWoSBic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Andy Nguyen <theflow@google.com>,
+	Peter Gonda <pgonda@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	David Rientjes <rientjes@google.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 174/885] selftests/bpf: Fix build errors if CONFIG_NF_CONNTRACK=m
-Date: Tue,  7 Mar 2023 17:51:48 +0100
-Message-Id: <20230307170009.522209927@linuxfoundation.org>
+Subject: [PATCH 6.1 147/885] crypto: ccp - Avoid page allocation failure warning for SEV_GET_ID2
+Date: Tue,  7 Mar 2023 17:51:21 +0100
+Message-Id: <20230307170008.265581542@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,79 +38,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: David Rientjes <rientjes@google.com>
 
-[ Upstream commit 92afc5329a5b23d876b215b783d200352d5aaea6 ]
+[ Upstream commit 91dfd98216d817ec5f1c55890bacb7b4fe9b068a ]
 
-If CONFIG_NF_CONNTRACK=m, there are no definitions of NF_NAT_MANIP_SRC
-and NF_NAT_MANIP_DST in vmlinux.h, build test_bpf_nf.c failed.
+For SEV_GET_ID2, the user provided length does not have a specified
+limitation because the length of the ID may change in the future.  The
+kernel memory allocation, however, is implicitly limited to 4MB on x86 by
+the page allocator, otherwise the kzalloc() will fail.
 
-$ make -C tools/testing/selftests/bpf/
+When this happens, it is best not to spam the kernel log with the warning.
+Simply fail the allocation and return ENOMEM to the user.
 
-  CLNG-BPF [test_maps] test_bpf_nf.bpf.o
-progs/test_bpf_nf.c:160:42: error: use of undeclared identifier 'NF_NAT_MANIP_SRC'
-                bpf_ct_set_nat_info(ct, &saddr, sport, NF_NAT_MANIP_SRC);
-                                                       ^
-progs/test_bpf_nf.c:163:42: error: use of undeclared identifier 'NF_NAT_MANIP_DST'
-                bpf_ct_set_nat_info(ct, &daddr, dport, NF_NAT_MANIP_DST);
-                                                       ^
-2 errors generated.
-
-Copy the definitions in include/net/netfilter/nf_nat.h to test_bpf_nf.c,
-in order to avoid redefinitions if CONFIG_NF_CONNTRACK=y, rename them with
-___local suffix. This is similar with commit 1058b6a78db2 ("selftests/bpf:
-Do not fail build if CONFIG_NF_CONNTRACK=m/n").
-
-Fixes: b06b45e82b59 ("selftests/bpf: add tests for bpf_ct_set_nat_info kfunc")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Tested-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/r/1674028604-7113-1-git-send-email-yangtiezhu@loongson.cn
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: d6112ea0cb34 ("crypto: ccp - introduce SEV_GET_ID2 command")
+Reported-by: Andy Nguyen <theflow@google.com>
+Reported-by: Peter Gonda <pgonda@google.com>
+Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: David Rientjes <rientjes@google.com>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/test_bpf_nf.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/crypto/ccp/sev-dev.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/test_bpf_nf.c b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-index 227e85e85ddaf..9fc603c9d673e 100644
---- a/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-+++ b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-@@ -34,6 +34,11 @@ __be16 dport = 0;
- int test_exist_lookup = -ENOENT;
- u32 test_exist_lookup_mark = 0;
+diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
+index 06fc7156c04f3..56998bc579d67 100644
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -881,7 +881,14 @@ static int sev_ioctl_do_get_id2(struct sev_issue_cmd *argp)
+ 	input_address = (void __user *)input.address;
  
-+enum nf_nat_manip_type___local {
-+	NF_NAT_MANIP_SRC___local,
-+	NF_NAT_MANIP_DST___local
-+};
-+
- struct nf_conn;
+ 	if (input.address && input.length) {
+-		id_blob = kzalloc(input.length, GFP_KERNEL);
++		/*
++		 * The length of the ID shouldn't be assumed by software since
++		 * it may change in the future.  The allocation size is limited
++		 * to 1 << (PAGE_SHIFT + MAX_ORDER - 1) by the page allocator.
++		 * If the allocation fails, simply return ENOMEM rather than
++		 * warning in the kernel log.
++		 */
++		id_blob = kzalloc(input.length, GFP_KERNEL | __GFP_NOWARN);
+ 		if (!id_blob)
+ 			return -ENOMEM;
  
- struct bpf_ct_opts___local {
-@@ -58,7 +63,7 @@ int bpf_ct_change_timeout(struct nf_conn *, u32) __ksym;
- int bpf_ct_set_status(struct nf_conn *, u32) __ksym;
- int bpf_ct_change_status(struct nf_conn *, u32) __ksym;
- int bpf_ct_set_nat_info(struct nf_conn *, union nf_inet_addr *,
--			int port, enum nf_nat_manip_type) __ksym;
-+			int port, enum nf_nat_manip_type___local) __ksym;
- 
- static __always_inline void
- nf_ct_test(struct nf_conn *(*lookup_fn)(void *, struct bpf_sock_tuple *, u32,
-@@ -157,10 +162,10 @@ nf_ct_test(struct nf_conn *(*lookup_fn)(void *, struct bpf_sock_tuple *, u32,
- 
- 		/* snat */
- 		saddr.ip = bpf_get_prandom_u32();
--		bpf_ct_set_nat_info(ct, &saddr, sport, NF_NAT_MANIP_SRC);
-+		bpf_ct_set_nat_info(ct, &saddr, sport, NF_NAT_MANIP_SRC___local);
- 		/* dnat */
- 		daddr.ip = bpf_get_prandom_u32();
--		bpf_ct_set_nat_info(ct, &daddr, dport, NF_NAT_MANIP_DST);
-+		bpf_ct_set_nat_info(ct, &daddr, dport, NF_NAT_MANIP_DST___local);
- 
- 		ct_ins = bpf_ct_insert_entry(ct);
- 		if (ct_ins) {
 -- 
 2.39.2
 
