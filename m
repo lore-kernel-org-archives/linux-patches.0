@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8345EBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:22:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD52C433EF;
-	Tue,  7 Mar 2023 18:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC60BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:22:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140A6C433EF;
+	Tue,  7 Mar 2023 18:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213356;
-	bh=zMTdZEKp+7Q0EH+mzraBpgIp4GVZpxamBZLKhrgd0rc=;
+	s=korg; t=1678213359;
+	bh=Nb6SslVtIP13LNSYQNx3jgpiRznoseakWZm2LQAooy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AIcHCIB1N90LhZMBQO+dxCnme8dSOuevpAGUd/+hcDtfcleBoH3AEEayJePo8GaVQ
-	 D9bt1UD+Rm9TZW2zUgkN2xnONyhb+TANZri7ASBek59EKSj9FtB6jjFlC0bDNM45Yq
-	 htSr9s7ZN53ViuJyEGpxfwxauXzIXOFML3kS7hyU=
+	b=1z67tAn2wTyzWwFh5HlXJHvat7yMh5D+LXz5VL/0yvcCyWaqVp9XAZZgE7kx+swcX
+	 eW5aHHB/xsdonfnTWf1qQFDz4ZEcH7Mxgmf+kHffFFdnHOi2g8PP7TWBkvGmPhvBVn
+	 Kz5hG05iWG68r6W2bHw9qieH5K8JjKOpbnM4XHOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 482/885] iommu: Fix error unwind in iommu_group_alloc()
-Date: Tue,  7 Mar 2023 17:56:56 +0100
-Message-Id: <20230307170023.418833672@linuxfoundation.org>
+Subject: [PATCH 6.1 483/885] iommu/amd: Do not identity map v2 capable device when snp is enabled
+Date: Tue,  7 Mar 2023 17:56:57 +0100
+Message-Id: <20230307170023.456991537@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,51 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-[ Upstream commit 4daa861174d56023c2068ddb03de0752f07fa199 ]
+[ Upstream commit 18792e99ea2fea27c72eb1ecca1879e5e6be304d ]
 
-If either iommu_group_grate_file() fails then the
-iommu_group is leaked.
+Flow:
+  - Booted system with SNP enabled, memory encryption off and
+    IOMMU DMA translation mode
+  - AMD driver detects v2 capable device and amd_iommu_def_domain_type()
+    returns identity mode
+  - amd_iommu_domain_alloc() returns NULL an SNP is enabled
+  - System will fail to register device
 
-Destroy it on these error paths.
+On SNP enabled system, passthrough mode is not supported. IOMMU default
+domain is set to translation mode. We need to return zero from
+amd_iommu_def_domain_type() so that it allocates translation domain.
 
-Found by kselftest/iommu/iommufd_fail_nth
-
-Fixes: bc7d12b91bd3 ("iommu: Implement reserved_regions iommu-group sysfs file")
-Fixes: c52c72d3dee8 ("iommu: Add sysfs attribyte for domain type")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/0-v1-8f616bee028d+8b-iommu_group_alloc_leak_jgg@nvidia.com
+Fixes: fb2accadaa94 ("iommu/amd: Introduce function to check and enable SNP")
+CC: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Link: https://lore.kernel.org/r/20230207091752.7656-1-vasant.hegde@amd.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommu.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/iommu.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 959d895fc1dff..fd8c8aeb3c504 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -749,12 +749,16 @@ struct iommu_group *iommu_group_alloc(void)
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index d3b39d0416fa3..46bf0744721dd 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -2394,12 +2394,17 @@ static int amd_iommu_def_domain_type(struct device *dev)
+ 		return 0;
  
- 	ret = iommu_group_create_file(group,
- 				      &iommu_group_attr_reserved_regions);
--	if (ret)
-+	if (ret) {
-+		kobject_put(group->devices_kobj);
- 		return ERR_PTR(ret);
+ 	/*
+-	 * Do not identity map IOMMUv2 capable devices when memory encryption is
+-	 * active, because some of those devices (AMD GPUs) don't have the
+-	 * encryption bit in their DMA-mask and require remapping.
++	 * Do not identity map IOMMUv2 capable devices when:
++	 *  - memory encryption is active, because some of those devices
++	 *    (AMD GPUs) don't have the encryption bit in their DMA-mask
++	 *    and require remapping.
++	 *  - SNP is enabled, because it prohibits DTE[Mode]=0.
+ 	 */
+-	if (!cc_platform_has(CC_ATTR_MEM_ENCRYPT) && dev_data->iommu_v2)
++	if (dev_data->iommu_v2 &&
++	    !cc_platform_has(CC_ATTR_MEM_ENCRYPT) &&
++	    !amd_iommu_snp_en) {
+ 		return IOMMU_DOMAIN_IDENTITY;
 +	}
  
- 	ret = iommu_group_create_file(group, &iommu_group_attr_type);
--	if (ret)
-+	if (ret) {
-+		kobject_put(group->devices_kobj);
- 		return ERR_PTR(ret);
-+	}
- 
- 	pr_debug("Allocated group %d\n", group->id);
- 
+ 	return 0;
+ }
 -- 
 2.39.2
 
