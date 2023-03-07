@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6CFBA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:09:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3819C433EF;
-	Tue,  7 Mar 2023 19:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35ABBA52
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:09:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 145FCC433EF;
+	Tue,  7 Mar 2023 19:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216175;
-	bh=084TwYer79m8VBMvi5NXgTPGZcMgrcdjEBrOuKMwImc=;
+	s=korg; t=1678216178;
+	bh=KCEuBy+vQlq+l6jOKnFcuSzdCEdjOiwxyU8c70mIZxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=olmsacm79AhG7PEHjI76WYB3NZcRD1UF0NC28Z+At3E30hhEiDfjJVMXYg6rIwBIN
-	 NZ/WR6nRyQw5YfuzV4s2GmX6aCW/ugfWhaSpXfYNRrUNLZ/vMnqiAHPZAoc4JoHVaK
-	 LKmzWh1m3C2FpOwGo6C1JdQQQ6EMsiATWRBCX3iw=
+	b=KdaElJu1QNRElKjtTpsvC90rKQfg66qf3Ta73+keqOuWlVanA9XibKrANe10ZZSOJ
+	 G1p45PV3UEVMoVaL7qj9CWJTDuZit1KuoHPY1OfyoLvdn6giyfPqwPgRK9JXE7ay9+
+	 y1Q0yuEdWG2aH5UKOKBpZzI+AN4Z06b9puxpGokQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	zhanchengbin <zhanchengbin1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 498/567] jbd2: fix data missing when reusing bh which is ready to be checkpointed
-Date: Tue,  7 Mar 2023 18:03:54 +0100
-Message-Id: <20230307165927.554429059@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Vineeth Pillai <viremana@linux.microsoft.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	kvm@vger.kernel.org,
+	Sean Christopherson <seanjc@google.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>
+Subject: [PATCH 5.15 469/567] KVM: SVM: hyper-v: placate modpost section mismatch error
+Date: Tue,  7 Mar 2023 18:03:25 +0100
+Message-Id: <20230307165926.208565593@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -37,145 +38,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit e6b9bd7290d334451ce054e98e752abc055e0034 upstream.
+commit 45dd9bc75d9adc9483f0c7d662ba6e73ed698a0b upstream.
 
-Following process will make data lost and could lead to a filesystem
-corrupted problem:
+modpost reports section mismatch errors/warnings:
+WARNING: modpost: vmlinux.o: section mismatch in reference: svm_hv_hardware_setup (section: .text) -> (unknown) (section: .init.data)
+WARNING: modpost: vmlinux.o: section mismatch in reference: svm_hv_hardware_setup (section: .text) -> (unknown) (section: .init.data)
+WARNING: modpost: vmlinux.o: section mismatch in reference: svm_hv_hardware_setup (section: .text) -> (unknown) (section: .init.data)
 
-1. jh(bh) is inserted into T1->t_checkpoint_list, bh is dirty, and
-   jh->b_transaction = NULL
-2. T1 is added into journal->j_checkpoint_transactions.
-3. Get bh prepare to write while doing checkpoing:
-           PA				    PB
-   do_get_write_access             jbd2_log_do_checkpoint
-    spin_lock(&jh->b_state_lock)
-     if (buffer_dirty(bh))
-      clear_buffer_dirty(bh)   // clear buffer dirty
-       set_buffer_jbddirty(bh)
-				    transaction =
-				    journal->j_checkpoint_transactions
-				    jh = transaction->t_checkpoint_list
-				    if (!buffer_dirty(bh))
-		                      __jbd2_journal_remove_checkpoint(jh)
-				      // bh won't be flushed
-		                    jbd2_cleanup_journal_tail
-    __jbd2_journal_file_buffer(jh, transaction, BJ_Reserved)
-4. Aborting journal/Power-cut before writing latest bh on journal area.
+This "(unknown) (section: .init.data)" all refer to svm_x86_ops.
 
-In this way we get a corrupted filesystem with bh's data lost.
+Tag svm_hv_hardware_setup() with __init to fix a modpost warning as the
+non-stub implementation accesses __initdata (svm_x86_ops), i.e. would
+generate a use-after-free if svm_hv_hardware_setup() were actually invoked
+post-init.  The helper is only called from svm_hardware_setup(), which is
+also __init, i.e. lack of __init is benign other than the modpost warning.
 
-Fix it by moving the clearing of buffer_dirty bit just before the call
-to __jbd2_journal_file_buffer(), both bit clearing and jh->b_transaction
-assignment are under journal->j_list_lock locked, so that
-jbd2_log_do_checkpoint() will wait until jh's new transaction fininshed
-even bh is currently not dirty. And journal_shrink_one_cp_list() won't
-remove jh from checkpoint list if the buffer head is reused in
-do_get_write_access().
-
-Fetch a reproducer in [Link].
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216898
-Cc: <stable@kernel.org>
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: zhanchengbin <zhanchengbin1@huawei.com>
-Suggested-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230110015327.1181863-1-chengzhihao1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 1e0c7d40758b ("KVM: SVM: hyper-v: Remote TLB flush for SVM")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Vineeth Pillai <viremana@linux.microsoft.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: kvm@vger.kernel.org
+Cc: stable@vger.kernel.org
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Message-Id: <20230222073315.9081-1-rdunlap@infradead.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/transaction.c |   50 +++++++++++++++++++++++++++++---------------------
- 1 file changed, 29 insertions(+), 21 deletions(-)
+ arch/x86/kvm/svm/svm_onhyperv.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -1001,36 +1001,28 @@ repeat:
- 	 * ie. locked but not dirty) or tune2fs (which may actually have
- 	 * the buffer dirtied, ugh.)  */
+--- a/arch/x86/kvm/svm/svm_onhyperv.h
++++ b/arch/x86/kvm/svm/svm_onhyperv.h
+@@ -48,7 +48,7 @@ static inline void svm_hv_init_vmcb(stru
+ 		hve->hv_enlightenments_control.enlightened_npt_tlb = 1;
+ }
  
--	if (buffer_dirty(bh)) {
-+	if (buffer_dirty(bh) && jh->b_transaction) {
-+		warn_dirty_buffer(bh);
- 		/*
--		 * First question: is this buffer already part of the current
--		 * transaction or the existing committing transaction?
--		 */
--		if (jh->b_transaction) {
--			J_ASSERT_JH(jh,
--				jh->b_transaction == transaction ||
--				jh->b_transaction ==
--					journal->j_committing_transaction);
--			if (jh->b_next_transaction)
--				J_ASSERT_JH(jh, jh->b_next_transaction ==
--							transaction);
--			warn_dirty_buffer(bh);
--		}
--		/*
--		 * In any case we need to clean the dirty flag and we must
--		 * do it under the buffer lock to be sure we don't race
--		 * with running write-out.
-+		 * We need to clean the dirty flag and we must do it under the
-+		 * buffer lock to be sure we don't race with running write-out.
- 		 */
- 		JBUFFER_TRACE(jh, "Journalling dirty buffer");
- 		clear_buffer_dirty(bh);
-+		/*
-+		 * The buffer is going to be added to BJ_Reserved list now and
-+		 * nothing guarantees jbd2_journal_dirty_metadata() will be
-+		 * ever called for it. So we need to set jbddirty bit here to
-+		 * make sure the buffer is dirtied and written out when the
-+		 * journaling machinery is done with it.
-+		 */
- 		set_buffer_jbddirty(bh);
- 	}
+-static inline void svm_hv_hardware_setup(void)
++static inline __init void svm_hv_hardware_setup(void)
+ {
+ 	if (npt_enabled &&
+ 	    ms_hyperv.nested_features & HV_X64_NESTED_ENLIGHTENED_TLB) {
+@@ -112,7 +112,7 @@ static inline void svm_hv_init_vmcb(stru
+ {
+ }
  
--	unlock_buffer(bh);
--
- 	error = -EROFS;
- 	if (is_handle_aborted(handle)) {
- 		spin_unlock(&jh->b_state_lock);
-+		unlock_buffer(bh);
- 		goto out;
- 	}
- 	error = 0;
-@@ -1040,8 +1032,10 @@ repeat:
- 	 * b_next_transaction points to it
- 	 */
- 	if (jh->b_transaction == transaction ||
--	    jh->b_next_transaction == transaction)
-+	    jh->b_next_transaction == transaction) {
-+		unlock_buffer(bh);
- 		goto done;
-+	}
+-static inline void svm_hv_hardware_setup(void)
++static inline __init void svm_hv_hardware_setup(void)
+ {
+ }
  
- 	/*
- 	 * this is the first time this transaction is touching this buffer,
-@@ -1065,10 +1059,24 @@ repeat:
- 		 */
- 		smp_wmb();
- 		spin_lock(&journal->j_list_lock);
-+		if (test_clear_buffer_dirty(bh)) {
-+			/*
-+			 * Execute buffer dirty clearing and jh->b_transaction
-+			 * assignment under journal->j_list_lock locked to
-+			 * prevent bh being removed from checkpoint list if
-+			 * the buffer is in an intermediate state (not dirty
-+			 * and jh->b_transaction is NULL).
-+			 */
-+			JBUFFER_TRACE(jh, "Journalling dirty buffer");
-+			set_buffer_jbddirty(bh);
-+		}
- 		__jbd2_journal_file_buffer(jh, transaction, BJ_Reserved);
- 		spin_unlock(&journal->j_list_lock);
-+		unlock_buffer(bh);
- 		goto done;
- 	}
-+	unlock_buffer(bh);
-+
- 	/*
- 	 * If there is already a copy-out version of this buffer, then we don't
- 	 * need to make another one
 
 
