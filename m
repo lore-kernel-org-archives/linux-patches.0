@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B334BBA46
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:10:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD01BC4339B;
-	Tue,  7 Mar 2023 18:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47AB9BA46
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:10:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3808C433EF;
+	Tue,  7 Mar 2023 18:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212638;
-	bh=74p5CosyWb5Wxz0lA/P5URPZ1cKl0QrpLYp1x+w71TA=;
+	s=korg; t=1678212641;
+	bh=MhZrypLdQ94TSB6z2WRf3tO8RBjMmuX9xZYdwxeF+rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PF3+ktgsGxpociDYrXgRX2sF2tS4VjgPc+YEuvyMIo71mZhavfnD3pJheuN/Slmyg
-	 bUc0+WlNADW3MCDAN+8QGGtNNW700LFS+iQ/WL1ltE/KYbKqdlR0ikKvSFElzlN6fA
-	 ZV7rmKR84f3vuKg+vh+7VqAlfswUYzHHuGirY/4A=
+	b=aeiP6pt+X0V7Q0+H9F2wLt1D3mgbiqN2M32Ryxk+PCT4ZEU4I55JAlSAO9Nb6JJB3
+	 WQ675kDSPinySqB3kII0AJ2dAEEnFTlX8yfgofYfn3RIYHWmqsGovcSPluTmLA7a1v
+	 abOPZxpq6qcxD0g9nJVUC+bxtWpUDRLhm4aDnrFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 208/885] net: add sock_init_data_uid()
-Date: Tue,  7 Mar 2023 17:52:22 +0100
-Message-Id: <20230307170011.094411091@linuxfoundation.org>
+Subject: [PATCH 6.1 242/885] thermal/drivers/hisi: Drop second sensor hi3660
+Date: Tue,  7 Mar 2023 17:52:56 +0100
+Message-Id: <20230307170012.530624369@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,87 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Yongqin Liu <yongqin.liu@linaro.org>
 
-[ Upstream commit 584f3742890e966d2f0a1f3c418c9ead70b2d99e ]
+[ Upstream commit 15cc25829a97c3957e520e971868aacc84341317 ]
 
-Add sock_init_data_uid() to explicitly initialize the socket uid.
-To initialise the socket uid, sock_init_data() assumes a the struct
-socket* sock is always embedded in a struct socket_alloc, used to
-access the corresponding inode uid. This may not be true.
-Examples are sockets created in tun_chr_open() and tap_open().
+The commit 74c8e6bffbe1 ("driver core: Add __alloc_size hint to devm
+allocators") exposes a panic "BRK handler: Fatal exception" on the
+hi3660_thermal_probe funciton.
+This is because the function allocates memory for only one
+sensors array entry, but tries to fill up a second one.
 
-Fixes: 86741ec25462 ("net: core: Add a UID field to struct sock.")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix this by removing the unneeded second access.
+
+Fixes: 7d3a2a2bbadb ("thermal/drivers/hisi: Fix number of sensors on hi3660")
+Signed-off-by: Yongqin Liu <yongqin.liu@linaro.org>
+Link: https://lore.kernel.org/linux-mm/20221101223321.1326815-5-keescook@chromium.org/
+Link: https://lore.kernel.org/r/20230210141507.71014-1-yongqin.liu@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h |  7 ++++++-
- net/core/sock.c    | 15 ++++++++++++---
- 2 files changed, 18 insertions(+), 4 deletions(-)
+ drivers/thermal/hisi_thermal.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 1f868764575c3..832a4a51de4d9 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1952,7 +1952,12 @@ void sk_common_release(struct sock *sk);
-  *	Default socket callbacks and setup code
-  */
+diff --git a/drivers/thermal/hisi_thermal.c b/drivers/thermal/hisi_thermal.c
+index d6974db7aaf76..15af90f5c7d91 100644
+--- a/drivers/thermal/hisi_thermal.c
++++ b/drivers/thermal/hisi_thermal.c
+@@ -427,10 +427,6 @@ static int hi3660_thermal_probe(struct hisi_thermal_data *data)
+ 	data->sensor[0].irq_name = "tsensor_a73";
+ 	data->sensor[0].data = data;
  
--/* Initialise core socket variables */
-+/* Initialise core socket variables using an explicit uid. */
-+void sock_init_data_uid(struct socket *sock, struct sock *sk, kuid_t uid);
-+
-+/* Initialise core socket variables.
-+ * Assumes struct socket *sock is embedded in a struct socket_alloc.
-+ */
- void sock_init_data(struct socket *sock, struct sock *sk);
- 
- /*
-diff --git a/net/core/sock.c b/net/core/sock.c
-index ba6ea61b3458b..4dfdcdfd00114 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3359,7 +3359,7 @@ void sk_stop_timer_sync(struct sock *sk, struct timer_list *timer)
+-	data->sensor[1].id = HI3660_LITTLE_SENSOR;
+-	data->sensor[1].irq_name = "tsensor_a53";
+-	data->sensor[1].data = data;
+-
+ 	return 0;
  }
- EXPORT_SYMBOL(sk_stop_timer_sync);
  
--void sock_init_data(struct socket *sock, struct sock *sk)
-+void sock_init_data_uid(struct socket *sock, struct sock *sk, kuid_t uid)
- {
- 	sk_init_common(sk);
- 	sk->sk_send_head	=	NULL;
-@@ -3378,11 +3378,10 @@ void sock_init_data(struct socket *sock, struct sock *sk)
- 		sk->sk_type	=	sock->type;
- 		RCU_INIT_POINTER(sk->sk_wq, &sock->wq);
- 		sock->sk	=	sk;
--		sk->sk_uid	=	SOCK_INODE(sock)->i_uid;
- 	} else {
- 		RCU_INIT_POINTER(sk->sk_wq, NULL);
--		sk->sk_uid	=	make_kuid(sock_net(sk)->user_ns, 0);
- 	}
-+	sk->sk_uid	=	uid;
- 
- 	rwlock_init(&sk->sk_callback_lock);
- 	if (sk->sk_kern_sock)
-@@ -3440,6 +3439,16 @@ void sock_init_data(struct socket *sock, struct sock *sk)
- 	refcount_set(&sk->sk_refcnt, 1);
- 	atomic_set(&sk->sk_drops, 0);
- }
-+EXPORT_SYMBOL(sock_init_data_uid);
-+
-+void sock_init_data(struct socket *sock, struct sock *sk)
-+{
-+	kuid_t uid = sock ?
-+		SOCK_INODE(sock)->i_uid :
-+		make_kuid(sock_net(sk)->user_ns, 0);
-+
-+	sock_init_data_uid(sock, sk, uid);
-+}
- EXPORT_SYMBOL(sock_init_data);
- 
- void lock_sock_nested(struct sock *sk, int subclass)
 -- 
 2.39.2
 
