@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F23BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:06:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF23C433EF;
-	Tue,  7 Mar 2023 18:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CC2BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:06:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC14C433EF;
+	Tue,  7 Mar 2023 18:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212400;
-	bh=zNmdqPUPoeZyJ3wcugg7wk8X3C8p58xBXgu2ZKEUwAU=;
+	s=korg; t=1678212403;
+	bh=uw+d/MGSWEKxdDrXow9nFnZ5jR24MWhjnbMpVFslErw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CfovWZ1x6kG7Ncz45D5CwclSP0UKkG1lbAuI3+iLhYnP0gpQ6ahyNWujWrBy8/QGw
-	 pa0bOquyuztT3c1GngZvcJh62ZPDT76wNrF1vJZoPMFpyT2zKUnXgnh26upuJBDvp3
-	 2qk4BDCU+DrWm+9NEscBjF1pgHnEl2uEmQ6vD92M=
+	b=XHxIe+Jccw1Uhft+e1GZ/GebuZRqUOQDsbQoMmyZzmmeuKJf1Y5tAKs3ICMKWakKN
+	 rDqOprPHQUuVHbEpqYMef/JI5DjX/tGImvv6sIRE6yiPEaD5IvWNGDnHrjZdmzwKxm
+	 uOje4aEVMnMH5q/i+LoUum8H5SzcfT1I/q26Ysiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivani Baranwal <quic_shivbara@quicinc.com>,
-	Veerendranath Jakkam <quic_vjakkam@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Roberto Sassu <roberto.sassu@huaweicloud.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Eric Biggers <ebiggers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 172/885] wifi: cfg80211: Fix extended KCK key length check in nl80211_set_rekey_data()
-Date: Tue,  7 Mar 2023 17:51:46 +0100
-Message-Id: <20230307170009.436205189@linuxfoundation.org>
+Subject: [PATCH 6.1 146/885] lib/mpi: Fix buffer overrun when SG is too long
+Date: Tue,  7 Mar 2023 17:51:20 +0100
+Message-Id: <20230307170008.217272954@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,39 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shivani Baranwal <quic_shivbara@quicinc.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit df4969ca135b9b3b2c38c07514aaa775112ac835 ]
+[ Upstream commit 7361d1bc307b926cbca214ab67b641123c2d6357 ]
 
-The extended KCK key length check wrongly using the KEK key attribute
-for validation. Due to this GTK rekey offload is failing when the KCK
-key length is 24 bytes even though the driver advertising
-WIPHY_FLAG_SUPPORTS_EXT_KEK_KCK flag. Use correct attribute to fix the
-same.
+The helper mpi_read_raw_from_sgl sets the number of entries in
+the SG list according to nbytes.  However, if the last entry
+in the SG list contains more data than nbytes, then it may overrun
+the buffer because it only allocates enough memory for nbytes.
 
-Fixes: 093a48d2aa4b ("cfg80211: support bigger kek/kck key length")
-Signed-off-by: Shivani Baranwal <quic_shivbara@quicinc.com>
-Signed-off-by: Veerendranath Jakkam <quic_vjakkam@quicinc.com>
-Link: https://lore.kernel.org/r/20221206143715.1802987-2-quic_vjakkam@quicinc.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers")
+Reported-by: Roberto Sassu <roberto.sassu@huaweicloud.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/mpi/mpicoder.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index d2321c6833985..4d4de49f7ab65 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -13808,7 +13808,7 @@ static int nl80211_set_rekey_data(struct sk_buff *skb, struct genl_info *info)
- 		return -ERANGE;
- 	if (nla_len(tb[NL80211_REKEY_DATA_KCK]) != NL80211_KCK_LEN &&
- 	    !(rdev->wiphy.flags & WIPHY_FLAG_SUPPORTS_EXT_KEK_KCK &&
--	      nla_len(tb[NL80211_REKEY_DATA_KEK]) == NL80211_KCK_EXT_LEN))
-+	      nla_len(tb[NL80211_REKEY_DATA_KCK]) == NL80211_KCK_EXT_LEN))
- 		return -ERANGE;
+diff --git a/lib/mpi/mpicoder.c b/lib/mpi/mpicoder.c
+index 39c4c67310946..3cb6bd148fa9e 100644
+--- a/lib/mpi/mpicoder.c
++++ b/lib/mpi/mpicoder.c
+@@ -504,7 +504,8 @@ MPI mpi_read_raw_from_sgl(struct scatterlist *sgl, unsigned int nbytes)
  
- 	rekey_data.kek = nla_data(tb[NL80211_REKEY_DATA_KEK]);
+ 	while (sg_miter_next(&miter)) {
+ 		buff = miter.addr;
+-		len = miter.length;
++		len = min_t(unsigned, miter.length, nbytes);
++		nbytes -= len;
+ 
+ 		for (x = 0; x < len; x++) {
+ 			a <<= 8;
 -- 
 2.39.2
 
