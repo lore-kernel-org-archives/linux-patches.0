@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89C8BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:12:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF69C4339B;
-	Tue,  7 Mar 2023 18:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B2CBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:12:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14398C433EF;
+	Tue,  7 Mar 2023 18:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212735;
-	bh=yb1h0VR3IbDMaA4+EsRACoGnUEk3F+0NQAQopa10+DU=;
+	s=korg; t=1678212738;
+	bh=OZdwRaIXCowRIk33gj614RkTEgt+m/8idpbUsFriHok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iCRQ3oHGQ27QdB/PEASwSsjPaeN+QNo3rW9ND+I5mGWX/AFVCJH4LUmsrEw5PQANK
-	 UolwFWGteucHki2ouXodjZnrtTJFrfLjS9WAjPkialSDhlWb8RJJxXmv+11+QzqOti
-	 gBSwla8m4BCEcT3ekP6OiQop4TLGYgpRoi+5CPKk=
+	b=1TECTB+pkZ1mtajU1X1waaXS4SHK3LOuhjPrTZh0GICfqpf9fHUag60BcVwCmjji1
+	 rbM43BlFWXd6JVYMjalXkX0YQAdC0ExUG5xvuCCXG+v5/Cptb+F/ieu18tephAUIhQ
+	 XkYh4n3Gu6/FJKTzxIdAG9IwQM4zPq/67+c6LcnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hengqi Chen <hengqi.chen@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 250/885] LoongArch, bpf: Use 4 instructions for function address in JIT
-Date: Tue,  7 Mar 2023 17:53:04 +0100
-Message-Id: <20230307170012.866296231@linuxfoundation.org>
+Subject: [PATCH 6.1 241/885] tools/lib/thermal: Fix thermal_sampling_exit()
+Date: Tue,  7 Mar 2023 17:52:55 +0100
+Message-Id: <20230307170012.483517551@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,81 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hengqi Chen <hengqi.chen@gmail.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit 64f50f6575721ef03d001e907455cbe3baa2a5b1 ]
+[ Upstream commit a29cbd76aaf63f5493e962aa2fbaadcdc4615143 ]
 
-This patch fixes the following issue of function calls in JIT, like:
+thermal_sampling_init() suscribes to THERMAL_GENL_SAMPLING_GROUP_NAME group
+so thermal_sampling_exit() should unsubscribe from the same group.
 
-  [   29.346981] multi-func JIT bug 105 != 103
-
-The issus can be reproduced by running the "inline simple bpf_loop call"
-verifier test.
-
-This is because we are emiting 2-4 instructions for 64-bit immediate moves.
-During the first pass of JIT, the placeholder address is zero, emiting two
-instructions for it. In the extra pass, the function address is in XKVRANGE,
-emiting four instructions for it. This change the instruction index in
-JIT context. Let's always use 4 instructions for function address in JIT.
-So that the instruction sequences don't change between the first pass and
-the extra pass for function calls.
-
-Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
-Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Link: https://lore.kernel.org/bpf/20230214152633.2265699-1-hengqi.chen@gmail.com
+Fixes: 47c4b0de080a ("tools/lib/thermal: Add a thermal library")
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20230202102812.453357-1-vincent.guittot@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/net/bpf_jit.c |  2 +-
- arch/loongarch/net/bpf_jit.h | 21 +++++++++++++++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ tools/lib/thermal/sampling.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index bdcd0c7719a9e..2467bfb8889a9 100644
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -782,7 +782,7 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
- 		if (ret < 0)
- 			return ret;
- 
--		move_imm(ctx, t1, func_addr, is32);
-+		move_addr(ctx, t1, func_addr);
- 		emit_insn(ctx, jirl, t1, LOONGARCH_GPR_RA, 0);
- 		move_reg(ctx, regmap[BPF_REG_0], LOONGARCH_GPR_A0);
- 		break;
-diff --git a/arch/loongarch/net/bpf_jit.h b/arch/loongarch/net/bpf_jit.h
-index e665ddb0aeb85..093885539e701 100644
---- a/arch/loongarch/net/bpf_jit.h
-+++ b/arch/loongarch/net/bpf_jit.h
-@@ -80,6 +80,27 @@ static inline void emit_sext_32(struct jit_ctx *ctx, enum loongarch_gpr reg, boo
- 	emit_insn(ctx, addiw, reg, reg, 0);
- }
- 
-+static inline void move_addr(struct jit_ctx *ctx, enum loongarch_gpr rd, u64 addr)
-+{
-+	u64 imm_11_0, imm_31_12, imm_51_32, imm_63_52;
-+
-+	/* lu12iw rd, imm_31_12 */
-+	imm_31_12 = (addr >> 12) & 0xfffff;
-+	emit_insn(ctx, lu12iw, rd, imm_31_12);
-+
-+	/* ori rd, rd, imm_11_0 */
-+	imm_11_0 = addr & 0xfff;
-+	emit_insn(ctx, ori, rd, rd, imm_11_0);
-+
-+	/* lu32id rd, imm_51_32 */
-+	imm_51_32 = (addr >> 32) & 0xfffff;
-+	emit_insn(ctx, lu32id, rd, imm_51_32);
-+
-+	/* lu52id rd, rd, imm_63_52 */
-+	imm_63_52 = (addr >> 52) & 0xfff;
-+	emit_insn(ctx, lu52id, rd, rd, imm_63_52);
-+}
-+
- static inline void move_imm(struct jit_ctx *ctx, enum loongarch_gpr rd, long imm, bool is32)
+diff --git a/tools/lib/thermal/sampling.c b/tools/lib/thermal/sampling.c
+index ee818f4e9654d..70577423a9f0c 100644
+--- a/tools/lib/thermal/sampling.c
++++ b/tools/lib/thermal/sampling.c
+@@ -54,7 +54,7 @@ int thermal_sampling_fd(struct thermal_handler *th)
+ thermal_error_t thermal_sampling_exit(struct thermal_handler *th)
  {
- 	long imm_11_0, imm_31_12, imm_51_32, imm_63_52, imm_51_0, imm_51_31;
+ 	if (nl_unsubscribe_thermal(th->sk_sampling, th->cb_sampling,
+-				   THERMAL_GENL_EVENT_GROUP_NAME))
++				   THERMAL_GENL_SAMPLING_GROUP_NAME))
+ 		return THERMAL_ERROR;
+ 
+ 	nl_thermal_disconnect(th->sk_sampling, th->cb_sampling);
 -- 
 2.39.2
 
