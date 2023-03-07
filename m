@@ -1,30 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B487FBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE2BC433D2;
-	Tue,  7 Mar 2023 17:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C81BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1D7C433EF;
+	Tue,  7 Mar 2023 17:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211132;
-	bh=t+4hWRgPBkMiuxmmLtp2VfPE3wCIQ9FXt6SPS5DfwPA=;
+	s=korg; t=1678211135;
+	bh=Vwe2LHrWBi9+Q2jtRnPjURvWb4VjOpcl+xChvYJJTlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l86/2DIMcqLOktg6/bTF96blXvhj3A9PDhbuUNkINackw3xtl8vqtzBmD38rvaZJB
-	 uwAZpJGwC9ZxSadyyCUbMdLTcyGcfk9AyumGvlAAPy7K92gJyXenYvYgDb4m+Klyy5
-	 nMMqfwKrq3PKS898wc5/v4XmQ1BGhmM759tX9Tzg=
+	b=jVYe/8O9LfvOloxjmV5pBXfgnDyF4rvgkUD68u0y9Wj4yYs8TALumvvPso33Ocxeu
+	 SgSxguhSyKJpIkcI8bY3K45a4wDtKwtHmvfzkKFRQ2BTSFodubS06ezZeRK8USBCh5
+	 +wy7g68i/CmQSE82XZtnsikLZ3uZggrEbnZRYjb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nevenko Stupar <Nevenko.Stupar@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Vladimir Stempen <vladimir.stempen@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0722/1001] drm/amd/display: fix FCLK pstate change underflow
-Date: Tue,  7 Mar 2023 17:58:14 +0100
-Message-Id: <20230307170053.021347694@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.2 0757/1001] io_uring: add a conditional reschedule to the IOPOLL cancelation loop
+Date: Tue,  7 Mar 2023 17:58:49 +0100
+Message-Id: <20230307170054.572814166@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,48 +33,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Stempen <vladimir.stempen@amd.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 972243f973eb0821084e5833d5f7f4ed025f42da ]
+commit fcc926bb857949dbfa51a7d95f3f5ebc657f198c upstream.
 
-[Why]
-Currently we set FCLK p-state change
-watermark calculated based on dummy
-p-state latency when UCLK p-state is
-not supported
+If the kernel is configured with CONFIG_PREEMPT_NONE, we could be
+sitting in a tight loop reaping events but not giving them a chance to
+finish. This results in a trace ala:
 
-[How]
-Calculate FCLK p-state change watermark
-based on on FCLK pstate change latency
-in case UCLK p-state is not supported
+rcu: INFO: rcu_sched self-detected stall on CPU
+rcu: 	2-...!: (5249 ticks this GP) idle=935c/1/0x4000000000000000 softirq=4265/4274 fqs=1
+	(t=5251 jiffies g=465 q=4135 ncpus=4)
+rcu: rcu_sched kthread starved for 5249 jiffies! g465 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x0 ->cpu=0
+rcu: 	Unless rcu_sched kthread gets sufficient CPU time, OOM is now expected behavior.
+rcu: RCU grace-period kthread stack dump:
+task:rcu_sched       state:R  running task     stack:0     pid:12    ppid:2      flags:0x00000008
+Call trace:
+ __switch_to+0xb0/0xc8
+ __schedule+0x43c/0x520
+ schedule+0x4c/0x98
+ schedule_timeout+0xbc/0xdc
+ rcu_gp_fqs_loop+0x308/0x344
+ rcu_gp_kthread+0xd8/0xf0
+ kthread+0xb8/0xc8
+ ret_from_fork+0x10/0x20
+rcu: Stack dump where RCU GP kthread last ran:
+Task dump for CPU 0:
+task:kworker/u8:10   state:R  running task     stack:0     pid:89    ppid:2      flags:0x0000000a
+Workqueue: events_unbound io_ring_exit_work
+Call trace:
+ __switch_to+0xb0/0xc8
+ 0xffff0000c8fefd28
+CPU: 2 PID: 95 Comm: kworker/u8:13 Not tainted 6.2.0-rc5-00042-g40316e337c80-dirty #2759
+Hardware name: linux,dummy-virt (DT)
+Workqueue: events_unbound io_ring_exit_work
+pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+pc : io_do_iopoll+0x344/0x360
+lr : io_do_iopoll+0xb8/0x360
+sp : ffff800009bebc60
+x29: ffff800009bebc60 x28: 0000000000000000 x27: 0000000000000000
+x26: ffff0000c0f67d48 x25: ffff0000c0f67840 x24: ffff800008950024
+x23: 0000000000000001 x22: 0000000000000000 x21: ffff0000c27d3200
+x20: ffff0000c0f67840 x19: ffff0000c0f67800 x18: 0000000000000000
+x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+x14: 0000000000000001 x13: 0000000000000001 x12: 0000000000000000
+x11: 0000000000000179 x10: 0000000000000870 x9 : ffff800009bebd60
+x8 : ffff0000c27d3ad0 x7 : fefefefefefefeff x6 : 0000646e756f626e
+x5 : ffff0000c0f67840 x4 : 0000000000000000 x3 : ffff0000c2398000
+x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+Call trace:
+ io_do_iopoll+0x344/0x360
+ io_uring_try_cancel_requests+0x21c/0x334
+ io_ring_exit_work+0x90/0x40c
+ process_one_work+0x1a4/0x254
+ worker_thread+0x1ec/0x258
+ kthread+0xb8/0xc8
+ ret_from_fork+0x10/0x20
 
-Reviewed-by: Nevenko Stupar <Nevenko.Stupar@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Vladimir Stempen <vladimir.stempen@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add a cond_resched() in the cancelation IOPOLL loop to fix this.
+
+Cc: stable@vger.kernel.org # 5.10+
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ io_uring/io_uring.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-index f94abd124021e..8450f59c26186 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -2038,6 +2038,10 @@ void dcn32_calculate_wm_and_dlg_fpu(struct dc *dc, struct dc_state *context,
- 		 */
- 		context->bw_ctx.bw.dcn.watermarks.a = context->bw_ctx.bw.dcn.watermarks.c;
- 		context->bw_ctx.bw.dcn.watermarks.a.cstate_pstate.pstate_change_ns = 0;
-+		/* Calculate FCLK p-state change watermark based on FCLK pstate change latency in case
-+		 * UCLK p-state is not supported, to avoid underflow in case FCLK pstate is supported
-+		 */
-+		context->bw_ctx.bw.dcn.watermarks.a.cstate_pstate.fclk_pstate_change_ns = get_fclk_watermark(&context->bw_ctx.dml, pipes, pipe_cnt) * 1000;
- 	} else {
- 		/* Set A:
- 		 * All clocks min.
--- 
-2.39.2
-
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3053,6 +3053,7 @@ static __cold bool io_uring_try_cancel_r
+ 		while (!wq_list_empty(&ctx->iopoll_list)) {
+ 			io_iopoll_try_reap_events(ctx);
+ 			ret = true;
++			cond_resched();
+ 		}
+ 	}
+ 
 
 
