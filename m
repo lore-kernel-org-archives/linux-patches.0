@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2ED4BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:50:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060D1C433EF;
-	Tue,  7 Mar 2023 18:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE97BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:50:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1359BC433EF;
+	Tue,  7 Mar 2023 18:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215054;
-	bh=0zr1IgT8A0Qnx8nHanHALvhoeyDkWIkS87HmeWMQWh0=;
+	s=korg; t=1678215057;
+	bh=yyWW6NmU6LHh2ZgpeHiIjSXAdTU2mGuuGd0L6PJC4aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=03fLqsoef4bqP+tQsHhCMI4XcRsA3hfqvOL4ZptbQOYWPC6qYRAeOaY4KENWFmwZc
-	 narBQzlO51V/rQfgs3biGObVy6EoV35fw3vYgKwjIl5yAHPQ2GrruMkGqI5/Dipuls
-	 IShG+ReMEnjqjQ6l0W5UBeKKJ6IYnz7tqgSGAu/k=
+	b=CWpDODduq1BORp5C7HqnlU2IeWIFkzdxthUUWInLE3FzOHaZwVw2g8C4MhK93BAdx
+	 rpKp+wKjnOwtxW2Pk0aUEs27djZANOaJ3kQGag6ReTcyqt4djpHggUUxTA5mhVar9D
+	 lPZbeaDvj3P/4fP4fj4Jk5PXuM2RyKpnTgNS7rDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Coffin <alex.coffin@matician.com>,
+	Zhengping Jiang <jiangzp@google.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 137/567] Bluetooth: L2CAP: Fix potential user-after-free
-Date: Tue,  7 Mar 2023 17:57:53 +0100
-Message-Id: <20230307165911.829182335@linuxfoundation.org>
+Subject: [PATCH 5.15 138/567] Bluetooth: hci_qca: get wakeup status from serdev device handle
+Date: Tue,  7 Mar 2023 17:57:54 +0100
+Message-Id: <20230307165911.879614462@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,91 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Zhengping Jiang <jiangzp@google.com>
 
-[ Upstream commit df5703348813235874d851934e957c3723d71644 ]
+[ Upstream commit 03b0093f7b310493bc944a20f725228cfe0d3fea ]
 
-This fixes all instances of which requires to allocate a buffer calling
-alloc_skb which may release the chan lock and reacquire later which
-makes it possible that the chan is disconnected in the meantime.
+Bluetooth controller attached via the UART is handled by the serdev driver.
+Get the wakeup status from the device handle through serdev, instead of the
+parent path.
 
-Fixes: a6a5568c03c4 ("Bluetooth: Lock the L2CAP channel when sending")
-Reported-by: Alexander Coffin <alex.coffin@matician.com>
+Fixes: c1a74160eaf1 ("Bluetooth: hci_qca: Add device_may_wakeup support")
+Signed-off-by: Zhengping Jiang <jiangzp@google.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 24 ------------------------
- net/bluetooth/l2cap_sock.c |  8 ++++++++
- 2 files changed, 8 insertions(+), 24 deletions(-)
+ drivers/bluetooth/hci_qca.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index e15fcf72a3428..a21e086d69d0e 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -2683,14 +2683,6 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
- 		if (IS_ERR(skb))
- 			return PTR_ERR(skb);
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index e45777b3f5dac..8041155f30214 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1582,10 +1582,11 @@ static bool qca_prevent_wake(struct hci_dev *hdev)
+ 	struct hci_uart *hu = hci_get_drvdata(hdev);
+ 	bool wakeup;
  
--		/* Channel lock is released before requesting new skb and then
--		 * reacquired thus we need to recheck channel state.
--		 */
--		if (chan->state != BT_CONNECTED) {
--			kfree_skb(skb);
--			return -ENOTCONN;
--		}
--
- 		l2cap_do_send(chan, skb);
- 		return len;
- 	}
-@@ -2735,14 +2727,6 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
- 		if (IS_ERR(skb))
- 			return PTR_ERR(skb);
+-	/* UART driver handles the interrupt from BT SoC.So we need to use
+-	 * device handle of UART driver to get the status of device may wakeup.
++	/* BT SoC attached through the serial bus is handled by the serdev driver.
++	 * So we need to use the device handle of the serdev driver to get the
++	 * status of device may wakeup.
+ 	 */
+-	wakeup = device_may_wakeup(hu->serdev->ctrl->dev.parent);
++	wakeup = device_may_wakeup(&hu->serdev->ctrl->dev);
+ 	bt_dev_dbg(hu->hdev, "wakeup status : %d", wakeup);
  
--		/* Channel lock is released before requesting new skb and then
--		 * reacquired thus we need to recheck channel state.
--		 */
--		if (chan->state != BT_CONNECTED) {
--			kfree_skb(skb);
--			return -ENOTCONN;
--		}
--
- 		l2cap_do_send(chan, skb);
- 		err = len;
- 		break;
-@@ -2763,14 +2747,6 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
- 		 */
- 		err = l2cap_segment_sdu(chan, &seg_queue, msg, len);
- 
--		/* The channel could have been closed while segmenting,
--		 * check that it is still connected.
--		 */
--		if (chan->state != BT_CONNECTED) {
--			__skb_queue_purge(&seg_queue);
--			err = -ENOTCONN;
--		}
--
- 		if (err)
- 			break;
- 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index d2c6785205992..a267c9b6bcef4 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1623,6 +1623,14 @@ static struct sk_buff *l2cap_sock_alloc_skb_cb(struct l2cap_chan *chan,
- 	if (!skb)
- 		return ERR_PTR(err);
- 
-+	/* Channel lock is released before requesting new skb and then
-+	 * reacquired thus we need to recheck channel state.
-+	 */
-+	if (chan->state != BT_CONNECTED) {
-+		kfree_skb(skb);
-+		return ERR_PTR(-ENOTCONN);
-+	}
-+
- 	skb->priority = sk->sk_priority;
- 
- 	bt_cb(skb)->l2cap.chan = chan;
+ 	return !wakeup;
 -- 
 2.39.2
 
