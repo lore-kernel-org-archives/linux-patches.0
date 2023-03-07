@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCEEBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E571CC4339B;
-	Tue,  7 Mar 2023 17:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B663ABA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C257C4339C;
+	Tue,  7 Mar 2023 17:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209463;
-	bh=/3hg6g45+p6O7dgA5fmmzauACZusRtsfj/LNV9NXtaE=;
+	s=korg; t=1678209466;
+	bh=N93LmdeGxLsHBMcxjud4QxgQhBafdjUUEiqNizgPKn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yp6GKge0lfBEeZ1XJi4zbfM2IceaSJ9FIb2UAQt8UiAcRLnAUhB+8pL3wkWPP1HRi
-	 WOC+f9XjUbiZ7OSjg8wQu+KOGOKxZU+yZNDl3tijwKIY1NnbXP3KW5ELQKktMV6ibb
-	 cBok0VZNQmlPW5LrXq8KyIB3x7bVHP3C35P6Lcgs=
+	b=eRaDkzaQC4IbPyZB36FeIv5VB4o0ImuTx+LwQHImoF9dR+LQ9lgQfuU1ar32caPQg
+	 HJX3ZUyiQgbtcLsZ+CDwLwMfiuCdS2lVGmUTjwzDtqFOhz26hQIy6uut4HPqzQqhEd
+	 OgF3J9tN49g4ETXkFknmvDxEx5JWHp/E9sAWHghk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Ashok Raj <ashok.raj@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0187/1001] selftests/xsk: print correct payload for packet dump
-Date: Tue,  7 Mar 2023 17:49:19 +0100
-Message-Id: <20230307170030.010035134@linuxfoundation.org>
+Subject: [PATCH 6.2 0221/1001] x86/microcode: Add a parameter to microcode_check() to store CPU capabilities
+Date: Tue,  7 Mar 2023 17:49:53 +0100
+Message-Id: <20230307170031.474855490@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,46 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Magnus Karlsson <magnus.karlsson@intel.com>
+From: Ashok Raj <ashok.raj@intel.com>
 
-[ Upstream commit 2d0b2ae2871ae6d42a9f0a4280e0fb5bff8d38b8 ]
+[ Upstream commit ab31c74455c64e69342ddab21fd9426fcbfefde7 ]
 
-Print the correct payload when the packet dump option is selected. The
-network to host conversion was forgotten and the payload was
-erronously declared to be an int instead of an unsigned int.
+Add a parameter to store CPU capabilities before performing a microcode
+update so that CPU capabilities can be compared before and after update.
 
-Fixes: facb7cb2e909 ("selftests/bpf: Xsk selftests - SKB POLL, NOPOLL")
-Signed-off-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://lore.kernel.org/r/20230111093526.11682-2-magnus.karlsson@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+  [ bp: Massage. ]
+
+Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230109153555.4986-2-ashok.raj@intel.com
+Stable-dep-of: c0dd9245aa9e ("x86/microcode: Check CPU capabilities after late microcode update correctly")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/xskxceiver.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/processor.h     |  2 +-
+ arch/x86/kernel/cpu/common.c         | 21 +++++++++++++--------
+ arch/x86/kernel/cpu/microcode/core.c |  3 ++-
+ 3 files changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/xskxceiver.c b/tools/testing/selftests/bpf/xskxceiver.c
-index 162d3a516f2ca..2ff43b22180fa 100644
---- a/tools/testing/selftests/bpf/xskxceiver.c
-+++ b/tools/testing/selftests/bpf/xskxceiver.c
-@@ -767,7 +767,7 @@ static void pkt_dump(void *pkt, u32 len)
- 	struct ethhdr *ethhdr;
- 	struct udphdr *udphdr;
- 	struct iphdr *iphdr;
--	int payload, i;
-+	u32 payload, i;
+diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
+index 4e35c66edeb7d..f256a4ddd25da 100644
+--- a/arch/x86/include/asm/processor.h
++++ b/arch/x86/include/asm/processor.h
+@@ -697,7 +697,7 @@ bool xen_set_default_idle(void);
+ #endif
  
- 	ethhdr = pkt;
- 	iphdr = pkt + sizeof(*ethhdr);
-@@ -792,7 +792,7 @@ static void pkt_dump(void *pkt, u32 len)
- 	fprintf(stdout, "DEBUG>> L4: udp_hdr->src: %d\n", ntohs(udphdr->source));
- 	fprintf(stdout, "DEBUG>> L4: udp_hdr->dst: %d\n", ntohs(udphdr->dest));
- 	/*extract L5 frame */
--	payload = *((uint32_t *)(pkt + PKT_HDR_SIZE));
-+	payload = ntohl(*((u32 *)(pkt + PKT_HDR_SIZE)));
+ void __noreturn stop_this_cpu(void *dummy);
+-void microcode_check(void);
++void microcode_check(struct cpuinfo_x86 *prev_info);
  
- 	fprintf(stdout, "DEBUG>> L5: payload: %d\n", payload);
- 	fprintf(stdout, "---------------------------------------\n");
+ enum l1tf_mitigations {
+ 	L1TF_MITIGATION_OFF,
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index f3cc7699e1e1b..cda7ded29213e 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -2302,30 +2302,35 @@ void cpu_init_secondary(void)
+ #endif
+ 
+ #ifdef CONFIG_MICROCODE_LATE_LOADING
+-/*
++/**
++ * microcode_check() - Check if any CPU capabilities changed after an update.
++ * @prev_info:	CPU capabilities stored before an update.
++ *
+  * The microcode loader calls this upon late microcode load to recheck features,
+  * only when microcode has been updated. Caller holds microcode_mutex and CPU
+  * hotplug lock.
++ *
++ * Return: None
+  */
+-void microcode_check(void)
++void microcode_check(struct cpuinfo_x86 *prev_info)
+ {
+-	struct cpuinfo_x86 info;
+-
+ 	perf_check_microcode();
+ 
+ 	/* Reload CPUID max function as it might've changed. */
+-	info.cpuid_level = cpuid_eax(0);
++	prev_info->cpuid_level = cpuid_eax(0);
+ 
+ 	/*
+ 	 * Copy all capability leafs to pick up the synthetic ones so that
+ 	 * memcmp() below doesn't fail on that. The ones coming from CPUID will
+ 	 * get overwritten in get_cpu_cap().
+ 	 */
+-	memcpy(&info.x86_capability, &boot_cpu_data.x86_capability, sizeof(info.x86_capability));
++	memcpy(&prev_info->x86_capability, &boot_cpu_data.x86_capability,
++	       sizeof(prev_info->x86_capability));
+ 
+-	get_cpu_cap(&info);
++	get_cpu_cap(prev_info);
+ 
+-	if (!memcmp(&info.x86_capability, &boot_cpu_data.x86_capability, sizeof(info.x86_capability)))
++	if (!memcmp(&prev_info->x86_capability, &boot_cpu_data.x86_capability,
++		    sizeof(prev_info->x86_capability)))
+ 		return;
+ 
+ 	pr_warn("x86/CPU: CPU features have changed after loading microcode, but might not take effect.\n");
+diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
+index 712aafff96e03..b2068ce2c86bf 100644
+--- a/arch/x86/kernel/cpu/microcode/core.c
++++ b/arch/x86/kernel/cpu/microcode/core.c
+@@ -438,6 +438,7 @@ static int __reload_late(void *info)
+ static int microcode_reload_late(void)
+ {
+ 	int old = boot_cpu_data.microcode, ret;
++	struct cpuinfo_x86 prev_info;
+ 
+ 	pr_err("Attempting late microcode loading - it is dangerous and taints the kernel.\n");
+ 	pr_err("You should switch to early loading, if possible.\n");
+@@ -447,7 +448,7 @@ static int microcode_reload_late(void)
+ 
+ 	ret = stop_machine_cpuslocked(__reload_late, NULL, cpu_online_mask);
+ 	if (ret == 0)
+-		microcode_check();
++		microcode_check(&prev_info);
+ 
+ 	pr_info("Reload completed, microcode revision: 0x%x -> 0x%x\n",
+ 		old, boot_cpu_data.microcode);
 -- 
 2.39.2
 
