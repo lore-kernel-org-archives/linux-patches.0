@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37DABA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65065C433D2;
-	Tue,  7 Mar 2023 17:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E07BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71664C4339B;
+	Tue,  7 Mar 2023 17:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209811;
-	bh=5/a51Nfi6YYbil90NZNM0K4WgsFihGtPP9T9zaNPPhg=;
+	s=korg; t=1678209814;
+	bh=4Y+yreR7X+ht2CtqaoXGWFUnfZuZSXTGmPNS9JkUrWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wPUL9cZVNOtWIb7o0R+paMBeDSzx3E9PSB/lWV7DFkc7nulqeE29nsVWSgEPMceto
-	 tiDD5EoB+CiZHmYdQmakM1c/xP7D4ap2oX+aj0ormyF07CdW1pW0G6wXhBWrRvk2uY
-	 05yLnDWh/+3MeLYQZOB2r/dq6ps81SpclngKmUw8=
+	b=zxhublTHOajAC8f9wK3afu5opyVOkpbEc+hQTUAkWDoP7HWBIpWFdeCYDCATXNsJg
+	 ODBh6SLYhIN0pErjXmcttnOAwPi9CMNk0YksiQC62qbR2InnJD0xn5J3LAZVZzFrmu
+	 PLpOPFYD9L37A6HJyk0PixAVkRYUQLfDp86Lrk3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Dave Airlie <airlied@redhat.com>,
-	dri-devel@lists.freedesktop.org,
+	Stefan Wahren <stefan.wahren@i2se.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0340/1001] drm/ast: Init iosys_map pointer as I/O memory for damage handling
-Date: Tue,  7 Mar 2023 17:51:52 +0100
-Message-Id: <20230307170036.228522811@linuxfoundation.org>
+Subject: [PATCH 6.2 0341/1001] drm/vc4: drop all currently held locks if deadlock happens
+Date: Tue,  7 Mar 2023 17:51:53 +0100
+Message-Id: <20230307170036.268823097@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,47 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit b1def7fadfa544bd2467581ce40b659583eb7e79 ]
+[ Upstream commit 479d4f0be4237ba33bc9432787aeb62c90e30f95 ]
 
-Ast hardware scans out the primary plane from video memory, which
-is in I/O-memory space. Hence init the damage handler's iosys_map
-pointer as I/O memory.
+If vc4_hdmi_reset_link() returns -EDEADLK, it means that a deadlock
+happened in the locking context. This situation should be addressed by
+dropping all currently held locks and block until the contended lock
+becomes available. Currently, vc4 is not dealing with the deadlock
+properly, producing the following output when PROVE_LOCKING is enabled:
 
-Not all platforms support accessing I/O memory as system memory,
-although it's usually not a problem in ast's x86-based systems.
+[  825.612809] ------------[ cut here ]------------
+[  825.612852] WARNING: CPU: 1 PID: 116 at drivers/gpu/drm/drm_modeset_lock.c:276 drm_modeset_drop_locks+0x60/0x68 [drm]
+[  825.613458] Modules linked in: 8021q mrp garp stp llc
+raspberrypi_cpufreq brcmfmac brcmutil crct10dif_ce hci_uart cfg80211
+btqca btbcm bluetooth vc4 raspberrypi_hwmon snd_soc_hdmi_codec cec
+clk_raspberrypi ecdh_generic drm_display_helper ecc rfkill
+drm_dma_helper drm_kms_helper pwm_bcm2835 bcm2835_thermal bcm2835_rng
+rng_core i2c_bcm2835 drm fuse ip_tables x_tables ipv6
+[  825.613735] CPU: 1 PID: 116 Comm: kworker/1:2 Tainted: G        W 6.1.0-rc6-01399-g941aae326315 #3
+[  825.613759] Hardware name: Raspberry Pi 3 Model B Rev 1.2 (DT)
+[  825.613777] Workqueue: events output_poll_execute [drm_kms_helper]
+[  825.614038] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  825.614063] pc : drm_modeset_drop_locks+0x60/0x68 [drm]
+[  825.614603] lr : drm_helper_probe_detect+0x120/0x1b4 [drm_kms_helper]
+[  825.614829] sp : ffff800008313bf0
+[  825.614844] x29: ffff800008313bf0 x28: ffffcd7778b8b000 x27: 0000000000000000
+[  825.614883] x26: 0000000000000001 x25: 0000000000000001 x24: ffff677cc35c2758
+[  825.614920] x23: ffffcd7707d01430 x22: ffffcd7707c3edc7 x21: 0000000000000001
+[  825.614958] x20: 0000000000000000 x19: ffff800008313c10 x18: 000000000000b6d3
+[  825.614995] x17: ffffcd777835e214 x16: ffffcd7777cef870 x15: fffff81000000000
+[  825.615033] x14: 0000000000000000 x13: 0000000000000099 x12: 0000000000000002
+[  825.615070] x11: 72917988020af800 x10: 72917988020af800 x9 : 72917988020af800
+[  825.615108] x8 : ffff677cc665e0a8 x7 : d00a8c180000110c x6 : ffffcd77774c0054
+[  825.615145] x5 : 0000000000000000 x4 : 0000000000000001 x3 : 0000000000000000
+[  825.615181] x2 : ffff677cc55e1880 x1 : ffffcd7777cef8ec x0 : ffff800008313c10
+[  825.615219] Call trace:
+[  825.615232]  drm_modeset_drop_locks+0x60/0x68 [drm]
+[  825.615773]  drm_helper_probe_detect+0x120/0x1b4 [drm_kms_helper]
+[  825.616003]  output_poll_execute+0xe4/0x224 [drm_kms_helper]
+[  825.616233]  process_one_work+0x2b4/0x618
+[  825.616264]  worker_thread+0x24c/0x464
+[  825.616288]  kthread+0xec/0x110
+[  825.616310]  ret_from_fork+0x10/0x20
+[  825.616335] irq event stamp: 7634
+[  825.616349] hardirqs last  enabled at (7633): [<ffffcd777831ee90>] _raw_spin_unlock_irq+0x3c/0x78
+[  825.616384] hardirqs last disabled at (7634): [<ffffcd7778315a78>] __schedule+0x134/0x9f0
+[  825.616411] softirqs last  enabled at (7630): [<ffffcd7707aacea0>] local_bh_enable+0x4/0x30 [ipv6]
+[  825.617019] softirqs last disabled at (7618): [<ffffcd7707aace70>] local_bh_disable+0x4/0x30 [ipv6]
+[  825.617586] ---[ end trace 0000000000000000 ]---
 
-The error report is at [1].
+Therefore, deal with the deadlock as suggested by [1], using the
+function drm_modeset_backoff().
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Fixes: f2fa5a99ca81 ("drm/ast: Convert ast to SHMEM")
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Jocelyn Falempe <jfalempe@redhat.com>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Link: https://lore.kernel.org/lkml/202212170111.eInM0unS-lkp@intel.com/T/#u # 1
-Link: https://patchwork.freedesktop.org/patch/msgid/20221216193005.30280-1-tzimmermann@suse.de
+[1] https://docs.kernel.org/gpu/drm-kms.html?highlight=kms#kms-locking
+
+Fixes: 6bed2ea3cb38 ("drm/vc4: hdmi: Reset link on hotplug")
+Reported-by: Stefan Wahren <stefan.wahren@i2se.com>
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Tested-by: Stefan Wahren <stefan.wahren@i2se.com>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221229194638.178712-1-mcanal@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ast/ast_mode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/ast/ast_mode.c b/drivers/gpu/drm/ast/ast_mode.c
-index 66a4a41c3fe94..d314b9e7c05f9 100644
---- a/drivers/gpu/drm/ast/ast_mode.c
-+++ b/drivers/gpu/drm/ast/ast_mode.c
-@@ -636,7 +636,7 @@ static void ast_handle_damage(struct ast_plane *ast_plane, struct iosys_map *src
- 			      struct drm_framebuffer *fb,
- 			      const struct drm_rect *clip)
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 7546103f14997..21338e6a95056 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -406,6 +406,7 @@ static void vc4_hdmi_handle_hotplug(struct vc4_hdmi *vc4_hdmi,
  {
--	struct iosys_map dst = IOSYS_MAP_INIT_VADDR(ast_plane->vaddr);
-+	struct iosys_map dst = IOSYS_MAP_INIT_VADDR_IOMEM(ast_plane->vaddr);
+ 	struct drm_connector *connector = &vc4_hdmi->connector;
+ 	struct edid *edid;
++	int ret;
  
- 	iosys_map_incr(&dst, drm_fb_clip_offset(fb->pitches[0], fb->format, clip));
- 	drm_fb_memcpy(&dst, fb->pitches, src, fb, clip);
+ 	/*
+ 	 * NOTE: This function should really be called with
+@@ -434,7 +435,15 @@ static void vc4_hdmi_handle_hotplug(struct vc4_hdmi *vc4_hdmi,
+ 	cec_s_phys_addr_from_edid(vc4_hdmi->cec_adap, edid);
+ 	kfree(edid);
+ 
+-	vc4_hdmi_reset_link(connector, ctx);
++	for (;;) {
++		ret = vc4_hdmi_reset_link(connector, ctx);
++		if (ret == -EDEADLK) {
++			drm_modeset_backoff(ctx);
++			continue;
++		}
++
++		break;
++	}
+ }
+ 
+ static int vc4_hdmi_connector_detect_ctx(struct drm_connector *connector,
 -- 
 2.39.2
 
