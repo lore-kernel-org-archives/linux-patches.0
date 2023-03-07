@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1D9BA46
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:10:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC10DC433EF;
-	Tue,  7 Mar 2023 18:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F974BA46
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:10:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8050C433D2;
+	Tue,  7 Mar 2023 18:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212611;
-	bh=kVM4jPj/0QexJcwFCg1Jj1jedA362i86xw3x0MwcclQ=;
+	s=korg; t=1678212615;
+	bh=B9S/aU6WLfM12WVDD1l/pigUkT+l1M4h9W8B8gG929E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LsyVZ7Jz4kIoOC14pOWzaTLi6wyIMCe+JNfSPIi/0dGpCRk7d6qSypNT8/03My3Mh
-	 ZIKQzbl+Ci9RF14rbVgbk9sEUnYtKZDLSMSKNKF8Tg4aSDwNXfTczfFp5NihJUx9Mo
-	 KvPrIrgm3lKLf4No8eoQsr4CDqF/HTt0GobC0kyU=
+	b=iulKDk5l57+wOsS5lW6sM1HTPMkg/Mp0G6VnLsPlu2EJ4SxV5Xq5FWr8Bgg7IERiw
+	 Bjeigb8XYCdvkynXR46RlWCI2YRextKDtVQsej3Rx8O1g518Gs4vi4ZTuWhaXlbIsL
+	 +U9nIWREi3LQputNhnO6VQfdjdODGSnbARBTxLuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Otcheretianski <andrei.otcheretianski@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 238/885] wifi: mac80211: Dont translate MLD addresses for multicast
-Date: Tue,  7 Mar 2023 17:52:52 +0100
-Message-Id: <20230307170012.351896646@linuxfoundation.org>
+Subject: [PATCH 6.1 239/885] wifi: mac80211: avoid u32_encode_bits() warning
+Date: Tue,  7 Mar 2023 17:52:53 +0100
+Message-Id: <20230307170012.401272441@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,37 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrei Otcheretianski <andrei.otcheretianski@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit daf8fb4295dccc032515cdc1bd3873370063542b ]
+[ Upstream commit 1d8d4af4347420d657be448f8be4c39c558f3b5d ]
 
-MLD address translation should be done only for individually addressed
-frames. Otherwise, AAD calculation would be wrong and the decryption
-would fail.
+gcc-9 triggers a false-postive warning in ieee80211_mlo_multicast_tx()
+for u32_encode_bits(ffs(links) - 1, ...), since ffs() can return zero
+on an empty bitmask, and the negative argument to u32_encode_bits()
+is then out of range:
 
-Fixes: e66b7920aa5ac ("wifi: mac80211: fix initialization of rx->link and rx->link_sta")
-Signed-off-by: Andrei Otcheretianski <andrei.otcheretianski@intel.com>
-Link: https://lore.kernel.org/r/20230214101048.792414-1-andrei.otcheretianski@intel.com
+In file included from include/linux/ieee80211.h:21,
+                 from include/net/cfg80211.h:23,
+                 from net/mac80211/tx.c:23:
+In function 'u32_encode_bits',
+    inlined from 'ieee80211_mlo_multicast_tx' at net/mac80211/tx.c:4437:17,
+    inlined from 'ieee80211_subif_start_xmit' at net/mac80211/tx.c:4485:3:
+include/linux/bitfield.h:177:3: error: call to '__field_overflow' declared with attribute error: value doesn't fit into mask
+  177 |   __field_overflow();     \
+      |   ^~~~~~~~~~~~~~~~~~
+include/linux/bitfield.h:197:2: note: in expansion of macro '____MAKE_OP'
+  197 |  ____MAKE_OP(u##size,u##size,,)
+      |  ^~~~~~~~~~~
+include/linux/bitfield.h:200:1: note: in expansion of macro '__MAKE_OP'
+  200 | __MAKE_OP(32)
+      | ^~~~~~~~~
+
+Newer compiler versions do not cause problems with the zero argument
+because they do not consider this a __builtin_constant_p().
+It's also harmless since the hweight16() check already guarantees
+that this cannot be 0.
+
+Replace the ffs() with an equivalent find_first_bit() check that
+matches the later for_each_set_bit() style and avoids the warning.
+
+Fixes: 963d0e8d08d9 ("wifi: mac80211: optionally implement MLO multicast TX")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230214132025.1532147-1-arnd@kernel.org
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index f9604dc182a87..08e01bddc9fb2 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -4861,7 +4861,8 @@ static bool ieee80211_prepare_and_rx_handle(struct ieee80211_rx_data *rx,
- 		hdr = (struct ieee80211_hdr *)rx->skb->data;
- 	}
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 6409097a56c7a..55220e764de68 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -4395,7 +4395,7 @@ static void ieee80211_mlo_multicast_tx(struct net_device *dev,
+ 	u32 ctrl_flags = IEEE80211_TX_CTRL_MCAST_MLO_FIRST_TX;
  
--	if (unlikely(rx->sta && rx->sta->sta.mlo)) {
-+	if (unlikely(rx->sta && rx->sta->sta.mlo) &&
-+	    is_unicast_ether_addr(hdr->addr1)) {
- 		/* translate to MLD addresses */
- 		if (ether_addr_equal(link->conf->addr, hdr->addr1))
- 			ether_addr_copy(hdr->addr1, rx->sdata->vif.addr);
+ 	if (hweight16(links) == 1) {
+-		ctrl_flags |= u32_encode_bits(ffs(links) - 1,
++		ctrl_flags |= u32_encode_bits(find_first_bit(&links, 16) - 1,
+ 					      IEEE80211_TX_CTRL_MLO_LINK);
+ 
+ 		__ieee80211_subif_start_xmit(skb, sdata->dev, 0, ctrl_flags,
 -- 
 2.39.2
 
