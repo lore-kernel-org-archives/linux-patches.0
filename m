@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9D1BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:35:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1ADC4339B;
-	Tue,  7 Mar 2023 18:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70C9BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:35:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EF53C433D2;
+	Tue,  7 Mar 2023 18:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214149;
-	bh=//03Omsn0zd6IxRBOjRByaNbgMQzFVQrt0YCCfyarVE=;
+	s=korg; t=1678214151;
+	bh=h2bKRFKlt6azgLjmk3x/BTFAgdZqNL5aDHdQjLeUl54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCfS/SYpmFhFmXcFcc3rxwuwzKq5lCPvfnI6uVhSgTyfec66SPlQhrnkp/iSG5Bzp
-	 sfeYrBTMwvzhTXYSmxoxz/948MA8HCSELnMXTT31JYF/pRqod/xL6o+GIex29pupeu
-	 ReU3Dqj6x1GH8geLHGvGQZ/EPpNNm7+6fcmakyBE=
+	b=shiUff5R54BwHHleU0qaOuJtdQwfLpFiRzHxjyf2GaLyDHTNXifdzX+QPWKhf4P5S
+	 W/51+LPeTsTFWc+0rNnrL952QpWS6NWSaTvkuenLPkFsybn9K92Mp1x4UPgqr/BcNv
+	 FbFkG5VmVBSK6RbS5eYbRP/0OSdDntjYqAWyLJSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+60f291a24acecb3c2bd5@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 708/885] udf: Do not bother merging very long extents
-Date: Tue,  7 Mar 2023 18:00:42 +0100
-Message-Id: <20230307170032.817581465@linuxfoundation.org>
+	Randall Huang <huangrandall@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.1 699/885] f2fs: retry to update the inode page given data corruption
+Date: Tue,  7 Mar 2023 18:00:33 +0100
+Message-Id: <20230307170032.469120373@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,52 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit 53cafe1d6d8ef9f93318e5bfccc0d24f27d41ced upstream.
+commit 3aa51c61cb4a4dcb40df51ac61171e9ac5a35321 upstream.
 
-When merging very long extents we try to push as much length as possible
-to the first extent. However this is unnecessarily complicated and not
-really worth the trouble. Furthermore there was a bug in the logic
-resulting in corrupting extents in the file as syzbot reproducer shows.
-So just don't bother with the merging of extents that are too long
-together.
+If the storage gives a corrupted node block due to short power failure and
+reset, f2fs stops the entire operations by setting the checkpoint failure flag.
 
-CC: stable@vger.kernel.org
-Reported-by: syzbot+60f291a24acecb3c2bd5@syzkaller.appspotmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Let's give more chances to live by re-issuing IOs for a while in such critical
+path.
+
+Cc: stable@vger.kernel.org
+Suggested-by: Randall Huang <huangrandall@google.com>
+Suggested-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c |   19 ++-----------------
- 1 file changed, 2 insertions(+), 17 deletions(-)
+ fs/f2fs/inode.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -1094,23 +1094,8 @@ static void udf_merge_extents(struct ino
- 			blocksize - 1) >> blocksize_bits)))) {
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -708,18 +708,19 @@ void f2fs_update_inode_page(struct inode
+ {
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
+ 	struct page *node_page;
++	int count = 0;
+ retry:
+ 	node_page = f2fs_get_node_page(sbi, inode->i_ino);
+ 	if (IS_ERR(node_page)) {
+ 		int err = PTR_ERR(node_page);
  
- 			if (((li->extLength & UDF_EXTENT_LENGTH_MASK) +
--				(lip1->extLength & UDF_EXTENT_LENGTH_MASK) +
--				blocksize - 1) & ~UDF_EXTENT_LENGTH_MASK) {
--				lip1->extLength = (lip1->extLength -
--						  (li->extLength &
--						   UDF_EXTENT_LENGTH_MASK) +
--						   UDF_EXTENT_LENGTH_MASK) &
--							~(blocksize - 1);
--				li->extLength = (li->extLength &
--						 UDF_EXTENT_FLAG_MASK) +
--						(UDF_EXTENT_LENGTH_MASK + 1) -
--						blocksize;
--				lip1->extLocation.logicalBlockNum =
--					li->extLocation.logicalBlockNum +
--					((li->extLength &
--						UDF_EXTENT_LENGTH_MASK) >>
--						blocksize_bits);
--			} else {
-+			     (lip1->extLength & UDF_EXTENT_LENGTH_MASK) +
-+			     blocksize - 1) <= UDF_EXTENT_LENGTH_MASK) {
- 				li->extLength = lip1->extLength +
- 					(((li->extLength &
- 						UDF_EXTENT_LENGTH_MASK) +
+-		if (err == -ENOMEM) {
+-			cond_resched();
++		/* The node block was truncated. */
++		if (err == -ENOENT)
++			return;
++
++		if (err == -ENOMEM || ++count <= DEFAULT_RETRY_IO_COUNT)
+ 			goto retry;
+-		} else if (err != -ENOENT) {
+-			f2fs_stop_checkpoint(sbi, false,
+-					STOP_CP_REASON_UPDATE_INODE);
+-		}
++		f2fs_stop_checkpoint(sbi, false, STOP_CP_REASON_UPDATE_INODE);
+ 		return;
+ 	}
+ 	f2fs_update_inode(inode, node_page);
 
 
