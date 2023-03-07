@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A4EBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:16:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA59C433D2;
-	Tue,  7 Mar 2023 17:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41675BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:16:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A65CC433A0;
+	Tue,  7 Mar 2023 17:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209395;
-	bh=pT08+Ag+ZJPUxmTHA6oYAUDsL2HMfkPh36QdEuKE48c=;
+	s=korg; t=1678209399;
+	bh=4zD5N3chTpNKOSM4YEzlxidUG22ZUJcdm2yVD1GM/rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IfYjy/BjqetXY+fVItixouiGCQPItezr7D2T9ZlcwqlI4kDpkJxItKyI2yPNGjgaf
-	 OZV5V10+F5ZSKuu7eS5gHhz0sVvyoBmPRP3COt8R/MXcXDCUlLkdzNeEd6+nnNZJm0
-	 MaXukK2OqEYnHyeUhCoTAaa3/BC8oCR6ugK7cFM8=
+	b=etOIgA6WFkXpg0CDidzLsoGDDSRqJOLQ08EWNNiopfXP/6KnX+GQkDf0gAQt3a90U
+	 9EzcCtLIOTyxylKBjt3Y42fKAtkywACailGNIpToAao7O6XsEl2U4I6zKll4L7/6H4
+	 Fzw52PJR//5k0KidwFNMjhtLymy6oH7LGPEbH1cY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viorel Suman <viorel.suman@nxp.com>,
-	Dong Aisheng <Aisheng.dong@nxp.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0206/1001] thermal/drivers/imx_sc_thermal: Fix the loop condition
-Date: Tue,  7 Mar 2023 17:49:38 +0100
-Message-Id: <20230307170030.838893392@linuxfoundation.org>
+Subject: [PATCH 6.2 0189/1001] arm64/cpufeature: Fix field sign for DIT hwcap detection
+Date: Tue,  7 Mar 2023 17:49:21 +0100
+Message-Id: <20230307170030.086992227@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,45 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Viorel Suman <viorel.suman@nxp.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 4b26b7c9cdefdcb478047c30901d2379ef9e50fc ]
+[ Upstream commit 50daf5b7c4ec4efcaf49a4128930f872bec7dbc0 ]
 
-The minimal resource ID is 0: IMX_SC_R_AP_0=0, so fix
-the loop condition. Aside of this - constify the array.
+Since it was added our hwcap for DIT has specified that DIT is a signed
+field but this appears to be incorrect, the two values for the enumeration
+are:
 
-Fixes: 31fd4b9db13b ("thermal/drivers/imx_sc: Rely on the platform data to get the resource id")
-Signed-off-by: Viorel Suman <viorel.suman@nxp.com>
-Reviewed-by: Dong Aisheng <Aisheng.dong@nxp.com>
-Link: https://lore.kernel.org/r/20230117091956.61729-1-viorel.suman@oss.nxp.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+	0b0000	NI
+	0b0001	IMP
+
+which look like a normal unsigned enumeration and the in-kernel DIT usage
+added by 01ab991fc0ee ("arm64: Enable data independent timing (DIT) in the
+kernel") detects the feature with an unsigned enum. Fix the hwcap to specify
+the field as unsigned.
+
+Fixes: 7206dc93a58f ("arm64: Expose Arm v8.4 features")
+Reviewed-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20221207-arm64-sysreg-helpers-v3-1-0d71a7b174a8@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/imx_sc_thermal.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/cpufeature.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/imx_sc_thermal.c b/drivers/thermal/imx_sc_thermal.c
-index 4df925e3a80bd..dfadb03580ae1 100644
---- a/drivers/thermal/imx_sc_thermal.c
-+++ b/drivers/thermal/imx_sc_thermal.c
-@@ -88,7 +88,7 @@ static int imx_sc_thermal_probe(struct platform_device *pdev)
- 	if (!resource_id)
- 		return -EINVAL;
- 
--	for (i = 0; resource_id[i] > 0; i++) {
-+	for (i = 0; resource_id[i] >= 0; i++) {
- 
- 		sensor = devm_kzalloc(&pdev->dev, sizeof(*sensor), GFP_KERNEL);
- 		if (!sensor)
-@@ -127,7 +127,7 @@ static int imx_sc_thermal_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int imx_sc_sensors[] = { IMX_SC_R_SYSTEM, IMX_SC_R_PMIC_0, -1 };
-+static const int imx_sc_sensors[] = { IMX_SC_R_SYSTEM, IMX_SC_R_PMIC_0, -1 };
- 
- static const struct of_device_id imx_sc_thermal_table[] = {
- 	{ .compatible = "fsl,imx-sc-thermal", .data =  imx_sc_sensors },
+diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+index a77315b338e61..ee40dca9f28ef 100644
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -2777,7 +2777,7 @@ static const struct arm64_cpu_capabilities arm64_elf_hwcaps[] = {
+ 	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_FP_SHIFT, 4, FTR_SIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_FPHP),
+ 	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_AdvSIMD_SHIFT, 4, FTR_SIGNED, 0, CAP_HWCAP, KERNEL_HWCAP_ASIMD),
+ 	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_AdvSIMD_SHIFT, 4, FTR_SIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_ASIMDHP),
+-	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_DIT_SHIFT, 4, FTR_SIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_DIT),
++	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_DIT_SHIFT, 4, FTR_UNSIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_DIT),
+ 	HWCAP_CAP(SYS_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_DPB_SHIFT, 4, FTR_UNSIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_DCPOP),
+ 	HWCAP_CAP(SYS_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_DPB_SHIFT, 4, FTR_UNSIGNED, 2, CAP_HWCAP, KERNEL_HWCAP_DCPODP),
+ 	HWCAP_CAP(SYS_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_JSCVT_SHIFT, 4, FTR_UNSIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_JSCVT),
 -- 
 2.39.2
 
