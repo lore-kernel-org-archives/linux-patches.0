@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F17BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:50:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5464C433D2;
-	Tue,  7 Mar 2023 18:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 555B4BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:50:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0915C433EF;
+	Tue,  7 Mar 2023 18:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215021;
-	bh=XQkggy392NQPY7GotMwPWkbC27jic4CzR6goDnLDakU=;
+	s=korg; t=1678215024;
+	bh=3DwLHOYp38wdLyy+Ft282z31473iRxPK0HdVsTsI04U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1EsWirc0ivpCkBY0Ldk2ZZk2TmjOFJXbFCwKjLL2NT9OoR+mwL6Pvkz5b2k1D80TR
-	 ojUZDRNsoo/bPSoNKwV+qNxxTfDHa/aqQLWzcrlYSO5rAJOdBugCFm2voSjdn6KFhg
-	 99/UqAPUFZI4FpgCX4hcqVKur9TRdjpO1vc1RN2E=
+	b=2c2FE24JXWxxCbU7ztHJt7I/3KoJDOAQtZ0VO5ztRIvA5X2AlPPIgm1pHmxJRAOl6
+	 XfA8y6wUq+H59uji7W/Nl0HDQWZn8GyR2aifaOic5sZN9uBcPbuMTfXBdXrD+9GtPo
+	 2Z0TMchNXBQqj/dGh19LrPdWsLnAvDpnngOsoFsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/567] thermal/drivers/tsens: Drop msm8976-specific defines
-Date: Tue,  7 Mar 2023 17:57:10 +0100
-Message-Id: <20230307165909.960772752@linuxfoundation.org>
+Subject: [PATCH 5.15 085/567] crypto: x86/ghash - fix unaligned access in ghash_setkey()
+Date: Tue,  7 Mar 2023 17:57:01 +0100
+Message-Id: <20230307165909.557644978@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -37,50 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 3bf0ea99e2e32b0335106b86d84404cc85bcd113 ]
+[ Upstream commit 116db2704c193fff6d73ea6c2219625f0c9bdfc8 ]
 
-Drop msm8976-specific defines, which duplicate generic ones.
+The key can be unaligned, so use the unaligned memory access helpers.
 
-Fixes: 0e580290170d ("thermal: qcom: tsens-v1: Add support for MSM8956 and MSM8976")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230101194034.831222-6-dmitry.baryshkov@linaro.org
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Fixes: 8ceee72808d1 ("crypto: ghash-clmulni-intel - use C implementation for setkey()")
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/tsens-v1.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ arch/x86/crypto/ghash-clmulni-intel_glue.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-index 573e261ccca74..13624263f1dfe 100644
---- a/drivers/thermal/qcom/tsens-v1.c
-+++ b/drivers/thermal/qcom/tsens-v1.c
-@@ -78,11 +78,6 @@
+diff --git a/arch/x86/crypto/ghash-clmulni-intel_glue.c b/arch/x86/crypto/ghash-clmulni-intel_glue.c
+index 1f1a95f3dd0ca..c0ab0ff4af655 100644
+--- a/arch/x86/crypto/ghash-clmulni-intel_glue.c
++++ b/arch/x86/crypto/ghash-clmulni-intel_glue.c
+@@ -19,6 +19,7 @@
+ #include <crypto/internal/simd.h>
+ #include <asm/cpu_device_id.h>
+ #include <asm/simd.h>
++#include <asm/unaligned.h>
  
- #define MSM8976_CAL_SEL_MASK	0x3
+ #define GHASH_BLOCK_SIZE	16
+ #define GHASH_DIGEST_SIZE	16
+@@ -54,15 +55,14 @@ static int ghash_setkey(struct crypto_shash *tfm,
+ 			const u8 *key, unsigned int keylen)
+ {
+ 	struct ghash_ctx *ctx = crypto_shash_ctx(tfm);
+-	be128 *x = (be128 *)key;
+ 	u64 a, b;
  
--#define MSM8976_CAL_DEGC_PT1	30
--#define MSM8976_CAL_DEGC_PT2	120
--#define MSM8976_SLOPE_FACTOR	1000
--#define MSM8976_SLOPE_DEFAULT	3200
--
- /* eeprom layout data for qcs404/405 (v1) */
- #define BASE0_MASK	0x000007f8
- #define BASE1_MASK	0x0007f800
-@@ -160,8 +155,8 @@ static void compute_intercept_slope_8976(struct tsens_priv *priv,
- 	priv->sensor[10].slope = 3286;
+ 	if (keylen != GHASH_BLOCK_SIZE)
+ 		return -EINVAL;
  
- 	for (i = 0; i < priv->num_sensors; i++) {
--		priv->sensor[i].offset = (p1[i] * MSM8976_SLOPE_FACTOR) -
--				(MSM8976_CAL_DEGC_PT1 *
-+		priv->sensor[i].offset = (p1[i] * SLOPE_FACTOR) -
-+				(CAL_DEGC_PT1 *
- 				priv->sensor[i].slope);
- 	}
- }
+ 	/* perform multiplication by 'x' in GF(2^128) */
+-	a = be64_to_cpu(x->a);
+-	b = be64_to_cpu(x->b);
++	a = get_unaligned_be64(key);
++	b = get_unaligned_be64(key + 8);
+ 
+ 	ctx->shash.a = (b << 1) | (a >> 63);
+ 	ctx->shash.b = (a << 1) | (b >> 63);
 -- 
 2.39.2
 
