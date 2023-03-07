@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3C4BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:23:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76259C433D2;
-	Tue,  7 Mar 2023 18:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A8CBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:23:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D24EC433EF;
+	Tue,  7 Mar 2023 18:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213428;
-	bh=1CgsFkOgc2peu48zLHkDMJzEWQg/q7F0Np9YA8DF9l4=;
+	s=korg; t=1678213431;
+	bh=gVK+vHDxhgfc05MESC6t6rqKAnLRDv5wRzzOFiCR5OI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EmtvsB8KFzJqsZhJUo8rm/UTLrmg4XqxoZDCNizx+znqLw+zCPanOE6o1Bc676vlz
-	 zfQif3bocrYTFz1T3ITDCIm0HcOJ/xe3pTHYoUoiM8Y/5rLUc9igIPskdG+cO/qmm3
-	 JrI7s/AXTERLrPcibdvVr+OCCM9FcQ6nkh3R45JQ=
+	b=l0RHOcMV0jeBaOAIwz1UcczIseUiLT9RiB/Fy/zKEOWIsBj5ZvXShRV0yTVGVre5S
+	 VC8MScwjmQnf0O9f1edVSOxhypYE/mtYbsWjUf88AQHuJqgedjrakJ3JSnWKfLB0Uo
+	 kMjK0PEHWq/9urkqXu0BT+8O7leBzYBpHoFnwwDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Maxim Kiselev <bigunclemax@gmail.com>,
 	Saravana Kannan <saravanak@google.com>,
-	Colin Foster <colin.foster@in-advantage.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
 	Douglas Anderson <dianders@chromium.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>,
 	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 6.1 474/885] driver core: fw_devlink: Make cycle detection more robust
-Date: Tue,  7 Mar 2023 17:56:48 +0100
-Message-Id: <20230307170023.095065922@linuxfoundation.org>
+Subject: [PATCH 6.1 475/885] mtd: mtdpart: Dont create platform device thatll never probe
+Date: Tue,  7 Mar 2023 17:56:49 +0100
+Message-Id: <20230307170023.127011505@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -41,399 +40,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit 3fb16866b51ded6c016b664caad53f8d4fd9dc56 ]
+[ Upstream commit fb42378dcc7f247df56f0ecddfdae85487495fbc ]
 
-fw_devlink could only detect a single and simple cycle because it relied
-mainly on device link cycle detection code that only checked for cycles
-between devices. The expectation was that the firmware wouldn't have
-complicated cycles and multiple cycles between devices. That expectation
-has been proven to be wrong.
+These "nvmem-cells" platform devices never get probed because there's no
+platform driver for it and it's never used anywhere else. So it's a
+waste of memory. These devices also cause fw_devlink to block nvmem
+consumers of "nvmem-cells" partition from probing because the supplier
+device never probes.
 
-For example, fw_devlink could handle:
+So stop creating platform devices for nvmem-cells partitions to avoid
+wasting memory and to avoid blocking probing of consumers.
 
-+-+        +-+
-|A+------> |B+
-+-+        +++
- ^          |
- |          |
- +----------+
-
-But it couldn't handle even something as "simple" as:
-
- +---------------------+
- |                     |
- v                     |
-+-+        +-+        +++
-|A+------> |B+------> |C|
-+-+        +++        +-+
- ^          |
- |          |
- +----------+
-
-But firmware has even more complicated cycles like:
-
-    +---------------------+
-    |                     |
-    v                     |
-   +-+       +---+       +++
-+--+A+------>| B +-----> |C|<--+
-|  +-+       ++--+       +++   |
-|   ^         | ^         |    |
-|   |         | |         |    |
-|   +---------+ +---------+    |
-|                              |
-+------------------------------+
-
-And this is without including parent child dependencies or nodes in the
-cycle that are just firmware nodes that'll never have a struct device
-created for them.
-
-The proper way to treat these devices it to not force any probe ordering
-between them, while still enforce dependencies between node in the
-cycles (A, B and C) and their consumers.
-
-So this patch goes all out and just deals with all types of cycles. It
-does this by:
-
-1. Following dependencies across device links, parent-child and fwnode
-   links.
-2. When it find cycles, it mark the device links and fwnode links as
-   such instead of just deleting them or making the indistinguishable
-   from proxy SYNC_STATE_ONLY device links.
-
-This way, when new nodes get added, we can immediately find and mark any
-new cycles whether the new node is a device or firmware node.
-
-Fixes: 2de9d8e0d2fe ("driver core: fw_devlink: Improve handling of cyclic dependencies")
+Reported-by: Maxim Kiselev <bigunclemax@gmail.com>
+Fixes: bcdf0315a61a ("mtd: call of_platform_populate() for MTD partitions")
 Signed-off-by: Saravana Kannan <saravanak@google.com>
-Tested-by: Colin Foster <colin.foster@in-advantage.com>
-Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+Tested-by: Maksim Kiselev <bigunclemax@gmail.com>
 Tested-by: Douglas Anderson <dianders@chromium.org>
 Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
-Link: https://lore.kernel.org/r/20230207014207.1678715-9-saravanak@google.com
+Link: https://lore.kernel.org/r/20230207014207.1678715-13-saravanak@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c | 248 +++++++++++++++++++++++---------------------
- 1 file changed, 129 insertions(+), 119 deletions(-)
+ drivers/mtd/mtdpart.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index bf053e351a277..ac08d475e2828 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -1865,47 +1865,6 @@ static void fw_devlink_unblock_consumers(struct device *dev)
- 	device_links_write_unlock();
- }
- 
--/**
-- * fw_devlink_relax_cycle - Convert cyclic links to SYNC_STATE_ONLY links
-- * @con: Device to check dependencies for.
-- * @sup: Device to check against.
-- *
-- * Check if @sup depends on @con or any device dependent on it (its child or
-- * its consumer etc).  When such a cyclic dependency is found, convert all
-- * device links created solely by fw_devlink into SYNC_STATE_ONLY device links.
-- * This is the equivalent of doing fw_devlink=permissive just between the
-- * devices in the cycle. We need to do this because, at this point, fw_devlink
-- * can't tell which of these dependencies is not a real dependency.
-- *
-- * Return 1 if a cycle is found. Otherwise, return 0.
-- */
--static int fw_devlink_relax_cycle(struct device *con, void *sup)
--{
--	struct device_link *link;
--	int ret;
--
--	if (con == sup)
--		return 1;
--
--	ret = device_for_each_child(con, sup, fw_devlink_relax_cycle);
--	if (ret)
--		return ret;
--
--	list_for_each_entry(link, &con->links.consumers, s_node) {
--		if (!(link->flags & DL_FLAG_CYCLE) &&
--		    device_link_flag_is_sync_state_only(link->flags))
--			continue;
--
--		if (!fw_devlink_relax_cycle(link->consumer, sup))
--			continue;
--
--		ret = 1;
--
--		fw_devlink_relax_link(link);
--		link->flags |= DL_FLAG_CYCLE;
--	}
--	return ret;
--}
- 
- static bool fwnode_init_without_drv(struct fwnode_handle *fwnode)
+diff --git a/drivers/mtd/mtdpart.c b/drivers/mtd/mtdpart.c
+index d442fa94c8720..85f5ee6f06fc6 100644
+--- a/drivers/mtd/mtdpart.c
++++ b/drivers/mtd/mtdpart.c
+@@ -577,6 +577,7 @@ static int mtd_part_of_parse(struct mtd_info *master,
  {
-@@ -1936,6 +1895,111 @@ static bool fwnode_ancestor_init_without_drv(struct fwnode_handle *fwnode)
- 	return false;
- }
- 
-+/**
-+ * __fw_devlink_relax_cycles - Relax and mark dependency cycles.
-+ * @con: Potential consumer device.
-+ * @sup_handle: Potential supplier's fwnode.
-+ *
-+ * Needs to be called with fwnode_lock and device link lock held.
-+ *
-+ * Check if @sup_handle or any of its ancestors or suppliers direct/indirectly
-+ * depend on @con. This function can detect multiple cyles between @sup_handle
-+ * and @con. When such dependency cycles are found, convert all device links
-+ * created solely by fw_devlink into SYNC_STATE_ONLY device links. Also, mark
-+ * all fwnode links in the cycle with FWLINK_FLAG_CYCLE so that when they are
-+ * converted into a device link in the future, they are created as
-+ * SYNC_STATE_ONLY device links. This is the equivalent of doing
-+ * fw_devlink=permissive just between the devices in the cycle. We need to do
-+ * this because, at this point, fw_devlink can't tell which of these
-+ * dependencies is not a real dependency.
-+ *
-+ * Return true if one or more cycles were found. Otherwise, return false.
-+ */
-+static bool __fw_devlink_relax_cycles(struct device *con,
-+				 struct fwnode_handle *sup_handle)
-+{
-+	struct device *sup_dev = NULL, *par_dev = NULL;
-+	struct fwnode_link *link;
-+	struct device_link *dev_link;
-+	bool ret = false;
-+
-+	if (!sup_handle)
-+		return false;
-+
-+	/*
-+	 * We aren't trying to find all cycles. Just a cycle between con and
-+	 * sup_handle.
-+	 */
-+	if (sup_handle->flags & FWNODE_FLAG_VISITED)
-+		return false;
-+
-+	sup_handle->flags |= FWNODE_FLAG_VISITED;
-+
-+	sup_dev = get_dev_from_fwnode(sup_handle);
-+
-+	/* Termination condition. */
-+	if (sup_dev == con) {
-+		ret = true;
-+		goto out;
-+	}
-+
-+	/*
-+	 * If sup_dev is bound to a driver and @con hasn't started binding to a
-+	 * driver, sup_dev can't be a consumer of @con. So, no need to check
-+	 * further.
-+	 */
-+	if (sup_dev && sup_dev->links.status ==  DL_DEV_DRIVER_BOUND &&
-+	    con->links.status == DL_DEV_NO_DRIVER) {
-+		ret = false;
-+		goto out;
-+	}
-+
-+	list_for_each_entry(link, &sup_handle->suppliers, c_hook) {
-+		if (__fw_devlink_relax_cycles(con, link->supplier)) {
-+			__fwnode_link_cycle(link);
-+			ret = true;
-+		}
-+	}
-+
-+	/*
-+	 * Give priority to device parent over fwnode parent to account for any
-+	 * quirks in how fwnodes are converted to devices.
-+	 */
-+	if (sup_dev)
-+		par_dev = get_device(sup_dev->parent);
-+	else
-+		par_dev = fwnode_get_next_parent_dev(sup_handle);
-+
-+	if (par_dev && __fw_devlink_relax_cycles(con, par_dev->fwnode))
-+		ret = true;
-+
-+	if (!sup_dev)
-+		goto out;
-+
-+	list_for_each_entry(dev_link, &sup_dev->links.suppliers, c_node) {
-+		/*
-+		 * Ignore a SYNC_STATE_ONLY flag only if it wasn't marked as
-+		 * such due to a cycle.
-+		 */
-+		if (device_link_flag_is_sync_state_only(dev_link->flags) &&
-+		    !(dev_link->flags & DL_FLAG_CYCLE))
-+			continue;
-+
-+		if (__fw_devlink_relax_cycles(con,
-+					      dev_link->supplier->fwnode)) {
-+			fw_devlink_relax_link(dev_link);
-+			dev_link->flags |= DL_FLAG_CYCLE;
-+			ret = true;
-+		}
-+	}
-+
-+out:
-+	sup_handle->flags &= ~FWNODE_FLAG_VISITED;
-+	put_device(sup_dev);
-+	put_device(par_dev);
-+	return ret;
-+}
-+
- /**
-  * fw_devlink_create_devlink - Create a device link from a consumer to fwnode
-  * @con: consumer device for the device link
-@@ -1988,6 +2052,21 @@ static int fw_devlink_create_devlink(struct device *con,
- 	    fwnode_is_ancestor_of(sup_handle, con->fwnode))
- 		return -EINVAL;
- 
-+	/*
-+	 * SYNC_STATE_ONLY device links don't block probing and supports cycles.
-+	 * So cycle detection isn't necessary and shouldn't be done.
-+	 */
-+	if (!(flags & DL_FLAG_SYNC_STATE_ONLY)) {
-+		device_links_write_lock();
-+		if (__fw_devlink_relax_cycles(con, sup_handle)) {
-+			__fwnode_link_cycle(link);
-+			flags = fw_devlink_get_flags(link->flags);
-+			dev_info(con, "Fixed dependency cycle(s) with %pfwf\n",
-+				 sup_handle);
-+		}
-+		device_links_write_unlock();
-+	}
-+
- 	if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
- 		sup_dev = fwnode_get_next_parent_dev(sup_handle);
+ 	struct mtd_part_parser *parser;
+ 	struct device_node *np;
++	struct device_node *child;
+ 	struct property *prop;
+ 	struct device *dev;
+ 	const char *compat;
+@@ -594,6 +595,15 @@ static int mtd_part_of_parse(struct mtd_info *master,
  	else
-@@ -2001,23 +2080,16 @@ static int fw_devlink_create_devlink(struct device *con,
- 		 */
- 		if (sup_dev->links.status == DL_DEV_NO_DRIVER &&
- 		    sup_handle->flags & FWNODE_FLAG_INITIALIZED) {
-+			dev_dbg(con,
-+				"Not linking %pfwf - dev might never probe\n",
-+				sup_handle);
- 			ret = -EINVAL;
- 			goto out;
- 		}
+ 		np = of_get_child_by_name(np, "partitions");
  
--		/*
--		 * If this fails, it is due to cycles in device links.  Just
--		 * give up on this link and treat it as invalid.
--		 */
--		if (!device_link_add(con, sup_dev, flags) &&
--		    !(flags & DL_FLAG_SYNC_STATE_ONLY)) {
--			dev_info(con, "Fixing up cyclic dependency with %s\n",
--				 dev_name(sup_dev));
--			device_links_write_lock();
--			fw_devlink_relax_cycle(con, sup_dev);
--			device_links_write_unlock();
--			device_link_add(con, sup_dev,
--					FW_DEVLINK_FLAGS_PERMISSIVE);
-+		if (!device_link_add(con, sup_dev, flags)) {
-+			dev_err(con, "Failed to create device link with %s\n",
-+				dev_name(sup_dev));
- 			ret = -EINVAL;
- 		}
- 
-@@ -2030,49 +2102,12 @@ static int fw_devlink_create_devlink(struct device *con,
- 	 */
- 	if (fwnode_init_without_drv(sup_handle) ||
- 	    fwnode_ancestor_init_without_drv(sup_handle)) {
--		dev_dbg(con, "Not linking %pfwP - Might never probe\n",
-+		dev_dbg(con, "Not linking %pfwf - might never become dev\n",
- 			sup_handle);
- 		return -EINVAL;
- 	}
- 
--	/*
--	 * DL_FLAG_SYNC_STATE_ONLY doesn't block probing and supports
--	 * cycles. So cycle detection isn't necessary and shouldn't be
--	 * done.
--	 */
--	if (flags & DL_FLAG_SYNC_STATE_ONLY)
--		return -EAGAIN;
--
--	/*
--	 * If we can't find the supplier device from its fwnode, it might be
--	 * due to a cyclic dependency between fwnodes. Some of these cycles can
--	 * be broken by applying logic. Check for these types of cycles and
--	 * break them so that devices in the cycle probe properly.
--	 *
--	 * If the supplier's parent is dependent on the consumer, then the
--	 * consumer and supplier have a cyclic dependency. Since fw_devlink
--	 * can't tell which of the inferred dependencies are incorrect, don't
--	 * enforce probe ordering between any of the devices in this cyclic
--	 * dependency. Do this by relaxing all the fw_devlink device links in
--	 * this cycle and by treating the fwnode link between the consumer and
--	 * the supplier as an invalid dependency.
--	 */
--	sup_dev = fwnode_get_next_parent_dev(sup_handle);
--	if (sup_dev && device_is_dependent(con, sup_dev)) {
--		dev_info(con, "Fixing up cyclic dependency with %pfwP (%s)\n",
--			 sup_handle, dev_name(sup_dev));
--		device_links_write_lock();
--		fw_devlink_relax_cycle(con, sup_dev);
--		device_links_write_unlock();
--		ret = -EINVAL;
--	} else {
--		/*
--		 * Can't check for cycles or no cycles. So let's try
--		 * again later.
--		 */
--		ret = -EAGAIN;
--	}
--
-+	ret = -EAGAIN;
- out:
- 	put_device(sup_dev);
- 	return ret;
-@@ -2155,10 +2190,7 @@ static void __fw_devlink_link_to_consumers(struct device *dev)
-  *
-  * The function creates normal (non-SYNC_STATE_ONLY) device links between @dev
-  * and the real suppliers of @dev. Once these device links are created, the
-- * fwnode links are deleted. When such device links are successfully created,
-- * this function is called recursively on those supplier devices. This is
-- * needed to detect and break some invalid cycles in fwnode links.  See
-- * fw_devlink_create_devlink() for more details.
-+ * fwnode links are deleted.
-  *
-  * In addition, it also looks at all the suppliers of the entire fwnode tree
-  * because some of the child devices of @dev that have not been added yet
-@@ -2179,7 +2211,6 @@ static void __fw_devlink_link_to_suppliers(struct device *dev,
- 
- 	list_for_each_entry_safe(link, tmp, &fwnode->suppliers, c_hook) {
- 		int ret;
--		struct device *sup_dev;
- 		struct fwnode_handle *sup = link->supplier;
- 
- 		ret = fw_devlink_create_devlink(dev, sup, link);
-@@ -2187,27 +2218,6 @@ static void __fw_devlink_link_to_suppliers(struct device *dev,
- 			continue;
- 
- 		__fwnode_link_del(link);
--
--		/* If no device link was created, nothing more to do. */
--		if (ret)
--			continue;
--
--		/*
--		 * If a device link was successfully created to a supplier, we
--		 * now need to try and link the supplier to all its suppliers.
--		 *
--		 * This is needed to detect and delete false dependencies in
--		 * fwnode links that haven't been converted to a device link
--		 * yet. See comments in fw_devlink_create_devlink() for more
--		 * details on the false dependency.
--		 *
--		 * Without deleting these false dependencies, some devices will
--		 * never probe because they'll keep waiting for their false
--		 * dependency fwnode links to be converted to device links.
--		 */
--		sup_dev = get_dev_from_fwnode(sup);
--		__fw_devlink_link_to_suppliers(sup_dev, sup_dev->fwnode);
--		put_device(sup_dev);
- 	}
- 
- 	/*
++	/*
++	 * Don't create devices that are added to a bus but will never get
++	 * probed. That'll cause fw_devlink to block probing of consumers of
++	 * this partition until the partition device is probed.
++	 */
++	for_each_child_of_node(np, child)
++		if (of_device_is_compatible(child, "nvmem-cells"))
++			of_node_set_flag(child, OF_POPULATED);
++
+ 	of_property_for_each_string(np, "compatible", prop, compat) {
+ 		parser = mtd_part_get_compatible_parser(compat);
+ 		if (!parser)
 -- 
 2.39.2
 
