@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A499BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:14:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90D8C433EF;
-	Tue,  7 Mar 2023 18:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEE6BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:14:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83CDC433EF;
+	Tue,  7 Mar 2023 18:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212891;
-	bh=+fjEORMF26BgRAYf1zu2KuHABTEdXXHsI6ujVz8Z2HE=;
+	s=korg; t=1678212894;
+	bh=AG4/g8xeWWzOeT3qTMzdZ7kJpzDrPTaP8g3RF5mV5Fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vpGkxtjA0swZKwP2WWcd6/DZCrjuPMDXocAg9NjoHvSOkOXCAYBNsrpEWLoQ73+xW
-	 zA6CWCtTIW+G3ftTrPvnm7YPoeoDwpd/17yvSJzLsaRAvWwgrhmGt0+ulvoW4vByZt
-	 DNYo7jbb3LA0uw0ntGALOTYqonHLXjzJn1Y1UWPE=
+	b=zQTJEAHuLFJhMUq/VV2IAUehCKWAHAHISHz3KxDvEQLsL+2c86sgNBiW7j09oOZB+
+	 aZTo4qbNY5ZOmJaW82V4Jc5zUogdVdmO/FjWScdaZNry4VjeBqyXLDF8+i42ABqBMv
+	 XxxSpEFUbOg1w/2xr1CLwXxhk+yVv/qz1tiIUWVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clark Wang <xiaoning.wang@nxp.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 330/885] gpio: vf610: connect GPIO label to dev name
-Date: Tue,  7 Mar 2023 17:54:24 +0100
-Message-Id: <20230307170016.521982856@linuxfoundation.org>
+Subject: [PATCH 6.1 331/885] ASoC: topology: Properly access value coming from topology file
+Date: Tue,  7 Mar 2023 17:54:25 +0100
+Message-Id: <20230307170016.564614477@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,36 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
 
-[ Upstream commit 6f8ecb7f85f441eb7d78ba2a4df45ee8a821934e ]
+[ Upstream commit c5d184c92df2b631fb81fe2ce6e96bfc5ba720e5 ]
 
-Current GPIO label is fixed, so can't distinguish different GPIO
-controllers through labels. Use dev name instead.
+When accessing values coming from topology, le32_to_cpu should be used.
+One of recent commits missed that.
 
-Fixes: 7f2691a19627 ("gpio: vf610: add gpiolib/IRQ chip driver for Vybrid")
-Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: 86e2d14b6d1a ("ASoC: topology: Add header payload_size verification")
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20230127231111.937721-2-amadeuszx.slawinski@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-vf610.c | 2 +-
+ sound/soc/soc-topology.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-vf610.c b/drivers/gpio/gpio-vf610.c
-index 9db42f6a20439..a429176673e7a 100644
---- a/drivers/gpio/gpio-vf610.c
-+++ b/drivers/gpio/gpio-vf610.c
-@@ -304,7 +304,7 @@ static int vf610_gpio_probe(struct platform_device *pdev)
+diff --git a/sound/soc/soc-topology.c b/sound/soc/soc-topology.c
+index a79a2fb260b87..d68c48555a7e3 100644
+--- a/sound/soc/soc-topology.c
++++ b/sound/soc/soc-topology.c
+@@ -2408,7 +2408,7 @@ static int soc_valid_header(struct soc_tplg *tplg,
+ 		return -EINVAL;
+ 	}
  
- 	gc = &port->gc;
- 	gc->parent = dev;
--	gc->label = "vf610-gpio";
-+	gc->label = dev_name(dev);
- 	gc->ngpio = VF610_GPIO_PER_PORT;
- 	gc->base = of_alias_get_id(np, "gpio") * VF610_GPIO_PER_PORT;
- 
+-	if (soc_tplg_get_hdr_offset(tplg) + hdr->payload_size >= tplg->fw->size) {
++	if (soc_tplg_get_hdr_offset(tplg) + le32_to_cpu(hdr->payload_size) >= tplg->fw->size) {
+ 		dev_err(tplg->dev,
+ 			"ASoC: invalid header of type %d at offset %ld payload_size %d\n",
+ 			le32_to_cpu(hdr->type), soc_tplg_get_hdr_offset(tplg),
 -- 
 2.39.2
 
