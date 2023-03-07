@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C14BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1083C433EF;
-	Tue,  7 Mar 2023 17:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EADBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09D6C433D2;
+	Tue,  7 Mar 2023 17:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210552;
-	bh=sLfTNoFhbdLlSB+wZ1XKYVxRV1FYTt+K2o2LMzANZPE=;
+	s=korg; t=1678210555;
+	bh=L5xP3TpICXv78Q6qrmzbR0pmltXMM8uBDSlrAcI9J4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YGweNjIZcWRGMcr6BFYycDcb4vHNQTuB729n+ON92ow19a/CRxuNKDb+6qIo3Pqo5
-	 fJ7z5x2Jk5Un8atUBaVsA178Gexgo4tpYexAi+I8cYskvZkVv9JAG+yqa/LZjBDnoK
-	 xXuqd6FiG1SOI97bAZRdZ4YAq4pVJUEz6za40yvw=
+	b=LbAf49XjT73z/IIyulKB1xr8T10g1PZ2bnwvaCrfsWze08kUCppE+4F645xDCzIY7
+	 rqpt8k85rPZN536m9gzHmndkAXl9btWautLdLjU7qQ4UN4432ZJXYayeZ6NwD0zE4Z
+	 aUzRhBx9Pcda3A0SNUfLTnjsv4yAYLrTHNfI6UZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0577/1001] RDMA/mana_ib: Fix a bug when the PF indicates more entries for registering memory on first packet
-Date: Tue,  7 Mar 2023 17:55:49 +0100
-Message-Id: <20230307170046.506934840@linuxfoundation.org>
+Subject: [PATCH 6.2 0578/1001] RDMA/rxe: Fix missing memory barriers in rxe_queue.h
+Date: Tue,  7 Mar 2023 17:55:50 +0100
+Message-Id: <20230307170046.553685040@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,87 +35,326 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Long Li <longli@microsoft.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 89d42b8c85b4c67d310c5ccaf491acbf71a260c3 ]
+[ Upstream commit a77a52385e9a761f896a88a4162e69fb7ccafe3f ]
 
-When registering memory in a large chunk that doesn't fit into a single PF
-message, the PF may return GDMA_STATUS_MORE_ENTRIES on the first message if
-there are more messages needed for registering more chunks.
+An earlier patch which introduced smp_load_acquire/smp_store_release
+into rxe_queue.h incorrectly assumed that surrounding spin-locks in
+rxe_verbs.c around queue updates for kernel ulps was sufficient to
+protect the passing of data through the queues between the ulp and
+the rxe tasklets. But this was incorrect. The typical sequence was
 
-Fix the VF to make it process the correct return code.
+	ulp				rxe requester tasklet
+	------------------------	---------------------
+	spin_lock_irqsave()		wqe = queue_head(queue)
+	if (!queue_full(q)) {		if (!wqe)
+		spin_unlock_irqrestore		return;
+		return -ENOMEM
+	}				<process wqe>
+	wqe = queue_producer_addr(q)
+	<fill in wqe>			queue_advance_consumer(queue)
+	queue_advance_producer(q)
+	spin_unlock_irqrestore()
 
-Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
-Link: https://lore.kernel.org/r/1676507522-21018-1-git-send-email-longli@linuxonhyperv.com
-Signed-off-by: Long Li <longli@microsoft.com>
+queue_head() calls queue_empty() which calls smp_load_acquire()
+For user space apps queue_advance_producer() calls smp_store_release()
+so that there is a memory barrier between the producer and the
+consumer but for kernel ulps queue_advance_produce() just incremented
+the producer index because the lock function is a release function.
+But to work the barrier has to come between filling in the wqe and
+updating the producer index. This patch adds the missing barriers.
+It also changes the enum names for the ulp queue types to
+	QUEUE_TYPE_FROM/TO_ULP instead of QUEUE_TYPE_TO/FROM_DRIVER
+which is very ambiguous. This bug is suspected as the cause of very
+rare lockups in a very high scale storage application. It is a bug
+in any case and should be corrected.
+
+Fixes: 0a67c46d2e99 ("RDMA/rxe: Protect user space index loads/stores")
+Link: https://lore.kernel.org/r/20230214071053.5395-1-rpearsonhpe@gmail.com
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mana/main.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_queue.h | 108 ++++++++++++++++----------
+ drivers/infiniband/sw/rxe/rxe_verbs.c |  20 ++---
+ 2 files changed, 76 insertions(+), 52 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mana/main.c b/drivers/infiniband/hw/mana/main.c
-index 8b3bc302d6f3a..7be4c3adb4e2b 100644
---- a/drivers/infiniband/hw/mana/main.c
-+++ b/drivers/infiniband/hw/mana/main.c
-@@ -249,7 +249,8 @@ static int
- mana_ib_gd_first_dma_region(struct mana_ib_dev *dev,
- 			    struct gdma_context *gc,
- 			    struct gdma_create_dma_region_req *create_req,
--			    size_t num_pages, mana_handle_t *gdma_region)
-+			    size_t num_pages, mana_handle_t *gdma_region,
-+			    u32 expected_status)
- {
- 	struct gdma_create_dma_region_resp create_resp = {};
- 	unsigned int create_req_msg_size;
-@@ -261,7 +262,7 @@ mana_ib_gd_first_dma_region(struct mana_ib_dev *dev,
+diff --git a/drivers/infiniband/sw/rxe/rxe_queue.h b/drivers/infiniband/sw/rxe/rxe_queue.h
+index ed44042782fa7..c711cb98b9496 100644
+--- a/drivers/infiniband/sw/rxe/rxe_queue.h
++++ b/drivers/infiniband/sw/rxe/rxe_queue.h
+@@ -35,19 +35,26 @@
+ /**
+  * enum queue_type - type of queue
+  * @QUEUE_TYPE_TO_CLIENT:	Queue is written by rxe driver and
+- *				read by client. Used by rxe driver only.
++ *				read by client which may be a user space
++ *				application or a kernel ulp.
++ *				Used by rxe internals only.
+  * @QUEUE_TYPE_FROM_CLIENT:	Queue is written by client and
+- *				read by rxe driver. Used by rxe driver only.
+- * @QUEUE_TYPE_TO_DRIVER:	Queue is written by client and
+- *				read by rxe driver. Used by kernel client only.
+- * @QUEUE_TYPE_FROM_DRIVER:	Queue is written by rxe driver and
+- *				read by client. Used by kernel client only.
++ *				read by rxe driver.
++ *				Used by rxe internals only.
++ * @QUEUE_TYPE_FROM_ULP:	Queue is written by kernel ulp and
++ *				read by rxe driver.
++ *				Used by kernel verbs APIs only on
++ *				behalf of ulps.
++ * @QUEUE_TYPE_TO_ULP:		Queue is written by rxe driver and
++ *				read by kernel ulp.
++ *				Used by kernel verbs APIs only on
++ *				behalf of ulps.
+  */
+ enum queue_type {
+ 	QUEUE_TYPE_TO_CLIENT,
+ 	QUEUE_TYPE_FROM_CLIENT,
+-	QUEUE_TYPE_TO_DRIVER,
+-	QUEUE_TYPE_FROM_DRIVER,
++	QUEUE_TYPE_FROM_ULP,
++	QUEUE_TYPE_TO_ULP,
+ };
  
- 	err = mana_gd_send_request(gc, create_req_msg_size, create_req,
- 				   sizeof(create_resp), &create_resp);
--	if (err || create_resp.hdr.status) {
-+	if (err || create_resp.hdr.status != expected_status) {
- 		ibdev_dbg(&dev->ib_dev,
- 			  "Failed to create DMA region: %d, 0x%x\n",
- 			  err, create_resp.hdr.status);
-@@ -372,14 +373,21 @@ int mana_ib_gd_create_dma_region(struct mana_ib_dev *dev, struct ib_umem *umem,
+ struct rxe_queue_buf;
+@@ -62,9 +69,9 @@ struct rxe_queue {
+ 	u32			index_mask;
+ 	enum queue_type		type;
+ 	/* private copy of index for shared queues between
+-	 * kernel space and user space. Kernel reads and writes
++	 * driver and clients. Driver reads and writes
+ 	 * this copy and then replicates to rxe_queue_buf
+-	 * for read access by user space.
++	 * for read access by clients.
+ 	 */
+ 	u32			index;
+ };
+@@ -97,19 +104,21 @@ static inline u32 queue_get_producer(const struct rxe_queue *q,
  
- 	page_addr_list = create_req->page_addr_list;
- 	rdma_umem_for_each_dma_block(umem, &biter, page_sz) {
-+		u32 expected_status = 0;
-+
- 		page_addr_list[tail++] = rdma_block_iter_dma_address(&biter);
- 		if (tail < num_pages_to_handle)
- 			continue;
+ 	switch (type) {
+ 	case QUEUE_TYPE_FROM_CLIENT:
+-		/* protect user index */
++		/* used by rxe, client owns the index */
+ 		prod = smp_load_acquire(&q->buf->producer_index);
+ 		break;
+ 	case QUEUE_TYPE_TO_CLIENT:
++		/* used by rxe which owns the index */
+ 		prod = q->index;
+ 		break;
+-	case QUEUE_TYPE_FROM_DRIVER:
+-		/* protect driver index */
+-		prod = smp_load_acquire(&q->buf->producer_index);
+-		break;
+-	case QUEUE_TYPE_TO_DRIVER:
++	case QUEUE_TYPE_FROM_ULP:
++		/* used by ulp which owns the index */
+ 		prod = q->buf->producer_index;
+ 		break;
++	case QUEUE_TYPE_TO_ULP:
++		/* used by ulp, rxe owns the index */
++		prod = smp_load_acquire(&q->buf->producer_index);
++		break;
+ 	}
  
-+		if (num_pages_processed + num_pages_to_handle <
-+		    num_pages_total)
-+			expected_status = GDMA_STATUS_MORE_ENTRIES;
-+
- 		if (!num_pages_processed) {
- 			/* First create message */
- 			err = mana_ib_gd_first_dma_region(dev, gc, create_req,
--							  tail, gdma_region);
-+							  tail, gdma_region,
-+							  expected_status);
- 			if (err)
- 				goto out;
+ 	return prod;
+@@ -122,19 +131,21 @@ static inline u32 queue_get_consumer(const struct rxe_queue *q,
  
-@@ -392,14 +400,8 @@ int mana_ib_gd_create_dma_region(struct mana_ib_dev *dev, struct ib_umem *umem,
- 			page_addr_list = add_req->page_addr_list;
- 		} else {
- 			/* Subsequent create messages */
--			u32 expected_s = 0;
--
--			if (num_pages_processed + num_pages_to_handle <
--			    num_pages_total)
--				expected_s = GDMA_STATUS_MORE_ENTRIES;
--
- 			err = mana_ib_gd_add_dma_region(dev, gc, add_req, tail,
--							expected_s);
-+							expected_status);
- 			if (err)
- 				break;
- 		}
+ 	switch (type) {
+ 	case QUEUE_TYPE_FROM_CLIENT:
++		/* used by rxe which owns the index */
+ 		cons = q->index;
+ 		break;
+ 	case QUEUE_TYPE_TO_CLIENT:
+-		/* protect user index */
++		/* used by rxe, client owns the index */
+ 		cons = smp_load_acquire(&q->buf->consumer_index);
+ 		break;
+-	case QUEUE_TYPE_FROM_DRIVER:
+-		cons = q->buf->consumer_index;
+-		break;
+-	case QUEUE_TYPE_TO_DRIVER:
+-		/* protect driver index */
++	case QUEUE_TYPE_FROM_ULP:
++		/* used by ulp, rxe owns the index */
+ 		cons = smp_load_acquire(&q->buf->consumer_index);
+ 		break;
++	case QUEUE_TYPE_TO_ULP:
++		/* used by ulp which owns the index */
++		cons = q->buf->consumer_index;
++		break;
+ 	}
+ 
+ 	return cons;
+@@ -172,24 +183,31 @@ static inline void queue_advance_producer(struct rxe_queue *q,
+ 
+ 	switch (type) {
+ 	case QUEUE_TYPE_FROM_CLIENT:
+-		pr_warn("%s: attempt to advance client index\n",
+-			__func__);
++		/* used by rxe, client owns the index */
++		if (WARN_ON(1))
++			pr_warn("%s: attempt to advance client index\n",
++				__func__);
+ 		break;
+ 	case QUEUE_TYPE_TO_CLIENT:
++		/* used by rxe which owns the index */
+ 		prod = q->index;
+ 		prod = (prod + 1) & q->index_mask;
+ 		q->index = prod;
+-		/* protect user index */
++		/* release so client can read it safely */
+ 		smp_store_release(&q->buf->producer_index, prod);
+ 		break;
+-	case QUEUE_TYPE_FROM_DRIVER:
+-		pr_warn("%s: attempt to advance driver index\n",
+-			__func__);
+-		break;
+-	case QUEUE_TYPE_TO_DRIVER:
++	case QUEUE_TYPE_FROM_ULP:
++		/* used by ulp which owns the index */
+ 		prod = q->buf->producer_index;
+ 		prod = (prod + 1) & q->index_mask;
+-		q->buf->producer_index = prod;
++		/* release so rxe can read it safely */
++		smp_store_release(&q->buf->producer_index, prod);
++		break;
++	case QUEUE_TYPE_TO_ULP:
++		/* used by ulp, rxe owns the index */
++		if (WARN_ON(1))
++			pr_warn("%s: attempt to advance driver index\n",
++				__func__);
+ 		break;
+ 	}
+ }
+@@ -201,24 +219,30 @@ static inline void queue_advance_consumer(struct rxe_queue *q,
+ 
+ 	switch (type) {
+ 	case QUEUE_TYPE_FROM_CLIENT:
+-		cons = q->index;
+-		cons = (cons + 1) & q->index_mask;
++		/* used by rxe which owns the index */
++		cons = (q->index + 1) & q->index_mask;
+ 		q->index = cons;
+-		/* protect user index */
++		/* release so client can read it safely */
+ 		smp_store_release(&q->buf->consumer_index, cons);
+ 		break;
+ 	case QUEUE_TYPE_TO_CLIENT:
+-		pr_warn("%s: attempt to advance client index\n",
+-			__func__);
++		/* used by rxe, client owns the index */
++		if (WARN_ON(1))
++			pr_warn("%s: attempt to advance client index\n",
++				__func__);
++		break;
++	case QUEUE_TYPE_FROM_ULP:
++		/* used by ulp, rxe owns the index */
++		if (WARN_ON(1))
++			pr_warn("%s: attempt to advance driver index\n",
++				__func__);
+ 		break;
+-	case QUEUE_TYPE_FROM_DRIVER:
++	case QUEUE_TYPE_TO_ULP:
++		/* used by ulp which owns the index */
+ 		cons = q->buf->consumer_index;
+ 		cons = (cons + 1) & q->index_mask;
+-		q->buf->consumer_index = cons;
+-		break;
+-	case QUEUE_TYPE_TO_DRIVER:
+-		pr_warn("%s: attempt to advance driver index\n",
+-			__func__);
++		/* release so rxe can read it safely */
++		smp_store_release(&q->buf->consumer_index, cons);
+ 		break;
+ 	}
+ }
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
+index 7a902e0a0607d..a3aee247aa157 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -245,7 +245,7 @@ static int post_one_recv(struct rxe_rq *rq, const struct ib_recv_wr *ibwr)
+ 	int num_sge = ibwr->num_sge;
+ 	int full;
+ 
+-	full = queue_full(rq->queue, QUEUE_TYPE_TO_DRIVER);
++	full = queue_full(rq->queue, QUEUE_TYPE_FROM_ULP);
+ 	if (unlikely(full))
+ 		return -ENOMEM;
+ 
+@@ -256,7 +256,7 @@ static int post_one_recv(struct rxe_rq *rq, const struct ib_recv_wr *ibwr)
+ 	for (i = 0; i < num_sge; i++)
+ 		length += ibwr->sg_list[i].length;
+ 
+-	recv_wqe = queue_producer_addr(rq->queue, QUEUE_TYPE_TO_DRIVER);
++	recv_wqe = queue_producer_addr(rq->queue, QUEUE_TYPE_FROM_ULP);
+ 	recv_wqe->wr_id = ibwr->wr_id;
+ 
+ 	memcpy(recv_wqe->dma.sge, ibwr->sg_list,
+@@ -268,7 +268,7 @@ static int post_one_recv(struct rxe_rq *rq, const struct ib_recv_wr *ibwr)
+ 	recv_wqe->dma.cur_sge		= 0;
+ 	recv_wqe->dma.sge_offset	= 0;
+ 
+-	queue_advance_producer(rq->queue, QUEUE_TYPE_TO_DRIVER);
++	queue_advance_producer(rq->queue, QUEUE_TYPE_FROM_ULP);
+ 
+ 	return 0;
+ }
+@@ -623,17 +623,17 @@ static int post_one_send(struct rxe_qp *qp, const struct ib_send_wr *ibwr,
+ 
+ 	spin_lock_irqsave(&qp->sq.sq_lock, flags);
+ 
+-	full = queue_full(sq->queue, QUEUE_TYPE_TO_DRIVER);
++	full = queue_full(sq->queue, QUEUE_TYPE_FROM_ULP);
+ 
+ 	if (unlikely(full)) {
+ 		spin_unlock_irqrestore(&qp->sq.sq_lock, flags);
+ 		return -ENOMEM;
+ 	}
+ 
+-	send_wqe = queue_producer_addr(sq->queue, QUEUE_TYPE_TO_DRIVER);
++	send_wqe = queue_producer_addr(sq->queue, QUEUE_TYPE_FROM_ULP);
+ 	init_send_wqe(qp, ibwr, mask, length, send_wqe);
+ 
+-	queue_advance_producer(sq->queue, QUEUE_TYPE_TO_DRIVER);
++	queue_advance_producer(sq->queue, QUEUE_TYPE_FROM_ULP);
+ 
+ 	spin_unlock_irqrestore(&qp->sq.sq_lock, flags);
+ 
+@@ -821,12 +821,12 @@ static int rxe_poll_cq(struct ib_cq *ibcq, int num_entries, struct ib_wc *wc)
+ 
+ 	spin_lock_irqsave(&cq->cq_lock, flags);
+ 	for (i = 0; i < num_entries; i++) {
+-		cqe = queue_head(cq->queue, QUEUE_TYPE_FROM_DRIVER);
++		cqe = queue_head(cq->queue, QUEUE_TYPE_TO_ULP);
+ 		if (!cqe)
+ 			break;
+ 
+ 		memcpy(wc++, &cqe->ibwc, sizeof(*wc));
+-		queue_advance_consumer(cq->queue, QUEUE_TYPE_FROM_DRIVER);
++		queue_advance_consumer(cq->queue, QUEUE_TYPE_TO_ULP);
+ 	}
+ 	spin_unlock_irqrestore(&cq->cq_lock, flags);
+ 
+@@ -838,7 +838,7 @@ static int rxe_peek_cq(struct ib_cq *ibcq, int wc_cnt)
+ 	struct rxe_cq *cq = to_rcq(ibcq);
+ 	int count;
+ 
+-	count = queue_count(cq->queue, QUEUE_TYPE_FROM_DRIVER);
++	count = queue_count(cq->queue, QUEUE_TYPE_TO_ULP);
+ 
+ 	return (count > wc_cnt) ? wc_cnt : count;
+ }
+@@ -854,7 +854,7 @@ static int rxe_req_notify_cq(struct ib_cq *ibcq, enum ib_cq_notify_flags flags)
+ 	if (cq->notify != IB_CQ_NEXT_COMP)
+ 		cq->notify = flags & IB_CQ_SOLICITED_MASK;
+ 
+-	empty = queue_empty(cq->queue, QUEUE_TYPE_FROM_DRIVER);
++	empty = queue_empty(cq->queue, QUEUE_TYPE_TO_ULP);
+ 
+ 	if ((flags & IB_CQ_REPORT_MISSED_EVENTS) && !empty)
+ 		ret = 1;
 -- 
 2.39.2
 
