@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A122BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:34:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E66C4339B;
-	Tue,  7 Mar 2023 17:34:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89077BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:34:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1385C433EF;
+	Tue,  7 Mar 2023 17:34:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210449;
-	bh=vIYI8VyyDWV8ih4I9Go7HDQkMb2ykAD0ZqFS3GbvG3Y=;
+	s=korg; t=1678210452;
+	bh=KbrNRuD8hH7gOnI1vOCWblkMpwXAwaBhdipgrDChGLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zyYbA/bTq3I7bX0dBx+MUeSyMtLVqCI4uJzqgt+mguCOGOSX9dx0QFL3ZC9vCW0SM
-	 1PkjE6WXt8dMWDTVg9wmf91CX6NvyTmMrkodeQ3qeag8TcofW3fyG+H+L9JnFn3JZB
-	 vvY6iAJIlFuWEiy6lEKjeDcwhB7sGyVeym1HOh1s=
+	b=rqcZZ9/KgN6nsB12iWACbs/5BKsJ5ZA8xRHtNCYiLVuVv+Kw7V4hgGRx8BrEFoZly
+	 ulgJRGNECjCC6pd8AkLJ5xX7Dwx2eu94XMDUe61x90bE2uksUdSZn1UYrMOI5e+Hjt
+	 JlkOV8Bkoa0xY0m39HtNQSJ2d7ZOC7YFFFEsXl68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0544/1001] RDMA/siw: Fix user page pinning accounting
-Date: Tue,  7 Mar 2023 17:55:16 +0100
-Message-Id: <20230307170045.056827743@linuxfoundation.org>
+Subject: [PATCH 6.2 0545/1001] RDMA/cxgb4: Fix potential null-ptr-deref in pass_establish()
+Date: Tue,  7 Mar 2023 17:55:17 +0100
+Message-Id: <20230307170045.108618575@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,87 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bernard Metzler <bmt@zurich.ibm.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 65a8fc30fb6722fc25adec6d7dd5b53b0bb85820 ]
+[ Upstream commit 283861a4c52c1ea4df3dd1b6fc75a50796ce3524 ]
 
-To avoid racing with other user memory reservations, immediately
-account full amount of pages to be pinned.
+If get_ep_from_tid() fails to lookup non-NULL value for ep, ep is
+dereferenced later regardless of whether it is empty.
+This patch adds a simple sanity check to fix the issue.
 
-Fixes: 2251334dcac9 ("rdma/siw: application buffer management")
-Reported-by: Jason Gunthorpe <jgg@nvidia.com>
-Suggested-by: Alistair Popple <apopple@nvidia.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Signed-off-by: Bernard Metzler <bmt@zurich.ibm.com>
-Link: https://lore.kernel.org/r/20230202101000.402990-1-bmt@zurich.ibm.com
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 944661dd97f4 ("RDMA/iw_cxgb4: atomically lookup ep and get a reference")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20230202184850.29882-1-n.zhandarovich@fintech.ru
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_mem.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/infiniband/hw/cxgb4/cm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/sw/siw/siw_mem.c b/drivers/infiniband/sw/siw/siw_mem.c
-index b2b33dd3b4fa1..f51ab2ccf1511 100644
---- a/drivers/infiniband/sw/siw/siw_mem.c
-+++ b/drivers/infiniband/sw/siw/siw_mem.c
-@@ -398,7 +398,7 @@ struct siw_umem *siw_umem_get(u64 start, u64 len, bool writable)
+diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
+index ea3ddf0d24114..ced615b5ea096 100644
+--- a/drivers/infiniband/hw/cxgb4/cm.c
++++ b/drivers/infiniband/hw/cxgb4/cm.c
+@@ -2676,6 +2676,9 @@ static int pass_establish(struct c4iw_dev *dev, struct sk_buff *skb)
+ 	u16 tcp_opt = ntohs(req->tcp_opt);
  
- 	mlock_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
- 
--	if (num_pages + atomic64_read(&mm_s->pinned_vm) > mlock_limit) {
-+	if (atomic64_add_return(num_pages, &mm_s->pinned_vm) > mlock_limit) {
- 		rv = -ENOMEM;
- 		goto out_sem_up;
- 	}
-@@ -411,30 +411,27 @@ struct siw_umem *siw_umem_get(u64 start, u64 len, bool writable)
- 		goto out_sem_up;
- 	}
- 	for (i = 0; num_pages; i++) {
--		int got, nents = min_t(int, num_pages, PAGES_PER_CHUNK);
--
--		umem->page_chunk[i].plist =
-+		int nents = min_t(int, num_pages, PAGES_PER_CHUNK);
-+		struct page **plist =
- 			kcalloc(nents, sizeof(struct page *), GFP_KERNEL);
--		if (!umem->page_chunk[i].plist) {
+ 	ep = get_ep_from_tid(dev, tid);
++	if (!ep)
++		return 0;
 +
-+		if (!plist) {
- 			rv = -ENOMEM;
- 			goto out_sem_up;
- 		}
--		got = 0;
-+		umem->page_chunk[i].plist = plist;
- 		while (nents) {
--			struct page **plist = &umem->page_chunk[i].plist[got];
--
- 			rv = pin_user_pages(first_page_va, nents, foll_flags,
- 					    plist, NULL);
- 			if (rv < 0)
- 				goto out_sem_up;
- 
- 			umem->num_pages += rv;
--			atomic64_add(rv, &mm_s->pinned_vm);
- 			first_page_va += rv * PAGE_SIZE;
-+			plist += rv;
- 			nents -= rv;
--			got += rv;
-+			num_pages -= rv;
- 		}
--		num_pages -= got;
- 	}
- out_sem_up:
- 	mmap_read_unlock(mm_s);
-@@ -442,6 +439,10 @@ struct siw_umem *siw_umem_get(u64 start, u64 len, bool writable)
- 	if (rv > 0)
- 		return umem;
- 
-+	/* Adjust accounting for pages not pinned */
-+	if (num_pages)
-+		atomic64_sub(num_pages, &mm_s->pinned_vm);
-+
- 	siw_umem_release(umem, false);
- 
- 	return ERR_PTR(rv);
+ 	pr_debug("ep %p tid %u\n", ep, ep->hwtid);
+ 	ep->snd_seq = be32_to_cpu(req->snd_isn);
+ 	ep->rcv_seq = be32_to_cpu(req->rcv_isn);
 -- 
 2.39.2
 
