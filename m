@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16C7BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1DDC433EF;
-	Tue,  7 Mar 2023 18:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34378BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B60AC433D2;
+	Tue,  7 Mar 2023 18:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214916;
-	bh=rAbAtauK0hmbO+K/zGADhjS5szni4drmaDh+sO7qiO0=;
+	s=korg; t=1678214920;
+	bh=AXLclTHKh0SHBCY9Tf4jCvhqMK90xQRv1dkF+Gbhc1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tTs7I4y4WE2yO1/YhJBsMOFgTWrm7n7GOw4q06Y26E0itlM/QlRXS+9mN9agsxKk/
-	 uLwLsC8TYkTgoSJpNVXyH3m7tBGYHYitk5vNGq/NnwdtcFZhHwF/VxiQ02gf4H1KSB
-	 b3F88gYeUtF7r6ZIGPd+UPuvuJx99HRccUDD5e2Q=
+	b=LDIKIIrc6lg+oL9HXAm6vVPfpQ0/7to8HsSAeEEQZchZuoUGlAmf+DEnp5oCPKxW4
+	 kUqfYbOTTB1FsuV9MV7ChFKxh3vFXqbK7/Fo4mN8eRY477WFaZBtWpvC5hMuKLwu+V
+	 kjqcjGElag+E2rD6BjTZCGaAimRjrj0ZmVcjIZek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arjan <8vvbbqzo567a@nospam.xutrox.com>,
-	Kevin Brace <kevinbrace@gmx.com>,
-	silviazhao <silviazhao-oc@zhaoxin.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/567] x86/perf/zhaoxin: Add stepping check for ZXC
-Date: Tue,  7 Mar 2023 17:56:37 +0100
-Message-Id: <20230307165908.538735707@linuxfoundation.org>
+Subject: [PATCH 5.15 052/567] arm64: dts: mt8192: Fix CPU map for single-cluster SoC
+Date: Tue,  7 Mar 2023 17:56:28 +0100
+Message-Id: <20230307165908.169417099@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -37,52 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: silviazhao <silviazhao-oc@zhaoxin.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit fd636b6a9bc6034f2e5bb869658898a2b472c037 ]
+[ Upstream commit 160ce54d635455ffb5e9b42c5ba9cb9aaa98cdb2 ]
 
-Some of Nano series processors will lead GP when accessing
-PMC fixed counter. Meanwhile, their hardware support for PMC
-has not announced externally. So exclude Nano CPUs from ZXC
-by checking stepping information. This is an unambiguous way
-to differentiate between ZXC and Nano CPUs.
+MT8192 features the ARM DynamIQ technology and combines both four
+Cortex-A76 (big) and four Cortex-A55 (LITTLE) CPUs in one cluster:
+fix the CPU map to reflect that.
 
-Following are Nano and ZXC FMS information:
-Nano FMS: Family=6, Model=F, Stepping=[0-A][C-D]
-ZXC FMS:  Family=6, Model=F, Stepping=E-F OR
-          Family=6, Model=0x19, Stepping=0-3
-
-Fixes: 3a4ac121c2ca ("x86/perf: Add hardware performance events support for Zhaoxin CPU.")
-
-Reported-by: Arjan <8vvbbqzo567a@nospam.xutrox.com>
-Reported-by: Kevin Brace <kevinbrace@gmx.com>
-Signed-off-by: silviazhao <silviazhao-oc@zhaoxin.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=212389
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 48489980e27e ("arm64: dts: Add Mediatek SoC MT8192 and evaluation board dts and Makefile")
+Link: https://lore.kernel.org/r/20230126103526.417039-3-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/zhaoxin/core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8192.dtsi | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/events/zhaoxin/core.c b/arch/x86/events/zhaoxin/core.c
-index 949d845c922b4..3e9acdaeed1ec 100644
---- a/arch/x86/events/zhaoxin/core.c
-+++ b/arch/x86/events/zhaoxin/core.c
-@@ -541,7 +541,13 @@ __init int zhaoxin_pmu_init(void)
- 
- 	switch (boot_cpu_data.x86) {
- 	case 0x06:
--		if (boot_cpu_data.x86_model == 0x0f || boot_cpu_data.x86_model == 0x19) {
-+		/*
-+		 * Support Zhaoxin CPU from ZXC series, exclude Nano series through FMS.
-+		 * Nano FMS: Family=6, Model=F, Stepping=[0-A][C-D]
-+		 * ZXC FMS: Family=6, Model=F, Stepping=E-F OR Family=6, Model=0x19, Stepping=0-3
-+		 */
-+		if ((boot_cpu_data.x86_model == 0x0f && boot_cpu_data.x86_stepping >= 0x0e) ||
-+			boot_cpu_data.x86_model == 0x19) {
- 
- 			x86_pmu.max_period = x86_pmu.cntval_mask >> 1;
- 
+diff --git a/arch/arm64/boot/dts/mediatek/mt8192.dtsi b/arch/arm64/boot/dts/mediatek/mt8192.dtsi
+index d1e63527b3875..9ed1a72295747 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8192.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8192.dtsi
+@@ -135,19 +135,16 @@ core2 {
+ 				core3 {
+ 					cpu = <&cpu3>;
+ 				};
+-			};
+-
+-			cluster1 {
+-				core0 {
++				core4 {
+ 					cpu = <&cpu4>;
+ 				};
+-				core1 {
++				core5 {
+ 					cpu = <&cpu5>;
+ 				};
+-				core2 {
++				core6 {
+ 					cpu = <&cpu6>;
+ 				};
+-				core3 {
++				core7 {
+ 					cpu = <&cpu7>;
+ 				};
+ 			};
 -- 
 2.39.2
 
