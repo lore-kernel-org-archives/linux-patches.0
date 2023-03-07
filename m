@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6CFBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:04:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EED2C433A0;
-	Tue,  7 Mar 2023 18:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9705BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:04:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A05FC433D2;
+	Tue,  7 Mar 2023 18:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212279;
-	bh=qzdMr4xBW/suCFA5m+op5SswmK1Mp4IkmsKpAa2DTbc=;
+	s=korg; t=1678212282;
+	bh=zGHRFoAzOqbZoTr8Eb9g8FmawEQ02ZQvdjQ+SCzP5lI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMO6Gr0Yg4U4rNyJXq2lJx2gfOCAkolxTLWfxuSQnXJFsFX4LJ00ECMJYZ5kynOSG
-	 8YWwFdmo1Rn8am09UQdFbPQ4sxP7Xi6EJgtFir/WvXTw5kZKcyaLOpEZ0/7CTF08uB
-	 MEttBwmZV9kIR+JubKlPLWTArmN6G2gnkKXTwPOo=
+	b=F5iYn5sUnvPyTjUMqnMMxPJXeIAoASESySi9M0CuppOV66ooDIVk+nYrz+jpraGxJ
+	 cVY6VETKxCDfkhZaU4x4iFospQOEoqYwjyPcFHqsIx5PSuS5CKpQpojucwcKODFZSB
+	 GMKMz+tVPXzT1rMQyWPiC4zQI71/I+q7K0L1julg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yang Yingliang <yangyingliang@huawei.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 134/885] wifi: libertas_tf: dont call kfree_skb() under spin_lock_irqsave()
-Date: Tue,  7 Mar 2023 17:51:08 +0100
-Message-Id: <20230307170007.685199907@linuxfoundation.org>
+Subject: [PATCH 6.1 135/885] wifi: libertas: if_usb: dont call kfree_skb() under spin_lock_irqsave()
+Date: Tue,  7 Mar 2023 17:51:09 +0100
+Message-Id: <20230307170007.730236178@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,35 +37,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 9388ce97b98216833c969191ee6df61a7201d797 ]
+[ Upstream commit 3968e81ba644f10a7d45bae2539560db9edac501 ]
 
 It is not allowed to call kfree_skb() from hardware interrupt
 context or with interrupts being disabled. So replace kfree_skb()
 with dev_kfree_skb_irq() under spin_lock_irqsave(). Compile
 tested only.
 
-Fixes: fc75122fabb5 ("libertas_tf: use irqsave() in USB's complete callback")
+Fixes: a3128feef6d5 ("libertas: use irqsave() in USB's complete callback")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221207150008.111743-2-yangyingliang@huawei.com
+Link: https://lore.kernel.org/r/20221207150008.111743-3-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas_tf/if_usb.c | 2 +-
+ drivers/net/wireless/marvell/libertas/if_usb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/marvell/libertas_tf/if_usb.c b/drivers/net/wireless/marvell/libertas_tf/if_usb.c
-index 75b5319d033f3..1750f5e93de21 100644
---- a/drivers/net/wireless/marvell/libertas_tf/if_usb.c
-+++ b/drivers/net/wireless/marvell/libertas_tf/if_usb.c
-@@ -613,7 +613,7 @@ static inline void process_cmdrequest(int recvlength, uint8_t *recvbuff,
- 	spin_lock_irqsave(&priv->driver_lock, flags);
- 	memcpy(priv->cmd_resp_buff, recvbuff + MESSAGE_HEADER_LEN,
- 	       recvlength - MESSAGE_HEADER_LEN);
+diff --git a/drivers/net/wireless/marvell/libertas/if_usb.c b/drivers/net/wireless/marvell/libertas/if_usb.c
+index 32fdc4150b605..2240b4db8c036 100644
+--- a/drivers/net/wireless/marvell/libertas/if_usb.c
++++ b/drivers/net/wireless/marvell/libertas/if_usb.c
+@@ -637,7 +637,7 @@ static inline void process_cmdrequest(int recvlength, uint8_t *recvbuff,
+ 	priv->resp_len[i] = (recvlength - MESSAGE_HEADER_LEN);
+ 	memcpy(priv->resp_buf[i], recvbuff + MESSAGE_HEADER_LEN,
+ 		priv->resp_len[i]);
 -	kfree_skb(skb);
 +	dev_kfree_skb_irq(skb);
- 	lbtf_cmd_response_rx(priv);
+ 	lbs_notify_command_response(priv, i);
+ 
  	spin_unlock_irqrestore(&priv->driver_lock, flags);
- }
 -- 
 2.39.2
 
