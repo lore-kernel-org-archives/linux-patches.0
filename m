@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9841BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1639BC4339B;
-	Tue,  7 Mar 2023 17:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C125DBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28951C433D2;
+	Tue,  7 Mar 2023 17:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209802;
-	bh=67OCwc+LVHg9FPPDq6kewUuKRH61FPvgBIA2w2Eg5yQ=;
+	s=korg; t=1678209805;
+	bh=PrJ7l4uqpDpyTIdTizrTPd04zpZt4A5oh3F3/YrSjmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13jhZOJuM8Wxn2J/Yi5sHws8Yyc++icyBI1icp8RVAtdVgZL4vWGOUcgcKyH0afl5
-	 CEpg8iwlH24Cu0P2xKpDbvseDWFB60/HBobgcc+V0Htt+ndd6TFUNg8Bnf+UhyjOkq
-	 0AUkPW/pBN7LfCipJ+EeoAimAeHfQbQQoHlECb5A=
+	b=BHVH3Y8jCqzKUaTzE3852L50fpAWKVbSsUvf2vIBBjfG47AEK7CN/ry+fkOqGyLD2
+	 Qe8gUurli2nwK1xd/QaKHOAfXAE3ZtqvMzcNxjrNseMhs5rm+MFEQQlRl8iRaEJQuo
+	 g2XdaZn+GjAgEflFAQC7Y9NKyj2Jvdwi8lgWXX7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
-	Robert Foss <robert.foss@linaro.org>,
+	Randolph Sapp <rs@ti.com>,
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Andrew Davis <afd@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0337/1001] drm/bridge: it6505: Guard bridge power in IRQ handler
-Date: Tue,  7 Mar 2023 17:51:49 +0100
-Message-Id: <20230307170036.099543518@linuxfoundation.org>
+Subject: [PATCH 6.2 0338/1001] drm: tidss: Fix pixel format definition
+Date: Tue,  7 Mar 2023 17:51:50 +0100
+Message-Id: <20230307170036.143896926@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,81 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pin-yen Lin <treapking@chromium.org>
+From: Randolph Sapp <rs@ti.com>
 
-[ Upstream commit 5eb9a4314053bda7642643f70f49a2b415920812 ]
+[ Upstream commit 2df0433b18f2735a49d2c3a968b40fa2881137c0 ]
 
-Add a pair of pm_runtime_get_if_in_use and pm_runtime_put_sync in the
-interrupt handler to make sure the bridge won't be powered off during
-the interrupt handlings. Also remove the irq_lock mutex because it's not
-guarding anything now.
+There was a long-standing bug from a typo that created 2 ARGB1555 and
+ABGR1555 pixel format entries. Weston 10 has a sanity check that alerted
+me to this issue.
 
-Fixes: ab28896f1a83 ("drm/bridge: it6505: Improve synchronization between extcon subsystem")
-Signed-off-by: Pin-yen Lin <treapking@chromium.org>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221109095227.3320919-1-treapking@chromium.org
+According to the Supported Pixel Data formats table we have the later
+entries should have been for Alpha-X instead.
+
+Signed-off-by: Randolph Sapp <rs@ti.com>
+Fixes: 32a1795f57eecc ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Acked-by: Andrew Davis <afd@ti.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221202001803.1765805-1-rs@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ite-it6505.c | 22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/tidss/tidss_dispc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
-index 21a9b8422bda5..e7f7d0ce13805 100644
---- a/drivers/gpu/drm/bridge/ite-it6505.c
-+++ b/drivers/gpu/drm/bridge/ite-it6505.c
-@@ -412,7 +412,6 @@ struct it6505 {
- 	 * Mutex protects extcon and interrupt functions from interfering
- 	 * each other.
- 	 */
--	struct mutex irq_lock;
- 	struct mutex extcon_lock;
- 	struct mutex mode_lock; /* used to bridge_detect */
- 	struct mutex aux_lock; /* used to aux data transfers */
-@@ -2494,10 +2493,8 @@ static irqreturn_t it6505_int_threaded_handler(int unused, void *data)
- 	};
- 	int int_status[3], i;
+diff --git a/drivers/gpu/drm/tidss/tidss_dispc.c b/drivers/gpu/drm/tidss/tidss_dispc.c
+index ad93acc9abd2a..16301bdfead12 100644
+--- a/drivers/gpu/drm/tidss/tidss_dispc.c
++++ b/drivers/gpu/drm/tidss/tidss_dispc.c
+@@ -1858,8 +1858,8 @@ static const struct {
+ 	{ DRM_FORMAT_XBGR4444, 0x21, },
+ 	{ DRM_FORMAT_RGBX4444, 0x22, },
  
--	mutex_lock(&it6505->irq_lock);
--
--	if (it6505->enable_drv_hold || !it6505->powered)
--		goto unlock;
-+	if (it6505->enable_drv_hold || pm_runtime_get_if_in_use(dev) <= 0)
-+		return IRQ_HANDLED;
+-	{ DRM_FORMAT_ARGB1555, 0x25, },
+-	{ DRM_FORMAT_ABGR1555, 0x26, },
++	{ DRM_FORMAT_XRGB1555, 0x25, },
++	{ DRM_FORMAT_XBGR1555, 0x26, },
  
- 	int_status[0] = it6505_read(it6505, INT_STATUS_01);
- 	int_status[1] = it6505_read(it6505, INT_STATUS_02);
-@@ -2515,16 +2512,14 @@ static irqreturn_t it6505_int_threaded_handler(int unused, void *data)
- 	if (it6505_test_bit(irq_vec[0].bit, (unsigned int *)int_status))
- 		irq_vec[0].handler(it6505);
- 
--	if (!it6505->hpd_state)
--		goto unlock;
--
--	for (i = 1; i < ARRAY_SIZE(irq_vec); i++) {
--		if (it6505_test_bit(irq_vec[i].bit, (unsigned int *)int_status))
--			irq_vec[i].handler(it6505);
-+	if (it6505->hpd_state) {
-+		for (i = 1; i < ARRAY_SIZE(irq_vec); i++) {
-+			if (it6505_test_bit(irq_vec[i].bit, (unsigned int *)int_status))
-+				irq_vec[i].handler(it6505);
-+		}
- 	}
- 
--unlock:
--	mutex_unlock(&it6505->irq_lock);
-+	pm_runtime_put_sync(dev);
- 
- 	return IRQ_HANDLED;
- }
-@@ -3277,7 +3272,6 @@ static int it6505_i2c_probe(struct i2c_client *client,
- 	if (!it6505)
- 		return -ENOMEM;
- 
--	mutex_init(&it6505->irq_lock);
- 	mutex_init(&it6505->extcon_lock);
- 	mutex_init(&it6505->mode_lock);
- 	mutex_init(&it6505->aux_lock);
+ 	{ DRM_FORMAT_XRGB8888, 0x27, },
+ 	{ DRM_FORMAT_XBGR8888, 0x28, },
 -- 
 2.39.2
 
