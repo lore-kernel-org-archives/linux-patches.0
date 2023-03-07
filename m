@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEDDBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:02:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F68C433EF;
-	Tue,  7 Mar 2023 18:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F0ABA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:02:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4127C433EF;
+	Tue,  7 Mar 2023 18:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212141;
-	bh=hKqOWbZqj6WLBgiBrKBmN5L86AzuxRhuYedqQoxKqx4=;
+	s=korg; t=1678212144;
+	bh=bGgurPUCjy0O/9Wxec9PC85cWH6gJYQ+YaLoeHzIUxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qC59cA4NOFmTHNXdG8iX7wzANpFQeZ1vdlmez3buevrSFRu0xHuGgC2o6t+yjfRnX
-	 mUNg6mNakIhRseXWJIVMIZSdc/bf00flApY1aUviyBZ7QZmgS3zjq1ujWhiEYNjorM
-	 4E1qm8rfkshUIkUW61kPVLq2YMVi260Sc+gJpSuE=
+	b=Lm6DdI3MVmTUnQs/2vqRglFOUlnVnZP4Uko5jfi04KzMXlpbu1bMDQnhKCGYuevGT
+	 6vaVU8FuCshkZkZcu2yDfOO14XVtJ0xB4Ttm7NktpBwf1an3EZGvKKdNlt3pcQCjma
+	 spblopbHW9B8MbnO5lFbaCNDPbo1RlXmTXqEFsbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/885] arm64: dts: qcom: msm8996 switch from RPM_SMD_BB_CLK1 to RPM_SMD_XO_CLK_SRC
-Date: Tue,  7 Mar 2023 17:50:25 +0100
-Message-Id: <20230307170005.782460743@linuxfoundation.org>
+Subject: [PATCH 6.1 092/885] arm64: dts: qcom: sm8350: drop incorrect cells from serial
+Date: Tue,  7 Mar 2023 17:50:26 +0100
+Message-Id: <20230307170005.824411410@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,92 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 8ae72166c2b73b0f2ce498ea15d4feceb9fef50e ]
+[ Upstream commit 6027331e6eae9eb957d1b73a7e3255f4151d6163 ]
 
-The vendor kernel uses RPM_SMD_XO_CLK_SRC clock as an CXO clock rather
-than using the RPM_SMD_BB_CLK1 directly. Follow this example and switch
-msm8996.dtsi to use RPM_SMD_XO_CLK_SRC clock instead of RPM_SMB_BB_CLK1.
+The serial/UART device node does not have children with unit addresses,
+so address/size cells are not correct.
 
-Fixes: 2b8c9c77c268 ("arm64: dts: qcom: msm8996: convert xo_board to RPM_SMD_BB_CLK1")
-Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Fixes: cf03cd7e12bd ("arm64: dts: qcom: sm8350: Set up WRAP0 QUPs")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230120061417.2623751-7-dmitry.baryshkov@linaro.org
+Link: https://lore.kernel.org/r/20230124084951.38195-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index a709dca48d07e..36af4fea38e73 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -712,7 +712,7 @@ gcc: clock-controller@300000 {
- 			#power-domain-cells = <1>;
- 			reg = <0x00300000 0x90000>;
- 
--			clocks = <&rpmcc RPM_SMD_BB_CLK1>,
-+			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
- 				 <&rpmcc RPM_SMD_LN_BB_CLK>,
- 				 <&sleep_clk>,
- 				 <&pciephy_0>,
-@@ -1050,7 +1050,7 @@ dsi0_phy: dsi-phy@994400 {
- 				#clock-cells = <1>;
- 				#phy-cells = <0>;
- 
--				clocks = <&mmcc MDSS_AHB_CLK>, <&rpmcc RPM_SMD_BB_CLK1>;
-+				clocks = <&mmcc MDSS_AHB_CLK>, <&rpmcc RPM_SMD_XO_CLK_SRC>;
- 				clock-names = "iface", "ref";
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index a6270d97a3192..ca7c428a741d4 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1043,8 +1043,6 @@ uart2: serial@98c000 {
+ 				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
+ 				power-domains = <&rpmhpd SM8350_CX>;
+ 				operating-points-v2 = <&qup_opp_table_100mhz>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
  				status = "disabled";
  			};
-@@ -1118,7 +1118,7 @@ dsi1_phy: dsi-phy@996400 {
- 				#clock-cells = <1>;
- 				#phy-cells = <0>;
  
--				clocks = <&mmcc MDSS_AHB_CLK>, <&rpmcc RPM_SMD_BB_CLK1>;
-+				clocks = <&mmcc MDSS_AHB_CLK>, <&rpmcc RPM_SMD_XO_CLK_SRC>;
- 				clock-names = "iface", "ref";
- 				status = "disabled";
- 			};
-@@ -2933,7 +2933,7 @@ kryocc: clock-controller@6400000 {
- 			reg = <0x06400000 0x90000>;
- 
- 			clock-names = "xo", "sys_apcs_aux";
--			clocks = <&rpmcc RPM_SMD_BB_CLK1>, <&apcs_glb>;
-+			clocks = <&rpmcc RPM_SMD_XO_A_CLK_SRC>, <&apcs_glb>;
- 
- 			#clock-cells = <1>;
- 		};
-@@ -3052,7 +3052,7 @@ sdhc1: mmc@7464900 {
- 			clock-names = "iface", "core", "xo";
- 			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
- 				<&gcc GCC_SDCC1_APPS_CLK>,
--				<&rpmcc RPM_SMD_BB_CLK1>;
-+				<&rpmcc RPM_SMD_XO_CLK_SRC>;
- 			resets = <&gcc GCC_SDCC1_BCR>;
- 
- 			pinctrl-names = "default", "sleep";
-@@ -3076,7 +3076,7 @@ sdhc2: mmc@74a4900 {
- 			clock-names = "iface", "core", "xo";
- 			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
- 				<&gcc GCC_SDCC2_APPS_CLK>,
--				<&rpmcc RPM_SMD_BB_CLK1>;
-+				<&rpmcc RPM_SMD_XO_CLK_SRC>;
- 			resets = <&gcc GCC_SDCC2_BCR>;
- 
- 			pinctrl-names = "default", "sleep";
-@@ -3383,7 +3383,7 @@ adsp_pil: remoteproc@9300000 {
- 			interrupt-names = "wdog", "fatal", "ready",
- 					  "handover", "stop-ack";
- 
--			clocks = <&rpmcc RPM_SMD_BB_CLK1>;
-+			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>;
- 			clock-names = "xo";
- 
- 			memory-region = <&adsp_mem>;
 -- 
 2.39.2
 
