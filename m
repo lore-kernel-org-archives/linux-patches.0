@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4CDBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:41:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA29C433D2;
-	Tue,  7 Mar 2023 17:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E19BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:41:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97E0C433EF;
+	Tue,  7 Mar 2023 17:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210912;
-	bh=LU+1oG37GVp9ieO4whK8pU3+qJA8YQyavvKZccwQgxQ=;
+	s=korg; t=1678210915;
+	bh=hN1zrcX8L/61v/ZkENGtatESrfr608Y8s+eR9V5xJug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pmq69VFju85x0CCqOBk5vjJq4H1s1qjSGR8pBFy9AVWaRfIdWOsiJsyf5FUmCXrmn
-	 xrlIx2a/EsOk/HwWkW7qHzFTcpCh3jtBluKOO6dF3V8fQFCyMSAFmYLbAIL2gVh/k0
-	 KaPzdxjXGV4HhNwJIoxx19Op3Y7qSNLfOH6jbT+o=
+	b=t96BKODxnXDKdlm/YD/HydYVXu6QB8pUn3yWY6R5ErlARAiUHD+pZMTPx5Ar2zZJe
+	 TyQYATlWiKefdWcY1Iy5YkShy4zp02I+iCiahqcmJ1wSpq1nE1710dkuq5+NKEUqvq
+	 g5B3PvhmDYGt84Mayacfb6l7HzLaE/P/7u4CHSgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0663/1001] s390/mm,ptdump: avoid Kasan vs Memcpy Real markers swapping
-Date: Tue,  7 Mar 2023 17:57:15 +0100
-Message-Id: <20230307170050.374879908@linuxfoundation.org>
+Subject: [PATCH 6.2 0664/1001] netfilter: nf_tables: NULL pointer dereference in nf_tables_updobj()
+Date: Tue,  7 Mar 2023 17:57:16 +0100
+Message-Id: <20230307170050.423011835@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,77 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 05178996e1a77e2a4664536e6d101a086a905034 ]
+[ Upstream commit dac7f50a45216d652887fb92d6cd3b7ca7f006ea ]
 
----[ Real Memory Copy Area Start ]---
-0x001bfffffffff000-0x001c000000000000         4K PTE I
----[ Kasan Shadow Start ]---
----[ Real Memory Copy Area End ]---
-0x001c000000000000-0x001c000200000000         8G PMD RW NX
-...
----[ Kasan Shadow End ]---
+static analyzer detect null pointer dereference case for 'type'
+function __nft_obj_type_get() can return NULL value which require to handle
+if type is NULL pointer return -ENOENT.
 
-ptdump does a stable sort of markers. Move kasan markers after
-memcpy real to avoid swapping.
+This is a theoretical issue, since an existing object has a type, but
+better add this failsafe check.
 
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/dump_pagetables.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/netfilter/nf_tables_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/s390/mm/dump_pagetables.c b/arch/s390/mm/dump_pagetables.c
-index 9953819d79596..ba5f802688781 100644
---- a/arch/s390/mm/dump_pagetables.c
-+++ b/arch/s390/mm/dump_pagetables.c
-@@ -33,10 +33,6 @@ enum address_markers_idx {
- #endif
- 	IDENTITY_AFTER_NR,
- 	IDENTITY_AFTER_END_NR,
--#ifdef CONFIG_KASAN
--	KASAN_SHADOW_START_NR,
--	KASAN_SHADOW_END_NR,
--#endif
- 	VMEMMAP_NR,
- 	VMEMMAP_END_NR,
- 	VMALLOC_NR,
-@@ -47,6 +43,10 @@ enum address_markers_idx {
- 	ABS_LOWCORE_END_NR,
- 	MEMCPY_REAL_NR,
- 	MEMCPY_REAL_END_NR,
-+#ifdef CONFIG_KASAN
-+	KASAN_SHADOW_START_NR,
-+	KASAN_SHADOW_END_NR,
-+#endif
- };
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 8c09e4d12ac1e..fc8256b00b320 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6999,6 +6999,9 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
+ 			return -EOPNOTSUPP;
  
- static struct addr_marker address_markers[] = {
-@@ -62,10 +62,6 @@ static struct addr_marker address_markers[] = {
- #endif
- 	[IDENTITY_AFTER_NR]	= {(unsigned long)_end, "Identity Mapping Start"},
- 	[IDENTITY_AFTER_END_NR]	= {0, "Identity Mapping End"},
--#ifdef CONFIG_KASAN
--	[KASAN_SHADOW_START_NR]	= {KASAN_SHADOW_START, "Kasan Shadow Start"},
--	[KASAN_SHADOW_END_NR]	= {KASAN_SHADOW_END, "Kasan Shadow End"},
--#endif
- 	[VMEMMAP_NR]		= {0, "vmemmap Area Start"},
- 	[VMEMMAP_END_NR]	= {0, "vmemmap Area End"},
- 	[VMALLOC_NR]		= {0, "vmalloc Area Start"},
-@@ -76,6 +72,10 @@ static struct addr_marker address_markers[] = {
- 	[ABS_LOWCORE_END_NR]	= {0, "Lowcore Area End"},
- 	[MEMCPY_REAL_NR]	= {0, "Real Memory Copy Area Start"},
- 	[MEMCPY_REAL_END_NR]	= {0, "Real Memory Copy Area End"},
-+#ifdef CONFIG_KASAN
-+	[KASAN_SHADOW_START_NR]	= {KASAN_SHADOW_START, "Kasan Shadow Start"},
-+	[KASAN_SHADOW_END_NR]	= {KASAN_SHADOW_END, "Kasan Shadow End"},
-+#endif
- 	{ -1, NULL }
- };
+ 		type = __nft_obj_type_get(objtype);
++		if (WARN_ON_ONCE(!type))
++			return -ENOENT;
++
+ 		nft_ctx_init(&ctx, net, skb, info->nlh, family, table, NULL, nla);
  
+ 		return nf_tables_updobj(&ctx, type, nla[NFTA_OBJ_DATA], obj);
 -- 
 2.39.2
 
