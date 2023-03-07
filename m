@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6A3BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:05:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA2BC433EF;
-	Tue,  7 Mar 2023 19:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9691BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:05:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131A4C4339B;
+	Tue,  7 Mar 2023 19:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215922;
-	bh=+9OuRYwPI54o/Fm7g7hAoBFrQ8pYFyaSyAT3RvzsrqY=;
+	s=korg; t=1678215925;
+	bh=BzyfmkEhRnsSq4Wk8WeAYEk1vY7xHBSOmthvn82SQ0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rdRKQVGOGYyqp+2qQJHZ8S8eb2gg5r83vTL2X93mxfeFbY5gFwmI9SuPq7PdTkist
-	 udeW7BllMrlX8HE5RKKhSuKxv+gDOTDgg/1tKEYhQGS8AQFZ6ToGQRs7NHbB1CcSq5
-	 SF5fvOT4siC/C3m0cFOnrDIdqR1NoWl9qxqzpWVE=
+	b=EErdqGCrL+GD5A5OeQ/oFge3R9Fiadmt0d4Owvo0l+098jDldv0sVSqZvNt86vxmN
+	 nDGfgXJMxtY6Q2lA9koIMX6BwMmRRhpkNUgtFFvTzXUfzBHMHtqWQ5CV96uJI0KVWd
+	 zdJz+eEHyJWXB4aNC6+A3neq9pjd3Y7bqTnOw3cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	linux-samsung-soc@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
+	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
+	syzbot+f51cb4b9afbd87ec06f2@syzkaller.appspotmail.com,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 417/567] regulator: s5m8767: Bounds check id indexing into arrays
-Date: Tue,  7 Mar 2023 18:02:33 +0100
-Message-Id: <20230307165923.953252495@linuxfoundation.org>
+Subject: [PATCH 5.15 418/567] gfs2: Improve gfs2_make_fs_rw error handling
+Date: Tue,  7 Mar 2023 18:02:34 +0100
+Message-Id: <20230307165923.992729764@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -38,53 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit e314e15a0b58f9d051c00b25951073bcdae61953 ]
+[ Upstream commit b66f723bb552ad59c2acb5d45ea45c890f84498b ]
 
-The compiler has no way to know if "id" is within the array bounds of
-the regulators array. Add a check for this and a build-time check that
-the regulators and reg_voltage_map arrays are sized the same. Seen with
-GCC 13:
+In gfs2_make_fs_rw(), make sure to call gfs2_consist() to report an
+inconsistency and mark the filesystem as withdrawn when
+gfs2_find_jhead() fails.
 
-../drivers/regulator/s5m8767.c: In function 's5m8767_pmic_probe':
-../drivers/regulator/s5m8767.c:936:35: warning: array subscript [0, 36] is outside array bounds of 'struct regulator_desc[37]' [-Warray-bounds=]
-  936 |                         regulators[id].vsel_reg =
-      |                         ~~~~~~~~~~^~~~
+At the end of gfs2_make_fs_rw(), when we discover that the filesystem
+has been withdrawn, make sure we report an error.  This also replaces
+the gfs2_withdrawn() check after gfs2_find_jhead().
 
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: linux-samsung-soc@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230128005358.never.313-kees@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Cc: syzbot+f51cb4b9afbd87ec06f2@syzkaller.appspotmail.com
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/s5m8767.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/gfs2/super.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/s5m8767.c b/drivers/regulator/s5m8767.c
-index 35269f9982105..754c6fcc6e642 100644
---- a/drivers/regulator/s5m8767.c
-+++ b/drivers/regulator/s5m8767.c
-@@ -923,10 +923,14 @@ static int s5m8767_pmic_probe(struct platform_device *pdev)
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index d615974ce4183..775ac3fb10c67 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -138,8 +138,10 @@ int gfs2_make_fs_rw(struct gfs2_sbd *sdp)
+ 		return -EIO;
  
- 	for (i = 0; i < pdata->num_regulators; i++) {
- 		const struct sec_voltage_desc *desc;
--		int id = pdata->regulators[i].id;
-+		unsigned int id = pdata->regulators[i].id;
- 		int enable_reg, enable_val;
- 		struct regulator_dev *rdev;
+ 	error = gfs2_find_jhead(sdp->sd_jdesc, &head, false);
+-	if (error || gfs2_withdrawn(sdp))
++	if (error) {
++		gfs2_consist(sdp);
+ 		return error;
++	}
  
-+		BUILD_BUG_ON(ARRAY_SIZE(regulators) != ARRAY_SIZE(reg_voltage_map));
-+		if (WARN_ON_ONCE(id >= ARRAY_SIZE(regulators)))
-+			continue;
-+
- 		desc = reg_voltage_map[id];
- 		if (desc) {
- 			regulators[id].n_voltages =
+ 	if (!(head.lh_flags & GFS2_LOG_HEAD_UNMOUNT)) {
+ 		gfs2_consist(sdp);
+@@ -151,7 +153,9 @@ int gfs2_make_fs_rw(struct gfs2_sbd *sdp)
+ 	gfs2_log_pointers_init(sdp, head.lh_blkno);
+ 
+ 	error = gfs2_quota_init(sdp);
+-	if (!error && !gfs2_withdrawn(sdp))
++	if (!error && gfs2_withdrawn(sdp))
++		error = -EIO;
++	if (!error)
+ 		set_bit(SDF_JOURNAL_LIVE, &sdp->sd_flags);
+ 	return error;
+ }
 -- 
 2.39.2
 
