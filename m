@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494E5BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:15:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9DDC433EF;
-	Tue,  7 Mar 2023 17:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E6FBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:16:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE7BC433EF;
+	Tue,  7 Mar 2023 17:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209359;
-	bh=7N6oifyHFC1nqqyYt3My57NdM3Hfok8rcw3GmbacoI4=;
+	s=korg; t=1678209362;
+	bh=hi2VpWytuZfHF9xBNOLtFWOO7ClSa6tJaMqoauKp9IY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XhnBhS1ccjgh4DVXu117S0ymjAnla1YuKDMQaipM8DmCoqCiQhEL2YCTqH/aZTjbo
-	 JWZBD0igRXiy3zcmwrW+A70Gj1/w1bxXd4ZPyfoV3BNapSspDGcNrxU/uVFbVcCjt3
-	 AoBxr/9HfNpdGvgRGm3SRBvKbMCkajdrtKonhgE4=
+	b=l9Q0u5wAI23FDZI/+TWA0XVPNHTfbOyJUUnLVM5gUFAvNRfZuYyx5JU2F/zKCMbuy
+	 9fROMANdsALW759xcOwu77kIMREhuceusd3r1YWh9gEwmhL03DdD5yyPS9BZOxZU2k
+	 FCAoW4x8P0W2ZeEpPRwTBe6TfABmR0F6EQf5I2oY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0161/1001] libbpf: Fix btf__align_of() by taking into account field offsets
-Date: Tue,  7 Mar 2023 17:48:53 +0100
-Message-Id: <20230307170029.008701547@linuxfoundation.org>
+Subject: [PATCH 6.2 0152/1001] wifi: iwlegacy: common: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Tue,  7 Mar 2023 17:48:44 +0100
+Message-Id: <20230307170028.654037250@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,57 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 25a4481b4136af7794e1df2d6c90ed2f354d60ce ]
+[ Upstream commit 0c1528675d7a9787cb516b64d8f6c0f6f8efcb48 ]
 
-btf__align_of() is supposed to be return alignment requirement of
-a requested BTF type. For STRUCT/UNION it doesn't always return correct
-value, because it calculates alignment only based on field types. But
-for packed structs this is not enough, we need to also check field
-offsets and struct size. If field offset isn't aligned according to
-field type's natural alignment, then struct must be packed. Similarly,
-if struct size is not a multiple of struct's natural alignment, then
-struct must be packed as well.
+It is not allowed to call consume_skb() from hardware interrupt context
+or with interrupts being disabled. So replace dev_kfree_skb() with
+dev_consume_skb_irq() under spin_lock_irqsave(). Compile tested only.
 
-This patch fixes this issue precisely by additionally checking these
-conditions.
-
-Fixes: 3d208f4ca111 ("libbpf: Expose btf__align_of() API")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20221212211505.558851-5-andrii@kernel.org
+Fixes: 4bc85c1324aa ("Revert "iwlwifi: split the drivers for agn and legacy devices 3945/4965"")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221207144013.70210-1-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/net/wireless/intel/iwlegacy/common.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index 71e165b09ed59..8cbcef959456d 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -688,8 +688,21 @@ int btf__align_of(const struct btf *btf, __u32 id)
- 			if (align <= 0)
- 				return libbpf_err(align);
- 			max_align = max(max_align, align);
-+
-+			/* if field offset isn't aligned according to field
-+			 * type's alignment, then struct must be packed
-+			 */
-+			if (btf_member_bitfield_size(t, i) == 0 &&
-+			    (m->offset % (8 * align)) != 0)
-+				return 1;
- 		}
+diff --git a/drivers/net/wireless/intel/iwlegacy/common.c b/drivers/net/wireless/intel/iwlegacy/common.c
+index 341c17fe2af4d..96002121bb8b2 100644
+--- a/drivers/net/wireless/intel/iwlegacy/common.c
++++ b/drivers/net/wireless/intel/iwlegacy/common.c
+@@ -5174,7 +5174,7 @@ il_mac_reset_tsf(struct ieee80211_hw *hw, struct ieee80211_vif *vif)
+ 	memset(&il->current_ht_config, 0, sizeof(struct il_ht_config));
  
-+		/* if struct/union size isn't a multiple of its alignment,
-+		 * then struct must be packed
-+		 */
-+		if ((t->size % max_align) != 0)
-+			return 1;
-+
- 		return max_align;
+ 	/* new association get rid of ibss beacon skb */
+-	dev_kfree_skb(il->beacon_skb);
++	dev_consume_skb_irq(il->beacon_skb);
+ 	il->beacon_skb = NULL;
+ 	il->timestamp = 0;
+ 
+@@ -5293,7 +5293,7 @@ il_beacon_update(struct ieee80211_hw *hw, struct ieee80211_vif *vif)
  	}
- 	default:
+ 
+ 	spin_lock_irqsave(&il->lock, flags);
+-	dev_kfree_skb(il->beacon_skb);
++	dev_consume_skb_irq(il->beacon_skb);
+ 	il->beacon_skb = skb;
+ 
+ 	timestamp = ((struct ieee80211_mgmt *)skb->data)->u.beacon.timestamp;
 -- 
 2.39.2
 
