@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F6EBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:25:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E348C433D2;
-	Tue,  7 Mar 2023 18:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6CABBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:25:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43955C433D2;
+	Tue,  7 Mar 2023 18:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213548;
-	bh=8Y8W2lzCAomsar/9v8o1UjVn+d0/1WS8d/iIJJs+EU4=;
+	s=korg; t=1678213551;
+	bh=rzg7BVZ1+2ddEgchxYHTuhivV8y45kBXO6IVvQs2qaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C5asGf4uYHRPP3lBUhUNEVYW0rFEO7AQRJgXxY8i3Q0RkI/IZ5KwSpR1cBGrpcNzk
-	 IkXwtg4CU91rI6R6SIK+2OavdlSUIyZmqRt76+czvl5Fa5zIu061oJAIXXnn4teKxT
-	 h5xky9NVCfwkj/gJ6JeBytttxypmE7DlKvpwVSlo=
+	b=Styfg59tQXESTOCnRQyLO/bKjwQ+f8ViQ7uvtvzZiVqk+QSa+yue0xW+VRc8ydUQH
+	 oN/xBUdKVAbXGgJ+Y4Yy2joskFTTruJkCsZUJukHqfHFdgaSYPv73WqgV71BeluP/r
+	 2O/qjiPKj4MYKmNB/GChmGAGFm4uO2gbK+7I+opQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 502/885] media: ov2740: Fix memleak in ov2740_init_controls()
-Date: Tue,  7 Mar 2023 17:57:16 +0100
-Message-Id: <20230307170024.267778001@linuxfoundation.org>
+Subject: [PATCH 6.1 535/885] blk-cgroup: dropping parent refcount after pd_free_fn() is done
+Date: Tue,  7 Mar 2023 17:57:49 +0100
+Message-Id: <20230307170025.731691648@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,64 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 2d899592ed7829d0d5140853bac4d58742a6b8af ]
+[ Upstream commit c7241babf0855d8a6180cd1743ff0ec34de40b4e ]
 
-There is a kmemleak when testing the media/i2c/ov2740.c with bpf mock
-device:
+Some cgroup policies will access parent pd through child pd even
+after pd_offline_fn() is done. If pd_free_fn() for parent is called
+before child, then UAF can be triggered. Hence it's better to guarantee
+the order of pd_free_fn().
 
-unreferenced object 0xffff8881090e19e0 (size 16):
-  comm "51-i2c-ov2740", pid 278, jiffies 4294781584 (age 23.613s)
-  hex dump (first 16 bytes):
-    00 f3 7c 0b 81 88 ff ff 80 75 6a 09 81 88 ff ff  ..|......uj.....
-  backtrace:
-    [<000000004e9fad8f>] __kmalloc_node+0x44/0x1b0
-    [<0000000039c802f4>] kvmalloc_node+0x34/0x180
-    [<000000009b8b5c63>] v4l2_ctrl_handler_init_class+0x11d/0x180
-[videodev]
-    [<0000000038644056>] ov2740_probe+0x37d/0x84f [ov2740]
-    [<0000000092489f59>] i2c_device_probe+0x28d/0x680
-    [<000000001038babe>] really_probe+0x17c/0x3f0
-    [<0000000098c7af1c>] __driver_probe_device+0xe3/0x170
-    [<00000000e1b3dc24>] device_driver_attach+0x34/0x80
-    [<000000005a04a34d>] bind_store+0x10b/0x1a0
-    [<00000000ce25d4f2>] drv_attr_store+0x49/0x70
-    [<000000007d9f4e9a>] sysfs_kf_write+0x8c/0xb0
-    [<00000000be6cff0f>] kernfs_fop_write_iter+0x216/0x2e0
-    [<0000000031ddb40a>] vfs_write+0x658/0x810
-    [<0000000041beecdd>] ksys_write+0xd6/0x1b0
-    [<0000000023755840>] do_syscall_64+0x38/0x90
-    [<00000000b2cc2da2>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Currently refcount of parent blkg is dropped in __blkg_release(), which
+is before pd_free_fn() is called in blkg_free_work_fn() while
+blkg_free_work_fn() is called asynchronously.
 
-ov2740_init_controls() won't clean all the allocated resources in fail
-path, which may causes the memleaks. Add v4l2_ctrl_handler_free() to
-prevent memleak.
+This patch make sure pd_free_fn() called from removing cgroup is ordered
+by delaying dropping parent refcount after calling pd_free_fn() for
+child.
 
-Fixes: 866edc895171 ("media: i2c: Add ov2740 image sensor driver")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+BTW, pd_free_fn() will also be called from blkcg_deactivate_policy()
+from deleting device, and following patches will guarantee the order.
+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230119110350.2287325-2-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov2740.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ block/blk-cgroup.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/ov2740.c b/drivers/media/i2c/ov2740.c
-index 5d74ad4792146..628ab86698c08 100644
---- a/drivers/media/i2c/ov2740.c
-+++ b/drivers/media/i2c/ov2740.c
-@@ -630,8 +630,10 @@ static int ov2740_init_controls(struct ov2740 *ov2740)
- 				     V4L2_CID_TEST_PATTERN,
- 				     ARRAY_SIZE(ov2740_test_pattern_menu) - 1,
- 				     0, 0, ov2740_test_pattern_menu);
--	if (ctrl_hdlr->error)
-+	if (ctrl_hdlr->error) {
-+		v4l2_ctrl_handler_free(ctrl_hdlr);
- 		return ctrl_hdlr->error;
-+	}
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 7c91d9195da8d..8d1b7757f1e4f 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -93,6 +93,8 @@ static void blkg_free_workfn(struct work_struct *work)
+ 		if (blkg->pd[i])
+ 			blkcg_policy[i]->pd_free_fn(blkg->pd[i]);
  
- 	ov2740->sd.ctrl_handler = ctrl_hdlr;
++	if (blkg->parent)
++		blkg_put(blkg->parent);
+ 	if (blkg->q)
+ 		blk_put_queue(blkg->q);
+ 	free_percpu(blkg->iostat_cpu);
+@@ -127,8 +129,6 @@ static void __blkg_release(struct rcu_head *rcu)
+ 
+ 	/* release the blkcg and parent blkg refs this blkg has been holding */
+ 	css_put(&blkg->blkcg->css);
+-	if (blkg->parent)
+-		blkg_put(blkg->parent);
+ 	blkg_free(blkg);
+ }
  
 -- 
 2.39.2
