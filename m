@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C55EBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:12:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6447C433EF;
-	Tue,  7 Mar 2023 18:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A66BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:12:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05B5C433D2;
+	Tue,  7 Mar 2023 18:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212729;
-	bh=r9bSOHdz2R6gaN2oBXmC8gpiJCZyz0yodePAWg2McYE=;
+	s=korg; t=1678212732;
+	bh=O8/q0oekSETQ9Z9BiI4wlxnqeehnV0rpQl7NmBLWdHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j45rCZsKs6GlGuy2EjO1nxmphlfGbA/tVkJxFfC7W79OEybbAzDKVMmOCh/Umpo9a
-	 Hl465hs0N1TBOtZuCzDh417HuqT7NiEgDciOBLFGIz3O8YqD2N7s+V6FGfm+X4+LWu
-	 bGldLlUhXHOEYuZ8nZG8e15HghyeobUHm1LZOX+U=
+	b=ouP9R0jnv//Bv5nl4QVSNmOGsbcRrdmW7QhkAL29FxPFqGozi0EyNlAaQZP1WIsta
+	 1UUzWpas/1nbf4H9mm2O29fPNwzqHM0k8lshbQY9rXnQJy7qNLWGJnAOqJi8+oNKJJ
+	 XzV1K0iFnrC0yyOCP8yQs9sYe2/KrR+lVwVuGek8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Jungclaus <frank.jungclaus@esd.eu>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 248/885] can: esd_usb: Make use of can_change_state() and relocate checking skb for NULL
-Date: Tue,  7 Mar 2023 17:53:02 +0100
-Message-Id: <20230307170012.783178362@linuxfoundation.org>
+Subject: [PATCH 6.1 249/885] xsk: check IFF_UP earlier in Tx path
+Date: Tue,  7 Mar 2023 17:53:03 +0100
+Message-Id: <20230307170012.819653023@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,128 +37,218 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Jungclaus <frank.jungclaus@esd.eu>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit 9684b000a86299b5968fef8ffbf1484def37452a ]
+[ Upstream commit 1596dae2f17ec5c6e8c8f0e3fec78c5ae55c1e0b ]
 
-Start a rework initiated by Vincents remarks "You should not report
-the greatest of txerr and rxerr but the one which actually increased."
-[1] and "As far as I understand, those flags should be set only when
-the threshold is reached" [2] .
+Xsk Tx can be triggered via either sendmsg() or poll() syscalls. These
+two paths share a call to common function xsk_xmit() which has two
+sanity checks within. A pseudo code example to show the two paths:
 
-Therefore make use of can_change_state() to (among others) set the
-flags CAN_ERR_CRTL_[RT]X_WARNING and CAN_ERR_CRTL_[RT]X_PASSIVE,
-maintain CAN statistic counters for error_warning, error_passive and
-bus_off.
+__xsk_sendmsg() :                       xsk_poll():
+if (unlikely(!xsk_is_bound(xs)))        if (unlikely(!xsk_is_bound(xs)))
+    return -ENXIO;                          return mask;
+if (unlikely(need_wait))                (...)
+    return -EOPNOTSUPP;                 xsk_xmit()
+mark napi id
+(...)
+xsk_xmit()
 
-Relocate testing alloc_can_err_skb() for NULL to the end of
-esd_usb_rx_event(), to have things like can_bus_off(),
-can_change_state() working even in out of memory conditions.
+xsk_xmit():
+if (unlikely(!(xs->dev->flags & IFF_UP)))
+	return -ENETDOWN;
+if (unlikely(!xs->tx))
+	return -ENOBUFS;
 
-Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
-Signed-off-by: Frank Jungclaus <frank.jungclaus@esd.eu>
-Link: [1] https://lore.kernel.org/all/CAMZ6RqKGBWe15aMkf8-QLf-cOQg99GQBebSm+1wEzTqHgvmNuw@mail.gmail.com/
-Link: [2] https://lore.kernel.org/all/CAMZ6Rq+QBO1yTX_o6GV0yhdBj-RzZSRGWDZBS0fs7zbSTy4hmA@mail.gmail.com/
-Link: https://lore.kernel.org/all/20230216190450.3901254-3-frank.jungclaus@esd.eu
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+As it can be observed above, in sendmsg() napi id can be marked on
+interface that was not brought up and this causes a NULL ptr
+dereference:
+
+[31757.505631] BUG: kernel NULL pointer dereference, address: 0000000000000018
+[31757.512710] #PF: supervisor read access in kernel mode
+[31757.517936] #PF: error_code(0x0000) - not-present page
+[31757.523149] PGD 0 P4D 0
+[31757.525726] Oops: 0000 [#1] PREEMPT SMP NOPTI
+[31757.530154] CPU: 26 PID: 95641 Comm: xdpsock Not tainted 6.2.0-rc5+ #40
+[31757.536871] Hardware name: Intel Corporation S2600WFT/S2600WFT, BIOS SE5C620.86B.02.01.0008.031920191559 03/19/2019
+[31757.547457] RIP: 0010:xsk_sendmsg+0xde/0x180
+[31757.551799] Code: 00 75 a2 48 8b 00 a8 04 75 9b 84 d2 74 69 8b 85 14 01 00 00 85 c0 75 1b 48 8b 85 28 03 00 00 48 8b 80 98 00 00 00 48 8b 40 20 <8b> 40 18 89 85 14 01 00 00 8b bd 14 01 00 00 81 ff 00 01 00 00 0f
+[31757.570840] RSP: 0018:ffffc90034f27dc0 EFLAGS: 00010246
+[31757.576143] RAX: 0000000000000000 RBX: ffffc90034f27e18 RCX: 0000000000000000
+[31757.583389] RDX: 0000000000000001 RSI: ffffc90034f27e18 RDI: ffff88984cf3c100
+[31757.590631] RBP: ffff88984714a800 R08: ffff88984714a800 R09: 0000000000000000
+[31757.597877] R10: 0000000000000001 R11: 0000000000000000 R12: 00000000fffffffa
+[31757.605123] R13: 0000000000000000 R14: 0000000000000003 R15: 0000000000000000
+[31757.612364] FS:  00007fb4c5931180(0000) GS:ffff88afdfa00000(0000) knlGS:0000000000000000
+[31757.620571] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[31757.626406] CR2: 0000000000000018 CR3: 000000184b41c003 CR4: 00000000007706e0
+[31757.633648] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[31757.640894] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[31757.648139] PKRU: 55555554
+[31757.650894] Call Trace:
+[31757.653385]  <TASK>
+[31757.655524]  sock_sendmsg+0x8f/0xa0
+[31757.659077]  ? sockfd_lookup_light+0x12/0x70
+[31757.663416]  __sys_sendto+0xfc/0x170
+[31757.667051]  ? do_sched_setscheduler+0xdb/0x1b0
+[31757.671658]  __x64_sys_sendto+0x20/0x30
+[31757.675557]  do_syscall_64+0x38/0x90
+[31757.679197]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+[31757.687969] Code: 8e f6 ff 44 8b 4c 24 2c 4c 8b 44 24 20 41 89 c4 44 8b 54 24 28 48 8b 54 24 18 b8 2c 00 00 00 48 8b 74 24 10 8b 7c 24 08 0f 05 <48> 3d 00 f0 ff ff 77 3a 44 89 e7 48 89 44 24 08 e8 b5 8e f6 ff 48
+[31757.707007] RSP: 002b:00007ffd49c73c70 EFLAGS: 00000293 ORIG_RAX: 000000000000002c
+[31757.714694] RAX: ffffffffffffffda RBX: 000055a996565380 RCX: 00007fb4c5727c16
+[31757.721939] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
+[31757.729184] RBP: 0000000000000040 R08: 0000000000000000 R09: 0000000000000000
+[31757.736429] R10: 0000000000000040 R11: 0000000000000293 R12: 0000000000000000
+[31757.743673] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+[31757.754940]  </TASK>
+
+To fix this, let's make xsk_xmit a function that will be responsible for
+generic Tx, where RCU is handled accordingly and pull out sanity checks
+and xs->zc handling. Populate sanity checks to __xsk_sendmsg() and
+xsk_poll().
+
+Fixes: ca2e1a627035 ("xsk: Mark napi_id on sendmsg()")
+Fixes: 18b1ab7aa76b ("xsk: Fix race at socket teardown")
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://lore.kernel.org/r/20230215143309.13145-1-maciej.fijalkowski@intel.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/esd_usb.c | 50 +++++++++++++++++------------------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ net/xdp/xsk.c | 59 ++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 33 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/net/can/usb/esd_usb.c b/drivers/net/can/usb/esd_usb.c
-index 5e182fadd875e..578b25f873e58 100644
---- a/drivers/net/can/usb/esd_usb.c
-+++ b/drivers/net/can/usb/esd_usb.c
-@@ -239,41 +239,42 @@ static void esd_usb_rx_event(struct esd_usb_net_priv *priv,
- 			   msg->msg.rx.dlc, state, ecc, rxerr, txerr);
- 
- 		skb = alloc_can_err_skb(priv->netdev, &cf);
--		if (skb == NULL) {
--			stats->rx_dropped++;
--			return;
--		}
- 
- 		if (state != priv->old_state) {
-+			enum can_state tx_state, rx_state;
-+			enum can_state new_state = CAN_STATE_ERROR_ACTIVE;
-+
- 			priv->old_state = state;
- 
- 			switch (state & ESD_BUSSTATE_MASK) {
- 			case ESD_BUSSTATE_BUSOFF:
--				priv->can.state = CAN_STATE_BUS_OFF;
--				cf->can_id |= CAN_ERR_BUSOFF;
--				priv->can.can_stats.bus_off++;
-+				new_state = CAN_STATE_BUS_OFF;
- 				can_bus_off(priv->netdev);
- 				break;
- 			case ESD_BUSSTATE_WARN:
--				priv->can.state = CAN_STATE_ERROR_WARNING;
--				priv->can.can_stats.error_warning++;
-+				new_state = CAN_STATE_ERROR_WARNING;
- 				break;
- 			case ESD_BUSSTATE_ERRPASSIVE:
--				priv->can.state = CAN_STATE_ERROR_PASSIVE;
--				priv->can.can_stats.error_passive++;
-+				new_state = CAN_STATE_ERROR_PASSIVE;
- 				break;
- 			default:
--				priv->can.state = CAN_STATE_ERROR_ACTIVE;
-+				new_state = CAN_STATE_ERROR_ACTIVE;
- 				txerr = 0;
- 				rxerr = 0;
- 				break;
- 			}
--		} else {
-+
-+			if (new_state != priv->can.state) {
-+				tx_state = (txerr >= rxerr) ? new_state : 0;
-+				rx_state = (txerr <= rxerr) ? new_state : 0;
-+				can_change_state(priv->netdev, cf,
-+						 tx_state, rx_state);
-+			}
-+		} else if (skb) {
- 			priv->can.can_stats.bus_error++;
- 			stats->rx_errors++;
- 
--			cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR |
--				      CAN_ERR_CNT;
-+			cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
- 
- 			switch (ecc & SJA1000_ECC_MASK) {
- 			case SJA1000_ECC_BIT:
-@@ -295,21 +296,20 @@ static void esd_usb_rx_event(struct esd_usb_net_priv *priv,
- 
- 			/* Bit stream position in CAN frame as the error was detected */
- 			cf->data[3] = ecc & SJA1000_ECC_SEG;
--
--			if (priv->can.state == CAN_STATE_ERROR_WARNING ||
--			    priv->can.state == CAN_STATE_ERROR_PASSIVE) {
--				cf->data[1] = (txerr > rxerr) ?
--					CAN_ERR_CRTL_TX_PASSIVE :
--					CAN_ERR_CRTL_RX_PASSIVE;
--			}
--			cf->data[6] = txerr;
--			cf->data[7] = rxerr;
- 		}
- 
- 		priv->bec.txerr = txerr;
- 		priv->bec.rxerr = rxerr;
- 
--		netif_rx(skb);
-+		if (skb) {
-+			cf->can_id |= CAN_ERR_CNT;
-+			cf->data[6] = txerr;
-+			cf->data[7] = rxerr;
-+
-+			netif_rx(skb);
-+		} else {
-+			stats->rx_dropped++;
-+		}
- 	}
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index 9f0561b67c12e..13f62d2402e71 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -511,7 +511,7 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
+ 	return skb;
  }
  
+-static int xsk_generic_xmit(struct sock *sk)
++static int __xsk_generic_xmit(struct sock *sk)
+ {
+ 	struct xdp_sock *xs = xdp_sk(sk);
+ 	u32 max_batch = TX_BATCH_SIZE;
+@@ -594,22 +594,13 @@ static int xsk_generic_xmit(struct sock *sk)
+ 	return err;
+ }
+ 
+-static int xsk_xmit(struct sock *sk)
++static int xsk_generic_xmit(struct sock *sk)
+ {
+-	struct xdp_sock *xs = xdp_sk(sk);
+ 	int ret;
+ 
+-	if (unlikely(!(xs->dev->flags & IFF_UP)))
+-		return -ENETDOWN;
+-	if (unlikely(!xs->tx))
+-		return -ENOBUFS;
+-
+-	if (xs->zc)
+-		return xsk_wakeup(xs, XDP_WAKEUP_TX);
+-
+ 	/* Drop the RCU lock since the SKB path might sleep. */
+ 	rcu_read_unlock();
+-	ret = xsk_generic_xmit(sk);
++	ret = __xsk_generic_xmit(sk);
+ 	/* Reaquire RCU lock before going into common code. */
+ 	rcu_read_lock();
+ 
+@@ -627,17 +618,31 @@ static bool xsk_no_wakeup(struct sock *sk)
+ #endif
+ }
+ 
++static int xsk_check_common(struct xdp_sock *xs)
++{
++	if (unlikely(!xsk_is_bound(xs)))
++		return -ENXIO;
++	if (unlikely(!(xs->dev->flags & IFF_UP)))
++		return -ENETDOWN;
++
++	return 0;
++}
++
+ static int __xsk_sendmsg(struct socket *sock, struct msghdr *m, size_t total_len)
+ {
+ 	bool need_wait = !(m->msg_flags & MSG_DONTWAIT);
+ 	struct sock *sk = sock->sk;
+ 	struct xdp_sock *xs = xdp_sk(sk);
+ 	struct xsk_buff_pool *pool;
++	int err;
+ 
+-	if (unlikely(!xsk_is_bound(xs)))
+-		return -ENXIO;
++	err = xsk_check_common(xs);
++	if (err)
++		return err;
+ 	if (unlikely(need_wait))
+ 		return -EOPNOTSUPP;
++	if (unlikely(!xs->tx))
++		return -ENOBUFS;
+ 
+ 	if (sk_can_busy_loop(sk)) {
+ 		if (xs->zc)
+@@ -649,8 +654,11 @@ static int __xsk_sendmsg(struct socket *sock, struct msghdr *m, size_t total_len
+ 		return 0;
+ 
+ 	pool = xs->pool;
+-	if (pool->cached_need_wakeup & XDP_WAKEUP_TX)
+-		return xsk_xmit(sk);
++	if (pool->cached_need_wakeup & XDP_WAKEUP_TX) {
++		if (xs->zc)
++			return xsk_wakeup(xs, XDP_WAKEUP_TX);
++		return xsk_generic_xmit(sk);
++	}
+ 	return 0;
+ }
+ 
+@@ -670,11 +678,11 @@ static int __xsk_recvmsg(struct socket *sock, struct msghdr *m, size_t len, int
+ 	bool need_wait = !(flags & MSG_DONTWAIT);
+ 	struct sock *sk = sock->sk;
+ 	struct xdp_sock *xs = xdp_sk(sk);
++	int err;
+ 
+-	if (unlikely(!xsk_is_bound(xs)))
+-		return -ENXIO;
+-	if (unlikely(!(xs->dev->flags & IFF_UP)))
+-		return -ENETDOWN;
++	err = xsk_check_common(xs);
++	if (err)
++		return err;
+ 	if (unlikely(!xs->rx))
+ 		return -ENOBUFS;
+ 	if (unlikely(need_wait))
+@@ -713,21 +721,20 @@ static __poll_t xsk_poll(struct file *file, struct socket *sock,
+ 	sock_poll_wait(file, sock, wait);
+ 
+ 	rcu_read_lock();
+-	if (unlikely(!xsk_is_bound(xs))) {
+-		rcu_read_unlock();
+-		return mask;
+-	}
++	if (xsk_check_common(xs))
++		goto skip_tx;
+ 
+ 	pool = xs->pool;
+ 
+ 	if (pool->cached_need_wakeup) {
+ 		if (xs->zc)
+ 			xsk_wakeup(xs, pool->cached_need_wakeup);
+-		else
++		else if (xs->tx)
+ 			/* Poll needs to drive Tx also in copy mode */
+-			xsk_xmit(sk);
++			xsk_generic_xmit(sk);
+ 	}
+ 
++skip_tx:
+ 	if (xs->rx && !xskq_prod_is_empty(xs->rx))
+ 		mask |= EPOLLIN | EPOLLRDNORM;
+ 	if (xs->tx && xsk_tx_writeable(xs))
 -- 
 2.39.2
 
