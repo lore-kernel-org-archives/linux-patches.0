@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD754BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:57:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AD1C4339B;
-	Tue,  7 Mar 2023 18:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0FBBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:57:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334C2C433EF;
+	Tue,  7 Mar 2023 18:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215447;
-	bh=kzXc2RUPuJwZ+k+KzwAaWOMMOs1615upUcGsuIMEf6A=;
+	s=korg; t=1678215450;
+	bh=z7ahMT7PCCZpGLLHnHCuhwIwaq6kT/3ECTKRYvNuR1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=irgbBGkh8mw1uhK8sJJ6Cpvrcgu9osHfu3SzyjDqBPczjno1bwGBeElWchAsu+JYt
-	 yKoNiftXCaLKZuktoe3YI8g4rffiWgClm7O+Z445FVEmg7hZschaVJEfeLkdbH3P0+
-	 OaKuib88No9z4qwx7PdXc8GJ6sOBYhw1VXupf92Y=
+	b=zsGM58Wuwj9exfZE9CvGHQbqZz/BkvwziNej3d/Jad/uKV59qVhQQQi10M/a1+OJh
+	 iZSCQF03UNrfy/UmG9xJvb9Z2Ip0ooyZxtQH1kL7EA+9aTZDRx142tl9SmWJiweGGf
+	 C5WjAeOnEJB480gHk8BdwYQ6bfFZOttcgGBqe7Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Mark Brown <broonie@kernel.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 222/567] ASoC: mchp-spdifrx: fix return value in case completion times out
-Date: Tue,  7 Mar 2023 17:59:18 +0100
-Message-Id: <20230307165915.518663367@linuxfoundation.org>
+Subject: [PATCH 5.15 258/567] gfs2: jdata writepage fix
+Date: Tue,  7 Mar 2023 17:59:54 +0100
+Message-Id: <20230307165917.113911820@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,47 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit a4c4161d6eae3ef5f486d1638ef452d9bc1376b0 ]
+[ Upstream commit cbb60951ce18c9b6e91d2eb97deb41d8ff616622 ]
 
-wait_for_completion_interruptible_timeout() returns 0 in case of
-timeout. Check this into account when returning from function.
+The ->writepage() and ->writepages() operations are supposed to write
+entire pages.  However, on filesystems with a block size smaller than
+PAGE_SIZE, __gfs2_jdata_writepage() only adds the first block to the
+current transaction instead of adding the entire page.  Fix that.
 
-Fixes: ef265c55c1ac ("ASoC: mchp-spdifrx: add driver for SPDIF RX")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230130120647.638049-3-claudiu.beznea@microchip.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 18ec7d5c3f43 ("[GFS2] Make journaled data files identical to normal files on disk")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/atmel/mchp-spdifrx.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/gfs2/aops.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/sound/soc/atmel/mchp-spdifrx.c b/sound/soc/atmel/mchp-spdifrx.c
-index 3962ce00ad34a..076a78fd0b125 100644
---- a/sound/soc/atmel/mchp-spdifrx.c
-+++ b/sound/soc/atmel/mchp-spdifrx.c
-@@ -524,9 +524,10 @@ static int mchp_spdifrx_cs_get(struct mchp_spdifrx_dev *dev,
- 	ret = wait_for_completion_interruptible_timeout(&ch_stat->done,
- 							msecs_to_jiffies(100));
- 	/* IP might not be started or valid stream might not be present */
--	if (ret < 0) {
-+	if (ret <= 0) {
- 		dev_dbg(dev->dev, "channel status for channel %d timeout\n",
- 			channel);
-+		return ret ? : -ETIMEDOUT;
- 	}
+diff --git a/fs/gfs2/aops.c b/fs/gfs2/aops.c
+index 4bbfb156e6a40..ee212c9310ad0 100644
+--- a/fs/gfs2/aops.c
++++ b/fs/gfs2/aops.c
+@@ -152,7 +152,6 @@ static int __gfs2_jdata_writepage(struct page *page, struct writeback_control *w
+ {
+ 	struct inode *inode = page->mapping->host;
+ 	struct gfs2_inode *ip = GFS2_I(inode);
+-	struct gfs2_sbd *sdp = GFS2_SB(inode);
  
- 	memcpy(uvalue->value.iec958.status, ch_stat->data,
-@@ -580,7 +581,7 @@ static int mchp_spdifrx_subcode_ch_get(struct mchp_spdifrx_dev *dev,
- 		dev_dbg(dev->dev, "user data for channel %d timeout\n",
- 			channel);
- 		mchp_spdifrx_isr_blockend_dis(dev);
--		return ret;
-+		return ret ? : -ETIMEDOUT;
+ 	if (PageChecked(page)) {
+ 		ClearPageChecked(page);
+@@ -160,7 +159,7 @@ static int __gfs2_jdata_writepage(struct page *page, struct writeback_control *w
+ 			create_empty_buffers(page, inode->i_sb->s_blocksize,
+ 					     BIT(BH_Dirty)|BIT(BH_Uptodate));
+ 		}
+-		gfs2_page_add_databufs(ip, page, 0, sdp->sd_vfs->s_blocksize);
++		gfs2_page_add_databufs(ip, page, 0, PAGE_SIZE);
  	}
- 
- 	spin_lock_irqsave(&user_data->lock, flags);
+ 	return gfs2_write_jdata_page(page, wbc);
+ }
 -- 
 2.39.2
 
