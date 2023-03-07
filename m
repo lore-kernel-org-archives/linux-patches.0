@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B24ABA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:34:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60960C433EF;
-	Tue,  7 Mar 2023 17:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202AABA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:34:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72983C433A4;
+	Tue,  7 Mar 2023 17:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210476;
-	bh=Rl3hpWgoQ/19JF+albPXTyTmuahy0hBYMGRUmUyyViM=;
+	s=korg; t=1678210479;
+	bh=vP5xQh6kFrlHr21SGXbaOzuh2hkmJnfheFpnzcDTdcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DgHke93RZV+/OxI8XBxcrR6JV3bK8OabGeR0oICyY87XLzxDYwu3eVjJ+3Nm3hpFp
-	 UngoWO8sXtLSVYOxLHKTFg2Sea3rOpkZrvjiHGEVnRPf0Wwqbz8DJpsixwwimoi+vw
-	 jdKYg98mSIFVX8QGR0TGUtcALNuAY4RbKtCXbLXo=
+	b=rw0BsyzFNRxG4crBx72SqL3Uo7TSMWzSPOJSXJ/1VKeeLdutsq2+onVB2cZpbj75K
+	 ahHdDSjl8mUPh0iHJmRPJ0hHawnE4tG7ESuZORs0Yzv63OIifUj23cb79NIgOqd8xV
+	 YtSnFo90gmQtRzU6nQsvo+p5W6/xMY/BjQ04ADjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>,
 	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 6.2 0552/1001] driver core: fw_devlink: Allow marking a fwnode link as being part of a cycle
-Date: Tue,  7 Mar 2023 17:55:24 +0100
-Message-Id: <20230307170045.431521615@linuxfoundation.org>
+Subject: [PATCH 6.2 0553/1001] driver core: fw_devlink: Consolidate device link flag computation
+Date: Tue,  7 Mar 2023 17:55:25 +0100
+Message-Id: <20230307170045.478367457@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -41,11 +41,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit 6a6dfdf8b3ff337be5a447e9f4e71969f18370ad ]
+[ Upstream commit cd115c0409f283edde94bd5a9a42dc42bee0aba8 ]
 
-To improve detection and handling of dependency cycles, we need to be
-able to mark fwnode links as being part of cycles. fwnode links marked
-as being part of a cycle should not block their consumers from probing.
+Consolidate the code that computes the flags to be used when creating a
+device link from a fwnode link.
 
 Fixes: 2de9d8e0d2fe ("driver core: fw_devlink: Improve handling of cyclic dependencies")
 Signed-off-by: Saravana Kannan <saravanak@google.com>
@@ -54,170 +53,116 @@ Tested-by: Sudeep Holla <sudeep.holla@arm.com>
 Tested-by: Douglas Anderson <dianders@chromium.org>
 Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
-Link: https://lore.kernel.org/r/20230207014207.1678715-7-saravanak@google.com
+Link: https://lore.kernel.org/r/20230207014207.1678715-8-saravanak@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c    | 50 +++++++++++++++++++++++++++++++++---------
- include/linux/fwnode.h | 11 +++++++++-
- 2 files changed, 50 insertions(+), 11 deletions(-)
+ drivers/base/core.c    | 28 +++++++++++++++-------------
+ include/linux/fwnode.h |  1 -
+ 2 files changed, 15 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/base/core.c b/drivers/base/core.c
-index b29c483e9ca7b..bd8ae74e5cdcb 100644
+index bd8ae74e5cdcb..05c3e9a09b323 100644
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -76,13 +76,15 @@ static bool fw_devlink_best_effort;
-  * are ignored and there is no reference counting.
-  */
- static int __fwnode_link_add(struct fwnode_handle *con,
--			     struct fwnode_handle *sup)
-+			     struct fwnode_handle *sup, u8 flags)
+@@ -1727,8 +1727,11 @@ static int __init fw_devlink_strict_setup(char *arg)
+ }
+ early_param("fw_devlink.strict", fw_devlink_strict_setup);
+ 
+-u32 fw_devlink_get_flags(void)
++static inline u32 fw_devlink_get_flags(u8 fwlink_flags)
  {
- 	struct fwnode_link *link;
- 
- 	list_for_each_entry(link, &sup->consumers, s_hook)
--		if (link->consumer == con)
-+		if (link->consumer == con) {
-+			link->flags |= flags;
- 			return 0;
-+		}
- 
- 	link = kzalloc(sizeof(*link), GFP_KERNEL);
- 	if (!link)
-@@ -92,6 +94,7 @@ static int __fwnode_link_add(struct fwnode_handle *con,
- 	INIT_LIST_HEAD(&link->s_hook);
- 	link->consumer = con;
- 	INIT_LIST_HEAD(&link->c_hook);
-+	link->flags = flags;
- 
- 	list_add(&link->s_hook, &sup->consumers);
- 	list_add(&link->c_hook, &con->suppliers);
-@@ -106,7 +109,7 @@ int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup)
- 	int ret;
- 
- 	mutex_lock(&fwnode_link_lock);
--	ret = __fwnode_link_add(con, sup);
-+	ret = __fwnode_link_add(con, sup, 0);
- 	mutex_unlock(&fwnode_link_lock);
- 	return ret;
- }
-@@ -126,6 +129,19 @@ static void __fwnode_link_del(struct fwnode_link *link)
- 	kfree(link);
- }
- 
-+/**
-+ * __fwnode_link_cycle - Mark a fwnode link as being part of a cycle.
-+ * @link: the fwnode_link to be marked
-+ *
-+ * The fwnode_link_lock needs to be held when this function is called.
-+ */
-+static void __fwnode_link_cycle(struct fwnode_link *link)
-+{
-+	pr_debug("%pfwf: Relaxing link with %pfwf\n",
-+		 link->consumer, link->supplier);
-+	link->flags |= FWLINK_FLAG_CYCLE;
-+}
++	if (fwlink_flags & FWLINK_FLAG_CYCLE)
++		return FW_DEVLINK_FLAGS_PERMISSIVE | DL_FLAG_CYCLE;
 +
- /**
-  * fwnode_links_purge_suppliers - Delete all supplier links of fwnode_handle.
-  * @fwnode: fwnode whose supplier links need to be deleted
-@@ -199,7 +215,7 @@ static void __fwnode_links_move_consumers(struct fwnode_handle *from,
+ 	return fw_devlink_flags;
+ }
+ 
+@@ -1909,7 +1912,7 @@ static int fw_devlink_relax_cycle(struct device *con, void *sup)
+  * fw_devlink_create_devlink - Create a device link from a consumer to fwnode
+  * @con: consumer device for the device link
+  * @sup_handle: fwnode handle of supplier
+- * @flags: devlink flags
++ * @link: fwnode link that's being converted to a device link
+  *
+  * This function will try to create a device link between the consumer device
+  * @con and the supplier device represented by @sup_handle.
+@@ -1926,10 +1929,17 @@ static int fw_devlink_relax_cycle(struct device *con, void *sup)
+  *  possible to do that in the future
+  */
+ static int fw_devlink_create_devlink(struct device *con,
+-				     struct fwnode_handle *sup_handle, u32 flags)
++				     struct fwnode_handle *sup_handle,
++				     struct fwnode_link *link)
+ {
+ 	struct device *sup_dev;
+ 	int ret = 0;
++	u32 flags;
++
++	if (con->fwnode == link->consumer)
++		flags = fw_devlink_get_flags(link->flags);
++	else
++		flags = FW_DEVLINK_FLAGS_PERMISSIVE;
+ 
+ 	/*
+ 	 * In some cases, a device P might also be a supplier to its child node
+@@ -2055,7 +2065,6 @@ static void __fw_devlink_link_to_consumers(struct device *dev)
  	struct fwnode_link *link, *tmp;
  
- 	list_for_each_entry_safe(link, tmp, &from->consumers, s_hook) {
--		__fwnode_link_add(link->consumer, to);
-+		__fwnode_link_add(link->consumer, to, link->flags);
- 		__fwnode_link_del(link);
- 	}
- }
-@@ -1041,6 +1057,21 @@ static bool dev_is_best_effort(struct device *dev)
- 		(dev->fwnode && (dev->fwnode->flags & FWNODE_FLAG_BEST_EFFORT));
- }
+ 	list_for_each_entry_safe(link, tmp, &fwnode->consumers, s_hook) {
+-		u32 dl_flags = fw_devlink_get_flags();
+ 		struct device *con_dev;
+ 		bool own_link = true;
+ 		int ret;
+@@ -2085,14 +2094,13 @@ static void __fw_devlink_link_to_consumers(struct device *dev)
+ 				con_dev = NULL;
+ 			} else {
+ 				own_link = false;
+-				dl_flags = FW_DEVLINK_FLAGS_PERMISSIVE;
+ 			}
+ 		}
  
-+static struct fwnode_handle *fwnode_links_check_suppliers(
-+						struct fwnode_handle *fwnode)
-+{
-+	struct fwnode_link *link;
-+
-+	if (!fwnode || fw_devlink_is_permissive())
-+		return NULL;
-+
-+	list_for_each_entry(link, &fwnode->suppliers, c_hook)
-+		if (!(link->flags & FWLINK_FLAG_CYCLE))
-+			return link->supplier;
-+
-+	return NULL;
-+}
-+
- /**
-  * device_links_check_suppliers - Check presence of supplier drivers.
-  * @dev: Consumer device.
-@@ -1068,11 +1099,8 @@ int device_links_check_suppliers(struct device *dev)
- 	 * probe.
- 	 */
- 	mutex_lock(&fwnode_link_lock);
--	if (dev->fwnode && !list_empty(&dev->fwnode->suppliers) &&
--	    !fw_devlink_is_permissive()) {
--		sup_fw = list_first_entry(&dev->fwnode->suppliers,
--					  struct fwnode_link,
--					  c_hook)->supplier;
-+	sup_fw = fwnode_links_check_suppliers(dev->fwnode);
-+	if (sup_fw) {
- 		if (!dev_is_best_effort(dev)) {
- 			fwnode_ret = -EPROBE_DEFER;
- 			dev_err_probe(dev, -EPROBE_DEFER,
-@@ -1261,7 +1289,9 @@ static ssize_t waiting_for_supplier_show(struct device *dev,
- 	bool val;
+ 		if (!con_dev)
+ 			continue;
  
- 	device_lock(dev);
--	val = !list_empty(&dev->fwnode->suppliers);
-+	mutex_lock(&fwnode_link_lock);
-+	val = !!fwnode_links_check_suppliers(dev->fwnode);
-+	mutex_unlock(&fwnode_link_lock);
- 	device_unlock(dev);
- 	return sysfs_emit(buf, "%u\n", val);
- }
+-		ret = fw_devlink_create_devlink(con_dev, fwnode, dl_flags);
++		ret = fw_devlink_create_devlink(con_dev, fwnode, link);
+ 		put_device(con_dev);
+ 		if (!own_link || ret == -EAGAIN)
+ 			continue;
+@@ -2133,19 +2141,13 @@ static void __fw_devlink_link_to_suppliers(struct device *dev,
+ 	bool own_link = (dev->fwnode == fwnode);
+ 	struct fwnode_link *link, *tmp;
+ 	struct fwnode_handle *child = NULL;
+-	u32 dl_flags;
+-
+-	if (own_link)
+-		dl_flags = fw_devlink_get_flags();
+-	else
+-		dl_flags = FW_DEVLINK_FLAGS_PERMISSIVE;
+ 
+ 	list_for_each_entry_safe(link, tmp, &fwnode->suppliers, c_hook) {
+ 		int ret;
+ 		struct device *sup_dev;
+ 		struct fwnode_handle *sup = link->supplier;
+ 
+-		ret = fw_devlink_create_devlink(dev, sup, dl_flags);
++		ret = fw_devlink_create_devlink(dev, sup, link);
+ 		if (!own_link || ret == -EAGAIN)
+ 			continue;
+ 
 diff --git a/include/linux/fwnode.h b/include/linux/fwnode.h
-index 89b9bdfca925c..fdf2ee0285b7a 100644
+index fdf2ee0285b7a..5700451b300fb 100644
 --- a/include/linux/fwnode.h
 +++ b/include/linux/fwnode.h
-@@ -18,7 +18,7 @@ struct fwnode_operations;
- struct device;
+@@ -207,7 +207,6 @@ static inline void fwnode_dev_initialized(struct fwnode_handle *fwnode,
+ 		fwnode->flags &= ~FWNODE_FLAG_INITIALIZED;
+ }
  
- /*
-- * fwnode link flags
-+ * fwnode flags
-  *
-  * LINKS_ADDED:	The fwnode has already be parsed to add fwnode links.
-  * NOT_DEVICE:	The fwnode will never be populated as a struct device.
-@@ -36,6 +36,7 @@ struct device;
- #define FWNODE_FLAG_INITIALIZED			BIT(2)
- #define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	BIT(3)
- #define FWNODE_FLAG_BEST_EFFORT			BIT(4)
-+#define FWNODE_FLAG_VISITED			BIT(5)
- 
- struct fwnode_handle {
- 	struct fwnode_handle *secondary;
-@@ -46,11 +47,19 @@ struct fwnode_handle {
- 	u8 flags;
- };
- 
-+/*
-+ * fwnode link flags
-+ *
-+ * CYCLE:	The fwnode link is part of a cycle. Don't defer probe.
-+ */
-+#define FWLINK_FLAG_CYCLE			BIT(0)
-+
- struct fwnode_link {
- 	struct fwnode_handle *supplier;
- 	struct list_head s_hook;
- 	struct fwnode_handle *consumer;
- 	struct list_head c_hook;
-+	u8 flags;
- };
- 
- /**
+-extern u32 fw_devlink_get_flags(void);
+ extern bool fw_devlink_is_strict(void);
+ int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup);
+ void fwnode_links_purge(struct fwnode_handle *fwnode);
 -- 
 2.39.2
 
