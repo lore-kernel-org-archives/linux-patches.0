@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E89BA35
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:32:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A54C433D2;
-	Tue,  7 Mar 2023 17:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5F7BA35
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:32:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8730DC433D2;
+	Tue,  7 Mar 2023 17:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210370;
-	bh=hSHw0+w3LFQi4ksALU05R/0a2ukRR5E/U/EYVxDLyQs=;
+	s=korg; t=1678210373;
+	bh=kuDlEyKFMm3hkU0qV64QqInuOViRoocDeoJjbnYDs1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9j+1+bS1Npd4njQCl0JD4Jda3TPeByYwtFOW7uNyI9P28mW08AfvJZ7LtF0F5G9F
-	 HPTX7ZHIcHZ74AtMD3lnrAD/OcOxGh1vFexDWhNRH4iAHy4m3FX1rZWuEgv4a292w+
-	 IlMviKxNXbjTLxkAebA6Kz1okVwCLhAqS0ldPkyY=
+	b=nWvKF80BEB9csXPVZNNH+0GaAGN9VL3MaZ5i0VFixYXQzX0r+yfF+rMX6xcBP8BPR
+	 U0csmS0ITtE8/QvgNMWnGHRvYO2cxn5KxUw+Fwbx12XWEz9LtzINp5RpyyjV+8zlTp
+	 P28UOA18IJUj0tYAEsnXzPyVKTfhJyUrDLfyvkJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+	syzkaller <syzkaller@googlegroups.com>,
+	George Kennedy <george.kennedy@oracle.com>,
+	Vishnu Dasa <vdasa@vmware.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0518/1001] firmware: stratix10-svc: fix error handle while alloc/add device failed
-Date: Tue,  7 Mar 2023 17:54:50 +0100
-Message-Id: <20230307170043.921825951@linuxfoundation.org>
+Subject: [PATCH 6.2 0519/1001] VMCI: check context->notify_page after call to get_user_pages_fast() to avoid GPF
+Date: Tue,  7 Mar 2023 17:54:51 +0100
+Message-Id: <20230307170043.962056425@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,63 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: George Kennedy <george.kennedy@oracle.com>
 
-[ Upstream commit d66a4c20ae55ac88136b4a3befd944c093ffa677 ]
+[ Upstream commit 1a726cb47fd204109c767409fa9ca15a96328f14 ]
 
-If add device "stratix10-rsu" failed in stratix10_svc_drv_probe(),
-the 'svc_fifo' and 'genpool' need be freed in the error path.
+The call to get_user_pages_fast() in vmci_host_setup_notify() can return
+NULL context->notify_page causing a GPF. To avoid GPF check if
+context->notify_page == NULL and return error if so.
 
-If allocate or add device "intel-fcs" failed in stratix10_svc_drv_probe(),
-the device "stratix10-rsu" need be unregistered in the error path.
+general protection fault, probably for non-canonical address
+    0xe0009d1000000060: 0000 [#1] PREEMPT SMP KASAN NOPTI
+KASAN: maybe wild-memory-access in range [0x0005088000000300-
+    0x0005088000000307]
+CPU: 2 PID: 26180 Comm: repro_34802241 Not tainted 6.1.0-rc4 #1
+Hardware name: Red Hat KVM, BIOS 1.15.0-2.module+el8.6.0 04/01/2014
+RIP: 0010:vmci_ctx_check_signal_notify+0x91/0xe0
+Call Trace:
+ <TASK>
+ vmci_host_unlocked_ioctl+0x362/0x1f40
+ __x64_sys_ioctl+0x1a1/0x230
+ do_syscall_64+0x3a/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: e6281c26674e ("firmware: stratix10-svc: Add support for FCS")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
-Link: https://lore.kernel.org/r/20221129163602.462369-2-dinguyen@kernel.org
+Fixes: a1d88436d53a ("VMCI: Fix two UVA mapping bugs")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: George Kennedy <george.kennedy@oracle.com>
+Reviewed-by: Vishnu Dasa <vdasa@vmware.com>
+Link: https://lore.kernel.org/r/1669666705-24012-1-git-send-email-george.kennedy@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/stratix10-svc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/misc/vmw_vmci/vmci_host.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
-index 1a5640b3ab422..bde1f543f5298 100644
---- a/drivers/firmware/stratix10-svc.c
-+++ b/drivers/firmware/stratix10-svc.c
-@@ -1202,19 +1202,20 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
- 	ret = platform_device_add(svc->stratix10_svc_rsu);
- 	if (ret) {
- 		platform_device_put(svc->stratix10_svc_rsu);
--		return ret;
-+		goto err_free_kfifo;
+diff --git a/drivers/misc/vmw_vmci/vmci_host.c b/drivers/misc/vmw_vmci/vmci_host.c
+index da1e2a773823e..857b9851402a6 100644
+--- a/drivers/misc/vmw_vmci/vmci_host.c
++++ b/drivers/misc/vmw_vmci/vmci_host.c
+@@ -242,6 +242,8 @@ static int vmci_host_setup_notify(struct vmci_ctx *context,
+ 		context->notify_page = NULL;
+ 		return VMCI_ERROR_GENERIC;
  	}
++	if (context->notify_page == NULL)
++		return VMCI_ERROR_UNAVAILABLE;
  
- 	svc->intel_svc_fcs = platform_device_alloc(INTEL_FCS, 1);
- 	if (!svc->intel_svc_fcs) {
- 		dev_err(dev, "failed to allocate %s device\n", INTEL_FCS);
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto err_unregister_dev;
- 	}
- 
- 	ret = platform_device_add(svc->intel_svc_fcs);
- 	if (ret) {
- 		platform_device_put(svc->intel_svc_fcs);
--		return ret;
-+		goto err_unregister_dev;
- 	}
- 
- 	dev_set_drvdata(dev, svc);
-@@ -1223,6 +1224,8 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
-+err_unregister_dev:
-+	platform_device_unregister(svc->stratix10_svc_rsu);
- err_free_kfifo:
- 	kfifo_free(&controller->svc_fifo);
- err_destroy_pool:
+ 	/*
+ 	 * Map the locked page and set up notify pointer.
 -- 
 2.39.2
 
