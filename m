@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D5ABA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:21:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12520C433EF;
-	Tue,  7 Mar 2023 18:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9AEBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:21:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162D1C433EF;
+	Tue,  7 Mar 2023 18:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213276;
-	bh=pgWK7iDobdFd0IOjlILgXLxRznXKjkiZPmIYrwy8efU=;
+	s=korg; t=1678213279;
+	bh=shNNeHqfHJ88zT8GZ66H30xyasgCDChVa5CUgly7KCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lk0j4DcZKZseKOw6Edh/ob3jvnnzMsGaMxw/o9vsP3EgxcR/x0+sPrrJfTW4Bx1cS
-	 2PNociDk+hHDfcee2xWMKFR2N3xFjeZy6pTf0yN8yppmbe1tJng8EJTZbR4a64PC97
-	 sfwlgR9rk9evqGAchuulOpQwIGAiLEG3gY/0PLfg=
+	b=f6moAhtVD+lAZzZFg4/U09yrwanws5ivU+4GBDUOqH1HYqOKNWuzGn1F/8WcAqKbp
+	 j9LNYai0HOTg+mKAY+sTjOpUQQW+g90TLYwdLNdNvuYA13kX/l319lTVT9TmMlxKGN
+	 iEzdAuqqjksnYtcIzxntuqPRfOjfjDuiNfzEkBZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Chunfeng Yun <chunfeng.yun@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Tomas Winkler <tomas.winkler@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 456/885] phy: mediatek: remove temporary variable @mask_
-Date: Tue,  7 Mar 2023 17:56:30 +0100
-Message-Id: <20230307170022.316906281@linuxfoundation.org>
+Subject: [PATCH 6.1 439/885] mei: pxp: Use correct macros to initialize uuid_le
+Date: Tue,  7 Mar 2023 17:56:13 +0100
+Message-Id: <20230307170021.487383509@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,50 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chunfeng Yun <chunfeng.yun@mediatek.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 49094d928618309877c50e589f23e639a3b0c453 ]
+[ Upstream commit 503b676dde2780330c90a10b37a844686601a784 ]
 
-Remove the temporary @mask_, this may cause build warning when use clang
-compiler for powerpc, but can't reproduce it when compile for arm64.
-the build warning is caused by:
+GUID_INIT() is for internal guid_t type and shouldn't be used
+for the uuid_le. I.o.w. relying on the implementation details
+is layering violation. Use correct macros to initialize uuid_le.
 
-"warning: result of comparison of constant 18446744073709551615 with
-expression of type (aka 'unsigned long') is always false
-[-Wtautological-constant-out-of-range-compare]"
-
-More information provided in below lore link.
-
-After removing @mask_, there is a "CHECK:MACRO_ARG_REUSE" when run
-checkpatch.pl, but due to @mask is constant, no reuse problem will happen.
-
-Link: https://lore.kernel.org/lkml/202212160357.jJuesD8n-lkp@intel.com/t/
-Fixes: 84513eccd678 ("phy: mediatek: fix build warning of FIELD_PREP()")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Chunfeng Yun <chunfeng.yun@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230118084343.26913-1-chunfeng.yun@mediatek.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: c2004ce99ed7 ("mei: pxp: export pavp client to me client bus")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Tomas Winkler <tomas.winkler@intel.com>
+Link: https://lore.kernel.org/r/20221228160558.21311-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/mediatek/phy-mtk-io.h | 4 ++--
+ drivers/misc/mei/pxp/mei_pxp.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/mediatek/phy-mtk-io.h b/drivers/phy/mediatek/phy-mtk-io.h
-index d20ad5e5be814..58f06db822cb0 100644
---- a/drivers/phy/mediatek/phy-mtk-io.h
-+++ b/drivers/phy/mediatek/phy-mtk-io.h
-@@ -39,8 +39,8 @@ static inline void mtk_phy_update_bits(void __iomem *reg, u32 mask, u32 val)
- /* field @mask shall be constant and continuous */
- #define mtk_phy_update_field(reg, mask, val) \
- ({ \
--	typeof(mask) mask_ = (mask);	\
--	mtk_phy_update_bits(reg, mask_, FIELD_PREP(mask_, val)); \
-+	BUILD_BUG_ON_MSG(!__builtin_constant_p(mask), "mask is not constant"); \
-+	mtk_phy_update_bits(reg, mask, FIELD_PREP(mask, val)); \
- })
+diff --git a/drivers/misc/mei/pxp/mei_pxp.c b/drivers/misc/mei/pxp/mei_pxp.c
+index 5c39457e3f53d..412b2d91d9459 100644
+--- a/drivers/misc/mei/pxp/mei_pxp.c
++++ b/drivers/misc/mei/pxp/mei_pxp.c
+@@ -206,8 +206,8 @@ static void mei_pxp_remove(struct mei_cl_device *cldev)
+ }
  
- #endif
+ /* fbf6fcf1-96cf-4e2e-a6a6-1bab8cbe36b1 : PAVP GUID*/
+-#define MEI_GUID_PXP GUID_INIT(0xfbf6fcf1, 0x96cf, 0x4e2e, 0xA6, \
+-			       0xa6, 0x1b, 0xab, 0x8c, 0xbe, 0x36, 0xb1)
++#define MEI_GUID_PXP UUID_LE(0xfbf6fcf1, 0x96cf, 0x4e2e, 0xA6, \
++			     0xa6, 0x1b, 0xab, 0x8c, 0xbe, 0x36, 0xb1)
+ 
+ static struct mei_cl_device_id mei_pxp_tbl[] = {
+ 	{ .uuid = MEI_GUID_PXP, .version = MEI_CL_VERSION_ANY },
 -- 
 2.39.2
 
