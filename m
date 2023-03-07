@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA9BBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:38:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DAE5C433A4;
-	Tue,  7 Mar 2023 17:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB130BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:38:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5178BC433EF;
+	Tue,  7 Mar 2023 17:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210696;
-	bh=6mzyJYt0huHbzupLMh2jwopCQuyIADj9KoOIqpEDMd8=;
+	s=korg; t=1678210699;
+	bh=ymLtC62DHR4njtCXvOI1cjH7nnpc35uC9aPj7HANB4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RzdCzwBzl8It1otaEEMVNJhvcVoixOablwN8SZY5AH9KItnCN3BryxGdHchmnf0xn
-	 9vcLaVoY1yqatiOdxBOmnsgraQdhcaVbhCIFIaWxud6+JWQHm1zOujZrfTHL9cro7p
-	 Qim5ndfJtp62tTT3Teh0ADYtsrJamtkPFPuE80fA=
+	b=Ek3wj3lgyf4ZmWjwjrdIev3cGea8gehtprRz/Gg3xE9h1LHBWYaRGnycZrwn9wZVW
+	 unigS1FsvAtQI5wFQ1SiDRiHwwNpGpD6elWHVi/XNpr7yU+KtzOFnKqLMv8ANBPi+A
+	 qlNEUylPTuFombMAR81JGTRzD0iST+/vIM7qhpJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	coverity-bot <keescook+coverity-bot@chromium.org>,
-	Marco Felsch <m.felsch@pengutronix.de>,
+	Nishanth Menon <nm@ti.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonaboard.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0594/1001] media: i2c: tc358746: fix possible endianness issue
-Date: Tue,  7 Mar 2023 17:56:06 +0100
-Message-Id: <20230307170047.290298207@linuxfoundation.org>
+Subject: [PATCH 6.2 0595/1001] media: ov5640: Fix soft reset sequence and timings
+Date: Tue,  7 Mar 2023 17:56:07 +0100
+Message-Id: <20230307170047.323888350@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,50 +39,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Felsch <m.felsch@pengutronix.de>
+From: Jai Luthra <j-luthra@ti.com>
 
-[ Upstream commit 5ad2e46030ad97de7fdbdaf63bb1af45c7caf3dd ]
+[ Upstream commit decea0a98b7ac04536c7d659f74783e8d67a06c0 ]
 
-Using the u64 v4l2_dbg_register.val directly can lead to unexpected
-results depending on machine endianness. Fix this by using a local
-variable which is assigned afterwards. Since tc358746_read() will init
-the val variable to 0 we can assing it without checking the return value
-first.
+Move the register-based reset out of the init_setting[] and into the
+powerup_sequence function. The sensor is power cycled and reset using
+the gpio pins so the soft reset is not always necessary.
 
-Addresses-Coverity-ID: 1527256 ("Integer handling issues")
+This also ensures that soft reset honors the timing sequence
+from the datasheet [1].
 
-Reported-by: coverity-bot <keescook+coverity-bot@chromium.org>
-Fixes: 80a21da36051 ("media: tc358746: add Toshiba TC358746 Parallel to CSI-2 bridge driver")
-Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
+[1] https://cdn.sparkfun.com/datasheets/Sensors/LightImaging/OV5640_datasheet.pdf
+
+Fixes: 19a81c1426c1 ("[media] add Omnivision OV5640 sensor driver")
+Reported-by: Nishanth Menon <nm@ti.com>
+Suggested-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonaboard.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/tc358746.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/i2c/ov5640.c | 34 ++++++++++++++++++++++++----------
+ 1 file changed, 24 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/i2c/tc358746.c b/drivers/media/i2c/tc358746.c
-index c5a0df300a06d..4063754a67320 100644
---- a/drivers/media/i2c/tc358746.c
-+++ b/drivers/media/i2c/tc358746.c
-@@ -988,6 +988,7 @@ static int __maybe_unused
- tc358746_g_register(struct v4l2_subdev *sd, struct v4l2_dbg_register *reg)
- {
- 	struct tc358746 *tc358746 = to_tc358746(sd);
-+	u32 val;
- 	int err;
+diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
+index e0f908af581b8..75dada60298b5 100644
+--- a/drivers/media/i2c/ov5640.c
++++ b/drivers/media/i2c/ov5640.c
+@@ -50,6 +50,7 @@
+ #define OV5640_REG_SYS_CTRL0		0x3008
+ #define OV5640_REG_SYS_CTRL0_SW_PWDN	0x42
+ #define OV5640_REG_SYS_CTRL0_SW_PWUP	0x02
++#define OV5640_REG_SYS_CTRL0_SW_RST	0x82
+ #define OV5640_REG_CHIP_ID		0x300a
+ #define OV5640_REG_IO_MIPI_CTRL00	0x300e
+ #define OV5640_REG_PAD_OUTPUT_ENABLE01	0x3017
+@@ -532,7 +533,7 @@ static const struct v4l2_mbus_framefmt ov5640_default_fmt = {
+ };
  
- 	/* 32-bit registers starting from CLW_DPHYCONTTX */
-@@ -996,7 +997,8 @@ tc358746_g_register(struct v4l2_subdev *sd, struct v4l2_dbg_register *reg)
- 	if (!pm_runtime_get_if_in_use(sd->dev))
- 		return 0;
+ static const struct reg_value ov5640_init_setting[] = {
+-	{0x3103, 0x11, 0, 0}, {0x3008, 0x82, 0, 5}, {0x3008, 0x42, 0, 0},
++	{0x3103, 0x11, 0, 0},
+ 	{0x3103, 0x03, 0, 0}, {0x3630, 0x36, 0, 0},
+ 	{0x3631, 0x0e, 0, 0}, {0x3632, 0xe2, 0, 0}, {0x3633, 0x12, 0, 0},
+ 	{0x3621, 0xe0, 0, 0}, {0x3704, 0xa0, 0, 0}, {0x3703, 0x5a, 0, 0},
+@@ -2429,19 +2430,32 @@ static void ov5640_reset(struct ov5640_dev *sensor)
+ 	if (!sensor->reset_gpio)
+ 		return;
  
--	err = tc358746_read(tc358746, reg->reg, (u32 *)&reg->val);
-+	err = tc358746_read(tc358746, reg->reg, &val);
-+	reg->val = val;
+-	gpiod_set_value_cansleep(sensor->reset_gpio, 0);
++	if (sensor->pwdn_gpio) {
++		gpiod_set_value_cansleep(sensor->reset_gpio, 0);
  
- 	pm_runtime_mark_last_busy(sd->dev);
- 	pm_runtime_put_sync_autosuspend(sd->dev);
+-	/* camera power cycle */
+-	ov5640_power(sensor, false);
+-	usleep_range(5000, 10000);
+-	ov5640_power(sensor, true);
+-	usleep_range(5000, 10000);
++		/* camera power cycle */
++		ov5640_power(sensor, false);
++		usleep_range(5000, 10000);
++		ov5640_power(sensor, true);
++		usleep_range(5000, 10000);
+ 
+-	gpiod_set_value_cansleep(sensor->reset_gpio, 1);
+-	usleep_range(1000, 2000);
++		gpiod_set_value_cansleep(sensor->reset_gpio, 1);
++		usleep_range(1000, 2000);
+ 
+-	gpiod_set_value_cansleep(sensor->reset_gpio, 0);
++		gpiod_set_value_cansleep(sensor->reset_gpio, 0);
++	} else {
++		/* software reset */
++		ov5640_write_reg(sensor, OV5640_REG_SYS_CTRL0,
++				 OV5640_REG_SYS_CTRL0_SW_RST);
++	}
+ 	usleep_range(20000, 25000);
++
++	/*
++	 * software standby: allows registers programming;
++	 * exit at restore_mode() for CSI, s_stream(1) for DVP
++	 */
++	ov5640_write_reg(sensor, OV5640_REG_SYS_CTRL0,
++			 OV5640_REG_SYS_CTRL0_SW_PWDN);
+ }
+ 
+ static int ov5640_set_power_on(struct ov5640_dev *sensor)
 -- 
 2.39.2
 
