@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D29BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:15:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59EDCC433D2;
-	Tue,  7 Mar 2023 17:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE77BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:15:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FDEC433EF;
+	Tue,  7 Mar 2023 17:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209306;
-	bh=kqe0tYzVyi53iAs5hlt3XF1ZLZKqBH3/KOLHhAtlgCg=;
+	s=korg; t=1678209310;
+	bh=MWhiQgNujATw0PoR9bSWRV9Y91s/Rl7SOHJwQoD4yQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uiGM/KJuc4Gj5ohVji/a+lDcEQgPLV45RW3o/xQR59N0Gni0UWnFJvBSP0cYoEr5Q
-	 IMx5HTL0o9WK1roUtLMw7h323PtvPAqzLpQinutmYZNH4AzIBUL5x4iiwx7lLn4g9K
-	 Bv8FtssYViD2n7ydm+Pl1YwiNv/zorNkd9fiRPuk=
+	b=h6Uv3SGgCWj7YI2BOdofiGqi8z6cFUaguy1yU0IMK4jXh3mDF3Y/oiGU4vWLWz86t
+	 kNWWcgklHh4tL5F3jhtzV14pdfa7X5Cm/AVF7G3RhyXnFPdN4DAtgwT0Mc9prjuppI
+	 2mYontGu3TJQUbtNeH4eMLdhXWceca6zl0JilOFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0176/1001] ACPICA: Drop port I/O validation for some regions
-Date: Tue,  7 Mar 2023 17:49:08 +0100
-Message-Id: <20230307170029.568761151@linuxfoundation.org>
+	"Elliott, Robert (Servers)" <elliott@hpe.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Josh Don <joshdon@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Elliott
+Subject: [PATCH 6.2 0177/1001] genirq: Fix the return type of kstat_cpu_irqs_sum()
+Date: Tue,  7 Mar 2023 17:49:09 +0100
+Message-Id: <20230307170029.608922890@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,73 +42,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit e1d9148582ab2c3dada5c5cf8ca7531ca269fee5 ]
+[ Upstream commit 47904aed898a08f028572b9b5a5cc101ddfb2d82 ]
 
-Microsoft introduced support in Windows XP for blocking port I/O
-to various regions.  For Windows compatibility ACPICA has adopted
-the same protections and will disallow writes to those
-(presumably) the same regions.
+The type of member ->irqs_sum is unsigned long, but kstat_cpu_irqs_sum()
+returns int, which can result in truncation.  Therefore, change the
+kstat_cpu_irqs_sum() function's return value to unsigned long to avoid
+truncation.
 
-On some systems the AML included with the firmware will issue 4 byte
-long writes to 0x80.  These writes aren't making it over because of this
-blockage. The first 4 byte write attempt is rejected, and then
-subsequently 1 byte at a time each offset is tried. The first at 0x80
-works, but then the next 3 bytes are rejected.
-
-This manifests in bizarre failures for devices that expected the AML to
-write all 4 bytes.  Trying the same AML on Windows 10 or 11 doesn't hit
-this failure and all 4 bytes are written.
-
-Either some of these regions were wrong or some point after Windows XP
-some of these regions blocks have been lifted.
-
-In the last 15 years there doesn't seem to be any reports popping up of
-this error in the Windows event viewer anymore.  There is no documentation
-at Microsoft's developer site indicating that Windows ACPI interpreter
-blocks these regions. Between the lack of documentation and the fact that
-the writes actually do work in Windows 10 and 11, it's quite likely
-Windows doesn't actually enforce this anymore.
-
-So to help the issue, only enforce Windows XP specific entries if the
-latest _OSI supported is Windows XP. Continue to enforce the
-ALWAYS_ILLEGAL entries.
-
-Link: https://github.com/acpica/acpica/pull/817
-Fixes: 7f0719039085 ("ACPICA: New: I/O port protection")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: f2c66cd8eedd ("/proc/stat: scalability of irq num per cpu")
+Reported-by: Elliott, Robert (Servers) <elliott@hpe.com>
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: "Peter Zijlstra (Intel)" <peterz@infradead.org>
+Cc: Josh Don <joshdon@google.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/hwvalid.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/linux/kernel_stat.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/hwvalid.c b/drivers/acpi/acpica/hwvalid.c
-index 915b26448d2c9..0d392e7b0747b 100644
---- a/drivers/acpi/acpica/hwvalid.c
-+++ b/drivers/acpi/acpica/hwvalid.c
-@@ -23,8 +23,8 @@ acpi_hw_validate_io_request(acpi_io_address address, u32 bit_width);
-  *
-  * The table is used to implement the Microsoft port access rules that
-  * first appeared in Windows XP. Some ports are always illegal, and some
-- * ports are only illegal if the BIOS calls _OSI with a win_XP string or
-- * later (meaning that the BIOS itelf is post-XP.)
-+ * ports are only illegal if the BIOS calls _OSI with nothing newer than
-+ * the specific _OSI strings.
-  *
-  * This provides ACPICA with the desired port protections and
-  * Microsoft compatibility.
-@@ -145,7 +145,8 @@ acpi_hw_validate_io_request(acpi_io_address address, u32 bit_width)
- 
- 			/* Port illegality may depend on the _OSI calls made by the BIOS */
- 
--			if (acpi_gbl_osi_data >= port_info->osi_dependency) {
-+			if (port_info->osi_dependency == ACPI_ALWAYS_ILLEGAL ||
-+			    acpi_gbl_osi_data == port_info->osi_dependency) {
- 				ACPI_DEBUG_PRINT((ACPI_DB_VALUES,
- 						  "Denied AML access to port 0x%8.8X%8.8X/%X (%s 0x%.4X-0x%.4X)\n",
- 						  ACPI_FORMAT_UINT64(address),
+diff --git a/include/linux/kernel_stat.h b/include/linux/kernel_stat.h
+index ddb5a358fd829..90e2fdc17d79f 100644
+--- a/include/linux/kernel_stat.h
++++ b/include/linux/kernel_stat.h
+@@ -75,7 +75,7 @@ extern unsigned int kstat_irqs_usr(unsigned int irq);
+ /*
+  * Number of interrupts per cpu, since bootup
+  */
+-static inline unsigned int kstat_cpu_irqs_sum(unsigned int cpu)
++static inline unsigned long kstat_cpu_irqs_sum(unsigned int cpu)
+ {
+ 	return kstat_cpu(cpu).irqs_sum;
+ }
 -- 
 2.39.2
 
