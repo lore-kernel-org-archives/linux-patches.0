@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88FABA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:55:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C7BC433EF;
-	Tue,  7 Mar 2023 18:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C520DBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:55:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A3EFC433D2;
+	Tue,  7 Mar 2023 18:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215340;
-	bh=bAuigzgwlgt9/l2dfN6ntLK7DUM/ckirQ4m/Znfd9Uc=;
+	s=korg; t=1678215343;
+	bh=7GWW2dr4UU2iFyBQtgJFcHrBC/VvbQ6cRQs97tZ9Cyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EHWOU65fRrUt1qOOvugcW4AlW0dWO2AxCeFSeaemBUJAvq/MKlGkP5ZdqwWDNPsx/
-	 7lOu/RqxSNtMrbyHcrEIqSaf+WtrbyYeGzd9f3j7hATIK7FuN+Dt2jdUBwv72IDaRc
-	 X/0S7Qz/009RAZEEPHS1JiFPw7c5UokWOuu8CG+g=
+	b=MzIokD0UpwCqdC3tQb01Uzg/Pv4EQHp23EDHHXzPFgi9V+pB8jlWoAbP8R+Nbdprk
+	 cLysNE7GbtlpoFTGl+UrbYpjFfrUUkIgqZ6EPt4WLSKHYu1ES9ATkrUoo/83jHwNtE
+	 XxEo81H0qil3YBGw2zSZeGyIBSNoK6TEXd+MzD+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Iuliana Prodan <iuliana.prodan@nxp.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 188/567] ASoC: fsl_sai: initialize is_dsp_mode flag
-Date: Tue,  7 Mar 2023 17:58:44 +0100
-Message-Id: <20230307165914.114142639@linuxfoundation.org>
+Subject: [PATCH 5.15 223/567] ASoC: mchp-spdifrx: fix controls that works with completion mechanism
+Date: Tue,  7 Mar 2023 17:59:19 +0100
+Message-Id: <20230307165915.569997902@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,40 +35,280 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit a23924b7dd7b748fff8e305e1daf590fed2af21b ]
+[ Upstream commit d3681df44e856aab523a6eb7ba15b5e41efcbb1c ]
 
-Initialize is_dsp_mode flag in the beginning of function
-fsl_sai_set_dai_fmt_tr().
+Channel status get and channel subcode get controls relies on data
+returned by controls when certain IRQs are raised. To achieve that
+completions are used b/w controls and interrupt service routine. The
+concurrent accesses to these controls are protected by
+struct snd_card::controls_rwsem.
 
-When the DAIFMT is DAIFMT_DSP_B the first time, is_dsp_mode is
-true, then the second time DAIFMT is DAIFMT_I2S, is_dsp_mode
-still true, which is a wrong state. So need to initialize
-is_dsp_mode flag every time.
+Issues identified:
+- reinit_completion() may be called while waiting for completion
+  which should be avoided
+- in case of multiple threads waiting, the complete() call in interrupt
+  will signal only one waiting thread per interrupt which may lead to
+  timeout for the others
+- in case of channel status get as the CSC interrupt is not refcounted
+  ISR may disable interrupt for threads that were just enabled it.
 
-Fixes: a3f7dcc9cc03 ("ASoC: fsl-sai: Add SND_SOC_DAIFMT_DSP_A/B support.")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
-Link: https://lore.kernel.org/r/1673852874-32200-1-git-send-email-shengjiu.wang@nxp.com
+To solve these the access to controls were protected by a mutex. Along
+with this there is no need for spinlock to protect the software cache
+reads/updates b/w controls and ISR as the update is happening only when
+requested from control, and only one reader can reach the control.
+
+Fixes: ef265c55c1ac ("ASoC: mchp-spdifrx: add driver for SPDIF RX")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230130120647.638049-4-claudiu.beznea@microchip.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_sai.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/atmel/mchp-spdifrx.c | 143 ++++++++++++++++++---------------
+ 1 file changed, 77 insertions(+), 66 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index 5ec504ff060a5..6a12cbd43084b 100644
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -231,6 +231,7 @@ static int fsl_sai_set_dai_fmt_tr(struct snd_soc_dai *cpu_dai,
- 	if (!sai->is_lsb_first)
- 		val_cr4 |= FSL_SAI_CR4_MF;
+diff --git a/sound/soc/atmel/mchp-spdifrx.c b/sound/soc/atmel/mchp-spdifrx.c
+index 076a78fd0b125..eb1b8724e11f4 100644
+--- a/sound/soc/atmel/mchp-spdifrx.c
++++ b/sound/soc/atmel/mchp-spdifrx.c
+@@ -217,7 +217,6 @@ struct mchp_spdifrx_ch_stat {
+ struct mchp_spdifrx_user_data {
+ 	unsigned char data[SPDIFRX_UD_BITS / 8];
+ 	struct completion done;
+-	spinlock_t lock;	/* protect access to user data */
+ };
  
-+	sai->is_dsp_mode = false;
- 	/* DAI mode */
- 	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
- 	case SND_SOC_DAIFMT_I2S:
+ struct mchp_spdifrx_mixer_control {
+@@ -231,8 +230,6 @@ struct mchp_spdifrx_mixer_control {
+ struct mchp_spdifrx_dev {
+ 	struct snd_dmaengine_dai_dma_data	capture;
+ 	struct mchp_spdifrx_mixer_control	control;
+-	spinlock_t				blockend_lock;	/* protect access to blockend_refcount */
+-	int					blockend_refcount;
+ 	struct mutex				mlock;
+ 	struct device				*dev;
+ 	struct regmap				*regmap;
+@@ -277,37 +274,11 @@ static void mchp_spdifrx_channel_user_data_read(struct mchp_spdifrx_dev *dev,
+ 	}
+ }
+ 
+-/* called from non-atomic context only */
+-static void mchp_spdifrx_isr_blockend_en(struct mchp_spdifrx_dev *dev)
+-{
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&dev->blockend_lock, flags);
+-	dev->blockend_refcount++;
+-	/* don't enable BLOCKEND interrupt if it's already enabled */
+-	if (dev->blockend_refcount == 1)
+-		regmap_write(dev->regmap, SPDIFRX_IER, SPDIFRX_IR_BLOCKEND);
+-	spin_unlock_irqrestore(&dev->blockend_lock, flags);
+-}
+-
+-/* called from atomic/non-atomic context */
+-static void mchp_spdifrx_isr_blockend_dis(struct mchp_spdifrx_dev *dev)
+-{
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&dev->blockend_lock, flags);
+-	dev->blockend_refcount--;
+-	/* don't enable BLOCKEND interrupt if it's already enabled */
+-	if (dev->blockend_refcount == 0)
+-		regmap_write(dev->regmap, SPDIFRX_IDR, SPDIFRX_IR_BLOCKEND);
+-	spin_unlock_irqrestore(&dev->blockend_lock, flags);
+-}
+-
+ static irqreturn_t mchp_spdif_interrupt(int irq, void *dev_id)
+ {
+ 	struct mchp_spdifrx_dev *dev = dev_id;
+ 	struct mchp_spdifrx_mixer_control *ctrl = &dev->control;
+-	u32 sr, imr, pending, idr = 0;
++	u32 sr, imr, pending;
+ 	irqreturn_t ret = IRQ_NONE;
+ 	int ch;
+ 
+@@ -322,13 +293,10 @@ static irqreturn_t mchp_spdif_interrupt(int irq, void *dev_id)
+ 
+ 	if (pending & SPDIFRX_IR_BLOCKEND) {
+ 		for (ch = 0; ch < SPDIFRX_CHANNELS; ch++) {
+-			spin_lock(&ctrl->user_data[ch].lock);
+ 			mchp_spdifrx_channel_user_data_read(dev, ch);
+-			spin_unlock(&ctrl->user_data[ch].lock);
+-
+ 			complete(&ctrl->user_data[ch].done);
+ 		}
+-		mchp_spdifrx_isr_blockend_dis(dev);
++		regmap_write(dev->regmap, SPDIFRX_IDR, SPDIFRX_IR_BLOCKEND);
+ 		ret = IRQ_HANDLED;
+ 	}
+ 
+@@ -336,7 +304,7 @@ static irqreturn_t mchp_spdif_interrupt(int irq, void *dev_id)
+ 		if (pending & SPDIFRX_IR_CSC(ch)) {
+ 			mchp_spdifrx_channel_status_read(dev, ch);
+ 			complete(&ctrl->ch_stat[ch].done);
+-			idr |= SPDIFRX_IR_CSC(ch);
++			regmap_write(dev->regmap, SPDIFRX_IDR, SPDIFRX_IR_CSC(ch));
+ 			ret = IRQ_HANDLED;
+ 		}
+ 	}
+@@ -346,8 +314,6 @@ static irqreturn_t mchp_spdif_interrupt(int irq, void *dev_id)
+ 		ret = IRQ_HANDLED;
+ 	}
+ 
+-	regmap_write(dev->regmap, SPDIFRX_IDR, idr);
+-
+ 	return ret;
+ }
+ 
+@@ -517,23 +483,51 @@ static int mchp_spdifrx_cs_get(struct mchp_spdifrx_dev *dev,
+ {
+ 	struct mchp_spdifrx_mixer_control *ctrl = &dev->control;
+ 	struct mchp_spdifrx_ch_stat *ch_stat = &ctrl->ch_stat[channel];
+-	int ret;
++	int ret = 0;
++
++	mutex_lock(&dev->mlock);
+ 
+-	regmap_write(dev->regmap, SPDIFRX_IER, SPDIFRX_IR_CSC(channel));
+-	/* check for new data available */
+-	ret = wait_for_completion_interruptible_timeout(&ch_stat->done,
+-							msecs_to_jiffies(100));
+-	/* IP might not be started or valid stream might not be present */
+-	if (ret <= 0) {
+-		dev_dbg(dev->dev, "channel status for channel %d timeout\n",
+-			channel);
+-		return ret ? : -ETIMEDOUT;
++	/*
++	 * We may reach this point with both clocks enabled but the receiver
++	 * still disabled. To void waiting for completion and return with
++	 * timeout check the dev->trigger_enabled.
++	 *
++	 * To retrieve data:
++	 * - if the receiver is enabled CSC IRQ will update the data in software
++	 *   caches (ch_stat->data)
++	 * - otherwise we just update it here the software caches with latest
++	 *   available information and return it; in this case we don't need
++	 *   spin locking as the IRQ is disabled and will not be raised from
++	 *   anywhere else.
++	 */
++
++	if (dev->trigger_enabled) {
++		reinit_completion(&ch_stat->done);
++		regmap_write(dev->regmap, SPDIFRX_IER, SPDIFRX_IR_CSC(channel));
++		/* Check for new data available */
++		ret = wait_for_completion_interruptible_timeout(&ch_stat->done,
++								msecs_to_jiffies(100));
++		/* Valid stream might not be present */
++		if (ret <= 0) {
++			dev_dbg(dev->dev, "channel status for channel %d timeout\n",
++				channel);
++			regmap_write(dev->regmap, SPDIFRX_IDR, SPDIFRX_IR_CSC(channel));
++			ret = ret ? : -ETIMEDOUT;
++			goto unlock;
++		} else {
++			ret = 0;
++		}
++	} else {
++		/* Update software cache with latest channel status. */
++		mchp_spdifrx_channel_status_read(dev, channel);
+ 	}
+ 
+ 	memcpy(uvalue->value.iec958.status, ch_stat->data,
+ 	       sizeof(ch_stat->data));
+ 
+-	return 0;
++unlock:
++	mutex_unlock(&dev->mlock);
++	return ret;
+ }
+ 
+ static int mchp_spdifrx_cs1_get(struct snd_kcontrol *kcontrol,
+@@ -567,29 +561,49 @@ static int mchp_spdifrx_subcode_ch_get(struct mchp_spdifrx_dev *dev,
+ 				       int channel,
+ 				       struct snd_ctl_elem_value *uvalue)
+ {
+-	unsigned long flags;
+ 	struct mchp_spdifrx_mixer_control *ctrl = &dev->control;
+ 	struct mchp_spdifrx_user_data *user_data = &ctrl->user_data[channel];
+-	int ret;
++	int ret = 0;
++
++	mutex_lock(&dev->mlock);
++
++	/*
++	 * We may reach this point with both clocks enabled but the receiver
++	 * still disabled. To void waiting for completion to just timeout we
++	 * check here the dev->trigger_enabled flag.
++	 *
++	 * To retrieve data:
++	 * - if the receiver is enabled we need to wait for blockend IRQ to read
++	 *   data to and update it for us in software caches
++	 * - otherwise reading the SPDIFRX_CHUD() registers is enough.
++	 */
+ 
+-	reinit_completion(&user_data->done);
+-	mchp_spdifrx_isr_blockend_en(dev);
+-	ret = wait_for_completion_interruptible_timeout(&user_data->done,
+-							msecs_to_jiffies(100));
+-	/* IP might not be started or valid stream might not be present */
+-	if (ret <= 0) {
+-		dev_dbg(dev->dev, "user data for channel %d timeout\n",
+-			channel);
+-		mchp_spdifrx_isr_blockend_dis(dev);
+-		return ret ? : -ETIMEDOUT;
++	if (dev->trigger_enabled) {
++		reinit_completion(&user_data->done);
++		regmap_write(dev->regmap, SPDIFRX_IER, SPDIFRX_IR_BLOCKEND);
++		ret = wait_for_completion_interruptible_timeout(&user_data->done,
++								msecs_to_jiffies(100));
++		/* Valid stream might not be present. */
++		if (ret <= 0) {
++			dev_dbg(dev->dev, "user data for channel %d timeout\n",
++				channel);
++			regmap_write(dev->regmap, SPDIFRX_IDR, SPDIFRX_IR_BLOCKEND);
++			ret = ret ? : -ETIMEDOUT;
++			goto unlock;
++		} else {
++			ret = 0;
++		}
++	} else {
++		/* Update software cache with last available data. */
++		mchp_spdifrx_channel_user_data_read(dev, channel);
+ 	}
+ 
+-	spin_lock_irqsave(&user_data->lock, flags);
+ 	memcpy(uvalue->value.iec958.subcode, user_data->data,
+ 	       sizeof(user_data->data));
+-	spin_unlock_irqrestore(&user_data->lock, flags);
+ 
+-	return 0;
++unlock:
++	mutex_unlock(&dev->mlock);
++	return ret;
+ }
+ 
+ static int mchp_spdifrx_subcode_ch1_get(struct snd_kcontrol *kcontrol,
+@@ -890,11 +904,9 @@ static int mchp_spdifrx_dai_probe(struct snd_soc_dai *dai)
+ 		     SPDIFRX_MR_AUTORST_NOACTION |
+ 		     SPDIFRX_MR_PACK_DISABLED);
+ 
+-	dev->blockend_refcount = 0;
+ 	for (ch = 0; ch < SPDIFRX_CHANNELS; ch++) {
+ 		init_completion(&ctrl->ch_stat[ch].done);
+ 		init_completion(&ctrl->user_data[ch].done);
+-		spin_lock_init(&ctrl->user_data[ch].lock);
+ 	}
+ 
+ 	/* Add controls */
+@@ -1004,7 +1016,6 @@ static int mchp_spdifrx_probe(struct platform_device *pdev)
+ 	 */
+ 	clk_set_min_rate(dev->gclk, 48000 * SPDIFRX_GCLK_RATIO_MIN + 1);
+ 
+-	spin_lock_init(&dev->blockend_lock);
+ 	mutex_init(&dev->mlock);
+ 
+ 	dev->dev = &pdev->dev;
 -- 
 2.39.2
 
