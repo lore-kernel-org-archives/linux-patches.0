@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4E3BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:12:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3EF4C433EF;
-	Tue,  7 Mar 2023 18:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C55EBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:12:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6447C433EF;
+	Tue,  7 Mar 2023 18:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212726;
-	bh=Y/sklo1DtXbedLOwLurLaX7pAxmsh2roGWDbL68H25Q=;
+	s=korg; t=1678212729;
+	bh=r9bSOHdz2R6gaN2oBXmC8gpiJCZyz0yodePAWg2McYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZGcnLGeyo+t3DUVKJdUBaaErY0sLbv9bdj+gzwXcrR1fYXeo86SHN0pA/iq+Am1h
-	 VvCpnn3YZjfiOnQ7mouSf5NZxIeJaNH2KrV4JXUaa/zQPWUZrjCK1+Qgjo0hkUQ0FM
-	 K9xkEuENyiLFxRcJ8AcSHTlw+Lv37DANqlhWYods=
+	b=j45rCZsKs6GlGuy2EjO1nxmphlfGbA/tVkJxFfC7W79OEybbAzDKVMmOCh/Umpo9a
+	 Hl465hs0N1TBOtZuCzDh417HuqT7NiEgDciOBLFGIz3O8YqD2N7s+V6FGfm+X4+LWu
+	 bGldLlUhXHOEYuZ8nZG8e15HghyeobUHm1LZOX+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Jungclaus <frank.jungclaus@esd.eu>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 247/885] can: esd_usb: Move mislocated storage of SJA1000_ECC_SEG bits in case of a bus error
-Date: Tue,  7 Mar 2023 17:53:01 +0100
-Message-Id: <20230307170012.736283284@linuxfoundation.org>
+Subject: [PATCH 6.1 248/885] can: esd_usb: Make use of can_change_state() and relocate checking skb for NULL
+Date: Tue,  7 Mar 2023 17:53:02 +0100
+Message-Id: <20230307170012.783178362@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,44 +37,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Jungclaus <frank.jungclaus@esd.eu>
 
-[ Upstream commit 118469f88180438ef43dee93d71f77c00e7b425d ]
+[ Upstream commit 9684b000a86299b5968fef8ffbf1484def37452a ]
 
-Move the supply for cf->data[3] (bit stream position of CAN error), in
-case of a bus- or protocol-error, outside of the "switch (ecc &
-SJA1000_ECC_MASK){}"-statement, because this bit stream position is
-independent of the error type.
+Start a rework initiated by Vincents remarks "You should not report
+the greatest of txerr and rxerr but the one which actually increased."
+[1] and "As far as I understand, those flags should be set only when
+the threshold is reached" [2] .
+
+Therefore make use of can_change_state() to (among others) set the
+flags CAN_ERR_CRTL_[RT]X_WARNING and CAN_ERR_CRTL_[RT]X_PASSIVE,
+maintain CAN statistic counters for error_warning, error_passive and
+bus_off.
+
+Relocate testing alloc_can_err_skb() for NULL to the end of
+esd_usb_rx_event(), to have things like can_bus_off(),
+can_change_state() working even in out of memory conditions.
 
 Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
 Signed-off-by: Frank Jungclaus <frank.jungclaus@esd.eu>
-Link: https://lore.kernel.org/all/20230216190450.3901254-2-frank.jungclaus@esd.eu
+Link: [1] https://lore.kernel.org/all/CAMZ6RqKGBWe15aMkf8-QLf-cOQg99GQBebSm+1wEzTqHgvmNuw@mail.gmail.com/
+Link: [2] https://lore.kernel.org/all/CAMZ6Rq+QBO1yTX_o6GV0yhdBj-RzZSRGWDZBS0fs7zbSTy4hmA@mail.gmail.com/
+Link: https://lore.kernel.org/all/20230216190450.3901254-3-frank.jungclaus@esd.eu
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/esd_usb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/esd_usb.c | 50 +++++++++++++++++------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
 diff --git a/drivers/net/can/usb/esd_usb.c b/drivers/net/can/usb/esd_usb.c
-index 42323f5e6f3a0..5e182fadd875e 100644
+index 5e182fadd875e..578b25f873e58 100644
 --- a/drivers/net/can/usb/esd_usb.c
 +++ b/drivers/net/can/usb/esd_usb.c
-@@ -286,7 +286,6 @@ static void esd_usb_rx_event(struct esd_usb_net_priv *priv,
- 				cf->data[2] |= CAN_ERR_PROT_STUFF;
+@@ -239,41 +239,42 @@ static void esd_usb_rx_event(struct esd_usb_net_priv *priv,
+ 			   msg->msg.rx.dlc, state, ecc, rxerr, txerr);
+ 
+ 		skb = alloc_can_err_skb(priv->netdev, &cf);
+-		if (skb == NULL) {
+-			stats->rx_dropped++;
+-			return;
+-		}
+ 
+ 		if (state != priv->old_state) {
++			enum can_state tx_state, rx_state;
++			enum can_state new_state = CAN_STATE_ERROR_ACTIVE;
++
+ 			priv->old_state = state;
+ 
+ 			switch (state & ESD_BUSSTATE_MASK) {
+ 			case ESD_BUSSTATE_BUSOFF:
+-				priv->can.state = CAN_STATE_BUS_OFF;
+-				cf->can_id |= CAN_ERR_BUSOFF;
+-				priv->can.can_stats.bus_off++;
++				new_state = CAN_STATE_BUS_OFF;
+ 				can_bus_off(priv->netdev);
+ 				break;
+ 			case ESD_BUSSTATE_WARN:
+-				priv->can.state = CAN_STATE_ERROR_WARNING;
+-				priv->can.can_stats.error_warning++;
++				new_state = CAN_STATE_ERROR_WARNING;
+ 				break;
+ 			case ESD_BUSSTATE_ERRPASSIVE:
+-				priv->can.state = CAN_STATE_ERROR_PASSIVE;
+-				priv->can.can_stats.error_passive++;
++				new_state = CAN_STATE_ERROR_PASSIVE;
  				break;
  			default:
--				cf->data[3] = ecc & SJA1000_ECC_SEG;
+-				priv->can.state = CAN_STATE_ERROR_ACTIVE;
++				new_state = CAN_STATE_ERROR_ACTIVE;
+ 				txerr = 0;
+ 				rxerr = 0;
  				break;
  			}
- 
-@@ -294,6 +293,9 @@ static void esd_usb_rx_event(struct esd_usb_net_priv *priv,
- 			if (!(ecc & SJA1000_ECC_DIR))
- 				cf->data[2] |= CAN_ERR_PROT_TX;
- 
-+			/* Bit stream position in CAN frame as the error was detected */
-+			cf->data[3] = ecc & SJA1000_ECC_SEG;
+-		} else {
 +
- 			if (priv->can.state == CAN_STATE_ERROR_WARNING ||
- 			    priv->can.state == CAN_STATE_ERROR_PASSIVE) {
- 				cf->data[1] = (txerr > rxerr) ?
++			if (new_state != priv->can.state) {
++				tx_state = (txerr >= rxerr) ? new_state : 0;
++				rx_state = (txerr <= rxerr) ? new_state : 0;
++				can_change_state(priv->netdev, cf,
++						 tx_state, rx_state);
++			}
++		} else if (skb) {
+ 			priv->can.can_stats.bus_error++;
+ 			stats->rx_errors++;
+ 
+-			cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR |
+-				      CAN_ERR_CNT;
++			cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
+ 
+ 			switch (ecc & SJA1000_ECC_MASK) {
+ 			case SJA1000_ECC_BIT:
+@@ -295,21 +296,20 @@ static void esd_usb_rx_event(struct esd_usb_net_priv *priv,
+ 
+ 			/* Bit stream position in CAN frame as the error was detected */
+ 			cf->data[3] = ecc & SJA1000_ECC_SEG;
+-
+-			if (priv->can.state == CAN_STATE_ERROR_WARNING ||
+-			    priv->can.state == CAN_STATE_ERROR_PASSIVE) {
+-				cf->data[1] = (txerr > rxerr) ?
+-					CAN_ERR_CRTL_TX_PASSIVE :
+-					CAN_ERR_CRTL_RX_PASSIVE;
+-			}
+-			cf->data[6] = txerr;
+-			cf->data[7] = rxerr;
+ 		}
+ 
+ 		priv->bec.txerr = txerr;
+ 		priv->bec.rxerr = rxerr;
+ 
+-		netif_rx(skb);
++		if (skb) {
++			cf->can_id |= CAN_ERR_CNT;
++			cf->data[6] = txerr;
++			cf->data[7] = rxerr;
++
++			netif_rx(skb);
++		} else {
++			stats->rx_dropped++;
++		}
+ 	}
+ }
+ 
 -- 
 2.39.2
 
