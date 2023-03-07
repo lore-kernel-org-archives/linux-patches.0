@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6345FBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:25:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD3BC433EF;
-	Tue,  7 Mar 2023 17:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3DDBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:25:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3638C433EF;
+	Tue,  7 Mar 2023 17:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209942;
-	bh=duQg89uPMqHR04oddaNUlefwEp7GrqY2PPYVRwM7fIw=;
+	s=korg; t=1678209945;
+	bh=hcFT8IsqXJCj3rGjIlzW3DWcsEEmsg/ZyBSjz7ZayTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jx3DhSa5XNvaP/BeWFqwPbi/evXnq83FmwE+RH+1QSSQCEI2YSCtDw6iexvZU79MQ
-	 6TrT/AkWxgdyxYLE3XoU3u5OqHgR+GmnZ4uO0++lH7a6a24rAiV8aKO40ScL2jCUpm
-	 VKObUd4IBh4ImJMjO02+/MN4/T09TTL3yH/pobz4=
+	b=EQy96cAjgdRBu+lKmBMRegN/iy/MejKsAL5hX/atwf9ypRyWwXN3IcdvgE4YWJWBn
+	 6nrONq2d1KKKzkzYk58/B6NwpgcgLnqZYbrwMUxIyh4RGNFyw0A78UrK9Q/fsgKq2I
+	 xuNaBkuMfgumZW9DDhYK/xzVDK6miUfQ/jCjw52I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	farah kassabri <fkassabri@habana.ai>,
+	Oded Gabbay <ogabbay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0381/1001] drm/msm/mdp5: Add check for kzalloc
-Date: Tue,  7 Mar 2023 17:52:33 +0100
-Message-Id: <20230307170037.904929548@linuxfoundation.org>
+Subject: [PATCH 6.2 0382/1001] habanalabs: bugs fixes in timestamps buff alloc
+Date: Tue,  7 Mar 2023 17:52:34 +0100
+Message-Id: <20230307170037.951615833@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,41 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: farah kassabri <fkassabri@habana.ai>
 
-[ Upstream commit 13fcfcb2a9a4787fe4e49841d728f6f2e9fa6911 ]
+[ Upstream commit 1693fef9e95dbe8ab767d208a02328fff13fbb94 ]
 
-As kzalloc may fail and return NULL pointer,
-it should be better to check the return value
-in order to avoid the NULL pointer dereference.
+use argument instead of fixed GFP value for allocation
+in Timestamps buffers alloc function.
+change data type of size to size_t.
 
-Fixes: 1cff7440a86e ("drm/msm: Convert to using __drm_atomic_helper_crtc_reset() for reset.")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/514154/
-Link: https://lore.kernel.org/r/20221206074819.18134-1-jiasheng@iscas.ac.cn
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 9158bf69e74f ("habanalabs: Timestamps buffers registration")
+Signed-off-by: farah kassabri <fkassabri@habana.ai>
+Reviewed-by: Oded Gabbay <ogabbay@kernel.org>
+Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/misc/habanalabs/common/memory.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-index e86421c69bd1f..86036dd4e1e82 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-@@ -1139,7 +1139,10 @@ static void mdp5_crtc_reset(struct drm_crtc *crtc)
- 	if (crtc->state)
- 		mdp5_crtc_destroy_state(crtc, crtc->state);
+diff --git a/drivers/misc/habanalabs/common/memory.c b/drivers/misc/habanalabs/common/memory.c
+index 5e9ae7600d75e..047306e33baad 100644
+--- a/drivers/misc/habanalabs/common/memory.c
++++ b/drivers/misc/habanalabs/common/memory.c
+@@ -2089,12 +2089,13 @@ static int hl_ts_mmap(struct hl_mmap_mem_buf *buf, struct vm_area_struct *vma, v
+ static int hl_ts_alloc_buf(struct hl_mmap_mem_buf *buf, gfp_t gfp, void *args)
+ {
+ 	struct hl_ts_buff *ts_buff = NULL;
+-	u32 size, num_elements;
++	u32 num_elements;
++	size_t size;
+ 	void *p;
  
--	__drm_atomic_helper_crtc_reset(crtc, &mdp5_cstate->base);
-+	if (mdp5_cstate)
-+		__drm_atomic_helper_crtc_reset(crtc, &mdp5_cstate->base);
-+	else
-+		__drm_atomic_helper_crtc_reset(crtc, NULL);
- }
+ 	num_elements = *(u32 *)args;
  
- static const struct drm_crtc_funcs mdp5_crtc_no_lm_cursor_funcs = {
+-	ts_buff = kzalloc(sizeof(*ts_buff), GFP_KERNEL);
++	ts_buff = kzalloc(sizeof(*ts_buff), gfp);
+ 	if (!ts_buff)
+ 		return -ENOMEM;
+ 
 -- 
 2.39.2
 
