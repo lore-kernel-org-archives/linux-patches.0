@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFB9BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:41:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C386CC433D2;
-	Tue,  7 Mar 2023 17:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102EFBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:41:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDBFC433EF;
+	Tue,  7 Mar 2023 17:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210889;
-	bh=kdtPLffp0suWmww4+ZPOFlY086JqNVxevVOpX3FHGYw=;
+	s=korg; t=1678210891;
+	bh=ZZxxS825Kwy+hbv47KxsyrgqDuuIejy6PlMltNlw5lM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mG0VKLvRycPkpj6StrUS3l4vbRCbgj4v8yuoxXed5GJIBlLo+yNLPMQbv9iIYXCua
-	 NYzK+Mo7GtHZgTjdr0K6yy7kA7ozbWv8qNC1mQGkfxhgwSEM1xvNhcWzrHWPFUDaKQ
-	 OWEHlkTjzBhIzO92cmdAyLh9QJYzIKeqLZD4oQu0=
+	b=mP5aOil0BO5YNp56xZA7n2wtUKDMlQ2ExhgYUYJ0a+zgEn+uk84aHFpeKd36TTan1
+	 DP0VHgIm9v4Tc92cVZSsNFIrUyb4zUSO16NBjABtx0OAwreBktNfvFxBuiX6Cf2nXO
+	 J1jXho6maoOmK4In+wQA5k7q05ovL0+pnsVxrZkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0685/1001] scm: add user copy checks to put_cmsg()
-Date: Tue,  7 Mar 2023 17:57:37 +0100
-Message-Id: <20230307170051.336046887@linuxfoundation.org>
+Subject: [PATCH 6.2 0686/1001] drm: panel-orientation-quirks: Add quirk for Lenovo Yoga Tab 3 X90F
+Date: Tue,  7 Mar 2023 17:57:38 +0100
+Message-Id: <20230307170051.376130558@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,48 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 5f1eb1ff58ea122e24adf0bc940f268ed2227462 ]
+[ Upstream commit 8a238d7f7eea7592e0764bc3b9e79e7c6354b04c ]
 
-This is a followup of commit 2558b8039d05 ("net: use a bounce
-buffer for copying skb->mark")
+The Lenovo Yoga Tab 3 X90F has a portrait 1600x2560 LCD used in
+landscape mode, add a quirk for this.
 
-x86 and powerpc define user_access_begin, meaning
-that they are not able to perform user copy checks
-when using user_write_access_begin() / unsafe_copy_to_user()
-and friends [1]
-
-Instead of waiting bugs to trigger on other arches,
-add a check_object_size() in put_cmsg() to make sure
-that new code tested on x86 with CONFIG_HARDENED_USERCOPY=y
-will perform more security checks.
-
-[1] We can not generically call check_object_size() from
-unsafe_copy_to_user() because UACCESS is enabled at this point.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Kees Cook <keescook@chromium.org>
-Acked-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221127181539.104223-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/scm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/net/core/scm.c b/net/core/scm.c
-index 5c356f0dee30c..acb7d776fa6ec 100644
---- a/net/core/scm.c
-+++ b/net/core/scm.c
-@@ -229,6 +229,8 @@ int put_cmsg(struct msghdr * msg, int level, int type, int len, void *data)
- 	if (msg->msg_control_is_user) {
- 		struct cmsghdr __user *cm = msg->msg_control_user;
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index 3659f0465a724..23d63a4d42d9c 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -127,6 +127,12 @@ static const struct drm_dmi_panel_orientation_data lcd1600x2560_leftside_up = {
+ 	.orientation = DRM_MODE_PANEL_ORIENTATION_LEFT_UP,
+ };
  
-+		check_object_size(data, cmlen - sizeof(*cm), true);
++static const struct drm_dmi_panel_orientation_data lcd1600x2560_rightside_up = {
++	.width = 1600,
++	.height = 2560,
++	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
++};
 +
- 		if (!user_write_access_begin(cm, cmlen))
- 			goto efault;
- 
+ static const struct dmi_system_id orientation_data[] = {
+ 	{	/* Acer One 10 (S1003) */
+ 		.matches = {
+@@ -331,6 +337,13 @@ static const struct dmi_system_id orientation_data[] = {
+ 		 DMI_MATCH(DMI_BIOS_VERSION, "BLADE_21"),
+ 		},
+ 		.driver_data = (void *)&lcd1200x1920_rightside_up,
++	}, {	/* Lenovo Yoga Tab 3 X90F */
++		.matches = {
++		 DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
++		 DMI_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
++		 DMI_MATCH(DMI_PRODUCT_VERSION, "Blade3-10A-001"),
++		},
++		.driver_data = (void *)&lcd1600x2560_rightside_up,
+ 	}, {	/* Nanote UMPC-01 */
+ 		.matches = {
+ 		 DMI_MATCH(DMI_SYS_VENDOR, "RWC CO.,LTD"),
 -- 
 2.39.2
 
