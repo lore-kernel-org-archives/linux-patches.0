@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E270BBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD72C43329;
-	Tue,  7 Mar 2023 18:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC586BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF1BC4339B;
+	Tue,  7 Mar 2023 18:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214213;
-	bh=5HPV5A2n+wX8FaESr1ESZ5sZPXmSk506fMceRtKFuNE=;
+	s=korg; t=1678214216;
+	bh=HXq/6ZjXuusXiycdbXpA5n7j8u0nZx0cU+AyOrSbcWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4L8/HS/NUi8HpkqwJtp2kHRhZ/RIeGyEQOKZzyK30mmEsSR3QLzvKnY9631joonB
-	 INAwTEGe9y/FOHm9+1d5Ur5qEC0Sve6BVM8BEGNLQJsnFtLh0FsSM0TueAx0RXIuHG
-	 TT5BeqwK0jK30Up//iTiV2OfDFgWXc28yZrvrcdY=
+	b=MCE7F0J2/8S2Qgnc9zFDKQk1HegdAqAKhdfPDvpa+lvZshXXk3emdFsvfiNHfmQ5p
+	 PtAys/yI8oyZCyEMKBEFGJtaJKFGp192PvU9FGqer3uXz4mzMxaclTlVHZjGyB49yy
+	 ZLwyCxC4ZJD46MOX17ZYVzFHlCAR1gMpGwH5Ojt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-kselftest@vger.kernel.org,
 	Ingo Molnar <mingo@redhat.com>,
 	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.1 759/885] selftests: gpio: Fix incorrect kernel headers search path
-Date: Tue,  7 Mar 2023 18:01:33 +0100
-Message-Id: <20230307170034.917655007@linuxfoundation.org>
+Subject: [PATCH 6.1 760/885] selftests: filesystems: Fix incorrect kernel headers search path
+Date: Tue,  7 Mar 2023 18:01:34 +0100
+Message-Id: <20230307170034.955326718@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -39,7 +39,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-commit 8bb9c1808628babcc7b99ec2439bf102379bd4ac upstream.
+commit c2d3cf3653a8ff6e4b402d55e7f84790ac08a8ad upstream.
 
 Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
 building against kernel headers from the build environment in scenarios
@@ -50,22 +50,44 @@ Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: Shuah Khan <shuah@kernel.org>
 Cc: linux-kselftest@vger.kernel.org
 Cc: Ingo Molnar <mingo@redhat.com>
-Cc: <stable@vger.kernel.org>  # 5.18+
+Cc: <stable@vger.kernel.org> # 5.18+
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/gpio/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/filesystems/Makefile          |    2 +-
+ tools/testing/selftests/filesystems/binderfs/Makefile |    2 +-
+ tools/testing/selftests/filesystems/epoll/Makefile    |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/gpio/Makefile
-+++ b/tools/testing/selftests/gpio/Makefile
-@@ -3,6 +3,6 @@
- TEST_PROGS := gpio-mockup.sh gpio-sim.sh
- TEST_FILES := gpio-mockup-sysfs.sh
- TEST_GEN_PROGS_EXTENDED := gpio-mockup-cdev gpio-chip-info gpio-line-name
--CFLAGS += -O2 -g -Wall -I../../../../usr/include/ $(KHDR_INCLUDES)
-+CFLAGS += -O2 -g -Wall $(KHDR_INCLUDES)
+--- a/tools/testing/selftests/filesystems/Makefile
++++ b/tools/testing/selftests/filesystems/Makefile
+@@ -1,6 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
  
- include ../lib.mk
+-CFLAGS += -I../../../../usr/include/
++CFLAGS += $(KHDR_INCLUDES)
+ TEST_GEN_PROGS := devpts_pts
+ TEST_GEN_PROGS_EXTENDED := dnotify_test
+ 
+--- a/tools/testing/selftests/filesystems/binderfs/Makefile
++++ b/tools/testing/selftests/filesystems/binderfs/Makefile
+@@ -1,6 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
+ 
+-CFLAGS += -I../../../../../usr/include/ -pthread
++CFLAGS += $(KHDR_INCLUDES) -pthread
+ TEST_GEN_PROGS := binderfs_test
+ 
+ binderfs_test: binderfs_test.c ../../kselftest.h ../../kselftest_harness.h
+--- a/tools/testing/selftests/filesystems/epoll/Makefile
++++ b/tools/testing/selftests/filesystems/epoll/Makefile
+@@ -1,6 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
+ 
+-CFLAGS += -I../../../../../usr/include/
++CFLAGS += $(KHDR_INCLUDES)
+ LDLIBS += -lpthread
+ TEST_GEN_PROGS := epoll_wakeup_test
+ 
 
 
