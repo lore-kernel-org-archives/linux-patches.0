@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EC8BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:01:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F963C433EF;
-	Tue,  7 Mar 2023 18:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75ECBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:01:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD3CC433D2;
+	Tue,  7 Mar 2023 18:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212104;
-	bh=AVQJGKVHr3r+Rt0ku7YpVWMS0+tSxIJnMQyS+7jsB1Q=;
+	s=korg; t=1678212107;
+	bh=2kG26NafuKtgjutR27bE/ZpyKsxhcTAPfbvyZv3FybE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hj68D/pXAMldAwPNmdIgEkhkRCnTVrqYBOxMX8G7yM4YTxGfdkip26J2M+qWO4YoN
-	 C/MdvUNX9/KGoCI3o8h5/XhAgQU7qQe6aCu9+5bqMVhYzzqg0l6NIZdnix4DNs+/BS
-	 +Wx76WVbwInsM1SlOwb6qpcxP/WOOEBj9wWIvLm4=
+	b=c1VtMuGEuZH5qopIRcwVnVIu+LvxLTBnScgaQs+c18oYXGr3YnN771/o3Dk36JUKK
+	 /7a7pOV+WxToJfq+KPqqJN9EtEDymvoBLd83z8B4/PWEj73U2dxZmp0Ug/YwSWvWHA
+	 lwiN3rrgWwwX2Nzg9M8Hfi5Pwp7odG83UEyX386M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vaishnav Achath <vaishnav.a@ti.com>,
+	Jayesh Choudhary <j-choudhary@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 048/885] ARM: s3c: fix s3c64xx_set_timer_source prototype
-Date: Tue,  7 Mar 2023 17:49:42 +0100
-Message-Id: <20230307170003.799358478@linuxfoundation.org>
+Subject: [PATCH 6.1 049/885] arm64: dts: ti: k3-j7200: Fix wakeup pinmux range
+Date: Tue,  7 Mar 2023 17:49:43 +0100
+Message-Id: <20230307170003.851439494@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,44 +36,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Vaishnav Achath <vaishnav.a@ti.com>
 
-[ Upstream commit 5bf52f5e4d12b8109f348cab60cb7d51092c4270 ]
+[ Upstream commit 9ae21ac445e911e3541985c20052fc05d60f6879 ]
 
-The prototype does not match the definition, as gcc-13 points
-out:
+The WKUP_PADCONFIG register region in J7200 has multiple non-addressable
+regions, split the existing wkup_pmx region as follows to avoid the
+non-addressable regions and include all valid WKUP_PADCONFIG registers.
+Also update references to old nodes with new ones.
 
-arch/arm/mach-s3c/s3c64xx.c:169:13: error: conflicting types for 's3c64xx_set_timer_source' due to enum/integer mismatch; have 'void(unsigned int,  unsigned int)' [-Werror=enum-int-mismatch]
-  169 | void __init s3c64xx_set_timer_source(unsigned int event, unsigned int source)
-      |             ^~~~~~~~~~~~~~~~~~~~~~~~
-In file included from arch/arm/mach-s3c/s3c64xx.c:50:
-arch/arm/mach-s3c/s3c64xx.h:62:20: note: previous declaration of 's3c64xx_set_timer_source' with type 'void(enum s3c64xx_timer_mode,  enum s3c64xx_timer_mode)'
-   62 | extern void __init s3c64xx_set_timer_source(enum s3c64xx_timer_mode event,
-      |                    ^~~~~~~~~~~~~~~~~~~~~~~~
+wkup_pmx0 -> 13 pins (WKUP_PADCONFIG 0 - 12)
+wkup_pmx1 -> 2 pins (WKUP_PADCONFIG 14 - 15)
+wkup_pmx2 -> 59 pins (WKUP_PADCONFIG 26 - 84)
+wkup_pmx3 -> 8 pins (WKUP_PADCONFIG 93 - 100)
 
-Fixes: 4280506ac9bb ("ARM: SAMSUNG: Move all platforms to new clocksource driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230118090224.2162863-1-arnd@kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+J7200 Datasheet (Table 6-106, Section 6.4 Pin Multiplexing) :
+	https://www.ti.com/lit/ds/symlink/dra821u.pdf
+
+Fixes: d361ed88455f ("arm64: dts: ti: Add support for J7200 SoC")
+
+Signed-off-by: Vaishnav Achath <vaishnav.a@ti.com>
+Reviewed-by: Jayesh Choudhary <j-choudhary@ti.com>
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Link: https://lore.kernel.org/r/20230119042622.22310-1-vaishnav.a@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-s3c/s3c64xx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../dts/ti/k3-j7200-common-proc-board.dts     |  2 +-
+ .../boot/dts/ti/k3-j7200-mcu-wakeup.dtsi      | 29 ++++++++++++++++++-
+ 2 files changed, 29 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-s3c/s3c64xx.c b/arch/arm/mach-s3c/s3c64xx.c
-index 0a8116c108fe4..dce2b0e953088 100644
---- a/arch/arm/mach-s3c/s3c64xx.c
-+++ b/arch/arm/mach-s3c/s3c64xx.c
-@@ -173,7 +173,8 @@ static struct samsung_pwm_variant s3c64xx_pwm_variant = {
- 	.tclk_mask	= (1 << 7) | (1 << 6) | (1 << 5),
+diff --git a/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts b/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts
+index 7e8552fd2b6ae..50009f963a324 100644
+--- a/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts
++++ b/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts
+@@ -80,7 +80,7 @@ vdd_sd_dv: gpio-regulator-TLV71033 {
+ 	};
  };
  
--void __init s3c64xx_set_timer_source(unsigned int event, unsigned int source)
-+void __init s3c64xx_set_timer_source(enum s3c64xx_timer_mode event,
-+				     enum s3c64xx_timer_mode source)
- {
- 	s3c64xx_pwm_variant.output_mask = BIT(SAMSUNG_PWM_NUM) - 1;
- 	s3c64xx_pwm_variant.output_mask &= ~(BIT(event) | BIT(source));
+-&wkup_pmx0 {
++&wkup_pmx2 {
+ 	mcu_cpsw_pins_default: mcu-cpsw-pins-default {
+ 		pinctrl-single,pins = <
+ 			J721E_WKUP_IOPAD(0x0068, PIN_OUTPUT, 0) /* MCU_RGMII1_TX_CTL */
+diff --git a/arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi b/arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi
+index d3fb86b2ea939..f04c6c890c33d 100644
+--- a/arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi
+@@ -56,7 +56,34 @@ chipid@43000014 {
+ 	wkup_pmx0: pinctrl@4301c000 {
+ 		compatible = "pinctrl-single";
+ 		/* Proxy 0 addressing */
+-		reg = <0x00 0x4301c000 0x00 0x178>;
++		reg = <0x00 0x4301c000 0x00 0x34>;
++		#pinctrl-cells = <1>;
++		pinctrl-single,register-width = <32>;
++		pinctrl-single,function-mask = <0xffffffff>;
++	};
++
++	wkup_pmx1: pinctrl@0x4301c038 {
++		compatible = "pinctrl-single";
++		/* Proxy 0 addressing */
++		reg = <0x00 0x4301c038 0x00 0x8>;
++		#pinctrl-cells = <1>;
++		pinctrl-single,register-width = <32>;
++		pinctrl-single,function-mask = <0xffffffff>;
++	};
++
++	wkup_pmx2: pinctrl@0x4301c068 {
++		compatible = "pinctrl-single";
++		/* Proxy 0 addressing */
++		reg = <0x00 0x4301c068 0x00 0xec>;
++		#pinctrl-cells = <1>;
++		pinctrl-single,register-width = <32>;
++		pinctrl-single,function-mask = <0xffffffff>;
++	};
++
++	wkup_pmx3: pinctrl@0x4301c174 {
++		compatible = "pinctrl-single";
++		/* Proxy 0 addressing */
++		reg = <0x00 0x4301c174 0x00 0x20>;
+ 		#pinctrl-cells = <1>;
+ 		pinctrl-single,register-width = <32>;
+ 		pinctrl-single,function-mask = <0xffffffff>;
 -- 
 2.39.2
 
