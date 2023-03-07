@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB024BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:23:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50AB8C433EF;
-	Tue,  7 Mar 2023 18:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0120BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:23:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9F7C433D2;
+	Tue,  7 Mar 2023 18:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213416;
-	bh=YDH6YSNZw/uNjIOSTAm6SWhQX/bt1qskzo9zZHhwXX4=;
+	s=korg; t=1678213419;
+	bh=Tp8INafFk55/n+e/TcfKI1TQO4+2M/nuxjuPHA7aHaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0lbwbvWTGhKF7MoGKnO0YEJAXg+wasxtInSHUjTjh3inL3E4I0ZmOFconi1OfD7oD
-	 zpBnQUSy0knuZWJfj0trDMT5/iZuXIUT5NgX6z/w3pNxlEc990foxZcTlQbfAMIl8s
-	 fHEg5ZtBmGf6jM1x6g0jrI7CjBwBxg4bDQ3UiNVo=
+	b=Q84W1caSoicSqkInI9GgSPcyMd6AtpyDAN3dW7cyofbjRuxbptpwbPbAEvv70QRyR
+	 EsFysvPLe802+bKlGF4oDQ/HSeSLtSKrUiZO9a4JQTmjJMvjeSv7m6PwGa6D5cs4bi
+	 as/cJCqAZoAqKBpYQGLGX+p4C0DROVAHq8J4PEKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 499/885] s390/vdso: Drop -shared from KBUILD_CFLAGS_64
-Date: Tue,  7 Mar 2023 17:57:13 +0100
-Message-Id: <20230307170024.140485026@linuxfoundation.org>
+	Saravana Kannan <saravanak@google.com>,
+	Colin Foster <colin.foster@in-advantage.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sasha Levin <sashal@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 6.1 473/885] driver core: fw_devlink: Improve check for fwnode with no device/driver
+Date: Tue,  7 Mar 2023 17:56:47 +0100
+Message-Id: <20230307170023.055516369@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -39,43 +39,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit fd8589dce8107e2ce62e92f76089654462dd67b4 ]
+[ Upstream commit 411c0d58ca6faa9bc4b9f5382118a31c7bb92a6f ]
 
-When clang's -Qunused-arguments is dropped from KBUILD_CPPFLAGS, it
-points out that there is a linking phase flag added to CFLAGS, which
-will only be used for compiling
+fw_devlink shouldn't defer the probe of a device to wait on a supplier
+that'll never have a struct device or will never be probed by a driver.
+We currently check if a supplier falls into this category, but don't
+check its ancestors. We need to check the ancestors too because if the
+ancestor will never probe, then the supplier will never probe either.
 
-  clang-16: error: argument unused during compilation: '-shared' [-Werror,-Wunused-command-line-argument]
-
-'-shared' is already present in ldflags-y so it can just be dropped.
-
-Fixes: 2b2a25845d53 ("s390/vdso: Use $(LD) instead of $(CC) to link vDSO")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Colin Foster <colin.foster@in-advantage.com>
+Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
+Link: https://lore.kernel.org/r/20230207014207.1678715-3-saravanak@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 3fb16866b51d ("driver core: fw_devlink: Make cycle detection more robust")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/vdso64/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/core.c | 40 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 38 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/kernel/vdso64/Makefile b/arch/s390/kernel/vdso64/Makefile
-index 9e2b95a222a98..1605ba45ac4c0 100644
---- a/arch/s390/kernel/vdso64/Makefile
-+++ b/arch/s390/kernel/vdso64/Makefile
-@@ -25,7 +25,7 @@ KBUILD_AFLAGS_64 := $(filter-out -m64,$(KBUILD_AFLAGS))
- KBUILD_AFLAGS_64 += -m64 -s
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index f623ebc131f8d..bf053e351a277 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -1907,6 +1907,35 @@ static int fw_devlink_relax_cycle(struct device *con, void *sup)
+ 	return ret;
+ }
  
- KBUILD_CFLAGS_64 := $(filter-out -m64,$(KBUILD_CFLAGS))
--KBUILD_CFLAGS_64 += -m64 -fPIC -shared -fno-common -fno-builtin
-+KBUILD_CFLAGS_64 += -m64 -fPIC -fno-common -fno-builtin
- ldflags-y := -fPIC -shared -soname=linux-vdso64.so.1 \
- 	     --hash-style=both --build-id=sha1 -T
++static bool fwnode_init_without_drv(struct fwnode_handle *fwnode)
++{
++	struct device *dev;
++	bool ret;
++
++	if (!(fwnode->flags & FWNODE_FLAG_INITIALIZED))
++		return false;
++
++	dev = get_dev_from_fwnode(fwnode);
++	ret = !dev || dev->links.status == DL_DEV_NO_DRIVER;
++	put_device(dev);
++
++	return ret;
++}
++
++static bool fwnode_ancestor_init_without_drv(struct fwnode_handle *fwnode)
++{
++	struct fwnode_handle *parent;
++
++	fwnode_for_each_parent_node(fwnode, parent) {
++		if (fwnode_init_without_drv(parent)) {
++			fwnode_handle_put(parent);
++			return true;
++		}
++	}
++
++	return false;
++}
++
+ /**
+  * fw_devlink_create_devlink - Create a device link from a consumer to fwnode
+  * @con: consumer device for the device link
+@@ -1995,9 +2024,16 @@ static int fw_devlink_create_devlink(struct device *con,
+ 		goto out;
+ 	}
  
+-	/* Supplier that's already initialized without a struct device. */
+-	if (sup_handle->flags & FWNODE_FLAG_INITIALIZED)
++	/*
++	 * Supplier or supplier's ancestor already initialized without a struct
++	 * device or being probed by a driver.
++	 */
++	if (fwnode_init_without_drv(sup_handle) ||
++	    fwnode_ancestor_init_without_drv(sup_handle)) {
++		dev_dbg(con, "Not linking %pfwP - Might never probe\n",
++			sup_handle);
+ 		return -EINVAL;
++	}
+ 
+ 	/*
+ 	 * DL_FLAG_SYNC_STATE_ONLY doesn't block probing and supports
 -- 
 2.39.2
 
