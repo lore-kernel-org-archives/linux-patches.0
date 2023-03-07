@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A00BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:05:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1720C433D2;
-	Tue,  7 Mar 2023 19:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31796BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:05:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB066C4339B;
+	Tue,  7 Mar 2023 19:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215932;
-	bh=8IaBUVsnMqpYeagREA/FdjTGqhmH5SMj+0D3Vpl7tpw=;
+	s=korg; t=1678215935;
+	bh=TJTuEqUMBE4XDYbx9SMFo7zhWcls3E7sHIW8CdRKqJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q+axpPXYVnNr7fWwB70bWX2Z8MtyBFkYm/im9aLwSenVDf7bgR+PS/7Vd9uOI56Wj
-	 sdiuWfDtzmD0tzRPpImvjDvuJ/Zi6OfsRDCmuvlWMheJhXwz3IYLDD0XnXw7F9++Gb
-	 g9mwEU9ldIDc+3+Lyh22dklYQzvodBGzbBoBuTkw=
+	b=diHnyduWbmKK8jstsJo2kRYN0pbWmG9A/UWdq8vAwJWDEPPqcPzDRXx99rGLvrWcw
+	 zY7L2fUHltgue/x4cltaION9zMamElNeJHqseJnieYoBJ6X6vvwnqv3/m4TN9Gh627
+	 dlEgRYTA/zFX4+dcZ5E6tZ8JPjWmgzM+F1ZzqO5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Karan Tilak Kumar <kartilak@cisco.com>,
+	Sesidhar Baddela <sebaddel@cisco.com>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 420/567] pinctrl: at91: use devm_kasprintf() to avoid potential leaks
-Date: Tue,  7 Mar 2023 18:02:36 +0100
-Message-Id: <20230307165924.084759601@linuxfoundation.org>
+Subject: [PATCH 5.15 421/567] scsi: snic: Fix memory leak with using debugfs_lookup()
+Date: Tue,  7 Mar 2023 18:02:37 +0100
+Message-Id: <20230307165924.126363478@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,51 +39,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 1c4e5c470a56f7f7c649c0c70e603abc1eab15c4 ]
+[ Upstream commit ad0e4e2fab928477f74d742e6e77d79245d3d3e7 ]
 
-Use devm_kasprintf() instead of kasprintf() to avoid any potential
-leaks. At the moment drivers have no remove functionality thus
-there is no need for fixes tag.
+When calling debugfs_lookup() the result must have dput() called on it,
+otherwise the memory will leak over time.  To make things simpler, just
+call debugfs_lookup_and_remove() instead which handles all of the logic at
+once.
 
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230203132714.1931596-1-claudiu.beznea@microchip.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20230202141009.2290380-1-gregkh@linuxfoundation.org
+Cc: Karan Tilak Kumar <kartilak@cisco.com>
+Cc: Sesidhar Baddela <sebaddel@cisco.com>
+Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
+Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: linux-scsi@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-at91-pio4.c | 4 ++--
- drivers/pinctrl/pinctrl-at91.c      | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/snic/snic_debugfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-at91-pio4.c b/drivers/pinctrl/pinctrl-at91-pio4.c
-index 03c32b2c5d303..c86fcdfaf825c 100644
---- a/drivers/pinctrl/pinctrl-at91-pio4.c
-+++ b/drivers/pinctrl/pinctrl-at91-pio4.c
-@@ -1126,8 +1126,8 @@ static int atmel_pinctrl_probe(struct platform_device *pdev)
- 
- 		pin_desc[i].number = i;
- 		/* Pin naming convention: P(bank_name)(bank_pin_number). */
--		pin_desc[i].name = kasprintf(GFP_KERNEL, "P%c%d",
--					     bank + 'A', line);
-+		pin_desc[i].name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "P%c%d",
-+						  bank + 'A', line);
- 
- 		group->name = group_names[i] = pin_desc[i].name;
- 		group->pin = pin_desc[i].number;
-diff --git a/drivers/pinctrl/pinctrl-at91.c b/drivers/pinctrl/pinctrl-at91.c
-index 6022496bb6a98..3b0341c730ee0 100644
---- a/drivers/pinctrl/pinctrl-at91.c
-+++ b/drivers/pinctrl/pinctrl-at91.c
-@@ -1891,7 +1891,7 @@ static int at91_gpio_probe(struct platform_device *pdev)
- 	}
- 
- 	for (i = 0; i < chip->ngpio; i++)
--		names[i] = kasprintf(GFP_KERNEL, "pio%c%d", alias_idx + 'A', i);
-+		names[i] = devm_kasprintf(&pdev->dev, GFP_KERNEL, "pio%c%d", alias_idx + 'A', i);
- 
- 	chip->names = (const char *const *)names;
- 
+diff --git a/drivers/scsi/snic/snic_debugfs.c b/drivers/scsi/snic/snic_debugfs.c
+index 5e0faeba516e5..76baa4f9a06e3 100644
+--- a/drivers/scsi/snic/snic_debugfs.c
++++ b/drivers/scsi/snic/snic_debugfs.c
+@@ -451,6 +451,6 @@ void snic_trc_debugfs_init(void)
+ void
+ snic_trc_debugfs_term(void)
+ {
+-	debugfs_remove(debugfs_lookup(TRC_FILE, snic_glob->trc_root));
+-	debugfs_remove(debugfs_lookup(TRC_ENABLE_FILE, snic_glob->trc_root));
++	debugfs_lookup_and_remove(TRC_FILE, snic_glob->trc_root);
++	debugfs_lookup_and_remove(TRC_ENABLE_FILE, snic_glob->trc_root);
+ }
 -- 
 2.39.2
 
