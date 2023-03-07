@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B967BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:52:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87566C433EF;
-	Tue,  7 Mar 2023 17:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F59BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:52:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACC8C433EF;
+	Tue,  7 Mar 2023 17:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211537;
-	bh=XpzhoalVVCwrw3ou+mCujUyRNexW3OJJx1ZZztCmxnI=;
+	s=korg; t=1678211539;
+	bh=5HPV5A2n+wX8FaESr1ESZ5sZPXmSk506fMceRtKFuNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KX+F7sFIQTfOqSvMwQLiuFrXSUzlnFHgq7OETHECj22tM5kbNp1hpk2v1v+BuLs5b
-	 NbPFSGy/gqNxl0S8ueQbhDlarLti+T27JTu/ai5FktlvsoUKRsdOAWpwuEV+RtqXdh
-	 GzvAYtnMHQ16gwbmkq2p9oom5Ns/ePMIdxidLBk4=
+	b=IpWk0wxMmpmvM321EL9gUVPWyz9QYIB2jfIz7mEU+o1BBNnYqIlxw72KpkzFTanwl
+	 /PFrNStyPXK2xogGBpGjjbiO5ELU8t5h54u4ZtS7rTLUJP5StgDC/YT6MAjRPZEyXX
+	 OuYx6V//Jy7nnffVbaAp5zpRoOqXCca4R5Ih9a30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-kselftest@vger.kernel.org,
 	Ingo Molnar <mingo@redhat.com>,
 	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.2 0864/1001] selftests: media_tests: Fix incorrect kernel headers search path
-Date: Tue,  7 Mar 2023 18:00:36 +0100
-Message-Id: <20230307170059.348833925@linuxfoundation.org>
+Subject: [PATCH 6.2 0865/1001] selftests: gpio: Fix incorrect kernel headers search path
+Date: Tue,  7 Mar 2023 18:00:37 +0100
+Message-Id: <20230307170059.400076491@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -39,7 +39,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-commit f2f9592b736087f695230410fb8dc1afd3cafbbb upstream.
+commit 8bb9c1808628babcc7b99ec2439bf102379bd4ac upstream.
 
 Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
 building against kernel headers from the build environment in scenarios
@@ -50,21 +50,21 @@ Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: Shuah Khan <shuah@kernel.org>
 Cc: linux-kselftest@vger.kernel.org
 Cc: Ingo Molnar <mingo@redhat.com>
-Cc: <stable@vger.kernel.org> # 5.18+
+Cc: <stable@vger.kernel.org>  # 5.18+
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/media_tests/Makefile |    2 +-
+ tools/testing/selftests/gpio/Makefile |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/media_tests/Makefile
-+++ b/tools/testing/selftests/media_tests/Makefile
-@@ -1,6 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- #
--CFLAGS += -I../ -I../../../../usr/include/
-+CFLAGS += -I../ $(KHDR_INCLUDES)
- TEST_GEN_PROGS := media_device_test media_device_open video_device_test
+--- a/tools/testing/selftests/gpio/Makefile
++++ b/tools/testing/selftests/gpio/Makefile
+@@ -3,6 +3,6 @@
+ TEST_PROGS := gpio-mockup.sh gpio-sim.sh
+ TEST_FILES := gpio-mockup-sysfs.sh
+ TEST_GEN_PROGS_EXTENDED := gpio-mockup-cdev gpio-chip-info gpio-line-name
+-CFLAGS += -O2 -g -Wall -I../../../../usr/include/ $(KHDR_INCLUDES)
++CFLAGS += -O2 -g -Wall $(KHDR_INCLUDES)
  
  include ../lib.mk
 
