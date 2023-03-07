@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5D1BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:42:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3BFC433EF;
-	Tue,  7 Mar 2023 17:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30EBBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:42:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A8AC433D2;
+	Tue,  7 Mar 2023 17:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210971;
-	bh=QLWxoO7q5r3HBT3pTtvAUaBO28iq3jSg7o+cbFPi5j0=;
+	s=korg; t=1678210974;
+	bh=IBCkHIpZeDJTFn+mUBCsEZmhHXCuKQdybjKciyxdnaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n7K8o3pbpxd7t4VQCTq8+JM9llv1+geljsMizms3LW+ppcBvl9b1vskg30UBXvo2t
-	 JKtma0yKg1hceRYXL/Zu5h7foLr/P930ACTyMGbdkzGz9ul3lZ4kreH/BbrBqi3ZkO
-	 oambArcaN1ta8461ndR7Tr2b4QQysmG/B//XjAi4=
+	b=JlaPr4AcfnnXhsp0wVa15+oLH7E52Ed2iVOe58tT0tTLQ1NWnZOnu8Mug2NfB/wwb
+	 7hnBJeAl6BmzxUwxDJuydlUjIVYV1oao0riisWjp31PZ4ucoF3ZSeNlWAFud7/eca8
+	 UYL6Pgf/8IjGcFrMsgMckKI5hixG9x2gqYL28jO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moti Haimovski <mhaimovski@habana.ai>,
+	farah kassabri <fkassabri@habana.ai>,
 	Oded Gabbay <ogabbay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0713/1001] habanalabs: extend fatal messages to contain PCI info
-Date: Tue,  7 Mar 2023 17:58:05 +0100
-Message-Id: <20230307170052.581668641@linuxfoundation.org>
+Subject: [PATCH 6.2 0714/1001] habanalabs: fix bug in timestamps registration code
+Date: Tue,  7 Mar 2023 17:58:06 +0100
+Message-Id: <20230307170052.629973856@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,127 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moti Haimovski <mhaimovski@habana.ai>
+From: farah kassabri <fkassabri@habana.ai>
 
-[ Upstream commit 2a0a839b6a28f7c4c528bb75b740c7f38ef79a37 ]
+[ Upstream commit ac5af9900f82b7034de7c9eb1d70d030ba325607 ]
 
-This commit attaches the PCI device address to driver fatal messages
-in order to ease debugging in multi-device setups.
+Protect re-using the same timestamp buffer record before actually
+adding it to the to interrupt wait list.
+Mark ts buff offset as in use in the spinlock protection area of the
+interrupt wait list to avoid getting in the re-use section in
+ts_buff_get_kernel_ts_record before adding the node to the list.
+this scenario might happen when multiple threads are racing on
+same offset and one thread could set data in the ts buff in
+ts_buff_get_kernel_ts_record then the other thread takes over
+and get to ts_buff_get_kernel_ts_record and we will try
+to re-use the same ts buff offset then we will try to
+delete a non existing node from the list.
 
-Signed-off-by: Moti Haimovski <mhaimovski@habana.ai>
+Signed-off-by: farah kassabri <fkassabri@habana.ai>
 Reviewed-by: Oded Gabbay <ogabbay@kernel.org>
 Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/habanalabs/common/device.c | 38 ++++++++++++++++---------
- 1 file changed, 25 insertions(+), 13 deletions(-)
+ .../habanalabs/common/command_submission.c    | 33 ++++++++++++-------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/misc/habanalabs/common/device.c b/drivers/misc/habanalabs/common/device.c
-index 87ab329e65d49..f7b9c3871518b 100644
---- a/drivers/misc/habanalabs/common/device.c
-+++ b/drivers/misc/habanalabs/common/device.c
-@@ -1566,7 +1566,8 @@ int hl_device_reset(struct hl_device *hdev, u32 flags)
- 		if (rc == -EBUSY) {
- 			if (hdev->device_fini_pending) {
- 				dev_crit(hdev->dev,
--					"Failed to kill all open processes, stopping hard reset\n");
-+					"%s Failed to kill all open processes, stopping hard reset\n",
-+					dev_name(&(hdev)->pdev->dev));
- 				goto out_err;
- 			}
- 
-@@ -1576,7 +1577,8 @@ int hl_device_reset(struct hl_device *hdev, u32 flags)
- 
- 		if (rc) {
- 			dev_crit(hdev->dev,
--				"Failed to kill all open processes, stopping hard reset\n");
-+				"%s Failed to kill all open processes, stopping hard reset\n",
-+				dev_name(&(hdev)->pdev->dev));
- 			goto out_err;
+diff --git a/drivers/misc/habanalabs/common/command_submission.c b/drivers/misc/habanalabs/common/command_submission.c
+index ea0e5101c10ed..6367cbea4ca2a 100644
+--- a/drivers/misc/habanalabs/common/command_submission.c
++++ b/drivers/misc/habanalabs/common/command_submission.c
+@@ -3119,19 +3119,18 @@ static int ts_buff_get_kernel_ts_record(struct hl_mmap_mem_buf *buf,
+ 			goto start_over;
  		}
- 
-@@ -1627,14 +1629,16 @@ int hl_device_reset(struct hl_device *hdev, u32 flags)
- 			 * ensure driver puts the driver in a unusable state
- 			 */
- 			dev_crit(hdev->dev,
--				"Consecutive FW fatal errors received, stopping hard reset\n");
-+				"%s Consecutive FW fatal errors received, stopping hard reset\n",
-+				dev_name(&(hdev)->pdev->dev));
- 			rc = -EIO;
- 			goto out_err;
- 		}
- 
- 		if (hdev->kernel_ctx) {
- 			dev_crit(hdev->dev,
--				"kernel ctx was alive during hard reset, something is terribly wrong\n");
-+				"%s kernel ctx was alive during hard reset, something is terribly wrong\n",
-+				dev_name(&(hdev)->pdev->dev));
- 			rc = -EBUSY;
- 			goto out_err;
- 		}
-@@ -1752,9 +1756,13 @@ int hl_device_reset(struct hl_device *hdev, u32 flags)
- 	hdev->reset_info.needs_reset = false;
- 
- 	if (hard_reset)
--		dev_info(hdev->dev, "Successfully finished resetting the device\n");
-+		dev_info(hdev->dev,
-+			 "Successfully finished resetting the %s device\n",
-+			 dev_name(&(hdev)->pdev->dev));
- 	else
--		dev_dbg(hdev->dev, "Successfully finished resetting the device\n");
-+		dev_dbg(hdev->dev,
-+			"Successfully finished resetting the %s device\n",
-+			dev_name(&(hdev)->pdev->dev));
- 
- 	if (hard_reset) {
- 		hdev->reset_info.hard_reset_cnt++;
-@@ -1789,7 +1797,9 @@ int hl_device_reset(struct hl_device *hdev, u32 flags)
- 	hdev->reset_info.in_compute_reset = 0;
- 
- 	if (hard_reset) {
--		dev_err(hdev->dev, "Failed to reset! Device is NOT usable\n");
-+		dev_err(hdev->dev,
-+			"%s Failed to reset! Device is NOT usable\n",
-+			dev_name(&(hdev)->pdev->dev));
- 		hdev->reset_info.hard_reset_cnt++;
- 	} else if (reset_upon_device_release) {
- 		spin_unlock(&hdev->reset_info.lock);
-@@ -2186,7 +2196,8 @@ int hl_device_init(struct hl_device *hdev, struct class *hclass)
+ 	} else {
++		/* Fill up the new registration node info */
++		requested_offset_record->ts_reg_info.buf = buf;
++		requested_offset_record->ts_reg_info.cq_cb = cq_cb;
++		requested_offset_record->ts_reg_info.timestamp_kernel_addr =
++				(u64 *) ts_buff->user_buff_address + ts_offset;
++		requested_offset_record->cq_kernel_addr =
++				(u64 *) cq_cb->kernel_address + cq_offset;
++		requested_offset_record->cq_target_value = target_value;
++
+ 		spin_unlock_irqrestore(wait_list_lock, flags);
  	}
  
- 	dev_notice(hdev->dev,
--		"Successfully added device to habanalabs driver\n");
-+		"Successfully added device %s to habanalabs driver\n",
-+		dev_name(&(hdev)->pdev->dev));
+-	/* Fill up the new registration node info */
+-	requested_offset_record->ts_reg_info.in_use = 1;
+-	requested_offset_record->ts_reg_info.buf = buf;
+-	requested_offset_record->ts_reg_info.cq_cb = cq_cb;
+-	requested_offset_record->ts_reg_info.timestamp_kernel_addr =
+-			(u64 *) ts_buff->user_buff_address + ts_offset;
+-	requested_offset_record->cq_kernel_addr =
+-			(u64 *) cq_cb->kernel_address + cq_offset;
+-	requested_offset_record->cq_target_value = target_value;
+-
+ 	*pend = requested_offset_record;
  
- 	hdev->init_done = true;
- 
-@@ -2235,11 +2246,11 @@ int hl_device_init(struct hl_device *hdev, struct class *hclass)
- 		device_cdev_sysfs_add(hdev);
- 	if (hdev->pdev)
- 		dev_err(&hdev->pdev->dev,
--			"Failed to initialize hl%d. Device is NOT usable !\n",
--			hdev->cdev_idx);
-+			"Failed to initialize hl%d. Device %s is NOT usable !\n",
-+			hdev->cdev_idx, dev_name(&(hdev)->pdev->dev));
- 	else
--		pr_err("Failed to initialize hl%d. Device is NOT usable !\n",
--			hdev->cdev_idx);
-+		pr_err("Failed to initialize hl%d. Device %s is NOT usable !\n",
-+			hdev->cdev_idx, dev_name(&(hdev)->pdev->dev));
- 
- 	return rc;
- }
-@@ -2295,7 +2306,8 @@ void hl_device_fini(struct hl_device *hdev)
- 
- 		if (ktime_compare(ktime_get(), timeout) > 0) {
- 			dev_crit(hdev->dev,
--				"Failed to remove device because reset function did not finish\n");
-+				"%s Failed to remove device because reset function did not finish\n",
-+				dev_name(&(hdev)->pdev->dev));
- 			return;
+ 	dev_dbg(buf->mmg->dev, "Found available node in TS kernel CB %p\n",
+@@ -3179,7 +3178,7 @@ static int _hl_interrupt_wait_ioctl(struct hl_device *hdev, struct hl_ctx *ctx,
+ 			goto put_cq_cb;
  		}
- 	}
+ 
+-		/* Find first available record */
++		/* get ts buffer record */
+ 		rc = ts_buff_get_kernel_ts_record(buf, cq_cb, ts_offset,
+ 						cq_counters_offset, target_value,
+ 						&interrupt->wait_list_lock, &pend);
+@@ -3227,7 +3226,19 @@ static int _hl_interrupt_wait_ioctl(struct hl_device *hdev, struct hl_ctx *ctx,
+ 	 * Note that we cannot have sorted list by target value,
+ 	 * in order to shorten the list pass loop, since
+ 	 * same list could have nodes for different cq counter handle.
++	 * Note:
++	 * Mark ts buff offset as in use here in the spinlock protection area
++	 * to avoid getting in the re-use section in ts_buff_get_kernel_ts_record
++	 * before adding the node to the list. this scenario might happen when
++	 * multiple threads are racing on same offset and one thread could
++	 * set the ts buff in ts_buff_get_kernel_ts_record then the other thread
++	 * takes over and get to ts_buff_get_kernel_ts_record and then we will try
++	 * to re-use the same ts buff offset, and will try to delete a non existing
++	 * node from the list.
+ 	 */
++	if (register_ts_record)
++		pend->ts_reg_info.in_use = 1;
++
+ 	list_add_tail(&pend->wait_list_node, &interrupt->wait_list_head);
+ 	spin_unlock_irqrestore(&interrupt->wait_list_lock, flags);
+ 
 -- 
 2.39.2
 
