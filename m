@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E83DBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:12:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12F8C433D2;
-	Tue,  7 Mar 2023 17:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B378BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:12:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C3BC433D2;
+	Tue,  7 Mar 2023 17:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209151;
-	bh=v3PEFF0tjST3jgawp8BYT5n3NeHK+QSKciRdRjAH8xw=;
+	s=korg; t=1678209154;
+	bh=xsOVThqsQh+ZVvZrztrjeT1qnorz+ErB+dbDMa4sqhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQDVQl2do0S+GJldX0QDGZbHZJFk6rgSGy8X3ALU6Jky+WM1Gjn0g6vFFJ9WCvk1x
-	 HZJby3O9So8Ccu8kQtE8/NtQR5VSG/XU3aS+HCsRNJag42YWTUDp3MzKQ+lLRxdWQh
-	 MzRTqFS4DVAhGlc96yqyVmKPKxtD63Ep9dGOikP4=
+	b=Pyuph6Mkc4CeE9i+o2b2c5Za40gIjUbwNKLRav2RhBkRzCgTLsYujuBt3m2nztHn0
+	 upJpDtl+oLHw/sFAFNQb9CQW2AdUXi1kF1CEF9TOpHWwP/dx822CV9m1fxu/FdNx8g
+	 8AhPvVnyPuge0cop4NSNJAyqJlmUjWkDoKWLSqPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Richard Guy Briggs <rgb@redhat.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0087/1001] arm64: tegra: Mark host1x as dma-coherent on Tegra194/234
-Date: Tue,  7 Mar 2023 17:47:39 +0100
-Message-Id: <20230307170025.924315414@linuxfoundation.org>
+Subject: [PATCH 6.2 0120/1001] io_uring,audit: dont log IORING_OP_MADVISE
+Date: Tue,  7 Mar 2023 17:48:12 +0100
+Message-Id: <20230307170027.299854995@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,46 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Richard Guy Briggs <rgb@redhat.com>
 
-[ Upstream commit 361238cdc52523fd7b1f3aa447c0579f42448b00 ]
+[ Upstream commit fbe870a72fd1ddc5e08c23764e23e5766f54aa87 ]
 
-Ensure appropriate configuration is done to make the host1x device
-and context devices DMA coherent by adding the dma-coherent flag.
+fadvise and madvise both provide hints for caching or access pattern for
+file and memory respectively.  Skip them.
 
-Fixes: b35f5b53a87b ("arm64: tegra: Add context isolation domains on Tegra234")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: 5bd2182d58e9 ("audit,io_uring,io-wq: add some basic audit support to io_uring")
+Signed-off-by: Richard Guy Briggs <rgb@redhat.com>
+Link: https://lore.kernel.org/r/b5dfdcd541115c86dbc774aa9dd502c964849c5f.1675282642.git.rgb@redhat.com
+Acked-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra194.dtsi | 1 +
- arch/arm64/boot/dts/nvidia/tegra234.dtsi | 1 +
- 2 files changed, 2 insertions(+)
+ io_uring/opdef.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra194.dtsi b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
-index 45a204d753b1b..76c672d2196be 100644
---- a/arch/arm64/boot/dts/nvidia/tegra194.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
-@@ -1922,6 +1922,7 @@ host1x@13e00000 {
- 			interconnects = <&mc TEGRA194_MEMORY_CLIENT_HOST1XDMAR &emc>;
- 			interconnect-names = "dma-mem";
- 			iommus = <&smmu TEGRA194_SID_HOST1X>;
-+			dma-coherent;
- 
- 			/* Context isolation domains */
- 			iommu-map = <0 &smmu TEGRA194_SID_HOST1X_CTX0 1>,
-diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-index 7a3112c82cdc7..cee86dcb68712 100644
---- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-@@ -1967,6 +1967,7 @@ host1x@13e00000 {
- 			interconnects = <&mc TEGRA234_MEMORY_CLIENT_HOST1XDMAR &emc>;
- 			interconnect-names = "dma-mem";
- 			iommus = <&smmu_niso1 TEGRA234_SID_HOST1X>;
-+			dma-coherent;
- 
- 			/* Context isolation domains */
- 			iommu-map = <0 &smmu_niso0 TEGRA234_SID_HOST1X_CTX0 1>,
+diff --git a/io_uring/opdef.c b/io_uring/opdef.c
+index 3aa0d65c50e34..be45b76649a08 100644
+--- a/io_uring/opdef.c
++++ b/io_uring/opdef.c
+@@ -313,6 +313,7 @@ const struct io_op_def io_op_defs[] = {
+ 	},
+ 	[IORING_OP_MADVISE] = {
+ 		.name			= "MADVISE",
++		.audit_skip		= 1,
+ 		.prep			= io_madvise_prep,
+ 		.issue			= io_madvise,
+ 	},
 -- 
 2.39.2
 
