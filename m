@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4736FBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:12:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B79C433EF;
-	Tue,  7 Mar 2023 17:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E83DBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:12:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12F8C433D2;
+	Tue,  7 Mar 2023 17:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209148;
-	bh=BcUj8HfmhMlDOaNw2ot+sTFsOS13yskXVublgwQLUPU=;
+	s=korg; t=1678209151;
+	bh=v3PEFF0tjST3jgawp8BYT5n3NeHK+QSKciRdRjAH8xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TcVYyP4vYTAdlLVCo59PSJWSVIDmgxmbh3UGTnoh1ewhj+Yn2XwC8EA1t/Ref3zZ6
-	 UiGgqwWXNe9iK9qMt5g1LrcW8GHaKBAjDfALQj04/iUkWtS/24gkCh6mT0l81Bynww
-	 /X8VNCyHd4fsoqaFBHlWESN2l3kR+YZT2WdfGzMc=
+	b=nQDVQl2do0S+GJldX0QDGZbHZJFk6rgSGy8X3ALU6Jky+WM1Gjn0g6vFFJ9WCvk1x
+	 HZJby3O9So8Ccu8kQtE8/NtQR5VSG/XU3aS+HCsRNJag42YWTUDp3MzKQ+lLRxdWQh
+	 MzRTqFS4DVAhGlc96yqyVmKPKxtD63Ep9dGOikP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0096/1001] sbitmap: correct wake_batch recalculation to avoid potential IO hung
-Date: Tue,  7 Mar 2023 17:47:48 +0100
-Message-Id: <20230307170026.334576716@linuxfoundation.org>
+Subject: [PATCH 6.2 0087/1001] arm64: tegra: Mark host1x as dma-coherent on Tegra194/234
+Date: Tue,  7 Mar 2023 17:47:39 +0100
+Message-Id: <20230307170025.924315414@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,61 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit b5fcf7871acb7f9a3a8ed341a68bd86aba3e254a ]
+[ Upstream commit 361238cdc52523fd7b1f3aa447c0579f42448b00 ]
 
-Commit 180dccb0dba4f ("blk-mq: fix tag_get wait task can't be awakened")
-mentioned that in case of shared tags, there could be just one real
-active hctx(queue) because of lazy detection of tag idle. Then driver tag
-allocation may wait forever on this real active hctx(queue) if wake_batch
-is > hctx_max_depth where hctx_max_depth is available tags depth for the
-actve hctx(queue). However, the condition wake_batch > hctx_max_depth is
-not strong enough to avoid IO hung as the sbitmap_queue_wake_up will only
-wake up one wait queue for each wake_batch even though there is only one
-waiter in the woken wait queue. After this, there is only one tag to free
-and wake_batch may not be reached anymore. Commit 180dccb0dba4f ("blk-mq:
-fix tag_get wait task can't be awakened") methioned that driver tag
-allocation may wait forever. Actually, the inactive hctx(queue) will be
-truely idle after at most 30 seconds and will call blk_mq_tag_wakeup_all
-to wake one waiter per wait queue to break the hung. But IO hung for 30
-seconds is also not acceptable. Set batch size to small enough that depth
-of the shared hctx(queue) is enough to wake up all of the queues like
-sbq_calc_wake_batch do to fix this potential IO hung.
+Ensure appropriate configuration is done to make the host1x device
+and context devices DMA coherent by adding the dma-coherent flag.
 
-Although hctx_max_depth will be clamped to at least 4 while wake_batch
-recalculation does not do the clamp, the wake_batch will be always
-recalculated to 1 when hctx_max_depth <= 4.
-
-Fixes: 180dccb0dba4 ("blk-mq: fix tag_get wait task can't be awakened")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Link: https://lore.kernel.org/r/20230116205059.3821738-6-shikemeng@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: b35f5b53a87b ("arm64: tegra: Add context isolation domains on Tegra234")
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/sbitmap.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra194.dtsi | 1 +
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index 2281fbb49d5c6..888c51235bd3c 100644
---- a/lib/sbitmap.c
-+++ b/lib/sbitmap.c
-@@ -464,13 +464,10 @@ void sbitmap_queue_recalculate_wake_batch(struct sbitmap_queue *sbq,
- 					    unsigned int users)
- {
- 	unsigned int wake_batch;
--	unsigned int min_batch;
- 	unsigned int depth = (sbq->sb.depth + users - 1) / users;
+diff --git a/arch/arm64/boot/dts/nvidia/tegra194.dtsi b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
+index 45a204d753b1b..76c672d2196be 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra194.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
+@@ -1922,6 +1922,7 @@ host1x@13e00000 {
+ 			interconnects = <&mc TEGRA194_MEMORY_CLIENT_HOST1XDMAR &emc>;
+ 			interconnect-names = "dma-mem";
+ 			iommus = <&smmu TEGRA194_SID_HOST1X>;
++			dma-coherent;
  
--	min_batch = sbq->sb.depth >= (4 * SBQ_WAIT_QUEUES) ? 4 : 1;
--
- 	wake_batch = clamp_val(depth / SBQ_WAIT_QUEUES,
--			min_batch, SBQ_WAKE_BATCH);
-+			1, SBQ_WAKE_BATCH);
+ 			/* Context isolation domains */
+ 			iommu-map = <0 &smmu TEGRA194_SID_HOST1X_CTX0 1>,
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+index 7a3112c82cdc7..cee86dcb68712 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+@@ -1967,6 +1967,7 @@ host1x@13e00000 {
+ 			interconnects = <&mc TEGRA234_MEMORY_CLIENT_HOST1XDMAR &emc>;
+ 			interconnect-names = "dma-mem";
+ 			iommus = <&smmu_niso1 TEGRA234_SID_HOST1X>;
++			dma-coherent;
  
- 	WRITE_ONCE(sbq->wake_batch, wake_batch);
- }
+ 			/* Context isolation domains */
+ 			iommu-map = <0 &smmu_niso0 TEGRA234_SID_HOST1X_CTX0 1>,
 -- 
 2.39.2
 
