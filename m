@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C69CBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:33:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98935C433D2;
-	Tue,  7 Mar 2023 18:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E4EBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:33:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FF2C433EF;
+	Tue,  7 Mar 2023 18:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213988;
-	bh=wdddd97lNEsy7Qh7KtufU0XtlIg1UTyiH9R6gbRW7/c=;
+	s=korg; t=1678213992;
+	bh=1PUpIQRDHlg0QANfyUGpYpycg/Po5EgS5kF056alFB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dfcg7PJfZ4+FPDsXYniqKGoyMGSmBd38yVygtRs19DREyXaJc/P2BnBRUtb15B+vM
-	 Knc2Qwt4BXXSrSkOo5dmHE5OPK13ETy9HXEiYWorDOp11JoLgUX3rXg5ioGpRgCnMs
-	 DN2zvWeQ3JYwIbju+yVDXzgjD4M4wY+BUw8tdDwA=
+	b=zQR/k/lBna3VyzTa2byS6DbogU4Iobw/uvyjIVezeNNVEMG4XUZM7Cai5k+LvkLfB
+	 GrOW1f2t0Jmq31h2bEfC+h4UOBj5XoP8XVCwyqPf+VrJ5mPFdKgwZvbsIJgBFM0soV
+	 UwExI9d9+yJHR9oK7I5wXgLSmTydXZZ6P6zVSWHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 685/885] ksmbd: fix possible memory leak in smb2_lock()
-Date: Tue,  7 Mar 2023 18:00:19 +0100
-Message-Id: <20230307170031.875792007@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.1 668/885] s390/kprobes: fix current_kprobe never cleared after kprobes reenter
+Date: Tue,  7 Mar 2023 18:00:02 +0100
+Message-Id: <20230307170031.183653226@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,117 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-commit d3ca9f7aeba793d74361d88a8800b2f205c9236b upstream.
+commit cd57953936f2213dfaccce10d20f396956222c7d upstream.
 
-argv needs to be free when setup_async_work fails or when the current
-process is woken up.
+Recent test_kprobe_missed kprobes kunit test uncovers the following
+problem. Once kprobe is triggered from another kprobe (kprobe reenter),
+all future kprobes on this cpu are considered as kprobe reenter, thus
+pre_handler and post_handler are not being called and kprobes are counted
+as "missed".
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Commit b9599798f953 ("[S390] kprobes: activation and deactivation")
+introduced a simpler scheme for kprobes (de)activation and status
+tracking by using push_kprobe/pop_kprobe, which supposed to work for
+both initial kprobe entry as well as kprobe reentry and helps to avoid
+handling those two cases differently. The problem is that a sequence of
+calls in case of kprobes reenter:
+push_kprobe() <- NULL (current_kprobe)
+push_kprobe() <- kprobe1 (current_kprobe)
+pop_kprobe() -> kprobe1 (current_kprobe)
+pop_kprobe() -> kprobe1 (current_kprobe)
+leaves "kprobe1" as "current_kprobe" on this cpu, instead of setting it
+to NULL. In fact push_kprobe/pop_kprobe can only store a single state
+(there is just one prev_kprobe in kprobe_ctlblk). Which is a hack but
+sufficient, there is no need to have another prev_kprobe just to store
+NULL. To make a simple and backportable fix simply reset "prev_kprobe"
+when kprobe is poped from this "stack". No need to worry about
+"kprobe_status" in this case, because its value is only checked when
+current_kprobe != NULL.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: b9599798f953 ("[S390] kprobes: activation and deactivation")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c   |   28 +++++++++++++---------------
- fs/ksmbd/vfs_cache.c |    5 ++---
- 2 files changed, 15 insertions(+), 18 deletions(-)
+ arch/s390/kernel/kprobes.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -6642,7 +6642,7 @@ int smb2_cancel(struct ksmbd_work *work)
- 	struct ksmbd_conn *conn = work->conn;
- 	struct smb2_hdr *hdr = smb2_get_msg(work->request_buf);
- 	struct smb2_hdr *chdr;
--	struct ksmbd_work *cancel_work = NULL, *iter;
-+	struct ksmbd_work *iter;
- 	struct list_head *command_list;
- 
- 	ksmbd_debug(SMB, "smb2 cancel called on mid %llu, async flags 0x%x\n",
-@@ -6664,7 +6664,9 @@ int smb2_cancel(struct ksmbd_work *work)
- 				    "smb2 with AsyncId %llu cancelled command = 0x%x\n",
- 				    le64_to_cpu(hdr->Id.AsyncId),
- 				    le16_to_cpu(chdr->Command));
--			cancel_work = iter;
-+			iter->state = KSMBD_WORK_CANCELLED;
-+			if (iter->cancel_fn)
-+				iter->cancel_fn(iter->cancel_argv);
- 			break;
- 		}
- 		spin_unlock(&conn->request_lock);
-@@ -6683,18 +6685,12 @@ int smb2_cancel(struct ksmbd_work *work)
- 				    "smb2 with mid %llu cancelled command = 0x%x\n",
- 				    le64_to_cpu(hdr->MessageId),
- 				    le16_to_cpu(chdr->Command));
--			cancel_work = iter;
-+			iter->state = KSMBD_WORK_CANCELLED;
- 			break;
- 		}
- 		spin_unlock(&conn->request_lock);
- 	}
- 
--	if (cancel_work) {
--		cancel_work->state = KSMBD_WORK_CANCELLED;
--		if (cancel_work->cancel_fn)
--			cancel_work->cancel_fn(cancel_work->cancel_argv);
--	}
--
- 	/* For SMB2_CANCEL command itself send no response*/
- 	work->send_no_response = 1;
- 	return 0;
-@@ -7055,6 +7051,14 @@ skip:
- 
- 				ksmbd_vfs_posix_lock_wait(flock);
- 
-+				spin_lock(&work->conn->request_lock);
-+				spin_lock(&fp->f_lock);
-+				list_del(&work->fp_entry);
-+				work->cancel_fn = NULL;
-+				kfree(argv);
-+				spin_unlock(&fp->f_lock);
-+				spin_unlock(&work->conn->request_lock);
-+
- 				if (work->state != KSMBD_WORK_ACTIVE) {
- 					list_del(&smb_lock->llist);
- 					spin_lock(&work->conn->llist_lock);
-@@ -7063,9 +7067,6 @@ skip:
- 					locks_free_lock(flock);
- 
- 					if (work->state == KSMBD_WORK_CANCELLED) {
--						spin_lock(&fp->f_lock);
--						list_del(&work->fp_entry);
--						spin_unlock(&fp->f_lock);
- 						rsp->hdr.Status =
- 							STATUS_CANCELLED;
- 						kfree(smb_lock);
-@@ -7087,9 +7088,6 @@ skip:
- 				list_del(&smb_lock->clist);
- 				spin_unlock(&work->conn->llist_lock);
- 
--				spin_lock(&fp->f_lock);
--				list_del(&work->fp_entry);
--				spin_unlock(&fp->f_lock);
- 				goto retry;
- 			} else if (!rc) {
- 				spin_lock(&work->conn->llist_lock);
---- a/fs/ksmbd/vfs_cache.c
-+++ b/fs/ksmbd/vfs_cache.c
-@@ -364,12 +364,11 @@ static void __put_fd_final(struct ksmbd_
- 
- static void set_close_state_blocked_works(struct ksmbd_file *fp)
+--- a/arch/s390/kernel/kprobes.c
++++ b/arch/s390/kernel/kprobes.c
+@@ -279,6 +279,7 @@ static void pop_kprobe(struct kprobe_ctl
  {
--	struct ksmbd_work *cancel_work, *ctmp;
-+	struct ksmbd_work *cancel_work;
+ 	__this_cpu_write(current_kprobe, kcb->prev_kprobe.kp);
+ 	kcb->kprobe_status = kcb->prev_kprobe.status;
++	kcb->prev_kprobe.kp = NULL;
+ }
+ NOKPROBE_SYMBOL(pop_kprobe);
  
- 	spin_lock(&fp->f_lock);
--	list_for_each_entry_safe(cancel_work, ctmp, &fp->blocked_works,
-+	list_for_each_entry(cancel_work, &fp->blocked_works,
- 				 fp_entry) {
--		list_del(&cancel_work->fp_entry);
- 		cancel_work->state = KSMBD_WORK_CLOSED;
- 		cancel_work->cancel_fn(cancel_work->cancel_argv);
- 	}
 
 
