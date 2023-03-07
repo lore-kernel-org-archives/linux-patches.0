@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82BFBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:35:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B84DC433D2;
-	Tue,  7 Mar 2023 18:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75C4BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:35:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BBBDC433EF;
+	Tue,  7 Mar 2023 18:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214122;
-	bh=Wd27njoz4huAr8le8GYUdZSLpoaLwk2ozr28eL5dNaA=;
+	s=korg; t=1678214125;
+	bh=5s41Ou5wHXW00sHFCrzuXX0PaP1OOK9Qr+OBvBX2YwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rgacd6dUsZ7q8NKmir9ruzeCY/ZYmC6ej9aQvGJTVJXvgCL7JZe8IiMR6xvDh+LHn
-	 Y7HUCIlgp5MKE2zTWPrTiGg7xzX6kDcq7ZMmyzgROgTGaBc8Btakg3qOU0UkEAqtVq
-	 FKHiOrQJL55avEUmPJYNRU1vPKbTTAcsnSS57t6o=
+	b=HwLppjmcbLFGUUZcezaltpWKipo2dynv3zavjoWNXFzUofWSwXgwAYCnM/UwSrH2i
+	 oq0+8qYti/eoG+575MVZVAQaTvW03Nr3gSzBMe3FXM78lzmI7VlJKlATLAP+JLgwbX
+	 44YlAQYQoaPfADSdJ3kfqP7EJjwJM/B0PGG2uiYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Vineeth Pillai <viremana@linux.microsoft.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	kvm@vger.kernel.org,
-	Sean Christopherson <seanjc@google.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>
-Subject: [PATCH 6.1 728/885] KVM: SVM: hyper-v: placate modpost section mismatch error
-Date: Tue,  7 Mar 2023 18:01:02 +0100
-Message-Id: <20230307170033.615893897@linuxfoundation.org>
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 702/885] ocfs2: fix defrag path triggering jbd2 ASSERT
+Date: Tue,  7 Mar 2023 18:00:36 +0100
+Message-Id: <20230307170032.592748921@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,57 +41,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Heming Zhao via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
 
-commit 45dd9bc75d9adc9483f0c7d662ba6e73ed698a0b upstream.
+commit 60eed1e3d45045623e46944ebc7c42c30a4350f0 upstream.
 
-modpost reports section mismatch errors/warnings:
-WARNING: modpost: vmlinux.o: section mismatch in reference: svm_hv_hardware_setup (section: .text) -> (unknown) (section: .init.data)
-WARNING: modpost: vmlinux.o: section mismatch in reference: svm_hv_hardware_setup (section: .text) -> (unknown) (section: .init.data)
-WARNING: modpost: vmlinux.o: section mismatch in reference: svm_hv_hardware_setup (section: .text) -> (unknown) (section: .init.data)
+code path:
 
-This "(unknown) (section: .init.data)" all refer to svm_x86_ops.
+ocfs2_ioctl_move_extents
+ ocfs2_move_extents
+  ocfs2_defrag_extent
+   __ocfs2_move_extent
+    + ocfs2_journal_access_di
+    + ocfs2_split_extent  //sub-paths call jbd2_journal_restart
+    + ocfs2_journal_dirty //crash by jbs2 ASSERT
 
-Tag svm_hv_hardware_setup() with __init to fix a modpost warning as the
-non-stub implementation accesses __initdata (svm_x86_ops), i.e. would
-generate a use-after-free if svm_hv_hardware_setup() were actually invoked
-post-init.  The helper is only called from svm_hardware_setup(), which is
-also __init, i.e. lack of __init is benign other than the modpost warning.
+crash stacks:
 
-Fixes: 1e0c7d40758b ("KVM: SVM: hyper-v: Remote TLB flush for SVM")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Vineeth Pillai <viremana@linux.microsoft.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: kvm@vger.kernel.org
-Cc: stable@vger.kernel.org
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Message-Id: <20230222073315.9081-1-rdunlap@infradead.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+PID: 11297  TASK: ffff974a676dcd00  CPU: 67  COMMAND: "defragfs.ocfs2"
+ #0 [ffffb25d8dad3900] machine_kexec at ffffffff8386fe01
+ #1 [ffffb25d8dad3958] __crash_kexec at ffffffff8395959d
+ #2 [ffffb25d8dad3a20] crash_kexec at ffffffff8395a45d
+ #3 [ffffb25d8dad3a38] oops_end at ffffffff83836d3f
+ #4 [ffffb25d8dad3a58] do_trap at ffffffff83833205
+ #5 [ffffb25d8dad3aa0] do_invalid_op at ffffffff83833aa6
+ #6 [ffffb25d8dad3ac0] invalid_op at ffffffff84200d18
+    [exception RIP: jbd2_journal_dirty_metadata+0x2ba]
+    RIP: ffffffffc09ca54a  RSP: ffffb25d8dad3b70  RFLAGS: 00010207
+    RAX: 0000000000000000  RBX: ffff9706eedc5248  RCX: 0000000000000000
+    RDX: 0000000000000001  RSI: ffff97337029ea28  RDI: ffff9706eedc5250
+    RBP: ffff9703c3520200   R8: 000000000f46b0b2   R9: 0000000000000000
+    R10: 0000000000000001  R11: 00000001000000fe  R12: ffff97337029ea28
+    R13: 0000000000000000  R14: ffff9703de59bf60  R15: ffff9706eedc5250
+    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
+ #7 [ffffb25d8dad3ba8] ocfs2_journal_dirty at ffffffffc137fb95 [ocfs2]
+ #8 [ffffb25d8dad3be8] __ocfs2_move_extent at ffffffffc139a950 [ocfs2]
+ #9 [ffffb25d8dad3c80] ocfs2_defrag_extent at ffffffffc139b2d2 [ocfs2]
+
+Analysis
+
+This bug has the same root cause of 'commit 7f27ec978b0e ("ocfs2: call
+ocfs2_journal_access_di() before ocfs2_journal_dirty() in
+ocfs2_write_end_nolock()")'.  For this bug, jbd2_journal_restart() is
+called by ocfs2_split_extent() during defragmenting.
+
+How to fix
+
+For ocfs2_split_extent() can handle journal operations totally by itself.
+Caller doesn't need to call journal access/dirty pair, and caller only
+needs to call journal start/stop pair.  The fix method is to remove
+journal access/dirty from __ocfs2_move_extent().
+
+The discussion for this patch:
+https://oss.oracle.com/pipermail/ocfs2-devel/2023-February/000647.html
+
+Link: https://lkml.kernel.org/r/20230217003717.32469-1-heming.zhao@suse.com
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm_onhyperv.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ocfs2/move_extents.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
---- a/arch/x86/kvm/svm/svm_onhyperv.h
-+++ b/arch/x86/kvm/svm/svm_onhyperv.h
-@@ -28,7 +28,7 @@ static inline void svm_hv_init_vmcb(stru
- 		hve->hv_enlightenments_control.msr_bitmap = 1;
- }
+--- a/fs/ocfs2/move_extents.c
++++ b/fs/ocfs2/move_extents.c
+@@ -105,14 +105,6 @@ static int __ocfs2_move_extent(handle_t
+ 	 */
+ 	replace_rec.e_flags = ext_flags & ~OCFS2_EXT_REFCOUNTED;
  
--static inline void svm_hv_hardware_setup(void)
-+static inline __init void svm_hv_hardware_setup(void)
- {
- 	if (npt_enabled &&
- 	    ms_hyperv.nested_features & HV_X64_NESTED_ENLIGHTENED_TLB) {
-@@ -85,7 +85,7 @@ static inline void svm_hv_init_vmcb(stru
- {
- }
+-	ret = ocfs2_journal_access_di(handle, INODE_CACHE(inode),
+-				      context->et.et_root_bh,
+-				      OCFS2_JOURNAL_ACCESS_WRITE);
+-	if (ret) {
+-		mlog_errno(ret);
+-		goto out;
+-	}
+-
+ 	ret = ocfs2_split_extent(handle, &context->et, path, index,
+ 				 &replace_rec, context->meta_ac,
+ 				 &context->dealloc);
+@@ -121,8 +113,6 @@ static int __ocfs2_move_extent(handle_t
+ 		goto out;
+ 	}
  
--static inline void svm_hv_hardware_setup(void)
-+static inline __init void svm_hv_hardware_setup(void)
- {
- }
+-	ocfs2_journal_dirty(handle, context->et.et_root_bh);
+-
+ 	context->new_phys_cpos = new_p_cpos;
  
+ 	/*
 
 
