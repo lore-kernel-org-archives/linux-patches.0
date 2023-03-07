@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66C9BA4C
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:00:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C43C433EF;
-	Tue,  7 Mar 2023 19:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46549BA4C
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:00:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FB4C4339C;
+	Tue,  7 Mar 2023 19:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215626;
-	bh=MN7mt4EJtJlJgrqnWQh0pD1BIBqByyhxDQkx5h5Y4OU=;
+	s=korg; t=1678215631;
+	bh=qASnTob71FsRHNXYxw17egdb44e9SyEhIRR/f/puuAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ov0hTMOz0gyTbpz0VifaVAjKLr8p9tClll5rPmiBkqSYbHSiBVwFQwOTL7qXSW1zw
-	 iHq/wSVHlO008Rag1Vfm4QvYWUkGqcc88VSM7xvkOaaGz8ZjVWbzVb62jBzIU1D+i9
-	 l/E6vdVZqvmI1XfyuXB24C+alT4BKKclhAmBAdzo=
+	b=aZ6DaOpVWlBQtotW1AQAGBU1dRob9GBdbZffHndE5PfH2JFZPHd2JHShuVJEGlga/
+	 zdoC41jZ9qBnWB/AHnHxh8LYRBeTL+3t+HXB5fA/kZ73sfSY+z5yJjtmYKxZ9rPgI1
+	 yYEgAmy1p5LyWgHATEl8JJ+UKicIAXyhURFjb9Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-	Udipto Goswami <quic_ugoswami@quicinc.com>,
+	Ashok Raj <ashok.raj@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 321/567] usb: gadget: configfs: Restrict symlink creation is UDC already binded
-Date: Tue,  7 Mar 2023 18:00:57 +0100
-Message-Id: <20230307165919.792325720@linuxfoundation.org>
+Subject: [PATCH 5.15 322/567] iommu/vt-d: Set No Execute Enable bit in PASID table entry
+Date: Tue,  7 Mar 2023 18:00:58 +0100
+Message-Id: <20230307165919.842460614@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,100 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Udipto Goswami <quic_ugoswami@quicinc.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit 89e7252d6c7e7eeb31971cd7df987316ecc64ff5 ]
+[ Upstream commit e06d24435596c8afcaa81c0c498f5b0ec4ee2b7c ]
 
-During enumeration or composition switch,a userspace process
-agnostic of the conventions of configs can try to create function
-symlinks even after the UDC is bound to current config which is
-not correct. Potentially it can create duplicates within the
-current config.
+Setup No Execute Enable bit (Bit 133) of a scalable mode PASID entry.
+This is to allow the use of XD bit of the first level page table.
 
-Prevent this by adding a check if udc_name already exists, then bail
-out of cfg_link.
-
-Following is an example:
-
-Step1:
-ln -s X1 ffs.a
--->cfg_link
---> usb_get_function(ffs.a)
-	->ffs_alloc
-
-	CFG->FUNC_LIST: <ffs.a>
-	C->FUNCTION: <empty>
-
-Step2:
-echo udc.name > /config/usb_gadget/g1/UDC
---> UDC_store
-	->composite_bind
-	->usb_add_function
-
-	CFG->FUNC_LIST: <empty>
-	C->FUNCTION: <ffs.a>
-
-Step3:
-ln -s Y1 ffs.a
--->cfg_link
--->usb_get_function(ffs.a)
-	->ffs_alloc
-
-	CFG->FUNC_LIST: <ffs.a>
-	C->FUNCTION: <ffs.a>
-
-both the lists corresponds to the same function instance ffs.a
-but the usb_function* pointer is different because in step 3
-ffs_alloc has created a new reference to usb_function* for
-ffs.a and added it to cfg_list.
-
-Step4:
-Now a composition switch involving <ffs.b,ffs.a> is executed.
-
-the composition switch will involve 3 things:
-	1. unlinking the previous functions existing
-	2. creating new symlinks
-	3. writing UDC
-
-However, the composition switch is generally taken care by
-userspace process which creates the symlinks in its own
-nomenclature(X*) and removes only those.
-So it won't be able to remove Y1 which user had created
-by own.
-
-Due to this the new symlinks cannot be created for ffs.a
-since the entry already exists in CFG->FUNC_LIST.
-
-The state of the CFG->FUNC_LIST is as follows:
-	CFG->FUNC_LIST: <ffs.a>
-
-Fixes: 88af8bbe4ef7 ("usb: gadget: the start of the configfs interface")
-Signed-off-by: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Signed-off-by: Udipto Goswami <quic_ugoswami@quicinc.com>
-Link: https://lore.kernel.org/r/20230201132308.31523-1-quic_ugoswami@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ddf09b6d43ec ("iommu/vt-d: Setup pasid entries for iova over first level")
+Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20230126095438.354205-1-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/configfs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iommu/intel/pasid.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
-index 891d8e4023221..5cbf4084daedc 100644
---- a/drivers/usb/gadget/configfs.c
-+++ b/drivers/usb/gadget/configfs.c
-@@ -428,6 +428,12 @@ static int config_usb_cfg_link(
- 	 * from another gadget or a random directory.
- 	 * Also a function instance can only be linked once.
- 	 */
+diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
+index 0060bd089dc7f..9a3dd55aaa1c2 100644
+--- a/drivers/iommu/intel/pasid.c
++++ b/drivers/iommu/intel/pasid.c
+@@ -425,6 +425,16 @@ static inline void pasid_set_page_snoop(struct pasid_entry *pe, bool value)
+ 	pasid_set_bits(&pe->val[1], 1 << 23, value << 23);
+ }
+ 
++/*
++ * Setup No Execute Enable bit (Bit 133) of a scalable mode PASID
++ * entry. It is required when XD bit of the first level page table
++ * entry is about to be set.
++ */
++static inline void pasid_set_nxe(struct pasid_entry *pe)
++{
++	pasid_set_bits(&pe->val[2], 1 << 5, 1 << 5);
++}
 +
-+	if (gi->composite.gadget_driver.udc_name) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
-+
- 	list_for_each_entry(iter, &gi->available_func, cfs_list) {
- 		if (iter != fi)
- 			continue;
+ /*
+  * Setup the Page Snoop (PGSNP) field (Bit 88) of a scalable mode
+  * PASID entry.
+@@ -631,6 +641,7 @@ int intel_pasid_setup_first_level(struct intel_iommu *iommu,
+ 	pasid_set_domain_id(pte, did);
+ 	pasid_set_address_width(pte, iommu->agaw);
+ 	pasid_set_page_snoop(pte, !!ecap_smpwc(iommu->ecap));
++	pasid_set_nxe(pte);
+ 
+ 	/* Setup Present and PASID Granular Transfer Type: */
+ 	pasid_set_translation_type(pte, PASID_ENTRY_PGTT_FL_ONLY);
 -- 
 2.39.2
 
