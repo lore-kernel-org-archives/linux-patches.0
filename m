@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37D1BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:44:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDB6C433EF;
-	Tue,  7 Mar 2023 17:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F97BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:44:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DE3C433EF;
+	Tue,  7 Mar 2023 17:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211079;
-	bh=VaZHPCKvH+cc7GvKCXfubK+uMFz4i8+GnIX8sPuKvd4=;
+	s=korg; t=1678211083;
+	bh=F0LrYIngtzAxJQJLg0IX9ZZ7/P4HSgoJskolKaaB5UY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sPtSYIf09zhRVCrL+WO3zpcDKM7CaBywohhzTc4NjuyzI1shn1kjnBnJDtNUg07/l
-	 ALf/noyS+7s8Z54mGWrwAW7AbVKmsXiEnGz/56bnJD7LIVDV1Iemp6Twil/eCbyKqH
-	 YNOLywntDVRe8ZiTY7yYodFUCaHatEPeD4trJGAw=
+	b=MksvjnBd4Qk+/x692iwA6A7ECM18Ts1L3OtlB+RUJfVCLEf6w/mURj88m4RX94/YM
+	 hV+HW34xqpCi0qms6UvRW8b2//vYcFRrnFoHRxtMp3teRxBlYS0BtMIXTGPMymGL67
+	 zu+xcaL2H+rTG+091FvxRw17XA5pYJvS6HFSXNF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Michael Kelley <mikelley@microsoft.com>
-Subject: [PATCH 6.2 0746/1001] block: dont allow multiple bios for IOCB_NOWAIT issue
-Date: Tue,  7 Mar 2023 17:58:38 +0100
-Message-Id: <20230307170054.103174864@linuxfoundation.org>
+	Keith Busch <kbusch@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.2 0747/1001] block: clear bio->bi_bdev when putting a bio back in the cache
+Date: Tue,  7 Mar 2023 17:58:39 +0100
+Message-Id: <20230307170054.141856076@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,68 +36,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-commit 67d59247d4b52c917e373f05a807027756ab216f upstream.
+commit 11eb695feb636fa5211067189cad25ac073e7fe5 upstream.
 
-If we're doing a large IO request which needs to be split into multiple
-bios for issue, then we can run into the same situation as the below
-marked commit fixes - parts will complete just fine, one or more parts
-will fail to allocate a request. This will result in a partially
-completed read or write request, where the caller gets EAGAIN even though
-parts of the IO completed just fine.
+This isn't strictly needed in terms of correctness, but it does allow
+polling to know if the bio has been put already by a different task
+and hence avoid polling something that we don't need to.
 
-Do the same for large bios as we do for splits - fail a NOWAIT request
-with EAGAIN. This isn't technically fixing an issue in the below marked
-patch, but for stable purposes, we should have either none of them or
-both.
-
-This depends on: 613b14884b85 ("block: handle bio_split_to_limits() NULL return")
-
-Cc: stable@vger.kernel.org # 5.15+
-Fixes: 9cea62b2cbab ("block: don't allow splitting of a REQ_NOWAIT bio")
-Link: https://github.com/axboe/liburing/issues/766
-Reported-and-tested-by: Michael Kelley <mikelley@microsoft.com>
+Cc: stable@vger.kernel.org
+Fixes: be4d234d7aeb ("bio: add allocation cache abstraction")
+Reviewed-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/fops.c |   21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ block/bio.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -221,6 +221,24 @@ static ssize_t __blkdev_direct_IO(struct
- 			bio_endio(bio);
- 			break;
- 		}
-+		if (iocb->ki_flags & IOCB_NOWAIT) {
-+			/*
-+			 * This is nonblocking IO, and we need to allocate
-+			 * another bio if we have data left to map. As we
-+			 * cannot guarantee that one of the sub bios will not
-+			 * fail getting issued FOR NOWAIT and as error results
-+			 * are coalesced across all of them, be safe and ask for
-+			 * a retry of this from blocking context.
-+			 */
-+			if (unlikely(iov_iter_count(iter))) {
-+				bio_release_pages(bio, false);
-+				bio_clear_flag(bio, BIO_REFFED);
-+				bio_put(bio);
-+				blk_finish_plug(&plug);
-+				return -EAGAIN;
-+			}
-+			bio->bi_opf |= REQ_NOWAIT;
-+		}
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -773,6 +773,7 @@ static inline void bio_put_percpu_cache(
  
- 		if (is_read) {
- 			if (dio->flags & DIO_SHOULD_DIRTY)
-@@ -228,9 +246,6 @@ static ssize_t __blkdev_direct_IO(struct
- 		} else {
- 			task_io_account_write(bio->bi_iter.bi_size);
- 		}
--		if (iocb->ki_flags & IOCB_NOWAIT)
--			bio->bi_opf |= REQ_NOWAIT;
--
- 		dio->size += bio->bi_iter.bi_size;
- 		pos += bio->bi_iter.bi_size;
- 
+ 	if ((bio->bi_opf & REQ_POLLED) && !WARN_ON_ONCE(in_interrupt())) {
+ 		bio->bi_next = cache->free_list;
++		bio->bi_bdev = NULL;
+ 		cache->free_list = bio;
+ 		cache->nr++;
+ 	} else {
 
 
