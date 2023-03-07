@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42DDBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:44:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2784BC433D2;
-	Tue,  7 Mar 2023 18:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB98BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:44:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527EAC433D2;
+	Tue,  7 Mar 2023 18:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214693;
-	bh=qeLeNIXxJNYpEDWqTqqrZTf0gnfv31fFidcds7kY8fs=;
+	s=korg; t=1678214696;
+	bh=37AzPDB6qsEfN8uuFhA/55KyMtG4UOzpPHgcE+i4lvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BALeeXZUM8yZX4182zFGDbPTOgPbLcyJLK3tHIX1nlkjoIjeosx9iIgyGeCmV2b20
-	 q0C/u2aj9L3+5k68paVsezvw9FpGr3hvE6Wk/MBgIdAwq8RURxT0xmSAA/LVmzwLGs
-	 MiVhpWG/6Frukq/2mYJ5tu5j5s/9KTOaMp55m+ho=
+	b=Ttap0Ax5eKwA0srxuYZc9Eix+CMairX9LO+SaP7aeXvpJWvBfzOUJtQxLrRJGMjDT
+	 wxb0NAXPmTE0leTEn8DEs5rzvgwBgoAbf61xaBV05lyrh8nYkaXzfGaFea7BFZs4rL
+	 61jXoGkSROhPAtOdqX+/CHz5pwn0IEkKqeb6tQ+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	=?UTF-8?q?Daniel=20D=C3=ADaz?= <daniel.diaz@linaro.org>
-Subject: [PATCH 5.15 003/567] powerpc/mm: Rearrange if-else block to avoid clang warning
-Date: Tue,  7 Mar 2023 17:55:39 +0100
-Message-Id: <20230307165905.969362083@linuxfoundation.org>
+	Chen Hui <judy.chenhui@huawei.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 004/567] ARM: OMAP2+: Fix memory leak in realtime_counter_init()
+Date: Tue,  7 Mar 2023 17:55:40 +0100
+Message-Id: <20230307165906.017908106@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -38,58 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anders Roxell <anders.roxell@linaro.org>
+From: Chen Hui <judy.chenhui@huawei.com>
 
-commit d78c8e32890ef7eca79ffd67c96022c7f9d8cce4 upstream.
+[ Upstream commit ed8167cbf65c2b6ff6faeb0f96ded4d6d581e1ac ]
 
-Clang warns:
+The "sys_clk" resource is malloced by clk_get(),
+it is not released when the function return.
 
-  arch/powerpc/mm/book3s64/radix_tlb.c:1191:23: error: variable 'hstart' is uninitialized when used here
-    __tlbiel_va_range(hstart, hend, pid,
-                      ^~~~~~
-  arch/powerpc/mm/book3s64/radix_tlb.c:1191:31: error: variable 'hend' is uninitialized when used here
-    __tlbiel_va_range(hstart, hend, pid,
-                              ^~~~
-
-Rework the 'if (IS_ENABLE(CONFIG_TRANSPARENT_HUGEPAGE))' so hstart/hend
-is always initialized to silence the warnings. That will also simplify
-the 'else' path. Clang is getting confused with these warnings, but the
-warnings is a false-positive.
-
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Suggested-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20220810114318.3220630-1-anders.roxell@linaro.org
-Signed-off-by: Daniel Díaz <daniel.diaz@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fa6d79d27614 ("ARM: OMAP: Add initialisation for the real-time counter.")
+Signed-off-by: Chen Hui <judy.chenhui@huawei.com>
+Message-Id: <20221108141917.46796-1-judy.chenhui@huawei.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/book3s64/radix_tlb.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ arch/arm/mach-omap2/timer.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/powerpc/mm/book3s64/radix_tlb.c
-+++ b/arch/powerpc/mm/book3s64/radix_tlb.c
-@@ -1171,15 +1171,12 @@ static inline void __radix__flush_tlb_ra
- 			}
- 		}
- 	} else {
--		bool hflush = false;
-+		bool hflush;
- 		unsigned long hstart, hend;
+diff --git a/arch/arm/mach-omap2/timer.c b/arch/arm/mach-omap2/timer.c
+index 620ba69c8f114..5677c4a08f376 100644
+--- a/arch/arm/mach-omap2/timer.c
++++ b/arch/arm/mach-omap2/timer.c
+@@ -76,6 +76,7 @@ static void __init realtime_counter_init(void)
+ 	}
  
--		if (IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE)) {
--			hstart = (start + PMD_SIZE - 1) & PMD_MASK;
--			hend = end & PMD_MASK;
--			if (hstart < hend)
--				hflush = true;
--		}
-+		hstart = (start + PMD_SIZE - 1) & PMD_MASK;
-+		hend = end & PMD_MASK;
-+		hflush = IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE) && hstart < hend;
+ 	rate = clk_get_rate(sys_clk);
++	clk_put(sys_clk);
  
- 		if (type == FLUSH_TYPE_LOCAL) {
- 			asm volatile("ptesync": : :"memory");
+ 	if (soc_is_dra7xx()) {
+ 		/*
+-- 
+2.39.2
+
 
 
