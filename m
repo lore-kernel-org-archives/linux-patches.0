@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8885BBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:42:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A12C433D2;
-	Tue,  7 Mar 2023 17:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952D3BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:42:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC75C433D2;
+	Tue,  7 Mar 2023 17:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210953;
-	bh=riMf5SxrLeuRWUIGTjusgq++cSOS0wh+J6QtasIKR7o=;
+	s=korg; t=1678210957;
+	bh=GQxP9AQoQK97cssiaWPn4VOSvftzRKkxDGNVRQYmnhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AltL6uTWEHrAs5lL8IHXSbyNgb7O8/HhmLxESevZqwexomQLaDOGFs/kHEHedKG2z
-	 pe4iTuIvPaXo05wE/Gbyo7MBkqKzaUZsbf+JqqtLlGe2gE9gCnlIi80xHOuA9M36Mg
-	 E1wQ59zgYoT0+95bvQI5ISXWu4xLU4YCjP1gvFH0=
+	b=veGpAsXJtKj1Wp39XeI3zp8SUR5Ymp1rT7oGKiQAO8tAHO19QMG5sXv54CuIi4Rrb
+	 wkaSyxiyizZq9C3EuEdPBCM89Sf9jqKzvMIYih/OIsJdSWigdQPVGxYvs/mEDFpkiV
+	 t65aJsamiMmqaCUiMnFbX9JmjOcqQAFqJAtyKcBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0708/1001] drm: rcar-du: Add quirk for H3 ES1.x pclk workaround
-Date: Tue,  7 Mar 2023 17:58:00 +0100
-Message-Id: <20230307170052.344640934@linuxfoundation.org>
+Subject: [PATCH 6.2 0691/1001] drm/omap: dsi: Fix excessive stack usage
+Date: Tue,  7 Mar 2023 17:57:43 +0100
+Message-Id: <20230307170051.601960486@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,163 +36,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 4f548bc48a2b4c4e54eecfddb6f7d24aa1b98768 ]
+[ Upstream commit cfca78971b9233aef0891507a98fba62046d4542 ]
 
-rcar_du_crtc.c does a soc_device_match() in
-rcar_du_crtc_set_display_timing() to find out if the SoC is H3 ES1.x, and
-if so, apply a workaround.
+dsi_dump_dsi_irqs(), a function used for debugfs prints, has a large
+struct in its frame, which can result in:
 
-We will need another H3 ES1.x check in the following patch, so rather than
-adding more soc_device_match() calls, let's add a rcar_du_device_info
-entry for the ES1, and a quirk flag,
-RCAR_DU_QUIRK_H3_ES1_PCLK_STABILITY, for the workaround.
+drivers/gpu/drm/omapdrm/dss/dsi.c:1126:1: warning: the frame size of 1060 bytes is larger than 1024 bytes [-Wframe-larger-than=]
 
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+As the performance of the function is of no concern, let's allocate the
+struct with kmalloc instead.
+
+Compile-tested only.
+
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220916082206.167427-1-tomi.valkeinen@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rcar-du/rcar_du_crtc.c |  8 +----
- drivers/gpu/drm/rcar-du/rcar_du_drv.c  | 48 ++++++++++++++++++++++++++
- drivers/gpu/drm/rcar-du/rcar_du_drv.h  |  1 +
- 3 files changed, 50 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/omapdrm/dss/dsi.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/rcar-du/rcar_du_crtc.c b/drivers/gpu/drm/rcar-du/rcar_du_crtc.c
-index 3619e1ddeb620..f2d3266509cc1 100644
---- a/drivers/gpu/drm/rcar-du/rcar_du_crtc.c
-+++ b/drivers/gpu/drm/rcar-du/rcar_du_crtc.c
-@@ -10,7 +10,6 @@
- #include <linux/clk.h>
- #include <linux/mutex.h>
- #include <linux/platform_device.h>
--#include <linux/sys_soc.h>
+diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.c b/drivers/gpu/drm/omapdrm/dss/dsi.c
+index a6845856cbce4..4c1084eb01759 100644
+--- a/drivers/gpu/drm/omapdrm/dss/dsi.c
++++ b/drivers/gpu/drm/omapdrm/dss/dsi.c
+@@ -1039,22 +1039,26 @@ static int dsi_dump_dsi_irqs(struct seq_file *s, void *p)
+ {
+ 	struct dsi_data *dsi = s->private;
+ 	unsigned long flags;
+-	struct dsi_irq_stats stats;
++	struct dsi_irq_stats *stats;
++
++	stats = kmalloc(sizeof(*stats), GFP_KERNEL);
++	if (!stats)
++		return -ENOMEM;
  
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
-@@ -204,11 +203,6 @@ static void rcar_du_escr_divider(struct clk *clk, unsigned long target,
- 	}
+ 	spin_lock_irqsave(&dsi->irq_stats_lock, flags);
+ 
+-	stats = dsi->irq_stats;
++	*stats = dsi->irq_stats;
+ 	memset(&dsi->irq_stats, 0, sizeof(dsi->irq_stats));
+ 	dsi->irq_stats.last_reset = jiffies;
+ 
+ 	spin_unlock_irqrestore(&dsi->irq_stats_lock, flags);
+ 
+ 	seq_printf(s, "period %u ms\n",
+-			jiffies_to_msecs(jiffies - stats.last_reset));
++			jiffies_to_msecs(jiffies - stats->last_reset));
+ 
+-	seq_printf(s, "irqs %d\n", stats.irq_count);
++	seq_printf(s, "irqs %d\n", stats->irq_count);
+ #define PIS(x) \
+-	seq_printf(s, "%-20s %10d\n", #x, stats.dsi_irqs[ffs(DSI_IRQ_##x)-1]);
++	seq_printf(s, "%-20s %10d\n", #x, stats->dsi_irqs[ffs(DSI_IRQ_##x)-1]);
+ 
+ 	seq_printf(s, "-- DSI%d interrupts --\n", dsi->module_id + 1);
+ 	PIS(VC0);
+@@ -1078,10 +1082,10 @@ static int dsi_dump_dsi_irqs(struct seq_file *s, void *p)
+ 
+ #define PIS(x) \
+ 	seq_printf(s, "%-20s %10d %10d %10d %10d\n", #x, \
+-			stats.vc_irqs[0][ffs(DSI_VC_IRQ_##x)-1], \
+-			stats.vc_irqs[1][ffs(DSI_VC_IRQ_##x)-1], \
+-			stats.vc_irqs[2][ffs(DSI_VC_IRQ_##x)-1], \
+-			stats.vc_irqs[3][ffs(DSI_VC_IRQ_##x)-1]);
++			stats->vc_irqs[0][ffs(DSI_VC_IRQ_##x)-1], \
++			stats->vc_irqs[1][ffs(DSI_VC_IRQ_##x)-1], \
++			stats->vc_irqs[2][ffs(DSI_VC_IRQ_##x)-1], \
++			stats->vc_irqs[3][ffs(DSI_VC_IRQ_##x)-1]);
+ 
+ 	seq_printf(s, "-- VC interrupts --\n");
+ 	PIS(CS);
+@@ -1097,7 +1101,7 @@ static int dsi_dump_dsi_irqs(struct seq_file *s, void *p)
+ 
+ #define PIS(x) \
+ 	seq_printf(s, "%-20s %10d\n", #x, \
+-			stats.cio_irqs[ffs(DSI_CIO_IRQ_##x)-1]);
++			stats->cio_irqs[ffs(DSI_CIO_IRQ_##x)-1]);
+ 
+ 	seq_printf(s, "-- CIO interrupts --\n");
+ 	PIS(ERRSYNCESC1);
+@@ -1122,6 +1126,8 @@ static int dsi_dump_dsi_irqs(struct seq_file *s, void *p)
+ 	PIS(ULPSACTIVENOT_ALL1);
+ #undef PIS
+ 
++	kfree(stats);
++
+ 	return 0;
  }
- 
--static const struct soc_device_attribute rcar_du_r8a7795_es1[] = {
--	{ .soc_id = "r8a7795", .revision = "ES1.*" },
--	{ /* sentinel */ }
--};
--
- static void rcar_du_crtc_set_display_timing(struct rcar_du_crtc *rcrtc)
- {
- 	const struct drm_display_mode *mode = &rcrtc->crtc.state->adjusted_mode;
-@@ -238,7 +232,7 @@ static void rcar_du_crtc_set_display_timing(struct rcar_du_crtc *rcrtc)
- 		 * no post-divider when a display PLL is present (as shown by
- 		 * the workaround breaking HDMI output on M3-W during testing).
- 		 */
--		if (soc_device_match(rcar_du_r8a7795_es1)) {
-+		if (rcdu->info->quirks & RCAR_DU_QUIRK_H3_ES1_PCLK_STABILITY) {
- 			target *= 2;
- 			div = 1;
- 		}
-diff --git a/drivers/gpu/drm/rcar-du/rcar_du_drv.c b/drivers/gpu/drm/rcar-du/rcar_du_drv.c
-index d003e8d9e7a26..c479996f8e91e 100644
---- a/drivers/gpu/drm/rcar-du/rcar_du_drv.c
-+++ b/drivers/gpu/drm/rcar-du/rcar_du_drv.c
-@@ -16,6 +16,7 @@
- #include <linux/platform_device.h>
- #include <linux/pm.h>
- #include <linux/slab.h>
-+#include <linux/sys_soc.h>
- #include <linux/wait.h>
- 
- #include <drm/drm_atomic_helper.h>
-@@ -386,6 +387,42 @@ static const struct rcar_du_device_info rcar_du_r8a7795_info = {
- 	.dpll_mask =  BIT(2) | BIT(1),
- };
- 
-+static const struct rcar_du_device_info rcar_du_r8a7795_es1_info = {
-+	.gen = 3,
-+	.features = RCAR_DU_FEATURE_CRTC_IRQ
-+		  | RCAR_DU_FEATURE_CRTC_CLOCK
-+		  | RCAR_DU_FEATURE_VSP1_SOURCE
-+		  | RCAR_DU_FEATURE_INTERLACED
-+		  | RCAR_DU_FEATURE_TVM_SYNC,
-+	.quirks = RCAR_DU_QUIRK_H3_ES1_PCLK_STABILITY,
-+	.channels_mask = BIT(3) | BIT(2) | BIT(1) | BIT(0),
-+	.routes = {
-+		/*
-+		 * R8A7795 has one RGB output, two HDMI outputs and one
-+		 * LVDS output.
-+		 */
-+		[RCAR_DU_OUTPUT_DPAD0] = {
-+			.possible_crtcs = BIT(3),
-+			.port = 0,
-+		},
-+		[RCAR_DU_OUTPUT_HDMI0] = {
-+			.possible_crtcs = BIT(1),
-+			.port = 1,
-+		},
-+		[RCAR_DU_OUTPUT_HDMI1] = {
-+			.possible_crtcs = BIT(2),
-+			.port = 2,
-+		},
-+		[RCAR_DU_OUTPUT_LVDS0] = {
-+			.possible_crtcs = BIT(0),
-+			.port = 3,
-+		},
-+	},
-+	.num_lvds = 1,
-+	.num_rpf = 5,
-+	.dpll_mask =  BIT(2) | BIT(1),
-+};
-+
- static const struct rcar_du_device_info rcar_du_r8a7796_info = {
- 	.gen = 3,
- 	.features = RCAR_DU_FEATURE_CRTC_IRQ
-@@ -554,6 +591,11 @@ static const struct of_device_id rcar_du_of_table[] = {
- 
- MODULE_DEVICE_TABLE(of, rcar_du_of_table);
- 
-+static const struct soc_device_attribute rcar_du_soc_table[] = {
-+	{ .soc_id = "r8a7795", .revision = "ES1.*", .data = &rcar_du_r8a7795_es1_info },
-+	{ /* sentinel */ }
-+};
-+
- const char *rcar_du_output_name(enum rcar_du_output output)
- {
- 	static const char * const names[] = {
-@@ -645,6 +687,7 @@ static void rcar_du_shutdown(struct platform_device *pdev)
- 
- static int rcar_du_probe(struct platform_device *pdev)
- {
-+	const struct soc_device_attribute *soc_attr;
- 	struct rcar_du_device *rcdu;
- 	unsigned int mask;
- 	int ret;
-@@ -659,8 +702,13 @@ static int rcar_du_probe(struct platform_device *pdev)
- 		return PTR_ERR(rcdu);
- 
- 	rcdu->dev = &pdev->dev;
-+
- 	rcdu->info = of_device_get_match_data(rcdu->dev);
- 
-+	soc_attr = soc_device_match(rcar_du_soc_table);
-+	if (soc_attr)
-+		rcdu->info = soc_attr->data;
-+
- 	platform_set_drvdata(pdev, rcdu);
- 
- 	/* I/O resources */
-diff --git a/drivers/gpu/drm/rcar-du/rcar_du_drv.h b/drivers/gpu/drm/rcar-du/rcar_du_drv.h
-index 5cfa2bb7ad93d..df87ccab146f4 100644
---- a/drivers/gpu/drm/rcar-du/rcar_du_drv.h
-+++ b/drivers/gpu/drm/rcar-du/rcar_du_drv.h
-@@ -34,6 +34,7 @@ struct rcar_du_device;
- #define RCAR_DU_FEATURE_NO_BLENDING	BIT(5)	/* PnMR.SPIM does not have ALP nor EOR bits */
- 
- #define RCAR_DU_QUIRK_ALIGN_128B	BIT(0)	/* Align pitches to 128 bytes */
-+#define RCAR_DU_QUIRK_H3_ES1_PCLK_STABILITY BIT(1)	/* H3 ES1 has pclk stability issue */
- 
- enum rcar_du_output {
- 	RCAR_DU_OUTPUT_DPAD0,
+ #endif
 -- 
 2.39.2
 
