@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B50CBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:27:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E4DC433EF;
-	Tue,  7 Mar 2023 18:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05911BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:27:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA59C433EF;
+	Tue,  7 Mar 2023 18:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213620;
-	bh=kXVQvDbRjjHJfJN5vjStph0aXrLR7cljx3xmC6+I7xM=;
+	s=korg; t=1678213623;
+	bh=mECLp6YKjUb0Ux5Kq0yda8oo73Up9Ucp5zvw/guYebs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HUro2UcqKD9LJfaovGK+pksGNmubUtNpe0Msxiejk15kf8Wyiia1G/dwC0tojZq0N
-	 VeoQ7uWnqPU+XjEBkgyIlzVdPnxa4eN5xfs1sBz40SH2A2RZ+7KKlkbBSSC8fYFEVb
-	 V1E+Mtypx/0X9lemWKPRnOyOmB5PUkfJ8zmGrd4M=
+	b=AygngQ4Rrf4XJHD+/kwspvln3+tCg4wdFrTEER6fr3B/5bXc8Hsyjnid3/HR10uF1
+	 ohtUMrs+jjCbRJ12+8YzjAbZhAFPFzJ+pSMglV5H163sMPJxFnLzk7L2m2FB1kY7lF
+	 mYB2aXp0R9Qr7p+xk+Z2L2hpYW7Qn/sDielH27R8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Thaler <dthaler@microsoft.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Tim Zimmermann <tim@linux4.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 564/885] bpf, docs: Fix modulo zero, division by zero, overflow, and underflow
-Date: Tue,  7 Mar 2023 17:58:18 +0100
-Message-Id: <20230307170026.947355919@linuxfoundation.org>
+Subject: [PATCH 6.1 565/885] thermal: intel: intel_pch: Add support for Wellsburg PCH
+Date: Tue,  7 Mar 2023 17:58:19 +0100
+Message-Id: <20230307170026.991083174@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,66 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Thaler <dthaler@microsoft.com>
+From: Tim Zimmermann <tim@linux4.de>
 
-[ Upstream commit 0eb9d19e2201068260e439a5c96dc85f9f3722a2 ]
+[ Upstream commit 40dc1929089fc844ea06d9f8bdb6211ed4517c2e ]
 
-Fix modulo zero, division by zero, overflow, and underflow. Also clarify how
-a negative immediate value is used in unsigned division.
+Add the PCI ID for the Wellsburg C610 series chipset PCH.
 
-Signed-off-by: Dave Thaler <dthaler@microsoft.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230124001218.827-1-dthaler1968@googlemail.com
+The driver can read the temperature from the Wellsburg PCH with only
+the PCI ID added and no other modifications.
+
+Signed-off-by: Tim Zimmermann <tim@linux4.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/bpf/instruction-set.rst | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/thermal/intel/intel_pch_thermal.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/Documentation/bpf/instruction-set.rst b/Documentation/bpf/instruction-set.rst
-index 5d798437dad47..3ba6475cfbfc7 100644
---- a/Documentation/bpf/instruction-set.rst
-+++ b/Documentation/bpf/instruction-set.rst
-@@ -99,19 +99,26 @@ code      value  description
- BPF_ADD   0x00   dst += src
- BPF_SUB   0x10   dst -= src
- BPF_MUL   0x20   dst \*= src
--BPF_DIV   0x30   dst /= src
-+BPF_DIV   0x30   dst = (src != 0) ? (dst / src) : 0
- BPF_OR    0x40   dst \|= src
- BPF_AND   0x50   dst &= src
- BPF_LSH   0x60   dst <<= src
- BPF_RSH   0x70   dst >>= src
- BPF_NEG   0x80   dst = ~src
--BPF_MOD   0x90   dst %= src
-+BPF_MOD   0x90   dst = (src != 0) ? (dst % src) : dst
- BPF_XOR   0xa0   dst ^= src
- BPF_MOV   0xb0   dst = src
- BPF_ARSH  0xc0   sign extending shift right
- BPF_END   0xd0   byte swap operations (see `Byte swap instructions`_ below)
- ========  =====  ==========================================================
+diff --git a/drivers/thermal/intel/intel_pch_thermal.c b/drivers/thermal/intel/intel_pch_thermal.c
+index dabf11a687a15..9e27f430e0345 100644
+--- a/drivers/thermal/intel/intel_pch_thermal.c
++++ b/drivers/thermal/intel/intel_pch_thermal.c
+@@ -29,6 +29,7 @@
+ #define PCH_THERMAL_DID_CNL_LP	0x02F9 /* CNL-LP PCH */
+ #define PCH_THERMAL_DID_CML_H	0X06F9 /* CML-H PCH */
+ #define PCH_THERMAL_DID_LWB	0xA1B1 /* Lewisburg PCH */
++#define PCH_THERMAL_DID_WBG	0x8D24 /* Wellsburg PCH */
  
-+Underflow and overflow are allowed during arithmetic operations, meaning
-+the 64-bit or 32-bit value will wrap. If eBPF program execution would
-+result in division by zero, the destination register is instead set to zero.
-+If execution would result in modulo by zero, for ``BPF_ALU64`` the value of
-+the destination register is unchanged whereas for ``BPF_ALU`` the upper
-+32 bits of the destination register are zeroed.
-+
- ``BPF_ADD | BPF_X | BPF_ALU`` means::
+ /* Wildcat Point-LP  PCH Thermal registers */
+ #define WPT_TEMP	0x0000	/* Temperature */
+@@ -350,6 +351,7 @@ enum board_ids {
+ 	board_cnl,
+ 	board_cml,
+ 	board_lwb,
++	board_wbg,
+ };
  
-   dst_reg = (u32) dst_reg + (u32) src_reg;
-@@ -128,6 +135,11 @@ BPF_END   0xd0   byte swap operations (see `Byte swap instructions`_ below)
+ static const struct board_info {
+@@ -380,6 +382,10 @@ static const struct board_info {
+ 		.name = "pch_lewisburg",
+ 		.ops = &pch_dev_ops_wpt,
+ 	},
++	[board_wbg] = {
++		.name = "pch_wellsburg",
++		.ops = &pch_dev_ops_wpt,
++	},
+ };
  
-   src_reg = src_reg ^ imm32
- 
-+Also note that the division and modulo operations are unsigned. Thus, for
-+``BPF_ALU``, 'imm' is first interpreted as an unsigned 32-bit value, whereas
-+for ``BPF_ALU64``, 'imm' is first sign extended to 64 bits and the result
-+interpreted as an unsigned 64-bit value. There are no instructions for
-+signed division or modulo.
- 
- Byte swap instructions
- ~~~~~~~~~~~~~~~~~~~~~~
+ static int intel_pch_thermal_probe(struct pci_dev *pdev,
+@@ -495,6 +501,8 @@ static const struct pci_device_id intel_pch_thermal_id[] = {
+ 		.driver_data = board_cml, },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_INTEL, PCH_THERMAL_DID_LWB),
+ 		.driver_data = board_lwb, },
++	{ PCI_DEVICE(PCI_VENDOR_ID_INTEL, PCH_THERMAL_DID_WBG),
++		.driver_data = board_wbg, },
+ 	{ 0, },
+ };
+ MODULE_DEVICE_TABLE(pci, intel_pch_thermal_id);
 -- 
 2.39.2
 
