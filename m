@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE69BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:19:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72AAAC433D2;
-	Tue,  7 Mar 2023 18:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4671FBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:19:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D055C433EF;
+	Tue,  7 Mar 2023 18:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213149;
-	bh=RpOFDwS1FLwwrPDDS3IFCZUaXPah1Rlrdyj83QhuShw=;
+	s=korg; t=1678213153;
+	bh=UjSbeJDJAnMBq4dQKZ4o0LcO4wJFbQckHcVsdbcXxSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P6KpRW5x02Clu8h8H8YQzUMO/3cbNTBku6tfRbDsM3bkhlbsP/8tz1bSGIDAauOF9
-	 dTuu+eJ1kcXK51BLJX0xEQPxK3L9tznn0qiyExflEf44i2nWDq1tW3kKOCZaC5wJCp
-	 ixaB29swWlZbdYcLDW/c+I69+rIeBFSv/BliHnJQ=
+	b=M5ba1iBZE0pIh3iIN4g2lGSwYZn9H0jhT2vywDnyGquloB+9jzZ1mK+mtzNS12b4p
+	 utHr/j+VN5Y7givzmkuO9vRc7ksXQ95dHkdJwpu5NPs8kJsmwaGEK9/ZPHHDID8I0o
+	 rUdkJuA9RxgLc4NyUHYxDfsZL39gnXR66k4PmL6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 415/885] alpha/boot/tools/objstrip: fix the check for ELF header
-Date: Tue,  7 Mar 2023 17:55:49 +0100
-Message-Id: <20230307170020.453665169@linuxfoundation.org>
+Subject: [PATCH 6.1 416/885] media: uvcvideo: Check for INACTIVE in uvc_ctrl_is_accessible()
+Date: Tue,  7 Mar 2023 17:55:50 +0100
+Message-Id: <20230307170020.489538109@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,34 +36,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 1878787797cbb019eeefe6f905514dcd557302b6 ]
+[ Upstream commit 9f582f0418ed1c18f92c9e4628075d6ec9a7d9fb ]
 
-Just memcmp() with ELFMAG - that's the normal way to do it in userland
-code, which that thing is.  Besides, that has the benefit of actually
-building - str_has_prefix() is *NOT* present in <string.h>.
+Check for inactive controls in uvc_ctrl_is_accessible().
 
-Fixes: 5f14596e55de "alpha: Replace strncmp with str_has_prefix"
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Use the new value for the master_id controls if present, otherwise
+use the existing value to determine if it is OK to set the control.
+Doing this here avoids attempting to set an inactive control, which
+will return an error from the USB device, which returns an invalid
+errorcode.
+
+This fixes:
+  warn: v4l2-test-controls.cpp(483): s_ctrl returned EIO
+  warn: v4l2-test-controls.cpp(483): s_ctrl returned EIO
+test VIDIOC_G/S_CTRL: OK
+  warn: v4l2-test-controls.cpp(739): s_ext_ctrls returned EIO
+  warn: v4l2-test-controls.cpp(739): s_ext_ctrls returned EIO
+  warn: v4l2-test-controls.cpp(816): s_ext_ctrls returned EIO
+test VIDIOC_G/S/TRY_EXT_CTRLS: OK
+
+Tested with:
+v4l2-ctl -c auto_exposure=1
+OK
+v4l2-ctl -c exposure_time_absolute=251
+OK
+v4l2-ctl -c auto_exposure=3
+OK
+v4l2-ctl -c exposure_time_absolute=251
+VIDIOC_S_EXT_CTRLS: failed: Input/output error
+exposure_time_absolute: Input/output error
+ERROR
+v4l2-ctl -c auto_exposure=3,exposure_time_absolute=251,auto_exposure=1
+v4l2-ctl -C auto_exposure,exposure_time_absolute  
+auto_exposure: 1
+exposure_time_absolute: 251
+
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/boot/tools/objstrip.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_ctrl.c | 42 +++++++++++++++++++++++++++++++-
+ drivers/media/usb/uvc/uvc_v4l2.c |  3 +--
+ drivers/media/usb/uvc/uvcvideo.h |  3 ++-
+ 3 files changed, 44 insertions(+), 4 deletions(-)
 
-diff --git a/arch/alpha/boot/tools/objstrip.c b/arch/alpha/boot/tools/objstrip.c
-index 08b430d25a315..7cf92d172dce9 100644
---- a/arch/alpha/boot/tools/objstrip.c
-+++ b/arch/alpha/boot/tools/objstrip.c
-@@ -148,7 +148,7 @@ main (int argc, char *argv[])
- #ifdef __ELF__
-     elf = (struct elfhdr *) buf;
+diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
+index c95a2229f4fa9..6f5aaaf09ee01 100644
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1085,11 +1085,28 @@ static int uvc_query_v4l2_class(struct uvc_video_chain *chain, u32 req_id,
+ 	return 0;
+ }
  
--    if (elf->e_ident[0] == 0x7f && str_has_prefix((char *)elf->e_ident + 1, "ELF")) {
-+    if (memcmp(&elf->e_ident[EI_MAG0], ELFMAG, SELFMAG) == 0) {
- 	if (elf->e_type != ET_EXEC) {
- 	    fprintf(stderr, "%s: %s is not an ELF executable\n",
- 		    prog_name, inname);
++/*
++ * Check if control @v4l2_id can be accessed by the given control @ioctl
++ * (VIDIOC_G_EXT_CTRLS, VIDIOC_TRY_EXT_CTRLS or VIDIOC_S_EXT_CTRLS).
++ *
++ * For set operations on slave controls, check if the master's value is set to
++ * manual, either in the others controls set in the same ioctl call, or from
++ * the master's current value. This catches VIDIOC_S_EXT_CTRLS calls that set
++ * both the master and slave control, such as for instance setting
++ * auto_exposure=1, exposure_time_absolute=251.
++ */
+ int uvc_ctrl_is_accessible(struct uvc_video_chain *chain, u32 v4l2_id,
+-			   bool read)
++			   const struct v4l2_ext_controls *ctrls,
++			   unsigned long ioctl)
+ {
++	struct uvc_control_mapping *master_map = NULL;
++	struct uvc_control *master_ctrl = NULL;
+ 	struct uvc_control_mapping *mapping;
+ 	struct uvc_control *ctrl;
++	bool read = ioctl == VIDIOC_G_EXT_CTRLS;
++	s32 val;
++	int ret;
++	int i;
+ 
+ 	if (__uvc_query_v4l2_class(chain, v4l2_id, 0) >= 0)
+ 		return -EACCES;
+@@ -1104,6 +1121,29 @@ int uvc_ctrl_is_accessible(struct uvc_video_chain *chain, u32 v4l2_id,
+ 	if (!(ctrl->info.flags & UVC_CTRL_FLAG_SET_CUR) && !read)
+ 		return -EACCES;
+ 
++	if (ioctl != VIDIOC_S_EXT_CTRLS || !mapping->master_id)
++		return 0;
++
++	/*
++	 * Iterate backwards in cases where the master control is accessed
++	 * multiple times in the same ioctl. We want the last value.
++	 */
++	for (i = ctrls->count - 1; i >= 0; i--) {
++		if (ctrls->controls[i].id == mapping->master_id)
++			return ctrls->controls[i].value ==
++					mapping->master_manual ? 0 : -EACCES;
++	}
++
++	__uvc_find_control(ctrl->entity, mapping->master_id, &master_map,
++			   &master_ctrl, 0);
++
++	if (!master_ctrl || !(master_ctrl->info.flags & UVC_CTRL_FLAG_GET_CUR))
++		return 0;
++
++	ret = __uvc_ctrl_get(chain, master_ctrl, master_map, &val);
++	if (ret >= 0 && val != mapping->master_manual)
++		return -EACCES;
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/media/usb/uvc/uvc_v4l2.c b/drivers/media/usb/uvc/uvc_v4l2.c
+index f4d4c33b6dfbd..3edb54c086b24 100644
+--- a/drivers/media/usb/uvc/uvc_v4l2.c
++++ b/drivers/media/usb/uvc/uvc_v4l2.c
+@@ -1020,8 +1020,7 @@ static int uvc_ctrl_check_access(struct uvc_video_chain *chain,
+ 	int ret = 0;
+ 
+ 	for (i = 0; i < ctrls->count; ++ctrl, ++i) {
+-		ret = uvc_ctrl_is_accessible(chain, ctrl->id,
+-					    ioctl == VIDIOC_G_EXT_CTRLS);
++		ret = uvc_ctrl_is_accessible(chain, ctrl->id, ctrls, ioctl);
+ 		if (ret)
+ 			break;
+ 	}
+diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
+index df93db259312e..a151f583cd156 100644
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -761,7 +761,8 @@ static inline int uvc_ctrl_rollback(struct uvc_fh *handle)
+ int uvc_ctrl_get(struct uvc_video_chain *chain, struct v4l2_ext_control *xctrl);
+ int uvc_ctrl_set(struct uvc_fh *handle, struct v4l2_ext_control *xctrl);
+ int uvc_ctrl_is_accessible(struct uvc_video_chain *chain, u32 v4l2_id,
+-			   bool read);
++			   const struct v4l2_ext_controls *ctrls,
++			   unsigned long ioctl);
+ 
+ int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
+ 		      struct uvc_xu_control_query *xqry);
 -- 
 2.39.2
 
