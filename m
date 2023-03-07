@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13CFBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33172C4339B;
-	Tue,  7 Mar 2023 17:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331A1BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC19C433EF;
+	Tue,  7 Mar 2023 17:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210987;
-	bh=jKZlzn2zgAqVSSQzYMdPXgrQ+56PWN+KQo7GH48Xnks=;
+	s=korg; t=1678210992;
+	bh=OvNyHpAAeeiTPusi5F0W7Sq5fJ9njNoI5QzTKir0DAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+o7aC69jylho0SKAs05suFwYH5hGUMWRNWT+qrKc4onTEilTbpcNEWdEi+KjRfok
-	 9Tfu+vwOOXYGXueJQ1n2/AbbgkCG2u8oFLTODfCufvNoG4HzxTuB8Ad/f8UFiXrpOI
-	 8bjddG6eunIjgOg/yRvEON8i0HJJW1JOPHbPPxh8=
+	b=rHQ4DIC+XUApDr5EN0ZM4yvs667pwT0jq3xxjpjZRY0CjmTXuTdj6hn2TMx4kFusH
+	 zzhPVFKSa/gsKcy0h6xTL7KT7TkdO0PfXX9y3b64laCyJEhakJIyDInlwrVGpSoORN
+	 A6c3RKMVdFaM7QUqYilwoAfbSdcKUyUQKth5r6tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinhyung Kang <s47.kang@samsung.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	alsa-devel@alsa-project.org,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0717/1001] ASoC: soc-compress: Reposition and add pcm_mutex
-Date: Tue,  7 Mar 2023 17:58:09 +0100
-Message-Id: <20230307170052.779221226@linuxfoundation.org>
+Subject: [PATCH 6.2 0718/1001] ASoC: kirkwood: Iterate over array indexes instead of using pointer math
+Date: Tue,  7 Mar 2023 17:58:10 +0100
+Message-Id: <20230307170052.822495610@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,131 +39,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: 강신형 <s47.kang@samsung.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit aa9ff6a4955fdba02b54fbc4386db876603703b7 ]
+[ Upstream commit b3bcedc0402fcdc5c8624c433562d9d1882749d8 ]
 
-If panic_on_warn is set and compress stream(DPCM) is started,
-then kernel panic occurred because card->pcm_mutex isn't held appropriately.
-In the following functions, warning were issued at this line
-"snd_soc_dpcm_mutex_assert_held".
+Walking the dram->cs array was seen as accesses beyond the first array
+item by the compiler. Instead, use the array index directly. This allows
+for run-time bounds checking under CONFIG_UBSAN_BOUNDS as well. Seen
+with GCC 13 with -fstrict-flex-arrays:
 
-static int dpcm_be_connect(struct snd_soc_pcm_runtime *fe,
-		struct snd_soc_pcm_runtime *be, int stream)
-{
-	...
-	snd_soc_dpcm_mutex_assert_held(fe);
-	...
-}
+../sound/soc/kirkwood/kirkwood-dma.c: In function
+'kirkwood_dma_conf_mbus_windows.constprop':
+../sound/soc/kirkwood/kirkwood-dma.c:90:24: warning: array subscript 0 is outside array bounds of 'const struct mbus_dram_window[0]' [-Warray-bounds=]
+   90 |                 if ((cs->base & 0xffff0000) < (dma & 0xffff0000)) {
+      |                      ~~^~~~~~
 
-void dpcm_be_disconnect(struct snd_soc_pcm_runtime *fe, int stream)
-{
-	...
-	snd_soc_dpcm_mutex_assert_held(fe);
-	...
-}
-
-void snd_soc_runtime_action(struct snd_soc_pcm_runtime *rtd,
-			    int stream, int action)
-{
-	...
-	snd_soc_dpcm_mutex_assert_held(rtd);
-	...
-}
-
-int dpcm_dapm_stream_event(struct snd_soc_pcm_runtime *fe, int dir,
-	int event)
-{
-	...
-	snd_soc_dpcm_mutex_assert_held(fe);
-	...
-}
-
-These functions are called by soc_compr_set_params_fe, soc_compr_open_fe
-and soc_compr_free_fe
-without pcm_mutex locking. And this is call stack.
-
-[  414.527841][ T2179] pc : dpcm_process_paths+0x5a4/0x750
-[  414.527848][ T2179] lr : dpcm_process_paths+0x37c/0x750
-[  414.527945][ T2179] Call trace:
-[  414.527949][ T2179]  dpcm_process_paths+0x5a4/0x750
-[  414.527955][ T2179]  soc_compr_open_fe+0xb0/0x2cc
-[  414.527972][ T2179]  snd_compr_open+0x180/0x248
-[  414.527981][ T2179]  snd_open+0x15c/0x194
-[  414.528003][ T2179]  chrdev_open+0x1b0/0x220
-[  414.528023][ T2179]  do_dentry_open+0x30c/0x594
-[  414.528045][ T2179]  vfs_open+0x34/0x44
-[  414.528053][ T2179]  path_openat+0x914/0xb08
-[  414.528062][ T2179]  do_filp_open+0xc0/0x170
-[  414.528068][ T2179]  do_sys_openat2+0x94/0x18c
-[  414.528076][ T2179]  __arm64_sys_openat+0x78/0xa4
-[  414.528084][ T2179]  invoke_syscall+0x48/0x10c
-[  414.528094][ T2179]  el0_svc_common+0xbc/0x104
-[  414.528099][ T2179]  do_el0_svc+0x34/0xd8
-[  414.528103][ T2179]  el0_svc+0x34/0xc4
-[  414.528125][ T2179]  el0t_64_sync_handler+0x8c/0xfc
-[  414.528133][ T2179]  el0t_64_sync+0x1a0/0x1a4
-[  414.528142][ T2179] Kernel panic - not syncing: panic_on_warn set ...
-
-So, I reposition and add pcm_mutex to resolve lockdep error.
-
-Signed-off-by: Shinhyung Kang <s47.kang@samsung.com>
-Link: https://lore.kernel.org/r/016401d90ac4$7b6848c0$7238da40$@samsung.com
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: alsa-devel@alsa-project.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230127224128.never.410-kees@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-compress.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/soc/kirkwood/kirkwood-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/soc-compress.c b/sound/soc/soc-compress.c
-index cb0ed2fea893a..e7aa6f360cabe 100644
---- a/sound/soc/soc-compress.c
-+++ b/sound/soc/soc-compress.c
-@@ -149,6 +149,8 @@ static int soc_compr_open_fe(struct snd_compr_stream *cstream)
- 	if (ret < 0)
- 		goto be_err;
+diff --git a/sound/soc/kirkwood/kirkwood-dma.c b/sound/soc/kirkwood/kirkwood-dma.c
+index 700a18561a940..640cebd2983e2 100644
+--- a/sound/soc/kirkwood/kirkwood-dma.c
++++ b/sound/soc/kirkwood/kirkwood-dma.c
+@@ -86,7 +86,7 @@ kirkwood_dma_conf_mbus_windows(void __iomem *base, int win,
  
-+	mutex_lock_nested(&fe->card->pcm_mutex, fe->card->pcm_subclass);
-+
- 	/* calculate valid and active FE <-> BE dpcms */
- 	dpcm_process_paths(fe, stream, &list, 1);
- 	fe->dpcm[stream].runtime = fe_substream->runtime;
-@@ -184,7 +186,6 @@ static int soc_compr_open_fe(struct snd_compr_stream *cstream)
- 	fe->dpcm[stream].state = SND_SOC_DPCM_STATE_OPEN;
- 	fe->dpcm[stream].runtime_update = SND_SOC_DPCM_UPDATE_NO;
- 
--	mutex_lock_nested(&fe->card->pcm_mutex, fe->card->pcm_subclass);
- 	snd_soc_runtime_activate(fe, stream);
- 	mutex_unlock(&fe->card->pcm_mutex);
- 
-@@ -215,7 +216,6 @@ static int soc_compr_free_fe(struct snd_compr_stream *cstream)
- 
- 	mutex_lock_nested(&fe->card->pcm_mutex, fe->card->pcm_subclass);
- 	snd_soc_runtime_deactivate(fe, stream);
--	mutex_unlock(&fe->card->pcm_mutex);
- 
- 	fe->dpcm[stream].runtime_update = SND_SOC_DPCM_UPDATE_FE;
- 
-@@ -234,6 +234,8 @@ static int soc_compr_free_fe(struct snd_compr_stream *cstream)
- 
- 	dpcm_be_disconnect(fe, stream);
- 
-+	mutex_unlock(&fe->card->pcm_mutex);
-+
- 	fe->dpcm[stream].runtime = NULL;
- 
- 	snd_soc_link_compr_shutdown(cstream, 0);
-@@ -409,8 +411,9 @@ static int soc_compr_set_params_fe(struct snd_compr_stream *cstream,
- 	ret = snd_soc_link_compr_set_params(cstream);
- 	if (ret < 0)
- 		goto out;
--
-+	mutex_lock_nested(&fe->card->pcm_mutex, fe->card->pcm_subclass);
- 	dpcm_dapm_stream_event(fe, stream, SND_SOC_DAPM_STREAM_START);
-+	mutex_unlock(&fe->card->pcm_mutex);
- 	fe->dpcm[stream].state = SND_SOC_DPCM_STATE_PREPARE;
- 
- out:
+ 	/* try to find matching cs for current dma address */
+ 	for (i = 0; i < dram->num_cs; i++) {
+-		const struct mbus_dram_window *cs = dram->cs + i;
++		const struct mbus_dram_window *cs = &dram->cs[i];
+ 		if ((cs->base & 0xffff0000) < (dma & 0xffff0000)) {
+ 			writel(cs->base & 0xffff0000,
+ 				base + KIRKWOOD_AUDIO_WIN_BASE_REG(win));
 -- 
 2.39.2
 
