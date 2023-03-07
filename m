@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB35AD5F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:06:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB6BC433D2;
-	Tue,  7 Mar 2023 17:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC05CBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:06:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE87C433EF;
+	Tue,  7 Mar 2023 17:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678208785;
-	bh=ST8dCG7vZmKlo5us2tUSvMoug+d0AKP+ryIb39k85YQ=;
+	s=korg; t=1678208788;
+	bh=wf38QDd2OYKI9xDGBcBXnxVnRUb8XvnV58YUUEfQt4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7xvUDbZGVhCTfvN14+6tpdN1QVuRYzJgv6pb1ekJxnv0KdVZ+PEMEo0AaJy78Laz
-	 u5OkHurRYQaGStwmy1HwBEHhZ+q5NFkg7mQSNmJTourtjpfMmdZ76zYf4nUUsLzvjI
-	 QtWc49Fs1bVpwTnBTbRVaDdIH0Vkk0ib+zdkQGg8=
+	b=NbslyvkFuYrV2fWxrB/zIz8IaKqw0NRk+13e7oAILDvxpjHlQ65vWG4MEu5xQ9Vzq
+	 yg2GxDwJph15kn+P8ULe4+dqvcEqpg7ZsBYTIeLhQCADy2vsumU4PlYoku3c0dtDZC
+	 dEt/hyqdqC2CuLy/dcKV3t5/HPKoXEO0uOu9E26o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0010/1001] arm64: dts: qcom: qcs404: use symbol names for PCIe resets
-Date: Tue,  7 Mar 2023 17:46:22 +0100
-Message-Id: <20230307170022.587757393@linuxfoundation.org>
+Subject: [PATCH 6.2 0011/1001] arm64: dts: qcom: msm8996-tone: Fix USB taking 6 minutes to wake up
+Date: Tue,  7 Mar 2023 17:46:23 +0100
+Message-Id: <20230307170022.633519847@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,56 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 41a37d157a613444c97e8f71a5fb2a21116b70d7 ]
+[ Upstream commit 43069b9cd358aebc692e654de91ee06ff66e26af ]
 
-The commit e5bbbff5b7d7 ("clk: gcc-qcs404: Add PCIe resets") added names
-for PCIe resets, but it did not change the existing qcs404.dtsi to use
-these names. Do it now and use symbol names to make it easier to check
-and modify the dtsi in future.
+The hardware turns out to be pretty sluggish at assuming it can only
+do USB2 with just a USB2 phy assigned to it - before it needed about
+6 minutes to acknowledge that.
 
-Fixes: e5bbbff5b7d7 ("clk: gcc-qcs404: Add PCIe resets")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Limit it to USB-HS explicitly to make USB come up about 720x faster.
+
+Fixes: 9da65e441d4d ("arm64: dts: qcom: Add support for SONY Xperia X Performance / XZ / XZs (msm8996, Tone platform)")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221226042154.2666748-14-dmitry.baryshkov@linaro.org
+Link: https://lore.kernel.org/r/20221124220147.102611-1-konrad.dybcio@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcs404.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index a5324eecb50a9..502dd6db491e2 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -806,7 +806,7 @@ pcie_phy: phy@7786000 {
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
+index dec361b93ccea..be62899edf8e3 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
+@@ -943,10 +943,6 @@ touch_int_sleep: touch-int-sleep-state {
+ 	};
+ };
  
- 			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>;
- 			resets = <&gcc GCC_PCIEPHY_0_PHY_BCR>,
--				 <&gcc 21>;
-+				 <&gcc GCC_PCIE_0_PIPE_ARES>;
- 			reset-names = "phy", "pipe";
- 
- 			clock-output-names = "pcie_0_pipe_clk";
-@@ -1336,12 +1336,12 @@ pcie: pci@10000000 {
- 				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>;
- 			clock-names = "iface", "aux", "master_bus", "slave_bus";
- 
--			resets = <&gcc 18>,
--				 <&gcc 17>,
--				 <&gcc 15>,
--				 <&gcc 19>,
-+			resets = <&gcc GCC_PCIE_0_AXI_MASTER_ARES>,
-+				 <&gcc GCC_PCIE_0_AXI_SLAVE_ARES>,
-+				 <&gcc GCC_PCIE_0_AXI_MASTER_STICKY_ARES>,
-+				 <&gcc GCC_PCIE_0_CORE_STICKY_ARES>,
- 				 <&gcc GCC_PCIE_0_BCR>,
--				 <&gcc 16>;
-+				 <&gcc GCC_PCIE_0_AHB_ARES>;
- 			reset-names = "axi_m",
- 				      "axi_s",
- 				      "axi_m_sticky",
+-/*
+- * For reasons that are currently unknown (but probably related to fusb301), USB takes about
+- * 6 minutes to wake up (nothing interesting in kernel logs), but then it works as it should.
+- */
+ &usb3 {
+ 	status = "okay";
+ 	qcom,select-utmi-as-pipe-clk;
+@@ -955,6 +951,7 @@ &usb3 {
+ &usb3_dwc3 {
+ 	extcon = <&usb3_id>;
+ 	dr_mode = "peripheral";
++	maximum-speed = "high-speed";
+ 	phys = <&hsusb_phy1>;
+ 	phy-names = "usb2-phy";
+ 	snps,hird-threshold = /bits/ 8 <0>;
 -- 
 2.39.2
 
