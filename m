@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D98BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:26:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FD7BC433EF;
-	Tue,  7 Mar 2023 18:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59D3BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:26:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479DAC4339B;
+	Tue,  7 Mar 2023 18:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213608;
-	bh=/cD+OMKL6GnvFIBsYmlbDkHeh24XybtdMR33/9MU0B0=;
+	s=korg; t=1678213611;
+	bh=DK72REUFYDwfSdx2BvqmMqv8vFgeCV7k36eZc41VOy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lxkgle0lBeu0v3cSW/R3QLxRwpesC360lM65JbMXf4bkXpvxK8U3rhP8Rl0H5jTx+
-	 iNUQ9PII30qtT2wrDiQNGfQHviotFjck/+vXK9JGM9Km13U9fQrx7+a5tgkGJbBHjL
-	 86mYqm6SAsEhjPvuBTvW28WcmciIWEo+/J1CRlfA=
+	b=iUMSRb0QFHPZPjQfpYipmsDWMQki9tKs0IZOI0HPuYEWRJWYi2pZRKYREvuBj7MSR
+	 r/01iddLTle4AIiJMemv8Ik/IeuvN1eSsCDvgN3IJkDOUXP3ikqrTCeMghO8MQv2Ac
+	 AlzpORU0e02wQ7fL0mkGFSWj3VwCrVbejMjxVkKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddaraju DH <siddaraju.dh@intel.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Gurucharan G <gurucharanx.g@intel.com>
-Subject: [PATCH 6.1 561/885] ice: restrict PTP HW clock freq adjustments to 100, 000, 000 PPB
-Date: Tue,  7 Mar 2023 17:58:15 +0100
-Message-Id: <20230307170026.824682530@linuxfoundation.org>
+Subject: [PATCH 6.1 562/885] ice: add missing checks for PF vsi type
+Date: Tue,  7 Mar 2023 17:58:16 +0100
+Message-Id: <20230307170026.866801838@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,55 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siddaraju DH <siddaraju.dh@intel.com>
+From: Jesse Brandeburg <jesse.brandeburg@intel.com>
 
-[ Upstream commit 8aa4318c3a122b8670bc09af142de3872ca63b88 ]
+[ Upstream commit 6a8d013e904ad9a66706fcc926ec9993bed7d190 ]
 
-The PHY provides only 39b timestamp. With current timing
-implementation, we discard lower 7b, leaving 32b timestamp.
-The driver reconstructs the full 64b timestamp by correlating the
-32b timestamp with cached_time for performance. The reconstruction
-algorithm does both forward & backward interpolation.
+There were a few places we had missed checking the VSI type to make sure
+it was definitely a PF VSI, before calling setup functions intended only
+for the PF VSI.
 
-The 32b timeval has overflow duration of 2^32 counts ~= 4.23 second.
-Due to interpolation in both direction, its now ~= 2.125 second
-IIRC, going with at least half a duration, the cached_time is updated
-with periodic thread of 1 second (worst-case) periodicity.
+This doesn't fix any explicit bugs but cleans up the code in a few
+places and removes one explicit != vsi->type check that can be
+superseded by this code (it's a super set)
 
-But the 1 second periodicity is based on System-timer.
-With PPB adjustments, if the 1588 timers increments at say
-double the rate, (2s in-place of 1s), the Nyquist rate/half duration
-sampling/update of cached_time with 1 second periodic thread will
-lead to incorrect interpolations.
-
-Hence we should restrict the PPB adjustments to at least half duration
-of cached_time update which translates to 500,000,000 PPB.
-
-Since the periodicity of the cached-time system thread can vary,
-it is good to have some buffer time and considering practicality of
-PPB adjustments, limiting the max_adj to 100,000,000.
-
-Signed-off-by: Siddaraju DH <siddaraju.dh@intel.com>
+Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
 Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index 53fec5bbe6e00..a3585ede829bb 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -2293,7 +2293,7 @@ static void ice_ptp_set_caps(struct ice_pf *pf)
- 	snprintf(info->name, sizeof(info->name) - 1, "%s-%s-clk",
- 		 dev_driver_string(dev), dev_name(dev));
- 	info->owner = THIS_MODULE;
--	info->max_adj = 999999999;
-+	info->max_adj = 100000000;
- 	info->adjtime = ice_ptp_adjtime;
- 	info->adjfine = ice_ptp_adjfine;
- 	info->gettimex64 = ice_ptp_gettimex64;
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 72f97bb50b09c..3c6bb3f9ac780 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -6159,15 +6159,12 @@ int ice_vsi_cfg(struct ice_vsi *vsi)
+ {
+ 	int err;
+ 
+-	if (vsi->netdev) {
++	if (vsi->netdev && vsi->type == ICE_VSI_PF) {
+ 		ice_set_rx_mode(vsi->netdev);
+ 
+-		if (vsi->type != ICE_VSI_LB) {
+-			err = ice_vsi_vlan_setup(vsi);
+-
+-			if (err)
+-				return err;
+-		}
++		err = ice_vsi_vlan_setup(vsi);
++		if (err)
++			return err;
+ 	}
+ 	ice_vsi_cfg_dcb_rings(vsi);
+ 
+@@ -6348,7 +6345,7 @@ static int ice_up_complete(struct ice_vsi *vsi)
+ 
+ 	if (vsi->port_info &&
+ 	    (vsi->port_info->phy.link_info.link_info & ICE_AQ_LINK_UP) &&
+-	    vsi->netdev) {
++	    vsi->netdev && vsi->type == ICE_VSI_PF) {
+ 		ice_print_link_msg(vsi, true);
+ 		netif_tx_start_all_queues(vsi->netdev);
+ 		netif_carrier_on(vsi->netdev);
+@@ -6360,7 +6357,9 @@ static int ice_up_complete(struct ice_vsi *vsi)
+ 	 * set the baseline so counters are ready when interface is up
+ 	 */
+ 	ice_update_eth_stats(vsi);
+-	ice_service_task_schedule(pf);
++
++	if (vsi->type == ICE_VSI_PF)
++		ice_service_task_schedule(pf);
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
