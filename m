@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AF7BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:28:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DDBC433EF;
-	Tue,  7 Mar 2023 17:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A139BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:28:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3D1C433D2;
+	Tue,  7 Mar 2023 17:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210097;
-	bh=+kcsqaMX+gi+FIq0V5brIxF2J6mu4X5y6jf8toCIXpY=;
+	s=korg; t=1678210100;
+	bh=FhsPD37uhCaYegaZVO0Wd6at01E0tB2o3+l5rgJBV+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vtXloWHfxurm3yTJcFgJMMXxWYfsnTKkFc4gpvaGU2Hny3PivTnqXDpzzMjb1iLrC
-	 R2AjwSPMLtu4bvva0vr7ZvjxewFEiiRAvEBYmTmeCuy7fdjNFW3Inj9y6M82egOuke
-	 rcJ9aKuRkqn8ysyEuMF3Vi9lTj+qY5WKTcqi1U/A=
+	b=OMDQQsdSy8LZAlzdfXe6rjLxpreINrVPdYFRIBORiaOfk7+MxkLNsZCBdea2uQels
+	 N8VSYXQkunAe/EyAKuwr9seTpIU/yT09XV5LfcIVxlJqDtAto0UTzX4GFMmAlBynrZ
+	 f2+fEC0kEKjcgc0rdUEL29jwvudTkCnJLDHyiXIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0424/1001] ASoC: qcom: q6apm-lpass-dai: unprepare stream if its already prepared
-Date: Tue,  7 Mar 2023 17:53:16 +0100
-Message-Id: <20230307170039.756247832@linuxfoundation.org>
+Subject: [PATCH 6.2 0433/1001] hwmon: (mlxreg-fan) Return zero speed for broken fan
+Date: Tue,  7 Mar 2023 17:53:25 +0100
+Message-Id: <20230307170040.149997775@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,41 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Vadim Pasternak <vadimp@nvidia.com>
 
-[ Upstream commit c2ac3aec474da0455df79c4a182f19687bc98d1d ]
+[ Upstream commit a1ffd3c46267ee5c807acd780e15df9bb692223f ]
 
-prepare callback can be called multiple times, so unprepare the stream
-if its already prepared.
+Currently for broken fan driver returns value calculated based on error
+code (0xFF) in related fan speed register.
+Thus, for such fan user gets fan{n}_fault to 1 and fan{n}_input with
+misleading value.
 
-Without this DSP is not happy to setting the params on a already
-prepared graph.
+Add check for fan fault prior return speed value and return zero if
+fault is detected.
 
-Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230209122806.18923-2-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 65afb4c8e7e4 ("hwmon: (mlxreg-fan) Add support for Mellanox FAN driver")
+Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
+Link: https://lore.kernel.org/r/20230212145730.24247-1-vadimp@nvidia.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-lpass-dais.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/hwmon/mlxreg-fan.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-index ce9e5646d8f3a..23d23bc6fbaa7 100644
---- a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-@@ -127,6 +127,11 @@ static int q6apm_lpass_dai_prepare(struct snd_pcm_substream *substream, struct s
- 	int graph_id = dai->id;
- 	int rc;
+diff --git a/drivers/hwmon/mlxreg-fan.c b/drivers/hwmon/mlxreg-fan.c
+index b48bd7c961d66..96017cc8da7ec 100644
+--- a/drivers/hwmon/mlxreg-fan.c
++++ b/drivers/hwmon/mlxreg-fan.c
+@@ -155,6 +155,12 @@ mlxreg_fan_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+ 			if (err)
+ 				return err;
  
-+	if (dai_data->is_port_started[dai->id]) {
-+		q6apm_graph_stop(dai_data->graph[dai->id]);
-+		dai_data->is_port_started[dai->id] = false;
-+	}
++			if (MLXREG_FAN_GET_FAULT(regval, tacho->mask)) {
++				/* FAN is broken - return zero for FAN speed. */
++				*val = 0;
++				return 0;
++			}
 +
- 	/**
- 	 * It is recommend to load DSP with source graph first and then sink
- 	 * graph, so sequence for playback and capture will be different
+ 			*val = MLXREG_FAN_GET_RPM(regval, fan->divider,
+ 						  fan->samples);
+ 			break;
 -- 
 2.39.2
 
