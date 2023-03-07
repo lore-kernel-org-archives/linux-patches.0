@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D79BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF2EC433EF;
-	Tue,  7 Mar 2023 17:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4278ABA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE731C433D2;
+	Tue,  7 Mar 2023 17:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211101;
-	bh=euUxiKwP+1pbufyhQM4OyDNkBa6a7IsDvu6FGiGWhWQ=;
+	s=korg; t=1678211104;
+	bh=w8mf7b/lIn8fDpmJwDEQoQ111ClNbVEW2QmL5/KYuME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1o7n0gmODR0/AhqC3IgtSil8UVH7FVnNHhlljZcc4aY3SwV9TfJfvqNm5/yEOy7ix
-	 BgOsdrVqX8H8ePDclTQoh64Hkmuswi7lxOUJZbNmOJrv0s4i1DiYUsysMpLyA7YE25
-	 ExqE183QgnLzypHklF4pjmteVATq3Q7CeS4rkFYw=
+	b=tiRmEG5LFbCoAlaUuchw9SWkzcsE4QZBrJknPloJGeylS/fA6PiCCc6Y40o4jDzAk
+	 obDJaOH7yhk+5+bzsdH3ZJ2eWweMgRIBGg/+ZcXI8cBXsxOXutDI+cQwvHf9mQH6s4
+	 V6w20zKBBNLs4lMhtxdlnPaDjREnxsHsN6nab/LA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH 6.2 0752/1001] ipmi_ssif: Rename idle state and check
-Date: Tue,  7 Mar 2023 17:58:44 +0100
-Message-Id: <20230307170054.342601292@linuxfoundation.org>
+Subject: [PATCH 6.2 0753/1001] ipmi:ssif: Add a timer between request retries
+Date: Tue,  7 Mar 2023 17:58:45 +0100
+Message-Id: <20230307170054.390670488@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,191 +35,128 @@ Content-Transfer-Encoding: 8bit
 
 From: Corey Minyard <cminyard@mvista.com>
 
-commit 8230831c43a328c2be6d28c65d3f77e14c59986b upstream.
+commit 00bb7e763ec9f384cb382455cb6ba5588b5375cf upstream.
 
-Rename the SSIF_IDLE() to IS_SSIF_IDLE(), since that is more clear, and
-rename SSIF_NORMAL to SSIF_IDLE, since that's more accurate.
+The IPMI spec has a time (T6) specified between request retries.  Add
+the handling for that.
 
+Reported by: Tony Camuso <tcamuso@redhat.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Corey Minyard <cminyard@mvista.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c |   46 +++++++++++++++++++++---------------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ drivers/char/ipmi/ipmi_ssif.c |   34 +++++++++++++++++++++++++++-------
+ 1 file changed, 27 insertions(+), 7 deletions(-)
 
 --- a/drivers/char/ipmi/ipmi_ssif.c
 +++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -92,7 +92,7 @@
- #define SSIF_WATCH_WATCHDOG_TIMEOUT	msecs_to_jiffies(250)
- 
- enum ssif_intf_state {
--	SSIF_NORMAL,
-+	SSIF_IDLE,
- 	SSIF_GETTING_FLAGS,
- 	SSIF_GETTING_EVENTS,
- 	SSIF_CLEARING_FLAGS,
-@@ -100,8 +100,8 @@ enum ssif_intf_state {
- 	/* FIXME - add watchdog stuff. */
- };
- 
--#define SSIF_IDLE(ssif)	 ((ssif)->ssif_state == SSIF_NORMAL \
--			  && (ssif)->curr_msg == NULL)
-+#define IS_SSIF_IDLE(ssif) ((ssif)->ssif_state == SSIF_IDLE \
-+			    && (ssif)->curr_msg == NULL)
- 
+@@ -74,7 +74,8 @@
  /*
-  * Indexes into stats[] in ssif_info below.
-@@ -348,9 +348,9 @@ static void return_hosed_msg(struct ssif
- 
- /*
-  * Must be called with the message lock held.  This will release the
-- * message lock.  Note that the caller will check SSIF_IDLE and start a
-- * new operation, so there is no need to check for new messages to
-- * start in here.
-+ * message lock.  Note that the caller will check IS_SSIF_IDLE and
-+ * start a new operation, so there is no need to check for new
-+ * messages to start in here.
+  * Timer values
   */
- static void start_clear_flags(struct ssif_info *ssif_info, unsigned long *flags)
- {
-@@ -367,7 +367,7 @@ static void start_clear_flags(struct ssi
+-#define SSIF_MSG_USEC		60000	/* 60ms between message tries. */
++#define SSIF_MSG_USEC		60000	/* 60ms between message tries (T3). */
++#define SSIF_REQ_RETRY_USEC	60000	/* 60ms between send retries (T6). */
+ #define SSIF_MSG_PART_USEC	5000	/* 5ms for a message part */
  
- 	if (start_send(ssif_info, msg, 3) != 0) {
- 		/* Error, just go to normal state. */
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 	}
- }
+ /* How many times to we retry sending/receiving the message. */
+@@ -82,7 +83,9 @@
+ #define	SSIF_RECV_RETRIES	250
  
-@@ -382,7 +382,7 @@ static void start_flag_fetch(struct ssif
- 	mb[0] = (IPMI_NETFN_APP_REQUEST << 2);
- 	mb[1] = IPMI_GET_MSG_FLAGS_CMD;
- 	if (start_send(ssif_info, mb, 2) != 0)
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- }
- 
- static void check_start_send(struct ssif_info *ssif_info, unsigned long *flags,
-@@ -393,7 +393,7 @@ static void check_start_send(struct ssif
- 
- 		flags = ipmi_ssif_lock_cond(ssif_info, &oflags);
- 		ssif_info->curr_msg = NULL;
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		ipmi_free_smi_msg(msg);
- 	}
-@@ -407,7 +407,7 @@ static void start_event_fetch(struct ssi
- 
- 	msg = ipmi_alloc_smi_msg();
- 	if (!msg) {
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		return;
- 	}
-@@ -430,7 +430,7 @@ static void start_recv_msg_fetch(struct
- 
- 	msg = ipmi_alloc_smi_msg();
- 	if (!msg) {
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		return;
- 	}
-@@ -448,9 +448,9 @@ static void start_recv_msg_fetch(struct
+ #define SSIF_MSG_MSEC		(SSIF_MSG_USEC / 1000)
++#define SSIF_REQ_RETRY_MSEC	(SSIF_REQ_RETRY_USEC / 1000)
+ #define SSIF_MSG_JIFFIES	((SSIF_MSG_USEC * 1000) / TICK_NSEC)
++#define SSIF_REQ_RETRY_JIFFIES	((SSIF_REQ_RETRY_USEC * 1000) / TICK_NSEC)
+ #define SSIF_MSG_PART_JIFFIES	((SSIF_MSG_PART_USEC * 1000) / TICK_NSEC)
  
  /*
-  * Must be called with the message lock held.  This will release the
-- * message lock.  Note that the caller will check SSIF_IDLE and start a
-- * new operation, so there is no need to check for new messages to
-- * start in here.
-+ * message lock.  Note that the caller will check IS_SSIF_IDLE and
-+ * start a new operation, so there is no need to check for new
-+ * messages to start in here.
-  */
- static void handle_flags(struct ssif_info *ssif_info, unsigned long *flags)
- {
-@@ -466,7 +466,7 @@ static void handle_flags(struct ssif_inf
- 		/* Events available. */
- 		start_event_fetch(ssif_info, flags);
- 	else {
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 	}
+@@ -229,6 +232,9 @@ struct ssif_info {
+ 	bool		    got_alert;
+ 	bool		    waiting_alert;
+ 
++	/* Used to inform the timeout that it should do a resend. */
++	bool		    do_resend;
++
+ 	/*
+ 	 * If set to true, this will request events the next time the
+ 	 * state machine is idle.
+@@ -538,22 +544,28 @@ static void start_get(struct ssif_info *
+ 		  ssif_info->recv, I2C_SMBUS_BLOCK_DATA);
  }
-@@ -568,7 +568,7 @@ static void watch_timeout(struct timer_l
- 	if (ssif_info->watch_timeout) {
- 		mod_timer(&ssif_info->watch_timer,
- 			  jiffies + ssif_info->watch_timeout);
--		if (SSIF_IDLE(ssif_info)) {
-+		if (IS_SSIF_IDLE(ssif_info)) {
- 			start_flag_fetch(ssif_info, flags); /* Releases lock */
- 			return;
- 		}
-@@ -756,7 +756,7 @@ static void msg_done_handler(struct ssif
- 	}
  
- 	switch (ssif_info->ssif_state) {
--	case SSIF_NORMAL:
-+	case SSIF_IDLE:
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		if (!msg)
- 			break;
-@@ -774,7 +774,7 @@ static void msg_done_handler(struct ssif
- 			 * Error fetching flags, or invalid length,
- 			 * just give up for now.
- 			 */
--			ssif_info->ssif_state = SSIF_NORMAL;
-+			ssif_info->ssif_state = SSIF_IDLE;
- 			ipmi_ssif_unlock_cond(ssif_info, flags);
- 			dev_warn(&ssif_info->client->dev,
- 				 "Error getting flags: %d %d, %x\n",
-@@ -809,7 +809,7 @@ static void msg_done_handler(struct ssif
- 				 "Invalid response clearing flags: %x %x\n",
- 				 data[0], data[1]);
- 		}
--		ssif_info->ssif_state = SSIF_NORMAL;
-+		ssif_info->ssif_state = SSIF_IDLE;
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		break;
++static void start_resend(struct ssif_info *ssif_info);
++
+ static void retry_timeout(struct timer_list *t)
+ {
+ 	struct ssif_info *ssif_info = from_timer(ssif_info, t, retry_timer);
+ 	unsigned long oflags, *flags;
+-	bool waiting;
++	bool waiting, resend;
  
-@@ -887,7 +887,7 @@ static void msg_done_handler(struct ssif
- 	}
+ 	if (ssif_info->stopping)
+ 		return;
  
  	flags = ipmi_ssif_lock_cond(ssif_info, &oflags);
--	if (SSIF_IDLE(ssif_info) && !ssif_info->stopping) {
-+	if (IS_SSIF_IDLE(ssif_info) && !ssif_info->stopping) {
- 		if (ssif_info->req_events)
- 			start_event_fetch(ssif_info, flags);
- 		else if (ssif_info->req_flags)
-@@ -1032,7 +1032,7 @@ static void start_next_msg(struct ssif_i
- 	unsigned long oflags;
++	resend = ssif_info->do_resend;
++	ssif_info->do_resend = false;
+ 	waiting = ssif_info->waiting_alert;
+ 	ssif_info->waiting_alert = false;
+ 	ipmi_ssif_unlock_cond(ssif_info, flags);
  
-  restart:
--	if (!SSIF_IDLE(ssif_info)) {
-+	if (!IS_SSIF_IDLE(ssif_info)) {
- 		ipmi_ssif_unlock_cond(ssif_info, flags);
- 		return;
+ 	if (waiting)
+ 		start_get(ssif_info);
++	if (resend)
++		start_resend(ssif_info);
+ }
+ 
+ static void watch_timeout(struct timer_list *t)
+@@ -602,8 +614,6 @@ static void ssif_alert(struct i2c_client
+ 		start_get(ssif_info);
+ }
+ 
+-static void start_resend(struct ssif_info *ssif_info);
+-
+ static void msg_done_handler(struct ssif_info *ssif_info, int result,
+ 			     unsigned char *data, unsigned int len)
+ {
+@@ -909,7 +919,13 @@ static void msg_written_handler(struct s
+ 	if (result < 0) {
+ 		ssif_info->retries_left--;
+ 		if (ssif_info->retries_left > 0) {
+-			start_resend(ssif_info);
++			/*
++			 * Wait the retry timeout time per the spec,
++			 * then redo the send.
++			 */
++			ssif_info->do_resend = true;
++			mod_timer(&ssif_info->retry_timer,
++				  jiffies + SSIF_REQ_RETRY_JIFFIES);
+ 			return;
+ 		}
+ 
+@@ -1320,8 +1336,10 @@ static int do_cmd(struct i2c_client *cli
+ 	ret = i2c_smbus_write_block_data(client, SSIF_IPMI_REQUEST, len, msg);
+ 	if (ret) {
+ 		retry_cnt--;
+-		if (retry_cnt > 0)
++		if (retry_cnt > 0) {
++			msleep(SSIF_REQ_RETRY_MSEC);
+ 			goto retry1;
++		}
+ 		return -ENODEV;
  	}
-@@ -1255,7 +1255,7 @@ static void shutdown_ssif(void *send_inf
- 	dev_set_drvdata(&ssif_info->client->dev, NULL);
  
- 	/* make sure the driver is not looking for flags any more. */
--	while (ssif_info->ssif_state != SSIF_NORMAL)
-+	while (ssif_info->ssif_state != SSIF_IDLE)
- 		schedule_timeout(1);
- 
- 	ssif_info->stopping = true;
-@@ -1825,7 +1825,7 @@ static int ssif_probe(struct i2c_client
+@@ -1462,8 +1480,10 @@ retry_write:
+ 					 32, msg);
+ 	if (ret) {
+ 		retry_cnt--;
+-		if (retry_cnt > 0)
++		if (retry_cnt > 0) {
++			msleep(SSIF_REQ_RETRY_MSEC);
+ 			goto retry_write;
++		}
+ 		dev_err(&client->dev, "Could not write multi-part start, though the BMC said it could handle it.  Just limit sends to one part.\n");
+ 		return ret;
  	}
- 
- 	spin_lock_init(&ssif_info->lock);
--	ssif_info->ssif_state = SSIF_NORMAL;
-+	ssif_info->ssif_state = SSIF_IDLE;
- 	timer_setup(&ssif_info->retry_timer, retry_timeout, 0);
- 	timer_setup(&ssif_info->watch_timer, watch_timeout, 0);
- 
 
 
