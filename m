@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E83BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:28:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15FE1C433A1;
-	Tue,  7 Mar 2023 18:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64DBBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:28:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2812DC433EF;
+	Tue,  7 Mar 2023 18:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213692;
-	bh=0UrN5Ya4jNeVaBqvPSKD6LjakYrw8VQiuRe0x97UxME=;
+	s=korg; t=1678213695;
+	bh=Lm82ebFm2qYNzcZJIZnTcs+9rXjIc8uyrsa6jIsuAdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X9R+7CNj5sn5T21//MwJ8funO3DXaWTJ2RTEbtTMRmQQcoaWJeKqkBZLWtgKBe3uo
-	 IrdR9p+T3aUXu962g321x36xI9Xt4qeIurbUz10fMaVr3yZIw0B1GkPNbGxhpmUOkk
-	 LkHU1gP4iSta1TxhMbsjLFk2Dm/Y/4u3aU5deWCk=
+	b=V/hHx3IoxSQZgRUcFnld0DTKQtVxCRUA4o+nLIWlpojXlkxJB214hRjxFX6Tng6bj
+	 63t6FsPfklt/A+nqYKtRSfm6/+9HnVr5MsMB69ad8HLv5L7CUZby8j/O/VUTJSK1pf
+	 D6h1MfCvFufhkP7SMQnvdChQbz6PqjiPPD1N8Jo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Baoquan He <bhe@redhat.com>,
+	Alexander Potapenko <glider@google.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 588/885] hv_netvsc: Check status in SEND_RNDIS_PKT completion message
-Date: Tue,  7 Mar 2023 17:58:42 +0100
-Message-Id: <20230307170027.933276710@linuxfoundation.org>
+Subject: [PATCH 6.1 589/885] s390/kfence: fix page fault reporting
+Date: Tue,  7 Mar 2023 17:58:43 +0100
+Message-Id: <20230307170027.971674223@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,62 +36,172 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit dca5161f9bd052e9e73be90716ffd57e8762c697 ]
+[ Upstream commit d9c2cf67b9cfd643ba85d51bc865a89a92e4f979 ]
 
-Completion responses to SEND_RNDIS_PKT messages are currently processed
-regardless of the status in the response, so that resources associated
-with the request are freed.  While this is appropriate, code bugs that
-cause sending a malformed message, or errors on the Hyper-V host, go
-undetected. Fix this by checking the status and outputting a rate-limited
-message if there is an error.
+Baoquan He reported lots of KFENCE reports when /proc/kcore is read,
+e.g. with crash or even simpler with dd:
 
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Link: https://lore.kernel.org/r/1676264881-48928-1-git-send-email-mikelley@microsoft.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+ BUG: KFENCE: invalid read in copy_from_kernel_nofault+0x5e/0x120
+ Invalid read at 0x00000000f4f5149f:
+  copy_from_kernel_nofault+0x5e/0x120
+  read_kcore+0x6b2/0x870
+  proc_reg_read+0x9a/0xf0
+  vfs_read+0x94/0x270
+  ksys_read+0x70/0x100
+  __do_syscall+0x1d0/0x200
+  system_call+0x82/0xb0
+
+The reason for this is that read_kcore() simply reads memory that might
+have been unmapped by KFENCE with copy_from_kernel_nofault(). Any fault due
+to pages being unmapped by KFENCE would be handled gracefully by the fault
+handler (exception table fixup).
+
+However the s390 fault handler first reports the fault, and only afterwards
+would perform the exception table fixup. Most architectures have this in
+reversed order, which also avoids the false positive KFENCE reports when an
+unmapped page is accessed.
+
+Therefore change the s390 fault handler so it handles exception table
+fixups before KFENCE page faults are reported.
+
+Reported-by: Baoquan He <bhe@redhat.com>
+Tested-by: Baoquan He <bhe@redhat.com>
+Acked-by: Alexander Potapenko <glider@google.com>
+Link: https://lore.kernel.org/r/20230213183858.1473681-1-hca@linux.ibm.com
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hyperv/netvsc.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ arch/s390/mm/fault.c | 49 +++++++++++++++++++++++++++++++-------------
+ 1 file changed, 35 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/hyperv/netvsc.c b/drivers/net/hyperv/netvsc.c
-index 79f4e13620a46..da737d959e81c 100644
---- a/drivers/net/hyperv/netvsc.c
-+++ b/drivers/net/hyperv/netvsc.c
-@@ -851,6 +851,7 @@ static void netvsc_send_completion(struct net_device *ndev,
- 	u32 msglen = hv_pkt_datalen(desc);
- 	struct nvsp_message *pkt_rqst;
- 	u64 cmd_rqst;
-+	u32 status;
+diff --git a/arch/s390/mm/fault.c b/arch/s390/mm/fault.c
+index 9649d9382e0ae..8e84ed2bb944e 100644
+--- a/arch/s390/mm/fault.c
++++ b/arch/s390/mm/fault.c
+@@ -96,6 +96,20 @@ static enum fault_type get_fault_type(struct pt_regs *regs)
+ 	return KERNEL_FAULT;
+ }
  
- 	/* First check if this is a VMBUS completion without data payload */
- 	if (!msglen) {
-@@ -922,6 +923,23 @@ static void netvsc_send_completion(struct net_device *ndev,
- 		break;
++static unsigned long get_fault_address(struct pt_regs *regs)
++{
++	unsigned long trans_exc_code = regs->int_parm_long;
++
++	return trans_exc_code & __FAIL_ADDR_MASK;
++}
++
++static bool fault_is_write(struct pt_regs *regs)
++{
++	unsigned long trans_exc_code = regs->int_parm_long;
++
++	return (trans_exc_code & store_indication) == 0x400;
++}
++
+ static int bad_address(void *p)
+ {
+ 	unsigned long dummy;
+@@ -228,15 +242,26 @@ static noinline void do_sigsegv(struct pt_regs *regs, int si_code)
+ 			(void __user *)(regs->int_parm_long & __FAIL_ADDR_MASK));
+ }
  
- 	case NVSP_MSG1_TYPE_SEND_RNDIS_PKT_COMPLETE:
-+		if (msglen < sizeof(struct nvsp_message_header) +
-+		    sizeof(struct nvsp_1_message_send_rndis_packet_complete)) {
-+			if (net_ratelimit())
-+				netdev_err(ndev, "nvsp_rndis_pkt_complete length too small: %u\n",
-+					   msglen);
+-static noinline void do_no_context(struct pt_regs *regs)
++static noinline void do_no_context(struct pt_regs *regs, vm_fault_t fault)
+ {
++	enum fault_type fault_type;
++	unsigned long address;
++	bool is_write;
++
+ 	if (fixup_exception(regs))
+ 		return;
++	fault_type = get_fault_type(regs);
++	if ((fault_type == KERNEL_FAULT) && (fault == VM_FAULT_BADCONTEXT)) {
++		address = get_fault_address(regs);
++		is_write = fault_is_write(regs);
++		if (kfence_handle_page_fault(address, is_write, regs))
 +			return;
-+		}
-+
-+		/* If status indicates an error, output a message so we know
-+		 * there's a problem. But process the completion anyway so the
-+		 * resources are released.
-+		 */
-+		status = nvsp_packet->msg.v1_msg.send_rndis_pkt_complete.status;
-+		if (status != NVSP_STAT_SUCCESS && net_ratelimit())
-+			netdev_err(ndev, "nvsp_rndis_pkt_complete error status: %x\n",
-+				   status);
-+
- 		netvsc_send_tx_complete(ndev, net_device, incoming_channel,
- 					desc, budget);
++	}
+ 	/*
+ 	 * Oops. The kernel tried to access some bad page. We'll have to
+ 	 * terminate things with extreme prejudice.
+ 	 */
+-	if (get_fault_type(regs) == KERNEL_FAULT)
++	if (fault_type == KERNEL_FAULT)
+ 		printk(KERN_ALERT "Unable to handle kernel pointer dereference"
+ 		       " in virtual kernel address space\n");
+ 	else
+@@ -255,7 +280,7 @@ static noinline void do_low_address(struct pt_regs *regs)
+ 		die (regs, "Low-address protection");
+ 	}
+ 
+-	do_no_context(regs);
++	do_no_context(regs, VM_FAULT_BADACCESS);
+ }
+ 
+ static noinline void do_sigbus(struct pt_regs *regs)
+@@ -286,28 +311,28 @@ static noinline void do_fault_error(struct pt_regs *regs, vm_fault_t fault)
+ 		fallthrough;
+ 	case VM_FAULT_BADCONTEXT:
+ 	case VM_FAULT_PFAULT:
+-		do_no_context(regs);
++		do_no_context(regs, fault);
  		break;
+ 	case VM_FAULT_SIGNAL:
+ 		if (!user_mode(regs))
+-			do_no_context(regs);
++			do_no_context(regs, fault);
+ 		break;
+ 	default: /* fault & VM_FAULT_ERROR */
+ 		if (fault & VM_FAULT_OOM) {
+ 			if (!user_mode(regs))
+-				do_no_context(regs);
++				do_no_context(regs, fault);
+ 			else
+ 				pagefault_out_of_memory();
+ 		} else if (fault & VM_FAULT_SIGSEGV) {
+ 			/* Kernel mode? Handle exceptions or die */
+ 			if (!user_mode(regs))
+-				do_no_context(regs);
++				do_no_context(regs, fault);
+ 			else
+ 				do_sigsegv(regs, SEGV_MAPERR);
+ 		} else if (fault & VM_FAULT_SIGBUS) {
+ 			/* Kernel mode? Handle exceptions or die */
+ 			if (!user_mode(regs))
+-				do_no_context(regs);
++				do_no_context(regs, fault);
+ 			else
+ 				do_sigbus(regs);
+ 		} else
+@@ -334,7 +359,6 @@ static inline vm_fault_t do_exception(struct pt_regs *regs, int access)
+ 	struct mm_struct *mm;
+ 	struct vm_area_struct *vma;
+ 	enum fault_type type;
+-	unsigned long trans_exc_code;
+ 	unsigned long address;
+ 	unsigned int flags;
+ 	vm_fault_t fault;
+@@ -351,9 +375,8 @@ static inline vm_fault_t do_exception(struct pt_regs *regs, int access)
+ 		return 0;
+ 
+ 	mm = tsk->mm;
+-	trans_exc_code = regs->int_parm_long;
+-	address = trans_exc_code & __FAIL_ADDR_MASK;
+-	is_write = (trans_exc_code & store_indication) == 0x400;
++	address = get_fault_address(regs);
++	is_write = fault_is_write(regs);
+ 
+ 	/*
+ 	 * Verify that the fault happened in user space, that
+@@ -364,8 +387,6 @@ static inline vm_fault_t do_exception(struct pt_regs *regs, int access)
+ 	type = get_fault_type(regs);
+ 	switch (type) {
+ 	case KERNEL_FAULT:
+-		if (kfence_handle_page_fault(address, is_write, regs))
+-			return 0;
+ 		goto out;
+ 	case USER_FAULT:
+ 	case GMAP_FAULT:
 -- 
 2.39.2
 
