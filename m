@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D463ABA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:48:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B24DC433EF;
-	Tue,  7 Mar 2023 17:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17830BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:48:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6650AC433D2;
+	Tue,  7 Mar 2023 17:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211314;
-	bh=MKk7juCt+0M4ouX7TnDNTx5y8hTrCFf5DbKG6DZHWzo=;
+	s=korg; t=1678211317;
+	bh=jTs21SMKdKVA1aiWJUsdshor0HxUCtX9Qi+dX/qfiJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DuUJki+oQjDy3AECYdcU+cIi/R7khgxSUwWOSlYU/FRU0+KMf36/o5m7nALVhCco9
-	 Yr5dP8akyn5pL/wXx+yZ9oijMlFLOGDChZk1kpIes+ef+H52490nAt+vruvo2wTV5n
-	 IVmum0OKtfRj4GjJnWAwr97h+deBqxbdzdwULnoc=
+	b=MV7IlYeHaYKWbL5pt6IVQC5yeeVfL7yjD0L2PI0hFJEjggP8G5NU7EKAZI190i+Ar
+	 W3Ly+pH2C32VSiYTaEwoxf1t+hHcXrgnCAwxwTWpCwnCBcFTiq6G1ERseMXusSHlTJ
+	 rSrohjiv1zN8hY1g2BftMHNZsSnNGSHTz6cybh84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E6=9F=B3=E8=8F=81=E5=B3=B0?= <liujingfeng@qianxin.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.2 0821/1001] KVM: Destroy target device if coalesced MMIO unregistration fails
-Date: Tue,  7 Mar 2023 17:59:53 +0100
-Message-Id: <20230307170057.381522110@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Alexandru Matei <alexandru.matei@uipath.com>
+Subject: [PATCH 6.2 0822/1001] KVM: VMX: Fix crash due to uninitialized current_vmcs
+Date: Tue,  7 Mar 2023 17:59:54 +0100
+Message-Id: <20230307170057.428997814@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,71 +34,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Alexandru Matei <alexandru.matei@uipath.com>
 
-commit b1cb1fac22abf102ffeb29dd3eeca208a3869d54 upstream.
+commit 93827a0a36396f2fd6368a54a020f420c8916e9b upstream.
 
-Destroy and free the target coalesced MMIO device if unregistering said
-device fails.  As clearly noted in the code, kvm_io_bus_unregister_dev()
-does not destroy the target device.
+KVM enables 'Enlightened VMCS' and 'Enlightened MSR Bitmap' when running as
+a nested hypervisor on top of Hyper-V. When MSR bitmap is updated,
+evmcs_touch_msr_bitmap function uses current_vmcs per-cpu variable to mark
+that the msr bitmap was changed.
 
-  BUG: memory leak
-  unreferenced object 0xffff888112a54880 (size 64):
-    comm "syz-executor.2", pid 5258, jiffies 4297861402 (age 14.129s)
-    hex dump (first 32 bytes):
-      38 c7 67 15 00 c9 ff ff 38 c7 67 15 00 c9 ff ff  8.g.....8.g.....
-      e0 c7 e1 83 ff ff ff ff 00 30 67 15 00 c9 ff ff  .........0g.....
-    backtrace:
-      [<0000000006995a8a>] kmalloc include/linux/slab.h:556 [inline]
-      [<0000000006995a8a>] kzalloc include/linux/slab.h:690 [inline]
-      [<0000000006995a8a>] kvm_vm_ioctl_register_coalesced_mmio+0x8e/0x3d0 arch/x86/kvm/../../../virt/kvm/coalesced_mmio.c:150
-      [<00000000022550c2>] kvm_vm_ioctl+0x47d/0x1600 arch/x86/kvm/../../../virt/kvm/kvm_main.c:3323
-      [<000000008a75102f>] vfs_ioctl fs/ioctl.c:46 [inline]
-      [<000000008a75102f>] file_ioctl fs/ioctl.c:509 [inline]
-      [<000000008a75102f>] do_vfs_ioctl+0xbab/0x1160 fs/ioctl.c:696
-      [<0000000080e3f669>] ksys_ioctl+0x76/0xa0 fs/ioctl.c:713
-      [<0000000059ef4888>] __do_sys_ioctl fs/ioctl.c:720 [inline]
-      [<0000000059ef4888>] __se_sys_ioctl fs/ioctl.c:718 [inline]
-      [<0000000059ef4888>] __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:718
-      [<000000006444fa05>] do_syscall_64+0x9f/0x4e0 arch/x86/entry/common.c:290
-      [<000000009a4ed50b>] entry_SYSCALL_64_after_hwframe+0x49/0xbe
+vmx_vcpu_create() modifies the msr bitmap via vmx_disable_intercept_for_msr
+-> vmx_msr_bitmap_l01_changed which in the end calls this function. The
+function checks for current_vmcs if it is null but the check is
+insufficient because current_vmcs is not initialized. Because of this, the
+code might incorrectly write to the structure pointed by current_vmcs value
+left by another task. Preemption is not disabled, the current task can be
+preempted and moved to another CPU while current_vmcs is accessed multiple
+times from evmcs_touch_msr_bitmap() which leads to crash.
 
-  BUG: leak checking failed
+The manipulation of MSR bitmaps by callers happens only for vmcs01 so the
+solution is to use vmx->vmcs01.vmcs instead of current_vmcs.
 
-Fixes: 5d3c4c79384a ("KVM: Stop looking for coalesced MMIO zones if the bus is destroyed")
+  BUG: kernel NULL pointer dereference, address: 0000000000000338
+  PGD 4e1775067 P4D 0
+  Oops: 0002 [#1] PREEMPT SMP NOPTI
+  ...
+  RIP: 0010:vmx_msr_bitmap_l01_changed+0x39/0x50 [kvm_intel]
+  ...
+  Call Trace:
+   vmx_disable_intercept_for_msr+0x36/0x260 [kvm_intel]
+   vmx_vcpu_create+0xe6/0x540 [kvm_intel]
+   kvm_arch_vcpu_create+0x1d1/0x2e0 [kvm]
+   kvm_vm_ioctl_create_vcpu+0x178/0x430 [kvm]
+   kvm_vm_ioctl+0x53f/0x790 [kvm]
+   __x64_sys_ioctl+0x8a/0xc0
+   do_syscall_64+0x5c/0x90
+   entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fixes: ceef7d10dfb6 ("KVM: x86: VMX: hyper-v: Enlightened MSR-Bitmap support")
 Cc: stable@vger.kernel.org
-Reported-by: 柳菁峰 <liujingfeng@qianxin.com>
-Reported-by: Michal Luczaj <mhal@rbox.co>
-Link: https://lore.kernel.org/r/20221219171924.67989-1-seanjc@google.com
-Link: https://lore.kernel.org/all/20230118220003.1239032-1-mhal@rbox.co
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Alexandru Matei <alexandru.matei@uipath.com>
+Link: https://lore.kernel.org/r/20230123221208.4964-1-alexandru.matei@uipath.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/coalesced_mmio.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/x86/kvm/vmx/hyperv.h |   11 -----------
+ arch/x86/kvm/vmx/vmx.c    |    9 +++++++--
+ 2 files changed, 7 insertions(+), 13 deletions(-)
 
---- a/virt/kvm/coalesced_mmio.c
-+++ b/virt/kvm/coalesced_mmio.c
-@@ -187,15 +187,17 @@ int kvm_vm_ioctl_unregister_coalesced_mm
- 			r = kvm_io_bus_unregister_dev(kvm,
- 				zone->pio ? KVM_PIO_BUS : KVM_MMIO_BUS, &dev->dev);
+--- a/arch/x86/kvm/vmx/hyperv.h
++++ b/arch/x86/kvm/vmx/hyperv.h
+@@ -190,16 +190,6 @@ static inline u16 evmcs_read16(unsigned
+ 	return *(u16 *)((char *)current_evmcs + offset);
+ }
  
-+			kvm_iodevice_destructor(&dev->dev);
+-static inline void evmcs_touch_msr_bitmap(void)
+-{
+-	if (unlikely(!current_evmcs))
+-		return;
+-
+-	if (current_evmcs->hv_enlightenments_control.msr_bitmap)
+-		current_evmcs->hv_clean_fields &=
+-			~HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP;
+-}
+-
+ static inline void evmcs_load(u64 phys_addr)
+ {
+ 	struct hv_vp_assist_page *vp_ap =
+@@ -219,7 +209,6 @@ static inline u64 evmcs_read64(unsigned
+ static inline u32 evmcs_read32(unsigned long field) { return 0; }
+ static inline u16 evmcs_read16(unsigned long field) { return 0; }
+ static inline void evmcs_load(u64 phys_addr) {}
+-static inline void evmcs_touch_msr_bitmap(void) {}
+ #endif /* IS_ENABLED(CONFIG_HYPERV) */
+ 
+ #define EVMPTR_INVALID (-1ULL)
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -3865,8 +3865,13 @@ static void vmx_msr_bitmap_l01_changed(s
+ 	 * 'Enlightened MSR Bitmap' feature L0 needs to know that MSR
+ 	 * bitmap has changed.
+ 	 */
+-	if (static_branch_unlikely(&enable_evmcs))
+-		evmcs_touch_msr_bitmap();
++	if (IS_ENABLED(CONFIG_HYPERV) && static_branch_unlikely(&enable_evmcs)) {
++		struct hv_enlightened_vmcs *evmcs = (void *)vmx->vmcs01.vmcs;
 +
- 			/*
- 			 * On failure, unregister destroys all devices on the
- 			 * bus _except_ the target device, i.e. coalesced_zones
--			 * has been modified.  No need to restart the walk as
--			 * there aren't any zones left.
-+			 * has been modified.  Bail after destroying the target
-+			 * device, there's no need to restart the walk as there
-+			 * aren't any zones left.
- 			 */
- 			if (r)
- 				break;
--			kvm_iodevice_destructor(&dev->dev);
- 		}
- 	}
++		if (evmcs->hv_enlightenments_control.msr_bitmap)
++			evmcs->hv_clean_fields &=
++				~HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP;
++	}
  
+ 	vmx->nested.force_msr_bitmap_recalc = true;
+ }
 
 
