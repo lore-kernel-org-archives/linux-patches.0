@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A899BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:10:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E217BC433EF;
-	Tue,  7 Mar 2023 17:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE9FBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:10:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8C5C433D2;
+	Tue,  7 Mar 2023 17:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209018;
-	bh=9h6R7RBQpKzyBaLqKeRHPV03rq46PwuKgXF7ADSdT2o=;
+	s=korg; t=1678209021;
+	bh=KZ1aYUkLqr2PpOSRLLq7EE1+mPgE58JsoUhRuj+K/as=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xm+fmntJPtcrq48OpTxuB2eEkOVHBKUVEmu/VXkln9Ud4dacrd/4a4cZcmm5wjQwu
-	 atWtmxxmmPtqBhFh4nZFfW+Cw2hJW6IvvNnXZ1f210kit6A4lP0FOHQ/8z5gSwXucN
-	 lR7MX+BeGpaUYU5tA6u6SUM1OL9dtsOGqTlI2REI=
+	b=PJBuQg87EmOwWa57yPGZcJAjN6PNgfs2ZNfDpXM8leNO2ZlStmtZPQ81SewYQIGZN
+	 5RZxTwO86PN6SNRugMYgOVDJ9Dx3F0DMsCO63HeDulgjeFAq2ZXl921/YDEfvy497g
+	 7EpuR/oVYShxsjKK7Csap88oS87vOSgQ0XOMIZ6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Waiman Long <longman@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Robert Marko <robimarko@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0084/1001] locking/rwsem: Disable preemption in all down_read*() and up_read() code paths
-Date: Tue,  7 Mar 2023 17:47:36 +0100
-Message-Id: <20230307170025.738321018@linuxfoundation.org>
+Subject: [PATCH 6.2 0058/1001] arm64: dts: qcom: ipq8074: correct Gen2 PCIe ranges
+Date: Tue,  7 Mar 2023 17:47:10 +0100
+Message-Id: <20230307170024.642798564@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,132 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Waiman Long <longman@redhat.com>
+From: Robert Marko <robimarko@gmail.com>
 
-[ Upstream commit 3f5245538a1964ae186ab7e1636020a41aa63143 ]
+[ Upstream commit 2055cb7dccea16bafa3adf9c5e3216949512c34a ]
 
-Commit:
+Current ranges property set in Gen2 PCIe node is incorrect, replace it
+with the downstream 5.4 QCA kernel value.
 
-  91d2a812dfb9 ("locking/rwsem: Make handoff writer optimistically spin on owner")
-
-... assumes that when the owner field is changed to NULL, the lock will
-become free soon. But commit:
-
-  48dfb5d2560d ("locking/rwsem: Disable preemption while trying for rwsem lock")
-
-... disabled preemption when acquiring rwsem for write.
-
-However, preemption has not yet been disabled when acquiring a read lock
-on a rwsem.  So a reader can add a RWSEM_READER_BIAS to count without
-setting owner to signal a reader, got preempted out by a RT task which
-then spins in the writer slowpath as owner remains NULL leading to live lock.
-
-One easy way to fix this problem is to disable preemption at all the
-down_read*() and up_read() code paths as implemented in this patch.
-
-Fixes: 91d2a812dfb9 ("locking/rwsem: Make handoff writer optimistically spin on owner")
-Reported-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230126003628.365092-3-longman@redhat.com
+Fixes: 33057e1672fe ("ARM: dts: ipq8074: Add pcie nodes")
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230113164449.906002-3-robimarko@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/rwsem.c | 30 ++++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
-index 44873594de031..324fc370b6a68 100644
---- a/kernel/locking/rwsem.c
-+++ b/kernel/locking/rwsem.c
-@@ -1092,7 +1092,7 @@ rwsem_down_read_slowpath(struct rw_semaphore *sem, long count, unsigned int stat
- 			/* Ordered by sem->wait_lock against rwsem_mark_wake(). */
- 			break;
- 		}
--		schedule();
-+		schedule_preempt_disabled();
- 		lockevent_inc(rwsem_sleep_reader);
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index f099785facf39..df16ef5a90bb5 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -773,9 +773,9 @@ pcie1: pci@10000000 {
+ 			phy-names = "pciephy";
  
-@@ -1254,14 +1254,20 @@ static struct rw_semaphore *rwsem_downgrade_wake(struct rw_semaphore *sem)
-  */
- static inline int __down_read_common(struct rw_semaphore *sem, int state)
- {
-+	int ret = 0;
- 	long count;
+ 			ranges = <0x81000000 0 0x10200000 0x10200000
+-				  0 0x100000   /* downstream I/O */
+-				  0x82000000 0 0x10300000 0x10300000
+-				  0 0xd00000>; /* non-prefetchable memory */
++				  0 0x10000>,   /* downstream I/O */
++				 <0x82000000 0 0x10220000 0x10220000
++				  0 0xfde0000>; /* non-prefetchable memory */
  
-+	preempt_disable();
- 	if (!rwsem_read_trylock(sem, &count)) {
--		if (IS_ERR(rwsem_down_read_slowpath(sem, count, state)))
--			return -EINTR;
-+		if (IS_ERR(rwsem_down_read_slowpath(sem, count, state))) {
-+			ret = -EINTR;
-+			goto out;
-+		}
- 		DEBUG_RWSEMS_WARN_ON(!is_rwsem_reader_owned(sem), sem);
- 	}
--	return 0;
-+out:
-+	preempt_enable();
-+	return ret;
- }
- 
- static inline void __down_read(struct rw_semaphore *sem)
-@@ -1281,19 +1287,23 @@ static inline int __down_read_killable(struct rw_semaphore *sem)
- 
- static inline int __down_read_trylock(struct rw_semaphore *sem)
- {
-+	int ret = 0;
- 	long tmp;
- 
- 	DEBUG_RWSEMS_WARN_ON(sem->magic != sem, sem);
- 
-+	preempt_disable();
- 	tmp = atomic_long_read(&sem->count);
- 	while (!(tmp & RWSEM_READ_FAILED_MASK)) {
- 		if (atomic_long_try_cmpxchg_acquire(&sem->count, &tmp,
- 						    tmp + RWSEM_READER_BIAS)) {
- 			rwsem_set_reader_owned(sem);
--			return 1;
-+			ret = 1;
-+			break;
- 		}
- 	}
--	return 0;
-+	preempt_enable();
-+	return ret;
- }
- 
- /*
-@@ -1335,6 +1345,7 @@ static inline void __up_read(struct rw_semaphore *sem)
- 	DEBUG_RWSEMS_WARN_ON(sem->magic != sem, sem);
- 	DEBUG_RWSEMS_WARN_ON(!is_rwsem_reader_owned(sem), sem);
- 
-+	preempt_disable();
- 	rwsem_clear_reader_owned(sem);
- 	tmp = atomic_long_add_return_release(-RWSEM_READER_BIAS, &sem->count);
- 	DEBUG_RWSEMS_WARN_ON(tmp < 0, sem);
-@@ -1343,6 +1354,7 @@ static inline void __up_read(struct rw_semaphore *sem)
- 		clear_nonspinnable(sem);
- 		rwsem_wake(sem);
- 	}
-+	preempt_enable();
- }
- 
- /*
-@@ -1662,6 +1674,12 @@ void down_read_non_owner(struct rw_semaphore *sem)
- {
- 	might_sleep();
- 	__down_read(sem);
-+	/*
-+	 * The owner value for a reader-owned lock is mostly for debugging
-+	 * purpose only and is not critical to the correct functioning of
-+	 * rwsem. So it is perfectly fine to set it in a preempt-enabled
-+	 * context here.
-+	 */
- 	__rwsem_set_reader_owned(sem, NULL);
- }
- EXPORT_SYMBOL(down_read_non_owner);
+ 			interrupts = <GIC_SPI 85 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "msi";
 -- 
 2.39.2
 
