@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A38BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:15:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E1BC433D2;
-	Tue,  7 Mar 2023 18:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9033BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:15:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40ED2C433EF;
+	Tue,  7 Mar 2023 18:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212918;
-	bh=G1IF+I8bklVPCEKPT9SLdAXc7YFDOkHrAmmdYmYM1OE=;
+	s=korg; t=1678212921;
+	bh=qgjW1//CgREvjO0RBbh3usvXHix0WlXrBWdxsWuz4Ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T76/l91Q/YZInLXp5T/am//FOmN3g7q1Nfunw4O8M+UwktK8ysDih6PAOk0JQ9IG8
-	 AR5Yp2nJJySR4B2z8Nyy8dajrb7iLe7kZDhYdA4Q1kRmUosQa4OzQtjrhpRQlhFNs3
-	 XCK2PWXlaPKGKEOGICpolppVVnBBMyrL45Hl/Vfs=
+	b=N6RGcoKE42hunzXA4ATwElmqyhpKmHSTF8VzD2eHQj8Sp1beGg97QMsiLDTtU8tpl
+	 moYE4RqgP0J2EW959JzC72UYcJJx7E9+XBQLvbji6+emCHapd7/BLO9Et0ulUfYZVR
+	 CJZcmOJ7wRJu+Ysnej1lW38CxHLtvLdVaDiCokVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Colin Foster <colin.foster@in-advantage.com>,
-	Mark Brown <broonie@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 338/885] regmap: apply reg_base and reg_downshift for single register ops
-Date: Tue,  7 Mar 2023 17:54:32 +0100
-Message-Id: <20230307170016.898923418@linuxfoundation.org>
+Subject: [PATCH 6.1 310/885] drm/msm: use strscpy instead of strncpy
+Date: Tue,  7 Mar 2023 17:54:04 +0100
+Message-Id: <20230307170015.589954463@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,64 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 697c3892d825fb78f42ec8e53bed065dd728db3e ]
+[ Upstream commit d7fd8634f48d76aa799ed57beb7d87dab91bde80 ]
 
-reg_base and reg_downshift currently don't have any effect if used with
-a regmap_bus or regmap_config which only offers single register
-operations (ie. reg_read, reg_write and optionally reg_update_bits).
+Using strncpy can result in non-NULL-terminated destination string. Use
+strscpy instead. This fixes following warning:
 
-Fix that and take them into account also for regmap_bus with only
-reg_read and read_write operations by applying reg_base and
-reg_downshift in _regmap_bus_reg_write, _regmap_bus_reg_read.
+drivers/gpu/drm/msm/msm_fence.c: In function ‘msm_fence_context_alloc’:
+drivers/gpu/drm/msm/msm_fence.c:25:9: warning: ‘strncpy’ specified bound 32 equals destination size [-Wstringop-truncation]
+   25 |         strncpy(fctx->name, name, sizeof(fctx->name));
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Also apply reg_base and reg_downshift in _regmap_update_bits, but only
-in case the operation is carried out with a reg_update_bits call
-defined in either regmap_bus or regmap_config.
-
-Fixes: 0074f3f2b1e43d ("regmap: allow a defined reg_base to be added to every address")
-Fixes: 86fc59ef818beb ("regmap: add configurable downshift for addresses")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Tested-by: Colin Foster <colin.foster@in-advantage.com>
-Link: https://lore.kernel.org/r/Y9clyVS3tQEHlUhA@makrotopia.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f97decac5f4c ("drm/msm: Support multiple ringbuffers")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/518787/
+Link: https://lore.kernel.org/r/20230118020152.1689213-1-dmitry.baryshkov@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/msm/msm_fence.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
-index c6d6d53e8cd3f..7de1f27d0323d 100644
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -1942,6 +1942,8 @@ static int _regmap_bus_reg_write(void *context, unsigned int reg,
- {
- 	struct regmap *map = context;
+diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_fence.c
+index a47e5837c528f..56641408ea742 100644
+--- a/drivers/gpu/drm/msm/msm_fence.c
++++ b/drivers/gpu/drm/msm/msm_fence.c
+@@ -22,7 +22,7 @@ msm_fence_context_alloc(struct drm_device *dev, volatile uint32_t *fenceptr,
+ 		return ERR_PTR(-ENOMEM);
  
-+	reg += map->reg_base;
-+	reg >>= map->format.reg_downshift;
- 	return map->bus->reg_write(map->bus_context, reg, val);
- }
- 
-@@ -2840,6 +2842,8 @@ static int _regmap_bus_reg_read(void *context, unsigned int reg,
- {
- 	struct regmap *map = context;
- 
-+	reg += map->reg_base;
-+	reg >>= map->format.reg_downshift;
- 	return map->bus->reg_read(map->bus_context, reg, val);
- }
- 
-@@ -3231,6 +3235,8 @@ static int _regmap_update_bits(struct regmap *map, unsigned int reg,
- 		*change = false;
- 
- 	if (regmap_volatile(map, reg) && map->reg_update_bits) {
-+		reg += map->reg_base;
-+		reg >>= map->format.reg_downshift;
- 		ret = map->reg_update_bits(map->bus_context, reg, mask, val);
- 		if (ret == 0 && change)
- 			*change = true;
+ 	fctx->dev = dev;
+-	strncpy(fctx->name, name, sizeof(fctx->name));
++	strscpy(fctx->name, name, sizeof(fctx->name));
+ 	fctx->context = dma_fence_context_alloc(1);
+ 	fctx->index = index++;
+ 	fctx->fenceptr = fenceptr;
 -- 
 2.39.2
 
