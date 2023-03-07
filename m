@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085DEBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:24:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61729C433EF;
-	Tue,  7 Mar 2023 18:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5B8BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:24:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721F3C433EF;
+	Tue,  7 Mar 2023 18:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213453;
-	bh=LshO+HO0q+wl6AI7aR1FOixDz6EAcGqKOhfdtHq9Gm0=;
+	s=korg; t=1678213457;
+	bh=GsLA4w0BvTbWxC+Ki2Sv7W4m/dgFu9wCanHWZ42ARVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BbypiWIcEIx4ab0yYW/xCaB1fOd85+kud22+99wb08Cvxudh2yDOiWRCSaG8ruQnE
-	 KqcoDP0coqbJ+/rF7CZZQpCtl1m+muxDoFfZcEYufDJxaj5UAZ0oLN/b+Jfrll8kOZ
-	 aKfvczPqHf+WLSTjbmN66inz4mmeoUAHnd65qz8k=
+	b=Hq7+5byuiWht2U6AsyNRxzXx4OK114O3nLE3y0f5sLtu71ZRquwZgawUDKHSktQgE
+	 Foan2SlsJB6PqD6B7E2lZRkkx2WqgyrdESFX3+KHJS63V7X5Jvl7/uvbZvl4++9aHW
+	 4EjF90gn0MbyaFDzjpWrBbmmJHP29LzWmleCONHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moudy Ho <moudy.ho@mediatek.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 512/885] media: platform: mtk-mdp3: remove unused VIDEO_MEDIATEK_VPU config
-Date: Tue,  7 Mar 2023 17:57:26 +0100
-Message-Id: <20230307170024.728407149@linuxfoundation.org>
+Subject: [PATCH 6.1 513/885] media: platform: mtk-mdp3: fix Kconfig dependencies
+Date: Tue,  7 Mar 2023 17:57:27 +0100
+Message-Id: <20230307170024.769304998@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,48 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moudy Ho <moudy.ho@mediatek.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 9195a860ef0a384d2ca2065cc61a0cc80d620de5 ]
+[ Upstream commit e3f7feb6d89311f369dd4ad903ea62e45328cdbe ]
 
-Since REMOTEPROC completely replaces the VIDEO_MEDIATEK_VPU in MDP3,
-unused config should be removed to avoid compilation warnings
-reported on i386 or x86_64.
+The new mdp3 driver uses 'select' to force-enable a couple of drivers
+it depends on. This is error-prone and likely to cause dependency
+loops as well as warnings like:
 
-Warning messages:
-    WARNING: unmet direct dependencies detected for VIDEO_MEDIATEK_VPU
-          Depends on [n]: MEDIA_SUPPORT [=y] && MEDIA_PLATFORM_SUPPORT [=y]
-        && MEDIA_PLATFORM_DRIVERS [=y] && V4L_MEM2MEM_DRIVERS [=n] &&
-        VIDEO_DEV [=y] && (ARCH_MEDIATEK || COMPILE_TEST [=y])
-          Selected by [y]:
-          - VIDEO_MEDIATEK_MDP3 [=y] && MEDIA_SUPPORT [=y] &&
-        MEDIA_PLATFORM_SUPPORT [=y] && MEDIA_PLATFORM_DRIVERS [=y] &&
-        (MTK_IOMMU [=n] || COMPILE_TEST [=y]) && VIDEO_DEV [=y] &&
-        (ARCH_MEDIATEK || COMPILE_TEST [=y]) && HAS_DMA [=y] && REMOTEPROC
-        [=y]
+WARNING: unmet direct dependencies detected for VIDEO_MEDIATEK_VPU
+  Depends on [n]: MEDIA_SUPPORT [=m] && MEDIA_PLATFORM_SUPPORT [=y] && MEDIA_PLATFORM_DRIVERS [=y] && V4L_MEM2MEM_DRIVERS [=n] && VIDEO_DEV [=m] && (ARCH_MEDIATEK [=y] || COMPILE_TEST [=y])
+  Selected by [m]:
+  - VIDEO_MEDIATEK_MDP3 [=m] && MEDIA_SUPPORT [=m] && MEDIA_PLATFORM_SUPPORT [=y] && MEDIA_PLATFORM_DRIVERS [=y] && (MTK_IOMMU [=m] || COMPILE_TEST [=y]) && VIDEO_DEV [=m] && (ARCH_MEDIATEK [=y] || COMPILE_TEST [=y]) && HAS_DMA [=y] && REMOTEPROC [=y]
+
+This specific warning was already addressed in a previous patch,
+but there are similar unnecessary 'select' statements, so turn those
+into 'depends on'. This also means the dependency on ARCH_MEDIATEK
+is redundant and can be dropped.
 
 Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
-Signed-off-by: Moudy Ho <moudy.ho@mediatek.com>
+Fixes: 9195a860ef0a ("media: platform: mtk-mdp3: remove unused VIDEO_MEDIATEK_VPU config")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: e3f7feb6d893 ("media: platform: mtk-mdp3: fix Kconfig dependencies")
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/mdp3/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/platform/mediatek/mdp3/Kconfig | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/media/platform/mediatek/mdp3/Kconfig b/drivers/media/platform/mediatek/mdp3/Kconfig
-index 50ae07b75b5f2..846e759a8f6a9 100644
+index 846e759a8f6a9..602329c447501 100644
 --- a/drivers/media/platform/mediatek/mdp3/Kconfig
 +++ b/drivers/media/platform/mediatek/mdp3/Kconfig
-@@ -9,7 +9,6 @@ config VIDEO_MEDIATEK_MDP3
+@@ -3,14 +3,13 @@ config VIDEO_MEDIATEK_MDP3
+ 	tristate "MediaTek MDP v3 driver"
+ 	depends on MTK_IOMMU || COMPILE_TEST
+ 	depends on VIDEO_DEV
+-	depends on ARCH_MEDIATEK || COMPILE_TEST
+ 	depends on HAS_DMA
+ 	depends on REMOTEPROC
++	depends on MTK_MMSYS
++	depends on MTK_CMDQ
++	depends on MTK_SCP
  	select VIDEOBUF2_DMA_CONTIG
  	select V4L2_MEM2MEM_DEV
- 	select MTK_MMSYS
--	select VIDEO_MEDIATEK_VPU
- 	select MTK_CMDQ
- 	select MTK_SCP
+-	select MTK_MMSYS
+-	select MTK_CMDQ
+-	select MTK_SCP
  	default n
+ 	help
+ 	    It is a v4l2 driver and present in MediaTek MT8183 SoC.
 -- 
 2.39.2
 
