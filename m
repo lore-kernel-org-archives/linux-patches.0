@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C76BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:38:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC63EC433EF;
-	Tue,  7 Mar 2023 17:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFE5BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:38:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F8EC4339C;
+	Tue,  7 Mar 2023 17:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210687;
-	bh=HqGKXdBJs5isKSytWpXh57H8LBpivFV4RXaR+qad+50=;
+	s=korg; t=1678210690;
+	bh=HnCjmypvKMF6e+p3h62DCRZRNvQl4nTWa8tOYy7k1yM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FsRh0XZmMVMZkcU7qViqKkhfbhtr7gPqWAfsVUYNCSrEcYjdMgXzOeRt+FhdDhmCr
-	 P3TgV9bdMZnnFm1UVBWJp1h5vlVmxODAfmtFXW5lUEdmHyj26FGcae8ddnSex33BvH
-	 fjofdJvtX78woXKFgmxfXf/y9Q1C+ADz4hcvTrz8=
+	b=Q5C//R1rjwdIhSuR3tFKaFSgkb1HKPUj8cSrm/nj/NCdr8rqCfyvaFLuU0mbEJiBB
+	 m1sClmBSMRnMBqD6VvSNld/ZXvY2XUbBI+blF1JaaW7yDzFbK0GVXr+Zc9dgqx9KDD
+	 zwXJp12JzQFEIJziujusvanKf+CVwkQ3UwdkmlKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0620/1001] udf: Define EFSCORRUPTED error code
-Date: Tue,  7 Mar 2023 17:56:32 +0100
-Message-Id: <20230307170048.463067735@linuxfoundation.org>
+Subject: [PATCH 6.2 0621/1001] context_tracking: Fix noinstr vs KASAN
+Date: Tue,  7 Mar 2023 17:56:33 +0100
+Message-Id: <20230307170048.510133225@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,32 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 3d2d7e61553dbcc8ba45201d8ae4f383742c8202 ]
+[ Upstream commit 0e26e1de0032779e43929174339429c16307a299 ]
 
-Similarly to other filesystems define EFSCORRUPTED error code for
-reporting internal filesystem corruption.
+Low level noinstr context-tracking code is calling out to instrumented
+code on KASAN:
 
-Signed-off-by: Jan Kara <jack@suse.cz>
+  vmlinux.o: warning: objtool: __ct_user_enter+0x72: call to __kasan_check_write() leaves .noinstr.text section
+  vmlinux.o: warning: objtool: __ct_user_exit+0x47: call to __kasan_check_write() leaves .noinstr.text section
+
+Use even lower level atomic methods to avoid the instrumentation.
+
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20230112195542.458034262@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/udf_sb.h | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/context_tracking.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/udf/udf_sb.h b/fs/udf/udf_sb.h
-index 291b56dd011ee..6bccff3c70f54 100644
---- a/fs/udf/udf_sb.h
-+++ b/fs/udf/udf_sb.h
-@@ -55,6 +55,8 @@
- #define MF_DUPLICATE_MD		0x01
- #define MF_MIRROR_FE_LOADED	0x02
+diff --git a/kernel/context_tracking.c b/kernel/context_tracking.c
+index 77978e3723771..a09f1c19336ae 100644
+--- a/kernel/context_tracking.c
++++ b/kernel/context_tracking.c
+@@ -510,7 +510,7 @@ void noinstr __ct_user_enter(enum ctx_state state)
+ 			 * In this we case we don't care about any concurrency/ordering.
+ 			 */
+ 			if (!IS_ENABLED(CONFIG_CONTEXT_TRACKING_IDLE))
+-				atomic_set(&ct->state, state);
++				arch_atomic_set(&ct->state, state);
+ 		} else {
+ 			/*
+ 			 * Even if context tracking is disabled on this CPU, because it's outside
+@@ -527,7 +527,7 @@ void noinstr __ct_user_enter(enum ctx_state state)
+ 			 */
+ 			if (!IS_ENABLED(CONFIG_CONTEXT_TRACKING_IDLE)) {
+ 				/* Tracking for vtime only, no concurrent RCU EQS accounting */
+-				atomic_set(&ct->state, state);
++				arch_atomic_set(&ct->state, state);
+ 			} else {
+ 				/*
+ 				 * Tracking for vtime and RCU EQS. Make sure we don't race
+@@ -535,7 +535,7 @@ void noinstr __ct_user_enter(enum ctx_state state)
+ 				 * RCU only requires RCU_DYNTICKS_IDX increments to be fully
+ 				 * ordered.
+ 				 */
+-				atomic_add(state, &ct->state);
++				arch_atomic_add(state, &ct->state);
+ 			}
+ 		}
+ 	}
+@@ -630,12 +630,12 @@ void noinstr __ct_user_exit(enum ctx_state state)
+ 			 * In this we case we don't care about any concurrency/ordering.
+ 			 */
+ 			if (!IS_ENABLED(CONFIG_CONTEXT_TRACKING_IDLE))
+-				atomic_set(&ct->state, CONTEXT_KERNEL);
++				arch_atomic_set(&ct->state, CONTEXT_KERNEL);
  
-+#define EFSCORRUPTED EUCLEAN
-+
- struct udf_meta_data {
- 	__u32	s_meta_file_loc;
- 	__u32	s_mirror_file_loc;
+ 		} else {
+ 			if (!IS_ENABLED(CONFIG_CONTEXT_TRACKING_IDLE)) {
+ 				/* Tracking for vtime only, no concurrent RCU EQS accounting */
+-				atomic_set(&ct->state, CONTEXT_KERNEL);
++				arch_atomic_set(&ct->state, CONTEXT_KERNEL);
+ 			} else {
+ 				/*
+ 				 * Tracking for vtime and RCU EQS. Make sure we don't race
+@@ -643,7 +643,7 @@ void noinstr __ct_user_exit(enum ctx_state state)
+ 				 * RCU only requires RCU_DYNTICKS_IDX increments to be fully
+ 				 * ordered.
+ 				 */
+-				atomic_sub(state, &ct->state);
++				arch_atomic_sub(state, &ct->state);
+ 			}
+ 		}
+ 	}
 -- 
 2.39.2
 
