@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0905BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:45:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28967C433EF;
-	Tue,  7 Mar 2023 18:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F541BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:45:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1569EC433D2;
+	Tue,  7 Mar 2023 18:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214754;
-	bh=tfiYP878+4dJA9pcIR+H8nZX+Sy64CLuX57GGke7EaU=;
+	s=korg; t=1678214757;
+	bh=iYharW0ASddqdQWwFA+V9ThNp6RTq0N+JARnjoTT4L8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KmWGG4eZvMbva0tDn4V5au76/U8e1Y1xjMZFgWMdLLVWCDTYBWHKQIi4q8/LPCgiA
-	 y7Gq9eQkUm1eXadhAgtWn+df/baagmits6vzOjI6U1pEm3w7lfWwvipQ9fUUMW43ms
-	 pGSich+rPD4ROASQ3TT2PkkmRHLhprs4UYozR0M8=
+	b=K1AGznILtvvOQwKzzAZGCaHSP5m9XPJ3bF/urtR8twOE6uG/BmFlqvfdWbiBAH+0z
+	 c1ExzDQTgSZqt/QtbhCPmWVMffEWz8+cdcpCyZosXtDuqXHUSh4l1CsuvWfBXcRfSR
+	 mrWMN8+cOBvPN4ww/4ka64bgREGnz67YtXFhqxY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/567] arm64: dts: amlogic: meson-gxl-s905d-sml5442tw: drop invalid clock-names property
-Date: Tue,  7 Mar 2023 17:56:14 +0100
-Message-Id: <20230307165907.581906377@linuxfoundation.org>
+Subject: [PATCH 5.15 039/567] arm64: dts: amlogic: meson-gx: add missing unit address to rng node name
+Date: Tue,  7 Mar 2023 17:56:15 +0100
+Message-Id: <20230307165907.629148011@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,29 +36,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit e3bd275ccbacf5eb18eaa311cea39f8bf8655feb ]
+[ Upstream commit 61ff70708b98a85516eccb3755084ac97b42cf48 ]
 
 Fixes:
-bluetooth: 'clock-names' does not match any of the regexes: 'pinctrl-[0-9]+'
+bus@c8834000: rng: {...} should not be valid under {'type': 'object'}
 
-Link: https://lore.kernel.org/r/20230124-b4-amlogic-bindings-fixups-v1-5-44351528957e@linaro.org
+Link: https://lore.kernel.org/r/20230124-b4-amlogic-bindings-fixups-v1-6-44351528957e@linaro.org
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-gxl-s905d-sml5442tw.dts | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/boot/dts/amlogic/meson-gx.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-sml5442tw.dts b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-sml5442tw.dts
-index b331a013572f3..c490dbbf063bf 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-sml5442tw.dts
-+++ b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-sml5442tw.dts
-@@ -79,6 +79,5 @@ bluetooth {
- 		enable-gpios = <&gpio GPIOX_17 GPIO_ACTIVE_HIGH>;
- 		max-speed = <2000000>;
- 		clocks = <&wifi32k>;
--		clock-names = "lpo";
- 	};
- };
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
+index 31bbfe4868d8e..32cc9fab4490f 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
+@@ -531,7 +531,7 @@ periphs: bus@c8834000 {
+ 			#size-cells = <2>;
+ 			ranges = <0x0 0x0 0x0 0xc8834000 0x0 0x2000>;
+ 
+-			hwrng: rng {
++			hwrng: rng@0 {
+ 				compatible = "amlogic,meson-rng";
+ 				reg = <0x0 0x0 0x0 0x4>;
+ 			};
 -- 
 2.39.2
 
