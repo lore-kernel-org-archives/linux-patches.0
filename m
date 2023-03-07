@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E19BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:41:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97E0C433EF;
-	Tue,  7 Mar 2023 17:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5B8BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:42:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C86C433EF;
+	Tue,  7 Mar 2023 17:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210915;
-	bh=hN1zrcX8L/61v/ZkENGtatESrfr608Y8s+eR9V5xJug=;
+	s=korg; t=1678210920;
+	bh=N1EcWGLLe8wG22u64eetkzqI3wxz8TjIp8uhLlWEs9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t96BKODxnXDKdlm/YD/HydYVXu6QB8pUn3yWY6R5ErlARAiUHD+pZMTPx5Ar2zZJe
-	 TyQYATlWiKefdWcY1Iy5YkShy4zp02I+iCiahqcmJ1wSpq1nE1710dkuq5+NKEUqvq
-	 g5B3PvhmDYGt84Mayacfb6l7HzLaE/P/7u4CHSgI=
+	b=WfTFP0a7QlNzvh6mWq7JwMMExF/C3/EcRIuJvHWq+cH+8A1vjpnzNyYEUBRen44KO
+	 LUoZPyfnr1SbzLK4t+JGwOP5n1UWEoB7fwOmSCnLC0U00GL0PfJg0iv2tQYPn+mRef
+	 d+G1NdXjcazG+OAG8b/0f7a5h/yVYsn8YI2C6j+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Florent Revest <revest@chromium.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Will Deacon <will@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0664/1001] netfilter: nf_tables: NULL pointer dereference in nf_tables_updobj()
-Date: Tue,  7 Mar 2023 17:57:16 +0100
-Message-Id: <20230307170050.423011835@linuxfoundation.org>
+Subject: [PATCH 6.2 0655/1001] Compiler attributes: GCC cold function alignment workarounds
+Date: Tue,  7 Mar 2023 17:57:07 +0100
+Message-Id: <20230307170050.026752639@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,38 +42,170 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit dac7f50a45216d652887fb92d6cd3b7ca7f006ea ]
+[ Upstream commit c27cd083cfb9d392f304657ed00fcde1136704e7 ]
 
-static analyzer detect null pointer dereference case for 'type'
-function __nft_obj_type_get() can return NULL value which require to handle
-if type is NULL pointer return -ENOENT.
+Contemporary versions of GCC (e.g. GCC 12.2.0) drop the alignment
+specified by '-falign-functions=N' for functions marked with the
+__cold__ attribute, and potentially for callees of __cold__ functions as
+these may be implicitly marked as __cold__ by the compiler. LLVM appears
+to respect '-falign-functions=N' in such cases.
 
-This is a theoretical issue, since an existing object has a type, but
-better add this failsafe check.
+This has been reported to GCC in bug 88345:
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=88345
+
+... which also covers alignment being dropped when '-Os' is used, which
+will be addressed in a separate patch.
+
+Currently, use of '-falign-functions=N' is limited to
+CONFIG_FUNCTION_ALIGNMENT, which is largely used for performance and/or
+analysis reasons (e.g. with CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B), but
+isn't necessary for correct functionality. However, this dropped
+alignment isn't great for the performance and/or analysis cases.
+
+Subsequent patches will use CONFIG_FUNCTION_ALIGNMENT as part of arm64's
+ftrace implementation, which will require all instrumented functions to
+be aligned to at least 8-bytes.
+
+This patch works around the dropped alignment by avoiding the use of the
+__cold__ attribute when CONFIG_FUNCTION_ALIGNMENT is non-zero, and by
+specifically aligning abort(), which GCC implicitly marks as __cold__.
+As the __cold macro is now dependent upon config options (which is
+against the policy described at the top of compiler_attributes.h), it is
+moved into compiler_types.h.
+
+I've tested this by building and booting a kernel configured with
+defconfig + CONFIG_EXPERT=y + CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B=y,
+and looking for misaligned text symbols in /proc/kallsyms:
+
+* arm64:
+
+  Before:
+    # uname -rm
+    6.2.0-rc3 aarch64
+    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
+    5009
+
+  After:
+    # uname -rm
+    6.2.0-rc3-00001-g2a2bedf8bfa9 aarch64
+    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
+    919
+
+* x86_64:
+
+  Before:
+    # uname -rm
+    6.2.0-rc3 x86_64
+    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
+    11537
+
+  After:
+    # uname -rm
+    6.2.0-rc3-00001-g2a2bedf8bfa9 x86_64
+    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
+    2805
+
+There's clearly a substantial reduction in the number of misaligned
+symbols. From manual inspection, the remaining unaligned text labels are
+a combination of ACPICA functions (due to the use of '-Os'), static call
+trampolines, and non-function labels in assembly, which will be dealt
+with in subsequent patches.
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Florent Revest <revest@chromium.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/r/20230123134603.1064407-3-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/compiler_attributes.h |  6 ------
+ include/linux/compiler_types.h      | 27 +++++++++++++++++++++++++++
+ kernel/exit.c                       |  9 ++++++++-
+ 3 files changed, 35 insertions(+), 7 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 8c09e4d12ac1e..fc8256b00b320 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6999,6 +6999,9 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
- 			return -EOPNOTSUPP;
+diff --git a/include/linux/compiler_attributes.h b/include/linux/compiler_attributes.h
+index 898b3458b24a0..b83126452c651 100644
+--- a/include/linux/compiler_attributes.h
++++ b/include/linux/compiler_attributes.h
+@@ -75,12 +75,6 @@
+ # define __assume_aligned(a, ...)
+ #endif
  
- 		type = __nft_obj_type_get(objtype);
-+		if (WARN_ON_ONCE(!type))
-+			return -ENOENT;
+-/*
+- *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-cold-function-attribute
+- *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Label-Attributes.html#index-cold-label-attribute
+- */
+-#define __cold                          __attribute__((__cold__))
+-
+ /*
+  * Note the long name.
+  *
+diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
+index 7c1afe0f4129c..aab34e30128e9 100644
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -79,6 +79,33 @@ static inline void __chk_io_ptr(const volatile void __iomem *ptr) { }
+ /* Attributes */
+ #include <linux/compiler_attributes.h>
+ 
++#if CONFIG_FUNCTION_ALIGNMENT > 0
++#define __function_aligned		__aligned(CONFIG_FUNCTION_ALIGNMENT)
++#else
++#define __function_aligned
++#endif
 +
- 		nft_ctx_init(&ctx, net, skb, info->nlh, family, table, NULL, nla);
++/*
++ *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-cold-function-attribute
++ *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Label-Attributes.html#index-cold-label-attribute
++ *
++ * When -falign-functions=N is in use, we must avoid the cold attribute as
++ * contemporary versions of GCC drop the alignment for cold functions. Worse,
++ * GCC can implicitly mark callees of cold functions as cold themselves, so
++ * it's not sufficient to add __function_aligned here as that will not ensure
++ * that callees are correctly aligned.
++ *
++ * See:
++ *
++ *   https://lore.kernel.org/lkml/Y77%2FqVgvaJidFpYt@FVFF77S0Q05N
++ *   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=88345#c9
++ */
++#if !defined(CONFIG_CC_IS_GCC) || (CONFIG_FUNCTION_ALIGNMENT == 0)
++#define __cold				__attribute__((__cold__))
++#else
++#define __cold
++#endif
++
+ /* Builtins */
  
- 		return nf_tables_updobj(&ctx, type, nla[NFTA_OBJ_DATA], obj);
+ /*
+diff --git a/kernel/exit.c b/kernel/exit.c
+index bccfa4218356e..f2afdb0add7c5 100644
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -1905,7 +1905,14 @@ bool thread_group_exited(struct pid *pid)
+ }
+ EXPORT_SYMBOL(thread_group_exited);
+ 
+-__weak void abort(void)
++/*
++ * This needs to be __function_aligned as GCC implicitly makes any
++ * implementation of abort() cold and drops alignment specified by
++ * -falign-functions=N.
++ *
++ * See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=88345#c11
++ */
++__weak __function_aligned void abort(void)
+ {
+ 	BUG();
+ 
 -- 
 2.39.2
 
