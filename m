@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D0ABA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:09:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E96AC433D2;
-	Tue,  7 Mar 2023 17:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABFCBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:09:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0AD6C433D2;
+	Tue,  7 Mar 2023 17:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678208945;
-	bh=GnVFJuci8QNww+1jaGlEsepIErrCXH2rrWGB9xb6+8w=;
+	s=korg; t=1678208948;
+	bh=1HkcaeOabBwUzuEJBbsS4DSpkxh8B/TmSi9hwkShGVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0vM9f9Tb7o5A/ftKUn7L4vibDftIZ0lTrpx8gjp7jNJhYhwP06Z5PuhxduoVMmCsY
-	 XwhBxrx4u3TTOBDxNikV0WptHnCfzMmOeOv+bq0do+aoxR+AzpOi7boyEbzHYNSyid
-	 XAQzVU1m0IiaS9XZuKPqI/vQgebUaBaq00p61E/Y=
+	b=AvlRGXGk1HGutrtikjWxGHQhqstPC4FlTRZrJt3X6xjtn+moZFTYWpBSsUigImFu0
+	 Yqg2qv74/roQNVT3dq/GfCrHZiVHvpq3QCGJrCKX7jdE/e8dg/JjUMBFvnFEpEm+oJ
+	 ljb1U83KfGfKOgPPshojUkMIYtmUBZ/rl3UU3xvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0030/1001] arm64: dts: mediatek: mt8192: Fix systimer 13 MHz clock description
-Date: Tue,  7 Mar 2023 17:46:42 +0100
-Message-Id: <20230307170023.433940711@linuxfoundation.org>
+Subject: [PATCH 6.2 0031/1001] arm64: dts: mediatek: mt8195: Fix systimer 13 MHz clock description
+Date: Tue,  7 Mar 2023 17:46:43 +0100
+Message-Id: <20230307170023.482678351@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,35 +38,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit f19f68e56b0c6631984a9f5023035d4bd09612bb ]
+[ Upstream commit 0f1c806b65d136a5fe0b88adad5ff1cb451fc401 ]
 
 The systimer block derives its 13 MHz clock by dividing the main 26 MHz
 oscillator clock by 2 internally, not through the TOPCKGEN clock
 controller.
 
-On the MT8192 this divider is fixed to /2 and is not configurable.
+On the MT8195 this divider is set either by power-on-reset or by the
+bootloader. The bootloader may then make the divider unconfigurable to,
+but can be read out by, the operating system.
 
 Making the systimer block take the 26 MHz clock directly requires
 changing the implementations. As an ABI compatible fix, change the
 input clock of the systimer block a fixed factor divide-by-2 clock
 that takes the 26 MHz oscillator as its input.
 
-Fixes: 48489980e27e ("arm64: dts: Add Mediatek SoC MT8192 and evaluation board dts and Makefile")
+Fixes: 37f2582883be ("arm64: dts: Add mediatek SoC mt8195 and evaluation board")
 Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221201084229.3464449-3-wenst@chromium.org
+Link: https://lore.kernel.org/r/20221201084229.3464449-4-wenst@chromium.org
 Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8192.dtsi | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8192.dtsi b/arch/arm64/boot/dts/mediatek/mt8192.dtsi
-index 424fc89cc6f7c..0d43a32734a37 100644
---- a/arch/arm64/boot/dts/mediatek/mt8192.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8192.dtsi
-@@ -29,6 +29,15 @@ aliases {
- 		rdma4 = &rdma4;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index d6856691fc385..d8d846a57d97f 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -248,6 +248,15 @@ sound: mt8195-sound {
+ 		status = "disabled";
  	};
  
 +	clk13m: fixed-factor-clock-13m {
@@ -78,19 +80,18 @@ index 424fc89cc6f7c..0d43a32734a37 100644
 +		clock-output-names = "clk13m";
 +	};
 +
- 	clk26m: oscillator0 {
+ 	clk26m: oscillator-26m {
  		compatible = "fixed-clock";
  		#clock-cells = <0>;
-@@ -534,8 +543,7 @@ systimer: timer@10017000 {
+@@ -705,7 +714,7 @@ systimer: timer@10017000 {
  				     "mediatek,mt6765-timer";
  			reg = <0 0x10017000 0 0x1000>;
- 			interrupts = <GIC_SPI 233 IRQ_TYPE_LEVEL_HIGH 0>;
--			clocks = <&topckgen CLK_TOP_CSW_F26M_D2>;
--			clock-names = "clk13m";
+ 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH 0>;
+-			clocks = <&topckgen CLK_TOP_CLK26M_D2>;
 +			clocks = <&clk13m>;
  		};
  
- 		pwrap: pwrap@10026000 {
+ 		pwrap: pwrap@10024000 {
 -- 
 2.39.2
 
