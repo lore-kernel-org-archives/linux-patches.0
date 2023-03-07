@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928B4BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:21:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A76C4339C;
-	Tue,  7 Mar 2023 17:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9862BBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:21:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154B5C433D2;
+	Tue,  7 Mar 2023 17:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209676;
-	bh=TbyhC4xk6PT+sJMiZKaIGUTHX1jSdcDGg1cjA0fDZsE=;
+	s=korg; t=1678209679;
+	bh=opN/afqKVDP/UNKIq0kK8XquPDYT3sZzOgpZdhM/Vxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OKT7w82EX14BeYQ/a+AJTMKwAkujRBCNe69WqSAazA5bXxD2ee/kRS9uphYQw9qQs
-	 3rPtIcMf4fF7g7YkQHfmczkbz0iFNIi6sf9z69sEpKt9fcijqSS5+SJHtBEA9nYffR
-	 M7Q0MQp6UWflR2JE0uAoLmaxkECEL9+52oiFmIOA=
+	b=nAJ+bt6o+NrmvgchzZMAHDp4Rp9SL5yKJakaWZ3WdEjlI2zs/8iWdz+B19ppCuFg2
+	 F41zrcE+cK1cP8qgpdUUvtCF5XZTrUIXC5eIravpC+m0llGSAxqKrWcU1rFgoW4FPG
+	 GluSsk6cRnHEK9CxPMzSkJTOzI40WpkEcE5Ye7FE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eran Ben Elisha <eranbe@nvidia.com>,
-	Majd Dibbiny <majd@nvidia.com>,
-	Jack Morgenstein <jackm@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Hector Martin <marcan@marcan.st>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0254/1001] net/mlx5: Enhance debug print in page allocation failure
-Date: Tue,  7 Mar 2023 17:50:26 +0100
-Message-Id: <20230307170032.778193375@linuxfoundation.org>
+Subject: [PATCH 6.2 0289/1001] wifi: brcmfmac: pcie: Perform correct BCM4364 firmware selection
+Date: Tue,  7 Mar 2023 17:51:01 +0100
+Message-Id: <20230307170034.178144263@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,36 +37,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jack Morgenstein <jackm@nvidia.com>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit 7eef93003e5d20e1a6a6e59e12d914b5431cbda2 ]
+[ Upstream commit 6a142f70774fd10350a52a10ba1297d52da46780 ]
 
-Provide more details to aid debugging.
+This chip exists in two revisions (B2=r3 and B3=r4) on different
+platforms, and was added without regard to doing proper firmware
+selection or differentiating between them. Fix this to have proper
+per-revision firmwares and support Apple NVRAM selection.
 
-Fixes: bf0bf77f6519 ("mlx5: Support communicating arbitrary host page size to firmware")
-Signed-off-by: Eran Ben Elisha <eranbe@nvidia.com>
-Signed-off-by: Majd Dibbiny <majd@nvidia.com>
-Signed-off-by: Jack Morgenstein <jackm@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Revision B2 is present on at least these Apple T2 Macs:
+
+kauai:    MacBook Pro 15" (Touch/2018-2019)
+maui:     MacBook Pro 13" (Touch/2018-2019)
+lanai:    Mac mini (Late 2018)
+ekans:    iMac Pro 27" (5K, Late 2017)
+
+And these non-T2 Macs:
+
+nihau:    iMac 27" (5K, 2019)
+
+Revision B3 is present on at least these Apple T2 Macs:
+
+bali:     MacBook Pro 16" (2019)
+trinidad: MacBook Pro 13" (2020, 4 TB3)
+borneo:   MacBook Pro 16" (2019, 5600M)
+kahana:   Mac Pro (2019)
+kahana:   Mac Pro (2019, Rack)
+hanauma:  iMac 27" (5K, 2020)
+kure:     iMac 27" (5K, 2020, 5700/XT)
+
+Also fix the firmware interface for 4364, from BCA to WCC.
+
+Fixes: 24f0bd136264 ("brcmfmac: add the BRCM 4364 found in MacBook Pro 15,2")
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230212063813.27622-5-marcan@marcan.st
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-index 0eb50be175cc4..64d4e7125e9bb 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-@@ -219,7 +219,8 @@ static int alloc_4k(struct mlx5_core_dev *dev, u64 *addr, u32 function)
- 
- 	n = find_first_bit(&fp->bitmask, 8 * sizeof(fp->bitmask));
- 	if (n >= MLX5_NUM_4K_IN_PAGE) {
--		mlx5_core_warn(dev, "alloc 4k bug\n");
-+		mlx5_core_warn(dev, "alloc 4k bug: fw page = 0x%llx, n = %u, bitmask: %lu, max num of 4K pages: %d\n",
-+			       fp->addr, n, fp->bitmask,  MLX5_NUM_4K_IN_PAGE);
- 		return -ENOENT;
- 	}
- 	clear_bit(n, &fp->bitmask);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index b752a65de2dcb..a9b9b2dc62d4f 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -57,7 +57,8 @@ BRCMF_FW_CLM_DEF(4356, "brcmfmac4356-pcie");
+ BRCMF_FW_CLM_DEF(43570, "brcmfmac43570-pcie");
+ BRCMF_FW_DEF(4358, "brcmfmac4358-pcie");
+ BRCMF_FW_DEF(4359, "brcmfmac4359-pcie");
+-BRCMF_FW_DEF(4364, "brcmfmac4364-pcie");
++BRCMF_FW_CLM_DEF(4364B2, "brcmfmac4364b2-pcie");
++BRCMF_FW_CLM_DEF(4364B3, "brcmfmac4364b3-pcie");
+ BRCMF_FW_DEF(4365B, "brcmfmac4365b-pcie");
+ BRCMF_FW_DEF(4365C, "brcmfmac4365c-pcie");
+ BRCMF_FW_DEF(4366B, "brcmfmac4366b-pcie");
+@@ -88,7 +89,8 @@ static const struct brcmf_firmware_mapping brcmf_pcie_fwnames[] = {
+ 	BRCMF_FW_ENTRY(BRCM_CC_43570_CHIP_ID, 0xFFFFFFFF, 43570),
+ 	BRCMF_FW_ENTRY(BRCM_CC_4358_CHIP_ID, 0xFFFFFFFF, 4358),
+ 	BRCMF_FW_ENTRY(BRCM_CC_4359_CHIP_ID, 0xFFFFFFFF, 4359),
+-	BRCMF_FW_ENTRY(BRCM_CC_4364_CHIP_ID, 0xFFFFFFFF, 4364),
++	BRCMF_FW_ENTRY(BRCM_CC_4364_CHIP_ID, 0x0000000F, 4364B2), /* 3 */
++	BRCMF_FW_ENTRY(BRCM_CC_4364_CHIP_ID, 0xFFFFFFF0, 4364B3), /* 4 */
+ 	BRCMF_FW_ENTRY(BRCM_CC_4365_CHIP_ID, 0x0000000F, 4365B),
+ 	BRCMF_FW_ENTRY(BRCM_CC_4365_CHIP_ID, 0xFFFFFFF0, 4365C),
+ 	BRCMF_FW_ENTRY(BRCM_CC_4366_CHIP_ID, 0x0000000F, 4366B),
+@@ -2003,6 +2005,11 @@ static int brcmf_pcie_read_otp(struct brcmf_pciedev_info *devinfo)
+ 		base = 0x8c0;
+ 		words = 0xb2;
+ 		break;
++	case BRCM_CC_4364_CHIP_ID:
++		coreid = BCMA_CORE_CHIPCOMMON;
++		base = 0x8c0;
++		words = 0x1a0;
++		break;
+ 	case BRCM_CC_4377_CHIP_ID:
+ 	case BRCM_CC_4378_CHIP_ID:
+ 		coreid = BCMA_CORE_GCI;
+@@ -2611,7 +2618,7 @@ static const struct pci_device_id brcmf_pcie_devid_table[] = {
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_2G_DEVICE_ID, WCC),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_5G_DEVICE_ID, WCC),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_RAW_DEVICE_ID, WCC),
+-	BRCMF_PCIE_DEVICE(BRCM_PCIE_4364_DEVICE_ID, BCA),
++	BRCMF_PCIE_DEVICE(BRCM_PCIE_4364_DEVICE_ID, WCC),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_DEVICE_ID, BCA),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_2G_DEVICE_ID, BCA),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_5G_DEVICE_ID, BCA),
 -- 
 2.39.2
 
