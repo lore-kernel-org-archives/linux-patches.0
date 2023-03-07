@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425B2BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3314C433D2;
-	Tue,  7 Mar 2023 17:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1886FBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922EDC433D2;
+	Tue,  7 Mar 2023 17:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211007;
-	bh=cc7E2/3fupkE9Jtief+WV2cpnbPcHLZQ59sTyPpWYcs=;
+	s=korg; t=1678211009;
+	bh=7pcQKjnYXqWQSypu+vZwn5kDD4FPO2Z05CoGPXsuXK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rcIoTSlGBjNGptXXOVqbBfC6+4vmdb3qHIkdE01n9Di0FkHDEKjscjZF3R+fMEyDk
-	 cFyvm3M35t+3425Tg5NxF3bugEf8nNjFtfygNOwIQ3LyDsU3IRKnmD5QhysGDm9jgN
-	 UtUTanVQuvbusXefVfuVYrQ/xxjoRE+xkINoG+vo=
+	b=Xamt8t8ogT4TFfR0MNJF9IfozmihdXE8EuURt4HYzJbwRDVj5v0Tu2th7VNB4qZ84
+	 ylR/Zc0Ez6YoWkm9aCOCB9sDAObDSpIawcjxwoQv02crP2QuP6RQKn7AYmrab+/baS
+	 4DxYSksNYL01D7grVlJcTb0/gYHkLoNfLsdV4sjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Carlo Caione <ccaione@baylibre.com>,
-	Kamlesh Gurudasani <kamlesh.gurudasani@gmail.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Syed Hassan <Syed.Hassan@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0693/1001] drm/tiny: ili9486: Do not assume 8-bit only SPI controllers
-Date: Tue,  7 Mar 2023 17:57:45 +0100
-Message-Id: <20230307170051.697355940@linuxfoundation.org>
+Subject: [PATCH 6.2 0694/1001] drm/amd/display: Defer DIG FIFO disable after VID stream enable
+Date: Tue,  7 Mar 2023 17:57:46 +0100
+Message-Id: <20230307170051.735253825@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,83 +38,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlo Caione <ccaione@baylibre.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 77772e607522daa61f3af74df018559db75c43d6 ]
+[ Upstream commit 2d90a1c054831338d57b39aec4d273cf3e867590 ]
 
-The pixel data for the ILI9486 is always 16-bits wide and it must be
-sent over the SPI bus. When the controller is only able to deal with
-8-bit transfers, this 16-bits data needs to be swapped before the
-sending to account for the big endian bus, this is on the contrary not
-needed when the SPI controller already supports 16-bits transfers.
+[Why]
+On some monitors we see a brief flash of corruption during the
+monitor disable sequence caused by FIFO being disabled in the middle
+of an active DP stream.
 
-The decision about swapping the pixel data or not is taken in the MIPI
-DBI code by probing the controller capabilities: if the controller only
-suppors 8-bit transfers the data is swapped, otherwise it is not.
+[How]
+Wait until DP vid stream is disabled before turning off the FIFO.
 
-This swapping/non-swapping is relying on the assumption that when the
-controller does support 16-bit transactions then the data is sent
-unswapped in 16-bits-per-word over SPI.
+The FIFO reset on DP unblank should take care of clearing any FIFO
+error, if any.
 
-The problem with the ILI9486 driver is that it is forcing 8-bit
-transactions also for controllers supporting 16-bits, violating the
-assumption and corrupting the pixel data.
-
-Align the driver to what is done in the MIPI DBI code by adjusting the
-transfer size to the maximum allowed by the SPI controller.
-
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Carlo Caione <ccaione@baylibre.com>
-Reviewed-by: Kamlesh Gurudasani <kamlesh.gurudasani@gmail.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221116-s905x_spi_ili9486-v4-2-f86b4463b9e4@baylibre.com
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Reviewed-by: Syed Hassan <Syed.Hassan@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/ili9486.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ .../drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c   | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/tiny/ili9486.c b/drivers/gpu/drm/tiny/ili9486.c
-index 1bb847466b107..a63b15817f112 100644
---- a/drivers/gpu/drm/tiny/ili9486.c
-+++ b/drivers/gpu/drm/tiny/ili9486.c
-@@ -43,6 +43,7 @@ static int waveshare_command(struct mipi_dbi *mipi, u8 *cmd, u8 *par,
- 			     size_t num)
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c
+index 38842f938bed0..0926db0183383 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c
+@@ -278,10 +278,10 @@ static void enc314_stream_encoder_dp_blank(
+ 	struct dc_link *link,
+ 	struct stream_encoder *enc)
  {
- 	struct spi_device *spi = mipi->spi;
-+	unsigned int bpw = 8;
- 	void *data = par;
- 	u32 speed_hz;
- 	int i, ret;
-@@ -56,8 +57,6 @@ static int waveshare_command(struct mipi_dbi *mipi, u8 *cmd, u8 *par,
- 	 * The displays are Raspberry Pi HATs and connected to the 8-bit only
- 	 * SPI controller, so 16-bit command and parameters need byte swapping
- 	 * before being transferred as 8-bit on the big endian SPI bus.
--	 * Pixel data bytes have already been swapped before this function is
--	 * called.
- 	 */
- 	buf[0] = cpu_to_be16(*cmd);
- 	gpiod_set_value_cansleep(mipi->dc, 0);
-@@ -71,12 +70,18 @@ static int waveshare_command(struct mipi_dbi *mipi, u8 *cmd, u8 *par,
- 		for (i = 0; i < num; i++)
- 			buf[i] = cpu_to_be16(par[i]);
- 		num *= 2;
--		speed_hz = mipi_dbi_spi_cmd_max_speed(spi, num);
- 		data = buf;
- 	}
- 
-+	/*
-+	 * Check whether pixel data bytes needs to be swapped or not
-+	 */
-+	if (*cmd == MIPI_DCS_WRITE_MEMORY_START && !mipi->swap_bytes)
-+		bpw = 16;
+-	/* New to DCN314 - disable the FIFO before VID stream disable. */
+-	enc314_disable_fifo(enc);
+-
+ 	enc1_stream_encoder_dp_blank(link, enc);
 +
- 	gpiod_set_value_cansleep(mipi->dc, 1);
--	ret = mipi_dbi_spi_transfer(spi, speed_hz, 8, data, num);
-+	speed_hz = mipi_dbi_spi_cmd_max_speed(spi, num);
-+	ret = mipi_dbi_spi_transfer(spi, speed_hz, bpw, data, num);
-  free:
- 	kfree(buf);
++	/* Disable FIFO after the DP vid stream is disabled to avoid corruption. */
++	enc314_disable_fifo(enc);
+ }
  
+ static void enc314_stream_encoder_dp_unblank(
 -- 
 2.39.2
 
