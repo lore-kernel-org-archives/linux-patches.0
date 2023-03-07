@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13C3BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:30:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CC5C433A1;
-	Tue,  7 Mar 2023 18:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFC6BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:30:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23955C433D2;
+	Tue,  7 Mar 2023 18:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213848;
-	bh=NFTdsDS4VibVEjjcSLK6bi5KlwYGD0WAksdvHJ2nuOQ=;
+	s=korg; t=1678213851;
+	bh=7pcQKjnYXqWQSypu+vZwn5kDD4FPO2Z05CoGPXsuXK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=So2AnUen1VyUCx2wKOtGWWaojwcYBJvoY8R3gpRg1FRht9dzdfrKM7g7cVKoFvIpn
-	 YlwyoTc4mjheHlA5/Af2o2QbcDGh94a1ASjrSlm1is54wcdFNdgYq2o3rX92IOTZTz
-	 +w3qduwiekiOES1R3A2X0Vb1IxVLIfTYUXQZPeKI=
+	b=TZFjBmq4AFXaMOcSdo/yGBANHYy40dAWr46Sz36FsudKNpEbc3a+8R9eMi83F31pg
+	 G87Nwp8mUh1128MwFJtWoK9XNWkXbjRpoQ90tRrDkFcYYXXNLTsZHRiAvDpeUwGuz4
+	 KuBCjNpegmUPlQxk+TK7G7HmIn8JTH9PRyrrLSyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mia Kanashi <chad@redpilled.dev>,
-	Andreas Grosse <andig.mail@t-online.de>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Syed Hassan <Syed.Hassan@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 609/885] HID: uclogic: Add frame type quirk
-Date: Tue,  7 Mar 2023 17:59:03 +0100
-Message-Id: <20230307170028.784958923@linuxfoundation.org>
+Subject: [PATCH 6.1 600/885] drm/amd/display: Defer DIG FIFO disable after VID stream enable
+Date: Tue,  7 Mar 2023 17:58:54 +0100
+Message-Id: <20230307170028.415554987@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,142 +38,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 14b71e6ad8ca59dd734c7fa9676f3d60bddee2a9 ]
+[ Upstream commit 2d90a1c054831338d57b39aec4d273cf3e867590 ]
 
-The report descriptor used to get information about UGEE v2 devices is
-incorrect in the XP-PEN Deco Pro SW. It indicates that the device frame
-is of type UCLOGIC_PARAMS_FRAME_BUTTONS but the device has a frame of
-type UCLOGIC_PARAMS_FRAME_MOUSE.
+[Why]
+On some monitors we see a brief flash of corruption during the
+monitor disable sequence caused by FIFO being disabled in the middle
+of an active DP stream.
 
-Here is the original report descriptor:
+[How]
+Wait until DP vid stream is disabled before turning off the FIFO.
 
-  0x0e 0x03 0xc8 0xb3 0x34 0x65 0x08 0x00 0xff 0x1f 0xd8 0x13 0x00 0x00
-                                     ^ This byte should be 2
+The FIFO reset on DP unblank should take care of clearing any FIFO
+error, if any.
 
-Add a quirk to be able to fix the reported frame type.
-
-Tested-by: Mia Kanashi <chad@redpilled.dev>
-Tested-by: Andreas Grosse <andig.mail@t-online.de>
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Reviewed-by: Syed Hassan <Syed.Hassan@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-uclogic-core.c   | 20 +-------------------
- drivers/hid/hid-uclogic-params.c |  5 +++++
- drivers/hid/hid-uclogic-params.h | 23 +++++++++++++++++++++++
- 3 files changed, 29 insertions(+), 19 deletions(-)
+ .../drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c   | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-uclogic-core.c b/drivers/hid/hid-uclogic-core.c
-index cfbbc39807a69..739984b8fa1b8 100644
---- a/drivers/hid/hid-uclogic-core.c
-+++ b/drivers/hid/hid-uclogic-core.c
-@@ -22,25 +22,6 @@
- 
- #include "hid-ids.h"
- 
--/* Driver data */
--struct uclogic_drvdata {
--	/* Interface parameters */
--	struct uclogic_params params;
--	/* Pointer to the replacement report descriptor. NULL if none. */
--	__u8 *desc_ptr;
--	/*
--	 * Size of the replacement report descriptor.
--	 * Only valid if desc_ptr is not NULL
--	 */
--	unsigned int desc_size;
--	/* Pen input device */
--	struct input_dev *pen_input;
--	/* In-range timer */
--	struct timer_list inrange_timer;
--	/* Last rotary encoder state, or U8_MAX for none */
--	u8 re_state;
--};
--
- /**
-  * uclogic_inrange_timeout - handle pen in-range state timeout.
-  * Emulate input events normally generated when pen goes out of range for
-@@ -202,6 +183,7 @@ static int uclogic_probe(struct hid_device *hdev,
- 	}
- 	timer_setup(&drvdata->inrange_timer, uclogic_inrange_timeout, 0);
- 	drvdata->re_state = U8_MAX;
-+	drvdata->quirks = id->driver_data;
- 	hid_set_drvdata(hdev, drvdata);
- 
- 	/* Initialize the device and retrieve interface parameters */
-diff --git a/drivers/hid/hid-uclogic-params.c b/drivers/hid/hid-uclogic-params.c
-index 3c5eea3df3288..e052538a62fb3 100644
---- a/drivers/hid/hid-uclogic-params.c
-+++ b/drivers/hid/hid-uclogic-params.c
-@@ -1298,6 +1298,7 @@ static int uclogic_params_ugee_v2_init(struct uclogic_params *params,
- 				       struct hid_device *hdev)
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c
+index 38842f938bed0..0926db0183383 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c
+@@ -278,10 +278,10 @@ static void enc314_stream_encoder_dp_blank(
+ 	struct dc_link *link,
+ 	struct stream_encoder *enc)
  {
- 	int rc = 0;
-+	struct uclogic_drvdata *drvdata;
- 	struct usb_interface *iface;
- 	__u8 bInterfaceNumber;
- 	const int str_desc_len = 12;
-@@ -1316,6 +1317,7 @@ static int uclogic_params_ugee_v2_init(struct uclogic_params *params,
- 		goto cleanup;
- 	}
- 
-+	drvdata = hid_get_drvdata(hdev);
- 	iface = to_usb_interface(hdev->dev.parent);
- 	bInterfaceNumber = iface->cur_altsetting->desc.bInterfaceNumber;
- 
-@@ -1382,6 +1384,9 @@ static int uclogic_params_ugee_v2_init(struct uclogic_params *params,
- 	p.pen.subreport_list[0].id = UCLOGIC_RDESC_V1_FRAME_ID;
- 
- 	/* Initialize the frame interface */
-+	if (drvdata->quirks & UCLOGIC_MOUSE_FRAME_QUIRK)
-+		frame_type = UCLOGIC_PARAMS_FRAME_MOUSE;
+-	/* New to DCN314 - disable the FIFO before VID stream disable. */
+-	enc314_disable_fifo(enc);
+-
+ 	enc1_stream_encoder_dp_blank(link, enc);
 +
- 	switch (frame_type) {
- 	case UCLOGIC_PARAMS_FRAME_DIAL:
- 	case UCLOGIC_PARAMS_FRAME_MOUSE:
-diff --git a/drivers/hid/hid-uclogic-params.h b/drivers/hid/hid-uclogic-params.h
-index a97477c02ff82..10a05c7fd9398 100644
---- a/drivers/hid/hid-uclogic-params.h
-+++ b/drivers/hid/hid-uclogic-params.h
-@@ -19,6 +19,8 @@
- #include <linux/usb.h>
- #include <linux/hid.h>
++	/* Disable FIFO after the DP vid stream is disabled to avoid corruption. */
++	enc314_disable_fifo(enc);
+ }
  
-+#define UCLOGIC_MOUSE_FRAME_QUIRK	BIT(0)
-+
- /* Types of pen in-range reporting */
- enum uclogic_params_pen_inrange {
- 	/* Normal reports: zero - out of proximity, one - in proximity */
-@@ -215,6 +217,27 @@ struct uclogic_params {
- 	struct uclogic_params_frame frame_list[3];
- };
- 
-+/* Driver data */
-+struct uclogic_drvdata {
-+	/* Interface parameters */
-+	struct uclogic_params params;
-+	/* Pointer to the replacement report descriptor. NULL if none. */
-+	__u8 *desc_ptr;
-+	/*
-+	 * Size of the replacement report descriptor.
-+	 * Only valid if desc_ptr is not NULL
-+	 */
-+	unsigned int desc_size;
-+	/* Pen input device */
-+	struct input_dev *pen_input;
-+	/* In-range timer */
-+	struct timer_list inrange_timer;
-+	/* Last rotary encoder state, or U8_MAX for none */
-+	u8 re_state;
-+	/* Device quirks */
-+	unsigned long quirks;
-+};
-+
- /* Initialize a tablet interface and discover its parameters */
- extern int uclogic_params_init(struct uclogic_params *params,
- 				struct hid_device *hdev);
+ static void enc314_stream_encoder_dp_unblank(
 -- 
 2.39.2
 
