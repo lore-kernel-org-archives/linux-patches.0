@@ -1,33 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF012BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:18:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E7DCC433D2;
-	Tue,  7 Mar 2023 18:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5CFBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:18:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05CBDC433D2;
+	Tue,  7 Mar 2023 18:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213106;
-	bh=SibYQp57NS7jPG0XJfh0C067YW6BJeRZPyxGP2VFcxM=;
+	s=korg; t=1678213109;
+	bh=wGZfxjhGE9qBVjyg3PF/jqOVziJK7LJT+bAvv8mPIvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wb7La1YKd1MXLtnQSK2sNMutMXfxqfccCiKAUfsOF1sTEp2ZYxsVR3s5lymRwXBaO
-	 sr8On6LiLU2jCNQNAbbggKgLw34gsdjYDGEcj7gaokYZqBuZ90vYKKfWDWi+nw8ElP
-	 LVOHPY8Wii3OXGtoNKsKIIqPe+cu8dxNoCnoYf+I=
+	b=s3SPxdOkbH/DU4wuhJflWWtZafF04CzoZLZ0sz0G2W4ev8RXEgBkqqb44aK0jAwC3
+	 3+Gs/ZI/9eyjdxq7Ld4FNy+bgl+/BE+AtR0XJGQaZE+SYJGXq/7isC78TVPawAfcmr
+	 OPZymAcTIrFlu6VnV2+u7D4g0PhbOaDNsbgAC3pI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Nageswara R Sastry <rnsastry@linux.ibm.com>,
-	linuxppc-dev@lists.ozlabs.org,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Marco Elver <elver@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 400/885] perf tests stat_all_metrics: Change true workload to sleep workload for system wide check
-Date: Tue,  7 Mar 2023 17:55:34 +0100
-Message-Id: <20230307170019.783375647@linuxfoundation.org>
+Subject: [PATCH 6.1 401/885] objtool: add UACCESS exceptions for __tsan_volatile_read/write
+Date: Tue,  7 Mar 2023 17:55:35 +0100
+Message-Id: <20230307170019.827542195@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -41,79 +44,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kajol Jain <kjain@linux.ibm.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit f9fa0778ee7349a9aa3d2ea10e9f2ab843a0b44e ]
+[ Upstream commit d5d469247264e56960705dc5ae7e1d014861fe40 ]
 
-Testcase stat_all_metrics.sh fails in powerpc:
+A lot of the tsan helpers are already excempt from the UACCESS warnings,
+but some more functions were added that need the same thing:
 
-98: perf all metrics test : FAILED!
+kernel/kcsan/core.o: warning: objtool: __tsan_volatile_read16+0x0: call to __tsan_unaligned_read16() with UACCESS enabled
+kernel/kcsan/core.o: warning: objtool: __tsan_volatile_write16+0x0: call to __tsan_unaligned_write16() with UACCESS enabled
+vmlinux.o: warning: objtool: __tsan_unaligned_volatile_read16+0x4: call to __tsan_unaligned_read16() with UACCESS enabled
+vmlinux.o: warning: objtool: __tsan_unaligned_volatile_write16+0x4: call to __tsan_unaligned_write16() with UACCESS enabled
 
-Logs with verbose:
+As Marco points out, these functions don't even call each other
+explicitly but instead gcc (but not clang) notices the functions
+being identical and turns one symbol into a direct branch to the
+other.
 
-  [command]# ./perf test 98 -vv
-   98: perf all metrics test                                           :
-   --- start ---
-  test child forked, pid 13262
-  Testing BRU_STALL_CPI
-  Testing COMPLETION_STALL_CPI
-   ----
-  Testing TOTAL_LOCAL_NODE_PUMPS_P23
-  Metric 'TOTAL_LOCAL_NODE_PUMPS_P23' not printed in:
-  Error:
-  Invalid event (hv_24x7/PM_PB_LNS_PUMP23,chip=3/) in per-thread mode, enable system wide with '-a'.
-  Testing TOTAL_LOCAL_NODE_PUMPS_RETRIES_P01
-  Metric 'TOTAL_LOCAL_NODE_PUMPS_RETRIES_P01' not printed in:
-  Error:
-  Invalid event (hv_24x7/PM_PB_RTY_LNS_PUMP01,chip=3/) in per-thread mode, enable system wide with '-a'.
-   ----
-
-Based on above logs, we could see some of the hv-24x7 metric events
-fails, and logs suggest to run the metric event with -a option.  This
-change happened after the commit a4b8cfcabb1d90ec ("perf stat: Delay
-metric parsing"), which delayed the metric parsing phase and now before
-metric parsing phase perf tool identifies, whether target is system-wide
-or not. With this change, perf_event_open will fails with workload
-monitoring for uncore events as expected.
-
-The perf all metric test case fails as some of the hv-24x7 metric events
-may need bigger workload with system wide monitoring to get the data.
-Fix this issue by changing current system wide check from true workload
-to sleep 0.01 workload.
-
-Result with the patch changes in powerpc:
-
-  98: perf all metrics test : Ok
-
-Fixes: a4b8cfcabb1d90ec ("perf stat: Delay metric parsing")
-Suggested-by: Ian Rogers <irogers@google.com>
-Reviewed-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
-Tested-by: Disha Goel <disgoel@linux.ibm.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Nageswara R Sastry <rnsastry@linux.ibm.com>
-Cc: linuxppc-dev@lists.ozlabs.org
-Link: https://lore.kernel.org/r/20230215093827.124921-1-kjain@linux.ibm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Link: https://lkml.kernel.org/r/20230215130058.3836177-4-arnd@kernel.org
+Fixes: 75d75b7a4d54 ("kcsan: Support distinguishing volatile accesses")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Marco Elver <elver@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>
+Cc: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/stat_all_metrics.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/objtool/check.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/perf/tests/shell/stat_all_metrics.sh b/tools/perf/tests/shell/stat_all_metrics.sh
-index 6e79349e42bef..22e9cb294b40e 100755
---- a/tools/perf/tests/shell/stat_all_metrics.sh
-+++ b/tools/perf/tests/shell/stat_all_metrics.sh
-@@ -11,7 +11,7 @@ for m in $(perf list --raw-dump metrics); do
-     continue
-   fi
-   # Failed so try system wide.
--  result=$(perf stat -M "$m" -a true 2>&1)
-+  result=$(perf stat -M "$m" -a sleep 0.01 2>&1)
-   if [[ "$result" =~ "${m:0:50}" ]]
-   then
-     continue
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 51494c3002d91..0c1b6acad141f 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -1059,6 +1059,8 @@ static const char *uaccess_safe_builtin[] = {
+ 	"__tsan_atomic64_compare_exchange_val",
+ 	"__tsan_atomic_thread_fence",
+ 	"__tsan_atomic_signal_fence",
++	"__tsan_unaligned_read16",
++	"__tsan_unaligned_write16",
+ 	/* KCOV */
+ 	"write_comp_data",
+ 	"check_kcov_mode",
 -- 
 2.39.2
 
