@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E13BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED38C433EF;
-	Tue,  7 Mar 2023 18:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C0ABA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDCAC433EF;
+	Tue,  7 Mar 2023 18:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214162;
-	bh=YLdiUgVhBv3bV48AniyjMASGnPGb+33LGqHi0IVj/YI=;
+	s=korg; t=1678214165;
+	bh=4kE2uW3RXaMUo4vk3LtW5hwFku4qjjG9WOutV27XEJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yXsX/P+oFYyCN1xZS5tf3biA73vQF+tcwlp5ZmPpfHy6Ln0wlI+SUm11E6XLEUDfO
-	 A9MdCxdkse0h6WQBew+fOmPchIU2Vq5fpZ8nOeZu4bE6BsYi5WzedUfntN8uziNZC5
-	 yvoagrmxFg4OUa095MgoYXBwOvCWAp9SdkO7xBYs=
+	b=ap6pCVrvM0RU6UO39cTKwQ3l+PbPc+DAXpg6EQkWP0iLGvbac7B6Rb9xkV7xbQGut
+	 vwtn1zplE5MaPOlB9aVhXixQsfIySqkRlBuBrCx5zPLpZjf3O3eAd+GZF7RejdbKss
+	 k89GOgOA6Zw4VEYjWhfNiahehI1CGMOOlFrXctTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 743/885] brd: return 0/-error from brd_insert_page()
-Date: Tue,  7 Mar 2023 18:01:17 +0100
-Message-Id: <20230307170034.214425566@linuxfoundation.org>
+Subject: [PATCH 6.1 744/885] brd: check for REQ_NOWAIT and set correct page allocation mask
+Date: Tue,  7 Mar 2023 18:01:18 +0100
+Message-Id: <20230307170034.249009552@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,91 +36,152 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-commit db0ccc44a20b4bb3039c0f6885a1f9c3323c7673 upstream.
+commit 6ded703c56c21bfb259725d4f1831a5feb563e9b upstream.
 
-It currently returns a page, but callers just check for NULL/page to
-gauge success. Clean this up and return the appropriate error directly
-instead.
+If REQ_NOWAIT is set, then do a non-blocking allocation if the operation
+is a write and we need to insert a new page. Currently REQ_NOWAIT cannot
+be set as the queue isn't marked as supporting nowait, this change is in
+preparation for allowing that.
+
+radix_tree_preload() warns on attempting to call it with an allocation
+mask that doesn't allow blocking. While that warning could arguably
+be removed, we need to handle radix insertion failures anyway as they
+are more likely if we cannot block to get memory.
+
+Remove legacy BUG_ON()'s and turn them into proper errors instead, one
+for the allocation failure and one for finding a page that doesn't
+match the correct index.
 
 Cc: stable@vger.kernel.org # 5.10+
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/brd.c |   26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ drivers/block/brd.c |   48 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 28 insertions(+), 20 deletions(-)
 
 --- a/drivers/block/brd.c
 +++ b/drivers/block/brd.c
-@@ -78,11 +78,9 @@ static struct page *brd_lookup_page(stru
- }
- 
+@@ -80,26 +80,21 @@ static struct page *brd_lookup_page(stru
  /*
-- * Look up and return a brd's page for a given sector.
-- * If one does not exist, allocate an empty page, and insert that. Then
-- * return it.
-+ * Insert a new page for a given sector, if one does not already exist.
+  * Insert a new page for a given sector, if one does not already exist.
   */
--static struct page *brd_insert_page(struct brd_device *brd, sector_t sector)
-+static int brd_insert_page(struct brd_device *brd, sector_t sector)
+-static int brd_insert_page(struct brd_device *brd, sector_t sector)
++static int brd_insert_page(struct brd_device *brd, sector_t sector, gfp_t gfp)
  {
  	pgoff_t idx;
  	struct page *page;
-@@ -90,7 +88,7 @@ static struct page *brd_insert_page(stru
+-	gfp_t gfp_flags;
++	int ret = 0;
  
  	page = brd_lookup_page(brd, sector);
  	if (page)
--		return page;
-+		return 0;
+ 		return 0;
  
- 	/*
- 	 * Must use NOIO because we don't want to recurse back into the
-@@ -99,11 +97,11 @@ static struct page *brd_insert_page(stru
- 	gfp_flags = GFP_NOIO | __GFP_ZERO | __GFP_HIGHMEM;
- 	page = alloc_page(gfp_flags);
+-	/*
+-	 * Must use NOIO because we don't want to recurse back into the
+-	 * block or filesystem layers from page reclaim.
+-	 */
+-	gfp_flags = GFP_NOIO | __GFP_ZERO | __GFP_HIGHMEM;
+-	page = alloc_page(gfp_flags);
++	page = alloc_page(gfp | __GFP_ZERO | __GFP_HIGHMEM);
  	if (!page)
--		return NULL;
-+		return -ENOMEM;
+ 		return -ENOMEM;
  
- 	if (radix_tree_preload(GFP_NOIO)) {
+-	if (radix_tree_preload(GFP_NOIO)) {
++	if (gfpflags_allow_blocking(gfp) && radix_tree_preload(gfp)) {
  		__free_page(page);
--		return NULL;
-+		return -ENOMEM;
+ 		return -ENOMEM;
  	}
- 
- 	spin_lock(&brd->brd_lock);
-@@ -120,8 +118,7 @@ static struct page *brd_insert_page(stru
+@@ -110,15 +105,17 @@ static int brd_insert_page(struct brd_de
+ 	if (radix_tree_insert(&brd->brd_pages, idx, page)) {
+ 		__free_page(page);
+ 		page = radix_tree_lookup(&brd->brd_pages, idx);
+-		BUG_ON(!page);
+-		BUG_ON(page->index != idx);
++		if (!page)
++			ret = -ENOMEM;
++		else if (page->index != idx)
++			ret = -EIO;
+ 	} else {
+ 		brd->brd_nr_pages++;
+ 	}
  	spin_unlock(&brd->brd_lock);
  
  	radix_tree_preload_end();
--
--	return page;
-+	return 0;
- }
- 
- /*
-@@ -174,16 +171,17 @@ static int copy_to_brd_setup(struct brd_
- {
- 	unsigned int offset = (sector & (PAGE_SECTORS-1)) << SECTOR_SHIFT;
- 	size_t copy;
-+	int ret;
- 
- 	copy = min_t(size_t, n, PAGE_SIZE - offset);
--	if (!brd_insert_page(brd, sector))
--		return -ENOSPC;
-+	ret = brd_insert_page(brd, sector);
-+	if (ret)
-+		return ret;
- 	if (copy < n) {
- 		sector += copy >> SECTOR_SHIFT;
--		if (!brd_insert_page(brd, sector))
--			return -ENOSPC;
-+		ret = brd_insert_page(brd, sector);
- 	}
 -	return 0;
 +	return ret;
  }
  
  /*
+@@ -167,19 +164,20 @@ static void brd_free_pages(struct brd_de
+ /*
+  * copy_to_brd_setup must be called before copy_to_brd. It may sleep.
+  */
+-static int copy_to_brd_setup(struct brd_device *brd, sector_t sector, size_t n)
++static int copy_to_brd_setup(struct brd_device *brd, sector_t sector, size_t n,
++			     gfp_t gfp)
+ {
+ 	unsigned int offset = (sector & (PAGE_SECTORS-1)) << SECTOR_SHIFT;
+ 	size_t copy;
+ 	int ret;
+ 
+ 	copy = min_t(size_t, n, PAGE_SIZE - offset);
+-	ret = brd_insert_page(brd, sector);
++	ret = brd_insert_page(brd, sector, gfp);
+ 	if (ret)
+ 		return ret;
+ 	if (copy < n) {
+ 		sector += copy >> SECTOR_SHIFT;
+-		ret = brd_insert_page(brd, sector);
++		ret = brd_insert_page(brd, sector, gfp);
+ 	}
+ 	return ret;
+ }
+@@ -254,20 +252,26 @@ static void copy_from_brd(void *dst, str
+  * Process a single bvec of a bio.
+  */
+ static int brd_do_bvec(struct brd_device *brd, struct page *page,
+-			unsigned int len, unsigned int off, enum req_op op,
++			unsigned int len, unsigned int off, blk_opf_t opf,
+ 			sector_t sector)
+ {
+ 	void *mem;
+ 	int err = 0;
+ 
+-	if (op_is_write(op)) {
+-		err = copy_to_brd_setup(brd, sector, len);
++	if (op_is_write(opf)) {
++		/*
++		 * Must use NOIO because we don't want to recurse back into the
++		 * block or filesystem layers from page reclaim.
++		 */
++		gfp_t gfp = opf & REQ_NOWAIT ? GFP_NOWAIT : GFP_NOIO;
++
++		err = copy_to_brd_setup(brd, sector, len, gfp);
+ 		if (err)
+ 			goto out;
+ 	}
+ 
+ 	mem = kmap_atomic(page);
+-	if (!op_is_write(op)) {
++	if (!op_is_write(opf)) {
+ 		copy_from_brd(mem + off, brd, sector, len);
+ 		flush_dcache_page(page);
+ 	} else {
+@@ -296,8 +300,12 @@ static void brd_submit_bio(struct bio *b
+ 				(len & (SECTOR_SIZE - 1)));
+ 
+ 		err = brd_do_bvec(brd, bvec.bv_page, len, bvec.bv_offset,
+-				  bio_op(bio), sector);
++				  bio->bi_opf, sector);
+ 		if (err) {
++			if (err == -ENOMEM && bio->bi_opf & REQ_NOWAIT) {
++				bio_wouldblock_error(bio);
++				return;
++			}
+ 			bio_io_error(bio);
+ 			return;
+ 		}
 
 
