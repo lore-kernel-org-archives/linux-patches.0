@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B74BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:24:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33474C433EF;
-	Tue,  7 Mar 2023 17:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CA1BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:24:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24908C433EF;
+	Tue,  7 Mar 2023 17:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209883;
-	bh=ko5ERGC5OYqfVLM/RsoXP/V+9as0tWO+gv2xsa+H1Vw=;
+	s=korg; t=1678209886;
+	bh=AbEeA01qbxzdWPn/EBGuK9l6ZaGwh92c0yEaAmbRI4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l2FRTmCgFVsMrBC2BIz8/9pi5wNM1ak3Cy8WGrxo03YVfOPGWH3A8XVduQVo4Nto8
-	 LllsWktU4wcSVo9QKUGnubf2Dn0TxCU+l2wnm/iSmbvtsjBIVLdMHOhbItt8xpMR0K
-	 aOBo6nj23aAD4CdyplWcB0nwx1y2tqGomDzxITls=
+	b=rx4LicSPSMWX/L0pwAUPtwcB84ox2xWS2Vq/A9GS1CApd5qVZxjSs3JlrBgT8DfIW
+	 iU+bsC8GFmknJLbPwZxKB/ztb3rk9h0KJ8nlIKEQTxb/I5J+uk5/M/IplbAX1iTBfy
+	 qY0vhCAbDtxfasSPoqNY47Am5NU6raRouRkL9pkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0322/1001] net: lan966x: Fix possible deadlock inside PTP
-Date: Tue,  7 Mar 2023 17:51:34 +0100
-Message-Id: <20230307170035.507120511@linuxfoundation.org>
+Subject: [PATCH 6.2 0356/1001] scsi: qla2xxx: Fix exchange oversubscription
+Date: Tue,  7 Mar 2023 17:52:08 +0100
+Message-Id: <20230307170036.885086611@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,222 +37,382 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Quinn Tran <qutran@marvell.com>
 
-[ Upstream commit 3a70e0d4c9d74cb00f7c0ec022f5599f9f7ba07d ]
+[ Upstream commit 41e5afe51f75f2858f5563145348f6c26d307b8f ]
 
-When doing timestamping in lan966x and having PROVE_LOCKING
-enabled the following warning is shown.
+In large environment, it is possible to experience command timeout and
+escalation of path recovery. Currently the driver does not track the number
+of exchanges/commands sent to FW. If there is a delay for commands at the
+head of the queue, then this will create back pressure for commands at the
+back of the queue.
 
-========================================================
-WARNING: possible irq lock inversion dependency detected
-6.2.0-rc7-01749-gc54e1f7f7e36 #2786 Tainted: G                 N
---------------------------------------------------------
-swapper/0/0 just changed the state of lock:
-c2609f50 (_xmit_ETHER#2){+.-.}-{2:2}, at: sch_direct_xmit+0x16c/0x2e8
-but this lock took another, SOFTIRQ-unsafe lock in the past:
- (&lan966x->ptp_ts_id_lock){+.+.}-{2:2}
+Check for exchange availability before command submission.
 
-and interrupts could create inverse lock ordering between them.
-
-other info that might help us debug this:
- Possible interrupt unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&lan966x->ptp_ts_id_lock);
-                               local_irq_disable();
-                               lock(_xmit_ETHER#2);
-                               lock(&lan966x->ptp_ts_id_lock);
-  <Interrupt>
-    lock(_xmit_ETHER#2);
-
- *** DEADLOCK ***
-
-5 locks held by swapper/0/0:
- #0: c1001e18 ((&ndev->rs_timer)){+.-.}-{0:0}, at: call_timer_fn+0x0/0x33c
- #1: c105e7c4 (rcu_read_lock){....}-{1:2}, at: ndisc_send_skb+0x134/0x81c
- #2: c105e7d8 (rcu_read_lock_bh){....}-{1:2}, at: ip6_finish_output2+0x17c/0xc64
- #3: c105e7d8 (rcu_read_lock_bh){....}-{1:2}, at: __dev_queue_xmit+0x4c/0x1224
- #4: c3056174 (dev->qdisc_tx_busylock ?: &qdisc_tx_busylock){+...}-{2:2}, at: __dev_queue_xmit+0x354/0x1224
-
-the shortest dependencies between 2nd lock and 1st lock:
- -> (&lan966x->ptp_ts_id_lock){+.+.}-{2:2} {
-    HARDIRQ-ON-W at:
-                      lock_acquire.part.0+0xb0/0x248
-                      _raw_spin_lock+0x38/0x48
-                      lan966x_ptp_irq_handler+0x164/0x2a8
-                      irq_thread_fn+0x1c/0x78
-                      irq_thread+0x130/0x278
-                      kthread+0xec/0x110
-                      ret_from_fork+0x14/0x28
-    SOFTIRQ-ON-W at:
-                      lock_acquire.part.0+0xb0/0x248
-                      _raw_spin_lock+0x38/0x48
-                      lan966x_ptp_irq_handler+0x164/0x2a8
-                      irq_thread_fn+0x1c/0x78
-                      irq_thread+0x130/0x278
-                      kthread+0xec/0x110
-                      ret_from_fork+0x14/0x28
-    INITIAL USE at:
-                     lock_acquire.part.0+0xb0/0x248
-                     _raw_spin_lock_irqsave+0x4c/0x68
-                     lan966x_ptp_txtstamp_request+0x128/0x1cc
-                     lan966x_port_xmit+0x224/0x43c
-                     dev_hard_start_xmit+0xa8/0x2f0
-                     sch_direct_xmit+0x108/0x2e8
-                     __dev_queue_xmit+0x41c/0x1224
-                     packet_sendmsg+0xdb4/0x134c
-                     __sys_sendto+0xd0/0x154
-                     sys_send+0x18/0x20
-                     ret_fast_syscall+0x0/0x1c
-  }
-  ... key      at: [<c174ba0c>] __key.2+0x0/0x8
-  ... acquired at:
-   _raw_spin_lock_irqsave+0x4c/0x68
-   lan966x_ptp_txtstamp_request+0x128/0x1cc
-   lan966x_port_xmit+0x224/0x43c
-   dev_hard_start_xmit+0xa8/0x2f0
-   sch_direct_xmit+0x108/0x2e8
-   __dev_queue_xmit+0x41c/0x1224
-   packet_sendmsg+0xdb4/0x134c
-   __sys_sendto+0xd0/0x154
-   sys_send+0x18/0x20
-   ret_fast_syscall+0x0/0x1c
-
--> (_xmit_ETHER#2){+.-.}-{2:2} {
-   HARDIRQ-ON-W at:
-                    lock_acquire.part.0+0xb0/0x248
-                    _raw_spin_lock+0x38/0x48
-                    netif_freeze_queues+0x38/0x68
-                    dev_deactivate_many+0xac/0x388
-                    dev_deactivate+0x38/0x6c
-                    linkwatch_do_dev+0x70/0x8c
-                    __linkwatch_run_queue+0xd4/0x1e8
-                    linkwatch_event+0x24/0x34
-                    process_one_work+0x284/0x744
-                    worker_thread+0x28/0x4bc
-                    kthread+0xec/0x110
-                    ret_from_fork+0x14/0x28
-   IN-SOFTIRQ-W at:
-                    lock_acquire.part.0+0xb0/0x248
-                    _raw_spin_lock+0x38/0x48
-                    sch_direct_xmit+0x16c/0x2e8
-                    __dev_queue_xmit+0x41c/0x1224
-                    ip6_finish_output2+0x5f4/0xc64
-                    ndisc_send_skb+0x4cc/0x81c
-                    addrconf_rs_timer+0xb0/0x2f8
-                    call_timer_fn+0xb4/0x33c
-                    expire_timers+0xb4/0x10c
-                    run_timer_softirq+0xf8/0x2a8
-                    __do_softirq+0xd4/0x5fc
-                    __irq_exit_rcu+0x138/0x17c
-                    irq_exit+0x8/0x28
-                    __irq_svc+0x90/0xbc
-                    arch_cpu_idle+0x30/0x3c
-                    default_idle_call+0x44/0xac
-                    do_idle+0xc8/0x138
-                    cpu_startup_entry+0x18/0x1c
-                    rest_init+0xcc/0x168
-                    arch_post_acpi_subsys_init+0x0/0x8
-   INITIAL USE at:
-                   lock_acquire.part.0+0xb0/0x248
-                   _raw_spin_lock+0x38/0x48
-                   netif_freeze_queues+0x38/0x68
-                   dev_deactivate_many+0xac/0x388
-                   dev_deactivate+0x38/0x6c
-                   linkwatch_do_dev+0x70/0x8c
-                   __linkwatch_run_queue+0xd4/0x1e8
-                   linkwatch_event+0x24/0x34
-                   process_one_work+0x284/0x744
-                   worker_thread+0x28/0x4bc
-                   kthread+0xec/0x110
-                   ret_from_fork+0x14/0x28
- }
- ... key      at: [<c175974c>] netdev_xmit_lock_key+0x8/0x1c8
- ... acquired at:
-   __lock_acquire+0x978/0x2978
-   lock_acquire.part.0+0xb0/0x248
-   _raw_spin_lock+0x38/0x48
-   sch_direct_xmit+0x16c/0x2e8
-   __dev_queue_xmit+0x41c/0x1224
-   ip6_finish_output2+0x5f4/0xc64
-   ndisc_send_skb+0x4cc/0x81c
-   addrconf_rs_timer+0xb0/0x2f8
-   call_timer_fn+0xb4/0x33c
-   expire_timers+0xb4/0x10c
-   run_timer_softirq+0xf8/0x2a8
-   __do_softirq+0xd4/0x5fc
-   __irq_exit_rcu+0x138/0x17c
-   irq_exit+0x8/0x28
-   __irq_svc+0x90/0xbc
-   arch_cpu_idle+0x30/0x3c
-   default_idle_call+0x44/0xac
-   do_idle+0xc8/0x138
-   cpu_startup_entry+0x18/0x1c
-   rest_init+0xcc/0x168
-   arch_post_acpi_subsys_init+0x0/0x8
-
-stack backtrace:
-CPU: 0 PID: 0 Comm: swapper/0 Tainted: G                 N 6.2.0-rc7-01749-gc54e1f7f7e36 #2786
-Hardware name: Generic DT based system
- unwind_backtrace from show_stack+0x10/0x14
- show_stack from dump_stack_lvl+0x58/0x70
- dump_stack_lvl from mark_lock.part.0+0x59c/0x93c
- mark_lock.part.0 from __lock_acquire+0x978/0x2978
- __lock_acquire from lock_acquire.part.0+0xb0/0x248
- lock_acquire.part.0 from _raw_spin_lock+0x38/0x48
- _raw_spin_lock from sch_direct_xmit+0x16c/0x2e8
- sch_direct_xmit from __dev_queue_xmit+0x41c/0x1224
- __dev_queue_xmit from ip6_finish_output2+0x5f4/0xc64
- ip6_finish_output2 from ndisc_send_skb+0x4cc/0x81c
- ndisc_send_skb from addrconf_rs_timer+0xb0/0x2f8
- addrconf_rs_timer from call_timer_fn+0xb4/0x33c
- call_timer_fn from expire_timers+0xb4/0x10c
- expire_timers from run_timer_softirq+0xf8/0x2a8
- run_timer_softirq from __do_softirq+0xd4/0x5fc
- __do_softirq from __irq_exit_rcu+0x138/0x17c
- __irq_exit_rcu from irq_exit+0x8/0x28
- irq_exit from __irq_svc+0x90/0xbc
-Exception stack(0xc1001f20 to 0xc1001f68)
-1f20: ffffffff ffffffff 00000001 c011f840 c100e000 c100e000 c1009314 c1009370
-1f40: c10f0c1a c0d5e564 c0f5da8c 00000000 00000000 c1001f70 c010f0bc c010f0c0
-1f60: 600f0013 ffffffff
- __irq_svc from arch_cpu_idle+0x30/0x3c
- arch_cpu_idle from default_idle_call+0x44/0xac
- default_idle_call from do_idle+0xc8/0x138
- do_idle from cpu_startup_entry+0x18/0x1c
- cpu_startup_entry from rest_init+0xcc/0x168
- rest_init from arch_post_acpi_subsys_init+0x0/0x8
-
-Fix this by using spin_lock_irqsave/spin_lock_irqrestore also
-inside lan966x_ptp_irq_handler.
-
-Fixes: e85a96e48e33 ("net: lan966x: Add support for ptp interrupts")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://lore.kernel.org/r/20230217210917.2649365-1-horatiu.vultur@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 89c72f4245a8 ("scsi: qla2xxx: Add IOCB resource tracking")
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/qla2xxx/qla_def.h    |  6 +++-
+ drivers/scsi/qla2xxx/qla_edif.c   |  7 +++--
+ drivers/scsi/qla2xxx/qla_init.c   | 13 ++++++++
+ drivers/scsi/qla2xxx/qla_inline.h | 52 +++++++++++++++++++++----------
+ drivers/scsi/qla2xxx/qla_iocb.c   | 28 ++++++++++-------
+ drivers/scsi/qla2xxx/qla_isr.c    |  3 +-
+ drivers/scsi/qla2xxx/qla_nvme.c   | 15 ++++++++-
+ 7 files changed, 88 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-index a8348437dd87f..61fbabf5bebc3 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-@@ -524,9 +524,9 @@ irqreturn_t lan966x_ptp_irq_handler(int irq, void *args)
- 		if (WARN_ON(!skb_match))
- 			continue;
+diff --git a/drivers/scsi/qla2xxx/qla_def.h b/drivers/scsi/qla2xxx/qla_def.h
+index a26a373be9da3..cd4eb11b07079 100644
+--- a/drivers/scsi/qla2xxx/qla_def.h
++++ b/drivers/scsi/qla2xxx/qla_def.h
+@@ -660,7 +660,7 @@ enum {
  
--		spin_lock(&lan966x->ptp_ts_id_lock);
-+		spin_lock_irqsave(&lan966x->ptp_ts_id_lock, flags);
- 		lan966x->ptp_skbs--;
--		spin_unlock(&lan966x->ptp_ts_id_lock);
-+		spin_unlock_irqrestore(&lan966x->ptp_ts_id_lock, flags);
+ struct iocb_resource {
+ 	u8 res_type;
+-	u8 pad;
++	u8  exch_cnt;
+ 	u16 iocb_cnt;
+ };
  
- 		/* Get the h/w timestamp */
- 		lan966x_get_hwtimestamp(lan966x, &ts, delay);
+@@ -3721,6 +3721,10 @@ struct qla_fw_resources {
+ 	u16 iocbs_limit;
+ 	u16 iocbs_qp_limit;
+ 	u16 iocbs_used;
++	u16 exch_total;
++	u16 exch_limit;
++	u16 exch_used;
++	u16 pad;
+ };
+ 
+ #define QLA_IOCB_PCT_LIMIT 95
+diff --git a/drivers/scsi/qla2xxx/qla_edif.c b/drivers/scsi/qla2xxx/qla_edif.c
+index e4240aae5f9e3..53186a1459629 100644
+--- a/drivers/scsi/qla2xxx/qla_edif.c
++++ b/drivers/scsi/qla2xxx/qla_edif.c
+@@ -2989,9 +2989,10 @@ qla28xx_start_scsi_edif(srb_t *sp)
+ 	tot_dsds = nseg;
+ 	req_cnt = qla24xx_calc_iocbs(vha, tot_dsds);
+ 
+-	sp->iores.res_type = RESOURCE_INI;
++	sp->iores.res_type = RESOURCE_IOCB | RESOURCE_EXCH;
++	sp->iores.exch_cnt = 1;
+ 	sp->iores.iocb_cnt = req_cnt;
+-	if (qla_get_iocbs(sp->qpair, &sp->iores))
++	if (qla_get_fw_resources(sp->qpair, &sp->iores))
+ 		goto queuing_error;
+ 
+ 	if (req->cnt < (req_cnt + 2)) {
+@@ -3185,7 +3186,7 @@ qla28xx_start_scsi_edif(srb_t *sp)
+ 		mempool_free(sp->u.scmd.ct6_ctx, ha->ctx_mempool);
+ 		sp->u.scmd.ct6_ctx = NULL;
+ 	}
+-	qla_put_iocbs(sp->qpair, &sp->iores);
++	qla_put_fw_resources(sp->qpair, &sp->iores);
+ 	spin_unlock_irqrestore(lock, flags);
+ 
+ 	return QLA_FUNCTION_FAILED;
+diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
+index 8d9ecabb1aac1..fd27fb5114796 100644
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -128,12 +128,14 @@ static void qla24xx_abort_iocb_timeout(void *data)
+ 		    sp->cmd_sp)) {
+ 			qpair->req->outstanding_cmds[handle] = NULL;
+ 			cmdsp_found = 1;
++			qla_put_fw_resources(qpair, &sp->cmd_sp->iores);
+ 		}
+ 
+ 		/* removing the abort */
+ 		if (qpair->req->outstanding_cmds[handle] == sp) {
+ 			qpair->req->outstanding_cmds[handle] = NULL;
+ 			sp_found = 1;
++			qla_put_fw_resources(qpair, &sp->iores);
+ 			break;
+ 		}
+ 	}
+@@ -2000,6 +2002,7 @@ qla2x00_tmf_iocb_timeout(void *data)
+ 		for (h = 1; h < sp->qpair->req->num_outstanding_cmds; h++) {
+ 			if (sp->qpair->req->outstanding_cmds[h] == sp) {
+ 				sp->qpair->req->outstanding_cmds[h] = NULL;
++				qla_put_fw_resources(sp->qpair, &sp->iores);
+ 				break;
+ 			}
+ 		}
+@@ -3943,6 +3946,12 @@ void qla_init_iocb_limit(scsi_qla_host_t *vha)
+ 	ha->base_qpair->fwres.iocbs_limit = limit;
+ 	ha->base_qpair->fwres.iocbs_qp_limit = limit / num_qps;
+ 	ha->base_qpair->fwres.iocbs_used = 0;
++
++	ha->base_qpair->fwres.exch_total = ha->orig_fw_xcb_count;
++	ha->base_qpair->fwres.exch_limit = (ha->orig_fw_xcb_count *
++					    QLA_IOCB_PCT_LIMIT) / 100;
++	ha->base_qpair->fwres.exch_used  = 0;
++
+ 	for (i = 0; i < ha->max_qpairs; i++) {
+ 		if (ha->queue_pair_map[i])  {
+ 			ha->queue_pair_map[i]->fwres.iocbs_total =
+@@ -3951,6 +3960,10 @@ void qla_init_iocb_limit(scsi_qla_host_t *vha)
+ 			ha->queue_pair_map[i]->fwres.iocbs_qp_limit =
+ 				limit / num_qps;
+ 			ha->queue_pair_map[i]->fwres.iocbs_used = 0;
++			ha->queue_pair_map[i]->fwres.exch_total = ha->orig_fw_xcb_count;
++			ha->queue_pair_map[i]->fwres.exch_limit =
++				(ha->orig_fw_xcb_count * QLA_IOCB_PCT_LIMIT) / 100;
++			ha->queue_pair_map[i]->fwres.exch_used = 0;
+ 		}
+ 	}
+ }
+diff --git a/drivers/scsi/qla2xxx/qla_inline.h b/drivers/scsi/qla2xxx/qla_inline.h
+index 5185dc5daf80d..2d5a275d8b000 100644
+--- a/drivers/scsi/qla2xxx/qla_inline.h
++++ b/drivers/scsi/qla2xxx/qla_inline.h
+@@ -380,13 +380,16 @@ qla2xxx_get_fc4_priority(struct scsi_qla_host *vha)
+ 
+ enum {
+ 	RESOURCE_NONE,
+-	RESOURCE_INI,
++	RESOURCE_IOCB  = BIT_0,
++	RESOURCE_EXCH = BIT_1,  /* exchange */
++	RESOURCE_FORCE = BIT_2,
+ };
+ 
+ static inline int
+-qla_get_iocbs(struct qla_qpair *qp, struct iocb_resource *iores)
++qla_get_fw_resources(struct qla_qpair *qp, struct iocb_resource *iores)
+ {
+ 	u16 iocbs_used, i;
++	u16 exch_used;
+ 	struct qla_hw_data *ha = qp->vha->hw;
+ 
+ 	if (!ql2xenforce_iocb_limit) {
+@@ -394,10 +397,7 @@ qla_get_iocbs(struct qla_qpair *qp, struct iocb_resource *iores)
+ 		return 0;
+ 	}
+ 
+-	if ((iores->iocb_cnt + qp->fwres.iocbs_used) < qp->fwres.iocbs_qp_limit) {
+-		qp->fwres.iocbs_used += iores->iocb_cnt;
+-		return 0;
+-	} else {
++	if ((iores->iocb_cnt + qp->fwres.iocbs_used) >= qp->fwres.iocbs_qp_limit) {
+ 		/* no need to acquire qpair lock. It's just rough calculation */
+ 		iocbs_used = ha->base_qpair->fwres.iocbs_used;
+ 		for (i = 0; i < ha->max_qpairs; i++) {
+@@ -405,30 +405,48 @@ qla_get_iocbs(struct qla_qpair *qp, struct iocb_resource *iores)
+ 				iocbs_used += ha->queue_pair_map[i]->fwres.iocbs_used;
+ 		}
+ 
+-		if ((iores->iocb_cnt + iocbs_used) < qp->fwres.iocbs_limit) {
+-			qp->fwres.iocbs_used += iores->iocb_cnt;
+-			return 0;
+-		} else {
++		if ((iores->iocb_cnt + iocbs_used) >= qp->fwres.iocbs_limit) {
++			iores->res_type = RESOURCE_NONE;
++			return -ENOSPC;
++		}
++	}
++
++	if (iores->res_type & RESOURCE_EXCH) {
++		exch_used = ha->base_qpair->fwres.exch_used;
++		for (i = 0; i < ha->max_qpairs; i++) {
++			if (ha->queue_pair_map[i])
++				exch_used += ha->queue_pair_map[i]->fwres.exch_used;
++		}
++
++		if ((exch_used + iores->exch_cnt) >= qp->fwres.exch_limit) {
+ 			iores->res_type = RESOURCE_NONE;
+ 			return -ENOSPC;
+ 		}
+ 	}
++	qp->fwres.iocbs_used += iores->iocb_cnt;
++	qp->fwres.exch_used += iores->exch_cnt;
++	return 0;
+ }
+ 
+ static inline void
+-qla_put_iocbs(struct qla_qpair *qp, struct iocb_resource *iores)
++qla_put_fw_resources(struct qla_qpair *qp, struct iocb_resource *iores)
+ {
+-	switch (iores->res_type) {
+-	case RESOURCE_NONE:
+-		break;
+-	default:
++	if (iores->res_type & RESOURCE_IOCB) {
+ 		if (qp->fwres.iocbs_used >= iores->iocb_cnt) {
+ 			qp->fwres.iocbs_used -= iores->iocb_cnt;
+ 		} else {
+-			// should not happen
++			/* should not happen */
+ 			qp->fwres.iocbs_used = 0;
+ 		}
+-		break;
++	}
++
++	if (iores->res_type & RESOURCE_EXCH) {
++		if (qp->fwres.exch_used >= iores->exch_cnt) {
++			qp->fwres.exch_used -= iores->exch_cnt;
++		} else {
++			/* should not happen */
++			qp->fwres.exch_used = 0;
++		}
+ 	}
+ 	iores->res_type = RESOURCE_NONE;
+ }
+diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
+index 42ce4e1fe7441..399ec8da2d73c 100644
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -1589,9 +1589,10 @@ qla24xx_start_scsi(srb_t *sp)
+ 	tot_dsds = nseg;
+ 	req_cnt = qla24xx_calc_iocbs(vha, tot_dsds);
+ 
+-	sp->iores.res_type = RESOURCE_INI;
++	sp->iores.res_type = RESOURCE_IOCB | RESOURCE_EXCH;
++	sp->iores.exch_cnt = 1;
+ 	sp->iores.iocb_cnt = req_cnt;
+-	if (qla_get_iocbs(sp->qpair, &sp->iores))
++	if (qla_get_fw_resources(sp->qpair, &sp->iores))
+ 		goto queuing_error;
+ 
+ 	if (req->cnt < (req_cnt + 2)) {
+@@ -1678,7 +1679,7 @@ qla24xx_start_scsi(srb_t *sp)
+ 	if (tot_dsds)
+ 		scsi_dma_unmap(cmd);
+ 
+-	qla_put_iocbs(sp->qpair, &sp->iores);
++	qla_put_fw_resources(sp->qpair, &sp->iores);
+ 	spin_unlock_irqrestore(&ha->hardware_lock, flags);
+ 
+ 	return QLA_FUNCTION_FAILED;
+@@ -1793,9 +1794,10 @@ qla24xx_dif_start_scsi(srb_t *sp)
+ 	tot_prot_dsds = nseg;
+ 	tot_dsds += nseg;
+ 
+-	sp->iores.res_type = RESOURCE_INI;
++	sp->iores.res_type = RESOURCE_IOCB | RESOURCE_EXCH;
++	sp->iores.exch_cnt = 1;
+ 	sp->iores.iocb_cnt = qla24xx_calc_iocbs(vha, tot_dsds);
+-	if (qla_get_iocbs(sp->qpair, &sp->iores))
++	if (qla_get_fw_resources(sp->qpair, &sp->iores))
+ 		goto queuing_error;
+ 
+ 	if (req->cnt < (req_cnt + 2)) {
+@@ -1883,7 +1885,7 @@ qla24xx_dif_start_scsi(srb_t *sp)
+ 	}
+ 	/* Cleanup will be performed by the caller (queuecommand) */
+ 
+-	qla_put_iocbs(sp->qpair, &sp->iores);
++	qla_put_fw_resources(sp->qpair, &sp->iores);
+ 	spin_unlock_irqrestore(&ha->hardware_lock, flags);
+ 
+ 	return QLA_FUNCTION_FAILED;
+@@ -1952,9 +1954,10 @@ qla2xxx_start_scsi_mq(srb_t *sp)
+ 	tot_dsds = nseg;
+ 	req_cnt = qla24xx_calc_iocbs(vha, tot_dsds);
+ 
+-	sp->iores.res_type = RESOURCE_INI;
++	sp->iores.res_type = RESOURCE_IOCB | RESOURCE_EXCH;
++	sp->iores.exch_cnt = 1;
+ 	sp->iores.iocb_cnt = req_cnt;
+-	if (qla_get_iocbs(sp->qpair, &sp->iores))
++	if (qla_get_fw_resources(sp->qpair, &sp->iores))
+ 		goto queuing_error;
+ 
+ 	if (req->cnt < (req_cnt + 2)) {
+@@ -2041,7 +2044,7 @@ qla2xxx_start_scsi_mq(srb_t *sp)
+ 	if (tot_dsds)
+ 		scsi_dma_unmap(cmd);
+ 
+-	qla_put_iocbs(sp->qpair, &sp->iores);
++	qla_put_fw_resources(sp->qpair, &sp->iores);
+ 	spin_unlock_irqrestore(&qpair->qp_lock, flags);
+ 
+ 	return QLA_FUNCTION_FAILED;
+@@ -2171,9 +2174,10 @@ qla2xxx_dif_start_scsi_mq(srb_t *sp)
+ 	tot_prot_dsds = nseg;
+ 	tot_dsds += nseg;
+ 
+-	sp->iores.res_type = RESOURCE_INI;
++	sp->iores.res_type = RESOURCE_IOCB | RESOURCE_EXCH;
++	sp->iores.exch_cnt = 1;
+ 	sp->iores.iocb_cnt = qla24xx_calc_iocbs(vha, tot_dsds);
+-	if (qla_get_iocbs(sp->qpair, &sp->iores))
++	if (qla_get_fw_resources(sp->qpair, &sp->iores))
+ 		goto queuing_error;
+ 
+ 	if (req->cnt < (req_cnt + 2)) {
+@@ -2260,7 +2264,7 @@ qla2xxx_dif_start_scsi_mq(srb_t *sp)
+ 	}
+ 	/* Cleanup will be performed by the caller (queuecommand) */
+ 
+-	qla_put_iocbs(sp->qpair, &sp->iores);
++	qla_put_fw_resources(sp->qpair, &sp->iores);
+ 	spin_unlock_irqrestore(&qpair->qp_lock, flags);
+ 
+ 	return QLA_FUNCTION_FAILED;
+diff --git a/drivers/scsi/qla2xxx/qla_isr.c b/drivers/scsi/qla2xxx/qla_isr.c
+index e19fde304e5c6..42d3d2de3d31f 100644
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -3197,7 +3197,7 @@ qla2x00_status_entry(scsi_qla_host_t *vha, struct rsp_que *rsp, void *pkt)
+ 		}
+ 		return;
+ 	}
+-	qla_put_iocbs(sp->qpair, &sp->iores);
++	qla_put_fw_resources(sp->qpair, &sp->iores);
+ 
+ 	if (sp->cmd_type != TYPE_SRB) {
+ 		req->outstanding_cmds[handle] = NULL;
+@@ -3618,7 +3618,6 @@ qla2x00_error_entry(scsi_qla_host_t *vha, struct rsp_que *rsp, sts_entry_t *pkt)
+ 	default:
+ 		sp = qla2x00_get_sp_from_handle(vha, func, req, pkt);
+ 		if (sp) {
+-			qla_put_iocbs(sp->qpair, &sp->iores);
+ 			sp->done(sp, res);
+ 			return 0;
+ 		}
+diff --git a/drivers/scsi/qla2xxx/qla_nvme.c b/drivers/scsi/qla2xxx/qla_nvme.c
+index 02fdeb0d31ec4..582d88dd59abe 100644
+--- a/drivers/scsi/qla2xxx/qla_nvme.c
++++ b/drivers/scsi/qla2xxx/qla_nvme.c
+@@ -445,13 +445,24 @@ static inline int qla2x00_start_nvme_mq(srb_t *sp)
+ 		goto queuing_error;
+ 	}
+ 	req_cnt = qla24xx_calc_iocbs(vha, tot_dsds);
++
++	sp->iores.res_type = RESOURCE_IOCB | RESOURCE_EXCH;
++	sp->iores.exch_cnt = 1;
++	sp->iores.iocb_cnt = req_cnt;
++	if (qla_get_fw_resources(sp->qpair, &sp->iores)) {
++		rval = -EBUSY;
++		goto queuing_error;
++	}
++
+ 	if (req->cnt < (req_cnt + 2)) {
+ 		if (IS_SHADOW_REG_CAPABLE(ha)) {
+ 			cnt = *req->out_ptr;
+ 		} else {
+ 			cnt = rd_reg_dword_relaxed(req->req_q_out);
+-			if (qla2x00_check_reg16_for_disconnect(vha, cnt))
++			if (qla2x00_check_reg16_for_disconnect(vha, cnt)) {
++				rval = -EBUSY;
+ 				goto queuing_error;
++			}
+ 		}
+ 
+ 		if (req->ring_index < cnt)
+@@ -600,6 +611,8 @@ static inline int qla2x00_start_nvme_mq(srb_t *sp)
+ 		qla24xx_process_response_queue(vha, rsp);
+ 
+ queuing_error:
++	if (rval)
++		qla_put_fw_resources(sp->qpair, &sp->iores);
+ 	spin_unlock_irqrestore(&qpair->qp_lock, flags);
+ 
+ 	return rval;
 -- 
 2.39.2
 
