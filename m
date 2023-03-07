@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7384FBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:28:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBBEBC43444;
-	Tue,  7 Mar 2023 18:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA88BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:28:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD4DC433EF;
+	Tue,  7 Mar 2023 18:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213711;
-	bh=GmoqgQjS8GrD7H/UaNkiPlOwZIiDMOQSslpLAim/nmo=;
+	s=korg; t=1678213714;
+	bh=k++tYFrBvbMA0IHjxXTJWHVS5uy74mq+MUGMxCVwQ1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ORtXeGZ34ML//h4pV3ox6a1ouHk8O7CUhz6aRNVHUl3dgk+biTLkxi3TuOeubpzCX
-	 Bbp3gPL0syxE1zhr5923e9EPfK+xN9CHePFtF1yNWo/thlDU/mGm5BlSMqZjF0Ex8J
-	 XBXPI2es235HB9sNVJF0+OZvFP2co2qYG2WpPdgM=
+	b=B8x4ehUgSaQO9lfkW4WYDGCo3zY2Zquy18iSFL9Ji3RfqWrDtXibAmaPu8MMlbU+E
+	 ORTzin+7JzNoVHGQFNYsI5tMfJfH3qxRzi+tjJ40K2rsvxBqN504R+WYkBhxlxPTL2
+	 qo/aLcet4QX2DBPSWQq1jWIy49Xx2/3p5Svb5G5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Lei <Jun.Lei@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
 	Jasdeep Dhillon <jdhillon@amd.com>,
-	Dillon Varone <Dillon.Varone@amd.com>,
+	Ian Chen <ian.chen@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 594/885] drm/amd/display: Reduce expected sdp bandwidth for dcn321
-Date: Tue,  7 Mar 2023 17:58:48 +0100
-Message-Id: <20230307170028.172705372@linuxfoundation.org>
+Subject: [PATCH 6.1 595/885] drm/amd/display: Revert Reduce delay when sink device not able to ACK 00340h write
+Date: Tue,  7 Mar 2023 17:58:49 +0100
+Message-Id: <20230307170028.220603159@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,36 +37,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dillon Varone <Dillon.Varone@amd.com>
+From: Ian Chen <ian.chen@amd.com>
 
-[ Upstream commit 6b81090d6d4cc0fd818c9ec9dbb6906f921ad396 ]
+[ Upstream commit 639f6ad6df7f47db48b59956b469a6917a136afb ]
 
-[Description]
-Modify soc BB to reduce expected sdp bandwidth and align with measurements to
-fix underflow issues.
+[WHY]
+It causes regression AMD source will not write DPCD 340.
 
-Reviewed-by: Jun Lei <Jun.Lei@amd.com>
+Reviewed-by: Wayne Lin <Wayne.Lin@amd.com>
 Acked-by: Jasdeep Dhillon <jdhillon@amd.com>
-Signed-off-by: Dillon Varone <Dillon.Varone@amd.com>
+Signed-off-by: Ian Chen <ian.chen@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_link.c    |  6 ------
+ drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c | 14 +++-----------
+ drivers/gpu/drm/amd/display/dc/dc_dp_types.h     |  1 -
+ 3 files changed, 3 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
-index f4b176599be7a..0ea406145c1d7 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
-@@ -136,7 +136,7 @@ struct _vcs_dpi_soc_bounding_box_st dcn3_21_soc = {
- 	.urgent_out_of_order_return_per_channel_pixel_only_bytes = 4096,
- 	.urgent_out_of_order_return_per_channel_pixel_and_vm_bytes = 4096,
- 	.urgent_out_of_order_return_per_channel_vm_only_bytes = 4096,
--	.pct_ideal_sdp_bw_after_urgent = 100.0,
-+	.pct_ideal_sdp_bw_after_urgent = 90.0,
- 	.pct_ideal_fabric_bw_after_urgent = 67.0,
- 	.pct_ideal_dram_sdp_bw_after_urgent_pixel_only = 20.0,
- 	.pct_ideal_dram_sdp_bw_after_urgent_pixel_and_vm = 60.0, // N/A, for now keep as is until DML implemented
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link.c b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
+index 40b9d2ce08e66..328c5e33cc66b 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_link.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
+@@ -1916,12 +1916,6 @@ struct dc_link *link_create(const struct link_init_data *init_params)
+ 	if (false == dc_link_construct(link, init_params))
+ 		goto construct_fail;
+ 
+-	/*
+-	 * Must use preferred_link_setting, not reported_link_cap or verified_link_cap,
+-	 * since struct preferred_link_setting won't be reset after S3.
+-	 */
+-	link->preferred_link_setting.dpcd_source_device_specific_field_support = true;
+-
+ 	return link;
+ 
+ construct_fail:
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
+index 1254d38f1778a..24f1aba4ae133 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
+@@ -6591,18 +6591,10 @@ void dpcd_set_source_specific_data(struct dc_link *link)
+ 
+ 			uint8_t hblank_size = (uint8_t)link->dc->caps.min_horizontal_blanking_period;
+ 
+-			if (link->preferred_link_setting.dpcd_source_device_specific_field_support) {
+-				result_write_min_hblank = core_link_write_dpcd(link,
+-					DP_SOURCE_MINIMUM_HBLANK_SUPPORTED, (uint8_t *)(&hblank_size),
+-					sizeof(hblank_size));
+-
+-				if (result_write_min_hblank == DC_ERROR_UNEXPECTED)
+-					link->preferred_link_setting.dpcd_source_device_specific_field_support = false;
+-			} else {
+-				DC_LOG_DC("Sink device does not support 00340h DPCD write. Skipping on purpose.\n");
+-			}
++			result_write_min_hblank = core_link_write_dpcd(link,
++				DP_SOURCE_MINIMUM_HBLANK_SUPPORTED, (uint8_t *)(&hblank_size),
++				sizeof(hblank_size));
+ 		}
+-
+ 		DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_INFORMATION,
+ 							WPP_BIT_FLAG_DC_DETECTION_DP_CAPS,
+ 							"result=%u link_index=%u enum dce_version=%d DPCD=0x%04X min_hblank=%u branch_dev_id=0x%x branch_dev_name='%c%c%c%c%c%c'",
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
+index 2c54b6e0498bf..296793d8b2bf2 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
+@@ -149,7 +149,6 @@ struct dc_link_settings {
+ 	enum dc_link_spread link_spread;
+ 	bool use_link_rate_set;
+ 	uint8_t link_rate_set;
+-	bool dpcd_source_device_specific_field_support;
+ };
+ 
+ union dc_dp_ffe_preset {
 -- 
 2.39.2
 
