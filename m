@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DC1BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:26:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5FCC433EF;
-	Tue,  7 Mar 2023 18:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A276CBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:26:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE06C433D2;
+	Tue,  7 Mar 2023 18:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213584;
-	bh=R8WZzBbrGpBQq+SGjS+yP1mOYgU01k+VqiIedrTi4js=;
+	s=korg; t=1678213587;
+	bh=+Hhso6gxQnJ9KT4Ow7cZ+KQtXRJeT90UhIgQvLbuhhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VXL+vFlx5WeQZ/eW9z+i06uy4U5a/NfEMqb9DAdzvaAfc07vknm2coWntbbvjWHny
-	 3CwQnEDpqGgRKb/R/F8Oy02HX58OslWlSQ7SUab0W2EopRoCoPVAj7bMtFCxUIn7xL
-	 dunmQiyr3NoFQDVk7xpHBBqito2P9tnK6+PwXj6U=
+	b=ayDTRfUEKdDGZ+jiNbsLdQRo1Mgegf7c7juzJobOuoeYfin/Yeg87xEZeRnmtsmLQ
+	 HBoL9HDtybQVnDTe4LEQPQytUKxMAgp2pR1l+gvIBAds1BUmSrK5rM8YJErAA4Tz2I
+	 /1FN7mkWqrIyU35guxjOcDepdvRvf2KpKT85uA60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Yang Li <yang.lee@linux.alibaba.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 536/885] blk-cgroup: synchronize pd_free_fn() from blkg_free_workfn() and blkcg_deactivate_policy()
-Date: Tue,  7 Mar 2023 17:57:50 +0100
-Message-Id: <20230307170025.780340286@linuxfoundation.org>
+Subject: [PATCH 6.1 554/885] thermal: intel: Fix unsigned comparison with less than zero
+Date: Tue,  7 Mar 2023 17:58:08 +0100
+Message-Id: <20230307170026.557424357@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,152 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Yang Li <yang.lee@linux.alibaba.com>
 
-[ Upstream commit f1c006f1c6850c14040f8337753a63119bba39b9 ]
+[ Upstream commit e7fcfe67f9f410736b758969477b17ea285e8e6c ]
 
-Currently parent pd can be freed before child pd:
+The return value from the call to intel_tcc_get_tjmax() is int, which can
+be a negative error code. However, the return value is being assigned to
+an u32 variable 'tj_max', so making 'tj_max' an int.
 
-t1: remove cgroup C1
-blkcg_destroy_blkgs
- blkg_destroy
-  list_del_init(&blkg->q_node)
-  // remove blkg from queue list
-  percpu_ref_kill(&blkg->refcnt)
-   blkg_release
-    call_rcu
+Eliminate the following warning:
+./drivers/thermal/intel/intel_soc_dts_iosf.c:394:5-11: WARNING: Unsigned expression compared with zero: tj_max < 0
 
-t2: from t1
-__blkg_release
- blkg_free
-  schedule_work
-			t4: deactivate policy
-			blkcg_deactivate_policy
-			 pd_free_fn
-			 // parent of C1 is freed first
-t3: from t2
- blkg_free_workfn
-  pd_free_fn
-
-If policy(for example, ioc_timer_fn() from iocost) access parent pd from
-child pd after pd_offline_fn(), then UAF can be triggered.
-
-Fix the problem by delaying 'list_del_init(&blkg->q_node)' from
-blkg_destroy() to blkg_free_workfn(), and using a new disk level mutex to
-synchronize blkg_free_workfn() and blkcg_deactivate_policy().
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230119110350.2287325-4-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3637
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+Acked-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c     | 35 +++++++++++++++++++++++++++++------
- include/linux/blkdev.h |  1 +
- 2 files changed, 30 insertions(+), 6 deletions(-)
+ drivers/thermal/intel/intel_soc_dts_iosf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 8d1b7757f1e4f..f8b21bead6552 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -87,16 +87,32 @@ static void blkg_free_workfn(struct work_struct *work)
+diff --git a/drivers/thermal/intel/intel_soc_dts_iosf.c b/drivers/thermal/intel/intel_soc_dts_iosf.c
+index 342b0bb5a56d9..8651ff1abe754 100644
+--- a/drivers/thermal/intel/intel_soc_dts_iosf.c
++++ b/drivers/thermal/intel/intel_soc_dts_iosf.c
+@@ -405,7 +405,7 @@ struct intel_soc_dts_sensors *intel_soc_dts_iosf_init(
  {
- 	struct blkcg_gq *blkg = container_of(work, struct blkcg_gq,
- 					     free_work);
-+	struct request_queue *q = blkg->q;
+ 	struct intel_soc_dts_sensors *sensors;
+ 	bool notification;
+-	u32 tj_max;
++	int tj_max;
+ 	int ret;
  	int i;
  
-+	/*
-+	 * pd_free_fn() can also be called from blkcg_deactivate_policy(),
-+	 * in order to make sure pd_free_fn() is called in order, the deletion
-+	 * of the list blkg->q_node is delayed to here from blkg_destroy(), and
-+	 * blkcg_mutex is used to synchronize blkg_free_workfn() and
-+	 * blkcg_deactivate_policy().
-+	 */
-+	if (q)
-+		mutex_lock(&q->blkcg_mutex);
-+
- 	for (i = 0; i < BLKCG_MAX_POLS; i++)
- 		if (blkg->pd[i])
- 			blkcg_policy[i]->pd_free_fn(blkg->pd[i]);
- 
- 	if (blkg->parent)
- 		blkg_put(blkg->parent);
--	if (blkg->q)
--		blk_put_queue(blkg->q);
-+
-+	if (q) {
-+		list_del_init(&blkg->q_node);
-+		mutex_unlock(&q->blkcg_mutex);
-+		blk_put_queue(q);
-+	}
-+
- 	free_percpu(blkg->iostat_cpu);
- 	percpu_ref_exit(&blkg->refcnt);
- 	kfree(blkg);
-@@ -425,9 +441,14 @@ static void blkg_destroy(struct blkcg_gq *blkg)
- 	lockdep_assert_held(&blkg->q->queue_lock);
- 	lockdep_assert_held(&blkcg->lock);
- 
--	/* Something wrong if we are trying to remove same group twice */
--	WARN_ON_ONCE(list_empty(&blkg->q_node));
--	WARN_ON_ONCE(hlist_unhashed(&blkg->blkcg_node));
-+	/*
-+	 * blkg stays on the queue list until blkg_free_workfn(), see details in
-+	 * blkg_free_workfn(), hence this function can be called from
-+	 * blkcg_destroy_blkgs() first and again from blkg_destroy_all() before
-+	 * blkg_free_workfn().
-+	 */
-+	if (hlist_unhashed(&blkg->blkcg_node))
-+		return;
- 
- 	for (i = 0; i < BLKCG_MAX_POLS; i++) {
- 		struct blkcg_policy *pol = blkcg_policy[i];
-@@ -439,7 +460,6 @@ static void blkg_destroy(struct blkcg_gq *blkg)
- 	blkg->online = false;
- 
- 	radix_tree_delete(&blkcg->blkg_tree, blkg->q->id);
--	list_del_init(&blkg->q_node);
- 	hlist_del_init_rcu(&blkg->blkcg_node);
- 
- 	/*
-@@ -1226,6 +1246,7 @@ int blkcg_init_disk(struct gendisk *disk)
- 	int ret;
- 
- 	INIT_LIST_HEAD(&q->blkg_list);
-+	mutex_init(&q->blkcg_mutex);
- 
- 	new_blkg = blkg_alloc(&blkcg_root, disk, GFP_KERNEL);
- 	if (!new_blkg)
-@@ -1463,6 +1484,7 @@ void blkcg_deactivate_policy(struct request_queue *q,
- 	if (queue_is_mq(q))
- 		blk_mq_freeze_queue(q);
- 
-+	mutex_lock(&q->blkcg_mutex);
- 	spin_lock_irq(&q->queue_lock);
- 
- 	__clear_bit(pol->plid, q->blkcg_pols);
-@@ -1481,6 +1503,7 @@ void blkcg_deactivate_policy(struct request_queue *q,
- 	}
- 
- 	spin_unlock_irq(&q->queue_lock);
-+	mutex_unlock(&q->blkcg_mutex);
- 
- 	if (queue_is_mq(q))
- 		blk_mq_unfreeze_queue(q);
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 891f8cbcd0436..1680b6e1e5362 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -487,6 +487,7 @@ struct request_queue {
- 	DECLARE_BITMAP		(blkcg_pols, BLKCG_MAX_POLS);
- 	struct blkcg_gq		*root_blkg;
- 	struct list_head	blkg_list;
-+	struct mutex		blkcg_mutex;
- #endif
- 
- 	struct queue_limits	limits;
 -- 
 2.39.2
 
