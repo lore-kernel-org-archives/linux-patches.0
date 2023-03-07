@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD10BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B06C433EF;
-	Tue,  7 Mar 2023 17:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245CDBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96586C433D2;
+	Tue,  7 Mar 2023 17:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211110;
-	bh=DNw91WgBpcZMsqJL4CBUdfiawTgNfe1yjnEpxebHFZE=;
+	s=korg; t=1678211113;
+	bh=+IWnCY8nRXkgV2rY4QhoUp4clvCg11NoNmn48kCRs0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1bMCbRI5BaTrCXJ2xY+YfTgSMSgJZ/h6dkzYcv7QDH2IXBYu0qsgt+64O0/uNHK4
-	 BCwG8cazz/+fb6kLwHF/T8tJXwuqpV5RFrDnK9Lk3e7+HMLK0i0pINscWsRzMFgR+y
-	 nHu3mnwDydxd7kDJbWkFor2OK1KXlvqDJHJclbC0=
+	b=JWBzVk9f40pBbDbsu8Rjej7HEsadiFGRLOVaAFPJIs98N9ia6vYbRSXR48PJSoACY
+	 jweYpQAaQzjYWG0f0T7iD9Vmyp4Xf6soDl/WA43LOOss1Ljb5cy/fHPL9z+nIyjb8R
+	 yrFi61iiJaWiHkX2bmp4rIsb6nSt3kNBrnDmYeOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.2 0755/1001] io_uring: use user visible tail in io_uring_poll()
-Date: Tue,  7 Mar 2023 17:58:47 +0100
-Message-Id: <20230307170054.476984756@linuxfoundation.org>
+	Denis Pauk <pauk.denis@gmail.com>,
+	Ahmad Khalifa <ahmad@khalifa.ws>,
+	Jeroen Beerstra <jeroen@beerstra.org>,
+	Slawomir Stepien <sst@poczta.fm>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 0726/1001] hwmon: (nct6775) B650/B660/X670 ASUS boards support
+Date: Tue,  7 Mar 2023 17:58:18 +0100
+Message-Id: <20230307170053.210522282@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,33 +38,152 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Denis Pauk <pauk.denis@gmail.com>
 
-commit c10bb64684813a326174c3eebcafb3ee5af52ca3 upstream.
+[ Upstream commit e2e09989ccc21ad428d6393450add78584b143bd ]
 
-We return POLLIN from io_uring_poll() depending on whether there are
-CQEs for the userspace, and so we should use the user visible tail
-pointer instead of a transient cached value.
+Boards such as:
+  "EX-B660M-V5 PRO D4",
+  "PRIME B650-PLUS",
+  "PRIME B650M-A",
+  "PRIME B650M-A AX",
+  "PRIME B650M-A II",
+  "PRIME B650M-A WIFI",
+  "PRIME B650M-A WIFI II",
+  "PRIME B660M-A D4",
+  "PRIME B660M-A WIFI D4",
+  "PRIME X670-P",
+  "PRIME X670-P WIFI",
+  "PRIME X670E-PRO WIFI",
+  "Pro B660M-C-D4",
+  "ProArt B660-CREATOR D4",
+  "ProArt X670E-CREATOR WIFI",
+  "ROG CROSSHAIR X670E EXTREME",
+  "ROG CROSSHAIR X670E GENE",
+  "ROG CROSSHAIR X670E HERO",
+  "ROG MAXIMUS XIII EXTREME GLACIAL",
+  "ROG MAXIMUS Z690 EXTREME",
+  "ROG MAXIMUS Z690 EXTREME GLACIAL",
+  "ROG STRIX B650-A GAMING WIFI",
+  "ROG STRIX B650E-E GAMING WIFI",
+  "ROG STRIX B650E-F GAMING WIFI",
+  "ROG STRIX B650E-I GAMING WIFI",
+  "ROG STRIX B660-A GAMING WIFI D4",
+  "ROG STRIX B660-F GAMING WIFI",
+  "ROG STRIX B660-G GAMING WIFI",
+  "ROG STRIX B660-I GAMING WIFI",
+  "ROG STRIX X670E-A GAMING WIFI",
+  "ROG STRIX X670E-E GAMING WIFI",
+  "ROG STRIX X670E-F GAMING WIFI",
+  "ROG STRIX X670E-I GAMING WIFI",
+  "ROG STRIX Z590-A GAMING WIFI II",
+  "ROG STRIX Z690-A GAMING WIFI D4",
+  "TUF GAMING B650-PLUS",
+  "TUF GAMING B650-PLUS WIFI",
+  "TUF GAMING B650M-PLUS",
+  "TUF GAMING B650M-PLUS WIFI",
+  "TUF GAMING B660M-PLUS WIFI",
+  "TUF GAMING X670E-PLUS",
+  "TUF GAMING X670E-PLUS WIFI",
+  "TUF GAMING Z590-PLUS WIFI",
+have got a NCT6799D chip, but by default there's no use of it
+because of resource conflict with WMI method.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/228ffcbf30ba98856f66ffdb9a6a60ead1dd96c0.1674484266.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This commit adds such boards to the monitoring list with new ACPI device
+UID.
+
+BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=204807
+Signed-off-by: Denis Pauk <pauk.denis@gmail.com>
+Co-developed-by: Ahmad Khalifa <ahmad@khalifa.ws>
+Signed-off-by: Ahmad Khalifa <ahmad@khalifa.ws>
+Tested-by: Jeroen Beerstra <jeroen@beerstra.org>
+Tested-by: Slawomir Stepien <sst@poczta.fm>
+Link: https://lore.kernel.org/r/20230111212241.7456-2-pauk.denis@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/nct6775-platform.c | 52 ++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2790,7 +2790,7 @@ static __poll_t io_uring_poll(struct fil
- 	 * pushes them to do the flush.
- 	 */
+diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
+index e5d4a79cd5f7d..76c6b564d7fc4 100644
+--- a/drivers/hwmon/nct6775-platform.c
++++ b/drivers/hwmon/nct6775-platform.c
+@@ -114,6 +114,7 @@ struct nct6775_sio_data {
+ #define ASUSWMI_UNSUPPORTED_METHOD	0xFFFFFFFE
+ #define ASUSWMI_DEVICE_HID		"PNP0C14"
+ #define ASUSWMI_DEVICE_UID		"ASUSWMI"
++#define ASUSMSI_DEVICE_UID		"AsusMbSwInterface"
  
--	if (io_cqring_events(ctx) || io_has_work(ctx))
-+	if (__io_cqring_events_user(ctx) || io_has_work(ctx))
- 		mask |= EPOLLIN | EPOLLRDNORM;
+ #if IS_ENABLED(CONFIG_ACPI)
+ /*
+@@ -1108,6 +1109,52 @@ static const char * const asus_wmi_boards[] = {
+ 	"TUF GAMING Z490-PLUS (WI-FI)",
+ };
  
- 	return mask;
++static const char * const asus_msi_boards[] = {
++	"EX-B660M-V5 PRO D4",
++	"PRIME B650-PLUS",
++	"PRIME B650M-A",
++	"PRIME B650M-A AX",
++	"PRIME B650M-A II",
++	"PRIME B650M-A WIFI",
++	"PRIME B650M-A WIFI II",
++	"PRIME B660M-A D4",
++	"PRIME B660M-A WIFI D4",
++	"PRIME X670-P",
++	"PRIME X670-P WIFI",
++	"PRIME X670E-PRO WIFI",
++	"Pro B660M-C-D4",
++	"ProArt B660-CREATOR D4",
++	"ProArt X670E-CREATOR WIFI",
++	"ROG CROSSHAIR X670E EXTREME",
++	"ROG CROSSHAIR X670E GENE",
++	"ROG CROSSHAIR X670E HERO",
++	"ROG MAXIMUS XIII EXTREME GLACIAL",
++	"ROG MAXIMUS Z690 EXTREME",
++	"ROG MAXIMUS Z690 EXTREME GLACIAL",
++	"ROG STRIX B650-A GAMING WIFI",
++	"ROG STRIX B650E-E GAMING WIFI",
++	"ROG STRIX B650E-F GAMING WIFI",
++	"ROG STRIX B650E-I GAMING WIFI",
++	"ROG STRIX B660-A GAMING WIFI D4",
++	"ROG STRIX B660-F GAMING WIFI",
++	"ROG STRIX B660-G GAMING WIFI",
++	"ROG STRIX B660-I GAMING WIFI",
++	"ROG STRIX X670E-A GAMING WIFI",
++	"ROG STRIX X670E-E GAMING WIFI",
++	"ROG STRIX X670E-F GAMING WIFI",
++	"ROG STRIX X670E-I GAMING WIFI",
++	"ROG STRIX Z590-A GAMING WIFI II",
++	"ROG STRIX Z690-A GAMING WIFI D4",
++	"TUF GAMING B650-PLUS",
++	"TUF GAMING B650-PLUS WIFI",
++	"TUF GAMING B650M-PLUS",
++	"TUF GAMING B650M-PLUS WIFI",
++	"TUF GAMING B660M-PLUS WIFI",
++	"TUF GAMING X670E-PLUS",
++	"TUF GAMING X670E-PLUS WIFI",
++	"TUF GAMING Z590-PLUS WIFI",
++};
++
+ #if IS_ENABLED(CONFIG_ACPI)
+ /*
+  * Callback for acpi_bus_for_each_dev() to find the right device
+@@ -1171,6 +1218,11 @@ static int __init sensors_nct6775_platform_init(void)
+ 				   board_name);
+ 		if (err >= 0)
+ 			access = nct6775_determine_access(ASUSWMI_DEVICE_UID);
++
++		err = match_string(asus_msi_boards, ARRAY_SIZE(asus_msi_boards),
++				   board_name);
++		if (err >= 0)
++			access = nct6775_determine_access(ASUSMSI_DEVICE_UID);
+ 	}
+ 
+ 	/*
+-- 
+2.39.2
+
 
 
