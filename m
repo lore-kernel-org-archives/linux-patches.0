@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F78CBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:01:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2205C433A0;
-	Tue,  7 Mar 2023 18:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC72BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:01:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFA9C4339E;
+	Tue,  7 Mar 2023 18:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212073;
-	bh=R1/unQV/H/gt2kwnoeyRaXnV71mwM9QAP+KQryADqDI=;
+	s=korg; t=1678212076;
+	bh=D1RXHSyBNugUMbjzFdSlEhgSXSOV44lLHTee+kMtcSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NALZ3nFV7qd5+95sPay4eHKNAO2vj5wlLlX4BxkyYlzN3JDr0QwxYRfIqKnxa95Kj
-	 3D7L0ZnMIxPPKXXf9xz0UhGcdFYk++i1QW4v5AOZylKeGpn4oyay3N4G0FKsl76aRE
-	 m9ouIiTNjHP+GYpG2aa6sR5bVBO/nnmMfwus4xgU=
+	b=LN+/XJuBxK0aF1/qM8K9TNR5oQy/IItP0GdT49oQcKBexkhgpEd+CCCL5Sc5osVmJ
+	 sACQjjWaSXF1yusZkOR+CvvrLLqCduApOQIGvqMHombui01LZ9Jvl0lNUgxUWcGs1s
+	 Y4js7MuM/gyyG7f2pFYcmmyVL1mjHHeLg03pxDmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
+	Christian Hewitt <christianshewitt@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/885] arm64: dts: meson: radxa-zero: allow usb otg mode
-Date: Tue,  7 Mar 2023 17:50:02 +0100
-Message-Id: <20230307170004.733912207@linuxfoundation.org>
+Subject: [PATCH 6.1 069/885] arm64: dts: meson: bananapi-m5: switch VDDIO_C pin to OPEN_DRAIN
+Date: Tue,  7 Mar 2023 17:50:03 +0100
+Message-Id: <20230307170004.783025165@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,31 +37,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Hewitt <christianshewitt@gmail.com>
 
-[ Upstream commit ce43ea00b927805c1fd0450ccc9b4b6069e292c5 ]
+[ Upstream commit 856968e066bd77b113965f1a355ec7401edff65f ]
 
-Setting dr_mode to "host" prevents otg which can be useful on a board
-with limited connectivity options. So don't force host mode.
+For proper warm (re)boot from SD card the BPI-M5 board requires TFLASH_VDD_EN
+and VDDIO_C pins to be switched to high impedance mode. This can be achieved
+using OPEN_DRAIN instead of ACTIVE_HIGH to leave the GPIO pins in input mode
+and retain high state (pin has the pull-up).
 
-Fixes: 26d1400f7457 ("arm64: dts: amlogic: add support for Radxa Zero")
+This change is inspired by meson-sm1-odroid.dtsi where OPEN_DRAIN has been
+used to resolve similar problems with the Odroid C4 board (TF_IO in the C4
+dts is the equivalent regulator).
+
+Fixes: 976e920183e4 ("arm64: dts: meson-sm1: add Banana PI BPI-M5 board dts")
+Suggested-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230127103913.3386435-1-christianshewitt@gmail.com
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230127142221.3718184-2-christianshewitt@gmail.com
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-g12a-radxa-zero.dts | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-g12a-radxa-zero.dts b/arch/arm64/boot/dts/amlogic/meson-g12a-radxa-zero.dts
-index e3bb6df42ff3e..cf0a9be83fc47 100644
---- a/arch/arm64/boot/dts/amlogic/meson-g12a-radxa-zero.dts
-+++ b/arch/arm64/boot/dts/amlogic/meson-g12a-radxa-zero.dts
-@@ -401,5 +401,4 @@ &uart_AO {
+diff --git a/arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts b/arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts
+index 6d0db667581fa..38ebe98ba9c6b 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-sm1-bananapi-m5.dts
+@@ -123,7 +123,7 @@ vddio_c: regulator-vddio_c {
+ 		regulator-min-microvolt = <1800000>;
+ 		regulator-max-microvolt = <3300000>;
  
- &usb {
- 	status = "okay";
--	dr_mode = "host";
- };
+-		enable-gpio = <&gpio_ao GPIOE_2 GPIO_ACTIVE_HIGH>;
++		enable-gpio = <&gpio_ao GPIOE_2 GPIO_OPEN_DRAIN>;
+ 		enable-active-high;
+ 		regulator-always-on;
+ 
 -- 
 2.39.2
 
