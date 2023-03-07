@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC60BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:22:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140A6C433EF;
-	Tue,  7 Mar 2023 18:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9028ABA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:22:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7961C433D2;
+	Tue,  7 Mar 2023 18:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213359;
-	bh=Nb6SslVtIP13LNSYQNx3jgpiRznoseakWZm2LQAooy4=;
+	s=korg; t=1678213362;
+	bh=7fymXT6a76Kfg39zLL2wxjZ6QOHP06Z+W0Vp4ZfdjD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1z67tAn2wTyzWwFh5HlXJHvat7yMh5D+LXz5VL/0yvcCyWaqVp9XAZZgE7kx+swcX
-	 eW5aHHB/xsdonfnTWf1qQFDz4ZEcH7Mxgmf+kHffFFdnHOi2g8PP7TWBkvGmPhvBVn
-	 Kz5hG05iWG68r6W2bHw9qieH5K8JjKOpbnM4XHOc=
+	b=GAsXK7+7StEH3hcc6xsYtvhJqqAbNbO5acR4GEQK5qQGPvw0fxbCX85aKMcX4mNIH
+	 GG/rlQuXpYLYb2OCBGX7fcDk2GxniLYzoePAcARWZ61lS3MjD7U51R3W3UWTzvfELB
+	 8jk5K38wNLyPIN7JGIWLRTE6zSiahkuuO5Sa0Ds8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Shravan Chippa <shravan.chippa@microchip.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 483/885] iommu/amd: Do not identity map v2 capable device when snp is enabled
-Date: Tue,  7 Mar 2023 17:56:57 +0100
-Message-Id: <20230307170023.456991537@linuxfoundation.org>
+Subject: [PATCH 6.1 484/885] dmaengine: sf-pdma: pdma_desc memory leak fix
+Date: Tue,  7 Mar 2023 17:56:58 +0100
+Message-Id: <20230307170023.495513962@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,58 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Shravan Chippa <shravan.chippa@microchip.com>
 
-[ Upstream commit 18792e99ea2fea27c72eb1ecca1879e5e6be304d ]
+[ Upstream commit b02e07015a5ac7bbc029da931ae17914b8ae0339 ]
 
-Flow:
-  - Booted system with SNP enabled, memory encryption off and
-    IOMMU DMA translation mode
-  - AMD driver detects v2 capable device and amd_iommu_def_domain_type()
-    returns identity mode
-  - amd_iommu_domain_alloc() returns NULL an SNP is enabled
-  - System will fail to register device
+Commit b2cc5c465c2c ("dmaengine: sf-pdma: Add multithread support for a
+DMA channel") changed sf_pdma_prep_dma_memcpy() to unconditionally
+allocate a new sf_pdma_desc each time it is called.
 
-On SNP enabled system, passthrough mode is not supported. IOMMU default
-domain is set to translation mode. We need to return zero from
-amd_iommu_def_domain_type() so that it allocates translation domain.
+The driver previously recycled descs, by checking the in_use flag, only
+allocating additional descs if the existing one was in use. This logic
+was removed in commit b2cc5c465c2c ("dmaengine: sf-pdma: Add multithread
+support for a DMA channel"), but sf_pdma_free_desc() was not changed to
+handle the new behaviour.
 
-Fixes: fb2accadaa94 ("iommu/amd: Introduce function to check and enable SNP")
-CC: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20230207091752.7656-1-vasant.hegde@amd.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+As a result, each time sf_pdma_prep_dma_memcpy() is called, the previous
+descriptor is leaked, over time leading to memory starvation:
+
+  unreferenced object 0xffffffe008447300 (size 192):
+  comm "irq/39-mchp_dsc", pid 343, jiffies 4294906910 (age 981.200s)
+  hex dump (first 32 bytes):
+    00 00 00 ff 00 00 00 00 b8 c1 00 00 00 00 00 00  ................
+    00 00 70 08 10 00 00 00 00 00 00 c0 00 00 00 00  ..p.............
+  backtrace:
+    [<00000000064a04f4>] kmemleak_alloc+0x1e/0x28
+    [<00000000018927a7>] kmem_cache_alloc+0x11e/0x178
+    [<000000002aea8d16>] sf_pdma_prep_dma_memcpy+0x40/0x112
+
+Add the missing kfree() to sf_pdma_free_desc(), and remove the redundant
+in_use flag.
+
+Fixes: b2cc5c465c2c ("dmaengine: sf-pdma: Add multithread support for a DMA channel")
+Signed-off-by: Shravan Chippa <shravan.chippa@microchip.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230120100623.3530634-1-shravan.chippa@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/dma/sf-pdma/sf-pdma.c | 3 +--
+ drivers/dma/sf-pdma/sf-pdma.h | 1 -
+ 2 files changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index d3b39d0416fa3..46bf0744721dd 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -2394,12 +2394,17 @@ static int amd_iommu_def_domain_type(struct device *dev)
- 		return 0;
+diff --git a/drivers/dma/sf-pdma/sf-pdma.c b/drivers/dma/sf-pdma/sf-pdma.c
+index 6b524eb6bcf3a..e578ad5569494 100644
+--- a/drivers/dma/sf-pdma/sf-pdma.c
++++ b/drivers/dma/sf-pdma/sf-pdma.c
+@@ -96,7 +96,6 @@ sf_pdma_prep_dma_memcpy(struct dma_chan *dchan,	dma_addr_t dest, dma_addr_t src,
+ 	if (!desc)
+ 		return NULL;
  
- 	/*
--	 * Do not identity map IOMMUv2 capable devices when memory encryption is
--	 * active, because some of those devices (AMD GPUs) don't have the
--	 * encryption bit in their DMA-mask and require remapping.
-+	 * Do not identity map IOMMUv2 capable devices when:
-+	 *  - memory encryption is active, because some of those devices
-+	 *    (AMD GPUs) don't have the encryption bit in their DMA-mask
-+	 *    and require remapping.
-+	 *  - SNP is enabled, because it prohibits DTE[Mode]=0.
- 	 */
--	if (!cc_platform_has(CC_ATTR_MEM_ENCRYPT) && dev_data->iommu_v2)
-+	if (dev_data->iommu_v2 &&
-+	    !cc_platform_has(CC_ATTR_MEM_ENCRYPT) &&
-+	    !amd_iommu_snp_en) {
- 		return IOMMU_DOMAIN_IDENTITY;
-+	}
+-	desc->in_use = true;
+ 	desc->dirn = DMA_MEM_TO_MEM;
+ 	desc->async_tx = vchan_tx_prep(&chan->vchan, &desc->vdesc, flags);
  
- 	return 0;
+@@ -290,7 +289,7 @@ static void sf_pdma_free_desc(struct virt_dma_desc *vdesc)
+ 	struct sf_pdma_desc *desc;
+ 
+ 	desc = to_sf_pdma_desc(vdesc);
+-	desc->in_use = false;
++	kfree(desc);
  }
+ 
+ static void sf_pdma_donebh_tasklet(struct tasklet_struct *t)
+diff --git a/drivers/dma/sf-pdma/sf-pdma.h b/drivers/dma/sf-pdma/sf-pdma.h
+index dcb3687bd5da2..5c398a83b491a 100644
+--- a/drivers/dma/sf-pdma/sf-pdma.h
++++ b/drivers/dma/sf-pdma/sf-pdma.h
+@@ -78,7 +78,6 @@ struct sf_pdma_desc {
+ 	u64				src_addr;
+ 	struct virt_dma_desc		vdesc;
+ 	struct sf_pdma_chan		*chan;
+-	bool				in_use;
+ 	enum dma_transfer_direction	dirn;
+ 	struct dma_async_tx_descriptor *async_tx;
+ };
 -- 
 2.39.2
 
