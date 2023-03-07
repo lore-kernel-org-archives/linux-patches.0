@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63424BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:59:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7636C433D2;
-	Tue,  7 Mar 2023 17:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31247BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:59:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A925FC433EF;
+	Tue,  7 Mar 2023 17:59:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211954;
-	bh=FkAEFvOe2gtwLpt5dczlgClgNDJhmXDOXH7Z6JRpiL8=;
+	s=korg; t=1678211957;
+	bh=fg+x+bkFX6ZUErlos+KNhs00/QnMBAaIv1Y9TMxot/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q1p6Bx6/URHqUYH6CuKicEHVhpl0Tt63RaVxGqA8/27EHuoggaM2ZxZKxjuthJwM6
-	 s/Bk61bcBFpbLqzyDmeDmphhLfmGeb06RGBC48MmxYnH/Kx8ulsUw/SJZhip8opsgj
-	 b+J7fO87sVmZtjrciLjoOc3YzGSajMLAcVsTM5Yc=
+	b=qaeIL/xTLAXsQEo2t9m/jKGJFWAJdVXHly9srnZl3iiW6e+LQx+W9spaXIAcba+o6
+	 0Ht7jRIQprJ5E+CO56UoElieHrzif4YH8IGlJxXMDYxmnYbOEMjMNGud6F4v8cuilS
+	 tmthEd9O2zuHSr90mYtC0W1szO75j78CO3rcQZpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Qiheng Lin <linqiheng@huawei.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/885] arm64: dts: meson-gx: Fix the SCPI DVFS node name and unit address
-Date: Tue,  7 Mar 2023 17:49:24 +0100
-Message-Id: <20230307170002.960354453@linuxfoundation.org>
+Subject: [PATCH 6.1 013/885] ARM: zynq: Fix refcount leak in zynq_early_slcr_init
+Date: Tue,  7 Mar 2023 17:49:07 +0100
+Message-Id: <20230307170002.209388542@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,38 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Qiheng Lin <linqiheng@huawei.com>
 
-[ Upstream commit f189c869ad92787ddd753558bcbae89d75825bb6 ]
+[ Upstream commit 9eedb910a3be0005b88c696a8552c0d4c9937cd4 ]
 
-Node names should be generic and use hyphens instead of underscores to
-not cause warnings. Also nodes without a reg property should not have a
-unit-address. Change the scpi_dvfs node to use clock-controller as node
-name without a unit address (since it does not have a reg property).
+of_find_compatible_node() returns a node pointer with refcount incremented,
+we should use of_node_put() on error path.
+Add missing of_node_put() to avoid refcount leak.
 
-Fixes: 70db166a2baa ("ARM64: dts: meson-gxbb: Add SCPI with cpufreq & sensors Nodes")
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230111211350.1461860-7-martin.blumenstingl@googlemail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: 3329659df030 ("ARM: zynq: Simplify SLCR initialization")
+Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
+Link: https://lore.kernel.org/r/20221129140544.41293-1-linqiheng@huawei.com
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-gx.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mach-zynq/slcr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-index a56fa88b387e8..3a53398176b35 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-@@ -249,7 +249,7 @@ scpi {
- 		scpi_clocks: clocks {
- 			compatible = "arm,scpi-clocks";
+diff --git a/arch/arm/mach-zynq/slcr.c b/arch/arm/mach-zynq/slcr.c
+index 37707614885a5..9765b3f4c2fc5 100644
+--- a/arch/arm/mach-zynq/slcr.c
++++ b/arch/arm/mach-zynq/slcr.c
+@@ -213,6 +213,7 @@ int __init zynq_early_slcr_init(void)
+ 	zynq_slcr_regmap = syscon_regmap_lookup_by_compatible("xlnx,zynq-slcr");
+ 	if (IS_ERR(zynq_slcr_regmap)) {
+ 		pr_err("%s: failed to find zynq-slcr\n", __func__);
++		of_node_put(np);
+ 		return -ENODEV;
+ 	}
  
--			scpi_dvfs: scpi_clocks@0 {
-+			scpi_dvfs: clock-controller {
- 				compatible = "arm,scpi-dvfs-clocks";
- 				#clock-cells = <1>;
- 				clock-indices = <0>;
 -- 
 2.39.2
 
