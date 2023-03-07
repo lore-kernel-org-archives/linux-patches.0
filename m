@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8A4BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:58:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF00EC433EF;
-	Tue,  7 Mar 2023 17:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1002BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:58:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E96C433D2;
+	Tue,  7 Mar 2023 17:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211902;
-	bh=yysW5M1tTUvQ5PULybPKFKtjntc7qtk70DxuzXCvvLc=;
+	s=korg; t=1678211905;
+	bh=37AzPDB6qsEfN8uuFhA/55KyMtG4UOzpPHgcE+i4lvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pX6DV5UZFJlfIN4RMkdxXmT6Z/VViNMUkAk4SBv0ik6hWeQXWRG8/zyctPyispMbD
-	 Vt2q2koHns/xVv5Bvm8ltHqwmGggMxZ9wXW8j1Jz3+fgXyxdLp9PxBfSGEa/Mg42A1
-	 KfpCFCBDgyevmp+Ib4n6Cz9Irk/joi0bYx0pFE8Y=
+	b=q2U5jEf/qICRuJ4XnKwTs7gqXjH6MfFyb5LAomdXwZ4TWOP7jiE+DyqTYhFs5nBLx
+	 AHq96oeXshLzE0m/rO8cnuwQr5dZ52jkLTfddx3GrzLZFhoMeYxTcxiAmBbrwdj5U/
+	 JcDAUpR+Gb1AcodZ+s4q6MwbKiM6xG3ET5tPS0RE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Subject: [PATCH 6.1 004/885] ata: ahci: Revert "ata: ahci: Add Tiger Lake UP{3,4} AHCI controller"
-Date: Tue,  7 Mar 2023 17:48:58 +0100
-Message-Id: <20230307170001.821308285@linuxfoundation.org>
+	Chen Hui <judy.chenhui@huawei.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 005/885] ARM: OMAP2+: Fix memory leak in realtime_counter_init()
+Date: Tue,  7 Mar 2023 17:48:59 +0100
+Message-Id: <20230307170001.870219885@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -33,33 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Chen Hui <judy.chenhui@huawei.com>
 
-commit 6210038aeaf49c395c2da57572246d93ec67f6d4 upstream.
+[ Upstream commit ed8167cbf65c2b6ff6faeb0f96ded4d6d581e1ac ]
 
-Commit 104ff59af73a ("ata: ahci: Add Tiger Lake UP{3,4} AHCI
-controller") enabled low power mode for the Tiger Lake AHIC adapter in
-the author system but created regressions for others. Revert this patch
-for now until a better solution is found to make this adapter
-eco-friendly.
+The "sys_clk" resource is malloced by clk_get(),
+it is not released when the function return.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217114
-CC: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fa6d79d27614 ("ARM: OMAP: Add initialisation for the real-time counter.")
+Signed-off-by: Chen Hui <judy.chenhui@huawei.com>
+Message-Id: <20221108141917.46796-1-judy.chenhui@huawei.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.c |    1 -
- 1 file changed, 1 deletion(-)
+ arch/arm/mach-omap2/timer.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -422,7 +422,6 @@ static const struct pci_device_id ahci_p
- 	{ PCI_VDEVICE(INTEL, 0x34d3), board_ahci_low_power }, /* Ice Lake LP AHCI */
- 	{ PCI_VDEVICE(INTEL, 0x02d3), board_ahci_low_power }, /* Comet Lake PCH-U AHCI */
- 	{ PCI_VDEVICE(INTEL, 0x02d7), board_ahci_low_power }, /* Comet Lake PCH RAID */
--	{ PCI_VDEVICE(INTEL, 0xa0d3), board_ahci_low_power }, /* Tiger Lake UP{3,4} AHCI */
+diff --git a/arch/arm/mach-omap2/timer.c b/arch/arm/mach-omap2/timer.c
+index 620ba69c8f114..5677c4a08f376 100644
+--- a/arch/arm/mach-omap2/timer.c
++++ b/arch/arm/mach-omap2/timer.c
+@@ -76,6 +76,7 @@ static void __init realtime_counter_init(void)
+ 	}
  
- 	/* JMicron 360/1/3/5/6, match class to avoid IDE function */
- 	{ PCI_VENDOR_ID_JMICRON, PCI_ANY_ID, PCI_ANY_ID, PCI_ANY_ID,
+ 	rate = clk_get_rate(sys_clk);
++	clk_put(sys_clk);
+ 
+ 	if (soc_is_dra7xx()) {
+ 		/*
+-- 
+2.39.2
+
 
 
