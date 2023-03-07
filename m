@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE424BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50637C433EF;
-	Tue,  7 Mar 2023 17:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E39BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB1DC433D2;
+	Tue,  7 Mar 2023 17:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211021;
-	bh=Jw8OmNNYTj5V+E7FcTxic4oNCwUblrFvkUJnQS+FySM=;
+	s=korg; t=1678211025;
+	bh=2dt5dJnKJsrssrf67TfDJ/1Am/VHL7srRIG0uHE68jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1JdFPFMaGtQRgA+Lg6YQ4VHC4nxBEQUIGgwHP5mZrr9lQuNMD523v51Yby/TcSXi8
-	 90hjaUMFd94N41ti9+UCrRBMn0fmDZvCOIJrk7Yud5QK3wOZJWXUBR6pucr0onphSK
-	 JIShqp0+ndDtNli0S8300D+0496DikWUvlRV/k0Y=
+	b=nL7sGK8FLkpHlt5QMjubWTbA7w12eutDA4rdPjOeIvE5BL5uWqnyo2QSY2iQnUwAk
+	 1k2TX4v53smAJm/3nQdkcLXxIhxaMh3Ea7mmjsEpG4WVdoWRzlomlnDpqO6ZpzOEQk
+	 Z0nWQ6YweTFwJKFNS40x8LDMKNT+Accj/Un/5ZWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Jasdeep Dhillon <jdhillon@amd.com>,
+	Ian Chen <ian.chen@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0698/1001] scsi: lpfc: Fix use-after-free KFENCE violation during sysfs firmware write
-Date: Tue,  7 Mar 2023 17:57:50 +0100
-Message-Id: <20230307170051.918940006@linuxfoundation.org>
+Subject: [PATCH 6.2 0689/1001] drm/amd/display: Revert Reduce delay when sink device not able to ACK 00340h write
+Date: Tue,  7 Mar 2023 17:57:41 +0100
+Message-Id: <20230307170051.510943874@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,94 +37,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Ian Chen <ian.chen@amd.com>
 
-[ Upstream commit 21681b81b9ae548c5dae7ae00d931197a27f480c ]
+[ Upstream commit 639f6ad6df7f47db48b59956b469a6917a136afb ]
 
-During the sysfs firmware write process, a use-after-free read warning is
-logged from the lpfc_wr_object() routine:
+[WHY]
+It causes regression AMD source will not write DPCD 340.
 
-  BUG: KFENCE: use-after-free read in lpfc_wr_object+0x235/0x310 [lpfc]
-  Use-after-free read at 0x0000000000cf164d (in kfence-#111):
-  lpfc_wr_object+0x235/0x310 [lpfc]
-  lpfc_write_firmware.cold+0x206/0x30d [lpfc]
-  lpfc_sli4_request_firmware_update+0xa6/0x100 [lpfc]
-  lpfc_request_firmware_upgrade_store+0x66/0xb0 [lpfc]
-  kernfs_fop_write_iter+0x121/0x1b0
-  new_sync_write+0x11c/0x1b0
-  vfs_write+0x1ef/0x280
-  ksys_write+0x5f/0xe0
-  do_syscall_64+0x59/0x90
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-The driver accessed wr_object pointer data, which was initialized into
-mailbox payload memory, after the mailbox object was released back to the
-mailbox pool.
-
-Fix by moving the mailbox free calls to the end of the routine ensuring
-that we don't reference internal mailbox memory after release.
-
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Wayne Lin <Wayne.Lin@amd.com>
+Acked-by: Jasdeep Dhillon <jdhillon@amd.com>
+Signed-off-by: Ian Chen <ian.chen@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_sli.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_link.c    |  6 ------
+ drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c | 14 +++-----------
+ drivers/gpu/drm/amd/display/dc/dc_dp_types.h     |  1 -
+ 3 files changed, 3 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index 182aaae603868..55a0d4013439f 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -20819,6 +20819,7 @@ lpfc_wr_object(struct lpfc_hba *phba, struct list_head *dmabuf_list,
- 	struct lpfc_mbx_wr_object *wr_object;
- 	LPFC_MBOXQ_t *mbox;
- 	int rc = 0, i = 0;
-+	int mbox_status = 0;
- 	uint32_t shdr_status, shdr_add_status, shdr_add_status_2;
- 	uint32_t shdr_change_status = 0, shdr_csf = 0;
- 	uint32_t mbox_tmo;
-@@ -20864,11 +20865,15 @@ lpfc_wr_object(struct lpfc_hba *phba, struct list_head *dmabuf_list,
- 	wr_object->u.request.bde_count = i;
- 	bf_set(lpfc_wr_object_write_length, &wr_object->u.request, written);
- 	if (!phba->sli4_hba.intr_enable)
--		rc = lpfc_sli_issue_mbox(phba, mbox, MBX_POLL);
-+		mbox_status = lpfc_sli_issue_mbox(phba, mbox, MBX_POLL);
- 	else {
- 		mbox_tmo = lpfc_mbox_tmo_val(phba, mbox);
--		rc = lpfc_sli_issue_mbox_wait(phba, mbox, mbox_tmo);
-+		mbox_status = lpfc_sli_issue_mbox_wait(phba, mbox, mbox_tmo);
- 	}
-+
-+	/* The mbox status needs to be maintained to detect MBOX_TIMEOUT. */
-+	rc = mbox_status;
-+
- 	/* The IOCTL status is embedded in the mailbox subheader. */
- 	shdr_status = bf_get(lpfc_mbox_hdr_status,
- 			     &wr_object->header.cfg_shdr.response);
-@@ -20883,10 +20888,6 @@ lpfc_wr_object(struct lpfc_hba *phba, struct list_head *dmabuf_list,
- 				  &wr_object->u.response);
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link.c b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
+index c88f044666fee..754fc86341494 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_link.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
+@@ -1916,12 +1916,6 @@ struct dc_link *link_create(const struct link_init_data *init_params)
+ 	if (false == dc_link_construct(link, init_params))
+ 		goto construct_fail;
  
--	if (!phba->sli4_hba.intr_enable)
--		mempool_free(mbox, phba->mbox_mem_pool);
--	else if (rc != MBX_TIMEOUT)
--		mempool_free(mbox, phba->mbox_mem_pool);
- 	if (shdr_status || shdr_add_status || shdr_add_status_2 || rc) {
- 		lpfc_printf_log(phba, KERN_ERR, LOG_TRACE_EVENT,
- 				"3025 Write Object mailbox failed with "
-@@ -20904,6 +20905,12 @@ lpfc_wr_object(struct lpfc_hba *phba, struct list_head *dmabuf_list,
- 		lpfc_log_fw_write_cmpl(phba, shdr_status, shdr_add_status,
- 				       shdr_add_status_2, shdr_change_status,
- 				       shdr_csf);
-+
-+	if (!phba->sli4_hba.intr_enable)
-+		mempool_free(mbox, phba->mbox_mem_pool);
-+	else if (mbox_status != MBX_TIMEOUT)
-+		mempool_free(mbox, phba->mbox_mem_pool);
-+
- 	return rc;
- }
+-	/*
+-	 * Must use preferred_link_setting, not reported_link_cap or verified_link_cap,
+-	 * since struct preferred_link_setting won't be reset after S3.
+-	 */
+-	link->preferred_link_setting.dpcd_source_device_specific_field_support = true;
+-
+ 	return link;
  
+ construct_fail:
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
+index dedd1246ce588..475ad3eed002d 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
+@@ -6554,18 +6554,10 @@ void dpcd_set_source_specific_data(struct dc_link *link)
+ 
+ 			uint8_t hblank_size = (uint8_t)link->dc->caps.min_horizontal_blanking_period;
+ 
+-			if (link->preferred_link_setting.dpcd_source_device_specific_field_support) {
+-				result_write_min_hblank = core_link_write_dpcd(link,
+-					DP_SOURCE_MINIMUM_HBLANK_SUPPORTED, (uint8_t *)(&hblank_size),
+-					sizeof(hblank_size));
+-
+-				if (result_write_min_hblank == DC_ERROR_UNEXPECTED)
+-					link->preferred_link_setting.dpcd_source_device_specific_field_support = false;
+-			} else {
+-				DC_LOG_DC("Sink device does not support 00340h DPCD write. Skipping on purpose.\n");
+-			}
++			result_write_min_hblank = core_link_write_dpcd(link,
++				DP_SOURCE_MINIMUM_HBLANK_SUPPORTED, (uint8_t *)(&hblank_size),
++				sizeof(hblank_size));
+ 		}
+-
+ 		DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_INFORMATION,
+ 							WPP_BIT_FLAG_DC_DETECTION_DP_CAPS,
+ 							"result=%u link_index=%u enum dce_version=%d DPCD=0x%04X min_hblank=%u branch_dev_id=0x%x branch_dev_name='%c%c%c%c%c%c'",
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
+index 2c54b6e0498bf..296793d8b2bf2 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
+@@ -149,7 +149,6 @@ struct dc_link_settings {
+ 	enum dc_link_spread link_spread;
+ 	bool use_link_rate_set;
+ 	uint8_t link_rate_set;
+-	bool dpcd_source_device_specific_field_support;
+ };
+ 
+ union dc_dp_ffe_preset {
 -- 
 2.39.2
 
