@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213E6BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:28:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD40C433D2;
-	Tue,  7 Mar 2023 17:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145B3BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:28:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC65C433EF;
+	Tue,  7 Mar 2023 17:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210087;
-	bh=E9SXwfCZWdXuG1K8tv+4K6jme0cg532nS4u7wFM3FD8=;
+	s=korg; t=1678210090;
+	bh=fGnlC+/ZbJvDWK6umCHmbFyxO5HSN+xNb6T5ayMUs7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b1ASkDp59yhzR0MKZproQbVPKkwV05sipbjjH4YDwQDRuzYPM5qQ9WlQFmJTGgGjt
-	 TvhQOD5IQbZXjQil7eIT6hyPd3ghITSjfyHkVuAB5NSav3+bUfrEtRv5bSmqgB93Gv
-	 ZIKZT7pUNx5ZvrqFKOjMaopGiaP89J+d9arVX52c=
+	b=zhn8eWTqUsJ5aI6TbH8N98s09Zg6l4okerFAAwkmnNFnBffgvvPvpSiyoWYqHRUKr
+	 62lrKaZYvHLVcaxqSraJGVoHiF2SNZXn9011cOsb6MSNKj2M72RSzJnqeDlV1yxdQX
+	 +T8OIvvf/lodD5Z6JSdDELrHrp+ljnVFKgN+AK6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ruanjinjie <ruanjinjie@huawei.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0397/1001] drm/mediatek: mtk_drm_crtc: Add checks for devm_kcalloc
-Date: Tue,  7 Mar 2023 17:52:49 +0100
-Message-Id: <20230307170038.563808531@linuxfoundation.org>
+Subject: [PATCH 6.2 0398/1001] drm/mediatek: Clean dangling pointer on bind error path
+Date: Tue,  7 Mar 2023 17:52:50 +0100
+Message-Id: <20230307170038.602217270@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,36 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ruanjinjie <ruanjinjie@huawei.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 5bf1e3bd7da625ccf9a22c8cb7d65271e6e47f4c ]
+[ Upstream commit 36aa8c61af55675ed967900fbe5deb32d776f051 ]
 
-As the devm_kcalloc may return NULL, the return value needs to be checked
-to avoid NULL poineter dereference.
+mtk_drm_bind() can fail, in which case drm_dev_put() is called,
+destroying the drm_device object. However a pointer to it was still
+being held in the private object, and that pointer would be passed along
+to DRM in mtk_drm_sys_prepare() if a suspend were triggered at that
+point, resulting in a panic. Clean the pointer when destroying the
+object in the error path to prevent this from happening.
 
-Fixes: 31c5558dae05 ("drm/mediatek: Refactor plane init")
-Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
+Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20221205095115.2905090-1-ruanjinjie@huawei.com/
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20221122143949.3493104-1-nfraprado@collabora.com/
 Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_crtc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-index 112615817dcbe..5071f1263216b 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-@@ -945,6 +945,8 @@ int mtk_drm_crtc_create(struct drm_device *drm_dev,
- 
- 	mtk_crtc->planes = devm_kcalloc(dev, num_comp_planes,
- 					sizeof(struct drm_plane), GFP_KERNEL);
-+	if (!mtk_crtc->planes)
-+		return -ENOMEM;
- 
- 	for (i = 0; i < mtk_crtc->ddp_comp_nr; i++) {
- 		ret = mtk_drm_crtc_init_comp_planes(drm_dev, mtk_crtc, i,
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+index cd5b18ef79512..d3e57dd79f5f5 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -520,6 +520,7 @@ static int mtk_drm_bind(struct device *dev)
+ err_deinit:
+ 	mtk_drm_kms_deinit(drm);
+ err_free:
++	private->drm = NULL;
+ 	drm_dev_put(drm);
+ 	return ret;
+ }
 -- 
 2.39.2
 
