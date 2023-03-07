@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DDEBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:25:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5756CC4339B;
-	Tue,  7 Mar 2023 18:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FC3BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:25:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBDDC433D2;
+	Tue,  7 Mar 2023 18:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213514;
-	bh=HnCjmypvKMF6e+p3h62DCRZRNvQl4nTWa8tOYy7k1yM=;
+	s=korg; t=1678213517;
+	bh=W0X+bglo/2EJq1DlaNXfa7q21jxRw4oo7JaOBAQ6veU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DivdqGLfWNjkisxKKy0R4/MG/p4lYzxDZFdXYMDGZjSNSx0+HsdPxVcI+p8zhA6R9
-	 KfN7fZwvXKCpqvplaqdDOSoExuDHVP+ZlWy8i9phoL4+WqX4S2YBtwug85pzz8C1nH
-	 8Hya5MBykVckYGgwYQyK9BhJAZ1twdrfG5megFDM=
+	b=ym4a62Tg0prAUmN4vs9Wn+uGYcvvh6qeQzxtDDgmhRdza2WVYTIk5NSdyAXAa0d/t
+	 N+EHfjgZuLjZ5nSnwB4CQyRPVZ+KqgEIkVpBqfuiGAtf6EgGAVSsd9JFOOyS5r/BCx
+	 cEu9AdUWKssVby2Y0p979Oc5ZjqHEnprsysdDVmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 530/885] context_tracking: Fix noinstr vs KASAN
-Date: Tue,  7 Mar 2023 17:57:44 +0100
-Message-Id: <20230307170025.505823648@linuxfoundation.org>
+Subject: [PATCH 6.1 531/885] exit: Detect and fix irq disabled state in oops
+Date: Tue,  7 Mar 2023 17:57:45 +0100
+Message-Id: <20230307170025.545378180@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,81 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-[ Upstream commit 0e26e1de0032779e43929174339429c16307a299 ]
+[ Upstream commit 001c28e57187570e4b5aa4492c7a957fb6d65d7b ]
 
-Low level noinstr context-tracking code is calling out to instrumented
-code on KASAN:
+If a task oopses with irqs disabled, this can cause various cascading
+problems in the oops path such as sleep-from-invalid warnings, and
+potentially worse.
 
-  vmlinux.o: warning: objtool: __ct_user_enter+0x72: call to __kasan_check_write() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: __ct_user_exit+0x47: call to __kasan_check_write() leaves .noinstr.text section
+Since commit 0258b5fd7c712 ("coredump: Limit coredumps to a single
+thread group"), the unconditional irq enable in coredump_task_exit()
+will "fix" the irq state to be enabled early in do_exit(), so currently
+this may not be triggerable, but that is coincidental and fragile.
 
-Use even lower level atomic methods to avoid the instrumentation.
+Detect and fix the irqs_disabled() condition in the oops path before
+calling do_exit(), similarly to the way in_atomic() is handled.
 
+Reported-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230112195542.458034262@infradead.org
+Acked-by: "Eric W. Biederman" <ebiederm@xmission.com>
+Link: https://lore.kernel.org/lkml/20221004094401.708299-1-npiggin@gmail.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/context_tracking.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/exit.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/kernel/context_tracking.c b/kernel/context_tracking.c
-index 77978e3723771..a09f1c19336ae 100644
---- a/kernel/context_tracking.c
-+++ b/kernel/context_tracking.c
-@@ -510,7 +510,7 @@ void noinstr __ct_user_enter(enum ctx_state state)
- 			 * In this we case we don't care about any concurrency/ordering.
- 			 */
- 			if (!IS_ENABLED(CONFIG_CONTEXT_TRACKING_IDLE))
--				atomic_set(&ct->state, state);
-+				arch_atomic_set(&ct->state, state);
- 		} else {
- 			/*
- 			 * Even if context tracking is disabled on this CPU, because it's outside
-@@ -527,7 +527,7 @@ void noinstr __ct_user_enter(enum ctx_state state)
- 			 */
- 			if (!IS_ENABLED(CONFIG_CONTEXT_TRACKING_IDLE)) {
- 				/* Tracking for vtime only, no concurrent RCU EQS accounting */
--				atomic_set(&ct->state, state);
-+				arch_atomic_set(&ct->state, state);
- 			} else {
- 				/*
- 				 * Tracking for vtime and RCU EQS. Make sure we don't race
-@@ -535,7 +535,7 @@ void noinstr __ct_user_enter(enum ctx_state state)
- 				 * RCU only requires RCU_DYNTICKS_IDX increments to be fully
- 				 * ordered.
- 				 */
--				atomic_add(state, &ct->state);
-+				arch_atomic_add(state, &ct->state);
- 			}
- 		}
- 	}
-@@ -630,12 +630,12 @@ void noinstr __ct_user_exit(enum ctx_state state)
- 			 * In this we case we don't care about any concurrency/ordering.
- 			 */
- 			if (!IS_ENABLED(CONFIG_CONTEXT_TRACKING_IDLE))
--				atomic_set(&ct->state, CONTEXT_KERNEL);
-+				arch_atomic_set(&ct->state, CONTEXT_KERNEL);
+diff --git a/kernel/exit.c b/kernel/exit.c
+index 15dc2ec80c467..bccfa4218356e 100644
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -807,6 +807,8 @@ void __noreturn do_exit(long code)
+ 	struct task_struct *tsk = current;
+ 	int group_dead;
  
- 		} else {
- 			if (!IS_ENABLED(CONFIG_CONTEXT_TRACKING_IDLE)) {
- 				/* Tracking for vtime only, no concurrent RCU EQS accounting */
--				atomic_set(&ct->state, CONTEXT_KERNEL);
-+				arch_atomic_set(&ct->state, CONTEXT_KERNEL);
- 			} else {
- 				/*
- 				 * Tracking for vtime and RCU EQS. Make sure we don't race
-@@ -643,7 +643,7 @@ void noinstr __ct_user_exit(enum ctx_state state)
- 				 * RCU only requires RCU_DYNTICKS_IDX increments to be fully
- 				 * ordered.
- 				 */
--				atomic_sub(state, &ct->state);
-+				arch_atomic_sub(state, &ct->state);
- 			}
- 		}
- 	}
++	WARN_ON(irqs_disabled());
++
+ 	synchronize_group_exit(tsk, code);
+ 
+ 	WARN_ON(tsk->plug);
+@@ -938,6 +940,11 @@ void __noreturn make_task_dead(int signr)
+ 	if (unlikely(!tsk->pid))
+ 		panic("Attempted to kill the idle task!");
+ 
++	if (unlikely(irqs_disabled())) {
++		pr_info("note: %s[%d] exited with irqs disabled\n",
++			current->comm, task_pid_nr(current));
++		local_irq_enable();
++	}
+ 	if (unlikely(in_atomic())) {
+ 		pr_info("note: %s[%d] exited with preempt_count %d\n",
+ 			current->comm, task_pid_nr(current),
 -- 
 2.39.2
 
