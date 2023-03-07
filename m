@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DD1BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:39:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 976D6C433D2;
-	Tue,  7 Mar 2023 18:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386A9BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:39:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB5EC433D2;
+	Tue,  7 Mar 2023 18:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214389;
-	bh=7oRs06MOKabU/AB0P/fGhK/4WWAyhir/j7o4cOqjFSI=;
+	s=korg; t=1678214392;
+	bh=4Gel5IzMRkQbAtuXUjpbDE7WetcXyeqzZ/oUNdaKvmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w/SCruR3yGGSv3ZITajY9m4yBchaWvhZc1LmLrJRHDIWB+KFgiFBLM5wQ0Du8BvKe
-	 cm9sSBrD6BiRNjlQquUei3KCxbjzLf903H3UIiLVp20NRzLB9nih5g97Ld/DH3qhBI
-	 u4kY09ppZ4cTRL1k9mWFsTyl0MkxVWdmjSaVnu1w=
+	b=UtKvr0J47XZBJ59+qbX+czoShc2Elx7MVg72z7RJcSUKrL7ssbCt397OSmkn9PEFT
+	 bgV1KILnFs/87hWpTdxlEMqId2silwTKInMoJdPb4cokLccqv539PVh0Zqx3mLv5JA
+	 ysfEBr6l/A3KQk2WE1ZS0rVngl95G0jLfgSrzM0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 807/885] dm flakey: fix a bug with 32-bit highmem systems
-Date: Tue,  7 Mar 2023 18:02:21 +0100
-Message-Id: <20230307170036.949279200@linuxfoundation.org>
+	Zev Weiss <zev@bewilderbeest.net>,
+	Iwona Winiarska <iwona.winiarska@intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	stable@kernel.org
+Subject: [PATCH 6.1 808/885] hwmon: (peci/cputemp) Fix off-by-one in coretemp_label allocation
+Date: Tue,  7 Mar 2023 18:02:22 +0100
+Message-Id: <20230307170036.983369186@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,34 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Zev Weiss <zev@bewilderbeest.net>
 
-commit 8eb29c4fbf9661e6bd4dd86197a37ffe0ecc9d50 upstream.
+commit f00093608fa790580da309bb9feb5108fbe7c331 upstream.
 
-The function page_address does not work with 32-bit systems with high
-memory. Use bvec_kmap_local/kunmap_local instead.
+The find_last_bit() call produces the index of the highest-numbered
+core in core_mask; because cores are numbered from zero, the number of
+elements we need to allocate is one more than that.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+Cc: stable@kernel.org # v5.18
+Fixes: bf3608f338e9 ("hwmon: peci: Add cputemp driver")
+Reviewed-by: Iwona Winiarska <iwona.winiarska@intel.com>
+Link: https://lore.kernel.org/r/20230202021825.21486-1-zev@bewilderbeest.net
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-flakey.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/peci/cputemp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-flakey.c
-+++ b/drivers/md/dm-flakey.c
-@@ -307,8 +307,9 @@ static void corrupt_bio_data(struct bio
- 			struct page *page = bio_iter_page(bio, iter);
- 			if (unlikely(page == ZERO_PAGE(0)))
- 				break;
--			segment = (page_address(page) + bio_iter_offset(bio, iter));
-+			segment = bvec_kmap_local(&bvec);
- 			segment[corrupt_bio_byte] = fc->corrupt_bio_value;
-+			kunmap_local(segment);
- 			DMDEBUG("Corrupting data bio=%p by writing %u to byte %u "
- 				"(rw=%c bi_opf=%u bi_sector=%llu size=%u)\n",
- 				bio, fc->corrupt_bio_value, fc->corrupt_bio_byte,
+diff --git a/drivers/hwmon/peci/cputemp.c b/drivers/hwmon/peci/cputemp.c
+index 57470fda5f6c..30850a479f61 100644
+--- a/drivers/hwmon/peci/cputemp.c
++++ b/drivers/hwmon/peci/cputemp.c
+@@ -402,7 +402,7 @@ static int create_temp_label(struct peci_cputemp *priv)
+ 	unsigned long core_max = find_last_bit(priv->core_mask, CORE_NUMS_MAX);
+ 	int i;
+ 
+-	priv->coretemp_label = devm_kzalloc(priv->dev, core_max * sizeof(char *), GFP_KERNEL);
++	priv->coretemp_label = devm_kzalloc(priv->dev, (core_max + 1) * sizeof(char *), GFP_KERNEL);
+ 	if (!priv->coretemp_label)
+ 		return -ENOMEM;
+ 
+-- 
+2.39.2
+
 
 
