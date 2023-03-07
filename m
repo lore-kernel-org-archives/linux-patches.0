@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F087CBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:42:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BE1C433D2;
-	Tue,  7 Mar 2023 18:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1667CBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:42:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6587FC433EF;
+	Tue,  7 Mar 2023 18:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214564;
-	bh=voI6a9986FzORnmDyWvB195TsofQKYj/+HwWrXED/yY=;
+	s=korg; t=1678214567;
+	bh=txwgCUkEjGwACtdhd+vQYoGz1Go1Lauqqofk/lf6iVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yvxt7Xo2WWb66022G1ydHw2uyREx3L5rfuacpRi85k5fVydtYLo8zG1dweYF66GIY
-	 qX4mnqjCLrSe2D5ivmDheqiU+GJNHew+qgxvOLpsXKt1jyqsFTsaEWSTbv3dIsLS8b
-	 U7qnzae2f8dkxKWW4j6na2kG+XFStTlkURPkVXbc=
+	b=AwKc92gI1dzRGg8jUE7+5kXGPuNnq14FQEs2ARdC+HcWQ3wnVyNn27+JTWBdu6cLk
+	 yEDWbRikBGlEUGrkEBwPhmehUcJ+yOByhKrLKTTRkeI5HbpsyEUvphUo3DomHSSwoK
+	 yCXhT1DzBJTj2TxTU7UJYaZmWXNE3iZRiJeFkqgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@linux.alibaba.com>,
-	Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 861/885] riscv: ftrace: Remove wasted nops for !RISCV_ISA_C
-Date: Tue,  7 Mar 2023 18:03:15 +0100
-Message-Id: <20230307170039.151329318@linuxfoundation.org>
+	Pengfei Xu <pengfei.xu@intel.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 834/885] kprobes: Fix to handle forcibly unoptimized kprobes on freeing_list
+Date: Tue,  7 Mar 2023 18:02:48 +0100
+Message-Id: <20230307170038.064194033@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,55 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guo Ren <guoren@linux.alibaba.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 409c8fb20c66df7150e592747412438c04aeb11f upstream.
+commit 4fbd2f83fda0ca44a2ec6421ca3508b355b31858 upstream.
 
-When CONFIG_RISCV_ISA_C=n, -fpatchable-function-entry=8 would generate
-more nops than we expect. Because it treat nop opcode as 0x00000013
-instead of 0x0001.
+Since forcibly unoptimized kprobes will be put on the freeing_list directly
+in the unoptimize_kprobe(), do_unoptimize_kprobes() must continue to check
+the freeing_list even if unoptimizing_list is empty.
 
-Dump of assembler code for function dw_pcie_free_msi:
-   0xffffffff806fce94 <+0>:     sd      ra,-8(sp)
-   0xffffffff806fce98 <+4>:     auipc   ra,0xff90f
-   0xffffffff806fce9c <+8>:     jalr    -684(ra) # 0xffffffff8000bbec
-<ftrace_caller>
-   0xffffffff806fcea0 <+12>:    ld      ra,-8(sp)
-   0xffffffff806fcea4 <+16>:    nop /* wasted */
-   0xffffffff806fcea8 <+20>:    nop /* wasted */
-   0xffffffff806fceac <+24>:    nop /* wasted */
-   0xffffffff806fceb0 <+28>:    nop /* wasted */
-   0xffffffff806fceb4 <+0>:     addi    sp,sp,-48
-   0xffffffff806fceb8 <+4>:     sd      s0,32(sp)
-   0xffffffff806fcebc <+8>:     sd      s1,24(sp)
-   0xffffffff806fcec0 <+12>:    sd      s2,16(sp)
-   0xffffffff806fcec4 <+16>:    sd      s3,8(sp)
-   0xffffffff806fcec8 <+20>:    sd      ra,40(sp)
-   0xffffffff806fcecc <+24>:    addi    s0,sp,48
+This bug can happen if a kprobe is put in an instruction which is in the
+middle of the jump-replaced instruction sequence of an optprobe, *and* the
+optprobe is recently unregistered and queued on unoptimizing_list.
+In this case, the optprobe will be unoptimized forcibly (means immediately)
+and put it into the freeing_list, expecting the optprobe will be handled in
+do_unoptimize_kprobe().
+But if there is no other optprobes on the unoptimizing_list, current code
+returns from the do_unoptimize_kprobe() soon and does not handle the
+optprobe which is on the freeing_list. Then the optprobe will hit the
+WARN_ON_ONCE() in the do_free_cleaned_kprobes(), because it is not handled
+in the latter loop of the do_unoptimize_kprobe().
 
-Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20230112090603.1295340-3-guoren@kernel.org
+To solve this issue, do not return from do_unoptimize_kprobes() immediately
+even if unoptimizing_list is empty.
+
+Moreover, this change affects another case. kill_optimized_kprobes() expects
+kprobe_optimizer() will just free the optprobe on freeing_list.
+So I changed it to just do list_move() to freeing_list if optprobes are on
+unoptimizing list. And the do_unoptimize_kprobe() will skip
+arch_disarm_kprobe() if the probe on freeing_list has gone flag.
+
+Link: https://lore.kernel.org/all/Y8URdIfVr3pq2X8w@xpf.sh.intel.com/
+Link: https://lore.kernel.org/all/167448024501.3253718.13037333683110512967.stgit@devnote3/
+
+Fixes: e4add247789e ("kprobes: Fix optimize_kprobe()/unoptimize_kprobe() cancellation logic")
+Reported-by: Pengfei Xu <pengfei.xu@intel.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/Makefile |    4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/kprobes.c |   23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
---- a/arch/riscv/Makefile
-+++ b/arch/riscv/Makefile
-@@ -11,7 +11,11 @@ LDFLAGS_vmlinux :=
- ifeq ($(CONFIG_DYNAMIC_FTRACE),y)
- 	LDFLAGS_vmlinux := --no-relax
- 	KBUILD_CPPFLAGS += -DCC_USING_PATCHABLE_FUNCTION_ENTRY
-+ifeq ($(CONFIG_RISCV_ISA_C),y)
- 	CC_FLAGS_FTRACE := -fpatchable-function-entry=8
-+else
-+	CC_FLAGS_FTRACE := -fpatchable-function-entry=4
-+endif
- endif
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -555,17 +555,15 @@ static void do_unoptimize_kprobes(void)
+ 	/* See comment in do_optimize_kprobes() */
+ 	lockdep_assert_cpus_held();
  
- ifeq ($(CONFIG_CMODEL_MEDLOW),y)
+-	/* Unoptimization must be done anytime */
+-	if (list_empty(&unoptimizing_list))
+-		return;
++	if (!list_empty(&unoptimizing_list))
++		arch_unoptimize_kprobes(&unoptimizing_list, &freeing_list);
+ 
+-	arch_unoptimize_kprobes(&unoptimizing_list, &freeing_list);
+-	/* Loop on 'freeing_list' for disarming */
++	/* Loop on 'freeing_list' for disarming and removing from kprobe hash list */
+ 	list_for_each_entry_safe(op, tmp, &freeing_list, list) {
+ 		/* Switching from detour code to origin */
+ 		op->kp.flags &= ~KPROBE_FLAG_OPTIMIZED;
+-		/* Disarm probes if marked disabled */
+-		if (kprobe_disabled(&op->kp))
++		/* Disarm probes if marked disabled and not gone */
++		if (kprobe_disabled(&op->kp) && !kprobe_gone(&op->kp))
+ 			arch_disarm_kprobe(&op->kp);
+ 		if (kprobe_unused(&op->kp)) {
+ 			/*
+@@ -797,14 +795,13 @@ static void kill_optimized_kprobe(struct
+ 	op->kp.flags &= ~KPROBE_FLAG_OPTIMIZED;
+ 
+ 	if (kprobe_unused(p)) {
+-		/* Enqueue if it is unused */
+-		list_add(&op->list, &freeing_list);
+ 		/*
+-		 * Remove unused probes from the hash list. After waiting
+-		 * for synchronization, this probe is reclaimed.
+-		 * (reclaiming is done by do_free_cleaned_kprobes().)
++		 * Unused kprobe is on unoptimizing or freeing list. We move it
++		 * to freeing_list and let the kprobe_optimizer() remove it from
++		 * the kprobe hash list and free it.
+ 		 */
+-		hlist_del_rcu(&op->kp.hlist);
++		if (optprobe_queued_unopt(op))
++			list_move(&op->list, &freeing_list);
+ 	}
+ 
+ 	/* Don't touch the code, because it is already freed. */
 
 
