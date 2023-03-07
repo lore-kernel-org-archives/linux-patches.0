@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E85BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:27:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9B6C433D2;
-	Tue,  7 Mar 2023 18:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BEFBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:27:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D86C433EF;
+	Tue,  7 Mar 2023 18:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213626;
-	bh=p6f6PDNPj16cOqMFdi1JjeXhpIAH78rKC7/U33S61aU=;
+	s=korg; t=1678213629;
+	bh=mKaXKtF2VK+E9bMy8GGnD4WWDE5oevqvItfyNCsxse0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VeLchg32+LlvVCjf968rPrKdNuv+oOXvgradc6k/gRQUvj6oK+2faOQR0Oevo9Kes
-	 NC8UlU7+jL33Ilz1vD+owPzm8GtjS3c4/iiTw+ukVxQ0cjARwBSHS6zMC7I7f0UJGQ
-	 CIWZRhHftYiZp1Dgo5Bc/hbjIW1RiN4/hdtvFfB8=
+	b=bUBRFN1NWqFO56ZW1JALWzganH6zfnjh9jxZl2xQOuI0+n7Nc3ZnTVvTy92PORwR5
+	 98f/xO3VmcLtfqwkzDXeiu4Tmc3wvdzd+5U8Lgocxcpd0GktJ6HmHQSwiHG1rWR3nP
+	 N8kV11DeCm/M5HJuN2jIZ3vEKtyxAb0gETjS/3vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Tang <feng.tang@intel.com>,
-	Waiman Long <longman@redhat.com>,
-	John Stultz <jstultz@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Stephen Boyd <sboyd@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 566/885] clocksource: Suspend the watchdog temporarily when high read latency detected
-Date: Tue,  7 Mar 2023 17:58:20 +0100
-Message-Id: <20230307170027.023195827@linuxfoundation.org>
+Subject: [PATCH 6.1 538/885] btrfs: scrub: improve tree block error reporting
+Date: Tue,  7 Mar 2023 17:57:52 +0100
+Message-Id: <20230307170025.867017348@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -39,143 +35,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Feng Tang <feng.tang@intel.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit b7082cdfc464bf9231300605d03eebf943dda307 ]
+[ Upstream commit 28232909ba43561887508a6ef46d7f33a648f375 ]
 
-Bugs have been reported on 8 sockets x86 machines in which the TSC was
-wrongly disabled when the system is under heavy workload.
+[BUG]
+When debugging a scrub related metadata error, it turns out that our
+metadata error reporting is not ideal.
 
- [ 818.380354] clocksource: timekeeping watchdog on CPU336: hpet wd-wd read-back delay of 1203520ns
- [ 818.436160] clocksource: wd-tsc-wd read-back delay of 181880ns, clock-skew test skipped!
- [ 819.402962] clocksource: timekeeping watchdog on CPU338: hpet wd-wd read-back delay of 324000ns
- [ 819.448036] clocksource: wd-tsc-wd read-back delay of 337240ns, clock-skew test skipped!
- [ 819.880863] clocksource: timekeeping watchdog on CPU339: hpet read-back delay of 150280ns, attempt 3, marking unstable
- [ 819.936243] tsc: Marking TSC unstable due to clocksource watchdog
- [ 820.068173] TSC found unstable after boot, most likely due to broken BIOS. Use 'tsc=unstable'.
- [ 820.092382] sched_clock: Marking unstable (818769414384, 1195404998)
- [ 820.643627] clocksource: Checking clocksource tsc synchronization from CPU 267 to CPUs 0,4,25,70,126,430,557,564.
- [ 821.067990] clocksource: Switched to clocksource hpet
+The only 3 error messages are:
 
-This can be reproduced by running memory intensive 'stream' tests,
-or some of the stress-ng subcases such as 'ioport'.
+- BTRFS error (device dm-2): bdev /dev/mapper/test-scratch1 errs: wr 0, rd 0, flush 0, corrupt 0, gen 1
+  Showing we have metadata generation mismatch errors.
 
-The reason for these issues is the when system is under heavy load, the
-read latency of the clocksources can be very high.  Even lightweight TSC
-reads can show high latencies, and latencies are much worse for external
-clocksources such as HPET or the APIC PM timer.  These latencies can
-result in false-positive clocksource-unstable determinations.
+- BTRFS error (device dm-2): unable to fixup (regular) error at logical 7110656 on dev /dev/mapper/test-scratch1
+  Showing which tree blocks are corrupted.
 
-These issues were initially reported by a customer running on a production
-system, and this problem was reproduced on several generations of Xeon
-servers, especially when running the stress-ng test.  These Xeon servers
-were not production systems, but they did have the latest steppings
-and firmware.
+- BTRFS warning (device dm-2): checksum/header error at logical 24772608 on dev /dev/mapper/test-scratch2, physical 3801088: metadata node (level 1) in tree 5
+  Showing which physical range the corrupted metadata is at.
 
-Given that the clocksource watchdog is a continual diagnostic check with
-frequency of twice a second, there is no need to rush it when the system
-is under heavy load.  Therefore, when high clocksource read latencies
-are detected, suspend the watchdog timer for 5 minutes.
+We have to combine the above 3 to know we have a corrupted metadata with
+generation mismatch.
 
-Signed-off-by: Feng Tang <feng.tang@intel.com>
-Acked-by: Waiman Long <longman@redhat.com>
-Cc: John Stultz <jstultz@google.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Cc: Feng Tang <feng.tang@intel.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+And this is already the better case, if we have other problems, like
+fsid mismatch, we can not even know the cause.
+
+[CAUSE]
+The problem is caused by the fact that, scrub_checksum_tree_block()
+never outputs any error message.
+
+It just return two bits for scrub: sblock->header_error, and
+sblock->generation_error.
+
+And later we report error in scrub_print_warning(), but unfortunately we
+only have two bits, there is not really much thing we can done to print
+any detailed errors.
+
+[FIX]
+This patch will do the following to enhance the error reporting of
+metadata scrub:
+
+- Add extra warning (ratelimited) for every error we hit
+  This can help us to distinguish the different types of errors.
+  Some errors can help us to know what's going wrong immediately,
+  like bytenr mismatch.
+
+- Re-order the checks
+  Currently we check bytenr first, then immediately generation.
+  This can lead to false generation mismatch reports, while the fsid
+  mismatches.
+
+Here is the new output for the bug I'm debugging (we forgot to
+writeback tree blocks for commit roots):
+
+ BTRFS warning (device dm-2): tree block 24117248 mirror 1 has bad fsid, has b77cd862-f150-4c71-90ec-7baf0544d83f want 17df6abf-23cd-445f-b350-5b3e40bfd2fc
+ BTRFS warning (device dm-2): tree block 24117248 mirror 0 has bad fsid, has b77cd862-f150-4c71-90ec-7baf0544d83f want 17df6abf-23cd-445f-b350-5b3e40bfd2fc
+
+Now we can immediately know it's some tree blocks didn't even get written
+back, other than the original confusing generation mismatch.
+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/clocksource.c | 45 ++++++++++++++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 13 deletions(-)
+ fs/btrfs/scrub.c | 49 +++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 40 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
-index 8058bec87acee..1c90e710d537f 100644
---- a/kernel/time/clocksource.c
-+++ b/kernel/time/clocksource.c
-@@ -384,6 +384,15 @@ void clocksource_verify_percpu(struct clocksource *cs)
- }
- EXPORT_SYMBOL_GPL(clocksource_verify_percpu);
- 
-+static inline void clocksource_reset_watchdog(void)
-+{
-+	struct clocksource *cs;
-+
-+	list_for_each_entry(cs, &watchdog_list, wd_list)
-+		cs->flags &= ~CLOCK_SOURCE_WATCHDOG;
-+}
-+
-+
- static void clocksource_watchdog(struct timer_list *unused)
- {
- 	u64 csnow, wdnow, cslast, wdlast, delta;
-@@ -391,6 +400,7 @@ static void clocksource_watchdog(struct timer_list *unused)
- 	int64_t wd_nsec, cs_nsec;
- 	struct clocksource *cs;
- 	enum wd_read_status read_ret;
-+	unsigned long extra_wait = 0;
- 	u32 md;
- 
- 	spin_lock(&watchdog_lock);
-@@ -410,13 +420,30 @@ static void clocksource_watchdog(struct timer_list *unused)
- 
- 		read_ret = cs_watchdog_read(cs, &csnow, &wdnow);
- 
--		if (read_ret != WD_READ_SUCCESS) {
--			if (read_ret == WD_READ_UNSTABLE)
--				/* Clock readout unreliable, so give it up. */
--				__clocksource_unstable(cs);
-+		if (read_ret == WD_READ_UNSTABLE) {
-+			/* Clock readout unreliable, so give it up. */
-+			__clocksource_unstable(cs);
- 			continue;
- 		}
- 
-+		/*
-+		 * When WD_READ_SKIP is returned, it means the system is likely
-+		 * under very heavy load, where the latency of reading
-+		 * watchdog/clocksource is very big, and affect the accuracy of
-+		 * watchdog check. So give system some space and suspend the
-+		 * watchdog check for 5 minutes.
-+		 */
-+		if (read_ret == WD_READ_SKIP) {
-+			/*
-+			 * As the watchdog timer will be suspended, and
-+			 * cs->last could keep unchanged for 5 minutes, reset
-+			 * the counters.
-+			 */
-+			clocksource_reset_watchdog();
-+			extra_wait = HZ * 300;
-+			break;
-+		}
-+
- 		/* Clocksource initialized ? */
- 		if (!(cs->flags & CLOCK_SOURCE_WATCHDOG) ||
- 		    atomic_read(&watchdog_reset_pending)) {
-@@ -512,7 +539,7 @@ static void clocksource_watchdog(struct timer_list *unused)
- 	 * pair clocksource_stop_watchdog() clocksource_start_watchdog().
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index 196c4c6ed1ed8..c5d8dc112fd58 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -2036,20 +2036,33 @@ static int scrub_checksum_tree_block(struct scrub_block *sblock)
+ 	 * a) don't have an extent buffer and
+ 	 * b) the page is already kmapped
  	 */
- 	if (!timer_pending(&watchdog_timer)) {
--		watchdog_timer.expires += WATCHDOG_INTERVAL;
-+		watchdog_timer.expires += WATCHDOG_INTERVAL + extra_wait;
- 		add_timer_on(&watchdog_timer, next_cpu);
+-	if (sblock->logical != btrfs_stack_header_bytenr(h))
++	if (sblock->logical != btrfs_stack_header_bytenr(h)) {
+ 		sblock->header_error = 1;
+-
+-	if (sector->generation != btrfs_stack_header_generation(h)) {
+-		sblock->header_error = 1;
+-		sblock->generation_error = 1;
++		btrfs_warn_rl(fs_info,
++		"tree block %llu mirror %u has bad bytenr, has %llu want %llu",
++			      sblock->logical, sblock->mirror_num,
++			      btrfs_stack_header_bytenr(h),
++			      sblock->logical);
++		goto out;
  	}
- out:
-@@ -537,14 +564,6 @@ static inline void clocksource_stop_watchdog(void)
- 	watchdog_running = 0;
+ 
+-	if (!scrub_check_fsid(h->fsid, sector))
++	if (!scrub_check_fsid(h->fsid, sector)) {
+ 		sblock->header_error = 1;
++		btrfs_warn_rl(fs_info,
++		"tree block %llu mirror %u has bad fsid, has %pU want %pU",
++			      sblock->logical, sblock->mirror_num,
++			      h->fsid, sblock->dev->fs_devices->fsid);
++		goto out;
++	}
+ 
+-	if (memcmp(h->chunk_tree_uuid, fs_info->chunk_tree_uuid,
+-		   BTRFS_UUID_SIZE))
++	if (memcmp(h->chunk_tree_uuid, fs_info->chunk_tree_uuid, BTRFS_UUID_SIZE)) {
+ 		sblock->header_error = 1;
++		btrfs_warn_rl(fs_info,
++		"tree block %llu mirror %u has bad chunk tree uuid, has %pU want %pU",
++			      sblock->logical, sblock->mirror_num,
++			      h->chunk_tree_uuid, fs_info->chunk_tree_uuid);
++		goto out;
++	}
+ 
+ 	shash->tfm = fs_info->csum_shash;
+ 	crypto_shash_init(shash);
+@@ -2062,9 +2075,27 @@ static int scrub_checksum_tree_block(struct scrub_block *sblock)
+ 	}
+ 
+ 	crypto_shash_final(shash, calculated_csum);
+-	if (memcmp(calculated_csum, on_disk_csum, sctx->fs_info->csum_size))
++	if (memcmp(calculated_csum, on_disk_csum, sctx->fs_info->csum_size)) {
+ 		sblock->checksum_error = 1;
++		btrfs_warn_rl(fs_info,
++		"tree block %llu mirror %u has bad csum, has " CSUM_FMT " want " CSUM_FMT,
++			      sblock->logical, sblock->mirror_num,
++			      CSUM_FMT_VALUE(fs_info->csum_size, on_disk_csum),
++			      CSUM_FMT_VALUE(fs_info->csum_size, calculated_csum));
++		goto out;
++	}
++
++	if (sector->generation != btrfs_stack_header_generation(h)) {
++		sblock->header_error = 1;
++		sblock->generation_error = 1;
++		btrfs_warn_rl(fs_info,
++		"tree block %llu mirror %u has bad generation, has %llu want %llu",
++			      sblock->logical, sblock->mirror_num,
++			      btrfs_stack_header_generation(h),
++			      sector->generation);
++	}
+ 
++out:
+ 	return sblock->header_error || sblock->checksum_error;
  }
  
--static inline void clocksource_reset_watchdog(void)
--{
--	struct clocksource *cs;
--
--	list_for_each_entry(cs, &watchdog_list, wd_list)
--		cs->flags &= ~CLOCK_SOURCE_WATCHDOG;
--}
--
- static void clocksource_resume_watchdog(void)
- {
- 	atomic_inc(&watchdog_reset_pending);
 -- 
 2.39.2
 
