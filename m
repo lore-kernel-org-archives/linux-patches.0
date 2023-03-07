@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD65BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:59:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21C0C433D2;
-	Tue,  7 Mar 2023 17:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75053BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:59:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE414C433D2;
+	Tue,  7 Mar 2023 17:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211981;
-	bh=LPXLKTzTuAN+Tu18ibAak93BOsM627jd4w9g8f4/30E=;
+	s=korg; t=1678211984;
+	bh=hlPByCCHPDZ8BRLUI1DXLlkMIKUFq0Blq3TF7npokN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1Wkdit+Ro0nExWAoONZBx4ws3zh+OZDmy22f9Lk8Cvh+LtjUjgijC11Q2v+O2FPX
-	 rl8d24+seh2Qm97WO/fpFYhqFr/G9Jn+0blqUzcazoCU26QVYaa4XudwiwenDSlkVY
-	 SyR5/QX/1/fP0oU2r7aHerknQR2k0H8jsXcNHsRs=
+	b=Sg6uO6TtMFUVFIKNFhMjX+RYHMe+c7JbWb5EqHFrWfR7h6oTXxaLGPUQSro1RDQSa
+	 L4xl/gCAKbLpdH43+OaY2qHrP5JhiJaAo1sadcokZ9Lh34LCsRLRh2g8xFLg+V1Fkf
+	 CxIEvUVu+G/MrbN6sD8RmB0sukHPSGlH70fOHPYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Robert Marko <robimarko@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/885] arm64: dts: qcom: ipq8074: correct USB3 QMP PHY-s clock output names
-Date: Tue,  7 Mar 2023 17:49:32 +0100
-Message-Id: <20230307170003.323323636@linuxfoundation.org>
+Subject: [PATCH 6.1 039/885] arm64: dts: qcom: ipq8074: fix Gen2 PCIe QMP PHY
+Date: Tue,  7 Mar 2023 17:49:33 +0100
+Message-Id: <20230307170003.371960795@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,60 +37,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Robert Marko <robimarko@gmail.com>
 
-[ Upstream commit 877cff3568c0f54511d77918ae16b2d6e9a0dfce ]
+[ Upstream commit 100d9c94ccf15b02742c326cd04f422ab729153b ]
 
-It seems that clock-output-names for the USB3 QMP PHY-s where set without
-actually checking what is the GCC clock driver expecting, so clock core
-could never actually find the parents for usb0_pipe_clk_src and
-usb1_pipe_clk_src clocks in the GCC driver.
+Serdes register space sizes are incorrect, update them to match the
+actual sizes from downstream QCA 5.4 kernel.
 
-So, correct the names to be what the driver expects so that parenting
-works.
-
-Before:
-gcc_usb0_pipe_clk_src                0        0        0   125000000          0     0  50000         Y
-gcc_usb1_pipe_clk_src                0        0        0   125000000          0     0  50000         Y
-
-After:
- usb3phy_0_cc_pipe_clk                1        1        0   125000000          0     0  50000         Y
-    usb0_pipe_clk_src                 1        1        0   125000000          0     0  50000         Y
-       gcc_usb0_pipe_clk              1        1        0   125000000          0     0  50000         Y
- usb3phy_1_cc_pipe_clk                1        1        0   125000000          0     0  50000         Y
-    usb1_pipe_clk_src                 1        1        0   125000000          0     0  50000         Y
-       gcc_usb1_pipe_clk              1        1        0   125000000          0     0  50000         Y
-
-Fixes: 5e09bc51d07b ("arm64: dts: ipq8074: enable USB support")
+Fixes: 942bcd33ed45 ("arm64: dts: qcom: Fix IPQ8074 PCIe PHY nodes")
 Signed-off-by: Robert Marko <robimarko@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230108130440.670181-2-robimarko@gmail.com
+Link: https://lore.kernel.org/r/20230113164449.906002-1-robimarko@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index a721cdd80489e..cde06bfc598bf 100644
+index cde06bfc598bf..09ba99fc90ac4 100644
 --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -137,7 +137,7 @@ usb1_ssphy: phy@58200 {
- 				#clock-cells = <0>;
- 				clocks = <&gcc GCC_USB1_PIPE_CLK>;
- 				clock-names = "pipe0";
--				clock-output-names = "gcc_usb1_pipe_clk_src";
-+				clock-output-names = "usb3phy_1_cc_pipe_clk";
- 			};
- 		};
+@@ -242,9 +242,9 @@ pcie_qmp1: phy@8e000 {
+ 			status = "disabled";
  
-@@ -180,7 +180,7 @@ usb0_ssphy: phy@78200 {
+ 			pcie_phy1: phy@8e200 {
+-				reg = <0x8e200 0x16c>,
++				reg = <0x8e200 0x130>,
+ 				      <0x8e400 0x200>,
+-				      <0x8e800 0x4f4>;
++				      <0x8e800 0x1f8>;
+ 				#phy-cells = <0>;
  				#clock-cells = <0>;
- 				clocks = <&gcc GCC_USB0_PIPE_CLK>;
- 				clock-names = "pipe0";
--				clock-output-names = "gcc_usb0_pipe_clk_src";
-+				clock-output-names = "usb3phy_0_cc_pipe_clk";
- 			};
- 		};
- 
+ 				clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
 -- 
 2.39.2
 
