@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A61BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:38:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623F6C4339C;
-	Tue,  7 Mar 2023 17:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D174BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:38:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B03C433A0;
+	Tue,  7 Mar 2023 17:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210702;
-	bh=HfELA5bv6JNGGKsubN/vePsaoGTwJhQONqPLJajGitU=;
+	s=korg; t=1678210705;
+	bh=uw2nkjhNQx5+erk0stxMqkev2lIwAdl32LZRI5YipLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rpGJdTsTptsrNCZB653hyCXNhSObtNHKhpqdbX0Z0c7hHd8IZNdKrddRR5DvfQBRt
-	 KP5uUZJlW31bel6XPL/cEITKR7eyx4DAxLMLF4Pd2iB/QAN2Xzu0rZIG0rH2TctOP8
-	 zbC5Hvj4VTt6UCiFu8wB8wTE+c/YjtokI3MaxkaE=
+	b=ryLfAc89Q+tfOx+O0Y1exBkymJcfJuX5YZqMRA1BxrBA4odiFOmbqUmnW6cedNx0Y
+	 9PW/ooa4sW7U1qXYDFdkrCbVwzCp8J/aAlVsh8Qdwe1a6jckuxDnS8EQlc8JSnFy0N
+	 KGWR5/3ovH6BEZI2j32/bkFXYn9i0VPLQRSZC320=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nishanth Menon <nm@ti.com>,
-	Jai Luthra <j-luthra@ti.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0596/1001] media: ov5640: Handle delays when no reset_gpio set
-Date: Tue,  7 Mar 2023 17:56:08 +0100
-Message-Id: <20230307170047.357957072@linuxfoundation.org>
+Subject: [PATCH 6.2 0597/1001] media: mc: Get media_device directly from pad
+Date: Tue,  7 Mar 2023 17:56:09 +0100
+Message-Id: <20230307170047.400897309@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,78 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jai Luthra <j-luthra@ti.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit d7ff69139908842adf824be4f50c7e9ac5886c04 ]
+[ Upstream commit a967a3a788028f541e4db54beabcebc3648997db ]
 
-Some module manufacturers [1][2] don't expose the RESETB and PWDN pins
-of the sensor directly through the 15-pin FFC connector. Instead wiring
-~PWDN gpio to the sensor pins with appropriate delays.
+Various functions access the media_device from a pad by going through
+the entity the pad belongs to. Remove the level of indirection and get
+the media_device from the pad directly.
 
-In such cases, reset_gpio will not be available to the driver, but it
-will still be toggled when the sensor is powered on, and thus we should
-still honor the wait time of >= 5ms + 1ms + 20ms (see figure 2-3 in [3])
-before attempting any i/o operations over SCCB.
-
-Also, rename the function to ov5640_powerup_sequence to better match the
-datasheet (section 2.7).
-
-[1] https://digilent.com/reference/_media/reference/add-ons/pcam-5c/pcam_5c_sch.pdf
-[2] https://www.alinx.com/public/upload/file/AN5641_User_Manual.pdf
-[3] https://cdn.sparkfun.com/datasheets/Sensors/LightImaging/OV5640_datasheet.pdf
-
-Fixes: 19a81c1426c1 ("[media] add Omnivision OV5640 sensor driver")
-Reported-by: Nishanth Menon <nm@ti.com>
-Signed-off-by: Jai Luthra <j-luthra@ti.com>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Fixes: 9e3576a1ae2b ("media: mc: convert pipeline funcs to take media_pad")
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5640.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/media/mc/mc-entity.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
-index 75dada60298b5..c159f297ab92a 100644
---- a/drivers/media/i2c/ov5640.c
-+++ b/drivers/media/i2c/ov5640.c
-@@ -2425,11 +2425,22 @@ static void ov5640_power(struct ov5640_dev *sensor, bool enable)
- 	gpiod_set_value_cansleep(sensor->pwdn_gpio, enable ? 0 : 1);
- }
- 
--static void ov5640_reset(struct ov5640_dev *sensor)
-+/*
-+ * From section 2.7 power up sequence:
-+ * t0 + t1 + t2 >= 5ms	Delay from DOVDD stable to PWDN pull down
-+ * t3 >= 1ms		Delay from PWDN pull down to RESETB pull up
-+ * t4 >= 20ms		Delay from RESETB pull up to SCCB (i2c) stable
-+ *
-+ * Some modules don't expose RESETB/PWDN pins directly, instead providing a
-+ * "PWUP" GPIO which is wired through appropriate delays and inverters to the
-+ * pins.
-+ *
-+ * In such cases, this gpio should be mapped to pwdn_gpio in the driver, and we
-+ * should still toggle the pwdn_gpio below with the appropriate delays, while
-+ * the calls to reset_gpio will be ignored.
-+ */
-+static void ov5640_powerup_sequence(struct ov5640_dev *sensor)
+diff --git a/drivers/media/mc/mc-entity.c b/drivers/media/mc/mc-entity.c
+index b8bcbc734eaf4..f268cf66053e1 100644
+--- a/drivers/media/mc/mc-entity.c
++++ b/drivers/media/mc/mc-entity.c
+@@ -703,7 +703,7 @@ static int media_pipeline_populate(struct media_pipeline *pipe,
+ __must_check int __media_pipeline_start(struct media_pad *pad,
+ 					struct media_pipeline *pipe)
  {
--	if (!sensor->reset_gpio)
--		return;
--
- 	if (sensor->pwdn_gpio) {
- 		gpiod_set_value_cansleep(sensor->reset_gpio, 0);
+-	struct media_device *mdev = pad->entity->graph_obj.mdev;
++	struct media_device *mdev = pad->graph_obj.mdev;
+ 	struct media_pipeline_pad *err_ppad;
+ 	struct media_pipeline_pad *ppad;
+ 	int ret;
+@@ -851,7 +851,7 @@ EXPORT_SYMBOL_GPL(__media_pipeline_start);
+ __must_check int media_pipeline_start(struct media_pad *pad,
+ 				      struct media_pipeline *pipe)
+ {
+-	struct media_device *mdev = pad->entity->graph_obj.mdev;
++	struct media_device *mdev = pad->graph_obj.mdev;
+ 	int ret;
  
-@@ -2478,8 +2489,7 @@ static int ov5640_set_power_on(struct ov5640_dev *sensor)
- 		goto xclk_off;
- 	}
+ 	mutex_lock(&mdev->graph_mutex);
+@@ -888,7 +888,7 @@ EXPORT_SYMBOL_GPL(__media_pipeline_stop);
  
--	ov5640_reset(sensor);
--	ov5640_power(sensor, true);
-+	ov5640_powerup_sequence(sensor);
+ void media_pipeline_stop(struct media_pad *pad)
+ {
+-	struct media_device *mdev = pad->entity->graph_obj.mdev;
++	struct media_device *mdev = pad->graph_obj.mdev;
  
- 	ret = ov5640_init_slave_id(sensor);
- 	if (ret)
+ 	mutex_lock(&mdev->graph_mutex);
+ 	__media_pipeline_stop(pad);
+@@ -898,7 +898,7 @@ EXPORT_SYMBOL_GPL(media_pipeline_stop);
+ 
+ __must_check int media_pipeline_alloc_start(struct media_pad *pad)
+ {
+-	struct media_device *mdev = pad->entity->graph_obj.mdev;
++	struct media_device *mdev = pad->graph_obj.mdev;
+ 	struct media_pipeline *new_pipe = NULL;
+ 	struct media_pipeline *pipe;
+ 	int ret;
 -- 
 2.39.2
 
