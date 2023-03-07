@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782BABA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:17:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB868C433D2;
-	Tue,  7 Mar 2023 18:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56034BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:17:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4D9C433EF;
+	Tue,  7 Mar 2023 18:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213037;
-	bh=0TFvKDh/z/L3r5jPYIYlJrigoOErlR9z55wvhV3BUxk=;
+	s=korg; t=1678213041;
+	bh=Ed/Gnb6Dioor4lM/pwGnTJjJuZQFFzidX40torlALKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LUHTb6yMXSfV8ZUdSaJRkM5gNzOfpZZic555nTGPYcl8r2/y30c3R/sTEWuXhZI1v
-	 ATkdgt32xmf3cLHzFk+ks2/PgSv33DXsp5qRzVjxlY48kInxNqQfd/Ya/i7ZQAwU38
-	 sl9u1G2MAyDkOcO5zVYGdcUXWmy+4G3i66Fan0s4=
+	b=OHBFc6JgrQRWnGe7ER8qCxoNF4q7M5uc8GRd182cVs6ia/wkHGMdMPV95P66yj0Vw
+	 Y/ia3La0y49x1QVIBhbSIbtNcayhONo3KSNfWUAoYBOm8Et+wls4aoYU181nq9iY3R
+	 Io+uAwp41gL8TETOt9Nr52iuR2DdsnxAvmGiMLVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Jason Yan <yanaijie@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 348/885] scsi: aic94xx: Add missing check for dma_map_single()
-Date: Tue,  7 Mar 2023 17:54:42 +0100
-Message-Id: <20230307170017.363314306@linuxfoundation.org>
+Subject: [PATCH 6.1 339/885] ASoC: rsnd: fixup #endif position
+Date: Tue,  7 Mar 2023 17:54:33 +0100
+Message-Id: <20230307170016.954122552@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,37 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 32fe45274edb5926abc0fac7263d9f889d02d9cf ]
+[ Upstream commit 49123b51cd896e00b256a27c2ce9e6bfe1bbc22f ]
 
-Add check for dma_map_single() and return error if it fails in order to
-avoid invalid DMA address.
+commit 1f9c82b5ab83ff2 ("ASoC: rsnd: add debugfs support") added
+CONFIG_DEBUG_FS related definitions on rsnd.h, but it should be
+added inside of RSND_H. This patch fixup it.
 
-Fixes: 2908d778ab3e ("[SCSI] aic94xx: new driver")
-Link: https://lore.kernel.org/r/20230128110832.6792-1-jiasheng@iscas.ac.cn
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 1f9c82b5ab83 ("ASoC: rsnd: add debugfs support")
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/877cx26t7r.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aic94xx/aic94xx_task.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/sh/rcar/rsnd.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/aic94xx/aic94xx_task.c b/drivers/scsi/aic94xx/aic94xx_task.c
-index ed119a3f6f2ed..7f02083001100 100644
---- a/drivers/scsi/aic94xx/aic94xx_task.c
-+++ b/drivers/scsi/aic94xx/aic94xx_task.c
-@@ -50,6 +50,9 @@ static int asd_map_scatterlist(struct sas_task *task,
- 		dma_addr_t dma = dma_map_single(&asd_ha->pcidev->dev, p,
- 						task->total_xfer_len,
- 						task->data_dir);
-+		if (dma_mapping_error(&asd_ha->pcidev->dev, dma))
-+			return -ENOMEM;
+diff --git a/sound/soc/sh/rcar/rsnd.h b/sound/soc/sh/rcar/rsnd.h
+index d9cd190d7e198..f8ef6836ef84e 100644
+--- a/sound/soc/sh/rcar/rsnd.h
++++ b/sound/soc/sh/rcar/rsnd.h
+@@ -901,8 +901,6 @@ void rsnd_mod_make_sure(struct rsnd_mod *mod, enum rsnd_mod_type type);
+ 	if (!IS_BUILTIN(RSND_DEBUG_NO_DAI_CALL))	\
+ 		dev_dbg(dev, param)
+ 
+-#endif
+-
+ #ifdef CONFIG_DEBUG_FS
+ int rsnd_debugfs_probe(struct snd_soc_component *component);
+ void rsnd_debugfs_reg_show(struct seq_file *m, phys_addr_t _addr,
+@@ -913,3 +911,5 @@ void rsnd_debugfs_mod_reg_show(struct seq_file *m, struct rsnd_mod *mod,
+ #else
+ #define rsnd_debugfs_probe  NULL
+ #endif
 +
- 		sg_arr[0].bus_addr = cpu_to_le64((u64)dma);
- 		sg_arr[0].size = cpu_to_le32(task->total_xfer_len);
- 		sg_arr[0].flags |= ASD_SG_EL_LIST_EOL;
++#endif /* RSND_H */
 -- 
 2.39.2
 
