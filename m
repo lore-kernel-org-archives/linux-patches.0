@@ -1,39 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E4ABA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:18:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF65C433A1;
-	Tue,  7 Mar 2023 17:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9ACBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:18:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ECC0C433EF;
+	Tue,  7 Mar 2023 17:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209487;
-	bh=Yqrs8HTGisDdywa3JPQeocUGX9CBGTZCMFQettr/AWc=;
+	s=korg; t=1678209491;
+	bh=Ub4gL2SWRUQxDIbDVcCFnTHE8wFSikK5JXtvra/GilI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GYKbZfoqwpPRGduIBji+pYYHMeXe6xBAacI75dP3Epr1dI7JKqLYjetYGN+4yCiKP
-	 SiPnHOY3CJGm2Q+WFt+sMjQxnqfZaJtgrSl0k4f3wpALxyArtkEbX6468PYgzDJTte
-	 Q6V3GsjZiG3KlEnbNNczYiMJTEzCdFeRGyCyKYXg=
+	b=LEVh4klC6waORVvrY15awRtNZYcQMnUOEPGBBNydo+rmgYmGxZELl91E7df8JQaZ8
+	 gNhn1wKHpz7lXVGMBTtUscslF2ipiTEtA8rUeV/67ZGA+7SKh2vC/VEumF7bwjhPYy
+	 BPoie9OSoMy/MDgwBoMkHaeXkFqhRrDosnW3vlxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tonghao Zhang <tong@infragraf.org>,
-	Quentin Monnet <quentin@isovalent.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Song Liu <song@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	KP Singh <kpsingh@kernel.org>,
-	Stanislav Fomichev <sdf@google.com>,
-	Hao Luo <haoluo@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0236/1001] bpftool: profile online CPUs instead of possible
-Date: Tue,  7 Mar 2023 17:50:08 +0100
-Message-Id: <20230307170032.080686152@linuxfoundation.org>
+Subject: [PATCH 6.2 0237/1001] wifi: mt76: mt7921: fix deadlock in mt7921_abort_roc
+Date: Tue,  7 Mar 2023 17:50:09 +0100
+Message-Id: <20230307170032.125216943@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -47,114 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tonghao Zhang <tong@infragraf.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 377c16fa3f3c60d21e4b05314c8be034ce37f2eb ]
+[ Upstream commit de19b9c83654e323d83f839a550ca4af37fea15b ]
 
-The number of online cpu may be not equal to possible cpu.
-"bpftool prog profile" can not create pmu event on possible
-but on online cpu.
+When mt7921_abort_roc is called with dev->mutex held, it can deadlock while
+calling cancel_work_sync(&phy->roc_work), because the work function could
+be waiting to acquire the mutex.
 
-$ dmidecode -s system-product-name
-PowerEdge R620
-$ cat /sys/devices/system/cpu/possible
-0-47
-$ cat /sys/devices/system/cpu/online
-0-31
+Fix this by flushing the work before taking the mutex
 
-Disable cpu dynamically:
-$ echo 0 > /sys/devices/system/cpu/cpuX/online
-
-If one cpu is offline, perf_event_open will return ENODEV.
-To fix this issue:
-* check value returned and skip offline cpu.
-* close pmu_fd immediately on error path, avoid fd leaking.
-
-Fixes: 47c09d6a9f67 ("bpftool: Introduce "prog profile" command")
-Signed-off-by: Tonghao Zhang <tong@infragraf.org>
-Cc: Quentin Monnet <quentin@isovalent.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Martin KaFai Lau <martin.lau@linux.dev>
-Cc: Song Liu <song@kernel.org>
-Cc: Yonghong Song <yhs@fb.com>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: KP Singh <kpsingh@kernel.org>
-Cc: Stanislav Fomichev <sdf@google.com>
-Cc: Hao Luo <haoluo@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20230202131701.29519-1-tong@infragraf.org
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Fixes: 034ae28b56f1 ("wifi: mt76: mt7921: introduce remain_on_channel support")
+Fixes: 41ac53c899bd ("wifi: mt76: mt7921: introduce chanctx support")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/prog.c | 38 ++++++++++++++++++++++++++++++--------
- 1 file changed, 30 insertions(+), 8 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7921/main.c  | 22 ++++++-------------
+ 1 file changed, 7 insertions(+), 15 deletions(-)
 
-diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
-index cfc9fdc1e8634..e87738dbffc10 100644
---- a/tools/bpf/bpftool/prog.c
-+++ b/tools/bpf/bpftool/prog.c
-@@ -2233,10 +2233,38 @@ static void profile_close_perf_events(struct profiler_bpf *obj)
- 	profile_perf_event_cnt = 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index 76ac5069638fe..722df8eea91f7 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -422,15 +422,15 @@ void mt7921_roc_timer(struct timer_list *timer)
+ 
+ static int mt7921_abort_roc(struct mt7921_phy *phy, struct mt7921_vif *vif)
+ {
+-	int err;
+-
+-	if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
+-		return 0;
++	int err = 0;
+ 
+ 	del_timer_sync(&phy->roc_timer);
+ 	cancel_work_sync(&phy->roc_work);
+-	err = mt7921_mcu_abort_roc(phy, vif, phy->roc_token_id);
+-	clear_bit(MT76_STATE_ROC, &phy->mt76->state);
++
++	mt7921_mutex_acquire(phy->dev);
++	if (test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
++		err = mt7921_mcu_abort_roc(phy, vif, phy->roc_token_id);
++	mt7921_mutex_release(phy->dev);
+ 
+ 	return err;
+ }
+@@ -487,13 +487,8 @@ static int mt7921_cancel_remain_on_channel(struct ieee80211_hw *hw,
+ {
+ 	struct mt7921_vif *mvif = (struct mt7921_vif *)vif->drv_priv;
+ 	struct mt7921_phy *phy = mt7921_hw_phy(hw);
+-	int err;
+ 
+-	mt7921_mutex_acquire(phy->dev);
+-	err = mt7921_abort_roc(phy, mvif);
+-	mt7921_mutex_release(phy->dev);
+-
+-	return err;
++	return mt7921_abort_roc(phy, mvif);
  }
  
-+static int profile_open_perf_event(int mid, int cpu, int map_fd)
-+{
-+	int pmu_fd;
-+
-+	pmu_fd = syscall(__NR_perf_event_open, &metrics[mid].attr,
-+			 -1 /*pid*/, cpu, -1 /*group_fd*/, 0);
-+	if (pmu_fd < 0) {
-+		if (errno == ENODEV) {
-+			p_info("cpu %d may be offline, skip %s profiling.",
-+				cpu, metrics[mid].name);
-+			profile_perf_event_cnt++;
-+			return 0;
-+		}
-+		return -1;
-+	}
-+
-+	if (bpf_map_update_elem(map_fd,
-+				&profile_perf_event_cnt,
-+				&pmu_fd, BPF_ANY) ||
-+	    ioctl(pmu_fd, PERF_EVENT_IOC_ENABLE, 0)) {
-+		close(pmu_fd);
-+		return -1;
-+	}
-+
-+	profile_perf_events[profile_perf_event_cnt++] = pmu_fd;
-+	return 0;
-+}
-+
- static int profile_open_perf_events(struct profiler_bpf *obj)
+ static int mt7921_set_channel(struct mt7921_phy *phy)
+@@ -1778,11 +1773,8 @@ static void mt7921_mgd_complete_tx(struct ieee80211_hw *hw,
+ 				   struct ieee80211_prep_tx_info *info)
  {
- 	unsigned int cpu, m;
--	int map_fd, pmu_fd;
-+	int map_fd;
+ 	struct mt7921_vif *mvif = (struct mt7921_vif *)vif->drv_priv;
+-	struct mt7921_dev *dev = mt7921_hw_dev(hw);
  
- 	profile_perf_events = calloc(
- 		sizeof(int), obj->rodata->num_cpu * obj->rodata->num_metric);
-@@ -2255,17 +2283,11 @@ static int profile_open_perf_events(struct profiler_bpf *obj)
- 		if (!metrics[m].selected)
- 			continue;
- 		for (cpu = 0; cpu < obj->rodata->num_cpu; cpu++) {
--			pmu_fd = syscall(__NR_perf_event_open, &metrics[m].attr,
--					 -1/*pid*/, cpu, -1/*group_fd*/, 0);
--			if (pmu_fd < 0 ||
--			    bpf_map_update_elem(map_fd, &profile_perf_event_cnt,
--						&pmu_fd, BPF_ANY) ||
--			    ioctl(pmu_fd, PERF_EVENT_IOC_ENABLE, 0)) {
-+			if (profile_open_perf_event(m, cpu, map_fd)) {
- 				p_err("failed to create event %s on cpu %d",
- 				      metrics[m].name, cpu);
- 				return -1;
- 			}
--			profile_perf_events[profile_perf_event_cnt++] = pmu_fd;
- 		}
- 	}
- 	return 0;
+-	mt7921_mutex_acquire(dev);
+ 	mt7921_abort_roc(mvif->phy, mvif);
+-	mt7921_mutex_release(dev);
+ }
+ 
+ const struct ieee80211_ops mt7921_ops = {
 -- 
 2.39.2
 
