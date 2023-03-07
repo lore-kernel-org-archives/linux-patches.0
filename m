@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16097BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:48:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF9CC433D2;
-	Tue,  7 Mar 2023 17:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D01BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:48:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A75AC433D2;
+	Tue,  7 Mar 2023 17:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211323;
-	bh=/GcI8ztlGClBKf6nyfA6O8NvDYgvK54NcPnfofWr7L8=;
+	s=korg; t=1678211327;
+	bh=hauSpmDX0MEY7Ve/xrwRp/71H/1iWC8kc73YPbev0Hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ayCqkRJ1C0+SHyWznn7emzoO6R9SGbp4f7yZYmOGf/uzlbsled51CYJ5khIFKq4Gd
-	 nhlcFa6cHT+x1hriEn7h4Hv6tTgJowbfjvIZum63I0BJMDm78JTIsNyvfcro9SUxty
-	 1n5AE7E3uXjHoLFjoBAzndfApeeVKpIBsyHKxD/0=
+	b=N1UZLHjZTJhYKoIgFr6I0gSy9Xs0iN9BNZsiG8zI1A1unwsjmdbSvs+4EtIeb6e5x
+	 7Lo4V7rf54zmTM0HE2Sb/R4uMDl3JIpfHcMV09FhsxZg7DIDVBDvtNHyNPKAOpA5gJ
+	 hlvMaodmdPT3loIYcG4GonaUAEq1ERNiUx3h/g3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yugui <wangyugui@e16-tech.com>,
 	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Andy Wu <Andy.Wu@sony.com>,
-	Aoyama Wataru <wataru.aoyama@sony.com>,
 	Sungjong Seo <sj1557.seo@samsung.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.2 0794/1001] exfat: fix unexpected EOF while reading dir
-Date: Tue,  7 Mar 2023 17:59:26 +0100
-Message-Id: <20230307170056.205564092@linuxfoundation.org>
+Subject: [PATCH 6.2 0795/1001] exfat: redefine DIR_DELETED as the bad cluster number
+Date: Tue,  7 Mar 2023 17:59:27 +0100
+Message-Id: <20230307170056.247143167@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,49 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Sungjong Seo <sj1557.seo@samsung.com>
 
-commit 6cb5d1a16a51d080fbc1649a5144cbc5ca7d6f88 upstream.
+commit bdaadfd343e3cba49ad0b009ff4b148dad0fa404 upstream.
 
-If the position is not aligned with the dentry size, the return
-value of readdir() will be NULL and errno is 0, which means the
-end of the directory stream is reached.
+When a file or a directory is deleted, the hint for the cluster of
+its parent directory in its in-memory inode is set as DIR_DELETED.
+Therefore, DIR_DELETED must be one of invalid cluster numbers. According
+to the exFAT specification, a volume can have at most 2^32-11 clusters.
+However, DIR_DELETED is wrongly defined as 0xFFFF0321, which could be
+a valid cluster number. To fix it, let's redefine DIR_DELETED as
+0xFFFFFFF7, the bad cluster number.
 
-If the position is aligned with dentry size, but there is no file
-or directory at the position, exfat_readdir() will continue to
-get dentry from the next dentry. So the dentry gotten by readdir()
-may not be at the position.
-
-After this commit, if the position is not aligned with the dentry
-size, round the position up to the dentry size and continue to get
-the dentry.
-
-Fixes: ca06197382bd ("exfat: add directory operations")
+Fixes: 1acf1a564b60 ("exfat: add in-memory and on-disk structures and headers")
 Cc: stable@vger.kernel.org # v5.7+
-Reported-by: Wang Yugui <wangyugui@e16-tech.com>
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Andy Wu <Andy.Wu@sony.com>
-Reviewed-by: Aoyama Wataru <wataru.aoyama@sony.com>
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Reported-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/dir.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/exfat/exfat_fs.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/exfat/dir.c
-+++ b/fs/exfat/dir.c
-@@ -234,10 +234,7 @@ static int exfat_iterate(struct file *fi
- 		fake_offset = 1;
- 	}
+--- a/fs/exfat/exfat_fs.h
++++ b/fs/exfat/exfat_fs.h
+@@ -50,7 +50,7 @@ enum {
+ #define ES_IDX_LAST_FILENAME(name_len)	\
+ 	(ES_IDX_FIRST_FILENAME + EXFAT_FILENAME_ENTRY_NUM(name_len) - 1)
  
--	if (cpos & (DENTRY_SIZE - 1)) {
--		err = -ENOENT;
--		goto unlock;
--	}
-+	cpos = round_up(cpos, DENTRY_SIZE);
+-#define DIR_DELETED		0xFFFF0321
++#define DIR_DELETED		0xFFFFFFF7
  
- 	/* name buffer should be allocated before use */
- 	err = exfat_alloc_namebuf(nb);
+ /* type values */
+ #define TYPE_UNUSED		0x0000
 
 
