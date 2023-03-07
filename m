@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BF0BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB87C433EF;
-	Tue,  7 Mar 2023 17:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F784BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74CEDC433D2;
+	Tue,  7 Mar 2023 17:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209429;
-	bh=BIhkWpejoZ3l+rZwaG1tUWyCBcb8lBzrRwfwYwceka4=;
+	s=korg; t=1678209432;
+	bh=cIKITZ0rg0q81OMnAi3fSWo9WaDeyazQwtAE9jMT2U0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zEObMeA9I0w/6lMxpxr+fyn8zSZ6G/RT2DQZjG73V+vIZthhnPwZk7GSjOLXboMjB
-	 R/d1aLAXrPCywwzykV0GExR7Cpx3rUqX/sk2GcKHLK2JIPh8HLnUXP9Y8qgFKqHXIS
-	 6MCymq0tLoXk8HyMp5lpaLw/cD4ePiRcYIG641uI=
+	b=H4majqT+UXElN9eoIdYKQ+sTDmC6B89OciT4Y/jZ3/Z04bXb8oRlJNHb8dUrs3XlQ
+	 hHRqfZYuDrNZ+s2GyAhsEtFQUVLzhPCBxKVTHuiHQf1YoVhvgfpjgOljBhNjDaHN65
+	 5VDtsnQGm9/pAa89c4VEYWOxrD9T2Uu1NN2tmiiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0216/1001] crypto: seqiv - Handle EBUSY correctly
-Date: Tue,  7 Mar 2023 17:49:48 +0100
-Message-Id: <20230307170031.252408940@linuxfoundation.org>
+Subject: [PATCH 6.2 0190/1001] arm64/sysreg: Fix errors in 32 bit enumeration values
+Date: Tue,  7 Mar 2023 17:49:22 +0100
+Message-Id: <20230307170030.127423495@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,38 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 32e62025e5e52fbe4812ef044759de7010b15dbc ]
+[ Upstream commit 8c6e105558628b63292ae770198f11a1d5535660 ]
 
-As it is seqiv only handles the special return value of EINPROGERSS,
-which means that in all other cases it will free data related to the
-request.
+The recently converted 32 bit ID registers have errors in MVFR0_EL1.FPSP,
+MVFR0_EL1.SIMDReg and MVFR1_EL1.SIMDHP where enumeration values which
+should be 0b0010 are specified as 0b0001. Correct these.
 
-However, as the caller of seqiv may specify MAY_BACKLOG, we also need
-to expect EBUSY and treat it in the same way.  Otherwise backlogged
-requests will trigger a use-after-free.
-
-Fixes: 0a270321dbf9 ("[CRYPTO] seqiv: Add Sequence Number IV Generator")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: e79c94a2a487 ("arm64/sysreg: Convert MVFR0_EL1 to automatic generation")
+Fixes: c9b718eda706 ("arm64/sysreg: Convert MVFR1_EL1 to automatic generation")
+Reviewed-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20221207-arm64-sysreg-helpers-v3-2-0d71a7b174a8@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/seqiv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/tools/sysreg | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/crypto/seqiv.c b/crypto/seqiv.c
-index 0899d527c2845..b1bcfe537daf1 100644
---- a/crypto/seqiv.c
-+++ b/crypto/seqiv.c
-@@ -23,7 +23,7 @@ static void seqiv_aead_encrypt_complete2(struct aead_request *req, int err)
- 	struct aead_request *subreq = aead_request_ctx(req);
- 	struct crypto_aead *geniv;
+diff --git a/arch/arm64/tools/sysreg b/arch/arm64/tools/sysreg
+index 184e58fd5631a..e8fb6684d7f3c 100644
+--- a/arch/arm64/tools/sysreg
++++ b/arch/arm64/tools/sysreg
+@@ -689,17 +689,17 @@ EndEnum
+ Enum	11:8	FPDP
+ 	0b0000	NI
+ 	0b0001	VFPv2
+-	0b0001	VFPv3
++	0b0010	VFPv3
+ EndEnum
+ Enum	7:4	FPSP
+ 	0b0000	NI
+ 	0b0001	VFPv2
+-	0b0001	VFPv3
++	0b0010	VFPv3
+ EndEnum
+ Enum	3:0	SIMDReg
+ 	0b0000	NI
+ 	0b0001	IMP_16x64
+-	0b0001	IMP_32x64
++	0b0010	IMP_32x64
+ EndEnum
+ EndSysreg
  
--	if (err == -EINPROGRESS)
-+	if (err == -EINPROGRESS || err == -EBUSY)
- 		return;
- 
- 	if (err)
+@@ -718,7 +718,7 @@ EndEnum
+ Enum	23:20	SIMDHP
+ 	0b0000	NI
+ 	0b0001	SIMDHP
+-	0b0001	SIMDHP_FLOAT
++	0b0010	SIMDHP_FLOAT
+ EndEnum
+ Enum	19:16	SIMDSP
+ 	0b0000	NI
 -- 
 2.39.2
 
