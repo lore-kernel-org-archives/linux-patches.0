@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCE6BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:13:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F48C4339B;
-	Tue,  7 Mar 2023 18:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46308BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:13:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FABC433EF;
+	Tue,  7 Mar 2023 18:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212808;
-	bh=KwFGdCYbYuVH9Aynu4h8kWq0fsdAd4+m7iBkQDGVmLo=;
+	s=korg; t=1678212811;
+	bh=6+FfswvVs2gGDbAwqPIHDDREVeKGJFoUp7uWASgp2rM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QnPhoW+sU0l8oYatlf67wob/5OmfCAYXNe8bLjsQ1iKqlkKlggaqqEIoje+W3OMlZ
-	 F2ub3tn24nbC8pStMc+a3NE56/L40p1WnHlzPTk1+ayE/y5egZeani3/uJlBuSBb+A
-	 jWGz5mpnM5As70fZIN3UO8VVldi98i1Z7ju9VcpI=
+	b=f12qEd401KTFULnwJEziGBy3r+c1SJff9uHgYc8ydRtwW9CvtbzkThlDZfHxadSOh
+	 zwXMGwRS1V3Z5tJvU6MvO6ymcFGYuBW5aVeEvbQpmTb+w69XkF/UO90O7DSPCluiJC
+	 tHXPyR02K0J0mq0JtvFCrc2O4CTIZRxruBpc2+BA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 303/885] drm/bridge: lt9611: pass a pointer to the of node
-Date: Tue,  7 Mar 2023 17:53:57 +0100
-Message-Id: <20230307170015.256536658@linuxfoundation.org>
+Subject: [PATCH 6.1 277/885] drm/msm/hdmi: Add missing check for alloc_ordered_workqueue
+Date: Tue,  7 Mar 2023 17:53:31 +0100
+Message-Id: <20230307170014.039243267@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,35 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit b0a7f8736789935f62d6df32d441cdf05a5c05d2 ]
+[ Upstream commit afe4cb96153a0d8003e4e4ebd91b5c543e10df84 ]
 
-Pass a pointer to the OF node while registering lt9611 MIPI device.
+Add check for the return value of alloc_ordered_workqueue as it may return
+NULL pointer and cause NULL pointer dereference in `hdmi_hdcp.c` and
+`hdmi_hpd.c`.
 
-Fixes: 23278bf54afe ("drm/bridge: Introduce LT9611 DSI to HDMI bridge")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: c6a57a50ad56 ("drm/msm/hdmi: add hdmi hdcp support (V3)")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/517211/
+Link: https://lore.kernel.org/r/20230106023011.3985-1-jiasheng@iscas.ac.cn
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230118081658.2198520-7-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/hdmi/hdmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-index e2799a0df8f8b..3b77238ca4aff 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -769,7 +769,7 @@ static const struct drm_connector_funcs lt9611_bridge_connector_funcs = {
- static struct mipi_dsi_device *lt9611_attach_dsi(struct lt9611 *lt9611,
- 						 struct device_node *dsi_node)
- {
--	const struct mipi_dsi_device_info info = { "lt9611", 0, NULL };
-+	const struct mipi_dsi_device_info info = { "lt9611", 0, lt9611->dev->of_node};
- 	struct mipi_dsi_device *dsi;
- 	struct mipi_dsi_host *host;
- 	struct device *dev = lt9611->dev;
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+index 8cd5d50639a53..333cedc11f215 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+@@ -255,6 +255,10 @@ static struct hdmi *msm_hdmi_init(struct platform_device *pdev)
+ 	devm_pm_runtime_enable(&pdev->dev);
+ 
+ 	hdmi->workq = alloc_ordered_workqueue("msm_hdmi", 0);
++	if (!hdmi->workq) {
++		ret = -ENOMEM;
++		goto fail;
++	}
+ 
+ 	hdmi->i2c = msm_hdmi_i2c_init(hdmi);
+ 	if (IS_ERR(hdmi->i2c)) {
 -- 
 2.39.2
 
