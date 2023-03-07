@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E73BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:04:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1733C4339B;
-	Tue,  7 Mar 2023 18:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3715FBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:04:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFD6C433EF;
+	Tue,  7 Mar 2023 18:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212263;
-	bh=RjLut2ejJIbCFRA2lCvOTojkatcBxvS8gouBh9IDL6g=;
+	s=korg; t=1678212267;
+	bh=FLaoKP3mvUlsIyfzu8KuoroxST0CDW8UaBwZn1x7mjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VS9TbHfPa0OLyd4fTHSYFJVwBE/ewVRZz3WSqDhe2zRUh7ZR/l+f/Xrsc0S7sW9ZM
-	 x+WkgHsVNvQDLGaYvDerTmryXbjY6FFG3D9P9FZeTCYLevKWjWpSWLB4a8T/KiFNSU
-	 UtLs1unlqxn2C5nv/gP/3cpaIBFIKRG3hVTtY2xI=
+	b=bhOR2De1DBAh2SE9kXD/QATFeMh71nXSZZyYNLdOW6BPkVa493ITAnDF4mqWCQU10
+	 HzlX0MiYWCFGPdsN5WMmqROxVCWh2q2Ih07rOx4uoevt7yY//OruggHDCcchNhzxAL
+	 Z+B97ym0IS2znCVGy0snQbIn5OutLCXSrr7ui0SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	YN Chen <YN.Chen@mediatek.com>,
-	Deren Wu <deren.wu@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 112/885] wifi: mt76: mt7921s: fix slab-out-of-bounds access in sdio host
-Date: Tue,  7 Mar 2023 17:50:46 +0100
-Message-Id: <20230307170006.737359285@linuxfoundation.org>
+Subject: [PATCH 6.1 130/885] wifi: wilc1000: fix potential memory leak in wilc_mac_xmit()
+Date: Tue,  7 Mar 2023 17:51:04 +0100
+Message-Id: <20230307170007.492718542@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,95 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deren Wu <deren.wu@mediatek.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit aec4cf2ea0797e28f18f8dbe01943a56d987fe56 ]
+[ Upstream commit deb962ec9e1c9a81babd3d37542ad4bd6ac3396e ]
 
-SDIO may need addtional 511 bytes to align bus operation. If the tailroom
-of this skb is not big enough, we would access invalid memory region.
-For low level operation, increase skb size to keep valid memory access in
-SDIO host.
+The wilc_mac_xmit() returns NETDEV_TX_OK without freeing skb, add
+dev_kfree_skb() to fix it. Compile tested only.
 
-Error message:
-[69.951] BUG: KASAN: slab-out-of-bounds in sg_copy_buffer+0xe9/0x1a0
-[69.951] Read of size 64 at addr ffff88811c9cf000 by task kworker/u16:7/451
-[69.951] CPU: 4 PID: 451 Comm: kworker/u16:7 Tainted: G W  OE  6.1.0-rc5 #1
-[69.951] Workqueue: kvub300c vub300_cmndwork_thread [vub300]
-[69.951] Call Trace:
-[69.951]  <TASK>
-[69.952]  dump_stack_lvl+0x49/0x63
-[69.952]  print_report+0x171/0x4a8
-[69.952]  kasan_report+0xb4/0x130
-[69.952]  kasan_check_range+0x149/0x1e0
-[69.952]  memcpy+0x24/0x70
-[69.952]  sg_copy_buffer+0xe9/0x1a0
-[69.952]  sg_copy_to_buffer+0x12/0x20
-[69.952]  __command_write_data.isra.0+0x23c/0xbf0 [vub300]
-[69.952]  vub300_cmndwork_thread+0x17f3/0x58b0 [vub300]
-[69.952]  process_one_work+0x7ee/0x1320
-[69.952]  worker_thread+0x53c/0x1240
-[69.952]  kthread+0x2b8/0x370
-[69.952]  ret_from_fork+0x1f/0x30
-[69.952]  </TASK>
-
-[69.952] Allocated by task 854:
-[69.952]  kasan_save_stack+0x26/0x50
-[69.952]  kasan_set_track+0x25/0x30
-[69.952]  kasan_save_alloc_info+0x1b/0x30
-[69.952]  __kasan_kmalloc+0x87/0xa0
-[69.952]  __kmalloc_node_track_caller+0x63/0x150
-[69.952]  kmalloc_reserve+0x31/0xd0
-[69.952]  __alloc_skb+0xfc/0x2b0
-[69.952]  __mt76_mcu_msg_alloc+0xbf/0x230 [mt76]
-[69.952]  mt76_mcu_send_and_get_msg+0xab/0x110 [mt76]
-[69.952]  __mt76_mcu_send_firmware.cold+0x94/0x15d [mt76]
-[69.952]  mt76_connac_mcu_send_ram_firmware+0x415/0x54d [mt76_connac_lib]
-[69.952]  mt76_connac2_load_ram.cold+0x118/0x4bc [mt76_connac_lib]
-[69.952]  mt7921_run_firmware.cold+0x2e9/0x405 [mt7921_common]
-[69.952]  mt7921s_mcu_init+0x45/0x80 [mt7921s]
-[69.953]  mt7921_init_work+0xe1/0x2a0 [mt7921_common]
-[69.953]  process_one_work+0x7ee/0x1320
-[69.953]  worker_thread+0x53c/0x1240
-[69.953]  kthread+0x2b8/0x370
-[69.953]  ret_from_fork+0x1f/0x30
-[69.953] The buggy address belongs to the object at ffff88811c9ce800
-             which belongs to the cache kmalloc-2k of size 2048
-[69.953] The buggy address is located 0 bytes to the right of
-             2048-byte region [ffff88811c9ce800, ffff88811c9cf000)
-
-[69.953] Memory state around the buggy address:
-[69.953]  ffff88811c9cef00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[69.953]  ffff88811c9cef80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[69.953] >ffff88811c9cf000: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[69.953]                    ^
-[69.953]  ffff88811c9cf080: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[69.953]  ffff88811c9cf100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-
-Fixes: 764dee47e2c1 ("mt76: sdio: move common code in mt76_sdio module")
-Suggested-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Tested-by: YN Chen <YN.Chen@mediatek.com>
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: c5c77ba18ea6 ("staging: wilc1000: Add SDIO/SPI 802.11 driver")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/1668684964-48622-1-git-send-email-zhangchangzhong@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/sdio_txrx.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/microchip/wilc1000/netdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/sdio_txrx.c b/drivers/net/wireless/mediatek/mt76/sdio_txrx.c
-index bfc4de50a4d23..ddd8c0cc744df 100644
---- a/drivers/net/wireless/mediatek/mt76/sdio_txrx.c
-+++ b/drivers/net/wireless/mediatek/mt76/sdio_txrx.c
-@@ -254,6 +254,10 @@ static int mt76s_tx_run_queue(struct mt76_dev *dev, struct mt76_queue *q)
+diff --git a/drivers/net/wireless/microchip/wilc1000/netdev.c b/drivers/net/wireless/microchip/wilc1000/netdev.c
+index 9b319a455b96d..6f3ae0dff77ce 100644
+--- a/drivers/net/wireless/microchip/wilc1000/netdev.c
++++ b/drivers/net/wireless/microchip/wilc1000/netdev.c
+@@ -730,6 +730,7 @@ netdev_tx_t wilc_mac_xmit(struct sk_buff *skb, struct net_device *ndev)
  
- 		if (!test_bit(MT76_STATE_MCU_RUNNING, &dev->phy.state)) {
- 			__skb_put_zero(e->skb, 4);
-+			err = __skb_grow(e->skb, roundup(e->skb->len,
-+							 sdio->func->cur_blksize));
-+			if (err)
-+				return err;
- 			err = __mt76s_xmit_queue(dev, e->skb->data,
- 						 e->skb->len);
- 			if (err)
+ 	if (skb->dev != ndev) {
+ 		netdev_err(ndev, "Packet not destined to this device\n");
++		dev_kfree_skb(skb);
+ 		return NETDEV_TX_OK;
+ 	}
+ 
 -- 
 2.39.2
 
