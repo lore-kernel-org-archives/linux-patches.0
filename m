@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4671FBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:19:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D055C433EF;
-	Tue,  7 Mar 2023 18:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E669BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:19:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FD8C433D2;
+	Tue,  7 Mar 2023 18:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213153;
-	bh=UjSbeJDJAnMBq4dQKZ4o0LcO4wJFbQckHcVsdbcXxSA=;
+	s=korg; t=1678213156;
+	bh=QogSyyIYl4ZSdi1GmWLwyiJktddBbw3e4ji5R8TITVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M5ba1iBZE0pIh3iIN4g2lGSwYZn9H0jhT2vywDnyGquloB+9jzZ1mK+mtzNS12b4p
-	 utHr/j+VN5Y7givzmkuO9vRc7ksXQ95dHkdJwpu5NPs8kJsmwaGEK9/ZPHHDID8I0o
-	 rUdkJuA9RxgLc4NyUHYxDfsZL39gnXR66k4PmL6s=
+	b=RNE2simPPYQIL+wxzP756tdUr5mU9RkbA016MtO0cjDN1esVCsnSjpuZYhbUeJqo9
+	 J6Gw5EhsKS4Fbq6wMN+IPdD/B6NCI9R6DA7w+le8VaZ0gY/jxOkfSJahkVhUK/lfBX
+	 rKpDKVGPL+54oQV3rQJ6QAydxBHpe0Xj/L94VOX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 416/885] media: uvcvideo: Check for INACTIVE in uvc_ctrl_is_accessible()
-Date: Tue,  7 Mar 2023 17:55:50 +0100
-Message-Id: <20230307170020.489538109@linuxfoundation.org>
+Subject: [PATCH 6.1 417/885] media: uvcvideo: Implement mask for V4L2_CTRL_TYPE_MENU
+Date: Tue,  7 Mar 2023 17:55:51 +0100
+Message-Id: <20230307170020.542219084@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,146 +35,186 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 9f582f0418ed1c18f92c9e4628075d6ec9a7d9fb ]
+[ Upstream commit 40140eda661ea4be219ef194a4f43b7b5e3bbd27 ]
 
-Check for inactive controls in uvc_ctrl_is_accessible().
+Replace the count with a mask field that lets us choose not only the max
+value, but also the minimum value and what values are valid in between.
 
-Use the new value for the master_id controls if present, otherwise
-use the existing value to determine if it is OK to set the control.
-Doing this here avoids attempting to set an inactive control, which
-will return an error from the USB device, which returns an invalid
-errorcode.
-
-This fixes:
-  warn: v4l2-test-controls.cpp(483): s_ctrl returned EIO
-  warn: v4l2-test-controls.cpp(483): s_ctrl returned EIO
-test VIDIOC_G/S_CTRL: OK
-  warn: v4l2-test-controls.cpp(739): s_ext_ctrls returned EIO
-  warn: v4l2-test-controls.cpp(739): s_ext_ctrls returned EIO
-  warn: v4l2-test-controls.cpp(816): s_ext_ctrls returned EIO
-test VIDIOC_G/S/TRY_EXT_CTRLS: OK
-
-Tested with:
-v4l2-ctl -c auto_exposure=1
-OK
-v4l2-ctl -c exposure_time_absolute=251
-OK
-v4l2-ctl -c auto_exposure=3
-OK
-v4l2-ctl -c exposure_time_absolute=251
-VIDIOC_S_EXT_CTRLS: failed: Input/output error
-exposure_time_absolute: Input/output error
-ERROR
-v4l2-ctl -c auto_exposure=3,exposure_time_absolute=251,auto_exposure=1
-v4l2-ctl -C auto_exposure,exposure_time_absolute  
-auto_exposure: 1
-exposure_time_absolute: 251
-
+Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Stable-dep-of: 3aa8628eb78a ("media: uvcvideo: Refactor power_line_frequency_controls_limited")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 42 +++++++++++++++++++++++++++++++-
- drivers/media/usb/uvc/uvc_v4l2.c |  3 +--
- drivers/media/usb/uvc/uvcvideo.h |  3 ++-
- 3 files changed, 44 insertions(+), 4 deletions(-)
+ drivers/media/usb/uvc/uvc_ctrl.c   | 33 +++++++++++++++++++++---------
+ drivers/media/usb/uvc/uvc_driver.c |  4 +++-
+ drivers/media/usb/uvc/uvc_v4l2.c   |  3 ++-
+ drivers/media/usb/uvc/uvcvideo.h   |  2 +-
+ 4 files changed, 29 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index c95a2229f4fa9..6f5aaaf09ee01 100644
+index 6f5aaaf09ee01..32c182987d52c 100644
 --- a/drivers/media/usb/uvc/uvc_ctrl.c
 +++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1085,11 +1085,28 @@ static int uvc_query_v4l2_class(struct uvc_video_chain *chain, u32 req_id,
- 	return 0;
- }
+@@ -6,6 +6,7 @@
+  *          Laurent Pinchart (laurent.pinchart@ideasonboard.com)
+  */
  
-+/*
-+ * Check if control @v4l2_id can be accessed by the given control @ioctl
-+ * (VIDIOC_G_EXT_CTRLS, VIDIOC_TRY_EXT_CTRLS or VIDIOC_S_EXT_CTRLS).
-+ *
-+ * For set operations on slave controls, check if the master's value is set to
-+ * manual, either in the others controls set in the same ioctl call, or from
-+ * the master's current value. This catches VIDIOC_S_EXT_CTRLS calls that set
-+ * both the master and slave control, such as for instance setting
-+ * auto_exposure=1, exposure_time_absolute=251.
-+ */
- int uvc_ctrl_is_accessible(struct uvc_video_chain *chain, u32 v4l2_id,
--			   bool read)
-+			   const struct v4l2_ext_controls *ctrls,
-+			   unsigned long ioctl)
- {
-+	struct uvc_control_mapping *master_map = NULL;
-+	struct uvc_control *master_ctrl = NULL;
- 	struct uvc_control_mapping *mapping;
- 	struct uvc_control *ctrl;
-+	bool read = ioctl == VIDIOC_G_EXT_CTRLS;
-+	s32 val;
-+	int ret;
-+	int i;
++#include <linux/bitops.h>
+ #include <linux/kernel.h>
+ #include <linux/list.h>
+ #include <linux/module.h>
+@@ -525,7 +526,8 @@ static const struct uvc_control_mapping uvc_ctrl_mappings[] = {
+ 		.v4l2_type	= V4L2_CTRL_TYPE_MENU,
+ 		.data_type	= UVC_CTRL_DATA_TYPE_BITMASK,
+ 		.menu_info	= exposure_auto_controls,
+-		.menu_count	= ARRAY_SIZE(exposure_auto_controls),
++		.menu_mask	= GENMASK(V4L2_EXPOSURE_APERTURE_PRIORITY,
++					  V4L2_EXPOSURE_AUTO),
+ 		.slave_ids	= { V4L2_CID_EXPOSURE_ABSOLUTE, },
+ 	},
+ 	{
+@@ -731,7 +733,8 @@ static const struct uvc_control_mapping uvc_ctrl_mappings_uvc11[] = {
+ 		.v4l2_type	= V4L2_CTRL_TYPE_MENU,
+ 		.data_type	= UVC_CTRL_DATA_TYPE_ENUM,
+ 		.menu_info	= power_line_frequency_controls,
+-		.menu_count	= ARRAY_SIZE(power_line_frequency_controls) - 1,
++		.menu_mask	= GENMASK(V4L2_CID_POWER_LINE_FREQUENCY_60HZ,
++					  V4L2_CID_POWER_LINE_FREQUENCY_DISABLED),
+ 	},
+ };
  
- 	if (__uvc_query_v4l2_class(chain, v4l2_id, 0) >= 0)
- 		return -EACCES;
-@@ -1104,6 +1121,29 @@ int uvc_ctrl_is_accessible(struct uvc_video_chain *chain, u32 v4l2_id,
- 	if (!(ctrl->info.flags & UVC_CTRL_FLAG_SET_CUR) && !read)
- 		return -EACCES;
+@@ -745,7 +748,8 @@ static const struct uvc_control_mapping uvc_ctrl_mappings_uvc15[] = {
+ 		.v4l2_type	= V4L2_CTRL_TYPE_MENU,
+ 		.data_type	= UVC_CTRL_DATA_TYPE_ENUM,
+ 		.menu_info	= power_line_frequency_controls,
+-		.menu_count	= ARRAY_SIZE(power_line_frequency_controls),
++		.menu_mask	= GENMASK(V4L2_CID_POWER_LINE_FREQUENCY_AUTO,
++					  V4L2_CID_POWER_LINE_FREQUENCY_DISABLED),
+ 	},
+ };
  
-+	if (ioctl != VIDIOC_S_EXT_CTRLS || !mapping->master_id)
-+		return 0;
-+
-+	/*
-+	 * Iterate backwards in cases where the master control is accessed
-+	 * multiple times in the same ioctl. We want the last value.
-+	 */
-+	for (i = ctrls->count - 1; i >= 0; i--) {
-+		if (ctrls->controls[i].id == mapping->master_id)
-+			return ctrls->controls[i].value ==
-+					mapping->master_manual ? 0 : -EACCES;
-+	}
-+
-+	__uvc_find_control(ctrl->entity, mapping->master_id, &master_map,
-+			   &master_ctrl, 0);
-+
-+	if (!master_ctrl || !(master_ctrl->info.flags & UVC_CTRL_FLAG_GET_CUR))
-+		return 0;
-+
-+	ret = __uvc_ctrl_get(chain, master_ctrl, master_map, &val);
-+	if (ret >= 0 && val != mapping->master_manual)
-+		return -EACCES;
-+
- 	return 0;
- }
+@@ -975,7 +979,9 @@ static s32 __uvc_ctrl_get_value(struct uvc_control_mapping *mapping,
+ 		const struct uvc_menu_info *menu = mapping->menu_info;
+ 		unsigned int i;
  
+-		for (i = 0; i < mapping->menu_count; ++i, ++menu) {
++		for (i = 0; BIT(i) <= mapping->menu_mask; ++i, ++menu) {
++			if (!test_bit(i, &mapping->menu_mask))
++				continue;
+ 			if (menu->value == value) {
+ 				value = i;
+ 				break;
+@@ -1209,12 +1215,14 @@ static int __uvc_query_v4l2_ctrl(struct uvc_video_chain *chain,
+ 
+ 	switch (mapping->v4l2_type) {
+ 	case V4L2_CTRL_TYPE_MENU:
+-		v4l2_ctrl->minimum = 0;
+-		v4l2_ctrl->maximum = mapping->menu_count - 1;
++		v4l2_ctrl->minimum = ffs(mapping->menu_mask) - 1;
++		v4l2_ctrl->maximum = fls(mapping->menu_mask) - 1;
+ 		v4l2_ctrl->step = 1;
+ 
+ 		menu = mapping->menu_info;
+-		for (i = 0; i < mapping->menu_count; ++i, ++menu) {
++		for (i = 0; BIT(i) <= mapping->menu_mask; ++i, ++menu) {
++			if (!test_bit(i, &mapping->menu_mask))
++				continue;
+ 			if (menu->value == v4l2_ctrl->default_value) {
+ 				v4l2_ctrl->default_value = i;
+ 				break;
+@@ -1329,7 +1337,7 @@ int uvc_query_v4l2_menu(struct uvc_video_chain *chain,
+ 		goto done;
+ 	}
+ 
+-	if (query_menu->index >= mapping->menu_count) {
++	if (!test_bit(query_menu->index, &mapping->menu_mask)) {
+ 		ret = -EINVAL;
+ 		goto done;
+ 	}
+@@ -1837,8 +1845,13 @@ int uvc_ctrl_set(struct uvc_fh *handle,
+ 		break;
+ 
+ 	case V4L2_CTRL_TYPE_MENU:
+-		if (xctrl->value < 0 || xctrl->value >= mapping->menu_count)
++		if (xctrl->value < (ffs(mapping->menu_mask) - 1) ||
++		    xctrl->value > (fls(mapping->menu_mask) - 1))
+ 			return -ERANGE;
++
++		if (!test_bit(xctrl->value, &mapping->menu_mask))
++			return -EINVAL;
++
+ 		value = mapping->menu_info[xctrl->value].value;
+ 
+ 		/*
+@@ -2277,7 +2290,7 @@ static int __uvc_ctrl_add_mapping(struct uvc_video_chain *chain,
+ 
+ 	INIT_LIST_HEAD(&map->ev_subs);
+ 
+-	size = sizeof(*mapping->menu_info) * mapping->menu_count;
++	size = sizeof(*mapping->menu_info) * fls(mapping->menu_mask);
+ 	map->menu_info = kmemdup(mapping->menu_info, size, GFP_KERNEL);
+ 	if (map->menu_info == NULL) {
+ 		kfree(map->name);
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index 215fb483efb00..d6dcd78b434ac 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -7,6 +7,7 @@
+  */
+ 
+ #include <linux/atomic.h>
++#include <linux/bits.h>
+ #include <linux/gpio/consumer.h>
+ #include <linux/kernel.h>
+ #include <linux/list.h>
+@@ -2387,7 +2388,8 @@ static const struct uvc_control_mapping uvc_ctrl_power_line_mapping_limited = {
+ 	.v4l2_type	= V4L2_CTRL_TYPE_MENU,
+ 	.data_type	= UVC_CTRL_DATA_TYPE_ENUM,
+ 	.menu_info	= power_line_frequency_controls_limited,
+-	.menu_count	= ARRAY_SIZE(power_line_frequency_controls_limited),
++	.menu_mask	=
++		GENMASK(ARRAY_SIZE(power_line_frequency_controls_limited) - 1, 0),
+ };
+ 
+ static const struct uvc_device_info uvc_ctrl_power_line_limited = {
 diff --git a/drivers/media/usb/uvc/uvc_v4l2.c b/drivers/media/usb/uvc/uvc_v4l2.c
-index f4d4c33b6dfbd..3edb54c086b24 100644
+index 3edb54c086b24..0774a11360c03 100644
 --- a/drivers/media/usb/uvc/uvc_v4l2.c
 +++ b/drivers/media/usb/uvc/uvc_v4l2.c
-@@ -1020,8 +1020,7 @@ static int uvc_ctrl_check_access(struct uvc_video_chain *chain,
- 	int ret = 0;
+@@ -6,6 +6,7 @@
+  *          Laurent Pinchart (laurent.pinchart@ideasonboard.com)
+  */
  
- 	for (i = 0; i < ctrls->count; ++ctrl, ++i) {
--		ret = uvc_ctrl_is_accessible(chain, ctrl->id,
--					    ioctl == VIDIOC_G_EXT_CTRLS);
-+		ret = uvc_ctrl_is_accessible(chain, ctrl->id, ctrls, ioctl);
- 		if (ret)
- 			break;
- 	}
++#include <linux/bits.h>
+ #include <linux/compat.h>
+ #include <linux/kernel.h>
+ #include <linux/list.h>
+@@ -80,7 +81,7 @@ static int uvc_ioctl_ctrl_map(struct uvc_video_chain *chain,
+ 			goto free_map;
+ 		}
+ 
+-		map->menu_count = xmap->menu_count;
++		map->menu_mask = GENMASK(xmap->menu_count - 1, 0);
+ 		break;
+ 
+ 	default:
 diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index df93db259312e..a151f583cd156 100644
+index a151f583cd156..f75e5864bbf72 100644
 --- a/drivers/media/usb/uvc/uvcvideo.h
 +++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -761,7 +761,8 @@ static inline int uvc_ctrl_rollback(struct uvc_fh *handle)
- int uvc_ctrl_get(struct uvc_video_chain *chain, struct v4l2_ext_control *xctrl);
- int uvc_ctrl_set(struct uvc_fh *handle, struct v4l2_ext_control *xctrl);
- int uvc_ctrl_is_accessible(struct uvc_video_chain *chain, u32 v4l2_id,
--			   bool read);
-+			   const struct v4l2_ext_controls *ctrls,
-+			   unsigned long ioctl);
+@@ -117,7 +117,7 @@ struct uvc_control_mapping {
+ 	u32 data_type;
  
- int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
- 		      struct uvc_xu_control_query *xqry);
+ 	const struct uvc_menu_info *menu_info;
+-	u32 menu_count;
++	unsigned long menu_mask;
+ 
+ 	u32 master_id;
+ 	s32 master_manual;
 -- 
 2.39.2
 
