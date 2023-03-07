@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D1CBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:21:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28501C433D2;
-	Tue,  7 Mar 2023 18:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9597BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:21:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 336DCC433EF;
+	Tue,  7 Mar 2023 18:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213291;
-	bh=u36mYcw1f4GnayqJFF+k3Zx4K3R6//a/CI16mtdXDDo=;
+	s=korg; t=1678213294;
+	bh=deTLRwHs5/nt4/Mtbjl9vUvWGMm5yM6a6rAIw1u2KJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o4MXZV4nz78xf7Q0PPezsX+OtvFaTgLqzxTQhChIcrVuemjnE7RF06XhIz/qcNLvb
-	 kZJggMg777Xu86b4n/6vdvcedJ1NtLzxeUhom9F2Q9DdHddvs0kQUVJ24gDv+j21o8
-	 D4tLWqZ8wB92JLFQYw7ilLZpeandMtnE87GnObZw=
+	b=s0LOb8RXHsvRr5DdEzC1ICffF8PxXI+qXK0P9ZE3W9o0DfmHsezajrZSdqbnGxQ1a
+	 C32uXGrh3AWmiSt2Xt7QDWh+byrxwywRnsJj9UdsyIFXlry3/VuMal9zuzZth8sNTO
+	 q4ybtFm9jxFXu0oCZWKUw74BNJCK0sHs+bY0V6Ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Peter <sven@svenpeter.dev>,
-	Eric Curtin <ecurtin@redhat.com>,
+	Ashok Raj <ashok.raj@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 460/885] iommu/dart: Fix apple_dart_device_group for PCI groups
-Date: Tue,  7 Mar 2023 17:56:34 +0100
-Message-Id: <20230307170022.486331968@linuxfoundation.org>
+Subject: [PATCH 6.1 461/885] iommu/vt-d: Set No Execute Enable bit in PASID table entry
+Date: Tue,  7 Mar 2023 17:56:35 +0100
+Message-Id: <20230307170022.529226166@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,98 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Peter <sven@svenpeter.dev>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit cf5c1c87c2391649e05e58ecc6dfc3dc5ebebc05 ]
+[ Upstream commit e06d24435596c8afcaa81c0c498f5b0ec4ee2b7c ]
 
-pci_device_group() can return an already existing IOMMU group if the PCI
-device's pagetables have to be shared with another one due to bus
-toplogy, isolation features and/or DMA alias quirks.
-apple_dart_device_group() however assumes that the group has just been
-created and overwrites its iommudata which will eventually lead to
-apple_dart_release_group leaving stale entries in sid2group.
-Fix that by merging the iommudata if the returned group already exists.
+Setup No Execute Enable bit (Bit 133) of a scalable mode PASID entry.
+This is to allow the use of XD bit of the first level page table.
 
-Fixes: f0b636804c7c ("iommu/dart: Clear sid2group entry when a group is freed")
-Signed-off-by: Sven Peter <sven@svenpeter.dev>
-Reviewed-by: Eric Curtin <ecurtin@redhat.com>
-Link: https://lore.kernel.org/r/20230128113532.94651-1-sven@svenpeter.dev
+Fixes: ddf09b6d43ec ("iommu/vt-d: Setup pasid entries for iova over first level")
+Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20230126095438.354205-1-baolu.lu@linux.intel.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/apple-dart.c | 51 ++++++++++++++++++++++++++++++++------
- 1 file changed, 44 insertions(+), 7 deletions(-)
+ drivers/iommu/intel/pasid.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/iommu/apple-dart.c b/drivers/iommu/apple-dart.c
-index 80e4436ee4de7..06ca73bddb5a5 100644
---- a/drivers/iommu/apple-dart.c
-+++ b/drivers/iommu/apple-dart.c
-@@ -689,6 +689,29 @@ static void apple_dart_release_group(void *iommu_data)
- 	mutex_unlock(&apple_dart_groups_lock);
+diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
+index e13d7e5273e19..13a5a4e05fe9a 100644
+--- a/drivers/iommu/intel/pasid.c
++++ b/drivers/iommu/intel/pasid.c
+@@ -362,6 +362,16 @@ static inline void pasid_set_page_snoop(struct pasid_entry *pe, bool value)
+ 	pasid_set_bits(&pe->val[1], 1 << 23, value << 23);
  }
  
-+static int apple_dart_merge_master_cfg(struct apple_dart_master_cfg *dst,
-+				       struct apple_dart_master_cfg *src)
++/*
++ * Setup No Execute Enable bit (Bit 133) of a scalable mode PASID
++ * entry. It is required when XD bit of the first level page table
++ * entry is about to be set.
++ */
++static inline void pasid_set_nxe(struct pasid_entry *pe)
 +{
-+	/*
-+	 * We know that this function is only called for groups returned from
-+	 * pci_device_group and that all Apple Silicon platforms never spread
-+	 * PCIe devices from the same bus across multiple DARTs such that we can
-+	 * just assume that both src and dst only have the same single DART.
-+	 */
-+	if (src->stream_maps[1].dart)
-+		return -EINVAL;
-+	if (dst->stream_maps[1].dart)
-+		return -EINVAL;
-+	if (src->stream_maps[0].dart != dst->stream_maps[0].dart)
-+		return -EINVAL;
-+
-+	bitmap_or(dst->stream_maps[0].sidmap,
-+		  dst->stream_maps[0].sidmap,
-+		  src->stream_maps[0].sidmap,
-+		  dst->stream_maps[0].dart->num_streams);
-+	return 0;
++	pasid_set_bits(&pe->val[2], 1 << 5, 1 << 5);
 +}
 +
- static struct iommu_group *apple_dart_device_group(struct device *dev)
- {
- 	int i, sid;
-@@ -730,14 +753,28 @@ static struct iommu_group *apple_dart_device_group(struct device *dev)
- 	if (!group)
- 		goto out;
+ /*
+  * Setup the Page Snoop (PGSNP) field (Bit 88) of a scalable mode
+  * PASID entry.
+@@ -555,6 +565,7 @@ int intel_pasid_setup_first_level(struct intel_iommu *iommu,
+ 	pasid_set_domain_id(pte, did);
+ 	pasid_set_address_width(pte, iommu->agaw);
+ 	pasid_set_page_snoop(pte, !!ecap_smpwc(iommu->ecap));
++	pasid_set_nxe(pte);
  
--	group_master_cfg = kmemdup(cfg, sizeof(*group_master_cfg), GFP_KERNEL);
--	if (!group_master_cfg) {
--		iommu_group_put(group);
--		goto out;
--	}
-+	group_master_cfg = iommu_group_get_iommudata(group);
-+	if (group_master_cfg) {
-+		int ret;
- 
--	iommu_group_set_iommudata(group, group_master_cfg,
--		apple_dart_release_group);
-+		ret = apple_dart_merge_master_cfg(group_master_cfg, cfg);
-+		if (ret) {
-+			dev_err(dev, "Failed to merge DART IOMMU grups.\n");
-+			iommu_group_put(group);
-+			res = ERR_PTR(ret);
-+			goto out;
-+		}
-+	} else {
-+		group_master_cfg = kmemdup(cfg, sizeof(*group_master_cfg),
-+					   GFP_KERNEL);
-+		if (!group_master_cfg) {
-+			iommu_group_put(group);
-+			goto out;
-+		}
-+
-+		iommu_group_set_iommudata(group, group_master_cfg,
-+			apple_dart_release_group);
-+	}
- 
- 	for_each_stream_map(i, cfg, stream_map)
- 		for_each_set_bit(sid, stream_map->sidmap, stream_map->dart->num_streams)
+ 	/* Setup Present and PASID Granular Transfer Type: */
+ 	pasid_set_translation_type(pte, PASID_ENTRY_PGTT_FL_ONLY);
 -- 
 2.39.2
 
