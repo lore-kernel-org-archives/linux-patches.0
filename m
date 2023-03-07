@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11988BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A408C4339B;
-	Tue,  7 Mar 2023 18:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4255EBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95270C4339B;
+	Tue,  7 Mar 2023 18:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214879;
-	bh=pwznk9DKR30fbg46c7FPCaPKrTbXZEOcPEqs9gftHpk=;
+	s=korg; t=1678214883;
+	bh=qzdMr4xBW/suCFA5m+op5SswmK1Mp4IkmsKpAa2DTbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7IcYLlNjfDFtGiKiZmUamNM+mdBmPYAYIQ7RgLRFTOI4hgznLJaf24sdDNJa/YQT
-	 wODfPTGsVgzKc0MNRSmqXbasDVKNFlRgp73ayXz7cKZif809HDQigCkWiliaYw3Bet
-	 5xBuV+LEh4XkSXQTelv6VYZf1x5CagmWjtCsP6qY=
+	b=JBLWArQ9IckxaKYqZHvCpnSBHrecEe/9Gl0bME4dsF3Mrx7OdRRrkQ4FWlNbCn5A7
+	 Gn7oezScX89YzUSirGO5M9WPu0OiyZv1ww/41jo0CmbpHnqXs7EdWrN3p+8qKiy8ia
+	 Vg+nyYlXZOCdYqUXW+QrObm9a9QGapVjxIV789Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/567] wifi: brcmfmac: unmap dma buffer in brcmf_msgbuf_alloc_pktid()
-Date: Tue,  7 Mar 2023 17:56:55 +0100
-Message-Id: <20230307165909.309537500@linuxfoundation.org>
+Subject: [PATCH 5.15 080/567] wifi: libertas_tf: dont call kfree_skb() under spin_lock_irqsave()
+Date: Tue,  7 Mar 2023 17:56:56 +0100
+Message-Id: <20230307165909.348932307@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,44 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit b9f420032f2ba1e634b22ca7b433e5c40ea663af ]
+[ Upstream commit 9388ce97b98216833c969191ee6df61a7201d797 ]
 
-After the DMA buffer is mapped to a physical address, address is stored
-in pktids in brcmf_msgbuf_alloc_pktid(). Then, pktids is parsed in
-brcmf_msgbuf_get_pktid()/brcmf_msgbuf_release_array() to obtain physaddr
-and later unmap the DMA buffer. But when count is always equal to
-pktids->array_size, physaddr isn't stored in pktids and the DMA buffer
-will not be unmapped anyway.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave(). Compile
+tested only.
 
-Fixes: 9a1bb60250d2 ("brcmfmac: Adding msgbuf protocol.")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Fixes: fc75122fabb5 ("libertas_tf: use irqsave() in USB's complete callback")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221207013114.1748936-1-shaozhengchao@huawei.com
+Link: https://lore.kernel.org/r/20221207150008.111743-2-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/marvell/libertas_tf/if_usb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-index 7c8e08ee8f0ff..bd3b234b78038 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-@@ -346,8 +346,11 @@ brcmf_msgbuf_alloc_pktid(struct device *dev,
- 		count++;
- 	} while (count < pktids->array_size);
- 
--	if (count == pktids->array_size)
-+	if (count == pktids->array_size) {
-+		dma_unmap_single(dev, *physaddr, skb->len - data_offset,
-+				 pktids->direction);
- 		return -ENOMEM;
-+	}
- 
- 	array[*idx].data_offset = data_offset;
- 	array[*idx].physaddr = *physaddr;
+diff --git a/drivers/net/wireless/marvell/libertas_tf/if_usb.c b/drivers/net/wireless/marvell/libertas_tf/if_usb.c
+index 75b5319d033f3..1750f5e93de21 100644
+--- a/drivers/net/wireless/marvell/libertas_tf/if_usb.c
++++ b/drivers/net/wireless/marvell/libertas_tf/if_usb.c
+@@ -613,7 +613,7 @@ static inline void process_cmdrequest(int recvlength, uint8_t *recvbuff,
+ 	spin_lock_irqsave(&priv->driver_lock, flags);
+ 	memcpy(priv->cmd_resp_buff, recvbuff + MESSAGE_HEADER_LEN,
+ 	       recvlength - MESSAGE_HEADER_LEN);
+-	kfree_skb(skb);
++	dev_kfree_skb_irq(skb);
+ 	lbtf_cmd_response_rx(priv);
+ 	spin_unlock_irqrestore(&priv->driver_lock, flags);
+ }
 -- 
 2.39.2
 
