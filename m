@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37B0BA4C
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:00:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C60C433EF;
-	Tue,  7 Mar 2023 19:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7E5BA4C
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:01:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA59C433EF;
+	Tue,  7 Mar 2023 19:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215658;
-	bh=onVm3xFumLM2yGt4WSQ4p84IkZi2wcbDHfrOK3XGPCQ=;
+	s=korg; t=1678215661;
+	bh=Oj9JntBQWOhAYET4xyBqJrN3dmq8msvR8XKDcoS3vcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zsEWcVPQQYgah3v2G6Xb0AtGRX9JAxa1qoRDD14NHVKRRBQcBuAGkmQiTjGwXfMa+
-	 dsNPvRyF3oL4t3Lt8TebOJfnE9P7AmGUdSfX9SGezFnQJMxCOJWUjU4HVsSS0ybtKZ
-	 6tjYmEFH0IvjHsY1oThpt7NcMkmBO7mZY5uTl/gM=
+	b=Wh17R+D+YHEhApvYTdx6Dc4n5guv+UsmQfXrOWSdropZG5dFI7jH9rHhgVcgxR08V
+	 ieqnUMa2uuFgYcu1NNniUYk3arXoUHVAPgRKsM3j66vIP3ItXllnDz8yJE9E6OStrv
+	 hUMq0zpOquhC0Ton1LzY9UiRWzTXava8lrNYZknY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Jinlong Mao <quic_jinlmao@quicinc.com>,
+	James Clark <james.clark@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 300/567] tty: serial: qcom-geni-serial: stop operations in progress at shutdown
-Date: Tue,  7 Mar 2023 18:00:36 +0100
-Message-Id: <20230307165918.863769089@linuxfoundation.org>
+Subject: [PATCH 5.15 291/567] coresight: cti: Prevent negative values of enable count
+Date: Tue,  7 Mar 2023 18:00:27 +0100
+Message-Id: <20230307165918.512833862@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,37 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: James Clark <james.clark@arm.com>
 
-[ Upstream commit d8aca2f96813d51df574a811eda9a2cbed00f261 ]
+[ Upstream commit 3244fb6dbbf1ffc114cdf382cc167bdd8c18088a ]
 
-We don't stop transmissions in progress at shutdown. This is fine with
-FIFO SE mode but with DMA (support for which we'll introduce later) it
-causes trouble so fix it now.
+Writing 0 to the enable control repeatedly results in a negative value
+for enable_req_count. After this, writing 1 to the enable control
+appears to not work until the count returns to positive.
 
-Fixes: e83766334f96 ("tty: serial: qcom_geni_serial: No need to stop tx/rx on UART shutdown")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20221229155030.418800-2-brgl@bgdev.pl
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Change it so that it's impossible for enable_req_count to be < 0.
+Return an error to indicate that the disable request was invalid.
+
+Fixes: 835d722ba10a ("coresight: cti: Initial CoreSight CTI Driver")
+Tested-by: Jinlong Mao <quic_jinlmao@quicinc.com>
+Signed-off-by: James Clark <james.clark@arm.com>
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20230110110736.2709917-2-james.clark@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwtracing/coresight/coresight-cti-core.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index ce1c81731a2a8..e5ca3c3c27d21 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -893,6 +893,8 @@ static int setup_fifos(struct qcom_geni_serial_port *port)
- static void qcom_geni_serial_shutdown(struct uart_port *uport)
+diff --git a/drivers/hwtracing/coresight/coresight-cti-core.c b/drivers/hwtracing/coresight/coresight-cti-core.c
+index dcd607a0c41a1..932e17f00c0ba 100644
+--- a/drivers/hwtracing/coresight/coresight-cti-core.c
++++ b/drivers/hwtracing/coresight/coresight-cti-core.c
+@@ -151,9 +151,16 @@ static int cti_disable_hw(struct cti_drvdata *drvdata)
  {
- 	disable_irq(uport->irq);
-+	qcom_geni_serial_stop_tx(uport);
-+	qcom_geni_serial_stop_rx(uport);
+ 	struct cti_config *config = &drvdata->config;
+ 	struct coresight_device *csdev = drvdata->csdev;
++	int ret = 0;
+ 
+ 	spin_lock(&drvdata->spinlock);
+ 
++	/* don't allow negative refcounts, return an error */
++	if (!atomic_read(&drvdata->config.enable_req_count)) {
++		ret = -EINVAL;
++		goto cti_not_disabled;
++	}
++
+ 	/* check refcount - disable on 0 */
+ 	if (atomic_dec_return(&drvdata->config.enable_req_count) > 0)
+ 		goto cti_not_disabled;
+@@ -171,12 +178,12 @@ static int cti_disable_hw(struct cti_drvdata *drvdata)
+ 	coresight_disclaim_device_unlocked(csdev);
+ 	CS_LOCK(drvdata->base);
+ 	spin_unlock(&drvdata->spinlock);
+-	return 0;
++	return ret;
+ 
+ 	/* not disabled this call */
+ cti_not_disabled:
+ 	spin_unlock(&drvdata->spinlock);
+-	return 0;
++	return ret;
  }
  
- static int qcom_geni_serial_port_setup(struct uart_port *uport)
+ void cti_write_single_reg(struct cti_drvdata *drvdata, int offset, u32 value)
 -- 
 2.39.2
 
