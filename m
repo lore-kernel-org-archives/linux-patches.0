@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8092ABA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:24:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F42C433D2;
-	Tue,  7 Mar 2023 17:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FBDBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:24:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAFBAC433EF;
+	Tue,  7 Mar 2023 17:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209862;
-	bh=E7yBh4ctQ5zPhY8bcEUTSa3qZdFq+2o5olOGV8jJx1c=;
+	s=korg; t=1678209865;
+	bh=Rs/DUMvyIUb3iNsxBuRf5rr+fHp2X4QsbIWzvdXZ4AI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rZ7T7gouww/Ym8D7O00oRHAJcIYtkDO1XYfdlkcNzaTvFl2gcFPXZh1cQ+OTk3si7
-	 fYpUDntC2FKOSi4c+LH3mv+ElP/Kc/IoRjk50ZWrGTMhN3UPXUh/lyLLWL9/8Wu1j+
-	 KgDcbTtMM3HPctiPqQhU76xJAUJjTCBSHE+e1hRs=
+	b=NNB9Uvq9aEq18wKceH4Zvf6v4eIB5a3BL3kBpuOtzr0gTe2Qdl+hyJ/C2tnHZlHcu
+	 Yd13ol8VsGqu/1DjVdsqMs1doXZWioD7UqUJZOTRMtDZDvdEvpPIcom1k8Am1lPAqV
+	 ncLFI29qeVt+hqtqeGA1FahHcm3czBvqTEF5h4fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Amir Tzin <amirtz@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0354/1001] drm/msm: clean event_thread->worker in case of an error
-Date: Tue,  7 Mar 2023 17:52:06 +0100
-Message-Id: <20230307170036.808757992@linuxfoundation.org>
+Subject: [PATCH 6.2 0326/1001] sefltests: netdevsim: wait for devlink instance after netns removal
+Date: Tue,  7 Mar 2023 17:51:38 +0100
+Message-Id: <20230307170035.661045039@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,37 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Jiri Pirko <jiri@nvidia.com>
 
-[ Upstream commit c79bb6b92defdcb834ceeeed9c1cf591beb1b71a ]
+[ Upstream commit f922c7b1c1c45740d329bf248936fdb78c0cff6e ]
 
-If worker creation fails, nullify the event_thread->worker, so that
-msm_drm_uninit() doesn't try accessing invalid memory location. While we
-are at it, remove duplicate assignment to the ret variable.
+When devlink instance is put into network namespace and that network
+namespace gets deleted, devlink instance is moved back into init_ns.
+This is done as a part of cleanup_net() routine. Since cleanup_net()
+is called asynchronously from workqueue, there is no guarantee that
+the devlink instance move is done after "ip netns del" returns.
 
-Fixes: 1041dee2178f ("drm/msm: use kthread_create_worker instead of kthread_run")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/490106/
-Link: https://lore.kernel.org/r/20220617233328.1143665-2-dmitry.baryshkov@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+So fix this race by making sure that the devlink instance is present
+before any other operation.
+
+Reported-by: Amir Tzin <amirtz@nvidia.com>
+Fixes: b74c37fd35a2 ("selftests: netdevsim: add tests for devlink reload with resources")
+Signed-off-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://lore.kernel.org/r/20230220132336.198597-1-jiri@resnulli.us
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_drv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../selftests/drivers/net/netdevsim/devlink.sh | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 45e81eb148a8d..ee2f60b6f09b3 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -491,7 +491,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
- 		if (IS_ERR(priv->event_thread[i].worker)) {
- 			ret = PTR_ERR(priv->event_thread[i].worker);
- 			DRM_DEV_ERROR(dev, "failed to create crtc_event kthread\n");
--			ret = PTR_ERR(priv->event_thread[i].worker);
-+			priv->event_thread[i].worker = NULL;
- 			goto err_msm_uninit;
- 		}
+diff --git a/tools/testing/selftests/drivers/net/netdevsim/devlink.sh b/tools/testing/selftests/drivers/net/netdevsim/devlink.sh
+index a08c02abde121..7f7d20f222070 100755
+--- a/tools/testing/selftests/drivers/net/netdevsim/devlink.sh
++++ b/tools/testing/selftests/drivers/net/netdevsim/devlink.sh
+@@ -17,6 +17,18 @@ SYSFS_NET_DIR=/sys/bus/netdevsim/devices/$DEV_NAME/net/
+ DEBUGFS_DIR=/sys/kernel/debug/netdevsim/$DEV_NAME/
+ DL_HANDLE=netdevsim/$DEV_NAME
+ 
++wait_for_devlink()
++{
++	"$@" | grep -q $DL_HANDLE
++}
++
++devlink_wait()
++{
++	local timeout=$1
++
++	busywait "$timeout" wait_for_devlink devlink dev
++}
++
+ fw_flash_test()
+ {
+ 	RET=0
+@@ -256,6 +268,9 @@ netns_reload_test()
+ 	ip netns del testns2
+ 	ip netns del testns1
+ 
++	# Wait until netns async cleanup is done.
++	devlink_wait 2000
++
+ 	log_test "netns reload test"
+ }
+ 
+@@ -348,6 +363,9 @@ resource_test()
+ 	ip netns del testns2
+ 	ip netns del testns1
+ 
++	# Wait until netns async cleanup is done.
++	devlink_wait 2000
++
+ 	log_test "resource test"
+ }
  
 -- 
 2.39.2
