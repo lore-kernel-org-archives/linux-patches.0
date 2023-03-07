@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF240BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A640C433EF;
-	Tue,  7 Mar 2023 17:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C675BBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51FA7C433D2;
+	Tue,  7 Mar 2023 17:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210994;
-	bh=1ejct+P7WX/gTTCwKmlRL2zM/5lK7UHFrYczhzWpZT0=;
+	s=korg; t=1678210997;
+	bh=RI+2ZlHkq0yMs104zOUutA4H6Ml71kMG+ja8FyIwdwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y1Vb/ZeXA25J3Eg/Xt0KD6a3Vfay7Ry9IY+IX1fXBYpr3StFzrwBDS8icg0t8ehOX
-	 iLhGsBtyAHQp1GXeS6wlO91hfG07uvvnmJZCmApUTXA8R/HPTkRG0qflthjFqehfEA
-	 jfmAoivLvxmJWVVBYPmstIhB8KoJOWmCwYs0/oWc=
+	b=nBCVe69YZxnS4uLm2DEo9+MWUcoTi6IJE+WQFmr3YoVCOANj0JQLGduT5/hVRVmED
+	 sykAj+qj3+KpKfTtDKVnDXN4/WAJkM82UewYuDabFsNXV/LUaWrzlNUanAUEfHRD7K
+	 xXh+4uNY57aBNu5YBC1SHouu4/zqDS6t22xHOm9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingyuan Liang <jingyliang@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Javier Martinez Canillas <javier@dowhile0.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0692/1001] HID: Add Mapping for System Microphone Mute
-Date: Tue,  7 Mar 2023 17:57:44 +0100
-Message-Id: <20230307170051.649044674@linuxfoundation.org>
+Subject: [PATCH 6.2 0719/1001] regulator: max77802: Bounds check regulator id against opmode
+Date: Tue,  7 Mar 2023 17:58:11 +0100
+Message-Id: <20230307170052.875586818@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,56 +38,135 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jingyuan Liang <jingyliang@chromium.org>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 2d60f9f4f26785a00273cb81fe60eff129ebd449 ]
+[ Upstream commit 4fd8bcec5fd7c0d586206fa2f42bd67b06cdaa7e ]
 
-HUTRR110 added a new usage code for a key that is supposed to
-mute/unmute microphone system-wide.
+Explicitly bounds-check the id before accessing the opmode array. Seen
+with GCC 13:
 
-Map the new usage code(0x01 0xa9) to keycode KEY_MICMUTE.
-Additionally hid-debug is adjusted to recognize this keycode as well.
+../drivers/regulator/max77802-regulator.c: In function 'max77802_enable':
+../drivers/regulator/max77802-regulator.c:217:29: warning: array subscript [0, 41] is outside array bounds of 'unsigned int[42]' [-Warray-bounds=]
+  217 |         if (max77802->opmode[id] == MAX77802_OFF_PWRREQ)
+      |             ~~~~~~~~~~~~~~~~^~~~
+../drivers/regulator/max77802-regulator.c:62:22: note: while referencing 'opmode'
+   62 |         unsigned int opmode[MAX77802_REG_MAX];
+      |                      ^~~~~~
 
-Signed-off-by: Jingyuan Liang <jingyliang@chromium.org>
-Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Cc: Javier Martinez Canillas <javier@dowhile0.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Acked-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://lore.kernel.org/r/20230127225203.never.864-kees@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-debug.c | 1 +
- drivers/hid/hid-input.c | 8 ++++++++
- 2 files changed, 9 insertions(+)
+ drivers/regulator/max77802-regulator.c | 34 ++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/hid/hid-debug.c b/drivers/hid/hid-debug.c
-index e213bdde543af..e7ef1ea107c9e 100644
---- a/drivers/hid/hid-debug.c
-+++ b/drivers/hid/hid-debug.c
-@@ -975,6 +975,7 @@ static const char *keys[KEY_MAX + 1] = {
- 	[KEY_CAMERA_ACCESS_DISABLE] = "CameraAccessDisable",
- 	[KEY_CAMERA_ACCESS_TOGGLE] = "CameraAccessToggle",
- 	[KEY_DICTATE] = "Dictate",
-+	[KEY_MICMUTE] = "MicrophoneMute",
- 	[KEY_BRIGHTNESS_MIN] = "BrightnessMin",
- 	[KEY_BRIGHTNESS_MAX] = "BrightnessMax",
- 	[KEY_BRIGHTNESS_AUTO] = "BrightnessAuto",
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index 77c8c49852b5c..bd0cfccfb7a25 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -793,6 +793,14 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
- 			break;
- 		}
+diff --git a/drivers/regulator/max77802-regulator.c b/drivers/regulator/max77802-regulator.c
+index 21e0eb0f43f94..befe5f319819b 100644
+--- a/drivers/regulator/max77802-regulator.c
++++ b/drivers/regulator/max77802-regulator.c
+@@ -94,9 +94,11 @@ static int max77802_set_suspend_disable(struct regulator_dev *rdev)
+ {
+ 	unsigned int val = MAX77802_OFF_PWRREQ;
+ 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
+-	int id = rdev_get_id(rdev);
++	unsigned int id = rdev_get_id(rdev);
+ 	int shift = max77802_get_opmode_shift(id);
  
-+		if ((usage->hid & 0xf0) == 0xa0) {	/* SystemControl */
-+			switch (usage->hid & 0xf) {
-+			case 0x9: map_key_clear(KEY_MICMUTE); break;
-+			default: goto ignore;
-+			}
-+			break;
-+		}
++	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
++		return -EINVAL;
+ 	max77802->opmode[id] = val;
+ 	return regmap_update_bits(rdev->regmap, rdev->desc->enable_reg,
+ 				  rdev->desc->enable_mask, val << shift);
+@@ -110,7 +112,7 @@ static int max77802_set_suspend_disable(struct regulator_dev *rdev)
+ static int max77802_set_mode(struct regulator_dev *rdev, unsigned int mode)
+ {
+ 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
+-	int id = rdev_get_id(rdev);
++	unsigned int id = rdev_get_id(rdev);
+ 	unsigned int val;
+ 	int shift = max77802_get_opmode_shift(id);
+ 
+@@ -127,6 +129,9 @@ static int max77802_set_mode(struct regulator_dev *rdev, unsigned int mode)
+ 		return -EINVAL;
+ 	}
+ 
++	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
++		return -EINVAL;
 +
- 		if ((usage->hid & 0xf0) == 0xb0) {	/* SC - Display */
- 			switch (usage->hid & 0xf) {
- 			case 0x05: map_key_clear(KEY_SWITCHVIDEOMODE); break;
+ 	max77802->opmode[id] = val;
+ 	return regmap_update_bits(rdev->regmap, rdev->desc->enable_reg,
+ 				  rdev->desc->enable_mask, val << shift);
+@@ -135,8 +140,10 @@ static int max77802_set_mode(struct regulator_dev *rdev, unsigned int mode)
+ static unsigned max77802_get_mode(struct regulator_dev *rdev)
+ {
+ 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
+-	int id = rdev_get_id(rdev);
++	unsigned int id = rdev_get_id(rdev);
+ 
++	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
++		return -EINVAL;
+ 	return max77802_map_mode(max77802->opmode[id]);
+ }
+ 
+@@ -160,10 +167,13 @@ static int max77802_set_suspend_mode(struct regulator_dev *rdev,
+ 				     unsigned int mode)
+ {
+ 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
+-	int id = rdev_get_id(rdev);
++	unsigned int id = rdev_get_id(rdev);
+ 	unsigned int val;
+ 	int shift = max77802_get_opmode_shift(id);
+ 
++	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
++		return -EINVAL;
++
+ 	/*
+ 	 * If the regulator has been disabled for suspend
+ 	 * then is invalid to try setting a suspend mode.
+@@ -209,9 +219,11 @@ static int max77802_set_suspend_mode(struct regulator_dev *rdev,
+ static int max77802_enable(struct regulator_dev *rdev)
+ {
+ 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
+-	int id = rdev_get_id(rdev);
++	unsigned int id = rdev_get_id(rdev);
+ 	int shift = max77802_get_opmode_shift(id);
+ 
++	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
++		return -EINVAL;
+ 	if (max77802->opmode[id] == MAX77802_OFF_PWRREQ)
+ 		max77802->opmode[id] = MAX77802_OPMODE_NORMAL;
+ 
+@@ -495,7 +507,7 @@ static int max77802_pmic_probe(struct platform_device *pdev)
+ 
+ 	for (i = 0; i < MAX77802_REG_MAX; i++) {
+ 		struct regulator_dev *rdev;
+-		int id = regulators[i].id;
++		unsigned int id = regulators[i].id;
+ 		int shift = max77802_get_opmode_shift(id);
+ 		int ret;
+ 
+@@ -513,10 +525,12 @@ static int max77802_pmic_probe(struct platform_device *pdev)
+ 		 * the hardware reports OFF as the regulator operating mode.
+ 		 * Default to operating mode NORMAL in that case.
+ 		 */
+-		if (val == MAX77802_STATUS_OFF)
+-			max77802->opmode[id] = MAX77802_OPMODE_NORMAL;
+-		else
+-			max77802->opmode[id] = val;
++		if (id < ARRAY_SIZE(max77802->opmode)) {
++			if (val == MAX77802_STATUS_OFF)
++				max77802->opmode[id] = MAX77802_OPMODE_NORMAL;
++			else
++				max77802->opmode[id] = val;
++		}
+ 
+ 		rdev = devm_regulator_register(&pdev->dev,
+ 					       &regulators[i], &config);
 -- 
 2.39.2
 
