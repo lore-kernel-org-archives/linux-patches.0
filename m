@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9757BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34492C433EF;
-	Tue,  7 Mar 2023 18:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D479BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13455C433D2;
+	Tue,  7 Mar 2023 18:48:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214901;
-	bh=hEmoMWYBUXEAyYEiPiREgit81uMbxcLhiQJnlKujpvU=;
+	s=korg; t=1678214904;
+	bh=uYkOMHi0eqFSkhlHeL/TM7QsZ1IhpShGF8Xj+RTepc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVF+4TC5DavCtB0QVkwrINRSURJ7mEH0WqCkqMVKNsMSGOHk/U2lps06L2lgCJi8z
-	 cEfRdhRT2pXmZpK/DLIwj1fHapzNBBDlhMQb+H3ThVfylixwBgmAfU/dj8bRnXQRkH
-	 okX9mh/KU62KxSdmN0Uf4OLvVgyNJZkXGTQoUE4I=
+	b=FW4EKgCI7iIm3QyisS8WMx8vg+2JJ815hIxd+qn6mu3mDZqd4GXAEN4nBMzXDT3vx
+	 ZUfG15AMRIYq/wJsp/Vhg1Avg723GBFkJenBGNNDJhzYqtm4KcHJI+640Y++vJihjY
+	 vT4i4niaY/T2hC/4hY1DhMwwgjQY87mSnXKUjHwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jamie Douglass <jamiemdouglass@gmail.com>,
+	Petr Vorel <pvorel@suse.cz>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/567] blk-mq: correct stale comment of .get_budget
-Date: Tue,  7 Mar 2023 17:56:32 +0100
-Message-Id: <20230307165908.342377186@linuxfoundation.org>
+Subject: [PATCH 5.15 057/567] arm64: dts: qcom: msm8992-lg-bullhead: Correct memory overlaps with the SMEM and MPSS memory regions
+Date: Tue,  7 Mar 2023 17:56:33 +0100
+Message-Id: <20230307165908.374036727@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,47 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Jamie Douglass <jamiemdouglass@gmail.com>
 
-[ Upstream commit 01542f651a9f58a9b176c3d3dc3eefbacee53b78 ]
+[ Upstream commit d44106883d74992343710f18c4aaae937c7cefab ]
 
-Commit 88022d7201e96 ("blk-mq: don't handle failure in .get_budget")
-remove BLK_STS_RESOURCE return value and we only check if we can get
-the budget from .get_budget() now.
-Correct stale comment that ".get_budget() returns BLK_STS_NO_RESOURCE"
-to ".get_budget() fails to get the budget".
+The memory region reserved by a previous commit (see fixes tag below)
+overlaps with the SMEM and MPSS memory regions, causing error messages in
+dmesg:
+	OF: reserved mem: OVERLAP DETECTED!
+	reserved@5000000 (0x0000000005000000--0x0000000007200000)
+	overlaps with smem_region@6a00000
+	(0x0000000006a00000--0x0000000006c00000)
 
-Fixes: 88022d7201e9 ("blk-mq: don't handle failure in .get_budget")
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+	OF: reserved mem: OVERLAP DETECTED!
+	reserved@6c00000 (0x0000000006c00000--0x0000000007200000)
+	overlaps with memory@7000000
+	(0x0000000007000000--0x000000000ca00000)
+
+This patch resolves both of these by splitting the previously reserved
+memory region into two sections either side of the SMEM region and by
+cutting off the second memory region to 0x7000000.
+
+Fixes: 22c7e1a0fa45 ("arm64: dts: msm8992-bullhead: add memory hole region")
+Signed-off-by: Jamie Douglass <jamiemdouglass@gmail.com>
+Reviewed-by: Petr Vorel <pvorel@suse.cz>
+Tested-by: Petr Vorel <pvorel@suse.cz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230202054819.16079-1-jamiemdouglass@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq-sched.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
-index de45a28925d83..ff1021dbb0d22 100644
---- a/block/blk-mq-sched.c
-+++ b/block/blk-mq-sched.c
-@@ -109,7 +109,7 @@ static bool blk_mq_dispatch_hctx_list(struct list_head *rq_list)
- /*
-  * Only SCSI implements .get_budget and .put_budget, and SCSI restarts
-  * its queue by itself in its completion handler, so we don't need to
-- * restart queue if .get_budget() returns BLK_STS_NO_RESOURCE.
-+ * restart queue if .get_budget() fails to get the budget.
-  *
-  * Returns -EAGAIN if hctx->dispatch was found non-empty and run_work has to
-  * be run again.  This is necessary to avoid starving flushes.
-@@ -237,7 +237,7 @@ static struct blk_mq_ctx *blk_mq_next_ctx(struct blk_mq_hw_ctx *hctx,
- /*
-  * Only SCSI implements .get_budget and .put_budget, and SCSI restarts
-  * its queue by itself in its completion handler, so we don't need to
-- * restart queue if .get_budget() returns BLK_STS_NO_RESOURCE.
-+ * restart queue if .get_budget() fails to get the budget.
-  *
-  * Returns -EAGAIN if hctx->dispatch was found non-empty and run_work has to
-  * be run again.  This is necessary to avoid starving flushes.
+diff --git a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
+index 84ba740cb957b..60fcb024c8879 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
++++ b/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
+@@ -55,8 +55,13 @@ cont_splash_mem: memory@3400000 {
+ 			no-map;
+ 		};
+ 
+-		removed_region: reserved@5000000 {
+-			reg = <0 0x05000000 0 0x2200000>;
++		reserved@5000000 {
++			reg = <0x0 0x05000000 0x0 0x1a00000>;
++			no-map;
++		};
++
++		reserved@6c00000 {
++			reg = <0x0 0x06c00000 0x0 0x400000>;
+ 			no-map;
+ 		};
+ 	};
 -- 
 2.39.2
 
