@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1642BA4C
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:01:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BDBC433EF;
-	Tue,  7 Mar 2023 19:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70B9BA4C
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:01:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2ACC433EF;
+	Tue,  7 Mar 2023 19:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215704;
-	bh=0+4F+m9qNeuPOHJ8dgzS6KSI+Iy3bG865iXbXCFZUj4=;
+	s=korg; t=1678215707;
+	bh=mZrWDXAGQ1Q53BwuIWk2aT+WeZnexLukaJbCZOdjrvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/ugMceBCP/a052Oxy3dSeY9+cQR0mpwrwZ+U+20D5tzzXjumH2GRaRCYpv2fwfo2
-	 7imDN43qg0x7hQHxRsNx45o3qppIpIPOCpdIlLicNLQ8p5BrtGnOXFHt3bMjXzEIvq
-	 WXYDSoZfW7uRyu5M+v06XFL61pzsuzQq4yefbHPY=
+	b=aLSQg5ZNjkiCPKthXj3CRq2WLwJV3PPIacW7dS0GyQsgk0xp0RhW5YEfo7od2ndCx
+	 K4Tx+rGQUS3tB0P48anikOzcohQEma7m5jteHG6aZhRTrmbsdP3+GszoGtHHmyLd6l
+	 BhSKMZKGKhst6TDCe98V0YrdZ6JMaOve4KbgAok0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
 	Masahiro Yamada <masahiroy@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 347/567] powerpc: Remove linker flag from KBUILD_AFLAGS
-Date: Tue,  7 Mar 2023 18:01:23 +0100
-Message-Id: <20230307165920.913556117@linuxfoundation.org>
+Subject: [PATCH 5.15 348/567] s390/vdso: remove -nostdlib compiler flag
+Date: Tue,  7 Mar 2023 18:01:24 +0100
+Message-Id: <20230307165920.958546375@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -39,70 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 31f48f16264bc70962fb3e7ec62da64d0a2ba04a ]
+[ Upstream commit 7b737adc10d269e7fdf714ae2caa2281b6a801cf ]
 
-When clang's -Qunused-arguments is dropped from KBUILD_CPPFLAGS, it
-points out that KBUILD_AFLAGS contains a linker flag, which will be
-unused:
+The -nostdlib option requests the compiler to not use the standard
+system startup files or libraries when linking. It is effective only
+when $(CC) is used as a linker driver.
 
-  clang: error: -Wl,-a32: 'linker' input unused [-Werror,-Wunused-command-line-argument]
+Since commit 2b2a25845d53 ("s390/vdso: Use $(LD) instead of $(CC) to
+link vDSO"), $(LD) is directly used, hence -nostdlib is unneeded.
 
-This was likely supposed to be '-Wa,-a$(BITS)'. However, this change is
-unnecessary, as all supported versions of clang and gcc will pass '-a64'
-or '-a32' to GNU as based on the value of '-m'; the behavior of the
-latest stable release of the oldest supported major version of each
-compiler is shown below and each compiler's latest release exhibits the
-same behavior (GCC 12.2.0 and Clang 15.0.6).
-
-  $ powerpc64-linux-gcc --version | head -1
-  powerpc64-linux-gcc (GCC) 5.5.0
-
-  $ powerpc64-linux-gcc -m64 -### -x assembler-with-cpp -c -o /dev/null /dev/null &| grep 'as '
-  .../as -a64 -mppc64 -many -mbig -o /dev/null /tmp/cctwuBzZ.s
-
-  $ powerpc64-linux-gcc -m32 -### -x assembler-with-cpp -c -o /dev/null /dev/null &| grep 'as '
-  .../as -a32 -mppc -many -mbig -o /dev/null /tmp/ccaZP4mF.sg
-
-  $ clang --version | head -1
-  Ubuntu clang version 11.1.0-++20211011094159+1fdec59bffc1-1~exp1~20211011214622.5
-
-  $ clang --target=powerpc64-linux-gnu -fno-integrated-as -m64 -### \
-    -x assembler-with-cpp -c -o /dev/null /dev/null &| grep gnu-as
-   "/usr/bin/powerpc64-linux-gnu-as" "-a64" "-mppc64" "-many" "-o" "/dev/null" "/tmp/null-80267c.s"
-
-  $ clang --target=powerpc64-linux-gnu -fno-integrated-as -m64 -### \
-    -x assembler-with-cpp -c -o /dev/null /dev/null &| grep gnu-as
-   "/usr/bin/powerpc64-linux-gnu-as" "-a32" "-mppc" "-many" "-o" "/dev/null" "/tmp/null-ab8f8d.s"
-
-Remove this flag altogether to avoid future issues.
-
-Fixes: 1421dc6d4829 ("powerpc/kbuild: Use flags variables rather than overriding LD/CC/AS")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Acked-by: Michael Ellerman <mpe@ellerman.id.au>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://lore.kernel.org/r/20211107162111.323701-1-masahiroy@kernel.org
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Stable-dep-of: fd8589dce810 ("s390/vdso: Drop '-shared' from KBUILD_CFLAGS_64")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kernel/vdso32/Makefile | 2 +-
+ arch/s390/kernel/vdso64/Makefile | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/Makefile b/arch/powerpc/Makefile
-index 7859ae56fcdcd..a8e52e64c1a5b 100644
---- a/arch/powerpc/Makefile
-+++ b/arch/powerpc/Makefile
-@@ -92,7 +92,7 @@ aflags-$(CONFIG_CPU_LITTLE_ENDIAN)	+= -mlittle-endian
+diff --git a/arch/s390/kernel/vdso32/Makefile b/arch/s390/kernel/vdso32/Makefile
+index e3e6ac5686df5..245bddfe9bc0e 100644
+--- a/arch/s390/kernel/vdso32/Makefile
++++ b/arch/s390/kernel/vdso32/Makefile
+@@ -22,7 +22,7 @@ KBUILD_AFLAGS_32 += -m31 -s
+ KBUILD_CFLAGS_32 := $(filter-out -m64,$(KBUILD_CFLAGS))
+ KBUILD_CFLAGS_32 += -m31 -fPIC -shared -fno-common -fno-builtin
  
- ifeq ($(HAS_BIARCH),y)
- KBUILD_CFLAGS	+= -m$(BITS)
--KBUILD_AFLAGS	+= -m$(BITS) -Wl,-a$(BITS)
-+KBUILD_AFLAGS	+= -m$(BITS)
- KBUILD_LDFLAGS	+= -m elf$(BITS)$(LDEMULATION)
- endif
+-LDFLAGS_vdso32.so.dbg += -fPIC -shared -nostdlib -soname=linux-vdso32.so.1 \
++LDFLAGS_vdso32.so.dbg += -fPIC -shared -soname=linux-vdso32.so.1 \
+ 	--hash-style=both --build-id=sha1 -melf_s390 -T
  
+ $(targets:%=$(obj)/%.dbg): KBUILD_CFLAGS = $(KBUILD_CFLAGS_32)
+diff --git a/arch/s390/kernel/vdso64/Makefile b/arch/s390/kernel/vdso64/Makefile
+index 0dea82b87e54b..9e2b95a222a98 100644
+--- a/arch/s390/kernel/vdso64/Makefile
++++ b/arch/s390/kernel/vdso64/Makefile
+@@ -26,7 +26,7 @@ KBUILD_AFLAGS_64 += -m64 -s
+ 
+ KBUILD_CFLAGS_64 := $(filter-out -m64,$(KBUILD_CFLAGS))
+ KBUILD_CFLAGS_64 += -m64 -fPIC -shared -fno-common -fno-builtin
+-ldflags-y := -fPIC -shared -nostdlib -soname=linux-vdso64.so.1 \
++ldflags-y := -fPIC -shared -soname=linux-vdso64.so.1 \
+ 	     --hash-style=both --build-id=sha1 -T
+ 
+ $(targets:%=$(obj)/%.dbg): KBUILD_CFLAGS = $(KBUILD_CFLAGS_64)
 -- 
 2.39.2
 
