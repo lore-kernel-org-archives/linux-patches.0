@@ -1,244 +1,160 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A716CBA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:09:38 +0000 (UTC)
-Received: by mail-pg1-f181.google.com with SMTP id z10so8228823pgr.8
-        for <patches@lists.linux.dev>; Tue, 07 Mar 2023 11:09:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1678216178;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XRRXK53jDGzKbqJ6qVuf5oPuz3OEKiwRmxooP50BqwU=;
-        b=C95LyP/OCNgLMK2gkpE2Tq+GV5LS0ZzrUM5vHN14SSaIVFPDJcJDkaY8pmmL5KbLHa
-         it523dGKZy/6Of9wX7Sk+aUqLP+9snIAyuvxDxibtDt9DsfMkvo65iNxlbjWpXdr69eD
-         PYk1lvGvuNA463TonRhWYlHewtMoHVfJmJXvVqSgezGk4x8+pH2QtydFCYL4sg4N162c
-         Fy5q4P2sU2b0pGpBJh3CUw/ekia1AXvns+GJP+WcRX9gqqIu2uB7RMNiIyFLEFNqEQk3
-         GfhGyHE77ttvEuzntKC/nn++g5bkRZQ8/Sfj3CvAMyHD3mNxSrYi0kkoz8JT17MgPAuR
-         B+BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678216178;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XRRXK53jDGzKbqJ6qVuf5oPuz3OEKiwRmxooP50BqwU=;
-        b=qYERkPqFFp+pNbYhM964dBIVbRAelgOPalPONxdVp7QWq1+mb8RBvJ6Q3hH3W6YY8P
-         uAbmxjhAJE5MfjKxEHliUBLCavTKRBaU44vBfzh28qGu96/vBnDEH7EmnPGubnYZX+9e
-         FzpXmLGlSjXmggapcop/sPBYu5OtlqawfJWRbybNKbOsKhaGMR+vyxJmYz2NyZsVi+EL
-         jKGMu3HPP7zqMXgx9+bStLB+FFdttN4+3flgkH67vJNEnGvgBwN5j9GoN0B5uPxEi+Et
-         bkAwyxBohi5Ma7k3Alyi08oV65OjQvUj1vt2gN5jpz77EyIpP/WKLiajhxYFdgc4AtJP
-         80xA==
-X-Gm-Message-State: AO0yUKVjzGzc5cncriUw+Emo2s64W9koXATibK85IgNcf6al9MA6SnbM
-	hWRxfRdietLB0l1XUPx7eBXaWAAS9ZqxN4+OBE7gSA==
-X-Google-Smtp-Source: AK7set/ujLaCC87ejtyPflmPHKLb1GCAa/9hnu7R3JDIfn6UfjhtH1nJ7GYgLehA51r1bZe2ytPOlGk+h6B0nfaflVM=
-X-Received: by 2002:a62:8607:0:b0:619:46b3:7903 with SMTP id
- x7-20020a628607000000b0061946b37903mr5181811pfd.3.1678216177661; Tue, 07 Mar
- 2023 11:09:37 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011B9BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:09:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5B0C433D2;
+	Tue,  7 Mar 2023 19:09:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1678216181;
+	bh=EjNU+yaRlZDe8Dtf8jxfZBGEXcBfivUTDgjP1lIT77U=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=iTWwAQYLq9YSx0sbqZnIJbaAwz2HTu0K0OEAeMe55RXE0jf1fIDGYIH8gSD+FWxd5
+	 z+HCLYq84qaj/IpQ2bPVFVOE0EvATjYdf0/PnBjTFPUSp8ifT4WhE5mW6aVrrXwMdv
+	 KwY/5Yc2HV/dQfljxlCnaDCzRuaXLo+hGT0eyJwo=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Nico Boehr <nrb@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>
+Subject: [PATCH 5.15 470/567] KVM: s390: disable migration mode when dirty tracking is disabled
+Date: Tue,  7 Mar 2023 18:03:26 +0100
+Message-Id: <20230307165926.256086594@linuxfoundation.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
+References: <20230307165905.838066027@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230307165905.838066027@linuxfoundation.org> <20230307165920.205338995@linuxfoundation.org>
-In-Reply-To: <20230307165920.205338995@linuxfoundation.org>
-From: Saravana Kannan <saravanak@google.com>
-Date: Tue, 7 Mar 2023 11:09:01 -0800
-Message-ID: <CAGETcx-sDPx3HySkP-8Rb7TZLZUVP8xTK97Hi2ZJ7PcRva5xkQ@mail.gmail.com>
-Subject: Re: [PATCH 5.15 330/567] driver core: fw_devlink: Add DL_FLAG_CYCLE
- support to device links
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Colin Foster <colin.foster@in-advantage.com>, Sudeep Holla <sudeep.holla@arm.com>, 
-	Douglas Anderson <dianders@chromium.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Sasha Levin <sashal@kernel.org>, Luca Weiss <luca.weiss@fairphone.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 7, 2023 at 11:02=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> From: Saravana Kannan <saravanak@google.com>
->
-> [ Upstream commit 67cad5c67019c38126b749621665b6723d3ae7e6 ]
->
-> fw_devlink uses DL_FLAG_SYNC_STATE_ONLY device link flag for two
-> purposes:
->
-> 1. To allow a parent device to proxy its child device's dependency on a
->    supplier so that the supplier doesn't get its sync_state() callback
->    before the child device/consumer can be added and probed. In this
->    usage scenario, we need to ignore cycles for ensure correctness of
->    sync_state() callbacks.
->
-> 2. When there are dependency cycles in firmware, we don't know which of
->    those dependencies are valid. So, we have to ignore them all wrt
->    probe ordering while still making sure the sync_state() callbacks
->    come correctly.
->
-> However, when detecting dependency cycles, there can be multiple
-> dependency cycles between two devices that we need to detect. For
-> example:
->
-> A -> B -> A and A -> C -> B -> A.
->
-> To detect multiple cycles correct, we need to be able to differentiate
-> DL_FLAG_SYNC_STATE_ONLY device links used for (1) vs (2) above.
->
-> To allow this differentiation, add a DL_FLAG_CYCLE that can be use to
-> mark use case (2). We can then use the DL_FLAG_CYCLE to decide which
-> DL_FLAG_SYNC_STATE_ONLY device links to follow when looking for
-> dependency cycles.
->
-> Fixes: 2de9d8e0d2fe ("driver core: fw_devlink: Improve handling of cyclic=
- dependencies")
-> Signed-off-by: Saravana Kannan <saravanak@google.com>
-> Tested-by: Colin Foster <colin.foster@in-advantage.com>
-> Tested-by: Sudeep Holla <sudeep.holla@arm.com>
-> Tested-by: Douglas Anderson <dianders@chromium.org>
-> Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-=
-fp4
-> Link: https://lore.kernel.org/r/20230207014207.1678715-6-saravanak@google=
-.com
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
+From: Nico Boehr <nrb@linux.ibm.com>
 
-These fw_devlink patches weren't tested with 5.15. It's also an
-extensive refactor. So I'm a little worried if it'll be finicky and
-break things in a kernel that's a year old.
+commit f2d3155e2a6bac44d16f04415a321e8707d895c6 upstream.
 
-Unless someone specifically wants these patches in 5.15, I'd prefer we
-don't pick it up in 5.15.
+Migration mode is a VM attribute which enables tracking of changes in
+storage attributes (PGSTE). It assumes dirty tracking is enabled on all
+memslots to keep a dirty bitmap of pages with changed storage attributes.
 
--Saravana
+When enabling migration mode, we currently check that dirty tracking is
+enabled for all memslots. However, userspace can disable dirty tracking
+without disabling migration mode.
 
->  drivers/base/core.c    | 28 ++++++++++++++++++----------
->  include/linux/device.h |  1 +
->  2 files changed, 19 insertions(+), 10 deletions(-)
->
-> diff --git a/drivers/base/core.c b/drivers/base/core.c
-> index adf003a7e8d6a..178a21e985197 100644
-> --- a/drivers/base/core.c
-> +++ b/drivers/base/core.c
-> @@ -269,6 +269,12 @@ static bool device_is_ancestor(struct device *dev, s=
-truct device *target)
->         return false;
->  }
->
-> +static inline bool device_link_flag_is_sync_state_only(u32 flags)
-> +{
-> +       return (flags & ~(DL_FLAG_INFERRED | DL_FLAG_CYCLE)) =3D=3D
-> +               (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED);
-> +}
-> +
->  /**
->   * device_is_dependent - Check if one device depends on another one
->   * @dev: Device to check dependencies for.
-> @@ -295,8 +301,7 @@ int device_is_dependent(struct device *dev, void *tar=
-get)
->                 return ret;
->
->         list_for_each_entry(link, &dev->links.consumers, s_node) {
-> -               if ((link->flags & ~DL_FLAG_INFERRED) =3D=3D
-> -                   (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
-> +               if (device_link_flag_is_sync_state_only(link->flags))
->                         continue;
->
->                 if (link->consumer =3D=3D target)
-> @@ -369,8 +374,7 @@ static int device_reorder_to_tail(struct device *dev,=
- void *not_used)
->
->         device_for_each_child(dev, NULL, device_reorder_to_tail);
->         list_for_each_entry(link, &dev->links.consumers, s_node) {
-> -               if ((link->flags & ~DL_FLAG_INFERRED) =3D=3D
-> -                   (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
-> +               if (device_link_flag_is_sync_state_only(link->flags))
->                         continue;
->                 device_reorder_to_tail(link->consumer, NULL);
->         }
-> @@ -621,7 +625,8 @@ postcore_initcall(devlink_class_init);
->                                DL_FLAG_AUTOREMOVE_SUPPLIER | \
->                                DL_FLAG_AUTOPROBE_CONSUMER  | \
->                                DL_FLAG_SYNC_STATE_ONLY | \
-> -                              DL_FLAG_INFERRED)
-> +                              DL_FLAG_INFERRED | \
-> +                              DL_FLAG_CYCLE)
->
->  #define DL_ADD_VALID_FLAGS (DL_MANAGED_LINK_FLAGS | DL_FLAG_STATELESS | =
-\
->                             DL_FLAG_PM_RUNTIME | DL_FLAG_RPM_ACTIVE)
-> @@ -690,8 +695,6 @@ struct device_link *device_link_add(struct device *co=
-nsumer,
->         if (!consumer || !supplier || consumer =3D=3D supplier ||
->             flags & ~DL_ADD_VALID_FLAGS ||
->             (flags & DL_FLAG_STATELESS && flags & DL_MANAGED_LINK_FLAGS) =
-||
-> -           (flags & DL_FLAG_SYNC_STATE_ONLY &&
-> -            (flags & ~DL_FLAG_INFERRED) !=3D DL_FLAG_SYNC_STATE_ONLY) ||
->             (flags & DL_FLAG_AUTOPROBE_CONSUMER &&
->              flags & (DL_FLAG_AUTOREMOVE_CONSUMER |
->                       DL_FLAG_AUTOREMOVE_SUPPLIER)))
-> @@ -707,6 +710,10 @@ struct device_link *device_link_add(struct device *c=
-onsumer,
->         if (!(flags & DL_FLAG_STATELESS))
->                 flags |=3D DL_FLAG_MANAGED;
->
-> +       if (flags & DL_FLAG_SYNC_STATE_ONLY &&
-> +           !device_link_flag_is_sync_state_only(flags))
-> +               return NULL;
-> +
->         device_links_write_lock();
->         device_pm_lock();
->
-> @@ -1627,7 +1634,7 @@ static void fw_devlink_relax_link(struct device_lin=
-k *link)
->         if (!(link->flags & DL_FLAG_INFERRED))
->                 return;
->
-> -       if (link->flags =3D=3D (DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMIS=
-SIVE))
-> +       if (device_link_flag_is_sync_state_only(link->flags))
->                 return;
->
->         pm_runtime_drop_link(link);
-> @@ -1695,8 +1702,8 @@ static int fw_devlink_relax_cycle(struct device *co=
-n, void *sup)
->                 return ret;
->
->         list_for_each_entry(link, &con->links.consumers, s_node) {
-> -               if ((link->flags & ~DL_FLAG_INFERRED) =3D=3D
-> -                   (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
-> +               if (!(link->flags & DL_FLAG_CYCLE) &&
-> +                   device_link_flag_is_sync_state_only(link->flags))
->                         continue;
->
->                 if (!fw_devlink_relax_cycle(link->consumer, sup))
-> @@ -1705,6 +1712,7 @@ static int fw_devlink_relax_cycle(struct device *co=
-n, void *sup)
->                 ret =3D 1;
->
->                 fw_devlink_relax_link(link);
-> +               link->flags |=3D DL_FLAG_CYCLE;
->         }
->         return ret;
->  }
-> diff --git a/include/linux/device.h b/include/linux/device.h
-> index e270cb740b9e7..636ef7caa021d 100644
-> --- a/include/linux/device.h
-> +++ b/include/linux/device.h
-> @@ -326,6 +326,7 @@ enum device_link_state {
->  #define DL_FLAG_MANAGED                        BIT(6)
->  #define DL_FLAG_SYNC_STATE_ONLY                BIT(7)
->  #define DL_FLAG_INFERRED               BIT(8)
-> +#define DL_FLAG_CYCLE                  BIT(9)
->
->  /**
->   * enum dl_dev_state - Device driver presence tracking information.
-> --
-> 2.39.2
->
->
->
+Since migration mode is pointless with dirty tracking disabled, disable
+migration mode whenever userspace disables dirty tracking on any slot.
+
+Also update the documentation to clarify that dirty tracking must be
+enabled when enabling migration mode, which is already enforced by the
+code in kvm_s390_vm_start_migration().
+
+Also highlight in the documentation for KVM_S390_GET_CMMA_BITS that it
+can now fail with -EINVAL when dirty tracking is disabled while
+migration mode is on. Move all the error codes to a table so this stays
+readable.
+
+To disable migration mode, slots_lock should be held, which is taken
+in kvm_set_memory_region() and thus held in
+kvm_arch_prepare_memory_region().
+
+Restructure the prepare code a bit so all the sanity checking is done
+before disabling migration mode. This ensures migration mode isn't
+disabled when some sanity check fails.
+
+Cc: stable@vger.kernel.org
+Fixes: 190df4a212a7 ("KVM: s390: CMMA tracking, ESSA emulation, migration mode")
+Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230127140532.230651-2-nrb@linux.ibm.com
+Message-Id: <20230127140532.230651-2-nrb@linux.ibm.com>
+[frankja@linux.ibm.com: fixed commit message typo, moved api.rst error table upwards]
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ Documentation/virt/kvm/api.rst        |   18 ++++++++++++------
+ Documentation/virt/kvm/devices/vm.rst |    4 ++++
+ arch/s390/kvm/kvm-s390.c              |   17 +++++++++++++++++
+ 3 files changed, 33 insertions(+), 6 deletions(-)
+
+--- a/Documentation/virt/kvm/api.rst
++++ b/Documentation/virt/kvm/api.rst
+@@ -4117,6 +4117,18 @@ not holding a previously reported uncorr
+ :Parameters: struct kvm_s390_cmma_log (in, out)
+ :Returns: 0 on success, a negative value on error
+ 
++Errors:
++
++  ======     =============================================================
++  ENOMEM     not enough memory can be allocated to complete the task
++  ENXIO      if CMMA is not enabled
++  EINVAL     if KVM_S390_CMMA_PEEK is not set but migration mode was not enabled
++  EINVAL     if KVM_S390_CMMA_PEEK is not set but dirty tracking has been
++             disabled (and thus migration mode was automatically disabled)
++  EFAULT     if the userspace address is invalid or if no page table is
++             present for the addresses (e.g. when using hugepages).
++  ======     =============================================================
++
+ This ioctl is used to get the values of the CMMA bits on the s390
+ architecture. It is meant to be used in two scenarios:
+ 
+@@ -4197,12 +4209,6 @@ mask is unused.
+ 
+ values points to the userspace buffer where the result will be stored.
+ 
+-This ioctl can fail with -ENOMEM if not enough memory can be allocated to
+-complete the task, with -ENXIO if CMMA is not enabled, with -EINVAL if
+-KVM_S390_CMMA_PEEK is not set but migration mode was not enabled, with
+--EFAULT if the userspace address is invalid or if no page table is
+-present for the addresses (e.g. when using hugepages).
+-
+ 4.108 KVM_S390_SET_CMMA_BITS
+ ----------------------------
+ 
+--- a/Documentation/virt/kvm/devices/vm.rst
++++ b/Documentation/virt/kvm/devices/vm.rst
+@@ -302,6 +302,10 @@ Allows userspace to start migration mode
+ Setting this attribute when migration mode is already active will have
+ no effects.
+ 
++Dirty tracking must be enabled on all memslots, else -EINVAL is returned. When
++dirty tracking is disabled on any memslot, migration mode is automatically
++stopped.
++
+ :Parameters: none
+ :Returns:   -ENOMEM if there is not enough free memory to start migration mode;
+ 	    -EINVAL if the state of the VM is invalid (e.g. no memory defined);
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -5066,6 +5066,23 @@ int kvm_arch_prepare_memory_region(struc
+ 	/* When we are protected, we should not change the memory slots */
+ 	if (kvm_s390_pv_get_handle(kvm))
+ 		return -EINVAL;
++
++	if (!kvm->arch.migration_mode)
++		return 0;
++
++	/*
++	 * Turn off migration mode when:
++	 * - userspace creates a new memslot with dirty logging off,
++	 * - userspace modifies an existing memslot (MOVE or FLAGS_ONLY) and
++	 *   dirty logging is turned off.
++	 * Migration mode expects dirty page logging being enabled to store
++	 * its dirty bitmap.
++	 */
++	if (change != KVM_MR_DELETE &&
++	    !(mem->flags & KVM_MEM_LOG_DIRTY_PAGES))
++		WARN(kvm_s390_vm_stop_migration(kvm),
++		     "Failed to stop migration mode");
++
+ 	return 0;
+ }
+ 
+
+
