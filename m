@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64A9BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:32:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C27C433EF;
-	Tue,  7 Mar 2023 18:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA11BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:32:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7554AC4339C;
+	Tue,  7 Mar 2023 18:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213974;
-	bh=ADptdmh2tNWasfKW0aQORL4yIY4ow1X2A90pLbQUuE0=;
+	s=korg; t=1678213977;
+	bh=T64YGB/WbSmo844IPhN5Qg5+GnKYfnMKflw+A6LaWMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OK/KkSP7pNJJe5fQ2ZZ3c5CbqJNOKTF7jpTbizpJ7UDIUz65q8+0LtCWYtLZiYnhf
-	 NCKeunEPXlOL742fvFevT2ZFrRd+oGenKTsL65FAaaxlu7BYV3R/X1EVUNrpMMS/sM
-	 ygRIjKCWo+pSIIh+on2ZBs+ZC+HZBZL76e2NK1qo=
+	b=0z6cae5Yq6Rt1CqY+5ph5kQm1X9cXuJ/d4NS1ICauSA1RfufCn9GLX2f0knAWeqQ8
+	 1kHdeZhgIK/0I5kvyCtXoU75ov6OE21U70z0YWhS92U+8hc6M4CQo0csMtntKS+4gD
+	 G4vFBEPuq3a3saz+884/Og18Vc6FZJ0JYsniZvaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 681/885] btrfs: hold block group refcount during async discard
-Date: Tue,  7 Mar 2023 18:00:15 +0100
-Message-Id: <20230307170031.706754885@linuxfoundation.org>
+	Waiman Long <longman@redhat.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: [PATCH 6.1 682/885] locking/rwsem: Prevent non-first waiter from spinning in down_write() slowpath
+Date: Tue,  7 Mar 2023 18:00:16 +0100
+Message-Id: <20230307170031.751518586@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,153 +35,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Boris Burkov <boris@bur.io>
+From: Waiman Long <longman@redhat.com>
 
-commit 2b5463fcbdfb24e898916bcae2b1359042d26963 upstream.
+commit b613c7f31476c44316bfac1af7cac714b7d6bef9 upstream.
 
-Async discard does not acquire the block group reference count while it
-holds a reference on the discard list. This is generally OK, as the
-paths which destroy block groups tend to try to synchronize on
-cancelling async discard work. However, relying on cancelling work
-requires careful analysis to be sure it is safe from races with
-unpinning scheduling more work.
+A non-first waiter can potentially spin in the for loop of
+rwsem_down_write_slowpath() without sleeping but fail to acquire the
+lock even if the rwsem is free if the following sequence happens:
 
-While I am unable to find a race with unpinning in the current code for
-either the unused bgs or relocation paths, I believe we have one in an
-older version of auto relocation in a Meta internal build. This suggests
-that this is in fact an error prone model, and could be fragile to
-future changes to these bg deletion paths.
+  Non-first RT waiter    First waiter      Lock holder
+  -------------------    ------------      -----------
+  Acquire wait_lock
+  rwsem_try_write_lock():
+    Set handoff bit if RT or
+      wait too long
+    Set waiter->handoff_set
+  Release wait_lock
+                         Acquire wait_lock
+                         Inherit waiter->handoff_set
+                         Release wait_lock
+					   Clear owner
+                                           Release lock
+  if (waiter.handoff_set) {
+    rwsem_spin_on_owner(();
+    if (OWNER_NULL)
+      goto trylock_again;
+  }
+  trylock_again:
+  Acquire wait_lock
+  rwsem_try_write_lock():
+     if (first->handoff_set && (waiter != first))
+	return false;
+  Release wait_lock
 
-To make this ownership more clear, add a refcount for async discard. If
-work is queued for a block group, its refcount should be incremented,
-and when work is completed or canceled, it should be decremented.
+A non-first waiter cannot really acquire the rwsem even if it mistakenly
+believes that it can spin on OWNER_NULL value. If that waiter happens
+to be an RT task running on the same CPU as the first waiter, it can
+block the first waiter from acquiring the rwsem leading to live lock.
+Fix this problem by making sure that a non-first waiter cannot spin in
+the slowpath loop without sleeping.
 
-CC: stable@vger.kernel.org # 5.15+
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: d257cc8cb8d5 ("locking/rwsem: Make handoff bit handling more consistent")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230126003628.365092-2-longman@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/discard.c |   41 ++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 38 insertions(+), 3 deletions(-)
+ kernel/locking/rwsem.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
---- a/fs/btrfs/discard.c
-+++ b/fs/btrfs/discard.c
-@@ -77,6 +77,7 @@ static struct list_head *get_discard_lis
- static void __add_to_discard_list(struct btrfs_discard_ctl *discard_ctl,
- 				  struct btrfs_block_group *block_group)
- {
-+	lockdep_assert_held(&discard_ctl->lock);
- 	if (!btrfs_run_discard_work(discard_ctl))
- 		return;
- 
-@@ -88,6 +89,8 @@ static void __add_to_discard_list(struct
- 						      BTRFS_DISCARD_DELAY);
- 		block_group->discard_state = BTRFS_DISCARD_RESET_CURSOR;
- 	}
-+	if (list_empty(&block_group->discard_list))
-+		btrfs_get_block_group(block_group);
- 
- 	list_move_tail(&block_group->discard_list,
- 		       get_discard_list(discard_ctl, block_group));
-@@ -107,8 +110,12 @@ static void add_to_discard_list(struct b
- static void add_to_discard_unused_list(struct btrfs_discard_ctl *discard_ctl,
- 				       struct btrfs_block_group *block_group)
- {
-+	bool queued;
-+
- 	spin_lock(&discard_ctl->lock);
- 
-+	queued = !list_empty(&block_group->discard_list);
-+
- 	if (!btrfs_run_discard_work(discard_ctl)) {
- 		spin_unlock(&discard_ctl->lock);
- 		return;
-@@ -120,6 +127,8 @@ static void add_to_discard_unused_list(s
- 	block_group->discard_eligible_time = (ktime_get_ns() +
- 					      BTRFS_DISCARD_UNUSED_DELAY);
- 	block_group->discard_state = BTRFS_DISCARD_RESET_CURSOR;
-+	if (!queued)
-+		btrfs_get_block_group(block_group);
- 	list_add_tail(&block_group->discard_list,
- 		      &discard_ctl->discard_list[BTRFS_DISCARD_INDEX_UNUSED]);
- 
-@@ -130,6 +139,7 @@ static bool remove_from_discard_list(str
- 				     struct btrfs_block_group *block_group)
- {
- 	bool running = false;
-+	bool queued = false;
- 
- 	spin_lock(&discard_ctl->lock);
- 
-@@ -139,7 +149,16 @@ static bool remove_from_discard_list(str
- 	}
- 
- 	block_group->discard_eligible_time = 0;
-+	queued = !list_empty(&block_group->discard_list);
- 	list_del_init(&block_group->discard_list);
-+	/*
-+	 * If the block group is currently running in the discard workfn, we
-+	 * don't want to deref it, since it's still being used by the workfn.
-+	 * The workfn will notice this case and deref the block group when it is
-+	 * finished.
-+	 */
-+	if (queued && !running)
-+		btrfs_put_block_group(block_group);
- 
- 	spin_unlock(&discard_ctl->lock);
- 
-@@ -212,10 +231,12 @@ again:
- 	if (block_group && now >= block_group->discard_eligible_time) {
- 		if (block_group->discard_index == BTRFS_DISCARD_INDEX_UNUSED &&
- 		    block_group->used != 0) {
--			if (btrfs_is_block_group_data_only(block_group))
-+			if (btrfs_is_block_group_data_only(block_group)) {
- 				__add_to_discard_list(discard_ctl, block_group);
--			else
-+			} else {
- 				list_del_init(&block_group->discard_list);
-+				btrfs_put_block_group(block_group);
-+			}
- 			goto again;
+--- a/kernel/locking/rwsem.c
++++ b/kernel/locking/rwsem.c
+@@ -624,18 +624,16 @@ static inline bool rwsem_try_write_lock(
+ 			 */
+ 			if (first->handoff_set && (waiter != first))
+ 				return false;
+-
+-			/*
+-			 * First waiter can inherit a previously set handoff
+-			 * bit and spin on rwsem if lock acquisition fails.
+-			 */
+-			if (waiter == first)
+-				waiter->handoff_set = true;
  		}
- 		if (block_group->discard_state == BTRFS_DISCARD_RESET_CURSOR) {
-@@ -502,6 +523,15 @@ static void btrfs_discard_workfn(struct
- 	spin_lock(&discard_ctl->lock);
- 	discard_ctl->prev_discard = trimmed;
- 	discard_ctl->prev_discard_time = now;
-+	/*
-+	 * If the block group was removed from the discard list while it was
-+	 * running in this workfn, then we didn't deref it, since this function
-+	 * still owned that reference. But we set the discard_ctl->block_group
-+	 * back to NULL, so we can use that condition to know that now we need
-+	 * to deref the block_group.
-+	 */
-+	if (discard_ctl->block_group == NULL)
-+		btrfs_put_block_group(block_group);
- 	discard_ctl->block_group = NULL;
- 	__btrfs_discard_schedule_work(discard_ctl, now, false);
- 	spin_unlock(&discard_ctl->lock);
-@@ -638,8 +668,12 @@ void btrfs_discard_punt_unused_bgs_list(
- 	list_for_each_entry_safe(block_group, next, &fs_info->unused_bgs,
- 				 bg_list) {
- 		list_del_init(&block_group->bg_list);
--		btrfs_put_block_group(block_group);
- 		btrfs_discard_queue_work(&fs_info->discard_ctl, block_group);
-+		/*
-+		 * This put is for the get done by btrfs_mark_bg_unused.
-+		 * Queueing discard incremented it for discard's reference.
-+		 */
-+		btrfs_put_block_group(block_group);
+ 
+ 		new = count;
+ 
+ 		if (count & RWSEM_LOCK_MASK) {
++			/*
++			 * A waiter (first or not) can set the handoff bit
++			 * if it is an RT task or wait in the wait queue
++			 * for too long.
++			 */
+ 			if (has_handoff || (!rt_task(waiter->task) &&
+ 					    !time_after(jiffies, waiter->timeout)))
+ 				return false;
+@@ -651,11 +649,12 @@ static inline bool rwsem_try_write_lock(
+ 	} while (!atomic_long_try_cmpxchg_acquire(&sem->count, &count, new));
+ 
+ 	/*
+-	 * We have either acquired the lock with handoff bit cleared or
+-	 * set the handoff bit.
++	 * We have either acquired the lock with handoff bit cleared or set
++	 * the handoff bit. Only the first waiter can have its handoff_set
++	 * set here to enable optimistic spinning in slowpath loop.
+ 	 */
+ 	if (new & RWSEM_FLAG_HANDOFF) {
+-		waiter->handoff_set = true;
++		first->handoff_set = true;
+ 		lockevent_inc(rwsem_wlock_handoff);
+ 		return false;
  	}
- 	spin_unlock(&fs_info->unused_bgs_lock);
- }
-@@ -669,6 +703,7 @@ static void btrfs_discard_purge_list(str
- 			if (block_group->used == 0)
- 				btrfs_mark_bg_unused(block_group);
- 			spin_lock(&discard_ctl->lock);
-+			btrfs_put_block_group(block_group);
- 		}
- 	}
- 	spin_unlock(&discard_ctl->lock);
 
 
