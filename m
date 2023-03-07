@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE99BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:05:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D471AC4339B;
-	Tue,  7 Mar 2023 19:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FCBBA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:05:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB47EC433EF;
+	Tue,  7 Mar 2023 19:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215913;
-	bh=OvNyHpAAeeiTPusi5F0W7Sq5fJ9njNoI5QzTKir0DAQ=;
+	s=korg; t=1678215916;
+	bh=319VrVLMyzeaFNs2RtDivoLZ5vSlmo4RD3UQ2cZy1Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dIIPI4kbFFoL8NBh2kDLc5isY0P4VAv/b1Q2eL/SbkxXcCLc+iQJ3u76TnUMb4flL
-	 3GeEKSliUpVe2es1JVd6F3izwZOuhfgeLlAls2DeJ4hvKwEz7CyPwzxw6NaZW68mte
-	 bVJDztU73RifflfZDnLUqf9vRjacgYbPJm58MnLU=
+	b=Hj3tie5fsGXJrpBMK1DnkbfdtOrazUFevkTtfYt026XCpKn3Hx3KGoF7Y2VVQE3fF
+	 a66+hbYzupTa+aohgTAUHhGzYaY9I/xcK3pH55MNXEfTykCKhhQ39mWSDkhiV2i8F2
+	 m4EVFpgxvLZb07iwe3YCXtwCkpwcpPrVbo86tCeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	alsa-devel@alsa-project.org,
-	Kees Cook <keescook@chromium.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 415/567] ASoC: kirkwood: Iterate over array indexes instead of using pointer math
-Date: Tue,  7 Mar 2023 18:02:31 +0100
-Message-Id: <20230307165923.857034050@linuxfoundation.org>
+Subject: [PATCH 5.15 398/567] PM: domains: fix memory leak with using debugfs_lookup()
+Date: Tue,  7 Mar 2023 18:02:14 +0100
+Message-Id: <20230307165923.091723317@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -39,47 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit b3bcedc0402fcdc5c8624c433562d9d1882749d8 ]
+[ Upstream commit 0b6200e1e9f53dabdc30d0f6c51af9a5f664d32b ]
 
-Walking the dram->cs array was seen as accesses beyond the first array
-item by the compiler. Instead, use the array index directly. This allows
-for run-time bounds checking under CONFIG_UBSAN_BOUNDS as well. Seen
-with GCC 13 with -fstrict-flex-arrays:
+When calling debugfs_lookup() the result must have dput() called on it,
+otherwise the memory will leak over time.  To make things simpler, just
+call debugfs_lookup_and_remove() instead which handles all of the logic
+at once.
 
-../sound/soc/kirkwood/kirkwood-dma.c: In function
-'kirkwood_dma_conf_mbus_windows.constprop':
-../sound/soc/kirkwood/kirkwood-dma.c:90:24: warning: array subscript 0 is outside array bounds of 'const struct mbus_dram_window[0]' [-Warray-bounds=]
-   90 |                 if ((cs->base & 0xffff0000) < (dma & 0xffff0000)) {
-      |                      ~~^~~~~~
-
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: alsa-devel@alsa-project.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230127224128.never.410-kees@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/kirkwood/kirkwood-dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/power/domain.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/sound/soc/kirkwood/kirkwood-dma.c b/sound/soc/kirkwood/kirkwood-dma.c
-index 700a18561a940..640cebd2983e2 100644
---- a/sound/soc/kirkwood/kirkwood-dma.c
-+++ b/sound/soc/kirkwood/kirkwood-dma.c
-@@ -86,7 +86,7 @@ kirkwood_dma_conf_mbus_windows(void __iomem *base, int win,
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index 94fe30c187ad8..24a82e252b7e1 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -217,13 +217,10 @@ static void genpd_debug_add(struct generic_pm_domain *genpd);
  
- 	/* try to find matching cs for current dma address */
- 	for (i = 0; i < dram->num_cs; i++) {
--		const struct mbus_dram_window *cs = dram->cs + i;
-+		const struct mbus_dram_window *cs = &dram->cs[i];
- 		if ((cs->base & 0xffff0000) < (dma & 0xffff0000)) {
- 			writel(cs->base & 0xffff0000,
- 				base + KIRKWOOD_AUDIO_WIN_BASE_REG(win));
+ static void genpd_debug_remove(struct generic_pm_domain *genpd)
+ {
+-	struct dentry *d;
+-
+ 	if (!genpd_debugfs_dir)
+ 		return;
+ 
+-	d = debugfs_lookup(genpd->name, genpd_debugfs_dir);
+-	debugfs_remove(d);
++	debugfs_lookup_and_remove(genpd->name, genpd_debugfs_dir);
+ }
+ 
+ static void genpd_update_accounting(struct generic_pm_domain *genpd)
 -- 
 2.39.2
 
