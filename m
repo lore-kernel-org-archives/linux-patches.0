@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB81BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:46:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0EAFC433EF;
-	Tue,  7 Mar 2023 18:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58405BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:46:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7ED4C433EF;
+	Tue,  7 Mar 2023 18:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214781;
-	bh=2YW5azqXnLgUujBzR/jXRwcNd/I7Sr7yDfOGI8OjIIU=;
+	s=korg; t=1678214784;
+	bh=nH/qHADc/aV0BOh1sT85kfPYo8JrjEvROLcsHUdHMWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FCPb+wuEBPokmpkxdMyrz/iZTKUaTgSe1OyaWmf8e5i64ApwMsJz5Q+KjlePJus4o
-	 5Tk39yRra3GTae2Jcg8nOL260ybLADWpjT8leW66q+VIoSivG/2FGnUtOc17WTPATG
-	 ztm9B4BqJ7f5HNo2wp6SR7EjdfcIyxW9ESglKSkU=
+	b=ZMRRb0+BKoAc5NtVAlIdebmLDfA5191lH80Q0kA6vqKEg7ooyoGR+WnydcWfjdN7i
+	 q2wQh/Jdqnm1QlYc6wWmUTytca73DeAThNVw6R0SRSFU4lyBYp4aOqvSSiFCFFR1eF
+	 7uG4QT/Vdkak0GRgotArTG3dxJcte6X3YiJWSQhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Waiman Long <longman@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Robert Marko <robimarko@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 047/567] locking/rwsem: Disable preemption in all down_read*() and up_read() code paths
-Date: Tue,  7 Mar 2023 17:56:23 +0100
-Message-Id: <20230307165907.965374092@linuxfoundation.org>
+Subject: [PATCH 5.15 021/567] arm64: dts: qcom: ipq8074: correct USB3 QMP PHY-s clock output names
+Date: Tue,  7 Mar 2023 17:55:57 +0100
+Message-Id: <20230307165906.822321493@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -37,132 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Waiman Long <longman@redhat.com>
+From: Robert Marko <robimarko@gmail.com>
 
-[ Upstream commit 3f5245538a1964ae186ab7e1636020a41aa63143 ]
+[ Upstream commit 877cff3568c0f54511d77918ae16b2d6e9a0dfce ]
 
-Commit:
+It seems that clock-output-names for the USB3 QMP PHY-s where set without
+actually checking what is the GCC clock driver expecting, so clock core
+could never actually find the parents for usb0_pipe_clk_src and
+usb1_pipe_clk_src clocks in the GCC driver.
 
-  91d2a812dfb9 ("locking/rwsem: Make handoff writer optimistically spin on owner")
+So, correct the names to be what the driver expects so that parenting
+works.
 
-... assumes that when the owner field is changed to NULL, the lock will
-become free soon. But commit:
+Before:
+gcc_usb0_pipe_clk_src                0        0        0   125000000          0     0  50000         Y
+gcc_usb1_pipe_clk_src                0        0        0   125000000          0     0  50000         Y
 
-  48dfb5d2560d ("locking/rwsem: Disable preemption while trying for rwsem lock")
+After:
+ usb3phy_0_cc_pipe_clk                1        1        0   125000000          0     0  50000         Y
+    usb0_pipe_clk_src                 1        1        0   125000000          0     0  50000         Y
+       gcc_usb0_pipe_clk              1        1        0   125000000          0     0  50000         Y
+ usb3phy_1_cc_pipe_clk                1        1        0   125000000          0     0  50000         Y
+    usb1_pipe_clk_src                 1        1        0   125000000          0     0  50000         Y
+       gcc_usb1_pipe_clk              1        1        0   125000000          0     0  50000         Y
 
-... disabled preemption when acquiring rwsem for write.
-
-However, preemption has not yet been disabled when acquiring a read lock
-on a rwsem.  So a reader can add a RWSEM_READER_BIAS to count without
-setting owner to signal a reader, got preempted out by a RT task which
-then spins in the writer slowpath as owner remains NULL leading to live lock.
-
-One easy way to fix this problem is to disable preemption at all the
-down_read*() and up_read() code paths as implemented in this patch.
-
-Fixes: 91d2a812dfb9 ("locking/rwsem: Make handoff writer optimistically spin on owner")
-Reported-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230126003628.365092-3-longman@redhat.com
+Fixes: 5e09bc51d07b ("arm64: dts: ipq8074: enable USB support")
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230108130440.670181-2-robimarko@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/rwsem.c | 30 ++++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
-index 73cff464dde00..bd1d714a7ea08 100644
---- a/kernel/locking/rwsem.c
-+++ b/kernel/locking/rwsem.c
-@@ -1045,7 +1045,7 @@ rwsem_down_read_slowpath(struct rw_semaphore *sem, long count, unsigned int stat
- 			/* Ordered by sem->wait_lock against rwsem_mark_wake(). */
- 			break;
- 		}
--		schedule();
-+		schedule_preempt_disabled();
- 		lockevent_inc(rwsem_sleep_reader);
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index 9d4019e0949a9..183b144a23fb5 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -114,7 +114,7 @@ usb1_ssphy: phy@58200 {
+ 				#phy-cells = <0>;
+ 				clocks = <&gcc GCC_USB1_PIPE_CLK>;
+ 				clock-names = "pipe0";
+-				clock-output-names = "gcc_usb1_pipe_clk_src";
++				clock-output-names = "usb3phy_1_cc_pipe_clk";
+ 			};
+ 		};
  
-@@ -1224,14 +1224,20 @@ static struct rw_semaphore *rwsem_downgrade_wake(struct rw_semaphore *sem)
-  */
- static inline int __down_read_common(struct rw_semaphore *sem, int state)
- {
-+	int ret = 0;
- 	long count;
+@@ -157,7 +157,7 @@ usb0_ssphy: phy@78200 {
+ 				#phy-cells = <0>;
+ 				clocks = <&gcc GCC_USB0_PIPE_CLK>;
+ 				clock-names = "pipe0";
+-				clock-output-names = "gcc_usb0_pipe_clk_src";
++				clock-output-names = "usb3phy_0_cc_pipe_clk";
+ 			};
+ 		};
  
-+	preempt_disable();
- 	if (!rwsem_read_trylock(sem, &count)) {
--		if (IS_ERR(rwsem_down_read_slowpath(sem, count, state)))
--			return -EINTR;
-+		if (IS_ERR(rwsem_down_read_slowpath(sem, count, state))) {
-+			ret = -EINTR;
-+			goto out;
-+		}
- 		DEBUG_RWSEMS_WARN_ON(!is_rwsem_reader_owned(sem), sem);
- 	}
--	return 0;
-+out:
-+	preempt_enable();
-+	return ret;
- }
- 
- static inline void __down_read(struct rw_semaphore *sem)
-@@ -1251,19 +1257,23 @@ static inline int __down_read_killable(struct rw_semaphore *sem)
- 
- static inline int __down_read_trylock(struct rw_semaphore *sem)
- {
-+	int ret = 0;
- 	long tmp;
- 
- 	DEBUG_RWSEMS_WARN_ON(sem->magic != sem, sem);
- 
-+	preempt_disable();
- 	tmp = atomic_long_read(&sem->count);
- 	while (!(tmp & RWSEM_READ_FAILED_MASK)) {
- 		if (atomic_long_try_cmpxchg_acquire(&sem->count, &tmp,
- 						    tmp + RWSEM_READER_BIAS)) {
- 			rwsem_set_reader_owned(sem);
--			return 1;
-+			ret = 1;
-+			break;
- 		}
- 	}
--	return 0;
-+	preempt_enable();
-+	return ret;
- }
- 
- /*
-@@ -1305,6 +1315,7 @@ static inline void __up_read(struct rw_semaphore *sem)
- 	DEBUG_RWSEMS_WARN_ON(sem->magic != sem, sem);
- 	DEBUG_RWSEMS_WARN_ON(!is_rwsem_reader_owned(sem), sem);
- 
-+	preempt_disable();
- 	rwsem_clear_reader_owned(sem);
- 	tmp = atomic_long_add_return_release(-RWSEM_READER_BIAS, &sem->count);
- 	DEBUG_RWSEMS_WARN_ON(tmp < 0, sem);
-@@ -1313,6 +1324,7 @@ static inline void __up_read(struct rw_semaphore *sem)
- 		clear_nonspinnable(sem);
- 		rwsem_wake(sem);
- 	}
-+	preempt_enable();
- }
- 
- /*
-@@ -1630,6 +1642,12 @@ void down_read_non_owner(struct rw_semaphore *sem)
- {
- 	might_sleep();
- 	__down_read(sem);
-+	/*
-+	 * The owner value for a reader-owned lock is mostly for debugging
-+	 * purpose only and is not critical to the correct functioning of
-+	 * rwsem. So it is perfectly fine to set it in a preempt-enabled
-+	 * context here.
-+	 */
- 	__rwsem_set_reader_owned(sem, NULL);
- }
- EXPORT_SYMBOL(down_read_non_owner);
 -- 
 2.39.2
 
