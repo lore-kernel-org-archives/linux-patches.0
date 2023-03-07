@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F29BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:16:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58CE5C433D2;
-	Tue,  7 Mar 2023 18:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A28BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:16:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F750C433EF;
+	Tue,  7 Mar 2023 18:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213016;
-	bh=w/OFUmNltoAFo66qK+uQlG9sHZGyUPwRkXH2JuihsB4=;
+	s=korg; t=1678213019;
+	bh=QfYdUlt/Ld29B1iV2/oLizqH7hxUCn+kXz4e7A6sfX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0d1HjcTyyz0vksnFUn/j0mRVExiI47YWXlmyq75qzucxzosKzTdjPWmRZauFD71U
-	 nZStlktIexvoTuLyH3cp8fQu5FTolWedKPlEEGaeRSTus4DYmviqCrCyBkXRxITZxf
-	 Ee99wHHoKInbUpW1HH/aMKMF79WOOxYqETy60lhM=
+	b=la466KRTHDUzbYT9xEL5xQnd9mexpzTyVLraw/fxhWUZLC3SpL96VRfsmEteEaDJP
+	 vwzBrUaGN4xXEKNKSQhpMHD4hoQVWbZPHwqJ9z99PxMiDuJg8bH1B6+KCzP/DPjVrx
+	 RECVsmxg+qJMHGuyOaLz0MwekdOF3oVL61ze+/Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Orlando Chamberlain <orlandoch.dev@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 370/885] hid: bigben_probe(): validate report count
-Date: Tue,  7 Mar 2023 17:55:04 +0100
-Message-Id: <20230307170018.395104502@linuxfoundation.org>
+Subject: [PATCH 6.1 371/885] ALSA: hda/hdmi: Register with vga_switcheroo on Dual GPU Macbooks
+Date: Tue,  7 Mar 2023 17:55:05 +0100
+Message-Id: <20230307170018.432726480@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,55 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Orlando Chamberlain <orlandoch.dev@gmail.com>
 
-[ Upstream commit b94335f899542a0da5fafc38af8edcaf90195843 ]
+[ Upstream commit 5beb5627a2481aade9aa630b7ebb7f99442321b6 ]
 
-bigben_probe() does not validate that the output report has the
-needed report values in the first field.
-A malicious device registering a report with one field and a single
-value causes an head OOB write in bigben_worker() when
-accessing report_field->value[1] to report_field->value[7].
-Use hid_validate_values() which takes care of all the needed checks.
+Commit 586bc4aab878 ("ALSA: hda/hdmi - fix vgaswitcheroo detection for
+AMD") caused only AMD gpu's with PX to have their audio component register
+with vga_switcheroo. This meant that Apple Macbooks with apple-gmux as the
+gpu switcher no longer had the audio client registering, so when the gpu is
+powered off by vga_switcheroo snd_hda_intel is unaware that it should have
+suspended the device:
 
-Fixes: 256a90ed9e46 ("HID: hid-bigbenff: driver for BigBen Interactive PS3OFMINIPAD gamepad")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Link: https://lore.kernel.org/r/20230211-bigben-oob-v1-1-d2849688594c@diag.uniroma1.it
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+amdgpu: switched off
+snd_hda_intel 0000:03:00.1:
+    Unable to change power state from D3hot to D0, device inaccessible
+snd_hda_intel 0000:03:00.1: CORB reset timeout#2, CORBRP = 65535
+
+To resolve this, we use apple_gmux_detect() and register a
+vga_switcheroo audio client when apple-gmux is detected.
+
+Fixes: 586bc4aab878 ("ALSA: hda/hdmi - fix vgaswitcheroo detection for AMD")
+Link: https://lore.kernel.org/all/20230210044826.9834-9-orlandoch.dev@gmail.com/
+Signed-off-by: Orlando Chamberlain <orlandoch.dev@gmail.com>
+Link: https://lore.kernel.org/r/20230216103450.12925-1-orlandoch.dev@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-bigbenff.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ sound/pci/hda/hda_intel.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-bigbenff.c b/drivers/hid/hid-bigbenff.c
-index 9d6560db762b1..a02cb517b4c47 100644
---- a/drivers/hid/hid-bigbenff.c
-+++ b/drivers/hid/hid-bigbenff.c
-@@ -371,7 +371,6 @@ static int bigben_probe(struct hid_device *hid,
- {
- 	struct bigben_device *bigben;
- 	struct hid_input *hidinput;
--	struct list_head *report_list;
- 	struct led_classdev *led;
- 	char *name;
- 	size_t name_sz;
-@@ -396,14 +395,12 @@ static int bigben_probe(struct hid_device *hid,
- 		return error;
- 	}
- 
--	report_list = &hid->report_enum[HID_OUTPUT_REPORT].report_list;
--	if (list_empty(report_list)) {
-+	bigben->report = hid_validate_values(hid, HID_OUTPUT_REPORT, 0, 0, 8);
-+	if (!bigben->report) {
- 		hid_err(hid, "no output report found\n");
- 		error = -ENODEV;
- 		goto error_hw_stop;
- 	}
--	bigben->report = list_entry(report_list->next,
--		struct hid_report, list);
- 
- 	if (list_empty(&hid->inputs)) {
- 		hid_err(hid, "no inputs found\n");
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index 2dbc082076f69..81c4a45254ff2 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -50,6 +50,7 @@
+ #include <sound/intel-dsp-config.h>
+ #include <linux/vgaarb.h>
+ #include <linux/vga_switcheroo.h>
++#include <linux/apple-gmux.h>
+ #include <linux/firmware.h>
+ #include <sound/hda_codec.h>
+ #include "hda_controller.h"
+@@ -1466,7 +1467,7 @@ static struct pci_dev *get_bound_vga(struct pci_dev *pci)
+ 				 * vgaswitcheroo.
+ 				 */
+ 				if (((p->class >> 16) == PCI_BASE_CLASS_DISPLAY) &&
+-				    atpx_present())
++				    (atpx_present() || apple_gmux_detect(NULL, NULL)))
+ 					return p;
+ 				pci_dev_put(p);
+ 			}
 -- 
 2.39.2
 
