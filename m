@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41675BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:16:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A65CC433A0;
-	Tue,  7 Mar 2023 17:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563DABA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:16:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD58AC4339B;
+	Tue,  7 Mar 2023 17:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209399;
-	bh=4zD5N3chTpNKOSM4YEzlxidUG22ZUJcdm2yVD1GM/rk=;
+	s=korg; t=1678209402;
+	bh=BHKUmmH1uQuc+dsRin47O0oj/CdIqLOijuZB5LVslec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=etOIgA6WFkXpg0CDidzLsoGDDSRqJOLQ08EWNNiopfXP/6KnX+GQkDf0gAQt3a90U
-	 9EzcCtLIOTyxylKBjt3Y42fKAtkywACailGNIpToAao7O6XsEl2U4I6zKll4L7/6H4
-	 Fzw52PJR//5k0KidwFNMjhtLymy6oH7LGPEbH1cY=
+	b=b3NntrisF5hjePr6xJ3nAuqeHepGJyxCatTCB05gQxuEbmbxsQJNqkMPWu76WkjSc
+	 piPlw8G5qXJRLajflvyfL2BlXe/YFctzytvowFqWHLq7XAKjJrKxChaoNe6KjAoreD
+	 KI26A3WdWN+mt3S15SIpWo2ec2rnjbire1FlggU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	syzbot+e008dccab31bd3647609@syzkaller.appspotmail.com,
+	syzbot+6692c72009680f7c4eb2@syzkaller.appspotmail.com,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0189/1001] arm64/cpufeature: Fix field sign for DIT hwcap detection
-Date: Tue,  7 Mar 2023 17:49:21 +0100
-Message-Id: <20230307170030.086992227@linuxfoundation.org>
+Subject: [PATCH 6.2 0207/1001] wifi: ath9k: htc_hst: free skb in ath9k_htc_rx_msg() if there is no callback function
+Date: Tue,  7 Mar 2023 17:49:39 +0100
+Message-Id: <20230307170030.877838123@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,45 +39,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 50daf5b7c4ec4efcaf49a4128930f872bec7dbc0 ]
+[ Upstream commit 9b25e3985477ac3f02eca5fc1e0cc6850a3f7e69 ]
 
-Since it was added our hwcap for DIT has specified that DIT is a signed
-field but this appears to be incorrect, the two values for the enumeration
-are:
+It is stated that ath9k_htc_rx_msg() either frees the provided skb or
+passes its management to another callback function. However, the skb is
+not freed in case there is no another callback function, and Syzkaller was
+able to cause a memory leak. Also minor comment fix.
 
-	0b0000	NI
-	0b0001	IMP
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-which look like a normal unsigned enumeration and the in-kernel DIT usage
-added by 01ab991fc0ee ("arm64: Enable data independent timing (DIT) in the
-kernel") detects the feature with an unsigned enum. Fix the hwcap to specify
-the field as unsigned.
-
-Fixes: 7206dc93a58f ("arm64: Expose Arm v8.4 features")
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20221207-arm64-sysreg-helpers-v3-1-0d71a7b174a8@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Reported-by: syzbot+e008dccab31bd3647609@syzkaller.appspotmail.com
+Reported-by: syzbot+6692c72009680f7c4eb2@syzkaller.appspotmail.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230104123546.51427-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/cpufeature.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/htc_hst.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index a77315b338e61..ee40dca9f28ef 100644
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -2777,7 +2777,7 @@ static const struct arm64_cpu_capabilities arm64_elf_hwcaps[] = {
- 	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_FP_SHIFT, 4, FTR_SIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_FPHP),
- 	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_AdvSIMD_SHIFT, 4, FTR_SIGNED, 0, CAP_HWCAP, KERNEL_HWCAP_ASIMD),
- 	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_AdvSIMD_SHIFT, 4, FTR_SIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_ASIMDHP),
--	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_DIT_SHIFT, 4, FTR_SIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_DIT),
-+	HWCAP_CAP(SYS_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_DIT_SHIFT, 4, FTR_UNSIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_DIT),
- 	HWCAP_CAP(SYS_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_DPB_SHIFT, 4, FTR_UNSIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_DCPOP),
- 	HWCAP_CAP(SYS_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_DPB_SHIFT, 4, FTR_UNSIGNED, 2, CAP_HWCAP, KERNEL_HWCAP_DCPODP),
- 	HWCAP_CAP(SYS_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_JSCVT_SHIFT, 4, FTR_UNSIGNED, 1, CAP_HWCAP, KERNEL_HWCAP_JSCVT),
+diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
+index ca05b07a45e67..fe62ff668f757 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_hst.c
++++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
+@@ -391,7 +391,7 @@ static void ath9k_htc_fw_panic_report(struct htc_target *htc_handle,
+  * HTC Messages are handled directly here and the obtained SKB
+  * is freed.
+  *
+- * Service messages (Data, WMI) passed to the corresponding
++ * Service messages (Data, WMI) are passed to the corresponding
+  * endpoint RX handlers, which have to free the SKB.
+  */
+ void ath9k_htc_rx_msg(struct htc_target *htc_handle,
+@@ -478,6 +478,8 @@ void ath9k_htc_rx_msg(struct htc_target *htc_handle,
+ 		if (endpoint->ep_callbacks.rx)
+ 			endpoint->ep_callbacks.rx(endpoint->ep_callbacks.priv,
+ 						  skb, epid);
++		else
++			goto invalid;
+ 	}
+ }
+ 
 -- 
 2.39.2
 
