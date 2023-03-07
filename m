@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23777BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:50:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9645CC433D2;
-	Tue,  7 Mar 2023 18:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6B8BA4C
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:50:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12D6C433D2;
+	Tue,  7 Mar 2023 18:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215003;
-	bh=/IG47hQpwi5I9tjNK9hCayohghJ30Y62H2Hcj9FZOYc=;
+	s=korg; t=1678215006;
+	bh=2vjIpf5zAHEPy6IFEG8tyq+dyDMx93bJpxc8Bblw5F0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DvcVo/cKQeCU08y5qFb3eW0LexPtuaaATmiPTwvGSiA3isTxlDOBHb8XY8mTxQHOi
-	 9WGZ8hnh6LjvYQAUZdEJGY5LHFknrOgM9FEfc7mn1FaN3SpqDPXrG0pFDHgsM48cvB
-	 8RMFdmjXokaThGudriB18TiBBxAhKEQudehWWXcM=
+	b=DGahzxdjLG0UFjlxMkna8rjXPpb69y8jSEDSQGDIWm6JZgilqCKLsP7DEghdWaGgX
+	 XmKqY4q+S3deZuNM2X1D/cnpdlSXNalDjzB9FyfALbikBscgHNWX6R8fFvGPVqY3Gg
+	 raHXI6odRnNZsh9PVNa1im4YdLApnTE75UivVhbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashok Raj <ashok.raj@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 118/567] x86/microcode: Check CPU capabilities after late microcode update correctly
-Date: Tue,  7 Mar 2023 17:57:34 +0100
-Message-Id: <20230307165911.012962264@linuxfoundation.org>
+Subject: [PATCH 5.15 089/567] rcu-tasks: Remove preemption disablement around srcu_read_[un]lock() calls
+Date: Tue,  7 Mar 2023 17:57:05 +0100
+Message-Id: <20230307165909.743714264@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,148 +38,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ashok Raj <ashok.raj@intel.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit c0dd9245aa9e25a697181f6085692272c9ec61bc ]
+[ Upstream commit 44757092958bdd749775022f915b7ac974384c2a ]
 
-The kernel caches each CPU's feature bits at boot in an x86_capability[]
-structure. However, the capabilities in the BSP's copy can be turned off
-as a result of certain command line parameters or configuration
-restrictions, for example the SGX bit. This can cause a mismatch when
-comparing the values before and after the microcode update.
+Ever since the following commit:
 
-Another example is X86_FEATURE_SRBDS_CTRL which gets added only after
-microcode update:
+	5a41344a3d83 ("srcu: Simplify __srcu_read_unlock() via this_cpu_dec()")
 
-#  --- cpuid.before	2023-01-21 14:54:15.652000747 +0100
-#  +++ cpuid.after	2023-01-21 14:54:26.632001024 +0100
-#  @@ -10,7 +10,7 @@ CPU:
-#      0x00000004 0x04: eax=0x00000000 ebx=0x00000000 ecx=0x00000000 edx=0x00000000
-#      0x00000005 0x00: eax=0x00000040 ebx=0x00000040 ecx=0x00000003 edx=0x11142120
-#      0x00000006 0x00: eax=0x000027f7 ebx=0x00000002 ecx=0x00000001 edx=0x00000000
-#  -   0x00000007 0x00: eax=0x00000000 ebx=0x029c6fbf ecx=0x40000000 edx=0xbc002400
-#  +   0x00000007 0x00: eax=0x00000000 ebx=0x029c6fbf ecx=0x40000000 edx=0xbc002e00
-  									     ^^^
+SRCU doesn't rely anymore on preemption to be disabled in order to
+modify the per-CPU counter. And even then it used to be done from the API
+itself.
 
-and which proves for a gazillionth time that late loading is a bad bad
-idea.
+Therefore and after checking further, it appears to be safe to remove
+the preemption disablement around __srcu_read_[un]lock() in
+exit_tasks_rcu_start() and exit_tasks_rcu_finish()
 
-microcode_check() is called after an update to report any previously
-cached CPUID bits which might have changed due to the update.
-
-Therefore, store the cached CPU caps before the update and compare them
-with the CPU caps after the microcode update has succeeded.
-
-Thus, the comparison is done between the CPUID *hardware* bits before
-and after the upgrade instead of using the cached, possibly runtime
-modified values in BSP's boot_cpu_data copy.
-
-As a result, false warnings about CPUID bits changes are avoided.
-
-  [ bp:
-  	- Massage.
-	- Add SRBDS_CTRL example.
-	- Add kernel-doc.
-	- Incorporate forgotten review feedback from dhansen.
-	]
-
-Fixes: 1008c52c09dc ("x86/CPU: Add a microcode loader callback")
-Signed-off-by: Ashok Raj <ashok.raj@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230109153555.4986-3-ashok.raj@intel.com
+Suggested-by: Boqun Feng <boqun.feng@gmail.com>
+Suggested-by: Paul E. McKenney <paulmck@kernel.org>
+Suggested-by: Neeraj Upadhyay <quic_neeraju@quicinc.com>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Stable-dep-of: 28319d6dc5e2 ("rcu-tasks: Fix synchronize_rcu_tasks() VS zap_pid_ns_processes()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/processor.h     |  1 +
- arch/x86/kernel/cpu/common.c         | 36 ++++++++++++++++++----------
- arch/x86/kernel/cpu/microcode/core.c |  6 +++++
- 3 files changed, 30 insertions(+), 13 deletions(-)
+ kernel/rcu/tasks.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
-index eb6d6d1057929..3e3bd5b7d5dbe 100644
---- a/arch/x86/include/asm/processor.h
-+++ b/arch/x86/include/asm/processor.h
-@@ -836,6 +836,7 @@ bool xen_set_default_idle(void);
- 
- void __noreturn stop_this_cpu(void *dummy);
- void microcode_check(struct cpuinfo_x86 *prev_info);
-+void store_cpu_caps(struct cpuinfo_x86 *info);
- 
- enum l1tf_mitigations {
- 	L1TF_MITIGATION_OFF,
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index f2cd244d31311..f7b4bbe71cdf9 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -2150,6 +2150,25 @@ void cpu_init_secondary(void)
- #endif
- 
- #ifdef CONFIG_MICROCODE_LATE_LOADING
-+/**
-+ * store_cpu_caps() - Store a snapshot of CPU capabilities
-+ * @curr_info: Pointer where to store it
-+ *
-+ * Returns: None
-+ */
-+void store_cpu_caps(struct cpuinfo_x86 *curr_info)
-+{
-+	/* Reload CPUID max function as it might've changed. */
-+	curr_info->cpuid_level = cpuid_eax(0);
-+
-+	/* Copy all capability leafs and pick up the synthetic ones. */
-+	memcpy(&curr_info->x86_capability, &boot_cpu_data.x86_capability,
-+	       sizeof(curr_info->x86_capability));
-+
-+	/* Get the hardware CPUID leafs */
-+	get_cpu_cap(curr_info);
-+}
-+
- /**
-  * microcode_check() - Check if any CPU capabilities changed after an update.
-  * @prev_info:	CPU capabilities stored before an update.
-@@ -2162,22 +2181,13 @@ void cpu_init_secondary(void)
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index d937bacf27b68..2408ca633872a 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -632,9 +632,7 @@ EXPORT_SYMBOL_GPL(show_rcu_tasks_classic_gp_kthread);
   */
- void microcode_check(struct cpuinfo_x86 *prev_info)
+ void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
  {
--	perf_check_microcode();
--
--	/* Reload CPUID max function as it might've changed. */
--	prev_info->cpuid_level = cpuid_eax(0);
-+	struct cpuinfo_x86 curr_info;
+-	preempt_disable();
+ 	current->rcu_tasks_idx = __srcu_read_lock(&tasks_rcu_exit_srcu);
+-	preempt_enable();
+ }
  
--	/*
--	 * Copy all capability leafs to pick up the synthetic ones so that
--	 * memcmp() below doesn't fail on that. The ones coming from CPUID will
--	 * get overwritten in get_cpu_cap().
--	 */
--	memcpy(&prev_info->x86_capability, &boot_cpu_data.x86_capability,
--	       sizeof(prev_info->x86_capability));
-+	perf_check_microcode();
+ /*
+@@ -646,9 +644,7 @@ void exit_tasks_rcu_finish(void) __releases(&tasks_rcu_exit_srcu)
+ {
+ 	struct task_struct *t = current;
  
--	get_cpu_cap(prev_info);
-+	store_cpu_caps(&curr_info);
+-	preempt_disable();
+ 	__srcu_read_unlock(&tasks_rcu_exit_srcu, t->rcu_tasks_idx);
+-	preempt_enable();
+ 	exit_tasks_rcu_finish_trace(t);
+ }
  
--	if (!memcmp(&prev_info->x86_capability, &boot_cpu_data.x86_capability,
-+	if (!memcmp(&prev_info->x86_capability, &curr_info.x86_capability,
- 		    sizeof(prev_info->x86_capability)))
- 		return;
- 
-diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index 9592dbf628b43..30d1bd36934dd 100644
---- a/arch/x86/kernel/cpu/microcode/core.c
-+++ b/arch/x86/kernel/cpu/microcode/core.c
-@@ -514,6 +514,12 @@ static int microcode_reload_late(void)
- 	atomic_set(&late_cpus_in,  0);
- 	atomic_set(&late_cpus_out, 0);
- 
-+	/*
-+	 * Take a snapshot before the microcode update in order to compare and
-+	 * check whether any bits changed after an update.
-+	 */
-+	store_cpu_caps(&prev_info);
-+
- 	ret = stop_machine_cpuslocked(__reload_late, NULL, cpu_online_mask);
- 	if (ret == 0)
- 		microcode_check(&prev_info);
 -- 
 2.39.2
 
