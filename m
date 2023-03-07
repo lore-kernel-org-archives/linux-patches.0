@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFB3BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CC8C433EF;
-	Tue,  7 Mar 2023 17:23:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A57BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3691C433D2;
+	Tue,  7 Mar 2023 17:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209787;
-	bh=wHJfAO5LsXajI8osGTdcr2aeOgtdaGADNY7wZzWn0Uc=;
+	s=korg; t=1678209790;
+	bh=iTaY3OGiLdQn1K5HESp2a+68ugNSO6iNybwKsp4vK2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F0M7FVAKzJiSCvRk5ZNyOipTYI9MfGrkhNBN0+J3TYRR1za5bBT/cnojtSS82s9hV
-	 HT4UA2TEMC1ogVDoVOoFmZ5XC3RChJGEvw2j+tyo0FsI79NRu/6/ur6s3399UndYfs
-	 5o7IGL9FXEduyVG30+5iAl9s6urokf+NJrAjqATU=
+	b=1LbXsw+dH/33ZfH81qotddmn43CTHJAIcs7clOyRaywu5pqf4PxnBu90pQCBhvog2
+	 FVHvjtzbCr+LlpOIAFKDvVh9/xz0ASn920KljPVnJSsZwSnOPvia3aHLXPnGf3QIaN
+	 tx/gtQ6qXcuajSIAmsSthd9n4LbDUOpV+8Ks/rnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yuan Can <yuancan@huawei.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Ian Ray <ian.ray@ge.com>,
-	Robert Foss <robert.foss@linaro.org>,
+	Melissa Wen <mwen@igalia.com>,
+	Melissa Wen <melissa.srw@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0332/1001] drm/bridge: megachips: Fix error handling in i2c_register_driver()
-Date: Tue,  7 Mar 2023 17:51:44 +0100
-Message-Id: <20230307170035.904426605@linuxfoundation.org>
+Subject: [PATCH 6.2 0333/1001] drm/vkms: Fix memory leak in vkms_init()
+Date: Tue,  7 Mar 2023 17:51:45 +0100
+Message-Id: <20230307170035.943630654@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -39,61 +38,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 4ecff954c370b82bce45bdca2846c5c5563e8a8a ]
+[ Upstream commit 0d0b368b9d104b437e1f4850ae94bdb9a3601e89 ]
 
-A problem about insmod megachips-stdpxxxx-ge-b850v3-fw.ko failed is
-triggered with the following log given:
+A memory leak was reported after the vkms module install failed.
 
-[ 4497.981497] Error: Driver 'stdp4028-ge-b850v3-fw' is already registered, aborting...
-insmod: ERROR: could not insert module megachips-stdpxxxx-ge-b850v3-fw.ko: Device or resource busy
+unreferenced object 0xffff88810bc28520 (size 16):
+  comm "modprobe", pid 9662, jiffies 4298009455 (age 42.590s)
+  hex dump (first 16 bytes):
+    01 01 00 64 81 88 ff ff 00 00 dc 0a 81 88 ff ff  ...d............
+  backtrace:
+    [<00000000e7561ff8>] kmalloc_trace+0x27/0x60
+    [<000000000b1954a0>] 0xffffffffc45200a9
+    [<00000000abbf1da0>] do_one_initcall+0xd0/0x4f0
+    [<000000001505ee87>] do_init_module+0x1a4/0x680
+    [<00000000958079ad>] load_module+0x6249/0x7110
+    [<00000000117e4696>] __do_sys_finit_module+0x140/0x200
+    [<00000000f74b12d2>] do_syscall_64+0x35/0x80
+    [<000000008fc6fcde>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-The reason is that stdpxxxx_ge_b850v3_init() returns i2c_add_driver()
-directly without checking its return value, if i2c_add_driver() failed,
-it returns without calling i2c_del_driver() on the previous i2c driver,
-resulting the megachips-stdpxxxx-ge-b850v3-fw can never be installed
-later.
-A simple call graph is shown as below:
+The reason is that the vkms_init() returns without checking the return
+value of vkms_create(), and if the vkms_create() failed, the config
+allocated at the beginning of vkms_init() is leaked.
 
- stdpxxxx_ge_b850v3_init()
-   i2c_add_driver(&stdp4028_ge_b850v3_fw_driver)
-   i2c_add_driver(&stdp2690_ge_b850v3_fw_driver)
-     i2c_register_driver()
-       driver_register()
-         bus_add_driver()
-           priv = kzalloc(...) # OOM happened
-   # return without delete stdp4028_ge_b850v3_fw_driver
+ vkms_init()
+   config = kmalloc(...) # config allocated
+   ...
+   return vkms_create() # vkms_create failed and config is leaked
 
-Fix by calling i2c_del_driver() on stdp4028_ge_b850v3_fw_driver when
-i2c_add_driver() returns error.
+Fix this problem by checking return value of vkms_create() and free the
+config if error happened.
 
-Fixes: fcfa0ddc18ed ("drm/bridge: Drivers for megachips-stdpxxxx-ge-b850v3-fw (LVDS-DP++)")
+Fixes: 2df7af93fdad ("drm/vkms: Add vkms_config type")
 Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Tested-by: Ian Ray <ian.ray@ge.com>
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221108091226.114524-1-yuancan@huawei.com
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Melissa Wen <melissa.srw@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221101065156.41584-2-yuancan@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vkms/vkms_drv.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c b/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
-index 97359f807bfc3..cbfa05a6767b5 100644
---- a/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
-+++ b/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
-@@ -440,7 +440,11 @@ static int __init stdpxxxx_ge_b850v3_init(void)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/gpu/drm/vkms/vkms_drv.c b/drivers/gpu/drm/vkms/vkms_drv.c
+index 293dbca50c316..8a74f37d59123 100644
+--- a/drivers/gpu/drm/vkms/vkms_drv.c
++++ b/drivers/gpu/drm/vkms/vkms_drv.c
+@@ -218,6 +218,7 @@ static int vkms_create(struct vkms_config *config)
  
--	return i2c_add_driver(&stdp2690_ge_b850v3_fw_driver);
-+	ret = i2c_add_driver(&stdp2690_ge_b850v3_fw_driver);
+ static int __init vkms_init(void)
+ {
++	int ret;
+ 	struct vkms_config *config;
+ 
+ 	config = kmalloc(sizeof(*config), GFP_KERNEL);
+@@ -230,7 +231,11 @@ static int __init vkms_init(void)
+ 	config->writeback = enable_writeback;
+ 	config->overlay = enable_overlay;
+ 
+-	return vkms_create(config);
++	ret = vkms_create(config);
 +	if (ret)
-+		i2c_del_driver(&stdp4028_ge_b850v3_fw_driver);
++		kfree(config);
 +
 +	return ret;
  }
- module_init(stdpxxxx_ge_b850v3_init);
  
+ static void vkms_destroy(struct vkms_config *config)
 -- 
 2.39.2
 
