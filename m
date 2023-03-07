@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9C1BA34
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:31:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540D6C4339B;
-	Tue,  7 Mar 2023 17:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E37BA34
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:31:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38305C4339E;
+	Tue,  7 Mar 2023 17:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210315;
-	bh=IVnI6tks0X4/fD2QVpdHmQBKEi+k0hH15T/PmMjIxxI=;
+	s=korg; t=1678210318;
+	bh=D+yubnDFXwrN/gENUSmFX9771EZyWlo4SabxxbJ/s1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lDseI2VK+XNEWFFNuXsqyBsBK8fKxvAuIk69SDzJNdEKV8wHhqkjz8iBS58fx1V2b
-	 hhhryMwGv5mrrVjk1tTa5HR5OSoPKF5fgUAstWB0TyAsCcFPDmCAMRIGnAbBJ4MI6k
-	 Nasj4a8xUj/JHysflXSF9bb71hwtNsIt+Qf6GTmo=
+	b=mltR5b+2IAuAUaT3G3oLMNG75XZhmkosQrs29oYFdVC4XDClcsf+ipOgb2RCkZmMe
+	 6qYKXwXlcKZF4epHUGNrtNscDX5QwxocnygyVC1DnGj5LYqGse1IlzILMab3QpqsPT
+	 VTqSaay8IR9qwIegHv7Lwy0IAc+QWnDfjrmXnEJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@huawei.com>,
+	Jinlong Mao <quic_jinlmao@quicinc.com>,
+	James Clark <james.clark@arm.com>,
 	Mike Leach <mike.leach@linaro.org>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0502/1001] coresight: etm4x: Fix accesses to TRCSEQRSTEVR and TRCSEQSTR
-Date: Tue,  7 Mar 2023 17:54:34 +0100
-Message-Id: <20230307170043.175290817@linuxfoundation.org>
+Subject: [PATCH 6.2 0503/1001] coresight: cti: Prevent negative values of enable count
+Date: Tue,  7 Mar 2023 17:54:35 +0100
+Message-Id: <20230307170043.224079356@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,67 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Junhao He <hejunhao3@huawei.com>
+From: James Clark <james.clark@arm.com>
 
-[ Upstream commit 589d928248b72f8377d45904a14bcf686aa8bbeb ]
+[ Upstream commit 3244fb6dbbf1ffc114cdf382cc167bdd8c18088a ]
 
-The TRCSEQRSTEVR and TRCSEQSTR registers are not implemented if the
-TRCIDR5.NUMSEQSTATE == 0. Skip accessing the registers in such cases.
+Writing 0 to the enable control repeatedly results in a negative value
+for enable_req_count. After this, writing 1 to the enable control
+appears to not work until the count returns to positive.
 
-Fixes: 2e1cdfe184b5 ("coresight-etm4x: Adding CoreSight ETM4x driver")
-Signed-off-by: Junhao He <hejunhao3@huawei.com>
+Change it so that it's impossible for enable_req_count to be < 0.
+Return an error to indicate that the disable request was invalid.
+
+Fixes: 835d722ba10a ("coresight: cti: Initial CoreSight CTI Driver")
+Tested-by: Jinlong Mao <quic_jinlmao@quicinc.com>
+Signed-off-by: James Clark <james.clark@arm.com>
 Reviewed-by: Mike Leach <mike.leach@linaro.org>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20230114091632.60095-1-hejunhao3@huawei.com
+Link: https://lore.kernel.org/r/20230110110736.2709917-2-james.clark@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hwtracing/coresight/coresight-etm4x-core.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/hwtracing/coresight/coresight-cti-core.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 1cc052979e016..77bca6932f017 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -427,8 +427,10 @@ static int etm4_enable_hw(struct etmv4_drvdata *drvdata)
- 		etm4x_relaxed_write32(csa, config->vipcssctlr, TRCVIPCSSCTLR);
- 	for (i = 0; i < drvdata->nrseqstate - 1; i++)
- 		etm4x_relaxed_write32(csa, config->seq_ctrl[i], TRCSEQEVRn(i));
--	etm4x_relaxed_write32(csa, config->seq_rst, TRCSEQRSTEVR);
--	etm4x_relaxed_write32(csa, config->seq_state, TRCSEQSTR);
-+	if (drvdata->nrseqstate) {
-+		etm4x_relaxed_write32(csa, config->seq_rst, TRCSEQRSTEVR);
-+		etm4x_relaxed_write32(csa, config->seq_state, TRCSEQSTR);
+diff --git a/drivers/hwtracing/coresight/coresight-cti-core.c b/drivers/hwtracing/coresight/coresight-cti-core.c
+index d2cf4f4848e1b..838872f2484d3 100644
+--- a/drivers/hwtracing/coresight/coresight-cti-core.c
++++ b/drivers/hwtracing/coresight/coresight-cti-core.c
+@@ -151,9 +151,16 @@ static int cti_disable_hw(struct cti_drvdata *drvdata)
+ {
+ 	struct cti_config *config = &drvdata->config;
+ 	struct coresight_device *csdev = drvdata->csdev;
++	int ret = 0;
+ 
+ 	spin_lock(&drvdata->spinlock);
+ 
++	/* don't allow negative refcounts, return an error */
++	if (!atomic_read(&drvdata->config.enable_req_count)) {
++		ret = -EINVAL;
++		goto cti_not_disabled;
 +	}
- 	etm4x_relaxed_write32(csa, config->ext_inp, TRCEXTINSELR);
- 	for (i = 0; i < drvdata->nr_cntr; i++) {
- 		etm4x_relaxed_write32(csa, config->cntrldvr[i], TRCCNTRLDVRn(i));
-@@ -1634,8 +1636,10 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
- 	for (i = 0; i < drvdata->nrseqstate - 1; i++)
- 		state->trcseqevr[i] = etm4x_read32(csa, TRCSEQEVRn(i));
++
+ 	/* check refcount - disable on 0 */
+ 	if (atomic_dec_return(&drvdata->config.enable_req_count) > 0)
+ 		goto cti_not_disabled;
+@@ -171,12 +178,12 @@ static int cti_disable_hw(struct cti_drvdata *drvdata)
+ 	coresight_disclaim_device_unlocked(csdev);
+ 	CS_LOCK(drvdata->base);
+ 	spin_unlock(&drvdata->spinlock);
+-	return 0;
++	return ret;
  
--	state->trcseqrstevr = etm4x_read32(csa, TRCSEQRSTEVR);
--	state->trcseqstr = etm4x_read32(csa, TRCSEQSTR);
-+	if (drvdata->nrseqstate) {
-+		state->trcseqrstevr = etm4x_read32(csa, TRCSEQRSTEVR);
-+		state->trcseqstr = etm4x_read32(csa, TRCSEQSTR);
-+	}
- 	state->trcextinselr = etm4x_read32(csa, TRCEXTINSELR);
+ 	/* not disabled this call */
+ cti_not_disabled:
+ 	spin_unlock(&drvdata->spinlock);
+-	return 0;
++	return ret;
+ }
  
- 	for (i = 0; i < drvdata->nr_cntr; i++) {
-@@ -1763,8 +1767,10 @@ static void __etm4_cpu_restore(struct etmv4_drvdata *drvdata)
- 	for (i = 0; i < drvdata->nrseqstate - 1; i++)
- 		etm4x_relaxed_write32(csa, state->trcseqevr[i], TRCSEQEVRn(i));
- 
--	etm4x_relaxed_write32(csa, state->trcseqrstevr, TRCSEQRSTEVR);
--	etm4x_relaxed_write32(csa, state->trcseqstr, TRCSEQSTR);
-+	if (drvdata->nrseqstate) {
-+		etm4x_relaxed_write32(csa, state->trcseqrstevr, TRCSEQRSTEVR);
-+		etm4x_relaxed_write32(csa, state->trcseqstr, TRCSEQSTR);
-+	}
- 	etm4x_relaxed_write32(csa, state->trcextinselr, TRCEXTINSELR);
- 
- 	for (i = 0; i < drvdata->nr_cntr; i++) {
+ void cti_write_single_reg(struct cti_drvdata *drvdata, int offset, u32 value)
 -- 
 2.39.2
 
