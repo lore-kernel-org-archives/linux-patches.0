@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4D2BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:20:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378FEC433EF;
-	Tue,  7 Mar 2023 17:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8EFBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:20:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB003C433A0;
+	Tue,  7 Mar 2023 17:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209641;
-	bh=ls1ww7wUoZdGfmdpDQ/rsvnyM2uFK2RBvTwDXaamC4E=;
+	s=korg; t=1678209645;
+	bh=wOKglhwjuN2P0B8giL2A/Jo5xiwh1H7X5JHJtbhdwEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2SwHO/MN5j5VxVt1zJFBlDs1GhpzcDs4nCTgiIvdkSkIBoM5p9fZUq+PCi9ew5Bya
-	 4SsmIaCtqjNgYmozSYQE1g1Wdisu5Iij3x4chmhLSCLvqX6rwApjUZMw9q3xwCtZXK
-	 oPUhZKd6WLswXanQvo1lxsjim48IqQxtV1aHPL4k=
+	b=d85RzPWcaiEVIQIXiQoPHIDZYtQXBbXMqsnFhxZZEW4JqCKhHsf19/CLQL8D3UfXY
+	 l+O306D/oFZSWSu5+jUDpdTIuCfgZK43w8u+xH63o/1fP+WbxnBpfoGpk5JRyUtq2q
+	 sPV08p+A9Lpd/Rzyhi4jMMJ7E9aGa/KzFWo7lCuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0257/1001] irqchip/irq-mvebu-gicp: Fix refcount leak in mvebu_gicp_probe
-Date: Tue,  7 Mar 2023 17:50:29 +0100
-Message-Id: <20230307170032.883618024@linuxfoundation.org>
+Subject: [PATCH 6.2 0284/1001] wifi: iwl3945: Add missing check for create_singlethread_workqueue
+Date: Tue,  7 Mar 2023 17:50:56 +0100
+Message-Id: <20230307170033.985114064@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,35 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 9419e700021a393f67be36abd0c4f3acc6139041 ]
+[ Upstream commit 1fdeb8b9f29dfd64805bb49475ac7566a3cb06cb ]
 
-of_irq_find_parent() returns a node pointer with refcount incremented,
-We should use of_node_put() on it when not needed anymore.
-Add missing of_node_put() to avoid refcount leak.
+Add the check for the return value of the create_singlethread_workqueue
+in order to avoid NULL pointer dereference.
 
-Fixes: a68a63cb4dfc ("irqchip/irq-mvebu-gicp: Add new driver for Marvell GICP")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230102084208.3951758-1-linmq006@gmail.com
+Fixes: b481de9ca074 ("[IWLWIFI]: add iwlwifi wireless drivers")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230208063032.42763-2-jiasheng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mvebu-gicp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/intel/iwlegacy/3945-mac.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/irqchip/irq-mvebu-gicp.c b/drivers/irqchip/irq-mvebu-gicp.c
-index fe88a782173dd..c43a345061d53 100644
---- a/drivers/irqchip/irq-mvebu-gicp.c
-+++ b/drivers/irqchip/irq-mvebu-gicp.c
-@@ -221,6 +221,7 @@ static int mvebu_gicp_probe(struct platform_device *pdev)
+diff --git a/drivers/net/wireless/intel/iwlegacy/3945-mac.c b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
+index d7e99d50b287b..9eaf5ec133f9e 100644
+--- a/drivers/net/wireless/intel/iwlegacy/3945-mac.c
++++ b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
+@@ -3372,10 +3372,12 @@ static DEVICE_ATTR(dump_errors, 0200, NULL, il3945_dump_error_log);
+  *
+  *****************************************************************************/
+ 
+-static void
++static int
+ il3945_setup_deferred_work(struct il_priv *il)
+ {
+ 	il->workqueue = create_singlethread_workqueue(DRV_NAME);
++	if (!il->workqueue)
++		return -ENOMEM;
+ 
+ 	init_waitqueue_head(&il->wait_command_queue);
+ 
+@@ -3392,6 +3394,8 @@ il3945_setup_deferred_work(struct il_priv *il)
+ 	timer_setup(&il->watchdog, il_bg_watchdog, 0);
+ 
+ 	tasklet_setup(&il->irq_tasklet, il3945_irq_tasklet);
++
++	return 0;
+ }
+ 
+ static void
+@@ -3712,7 +3716,10 @@ il3945_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
  	}
  
- 	parent_domain = irq_find_host(irq_parent_dn);
-+	of_node_put(irq_parent_dn);
- 	if (!parent_domain) {
- 		dev_err(&pdev->dev, "failed to find parent IRQ domain\n");
- 		return -ENODEV;
+ 	il_set_rxon_channel(il, &il->bands[NL80211_BAND_2GHZ].channels[5]);
+-	il3945_setup_deferred_work(il);
++	err = il3945_setup_deferred_work(il);
++	if (err)
++		goto out_remove_sysfs;
++
+ 	il3945_setup_handlers(il);
+ 	il_power_initialize(il);
+ 
+@@ -3724,7 +3731,7 @@ il3945_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 
+ 	err = il3945_setup_mac(il);
+ 	if (err)
+-		goto out_remove_sysfs;
++		goto out_destroy_workqueue;
+ 
+ 	il_dbgfs_register(il, DRV_NAME);
+ 
+@@ -3733,9 +3740,10 @@ il3945_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 
+ 	return 0;
+ 
+-out_remove_sysfs:
++out_destroy_workqueue:
+ 	destroy_workqueue(il->workqueue);
+ 	il->workqueue = NULL;
++out_remove_sysfs:
+ 	sysfs_remove_group(&pdev->dev.kobj, &il3945_attribute_group);
+ out_release_irq:
+ 	free_irq(il->pci_dev->irq, il);
 -- 
 2.39.2
 
