@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C27BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:33:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A24C43442;
-	Tue,  7 Mar 2023 17:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACD8BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:33:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C96C433EF;
+	Tue,  7 Mar 2023 17:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210415;
-	bh=YtKYInGt8VBTJB2alN4aCTeQ4DKlAicfnwsCC2NacNY=;
+	s=korg; t=1678210418;
+	bh=8Th9SNsa3znit+7Mpy1+XVSxSJzG0pSvQ6lxtUA4fA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=poDH2EqOVhuxtqw4XzGdiCUVG04VqCipS7tJKW0Gv9r1YB38MzdRNq6j7alvUjAd6
-	 BDaRvXJjF+gbenzTa5G45kmu/KBqwBv+KlWzfqr5ONGHllxkWPbC/sEOVTmLxZi9Dl
-	 8no6U0+dAZ3kZ87jwaHrH5vb3zuativH1uX1eaAo=
+	b=phUo6mLLcP7WhyREjaMYpivGnHDB8EsCvhWCbduhW9z4djhKGIXrXYjj8XhoM0yfs
+	 M6fb7dqyPDxacYKzWnU+19t612yiNpX+K1nqMZlq/MBM1ORz4IhQGqYQYbS+MhRI6g
+	 Tz0O+uzpGXxR2t6qxYF94K0r9Z7MOTaPht3mnAVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Bornyakov <i.bornyakov@metrotek.ru>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Xu Yilun <yilun.xu@intel.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0534/1001] fpga: microchip-spi: rewrite status polling in a time measurable way
-Date: Tue,  7 Mar 2023 17:55:06 +0100
-Message-Id: <20230307170044.620428819@linuxfoundation.org>
+Subject: [PATCH 6.2 0535/1001] usb: early: xhci-dbc: Fix a potential out-of-bound memory access
+Date: Tue,  7 Mar 2023 17:55:07 +0100
+Message-Id: <20230307170044.669603117@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,93 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Bornyakov <i.bornyakov@metrotek.ru>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 88e705697e801299a13ecaf2ba54599964fe711c ]
+[ Upstream commit a4a97ab3db5c081eb6e7dba91306adefb461e0bd ]
 
-Original busy loop with retries count in mpf_poll_status() is not too
-reliable, as it takes different times on different systems. Replace it
-with read_poll_timeout() macro.
+If xdbc_bulk_write() fails, the values in 'buf' can be anything. So the
+string is not guaranteed to be NULL terminated when xdbc_trace() is called.
 
-While at it, fix polling stop condition to met function's original
-intention declared in the comment. The issue with original polling stop
-condition is that it stops if any of mask bits is set, while intention
-was to stop if all mask bits is set. This was not noticible because only
-MPF_STATUS_READY is passed as mask argument and it is BIT(1).
+Reserve an extra byte, which will be zeroed automatically because 'buf' is
+a static variable, in order to avoid troubles, should it happen.
 
-Fixes: 5f8d4a900830 ("fpga: microchip-spi: add Microchip MPF FPGA manager")
-Signed-off-by: Ivan Bornyakov <i.bornyakov@metrotek.ru>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Acked-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20221230092922.18822-3-i.bornyakov@metrotek.ru
-Signed-off-by: Xu Yilun <yilun.xu@intel.com>
+Fixes: aeb9dd1de98c ("usb/early: Add driver for xhci debug capability")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/d6a7562c5e839a195cee85db6dc81817f9372cb1.1675016180.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/fpga/microchip-spi.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ drivers/usb/early/xhci-dbc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/fpga/microchip-spi.c b/drivers/fpga/microchip-spi.c
-index bb69f5beefe78..137fafdf57a6f 100644
---- a/drivers/fpga/microchip-spi.c
-+++ b/drivers/fpga/microchip-spi.c
-@@ -6,6 +6,7 @@
- #include <asm/unaligned.h>
- #include <linux/delay.h>
- #include <linux/fpga/fpga-mgr.h>
-+#include <linux/iopoll.h>
- #include <linux/module.h>
- #include <linux/of_device.h>
- #include <linux/spi/spi.h>
-@@ -33,7 +34,7 @@
+diff --git a/drivers/usb/early/xhci-dbc.c b/drivers/usb/early/xhci-dbc.c
+index 7970471548202..f3e23be227d41 100644
+--- a/drivers/usb/early/xhci-dbc.c
++++ b/drivers/usb/early/xhci-dbc.c
+@@ -874,7 +874,8 @@ static int xdbc_bulk_write(const char *bytes, int size)
  
- #define	MPF_BITS_PER_COMPONENT_SIZE	22
- 
--#define	MPF_STATUS_POLL_RETRIES		10000
-+#define	MPF_STATUS_POLL_TIMEOUT		(2 * USEC_PER_SEC)
- #define	MPF_STATUS_BUSY			BIT(0)
- #define	MPF_STATUS_READY		BIT(1)
- #define	MPF_STATUS_SPI_VIOLATION	BIT(2)
-@@ -194,24 +195,25 @@ static int mpf_ops_parse_header(struct fpga_manager *mgr,
- 	return 0;
- }
- 
--/* Poll HW status until busy bit is cleared and mask bits are set. */
- static int mpf_poll_status(struct mpf_priv *priv, u8 mask)
+ static void early_xdbc_write(struct console *con, const char *str, u32 n)
  {
--	int status, retries = MPF_STATUS_POLL_RETRIES;
-+	int ret, status;
+-	static char buf[XDBC_MAX_PACKET];
++	/* static variables are zeroed, so buf is always NULL terminated */
++	static char buf[XDBC_MAX_PACKET + 1];
+ 	int chunk, ret;
+ 	int use_cr = 0;
  
--	while (retries--) {
--		status = mpf_read_status(priv);
--		if (status < 0)
--			return status;
--
--		if (status & MPF_STATUS_BUSY)
--			continue;
--
--		if (!mask || (status & mask))
--			return status;
--	}
-+	/*
-+	 * Busy poll HW status. Polling stops if any of the following
-+	 * conditions are met:
-+	 *  - timeout is reached
-+	 *  - mpf_read_status() returns an error
-+	 *  - busy bit is cleared AND mask bits are set
-+	 */
-+	ret = read_poll_timeout(mpf_read_status, status,
-+				(status < 0) ||
-+				((status & (MPF_STATUS_BUSY | mask)) == mask),
-+				0, MPF_STATUS_POLL_TIMEOUT, false, priv);
-+	if (ret < 0)
-+		return ret;
- 
--	return -EBUSY;
-+	return status;
- }
- 
- static int mpf_spi_write(struct mpf_priv *priv, const void *buf, size_t buf_size)
 -- 
 2.39.2
 
