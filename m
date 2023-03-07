@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4724BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:40:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8E9C433EF;
-	Tue,  7 Mar 2023 17:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80CFBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:40:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC3BC433D2;
+	Tue,  7 Mar 2023 17:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210849;
-	bh=lX1KobrTflvWQnZeQwufnxX7sVZ0XDOpN260eJg/mhM=;
+	s=korg; t=1678210852;
+	bh=c6CFEAa3lu+8WT8c4VQGkZ0gM5IJh82kODyMmxNZiSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=prkv4poEQSslcuZ3EQzJygkodu98uK2GBrCMQwP1Jv+u3CP3XFnlQrFJBYoSPFzRN
-	 LJ8ycjAo79FWJ/jVbBbKmYFz5a9lI03yxyYMDzap72i0KBmDyi1tQSIUv18shNL34l
-	 j+0sjueevbspQmRJRaOoLJbYTrdWNFYYDwC0QvoI=
+	b=jeDdTC5S46q1WeiCD3wNI1aAWjx7lhFVkIht1JgC083MSqmx73Hm8r8zAJvC3xy5l
+	 SCXvdP6lgfGpSFAQBnPDbD3ms1Mi1Jnx1OZ2b8KZdEZOOx/h8VGtFeU1i6gbbiM9h8
+	 RDHC1rjFWxbRJnailweFTPrkWSMCKFWiWab6Sh80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Dave Thaler <dthaler@microsoft.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0674/1001] s390/idle: mark arch_cpu_idle() noinstr
-Date: Tue,  7 Mar 2023 17:57:26 +0100
-Message-Id: <20230307170050.849380350@linuxfoundation.org>
+Subject: [PATCH 6.2 0657/1001] bpf, docs: Fix modulo zero, division by zero, overflow, and underflow
+Date: Tue,  7 Mar 2023 17:57:09 +0100
+Message-Id: <20230307170050.114786406@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,66 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Dave Thaler <dthaler@microsoft.com>
 
-[ Upstream commit a9cbc1b471d291c865907542394f1c483b93a811 ]
+[ Upstream commit 0eb9d19e2201068260e439a5c96dc85f9f3722a2 ]
 
-linux-next commit ("cpuidle: tracing: Warn about !rcu_is_watching()")
-adds a new warning which hits on s390's arch_cpu_idle() function:
+Fix modulo zero, division by zero, overflow, and underflow. Also clarify how
+a negative immediate value is used in unsigned division.
 
-RCU not on for: arch_cpu_idle+0x0/0x28
-WARNING: CPU: 2 PID: 0 at include/linux/trace_recursion.h:162 arch_ftrace_ops_list_func+0x24c/0x258
-Modules linked in:
-CPU: 2 PID: 0 Comm: swapper/2 Not tainted 6.2.0-rc6-next-20230202 #4
-Hardware name: IBM 8561 T01 703 (z/VM 7.3.0)
-Krnl PSW : 0404d00180000000 00000000002b55c0 (arch_ftrace_ops_list_func+0x250/0x258)
-           R:0 T:1 IO:0 EX:0 Key:0 M:1 W:0 P:0 AS:3 CC:1 PM:0 RI:0 EA:3
-Krnl GPRS: c0000000ffffbfff 0000000080000002 0000000000000026 0000000000000000
-           0000037ffffe3a28 0000037ffffe3a20 0000000000000000 0000000000000000
-           0000000000000000 0000000000f4acf6 00000000001044f0 0000037ffffe3cb0
-           0000000000000000 0000000000000000 00000000002b55bc 0000037ffffe3bb8
-Krnl Code: 00000000002b55b0: c02000840051        larl    %r2,0000000001335652
-           00000000002b55b6: c0e5fff512d1        brasl   %r14,0000000000157b58
-          #00000000002b55bc: af000000            mc      0,0
-          >00000000002b55c0: a7f4ffe7            brc     15,00000000002b558e
-           00000000002b55c4: 0707                bcr     0,%r7
-           00000000002b55c6: 0707                bcr     0,%r7
-           00000000002b55c8: eb6ff0480024        stmg    %r6,%r15,72(%r15)
-           00000000002b55ce: b90400ef            lgr     %r14,%r15
-Call Trace:
- [<00000000002b55c0>] arch_ftrace_ops_list_func+0x250/0x258
-([<00000000002b55bc>] arch_ftrace_ops_list_func+0x24c/0x258)
- [<0000000000f5f0fc>] ftrace_common+0x1c/0x20
- [<00000000001044f6>] arch_cpu_idle+0x6/0x28
- [<0000000000f4acf6>] default_idle_call+0x76/0x128
- [<00000000001cc374>] do_idle+0xf4/0x1b0
- [<00000000001cc6ce>] cpu_startup_entry+0x36/0x40
- [<0000000000119d00>] smp_start_secondary+0x140/0x150
- [<0000000000f5d2ae>] restart_int_handler+0x6e/0x90
-
-Mark arch_cpu_idle() noinstr like all other architectures with
-CONFIG_ARCH_WANTS_NO_INSTR (should) have it to fix this.
-
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Dave Thaler <dthaler@microsoft.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230124001218.827-1-dthaler1968@googlemail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/idle.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/bpf/instruction-set.rst | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/kernel/idle.c b/arch/s390/kernel/idle.c
-index 4bf1ee293f2b3..a0da049e73609 100644
---- a/arch/s390/kernel/idle.c
-+++ b/arch/s390/kernel/idle.c
-@@ -44,7 +44,7 @@ void account_idle_time_irq(void)
- 	S390_lowcore.last_update_timer = idle->timer_idle_exit;
- }
+diff --git a/Documentation/bpf/instruction-set.rst b/Documentation/bpf/instruction-set.rst
+index e672d5ec6cc7b..2d3fe59bd260f 100644
+--- a/Documentation/bpf/instruction-set.rst
++++ b/Documentation/bpf/instruction-set.rst
+@@ -99,19 +99,26 @@ code      value  description
+ BPF_ADD   0x00   dst += src
+ BPF_SUB   0x10   dst -= src
+ BPF_MUL   0x20   dst \*= src
+-BPF_DIV   0x30   dst /= src
++BPF_DIV   0x30   dst = (src != 0) ? (dst / src) : 0
+ BPF_OR    0x40   dst \|= src
+ BPF_AND   0x50   dst &= src
+ BPF_LSH   0x60   dst <<= src
+ BPF_RSH   0x70   dst >>= src
+ BPF_NEG   0x80   dst = ~src
+-BPF_MOD   0x90   dst %= src
++BPF_MOD   0x90   dst = (src != 0) ? (dst % src) : dst
+ BPF_XOR   0xa0   dst ^= src
+ BPF_MOV   0xb0   dst = src
+ BPF_ARSH  0xc0   sign extending shift right
+ BPF_END   0xd0   byte swap operations (see `Byte swap instructions`_ below)
+ ========  =====  ==========================================================
  
--void arch_cpu_idle(void)
-+void noinstr arch_cpu_idle(void)
- {
- 	struct s390_idle_data *idle = this_cpu_ptr(&s390_idle);
- 	unsigned long idle_time;
++Underflow and overflow are allowed during arithmetic operations, meaning
++the 64-bit or 32-bit value will wrap. If eBPF program execution would
++result in division by zero, the destination register is instead set to zero.
++If execution would result in modulo by zero, for ``BPF_ALU64`` the value of
++the destination register is unchanged whereas for ``BPF_ALU`` the upper
++32 bits of the destination register are zeroed.
++
+ ``BPF_ADD | BPF_X | BPF_ALU`` means::
+ 
+   dst_reg = (u32) dst_reg + (u32) src_reg;
+@@ -128,6 +135,11 @@ BPF_END   0xd0   byte swap operations (see `Byte swap instructions`_ below)
+ 
+   dst_reg = dst_reg ^ imm32
+ 
++Also note that the division and modulo operations are unsigned. Thus, for
++``BPF_ALU``, 'imm' is first interpreted as an unsigned 32-bit value, whereas
++for ``BPF_ALU64``, 'imm' is first sign extended to 64 bits and the result
++interpreted as an unsigned 64-bit value. There are no instructions for
++signed division or modulo.
+ 
+ Byte swap instructions
+ ~~~~~~~~~~~~~~~~~~~~~~
 -- 
 2.39.2
 
