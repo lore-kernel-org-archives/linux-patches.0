@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732B5BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:46:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6CE5C433D2;
-	Tue,  7 Mar 2023 18:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC5BBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:46:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8CDBC433D2;
+	Tue,  7 Mar 2023 18:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214812;
-	bh=/lcoIZHB3ras2pvMDqkCyXxIT7s0lkjWl70CFSXQ2EM=;
+	s=korg; t=1678214815;
+	bh=ADnIdwdRBrDx7wElCOPENqlIyXPe0Zn+YBQZdYkLneg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DJkU8X63rQwUr96LSsrGMI8Cb+vyZiLuU487UTULrMJUJhLdI24e32lM/B7ra32Yu
-	 A7pVBLjps7F5vrBDlKfVByluSJb6RlkTsD3lNNpkC2qD0UfsBmcI6JEL7g7/oOb0v7
-	 3hV0MNrot7sTB3d5JdUkjax+f6k4b/X1b1lMjLfg=
+	b=llVrktSzolHgQemAkHAqns85XmjS1sDsJVkdiV3fHtYZB7q7rZgT6PthxhuCcmsd2
+	 0pb2KcYwjsco4Pjyij+F/E6sH4HLzjcmmMwteMKDG32dw93hpzlcdiu0xDmSjzqphg
+	 rYx3GRNx5CSx6ZTdvnZiZYis7sADBKcZ6T2/p0TY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Robert Marko <robimarko@gmail.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 026/567] arm64: dts: qcom: ipq8074: fix Gen3 PCIe node
-Date: Tue,  7 Mar 2023 17:56:02 +0100
-Message-Id: <20230307165907.064537463@linuxfoundation.org>
+Subject: [PATCH 5.15 027/567] arm64: dts: qcom: ipq8074: correct PCIe QMP PHY output clock names
+Date: Tue,  7 Mar 2023 17:56:03 +0100
+Message-Id: <20230307165907.103684669@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -37,105 +37,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Robert Marko <robimarko@gmail.com>
 
-[ Upstream commit 3e83a9c41ab0244a45a4a2800b9adb8de0d15f82 ]
+[ Upstream commit 0e8b90c0256cf9c9589e2cee517dedc987a34355 ]
 
-IPQ8074 comes in 2 silicon versions:
-* v1 with 2x Gen2 PCIe ports and QMP PHY-s
-* v2 with 1x Gen3 and 1x Gen2 PCIe ports and QMP PHY-s
+Current PCIe QMP PHY output name were changed in ("arm64: dts: qcom: Fix
+IPQ8074 PCIe PHY nodes") however it did not account for the fact that GCC
+driver is relying on the old names to match them as they are being used as
+the parent for the gcc_pcie0_pipe_clk and gcc_pcie1_pipe_clk.
 
-v2 is the final and production version that is actually supported by the
-kernel, however it looks like PCIe related nodes were added for the v1 SoC.
+This broke parenting as GCC could not find the parent clock, so fix it by
+changing to the names that driver is expecting.
 
-Finish the PCIe fixup by using the correct compatible, adding missing ATU
-register space, declaring max-link-speed, use correct ranges, add missing
-clocks and resets.
-
-Fixes: 33057e1672fe ("ARM: dts: ipq8074: Add pcie nodes")
+Fixes: 942bcd33ed45 ("arm64: dts: qcom: Fix IPQ8074 PCIe PHY nodes")
 Signed-off-by: Robert Marko <robimarko@gmail.com>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230113164449.906002-8-robimarko@gmail.com
+Link: https://lore.kernel.org/r/20230113164449.906002-9-robimarko@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 30 +++++++++++++++------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index fe0a4cdfe4e56..e1c1f132209d9 100644
+index e1c1f132209d9..a893a221e5633 100644
 --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -707,16 +707,18 @@ IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+@@ -199,7 +199,7 @@ pcie_phy0: phy@84200 {
+ 				#clock-cells = <0>;
+ 				clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
+ 				clock-names = "pipe0";
+-				clock-output-names = "pcie_0_pipe_clk";
++				clock-output-names = "pcie20_phy0_pipe_clk";
+ 			};
  		};
  
- 		pcie0: pci@20000000 {
--			compatible = "qcom,pcie-ipq8074";
-+			compatible = "qcom,pcie-ipq8074-gen3";
- 			reg = <0x20000000 0xf1d>,
- 			      <0x20000f20 0xa8>,
--			      <0x00080000 0x2000>,
-+			      <0x20001000 0x1000>,
-+			      <0x00080000 0x4000>,
- 			      <0x20100000 0x1000>;
--			reg-names = "dbi", "elbi", "parf", "config";
-+			reg-names = "dbi", "elbi", "atu", "parf", "config";
- 			device_type = "pci";
- 			linux,pci-domain = <0>;
- 			bus-range = <0x00 0xff>;
- 			num-lanes = <1>;
-+			max-link-speed = <3>;
- 			#address-cells = <3>;
- 			#size-cells = <2>;
- 
-@@ -724,9 +726,9 @@ pcie0: pci@20000000 {
- 			phy-names = "pciephy";
- 
- 			ranges = <0x81000000 0 0x20200000 0x20200000
--				  0 0x100000   /* downstream I/O */
--				  0x82000000 0 0x20300000 0x20300000
--				  0 0xd00000>; /* non-prefetchable memory */
-+				  0 0x10000>, /* downstream I/O */
-+				 <0x82000000 0 0x20220000 0x20220000
-+				  0 0xfde0000>; /* non-prefetchable memory */
- 
- 			interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "msi";
-@@ -744,28 +746,30 @@ IRQ_TYPE_LEVEL_HIGH>, /* int_c */
- 			clocks = <&gcc GCC_SYS_NOC_PCIE0_AXI_CLK>,
- 				 <&gcc GCC_PCIE0_AXI_M_CLK>,
- 				 <&gcc GCC_PCIE0_AXI_S_CLK>,
--				 <&gcc GCC_PCIE0_AHB_CLK>,
--				 <&gcc GCC_PCIE0_AUX_CLK>;
--
-+				 <&gcc GCC_PCIE0_AXI_S_BRIDGE_CLK>,
-+				 <&gcc GCC_PCIE0_RCHNG_CLK>;
- 			clock-names = "iface",
- 				      "axi_m",
- 				      "axi_s",
--				      "ahb",
--				      "aux";
-+				      "axi_bridge",
-+				      "rchng";
-+
- 			resets = <&gcc GCC_PCIE0_PIPE_ARES>,
- 				 <&gcc GCC_PCIE0_SLEEP_ARES>,
- 				 <&gcc GCC_PCIE0_CORE_STICKY_ARES>,
- 				 <&gcc GCC_PCIE0_AXI_MASTER_ARES>,
- 				 <&gcc GCC_PCIE0_AXI_SLAVE_ARES>,
- 				 <&gcc GCC_PCIE0_AHB_ARES>,
--				 <&gcc GCC_PCIE0_AXI_MASTER_STICKY_ARES>;
-+				 <&gcc GCC_PCIE0_AXI_MASTER_STICKY_ARES>,
-+				 <&gcc GCC_PCIE0_AXI_SLAVE_STICKY_ARES>;
- 			reset-names = "pipe",
- 				      "sleep",
- 				      "sticky",
- 				      "axi_m",
- 				      "axi_s",
- 				      "ahb",
--				      "axi_m_sticky";
-+				      "axi_m_sticky",
-+				      "axi_s_sticky";
- 			status = "disabled";
+@@ -227,7 +227,7 @@ pcie_phy1: phy@8e200 {
+ 				#clock-cells = <0>;
+ 				clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
+ 				clock-names = "pipe0";
+-				clock-output-names = "pcie_1_pipe_clk";
++				clock-output-names = "pcie20_phy1_pipe_clk";
+ 			};
  		};
- 	};
+ 
 -- 
 2.39.2
 
