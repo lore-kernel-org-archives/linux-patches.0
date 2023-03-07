@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA98EBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:44:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05B0C4339B;
-	Tue,  7 Mar 2023 17:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACF6BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:44:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088A6C4339B;
+	Tue,  7 Mar 2023 17:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211089;
-	bh=eiyPRHTKbFMhk/WfNo54jTafuAH6RpDmIKMet5d2GsI=;
+	s=korg; t=1678211092;
+	bh=hZDQs9eXUYPuDZMUCc+ieuOZlH3GgKGjFisfM2ka49w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hmoGCQmx8SwIzaPT646FlkCw6zbe+KKfqqfUw/FHLWSX/S+CYOSOB+Rwn0up/eZ5S
-	 EKp1UDT6emh1KrTdYWz+D3TpG/bD2ueYQjuwgkUjN3zLEarQHihPv/KCUsMrSs3Q3q
-	 jHB1Mwq2DglxYV5SmAPZrpiS/8RFDNqJfv8Ik2NM=
+	b=jC4BkgUqLvw4N4JH7zf3Jo4aoaiecak2aqOZIu80R7TtTvLQmYKj12MuTdhs/B28P
+	 /Z8gMa7JqBCjKJA1R927mOVH8n5UE3Re3Upi0va2UVyc89e2UGudddzYGQ6zeWIs7x
+	 AyGKkVLf12v6bJrkB3ffRiGXQ4J/gsuVL7dt1vUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	David Collins <quic_collinsd@quicinc.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.2 0749/1001] rtc: pm8xxx: fix set-alarm race
-Date: Tue,  7 Mar 2023 17:58:41 +0100
-Message-Id: <20230307170054.225071429@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Corey Minyard <cminyard@mvista.com>
+Subject: [PATCH 6.2 0750/1001] ipmi: ipmb: Fix the MODULE_PARM_DESC associated to retry_time_ms
+Date: Tue,  7 Mar 2023 17:58:42 +0100
+Message-Id: <20230307170054.264504140@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,74 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit c88db0eff9722fc2b6c4d172a50471d20e08ecc6 upstream.
+commit befb28f2676a65a5a4cc4626ae224461d8785af6 upstream.
 
-Make sure to disable the alarm before updating the four alarm time
-registers to avoid spurious alarms during the update.
+'This should be 'retry_time_ms' instead of 'max_retries'.
 
-Note that the disable needs to be done outside of the ctrl_reg_lock
-section to prevent a racing alarm interrupt from disabling the newly set
-alarm when the lock is released.
-
-Fixes: 9a9a54ad7aa2 ("drivers/rtc: add support for Qualcomm PMIC8xxx RTC")
-Cc: stable@vger.kernel.org      # 3.1
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: David Collins <quic_collinsd@quicinc.com>
-Link: https://lore.kernel.org/r/20230202155448.6715-2-johan+linaro@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 63c4eb347164 ("ipmi:ipmb: Add initial support for IPMI over IPMB")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Message-Id: <0d8670cff2c656e99a832a249e77dc90578f67de.1675591429.git.christophe.jaillet@wanadoo.fr>
+Cc: stable@vger.kernel.org
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-pm8xxx.c |   24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ drivers/char/ipmi/ipmi_ipmb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/rtc/rtc-pm8xxx.c
-+++ b/drivers/rtc/rtc-pm8xxx.c
-@@ -221,7 +221,6 @@ static int pm8xxx_rtc_set_alarm(struct d
- {
- 	int rc, i;
- 	u8 value[NUM_8_BIT_RTC_REGS];
--	unsigned int ctrl_reg;
- 	unsigned long secs, irq_flags;
- 	struct pm8xxx_rtc *rtc_dd = dev_get_drvdata(dev);
- 	const struct pm8xxx_rtc_regs *regs = rtc_dd->regs;
-@@ -233,6 +232,11 @@ static int pm8xxx_rtc_set_alarm(struct d
- 		secs >>= 8;
- 	}
+--- a/drivers/char/ipmi/ipmi_ipmb.c
++++ b/drivers/char/ipmi/ipmi_ipmb.c
+@@ -27,7 +27,7 @@ MODULE_PARM_DESC(bmcaddr, "Address to us
  
-+	rc = regmap_update_bits(rtc_dd->regmap, regs->alarm_ctrl,
-+				regs->alarm_en, 0);
-+	if (rc)
-+		return rc;
-+
- 	spin_lock_irqsave(&rtc_dd->ctrl_reg_lock, irq_flags);
+ static unsigned int retry_time_ms = 250;
+ module_param(retry_time_ms, uint, 0644);
+-MODULE_PARM_DESC(max_retries, "Timeout time between retries, in milliseconds.");
++MODULE_PARM_DESC(retry_time_ms, "Timeout time between retries, in milliseconds.");
  
- 	rc = regmap_bulk_write(rtc_dd->regmap, regs->alarm_rw, value,
-@@ -242,19 +246,11 @@ static int pm8xxx_rtc_set_alarm(struct d
- 		goto rtc_rw_fail;
- 	}
- 
--	rc = regmap_read(rtc_dd->regmap, regs->alarm_ctrl, &ctrl_reg);
--	if (rc)
--		goto rtc_rw_fail;
--
--	if (alarm->enabled)
--		ctrl_reg |= regs->alarm_en;
--	else
--		ctrl_reg &= ~regs->alarm_en;
--
--	rc = regmap_write(rtc_dd->regmap, regs->alarm_ctrl, ctrl_reg);
--	if (rc) {
--		dev_err(dev, "Write to RTC alarm control register failed\n");
--		goto rtc_rw_fail;
-+	if (alarm->enabled) {
-+		rc = regmap_update_bits(rtc_dd->regmap, regs->alarm_ctrl,
-+					regs->alarm_en, regs->alarm_en);
-+		if (rc)
-+			goto rtc_rw_fail;
- 	}
- 
- 	dev_dbg(dev, "Alarm Set for h:m:s=%ptRt, y-m-d=%ptRdr\n",
+ static unsigned int max_retries = 1;
+ module_param(max_retries, uint, 0644);
 
 
