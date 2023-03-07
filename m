@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0730EBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79360C433D2;
-	Tue,  7 Mar 2023 17:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD88EBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6146EC433D2;
+	Tue,  7 Mar 2023 17:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210510;
-	bh=7fymXT6a76Kfg39zLL2wxjZ6QOHP06Z+W0Vp4ZfdjD0=;
+	s=korg; t=1678210513;
+	bh=X5Kev56y7YGnAKASzygP7QcKaEky7kIxHJKVW2nbC40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nw0+cG3MvfQ/aqyDxXtdHjSy0EuvVz4vfugCGkwkV/VjWxiTdnfMPfAtoLifCRZXx
-	 L6+Rv3cYsux6BFZImeIwihXfhXCmOPHqrqUqeyPZiDugt3/bgqFElubDpy0IfvhEi9
-	 QHGZiVn+n61wuXLIn2mNNcb7S6NqFUdY/Lq1LLD4=
+	b=XiRkEH+9gOEmkZ+mUdqcFwdIlEcqHBrpHcT4rT59jwDbla5qSM7iWxoUm/Pxfnm4i
+	 EsvxxYsNMR0iyqXKFc5ZwV+S/Z5kcrNxachkGKCx+R27v89gwJhnX1oJNV2xDezYgG
+	 WEqBXglmQaZR3wPT05BgvGDZW+piGVPGG0kB7Llo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shravan Chippa <shravan.chippa@microchip.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
 	Vinod Koul <vkoul@kernel.org>,
+	dmaengine@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0565/1001] dmaengine: sf-pdma: pdma_desc memory leak fix
-Date: Tue,  7 Mar 2023 17:55:37 +0100
-Message-Id: <20230307170045.997667637@linuxfoundation.org>
+Subject: [PATCH 6.2 0566/1001] dmaengine: dw-axi-dmac: Do not dereference NULL structure
+Date: Tue,  7 Mar 2023 17:55:38 +0100
+Message-Id: <20230307170046.027738366@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,80 +38,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shravan Chippa <shravan.chippa@microchip.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit b02e07015a5ac7bbc029da931ae17914b8ae0339 ]
+[ Upstream commit be4d46edeee4b2459d2f53f37ada88bbfb634b6c ]
 
-Commit b2cc5c465c2c ("dmaengine: sf-pdma: Add multithread support for a
-DMA channel") changed sf_pdma_prep_dma_memcpy() to unconditionally
-allocate a new sf_pdma_desc each time it is called.
+If "vdesc" is NULL, it cannot be used with vd_to_axi_desc(). Leave
+"bytes" unchanged at 0. Seen under GCC 13 with -Warray-bounds:
 
-The driver previously recycled descs, by checking the in_use flag, only
-allocating additional descs if the existing one was in use. This logic
-was removed in commit b2cc5c465c2c ("dmaengine: sf-pdma: Add multithread
-support for a DMA channel"), but sf_pdma_free_desc() was not changed to
-handle the new behaviour.
+../drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c: In function 'dma_chan_tx_status':
+../drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c:329:46: warning: array subscript 0 is outside array bounds of 'struct
+virt_dma_desc[46116860184273879]' [-Warray-bounds=]
+  329 |                 bytes = vd_to_axi_desc(vdesc)->length;
+      |                                              ^~
 
-As a result, each time sf_pdma_prep_dma_memcpy() is called, the previous
-descriptor is leaked, over time leading to memory starvation:
-
-  unreferenced object 0xffffffe008447300 (size 192):
-  comm "irq/39-mchp_dsc", pid 343, jiffies 4294906910 (age 981.200s)
-  hex dump (first 32 bytes):
-    00 00 00 ff 00 00 00 00 b8 c1 00 00 00 00 00 00  ................
-    00 00 70 08 10 00 00 00 00 00 00 c0 00 00 00 00  ..p.............
-  backtrace:
-    [<00000000064a04f4>] kmemleak_alloc+0x1e/0x28
-    [<00000000018927a7>] kmem_cache_alloc+0x11e/0x178
-    [<000000002aea8d16>] sf_pdma_prep_dma_memcpy+0x40/0x112
-
-Add the missing kfree() to sf_pdma_free_desc(), and remove the redundant
-in_use flag.
-
-Fixes: b2cc5c465c2c ("dmaengine: sf-pdma: Add multithread support for a DMA channel")
-Signed-off-by: Shravan Chippa <shravan.chippa@microchip.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20230120100623.3530634-1-shravan.chippa@microchip.com
+Fixes: 8e55444da65c ("dmaengine: dw-axi-dmac: Support burst residue granularity")
+Cc: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230127223623.never.507-kees@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sf-pdma/sf-pdma.c | 3 +--
- drivers/dma/sf-pdma/sf-pdma.h | 1 -
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/dma/sf-pdma/sf-pdma.c b/drivers/dma/sf-pdma/sf-pdma.c
-index 6b524eb6bcf3a..e578ad5569494 100644
---- a/drivers/dma/sf-pdma/sf-pdma.c
-+++ b/drivers/dma/sf-pdma/sf-pdma.c
-@@ -96,7 +96,6 @@ sf_pdma_prep_dma_memcpy(struct dma_chan *dchan,	dma_addr_t dest, dma_addr_t src,
- 	if (!desc)
- 		return NULL;
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index bf85aa0979ecb..152c5d98524d7 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -325,8 +325,6 @@ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
+ 		len = vd_to_axi_desc(vdesc)->hw_desc[0].len;
+ 		completed_length = completed_blocks * len;
+ 		bytes = length - completed_length;
+-	} else {
+-		bytes = vd_to_axi_desc(vdesc)->length;
+ 	}
  
--	desc->in_use = true;
- 	desc->dirn = DMA_MEM_TO_MEM;
- 	desc->async_tx = vchan_tx_prep(&chan->vchan, &desc->vdesc, flags);
- 
-@@ -290,7 +289,7 @@ static void sf_pdma_free_desc(struct virt_dma_desc *vdesc)
- 	struct sf_pdma_desc *desc;
- 
- 	desc = to_sf_pdma_desc(vdesc);
--	desc->in_use = false;
-+	kfree(desc);
- }
- 
- static void sf_pdma_donebh_tasklet(struct tasklet_struct *t)
-diff --git a/drivers/dma/sf-pdma/sf-pdma.h b/drivers/dma/sf-pdma/sf-pdma.h
-index dcb3687bd5da2..5c398a83b491a 100644
---- a/drivers/dma/sf-pdma/sf-pdma.h
-+++ b/drivers/dma/sf-pdma/sf-pdma.h
-@@ -78,7 +78,6 @@ struct sf_pdma_desc {
- 	u64				src_addr;
- 	struct virt_dma_desc		vdesc;
- 	struct sf_pdma_chan		*chan;
--	bool				in_use;
- 	enum dma_transfer_direction	dirn;
- 	struct dma_async_tx_descriptor *async_tx;
- };
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
 -- 
 2.39.2
 
