@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC05BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:30:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A87C433EF;
-	Tue,  7 Mar 2023 18:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784E4BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:30:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1402C433D2;
+	Tue,  7 Mar 2023 18:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213833;
-	bh=OLzHTqFgFq8lIQjXcxoNXVvZLsxnNC0mKbItTkoaY/Q=;
+	s=korg; t=1678213836;
+	bh=8JL3bT9i44hJKKcT8evIpzAZ9F3lTIfuymCR/s290UE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P6pAv4iyk7Hlg8f5KW6EwkY7gxqPMhs76gPUnYTobkm3BWrc1v93hPyRJ2NEuEg9H
-	 7jLEyfeiSRc9xAwCoouFgeJEs86e1riK/wA5bZMWI0rAiuETRLcATvGn0DUdUk+4Zp
-	 6gbnAILPInzEMovwv9j20XvTwjzj+vG03V0+M6wI=
+	b=2vMAkO9MBHggcbMeCOO9N65iDjmv1fm5YlJhlHbMNgDh4us/ske2XjQTeaPebNbBc
+	 ogI55TzsynqYg9ARdu6mVXZWDJKIkyHeBbIQQGpa57CnLz4AXsjyx9ghSk1yXOx48A
+	 HEZTHtMARUe1YEGCxpC/c+j0Y3bJDUCeBjGJ6N1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 604/885] scsi: lpfc: Fix use-after-free KFENCE violation during sysfs firmware write
-Date: Tue,  7 Mar 2023 17:58:58 +0100
-Message-Id: <20230307170028.601483069@linuxfoundation.org>
+Subject: [PATCH 6.1 605/885] Revert "fbcon: dont lose the console font across generic->chip driver switch"
+Date: Tue,  7 Mar 2023 17:58:59 +0100
+Message-Id: <20230307170028.639026702@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,94 +35,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 21681b81b9ae548c5dae7ae00d931197a27f480c ]
+[ Upstream commit 12d5796d55f9fd9e4b621003127c99e176665064 ]
 
-During the sysfs firmware write process, a use-after-free read warning is
-logged from the lpfc_wr_object() routine:
+This reverts commit ae1287865f5361fa138d4d3b1b6277908b54eac9.
 
-  BUG: KFENCE: use-after-free read in lpfc_wr_object+0x235/0x310 [lpfc]
-  Use-after-free read at 0x0000000000cf164d (in kfence-#111):
-  lpfc_wr_object+0x235/0x310 [lpfc]
-  lpfc_write_firmware.cold+0x206/0x30d [lpfc]
-  lpfc_sli4_request_firmware_update+0xa6/0x100 [lpfc]
-  lpfc_request_firmware_upgrade_store+0x66/0xb0 [lpfc]
-  kernfs_fop_write_iter+0x121/0x1b0
-  new_sync_write+0x11c/0x1b0
-  vfs_write+0x1ef/0x280
-  ksys_write+0x5f/0xe0
-  do_syscall_64+0x59/0x90
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Always free the console font when deinitializing the framebuffer
+console. Subsequent framebuffer consoles will then use the default
+font. Rely on userspace to load any user-configured font for these
+consoles.
 
-The driver accessed wr_object pointer data, which was initialized into
-mailbox payload memory, after the mailbox object was released back to the
-mailbox pool.
+Commit ae1287865f53 ("fbcon: don't lose the console font across
+generic->chip driver switch") was introduced to work around losing
+the font during graphics-device handover. [1][2] It kept a dangling
+pointer with the font data between loading the two consoles, which is
+fairly adventurous hack. It also never covered cases when the other
+consoles, such as VGA text mode, where involved.
 
-Fix by moving the mailbox free calls to the end of the routine ensuring
-that we don't reference internal mailbox memory after release.
+The problem has meanwhile been solved in userspace. Systemd comes
+with a udev rule that re-installs the configured font when a console
+comes up. [3] So the kernel workaround can be removed.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This also removes one of the two special cases triggered by setting
+FBINFO_MISC_FIRMWARE in an fbdev driver.
+
+Tested during device handover from efifb and simpledrm to radeon. Udev
+reloads the configured console font for the new driver's terminal.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=892340 # 1
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=1074624 # 2
+Link: https://cgit.freedesktop.org/systemd/systemd/tree/src/vconsole/90-vconsole.rules.in?h=v222 # 3
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221219160516.23436-3-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_sli.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/video/fbdev/core/fbcon.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index 21c52154626f1..b93c948c4fcc4 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -20802,6 +20802,7 @@ lpfc_wr_object(struct lpfc_hba *phba, struct list_head *dmabuf_list,
- 	struct lpfc_mbx_wr_object *wr_object;
- 	LPFC_MBOXQ_t *mbox;
- 	int rc = 0, i = 0;
-+	int mbox_status = 0;
- 	uint32_t shdr_status, shdr_add_status, shdr_add_status_2;
- 	uint32_t shdr_change_status = 0, shdr_csf = 0;
- 	uint32_t mbox_tmo;
-@@ -20847,11 +20848,15 @@ lpfc_wr_object(struct lpfc_hba *phba, struct list_head *dmabuf_list,
- 	wr_object->u.request.bde_count = i;
- 	bf_set(lpfc_wr_object_write_length, &wr_object->u.request, written);
- 	if (!phba->sli4_hba.intr_enable)
--		rc = lpfc_sli_issue_mbox(phba, mbox, MBX_POLL);
-+		mbox_status = lpfc_sli_issue_mbox(phba, mbox, MBX_POLL);
- 	else {
- 		mbox_tmo = lpfc_mbox_tmo_val(phba, mbox);
--		rc = lpfc_sli_issue_mbox_wait(phba, mbox, mbox_tmo);
-+		mbox_status = lpfc_sli_issue_mbox_wait(phba, mbox, mbox_tmo);
- 	}
-+
-+	/* The mbox status needs to be maintained to detect MBOX_TIMEOUT. */
-+	rc = mbox_status;
-+
- 	/* The IOCTL status is embedded in the mailbox subheader. */
- 	shdr_status = bf_get(lpfc_mbox_hdr_status,
- 			     &wr_object->header.cfg_shdr.response);
-@@ -20866,10 +20871,6 @@ lpfc_wr_object(struct lpfc_hba *phba, struct list_head *dmabuf_list,
- 				  &wr_object->u.response);
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index 1b14c21af2b74..2bc8baa90c0f2 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -958,7 +958,7 @@ static const char *fbcon_startup(void)
+ 	set_blitting_type(vc, info);
+ 
+ 	/* Setup default font */
+-	if (!p->fontdata && !vc->vc_font.data) {
++	if (!p->fontdata) {
+ 		if (!fontname[0] || !(font = find_font(fontname)))
+ 			font = get_default_font(info->var.xres,
+ 						info->var.yres,
+@@ -968,8 +968,6 @@ static const char *fbcon_startup(void)
+ 		vc->vc_font.height = font->height;
+ 		vc->vc_font.data = (void *)(p->fontdata = font->data);
+ 		vc->vc_font.charcount = font->charcount;
+-	} else {
+-		p->fontdata = vc->vc_font.data;
  	}
  
--	if (!phba->sli4_hba.intr_enable)
--		mempool_free(mbox, phba->mbox_mem_pool);
--	else if (rc != MBX_TIMEOUT)
--		mempool_free(mbox, phba->mbox_mem_pool);
- 	if (shdr_status || shdr_add_status || shdr_add_status_2 || rc) {
- 		lpfc_printf_log(phba, KERN_ERR, LOG_TRACE_EVENT,
- 				"3025 Write Object mailbox failed with "
-@@ -20887,6 +20888,12 @@ lpfc_wr_object(struct lpfc_hba *phba, struct list_head *dmabuf_list,
- 		lpfc_log_fw_write_cmpl(phba, shdr_status, shdr_add_status,
- 				       shdr_add_status_2, shdr_change_status,
- 				       shdr_csf);
-+
-+	if (!phba->sli4_hba.intr_enable)
-+		mempool_free(mbox, phba->mbox_mem_pool);
-+	else if (mbox_status != MBX_TIMEOUT)
-+		mempool_free(mbox, phba->mbox_mem_pool);
-+
- 	return rc;
+ 	cols = FBCON_SWAP(ops->rotate, info->var.xres, info->var.yres);
+@@ -1135,9 +1133,9 @@ static void fbcon_init(struct vc_data *vc, int init)
+ 	ops->p = &fb_display[fg_console];
  }
  
+-static void fbcon_free_font(struct fbcon_display *p, bool freefont)
++static void fbcon_free_font(struct fbcon_display *p)
+ {
+-	if (freefont && p->userfont && p->fontdata && (--REFCOUNT(p->fontdata) == 0))
++	if (p->userfont && p->fontdata && (--REFCOUNT(p->fontdata) == 0))
+ 		kfree(p->fontdata - FONT_EXTRA_WORDS * sizeof(int));
+ 	p->fontdata = NULL;
+ 	p->userfont = 0;
+@@ -1172,8 +1170,8 @@ static void fbcon_deinit(struct vc_data *vc)
+ 	struct fb_info *info;
+ 	struct fbcon_ops *ops;
+ 	int idx;
+-	bool free_font = true;
+ 
++	fbcon_free_font(p);
+ 	idx = con2fb_map[vc->vc_num];
+ 
+ 	if (idx == -1)
+@@ -1184,8 +1182,6 @@ static void fbcon_deinit(struct vc_data *vc)
+ 	if (!info)
+ 		goto finished;
+ 
+-	if (info->flags & FBINFO_MISC_FIRMWARE)
+-		free_font = false;
+ 	ops = info->fbcon_par;
+ 
+ 	if (!ops)
+@@ -1197,9 +1193,8 @@ static void fbcon_deinit(struct vc_data *vc)
+ 	ops->initialized = false;
+ finished:
+ 
+-	fbcon_free_font(p, free_font);
+-	if (free_font)
+-		vc->vc_font.data = NULL;
++	fbcon_free_font(p);
++	vc->vc_font.data = NULL;
+ 
+ 	if (vc->vc_hi_font_mask && vc->vc_screenbuf)
+ 		set_vc_hi_font(vc, false);
 -- 
 2.39.2
 
