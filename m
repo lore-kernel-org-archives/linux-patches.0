@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D01BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:48:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A75AC433D2;
-	Tue,  7 Mar 2023 17:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54113BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:48:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931E8C433EF;
+	Tue,  7 Mar 2023 17:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211327;
-	bh=hauSpmDX0MEY7Ve/xrwRp/71H/1iWC8kc73YPbev0Hs=;
+	s=korg; t=1678211330;
+	bh=HnQYyYIqdPvQ+jzc18RfqnnuGxC4XSAukLjgRK9genA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1UZLHjZTJhYKoIgFr6I0gSy9Xs0iN9BNZsiG8zI1A1unwsjmdbSvs+4EtIeb6e5x
-	 7Lo4V7rf54zmTM0HE2Sb/R4uMDl3JIpfHcMV09FhsxZg7DIDVBDvtNHyNPKAOpA5gJ
-	 hlvMaodmdPT3loIYcG4GonaUAEq1ERNiUx3h/g3w=
+	b=ZXMthYgysJ4JQRd9vsYAPR4bsgCo+3DeanArHsdqv/pc+sVf6bD4roR0woEr1uERq
+	 ZhywWpJD+/mrOvYSbMbtuYM5DNNEtBmamDIwBjFfULbSurlcKujntqBUBbpbRDYFud
+	 jH+pLFxcQ3TzybKVyc5czbqFk0bsAPvcfdA0t3Z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wang Yugui <wangyugui@e16-tech.com>,
 	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Sungjong Seo <sj1557.seo@samsung.com>,
+	Andy Wu <Andy.Wu@sony.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.2 0795/1001] exfat: redefine DIR_DELETED as the bad cluster number
-Date: Tue,  7 Mar 2023 17:59:27 +0100
-Message-Id: <20230307170056.247143167@linuxfoundation.org>
+Subject: [PATCH 6.2 0796/1001] exfat: fix inode->i_blocks for non-512 byte sector size device
+Date: Tue,  7 Mar 2023 17:59:28 +0100
+Message-Id: <20230307170056.295346682@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,38 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sungjong Seo <sj1557.seo@samsung.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-commit bdaadfd343e3cba49ad0b009ff4b148dad0fa404 upstream.
+commit 39c1ce8eafc0ff64fb9e28536ccc7df6a8e2999d upstream.
 
-When a file or a directory is deleted, the hint for the cluster of
-its parent directory in its in-memory inode is set as DIR_DELETED.
-Therefore, DIR_DELETED must be one of invalid cluster numbers. According
-to the exFAT specification, a volume can have at most 2^32-11 clusters.
-However, DIR_DELETED is wrongly defined as 0xFFFF0321, which could be
-a valid cluster number. To fix it, let's redefine DIR_DELETED as
-0xFFFFFFF7, the bad cluster number.
+inode->i_blocks is not real number of blocks, but 512 byte ones.
 
-Fixes: 1acf1a564b60 ("exfat: add in-memory and on-disk structures and headers")
+Fixes: 98d917047e8b ("exfat: add file operations")
 Cc: stable@vger.kernel.org # v5.7+
-Reported-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
+Reported-by: Wang Yugui <wangyugui@e16-tech.com>
+Tested-by: Wang Yugui <wangyugui@e16-tech.com>
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Andy Wu <Andy.Wu@sony.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/exfat_fs.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/exfat/file.c  |    3 +--
+ fs/exfat/inode.c |    6 ++----
+ fs/exfat/namei.c |    2 +-
+ fs/exfat/super.c |    3 +--
+ 4 files changed, 5 insertions(+), 9 deletions(-)
 
---- a/fs/exfat/exfat_fs.h
-+++ b/fs/exfat/exfat_fs.h
-@@ -50,7 +50,7 @@ enum {
- #define ES_IDX_LAST_FILENAME(name_len)	\
- 	(ES_IDX_FIRST_FILENAME + EXFAT_FILENAME_ENTRY_NUM(name_len) - 1)
+--- a/fs/exfat/file.c
++++ b/fs/exfat/file.c
+@@ -209,8 +209,7 @@ void exfat_truncate(struct inode *inode)
+ 	if (err)
+ 		goto write_size;
  
--#define DIR_DELETED		0xFFFF0321
-+#define DIR_DELETED		0xFFFFFFF7
+-	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >>
+-				inode->i_blkbits;
++	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >> 9;
+ write_size:
+ 	aligned_size = i_size_read(inode);
+ 	if (aligned_size & (blocksize - 1)) {
+--- a/fs/exfat/inode.c
++++ b/fs/exfat/inode.c
+@@ -220,8 +220,7 @@ static int exfat_map_cluster(struct inod
+ 		num_clusters += num_to_be_allocated;
+ 		*clu = new_clu.dir;
  
- /* type values */
- #define TYPE_UNUSED		0x0000
+-		inode->i_blocks +=
+-			num_to_be_allocated << sbi->sect_per_clus_bits;
++		inode->i_blocks += EXFAT_CLU_TO_B(num_to_be_allocated, sbi) >> 9;
+ 
+ 		/*
+ 		 * Move *clu pointer along FAT chains (hole care) because the
+@@ -576,8 +575,7 @@ static int exfat_fill_inode(struct inode
+ 
+ 	exfat_save_attr(inode, info->attr);
+ 
+-	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >>
+-				inode->i_blkbits;
++	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >> 9;
+ 	inode->i_mtime = info->mtime;
+ 	inode->i_ctime = info->mtime;
+ 	ei->i_crtime = info->crtime;
+--- a/fs/exfat/namei.c
++++ b/fs/exfat/namei.c
+@@ -396,7 +396,7 @@ static int exfat_find_empty_entry(struct
+ 		ei->i_size_ondisk += sbi->cluster_size;
+ 		ei->i_size_aligned += sbi->cluster_size;
+ 		ei->flags = p_dir->flags;
+-		inode->i_blocks += 1 << sbi->sect_per_clus_bits;
++		inode->i_blocks += sbi->cluster_size >> 9;
+ 	}
+ 
+ 	return dentry;
+--- a/fs/exfat/super.c
++++ b/fs/exfat/super.c
+@@ -373,8 +373,7 @@ static int exfat_read_root(struct inode
+ 	inode->i_op = &exfat_dir_inode_operations;
+ 	inode->i_fop = &exfat_dir_operations;
+ 
+-	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >>
+-				inode->i_blkbits;
++	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >> 9;
+ 	ei->i_pos = ((loff_t)sbi->root_dir << 32) | 0xffffffff;
+ 	ei->i_size_aligned = i_size_read(inode);
+ 	ei->i_size_ondisk = i_size_read(inode);
 
 
