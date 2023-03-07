@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1C7BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:18:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B74C433EF;
-	Tue,  7 Mar 2023 18:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF83BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:18:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9C6C433D2;
+	Tue,  7 Mar 2023 18:18:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213119;
-	bh=IvegPonRFZ27fozfMfL+WMmN/6XRuSp+MW08wHsAWew=;
+	s=korg; t=1678213122;
+	bh=NWQx7M4PyVwY3RDumDwGbmubuc4FCNF3J7izREiR+nY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gt5jPSElZ9iHKpIkUw7UVk35WhDVCHi5R1VLb4k+HpnKXl1+PNa9UJA+es3xQlKos
-	 2rQ1zPBOccNO8GxEa3i/gMwI16/B5Becyfy7HJAmR7InrC+RlwcZEFwMu5mT9UIenh
-	 c+BMGD9/dtIK7l6qSHpuwWaP6Pt/+GdAkRvopzOI=
+	b=j3ANnx/KWUQ3bZ9BGe4n2u7Hka8b03ijOghTmHhlos5FUXW5/+5LWSlMH+iDxPMaD
+	 dFFDXS3evIzN467LdMYFxB3Q7NWdYHDcDjDI0NRJK1dijtWriyUx+/vWzImqzrB15E
+	 pN7lo3enJZPRJV+aQVSZS+4brIKoldkudftBFITs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiheng Lin <linqiheng@huawei.com>,
-	Lee Jones <lee@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 403/885] mfd: pcf50633-adc: Fix potential memleak in pcf50633_adc_async_read()
-Date: Tue,  7 Mar 2023 17:55:37 +0100
-Message-Id: <20230307170019.906128504@linuxfoundation.org>
+Subject: [PATCH 6.1 376/885] nfsd: clean up potential nfsd_file refcount leaks in COPY codepath
+Date: Tue,  7 Mar 2023 17:55:10 +0100
+Message-Id: <20230307170018.664603447@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,48 +35,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiheng Lin <linqiheng@huawei.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 8b450dcff23aa254844492831a8e2b508a9d522d ]
+[ Upstream commit 6ba434cb1a8d403ea9aad1b667c3ea3ad8b3191f ]
 
-`req` is allocated in pcf50633_adc_async_read(), but
-adc_enqueue_request() could fail to insert the `req` into queue.
-We need to check the return value and free it in the case of failure.
+There are two different flavors of the nfsd4_copy struct. One is
+embedded in the compound and is used directly in synchronous copies. The
+other is dynamically allocated, refcounted and tracked in the client
+struture. For the embedded one, the cleanup just involves releasing any
+nfsd_files held on its behalf. For the async one, the cleanup is a bit
+more involved, and we need to dequeue it from lists, unhash it, etc.
 
-Fixes: 08c3e06a5eb2 ("mfd: PCF50633 adc driver")
-Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20221208061555.8776-1-linqiheng@huawei.com
+There is at least one potential refcount leak in this code now. If the
+kthread_create call fails, then both the src and dst nfsd_files in the
+original nfsd4_copy object are leaked.
+
+The cleanup in this codepath is also sort of weird. In the async copy
+case, we'll have up to four nfsd_file references (src and dst for both
+flavors of copy structure). They are both put at the end of
+nfsd4_do_async_copy, even though the ones held on behalf of the embedded
+one outlive that structure.
+
+Change it so that we always clean up the nfsd_file refs held by the
+embedded copy structure before nfsd4_copy returns. Rework
+cleanup_async_copy to handle both inter and intra copies. Eliminate
+nfsd4_cleanup_intra_ssc since it now becomes a no-op.
+
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: 81e722978ad2 ("NFSD: fix problems with cleanup on errors in nfsd4_copy")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/pcf50633-adc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4proc.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/mfd/pcf50633-adc.c b/drivers/mfd/pcf50633-adc.c
-index 5cd653e615125..191b1bc6141c2 100644
---- a/drivers/mfd/pcf50633-adc.c
-+++ b/drivers/mfd/pcf50633-adc.c
-@@ -136,6 +136,7 @@ int pcf50633_adc_async_read(struct pcf50633 *pcf, int mux, int avg,
- 			     void *callback_param)
- {
- 	struct pcf50633_adc_request *req;
-+	int ret;
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 32652b5e6eff3..043cef25d3dbd 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1523,7 +1523,6 @@ nfsd4_cleanup_inter_ssc(struct nfsd4_ssc_umount_item *nsui, struct file *filp,
+ 	long timeout = msecs_to_jiffies(nfsd4_ssc_umount_timeout);
  
- 	/* req is freed when the result is ready, in interrupt handler */
- 	req = kmalloc(sizeof(*req), GFP_KERNEL);
-@@ -147,7 +148,11 @@ int pcf50633_adc_async_read(struct pcf50633 *pcf, int mux, int avg,
- 	req->callback = callback;
- 	req->callback_param = callback_param;
+ 	nfs42_ssc_close(filp);
+-	nfsd_file_put(dst);
+ 	fput(filp);
  
--	return adc_enqueue_request(pcf, req);
-+	ret = adc_enqueue_request(pcf, req);
-+	if (ret)
-+		kfree(req);
-+
-+	return ret;
+ 	spin_lock(&nn->nfsd_ssc_lock);
+@@ -1573,13 +1572,6 @@ nfsd4_setup_intra_ssc(struct svc_rqst *rqstp,
+ 				 &copy->nf_dst);
  }
- EXPORT_SYMBOL_GPL(pcf50633_adc_async_read);
  
+-static void
+-nfsd4_cleanup_intra_ssc(struct nfsd_file *src, struct nfsd_file *dst)
+-{
+-	nfsd_file_put(src);
+-	nfsd_file_put(dst);
+-}
+-
+ static void nfsd4_cb_offload_release(struct nfsd4_callback *cb)
+ {
+ 	struct nfsd4_cb_offload *cbo =
+@@ -1694,12 +1686,18 @@ static void dup_copy_fields(struct nfsd4_copy *src, struct nfsd4_copy *dst)
+ 	dst->ss_nsui = src->ss_nsui;
+ }
+ 
++static void release_copy_files(struct nfsd4_copy *copy)
++{
++	if (copy->nf_src)
++		nfsd_file_put(copy->nf_src);
++	if (copy->nf_dst)
++		nfsd_file_put(copy->nf_dst);
++}
++
+ static void cleanup_async_copy(struct nfsd4_copy *copy)
+ {
+ 	nfs4_free_copy_state(copy);
+-	nfsd_file_put(copy->nf_dst);
+-	if (!nfsd4_ssc_is_inter(copy))
+-		nfsd_file_put(copy->nf_src);
++	release_copy_files(copy);
+ 	spin_lock(&copy->cp_clp->async_lock);
+ 	list_del(&copy->copies);
+ 	spin_unlock(&copy->cp_clp->async_lock);
+@@ -1759,7 +1757,6 @@ static int nfsd4_do_async_copy(void *data)
+ 	} else {
+ 		nfserr = nfsd4_do_copy(copy, copy->nf_src->nf_file,
+ 				       copy->nf_dst->nf_file, false);
+-		nfsd4_cleanup_intra_ssc(copy->nf_src, copy->nf_dst);
+ 	}
+ 
+ do_callback:
+@@ -1822,9 +1819,9 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	} else {
+ 		status = nfsd4_do_copy(copy, copy->nf_src->nf_file,
+ 				       copy->nf_dst->nf_file, true);
+-		nfsd4_cleanup_intra_ssc(copy->nf_src, copy->nf_dst);
+ 	}
+ out:
++	release_copy_files(copy);
+ 	return status;
+ out_err:
+ 	if (nfsd4_ssc_is_inter(copy)) {
 -- 
 2.39.2
 
