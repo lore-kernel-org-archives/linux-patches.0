@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776D2BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:42:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFCE0C433EF;
-	Tue,  7 Mar 2023 18:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AFEBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:42:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00A2C433EF;
+	Tue,  7 Mar 2023 18:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214549;
-	bh=RXXBY/6yfiWKShcR8orx+uf1enEGD2NB1ekCpIGH6os=;
+	s=korg; t=1678214552;
+	bh=Mq8kpbkOodAb88/qz/hCUgFF5qlWUMDdl3EKD2jer/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uxs+lZYgmvIJvu7gFyQQS44yRkKh1OMvTTB7qhw8Djm/NKKR2Iwr7xtqBNNv8hmS5
-	 vlev1vg2C/D8Qw5/Bf9PvBh4/hIhTd8+NqQdjeAWnNqlFlk0sMSVLZAFm54ubPFESo
-	 f2Bh662jDPdlB5tXKJb5SGeKUBoFQMN0E5kREEK4=
+	b=VqFZ4v1DrjVyrwnT2wvCZuy+viJ9ITi0s7S35zKkdXZ1ll8w5eBznUswm3S3FnS7C
+	 xXl6INsvf+JPNHG3elzYrNWDVYQ6zIAWJRdjUVfb9CtFaRQcgGnA2YviWJ3FFNAECt
+	 OPQO8RY7p2PU9m4H805sGb7W+6Ba6+9B1Gce+MZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mattias Nissler <mnissler@rivosinc.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	"Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
+	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 857/885] riscv: Avoid enabling interrupts in die()
-Date: Tue,  7 Mar 2023 18:03:11 +0100
-Message-Id: <20230307170039.004480306@linuxfoundation.org>
+Subject: [PATCH 6.1 858/885] riscv: mm: fix regression due to update_mmu_cache change
+Date: Tue,  7 Mar 2023 18:03:12 +0100
+Message-Id: <20230307170039.035848915@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,52 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mattias Nissler <mnissler@rivosinc.com>
+From: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
 
-commit 130aee3fd9981297ff9354e5d5609cd59aafbbea upstream.
+commit b49f700668fff7565b945dce823def79bff59bb0 upstream.
 
-While working on something else, I noticed that the kernel would start
-accepting interrupts again after crashing in an interrupt handler. Since
-the kernel is already in inconsistent state, enabling interrupts is
-dangerous and opens up risk of kernel state deteriorating further.
-Interrupts do get enabled via what looks like an unintended side effect of
-spin_unlock_irq, so switch to the more cautious
-spin_lock_irqsave/spin_unlock_irqrestore instead.
+This is a partial revert of the commit 4bd1d80efb5a ("riscv: mm: notify
+remote harts about mmu cache updates"). Original commit included two
+loosely related changes serving the same purpose of fixing stale TLB
+entries causing user-space application crash:
+- introduce deferred per-ASID TLB flush for CPUs not running the task
+- switch to per-ASID TLB flush on all CPUs running the task in update_mmu_cache
 
-Fixes: 76d2a0493a17 ("RISC-V: Init and Halt Code")
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Link: https://lore.kernel.org/r/20230215144828.3370316-1-mnissler@rivosinc.com
+According to report and discussion in [1], the second part caused a
+regression on Renesas RZ/Five SoC. For now restore the old behavior
+of the update_mmu_cache.
+
+[1] https://lore.kernel.org/linux-riscv/20220829205219.283543-1-geomatsi@gmail.com/
+
+Fixes: 4bd1d80efb5a ("riscv: mm: notify remote harts about mmu cache updates")
+Reported-by: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Signed-off-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
+Link: trailer, so that it can be parsed with git's trailer functionality?
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230129211818.686557-1-geomatsi@gmail.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/traps.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/riscv/include/asm/pgtable.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/traps.c
-+++ b/arch/riscv/kernel/traps.c
-@@ -34,10 +34,11 @@ void die(struct pt_regs *regs, const cha
- 	static int die_counter;
- 	int ret;
- 	long cause;
-+	unsigned long flags;
+--- a/arch/riscv/include/asm/pgtable.h
++++ b/arch/riscv/include/asm/pgtable.h
+@@ -415,7 +415,7 @@ static inline void update_mmu_cache(stru
+ 	 * Relying on flush_tlb_fix_spurious_fault would suffice, but
+ 	 * the extra traps reduce performance.  So, eagerly SFENCE.VMA.
+ 	 */
+-	flush_tlb_page(vma, address);
++	local_flush_tlb_page(address);
+ }
  
- 	oops_enter();
- 
--	spin_lock_irq(&die_lock);
-+	spin_lock_irqsave(&die_lock, flags);
- 	console_verbose();
- 	bust_spinlocks(1);
- 
-@@ -54,7 +55,7 @@ void die(struct pt_regs *regs, const cha
- 
- 	bust_spinlocks(0);
- 	add_taint(TAINT_DIE, LOCKDEP_NOW_UNRELIABLE);
--	spin_unlock_irq(&die_lock);
-+	spin_unlock_irqrestore(&die_lock, flags);
- 	oops_exit();
- 
- 	if (in_interrupt())
+ static inline void update_mmu_cache_pmd(struct vm_area_struct *vma,
 
 
