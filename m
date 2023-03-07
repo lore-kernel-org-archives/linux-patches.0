@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD1CBA34
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:32:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B4FC433EF;
-	Tue,  7 Mar 2023 17:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDEE0BA35
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:32:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C5BC433D2;
+	Tue,  7 Mar 2023 17:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210329;
-	bh=fn9zZWHyjnilzJr7G0Xe71XAY6C7Ha1eyI6rzIIgOXg=;
+	s=korg; t=1678210332;
+	bh=+HR9jXVGjFFlB/GhQyLngXKC9rBZihLHjHk+QGfRUOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qzsAKTktEvIzVdD/k+0lKQkS7fdOp2M1XupExJn2IK0uAGTeVS53GbOIj5UdTzyOv
-	 EbStLJ3dku7TlT7yWYEMZEhgLCEOYvIHS28r9VWYG5tV28a8LQS3MuWn70CFy1LWgJ
-	 I/3R7mXk6AEEBnaZvt/aaB/TrqgdrERhHMKEFcSE=
+	b=a7iSP6B/Wprnj3ffAL9P6QtNFHlPn9E70PAA1Y5Is6OF6sJ/8anMDlFJsxvRbBgSj
+	 6w+JiU3US84c+9teuVMLBhqBo1gxbouucJIJJmNDTOZOQu/QPPzleYvzKqb8zSjXpg
+	 gmmI8WqyE2KG+RRmeCnKtdR2vFwh0R0ZqXF08z8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
+	Ferry Toth <ftoth@exalondelft.nl>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0507/1001] PCI: switchtec: Return -EFAULT for copy_to_user() errors
-Date: Tue,  7 Mar 2023 17:54:39 +0100
-Message-Id: <20230307170043.414316021@linuxfoundation.org>
+Subject: [PATCH 6.2 0490/1001] iio: light: tsl2563: Do not hardcode interrupt trigger type
+Date: Tue,  7 Mar 2023 17:54:22 +0100
+Message-Id: <20230307170042.652177548@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,55 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Ferry Toth <ftoth@exalondelft.nl>
 
-[ Upstream commit ddc10938e08cd7aac63d8385f7305f7889df5179 ]
+[ Upstream commit 027641b52fe37b64af61025298ce160c8b9b7a73 ]
 
-switchtec_dev_read() didn't handle copy_to_user() errors correctly: it
-assigned "rc = -EFAULT", but actually returned either "size", -ENXIO, or
--EBADMSG instead.
+Instead of hardcoding IRQ trigger type to IRQF_TRIGGER_RAISING,
+let's respect the settings specified in the firmware description.
+To be compatible with the older firmware descriptions, if trigger
+type is not set up there, we'll set it to default (raising edge).
 
-Update the failure cases to unlock mrpc_mutex and return -EFAULT directly.
-
-Link: https://lore.kernel.org/r/20221216162126.207863-3-helgaas@kernel.org
-Fixes: 080b47def5e5 ("MicroSemi Switchtec management interface driver")
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Fixes: 388be4883952 ("staging:iio: tsl2563 abi fixes and interrupt handling")
+Fixes: bdab1001738f ("staging:iio:light:tsl2563 remove old style event registration.")
+Signed-off-by: Ferry Toth <ftoth@exalondelft.nl>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20221207190348.9347-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/switch/switchtec.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/iio/light/tsl2563.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/switch/switchtec.c b/drivers/pci/switch/switchtec.c
-index 75be4fe225090..0c1faa6c1973a 100644
---- a/drivers/pci/switch/switchtec.c
-+++ b/drivers/pci/switch/switchtec.c
-@@ -606,21 +606,20 @@ static ssize_t switchtec_dev_read(struct file *filp, char __user *data,
- 	rc = copy_to_user(data, &stuser->return_code,
- 			  sizeof(stuser->return_code));
- 	if (rc) {
--		rc = -EFAULT;
--		goto out;
-+		mutex_unlock(&stdev->mrpc_mutex);
-+		return -EFAULT;
- 	}
+diff --git a/drivers/iio/light/tsl2563.c b/drivers/iio/light/tsl2563.c
+index d0e42b73203a6..71302ae864d99 100644
+--- a/drivers/iio/light/tsl2563.c
++++ b/drivers/iio/light/tsl2563.c
+@@ -704,6 +704,7 @@ static int tsl2563_probe(struct i2c_client *client)
+ 	struct iio_dev *indio_dev;
+ 	struct tsl2563_chip *chip;
+ 	struct tsl2563_platform_data *pdata = client->dev.platform_data;
++	unsigned long irq_flags;
+ 	int err = 0;
+ 	u8 id = 0;
  
- 	data += sizeof(stuser->return_code);
- 	rc = copy_to_user(data, &stuser->data,
- 			  size - sizeof(stuser->return_code));
- 	if (rc) {
--		rc = -EFAULT;
--		goto out;
-+		mutex_unlock(&stdev->mrpc_mutex);
-+		return -EFAULT;
- 	}
+@@ -759,10 +760,15 @@ static int tsl2563_probe(struct i2c_client *client)
+ 		indio_dev->info = &tsl2563_info_no_irq;
  
- 	stuser_set_state(stuser, MRPC_IDLE);
- 
--out:
- 	mutex_unlock(&stdev->mrpc_mutex);
- 
- 	if (stuser->status == SWITCHTEC_MRPC_STATUS_DONE ||
+ 	if (client->irq) {
++		irq_flags = irq_get_trigger_type(client->irq);
++		if (irq_flags == IRQF_TRIGGER_NONE)
++			irq_flags = IRQF_TRIGGER_RISING;
++		irq_flags |= IRQF_ONESHOT;
++
+ 		err = devm_request_threaded_irq(&client->dev, client->irq,
+ 					   NULL,
+ 					   &tsl2563_event_handler,
+-					   IRQF_TRIGGER_RISING | IRQF_ONESHOT,
++					   irq_flags,
+ 					   "tsl2563_event",
+ 					   indio_dev);
+ 		if (err) {
 -- 
 2.39.2
 
