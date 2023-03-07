@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34B0BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:35:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB91C433D2;
-	Tue,  7 Mar 2023 18:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9D1BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:35:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1ADC4339B;
+	Tue,  7 Mar 2023 18:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214146;
-	bh=bhPVx887wSAvLdlf0wjlLgBymg2a9kYS3ydX/VlCrYU=;
+	s=korg; t=1678214149;
+	bh=//03Omsn0zd6IxRBOjRByaNbgMQzFVQrt0YCCfyarVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X9jwSKBCdzR1bnjnlflEU2Iys4Silp34vZ/zoTXVvQo9MkGnw2TFonU0q8dp+rO+r
-	 hDb0QRYErj+V30ez8XGS4DtZc3vv4FNu4QXZukptoEIabzeyCphiehlYN+uRbRm5au
-	 VFUwFfER7wCqeETOHnJ3jgXIbHw28HwzYGjILBHE=
+	b=HCfS/SYpmFhFmXcFcc3rxwuwzKq5lCPvfnI6uVhSgTyfec66SPlQhrnkp/iSG5Bzp
+	 sfeYrBTMwvzhTXYSmxoxz/948MA8HCSELnMXTT31JYF/pRqod/xL6o+GIex29pupeu
+	 ReU3Dqj6x1GH8geLHGvGQZ/EPpNNm7+6fcmakyBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+60f291a24acecb3c2bd5@syzkaller.appspotmail.com,
 	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 707/885] udf: Truncate added extents on failed expansion
-Date: Tue,  7 Mar 2023 18:00:41 +0100
-Message-Id: <20230307170032.784780456@linuxfoundation.org>
+Subject: [PATCH 6.1 708/885] udf: Do not bother merging very long extents
+Date: Tue,  7 Mar 2023 18:00:42 +0100
+Message-Id: <20230307170032.817581465@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,63 +36,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-commit 70bfb3a8d661d4fdc742afc061b88a7f3fc9f500 upstream.
+commit 53cafe1d6d8ef9f93318e5bfccc0d24f27d41ced upstream.
 
-When a file expansion failed because we didn't have enough space for
-indirect extents make sure we truncate extents created so far so that we
-don't leave extents beyond EOF.
+When merging very long extents we try to push as much length as possible
+to the first extent. However this is unnecessarily complicated and not
+really worth the trouble. Furthermore there was a bug in the logic
+resulting in corrupting extents in the file as syzbot reproducer shows.
+So just don't bother with the merging of extents that are too long
+together.
 
 CC: stable@vger.kernel.org
+Reported-by: syzbot+60f291a24acecb3c2bd5@syzkaller.appspotmail.com
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ fs/udf/inode.c |   19 ++-----------------
+ 1 file changed, 2 insertions(+), 17 deletions(-)
 
 --- a/fs/udf/inode.c
 +++ b/fs/udf/inode.c
-@@ -526,8 +526,10 @@ static int udf_do_extend_file(struct ino
- 	}
+@@ -1094,23 +1094,8 @@ static void udf_merge_extents(struct ino
+ 			blocksize - 1) >> blocksize_bits)))) {
  
- 	if (fake) {
--		udf_add_aext(inode, last_pos, &last_ext->extLocation,
--			     last_ext->extLength, 1);
-+		err = udf_add_aext(inode, last_pos, &last_ext->extLocation,
-+				   last_ext->extLength, 1);
-+		if (err < 0)
-+			goto out_err;
- 		count++;
- 	} else {
- 		struct kernel_lb_addr tmploc;
-@@ -561,7 +563,7 @@ static int udf_do_extend_file(struct ino
- 		err = udf_add_aext(inode, last_pos, &last_ext->extLocation,
- 				   last_ext->extLength, 1);
- 		if (err)
--			return err;
-+			goto out_err;
- 		count++;
- 	}
- 	if (new_block_bytes) {
-@@ -570,7 +572,7 @@ static int udf_do_extend_file(struct ino
- 		err = udf_add_aext(inode, last_pos, &last_ext->extLocation,
- 				   last_ext->extLength, 1);
- 		if (err)
--			return err;
-+			goto out_err;
- 		count++;
- 	}
- 
-@@ -584,6 +586,11 @@ out:
- 		return -EIO;
- 
- 	return count;
-+out_err:
-+	/* Remove extents we've created so far */
-+	udf_clear_extent_cache(inode);
-+	udf_truncate_extents(inode);
-+	return err;
- }
- 
- /* Extend the final block of the file to final_block_len bytes */
+ 			if (((li->extLength & UDF_EXTENT_LENGTH_MASK) +
+-				(lip1->extLength & UDF_EXTENT_LENGTH_MASK) +
+-				blocksize - 1) & ~UDF_EXTENT_LENGTH_MASK) {
+-				lip1->extLength = (lip1->extLength -
+-						  (li->extLength &
+-						   UDF_EXTENT_LENGTH_MASK) +
+-						   UDF_EXTENT_LENGTH_MASK) &
+-							~(blocksize - 1);
+-				li->extLength = (li->extLength &
+-						 UDF_EXTENT_FLAG_MASK) +
+-						(UDF_EXTENT_LENGTH_MASK + 1) -
+-						blocksize;
+-				lip1->extLocation.logicalBlockNum =
+-					li->extLocation.logicalBlockNum +
+-					((li->extLength &
+-						UDF_EXTENT_LENGTH_MASK) >>
+-						blocksize_bits);
+-			} else {
++			     (lip1->extLength & UDF_EXTENT_LENGTH_MASK) +
++			     blocksize - 1) <= UDF_EXTENT_LENGTH_MASK) {
+ 				li->extLength = lip1->extLength +
+ 					(((li->extLength &
+ 						UDF_EXTENT_LENGTH_MASK) +
 
 
