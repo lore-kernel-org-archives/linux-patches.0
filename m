@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB886BA34
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:32:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5219CC433D2;
-	Tue,  7 Mar 2023 17:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00453BA34
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:32:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE58C433D2;
+	Tue,  7 Mar 2023 17:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210338;
-	bh=+4qa1cRGyKcj6Rvb0jubXyaq45q0+Q7ELXHfVA1gV4w=;
+	s=korg; t=1678210341;
+	bh=AJslyw4d2AombI42miWC+tWmcPS6kuHhGNmdBY459S4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CS3KgtbFV4re0gHazuNAS/ULrLVQf8dm0a348br3MGKfHhYeCe1+FBkhEAqQuPcfn
-	 JJlQGDYGEOqfBgKiyhq1TW3+bbVZa3hUxYgZ0t4rLnTIN3E5HgfQr3hAZm4o8rIahI
-	 WyhewwbFgqZsr1BPDNFK4MPqOl/4dKxYnB7rlhYQ=
+	b=F6c/VBn0EIz1AJylxxxdr+aWdG9fnz+Xhntc1rftXyknFghpf9jZQLVKU5cITyjJS
+	 3kcb9jxst2w+I4Me8TktHDQ+SUQOlMSOzatf0q6yAB4dV64kpRTKYhU9tqZX4I+Lyi
+	 LCWq9317j9TBInfQJPsGo6aIzbicZuVHzwK07IYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Sherry Sun <sherry.sun@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0509/1001] hwtracing: hisi_ptt: Only add the supported devices to the filters list
-Date: Tue,  7 Mar 2023 17:54:41 +0100
-Message-Id: <20230307170043.511827320@linuxfoundation.org>
+Subject: [PATCH 6.2 0510/1001] tty: serial: fsl_lpuart: disable Rx/Tx DMA in lpuart32_shutdown()
+Date: Tue,  7 Mar 2023 17:54:42 +0100
+Message-Id: <20230307170043.560268040@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,49 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit b8d976c7d41a28c0fccf22c7113be9a29dc07e5c ]
+[ Upstream commit 1d4bd0e4ae4ba95892bef919a8d4d3f08f122d7e ]
 
-The PTT device can only support the devices on the same PCIe core,
-within BDF range [lower_bdf, upper_bdf]. It's not correct to assume
-the devices on the root bus are from the same PCIe core, there are
-cases that root ports from different PCIe core are sharing the same
-bus. So check when initializing the filters list.
+UARTBAUD_RDMAE and UARTBAUD_TDMAE are enabled in lpuart32_startup(), but
+lpuart32_shutdown() not disable them, only free the dma ring buffer and
+release the dma channels, so here disable the Rx/Tx DMA first in
+lpuart32_shutdown().
 
-Fixes: ff0de066b463 ("hwtracing: hisi_ptt: Add trace function support for HiSilicon PCIe Tune and Trace device")
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20230112112201.16283-1-yangyicong@huawei.com
+Fixes: 42b68768e51b ("serial: fsl_lpuart: DMA support for 32-bit variant")
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://lore.kernel.org/r/20221125101953.18753-3-sherry.sun@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/ptt/hisi_ptt.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/tty/serial/fsl_lpuart.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hwtracing/ptt/hisi_ptt.c b/drivers/hwtracing/ptt/hisi_ptt.c
-index 5d5526aa60c40..30f1525639b57 100644
---- a/drivers/hwtracing/ptt/hisi_ptt.c
-+++ b/drivers/hwtracing/ptt/hisi_ptt.c
-@@ -356,8 +356,18 @@ static int hisi_ptt_register_irq(struct hisi_ptt *hisi_ptt)
+diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
+index 5e69fb73f570f..5d1c28e094bb2 100644
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -1796,6 +1796,11 @@ static void lpuart32_shutdown(struct uart_port *port)
  
- static int hisi_ptt_init_filters(struct pci_dev *pdev, void *data)
- {
-+	struct pci_dev *root_port = pcie_find_root_port(pdev);
- 	struct hisi_ptt_filter_desc *filter;
- 	struct hisi_ptt *hisi_ptt = data;
-+	u32 port_devid;
-+
-+	if (!root_port)
-+		return 0;
-+
-+	port_devid = PCI_DEVID(root_port->bus->number, root_port->devfn);
-+	if (port_devid < hisi_ptt->lower_bdf ||
-+	    port_devid > hisi_ptt->upper_bdf)
-+		return 0;
+ 	spin_lock_irqsave(&port->lock, flags);
  
- 	/*
- 	 * We won't fail the probe if filter allocation failed here. The filters
++	/* disable Rx/Tx DMA */
++	temp = lpuart32_read(port, UARTBAUD);
++	temp &= ~(UARTBAUD_TDMAE | UARTBAUD_RDMAE);
++	lpuart32_write(port, temp, UARTBAUD);
++
+ 	/* disable Rx/Tx and interrupts */
+ 	temp = lpuart32_read(port, UARTCTRL);
+ 	temp &= ~(UARTCTRL_TE | UARTCTRL_RE |
 -- 
 2.39.2
 
