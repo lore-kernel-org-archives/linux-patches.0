@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31247BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:59:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A925FC433EF;
-	Tue,  7 Mar 2023 17:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1FEBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:59:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5247EC433D2;
+	Tue,  7 Mar 2023 17:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211957;
-	bh=fg+x+bkFX6ZUErlos+KNhs00/QnMBAaIv1Y9TMxot/I=;
+	s=korg; t=1678211959;
+	bh=l8uX+ww20rxdEljzUC7ky+orcyiCrlVXLU7EJWfL7K0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qaeIL/xTLAXsQEo2t9m/jKGJFWAJdVXHly9srnZl3iiW6e+LQx+W9spaXIAcba+o6
-	 0Ht7jRIQprJ5E+CO56UoElieHrzif4YH8IGlJxXMDYxmnYbOEMjMNGud6F4v8cuilS
-	 tmthEd9O2zuHSr90mYtC0W1szO75j78CO3rcQZpo=
+	b=AoE+WwzMK7LyInB2z3oeqnIt+HLlHbpH7oxexJ0JZvzvDdZfpjMg5f+0mbDU8akLD
+	 hE9sjcGFR6vjKG+MPz6BeCBCncX9naBlUCPssyUOk2K6YWBjuNQ9/8C9NhBsQLk6gx
+	 ymtEQ7TjtD+ah7dgq0A6xwfKWEg05sQ6bg7J0QLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiheng Lin <linqiheng@huawei.com>,
-	Michal Simek <michal.simek@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Tony Lindgren <tony@atomide.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/885] ARM: zynq: Fix refcount leak in zynq_early_slcr_init
-Date: Tue,  7 Mar 2023 17:49:07 +0100
-Message-Id: <20230307170002.209388542@linuxfoundation.org>
+Subject: [PATCH 6.1 031/885] cpuidle, intel_idle: Fix CPUIDLE_FLAG_IRQ_ENABLE *again*
+Date: Tue,  7 Mar 2023 17:49:25 +0100
+Message-Id: <20230307170003.009357914@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,35 +39,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiheng Lin <linqiheng@huawei.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 9eedb910a3be0005b88c696a8552c0d4c9937cd4 ]
+[ Upstream commit 6d9c7f51b1d9179bf7c3542267c656a934e8af23 ]
 
-of_find_compatible_node() returns a node pointer with refcount incremented,
-we should use of_node_put() on error path.
-Add missing of_node_put() to avoid refcount leak.
+So objtool found this bug:
 
-Fixes: 3329659df030 ("ARM: zynq: Simplify SLCR initialization")
-Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
-Link: https://lore.kernel.org/r/20221129140544.41293-1-linqiheng@huawei.com
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+  vmlinux.o: warning: objtool: intel_idle_irq+0x10c: call to trace_hardirqs_off() leaves .noinstr.text section
+
+As per commit 32d4fd5751ea ("cpuidle,intel_idle: Fix CPUIDLE_FLAG_IRQ_ENABLE"):
+
+  "must not have tracing in idle functions"
+
+Clearly people can't read and tinker along until splat dissapears.
+This straight up reverts commit d295ad34f236 ("intel_idle: Fix false
+positive RCU splats due to incorrect hardirqs state").
+
+It doesn't re-introduce the problem because preceding patches fixed it
+properly.
+
+Fixes: d295ad34f236 ("intel_idle: Fix false positive RCU splats due to incorrect hardirqs state")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Tony Lindgren <tony@atomide.com>
+Tested-by: Ulf Hansson <ulf.hansson@linaro.org>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/r/20230112195540.434302128@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-zynq/slcr.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/idle/intel_idle.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/arch/arm/mach-zynq/slcr.c b/arch/arm/mach-zynq/slcr.c
-index 37707614885a5..9765b3f4c2fc5 100644
---- a/arch/arm/mach-zynq/slcr.c
-+++ b/arch/arm/mach-zynq/slcr.c
-@@ -213,6 +213,7 @@ int __init zynq_early_slcr_init(void)
- 	zynq_slcr_regmap = syscon_regmap_lookup_by_compatible("xlnx,zynq-slcr");
- 	if (IS_ERR(zynq_slcr_regmap)) {
- 		pr_err("%s: failed to find zynq-slcr\n", __func__);
-+		of_node_put(np);
- 		return -ENODEV;
- 	}
+diff --git a/drivers/idle/intel_idle.c b/drivers/idle/intel_idle.c
+index cfeb24d40d378..f060ac7376e69 100644
+--- a/drivers/idle/intel_idle.c
++++ b/drivers/idle/intel_idle.c
+@@ -168,13 +168,7 @@ static __cpuidle int intel_idle_irq(struct cpuidle_device *dev,
  
+ 	raw_local_irq_enable();
+ 	ret = __intel_idle(dev, drv, index);
+-
+-	/*
+-	 * The lockdep hardirqs state may be changed to 'on' with timer
+-	 * tick interrupt followed by __do_softirq(). Use local_irq_disable()
+-	 * to keep the hardirqs state correct.
+-	 */
+-	local_irq_disable();
++	raw_local_irq_disable();
+ 
+ 	return ret;
+ }
 -- 
 2.39.2
 
