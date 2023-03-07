@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F784BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74CEDC433D2;
-	Tue,  7 Mar 2023 17:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0908CBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72254C433EF;
+	Tue,  7 Mar 2023 17:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209432;
-	bh=cIKITZ0rg0q81OMnAi3fSWo9WaDeyazQwtAE9jMT2U0=;
+	s=korg; t=1678209435;
+	bh=ToiEiwaYaIvQlCPykDSsre+dxVuZpwdUeG64vLoFrSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H4majqT+UXElN9eoIdYKQ+sTDmC6B89OciT4Y/jZ3/Z04bXb8oRlJNHb8dUrs3XlQ
-	 hHRqfZYuDrNZ+s2GyAhsEtFQUVLzhPCBxKVTHuiHQf1YoVhvgfpjgOljBhNjDaHN65
-	 5VDtsnQGm9/pAa89c4VEYWOxrD9T2Uu1NN2tmiiY=
+	b=2IxYSVVaSKe8iPLDxDcmqg+oZZfFmOTgV3RM55I9gDGe6+62eWE01RkpqVkBVBGUL
+	 drtx/c0E0WnjasDNUekzG/Ctt97KWIehd/gZ/pQpuos/YLr4R3Nandi1IrpRPjJFPX
+	 uulfIAKC9RJG42FH0xzM77c80i7tIFIk71OJ1LKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0190/1001] arm64/sysreg: Fix errors in 32 bit enumeration values
-Date: Tue,  7 Mar 2023 17:49:22 +0100
-Message-Id: <20230307170030.127423495@linuxfoundation.org>
+Subject: [PATCH 6.2 0217/1001] powercap: fix possible name leak in powercap_register_zone()
+Date: Tue,  7 Mar 2023 17:49:49 +0100
+Message-Id: <20230307170031.296992893@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,59 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 8c6e105558628b63292ae770198f11a1d5535660 ]
+[ Upstream commit 1b6599f741a4525ca761ecde46e5885ff1e6ba58 ]
 
-The recently converted 32 bit ID registers have errors in MVFR0_EL1.FPSP,
-MVFR0_EL1.SIMDReg and MVFR1_EL1.SIMDHP where enumeration values which
-should be 0b0010 are specified as 0b0001. Correct these.
+In the error path after calling dev_set_name(), the device
+name is leaked. To fix this, calling dev_set_name() before
+device_register(), and call put_device() if it returns error.
 
-Fixes: e79c94a2a487 ("arm64/sysreg: Convert MVFR0_EL1 to automatic generation")
-Fixes: c9b718eda706 ("arm64/sysreg: Convert MVFR1_EL1 to automatic generation")
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20221207-arm64-sysreg-helpers-v3-2-0d71a7b174a8@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+All the resources is released in powercap_release(), so it
+can return from powercap_register_zone() directly.
+
+Fixes: 75d2364ea0ca ("PowerCap: Add class driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/tools/sysreg | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/powercap/powercap_sys.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/tools/sysreg b/arch/arm64/tools/sysreg
-index 184e58fd5631a..e8fb6684d7f3c 100644
---- a/arch/arm64/tools/sysreg
-+++ b/arch/arm64/tools/sysreg
-@@ -689,17 +689,17 @@ EndEnum
- Enum	11:8	FPDP
- 	0b0000	NI
- 	0b0001	VFPv2
--	0b0001	VFPv3
-+	0b0010	VFPv3
- EndEnum
- Enum	7:4	FPSP
- 	0b0000	NI
- 	0b0001	VFPv2
--	0b0001	VFPv3
-+	0b0010	VFPv3
- EndEnum
- Enum	3:0	SIMDReg
- 	0b0000	NI
- 	0b0001	IMP_16x64
--	0b0001	IMP_32x64
-+	0b0010	IMP_32x64
- EndEnum
- EndSysreg
+diff --git a/drivers/powercap/powercap_sys.c b/drivers/powercap/powercap_sys.c
+index 1f968353d4799..e180dee0f83d0 100644
+--- a/drivers/powercap/powercap_sys.c
++++ b/drivers/powercap/powercap_sys.c
+@@ -530,9 +530,6 @@ struct powercap_zone *powercap_register_zone(
+ 	power_zone->name = kstrdup(name, GFP_KERNEL);
+ 	if (!power_zone->name)
+ 		goto err_name_alloc;
+-	dev_set_name(&power_zone->dev, "%s:%x",
+-					dev_name(power_zone->dev.parent),
+-					power_zone->id);
+ 	power_zone->constraints = kcalloc(nr_constraints,
+ 					  sizeof(*power_zone->constraints),
+ 					  GFP_KERNEL);
+@@ -555,9 +552,16 @@ struct powercap_zone *powercap_register_zone(
+ 	power_zone->dev_attr_groups[0] = &power_zone->dev_zone_attr_group;
+ 	power_zone->dev_attr_groups[1] = NULL;
+ 	power_zone->dev.groups = power_zone->dev_attr_groups;
++	dev_set_name(&power_zone->dev, "%s:%x",
++					dev_name(power_zone->dev.parent),
++					power_zone->id);
+ 	result = device_register(&power_zone->dev);
+-	if (result)
+-		goto err_dev_ret;
++	if (result) {
++		put_device(&power_zone->dev);
++		mutex_unlock(&control_type->lock);
++
++		return ERR_PTR(result);
++	}
  
-@@ -718,7 +718,7 @@ EndEnum
- Enum	23:20	SIMDHP
- 	0b0000	NI
- 	0b0001	SIMDHP
--	0b0001	SIMDHP_FLOAT
-+	0b0010	SIMDHP_FLOAT
- EndEnum
- Enum	19:16	SIMDSP
- 	0b0000	NI
+ 	control_type->nr_zones++;
+ 	mutex_unlock(&control_type->lock);
 -- 
 2.39.2
 
