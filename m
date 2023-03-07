@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9862BBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:21:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154B5C433D2;
-	Tue,  7 Mar 2023 17:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4191BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:21:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB71C433EF;
+	Tue,  7 Mar 2023 17:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209679;
-	bh=opN/afqKVDP/UNKIq0kK8XquPDYT3sZzOgpZdhM/Vxk=;
+	s=korg; t=1678209682;
+	bh=E0munJqBuy47T5ovK1MSVmhSqtRXQXurxxj8x7+oW58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nAJ+bt6o+NrmvgchzZMAHDp4Rp9SL5yKJakaWZ3WdEjlI2zs/8iWdz+B19ppCuFg2
-	 F41zrcE+cK1cP8qgpdUUvtCF5XZTrUIXC5eIravpC+m0llGSAxqKrWcU1rFgoW4FPG
-	 GluSsk6cRnHEK9CxPMzSkJTOzI40WpkEcE5Ye7FE=
+	b=Ko7+vWd4gujNdjXmbGCuYnTXqheVoa0ds/Md1hAleNZcSFHQF8AVNiDxTFdNL8QYU
+	 u3lBmw/SEzlIsBOo7PkKyoWUG5UbKLnSTpcdOZeUWd8lJTtx/sK/BYt0sdFVrdIbHx
+	 YnbZSEflLPxqyLBfsk/QXnIvPtnE9nrt8bGHvyM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Hector Martin <marcan@marcan.st>,
-	Kalle Valo <kvalo@kernel.org>,
+	Nicolas Cavallari <nicolas.cavallari@green-communications.fr>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0289/1001] wifi: brcmfmac: pcie: Perform correct BCM4364 firmware selection
-Date: Tue,  7 Mar 2023 17:51:01 +0100
-Message-Id: <20230307170034.178144263@linuxfoundation.org>
+Subject: [PATCH 6.2 0298/1001] wifi: mac80211: move color collision detection report in a delayed work
+Date: Tue,  7 Mar 2023 17:51:10 +0100
+Message-Id: <20230307170034.522955564@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,94 +36,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hector Martin <marcan@marcan.st>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 6a142f70774fd10350a52a10ba1297d52da46780 ]
+[ Upstream commit 9288188438d85e22c23cfd6657ee8a801babc83c ]
 
-This chip exists in two revisions (B2=r3 and B3=r4) on different
-platforms, and was added without regard to doing proper firmware
-selection or differentiating between them. Fix this to have proper
-per-revision firmwares and support Apple NVRAM selection.
+Move color collision report in a dedicated delayed work and do not run
+it in interrupt context in order to rate-limit the number of events
+reported to userspace. Moreover grab wdev mutex in
+ieee80211_color_collision_detection_work routine since it is required
+by cfg80211_obss_color_collision_notify().
 
-Revision B2 is present on at least these Apple T2 Macs:
-
-kauai:    MacBook Pro 15" (Touch/2018-2019)
-maui:     MacBook Pro 13" (Touch/2018-2019)
-lanai:    Mac mini (Late 2018)
-ekans:    iMac Pro 27" (5K, Late 2017)
-
-And these non-T2 Macs:
-
-nihau:    iMac 27" (5K, 2019)
-
-Revision B3 is present on at least these Apple T2 Macs:
-
-bali:     MacBook Pro 16" (2019)
-trinidad: MacBook Pro 13" (2020, 4 TB3)
-borneo:   MacBook Pro 16" (2019, 5600M)
-kahana:   Mac Pro (2019)
-kahana:   Mac Pro (2019, Rack)
-hanauma:  iMac 27" (5K, 2020)
-kure:     iMac 27" (5K, 2020, 5700/XT)
-
-Also fix the firmware interface for 4364, from BCA to WCC.
-
-Fixes: 24f0bd136264 ("brcmfmac: add the BRCM 4364 found in MacBook Pro 15,2")
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230212063813.27622-5-marcan@marcan.st
+Tested-by: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Fixes: 5f9404abdf2a ("mac80211: add support for BSS color change")
+Link: https://lore.kernel.org/r/3f6cf60c892ad40c1cca4a55d62b1224ef1c6ce9.1674644379.git.lorenzo@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/mac80211/cfg.c         | 26 +++++++++++++++++++++++++-
+ net/mac80211/ieee80211_i.h |  3 +++
+ net/mac80211/link.c        |  3 +++
+ 3 files changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-index b752a65de2dcb..a9b9b2dc62d4f 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -57,7 +57,8 @@ BRCMF_FW_CLM_DEF(4356, "brcmfmac4356-pcie");
- BRCMF_FW_CLM_DEF(43570, "brcmfmac43570-pcie");
- BRCMF_FW_DEF(4358, "brcmfmac4358-pcie");
- BRCMF_FW_DEF(4359, "brcmfmac4359-pcie");
--BRCMF_FW_DEF(4364, "brcmfmac4364-pcie");
-+BRCMF_FW_CLM_DEF(4364B2, "brcmfmac4364b2-pcie");
-+BRCMF_FW_CLM_DEF(4364B3, "brcmfmac4364b3-pcie");
- BRCMF_FW_DEF(4365B, "brcmfmac4365b-pcie");
- BRCMF_FW_DEF(4365C, "brcmfmac4365c-pcie");
- BRCMF_FW_DEF(4366B, "brcmfmac4366b-pcie");
-@@ -88,7 +89,8 @@ static const struct brcmf_firmware_mapping brcmf_pcie_fwnames[] = {
- 	BRCMF_FW_ENTRY(BRCM_CC_43570_CHIP_ID, 0xFFFFFFFF, 43570),
- 	BRCMF_FW_ENTRY(BRCM_CC_4358_CHIP_ID, 0xFFFFFFFF, 4358),
- 	BRCMF_FW_ENTRY(BRCM_CC_4359_CHIP_ID, 0xFFFFFFFF, 4359),
--	BRCMF_FW_ENTRY(BRCM_CC_4364_CHIP_ID, 0xFFFFFFFF, 4364),
-+	BRCMF_FW_ENTRY(BRCM_CC_4364_CHIP_ID, 0x0000000F, 4364B2), /* 3 */
-+	BRCMF_FW_ENTRY(BRCM_CC_4364_CHIP_ID, 0xFFFFFFF0, 4364B3), /* 4 */
- 	BRCMF_FW_ENTRY(BRCM_CC_4365_CHIP_ID, 0x0000000F, 4365B),
- 	BRCMF_FW_ENTRY(BRCM_CC_4365_CHIP_ID, 0xFFFFFFF0, 4365C),
- 	BRCMF_FW_ENTRY(BRCM_CC_4366_CHIP_ID, 0x0000000F, 4366B),
-@@ -2003,6 +2005,11 @@ static int brcmf_pcie_read_otp(struct brcmf_pciedev_info *devinfo)
- 		base = 0x8c0;
- 		words = 0xb2;
- 		break;
-+	case BRCM_CC_4364_CHIP_ID:
-+		coreid = BCMA_CORE_CHIPCOMMON;
-+		base = 0x8c0;
-+		words = 0x1a0;
-+		break;
- 	case BRCM_CC_4377_CHIP_ID:
- 	case BRCM_CC_4378_CHIP_ID:
- 		coreid = BCMA_CORE_GCI;
-@@ -2611,7 +2618,7 @@ static const struct pci_device_id brcmf_pcie_devid_table[] = {
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_2G_DEVICE_ID, WCC),
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_5G_DEVICE_ID, WCC),
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_RAW_DEVICE_ID, WCC),
--	BRCMF_PCIE_DEVICE(BRCM_PCIE_4364_DEVICE_ID, BCA),
-+	BRCMF_PCIE_DEVICE(BRCM_PCIE_4364_DEVICE_ID, WCC),
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_DEVICE_ID, BCA),
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_2G_DEVICE_ID, BCA),
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_5G_DEVICE_ID, BCA),
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index 672eff6f5d328..d611e15301839 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -4622,6 +4622,20 @@ void ieee80211_color_change_finalize_work(struct work_struct *work)
+ 	sdata_unlock(sdata);
+ }
+ 
++void ieee80211_color_collision_detection_work(struct work_struct *work)
++{
++	struct delayed_work *delayed_work = to_delayed_work(work);
++	struct ieee80211_link_data *link =
++		container_of(delayed_work, struct ieee80211_link_data,
++			     color_collision_detect_work);
++	struct ieee80211_sub_if_data *sdata = link->sdata;
++
++	sdata_lock(sdata);
++	cfg80211_obss_color_collision_notify(sdata->dev, link->color_bitmap,
++					     GFP_KERNEL);
++	sdata_unlock(sdata);
++}
++
+ void ieee80211_color_change_finish(struct ieee80211_vif *vif)
+ {
+ 	struct ieee80211_sub_if_data *sdata = vif_to_sdata(vif);
+@@ -4636,11 +4650,21 @@ ieeee80211_obss_color_collision_notify(struct ieee80211_vif *vif,
+ 				       u64 color_bitmap, gfp_t gfp)
+ {
+ 	struct ieee80211_sub_if_data *sdata = vif_to_sdata(vif);
++	struct ieee80211_link_data *link = &sdata->deflink;
+ 
+ 	if (sdata->vif.bss_conf.color_change_active || sdata->vif.bss_conf.csa_active)
+ 		return;
+ 
+-	cfg80211_obss_color_collision_notify(sdata->dev, color_bitmap, gfp);
++	if (delayed_work_pending(&link->color_collision_detect_work))
++		return;
++
++	link->color_bitmap = color_bitmap;
++	/* queue the color collision detection event every 500 ms in order to
++	 * avoid sending too much netlink messages to userspace.
++	 */
++	ieee80211_queue_delayed_work(&sdata->local->hw,
++				     &link->color_collision_detect_work,
++				     msecs_to_jiffies(500));
+ }
+ EXPORT_SYMBOL_GPL(ieeee80211_obss_color_collision_notify);
+ 
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index d16606e84e22d..7ca9bde3c6d25 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -974,6 +974,8 @@ struct ieee80211_link_data {
+ 	struct cfg80211_chan_def csa_chandef;
+ 
+ 	struct work_struct color_change_finalize_work;
++	struct delayed_work color_collision_detect_work;
++	u64 color_bitmap;
+ 
+ 	/* context reservation -- protected with chanctx_mtx */
+ 	struct ieee80211_chanctx *reserved_chanctx;
+@@ -1929,6 +1931,7 @@ int ieee80211_channel_switch(struct wiphy *wiphy, struct net_device *dev,
+ 
+ /* color change handling */
+ void ieee80211_color_change_finalize_work(struct work_struct *work);
++void ieee80211_color_collision_detection_work(struct work_struct *work);
+ 
+ /* interface handling */
+ #define MAC80211_SUPPORTED_FEATURES_TX	(NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM | \
+diff --git a/net/mac80211/link.c b/net/mac80211/link.c
+index d1f5a9f7c6470..8c8869cc1fb4c 100644
+--- a/net/mac80211/link.c
++++ b/net/mac80211/link.c
+@@ -39,6 +39,8 @@ void ieee80211_link_init(struct ieee80211_sub_if_data *sdata,
+ 		  ieee80211_csa_finalize_work);
+ 	INIT_WORK(&link->color_change_finalize_work,
+ 		  ieee80211_color_change_finalize_work);
++	INIT_DELAYED_WORK(&link->color_collision_detect_work,
++			  ieee80211_color_collision_detection_work);
+ 	INIT_LIST_HEAD(&link->assigned_chanctx_list);
+ 	INIT_LIST_HEAD(&link->reserved_chanctx_list);
+ 	INIT_DELAYED_WORK(&link->dfs_cac_timer_work,
+@@ -66,6 +68,7 @@ void ieee80211_link_stop(struct ieee80211_link_data *link)
+ 	if (link->sdata->vif.type == NL80211_IFTYPE_STATION)
+ 		ieee80211_mgd_stop_link(link);
+ 
++	cancel_delayed_work_sync(&link->color_collision_detect_work);
+ 	ieee80211_link_release_channel(link);
+ }
+ 
 -- 
 2.39.2
 
