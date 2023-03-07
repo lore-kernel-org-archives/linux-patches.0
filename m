@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771F3BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:50:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7D30C4339E;
-	Tue,  7 Mar 2023 17:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA97BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:50:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E920BC433D2;
+	Tue,  7 Mar 2023 17:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211427;
-	bh=5PY/Pxx78wE4EwQtttQF8UnMsI02CIxsIwSq8m23V6M=;
+	s=korg; t=1678211430;
+	bh=LHBUekxiZsO/KNw8HvEnInJHDZhQ4nN6HtA2I1XcErw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V4hjbMJjEKSrL1UpDUk7wa/wgZLQKzOKJGOOEOUc8F62B6xF+kAri0UvGxVpKgVMy
-	 j9L/ATJQrGRvUydT56XLGfqXXKA9brUNmoF/ZW2EwfqHhTb6ZSBFKgRBSkYVCj2Eo1
-	 CaJFO8eFx9MqcFvXLBb1O2+RH3GjzSEK7lrXY6jE=
+	b=ZFKQI9OZhsS1gyCNkz9Jv2wvr9QreqXgrxas4zitJdvRiIlj28Ln/8zDChnXY0InH
+	 pFADt2YyE0h/VR5baIJVSGTTavlbopmpKWkLcfDil01BkngNRGb6Q1gViZM7Vf9oxo
+	 5vXOLgPLEU1gvE/MhWVF6B0ZeangJNYgz7MJlV5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Maxim Levitsky <mlevitsk@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.2 0827/1001] KVM: x86: Dont inhibit APICv/AVIC if xAPIC ID mismatch is due to 32-bit ID
-Date: Tue,  7 Mar 2023 17:59:59 +0100
-Message-Id: <20230307170057.652868823@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>
+Subject: [PATCH 6.2 0828/1001] KVM: SVM: Flush the "current" TLB when activating AVIC
+Date: Tue,  7 Mar 2023 18:00:00 +0100
+Message-Id: <20230307170057.700953747@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,58 +37,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit f651a008954803d7bb2d85b7042d0fd46133d782 upstream.
+commit 0ccf3e7cb95a2db8ddb2a44812037ffba8166dc9 upstream.
 
-Truncate the vcpu_id, a.k.a. x2APIC ID, to an 8-bit value when comparing
-it against the xAPIC ID to avoid false positives (sort of) on systems
-with >255 CPUs, i.e. with IDs that don't fit into a u8.  The intent of
-APIC_ID_MODIFIED is to inhibit APICv/AVIC when the xAPIC is changed from
-it's original value,
+Flush the TLB when activating AVIC as the CPU can insert into the TLB
+while AVIC is "locally" disabled.  KVM doesn't treat "APIC hardware
+disabled" as VM-wide AVIC inhibition, and so when a vCPU has its APIC
+hardware disabled, AVIC is not guaranteed to be inhibited.  As a result,
+KVM may create a valid NPT mapping for the APIC base, which the CPU can
+cache as a non-AVIC translation.
 
-The mismatch isn't technically a false positive, as architecturally the
-xAPIC IDs do end up being aliased in this scenario, and neither APICv
-nor AVIC correctly handles IPI virtualization when there is aliasing.
-However, KVM already deliberately does not honor the aliasing behavior
-that results when an x2APIC ID gets truncated to an xAPIC ID.  I.e. the
-resulting APICv/AVIC behavior is aligned with KVM's existing behavior
-when KVM's x2APIC hotplug hack is effectively enabled.
+Note, Intel handles this in vmx_set_virtual_apic_mode().
 
-If/when KVM provides a way to disable the hotplug hack, APICv/AVIC can
-piggyback whatever logic disables the optimized APIC map (which is what
-provides the hotplug hack), i.e. so that KVM's optimized map and APIC
-virtualization yield the same behavior.
-
-For now, fix the immediate problem of APIC virtualization being disabled
-for large VMs, which is a much more pressing issue than ensuring KVM
-honors architectural behavior for APIC ID aliasing.
-
-Fixes: 3743c2f02517 ("KVM: x86: inhibit APICv/AVIC on changes to APIC ID or APIC base")
-Reported-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20230106011306.85230-7-seanjc@google.com>
+Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+Message-Id: <20230106011306.85230-4-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/kvm/svm/avic.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2078,7 +2078,12 @@ static void kvm_lapic_xapic_id_updated(s
- 	if (KVM_BUG_ON(apic_x2apic_mode(apic), kvm))
- 		return;
- 
--	if (kvm_xapic_id(apic) == apic->vcpu->vcpu_id)
-+	/*
-+	 * Deliberately truncate the vCPU ID when detecting a modified APIC ID
-+	 * to avoid false positives if the vCPU ID, i.e. x2APIC ID, is a 32-bit
-+	 * value.
-+	 */
-+	if (kvm_xapic_id(apic) == (u8)apic->vcpu->vcpu_id)
- 		return;
- 
- 	kvm_set_apicv_inhibit(apic->vcpu->kvm, APICV_INHIBIT_REASON_APIC_ID_MODIFIED);
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -86,6 +86,12 @@ static void avic_activate_vmcb(struct vc
+ 		/* Disabling MSR intercept for x2APIC registers */
+ 		svm_set_x2apic_msr_interception(svm, false);
+ 	} else {
++		/*
++		 * Flush the TLB, the guest may have inserted a non-APIC
++		 * mapping into the TLB while AVIC was disabled.
++		 */
++		kvm_make_request(KVM_REQ_TLB_FLUSH_CURRENT, &svm->vcpu);
++
+ 		/* For xAVIC and hybrid-xAVIC modes */
+ 		vmcb->control.avic_physical_id |= AVIC_MAX_PHYSICAL_ID;
+ 		/* Enabling MSR intercept for x2APIC registers */
 
 
