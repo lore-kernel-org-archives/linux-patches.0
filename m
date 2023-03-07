@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85095BA4C
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:02:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0259C433EF;
-	Tue,  7 Mar 2023 19:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A43CBA4C
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:02:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0FBEC433D2;
+	Tue,  7 Mar 2023 19:02:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215732;
-	bh=ohRyU9pYTPS5Vr8ts9Btmsl58gJpwO230n1hTvkqmmU=;
+	s=korg; t=1678215735;
+	bh=x2w2yqC2YRL9UpNQc4UXBbyVy8gKpsfQ2Y4fVPXSunY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1BMbgtU2O+SGh69lOvUUxS6x9v+eMuw5hNAXyLSE4kXx8sZQdgylRN5osE+ivbG/l
-	 w5DFxF//jLd7LTRk1c9nNbVLKOxXvyKOrPkDHOd8li/tG9PgANNCLOYm1f9C33sLO7
-	 R2cNJelPg615BXByNwkjWyCjsHjUekrdl2yAb/vs=
+	b=lm5gNUhf1Jdj1NeBy8KV0/buXwCPsMDsthIW/LooxFbkVbsvcdJ7WJRHXrqufztVt
+	 zxZGhQJz0EFZoKLAp+c8utq/V5SRsPAdoaUXfKiszTpcqYMwQfLANN/qZDb21aNpEG
+	 TcPemFRa+91DHKJz8wn+yiHArEREivCW51QJI1oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sherry Sun <sherry.sun@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Jason Liu <jason.hui.liu@nxp.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 329/567] tty: serial: imx: disable Ageing Timer interrupt request irq
-Date: Tue,  7 Mar 2023 18:01:05 +0100
-Message-Id: <20230307165920.156602572@linuxfoundation.org>
+Subject: [PATCH 5.15 356/567] media: i2c: imx219: Fix binning for RAW8 capture
+Date: Tue,  7 Mar 2023 18:01:32 +0100
+Message-Id: <20230307165921.314734475@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,81 +37,178 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Jai Luthra <j-luthra@ti.com>
 
-[ Upstream commit ef25e16ea9674b713a68c3bda821556ce9901254 ]
+[ Upstream commit ef86447e775fb1f2ced00d4c7fff2c0a1c63f165 ]
 
-There maybe pending USR interrupt before requesting irq, however
-uart_add_one_port has not executed, so there will be kernel panic:
-[    0.795668] Unable to handle kernel NULL pointer dereference at virtual addre
-ss 0000000000000080
-[    0.802701] Mem abort info:
-[    0.805367]   ESR = 0x0000000096000004
-[    0.808950]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    0.814033]   SET = 0, FnV = 0
-[    0.816950]   EA = 0, S1PTW = 0
-[    0.819950]   FSC = 0x04: level 0 translation fault
-[    0.824617] Data abort info:
-[    0.827367]   ISV = 0, ISS = 0x00000004
-[    0.831033]   CM = 0, WnR = 0
-[    0.833866] [0000000000000080] user address but active_mm is swapper
-[    0.839951] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
-[    0.845953] Modules linked in:
-[    0.848869] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.1.1+g56321e101aca #1
-[    0.855617] Hardware name: Freescale i.MX8MP EVK (DT)
-[    0.860452] pstate: 000000c5 (nzcv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    0.867117] pc : __imx_uart_rxint.constprop.0+0x11c/0x2c0
-[    0.872283] lr : imx_uart_int+0xf8/0x1ec
+2x2 binning works fine for RAW10 capture, but for RAW8 1232p mode it
+leads to corrupted frames [1][2].
 
-The issue only happends in the inmate linux when Jailhouse hypervisor
-enabled. The test procedure is:
-while true; do
-	jailhouse enable imx8mp.cell
-	jailhouse cell linux xxxx
-	sleep 10
-	jailhouse cell destroy 1
-	jailhouse disable
-	sleep 5
-done
+Using the special 2x2 analog binning mode fixes the issue, but causes
+artefacts for RAW10 1232p capture. So here we choose the binning mode
+depending upon the frame format selected.
 
-And during the upper test, press keys to the 2nd linux console.
-When `jailhouse cell destroy 1`, the 2nd linux has no chance to put
-the uart to a quiese state, so USR1/2 may has pending interrupts. Then
-when `jailhosue cell linux xx` to start 2nd linux again, the issue
-trigger.
+As both binning modes work fine for 480p RAW8 and RAW10 capture, it can
+share the same code path as 1232p for selecting binning mode.
 
-In order to disable irqs before requesting them, both UCR1 and UCR2 irqs
-should be disabled, so here fix that, disable the Ageing Timer interrupt
-in UCR2 as UCR1 does.
+[1] https://forums.raspberrypi.com/viewtopic.php?t=332103
+[2] https://github.com/raspberrypi/libcamera-apps/issues/281
 
-Fixes: 8a61f0c70ae6 ("serial: imx: Disable irqs before requesting them")
-Suggested-by: Sherry Sun <sherry.sun@nxp.com>
-Reviewed-by: Sherry Sun <sherry.sun@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Acked-by: Jason Liu <jason.hui.liu@nxp.com>
-Link: https://lore.kernel.org/r/20230206013016.29352-1-sherry.sun@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 22da1d56e982 ("media: i2c: imx219: Add support for RAW8 bit bayer format")
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/imx.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/i2c/imx219.c | 57 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 49 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
-index 136da4bebe85a..77a4f4af3b8d5 100644
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -2348,6 +2348,11 @@ static int imx_uart_probe(struct platform_device *pdev)
- 	ucr1 &= ~(UCR1_ADEN | UCR1_TRDYEN | UCR1_IDEN | UCR1_RRDYEN | UCR1_RTSDEN);
- 	imx_uart_writel(sport, ucr1, UCR1);
+diff --git a/drivers/media/i2c/imx219.c b/drivers/media/i2c/imx219.c
+index faa5dab3c2ec8..de1f0aa6fff4a 100644
+--- a/drivers/media/i2c/imx219.c
++++ b/drivers/media/i2c/imx219.c
+@@ -89,6 +89,12 @@
  
-+	/* Disable Ageing Timer interrupt */
-+	ucr2 = imx_uart_readl(sport, UCR2);
-+	ucr2 &= ~UCR2_ATEN;
-+	imx_uart_writel(sport, ucr2, UCR2);
+ #define IMX219_REG_ORIENTATION		0x0172
+ 
++/* Binning  Mode */
++#define IMX219_REG_BINNING_MODE		0x0174
++#define IMX219_BINNING_NONE		0x0000
++#define IMX219_BINNING_2X2		0x0101
++#define IMX219_BINNING_2X2_ANALOG	0x0303
 +
- 	/*
- 	 * In case RS485 is enabled without GPIO RTS control, the UART IP
- 	 * is used to control CTS signal. Keep both the UART and Receiver
+ /* Test Pattern Control */
+ #define IMX219_REG_TEST_PATTERN		0x0600
+ #define IMX219_TEST_PATTERN_DISABLE	0
+@@ -143,6 +149,9 @@ struct imx219_mode {
+ 
+ 	/* Default register values */
+ 	struct imx219_reg_list reg_list;
++
++	/* 2x2 binning is used */
++	bool binning;
+ };
+ 
+ static const struct imx219_reg imx219_common_regs[] = {
+@@ -212,8 +221,6 @@ static const struct imx219_reg mode_3280x2464_regs[] = {
+ 	{0x016d, 0xd0},
+ 	{0x016e, 0x09},
+ 	{0x016f, 0xa0},
+-	{0x0174, 0x00},	/* No-Binning */
+-	{0x0175, 0x00},
+ 	{0x0624, 0x0c},
+ 	{0x0625, 0xd0},
+ 	{0x0626, 0x09},
+@@ -233,8 +240,6 @@ static const struct imx219_reg mode_1920_1080_regs[] = {
+ 	{0x016d, 0x80},
+ 	{0x016e, 0x04},
+ 	{0x016f, 0x38},
+-	{0x0174, 0x00},	/* No-Binning */
+-	{0x0175, 0x00},
+ 	{0x0624, 0x07},
+ 	{0x0625, 0x80},
+ 	{0x0626, 0x04},
+@@ -254,8 +259,6 @@ static const struct imx219_reg mode_1640_1232_regs[] = {
+ 	{0x016d, 0x68},
+ 	{0x016e, 0x04},
+ 	{0x016f, 0xd0},
+-	{0x0174, 0x01},	/* x2-Binning */
+-	{0x0175, 0x01},
+ 	{0x0624, 0x06},
+ 	{0x0625, 0x68},
+ 	{0x0626, 0x04},
+@@ -275,8 +278,6 @@ static const struct imx219_reg mode_640_480_regs[] = {
+ 	{0x016d, 0x80},
+ 	{0x016e, 0x01},
+ 	{0x016f, 0xe0},
+-	{0x0174, 0x03},	/* x2-analog binning */
+-	{0x0175, 0x03},
+ 	{0x0624, 0x06},
+ 	{0x0625, 0x68},
+ 	{0x0626, 0x04},
+@@ -390,6 +391,7 @@ static const struct imx219_mode supported_modes[] = {
+ 			.num_of_regs = ARRAY_SIZE(mode_3280x2464_regs),
+ 			.regs = mode_3280x2464_regs,
+ 		},
++		.binning = false,
+ 	},
+ 	{
+ 		/* 1080P 30fps cropped */
+@@ -406,6 +408,7 @@ static const struct imx219_mode supported_modes[] = {
+ 			.num_of_regs = ARRAY_SIZE(mode_1920_1080_regs),
+ 			.regs = mode_1920_1080_regs,
+ 		},
++		.binning = false,
+ 	},
+ 	{
+ 		/* 2x2 binned 30fps mode */
+@@ -422,6 +425,7 @@ static const struct imx219_mode supported_modes[] = {
+ 			.num_of_regs = ARRAY_SIZE(mode_1640_1232_regs),
+ 			.regs = mode_1640_1232_regs,
+ 		},
++		.binning = true,
+ 	},
+ 	{
+ 		/* 640x480 30fps mode */
+@@ -438,6 +442,7 @@ static const struct imx219_mode supported_modes[] = {
+ 			.num_of_regs = ARRAY_SIZE(mode_640_480_regs),
+ 			.regs = mode_640_480_regs,
+ 		},
++		.binning = true,
+ 	},
+ };
+ 
+@@ -884,6 +889,35 @@ static int imx219_set_framefmt(struct imx219 *imx219)
+ 	return -EINVAL;
+ }
+ 
++static int imx219_set_binning(struct imx219 *imx219)
++{
++	if (!imx219->mode->binning) {
++		return imx219_write_reg(imx219, IMX219_REG_BINNING_MODE,
++					IMX219_REG_VALUE_16BIT,
++					IMX219_BINNING_NONE);
++	}
++
++	switch (imx219->fmt.code) {
++	case MEDIA_BUS_FMT_SRGGB8_1X8:
++	case MEDIA_BUS_FMT_SGRBG8_1X8:
++	case MEDIA_BUS_FMT_SGBRG8_1X8:
++	case MEDIA_BUS_FMT_SBGGR8_1X8:
++		return imx219_write_reg(imx219, IMX219_REG_BINNING_MODE,
++					IMX219_REG_VALUE_16BIT,
++					IMX219_BINNING_2X2_ANALOG);
++
++	case MEDIA_BUS_FMT_SRGGB10_1X10:
++	case MEDIA_BUS_FMT_SGRBG10_1X10:
++	case MEDIA_BUS_FMT_SGBRG10_1X10:
++	case MEDIA_BUS_FMT_SBGGR10_1X10:
++		return imx219_write_reg(imx219, IMX219_REG_BINNING_MODE,
++					IMX219_REG_VALUE_16BIT,
++					IMX219_BINNING_2X2);
++	}
++
++	return -EINVAL;
++}
++
+ static const struct v4l2_rect *
+ __imx219_get_pad_crop(struct imx219 *imx219,
+ 		      struct v4l2_subdev_state *sd_state,
+@@ -968,6 +1002,13 @@ static int imx219_start_streaming(struct imx219 *imx219)
+ 		goto err_rpm_put;
+ 	}
+ 
++	ret = imx219_set_binning(imx219);
++	if (ret) {
++		dev_err(&client->dev, "%s failed to set binning: %d\n",
++			__func__, ret);
++		goto err_rpm_put;
++	}
++
+ 	/* Apply customized values from user */
+ 	ret =  __v4l2_ctrl_handler_setup(imx219->sd.ctrl_handler);
+ 	if (ret)
 -- 
 2.39.2
 
