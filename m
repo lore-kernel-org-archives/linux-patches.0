@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B663ABA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C257C4339C;
-	Tue,  7 Mar 2023 17:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7137BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B867C433D2;
+	Tue,  7 Mar 2023 17:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209466;
-	bh=N93LmdeGxLsHBMcxjud4QxgQhBafdjUUEiqNizgPKn0=;
+	s=korg; t=1678209469;
+	bh=OkEdYZYJeKxMTb4WHS+73ZwIwCTd68/c70t3CD3EedM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRaDkzaQC4IbPyZB36FeIv5VB4o0ImuTx+LwQHImoF9dR+LQ9lgQfuU1ar32caPQg
-	 HJX3ZUyiQgbtcLsZ+CDwLwMfiuCdS2lVGmUTjwzDtqFOhz26hQIy6uut4HPqzQqhEd
-	 OgF3J9tN49g4ETXkFknmvDxEx5JWHp/E9sAWHghk=
+	b=sOqF588prvoXBfUQHWXln7V+NtDvLhXxi+htPgHpwjhMsR3QRgcyO3NCuF2RUWlm8
+	 fOG0IZ6aDeEb9Pn1Bm3mnNS1MD4kIeHZ0WB+h6h8khiu6nDhBcySU1wCqFlLc21cH1
+	 OvAi1WbgHZ26vufYKQgr8a9Dr6SaAj1B3yb8Dfeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashok Raj <ashok.raj@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0221/1001] x86/microcode: Add a parameter to microcode_check() to store CPU capabilities
-Date: Tue,  7 Mar 2023 17:49:53 +0100
-Message-Id: <20230307170031.474855490@linuxfoundation.org>
+Subject: [PATCH 6.2 0230/1001] wifi: iwlwifi: mei: fix compilation errors in rfkill()
+Date: Tue,  7 Mar 2023 17:50:02 +0100
+Message-Id: <20230307170031.838342143@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,108 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ashok Raj <ashok.raj@intel.com>
+From: Gregory Greenman <gregory.greenman@intel.com>
 
-[ Upstream commit ab31c74455c64e69342ddab21fd9426fcbfefde7 ]
+[ Upstream commit 9cbd5a8abca904441e36861e3a92961bec41d13f ]
 
-Add a parameter to store CPU capabilities before performing a microcode
-update so that CPU capabilities can be compared before and after update.
+The rfkill() callback was invoked with wrong parameters.
+It was missed since MEI is defined now as depending on BROKEN.
+Fix that.
 
-  [ bp: Massage. ]
-
-Signed-off-by: Ashok Raj <ashok.raj@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230109153555.4986-2-ashok.raj@intel.com
-Stable-dep-of: c0dd9245aa9e ("x86/microcode: Check CPU capabilities after late microcode update correctly")
+Fixes: d288067ede4b ("wifi: iwlwifi: mei: avoid blocking sap messages handling due to rtnl lock")
+Fixes: 5aa7ce31bd84 ("wifi: iwlwifi: mei: make sure ownership confirmed message is sent")
+Fixes: 95170a46b7dd ("wifi: iwlwifi: mei: don't send SAP commands if AMT is disabled")
+Link: https://lore.kernel.org/r/20230126222821.305122-2-gregory.greenman@intel.com
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/processor.h     |  2 +-
- arch/x86/kernel/cpu/common.c         | 21 +++++++++++++--------
- arch/x86/kernel/cpu/microcode/core.c |  3 ++-
- 3 files changed, 16 insertions(+), 10 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mei/main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
-index 4e35c66edeb7d..f256a4ddd25da 100644
---- a/arch/x86/include/asm/processor.h
-+++ b/arch/x86/include/asm/processor.h
-@@ -697,7 +697,7 @@ bool xen_set_default_idle(void);
- #endif
+diff --git a/drivers/net/wireless/intel/iwlwifi/mei/main.c b/drivers/net/wireless/intel/iwlwifi/mei/main.c
+index f9d11935ed97e..67dfb77fedf79 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mei/main.c
++++ b/drivers/net/wireless/intel/iwlwifi/mei/main.c
+@@ -788,7 +788,7 @@ static void iwl_mei_handle_amt_state(struct mei_cl_device *cldev,
+ 	if (mei->amt_enabled)
+ 		iwl_mei_set_init_conf(mei);
+ 	else if (iwl_mei_cache.ops)
+-		iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, false, false);
++		iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, false);
  
- void __noreturn stop_this_cpu(void *dummy);
--void microcode_check(void);
-+void microcode_check(struct cpuinfo_x86 *prev_info);
+ 	schedule_work(&mei->netdev_work);
  
- enum l1tf_mitigations {
- 	L1TF_MITIGATION_OFF,
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index f3cc7699e1e1b..cda7ded29213e 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -2302,30 +2302,35 @@ void cpu_init_secondary(void)
- #endif
+@@ -829,7 +829,7 @@ static void iwl_mei_handle_csme_taking_ownership(struct mei_cl_device *cldev,
+ 		 */
+ 		mei->csme_taking_ownership = true;
  
- #ifdef CONFIG_MICROCODE_LATE_LOADING
--/*
-+/**
-+ * microcode_check() - Check if any CPU capabilities changed after an update.
-+ * @prev_info:	CPU capabilities stored before an update.
-+ *
-  * The microcode loader calls this upon late microcode load to recheck features,
-  * only when microcode has been updated. Caller holds microcode_mutex and CPU
-  * hotplug lock.
-+ *
-+ * Return: None
-  */
--void microcode_check(void)
-+void microcode_check(struct cpuinfo_x86 *prev_info)
- {
--	struct cpuinfo_x86 info;
--
- 	perf_check_microcode();
- 
- 	/* Reload CPUID max function as it might've changed. */
--	info.cpuid_level = cpuid_eax(0);
-+	prev_info->cpuid_level = cpuid_eax(0);
- 
- 	/*
- 	 * Copy all capability leafs to pick up the synthetic ones so that
- 	 * memcmp() below doesn't fail on that. The ones coming from CPUID will
- 	 * get overwritten in get_cpu_cap().
- 	 */
--	memcpy(&info.x86_capability, &boot_cpu_data.x86_capability, sizeof(info.x86_capability));
-+	memcpy(&prev_info->x86_capability, &boot_cpu_data.x86_capability,
-+	       sizeof(prev_info->x86_capability));
- 
--	get_cpu_cap(&info);
-+	get_cpu_cap(prev_info);
- 
--	if (!memcmp(&info.x86_capability, &boot_cpu_data.x86_capability, sizeof(info.x86_capability)))
-+	if (!memcmp(&prev_info->x86_capability, &boot_cpu_data.x86_capability,
-+		    sizeof(prev_info->x86_capability)))
- 		return;
- 
- 	pr_warn("x86/CPU: CPU features have changed after loading microcode, but might not take effect.\n");
-diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index 712aafff96e03..b2068ce2c86bf 100644
---- a/arch/x86/kernel/cpu/microcode/core.c
-+++ b/arch/x86/kernel/cpu/microcode/core.c
-@@ -438,6 +438,7 @@ static int __reload_late(void *info)
- static int microcode_reload_late(void)
- {
- 	int old = boot_cpu_data.microcode, ret;
-+	struct cpuinfo_x86 prev_info;
- 
- 	pr_err("Attempting late microcode loading - it is dangerous and taints the kernel.\n");
- 	pr_err("You should switch to early loading, if possible.\n");
-@@ -447,7 +448,7 @@ static int microcode_reload_late(void)
- 
- 	ret = stop_machine_cpuslocked(__reload_late, NULL, cpu_online_mask);
- 	if (ret == 0)
--		microcode_check();
-+		microcode_check(&prev_info);
- 
- 	pr_info("Reload completed, microcode revision: 0x%x -> 0x%x\n",
- 		old, boot_cpu_data.microcode);
+-		iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, true, true);
++		iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, true);
+ 	} else {
+ 		iwl_mei_send_sap_msg(cldev,
+ 				     SAP_MSG_NOTIF_CSME_OWNERSHIP_CONFIRMED);
+@@ -1774,7 +1774,7 @@ int iwl_mei_register(void *priv, const struct iwl_mei_ops *ops)
+ 			if (mei->amt_enabled)
+ 				iwl_mei_send_sap_msg(mei->cldev,
+ 						     SAP_MSG_NOTIF_WIFIDR_UP);
+-			ops->rfkill(priv, mei->link_prot_state, false);
++			ops->rfkill(priv, mei->link_prot_state);
+ 		}
+ 	}
+ 	ret = 0;
 -- 
 2.39.2
 
