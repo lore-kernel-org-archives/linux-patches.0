@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A086BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:35:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11671C433EF;
-	Tue,  7 Mar 2023 18:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C72BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:35:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF64DC433EF;
+	Tue,  7 Mar 2023 18:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214154;
-	bh=/ypXcRd1i1Q/xmBqVkCBq9+NAEiJzmQzYxYM+zTAl54=;
+	s=korg; t=1678214157;
+	bh=FGx1KPeZ+deSgkxyU1im6mdDfh74pEYsxUH1Y4VvX0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kq4fNd0zOatGX5C9rggZbK/NV8ZHITigrQJLxHjY4KvUv04/YI7pFoGigNQlhoFVg
-	 0cnL1D+SV18lTQh+MVx5TnlUMoURtNVOvRx8W6o6VuXVfIf1E7a+C/XWdyni+Wr7gv
-	 4TOZgcEmoLoH2IfaEgSSs2Gu+UHS0Hw+Y9YKF8Y4=
+	b=H9pmZ62JhG5xt4ZIKPrY5Pl21B6xjqfxjRKCZ/RHI/9EHjNJ88fSYFv80ItGO12HA
+	 iB3a0x1wit5eHK8/F4HyLkyylYE/ujDwwLQMNGZsIQzXhHZt767DYsP8LbqAc04Hvr
+	 Tpdx3ZK+xCEPNCL+eEM9e1nWACtLWOjaIZh1u/bI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 732/885] x86/reboot: Disable virtualization in an emergency if SVM is supported
-Date: Tue,  7 Mar 2023 18:01:06 +0100
-Message-Id: <20230307170033.787553161@linuxfoundation.org>
+	Larry Dewey <larry.dewey@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.1 741/885] virt/sev-guest: Return -EIO if certificate buffer is not large enough
+Date: Tue,  7 Mar 2023 18:01:15 +0100
+Message-Id: <20230307170034.140420692@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,72 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Tom Lendacky <thomas.lendacky@amd.com>
 
-commit d81f952aa657b76cea381384bef1fea35c5fd266 upstream.
+commit dd093fb08e8f8a958fec4eef36f9f09eac047f60 upstream.
 
-Disable SVM on all CPUs via NMI shootdown during an emergency reboot.
-Like VMX, SVM can block INIT, e.g. if the emergency reboot is triggered
-between CLGI and STGI, and thus can prevent bringing up other CPUs via
-INIT-SIPI-SIPI.
+Commit
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221130233650.1404148-4-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+  47894e0fa6a5 ("virt/sev-guest: Prevent IV reuse in the SNP guest driver")
+
+changed the behavior associated with the return value when the caller
+does not supply a large enough certificate buffer. Prior to the commit a
+value of -EIO was returned. Now, 0 is returned.  This breaks the
+established ABI with the user.
+
+Change the code to detect the buffer size error and return -EIO.
+
+Fixes: 47894e0fa6a5 ("virt/sev-guest: Prevent IV reuse in the SNP guest driver")
+Reported-by: Larry Dewey <larry.dewey@amd.com>
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Larry Dewey <larry.dewey@amd.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/2afbcae6daf13f7ad5a4296692e0a0fe1bc1e4ee.1677083979.git.thomas.lendacky@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/reboot.c |   23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ drivers/virt/coco/sev-guest/sev-guest.c |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/reboot.c
-+++ b/arch/x86/kernel/reboot.c
-@@ -530,27 +530,26 @@ static inline void kb_wait(void)
- 
- static inline void nmi_shootdown_cpus_on_restart(void);
- 
--/* Use NMIs as IPIs to tell all CPUs to disable virtualization */
--static void emergency_vmx_disable_all(void)
-+static void emergency_reboot_disable_virtualization(void)
- {
- 	/* Just make sure we won't change CPUs while doing this */
- 	local_irq_disable();
- 
- 	/*
--	 * Disable VMX on all CPUs before rebooting, otherwise we risk hanging
--	 * the machine, because the CPU blocks INIT when it's in VMX root.
-+	 * Disable virtualization on all CPUs before rebooting to avoid hanging
-+	 * the system, as VMX and SVM block INIT when running in the host.
- 	 *
- 	 * We can't take any locks and we may be on an inconsistent state, so
--	 * use NMIs as IPIs to tell the other CPUs to exit VMX root and halt.
-+	 * use NMIs as IPIs to tell the other CPUs to disable VMX/SVM and halt.
- 	 *
--	 * Do the NMI shootdown even if VMX if off on _this_ CPU, as that
--	 * doesn't prevent a different CPU from being in VMX root operation.
-+	 * Do the NMI shootdown even if virtualization is off on _this_ CPU, as
-+	 * other CPUs may have virtualization enabled.
- 	 */
--	if (cpu_has_vmx()) {
--		/* Safely force _this_ CPU out of VMX root operation. */
--		__cpu_emergency_vmxoff();
-+	if (cpu_has_vmx() || cpu_has_svm(NULL)) {
-+		/* Safely force _this_ CPU out of VMX/SVM operation. */
-+		cpu_emergency_disable_virtualization();
- 
--		/* Halt and exit VMX root operation on the other CPUs. */
-+		/* Disable VMX/SVM and halt on other CPUs. */
- 		nmi_shootdown_cpus_on_restart();
+--- a/drivers/virt/coco/sev-guest/sev-guest.c
++++ b/drivers/virt/coco/sev-guest/sev-guest.c
+@@ -379,9 +379,26 @@ static int handle_guest_request(struct s
+ 		snp_dev->input.data_npages = certs_npages;
  	}
- }
-@@ -587,7 +586,7 @@ static void native_machine_emergency_res
- 	unsigned short mode;
  
- 	if (reboot_emergency)
--		emergency_vmx_disable_all();
-+		emergency_reboot_disable_virtualization();
++	/*
++	 * Increment the message sequence number. There is no harm in doing
++	 * this now because decryption uses the value stored in the response
++	 * structure and any failure will wipe the VMPCK, preventing further
++	 * use anyway.
++	 */
++	snp_inc_msg_seqno(snp_dev);
++
+ 	if (fw_err)
+ 		*fw_err = err;
  
- 	tboot_shutdown(TB_SHUTDOWN_REBOOT);
++	/*
++	 * If an extended guest request was issued and the supplied certificate
++	 * buffer was not large enough, a standard guest request was issued to
++	 * prevent IV reuse. If the standard request was successful, return -EIO
++	 * back to the caller as would have originally been returned.
++	 */
++	if (!rc && err == SNP_GUEST_REQ_INVALID_LEN)
++		return -EIO;
++
+ 	if (rc) {
+ 		dev_alert(snp_dev->dev,
+ 			  "Detected error from ASP request. rc: %d, fw_err: %llu\n",
+@@ -397,9 +414,6 @@ static int handle_guest_request(struct s
+ 		goto disable_vmpck;
+ 	}
  
+-	/* Increment to new message sequence after payload decryption was successful. */
+-	snp_inc_msg_seqno(snp_dev);
+-
+ 	return 0;
+ 
+ disable_vmpck:
 
 
