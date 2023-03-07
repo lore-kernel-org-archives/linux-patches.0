@@ -1,38 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F260BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:59:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C73DC433EF;
-	Tue,  7 Mar 2023 18:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A584BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:59:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8866FC433EF;
+	Tue,  7 Mar 2023 18:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215548;
-	bh=+gG78ObpD8v6Uhmrv4zUkPa2t7eYN91BNznaEBr2Ekw=;
+	s=korg; t=1678215551;
+	bh=uz1DyUj9wiP23cA67KlGpjiDBKPir7H4mFieYghJyvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i1duWUCLxzv6VqxfKK5iZQx1engIfBnYkTFCpsKnqw+O/kHg2VEW3gB8T/Ue9hMjD
-	 dNEO2P4btPO8JNH6rC7CkYZpaQ9aBrg3m9dTEcip0Pk3/jWUEgVm39m55gGbnVxKsQ
-	 gbtNH04qIsSUE25iSNTXC0M/Fi1FTB0fNc8IeKBs=
+	b=QeRjd3DwYqzKj8pzaL1iJ3FUML7BBRZzrKm7lKDHTICoqM4NBRHa1iVqu/1EaibQl
+	 RxAToM6muK1B4xiC69vWUX0yI5r/ujia+ttKeTbZxFegQ45ad2ZNxXQ4O+ExCdkqu3
+	 SZ4lHukJJ1gAmK7EchfZY/rJ4D5CVBX1FQeONS5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@arm.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jin Yao <yao.jin@linux.intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linuxarm@huawei.com,
-	prime.zeng@hisilicon.com,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Tom Talpey <tom@talpey.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 266/567] perf tools: Fix auto-complete on aarch64
-Date: Tue,  7 Mar 2023 18:00:02 +0100
-Message-Id: <20230307165917.463364933@linuxfoundation.org>
+Subject: [PATCH 5.15 257/567] cifs: Fix warning and UAF when destroy the MR list
+Date: Tue,  7 Mar 2023 17:59:53 +0100
+Message-Id: <20230307165917.076509276@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -46,70 +37,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit ffd1240e8f0814262ceb957dbe961f6e0aef1e7a ]
+[ Upstream commit 3e161c2791f8e661eed24a2c624087084d910215 ]
 
-On aarch64 CPU related events are not under event_source/devices/cpu/events,
-they're under event_source/devices/armv8_pmuv3_0/events on my machine.
-Using current auto-complete script will generate below error:
+If the MR allocate failed, the MR recovery work not initialized
+and list not cleared. Then will be warning and UAF when release
+the MR:
 
-  [root@localhost bin]# perf stat -e
-  ls: cannot access '/sys/bus/event_source/devices/cpu/events': No such file or directory
+  WARNING: CPU: 4 PID: 824 at kernel/workqueue.c:3066 __flush_work.isra.0+0xf7/0x110
+  CPU: 4 PID: 824 Comm: mount.cifs Not tainted 6.1.0-rc5+ #82
+  RIP: 0010:__flush_work.isra.0+0xf7/0x110
+  Call Trace:
+   <TASK>
+   __cancel_work_timer+0x2ba/0x2e0
+   smbd_destroy+0x4e1/0x990
+   _smbd_get_connection+0x1cbd/0x2110
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Fix this by not testing /sys/bus/event_source/devices/cpu/events on
-aarch64 machine.
+  BUG: KASAN: use-after-free in smbd_destroy+0x4fc/0x990
+  Read of size 8 at addr ffff88810b156a08 by task mount.cifs/824
+  CPU: 4 PID: 824 Comm: mount.cifs Tainted: G        W          6.1.0-rc5+ #82
+  Call Trace:
+   dump_stack_lvl+0x34/0x44
+   print_report+0x171/0x472
+   kasan_report+0xad/0x130
+   smbd_destroy+0x4fc/0x990
+   _smbd_get_connection+0x1cbd/0x2110
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Fixes: 74cd5815d9af6e6c ("perf tool: Improve bash command line auto-complete for multiple events with comma")
-Reviewed-by: James Clark <james.clark@arm.com>
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jin Yao <yao.jin@linux.intel.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linuxarm@huawei.com
-Cc: prime.zeng@hisilicon.com
-Link: https://lore.kernel.org/r/20230207035057.43394-1-yangyicong@huawei.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+  Allocated by task 824:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   __kasan_kmalloc+0x7a/0x90
+   _smbd_get_connection+0x1b6f/0x2110
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+  Freed by task 824:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   kasan_save_free_info+0x2a/0x40
+   ____kasan_slab_free+0x143/0x1b0
+   __kmem_cache_free+0xc8/0x330
+   _smbd_get_connection+0x1c6a/0x2110
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+Let's initialize the MR recovery work before MR allocate to prevent
+the warning, remove the MRs from the list to prevent the UAF.
+
+Fixes: c7398583340a ("CIFS: SMBD: Implement RDMA memory registration")
+Acked-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Reviewed-by: Tom Talpey <tom@talpey.com>
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/perf-completion.sh | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/cifs/smbdirect.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/perf-completion.sh b/tools/perf/perf-completion.sh
-index fdf75d45efff7..978249d7868c2 100644
---- a/tools/perf/perf-completion.sh
-+++ b/tools/perf/perf-completion.sh
-@@ -165,7 +165,12 @@ __perf_main ()
+diff --git a/fs/cifs/smbdirect.c b/fs/cifs/smbdirect.c
+index 58f086aabc888..a9a5d27b8d38b 100644
+--- a/fs/cifs/smbdirect.c
++++ b/fs/cifs/smbdirect.c
+@@ -2251,6 +2251,7 @@ static int allocate_mr_list(struct smbd_connection *info)
+ 	atomic_set(&info->mr_ready_count, 0);
+ 	atomic_set(&info->mr_used_count, 0);
+ 	init_waitqueue_head(&info->wait_for_mr_cleanup);
++	INIT_WORK(&info->mr_recovery_work, smbd_mr_recovery_work);
+ 	/* Allocate more MRs (2x) than hardware responder_resources */
+ 	for (i = 0; i < info->responder_resources * 2; i++) {
+ 		smbdirect_mr = kzalloc(sizeof(*smbdirect_mr), GFP_KERNEL);
+@@ -2278,13 +2279,13 @@ static int allocate_mr_list(struct smbd_connection *info)
+ 		list_add_tail(&smbdirect_mr->list, &info->mr_list);
+ 		atomic_inc(&info->mr_ready_count);
+ 	}
+-	INIT_WORK(&info->mr_recovery_work, smbd_mr_recovery_work);
+ 	return 0;
  
- 		local cur1=${COMP_WORDS[COMP_CWORD]}
- 		local raw_evts=$($cmd list --raw-dump)
--		local arr s tmp result
-+		local arr s tmp result cpu_evts
-+
-+		# aarch64 doesn't have /sys/bus/event_source/devices/cpu/events
-+		if [[ `uname -m` != aarch64 ]]; then
-+			cpu_evts=$(ls /sys/bus/event_source/devices/cpu/events)
-+		fi
+ out:
+ 	kfree(smbdirect_mr);
  
- 		if [[ "$cur1" == */* && ${cur1#*/} =~ ^[A-Z] ]]; then
- 			OLD_IFS="$IFS"
-@@ -183,9 +188,9 @@ __perf_main ()
- 				fi
- 			done
- 
--			evts=${result}" "$(ls /sys/bus/event_source/devices/cpu/events)
-+			evts=${result}" "${cpu_evts}
- 		else
--			evts=${raw_evts}" "$(ls /sys/bus/event_source/devices/cpu/events)
-+			evts=${raw_evts}" "${cpu_evts}
- 		fi
- 
- 		if [[ "$cur1" == , ]]; then
+ 	list_for_each_entry_safe(smbdirect_mr, tmp, &info->mr_list, list) {
++		list_del(&smbdirect_mr->list);
+ 		ib_dereg_mr(smbdirect_mr->mr);
+ 		kfree(smbdirect_mr->sgl);
+ 		kfree(smbdirect_mr);
 -- 
 2.39.2
 
