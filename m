@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0ACBA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EBF1C433EF;
-	Tue,  7 Mar 2023 17:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6485BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B40BC433EF;
+	Tue,  7 Mar 2023 17:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211656;
-	bh=vgjzvMwfqREa+lHmGwYtebriiOfY+KDav08tZLkqfp4=;
+	s=korg; t=1678211659;
+	bh=XiBngLPm0sTkZGrpgalvbiWmOGeMLl/W4nCs4fI+Cz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZIWDLDBoFJYmQ2XRsN5qfGlIkTcntJdbmNhA3FZqw7tNuOW4i/mILMxcBO6JyGdUy
-	 OjrftkZ0EbLis0prCTrLXNCI2/M9hIcb/mEvJfaY467Q3R9G/fRu4lVL46pTFaHcVs
-	 bA8itNE6cGMgLJ6BY5Vj9WoKM7r3NRo8GZv+/OaU=
+	b=GGVIdN1lb6JdlANLjLCKN80M+aYCeIK5Gl2dAmHhRCy4WVcVfI6yevb+3/UM0odgR
+	 NcjP1lyvFhV1hJ4dnK5R2uoP0mRu8yARtlZq32RbrLcxpH96OD4bam7zQBvAlA3Ynw
+	 yRawkeiRKUN6O3RChW/pVH5EmpJE1u34k9xAFub8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.2 0926/1001] arm64: acpi: Fix possible memory leak of ffh_ctxt
-Date: Tue,  7 Mar 2023 18:01:38 +0100
-Message-Id: <20230307170102.272177006@linuxfoundation.org>
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.2 0935/1001] genirq/msi, platform-msi: Ensure that MSI descriptors are unreferenced
+Date: Tue,  7 Mar 2023 18:01:47 +0100
+Message-Id: <20230307170102.674982114@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,58 +34,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 1b561d3949f8478c5403c9752b5533211a757226 upstream.
+commit 0fb7fb713461e44b12e72c292bf90ee300f40710 upstream.
 
-Allocated 'ffh_ctxt' memory leak is possible if the SMCCC version
-and conduit checks fail and -EOPNOTSUPP is returned without freeing the
-allocated memory.
+Miquel reported a warning in the MSI core which is triggered when
+interrupts are freed via platform_msi_device_domain_free().
 
-Fix the same by moving the allocation after the SMCCC version and
-conduit checks.
+This code got reworked to use core functions for freeing the MSI
+descriptors, but nothing took care to clear the msi_desc->irq entry, which
+then triggers the warning in msi_free_msi_desc() which uses desc->irq to
+validate that the descriptor has been torn down. The same issue exists in
+msi_domain_populate_irqs().
 
-Fixes: 1d280ce099db ("arm64: Add architecture specific ACPI FFH Opregion callbacks")
-Cc: <stable@vger.kernel.org> # 6.2.x
-Cc: Will Deacon <will@kernel.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Suggested-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/r/202302191417.dAl9NuE8-lkp@intel.com/
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://lore.kernel.org/r/20230223135742.2952091-1-sudeep.holla@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Up to the point that msi_free_msi_descs() grew a warning for this case,
+this went un-noticed.
+
+Provide the counterpart of msi_domain_populate_irqs() and invoke it in
+platform_msi_device_domain_free() before freeing the interrupts and MSI
+descriptors and also in the error path of msi_domain_populate_irqs().
+
+Fixes: 2f2940d16823 ("genirq/msi: Remove filter from msi_free_descs_free_range()")
+Reported-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/87mt4wkwnv.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/acpi.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/base/platform-msi.c |  1 +
+ include/linux/msi.h         |  2 ++
+ kernel/irq/msi.c            | 23 ++++++++++++++++++++++-
+ 3 files changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/acpi.c b/arch/arm64/kernel/acpi.c
-index 378453faa87e..dba8fcec7f33 100644
---- a/arch/arm64/kernel/acpi.c
-+++ b/arch/arm64/kernel/acpi.c
-@@ -435,10 +435,6 @@ int acpi_ffh_address_space_arch_setup(void *handler_ctxt, void **region_ctxt)
- 	enum arm_smccc_conduit conduit;
- 	struct acpi_ffh_data *ffh_ctxt;
+diff --git a/drivers/base/platform-msi.c b/drivers/base/platform-msi.c
+index 5883e7634a2b..f37ad34c80ec 100644
+--- a/drivers/base/platform-msi.c
++++ b/drivers/base/platform-msi.c
+@@ -324,6 +324,7 @@ void platform_msi_device_domain_free(struct irq_domain *domain, unsigned int vir
+ 	struct platform_msi_priv_data *data = domain->host_data;
  
--	ffh_ctxt = kzalloc(sizeof(*ffh_ctxt), GFP_KERNEL);
--	if (!ffh_ctxt)
--		return -ENOMEM;
--
- 	if (arm_smccc_get_version() < ARM_SMCCC_VERSION_1_2)
- 		return -EOPNOTSUPP;
- 
-@@ -448,6 +444,10 @@ int acpi_ffh_address_space_arch_setup(void *handler_ctxt, void **region_ctxt)
- 		return -EOPNOTSUPP;
- 	}
- 
-+	ffh_ctxt = kzalloc(sizeof(*ffh_ctxt), GFP_KERNEL);
-+	if (!ffh_ctxt)
-+		return -ENOMEM;
+ 	msi_lock_descs(data->dev);
++	msi_domain_depopulate_descs(data->dev, virq, nr_irqs);
+ 	irq_domain_free_irqs_common(domain, virq, nr_irqs);
+ 	msi_free_msi_descs_range(data->dev, virq, virq + nr_irqs - 1);
+ 	msi_unlock_descs(data->dev);
+diff --git a/include/linux/msi.h b/include/linux/msi.h
+index a112b913fff9..15dd71817996 100644
+--- a/include/linux/msi.h
++++ b/include/linux/msi.h
+@@ -631,6 +631,8 @@ int msi_domain_prepare_irqs(struct irq_domain *domain, struct device *dev,
+ 			    int nvec, msi_alloc_info_t *args);
+ int msi_domain_populate_irqs(struct irq_domain *domain, struct device *dev,
+ 			     int virq, int nvec, msi_alloc_info_t *args);
++void msi_domain_depopulate_descs(struct device *dev, int virq, int nvec);
 +
- 	if (conduit == SMCCC_CONDUIT_SMC) {
- 		ffh_ctxt->invoke_ffh_fn = __arm_smccc_smc;
- 		ffh_ctxt->invoke_ffh64_fn = arm_smccc_1_2_smc;
+ struct irq_domain *
+ __platform_msi_create_device_domain(struct device *dev,
+ 				    unsigned int nvec,
+diff --git a/kernel/irq/msi.c b/kernel/irq/msi.c
+index efd21b79bf32..d169ee0c1799 100644
+--- a/kernel/irq/msi.c
++++ b/kernel/irq/msi.c
+@@ -1109,14 +1109,35 @@ int msi_domain_populate_irqs(struct irq_domain *domain, struct device *dev,
+ 	return 0;
+ 
+ fail:
+-	for (--virq; virq >= virq_base; virq--)
++	for (--virq; virq >= virq_base; virq--) {
++		msi_domain_depopulate_descs(dev, virq, 1);
+ 		irq_domain_free_irqs_common(domain, virq, 1);
++	}
+ 	msi_domain_free_descs(dev, &ctrl);
+ unlock:
+ 	msi_unlock_descs(dev);
+ 	return ret;
+ }
+ 
++void msi_domain_depopulate_descs(struct device *dev, int virq_base, int nvec)
++{
++	struct msi_ctrl ctrl = {
++		.domid	= MSI_DEFAULT_DOMAIN,
++		.first  = virq_base,
++		.last	= virq_base + nvec - 1,
++	};
++	struct msi_desc *desc;
++	struct xarray *xa;
++	unsigned long idx;
++
++	if (!msi_ctrl_valid(dev, &ctrl))
++		return;
++
++	xa = &dev->msi.data->__domains[ctrl.domid].store;
++	xa_for_each_range(xa, idx, desc, ctrl.first, ctrl.last)
++		desc->irq = 0;
++}
++
+ /*
+  * Carefully check whether the device can use reservation mode. If
+  * reservation mode is enabled then the early activation will assign a
 -- 
 2.39.2
 
