@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4935FBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:27:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1067C433EF;
-	Tue,  7 Mar 2023 17:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A48BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:27:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2927C433EF;
+	Tue,  7 Mar 2023 17:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210023;
-	bh=z84F0HEu790UqBUHkBsNtX8uxxqN9Hq53NDjpScuJDo=;
+	s=korg; t=1678210026;
+	bh=CYUnZgmLIV89cYqA5FC6HuuEnGI/szk4bLgy1BlUKEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=piiYbYqXj9L8xx+fM0+KZwc69yGmC1AcBQmtoTZAVOpSTjHx6wKh6nAWoq+T4++M4
-	 3pKfM93IZmgfHSiJHMch3M1wuj4SFvP82g7NT79BNR0viZd1/4XwGqu86gqpWUta5P
-	 +4UptnyZ+LbRdwW1zzDuCgV0GerkFyyvND26NJbI=
+	b=tpjleHWPEwtzvRv7qHaoOGCG/smM1tQ229i0Lfk3KGHKDDoo2PPsGCj3ED8KiKVT0
+	 zKV9HGB7HJWx/tZAjtsbXTYArdPG1YGwqJSTHsebHuOwO16m8PThvu80l9Z4COudU1
+	 mxyBJ/sYnFbrraYf5CtJKgt4WYzyK4fky5TU0tiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Mark Brown <broonie@kernel.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0408/1001] ASoC: mchp-spdifrx: disable all interrupts in mchp_spdifrx_dai_remove()
-Date: Tue,  7 Mar 2023 17:53:00 +0100
-Message-Id: <20230307170039.033110409@linuxfoundation.org>
+Subject: [PATCH 6.2 0391/1001] pinctrl: renesas: rzg2l: Fix configuring the GPIO pins as interrupts
+Date: Tue,  7 Mar 2023 17:52:43 +0100
+Message-Id: <20230307170038.327175342@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,36 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit aaecdc32b7e35b4f9b457fb3509414aa9a932589 ]
+[ Upstream commit 00dfe29887761405ccd23cc0aa07cb86623bb2b7 ]
 
-CSC interrupts which might be used in controls are on bits 8 and 9 of
-SPDIFRX_IDR register. Thus disable all the interrupts that are exported
-by driver.
+On the RZ/G2UL SoC we have less number of pins compared to RZ/G2L and also
+the pin configs are completely different. This patch makes sure we use the
+appropriate pin configs for each SoC (which is passed as part of the OF
+data) while configuring the GPIO pin as interrupts instead of using
+rzg2l_gpio_configs[] for all the SoCs.
 
-Fixes: ef265c55c1ac ("ASoC: mchp-spdifrx: add driver for SPDIF RX")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230130120647.638049-5-claudiu.beznea@microchip.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: bfc69bdbaad1 ("pinctrl: renesas: rzg2l: Add RZ/G2UL support")
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20230102221815.273719-3-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/atmel/mchp-spdifrx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/atmel/mchp-spdifrx.c b/sound/soc/atmel/mchp-spdifrx.c
-index 31ffaaf46dec0..b81fc77728dfc 100644
---- a/sound/soc/atmel/mchp-spdifrx.c
-+++ b/sound/soc/atmel/mchp-spdifrx.c
-@@ -921,7 +921,7 @@ static int mchp_spdifrx_dai_remove(struct snd_soc_dai *dai)
- 	struct mchp_spdifrx_dev *dev = snd_soc_dai_get_drvdata(dai);
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+index 5aa3836dbc226..6f762097557af 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+@@ -130,6 +130,7 @@ struct rzg2l_dedicated_configs {
+ struct rzg2l_pinctrl_data {
+ 	const char * const *port_pins;
+ 	const u32 *port_pin_configs;
++	unsigned int n_ports;
+ 	struct rzg2l_dedicated_configs *dedicated_pins;
+ 	unsigned int n_port_pins;
+ 	unsigned int n_dedicated_pins;
+@@ -1124,7 +1125,7 @@ static struct {
+ 	}
+ };
  
- 	/* Disable interrupts */
--	regmap_write(dev->regmap, SPDIFRX_IDR, 0xFF);
-+	regmap_write(dev->regmap, SPDIFRX_IDR, GENMASK(14, 0));
+-static int rzg2l_gpio_get_gpioint(unsigned int virq)
++static int rzg2l_gpio_get_gpioint(unsigned int virq, const struct rzg2l_pinctrl_data *data)
+ {
+ 	unsigned int gpioint;
+ 	unsigned int i;
+@@ -1133,13 +1134,13 @@ static int rzg2l_gpio_get_gpioint(unsigned int virq)
+ 	port = virq / 8;
+ 	bit = virq % 8;
  
- 	clk_disable_unprepare(dev->pclk);
+-	if (port >= ARRAY_SIZE(rzg2l_gpio_configs) ||
+-	    bit >= RZG2L_GPIO_PORT_GET_PINCNT(rzg2l_gpio_configs[port]))
++	if (port >= data->n_ports ||
++	    bit >= RZG2L_GPIO_PORT_GET_PINCNT(data->port_pin_configs[port]))
+ 		return -EINVAL;
  
+ 	gpioint = bit;
+ 	for (i = 0; i < port; i++)
+-		gpioint += RZG2L_GPIO_PORT_GET_PINCNT(rzg2l_gpio_configs[i]);
++		gpioint += RZG2L_GPIO_PORT_GET_PINCNT(data->port_pin_configs[i]);
+ 
+ 	return gpioint;
+ }
+@@ -1239,7 +1240,7 @@ static int rzg2l_gpio_child_to_parent_hwirq(struct gpio_chip *gc,
+ 	unsigned long flags;
+ 	int gpioint, irq;
+ 
+-	gpioint = rzg2l_gpio_get_gpioint(child);
++	gpioint = rzg2l_gpio_get_gpioint(child, pctrl->data);
+ 	if (gpioint < 0)
+ 		return gpioint;
+ 
+@@ -1313,8 +1314,8 @@ static void rzg2l_init_irq_valid_mask(struct gpio_chip *gc,
+ 		port = offset / 8;
+ 		bit = offset % 8;
+ 
+-		if (port >= ARRAY_SIZE(rzg2l_gpio_configs) ||
+-		    bit >= RZG2L_GPIO_PORT_GET_PINCNT(rzg2l_gpio_configs[port]))
++		if (port >= pctrl->data->n_ports ||
++		    bit >= RZG2L_GPIO_PORT_GET_PINCNT(pctrl->data->port_pin_configs[port]))
+ 			clear_bit(offset, valid_mask);
+ 	}
+ }
+@@ -1519,6 +1520,7 @@ static int rzg2l_pinctrl_probe(struct platform_device *pdev)
+ static struct rzg2l_pinctrl_data r9a07g043_data = {
+ 	.port_pins = rzg2l_gpio_names,
+ 	.port_pin_configs = r9a07g043_gpio_configs,
++	.n_ports = ARRAY_SIZE(r9a07g043_gpio_configs),
+ 	.dedicated_pins = rzg2l_dedicated_pins.common,
+ 	.n_port_pins = ARRAY_SIZE(r9a07g043_gpio_configs) * RZG2L_PINS_PER_PORT,
+ 	.n_dedicated_pins = ARRAY_SIZE(rzg2l_dedicated_pins.common),
+@@ -1527,6 +1529,7 @@ static struct rzg2l_pinctrl_data r9a07g043_data = {
+ static struct rzg2l_pinctrl_data r9a07g044_data = {
+ 	.port_pins = rzg2l_gpio_names,
+ 	.port_pin_configs = rzg2l_gpio_configs,
++	.n_ports = ARRAY_SIZE(rzg2l_gpio_configs),
+ 	.dedicated_pins = rzg2l_dedicated_pins.common,
+ 	.n_port_pins = ARRAY_SIZE(rzg2l_gpio_names),
+ 	.n_dedicated_pins = ARRAY_SIZE(rzg2l_dedicated_pins.common) +
 -- 
 2.39.2
 
