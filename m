@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65F2BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:55:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D91C433D2;
-	Tue,  7 Mar 2023 17:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28A1BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:55:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7053BC4339B;
+	Tue,  7 Mar 2023 17:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211721;
-	bh=7FPfhsixwY3MuYbT2s87ZFNTbxb179HSMv+1ZtweWWA=;
+	s=korg; t=1678211724;
+	bh=j0/cv6nKgTp1KMVIZwNUsb66pe3S/tolhd4QZOhQX2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xt5i63ijSkpl465vHKn6/V8PVkFr8sqCo+xk2lCQg83eekEIVZ7ryLCihs0tJkKwt
-	 v9gCGjPmNIG5XkOweO28TwgMHy00Ls53ptr1YuHU6Eop4X9HGROwEdGRyyuRrWvGHD
-	 OWcf/9XqJVkrEXI/dLdzANgBE7WKb2hXVx03Bqog=
+	b=ey9llpkxq8yMieHUP5lSt5DxQHot28on7m4RKGCh2mtApKfjABONsaZqKB8jrs71Q
+	 kNd1KdeyXxX9Yli6BKqtzQHRDFaEsoi/s1SGX+jBEKophbtsUWGdo0ar5ypGuKwB/O
+	 LpQgx5r5iqeqzrtQyxsguHtofEviSZDtEb+ALdrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.2 0954/1001] tracing/eprobe: Fix to add filter on eprobe description in README file
-Date: Tue,  7 Mar 2023 18:02:06 +0100
-Message-Id: <20230307170103.554455128@linuxfoundation.org>
+	Peter Collingbourne <pcc@google.com>,
+	=?UTF-8?q?Kuan-Ying=20Lee=20 ?= <Kuan-Ying.Lee@mediatek.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.2 0928/1001] arm64: Reset KASAN tag in copy_highpage with HW tags only
+Date: Tue,  7 Mar 2023 18:01:40 +0100
+Message-Id: <20230307170102.372731770@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,34 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Peter Collingbourne <pcc@google.com>
 
-commit 133921530c42960c07d25d12677f9e131a2b0cdf upstream.
+commit e74a68468062d7ebd8ce17069e12ccc64cc6a58c upstream.
 
-Fix to add a description of the filter on eprobe in README file. This
-is required to identify the kernel supports the filter on eprobe or not.
+During page migration, the copy_highpage function is used to copy the
+page data to the target page. If the source page is a userspace page
+with MTE tags, the KASAN tag of the target page must have the match-all
+tag in order to avoid tag check faults during subsequent accesses to the
+page by the kernel. However, the target page may have been allocated in
+a number of ways, some of which will use the KASAN allocator and will
+therefore end up setting the KASAN tag to a non-match-all tag. Therefore,
+update the target page's KASAN tag to match the source page.
 
-Link: https://lore.kernel.org/all/167309833728.640500.12232259238201433587.stgit@devnote3/
+We ended up unintentionally fixing this issue as a result of a bad
+merge conflict resolution between commit e059853d14ca ("arm64: mte:
+Fix/clarify the PG_mte_tagged semantics") and commit 20794545c146 ("arm64:
+kasan: Revert "arm64: mte: reset the page tag in page->flags""), which
+preserved a tag reset for PG_mte_tagged pages which was considered to be
+unnecessary at the time. Because SW tags KASAN uses separate tag storage,
+update the code to only reset the tags when HW tags KASAN is enabled.
 
-Fixes: 752be5c5c910 ("tracing/eprobe: Add eprobe filter support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Link: https://linux-review.googlesource.com/id/If303d8a709438d3ff5af5fd85706505830f52e0c
+Reported-by: "Kuan-Ying Lee (李冠穎)" <Kuan-Ying.Lee@mediatek.com>
+Cc: <stable@vger.kernel.org> # 6.1
+Fixes: 20794545c146 ("arm64: kasan: Revert "arm64: mte: reset the page tag in page->flags"")
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Link: https://lore.kernel.org/r/20230215050911.1433132-1-pcc@google.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/mm/copypage.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -5598,7 +5598,7 @@ static const char readme_msg[] =
- #ifdef CONFIG_HIST_TRIGGERS
- 	"\t           s:[synthetic/]<event> <field> [<field>]\n"
- #endif
--	"\t           e[:[<group>/][<event>]] <attached-group>.<attached-event> [<args>]\n"
-+	"\t           e[:[<group>/][<event>]] <attached-group>.<attached-event> [<args>] [if <filter>]\n"
- 	"\t           -:[<group>/][<event>]\n"
- #ifdef CONFIG_KPROBE_EVENTS
- 	"\t    place: [<module>:]<symbol>[+<offset>]|<memaddr>\n"
+--- a/arch/arm64/mm/copypage.c
++++ b/arch/arm64/mm/copypage.c
+@@ -22,7 +22,8 @@ void copy_highpage(struct page *to, stru
+ 	copy_page(kto, kfrom);
+ 
+ 	if (system_supports_mte() && page_mte_tagged(from)) {
+-		page_kasan_tag_reset(to);
++		if (kasan_hw_tags_enabled())
++			page_kasan_tag_reset(to);
+ 		/* It's a new page, shouldn't have been tagged yet */
+ 		WARN_ON_ONCE(!try_page_mte_tagging(to));
+ 		mte_copy_page_tags(kto, kfrom);
 
 
