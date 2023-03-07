@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F5FBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:16:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C9EC433EF;
-	Tue,  7 Mar 2023 18:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97323BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:16:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D771C433D2;
+	Tue,  7 Mar 2023 18:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212976;
-	bh=8kqN3RniMzBMnKdyxH0PpH/cGfSiIAJm7s5/6Wj3Lkk=;
+	s=korg; t=1678212979;
+	bh=Uqe88ZOiTAMwGWY9SJd3pNnDcjxhEl+vnrYP76spxsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BG/eckF3oxDo+AbZzYEwGlHf0idokSAaWDqRURfC4JTAh6FWxE0eAow4RWKG1mDan
-	 wVCo1h/avBNQMoAhjCZWm1JPRrn45FmIzRiq45/XHMdk/DOxQnzNo6IdYc4r97Qg9o
-	 BHCUJAjJflShHAwJAzXBfR7fWkzZYePGrk0tRXUI=
+	b=Wzj4Uhm0bO1OqmZGIph/wnIUZgS6t5ce3ofKNfH4GHWj+6CYMLGNTKaMyIZsuOlNr
+	 0GyMAOf6YKYzQHv+GFPCw7IoAZpBdJhE12zmI/sJVO6vDkrduo6XRGKF3ihFzmZ5+m
+	 X3HnBp6/VjHKeEQvzy9w9nVraHxq1Q7+nH1asSuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	William Zhang <william.zhang@broadcom.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 341/885] ASoC: dt-bindings: meson: fix gx-card codec node regex
-Date: Tue,  7 Mar 2023 17:54:35 +0100
-Message-Id: <20230307170017.035024790@linuxfoundation.org>
+Subject: [PATCH 6.1 359/885] spi: bcm63xx-hsspi: Fix multi-bit mode setting
+Date: Tue,  7 Mar 2023 17:54:53 +0100
+Message-Id: <20230307170017.872383350@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,36 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: William Zhang <william.zhang@broadcom.com>
 
-[ Upstream commit 480b26226873c88e482575ceb0d0a38d76e1be57 ]
+[ Upstream commit 811ff802aaf878ebbbaeac0307a0164fa21e7d40 ]
 
-'codec' is a valid node name when there is a single codec
-in the link. Fix the node regular expression to apply this.
+Currently the driver always sets the controller to dual data bit mode
+for both tx and rx data in the profile mode control register even for
+single data bit transfer. Luckily the opcode is set correctly according
+to SPI transfer data bit width so it does not actually cause issues.
 
-Fixes: fd00366b8e41 ("ASoC: meson: gx: add sound card dt-binding documentation")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230202183653.486216-3-jbrunet@baylibre.com
+This change fixes the problem by setting tx and rx data bit mode field
+correctly according to the actual SPI transfer tx and rx data bit width.
+
+Fixes: 142168eba9dc ("spi: bcm63xx-hsspi: add bcm63xx HSSPI driver")
+Signed-off-by: William Zhang <william.zhang@broadcom.com>
+Link: https://lore.kernel.org/r/20230209200246.141520-11-william.zhang@broadcom.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/sound/amlogic,gx-sound-card.yaml        | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-bcm63xx-hsspi.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml b/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml
-index 5b8d59245f82f..b358fd601ed38 100644
---- a/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml
-+++ b/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml
-@@ -62,7 +62,7 @@ patternProperties:
-         description: phandle of the CPU DAI
+diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
+index a74345ed0e2ff..9ec33745c1472 100644
+--- a/drivers/spi/spi-bcm63xx-hsspi.c
++++ b/drivers/spi/spi-bcm63xx-hsspi.c
+@@ -163,6 +163,7 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
+ 	int step_size = HSSPI_BUFFER_LEN;
+ 	const u8 *tx = t->tx_buf;
+ 	u8 *rx = t->rx_buf;
++	u32 val = 0;
  
-     patternProperties:
--      "^codec-[0-9]+$":
-+      "^codec(-[0-9]+)?$":
-         type: object
-         additionalProperties: false
-         description: |-
+ 	bcm63xx_hsspi_set_clk(bs, spi, t->speed_hz);
+ 	bcm63xx_hsspi_set_cs(bs, spi->chip_select, true);
+@@ -178,11 +179,16 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
+ 		step_size -= HSSPI_OPCODE_LEN;
+ 
+ 	if ((opcode == HSSPI_OP_READ && t->rx_nbits == SPI_NBITS_DUAL) ||
+-	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL))
++	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL)) {
+ 		opcode |= HSSPI_OP_MULTIBIT;
+ 
+-	__raw_writel(1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT |
+-		     1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT | 0xff,
++		if (t->rx_nbits == SPI_NBITS_DUAL)
++			val |= 1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT;
++		if (t->tx_nbits == SPI_NBITS_DUAL)
++			val |= 1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT;
++	}
++
++	__raw_writel(val | 0xff,
+ 		     bs->regs + HSSPI_PROFILE_MODE_CTRL_REG(chip_select));
+ 
+ 	while (pending > 0) {
 -- 
 2.39.2
 
