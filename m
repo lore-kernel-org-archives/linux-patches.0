@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58405BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:46:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7ED4C433EF;
-	Tue,  7 Mar 2023 18:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7853DBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:46:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A94C433EF;
+	Tue,  7 Mar 2023 18:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214784;
-	bh=nH/qHADc/aV0BOh1sT85kfPYo8JrjEvROLcsHUdHMWI=;
+	s=korg; t=1678214787;
+	bh=u5bv5718quh7sauqTA9ZlkhxW/MbwIqa0JxHq8+TATU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZMRRb0+BKoAc5NtVAlIdebmLDfA5191lH80Q0kA6vqKEg7ooyoGR+WnydcWfjdN7i
-	 q2wQh/Jdqnm1QlYc6wWmUTytca73DeAThNVw6R0SRSFU4lyBYp4aOqvSSiFCFFR1eF
-	 7uG4QT/Vdkak0GRgotArTG3dxJcte6X3YiJWSQhg=
+	b=XShl8ZFLeEfk4ppkgB/gwQgtFSzftoMQc8iaCdIB6oc6W4Mp1OM5yyJm4+X7NCPo2
+	 p+EQUMcTn4qaCcymn1AwaZrbeqAF8QSuiEuxZ82ztMKF89XmWmHGHa6v6cCE9slt0L
+	 6T/mQOFtAHnfqrC/fN8lffDuxrZeG1i/ca/dg2qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robimarko@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Adam Ford <aford173@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 021/567] arm64: dts: qcom: ipq8074: correct USB3 QMP PHY-s clock output names
-Date: Tue,  7 Mar 2023 17:55:57 +0100
-Message-Id: <20230307165906.822321493@linuxfoundation.org>
+Subject: [PATCH 5.15 048/567] arm64: dts: renesas: beacon-renesom: Fix gpio expander reference
+Date: Tue,  7 Mar 2023 17:56:24 +0100
+Message-Id: <20230307165908.011096584@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,62 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Marko <robimarko@gmail.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 877cff3568c0f54511d77918ae16b2d6e9a0dfce ]
+[ Upstream commit d7f9492dfc03153ac56ab59066a196558748f575 ]
 
-It seems that clock-output-names for the USB3 QMP PHY-s where set without
-actually checking what is the GCC clock driver expecting, so clock core
-could never actually find the parents for usb0_pipe_clk_src and
-usb1_pipe_clk_src clocks in the GCC driver.
+The board used to originally introduce the Beacon Embedded RZ/G2[M/N/H]
+boards had a GPIO expander with address 20, but this was changed when
+the final board went to production.
 
-So, correct the names to be what the driver expects so that parenting
-works.
+The production boards changed both the part itself and the address.
+With the incorrect address, the LCD cannot come up.  If the LCD fails,
+the rcar-du driver fails to come up, and that also breaks HDMI.
 
-Before:
-gcc_usb0_pipe_clk_src                0        0        0   125000000          0     0  50000         Y
-gcc_usb1_pipe_clk_src                0        0        0   125000000          0     0  50000         Y
+Pre-release board were not shipped to the general public, so it should
+be safe to push this as a fix.  Anyone with a production board would
+have video fail due to this GPIO expander change.
 
-After:
- usb3phy_0_cc_pipe_clk                1        1        0   125000000          0     0  50000         Y
-    usb0_pipe_clk_src                 1        1        0   125000000          0     0  50000         Y
-       gcc_usb0_pipe_clk              1        1        0   125000000          0     0  50000         Y
- usb3phy_1_cc_pipe_clk                1        1        0   125000000          0     0  50000         Y
-    usb1_pipe_clk_src                 1        1        0   125000000          0     0  50000         Y
-       gcc_usb1_pipe_clk              1        1        0   125000000          0     0  50000         Y
-
-Fixes: 5e09bc51d07b ("arm64: dts: ipq8074: enable USB support")
-Signed-off-by: Robert Marko <robimarko@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230108130440.670181-2-robimarko@gmail.com
+Fixes: a1d8a344f1ca ("arm64: dts: renesas: Introduce r8a774a1-beacon-rzg2m-kit")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230114225647.227972-1-aford173@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../dts/renesas/beacon-renesom-baseboard.dtsi | 24 ++++++++-----------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 9d4019e0949a9..183b144a23fb5 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -114,7 +114,7 @@ usb1_ssphy: phy@58200 {
- 				#phy-cells = <0>;
- 				clocks = <&gcc GCC_USB1_PIPE_CLK>;
- 				clock-names = "pipe0";
--				clock-output-names = "gcc_usb1_pipe_clk_src";
-+				clock-output-names = "usb3phy_1_cc_pipe_clk";
+diff --git a/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi b/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
+index 48e0c0494f6a0..f1ab4943c295c 100644
+--- a/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
++++ b/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
+@@ -432,20 +432,6 @@ wm8962_endpoint: endpoint {
+ 		};
+ 	};
+ 
+-	/* 0 - lcd_reset */
+-	/* 1 - lcd_pwr */
+-	/* 2 - lcd_select */
+-	/* 3 - backlight-enable */
+-	/* 4 - Touch_shdwn */
+-	/* 5 - LCD_H_pol */
+-	/* 6 - lcd_V_pol */
+-	gpio_exp1: gpio@20 {
+-		compatible = "onnn,pca9654";
+-		reg = <0x20>;
+-		gpio-controller;
+-		#gpio-cells = <2>;
+-	};
+-
+ 	touchscreen@26 {
+ 		compatible = "ilitek,ili2117";
+ 		reg = <0x26>;
+@@ -477,6 +463,16 @@ hd3ss3220_out_ep: endpoint {
  			};
  		};
+ 	};
++
++	gpio_exp1: gpio@70 {
++		compatible = "nxp,pca9538";
++		reg = <0x70>;
++		gpio-controller;
++		#gpio-cells = <2>;
++		gpio-line-names = "lcd_reset", "lcd_pwr", "lcd_select",
++				  "backlight-enable", "Touch_shdwn",
++				  "LCD_H_pol", "lcd_V_pol";
++	};
+ };
  
-@@ -157,7 +157,7 @@ usb0_ssphy: phy@78200 {
- 				#phy-cells = <0>;
- 				clocks = <&gcc GCC_USB0_PIPE_CLK>;
- 				clock-names = "pipe0";
--				clock-output-names = "gcc_usb0_pipe_clk_src";
-+				clock-output-names = "usb3phy_0_cc_pipe_clk";
- 			};
- 		};
- 
+ &lvds0 {
 -- 
 2.39.2
 
