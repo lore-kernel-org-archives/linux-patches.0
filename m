@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF4FBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:36:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F13FC433EF;
-	Tue,  7 Mar 2023 17:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4746BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:36:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F925C433EF;
+	Tue,  7 Mar 2023 17:36:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210573;
-	bh=JUZpk+dIhUmznIZCxnIwBLzvBh2X6kYGXdYbolgujo4=;
+	s=korg; t=1678210576;
+	bh=ydGuym6RW3WZLSqSRqt3EtLsYeZwA9ltFogTz021gRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ePGzx8yXSnnOV5KZTDTbjMhgo1KrIMmPeclWKrQLS8wSKqgRPoGTwHn6qEe5uk0wb
-	 LzwMLwXyabWToWUC1wEy+9bAtnoHVN8stzg3Z3BBiDcavRNG0Q2w4vcrqmEAzEFhPT
-	 UYcRLqU0pSlkQ0Aw46Ow2hFopVIvpL7ijoNlqK0Y=
+	b=c0aOZxpvAzNHqkbYo2A5Odcmp5ygJV0A9RTIgE5L28rX3BvjcV81Zf7I49f4xUaR6
+	 WAzNIcGH1lxf5TWvWrdtj9JNMroC0S8knLK+5Oh2DR5a6h9mDZzWmdIiGZyA80SOCs
+	 EW4NYdQGimA/UQl6Kr68Dnnx4xSSYi54AKGh+8Gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0584/1001] media: platform: ti: Add missing check for devm_regulator_get
-Date: Tue,  7 Mar 2023 17:55:56 +0100
-Message-Id: <20230307170046.826048252@linuxfoundation.org>
+Subject: [PATCH 6.2 0558/1001] dmaengine: dw-edma: Fix readq_ch() return value truncation
+Date: Tue,  7 Mar 2023 17:55:30 +0100
+Message-Id: <20230307170045.700958464@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,43 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 
-[ Upstream commit da8e05f84a11c3cc3b0ba0a3c62d20e358002d99 ]
+[ Upstream commit 5fdca4a995bcd4cf61bda40af154a730589dc524 ]
 
-Add check for the return value of devm_regulator_get since it may return
-error pointer.
+Previously, readq_ch() did a 64-bit readq(), but truncated the result by
+storing it in the u32 "value".  Change "value" to u64 to avoid the
+truncation.
 
-Fixes: 448de7e7850b ("[media] omap3isp: OMAP3 ISP core")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Note: the method is currently unused, so the bug hasn't caused any problem
+so far.
+
+Fixes: 04e0a39fc10f ("dmaengine: dw-edma: Add writeq() and readq() for 64 bits architectures")
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/ti/omap3isp/isp.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/dma/dw-edma/dw-edma-v0-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/ti/omap3isp/isp.c b/drivers/media/platform/ti/omap3isp/isp.c
-index 1d40bb59ff814..e7327e38482de 100644
---- a/drivers/media/platform/ti/omap3isp/isp.c
-+++ b/drivers/media/platform/ti/omap3isp/isp.c
-@@ -2307,7 +2307,16 @@ static int isp_probe(struct platform_device *pdev)
+diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
+index 77e6cfe52e0a3..a3816ba632851 100644
+--- a/drivers/dma/dw-edma/dw-edma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
+@@ -192,7 +192,7 @@ static inline void writeq_ch(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch,
+ static inline u64 readq_ch(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch,
+ 			   const void __iomem *addr)
+ {
+-	u32 value;
++	u64 value;
  
- 	/* Regulators */
- 	isp->isp_csiphy1.vdd = devm_regulator_get(&pdev->dev, "vdd-csiphy1");
-+	if (IS_ERR(isp->isp_csiphy1.vdd)) {
-+		ret = PTR_ERR(isp->isp_csiphy1.vdd);
-+		goto error;
-+	}
-+
- 	isp->isp_csiphy2.vdd = devm_regulator_get(&pdev->dev, "vdd-csiphy2");
-+	if (IS_ERR(isp->isp_csiphy2.vdd)) {
-+		ret = PTR_ERR(isp->isp_csiphy2.vdd);
-+		goto error;
-+	}
- 
- 	/* Clocks
- 	 *
+ 	if (dw->chip->mf == EDMA_MF_EDMA_LEGACY) {
+ 		u32 viewport_sel;
 -- 
 2.39.2
 
