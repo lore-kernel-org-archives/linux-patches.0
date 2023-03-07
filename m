@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291EBBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:11:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C58C433EF;
-	Tue,  7 Mar 2023 18:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A63BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:11:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D949C4339B;
+	Tue,  7 Mar 2023 18:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212705;
-	bh=5crKRGoGjs7OvnBbceoKVHiUFKx5kaljmaFN01e52PI=;
+	s=korg; t=1678212708;
+	bh=ixEwJp9WTAMQNd18J15BF1Jy9Qoxvt+YxPUGOkeBAGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wsYto6E0zEM4chpyjrZBUbcq/exdmQpkbYxdV2jxjtz2pWsTz1ojDN5cYDgPcu308
-	 1VwMrdN7IwbCze+6W62BIa6t66z1z7elGk27nmCc5K4dTl9Ra7k9rsTF2wGTukOWDK
-	 6yf03b9S59/9BDq4QofJVVTNdHcoep7UnTdypY2g=
+	b=r4E14U3BW97TwMpCmK7XFJ5G+x80Qpt9cNl97PRg1bIKnq5byaITrxzDgHzHiM7B3
+	 Orow7cOQHpmij34E6yJwBVaslQWkASUxgTO5NKgTuqGhYdruoX45KVilW8IX2iAOwf
+	 z7TPmXN8ydNuKHW2YLVnLII9fnbkQcpVPTTS4TDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Melissa Wen <melissa.srw@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 270/885] drm/vkms: Fix null-ptr-deref in vkms_release()
-Date: Tue,  7 Mar 2023 17:53:24 +0100
-Message-Id: <20230307170013.745153292@linuxfoundation.org>
+Subject: [PATCH 6.1 244/885] wifi: mac80211: pass sta to ieee80211_rx_data_set_sta()
+Date: Tue,  7 Mar 2023 17:52:58 +0100
+Message-Id: <20230307170012.609527113@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,77 +34,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 2fe2a8f40c21161ffe7653cc234e7934db5b7cc5 ]
+[ Upstream commit 0d846bdc11101ac0ba4d89c2be359af08cb9379b ]
 
-A null-ptr-deref is triggered when it tries to destroy the workqueue in
-vkms->output.composer_workq in vkms_release().
+There's at least one case in ieee80211_rx_for_interface()
+where we might pass &((struct sta_info *)NULL)->sta to it
+only to then do container_of(), and then checking the
+result for NULL, but checking the result of container_of()
+for NULL looks really odd.
 
- KASAN: null-ptr-deref in range [0x0000000000000118-0x000000000000011f]
- CPU: 5 PID: 17193 Comm: modprobe Not tainted 6.0.0-11331-gd465bff130bf #24
- RIP: 0010:destroy_workqueue+0x2f/0x710
- ...
- Call Trace:
-  <TASK>
-  ? vkms_config_debugfs_init+0x50/0x50 [vkms]
-  __devm_drm_dev_alloc+0x15a/0x1c0 [drm]
-  vkms_init+0x245/0x1000 [vkms]
-  do_one_initcall+0xd0/0x4f0
-  do_init_module+0x1a4/0x680
-  load_module+0x6249/0x7110
-  __do_sys_finit_module+0x140/0x200
-  do_syscall_64+0x35/0x80
-  entry_SYSCALL_64_after_hwframe+0x46/0xb0
+Fix this by just passing the struct sta_info * instead.
 
-The reason is that an OOM happened which triggers the destroy of the
-workqueue, however, the workqueue is alloced in the later process,
-thus a null-ptr-deref happened. A simple call graph is shown as below:
-
- vkms_init()
-  vkms_create()
-    devm_drm_dev_alloc()
-      __devm_drm_dev_alloc()
-        devm_drm_dev_init()
-          devm_add_action_or_reset()
-            devm_add_action() # an error happened
-            devm_drm_dev_init_release()
-              drm_dev_put()
-                kref_put()
-                  drm_dev_release()
-                    vkms_release()
-                      destroy_workqueue() # null-ptr-deref happened
-    vkms_modeset_init()
-      vkms_output_init()
-        vkms_crtc_init() # where the workqueue get allocated
-
-Fix this by checking if composer_workq is NULL before passing it to
-the destroy_workqueue() in vkms_release().
-
-Fixes: 6c234fe37c57 ("drm/vkms: Implement CRC debugfs API")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Signed-off-by: Melissa Wen <melissa.srw@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221101065156.41584-3-yuancan@huawei.com
+Fixes: e66b7920aa5a ("wifi: mac80211: fix initialization of rx->link and rx->link_sta")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vkms/vkms_drv.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/rx.c | 26 +++++++++++---------------
+ 1 file changed, 11 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/vkms/vkms_drv.c b/drivers/gpu/drm/vkms/vkms_drv.c
-index dfe983eaa07ff..f716c5796f5fc 100644
---- a/drivers/gpu/drm/vkms/vkms_drv.c
-+++ b/drivers/gpu/drm/vkms/vkms_drv.c
-@@ -57,7 +57,8 @@ static void vkms_release(struct drm_device *dev)
- {
- 	struct vkms_device *vkms = drm_device_to_vkms_device(dev);
- 
--	destroy_workqueue(vkms->output.composer_workq);
-+	if (vkms->output.composer_workq)
-+		destroy_workqueue(vkms->output.composer_workq);
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 08e01bddc9fb2..44e407e1a14c7 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -4094,13 +4094,8 @@ static bool ieee80211_rx_data_set_link(struct ieee80211_rx_data *rx,
  }
  
- static void vkms_atomic_commit_tail(struct drm_atomic_state *old_state)
+ static bool ieee80211_rx_data_set_sta(struct ieee80211_rx_data *rx,
+-				      struct ieee80211_sta *pubsta,
+-				      int link_id)
++				      struct sta_info *sta, int link_id)
+ {
+-	struct sta_info *sta;
+-
+-	sta = container_of(pubsta, struct sta_info, sta);
+-
+ 	rx->link_id = link_id;
+ 	rx->sta = sta;
+ 
+@@ -4138,7 +4133,7 @@ void ieee80211_release_reorder_timeout(struct sta_info *sta, int tid)
+ 	if (sta->sta.valid_links)
+ 		link_id = ffs(sta->sta.valid_links) - 1;
+ 
+-	if (!ieee80211_rx_data_set_sta(&rx, &sta->sta, link_id))
++	if (!ieee80211_rx_data_set_sta(&rx, sta, link_id))
+ 		return;
+ 
+ 	tid_agg_rx = rcu_dereference(sta->ampdu_mlme.tid_rx[tid]);
+@@ -4184,7 +4179,7 @@ void ieee80211_mark_rx_ba_filtered_frames(struct ieee80211_sta *pubsta, u8 tid,
+ 
+ 	sta = container_of(pubsta, struct sta_info, sta);
+ 
+-	if (!ieee80211_rx_data_set_sta(&rx, pubsta, -1))
++	if (!ieee80211_rx_data_set_sta(&rx, sta, -1))
+ 		return;
+ 
+ 	rcu_read_lock();
+@@ -4892,6 +4887,7 @@ static void __ieee80211_rx_handle_8023(struct ieee80211_hw *hw,
+ 	struct ieee80211_rx_status *status = IEEE80211_SKB_RXCB(skb);
+ 	struct ieee80211_fast_rx *fast_rx;
+ 	struct ieee80211_rx_data rx;
++	struct sta_info *sta;
+ 	int link_id = -1;
+ 
+ 	memset(&rx, 0, sizeof(rx));
+@@ -4919,7 +4915,8 @@ static void __ieee80211_rx_handle_8023(struct ieee80211_hw *hw,
+ 	 * link_id is used only for stats purpose and updating the stats on
+ 	 * the deflink is fine?
+ 	 */
+-	if (!ieee80211_rx_data_set_sta(&rx, pubsta, link_id))
++	sta = container_of(pubsta, struct sta_info, sta);
++	if (!ieee80211_rx_data_set_sta(&rx, sta, link_id))
+ 		goto drop;
+ 
+ 	fast_rx = rcu_dereference(rx.sta->fast_rx);
+@@ -4959,7 +4956,7 @@ static bool ieee80211_rx_for_interface(struct ieee80211_rx_data *rx,
+ 			link_id = status->link_id;
+ 	}
+ 
+-	if (!ieee80211_rx_data_set_sta(rx, &sta->sta, link_id))
++	if (!ieee80211_rx_data_set_sta(rx, sta, link_id))
+ 		return false;
+ 
+ 	return ieee80211_prepare_and_rx_handle(rx, skb, consume);
+@@ -5026,7 +5023,8 @@ static void __ieee80211_rx_handle_packet(struct ieee80211_hw *hw,
+ 			link_id = status->link_id;
+ 
+ 		if (pubsta) {
+-			if (!ieee80211_rx_data_set_sta(&rx, pubsta, link_id))
++			sta = container_of(pubsta, struct sta_info, sta);
++			if (!ieee80211_rx_data_set_sta(&rx, sta, link_id))
+ 				goto out;
+ 
+ 			/*
+@@ -5063,8 +5061,7 @@ static void __ieee80211_rx_handle_packet(struct ieee80211_hw *hw,
+ 			}
+ 
+ 			rx.sdata = prev_sta->sdata;
+-			if (!ieee80211_rx_data_set_sta(&rx, &prev_sta->sta,
+-						       link_id))
++			if (!ieee80211_rx_data_set_sta(&rx, prev_sta, link_id))
+ 				goto out;
+ 
+ 			if (!status->link_valid && prev_sta->sta.mlo)
+@@ -5077,8 +5074,7 @@ static void __ieee80211_rx_handle_packet(struct ieee80211_hw *hw,
+ 
+ 		if (prev_sta) {
+ 			rx.sdata = prev_sta->sdata;
+-			if (!ieee80211_rx_data_set_sta(&rx, &prev_sta->sta,
+-						       link_id))
++			if (!ieee80211_rx_data_set_sta(&rx, prev_sta, link_id))
+ 				goto out;
+ 
+ 			if (!status->link_valid && prev_sta->sta.mlo)
 -- 
 2.39.2
 
