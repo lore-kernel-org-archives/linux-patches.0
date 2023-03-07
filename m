@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3A4BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:44:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F086C433D2;
-	Tue,  7 Mar 2023 18:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42DDBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:44:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2784BC433D2;
+	Tue,  7 Mar 2023 18:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214690;
-	bh=sAf9SNd1MO+eyzbcjb3d0416BdmATY6A/pNsww4PXrY=;
+	s=korg; t=1678214693;
+	bh=qeLeNIXxJNYpEDWqTqqrZTf0gnfv31fFidcds7kY8fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eK8AGfQP3RNBRl9Kis1VnTCPdFX17glmT9Hb8lcUXk/kt1O52r1Rf1PfIC1eTbl3H
-	 2RKhPsMlTuYAuSB3nJGvAb0Qx2WresJqiuAmEOZ4onCXb0qgzTi3ZFt9fal6U55+Xs
-	 hykcSxw+/TVPxvreP6l7M7uasEp0CWXV7/vgvz68=
+	b=BALeeXZUM8yZX4182zFGDbPTOgPbLcyJLK3tHIX1nlkjoIjeosx9iIgyGeCmV2b20
+	 q0C/u2aj9L3+5k68paVsezvw9FpGr3hvE6Wk/MBgIdAwq8RURxT0xmSAA/LVmzwLGs
+	 MiVhpWG/6Frukq/2mYJ5tu5j5s/9KTOaMp55m+ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Stefan Ghinea <stefan.ghinea@windriver.com>
-Subject: [PATCH 5.15 002/567] HID: asus: use spinlock to safely schedule workers
-Date: Tue,  7 Mar 2023 17:55:38 +0100
-Message-Id: <20230307165905.934287273@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	=?UTF-8?q?Daniel=20D=C3=ADaz?= <daniel.diaz@linaro.org>
+Subject: [PATCH 5.15 003/567] powerpc/mm: Rearrange if-else block to avoid clang warning
+Date: Tue,  7 Mar 2023 17:55:39 +0100
+Message-Id: <20230307165905.969362083@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,62 +38,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Anders Roxell <anders.roxell@linaro.org>
 
-commit 4ab3a086d10eeec1424f2e8a968827a6336203df upstream.
+commit d78c8e32890ef7eca79ffd67c96022c7f9d8cce4 upstream.
 
-Use spinlocks to deal with workers introducing a wrapper
-asus_schedule_work(), and several spinlock checks.
-Otherwise, asus_kbd_backlight_set() may schedule led->work after the
-structure has been freed, causing a use-after-free.
+Clang warns:
 
-Fixes: af22a610bc38 ("HID: asus: support backlight on USB keyboards")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-5-7860c5763c38@diag.uniroma1.it
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
+  arch/powerpc/mm/book3s64/radix_tlb.c:1191:23: error: variable 'hstart' is uninitialized when used here
+    __tlbiel_va_range(hstart, hend, pid,
+                      ^~~~~~
+  arch/powerpc/mm/book3s64/radix_tlb.c:1191:31: error: variable 'hend' is uninitialized when used here
+    __tlbiel_va_range(hstart, hend, pid,
+                              ^~~~
+
+Rework the 'if (IS_ENABLE(CONFIG_TRANSPARENT_HUGEPAGE))' so hstart/hend
+is always initialized to silence the warnings. That will also simplify
+the 'else' path. Clang is getting confused with these warnings, but the
+warnings is a false-positive.
+
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Suggested-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20220810114318.3220630-1-anders.roxell@linaro.org
+Signed-off-by: Daniel Díaz <daniel.diaz@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-asus.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ arch/powerpc/mm/book3s64/radix_tlb.c |   11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -493,6 +493,16 @@ static int rog_nkey_led_init(struct hid_
- 	return ret;
- }
+--- a/arch/powerpc/mm/book3s64/radix_tlb.c
++++ b/arch/powerpc/mm/book3s64/radix_tlb.c
+@@ -1171,15 +1171,12 @@ static inline void __radix__flush_tlb_ra
+ 			}
+ 		}
+ 	} else {
+-		bool hflush = false;
++		bool hflush;
+ 		unsigned long hstart, hend;
  
-+static void asus_schedule_work(struct asus_kbd_leds *led)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&led->lock, flags);
-+	if (!led->removed)
-+		schedule_work(&led->work);
-+	spin_unlock_irqrestore(&led->lock, flags);
-+}
-+
- static void asus_kbd_backlight_set(struct led_classdev *led_cdev,
- 				   enum led_brightness brightness)
- {
-@@ -504,7 +514,7 @@ static void asus_kbd_backlight_set(struc
- 	led->brightness = brightness;
- 	spin_unlock_irqrestore(&led->lock, flags);
+-		if (IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE)) {
+-			hstart = (start + PMD_SIZE - 1) & PMD_MASK;
+-			hend = end & PMD_MASK;
+-			if (hstart < hend)
+-				hflush = true;
+-		}
++		hstart = (start + PMD_SIZE - 1) & PMD_MASK;
++		hend = end & PMD_MASK;
++		hflush = IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE) && hstart < hend;
  
--	schedule_work(&led->work);
-+	asus_schedule_work(led);
- }
- 
- static enum led_brightness asus_kbd_backlight_get(struct led_classdev *led_cdev)
-@@ -528,9 +538,6 @@ static void asus_kbd_backlight_work(stru
- 	int ret;
- 	unsigned long flags;
- 
--	if (led->removed)
--		return;
--
- 	spin_lock_irqsave(&led->lock, flags);
- 	buf[4] = led->brightness;
- 	spin_unlock_irqrestore(&led->lock, flags);
+ 		if (type == FLUSH_TYPE_LOCAL) {
+ 			asm volatile("ptesync": : :"memory");
 
 
