@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F81FBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07526C4339B;
-	Tue,  7 Mar 2023 17:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A9BBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D92C433EF;
+	Tue,  7 Mar 2023 17:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210149;
-	bh=JL8FWiKFOfWk3h+VT1ug0sPxierfnzzUvRYELMr4JVI=;
+	s=korg; t=1678210152;
+	bh=IejkT5VufTGewy7PPTCh1JWsx+8Nl9uvuO/bOMo03hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EMuPpmRzks3ueigl3Bqs1yrkz+3+7mUYnfljrfEE/F6AnFwY8T4z+RYBroQkLD0Vm
-	 kFokWXvtuLnIj6TtvL39AZ9UwAxuNWOyuwa5mp1HyWFxi1e03wdbqaupBgwVXPiv6+
-	 V/TtYidERND53cz0RVZLZJ254UD9/xLyF/CR352Y=
+	b=sZ4UtZIW7H6//8gocQg65XPb9wXwLqGZ1HfE9PZ8J3YdvSnWEVne1MraDONuUtgSf
+	 WgL3wnnzSDifRkgePKOJFVePwlABfviihA4ww7Qa3H+We7b/tARLkVN17SoDBgxgA/
+	 nxjg6ktjawsr2Yj39zWdkR7ysfFt6c4lJhM/fVQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asahi Lina <lina@asahilina.net>,
-	Javier Martinez Canillas <javierm@redhat.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Olga Kornievskaia <kolga@netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0448/1001] drm/shmem-helper: Fix locking for drm_gem_shmem_get_pages_sgt()
-Date: Tue,  7 Mar 2023 17:53:40 +0100
-Message-Id: <20230307170040.790340646@linuxfoundation.org>
+Subject: [PATCH 6.2 0449/1001] NFSD: enhance inter-server copy cleanup
+Date: Tue,  7 Mar 2023 17:53:41 +0100
+Message-Id: <20230307170040.837988398@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,110 +36,343 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Asahi Lina <lina@asahilina.net>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit ddddedaa0db99481c5e5abe628ad54f65e8765bc ]
+[ Upstream commit df24ac7a2e3a9d0bc68f1756a880e50bfe4b4522 ]
 
-Other functions touching shmem->sgt take the pages lock, so do that here
-too. drm_gem_shmem_get_pages() & co take the same lock, so move to the
-_locked() variants to avoid recursive locking.
+Currently nfsd4_setup_inter_ssc returns the vfsmount of the source
+server's export when the mount completes. After the copy is done
+nfsd4_cleanup_inter_ssc is called with the vfsmount of the source
+server and it searches nfsd_ssc_mount_list for a matching entry
+to do the clean up.
 
-Discovered while auditing locking to write the Rust abstractions.
+The problems with this approach are (1) the need to search the
+nfsd_ssc_mount_list and (2) the code has to handle the case where
+the matching entry is not found which looks ugly.
 
-Fixes: 2194a63a818d ("drm: Add library for shmem backed GEM objects")
-Fixes: 4fa3d66f132b ("drm/shmem: Do dma_unmap_sg before purging pages")
-Signed-off-by: Asahi Lina <lina@asahilina.net>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230205125124.2260-1-lina@asahilina.net
-(cherry picked from commit aa8c85affe3facd3842c8912186623415931cc72)
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+The enhancement is instead of nfsd4_setup_inter_ssc returning the
+vfsmount, it returns the nfsd4_ssc_umount_item which has the
+vfsmount embedded in it. When nfsd4_cleanup_inter_ssc is called
+it's passed with the nfsd4_ssc_umount_item directly to do the
+clean up so no searching is needed and there is no need to handle
+the 'not found' case.
+
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ cel: adjusted whitespace and variable/function names ]
+Reviewed-by: Olga Kornievskaia <kolga@netapp.com>
+Stable-dep-of: 34e8f9ec4c9a ("NFSD: fix leaked reference count of nfsd4_ssc_umount_item")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_gem_shmem_helper.c | 54 ++++++++++++++++----------
- 1 file changed, 34 insertions(+), 20 deletions(-)
+ fs/nfsd/nfs4proc.c      | 111 ++++++++++++++++------------------------
+ fs/nfsd/xdr4.h          |   2 +-
+ include/linux/nfs_ssc.h |   2 +-
+ 3 files changed, 46 insertions(+), 69 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_gem_shmem_helper.c b/drivers/gpu/drm/drm_gem_shmem_helper.c
-index b602cd72a1205..2c559b310cad3 100644
---- a/drivers/gpu/drm/drm_gem_shmem_helper.c
-+++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
-@@ -681,23 +681,7 @@ struct sg_table *drm_gem_shmem_get_sg_table(struct drm_gem_shmem_object *shmem)
- }
- EXPORT_SYMBOL_GPL(drm_gem_shmem_get_sg_table);
- 
--/**
-- * drm_gem_shmem_get_pages_sgt - Pin pages, dma map them, and return a
-- *				 scatter/gather table for a shmem GEM object.
-- * @shmem: shmem GEM object
-- *
-- * This function returns a scatter/gather table suitable for driver usage. If
-- * the sg table doesn't exist, the pages are pinned, dma-mapped, and a sg
-- * table created.
-- *
-- * This is the main function for drivers to get at backing storage, and it hides
-- * and difference between dma-buf imported and natively allocated objects.
-- * drm_gem_shmem_get_sg_table() should not be directly called by drivers.
-- *
-- * Returns:
-- * A pointer to the scatter/gather table of pinned pages or errno on failure.
-- */
--struct sg_table *drm_gem_shmem_get_pages_sgt(struct drm_gem_shmem_object *shmem)
-+static struct sg_table *drm_gem_shmem_get_pages_sgt_locked(struct drm_gem_shmem_object *shmem)
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index f189ba7995f5a..dbaf33398c827 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1293,15 +1293,15 @@ extern void nfs_sb_deactive(struct super_block *sb);
+  * setup a work entry in the ssc delayed unmount list.
+  */
+ static __be32 nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
+-		struct nfsd4_ssc_umount_item **retwork, struct vfsmount **ss_mnt)
++				  struct nfsd4_ssc_umount_item **nsui)
  {
- 	struct drm_gem_object *obj = &shmem->base;
- 	int ret;
-@@ -708,7 +692,7 @@ struct sg_table *drm_gem_shmem_get_pages_sgt(struct drm_gem_shmem_object *shmem)
+ 	struct nfsd4_ssc_umount_item *ni = NULL;
+ 	struct nfsd4_ssc_umount_item *work = NULL;
+ 	struct nfsd4_ssc_umount_item *tmp;
+ 	DEFINE_WAIT(wait);
++	__be32 status = 0;
  
- 	WARN_ON(obj->import_attach);
+-	*ss_mnt = NULL;
+-	*retwork = NULL;
++	*nsui = NULL;
+ 	work = kzalloc(sizeof(*work), GFP_KERNEL);
+ try_again:
+ 	spin_lock(&nn->nfsd_ssc_lock);
+@@ -1325,12 +1325,12 @@ static __be32 nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
+ 			finish_wait(&nn->nfsd_ssc_waitq, &wait);
+ 			goto try_again;
+ 		}
+-		*ss_mnt = ni->nsui_vfsmount;
++		*nsui = ni;
+ 		refcount_inc(&ni->nsui_refcnt);
+ 		spin_unlock(&nn->nfsd_ssc_lock);
+ 		kfree(work);
  
--	ret = drm_gem_shmem_get_pages(shmem);
-+	ret = drm_gem_shmem_get_pages_locked(shmem);
- 	if (ret)
- 		return ERR_PTR(ret);
- 
-@@ -730,10 +714,40 @@ struct sg_table *drm_gem_shmem_get_pages_sgt(struct drm_gem_shmem_object *shmem)
- 	sg_free_table(sgt);
- 	kfree(sgt);
- err_put_pages:
--	drm_gem_shmem_put_pages(shmem);
-+	drm_gem_shmem_put_pages_locked(shmem);
- 	return ERR_PTR(ret);
+-		/* return vfsmount in ss_mnt */
++		/* return vfsmount in (*nsui)->nsui_vfsmount */
+ 		return 0;
+ 	}
+ 	if (work) {
+@@ -1338,31 +1338,32 @@ static __be32 nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
+ 		refcount_set(&work->nsui_refcnt, 2);
+ 		work->nsui_busy = true;
+ 		list_add_tail(&work->nsui_list, &nn->nfsd_ssc_mount_list);
+-		*retwork = work;
+-	}
++		*nsui = work;
++	} else
++		status = nfserr_resource;
+ 	spin_unlock(&nn->nfsd_ssc_lock);
+-	return 0;
++	return status;
  }
--EXPORT_SYMBOL_GPL(drm_gem_shmem_get_pages_sgt);
-+
-+/**
-+ * drm_gem_shmem_get_pages_sgt - Pin pages, dma map them, and return a
-+ *				 scatter/gather table for a shmem GEM object.
-+ * @shmem: shmem GEM object
-+ *
-+ * This function returns a scatter/gather table suitable for driver usage. If
-+ * the sg table doesn't exist, the pages are pinned, dma-mapped, and a sg
-+ * table created.
-+ *
-+ * This is the main function for drivers to get at backing storage, and it hides
-+ * and difference between dma-buf imported and natively allocated objects.
-+ * drm_gem_shmem_get_sg_table() should not be directly called by drivers.
-+ *
-+ * Returns:
-+ * A pointer to the scatter/gather table of pinned pages or errno on failure.
-+ */
-+struct sg_table *drm_gem_shmem_get_pages_sgt(struct drm_gem_shmem_object *shmem)
-+{
-+	int ret;
-+	struct sg_table *sgt;
-+
-+	ret = mutex_lock_interruptible(&shmem->pages_lock);
-+	if (ret)
-+		return ERR_PTR(ret);
-+	sgt = drm_gem_shmem_get_pages_sgt_locked(shmem);
-+	mutex_unlock(&shmem->pages_lock);
-+
-+	return sgt;
-+}
-+EXPORT_SYMBOL(drm_gem_shmem_get_pages_sgt);
  
- /**
-  * drm_gem_shmem_prime_import_sg_table - Produce a shmem GEM object from
+-static void nfsd4_ssc_update_dul_work(struct nfsd_net *nn,
+-		struct nfsd4_ssc_umount_item *work, struct vfsmount *ss_mnt)
++static void nfsd4_ssc_update_dul(struct nfsd_net *nn,
++				 struct nfsd4_ssc_umount_item *nsui,
++				 struct vfsmount *ss_mnt)
+ {
+-	/* set nsui_vfsmount, clear busy flag and wakeup waiters */
+ 	spin_lock(&nn->nfsd_ssc_lock);
+-	work->nsui_vfsmount = ss_mnt;
+-	work->nsui_busy = false;
++	nsui->nsui_vfsmount = ss_mnt;
++	nsui->nsui_busy = false;
+ 	wake_up_all(&nn->nfsd_ssc_waitq);
+ 	spin_unlock(&nn->nfsd_ssc_lock);
+ }
+ 
+-static void nfsd4_ssc_cancel_dul_work(struct nfsd_net *nn,
+-		struct nfsd4_ssc_umount_item *work)
++static void nfsd4_ssc_cancel_dul(struct nfsd_net *nn,
++				 struct nfsd4_ssc_umount_item *nsui)
+ {
+ 	spin_lock(&nn->nfsd_ssc_lock);
+-	list_del(&work->nsui_list);
++	list_del(&nsui->nsui_list);
+ 	wake_up_all(&nn->nfsd_ssc_waitq);
+ 	spin_unlock(&nn->nfsd_ssc_lock);
+-	kfree(work);
++	kfree(nsui);
+ }
+ 
+ /*
+@@ -1370,7 +1371,7 @@ static void nfsd4_ssc_cancel_dul_work(struct nfsd_net *nn,
+  */
+ static __be32
+ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
+-		       struct vfsmount **mount)
++		       struct nfsd4_ssc_umount_item **nsui)
+ {
+ 	struct file_system_type *type;
+ 	struct vfsmount *ss_mnt;
+@@ -1381,7 +1382,6 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
+ 	char *ipaddr, *dev_name, *raw_data;
+ 	int len, raw_len;
+ 	__be32 status = nfserr_inval;
+-	struct nfsd4_ssc_umount_item *work = NULL;
+ 	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
+ 
+ 	naddr = &nss->u.nl4_addr;
+@@ -1389,6 +1389,7 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
+ 					 naddr->addr_len,
+ 					 (struct sockaddr *)&tmp_addr,
+ 					 sizeof(tmp_addr));
++	*nsui = NULL;
+ 	if (tmp_addrlen == 0)
+ 		goto out_err;
+ 
+@@ -1431,10 +1432,10 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
+ 		goto out_free_rawdata;
+ 	snprintf(dev_name, len + 5, "%s%s%s:/", startsep, ipaddr, endsep);
+ 
+-	status = nfsd4_ssc_setup_dul(nn, ipaddr, &work, &ss_mnt);
++	status = nfsd4_ssc_setup_dul(nn, ipaddr, nsui);
+ 	if (status)
+ 		goto out_free_devname;
+-	if (ss_mnt)
++	if ((*nsui)->nsui_vfsmount)
+ 		goto out_done;
+ 
+ 	/* Use an 'internal' mount: SB_KERNMOUNT -> MNT_INTERNAL */
+@@ -1442,15 +1443,12 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
+ 	module_put(type->owner);
+ 	if (IS_ERR(ss_mnt)) {
+ 		status = nfserr_nodev;
+-		if (work)
+-			nfsd4_ssc_cancel_dul_work(nn, work);
++		nfsd4_ssc_cancel_dul(nn, *nsui);
+ 		goto out_free_devname;
+ 	}
+-	if (work)
+-		nfsd4_ssc_update_dul_work(nn, work, ss_mnt);
++	nfsd4_ssc_update_dul(nn, *nsui, ss_mnt);
+ out_done:
+ 	status = 0;
+-	*mount = ss_mnt;
+ 
+ out_free_devname:
+ 	kfree(dev_name);
+@@ -1474,7 +1472,7 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
+ static __be32
+ nfsd4_setup_inter_ssc(struct svc_rqst *rqstp,
+ 		      struct nfsd4_compound_state *cstate,
+-		      struct nfsd4_copy *copy, struct vfsmount **mount)
++		      struct nfsd4_copy *copy)
+ {
+ 	struct svc_fh *s_fh = NULL;
+ 	stateid_t *s_stid = &copy->cp_src_stateid;
+@@ -1487,7 +1485,7 @@ nfsd4_setup_inter_ssc(struct svc_rqst *rqstp,
+ 	if (status)
+ 		goto out;
+ 
+-	status = nfsd4_interssc_connect(copy->cp_src, rqstp, mount);
++	status = nfsd4_interssc_connect(copy->cp_src, rqstp, &copy->ss_nsui);
+ 	if (status)
+ 		goto out;
+ 
+@@ -1505,45 +1503,27 @@ nfsd4_setup_inter_ssc(struct svc_rqst *rqstp,
+ }
+ 
+ static void
+-nfsd4_cleanup_inter_ssc(struct vfsmount *ss_mnt, struct file *filp,
++nfsd4_cleanup_inter_ssc(struct nfsd4_ssc_umount_item *nsui, struct file *filp,
+ 			struct nfsd_file *dst)
+ {
+-	bool found = false;
+-	long timeout;
+-	struct nfsd4_ssc_umount_item *tmp;
+-	struct nfsd4_ssc_umount_item *ni = NULL;
+ 	struct nfsd_net *nn = net_generic(dst->nf_net, nfsd_net_id);
++	long timeout = msecs_to_jiffies(nfsd4_ssc_umount_timeout);
+ 
+ 	nfs42_ssc_close(filp);
+ 	nfsd_file_put(dst);
+ 	fput(filp);
+ 
+-	if (!nn) {
+-		mntput(ss_mnt);
+-		return;
+-	}
+ 	spin_lock(&nn->nfsd_ssc_lock);
+-	timeout = msecs_to_jiffies(nfsd4_ssc_umount_timeout);
+-	list_for_each_entry_safe(ni, tmp, &nn->nfsd_ssc_mount_list, nsui_list) {
+-		if (ni->nsui_vfsmount->mnt_sb == ss_mnt->mnt_sb) {
+-			list_del(&ni->nsui_list);
+-			/*
+-			 * vfsmount can be shared by multiple exports,
+-			 * decrement refcnt. If the count drops to 1 it
+-			 * will be unmounted when nsui_expire expires.
+-			 */
+-			refcount_dec(&ni->nsui_refcnt);
+-			ni->nsui_expire = jiffies + timeout;
+-			list_add_tail(&ni->nsui_list, &nn->nfsd_ssc_mount_list);
+-			found = true;
+-			break;
+-		}
+-	}
++	list_del(&nsui->nsui_list);
++	/*
++	 * vfsmount can be shared by multiple exports,
++	 * decrement refcnt. If the count drops to 1 it
++	 * will be unmounted when nsui_expire expires.
++	 */
++	refcount_dec(&nsui->nsui_refcnt);
++	nsui->nsui_expire = jiffies + timeout;
++	list_add_tail(&nsui->nsui_list, &nn->nfsd_ssc_mount_list);
+ 	spin_unlock(&nn->nfsd_ssc_lock);
+-	if (!found) {
+-		mntput(ss_mnt);
+-		return;
+-	}
+ }
+ 
+ #else /* CONFIG_NFSD_V4_2_INTER_SSC */
+@@ -1551,15 +1531,13 @@ nfsd4_cleanup_inter_ssc(struct vfsmount *ss_mnt, struct file *filp,
+ static __be32
+ nfsd4_setup_inter_ssc(struct svc_rqst *rqstp,
+ 		      struct nfsd4_compound_state *cstate,
+-		      struct nfsd4_copy *copy,
+-		      struct vfsmount **mount)
++		      struct nfsd4_copy *copy)
+ {
+-	*mount = NULL;
+ 	return nfserr_inval;
+ }
+ 
+ static void
+-nfsd4_cleanup_inter_ssc(struct vfsmount *ss_mnt, struct file *filp,
++nfsd4_cleanup_inter_ssc(struct nfsd4_ssc_umount_item *nsui, struct file *filp,
+ 			struct nfsd_file *dst)
+ {
+ }
+@@ -1700,7 +1678,7 @@ static void dup_copy_fields(struct nfsd4_copy *src, struct nfsd4_copy *dst)
+ 	memcpy(dst->cp_src, src->cp_src, sizeof(struct nl4_server));
+ 	memcpy(&dst->stateid, &src->stateid, sizeof(src->stateid));
+ 	memcpy(&dst->c_fh, &src->c_fh, sizeof(src->c_fh));
+-	dst->ss_mnt = src->ss_mnt;
++	dst->ss_nsui = src->ss_nsui;
+ }
+ 
+ static void cleanup_async_copy(struct nfsd4_copy *copy)
+@@ -1749,8 +1727,8 @@ static int nfsd4_do_async_copy(void *data)
+ 	if (nfsd4_ssc_is_inter(copy)) {
+ 		struct file *filp;
+ 
+-		filp = nfs42_ssc_open(copy->ss_mnt, &copy->c_fh,
+-				      &copy->stateid);
++		filp = nfs42_ssc_open(copy->ss_nsui->nsui_vfsmount,
++				      &copy->c_fh, &copy->stateid);
+ 		if (IS_ERR(filp)) {
+ 			switch (PTR_ERR(filp)) {
+ 			case -EBADF:
+@@ -1764,7 +1742,7 @@ static int nfsd4_do_async_copy(void *data)
+ 		}
+ 		nfserr = nfsd4_do_copy(copy, filp, copy->nf_dst->nf_file,
+ 				       false);
+-		nfsd4_cleanup_inter_ssc(copy->ss_mnt, filp, copy->nf_dst);
++		nfsd4_cleanup_inter_ssc(copy->ss_nsui, filp, copy->nf_dst);
+ 	} else {
+ 		nfserr = nfsd4_do_copy(copy, copy->nf_src->nf_file,
+ 				       copy->nf_dst->nf_file, false);
+@@ -1790,8 +1768,7 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 			status = nfserr_notsupp;
+ 			goto out;
+ 		}
+-		status = nfsd4_setup_inter_ssc(rqstp, cstate, copy,
+-				&copy->ss_mnt);
++		status = nfsd4_setup_inter_ssc(rqstp, cstate, copy);
+ 		if (status)
+ 			return nfserr_offload_denied;
+ 	} else {
+diff --git a/fs/nfsd/xdr4.h b/fs/nfsd/xdr4.h
+index 4fd2cf6d1d2dc..510978e602da6 100644
+--- a/fs/nfsd/xdr4.h
++++ b/fs/nfsd/xdr4.h
+@@ -571,7 +571,7 @@ struct nfsd4_copy {
+ 	struct task_struct	*copy_task;
+ 	refcount_t		refcount;
+ 
+-	struct vfsmount		*ss_mnt;
++	struct nfsd4_ssc_umount_item *ss_nsui;
+ 	struct nfs_fh		c_fh;
+ 	nfs4_stateid		stateid;
+ };
+diff --git a/include/linux/nfs_ssc.h b/include/linux/nfs_ssc.h
+index 75843c00f326a..22265b1ff0800 100644
+--- a/include/linux/nfs_ssc.h
++++ b/include/linux/nfs_ssc.h
+@@ -53,6 +53,7 @@ static inline void nfs42_ssc_close(struct file *filep)
+ 	if (nfs_ssc_client_tbl.ssc_nfs4_ops)
+ 		(*nfs_ssc_client_tbl.ssc_nfs4_ops->sco_close)(filep);
+ }
++#endif
+ 
+ struct nfsd4_ssc_umount_item {
+ 	struct list_head nsui_list;
+@@ -66,7 +67,6 @@ struct nfsd4_ssc_umount_item {
+ 	struct vfsmount *nsui_vfsmount;
+ 	char nsui_ipaddr[RPC_MAX_ADDRBUFLEN + 1];
+ };
+-#endif
+ 
+ /*
+  * NFS_FS
 -- 
 2.39.2
 
