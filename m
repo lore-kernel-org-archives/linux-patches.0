@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D237EAD5D
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:30:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51326C433EF;
-	Tue,  7 Mar 2023 18:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B988CBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:30:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEB7C433D2;
+	Tue,  7 Mar 2023 18:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213814;
-	bh=kMpV1bU0a6OCUyh8n5laN0AE9zA8KycxV71miZMvmcY=;
+	s=korg; t=1678213817;
+	bh=hBZWy6jtqY2zllQ6aMr/FjAkjlCr87gJxDTlDWOtjGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skYUwP7Pv1cV5kQ7dYBm/Kxqx38KSGGVdOoqFfKnLwGO0QhIrUeyPO8fsHgITLPfC
-	 DyhBU9mUNV1w/J0qkEaEsKxjEH6UUr0GN4DJ8AA/+6n0NbguVC911WatWQS1jTxUyb
-	 Y1SXlD/38rrkCyl59lcitTFflSqu/7Nz3vhglPgE=
+	b=DIVCUs8DBgIfM5PUob+L4FZNGLhpeSe+fCDppfQvtzQpbdrPsQxDGdSnxCf6+cGiy
+	 HSGeZ+E/h+TYTEwiNG8fNCar2L0T+zJ41z5SaUHjKiREeTU6qkw3KBJgdgRP3e4Zj1
+	 DPqYvdoL8jQcBlx7s2eXfvGYFOE8ytr05bFAswRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nevenko Stupar <Nevenko.Stupar@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Vladimir Stempen <vladimir.stempen@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
+	syzbot+f51cb4b9afbd87ec06f2@syzkaller.appspotmail.com,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 627/885] drm/amd/display: fix FCLK pstate change underflow
-Date: Tue,  7 Mar 2023 17:59:21 +0100
-Message-Id: <20230307170029.458679167@linuxfoundation.org>
+Subject: [PATCH 6.1 628/885] gfs2: Improve gfs2_make_fs_rw error handling
+Date: Tue,  7 Mar 2023 17:59:22 +0100
+Message-Id: <20230307170029.500362794@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,46 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Stempen <vladimir.stempen@amd.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 972243f973eb0821084e5833d5f7f4ed025f42da ]
+[ Upstream commit b66f723bb552ad59c2acb5d45ea45c890f84498b ]
 
-[Why]
-Currently we set FCLK p-state change
-watermark calculated based on dummy
-p-state latency when UCLK p-state is
-not supported
+In gfs2_make_fs_rw(), make sure to call gfs2_consist() to report an
+inconsistency and mark the filesystem as withdrawn when
+gfs2_find_jhead() fails.
 
-[How]
-Calculate FCLK p-state change watermark
-based on on FCLK pstate change latency
-in case UCLK p-state is not supported
+At the end of gfs2_make_fs_rw(), when we discover that the filesystem
+has been withdrawn, make sure we report an error.  This also replaces
+the gfs2_withdrawn() check after gfs2_find_jhead().
 
-Reviewed-by: Nevenko Stupar <Nevenko.Stupar@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Vladimir Stempen <vladimir.stempen@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Cc: syzbot+f51cb4b9afbd87ec06f2@syzkaller.appspotmail.com
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/gfs2/super.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-index d90216d2fe3a8..04cc96e700981 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -1963,6 +1963,10 @@ void dcn32_calculate_wm_and_dlg_fpu(struct dc *dc, struct dc_state *context,
- 		 */
- 		context->bw_ctx.bw.dcn.watermarks.a = context->bw_ctx.bw.dcn.watermarks.c;
- 		context->bw_ctx.bw.dcn.watermarks.a.cstate_pstate.pstate_change_ns = 0;
-+		/* Calculate FCLK p-state change watermark based on FCLK pstate change latency in case
-+		 * UCLK p-state is not supported, to avoid underflow in case FCLK pstate is supported
-+		 */
-+		context->bw_ctx.bw.dcn.watermarks.a.cstate_pstate.fclk_pstate_change_ns = get_fclk_watermark(&context->bw_ctx.dml, pipes, pipe_cnt) * 1000;
- 	} else {
- 		/* Set A:
- 		 * All clocks min.
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index 011f9e7660ef8..2015bd05cba10 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -138,8 +138,10 @@ int gfs2_make_fs_rw(struct gfs2_sbd *sdp)
+ 		return -EIO;
+ 
+ 	error = gfs2_find_jhead(sdp->sd_jdesc, &head, false);
+-	if (error || gfs2_withdrawn(sdp))
++	if (error) {
++		gfs2_consist(sdp);
+ 		return error;
++	}
+ 
+ 	if (!(head.lh_flags & GFS2_LOG_HEAD_UNMOUNT)) {
+ 		gfs2_consist(sdp);
+@@ -151,7 +153,9 @@ int gfs2_make_fs_rw(struct gfs2_sbd *sdp)
+ 	gfs2_log_pointers_init(sdp, head.lh_blkno);
+ 
+ 	error = gfs2_quota_init(sdp);
+-	if (!error && !gfs2_withdrawn(sdp))
++	if (!error && gfs2_withdrawn(sdp))
++		error = -EIO;
++	if (!error)
+ 		set_bit(SDF_JOURNAL_LIVE, &sdp->sd_flags);
+ 	return error;
+ }
 -- 
 2.39.2
 
