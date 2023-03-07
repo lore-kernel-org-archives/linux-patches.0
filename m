@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8CDBA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:10:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E3BC433D2;
-	Tue,  7 Mar 2023 19:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE052BA52
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:10:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28807C433D2;
+	Tue,  7 Mar 2023 19:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216203;
-	bh=RyYzlUXgg7sHY/ATSzJz58Jt2bSUhFdFts3WNPbV4tU=;
+	s=korg; t=1678216206;
+	bh=VW0yzLU0SBMzs6eB4NkcVs1Er2zQjny3Ntqzn8rnoT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZ3TYKTV8AgOxnR1x7b6T7ObVakwHyv2VVIcHyL6fTAkVcCXys3+icXx+MzfIdReo
-	 mIAQhcFvGR3/zTTtVpiDoc0zGip9RMRJ1gRKBNi/qIAjNtIWLKXsKV+E6R4vHdD0ih
-	 hISrQ9owtGOmdtno0xQYNVtqjae1gHDdVvXENw54=
+	b=NxTleBW/JYwg1ygeFKzFWW5bxCbgMETBUPa0W822XCsBtF17L7t47OQxa4dLadjj2
+	 MCWobYqnZrSU504ScynHke1RQxa81Q6KmN850E6AVhFSEfUv083jnmKiFEXKzwYbK+
+	 55iHog8j62BOWtp1r6ddxdvwXaqwpgkaB1vqdh5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Wetzel <alexander@wetzel-home.de>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 509/567] wifi: cfg80211: Fix use after free for wext
-Date: Tue,  7 Mar 2023 18:04:05 +0100
-Message-Id: <20230307165928.010247811@linuxfoundation.org>
+	Manish Chopra <manishc@marvell.com>,
+	Bhaskar Upadhaya <bupadhaya@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Alok Prasad <palok@marvell.com>,
+	Ariel Elior <aelior@marvell.com>
+Subject: [PATCH 5.15 510/567] qede: fix interrupt coalescing configuration
+Date: Tue,  7 Mar 2023 18:04:06 +0100
+Message-Id: <20230307165928.059535550@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -34,96 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Wetzel <alexander@wetzel-home.de>
+From: Manish Chopra <manishc@marvell.com>
 
-commit 015b8cc5e7c4d7bb671f1984d7b7338c310b185b upstream.
+commit 908d4bb7c54caa58253a363d63e797a468eaf321 upstream.
 
-Key information in wext.connect is not reset on (re)connect and can hold
-data from a previous connection.
+On default driver load device gets configured with unexpected
+higher interrupt coalescing values instead of default expected
+values as memory allocated from krealloc() is not supposed to
+be zeroed out and may contain garbage values.
 
-Reset key data to avoid that drivers or mac80211 incorrectly detect a
-WEP connection request and access the freed or already reused memory.
+Fix this by allocating the memory of required size first with
+kcalloc() and then use krealloc() to resize and preserve the
+contents across down/up of the interface.
 
-Additionally optimize cfg80211_sme_connect() and avoid an useless
-schedule of conn_work.
-
-Fixes: fffd0934b939 ("cfg80211: rework key operation")
+Signed-off-by: Manish Chopra <manishc@marvell.com>
+Fixes: b0ec5489c480 ("qede: preserve per queue stats across up/down of interface")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230124141856.356646-1-alexander@wetzel-home.de
-Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Cc: Bhaskar Upadhaya <bupadhaya@marvell.com>
+Cc: David S. Miller <davem@davemloft.net>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2160054
+Signed-off-by: Alok Prasad <palok@marvell.com>
+Signed-off-by: Ariel Elior <aelior@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/sme.c |   31 ++++++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/qlogic/qede/qede_main.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/net/wireless/sme.c
-+++ b/net/wireless/sme.c
-@@ -268,6 +268,15 @@ void cfg80211_conn_work(struct work_stru
- 	wiphy_unlock(&rdev->wiphy);
- }
- 
-+static void cfg80211_step_auth_next(struct cfg80211_conn *conn,
-+				    struct cfg80211_bss *bss)
-+{
-+	memcpy(conn->bssid, bss->bssid, ETH_ALEN);
-+	conn->params.bssid = conn->bssid;
-+	conn->params.channel = bss->channel;
-+	conn->state = CFG80211_CONN_AUTHENTICATE_NEXT;
-+}
-+
- /* Returned bss is reference counted and must be cleaned up appropriately. */
- static struct cfg80211_bss *cfg80211_get_conn_bss(struct wireless_dev *wdev)
- {
-@@ -285,10 +294,7 @@ static struct cfg80211_bss *cfg80211_get
- 	if (!bss)
- 		return NULL;
- 
--	memcpy(wdev->conn->bssid, bss->bssid, ETH_ALEN);
--	wdev->conn->params.bssid = wdev->conn->bssid;
--	wdev->conn->params.channel = bss->channel;
--	wdev->conn->state = CFG80211_CONN_AUTHENTICATE_NEXT;
-+	cfg80211_step_auth_next(wdev->conn, bss);
- 	schedule_work(&rdev->conn_work);
- 
- 	return bss;
-@@ -567,7 +573,12 @@ static int cfg80211_sme_connect(struct w
- 	wdev->conn->params.ssid_len = wdev->ssid_len;
- 
- 	/* see if we have the bss already */
--	bss = cfg80211_get_conn_bss(wdev);
-+	bss = cfg80211_get_bss(wdev->wiphy, wdev->conn->params.channel,
-+			       wdev->conn->params.bssid,
-+			       wdev->conn->params.ssid,
-+			       wdev->conn->params.ssid_len,
-+			       wdev->conn_bss_type,
-+			       IEEE80211_PRIVACY(wdev->conn->params.privacy));
- 
- 	if (prev_bssid) {
- 		memcpy(wdev->conn->prev_bssid, prev_bssid, ETH_ALEN);
-@@ -578,6 +589,7 @@ static int cfg80211_sme_connect(struct w
- 	if (bss) {
- 		enum nl80211_timeout_reason treason;
- 
-+		cfg80211_step_auth_next(wdev->conn, bss);
- 		err = cfg80211_conn_do_work(wdev, &treason);
- 		cfg80211_put_bss(wdev->wiphy, bss);
- 	} else {
-@@ -1244,6 +1256,15 @@ int cfg80211_connect(struct cfg80211_reg
- 	} else {
- 		if (WARN_ON(connkeys))
- 			return -EINVAL;
-+
-+		/* connect can point to wdev->wext.connect which
-+		 * can hold key data from a previous connection
-+		 */
-+		connect->key = NULL;
-+		connect->key_len = 0;
-+		connect->key_idx = 0;
-+		connect->crypto.cipher_group = 0;
-+		connect->crypto.n_ciphers_pairwise = 0;
+--- a/drivers/net/ethernet/qlogic/qede/qede_main.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_main.c
+@@ -909,8 +909,15 @@ static int qede_alloc_fp_array(struct qe
+ 		goto err;
  	}
  
- 	wdev->connect_keys = connkeys;
+-	mem = krealloc(edev->coal_entry, QEDE_QUEUE_CNT(edev) *
+-		       sizeof(*edev->coal_entry), GFP_KERNEL);
++	if (!edev->coal_entry) {
++		mem = kcalloc(QEDE_MAX_RSS_CNT(edev),
++			      sizeof(*edev->coal_entry), GFP_KERNEL);
++	} else {
++		mem = krealloc(edev->coal_entry,
++			       QEDE_QUEUE_CNT(edev) * sizeof(*edev->coal_entry),
++			       GFP_KERNEL);
++	}
++
+ 	if (!mem) {
+ 		DP_ERR(edev, "coalesce entry allocation failed\n");
+ 		kfree(edev->coal_entry);
 
 
