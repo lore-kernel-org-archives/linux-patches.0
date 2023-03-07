@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC282BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:17:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4BBC433D2;
-	Tue,  7 Mar 2023 18:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B207ABA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:17:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36041C433D2;
+	Tue,  7 Mar 2023 18:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213044;
-	bh=QuKtu/xg+g15vL032uS3GiT3cqqpx8ZNp+N9v7Ss8+A=;
+	s=korg; t=1678213048;
+	bh=5d1UJmkzChSsewOMxyTxtJOAHKFTH1VdiwOAAvOpKZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l9o62dFRK3hJOyfLD1BSjL/9HtTxYbvUteN22i2qhGFcwI3NJt3Faxviu9SE+NW8M
-	 YspzXvHRlLLGgdCB4ZwWjkxzpHiEUuCf8Nh39NR38mYu1gAiEpXr4jcnhI3z+SXQbx
-	 njy+juY8kptkenL38L0RcTIUi8uPqKEQMCTGY8RA=
+	b=Z1t1Y216qyjTgKKcFw3x//PY8YYj3ztZs1ScDytebAjzyiQr9HASkdpJdgjIpT8eU
+	 HsdzBfWxoMNcQYeCH0kosaosjXuMyWMBhE9cvKsY9JZ/T7fSEzbBowFu0oqKdS9lzP
+	 +eMNUrYuX8CHZBaaaVcCIPBR5gMnmwYJyg7C8ELs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Olga Kornievskaia <kolga@netapp.com>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Tom Talpey <tom@talpey.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 373/885] NFSD: enhance inter-server copy cleanup
-Date: Tue,  7 Mar 2023 17:55:07 +0100
-Message-Id: <20230307170018.525185691@linuxfoundation.org>
+Subject: [PATCH 6.1 382/885] cifs: Fix warning and UAF when destroy the MR list
+Date: Tue,  7 Mar 2023 17:55:16 +0100
+Message-Id: <20230307170018.936848386@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,343 +37,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit df24ac7a2e3a9d0bc68f1756a880e50bfe4b4522 ]
+[ Upstream commit 3e161c2791f8e661eed24a2c624087084d910215 ]
 
-Currently nfsd4_setup_inter_ssc returns the vfsmount of the source
-server's export when the mount completes. After the copy is done
-nfsd4_cleanup_inter_ssc is called with the vfsmount of the source
-server and it searches nfsd_ssc_mount_list for a matching entry
-to do the clean up.
+If the MR allocate failed, the MR recovery work not initialized
+and list not cleared. Then will be warning and UAF when release
+the MR:
 
-The problems with this approach are (1) the need to search the
-nfsd_ssc_mount_list and (2) the code has to handle the case where
-the matching entry is not found which looks ugly.
+  WARNING: CPU: 4 PID: 824 at kernel/workqueue.c:3066 __flush_work.isra.0+0xf7/0x110
+  CPU: 4 PID: 824 Comm: mount.cifs Not tainted 6.1.0-rc5+ #82
+  RIP: 0010:__flush_work.isra.0+0xf7/0x110
+  Call Trace:
+   <TASK>
+   __cancel_work_timer+0x2ba/0x2e0
+   smbd_destroy+0x4e1/0x990
+   _smbd_get_connection+0x1cbd/0x2110
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-The enhancement is instead of nfsd4_setup_inter_ssc returning the
-vfsmount, it returns the nfsd4_ssc_umount_item which has the
-vfsmount embedded in it. When nfsd4_cleanup_inter_ssc is called
-it's passed with the nfsd4_ssc_umount_item directly to do the
-clean up so no searching is needed and there is no need to handle
-the 'not found' case.
+  BUG: KASAN: use-after-free in smbd_destroy+0x4fc/0x990
+  Read of size 8 at addr ffff88810b156a08 by task mount.cifs/824
+  CPU: 4 PID: 824 Comm: mount.cifs Tainted: G        W          6.1.0-rc5+ #82
+  Call Trace:
+   dump_stack_lvl+0x34/0x44
+   print_report+0x171/0x472
+   kasan_report+0xad/0x130
+   smbd_destroy+0x4fc/0x990
+   _smbd_get_connection+0x1cbd/0x2110
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ cel: adjusted whitespace and variable/function names ]
-Reviewed-by: Olga Kornievskaia <kolga@netapp.com>
-Stable-dep-of: 34e8f9ec4c9a ("NFSD: fix leaked reference count of nfsd4_ssc_umount_item")
+  Allocated by task 824:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   __kasan_kmalloc+0x7a/0x90
+   _smbd_get_connection+0x1b6f/0x2110
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+  Freed by task 824:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   kasan_save_free_info+0x2a/0x40
+   ____kasan_slab_free+0x143/0x1b0
+   __kmem_cache_free+0xc8/0x330
+   _smbd_get_connection+0x1c6a/0x2110
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+Let's initialize the MR recovery work before MR allocate to prevent
+the warning, remove the MRs from the list to prevent the UAF.
+
+Fixes: c7398583340a ("CIFS: SMBD: Implement RDMA memory registration")
+Acked-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Reviewed-by: Tom Talpey <tom@talpey.com>
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c      | 111 ++++++++++++++++------------------------
- fs/nfsd/xdr4.h          |   2 +-
- include/linux/nfs_ssc.h |   2 +-
- 3 files changed, 46 insertions(+), 69 deletions(-)
+ fs/cifs/smbdirect.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index ba04ce9b9fa51..92b63e51d28da 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1306,15 +1306,15 @@ extern void nfs_sb_deactive(struct super_block *sb);
-  * setup a work entry in the ssc delayed unmount list.
-  */
- static __be32 nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
--		struct nfsd4_ssc_umount_item **retwork, struct vfsmount **ss_mnt)
-+				  struct nfsd4_ssc_umount_item **nsui)
- {
- 	struct nfsd4_ssc_umount_item *ni = NULL;
- 	struct nfsd4_ssc_umount_item *work = NULL;
- 	struct nfsd4_ssc_umount_item *tmp;
- 	DEFINE_WAIT(wait);
-+	__be32 status = 0;
- 
--	*ss_mnt = NULL;
--	*retwork = NULL;
-+	*nsui = NULL;
- 	work = kzalloc(sizeof(*work), GFP_KERNEL);
- try_again:
- 	spin_lock(&nn->nfsd_ssc_lock);
-@@ -1338,12 +1338,12 @@ static __be32 nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
- 			finish_wait(&nn->nfsd_ssc_waitq, &wait);
- 			goto try_again;
- 		}
--		*ss_mnt = ni->nsui_vfsmount;
-+		*nsui = ni;
- 		refcount_inc(&ni->nsui_refcnt);
- 		spin_unlock(&nn->nfsd_ssc_lock);
- 		kfree(work);
- 
--		/* return vfsmount in ss_mnt */
-+		/* return vfsmount in (*nsui)->nsui_vfsmount */
- 		return 0;
+diff --git a/fs/cifs/smbdirect.c b/fs/cifs/smbdirect.c
+index 101dab87cad1a..cf923f211c512 100644
+--- a/fs/cifs/smbdirect.c
++++ b/fs/cifs/smbdirect.c
+@@ -2218,6 +2218,7 @@ static int allocate_mr_list(struct smbd_connection *info)
+ 	atomic_set(&info->mr_ready_count, 0);
+ 	atomic_set(&info->mr_used_count, 0);
+ 	init_waitqueue_head(&info->wait_for_mr_cleanup);
++	INIT_WORK(&info->mr_recovery_work, smbd_mr_recovery_work);
+ 	/* Allocate more MRs (2x) than hardware responder_resources */
+ 	for (i = 0; i < info->responder_resources * 2; i++) {
+ 		smbdirect_mr = kzalloc(sizeof(*smbdirect_mr), GFP_KERNEL);
+@@ -2245,13 +2246,13 @@ static int allocate_mr_list(struct smbd_connection *info)
+ 		list_add_tail(&smbdirect_mr->list, &info->mr_list);
+ 		atomic_inc(&info->mr_ready_count);
  	}
- 	if (work) {
-@@ -1351,31 +1351,32 @@ static __be32 nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
- 		refcount_set(&work->nsui_refcnt, 2);
- 		work->nsui_busy = true;
- 		list_add_tail(&work->nsui_list, &nn->nfsd_ssc_mount_list);
--		*retwork = work;
--	}
-+		*nsui = work;
-+	} else
-+		status = nfserr_resource;
- 	spin_unlock(&nn->nfsd_ssc_lock);
--	return 0;
-+	return status;
- }
+-	INIT_WORK(&info->mr_recovery_work, smbd_mr_recovery_work);
+ 	return 0;
  
--static void nfsd4_ssc_update_dul_work(struct nfsd_net *nn,
--		struct nfsd4_ssc_umount_item *work, struct vfsmount *ss_mnt)
-+static void nfsd4_ssc_update_dul(struct nfsd_net *nn,
-+				 struct nfsd4_ssc_umount_item *nsui,
-+				 struct vfsmount *ss_mnt)
- {
--	/* set nsui_vfsmount, clear busy flag and wakeup waiters */
- 	spin_lock(&nn->nfsd_ssc_lock);
--	work->nsui_vfsmount = ss_mnt;
--	work->nsui_busy = false;
-+	nsui->nsui_vfsmount = ss_mnt;
-+	nsui->nsui_busy = false;
- 	wake_up_all(&nn->nfsd_ssc_waitq);
- 	spin_unlock(&nn->nfsd_ssc_lock);
- }
+ out:
+ 	kfree(smbdirect_mr);
  
--static void nfsd4_ssc_cancel_dul_work(struct nfsd_net *nn,
--		struct nfsd4_ssc_umount_item *work)
-+static void nfsd4_ssc_cancel_dul(struct nfsd_net *nn,
-+				 struct nfsd4_ssc_umount_item *nsui)
- {
- 	spin_lock(&nn->nfsd_ssc_lock);
--	list_del(&work->nsui_list);
-+	list_del(&nsui->nsui_list);
- 	wake_up_all(&nn->nfsd_ssc_waitq);
- 	spin_unlock(&nn->nfsd_ssc_lock);
--	kfree(work);
-+	kfree(nsui);
- }
- 
- /*
-@@ -1383,7 +1384,7 @@ static void nfsd4_ssc_cancel_dul_work(struct nfsd_net *nn,
-  */
- static __be32
- nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
--		       struct vfsmount **mount)
-+		       struct nfsd4_ssc_umount_item **nsui)
- {
- 	struct file_system_type *type;
- 	struct vfsmount *ss_mnt;
-@@ -1394,7 +1395,6 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
- 	char *ipaddr, *dev_name, *raw_data;
- 	int len, raw_len;
- 	__be32 status = nfserr_inval;
--	struct nfsd4_ssc_umount_item *work = NULL;
- 	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
- 
- 	naddr = &nss->u.nl4_addr;
-@@ -1402,6 +1402,7 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
- 					 naddr->addr_len,
- 					 (struct sockaddr *)&tmp_addr,
- 					 sizeof(tmp_addr));
-+	*nsui = NULL;
- 	if (tmp_addrlen == 0)
- 		goto out_err;
- 
-@@ -1444,10 +1445,10 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
- 		goto out_free_rawdata;
- 	snprintf(dev_name, len + 5, "%s%s%s:/", startsep, ipaddr, endsep);
- 
--	status = nfsd4_ssc_setup_dul(nn, ipaddr, &work, &ss_mnt);
-+	status = nfsd4_ssc_setup_dul(nn, ipaddr, nsui);
- 	if (status)
- 		goto out_free_devname;
--	if (ss_mnt)
-+	if ((*nsui)->nsui_vfsmount)
- 		goto out_done;
- 
- 	/* Use an 'internal' mount: SB_KERNMOUNT -> MNT_INTERNAL */
-@@ -1455,15 +1456,12 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
- 	module_put(type->owner);
- 	if (IS_ERR(ss_mnt)) {
- 		status = nfserr_nodev;
--		if (work)
--			nfsd4_ssc_cancel_dul_work(nn, work);
-+		nfsd4_ssc_cancel_dul(nn, *nsui);
- 		goto out_free_devname;
- 	}
--	if (work)
--		nfsd4_ssc_update_dul_work(nn, work, ss_mnt);
-+	nfsd4_ssc_update_dul(nn, *nsui, ss_mnt);
- out_done:
- 	status = 0;
--	*mount = ss_mnt;
- 
- out_free_devname:
- 	kfree(dev_name);
-@@ -1487,7 +1485,7 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
- static __be32
- nfsd4_setup_inter_ssc(struct svc_rqst *rqstp,
- 		      struct nfsd4_compound_state *cstate,
--		      struct nfsd4_copy *copy, struct vfsmount **mount)
-+		      struct nfsd4_copy *copy)
- {
- 	struct svc_fh *s_fh = NULL;
- 	stateid_t *s_stid = &copy->cp_src_stateid;
-@@ -1500,7 +1498,7 @@ nfsd4_setup_inter_ssc(struct svc_rqst *rqstp,
- 	if (status)
- 		goto out;
- 
--	status = nfsd4_interssc_connect(copy->cp_src, rqstp, mount);
-+	status = nfsd4_interssc_connect(copy->cp_src, rqstp, &copy->ss_nsui);
- 	if (status)
- 		goto out;
- 
-@@ -1518,45 +1516,27 @@ nfsd4_setup_inter_ssc(struct svc_rqst *rqstp,
- }
- 
- static void
--nfsd4_cleanup_inter_ssc(struct vfsmount *ss_mnt, struct file *filp,
-+nfsd4_cleanup_inter_ssc(struct nfsd4_ssc_umount_item *nsui, struct file *filp,
- 			struct nfsd_file *dst)
- {
--	bool found = false;
--	long timeout;
--	struct nfsd4_ssc_umount_item *tmp;
--	struct nfsd4_ssc_umount_item *ni = NULL;
- 	struct nfsd_net *nn = net_generic(dst->nf_net, nfsd_net_id);
-+	long timeout = msecs_to_jiffies(nfsd4_ssc_umount_timeout);
- 
- 	nfs42_ssc_close(filp);
- 	nfsd_file_put(dst);
- 	fput(filp);
- 
--	if (!nn) {
--		mntput(ss_mnt);
--		return;
--	}
- 	spin_lock(&nn->nfsd_ssc_lock);
--	timeout = msecs_to_jiffies(nfsd4_ssc_umount_timeout);
--	list_for_each_entry_safe(ni, tmp, &nn->nfsd_ssc_mount_list, nsui_list) {
--		if (ni->nsui_vfsmount->mnt_sb == ss_mnt->mnt_sb) {
--			list_del(&ni->nsui_list);
--			/*
--			 * vfsmount can be shared by multiple exports,
--			 * decrement refcnt. If the count drops to 1 it
--			 * will be unmounted when nsui_expire expires.
--			 */
--			refcount_dec(&ni->nsui_refcnt);
--			ni->nsui_expire = jiffies + timeout;
--			list_add_tail(&ni->nsui_list, &nn->nfsd_ssc_mount_list);
--			found = true;
--			break;
--		}
--	}
-+	list_del(&nsui->nsui_list);
-+	/*
-+	 * vfsmount can be shared by multiple exports,
-+	 * decrement refcnt. If the count drops to 1 it
-+	 * will be unmounted when nsui_expire expires.
-+	 */
-+	refcount_dec(&nsui->nsui_refcnt);
-+	nsui->nsui_expire = jiffies + timeout;
-+	list_add_tail(&nsui->nsui_list, &nn->nfsd_ssc_mount_list);
- 	spin_unlock(&nn->nfsd_ssc_lock);
--	if (!found) {
--		mntput(ss_mnt);
--		return;
--	}
- }
- 
- #else /* CONFIG_NFSD_V4_2_INTER_SSC */
-@@ -1564,15 +1544,13 @@ nfsd4_cleanup_inter_ssc(struct vfsmount *ss_mnt, struct file *filp,
- static __be32
- nfsd4_setup_inter_ssc(struct svc_rqst *rqstp,
- 		      struct nfsd4_compound_state *cstate,
--		      struct nfsd4_copy *copy,
--		      struct vfsmount **mount)
-+		      struct nfsd4_copy *copy)
- {
--	*mount = NULL;
- 	return nfserr_inval;
- }
- 
- static void
--nfsd4_cleanup_inter_ssc(struct vfsmount *ss_mnt, struct file *filp,
-+nfsd4_cleanup_inter_ssc(struct nfsd4_ssc_umount_item *nsui, struct file *filp,
- 			struct nfsd_file *dst)
- {
- }
-@@ -1713,7 +1691,7 @@ static void dup_copy_fields(struct nfsd4_copy *src, struct nfsd4_copy *dst)
- 	memcpy(dst->cp_src, src->cp_src, sizeof(struct nl4_server));
- 	memcpy(&dst->stateid, &src->stateid, sizeof(src->stateid));
- 	memcpy(&dst->c_fh, &src->c_fh, sizeof(src->c_fh));
--	dst->ss_mnt = src->ss_mnt;
-+	dst->ss_nsui = src->ss_nsui;
- }
- 
- static void cleanup_async_copy(struct nfsd4_copy *copy)
-@@ -1762,8 +1740,8 @@ static int nfsd4_do_async_copy(void *data)
- 	if (nfsd4_ssc_is_inter(copy)) {
- 		struct file *filp;
- 
--		filp = nfs42_ssc_open(copy->ss_mnt, &copy->c_fh,
--				      &copy->stateid);
-+		filp = nfs42_ssc_open(copy->ss_nsui->nsui_vfsmount,
-+				      &copy->c_fh, &copy->stateid);
- 		if (IS_ERR(filp)) {
- 			switch (PTR_ERR(filp)) {
- 			case -EBADF:
-@@ -1777,7 +1755,7 @@ static int nfsd4_do_async_copy(void *data)
- 		}
- 		nfserr = nfsd4_do_copy(copy, filp, copy->nf_dst->nf_file,
- 				       false);
--		nfsd4_cleanup_inter_ssc(copy->ss_mnt, filp, copy->nf_dst);
-+		nfsd4_cleanup_inter_ssc(copy->ss_nsui, filp, copy->nf_dst);
- 	} else {
- 		nfserr = nfsd4_do_copy(copy, copy->nf_src->nf_file,
- 				       copy->nf_dst->nf_file, false);
-@@ -1803,8 +1781,7 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 			status = nfserr_notsupp;
- 			goto out;
- 		}
--		status = nfsd4_setup_inter_ssc(rqstp, cstate, copy,
--				&copy->ss_mnt);
-+		status = nfsd4_setup_inter_ssc(rqstp, cstate, copy);
- 		if (status)
- 			return nfserr_offload_denied;
- 	} else {
-diff --git a/fs/nfsd/xdr4.h b/fs/nfsd/xdr4.h
-index 0eb00105d845b..36c3340c1d54a 100644
---- a/fs/nfsd/xdr4.h
-+++ b/fs/nfsd/xdr4.h
-@@ -571,7 +571,7 @@ struct nfsd4_copy {
- 	struct task_struct	*copy_task;
- 	refcount_t		refcount;
- 
--	struct vfsmount		*ss_mnt;
-+	struct nfsd4_ssc_umount_item *ss_nsui;
- 	struct nfs_fh		c_fh;
- 	nfs4_stateid		stateid;
- };
-diff --git a/include/linux/nfs_ssc.h b/include/linux/nfs_ssc.h
-index 75843c00f326a..22265b1ff0800 100644
---- a/include/linux/nfs_ssc.h
-+++ b/include/linux/nfs_ssc.h
-@@ -53,6 +53,7 @@ static inline void nfs42_ssc_close(struct file *filep)
- 	if (nfs_ssc_client_tbl.ssc_nfs4_ops)
- 		(*nfs_ssc_client_tbl.ssc_nfs4_ops->sco_close)(filep);
- }
-+#endif
- 
- struct nfsd4_ssc_umount_item {
- 	struct list_head nsui_list;
-@@ -66,7 +67,6 @@ struct nfsd4_ssc_umount_item {
- 	struct vfsmount *nsui_vfsmount;
- 	char nsui_ipaddr[RPC_MAX_ADDRBUFLEN + 1];
- };
--#endif
- 
- /*
-  * NFS_FS
+ 	list_for_each_entry_safe(smbdirect_mr, tmp, &info->mr_list, list) {
++		list_del(&smbdirect_mr->list);
+ 		ib_dereg_mr(smbdirect_mr->mr);
+ 		kfree(smbdirect_mr->sgl);
+ 		kfree(smbdirect_mr);
 -- 
 2.39.2
 
