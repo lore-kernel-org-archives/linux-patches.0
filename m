@@ -1,39 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30B8BA34
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:30:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31024C433EF;
-	Tue,  7 Mar 2023 17:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B28BA34
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:30:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741A7C433EF;
+	Tue,  7 Mar 2023 17:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210220;
-	bh=18jRIJLzDCr8zoPutiB+f5kL17Y6zy04u6aa2FpTZ5A=;
+	s=korg; t=1678210223;
+	bh=l80Y8+ValOrvFVlLUOngKpslY4MplrQhSvrvhPYXUn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvWDUWCniCzmzsIOizxMGUXBQ80z2W0BYkYqxCszOzTLRZAVFQttgtvLkJ6eNDXxk
-	 cV5P8UE3oQHr6ZXQ5rp9fP09n3FgXRKdkjnHKJQMsBBm/RU/TmAP4zi8ktT3nbgNL2
-	 HSURH2LeirQ2WeuJcpI3GWd8Y/kgkS8gPEVRz6f8=
+	b=vjP9kp9MUhlKCMCCNMbk+deOnnS83QnkjNEBzTlrK6sq7ZrsrHAUiosImOvPf6AoI
+	 xUgb9E6Mpphe62g/rLnnlfs495NOttudXzEiuWRJtdNURcEZC0nB0vtJWxHe75H4nr
+	 j9+xgX5tJXo+E0ZD0bFOQQuG91G9PUpjcA4f+PZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Perry Taylor <perry.taylor@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Florian Fischer <florian.fischer@muhq.space>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Stephane Eranian <eranian@google.com>,
-	Xing Zhengjun <zhengjun.xing@linux.intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Kirill Tkhai <tkhai@yandex.ru>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0472/1001] perf stat: Avoid merging/aggregating metric counts twice
-Date: Tue,  7 Mar 2023 17:54:04 +0100
-Message-Id: <20230307170041.888315263@linuxfoundation.org>
+Subject: [PATCH 6.2 0473/1001] sparc: allow PM configs for sparc32 COMPILE_TEST
+Date: Tue,  7 Mar 2023 17:54:05 +0100
+Message-Id: <20230307170041.932147252@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -47,55 +39,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Rogers <irogers@google.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 37f322cd58d81a9d46456531281c908de9ef6e42 ]
+[ Upstream commit 7be6a87c2473957090995b7eb541e31d57a2c801 ]
 
-The added perf_stat_merge_counters combines uncore counters. When
-metrics are enabled, the counts are merged into a metric_leader via the
-stat-shadow saved_value logic. As the leader now is passed an aggregated
-count, it leads to all counters being added together twice and counts
-appearing approximately doubled in metrics.
+When doing randconfig builds for sparc32 with COMPILE_TEST, some
+(non-Sparc) drivers cause kconfig warnings with the Kconfig symbols PM,
+PM_GENERIC_DOMAINS, or PM_GENERIC_DOMAINS_OF.
 
-This change disables the saved_value merging of counts for evsels that
-are merged. It is recommended that later changes remove the saved_value
-entirely as the two layers of aggregation in the code is confusing.
+This is due to arch/sparc/Kconfig not using the PM Kconfig for
+Sparc32:
 
-Fixes: 942c5593393d9418 ("perf stat: Add perf_stat_merge_counters()")
-Reported-by: Perry Taylor <perry.taylor@intel.com>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Eduard Zingerman <eddyz87@gmail.com>
-Cc: Florian Fischer <florian.fischer@muhq.space>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Stephane Eranian <eranian@google.com>
-Cc: Xing Zhengjun <zhengjun.xing@linux.intel.com>
-Link: https://lore.kernel.org/r/20230209064447.83733-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+  if SPARC64
+  source "kernel/power/Kconfig"
+  endif
+
+Arnd suggested adding "|| COMPILE_TEST" to the conditional,
+instead of trying to track down every driver that selects
+any of these PM symbols.
+
+Fixes the following kconfig warnings:
+
+WARNING: unmet direct dependencies detected for PM
+  Depends on [n]: SPARC64 [=n]
+  Selected by [y]:
+  - SUN20I_PPU [=y] && (ARCH_SUNXI || COMPILE_TEST [=y])
+
+WARNING: unmet direct dependencies detected for PM
+  Depends on [n]: SPARC64 [=n]
+  Selected by [y]:
+  - SUN20I_PPU [=y] && (ARCH_SUNXI || COMPILE_TEST [=y])
+
+WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS
+  Depends on [n]: SPARC64 [=n] && PM [=y]
+  Selected by [y]:
+  - QCOM_GDSC [=y] && COMMON_CLK [=y] && PM [=y]
+  - SUN20I_PPU [=y] && (ARCH_SUNXI || COMPILE_TEST [=y])
+  - MESON_GX_PM_DOMAINS [=y] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
+  - BCM2835_POWER [=y] && (ARCH_BCM2835 || COMPILE_TEST [=y] && OF [=y]) && PM [=y]
+  - BCM_PMB [=y] && (ARCH_BCMBCA || COMPILE_TEST [=y] && OF [=y]) && PM [=y]
+  - ROCKCHIP_PM_DOMAINS [=y] && (ARCH_ROCKCHIP || COMPILE_TEST [=y]) && PM [=y]
+  Selected by [m]:
+  - ARM_SCPI_POWER_DOMAIN [=m] && (ARM_SCPI_PROTOCOL [=m] || COMPILE_TEST [=y] && OF [=y]) && PM [=y]
+  - MESON_EE_PM_DOMAINS [=m] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
+  - QCOM_AOSS_QMP [=m] && (ARCH_QCOM || COMPILE_TEST [=y]) && MAILBOX [=y] && COMMON_CLK [=y] && PM [=y]
+
+WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS_OF
+  Depends on [n]: SPARC64 [=n] && PM_GENERIC_DOMAINS [=y] && OF [=y]
+  Selected by [y]:
+  - MESON_GX_PM_DOMAINS [=y] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
+  Selected by [m]:
+  - MESON_EE_PM_DOMAINS [=m] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
+
+Link: https://lkml.kernel.org/r/20230205004357.29459-1-rdunlap@infradead.org
+Fixes: bdde6b3c8ba4 ("sparc64: Hibernation support")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Sam Ravnborg <sam@ravnborg.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Kirill Tkhai <tkhai@yandex.ru>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/stat-shadow.c | 2 +-
+ arch/sparc/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/stat-shadow.c b/tools/perf/util/stat-shadow.c
-index cadb2df23c878..4cd05d9205e3b 100644
---- a/tools/perf/util/stat-shadow.c
-+++ b/tools/perf/util/stat-shadow.c
-@@ -311,7 +311,7 @@ void perf_stat__update_shadow_stats(struct evsel *counter, u64 count,
- 		update_stats(&v->stats, count);
- 		if (counter->metric_leader)
- 			v->metric_total += count;
--	} else if (counter->metric_leader) {
-+	} else if (counter->metric_leader && !counter->merged_stat) {
- 		v = saved_value_lookup(counter->metric_leader,
- 				       map_idx, true, STAT_NONE, 0, st, rsd.cgrp);
- 		v->metric_total += count;
+diff --git a/arch/sparc/Kconfig b/arch/sparc/Kconfig
+index 4d3d1af90d521..84437a4c65454 100644
+--- a/arch/sparc/Kconfig
++++ b/arch/sparc/Kconfig
+@@ -283,7 +283,7 @@ config ARCH_FORCE_MAX_ORDER
+ 	  This config option is actually maximum order plus one. For example,
+ 	  a value of 13 means that the largest free memory block is 2^12 pages.
+ 
+-if SPARC64
++if SPARC64 || COMPILE_TEST
+ source "kernel/power/Kconfig"
+ endif
+ 
 -- 
 2.39.2
 
