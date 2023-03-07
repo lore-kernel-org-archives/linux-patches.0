@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDB3BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:40:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F51C433D2;
-	Tue,  7 Mar 2023 18:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD50BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:40:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1707AC433D2;
+	Tue,  7 Mar 2023 18:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214404;
-	bh=/BgzxS7JaIxRIEWj8qbWZ7h3bxXz3cNqi++S7abWyTw=;
+	s=korg; t=1678214407;
+	bh=QZ/J5c16T3DlhoxUHH4nItPt0x0tksRPap4dyxd48Xg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UN1D6HgmniMXYhw5mTx19o8ikfFvLNX6Gd30XTqcV+f+TrAxLCGVyZYQa5jvD0kOY
-	 Q5XmTmZd3VF5CE1s5XbLfg6dgEjhwjk8rAqkYjWTg4xCj0J0bzJ1IXSgIH8wKNIlUB
-	 bxmbvHdgr/TUzqEKUHE6sBvQGZDcX96zVDurpGHQ=
+	b=qea4CDEF234uONwAx/s3AZHLjA1XMY4cVj1RkRcNYUCSbPCmwG+v/Qnt5QgpHVz3D
+	 GsB7bOLuyh/GLlFtcIwfPAqOn+NKCfcqiEUBqKHVBuPrikiu7CdZR2i75J+kgEQ71i
+	 clCzVCLGxruS2K6nS1HDAWWLQXsCNtTZaaYRJsZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.1 812/885] ARM: dts: exynos: correct TMU phandle in Exynos4210
-Date: Tue,  7 Mar 2023 18:02:26 +0100
-Message-Id: <20230307170037.143322232@linuxfoundation.org>
+Subject: [PATCH 6.1 813/885] ARM: dts: exynos: correct TMU phandle in Exynos4
+Date: Tue,  7 Mar 2023 18:02:27 +0100
+Message-Id: <20230307170037.185605764@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,31 +35,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 408ab6786dbf6dd696488054c9559681112ef994 upstream.
+commit 8e4505e617a80f601e2f53a917611777f128f925 upstream.
 
 TMU node uses 0 as thermal-sensor-cells, thus thermal zone referencing
-it must not have an argument to phandle.  Since thermal-sensors property is
-already defined in included exynos4-cpu-thermal.dtsi, drop it from
-exynos4210.dtsi to fix the error and remoev redundancy.
+it must not have an argument to phandle.
 
-Fixes: 9843a2236003 ("ARM: dts: Provide dt bindings identical for Exynos TMU")
+Fixes: 328829a6ad70 ("ARM: dts: define default thermal-zones for exynos4")
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230209105841.779596-2-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230209105841.779596-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/exynos4210.dtsi |    1 -
- 1 file changed, 1 deletion(-)
+ arch/arm/boot/dts/exynos4-cpu-thermal.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm/boot/dts/exynos4210.dtsi
-+++ b/arch/arm/boot/dts/exynos4210.dtsi
-@@ -393,7 +393,6 @@
- &cpu_thermal {
- 	polling-delay-passive = <0>;
- 	polling-delay = <0>;
--	thermal-sensors = <&tmu 0>;
- };
- 
- &gic {
+--- a/arch/arm/boot/dts/exynos4-cpu-thermal.dtsi
++++ b/arch/arm/boot/dts/exynos4-cpu-thermal.dtsi
+@@ -10,7 +10,7 @@
+ / {
+ thermal-zones {
+ 	cpu_thermal: cpu-thermal {
+-		thermal-sensors = <&tmu 0>;
++		thermal-sensors = <&tmu>;
+ 		polling-delay-passive = <0>;
+ 		polling-delay = <0>;
+ 		trips {
 
 
