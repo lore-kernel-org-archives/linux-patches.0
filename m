@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88898BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:49:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1804C433D2;
-	Tue,  7 Mar 2023 18:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CBDBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:49:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3FBCC433EF;
+	Tue,  7 Mar 2023 18:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214990;
-	bh=e/Pre2imnpWXGVk6zzLY2qTyBv+tmMkJDbggQiyPIfg=;
+	s=korg; t=1678214993;
+	bh=F6XYqSR6v/O/e5ouIKShapQd254Flxlej2BjKmLuWTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s+zB58my8QWDvVl224/KuilYX6l0K9FIsCG+29d3x5WEGk312e9AwjNenaz03DILU
-	 c9hsjgYTGIzxQBUzbVqeeri528mLgqjDcOFQvD6zQFuoLUM+XOx+nqs5ZrSy1WXslj
-	 +Cm02jkc5PmBgPqPb3szHfFXWYiODEr/HjngZOCU=
+	b=OQUvVPIElvChvvFIH+xYmSqr7jiBisLw9OGmZnU4qcBmUJJKh9/91UxiYcYodWBrb
+	 2WBfXKiC7Z7QS3uM+Nu2v6SbEghSOuAFbbxUn1iMkwcj+Pn5+DQZiTiuxfG0yAB4c9
+	 pkNTRZqThFBWDcsCPRocUbDjdUWSx44jpoibcoWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Borislav Petkov <bp@suse.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/567] rcu-tasks: Improve comments explaining tasks_rcu_exit_srcu purpose
-Date: Tue,  7 Mar 2023 17:57:04 +0100
-Message-Id: <20230307165909.700070962@linuxfoundation.org>
+Subject: [PATCH 5.15 115/567] x86/microcode: Default-disable late loading
+Date: Tue,  7 Mar 2023 17:57:31 +0100
+Message-Id: <20230307165910.899232186@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -40,97 +36,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Borislav Petkov <bp@suse.de>
 
-[ Upstream commit e4e1e8089c5fd948da12cb9f4adc93821036945f ]
+[ Upstream commit a77a94f86273ce42a39cb479217dd8d68acfe0ff ]
 
-Make sure we don't need to look again into the depths of git blame in
-order not to miss a subtle part about how rcu-tasks is dealing with
-exiting tasks.
+It is dangerous and it should not be used anyway - there's a nice early
+loading already.
 
-Suggested-by: Boqun Feng <boqun.feng@gmail.com>
-Suggested-by: Neeraj Upadhyay <quic_neeraju@quicinc.com>
-Suggested-by: Paul E. McKenney <paulmck@kernel.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Stable-dep-of: 28319d6dc5e2 ("rcu-tasks: Fix synchronize_rcu_tasks() VS zap_pid_ns_processes()")
+Requested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20220525161232.14924-3-bp@alien8.de
+Stable-dep-of: c0dd9245aa9e ("x86/microcode: Check CPU capabilities after late microcode update correctly")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tasks.h | 37 +++++++++++++++++++++++++++++--------
- 1 file changed, 29 insertions(+), 8 deletions(-)
+ arch/x86/Kconfig                     | 11 +++++++++++
+ arch/x86/kernel/cpu/common.c         |  2 ++
+ arch/x86/kernel/cpu/microcode/core.c |  7 ++++++-
+ 3 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index 4bd07cc3c0eab..d937bacf27b68 100644
---- a/kernel/rcu/tasks.h
-+++ b/kernel/rcu/tasks.h
-@@ -451,11 +451,21 @@ static void rcu_tasks_pertask(struct task_struct *t, struct list_head *hop)
- static void rcu_tasks_postscan(struct list_head *hop)
- {
- 	/*
--	 * Wait for tasks that are in the process of exiting.  This
--	 * does only part of the job, ensuring that all tasks that were
--	 * previously exiting reach the point where they have disabled
--	 * preemption, allowing the later synchronize_rcu() to finish
--	 * the job.
-+	 * Exiting tasks may escape the tasklist scan. Those are vulnerable
-+	 * until their final schedule() with TASK_DEAD state. To cope with
-+	 * this, divide the fragile exit path part in two intersecting
-+	 * read side critical sections:
-+	 *
-+	 * 1) An _SRCU_ read side starting before calling exit_notify(),
-+	 *    which may remove the task from the tasklist, and ending after
-+	 *    the final preempt_disable() call in do_exit().
-+	 *
-+	 * 2) An _RCU_ read side starting with the final preempt_disable()
-+	 *    call in do_exit() and ending with the final call to schedule()
-+	 *    with TASK_DEAD state.
-+	 *
-+	 * This handles the part 1). And postgp will handle part 2) with a
-+	 * call to synchronize_rcu().
- 	 */
- 	synchronize_srcu(&tasks_rcu_exit_srcu);
- }
-@@ -522,7 +532,10 @@ static void rcu_tasks_postgp(struct rcu_tasks *rtp)
- 	 *
- 	 * In addition, this synchronize_rcu() waits for exiting tasks
- 	 * to complete their final preempt_disable() region of execution,
--	 * cleaning up after the synchronize_srcu() above.
-+	 * cleaning up after synchronize_srcu(&tasks_rcu_exit_srcu),
-+	 * enforcing the whole region before tasklist removal until
-+	 * the final schedule() with TASK_DEAD state to be an RCU TASKS
-+	 * read side critical section.
- 	 */
- 	synchronize_rcu();
- }
-@@ -612,7 +625,11 @@ void show_rcu_tasks_classic_gp_kthread(void)
- EXPORT_SYMBOL_GPL(show_rcu_tasks_classic_gp_kthread);
- #endif // !defined(CONFIG_TINY_RCU)
+diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+index da87b3bfc9132..a08ce6360382a 100644
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -1320,6 +1320,17 @@ config MICROCODE_AMD
+ 	  If you select this option, microcode patch loading support for AMD
+ 	  processors will be enabled.
  
--/* Do the srcu_read_lock() for the above synchronize_srcu().  */
-+/*
-+ * Contribute to protect against tasklist scan blind spot while the
-+ * task is exiting and may be removed from the tasklist. See
-+ * corresponding synchronize_srcu() for further details.
-+ */
- void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
- {
- 	preempt_disable();
-@@ -620,7 +637,11 @@ void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
- 	preempt_enable();
++config MICROCODE_LATE_LOADING
++	bool "Late microcode loading (DANGEROUS)"
++	default n
++	depends on MICROCODE
++	help
++	  Loading microcode late, when the system is up and executing instructions
++	  is a tricky business and should be avoided if possible. Just the sequence
++	  of synchronizing all cores and SMT threads is one fragile dance which does
++	  not guarantee that cores might not softlock after the loading. Therefore,
++	  use this at your own risk. Late loading taints the kernel too.
++
+ config X86_MSR
+ 	tristate "/dev/cpu/*/msr - Model-specific register support"
+ 	help
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index 1698470dbea5f..6b71f40cd52d6 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -2149,6 +2149,7 @@ void cpu_init_secondary(void)
+ }
+ #endif
+ 
++#ifdef CONFIG_MICROCODE_LATE_LOADING
+ /*
+  * The microcode loader calls this upon late microcode load to recheck features,
+  * only when microcode has been updated. Caller holds microcode_mutex and CPU
+@@ -2178,6 +2179,7 @@ void microcode_check(void)
+ 	pr_warn("x86/CPU: CPU features have changed after loading microcode, but might not take effect.\n");
+ 	pr_warn("x86/CPU: Please consider either early loading through initrd/built-in or a potential BIOS update.\n");
+ }
++#endif
+ 
+ /*
+  * Invoked from core CPU hotplug code after hotplug operations
+diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
+index 951677121c77d..dc346bbb06777 100644
+--- a/arch/x86/kernel/cpu/microcode/core.c
++++ b/arch/x86/kernel/cpu/microcode/core.c
+@@ -393,6 +393,7 @@ static int apply_microcode_on_target(int cpu)
+ /* fake device for request_firmware */
+ static struct platform_device	*microcode_pdev;
+ 
++#ifdef CONFIG_MICROCODE_LATE_LOADING
+ /*
+  * Late loading dance. Why the heavy-handed stomp_machine effort?
+  *
+@@ -560,6 +561,9 @@ static ssize_t reload_store(struct device *dev,
+ 	return ret;
  }
  
--/* Do the srcu_read_unlock() for the above synchronize_srcu().  */
-+/*
-+ * Contribute to protect against tasklist scan blind spot while the
-+ * task is exiting and may be removed from the tasklist. See
-+ * corresponding synchronize_srcu() for further details.
-+ */
- void exit_tasks_rcu_finish(void) __releases(&tasks_rcu_exit_srcu)
++static DEVICE_ATTR_WO(reload);
++#endif
++
+ static ssize_t version_show(struct device *dev,
+ 			struct device_attribute *attr, char *buf)
  {
- 	struct task_struct *t = current;
+@@ -576,7 +580,6 @@ static ssize_t pf_show(struct device *dev,
+ 	return sprintf(buf, "0x%x\n", uci->cpu_sig.pf);
+ }
+ 
+-static DEVICE_ATTR_WO(reload);
+ static DEVICE_ATTR(version, 0444, version_show, NULL);
+ static DEVICE_ATTR(processor_flags, 0444, pf_show, NULL);
+ 
+@@ -729,7 +732,9 @@ static int mc_cpu_down_prep(unsigned int cpu)
+ }
+ 
+ static struct attribute *cpu_root_microcode_attrs[] = {
++#ifdef CONFIG_MICROCODE_LATE_LOADING
+ 	&dev_attr_reload.attr,
++#endif
+ 	NULL
+ };
+ 
 -- 
 2.39.2
 
