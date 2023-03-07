@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C57BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:20:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECCADC4339B;
-	Tue,  7 Mar 2023 17:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDEF4BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:20:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2428AC433A0;
+	Tue,  7 Mar 2023 17:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209635;
-	bh=4kZZwJ+ftZ/O9uKO+WRLiH93SOW07IPvo6aFklykatI=;
+	s=korg; t=1678209638;
+	bh=CVtAXUjfOWyXtdCD7IOhtwx1KkDlNylxNmr3yMck988=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vdBpetEoJHUxkaFHW8qO3yqqvVy0M/57v9zqnB8wdmqit808IU3rd1eCmb1VM9Eqs
-	 uchXFIXldm6+7swthPHO6TZSgRKF8bh92oW/3Hg8Jv8BXgkVOv+ogOd8B0jv+x9NoU
-	 U7aaDfXiQDOHHNEv8I5Jvv5qVIdlhlfj+cFTqE1A=
+	b=fh0HRldOGTJpBXRpn+GTtJdzgfROiyy2PJhlQXz2U6ty8mp7ma0HyL/AIAtOU1dam
+	 kWKgip1XY5gOB47z7cmk0kJ0uiASliUJCZEsL/1TW+m/nZw2NXYeiGrOQl/hO6QZso
+	 hpiQhh64rZKNz6d1abcaJBZ54maVHxyHIfjfWbsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel@sholland.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Anup Patel <apatel@ventanamicro.com>,
+	Matt Evans <mev@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Anup Patel <anup@brainfault.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0282/1001] RISC-V: time: initialize hrtimer based broadcast clock event device
-Date: Tue,  7 Mar 2023 17:50:54 +0100
-Message-Id: <20230307170033.906073337@linuxfoundation.org>
+Subject: [PATCH 6.2 0283/1001] clocksource/drivers/riscv: Patch riscv_clock_next_event() jump before first use
+Date: Tue,  7 Mar 2023 17:50:55 +0100
+Message-Id: <20230307170033.944582297@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,63 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Matt Evans <mev@rivosinc.com>
 
-[ Upstream commit 8b3b8fbb4896984b5564789a42240e4b3caddb61 ]
+[ Upstream commit 225b9596cb0227c1c1b1e4a836dad43595c3e61a ]
 
-Similarly to commit 022eb8ae8b5e ("ARM: 8938/1: kernel: initialize
-broadcast hrtimer based clock event device"), RISC-V needs to initiate
-hrtimer based broadcast clock event device before C3STOP can be used.
-Otherwise, the introduction of C3STOP for the RISC-V arch timer in
-commit 232ccac1bd9b ("clocksource/drivers/riscv: Events are stopped
-during CPU suspend") leaves us without any broadcast timer registered.
-This prevents the kernel from entering oneshot mode, which breaks timer
-behaviour, for example clock_nanosleep().
+A static key is used to select between SBI and Sstc timer usage in
+riscv_clock_next_event(), but currently the direction is resolved
+after cpuhp_setup_state() is called (which sets the next event).  The
+first event will therefore fall through the sbi_set_timer() path; this
+breaks Sstc-only systems.  So, apply the jump patching before first
+use.
 
-A test app that sleeps each cpu for 6, 5, 4, 3 ms respectively, HZ=250
-& C3STOP enabled, the sleep times are rounded up to the next jiffy:
-== CPU: 1 ==      == CPU: 2 ==      == CPU: 3 ==      == CPU: 4 ==
-Mean: 7.974992    Mean: 7.976534    Mean: 7.962591    Mean: 3.952179
-Std Dev: 0.154374 Std Dev: 0.156082 Std Dev: 0.171018 Std Dev: 0.076193
-Hi: 9.472000      Hi: 10.495000     Hi: 8.864000      Hi: 4.736000
-Lo: 6.087000      Lo: 6.380000      Lo: 4.872000      Lo: 3.403000
-Samples: 521      Samples: 521      Samples: 521      Samples: 521
-
-Link: https://lore.kernel.org/linux-riscv/YzYTNQRxLr7Q9JR0@spud/
-Fixes: 232ccac1bd9b ("clocksource/drivers/riscv: Events are stopped during CPU suspend")
-Suggested-by: Samuel Holland <samuel@sholland.org>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Reviewed-by: Samuel Holland <samuel@sholland.org>
+Fixes: 9f7a8ff6391f ("RISC-V: Prefer sstc extension if available")
+Signed-off-by: Matt Evans <mev@rivosinc.com>
+Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
 Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Link: https://lore.kernel.org/r/20230103141102.772228-2-apatel@ventanamicro.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/CDDAB2D0-264E-42F3-8E31-BA210BEB8EC1@rivosinc.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/time.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/clocksource/timer-riscv.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/riscv/kernel/time.c b/arch/riscv/kernel/time.c
-index 8217b0f67c6cb..1cf21db4fcc77 100644
---- a/arch/riscv/kernel/time.c
-+++ b/arch/riscv/kernel/time.c
-@@ -5,6 +5,7 @@
-  */
+diff --git a/drivers/clocksource/timer-riscv.c b/drivers/clocksource/timer-riscv.c
+index a0d66fabf0732..a01c2bd241349 100644
+--- a/drivers/clocksource/timer-riscv.c
++++ b/drivers/clocksource/timer-riscv.c
+@@ -177,6 +177,11 @@ static int __init riscv_timer_init_dt(struct device_node *n)
+ 		return error;
+ 	}
  
- #include <linux/of_clk.h>
-+#include <linux/clockchips.h>
- #include <linux/clocksource.h>
- #include <linux/delay.h>
- #include <asm/sbi.h>
-@@ -29,6 +30,8 @@ void __init time_init(void)
- 
- 	of_clk_init(NULL);
- 	timer_probe();
++	if (riscv_isa_extension_available(NULL, SSTC)) {
++		pr_info("Timer interrupt in S-mode is available via sstc extension\n");
++		static_branch_enable(&riscv_sstc_available);
++	}
 +
-+	tick_setup_hrtimer_broadcast();
+ 	error = cpuhp_setup_state(CPUHP_AP_RISCV_TIMER_STARTING,
+ 			 "clockevents/riscv/timer:starting",
+ 			 riscv_timer_starting_cpu, riscv_timer_dying_cpu);
+@@ -184,11 +189,6 @@ static int __init riscv_timer_init_dt(struct device_node *n)
+ 		pr_err("cpu hp setup state failed for RISCV timer [%d]\n",
+ 		       error);
+ 
+-	if (riscv_isa_extension_available(NULL, SSTC)) {
+-		pr_info("Timer interrupt in S-mode is available via sstc extension\n");
+-		static_branch_enable(&riscv_sstc_available);
+-	}
+-
+ 	return error;
  }
  
- void clocksource_arch_init(struct clocksource *cs)
 -- 
 2.39.2
 
