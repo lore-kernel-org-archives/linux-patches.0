@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E6BBA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:52:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C085C4339B;
-	Tue,  7 Mar 2023 17:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F08CBA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:52:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6341C4339B;
+	Tue,  7 Mar 2023 17:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211549;
-	bh=ytVc7YHJCWb9B5abHN3PSefGPQK17tv8/pSOJl/ooOk=;
+	s=korg; t=1678211552;
+	bh=V3e9yIEPHQEu54S32WuwDM4b1JaPpugn6OxAPPMnFQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e1l9IATFXArtymohk5s9a3vO1lIS42Ng0yPtYGAesP3l1usg1YSnvcbsghpARtlsA
-	 rYAndbcgq/pyXYW9pjbr+z2siXRDQUwuhDFLZMT69sN50+miEYMf4LccvKsMywFEgX
-	 Ppb0A5N56GH1oFj7lP1FRpPB3KQ9xzQmrnpyoIuk=
+	b=yjTO+dZ4us91D6+sANEJheQCxuGz3GzloqHPCy3PehCrmGZyC6bP27gCx3cL2J8ql
+	 oovXVmb7gDjDVEwBmRz6rbSYfD2GIJfbRakZRWZiifH1jaJVSkiV/cExc4khyYSxAi
+	 uqEBAdxWqYzzZ01GUvVvraIyWHg2AYzw9dSLtWDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	zhanchengbin <zhanchengbin1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.2 0891/1001] jbd2: fix data missing when reusing bh which is ready to be checkpointed
-Date: Tue,  7 Mar 2023 18:01:03 +0100
-Message-Id: <20230307170100.619782853@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Peter Rajnoha <prajnoha@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.2 0900/1001] dm: send just one event on resize, not two
+Date: Tue,  7 Mar 2023 18:01:12 +0100
+Message-Id: <20230307170101.055886417@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,145 +35,168 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit e6b9bd7290d334451ce054e98e752abc055e0034 upstream.
+commit 7533afa1d27ba1234146d31d2402c195cf195962 upstream.
 
-Following process will make data lost and could lead to a filesystem
-corrupted problem:
+Device mapper sends an uevent when the device is suspended, using the
+function set_capacity_and_notify. However, this causes a race condition
+with udev.
 
-1. jh(bh) is inserted into T1->t_checkpoint_list, bh is dirty, and
-   jh->b_transaction = NULL
-2. T1 is added into journal->j_checkpoint_transactions.
-3. Get bh prepare to write while doing checkpoing:
-           PA				    PB
-   do_get_write_access             jbd2_log_do_checkpoint
-    spin_lock(&jh->b_state_lock)
-     if (buffer_dirty(bh))
-      clear_buffer_dirty(bh)   // clear buffer dirty
-       set_buffer_jbddirty(bh)
-				    transaction =
-				    journal->j_checkpoint_transactions
-				    jh = transaction->t_checkpoint_list
-				    if (!buffer_dirty(bh))
-		                      __jbd2_journal_remove_checkpoint(jh)
-				      // bh won't be flushed
-		                    jbd2_cleanup_journal_tail
-    __jbd2_journal_file_buffer(jh, transaction, BJ_Reserved)
-4. Aborting journal/Power-cut before writing latest bh on journal area.
+Udev skips scanning dm devices that are suspended. If we send an uevent
+while we are suspended, udev will be racing with device mapper resume
+code. If the device mapper resume code wins the race, udev will process
+the uevent after the device is resumed and it will properly scan the
+device.
 
-In this way we get a corrupted filesystem with bh's data lost.
+However, if udev wins the race, it will receive the uevent, find out that
+the dm device is suspended and skip scanning the device. This causes bugs
+such as systemd unmounting the device - see
+https://bugzilla.redhat.com/show_bug.cgi?id=2158628
 
-Fix it by moving the clearing of buffer_dirty bit just before the call
-to __jbd2_journal_file_buffer(), both bit clearing and jh->b_transaction
-assignment are under journal->j_list_lock locked, so that
-jbd2_log_do_checkpoint() will wait until jh's new transaction fininshed
-even bh is currently not dirty. And journal_shrink_one_cp_list() won't
-remove jh from checkpoint list if the buffer head is reused in
-do_get_write_access().
+This commit fixes this race.
 
-Fetch a reproducer in [Link].
+We replace the function set_capacity_and_notify with set_capacity, so that
+the uevent is not sent at this point. In do_resume, we detect if the
+capacity has changed and we pass a boolean variable need_resize_uevent to
+dm_kobject_uevent. dm_kobject_uevent adds "RESIZE=1" to the uevent if
+need_resize_uevent is set.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216898
-Cc: <stable@kernel.org>
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: zhanchengbin <zhanchengbin1@huawei.com>
-Suggested-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230110015327.1181863-1-chengzhihao1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Tested-by: Peter Rajnoha <prajnoha@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/transaction.c |   50 +++++++++++++++++++++++++++++---------------------
- 1 file changed, 29 insertions(+), 21 deletions(-)
+ drivers/md/dm-ioctl.c |   13 ++++++++++---
+ drivers/md/dm.c       |   27 +++++++++++++--------------
+ drivers/md/dm.h       |    2 +-
+ 3 files changed, 24 insertions(+), 18 deletions(-)
 
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -1010,36 +1010,28 @@ repeat:
- 	 * ie. locked but not dirty) or tune2fs (which may actually have
- 	 * the buffer dirtied, ugh.)  */
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -482,7 +482,7 @@ static struct mapped_device *dm_hash_ren
+ 		dm_table_event(table);
+ 	dm_put_live_table(hc->md, srcu_idx);
  
--	if (buffer_dirty(bh)) {
-+	if (buffer_dirty(bh) && jh->b_transaction) {
-+		warn_dirty_buffer(bh);
- 		/*
--		 * First question: is this buffer already part of the current
--		 * transaction or the existing committing transaction?
--		 */
--		if (jh->b_transaction) {
--			J_ASSERT_JH(jh,
--				jh->b_transaction == transaction ||
--				jh->b_transaction ==
--					journal->j_committing_transaction);
--			if (jh->b_next_transaction)
--				J_ASSERT_JH(jh, jh->b_next_transaction ==
--							transaction);
--			warn_dirty_buffer(bh);
--		}
--		/*
--		 * In any case we need to clean the dirty flag and we must
--		 * do it under the buffer lock to be sure we don't race
--		 * with running write-out.
-+		 * We need to clean the dirty flag and we must do it under the
-+		 * buffer lock to be sure we don't race with running write-out.
- 		 */
- 		JBUFFER_TRACE(jh, "Journalling dirty buffer");
- 		clear_buffer_dirty(bh);
-+		/*
-+		 * The buffer is going to be added to BJ_Reserved list now and
-+		 * nothing guarantees jbd2_journal_dirty_metadata() will be
-+		 * ever called for it. So we need to set jbddirty bit here to
-+		 * make sure the buffer is dirtied and written out when the
-+		 * journaling machinery is done with it.
-+		 */
- 		set_buffer_jbddirty(bh);
- 	}
+-	if (!dm_kobject_uevent(hc->md, KOBJ_CHANGE, param->event_nr))
++	if (!dm_kobject_uevent(hc->md, KOBJ_CHANGE, param->event_nr, false))
+ 		param->flags |= DM_UEVENT_GENERATED_FLAG;
  
--	unlock_buffer(bh);
--
- 	error = -EROFS;
- 	if (is_handle_aborted(handle)) {
- 		spin_unlock(&jh->b_state_lock);
-+		unlock_buffer(bh);
- 		goto out;
- 	}
- 	error = 0;
-@@ -1049,8 +1041,10 @@ repeat:
- 	 * b_next_transaction points to it
- 	 */
- 	if (jh->b_transaction == transaction ||
--	    jh->b_next_transaction == transaction)
-+	    jh->b_next_transaction == transaction) {
-+		unlock_buffer(bh);
- 		goto done;
-+	}
+ 	md = hc->md;
+@@ -995,7 +995,7 @@ static int dev_remove(struct file *filp,
  
- 	/*
- 	 * this is the first time this transaction is touching this buffer,
-@@ -1074,10 +1068,24 @@ repeat:
- 		 */
- 		smp_wmb();
- 		spin_lock(&journal->j_list_lock);
-+		if (test_clear_buffer_dirty(bh)) {
-+			/*
-+			 * Execute buffer dirty clearing and jh->b_transaction
-+			 * assignment under journal->j_list_lock locked to
-+			 * prevent bh being removed from checkpoint list if
-+			 * the buffer is in an intermediate state (not dirty
-+			 * and jh->b_transaction is NULL).
-+			 */
-+			JBUFFER_TRACE(jh, "Journalling dirty buffer");
-+			set_buffer_jbddirty(bh);
-+		}
- 		__jbd2_journal_file_buffer(jh, transaction, BJ_Reserved);
- 		spin_unlock(&journal->j_list_lock);
-+		unlock_buffer(bh);
- 		goto done;
- 	}
-+	unlock_buffer(bh);
+ 	dm_ima_measure_on_device_remove(md, false);
+ 
+-	if (!dm_kobject_uevent(md, KOBJ_REMOVE, param->event_nr))
++	if (!dm_kobject_uevent(md, KOBJ_REMOVE, param->event_nr, false))
+ 		param->flags |= DM_UEVENT_GENERATED_FLAG;
+ 
+ 	dm_put(md);
+@@ -1129,6 +1129,7 @@ static int do_resume(struct dm_ioctl *pa
+ 	struct hash_cell *hc;
+ 	struct mapped_device *md;
+ 	struct dm_table *new_map, *old_map = NULL;
++	bool need_resize_uevent = false;
+ 
+ 	down_write(&_hash_lock);
+ 
+@@ -1149,6 +1150,8 @@ static int do_resume(struct dm_ioctl *pa
+ 
+ 	/* Do we need to load a new map ? */
+ 	if (new_map) {
++		sector_t old_size, new_size;
 +
- 	/*
- 	 * If there is already a copy-out version of this buffer, then we don't
- 	 * need to make another one
+ 		/* Suspend if it isn't already suspended */
+ 		if (param->flags & DM_SKIP_LOCKFS_FLAG)
+ 			suspend_flags &= ~DM_SUSPEND_LOCKFS_FLAG;
+@@ -1157,6 +1160,7 @@ static int do_resume(struct dm_ioctl *pa
+ 		if (!dm_suspended_md(md))
+ 			dm_suspend(md, suspend_flags);
+ 
++		old_size = dm_get_size(md);
+ 		old_map = dm_swap_table(md, new_map);
+ 		if (IS_ERR(old_map)) {
+ 			dm_sync_table(md);
+@@ -1164,6 +1168,9 @@ static int do_resume(struct dm_ioctl *pa
+ 			dm_put(md);
+ 			return PTR_ERR(old_map);
+ 		}
++		new_size = dm_get_size(md);
++		if (old_size && new_size && old_size != new_size)
++			need_resize_uevent = true;
+ 
+ 		if (dm_table_get_mode(new_map) & FMODE_WRITE)
+ 			set_disk_ro(dm_disk(md), 0);
+@@ -1176,7 +1183,7 @@ static int do_resume(struct dm_ioctl *pa
+ 		if (!r) {
+ 			dm_ima_measure_on_device_resume(md, new_map ? true : false);
+ 
+-			if (!dm_kobject_uevent(md, KOBJ_CHANGE, param->event_nr))
++			if (!dm_kobject_uevent(md, KOBJ_CHANGE, param->event_nr, need_resize_uevent))
+ 				param->flags |= DM_UEVENT_GENERATED_FLAG;
+ 		}
+ 	}
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -2171,10 +2171,7 @@ static struct dm_table *__bind(struct ma
+ 	if (size != dm_get_size(md))
+ 		memset(&md->geometry, 0, sizeof(md->geometry));
+ 
+-	if (!get_capacity(md->disk))
+-		set_capacity(md->disk, size);
+-	else
+-		set_capacity_and_notify(md->disk, size);
++	set_capacity(md->disk, size);
+ 
+ 	dm_table_event_callback(t, event_callback, md);
+ 
+@@ -2967,23 +2964,25 @@ EXPORT_SYMBOL_GPL(dm_internal_resume_fas
+  * Event notification.
+  *---------------------------------------------------------------*/
+ int dm_kobject_uevent(struct mapped_device *md, enum kobject_action action,
+-		       unsigned cookie)
++		      unsigned cookie, bool need_resize_uevent)
+ {
+ 	int r;
+ 	unsigned noio_flag;
+ 	char udev_cookie[DM_COOKIE_LENGTH];
+-	char *envp[] = { udev_cookie, NULL };
+-
+-	noio_flag = memalloc_noio_save();
+-
+-	if (!cookie)
+-		r = kobject_uevent(&disk_to_dev(md->disk)->kobj, action);
+-	else {
++	char *envp[3] = { NULL, NULL, NULL };
++	char **envpp = envp;
++	if (cookie) {
+ 		snprintf(udev_cookie, DM_COOKIE_LENGTH, "%s=%u",
+ 			 DM_COOKIE_ENV_VAR_NAME, cookie);
+-		r = kobject_uevent_env(&disk_to_dev(md->disk)->kobj,
+-				       action, envp);
++		*envpp++ = udev_cookie;
+ 	}
++	if (need_resize_uevent) {
++		*envpp++ = "RESIZE=1";
++	}
++
++	noio_flag = memalloc_noio_save();
++
++	r = kobject_uevent_env(&disk_to_dev(md->disk)->kobj, action, envp);
+ 
+ 	memalloc_noio_restore(noio_flag);
+ 
+--- a/drivers/md/dm.h
++++ b/drivers/md/dm.h
+@@ -203,7 +203,7 @@ int dm_get_table_device(struct mapped_de
+ void dm_put_table_device(struct mapped_device *md, struct dm_dev *d);
+ 
+ int dm_kobject_uevent(struct mapped_device *md, enum kobject_action action,
+-		      unsigned cookie);
++		      unsigned cookie, bool need_resize_uevent);
+ 
+ void dm_internal_suspend(struct mapped_device *md);
+ void dm_internal_resume(struct mapped_device *md);
 
 
