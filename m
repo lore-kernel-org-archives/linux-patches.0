@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05ABBA46
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:11:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4474FC433D2;
-	Tue,  7 Mar 2023 18:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24E7BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:11:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56549C4339B;
+	Tue,  7 Mar 2023 18:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212689;
-	bh=fY1d5z9ST2cxWNPFnSWBGoAABv5eJ6UDXALDYPkD3Os=;
+	s=korg; t=1678212692;
+	bh=AtCwruKgpu3TE+v8RRhAfkc7TT9VcdefsPY5sMSjRvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/azf7Mt3h/ezmlILrtTyWNRFSCe2uFzsZUzITIlC3WNDfPeS2rUBC8IKnf8r74mU
-	 Qs0BfCCSX11W/v5kdE9MLk02yFtrMIAGtMPYIN3QWpdOY1SwyX8WAMgqNSFthaorAw
-	 xmD64ZtPisPfDbdPFUCum9JpkO881yXBvk2Fi/Zk=
+	b=GbX4Rj7Hf3nhjf57EhGa+7N5r6WjVsGiFhIlECYDEOwf1xlvPBCEHEkzF0H6GPAAp
+	 ZK2BDi+12Dm8/c4j9ws1iGl/HNE0Wp5p+1I0JuvoCChGYBC0FSzqEpFbZpnHafTgzl
+	 hjktmQQmXaV811ntdPnu+8eC1TF515xcYVTmg+lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Robert Foss <robert.foss@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marek Vasut <marex@denx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 265/885] drm/bridge: ti-sn65dsi83: Fix delay after reset deassert to match spec
-Date: Tue,  7 Mar 2023 17:53:19 +0100
-Message-Id: <20230307170013.531680369@linuxfoundation.org>
+Subject: [PATCH 6.1 266/885] drm: mxsfb: DRM_IMX_LCDIF should depend on ARCH_MXC
+Date: Tue,  7 Mar 2023 17:53:20 +0100
+Message-Id: <20230307170013.572285394@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,37 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frieder Schrempf <frieder.schrempf@kontron.de>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 4b03d5e0d3e86ee492d54254927d020dc0fe8acf ]
+[ Upstream commit 10ef5f2992006720318b9886961820155b3750fd ]
 
-The datasheet specifies a delay of 10 milliseconds, but the current
-driver only waits for 1 ms. Fix this to make sure the initialization
-sequence meets the spec.
+The Freescale/NXP i.MX LCDIFv3 LCD controller is only present on
+Freescale/NXP i.MX SoCs.  Hence add a dependency on ARCH_MXC, to prevent
+asking the user about this driver when configuring a kernel without
+Freescale/NXP i.MX support.
 
-Fixes: ceb515ba29ba ("drm/bridge: ti-sn65dsi83: Add TI SN65DSI83 and SN65DSI84 driver")
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221122081219.20143-1-frieder@fris.de
+Fixes: 9db35bb349a0ef32 ("drm: lcdif: Add support for i.MX8MP LCDIF variant")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/6103c1aa65a7888c12d351ae63f29850f29f42b9.1669046403.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi83.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/mxsfb/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi83.c b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-index 7ba9467fff129..047c14ddbbf11 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-@@ -346,7 +346,7 @@ static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
- 
- 	/* Deassert reset */
- 	gpiod_set_value_cansleep(ctx->enable_gpio, 1);
--	usleep_range(1000, 1100);
-+	usleep_range(10000, 11000);
- 
- 	/* Get the LVDS format from the bridge state. */
- 	bridge_state = drm_atomic_get_new_bridge_state(state, bridge);
+diff --git a/drivers/gpu/drm/mxsfb/Kconfig b/drivers/gpu/drm/mxsfb/Kconfig
+index 116f8168bda4a..aa4b0eb2a562b 100644
+--- a/drivers/gpu/drm/mxsfb/Kconfig
++++ b/drivers/gpu/drm/mxsfb/Kconfig
+@@ -24,6 +24,7 @@ config DRM_IMX_LCDIF
+ 	tristate "i.MX LCDIFv3 LCD controller"
+ 	depends on DRM && OF
+ 	depends on COMMON_CLK
++	depends on ARCH_MXC || COMPILE_TEST
+ 	select DRM_MXS
+ 	select DRM_KMS_HELPER
+ 	select DRM_GEM_DMA_HELPER
 -- 
 2.39.2
 
