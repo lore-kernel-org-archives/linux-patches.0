@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0868BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:19:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BB9C433A4;
-	Tue,  7 Mar 2023 17:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B99BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:19:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42500C433A7;
+	Tue,  7 Mar 2023 17:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209576;
-	bh=8VzJnpP/vL8Hm15qv9EuWG9UjYcoPmucC/2RrPSwafs=;
+	s=korg; t=1678209579;
+	bh=+My6TIAiYcR6tWcRy9NCddJk76iP5SBDdrfL5+IJDd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jF2uzowHyaPDMzmDi04sw7q9WAe9SM+gLxTG+txWn+OrbXkl2U+2hnbZJNIJaW1V+
-	 eGrV16DdmrSazKnl1VNzPorRcmSJr10AE9lCWPALHPhbNB+dt2X5BY9JjGa++teg0K
-	 l7I7wO1iFHVXATlm3N9Q20uaLpJZIsvukAgfStjI=
+	b=AV9dMVwUqFoTRy/YAd9ZFqaCdnIml9UdbM+nQkzYJikvOQyxi1WjCjd3XcWWxyICa
+	 3uK3SJEMnFLiawL7zRcOlO8C0/CJjO6DeqX/HE+1ZZDyx3/BdKfU7jPa0mCacB4oXY
+	 aZpHwCjrlFaFTDE0M9ssRAhPY5nwL/fCXSZpM0xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0264/1001] net: add sock_init_data_uid()
-Date: Tue,  7 Mar 2023 17:50:36 +0100
-Message-Id: <20230307170033.197562037@linuxfoundation.org>
+Subject: [PATCH 6.2 0265/1001] tun: tun_chr_open(): correctly initialize socket uid
+Date: Tue,  7 Mar 2023 17:50:37 +0100
+Message-Id: <20230307170033.244615554@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,13 +38,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 584f3742890e966d2f0a1f3c418c9ead70b2d99e ]
+[ Upstream commit a096ccca6e503a5c575717ff8a36ace27510ab0a ]
 
-Add sock_init_data_uid() to explicitly initialize the socket uid.
-To initialise the socket uid, sock_init_data() assumes a the struct
-socket* sock is always embedded in a struct socket_alloc, used to
-access the corresponding inode uid. This may not be true.
-Examples are sockets created in tun_chr_open() and tap_open().
+sock_init_data() assumes that the `struct socket` passed in input is
+contained in a `struct socket_alloc` allocated with sock_alloc().
+However, tun_chr_open() passes a `struct socket` embedded in a `struct
+tun_file` allocated with sk_alloc().
+This causes a type confusion when issuing a container_of() with
+SOCK_INODE() in sock_init_data() which results in assigning a wrong
+sk_uid to the `struct sock` in input.
+On default configuration, the type confused field overlaps with the
+high 4 bytes of `struct tun_struct __rcu *tun` of `struct tun_file`,
+NULL at the time of call, which makes the uid of all tun sockets 0,
+i.e., the root one.
+Fix the assignment by using sock_init_data_uid().
 
 Fixes: 86741ec25462 ("net: core: Add a UID field to struct sock.")
 Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
@@ -52,71 +59,22 @@ Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h |  7 ++++++-
- net/core/sock.c    | 15 ++++++++++++---
- 2 files changed, 18 insertions(+), 4 deletions(-)
+ drivers/net/tun.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 5562097276336..c6584a3524638 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1956,7 +1956,12 @@ void sk_common_release(struct sock *sk);
-  *	Default socket callbacks and setup code
-  */
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index a7d17c680f4a0..745131b2d6dbf 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -3448,7 +3448,7 @@ static int tun_chr_open(struct inode *inode, struct file * file)
+ 	tfile->socket.file = file;
+ 	tfile->socket.ops = &tun_socket_ops;
  
--/* Initialise core socket variables */
-+/* Initialise core socket variables using an explicit uid. */
-+void sock_init_data_uid(struct socket *sock, struct sock *sk, kuid_t uid);
-+
-+/* Initialise core socket variables.
-+ * Assumes struct socket *sock is embedded in a struct socket_alloc.
-+ */
- void sock_init_data(struct socket *sock, struct sock *sk);
+-	sock_init_data(&tfile->socket, &tfile->sk);
++	sock_init_data_uid(&tfile->socket, &tfile->sk, inode->i_uid);
  
- /*
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 6f27c24016fee..63680f999bf6d 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3381,7 +3381,7 @@ void sk_stop_timer_sync(struct sock *sk, struct timer_list *timer)
- }
- EXPORT_SYMBOL(sk_stop_timer_sync);
- 
--void sock_init_data(struct socket *sock, struct sock *sk)
-+void sock_init_data_uid(struct socket *sock, struct sock *sk, kuid_t uid)
- {
- 	sk_init_common(sk);
- 	sk->sk_send_head	=	NULL;
-@@ -3401,11 +3401,10 @@ void sock_init_data(struct socket *sock, struct sock *sk)
- 		sk->sk_type	=	sock->type;
- 		RCU_INIT_POINTER(sk->sk_wq, &sock->wq);
- 		sock->sk	=	sk;
--		sk->sk_uid	=	SOCK_INODE(sock)->i_uid;
- 	} else {
- 		RCU_INIT_POINTER(sk->sk_wq, NULL);
--		sk->sk_uid	=	make_kuid(sock_net(sk)->user_ns, 0);
- 	}
-+	sk->sk_uid	=	uid;
- 
- 	rwlock_init(&sk->sk_callback_lock);
- 	if (sk->sk_kern_sock)
-@@ -3463,6 +3462,16 @@ void sock_init_data(struct socket *sock, struct sock *sk)
- 	refcount_set(&sk->sk_refcnt, 1);
- 	atomic_set(&sk->sk_drops, 0);
- }
-+EXPORT_SYMBOL(sock_init_data_uid);
-+
-+void sock_init_data(struct socket *sock, struct sock *sk)
-+{
-+	kuid_t uid = sock ?
-+		SOCK_INODE(sock)->i_uid :
-+		make_kuid(sock_net(sk)->user_ns, 0);
-+
-+	sock_init_data_uid(sock, sk, uid);
-+}
- EXPORT_SYMBOL(sock_init_data);
- 
- void lock_sock_nested(struct sock *sk, int subclass)
+ 	tfile->sk.sk_write_space = tun_sock_write_space;
+ 	tfile->sk.sk_sndbuf = INT_MAX;
 -- 
 2.39.2
 
