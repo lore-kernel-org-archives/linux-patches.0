@@ -1,39 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7D2BA49;
-	Tue,  7 Mar 2023 18:58:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC910C433D2;
-	Tue,  7 Mar 2023 18:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB83EBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:58:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA09C433D2;
+	Tue,  7 Mar 2023 18:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215484;
-	bh=JN+PH1NmuC42Ae/UZeVPJKaF8s2n1S6+4ls8J7Zf/iY=;
+	s=korg; t=1678215487;
+	bh=yQs/cC66x/roXnEUE44zDOMy4AyrU6EqQoh3T6TabmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KC4FzVnwY3avFldOLdHjvL3pZL/CtHxnL+nFiGBRW3DrhxtiF0lWNO6o8fbblLj/I
-	 3jPFTDvrC73hYg4sQTB+0tCW8Ne35ZKHs1wP+Oc07/x1+6F2HEQBs2nF0ZSr6WxoHY
-	 iVUwR3BWel/v7h6deNvpsphaEKcn1a4sn0qkVnX8=
+	b=xQguzGdR+blTlHdzEOKHg+VQyybdOzB1D44cHg04LxEMboGQI6fUeftUvYfKm/Z3m
+	 PLyHAvoMKuPCZSB54p6esvzpxCzHo9COEhdY4iuNgyhtlikp8QtKov1Ij2HbB5IWn3
+	 eWZq+ZQCnsXSDCS8x6QqWzQ0lE/3mxj4Tl/kJtGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	bpf@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	llvm@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Tom Rix <trix@redhat.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Hanna Hawa <hhhawa@amazon.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 259/567] perf llvm: Fix inadvertent file creation
-Date: Tue,  7 Mar 2023 17:59:55 +0100
-Message-Id: <20230307165917.149823095@linuxfoundation.org>
+Subject: [PATCH 5.15 277/567] i2c: designware: fix i2c_dw_clk_rate() return size to be u32
+Date: Tue,  7 Mar 2023 18:00:13 +0100
+Message-Id: <20230307165917.902691981@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -47,89 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Rogers <irogers@google.com>
+From: Hanna Hawa <hhhawa@amazon.com>
 
-[ Upstream commit 9f19aab47ced012eddef1e2bc96007efc7713b61 ]
+[ Upstream commit f2e1fa99550dd7a882229e2c2cd9ecab4ce773d0 ]
 
-The LLVM template is first echo-ed into command_out and then
-command_out executed. The echo surrounds the template with double
-quotes, however, the template itself may contain quotes. This is
-generally innocuous but in tools/perf/tests/bpf-script-test-prologue.c
-we see:
-...
-SEC("func=null_lseek file->f_mode offset orig")
-...
-where the first double quote ends the double quote of the echo, then
-the > redirects output into a file called f_mode.
+Make i2c_dw_clk_rate() to return u32 instead of unsigned long, as the
+function return the value of get_clk_rate_khz() which returns u32.
 
-To avoid this inadvertent behavior substitute redirects and similar
-characters to be ASCII control codes, then substitute the output in
-the echo back again.
-
-Fixes: 5eab5a7ee032acaa ("perf llvm: Display eBPF compiling command in debug output")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: bpf@vger.kernel.org
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: llvm@lists.linux.dev
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Tom Rix <trix@redhat.com>
-Link: https://lore.kernel.org/r/20230105082609.344538-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: b33af11de236 ("i2c: designware: Do not require clock when SSCN and FFCN are provided")
+Signed-off-by: Hanna Hawa <hhhawa@amazon.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/llvm-utils.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-designware-common.c | 2 +-
+ drivers/i2c/busses/i2c-designware-core.h   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/llvm-utils.c b/tools/perf/util/llvm-utils.c
-index 96c8ef60f4f84..8ee3a947b1599 100644
---- a/tools/perf/util/llvm-utils.c
-+++ b/tools/perf/util/llvm-utils.c
-@@ -531,14 +531,37 @@ int llvm__compile_bpf(const char *path, void **p_obj_buf,
+diff --git a/drivers/i2c/busses/i2c-designware-common.c b/drivers/i2c/busses/i2c-designware-common.c
+index 4af65f101dac4..4e752321b95e0 100644
+--- a/drivers/i2c/busses/i2c-designware-common.c
++++ b/drivers/i2c/busses/i2c-designware-common.c
+@@ -465,7 +465,7 @@ void __i2c_dw_disable(struct dw_i2c_dev *dev)
+ 	dev_warn(dev->dev, "timeout in disabling adapter\n");
+ }
  
- 	pr_debug("llvm compiling command template: %s\n", template);
- 
-+	/*
-+	 * Below, substitute control characters for values that can cause the
-+	 * echo to misbehave, then substitute the values back.
-+	 */
- 	err = -ENOMEM;
--	if (asprintf(&command_echo, "echo -n \"%s\"", template) < 0)
-+	if (asprintf(&command_echo, "echo -n \a%s\a", template) < 0)
- 		goto errout;
- 
-+#define SWAP_CHAR(a, b) do { if (*p == a) *p = b; } while (0)
-+	for (char *p = command_echo; *p; p++) {
-+		SWAP_CHAR('<', '\001');
-+		SWAP_CHAR('>', '\002');
-+		SWAP_CHAR('"', '\003');
-+		SWAP_CHAR('\'', '\004');
-+		SWAP_CHAR('|', '\005');
-+		SWAP_CHAR('&', '\006');
-+		SWAP_CHAR('\a', '"');
-+	}
- 	err = read_from_pipe(command_echo, (void **) &command_out, NULL);
- 	if (err)
- 		goto errout;
- 
-+	for (char *p = command_out; *p; p++) {
-+		SWAP_CHAR('\001', '<');
-+		SWAP_CHAR('\002', '>');
-+		SWAP_CHAR('\003', '"');
-+		SWAP_CHAR('\004', '\'');
-+		SWAP_CHAR('\005', '|');
-+		SWAP_CHAR('\006', '&');
-+	}
-+#undef SWAP_CHAR
- 	pr_debug("llvm compiling command : %s\n", command_out);
- 
- 	err = read_from_pipe(template, &obj_buf, &obj_buf_sz);
+-unsigned long i2c_dw_clk_rate(struct dw_i2c_dev *dev)
++u32 i2c_dw_clk_rate(struct dw_i2c_dev *dev)
+ {
+ 	/*
+ 	 * Clock is not necessary if we got LCNT/HCNT values directly from
+diff --git a/drivers/i2c/busses/i2c-designware-core.h b/drivers/i2c/busses/i2c-designware-core.h
+index 9be81dbebede7..59b36e0644f31 100644
+--- a/drivers/i2c/busses/i2c-designware-core.h
++++ b/drivers/i2c/busses/i2c-designware-core.h
+@@ -310,7 +310,7 @@ int i2c_dw_init_regmap(struct dw_i2c_dev *dev);
+ u32 i2c_dw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond, int offset);
+ u32 i2c_dw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset);
+ int i2c_dw_set_sda_hold(struct dw_i2c_dev *dev);
+-unsigned long i2c_dw_clk_rate(struct dw_i2c_dev *dev);
++u32 i2c_dw_clk_rate(struct dw_i2c_dev *dev);
+ int i2c_dw_prepare_clk(struct dw_i2c_dev *dev, bool prepare);
+ int i2c_dw_acquire_lock(struct dw_i2c_dev *dev);
+ void i2c_dw_release_lock(struct dw_i2c_dev *dev);
 -- 
 2.39.2
 
