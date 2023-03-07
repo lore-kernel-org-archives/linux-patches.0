@@ -1,84 +1,148 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B1E290F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 09:26:20 +0000 (UTC)
-Received: by mail-ed1-f51.google.com with SMTP id g3so49747720eda.1
-        for <patches@lists.linux.dev>; Tue, 07 Mar 2023 01:26:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678181178;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6ztapAqrp0P0arwM5QDm4n16xyUTGqlP0zUmPheiyv8=;
-        b=ajw0Ap8dLJ0TFUrTkUnw3NQh/6Hl0eG+9B/0Z8Yq8vvj9ltkeF2rPq7WWmcgAjZVkF
-         bxz27W2e73rYXr0qP7TsVMmHHd3f2707LiWu8HnA9FJJdGvjByP3u2JwFrd+2IEjpMh2
-         VXx1liWRNYheg/Z4ARSHN7aAPHjB8ZJYzp8GAq668mmoAGIr860MEy5QgntC+Qdtmr2Z
-         Hcr+1aAyzC6pyp22E3MAl0/YmvGo/OHR8BJgORQLg4SRU6CJzU5CfdF5hl8ZLz1VDKrz
-         UnaKsxxdqy26QfWtTtfYH6+AkiCn2lq6EjqHDHbBX+zcFLevhTfHK+m6BBWqML6HxdzI
-         Qv3Q==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6280733D2
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 11:02:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1678186937;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=BDXpVQCtQOIlmzO6ioTe8cdUScPgYtXM44balfNsDNo=;
+	b=EFAdWQvU9H5e6et1A96Rh5sDVUeZTrEWvYHc5onmOEUZ55ilM4OnVSYpt/rFig6lthMxeC
+	DqOhZ0LAUPzGrToUOkpHKyxf0AGBHDqn4MEwrmEp0BtDu4NFOsVPwGWHSiWlGO4hAfjcPQ
+	qLLvr390Frc9q8e6OyUwx2pUyQI1pk4=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-182-VHQItgImMX6onn8dMM1-XA-1; Tue, 07 Mar 2023 06:02:15 -0500
+X-MC-Unique: VHQItgImMX6onn8dMM1-XA-1
+Received: by mail-ed1-f72.google.com with SMTP id m8-20020a056402430800b004cdaaa4f428so15610211edc.20
+        for <patches@lists.linux.dev>; Tue, 07 Mar 2023 03:02:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678181178;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=6ztapAqrp0P0arwM5QDm4n16xyUTGqlP0zUmPheiyv8=;
-        b=oLMR3brWQgGBE45Ao7TohH0Npx7o6L5NO29Dr5bBuzmU8nq3MjZ0Qz+ufdJ4Whl2hu
-         eg96hGfk6TL6494/gEQfoHpUJePG+pLxaoIt4AQGJ/qS2p1o0iSWNDGKDb+uwA75XHBI
-         Ra3AAd3WebqHVqFvNwGqUUNrXIOQQkgDWGOtL+sEiHtuYwhpJOYoke8R3PRThyEvRJ1t
-         jLMEfI2m9pZF9eAb22csWkAYhgFWUWmyJzhHfLl5DYqM0dxwFBiYVXon1vLDSp0XjwFL
-         Vfs36cqxemzuVHFVWJRmwfvd27Pethp52RQ/wLWxD659VfWX6u0ecVqurgahZZl4PI+Y
-         MLmw==
-X-Gm-Message-State: AO0yUKXnBN1e2+jAENHNCGiHLTQfsJ9+14asd98BmpA7rxomUodnhGwt
-	6FZCw3KJYViz6yOV3ntxScE=
-X-Google-Smtp-Source: AK7set9vnOx118VHRJHv28HiwsiIKXKtrIehHz+W/nZGoYhuq4nLXCAiKufIQdTAhvQTJ74zUjoavQ==
-X-Received: by 2002:a17:906:fa82:b0:8ea:a647:a5aa with SMTP id lt2-20020a170906fa8200b008eaa647a5aamr18566645ejb.38.1678181178059;
-        Tue, 07 Mar 2023 01:26:18 -0800 (PST)
-Received: from localhost ([2001:b07:5d37:537d:5e25:9ef5:7977:d60c])
-        by smtp.gmail.com with ESMTPSA id hb15-20020a170906b88f00b008d09b900614sm5741459ejb.80.2023.03.07.01.26.16
+        d=1e100.net; s=20210112; t=1678186934;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BDXpVQCtQOIlmzO6ioTe8cdUScPgYtXM44balfNsDNo=;
+        b=vtzM48jHCTgK8It4XMmmjZncvVquEslc+dbtiQ4VNozCIyZYNUDXiWWGvHK2/+Gcse
+         qWwL1Es6wpYsLicZzeS78fuVY4AbFBE6HxcbiWQnLTHYQtfKJHcUOx/yEwMjuQLwA4DY
+         dr7iHrIhBLpR8LyLhSrtK/5DoY3+0y+Fxsaf4XGCqJmfHkeTjv6i7pJ9ThL5dzqC7b08
+         Up6kWwe8O3neu+vvdwqdKDWnW0rYp6qna5+pM2RUHlVjHBrO8g4zm5xF1Q7xC2xlHqun
+         xSWgLJaljGi9dqgbMG35wgsIdVVui17adik4CYlRJYNO9//OPmrruUb5M+5EiGHUh3fJ
+         xMLw==
+X-Gm-Message-State: AO0yUKVjXzUfBd1IVz8ob7oimcaYgNqj3my8T0BlEGSur/mMg9wJg7ut
+	qWZcaQGF/7Gful2mbYfg1+OTUDriqS/cmULaFjOt9c4M0LWYabZkUlmy6AJLPQI9+O84J16rsMi
+	KOdA074qi7NTblgjnsw==
+X-Received: by 2002:a17:907:3e91:b0:8b2:b711:5e62 with SMTP id hs17-20020a1709073e9100b008b2b7115e62mr16191513ejc.52.1678186934715;
+        Tue, 07 Mar 2023 03:02:14 -0800 (PST)
+X-Google-Smtp-Source: AK7set9nJRFyyMSUSPpxbJwDWUspJLFE9XgiKxOVJCQqMy9LeMgxwcewIoOUdbCS7ZKCPD2GqektIg==
+X-Received: by 2002:a17:907:3e91:b0:8b2:b711:5e62 with SMTP id hs17-20020a1709073e9100b008b2b7115e62mr16191477ejc.52.1678186934456;
+        Tue, 07 Mar 2023 03:02:14 -0800 (PST)
+Received: from ?IPV6:2001:1c00:c32:7800:5bfa:a036:83f0:f9ec? (2001-1c00-0c32-7800-5bfa-a036-83f0-f9ec.cable.dynamic.v6.ziggo.nl. [2001:1c00:c32:7800:5bfa:a036:83f0:f9ec])
+        by smtp.gmail.com with ESMTPSA id o13-20020a1709062e8d00b008e22978b98bsm5956978eji.61.2023.03.07.03.02.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Mar 2023 01:26:17 -0800 (PST)
+        Tue, 07 Mar 2023 03:02:13 -0800 (PST)
+Message-ID: <d3761f4a-6945-9a7e-03e9-bf0279c6f0f2@redhat.com>
+Date: Tue, 7 Mar 2023 12:02:12 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v3 0/8] Add Array BIST test support to IFS
+To: Jithu Joseph <jithu.joseph@intel.com>, markgross@kernel.org
+Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+ dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+ gregkh@linuxfoundation.org, rostedt@goodmis.org, ashok.raj@intel.com,
+ tony.luck@intel.com, linux-kernel@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+ ravi.v.shankar@intel.com, thiago.macieira@intel.com,
+ athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
+References: <20230214234426.344960-1-jithu.joseph@intel.com>
+ <20230301015942.462799-1-jithu.joseph@intel.com>
+From: Hans de Goede <hdegoede@redhat.com>
+In-Reply-To: <20230301015942.462799-1-jithu.joseph@intel.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US, nl
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 Mar 2023 10:26:16 +0100
-Message-Id: <CR01KTDBXXM6.1IJUOC2OAJQX2@vincent-arch>
-Cc: <linux-doc@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH] docs: rust: point directly to the standalone installers
-From: "Vincenzo Palazzo" <vincenzopalazzodev@gmail.com>
-To: "Miguel Ojeda" <ojeda@kernel.org>, "Jonathan Corbet" <corbet@lwn.net>,
- "Wedson Almeida Filho" <wedsonaf@gmail.com>, "Alex Gaynor"
- <alex.gaynor@gmail.com>, "Boqun Feng" <boqun.feng@gmail.com>, "Gary Guo"
- <gary@garyguo.net>, =?utf-8?q?Bj=C3=B6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>
-References: <20230306220959.240235-1-ojeda@kernel.org>
-In-Reply-To: <20230306220959.240235-1-ojeda@kernel.org>
+Content-Transfer-Encoding: 7bit
 
-> The Quick Start guide points to the Rust programming language front
-> page when it mentions the possibility of using the standalone
-> installers instead of `rustup`.
->
-> This was done to have a hopefully stable link, but it is not too
-> helpful: readers need to figure out how to reach the standalone
-> installers from there.
->
-> Thus point directly to the page (and anchor) with the table that
-> contains the standalone installers (plus signing key etc.).
->
-> If the link breaks in the future, we can always update it as
-> needed. And anyway having the full link includes the domain and
-> gives more information about where the old docs were in such
-> a broken link case, which may help.
->
-> Link: https://lore.kernel.org/linux-doc/CANiq72=3DgpzQyh1ExGbBWWNdgH-mTAT=
-dG5F600jKD1=3DNLLCn7wg@mail.gmail.com/
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
+Hi Jithu,
 
-Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
+On 3/1/23 02:59, Jithu Joseph wrote:
+> Changes in v3
+>  - GregKH 
+>     -  Separating read-only fields from rw fields in
+>        struct ifs_device (patch 1/8)
+>     -  Remove the subdirectory intel_ifs/<n> for devicenode (patch 2/8)
+>     -  Replaced an enum with #define (patch 4/8)
+>  - Dave Hansen
+>     - Remove tracing patch
+>     - ifs_array_test_core() (patch 6/8)
+>         - fix an initialization bug
+>         - other suggested changes
+>     - Use basic types in ifs_array for first two fields. (kept
+>       the union to avoid type castings)
+
+Thank you for the new version. Given all the feedback on
+the previous 2 versions I'm going to wait a bit to see if more
+feedback comes in before reviewing this myself.
+
+Regards,
+
+Hans
+
+
+
+
+> v2 submission:
+> Link: https://lore.kernel.org/lkml/20230214234426.344960-1-jithu.joseph@intel.com/
+> 
+> Changes in v2
+>  - remove duplicate initializations from ifs_array_test_core()
+>    (Dave Hansen, patch 4/7)
+>  - remove bit parsing from tracing fast path to tracing 
+>    output (Steven Rostedt, patch 5/7)
+>  - move "ATTRIBUTE_GROUPS(plat_ifs_array)" to core.c and remove
+>    exporting function ifs_get_array_groups() (Greg KH, patch 3/7)
+>  - Generalized doc and ABI doc (Greg KH, patches 6/7 and 7/7)
+> 
+> v1 submission:
+> Link: https://lore.kernel.org/lkml/20230131234302.3997223-1-jithu.joseph@intel.com/
+> 
+> Array BIST is a new type of core test introduced under the Intel Infield
+> Scan (IFS) suite of tests.
+> 
+> Emerald Rapids (EMR) is the first CPU to support Array BIST.
+> Array BIST performs tests on some portions of the core logic such as
+> caches and register files. These are different portions of the silicon
+> compared to the parts tested by Scan at Field (SAF).
+> 
+> Unlike SAF, Array BIST doesn't require any test content to be loaded.
+> 
+> Jithu Joseph (8):
+>   platform/x86/intel/ifs: Reorganize driver data
+>   platform/x86/intel/ifs: IFS cleanup
+>   x86/include/asm/msr-index.h: Add IFS Array test bits
+>   platform/x86/intel/ifs: Introduce Array Scan test to IFS
+>   platform/x86/intel/ifs: Sysfs interface for Array BIST
+>   platform/x86/intel/ifs: Implement Array BIST test
+>   platform/x86/intel/ifs: Update IFS doc
+>   Documentation/ABI: Update IFS ABI doc
+> 
+>  arch/x86/include/asm/msr-index.h              |  2 +
+>  drivers/platform/x86/intel/ifs/ifs.h          | 62 +++++++++----
+>  drivers/platform/x86/intel/ifs/core.c         | 92 ++++++++++++++-----
+>  drivers/platform/x86/intel/ifs/load.c         |  8 +-
+>  drivers/platform/x86/intel/ifs/runtest.c      | 91 +++++++++++++++++-
+>  drivers/platform/x86/intel/ifs/sysfs.c        | 17 ++--
+>  .../ABI/testing/sysfs-platform-intel-ifs      |  8 +-
+>  7 files changed, 221 insertions(+), 59 deletions(-)
+> 
+
