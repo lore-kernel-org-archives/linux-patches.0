@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FCABA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAEEC433EF;
-	Tue,  7 Mar 2023 17:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14DFBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A7BC433EF;
+	Tue,  7 Mar 2023 17:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211147;
-	bh=BqLLOxf5ljTatu49Xz2Q2P5QVfChrNHm9g2MjkT2BxU=;
+	s=korg; t=1678211150;
+	bh=sCrqRIZlm/aXYMX3LXqqHc78MmZaCV72Cq9hgyWE0dA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YO7GmO2Un2TufetimpDLQ0JhcOQSjD228HAgynw6lcBAjh3kQfCQRBHIqN/0VwDDc
-	 jPsAr3xmjdyDUv+FhVkrMpua2JxiWOmf32UO/ccIGb1sc1SbfDtZQuUrA0dTao6IhJ
-	 09POu8jJMOOzPGM//2dvAK0yuOCU+ouGvHzv8l+k=
+	b=Blds3VEBwKzESfFufuZvvxBUbxErCDJL1W/bP7W8ZkW3KF8zPO/mzQKJRU5ZKVoCM
+	 Lphg2O78XdRqBOADSv2/QQdY4sPdyHYIZI/O+aAbf3xL6zcOE2nY4b8owibHeBCHrM
+	 N0JnP2Bq1paLbooLFxjHceb+syGhe+tF6R9AnvEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nico Boehr <nrb@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 6.2 0769/1001] KVM: s390: disable migration mode when dirty tracking is disabled
-Date: Tue,  7 Mar 2023 17:59:01 +0100
-Message-Id: <20230307170055.143830907@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Ronnie Sahlberg <lsahlber@redhat.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.2 0770/1001] cifs: improve checking of DFS links over STATUS_OBJECT_NAME_INVALID
+Date: Tue,  7 Mar 2023 17:59:02 +0100
+Message-Id: <20230307170055.186067812@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,158 +35,232 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nico Boehr <nrb@linux.ibm.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit f2d3155e2a6bac44d16f04415a321e8707d895c6 upstream.
+commit b9ee2e307c6b06384b6f9e393a9b8e048e8fc277 upstream.
 
-Migration mode is a VM attribute which enables tracking of changes in
-storage attributes (PGSTE). It assumes dirty tracking is enabled on all
-memslots to keep a dirty bitmap of pages with changed storage attributes.
+Do not map STATUS_OBJECT_NAME_INVALID to -EREMOTE under non-DFS
+shares, or 'nodfs' mounts or CONFIG_CIFS_DFS_UPCALL=n builds.
+Otherwise, in the slow path, get a referral to figure out whether it
+is an actual DFS link.
 
-When enabling migration mode, we currently check that dirty tracking is
-enabled for all memslots. However, userspace can disable dirty tracking
-without disabling migration mode.
+This could be simply reproduced under a non-DFS share by running the
+following
 
-Since migration mode is pointless with dirty tracking disabled, disable
-migration mode whenever userspace disables dirty tracking on any slot.
+  $ mount.cifs //srv/share /mnt -o ...
+  $ cat /mnt/$(printf '\U110000')
+  cat: '/mnt/'$'\364\220\200\200': Object is remote
 
-Also update the documentation to clarify that dirty tracking must be
-enabled when enabling migration mode, which is already enforced by the
-code in kvm_s390_vm_start_migration().
-
-Also highlight in the documentation for KVM_S390_GET_CMMA_BITS that it
-can now fail with -EINVAL when dirty tracking is disabled while
-migration mode is on. Move all the error codes to a table so this stays
-readable.
-
-To disable migration mode, slots_lock should be held, which is taken
-in kvm_set_memory_region() and thus held in
-kvm_arch_prepare_memory_region().
-
-Restructure the prepare code a bit so all the sanity checking is done
-before disabling migration mode. This ensures migration mode isn't
-disabled when some sanity check fails.
-
-Cc: stable@vger.kernel.org
-Fixes: 190df4a212a7 ("KVM: s390: CMMA tracking, ESSA emulation, migration mode")
-Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230127140532.230651-2-nrb@linux.ibm.com
-Message-Id: <20230127140532.230651-2-nrb@linux.ibm.com>
-[frankja@linux.ibm.com: fixed commit message typo, moved api.rst error table upwards]
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Fixes: c877ce47e137 ("cifs: reduce roundtrips on create/qinfo requests")
+CC: stable@vger.kernel.org # 6.2
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Reviewed-by: Ronnie Sahlberg <lsahlber@redhat.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/virt/kvm/api.rst        |   18 ++++++++-----
- Documentation/virt/kvm/devices/vm.rst |    4 ++
- arch/s390/kvm/kvm-s390.c              |   47 +++++++++++++++++++++++-----------
- 3 files changed, 48 insertions(+), 21 deletions(-)
+ fs/cifs/cifsproto.h |   20 +++++++++++----
+ fs/cifs/misc.c      |   67 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ fs/cifs/smb2inode.c |   21 ++++++++--------
+ fs/cifs/smb2ops.c   |   23 ++++++++++-------
+ 4 files changed, 106 insertions(+), 25 deletions(-)
 
---- a/Documentation/virt/kvm/api.rst
-+++ b/Documentation/virt/kvm/api.rst
-@@ -4457,6 +4457,18 @@ not holding a previously reported uncorr
- :Parameters: struct kvm_s390_cmma_log (in, out)
- :Returns: 0 on success, a negative value on error
- 
-+Errors:
-+
-+  ======     =============================================================
-+  ENOMEM     not enough memory can be allocated to complete the task
-+  ENXIO      if CMMA is not enabled
-+  EINVAL     if KVM_S390_CMMA_PEEK is not set but migration mode was not enabled
-+  EINVAL     if KVM_S390_CMMA_PEEK is not set but dirty tracking has been
-+             disabled (and thus migration mode was automatically disabled)
-+  EFAULT     if the userspace address is invalid or if no page table is
-+             present for the addresses (e.g. when using hugepages).
-+  ======     =============================================================
-+
- This ioctl is used to get the values of the CMMA bits on the s390
- architecture. It is meant to be used in two scenarios:
- 
-@@ -4537,12 +4549,6 @@ mask is unused.
- 
- values points to the userspace buffer where the result will be stored.
- 
--This ioctl can fail with -ENOMEM if not enough memory can be allocated to
--complete the task, with -ENXIO if CMMA is not enabled, with -EINVAL if
--KVM_S390_CMMA_PEEK is not set but migration mode was not enabled, with
---EFAULT if the userspace address is invalid or if no page table is
--present for the addresses (e.g. when using hugepages).
+--- a/fs/cifs/cifsproto.h
++++ b/fs/cifs/cifsproto.h
+@@ -670,11 +670,21 @@ static inline int get_dfs_path(const uns
+ int match_target_ip(struct TCP_Server_Info *server,
+ 		    const char *share, size_t share_len,
+ 		    bool *result);
 -
- 4.108 KVM_S390_SET_CMMA_BITS
- ----------------------------
+-int cifs_dfs_query_info_nonascii_quirk(const unsigned int xid,
+-				       struct cifs_tcon *tcon,
+-				       struct cifs_sb_info *cifs_sb,
+-				       const char *dfs_link_path);
++int cifs_inval_name_dfs_link_error(const unsigned int xid,
++				   struct cifs_tcon *tcon,
++				   struct cifs_sb_info *cifs_sb,
++				   const char *full_path,
++				   bool *islink);
++#else
++static inline int cifs_inval_name_dfs_link_error(const unsigned int xid,
++				   struct cifs_tcon *tcon,
++				   struct cifs_sb_info *cifs_sb,
++				   const char *full_path,
++				   bool *islink)
++{
++	*islink = false;
++	return 0;
++}
+ #endif
  
---- a/Documentation/virt/kvm/devices/vm.rst
-+++ b/Documentation/virt/kvm/devices/vm.rst
-@@ -302,6 +302,10 @@ Allows userspace to start migration mode
- Setting this attribute when migration mode is already active will have
- no effects.
- 
-+Dirty tracking must be enabled on all memslots, else -EINVAL is returned. When
-+dirty tracking is disabled on any memslot, migration mode is automatically
-+stopped.
-+
- :Parameters: none
- :Returns:   -ENOMEM if there is not enough free memory to start migration mode;
- 	    -EINVAL if the state of the VM is invalid (e.g. no memory defined);
---- a/arch/s390/kvm/kvm-s390.c
-+++ b/arch/s390/kvm/kvm-s390.c
-@@ -5633,23 +5633,40 @@ int kvm_arch_prepare_memory_region(struc
- 	if (kvm_s390_pv_get_handle(kvm))
- 		return -EINVAL;
- 
--	if (change == KVM_MR_DELETE || change == KVM_MR_FLAGS_ONLY)
--		return 0;
--
--	/* A few sanity checks. We can have memory slots which have to be
--	   located/ended at a segment boundary (1MB). The memory in userland is
--	   ok to be fragmented into various different vmas. It is okay to mmap()
--	   and munmap() stuff in this slot after doing this call at any time */
--
--	if (new->userspace_addr & 0xffffful)
--		return -EINVAL;
-+	if (change != KVM_MR_DELETE && change != KVM_MR_FLAGS_ONLY) {
-+		/*
-+		 * A few sanity checks. We can have memory slots which have to be
-+		 * located/ended at a segment boundary (1MB). The memory in userland is
-+		 * ok to be fragmented into various different vmas. It is okay to mmap()
-+		 * and munmap() stuff in this slot after doing this call at any time
-+		 */
-+
-+		if (new->userspace_addr & 0xffffful)
-+			return -EINVAL;
-+
-+		size = new->npages * PAGE_SIZE;
-+		if (size & 0xffffful)
-+			return -EINVAL;
-+
-+		if ((new->base_gfn * PAGE_SIZE) + size > kvm->arch.mem_limit)
-+			return -EINVAL;
-+	}
- 
--	size = new->npages * PAGE_SIZE;
--	if (size & 0xffffful)
--		return -EINVAL;
-+	if (!kvm->arch.migration_mode)
-+		return 0;
- 
--	if ((new->base_gfn * PAGE_SIZE) + size > kvm->arch.mem_limit)
--		return -EINVAL;
-+	/*
-+	 * Turn off migration mode when:
-+	 * - userspace creates a new memslot with dirty logging off,
-+	 * - userspace modifies an existing memslot (MOVE or FLAGS_ONLY) and
-+	 *   dirty logging is turned off.
-+	 * Migration mode expects dirty page logging being enabled to store
-+	 * its dirty bitmap.
-+	 */
-+	if (change != KVM_MR_DELETE &&
-+	    !(new->flags & KVM_MEM_LOG_DIRTY_PAGES))
-+		WARN(kvm_s390_vm_stop_migration(kvm),
-+		     "Failed to stop migration mode");
- 
+ static inline int cifs_create_options(struct cifs_sb_info *cifs_sb, int options)
+--- a/fs/cifs/misc.c
++++ b/fs/cifs/misc.c
+@@ -21,6 +21,7 @@
+ #include "cifsfs.h"
+ #ifdef CONFIG_CIFS_DFS_UPCALL
+ #include "dns_resolve.h"
++#include "dfs_cache.h"
+ #endif
+ #include "fs_context.h"
+ #include "cached_dir.h"
+@@ -1300,4 +1301,70 @@ int cifs_update_super_prepath(struct cif
+ 	cifs_sb->mnt_cifs_flags |= CIFS_MOUNT_USE_PREFIX_PATH;
  	return 0;
  }
++
++/*
++ * Handle weird Windows SMB server behaviour. It responds with
++ * STATUS_OBJECT_NAME_INVALID code to SMB2 QUERY_INFO request for
++ * "\<server>\<dfsname>\<linkpath>" DFS reference, where <dfsname> contains
++ * non-ASCII unicode symbols.
++ */
++int cifs_inval_name_dfs_link_error(const unsigned int xid,
++				   struct cifs_tcon *tcon,
++				   struct cifs_sb_info *cifs_sb,
++				   const char *full_path,
++				   bool *islink)
++{
++	struct cifs_ses *ses = tcon->ses;
++	size_t len;
++	char *path;
++	char *ref_path;
++
++	*islink = false;
++
++	/*
++	 * Fast path - skip check when @full_path doesn't have a prefix path to
++	 * look up or tcon is not DFS.
++	 */
++	if (strlen(full_path) < 2 || !cifs_sb ||
++	    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NO_DFS) ||
++	    !is_tcon_dfs(tcon) || !ses->server->origin_fullpath)
++		return 0;
++
++	/*
++	 * Slow path - tcon is DFS and @full_path has prefix path, so attempt
++	 * to get a referral to figure out whether it is an DFS link.
++	 */
++	len = strnlen(tcon->tree_name, MAX_TREE_SIZE + 1) + strlen(full_path) + 1;
++	path = kmalloc(len, GFP_KERNEL);
++	if (!path)
++		return -ENOMEM;
++
++	scnprintf(path, len, "%s%s", tcon->tree_name, full_path);
++	ref_path = dfs_cache_canonical_path(path + 1, cifs_sb->local_nls,
++					    cifs_remap(cifs_sb));
++	kfree(path);
++
++	if (IS_ERR(ref_path)) {
++		if (PTR_ERR(ref_path) != -EINVAL)
++			return PTR_ERR(ref_path);
++	} else {
++		struct dfs_info3_param *refs = NULL;
++		int num_refs = 0;
++
++		/*
++		 * XXX: we are not using dfs_cache_find() here because we might
++		 * end filling all the DFS cache and thus potentially
++		 * removing cached DFS targets that the client would eventually
++		 * need during failover.
++		 */
++		if (ses->server->ops->get_dfs_refer &&
++		    !ses->server->ops->get_dfs_refer(xid, ses, ref_path, &refs,
++						     &num_refs, cifs_sb->local_nls,
++						     cifs_remap(cifs_sb)))
++			*islink = refs[0].server_type == DFS_TYPE_LINK;
++		free_dfs_info_array(refs, num_refs);
++		kfree(ref_path);
++	}
++	return 0;
++}
+ #endif
+--- a/fs/cifs/smb2inode.c
++++ b/fs/cifs/smb2inode.c
+@@ -526,12 +526,13 @@ int smb2_query_path_info(const unsigned
+ 			 struct cifs_sb_info *cifs_sb, const char *full_path,
+ 			 struct cifs_open_info_data *data, bool *adjust_tz, bool *reparse)
+ {
+-	int rc;
+ 	__u32 create_options = 0;
+ 	struct cifsFileInfo *cfile;
+ 	struct cached_fid *cfid = NULL;
+ 	struct kvec err_iov[3] = {};
+ 	int err_buftype[3] = {};
++	bool islink;
++	int rc, rc2;
+ 
+ 	*adjust_tz = false;
+ 	*reparse = false;
+@@ -579,15 +580,15 @@ int smb2_query_path_info(const unsigned
+ 					      SMB2_OP_QUERY_INFO, cfile, NULL, NULL,
+ 					      NULL, NULL);
+ 			goto out;
+-		} else if (rc != -EREMOTE && IS_ENABLED(CONFIG_CIFS_DFS_UPCALL) &&
+-			   hdr->Status == STATUS_OBJECT_NAME_INVALID) {
+-			/*
+-			 * Handle weird Windows SMB server behaviour. It responds with
+-			 * STATUS_OBJECT_NAME_INVALID code to SMB2 QUERY_INFO request
+-			 * for "\<server>\<dfsname>\<linkpath>" DFS reference,
+-			 * where <dfsname> contains non-ASCII unicode symbols.
+-			 */
+-			rc = -EREMOTE;
++		} else if (rc != -EREMOTE && hdr->Status == STATUS_OBJECT_NAME_INVALID) {
++			rc2 = cifs_inval_name_dfs_link_error(xid, tcon, cifs_sb,
++							     full_path, &islink);
++			if (rc2) {
++				rc = rc2;
++				goto out;
++			}
++			if (islink)
++				rc = -EREMOTE;
+ 		}
+ 		if (rc == -EREMOTE && IS_ENABLED(CONFIG_CIFS_DFS_UPCALL) && cifs_sb &&
+ 		    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NO_DFS))
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -794,7 +794,6 @@ static int
+ smb2_is_path_accessible(const unsigned int xid, struct cifs_tcon *tcon,
+ 			struct cifs_sb_info *cifs_sb, const char *full_path)
+ {
+-	int rc;
+ 	__le16 *utf16_path;
+ 	__u8 oplock = SMB2_OPLOCK_LEVEL_NONE;
+ 	int err_buftype = CIFS_NO_BUFFER;
+@@ -802,6 +801,8 @@ smb2_is_path_accessible(const unsigned i
+ 	struct kvec err_iov = {};
+ 	struct cifs_fid fid;
+ 	struct cached_fid *cfid;
++	bool islink;
++	int rc, rc2;
+ 
+ 	rc = open_cached_dir(xid, tcon, full_path, cifs_sb, true, &cfid);
+ 	if (!rc) {
+@@ -830,15 +831,17 @@ smb2_is_path_accessible(const unsigned i
+ 
+ 		if (unlikely(!hdr || err_buftype == CIFS_NO_BUFFER))
+ 			goto out;
+-		/*
+-		 * Handle weird Windows SMB server behaviour. It responds with
+-		 * STATUS_OBJECT_NAME_INVALID code to SMB2 QUERY_INFO request
+-		 * for "\<server>\<dfsname>\<linkpath>" DFS reference,
+-		 * where <dfsname> contains non-ASCII unicode symbols.
+-		 */
+-		if (rc != -EREMOTE && IS_ENABLED(CONFIG_CIFS_DFS_UPCALL) &&
+-		    hdr->Status == STATUS_OBJECT_NAME_INVALID)
+-			rc = -EREMOTE;
++
++		if (rc != -EREMOTE && hdr->Status == STATUS_OBJECT_NAME_INVALID) {
++			rc2 = cifs_inval_name_dfs_link_error(xid, tcon, cifs_sb,
++							     full_path, &islink);
++			if (rc2) {
++				rc = rc2;
++				goto out;
++			}
++			if (islink)
++				rc = -EREMOTE;
++		}
+ 		if (rc == -EREMOTE && IS_ENABLED(CONFIG_CIFS_DFS_UPCALL) && cifs_sb &&
+ 		    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NO_DFS))
+ 			rc = -EOPNOTSUPP;
 
 
