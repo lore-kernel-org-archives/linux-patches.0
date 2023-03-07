@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E97BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:25:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0310CC433EF;
-	Tue,  7 Mar 2023 17:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BBBBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:25:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A70C433EF;
+	Tue,  7 Mar 2023 17:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209948;
-	bh=Jg/fMJnI3ke8gEvZQdHrTALGycE45S5Wfg+Cum6cCVo=;
+	s=korg; t=1678209951;
+	bh=rVd49xkJxQTNETaFDFoOIJzvxTXvDIrin2+29uNm4T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ufxEiHrLtr7veav5LjsmHb+xjFs+HtxHdbNGcbapW6ZYhWiEI/rYlkY+qdpkjhjKp
-	 uhAyzRO0dWlgFy1Oa2LxPzFkjOXPBbdPBDfHpEl8hHGEMR6Czy17ybB9FXmrqxoOjL
-	 GJvvqJNWvRKIMb83OxcVAItn1KfXgA4vzy1sgPXU=
+	b=DT2yfaq8R5i6kVxuZqbKrqwUzzdlR0YZGKtDdOXZ/Pi2MOiJWQqeiq540j6qVKZ1w
+	 clNHbnSPH2IMWsa45sFSA6xjBmfFM62su4AoNUQKkaabSZU6WRw6i61qyW4prBKSyh
+	 NBTvWlIiI2px/4HoAtMOgYiCBPQKG40n6PfyvTc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Stefan Wahren <stefan.wahren@i2se.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Guodong Liu <Guodong.Liu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0383/1001] pinctrl: bcm2835: Remove of_node_put() in bcm2835_of_gpio_ranges_fallback()
-Date: Tue,  7 Mar 2023 17:52:35 +0100
-Message-Id: <20230307170037.999517516@linuxfoundation.org>
+Subject: [PATCH 6.2 0384/1001] pinctrl: mediatek: Initialize variable pullen and pullup to zero
+Date: Tue,  7 Mar 2023 17:52:36 +0100
+Message-Id: <20230307170038.052121382@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,39 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Guodong Liu <Guodong.Liu@mediatek.com>
 
-[ Upstream commit 2d578dd27871372f7159dd3206149ec616700d87 ]
+[ Upstream commit a298c70a10c604a6b3df5a0aa56597b705ba0f6b ]
 
-Remove wrong of_node_put() in bcm2835_of_gpio_ranges_fallback(),
-there is no counterpart of_node_get() for it.
+Coverity spotted that pullen and pullup is not initialized to zero in
+mtk_pctrl_show_one_pin. The uninitialized variable pullen is used in
+assignment statement "rsel = pullen;" in mtk_pctrl_show_one_pin, and
+Uninitialized variable pullup is used when calling scnprintf. Fix this
+coverity by initializing pullen and pullup as zero.
 
-Fixes: d2b67744fd99 ("pinctrl: bcm2835: implement hook for missing gpio-ranges")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Stefan Wahren <stefan.wahren@i2se.com>
-Tested-by: Stefan Wahren <stefan.wahren@i2se.com>
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Link: https://lore.kernel.org/r/20230113215352.44272-3-andriy.shevchenko@linux.intel.com
+Fixes: 184d8e13f9b1 ("pinctrl: mediatek: Add support for pin configuration dump via debugfs.")
+Signed-off-by: Guodong Liu <Guodong.Liu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230118062036.26258-2-Guodong.Liu@mediatek.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/bcm/pinctrl-bcm2835.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-paris.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/bcm/pinctrl-bcm2835.c b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
-index 7857e612a1008..c7cdccdb4332a 100644
---- a/drivers/pinctrl/bcm/pinctrl-bcm2835.c
-+++ b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
-@@ -363,8 +363,6 @@ static int bcm2835_of_gpio_ranges_fallback(struct gpio_chip *gc,
+diff --git a/drivers/pinctrl/mediatek/pinctrl-paris.c b/drivers/pinctrl/mediatek/pinctrl-paris.c
+index 475f4172d5085..3330f0ce9bd1d 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-paris.c
++++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
+@@ -640,7 +640,7 @@ static int mtk_hw_get_value_wrap(struct mtk_pinctrl *hw, unsigned int gpio, int
+ ssize_t mtk_pctrl_show_one_pin(struct mtk_pinctrl *hw,
+ 	unsigned int gpio, char *buf, unsigned int buf_len)
  {
- 	struct pinctrl_dev *pctldev = of_pinctrl_get(np);
- 
--	of_node_put(np);
--
- 	if (!pctldev)
- 		return 0;
+-	int pinmux, pullup, pullen, len = 0, r1 = -1, r0 = -1, rsel = -1;
++	int pinmux, pullup = 0, pullen = 0, len = 0, r1 = -1, r0 = -1, rsel = -1;
+ 	const struct mtk_pin_desc *desc;
+ 	u32 try_all_type = 0;
  
 -- 
 2.39.2
