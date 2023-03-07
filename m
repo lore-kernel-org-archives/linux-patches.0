@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895E9BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:37:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE68C433EF;
-	Tue,  7 Mar 2023 17:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C319BA3F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:37:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2CBC4339B;
+	Tue,  7 Mar 2023 17:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210643;
-	bh=dUpq22EcPIUXhWVJWeCv7GvmWOePXscZy5LHRVYAUE0=;
+	s=korg; t=1678210646;
+	bh=0GUxIMEfCtrgcszgBH/+gZUKC19P5KS4ZyYFpSHHT+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2q/AKNYmUASn2zqitQMLf1AeMYepZ9EofxIR9L+jAcJYt45eeC+Vml7pzvKqCPmNk
-	 tcDrH/5gg/iKpdLrgtwID4n/xDRHQjwNFYK4O0S7ONZgdn3yp9xDqTbNwPODD+Zqdp
-	 mf2wmtMEO12BaLF5bwvVUSXSObKLu/BrjvHDISfE=
+	b=eaU7L7qIQYGX+DFx3w/JqWjCncZwlij/eP9rId+FJ/uMGMOVqXC1Xtl++c+ENywi/
+	 q4aCdIE4JOquOMiD7lpnAWuom8jKqryIbKwEF1b8gn0fndPONXURdLtXn+Sa65SBfL
+	 uHTJ/osU9tXD+r1BatQG27iPSiA0gjVaQMAbPN0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0608/1001] media: amphion: correct the unspecified color space
-Date: Tue,  7 Mar 2023 17:56:20 +0100
-Message-Id: <20230307170047.890239189@linuxfoundation.org>
+Subject: [PATCH 6.2 0591/1001] media: ov5675: Fix memleak in ov5675_init_controls()
+Date: Tue,  7 Mar 2023 17:56:03 +0100
+Message-Id: <20230307170047.153666628@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,57 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 809060c8a357e020010dd8f797a5efd3c5432b13 ]
+[ Upstream commit dd74ed6c213003533e3abf4c204374ef01d86978 ]
 
-in the E.2.1 of Rec. ITU-T H.264 (06/2019),
-0 of colour primaries is reserved, and 2 is unspecified.
-driver can map V4L2_COLORSPACE_LAST to 0,
-and map V4L2_COLORSPACE_DEFAULT to 2.
+There is a kmemleak when testing the media/i2c/ov5675.c with bpf mock
+device:
 
-v4l2_xfer_func and v4l2_ycbcr_encoding are similar case.
+AssertionError: unreferenced object 0xffff888107362160 (size 16):
+  comm "python3", pid 277, jiffies 4294832798 (age 20.722s)
+  hex dump (first 16 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<00000000abe7d67c>] __kmalloc_node+0x44/0x1b0
+    [<000000008a725aac>] kvmalloc_node+0x34/0x180
+    [<000000009a53cd11>] v4l2_ctrl_handler_init_class+0x11d/0x180
+[videodev]
+    [<0000000055b46db0>] ov5675_probe+0x38b/0x897 [ov5675]
+    [<00000000153d886c>] i2c_device_probe+0x28d/0x680
+    [<000000004afb7e8f>] really_probe+0x17c/0x3f0
+    [<00000000ff2f18e4>] __driver_probe_device+0xe3/0x170
+    [<000000000a001029>] driver_probe_device+0x49/0x120
+    [<00000000e39743c7>] __device_attach_driver+0xf7/0x150
+    [<00000000d32fd070>] bus_for_each_drv+0x114/0x180
+    [<000000009083ac41>] __device_attach+0x1e5/0x2d0
+    [<0000000015b4a830>] bus_probe_device+0x126/0x140
+    [<000000007813deaf>] device_add+0x810/0x1130
+    [<000000007becb867>] i2c_new_client_device+0x386/0x540
+    [<000000007f9cf4b4>] of_i2c_register_device+0xf1/0x110
+    [<00000000ebfdd032>] of_i2c_notify+0xfc/0x1f0
 
-Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+ov5675_init_controls() won't clean all the allocated resources in fail
+path, which may causes the memleaks. Add v4l2_ctrl_handler_free() to
+prevent memleak.
+
+Fixes: bf27502b1f3b ("media: ov5675: Add support for OV5675 sensor")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_color.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/i2c/ov5675.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_color.c b/drivers/media/platform/amphion/vpu_color.c
-index 80b9a53fd1c14..4ae435cbc5cda 100644
---- a/drivers/media/platform/amphion/vpu_color.c
-+++ b/drivers/media/platform/amphion/vpu_color.c
-@@ -17,7 +17,7 @@
- #include "vpu_helpers.h"
+diff --git a/drivers/media/i2c/ov5675.c b/drivers/media/i2c/ov5675.c
+index 94dc8cb7a7c00..a6e6b367d1283 100644
+--- a/drivers/media/i2c/ov5675.c
++++ b/drivers/media/i2c/ov5675.c
+@@ -820,8 +820,10 @@ static int ov5675_init_controls(struct ov5675 *ov5675)
+ 	v4l2_ctrl_new_std(ctrl_hdlr, &ov5675_ctrl_ops,
+ 			  V4L2_CID_VFLIP, 0, 1, 1, 0);
  
- static const u8 colorprimaries[] = {
--	0,
-+	V4L2_COLORSPACE_LAST,
- 	V4L2_COLORSPACE_REC709,         /*Rec. ITU-R BT.709-6*/
- 	0,
- 	0,
-@@ -31,7 +31,7 @@ static const u8 colorprimaries[] = {
- };
+-	if (ctrl_hdlr->error)
++	if (ctrl_hdlr->error) {
++		v4l2_ctrl_handler_free(ctrl_hdlr);
+ 		return ctrl_hdlr->error;
++	}
  
- static const u8 colortransfers[] = {
--	0,
-+	V4L2_XFER_FUNC_LAST,
- 	V4L2_XFER_FUNC_709,             /*Rec. ITU-R BT.709-6*/
- 	0,
- 	0,
-@@ -53,7 +53,7 @@ static const u8 colortransfers[] = {
- };
+ 	ov5675->sd.ctrl_handler = ctrl_hdlr;
  
- static const u8 colormatrixcoefs[] = {
--	0,
-+	V4L2_YCBCR_ENC_LAST,
- 	V4L2_YCBCR_ENC_709,              /*Rec. ITU-R BT.709-6*/
- 	0,
- 	0,
 -- 
 2.39.2
 
