@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2B7BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:35:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1074C433D2;
-	Tue,  7 Mar 2023 18:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71402BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:35:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7459C433EF;
+	Tue,  7 Mar 2023 18:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214131;
-	bh=IfDYN/tlD4Jj6qsCG1YAcmJZMOVDCCtob5mcwAGINgo=;
+	s=korg; t=1678214134;
+	bh=LzxOs5VMddDWhrTpVYqWpNappj6ZqW23t5B16fBvJY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ioSdAUL7cWbrRpt+sWw8o6UW5LXkEzAE2cTS59c2O0sTcGPPI+rtHqipY49raMIGV
-	 zG3QVkhJRqcTvV+pMye7kEsCM9oBGvaCLKP96irPCkC2A7T/ehI9D9A91RgmNhvDZY
-	 QHGKDTgNNBIaesutmsK4Yc5jQbF16NCBsA192QTs=
+	b=R8tOQabBTKTHviacfFc6S5VVOI2Im7NaG/S9p32Y6nN0QNCsrqvorZiClrCK3jTtu
+	 gFHfUlf8Tl3TbmJ53sOraOVrHIEZt6lKE0mpDre/bNYksskZt9Srxz1FnZQN+QsKZJ
+	 9OusNeANxppGYhy2XcewaSMOAiHWTf3AXdEgln8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <Andrew.Cooper3@citrix.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 730/885] x86/virt: Force GIF=1 prior to disabling SVM (for reboot flows)
-Date: Tue,  7 Mar 2023 18:01:04 +0100
-Message-Id: <20230307170033.700213106@linuxfoundation.org>
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 703/885] ocfs2: fix non-auto defrag path not working issue
+Date: Tue,  7 Mar 2023 18:00:37 +0100
+Message-Id: <20230307170032.629103326@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,54 +41,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Heming Zhao via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
 
-commit 6a3236580b0b1accc3976345e723104f74f6f8e6 upstream.
+commit 236b9254f8d1edc273ad88b420aa85fbd84f492d upstream.
 
-Set GIF=1 prior to disabling SVM to ensure that INIT is recognized if the
-kernel is disabling SVM in an emergency, e.g. if the kernel is about to
-jump into a crash kernel or may reboot without doing a full CPU RESET.
-If GIF is left cleared, the new kernel (or firmware) will be unabled to
-awaken APs.  Eat faults on STGI (due to EFER.SVME=0) as it's possible
-that SVM could be disabled via NMI shootdown between reading EFER.SVME
-and executing STGI.
+This fixes three issues on move extents ioctl without auto defrag:
 
-Link: https://lore.kernel.org/all/cbcb6f35-e5d7-c1c9-4db9-fe5cc4de579a@amd.com
-Cc: stable@vger.kernel.org
-Cc: Andrew Cooper <Andrew.Cooper3@citrix.com>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221130233650.1404148-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+a) In ocfs2_find_victim_alloc_group(), we have to convert bits to block
+   first in case of global bitmap.
+
+b) In ocfs2_probe_alloc_group(), when finding enough bits in block
+   group bitmap, we have to back off move_len to start pos as well,
+   otherwise it may corrupt filesystem.
+
+c) In ocfs2_ioctl_move_extents(), set me_threshold both for non-auto
+   and auto defrag paths.  Otherwise it will set move_max_hop to 0 and
+   finally cause unexpectedly ENOSPC error.
+
+Currently there are no tools triggering the above issues since
+defragfs.ocfs2 enables auto defrag by default.  Tested with manually
+changing defragfs.ocfs2 to run non auto defrag path.
+
+Link: https://lkml.kernel.org/r/20230220050526.22020-1-heming.zhao@suse.com
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/virtext.h |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ fs/ocfs2/move_extents.c |   24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/arch/x86/include/asm/virtext.h
-+++ b/arch/x86/include/asm/virtext.h
-@@ -126,7 +126,21 @@ static inline void cpu_svm_disable(void)
+--- a/fs/ocfs2/move_extents.c
++++ b/fs/ocfs2/move_extents.c
+@@ -434,7 +434,7 @@ static int ocfs2_find_victim_alloc_group
+ 			bg = (struct ocfs2_group_desc *)gd_bh->b_data;
  
- 	wrmsrl(MSR_VM_HSAVE_PA, 0);
- 	rdmsrl(MSR_EFER, efer);
--	wrmsrl(MSR_EFER, efer & ~EFER_SVME);
-+	if (efer & EFER_SVME) {
-+		/*
-+		 * Force GIF=1 prior to disabling SVM to ensure INIT and NMI
-+		 * aren't blocked, e.g. if a fatal error occurred between CLGI
-+		 * and STGI.  Note, STGI may #UD if SVM is disabled from NMI
-+		 * context between reading EFER and executing STGI.  In that
-+		 * case, GIF must already be set, otherwise the NMI would have
-+		 * been blocked, so just eat the fault.
-+		 */
-+		asm_volatile_goto("1: stgi\n\t"
-+				  _ASM_EXTABLE(1b, %l[fault])
-+				  ::: "memory" : fault);
-+fault:
-+		wrmsrl(MSR_EFER, efer & ~EFER_SVME);
-+	}
- }
+ 			if (vict_blkno < (le64_to_cpu(bg->bg_blkno) +
+-						le16_to_cpu(bg->bg_bits))) {
++						(le16_to_cpu(bg->bg_bits) << bits_per_unit))) {
  
- /** Makes sure SVM is disabled, if it is supported on the CPU
+ 				*ret_bh = gd_bh;
+ 				*vict_bit = (vict_blkno - blkno) >>
+@@ -549,6 +549,7 @@ static void ocfs2_probe_alloc_group(stru
+ 			last_free_bits++;
+ 
+ 		if (last_free_bits == move_len) {
++			i -= move_len;
+ 			*goal_bit = i;
+ 			*phys_cpos = base_cpos + i;
+ 			break;
+@@ -1020,18 +1021,19 @@ int ocfs2_ioctl_move_extents(struct file
+ 
+ 	context->range = &range;
+ 
++	/*
++	 * ok, the default theshold for the defragmentation
++	 * is 1M, since our maximum clustersize was 1M also.
++	 * any thought?
++	 */
++	if (!range.me_threshold)
++		range.me_threshold = 1024 * 1024;
++
++	if (range.me_threshold > i_size_read(inode))
++		range.me_threshold = i_size_read(inode);
++
+ 	if (range.me_flags & OCFS2_MOVE_EXT_FL_AUTO_DEFRAG) {
+ 		context->auto_defrag = 1;
+-		/*
+-		 * ok, the default theshold for the defragmentation
+-		 * is 1M, since our maximum clustersize was 1M also.
+-		 * any thought?
+-		 */
+-		if (!range.me_threshold)
+-			range.me_threshold = 1024 * 1024;
+-
+-		if (range.me_threshold > i_size_read(inode))
+-			range.me_threshold = i_size_read(inode);
+ 
+ 		if (range.me_flags & OCFS2_MOVE_EXT_FL_PART_DEFRAG)
+ 			context->partial = 1;
 
 
