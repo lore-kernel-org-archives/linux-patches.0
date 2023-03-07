@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D53BA42
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:37:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9104EC433EF;
-	Tue,  7 Mar 2023 17:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115FFBA3F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:37:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD97C433D2;
+	Tue,  7 Mar 2023 17:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210656;
-	bh=YxlUhGt43u17Ppx7Y8MnNtp+R0dUfZBbeu5ZqIcySQ4=;
+	s=korg; t=1678210659;
+	bh=+zv8gpOmrHqLRdx+A8qMPPOiTd1/jX0jW/wHjSx7OXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VvASa1lerG5YPg0kfWoyJn00uA+G2w2hXsVO9kT+MpzmnZFM1HIXTtR0l2Hq/9fqC
-	 4WNbOhiPcY2IlKfIIzirs6A/u1MCrKXepHOuQ0EJ6tGlLW383FRu+d0oI1sCz5RWGU
-	 gBo/ZIiHb6ry3C6m+u1vgqjnv1AnOv2Qr+GDckEI=
+	b=0Q8DnZ61IWBuqxwIadiup528cg8g3YIqXCPwNgV7/Hd4B9bbnMtoJa7An/gOeg0lA
+	 RLi3cUBmXwe6rF/QXvy3WbVNAT8Y7F91ABLoQ/+APK4oK88ieREefJSDpV7bvbdZJZ
+	 Q6AhTFI4SsD+Q0QdBGFTwOkEKZ+o0FeCV66lSHpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
 	Andy Shevchenko <andy@kernel.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0611/1001] media: atomisp: fix videobuf2 Kconfig depenendency
-Date: Tue,  7 Mar 2023 17:56:23 +0100
-Message-Id: <20230307170048.035402193@linuxfoundation.org>
+Subject: [PATCH 6.2 0612/1001] media: atomisp: Only set default_run_mode on first open of a stream/asd
+Date: Tue,  7 Mar 2023 17:56:24 +0100
+Message-Id: <20230307170048.083179872@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,42 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit be94be1b7fc7e51f9ccef20a0ef76583587275f3 ]
+[ Upstream commit 60ec70a71a9f9975a5d2dd4a7d97c20da0e41976 ]
 
-The recent conversion missed the Kconfig bit, so it can now
-end up in a link error on randconfig builds:
+Calling v4l2_ctrl_s_ctrl(asd->run_mode, pipe->default_run_mode) when
+the stream is already active (through another /dev/video# node) causes
+the stream to stop.
 
-ld.lld: error: undefined symbol: vb2_vmalloc_memops
->>> referenced by atomisp_fops.c
->>>               drivers/staging/media/atomisp/pci/atomisp_fops.o:(atomisp_open) in archive vmlinux.a
+Move the call to set the default run-mode so that it is only done
+on the first open of one of the 4 /dev/video# nodes of one of
+the 2 streams (atomisp-sub-devices / asd-s).
 
-Link: https://lore.kernel.org/r/20230104082212.3770415-1-arnd@kernel.org
-
-Fixes: cb48ae89be3b ("media: atomisp: Convert to videobuf2")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Tested-by: Andy Shevchenko <andy@kernel.org>
+Fixes: 2c45e343c581 ("media: atomisp: set per-device's default mode")
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/atomisp/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/media/atomisp/pci/atomisp_fops.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/media/atomisp/Kconfig b/drivers/staging/media/atomisp/Kconfig
-index 2c8d7fdcc5f7a..c9bff98e5309a 100644
---- a/drivers/staging/media/atomisp/Kconfig
-+++ b/drivers/staging/media/atomisp/Kconfig
-@@ -14,7 +14,7 @@ config VIDEO_ATOMISP
- 	depends on VIDEO_DEV && INTEL_ATOMISP
- 	depends on PMIC_OPREGION
- 	select IOSF_MBI
--	select VIDEOBUF_VMALLOC
-+	select VIDEOBUF2_VMALLOC
- 	select VIDEO_V4L2_SUBDEV_API
- 	help
- 	  Say Y here if your platform supports Intel Atom SoC
+diff --git a/drivers/staging/media/atomisp/pci/atomisp_fops.c b/drivers/staging/media/atomisp/pci/atomisp_fops.c
+index acea7492847d8..9b9d50d7166a0 100644
+--- a/drivers/staging/media/atomisp/pci/atomisp_fops.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_fops.c
+@@ -821,13 +821,13 @@ static int atomisp_open(struct file *file)
+ 		goto done;
+ 
+ 	atomisp_subdev_init_struct(asd);
++	/* Ensure that a mode is set */
++	v4l2_ctrl_s_ctrl(asd->run_mode, pipe->default_run_mode);
+ 
+ done:
+ 	pipe->users++;
+ 	mutex_unlock(&isp->mutex);
+ 
+-	/* Ensure that a mode is set */
+-	v4l2_ctrl_s_ctrl(asd->run_mode, pipe->default_run_mode);
+ 
+ 	return 0;
+ 
 -- 
 2.39.2
 
