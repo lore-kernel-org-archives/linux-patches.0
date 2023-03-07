@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72280BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:13:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F8AC433D2;
-	Tue,  7 Mar 2023 17:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2768BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:13:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171CFC4339B;
+	Tue,  7 Mar 2023 17:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209185;
-	bh=Sstslexe06+2YQqABB12lYoeHnlMhwc2CyluOvbVbpg=;
+	s=korg; t=1678209188;
+	bh=LclxFoHMQ+Om0paFxK/NWVCNElj9NCx36gicqA69mjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ejZM25oQYq279UrqQaQ/PiJs2fWrOK2ccN5ULHBOj0YfgKJkhYLj8xAHB2HJkxPMf
-	 jXCn/QThuzvCvdbxwfjcSo911h1KXBLDzZ2MlfU7vCZeumZqSz/AQhdE/rICs1PWXx
-	 rlywYaX0LGWcyiImErWaOP6yJwXvL/7afogB0rHg=
+	b=MaFkzxHyifNb9uJzRKSI/ZQ89LZmxchixH1luWKPPAhOY67snFBJA9V8/a2tlDLyl
+	 M+aiiBpsp4OFJ4merLLa0Riodi+ckHa8TsdSzrkG+125pW0Xscrv+uN8IXM+TEg2gB
+	 Tcz0PLsDpjpnZz4OzSCUTuph8996XOzeqfXpylsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryder Lee <ryder.lee@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Phil Auld <pauld@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0138/1001] wifi: mt76: mt7915: check return value before accessing free_block_num
-Date: Tue,  7 Mar 2023 17:48:30 +0100
-Message-Id: <20230307170028.044824644@linuxfoundation.org>
+Subject: [PATCH 6.2 0121/1001] sched/rt: pick_next_rt_entity(): check list_entry
+Date: Tue,  7 Mar 2023 17:48:13 +0100
+Message-Id: <20230307170027.332038786@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,84 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryder Lee <ryder.lee@mediatek.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 59b27a7d472f100ac8998e15a63c47a03cced12a ]
+[ Upstream commit 7c4a5b89a0b5a57a64b601775b296abf77a9fe97 ]
 
-Check return value of mt7915_mcu_get_eeprom_free_block() first before
-accessing free_block_num.
+Commit 326587b84078 ("sched: fix goto retry in pick_next_task_rt()")
+removed any path which could make pick_next_rt_entity() return NULL.
+However, BUG_ON(!rt_se) in _pick_next_task_rt() (the only caller of
+pick_next_rt_entity()) still checks the error condition, which can
+never happen, since list_entry() never returns NULL.
+Remove the BUG_ON check, and instead emit a warning in the only
+possible error condition here: the queue being empty which should
+never happen.
 
-Fixes: bbc1d4154ec1 ("mt76: mt7915: add default calibrated data support")
-Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 326587b84078 ("sched: fix goto retry in pick_next_task_rt()")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Phil Auld <pauld@redhat.com>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/20230128-list-entry-null-check-sched-v3-1-b1a71bd1ac6b@diag.uniroma1.it
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt7915/eeprom.c    | 19 ++++++++++++-------
- .../net/wireless/mediatek/mt76/mt7915/mcu.c   | 10 ++++++----
- 2 files changed, 18 insertions(+), 11 deletions(-)
+ kernel/sched/rt.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-index 59069fb864147..24efa280dd868 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-@@ -110,18 +110,23 @@ static int mt7915_eeprom_load(struct mt7915_dev *dev)
- 	} else {
- 		u8 free_block_num;
- 		u32 block_num, i;
-+		u32 eeprom_blk_size = MT7915_EEPROM_BLOCK_SIZE;
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index ed2a47e4ddaec..0a11f44adee57 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -1777,6 +1777,8 @@ static struct sched_rt_entity *pick_next_rt_entity(struct rt_rq *rt_rq)
+ 	BUG_ON(idx >= MAX_RT_PRIO);
  
--		mt7915_mcu_get_eeprom_free_block(dev, &free_block_num);
--		/* efuse info not enough */
-+		ret = mt7915_mcu_get_eeprom_free_block(dev, &free_block_num);
-+		if (ret < 0)
-+			return ret;
-+
-+		/* efuse info isn't enough */
- 		if (free_block_num >= 29)
- 			return -EINVAL;
+ 	queue = array->queue + idx;
++	if (SCHED_WARN_ON(list_empty(queue)))
++		return NULL;
+ 	next = list_entry(queue->next, struct sched_rt_entity, run_list);
  
- 		/* read eeprom data from efuse */
--		block_num = DIV_ROUND_UP(eeprom_size,
--					 MT7915_EEPROM_BLOCK_SIZE);
--		for (i = 0; i < block_num; i++)
--			mt7915_mcu_get_eeprom(dev,
--					      i * MT7915_EEPROM_BLOCK_SIZE);
-+		block_num = DIV_ROUND_UP(eeprom_size, eeprom_blk_size);
-+		for (i = 0; i < block_num; i++) {
-+			ret = mt7915_mcu_get_eeprom(dev, i * eeprom_blk_size);
-+			if (ret < 0)
-+				return ret;
-+		}
- 	}
+ 	return next;
+@@ -1789,7 +1791,8 @@ static struct task_struct *_pick_next_task_rt(struct rq *rq)
  
- 	return mt7915_check_eeprom(dev);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-index b2652de082baa..d9d6846ba8e02 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-@@ -2792,8 +2792,9 @@ int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset)
- 	int ret;
- 	u8 *buf;
- 
--	ret = mt76_mcu_send_and_get_msg(&dev->mt76, MCU_EXT_QUERY(EFUSE_ACCESS), &req,
--				sizeof(req), true, &skb);
-+	ret = mt76_mcu_send_and_get_msg(&dev->mt76,
-+					MCU_EXT_QUERY(EFUSE_ACCESS),
-+					&req, sizeof(req), true, &skb);
- 	if (ret)
- 		return ret;
- 
-@@ -2818,8 +2819,9 @@ int mt7915_mcu_get_eeprom_free_block(struct mt7915_dev *dev, u8 *block_num)
- 	struct sk_buff *skb;
- 	int ret;
- 
--	ret = mt76_mcu_send_and_get_msg(&dev->mt76, MCU_EXT_QUERY(EFUSE_FREE_BLOCK), &req,
--					sizeof(req), true, &skb);
-+	ret = mt76_mcu_send_and_get_msg(&dev->mt76,
-+					MCU_EXT_QUERY(EFUSE_FREE_BLOCK),
-+					&req, sizeof(req), true, &skb);
- 	if (ret)
- 		return ret;
+ 	do {
+ 		rt_se = pick_next_rt_entity(rt_rq);
+-		BUG_ON(!rt_se);
++		if (unlikely(!rt_se))
++			return NULL;
+ 		rt_rq = group_rt_rq(rt_se);
+ 	} while (rt_rq);
  
 -- 
 2.39.2
