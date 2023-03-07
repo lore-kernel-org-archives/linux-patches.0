@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A84BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:12:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D07C433EF;
-	Tue,  7 Mar 2023 18:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE4DBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:12:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12994C4339B;
+	Tue,  7 Mar 2023 18:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212767;
-	bh=iDd3G5r/hYbYgGGc2cZqAEgptlGTBKffd4cexRU1YTw=;
+	s=korg; t=1678212770;
+	bh=j3SsXPfit0k+7teO/+qymtnavDrv+NJw0Di82qu0viU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x0BhEIGgejrQ89UfYn+4qNahRUD/3xxo4mEMRxbJfp4XwW/Wllg3XBgL//Fy/doEl
-	 2tgwoMppY37brUbdfX058XCIE8JzlwdN2CLqex05YFsaaosmvJ0RMUjpZXzbd70vgC
-	 gFSiZoH1OEK6RRAqV5qiN46N0NmZQyViucfsStuU=
+	b=Bt51o79Uao8nLPbcbODKB1vPW0y/VACoQK2gVKu4lQwyeRSvGTtqeRzib5bRTxHbe
+	 5tVBIQFNlkL2W94AZbcBMiUonBRnGeQvo4KEsi9aJkEfxMsY2rqit7UtpAqKYAPVlF
+	 Cvbr2eiVOww9S3KdzWNKoboox2ry8F9hB8plc/HY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Iuliana Prodan <iuliana.prodan@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 291/885] ASoC: fsl_sai: initialize is_dsp_mode flag
-Date: Tue,  7 Mar 2023 17:53:45 +0100
-Message-Id: <20230307170014.712634686@linuxfoundation.org>
+Subject: [PATCH 6.1 292/885] drm/bridge: tc358767: Set default CLRSIPO count
+Date: Tue,  7 Mar 2023 17:53:46 +0100
+Message-Id: <20230307170014.759158003@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,40 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit a23924b7dd7b748fff8e305e1daf590fed2af21b ]
+[ Upstream commit 01338bb82fed40a6a234c2b36a92367c8671adf0 ]
 
-Initialize is_dsp_mode flag in the beginning of function
-fsl_sai_set_dai_fmt_tr().
+The current CLRSIPO count is still marginal and does not work with high
+DSI clock rates in burst mode. Increase it further to allow the DSI link
+to work at up to 1Gbps lane speed. This returns the counts to defaults
+as provided by datasheet.
 
-When the DAIFMT is DAIFMT_DSP_B the first time, is_dsp_mode is
-true, then the second time DAIFMT is DAIFMT_I2S, is_dsp_mode
-still true, which is a wrong state. So need to initialize
-is_dsp_mode flag every time.
-
-Fixes: a3f7dcc9cc03 ("ASoC: fsl-sai: Add SND_SOC_DAIFMT_DSP_A/B support.")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
-Link: https://lore.kernel.org/r/1673852874-32200-1-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ea6490b02240b ("drm/bridge: tc358767: increase CLRSIPO count")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Acked-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221016003556.406441-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_sai.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/bridge/tc358767.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index 8205b32171495..df7c0bf372451 100644
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -281,6 +281,7 @@ static int fsl_sai_set_dai_fmt_tr(struct snd_soc_dai *cpu_dai,
- 		val_cr4 |= FSL_SAI_CR4_MF;
+diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+index 2a58eb271f701..b9b681086fc49 100644
+--- a/drivers/gpu/drm/bridge/tc358767.c
++++ b/drivers/gpu/drm/bridge/tc358767.c
+@@ -1264,10 +1264,10 @@ static int tc_dsi_rx_enable(struct tc_data *tc)
+ 	u32 value;
+ 	int ret;
  
- 	sai->is_pdm_mode = false;
-+	sai->is_dsp_mode = false;
- 	/* DAI mode */
- 	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
- 	case SND_SOC_DAIFMT_I2S:
+-	regmap_write(tc->regmap, PPI_D0S_CLRSIPOCOUNT, 5);
+-	regmap_write(tc->regmap, PPI_D1S_CLRSIPOCOUNT, 5);
+-	regmap_write(tc->regmap, PPI_D2S_CLRSIPOCOUNT, 5);
+-	regmap_write(tc->regmap, PPI_D3S_CLRSIPOCOUNT, 5);
++	regmap_write(tc->regmap, PPI_D0S_CLRSIPOCOUNT, 25);
++	regmap_write(tc->regmap, PPI_D1S_CLRSIPOCOUNT, 25);
++	regmap_write(tc->regmap, PPI_D2S_CLRSIPOCOUNT, 25);
++	regmap_write(tc->regmap, PPI_D3S_CLRSIPOCOUNT, 25);
+ 	regmap_write(tc->regmap, PPI_D0S_ATMR, 0);
+ 	regmap_write(tc->regmap, PPI_D1S_ATMR, 0);
+ 	regmap_write(tc->regmap, PPI_TX_RX_TA, TTA_GET | TTA_SURE);
 -- 
 2.39.2
 
