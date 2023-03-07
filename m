@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C675BBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51FA7C433D2;
-	Tue,  7 Mar 2023 17:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFCABA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1ABCC433EF;
+	Tue,  7 Mar 2023 17:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210997;
-	bh=RI+2ZlHkq0yMs104zOUutA4H6Ml71kMG+ja8FyIwdwg=;
+	s=korg; t=1678211001;
+	bh=+9OuRYwPI54o/Fm7g7hAoBFrQ8pYFyaSyAT3RvzsrqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nBCVe69YZxnS4uLm2DEo9+MWUcoTi6IJE+WQFmr3YoVCOANj0JQLGduT5/hVRVmED
-	 sykAj+qj3+KpKfTtDKVnDXN4/WAJkM82UewYuDabFsNXV/LUaWrzlNUanAUEfHRD7K
-	 xXh+4uNY57aBNu5YBC1SHouu4/zqDS6t22xHOm9E=
+	b=g1tzAEK3yBuYiRT1ggY0dVp6engIpJE0j4kPNd11btCSlTpnFrNsI8/g80pCZGSOb
+	 GHWQWydnli9dHyFI09d00aQxDR9Bh+tYrkpgoq083QD8KF+JD1EpZyX534UqynsRXj
+	 Ft/+i5wTOELnJtBR0iQePf5v2vltrYcngj5HayX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Martinez Canillas <javier@dowhile0.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Liam Girdwood <lgirdwood@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
+	linux-samsung-soc@vger.kernel.org,
 	Kees Cook <keescook@chromium.org>,
-	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0719/1001] regulator: max77802: Bounds check regulator id against opmode
-Date: Tue,  7 Mar 2023 17:58:11 +0100
-Message-Id: <20230307170052.875586818@linuxfoundation.org>
+Subject: [PATCH 6.2 0720/1001] regulator: s5m8767: Bounds check id indexing into arrays
+Date: Tue,  7 Mar 2023 17:58:12 +0100
+Message-Id: <20230307170052.923330055@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -40,133 +40,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 4fd8bcec5fd7c0d586206fa2f42bd67b06cdaa7e ]
+[ Upstream commit e314e15a0b58f9d051c00b25951073bcdae61953 ]
 
-Explicitly bounds-check the id before accessing the opmode array. Seen
-with GCC 13:
+The compiler has no way to know if "id" is within the array bounds of
+the regulators array. Add a check for this and a build-time check that
+the regulators and reg_voltage_map arrays are sized the same. Seen with
+GCC 13:
 
-../drivers/regulator/max77802-regulator.c: In function 'max77802_enable':
-../drivers/regulator/max77802-regulator.c:217:29: warning: array subscript [0, 41] is outside array bounds of 'unsigned int[42]' [-Warray-bounds=]
-  217 |         if (max77802->opmode[id] == MAX77802_OFF_PWRREQ)
-      |             ~~~~~~~~~~~~~~~~^~~~
-../drivers/regulator/max77802-regulator.c:62:22: note: while referencing 'opmode'
-   62 |         unsigned int opmode[MAX77802_REG_MAX];
-      |                      ^~~~~~
+../drivers/regulator/s5m8767.c: In function 's5m8767_pmic_probe':
+../drivers/regulator/s5m8767.c:936:35: warning: array subscript [0, 36] is outside array bounds of 'struct regulator_desc[37]' [-Warray-bounds=]
+  936 |                         regulators[id].vsel_reg =
+      |                         ~~~~~~~~~~^~~~
 
-Cc: Javier Martinez Canillas <javier@dowhile0.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc: Liam Girdwood <lgirdwood@gmail.com>
 Cc: Mark Brown <broonie@kernel.org>
+Cc: linux-samsung-soc@vger.kernel.org
 Signed-off-by: Kees Cook <keescook@chromium.org>
-Acked-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://lore.kernel.org/r/20230127225203.never.864-kees@kernel.org
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230128005358.never.313-kees@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/max77802-regulator.c | 34 ++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 10 deletions(-)
+ drivers/regulator/s5m8767.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/max77802-regulator.c b/drivers/regulator/max77802-regulator.c
-index 21e0eb0f43f94..befe5f319819b 100644
---- a/drivers/regulator/max77802-regulator.c
-+++ b/drivers/regulator/max77802-regulator.c
-@@ -94,9 +94,11 @@ static int max77802_set_suspend_disable(struct regulator_dev *rdev)
- {
- 	unsigned int val = MAX77802_OFF_PWRREQ;
- 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
--	int id = rdev_get_id(rdev);
-+	unsigned int id = rdev_get_id(rdev);
- 	int shift = max77802_get_opmode_shift(id);
+diff --git a/drivers/regulator/s5m8767.c b/drivers/regulator/s5m8767.c
+index 35269f9982105..754c6fcc6e642 100644
+--- a/drivers/regulator/s5m8767.c
++++ b/drivers/regulator/s5m8767.c
+@@ -923,10 +923,14 @@ static int s5m8767_pmic_probe(struct platform_device *pdev)
  
-+	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
-+		return -EINVAL;
- 	max77802->opmode[id] = val;
- 	return regmap_update_bits(rdev->regmap, rdev->desc->enable_reg,
- 				  rdev->desc->enable_mask, val << shift);
-@@ -110,7 +112,7 @@ static int max77802_set_suspend_disable(struct regulator_dev *rdev)
- static int max77802_set_mode(struct regulator_dev *rdev, unsigned int mode)
- {
- 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
--	int id = rdev_get_id(rdev);
-+	unsigned int id = rdev_get_id(rdev);
- 	unsigned int val;
- 	int shift = max77802_get_opmode_shift(id);
- 
-@@ -127,6 +129,9 @@ static int max77802_set_mode(struct regulator_dev *rdev, unsigned int mode)
- 		return -EINVAL;
- 	}
- 
-+	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
-+		return -EINVAL;
-+
- 	max77802->opmode[id] = val;
- 	return regmap_update_bits(rdev->regmap, rdev->desc->enable_reg,
- 				  rdev->desc->enable_mask, val << shift);
-@@ -135,8 +140,10 @@ static int max77802_set_mode(struct regulator_dev *rdev, unsigned int mode)
- static unsigned max77802_get_mode(struct regulator_dev *rdev)
- {
- 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
--	int id = rdev_get_id(rdev);
-+	unsigned int id = rdev_get_id(rdev);
- 
-+	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
-+		return -EINVAL;
- 	return max77802_map_mode(max77802->opmode[id]);
- }
- 
-@@ -160,10 +167,13 @@ static int max77802_set_suspend_mode(struct regulator_dev *rdev,
- 				     unsigned int mode)
- {
- 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
--	int id = rdev_get_id(rdev);
-+	unsigned int id = rdev_get_id(rdev);
- 	unsigned int val;
- 	int shift = max77802_get_opmode_shift(id);
- 
-+	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
-+		return -EINVAL;
-+
- 	/*
- 	 * If the regulator has been disabled for suspend
- 	 * then is invalid to try setting a suspend mode.
-@@ -209,9 +219,11 @@ static int max77802_set_suspend_mode(struct regulator_dev *rdev,
- static int max77802_enable(struct regulator_dev *rdev)
- {
- 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
--	int id = rdev_get_id(rdev);
-+	unsigned int id = rdev_get_id(rdev);
- 	int shift = max77802_get_opmode_shift(id);
- 
-+	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
-+		return -EINVAL;
- 	if (max77802->opmode[id] == MAX77802_OFF_PWRREQ)
- 		max77802->opmode[id] = MAX77802_OPMODE_NORMAL;
- 
-@@ -495,7 +507,7 @@ static int max77802_pmic_probe(struct platform_device *pdev)
- 
- 	for (i = 0; i < MAX77802_REG_MAX; i++) {
+ 	for (i = 0; i < pdata->num_regulators; i++) {
+ 		const struct sec_voltage_desc *desc;
+-		int id = pdata->regulators[i].id;
++		unsigned int id = pdata->regulators[i].id;
+ 		int enable_reg, enable_val;
  		struct regulator_dev *rdev;
--		int id = regulators[i].id;
-+		unsigned int id = regulators[i].id;
- 		int shift = max77802_get_opmode_shift(id);
- 		int ret;
  
-@@ -513,10 +525,12 @@ static int max77802_pmic_probe(struct platform_device *pdev)
- 		 * the hardware reports OFF as the regulator operating mode.
- 		 * Default to operating mode NORMAL in that case.
- 		 */
--		if (val == MAX77802_STATUS_OFF)
--			max77802->opmode[id] = MAX77802_OPMODE_NORMAL;
--		else
--			max77802->opmode[id] = val;
-+		if (id < ARRAY_SIZE(max77802->opmode)) {
-+			if (val == MAX77802_STATUS_OFF)
-+				max77802->opmode[id] = MAX77802_OPMODE_NORMAL;
-+			else
-+				max77802->opmode[id] = val;
-+		}
- 
- 		rdev = devm_regulator_register(&pdev->dev,
- 					       &regulators[i], &config);
++		BUILD_BUG_ON(ARRAY_SIZE(regulators) != ARRAY_SIZE(reg_voltage_map));
++		if (WARN_ON_ONCE(id >= ARRAY_SIZE(regulators)))
++			continue;
++
+ 		desc = reg_voltage_map[id];
+ 		if (desc) {
+ 			regulators[id].n_voltages =
 -- 
 2.39.2
 
