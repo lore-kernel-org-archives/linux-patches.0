@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7181BBA35
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:33:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB06C4339B;
-	Tue,  7 Mar 2023 17:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB47BA35
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:33:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024FDC433EF;
+	Tue,  7 Mar 2023 17:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210380;
-	bh=FT5BzBiFOOoVnrVep2O460kqXxM/NKSSiiE9MmPUhhU=;
+	s=korg; t=1678210383;
+	bh=cnmknNZZQxhnfER+yEBtT6u1lp4kFhvlt3kXrosONVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HKZTLp66YpDsutNuh2hl/u+W38i6h/nIZ4DlxT2fVVA1wJdDNcXHGom9GTGFWIAWe
-	 GcObOzHEYQt4a+SPAGxCaqtz/RZkw+AH6rBGXldIsFMXUWAoLzN+yFoTEP1tANhw4y
-	 LYCqrKyF4Ny6wD5kFbQ9I1xkaTIJkgldydYGLETA=
+	b=bRqKBJLLzjIWnKM1VBYYjzWHFTp0esZupLWEzKnLVN2Io0fxc+SiQnfurr805S0GE
+	 JlfDjMcvigRi2zhLpNjidpaQuAmkMto+PTVwyJc1m527Wh7TOo1wcCqqqlRB/FnwCn
+	 VmBlJSXDHcJZs+Fb+qlbSwZ+1/3cGlFXYXhGp2EM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hanna Hawa <hhhawa@amazon.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0521/1001] misc/mei/hdcp: Use correct macros to initialize uuid_le
-Date: Tue,  7 Mar 2023 17:54:53 +0100
-Message-Id: <20230307170044.047783673@linuxfoundation.org>
+Subject: [PATCH 6.2 0492/1001] i2c: designware: fix i2c_dw_clk_rate() return size to be u32
+Date: Tue,  7 Mar 2023 17:54:24 +0100
+Message-Id: <20230307170042.730453689@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,39 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Hanna Hawa <hhhawa@amazon.com>
 
-[ Upstream commit 512ba04d8211dd1a54dd36adc3ecc527a28069c5 ]
+[ Upstream commit f2e1fa99550dd7a882229e2c2cd9ecab4ce773d0 ]
 
-GUID_INIT() is for internal guid_t type and shouldn't be used
-for the uuid_le. I.o.w. relying on the implementation details
-is layering violation. Use correct macros to initialize uuid_le.
+Make i2c_dw_clk_rate() to return u32 instead of unsigned long, as the
+function return the value of get_clk_rate_khz() which returns u32.
 
-Fixes: 64e9bbdd9588 ("misc/mei/hdcp: Client driver for HDCP application")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20221228160500.21220-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b33af11de236 ("i2c: designware: Do not require clock when SSCN and FFCN are provided")
+Signed-off-by: Hanna Hawa <hhhawa@amazon.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/hdcp/mei_hdcp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-designware-common.c | 2 +-
+ drivers/i2c/busses/i2c-designware-core.h   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/mei/hdcp/mei_hdcp.c b/drivers/misc/mei/hdcp/mei_hdcp.c
-index e889a8bd7ac88..e0dcd5c114db1 100644
---- a/drivers/misc/mei/hdcp/mei_hdcp.c
-+++ b/drivers/misc/mei/hdcp/mei_hdcp.c
-@@ -859,8 +859,8 @@ static void mei_hdcp_remove(struct mei_cl_device *cldev)
- 		dev_warn(&cldev->dev, "mei_cldev_disable() failed\n");
+diff --git a/drivers/i2c/busses/i2c-designware-common.c b/drivers/i2c/busses/i2c-designware-common.c
+index 581e02cc979a0..2f2e99882b011 100644
+--- a/drivers/i2c/busses/i2c-designware-common.c
++++ b/drivers/i2c/busses/i2c-designware-common.c
+@@ -465,7 +465,7 @@ void __i2c_dw_disable(struct dw_i2c_dev *dev)
+ 	dev_warn(dev->dev, "timeout in disabling adapter\n");
  }
  
--#define MEI_UUID_HDCP GUID_INIT(0xB638AB7E, 0x94E2, 0x4EA2, 0xA5, \
--				0x52, 0xD1, 0xC5, 0x4B, 0x62, 0x7F, 0x04)
-+#define MEI_UUID_HDCP UUID_LE(0xB638AB7E, 0x94E2, 0x4EA2, 0xA5, \
-+			      0x52, 0xD1, 0xC5, 0x4B, 0x62, 0x7F, 0x04)
- 
- static const struct mei_cl_device_id mei_hdcp_tbl[] = {
- 	{ .uuid = MEI_UUID_HDCP, .version = MEI_CL_VERSION_ANY },
+-unsigned long i2c_dw_clk_rate(struct dw_i2c_dev *dev)
++u32 i2c_dw_clk_rate(struct dw_i2c_dev *dev)
+ {
+ 	/*
+ 	 * Clock is not necessary if we got LCNT/HCNT values directly from
+diff --git a/drivers/i2c/busses/i2c-designware-core.h b/drivers/i2c/busses/i2c-designware-core.h
+index 95ebc5eaa5d12..6bc2edec14f2f 100644
+--- a/drivers/i2c/busses/i2c-designware-core.h
++++ b/drivers/i2c/busses/i2c-designware-core.h
+@@ -320,7 +320,7 @@ int i2c_dw_init_regmap(struct dw_i2c_dev *dev);
+ u32 i2c_dw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond, int offset);
+ u32 i2c_dw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset);
+ int i2c_dw_set_sda_hold(struct dw_i2c_dev *dev);
+-unsigned long i2c_dw_clk_rate(struct dw_i2c_dev *dev);
++u32 i2c_dw_clk_rate(struct dw_i2c_dev *dev);
+ int i2c_dw_prepare_clk(struct dw_i2c_dev *dev, bool prepare);
+ int i2c_dw_acquire_lock(struct dw_i2c_dev *dev);
+ void i2c_dw_release_lock(struct dw_i2c_dev *dev);
 -- 
 2.39.2
 
