@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5C1BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:34:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3FFC433EF;
-	Tue,  7 Mar 2023 18:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC85FBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:34:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F0AC433EF;
+	Tue,  7 Mar 2023 18:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214043;
-	bh=0p3zJVyOxCxxCj0LSM8Xc3gIsYUNvegh7IgK/izqR0c=;
+	s=korg; t=1678214046;
+	bh=RWAImVFas2It3Rt5Glwm6asNoUdBBRXVmcsw/fEkPH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KkoR9399H3xVKdwcvMpa0hw0qwyNaCv3lBWmbM2V75cpGxGZn6oOm4ty8CBxWXtFP
-	 OLCOOVrVV1zSroNmgIHaDq44KgIlEsAF8U62c0u9g7VIQPlWc5/flxlZQONAOjBFO7
-	 u+WhLDgBDVZkFJS7A/tB7QkAxqoShDSXO9VLhG4w=
+	b=vUBrgqHhc47QVEviqKeKXp87dPR7+CC3cuHvptAH5fFaWQB79ed6WD8bkmm0ZMCBe
+	 sMR69ttZnbuKwmD4Q6mxIT3FJY9KgK6C8X/wPtv+T7KR4C3vz+y3Ue7lOaXz9UwNkD
+	 ToboLrbs4tCnlEexQOQ4E54wx6wfMu2EXAUCsgBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Ronnie Sahlberg <lsahlber@redhat.com>,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	linux-cifs@vger.kernel.org,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 672/885] cifs: fix mount on old smb servers
-Date: Tue,  7 Mar 2023 18:00:06 +0100
-Message-Id: <20230307170031.347894275@linuxfoundation.org>
+Subject: [PATCH 6.1 673/885] cifs: introduce cifs_io_parms in smb2_async_writev()
+Date: Tue,  7 Mar 2023 18:00:07 +0100
+Message-Id: <20230307170031.393826244@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,140 +40,138 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-commit d99e86ebde2d7b3a04190f8d14de5bf6814bf10f upstream.
+commit d643a8a446fc46c06837d08a056f69da2ff16025 upstream.
 
-The client was sending rfc1002 session request packet with a wrong
-length field set, therefore failing to mount shares against old SMB
-servers over port 139.
+This will simplify the following changes and makes it easy to get
+in passed in from the caller in future.
 
-Fix this by calculating the correct length as specified in rfc1002.
-
-Fixes: d7173623bf0b ("cifs: use ALIGN() and round_up() macros")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: linux-cifs@vger.kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Reviewed-by: Ronnie Sahlberg <lsahlber@redhat.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/connect.c | 94 ++++++++++++++++++-----------------------------
- 1 file changed, 35 insertions(+), 59 deletions(-)
+ fs/cifs/smb2pdu.c |   53 +++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 39 insertions(+), 14 deletions(-)
 
-diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
-index b2a04b4e89a5..af49ae53aaf4 100644
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -2843,72 +2843,48 @@ ip_rfc1001_connect(struct TCP_Server_Info *server)
- 	 * negprot - BB check reconnection in case where second
- 	 * sessinit is sent but no second negprot
- 	 */
--	struct rfc1002_session_packet *ses_init_buf;
--	unsigned int req_noscope_len;
--	struct smb_hdr *smb_buf;
-+	struct rfc1002_session_packet req = {};
-+	struct smb_hdr *smb_buf = (struct smb_hdr *)&req;
-+	unsigned int len;
+--- a/fs/cifs/smb2pdu.c
++++ b/fs/cifs/smb2pdu.c
+@@ -4504,10 +4504,27 @@ smb2_async_writev(struct cifs_writedata
+ 	struct kvec iov[1];
+ 	struct smb_rqst rqst = { };
+ 	unsigned int total_len;
++	struct cifs_io_parms _io_parms;
++	struct cifs_io_parms *io_parms = NULL;
  
--	ses_init_buf = kzalloc(sizeof(struct rfc1002_session_packet),
--			       GFP_KERNEL);
-+	req.trailer.session_req.called_len = sizeof(req.trailer.session_req.called_name);
+ 	if (!wdata->server)
+ 		server = wdata->server = cifs_pick_channel(tcon->ses);
  
--	if (ses_init_buf) {
--		ses_init_buf->trailer.session_req.called_len = 32;
-+	if (server->server_RFC1001_name[0] != 0)
-+		rfc1002mangle(req.trailer.session_req.called_name,
-+			      server->server_RFC1001_name,
-+			      RFC1001_NAME_LEN_WITH_NULL);
-+	else
-+		rfc1002mangle(req.trailer.session_req.called_name,
-+			      DEFAULT_CIFS_CALLED_NAME,
-+			      RFC1001_NAME_LEN_WITH_NULL);
- 
--		if (server->server_RFC1001_name[0] != 0)
--			rfc1002mangle(ses_init_buf->trailer.
--				      session_req.called_name,
--				      server->server_RFC1001_name,
--				      RFC1001_NAME_LEN_WITH_NULL);
--		else
--			rfc1002mangle(ses_init_buf->trailer.
--				      session_req.called_name,
--				      DEFAULT_CIFS_CALLED_NAME,
--				      RFC1001_NAME_LEN_WITH_NULL);
-+	req.trailer.session_req.calling_len = sizeof(req.trailer.session_req.calling_name);
- 
--		ses_init_buf->trailer.session_req.calling_len = 32;
-+	/* calling name ends in null (byte 16) from old smb convention */
-+	if (server->workstation_RFC1001_name[0] != 0)
-+		rfc1002mangle(req.trailer.session_req.calling_name,
-+			      server->workstation_RFC1001_name,
-+			      RFC1001_NAME_LEN_WITH_NULL);
-+	else
-+		rfc1002mangle(req.trailer.session_req.calling_name,
-+			      "LINUX_CIFS_CLNT",
-+			      RFC1001_NAME_LEN_WITH_NULL);
- 
--		/*
--		 * calling name ends in null (byte 16) from old smb
--		 * convention.
--		 */
--		if (server->workstation_RFC1001_name[0] != 0)
--			rfc1002mangle(ses_init_buf->trailer.
--				      session_req.calling_name,
--				      server->workstation_RFC1001_name,
--				      RFC1001_NAME_LEN_WITH_NULL);
--		else
--			rfc1002mangle(ses_init_buf->trailer.
--				      session_req.calling_name,
--				      "LINUX_CIFS_CLNT",
--				      RFC1001_NAME_LEN_WITH_NULL);
--
--		ses_init_buf->trailer.session_req.scope1 = 0;
--		ses_init_buf->trailer.session_req.scope2 = 0;
--		smb_buf = (struct smb_hdr *)ses_init_buf;
--
--		/* sizeof RFC1002_SESSION_REQUEST with no scopes */
--		req_noscope_len = sizeof(struct rfc1002_session_packet) - 2;
--
--		/* == cpu_to_be32(0x81000044) */
--		smb_buf->smb_buf_length =
--			cpu_to_be32((RFC1002_SESSION_REQUEST << 24) | req_noscope_len);
--		rc = smb_send(server, smb_buf, 0x44);
--		kfree(ses_init_buf);
--		/*
--		 * RFC1001 layer in at least one server
--		 * requires very short break before negprot
--		 * presumably because not expecting negprot
--		 * to follow so fast.  This is a simple
--		 * solution that works without
--		 * complicating the code and causes no
--		 * significant slowing down on mount
--		 * for everyone else
--		 */
--		usleep_range(1000, 2000);
--	}
- 	/*
--	 * else the negprot may still work without this
--	 * even though malloc failed
-+	 * As per rfc1002, @len must be the number of bytes that follows the
-+	 * length field of a rfc1002 session request payload.
-+	 */
-+	len = sizeof(req) - offsetof(struct rfc1002_session_packet, trailer.session_req);
-+
-+	smb_buf->smb_buf_length = cpu_to_be32((RFC1002_SESSION_REQUEST << 24) | len);
-+	rc = smb_send(server, smb_buf, len);
 +	/*
-+	 * RFC1001 layer in at least one server requires very short break before
-+	 * negprot presumably because not expecting negprot to follow so fast.
-+	 * This is a simple solution that works without complicating the code
-+	 * and causes no significant slowing down on mount for everyone else
- 	 */
-+	usleep_range(1000, 2000);
++	 * in future we may get cifs_io_parms passed in from the caller,
++	 * but for now we construct it here...
++	 */
++	_io_parms = (struct cifs_io_parms) {
++		.tcon = tcon,
++		.server = server,
++		.offset = wdata->offset,
++		.length = wdata->bytes,
++		.persistent_fid = wdata->cfile->fid.persistent_fid,
++		.volatile_fid = wdata->cfile->fid.volatile_fid,
++		.pid = wdata->pid,
++	};
++	io_parms = &_io_parms;
++
+ 	rc = smb2_plain_req_init(SMB2_WRITE, tcon, server,
+ 				 (void **) &req, &total_len);
+ 	if (rc)
+@@ -4517,26 +4534,31 @@ smb2_async_writev(struct cifs_writedata
+ 		flags |= CIFS_TRANSFORM_REQ;
  
- 	return rc;
- }
--- 
-2.39.2
-
+ 	shdr = (struct smb2_hdr *)req;
+-	shdr->Id.SyncId.ProcessId = cpu_to_le32(wdata->cfile->pid);
++	shdr->Id.SyncId.ProcessId = cpu_to_le32(io_parms->pid);
+ 
+-	req->PersistentFileId = wdata->cfile->fid.persistent_fid;
+-	req->VolatileFileId = wdata->cfile->fid.volatile_fid;
++	req->PersistentFileId = io_parms->persistent_fid;
++	req->VolatileFileId = io_parms->volatile_fid;
+ 	req->WriteChannelInfoOffset = 0;
+ 	req->WriteChannelInfoLength = 0;
+ 	req->Channel = 0;
+-	req->Offset = cpu_to_le64(wdata->offset);
++	req->Offset = cpu_to_le64(io_parms->offset);
+ 	req->DataOffset = cpu_to_le16(
+ 				offsetof(struct smb2_write_req, Buffer));
+ 	req->RemainingBytes = 0;
+ 
+-	trace_smb3_write_enter(0 /* xid */, wdata->cfile->fid.persistent_fid,
+-		tcon->tid, tcon->ses->Suid, wdata->offset, wdata->bytes);
++	trace_smb3_write_enter(0 /* xid */,
++			       io_parms->persistent_fid,
++			       io_parms->tcon->tid,
++			       io_parms->tcon->ses->Suid,
++			       io_parms->offset,
++			       io_parms->length);
++
+ #ifdef CONFIG_CIFS_SMB_DIRECT
+ 	/*
+ 	 * If we want to do a server RDMA read, fill in and append
+ 	 * smbd_buffer_descriptor_v1 to the end of write request
+ 	 */
+-	if (server->rdma && !server->sign && wdata->bytes >=
++	if (server->rdma && !server->sign && io_parms->length >=
+ 		server->smbd_conn->rdma_readwrite_threshold) {
+ 
+ 		struct smbd_buffer_descriptor_v1 *v1;
+@@ -4590,14 +4612,14 @@ smb2_async_writev(struct cifs_writedata
+ 	}
+ #endif
+ 	cifs_dbg(FYI, "async write at %llu %u bytes\n",
+-		 wdata->offset, wdata->bytes);
++		 io_parms->offset, io_parms->length);
+ 
+ #ifdef CONFIG_CIFS_SMB_DIRECT
+ 	/* For RDMA read, I/O size is in RemainingBytes not in Length */
+ 	if (!wdata->mr)
+-		req->Length = cpu_to_le32(wdata->bytes);
++		req->Length = cpu_to_le32(io_parms->length);
+ #else
+-	req->Length = cpu_to_le32(wdata->bytes);
++	req->Length = cpu_to_le32(io_parms->length);
+ #endif
+ 
+ 	if (wdata->credits.value > 0) {
+@@ -4605,7 +4627,7 @@ smb2_async_writev(struct cifs_writedata
+ 						    SMB2_MAX_BUFFER_SIZE));
+ 		shdr->CreditRequest = cpu_to_le16(le16_to_cpu(shdr->CreditCharge) + 8);
+ 
+-		rc = adjust_credits(server, &wdata->credits, wdata->bytes);
++		rc = adjust_credits(server, &wdata->credits, io_parms->length);
+ 		if (rc)
+ 			goto async_writev_out;
+ 
+@@ -4618,9 +4640,12 @@ smb2_async_writev(struct cifs_writedata
+ 
+ 	if (rc) {
+ 		trace_smb3_write_err(0 /* no xid */,
+-				     req->PersistentFileId,
+-				     tcon->tid, tcon->ses->Suid, wdata->offset,
+-				     wdata->bytes, rc);
++				     io_parms->persistent_fid,
++				     io_parms->tcon->tid,
++				     io_parms->tcon->ses->Suid,
++				     io_parms->offset,
++				     io_parms->length,
++				     rc);
+ 		kref_put(&wdata->refcount, release);
+ 		cifs_stats_fail_inc(tcon, SMB2_WRITE_HE);
+ 	}
 
 
