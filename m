@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869C8BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:52:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1554C433EF;
-	Tue,  7 Mar 2023 17:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B129BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:52:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00870C433EF;
+	Tue,  7 Mar 2023 17:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211561;
-	bh=L0wTZ31N6P3KERkNZ5z/0tXuCJP3/Nf+rc0d6EopIw8=;
+	s=korg; t=1678211564;
+	bh=Z4qy3MFTkul+54Agg3akvYeznF+Z8UQKWOBT2oj1r/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cWCk/VpmjR9oApo8nLGiTtaEeKRlh6kJciJB/r5t1DkeUDO29Yoi3U0MMaXLSMqOm
-	 Ocfn2BxNWKAZlMxYHoaP5ST/A2eVv3JxMsKVNtpAvWCymMm1LLoBrrxvk+G49nAcPM
-	 ZCGjhinU3V7vDST0eyhvCcw7dY6LIg/vrCfYYGkQ=
+	b=lt3KhLm45PpZ0PO+v/Y6HbGCt0csh42k9CpNxWSailI+IK4POtKqmWhFARd3jEc83
+	 eFFugqs5KIb1mgemhNGCXdsnV2uOCh+ZYkREzeM+bc5NKUWi1GN/Y2rwfc9EmMlxBi
+	 G6QXskdkyRfbZ7NeeZ/3qoHsj2wPRUeV4RP0yHiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Gover <pmw.gover@yahoo.co.uk>,
-	Stable@vger.kernel.org,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.2 0903/1001] wifi: rtw88: use RTW_FLAG_POWERON flag to prevent to power on/off twice
-Date: Tue,  7 Mar 2023 18:01:15 +0100
-Message-Id: <20230307170101.201165332@linuxfoundation.org>
+Subject: [PATCH 6.2 0904/1001] wifi: rtl8xxxu: Use a longer retry limit of 48
+Date: Tue,  7 Mar 2023 18:01:16 +0100
+Message-Id: <20230307170101.244701312@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,125 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit 4a267bc5ea8f159b614d0549030216d0434eccca upstream.
+commit 2a86aa9a1892d60ef2e3f310f5b42b8b05546d65 upstream.
 
-Use power state to decide whether we can enter or leave IPS accurately,
-and then prevent to power on/off twice.
+The Realtek rate control algorithm goes back and forth a lot between
+the highest and the lowest rate it's allowed to use. This is due to
+a lot of frames being dropped because the retry limits set by
+IEEE80211_CONF_CHANGE_RETRY_LIMITS are too low. (Experimentally, they
+are 4 for long frames and 7 for short frames.)
 
-The commit 6bf3a083407b ("wifi: rtw88: add flag check before enter or leave IPS")
-would like to prevent this as well, but it still can't entirely handle all
-cases. The exception is that WiFi gets connected and does suspend/resume,
-it will power on twice and cause it failed to power on after resuming,
-like:
+The vendor drivers hardcode the value 48 for both retry limits (for
+station mode), which makes dropped frames very rare and thus the rate
+control is more stable.
 
-  rtw_8723de 0000:03:00.0: failed to poll offset=0x6 mask=0x2 value=0x2
-  rtw_8723de 0000:03:00.0: mac power on failed
-  rtw_8723de 0000:03:00.0: failed to power on mac
-  rtw_8723de 0000:03:00.0: leave idle state failed
-  rtw_8723de 0000:03:00.0: failed to leave ips state
-  rtw_8723de 0000:03:00.0: failed to leave idle state
-  rtw_8723de 0000:03:00.0: failed to send h2c command
+Because most Realtek chips handle the rate control in the firmware,
+which can't be modified, ignore the limits set by
+IEEE80211_CONF_CHANGE_RETRY_LIMITS and use the value 48 (set during
+chip initialisation), same as the vendor drivers.
 
-To fix this, introduce new flag RTW_FLAG_POWERON to reflect power state,
-and call rtw_mac_pre_system_cfg() to configure registers properly between
-power-off/-on.
-
-Reported-by: Paul Gover <pmw.gover@yahoo.co.uk>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217016
-Fixes: 6bf3a083407b ("wifi: rtw88: add flag check before enter or leave IPS")
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230216053633.20366-1-pkshih@realtek.com
+Link: https://lore.kernel.org/r/477d745b-6bac-111d-403c-487fc19aa30d@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/coex.c |    2 +-
- drivers/net/wireless/realtek/rtw88/mac.c  |   10 ++++++++++
- drivers/net/wireless/realtek/rtw88/main.h |    2 +-
- drivers/net/wireless/realtek/rtw88/ps.c   |    4 ++--
- drivers/net/wireless/realtek/rtw88/wow.c  |    2 +-
- 5 files changed, 15 insertions(+), 5 deletions(-)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c |    9 ---------
+ 1 file changed, 9 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtw88/coex.c
-+++ b/drivers/net/wireless/realtek/rtw88/coex.c
-@@ -4056,7 +4056,7 @@ void rtw_coex_display_coex_info(struct r
- 		   rtwdev->stats.tx_throughput, rtwdev->stats.rx_throughput);
- 	seq_printf(m, "%-40s = %u/ %u/ %u\n",
- 		   "IPS/ Low Power/ PS mode",
--		   test_bit(RTW_FLAG_INACTIVE_PS, rtwdev->flags),
-+		   !test_bit(RTW_FLAG_POWERON, rtwdev->flags),
- 		   test_bit(RTW_FLAG_LEISURE_PS_DEEP, rtwdev->flags),
- 		   rtwdev->lps_conf.mode);
- 
---- a/drivers/net/wireless/realtek/rtw88/mac.c
-+++ b/drivers/net/wireless/realtek/rtw88/mac.c
-@@ -273,6 +273,11 @@ static int rtw_mac_power_switch(struct r
- 	if (rtw_pwr_seq_parser(rtwdev, pwr_seq))
- 		return -EINVAL;
- 
-+	if (pwr_on)
-+		set_bit(RTW_FLAG_POWERON, rtwdev->flags);
-+	else
-+		clear_bit(RTW_FLAG_POWERON, rtwdev->flags);
-+
- 	return 0;
- }
- 
-@@ -335,6 +340,11 @@ int rtw_mac_power_on(struct rtw_dev *rtw
- 	ret = rtw_mac_power_switch(rtwdev, true);
- 	if (ret == -EALREADY) {
- 		rtw_mac_power_switch(rtwdev, false);
-+
-+		ret = rtw_mac_pre_system_cfg(rtwdev);
-+		if (ret)
-+			goto err;
-+
- 		ret = rtw_mac_power_switch(rtwdev, true);
- 		if (ret)
- 			goto err;
---- a/drivers/net/wireless/realtek/rtw88/main.h
-+++ b/drivers/net/wireless/realtek/rtw88/main.h
-@@ -356,7 +356,7 @@ enum rtw_flags {
- 	RTW_FLAG_RUNNING,
- 	RTW_FLAG_FW_RUNNING,
- 	RTW_FLAG_SCANNING,
--	RTW_FLAG_INACTIVE_PS,
-+	RTW_FLAG_POWERON,
- 	RTW_FLAG_LEISURE_PS,
- 	RTW_FLAG_LEISURE_PS_DEEP,
- 	RTW_FLAG_DIG_DISABLE,
---- a/drivers/net/wireless/realtek/rtw88/ps.c
-+++ b/drivers/net/wireless/realtek/rtw88/ps.c
-@@ -25,7 +25,7 @@ static int rtw_ips_pwr_up(struct rtw_dev
- 
- int rtw_enter_ips(struct rtw_dev *rtwdev)
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -5954,7 +5954,6 @@ static int rtl8xxxu_config(struct ieee80
  {
--	if (test_and_set_bit(RTW_FLAG_INACTIVE_PS, rtwdev->flags))
-+	if (!test_bit(RTW_FLAG_POWERON, rtwdev->flags))
- 		return 0;
+ 	struct rtl8xxxu_priv *priv = hw->priv;
+ 	struct device *dev = &priv->udev->dev;
+-	u16 val16;
+ 	int ret = 0, channel;
+ 	bool ht40;
  
- 	rtw_coex_ips_notify(rtwdev, COEX_IPS_ENTER);
-@@ -50,7 +50,7 @@ int rtw_leave_ips(struct rtw_dev *rtwdev
- {
- 	int ret;
+@@ -5964,14 +5963,6 @@ static int rtl8xxxu_config(struct ieee80
+ 			 __func__, hw->conf.chandef.chan->hw_value,
+ 			 changed, hw->conf.chandef.width);
  
--	if (!test_and_clear_bit(RTW_FLAG_INACTIVE_PS, rtwdev->flags))
-+	if (test_bit(RTW_FLAG_POWERON, rtwdev->flags))
- 		return 0;
- 
- 	rtw_hci_link_ps(rtwdev, false);
---- a/drivers/net/wireless/realtek/rtw88/wow.c
-+++ b/drivers/net/wireless/realtek/rtw88/wow.c
-@@ -592,7 +592,7 @@ static int rtw_wow_leave_no_link_ps(stru
- 		if (rtw_get_lps_deep_mode(rtwdev) != LPS_DEEP_MODE_NONE)
- 			rtw_leave_lps_deep(rtwdev);
- 	} else {
--		if (test_bit(RTW_FLAG_INACTIVE_PS, rtwdev->flags)) {
-+		if (!test_bit(RTW_FLAG_POWERON, rtwdev->flags)) {
- 			rtw_wow->ips_enabled = true;
- 			ret = rtw_leave_ips(rtwdev);
- 			if (ret)
+-	if (changed & IEEE80211_CONF_CHANGE_RETRY_LIMITS) {
+-		val16 = ((hw->conf.long_frame_max_tx_count <<
+-			  RETRY_LIMIT_LONG_SHIFT) & RETRY_LIMIT_LONG_MASK) |
+-			((hw->conf.short_frame_max_tx_count <<
+-			  RETRY_LIMIT_SHORT_SHIFT) & RETRY_LIMIT_SHORT_MASK);
+-		rtl8xxxu_write16(priv, REG_RETRY_LIMIT, val16);
+-	}
+-
+ 	if (changed & IEEE80211_CONF_CHANGE_CHANNEL) {
+ 		switch (hw->conf.chandef.width) {
+ 		case NL80211_CHAN_WIDTH_20_NOHT:
 
 
