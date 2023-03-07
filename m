@@ -1,30 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DEA5BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D5CC4339B;
-	Tue,  7 Mar 2023 17:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30915BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:30:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5495FC433EF;
+	Tue,  7 Mar 2023 17:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210198;
-	bh=4Nt92KzbsqU8PigjDhTRfGAusiZGoIGgOoXHeJkDaRM=;
+	s=korg; t=1678210202;
+	bh=iwG3ytSkjrz3tbNSkwVXtayFD/crCkt5s0zdSOXZ75U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yhf7BuVGF4vnbrJetJy2yNT5MXZfekPFIClOVNSEpD05ipFOIMPJVmEDFXyxr57ec
-	 eA21QLhPACvLKOQkcSSDq7lwoAW2WXA1TyUn4EoxscV9VQyqG4pDjBzTvRQ3s9Gjpe
-	 1CL+anJCI4sRR6pD41+ho2WQ1om1SaMujkp1ZZMk=
+	b=ghpPO+YH1UljMlEZd2OB/2bW/mTOESlngqheqIQa6IeH/HdsD0TZ7CQzwXDvFo0Fb
+	 XNSxLnqnZXLKhfqLb5FDS2kqbWjTLVTvEHzYMKILcFutNf4a4nkBEjTBPouijxZ7f3
+	 lR7faHlVn06oAItTRa8v99S6r2ACQNESC1bm9dvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	David Howells <dhowells@redhat.com>,
-	Tom Talpey <tom@talpey.com>,
-	Steve French <stfrench@microsoft.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	James Clark <james.clark@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Stephane Eranian <eranian@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0457/1001] cifs: Fix lost destroy smbd connection when MR allocate failed
-Date: Tue,  7 Mar 2023 17:53:49 +0100
-Message-Id: <20230307170041.205711239@linuxfoundation.org>
+Subject: [PATCH 6.2 0466/1001] perf inject: Use perf_data__read() for auxtrace
+Date: Tue,  7 Mar 2023 17:53:58 +0100
+Message-Id: <20230307170041.621939769@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,40 +43,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit e9d3401d95d62a9531082cd2453ed42f2740e3fd ]
+[ Upstream commit 1746212daeba95e9ae1639227dc0c3591d41deeb ]
 
-If the MR allocate failed, the smb direct connection info is NULL,
-then smbd_destroy() will directly return, then the connection info
-will be leaked.
+In copy_bytes(), it reads the data from the (input) fd and writes it to
+the output file.  But it does with the read(2) unconditionally which
+caused a problem of mixing buffered vs unbuffered I/O together.
 
-Let's set the smb direct connection info to the server before call
-smbd_destroy().
+You can see the problem when using pipes.
 
-Fixes: c7398583340a ("CIFS: SMBD: Implement RDMA memory registration")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Acked-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Tom Talpey <tom@talpey.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+  $ perf record -e intel_pt// -o- true | perf inject -b > /dev/null
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.000 MB - ]
+  0x45c0 [0x30]: failed to process type: 71
+
+It should use perf_data__read() to honor the 'use_stdio' setting.
+
+Fixes: 601366678c93618f ("perf data: Allow to use stdio functions for pipe mode")
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: James Clark <james.clark@arm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Stephane Eranian <eranian@google.com>
+Link: https://lore.kernel.org/r/20230131023350.1903992-2-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smbdirect.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/builtin-inject.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/cifs/smbdirect.c b/fs/cifs/smbdirect.c
-index 8c816b25ce7c6..101dab87cad1a 100644
---- a/fs/cifs/smbdirect.c
-+++ b/fs/cifs/smbdirect.c
-@@ -1700,6 +1700,7 @@ static struct smbd_connection *_smbd_get_connection(
+diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
+index 3f4e4dd5abf31..f8182417b7341 100644
+--- a/tools/perf/builtin-inject.c
++++ b/tools/perf/builtin-inject.c
+@@ -215,14 +215,14 @@ static int perf_event__repipe_event_update(struct perf_tool *tool,
  
- allocate_mr_failed:
- 	/* At this point, need to a full transport shutdown */
-+	server->smbd_conn = info;
- 	smbd_destroy(server);
- 	return NULL;
+ #ifdef HAVE_AUXTRACE_SUPPORT
  
+-static int copy_bytes(struct perf_inject *inject, int fd, off_t size)
++static int copy_bytes(struct perf_inject *inject, struct perf_data *data, off_t size)
+ {
+ 	char buf[4096];
+ 	ssize_t ssz;
+ 	int ret;
+ 
+ 	while (size > 0) {
+-		ssz = read(fd, buf, min(size, (off_t)sizeof(buf)));
++		ssz = perf_data__read(data, buf, min(size, (off_t)sizeof(buf)));
+ 		if (ssz < 0)
+ 			return -errno;
+ 		ret = output_bytes(inject, buf, ssz);
+@@ -260,7 +260,7 @@ static s64 perf_event__repipe_auxtrace(struct perf_session *session,
+ 		ret = output_bytes(inject, event, event->header.size);
+ 		if (ret < 0)
+ 			return ret;
+-		ret = copy_bytes(inject, perf_data__fd(session->data),
++		ret = copy_bytes(inject, session->data,
+ 				 event->auxtrace.size);
+ 	} else {
+ 		ret = output_bytes(inject, event,
 -- 
 2.39.2
 
