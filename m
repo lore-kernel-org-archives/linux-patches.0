@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C81BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1D7C433EF;
-	Tue,  7 Mar 2023 17:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C43BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDC3C433EF;
+	Tue,  7 Mar 2023 17:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211135;
-	bh=Vwe2LHrWBi9+Q2jtRnPjURvWb4VjOpcl+xChvYJJTlg=;
+	s=korg; t=1678211138;
+	bh=+JqRYGk7xqyH2ZR1SbB3gPp/ILRyVUZwlXqz7exnFPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jVYe/8O9LfvOloxjmV5pBXfgnDyF4rvgkUD68u0y9Wj4yYs8TALumvvPso33Ocxeu
-	 SgSxguhSyKJpIkcI8bY3K45a4wDtKwtHmvfzkKFRQ2BTSFodubS06ezZeRK8USBCh5
-	 +wy7g68i/CmQSE82XZtnsikLZ3uZggrEbnZRYjb0=
+	b=fAj3FQUMLSK/Qd4WVfWC2W+uBl8kr6cx3X63Z2c96OfKVBSqubbDIXwolN4FF3YH4
+	 zjqfV5nz9ka5/d4weGTw6lg4sGNfgt/K2WzB4j62qo5Xtluu0CS1d6XWXy24hylmWG
+	 aB5nE57ZrA45rqMdNMXwXl91rnI0rdOLhjI/aoGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.2 0757/1001] io_uring: add a conditional reschedule to the IOPOLL cancelation loop
-Date: Tue,  7 Mar 2023 17:58:49 +0100
-Message-Id: <20230307170054.572814166@linuxfoundation.org>
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.2 0766/1001] s390/ipl: add loadparm parameter to eckd ipl/reipl data
+Date: Tue,  7 Mar 2023 17:58:58 +0100
+Message-Id: <20230307170055.006510681@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -33,81 +34,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-commit fcc926bb857949dbfa51a7d95f3f5ebc657f198c upstream.
+commit 6bb361d5d8eb1dbc9e0b190eeee27a2ac4d1119f upstream.
 
-If the kernel is configured with CONFIG_PREEMPT_NONE, we could be
-sitting in a tight loop reaping events but not giving them a chance to
-finish. This results in a trace ala:
+commit 87fd22e0ae92 ("s390/ipl: add eckd support") missed to add the
+loadparm attribute to the new eckd ipl/reipl data.
 
-rcu: INFO: rcu_sched self-detected stall on CPU
-rcu: 	2-...!: (5249 ticks this GP) idle=935c/1/0x4000000000000000 softirq=4265/4274 fqs=1
-	(t=5251 jiffies g=465 q=4135 ncpus=4)
-rcu: rcu_sched kthread starved for 5249 jiffies! g465 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x0 ->cpu=0
-rcu: 	Unless rcu_sched kthread gets sufficient CPU time, OOM is now expected behavior.
-rcu: RCU grace-period kthread stack dump:
-task:rcu_sched       state:R  running task     stack:0     pid:12    ppid:2      flags:0x00000008
-Call trace:
- __switch_to+0xb0/0xc8
- __schedule+0x43c/0x520
- schedule+0x4c/0x98
- schedule_timeout+0xbc/0xdc
- rcu_gp_fqs_loop+0x308/0x344
- rcu_gp_kthread+0xd8/0xf0
- kthread+0xb8/0xc8
- ret_from_fork+0x10/0x20
-rcu: Stack dump where RCU GP kthread last ran:
-Task dump for CPU 0:
-task:kworker/u8:10   state:R  running task     stack:0     pid:89    ppid:2      flags:0x0000000a
-Workqueue: events_unbound io_ring_exit_work
-Call trace:
- __switch_to+0xb0/0xc8
- 0xffff0000c8fefd28
-CPU: 2 PID: 95 Comm: kworker/u8:13 Not tainted 6.2.0-rc5-00042-g40316e337c80-dirty #2759
-Hardware name: linux,dummy-virt (DT)
-Workqueue: events_unbound io_ring_exit_work
-pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-pc : io_do_iopoll+0x344/0x360
-lr : io_do_iopoll+0xb8/0x360
-sp : ffff800009bebc60
-x29: ffff800009bebc60 x28: 0000000000000000 x27: 0000000000000000
-x26: ffff0000c0f67d48 x25: ffff0000c0f67840 x24: ffff800008950024
-x23: 0000000000000001 x22: 0000000000000000 x21: ffff0000c27d3200
-x20: ffff0000c0f67840 x19: ffff0000c0f67800 x18: 0000000000000000
-x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-x14: 0000000000000001 x13: 0000000000000001 x12: 0000000000000000
-x11: 0000000000000179 x10: 0000000000000870 x9 : ffff800009bebd60
-x8 : ffff0000c27d3ad0 x7 : fefefefefefefeff x6 : 0000646e756f626e
-x5 : ffff0000c0f67840 x4 : 0000000000000000 x3 : ffff0000c2398000
-x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
-Call trace:
- io_do_iopoll+0x344/0x360
- io_uring_try_cancel_requests+0x21c/0x334
- io_ring_exit_work+0x90/0x40c
- process_one_work+0x1a4/0x254
- worker_thread+0x1ec/0x258
- kthread+0xb8/0xc8
- ret_from_fork+0x10/0x20
-
-Add a cond_resched() in the cancelation IOPOLL loop to fix this.
-
-Cc: stable@vger.kernel.org # 5.10+
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 87fd22e0ae92 ("s390/ipl: add eckd support")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/s390/kernel/ipl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3053,6 +3053,7 @@ static __cold bool io_uring_try_cancel_r
- 		while (!wq_list_empty(&ctx->iopoll_list)) {
- 			io_iopoll_try_reap_events(ctx);
- 			ret = true;
-+			cond_resched();
- 		}
- 	}
+diff --git a/arch/s390/kernel/ipl.c b/arch/s390/kernel/ipl.c
+index d7b433261145..5f0f5c86963a 100644
+--- a/arch/s390/kernel/ipl.c
++++ b/arch/s390/kernel/ipl.c
+@@ -593,6 +593,7 @@ static struct attribute *ipl_eckd_attrs[] = {
+ 	&sys_ipl_type_attr.attr,
+ 	&sys_ipl_eckd_bootprog_attr.attr,
+ 	&sys_ipl_eckd_br_chr_attr.attr,
++	&sys_ipl_ccw_loadparm_attr.attr,
+ 	&sys_ipl_device_attr.attr,
+ 	&sys_ipl_secure_attr.attr,
+ 	&sys_ipl_has_secure_attr.attr,
+@@ -908,6 +909,7 @@ DEFINE_GENERIC_LOADPARM(fcp);
+ DEFINE_GENERIC_LOADPARM(nvme);
+ DEFINE_GENERIC_LOADPARM(ccw);
+ DEFINE_GENERIC_LOADPARM(nss);
++DEFINE_GENERIC_LOADPARM(eckd);
  
+ static ssize_t reipl_fcp_clear_show(struct kobject *kobj,
+ 				    struct kobj_attribute *attr, char *page)
+@@ -1129,6 +1131,7 @@ static struct attribute *reipl_eckd_attrs[] = {
+ 	&sys_reipl_eckd_device_attr.attr,
+ 	&sys_reipl_eckd_bootprog_attr.attr,
+ 	&sys_reipl_eckd_br_chr_attr.attr,
++	&sys_reipl_eckd_loadparm_attr.attr,
+ 	NULL,
+ };
+ 
+-- 
+2.39.2
+
 
 
