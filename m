@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F2FBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:32:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E4DC433D2;
-	Tue,  7 Mar 2023 18:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6543BBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:32:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAEE3C433EF;
+	Tue,  7 Mar 2023 18:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213924;
-	bh=Rhg17fZJvSBTmZQ07asP2+nngFnAzMKw0sAvwzynhG4=;
+	s=korg; t=1678213927;
+	bh=dWi15JBGD2xuVUf0ZmnTj4PidPtOupBFmg1mjwECCpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eJdq0+FSijfdQfhdd7CF5c4G8t+aE8//Wf51qugzrV1uXoqsz6/IhFhTCvectQzah
-	 2Nkrw5YEwSy7fne9PD492z2QwXnykfpQMLY8rJDtGoBgHzhtz5JAJ8fAWt2sbbfmSU
-	 8ZGveXSwepcbqXXSnfsw8PNP/eZjAp6zQRJtC2yY=
+	b=AOmn8oXD3/Zc7Sh99ysuXjGCFs/KlnOSIxok9tvT9h1xGsAGURh4bPQAOn7JDOwVD
+	 gmhYYtAmSYnl+8CU3FpsQZlzXB7RFojXEJnveOG50Px1RNc6OGL1RM66myDkdvtsVA
+	 arpxmojnu7ZN9bo8+/fScDJK6T+uQzGY3URJJilQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
+	David Lamparter <equinox@diac24.net>,
+	Eric Dumazet <edumazet@google.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 662/885] io_uring/rsrc: disallow multi-source reg buffers
-Date: Tue,  7 Mar 2023 17:59:56 +0100
-Message-Id: <20230307170030.923135015@linuxfoundation.org>
+Subject: [PATCH 6.1 663/885] io_uring: remove MSG_NOSIGNAL from recvmsg
+Date: Tue,  7 Mar 2023 17:59:57 +0100
+Message-Id: <20230307170030.973826647@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,48 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: David Lamparter <equinox@diac24.net>
 
-commit edd478269640b360c6f301f2baa04abdda563ef3 upstream.
+commit 7605c43d67face310b4b87dee1a28bc0c8cd8c0f upstream.
 
-If two or more mappings go back to back to each other they can be passed
-into io_uring to be registered as a single registered buffer. That would
-even work if mappings came from different sources, e.g. it's possible to
-mix in this way anon pages and pages from shmem or hugetlb. That is not
-a problem but it'd rather be less prone if we forbid such mixing.
+MSG_NOSIGNAL is not applicable for the receiving side, SIGPIPE is
+generated when trying to write to a "broken pipe".  AF_PACKET's
+packet_recvmsg() does enforce this, giving back EINVAL when MSG_NOSIGNAL
+is set - making it unuseable in io_uring's recvmsg.
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Remove MSG_NOSIGNAL from io_recvmsg_prep().
+
+Cc: stable@vger.kernel.org # v5.10+
+Signed-off-by: David Lamparter <equinox@diac24.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230224150123.128346-1-equinox@diac24.net
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rsrc.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ io_uring/net.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -1147,14 +1147,17 @@ struct page **io_pin_pages(unsigned long
- 	pret = pin_user_pages(ubuf, nr_pages, FOLL_WRITE | FOLL_LONGTERM,
- 			      pages, vmas);
- 	if (pret == nr_pages) {
-+		struct file *file = vmas[0]->vm_file;
-+
- 		/* don't support file backed memory */
- 		for (i = 0; i < nr_pages; i++) {
--			struct vm_area_struct *vma = vmas[i];
--
--			if (vma_is_shmem(vma))
-+			if (vmas[i]->vm_file != file) {
-+				ret = -EINVAL;
-+				break;
-+			}
-+			if (!file)
- 				continue;
--			if (vma->vm_file &&
--			    !is_file_hugepages(vma->vm_file)) {
-+			if (!vma_is_shmem(vmas[i]) && !is_file_hugepages(file)) {
- 				ret = -EOPNOTSUPP;
- 				break;
- 			}
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -553,7 +553,7 @@ int io_recvmsg_prep(struct io_kiocb *req
+ 	sr->flags = READ_ONCE(sqe->ioprio);
+ 	if (sr->flags & ~(RECVMSG_FLAGS))
+ 		return -EINVAL;
+-	sr->msg_flags = READ_ONCE(sqe->msg_flags) | MSG_NOSIGNAL;
++	sr->msg_flags = READ_ONCE(sqe->msg_flags);
+ 	if (sr->msg_flags & MSG_DONTWAIT)
+ 		req->flags |= REQ_F_NOWAIT;
+ 	if (sr->msg_flags & MSG_ERRQUEUE)
 
 
