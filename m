@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E11BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:14:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0CFC433D2;
-	Tue,  7 Mar 2023 17:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041C0BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:14:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E80BC433EF;
+	Tue,  7 Mar 2023 17:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209244;
-	bh=uYf6Ix9X5JwD3yvYIMdWonOHbYAciUUb6PJoVTFp1Ao=;
+	s=korg; t=1678209247;
+	bh=ZkNxk2A7W6zT9g8QRZolMj0vTxWc4QVw+JfRUV1wO7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hFoy9MXWYP9w/qXZQErKVSTdmRvEWZqcD24pT8nV1RQIH57O7gidhE6uNHKc9XkQj
-	 C2IVrM2N84RFLyLAjfXIX6G3nPR8BSC4lwZUrFKxUfUsMlss90PKSxY7vOI/hZ71tw
-	 UwmiqlAUSrRqfcms8ilvCDQbRK0BzX1IME1p2l6U=
+	b=NcQyyhuszj9Su0UrlsvnLzAFiIsd6rmt/u3e3gJ2FqgJIxLyFp3wlPK9mZ0vZ+Jhg
+	 9mNMSsPfJgMoFiKxVDBwRKCGBCJhJ0DG9ytqjbPyqXYa0IVat4KuUh5bnWSTyqFfrK
+	 6xLDqil8gaBW71Q6e4E3uPU16exnQQEBt7T/9FlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Jia Zhu <zhujia.zj@bytedance.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0126/1001] arm64: dts: qcom: pmk8350: Use the correct PON compatible
-Date: Tue,  7 Mar 2023 17:48:18 +0100
-Message-Id: <20230307170027.533389297@linuxfoundation.org>
+Subject: [PATCH 6.2 0127/1001] erofs: relinquish volume with mutex held
+Date: Tue,  7 Mar 2023 17:48:19 +0100
+Message-Id: <20230307170027.577427980@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,35 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Jingbo Xu <jefflexu@linux.alibaba.com>
 
-[ Upstream commit c0ee8e0ba5cc17623e63349a168b41e407b1eef0 ]
+[ Upstream commit 7032809a44d752b9e2275833787e0aa88a7540af ]
 
-A special compatible was introduced for PMK8350 both in the driver and
-the bindings to facilitate for 2 base registers (PBS & HLOS). Use it.
+Relinquish fscache volume with mutex held.  Otherwise if a new domain is
+registered when the old domain with the same name gets removed from the
+list but not relinquished yet, fscache may complain the collision.
 
-Fixes: b2de43136058 ("arm64: dts: qcom: pmk8350: Add peripherals for pmk8350")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230213212930.2115182-1-konrad.dybcio@linaro.org
+Fixes: 8b7adf1dff3d ("erofs: introduce fscache-based domain")
+Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Reviewed-by: Jia Zhu <zhujia.zj@bytedance.com>
+Link: https://lore.kernel.org/r/20230209063913.46341-4-jefflexu@linux.alibaba.com
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pmk8350.dtsi | 2 +-
+ fs/erofs/fscache.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pmk8350.dtsi b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-index 32f5e6af8c11c..f26fb7d32faf2 100644
---- a/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-@@ -21,7 +21,7 @@ pmk8350: pmic@PMK8350_SID {
- 		#size-cells = <0>;
- 
- 		pmk8350_pon: pon@1300 {
--			compatible = "qcom,pm8998-pon";
-+			compatible = "qcom,pmk8350-pon";
- 			reg = <0x1300>, <0x800>;
- 			reg-names = "hlos", "pbs";
- 
+diff --git a/fs/erofs/fscache.c b/fs/erofs/fscache.c
+index 014e209623762..a7923d6661301 100644
+--- a/fs/erofs/fscache.c
++++ b/fs/erofs/fscache.c
+@@ -337,8 +337,8 @@ static void erofs_fscache_domain_put(struct erofs_domain *domain)
+ 			kern_unmount(erofs_pseudo_mnt);
+ 			erofs_pseudo_mnt = NULL;
+ 		}
+-		mutex_unlock(&erofs_domain_list_lock);
+ 		fscache_relinquish_volume(domain->volume, NULL, false);
++		mutex_unlock(&erofs_domain_list_lock);
+ 		kfree(domain->domain_id);
+ 		kfree(domain);
+ 		return;
 -- 
 2.39.2
 
