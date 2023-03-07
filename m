@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B378BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:12:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C3BC433D2;
-	Tue,  7 Mar 2023 17:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FCEBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:12:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1116DC433D2;
+	Tue,  7 Mar 2023 17:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209154;
-	bh=xsOVThqsQh+ZVvZrztrjeT1qnorz+ErB+dbDMa4sqhk=;
+	s=korg; t=1678209157;
+	bh=NWTaQTAogvY3QayNfardVTEp0uyixYWLPwIj0FnNyuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pyuph6Mkc4CeE9i+o2b2c5Za40gIjUbwNKLRav2RhBkRzCgTLsYujuBt3m2nztHn0
-	 upJpDtl+oLHw/sFAFNQb9CQW2AdUXi1kF1CEF9TOpHWwP/dx822CV9m1fxu/FdNx8g
-	 8AhPvVnyPuge0cop4NSNJAyqJlmUjWkDoKWLSqPE=
+	b=PJQhEWYPQ3g5wHLk13Pqr8AmyHfYAlBNjYRMZ7A3EV5bFaFktbtSySkU6VbMG6DKL
+	 ZeTNAJI7umXOd96tXl8WkJmlm1QY85ckTOoEqxOIwleCJfbGJmEKslmkQzOmYvr117
+	 JY3v8cvoyi1tseVqcb17U0aSUu+9DGJtI01mNPds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Guy Briggs <rgb@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Jinke Han <hanjinke.666@bytedance.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0120/1001] io_uring,audit: dont log IORING_OP_MADVISE
-Date: Tue,  7 Mar 2023 17:48:12 +0100
-Message-Id: <20230307170027.299854995@linuxfoundation.org>
+Subject: [PATCH 6.2 0129/1001] block: Fix io statistics for cgroup in throttle path
+Date: Tue,  7 Mar 2023 17:48:21 +0100
+Message-Id: <20230307170027.663417213@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,35 +38,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Richard Guy Briggs <rgb@redhat.com>
+From: Jinke Han <hanjinke.666@bytedance.com>
 
-[ Upstream commit fbe870a72fd1ddc5e08c23764e23e5766f54aa87 ]
+[ Upstream commit 0f7c8f0f7934c389b0f9fa1f151e753d8de6348f ]
 
-fadvise and madvise both provide hints for caching or access pattern for
-file and memory respectively.  Skip them.
+In the current code, io statistics are missing for cgroup when bio
+was throttled by blk-throttle. Fix it by moving the unreaching code
+to submit_bio_noacct_nocheck.
 
-Fixes: 5bd2182d58e9 ("audit,io_uring,io-wq: add some basic audit support to io_uring")
-Signed-off-by: Richard Guy Briggs <rgb@redhat.com>
-Link: https://lore.kernel.org/r/b5dfdcd541115c86dbc774aa9dd502c964849c5f.1675282642.git.rgb@redhat.com
-Acked-by: Paul Moore <paul@paul-moore.com>
+Fixes: 3f98c753717c ("block: don't check bio in blk_throtl_dispatch_work_fn")
+Signed-off-by: Jinke Han <hanjinke.666@bytedance.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Acked-by: Muchun Song <songmuchun@bytedance.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230216032250.74230-1-hanjinke.666@bytedance.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/opdef.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/blk-core.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/io_uring/opdef.c b/io_uring/opdef.c
-index 3aa0d65c50e34..be45b76649a08 100644
---- a/io_uring/opdef.c
-+++ b/io_uring/opdef.c
-@@ -313,6 +313,7 @@ const struct io_op_def io_op_defs[] = {
- 	},
- 	[IORING_OP_MADVISE] = {
- 		.name			= "MADVISE",
-+		.audit_skip		= 1,
- 		.prep			= io_madvise_prep,
- 		.issue			= io_madvise,
- 	},
+diff --git a/block/blk-core.c b/block/blk-core.c
+index b5098355d8b27..0a55844dfde27 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -684,6 +684,18 @@ static void __submit_bio_noacct_mq(struct bio *bio)
+ 
+ void submit_bio_noacct_nocheck(struct bio *bio)
+ {
++	blk_cgroup_bio_start(bio);
++	blkcg_bio_issue_init(bio);
++
++	if (!bio_flagged(bio, BIO_TRACE_COMPLETION)) {
++		trace_block_bio_queue(bio);
++		/*
++		 * Now that enqueuing has been traced, we need to trace
++		 * completion as well.
++		 */
++		bio_set_flag(bio, BIO_TRACE_COMPLETION);
++	}
++
+ 	/*
+ 	 * We only want one ->submit_bio to be active at a time, else stack
+ 	 * usage with stacked devices could be a problem.  Use current->bio_list
+@@ -788,17 +800,6 @@ void submit_bio_noacct(struct bio *bio)
+ 
+ 	if (blk_throtl_bio(bio))
+ 		return;
+-
+-	blk_cgroup_bio_start(bio);
+-	blkcg_bio_issue_init(bio);
+-
+-	if (!bio_flagged(bio, BIO_TRACE_COMPLETION)) {
+-		trace_block_bio_queue(bio);
+-		/* Now that enqueuing has been traced, we need to trace
+-		 * completion as well.
+-		 */
+-		bio_set_flag(bio, BIO_TRACE_COMPLETION);
+-	}
+ 	submit_bio_noacct_nocheck(bio);
+ 	return;
+ 
 -- 
 2.39.2
 
