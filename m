@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBCFBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:09:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D28C433EF;
-	Tue,  7 Mar 2023 18:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1119BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:09:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E62C433D2;
+	Tue,  7 Mar 2023 18:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212577;
-	bh=0KuN3CZkEOygSQyyv47fcPCpC2vYIsVQAMRC+AAuncA=;
+	s=korg; t=1678212580;
+	bh=NkhGTQjfEg3PCOniQyzM+GV8UTZR8oOJLCu/M5uuEjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2I/XmtukI4LH8j/+1IogU00nIsmIwkk1X+8c0+WM02tcNCiSwPzAG5mu0R/H1jFoE
-	 HmsgQsfjwTBbGE+3BMvSjGtQ1hlDagyU2I18/wOnrCc+YybqKgmlhPk4BxNTFvWTkB
-	 eXRSinsQNPyZharcgtTZfvyTG/+abX6EZDl2ZW+U=
+	b=fLQ1I3aZ3A62Zq9Ll0Clzjk1CW0j/fynfuTczmoTBUa8IAcXjwVsm3aL08PTj+YS2
+	 s+hZOy7h074jwTgoWVnrsiyBSsSRZVHyjCxtWHqkgUNso7at+pG9ZtCqZQgDBzmCiA
+	 S4spNs50nK3KWuTSg46bv+3elGOXCQgEGUrZHVy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Dan Carpenter <error27@gmail.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 228/885] wifi: iwl4965: Add missing check for create_singlethread_workqueue()
-Date: Tue,  7 Mar 2023 17:52:42 +0100
-Message-Id: <20230307170011.929936557@linuxfoundation.org>
+Subject: [PATCH 6.1 229/885] wifi: mwifiex: fix loop iterator in mwifiex_update_ampdu_txwinsize()
+Date: Tue,  7 Mar 2023 17:52:43 +0100
+Message-Id: <20230307170011.968243187@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,70 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 26e6775f75517ad6844fe5b79bc5f3fa8c22ee61 ]
+[ Upstream commit 3cfb7df24cee0f5fdc4cc5d3176cab9aadfcb430 ]
 
-Add the check for the return value of the create_singlethread_workqueue()
-in order to avoid NULL pointer dereference.
+This code re-uses "i" to be the iterator for both the inside and outside
+loops.  It means the outside loop will exit earlier than intended.
 
-Fixes: b481de9ca074 ("[IWLWIFI]: add iwlwifi wireless drivers")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Fixes: d219b7eb3792 ("mwifiex: handle BT coex event to adjust Rx BA window size")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230209010748.45454-1-jiasheng@iscas.ac.cn
+Link: https://lore.kernel.org/r/Y+ERnaDaZD7RtLvX@kili
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlegacy/4965-mac.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/11n.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlegacy/4965-mac.c b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-index 943de47170c70..78dee8ccfebfe 100644
---- a/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-+++ b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-@@ -6211,10 +6211,12 @@ il4965_bg_txpower_work(struct work_struct *work)
- 	mutex_unlock(&il->mutex);
- }
- 
--static void
-+static int
- il4965_setup_deferred_work(struct il_priv *il)
+diff --git a/drivers/net/wireless/marvell/mwifiex/11n.c b/drivers/net/wireless/marvell/mwifiex/11n.c
+index 4af57e6d43932..90e4011008981 100644
+--- a/drivers/net/wireless/marvell/mwifiex/11n.c
++++ b/drivers/net/wireless/marvell/mwifiex/11n.c
+@@ -878,7 +878,7 @@ mwifiex_send_delba_txbastream_tbl(struct mwifiex_private *priv, u8 tid)
+  */
+ void mwifiex_update_ampdu_txwinsize(struct mwifiex_adapter *adapter)
  {
- 	il->workqueue = create_singlethread_workqueue(DRV_NAME);
-+	if (!il->workqueue)
-+		return -ENOMEM;
+-	u8 i;
++	u8 i, j;
+ 	u32 tx_win_size;
+ 	struct mwifiex_private *priv;
  
- 	init_waitqueue_head(&il->wait_command_queue);
- 
-@@ -6233,6 +6235,8 @@ il4965_setup_deferred_work(struct il_priv *il)
- 	timer_setup(&il->watchdog, il_bg_watchdog, 0);
- 
- 	tasklet_setup(&il->irq_tasklet, il4965_irq_tasklet);
-+
-+	return 0;
- }
- 
- static void
-@@ -6617,7 +6621,10 @@ il4965_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		goto out_disable_msi;
+@@ -909,8 +909,8 @@ void mwifiex_update_ampdu_txwinsize(struct mwifiex_adapter *adapter)
+ 		if (tx_win_size != priv->add_ba_param.tx_win_size) {
+ 			if (!priv->media_connected)
+ 				continue;
+-			for (i = 0; i < MAX_NUM_TID; i++)
+-				mwifiex_send_delba_txbastream_tbl(priv, i);
++			for (j = 0; j < MAX_NUM_TID; j++)
++				mwifiex_send_delba_txbastream_tbl(priv, j);
+ 		}
  	}
- 
--	il4965_setup_deferred_work(il);
-+	err = il4965_setup_deferred_work(il);
-+	if (err)
-+		goto out_free_irq;
-+
- 	il4965_setup_handlers(il);
- 
- 	/*********************************************
-@@ -6655,6 +6662,7 @@ il4965_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- out_destroy_workqueue:
- 	destroy_workqueue(il->workqueue);
- 	il->workqueue = NULL;
-+out_free_irq:
- 	free_irq(il->pci_dev->irq, il);
- out_disable_msi:
- 	pci_disable_msi(il->pci_dev);
+ }
 -- 
 2.39.2
 
