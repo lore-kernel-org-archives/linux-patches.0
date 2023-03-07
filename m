@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFE5BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:38:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F8EC4339C;
-	Tue,  7 Mar 2023 17:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF8CBA3F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:38:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139C3C433EF;
+	Tue,  7 Mar 2023 17:38:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210690;
-	bh=HnCjmypvKMF6e+p3h62DCRZRNvQl4nTWa8tOYy7k1yM=;
+	s=korg; t=1678210693;
+	bh=3mt4/Si+069yYsRqzcPvpa62Jure4uj9TPDeL57XWKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5C//R1rjwdIhSuR3tFKaFSgkb1HKPUj8cSrm/nj/NCdr8rqCfyvaFLuU0mbEJiBB
-	 m1sClmBSMRnMBqD6VvSNld/ZXvY2XUbBI+blF1JaaW7yDzFbK0GVXr+Zc9dgqx9KDD
-	 zwXJp12JzQFEIJziujusvanKf+CVwkQ3UwdkmlKY=
+	b=uedJPxe12omZgtxhg2OtwXyiWCF5v/BV4KeTNCxFL5uSLKI5WVkIrmj/KKv/mJdut
+	 V88PjvSC6C3LmWKX4vxXAs4Ffr2bh5UPQURilWsRL8PyoYBxEdZyxeRRIwE9O+1SA+
+	 3mBT6Bs9R7+IMMgKjMjQ0+lvf5BOa2yVKhiqvQ58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	coverity-bot <keescook+coverity-bot@chromium.org>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0621/1001] context_tracking: Fix noinstr vs KASAN
-Date: Tue,  7 Mar 2023 17:56:33 +0100
-Message-Id: <20230307170048.510133225@linuxfoundation.org>
+Subject: [PATCH 6.2 0593/1001] media: i2c: tc358746: fix ignoring read error in g_register callback
+Date: Tue,  7 Mar 2023 17:56:05 +0100
+Message-Id: <20230307170047.243782925@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,81 +37,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Marco Felsch <m.felsch@pengutronix.de>
 
-[ Upstream commit 0e26e1de0032779e43929174339429c16307a299 ]
+[ Upstream commit 9d33802c8bcf96c4099ffea4f392afa52897e556 ]
 
-Low level noinstr context-tracking code is calling out to instrumented
-code on KASAN:
+Currently we ignore the return value of tc358746_read() and return
+alawys return 0 which is wrong. Fix this by returning the actual return
+value of the read operation which is either 0 on success or an error
+value.
 
-  vmlinux.o: warning: objtool: __ct_user_enter+0x72: call to __kasan_check_write() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: __ct_user_exit+0x47: call to __kasan_check_write() leaves .noinstr.text section
+Addresses-Coverity-ID: 1527254 ("Error handling issues")
 
-Use even lower level atomic methods to avoid the instrumentation.
-
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230112195542.458034262@infradead.org
+Reported-by: coverity-bot <keescook+coverity-bot@chromium.org>
+Fixes: 80a21da36051 ("media: tc358746: add Toshiba TC358746 Parallel to CSI-2 bridge driver")
+Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/context_tracking.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/media/i2c/tc358746.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/context_tracking.c b/kernel/context_tracking.c
-index 77978e3723771..a09f1c19336ae 100644
---- a/kernel/context_tracking.c
-+++ b/kernel/context_tracking.c
-@@ -510,7 +510,7 @@ void noinstr __ct_user_enter(enum ctx_state state)
- 			 * In this we case we don't care about any concurrency/ordering.
- 			 */
- 			if (!IS_ENABLED(CONFIG_CONTEXT_TRACKING_IDLE))
--				atomic_set(&ct->state, state);
-+				arch_atomic_set(&ct->state, state);
- 		} else {
- 			/*
- 			 * Even if context tracking is disabled on this CPU, because it's outside
-@@ -527,7 +527,7 @@ void noinstr __ct_user_enter(enum ctx_state state)
- 			 */
- 			if (!IS_ENABLED(CONFIG_CONTEXT_TRACKING_IDLE)) {
- 				/* Tracking for vtime only, no concurrent RCU EQS accounting */
--				atomic_set(&ct->state, state);
-+				arch_atomic_set(&ct->state, state);
- 			} else {
- 				/*
- 				 * Tracking for vtime and RCU EQS. Make sure we don't race
-@@ -535,7 +535,7 @@ void noinstr __ct_user_enter(enum ctx_state state)
- 				 * RCU only requires RCU_DYNTICKS_IDX increments to be fully
- 				 * ordered.
- 				 */
--				atomic_add(state, &ct->state);
-+				arch_atomic_add(state, &ct->state);
- 			}
- 		}
- 	}
-@@ -630,12 +630,12 @@ void noinstr __ct_user_exit(enum ctx_state state)
- 			 * In this we case we don't care about any concurrency/ordering.
- 			 */
- 			if (!IS_ENABLED(CONFIG_CONTEXT_TRACKING_IDLE))
--				atomic_set(&ct->state, CONTEXT_KERNEL);
-+				arch_atomic_set(&ct->state, CONTEXT_KERNEL);
+diff --git a/drivers/media/i2c/tc358746.c b/drivers/media/i2c/tc358746.c
+index e7f27cbb57907..c5a0df300a06d 100644
+--- a/drivers/media/i2c/tc358746.c
++++ b/drivers/media/i2c/tc358746.c
+@@ -988,6 +988,7 @@ static int __maybe_unused
+ tc358746_g_register(struct v4l2_subdev *sd, struct v4l2_dbg_register *reg)
+ {
+ 	struct tc358746 *tc358746 = to_tc358746(sd);
++	int err;
  
- 		} else {
- 			if (!IS_ENABLED(CONFIG_CONTEXT_TRACKING_IDLE)) {
- 				/* Tracking for vtime only, no concurrent RCU EQS accounting */
--				atomic_set(&ct->state, CONTEXT_KERNEL);
-+				arch_atomic_set(&ct->state, CONTEXT_KERNEL);
- 			} else {
- 				/*
- 				 * Tracking for vtime and RCU EQS. Make sure we don't race
-@@ -643,7 +643,7 @@ void noinstr __ct_user_exit(enum ctx_state state)
- 				 * RCU only requires RCU_DYNTICKS_IDX increments to be fully
- 				 * ordered.
- 				 */
--				atomic_sub(state, &ct->state);
-+				arch_atomic_sub(state, &ct->state);
- 			}
- 		}
- 	}
+ 	/* 32-bit registers starting from CLW_DPHYCONTTX */
+ 	reg->size = reg->reg < CLW_DPHYCONTTX_REG ? 2 : 4;
+@@ -995,12 +996,12 @@ tc358746_g_register(struct v4l2_subdev *sd, struct v4l2_dbg_register *reg)
+ 	if (!pm_runtime_get_if_in_use(sd->dev))
+ 		return 0;
+ 
+-	tc358746_read(tc358746, reg->reg, (u32 *)&reg->val);
++	err = tc358746_read(tc358746, reg->reg, (u32 *)&reg->val);
+ 
+ 	pm_runtime_mark_last_busy(sd->dev);
+ 	pm_runtime_put_sync_autosuspend(sd->dev);
+ 
+-	return 0;
++	return err;
+ }
+ 
+ static int __maybe_unused
 -- 
 2.39.2
 
