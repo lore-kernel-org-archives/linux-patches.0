@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B329BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:30:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7D93C433A0;
-	Tue,  7 Mar 2023 18:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB8EBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:30:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8B0C433A1;
+	Tue,  7 Mar 2023 18:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213824;
-	bh=rSz7wD66J2/OqZXh7++Sp4ScITvva0newLdxJD29UtQ=;
+	s=korg; t=1678213827;
+	bh=DFOqLlMW5HU8+kwmUKhnoTHyj0qw8d1gOL+7Hmi6QYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VSACxqaYhOmfPA1jvEC9izEBYmlz2w+grJcxjJ9OuyxKb7/BbQkkUK3ofIeTOfy1q
-	 jEE2DVEDj952ieVE/+KAiX0PPEKrUtci8j4uX3htKd2GUdndzl3ZDWekxdyafWWSVX
-	 Z4k6KLafU5E8t1/WbVgJxh6qWOFV92fzDwNBqzfM=
+	b=ko464LwlCT3URGgxzmbcf1G+xAhHsSHO7Ea9/6earOxGWuFLVNRnP71BCWviDdEsq
+	 QvTZy5sZVat9UDVE4RJA/0aOC6DkpbuDtNWTLf3trdKRStkfZM9Owzkb8hkGXQK42u
+	 Vz4AXXfGcDAIg0E8v6jBhADB4g04LsvR2sp16UVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Denis Pauk <pauk.denis@gmail.com>,
+	Ahmad Khalifa <ahmad@khalifa.ws>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 603/885] drm/amdkfd: Page aligned memory reserve size
-Date: Tue,  7 Mar 2023 17:58:57 +0100
-Message-Id: <20230307170028.553318860@linuxfoundation.org>
+Subject: [PATCH 6.1 630/885] hwmon: (nct6775) Directly call ASUS ACPI WMI method
+Date: Tue,  7 Mar 2023 17:59:24 +0100
+Message-Id: <20230307170029.574870002@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,110 +36,196 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Denis Pauk <pauk.denis@gmail.com>
 
-[ Upstream commit 0c2dece8fb541ab07b68c3312a1065fa9c927a81 ]
+[ Upstream commit c3b3747d02f571da2543e719066a50dd966989d8 ]
 
-Use page aligned size to reserve memory usage because page aligned TTM
-BO size is used to unreserve memory usage, otherwise no page aligned
-size causes memory usage accounting unbalanced.
+New ASUS B650/B660/X670 boards firmware have not exposed WMI monitoring
+GUID  and entrypoint method WMBD could be implemented for different device
+UID.
 
-Change vram_used definition type to int64_t to be able to trigger
-WARN_ONCE(adev && adev->kfd.vram_used < 0, "..."), to help debug the
-accounting issue with warning and backtrace.
+Implement the direct call to entrypoint method for monitoring the device
+UID of B550/X570 boards.
 
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=204807
+Signed-off-by: Denis Pauk <pauk.denis@gmail.com>
+Co-developed-by: Ahmad Khalifa <ahmad@khalifa.ws>
+Signed-off-by: Ahmad Khalifa <ahmad@khalifa.ws>
+Link: https://lore.kernel.org/r/20230111212241.7456-1-pauk.denis@gmail.com
+[groeck: Fix multi-line formatting]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h       |  2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 12 +++++++-----
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c         |  9 +++++++--
- 3 files changed, 15 insertions(+), 8 deletions(-)
+ drivers/hwmon/Kconfig            |  2 +-
+ drivers/hwmon/nct6775-platform.c | 98 ++++++++++++++++++++++----------
+ 2 files changed, 70 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-index 30f145dc8724e..dbc842590b253 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-@@ -95,7 +95,7 @@ struct amdgpu_amdkfd_fence {
+diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+index d3bccc8176c51..a5143d01b95f8 100644
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -1508,7 +1508,7 @@ config SENSORS_NCT6775_CORE
+ config SENSORS_NCT6775
+ 	tristate "Platform driver for Nuvoton NCT6775F and compatibles"
+ 	depends on !PPC
+-	depends on ACPI_WMI || ACPI_WMI=n
++	depends on ACPI || ACPI=n
+ 	select HWMON_VID
+ 	select SENSORS_NCT6775_CORE
+ 	help
+diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
+index bf43f73dc835f..e5d4a79cd5f7d 100644
+--- a/drivers/hwmon/nct6775-platform.c
++++ b/drivers/hwmon/nct6775-platform.c
+@@ -17,7 +17,6 @@
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+-#include <linux/wmi.h>
  
- struct amdgpu_kfd_dev {
- 	struct kfd_dev *dev;
--	uint64_t vram_used;
-+	int64_t vram_used;
- 	uint64_t vram_used_aligned;
- 	bool init_complete;
- 	struct work_struct reset_work;
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index 404c839683b1c..da01c1424b4ad 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -1653,6 +1653,7 @@ int amdgpu_amdkfd_gpuvm_alloc_memory_of_gpu(
- 	struct amdgpu_bo *bo;
- 	struct drm_gem_object *gobj = NULL;
- 	u32 domain, alloc_domain;
-+	uint64_t aligned_size;
- 	u64 alloc_flags;
- 	int ret;
+ #include "nct6775.h"
  
-@@ -1703,22 +1704,23 @@ int amdgpu_amdkfd_gpuvm_alloc_memory_of_gpu(
- 	 * the memory.
- 	 */
- 	if ((*mem)->aql_queue)
--		size = size >> 1;
-+		size >>= 1;
-+	aligned_size = PAGE_ALIGN(size);
+@@ -107,40 +106,50 @@ struct nct6775_sio_data {
+ 	void (*sio_exit)(struct nct6775_sio_data *sio_data);
+ };
  
- 	(*mem)->alloc_flags = flags;
- 
- 	amdgpu_sync_create(&(*mem)->sync);
- 
--	ret = amdgpu_amdkfd_reserve_mem_limit(adev, size, flags);
-+	ret = amdgpu_amdkfd_reserve_mem_limit(adev, aligned_size, flags);
- 	if (ret) {
- 		pr_debug("Insufficient memory\n");
- 		goto err_reserve_limit;
- 	}
- 
- 	pr_debug("\tcreate BO VA 0x%llx size 0x%llx domain %s\n",
--			va, size, domain_string(alloc_domain));
-+			va, (*mem)->aql_queue ? size << 1 : size, domain_string(alloc_domain));
- 
--	ret = amdgpu_gem_object_create(adev, size, 1, alloc_domain, alloc_flags,
-+	ret = amdgpu_gem_object_create(adev, aligned_size, 1, alloc_domain, alloc_flags,
- 				       bo_type, NULL, &gobj);
- 	if (ret) {
- 		pr_debug("Failed to create BO on domain %s. ret %d\n",
-@@ -1775,7 +1777,7 @@ int amdgpu_amdkfd_gpuvm_alloc_memory_of_gpu(
- 	/* Don't unreserve system mem limit twice */
- 	goto err_reserve_limit;
- err_bo_create:
--	amdgpu_amdkfd_unreserve_mem_limit(adev, size, flags);
-+	amdgpu_amdkfd_unreserve_mem_limit(adev, aligned_size, flags);
- err_reserve_limit:
- 	mutex_destroy(&(*mem)->lock);
- 	if (gobj)
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 6d291aa6386bd..f79b8e964140e 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -1127,8 +1127,13 @@ static int kfd_ioctl_alloc_memory_of_gpu(struct file *filep,
- 	}
- 
- 	/* Update the VRAM usage count */
--	if (flags & KFD_IOC_ALLOC_MEM_FLAGS_VRAM)
--		WRITE_ONCE(pdd->vram_usage, pdd->vram_usage + args->size);
-+	if (flags & KFD_IOC_ALLOC_MEM_FLAGS_VRAM) {
-+		uint64_t size = args->size;
+-#define ASUSWMI_MONITORING_GUID		"466747A0-70EC-11DE-8A39-0800200C9A66"
++#define ASUSWMI_METHOD			"WMBD"
+ #define ASUSWMI_METHODID_RSIO		0x5253494F
+ #define ASUSWMI_METHODID_WSIO		0x5753494F
+ #define ASUSWMI_METHODID_RHWM		0x5248574D
+ #define ASUSWMI_METHODID_WHWM		0x5748574D
+ #define ASUSWMI_UNSUPPORTED_METHOD	0xFFFFFFFE
++#define ASUSWMI_DEVICE_HID		"PNP0C14"
++#define ASUSWMI_DEVICE_UID		"ASUSWMI"
 +
-+		if (flags & KFD_IOC_ALLOC_MEM_FLAGS_AQL_QUEUE_MEM)
-+			size >>= 1;
-+		WRITE_ONCE(pdd->vram_usage, pdd->vram_usage + PAGE_ALIGN(size));
++#if IS_ENABLED(CONFIG_ACPI)
++/*
++ * ASUS boards have only one device with WMI "WMBD" method and have provided
++ * access to only one SuperIO chip at 0x0290.
++ */
++static struct acpi_device *asus_acpi_dev;
++#endif
+ 
+ static int nct6775_asuswmi_evaluate_method(u32 method_id, u8 bank, u8 reg, u8 val, u32 *retval)
+ {
+-#if IS_ENABLED(CONFIG_ACPI_WMI)
++#if IS_ENABLED(CONFIG_ACPI)
++	acpi_handle handle = acpi_device_handle(asus_acpi_dev);
+ 	u32 args = bank | (reg << 8) | (val << 16);
+-	struct acpi_buffer input = { (acpi_size) sizeof(args), &args };
+-	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
++	struct acpi_object_list input;
++	union acpi_object params[3];
++	unsigned long long result;
+ 	acpi_status status;
+-	union acpi_object *obj;
+-	u32 tmp = ASUSWMI_UNSUPPORTED_METHOD;
+-
+-	status = wmi_evaluate_method(ASUSWMI_MONITORING_GUID, 0,
+-				     method_id, &input, &output);
+ 
++	params[0].type = ACPI_TYPE_INTEGER;
++	params[0].integer.value = 0;
++	params[1].type = ACPI_TYPE_INTEGER;
++	params[1].integer.value = method_id;
++	params[2].type = ACPI_TYPE_BUFFER;
++	params[2].buffer.length = sizeof(args);
++	params[2].buffer.pointer = (void *)&args;
++	input.count = 3;
++	input.pointer = params;
++
++	status = acpi_evaluate_integer(handle, ASUSWMI_METHOD, &input, &result);
+ 	if (ACPI_FAILURE(status))
+ 		return -EIO;
+ 
+-	obj = output.pointer;
+-	if (obj && obj->type == ACPI_TYPE_INTEGER)
+-		tmp = obj->integer.value;
+-
+ 	if (retval)
+-		*retval = tmp;
++		*retval = (u32)result & 0xFFFFFFFF;
+ 
+-	kfree(obj);
+-
+-	if (tmp == ASUSWMI_UNSUPPORTED_METHOD)
+-		return -ENODEV;
+ 	return 0;
+ #else
+ 	return -EOPNOTSUPP;
+@@ -1099,6 +1108,45 @@ static const char * const asus_wmi_boards[] = {
+ 	"TUF GAMING Z490-PLUS (WI-FI)",
+ };
+ 
++#if IS_ENABLED(CONFIG_ACPI)
++/*
++ * Callback for acpi_bus_for_each_dev() to find the right device
++ * by _UID and _HID and return 1 to stop iteration.
++ */
++static int nct6775_asuswmi_device_match(struct device *dev, void *data)
++{
++	struct acpi_device *adev = to_acpi_device(dev);
++	const char *uid = acpi_device_uid(adev);
++	const char *hid = acpi_device_hid(adev);
++
++	if (hid && !strcmp(hid, ASUSWMI_DEVICE_HID) && uid && !strcmp(uid, data)) {
++		asus_acpi_dev = adev;
++		return 1;
 +	}
++
++	return 0;
++}
++#endif
++
++static enum sensor_access nct6775_determine_access(const char *device_uid)
++{
++#if IS_ENABLED(CONFIG_ACPI)
++	u8 tmp;
++
++	acpi_bus_for_each_dev(nct6775_asuswmi_device_match, (void *)device_uid);
++	if (!asus_acpi_dev)
++		return access_direct;
++
++	/* if reading chip id via ACPI succeeds, use WMI "WMBD" method for access */
++	if (!nct6775_asuswmi_read(0, NCT6775_PORT_CHIPID, &tmp) && tmp) {
++		pr_debug("Using Asus WMBD method of %s to access %#x chip.\n", device_uid, tmp);
++		return access_asuswmi;
++	}
++#endif
++
++	return access_direct;
++}
++
+ static int __init sensors_nct6775_platform_init(void)
+ {
+ 	int i, err;
+@@ -1109,7 +1157,6 @@ static int __init sensors_nct6775_platform_init(void)
+ 	int sioaddr[2] = { 0x2e, 0x4e };
+ 	enum sensor_access access = access_direct;
+ 	const char *board_vendor, *board_name;
+-	u8 tmp;
  
- 	mutex_unlock(&p->mutex);
+ 	err = platform_driver_register(&nct6775_driver);
+ 	if (err)
+@@ -1122,15 +1169,8 @@ static int __init sensors_nct6775_platform_init(void)
+ 	    !strcmp(board_vendor, "ASUSTeK COMPUTER INC.")) {
+ 		err = match_string(asus_wmi_boards, ARRAY_SIZE(asus_wmi_boards),
+ 				   board_name);
+-		if (err >= 0) {
+-			/* if reading chip id via WMI succeeds, use WMI */
+-			if (!nct6775_asuswmi_read(0, NCT6775_PORT_CHIPID, &tmp) && tmp) {
+-				pr_info("Using Asus WMI to access %#x chip.\n", tmp);
+-				access = access_asuswmi;
+-			} else {
+-				pr_err("Can't read ChipID by Asus WMI.\n");
+-			}
+-		}
++		if (err >= 0)
++			access = nct6775_determine_access(ASUSWMI_DEVICE_UID);
+ 	}
  
+ 	/*
 -- 
 2.39.2
 
