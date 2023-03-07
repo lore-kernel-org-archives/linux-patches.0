@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936CABA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:26:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C8AAC433D2;
-	Tue,  7 Mar 2023 18:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DC1BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:26:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5FCC433EF;
+	Tue,  7 Mar 2023 18:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213581;
-	bh=XdYoLPUsmNb3zP6NWeLy9B63ysP6zFJD11QxKKM3PGE=;
+	s=korg; t=1678213584;
+	bh=R8WZzBbrGpBQq+SGjS+yP1mOYgU01k+VqiIedrTi4js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=birWY8O61Xv0AZO/vnukA8z2QGtEkB5+1mI+QY5BRqRI8GLxQnmc1biCSckxMfTgG
-	 JLKPpah8z1MRZ/9yAagf/U0GtyOxPQJyHRyDJaIhXIC8j1amTlL2CUcnkrj3SckOXl
-	 PY1F1Yo5Rx78FxuB5uqs4ok1tV7yYCiTtl1gEr8c=
+	b=VXL+vFlx5WeQZ/eW9z+i06uy4U5a/NfEMqb9DAdzvaAfc07vknm2coWntbbvjWHny
+	 3CwQnEDpqGgRKb/R/F8Oy02HX58OslWlSQ7SUab0W2EopRoCoPVAj7bMtFCxUIn7xL
+	 dunmQiyr3NoFQDVk7xpHBBqito2P9tnK6+PwXj6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robert.marko@sartura.hr>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 553/885] wifi: ath11k: debugfs: fix to work with multiple PCI devices
-Date: Tue,  7 Mar 2023 17:58:07 +0100
-Message-Id: <20230307170026.512406324@linuxfoundation.org>
+Subject: [PATCH 6.1 536/885] blk-cgroup: synchronize pd_free_fn() from blkg_free_workfn() and blkcg_deactivate_policy()
+Date: Tue,  7 Mar 2023 17:57:50 +0100
+Message-Id: <20230307170025.780340286@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,149 +37,152 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kalle Valo <quic_kvalo@quicinc.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 323d91d4684d238f6bc3693fed93caf795378fe0 ]
+[ Upstream commit f1c006f1c6850c14040f8337753a63119bba39b9 ]
 
-ath11k fails to load if there are multiple ath11k PCI devices with same name:
+Currently parent pd can be freed before child pd:
 
- ath11k_pci 0000:01:00.0: Hardware name qcn9074 hw1.0
- debugfs: Directory 'ath11k' with parent '/' already present!
- ath11k_pci 0000:01:00.0: failed to create ath11k debugfs
- ath11k_pci 0000:01:00.0: failed to create soc core: -17
- ath11k_pci 0000:01:00.0: failed to init core: -17
- ath11k_pci: probe of 0000:01:00.0 failed with error -17
+t1: remove cgroup C1
+blkcg_destroy_blkgs
+ blkg_destroy
+  list_del_init(&blkg->q_node)
+  // remove blkg from queue list
+  percpu_ref_kill(&blkg->refcnt)
+   blkg_release
+    call_rcu
 
-Fix this by creating a directory for each ath11k device using schema
-<bus>-<devname>, for example "pci-0000:06:00.0". This directory created under
-the top-level ath11k directory, for example /sys/kernel/debug/ath11k.
+t2: from t1
+__blkg_release
+ blkg_free
+  schedule_work
+			t4: deactivate policy
+			blkcg_deactivate_policy
+			 pd_free_fn
+			 // parent of C1 is freed first
+t3: from t2
+ blkg_free_workfn
+  pd_free_fn
 
-The reference to the toplevel ath11k directory is not stored anymore within ath11k, instead
-it's retrieved using debugfs_lookup(). If the directory does not exist it will
-be created. After the last directory from the ath11k directory is removed, for
-example when doing rmmod ath11k, the empty ath11k directory is left in place,
-it's a minor cosmetic issue anyway.
+If policy(for example, ioc_timer_fn() from iocost) access parent pd from
+child pd after pd_offline_fn(), then UAF can be triggered.
 
-Here's an example hierarchy with one WCN6855:
+Fix the problem by delaying 'list_del_init(&blkg->q_node)' from
+blkg_destroy() to blkg_free_workfn(), and using a new disk level mutex to
+synchronize blkg_free_workfn() and blkcg_deactivate_policy().
 
-ath11k
-`-- pci-0000:06:00.0
-    |-- mac0
-    |   |-- dfs_block_radar_events
-    |   |-- dfs_simulate_radar
-    |   |-- ext_rx_stats
-    |   |-- ext_tx_stats
-    |   |-- fw_dbglog_config
-    |   |-- fw_stats
-    |   |   |-- beacon_stats
-    |   |   |-- pdev_stats
-    |   |   `-- vdev_stats
-    |   |-- htt_stats
-    |   |-- htt_stats_reset
-    |   |-- htt_stats_type
-    |   `-- pktlog_filter
-    |-- simulate_fw_crash
-    `-- soc_dp_stats
-
-I didn't have a test setup where I could connect multiple ath11k devices to the
-same the host, so I have only tested this with one device.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.9
-Tested-on: IPQ8074 hw2.0 AHB WLAN.HK.2.5.0.1-01208-QCAHKSWPL_SILICONZ-1
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.5.0.1-01208-QCAHKSWPL_SILICONZ-1
-
-Tested-by: Robert Marko <robert.marko@sartura.hr>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20221220121231.20120-1-kvalo@kernel.org
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230119110350.2287325-4-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/core.h    |  1 -
- drivers/net/wireless/ath/ath11k/debugfs.c | 48 +++++++++++++++++++----
- 2 files changed, 40 insertions(+), 9 deletions(-)
+ block/blk-cgroup.c     | 35 +++++++++++++++++++++++++++++------
+ include/linux/blkdev.h |  1 +
+ 2 files changed, 30 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/core.h b/drivers/net/wireless/ath/ath11k/core.h
-index c20e84e031fad..bd06536f82a64 100644
---- a/drivers/net/wireless/ath/ath11k/core.h
-+++ b/drivers/net/wireless/ath/ath11k/core.h
-@@ -912,7 +912,6 @@ struct ath11k_base {
- 	enum ath11k_dfs_region dfs_region;
- #ifdef CONFIG_ATH11K_DEBUGFS
- 	struct dentry *debugfs_soc;
--	struct dentry *debugfs_ath11k;
- #endif
- 	struct ath11k_soc_dp_stats soc_stats;
- 
-diff --git a/drivers/net/wireless/ath/ath11k/debugfs.c b/drivers/net/wireless/ath/ath11k/debugfs.c
-index ccdf3d5ba1ab6..5bb6fd17fdf6f 100644
---- a/drivers/net/wireless/ath/ath11k/debugfs.c
-+++ b/drivers/net/wireless/ath/ath11k/debugfs.c
-@@ -976,10 +976,6 @@ int ath11k_debugfs_pdev_create(struct ath11k_base *ab)
- 	if (test_bit(ATH11K_FLAG_REGISTERED, &ab->dev_flags))
- 		return 0;
- 
--	ab->debugfs_soc = debugfs_create_dir(ab->hw_params.name, ab->debugfs_ath11k);
--	if (IS_ERR(ab->debugfs_soc))
--		return PTR_ERR(ab->debugfs_soc);
--
- 	debugfs_create_file("simulate_fw_crash", 0600, ab->debugfs_soc, ab,
- 			    &fops_simulate_fw_crash);
- 
-@@ -1001,15 +997,51 @@ void ath11k_debugfs_pdev_destroy(struct ath11k_base *ab)
- 
- int ath11k_debugfs_soc_create(struct ath11k_base *ab)
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 8d1b7757f1e4f..f8b21bead6552 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -87,16 +87,32 @@ static void blkg_free_workfn(struct work_struct *work)
  {
--	ab->debugfs_ath11k = debugfs_create_dir("ath11k", NULL);
-+	struct dentry *root;
-+	bool dput_needed;
-+	char name[64];
-+	int ret;
-+
-+	root = debugfs_lookup("ath11k", NULL);
-+	if (!root) {
-+		root = debugfs_create_dir("ath11k", NULL);
-+		if (IS_ERR_OR_NULL(root))
-+			return PTR_ERR(root);
-+
-+		dput_needed = false;
-+	} else {
-+		/* a dentry from lookup() needs dput() after we don't use it */
-+		dput_needed = true;
-+	}
-+
-+	scnprintf(name, sizeof(name), "%s-%s", ath11k_bus_str(ab->hif.bus),
-+		  dev_name(ab->dev));
-+
-+	ab->debugfs_soc = debugfs_create_dir(name, root);
-+	if (IS_ERR_OR_NULL(ab->debugfs_soc)) {
-+		ret = PTR_ERR(ab->debugfs_soc);
-+		goto out;
-+	}
-+
-+	ret = 0;
+ 	struct blkcg_gq *blkg = container_of(work, struct blkcg_gq,
+ 					     free_work);
++	struct request_queue *q = blkg->q;
+ 	int i;
  
--	return PTR_ERR_OR_ZERO(ab->debugfs_ath11k);
-+out:
-+	if (dput_needed)
-+		dput(root);
-+
-+	return ret;
- }
- 
- void ath11k_debugfs_soc_destroy(struct ath11k_base *ab)
- {
--	debugfs_remove_recursive(ab->debugfs_ath11k);
--	ab->debugfs_ath11k = NULL;
-+	debugfs_remove_recursive(ab->debugfs_soc);
-+	ab->debugfs_soc = NULL;
-+
-+	/* We are not removing ath11k directory on purpose, even if it
-+	 * would be empty. This simplifies the directory handling and it's
-+	 * a minor cosmetic issue to leave an empty ath11k directory to
-+	 * debugfs.
++	/*
++	 * pd_free_fn() can also be called from blkcg_deactivate_policy(),
++	 * in order to make sure pd_free_fn() is called in order, the deletion
++	 * of the list blkg->q_node is delayed to here from blkg_destroy(), and
++	 * blkcg_mutex is used to synchronize blkg_free_workfn() and
++	 * blkcg_deactivate_policy().
 +	 */
- }
- EXPORT_SYMBOL(ath11k_debugfs_soc_destroy);
++	if (q)
++		mutex_lock(&q->blkcg_mutex);
++
+ 	for (i = 0; i < BLKCG_MAX_POLS; i++)
+ 		if (blkg->pd[i])
+ 			blkcg_policy[i]->pd_free_fn(blkg->pd[i]);
  
+ 	if (blkg->parent)
+ 		blkg_put(blkg->parent);
+-	if (blkg->q)
+-		blk_put_queue(blkg->q);
++
++	if (q) {
++		list_del_init(&blkg->q_node);
++		mutex_unlock(&q->blkcg_mutex);
++		blk_put_queue(q);
++	}
++
+ 	free_percpu(blkg->iostat_cpu);
+ 	percpu_ref_exit(&blkg->refcnt);
+ 	kfree(blkg);
+@@ -425,9 +441,14 @@ static void blkg_destroy(struct blkcg_gq *blkg)
+ 	lockdep_assert_held(&blkg->q->queue_lock);
+ 	lockdep_assert_held(&blkcg->lock);
+ 
+-	/* Something wrong if we are trying to remove same group twice */
+-	WARN_ON_ONCE(list_empty(&blkg->q_node));
+-	WARN_ON_ONCE(hlist_unhashed(&blkg->blkcg_node));
++	/*
++	 * blkg stays on the queue list until blkg_free_workfn(), see details in
++	 * blkg_free_workfn(), hence this function can be called from
++	 * blkcg_destroy_blkgs() first and again from blkg_destroy_all() before
++	 * blkg_free_workfn().
++	 */
++	if (hlist_unhashed(&blkg->blkcg_node))
++		return;
+ 
+ 	for (i = 0; i < BLKCG_MAX_POLS; i++) {
+ 		struct blkcg_policy *pol = blkcg_policy[i];
+@@ -439,7 +460,6 @@ static void blkg_destroy(struct blkcg_gq *blkg)
+ 	blkg->online = false;
+ 
+ 	radix_tree_delete(&blkcg->blkg_tree, blkg->q->id);
+-	list_del_init(&blkg->q_node);
+ 	hlist_del_init_rcu(&blkg->blkcg_node);
+ 
+ 	/*
+@@ -1226,6 +1246,7 @@ int blkcg_init_disk(struct gendisk *disk)
+ 	int ret;
+ 
+ 	INIT_LIST_HEAD(&q->blkg_list);
++	mutex_init(&q->blkcg_mutex);
+ 
+ 	new_blkg = blkg_alloc(&blkcg_root, disk, GFP_KERNEL);
+ 	if (!new_blkg)
+@@ -1463,6 +1484,7 @@ void blkcg_deactivate_policy(struct request_queue *q,
+ 	if (queue_is_mq(q))
+ 		blk_mq_freeze_queue(q);
+ 
++	mutex_lock(&q->blkcg_mutex);
+ 	spin_lock_irq(&q->queue_lock);
+ 
+ 	__clear_bit(pol->plid, q->blkcg_pols);
+@@ -1481,6 +1503,7 @@ void blkcg_deactivate_policy(struct request_queue *q,
+ 	}
+ 
+ 	spin_unlock_irq(&q->queue_lock);
++	mutex_unlock(&q->blkcg_mutex);
+ 
+ 	if (queue_is_mq(q))
+ 		blk_mq_unfreeze_queue(q);
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index 891f8cbcd0436..1680b6e1e5362 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -487,6 +487,7 @@ struct request_queue {
+ 	DECLARE_BITMAP		(blkcg_pols, BLKCG_MAX_POLS);
+ 	struct blkcg_gq		*root_blkg;
+ 	struct list_head	blkg_list;
++	struct mutex		blkcg_mutex;
+ #endif
+ 
+ 	struct queue_limits	limits;
 -- 
 2.39.2
 
