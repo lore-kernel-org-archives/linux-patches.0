@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD060BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:47:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F35C433D2;
-	Tue,  7 Mar 2023 18:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CD0BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:47:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FF3C433D2;
+	Tue,  7 Mar 2023 18:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214830;
-	bh=SsSdd7WURiikL9NB5e+ddUO9NxXQ35H+uSYxU1IcLp0=;
+	s=korg; t=1678214833;
+	bh=tvCbtp1BxyWawUq4pJBW/I7MRX3mjCoyT3BAaEK48cg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0BgavZAoQyrSYHO+j6/bWRAL5VJplANQpgBY1hMPuzs1nDj/Y7p+puUb+HtNjQzzx
-	 ukxPvBJvyzNhF/68o1vvZvMM+aejF6T0cXRMTaiXF0tpRk25fBcFNiGkubLV9EKe8S
-	 AarSTxPYkg1q1QI09spK7wCTLpgFgDe/w0+QV/ng=
+	b=FcMtD2nu+m6Joc3yb/t/tHaC8F4bLLi6W4K+fHrm6XqkZ/zdGmc8juc07ovSWWsik
+	 vGVjXJaeJ3CVf40LFDgaS6VMb5oqW8EnGTBqpJFoXue1+e0HOWMNFwIJhcauhtv82B
+	 TNvQ/qBhX/Nh6+lF5EkpSinqW3D9WN6TV/3s93x0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Saurav Kashyap <skashyap@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 064/567] arm64: dts: qcom: pmk8350: Use the correct PON compatible
-Date: Tue,  7 Mar 2023 17:56:40 +0100
-Message-Id: <20230307165908.668050510@linuxfoundation.org>
+Subject: [PATCH 5.15 065/567] block: bio-integrity: Copy flags when bio_integrity_payload is cloned
+Date: Tue,  7 Mar 2023 17:56:41 +0100
+Message-Id: <20230307165908.702173640@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,35 +38,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Martin K. Petersen <martin.petersen@oracle.com>
 
-[ Upstream commit c0ee8e0ba5cc17623e63349a168b41e407b1eef0 ]
+[ Upstream commit b6a4bdcda430e3ca43bbb9cb1d4d4d34ebe15c40 ]
 
-A special compatible was introduced for PMK8350 both in the driver and
-the bindings to facilitate for 2 base registers (PBS & HLOS). Use it.
+Make sure to copy the flags when a bio_integrity_payload is cloned.
+Otherwise per-I/O properties such as IP checksum flag will not be
+passed down to the HBA driver. Since the integrity buffer is owned by
+the original bio, the BIP_BLOCK_INTEGRITY flag needs to be masked off
+to avoid a double free in the completion path.
 
-Fixes: b2de43136058 ("arm64: dts: qcom: pmk8350: Add peripherals for pmk8350")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230213212930.2115182-1-konrad.dybcio@linaro.org
+Fixes: aae7df50190a ("block: Integrity checksum flag")
+Fixes: b1f01388574c ("block: Relocate bio integrity flags")
+Reported-by: Saurav Kashyap <skashyap@marvell.com>
+Tested-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://lore.kernel.org/r/20230215171801.21062-1-martin.petersen@oracle.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pmk8350.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/bio-integrity.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/pmk8350.dtsi b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-index 530adc87a4096..fc38f77d12a36 100644
---- a/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-@@ -16,7 +16,7 @@ pmk8350: pmic@0 {
- 		#size-cells = <0>;
+diff --git a/block/bio-integrity.c b/block/bio-integrity.c
+index 4a7c33ed9a661..4f34ac27c47dd 100644
+--- a/block/bio-integrity.c
++++ b/block/bio-integrity.c
+@@ -417,6 +417,7 @@ int bio_integrity_clone(struct bio *bio, struct bio *bio_src,
  
- 		pmk8350_pon: pon@1300 {
--			compatible = "qcom,pm8998-pon";
-+			compatible = "qcom,pmk8350-pon";
- 			reg = <0x1300>, <0x800>;
- 			reg-names = "hlos", "pbs";
+ 	bip->bip_vcnt = bip_src->bip_vcnt;
+ 	bip->bip_iter = bip_src->bip_iter;
++	bip->bip_flags = bip_src->bip_flags & ~BIP_BLOCK_INTEGRITY;
  
+ 	return 0;
+ }
 -- 
 2.39.2
 
