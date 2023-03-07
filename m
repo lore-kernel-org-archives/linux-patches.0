@@ -1,72 +1,110 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5AFBA45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3273BA46
 	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:57:57 +0000 (UTC)
-Received: by mail-pl1-f179.google.com with SMTP id u5so14983811plq.7
-        for <patches@lists.linux.dev>; Tue, 07 Mar 2023 09:57:57 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678211877;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eLBHmJfnrJpN2/BeQiLegODr6r/XtN9ZTf564gwPeRE=;
-        b=oC5FXQ6x7v/gwLqXWt3v5xH92jV3QUlPeoIrK4qT5pSujNNPoP4+TfU3Qr6nk4QepR
-         m5I4MVSmVzyfYMTDdHhF+TBPvjvb4tPz1cW+VNriyaryGgw/aiR++ZaVxHKXT3SU+Mxd
-         MIFKabicn8gfNAeVflDZ528VEqj28nVQJ7F5HJkJL0FnRSH+1i47IO+HlXWlYzmrkRDr
-         Bj5V0YEA0rvk9FtpKKrlEjOQIQ3id25cEbXMvir76Rv5Lm5x1H8JkYqdzqWkON+0Bo7U
-         jsAa+NYKDsQDLejgumZVixOvjLpwodWpGHO2CXrIShUZ43pSJC0Nv5R7M2077Uqg5NGg
-         cDhg==
-X-Gm-Message-State: AO0yUKUeLv4SsfWEFMiUBMpBcBvoEoebljuTkexeQy55kSetYjpOsGoz
-	TlFNBo53lyj6cBIhFwlVDCXtYDewJec=
-X-Google-Smtp-Source: AK7set8zre6vcOCIFYfZQQH3CBoT1NkpHzT08x8Yp1nQNyQxA0dogkh/FNr6jlGsHJZLHTfmfUpQ4Q==
-X-Received: by 2002:a05:6a20:12d1:b0:cd:fc47:ddbf with SMTP id v17-20020a056a2012d100b000cdfc47ddbfmr17185915pzg.47.1678211877038;
-        Tue, 07 Mar 2023 09:57:57 -0800 (PST)
-Received: from [192.168.132.235] ([63.145.95.70])
-        by smtp.gmail.com with ESMTPSA id a14-20020a62e20e000000b00582f222f088sm8190079pfi.47.2023.03.07.09.57.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Mar 2023 09:57:56 -0800 (PST)
-Message-ID: <680f3bd7-2af3-bdf3-5640-faf5a21a9182@acm.org>
-Date: Tue, 7 Mar 2023 09:57:55 -0800
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555B3C433D2;
+	Tue,  7 Mar 2023 17:57:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1678211877;
+	bh=nZGfAIzeggdGJ6iRYCgvuBR/AzMajDhQ6CjlytbIn4M=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=XRavBoDDIbCaup0S6sxuiTuteO3tMbSB0483aa7D/jUehJUHwx54LI/8tuaCLDB6h
+	 gj/+ntPzoTMruqSY9d6hu5lifJtn8ap77crxgHfr1GLbPNaQBVV3dePQl47Z2uuiAp
+	 LC6VETsjQ1w3kAyUdhyh6E+CT3VboAPEYdd1jqaU=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	=?UTF-8?q?Noralf=20Tr=C3=B8nnes?= <noralf@tronnes.org>
+Subject: [PATCH 6.2 0999/1001] drm/gud: Fix UBSAN warning
+Date: Tue,  7 Mar 2023 18:02:51 +0100
+Message-Id: <20230307170105.669148708@linuxfoundation.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
+References: <20230307170022.094103862@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 6.2 0957/1001] scsi: core: Remove the
- /proc/scsi/${proc_name} directory earlier
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Alan Stern <stern@rowland.harvard.edu>,
- Yi Zhang <yi.zhang@redhat.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>
-References: <20230307170022.094103862@linuxfoundation.org>
- <20230307170103.699105440@linuxfoundation.org>
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20230307170103.699105440@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 3/7/23 09:02, Greg Kroah-Hartman wrote:
-> From: Bart Van Assche <bvanassche@acm.org>
-> 
-> commit fc663711b94468f4e1427ebe289c9f05669699c9 upstream.
-> 
-> Remove the /proc/scsi/${proc_name} directory earlier to fix a race
-> condition between unloading and reloading kernel modules. This fixes a bug
-> introduced in 2009 by commit 77c019768f06 ("[SCSI] fix /proc memory leak in
-> the SCSI core").
+From: Noralf Trønnes <noralf@tronnes.org>
 
-Hi Greg,
+commit 951df98024f7272f85df5044eca7374f5b5b24ef upstream.
 
-This patch introduces a new bug and the new bug is easier to trigger 
-than the bug fixed by this patch. How about waiting with applying this 
-patch on any stable branch until the fix for this patch has landed upstream?
+UBSAN complains about invalid value for bool:
 
-Thanks,
+[  101.165172] [drm] Initialized gud 1.0.0 20200422 for 2-3.2:1.0 on minor 1
+[  101.213360] gud 2-3.2:1.0: [drm] fb1: guddrmfb frame buffer device
+[  101.213426] usbcore: registered new interface driver gud
+[  101.989431] ================================================================================
+[  101.989441] UBSAN: invalid-load in linux/include/linux/iosys-map.h:253:9
+[  101.989447] load of value 121 is not a valid value for type '_Bool'
+[  101.989451] CPU: 1 PID: 455 Comm: kworker/1:6 Not tainted 5.18.0-rc5-gud-5.18-rc5 #3
+[  101.989456] Hardware name: Hewlett-Packard HP EliteBook 820 G1/1991, BIOS L71 Ver. 01.44 04/12/2018
+[  101.989459] Workqueue: events_long gud_flush_work [gud]
+[  101.989471] Call Trace:
+[  101.989474]  <TASK>
+[  101.989479]  dump_stack_lvl+0x49/0x5f
+[  101.989488]  dump_stack+0x10/0x12
+[  101.989493]  ubsan_epilogue+0x9/0x3b
+[  101.989498]  __ubsan_handle_load_invalid_value.cold+0x44/0x49
+[  101.989504]  dma_buf_vmap.cold+0x38/0x3d
+[  101.989511]  ? find_busiest_group+0x48/0x300
+[  101.989520]  drm_gem_shmem_vmap+0x76/0x1b0 [drm_shmem_helper]
+[  101.989528]  drm_gem_shmem_object_vmap+0x9/0xb [drm_shmem_helper]
+[  101.989535]  drm_gem_vmap+0x26/0x60 [drm]
+[  101.989594]  drm_gem_fb_vmap+0x47/0x150 [drm_kms_helper]
+[  101.989630]  gud_prep_flush+0xc1/0x710 [gud]
+[  101.989639]  ? _raw_spin_lock+0x17/0x40
+[  101.989648]  gud_flush_work+0x1e0/0x430 [gud]
+[  101.989653]  ? __switch_to+0x11d/0x470
+[  101.989664]  process_one_work+0x21f/0x3f0
+[  101.989673]  worker_thread+0x200/0x3e0
+[  101.989679]  ? rescuer_thread+0x390/0x390
+[  101.989684]  kthread+0xfd/0x130
+[  101.989690]  ? kthread_complete_and_exit+0x20/0x20
+[  101.989696]  ret_from_fork+0x22/0x30
+[  101.989706]  </TASK>
+[  101.989708] ================================================================================
 
-Bart.
+The source of this warning is in iosys_map_clear() called from
+dma_buf_vmap(). It conditionally sets values based on map->is_iomem. The
+iosys_map variables are allocated uninitialized on the stack leading to
+->is_iomem having all kinds of values and not only 0/1.
+
+Fix this by zeroing the iosys_map variables.
+
+Fixes: 40e1a70b4aed ("drm: Add GUD USB Display driver")
+Cc: <stable@vger.kernel.org> # v5.18+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Noralf Trønnes <noralf@tronnes.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221122-gud-shadow-plane-v2-1-435037990a83@tronnes.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/gpu/drm/gud/gud_pipe.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--- a/drivers/gpu/drm/gud/gud_pipe.c
++++ b/drivers/gpu/drm/gud/gud_pipe.c
+@@ -157,8 +157,8 @@ static int gud_prep_flush(struct gud_dev
+ {
+ 	struct dma_buf_attachment *import_attach = fb->obj[0]->import_attach;
+ 	u8 compression = gdrm->compression;
+-	struct iosys_map map[DRM_FORMAT_MAX_PLANES];
+-	struct iosys_map map_data[DRM_FORMAT_MAX_PLANES];
++	struct iosys_map map[DRM_FORMAT_MAX_PLANES] = { };
++	struct iosys_map map_data[DRM_FORMAT_MAX_PLANES] = { };
+ 	struct iosys_map dst;
+ 	void *vaddr, *buf;
+ 	size_t pitch, len;
+
 
