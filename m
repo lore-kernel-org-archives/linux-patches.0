@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E606BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:41:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A82C4339B;
-	Tue,  7 Mar 2023 18:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E790BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:41:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94A1C433EF;
+	Tue,  7 Mar 2023 18:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214480;
-	bh=LUkVtC5AYQvxaTmeuTp8hV33VpT8kS1fvNgHTpvjK90=;
+	s=korg; t=1678214483;
+	bh=ke+HZuEGMBAjXnXiKlnse7V0pADQOuKZuCJ/tLEz0Ew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShrYmOwXxEmw8yUBn6tpPUS0KhA607igjQw9qXcKmbsn8FT8WF5XFbm0aVjCnYAlj
-	 hbyH8MjfdcVIR7Ncq4F5D5pdbhKQXYouLB0Kg+ps7kBqNhiEPD65lZoQOOTmj01FIY
-	 PPTPQaKXYfXdhYqXyx4ukZxwwsns/a+4XjTj5Djs=
+	b=cSehEV3uIXiuKQfzblQHg88TZuvP7G7uMulbT2MwES8hCZMa2zFUNLscegFi08DIs
+	 Y+A04nTNbp5BjK5JXl7v1CCHvJJ7pDrXcyPJC3d3SY/51pLUs5oGrSHMUaNRiWWXAV
+	 o31jZiVuN/KscVM49u2jhuRt4Vx6iIaktECurOqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 806/885] dm flakey: dont corrupt the zero page
-Date: Tue,  7 Mar 2023 18:02:20 +0100
-Message-Id: <20230307170036.903483113@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.1 797/885] wifi: rtl8xxxu: Use a longer retry limit of 48
+Date: Tue,  7 Mar 2023 18:02:11 +0100
+Message-Id: <20230307170036.522906655@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,46 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit f50714b57aecb6b3dc81d578e295f86d9c73f078 upstream.
+commit 2a86aa9a1892d60ef2e3f310f5b42b8b05546d65 upstream.
 
-When we need to zero some range on a block device, the function
-__blkdev_issue_zero_pages submits a write bio with the bio vector pointing
-to the zero page. If we use dm-flakey with corrupt bio writes option, it
-will corrupt the content of the zero page which results in crashes of
-various userspace programs. Glibc assumes that memory returned by mmap is
-zeroed and it uses it for calloc implementation; if the newly mapped
-memory is not zeroed, calloc will return non-zeroed memory.
+The Realtek rate control algorithm goes back and forth a lot between
+the highest and the lowest rate it's allowed to use. This is due to
+a lot of frames being dropped because the retry limits set by
+IEEE80211_CONF_CHANGE_RETRY_LIMITS are too low. (Experimentally, they
+are 4 for long frames and 7 for short frames.)
 
-Fix this bug by testing if the page is equal to ZERO_PAGE(0) and
-avoiding the corruption in this case.
+The vendor drivers hardcode the value 48 for both retry limits (for
+station mode), which makes dropped frames very rare and thus the rate
+control is more stable.
+
+Because most Realtek chips handle the rate control in the firmware,
+which can't be modified, ignore the limits set by
+IEEE80211_CONF_CHANGE_RETRY_LIMITS and use the value 48 (set during
+chip initialisation), same as the vendor drivers.
 
 Cc: stable@vger.kernel.org
-Fixes: a00f5276e266 ("dm flakey: Properly corrupt multi-page bios.")
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/477d745b-6bac-111d-403c-487fc19aa30d@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-flakey.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c |    9 ---------
+ 1 file changed, 9 deletions(-)
 
---- a/drivers/md/dm-flakey.c
-+++ b/drivers/md/dm-flakey.c
-@@ -303,8 +303,11 @@ static void corrupt_bio_data(struct bio
- 	 */
- 	bio_for_each_segment(bvec, bio, iter) {
- 		if (bio_iter_len(bio, iter) > corrupt_bio_byte) {
--			char *segment = (page_address(bio_iter_page(bio, iter))
--					 + bio_iter_offset(bio, iter));
-+			char *segment;
-+			struct page *page = bio_iter_page(bio, iter);
-+			if (unlikely(page == ZERO_PAGE(0)))
-+				break;
-+			segment = (page_address(page) + bio_iter_offset(bio, iter));
- 			segment[corrupt_bio_byte] = fc->corrupt_bio_value;
- 			DMDEBUG("Corrupting data bio=%p by writing %u to byte %u "
- 				"(rw=%c bi_opf=%u bi_sector=%llu size=%u)\n",
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -5966,7 +5966,6 @@ static int rtl8xxxu_config(struct ieee80
+ {
+ 	struct rtl8xxxu_priv *priv = hw->priv;
+ 	struct device *dev = &priv->udev->dev;
+-	u16 val16;
+ 	int ret = 0, channel;
+ 	bool ht40;
+ 
+@@ -5976,14 +5975,6 @@ static int rtl8xxxu_config(struct ieee80
+ 			 __func__, hw->conf.chandef.chan->hw_value,
+ 			 changed, hw->conf.chandef.width);
+ 
+-	if (changed & IEEE80211_CONF_CHANGE_RETRY_LIMITS) {
+-		val16 = ((hw->conf.long_frame_max_tx_count <<
+-			  RETRY_LIMIT_LONG_SHIFT) & RETRY_LIMIT_LONG_MASK) |
+-			((hw->conf.short_frame_max_tx_count <<
+-			  RETRY_LIMIT_SHORT_SHIFT) & RETRY_LIMIT_SHORT_MASK);
+-		rtl8xxxu_write16(priv, REG_RETRY_LIMIT, val16);
+-	}
+-
+ 	if (changed & IEEE80211_CONF_CHANGE_CHANNEL) {
+ 		switch (hw->conf.chandef.width) {
+ 		case NL80211_CHAN_WIDTH_20_NOHT:
 
 
