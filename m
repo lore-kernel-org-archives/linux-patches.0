@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22FDBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:24:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356AAC433EF;
-	Tue,  7 Mar 2023 18:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085DEBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:24:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61729C433EF;
+	Tue,  7 Mar 2023 18:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213450;
-	bh=0GUxIMEfCtrgcszgBH/+gZUKC19P5KS4ZyYFpSHHT+0=;
+	s=korg; t=1678213453;
+	bh=LshO+HO0q+wl6AI7aR1FOixDz6EAcGqKOhfdtHq9Gm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1JQpdH0K0in43c7+9E4wYjG9E6yUqu6TzALAsV9RtDlLE4PEHd8HpBIY0DsdWDWSQ
-	 Pf3sxlbvSdpG3926JlQR8wPvmX0Td7Gx7jRCdeSAt6TwUyupIrBufssO3iQFewYk19
-	 lzVJPSkakcuP3ft7bXiJwVWFlAYC2JZQx77hc2YE=
+	b=BbypiWIcEIx4ab0yYW/xCaB1fOd85+kud22+99wb08Cvxudh2yDOiWRCSaG8ruQnE
+	 KqcoDP0coqbJ+/rF7CZZQpCtl1m+muxDoFfZcEYufDJxaj5UAZ0oLN/b+Jfrll8kOZ
+	 aKfvczPqHf+WLSTjbmN66inz4mmeoUAHnd65qz8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Moudy Ho <moudy.ho@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 503/885] media: ov5675: Fix memleak in ov5675_init_controls()
-Date: Tue,  7 Mar 2023 17:57:17 +0100
-Message-Id: <20230307170024.305871215@linuxfoundation.org>
+Subject: [PATCH 6.1 512/885] media: platform: mtk-mdp3: remove unused VIDEO_MEDIATEK_VPU config
+Date: Tue,  7 Mar 2023 17:57:26 +0100
+Message-Id: <20230307170024.728407149@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,65 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Moudy Ho <moudy.ho@mediatek.com>
 
-[ Upstream commit dd74ed6c213003533e3abf4c204374ef01d86978 ]
+[ Upstream commit 9195a860ef0a384d2ca2065cc61a0cc80d620de5 ]
 
-There is a kmemleak when testing the media/i2c/ov5675.c with bpf mock
-device:
+Since REMOTEPROC completely replaces the VIDEO_MEDIATEK_VPU in MDP3,
+unused config should be removed to avoid compilation warnings
+reported on i386 or x86_64.
 
-AssertionError: unreferenced object 0xffff888107362160 (size 16):
-  comm "python3", pid 277, jiffies 4294832798 (age 20.722s)
-  hex dump (first 16 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<00000000abe7d67c>] __kmalloc_node+0x44/0x1b0
-    [<000000008a725aac>] kvmalloc_node+0x34/0x180
-    [<000000009a53cd11>] v4l2_ctrl_handler_init_class+0x11d/0x180
-[videodev]
-    [<0000000055b46db0>] ov5675_probe+0x38b/0x897 [ov5675]
-    [<00000000153d886c>] i2c_device_probe+0x28d/0x680
-    [<000000004afb7e8f>] really_probe+0x17c/0x3f0
-    [<00000000ff2f18e4>] __driver_probe_device+0xe3/0x170
-    [<000000000a001029>] driver_probe_device+0x49/0x120
-    [<00000000e39743c7>] __device_attach_driver+0xf7/0x150
-    [<00000000d32fd070>] bus_for_each_drv+0x114/0x180
-    [<000000009083ac41>] __device_attach+0x1e5/0x2d0
-    [<0000000015b4a830>] bus_probe_device+0x126/0x140
-    [<000000007813deaf>] device_add+0x810/0x1130
-    [<000000007becb867>] i2c_new_client_device+0x386/0x540
-    [<000000007f9cf4b4>] of_i2c_register_device+0xf1/0x110
-    [<00000000ebfdd032>] of_i2c_notify+0xfc/0x1f0
+Warning messages:
+    WARNING: unmet direct dependencies detected for VIDEO_MEDIATEK_VPU
+          Depends on [n]: MEDIA_SUPPORT [=y] && MEDIA_PLATFORM_SUPPORT [=y]
+        && MEDIA_PLATFORM_DRIVERS [=y] && V4L_MEM2MEM_DRIVERS [=n] &&
+        VIDEO_DEV [=y] && (ARCH_MEDIATEK || COMPILE_TEST [=y])
+          Selected by [y]:
+          - VIDEO_MEDIATEK_MDP3 [=y] && MEDIA_SUPPORT [=y] &&
+        MEDIA_PLATFORM_SUPPORT [=y] && MEDIA_PLATFORM_DRIVERS [=y] &&
+        (MTK_IOMMU [=n] || COMPILE_TEST [=y]) && VIDEO_DEV [=y] &&
+        (ARCH_MEDIATEK || COMPILE_TEST [=y]) && HAS_DMA [=y] && REMOTEPROC
+        [=y]
 
-ov5675_init_controls() won't clean all the allocated resources in fail
-path, which may causes the memleaks. Add v4l2_ctrl_handler_free() to
-prevent memleak.
-
-Fixes: bf27502b1f3b ("media: ov5675: Add support for OV5675 sensor")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
+Signed-off-by: Moudy Ho <moudy.ho@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: e3f7feb6d893 ("media: platform: mtk-mdp3: fix Kconfig dependencies")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5675.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/platform/mediatek/mdp3/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ov5675.c b/drivers/media/i2c/ov5675.c
-index 94dc8cb7a7c00..a6e6b367d1283 100644
---- a/drivers/media/i2c/ov5675.c
-+++ b/drivers/media/i2c/ov5675.c
-@@ -820,8 +820,10 @@ static int ov5675_init_controls(struct ov5675 *ov5675)
- 	v4l2_ctrl_new_std(ctrl_hdlr, &ov5675_ctrl_ops,
- 			  V4L2_CID_VFLIP, 0, 1, 1, 0);
- 
--	if (ctrl_hdlr->error)
-+	if (ctrl_hdlr->error) {
-+		v4l2_ctrl_handler_free(ctrl_hdlr);
- 		return ctrl_hdlr->error;
-+	}
- 
- 	ov5675->sd.ctrl_handler = ctrl_hdlr;
- 
+diff --git a/drivers/media/platform/mediatek/mdp3/Kconfig b/drivers/media/platform/mediatek/mdp3/Kconfig
+index 50ae07b75b5f2..846e759a8f6a9 100644
+--- a/drivers/media/platform/mediatek/mdp3/Kconfig
++++ b/drivers/media/platform/mediatek/mdp3/Kconfig
+@@ -9,7 +9,6 @@ config VIDEO_MEDIATEK_MDP3
+ 	select VIDEOBUF2_DMA_CONTIG
+ 	select V4L2_MEM2MEM_DEV
+ 	select MTK_MMSYS
+-	select VIDEO_MEDIATEK_VPU
+ 	select MTK_CMDQ
+ 	select MTK_SCP
+ 	default n
 -- 
 2.39.2
 
