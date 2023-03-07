@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331A1BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC19C433EF;
-	Tue,  7 Mar 2023 17:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF240BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A640C433EF;
+	Tue,  7 Mar 2023 17:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210992;
-	bh=OvNyHpAAeeiTPusi5F0W7Sq5fJ9njNoI5QzTKir0DAQ=;
+	s=korg; t=1678210994;
+	bh=1ejct+P7WX/gTTCwKmlRL2zM/5lK7UHFrYczhzWpZT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rHQ4DIC+XUApDr5EN0ZM4yvs667pwT0jq3xxjpjZRY0CjmTXuTdj6hn2TMx4kFusH
-	 zzhPVFKSa/gsKcy0h6xTL7KT7TkdO0PfXX9y3b64laCyJEhakJIyDInlwrVGpSoORN
-	 A6c3RKMVdFaM7QUqYilwoAfbSdcKUyUQKth5r6tw=
+	b=Y1Vb/ZeXA25J3Eg/Xt0KD6a3Vfay7Ry9IY+IX1fXBYpr3StFzrwBDS8icg0t8ehOX
+	 iLhGsBtyAHQp1GXeS6wlO91hfG07uvvnmJZCmApUTXA8R/HPTkRG0qflthjFqehfEA
+	 jfmAoivLvxmJWVVBYPmstIhB8KoJOWmCwYs0/oWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	alsa-devel@alsa-project.org,
-	Kees Cook <keescook@chromium.org>,
+	Jingyuan Liang <jingyliang@chromium.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0718/1001] ASoC: kirkwood: Iterate over array indexes instead of using pointer math
-Date: Tue,  7 Mar 2023 17:58:10 +0100
-Message-Id: <20230307170052.822495610@linuxfoundation.org>
+Subject: [PATCH 6.2 0692/1001] HID: Add Mapping for System Microphone Mute
+Date: Tue,  7 Mar 2023 17:57:44 +0100
+Message-Id: <20230307170051.649044674@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -39,47 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Jingyuan Liang <jingyliang@chromium.org>
 
-[ Upstream commit b3bcedc0402fcdc5c8624c433562d9d1882749d8 ]
+[ Upstream commit 2d60f9f4f26785a00273cb81fe60eff129ebd449 ]
 
-Walking the dram->cs array was seen as accesses beyond the first array
-item by the compiler. Instead, use the array index directly. This allows
-for run-time bounds checking under CONFIG_UBSAN_BOUNDS as well. Seen
-with GCC 13 with -fstrict-flex-arrays:
+HUTRR110 added a new usage code for a key that is supposed to
+mute/unmute microphone system-wide.
 
-../sound/soc/kirkwood/kirkwood-dma.c: In function
-'kirkwood_dma_conf_mbus_windows.constprop':
-../sound/soc/kirkwood/kirkwood-dma.c:90:24: warning: array subscript 0 is outside array bounds of 'const struct mbus_dram_window[0]' [-Warray-bounds=]
-   90 |                 if ((cs->base & 0xffff0000) < (dma & 0xffff0000)) {
-      |                      ~~^~~~~~
+Map the new usage code(0x01 0xa9) to keycode KEY_MICMUTE.
+Additionally hid-debug is adjusted to recognize this keycode as well.
 
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: alsa-devel@alsa-project.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230127224128.never.410-kees@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Jingyuan Liang <jingyliang@chromium.org>
+Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/kirkwood/kirkwood-dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-debug.c | 1 +
+ drivers/hid/hid-input.c | 8 ++++++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/sound/soc/kirkwood/kirkwood-dma.c b/sound/soc/kirkwood/kirkwood-dma.c
-index 700a18561a940..640cebd2983e2 100644
---- a/sound/soc/kirkwood/kirkwood-dma.c
-+++ b/sound/soc/kirkwood/kirkwood-dma.c
-@@ -86,7 +86,7 @@ kirkwood_dma_conf_mbus_windows(void __iomem *base, int win,
+diff --git a/drivers/hid/hid-debug.c b/drivers/hid/hid-debug.c
+index e213bdde543af..e7ef1ea107c9e 100644
+--- a/drivers/hid/hid-debug.c
++++ b/drivers/hid/hid-debug.c
+@@ -975,6 +975,7 @@ static const char *keys[KEY_MAX + 1] = {
+ 	[KEY_CAMERA_ACCESS_DISABLE] = "CameraAccessDisable",
+ 	[KEY_CAMERA_ACCESS_TOGGLE] = "CameraAccessToggle",
+ 	[KEY_DICTATE] = "Dictate",
++	[KEY_MICMUTE] = "MicrophoneMute",
+ 	[KEY_BRIGHTNESS_MIN] = "BrightnessMin",
+ 	[KEY_BRIGHTNESS_MAX] = "BrightnessMax",
+ 	[KEY_BRIGHTNESS_AUTO] = "BrightnessAuto",
+diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
+index 77c8c49852b5c..bd0cfccfb7a25 100644
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -793,6 +793,14 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
+ 			break;
+ 		}
  
- 	/* try to find matching cs for current dma address */
- 	for (i = 0; i < dram->num_cs; i++) {
--		const struct mbus_dram_window *cs = dram->cs + i;
-+		const struct mbus_dram_window *cs = &dram->cs[i];
- 		if ((cs->base & 0xffff0000) < (dma & 0xffff0000)) {
- 			writel(cs->base & 0xffff0000,
- 				base + KIRKWOOD_AUDIO_WIN_BASE_REG(win));
++		if ((usage->hid & 0xf0) == 0xa0) {	/* SystemControl */
++			switch (usage->hid & 0xf) {
++			case 0x9: map_key_clear(KEY_MICMUTE); break;
++			default: goto ignore;
++			}
++			break;
++		}
++
+ 		if ((usage->hid & 0xf0) == 0xb0) {	/* SC - Display */
+ 			switch (usage->hid & 0xf) {
+ 			case 0x05: map_key_clear(KEY_SWITCHVIDEOMODE); break;
 -- 
 2.39.2
 
