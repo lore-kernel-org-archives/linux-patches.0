@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97687BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:36:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24C3C433D2;
-	Tue,  7 Mar 2023 17:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF4FBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:36:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F13FC433EF;
+	Tue,  7 Mar 2023 17:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210570;
-	bh=FO9ouAa5rATCJduQ6vm2USYRmIMUEfyeNf+JC8crKXs=;
+	s=korg; t=1678210573;
+	bh=JUZpk+dIhUmznIZCxnIwBLzvBh2X6kYGXdYbolgujo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pep9T9LYfN4k568sDRpKlnYdq3TTDYNY50tlKyaoeY8DA3Q90Jj4xVKWOqiz7euAy
-	 ofGDrQImisD4EiCabq/yiKyUW11mB87UTr1nxfgugy/GmGva8u645WUBsiAXl4wMBV
-	 6KUCIBp3ETftmsKPUbvz8OnTlIUEoQ0oIjAlzJC0=
+	b=ePGzx8yXSnnOV5KZTDTbjMhgo1KrIMmPeclWKrQLS8wSKqgRPoGTwHn6qEe5uk0wb
+	 LzwMLwXyabWToWUC1wEy+9bAtnoHVN8stzg3Z3BBiDcavRNG0Q2w4vcrqmEAzEFhPT
+	 UYcRLqU0pSlkQ0Aw46Ow2hFopVIvpL7ijoNlqK0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0583/1001] media: ti: cal: fix possible memory leak in cal_ctx_create()
-Date: Tue,  7 Mar 2023 17:55:55 +0100
-Message-Id: <20230307170046.780671838@linuxfoundation.org>
+Subject: [PATCH 6.2 0584/1001] media: platform: ti: Add missing check for devm_regulator_get
+Date: Tue,  7 Mar 2023 17:55:56 +0100
+Message-Id: <20230307170046.826048252@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,39 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 7acd650a0484d92985a0d6d867d980c6dd019885 ]
+[ Upstream commit da8e05f84a11c3cc3b0ba0a3c62d20e358002d99 ]
 
-The memory of ctx is allocated in cal_ctx_create(), but it will
-not be freed when cal_ctx_v4l2_init() fails, so add kfree() when
-cal_ctx_v4l2_init() fails to fix it.
+Add check for the return value of devm_regulator_get since it may return
+error pointer.
 
-Fixes: d68a94e98a89 ("media: ti-vpe: cal: Split video device initialization and registration")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Fixes: 448de7e7850b ("[media] omap3isp: OMAP3 ISP core")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/ti/cal/cal.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/platform/ti/omap3isp/isp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/media/platform/ti/cal/cal.c b/drivers/media/platform/ti/cal/cal.c
-index 56b61c0583cf8..1236215ec70eb 100644
---- a/drivers/media/platform/ti/cal/cal.c
-+++ b/drivers/media/platform/ti/cal/cal.c
-@@ -1050,8 +1050,10 @@ static struct cal_ctx *cal_ctx_create(struct cal_dev *cal, int inst)
- 	ctx->cport = inst;
+diff --git a/drivers/media/platform/ti/omap3isp/isp.c b/drivers/media/platform/ti/omap3isp/isp.c
+index 1d40bb59ff814..e7327e38482de 100644
+--- a/drivers/media/platform/ti/omap3isp/isp.c
++++ b/drivers/media/platform/ti/omap3isp/isp.c
+@@ -2307,7 +2307,16 @@ static int isp_probe(struct platform_device *pdev)
  
- 	ret = cal_ctx_v4l2_init(ctx);
--	if (ret)
-+	if (ret) {
-+		kfree(ctx);
- 		return NULL;
+ 	/* Regulators */
+ 	isp->isp_csiphy1.vdd = devm_regulator_get(&pdev->dev, "vdd-csiphy1");
++	if (IS_ERR(isp->isp_csiphy1.vdd)) {
++		ret = PTR_ERR(isp->isp_csiphy1.vdd);
++		goto error;
++	}
++
+ 	isp->isp_csiphy2.vdd = devm_regulator_get(&pdev->dev, "vdd-csiphy2");
++	if (IS_ERR(isp->isp_csiphy2.vdd)) {
++		ret = PTR_ERR(isp->isp_csiphy2.vdd);
++		goto error;
 +	}
  
- 	return ctx;
- }
+ 	/* Clocks
+ 	 *
 -- 
 2.39.2
 
