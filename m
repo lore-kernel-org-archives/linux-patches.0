@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F90BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:15:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AAF7C4339B;
-	Tue,  7 Mar 2023 18:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FAABA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:15:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA2CC433D2;
+	Tue,  7 Mar 2023 18:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212948;
-	bh=xAxBgJ9cJg50tXybwn6GK14Tx6Ol9tH+8ydm5w08HGs=;
+	s=korg; t=1678212952;
+	bh=+kcsqaMX+gi+FIq0V5brIxF2J6mu4X5y6jf8toCIXpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jhBNruFXuWhozs6kSOiwXkxzb/QSQOCHSfvNRaBxeqxVg9Ra9vROW/TcGWXiHlD/K
-	 tlz942H5+ic5XWdsN8JKdAg/upVg754ESXwgdh0rT2IH8aEmDgMLHAt3oWELzzqKus
-	 W5htHlyRR3G8qE30X5OenZGmq4PSWmwdxPD0qPGw=
+	b=krSVShjR4/xgr4M9ZWN70gxEs5xitB9LT+KtgaXyMVeVttxekn3O2L2WUFsvus8qE
+	 4rPKK3Pcm7/Gmcf78Xzef0ehUxdbKelJr/U9z9i6ScXs1u9h6enueUf3z/caIxsA3b
+	 7XcYSdCHhNfz3Y9JFsBHkbD5OXfCvDLsgnIhS88E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <groeck@chromium.org>,
-	Allen Ballway <ballway@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Alistair Francis <alistair@alistair23.me>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 350/885] HID: retain initial quirks set up when creating HID devices
-Date: Tue,  7 Mar 2023 17:54:44 +0100
-Message-Id: <20230307170017.456472227@linuxfoundation.org>
+Subject: [PATCH 6.1 351/885] ASoC: qcom: q6apm-lpass-dai: unprepare stream if its already prepared
+Date: Tue,  7 Mar 2023 17:54:45 +0100
+Message-Id: <20230307170017.509092783@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,117 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit 03a86105556e23650e4470c09f91cf7c360d5e28 ]
+[ Upstream commit c2ac3aec474da0455df79c4a182f19687bc98d1d ]
 
-In certain circumstances, such as when creating I2C-connected HID
-devices, we want to pass and retain some quirks (axis inversion, etc).
-The source of such quirks may be device tree, or DMI data, or something
-else not readily available to the HID core itself and therefore cannot
-be reconstructed easily. To allow this, introduce "initial_quirks" field
-in hid_device structure and use it when determining the final set of
-quirks.
+prepare callback can be called multiple times, so unprepare the stream
+if its already prepared.
 
-This fixes the problem with i2c-hid setting up device-tree sourced
-quirks too late and losing them on device rebind, and also allows to
-sever the tie between hid-code and i2c-hid when applying DMI-based
-quirks.
+Without this DSP is not happy to setting the params on a already
+prepared graph.
 
-Fixes: b60d3c803d76 ("HID: i2c-hid-of: Expose the touchscreen-inverted properties")
-Fixes: a2f416bf062a ("HID: multitouch: Add quirks for flipped axes")
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Tested-by: Allen Ballway <ballway@chromium.org>
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Reviewed-by: Alistair Francis <alistair@alistair23.me>
-Link: https://lore.kernel.org/r/Y+LYwu3Zs13hdVDy@google.com
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230209122806.18923-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-quirks.c                 | 8 +-------
- drivers/hid/i2c-hid/i2c-hid-core.c       | 6 ++++--
- drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c | 1 -
- include/linux/hid.h                      | 1 +
- 4 files changed, 6 insertions(+), 10 deletions(-)
+ sound/soc/qcom/qdsp6/q6apm-lpass-dais.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 30e35f79def47..66e64350f1386 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -19,7 +19,6 @@
- #include <linux/input/elan-i2c-ids.h>
+diff --git a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
+index ce9e5646d8f3a..23d23bc6fbaa7 100644
+--- a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
++++ b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
+@@ -127,6 +127,11 @@ static int q6apm_lpass_dai_prepare(struct snd_pcm_substream *substream, struct s
+ 	int graph_id = dai->id;
+ 	int rc;
  
- #include "hid-ids.h"
--#include "i2c-hid/i2c-hid.h"
- 
- /*
-  * Alphabetically sorted by vendor then product.
-@@ -1238,7 +1237,7 @@ EXPORT_SYMBOL_GPL(hid_quirks_exit);
- static unsigned long hid_gets_squirk(const struct hid_device *hdev)
- {
- 	const struct hid_device_id *bl_entry;
--	unsigned long quirks = 0;
-+	unsigned long quirks = hdev->initial_quirks;
- 
- 	if (hid_match_id(hdev, hid_ignore_list))
- 		quirks |= HID_QUIRK_IGNORE;
-@@ -1299,11 +1298,6 @@ unsigned long hid_lookup_quirk(const struct hid_device *hdev)
- 		quirks = hid_gets_squirk(hdev);
- 	mutex_unlock(&dquirks_lock);
- 
--	/* Get quirks specific to I2C devices */
--	if (IS_ENABLED(CONFIG_I2C_DMI_CORE) && IS_ENABLED(CONFIG_DMI) &&
--	    hdev->bus == BUS_I2C)
--		quirks |= i2c_hid_get_dmi_quirks(hdev->vendor, hdev->product);
--
- 	return quirks;
- }
- EXPORT_SYMBOL_GPL(hid_lookup_quirk);
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index a9428b7f34a46..969f8eb086f02 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -1035,6 +1035,10 @@ int i2c_hid_core_probe(struct i2c_client *client, struct i2chid_ops *ops,
- 	hid->vendor = le16_to_cpu(ihid->hdesc.wVendorID);
- 	hid->product = le16_to_cpu(ihid->hdesc.wProductID);
- 
-+	hid->initial_quirks = quirks;
-+	hid->initial_quirks |= i2c_hid_get_dmi_quirks(hid->vendor,
-+						      hid->product);
++	if (dai_data->is_port_started[dai->id]) {
++		q6apm_graph_stop(dai_data->graph[dai->id]);
++		dai_data->is_port_started[dai->id] = false;
++	}
 +
- 	snprintf(hid->name, sizeof(hid->name), "%s %04X:%04X",
- 		 client->name, (u16)hid->vendor, (u16)hid->product);
- 	strscpy(hid->phys, dev_name(&client->dev), sizeof(hid->phys));
-@@ -1048,8 +1052,6 @@ int i2c_hid_core_probe(struct i2c_client *client, struct i2chid_ops *ops,
- 		goto err_mem_free;
- 	}
- 
--	hid->quirks |= quirks;
--
- 	return 0;
- 
- err_mem_free:
-diff --git a/drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c b/drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c
-index 554a7dc285365..210f17c3a0be0 100644
---- a/drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-dmi-quirks.c
-@@ -492,4 +492,3 @@ u32 i2c_hid_get_dmi_quirks(const u16 vendor, const u16 product)
- 
- 	return quirks;
- }
--EXPORT_SYMBOL_GPL(i2c_hid_get_dmi_quirks);
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 8677ae38599e4..48563dc09e171 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -619,6 +619,7 @@ struct hid_device {							/* device report descriptor */
- 	unsigned long status;						/* see STAT flags above */
- 	unsigned claimed;						/* Claimed by hidinput, hiddev? */
- 	unsigned quirks;						/* Various quirks the device can pull on us */
-+	unsigned initial_quirks;					/* Initial set of quirks supplied when creating device */
- 	bool io_started;						/* If IO has started */
- 
- 	struct list_head inputs;					/* The list of inputs */
+ 	/**
+ 	 * It is recommend to load DSP with source graph first and then sink
+ 	 * graph, so sequence for playback and capture will be different
 -- 
 2.39.2
 
