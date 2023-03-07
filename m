@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54113BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:48:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931E8C433EF;
-	Tue,  7 Mar 2023 17:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6549EBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:48:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0DFC433D2;
+	Tue,  7 Mar 2023 17:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211330;
-	bh=HnQYyYIqdPvQ+jzc18RfqnnuGxC4XSAukLjgRK9genA=;
+	s=korg; t=1678211333;
+	bh=HQK05q2ZPvtWTMQShlHDrzMR9Gk1Rvs7XWMEt3vqTp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZXMthYgysJ4JQRd9vsYAPR4bsgCo+3DeanArHsdqv/pc+sVf6bD4roR0woEr1uERq
-	 ZhywWpJD+/mrOvYSbMbtuYM5DNNEtBmamDIwBjFfULbSurlcKujntqBUBbpbRDYFud
-	 jH+pLFxcQ3TzybKVyc5czbqFk0bsAPvcfdA0t3Z4=
+	b=AzR+uiIv23ek+/mU1/LDsH8W15INqf3SqEYp3vn5CE/+pOunfFEQ5VPlqsGQkkAdv
+	 p9Q6u5u0xWMeRPn+BfiqJEHhNaqQ9jRam4Idg/ULTDuoPjIsvOPi5DpYk8gyoxmgNX
+	 TAupxI+pvTS72NFzc5+P/+mn0LbNnJN00fab5gxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yugui <wangyugui@e16-tech.com>,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Andy Wu <Andy.Wu@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.2 0796/1001] exfat: fix inode->i_blocks for non-512 byte sector size device
-Date: Tue,  7 Mar 2023 17:59:28 +0100
-Message-Id: <20230307170056.295346682@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>
+Subject: [PATCH 6.2 0797/1001] fs: dlm: start midcomms before scand
+Date: Tue,  7 Mar 2023 17:59:29 +0100
+Message-Id: <20230307170056.334444311@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,83 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-commit 39c1ce8eafc0ff64fb9e28536ccc7df6a8e2999d upstream.
+commit aad633dc0cf90093998b1ae0ba9f19b5f1dab644 upstream.
 
-inode->i_blocks is not real number of blocks, but 512 byte ones.
+The scand kthread can send dlm messages out, especially dlm remove
+messages to free memory for unused rsb on other nodes. To send out dlm
+messages, midcomms must be initialized. This patch moves the midcomms
+start before scand is started.
 
-Fixes: 98d917047e8b ("exfat: add file operations")
-Cc: stable@vger.kernel.org # v5.7+
-Reported-by: Wang Yugui <wangyugui@e16-tech.com>
-Tested-by: Wang Yugui <wangyugui@e16-tech.com>
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Andy Wu <Andy.Wu@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: e7fd41792fc0 ("[DLM] The core of the DLM for GFS2/CLVM")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/file.c  |    3 +--
- fs/exfat/inode.c |    6 ++----
- fs/exfat/namei.c |    2 +-
- fs/exfat/super.c |    3 +--
- 4 files changed, 5 insertions(+), 9 deletions(-)
+ fs/dlm/lockspace.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/fs/exfat/file.c
-+++ b/fs/exfat/file.c
-@@ -209,8 +209,7 @@ void exfat_truncate(struct inode *inode)
- 	if (err)
- 		goto write_size;
+--- a/fs/dlm/lockspace.c
++++ b/fs/dlm/lockspace.c
+@@ -381,23 +381,23 @@ static int threads_start(void)
+ {
+ 	int error;
  
--	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >>
--				inode->i_blkbits;
-+	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >> 9;
- write_size:
- 	aligned_size = i_size_read(inode);
- 	if (aligned_size & (blocksize - 1)) {
---- a/fs/exfat/inode.c
-+++ b/fs/exfat/inode.c
-@@ -220,8 +220,7 @@ static int exfat_map_cluster(struct inod
- 		num_clusters += num_to_be_allocated;
- 		*clu = new_clu.dir;
- 
--		inode->i_blocks +=
--			num_to_be_allocated << sbi->sect_per_clus_bits;
-+		inode->i_blocks += EXFAT_CLU_TO_B(num_to_be_allocated, sbi) >> 9;
- 
- 		/*
- 		 * Move *clu pointer along FAT chains (hole care) because the
-@@ -576,8 +575,7 @@ static int exfat_fill_inode(struct inode
- 
- 	exfat_save_attr(inode, info->attr);
- 
--	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >>
--				inode->i_blkbits;
-+	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >> 9;
- 	inode->i_mtime = info->mtime;
- 	inode->i_ctime = info->mtime;
- 	ei->i_crtime = info->crtime;
---- a/fs/exfat/namei.c
-+++ b/fs/exfat/namei.c
-@@ -396,7 +396,7 @@ static int exfat_find_empty_entry(struct
- 		ei->i_size_ondisk += sbi->cluster_size;
- 		ei->i_size_aligned += sbi->cluster_size;
- 		ei->flags = p_dir->flags;
--		inode->i_blocks += 1 << sbi->sect_per_clus_bits;
-+		inode->i_blocks += sbi->cluster_size >> 9;
+-	error = dlm_scand_start();
++	/* Thread for sending/receiving messages for all lockspace's */
++	error = dlm_midcomms_start();
+ 	if (error) {
+-		log_print("cannot start dlm_scand thread %d", error);
++		log_print("cannot start dlm midcomms %d", error);
+ 		goto fail;
  	}
  
- 	return dentry;
---- a/fs/exfat/super.c
-+++ b/fs/exfat/super.c
-@@ -373,8 +373,7 @@ static int exfat_read_root(struct inode
- 	inode->i_op = &exfat_dir_inode_operations;
- 	inode->i_fop = &exfat_dir_operations;
+-	/* Thread for sending/receiving messages for all lockspace's */
+-	error = dlm_midcomms_start();
++	error = dlm_scand_start();
+ 	if (error) {
+-		log_print("cannot start dlm midcomms %d", error);
+-		goto scand_fail;
++		log_print("cannot start dlm_scand thread %d", error);
++		goto midcomms_fail;
+ 	}
  
--	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >>
--				inode->i_blkbits;
-+	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >> 9;
- 	ei->i_pos = ((loff_t)sbi->root_dir << 32) | 0xffffffff;
- 	ei->i_size_aligned = i_size_read(inode);
- 	ei->i_size_ondisk = i_size_read(inode);
+ 	return 0;
+ 
+- scand_fail:
+-	dlm_scand_stop();
++ midcomms_fail:
++	dlm_midcomms_stop();
+  fail:
+ 	return error;
+ }
 
 
