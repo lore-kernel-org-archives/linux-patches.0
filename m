@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49480BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:44:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD22C433D2;
-	Tue,  7 Mar 2023 17:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D79BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF2EC433EF;
+	Tue,  7 Mar 2023 17:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211098;
-	bh=+3f8T4HSjcAE9HJ+B1k4HNRX0H7RQZejv7iygWq+upQ=;
+	s=korg; t=1678211101;
+	bh=euUxiKwP+1pbufyhQM4OyDNkBa6a7IsDvu6FGiGWhWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nOw7Bius+/O9ChdbPySYwcntb1x4Dk3Z0BZ9ePbmLcdv8FJ1J9CnsKFgcLi8xytPz
-	 fNZltsoaPGHFkGamOdp2oMuM/XxsI+ldZLBVAHSISqvqwc7zkDV0GvEw6HLhnC+aSd
-	 EKyj92gmCJNY5tVKhUCzjv2uiO4wyQWYsrbE6CD0=
+	b=1o7n0gmODR0/AhqC3IgtSil8UVH7FVnNHhlljZcc4aY3SwV9TfJfvqNm5/yEOy7ix
+	 BgOsdrVqX8H8ePDclTQoh64Hkmuswi7lxOUJZbNmOJrv0s4i1DiYUsysMpLyA7YE25
+	 ExqE183QgnLzypHklF4pjmteVATq3Q7CeS4rkFYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Pauk <pauk.denis@gmail.com>,
-	Ahmad Khalifa <ahmad@khalifa.ws>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0725/1001] hwmon: (nct6775) Directly call ASUS ACPI WMI method
-Date: Tue,  7 Mar 2023 17:58:17 +0100
-Message-Id: <20230307170053.161576088@linuxfoundation.org>
+	Corey Minyard <cminyard@mvista.com>
+Subject: [PATCH 6.2 0752/1001] ipmi_ssif: Rename idle state and check
+Date: Tue,  7 Mar 2023 17:58:44 +0100
+Message-Id: <20230307170054.342601292@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,198 +33,193 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Denis Pauk <pauk.denis@gmail.com>
+From: Corey Minyard <cminyard@mvista.com>
 
-[ Upstream commit c3b3747d02f571da2543e719066a50dd966989d8 ]
+commit 8230831c43a328c2be6d28c65d3f77e14c59986b upstream.
 
-New ASUS B650/B660/X670 boards firmware have not exposed WMI monitoring
-GUID  and entrypoint method WMBD could be implemented for different device
-UID.
+Rename the SSIF_IDLE() to IS_SSIF_IDLE(), since that is more clear, and
+rename SSIF_NORMAL to SSIF_IDLE, since that's more accurate.
 
-Implement the direct call to entrypoint method for monitoring the device
-UID of B550/X570 boards.
-
-BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=204807
-Signed-off-by: Denis Pauk <pauk.denis@gmail.com>
-Co-developed-by: Ahmad Khalifa <ahmad@khalifa.ws>
-Signed-off-by: Ahmad Khalifa <ahmad@khalifa.ws>
-Link: https://lore.kernel.org/r/20230111212241.7456-1-pauk.denis@gmail.com
-[groeck: Fix multi-line formatting]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/Kconfig            |  2 +-
- drivers/hwmon/nct6775-platform.c | 98 ++++++++++++++++++++++----------
- 2 files changed, 70 insertions(+), 30 deletions(-)
+ drivers/char/ipmi/ipmi_ssif.c |   46 +++++++++++++++++++++---------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-index 3176c33af6c69..300ce8115ce4f 100644
---- a/drivers/hwmon/Kconfig
-+++ b/drivers/hwmon/Kconfig
-@@ -1516,7 +1516,7 @@ config SENSORS_NCT6775_CORE
- config SENSORS_NCT6775
- 	tristate "Platform driver for Nuvoton NCT6775F and compatibles"
- 	depends on !PPC
--	depends on ACPI_WMI || ACPI_WMI=n
-+	depends on ACPI || ACPI=n
- 	select HWMON_VID
- 	select SENSORS_NCT6775_CORE
- 	help
-diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
-index bf43f73dc835f..e5d4a79cd5f7d 100644
---- a/drivers/hwmon/nct6775-platform.c
-+++ b/drivers/hwmon/nct6775-platform.c
-@@ -17,7 +17,6 @@
- #include <linux/module.h>
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
--#include <linux/wmi.h>
+--- a/drivers/char/ipmi/ipmi_ssif.c
++++ b/drivers/char/ipmi/ipmi_ssif.c
+@@ -92,7 +92,7 @@
+ #define SSIF_WATCH_WATCHDOG_TIMEOUT	msecs_to_jiffies(250)
  
- #include "nct6775.h"
- 
-@@ -107,40 +106,50 @@ struct nct6775_sio_data {
- 	void (*sio_exit)(struct nct6775_sio_data *sio_data);
+ enum ssif_intf_state {
+-	SSIF_NORMAL,
++	SSIF_IDLE,
+ 	SSIF_GETTING_FLAGS,
+ 	SSIF_GETTING_EVENTS,
+ 	SSIF_CLEARING_FLAGS,
+@@ -100,8 +100,8 @@ enum ssif_intf_state {
+ 	/* FIXME - add watchdog stuff. */
  };
  
--#define ASUSWMI_MONITORING_GUID		"466747A0-70EC-11DE-8A39-0800200C9A66"
-+#define ASUSWMI_METHOD			"WMBD"
- #define ASUSWMI_METHODID_RSIO		0x5253494F
- #define ASUSWMI_METHODID_WSIO		0x5753494F
- #define ASUSWMI_METHODID_RHWM		0x5248574D
- #define ASUSWMI_METHODID_WHWM		0x5748574D
- #define ASUSWMI_UNSUPPORTED_METHOD	0xFFFFFFFE
-+#define ASUSWMI_DEVICE_HID		"PNP0C14"
-+#define ASUSWMI_DEVICE_UID		"ASUSWMI"
-+
-+#if IS_ENABLED(CONFIG_ACPI)
-+/*
-+ * ASUS boards have only one device with WMI "WMBD" method and have provided
-+ * access to only one SuperIO chip at 0x0290.
-+ */
-+static struct acpi_device *asus_acpi_dev;
-+#endif
+-#define SSIF_IDLE(ssif)	 ((ssif)->ssif_state == SSIF_NORMAL \
+-			  && (ssif)->curr_msg == NULL)
++#define IS_SSIF_IDLE(ssif) ((ssif)->ssif_state == SSIF_IDLE \
++			    && (ssif)->curr_msg == NULL)
  
- static int nct6775_asuswmi_evaluate_method(u32 method_id, u8 bank, u8 reg, u8 val, u32 *retval)
+ /*
+  * Indexes into stats[] in ssif_info below.
+@@ -348,9 +348,9 @@ static void return_hosed_msg(struct ssif
+ 
+ /*
+  * Must be called with the message lock held.  This will release the
+- * message lock.  Note that the caller will check SSIF_IDLE and start a
+- * new operation, so there is no need to check for new messages to
+- * start in here.
++ * message lock.  Note that the caller will check IS_SSIF_IDLE and
++ * start a new operation, so there is no need to check for new
++ * messages to start in here.
+  */
+ static void start_clear_flags(struct ssif_info *ssif_info, unsigned long *flags)
  {
--#if IS_ENABLED(CONFIG_ACPI_WMI)
-+#if IS_ENABLED(CONFIG_ACPI)
-+	acpi_handle handle = acpi_device_handle(asus_acpi_dev);
- 	u32 args = bank | (reg << 8) | (val << 16);
--	struct acpi_buffer input = { (acpi_size) sizeof(args), &args };
--	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
-+	struct acpi_object_list input;
-+	union acpi_object params[3];
-+	unsigned long long result;
- 	acpi_status status;
--	union acpi_object *obj;
--	u32 tmp = ASUSWMI_UNSUPPORTED_METHOD;
--
--	status = wmi_evaluate_method(ASUSWMI_MONITORING_GUID, 0,
--				     method_id, &input, &output);
+@@ -367,7 +367,7 @@ static void start_clear_flags(struct ssi
  
-+	params[0].type = ACPI_TYPE_INTEGER;
-+	params[0].integer.value = 0;
-+	params[1].type = ACPI_TYPE_INTEGER;
-+	params[1].integer.value = method_id;
-+	params[2].type = ACPI_TYPE_BUFFER;
-+	params[2].buffer.length = sizeof(args);
-+	params[2].buffer.pointer = (void *)&args;
-+	input.count = 3;
-+	input.pointer = params;
-+
-+	status = acpi_evaluate_integer(handle, ASUSWMI_METHOD, &input, &result);
- 	if (ACPI_FAILURE(status))
- 		return -EIO;
+ 	if (start_send(ssif_info, msg, 3) != 0) {
+ 		/* Error, just go to normal state. */
+-		ssif_info->ssif_state = SSIF_NORMAL;
++		ssif_info->ssif_state = SSIF_IDLE;
+ 	}
+ }
  
--	obj = output.pointer;
--	if (obj && obj->type == ACPI_TYPE_INTEGER)
--		tmp = obj->integer.value;
--
- 	if (retval)
--		*retval = tmp;
-+		*retval = (u32)result & 0xFFFFFFFF;
+@@ -382,7 +382,7 @@ static void start_flag_fetch(struct ssif
+ 	mb[0] = (IPMI_NETFN_APP_REQUEST << 2);
+ 	mb[1] = IPMI_GET_MSG_FLAGS_CMD;
+ 	if (start_send(ssif_info, mb, 2) != 0)
+-		ssif_info->ssif_state = SSIF_NORMAL;
++		ssif_info->ssif_state = SSIF_IDLE;
+ }
  
--	kfree(obj);
--
--	if (tmp == ASUSWMI_UNSUPPORTED_METHOD)
--		return -ENODEV;
- 	return 0;
- #else
- 	return -EOPNOTSUPP;
-@@ -1099,6 +1108,45 @@ static const char * const asus_wmi_boards[] = {
- 	"TUF GAMING Z490-PLUS (WI-FI)",
- };
+ static void check_start_send(struct ssif_info *ssif_info, unsigned long *flags,
+@@ -393,7 +393,7 @@ static void check_start_send(struct ssif
  
-+#if IS_ENABLED(CONFIG_ACPI)
-+/*
-+ * Callback for acpi_bus_for_each_dev() to find the right device
-+ * by _UID and _HID and return 1 to stop iteration.
-+ */
-+static int nct6775_asuswmi_device_match(struct device *dev, void *data)
-+{
-+	struct acpi_device *adev = to_acpi_device(dev);
-+	const char *uid = acpi_device_uid(adev);
-+	const char *hid = acpi_device_hid(adev);
-+
-+	if (hid && !strcmp(hid, ASUSWMI_DEVICE_HID) && uid && !strcmp(uid, data)) {
-+		asus_acpi_dev = adev;
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+#endif
-+
-+static enum sensor_access nct6775_determine_access(const char *device_uid)
-+{
-+#if IS_ENABLED(CONFIG_ACPI)
-+	u8 tmp;
-+
-+	acpi_bus_for_each_dev(nct6775_asuswmi_device_match, (void *)device_uid);
-+	if (!asus_acpi_dev)
-+		return access_direct;
-+
-+	/* if reading chip id via ACPI succeeds, use WMI "WMBD" method for access */
-+	if (!nct6775_asuswmi_read(0, NCT6775_PORT_CHIPID, &tmp) && tmp) {
-+		pr_debug("Using Asus WMBD method of %s to access %#x chip.\n", device_uid, tmp);
-+		return access_asuswmi;
-+	}
-+#endif
-+
-+	return access_direct;
-+}
-+
- static int __init sensors_nct6775_platform_init(void)
+ 		flags = ipmi_ssif_lock_cond(ssif_info, &oflags);
+ 		ssif_info->curr_msg = NULL;
+-		ssif_info->ssif_state = SSIF_NORMAL;
++		ssif_info->ssif_state = SSIF_IDLE;
+ 		ipmi_ssif_unlock_cond(ssif_info, flags);
+ 		ipmi_free_smi_msg(msg);
+ 	}
+@@ -407,7 +407,7 @@ static void start_event_fetch(struct ssi
+ 
+ 	msg = ipmi_alloc_smi_msg();
+ 	if (!msg) {
+-		ssif_info->ssif_state = SSIF_NORMAL;
++		ssif_info->ssif_state = SSIF_IDLE;
+ 		ipmi_ssif_unlock_cond(ssif_info, flags);
+ 		return;
+ 	}
+@@ -430,7 +430,7 @@ static void start_recv_msg_fetch(struct
+ 
+ 	msg = ipmi_alloc_smi_msg();
+ 	if (!msg) {
+-		ssif_info->ssif_state = SSIF_NORMAL;
++		ssif_info->ssif_state = SSIF_IDLE;
+ 		ipmi_ssif_unlock_cond(ssif_info, flags);
+ 		return;
+ 	}
+@@ -448,9 +448,9 @@ static void start_recv_msg_fetch(struct
+ 
+ /*
+  * Must be called with the message lock held.  This will release the
+- * message lock.  Note that the caller will check SSIF_IDLE and start a
+- * new operation, so there is no need to check for new messages to
+- * start in here.
++ * message lock.  Note that the caller will check IS_SSIF_IDLE and
++ * start a new operation, so there is no need to check for new
++ * messages to start in here.
+  */
+ static void handle_flags(struct ssif_info *ssif_info, unsigned long *flags)
  {
- 	int i, err;
-@@ -1109,7 +1157,6 @@ static int __init sensors_nct6775_platform_init(void)
- 	int sioaddr[2] = { 0x2e, 0x4e };
- 	enum sensor_access access = access_direct;
- 	const char *board_vendor, *board_name;
--	u8 tmp;
- 
- 	err = platform_driver_register(&nct6775_driver);
- 	if (err)
-@@ -1122,15 +1169,8 @@ static int __init sensors_nct6775_platform_init(void)
- 	    !strcmp(board_vendor, "ASUSTeK COMPUTER INC.")) {
- 		err = match_string(asus_wmi_boards, ARRAY_SIZE(asus_wmi_boards),
- 				   board_name);
--		if (err >= 0) {
--			/* if reading chip id via WMI succeeds, use WMI */
--			if (!nct6775_asuswmi_read(0, NCT6775_PORT_CHIPID, &tmp) && tmp) {
--				pr_info("Using Asus WMI to access %#x chip.\n", tmp);
--				access = access_asuswmi;
--			} else {
--				pr_err("Can't read ChipID by Asus WMI.\n");
--			}
--		}
-+		if (err >= 0)
-+			access = nct6775_determine_access(ASUSWMI_DEVICE_UID);
+@@ -466,7 +466,7 @@ static void handle_flags(struct ssif_inf
+ 		/* Events available. */
+ 		start_event_fetch(ssif_info, flags);
+ 	else {
+-		ssif_info->ssif_state = SSIF_NORMAL;
++		ssif_info->ssif_state = SSIF_IDLE;
+ 		ipmi_ssif_unlock_cond(ssif_info, flags);
+ 	}
+ }
+@@ -568,7 +568,7 @@ static void watch_timeout(struct timer_l
+ 	if (ssif_info->watch_timeout) {
+ 		mod_timer(&ssif_info->watch_timer,
+ 			  jiffies + ssif_info->watch_timeout);
+-		if (SSIF_IDLE(ssif_info)) {
++		if (IS_SSIF_IDLE(ssif_info)) {
+ 			start_flag_fetch(ssif_info, flags); /* Releases lock */
+ 			return;
+ 		}
+@@ -756,7 +756,7 @@ static void msg_done_handler(struct ssif
  	}
  
- 	/*
--- 
-2.39.2
-
+ 	switch (ssif_info->ssif_state) {
+-	case SSIF_NORMAL:
++	case SSIF_IDLE:
+ 		ipmi_ssif_unlock_cond(ssif_info, flags);
+ 		if (!msg)
+ 			break;
+@@ -774,7 +774,7 @@ static void msg_done_handler(struct ssif
+ 			 * Error fetching flags, or invalid length,
+ 			 * just give up for now.
+ 			 */
+-			ssif_info->ssif_state = SSIF_NORMAL;
++			ssif_info->ssif_state = SSIF_IDLE;
+ 			ipmi_ssif_unlock_cond(ssif_info, flags);
+ 			dev_warn(&ssif_info->client->dev,
+ 				 "Error getting flags: %d %d, %x\n",
+@@ -809,7 +809,7 @@ static void msg_done_handler(struct ssif
+ 				 "Invalid response clearing flags: %x %x\n",
+ 				 data[0], data[1]);
+ 		}
+-		ssif_info->ssif_state = SSIF_NORMAL;
++		ssif_info->ssif_state = SSIF_IDLE;
+ 		ipmi_ssif_unlock_cond(ssif_info, flags);
+ 		break;
+ 
+@@ -887,7 +887,7 @@ static void msg_done_handler(struct ssif
+ 	}
+ 
+ 	flags = ipmi_ssif_lock_cond(ssif_info, &oflags);
+-	if (SSIF_IDLE(ssif_info) && !ssif_info->stopping) {
++	if (IS_SSIF_IDLE(ssif_info) && !ssif_info->stopping) {
+ 		if (ssif_info->req_events)
+ 			start_event_fetch(ssif_info, flags);
+ 		else if (ssif_info->req_flags)
+@@ -1032,7 +1032,7 @@ static void start_next_msg(struct ssif_i
+ 	unsigned long oflags;
+ 
+  restart:
+-	if (!SSIF_IDLE(ssif_info)) {
++	if (!IS_SSIF_IDLE(ssif_info)) {
+ 		ipmi_ssif_unlock_cond(ssif_info, flags);
+ 		return;
+ 	}
+@@ -1255,7 +1255,7 @@ static void shutdown_ssif(void *send_inf
+ 	dev_set_drvdata(&ssif_info->client->dev, NULL);
+ 
+ 	/* make sure the driver is not looking for flags any more. */
+-	while (ssif_info->ssif_state != SSIF_NORMAL)
++	while (ssif_info->ssif_state != SSIF_IDLE)
+ 		schedule_timeout(1);
+ 
+ 	ssif_info->stopping = true;
+@@ -1825,7 +1825,7 @@ static int ssif_probe(struct i2c_client
+ 	}
+ 
+ 	spin_lock_init(&ssif_info->lock);
+-	ssif_info->ssif_state = SSIF_NORMAL;
++	ssif_info->ssif_state = SSIF_IDLE;
+ 	timer_setup(&ssif_info->retry_timer, retry_timeout, 0);
+ 	timer_setup(&ssif_info->watch_timer, watch_timeout, 0);
+ 
 
 
