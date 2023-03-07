@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4C3BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:28:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B743EC433D2;
-	Tue,  7 Mar 2023 18:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86965BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:28:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71D1C433AF;
+	Tue,  7 Mar 2023 18:28:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213733;
-	bh=EUyNvDeFWrG6W1xOY+kVNZE3Pw1IZF0ChRwVu9OwwSE=;
+	s=korg; t=1678213736;
+	bh=Gt5RttRD2uzBUsNCm618cpLLtdUwX0697o/p2YGOFh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oLJBDb7Fk6979d3SvToVp0G45vRKbJ86GfWkWqurqKU0Xh+1fiYZKqccAblX2qe/z
-	 7g3nc1ZHw/kLaJ7zcfRRN4U9OnZMZo31gJPMjE7AMicbCs9nmMdSkDfyH28nwTbwdv
-	 P547LVu+1xa+ntkWC5/+njuXkam87Nl/Gu1DSLC0=
+	b=NRhrb1yp8ES+5m0qMpEppDQZ995qeAi2vimnWx8ro4C0Fuk/B1fv3eipE/jN7J3cY
+	 CrARaZYm4aZ68PsFVdurrTh4x+ZyqcXeGBbWNAikOGNojnG7lz5YwrIOx07k0XRqIb
+	 HNofkKPdDMzGZhfiEt5y+UIbRIt9ytb3z+0ojo4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	syzbot+5aed6c3aaba661f5b917@syzkaller.appspotmail.com,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 571/885] netfilter: nf_tables: NULL pointer dereference in nf_tables_updobj()
-Date: Tue,  7 Mar 2023 17:58:25 +0100
-Message-Id: <20230307170027.234861051@linuxfoundation.org>
+Subject: [PATCH 6.1 572/885] can: isotp: check CAN address family in isotp_bind()
+Date: Tue,  7 Mar 2023 17:58:26 +0100
+Message-Id: <20230307170027.265096406@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,38 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit dac7f50a45216d652887fb92d6cd3b7ca7f006ea ]
+[ Upstream commit c6adf659a8ba85913e16a571d5a9bcd17d3d1234 ]
 
-static analyzer detect null pointer dereference case for 'type'
-function __nft_obj_type_get() can return NULL value which require to handle
-if type is NULL pointer return -ENOENT.
+Add missing check to block non-AF_CAN binds.
 
-This is a theoretical issue, since an existing object has a type, but
-better add this failsafe check.
+Syzbot created some code which matched the right sockaddr struct size
+but used AF_XDP (0x2C) instead of AF_CAN (0x1D) in the address family
+field:
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+bind$xdp(r2, &(0x7f0000000540)={0x2c, 0x0, r4, 0x0, r2}, 0x10)
+                                ^^^^
+This has no funtional impact but the userspace should be notified about
+the wrong address family field content.
+
+Link: https://syzkaller.appspot.com/text?tag=CrashLog&x=11ff9d8c480000
+Reported-by: syzbot+5aed6c3aaba661f5b917@syzkaller.appspotmail.com
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/all/20230104201844.13168-1-socketcan@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 3 +++
+ net/can/isotp.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 3ba8c291fcaa7..dca5352bdf3d7 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6951,6 +6951,9 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
- 			return -EOPNOTSUPP;
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index fc81d77724a13..9bc344851704e 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1220,6 +1220,9 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	if (len < ISOTP_MIN_NAMELEN)
+ 		return -EINVAL;
  
- 		type = __nft_obj_type_get(objtype);
-+		if (WARN_ON_ONCE(!type))
-+			return -ENOENT;
++	if (addr->can_family != AF_CAN)
++		return -EINVAL;
 +
- 		nft_ctx_init(&ctx, net, skb, info->nlh, family, table, NULL, nla);
- 
- 		return nf_tables_updobj(&ctx, type, nla[NFTA_OBJ_DATA], obj);
+ 	/* sanitize tx CAN identifier */
+ 	if (tx_id & CAN_EFF_FLAG)
+ 		tx_id &= (CAN_EFF_FLAG | CAN_EFF_MASK);
 -- 
 2.39.2
 
