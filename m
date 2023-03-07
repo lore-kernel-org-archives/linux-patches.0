@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDF7BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:43:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0546FC433D2;
-	Tue,  7 Mar 2023 18:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8248BA4C
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:43:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1621BC433D2;
+	Tue,  7 Mar 2023 18:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214586;
-	bh=5/vYxG0d0VhyuEeTFEEZ+72FTBcf0IzUA4kufOOhIWc=;
+	s=korg; t=1678214589;
+	bh=2JJgs9MSqLa2QW9pGjiGKto7hRoTLiCW0Bm9U7ktLKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Q3lBH9s5lMEpZgsc0Nuj1VAP1BClaLpZlTs8RigQXRgowvXwpKIcvAFnt/SJaiXQ
-	 2R/NjUajniKyN3zjeVfebF7G1XIis/4aCEQsDnfLftOodUA0wBrWmRbeT5rZo+Wysl
-	 dhOy/5fQGCmxPuyDGUPCyFqoypnDjobGyfEWEvos=
+	b=iQpXZaOP5R48Xk00XPiFhH9yMs9BPCVYdr/WLiRr1PM59k86nDQIDskNSa8rImZdX
+	 GFoqSrwlqTErPuXaiEdfsisWeCuuWG+lGGsJxTS6NbbjOaz3xg82Tn/A9sFlFhNCSJ
+	 lNadv6DfEYs01mMC9XLmgD9S0QOXl9Xgwy/TD2uA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>
-Subject: [PATCH 6.1 830/885] docs: gdbmacros: print newest record
-Date: Tue,  7 Mar 2023 18:02:44 +0100
-Message-Id: <20230307170037.910520639@linuxfoundation.org>
+	"H. Nikolaus Schaller" <hns@goldelico.com>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.1 863/885] MIPS: DTS: CI20: fix otg power gpio
+Date: Tue,  7 Mar 2023 18:03:17 +0100
+Message-Id: <20230307170039.243490490@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,42 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Ogness <john.ogness@linutronix.de>
+From: H. Nikolaus Schaller <hns@goldelico.com>
 
-commit f2e4cca2f670c8e52fbb551a295f2afc9aa2bd72 upstream.
+commit 0cb4228f6cc9ed0ca2be0d9ddf29168a8e3a3905 upstream.
 
-@head_id points to the newest record, but the printing loop
-exits when it increments to this value (before printing).
+According to schematics it is PF15 and not PF14 (MIC_SW_EN).
+Seems as if it was hidden and not noticed during testing since
+there is no sound DT node.
 
-Exit the printing loop after the newest record has been printed.
-
-The python-based function in scripts/gdb/linux/dmesg.py already
-does this correctly.
-
-Fixes: e60768311af8 ("scripts/gdb: update for lockless printk ringbuffer")
+Fixes: 158c774d3c64 ("MIPS: Ingenic: Add missing nodes for Ingenic SoCs and boards.")
 Cc: stable@vger.kernel.org
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20221229134339.197627-1-john.ogness@linutronix.de
+Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
+Acked-by: Paul Cercueil <paul@crapouillou.net>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/kdump/gdbmacros.txt |    2 +-
+ arch/mips/boot/dts/ingenic/ci20.dts |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/admin-guide/kdump/gdbmacros.txt
-+++ b/Documentation/admin-guide/kdump/gdbmacros.txt
-@@ -312,10 +312,10 @@ define dmesg
- 			set var $prev_flags = $info->flags
- 		end
+--- a/arch/mips/boot/dts/ingenic/ci20.dts
++++ b/arch/mips/boot/dts/ingenic/ci20.dts
+@@ -113,7 +113,7 @@
+ 		regulator-min-microvolt = <5000000>;
+ 		regulator-max-microvolt = <5000000>;
  
--		set var $id = ($id + 1) & $id_mask
- 		if ($id == $end_id)
- 			loop_break
- 		end
-+		set var $id = ($id + 1) & $id_mask
- 	end
- end
- document dmesg
+-		gpio = <&gpf 14 GPIO_ACTIVE_LOW>;
++		gpio = <&gpf 15 GPIO_ACTIVE_LOW>;
+ 		enable-active-high;
+ 	};
+ };
 
 
