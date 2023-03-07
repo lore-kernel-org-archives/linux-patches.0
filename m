@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146BFBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:21:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A77C4339C;
-	Tue,  7 Mar 2023 17:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B965BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:21:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526D0C433D2;
+	Tue,  7 Mar 2023 17:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209660;
-	bh=SRxSxwdC2UK5K5lirdJ2KMLSUYI6E2JgaV5+Ezi6DKE=;
+	s=korg; t=1678209664;
+	bh=JK+yND/OhzW78yd2PRvX1T4mP0GhccggqgYqc6wfeb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=egRdMMg2ul9XPwUUP7xPK0iwo9/8GNe2WhZ+Q5Ii0AG83f5Le0voJsLWOLvN/RlTt
-	 h71VErWHj7qn5DPmfSmWnw9B8pYSsFlAQt4loGuEs053Ytzji42MH2FC6nHunaJ/uB
-	 zl+Ri7w33z5WVJ8fJCH/dDnhwHGYiuIjjSUQdwQA=
+	b=ltEcjgLxi+O8g9B8cZwPPNYYKcqKwSC3FBnGpGI2gvTMLVDQa6DBt3cXoaOrRcXf1
+	 3DWDpssvTiB0iE7rdZ0vSdy4UKewbQ3JWJPRDku6gLgCSKwSYR7M3WqAuqwI4VMQ1J
+	 MhqNbTuXcAJShEaYQ3OV9o7MsuwfBMaSNQ8D+Oww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vasily Gorbik <gor@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0259/1001] s390/mem_detect: fix detect_memory() error handling
-Date: Tue,  7 Mar 2023 17:50:31 +0100
-Message-Id: <20230307170032.972900826@linuxfoundation.org>
+Subject: [PATCH 6.2 0260/1001] s390/vmem: fix empty page tables cleanup under KASAN
+Date: Tue,  7 Mar 2023 17:50:32 +0100
+Message-Id: <20230307170033.022069929@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,36 +38,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit 3400c35a4090704e6c465449616ab7e67a9209e7 ]
+[ Upstream commit 108303b0a2d27cb14eed565e33e64ad9eefe5d7e ]
 
-Currently if for some reason sclp_early_read_info() fails,
-sclp_early_get_memsize() will not set max_physmem_end and it
-will stay uninitialized. Any garbage value other than 0 will lead
-to detect_memory() taking wrong path or returning a garbage value
-as max_physmem_end. To avoid that simply initialize max_physmem_end.
+Commit b9ff81003cf1 ("s390/vmem: cleanup empty page tables") introduced
+empty page tables cleanup in vmem code, but when the kernel is built
+with KASAN enabled the code has no effect due to wrong KASAN shadow
+memory intersection condition, which effectively ignores any memory
+range below KASAN shadow. Fix intersection condition to make code
+work as anticipated.
 
-Fixes: 73045a08cf55 ("s390: unify identity mapping limits handling")
-Reported-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: b9ff81003cf1 ("s390/vmem: cleanup empty page tables")
 Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/mem_detect.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/mm/vmem.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/s390/boot/mem_detect.c b/arch/s390/boot/mem_detect.c
-index 7fa1a32ea0f3f..0a5821ef4f1fd 100644
---- a/arch/s390/boot/mem_detect.c
-+++ b/arch/s390/boot/mem_detect.c
-@@ -165,7 +165,7 @@ static void search_mem_end(void)
+diff --git a/arch/s390/mm/vmem.c b/arch/s390/mm/vmem.c
+index ee1a97078527b..9a0ce5315f36d 100644
+--- a/arch/s390/mm/vmem.c
++++ b/arch/s390/mm/vmem.c
+@@ -297,7 +297,7 @@ static void try_free_pmd_table(pud_t *pud, unsigned long start)
+ 	if (end > VMALLOC_START)
+ 		return;
+ #ifdef CONFIG_KASAN
+-	if (start < KASAN_SHADOW_END && KASAN_SHADOW_START > end)
++	if (start < KASAN_SHADOW_END && end > KASAN_SHADOW_START)
+ 		return;
+ #endif
+ 	pmd = pmd_offset(pud, start);
+@@ -372,7 +372,7 @@ static void try_free_pud_table(p4d_t *p4d, unsigned long start)
+ 	if (end > VMALLOC_START)
+ 		return;
+ #ifdef CONFIG_KASAN
+-	if (start < KASAN_SHADOW_END && KASAN_SHADOW_START > end)
++	if (start < KASAN_SHADOW_END && end > KASAN_SHADOW_START)
+ 		return;
+ #endif
  
- unsigned long detect_memory(void)
- {
--	unsigned long max_physmem_end;
-+	unsigned long max_physmem_end = 0;
- 
- 	sclp_early_get_memsize(&max_physmem_end);
+@@ -426,7 +426,7 @@ static void try_free_p4d_table(pgd_t *pgd, unsigned long start)
+ 	if (end > VMALLOC_START)
+ 		return;
+ #ifdef CONFIG_KASAN
+-	if (start < KASAN_SHADOW_END && KASAN_SHADOW_START > end)
++	if (start < KASAN_SHADOW_END && end > KASAN_SHADOW_START)
+ 		return;
+ #endif
  
 -- 
 2.39.2
