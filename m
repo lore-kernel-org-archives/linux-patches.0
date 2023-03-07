@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68327BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:50:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA044C4339B;
-	Tue,  7 Mar 2023 18:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79EE6BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:50:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B74C433EF;
+	Tue,  7 Mar 2023 18:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215027;
-	bh=YuYhB/dKHorjUyZL4Inu0z7kFjwTLil0DAr9I6YhTa0=;
+	s=korg; t=1678215030;
+	bh=ls1ww7wUoZdGfmdpDQ/rsvnyM2uFK2RBvTwDXaamC4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CT45u9miTx3iN+zqAgdiIzgFDghWt8tpCynj1V+IBnJwEzBkpB/qcc7oGwnTv7O3+
-	 OwB9/96sgR+mEbMYpNqVa/SpgnyBLeIwSrCMuLFadD4NbA64WPH4uz1hO1ova7SfVd
-	 BWmslyhgxlATKwvMYUK93FMbFSQfWrezJx0kL5KI=
+	b=jmlbRUVTlNO2zTWxaboH7J/Mc4YK7oRi1lGrwNMNYCFxlSYUmTcgkz6zPCx+1qWw7
+	 Wp36Dh0Jr0jkZ8AZvVchp8dycZc1Clf7eSAjNTMzKQikJSZUXlJbjRzk5kOYjbZ3ry
+	 eA4Qk6/0c6c5vKqBOJEi4fhJrKXCivYSng6gSSIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 120/567] crypto: xts - Handle EBUSY correctly
-Date: Tue,  7 Mar 2023 17:57:36 +0100
-Message-Id: <20230307165911.106165985@linuxfoundation.org>
+Subject: [PATCH 5.15 129/567] irqchip/irq-mvebu-gicp: Fix refcount leak in mvebu_gicp_probe
+Date: Tue,  7 Mar 2023 17:57:45 +0100
+Message-Id: <20230307165911.480117356@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,61 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 51c082514c2dedf2711c99d93c196cc4eedceb40 ]
+[ Upstream commit 9419e700021a393f67be36abd0c4f3acc6139041 ]
 
-As it is xts only handles the special return value of EINPROGRESS,
-which means that in all other cases it will free data related to the
-request.
+of_irq_find_parent() returns a node pointer with refcount incremented,
+We should use of_node_put() on it when not needed anymore.
+Add missing of_node_put() to avoid refcount leak.
 
-However, as the caller of xts may specify MAY_BACKLOG, we also need
-to expect EBUSY and treat it in the same way.  Otherwise backlogged
-requests will trigger a use-after-free.
-
-Fixes: 8083b1bf8163 ("crypto: xts - add support for ciphertext stealing")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: a68a63cb4dfc ("irqchip/irq-mvebu-gicp: Add new driver for Marvell GICP")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230102084208.3951758-1-linmq006@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/xts.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-mvebu-gicp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/crypto/xts.c b/crypto/xts.c
-index 63c85b9e64e08..de6cbcf69bbd6 100644
---- a/crypto/xts.c
-+++ b/crypto/xts.c
-@@ -203,12 +203,12 @@ static void xts_encrypt_done(struct crypto_async_request *areq, int err)
- 	if (!err) {
- 		struct xts_request_ctx *rctx = skcipher_request_ctx(req);
- 
--		rctx->subreq.base.flags &= ~CRYPTO_TFM_REQ_MAY_SLEEP;
-+		rctx->subreq.base.flags &= CRYPTO_TFM_REQ_MAY_BACKLOG;
- 		err = xts_xor_tweak_post(req, true);
- 
- 		if (!err && unlikely(req->cryptlen % XTS_BLOCK_SIZE)) {
- 			err = xts_cts_final(req, crypto_skcipher_encrypt);
--			if (err == -EINPROGRESS)
-+			if (err == -EINPROGRESS || err == -EBUSY)
- 				return;
- 		}
+diff --git a/drivers/irqchip/irq-mvebu-gicp.c b/drivers/irqchip/irq-mvebu-gicp.c
+index fe88a782173dd..c43a345061d53 100644
+--- a/drivers/irqchip/irq-mvebu-gicp.c
++++ b/drivers/irqchip/irq-mvebu-gicp.c
+@@ -221,6 +221,7 @@ static int mvebu_gicp_probe(struct platform_device *pdev)
  	}
-@@ -223,12 +223,12 @@ static void xts_decrypt_done(struct crypto_async_request *areq, int err)
- 	if (!err) {
- 		struct xts_request_ctx *rctx = skcipher_request_ctx(req);
  
--		rctx->subreq.base.flags &= ~CRYPTO_TFM_REQ_MAY_SLEEP;
-+		rctx->subreq.base.flags &= CRYPTO_TFM_REQ_MAY_BACKLOG;
- 		err = xts_xor_tweak_post(req, false);
- 
- 		if (!err && unlikely(req->cryptlen % XTS_BLOCK_SIZE)) {
- 			err = xts_cts_final(req, crypto_skcipher_decrypt);
--			if (err == -EINPROGRESS)
-+			if (err == -EINPROGRESS || err == -EBUSY)
- 				return;
- 		}
- 	}
+ 	parent_domain = irq_find_host(irq_parent_dn);
++	of_node_put(irq_parent_dn);
+ 	if (!parent_domain) {
+ 		dev_err(&pdev->dev, "failed to find parent IRQ domain\n");
+ 		return -ENODEV;
 -- 
 2.39.2
 
