@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E05BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:04:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236AEC433A0;
-	Tue,  7 Mar 2023 18:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03516BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:04:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47362C433D2;
+	Tue,  7 Mar 2023 18:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212294;
-	bh=Yh3YOoIk/i1ir3llnCsDc7kUCVZGRLH/MGwJG31ZoLg=;
+	s=korg; t=1678212297;
+	bh=Le0XJppRH2Gh/YcCBkNWHfu3aHGKcvhNtp2U/9r1+8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XYjr0wr1q1oUCu7CmSNG5luDcAMyGhEnAz6vx8lhjJgOjoJ71HKLwpWz2xhEHetV0
-	 +W96k2B30sZ85IrgPyXykCiZap9+2CUrZGSTVc8v6oKNf9QoeDvasJ+iLNBi9VnKZr
-	 Qz0WEmcqQAzq38Q47NxeJ4v8vAxi83fn+Cj74NoU=
+	b=riDDvux53KxFQlQWeZrXLSTQ29p2qKFaw2UefpfKBRAjxzKO6Z7FjNabyyMg760sb
+	 zHNLomEAADkBoDV8y8d8hpMELHq3aRaAOPn+vCdUUd3Ph+3vj2eGqzT7Puv2BONynX
+	 VzmPo71ZWScRNGnw9O0KxS7h+IB1xF+TE71jxrHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Daniel T. Lee" <danieltimlee@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 139/885] libbpf: Fix invalid return address register in s390
-Date: Tue,  7 Mar 2023 17:51:13 +0100
-Message-Id: <20230307170007.900492112@linuxfoundation.org>
+Subject: [PATCH 6.1 113/885] wifi: mt76: mt7915: check return value before accessing free_block_num
+Date: Tue,  7 Mar 2023 17:50:47 +0100
+Message-Id: <20230307170006.783131837@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,40 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel T. Lee <danieltimlee@gmail.com>
+From: Ryder Lee <ryder.lee@mediatek.com>
 
-[ Upstream commit 7244eb669397f309c3d014264823cdc9cb3f8e6b ]
+[ Upstream commit 59b27a7d472f100ac8998e15a63c47a03cced12a ]
 
-There is currently an invalid register mapping in the s390 return
-address register. As the manual[1] states, the return address can be
-found at r14. In bpf_tracing.h, the s390 registers were named
-gprs(general purpose registers). This commit fixes the problem by
-correcting the mistyped mapping.
+Check return value of mt7915_mcu_get_eeprom_free_block() first before
+accessing free_block_num.
 
-[1]: https://uclibc.org/docs/psABI-s390x.pdf#page=14
-
-Fixes: 3cc31d794097 ("libbpf: Normalize PT_REGS_xxx() macro definitions")
-Signed-off-by: Daniel T. Lee <danieltimlee@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20221224071527.2292-7-danieltimlee@gmail.com
+Fixes: bbc1d4154ec1 ("mt76: mt7915: add default calibrated data support")
+Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/bpf_tracing.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../wireless/mediatek/mt76/mt7915/eeprom.c    | 19 ++++++++++++-------
+ .../net/wireless/mediatek/mt76/mt7915/mcu.c   | 10 ++++++----
+ 2 files changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/tools/lib/bpf/bpf_tracing.h b/tools/lib/bpf/bpf_tracing.h
-index 2972dc25ff722..9c1b1689068d1 100644
---- a/tools/lib/bpf/bpf_tracing.h
-+++ b/tools/lib/bpf/bpf_tracing.h
-@@ -137,7 +137,7 @@ struct pt_regs___s390 {
- #define __PT_PARM3_REG gprs[4]
- #define __PT_PARM4_REG gprs[5]
- #define __PT_PARM5_REG gprs[6]
--#define __PT_RET_REG grps[14]
-+#define __PT_RET_REG gprs[14]
- #define __PT_FP_REG gprs[11]	/* Works only with CONFIG_FRAME_POINTER */
- #define __PT_RC_REG gprs[2]
- #define __PT_SP_REG gprs[15]
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+index 0bce0ce51be00..f0ec000d46cf7 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+@@ -110,18 +110,23 @@ static int mt7915_eeprom_load(struct mt7915_dev *dev)
+ 	} else {
+ 		u8 free_block_num;
+ 		u32 block_num, i;
++		u32 eeprom_blk_size = MT7915_EEPROM_BLOCK_SIZE;
+ 
+-		mt7915_mcu_get_eeprom_free_block(dev, &free_block_num);
+-		/* efuse info not enough */
++		ret = mt7915_mcu_get_eeprom_free_block(dev, &free_block_num);
++		if (ret < 0)
++			return ret;
++
++		/* efuse info isn't enough */
+ 		if (free_block_num >= 29)
+ 			return -EINVAL;
+ 
+ 		/* read eeprom data from efuse */
+-		block_num = DIV_ROUND_UP(eeprom_size,
+-					 MT7915_EEPROM_BLOCK_SIZE);
+-		for (i = 0; i < block_num; i++)
+-			mt7915_mcu_get_eeprom(dev,
+-					      i * MT7915_EEPROM_BLOCK_SIZE);
++		block_num = DIV_ROUND_UP(eeprom_size, eeprom_blk_size);
++		for (i = 0; i < block_num; i++) {
++			ret = mt7915_mcu_get_eeprom(dev, i * eeprom_blk_size);
++			if (ret < 0)
++				return ret;
++		}
+ 	}
+ 
+ 	return mt7915_check_eeprom(dev);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index 8d297e4aa7d43..c4843f4de34ff 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -2743,8 +2743,9 @@ int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset)
+ 	int ret;
+ 	u8 *buf;
+ 
+-	ret = mt76_mcu_send_and_get_msg(&dev->mt76, MCU_EXT_QUERY(EFUSE_ACCESS), &req,
+-				sizeof(req), true, &skb);
++	ret = mt76_mcu_send_and_get_msg(&dev->mt76,
++					MCU_EXT_QUERY(EFUSE_ACCESS),
++					&req, sizeof(req), true, &skb);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -2769,8 +2770,9 @@ int mt7915_mcu_get_eeprom_free_block(struct mt7915_dev *dev, u8 *block_num)
+ 	struct sk_buff *skb;
+ 	int ret;
+ 
+-	ret = mt76_mcu_send_and_get_msg(&dev->mt76, MCU_EXT_QUERY(EFUSE_FREE_BLOCK), &req,
+-					sizeof(req), true, &skb);
++	ret = mt76_mcu_send_and_get_msg(&dev->mt76,
++					MCU_EXT_QUERY(EFUSE_FREE_BLOCK),
++					&req, sizeof(req), true, &skb);
+ 	if (ret)
+ 		return ret;
+ 
 -- 
 2.39.2
 
