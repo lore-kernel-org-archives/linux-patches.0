@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589BDBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:57:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 957BCC433EF;
-	Tue,  7 Mar 2023 18:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D9BBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:57:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22C1C433EF;
+	Tue,  7 Mar 2023 18:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215472;
-	bh=6hlwjHw6rs1YgvrHRHYfefssu4F8AeFjiLYPQsRd/FY=;
+	s=korg; t=1678215475;
+	bh=cR+qk1JhWw2COPgCW0BvZsUAFliCfLF1PTI0k5q5nNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qNbHPJbxNf+gIE9cPru7Ifw/jPgMxry8+MNMMfeD0M8tVv81+IqL6+Bio//EPrjkm
-	 eunLccrJLzZSklgxsZuRvHAnOSt0e8D6EHA4amOqTAWe3JevFGBtPAKZk57gJvY/Dc
-	 mKNV279kg/EDNIhPoaiRqF3fPQVW224ELVu8jUEk=
+	b=sHZ7LhPThdPZPUfu3C73oEvtMKrYFNlkoh57vH9n3NcJE6iiwpvRRf3wNvJt5dubI
+	 vj7asTadBZfg01RybYtNS8fV+oBrBN01rDVU3I4hp6vyekug6LYHU45z4EOZMbbG6R
+	 BVLWH67RElA7yLMtDLNCevkic48YFalrz7stT+oM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 273/567] dmaengine: idxd: Set traffic class values in GRPCFG on DSA 2.0
-Date: Tue,  7 Mar 2023 18:00:09 +0100
-Message-Id: <20230307165917.742043485@linuxfoundation.org>
+Subject: [PATCH 5.15 274/567] dmaengine: HISI_DMA should depend on ARCH_HISI
+Date: Tue,  7 Mar 2023 18:00:10 +0100
+Message-Id: <20230307165917.781055076@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,77 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fenghua Yu <fenghua.yu@intel.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 9735bde36487da43d3c3fc910df49639f72decbf ]
+[ Upstream commit dcca9d045c0852584ad092123c7f6e6526a633b1 ]
 
-On DSA/IAX 1.0, TC-A and TC-B in GRPCFG are set as 1 to have best
-performance and cannot be changed through sysfs knobs unless override
-option is given.
+The HiSilicon DMA Engine is only present on HiSilicon SoCs.  Hence add a
+dependency on ARCH_HISI, to prevent asking the user about this driver
+when configuring a kernel without HiSilicon SoC support.
 
-The same values should be set on DSA 2.0 as well.
-
-Fixes: ea7c8f598c32 ("dmaengine: idxd: restore traffic class defaults after wq reset")
-Fixes: ade8a86b512c ("dmaengine: idxd: Set defaults for GRPCFG traffic class")
-Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20221209172141.562648-1-fenghua.yu@intel.com
+Fixes: e9f08b65250d73ab ("dmaengine: hisilicon: Add Kunpeng DMA engine support")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/363a1816d36cd3cf604d88ec90f97c75f604de64.1669044190.git.geert+renesas@glider.be
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/device.c | 2 +-
- drivers/dma/idxd/init.c   | 2 +-
- drivers/dma/idxd/sysfs.c  | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/dma/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 37b07c679c0ee..535f021911c55 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -702,7 +702,7 @@ static void idxd_groups_clear_state(struct idxd_device *idxd)
- 		group->use_rdbuf_limit = false;
- 		group->rdbufs_allowed = 0;
- 		group->rdbufs_reserved = 0;
--		if (idxd->hw.version < DEVICE_VERSION_2 && !tc_override) {
-+		if (idxd->hw.version <= DEVICE_VERSION_2 && !tc_override) {
- 			group->tc_a = 1;
- 			group->tc_b = 1;
- 		} else {
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 6263d9825250b..e0e0c7f286b67 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -340,7 +340,7 @@ static int idxd_setup_groups(struct idxd_device *idxd)
- 		}
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index 80c2c03cb0141..95344ae49e532 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -236,7 +236,7 @@ config FSL_RAID
  
- 		idxd->groups[i] = group;
--		if (idxd->hw.version < DEVICE_VERSION_2 && !tc_override) {
-+		if (idxd->hw.version <= DEVICE_VERSION_2 && !tc_override) {
- 			group->tc_a = 1;
- 			group->tc_b = 1;
- 		} else {
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 33d94c67fedb9..489a9d8850764 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -327,7 +327,7 @@ static ssize_t group_traffic_class_a_store(struct device *dev,
- 	if (idxd->state == IDXD_DEV_ENABLED)
- 		return -EPERM;
- 
--	if (idxd->hw.version < DEVICE_VERSION_2 && !tc_override)
-+	if (idxd->hw.version <= DEVICE_VERSION_2 && !tc_override)
- 		return -EPERM;
- 
- 	if (val < 0 || val > 7)
-@@ -369,7 +369,7 @@ static ssize_t group_traffic_class_b_store(struct device *dev,
- 	if (idxd->state == IDXD_DEV_ENABLED)
- 		return -EPERM;
- 
--	if (idxd->hw.version < DEVICE_VERSION_2 && !tc_override)
-+	if (idxd->hw.version <= DEVICE_VERSION_2 && !tc_override)
- 		return -EPERM;
- 
- 	if (val < 0 || val > 7)
+ config HISI_DMA
+ 	tristate "HiSilicon DMA Engine support"
+-	depends on ARM64 || COMPILE_TEST
++	depends on ARCH_HISI || COMPILE_TEST
+ 	depends on PCI_MSI
+ 	select DMA_ENGINE
+ 	select DMA_VIRTUAL_CHANNELS
 -- 
 2.39.2
 
