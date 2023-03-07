@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB1EBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:42:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C603DC433D2;
-	Tue,  7 Mar 2023 18:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776D2BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:42:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFCE0C433EF;
+	Tue,  7 Mar 2023 18:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214546;
-	bh=f8D20QC3CJzX/ndMRx1yYHKDtzyAqslqUxzqFV+byVw=;
+	s=korg; t=1678214549;
+	bh=RXXBY/6yfiWKShcR8orx+uf1enEGD2NB1ekCpIGH6os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P59on7lxSK22sQEYqx4sCaZ/gCfM4OFPL/M/Djcr24bMOHGF8MpZsbxw5gUHtKRea
-	 PmRiriRoZyxZD+i/QkspG+IaBRywmesjbctc5QvBrXRJUE3cVIXYh3eAHvD5AObPmx
-	 L27uhRhzSRzK6yF88S1Ejr9KxheHbS7YrwRIWLnk=
+	b=Uxs+lZYgmvIJvu7gFyQQS44yRkKh1OMvTTB7qhw8Djm/NKKR2Iwr7xtqBNNv8hmS5
+	 vlev1vg2C/D8Qw5/Bf9PvBh4/hIhTd8+NqQdjeAWnNqlFlk0sMSVLZAFm54ubPFESo
+	 f2Bh662jDPdlB5tXKJb5SGeKUBoFQMN0E5kREEK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Guo Ren <guoren@kernel.org>,
+	Mattias Nissler <mnissler@rivosinc.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 856/885] RISC-V: add a spin_shadow_stack declaration
-Date: Tue,  7 Mar 2023 18:03:10 +0100
-Message-Id: <20230307170038.959753678@linuxfoundation.org>
+Subject: [PATCH 6.1 857/885] riscv: Avoid enabling interrupts in die()
+Date: Tue,  7 Mar 2023 18:03:11 +0100
+Message-Id: <20230307170039.004480306@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,39 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Mattias Nissler <mnissler@rivosinc.com>
 
-commit eb9be8310c58c166f9fae3b71c0ad9d6741b4897 upstream.
+commit 130aee3fd9981297ff9354e5d5609cd59aafbbea upstream.
 
-The patchwork automation reported a sparse complaint that
-spin_shadow_stack was not declared and should be static:
-../arch/riscv/kernel/traps.c:335:15: warning: symbol 'spin_shadow_stack' was not declared. Should it be static?
+While working on something else, I noticed that the kernel would start
+accepting interrupts again after crashing in an interrupt handler. Since
+the kernel is already in inconsistent state, enabling interrupts is
+dangerous and opens up risk of kernel state deteriorating further.
+Interrupts do get enabled via what looks like an unintended side effect of
+spin_unlock_irq, so switch to the more cautious
+spin_lock_irqsave/spin_unlock_irqrestore instead.
 
-However, this is used in entry.S and therefore shouldn't be static.
-The same applies to the shadow_stack that this pseudo spinlock is
-trying to protect, so do like its charge and add a declaration to
-thread_info.h
-
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Fixes: 7e1864332fbc ("riscv: fix race when vmap stack overflow")
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20230210185945.915806-1-conor@kernel.org
+Fixes: 76d2a0493a17 ("RISC-V: Init and Halt Code")
+Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Link: https://lore.kernel.org/r/20230215144828.3370316-1-mnissler@rivosinc.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/thread_info.h |    1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/kernel/traps.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/riscv/include/asm/thread_info.h
-+++ b/arch/riscv/include/asm/thread_info.h
-@@ -43,6 +43,7 @@
- #ifndef __ASSEMBLY__
+--- a/arch/riscv/kernel/traps.c
++++ b/arch/riscv/kernel/traps.c
+@@ -34,10 +34,11 @@ void die(struct pt_regs *regs, const cha
+ 	static int die_counter;
+ 	int ret;
+ 	long cause;
++	unsigned long flags;
  
- extern long shadow_stack[SHADOW_OVERFLOW_STACK_SIZE / sizeof(long)];
-+extern unsigned long spin_shadow_stack;
+ 	oops_enter();
  
- #include <asm/processor.h>
- #include <asm/csr.h>
+-	spin_lock_irq(&die_lock);
++	spin_lock_irqsave(&die_lock, flags);
+ 	console_verbose();
+ 	bust_spinlocks(1);
+ 
+@@ -54,7 +55,7 @@ void die(struct pt_regs *regs, const cha
+ 
+ 	bust_spinlocks(0);
+ 	add_taint(TAINT_DIE, LOCKDEP_NOW_UNRELIABLE);
+-	spin_unlock_irq(&die_lock);
++	spin_unlock_irqrestore(&die_lock, flags);
+ 	oops_exit();
+ 
+ 	if (in_interrupt())
 
 
