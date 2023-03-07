@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3D0BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:59:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D42C4339B;
-	Tue,  7 Mar 2023 18:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CED3BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:59:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE7FC433EF;
+	Tue,  7 Mar 2023 18:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215589;
-	bh=zFcTd643dyZEnOb+zT4R+fpPWmEFGBOWQY3ICI73bZM=;
+	s=korg; t=1678215591;
+	bh=74ixLvaz9Go/gDxr3wBRo/9Pn/kQ5m6yyXPWiIUliu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPi/KC9VKYTDsJeGYYUC+RsxTiYu1fBHHeIHNUFzS4BWhROMoVgRpA5op5oBSdNSp
-	 9RcFdsQKYaD3OafJDIC9l7KDz72AmRNXvrs9WC3TBXJGb/aYC4DCOaFTb4/cFVAAsL
-	 8H3uL08gIf0/1evF7RFt5lohn4tvSOzdIbnYuJ3s=
+	b=J2GXwtw1ya8DAOEeJic2Ph/9Png9Q1S+iwYHB2aTDdXaa9NCIXYPeZIuyXAjvcetD
+	 GAAcpvPgQRWqu0NW4+BCtc63a8SOUtx8ggEz/aqd3gsyPFmomma/kL/1FfhiUUGCxO
+	 gGy5G16k7VQnFkTpz0yrZQGRikAmrp/NYd7e/x1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 293/567] ACPI: resource: Add helper function acpi_dev_get_memory_resources()
-Date: Tue,  7 Mar 2023 18:00:29 +0100
-Message-Id: <20230307165918.588528477@linuxfoundation.org>
+Subject: [PATCH 5.15 311/567] firmware: dmi-sysfs: Fix null-ptr-deref in dmi_sysfs_register_handle
+Date: Tue,  7 Mar 2023 18:00:47 +0100
+Message-Id: <20230307165919.350124124@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,63 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 6bb057bfd9d509755349cd2a6ca5e5e6e6071304 ]
+[ Upstream commit 18e126e97c961f7a93823795c879d7c085fe5098 ]
 
-Wrapper function that finds all memory type resources by
-using acpi_dev_get_resources(). It removes the need for the
-drivers to check the resource data type separately.
+KASAN reported a null-ptr-deref error:
 
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: c3194949ae8f ("usb: typec: intel_pmc_mux: Don't leak the ACPI device reference count")
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+CPU: 0 PID: 1373 Comm: modprobe
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+RIP: 0010:dmi_sysfs_entry_release
+...
+Call Trace:
+ <TASK>
+ kobject_put
+ dmi_sysfs_register_handle (drivers/firmware/dmi-sysfs.c:540) dmi_sysfs
+ dmi_decode_table (drivers/firmware/dmi_scan.c:133)
+ dmi_walk (drivers/firmware/dmi_scan.c:1115)
+ dmi_sysfs_init (drivers/firmware/dmi-sysfs.c:149) dmi_sysfs
+ do_one_initcall (init/main.c:1296)
+ ...
+Kernel panic - not syncing: Fatal exception
+Kernel Offset: 0x4000000 from 0xffffffff81000000
+---[ end Kernel panic - not syncing: Fatal exception ]---
+
+It is because previous patch added kobject_put() to release the memory
+which will call  dmi_sysfs_entry_release() and list_del().
+
+However, list_add_tail(entry->list) is called after the error block,
+so the list_head is uninitialized and cannot be deleted.
+
+Move error handling to after list_add_tail to fix this.
+
+Fixes: 660ba678f999 ("firmware: dmi-sysfs: Fix memory leak in dmi_sysfs_register_handle")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221111015326.251650-2-chenzhongjin@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 17 +++++++++++++++++
- include/linux/acpi.h    |  1 +
- 2 files changed, 18 insertions(+)
+ drivers/firmware/dmi-sysfs.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index f6317bc417ab1..3b9f894873365 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -788,6 +788,23 @@ int acpi_dev_get_dma_resources(struct acpi_device *adev, struct list_head *list)
- }
- EXPORT_SYMBOL_GPL(acpi_dev_get_dma_resources);
+diff --git a/drivers/firmware/dmi-sysfs.c b/drivers/firmware/dmi-sysfs.c
+index 4a93fb490cb46..3d57b08320df9 100644
+--- a/drivers/firmware/dmi-sysfs.c
++++ b/drivers/firmware/dmi-sysfs.c
+@@ -602,16 +602,16 @@ static void __init dmi_sysfs_register_handle(const struct dmi_header *dh,
+ 	*ret = kobject_init_and_add(&entry->kobj, &dmi_sysfs_entry_ktype, NULL,
+ 				    "%d-%d", dh->type, entry->instance);
  
-+/**
-+ * acpi_dev_get_memory_resources - Get current memory resources of a device.
-+ * @adev: ACPI device node to get the resources for.
-+ * @list: Head of the resultant list of resources (must be empty).
-+ *
-+ * This is a helper function that locates all memory type resources of @adev
-+ * with acpi_dev_get_resources().
-+ *
-+ * The number of resources in the output list is returned on success, an error
-+ * code reflecting the error condition is returned otherwise.
-+ */
-+int acpi_dev_get_memory_resources(struct acpi_device *adev, struct list_head *list)
-+{
-+	return acpi_dev_get_resources(adev, list, is_memory, NULL);
-+}
-+EXPORT_SYMBOL_GPL(acpi_dev_get_memory_resources);
+-	if (*ret) {
+-		kobject_put(&entry->kobj);
+-		return;
+-	}
+-
+ 	/* Thread on the global list for cleanup */
+ 	spin_lock(&entry_list_lock);
+ 	list_add_tail(&entry->list, &entry_list);
+ 	spin_unlock(&entry_list_lock);
+ 
++	if (*ret) {
++		kobject_put(&entry->kobj);
++		return;
++	}
 +
- /**
-  * acpi_dev_filter_resource_type - Filter ACPI resource according to resource
-  *				   types
-diff --git a/include/linux/acpi.h b/include/linux/acpi.h
-index 2d7df5cea2494..a23a5aea9c817 100644
---- a/include/linux/acpi.h
-+++ b/include/linux/acpi.h
-@@ -484,6 +484,7 @@ int acpi_dev_get_resources(struct acpi_device *adev, struct list_head *list,
- 			   void *preproc_data);
- int acpi_dev_get_dma_resources(struct acpi_device *adev,
- 			       struct list_head *list);
-+int acpi_dev_get_memory_resources(struct acpi_device *adev, struct list_head *list);
- int acpi_dev_filter_resource_type(struct acpi_resource *ares,
- 				  unsigned long types);
- 
+ 	/* Handle specializations by type */
+ 	switch (dh->type) {
+ 	case DMI_ENTRY_SYSTEM_EVENT_LOG:
 -- 
 2.39.2
 
