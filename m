@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90125BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:14:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE896C433D2;
-	Tue,  7 Mar 2023 18:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A499BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:14:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90D8C433EF;
+	Tue,  7 Mar 2023 18:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212888;
-	bh=hLyJt667Aw4j4PzIorJ6E01MWCKul67qH0QIoSd4E+k=;
+	s=korg; t=1678212891;
+	bh=+fjEORMF26BgRAYf1zu2KuHABTEdXXHsI6ujVz8Z2HE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L8SVINAM8rzdoT8MZ2rVg9Y2Gy7G7YMct0pTZvbsvDLO4x8yRZIgXg6tKBqQ/TYcZ
-	 uepqjgHzgYixpM/UitW+jkD4qk5/SYlvpMN2JNIudtvnqa9UBIzg2bGwoJ51uOocqi
-	 XC9DsB2N18WIpJHG71rgwBzCTPnIS8VaFQ14ULYw=
+	b=vpGkxtjA0swZKwP2WWcd6/DZCrjuPMDXocAg9NjoHvSOkOXCAYBNsrpEWLoQ73+xW
+	 zA6CWCtTIW+G3ftTrPvnm7YPoeoDwpd/17yvSJzLsaRAvWwgrhmGt0+ulvoW4vByZt
+	 DNYo7jbb3LA0uw0ntGALOTYqonHLXjzJn1Y1UWPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allen-KH Cheng <allen-kh.cheng@mediatek.com>,
-	Rob Herring <robh@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Clark Wang <xiaoning.wang@nxp.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 329/885] dt-bindings: display: mediatek: Fix the fallback for mediatek,mt8186-disp-ccorr
-Date: Tue,  7 Mar 2023 17:54:23 +0100
-Message-Id: <20230307170016.473611363@linuxfoundation.org>
+Subject: [PATCH 6.1 330/885] gpio: vf610: connect GPIO label to dev name
+Date: Tue,  7 Mar 2023 17:54:24 +0100
+Message-Id: <20230307170016.521982856@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,40 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Allen-KH Cheng <allen-kh.cheng@mediatek.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit 137272ef1b0f17a1815fec00d583515a0163f85e ]
+[ Upstream commit 6f8ecb7f85f441eb7d78ba2a4df45ee8a821934e ]
 
-The mt8186-disp-ccorr is not fully compatible with the mt8183-disp-ccorr
-implementation. It causes a crash when system resumes if it binds to the
-device.
+Current GPIO label is fixed, so can't distinguish different GPIO
+controllers through labels. Use dev name instead.
 
-We should use mt8192-disp-ccorr as fallback of mt8186-disp-ccorr.
-
-Fixes: 8a26ea19d4dc ("dt-bindings: display: mediatek: add MT8186 SoC binding")
-Signed-off-by: Allen-KH Cheng <allen-kh.cheng@mediatek.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20230118091829.755-10-allen-kh.cheng@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 7f2691a19627 ("gpio: vf610: add gpiolib/IRQ chip driver for Vybrid")
+Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/display/mediatek/mediatek,ccorr.yaml    | 2 +-
+ drivers/gpio/gpio-vf610.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/display/mediatek/mediatek,ccorr.yaml b/Documentation/devicetree/bindings/display/mediatek/mediatek,ccorr.yaml
-index 63fb02014a56a..117e3db43f84a 100644
---- a/Documentation/devicetree/bindings/display/mediatek/mediatek,ccorr.yaml
-+++ b/Documentation/devicetree/bindings/display/mediatek/mediatek,ccorr.yaml
-@@ -32,7 +32,7 @@ properties:
-       - items:
-           - enum:
-               - mediatek,mt8186-disp-ccorr
--          - const: mediatek,mt8183-disp-ccorr
-+          - const: mediatek,mt8192-disp-ccorr
+diff --git a/drivers/gpio/gpio-vf610.c b/drivers/gpio/gpio-vf610.c
+index 9db42f6a20439..a429176673e7a 100644
+--- a/drivers/gpio/gpio-vf610.c
++++ b/drivers/gpio/gpio-vf610.c
+@@ -304,7 +304,7 @@ static int vf610_gpio_probe(struct platform_device *pdev)
  
-   reg:
-     maxItems: 1
+ 	gc = &port->gc;
+ 	gc->parent = dev;
+-	gc->label = "vf610-gpio";
++	gc->label = dev_name(dev);
+ 	gc->ngpio = VF610_GPIO_PER_PORT;
+ 	gc->base = of_alias_get_id(np, "gpio") * VF610_GPIO_PER_PORT;
+ 
 -- 
 2.39.2
 
