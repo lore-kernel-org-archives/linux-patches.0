@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC259BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:27:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270B1C43327;
-	Tue,  7 Mar 2023 18:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BE3BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:27:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C0EC433AA;
+	Tue,  7 Mar 2023 18:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213648;
-	bh=QrPeNJPNS/LxCffWxwTuhtwIxYegd5NHm1HTDYpBc/A=;
+	s=korg; t=1678213652;
+	bh=kwwV0Vie7GqPWM548iZf3CxzCSE3cyyo4RGHWl9RB1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b98oB+bRma0VS7d4FmBJQceF++yX+TQh8rpsh+z+QUu0xhVe7G7cVfUU0QC9gh0nF
-	 /HFYnZlAFxCEyYatQVFdvZ8jqjuy1890EI2OGs4D3x8fQF5kkkJA6EL3rE2GJdLMZt
-	 e5ndBsFijZSPL/Ps+iFKA1eRDiGXs4ik2vajPMAs=
+	b=VAgpvG5SnKAD9liIs3zv1qCubBNWIfkcwDhO3lZolmRv93P8tukf5/KA0nAxhx3m3
+	 vDzxZm9msJNt/yx5NO3SH3IrcWPFCj5K0wABzmMTlTqNMsPnBCLArR0WYREiGk3/91
+	 SZ/O9CMCkahRQUiDQkOKVjyBSh+al5ln2CDDknHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 534/885] blk-iocost: fix divide by 0 error in calc_lcoefs()
-Date: Tue,  7 Mar 2023 17:57:48 +0100
-Message-Id: <20230307170025.683422097@linuxfoundation.org>
+Subject: [PATCH 6.1 568/885] net: bcmgenet: Add a check for oversized packets
+Date: Tue,  7 Mar 2023 17:58:22 +0100
+Message-Id: <20230307170027.107112741@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,68 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit 984af1e66b4126cf145153661cc24c213e2ec231 ]
+[ Upstream commit 5c0862c2c962052ed5055220a00ac1cefb92fbcd ]
 
-echo max of u64 to cost.model can cause divide by 0 error.
+Occasionnaly we may get oversized packets from the hardware which
+exceed the nomimal 2KiB buffer size we allocate SKBs with. Add an early
+check which drops the packet to avoid invoking skb_over_panic() and move
+on to processing the next packet.
 
-  # echo 8:0 rbps=18446744073709551615 > /sys/fs/cgroup/io.cost.model
-
-  divide error: 0000 [#1] PREEMPT SMP
-  RIP: 0010:calc_lcoefs+0x4c/0xc0
-  Call Trace:
-   <TASK>
-   ioc_refresh_params+0x2b3/0x4f0
-   ioc_cost_model_write+0x3cb/0x4c0
-   ? _copy_from_iter+0x6d/0x6c0
-   ? kernfs_fop_write_iter+0xfc/0x270
-   cgroup_file_write+0xa0/0x200
-   kernfs_fop_write_iter+0x17d/0x270
-   vfs_write+0x414/0x620
-   ksys_write+0x73/0x160
-   __x64_sys_write+0x1e/0x30
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-calc_lcoefs() uses the input value of cost.model in DIV_ROUND_UP_ULL,
-overflow would happen if bps plus IOC_PAGE_SIZE is greater than
-ULLONG_MAX, it can cause divide by 0 error.
-
-Fix the problem by setting basecost
-
-Signed-off-by: Li Nan <linan122@huawei.com>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230117070806.3857142-5-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 495396425bade..bfc33fa9a063c 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -865,9 +865,14 @@ static void calc_lcoefs(u64 bps, u64 seqiops, u64 randiops,
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index 25c4506069856..f679ed54b3ef2 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -2311,6 +2311,14 @@ static unsigned int bcmgenet_desc_rx(struct bcmgenet_rx_ring *ring,
+ 			  __func__, p_index, ring->c_index,
+ 			  ring->read_ptr, dma_length_status);
  
- 	*page = *seqio = *randio = 0;
- 
--	if (bps)
--		*page = DIV64_U64_ROUND_UP(VTIME_PER_SEC,
--					   DIV_ROUND_UP_ULL(bps, IOC_PAGE_SIZE));
-+	if (bps) {
-+		u64 bps_pages = DIV_ROUND_UP_ULL(bps, IOC_PAGE_SIZE);
++		if (unlikely(len > RX_BUF_LENGTH)) {
++			netif_err(priv, rx_status, dev, "oversized packet\n");
++			dev->stats.rx_length_errors++;
++			dev->stats.rx_errors++;
++			dev_kfree_skb_any(skb);
++			goto next;
++		}
 +
-+		if (bps_pages)
-+			*page = DIV64_U64_ROUND_UP(VTIME_PER_SEC, bps_pages);
-+		else
-+			*page = 1;
-+	}
- 
- 	if (seqiops) {
- 		v = DIV64_U64_ROUND_UP(VTIME_PER_SEC, seqiops);
+ 		if (unlikely(!(dma_flag & DMA_EOP) || !(dma_flag & DMA_SOP))) {
+ 			netif_err(priv, rx_status, dev,
+ 				  "dropping fragmented packet!\n");
 -- 
 2.39.2
 
