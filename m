@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9D6BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:23:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD88C433D2;
-	Tue,  7 Mar 2023 18:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316ECBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:23:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B9DC433A7;
+	Tue,  7 Mar 2023 18:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213391;
-	bh=lwtDCNOB1P1C3uDyD3rizenKAw16yquVBJUkXGwWKKA=;
+	s=korg; t=1678213397;
+	bh=v5rJVvDbHQR54MKFa57MwrziVRiIGWiZn0XDocf0irs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DHjvFnOmkO2WjCddZ6+Mb/3RKr52yDt6v19gRgXXZ6Oo53w/Ya1UvUR/s+Z/+TD0b
-	 SkIM+tbMO2RA6AUZ7u845jZ1+g8mDtg2LbSKl2+u89RpCdjZ9I5W4uQ59YfmtbbeiV
-	 86TwGRIXBvfLVDkP8nYHj3K6XmmJMn+wzDc5kdCg=
+	b=ivMSquzqanHBxk9SXtrivZcqZpns/SgTRe7MCkPxIIiC2F0lUp23qjPEjcvh+h1KY
+	 aA4M7DPQRr09Ib0bwDBwoKVFMMRCkwfmLOMrcGOr12OJzdTpFc0aS+FSTENJN8vTv6
+	 FquQFZugJYPRVKrCmA19Xzz5wD4eDhaW5dD3qnQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brendan Cunningham <bcunningham@cornelisnetworks.com>,
-	Patrick Kelsey <pat.kelsey@cornelisnetworks.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 492/885] IB/hfi1: Fix sdma.h tx->num_descs off-by-one errors
-Date: Tue,  7 Mar 2023 17:57:06 +0100
-Message-Id: <20230307170023.843310078@linuxfoundation.org>
+Subject: [PATCH 6.1 493/885] Revert "remoteproc: qcom_q6v5_mss: map/unmap metadata region before/after use"
+Date: Tue,  7 Mar 2023 17:57:07 +0100
+Message-Id: <20230307170023.881416813@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,108 +37,116 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Patrick Kelsey <pat.kelsey@cornelisnetworks.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit fd8958efe8779d3db19c9124fce593ce681ac709 ]
+[ Upstream commit a899d542b687c9b04ccbd9eefabc829ba5fef791 ]
 
-Fix three sources of error involving struct sdma_txreq.num_descs.
+This reverts commit fc156629b23a21181e473e60341e3a78af25a1d4.
 
-When _extend_sdma_tx_descs() extends the descriptor array, it uses the
-value of tx->num_descs to determine how many existing entries from the
-tx's original, internal descriptor array to copy to the newly allocated
-one.  As this value was incremented before the call, the copy loop will
-access one entry past the internal descriptor array, copying its contents
-into the corresponding slot in the new array.
+This commit manages to do three API violations at once:
 
-If the call to _extend_sdma_tx_descs() fails, _pad_smda_tx_descs() then
-invokes __sdma_tx_clean() which uses the value of tx->num_desc to drive a
-loop that unmaps all descriptor entries in use.  As this value was
-incremented before the call, the unmap loop will invoke sdma_unmap_desc()
-on a descriptor entry whose contents consist of whatever random data was
-copied into it during (1), leading to cascading further calls into the
-kernel and driver using arbitrary data.
+ - dereference the return value of dma_alloc_attrs with the
+   DMA_ATTR_NO_KERNEL_MAPPING mapping, which is clearly forbidden and
+   will do the wrong thing on various dma mapping implementations.  The
+   fact that dma-direct uses a struct page as a cookie is an undocumented
+   implementation detail
+ - include dma-map-ops.h and use pgprot_dmacoherent despite a clear
+   comment documenting that this is not acceptable
+ - use of the VM_DMA_COHERENT for something that is not the dma-mapping
+   code
+ - use of VM_FLUSH_RESET_PERMS for vmap, while it is only supported for
+   vmalloc
 
-_sdma_close_tx() was using tx->num_descs instead of tx->num_descs - 1.
-
-Fix all of the above by:
-- Only increment .num_descs after .descp is extended.
-- Use .num_descs - 1 instead of .num_descs for last .descp entry.
-
-Fixes: f4d26d81ad7f ("staging/rdma/hfi1: Add coalescing support for SDMA TX descriptors")
-Link: https://lore.kernel.org/r/167656658879.2223096.10026561343022570690.stgit@awfm-02.cornelisnetworks.com
-Signed-off-by: Brendan Cunningham <bcunningham@cornelisnetworks.com>
-Signed-off-by: Patrick Kelsey <pat.kelsey@cornelisnetworks.com>
-Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230117085840.32356-6-quic_sibis@quicinc.com
+Stable-dep-of: 57f72170a2b2 ("remoteproc: qcom_q6v5_mss: Use a carveout to authenticate modem headers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/sdma.c |  4 ++--
- drivers/infiniband/hw/hfi1/sdma.h | 15 +++++++--------
- 2 files changed, 9 insertions(+), 10 deletions(-)
+ drivers/remoteproc/qcom_q6v5_mss.c | 38 +++++-------------------------
+ 1 file changed, 6 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/sdma.c b/drivers/infiniband/hw/hfi1/sdma.c
-index a95b654f52540..8ed20392e9f0d 100644
---- a/drivers/infiniband/hw/hfi1/sdma.c
-+++ b/drivers/infiniband/hw/hfi1/sdma.c
-@@ -3160,8 +3160,7 @@ int _pad_sdma_tx_descs(struct hfi1_devdata *dd, struct sdma_txreq *tx)
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index fddb63cffee07..a8b141db4de63 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -10,7 +10,6 @@
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/devcoredump.h>
+-#include <linux/dma-map-ops.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/interrupt.h>
+ #include <linux/kernel.h>
+@@ -933,52 +932,27 @@ static void q6v5proc_halt_axi_port(struct q6v5 *qproc,
+ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
+ 				const char *fw_name)
  {
- 	int rval = 0;
+-	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS | DMA_ATTR_NO_KERNEL_MAPPING;
+-	unsigned long flags = VM_DMA_COHERENT | VM_FLUSH_RESET_PERMS;
+-	struct page **pages;
+-	struct page *page;
++	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS;
+ 	dma_addr_t phys;
+ 	void *metadata;
+ 	int mdata_perm;
+ 	int xferop_ret;
+ 	size_t size;
+-	void *vaddr;
+-	int count;
++	void *ptr;
+ 	int ret;
+-	int i;
  
--	tx->num_desc++;
--	if ((unlikely(tx->num_desc == tx->desc_limit))) {
-+	if ((unlikely(tx->num_desc + 1 == tx->desc_limit))) {
- 		rval = _extend_sdma_tx_descs(dd, tx);
- 		if (rval) {
- 			__sdma_txclean(dd, tx);
-@@ -3174,6 +3173,7 @@ int _pad_sdma_tx_descs(struct hfi1_devdata *dd, struct sdma_txreq *tx)
- 		SDMA_MAP_NONE,
- 		dd->sdma_pad_phys,
- 		sizeof(u32) - (tx->packet_len & (sizeof(u32) - 1)));
-+	tx->num_desc++;
- 	_sdma_close_tx(dd, tx);
- 	return rval;
- }
-diff --git a/drivers/infiniband/hw/hfi1/sdma.h b/drivers/infiniband/hw/hfi1/sdma.h
-index d8170fcbfbdd5..b023fc461bd51 100644
---- a/drivers/infiniband/hw/hfi1/sdma.h
-+++ b/drivers/infiniband/hw/hfi1/sdma.h
-@@ -631,14 +631,13 @@ static inline void sdma_txclean(struct hfi1_devdata *dd, struct sdma_txreq *tx)
- static inline void _sdma_close_tx(struct hfi1_devdata *dd,
- 				  struct sdma_txreq *tx)
- {
--	tx->descp[tx->num_desc].qw[0] |=
--		SDMA_DESC0_LAST_DESC_FLAG;
--	tx->descp[tx->num_desc].qw[1] |=
--		dd->default_desc1;
-+	u16 last_desc = tx->num_desc - 1;
-+
-+	tx->descp[last_desc].qw[0] |= SDMA_DESC0_LAST_DESC_FLAG;
-+	tx->descp[last_desc].qw[1] |= dd->default_desc1;
- 	if (tx->flags & SDMA_TXREQ_F_URGENT)
--		tx->descp[tx->num_desc].qw[1] |=
--			(SDMA_DESC1_HEAD_TO_HOST_FLAG |
--			 SDMA_DESC1_INT_REQ_FLAG);
-+		tx->descp[last_desc].qw[1] |= (SDMA_DESC1_HEAD_TO_HOST_FLAG |
-+					       SDMA_DESC1_INT_REQ_FLAG);
- }
+ 	metadata = qcom_mdt_read_metadata(fw, &size, fw_name, qproc->dev);
+ 	if (IS_ERR(metadata))
+ 		return PTR_ERR(metadata);
  
- static inline int _sdma_txadd_daddr(
-@@ -655,6 +654,7 @@ static inline int _sdma_txadd_daddr(
- 		type,
- 		addr, len);
- 	WARN_ON(len > tx->tlen);
-+	tx->num_desc++;
- 	tx->tlen -= len;
- 	/* special cases for last */
- 	if (!tx->tlen) {
-@@ -666,7 +666,6 @@ static inline int _sdma_txadd_daddr(
- 			_sdma_close_tx(dd, tx);
- 		}
+-	page = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
+-	if (!page) {
++	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
++	if (!ptr) {
+ 		kfree(metadata);
+ 		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
+ 		return -ENOMEM;
  	}
--	tx->num_desc++;
- 	return rval;
- }
  
+-	count = PAGE_ALIGN(size) >> PAGE_SHIFT;
+-	pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
+-	if (!pages) {
+-		ret = -ENOMEM;
+-		goto free_dma_attrs;
+-	}
+-
+-	for (i = 0; i < count; i++)
+-		pages[i] = nth_page(page, i);
+-
+-	vaddr = vmap(pages, count, flags, pgprot_dmacoherent(PAGE_KERNEL));
+-	kfree(pages);
+-	if (!vaddr) {
+-		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n", &phys, size);
+-		ret = -EBUSY;
+-		goto free_dma_attrs;
+-	}
+-
+-	memcpy(vaddr, metadata, size);
+-
+-	vunmap(vaddr);
++	memcpy(ptr, metadata, size);
+ 
+ 	/* Hypervisor mapping to access metadata by modem */
+ 	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
+@@ -1008,7 +982,7 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
+ 			 "mdt buffer not reclaimed system may become unstable\n");
+ 
+ free_dma_attrs:
+-	dma_free_attrs(qproc->dev, size, page, phys, dma_attrs);
++	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
+ 	kfree(metadata);
+ 
+ 	return ret < 0 ? ret : 0;
 -- 
 2.39.2
 
