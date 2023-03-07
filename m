@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827A5BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:28:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AA5C433EF;
-	Tue,  7 Mar 2023 17:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB93BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:28:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA361C4339C;
+	Tue,  7 Mar 2023 17:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210118;
-	bh=j8yBHNYn3z9QPYoGCZqt9HojnIh4dA+1zd+u+aduuGM=;
+	s=korg; t=1678210121;
+	bh=hiAi7rAKPCo3vhcTyVvDLAXjvYrnPzRQdiEqCUUZDjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NWEcH+1RvWy7L4XMCO4XeZWPZoQk6oCf/yJTG5L28vvdQaDyXcPkw+SP1l0Zfs9yL
-	 G40yERS9xjLVpMGuUU4iJ+RLFk7mOwQ/uX0kz/FxYlQ3uypumUUnPaspl+lVUq4P9z
-	 7U3QL+Nl6w1wUhGT1/dVfwXxkht99KJXxHHtn+1w=
+	b=DRxe3VWvMo3NMpa2nRBje78FngmEAnkoWt5zXppcmL8FlkjF0kPJ6Op7pQsVb2Hmt
+	 DtKv2g0Vq/5ixUjrRD9z8k7okY+x6SwuHS0aIEVbz3709CILsTs08vf7I3yzDc+Db0
+	 5OrNVNrWJbo2/jUrjZJmHCEfek3dYJx5GZKqT9NY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
+	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Matt Atwood <matthew.s.atwood@intel.com>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0439/1001] drm/i915/pvc: Annotate two more workaround/tuning registers as MCR
-Date: Tue,  7 Mar 2023 17:53:31 +0100
-Message-Id: <20230307170040.402405615@linuxfoundation.org>
+Subject: [PATCH 6.2 0440/1001] drm/i915: Fix GEN8_MISCCPCTL
+Date: Tue,  7 Mar 2023 17:53:32 +0100
+Message-Id: <20230307170040.440477433@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,94 +41,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-[ Upstream commit effc0905d741b4138806747407baf8de98390c72 ]
+[ Upstream commit 6a8b2e4984f73f8d00c8c16b87a8b115d34088e4 ]
 
-XEHPC_LNCFMISCCFGREG0 and XEHPC_L3SCRUB are both in MCR register ranges
-on PVC (with HALFBSLICE and L3BANK replication respectively), so they
-should be explicitly declared as MCR registers and use MCR-aware
-workaround handlers.
+Register 0x9424 is not replicated on any platform, so it shouldn't be
+declared with REG_MCR(). Declaring it with _MMIO() is basically
+duplicate of the GEN7 version, so just remove the GEN8 and change all
+the callers to use the right functions.
 
-The workarounds/tuning settings should still be applied properly on PVC
-even without the MCR annotation, but readback verification on
-CONFIG_DRM_I915_DEBUG_GEM builds could potentitally give false positive
-"workaround lost on load" warnings on parts fused such that a unicast
-read targets a terminated register instance.
+Old versions of the gen8 bspec page used to contain a table with MCR
+registers, apparently implying 0x9400 - 0x94ff registers were
+replicated. However that table went away and there is no information
+related to the ranges for gen8 anymore. Moreover the current behavior of
+the driver wouldn't do anything special for 0x9424 since there is no
+equivalent table in intel_gt_mcr.c: the driver would just fallback to
+intel_uncore_{read,write}(). Therefore, do not care about the possible
+special case for gen8 and just use the register as non-MCR for all the
+platforms.
+
+One place doing read + write is also converted to intel_uncore_rmw().
+
+v2: Reword commit message adding the justification wrt gen8
 
 Fixes: a9e69428b1b4 ("drm/i915: Define MCR registers explicitly")
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230201222831.608281-1-matthew.d.roper@intel.com
-(cherry picked from commit 4039e44237e8ebb06f0e4af549fbedf7c41df9db)
+Cc: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Gustavo Sousa <gustavo.sousa@intel.com>
+Cc: Matt Atwood <matthew.s.atwood@intel.com>
+Cc: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230206165410.3056073-1-lucas.demarchi@intel.com
+(cherry picked from commit 869bace73ae2b4227e57ee3fd994bfa7d4808938)
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_gt_regs.h     |  4 ++--
- drivers/gpu/drm/i915/gt/intel_workarounds.c | 14 ++++++++++----
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_gt_regs.h     |  5 +----
+ drivers/gpu/drm/i915/gt/intel_workarounds.c |  4 ++--
+ drivers/gpu/drm/i915/gt/uc/intel_guc_fw.c   |  5 ++---
+ drivers/gpu/drm/i915/intel_pm.c             | 10 +++++-----
+ 4 files changed, 10 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/gt/intel_gt_regs.h b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-index 838f73165ebbc..0d47c930956e0 100644
+index 0d47c930956e0..3b6ef0eb47e76 100644
 --- a/drivers/gpu/drm/i915/gt/intel_gt_regs.h
 +++ b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-@@ -969,7 +969,7 @@
- #define   GEN7_WA_FOR_GEN7_L3_CONTROL		0x3C47FF8C
- #define   GEN7_L3AGDIS				(1 << 19)
+@@ -681,10 +681,7 @@
+ #define GEN6_RSTCTL				_MMIO(0x9420)
  
--#define XEHPC_LNCFMISCCFGREG0			_MMIO(0xb01c)
-+#define XEHPC_LNCFMISCCFGREG0			MCR_REG(0xb01c)
- #define   XEHPC_HOSTCACHEEN			REG_BIT(1)
- #define   XEHPC_OVRLSCCC			REG_BIT(0)
- 
-@@ -1032,7 +1032,7 @@
- #define XEHP_L3SCQREG7				MCR_REG(0xb188)
- #define   BLEND_FILL_CACHING_OPT_DIS		REG_BIT(3)
- 
--#define XEHPC_L3SCRUB				_MMIO(0xb18c)
-+#define XEHPC_L3SCRUB				MCR_REG(0xb18c)
- #define   SCRUB_CL_DWNGRADE_SHARED		REG_BIT(12)
- #define   SCRUB_RATE_PER_BANK_MASK		REG_GENMASK(2, 0)
- #define   SCRUB_RATE_4B_PER_CLK			REG_FIELD_PREP(SCRUB_RATE_PER_BANK_MASK, 0x6)
+ #define GEN7_MISCCPCTL				_MMIO(0x9424)
+-#define   GEN7_DOP_CLOCK_GATE_ENABLE		(1 << 0)
+-
+-#define GEN8_MISCCPCTL				MCR_REG(0x9424)
+-#define   GEN8_DOP_CLOCK_GATE_ENABLE		REG_BIT(0)
++#define   GEN7_DOP_CLOCK_GATE_ENABLE		REG_BIT(0)
+ #define   GEN12_DOP_CLOCK_GATE_RENDER_ENABLE	REG_BIT(1)
+ #define   GEN8_DOP_CLOCK_GATE_CFCLK_ENABLE	(1 << 2)
+ #define   GEN8_DOP_CLOCK_GATE_GUC_ENABLE	(1 << 4)
 diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-index c2d9d07af7ee9..80b0e9a56330c 100644
+index 80b0e9a56330c..d92b006d4cd2e 100644
 --- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
 +++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-@@ -224,6 +224,12 @@ wa_write(struct i915_wa_list *wal, i915_reg_t reg, u32 set)
- 	wa_write_clr_set(wal, reg, ~0, set);
+@@ -1673,7 +1673,7 @@ dg2_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
+ 	wa_mcr_write_or(wal, XEHP_SQCM, EN_32B_ACCESS);
+ 
+ 	/* Wa_14015795083 */
+-	wa_mcr_write_clr(wal, GEN8_MISCCPCTL, GEN12_DOP_CLOCK_GATE_RENDER_ENABLE);
++	wa_write_clr(wal, GEN7_MISCCPCTL, GEN12_DOP_CLOCK_GATE_RENDER_ENABLE);
+ 
+ 	/* Wa_18018781329 */
+ 	wa_mcr_write_or(wal, RENDER_MOD_CTRL, FORCE_MISS_FTLB);
+@@ -1692,7 +1692,7 @@ pvc_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
+ 	pvc_init_mcr(gt, wal);
+ 
+ 	/* Wa_14015795083 */
+-	wa_mcr_write_clr(wal, GEN8_MISCCPCTL, GEN12_DOP_CLOCK_GATE_RENDER_ENABLE);
++	wa_write_clr(wal, GEN7_MISCCPCTL, GEN12_DOP_CLOCK_GATE_RENDER_ENABLE);
+ 
+ 	/* Wa_18018781329 */
+ 	wa_mcr_write_or(wal, RENDER_MOD_CTRL, FORCE_MISS_FTLB);
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_fw.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_fw.c
+index 5b86b2e286e07..42c5d9d2e2182 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_fw.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_fw.c
+@@ -38,9 +38,8 @@ static void guc_prepare_xfer(struct intel_gt *gt)
+ 
+ 	if (GRAPHICS_VER(uncore->i915) == 9) {
+ 		/* DOP Clock Gating Enable for GuC clocks */
+-		intel_gt_mcr_multicast_write(gt, GEN8_MISCCPCTL,
+-					     GEN8_DOP_CLOCK_GATE_GUC_ENABLE |
+-					     intel_gt_mcr_read_any(gt, GEN8_MISCCPCTL));
++		intel_uncore_rmw(uncore, GEN7_MISCCPCTL, 0,
++				 GEN8_DOP_CLOCK_GATE_GUC_ENABLE);
+ 
+ 		/* allows for 5us (in 10ns units) before GT can go to RC6 */
+ 		intel_uncore_write(uncore, GUC_ARAT_C6DIS, 0x1FF);
+diff --git a/drivers/gpu/drm/i915/intel_pm.c b/drivers/gpu/drm/i915/intel_pm.c
+index 73c88b1c9545c..ac61df46d02c5 100644
+--- a/drivers/gpu/drm/i915/intel_pm.c
++++ b/drivers/gpu/drm/i915/intel_pm.c
+@@ -4299,8 +4299,8 @@ static void gen8_set_l3sqc_credits(struct drm_i915_private *dev_priv,
+ 	u32 val;
+ 
+ 	/* WaTempDisableDOPClkGating:bdw */
+-	misccpctl = intel_gt_mcr_multicast_rmw(to_gt(dev_priv), GEN8_MISCCPCTL,
+-					       GEN8_DOP_CLOCK_GATE_ENABLE, 0);
++	misccpctl = intel_uncore_rmw(&dev_priv->uncore, GEN7_MISCCPCTL,
++				     GEN7_DOP_CLOCK_GATE_ENABLE, 0);
+ 
+ 	val = intel_gt_mcr_read_any(to_gt(dev_priv), GEN8_L3SQCREG1);
+ 	val &= ~L3_PRIO_CREDITS_MASK;
+@@ -4314,7 +4314,7 @@ static void gen8_set_l3sqc_credits(struct drm_i915_private *dev_priv,
+ 	 */
+ 	intel_gt_mcr_read_any(to_gt(dev_priv), GEN8_L3SQCREG1);
+ 	udelay(1);
+-	intel_gt_mcr_multicast_write(to_gt(dev_priv), GEN8_MISCCPCTL, misccpctl);
++	intel_uncore_write(&dev_priv->uncore, GEN7_MISCCPCTL, misccpctl);
  }
  
-+static void
-+wa_mcr_write(struct i915_wa_list *wal, i915_mcr_reg_t reg, u32 set)
-+{
-+	wa_mcr_write_clr_set(wal, reg, ~0, set);
-+}
-+
- static void
- wa_write_or(struct i915_wa_list *wal, i915_reg_t reg, u32 set)
- {
-@@ -2971,9 +2977,9 @@ add_render_compute_tuning_settings(struct drm_i915_private *i915,
- 				   struct i915_wa_list *wal)
- {
- 	if (IS_PONTEVECCHIO(i915)) {
--		wa_write(wal, XEHPC_L3SCRUB,
--			 SCRUB_CL_DWNGRADE_SHARED | SCRUB_RATE_4B_PER_CLK);
--		wa_masked_en(wal, XEHPC_LNCFMISCCFGREG0, XEHPC_HOSTCACHEEN);
-+		wa_mcr_write(wal, XEHPC_L3SCRUB,
-+			     SCRUB_CL_DWNGRADE_SHARED | SCRUB_RATE_4B_PER_CLK);
-+		wa_mcr_masked_en(wal, XEHPC_LNCFMISCCFGREG0, XEHPC_HOSTCACHEEN);
- 	}
+ static void icl_init_clock_gating(struct drm_i915_private *dev_priv)
+@@ -4465,8 +4465,8 @@ static void skl_init_clock_gating(struct drm_i915_private *dev_priv)
+ 	gen9_init_clock_gating(dev_priv);
  
- 	if (IS_DG2(i915)) {
-@@ -3038,7 +3044,7 @@ general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_li
+ 	/* WaDisableDopClockGating:skl */
+-	intel_gt_mcr_multicast_rmw(to_gt(dev_priv), GEN8_MISCCPCTL,
+-				   GEN8_DOP_CLOCK_GATE_ENABLE, 0);
++	intel_uncore_rmw(&dev_priv->uncore, GEN7_MISCCPCTL,
++			 GEN7_DOP_CLOCK_GATE_ENABLE, 0);
  
- 	if (IS_PONTEVECCHIO(i915)) {
- 		/* Wa_16016694945 */
--		wa_masked_en(wal, XEHPC_LNCFMISCCFGREG0, XEHPC_OVRLSCCC);
-+		wa_mcr_masked_en(wal, XEHPC_LNCFMISCCFGREG0, XEHPC_OVRLSCCC);
- 	}
- 
- 	if (IS_XEHPSDV(i915)) {
+ 	/* WAC6entrylatency:skl */
+ 	intel_uncore_rmw(&dev_priv->uncore, FBC_LLC_READ_CTRL, 0, FBC_LLC_FULLY_OPEN);
 -- 
 2.39.2
 
