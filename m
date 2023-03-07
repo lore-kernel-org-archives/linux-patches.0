@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558CBBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:17:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98F9C433D2;
-	Tue,  7 Mar 2023 18:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666D5BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:17:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B97C433D2;
+	Tue,  7 Mar 2023 18:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213028;
-	bh=AAigMB9buv2eyxP2EUZfwadZVDse2eF7u65PURA+p+4=;
+	s=korg; t=1678213031;
+	bh=5ABY7QJinPFIzQMlRsUBpPIGIoP0/wB6FyWPK8sPGB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fYLZM6xhMzwcr8JaJjRMsEH067uTIog3WzCLnTJYxaw5/gf2TJoYXaH2Qiua8e1e7
-	 572cJ8y4z2diuCOMh05OXUvL+6+bLpCYotT0aQ8fnxCLkR/orGfqjFeNIi/YAH1udS
-	 /EKAuLVZbDuEd2/D+JWMHlSWDrT0CLaHTufUbIfc=
+	b=o2Llk+Mjg1kAM9LFkI1Mmz0iLgazMBGT/jdyxaW1pV15qGizI0ZzW0wTLcCj8zD2Z
+	 xO1kD58euAJOKit/TBblTScwjwkAwonqeicJVgAco4tXJxJjorzZMt51xauNcbAxe+
+	 mI9Zc7qklTkPUnQwQ3vyjwapkqIxaLi6+f5wW3Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 345/885] ALSA: hda: Fix the control element identification for multiple codecs
-Date: Tue,  7 Mar 2023 17:54:39 +0100
-Message-Id: <20230307170017.233558716@linuxfoundation.org>
+Subject: [PATCH 6.1 346/885] drm/amdgpu: fix enum odm_combine_mode mismatch
+Date: Tue,  7 Mar 2023 17:54:40 +0100
+Message-Id: <20230307170017.273334300@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,167 +35,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaroslav Kysela <perex@perex.cz>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit d045bceff5a904bd79d71dede9f927c00ce4906f ]
+[ Upstream commit 087bad7eb1f6945f8232f132953ecc2bda8bd38d ]
 
-Some motherboards have multiple HDA codecs connected to the serial bus.
-The current code may create multiple mixer controls with the almost
-identical identification.
+A conversion from 'bool' to 'enum odm_combine_mode' was incomplete,
+and gcc warns about this with many instances of
 
-The current code use id.device field from the control element structure
-to store the codec address to avoid such clashes for multiple codecs.
-Unfortunately, the user space do not handle this correctly. For mixer
-controls, only name and index are used for the identifiers.
+display/dc/dml/dcn20/display_mode_vba_20.c:3899:44: warning: implicit conversion from 'enum <anonymous>' to 'enum
+odm_combine_mode' [-Wenum-conversion]
+ 3899 |     locals->ODMCombineEnablePerState[i][k] = false;
 
-This patch fixes this problem to compose the index using the codec
-address as an offset in case, when the control already exists. It is
-really unlikely that one codec will create 10 similar controls.
+Change the ones that we get a warning for, using the same numerical
+values to leave the behavior unchanged.
 
-This patch adds new kernel module parameter 'ctl_dev_id' to allow
-select the old behaviour, too. The CONFIG_SND_HDA_CTL_DEV_ID Kconfig
-option sets the default value.
-
-BugLink: https://github.com/alsa-project/alsa-lib/issues/294
-BugLink: https://github.com/alsa-project/alsa-lib/issues/205
-Fixes: 54d174031576 ("[ALSA] hda-codec - Fix connection list parsing")
-Fixes: 1afe206ab699 ("ALSA: hda - Try to find an empty control index when it's occupied")
-Signed-off-by: Jaroslav Kysela <perex@perex.cz>
-Link: https://lore.kernel.org/r/20230202092013.4066998-1-perex@perex.cz
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 5fc11598166d ("drm/amd/display: expand dml structs")
+Link: https://lore.kernel.org/all/20201026210039.3884312-3-arnd@kernel.org/
+Link: https://lore.kernel.org/all/20210927100659.1431744-1-arnd@kernel.org/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/hda_codec.h      |  1 +
- sound/pci/hda/Kconfig          | 14 ++++++++++++++
- sound/pci/hda/hda_codec.c      | 13 ++++++++++---
- sound/pci/hda/hda_controller.c |  1 +
- sound/pci/hda/hda_controller.h |  1 +
- sound/pci/hda/hda_intel.c      |  5 +++++
- 6 files changed, 32 insertions(+), 3 deletions(-)
+ .../amd/display/dc/dml/dcn20/display_mode_vba_20.c   |  8 ++++----
+ .../amd/display/dc/dml/dcn20/display_mode_vba_20v2.c | 10 +++++-----
+ .../amd/display/dc/dml/dcn21/display_mode_vba_21.c   | 12 ++++++------
+ 3 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/include/sound/hda_codec.h b/include/sound/hda_codec.h
-index eba23daf2c290..bbb7805e85d8e 100644
---- a/include/sound/hda_codec.h
-+++ b/include/sound/hda_codec.h
-@@ -259,6 +259,7 @@ struct hda_codec {
- 	unsigned int relaxed_resume:1;	/* don't resume forcibly for jack */
- 	unsigned int forced_resume:1; /* forced resume for jack */
- 	unsigned int no_stream_clean_at_suspend:1; /* do not clean streams at suspend */
-+	unsigned int ctl_dev_id:1; /* old control element id build behaviour */
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20.c
+index d3b5b6fedf042..6266b0788387e 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20.c
+@@ -3897,14 +3897,14 @@ void dml20_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
+ 					mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine = mode_lib->vba.PixelClock[k] / 2
+ 							* (1 + mode_lib->vba.DISPCLKDPPCLKDSCCLKDownSpreading / 100.0);
  
- #ifdef CONFIG_PM
- 	unsigned long power_on_acct;
-diff --git a/sound/pci/hda/Kconfig b/sound/pci/hda/Kconfig
-index a8e8cf98befa1..d29d8372a3c04 100644
---- a/sound/pci/hda/Kconfig
-+++ b/sound/pci/hda/Kconfig
-@@ -302,6 +302,20 @@ config SND_HDA_INTEL_HDMI_SILENT_STREAM
- 	  This feature can impact power consumption as resources
- 	  are kept reserved both at transmitter and receiver.
+-				locals->ODMCombineEnablePerState[i][k] = false;
++				locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_disabled;
+ 				mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithoutODMCombine;
+ 				if (mode_lib->vba.ODMCapability) {
+ 					if (locals->PlaneRequiredDISPCLKWithoutODMCombine > mode_lib->vba.MaxDispclkRoundedDownToDFSGranularity) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					} else if (locals->HActive[k] > DCN20_MAX_420_IMAGE_WIDTH && locals->OutputFormat[k] == dm_420) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					}
+ 				}
+@@ -3957,7 +3957,7 @@ void dml20_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
+ 				locals->RequiredDISPCLK[i][j] = 0.0;
+ 				locals->DISPCLK_DPPCLK_Support[i][j] = true;
+ 				for (k = 0; k <= mode_lib->vba.NumberOfActivePlanes - 1; k++) {
+-					locals->ODMCombineEnablePerState[i][k] = false;
++					locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_disabled;
+ 					if (locals->SwathWidthYSingleDPP[k] <= locals->MaximumSwathWidth[k]) {
+ 						locals->NoOfDPP[i][j][k] = 1;
+ 						locals->RequiredDPPCLK[i][j][k] = locals->MinDPPCLKUsingSingleDPP[k]
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20v2.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20v2.c
+index edd098c7eb927..989d83ee38421 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20v2.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20v2.c
+@@ -4008,17 +4008,17 @@ void dml20v2_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode
+ 					mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine = mode_lib->vba.PixelClock[k] / 2
+ 							* (1 + mode_lib->vba.DISPCLKDPPCLKDSCCLKDownSpreading / 100.0);
  
-+config SND_HDA_CTL_DEV_ID
-+	bool "Use the device identifier field for controls"
-+	depends on SND_HDA_INTEL
-+	help
-+	  Say Y to use the device identifier field for (mixer)
-+	  controls (old behaviour until this option is available).
-+
-+	  When enabled, the multiple HDA codecs may set the device
-+	  field in control (mixer) element identifiers. The use
-+	  of this field is not recommended and defined for mixer controls.
-+
-+	  The old behaviour (Y) is obsolete and will be removed. Consider
-+	  to not enable this option.
-+
- endif
+-				locals->ODMCombineEnablePerState[i][k] = false;
++				locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_disabled;
+ 				mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithoutODMCombine;
+ 				if (mode_lib->vba.ODMCapability) {
+ 					if (locals->PlaneRequiredDISPCLKWithoutODMCombine > MaxMaxDispclkRoundedDown) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					} else if (locals->DSCEnabled[k] && (locals->HActive[k] > DCN20_MAX_DSC_IMAGE_WIDTH)) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					} else if (locals->HActive[k] > DCN20_MAX_420_IMAGE_WIDTH && locals->OutputFormat[k] == dm_420) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					}
+ 				}
+@@ -4071,7 +4071,7 @@ void dml20v2_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode
+ 				locals->RequiredDISPCLK[i][j] = 0.0;
+ 				locals->DISPCLK_DPPCLK_Support[i][j] = true;
+ 				for (k = 0; k <= mode_lib->vba.NumberOfActivePlanes - 1; k++) {
+-					locals->ODMCombineEnablePerState[i][k] = false;
++					locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_disabled;
+ 					if (locals->SwathWidthYSingleDPP[k] <= locals->MaximumSwathWidth[k]) {
+ 						locals->NoOfDPP[i][j][k] = 1;
+ 						locals->RequiredDPPCLK[i][j][k] = locals->MinDPPCLKUsingSingleDPP[k]
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_mode_vba_21.c b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_mode_vba_21.c
+index 1d84ae50311d9..b7c2844d0cbee 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_mode_vba_21.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_mode_vba_21.c
+@@ -4102,17 +4102,17 @@ void dml21_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
+ 					mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine = mode_lib->vba.PixelClock[k] / 2
+ 							* (1 + mode_lib->vba.DISPCLKDPPCLKDSCCLKDownSpreading / 100.0);
  
- endmenu
-diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
-index 2e728aad67713..9f79c0ac2bda7 100644
---- a/sound/pci/hda/hda_codec.c
-+++ b/sound/pci/hda/hda_codec.c
-@@ -3389,7 +3389,12 @@ int snd_hda_add_new_ctls(struct hda_codec *codec,
- 			kctl = snd_ctl_new1(knew, codec);
- 			if (!kctl)
- 				return -ENOMEM;
--			if (addr > 0)
-+			/* Do not use the id.device field for MIXER elements.
-+			 * This field is for real device numbers (like PCM) but codecs
-+			 * are hidden components from the user space view (unrelated
-+			 * to the mixer element identification).
-+			 */
-+			if (addr > 0 && codec->ctl_dev_id)
- 				kctl->id.device = addr;
- 			if (idx > 0)
- 				kctl->id.index = idx;
-@@ -3400,9 +3405,11 @@ int snd_hda_add_new_ctls(struct hda_codec *codec,
- 			 * the codec addr; if it still fails (or it's the
- 			 * primary codec), then try another control index
- 			 */
--			if (!addr && codec->core.addr)
-+			if (!addr && codec->core.addr) {
- 				addr = codec->core.addr;
--			else if (!idx && !knew->index) {
-+				if (!codec->ctl_dev_id)
-+					idx += 10 * addr;
-+			} else if (!idx && !knew->index) {
- 				idx = find_empty_mixer_ctl_idx(codec,
- 							       knew->name, 0);
- 				if (idx <= 0)
-diff --git a/sound/pci/hda/hda_controller.c b/sound/pci/hda/hda_controller.c
-index 0ff286b7b66be..083df287c1a48 100644
---- a/sound/pci/hda/hda_controller.c
-+++ b/sound/pci/hda/hda_controller.c
-@@ -1231,6 +1231,7 @@ int azx_probe_codecs(struct azx *chip, unsigned int max_slots)
- 				continue;
- 			codec->jackpoll_interval = chip->jackpoll_interval;
- 			codec->beep_mode = chip->beep_mode;
-+			codec->ctl_dev_id = chip->ctl_dev_id;
- 			codecs++;
+-				locals->ODMCombineEnablePerState[i][k] = false;
++				locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_disabled;
+ 				mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithoutODMCombine;
+ 				if (mode_lib->vba.ODMCapability) {
+ 					if (locals->PlaneRequiredDISPCLKWithoutODMCombine > MaxMaxDispclkRoundedDown) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					} else if (locals->DSCEnabled[k] && (locals->HActive[k] > DCN21_MAX_DSC_IMAGE_WIDTH)) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					} else if (locals->HActive[k] > DCN21_MAX_420_IMAGE_WIDTH && locals->OutputFormat[k] == dm_420) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					}
+ 				}
+@@ -4165,7 +4165,7 @@ void dml21_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
+ 				locals->RequiredDISPCLK[i][j] = 0.0;
+ 				locals->DISPCLK_DPPCLK_Support[i][j] = true;
+ 				for (k = 0; k <= mode_lib->vba.NumberOfActivePlanes - 1; k++) {
+-					locals->ODMCombineEnablePerState[i][k] = false;
++					locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_disabled;
+ 					if (locals->SwathWidthYSingleDPP[k] <= locals->MaximumSwathWidth[k]) {
+ 						locals->NoOfDPP[i][j][k] = 1;
+ 						locals->RequiredDPPCLK[i][j][k] = locals->MinDPPCLKUsingSingleDPP[k]
+@@ -5230,7 +5230,7 @@ void dml21_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
+ 			mode_lib->vba.ODMCombineEnabled[k] =
+ 					locals->ODMCombineEnablePerState[mode_lib->vba.VoltageLevel][k];
+ 		} else {
+-			mode_lib->vba.ODMCombineEnabled[k] = false;
++			mode_lib->vba.ODMCombineEnabled[k] = dm_odm_combine_mode_disabled;
  		}
- 	}
-diff --git a/sound/pci/hda/hda_controller.h b/sound/pci/hda/hda_controller.h
-index f5bf295eb8307..8556031bcd68e 100644
---- a/sound/pci/hda/hda_controller.h
-+++ b/sound/pci/hda/hda_controller.h
-@@ -124,6 +124,7 @@ struct azx {
- 	/* HD codec */
- 	int  codec_probe_mask; /* copied from probe_mask option */
- 	unsigned int beep_mode;
-+	bool ctl_dev_id;
- 
- #ifdef CONFIG_SND_HDA_PATCH_LOADER
- 	const struct firmware *fw;
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 87002670c0c92..2dbc082076f69 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -119,6 +119,7 @@ static bool beep_mode[SNDRV_CARDS] = {[0 ... (SNDRV_CARDS-1)] =
- 					CONFIG_SND_HDA_INPUT_BEEP_MODE};
- #endif
- static bool dmic_detect = 1;
-+static bool ctl_dev_id = IS_ENABLED(CONFIG_SND_HDA_CTL_DEV_ID) ? 1 : 0;
- 
- module_param_array(index, int, NULL, 0444);
- MODULE_PARM_DESC(index, "Index value for Intel HD audio interface.");
-@@ -157,6 +158,8 @@ module_param(dmic_detect, bool, 0444);
- MODULE_PARM_DESC(dmic_detect, "Allow DSP driver selection (bypass this driver) "
- 			     "(0=off, 1=on) (default=1); "
- 		 "deprecated, use snd-intel-dspcfg.dsp_driver option instead");
-+module_param(ctl_dev_id, bool, 0444);
-+MODULE_PARM_DESC(ctl_dev_id, "Use control device identifier (based on codec address).");
- 
- #ifdef CONFIG_PM
- static int param_set_xint(const char *val, const struct kernel_param *kp);
-@@ -2278,6 +2281,8 @@ static int azx_probe_continue(struct azx *chip)
- 	chip->beep_mode = beep_mode[dev];
- #endif
- 
-+	chip->ctl_dev_id = ctl_dev_id;
-+
- 	/* create codec instances */
- 	if (bus->codec_mask) {
- 		err = azx_probe_codecs(chip, azx_max_codecs[chip->driver_type]);
+ 		mode_lib->vba.DSCEnabled[k] =
+ 				locals->RequiresDSC[mode_lib->vba.VoltageLevel][k];
 -- 
 2.39.2
 
