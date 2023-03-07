@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7F8BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6513C433EF;
-	Tue,  7 Mar 2023 17:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C627BBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D77C433D2;
+	Tue,  7 Mar 2023 17:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210542;
-	bh=WmeQqNMIn0d+Al//BZrKLExRSzZUo3r6VfBDLM4B2QY=;
+	s=korg; t=1678210545;
+	bh=vERFEgZEN3dy6vYsoIzzGpAxsp2Zmg9QXDbBSK/U4aE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0yue2UwERky4Ysd93wIQoIKt9rj9oONCBP9sah+MkT87E25s3ewKvICP1/wZYgLu
-	 V7otbk2VyCdKe06GiagP0xm+GCzLwSKQYvnI8tC4yT+X4vtGmpIulBzfswufkXUmrp
-	 ITt5f3D1YuXYcxBSSWuzmIc0xNCX5SZMTOHXznvQ=
+	b=v6RILOcYHUcY4I0gO9c1FVobb/nPn1nDePHOd/w0OsVkk+PiSprJE7GwTDrN0QqPC
+	 GxmKpJlVFO5gjtG65ETwCnYrdcPRc9uOqFGXOT4PaPXr20h7TkQkym2DyHpAw0DF8a
+	 qhVXGU6U510hP8FNT83xa+cSkCgheU1NF6K8GY6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Rob Herring <robh@kernel.org>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0557/1001] usb: host: fsl-mph-dr-of: reuse device_set_of_node_from_dev
-Date: Tue,  7 Mar 2023 17:55:29 +0100
-Message-Id: <20230307170045.658284105@linuxfoundation.org>
+Subject: [PATCH 6.2 0575/1001] RDMA/rxe: Replace rxe_map and rxe_phys_buf by xarray
+Date: Tue,  7 Mar 2023 17:55:47 +0100
+Message-Id: <20230307170046.415969052@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,36 +35,817 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit e2ffae3ed92a9f768902c1cf82642c3a09cd0345 ]
+[ Upstream commit 592627ccbdff0ec6fff00fc761142a76db750dd4 ]
 
-This sets both of_node fields and takes a of_node reference as well.
+Replace struct rxe-phys_buf and struct rxe_map by struct xarray
+in rxe_verbs.h. This allows using rcu locking on reads for
+the memory maps stored in each mr.
 
-Fixes: bb160ee61c04 ("drivers/usb/host/ehci-fsl: Fix interrupt setup in host mode.")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20230207110531.1060252-4-alexander.stein@ew.tq-group.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is based off of a sketch of a patch from Jason Gunthorpe in the
+link below. Some changes were needed to make this work. It applies
+cleanly to the current for-next and passes the pyverbs, perftest
+and the same blktests test cases which run today.
+
+Link: https://lore.kernel.org/r/20230119235936.19728-7-rpearsonhpe@gmail.com
+Link: https://lore.kernel.org/linux-rdma/Y3gvZr6%2FNCii9Avy@nvidia.com/
+Co-developed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: 5ff31dfcd6d2 ("Subject: RDMA/rxe: Handle zero length rdma")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/fsl-mph-dr-of.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_loc.h   |   6 +-
+ drivers/infiniband/sw/rxe/rxe_mr.c    | 529 ++++++++++++--------------
+ drivers/infiniband/sw/rxe/rxe_verbs.h |  21 +-
+ 3 files changed, 254 insertions(+), 302 deletions(-)
 
-diff --git a/drivers/usb/host/fsl-mph-dr-of.c b/drivers/usb/host/fsl-mph-dr-of.c
-index e5df175228928..46c6a152b8655 100644
---- a/drivers/usb/host/fsl-mph-dr-of.c
-+++ b/drivers/usb/host/fsl-mph-dr-of.c
-@@ -112,8 +112,7 @@ static struct platform_device *fsl_usb2_device_register(
- 			goto error;
+diff --git a/drivers/infiniband/sw/rxe/rxe_loc.h b/drivers/infiniband/sw/rxe/rxe_loc.h
+index ad8bd6bd728a4..1bb0cb479eb12 100644
+--- a/drivers/infiniband/sw/rxe/rxe_loc.h
++++ b/drivers/infiniband/sw/rxe/rxe_loc.h
+@@ -64,9 +64,9 @@ void rxe_mr_init_dma(int access, struct rxe_mr *mr);
+ int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length, u64 iova,
+ 		     int access, struct rxe_mr *mr);
+ int rxe_mr_init_fast(int max_pages, struct rxe_mr *mr);
+-int rxe_flush_pmem_iova(struct rxe_mr *mr, u64 iova, int length);
+-int rxe_mr_copy(struct rxe_mr *mr, u64 iova, void *addr, int length,
+-		enum rxe_mr_copy_dir dir);
++int rxe_flush_pmem_iova(struct rxe_mr *mr, u64 iova, unsigned int length);
++int rxe_mr_copy(struct rxe_mr *mr, u64 iova, void *addr,
++		unsigned int length, enum rxe_mr_copy_dir dir);
+ int copy_data(struct rxe_pd *pd, int access, struct rxe_dma_info *dma,
+ 	      void *addr, int length, enum rxe_mr_copy_dir dir);
+ int rxe_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg,
+diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
+index 2181165ea40d7..c80458634962c 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mr.c
++++ b/drivers/infiniband/sw/rxe/rxe_mr.c
+@@ -62,60 +62,31 @@ static void rxe_mr_init(int access, struct rxe_mr *mr)
+ 	mr->lkey = mr->ibmr.lkey = lkey;
+ 	mr->rkey = mr->ibmr.rkey = rkey;
+ 
++	mr->access = access;
+ 	mr->ibmr.page_size = PAGE_SIZE;
+ 	mr->page_mask = PAGE_MASK;
+ 	mr->page_shift = PAGE_SHIFT;
+ 	mr->state = RXE_MR_STATE_INVALID;
+ }
+ 
+-static int rxe_mr_alloc(struct rxe_mr *mr, int num_buf)
+-{
+-	int i;
+-	int num_map;
+-	struct rxe_map **map = mr->map;
+-
+-	num_map = (num_buf + RXE_BUF_PER_MAP - 1) / RXE_BUF_PER_MAP;
+-
+-	mr->map = kmalloc_array(num_map, sizeof(*map), GFP_KERNEL);
+-	if (!mr->map)
+-		goto err1;
+-
+-	for (i = 0; i < num_map; i++) {
+-		mr->map[i] = kmalloc(sizeof(**map), GFP_KERNEL);
+-		if (!mr->map[i])
+-			goto err2;
+-	}
+-
+-	BUILD_BUG_ON(!is_power_of_2(RXE_BUF_PER_MAP));
+-
+-	mr->map_shift = ilog2(RXE_BUF_PER_MAP);
+-	mr->map_mask = RXE_BUF_PER_MAP - 1;
+-
+-	mr->num_buf = num_buf;
+-	mr->num_map = num_map;
+-	mr->max_buf = num_map * RXE_BUF_PER_MAP;
+-
+-	return 0;
+-
+-err2:
+-	for (i--; i >= 0; i--)
+-		kfree(mr->map[i]);
+-
+-	kfree(mr->map);
+-	mr->map = NULL;
+-err1:
+-	return -ENOMEM;
+-}
+-
+ void rxe_mr_init_dma(int access, struct rxe_mr *mr)
+ {
+ 	rxe_mr_init(access, mr);
+ 
+-	mr->access = access;
+ 	mr->state = RXE_MR_STATE_VALID;
+ 	mr->ibmr.type = IB_MR_TYPE_DMA;
+ }
+ 
++static unsigned long rxe_mr_iova_to_index(struct rxe_mr *mr, u64 iova)
++{
++	return (iova >> mr->page_shift) - (mr->ibmr.iova >> mr->page_shift);
++}
++
++static unsigned long rxe_mr_iova_to_page_offset(struct rxe_mr *mr, u64 iova)
++{
++	return iova & (mr_page_size(mr) - 1);
++}
++
+ static bool is_pmem_page(struct page *pg)
+ {
+ 	unsigned long paddr = page_to_phys(pg);
+@@ -125,82 +96,98 @@ static bool is_pmem_page(struct page *pg)
+ 				 IORES_DESC_PERSISTENT_MEMORY);
+ }
+ 
++static int rxe_mr_fill_pages_from_sgt(struct rxe_mr *mr, struct sg_table *sgt)
++{
++	XA_STATE(xas, &mr->page_list, 0);
++	struct sg_page_iter sg_iter;
++	struct page *page;
++	bool persistent = !!(mr->access & IB_ACCESS_FLUSH_PERSISTENT);
++
++	__sg_page_iter_start(&sg_iter, sgt->sgl, sgt->orig_nents, 0);
++	if (!__sg_page_iter_next(&sg_iter))
++		return 0;
++
++	do {
++		xas_lock(&xas);
++		while (true) {
++			page = sg_page_iter_page(&sg_iter);
++
++			if (persistent && !is_pmem_page(page)) {
++				rxe_dbg_mr(mr, "Page can't be persistent\n");
++				xas_set_err(&xas, -EINVAL);
++				break;
++			}
++
++			xas_store(&xas, page);
++			if (xas_error(&xas))
++				break;
++			xas_next(&xas);
++			if (!__sg_page_iter_next(&sg_iter))
++				break;
++		}
++		xas_unlock(&xas);
++	} while (xas_nomem(&xas, GFP_KERNEL));
++
++	return xas_error(&xas);
++}
++
+ int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length, u64 iova,
+ 		     int access, struct rxe_mr *mr)
+ {
+-	struct rxe_map		**map;
+-	struct rxe_phys_buf	*buf = NULL;
+-	struct ib_umem		*umem;
+-	struct sg_page_iter	sg_iter;
+-	int			num_buf;
+-	void			*vaddr;
++	struct ib_umem *umem;
+ 	int err;
+ 
++	rxe_mr_init(access, mr);
++
++	xa_init(&mr->page_list);
++
+ 	umem = ib_umem_get(&rxe->ib_dev, start, length, access);
+ 	if (IS_ERR(umem)) {
+ 		rxe_dbg_mr(mr, "Unable to pin memory region err = %d\n",
+ 			(int)PTR_ERR(umem));
+-		err = PTR_ERR(umem);
+-		goto err_out;
++		return PTR_ERR(umem);
  	}
  
--	pdev->dev.of_node = ofdev->dev.of_node;
--	pdev->dev.of_node_reused = true;
-+	device_set_of_node_from_dev(&pdev->dev, &ofdev->dev);
+-	num_buf = ib_umem_num_pages(umem);
+-
+-	rxe_mr_init(access, mr);
+-
+-	err = rxe_mr_alloc(mr, num_buf);
++	err = rxe_mr_fill_pages_from_sgt(mr, &umem->sgt_append.sgt);
+ 	if (err) {
+-		rxe_dbg_mr(mr, "Unable to allocate memory for map\n");
+-		goto err_release_umem;
++		ib_umem_release(umem);
++		return err;
+ 	}
  
- 	retval = platform_device_add(pdev);
- 	if (retval)
+-	num_buf			= 0;
+-	map = mr->map;
+-	if (length > 0) {
+-		bool persistent_access = access & IB_ACCESS_FLUSH_PERSISTENT;
+-
+-		buf = map[0]->buf;
+-		for_each_sgtable_page (&umem->sgt_append.sgt, &sg_iter, 0) {
+-			struct page *pg = sg_page_iter_page(&sg_iter);
++	mr->umem = umem;
++	mr->ibmr.type = IB_MR_TYPE_USER;
++	mr->state = RXE_MR_STATE_VALID;
+ 
+-			if (persistent_access && !is_pmem_page(pg)) {
+-				rxe_dbg_mr(mr, "Unable to register persistent access to non-pmem device\n");
+-				err = -EINVAL;
+-				goto err_release_umem;
+-			}
++	return 0;
++}
+ 
+-			if (num_buf >= RXE_BUF_PER_MAP) {
+-				map++;
+-				buf = map[0]->buf;
+-				num_buf = 0;
+-			}
++static int rxe_mr_alloc(struct rxe_mr *mr, int num_buf)
++{
++	XA_STATE(xas, &mr->page_list, 0);
++	int i = 0;
++	int err;
+ 
+-			vaddr = page_address(pg);
+-			if (!vaddr) {
+-				rxe_dbg_mr(mr, "Unable to get virtual address\n");
+-				err = -ENOMEM;
+-				goto err_release_umem;
+-			}
+-			buf->addr = (uintptr_t)vaddr;
+-			buf->size = mr_page_size(mr);
+-			num_buf++;
+-			buf++;
++	xa_init(&mr->page_list);
+ 
++	do {
++		xas_lock(&xas);
++		while (i != num_buf) {
++			xas_store(&xas, XA_ZERO_ENTRY);
++			if (xas_error(&xas))
++				break;
++			xas_next(&xas);
++			i++;
+ 		}
+-	}
++		xas_unlock(&xas);
++	} while (xas_nomem(&xas, GFP_KERNEL));
+ 
+-	mr->umem = umem;
+-	mr->access = access;
+-	mr->page_offset = ib_umem_offset(umem);
+-	mr->state = RXE_MR_STATE_VALID;
+-	mr->ibmr.type = IB_MR_TYPE_USER;
++	err = xas_error(&xas);
++	if (err)
++		return err;
+ 
+-	return 0;
++	mr->num_buf = num_buf;
+ 
+-err_release_umem:
+-	ib_umem_release(umem);
+-err_out:
+-	return err;
++	return 0;
+ }
+ 
+ int rxe_mr_init_fast(int max_pages, struct rxe_mr *mr)
+@@ -214,7 +201,6 @@ int rxe_mr_init_fast(int max_pages, struct rxe_mr *mr)
+ 	if (err)
+ 		goto err1;
+ 
+-	mr->max_buf = max_pages;
+ 	mr->state = RXE_MR_STATE_FREE;
+ 	mr->ibmr.type = IB_MR_TYPE_MEM_REG;
+ 
+@@ -224,206 +210,122 @@ int rxe_mr_init_fast(int max_pages, struct rxe_mr *mr)
+ 	return err;
+ }
+ 
+-static int rxe_set_page(struct ib_mr *ibmr, u64 addr)
++static int rxe_set_page(struct ib_mr *ibmr, u64 iova)
+ {
+ 	struct rxe_mr *mr = to_rmr(ibmr);
+-	struct rxe_map *map;
+-	struct rxe_phys_buf *buf;
++	struct page *page = virt_to_page(iova & mr->page_mask);
++	bool persistent = !!(mr->access & IB_ACCESS_FLUSH_PERSISTENT);
++	int err;
++
++	if (persistent && !is_pmem_page(page)) {
++		rxe_dbg_mr(mr, "Page cannot be persistent\n");
++		return -EINVAL;
++	}
+ 
+ 	if (unlikely(mr->nbuf == mr->num_buf))
+ 		return -ENOMEM;
+ 
+-	map = mr->map[mr->nbuf / RXE_BUF_PER_MAP];
+-	buf = &map->buf[mr->nbuf % RXE_BUF_PER_MAP];
++	err = xa_err(xa_store(&mr->page_list, mr->nbuf, page, GFP_KERNEL));
++	if (err)
++		return err;
+ 
+-	buf->addr = addr;
+-	buf->size = ibmr->page_size;
+ 	mr->nbuf++;
+-
+ 	return 0;
+ }
+ 
+-int rxe_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg,
++int rxe_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sgl,
+ 		  int sg_nents, unsigned int *sg_offset)
+ {
+ 	struct rxe_mr *mr = to_rmr(ibmr);
+ 	unsigned int page_size = mr_page_size(mr);
+ 
++	mr->nbuf = 0;
+ 	mr->page_shift = ilog2(page_size);
+ 	mr->page_mask = ~((u64)page_size - 1);
+-	mr->page_offset = ibmr->iova & (page_size - 1);
+-
+-	mr->nbuf = 0;
++	mr->page_offset = mr->ibmr.iova & (page_size - 1);
+ 
+-	return ib_sg_to_pages(ibmr, sg, sg_nents, sg_offset, rxe_set_page);
++	return ib_sg_to_pages(ibmr, sgl, sg_nents, sg_offset, rxe_set_page);
+ }
+ 
+-static void lookup_iova(struct rxe_mr *mr, u64 iova, int *m_out, int *n_out,
+-			size_t *offset_out)
++static int rxe_mr_copy_xarray(struct rxe_mr *mr, u64 iova, void *addr,
++			      unsigned int length, enum rxe_mr_copy_dir dir)
+ {
+-	size_t offset = iova - mr->ibmr.iova + mr->page_offset;
+-	int			map_index;
+-	int			buf_index;
+-	u64			length;
+-
+-	if (likely(mr->page_shift)) {
+-		*offset_out = offset & (mr_page_size(mr) - 1);
+-		offset >>= mr->page_shift;
+-		*n_out = offset & mr->map_mask;
+-		*m_out = offset >> mr->map_shift;
+-	} else {
+-		map_index = 0;
+-		buf_index = 0;
+-
+-		length = mr->map[map_index]->buf[buf_index].size;
++	unsigned int page_offset = rxe_mr_iova_to_page_offset(mr, iova);
++	unsigned long index = rxe_mr_iova_to_index(mr, iova);
++	unsigned int bytes;
++	struct page *page;
++	void *va;
+ 
+-		while (offset >= length) {
+-			offset -= length;
+-			buf_index++;
+-
+-			if (buf_index == RXE_BUF_PER_MAP) {
+-				map_index++;
+-				buf_index = 0;
+-			}
+-			length = mr->map[map_index]->buf[buf_index].size;
+-		}
++	while (length) {
++		page = xa_load(&mr->page_list, index);
++		if (!page)
++			return -EFAULT;
+ 
+-		*m_out = map_index;
+-		*n_out = buf_index;
+-		*offset_out = offset;
++		bytes = min_t(unsigned int, length,
++				mr_page_size(mr) - page_offset);
++		va = kmap_local_page(page);
++		if (dir == RXE_FROM_MR_OBJ)
++			memcpy(addr, va + page_offset, bytes);
++		else
++			memcpy(va + page_offset, addr, bytes);
++		kunmap_local(va);
++
++		page_offset = 0;
++		addr += bytes;
++		length -= bytes;
++		index++;
+ 	}
+-}
+-
+-static void *iova_to_vaddr(struct rxe_mr *mr, u64 iova, int length)
+-{
+-	size_t offset;
+-	int m, n;
+ 
+-	if (mr->state != RXE_MR_STATE_VALID)
+-		return NULL;
+-
+-	if (mr->ibmr.type == IB_MR_TYPE_DMA)
+-		return (void *)(uintptr_t)iova;
+-
+-	if (mr_check_range(mr, iova, length))
+-		return NULL;
+-
+-	lookup_iova(mr, iova, &m, &n, &offset);
+-
+-	if (offset + length > mr->map[m]->buf[n].size)
+-		return NULL;
+-
+-	return (void *)(uintptr_t)mr->map[m]->buf[n].addr + offset;
++	return 0;
+ }
+ 
+-int rxe_flush_pmem_iova(struct rxe_mr *mr, u64 iova, int length)
++static void rxe_mr_copy_dma(struct rxe_mr *mr, u64 iova, void *addr,
++			    unsigned int length, enum rxe_mr_copy_dir dir)
+ {
+-	size_t offset;
+-
+-	if (length == 0)
+-		return 0;
+-
+-	if (mr->ibmr.type == IB_MR_TYPE_DMA)
+-		return -EFAULT;
+-
+-	offset = (iova - mr->ibmr.iova + mr->page_offset) & mr->page_mask;
+-	while (length > 0) {
+-		u8 *va;
+-		int bytes;
+-
+-		bytes = mr->ibmr.page_size - offset;
+-		if (bytes > length)
+-			bytes = length;
+-
+-		va = iova_to_vaddr(mr, iova, length);
+-		if (!va)
+-			return -EFAULT;
+-
+-		arch_wb_cache_pmem(va, bytes);
++	unsigned int page_offset = iova & (PAGE_SIZE - 1);
++	unsigned int bytes;
++	struct page *page;
++	u8 *va;
+ 
+-		length -= bytes;
++	while (length) {
++		page = virt_to_page(iova & mr->page_mask);
++		bytes = min_t(unsigned int, length,
++				PAGE_SIZE - page_offset);
++		va = kmap_local_page(page);
++
++		if (dir == RXE_TO_MR_OBJ)
++			memcpy(va + page_offset, addr, bytes);
++		else
++			memcpy(addr, va + page_offset, bytes);
++
++		kunmap_local(va);
++		page_offset = 0;
+ 		iova += bytes;
+-		offset = 0;
++		addr += bytes;
++		length -= bytes;
+ 	}
+-
+-	return 0;
+ }
+ 
+-/* copy data from a range (vaddr, vaddr+length-1) to or from
+- * a mr object starting at iova.
+- */
+-int rxe_mr_copy(struct rxe_mr *mr, u64 iova, void *addr, int length,
+-		enum rxe_mr_copy_dir dir)
++int rxe_mr_copy(struct rxe_mr *mr, u64 iova, void *addr,
++		unsigned int length, enum rxe_mr_copy_dir dir)
+ {
+-	int			err;
+-	int			bytes;
+-	u8			*va;
+-	struct rxe_map		**map;
+-	struct rxe_phys_buf	*buf;
+-	int			m;
+-	int			i;
+-	size_t			offset;
++	int err;
+ 
+ 	if (length == 0)
+ 		return 0;
+ 
+ 	if (mr->ibmr.type == IB_MR_TYPE_DMA) {
+-		u8 *src, *dest;
+-
+-		src = (dir == RXE_TO_MR_OBJ) ? addr : ((void *)(uintptr_t)iova);
+-
+-		dest = (dir == RXE_TO_MR_OBJ) ? ((void *)(uintptr_t)iova) : addr;
+-
+-		memcpy(dest, src, length);
+-
++		rxe_mr_copy_dma(mr, iova, addr, length, dir);
+ 		return 0;
+ 	}
+ 
+-	WARN_ON_ONCE(!mr->map);
+-
+ 	err = mr_check_range(mr, iova, length);
+-	if (err) {
+-		err = -EFAULT;
+-		goto err1;
+-	}
+-
+-	lookup_iova(mr, iova, &m, &i, &offset);
+-
+-	map = mr->map + m;
+-	buf	= map[0]->buf + i;
+-
+-	while (length > 0) {
+-		u8 *src, *dest;
+-
+-		va	= (u8 *)(uintptr_t)buf->addr + offset;
+-		src = (dir == RXE_TO_MR_OBJ) ? addr : va;
+-		dest = (dir == RXE_TO_MR_OBJ) ? va : addr;
+-
+-		bytes	= buf->size - offset;
+-
+-		if (bytes > length)
+-			bytes = length;
+-
+-		memcpy(dest, src, bytes);
+-
+-		length	-= bytes;
+-		addr	+= bytes;
+-
+-		offset	= 0;
+-		buf++;
+-		i++;
+-
+-		if (i == RXE_BUF_PER_MAP) {
+-			i = 0;
+-			map++;
+-			buf = map[0]->buf;
+-		}
++	if (unlikely(err)) {
++		rxe_dbg_mr(mr, "iova out of range");
++		return err;
+ 	}
+ 
+-	return 0;
+-
+-err1:
+-	return err;
++	return rxe_mr_copy_xarray(mr, iova, addr, length, dir);
+ }
+ 
+ /* copy data in or out of a wqe, i.e. sg list
+@@ -495,7 +397,6 @@ int copy_data(
+ 
+ 		if (bytes > 0) {
+ 			iova = sge->addr + offset;
+-
+ 			err = rxe_mr_copy(mr, iova, addr, bytes, dir);
+ 			if (err)
+ 				goto err2;
+@@ -522,50 +423,111 @@ int copy_data(
+ 	return err;
+ }
+ 
++int rxe_flush_pmem_iova(struct rxe_mr *mr, u64 iova, unsigned int length)
++{
++	unsigned int page_offset;
++	unsigned long index;
++	struct page *page;
++	unsigned int bytes;
++	int err;
++	u8 *va;
++
++	if (length == 0)
++		return 0;
++
++	if (mr->ibmr.type == IB_MR_TYPE_DMA)
++		return -EFAULT;
++
++	err = mr_check_range(mr, iova, length);
++	if (err)
++		return err;
++
++	while (length > 0) {
++		index = rxe_mr_iova_to_index(mr, iova);
++		page = xa_load(&mr->page_list, index);
++		page_offset = rxe_mr_iova_to_page_offset(mr, iova);
++		if (!page)
++			return -EFAULT;
++		bytes = min_t(unsigned int, length,
++				mr_page_size(mr) - page_offset);
++
++		va = kmap_local_page(page);
++		arch_wb_cache_pmem(va + page_offset, bytes);
++		kunmap_local(va);
++
++		length -= bytes;
++		iova += bytes;
++		page_offset = 0;
++	}
++
++	return 0;
++}
++
+ /* Guarantee atomicity of atomic operations at the machine level. */
+ static DEFINE_SPINLOCK(atomic_ops_lock);
+ 
+ int rxe_mr_do_atomic_op(struct rxe_mr *mr, u64 iova, int opcode,
+ 			u64 compare, u64 swap_add, u64 *orig_val)
+ {
+-	u64 *va;
++	unsigned int page_offset;
++	struct page *page;
+ 	u64 value;
++	u64 *va;
+ 
+-	if (mr->state != RXE_MR_STATE_VALID) {
++	if (unlikely(mr->state != RXE_MR_STATE_VALID)) {
+ 		rxe_dbg_mr(mr, "mr not in valid state");
+ 		return RESPST_ERR_RKEY_VIOLATION;
+ 	}
+ 
+-	va = iova_to_vaddr(mr, iova, sizeof(u64));
+-	if (!va) {
+-		rxe_dbg_mr(mr, "iova out of range");
+-		return RESPST_ERR_RKEY_VIOLATION;
++	if (mr->ibmr.type == IB_MR_TYPE_DMA) {
++		page_offset = iova & (PAGE_SIZE - 1);
++		page = virt_to_page(iova & PAGE_MASK);
++	} else {
++		unsigned long index;
++		int err;
++
++		err = mr_check_range(mr, iova, sizeof(value));
++		if (err) {
++			rxe_dbg_mr(mr, "iova out of range");
++			return RESPST_ERR_RKEY_VIOLATION;
++		}
++		page_offset = rxe_mr_iova_to_page_offset(mr, iova);
++		index = rxe_mr_iova_to_index(mr, iova);
++		page = xa_load(&mr->page_list, index);
++		if (!page)
++			return RESPST_ERR_RKEY_VIOLATION;
+ 	}
+ 
+-	if ((uintptr_t)va & 0x7) {
++	if (unlikely(page_offset & 0x7)) {
+ 		rxe_dbg_mr(mr, "iova not aligned");
+ 		return RESPST_ERR_MISALIGNED_ATOMIC;
+ 	}
+ 
++	va = kmap_local_page(page);
++
+ 	spin_lock_bh(&atomic_ops_lock);
+-	value = *orig_val = *va;
++	value = *orig_val = va[page_offset >> 3];
+ 
+ 	if (opcode == IB_OPCODE_RC_COMPARE_SWAP) {
+ 		if (value == compare)
+-			*va = swap_add;
++			va[page_offset >> 3] = swap_add;
+ 	} else {
+ 		value += swap_add;
+-		*va = value;
++		va[page_offset >> 3] = value;
+ 	}
+ 	spin_unlock_bh(&atomic_ops_lock);
+ 
++	kunmap_local(va);
++
+ 	return 0;
+ }
+ 
+-/* only implemented for 64 bit architectures */
+ #if defined CONFIG_64BIT
++/* only implemented or called for 64 bit architectures */
+ int rxe_mr_do_atomic_write(struct rxe_mr *mr, u64 iova, u64 value)
+ {
++	unsigned int page_offset;
++	struct page *page;
+ 	u64 *va;
+ 
+ 	/* See IBA oA19-28 */
+@@ -574,20 +536,38 @@ int rxe_mr_do_atomic_write(struct rxe_mr *mr, u64 iova, u64 value)
+ 		return RESPST_ERR_RKEY_VIOLATION;
+ 	}
+ 
+-	va = iova_to_vaddr(mr, iova, sizeof(value));
+-	if (unlikely(!va)) {
+-		rxe_dbg_mr(mr, "iova out of range");
+-		return RESPST_ERR_RKEY_VIOLATION;
++	if (mr->ibmr.type == IB_MR_TYPE_DMA) {
++		page_offset = iova & (PAGE_SIZE - 1);
++		page = virt_to_page(iova & PAGE_MASK);
++	} else {
++		unsigned long index;
++		int err;
++
++		/* See IBA oA19-28 */
++		err = mr_check_range(mr, iova, sizeof(value));
++		if (unlikely(err)) {
++			rxe_dbg_mr(mr, "iova out of range");
++			return RESPST_ERR_RKEY_VIOLATION;
++		}
++		page_offset = rxe_mr_iova_to_page_offset(mr, iova);
++		index = rxe_mr_iova_to_index(mr, iova);
++		page = xa_load(&mr->page_list, index);
++		if (!page)
++			return RESPST_ERR_RKEY_VIOLATION;
+ 	}
+ 
+ 	/* See IBA A19.4.2 */
+-	if (unlikely((uintptr_t)va & 0x7 || iova & 0x7)) {
++	if (unlikely(page_offset & 0x7)) {
+ 		rxe_dbg_mr(mr, "misaligned address");
+ 		return RESPST_ERR_MISALIGNED_ATOMIC;
+ 	}
+ 
++	va = kmap_local_page(page);
++
+ 	/* Do atomic write after all prior operations have completed */
+-	smp_store_release(va, value);
++	smp_store_release(&va[page_offset >> 3], value);
++
++	kunmap_local(va);
+ 
+ 	return 0;
+ }
+@@ -631,12 +611,6 @@ int advance_dma_data(struct rxe_dma_info *dma, unsigned int length)
+ 	return 0;
+ }
+ 
+-/* (1) find the mr corresponding to lkey/rkey
+- *     depending on lookup_type
+- * (2) verify that the (qp) pd matches the mr pd
+- * (3) verify that the mr can support the requested access
+- * (4) verify that mr state is valid
+- */
+ struct rxe_mr *lookup_mr(struct rxe_pd *pd, int access, u32 key,
+ 			 enum rxe_mr_lookup_type type)
+ {
+@@ -757,15 +731,10 @@ int rxe_dereg_mr(struct ib_mr *ibmr, struct ib_udata *udata)
+ void rxe_mr_cleanup(struct rxe_pool_elem *elem)
+ {
+ 	struct rxe_mr *mr = container_of(elem, typeof(*mr), elem);
+-	int i;
+ 
+ 	rxe_put(mr_pd(mr));
+ 	ib_umem_release(mr->umem);
+ 
+-	if (mr->map) {
+-		for (i = 0; i < mr->num_map; i++)
+-			kfree(mr->map[i]);
+-
+-		kfree(mr->map);
+-	}
++	if (mr->ibmr.type != IB_MR_TYPE_DMA)
++		xa_destroy(&mr->page_list);
+ }
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.h b/drivers/infiniband/sw/rxe/rxe_verbs.h
+index bfc94caaeec57..c269ae2a32243 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.h
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.h
+@@ -283,17 +283,6 @@ enum rxe_mr_lookup_type {
+ 	RXE_LOOKUP_REMOTE,
+ };
+ 
+-#define RXE_BUF_PER_MAP		(PAGE_SIZE / sizeof(struct rxe_phys_buf))
+-
+-struct rxe_phys_buf {
+-	u64      addr;
+-	u64      size;
+-};
+-
+-struct rxe_map {
+-	struct rxe_phys_buf	buf[RXE_BUF_PER_MAP];
+-};
+-
+ static inline int rkey_is_mw(u32 rkey)
+ {
+ 	u32 index = rkey >> 8;
+@@ -311,22 +300,16 @@ struct rxe_mr {
+ 	u32			rkey;
+ 	enum rxe_mr_state	state;
+ 	int			access;
++	atomic_t		num_mw;
+ 
+ 	unsigned int		page_offset;
+ 	unsigned int		page_shift;
+ 	u64			page_mask;
+-	int			map_shift;
+-	int			map_mask;
+ 
+ 	u32			num_buf;
+ 	u32			nbuf;
+ 
+-	u32			max_buf;
+-	u32			num_map;
+-
+-	atomic_t		num_mw;
+-
+-	struct rxe_map		**map;
++	struct xarray		page_list;
+ };
+ 
+ static inline unsigned int mr_page_size(struct rxe_mr *mr)
 -- 
 2.39.2
 
