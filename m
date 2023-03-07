@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471E1BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8075DC4339B;
-	Tue,  7 Mar 2023 18:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C94BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA441C433A1;
+	Tue,  7 Mar 2023 18:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212329;
-	bh=i4EQkBQjrY4UOYfGmyeCf48T6yASAB++zF052nG9G1Q=;
+	s=korg; t=1678212332;
+	bh=FOu70jAGzI1lAzqTxLOg7F2OGehloLP0dQguDprPLjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JlBKAO+e7906ZZsy0FUWQhc0rKdG+L0N3pHgWDAcjSxqYDqb6xpypcDJyJztUP2GO
-	 O5Z0mRyZMVgUCkjoAJB67eUzz/zFOLBhApTwVaqmNv5+Zw/upTtlGWZZJRpQX59jXf
-	 RYNK8EAuZ7nM+8FoQdfE7glfIn8GxPSTjRBVYG74=
+	b=TK7mNgaBrjFqWm6lw9H7EGizRtfyW3jkBaB2QkSamd1Srw5tFbYg7HpI4Pd8TipGn
+	 CT6mERD/FSTkM8BlxfOXrVg6Z4Swlgh8aExlFHOaYOmDN2C4vGIDEUjXzFo+uk3FSu
+	 +TU51k211fV2rBrQQjqIhpQQMu+RE8IguxsAiOco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/885] block: use proper return value from bio_failfast()
-Date: Tue,  7 Mar 2023 17:50:44 +0100
-Message-Id: <20230307170006.656770777@linuxfoundation.org>
+Subject: [PATCH 6.1 144/885] rcu-tasks: Remove preemption disablement around srcu_read_[un]lock() calls
+Date: Tue,  7 Mar 2023 17:51:18 +0100
+Message-Id: <20230307170008.129576397@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,43 +38,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit f3ca73862453ac1e64fc6968a14bf66d839cd2d8 ]
+[ Upstream commit 44757092958bdd749775022f915b7ac974384c2a ]
 
-kernel test robot complains about a type mismatch:
+Ever since the following commit:
 
-   block/blk-merge.c:984:42: sparse:     expected restricted blk_opf_t const [usertype] ff
-   block/blk-merge.c:984:42: sparse:     got unsigned int
-   block/blk-merge.c:1010:42: sparse: sparse: incorrect type in initializer (different base types) @@     expected restricted blk_opf_t const [usertype] ff @@     got unsigned int @@
-   block/blk-merge.c:1010:42: sparse:     expected restricted blk_opf_t const [usertype] ff
-   block/blk-merge.c:1010:42: sparse:     got unsigned int
+	5a41344a3d83 ("srcu: Simplify __srcu_read_unlock() via this_cpu_dec()")
 
-because bio_failfast() is return an unsigned int rather than the
-appropriate blk_opt_f type. Fix it up.
+SRCU doesn't rely anymore on preemption to be disabled in order to
+modify the per-CPU counter. And even then it used to be done from the API
+itself.
 
-Fixes: 3ce6a115980c ("block: sync mixed merged request's failfast with 1st bio's")
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/oe-kbuild-all/202302170743.GXypM9Rt-lkp@intel.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Therefore and after checking further, it appears to be safe to remove
+the preemption disablement around __srcu_read_[un]lock() in
+exit_tasks_rcu_start() and exit_tasks_rcu_finish()
+
+Suggested-by: Boqun Feng <boqun.feng@gmail.com>
+Suggested-by: Paul E. McKenney <paulmck@kernel.org>
+Suggested-by: Neeraj Upadhyay <quic_neeraju@quicinc.com>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Stable-dep-of: 28319d6dc5e2 ("rcu-tasks: Fix synchronize_rcu_tasks() VS zap_pid_ns_processes()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-merge.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/rcu/tasks.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/block/blk-merge.c b/block/blk-merge.c
-index 914da38523b5a..17ac532105a97 100644
---- a/block/blk-merge.c
-+++ b/block/blk-merge.c
-@@ -747,7 +747,7 @@ void blk_rq_set_mixed_merge(struct request *rq)
- 	rq->rq_flags |= RQF_MIXED_MERGE;
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index 688c461036f57..80e75e7926cc6 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -1008,9 +1008,7 @@ EXPORT_SYMBOL_GPL(show_rcu_tasks_classic_gp_kthread);
+  */
+ void exit_tasks_rcu_start(void) __acquires(&tasks_rcu_exit_srcu)
+ {
+-	preempt_disable();
+ 	current->rcu_tasks_idx = __srcu_read_lock(&tasks_rcu_exit_srcu);
+-	preempt_enable();
  }
  
--static inline unsigned int bio_failfast(const struct bio *bio)
-+static inline blk_opf_t bio_failfast(const struct bio *bio)
+ /*
+@@ -1022,9 +1020,7 @@ void exit_tasks_rcu_finish(void) __releases(&tasks_rcu_exit_srcu)
  {
- 	if (bio->bi_opf & REQ_RAHEAD)
- 		return REQ_FAILFAST_MASK;
+ 	struct task_struct *t = current;
+ 
+-	preempt_disable();
+ 	__srcu_read_unlock(&tasks_rcu_exit_srcu, t->rcu_tasks_idx);
+-	preempt_enable();
+ 	exit_tasks_rcu_finish_trace(t);
+ }
+ 
 -- 
 2.39.2
 
