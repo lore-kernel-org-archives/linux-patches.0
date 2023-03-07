@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E790BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:41:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94A1C433EF;
-	Tue,  7 Mar 2023 18:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B345BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:41:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6AB4C433A1;
+	Tue,  7 Mar 2023 18:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214483;
-	bh=ke+HZuEGMBAjXnXiKlnse7V0pADQOuKZuCJ/tLEz0Ew=;
+	s=korg; t=1678214486;
+	bh=4ESyf6xhul6VZ8JrwY4WdLacfcd0MT65HXrkcNvlxVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSehEV3uIXiuKQfzblQHg88TZuvP7G7uMulbT2MwES8hCZMa2zFUNLscegFi08DIs
-	 Y+A04nTNbp5BjK5JXl7v1CCHvJJ7pDrXcyPJC3d3SY/51pLUs5oGrSHMUaNRiWWXAV
-	 o31jZiVuN/KscVM49u2jhuRt4Vx6iIaktECurOqc=
+	b=j4v/sMw6umexvLn80U7xCohkbMTCg28ru2fykMondAWIjpqK9KZG+0ZR8YdfV40lr
+	 eBTz31n4KN5RDmQss6/Kmi9utsenIeO4g+YivlyIQEO7fC6HzVS17qEe76xNmz5cD3
+	 ZctDcO25u+T7layqXZE3mTaks/DnBPaPvGoFzPhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.1 797/885] wifi: rtl8xxxu: Use a longer retry limit of 48
-Date: Tue,  7 Mar 2023 18:02:11 +0100
-Message-Id: <20230307170036.522906655@linuxfoundation.org>
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeelb@google.com>,
+	Hugh Dickins <hughd@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 831/885] mm: memcontrol: deprecate charge moving
+Date: Tue,  7 Mar 2023 18:02:45 +0100
+Message-Id: <20230307170037.946609862@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,59 +39,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-commit 2a86aa9a1892d60ef2e3f310f5b42b8b05546d65 upstream.
+commit da34a8484d162585e22ed8c1e4114aa2f60e3567 upstream.
 
-The Realtek rate control algorithm goes back and forth a lot between
-the highest and the lowest rate it's allowed to use. This is due to
-a lot of frames being dropped because the retry limits set by
-IEEE80211_CONF_CHANGE_RETRY_LIMITS are too low. (Experimentally, they
-are 4 for long frames and 7 for short frames.)
+Charge moving mode in cgroup1 allows memory to follow tasks as they
+migrate between cgroups.  This is, and always has been, a questionable
+thing to do - for several reasons.
 
-The vendor drivers hardcode the value 48 for both retry limits (for
-station mode), which makes dropped frames very rare and thus the rate
-control is more stable.
+First, it's expensive.  Pages need to be identified, locked and isolated
+from various MM operations, and reassigned, one by one.
 
-Because most Realtek chips handle the rate control in the firmware,
-which can't be modified, ignore the limits set by
-IEEE80211_CONF_CHANGE_RETRY_LIMITS and use the value 48 (set during
-chip initialisation), same as the vendor drivers.
+Second, it's unreliable.  Once pages are charged to a cgroup, there isn't
+always a clear owner task anymore.  Cache isn't moved at all, for example.
+Mapped memory is moved - but if trylocking or isolating a page fails,
+it's arbitrarily left behind.  Frequent moving between domains may leave a
+task's memory scattered all over the place.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/477d745b-6bac-111d-403c-487fc19aa30d@gmail.com
+Third, it isn't really needed.  Launcher tasks can kick off workload tasks
+directly in their target cgroup.  Using dedicated per-workload groups
+allows fine-grained policy adjustments - no need to move tasks and their
+physical pages between control domains.  The feature was never
+forward-ported to cgroup2, and it hasn't been missed.
+
+Despite it being a niche usecase, the maintenance overhead of supporting
+it is enormous.  Because pages are moved while they are live and subject
+to various MM operations, the synchronization rules are complicated.
+There are lock_page_memcg() in MM and FS code, which non-cgroup people
+don't understand.  In some cases we've been able to shift code and cgroup
+API calls around such that we can rely on native locking as much as
+possible.  But that's fragile, and sometimes we need to hold MM locks for
+longer than we otherwise would (pte lock e.g.).
+
+Mark the feature deprecated. Hopefully we can remove it soon.
+
+And backport into -stable kernels so that people who develop against
+earlier kernels are warned about this deprecation as early as possible.
+
+[akpm@linux-foundation.org: fix memory.rst underlining]
+Link: https://lkml.kernel.org/r/Y5COd+qXwk/S+n8N@cmpxchg.org
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Acked-by: Hugh Dickins <hughd@google.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c |    9 ---------
- 1 file changed, 9 deletions(-)
+ Documentation/admin-guide/cgroup-v1/memory.rst |   13 +++++++++++--
+ mm/memcontrol.c                                |    4 ++++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -5966,7 +5966,6 @@ static int rtl8xxxu_config(struct ieee80
+--- a/Documentation/admin-guide/cgroup-v1/memory.rst
++++ b/Documentation/admin-guide/cgroup-v1/memory.rst
+@@ -86,6 +86,8 @@ Brief summary of control files.
+  memory.swappiness		     set/show swappiness parameter of vmscan
+ 				     (See sysctl's vm.swappiness)
+  memory.move_charge_at_immigrate     set/show controls of moving charges
++                                     This knob is deprecated and shouldn't be
++                                     used.
+  memory.oom_control		     set/show oom controls.
+  memory.numa_stat		     show the number of memory usage per numa
+ 				     node
+@@ -716,8 +718,15 @@ NOTE2:
+        It is recommended to set the soft limit always below the hard limit,
+        otherwise the hard limit will take precedence.
+ 
+-8. Move charges at task migration
+-=================================
++8. Move charges at task migration (DEPRECATED!)
++===============================================
++
++THIS IS DEPRECATED!
++
++It's expensive and unreliable! It's better practice to launch workload
++tasks directly from inside their target cgroup. Use dedicated workload
++cgroups to allow fine-grained policy adjustments without having to
++move physical pages between control domains.
+ 
+ Users can move charges associated with a task along with task migration, that
+ is, uncharge task's pages from the old cgroup and charge them to the new cgroup.
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -3910,6 +3910,10 @@ static int mem_cgroup_move_charge_write(
  {
- 	struct rtl8xxxu_priv *priv = hw->priv;
- 	struct device *dev = &priv->udev->dev;
--	u16 val16;
- 	int ret = 0, channel;
- 	bool ht40;
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
  
-@@ -5976,14 +5975,6 @@ static int rtl8xxxu_config(struct ieee80
- 			 __func__, hw->conf.chandef.chan->hw_value,
- 			 changed, hw->conf.chandef.width);
++	pr_warn_once("Cgroup memory moving (move_charge_at_immigrate) is deprecated. "
++		     "Please report your usecase to linux-mm@kvack.org if you "
++		     "depend on this functionality.\n");
++
+ 	if (val & ~MOVE_MASK)
+ 		return -EINVAL;
  
--	if (changed & IEEE80211_CONF_CHANGE_RETRY_LIMITS) {
--		val16 = ((hw->conf.long_frame_max_tx_count <<
--			  RETRY_LIMIT_LONG_SHIFT) & RETRY_LIMIT_LONG_MASK) |
--			((hw->conf.short_frame_max_tx_count <<
--			  RETRY_LIMIT_SHORT_SHIFT) & RETRY_LIMIT_SHORT_MASK);
--		rtl8xxxu_write16(priv, REG_RETRY_LIMIT, val16);
--	}
--
- 	if (changed & IEEE80211_CONF_CHANGE_CHANNEL) {
- 		switch (hw->conf.chandef.width) {
- 		case NL80211_CHAN_WIDTH_20_NOHT:
 
 
