@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86082BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:25:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F06F9C433EF;
-	Tue,  7 Mar 2023 18:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9ADBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:25:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10A6C433D2;
+	Tue,  7 Mar 2023 18:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213527;
-	bh=z+chNbwLKXpApWkCvLfF1oNNWLt0wXbDHGIOtNPCMgE=;
+	s=korg; t=1678213530;
+	bh=uw2nkjhNQx5+erk0stxMqkev2lIwAdl32LZRI5YipLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGv0WqrnmamKQCHMVie2bvmApDLuL777BExlP/OdOcxik4t5nkTVBrUY+hL6Hn4af
-	 YqmqB68BDuMu5Enjt1dkM01vRyGwlt4iVflwNchAchEyFxKjKTu59tFou+0FhS+QUv
-	 e88CQKik4V/+yd0XTOa4k1W/8/Qtj2uAgVxSPtCs=
+	b=p9KoJiWWLRAK5oxd9ap31KrjpLSCHVlzrl4C2vPHdSsljedJ7ic08n3G5f95gEyhT
+	 IXqfxTyfHeQy+YpT35pT7i3YmuMXJR4CcFAvMy1Op5Tw3ySp8c0TtkW9HUVOmksvVk
+	 hBbU5wfIf0oVDzDM+5MFHpb+Xb5FpKCsgAzVRq8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 533/885] fs: Use CHECK_DATA_CORRUPTION() when kernel bugs are detected
-Date: Tue,  7 Mar 2023 17:57:47 +0100
-Message-Id: <20230307170025.643579216@linuxfoundation.org>
+Subject: [PATCH 6.1 506/885] media: mc: Get media_device directly from pad
+Date: Tue,  7 Mar 2023 17:57:20 +0100
+Message-Id: <20230307170024.443201745@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,94 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 47d586913f2abec4d240bae33417f537fda987ec ]
+[ Upstream commit a967a3a788028f541e4db54beabcebc3648997db ]
 
-Currently, filp_close() and generic_shutdown_super() use printk() to log
-messages when bugs are detected. This is problematic because infrastructure
-like syzkaller has no idea that this message indicates a bug.
-In addition, some people explicitly want their kernels to BUG() when kernel
-data corruption has been detected (CONFIG_BUG_ON_DATA_CORRUPTION).
-And finally, when generic_shutdown_super() detects remaining inodes on a
-system without CONFIG_BUG_ON_DATA_CORRUPTION, it would be nice if later
-accesses to a busy inode would at least crash somewhat cleanly rather than
-walking through freed memory.
+Various functions access the media_device from a pad by going through
+the entity the pad belongs to. Remove the level of indirection and get
+the media_device from the pad directly.
 
-To address all three, use CHECK_DATA_CORRUPTION() when kernel bugs are
-detected.
-
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Fixes: 9e3576a1ae2b ("media: mc: convert pipeline funcs to take media_pad")
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/open.c              |  5 +++--
- fs/super.c             | 21 +++++++++++++++++----
- include/linux/poison.h |  3 +++
- 3 files changed, 23 insertions(+), 6 deletions(-)
+ drivers/media/mc/mc-entity.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/open.c b/fs/open.c
-index 9d0197db15e7b..20717ec510c07 100644
---- a/fs/open.c
-+++ b/fs/open.c
-@@ -1411,8 +1411,9 @@ int filp_close(struct file *filp, fl_owner_t id)
+diff --git a/drivers/media/mc/mc-entity.c b/drivers/media/mc/mc-entity.c
+index b8bcbc734eaf4..f268cf66053e1 100644
+--- a/drivers/media/mc/mc-entity.c
++++ b/drivers/media/mc/mc-entity.c
+@@ -703,7 +703,7 @@ static int media_pipeline_populate(struct media_pipeline *pipe,
+ __must_check int __media_pipeline_start(struct media_pad *pad,
+ 					struct media_pipeline *pipe)
  {
- 	int retval = 0;
+-	struct media_device *mdev = pad->entity->graph_obj.mdev;
++	struct media_device *mdev = pad->graph_obj.mdev;
+ 	struct media_pipeline_pad *err_ppad;
+ 	struct media_pipeline_pad *ppad;
+ 	int ret;
+@@ -851,7 +851,7 @@ EXPORT_SYMBOL_GPL(__media_pipeline_start);
+ __must_check int media_pipeline_start(struct media_pad *pad,
+ 				      struct media_pipeline *pipe)
+ {
+-	struct media_device *mdev = pad->entity->graph_obj.mdev;
++	struct media_device *mdev = pad->graph_obj.mdev;
+ 	int ret;
  
--	if (!file_count(filp)) {
--		printk(KERN_ERR "VFS: Close: file count is 0\n");
-+	if (CHECK_DATA_CORRUPTION(file_count(filp) == 0,
-+			"VFS: Close: file count is 0 (f_op=%ps)",
-+			filp->f_op)) {
- 		return 0;
- 	}
+ 	mutex_lock(&mdev->graph_mutex);
+@@ -888,7 +888,7 @@ EXPORT_SYMBOL_GPL(__media_pipeline_stop);
  
-diff --git a/fs/super.c b/fs/super.c
-index 8d39e4f11cfa3..4f8a626a35cd9 100644
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -491,10 +491,23 @@ void generic_shutdown_super(struct super_block *sb)
- 		if (sop->put_super)
- 			sop->put_super(sb);
+ void media_pipeline_stop(struct media_pad *pad)
+ {
+-	struct media_device *mdev = pad->entity->graph_obj.mdev;
++	struct media_device *mdev = pad->graph_obj.mdev;
  
--		if (!list_empty(&sb->s_inodes)) {
--			printk("VFS: Busy inodes after unmount of %s. "
--			   "Self-destruct in 5 seconds.  Have a nice day...\n",
--			   sb->s_id);
-+		if (CHECK_DATA_CORRUPTION(!list_empty(&sb->s_inodes),
-+				"VFS: Busy inodes after unmount of %s (%s)",
-+				sb->s_id, sb->s_type->name)) {
-+			/*
-+			 * Adding a proper bailout path here would be hard, but
-+			 * we can at least make it more likely that a later
-+			 * iput_final() or such crashes cleanly.
-+			 */
-+			struct inode *inode;
-+
-+			spin_lock(&sb->s_inode_list_lock);
-+			list_for_each_entry(inode, &sb->s_inodes, i_sb_list) {
-+				inode->i_op = VFS_PTR_POISON;
-+				inode->i_sb = VFS_PTR_POISON;
-+				inode->i_mapping = VFS_PTR_POISON;
-+			}
-+			spin_unlock(&sb->s_inode_list_lock);
- 		}
- 	}
- 	spin_lock(&sb_lock);
-diff --git a/include/linux/poison.h b/include/linux/poison.h
-index 2d3249eb0e62d..0e8a1f2ceb2f1 100644
---- a/include/linux/poison.h
-+++ b/include/linux/poison.h
-@@ -84,4 +84,7 @@
- /********** kernel/bpf/ **********/
- #define BPF_PTR_POISON ((void *)(0xeB9FUL + POISON_POINTER_DELTA))
+ 	mutex_lock(&mdev->graph_mutex);
+ 	__media_pipeline_stop(pad);
+@@ -898,7 +898,7 @@ EXPORT_SYMBOL_GPL(media_pipeline_stop);
  
-+/********** VFS **********/
-+#define VFS_PTR_POISON ((void *)(0xF5 + POISON_POINTER_DELTA))
-+
- #endif
+ __must_check int media_pipeline_alloc_start(struct media_pad *pad)
+ {
+-	struct media_device *mdev = pad->entity->graph_obj.mdev;
++	struct media_device *mdev = pad->graph_obj.mdev;
+ 	struct media_pipeline *new_pipe = NULL;
+ 	struct media_pipeline *pipe;
+ 	int ret;
 -- 
 2.39.2
 
