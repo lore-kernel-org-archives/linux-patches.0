@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45273BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:09:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85248C433EF;
-	Tue,  7 Mar 2023 19:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D852BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:09:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7DCAC433D2;
+	Tue,  7 Mar 2023 19:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216194;
-	bh=+fVs9usZtIFnqGAOOm9jUMFZ7lqzeabQSEA/+2iYn+Q=;
+	s=korg; t=1678216197;
+	bh=Q6SBzlYL5SFhP1H7+YX4H5Mv1kMILOFMYuxwqpqj9dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2KPSe1FJ51cCVRkQwJcvl+6/tfdXiK+6VkJ1198PjqHMm598shPi+59kSDb8Vwqj
-	 y8gor8WmW8KELt6TNiZ+t9wjCp+qt6cTzeFabp36ZiaMcmxeH0YPou1Qi1mRpNeUrc
-	 z+UkUgESHdKCoea5hzdZftKDZJnKUAH3kZzRztf8=
+	b=BWL2MgJa9cBxMhJ1cYRpywyXcMgSS3tOvgTWxp/y3j8qrSCuqJGKfWqpSuYyOO7Mh
+	 TG58IzCuooDGsL7XJXhlOtTjykaHEk8rotAERHCyV35zV9Uo97UsslBwxFt1/xaqqa
+	 ELk8ErwfTWlezNmlSITzgToEBGMqHC8Wo7owqhWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.15 474/567] x86/reboot: Disable SVM, not just VMX, when stopping CPUs
-Date: Tue,  7 Mar 2023 18:03:30 +0100
-Message-Id: <20230307165926.447969628@linuxfoundation.org>
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 465/567] RDMA/siw: Fix user page pinning accounting
+Date: Tue,  7 Mar 2023 18:03:21 +0100
+Message-Id: <20230307165926.024373743@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -34,54 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Bernard Metzler <bmt@zurich.ibm.com>
 
-commit a2b07fa7b93321c059af0c6d492cc9a4f1e390aa upstream.
+[ Upstream commit 65a8fc30fb6722fc25adec6d7dd5b53b0bb85820 ]
 
-Disable SVM and more importantly force GIF=1 when halting a CPU or
-rebooting the machine.  Similar to VMX, SVM allows software to block
-INITs via CLGI, and thus can be problematic for a crash/reboot.  The
-window for failure is smaller with SVM as INIT is only blocked while
-GIF=0, i.e. between CLGI and STGI, but the window does exist.
+To avoid racing with other user memory reservations, immediately
+account full amount of pages to be pinned.
 
-Fixes: fba4f472b33a ("x86/reboot: Turn off KVM when halting a CPU")
-Cc: stable@vger.kernel.org
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221130233650.1404148-5-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2251334dcac9 ("rdma/siw: application buffer management")
+Reported-by: Jason Gunthorpe <jgg@nvidia.com>
+Suggested-by: Alistair Popple <apopple@nvidia.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Signed-off-by: Bernard Metzler <bmt@zurich.ibm.com>
+Link: https://lore.kernel.org/r/20230202101000.402990-1-bmt@zurich.ibm.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/smp.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/sw/siw/siw_mem.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
---- a/arch/x86/kernel/smp.c
-+++ b/arch/x86/kernel/smp.c
-@@ -32,7 +32,7 @@
- #include <asm/mce.h>
- #include <asm/trace/irq_vectors.h>
- #include <asm/kexec.h>
--#include <asm/virtext.h>
-+#include <asm/reboot.h>
+diff --git a/drivers/infiniband/sw/siw/siw_mem.c b/drivers/infiniband/sw/siw/siw_mem.c
+index 61c17db70d658..bf69566e2eb63 100644
+--- a/drivers/infiniband/sw/siw/siw_mem.c
++++ b/drivers/infiniband/sw/siw/siw_mem.c
+@@ -398,7 +398,7 @@ struct siw_umem *siw_umem_get(u64 start, u64 len, bool writable)
  
- /*
-  *	Some notes on x86 processor bugs affecting SMP operation:
-@@ -122,7 +122,7 @@ static int smp_stop_nmi_callback(unsigne
- 	if (raw_smp_processor_id() == atomic_read(&stopping_cpu))
- 		return NMI_HANDLED;
+ 	mlock_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
  
--	cpu_emergency_vmxoff();
-+	cpu_emergency_disable_virtualization();
- 	stop_this_cpu(NULL);
+-	if (num_pages + atomic64_read(&mm_s->pinned_vm) > mlock_limit) {
++	if (atomic64_add_return(num_pages, &mm_s->pinned_vm) > mlock_limit) {
+ 		rv = -ENOMEM;
+ 		goto out_sem_up;
+ 	}
+@@ -411,18 +411,16 @@ struct siw_umem *siw_umem_get(u64 start, u64 len, bool writable)
+ 		goto out_sem_up;
+ 	}
+ 	for (i = 0; num_pages; i++) {
+-		int got, nents = min_t(int, num_pages, PAGES_PER_CHUNK);
+-
+-		umem->page_chunk[i].plist =
++		int nents = min_t(int, num_pages, PAGES_PER_CHUNK);
++		struct page **plist =
+ 			kcalloc(nents, sizeof(struct page *), GFP_KERNEL);
+-		if (!umem->page_chunk[i].plist) {
++
++		if (!plist) {
+ 			rv = -ENOMEM;
+ 			goto out_sem_up;
+ 		}
+-		got = 0;
++		umem->page_chunk[i].plist = plist;
+ 		while (nents) {
+-			struct page **plist = &umem->page_chunk[i].plist[got];
+-
+ 			rv = pin_user_pages(first_page_va, nents,
+ 					    foll_flags | FOLL_LONGTERM,
+ 					    plist, NULL);
+@@ -430,12 +428,11 @@ struct siw_umem *siw_umem_get(u64 start, u64 len, bool writable)
+ 				goto out_sem_up;
  
- 	return NMI_HANDLED;
-@@ -134,7 +134,7 @@ static int smp_stop_nmi_callback(unsigne
- DEFINE_IDTENTRY_SYSVEC(sysvec_reboot)
- {
- 	ack_APIC_irq();
--	cpu_emergency_vmxoff();
-+	cpu_emergency_disable_virtualization();
- 	stop_this_cpu(NULL);
- }
+ 			umem->num_pages += rv;
+-			atomic64_add(rv, &mm_s->pinned_vm);
+ 			first_page_va += rv * PAGE_SIZE;
++			plist += rv;
+ 			nents -= rv;
+-			got += rv;
++			num_pages -= rv;
+ 		}
+-		num_pages -= got;
+ 	}
+ out_sem_up:
+ 	mmap_read_unlock(mm_s);
+@@ -443,6 +440,10 @@ struct siw_umem *siw_umem_get(u64 start, u64 len, bool writable)
+ 	if (rv > 0)
+ 		return umem;
  
++	/* Adjust accounting for pages not pinned */
++	if (num_pages)
++		atomic64_sub(num_pages, &mm_s->pinned_vm);
++
+ 	siw_umem_release(umem, false);
+ 
+ 	return ERR_PTR(rv);
+-- 
+2.39.2
+
 
 
