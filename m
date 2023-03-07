@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98504BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:28:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36DFC433D2;
-	Tue,  7 Mar 2023 18:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEABBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:29:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED22C4339E;
+	Tue,  7 Mar 2023 18:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213739;
-	bh=gqJnJUGl7wxn/SZ+P5h6Yr2ecI+jIRuAo9iv8iQb0mk=;
+	s=korg; t=1678213742;
+	bh=6GU7YqwBGP6km5FP8YQtlRBF9Ucct22hhgFPrY1uTIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2IEx4ONeohigFicR9Hv37jaBSAFHRm6Fs+sNEDaxXUOvzzemyAz2cXjGa4jdasNdl
-	 dLVDRmR4V8mP7FSt1mW7chCDJctIXZ7k5tcOTT0mPFdWokLcsXefCouJiNZN2f1ulq
-	 39ZEWa5b19kTpdEEVzCioqD616xjIpQXroy7bBVE=
+	b=CTYrEYpTeaF4hmTfKzgSa61w69x2iM0hvk9GTW8FRyMCXc2khgzBqxfUGwWah0VAg
+	 UZGgEy3vTM+UL2LIem4i5RHLoee5JTdtU039THi05fwwxkn78g5ZBNCBxCN/l64q1A
+	 g7XVXErUJI+RMNlyp24oRSGd3WxqhXfuhyYFIU9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam James <sam@gentoo.org>,
-	Kees Cook <keescook@chromium.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 573/885] gcc-plugins: drop -std=gnu++11 to fix GCC 13 build
-Date: Tue,  7 Mar 2023 17:58:27 +0100
-Message-Id: <20230307170027.304717338@linuxfoundation.org>
+Subject: [PATCH 6.1 574/885] tools/power/x86/intel-speed-select: Add Emerald Rapid quirk
+Date: Tue,  7 Mar 2023 17:58:28 +0100
+Message-Id: <20230307170027.339571355@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,49 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sam James <sam@gentoo.org>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 5a6b64adc18d9adfb497a529ff004d59b6df151f ]
+[ Upstream commit 61f9fdcdcd01f9a996b6db4e7092fcdfe8414ad5 ]
 
-The latest GCC 13 snapshot (13.0.1 20230129) gives the following:
-```
-cc1: error: cannot load plugin ./scripts/gcc-plugins/randomize_layout_plugin.so
- :./scripts/gcc-plugins/randomize_layout_plugin.so: undefined symbol: tree_code_type
-```
+Need memory frequency quirk as Sapphire Rapids in Emerald Rapids.
+So add Emerald Rapids CPU model check in is_spr_platform().
 
-This ends up being because of https://gcc.gnu.org/git/gitweb.cgi?p=gcc.git;h=b0241ce6e37031
-upstream in GCC which changes the visibility of some types used by the kernel's
-plugin infrastructure like tree_code_type.
-
-After discussion with the GCC folks, we found that the kernel needs to be building
-plugins with the same flags used to build GCC - and GCC defaults to gnu++17
-right now. The minimum GCC version needed to build the kernel is GCC 5.1
-and GCC 5.1 already defaults to gnu++14 anyway, so just drop the flag, as
-all GCCs that could be used to build GCC already default to an acceptable
-version which was >= the version we forced via flags until now.
-
-Bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108634
-Signed-off-by: Sam James <sam@gentoo.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230201230009.2252783-1-sam@gentoo.org
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+[srinivas.pandruvada@linux.intel.com: Subject, changelog and code edits]
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gcc-plugins/Makefile | 2 +-
+ tools/power/x86/intel-speed-select/isst-config.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/gcc-plugins/Makefile b/scripts/gcc-plugins/Makefile
-index b34d11e226366..320afd3cf8e82 100644
---- a/scripts/gcc-plugins/Makefile
-+++ b/scripts/gcc-plugins/Makefile
-@@ -29,7 +29,7 @@ GCC_PLUGINS_DIR = $(shell $(CC) -print-file-name=plugin)
- plugin_cxxflags	= -Wp,-MMD,$(depfile) $(KBUILD_HOSTCXXFLAGS) -fPIC \
- 		  -include $(srctree)/include/linux/compiler-version.h \
- 		  -DPLUGIN_VERSION=$(call stringify,$(KERNELVERSION)) \
--		  -I $(GCC_PLUGINS_DIR)/include -I $(obj) -std=gnu++11 \
-+		  -I $(GCC_PLUGINS_DIR)/include -I $(obj) \
- 		  -fno-rtti -fno-exceptions -fasynchronous-unwind-tables \
- 		  -ggdb -Wno-narrowing -Wno-unused-variable \
- 		  -Wno-format-diag
+diff --git a/tools/power/x86/intel-speed-select/isst-config.c b/tools/power/x86/intel-speed-select/isst-config.c
+index a160bad291eb7..be3668d37d654 100644
+--- a/tools/power/x86/intel-speed-select/isst-config.c
++++ b/tools/power/x86/intel-speed-select/isst-config.c
+@@ -110,7 +110,7 @@ int is_skx_based_platform(void)
+ 
+ int is_spr_platform(void)
+ {
+-	if (cpu_model == 0x8F)
++	if (cpu_model == 0x8F || cpu_model == 0xCF)
+ 		return 1;
+ 
+ 	return 0;
 -- 
 2.39.2
 
