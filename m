@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD38BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D70EC4339B;
-	Tue,  7 Mar 2023 18:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16C7BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1DDC433EF;
+	Tue,  7 Mar 2023 18:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214913;
-	bh=5/pZxIYAb8rVFXon30XZ/QanXXb9QKVo2s6IgHd6Nw4=;
+	s=korg; t=1678214916;
+	bh=rAbAtauK0hmbO+K/zGADhjS5szni4drmaDh+sO7qiO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4yHOF1Ov1Ja00miIWYPaCZsbR5JvGILFkkSj+/WklPPDu0W0H4B03nYoYZanvlYS
-	 zekeRRO0+Td1Essi2R3FvBI0bJrT8MbnOkRYN0JaU3ZFSrxzUHz2MDfCVSemuz0zsh
-	 xRdiQUhU+U1m0cjIANa0HTQCczjJtCajLQXNcNcI=
+	b=tTs7I4y4WE2yO1/YhJBsMOFgTWrm7n7GOw4q06Y26E0itlM/QlRXS+9mN9agsxKk/
+	 uLwLsC8TYkTgoSJpNVXyH3m7tBGYHYitk5vNGq/NnwdtcFZhHwF/VxiQ02gf4H1KSB
+	 b3F88gYeUtF7r6ZIGPd+UPuvuJx99HRccUDD5e2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Arjan <8vvbbqzo567a@nospam.xutrox.com>,
+	Kevin Brace <kevinbrace@gmx.com>,
+	silviazhao <silviazhao-oc@zhaoxin.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Phil Auld <pauld@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/567] sched/rt: pick_next_rt_entity(): check list_entry
-Date: Tue,  7 Mar 2023 17:56:36 +0100
-Message-Id: <20230307165908.501064049@linuxfoundation.org>
+Subject: [PATCH 5.15 061/567] x86/perf/zhaoxin: Add stepping check for ZXC
+Date: Tue,  7 Mar 2023 17:56:37 +0100
+Message-Id: <20230307165908.538735707@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -37,52 +37,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: silviazhao <silviazhao-oc@zhaoxin.com>
 
-[ Upstream commit 7c4a5b89a0b5a57a64b601775b296abf77a9fe97 ]
+[ Upstream commit fd636b6a9bc6034f2e5bb869658898a2b472c037 ]
 
-Commit 326587b84078 ("sched: fix goto retry in pick_next_task_rt()")
-removed any path which could make pick_next_rt_entity() return NULL.
-However, BUG_ON(!rt_se) in _pick_next_task_rt() (the only caller of
-pick_next_rt_entity()) still checks the error condition, which can
-never happen, since list_entry() never returns NULL.
-Remove the BUG_ON check, and instead emit a warning in the only
-possible error condition here: the queue being empty which should
-never happen.
+Some of Nano series processors will lead GP when accessing
+PMC fixed counter. Meanwhile, their hardware support for PMC
+has not announced externally. So exclude Nano CPUs from ZXC
+by checking stepping information. This is an unambiguous way
+to differentiate between ZXC and Nano CPUs.
 
-Fixes: 326587b84078 ("sched: fix goto retry in pick_next_task_rt()")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Following are Nano and ZXC FMS information:
+Nano FMS: Family=6, Model=F, Stepping=[0-A][C-D]
+ZXC FMS:  Family=6, Model=F, Stepping=E-F OR
+          Family=6, Model=0x19, Stepping=0-3
+
+Fixes: 3a4ac121c2ca ("x86/perf: Add hardware performance events support for Zhaoxin CPU.")
+
+Reported-by: Arjan <8vvbbqzo567a@nospam.xutrox.com>
+Reported-by: Kevin Brace <kevinbrace@gmx.com>
+Signed-off-by: silviazhao <silviazhao-oc@zhaoxin.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Phil Auld <pauld@redhat.com>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/r/20230128-list-entry-null-check-sched-v3-1-b1a71bd1ac6b@diag.uniroma1.it
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=212389
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/rt.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/events/zhaoxin/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index b374ea9f58ab2..08af6076c8097 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -1625,6 +1625,8 @@ static struct sched_rt_entity *pick_next_rt_entity(struct rt_rq *rt_rq)
- 	BUG_ON(idx >= MAX_RT_PRIO);
+diff --git a/arch/x86/events/zhaoxin/core.c b/arch/x86/events/zhaoxin/core.c
+index 949d845c922b4..3e9acdaeed1ec 100644
+--- a/arch/x86/events/zhaoxin/core.c
++++ b/arch/x86/events/zhaoxin/core.c
+@@ -541,7 +541,13 @@ __init int zhaoxin_pmu_init(void)
  
- 	queue = array->queue + idx;
-+	if (SCHED_WARN_ON(list_empty(queue)))
-+		return NULL;
- 	next = list_entry(queue->next, struct sched_rt_entity, run_list);
+ 	switch (boot_cpu_data.x86) {
+ 	case 0x06:
+-		if (boot_cpu_data.x86_model == 0x0f || boot_cpu_data.x86_model == 0x19) {
++		/*
++		 * Support Zhaoxin CPU from ZXC series, exclude Nano series through FMS.
++		 * Nano FMS: Family=6, Model=F, Stepping=[0-A][C-D]
++		 * ZXC FMS: Family=6, Model=F, Stepping=E-F OR Family=6, Model=0x19, Stepping=0-3
++		 */
++		if ((boot_cpu_data.x86_model == 0x0f && boot_cpu_data.x86_stepping >= 0x0e) ||
++			boot_cpu_data.x86_model == 0x19) {
  
- 	return next;
-@@ -1637,7 +1639,8 @@ static struct task_struct *_pick_next_task_rt(struct rq *rq)
- 
- 	do {
- 		rt_se = pick_next_rt_entity(rt_rq);
--		BUG_ON(!rt_se);
-+		if (unlikely(!rt_se))
-+			return NULL;
- 		rt_rq = group_rt_rq(rt_se);
- 	} while (rt_rq);
+ 			x86_pmu.max_period = x86_pmu.cntval_mask >> 1;
  
 -- 
 2.39.2
