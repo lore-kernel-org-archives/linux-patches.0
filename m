@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E30BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:44:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285CBC433D2;
-	Tue,  7 Mar 2023 17:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37D1BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:44:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDB6C433EF;
+	Tue,  7 Mar 2023 17:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211076;
-	bh=UJG2yLRgAPyWqdYK9/H3/GB16kLkik00kOREtcReAF8=;
+	s=korg; t=1678211079;
+	bh=VaZHPCKvH+cc7GvKCXfubK+uMFz4i8+GnIX8sPuKvd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z5muhLw6MqumETvE72uvoLR+EwTXlweq3LqtC+cgxKK5n3uf7YjtIgC9R0TQBVtVn
-	 2tYLWcs5JmIGm7OEKYAfsVAIjUMxr7dkayaLd8ugelirqMcQbBKqiRJjN+gUAdzbDU
-	 DSMqUwLUFP/MoMJrRIdb8+4nKPcRs2hDzrwkoOfY=
+	b=sPtSYIf09zhRVCrL+WO3zpcDKM7CaBywohhzTc4NjuyzI1shn1kjnBnJDtNUg07/l
+	 ALf/noyS+7s8Z54mGWrwAW7AbVKmsXiEnGz/56bnJD7LIVDV1Iemp6Twil/eCbyKqH
+	 YNOLywntDVRe8ZiTY7yYodFUCaHatEPeD4trJGAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alper Nebi Yasak <alpernebiyasak@gmail.com>,
-	Salvatore Bonaccorso <carnil@debian.org>
-Subject: [PATCH 6.2 0745/1001] firmware: coreboot: framebuffer: Ignore reserved pixel color bits
-Date: Tue,  7 Mar 2023 17:58:37 +0100
-Message-Id: <20230307170054.061088679@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Michael Kelley <mikelley@microsoft.com>
+Subject: [PATCH 6.2 0746/1001] block: dont allow multiple bios for IOCB_NOWAIT issue
+Date: Tue,  7 Mar 2023 17:58:38 +0100
+Message-Id: <20230307170054.103174864@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,52 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alper Nebi Yasak <alpernebiyasak@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit e6acaf25cba14661211bb72181c35dd13b24f5b3 upstream.
+commit 67d59247d4b52c917e373f05a807027756ab216f upstream.
 
-The coreboot framebuffer doesn't support transparency, its 'reserved'
-bit field is merely padding for byte/word alignment of pixel colors [1].
-When trying to match the framebuffer to a simplefb format, the kernel
-driver unnecessarily requires the format's transparency bit field to
-exactly match this padding, even if the former is zero-width.
+If we're doing a large IO request which needs to be split into multiple
+bios for issue, then we can run into the same situation as the below
+marked commit fixes - parts will complete just fine, one or more parts
+will fail to allocate a request. This will result in a partially
+completed read or write request, where the caller gets EAGAIN even though
+parts of the IO completed just fine.
 
-Due to a coreboot bug [2] (fixed upstream), some boards misreport the
-reserved field's size as equal to its position (0x18 for both on a
-'Lick' Chromebook), and the driver fails to probe where it would have
-otherwise worked fine with e.g. the a8r8g8b8 or x8r8g8b8 formats.
+Do the same for large bios as we do for splits - fail a NOWAIT request
+with EAGAIN. This isn't technically fixing an issue in the below marked
+patch, but for stable purposes, we should have either none of them or
+both.
 
-Remove the transparency comparison with reserved bits. When the
-bits-per-pixel and other color components match, transparency will
-already be in a subset of the reserved field. Not forcing it to match
-reserved bits allows the driver to work on the boards which misreport
-the reserved field. It also enables using simplefb formats that don't
-have transparency bits, although this doesn't currently happen due to
-format support and ordering in linux/platform_data/simplefb.h.
+This depends on: 613b14884b85 ("block: handle bio_split_to_limits() NULL return")
 
-[1] https://review.coreboot.org/plugins/gitiles/coreboot/+/4.19/src/commonlib/include/commonlib/coreboot_tables.h#255
-[2] https://review.coreboot.org/plugins/gitiles/coreboot/+/4.13/src/drivers/intel/fsp2_0/graphics.c#82
-
-Signed-off-by: Alper Nebi Yasak <alpernebiyasak@gmail.com>
-Link: https://lore.kernel.org/r/20230122190433.195941-1-alpernebiyasak@gmail.com
-Cc: Salvatore Bonaccorso <carnil@debian.org>
+Cc: stable@vger.kernel.org # 5.15+
+Fixes: 9cea62b2cbab ("block: don't allow splitting of a REQ_NOWAIT bio")
+Link: https://github.com/axboe/liburing/issues/766
+Reported-and-tested-by: Michael Kelley <mikelley@microsoft.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/google/framebuffer-coreboot.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ block/fops.c |   21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
---- a/drivers/firmware/google/framebuffer-coreboot.c
-+++ b/drivers/firmware/google/framebuffer-coreboot.c
-@@ -43,9 +43,7 @@ static int framebuffer_probe(struct core
- 		    fb->green_mask_pos     == formats[i].green.offset &&
- 		    fb->green_mask_size    == formats[i].green.length &&
- 		    fb->blue_mask_pos      == formats[i].blue.offset &&
--		    fb->blue_mask_size     == formats[i].blue.length &&
--		    fb->reserved_mask_pos  == formats[i].transp.offset &&
--		    fb->reserved_mask_size == formats[i].transp.length)
-+		    fb->blue_mask_size     == formats[i].blue.length)
- 			pdata.format = formats[i].name;
- 	}
- 	if (!pdata.format)
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -221,6 +221,24 @@ static ssize_t __blkdev_direct_IO(struct
+ 			bio_endio(bio);
+ 			break;
+ 		}
++		if (iocb->ki_flags & IOCB_NOWAIT) {
++			/*
++			 * This is nonblocking IO, and we need to allocate
++			 * another bio if we have data left to map. As we
++			 * cannot guarantee that one of the sub bios will not
++			 * fail getting issued FOR NOWAIT and as error results
++			 * are coalesced across all of them, be safe and ask for
++			 * a retry of this from blocking context.
++			 */
++			if (unlikely(iov_iter_count(iter))) {
++				bio_release_pages(bio, false);
++				bio_clear_flag(bio, BIO_REFFED);
++				bio_put(bio);
++				blk_finish_plug(&plug);
++				return -EAGAIN;
++			}
++			bio->bi_opf |= REQ_NOWAIT;
++		}
+ 
+ 		if (is_read) {
+ 			if (dio->flags & DIO_SHOULD_DIRTY)
+@@ -228,9 +246,6 @@ static ssize_t __blkdev_direct_IO(struct
+ 		} else {
+ 			task_io_account_write(bio->bi_iter.bi_size);
+ 		}
+-		if (iocb->ki_flags & IOCB_NOWAIT)
+-			bio->bi_opf |= REQ_NOWAIT;
+-
+ 		dio->size += bio->bi_iter.bi_size;
+ 		pos += bio->bi_iter.bi_size;
+ 
 
 
