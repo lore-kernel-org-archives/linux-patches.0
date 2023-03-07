@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51D4BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F429C433EF;
-	Tue,  7 Mar 2023 18:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAD1BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C34C433EF;
+	Tue,  7 Mar 2023 18:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212306;
-	bh=MWhiQgNujATw0PoR9bSWRV9Y91s/Rl7SOHJwQoD4yQM=;
+	s=korg; t=1678212309;
+	bh=0FUQUf3tFMdapdNJSPv+2g5rn/pSoqfGPS9OJiaNXFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YpU10SRB5FZta55gGgii2YqVCewr1fSqw99m5GHOHPVCpvt19rlAl6XeC/RH0YZn3
-	 Z0m1HzQwWqZuNwkOWS/3Hgj3+uKHzTLWjfdv1KpGs+W7f750hZbcdEHy2lDjV6NT2g
-	 xVArKTRu/fnNKNeWkmNqnISWwWkMWWDeqZQQrcjw=
+	b=d7ZvrFnSTOg5ejgswU+HcE13VO7jHF0B2xEQt3X8r2hlgmMf9ZAM4rwFsgInw8ny0
+	 LNaqmPQww2vD8FUS8NpIQ9nVwsjfPe3x3NGVzsMleH0RK5m8yNR2D+HWb+oEFi4JhH
+	 QG38JXKUQZTMXiQZdidxsGZglUhvl9/nQKIvAF/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Elliott, Robert (Servers)" <elliott@hpe.com>,
-	Zhen Lei <thunder.leizhen@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Josh Don <joshdon@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Elliott
-Subject: [PATCH 6.1 142/885] genirq: Fix the return type of kstat_cpu_irqs_sum()
-Date: Tue,  7 Mar 2023 17:51:16 +0100
-Message-Id: <20230307170008.026734570@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 114/885] wifi: mt76: mt7915: drop always true condition of __mt7915_reg_addr()
+Date: Tue,  7 Mar 2023 17:50:48 +0100
+Message-Id: <20230307170006.836654728@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -42,42 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhen Lei <thunder.leizhen@huawei.com>
+From: Ryder Lee <ryder.lee@mediatek.com>
 
-[ Upstream commit 47904aed898a08f028572b9b5a5cc101ddfb2d82 ]
+[ Upstream commit b0f7b9563358493dfe70d3e4c3ebeffc92d4b494 ]
 
-The type of member ->irqs_sum is unsigned long, but kstat_cpu_irqs_sum()
-returns int, which can result in truncation.  Therefore, change the
-kstat_cpu_irqs_sum() function's return value to unsigned long to avoid
-truncation.
+smatch warnings:
+addr <= MT_CBTOP2_PHY_END(0xffffffff) is always true (<= u32max),
+so drop it.
 
-Fixes: f2c66cd8eedd ("/proc/stat: scalability of irq num per cpu")
-Reported-by: Elliott, Robert (Servers) <elliott@hpe.com>
-Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: "Peter Zijlstra (Intel)" <peterz@infradead.org>
-Cc: Josh Don <joshdon@google.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: cd4c314a65d3 ("mt76: mt7915: refine register definition")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kernel_stat.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mmio.c | 2 +-
+ drivers/net/wireless/mediatek/mt76/mt7915/regs.h | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/linux/kernel_stat.h b/include/linux/kernel_stat.h
-index ddb5a358fd829..90e2fdc17d79f 100644
---- a/include/linux/kernel_stat.h
-+++ b/include/linux/kernel_stat.h
-@@ -75,7 +75,7 @@ extern unsigned int kstat_irqs_usr(unsigned int irq);
- /*
-  * Number of interrupts per cpu, since bootup
-  */
--static inline unsigned int kstat_cpu_irqs_sum(unsigned int cpu)
-+static inline unsigned long kstat_cpu_irqs_sum(unsigned int cpu)
- {
- 	return kstat_cpu(cpu).irqs_sum;
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
+index 7bd5f6725d7b7..bc68ede64ddbb 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
+@@ -436,7 +436,7 @@ static u32 __mt7915_reg_addr(struct mt7915_dev *dev, u32 addr)
+ 
+ 	if (dev_is_pci(dev->mt76.dev) &&
+ 	    ((addr >= MT_CBTOP1_PHY_START && addr <= MT_CBTOP1_PHY_END) ||
+-	     (addr >= MT_CBTOP2_PHY_START && addr <= MT_CBTOP2_PHY_END)))
++	    addr >= MT_CBTOP2_PHY_START))
+ 		return mt7915_reg_map_l1(dev, addr);
+ 
+ 	/* CONN_INFRA: covert to phyiscal addr and use layer 1 remap */
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/regs.h b/drivers/net/wireless/mediatek/mt76/mt7915/regs.h
+index 5920e705835a7..bf569aa0057a7 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/regs.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/regs.h
+@@ -740,7 +740,6 @@ enum offs_rev {
+ #define MT_CBTOP1_PHY_START		0x70000000
+ #define MT_CBTOP1_PHY_END		__REG(CBTOP1_PHY_END)
+ #define MT_CBTOP2_PHY_START		0xf0000000
+-#define MT_CBTOP2_PHY_END		0xffffffff
+ #define MT_INFRA_MCU_START		0x7c000000
+ #define MT_INFRA_MCU_END		__REG(INFRA_MCU_ADDR_END)
+ #define MT_CONN_INFRA_OFFSET(p)		((p) - MT_INFRA_BASE)
 -- 
 2.39.2
 
