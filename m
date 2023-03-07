@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A992DBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:19:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A449C433EF;
-	Tue,  7 Mar 2023 18:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78E0BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:19:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD00C433D2;
+	Tue,  7 Mar 2023 18:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213174;
-	bh=ca7r7Q6TweyqtG6p5YrzFMRKcVtOMxtEpUlJCYdV5uE=;
+	s=korg; t=1678213177;
+	bh=iTw/78BSAVpQZvd+pK66e2spGCGmHFO/fPM0Sq5d/68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGujrlClXmPrNk1AwOliQww5nXHLz2K4oL2bYOumaTgs0QGKV0V9ISIFXlCt4c38+
-	 J8Fxx/22f8zYL0FlgEpqKYpAz6x57eyCSaHIfVFmKw3fKxfhBZmSHMqY/7wk70f1NI
-	 1+aGm54i74yOAPaY2OVj+V2QE6PCtlMud0wV39h4=
+	b=mdEWel26t92MmK2L7bGtcEkGdZo2co7z2fhb9zAH/lvWKCPmeO89qKWKBvK3YT2lF
+	 dtlMce6gdkYfD7iLMbrYwcHEus2G/j1Au0nB2DUD6KyN1fyKxt2cTSdx8B134rTqSZ
+	 5Mgi8jSRJFUZYY2TvdWoCh+woG+gIY96U4pWdOP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 423/885] usb: typec: intel_pmc_mux: Dont leak the ACPI device reference count
-Date: Tue,  7 Mar 2023 17:55:57 +0100
-Message-Id: <20230307170020.793812697@linuxfoundation.org>
+Subject: [PATCH 6.1 406/885] dmaengine: HISI_DMA should depend on ARCH_HISI
+Date: Tue,  7 Mar 2023 17:55:40 +0100
+Message-Id: <20230307170020.045905196@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,39 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit c3194949ae8fcbe2b7e38670e7c6a5cfd2605edc ]
+[ Upstream commit dcca9d045c0852584ad092123c7f6e6526a633b1 ]
 
-When acpi_dev_get_memory_resources() fails, the reference count is
-left bumped. Drop it as it's done in the other error paths.
+The HiSilicon DMA Engine is only present on HiSilicon SoCs.  Hence add a
+dependency on ARCH_HISI, to prevent asking the user about this driver
+when configuring a kernel without HiSilicon SoC support.
 
-Fixes: 43d596e32276 ("usb: typec: intel_pmc_mux: Check the port status before connect")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230102202933.15968-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e9f08b65250d73ab ("dmaengine: hisilicon: Add Kunpeng DMA engine support")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/363a1816d36cd3cf604d88ec90f97c75f604de64.1669044190.git.geert+renesas@glider.be
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/mux/intel_pmc_mux.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/mux/intel_pmc_mux.c b/drivers/usb/typec/mux/intel_pmc_mux.c
-index fdbf3694e21f4..87e2c91306070 100644
---- a/drivers/usb/typec/mux/intel_pmc_mux.c
-+++ b/drivers/usb/typec/mux/intel_pmc_mux.c
-@@ -614,8 +614,10 @@ static int pmc_usb_probe_iom(struct pmc_usb *pmc)
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index 7524b62a8870a..b64ae02c26f8c 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -244,7 +244,7 @@ config FSL_RAID
  
- 	INIT_LIST_HEAD(&resource_list);
- 	ret = acpi_dev_get_memory_resources(adev, &resource_list);
--	if (ret < 0)
-+	if (ret < 0) {
-+		acpi_dev_put(adev);
- 		return ret;
-+	}
- 
- 	rentry = list_first_entry_or_null(&resource_list, struct resource_entry, node);
- 	if (rentry)
+ config HISI_DMA
+ 	tristate "HiSilicon DMA Engine support"
+-	depends on ARM64 || COMPILE_TEST
++	depends on ARCH_HISI || COMPILE_TEST
+ 	depends on PCI_MSI
+ 	select DMA_ENGINE
+ 	select DMA_VIRTUAL_CHANNELS
 -- 
 2.39.2
 
