@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C3ABA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:49:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613CDC433D2;
-	Tue,  7 Mar 2023 17:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317E9BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:49:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E30BC433D2;
+	Tue,  7 Mar 2023 17:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211342;
-	bh=UOWIIVLPcOJm+oyAXP948aROb1ce6Dv0PVEYvTMKTFw=;
+	s=korg; t=1678211346;
+	bh=+M1gEsg3qEIv515pBeyxMHFtrxXp6A5XzXwfNBlR9Zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j1gO5yZFszZkvWHNNQmdH0dKJ9lPxJxI2P+kFGpKphSc4Solmb2l9vyna4X0u1iNI
-	 glmel7J8lxngBeZBY/h6IPO5CBbMBXgDmSnimlEDCpDjlR3G+lXt10TZDAxDGRYTBF
-	 NJio0UnS1YERHEFdfBGjWdeZQyYGGneicZJkLdYU=
+	b=ayuyW1a4AeqVn0puUPO6lGfTmriye8wkvkSK/4ASJXZ2qIEmGn6HekvZQAG/7k6YZ
+	 dIsNSaw+GpGqPPFFpU9VRkr2Ri2LjM9h6eisnnTRQ/zULEBCzRMUxPDKC6mow/Dy4m
+	 EjN46CuHUGtZwbFDXrSfDRTAwAN6hT6+hlxfYGUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Maxim Levitsky <mlevitsk@redhat.com>,
+	Andy Nguyen <theflow@google.com>,
+	Thomas Lendacky <thomas.lendacky@amd.com>,
+	Peter Gonda <pgonda@google.com>,
+	David Rientjes <rientjes@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.2 0824/1001] KVM: x86: Purge "highest ISR" cache when updating APICv state
-Date: Tue,  7 Mar 2023 17:59:56 +0100
-Message-Id: <20230307170057.507724364@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	kvm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 6.2 0833/1001] KVM: SVM: Fix potential overflow in SEVs send|receive_update_data()
+Date: Tue,  7 Mar 2023 18:00:05 +0100
+Message-Id: <20230307170057.940444308@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,58 +40,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Peter Gonda <pgonda@google.com>
 
-commit 97a71c444a147ae41c7d0ab5b3d855d7f762f3ed upstream.
+commit f94f053aa3a5d6ff17951870483d9eb9e13de2e2 upstream.
 
-Purge the "highest ISR" cache when updating APICv state on a vCPU.  The
-cache must not be used when APICv is active as hardware may emulate EOIs
-(and other operations) without exiting to KVM.
+KVM_SEV_SEND_UPDATE_DATA and KVM_SEV_RECEIVE_UPDATE_DATA have an integer
+overflow issue. Params.guest_len and offset are both 32 bits wide, with a
+large params.guest_len the check to confirm a page boundary is not
+crossed can falsely pass:
 
-This fixes a bug where KVM will effectively block IRQs in perpetuity due
-to the "highest ISR" never getting reset if APICv is activated on a vCPU
-while an IRQ is in-service.  Hardware emulates the EOI and KVM never gets
-a chance to update its cache.
+    /* Check if we are crossing the page boundary *
+    offset = params.guest_uaddr & (PAGE_SIZE - 1);
+    if ((params.guest_len + offset > PAGE_SIZE))
 
-Fixes: b26a695a1d78 ("kvm: lapic: Introduce APICv update helper function")
+Add an additional check to confirm that params.guest_len itself is not
+greater than PAGE_SIZE.
+
+Note, this isn't a security concern as overflow can happen if and only if
+params.guest_len is greater than 0xfffff000, and the FW spec says these
+commands fail with lengths greater than 16KB, i.e. the PSP will detect
+KVM's goof.
+
+Fixes: 15fb7de1a7f5 ("KVM: SVM: Add KVM_SEV_RECEIVE_UPDATE_DATA command")
+Fixes: d3d1af85e2c7 ("KVM: SVM: Add KVM_SEND_UPDATE_DATA command")
+Reported-by: Andy Nguyen <theflow@google.com>
+Suggested-by: Thomas Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Peter Gonda <pgonda@google.com>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: kvm@vger.kernel.org
 Cc: stable@vger.kernel.org
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Cc: Maxim Levitsky <mlevitsk@redhat.com>
-Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+Cc: linux-kernel@vger.kernel.org
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/20230207171354.4012821-1-pgonda@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20230106011306.85230-3-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/x86/kvm/svm/sev.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2429,6 +2429,7 @@ void kvm_apic_update_apicv(struct kvm_vc
- 		 */
- 		apic->isr_count = count_vectors(apic->regs + APIC_ISR);
- 	}
-+	apic->highest_isr_cache = -1;
- }
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -1293,7 +1293,7 @@ static int sev_send_update_data(struct k
  
- void kvm_lapic_reset(struct kvm_vcpu *vcpu, bool init_event)
-@@ -2484,7 +2485,6 @@ void kvm_lapic_reset(struct kvm_vcpu *vc
- 		kvm_lapic_set_reg(apic, APIC_TMR + 0x10 * i, 0);
- 	}
- 	kvm_apic_update_apicv(vcpu);
--	apic->highest_isr_cache = -1;
- 	update_divide_count(apic);
- 	atomic_set(&apic->lapic_timer.pending, 0);
+ 	/* Check if we are crossing the page boundary */
+ 	offset = params.guest_uaddr & (PAGE_SIZE - 1);
+-	if ((params.guest_len + offset > PAGE_SIZE))
++	if (params.guest_len > PAGE_SIZE || (params.guest_len + offset) > PAGE_SIZE)
+ 		return -EINVAL;
  
-@@ -2772,7 +2772,6 @@ int kvm_apic_set_state(struct kvm_vcpu *
- 	__start_apic_timer(apic, APIC_TMCCT);
- 	kvm_lapic_set_reg(apic, APIC_TMCCT, 0);
- 	kvm_apic_update_apicv(vcpu);
--	apic->highest_isr_cache = -1;
- 	if (apic->apicv_active) {
- 		static_call_cond(kvm_x86_apicv_post_state_restore)(vcpu);
- 		static_call_cond(kvm_x86_hwapic_irr_update)(vcpu, apic_find_highest_irr(apic));
+ 	/* Pin guest memory */
+@@ -1473,7 +1473,7 @@ static int sev_receive_update_data(struc
+ 
+ 	/* Check if we are crossing the page boundary */
+ 	offset = params.guest_uaddr & (PAGE_SIZE - 1);
+-	if ((params.guest_len + offset > PAGE_SIZE))
++	if (params.guest_len > PAGE_SIZE || (params.guest_len + offset) > PAGE_SIZE)
+ 		return -EINVAL;
+ 
+ 	hdr = psp_copy_user_blob(params.hdr_uaddr, params.hdr_len);
 
 
