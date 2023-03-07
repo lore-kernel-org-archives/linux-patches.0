@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF61BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:30:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE6AC433EF;
-	Tue,  7 Mar 2023 17:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38050BA34
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:30:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79530C433D2;
+	Tue,  7 Mar 2023 17:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210205;
-	bh=zaWjMsi5uzuAx0ISdRQ1V4Jreir8Pb2KUfD1F6bE/AI=;
+	s=korg; t=1678210208;
+	bh=71wvhIOlgngeLbSnX47fS0nbU1QTrb0yd6vU7r9qBsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMkTu+FpD0eMOk1ONYq++k7WtyYEPoNOkto44Sgf3JTAwOiVjLW6C7uPj7nAY0PV4
-	 8zT5Iq0NSu7+lI2tYWduc6dPG5oNSqZMxZHSxGncFtHtRD2h8k5PM2zHGFmB6yCvrI
-	 aCA9quCXJVhpEgeLnCAAofbUP/C1F1ZI0lDWAh3o=
+	b=xe8aIlnR39UsMGp3tG+8+WrJdr18UdV3X2q8w1O7MAFjH02IxpLwTtY92mvTHp01v
+	 FLix5ja1h3dLIX+n4H1fVwb9FpvaZVaEuLrjHbl2vbm4vSgH69YJ+/WGroLn8067vg
+	 AR6NKo9kLU5PS/HiOG2aQaLqNz4IeM85zExgXpYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
 	Ingo Molnar <mingo@kernel.org>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
+	Michael Petlan <mpetlan@redhat.com>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0467/1001] perf intel-pt: Do not try to queue auxtrace data on pipe
-Date: Tue,  7 Mar 2023 17:53:59 +0100
-Message-Id: <20230307170041.656893861@linuxfoundation.org>
+Subject: [PATCH 6.2 0468/1001] perf stat: Hide invalid uncore event output for aggr mode
+Date: Tue,  7 Mar 2023 17:54:00 +0100
+Message-Id: <20230307170041.706783470@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -45,119 +44,134 @@ Content-Transfer-Encoding: 8bit
 
 From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit aeb802f872a7c42e4381f36041e77d1745908255 ]
+[ Upstream commit dd15480a3d67b9cf04a1f6f5d60f1c0dc018e22f ]
 
-When it processes AUXTRACE_INFO, it calls to auxtrace_queue_data() to
-collect AUXTRACE data first.  That won't work with pipe since it needs
-lseek() to read the scattered aux data.
+The current display code for perf stat iterates given cpus and build the
+aggr map to collect the event data for the aggregation mode.
 
-  $ perf record -o- -e intel_pt// true | perf report -i- --itrace=i100
-  # To display the perf.data header info, please use --header/--header-only options.
-  #
-  0x4118 [0xa0]: failed to process type: 70
-  Error:
-  failed to process sample
+But uncore events have their own cpu maps and it won't guarantee that
+it'd match to the aggr map.  For example, per-package uncore events
+would generate a single value for each socket.  When user asks per-core
+aggregation mode, the output would contain 0 values for other cores.
 
-For the pipe mode, it can handle the aux data as it gets.  But there's
-no guarantee it can get the aux data in time.  So the following warning
-will be shown at the beginning:
+Thus it needs to check the uncore PMU's cpumask and if it matches to the
+current aggregation id.
 
-  WARNING: Intel PT with pipe mode is not recommended.
-           The output cannot relied upon.  In particular,
-           time stamps and the order of events may be incorrect.
+Before:
+  $ sudo ./perf stat -a --per-core -e power/energy-pkg/ sleep 1
 
-Fixes: dbd134322e74f19d ("perf intel-pt: Add support for decoding AUX area samples")
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: James Clark <james.clark@arm.com>
+   Performance counter stats for 'system wide':
+
+  S0-D0-C0              1               3.73 Joules power/energy-pkg/
+  S0-D0-C1              0      <not counted> Joules power/energy-pkg/
+  S0-D0-C2              0      <not counted> Joules power/energy-pkg/
+  S0-D0-C3              0      <not counted> Joules power/energy-pkg/
+
+         1.001404046 seconds time elapsed
+
+  Some events weren't counted. Try disabling the NMI watchdog:
+  	echo 0 > /proc/sys/kernel/nmi_watchdog
+  	perf stat ...
+  	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+The core 1, 2 and 3 should not be printed because the event is handled
+in a cpu in the core 0 only.  With this change, the output becomes like
+below.
+
+After:
+  $ sudo ./perf stat -a --per-core -e power/energy-pkg/ sleep 1
+
+   Performance counter stats for 'system wide':
+
+  S0-D0-C0              1               2.09 Joules power/energy-pkg/
+
+Fixes: b897613510890d6e ("perf stat: Update event skip condition for system-wide per-thread mode and merged uncore and hybrid events")
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Ian Rogers <irogers@google.com>
+Acked-by: Ian Rogers <irogers@google.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
 Cc: Ingo Molnar <mingo@kernel.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Michael Petlan <mpetlan@redhat.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Stephane Eranian <eranian@google.com>
-Link: https://lore.kernel.org/r/20230131023350.1903992-3-namhyung@kernel.org
+Link: https://lore.kernel.org/r/20230125192431.2929677-1-namhyung@kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Documentation/perf-intel-pt.txt | 30 ++++++++++++++++++++++
- tools/perf/util/auxtrace.c                 |  3 +++
- tools/perf/util/intel-pt.c                 |  6 +++++
- 3 files changed, 39 insertions(+)
+ tools/perf/util/stat-display.c | 51 ++++++++++++++++++++++++++++++----
+ 1 file changed, 46 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/Documentation/perf-intel-pt.txt b/tools/perf/Documentation/perf-intel-pt.txt
-index 7b6ccd2fa3bf1..9d485a9cdb198 100644
---- a/tools/perf/Documentation/perf-intel-pt.txt
-+++ b/tools/perf/Documentation/perf-intel-pt.txt
-@@ -1821,6 +1821,36 @@ Can be compiled and traced:
-  $
+diff --git a/tools/perf/util/stat-display.c b/tools/perf/util/stat-display.c
+index 8bd8b0142630c..1b5cb20efd237 100644
+--- a/tools/perf/util/stat-display.c
++++ b/tools/perf/util/stat-display.c
+@@ -787,6 +787,51 @@ static void uniquify_counter(struct perf_stat_config *config, struct evsel *coun
+ 		uniquify_event_name(counter);
+ }
  
- 
-+Pipe mode
-+---------
-+Pipe mode is a problem for Intel PT and possibly other auxtrace users.
-+It's not recommended to use a pipe as data output with Intel PT because
-+of the following reason.
++/**
++ * should_skip_zero_count() - Check if the event should print 0 values.
++ * @config: The perf stat configuration (including aggregation mode).
++ * @counter: The evsel with its associated cpumap.
++ * @id: The aggregation id that is being queried.
++ *
++ * Due to mismatch between the event cpumap or thread-map and the
++ * aggregation mode, sometimes it'd iterate the counter with the map
++ * which does not contain any values.
++ *
++ * For example, uncore events have dedicated CPUs to manage them,
++ * result for other CPUs should be zero and skipped.
++ *
++ * Return: %true if the value should NOT be printed, %false if the value
++ * needs to be printed like "<not counted>" or "<not supported>".
++ */
++static bool should_skip_zero_counter(struct perf_stat_config *config,
++				     struct evsel *counter,
++				     const struct aggr_cpu_id *id)
++{
++	struct perf_cpu cpu;
++	int idx;
 +
-+Essentially the auxtrace buffers do not behave like the regular perf
-+event buffers.  That is because the head and tail are updated by
-+software, but in the auxtrace case the data is written by hardware.
-+So the head and tail do not get updated as data is written.
++	/*
++	 * Skip value 0 when enabling --per-thread globally,
++	 * otherwise it will have too many 0 output.
++	 */
++	if (config->aggr_mode == AGGR_THREAD && config->system_wide)
++		return true;
++	/*
++	 * Skip value 0 when it's an uncore event and the given aggr id
++	 * does not belong to the PMU cpumask.
++	 */
++	if (!counter->pmu || !counter->pmu->is_uncore)
++		return false;
 +
-+In the Intel PT case, the head and tail are updated only when the trace
-+is disabled by software, for example:
-+    - full-trace, system wide : when buffer passes watermark
-+    - full-trace, not system-wide : when buffer passes watermark or
-+                                    context switches
-+    - snapshot mode : as above but also when a snapshot is made
-+    - sample mode : as above but also when a sample is made
++	perf_cpu_map__for_each_cpu(cpu, idx, counter->pmu->cpus) {
++		struct aggr_cpu_id own_id = config->aggr_get_id(config, cpu);
 +
-+That means finished-round ordering doesn't work.  An auxtrace buffer
-+can turn up that has data that extends back in time, possibly to the
-+very beginning of tracing.
-+
-+For a perf.data file, that problem is solved by going through the trace
-+and queuing up the auxtrace buffers in advance.
-+
-+For pipe mode, the order of events and timestamps can presumably
-+be messed up.
-+
-+
- EXAMPLE
- -------
- 
-diff --git a/tools/perf/util/auxtrace.c b/tools/perf/util/auxtrace.c
-index c2e323cd7d496..d4b04fa07a119 100644
---- a/tools/perf/util/auxtrace.c
-+++ b/tools/perf/util/auxtrace.c
-@@ -1133,6 +1133,9 @@ int auxtrace_queue_data(struct perf_session *session, bool samples, bool events)
- 	if (auxtrace__dont_decode(session))
- 		return 0;
- 
-+	if (perf_data__is_pipe(session->data))
-+		return 0;
-+
- 	if (!session->auxtrace || !session->auxtrace->queue_data)
- 		return -EINVAL;
- 
-diff --git a/tools/perf/util/intel-pt.c b/tools/perf/util/intel-pt.c
-index 6d3921627e332..b8b29756fbf13 100644
---- a/tools/perf/util/intel-pt.c
-+++ b/tools/perf/util/intel-pt.c
-@@ -4379,6 +4379,12 @@ int intel_pt_process_auxtrace_info(union perf_event *event,
- 
- 	intel_pt_setup_pebs_events(pt);
- 
-+	if (perf_data__is_pipe(session->data)) {
-+		pr_warning("WARNING: Intel PT with pipe mode is not recommended.\n"
-+			   "         The output cannot relied upon.  In particular,\n"
-+			   "         timestamps and the order of events may be incorrect.\n");
++		if (aggr_cpu_id__equal(id, &own_id))
++			return false;
 +	}
++	return true;
++}
 +
- 	if (pt->sampling_mode || list_empty(&session->auxtrace_index))
- 		err = auxtrace_queue_data(session, true, true);
- 	else
+ static void print_counter_aggrdata(struct perf_stat_config *config,
+ 				   struct evsel *counter, int s,
+ 				   struct outstate *os)
+@@ -814,11 +859,7 @@ static void print_counter_aggrdata(struct perf_stat_config *config,
+ 	ena = aggr->counts.ena;
+ 	run = aggr->counts.run;
+ 
+-	/*
+-	 * Skip value 0 when enabling --per-thread globally, otherwise it will
+-	 * have too many 0 output.
+-	 */
+-	if (val == 0 && config->aggr_mode == AGGR_THREAD && config->system_wide)
++	if (val == 0 && should_skip_zero_counter(config, counter, &id))
+ 		return;
+ 
+ 	if (!metric_only) {
 -- 
 2.39.2
 
