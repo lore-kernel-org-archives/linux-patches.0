@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1923BBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8466EC433D2;
-	Tue,  7 Mar 2023 18:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A15FBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:48:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A404C433D2;
+	Tue,  7 Mar 2023 18:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214885;
-	bh=zGHRFoAzOqbZoTr8Eb9g8FmawEQ02ZQvdjQ+SCzP5lI=;
+	s=korg; t=1678214888;
+	bh=AXCtGMctU/XFryPGZCsFCx2g+Os1Gkk1oR/UtSK7V+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b0oiTfjw5qQGSJG0B2zTcErw1kgJtGANi5lyocjz7dJXvwnbXjKvtEKQgu5PUlRsY
-	 sTXLMxlwPty4IGOUaqyeRZQp2eQwrKhPwld7TUEtKApwA/QKjJpKtS9batt6We2AhZ
-	 ayB959i5v9RpKuKSsdr5CVmQSZdOm4Uq9MgKLDgM=
+	b=wQMpn75nwuWTgwIahH3iqSlmluI+6JFMvcHPlX26NJxsBeWtVwQWHIMq1suCS1WZq
+	 H6qXmSWbraIJ8eGNWFFhKJQrSnSPAHmBvuMpasgqkiR14wCrhjdj8hCuGfcnVoL4AW
+	 9t5GjGNRmIPkRc2HTdCMQhXaRJR2miQfefZiYKmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 081/567] wifi: libertas: if_usb: dont call kfree_skb() under spin_lock_irqsave()
-Date: Tue,  7 Mar 2023 17:56:57 +0100
-Message-Id: <20230307165909.386020083@linuxfoundation.org>
+Subject: [PATCH 5.15 055/567] blk-mq: remove stale comment for blk_mq_sched_mark_restart_hctx
+Date: Tue,  7 Mar 2023 17:56:31 +0100
+Message-Id: <20230307165908.302619399@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,37 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 3968e81ba644f10a7d45bae2539560db9edac501 ]
+[ Upstream commit c31e76bcc379182fe67a82c618493b7b8868c672 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So replace kfree_skb()
-with dev_kfree_skb_irq() under spin_lock_irqsave(). Compile
-tested only.
+Commit 97889f9ac24f8 ("blk-mq: remove synchronize_rcu() from
+blk_mq_del_queue_tag_set()") remove handle of TAG_SHARED in restart,
+then shared_hctx_restart counted for how many hardware queues are marked
+for restart is removed too.
+Remove the stale comment that we still count hardware queues need restart.
 
-Fixes: a3128feef6d5 ("libertas: use irqsave() in USB's complete callback")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221207150008.111743-3-yangyingliang@huawei.com
+Fixes: 97889f9ac24f ("blk-mq: remove synchronize_rcu() from blk_mq_del_queue_tag_set()")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas/if_usb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-mq-sched.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/libertas/if_usb.c b/drivers/net/wireless/marvell/libertas/if_usb.c
-index 32fdc4150b605..2240b4db8c036 100644
---- a/drivers/net/wireless/marvell/libertas/if_usb.c
-+++ b/drivers/net/wireless/marvell/libertas/if_usb.c
-@@ -637,7 +637,7 @@ static inline void process_cmdrequest(int recvlength, uint8_t *recvbuff,
- 	priv->resp_len[i] = (recvlength - MESSAGE_HEADER_LEN);
- 	memcpy(priv->resp_buf[i], recvbuff + MESSAGE_HEADER_LEN,
- 		priv->resp_len[i]);
--	kfree_skb(skb);
-+	dev_kfree_skb_irq(skb);
- 	lbs_notify_command_response(priv, i);
+diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
+index 35770e33c817a..de45a28925d83 100644
+--- a/block/blk-mq-sched.c
++++ b/block/blk-mq-sched.c
+@@ -45,8 +45,7 @@ void blk_mq_sched_assign_ioc(struct request *rq)
+ }
  
- 	spin_unlock_irqrestore(&priv->driver_lock, flags);
+ /*
+- * Mark a hardware queue as needing a restart. For shared queues, maintain
+- * a count of how many hardware queues are marked for restart.
++ * Mark a hardware queue as needing a restart.
+  */
+ void blk_mq_sched_mark_restart_hctx(struct blk_mq_hw_ctx *hctx)
+ {
 -- 
 2.39.2
 
