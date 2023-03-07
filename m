@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BD6BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:40:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0C6C4339E;
-	Tue,  7 Mar 2023 17:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF15DBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:40:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58CA1C433D2;
+	Tue,  7 Mar 2023 17:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210829;
-	bh=MUriy0Aq8bDuK/sfBTMpGV4KMRXL3dxl6eDkYtPsB50=;
+	s=korg; t=1678210832;
+	bh=8GXMsI33074mvs1DqZXOwtkzqHwP4h5cKFOuCVr6Yig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l2sAOf6IW7BcXjEjLZgBJzlfNtsKUcVAXojgKaXRG5F8Blg81vCtTXNCdevE8fUT6
-	 O9LyyxWnYQiWjR425fFjnG6S6iBw6nUxRxPm5MUeJTMXqMYK5f+Mgl/NaMvyvIxFkr
-	 NuPPXvdA6cZG416gfsUV/Fjp1WIp3ctP9GbTXQHA=
+	b=GwmvLOiXKBcHuiSH9mS2QpxZT+pQYkWv0zAEAYv3uMVqJxInJxIDq6CiTCOU135b8
+	 riGwDBQxueaUZ9ke/ydTbb016p+gZlAS5bRe1ISiz1BSDziGnuQQVnxOAvanjGAweV
+	 2Sh64pZ6tvSnWfyL9aOsKvWOf7tGCe3/oueJJFeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0668/1001] platform/x86: dell-ddv: Add support for interface version 3
-Date: Tue,  7 Mar 2023 17:57:20 +0100
-Message-Id: <20230307170050.600768569@linuxfoundation.org>
+Subject: [PATCH 6.2 0669/1001] wifi: mt76: dma: free rx_head in mt76_dma_rx_cleanup
+Date: Tue,  7 Mar 2023 17:57:21 +0100
+Message-Id: <20230307170050.640140461@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,56 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 3e899fec5dfce37701d49d656954a825275bf867 ]
+[ Upstream commit 1b88b47e898edef0e56e3a2f4e49f052a136153d ]
 
-While trying to solve a bugreport on bugzilla, i learned that
-some devices (for example the Dell XPS 17 9710) provide a more
-recent DDV WMI interface (version 3).
-Since the new interface version just adds an additional method,
-no code changes are necessary apart from whitelisting the version.
+Free rx_head skb in mt76_dma_rx_cleanup routine in order to avoid
+possible memory leak at module unload.
 
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20230126194021.381092-2-W_Armin@gmx.de
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-wmi-ddv.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/dma.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/platform/x86/dell/dell-wmi-ddv.c b/drivers/platform/x86/dell/dell-wmi-ddv.c
-index 2bb449845d143..9cb6ae42dbdc8 100644
---- a/drivers/platform/x86/dell/dell-wmi-ddv.c
-+++ b/drivers/platform/x86/dell/dell-wmi-ddv.c
-@@ -26,7 +26,8 @@
+diff --git a/drivers/net/wireless/mediatek/mt76/dma.c b/drivers/net/wireless/mediatek/mt76/dma.c
+index dee4449de9082..d147dc698c9db 100644
+--- a/drivers/net/wireless/mediatek/mt76/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/dma.c
+@@ -737,6 +737,7 @@ mt76_dma_rx_cleanup(struct mt76_dev *dev, struct mt76_queue *q)
+ 		return;
  
- #define DRIVER_NAME	"dell-wmi-ddv"
+ 	spin_lock_bh(&q->lock);
++
+ 	do {
+ 		buf = mt76_dma_dequeue(dev, q, true, NULL, NULL, &more, NULL);
+ 		if (!buf)
+@@ -744,6 +745,12 @@ mt76_dma_rx_cleanup(struct mt76_dev *dev, struct mt76_queue *q)
  
--#define DELL_DDV_SUPPORTED_INTERFACE 2
-+#define DELL_DDV_SUPPORTED_VERSION_MIN	2
-+#define DELL_DDV_SUPPORTED_VERSION_MAX	3
- #define DELL_DDV_GUID	"8A42EA14-4F2A-FD45-6422-0087F7A7E608"
+ 		skb_free_frag(buf);
+ 	} while (1);
++
++	if (q->rx_head) {
++		dev_kfree_skb(q->rx_head);
++		q->rx_head = NULL;
++	}
++
+ 	spin_unlock_bh(&q->lock);
  
- #define DELL_EPPID_LENGTH	20
-@@ -49,6 +50,7 @@ enum dell_ddv_method {
- 	DELL_DDV_BATTERY_RAW_ANALYTICS_START	= 0x0E,
- 	DELL_DDV_BATTERY_RAW_ANALYTICS		= 0x0F,
- 	DELL_DDV_BATTERY_DESIGN_VOLTAGE		= 0x10,
-+	DELL_DDV_BATTERY_RAW_ANALYTICS_A_BLOCK	= 0x11, /* version 3 */
+ 	if (!q->rx_page.va)
+@@ -769,12 +776,6 @@ mt76_dma_rx_reset(struct mt76_dev *dev, enum mt76_rxq_id qid)
+ 	mt76_dma_rx_cleanup(dev, q);
+ 	mt76_dma_sync_idx(dev, q);
+ 	mt76_dma_rx_fill(dev, q);
+-
+-	if (!q->rx_head)
+-		return;
+-
+-	dev_kfree_skb(q->rx_head);
+-	q->rx_head = NULL;
+ }
  
- 	DELL_DDV_INTERFACE_VERSION		= 0x12,
- 
-@@ -340,7 +342,7 @@ static int dell_wmi_ddv_probe(struct wmi_device *wdev, const void *context)
- 		return ret;
- 
- 	dev_dbg(&wdev->dev, "WMI interface version: %d\n", version);
--	if (version != DELL_DDV_SUPPORTED_INTERFACE)
-+	if (version < DELL_DDV_SUPPORTED_VERSION_MIN || version > DELL_DDV_SUPPORTED_VERSION_MAX)
- 		return -ENODEV;
- 
- 	data = devm_kzalloc(&wdev->dev, sizeof(*data), GFP_KERNEL);
+ static void
 -- 
 2.39.2
 
