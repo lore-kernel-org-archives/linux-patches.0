@@ -1,29 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A2CBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:19:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB316C433D2;
-	Tue,  7 Mar 2023 17:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C449BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:19:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05CFC4339B;
+	Tue,  7 Mar 2023 17:19:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209561;
-	bh=0wdxBqjs4Evg2/qMTg+rUeZAjkOMlookhVWkA7DrCQU=;
+	s=korg; t=1678209564;
+	bh=4wcmjOK3au9c7YzgOC3bkT1t8nJpoFaFDjWP1hCHNd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c93sb4VHz1PYyq0rAEaKzYWX4+EK7CkRl+sHg02B73lanN59OXaZbZi/A312bET8C
-	 AfSMXjTvxpecvEPYzKoxrSyTm59uANfKNrqaKsuSWZX4L4QpkeJrr6esedO0cx/4Xb
-	 xDclWsYs0xQzzOblv/7NYGW4lXVNbXHYMSY/HbHQ=
+	b=L47y4j+KYbU8LnYFNSp8v4rLx78dyGttBEaD57W94DuFBL7+WWOvHb25kWefqeL4m
+	 GvJjw3MSMIfiOIEG0r4maEGEVVyq0kx5/m0NLS1u6vCdpUI/W9Lg/sD2jYu6jDjcOR
+	 7thko4Y4lQRaip/R8MR7MwUKCkjt732Ss+WwH21g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Lee Jones <lee@kernel.org>,
+	coverity-bot <keescook+coverity-bot@chromium.org>,
+	Lyude Paul <lyude@redhat.com>,
+	Ben Skeggs <bskeggs@redhat.com>,
+	Karol Herbst <kherbst@redhat.com>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Dave Airlie <airlied@redhat.com>,
+	"Gustavo A. R. Silva" <gustavo@embeddedor.com>,
+	dri-devel@lists.freedesktop.org,
+	nouveau@lists.freedesktop.org,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0227/1001] leds: led-class: Add missing put_device() to led_put()
-Date: Tue,  7 Mar 2023 17:49:59 +0100
-Message-Id: <20230307170031.732438116@linuxfoundation.org>
+Subject: [PATCH 6.2 0228/1001] drm/nouveau/disp: Fix nvif_outp_acquire_dp() argument size
+Date: Tue,  7 Mar 2023 17:50:00 +0100
+Message-Id: <20230307170031.764563907@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,56 +44,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 445110941eb94709216363f9d807d2508e64abd7 ]
+[ Upstream commit 4076ea2419cf15bc1e1580f8b24ddf675fbdb02c ]
 
-led_put() is used to "undo" a successful of_led_get() call,
-of_led_get() uses class_find_device_by_of_node() which returns
-a reference to the device which must be free-ed with put_device()
-when the caller is done with it.
+Both Coverity and GCC with -Wstringop-overflow noticed that
+nvif_outp_acquire_dp() accidentally defined its second argument with 1
+additional element:
 
-Add a put_device() call to led_put() to free the reference returned
-by class_find_device_by_of_node().
+drivers/gpu/drm/nouveau/dispnv50/disp.c: In function 'nv50_pior_atomic_enable':
+drivers/gpu/drm/nouveau/dispnv50/disp.c:1813:17: error: 'nvif_outp_acquire_dp' accessing 16 bytes in a region of size 15 [-Werror=stringop-overflow=]
+ 1813 |                 nvif_outp_acquire_dp(&nv_encoder->outp, nv_encoder->dp.dpcd, 0, 0, false, false);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/nouveau/dispnv50/disp.c:1813:17: note: referencing argument 2 of type 'u8[16]' {aka 'unsigned char[16]'}
+drivers/gpu/drm/nouveau/include/nvif/outp.h:24:5: note: in a call to function 'nvif_outp_acquire_dp'
+   24 | int nvif_outp_acquire_dp(struct nvif_outp *, u8 dpcd[16],
+      |     ^~~~~~~~~~~~~~~~~~~~
 
-And also add a put_device() in the error-exit case of try_module_get()
-failing.
+Avoid these warnings by defining the argument size using the matching
+define (DP_RECEIVER_CAP_SIZE, 15) instead of having it be a literal
+(and incorrect) value (16).
 
-Fixes: 699a8c7c4bd3 ("leds: Add of_led_get() and led_put()")
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230120114524.408368-2-hdegoede@redhat.com
+Reported-by: coverity-bot <keescook+coverity-bot@chromium.org>
+Addresses-Coverity-ID: 1527269 ("Memory - corruptions")
+Addresses-Coverity-ID: 1527268 ("Memory - corruptions")
+Link: https://lore.kernel.org/lkml/202211100848.FFBA2432@keescook/
+Link: https://lore.kernel.org/lkml/202211100848.F4C2819BB@keescook/
+Fixes: 813443721331 ("drm/nouveau/disp: move DP link config into acquire")
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Cc: Ben Skeggs <bskeggs@redhat.com>
+Cc: Karol Herbst <kherbst@redhat.com>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: nouveau@lists.freedesktop.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221127183036.never.139-kees@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/led-class.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/include/nvif/outp.h | 3 ++-
+ drivers/gpu/drm/nouveau/nvif/outp.c         | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
-index 6a8ea94834fa3..7391d2cf1370a 100644
---- a/drivers/leds/led-class.c
-+++ b/drivers/leds/led-class.c
-@@ -241,8 +241,10 @@ struct led_classdev *of_led_get(struct device_node *np, int index)
+diff --git a/drivers/gpu/drm/nouveau/include/nvif/outp.h b/drivers/gpu/drm/nouveau/include/nvif/outp.h
+index 45daadec3c0c7..fa76a7b5e4b37 100644
+--- a/drivers/gpu/drm/nouveau/include/nvif/outp.h
++++ b/drivers/gpu/drm/nouveau/include/nvif/outp.h
+@@ -3,6 +3,7 @@
+ #define __NVIF_OUTP_H__
+ #include <nvif/object.h>
+ #include <nvif/if0012.h>
++#include <drm/display/drm_dp.h>
+ struct nvif_disp;
  
- 	led_cdev = dev_get_drvdata(led_dev);
- 
--	if (!try_module_get(led_cdev->dev->parent->driver->owner))
-+	if (!try_module_get(led_cdev->dev->parent->driver->owner)) {
-+		put_device(led_cdev->dev);
- 		return ERR_PTR(-ENODEV);
-+	}
- 
- 	return led_cdev;
+ struct nvif_outp {
+@@ -21,7 +22,7 @@ int nvif_outp_acquire_rgb_crt(struct nvif_outp *);
+ int nvif_outp_acquire_tmds(struct nvif_outp *, int head,
+ 			   bool hdmi, u8 max_ac_packet, u8 rekey, u8 scdc, bool hda);
+ int nvif_outp_acquire_lvds(struct nvif_outp *, bool dual, bool bpc8);
+-int nvif_outp_acquire_dp(struct nvif_outp *, u8 dpcd[16],
++int nvif_outp_acquire_dp(struct nvif_outp *outp, u8 dpcd[DP_RECEIVER_CAP_SIZE],
+ 			 int link_nr, int link_bw, bool hda, bool mst);
+ void nvif_outp_release(struct nvif_outp *);
+ int nvif_outp_infoframe(struct nvif_outp *, u8 type, struct nvif_outp_infoframe_v0 *, u32 size);
+diff --git a/drivers/gpu/drm/nouveau/nvif/outp.c b/drivers/gpu/drm/nouveau/nvif/outp.c
+index 7da39f1eae9fb..c24bc5eae3ecf 100644
+--- a/drivers/gpu/drm/nouveau/nvif/outp.c
++++ b/drivers/gpu/drm/nouveau/nvif/outp.c
+@@ -127,7 +127,7 @@ nvif_outp_acquire(struct nvif_outp *outp, u8 proto, struct nvif_outp_acquire_v0
  }
-@@ -255,6 +257,7 @@ EXPORT_SYMBOL_GPL(of_led_get);
- void led_put(struct led_classdev *led_cdev)
+ 
+ int
+-nvif_outp_acquire_dp(struct nvif_outp *outp, u8 dpcd[16],
++nvif_outp_acquire_dp(struct nvif_outp *outp, u8 dpcd[DP_RECEIVER_CAP_SIZE],
+ 		     int link_nr, int link_bw, bool hda, bool mst)
  {
- 	module_put(led_cdev->dev->parent->driver->owner);
-+	put_device(led_cdev->dev);
- }
- EXPORT_SYMBOL_GPL(led_put);
- 
+ 	struct nvif_outp_acquire_v0 args;
 -- 
 2.39.2
 
