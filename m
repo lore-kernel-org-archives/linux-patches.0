@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28C8BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:55:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4ADC4339B;
-	Tue,  7 Mar 2023 17:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12F7BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:55:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B968C433A1;
+	Tue,  7 Mar 2023 17:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211744;
-	bh=tzuj+z3Qq9SQeqRXsldGGxyi89cETHASy7zcPZ+JPFA=;
+	s=korg; t=1678211747;
+	bh=EvoJwXMHnUZUJHQOXHrAX9QKKcvmvLYb6Sj/YgUHLdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XnRT+T4+fW8KlDJqPdrzZ9DR9DkJD0OlKb/hSGK8MX6NPGor6Y/1HbNd5mwbpS6YE
-	 bKVfWLh/vjomZYbkrjO562/Ebo1/NYAQY0ABVN0fgT41rF5flwfTjMSXbOmeAXgeLX
-	 QIFdUwCASzYrYi7tcVwFwup/90rMcpT06HPwy+fM=
+	b=hg5Of7mb9tVCDItHlDSv4b2/MMslOEjBHuoqMJW6tPW/hCYLSI0QvzWezCBDZni2h
+	 EUPC7Rw9R9AmJ2SRlUoGuexDucgUttKhPw03XfP/XO+FarnNiUsPoCrSyyJl3MBfQ2
+	 9kNZHtZtn+bsIOLHULbthGiqIDJlaL1iTNHUzBdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.2 0931/1001] ceph: update the time stamps and try to drop the suid/sgid
-Date: Tue,  7 Mar 2023 18:01:43 +0100
-Message-Id: <20230307170102.492999568@linuxfoundation.org>
+	Matthias Kaehlcke <mka@chromium.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.2 0932/1001] regulator: core: Use ktime_get_boottime() to determine how long a regulator was off
+Date: Tue,  7 Mar 2023 18:01:44 +0100
+Message-Id: <20230307170102.540934421@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,61 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Matthias Kaehlcke <mka@chromium.org>
 
-commit e027253c4b77d395798600a90b6a96fe4adf4d5e upstream.
+commit 80d2c29e09e663761c2778167a625b25ffe01b6f upstream.
 
-The fallocate will try to clear the suid/sgid if a unprevileged user
-changed the file.
+For regulators with 'off-on-delay-us' the regulator framework currently
+uses ktime_get() to determine how long the regulator has been off
+before re-enabling it (after a delay if needed). A problem with using
+ktime_get() is that it doesn't account for the time the system is
+suspended. As a result a regulator with a longer 'off-on-delay' (e.g.
+500ms) that was switched off during suspend might still incurr in a
+delay on resume before it is re-enabled, even though the regulator
+might have been off for hours. ktime_get_boottime() accounts for
+suspend time, use it instead of ktime_get().
 
-There is no POSIX item requires that we should clear the suid/sgid
-in fallocate code path but this is the default behaviour for most of
-the filesystems and the VFS layer. And also the same for the write
-code path, which have already support it.
-
-And also we need to update the time stamps since the fallocate will
-change the file contents.
-
-Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/58054
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: a8ce7bd89689 ("regulator: core: Fix off_on_delay handling")
+Cc: stable@vger.kernel.org    # 5.13+
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/20230223003301.v2.1.I9719661b8eb0a73b8c416f9c26cf5bd8c0563f99@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/file.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/regulator/core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/ceph/file.c
-+++ b/fs/ceph/file.c
-@@ -2102,6 +2102,9 @@ static long ceph_fallocate(struct file *
- 	loff_t endoff = 0;
- 	loff_t size;
- 
-+	dout("%s %p %llx.%llx mode %x, offset %llu length %llu\n", __func__,
-+	     inode, ceph_vinop(inode), mode, offset, length);
-+
- 	if (mode != (FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE))
- 		return -EOPNOTSUPP;
- 
-@@ -2136,6 +2139,10 @@ static long ceph_fallocate(struct file *
- 	if (ret < 0)
- 		goto unlock;
- 
-+	ret = file_modified(file);
-+	if (ret)
-+		goto put_caps;
-+
- 	filemap_invalidate_lock(inode->i_mapping);
- 	ceph_fscache_invalidate(inode, false);
- 	ceph_zero_pagecache_range(inode, offset, length);
-@@ -2151,6 +2158,7 @@ static long ceph_fallocate(struct file *
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1584,7 +1584,7 @@ static int set_machine_constraints(struc
  	}
- 	filemap_invalidate_unlock(inode->i_mapping);
  
-+put_caps:
- 	ceph_put_cap_refs(ci, got);
- unlock:
- 	inode_unlock(inode);
+ 	if (rdev->desc->off_on_delay)
+-		rdev->last_off = ktime_get();
++		rdev->last_off = ktime_get_boottime();
+ 
+ 	/* If the constraints say the regulator should be on at this point
+ 	 * and we have control then make sure it is enabled.
+@@ -2673,7 +2673,7 @@ static int _regulator_do_enable(struct r
+ 		 * this regulator was disabled.
+ 		 */
+ 		ktime_t end = ktime_add_us(rdev->last_off, rdev->desc->off_on_delay);
+-		s64 remaining = ktime_us_delta(end, ktime_get());
++		s64 remaining = ktime_us_delta(end, ktime_get_boottime());
+ 
+ 		if (remaining > 0)
+ 			_regulator_delay_helper(remaining);
+@@ -2912,7 +2912,7 @@ static int _regulator_do_disable(struct
+ 	}
+ 
+ 	if (rdev->desc->off_on_delay)
+-		rdev->last_off = ktime_get();
++		rdev->last_off = ktime_get_boottime();
+ 
+ 	trace_regulator_disable_complete(rdev_get_name(rdev));
+ 
 
 
