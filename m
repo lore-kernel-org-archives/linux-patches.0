@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1886FBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922EDC433D2;
-	Tue,  7 Mar 2023 17:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB81BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:43:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725D3C433EF;
+	Tue,  7 Mar 2023 17:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211009;
-	bh=7pcQKjnYXqWQSypu+vZwn5kDD4FPO2Z05CoGPXsuXK8=;
+	s=korg; t=1678211013;
+	bh=8MdZYRTAeXAAInhvc+0S+4dqDnR4N96Gz+eomeDyBg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xamt8t8ogT4TFfR0MNJF9IfozmihdXE8EuURt4HYzJbwRDVj5v0Tu2th7VNB4qZ84
-	 ylR/Zc0Ez6YoWkm9aCOCB9sDAObDSpIawcjxwoQv02crP2QuP6RQKn7AYmrab+/baS
-	 4DxYSksNYL01D7grVlJcTb0/gYHkLoNfLsdV4sjw=
+	b=QR9hBjc2UkGMEoULOFAl/ma1HPrMQJVMfDqw4kLAaTKXYwBqXjWzcvdQxhCvYoTww
+	 G0TH+19Z7sn+G7YwxSU7HFb9dDaBEz+SBjicjnFgLP2D1QY5ELKll3TnP7XZQ54UoC
+	 G1C91ZhpmN7q90gn7DNj77RppkHTwD1Nfr5mZ27Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Syed Hassan <Syed.Hassan@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Liwei Song <liwei.song@windriver.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0694/1001] drm/amd/display: Defer DIG FIFO disable after VID stream enable
-Date: Tue,  7 Mar 2023 17:57:46 +0100
-Message-Id: <20230307170051.735253825@linuxfoundation.org>
+Subject: [PATCH 6.2 0695/1001] drm/radeon: free iio for atombios when driver shutdown
+Date: Tue,  7 Mar 2023 17:57:47 +0100
+Message-Id: <20230307170051.785023018@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,49 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Liwei Song <liwei.song@windriver.com>
 
-[ Upstream commit 2d90a1c054831338d57b39aec4d273cf3e867590 ]
+[ Upstream commit 4773fadedca918faec443daaca5e4ea1c0ced144 ]
 
-[Why]
-On some monitors we see a brief flash of corruption during the
-monitor disable sequence caused by FIFO being disabled in the middle
-of an active DP stream.
+Fix below kmemleak when unload radeon driver:
 
-[How]
-Wait until DP vid stream is disabled before turning off the FIFO.
+unreferenced object 0xffff9f8608ede200 (size 512):
+  comm "systemd-udevd", pid 326, jiffies 4294682822 (age 716.338s)
+  hex dump (first 32 bytes):
+    00 00 00 00 c4 aa ec aa 14 ab 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<0000000062fadebe>] kmem_cache_alloc_trace+0x2f1/0x500
+    [<00000000b6883cea>] atom_parse+0x117/0x230 [radeon]
+    [<00000000158c23fd>] radeon_atombios_init+0xab/0x170 [radeon]
+    [<00000000683f672e>] si_init+0x57/0x750 [radeon]
+    [<00000000566cc31f>] radeon_device_init+0x559/0x9c0 [radeon]
+    [<0000000046efabb3>] radeon_driver_load_kms+0xc1/0x1a0 [radeon]
+    [<00000000b5155064>] drm_dev_register+0xdd/0x1d0
+    [<0000000045fec835>] radeon_pci_probe+0xbd/0x100 [radeon]
+    [<00000000e69ecca3>] pci_device_probe+0xe1/0x160
+    [<0000000019484b76>] really_probe.part.0+0xc1/0x2c0
+    [<000000003f2649da>] __driver_probe_device+0x96/0x130
+    [<00000000231c5bb1>] driver_probe_device+0x24/0xf0
+    [<0000000000a42377>] __driver_attach+0x77/0x190
+    [<00000000d7574da6>] bus_for_each_dev+0x7f/0xd0
+    [<00000000633166d2>] driver_attach+0x1e/0x30
+    [<00000000313b05b8>] bus_add_driver+0x12c/0x1e0
 
-The FIFO reset on DP unblank should take care of clearing any FIFO
-error, if any.
+iio was allocated in atom_index_iio() called by atom_parse(),
+but it doesn't got released when the dirver is shutdown.
+Fix this kmemleak by free it in radeon_atombios_fini().
 
-Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Reviewed-by: Syed Hassan <Syed.Hassan@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Liwei Song <liwei.song@windriver.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c   | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/radeon/radeon_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c
-index 38842f938bed0..0926db0183383 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c
-@@ -278,10 +278,10 @@ static void enc314_stream_encoder_dp_blank(
- 	struct dc_link *link,
- 	struct stream_encoder *enc)
+diff --git a/drivers/gpu/drm/radeon/radeon_device.c b/drivers/gpu/drm/radeon/radeon_device.c
+index 6344454a77217..4f9729b4a8119 100644
+--- a/drivers/gpu/drm/radeon/radeon_device.c
++++ b/drivers/gpu/drm/radeon/radeon_device.c
+@@ -1023,6 +1023,7 @@ void radeon_atombios_fini(struct radeon_device *rdev)
  {
--	/* New to DCN314 - disable the FIFO before VID stream disable. */
--	enc314_disable_fifo(enc);
--
- 	enc1_stream_encoder_dp_blank(link, enc);
-+
-+	/* Disable FIFO after the DP vid stream is disabled to avoid corruption. */
-+	enc314_disable_fifo(enc);
- }
- 
- static void enc314_stream_encoder_dp_unblank(
+ 	if (rdev->mode_info.atom_context) {
+ 		kfree(rdev->mode_info.atom_context->scratch);
++		kfree(rdev->mode_info.atom_context->iio);
+ 	}
+ 	kfree(rdev->mode_info.atom_context);
+ 	rdev->mode_info.atom_context = NULL;
 -- 
 2.39.2
 
