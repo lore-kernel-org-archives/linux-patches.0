@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0FBBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:57:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334C2C433EF;
-	Tue,  7 Mar 2023 18:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E16BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:57:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D722C433D2;
+	Tue,  7 Mar 2023 18:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215450;
-	bh=z7ahMT7PCCZpGLLHnHCuhwIwaq6kT/3ECTKRYvNuR1g=;
+	s=korg; t=1678215453;
+	bh=Db/YoHaSz7Mw9nvUZGmlHqxTs2exc4UP8Cm/pmkOoLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zsGM58Wuwj9exfZE9CvGHQbqZz/BkvwziNej3d/Jad/uKV59qVhQQQi10M/a1+OJh
-	 iZSCQF03UNrfy/UmG9xJvb9Z2Ip0ooyZxtQH1kL7EA+9aTZDRx142tl9SmWJiweGGf
-	 C5WjAeOnEJB480gHk8BdwYQ6bfFZOttcgGBqe7Fg=
+	b=RzfHJaQM2lDIBGRxms9sPejPf0Z0PKTF5ESNwtfcn+0AtbtATVPU2qP4V58N5Gw26
+	 Ee2jh1hmzudtifyP5w4kGYqcAbZUO+G9Gi6h8XpiqE7YF5z3TLYqGFJ8L1WrRh+hzH
+	 jvPAw0IxMU1SuUbu9lpl7MNvQ0b8QbXrDvJAhtss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Kirill Tkhai <tkhai@yandex.ru>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 258/567] gfs2: jdata writepage fix
-Date: Tue,  7 Mar 2023 17:59:54 +0100
-Message-Id: <20230307165917.113911820@linuxfoundation.org>
+Subject: [PATCH 5.15 267/567] sparc: allow PM configs for sparc32 COMPILE_TEST
+Date: Tue,  7 Mar 2023 18:00:03 +0100
+Message-Id: <20230307165917.501811855@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -34,43 +39,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit cbb60951ce18c9b6e91d2eb97deb41d8ff616622 ]
+[ Upstream commit 7be6a87c2473957090995b7eb541e31d57a2c801 ]
 
-The ->writepage() and ->writepages() operations are supposed to write
-entire pages.  However, on filesystems with a block size smaller than
-PAGE_SIZE, __gfs2_jdata_writepage() only adds the first block to the
-current transaction instead of adding the entire page.  Fix that.
+When doing randconfig builds for sparc32 with COMPILE_TEST, some
+(non-Sparc) drivers cause kconfig warnings with the Kconfig symbols PM,
+PM_GENERIC_DOMAINS, or PM_GENERIC_DOMAINS_OF.
 
-Fixes: 18ec7d5c3f43 ("[GFS2] Make journaled data files identical to normal files on disk")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+This is due to arch/sparc/Kconfig not using the PM Kconfig for
+Sparc32:
+
+  if SPARC64
+  source "kernel/power/Kconfig"
+  endif
+
+Arnd suggested adding "|| COMPILE_TEST" to the conditional,
+instead of trying to track down every driver that selects
+any of these PM symbols.
+
+Fixes the following kconfig warnings:
+
+WARNING: unmet direct dependencies detected for PM
+  Depends on [n]: SPARC64 [=n]
+  Selected by [y]:
+  - SUN20I_PPU [=y] && (ARCH_SUNXI || COMPILE_TEST [=y])
+
+WARNING: unmet direct dependencies detected for PM
+  Depends on [n]: SPARC64 [=n]
+  Selected by [y]:
+  - SUN20I_PPU [=y] && (ARCH_SUNXI || COMPILE_TEST [=y])
+
+WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS
+  Depends on [n]: SPARC64 [=n] && PM [=y]
+  Selected by [y]:
+  - QCOM_GDSC [=y] && COMMON_CLK [=y] && PM [=y]
+  - SUN20I_PPU [=y] && (ARCH_SUNXI || COMPILE_TEST [=y])
+  - MESON_GX_PM_DOMAINS [=y] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
+  - BCM2835_POWER [=y] && (ARCH_BCM2835 || COMPILE_TEST [=y] && OF [=y]) && PM [=y]
+  - BCM_PMB [=y] && (ARCH_BCMBCA || COMPILE_TEST [=y] && OF [=y]) && PM [=y]
+  - ROCKCHIP_PM_DOMAINS [=y] && (ARCH_ROCKCHIP || COMPILE_TEST [=y]) && PM [=y]
+  Selected by [m]:
+  - ARM_SCPI_POWER_DOMAIN [=m] && (ARM_SCPI_PROTOCOL [=m] || COMPILE_TEST [=y] && OF [=y]) && PM [=y]
+  - MESON_EE_PM_DOMAINS [=m] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
+  - QCOM_AOSS_QMP [=m] && (ARCH_QCOM || COMPILE_TEST [=y]) && MAILBOX [=y] && COMMON_CLK [=y] && PM [=y]
+
+WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS_OF
+  Depends on [n]: SPARC64 [=n] && PM_GENERIC_DOMAINS [=y] && OF [=y]
+  Selected by [y]:
+  - MESON_GX_PM_DOMAINS [=y] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
+  Selected by [m]:
+  - MESON_EE_PM_DOMAINS [=m] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
+
+Link: https://lkml.kernel.org/r/20230205004357.29459-1-rdunlap@infradead.org
+Fixes: bdde6b3c8ba4 ("sparc64: Hibernation support")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Sam Ravnborg <sam@ravnborg.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Kirill Tkhai <tkhai@yandex.ru>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/aops.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/sparc/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/aops.c b/fs/gfs2/aops.c
-index 4bbfb156e6a40..ee212c9310ad0 100644
---- a/fs/gfs2/aops.c
-+++ b/fs/gfs2/aops.c
-@@ -152,7 +152,6 @@ static int __gfs2_jdata_writepage(struct page *page, struct writeback_control *w
- {
- 	struct inode *inode = page->mapping->host;
- 	struct gfs2_inode *ip = GFS2_I(inode);
--	struct gfs2_sbd *sdp = GFS2_SB(inode);
+diff --git a/arch/sparc/Kconfig b/arch/sparc/Kconfig
+index b120ed947f50b..eff9116bf7be3 100644
+--- a/arch/sparc/Kconfig
++++ b/arch/sparc/Kconfig
+@@ -286,7 +286,7 @@ config FORCE_MAX_ZONEORDER
+ 	  This config option is actually maximum order plus one. For example,
+ 	  a value of 13 means that the largest free memory block is 2^12 pages.
  
- 	if (PageChecked(page)) {
- 		ClearPageChecked(page);
-@@ -160,7 +159,7 @@ static int __gfs2_jdata_writepage(struct page *page, struct writeback_control *w
- 			create_empty_buffers(page, inode->i_sb->s_blocksize,
- 					     BIT(BH_Dirty)|BIT(BH_Uptodate));
- 		}
--		gfs2_page_add_databufs(ip, page, 0, sdp->sd_vfs->s_blocksize);
-+		gfs2_page_add_databufs(ip, page, 0, PAGE_SIZE);
- 	}
- 	return gfs2_write_jdata_page(page, wbc);
- }
+-if SPARC64
++if SPARC64 || COMPILE_TEST
+ source "kernel/power/Kconfig"
+ endif
+ 
 -- 
 2.39.2
 
