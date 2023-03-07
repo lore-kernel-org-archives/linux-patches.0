@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFEFBA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:12:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5652AC433EF;
-	Tue,  7 Mar 2023 19:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E71BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:12:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9012BC433EF;
+	Tue,  7 Mar 2023 19:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216375;
-	bh=lmbxegy/jPcV6cCHzaSVC6bSOjjrZxizzZIRaDvQL3s=;
+	s=korg; t=1678216378;
+	bh=bj36EocgUtIdbQ14b1Ttz0PbL87LXN5sZ/dCZxWxt14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O0l/aUcgs7O7w+P3o1OkydSIE1QjlQxL5Jqes/K63VJw5lN6tyMRkxNGD6vR5V+2Y
-	 ELKONiVEelszevseBj2LFEHafT/IsrUHVHhqrU3emJyCkUItBGFSaol+byTWNafJIC
-	 OX+x6jvT3UfGLdCDynC/hPIfIEQLeuWUmv3eJqT4=
+	b=T+bQ9Y0XU1+KMEe4z4q+nb41staDhlsWFJYUFbbHVTtbBVVYIDBtFs2GwjkSgOGvT
+	 iXikWDPR7MqKkNggBMY9JDB8yRn6+y0XFzSLp4v3XbHdI3/ZcXqQ8neFZZAHquktyK
+	 7OX3xYG9KE3TffvYMy2wy0pMGkgnkzEG3FZz0T/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Sistare <steven.sistare@oracle.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Alex Williamson <alex.williamson@redhat.com>
-Subject: [PATCH 5.15 563/567] vfio/type1: restore locked_vm
-Date: Tue,  7 Mar 2023 18:04:59 +0100
-Message-Id: <20230307165930.343733744@linuxfoundation.org>
+	Antonio Alvarez Feijoo <antonio.feijoo@suse.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 5.15 537/567] tools/bootconfig: fix single & used for logical condition
+Date: Tue,  7 Mar 2023 18:04:33 +0100
+Message-Id: <20230307165929.222842402@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,82 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve Sistare <steven.sistare@oracle.com>
+From: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
 
-commit 90fdd158a695d70403163f9a0e4efc5b20f3fd3e upstream.
+commit cf8c59a3756b2735c409a9b3ac1e4ec556546a7a upstream.
 
-When a vfio container is preserved across exec or fork-exec, the new
-task's mm has a locked_vm count of 0.  After a dma vaddr is updated using
-VFIO_DMA_MAP_FLAG_VADDR, locked_vm remains 0, and the pinned memory does
-not count against the task's RLIMIT_MEMLOCK.
+A single & will create a background process and return true, so the grep
+command will run even if the file checked in the first condition does not
+exist.
 
-To restore the correct locked_vm count, when VFIO_DMA_MAP_FLAG_VADDR is
-used and the dma's mm has changed, add the dma's locked_vm count to
-the new mm->locked_vm, subject to the rlimit, and subtract it from the
-old mm->locked_vm.
+Link: https://lore.kernel.org/all/20230112114215.17103-1-antonio.feijoo@suse.com/
 
-Fixes: c3cbab24db38 ("vfio/type1: implement interfaces to update vaddr")
+Fixes: 1eaad3ac3f39 ("tools/bootconfig: Use per-group/all enable option in ftrace2bconf script")
+Signed-off-by: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/1675184289-267876-5-git-send-email-steven.sistare@oracle.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/vfio_iommu_type1.c |   35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ tools/bootconfig/scripts/ftrace2bconf.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/vfio/vfio_iommu_type1.c
-+++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -1576,6 +1576,38 @@ static bool vfio_iommu_iova_dma_valid(st
- 	return list_empty(iova);
+diff --git a/tools/bootconfig/scripts/ftrace2bconf.sh b/tools/bootconfig/scripts/ftrace2bconf.sh
+index 6183b36c6846..1603801cf126 100755
+--- a/tools/bootconfig/scripts/ftrace2bconf.sh
++++ b/tools/bootconfig/scripts/ftrace2bconf.sh
+@@ -93,7 +93,7 @@ referred_vars() {
  }
  
-+static int vfio_change_dma_owner(struct vfio_dma *dma)
-+{
-+	struct task_struct *task = current->group_leader;
-+	struct mm_struct *mm = current->mm;
-+	long npage = dma->locked_vm;
-+	bool lock_cap;
-+	int ret;
-+
-+	if (mm == dma->mm)
-+		return 0;
-+
-+	lock_cap = capable(CAP_IPC_LOCK);
-+	ret = mm_lock_acct(task, mm, lock_cap, npage);
-+	if (ret)
-+		return ret;
-+
-+	if (mmget_not_zero(dma->mm)) {
-+		mm_lock_acct(dma->task, dma->mm, dma->lock_cap, -npage);
-+		mmput(dma->mm);
-+	}
-+
-+	if (dma->task != task) {
-+		put_task_struct(dma->task);
-+		dma->task = get_task_struct(task);
-+	}
-+	mmdrop(dma->mm);
-+	dma->mm = mm;
-+	mmgrab(dma->mm);
-+	dma->lock_cap = lock_cap;
-+	return 0;
-+}
-+
- static int vfio_dma_do_map(struct vfio_iommu *iommu,
- 			   struct vfio_iommu_type1_dma_map *map)
- {
-@@ -1625,6 +1657,9 @@ static int vfio_dma_do_map(struct vfio_i
- 			   dma->size != size) {
- 			ret = -EINVAL;
- 		} else {
-+			ret = vfio_change_dma_owner(dma);
-+			if (ret)
-+				goto out_unlock;
- 			dma->vaddr = vaddr;
- 			dma->vaddr_invalid = false;
- 			iommu->vaddr_invalid_count--;
+ event_is_enabled() { # enable-file
+-	test -f $1 & grep -q "1" $1
++	test -f $1 && grep -q "1" $1
+ }
+ 
+ per_event_options() { # event-dir
+-- 
+2.39.2
+
 
 
