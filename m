@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BCDBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:25:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A7BC433EF;
-	Tue,  7 Mar 2023 17:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37696BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:26:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941F5C433EF;
+	Tue,  7 Mar 2023 17:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209957;
-	bh=zn5/Tum+/bKrAG8ABzBy22+EE4i8VaWmewXfhHAwdwM=;
+	s=korg; t=1678209961;
+	bh=mKWjptEvwkgkWXnqZmXIE43nr8ICtlDlOqa14lCg+eE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2dmYPbsoR6aLCE9y4fiwqy+Te+zB6U35olE4Rtmhhc+Kp2DHqtAfZGFFnRaLRXYbK
-	 psugRTt2RZmkzzEZ2C/3e9k8EdqArwPjrpNgXlwnu1QxKWIXDLAmtdcG4rSAdUVd1p
-	 t2XBz7R4a0QOTHW8PMcGjL/NUL6TXBnv6O2o7y60=
+	b=VrYd/4dr9ELNKFMV9KE3yYZ4EnJirLCNd00rb/hGMb9KBJsJoa/uz3yOew5moU4i1
+	 fOgS4v1pSL1ZdPR+9sdYFSGoWS/M7v586Hihcr9dtVvG/jsxqH3ZGMsGXuIgK/yoPA
+	 TVP4ljtrpn71NYBwarQtCPcitASp4RaVcuUABDK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guodong Liu <Guodong.Liu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0385/1001] pinctrl: mediatek: Initialize variable *buf to zero
-Date: Tue,  7 Mar 2023 17:52:37 +0100
-Message-Id: <20230307170038.087460206@linuxfoundation.org>
+Subject: [PATCH 6.2 0386/1001] gpu: host1x: Fix mask for syncpoint increment register
+Date: Tue,  7 Mar 2023 17:52:38 +0100
+Message-Id: <20230307170038.139108604@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,37 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guodong Liu <Guodong.Liu@mediatek.com>
+From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit 2e34f82ba214134ecf590fbe0cdbd87401645a8a ]
+[ Upstream commit 79aad29c7d2d2cd64790115d3a6ebac28c00a8ec ]
 
-Coverity spotted that *buf is not initialized to zero in
-mtk_pctrl_dbg_show. Using uninitialized variable *buf as argument to %s
-when calling seq_printf. Fix this coverity by initializing *buf as zero.
+On Tegra186+, the syncpoint ID has 10 bits of space. To allow
+using more than 256 syncpoints, fix the mask.
 
-Fixes: 184d8e13f9b1 ("pinctrl: mediatek: Add support for pin configuration dump via debugfs.")
-Signed-off-by: Guodong Liu <Guodong.Liu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230118062036.26258-3-Guodong.Liu@mediatek.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 9abdd497cd0a ("gpu: host1x: Tegra234 device data and headers")
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-paris.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/host1x/hw/hw_host1x06_uclass.h | 2 +-
+ drivers/gpu/host1x/hw/hw_host1x07_uclass.h | 2 +-
+ drivers/gpu/host1x/hw/hw_host1x08_uclass.h | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-paris.c b/drivers/pinctrl/mediatek/pinctrl-paris.c
-index 3330f0ce9bd1d..37761a8e7a18f 100644
---- a/drivers/pinctrl/mediatek/pinctrl-paris.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
-@@ -717,7 +717,7 @@ static void mtk_pctrl_dbg_show(struct pinctrl_dev *pctldev, struct seq_file *s,
- 			  unsigned int gpio)
+diff --git a/drivers/gpu/host1x/hw/hw_host1x06_uclass.h b/drivers/gpu/host1x/hw/hw_host1x06_uclass.h
+index 5f831438d19bb..50c32de452fb1 100644
+--- a/drivers/gpu/host1x/hw/hw_host1x06_uclass.h
++++ b/drivers/gpu/host1x/hw/hw_host1x06_uclass.h
+@@ -53,7 +53,7 @@ static inline u32 host1x_uclass_incr_syncpt_cond_f(u32 v)
+ 	host1x_uclass_incr_syncpt_cond_f(v)
+ static inline u32 host1x_uclass_incr_syncpt_indx_f(u32 v)
  {
- 	struct mtk_pinctrl *hw = pinctrl_dev_get_drvdata(pctldev);
--	char buf[PIN_DBG_BUF_SZ];
-+	char buf[PIN_DBG_BUF_SZ] = { 0 };
- 
- 	(void)mtk_pctrl_show_one_pin(hw, gpio, buf, PIN_DBG_BUF_SZ);
- 
+-	return (v & 0xff) << 0;
++	return (v & 0x3ff) << 0;
+ }
+ #define HOST1X_UCLASS_INCR_SYNCPT_INDX_F(v) \
+ 	host1x_uclass_incr_syncpt_indx_f(v)
+diff --git a/drivers/gpu/host1x/hw/hw_host1x07_uclass.h b/drivers/gpu/host1x/hw/hw_host1x07_uclass.h
+index 8cd2ef087d5d0..887b878f92f79 100644
+--- a/drivers/gpu/host1x/hw/hw_host1x07_uclass.h
++++ b/drivers/gpu/host1x/hw/hw_host1x07_uclass.h
+@@ -53,7 +53,7 @@ static inline u32 host1x_uclass_incr_syncpt_cond_f(u32 v)
+ 	host1x_uclass_incr_syncpt_cond_f(v)
+ static inline u32 host1x_uclass_incr_syncpt_indx_f(u32 v)
+ {
+-	return (v & 0xff) << 0;
++	return (v & 0x3ff) << 0;
+ }
+ #define HOST1X_UCLASS_INCR_SYNCPT_INDX_F(v) \
+ 	host1x_uclass_incr_syncpt_indx_f(v)
+diff --git a/drivers/gpu/host1x/hw/hw_host1x08_uclass.h b/drivers/gpu/host1x/hw/hw_host1x08_uclass.h
+index 724cccd71aa1a..4fb1d090edae5 100644
+--- a/drivers/gpu/host1x/hw/hw_host1x08_uclass.h
++++ b/drivers/gpu/host1x/hw/hw_host1x08_uclass.h
+@@ -53,7 +53,7 @@ static inline u32 host1x_uclass_incr_syncpt_cond_f(u32 v)
+ 	host1x_uclass_incr_syncpt_cond_f(v)
+ static inline u32 host1x_uclass_incr_syncpt_indx_f(u32 v)
+ {
+-	return (v & 0xff) << 0;
++	return (v & 0x3ff) << 0;
+ }
+ #define HOST1X_UCLASS_INCR_SYNCPT_INDX_F(v) \
+ 	host1x_uclass_incr_syncpt_indx_f(v)
 -- 
 2.39.2
 
