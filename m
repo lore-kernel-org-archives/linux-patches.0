@@ -1,54 +1,229 @@
-Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C13BA34
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:25:18 +0000 (UTC)
-Received: from localhost (unknown [IPv6:2601:281:8300:73::5f6])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ms.lwn.net (Postfix) with ESMTPSA id 8FD7C2D3;
-	Tue,  7 Mar 2023 17:25:17 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 8FD7C2D3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
-	t=1678209917; bh=MXdgT/weL/sGwELNPyPxwLyYWjuL98nFt25rMpbGw10=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=QenhgGQYPFbxJEAX5UJ0287KfU5iW1wZkZxtA9qx/3TCHQPJEL9UZGF/KdfrALjFu
-	 7yMC1FW1q8rqO8y+2ZfhkBdV+LaQTHdnnuvEfpx5WF6RCS/ymJptOurEXpmDnTWgln
-	 wsTCyB35LpEA6a992r/rwt0dHKBQquaEljkC38Tykdx8l2t5V9fbKI8Z2ZsaoYfo27
-	 CWmLnj8L8n4SH3CvlL6fZkOx4nqr9z5G3bFGB/CwGRXkEqyZmUkY8qf3VzlcKKHp9k
-	 p09pg5fUK2yj7hXFzaBqMg5fDxUlVGb22ACoimYBKvoCRa/asNjPlIrz1VAi1Y4heq
-	 FMf7hLTgpNH5Q==
-From: Jonathan Corbet <corbet@lwn.net>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: linux-doc@vger.kernel.org, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev, Miguel Ojeda
- <ojeda@kernel.org>
-Subject: Re: [PATCH 1/2] docs: programming-language: remove mention of the
- Intel compiler
-In-Reply-To: <20230306191712.230658-1-ojeda@kernel.org>
-References: <20230306191712.230658-1-ojeda@kernel.org>
-Date: Tue, 07 Mar 2023 10:25:16 -0700
-Message-ID: <87pm9ko4n7.fsf@meer.lwn.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A804BBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:25:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD9AC433D2;
+	Tue,  7 Mar 2023 17:25:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1678209920;
+	bh=T4HSnj3hRQvb4TbMAapOvZxjFQ0fvPs5arkL2ZvTA3o=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Il6SVkBoxFaSj7ef2RbiEuxaWyiI3Rz/g5fsfUpN5eFcwu4Qi0vjaA6/X4MHHT23A
+	 Z+Y3E9ik5BEQ0HW/uHui3w5nDwkUvmmOMRlL0bTmifEqr1j9o0328HAOJjz7qDtSqU
+	 H4aNIfp4JAE/I+imcZBqEYwALY/9aeEErU2GhyFk=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 0357/1001] scsi: qla2xxx: Fix exchange oversubscription for management commands
+Date: Tue,  7 Mar 2023 17:52:09 +0100
+Message-Id: <20230307170036.930894429@linuxfoundation.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
+References: <20230307170022.094103862@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Miguel Ojeda <ojeda@kernel.org> writes:
+From: Quinn Tran <qutran@marvell.com>
 
-> The Intel compiler support has been removed in commit 95207db8166a
-> ("Remove Intel compiler support").
->
-> Thus remove its mention in the Documentation too.
->
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->  Documentation/process/programming-language.rst | 5 -----
->  1 file changed, 5 deletions(-)
+[ Upstream commit 5f63a163ed2f12c34dd4ae9b2757962ec7bb86e5 ]
 
-Both patches applied, thanks.
+Add resource checking for management (non-I/O) commands.
 
-jon
+Fixes: 89c72f4245a8 ("scsi: qla2xxx: Add IOCB resource tracking")
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/scsi/qla2xxx/qla_dfs.c    | 10 ++++-
+ drivers/scsi/qla2xxx/qla_inline.h |  5 ++-
+ drivers/scsi/qla2xxx/qla_iocb.c   | 67 +++++++++++++++++++++++++++++++
+ drivers/scsi/qla2xxx/qla_isr.c    |  1 +
+ 4 files changed, 80 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/scsi/qla2xxx/qla_dfs.c b/drivers/scsi/qla2xxx/qla_dfs.c
+index 777808af56347..1925cc6897b68 100644
+--- a/drivers/scsi/qla2xxx/qla_dfs.c
++++ b/drivers/scsi/qla2xxx/qla_dfs.c
+@@ -235,7 +235,7 @@ qla_dfs_fw_resource_cnt_show(struct seq_file *s, void *unused)
+ 	uint16_t mb[MAX_IOCB_MB_REG];
+ 	int rc;
+ 	struct qla_hw_data *ha = vha->hw;
+-	u16 iocbs_used, i;
++	u16 iocbs_used, i, exch_used;
+ 
+ 	rc = qla24xx_res_count_wait(vha, mb, SIZEOF_IOCB_MB_REG);
+ 	if (rc != QLA_SUCCESS) {
+@@ -263,13 +263,19 @@ qla_dfs_fw_resource_cnt_show(struct seq_file *s, void *unused)
+ 	if (ql2xenforce_iocb_limit) {
+ 		/* lock is not require. It's an estimate. */
+ 		iocbs_used = ha->base_qpair->fwres.iocbs_used;
++		exch_used = ha->base_qpair->fwres.exch_used;
+ 		for (i = 0; i < ha->max_qpairs; i++) {
+-			if (ha->queue_pair_map[i])
++			if (ha->queue_pair_map[i]) {
+ 				iocbs_used += ha->queue_pair_map[i]->fwres.iocbs_used;
++				exch_used += ha->queue_pair_map[i]->fwres.exch_used;
++			}
+ 		}
+ 
+ 		seq_printf(s, "Driver: estimate iocb used [%d] high water limit [%d]\n",
+ 			   iocbs_used, ha->base_qpair->fwres.iocbs_limit);
++
++		seq_printf(s, "estimate exchange used[%d] high water limit [%d] n",
++			   exch_used, ha->base_qpair->fwres.exch_limit);
+ 	}
+ 
+ 	return 0;
+diff --git a/drivers/scsi/qla2xxx/qla_inline.h b/drivers/scsi/qla2xxx/qla_inline.h
+index 2d5a275d8b000..b0ee307b5d4b9 100644
+--- a/drivers/scsi/qla2xxx/qla_inline.h
++++ b/drivers/scsi/qla2xxx/qla_inline.h
+@@ -380,7 +380,7 @@ qla2xxx_get_fc4_priority(struct scsi_qla_host *vha)
+ 
+ enum {
+ 	RESOURCE_NONE,
+-	RESOURCE_IOCB  = BIT_0,
++	RESOURCE_IOCB = BIT_0,
+ 	RESOURCE_EXCH = BIT_1,  /* exchange */
+ 	RESOURCE_FORCE = BIT_2,
+ };
+@@ -396,6 +396,8 @@ qla_get_fw_resources(struct qla_qpair *qp, struct iocb_resource *iores)
+ 		iores->res_type = RESOURCE_NONE;
+ 		return 0;
+ 	}
++	if (iores->res_type & RESOURCE_FORCE)
++		goto force;
+ 
+ 	if ((iores->iocb_cnt + qp->fwres.iocbs_used) >= qp->fwres.iocbs_qp_limit) {
+ 		/* no need to acquire qpair lock. It's just rough calculation */
+@@ -423,6 +425,7 @@ qla_get_fw_resources(struct qla_qpair *qp, struct iocb_resource *iores)
+ 			return -ENOSPC;
+ 		}
+ 	}
++force:
+ 	qp->fwres.iocbs_used += iores->iocb_cnt;
+ 	qp->fwres.exch_used += iores->exch_cnt;
+ 	return 0;
+diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
+index 399ec8da2d73c..4f48f098ea5a6 100644
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -3817,6 +3817,65 @@ qla24xx_prlo_iocb(srb_t *sp, struct logio_entry_24xx *logio)
+ 	logio->vp_index = sp->fcport->vha->vp_idx;
+ }
+ 
++int qla_get_iocbs_resource(struct srb *sp)
++{
++	bool get_exch;
++	bool push_it_through = false;
++
++	if (!ql2xenforce_iocb_limit) {
++		sp->iores.res_type = RESOURCE_NONE;
++		return 0;
++	}
++	sp->iores.res_type = RESOURCE_NONE;
++
++	switch (sp->type) {
++	case SRB_TM_CMD:
++	case SRB_PRLI_CMD:
++	case SRB_ADISC_CMD:
++		push_it_through = true;
++		fallthrough;
++	case SRB_LOGIN_CMD:
++	case SRB_ELS_CMD_RPT:
++	case SRB_ELS_CMD_HST:
++	case SRB_ELS_CMD_HST_NOLOGIN:
++	case SRB_CT_CMD:
++	case SRB_NVME_LS:
++	case SRB_ELS_DCMD:
++		get_exch = true;
++		break;
++
++	case SRB_FXIOCB_DCMD:
++	case SRB_FXIOCB_BCMD:
++		sp->iores.res_type = RESOURCE_NONE;
++		return 0;
++
++	case SRB_SA_UPDATE:
++	case SRB_SA_REPLACE:
++	case SRB_MB_IOCB:
++	case SRB_ABT_CMD:
++	case SRB_NACK_PLOGI:
++	case SRB_NACK_PRLI:
++	case SRB_NACK_LOGO:
++	case SRB_LOGOUT_CMD:
++	case SRB_CTRL_VP:
++		push_it_through = true;
++		fallthrough;
++	default:
++		get_exch = false;
++	}
++
++	sp->iores.res_type |= RESOURCE_IOCB;
++	sp->iores.iocb_cnt = 1;
++	if (get_exch) {
++		sp->iores.res_type |= RESOURCE_EXCH;
++		sp->iores.exch_cnt = 1;
++	}
++	if (push_it_through)
++		sp->iores.res_type |= RESOURCE_FORCE;
++
++	return qla_get_fw_resources(sp->qpair, &sp->iores);
++}
++
+ int
+ qla2x00_start_sp(srb_t *sp)
+ {
+@@ -3831,6 +3890,12 @@ qla2x00_start_sp(srb_t *sp)
+ 		return -EIO;
+ 
+ 	spin_lock_irqsave(qp->qp_lock_ptr, flags);
++	rval = qla_get_iocbs_resource(sp);
++	if (rval) {
++		spin_unlock_irqrestore(qp->qp_lock_ptr, flags);
++		return -EAGAIN;
++	}
++
+ 	pkt = __qla2x00_alloc_iocbs(sp->qpair, sp);
+ 	if (!pkt) {
+ 		rval = EAGAIN;
+@@ -3931,6 +3996,8 @@ qla2x00_start_sp(srb_t *sp)
+ 	wmb();
+ 	qla2x00_start_iocbs(vha, qp->req);
+ done:
++	if (rval)
++		qla_put_fw_resources(sp->qpair, &sp->iores);
+ 	spin_unlock_irqrestore(qp->qp_lock_ptr, flags);
+ 	return rval;
+ }
+diff --git a/drivers/scsi/qla2xxx/qla_isr.c b/drivers/scsi/qla2xxx/qla_isr.c
+index 42d3d2de3d31f..759bea69de120 100644
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -3112,6 +3112,7 @@ qla25xx_process_bidir_status_iocb(scsi_qla_host_t *vha, void *pkt,
+ 	}
+ 	bsg_reply->reply_payload_rcv_len = 0;
+ 
++	qla_put_fw_resources(sp->qpair, &sp->iores);
+ done:
+ 	/* Return the vendor specific reply to API */
+ 	bsg_reply->reply_data.vendor_reply.vendor_rsp[0] = rval;
+-- 
+2.39.2
+
+
+
