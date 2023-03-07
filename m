@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE11BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:53:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C54C433EF;
-	Tue,  7 Mar 2023 18:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713E4BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:53:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE18C433EF;
+	Tue,  7 Mar 2023 18:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215218;
-	bh=Cn7gMTpOCmB9U0SzE4mZ87PzeeRQ8YJhQK5yYQIy9XU=;
+	s=korg; t=1678215221;
+	bh=zwiNKgV0mD1E1iirvNL2YozEKwdMZGEHTQuYnC0+8PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XSEPkJq38fmWh0J7WuWukSjioZuxK2wntRh+e5KoUDmPlWNhu6RnCo3GAZgoQkI4t
-	 b0J2kO3NuZnfqovbonZ74Ac6+M5k0PTkHfBBC0C3OWFk23kDKNzw0XmpwVHRay3Sdk
-	 VFV1A6RcGj1y/6M5EL+/Ncn9DKJodTBIIS4R+Sjs=
+	b=l7nkW0Wfj1MmSMiC0hsZZoE94JezpyvgFQcYKszV6s7/bOAilmYdt1YqzF14YbdJd
+	 dJ0u42NVnfOmyApmwMgg9FGUZSR4yjqTjdFMKZhEwhnBDL0bFXHT7NaaHavhDOmucX
+	 iax/MyWS99fMaZ6lF4bTJ9Tjdm2LxSUK7PM7UGAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 157/567] irqchip/irq-brcmstb-l2: Set IRQ_LEVEL for level triggered interrupts
-Date: Tue,  7 Mar 2023 17:58:13 +0100
-Message-Id: <20230307165912.737937137@linuxfoundation.org>
+Subject: [PATCH 5.15 158/567] irqchip/irq-bcm7120-l2: Set IRQ_LEVEL for level triggered interrupts
+Date: Tue,  7 Mar 2023 17:58:14 +0100
+Message-Id: <20230307165912.775085133@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -38,47 +38,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit 94debe03e8afa1267f95a9001786a6aa506b9ff3 ]
+[ Upstream commit 13a157b38ca5b4f9eed81442b8821db293755961 ]
 
-When support for the level triggered interrupt controller flavor was
-added with c0ca7262088e, we forgot to update the flags to be set to
-contain IRQ_LEVEL. While the flow handler is correct, the output from
-/proc/interrupts does not show such interrupts as being level triggered
-when they are, correct that.
+When support for the interrupt controller was added with a5042de2688d,
+we forgot to update the flags to be set to contain IRQ_LEVEL. While the
+flow handler is correct, the output from /proc/interrupts does not show
+such interrupts as being level triggered when they are, correct that.
 
-Fixes: c0ca7262088e ("irqchip/brcmstb-l2: Add support for the BCM7271 L2 controller")
+Fixes: a5042de2688d ("irqchip: bcm7120-l2: Add Broadcom BCM7120-style Level 2 interrupt controller")
 Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221216230934.2478345-2-f.fainelli@gmail.com
+Link: https://lore.kernel.org/r/20221216230934.2478345-3-f.fainelli@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-brcmstb-l2.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-bcm7120-l2.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-brcmstb-l2.c b/drivers/irqchip/irq-brcmstb-l2.c
-index 8e0911561f2d1..fddea72272464 100644
---- a/drivers/irqchip/irq-brcmstb-l2.c
-+++ b/drivers/irqchip/irq-brcmstb-l2.c
-@@ -161,6 +161,7 @@ static int __init brcmstb_l2_intc_of_init(struct device_node *np,
- 					  *init_params)
- {
- 	unsigned int clr = IRQ_NOREQUEST | IRQ_NOPROBE | IRQ_NOAUTOEN;
-+	unsigned int set = 0;
- 	struct brcmstb_l2_intc_data *data;
- 	struct irq_chip_type *ct;
- 	int ret;
-@@ -208,9 +209,12 @@ static int __init brcmstb_l2_intc_of_init(struct device_node *np,
- 	if (IS_ENABLED(CONFIG_MIPS) && IS_ENABLED(CONFIG_CPU_BIG_ENDIAN))
+diff --git a/drivers/irqchip/irq-bcm7120-l2.c b/drivers/irqchip/irq-bcm7120-l2.c
+index f23d7651ea847..e91b38a6fc3df 100644
+--- a/drivers/irqchip/irq-bcm7120-l2.c
++++ b/drivers/irqchip/irq-bcm7120-l2.c
+@@ -271,7 +271,8 @@ static int __init bcm7120_l2_intc_probe(struct device_node *dn,
  		flags |= IRQ_GC_BE_IO;
  
-+	if (init_params->handler == handle_level_irq)
-+		set |= IRQ_LEVEL;
-+
- 	/* Allocate a single Generic IRQ chip for this node */
- 	ret = irq_alloc_domain_generic_chips(data->domain, 32, 1,
--			np->full_name, init_params->handler, clr, 0, flags);
-+			np->full_name, init_params->handler, clr, set, flags);
+ 	ret = irq_alloc_domain_generic_chips(data->domain, IRQS_PER_WORD, 1,
+-				dn->full_name, handle_level_irq, clr, 0, flags);
++				dn->full_name, handle_level_irq, clr,
++				IRQ_LEVEL, flags);
  	if (ret) {
  		pr_err("failed to allocate generic irq chip\n");
  		goto out_free_domain;
