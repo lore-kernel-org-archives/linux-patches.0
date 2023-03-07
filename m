@@ -1,28 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBF8BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:17:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3356EC4339B;
-	Tue,  7 Mar 2023 18:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C12BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:17:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF60C433EF;
+	Tue,  7 Mar 2023 18:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213070;
-	bh=LEy2NUR4IdIAeTTVC+T0c/xKK8EYO/cdcUB77P4ccG0=;
+	s=korg; t=1678213073;
+	bh=zXvqU6FIbEeTx/ihMnNNWWP34AeqqWOeJw814cGkHnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C7hph50iU9SKzp8cDhGKb7KfKXtoyifob0zelT4unrkRVEgPX9gJEyyG1TwxsrgAa
-	 sJ7qEzohpisw6wgS+uBdfr2Ot7ALYPy1YrN9JVRkS7F/Y4OlhFwzXhpHht1Ltsn0ld
-	 m6SlX5L7ZCGcpYoHBRrqcUXWC7VTeSNNA3YYTcwY=
+	b=rM982VCBKB27sn/7iuvkU1nLd8/YM5hdf0MB22aEPDOtcWjaS+qH4jEGAId9if1uo
+	 ZhLGrB48sJxCi0SzmWSKkUG8Y4XJwQhbZR+74D0K/JCmwH8AaF7XpurXa6O/Fl7pt8
+	 aFBVfRwAMkBGh5QdviNK1LamDqZ9wAwpsJXc8+uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Ziegler <br015@umbiko.net>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	James Clark <james.clark@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Stephane Eranian <eranian@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 389/885] tools/tracing/rtla: osnoise_hist: use total duration for average calculation
-Date: Tue,  7 Mar 2023 17:55:23 +0100
-Message-Id: <20230307170019.259355383@linuxfoundation.org>
+Subject: [PATCH 6.1 390/885] perf inject: Use perf_data__read() for auxtrace
+Date: Tue,  7 Mar 2023 17:55:24 +0100
+Message-Id: <20230307170019.314222737@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,53 +43,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Ziegler <br015@umbiko.net>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit fe137a4fe0e77eb95396cfc5c3dd7df404421aa4 ]
+[ Upstream commit 1746212daeba95e9ae1639227dc0c3591d41deeb ]
 
-Sampled durations must be weighted by observed quantity, to arrive at a correct
-average duration value.
+In copy_bytes(), it reads the data from the (input) fd and writes it to
+the output file.  But it does with the read(2) unconditionally which
+caused a problem of mixing buffered vs unbuffered I/O together.
 
-Perform calculation of total duration by summing (duration * count).
+You can see the problem when using pipes.
 
-Link: https://lkml.kernel.org/r/20230103103400.275566-2-br015@umbiko.net
+  $ perf record -e intel_pt// -o- true | perf inject -b > /dev/null
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.000 MB - ]
+  0x45c0 [0x30]: failed to process type: 71
 
-Fixes: 829a6c0b5698 ("rtla/osnoise: Add the hist mode")
+It should use perf_data__read() to honor the 'use_stdio' setting.
 
-Signed-off-by: Andreas Ziegler <br015@umbiko.net>
-Acked-by: Daniel Bristot de Oliveira <bristot@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 601366678c93618f ("perf data: Allow to use stdio functions for pipe mode")
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: James Clark <james.clark@arm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Stephane Eranian <eranian@google.com>
+Link: https://lore.kernel.org/r/20230131023350.1903992-2-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/src/osnoise_hist.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/perf/builtin-inject.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/tracing/rtla/src/osnoise_hist.c b/tools/tracing/rtla/src/osnoise_hist.c
-index 5d7ea479ac89f..fe34452fc4ec0 100644
---- a/tools/tracing/rtla/src/osnoise_hist.c
-+++ b/tools/tracing/rtla/src/osnoise_hist.c
-@@ -121,6 +121,7 @@ static void osnoise_hist_update_multiple(struct osnoise_tool *tool, int cpu,
+diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
+index e254f18986f7c..e2ce5f294cbd4 100644
+--- a/tools/perf/builtin-inject.c
++++ b/tools/perf/builtin-inject.c
+@@ -215,14 +215,14 @@ static int perf_event__repipe_event_update(struct perf_tool *tool,
+ 
+ #ifdef HAVE_AUXTRACE_SUPPORT
+ 
+-static int copy_bytes(struct perf_inject *inject, int fd, off_t size)
++static int copy_bytes(struct perf_inject *inject, struct perf_data *data, off_t size)
  {
- 	struct osnoise_hist_params *params = tool->params;
- 	struct osnoise_hist_data *data = tool->data;
-+	unsigned long long total_duration;
- 	int entries = data->entries;
- 	int bucket;
- 	int *hist;
-@@ -131,10 +132,12 @@ static void osnoise_hist_update_multiple(struct osnoise_tool *tool, int cpu,
- 	if (data->bucket_size)
- 		bucket = duration / data->bucket_size;
+ 	char buf[4096];
+ 	ssize_t ssz;
+ 	int ret;
  
-+	total_duration = duration * count;
-+
- 	hist = data->hist[cpu].samples;
- 	data->hist[cpu].count += count;
- 	update_min(&data->hist[cpu].min_sample, &duration);
--	update_sum(&data->hist[cpu].sum_sample, &duration);
-+	update_sum(&data->hist[cpu].sum_sample, &total_duration);
- 	update_max(&data->hist[cpu].max_sample, &duration);
- 
- 	if (bucket < entries)
+ 	while (size > 0) {
+-		ssz = read(fd, buf, min(size, (off_t)sizeof(buf)));
++		ssz = perf_data__read(data, buf, min(size, (off_t)sizeof(buf)));
+ 		if (ssz < 0)
+ 			return -errno;
+ 		ret = output_bytes(inject, buf, ssz);
+@@ -260,7 +260,7 @@ static s64 perf_event__repipe_auxtrace(struct perf_session *session,
+ 		ret = output_bytes(inject, event, event->header.size);
+ 		if (ret < 0)
+ 			return ret;
+-		ret = copy_bytes(inject, perf_data__fd(session->data),
++		ret = copy_bytes(inject, session->data,
+ 				 event->auxtrace.size);
+ 	} else {
+ 		ret = output_bytes(inject, event,
 -- 
 2.39.2
 
