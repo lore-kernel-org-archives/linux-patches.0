@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD21BBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:47:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A87C433EF;
-	Tue,  7 Mar 2023 18:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7ACBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:47:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C34BC4339B;
+	Tue,  7 Mar 2023 18:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214864;
-	bh=SO4TmPjTGtVmyOChUjSxE5JOC3EGu+TuYBlqo+fZzUE=;
+	s=korg; t=1678214867;
+	bh=gMPbaTDfJ1dvSoVqfAG5jDul9zjlycyet/arz3jMpKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L5cfN/iB+MyS5IQ4DZzRKL0S+D8mGuA7IVhXROfldyOcZJ4OUm54I1JELhDXEjgfo
-	 /20I6CQ8Wsg+Zy+Le8hpOy5BP0nH3T+Qv9NBu+07GRdWQUg7XxlBPAPGnxn96cB16a
-	 jP75Hml6YOPB6zyax267t949Vx+QFsbHzgpqNTR8=
+	b=nRfCl6LjUYZmfJIOZltbq6JkvLiI+XSgl7Xm+2CY71C1+y7zQzXryYU960NG9BAV4
+	 RI6ndvOlqW31faenxO79YxmICcEMRl+RzNkAN88jtHXVTEWxOD9tGyOJK+AbVF9o9A
+	 +WSFZo3AY8e+XSR/NmVgMjb+x2Sb8FTGD1PSD5XI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 074/567] libbpf: Fix btf__align_of() by taking into account field offsets
-Date: Tue,  7 Mar 2023 17:56:50 +0100
-Message-Id: <20230307165909.108375933@linuxfoundation.org>
+Subject: [PATCH 5.15 075/567] wifi: ipw2x00: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Tue,  7 Mar 2023 17:56:51 +0100
+Message-Id: <20230307165909.155922085@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,57 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 25a4481b4136af7794e1df2d6c90ed2f354d60ce ]
+[ Upstream commit 45fc6d7461f18df2f238caf0cbc5acc4163203d1 ]
 
-btf__align_of() is supposed to be return alignment requirement of
-a requested BTF type. For STRUCT/UNION it doesn't always return correct
-value, because it calculates alignment only based on field types. But
-for packed structs this is not enough, we need to also check field
-offsets and struct size. If field offset isn't aligned according to
-field type's natural alignment, then struct must be packed. Similarly,
-if struct size is not a multiple of struct's natural alignment, then
-struct must be packed as well.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-This patch fixes this issue precisely by additionally checking these
-conditions.
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
 
-Fixes: 3d208f4ca111 ("libbpf: Expose btf__align_of() API")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20221212211505.558851-5-andrii@kernel.org
+In this case, dev_kfree_skb() is called to free and drop the SKB when
+it's reset, so replace it with dev_kfree_skb_irq(). Compile tested
+only.
+
+Fixes: 43f66a6ce8da ("Add ipw2200 wireless driver.")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221208143826.2385218-1-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/net/wireless/intel/ipw2x00/ipw2200.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index 3ed759f53e7c2..fd23095129782 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -647,8 +647,21 @@ int btf__align_of(const struct btf *btf, __u32 id)
- 			if (align <= 0)
- 				return libbpf_err(align);
- 			max_align = max(max_align, align);
-+
-+			/* if field offset isn't aligned according to field
-+			 * type's alignment, then struct must be packed
-+			 */
-+			if (btf_member_bitfield_size(t, i) == 0 &&
-+			    (m->offset % (8 * align)) != 0)
-+				return 1;
+diff --git a/drivers/net/wireless/intel/ipw2x00/ipw2200.c b/drivers/net/wireless/intel/ipw2x00/ipw2200.c
+index ada6ce32c1f19..df28e4a05e140 100644
+--- a/drivers/net/wireless/intel/ipw2x00/ipw2200.c
++++ b/drivers/net/wireless/intel/ipw2x00/ipw2200.c
+@@ -3444,7 +3444,7 @@ static void ipw_rx_queue_reset(struct ipw_priv *priv,
+ 			dma_unmap_single(&priv->pci_dev->dev,
+ 					 rxq->pool[i].dma_addr,
+ 					 IPW_RX_BUF_SIZE, DMA_FROM_DEVICE);
+-			dev_kfree_skb(rxq->pool[i].skb);
++			dev_kfree_skb_irq(rxq->pool[i].skb);
+ 			rxq->pool[i].skb = NULL;
  		}
- 
-+		/* if struct/union size isn't a multiple of its alignment,
-+		 * then struct must be packed
-+		 */
-+		if ((t->size % max_align) != 0)
-+			return 1;
-+
- 		return max_align;
- 	}
- 	default:
+ 		list_add_tail(&rxq->pool[i].list, &rxq->rx_used);
 -- 
 2.39.2
 
