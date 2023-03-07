@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697DEBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:38:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20FFC433EF;
-	Tue,  7 Mar 2023 17:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651B7BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:38:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EDFC4339B;
+	Tue,  7 Mar 2023 17:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210681;
-	bh=2cd3LTHah5jdbR0rtPbY0tbZtnUjQXv83YwUDRxZjtI=;
+	s=korg; t=1678210684;
+	bh=B9Y+pr7JOs2q2E8RQzL5+z2cgosqPBIcm4O5yVk62d8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FcVYH3bbKNRrrWQINyx3jMum/78R3W2DbDIOhCIIKh5Oo4ri8dSVMvuzN19uuH6zg
-	 pAk9fyrIx9AmU1kA2HiaNdd0eR0zrzPBBhwUVsnXtmQvnecVqlNEEhxRM6DHT0o4Hg
-	 wYzJabWnmjAWc+As/MhMLkWm95B8MKZS/B9Km56A=
+	b=fQn7e7HSsro7uEY2wJTFbWLe51lGDqUkbCrpOifNjrLAV4REa03548Lvjl05SaekC
+	 K2+FLr8W1oIAH/UmIvq7PG9dbZ+dls+2j8e4LWzNWV0a95wmCE2Ft+W8z0E24uJl43
+	 eMDVj/5mJbDGkOfo8Csi7mM2qYQy41WhVP7EOQJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	coverity-bot <keescook+coverity-bot@chromium.org>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0592/1001] media: i2c: tc358746: fix missing return assignment
-Date: Tue,  7 Mar 2023 17:56:04 +0100
-Message-Id: <20230307170047.194446319@linuxfoundation.org>
+Subject: [PATCH 6.2 0619/1001] arm64: dts: qcom: msm8996: Add additional A2NoC clocks
+Date: Tue,  7 Mar 2023 17:56:31 +0100
+Message-Id: <20230307170048.415973385@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,38 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Felsch <m.felsch@pengutronix.de>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 0605081142070a41de8f1deb8fdaeb8677e97741 ]
+[ Upstream commit 67fb53745e0b38275fa0b422b6a3c6c1c028c9a2 ]
 
-It was intended to return an error if tc358746_update_bits() call fail.
-Fix this by storing the return code.
+On eMMC devices, the UFS clocks aren't started in the bootloader (or well,
+at least it should not be, as that would just leak power..), which results
+in platform reboots when trying to access the unclocked UFS hardware,
+which unfortunately happens on each and every boot, as interconnect calls
+sync_state and goes over each and every path.
 
-Addresses-Coverity-ID: 1527252 ("Control flow issues")
-
-Reported-by: coverity-bot <keescook+coverity-bot@chromium.org>
-Fixes: 80a21da36051 ("media: tc358746: add Toshiba TC358746 Parallel to CSI-2 bridge driver")
-Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> #db820c
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221210200353.418391-6-konrad.dybcio@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/tc358746.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/tc358746.c b/drivers/media/i2c/tc358746.c
-index d1f552bd81d42..e7f27cbb57907 100644
---- a/drivers/media/i2c/tc358746.c
-+++ b/drivers/media/i2c/tc358746.c
-@@ -406,7 +406,7 @@ tc358746_apply_pll_config(struct tc358746 *tc358746)
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index a444d9b531228..71678749d66f6 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -830,9 +830,11 @@ a2noc: interconnect@583000 {
+ 			compatible = "qcom,msm8996-a2noc";
+ 			reg = <0x00583000 0x7000>;
+ 			#interconnect-cells = <1>;
+-			clock-names = "bus", "bus_a";
++			clock-names = "bus", "bus_a", "aggre2_ufs_axi", "ufs_axi";
+ 			clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
+-				 <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
++				 <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>,
++				 <&gcc GCC_AGGRE2_UFS_AXI_CLK>,
++				 <&gcc GCC_UFS_AXI_CLK>;
+ 		};
  
- 	val = PLL_FRS(ilog2(post)) | RESETB | PLL_EN;
- 	mask = PLL_FRS_MASK | RESETB | PLL_EN;
--	tc358746_update_bits(tc358746, PLLCTL1_REG, mask, val);
-+	err = tc358746_update_bits(tc358746, PLLCTL1_REG, mask, val);
- 	if (err)
- 		return err;
- 
+ 		mnoc: interconnect@5a4000 {
 -- 
 2.39.2
 
