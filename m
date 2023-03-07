@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71402BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:35:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7459C433EF;
-	Tue,  7 Mar 2023 18:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8906BBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:35:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1AE2C433EF;
+	Tue,  7 Mar 2023 18:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214134;
-	bh=LzxOs5VMddDWhrTpVYqWpNappj6ZqW23t5B16fBvJY8=;
+	s=korg; t=1678214137;
+	bh=v4/56PbzylKFEkrArD5WawtBayv9ONQxiHboO3O6/No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R8tOQabBTKTHviacfFc6S5VVOI2Im7NaG/S9p32Y6nN0QNCsrqvorZiClrCK3jTtu
-	 gFHfUlf8Tl3TbmJ53sOraOVrHIEZt6lKE0mpDre/bNYksskZt9Srxz1FnZQN+QsKZJ
-	 9OusNeANxppGYhy2XcewaSMOAiHWTf3AXdEgln8s=
+	b=WZCVz+wRotdyZ+oCSCV0g1P1fM/MaseG+f1TRjqkEgSjzjFan+5rIIxmH8kJ+N5+N
+	 3J075wKhmF/qkzfT2Ewt1CMGgPgZCuUdJwR21VHmB0jIfBcGSxADK0K9OBP1BNIsVE
+	 5z9Eannw0b64x1K9o7IsTKQIKTGkQoZ39e8pNplI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
+	syzbot <syzbot+8ce7f8308d91e6b8bbe2@syzkaller.appspotmail.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Nicolas Pitre <nico@fluxnic.net>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 703/885] ocfs2: fix non-auto defrag path not working issue
-Date: Tue,  7 Mar 2023 18:00:37 +0100
-Message-Id: <20230307170032.629103326@linuxfoundation.org>
+Subject: [PATCH 6.1 704/885] fs/cramfs/inode.c: initialize file_ra_state
+Date: Tue,  7 Mar 2023 18:00:38 +0100
+Message-Id: <20230307170032.669089084@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -41,91 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heming Zhao via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
+From: Andrew Morton <akpm@linux-foundation.org>
 
-commit 236b9254f8d1edc273ad88b420aa85fbd84f492d upstream.
+commit 3e35102666f873a135d31a726ac1ec8af4905206 upstream.
 
-This fixes three issues on move extents ioctl without auto defrag:
+file_ra_state_init() assumes that the file_ra_state has been zeroed out.
+Fixes a KMSAN used-unintialized issue (at least).
 
-a) In ocfs2_find_victim_alloc_group(), we have to convert bits to block
-   first in case of global bitmap.
-
-b) In ocfs2_probe_alloc_group(), when finding enough bits in block
-   group bitmap, we have to back off move_len to start pos as well,
-   otherwise it may corrupt filesystem.
-
-c) In ocfs2_ioctl_move_extents(), set me_threshold both for non-auto
-   and auto defrag paths.  Otherwise it will set move_max_hop to 0 and
-   finally cause unexpectedly ENOSPC error.
-
-Currently there are no tools triggering the above issues since
-defragfs.ocfs2 enables auto defrag by default.  Tested with manually
-changing defragfs.ocfs2 to run non auto defrag path.
-
-Link: https://lkml.kernel.org/r/20230220050526.22020-1-heming.zhao@suse.com
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
+Fixes: cf948cbc35e80 ("cramfs: read_mapping_page() is synchronous")
+Reported-by: syzbot <syzbot+8ce7f8308d91e6b8bbe2@syzkaller.appspotmail.com>
+  Link: https://lkml.kernel.org/r/0000000000008f74e905f56df987@google.com
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Nicolas Pitre <nico@fluxnic.net>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/move_extents.c |   24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ fs/cramfs/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ocfs2/move_extents.c
-+++ b/fs/ocfs2/move_extents.c
-@@ -434,7 +434,7 @@ static int ocfs2_find_victim_alloc_group
- 			bg = (struct ocfs2_group_desc *)gd_bh->b_data;
- 
- 			if (vict_blkno < (le64_to_cpu(bg->bg_blkno) +
--						le16_to_cpu(bg->bg_bits))) {
-+						(le16_to_cpu(bg->bg_bits) << bits_per_unit))) {
- 
- 				*ret_bh = gd_bh;
- 				*vict_bit = (vict_blkno - blkno) >>
-@@ -549,6 +549,7 @@ static void ocfs2_probe_alloc_group(stru
- 			last_free_bits++;
- 
- 		if (last_free_bits == move_len) {
-+			i -= move_len;
- 			*goal_bit = i;
- 			*phys_cpos = base_cpos + i;
- 			break;
-@@ -1020,18 +1021,19 @@ int ocfs2_ioctl_move_extents(struct file
- 
- 	context->range = &range;
- 
-+	/*
-+	 * ok, the default theshold for the defragmentation
-+	 * is 1M, since our maximum clustersize was 1M also.
-+	 * any thought?
-+	 */
-+	if (!range.me_threshold)
-+		range.me_threshold = 1024 * 1024;
-+
-+	if (range.me_threshold > i_size_read(inode))
-+		range.me_threshold = i_size_read(inode);
-+
- 	if (range.me_flags & OCFS2_MOVE_EXT_FL_AUTO_DEFRAG) {
- 		context->auto_defrag = 1;
--		/*
--		 * ok, the default theshold for the defragmentation
--		 * is 1M, since our maximum clustersize was 1M also.
--		 * any thought?
--		 */
--		if (!range.me_threshold)
--			range.me_threshold = 1024 * 1024;
--
--		if (range.me_threshold > i_size_read(inode))
--			range.me_threshold = i_size_read(inode);
- 
- 		if (range.me_flags & OCFS2_MOVE_EXT_FL_PART_DEFRAG)
- 			context->partial = 1;
+diff --git a/fs/cramfs/inode.c b/fs/cramfs/inode.c
+index e3d168911dbe..006ef68d7ff6 100644
+--- a/fs/cramfs/inode.c
++++ b/fs/cramfs/inode.c
+@@ -183,7 +183,7 @@ static void *cramfs_blkdev_read(struct super_block *sb, unsigned int offset,
+ 				unsigned int len)
+ {
+ 	struct address_space *mapping = sb->s_bdev->bd_inode->i_mapping;
+-	struct file_ra_state ra;
++	struct file_ra_state ra = {};
+ 	struct page *pages[BLKS_PER_BUF];
+ 	unsigned i, blocknr, buffer;
+ 	unsigned long devsize;
+-- 
+2.39.2
+
 
 
