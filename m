@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E597BBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:13:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF67C433EF;
-	Tue,  7 Mar 2023 18:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BD5BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:13:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E860C433D2;
+	Tue,  7 Mar 2023 18:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212801;
-	bh=7W5jGb9b5LZt03E4If3VJss6LKD8D6n1PMG0qhaKjPw=;
+	s=korg; t=1678212804;
+	bh=XLzNsua3hjyE/PKcyajqCqiz3RsP5bTYDcbK0mHfkMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IYnYrN8dUlH9jw3SgZZPC8jRa8K6YKWEDU8QiLUA33OLwhJDZSv4F226/L9o78Gd6
-	 zR3IP+xxwDhqU32Z2g5nptOsMgMqfkTf+ryahAcA/QP56u3w+DRUxSbeeN6wQDmzPe
-	 Exi0TvtcIqPxSQGFnhPtNbllos5J83oRgDQjeReU=
+	b=UMVnXvjfODTAFS8IK40QA01gdqDMtaLTWdzFrlz8+MasNe6qR5mTh0EE8Pij9uObA
+	 opqi3ilTTEFzsnUMvh4sBth8gCw+IpsiJTPtXVEyTyDrX8p2WppQbiMon04X1FCRgE
+	 rm2Vb+BYo6xkXQXu0UyL59b4jmcA3TQclXgRkYkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 301/885] drm/bridge: lt9611: fix programming of video modes
-Date: Tue,  7 Mar 2023 17:53:55 +0100
-Message-Id: <20230307170015.164748182@linuxfoundation.org>
+Subject: [PATCH 6.1 302/885] drm/bridge: lt9611: fix clock calculation
+Date: Tue,  7 Mar 2023 17:53:56 +0100
+Message-Id: <20230307170015.209623621@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,34 +37,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit ad188aa47edaa033a270e1a3efae43836ff47569 ]
+[ Upstream commit 2576eb26494eb0509dd9ceb0cd27771a7a5e3674 ]
 
-Program the upper part of the hfront_porch into the proper register.
+Instead of having several fixed values for the pcr register, calculate
+it before programming. This allows the bridge to support most of the
+display modes.
 
 Fixes: 23278bf54afe ("drm/bridge: Introduce LT9611 DSI to HDMI bridge")
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230118081658.2198520-5-dmitry.baryshkov@linaro.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20230118081658.2198520-6-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/lontium-lt9611.c | 32 +++++++++++--------------
+ 1 file changed, 14 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-index deb503ca956af..f377052a45a44 100644
+index f377052a45a44..e2799a0df8f8b 100644
 --- a/drivers/gpu/drm/bridge/lontium-lt9611.c
 +++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -187,7 +187,8 @@ static void lt9611_mipi_video_setup(struct lt9611 *lt9611,
- 
- 	regmap_write(lt9611->regmap, 0x8319, (u8)(hfront_porch % 256));
- 
--	regmap_write(lt9611->regmap, 0x831a, (u8)(hsync_porch / 256));
-+	regmap_write(lt9611->regmap, 0x831a, (u8)(hsync_porch / 256) |
-+						((hfront_porch / 256) << 4));
+@@ -192,8 +192,9 @@ static void lt9611_mipi_video_setup(struct lt9611 *lt9611,
  	regmap_write(lt9611->regmap, 0x831b, (u8)(hsync_porch % 256));
  }
  
+-static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mode *mode)
++static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mode *mode, unsigned int postdiv)
+ {
++	unsigned int pcr_m = mode->clock * 5 * postdiv / 27000;
+ 	const struct reg_sequence reg_cfg[] = {
+ 		{ 0x830b, 0x01 },
+ 		{ 0x830c, 0x10 },
+@@ -236,24 +237,14 @@ static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mod
+ 	else
+ 		regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
+ 
+-	switch (mode->hdisplay) {
+-	case 640:
+-		regmap_write(lt9611->regmap, 0x8326, 0x14);
+-		break;
+-	case 1920:
+-		regmap_write(lt9611->regmap, 0x8326, 0x37);
+-		break;
+-	case 3840:
+-		regmap_write(lt9611->regmap, 0x8326, 0x37);
+-		break;
+-	}
++	regmap_write(lt9611->regmap, 0x8326, pcr_m);
+ 
+ 	/* pcr rst */
+ 	regmap_write(lt9611->regmap, 0x8011, 0x5a);
+ 	regmap_write(lt9611->regmap, 0x8011, 0xfa);
+ }
+ 
+-static int lt9611_pll_setup(struct lt9611 *lt9611, const struct drm_display_mode *mode)
++static int lt9611_pll_setup(struct lt9611 *lt9611, const struct drm_display_mode *mode, unsigned int *postdiv)
+ {
+ 	unsigned int pclk = mode->clock;
+ 	const struct reg_sequence reg_cfg[] = {
+@@ -271,12 +262,16 @@ static int lt9611_pll_setup(struct lt9611 *lt9611, const struct drm_display_mode
+ 
+ 	regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
+ 
+-	if (pclk > 150000)
++	if (pclk > 150000) {
+ 		regmap_write(lt9611->regmap, 0x812d, 0x88);
+-	else if (pclk > 70000)
++		*postdiv = 1;
++	} else if (pclk > 70000) {
+ 		regmap_write(lt9611->regmap, 0x812d, 0x99);
+-	else
++		*postdiv = 2;
++	} else {
+ 		regmap_write(lt9611->regmap, 0x812d, 0xaa);
++		*postdiv = 4;
++	}
+ 
+ 	/*
+ 	 * first divide pclk by 2 first
+@@ -895,14 +890,15 @@ static void lt9611_bridge_mode_set(struct drm_bridge *bridge,
+ {
+ 	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
+ 	struct hdmi_avi_infoframe avi_frame;
++	unsigned int postdiv;
+ 	int ret;
+ 
+ 	lt9611_bridge_pre_enable(bridge);
+ 
+ 	lt9611_mipi_input_digital(lt9611, mode);
+-	lt9611_pll_setup(lt9611, mode);
++	lt9611_pll_setup(lt9611, mode, &postdiv);
+ 	lt9611_mipi_video_setup(lt9611, mode);
+-	lt9611_pcr_setup(lt9611, mode);
++	lt9611_pcr_setup(lt9611, mode, postdiv);
+ 
+ 	ret = drm_hdmi_avi_infoframe_from_display_mode(&avi_frame,
+ 						       &lt9611->connector,
 -- 
 2.39.2
 
