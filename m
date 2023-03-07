@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCE3BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:01:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81CEC433EF;
-	Tue,  7 Mar 2023 18:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783E7BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:01:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2537C4339B;
+	Tue,  7 Mar 2023 18:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212067;
-	bh=9h6R7RBQpKzyBaLqKeRHPV03rq46PwuKgXF7ADSdT2o=;
+	s=korg; t=1678212070;
+	bh=ZfM7LHh3djO84w/6Deze6YHGLWE+Oyp/78kHfsEM1A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f66L+PWFmqU/7Syn+VOeReV/rVTiJ6D3M9fJUR0iKncWVEAaHsGWYrfWZJOTP+7bl
-	 gocq5hNXCqgVJGha5IW1a49WbVbzKQZThv2LE60UMFIb3CAESbUbW/vxD4mSv3mGja
-	 uD0ONVkbs4dZpzMui0emsnyrxOD8m/jiouNxLIn4=
+	b=R4V/YUGpcvsjxKDu5rF+CRVmevq7dmxlyfGPozYV0xvuMkstThOmA9z3m71tn4SBM
+	 71MLupRSfO6u0NgGPVmsyD99v8D+vVfbH5sZ9/2Qzv5P3IwX3rjrcUsjz6mRJLZtfQ
+	 x0O/skqJNE0Xjmab6MYWZONmTw7YDc9g6+w/ICMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Waiman Long <longman@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Adam Ford <aford173@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/885] locking/rwsem: Disable preemption in all down_read*() and up_read() code paths
-Date: Tue,  7 Mar 2023 17:50:00 +0100
-Message-Id: <20230307170004.644474928@linuxfoundation.org>
+Subject: [PATCH 6.1 067/885] arm64: dts: renesas: beacon-renesom: Fix gpio expander reference
+Date: Tue,  7 Mar 2023 17:50:01 +0100
+Message-Id: <20230307170004.690103611@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,132 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Waiman Long <longman@redhat.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 3f5245538a1964ae186ab7e1636020a41aa63143 ]
+[ Upstream commit d7f9492dfc03153ac56ab59066a196558748f575 ]
 
-Commit:
+The board used to originally introduce the Beacon Embedded RZ/G2[M/N/H]
+boards had a GPIO expander with address 20, but this was changed when
+the final board went to production.
 
-  91d2a812dfb9 ("locking/rwsem: Make handoff writer optimistically spin on owner")
+The production boards changed both the part itself and the address.
+With the incorrect address, the LCD cannot come up.  If the LCD fails,
+the rcar-du driver fails to come up, and that also breaks HDMI.
 
-... assumes that when the owner field is changed to NULL, the lock will
-become free soon. But commit:
+Pre-release board were not shipped to the general public, so it should
+be safe to push this as a fix.  Anyone with a production board would
+have video fail due to this GPIO expander change.
 
-  48dfb5d2560d ("locking/rwsem: Disable preemption while trying for rwsem lock")
-
-... disabled preemption when acquiring rwsem for write.
-
-However, preemption has not yet been disabled when acquiring a read lock
-on a rwsem.  So a reader can add a RWSEM_READER_BIAS to count without
-setting owner to signal a reader, got preempted out by a RT task which
-then spins in the writer slowpath as owner remains NULL leading to live lock.
-
-One easy way to fix this problem is to disable preemption at all the
-down_read*() and up_read() code paths as implemented in this patch.
-
-Fixes: 91d2a812dfb9 ("locking/rwsem: Make handoff writer optimistically spin on owner")
-Reported-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230126003628.365092-3-longman@redhat.com
+Fixes: a1d8a344f1ca ("arm64: dts: renesas: Introduce r8a774a1-beacon-rzg2m-kit")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230114225647.227972-1-aford173@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/rwsem.c | 30 ++++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+ .../dts/renesas/beacon-renesom-baseboard.dtsi | 24 ++++++++-----------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
-index 44873594de031..324fc370b6a68 100644
---- a/kernel/locking/rwsem.c
-+++ b/kernel/locking/rwsem.c
-@@ -1092,7 +1092,7 @@ rwsem_down_read_slowpath(struct rw_semaphore *sem, long count, unsigned int stat
- 			/* Ordered by sem->wait_lock against rwsem_mark_wake(). */
- 			break;
- 		}
--		schedule();
-+		schedule_preempt_disabled();
- 		lockevent_inc(rwsem_sleep_reader);
- 	}
+diff --git a/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi b/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
+index 8166e3c1ff4e5..cafde91b4721b 100644
+--- a/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
++++ b/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
+@@ -437,20 +437,6 @@ wm8962_endpoint: endpoint {
+ 		};
+ 	};
  
-@@ -1254,14 +1254,20 @@ static struct rw_semaphore *rwsem_downgrade_wake(struct rw_semaphore *sem)
-  */
- static inline int __down_read_common(struct rw_semaphore *sem, int state)
- {
-+	int ret = 0;
- 	long count;
+-	/* 0 - lcd_reset */
+-	/* 1 - lcd_pwr */
+-	/* 2 - lcd_select */
+-	/* 3 - backlight-enable */
+-	/* 4 - Touch_shdwn */
+-	/* 5 - LCD_H_pol */
+-	/* 6 - lcd_V_pol */
+-	gpio_exp1: gpio@20 {
+-		compatible = "onnn,pca9654";
+-		reg = <0x20>;
+-		gpio-controller;
+-		#gpio-cells = <2>;
+-	};
+-
+ 	touchscreen@26 {
+ 		compatible = "ilitek,ili2117";
+ 		reg = <0x26>;
+@@ -482,6 +468,16 @@ hd3ss3220_out_ep: endpoint {
+ 			};
+ 		};
+ 	};
++
++	gpio_exp1: gpio@70 {
++		compatible = "nxp,pca9538";
++		reg = <0x70>;
++		gpio-controller;
++		#gpio-cells = <2>;
++		gpio-line-names = "lcd_reset", "lcd_pwr", "lcd_select",
++				  "backlight-enable", "Touch_shdwn",
++				  "LCD_H_pol", "lcd_V_pol";
++	};
+ };
  
-+	preempt_disable();
- 	if (!rwsem_read_trylock(sem, &count)) {
--		if (IS_ERR(rwsem_down_read_slowpath(sem, count, state)))
--			return -EINTR;
-+		if (IS_ERR(rwsem_down_read_slowpath(sem, count, state))) {
-+			ret = -EINTR;
-+			goto out;
-+		}
- 		DEBUG_RWSEMS_WARN_ON(!is_rwsem_reader_owned(sem), sem);
- 	}
--	return 0;
-+out:
-+	preempt_enable();
-+	return ret;
- }
- 
- static inline void __down_read(struct rw_semaphore *sem)
-@@ -1281,19 +1287,23 @@ static inline int __down_read_killable(struct rw_semaphore *sem)
- 
- static inline int __down_read_trylock(struct rw_semaphore *sem)
- {
-+	int ret = 0;
- 	long tmp;
- 
- 	DEBUG_RWSEMS_WARN_ON(sem->magic != sem, sem);
- 
-+	preempt_disable();
- 	tmp = atomic_long_read(&sem->count);
- 	while (!(tmp & RWSEM_READ_FAILED_MASK)) {
- 		if (atomic_long_try_cmpxchg_acquire(&sem->count, &tmp,
- 						    tmp + RWSEM_READER_BIAS)) {
- 			rwsem_set_reader_owned(sem);
--			return 1;
-+			ret = 1;
-+			break;
- 		}
- 	}
--	return 0;
-+	preempt_enable();
-+	return ret;
- }
- 
- /*
-@@ -1335,6 +1345,7 @@ static inline void __up_read(struct rw_semaphore *sem)
- 	DEBUG_RWSEMS_WARN_ON(sem->magic != sem, sem);
- 	DEBUG_RWSEMS_WARN_ON(!is_rwsem_reader_owned(sem), sem);
- 
-+	preempt_disable();
- 	rwsem_clear_reader_owned(sem);
- 	tmp = atomic_long_add_return_release(-RWSEM_READER_BIAS, &sem->count);
- 	DEBUG_RWSEMS_WARN_ON(tmp < 0, sem);
-@@ -1343,6 +1354,7 @@ static inline void __up_read(struct rw_semaphore *sem)
- 		clear_nonspinnable(sem);
- 		rwsem_wake(sem);
- 	}
-+	preempt_enable();
- }
- 
- /*
-@@ -1662,6 +1674,12 @@ void down_read_non_owner(struct rw_semaphore *sem)
- {
- 	might_sleep();
- 	__down_read(sem);
-+	/*
-+	 * The owner value for a reader-owned lock is mostly for debugging
-+	 * purpose only and is not critical to the correct functioning of
-+	 * rwsem. So it is perfectly fine to set it in a preempt-enabled
-+	 * context here.
-+	 */
- 	__rwsem_set_reader_owned(sem, NULL);
- }
- EXPORT_SYMBOL(down_read_non_owner);
+ &lvds0 {
 -- 
 2.39.2
 
