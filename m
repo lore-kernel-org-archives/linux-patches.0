@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E78FBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:27:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C02C433EF;
-	Tue,  7 Mar 2023 17:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51CC1BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:27:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8FAC433D2;
+	Tue,  7 Mar 2023 17:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210059;
-	bh=iuBnDX04y2ZbW1Y3ZZan0C7qmHGUT/JTlMlSYQdxTHU=;
+	s=korg; t=1678210063;
+	bh=5ABY7QJinPFIzQMlRsUBpPIGIoP0/wB6FyWPK8sPGB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xXPxhSw8LuBhXqrvkTHxecXqnIDhOZYd5gY2VJWRElESf2IBCSv2DsoAMdXwQg4dD
-	 SqQ+Lyb7LWKv5MlZ9ZjzfaH5eObbDaGM1fojbwFdLnedHpJ4U2yG3JOTFkLFqAv8ls
-	 5qahKkIQMFBsp9FBK1msrrK9vwknnUv1odEQogtE=
+	b=XDmOYUoEJ8Q2ARZ3njamPfvtaxzwvfGW/gnKrLbwgLdvGPCk9z+0GgVAwphjyxPT4
+	 3j/AYCUxUXNLK846NVz6bh8Z1bFE9QI8rCX+rOq3L0uVePW9vwlqcNTZ/e0hxXSvmC
+	 0rTtofDl4mJwz0oTw1CLDy8T2xMxTbDuraYK77/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0392/1001] drm/i915/xehp: Annotate a couple more workaround registers as MCR
-Date: Tue,  7 Mar 2023 17:52:44 +0100
-Message-Id: <20230307170038.362178535@linuxfoundation.org>
+Subject: [PATCH 6.2 0419/1001] drm/amdgpu: fix enum odm_combine_mode mismatch
+Date: Tue,  7 Mar 2023 17:53:11 +0100
+Message-Id: <20230307170039.523753727@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,89 +35,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 7649a5d1f263b8cc5c2827ef0443ead9bee9ae0e ]
+[ Upstream commit 087bad7eb1f6945f8232f132953ecc2bda8bd38d ]
 
-GAMSTLB_CTRL and GAMCNTRL_CTRL became multicast/replicated registers on
-Xe_HP.  They should be defined accordingly and use MCR-aware operations.
+A conversion from 'bool' to 'enum odm_combine_mode' was incomplete,
+and gcc warns about this with many instances of
 
-These registers have only been used for some dg2/xehpsdv workarounds, so
-this fix is mostly just for consistency/future-proofing; even lacking
-the MCR annotation, workarounds will always be properly applied in a
-multicast manner on these platforms.
+display/dc/dml/dcn20/display_mode_vba_20.c:3899:44: warning: implicit conversion from 'enum <anonymous>' to 'enum
+odm_combine_mode' [-Wenum-conversion]
+ 3899 |     locals->ODMCombineEnablePerState[i][k] = false;
 
-Cc: Gustavo Sousa <gustavo.sousa@intel.com>
-Fixes: 58bc2453ab8a ("drm/i915: Define multicast registers as a new type")
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230125234159.3015385-3-matthew.d.roper@intel.com
+Change the ones that we get a warning for, using the same numerical
+values to leave the behavior unchanged.
+
+Fixes: 5fc11598166d ("drm/amd/display: expand dml structs")
+Link: https://lore.kernel.org/all/20201026210039.3884312-3-arnd@kernel.org/
+Link: https://lore.kernel.org/all/20210927100659.1431744-1-arnd@kernel.org/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_gt_regs.h     |  4 ++--
- drivers/gpu/drm/i915/gt/intel_workarounds.c | 16 ++++++++--------
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ .../amd/display/dc/dml/dcn20/display_mode_vba_20.c   |  8 ++++----
+ .../amd/display/dc/dml/dcn20/display_mode_vba_20v2.c | 10 +++++-----
+ .../amd/display/dc/dml/dcn21/display_mode_vba_21.c   | 12 ++++++------
+ 3 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt_regs.h b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-index c525fc07a9bcb..0c7e7972cc1c4 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-@@ -1093,12 +1093,12 @@
- #define VEBX_MOD_CTRL				MCR_REG(0xcf38)
- #define   FORCE_MISS_FTLB			REG_BIT(3)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20.c
+index d3b5b6fedf042..6266b0788387e 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20.c
+@@ -3897,14 +3897,14 @@ void dml20_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
+ 					mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine = mode_lib->vba.PixelClock[k] / 2
+ 							* (1 + mode_lib->vba.DISPCLKDPPCLKDSCCLKDownSpreading / 100.0);
  
--#define GEN12_GAMSTLB_CTRL			_MMIO(0xcf4c)
-+#define XEHP_GAMSTLB_CTRL			MCR_REG(0xcf4c)
- #define   CONTROL_BLOCK_CLKGATE_DIS		REG_BIT(12)
- #define   EGRESS_BLOCK_CLKGATE_DIS		REG_BIT(11)
- #define   TAG_BLOCK_CLKGATE_DIS			REG_BIT(7)
+-				locals->ODMCombineEnablePerState[i][k] = false;
++				locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_disabled;
+ 				mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithoutODMCombine;
+ 				if (mode_lib->vba.ODMCapability) {
+ 					if (locals->PlaneRequiredDISPCLKWithoutODMCombine > mode_lib->vba.MaxDispclkRoundedDownToDFSGranularity) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					} else if (locals->HActive[k] > DCN20_MAX_420_IMAGE_WIDTH && locals->OutputFormat[k] == dm_420) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					}
+ 				}
+@@ -3957,7 +3957,7 @@ void dml20_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
+ 				locals->RequiredDISPCLK[i][j] = 0.0;
+ 				locals->DISPCLK_DPPCLK_Support[i][j] = true;
+ 				for (k = 0; k <= mode_lib->vba.NumberOfActivePlanes - 1; k++) {
+-					locals->ODMCombineEnablePerState[i][k] = false;
++					locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_disabled;
+ 					if (locals->SwathWidthYSingleDPP[k] <= locals->MaximumSwathWidth[k]) {
+ 						locals->NoOfDPP[i][j][k] = 1;
+ 						locals->RequiredDPPCLK[i][j][k] = locals->MinDPPCLKUsingSingleDPP[k]
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20v2.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20v2.c
+index edd098c7eb927..989d83ee38421 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20v2.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_mode_vba_20v2.c
+@@ -4008,17 +4008,17 @@ void dml20v2_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode
+ 					mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine = mode_lib->vba.PixelClock[k] / 2
+ 							* (1 + mode_lib->vba.DISPCLKDPPCLKDSCCLKDownSpreading / 100.0);
  
--#define GEN12_GAMCNTRL_CTRL			_MMIO(0xcf54)
-+#define XEHP_GAMCNTRL_CTRL			MCR_REG(0xcf54)
- #define   INVALIDATION_BROADCAST_MODE_DIS	REG_BIT(12)
- #define   GLOBAL_INVALIDATION_MODE		REG_BIT(2)
+-				locals->ODMCombineEnablePerState[i][k] = false;
++				locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_disabled;
+ 				mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithoutODMCombine;
+ 				if (mode_lib->vba.ODMCapability) {
+ 					if (locals->PlaneRequiredDISPCLKWithoutODMCombine > MaxMaxDispclkRoundedDown) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					} else if (locals->DSCEnabled[k] && (locals->HActive[k] > DCN20_MAX_DSC_IMAGE_WIDTH)) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					} else if (locals->HActive[k] > DCN20_MAX_420_IMAGE_WIDTH && locals->OutputFormat[k] == dm_420) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					}
+ 				}
+@@ -4071,7 +4071,7 @@ void dml20v2_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode
+ 				locals->RequiredDISPCLK[i][j] = 0.0;
+ 				locals->DISPCLK_DPPCLK_Support[i][j] = true;
+ 				for (k = 0; k <= mode_lib->vba.NumberOfActivePlanes - 1; k++) {
+-					locals->ODMCombineEnablePerState[i][k] = false;
++					locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_disabled;
+ 					if (locals->SwathWidthYSingleDPP[k] <= locals->MaximumSwathWidth[k]) {
+ 						locals->NoOfDPP[i][j][k] = 1;
+ 						locals->RequiredDPPCLK[i][j][k] = locals->MinDPPCLKUsingSingleDPP[k]
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_mode_vba_21.c b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_mode_vba_21.c
+index 1d84ae50311d9..b7c2844d0cbee 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_mode_vba_21.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_mode_vba_21.c
+@@ -4102,17 +4102,17 @@ void dml21_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
+ 					mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine = mode_lib->vba.PixelClock[k] / 2
+ 							* (1 + mode_lib->vba.DISPCLKDPPCLKDSCCLKDownSpreading / 100.0);
  
-diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-index 9932d748b9d7b..dcc694b8bc8c7 100644
---- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
-+++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-@@ -1555,8 +1555,8 @@ xehpsdv_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
- 	wa_mcr_write_or(wal, XEHP_MERT_MOD_CTRL, FORCE_MISS_FTLB);
- 
- 	/* Wa_14014368820:xehpsdv */
--	wa_write_or(wal, GEN12_GAMCNTRL_CTRL,
--		    INVALIDATION_BROADCAST_MODE_DIS | GLOBAL_INVALIDATION_MODE);
-+	wa_mcr_write_or(wal, XEHP_GAMCNTRL_CTRL,
-+			INVALIDATION_BROADCAST_MODE_DIS | GLOBAL_INVALIDATION_MODE);
- }
- 
- static void
-@@ -1650,10 +1650,10 @@ dg2_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
- 		wa_mcr_write_or(wal, SSMCGCTL9530, RTFUNIT_CLKGATE_DIS);
- 
- 		/* Wa_14010680813:dg2_g10 */
--		wa_write_or(wal, GEN12_GAMSTLB_CTRL,
--			    CONTROL_BLOCK_CLKGATE_DIS |
--			    EGRESS_BLOCK_CLKGATE_DIS |
--			    TAG_BLOCK_CLKGATE_DIS);
-+		wa_mcr_write_or(wal, XEHP_GAMSTLB_CTRL,
-+				CONTROL_BLOCK_CLKGATE_DIS |
-+				EGRESS_BLOCK_CLKGATE_DIS |
-+				TAG_BLOCK_CLKGATE_DIS);
- 	}
- 
- 	/* Wa_14014830051:dg2 */
-@@ -1676,8 +1676,8 @@ dg2_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
- 	wa_mcr_write_or(wal, VEBX_MOD_CTRL, FORCE_MISS_FTLB);
- 
- 	/* Wa_1509235366:dg2 */
--	wa_write_or(wal, GEN12_GAMCNTRL_CTRL,
--		    INVALIDATION_BROADCAST_MODE_DIS | GLOBAL_INVALIDATION_MODE);
-+	wa_mcr_write_or(wal, XEHP_GAMCNTRL_CTRL,
-+			INVALIDATION_BROADCAST_MODE_DIS | GLOBAL_INVALIDATION_MODE);
- }
- 
- static void
+-				locals->ODMCombineEnablePerState[i][k] = false;
++				locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_disabled;
+ 				mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithoutODMCombine;
+ 				if (mode_lib->vba.ODMCapability) {
+ 					if (locals->PlaneRequiredDISPCLKWithoutODMCombine > MaxMaxDispclkRoundedDown) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					} else if (locals->DSCEnabled[k] && (locals->HActive[k] > DCN21_MAX_DSC_IMAGE_WIDTH)) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					} else if (locals->HActive[k] > DCN21_MAX_420_IMAGE_WIDTH && locals->OutputFormat[k] == dm_420) {
+-						locals->ODMCombineEnablePerState[i][k] = true;
++						locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_2to1;
+ 						mode_lib->vba.PlaneRequiredDISPCLK = mode_lib->vba.PlaneRequiredDISPCLKWithODMCombine;
+ 					}
+ 				}
+@@ -4165,7 +4165,7 @@ void dml21_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
+ 				locals->RequiredDISPCLK[i][j] = 0.0;
+ 				locals->DISPCLK_DPPCLK_Support[i][j] = true;
+ 				for (k = 0; k <= mode_lib->vba.NumberOfActivePlanes - 1; k++) {
+-					locals->ODMCombineEnablePerState[i][k] = false;
++					locals->ODMCombineEnablePerState[i][k] = dm_odm_combine_mode_disabled;
+ 					if (locals->SwathWidthYSingleDPP[k] <= locals->MaximumSwathWidth[k]) {
+ 						locals->NoOfDPP[i][j][k] = 1;
+ 						locals->RequiredDPPCLK[i][j][k] = locals->MinDPPCLKUsingSingleDPP[k]
+@@ -5230,7 +5230,7 @@ void dml21_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
+ 			mode_lib->vba.ODMCombineEnabled[k] =
+ 					locals->ODMCombineEnablePerState[mode_lib->vba.VoltageLevel][k];
+ 		} else {
+-			mode_lib->vba.ODMCombineEnabled[k] = false;
++			mode_lib->vba.ODMCombineEnabled[k] = dm_odm_combine_mode_disabled;
+ 		}
+ 		mode_lib->vba.DSCEnabled[k] =
+ 				locals->RequiresDSC[mode_lib->vba.VoltageLevel][k];
 -- 
 2.39.2
 
