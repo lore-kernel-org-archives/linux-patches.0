@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198F3BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:57:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74296C433EF;
-	Tue,  7 Mar 2023 18:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA2DBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:57:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854C9C433D2;
+	Tue,  7 Mar 2023 18:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215465;
-	bh=qNRMbP6qReMO5CvfzMVaV7QSK1rfwCBabCFn9zbe1tU=;
+	s=korg; t=1678215469;
+	bh=IvegPonRFZ27fozfMfL+WMmN/6XRuSp+MW08wHsAWew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7DazNT8zn0dOwprFxbWdnYFRxtlX6VgESr79GTc5e3QZesI6bHk7MoI/96IngBDl
-	 z3TbWQog74u2NVOd26TA6heBLdM6knh7QY6yD/4eprLIsFagO8v/m182d6euz4gotW
-	 07rVC1qQGC0hNKSFdZfJ3TnHL3Y7gjWD/ht2IIbo=
+	b=orL7gcKLNPp7BuR9xEDOZO5/icCZ4cRERvnCydhNi65TruHcow3kP2ho+NlLcWtyH
+	 4R8IsYoT1kOH9XxB35iZwJYCRBwEI7A0Xk/DaTRVblnj3MV1Ds33DBhLwYVq/NUiPf
+	 OVs3JIKrPmCPBHAUFd22CGlFLCFD4MP0HcIdn0d0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
+	Qiheng Lin <linqiheng@huawei.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 271/567] mfd: cs5535: Dont build on UML
-Date: Tue,  7 Mar 2023 18:00:07 +0100
-Message-Id: <20230307165917.670860405@linuxfoundation.org>
+Subject: [PATCH 5.15 272/567] mfd: pcf50633-adc: Fix potential memleak in pcf50633_adc_async_read()
+Date: Tue,  7 Mar 2023 18:00:08 +0100
+Message-Id: <20230307165917.700827514@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,57 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Qiheng Lin <linqiheng@huawei.com>
 
-[ Upstream commit 5ec32a3e4053c1a726b45381d56aa9e39eaf3911 ]
+[ Upstream commit 8b450dcff23aa254844492831a8e2b508a9d522d ]
 
-The cs5535-mfd driver uses CPU-specific data that is not available
-for ARCH=um builds, so don't allow it to be built for UML.
+`req` is allocated in pcf50633_adc_async_read(), but
+adc_enqueue_request() could fail to insert the `req` into queue.
+We need to check the return value and free it in the case of failure.
 
-Prevents these build errors:
-
-In file included from ../arch/x86/include/asm/olpc.h:7,
-                 from ../drivers/mfd/cs5535-mfd.c:17:
-../arch/x86/include/asm/geode.h: In function ‘is_geode_gx’:
-../arch/x86/include/asm/geode.h:16:31: error: ‘struct cpuinfo_um’ has no member named ‘x86_vendor’
-   16 |         return ((boot_cpu_data.x86_vendor == X86_VENDOR_NSC) &&
-../arch/x86/include/asm/geode.h:16:46: error: ‘X86_VENDOR_NSC’ undeclared (first use in this function); did you mean ‘X86_VENDOR_ANY’?
-   16 |         return ((boot_cpu_data.x86_vendor == X86_VENDOR_NSC) &&
-../arch/x86/include/asm/geode.h:17:31: error: ‘struct cpuinfo_um’ has no member named ‘x86’
-   17 |                 (boot_cpu_data.x86 == 5) &&
-../arch/x86/include/asm/geode.h:18:31: error: ‘struct cpuinfo_um’ has no member named ‘x86_model’
-   18 |                 (boot_cpu_data.x86_model == 5));
-../arch/x86/include/asm/geode.h: In function ‘is_geode_lx’:
-../arch/x86/include/asm/geode.h:23:31: error: ‘struct cpuinfo_um’ has no member named ‘x86_vendor’
-   23 |         return ((boot_cpu_data.x86_vendor == X86_VENDOR_AMD) &&
-../arch/x86/include/asm/geode.h:23:46: error: ‘X86_VENDOR_AMD’ undeclared (first use in this function); did you mean ‘X86_VENDOR_ANY’?
-   23 |         return ((boot_cpu_data.x86_vendor == X86_VENDOR_AMD) &&
-../arch/x86/include/asm/geode.h:24:31: error: ‘struct cpuinfo_um’ has no member named ‘x86’
-   24 |                 (boot_cpu_data.x86 == 5) &&
-../arch/x86/include/asm/geode.h:25:31: error: ‘struct cpuinfo_um’ has no member named ‘x86_model’
-   25 |                 (boot_cpu_data.x86_model == 10));
-
-Fixes: 68f5d3f3b654 ("um: add PCI over virtio emulation driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Fixes: 08c3e06a5eb2 ("mfd: PCF50633 adc driver")
+Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
 Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20221201012541.11809-1-rdunlap@infradead.org
+Link: https://lore.kernel.org/r/20221208061555.8776-1-linqiheng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mfd/pcf50633-adc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
-index 5dd7ea0ebd46c..ef550d33af920 100644
---- a/drivers/mfd/Kconfig
-+++ b/drivers/mfd/Kconfig
-@@ -15,6 +15,7 @@ config MFD_CS5535
- 	tristate "AMD CS5535 and CS5536 southbridge core functions"
- 	select MFD_CORE
- 	depends on PCI && (X86_32 || (X86 && COMPILE_TEST))
-+	depends on !UML
- 	help
- 	  This is the core driver for CS5535/CS5536 MFD functions.  This is
- 	  necessary for using the board's GPIO and MFGPT functionality.
+diff --git a/drivers/mfd/pcf50633-adc.c b/drivers/mfd/pcf50633-adc.c
+index 5cd653e615125..191b1bc6141c2 100644
+--- a/drivers/mfd/pcf50633-adc.c
++++ b/drivers/mfd/pcf50633-adc.c
+@@ -136,6 +136,7 @@ int pcf50633_adc_async_read(struct pcf50633 *pcf, int mux, int avg,
+ 			     void *callback_param)
+ {
+ 	struct pcf50633_adc_request *req;
++	int ret;
+ 
+ 	/* req is freed when the result is ready, in interrupt handler */
+ 	req = kmalloc(sizeof(*req), GFP_KERNEL);
+@@ -147,7 +148,11 @@ int pcf50633_adc_async_read(struct pcf50633 *pcf, int mux, int avg,
+ 	req->callback = callback;
+ 	req->callback_param = callback_param;
+ 
+-	return adc_enqueue_request(pcf, req);
++	ret = adc_enqueue_request(pcf, req);
++	if (ret)
++		kfree(req);
++
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(pcf50633_adc_async_read);
+ 
 -- 
 2.39.2
 
