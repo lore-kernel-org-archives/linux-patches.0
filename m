@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD67BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:46:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A1EC433EF;
-	Tue,  7 Mar 2023 17:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9A4BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:46:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46C3DC433D2;
+	Tue,  7 Mar 2023 17:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211185;
-	bh=NiNFn6FeKiBGfKYJaiyIAfUoEEPS2QismeyVd4s17AU=;
+	s=korg; t=1678211188;
+	bh=OS0gsR0zLlTOuBv5HysQkqgSDIydI0CVG9CyDf6+JH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b8YySk4g1HJ48YXhAAqXu1Mx5yxyWUsmZbEMyn/3jt9D6U5NcLC0FAvQUGCv6Qz83
-	 vdiKaz8LNVolwKSrAXxzbglbsare4F1ejx0KoR6yhFj74u/FVWbgwNu0ec2plXEx0N
-	 0XoOO0qvlbcYodz1uV6fUxU0fDRTWABMMGcfo2Mc=
+	b=pOSRTSkmqyeGquOjLwpVrBT97j3XnWs1vwQFdXS7Qn+8uNbyuu1706Nft39sOFN6c
+	 5/PuRSwXrG0PUn3wYa1KvwAlIBz3dO0lDKQ8a4Ax7xW1HiJb9XLRJCuuMWnuCMWvgV
+	 y58nLjeyH+CY5pr03pZgowxQm1eW4jVIQlWcO2/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
 	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.2 0780/1001] scsi: mpi3mr: Fix issues in mpi3mr_get_all_tgt_info()
-Date: Tue,  7 Mar 2023 17:59:12 +0100
-Message-Id: <20230307170055.600074998@linuxfoundation.org>
+Subject: [PATCH 6.2 0781/1001] scsi: mpi3mr: Remove unnecessary memcpy() to alltgt_info->dmi
+Date: Tue,  7 Mar 2023 17:59:13 +0100
+Message-Id: <20230307170055.637549782@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,28 +37,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-commit fb428a2005fc1260d18b989cc5199f281617f44d upstream.
+commit eeb270aee3e085411399f129fc14fa04bd6d83cf upstream.
 
-The function mpi3mr_get_all_tgt_info() has four issues:
+In the function mpi3mr_get_all_tgt_info(), devmap_info points to
+alltgt_info->dmi then there is no need to memcpy() data from devmap_info to
+alltgt_info->dmi. Remove the unnecessary memcpy(). This also allows to
+remove the local variable 'rval' and the goto label 'out'.
 
-1) It calculates valid entry length in alltgt_info assuming the header part
-   of the struct mpi3mr_device_map_info would equal to sizeof(u32).  The
-   correct size is sizeof(u64).
-
-2) When it calculates the valid entry length kern_entrylen, it excludes one
-   entry by subtracting 1 from num_devices.
-
-3) It copies num_device by calling memcpy(). Substitution is enough.
-
-4) It does not specify the calculated length to sg_copy_from_buffer().
-   Instead, it specifies the payload length which is larger than the
-   alltgt_info size. It causes "BUG: KASAN: slab-out-of-bounds".
-
-Fix the issues by using the correct header size, removing the subtraction
-from num_devices, replacing the memcpy() with substitution and specifying
-the correct length to sg_copy_from_buffer().
-
-Link: https://lore.kernel.org/r/20230214005019.1897251-2-shinichiro.kawasaki@wdc.com
+Link: https://lore.kernel.org/r/20230214005019.1897251-3-shinichiro.kawasaki@wdc.com
 Cc: stable@vger.kernel.org
 Fixes: f5e6d5a34376 ("scsi: mpi3mr: Add support for driver commands")
 Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
@@ -66,59 +52,49 @@ Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_app.c |   15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_app.c |   13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
 --- a/drivers/scsi/mpi3mr/mpi3mr_app.c
 +++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -312,7 +312,7 @@ static long mpi3mr_get_all_tgt_info(stru
- 		num_devices++;
- 	spin_unlock_irqrestore(&mrioc->tgtdev_lock, flags);
- 
--	if ((job->request_payload.payload_len == sizeof(u32)) ||
-+	if ((job->request_payload.payload_len <= sizeof(u64)) ||
- 		list_empty(&mrioc->tgtdev_list)) {
- 		sg_copy_from_buffer(job->request_payload.sg_list,
- 				    job->request_payload.sg_cnt,
-@@ -320,14 +320,14 @@ static long mpi3mr_get_all_tgt_info(stru
- 		return 0;
+@@ -293,7 +293,6 @@ out:
+ static long mpi3mr_get_all_tgt_info(struct mpi3mr_ioc *mrioc,
+ 	struct bsg_job *job)
+ {
+-	long rval = -EINVAL;
+ 	u16 num_devices = 0, i = 0, size;
+ 	unsigned long flags;
+ 	struct mpi3mr_tgt_dev *tgtdev;
+@@ -304,7 +303,7 @@ static long mpi3mr_get_all_tgt_info(stru
+ 	if (job->request_payload.payload_len < sizeof(u32)) {
+ 		dprint_bsg_err(mrioc, "%s: invalid size argument\n",
+ 		    __func__);
+-		return rval;
++		return -EINVAL;
  	}
  
--	kern_entrylen = (num_devices - 1) * sizeof(*devmap_info);
--	size = sizeof(*alltgt_info) + kern_entrylen;
-+	kern_entrylen = num_devices * sizeof(*devmap_info);
-+	size = sizeof(u64) + kern_entrylen;
- 	alltgt_info = kzalloc(size, GFP_KERNEL);
- 	if (!alltgt_info)
- 		return -ENOMEM;
- 
- 	devmap_info = alltgt_info->dmi;
--	memset((u8 *)devmap_info, 0xFF, (kern_entrylen + sizeof(*devmap_info)));
-+	memset((u8 *)devmap_info, 0xFF, kern_entrylen);
  	spin_lock_irqsave(&mrioc->tgtdev_lock, flags);
- 	list_for_each_entry(tgtdev, &mrioc->tgtdev_list, list) {
- 		if (i < num_devices) {
-@@ -344,9 +344,10 @@ static long mpi3mr_get_all_tgt_info(stru
- 	num_devices = i;
- 	spin_unlock_irqrestore(&mrioc->tgtdev_lock, flags);
- 
--	memcpy(&alltgt_info->num_devices, &num_devices, sizeof(num_devices));
-+	alltgt_info->num_devices = num_devices;
- 
--	usr_entrylen = (job->request_payload.payload_len - sizeof(u32)) / sizeof(*devmap_info);
-+	usr_entrylen = (job->request_payload.payload_len - sizeof(u64)) /
-+		sizeof(*devmap_info);
+@@ -350,20 +349,12 @@ static long mpi3mr_get_all_tgt_info(stru
+ 		sizeof(*devmap_info);
  	usr_entrylen *= sizeof(*devmap_info);
  	min_entrylen = min(usr_entrylen, kern_entrylen);
- 	if (min_entrylen && (!memcpy(&alltgt_info->dmi, devmap_info, min_entrylen))) {
-@@ -358,7 +359,7 @@ static long mpi3mr_get_all_tgt_info(stru
+-	if (min_entrylen && (!memcpy(&alltgt_info->dmi, devmap_info, min_entrylen))) {
+-		dprint_bsg_err(mrioc, "%s:%d: device map info copy failed\n",
+-		    __func__, __LINE__);
+-		rval = -EFAULT;
+-		goto out;
+-	}
  
  	sg_copy_from_buffer(job->request_payload.sg_list,
  			    job->request_payload.sg_cnt,
--			    alltgt_info, job->request_payload.payload_len);
-+			    alltgt_info, (min_entrylen + sizeof(u64)));
- 	rval = 0;
- out:
+ 			    alltgt_info, (min_entrylen + sizeof(u64)));
+-	rval = 0;
+-out:
  	kfree(alltgt_info);
+-	return rval;
++	return 0;
+ }
+ /**
+  * mpi3mr_get_change_count - Get topology change count
 
 
