@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A291BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:33:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764A9C433EF;
-	Tue,  7 Mar 2023 18:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1FABA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:33:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89611C433EF;
+	Tue,  7 Mar 2023 18:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214024;
-	bh=JcaqCcJb64welFPiUHNRXTUaQNH/TDHipslb0rbodL0=;
+	s=korg; t=1678214028;
+	bh=hD2BvJLSd/M3aiKh7/fdmWlFxABG0f6fyzt4dUZfTZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DQuTSQMWhcVvrr1OR/d0EtZ/7QlNrdt38yw4FbE/o10lJbAtz7iQ6QGmkn1/dbm0M
-	 uhQW+LFAEdeQGN1NlcTIAIRI9au13opQ4QaKS3MRsWwHUYu569EWYD1bcbN4aA1zHG
-	 xQDN+xCp6l2TxmjKMixr5vGVemvgE9A78f7zgkno=
+	b=aWwrunPuhl5uKtQc2QIA9t+aVrm/cmyd3zXrGg2M/7KaGNkzTilGYWBZuc/3hKXDg
+	 cS0QmEOqbiAWylmxR/BwF3B4qF5rA7VPbJGmnwkCWyQdedDmJvlVHC8DwV37Nv0e3A
+	 Bj9/HwmdQtciss6roMQ1iWHGWLiWutMm5XbtFwdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nico Boehr <nrb@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 6.1 669/885] KVM: s390: disable migration mode when dirty tracking is disabled
-Date: Tue,  7 Mar 2023 18:00:03 +0100
-Message-Id: <20230307170031.228818777@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>
+Subject: [PATCH 6.1 696/885] fs: dlm: move sending fin message into state change handling
+Date: Tue,  7 Mar 2023 18:00:30 +0100
+Message-Id: <20230307170032.338734383@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,158 +34,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nico Boehr <nrb@linux.ibm.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-commit f2d3155e2a6bac44d16f04415a321e8707d895c6 upstream.
+commit a58496361802070996f9bd76e941d109c4a85ebd upstream.
 
-Migration mode is a VM attribute which enables tracking of changes in
-storage attributes (PGSTE). It assumes dirty tracking is enabled on all
-memslots to keep a dirty bitmap of pages with changed storage attributes.
-
-When enabling migration mode, we currently check that dirty tracking is
-enabled for all memslots. However, userspace can disable dirty tracking
-without disabling migration mode.
-
-Since migration mode is pointless with dirty tracking disabled, disable
-migration mode whenever userspace disables dirty tracking on any slot.
-
-Also update the documentation to clarify that dirty tracking must be
-enabled when enabling migration mode, which is already enforced by the
-code in kvm_s390_vm_start_migration().
-
-Also highlight in the documentation for KVM_S390_GET_CMMA_BITS that it
-can now fail with -EINVAL when dirty tracking is disabled while
-migration mode is on. Move all the error codes to a table so this stays
-readable.
-
-To disable migration mode, slots_lock should be held, which is taken
-in kvm_set_memory_region() and thus held in
-kvm_arch_prepare_memory_region().
-
-Restructure the prepare code a bit so all the sanity checking is done
-before disabling migration mode. This ensures migration mode isn't
-disabled when some sanity check fails.
+This patch moves the send fin handling, which should appear in a specific
+state change, into the state change handling while the per node
+state_lock is held. I experienced issues with other messages because
+we changed the state and a fin message was sent out in a different state.
 
 Cc: stable@vger.kernel.org
-Fixes: 190df4a212a7 ("KVM: s390: CMMA tracking, ESSA emulation, migration mode")
-Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230127140532.230651-2-nrb@linux.ibm.com
-Message-Id: <20230127140532.230651-2-nrb@linux.ibm.com>
-[frankja@linux.ibm.com: fixed commit message typo, moved api.rst error table upwards]
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Fixes: 489d8e559c65 ("fs: dlm: add reliable connection if reconnect")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/virt/kvm/api.rst        |   18 ++++++++-----
- Documentation/virt/kvm/devices/vm.rst |    4 ++
- arch/s390/kvm/kvm-s390.c              |   47 +++++++++++++++++++++++-----------
- 3 files changed, 48 insertions(+), 21 deletions(-)
+ fs/dlm/midcomms.c |   33 +++++++++------------------------
+ 1 file changed, 9 insertions(+), 24 deletions(-)
 
---- a/Documentation/virt/kvm/api.rst
-+++ b/Documentation/virt/kvm/api.rst
-@@ -4483,6 +4483,18 @@ not holding a previously reported uncorr
- :Parameters: struct kvm_s390_cmma_log (in, out)
- :Returns: 0 on success, a negative value on error
+--- a/fs/dlm/midcomms.c
++++ b/fs/dlm/midcomms.c
+@@ -401,7 +401,7 @@ static int dlm_send_fin(struct midcomms_
+ 	struct dlm_mhandle *mh;
+ 	char *ppc;
  
-+Errors:
-+
-+  ======     =============================================================
-+  ENOMEM     not enough memory can be allocated to complete the task
-+  ENXIO      if CMMA is not enabled
-+  EINVAL     if KVM_S390_CMMA_PEEK is not set but migration mode was not enabled
-+  EINVAL     if KVM_S390_CMMA_PEEK is not set but dirty tracking has been
-+             disabled (and thus migration mode was automatically disabled)
-+  EFAULT     if the userspace address is invalid or if no page table is
-+             present for the addresses (e.g. when using hugepages).
-+  ======     =============================================================
-+
- This ioctl is used to get the values of the CMMA bits on the s390
- architecture. It is meant to be used in two scenarios:
+-	mh = dlm_midcomms_get_mhandle(node->nodeid, mb_len, GFP_NOFS, &ppc);
++	mh = dlm_midcomms_get_mhandle(node->nodeid, mb_len, GFP_ATOMIC, &ppc);
+ 	if (!mh)
+ 		return -ENOMEM;
  
-@@ -4563,12 +4575,6 @@ mask is unused.
- 
- values points to the userspace buffer where the result will be stored.
- 
--This ioctl can fail with -ENOMEM if not enough memory can be allocated to
--complete the task, with -ENXIO if CMMA is not enabled, with -EINVAL if
--KVM_S390_CMMA_PEEK is not set but migration mode was not enabled, with
---EFAULT if the userspace address is invalid or if no page table is
--present for the addresses (e.g. when using hugepages).
+@@ -503,8 +503,8 @@ static void dlm_midcomms_receive_buffer(
+ 					node->state = DLM_LAST_ACK;
+ 					pr_debug("switch node %d to state %s case 1\n",
+ 						 node->nodeid, dlm_state_str(node->state));
+-					spin_unlock(&node->state_lock);
+-					goto send_fin;
++					set_bit(DLM_NODE_FLAG_STOP_RX, &node->flags);
++					dlm_send_fin(node, dlm_pas_fin_ack_rcv);
+ 				}
+ 				break;
+ 			case DLM_FIN_WAIT1:
+@@ -547,12 +547,6 @@ static void dlm_midcomms_receive_buffer(
+ 		log_print_ratelimited("ignore dlm msg because seq mismatch, seq: %u, expected: %u, nodeid: %d",
+ 				      seq, node->seq_next, node->nodeid);
+ 	}
 -
- 4.108 KVM_S390_SET_CMMA_BITS
- ----------------------------
- 
---- a/Documentation/virt/kvm/devices/vm.rst
-+++ b/Documentation/virt/kvm/devices/vm.rst
-@@ -302,6 +302,10 @@ Allows userspace to start migration mode
- Setting this attribute when migration mode is already active will have
- no effects.
- 
-+Dirty tracking must be enabled on all memslots, else -EINVAL is returned. When
-+dirty tracking is disabled on any memslot, migration mode is automatically
-+stopped.
-+
- :Parameters: none
- :Returns:   -ENOMEM if there is not enough free memory to start migration mode;
- 	    -EINVAL if the state of the VM is invalid (e.g. no memory defined);
---- a/arch/s390/kvm/kvm-s390.c
-+++ b/arch/s390/kvm/kvm-s390.c
-@@ -5579,23 +5579,40 @@ int kvm_arch_prepare_memory_region(struc
- 	if (kvm_s390_pv_get_handle(kvm))
- 		return -EINVAL;
- 
--	if (change == KVM_MR_DELETE || change == KVM_MR_FLAGS_ONLY)
--		return 0;
+-	return;
 -
--	/* A few sanity checks. We can have memory slots which have to be
--	   located/ended at a segment boundary (1MB). The memory in userland is
--	   ok to be fragmented into various different vmas. It is okay to mmap()
--	   and munmap() stuff in this slot after doing this call at any time */
--
--	if (new->userspace_addr & 0xffffful)
--		return -EINVAL;
-+	if (change != KVM_MR_DELETE && change != KVM_MR_FLAGS_ONLY) {
-+		/*
-+		 * A few sanity checks. We can have memory slots which have to be
-+		 * located/ended at a segment boundary (1MB). The memory in userland is
-+		 * ok to be fragmented into various different vmas. It is okay to mmap()
-+		 * and munmap() stuff in this slot after doing this call at any time
-+		 */
-+
-+		if (new->userspace_addr & 0xffffful)
-+			return -EINVAL;
-+
-+		size = new->npages * PAGE_SIZE;
-+		if (size & 0xffffful)
-+			return -EINVAL;
-+
-+		if ((new->base_gfn * PAGE_SIZE) + size > kvm->arch.mem_limit)
-+			return -EINVAL;
-+	}
- 
--	size = new->npages * PAGE_SIZE;
--	if (size & 0xffffful)
--		return -EINVAL;
-+	if (!kvm->arch.migration_mode)
-+		return 0;
- 
--	if ((new->base_gfn * PAGE_SIZE) + size > kvm->arch.mem_limit)
--		return -EINVAL;
-+	/*
-+	 * Turn off migration mode when:
-+	 * - userspace creates a new memslot with dirty logging off,
-+	 * - userspace modifies an existing memslot (MOVE or FLAGS_ONLY) and
-+	 *   dirty logging is turned off.
-+	 * Migration mode expects dirty page logging being enabled to store
-+	 * its dirty bitmap.
-+	 */
-+	if (change != KVM_MR_DELETE &&
-+	    !(new->flags & KVM_MEM_LOG_DIRTY_PAGES))
-+		WARN(kvm_s390_vm_stop_migration(kvm),
-+		     "Failed to stop migration mode");
- 
- 	return 0;
+-send_fin:
+-	set_bit(DLM_NODE_FLAG_STOP_RX, &node->flags);
+-	dlm_send_fin(node, dlm_pas_fin_ack_rcv);
  }
+ 
+ static struct midcomms_node *
+@@ -1286,11 +1280,11 @@ void dlm_midcomms_remove_member(int node
+ 		case DLM_CLOSE_WAIT:
+ 			/* passive shutdown DLM_LAST_ACK case 2 */
+ 			node->state = DLM_LAST_ACK;
+-			spin_unlock(&node->state_lock);
+-
+ 			pr_debug("switch node %d to state %s case 2\n",
+ 				 node->nodeid, dlm_state_str(node->state));
+-			goto send_fin;
++			set_bit(DLM_NODE_FLAG_STOP_RX, &node->flags);
++			dlm_send_fin(node, dlm_pas_fin_ack_rcv);
++			break;
+ 		case DLM_LAST_ACK:
+ 			/* probably receive fin caught it, do nothing */
+ 			break;
+@@ -1306,12 +1300,6 @@ void dlm_midcomms_remove_member(int node
+ 	spin_unlock(&node->state_lock);
+ 
+ 	srcu_read_unlock(&nodes_srcu, idx);
+-	return;
+-
+-send_fin:
+-	set_bit(DLM_NODE_FLAG_STOP_RX, &node->flags);
+-	dlm_send_fin(node, dlm_pas_fin_ack_rcv);
+-	srcu_read_unlock(&nodes_srcu, idx);
+ }
+ 
+ static void midcomms_node_release(struct rcu_head *rcu)
+@@ -1342,6 +1330,7 @@ static void midcomms_shutdown(struct mid
+ 		node->state = DLM_FIN_WAIT1;
+ 		pr_debug("switch node %d to state %s case 2\n",
+ 			 node->nodeid, dlm_state_str(node->state));
++		dlm_send_fin(node, dlm_act_fin_ack_rcv);
+ 		break;
+ 	case DLM_CLOSED:
+ 		/* we have what we want */
+@@ -1355,12 +1344,8 @@ static void midcomms_shutdown(struct mid
+ 	}
+ 	spin_unlock(&node->state_lock);
+ 
+-	if (node->state == DLM_FIN_WAIT1) {
+-		dlm_send_fin(node, dlm_act_fin_ack_rcv);
+-
+-		if (DLM_DEBUG_FENCE_TERMINATION)
+-			msleep(5000);
+-	}
++	if (DLM_DEBUG_FENCE_TERMINATION)
++		msleep(5000);
+ 
+ 	/* wait for other side dlm + fin */
+ 	ret = wait_event_timeout(node->shutdown_wait,
 
 
