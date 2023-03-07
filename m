@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF25BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234EAC433D2;
-	Tue,  7 Mar 2023 17:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6B1BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B69C433EF;
+	Tue,  7 Mar 2023 17:54:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211668;
-	bh=gq02DswUiICYcpZAVT4by6ofriE+TCB6Gbc1Uux5ID4=;
+	s=korg; t=1678211671;
+	bh=7S4sb5OLz0mqz8LvUnV51zCb2W8YlnZ3t+bi/7xca+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YFp5LesgVcViSEleL3FuthnJJUbPuQ0P2mIY9rhFJk8/5veaGGCj4ITo9nla/nlE2
-	 rsohCxu4vNvs4uXPKx6Eg3q/zPNCBIoHQ6co31Ib3C8wDUwxRVr4W6SGjsGPlUNeeH
-	 VayXwAC1paxkBRhf6fUH5qVLF48YUs0rECNfoIKo=
+	b=OfEDGtlgyOCQCqkqlV2AA2PL2ruGrTLcIqWMTpoh9tx8vWbvMTjWXn3TCP3+rZu1y
+	 trZiHiotbfh24wvdi1IgxvmiZfmgx1tzuzF0eEfoMBy353DUk4icthKKZKQLY9q5J/
+	 rQ4eXnKPcI8V3hgwY924ovga3OmmYy0K5XjeNDnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Henderson <rth@twiddle.net>,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 6.2 0938/1001] alpha: fix FEN fault handling
-Date: Tue,  7 Mar 2023 18:01:50 +0100
-Message-Id: <20230307170102.816454533@linuxfoundation.org>
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@redhat.com>,
+	Pavel Tatashin <pasha.tatashin@soleen.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 6.2 0939/1001] dax/kmem: Fix leak of memory-hotplug resources
+Date: Tue,  7 Mar 2023 18:01:51 +0100
+Message-Id: <20230307170102.865879642@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,88 +38,136 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Dan Williams <dan.j.williams@intel.com>
 
-commit 977a3009547dad4a5bc95d91be4a58c9f7eedac0 upstream.
+commit e686c32590f40bffc45f105c04c836ffad3e531a upstream.
 
-Type 3 instruction fault (FPU insn with FPU disabled) is handled
-by quietly enabling FPU and returning.  Which is fine, except that
-we need to do that both for fault in userland and in the kernel;
-the latter *can* legitimately happen - all it takes is this:
+While experimenting with CXL region removal the following corruption of
+/proc/iomem appeared.
 
-.global _start
-_start:
-        call_pal 0xae
-	lda $0, 0
-	ldq $0, 0($0)
+Before:
+f010000000-f04fffffff : CXL Window 0
+  f010000000-f02fffffff : region4
+    f010000000-f02fffffff : dax4.0
+      f010000000-f02fffffff : System RAM (kmem)
 
-- call_pal CLRFEN to clear "FPU enabled" flag and arrange for
-a signal delivery (SIGSEGV in this case).
+After (modprobe -r cxl_test):
+f010000000-f02fffffff : **redacted binary garbage**
+  f010000000-f02fffffff : System RAM (kmem)
 
-Fixed by moving the handling of type 3 into the common part of
-do_entIF(), before we check for kernel vs. user mode.
+...and testing further the same is visible with persistent memory
+assigned to kmem:
 
-Incidentally, the check for kernel mode is unidiomatic; the normal
-way to do that is !user_mode(regs).  The difference is that
-the open-coded variant treats any of bits 63..3 of regs->ps being
-set as "it's user mode" while the normal approach is to check just
-the bit 3.  PS is a 4-bit register and regs->ps always will have
-bits 63..4 clear, so the open-coded variant here is actually equivalent
-to !user_mode(regs).  Harder to follow, though...
+Before:
+480000000-243fffffff : Persistent Memory
+  480000000-57e1fffff : namespace3.0
+  580000000-243fffffff : dax3.0
+    580000000-243fffffff : System RAM (kmem)
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Richard Henderson <rth@twiddle.net>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+After (ndctl disable-region all):
+480000000-243fffffff : Persistent Memory
+  580000000-243fffffff : ***redacted binary garbage***
+    580000000-243fffffff : System RAM (kmem)
+
+The corrupted data is from a use-after-free of the "dax4.0" and "dax3.0"
+resources, and it also shows that the "System RAM (kmem)" resource is
+not being removed. The bug does not appear after "modprobe -r kmem", it
+requires the parent of "dax4.0" and "dax3.0" to be removed which
+re-parents the leaked "System RAM (kmem)" instances. Those in turn
+reference the freed resource as a parent.
+
+First up for the fix is release_mem_region_adjustable() needs to
+reliably delete the resource inserted by add_memory_driver_managed().
+That is thwarted by a check for IORESOURCE_SYSRAM that predates the
+dax/kmem driver, from commit:
+
+65c78784135f ("kernel, resource: check for IORESOURCE_SYSRAM in release_mem_region_adjustable")
+
+That appears to be working around the behavior of HMM's
+"MEMORY_DEVICE_PUBLIC" facility that has since been deleted. With that
+check removed the "System RAM (kmem)" resource gets removed, but
+corruption still occurs occasionally because the "dax" resource is not
+reliably removed.
+
+The dax range information is freed before the device is unregistered, so
+the driver can not reliably recall (another use after free) what it is
+meant to release. Lastly if that use after free got lucky, the driver
+was covering up the leak of "System RAM (kmem)" due to its use of
+release_resource() which detaches, but does not free, child resources.
+The switch to remove_resource() forces remove_memory() to be responsible
+for the deletion of the resource added by add_memory_driver_managed().
+
+Fixes: c2f3011ee697 ("device-dax: add an allocation interface for device-dax instances")
+Cc: <stable@vger.kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Pavel Tatashin <pasha.tatashin@soleen.com>
+Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
+Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/167653656244.3147810.5705900882794040229.stgit@dwillia2-xfh.jf.intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/kernel/traps.c |   30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ drivers/dax/bus.c  |    2 +-
+ drivers/dax/kmem.c |    4 ++--
+ kernel/resource.c  |   14 --------------
+ 3 files changed, 3 insertions(+), 17 deletions(-)
 
---- a/arch/alpha/kernel/traps.c
-+++ b/arch/alpha/kernel/traps.c
-@@ -233,7 +233,21 @@ do_entIF(unsigned long type, struct pt_r
- {
- 	int signo, code;
+--- a/drivers/dax/bus.c
++++ b/drivers/dax/bus.c
+@@ -427,8 +427,8 @@ static void unregister_dev_dax(void *dev
+ 	dev_dbg(dev, "%s\n", __func__);
  
--	if ((regs->ps & ~IPL_MAX) == 0) {
-+	if (type == 3) { /* FEN fault */
-+		/* Irritating users can call PAL_clrfen to disable the
-+		   FPU for the process.  The kernel will then trap in
-+		   do_switch_stack and undo_switch_stack when we try
-+		   to save and restore the FP registers.
-+
-+		   Given that GCC by default generates code that uses the
-+		   FP registers, PAL_clrfen is not useful except for DoS
-+		   attacks.  So turn the bleeding FPU back on and be done
-+		   with it.  */
-+		current_thread_info()->pcb.flags |= 1;
-+		__reload_thread(&current_thread_info()->pcb);
-+		return;
-+	}
-+	if (!user_mode(regs)) {
- 		if (type == 1) {
- 			const unsigned int *data
- 			  = (const unsigned int *) regs->pc;
-@@ -366,20 +380,6 @@ do_entIF(unsigned long type, struct pt_r
+ 	kill_dev_dax(dev_dax);
+-	free_dev_dax_ranges(dev_dax);
+ 	device_del(dev);
++	free_dev_dax_ranges(dev_dax);
+ 	put_device(dev);
+ }
+ 
+--- a/drivers/dax/kmem.c
++++ b/drivers/dax/kmem.c
+@@ -146,7 +146,7 @@ static int dev_dax_kmem_probe(struct dev
+ 		if (rc) {
+ 			dev_warn(dev, "mapping%d: %#llx-%#llx memory add failed\n",
+ 					i, range.start, range.end);
+-			release_resource(res);
++			remove_resource(res);
+ 			kfree(res);
+ 			data->res[i] = NULL;
+ 			if (mapped)
+@@ -195,7 +195,7 @@ static void dev_dax_kmem_remove(struct d
+ 
+ 		rc = remove_memory(range.start, range_len(&range));
+ 		if (rc == 0) {
+-			release_resource(data->res[i]);
++			remove_resource(data->res[i]);
+ 			kfree(data->res[i]);
+ 			data->res[i] = NULL;
+ 			success++;
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -1343,20 +1343,6 @@ retry:
+ 			continue;
  		}
- 		break;
  
--	      case 3: /* FEN fault */
--		/* Irritating users can call PAL_clrfen to disable the
--		   FPU for the process.  The kernel will then trap in
--		   do_switch_stack and undo_switch_stack when we try
--		   to save and restore the FP registers.
+-		/*
+-		 * All memory regions added from memory-hotplug path have the
+-		 * flag IORESOURCE_SYSTEM_RAM. If the resource does not have
+-		 * this flag, we know that we are dealing with a resource coming
+-		 * from HMM/devm. HMM/devm use another mechanism to add/release
+-		 * a resource. This goes via devm_request_mem_region and
+-		 * devm_release_mem_region.
+-		 * HMM/devm take care to release their resources when they want,
+-		 * so if we are dealing with them, let us just back off here.
+-		 */
+-		if (!(res->flags & IORESOURCE_SYSRAM)) {
+-			break;
+-		}
 -
--		   Given that GCC by default generates code that uses the
--		   FP registers, PAL_clrfen is not useful except for DoS
--		   attacks.  So turn the bleeding FPU back on and be done
--		   with it.  */
--		current_thread_info()->pcb.flags |= 1;
--		__reload_thread(&current_thread_info()->pcb);
--		return;
--
- 	      case 5: /* illoc */
- 	      default: /* unexpected instruction-fault type */
- 		      ;
+ 		if (!(res->flags & IORESOURCE_MEM))
+ 			break;
+ 
 
 
