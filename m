@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764A6BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:48:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD440C433EF;
-	Tue,  7 Mar 2023 17:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCF7BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:48:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047B2C4339B;
+	Tue,  7 Mar 2023 17:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211293;
-	bh=h2fx1X61hkCZaPdHcPkW57mliNogB1E5uCoTLWt3nes=;
+	s=korg; t=1678211296;
+	bh=wUejTEtWLIfLcBfObVwX9nGSvJlnoWoQw0P8Qt8u4Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NI4cw5Aa87HX/ZdkSbT3Jt+NGYnlXXb5ngcQMLEs0FH0ouIUKvIVoxjnqcpt4lDUe
-	 A7t2JVdfolCryoomJ2j5vCtFSK/RhBopTJblA7UKNEqq2wrSbrllJhl2cWyQdh2Jr9
-	 62oSMNKPeFQrP7IcssaYj8ITEqdRG4m79CVqAfSQ=
+	b=dSjj6qgT1nSH6h5DdtJhkx3MrdXXA7sCq+b5MbXJF00jKym7jgB6Bi54jWzaexe35
+	 dw/izXUOq9o82d1rRrtrkBv6XqWPxPdlH6zIDjon0dh/2xENt1HAIBTkuBQSKF+XVN
+	 4I9C3dBBjCgrpV8IHwzueO+vgsNj343JSNfcmg4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+60f291a24acecb3c2bd5@syzkaller.appspotmail.com,
+	syzbot+0937935b993956ba28ab@syzkaller.appspotmail.com,
 	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.2 0815/1001] udf: Do not bother merging very long extents
-Date: Tue,  7 Mar 2023 17:59:47 +0100
-Message-Id: <20230307170057.117619134@linuxfoundation.org>
+Subject: [PATCH 6.2 0816/1001] udf: Do not update file length for failed writes to inline files
+Date: Tue,  7 Mar 2023 17:59:48 +0100
+Message-Id: <20230307170057.164591820@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,50 +36,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-commit 53cafe1d6d8ef9f93318e5bfccc0d24f27d41ced upstream.
+commit 256fe4162f8b5a1625b8603ca5f7ff79725bfb47 upstream.
 
-When merging very long extents we try to push as much length as possible
-to the first extent. However this is unnecessarily complicated and not
-really worth the trouble. Furthermore there was a bug in the logic
-resulting in corrupting extents in the file as syzbot reproducer shows.
-So just don't bother with the merging of extents that are too long
-together.
+When write to inline file fails (or happens only partly), we still
+updated length of inline data as if the whole write succeeded. Fix the
+update of length of inline data to happen only if the write succeeds.
 
+Reported-by: syzbot+0937935b993956ba28ab@syzkaller.appspotmail.com
 CC: stable@vger.kernel.org
-Reported-by: syzbot+60f291a24acecb3c2bd5@syzkaller.appspotmail.com
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c |   19 ++-----------------
- 1 file changed, 2 insertions(+), 17 deletions(-)
+ fs/udf/file.c |   26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -1087,23 +1087,8 @@ static void udf_merge_extents(struct ino
- 			blocksize - 1) >> blocksize_bits)))) {
+--- a/fs/udf/file.c
++++ b/fs/udf/file.c
+@@ -149,26 +149,24 @@ static ssize_t udf_file_write_iter(struc
+ 		goto out;
  
- 			if (((li->extLength & UDF_EXTENT_LENGTH_MASK) +
--				(lip1->extLength & UDF_EXTENT_LENGTH_MASK) +
--				blocksize - 1) & ~UDF_EXTENT_LENGTH_MASK) {
--				lip1->extLength = (lip1->extLength -
--						  (li->extLength &
--						   UDF_EXTENT_LENGTH_MASK) +
--						   UDF_EXTENT_LENGTH_MASK) &
--							~(blocksize - 1);
--				li->extLength = (li->extLength &
--						 UDF_EXTENT_FLAG_MASK) +
--						(UDF_EXTENT_LENGTH_MASK + 1) -
--						blocksize;
--				lip1->extLocation.logicalBlockNum =
--					li->extLocation.logicalBlockNum +
--					((li->extLength &
--						UDF_EXTENT_LENGTH_MASK) >>
--						blocksize_bits);
--			} else {
-+			     (lip1->extLength & UDF_EXTENT_LENGTH_MASK) +
-+			     blocksize - 1) <= UDF_EXTENT_LENGTH_MASK) {
- 				li->extLength = lip1->extLength +
- 					(((li->extLength &
- 						UDF_EXTENT_LENGTH_MASK) +
+ 	down_write(&iinfo->i_data_sem);
+-	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB) {
+-		loff_t end = iocb->ki_pos + iov_iter_count(from);
+-
+-		if (inode->i_sb->s_blocksize <
+-				(udf_file_entry_alloc_offset(inode) + end)) {
+-			err = udf_expand_file_adinicb(inode);
+-			if (err) {
+-				inode_unlock(inode);
+-				udf_debug("udf_expand_adinicb: err=%d\n", err);
+-				return err;
+-			}
+-		} else {
+-			iinfo->i_lenAlloc = max(end, inode->i_size);
+-			up_write(&iinfo->i_data_sem);
++	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB &&
++	    inode->i_sb->s_blocksize < (udf_file_entry_alloc_offset(inode) +
++				 iocb->ki_pos + iov_iter_count(from))) {
++		err = udf_expand_file_adinicb(inode);
++		if (err) {
++			inode_unlock(inode);
++			udf_debug("udf_expand_adinicb: err=%d\n", err);
++			return err;
+ 		}
+ 	} else
+ 		up_write(&iinfo->i_data_sem);
+ 
+ 	retval = __generic_file_write_iter(iocb, from);
+ out:
++	down_write(&iinfo->i_data_sem);
++	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB && retval > 0)
++		iinfo->i_lenAlloc = inode->i_size;
++	up_write(&iinfo->i_data_sem);
+ 	inode_unlock(inode);
+ 
+ 	if (retval > 0) {
 
 
