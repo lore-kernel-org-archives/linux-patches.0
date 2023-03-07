@@ -1,36 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC12BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:40:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C23C433EF;
-	Tue,  7 Mar 2023 17:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9B2BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:40:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E79C433EF;
+	Tue,  7 Mar 2023 17:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210818;
-	bh=p8XfusPeeyo+hJS950tKRUjvaqFpiJU+32RxMVQyEyY=;
+	s=korg; t=1678210821;
+	bh=Gt5RttRD2uzBUsNCm618cpLLtdUwX0697o/p2YGOFh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kcWwK3iZ9DrRj5QlnkhJWB31wY2PQ04ZwTUmOuiCp8hksYE4d9yN5Xei9Xn2+m4pX
-	 gEQf8nEPLeR97yxohgU0zSIQPdgJMNJVQ0LUDpyd4sMJeA4ZvbbCtWlCCvEjEZgy6/
-	 w+1LlXx/B0pfaqFKhWRlW1lnXRKQUScF21M5aHiQ=
+	b=DvLyS+cOYvxLJJE2a79o8apj1lNc6BgM7G4yCQoXpTO1K/g/7DTxa7grPPP4QNxDn
+	 J+Ldvj14eQEHchwFxoogX3mVe4UnL5p82S2Uq4BIIfG9ExfRa7pXQCaApDM6Wexf1l
+	 ta66nnS9NMABwKKhYOHBuPs8ZHMrDIu9a0hMh0f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Florent Revest <revest@chromium.org>,
-	Len Brown <lenb@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Robert Moore <robert.moore@intel.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Will Deacon <will@kernel.org>,
-	linux-acpi@vger.kernel.org,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	syzbot+5aed6c3aaba661f5b917@syzkaller.appspotmail.com,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0656/1001] ACPI: Dont build ACPICA with -Os
-Date: Tue,  7 Mar 2023 17:57:08 +0100
-Message-Id: <20230307170050.075055795@linuxfoundation.org>
+Subject: [PATCH 6.2 0665/1001] can: isotp: check CAN address family in isotp_bind()
+Date: Tue,  7 Mar 2023 17:57:17 +0100
+Message-Id: <20230307170050.470556034@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -44,109 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 8f9e0a52810dd83406c768972d022c37e7a18f1f ]
+[ Upstream commit c6adf659a8ba85913e16a571d5a9bcd17d3d1234 ]
 
-The ACPICA code has been built with '-Os' since the beginning of git
-history, though there's no explanatory comment as to why.
+Add missing check to block non-AF_CAN binds.
 
-This is unfortunate as GCC drops the alignment specificed by
-'-falign-functions=N' when '-Os' is used, as reported in GCC bug 88345:
+Syzbot created some code which matched the right sockaddr struct size
+but used AF_XDP (0x2C) instead of AF_CAN (0x1D) in the address family
+field:
 
-  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=88345
+bind$xdp(r2, &(0x7f0000000540)={0x2c, 0x0, r4, 0x0, r2}, 0x10)
+                                ^^^^
+This has no funtional impact but the userspace should be notified about
+the wrong address family field content.
 
-This prevents CONFIG_FUNCTION_ALIGNMENT and
-CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B from having their expected effect
-on the ACPICA code. This is doubly unfortunate as in subsequent patches
-arm64 will depend upon CONFIG_FUNCTION_ALIGNMENT for its ftrace
-implementation.
-
-Drop the '-Os' flag when building the ACPICA code. With this removed,
-the code builds cleanly and works correctly in testing so far.
-
-I've tested this by selecting CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B=y,
-building and booting a kernel using ACPI, and looking for misaligned
-text symbols:
-
-* arm64:
-
-  Before, v6.2-rc3:
-    # uname -rm
-    6.2.0-rc3 aarch64
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
-    5009
-
-  Before, v6.2-rc3 + fixed __cold:
-    # uname -rm
-    6.2.0-rc3-00001-g2a2bedf8bfa9 aarch64
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
-    919
-
-  After:
-    # uname -rm
-    6.2.0-rc3-00002-g267bddc38572 aarch64
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
-    323
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | grep acpi | wc -l
-    0
-
-* x86_64:
-
-  Before, v6.2-rc3:
-    # uname -rm
-    6.2.0-rc3 x86_64
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
-    11537
-
-  Before, v6.2-rc3 + fixed __cold:
-    # uname -rm
-    6.2.0-rc3-00001-g2a2bedf8bfa9 x86_64
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
-    2805
-
-  After:
-    # uname -rm
-    6.2.0-rc3-00002-g267bddc38572 x86_64
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
-    1357
-    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | grep acpi | wc -l
-    0
-
-With the patch applied, the remaining unaligned text labels are a
-combination of static call trampolines and labels in assembly, which can
-be dealt with in subsequent patches.
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: Florent Revest <revest@chromium.org>
-Cc: Len Brown <lenb@kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Robert Moore <robert.moore@intel.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: linux-acpi@vger.kernel.org
-Link: https://lore.kernel.org/r/20230123134603.1064407-4-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://syzkaller.appspot.com/text?tag=CrashLog&x=11ff9d8c480000
+Reported-by: syzbot+5aed6c3aaba661f5b917@syzkaller.appspotmail.com
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/all/20230104201844.13168-1-socketcan@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/can/isotp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/acpi/acpica/Makefile b/drivers/acpi/acpica/Makefile
-index 9e0d95d76fff7..30f3fc13c29d1 100644
---- a/drivers/acpi/acpica/Makefile
-+++ b/drivers/acpi/acpica/Makefile
-@@ -3,7 +3,7 @@
- # Makefile for ACPICA Core interpreter
- #
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index fc81d77724a13..9bc344851704e 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1220,6 +1220,9 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	if (len < ISOTP_MIN_NAMELEN)
+ 		return -EINVAL;
  
--ccflags-y			:= -Os -D_LINUX -DBUILDING_ACPICA
-+ccflags-y			:= -D_LINUX -DBUILDING_ACPICA
- ccflags-$(CONFIG_ACPI_DEBUG)	+= -DACPI_DEBUG_OUTPUT
- 
- # use acpi.o to put all files here into acpi.o modparam namespace
++	if (addr->can_family != AF_CAN)
++		return -EINVAL;
++
+ 	/* sanitize tx CAN identifier */
+ 	if (tx_id & CAN_EFF_FLAG)
+ 		tx_id &= (CAN_EFF_FLAG | CAN_EFF_MASK);
 -- 
 2.39.2
 
