@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6D0BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9582C433EF;
-	Tue,  7 Mar 2023 18:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9352BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4C6C433D2;
+	Tue,  7 Mar 2023 18:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214177;
-	bh=mBw42bebX8DNUdoH6dICQOBZ9/NkmZ9xzxCNbZ6F26I=;
+	s=korg; t=1678214179;
+	bh=U40Xjskab45RWPQzzxTgwLBAxDG+cI0CB2TPGcHJPE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNz9fWybd1kB5K0gUeiG+8cLISrtVpKkCXnqLvZmjJz7FhBKy2cKm/6lQOSpxPvl8
-	 9EX4fQaYSIGIKJwghf7zvFvFSeFNeRIzHxzL7FLM57/RlJzMG3M6rj1+BLD7xx1CPY
-	 A4+7bg671eUL5zb79rpXShqer63hRVBq4axFdIAU=
+	b=h2I8YOgSbF5riG6zCOe/3l1RJJ1+w76JU6JJSKVT5DqKSgqagiQ4DkMMpBHQIR+P9
+	 ZSSAPDu+b4pi+ibJCSLdkJ0qoeIP6nAi4eBJuauQsuFqgywZKnwWgf/4teo60N0Xox
+	 1C6g3/zfDKOV9d2d+lKRtI0obHHBbI1m2kW7ngxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 748/885] selftests/powerpc: Fix incorrect kernel headers search path
-Date: Tue,  7 Mar 2023 18:01:22 +0100
-Message-Id: <20230307170034.422247842@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.1 749/885] selftests/ftrace: Fix eprobe syntax test case to check filter support
+Date: Tue,  7 Mar 2023 18:01:23 +0100
+Message-Id: <20230307170034.463921396@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,80 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 4f11410bf6da87defe8fd59b0413f0d9f71744da upstream.
+commit a457e944df92789ab31aaf35fae9db064e3c51c4 upstream.
 
-Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
-building against kernel headers from the build environment in scenarios
-where kernel headers are installed into a specific output directory
-(O=...).
+Fix eprobe syntax test case to check whether the kernel supports the filter
+on eprobe for filter syntax test command. Without this fix, this test case
+will fail if the kernel supports eprobe but doesn't support the filter on
+eprobe.
 
-Cc: stable@vger.kernel.org # v5.18+
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/all/167309834742.640500.379128668288448035.stgit@devnote3/
+
+Fixes: 9e14bae7d049 ("selftests/ftrace: Add eprobe syntax error testcase")
+Cc: stable@vger.kernel.org
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230127135755.79929-22-mathieu.desnoyers@efficios.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/powerpc/ptrace/Makefile   | 2 +-
- tools/testing/selftests/powerpc/security/Makefile | 2 +-
- tools/testing/selftests/powerpc/syscalls/Makefile | 2 +-
- tools/testing/selftests/powerpc/tm/Makefile       | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ .../selftests/ftrace/test.d/dynevent/eprobes_syntax_errors.tc | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/powerpc/ptrace/Makefile b/tools/testing/selftests/powerpc/ptrace/Makefile
-index 2f02cb54224d..cbeeaeae8837 100644
---- a/tools/testing/selftests/powerpc/ptrace/Makefile
-+++ b/tools/testing/selftests/powerpc/ptrace/Makefile
-@@ -33,7 +33,7 @@ TESTS_64 := $(patsubst %,$(OUTPUT)/%,$(TESTS_64))
- $(TESTS_64): CFLAGS += -m64
- $(TM_TESTS): CFLAGS += -I../tm -mhtm
+diff --git a/tools/testing/selftests/ftrace/test.d/dynevent/eprobes_syntax_errors.tc b/tools/testing/selftests/ftrace/test.d/dynevent/eprobes_syntax_errors.tc
+index fc1daac7f066..4f5e8c665156 100644
+--- a/tools/testing/selftests/ftrace/test.d/dynevent/eprobes_syntax_errors.tc
++++ b/tools/testing/selftests/ftrace/test.d/dynevent/eprobes_syntax_errors.tc
+@@ -22,6 +22,8 @@ check_error 'e:foo/^bar.1 syscalls/sys_enter_openat'	# BAD_EVENT_NAME
+ check_error 'e:foo/bar syscalls/sys_enter_openat arg=^dfd'	# BAD_FETCH_ARG
+ check_error 'e:foo/bar syscalls/sys_enter_openat ^arg=$foo'	# BAD_ATTACH_ARG
  
--CFLAGS += -I../../../../../usr/include -fno-pie
-+CFLAGS += $(KHDR_INCLUDES) -fno-pie
+-check_error 'e:foo/bar syscalls/sys_enter_openat if ^'	# NO_EP_FILTER
++if grep -q '<attached-group>\.<attached-event>.*\[if <filter>\]' README; then
++  check_error 'e:foo/bar syscalls/sys_enter_openat if ^'	# NO_EP_FILTER
++fi
  
- $(OUTPUT)/ptrace-gpr: ptrace-gpr.S
- $(OUTPUT)/ptrace-pkey $(OUTPUT)/core-pkey: LDLIBS += -pthread
-diff --git a/tools/testing/selftests/powerpc/security/Makefile b/tools/testing/selftests/powerpc/security/Makefile
-index 7488315fd847..e0d979ab0204 100644
---- a/tools/testing/selftests/powerpc/security/Makefile
-+++ b/tools/testing/selftests/powerpc/security/Makefile
-@@ -5,7 +5,7 @@ TEST_PROGS := mitigation-patching.sh
- 
- top_srcdir = ../../../../..
- 
--CFLAGS += -I../../../../../usr/include
-+CFLAGS += $(KHDR_INCLUDES)
- 
- include ../../lib.mk
- 
-diff --git a/tools/testing/selftests/powerpc/syscalls/Makefile b/tools/testing/selftests/powerpc/syscalls/Makefile
-index 54ff5cfffc63..ee1740ddfb0c 100644
---- a/tools/testing/selftests/powerpc/syscalls/Makefile
-+++ b/tools/testing/selftests/powerpc/syscalls/Makefile
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
- TEST_GEN_PROGS := ipc_unmuxed rtas_filter
- 
--CFLAGS += -I../../../../../usr/include
-+CFLAGS += $(KHDR_INCLUDES)
- 
- top_srcdir = ../../../../..
- include ../../lib.mk
-diff --git a/tools/testing/selftests/powerpc/tm/Makefile b/tools/testing/selftests/powerpc/tm/Makefile
-index 5881e97c73c1..3876805c2f31 100644
---- a/tools/testing/selftests/powerpc/tm/Makefile
-+++ b/tools/testing/selftests/powerpc/tm/Makefile
-@@ -17,7 +17,7 @@ $(TEST_GEN_PROGS): ../harness.c ../utils.c
- CFLAGS += -mhtm
- 
- $(OUTPUT)/tm-syscall: tm-syscall-asm.S
--$(OUTPUT)/tm-syscall: CFLAGS += -I../../../../../usr/include
-+$(OUTPUT)/tm-syscall: CFLAGS += $(KHDR_INCLUDES)
- $(OUTPUT)/tm-tmspr: CFLAGS += -pthread
- $(OUTPUT)/tm-vmx-unavail: CFLAGS += -pthread -m64
- $(OUTPUT)/tm-resched-dscr: ../pmu/lib.c
+ exit 0
 -- 
 2.39.2
 
