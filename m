@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38219BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91028C433EF;
-	Tue,  7 Mar 2023 17:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D22BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29F2C433D2;
+	Tue,  7 Mar 2023 17:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211675;
-	bh=vU9G4G+Llss0uSFhzJX5rkdwUweQyaXWZsSvTMpTHb8=;
+	s=korg; t=1678211678;
+	bh=d0qWZZXD/D73c/z3EwcK1c2WSdGFjFTE9vadA1Q0FvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgBxVA+/TuduMC+gxaXyELNHzWZK+xfKDj9D4LepSgXAaTv+6OgBSLCBKr83FxtJB
-	 VihA208cml3ELAmGQndjTp71xcAG+FmvMweThzrpYmhqwWz6yBVbkEdWEwUquuM1gY
-	 7O++6DwEj76Na5TkrxQ+zoYkMSh2ma4dDA6u26lo=
+	b=d1ESs872gsq17lVXrr3o/4HI9nPN40JWbBfoFlg0WQKZ17X8TSoTl2O+IJgtRMyOk
+	 qJsKrIax9wgnSCXiqQTT6tWDkfsyQnACTOIb05kGHGgmOPXd1nnmWO9XuHA7mb7YeQ
+	 C4TkTkLUSgf52RQCP1uQGvmaATWazAEZZVrh1KJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dmitry V. Levin" <ldv@strace.io>,
-	Elvira Khabirova <lineprinter0@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.2 0940/1001] mips: fix syscall_get_nr
-Date: Tue,  7 Mar 2023 18:01:52 +0100
-Message-Id: <20230307170102.912982655@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Bingbu Cao <bingbu.cao@intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 6.2 0941/1001] media: ipu3-cio2: Fix PM runtime usage_count in driver unbind
+Date: Tue,  7 Mar 2023 18:01:53 +0100
+Message-Id: <20230307170102.965363259@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,39 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Elvira Khabirova <lineprinter0@gmail.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit 85cc91e2ba4262a602ec65e2b76c4391a9e60d3d upstream.
+commit 909d3096ac99fa2289f9b8945a3eab2269947a0a upstream.
 
-The implementation of syscall_get_nr on mips used to ignore the task
-argument and return the syscall number of the calling thread instead of
-the target thread.
+Get the PM runtime usage_count and forbid PM runtime at driver unbind. The
+opposite is being done in probe() already.
 
-The bug was exposed to user space by commit 201766a20e30f ("ptrace: add
-PTRACE_GET_SYSCALL_INFO request") and detected by strace test suite.
-
-Link: https://github.com/strace/strace/issues/235
-Fixes: c2d9f1775731 ("MIPS: Fix syscall_get_nr for the syscall exit tracing.")
-Cc: <stable@vger.kernel.org> # v3.19+
-Co-developed-by: Dmitry V. Levin <ldv@strace.io>
-Signed-off-by: Dmitry V. Levin <ldv@strace.io>
-Signed-off-by: Elvira Khabirova <lineprinter0@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: commit c2a6a07afe4a ("media: intel-ipu3: cio2: add new MIPI-CSI2 driver")
+Cc: stable@vger.kernel.org # for >= 4.16
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Bingbu Cao <bingbu.cao@intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/include/asm/syscall.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/pci/intel/ipu3/ipu3-cio2-main.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/mips/include/asm/syscall.h
-+++ b/arch/mips/include/asm/syscall.h
-@@ -38,7 +38,7 @@ static inline bool mips_syscall_is_indir
- static inline long syscall_get_nr(struct task_struct *task,
- 				  struct pt_regs *regs)
- {
--	return current_thread_info()->syscall;
-+	return task_thread_info(task)->syscall;
+--- a/drivers/media/pci/intel/ipu3/ipu3-cio2-main.c
++++ b/drivers/media/pci/intel/ipu3/ipu3-cio2-main.c
+@@ -1843,6 +1843,9 @@ static void cio2_pci_remove(struct pci_d
+ 	v4l2_device_unregister(&cio2->v4l2_dev);
+ 	media_device_cleanup(&cio2->media_dev);
+ 	mutex_destroy(&cio2->lock);
++
++	pm_runtime_forbid(&pci_dev->dev);
++	pm_runtime_get_noresume(&pci_dev->dev);
  }
  
- static inline void mips_syscall_update_nr(struct task_struct *task,
+ static int __maybe_unused cio2_runtime_suspend(struct device *dev)
 
 
