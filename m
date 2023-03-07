@@ -1,29 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FCDBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:40:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE6EC433EF;
-	Tue,  7 Mar 2023 17:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC12BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:40:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C23C433EF;
+	Tue,  7 Mar 2023 17:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210815;
-	bh=W0X+bglo/2EJq1DlaNXfa7q21jxRw4oo7JaOBAQ6veU=;
+	s=korg; t=1678210818;
+	bh=p8XfusPeeyo+hJS950tKRUjvaqFpiJU+32RxMVQyEyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rp+0lpJDyN8EtLoj11MKeJCh7y5FbfmW0q8KheBHkYiQc0sAObhBD7DCuSkNUI+er
-	 x6ABSb3KXSlbmgG4auNEnkAPuC7mlaGvoo2fR8cPlZCQQLWRNik1kCuwETt0d/t9rF
-	 S/E5ZqjbveKwrIEbiQlbbXgZxUg2Ufa+e3pp300A=
+	b=kcWwK3iZ9DrRj5QlnkhJWB31wY2PQ04ZwTUmOuiCp8hksYE4d9yN5Xei9Xn2+m4pX
+	 gEQf8nEPLeR97yxohgU0zSIQPdgJMNJVQ0LUDpyd4sMJeA4ZvbbCtWlCCvEjEZgy6/
+	 w+1LlXx/B0pfaqFKhWRlW1lnXRKQUScF21M5aHiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Florent Revest <revest@chromium.org>,
+	Len Brown <lenb@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Robert Moore <robert.moore@intel.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Will Deacon <will@kernel.org>,
+	linux-acpi@vger.kernel.org,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0622/1001] exit: Detect and fix irq disabled state in oops
-Date: Tue,  7 Mar 2023 17:56:34 +0100
-Message-Id: <20230307170048.557339503@linuxfoundation.org>
+Subject: [PATCH 6.2 0656/1001] ACPI: Dont build ACPICA with -Os
+Date: Tue,  7 Mar 2023 17:57:08 +0100
+Message-Id: <20230307170050.075055795@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,57 +44,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 001c28e57187570e4b5aa4492c7a957fb6d65d7b ]
+[ Upstream commit 8f9e0a52810dd83406c768972d022c37e7a18f1f ]
 
-If a task oopses with irqs disabled, this can cause various cascading
-problems in the oops path such as sleep-from-invalid warnings, and
-potentially worse.
+The ACPICA code has been built with '-Os' since the beginning of git
+history, though there's no explanatory comment as to why.
 
-Since commit 0258b5fd7c712 ("coredump: Limit coredumps to a single
-thread group"), the unconditional irq enable in coredump_task_exit()
-will "fix" the irq state to be enabled early in do_exit(), so currently
-this may not be triggerable, but that is coincidental and fragile.
+This is unfortunate as GCC drops the alignment specificed by
+'-falign-functions=N' when '-Os' is used, as reported in GCC bug 88345:
 
-Detect and fix the irqs_disabled() condition in the oops path before
-calling do_exit(), similarly to the way in_atomic() is handled.
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=88345
 
-Reported-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: "Eric W. Biederman" <ebiederm@xmission.com>
-Link: https://lore.kernel.org/lkml/20221004094401.708299-1-npiggin@gmail.com/
+This prevents CONFIG_FUNCTION_ALIGNMENT and
+CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B from having their expected effect
+on the ACPICA code. This is doubly unfortunate as in subsequent patches
+arm64 will depend upon CONFIG_FUNCTION_ALIGNMENT for its ftrace
+implementation.
+
+Drop the '-Os' flag when building the ACPICA code. With this removed,
+the code builds cleanly and works correctly in testing so far.
+
+I've tested this by selecting CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B=y,
+building and booting a kernel using ACPI, and looking for misaligned
+text symbols:
+
+* arm64:
+
+  Before, v6.2-rc3:
+    # uname -rm
+    6.2.0-rc3 aarch64
+    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
+    5009
+
+  Before, v6.2-rc3 + fixed __cold:
+    # uname -rm
+    6.2.0-rc3-00001-g2a2bedf8bfa9 aarch64
+    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
+    919
+
+  After:
+    # uname -rm
+    6.2.0-rc3-00002-g267bddc38572 aarch64
+    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
+    323
+    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | grep acpi | wc -l
+    0
+
+* x86_64:
+
+  Before, v6.2-rc3:
+    # uname -rm
+    6.2.0-rc3 x86_64
+    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
+    11537
+
+  Before, v6.2-rc3 + fixed __cold:
+    # uname -rm
+    6.2.0-rc3-00001-g2a2bedf8bfa9 x86_64
+    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
+    2805
+
+  After:
+    # uname -rm
+    6.2.0-rc3-00002-g267bddc38572 x86_64
+    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | wc -l
+    1357
+    # grep ' [Tt] ' /proc/kallsyms | grep -iv '[048c]0 [Tt] ' | grep acpi | wc -l
+    0
+
+With the patch applied, the remaining unaligned text labels are a
+combination of static call trampolines and labels in assembly, which can
+be dealt with in subsequent patches.
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: Florent Revest <revest@chromium.org>
+Cc: Len Brown <lenb@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Robert Moore <robert.moore@intel.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: linux-acpi@vger.kernel.org
+Link: https://lore.kernel.org/r/20230123134603.1064407-4-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/exit.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/acpi/acpica/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/exit.c b/kernel/exit.c
-index 15dc2ec80c467..bccfa4218356e 100644
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -807,6 +807,8 @@ void __noreturn do_exit(long code)
- 	struct task_struct *tsk = current;
- 	int group_dead;
+diff --git a/drivers/acpi/acpica/Makefile b/drivers/acpi/acpica/Makefile
+index 9e0d95d76fff7..30f3fc13c29d1 100644
+--- a/drivers/acpi/acpica/Makefile
++++ b/drivers/acpi/acpica/Makefile
+@@ -3,7 +3,7 @@
+ # Makefile for ACPICA Core interpreter
+ #
  
-+	WARN_ON(irqs_disabled());
-+
- 	synchronize_group_exit(tsk, code);
+-ccflags-y			:= -Os -D_LINUX -DBUILDING_ACPICA
++ccflags-y			:= -D_LINUX -DBUILDING_ACPICA
+ ccflags-$(CONFIG_ACPI_DEBUG)	+= -DACPI_DEBUG_OUTPUT
  
- 	WARN_ON(tsk->plug);
-@@ -938,6 +940,11 @@ void __noreturn make_task_dead(int signr)
- 	if (unlikely(!tsk->pid))
- 		panic("Attempted to kill the idle task!");
- 
-+	if (unlikely(irqs_disabled())) {
-+		pr_info("note: %s[%d] exited with irqs disabled\n",
-+			current->comm, task_pid_nr(current));
-+		local_irq_enable();
-+	}
- 	if (unlikely(in_atomic())) {
- 		pr_info("note: %s[%d] exited with preempt_count %d\n",
- 			current->comm, task_pid_nr(current),
+ # use acpi.o to put all files here into acpi.o modparam namespace
 -- 
 2.39.2
 
