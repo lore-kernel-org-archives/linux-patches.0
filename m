@@ -1,31 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77914BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:23:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB68C4339B;
-	Tue,  7 Mar 2023 19:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1C7BA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:47:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29617C433D2;
+	Tue,  7 Mar 2023 19:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678216992;
-	bh=7kyoS8ZgytWpoBl67Th/zqjZIXV9l0/AxtG+zXqfKgY=;
+	s=k20201202; t=1678218477;
+	bh=/1zAIbTQcsRF2izXv8x+EJJixmh8dm5+NhK5ibW2Rsc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JsQKPiLNFSZv52JQmLTDiJGOHIfWn+gpiebtotU3usFGeOzq1kkCxQHdzijBGBa6a
-	 aB405zKj+SRVYVoaeJIJjYBfOA1+vqApMu/c/fzd6NovCF92FBEmXW1WkCHwz1U3So
-	 pUPGeVso9f37se5dcjnELYJsyaGCEiJbqqFfC+RsIofoao2TJCavDBi+S2BEITiRU7
-	 DsayApFQtrQ1qnvtfJaqB0hzTyb7BW/cMJegFJdBCsXBH/KVml+/drYWeXjcmownRh
-	 4BRDCYa+6D8QqNR7RitAo45xWUJH1lA2SmIvYtUXbv9BTholZBHHRKDvqzwk6x7aBR
-	 faEZN3VpW/hjQ==
-Date: Tue, 7 Mar 2023 19:23:10 +0000
+	b=AyyYAwqUTTOk9EKiTutS5g25pM/VHwE2Yo3m82FjZAEXqu/CleA62t3i3SG/UTcG8
+	 cfH4mySgtTAl/FkN3gD0CJ7euNCSl9MX75AxDRKpva3vVaLJWbvyQOasMf1XPhtEse
+	 iBPu1h6EuVXY5lSdO/v6rwRJyxtn75T589Un0p3nRcpQZTj4bzppHMLBRDyhPnoXuz
+	 bHLOcMt+mmUsAQeljRkMmtZP9ekqGRdabMDAkS8V22Sb9MTBleK1hrduVVF14vWP/W
+	 aM3Nzol2A4VsZbRWcmcKEm4dvZ7lbDMj/phDraV03qLey3PXcapCMK6yTL8Mqeg2US
+	 bLMU3ZOVlo9ww==
+Date: Tue, 7 Mar 2023 11:47:54 -0800
 From: Eric Biggers <ebiggers@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>, Theodore Tso <tytso@mit.edu>,
-	linux-ext4@vger.kernel.org
-Subject: Re: [PATCH 6.1 788/885] ext4: Fix possible corruption when moving a
- directory
-Message-ID: <ZAePHuuAGo7I1VOc@gmail.com>
-References: <20230307170001.594919529@linuxfoundation.org>
- <20230307170036.133148515@linuxfoundation.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com,
+	john.johansen@canonical.com, paul@paul-moore.com, jmorris@namei.org,
+	serge@hallyn.com, luto@amacapital.net, wad@chromium.org,
+	dverkamp@chromium.org, paulmck@kernel.org, baihaowen@meizu.com,
+	frederic@kernel.org, jeffxu@google.com, tytso@mit.edu,
+	guoren@kernel.org, j.granados@samsung.com, zhangpeng362@huawei.com,
+	tangmeng@uniontech.com, willy@infradead.org, nixiaoming@huawei.com,
+	sujiaxun@uniontech.com, patches@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org, apparmor@lists.ubuntu.com,
+	linux-security-module@vger.kernel.org, linux-csky@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 09/11] fs-verity: simplify sysctls with register_sysctl()
+Message-ID: <ZAeU6shP3vjBOqo7@sol.localdomain>
+References: <20230302202826.776286-1-mcgrof@kernel.org>
+ <20230302202826.776286-10-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,28 +41,18 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230307170036.133148515@linuxfoundation.org>
+In-Reply-To: <20230302202826.776286-10-mcgrof@kernel.org>
 
-On Tue, Mar 07, 2023 at 06:02:02PM +0100, Greg Kroah-Hartman wrote:
-> From: Jan Kara <jack@suse.cz>
+On Thu, Mar 02, 2023 at 12:28:24PM -0800, Luis Chamberlain wrote:
+> register_sysctl_paths() is only needed if your child (directories) have
+> entries but this does not so just use register_sysctl() so to do away
+> with the path specification.
 > 
-> commit 0813299c586b175d7edb25f56412c54b812d0379 upstream.
-> 
-> When we are renaming a directory to a different directory, we need to
-> update '..' entry in the moved directory. However nothing prevents moved
-> directory from being modified and even converted from the inline format
-> to the normal format. When such race happens the rename code gets
-> confused and we crash. Fix the problem by locking the moved directory.
-> 
-> CC: stable@vger.kernel.org
-> Fixes: 32f7f22c0b52 ("ext4: let ext4_rename handle inline dir")
-> Signed-off-by: Jan Kara <jack@suse.cz>
-> Link: https://lore.kernel.org/r/20230126112221.11866-1-jack@suse.cz
-> Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> ---
+>  fs/verity/signature.c | 9 +--------
+>  1 file changed, 1 insertion(+), 8 deletions(-)
 
-This commit has a reported regression
-(https://lore.kernel.org/linux-ext4/5efbe1b9-ad8b-4a4f-b422-24824d2b775c@kili.mountain),
-so probably it should not be backported quite yet.
+Applied to https://git.kernel.org/pub/scm/fs/fsverity/linux.git/log/?h=for-next  
 
 - Eric
