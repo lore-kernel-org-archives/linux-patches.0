@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A81BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:27:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB18AC433A7;
-	Tue,  7 Mar 2023 17:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99912BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:27:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00615C4339B;
+	Tue,  7 Mar 2023 17:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210047;
-	bh=hNvETghRVz4SEq0n1aQcQLBjG7OwrPLlrJwjTSqg3J4=;
+	s=korg; t=1678210050;
+	bh=cDv81CRFHIsoqIGkZy7byR7wvu4GaiIgPSCBNHJh2BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WK2rTzJ+PJW9p6j2SWtoKStJCdSiw4fMNfje8CAy0oUW/6R5v3/L/El4uKYsRQ+qZ
-	 gFlpj35BbRzHhBxiaDuXakxesUUHj8Qi/u+NeW5fWB9YFPPlTtxbB1Xz+D2szniqhD
-	 aL0jLp/8pVQHkKxv4dQJCM7fPydjd2TsqFATLtmw=
+	b=IDwXVUohu0yEG1a1Hjb8bihDS9jI7z9qoaI6TCTkb4dcywYR407xo1HPEdYq6p08J
+	 mE5/maFZX4xk+xYFXCWCLDc9lj/HoOoKxsj9oCzKxkUCttzccZESq40WwGwPtRcW1f
+	 Ls8fuHnlnjxTChjcDfuOsR9SdPZO+fcBY5/NzxcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Neanne <jneanne@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eugene Shalygin <eugene.shalygin@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0415/1001] regulator: tps65219: use generic set_bypass()
-Date: Tue,  7 Mar 2023 17:53:07 +0100
-Message-Id: <20230307170039.340504413@linuxfoundation.org>
+Subject: [PATCH 6.2 0416/1001] hwmon: (asus-ec-sensors) add missing mutex path
+Date: Tue,  7 Mar 2023 17:53:08 +0100
+Message-Id: <20230307170039.385924749@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,62 +35,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jerome Neanne <jneanne@baylibre.com>
+From: Eugene Shalygin <eugene.shalygin@gmail.com>
 
-[ Upstream commit 0365df81145a4cfaae5f4da896160de512256e6d ]
+[ Upstream commit e2de0e6abd91b05411cb1f0953115dbbbe9b11ce ]
 
-Due to wrong interpretation of the specification,
-custom implementation was used instead of standard regmap helper.
-LINK: https://lore.kernel.org/all/c2014039-f1e8-6976-33d6-52e2dd4e7b66@baylibre.com/
+Add missing mutex path for ProArt X570-CREATOR WIFI.
 
-Fixes: c12ac5fc3e0a ("regulator: drivers: Add TI TPS65219 PMIC regulators support")
-
-Regulator does NOT require to be off to be switched to bypass mode.
-
-Signed-off-by: Jerome Neanne <jneanne@baylibre.com>
-Link: https://lore.kernel.org/r/20230203140119.13029-1-jneanne@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: de8fbac5e59e (hwmon: (asus-ec-sensors) implement locking via the ACPI global lock)
+Signed-off-by: Eugene Shalygin <eugene.shalygin@gmail.com>
+Link: https://lore.kernel.org/r/20230121111728.168514-2-eugene.shalygin@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/tps65219-regulator.c | 20 +-------------------
- 1 file changed, 1 insertion(+), 19 deletions(-)
+ drivers/hwmon/asus-ec-sensors.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/regulator/tps65219-regulator.c b/drivers/regulator/tps65219-regulator.c
-index 070159cb5f094..58f6541b6417b 100644
---- a/drivers/regulator/tps65219-regulator.c
-+++ b/drivers/regulator/tps65219-regulator.c
-@@ -173,24 +173,6 @@ static unsigned int tps65219_get_mode(struct regulator_dev *dev)
- 		return REGULATOR_MODE_NORMAL;
- }
- 
--/*
-- * generic regulator_set_bypass_regmap does not fully match requirements
-- * TPS65219 Requires explicitly that regulator is disabled before switch
-- */
--static int tps65219_set_bypass(struct regulator_dev *dev, bool enable)
--{
--	struct tps65219 *tps = rdev_get_drvdata(dev);
--	unsigned int rid = rdev_get_id(dev);
--
--	if (dev->desc->ops->is_enabled(dev)) {
--		dev_err(tps->dev,
--			"%s LDO%d enabled, must be shut down to set bypass ",
--			__func__, rid);
--		return -EBUSY;
--	}
--	return regulator_set_bypass_regmap(dev, enable);
--}
--
- /* Operations permitted on BUCK1/2/3 */
- static const struct regulator_ops tps65219_bucks_ops = {
- 	.is_enabled		= regulator_is_enabled_regmap,
-@@ -217,7 +199,7 @@ static const struct regulator_ops tps65219_ldos_1_2_ops = {
- 	.set_voltage_sel	= regulator_set_voltage_sel_regmap,
- 	.list_voltage		= regulator_list_voltage_linear_range,
- 	.map_voltage		= regulator_map_voltage_linear_range,
--	.set_bypass		= tps65219_set_bypass,
-+	.set_bypass		= regulator_set_bypass_regmap,
- 	.get_bypass		= regulator_get_bypass_regmap,
+diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
+index a901e4e33d81d..b4d65916b3c00 100644
+--- a/drivers/hwmon/asus-ec-sensors.c
++++ b/drivers/hwmon/asus-ec-sensors.c
+@@ -299,6 +299,7 @@ static const struct ec_board_info board_info_pro_art_x570_creator_wifi = {
+ 	.sensors = SENSOR_SET_TEMP_CHIPSET_CPU_MB | SENSOR_TEMP_VRM |
+ 		SENSOR_TEMP_T_SENSOR | SENSOR_FAN_CPU_OPT |
+ 		SENSOR_CURR_CPU | SENSOR_IN_CPU_CORE,
++	.mutex_path = ASUS_HW_ACCESS_MUTEX_ASMX,
+ 	.family = family_amd_500_series,
  };
  
 -- 
