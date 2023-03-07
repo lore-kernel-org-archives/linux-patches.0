@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80CFBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:40:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC3BC433D2;
-	Tue,  7 Mar 2023 17:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6269EBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:40:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4ECC433EF;
+	Tue,  7 Mar 2023 17:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210852;
-	bh=c6CFEAa3lu+8WT8c4VQGkZ0gM5IJh82kODyMmxNZiSs=;
+	s=korg; t=1678210855;
+	bh=WdzyvuOz1PQVuQqGVUeX2cO93sXIDXw6MWmUv1vHO4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jeDdTC5S46q1WeiCD3wNI1aAWjx7lhFVkIht1JgC083MSqmx73Hm8r8zAJvC3xy5l
-	 SCXvdP6lgfGpSFAQBnPDbD3ms1Mi1Jnx1OZ2b8KZdEZOOx/h8VGtFeU1i6gbbiM9h8
-	 RDHC1rjFWxbRJnailweFTPrkWSMCKFWiWab6Sh80=
+	b=c9qLl5cF0teLN1obYaqKGpykwsPopQk+rb2DgeRt6oy6u3Aqpm5MUSS2c0OX+SrLz
+	 TgWlMWMA325eZu0LqOt/PhnExYcOEiEvS0zYfv3DXWOA2NXBgFjZ4WchLH0Ox7U/MJ
+	 pCe3C+qfvzNGgTssjs/1k8hPFZxbH7nA95NmZfoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Thaler <dthaler@microsoft.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0657/1001] bpf, docs: Fix modulo zero, division by zero, overflow, and underflow
-Date: Tue,  7 Mar 2023 17:57:09 +0100
-Message-Id: <20230307170050.114786406@linuxfoundation.org>
+Subject: [PATCH 6.2 0675/1001] time/debug: Fix memory leak with using debugfs_lookup()
+Date: Tue,  7 Mar 2023 17:57:27 +0100
+Message-Id: <20230307170050.883197231@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,66 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Thaler <dthaler@microsoft.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 0eb9d19e2201068260e439a5c96dc85f9f3722a2 ]
+[ Upstream commit 5b268d8abaec6cbd4bd70d062e769098d96670aa ]
 
-Fix modulo zero, division by zero, overflow, and underflow. Also clarify how
-a negative immediate value is used in unsigned division.
+When calling debugfs_lookup() the result must have dput() called on it,
+otherwise the memory will leak over time.  To make things simpler, just
+call debugfs_lookup_and_remove() instead which handles all of the logic at
+once.
 
-Signed-off-by: Dave Thaler <dthaler@microsoft.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230124001218.827-1-dthaler1968@googlemail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20230202151214.2306822-1-gregkh@linuxfoundation.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/bpf/instruction-set.rst | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ kernel/time/test_udelay.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/bpf/instruction-set.rst b/Documentation/bpf/instruction-set.rst
-index e672d5ec6cc7b..2d3fe59bd260f 100644
---- a/Documentation/bpf/instruction-set.rst
-+++ b/Documentation/bpf/instruction-set.rst
-@@ -99,19 +99,26 @@ code      value  description
- BPF_ADD   0x00   dst += src
- BPF_SUB   0x10   dst -= src
- BPF_MUL   0x20   dst \*= src
--BPF_DIV   0x30   dst /= src
-+BPF_DIV   0x30   dst = (src != 0) ? (dst / src) : 0
- BPF_OR    0x40   dst \|= src
- BPF_AND   0x50   dst &= src
- BPF_LSH   0x60   dst <<= src
- BPF_RSH   0x70   dst >>= src
- BPF_NEG   0x80   dst = ~src
--BPF_MOD   0x90   dst %= src
-+BPF_MOD   0x90   dst = (src != 0) ? (dst % src) : dst
- BPF_XOR   0xa0   dst ^= src
- BPF_MOV   0xb0   dst = src
- BPF_ARSH  0xc0   sign extending shift right
- BPF_END   0xd0   byte swap operations (see `Byte swap instructions`_ below)
- ========  =====  ==========================================================
+diff --git a/kernel/time/test_udelay.c b/kernel/time/test_udelay.c
+index 13b11eb62685e..20d5df631570e 100644
+--- a/kernel/time/test_udelay.c
++++ b/kernel/time/test_udelay.c
+@@ -149,7 +149,7 @@ module_init(udelay_test_init);
+ static void __exit udelay_test_exit(void)
+ {
+ 	mutex_lock(&udelay_test_lock);
+-	debugfs_remove(debugfs_lookup(DEBUGFS_FILENAME, NULL));
++	debugfs_lookup_and_remove(DEBUGFS_FILENAME, NULL);
+ 	mutex_unlock(&udelay_test_lock);
+ }
  
-+Underflow and overflow are allowed during arithmetic operations, meaning
-+the 64-bit or 32-bit value will wrap. If eBPF program execution would
-+result in division by zero, the destination register is instead set to zero.
-+If execution would result in modulo by zero, for ``BPF_ALU64`` the value of
-+the destination register is unchanged whereas for ``BPF_ALU`` the upper
-+32 bits of the destination register are zeroed.
-+
- ``BPF_ADD | BPF_X | BPF_ALU`` means::
- 
-   dst_reg = (u32) dst_reg + (u32) src_reg;
-@@ -128,6 +135,11 @@ BPF_END   0xd0   byte swap operations (see `Byte swap instructions`_ below)
- 
-   dst_reg = dst_reg ^ imm32
- 
-+Also note that the division and modulo operations are unsigned. Thus, for
-+``BPF_ALU``, 'imm' is first interpreted as an unsigned 32-bit value, whereas
-+for ``BPF_ALU64``, 'imm' is first sign extended to 64 bits and the result
-+interpreted as an unsigned 64-bit value. There are no instructions for
-+signed division or modulo.
- 
- Byte swap instructions
- ~~~~~~~~~~~~~~~~~~~~~~
 -- 
 2.39.2
 
