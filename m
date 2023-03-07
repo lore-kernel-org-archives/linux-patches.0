@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B89BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:42:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37EB4C433D2;
-	Tue,  7 Mar 2023 17:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834A7BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:42:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44E1C433EF;
+	Tue,  7 Mar 2023 17:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210929;
-	bh=/phmm9tCIS34ybRtRg65eh8Qi1oLUdWhtTdg3MLPM4U=;
+	s=korg; t=1678210932;
+	bh=FR43rAtmpHjBfY1MdgtzjRQNf3n2KZR6/hd8PI6mKKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zVgpm2XYaw3Bud5PJZtL/t57XrJtNI/43D59oJa/Z9iOCwJL+rp/DCA8WiCn3fMrr
-	 SOeIyZ25dvKfq66rDUrzzlKVXozMU002OeC9iEKc6TFdIVrzvK8EZUky//Bh6taYzz
-	 Oc0HtsY6I6VF5izSagtmorxmNei58FbHe9wuh87E=
+	b=N6E59Y4rQN1G5Kz9KfdqmsLmpKkdcip5cXhmVmnalH7d513/00qvTmwYDQLwnbFFh
+	 ORnRQ0Cs/uQ37+k/KzJtf69fz5fuw9jYtK8zjQVoNep32KxkPZIKFj8lLtYc18P2d3
+	 isvMPlALUA4CNSrNsRinX9lYN98Lyun7NJilR5QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
+	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0700/1001] drm/amd: Avoid ASSERT for some message failures
-Date: Tue,  7 Mar 2023 17:57:52 +0100
-Message-Id: <20230307170051.994689445@linuxfoundation.org>
+Subject: [PATCH 6.2 0701/1001] drm: amd: display: Fix memory leakage
+Date: Tue,  7 Mar 2023 17:57:53 +0100
+Message-Id: <20230307170052.044689668@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,41 +35,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
 
-[ Upstream commit 3e5019ee67760cd61b2a5fd605e1289c2f92d983 ]
+[ Upstream commit 6b8701be1f66064ca72733c5f6e13748cdbf8397 ]
 
-On DCN314 when resuming from s0i3 an ASSERT is shown indicating that
-`VBIOSSMC_MSG_SetHardMinDcfclkByFreq` returned `VBIOSSMC_Result_Failed`.
+This commit fixes memory leakage in dc_construct_ctx() function.
 
-This isn't a driver bug; it's a BIOS/configuration bug. To make this
-easier to triage, add an explicit warning when this issue happens.
-
-This matches the behavior utilized for failures with
-`VBIOSSMC_MSG_TransferTableDram2Smu` configuration.
-
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_smu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_smu.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_smu.c
-index f47cfe6b42bd2..0765334f08259 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_smu.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_smu.c
-@@ -146,6 +146,9 @@ static int dcn314_smu_send_msg_with_param(struct clk_mgr_internal *clk_mgr,
- 		if (msg_id == VBIOSSMC_MSG_TransferTableDram2Smu &&
- 		    param == TABLE_WATERMARKS)
- 			DC_LOG_WARNING("Watermarks table not configured properly by SMU");
-+		else if (msg_id == VBIOSSMC_MSG_SetHardMinDcfclkByFreq ||
-+			 msg_id == VBIOSSMC_MSG_SetMinDeepSleepDcfclk)
-+			DC_LOG_WARNING("DCFCLK_DPM is not enabled by BIOS");
- 		else
- 			ASSERT(0);
- 		REG_WRITE(MP1_SMN_C2PMSG_91, VBIOSSMC_Result_OK);
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 0cb8d1f934d12..c03e86e49fea3 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -862,6 +862,7 @@ static bool dc_construct_ctx(struct dc *dc,
+ 
+ 	dc_ctx->perf_trace = dc_perf_trace_create();
+ 	if (!dc_ctx->perf_trace) {
++		kfree(dc_ctx);
+ 		ASSERT_CRITICAL(false);
+ 		return false;
+ 	}
 -- 
 2.39.2
 
