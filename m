@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B20BA4C
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:01:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07673C433EF;
-	Tue,  7 Mar 2023 19:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C27BA4C
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:01:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548E3C433EF;
+	Tue,  7 Mar 2023 19:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215664;
-	bh=2HyyGHbU19N8wN7gwvdxhKw6EH96AyXcByLAHVbiGB4=;
+	s=korg; t=1678215667;
+	bh=reVceQw8Vjx9DCDFgIspNsUMefaa5uHVjxDU6awyz2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zd/Z+Pa7jlrDjKgMv5JcmK8LAg0DLyWELFSzwdiFsQ1wyAGeR5BiA3BZzH/L0AeSC
-	 XQHLmhjTVLHptcaFAQCvyPa5Zl5lpK/GydkijjqjxWiTfoyg3WAgymNRZwsUyvU/VW
-	 tzMVK7hPUM/3iSluU63acgoI9pTNNLe53Sd+KPy4=
+	b=JGmT13anfTY8J7ztslV1AcWL3hN6Dn2LRdQ0oUdpWld1ylpkZv5kOoFHU39A5kVxI
+	 CltbV57/aaGCBF3iC4KtMAf2NOBC63IhCAxtvPi/+S5K2uYkP+Z2zbQ2WgMBNLIU3h
+	 XqZnSMLxUBE2VwpNGp/kx1+hlSQBPdMwAnMimeo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sherry Sun <sherry.sun@nxp.com>,
-	Shenwei Wang <shenwei.wang@nxp.com>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	dmaengine@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 327/567] serial: fsl_lpuart: fix RS485 RTS polariy inverse issue
-Date: Tue,  7 Mar 2023 18:01:03 +0100
-Message-Id: <20230307165920.071655585@linuxfoundation.org>
+Subject: [PATCH 5.15 336/567] dmaengine: dw-axi-dmac: Do not dereference NULL structure
+Date: Tue,  7 Mar 2023 18:01:12 +0100
+Message-Id: <20230307165920.444892107@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,43 +38,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shenwei Wang <shenwei.wang@nxp.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 3957b9501a5a8fa709ae4a47483714491471f6db ]
+[ Upstream commit be4d46edeee4b2459d2f53f37ada88bbfb634b6c ]
 
-The previous 'commit 846651eca073 ("serial: fsl_lpuart: RS485 RTS
-polariy is inverse")' only fixed the inverse issue on lpuart 8bit
-platforms.
+If "vdesc" is NULL, it cannot be used with vd_to_axi_desc(). Leave
+"bytes" unchanged at 0. Seen under GCC 13 with -Warray-bounds:
 
-This is a follow-up patch to fix the RS485 polarity inverse
-issue on lpuart 32bit platforms.
+../drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c: In function 'dma_chan_tx_status':
+../drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c:329:46: warning: array subscript 0 is outside array bounds of 'struct
+virt_dma_desc[46116860184273879]' [-Warray-bounds=]
+  329 |                 bytes = vd_to_axi_desc(vdesc)->length;
+      |                                              ^~
 
-Fixes: 03895cf41d18 ("tty: serial: fsl_lpuart: Add support for RS-485")
-Reported-by: Sherry Sun <sherry.sun@nxp.com>
-Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
-Link: https://lore.kernel.org/r/20230207162420.3647904-1-shenwei.wang@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8e55444da65c ("dmaengine: dw-axi-dmac: Support burst residue granularity")
+Cc: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230127223623.never.507-kees@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index 08096d33af8a6..f4d9dc4648da4 100644
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -1406,9 +1406,9 @@ static int lpuart32_config_rs485(struct uart_port *port,
- 		 * Note: UART is assumed to be active high.
- 		 */
- 		if (rs485->flags & SER_RS485_RTS_ON_SEND)
--			modem &= ~UARTMODEM_TXRTSPOL;
--		else if (rs485->flags & SER_RS485_RTS_AFTER_SEND)
- 			modem |= UARTMODEM_TXRTSPOL;
-+		else if (rs485->flags & SER_RS485_RTS_AFTER_SEND)
-+			modem &= ~UARTMODEM_TXRTSPOL;
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index 41654b2f6c600..cfc47efcb5d93 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -288,8 +288,6 @@ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
+ 		len = vd_to_axi_desc(vdesc)->hw_desc[0].len;
+ 		completed_length = completed_blocks * len;
+ 		bytes = length - completed_length;
+-	} else {
+-		bytes = vd_to_axi_desc(vdesc)->length;
  	}
  
- 	/* Store the new configuration */
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
 -- 
 2.39.2
 
