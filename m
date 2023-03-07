@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077CCBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:08:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645BBC433EF;
-	Tue,  7 Mar 2023 18:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF03BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:08:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757F9C433D2;
+	Tue,  7 Mar 2023 18:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212515;
-	bh=WtRAcWOMjcBClOVIvjiGtG8S1zNtSlXdm4kXmOuLBJ4=;
+	s=korg; t=1678212518;
+	bh=ROvuxhesmS7DdQKc583UisrZHiN5yyH2TekAT5Ghnlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFz7WMg5Rll/LqS70Xo6ub/9AHNK17XsljpTZYNgWBdwRCUxMoCmQ/MYuo/AnwfPs
-	 SI5B+mZd4z7/4/vxysSmrpG9/eb397V+HkPcKZHQFIp5mnjpUlBiaa76J2VoQlWNJc
-	 9t2cFD/RQgBcu6JiyfwyeHshqOzEocwsMj6AV0t0=
+	b=h5I+B/c/BlMEBGAuIFqbugg+LT/O3v/IReq0w9E/Gau4rncWt+kiceCztyf2ORUnr
+	 ao9lcVhCH+BRpcVW+X3XlMMc+NOf1S6SGXDaUSRLc1yOyJZbxkrAnu+klZscLzmeME
+	 6Xa9XJInPpyAWz/yDyZEUXCqNTJ/66JkPjeQa7jQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Ashok Raj <ashok.raj@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 207/885] s390/boot: fix mem_detect extended area allocation
-Date: Tue,  7 Mar 2023 17:52:21 +0100
-Message-Id: <20230307170011.046517115@linuxfoundation.org>
+Subject: [PATCH 6.1 179/885] x86/microcode: Add a parameter to microcode_check() to store CPU capabilities
+Date: Tue,  7 Mar 2023 17:51:53 +0100
+Message-Id: <20230307170009.754455565@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,225 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Ashok Raj <ashok.raj@intel.com>
 
-[ Upstream commit 22476f47b6b7fb7d066c71f67ebc11892adb0849 ]
+[ Upstream commit ab31c74455c64e69342ddab21fd9426fcbfefde7 ]
 
-Allocation of mem_detect extended area was not considered neither
-in commit 9641b8cc733f ("s390/ipl: read IPL report at early boot")
-nor in commit b2d24b97b2a9 ("s390/kernel: add support for kernel address
-space layout randomization (KASLR)"). As a result mem_detect extended
-theoretically may overlap with ipl report or randomized kernel image
-position. But as mem_detect code will allocate extended area only
-upon exceeding 255 online regions (which should alternate with offline
-memory regions) it is not seen in practice.
+Add a parameter to store CPU capabilities before performing a microcode
+update so that CPU capabilities can be compared before and after update.
 
-To make sure mem_detect extended area does not overlap with ipl report
-or randomized kernel position extend usage of "safe_addr". Make initrd
-handling and mem_detect extended area allocation code move it further
-right and make KASLR takes in into consideration as well.
+  [ bp: Massage. ]
 
-Fixes: 9641b8cc733f ("s390/ipl: read IPL report at early boot")
-Fixes: b2d24b97b2a9 ("s390/kernel: add support for kernel address space layout randomization (KASLR)")
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230109153555.4986-2-ashok.raj@intel.com
+Stable-dep-of: c0dd9245aa9e ("x86/microcode: Check CPU capabilities after late microcode update correctly")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/boot.h       |  4 +--
- arch/s390/boot/kaslr.c      |  6 -----
- arch/s390/boot/mem_detect.c | 52 ++++++++++++-------------------------
- arch/s390/boot/startup.c    | 21 ++++++++-------
- 4 files changed, 31 insertions(+), 52 deletions(-)
+ arch/x86/include/asm/processor.h     |  2 +-
+ arch/x86/kernel/cpu/common.c         | 21 +++++++++++++--------
+ arch/x86/kernel/cpu/microcode/core.c |  3 ++-
+ 3 files changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/arch/s390/boot/boot.h b/arch/s390/boot/boot.h
-index f6e82cf7851e2..939a1b7806df2 100644
---- a/arch/s390/boot/boot.h
-+++ b/arch/s390/boot/boot.h
-@@ -24,10 +24,10 @@ struct vmlinux_info {
- };
- 
- void startup_kernel(void);
--unsigned long detect_memory(void);
-+unsigned long detect_memory(unsigned long *safe_addr);
- bool is_ipl_block_dump(void);
- void store_ipl_parmblock(void);
--unsigned long read_ipl_report(unsigned long safe_offset);
-+unsigned long read_ipl_report(unsigned long safe_addr);
- void setup_boot_command_line(void);
- void parse_boot_command_line(void);
- void verify_facilities(void);
-diff --git a/arch/s390/boot/kaslr.c b/arch/s390/boot/kaslr.c
-index e8d74d4f62aa5..58a8d8c8a1007 100644
---- a/arch/s390/boot/kaslr.c
-+++ b/arch/s390/boot/kaslr.c
-@@ -174,7 +174,6 @@ unsigned long get_random_base(unsigned long safe_addr)
- {
- 	unsigned long memory_limit = get_mem_detect_end();
- 	unsigned long base_pos, max_pos, kernel_size;
--	unsigned long kasan_needs;
- 	int i;
- 
- 	memory_limit = min(memory_limit, ident_map_size);
-@@ -186,12 +185,7 @@ unsigned long get_random_base(unsigned long safe_addr)
- 	 */
- 	memory_limit -= kasan_estimate_memory_needs(memory_limit);
- 
--	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && initrd_data.start && initrd_data.size) {
--		if (safe_addr < initrd_data.start + initrd_data.size)
--			safe_addr = initrd_data.start + initrd_data.size;
--	}
- 	safe_addr = ALIGN(safe_addr, THREAD_SIZE);
--
- 	kernel_size = vmlinux.image_size + vmlinux.bss_size;
- 	if (safe_addr + kernel_size > memory_limit)
- 		return 0;
-diff --git a/arch/s390/boot/mem_detect.c b/arch/s390/boot/mem_detect.c
-index 41792a3a5e364..daa1593171835 100644
---- a/arch/s390/boot/mem_detect.c
-+++ b/arch/s390/boot/mem_detect.c
-@@ -16,29 +16,10 @@ struct mem_detect_info __bootdata(mem_detect);
- #define ENTRIES_EXTENDED_MAX						       \
- 	(256 * (1020 / 2) * sizeof(struct mem_detect_block))
- 
--/*
-- * To avoid corrupting old kernel memory during dump, find lowest memory
-- * chunk possible either right after the kernel end (decompressed kernel) or
-- * after initrd (if it is present and there is no hole between the kernel end
-- * and initrd)
-- */
--static void *mem_detect_alloc_extended(void)
--{
--	unsigned long offset = ALIGN(mem_safe_offset(), sizeof(u64));
--
--	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && initrd_data.start && initrd_data.size &&
--	    initrd_data.start < offset + ENTRIES_EXTENDED_MAX)
--		offset = ALIGN(initrd_data.start + initrd_data.size, sizeof(u64));
--
--	return (void *)offset;
--}
--
- static struct mem_detect_block *__get_mem_detect_block_ptr(u32 n)
- {
- 	if (n < MEM_INLINED_ENTRIES)
- 		return &mem_detect.entries[n];
--	if (unlikely(!mem_detect.entries_extended))
--		mem_detect.entries_extended = mem_detect_alloc_extended();
- 	return &mem_detect.entries_extended[n - MEM_INLINED_ENTRIES];
- }
- 
-@@ -147,7 +128,7 @@ static int tprot(unsigned long addr)
- 	return rc;
- }
- 
--static void search_mem_end(void)
-+static unsigned long search_mem_end(void)
- {
- 	unsigned long range = 1 << (MAX_PHYSMEM_BITS - 20); /* in 1MB blocks */
- 	unsigned long offset = 0;
-@@ -159,33 +140,34 @@ static void search_mem_end(void)
- 		if (!tprot(pivot << 20))
- 			offset = pivot;
- 	}
--
--	add_mem_detect_block(0, (offset + 1) << 20);
-+	return (offset + 1) << 20;
- }
- 
--unsigned long detect_memory(void)
-+unsigned long detect_memory(unsigned long *safe_addr)
- {
- 	unsigned long max_physmem_end = 0;
- 
- 	sclp_early_get_memsize(&max_physmem_end);
-+	mem_detect.entries_extended = (struct mem_detect_block *)ALIGN(*safe_addr, sizeof(u64));
- 
- 	if (!sclp_early_read_storage_info()) {
- 		mem_detect.info_source = MEM_DETECT_SCLP_STOR_INFO;
--		return max_physmem_end;
--	}
--
--	if (!diag260()) {
-+	} else if (!diag260()) {
- 		mem_detect.info_source = MEM_DETECT_DIAG260;
--		return max_physmem_end ?: get_mem_detect_end();
--	}
--
--	if (max_physmem_end) {
-+		max_physmem_end = max_physmem_end ?: get_mem_detect_end();
-+	} else if (max_physmem_end) {
- 		add_mem_detect_block(0, max_physmem_end);
- 		mem_detect.info_source = MEM_DETECT_SCLP_READ_INFO;
--		return max_physmem_end;
-+	} else {
-+		max_physmem_end = search_mem_end();
-+		add_mem_detect_block(0, max_physmem_end);
-+		mem_detect.info_source = MEM_DETECT_BIN_SEARCH;
-+	}
-+
-+	if (mem_detect.count > MEM_INLINED_ENTRIES) {
-+		*safe_addr += (mem_detect.count - MEM_INLINED_ENTRIES) *
-+			     sizeof(struct mem_detect_block);
- 	}
- 
--	search_mem_end();
--	mem_detect.info_source = MEM_DETECT_BIN_SEARCH;
--	return get_mem_detect_end();
-+	return max_physmem_end;
- }
-diff --git a/arch/s390/boot/startup.c b/arch/s390/boot/startup.c
-index 47ca3264c0230..e0863d28759a5 100644
---- a/arch/s390/boot/startup.c
-+++ b/arch/s390/boot/startup.c
-@@ -57,16 +57,17 @@ unsigned long mem_safe_offset(void)
- }
+diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
+index 67c9d73b31faa..2288ef4ba17c5 100644
+--- a/arch/x86/include/asm/processor.h
++++ b/arch/x86/include/asm/processor.h
+@@ -835,7 +835,7 @@ bool xen_set_default_idle(void);
  #endif
  
--static void rescue_initrd(unsigned long addr)
-+static unsigned long rescue_initrd(unsigned long safe_addr)
+ void __noreturn stop_this_cpu(void *dummy);
+-void microcode_check(void);
++void microcode_check(struct cpuinfo_x86 *prev_info);
+ 
+ enum l1tf_mitigations {
+ 	L1TF_MITIGATION_OFF,
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index e80572b674b7a..3c08985ed70c9 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -2311,30 +2311,35 @@ void cpu_init_secondary(void)
+ #endif
+ 
+ #ifdef CONFIG_MICROCODE_LATE_LOADING
+-/*
++/**
++ * microcode_check() - Check if any CPU capabilities changed after an update.
++ * @prev_info:	CPU capabilities stored before an update.
++ *
+  * The microcode loader calls this upon late microcode load to recheck features,
+  * only when microcode has been updated. Caller holds microcode_mutex and CPU
+  * hotplug lock.
++ *
++ * Return: None
+  */
+-void microcode_check(void)
++void microcode_check(struct cpuinfo_x86 *prev_info)
  {
- 	if (!IS_ENABLED(CONFIG_BLK_DEV_INITRD))
--		return;
-+		return safe_addr;
- 	if (!initrd_data.start || !initrd_data.size)
--		return;
--	if (addr <= initrd_data.start)
--		return;
--	memmove((void *)addr, (void *)initrd_data.start, initrd_data.size);
--	initrd_data.start = addr;
-+		return safe_addr;
-+	if (initrd_data.start < safe_addr) {
-+		memmove((void *)safe_addr, (void *)initrd_data.start, initrd_data.size);
-+		initrd_data.start = safe_addr;
-+	}
-+	return initrd_data.start + initrd_data.size;
- }
+-	struct cpuinfo_x86 info;
+-
+ 	perf_check_microcode();
  
- static void copy_bootdata(void)
-@@ -250,6 +251,7 @@ static unsigned long reserve_amode31(unsigned long safe_addr)
+ 	/* Reload CPUID max function as it might've changed. */
+-	info.cpuid_level = cpuid_eax(0);
++	prev_info->cpuid_level = cpuid_eax(0);
  
- void startup_kernel(void)
+ 	/*
+ 	 * Copy all capability leafs to pick up the synthetic ones so that
+ 	 * memcmp() below doesn't fail on that. The ones coming from CPUID will
+ 	 * get overwritten in get_cpu_cap().
+ 	 */
+-	memcpy(&info.x86_capability, &boot_cpu_data.x86_capability, sizeof(info.x86_capability));
++	memcpy(&prev_info->x86_capability, &boot_cpu_data.x86_capability,
++	       sizeof(prev_info->x86_capability));
+ 
+-	get_cpu_cap(&info);
++	get_cpu_cap(prev_info);
+ 
+-	if (!memcmp(&info.x86_capability, &boot_cpu_data.x86_capability, sizeof(info.x86_capability)))
++	if (!memcmp(&prev_info->x86_capability, &boot_cpu_data.x86_capability,
++		    sizeof(prev_info->x86_capability)))
+ 		return;
+ 
+ 	pr_warn("x86/CPU: CPU features have changed after loading microcode, but might not take effect.\n");
+diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
+index 6a41cee242f6d..9d006ff58edc9 100644
+--- a/arch/x86/kernel/cpu/microcode/core.c
++++ b/arch/x86/kernel/cpu/microcode/core.c
+@@ -492,6 +492,7 @@ static int __reload_late(void *info)
+ static int microcode_reload_late(void)
  {
-+	unsigned long max_physmem_end;
- 	unsigned long random_lma;
- 	unsigned long safe_addr;
- 	void *img;
-@@ -265,12 +267,13 @@ void startup_kernel(void)
- 	safe_addr = reserve_amode31(safe_addr);
- 	safe_addr = read_ipl_report(safe_addr);
- 	uv_query_info();
--	rescue_initrd(safe_addr);
-+	safe_addr = rescue_initrd(safe_addr);
- 	sclp_early_read_info();
- 	setup_boot_command_line();
- 	parse_boot_command_line();
- 	sanitize_prot_virt_host();
--	setup_ident_map_size(detect_memory());
-+	max_physmem_end = detect_memory(&safe_addr);
-+	setup_ident_map_size(max_physmem_end);
- 	setup_vmalloc_size();
- 	setup_kernel_memory_layout();
+ 	int old = boot_cpu_data.microcode, ret;
++	struct cpuinfo_x86 prev_info;
  
+ 	pr_err("Attempting late microcode loading - it is dangerous and taints the kernel.\n");
+ 	pr_err("You should switch to early loading, if possible.\n");
+@@ -501,7 +502,7 @@ static int microcode_reload_late(void)
+ 
+ 	ret = stop_machine_cpuslocked(__reload_late, NULL, cpu_online_mask);
+ 	if (ret == 0)
+-		microcode_check();
++		microcode_check(&prev_info);
+ 
+ 	pr_info("Reload completed, microcode revision: 0x%x -> 0x%x\n",
+ 		old, boot_cpu_data.microcode);
 -- 
 2.39.2
 
