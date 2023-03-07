@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B0FBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79039C433EF;
-	Tue,  7 Mar 2023 17:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB22BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80409C433D2;
+	Tue,  7 Mar 2023 17:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210504;
-	bh=3HTfAfun+urXFEuCvdtSvGr5dV7XxHyOnkWjNHaYtzA=;
+	s=korg; t=1678210508;
+	bh=gVK+vHDxhgfc05MESC6t6rqKAnLRDv5wRzzOFiCR5OI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qssg54OVBB3+bO3zl3N4pqKZaxL2780gG6gOZYGdstS6yfDe26k249WjDHn6pOxZN
-	 C/E1KCjzkNEhfqtY2YzCHA54WC6dWZXMOEFIhDhn0E0TX5jPH00rvh+TmQVn94x0ve
-	 JV8+CBWYlhB+nkFad++eh0wETK3RD8RtLG+k97qw=
+	b=XJ75aPFQgc5lCLYd9K65tRzky8UNJqZv+Lte4OeHC9pNUzIV6rDv/lY3lgGE4u2He
+	 C25bU6ykhGwgq0Rluu/LwaSaTDyJjHRMElfjfDI8gH1OcRBIZBKawO59SW3hPpKEEk
+	 Zxm2R0S5hjnyNOo57EG5LhlGb/GhiYbepA6w2/M4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0522/1001] misc: fastrpc: Fix an error handling path in fastrpc_rpmsg_probe()
-Date: Tue,  7 Mar 2023 17:54:54 +0100
-Message-Id: <20230307170044.096085582@linuxfoundation.org>
+	Maxim Kiselev <bigunclemax@gmail.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sasha Levin <sashal@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 6.2 0556/1001] mtd: mtdpart: Dont create platform device thatll never probe
+Date: Tue,  7 Mar 2023 17:55:28 +0100
+Message-Id: <20230307170045.610912755@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,47 +38,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit 11819ed2b70da94acc41fec34178a011c4d3d25d ]
+[ Upstream commit fb42378dcc7f247df56f0ecddfdae85487495fbc ]
 
-If of_platform_populate() fails, some resources need to be freed as already
-done in the other error handling paths.
+These "nvmem-cells" platform devices never get probed because there's no
+platform driver for it and it's never used anywhere else. So it's a
+waste of memory. These devices also cause fw_devlink to block nvmem
+consumers of "nvmem-cells" partition from probing because the supplier
+device never probes.
 
-Fixes: 278d56f970ae ("misc: fastrpc: Reference count channel context")
-Fixes: 3abe3ab3cdab ("misc: fastrpc: add secure domain support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/b909d2f3273b794ea0f1f78d14bc24affb08ea5f.1669398274.git.christophe.jaillet@wanadoo.fr
+So stop creating platform devices for nvmem-cells partitions to avoid
+wasting memory and to avoid blocking probing of consumers.
+
+Reported-by: Maxim Kiselev <bigunclemax@gmail.com>
+Fixes: bcdf0315a61a ("mtd: call of_platform_populate() for MTD partitions")
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Maksim Kiselev <bigunclemax@gmail.com>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
+Link: https://lore.kernel.org/r/20230207014207.1678715-13-saravanak@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/fastrpc.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/mtd/mtdpart.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 5310606113fe5..7ccaca1b7cb8b 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -2315,7 +2315,18 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 	data->domain_id = domain_id;
- 	data->rpdev = rpdev;
+diff --git a/drivers/mtd/mtdpart.c b/drivers/mtd/mtdpart.c
+index d442fa94c8720..85f5ee6f06fc6 100644
+--- a/drivers/mtd/mtdpart.c
++++ b/drivers/mtd/mtdpart.c
+@@ -577,6 +577,7 @@ static int mtd_part_of_parse(struct mtd_info *master,
+ {
+ 	struct mtd_part_parser *parser;
+ 	struct device_node *np;
++	struct device_node *child;
+ 	struct property *prop;
+ 	struct device *dev;
+ 	const char *compat;
+@@ -594,6 +595,15 @@ static int mtd_part_of_parse(struct mtd_info *master,
+ 	else
+ 		np = of_get_child_by_name(np, "partitions");
  
--	return of_platform_populate(rdev->of_node, NULL, NULL, rdev);
-+	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
-+	if (err)
-+		goto populate_error;
++	/*
++	 * Don't create devices that are added to a bus but will never get
++	 * probed. That'll cause fw_devlink to block probing of consumers of
++	 * this partition until the partition device is probed.
++	 */
++	for_each_child_of_node(np, child)
++		if (of_device_is_compatible(child, "nvmem-cells"))
++			of_node_set_flag(child, OF_POPULATED);
 +
-+	return 0;
-+
-+populate_error:
-+	if (data->fdevice)
-+		misc_deregister(&data->fdevice->miscdev);
-+	if (data->secure_fdevice)
-+		misc_deregister(&data->secure_fdevice->miscdev);
-+
- fdev_error:
- 	kfree(data);
- 	return err;
+ 	of_property_for_each_string(np, "compatible", prop, compat) {
+ 		parser = mtd_part_get_compatible_parser(compat);
+ 		if (!parser)
 -- 
 2.39.2
 
