@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564BEBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09FAC433D2;
-	Tue,  7 Mar 2023 17:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366ABBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9061BC433EF;
+	Tue,  7 Mar 2023 17:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210529;
-	bh=6Ld/dmg+GouFienxb6Xo6psUfbwkXHbVYVTS8+irLno=;
+	s=korg; t=1678210532;
+	bh=eVfluyw/+O1n4/6olepKV+q6B2a9vWX51paPMGJm/sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J3u4bVNwYzDs07DANb62eXk6USNR5Xz4jd7PBztjUy21i37Qc2FXH1c4W0ZsZ1+a0
-	 3PMLRZjrlFi2s7gCLnqokk8o+AiIwZ8Le7ok4nxM5huvWVlO7cZGYmrTcWXSOcvJ0s
-	 nCZZ4NN0tyvWvkFy0VHACmBS0vM75hCdeUoZ5FpM=
+	b=Hs8qAds1XO7uBz0H8vQkyx/rvgYXyezPotggAgzCk9FomsvID9Eugei4uzaGg63dX
+	 P+tULzuB89MvOeGnV3wTLLDExjny5K1mJ9kNMBtXWurjleTsF0sqmkZ1xwpy5v7nS+
+	 J1KXUcfuXQutLKun0iUsvSr6/hERKnNF4pkXc370=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bob Pearson <rpearsonhpe@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0571/1001] RDMA/rxe: Move rxe_map_mr_sg to rxe_mr.c
-Date: Tue,  7 Mar 2023 17:55:43 +0100
-Message-Id: <20230307170046.256672311@linuxfoundation.org>
+Subject: [PATCH 6.2 0572/1001] RDMA-rxe: Isolate mr code from atomic_reply()
+Date: Tue,  7 Mar 2023 17:55:44 +0100
+Message-Id: <20230307170046.307992084@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,128 +37,324 @@ Content-Transfer-Encoding: 8bit
 
 From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit db4729a5251992ed535da09c0fcf9b590ac7fe6c ]
+[ Upstream commit f04d5b3d916c61752ac2c2adea5dfe78f8e12f78 ]
 
-Move rxe_map_mr_sg() to rxe_mr.c where it makes a little more sense.
+Isolate mr specific code from atomic_reply() in rxe_resp.c into
+a subroutine rxe_mr_do_atomic_op() in rxe_mr.c.
+Minor cleanups to rxe_check_range() and iova_to_vaddr().
+Move enum resp_state to rxe.h
 
-Link: https://lore.kernel.org/r/20230119235936.19728-3-rpearsonhpe@gmail.com
+Link: https://lore.kernel.org/r/20230119235936.19728-4-rpearsonhpe@gmail.com
 Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Stable-dep-of: 5ff31dfcd6d2 ("Subject: RDMA/rxe: Handle zero length rdma")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_loc.h   |  2 ++
- drivers/infiniband/sw/rxe/rxe_mr.c    | 36 +++++++++++++++++++++++++++
- drivers/infiniband/sw/rxe/rxe_verbs.c | 36 ---------------------------
- 3 files changed, 38 insertions(+), 36 deletions(-)
+ drivers/infiniband/sw/rxe/rxe.h      | 38 +++++++++++++
+ drivers/infiniband/sw/rxe/rxe_loc.h  |  2 +
+ drivers/infiniband/sw/rxe/rxe_mr.c   | 83 ++++++++++++++++++----------
+ drivers/infiniband/sw/rxe/rxe_resp.c | 82 ++++-----------------------
+ 4 files changed, 105 insertions(+), 100 deletions(-)
 
+diff --git a/drivers/infiniband/sw/rxe/rxe.h b/drivers/infiniband/sw/rxe/rxe.h
+index ab334900fcc3d..2415f3704f576 100644
+--- a/drivers/infiniband/sw/rxe/rxe.h
++++ b/drivers/infiniband/sw/rxe/rxe.h
+@@ -57,6 +57,44 @@
+ #define rxe_dbg_mw(mw, fmt, ...) ibdev_dbg((mw)->ibmw.device,		\
+ 		"mw#%d %s:  " fmt, (mw)->elem.index, __func__, ##__VA_ARGS__)
+ 
++/* responder states */
++enum resp_states {
++	RESPST_NONE,
++	RESPST_GET_REQ,
++	RESPST_CHK_PSN,
++	RESPST_CHK_OP_SEQ,
++	RESPST_CHK_OP_VALID,
++	RESPST_CHK_RESOURCE,
++	RESPST_CHK_LENGTH,
++	RESPST_CHK_RKEY,
++	RESPST_EXECUTE,
++	RESPST_READ_REPLY,
++	RESPST_ATOMIC_REPLY,
++	RESPST_ATOMIC_WRITE_REPLY,
++	RESPST_PROCESS_FLUSH,
++	RESPST_COMPLETE,
++	RESPST_ACKNOWLEDGE,
++	RESPST_CLEANUP,
++	RESPST_DUPLICATE_REQUEST,
++	RESPST_ERR_MALFORMED_WQE,
++	RESPST_ERR_UNSUPPORTED_OPCODE,
++	RESPST_ERR_MISALIGNED_ATOMIC,
++	RESPST_ERR_PSN_OUT_OF_SEQ,
++	RESPST_ERR_MISSING_OPCODE_FIRST,
++	RESPST_ERR_MISSING_OPCODE_LAST_C,
++	RESPST_ERR_MISSING_OPCODE_LAST_D1E,
++	RESPST_ERR_TOO_MANY_RDMA_ATM_REQ,
++	RESPST_ERR_RNR,
++	RESPST_ERR_RKEY_VIOLATION,
++	RESPST_ERR_INVALIDATE_RKEY,
++	RESPST_ERR_LENGTH,
++	RESPST_ERR_CQ_OVERFLOW,
++	RESPST_ERROR,
++	RESPST_RESET,
++	RESPST_DONE,
++	RESPST_EXIT,
++};
++
+ void rxe_set_mtu(struct rxe_dev *rxe, unsigned int dev_mtu);
+ 
+ int rxe_add(struct rxe_dev *rxe, unsigned int mtu, const char *ibdev_name);
 diff --git a/drivers/infiniband/sw/rxe/rxe_loc.h b/drivers/infiniband/sw/rxe/rxe_loc.h
-index 948ce4902b10f..29b6c21430453 100644
+index 29b6c21430453..bcb1bbcf50dff 100644
 --- a/drivers/infiniband/sw/rxe/rxe_loc.h
 +++ b/drivers/infiniband/sw/rxe/rxe_loc.h
-@@ -69,6 +69,8 @@ int rxe_mr_copy(struct rxe_mr *mr, u64 iova, void *addr, int length,
- 		enum rxe_mr_copy_dir dir);
- int copy_data(struct rxe_pd *pd, int access, struct rxe_dma_info *dma,
- 	      void *addr, int length, enum rxe_mr_copy_dir dir);
-+int rxe_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg,
-+		  int sg_nents, unsigned int *sg_offset);
+@@ -72,6 +72,8 @@ int copy_data(struct rxe_pd *pd, int access, struct rxe_dma_info *dma,
+ int rxe_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg,
+ 		  int sg_nents, unsigned int *sg_offset);
  void *iova_to_vaddr(struct rxe_mr *mr, u64 iova, int length);
++int rxe_mr_do_atomic_op(struct rxe_mr *mr, u64 iova, int opcode,
++			u64 compare, u64 swap_add, u64 *orig_val);
  struct rxe_mr *lookup_mr(struct rxe_pd *pd, int access, u32 key,
  			 enum rxe_mr_lookup_type type);
+ int mr_check_range(struct rxe_mr *mr, u64 iova, size_t length);
 diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
-index 632ee1e516a1a..229c7259644cf 100644
+index 229c7259644cf..df9741474f1f0 100644
 --- a/drivers/infiniband/sw/rxe/rxe_mr.c
 +++ b/drivers/infiniband/sw/rxe/rxe_mr.c
-@@ -223,6 +223,42 @@ int rxe_mr_init_fast(int max_pages, struct rxe_mr *mr)
+@@ -32,13 +32,15 @@ int mr_check_range(struct rxe_mr *mr, u64 iova, size_t length)
+ 
+ 	case IB_MR_TYPE_USER:
+ 	case IB_MR_TYPE_MEM_REG:
+-		if (iova < mr->ibmr.iova || length > mr->ibmr.length ||
+-		    iova > mr->ibmr.iova + mr->ibmr.length - length)
+-			return -EFAULT;
++		if (iova < mr->ibmr.iova ||
++		    iova + length > mr->ibmr.iova + mr->ibmr.length) {
++			rxe_dbg_mr(mr, "iova/length out of range");
++			return -EINVAL;
++		}
+ 		return 0;
+ 
+ 	default:
+-		rxe_dbg_mr(mr, "type (%d) not supported\n", mr->ibmr.type);
++		rxe_dbg_mr(mr, "mr type not supported\n");
+ 		return -EINVAL;
+ 	}
+ }
+@@ -299,37 +301,22 @@ void *iova_to_vaddr(struct rxe_mr *mr, u64 iova, int length)
+ {
+ 	size_t offset;
+ 	int m, n;
+-	void *addr;
+ 
+-	if (mr->state != RXE_MR_STATE_VALID) {
+-		rxe_dbg_mr(mr, "Not in valid state\n");
+-		addr = NULL;
+-		goto out;
+-	}
++	if (mr->state != RXE_MR_STATE_VALID)
++		return NULL;
+ 
+-	if (!mr->map) {
+-		addr = (void *)(uintptr_t)iova;
+-		goto out;
+-	}
++	if (mr->ibmr.type == IB_MR_TYPE_DMA)
++		return (void *)(uintptr_t)iova;
+ 
+-	if (mr_check_range(mr, iova, length)) {
+-		rxe_dbg_mr(mr, "Range violation\n");
+-		addr = NULL;
+-		goto out;
+-	}
++	if (mr_check_range(mr, iova, length))
++		return NULL;
+ 
+ 	lookup_iova(mr, iova, &m, &n, &offset);
+ 
+-	if (offset + length > mr->map[m]->buf[n].size) {
+-		rxe_dbg_mr(mr, "Crosses page boundary\n");
+-		addr = NULL;
+-		goto out;
+-	}
+-
+-	addr = (void *)(uintptr_t)mr->map[m]->buf[n].addr + offset;
++	if (offset + length > mr->map[m]->buf[n].size)
++		return NULL;
+ 
+-out:
+-	return addr;
++	return (void *)(uintptr_t)mr->map[m]->buf[n].addr + offset;
+ }
+ 
+ int rxe_flush_pmem_iova(struct rxe_mr *mr, u64 iova, int length)
+@@ -538,6 +525,46 @@ int copy_data(
  	return err;
  }
  
-+static int rxe_set_page(struct ib_mr *ibmr, u64 addr)
++/* Guarantee atomicity of atomic operations at the machine level. */
++static DEFINE_SPINLOCK(atomic_ops_lock);
++
++int rxe_mr_do_atomic_op(struct rxe_mr *mr, u64 iova, int opcode,
++			u64 compare, u64 swap_add, u64 *orig_val)
 +{
-+	struct rxe_mr *mr = to_rmr(ibmr);
-+	struct rxe_map *map;
-+	struct rxe_phys_buf *buf;
++	u64 *va;
++	u64 value;
 +
-+	if (unlikely(mr->nbuf == mr->num_buf))
-+		return -ENOMEM;
++	if (mr->state != RXE_MR_STATE_VALID) {
++		rxe_dbg_mr(mr, "mr not in valid state");
++		return RESPST_ERR_RKEY_VIOLATION;
++	}
 +
-+	map = mr->map[mr->nbuf / RXE_BUF_PER_MAP];
-+	buf = &map->buf[mr->nbuf % RXE_BUF_PER_MAP];
++	va = iova_to_vaddr(mr, iova, sizeof(u64));
++	if (!va) {
++		rxe_dbg_mr(mr, "iova out of range");
++		return RESPST_ERR_RKEY_VIOLATION;
++	}
 +
-+	buf->addr = addr;
-+	buf->size = ibmr->page_size;
-+	mr->nbuf++;
++	if ((uintptr_t)va & 0x7) {
++		rxe_dbg_mr(mr, "iova not aligned");
++		return RESPST_ERR_MISALIGNED_ATOMIC;
++	}
++
++	spin_lock_bh(&atomic_ops_lock);
++	value = *orig_val = *va;
++
++	if (opcode == IB_OPCODE_RC_COMPARE_SWAP) {
++		if (value == compare)
++			*va = swap_add;
++	} else {
++		value += swap_add;
++		*va = value;
++	}
++	spin_unlock_bh(&atomic_ops_lock);
 +
 +	return 0;
 +}
 +
-+int rxe_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg,
-+		  int sg_nents, unsigned int *sg_offset)
-+{
-+	struct rxe_mr *mr = to_rmr(ibmr);
-+	int n;
-+
-+	mr->nbuf = 0;
-+
-+	n = ib_sg_to_pages(ibmr, sg, sg_nents, sg_offset, rxe_set_page);
-+
-+	mr->page_shift = ilog2(ibmr->page_size);
-+	mr->page_mask = ibmr->page_size - 1;
-+	mr->offset = ibmr->iova & mr->page_mask;
-+
-+	return n;
-+}
-+
- static void lookup_iova(struct rxe_mr *mr, u64 iova, int *m_out, int *n_out,
- 			size_t *offset_out)
+ int advance_dma_data(struct rxe_dma_info *dma, unsigned int length)
  {
-diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
-index 025b35bf014e2..7a902e0a0607d 100644
---- a/drivers/infiniband/sw/rxe/rxe_verbs.c
-+++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
-@@ -948,42 +948,6 @@ static struct ib_mr *rxe_alloc_mr(struct ib_pd *ibpd, enum ib_mr_type mr_type,
- 	return ERR_PTR(err);
+ 	struct rxe_sge		*sge	= &dma->sge[dma->cur_sge];
+diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
+index c74972244f08f..9d4b4e9b42fc9 100644
+--- a/drivers/infiniband/sw/rxe/rxe_resp.c
++++ b/drivers/infiniband/sw/rxe/rxe_resp.c
+@@ -10,43 +10,6 @@
+ #include "rxe_loc.h"
+ #include "rxe_queue.h"
+ 
+-enum resp_states {
+-	RESPST_NONE,
+-	RESPST_GET_REQ,
+-	RESPST_CHK_PSN,
+-	RESPST_CHK_OP_SEQ,
+-	RESPST_CHK_OP_VALID,
+-	RESPST_CHK_RESOURCE,
+-	RESPST_CHK_LENGTH,
+-	RESPST_CHK_RKEY,
+-	RESPST_EXECUTE,
+-	RESPST_READ_REPLY,
+-	RESPST_ATOMIC_REPLY,
+-	RESPST_ATOMIC_WRITE_REPLY,
+-	RESPST_PROCESS_FLUSH,
+-	RESPST_COMPLETE,
+-	RESPST_ACKNOWLEDGE,
+-	RESPST_CLEANUP,
+-	RESPST_DUPLICATE_REQUEST,
+-	RESPST_ERR_MALFORMED_WQE,
+-	RESPST_ERR_UNSUPPORTED_OPCODE,
+-	RESPST_ERR_MISALIGNED_ATOMIC,
+-	RESPST_ERR_PSN_OUT_OF_SEQ,
+-	RESPST_ERR_MISSING_OPCODE_FIRST,
+-	RESPST_ERR_MISSING_OPCODE_LAST_C,
+-	RESPST_ERR_MISSING_OPCODE_LAST_D1E,
+-	RESPST_ERR_TOO_MANY_RDMA_ATM_REQ,
+-	RESPST_ERR_RNR,
+-	RESPST_ERR_RKEY_VIOLATION,
+-	RESPST_ERR_INVALIDATE_RKEY,
+-	RESPST_ERR_LENGTH,
+-	RESPST_ERR_CQ_OVERFLOW,
+-	RESPST_ERROR,
+-	RESPST_RESET,
+-	RESPST_DONE,
+-	RESPST_EXIT,
+-};
+-
+ static char *resp_state_name[] = {
+ 	[RESPST_NONE]				= "NONE",
+ 	[RESPST_GET_REQ]			= "GET_REQ",
+@@ -725,17 +688,12 @@ static enum resp_states process_flush(struct rxe_qp *qp,
+ 	return RESPST_ACKNOWLEDGE;
  }
  
--static int rxe_set_page(struct ib_mr *ibmr, u64 addr)
--{
--	struct rxe_mr *mr = to_rmr(ibmr);
--	struct rxe_map *map;
--	struct rxe_phys_buf *buf;
+-/* Guarantee atomicity of atomic operations at the machine level. */
+-static DEFINE_SPINLOCK(atomic_ops_lock);
 -
--	if (unlikely(mr->nbuf == mr->num_buf))
--		return -ENOMEM;
--
--	map = mr->map[mr->nbuf / RXE_BUF_PER_MAP];
--	buf = &map->buf[mr->nbuf % RXE_BUF_PER_MAP];
--
--	buf->addr = addr;
--	buf->size = ibmr->page_size;
--	mr->nbuf++;
--
--	return 0;
--}
--
--static int rxe_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg,
--			 int sg_nents, unsigned int *sg_offset)
--{
--	struct rxe_mr *mr = to_rmr(ibmr);
--	int n;
--
--	mr->nbuf = 0;
--
--	n = ib_sg_to_pages(ibmr, sg, sg_nents, sg_offset, rxe_set_page);
--
--	mr->page_shift = ilog2(ibmr->page_size);
--	mr->page_mask = ibmr->page_size - 1;
--	mr->offset = ibmr->iova & mr->page_mask;
--
--	return n;
--}
--
- static ssize_t parent_show(struct device *device,
- 			   struct device_attribute *attr, char *buf)
+ static enum resp_states atomic_reply(struct rxe_qp *qp,
+-					 struct rxe_pkt_info *pkt)
++				     struct rxe_pkt_info *pkt)
  {
+-	u64 *vaddr;
+-	enum resp_states ret;
+ 	struct rxe_mr *mr = qp->resp.mr;
+ 	struct resp_res *res = qp->resp.res;
+-	u64 value;
++	int err;
+ 
+ 	if (!res) {
+ 		res = rxe_prepare_res(qp, pkt, RXE_ATOMIC_MASK);
+@@ -743,32 +701,14 @@ static enum resp_states atomic_reply(struct rxe_qp *qp,
+ 	}
+ 
+ 	if (!res->replay) {
+-		if (mr->state != RXE_MR_STATE_VALID) {
+-			ret = RESPST_ERR_RKEY_VIOLATION;
+-			goto out;
+-		}
+-
+-		vaddr = iova_to_vaddr(mr, qp->resp.va + qp->resp.offset,
+-					sizeof(u64));
+-
+-		/* check vaddr is 8 bytes aligned. */
+-		if (!vaddr || (uintptr_t)vaddr & 7) {
+-			ret = RESPST_ERR_MISALIGNED_ATOMIC;
+-			goto out;
+-		}
+-
+-		spin_lock_bh(&atomic_ops_lock);
+-		res->atomic.orig_val = value = *vaddr;
+-
+-		if (pkt->opcode == IB_OPCODE_RC_COMPARE_SWAP) {
+-			if (value == atmeth_comp(pkt))
+-				value = atmeth_swap_add(pkt);
+-		} else {
+-			value += atmeth_swap_add(pkt);
+-		}
++		u64 iova = qp->resp.va + qp->resp.offset;
+ 
+-		*vaddr = value;
+-		spin_unlock_bh(&atomic_ops_lock);
++		err = rxe_mr_do_atomic_op(mr, iova, pkt->opcode,
++					  atmeth_comp(pkt),
++					  atmeth_swap_add(pkt),
++					  &res->atomic.orig_val);
++		if (err)
++			return err;
+ 
+ 		qp->resp.msn++;
+ 
+@@ -780,9 +720,7 @@ static enum resp_states atomic_reply(struct rxe_qp *qp,
+ 		qp->resp.status = IB_WC_SUCCESS;
+ 	}
+ 
+-	ret = RESPST_ACKNOWLEDGE;
+-out:
+-	return ret;
++	return RESPST_ACKNOWLEDGE;
+ }
+ 
+ #ifdef CONFIG_64BIT
 -- 
 2.39.2
 
