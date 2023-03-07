@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F052BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE4CC433D2;
-	Tue,  7 Mar 2023 17:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A7EBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2759C433A1;
+	Tue,  7 Mar 2023 17:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210189;
-	bh=yfA8SmBItDEP2CFmlqct4ZJxhlSDQ/R7sb1TV1+qg3w=;
+	s=korg; t=1678210192;
+	bh=Uqe88ZOiTAMwGWY9SJd3pNnDcjxhEl+vnrYP76spxsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+LNAy424PC3qCY6Twnhcvi26ZwSRKkvupipY8mD9/DXA2enAspKQcG/qsuhgIbYI
-	 YMDXsucKpHnagPkR8N7FqObkTKufdupLgprgS+YzM/idqiYLOr7xMe4DJzAMpy5+eX
-	 b8z5jca7upR7kf2gWxhoayd6b5wT3bg5LXwZIgNM=
+	b=xRfFkLvUpMKTC9Dx7zJyGqzJRetauYoa0Ao0CWFitKKAvRjr64c0qdMgWZwaYz0dR
+	 u+WcHgHvnHu0Bl6Jcw1P2mk43IQl7K7bnNw6Xz8htdxKIcfQza4Hv65+onDzjP+H/P
+	 l9zcS/YZCIix9XWJWfr7EDnLZ+RvPnph8xnflEE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bastien Nocera <hadess@hadess.net>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	William Zhang <william.zhang@broadcom.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0431/1001] HID: logitech-hidpp: Hard-code HID++ 1.0 fast scroll support
-Date: Tue,  7 Mar 2023 17:53:23 +0100
-Message-Id: <20230307170040.066059171@linuxfoundation.org>
+Subject: [PATCH 6.2 0432/1001] spi: bcm63xx-hsspi: Fix multi-bit mode setting
+Date: Tue,  7 Mar 2023 17:53:24 +0100
+Message-Id: <20230307170040.115008992@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,69 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bastien Nocera <hadess@hadess.net>
+From: William Zhang <william.zhang@broadcom.com>
 
-[ Upstream commit 719acb4d3b7accc9cfbaf21c1c2d51dc7384aee2 ]
+[ Upstream commit 811ff802aaf878ebbbaeac0307a0164fa21e7d40 ]
 
-HID++ 1.0 devices only export whether Fast Scrolling is enabled, not
-whether they are capable of it. Reinstate the original quirks for the 3
-supported mice so fast scrolling works again on those devices.
+Currently the driver always sets the controller to dual data bit mode
+for both tx and rx data in the profile mode control register even for
+single data bit transfer. Luckily the opcode is set correctly according
+to SPI transfer data bit width so it does not actually cause issues.
 
-Fixes: 908d325e1665 ("HID: logitech-hidpp: Detect hi-res scrolling support")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216903
-Signed-off-by: Bastien Nocera <hadess@hadess.net>
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Link: https://lore.kernel.org/r/20230116130937.391441-1-hadess@hadess.net
+This change fixes the problem by setting tx and rx data bit mode field
+correctly according to the actual SPI transfer tx and rx data bit width.
+
+Fixes: 142168eba9dc ("spi: bcm63xx-hsspi: add bcm63xx HSSPI driver")
+Signed-off-by: William Zhang <william.zhang@broadcom.com>
+Link: https://lore.kernel.org/r/20230209200246.141520-11-william.zhang@broadcom.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/spi/spi-bcm63xx-hsspi.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 9c1ee8e91e0ca..0c024ec1452cd 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -77,6 +77,7 @@ MODULE_PARM_DESC(disable_tap_to_click,
- #define HIDPP_QUIRK_HIDPP_WHEELS		BIT(26)
- #define HIDPP_QUIRK_HIDPP_EXTRA_MOUSE_BTNS	BIT(27)
- #define HIDPP_QUIRK_HIDPP_CONSUMER_VENDOR_KEYS	BIT(28)
-+#define HIDPP_QUIRK_HI_RES_SCROLL_1P0		BIT(29)
+diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
+index a74345ed0e2ff..9ec33745c1472 100644
+--- a/drivers/spi/spi-bcm63xx-hsspi.c
++++ b/drivers/spi/spi-bcm63xx-hsspi.c
+@@ -163,6 +163,7 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
+ 	int step_size = HSSPI_BUFFER_LEN;
+ 	const u8 *tx = t->tx_buf;
+ 	u8 *rx = t->rx_buf;
++	u32 val = 0;
  
- /* These are just aliases for now */
- #define HIDPP_QUIRK_KBD_SCROLL_WHEEL HIDPP_QUIRK_HIDPP_WHEELS
-@@ -3472,14 +3473,8 @@ static int hidpp_initialize_hires_scroll(struct hidpp_device *hidpp)
- 			hid_dbg(hidpp->hid_dev, "Detected HID++ 2.0 hi-res scrolling\n");
- 		}
- 	} else {
--		struct hidpp_report response;
--
--		ret = hidpp_send_rap_command_sync(hidpp,
--						  REPORT_ID_HIDPP_SHORT,
--						  HIDPP_GET_REGISTER,
--						  HIDPP_ENABLE_FAST_SCROLL,
--						  NULL, 0, &response);
--		if (!ret) {
-+		/* We cannot detect fast scrolling support on HID++ 1.0 devices */
-+		if (hidpp->quirks & HIDPP_QUIRK_HI_RES_SCROLL_1P0) {
- 			hidpp->capabilities |= HIDPP_CAPABILITY_HIDPP10_FAST_SCROLL;
- 			hid_dbg(hidpp->hid_dev, "Detected HID++ 1.0 fast scroll\n");
- 		}
-@@ -4297,9 +4292,15 @@ static const struct hid_device_id hidpp_devices[] = {
- 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH,
- 		USB_DEVICE_ID_LOGITECH_T651),
- 	  .driver_data = HIDPP_QUIRK_CLASS_WTP },
-+	{ /* Mouse Logitech Anywhere MX */
-+	  LDJ_DEVICE(0x1017), .driver_data = HIDPP_QUIRK_HI_RES_SCROLL_1P0 },
- 	{ /* Mouse logitech M560 */
- 	  LDJ_DEVICE(0x402d),
- 	  .driver_data = HIDPP_QUIRK_DELAYED_INIT | HIDPP_QUIRK_CLASS_M560 },
-+	{ /* Mouse Logitech M705 (firmware RQM17) */
-+	  LDJ_DEVICE(0x101b), .driver_data = HIDPP_QUIRK_HI_RES_SCROLL_1P0 },
-+	{ /* Mouse Logitech Performance MX */
-+	  LDJ_DEVICE(0x101a), .driver_data = HIDPP_QUIRK_HI_RES_SCROLL_1P0 },
- 	{ /* Keyboard logitech K400 */
- 	  LDJ_DEVICE(0x4024),
- 	  .driver_data = HIDPP_QUIRK_CLASS_K400 },
+ 	bcm63xx_hsspi_set_clk(bs, spi, t->speed_hz);
+ 	bcm63xx_hsspi_set_cs(bs, spi->chip_select, true);
+@@ -178,11 +179,16 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
+ 		step_size -= HSSPI_OPCODE_LEN;
+ 
+ 	if ((opcode == HSSPI_OP_READ && t->rx_nbits == SPI_NBITS_DUAL) ||
+-	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL))
++	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL)) {
+ 		opcode |= HSSPI_OP_MULTIBIT;
+ 
+-	__raw_writel(1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT |
+-		     1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT | 0xff,
++		if (t->rx_nbits == SPI_NBITS_DUAL)
++			val |= 1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT;
++		if (t->tx_nbits == SPI_NBITS_DUAL)
++			val |= 1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT;
++	}
++
++	__raw_writel(val | 0xff,
+ 		     bs->regs + HSSPI_PROFILE_MODE_CTRL_REG(chip_select));
+ 
+ 	while (pending > 0) {
 -- 
 2.39.2
 
