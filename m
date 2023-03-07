@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA6CBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:21:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D82C433EF;
-	Tue,  7 Mar 2023 18:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D45BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:21:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA54C433D2;
+	Tue,  7 Mar 2023 18:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213282;
-	bh=AF769B30T8DbAb9bQNz2IbMFDjrXhdFLVYPbCj+khD4=;
+	s=korg; t=1678213285;
+	bh=IgAoI9427T+gYYcZbwy8LGbidteJ248lklD8EmzOeLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bTKRBqxIu87STyf6JZNhZZ4VC5q7fmDTYoyg3yXCAs4MuymoyIlZjwriHxygZ5CUR
-	 +JWcqNoJRolfx19KyaRnUV43X+6cYnpVYKFDtsOmsa46RaN7FerMje50ij3IVBtsHi
-	 Muxi/EfrxSHpDmRcVLqaLKKir3IaES1CzbH7nHfM=
+	b=L+J8WFRjjyvFrU+P6dqEBHeTyRXXmB8SVwJ/xy7kf3WTDQcOKCWwdbP0tnrrC1/rl
+	 MBWEBKIZlhHEkZD9G/k0G0cM7OCZi8aWkb1F3J8/RMkv3nxwsgYsuDg31+pHABE+EA
+	 R+iwF6APedXoNWi/43rnfdn8t6i2calEur0Rln00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Sven Peter <sven@svenpeter.dev>,
+	Hector Martin <marcan@marcan.st>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 457/885] PCI: mt7621: Delay phy ports initialization
-Date: Tue,  7 Mar 2023 17:56:31 +0100
-Message-Id: <20230307170022.360211959@linuxfoundation.org>
+Subject: [PATCH 6.1 458/885] iommu: dart: Add suspend/resume support
+Date: Tue,  7 Mar 2023 17:56:32 +0100
+Message-Id: <20230307170022.398259145@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,60 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit 0cb2a8f3456ff1cc51d571e287a48e8fddc98ec2 ]
+[ Upstream commit 3d68bbb81b1a64e279180eee1ed0e2c590b5029e ]
 
-Some devices like ZBT WE1326 and ZBT WF3526-P and some Netgear models need
-to delay phy port initialization after calling the mt7621_pcie_init_port()
-driver function to get into reliable boots for both warm and hard resets.
+We need to save/restore the TCR/TTBR registers, since they are lost
+on power gate.
 
-The delay required to detect the ports seems to be in the range [75-100]
-milliseconds.
-
-If the ports are not detected the controller is not functional.
-
-There is no datasheet or something similar to really understand why this
-extra delay is needed only for these devices and it is not for most of
-the boards that are built on mt7621 SoC.
-
-This issue has been reported by openWRT community and the complete
-discussion is in [0]. The 100 milliseconds delay has been tested in all
-devices to validate it.
-
-Add the extra 100 milliseconds delay to fix the issue.
-
-[0]: https://github.com/openwrt/openwrt/pull/11220
-
-Link: https://lore.kernel.org/r/20221231074041.264738-1-sergio.paracuellos@gmail.com
-Fixes: 2bdd5238e756 ("PCI: mt7621: Add MediaTek MT7621 PCIe host controller driver")
-Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Sven Peter <sven@svenpeter.dev>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Link: https://lore.kernel.org/r/20230113105029.26654-3-marcan@marcan.st
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: cf5c1c87c239 ("iommu/dart: Fix apple_dart_device_group for PCI groups")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-mt7621.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/apple-dart.c | 43 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/drivers/pci/controller/pcie-mt7621.c b/drivers/pci/controller/pcie-mt7621.c
-index ee7aad09d6277..63a5f4463a9f6 100644
---- a/drivers/pci/controller/pcie-mt7621.c
-+++ b/drivers/pci/controller/pcie-mt7621.c
-@@ -60,6 +60,7 @@
- #define PCIE_PORT_LINKUP		BIT(0)
- #define PCIE_PORT_CNT			3
+diff --git a/drivers/iommu/apple-dart.c b/drivers/iommu/apple-dart.c
+index 4f4a323be0d0f..2458416122f8d 100644
+--- a/drivers/iommu/apple-dart.c
++++ b/drivers/iommu/apple-dart.c
+@@ -121,6 +121,9 @@ struct apple_dart {
  
-+#define INIT_PORTS_DELAY_MS		100
- #define PERST_DELAY_MS			100
+ 	struct iommu_group *sid2group[DART_MAX_STREAMS];
+ 	struct iommu_device iommu;
++
++	u32 save_tcr[DART_MAX_STREAMS];
++	u32 save_ttbr[DART_MAX_STREAMS][DART_MAX_TTBR];
+ };
  
- /**
-@@ -369,6 +370,7 @@ static int mt7621_pcie_init_ports(struct mt7621_pcie *pcie)
- 		}
- 	}
+ /*
+@@ -932,6 +935,45 @@ static const struct apple_dart_hw apple_dart_hw_t6000 = {
+ 	.fmt = APPLE_DART2,
+ };
  
-+	msleep(INIT_PORTS_DELAY_MS);
- 	mt7621_pcie_reset_ep_deassert(pcie);
- 
- 	tmp = NULL;
++static __maybe_unused int apple_dart_suspend(struct device *dev)
++{
++	struct apple_dart *dart = dev_get_drvdata(dev);
++	unsigned int sid, idx;
++
++	for (sid = 0; sid < DART_MAX_STREAMS; sid++) {
++		dart->save_tcr[sid] = readl_relaxed(dart->regs + DART_TCR(sid));
++		for (idx = 0; idx < DART_MAX_TTBR; idx++)
++			dart->save_ttbr[sid][idx] =
++				readl(dart->regs + DART_TTBR(sid, idx));
++	}
++
++	return 0;
++}
++
++static __maybe_unused int apple_dart_resume(struct device *dev)
++{
++	struct apple_dart *dart = dev_get_drvdata(dev);
++	unsigned int sid, idx;
++	int ret;
++
++	ret = apple_dart_hw_reset(dart);
++	if (ret) {
++		dev_err(dev, "Failed to reset DART on resume\n");
++		return ret;
++	}
++
++	for (sid = 0; sid < DART_MAX_STREAMS; sid++) {
++		for (idx = 0; idx < DART_MAX_TTBR; idx++)
++			writel(dart->save_ttbr[sid][idx],
++			       dart->regs + DART_TTBR(sid, idx));
++		writel(dart->save_tcr[sid], dart->regs + DART_TCR(sid));
++	}
++
++	return 0;
++}
++
++DEFINE_SIMPLE_DEV_PM_OPS(apple_dart_pm_ops, apple_dart_suspend, apple_dart_resume);
++
+ static const struct of_device_id apple_dart_of_match[] = {
+ 	{ .compatible = "apple,t8103-dart", .data = &apple_dart_hw_t8103 },
+ 	{ .compatible = "apple,t6000-dart", .data = &apple_dart_hw_t6000 },
+@@ -944,6 +986,7 @@ static struct platform_driver apple_dart_driver = {
+ 		.name			= "apple-dart",
+ 		.of_match_table		= apple_dart_of_match,
+ 		.suppress_bind_attrs    = true,
++		.pm			= pm_sleep_ptr(&apple_dart_pm_ops),
+ 	},
+ 	.probe	= apple_dart_probe,
+ 	.remove	= apple_dart_remove,
 -- 
 2.39.2
 
