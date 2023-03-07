@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E94BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:15:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB9DC433D2;
-	Tue,  7 Mar 2023 18:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288A3BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:16:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5F7C433EF;
+	Tue,  7 Mar 2023 18:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212957;
-	bh=NhGsBGoqTdT0I8zUJPQxubvxLRtXHbikPeSRWymwZAA=;
+	s=korg; t=1678212961;
+	bh=uV69gHXs1BRTAAy+cC7xtXcZwabmMaQc6tzRKL0whsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E4FjR1UvuRclm3E47EuRIfv3Z3GoaKPwPYCpMMpRY18Hf+YtvaS0TH7i8JpwV7yJj
-	 xVW5HP6lPI74WbRYmgyd6+Ka7BQAKyofw++NCQNWL/zo21G8+iq+5NRu7cNRKXAc97
-	 64xyZ0STOQc2n/O2KZWbfFmR/3UbWHns1f38va3k=
+	b=Yw1h1FISN5eRfNGMpWtpoTuds/RrOFvYV851BH+AnFqefaMZvdqtFPxialLY4KkwV
+	 WDXQwMKv+BSiYeVrrEGX/66T4zyHZrWA3D9AsT0zzu9C4rMtWgbG6Ukkezg36r7hWS
+	 OnSoO5H3jg6+pkGdHWu3VPh1tMrOF0qFyeOjuyiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 353/885] ASoC: qcom: q6apm-dai: Add SNDRV_PCM_INFO_BATCH flag
-Date: Tue,  7 Mar 2023 17:54:47 +0100
-Message-Id: <20230307170017.598072911@linuxfoundation.org>
+Subject: [PATCH 6.1 354/885] ASoC: codecs: lpass: register mclk after runtime pm
+Date: Tue,  7 Mar 2023 17:54:48 +0100
+Message-Id: <20230307170017.639838763@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,67 +37,143 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit aa759f3f9f4394a3af65ad1772fca6cb9dd9e4cc ]
+[ Upstream commit 1dc3459009c33e335f0d62b84dd39a6bbd7fd5d2 ]
 
-At the moment, playing audio with PulseAudio with the qdsp6 driver
-results in distorted sound. It seems like its timer-based scheduling
-does not work properly with qdsp6 since setting tsched=0 in
-the PulseAudio configuration avoids the issue.
+move mclk out registration after runtime pm is enabled so that the
+clk framework can resume the codec if it requires to enable the mclk out.
 
-Apparently this happens when the pointer() callback is not accurate
-enough. There is a SNDRV_PCM_INFO_BATCH flag that can be used to stop
-PulseAudio from using timer-based scheduling by default.
-
-According to https://www.alsa-project.org/pipermail/alsa-devel/2014-March/073816.html:
-
-The flag is being used in the sense explained in the previous audio
-meeting -- the data transfer granularity isn't fine enough but aligned
-to the period size (or less).
-
-q6apm-dai reports the position as multiple of
-
-prtd->pcm_count = snd_pcm_lib_period_bytes(substream)
-
-so it indeed just a multiple of the period size.
-
-Therefore adding the flag here seems appropriate and makes audio
-work out of the box.
-
-Comment log inspired by Stephan Gerhold sent for q6asm-dai.c few years back.
-
-Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
+Fixes: c96baa2949b2 ("ASoC: codecs: wsa-macro: add runtime pm support")
+Fixes: 72ad25eabda0 ("ASoC: codecs: va-macro: add runtime pm support")
+Fixes: 366ff79ed539 ("ASoC: codecs: rx-macro: add runtime pm support")
+Fixes: 1fb83bc5cf64 ("ASoC: codecs: tx-macro: add runtime pm support")
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230209122806.18923-4-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20230209122806.18923-6-srinivas.kandagatla@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-dai.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/codecs/lpass-rx-macro.c  |  8 ++++----
+ sound/soc/codecs/lpass-tx-macro.c  |  8 ++++----
+ sound/soc/codecs/lpass-va-macro.c  | 20 ++++++++++----------
+ sound/soc/codecs/lpass-wsa-macro.c |  9 ++++-----
+ 4 files changed, 22 insertions(+), 23 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
-index bd35067a40521..7f02f5b2c33fd 100644
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -64,7 +64,8 @@ struct q6apm_dai_data {
- static struct snd_pcm_hardware q6apm_dai_hardware_capture = {
- 	.info =                 (SNDRV_PCM_INFO_MMAP | SNDRV_PCM_INFO_BLOCK_TRANSFER |
- 				 SNDRV_PCM_INFO_MMAP_VALID | SNDRV_PCM_INFO_INTERLEAVED |
--				 SNDRV_PCM_INFO_PAUSE | SNDRV_PCM_INFO_RESUME),
-+				 SNDRV_PCM_INFO_PAUSE | SNDRV_PCM_INFO_RESUME |
-+				 SNDRV_PCM_INFO_BATCH),
- 	.formats =              (SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE),
- 	.rates =                SNDRV_PCM_RATE_8000_48000,
- 	.rate_min =             8000,
-@@ -82,7 +83,8 @@ static struct snd_pcm_hardware q6apm_dai_hardware_capture = {
- static struct snd_pcm_hardware q6apm_dai_hardware_playback = {
- 	.info =                 (SNDRV_PCM_INFO_MMAP | SNDRV_PCM_INFO_BLOCK_TRANSFER |
- 				 SNDRV_PCM_INFO_MMAP_VALID | SNDRV_PCM_INFO_INTERLEAVED |
--				 SNDRV_PCM_INFO_PAUSE | SNDRV_PCM_INFO_RESUME),
-+				 SNDRV_PCM_INFO_PAUSE | SNDRV_PCM_INFO_RESUME |
-+				 SNDRV_PCM_INFO_BATCH),
- 	.formats =              (SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE),
- 	.rates =                SNDRV_PCM_RATE_8000_192000,
- 	.rate_min =             8000,
+diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
+index a9ef9d5ffcc5c..dd6970d5eb8d1 100644
+--- a/sound/soc/codecs/lpass-rx-macro.c
++++ b/sound/soc/codecs/lpass-rx-macro.c
+@@ -3601,10 +3601,6 @@ static int rx_macro_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_fsgen;
+ 
+-	ret = rx_macro_register_mclk_output(rx);
+-	if (ret)
+-		goto err_clkout;
+-
+ 	ret = devm_snd_soc_register_component(dev, &rx_macro_component_drv,
+ 					      rx_macro_dai,
+ 					      ARRAY_SIZE(rx_macro_dai));
+@@ -3618,6 +3614,10 @@ static int rx_macro_probe(struct platform_device *pdev)
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
+ 
++	ret = rx_macro_register_mclk_output(rx);
++	if (ret)
++		goto err_clkout;
++
+ 	return 0;
+ 
+ err_clkout:
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index ee15cf6b98bba..bc0a0c32ea5bf 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -1889,10 +1889,6 @@ static int tx_macro_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_fsgen;
+ 
+-	ret = tx_macro_register_mclk_output(tx);
+-	if (ret)
+-		goto err_clkout;
+-
+ 	ret = devm_snd_soc_register_component(dev, &tx_macro_component_drv,
+ 					      tx_macro_dai,
+ 					      ARRAY_SIZE(tx_macro_dai));
+@@ -1905,6 +1901,10 @@ static int tx_macro_probe(struct platform_device *pdev)
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
+ 
++	ret = tx_macro_register_mclk_output(tx);
++	if (ret)
++		goto err_clkout;
++
+ 	return 0;
+ 
+ err_clkout:
+diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
+index b0b6cf29cba30..1623ba78ddb3d 100644
+--- a/sound/soc/codecs/lpass-va-macro.c
++++ b/sound/soc/codecs/lpass-va-macro.c
+@@ -1524,16 +1524,6 @@ static int va_macro_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_mclk;
+ 
+-	ret = va_macro_register_fsgen_output(va);
+-	if (ret)
+-		goto err_clkout;
+-
+-	va->fsgen = clk_hw_get_clk(&va->hw, "fsgen");
+-	if (IS_ERR(va->fsgen)) {
+-		ret = PTR_ERR(va->fsgen);
+-		goto err_clkout;
+-	}
+-
+ 	if (va->has_swr_master) {
+ 		/* Set default CLK div to 1 */
+ 		regmap_update_bits(va->regmap, CDC_VA_TOP_CSR_SWR_MIC_CTL0,
+@@ -1560,6 +1550,16 @@ static int va_macro_probe(struct platform_device *pdev)
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
+ 
++	ret = va_macro_register_fsgen_output(va);
++	if (ret)
++		goto err_clkout;
++
++	va->fsgen = clk_hw_get_clk(&va->hw, "fsgen");
++	if (IS_ERR(va->fsgen)) {
++		ret = PTR_ERR(va->fsgen);
++		goto err_clkout;
++	}
++
+ 	return 0;
+ 
+ err_clkout:
+diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
+index 5e0abefe7cced..c012033fb69ed 100644
+--- a/sound/soc/codecs/lpass-wsa-macro.c
++++ b/sound/soc/codecs/lpass-wsa-macro.c
+@@ -2449,11 +2449,6 @@ static int wsa_macro_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_fsgen;
+ 
+-	ret = wsa_macro_register_mclk_output(wsa);
+-	if (ret)
+-		goto err_clkout;
+-
+-
+ 	ret = devm_snd_soc_register_component(dev, &wsa_macro_component_drv,
+ 					      wsa_macro_dai,
+ 					      ARRAY_SIZE(wsa_macro_dai));
+@@ -2466,6 +2461,10 @@ static int wsa_macro_probe(struct platform_device *pdev)
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
+ 
++	ret = wsa_macro_register_mclk_output(wsa);
++	if (ret)
++		goto err_clkout;
++
+ 	return 0;
+ 
+ err_clkout:
 -- 
 2.39.2
 
