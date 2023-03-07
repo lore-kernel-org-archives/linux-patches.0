@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79A8BA4F
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:07:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5E9C433EF;
-	Tue,  7 Mar 2023 19:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D3CBA4F
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 19:07:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF0FC433EF;
+	Tue,  7 Mar 2023 19:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678216070;
-	bh=AV3JCL4KGx4GHBZWpsfZrZsdVT0X+TPMsLy5IYMqN90=;
+	s=korg; t=1678216073;
+	bh=ZNTVKlgxn7i1l5E/8qHN8PCv2fDYgOsTs8cdi0TyjDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rfd/YOHa6ivPa6ZzjtydLZEikDufNqRiJB46BrRwmihMenfmu90aQxmfMmQj3RZSW
-	 m59ecwtxr0x787OBy7J9zARjfshC3ma3eqNlP6ZHCzBwjhg08CY/Een8NMpr8BkK9d
-	 v/Zw/IOUuBGZtF/J/ZR2dv5cD62u9s+UiSbQ1GvE=
+	b=I/0dll8aW5+1Z0GmAIbx5x3DHNyHrR53HET6hmCaaDxZ+mqTwf1Qv3qvHYYm05CrF
+	 TURLooUfZX1n589aEvngqqoTWqOrlYOTf+XYZqerF27dKTSStznIIhR/Wg0ifOjGK+
+	 5D82Q0MVVWrZCv6vAfzqTk+kV8xbKaEr9oERoSDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.15 464/567] udf: Fix file corruption when appending just after end of preallocated extent
-Date: Tue,  7 Mar 2023 18:03:20 +0100
-Message-Id: <20230307165925.975938852@linuxfoundation.org>
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 5.15 435/567] s390: discard .interp section
+Date: Tue,  7 Mar 2023 18:02:51 +0100
+Message-Id: <20230307165924.761892945@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -33,63 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-commit 36ec52ea038b18a53e198116ef7d7e70c87db046 upstream.
+commit e9c9cb90e76ffaabcc7ca8f275d9e82195fd6367 upstream.
 
-When we append new block just after the end of preallocated extent, the
-code in inode_getblk() wrongly determined we're going to use the
-preallocated extent which resulted in adding block into a wrong logical
-offset in the file. Sequence like this manifests it:
+When debugging vmlinux with QEMU + GDB, the following GDB error may
+occur:
 
-xfs_io -f -c "pwrite 0x2cacf 0xd122" -c "truncate 0x2dd6f" \
-  -c "pwrite 0x27fd9 0x69a9" -c "pwrite 0x32981 0x7244" <file>
+    (gdb) c
+    Continuing.
+    Warning:
+    Cannot insert breakpoint -1.
+    Cannot access memory at address 0xffffffffffff95c0
 
-The code that determined the use of preallocated extent is actually
-stale because udf_do_extend_file() does not create preallocation anymore
-so after calling that function we are sure there's no usable
-preallocation. Just remove the faulty condition.
+    Command aborted.
+    (gdb)
 
-CC: stable@vger.kernel.org
-Fixes: 16d055656814 ("udf: Discard preallocation before extending file with a hole")
-Signed-off-by: Jan Kara <jack@suse.cz>
+The reason is that, when .interp section is present, GDB tries to
+locate the file specified in it in memory and put a number of
+breakpoints there (see enable_break() function in gdb/solib-svr4.c).
+Sometimes GDB finds a bogus location that matches its heuristics,
+fails to set a breakpoint and stops. This makes further debugging
+impossible.
+
+The .interp section contains misleading information anyway (vmlinux
+does not need ld.so), so fix by discarding it.
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c |   24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ arch/s390/kernel/vmlinux.lds.S |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -804,19 +804,17 @@ static sector_t inode_getblk(struct inod
- 		c = 0;
- 		offset = 0;
- 		count += ret;
--		/* We are not covered by a preallocated extent? */
--		if ((laarr[0].extLength & UDF_EXTENT_FLAG_MASK) !=
--						EXT_NOT_RECORDED_ALLOCATED) {
--			/* Is there any real extent? - otherwise we overwrite
--			 * the fake one... */
--			if (count)
--				c = !c;
--			laarr[c].extLength = EXT_NOT_RECORDED_NOT_ALLOCATED |
--				inode->i_sb->s_blocksize;
--			memset(&laarr[c].extLocation, 0x00,
--				sizeof(struct kernel_lb_addr));
--			count++;
--		}
-+		/*
-+		 * Is there any real extent? - otherwise we overwrite the fake
-+		 * one...
-+		 */
-+		if (count)
-+			c = !c;
-+		laarr[c].extLength = EXT_NOT_RECORDED_NOT_ALLOCATED |
-+			inode->i_sb->s_blocksize;
-+		memset(&laarr[c].extLocation, 0x00,
-+			sizeof(struct kernel_lb_addr));
-+		count++;
- 		endnum = c + 1;
- 		lastblock = 1;
- 	} else {
+--- a/arch/s390/kernel/vmlinux.lds.S
++++ b/arch/s390/kernel/vmlinux.lds.S
+@@ -227,5 +227,6 @@ SECTIONS
+ 	DISCARDS
+ 	/DISCARD/ : {
+ 		*(.eh_frame)
++		*(.interp)
+ 	}
+ }
 
 
