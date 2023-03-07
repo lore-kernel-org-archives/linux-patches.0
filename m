@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F047BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:49:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA270C433D2;
-	Tue,  7 Mar 2023 17:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359B8BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:49:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903EFC433EF;
+	Tue,  7 Mar 2023 17:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211352;
-	bh=QidwShXfMRr2trNKEdef8DsuyD+LIdNpkzWElpk+xrA=;
+	s=korg; t=1678211355;
+	bh=IfDYN/tlD4Jj6qsCG1YAcmJZMOVDCCtob5mcwAGINgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dNn3wePG5zUylWE5qMt6GbX5H6AGrxMVviOuaoJFV1zzzgPOUF5TTcz1s8IbNEGVH
-	 Z4B7OXfYp+Y0aw3M8suegwumaHrlkdIut8Sd53CEztcAOgDgMUh0RUnAk+IJluqPSU
-	 qurunWwmfJWsrGi838cTUaPVoXUQbV8z/JyztKpk=
+	b=hpggduf/eMFH0p/cz52y0aOGSWbJq+G7eQxQR60BtLmPHGzlP1+ZDU0Ll+Y4FqMBo
+	 Yxn/b4DzpOZOBGhcNGBXV9ILJ0e7F3+Cw94yaFOPJtWChCSG25SXFj16gr6dLpkxiW
+	 /sP0IuwveshQ1DFWe8Wt3ya2HGrTuEBu+H9pdGL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Shuah Khan <shuah@kernel.org>,
-	linux-kselftest@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.2 0835/1001] selftests: x86: Fix incorrect kernel headers search path
-Date: Tue,  7 Mar 2023 18:00:07 +0100
-Message-Id: <20230307170058.033357851@linuxfoundation.org>
+	Andrew Cooper <Andrew.Cooper3@citrix.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.2 0836/1001] x86/virt: Force GIF=1 prior to disabling SVM (for reboot flows)
+Date: Tue,  7 Mar 2023 18:00:08 +0100
+Message-Id: <20230307170058.075377535@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,36 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit ac5ec90e94fe8eddb4499e51398640fa6a89d657 upstream.
+commit 6a3236580b0b1accc3976345e723104f74f6f8e6 upstream.
 
-Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
-building against kernel headers from the build environment in scenarios
-where kernel headers are installed into a specific output directory
-(O=...).
+Set GIF=1 prior to disabling SVM to ensure that INIT is recognized if the
+kernel is disabling SVM in an emergency, e.g. if the kernel is about to
+jump into a crash kernel or may reboot without doing a full CPU RESET.
+If GIF is left cleared, the new kernel (or firmware) will be unabled to
+awaken APs.  Eat faults on STGI (due to EFER.SVME=0) as it's possible
+that SVM could be disabled via NMI shootdown between reading EFER.SVME
+and executing STGI.
 
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: linux-kselftest@vger.kernel.org
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: <stable@vger.kernel.org>  # 5.18+
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/all/cbcb6f35-e5d7-c1c9-4db9-fe5cc4de579a@amd.com
+Cc: stable@vger.kernel.org
+Cc: Andrew Cooper <Andrew.Cooper3@citrix.com>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20221130233650.1404148-3-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/x86/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/virtext.h |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/x86/Makefile
-+++ b/tools/testing/selftests/x86/Makefile
-@@ -34,7 +34,7 @@ BINARIES_64 := $(TARGETS_C_64BIT_ALL:%=%
- BINARIES_32 := $(patsubst %,$(OUTPUT)/%,$(BINARIES_32))
- BINARIES_64 := $(patsubst %,$(OUTPUT)/%,$(BINARIES_64))
+--- a/arch/x86/include/asm/virtext.h
++++ b/arch/x86/include/asm/virtext.h
+@@ -126,7 +126,21 @@ static inline void cpu_svm_disable(void)
  
--CFLAGS := -O2 -g -std=gnu99 -pthread -Wall
-+CFLAGS := -O2 -g -std=gnu99 -pthread -Wall $(KHDR_INCLUDES)
+ 	wrmsrl(MSR_VM_HSAVE_PA, 0);
+ 	rdmsrl(MSR_EFER, efer);
+-	wrmsrl(MSR_EFER, efer & ~EFER_SVME);
++	if (efer & EFER_SVME) {
++		/*
++		 * Force GIF=1 prior to disabling SVM to ensure INIT and NMI
++		 * aren't blocked, e.g. if a fatal error occurred between CLGI
++		 * and STGI.  Note, STGI may #UD if SVM is disabled from NMI
++		 * context between reading EFER and executing STGI.  In that
++		 * case, GIF must already be set, otherwise the NMI would have
++		 * been blocked, so just eat the fault.
++		 */
++		asm_volatile_goto("1: stgi\n\t"
++				  _ASM_EXTABLE(1b, %l[fault])
++				  ::: "memory" : fault);
++fault:
++		wrmsrl(MSR_EFER, efer & ~EFER_SVME);
++	}
+ }
  
- # call32_from_64 in thunks.S uses absolute addresses.
- ifeq ($(CAN_BUILD_WITH_NOPIE),1)
+ /** Makes sure SVM is disabled, if it is supported on the CPU
 
 
