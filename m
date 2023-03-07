@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73ED2BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:25:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF33C433EF;
-	Tue,  7 Mar 2023 18:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86082BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:25:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F06F9C433EF;
+	Tue,  7 Mar 2023 18:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213524;
-	bh=IgEtkeY5EG+Auh/c04DIYEkj6tTUIw7hVoLjdQd/xsg=;
+	s=korg; t=1678213527;
+	bh=z+chNbwLKXpApWkCvLfF1oNNWLt0wXbDHGIOtNPCMgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VtLrAHZ0bEeqe+sFzww6tX9Md0nObCEve5J/nHVoSDax/8kFlPlKMn5cXxsr3fhqq
-	 iCXbYym5QTe1hu7NIlpcSwPFDOzT5YknTWdU3fibBPA2iVxNjmN0wkUlJeQZX0tbTY
-	 MueXBeekhqmr8IiBJVzHBRv+QuWU/3FL8uxjwC4k=
+	b=aGv0WqrnmamKQCHMVie2bvmApDLuL777BExlP/OdOcxik4t5nkTVBrUY+hL6Hn4af
+	 YqmqB68BDuMu5Enjt1dkM01vRyGwlt4iVflwNchAchEyFxKjKTu59tFou+0FhS+QUv
+	 e88CQKik4V/+yd0XTOa4k1W/8/Qtj2uAgVxSPtCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markuss Broks <markuss.broks@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jann Horn <jannh@google.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 532/885] ARM: dts: exynos: Use Exynos5420 compatible for the MIPI video phy
-Date: Tue,  7 Mar 2023 17:57:46 +0100
-Message-Id: <20230307170025.593783610@linuxfoundation.org>
+Subject: [PATCH 6.1 533/885] fs: Use CHECK_DATA_CORRUPTION() when kernel bugs are detected
+Date: Tue,  7 Mar 2023 17:57:47 +0100
+Message-Id: <20230307170025.643579216@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,35 +36,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Markuss Broks <markuss.broks@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 5d5aa219a790d61cad2c38e1aa32058f16ad2f0b ]
+[ Upstream commit 47d586913f2abec4d240bae33417f537fda987ec ]
 
-For some reason, the driver adding support for Exynos5420 MIPI phy
-back in 2016 wasn't used on Exynos5420, which caused a kernel panic.
-Add the proper compatible for it.
+Currently, filp_close() and generic_shutdown_super() use printk() to log
+messages when bugs are detected. This is problematic because infrastructure
+like syzkaller has no idea that this message indicates a bug.
+In addition, some people explicitly want their kernels to BUG() when kernel
+data corruption has been detected (CONFIG_BUG_ON_DATA_CORRUPTION).
+And finally, when generic_shutdown_super() detects remaining inodes on a
+system without CONFIG_BUG_ON_DATA_CORRUPTION, it would be nice if later
+accesses to a busy inode would at least crash somewhat cleanly rather than
+walking through freed memory.
 
-Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
-Link: https://lore.kernel.org/r/20230121201844.46872-2-markuss.broks@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To address all three, use CHECK_DATA_CORRUPTION() when kernel bugs are
+detected.
+
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/exynos5420.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/open.c              |  5 +++--
+ fs/super.c             | 21 +++++++++++++++++----
+ include/linux/poison.h |  3 +++
+ 3 files changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm/boot/dts/exynos5420.dtsi b/arch/arm/boot/dts/exynos5420.dtsi
-index 9f2523a873d9d..62263eb91b3cc 100644
---- a/arch/arm/boot/dts/exynos5420.dtsi
-+++ b/arch/arm/boot/dts/exynos5420.dtsi
-@@ -592,7 +592,7 @@ dp_phy: dp-video-phy {
- 		};
+diff --git a/fs/open.c b/fs/open.c
+index 9d0197db15e7b..20717ec510c07 100644
+--- a/fs/open.c
++++ b/fs/open.c
+@@ -1411,8 +1411,9 @@ int filp_close(struct file *filp, fl_owner_t id)
+ {
+ 	int retval = 0;
  
- 		mipi_phy: mipi-video-phy {
--			compatible = "samsung,s5pv210-mipi-video-phy";
-+			compatible = "samsung,exynos5420-mipi-video-phy";
- 			syscon = <&pmu_system_controller>;
- 			#phy-cells = <1>;
- 		};
+-	if (!file_count(filp)) {
+-		printk(KERN_ERR "VFS: Close: file count is 0\n");
++	if (CHECK_DATA_CORRUPTION(file_count(filp) == 0,
++			"VFS: Close: file count is 0 (f_op=%ps)",
++			filp->f_op)) {
+ 		return 0;
+ 	}
+ 
+diff --git a/fs/super.c b/fs/super.c
+index 8d39e4f11cfa3..4f8a626a35cd9 100644
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -491,10 +491,23 @@ void generic_shutdown_super(struct super_block *sb)
+ 		if (sop->put_super)
+ 			sop->put_super(sb);
+ 
+-		if (!list_empty(&sb->s_inodes)) {
+-			printk("VFS: Busy inodes after unmount of %s. "
+-			   "Self-destruct in 5 seconds.  Have a nice day...\n",
+-			   sb->s_id);
++		if (CHECK_DATA_CORRUPTION(!list_empty(&sb->s_inodes),
++				"VFS: Busy inodes after unmount of %s (%s)",
++				sb->s_id, sb->s_type->name)) {
++			/*
++			 * Adding a proper bailout path here would be hard, but
++			 * we can at least make it more likely that a later
++			 * iput_final() or such crashes cleanly.
++			 */
++			struct inode *inode;
++
++			spin_lock(&sb->s_inode_list_lock);
++			list_for_each_entry(inode, &sb->s_inodes, i_sb_list) {
++				inode->i_op = VFS_PTR_POISON;
++				inode->i_sb = VFS_PTR_POISON;
++				inode->i_mapping = VFS_PTR_POISON;
++			}
++			spin_unlock(&sb->s_inode_list_lock);
+ 		}
+ 	}
+ 	spin_lock(&sb_lock);
+diff --git a/include/linux/poison.h b/include/linux/poison.h
+index 2d3249eb0e62d..0e8a1f2ceb2f1 100644
+--- a/include/linux/poison.h
++++ b/include/linux/poison.h
+@@ -84,4 +84,7 @@
+ /********** kernel/bpf/ **********/
+ #define BPF_PTR_POISON ((void *)(0xeB9FUL + POISON_POINTER_DELTA))
+ 
++/********** VFS **********/
++#define VFS_PTR_POISON ((void *)(0xF5 + POISON_POINTER_DELTA))
++
+ #endif
 -- 
 2.39.2
 
