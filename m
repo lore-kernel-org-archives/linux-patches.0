@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E4EBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:33:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FF2C433EF;
-	Tue,  7 Mar 2023 18:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0AEBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:33:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FF2C433D2;
+	Tue,  7 Mar 2023 18:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213992;
-	bh=1PUpIQRDHlg0QANfyUGpYpycg/Po5EgS5kF056alFB0=;
+	s=korg; t=1678213995;
+	bh=T5WX+vpTvRxSMi1CUUsc1kTsSf6l4BeaDzEuu6KTPWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zQR/k/lBna3VyzTa2byS6DbogU4Iobw/uvyjIVezeNNVEMG4XUZM7Cai5k+LvkLfB
-	 GrOW1f2t0Jmq31h2bEfC+h4UOBj5XoP8XVCwyqPf+VrJ5mPFdKgwZvbsIJgBFM0soV
-	 UwExI9d9+yJHR9oK7I5wXgLSmTydXZZ6P6zVSWHA=
+	b=vjxgLknUIiS+kHvcFBTkaYhQrcDxcBhJjiSGvbhxA96QdTgtvjuKRR66OtE4OEcj7
+	 SXuWjcR7UMfm38HY1n2maTjJ6EeS9X5PkEQtFOj67pswO8o8ag6OEib+zwvjp3+JFa
+	 V+YWsCpGhHozCTLt5jP5wRttaa3Qjt+ykh75Zo/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.1 668/885] s390/kprobes: fix current_kprobe never cleared after kprobes reenter
-Date: Tue,  7 Mar 2023 18:00:02 +0100
-Message-Id: <20230307170031.183653226@linuxfoundation.org>
+	Paul McKenney <paulmck@kernel.org>,
+	Frederic Weisbecker <fweisbec@gmail.com>,
+	Zhouyi Zhou <zhouzhouyi@gmail.com>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Davidlohr Bueso <dave@stgolabs.net>
+Subject: [PATCH 6.1 686/885] torture: Fix hang during kthread shutdown phase
+Date: Tue,  7 Mar 2023 18:00:20 +0100
+Message-Id: <20230307170031.919369009@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,54 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Joel Fernandes (Google) <joel@joelfernandes.org>
 
-commit cd57953936f2213dfaccce10d20f396956222c7d upstream.
+commit d52d3a2bf408ff86f3a79560b5cce80efb340239 upstream.
 
-Recent test_kprobe_missed kprobes kunit test uncovers the following
-problem. Once kprobe is triggered from another kprobe (kprobe reenter),
-all future kprobes on this cpu are considered as kprobe reenter, thus
-pre_handler and post_handler are not being called and kprobes are counted
-as "missed".
+During rcutorture shutdown, the rcu_torture_cleanup() function calls
+torture_cleanup_begin(), which sets the fullstop global variable to
+FULLSTOP_RMMOD. This causes the rcutorture threads for readers and
+fakewriters to exit all of their "while" loops and start shutting down.
 
-Commit b9599798f953 ("[S390] kprobes: activation and deactivation")
-introduced a simpler scheme for kprobes (de)activation and status
-tracking by using push_kprobe/pop_kprobe, which supposed to work for
-both initial kprobe entry as well as kprobe reentry and helps to avoid
-handling those two cases differently. The problem is that a sequence of
-calls in case of kprobes reenter:
-push_kprobe() <- NULL (current_kprobe)
-push_kprobe() <- kprobe1 (current_kprobe)
-pop_kprobe() -> kprobe1 (current_kprobe)
-pop_kprobe() -> kprobe1 (current_kprobe)
-leaves "kprobe1" as "current_kprobe" on this cpu, instead of setting it
-to NULL. In fact push_kprobe/pop_kprobe can only store a single state
-(there is just one prev_kprobe in kprobe_ctlblk). Which is a hack but
-sufficient, there is no need to have another prev_kprobe just to store
-NULL. To make a simple and backportable fix simply reset "prev_kprobe"
-when kprobe is poped from this "stack". No need to worry about
-"kprobe_status" in this case, because its value is only checked when
-current_kprobe != NULL.
+They then call torture_kthread_stopping(), which in turn waits for
+kthread_stop() to be called.  However, rcu_torture_cleanup() has
+not yet called kthread_stop() on those threads, and before it gets a
+chance to do so, multiple instances of torture_kthread_stopping() invoke
+schedule_timeout_interruptible(1) in a tight loop.  Tracing confirms that
+TIMER_SOFTIRQ can then continuously execute timer callbacks.  If that
+TIMER_SOFTIRQ preempts the task executing rcu_torture_cleanup(), that
+task might never invoke kthread_stop().
 
-Cc: stable@vger.kernel.org
-Fixes: b9599798f953 ("[S390] kprobes: activation and deactivation")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+This commit improves this situation by increasing the timeout passed to
+schedule_timeout_interruptible() from one jiffy to 1/20th of a second.
+This change prevents TIMER_SOFTIRQ from monopolizing its CPU, thus
+allowing rcu_torture_cleanup() to carry out the needed kthread_stop()
+invocations.  Testing has shown 100 runs of TREE07 passing reliably,
+as oppose to the tens-of-percent failure rates seen beforehand.
+
+Cc: Paul McKenney <paulmck@kernel.org>
+Cc: Frederic Weisbecker <fweisbec@gmail.com>
+Cc: Zhouyi Zhou <zhouzhouyi@gmail.com>
+Cc: <stable@vger.kernel.org> # 6.0.x
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Tested-by: Zhouyi Zhou <zhouzhouyi@gmail.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/kprobes.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/torture.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/kernel/kprobes.c
-+++ b/arch/s390/kernel/kprobes.c
-@@ -279,6 +279,7 @@ static void pop_kprobe(struct kprobe_ctl
- {
- 	__this_cpu_write(current_kprobe, kcb->prev_kprobe.kp);
- 	kcb->kprobe_status = kcb->prev_kprobe.status;
-+	kcb->prev_kprobe.kp = NULL;
+diff --git a/kernel/torture.c b/kernel/torture.c
+index 29afc62f2bfe..1a0519b836ac 100644
+--- a/kernel/torture.c
++++ b/kernel/torture.c
+@@ -915,7 +915,7 @@ void torture_kthread_stopping(char *title)
+ 	VERBOSE_TOROUT_STRING(buf);
+ 	while (!kthread_should_stop()) {
+ 		torture_shutdown_absorb(title);
+-		schedule_timeout_uninterruptible(1);
++		schedule_timeout_uninterruptible(HZ / 20);
+ 	}
  }
- NOKPROBE_SYMBOL(pop_kprobe);
- 
+ EXPORT_SYMBOL_GPL(torture_kthread_stopping);
+-- 
+2.39.2
+
 
 
