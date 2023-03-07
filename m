@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF39EBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:49:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27268C4339B;
-	Tue,  7 Mar 2023 18:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA33EBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:49:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F68C433EF;
+	Tue,  7 Mar 2023 18:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214953;
-	bh=mSxITTnFU5bUU3V1I7GVYbX3PaXbBd81I0qI7P0qZWk=;
+	s=korg; t=1678214956;
+	bh=f+t0gIHRejU19Svk7mfYc+K40A4IsUI5ICQo0dXlZ6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hMJD3TYxZ+JhZ3R4r96UGpRQDLmUhZ8wgzcDX6w6Yb91kln/Ks5rlyovkaBj91rrd
-	 /Ukrrqr0xEObkzFqK0sSGXthg4B04j5qoJL6fjEnCChRglpUkNdiYsrDM5ufxkkywF
-	 pecrvh84Y3ddfHqg7nT6l6vQX7Zb9Mlf016VFS2M=
+	b=Gxjvb84kx6YoEatajNFqLQx0WnLxJbC3eHG4PO7uBOcWQYIAu2x/YZHqh13U5D42o
+	 pt4fmS48tCFVe6jcJ7SruIumxnJLq4uKBCOZV8zEtcN5uOjHUbcEncznZyBHE5aT0A
+	 Uo9F9AJYhMA3cguRiTWGumwr91IWVghDU6uyqajo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e9632e3eb038d93d6bc6@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/567] wifi: ath9k: hif_usb: clean up skbs if ath9k_hif_usb_rx_stream() fails
-Date: Tue,  7 Mar 2023 17:57:20 +0100
-Message-Id: <20230307165910.385956227@linuxfoundation.org>
+	"Elliott, Robert (Servers)" <elliott@hpe.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Josh Don <joshdon@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Elliott
+Subject: [PATCH 5.15 087/567] genirq: Fix the return type of kstat_cpu_irqs_sum()
+Date: Tue,  7 Mar 2023 17:57:03 +0100
+Message-Id: <20230307165909.651068811@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -38,119 +42,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit 0af54343a76263a12dbae7fafb64eb47c4a6ad38 ]
+[ Upstream commit 47904aed898a08f028572b9b5a5cc101ddfb2d82 ]
 
-Syzkaller detected a memory leak of skbs in ath9k_hif_usb_rx_stream().
-While processing skbs in ath9k_hif_usb_rx_stream(), the already allocated
-skbs in skb_pool are not freed if ath9k_hif_usb_rx_stream() fails. If we
-have an incorrect pkt_len or pkt_tag, the input skb is considered invalid
-and dropped. All the associated packets already in skb_pool should be
-dropped and freed. Added a comment describing this issue.
+The type of member ->irqs_sum is unsigned long, but kstat_cpu_irqs_sum()
+returns int, which can result in truncation.  Therefore, change the
+kstat_cpu_irqs_sum() function's return value to unsigned long to avoid
+truncation.
 
-The patch also makes remain_skb NULL after being processed so that it
-cannot be referenced after potential free. The initialization of hif_dev
-fields which are associated with remain_skb (rx_remain_len,
-rx_transfer_len and rx_pad_len) is moved after a new remain_skb is
-allocated.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 6ce708f54cc8 ("ath9k: Fix out-of-bound memcpy in ath9k_hif_usb_rx_stream")
-Fixes: 44b23b488d44 ("ath9k: hif_usb: Reduce indent 1 column")
-Reported-by: syzbot+e9632e3eb038d93d6bc6@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230104123615.51511-1-pchelkin@ispras.ru
+Fixes: f2c66cd8eedd ("/proc/stat: scalability of irq num per cpu")
+Reported-by: Elliott, Robert (Servers) <elliott@hpe.com>
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: "Peter Zijlstra (Intel)" <peterz@infradead.org>
+Cc: Josh Don <joshdon@google.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/hif_usb.c | 31 +++++++++++++++++-------
- 1 file changed, 22 insertions(+), 9 deletions(-)
+ include/linux/kernel_stat.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
-index 1a2e0c7eeb023..de6c0824c9cab 100644
---- a/drivers/net/wireless/ath/ath9k/hif_usb.c
-+++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
-@@ -561,11 +561,11 @@ static void ath9k_hif_usb_rx_stream(struct hif_device_usb *hif_dev,
- 			memcpy(ptr, skb->data, rx_remain_len);
- 
- 			rx_pkt_len += rx_remain_len;
--			hif_dev->rx_remain_len = 0;
- 			skb_put(remain_skb, rx_pkt_len);
- 
- 			skb_pool[pool_index++] = remain_skb;
--
-+			hif_dev->remain_skb = NULL;
-+			hif_dev->rx_remain_len = 0;
- 		} else {
- 			index = rx_remain_len;
- 		}
-@@ -584,16 +584,21 @@ static void ath9k_hif_usb_rx_stream(struct hif_device_usb *hif_dev,
- 		pkt_len = get_unaligned_le16(ptr + index);
- 		pkt_tag = get_unaligned_le16(ptr + index + 2);
- 
-+		/* It is supposed that if we have an invalid pkt_tag or
-+		 * pkt_len then the whole input SKB is considered invalid
-+		 * and dropped; the associated packets already in skb_pool
-+		 * are dropped, too.
-+		 */
- 		if (pkt_tag != ATH_USB_RX_STREAM_MODE_TAG) {
- 			RX_STAT_INC(hif_dev, skb_dropped);
--			return;
-+			goto invalid_pkt;
- 		}
- 
- 		if (pkt_len > 2 * MAX_RX_BUF_SIZE) {
- 			dev_err(&hif_dev->udev->dev,
- 				"ath9k_htc: invalid pkt_len (%x)\n", pkt_len);
- 			RX_STAT_INC(hif_dev, skb_dropped);
--			return;
-+			goto invalid_pkt;
- 		}
- 
- 		pad_len = 4 - (pkt_len & 0x3);
-@@ -605,11 +610,6 @@ static void ath9k_hif_usb_rx_stream(struct hif_device_usb *hif_dev,
- 
- 		if (index > MAX_RX_BUF_SIZE) {
- 			spin_lock(&hif_dev->rx_lock);
--			hif_dev->rx_remain_len = index - MAX_RX_BUF_SIZE;
--			hif_dev->rx_transfer_len =
--				MAX_RX_BUF_SIZE - chk_idx - 4;
--			hif_dev->rx_pad_len = pad_len;
--
- 			nskb = __dev_alloc_skb(pkt_len + 32, GFP_ATOMIC);
- 			if (!nskb) {
- 				dev_err(&hif_dev->udev->dev,
-@@ -617,6 +617,12 @@ static void ath9k_hif_usb_rx_stream(struct hif_device_usb *hif_dev,
- 				spin_unlock(&hif_dev->rx_lock);
- 				goto err;
- 			}
-+
-+			hif_dev->rx_remain_len = index - MAX_RX_BUF_SIZE;
-+			hif_dev->rx_transfer_len =
-+				MAX_RX_BUF_SIZE - chk_idx - 4;
-+			hif_dev->rx_pad_len = pad_len;
-+
- 			skb_reserve(nskb, 32);
- 			RX_STAT_INC(hif_dev, skb_allocated);
- 
-@@ -654,6 +660,13 @@ static void ath9k_hif_usb_rx_stream(struct hif_device_usb *hif_dev,
- 				 skb_pool[i]->len, USB_WLAN_RX_PIPE);
- 		RX_STAT_INC(hif_dev, skb_completed);
- 	}
-+	return;
-+invalid_pkt:
-+	for (i = 0; i < pool_index; i++) {
-+		dev_kfree_skb_any(skb_pool[i]);
-+		RX_STAT_INC(hif_dev, skb_dropped);
-+	}
-+	return;
+diff --git a/include/linux/kernel_stat.h b/include/linux/kernel_stat.h
+index 69ae6b2784645..f9460fbea0a81 100644
+--- a/include/linux/kernel_stat.h
++++ b/include/linux/kernel_stat.h
+@@ -72,7 +72,7 @@ extern unsigned int kstat_irqs_usr(unsigned int irq);
+ /*
+  * Number of interrupts per cpu, since bootup
+  */
+-static inline unsigned int kstat_cpu_irqs_sum(unsigned int cpu)
++static inline unsigned long kstat_cpu_irqs_sum(unsigned int cpu)
+ {
+ 	return kstat_cpu(cpu).irqs_sum;
  }
- 
- static void ath9k_hif_usb_rx_cb(struct urb *urb)
 -- 
 2.39.2
 
