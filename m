@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0A4BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:41:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD98C4339B;
-	Tue,  7 Mar 2023 18:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F085BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:41:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C79C433EF;
+	Tue,  7 Mar 2023 18:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214510;
-	bh=qyS0z/UqbA9OrrWqUuYmYeMTglhcsQ3kXYVrP/qQlKk=;
+	s=korg; t=1678214513;
+	bh=Ch2GagY3l/hGH3hLwxa3GxLjMtkCKVzwc3FN0Tlq1Mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/Og5IPiCKHg0ZC+v01in+tNTBtwj3lpSn5u3pGiyRNRV2Tj8EA8Qy4XgnNm4YFG+
-	 vlB6a4y0yMUR/+Mk8xjo0Gdgd3faQayToW04rEjwVtP6Y468nvZjPR/N6b9Ui79AS4
-	 OXpArD7DndqHstb9JBjM+rAI7tjQIHuiPX+vsEas=
+	b=xRBrtAtTqGTh+1I6kvrT7h5daMtyPW/XxoAwpC3SCsJgRt7nY6Y8M1vb7KEPTwTqF
+	 vj955n40mXllwca0JsQBvtX/nhe8Hw67JR7vYCcZ1u6T3y1kbmcY9k9RposseIVLIH
+	 fgFR78NGuat3C7DS5zbUrZXWZetZTn/KQ+9FSySo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arun Easi <aeasi@marvell.com>,
+	Quinn Tran <qutran@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 847/885] scsi: qla2xxx: Fix DMA-API call trace on NVMe LS requests
-Date: Tue,  7 Mar 2023 18:03:01 +0100
-Message-Id: <20230307170038.619122444@linuxfoundation.org>
+Subject: [PATCH 6.1 848/885] scsi: qla2xxx: Remove unintended flag clearing
+Date: Tue,  7 Mar 2023 18:03:02 +0100
+Message-Id: <20230307170038.657808741@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,87 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arun Easi <aeasi@marvell.com>
+From: Quinn Tran <qutran@marvell.com>
 
-commit c75e6aef5039830cce5d4cf764dd204522f89e6b upstream.
+commit 7e8a936a2d0f98dd6e5d05d4838affabe606cabc upstream.
 
-The following message and call trace was seen with debug kernels:
+FCF_ASYNC_SENT flag is used in session management. This flag is cleared in
+task management path by accident.  Remove unintended flag clearing.
 
-DMA-API: qla2xxx 0000:41:00.0: device driver failed to check map
-error [device address=0x00000002a3ff38d8] [size=1024 bytes] [mapped as
-single]
-WARNING: CPU: 0 PID: 2930 at kernel/dma/debug.c:1017
-	 check_unmap+0xf42/0x1990
-
-Call Trace:
-	debug_dma_unmap_page+0xc9/0x100
-	qla_nvme_ls_unmap+0x141/0x210 [qla2xxx]
-
-Remove DMA mapping from the driver altogether, as it is already done by FC
-layer. This prevents the warning.
-
-Fixes: c85ab7d9e27a ("scsi: qla2xxx: Fix missed DMA unmap for NVMe ls requests")
+Fixes: 388a49959ee4 ("scsi: qla2xxx: Fix panic from use after free in qla2x00_async_tm_cmd")
 Cc: stable@vger.kernel.org
-Signed-off-by: Arun Easi <aeasi@marvell.com>
+Signed-off-by: Quinn Tran <qutran@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c |   19 +------------------
- 1 file changed, 1 insertion(+), 18 deletions(-)
+ drivers/scsi/qla2xxx/qla_init.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -170,18 +170,6 @@ out:
- 	qla2xxx_rel_qpair_sp(sp->qpair, sp);
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -2076,7 +2076,6 @@ qla2x00_async_tm_cmd(fc_port_t *fcport,
+ done_free_sp:
+ 	/* ref: INIT */
+ 	kref_put(&sp->cmd_kref, qla2x00_sp_release);
+-	fcport->flags &= ~FCF_ASYNC_SENT;
+ done:
+ 	return rval;
  }
- 
--static void qla_nvme_ls_unmap(struct srb *sp, struct nvmefc_ls_req *fd)
--{
--	if (sp->flags & SRB_DMA_VALID) {
--		struct srb_iocb *nvme = &sp->u.iocb_cmd;
--		struct qla_hw_data *ha = sp->fcport->vha->hw;
--
--		dma_unmap_single(&ha->pdev->dev, nvme->u.nvme.cmd_dma,
--				 fd->rqstlen, DMA_TO_DEVICE);
--		sp->flags &= ~SRB_DMA_VALID;
--	}
--}
--
- static void qla_nvme_release_ls_cmd_kref(struct kref *kref)
- {
- 	struct srb *sp = container_of(kref, struct srb, cmd_kref);
-@@ -199,7 +187,6 @@ static void qla_nvme_release_ls_cmd_kref
- 
- 	fd = priv->fd;
- 
--	qla_nvme_ls_unmap(sp, fd);
- 	fd->done(fd, priv->comp_status);
- out:
- 	qla2x00_rel_sp(sp);
-@@ -365,13 +352,10 @@ static int qla_nvme_ls_req(struct nvme_f
- 	nvme->u.nvme.rsp_len = fd->rsplen;
- 	nvme->u.nvme.rsp_dma = fd->rspdma;
- 	nvme->u.nvme.timeout_sec = fd->timeout;
--	nvme->u.nvme.cmd_dma = dma_map_single(&ha->pdev->dev, fd->rqstaddr,
--	    fd->rqstlen, DMA_TO_DEVICE);
-+	nvme->u.nvme.cmd_dma = fd->rqstdma;
- 	dma_sync_single_for_device(&ha->pdev->dev, nvme->u.nvme.cmd_dma,
- 	    fd->rqstlen, DMA_TO_DEVICE);
- 
--	sp->flags |= SRB_DMA_VALID;
--
- 	rval = qla2x00_start_sp(sp);
- 	if (rval != QLA_SUCCESS) {
- 		ql_log(ql_log_warn, vha, 0x700e,
-@@ -379,7 +363,6 @@ static int qla_nvme_ls_req(struct nvme_f
- 		wake_up(&sp->nvme_ls_waitq);
- 		sp->priv = NULL;
- 		priv->sp = NULL;
--		qla_nvme_ls_unmap(sp, fd);
- 		qla2x00_rel_sp(sp);
- 		return rval;
- 	}
 
 
