@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BBBBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:25:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A70C433EF;
-	Tue,  7 Mar 2023 17:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9039BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:25:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F41AC433EF;
+	Tue,  7 Mar 2023 17:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209951;
-	bh=rVd49xkJxQTNETaFDFoOIJzvxTXvDIrin2+29uNm4T4=;
+	s=korg; t=1678209954;
+	bh=tfqhrKl/67BgqJ5hefqE8ljkPntiYXdBO9A2lEcM0cA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DT2yfaq8R5i6kVxuZqbKrqwUzzdlR0YZGKtDdOXZ/Pi2MOiJWQqeiq540j6qVKZ1w
-	 clNHbnSPH2IMWsa45sFSA6xjBmfFM62su4AoNUQKkaabSZU6WRw6i61qyW4prBKSyh
-	 NBTvWlIiI2px/4HoAtMOgYiCBPQKG40n6PfyvTc8=
+	b=Ee8aUxRC+3vnznWW0vAzbjN11knnqFrA45EnLxDe/VbH2CCubl0UwgjHCvAsW1S8Q
+	 em1d5+/FI+GxJHxr5uJUa6+hncwuQuRJywRj+PCZsfC/zyD8EgUOd9WR1WKumRuBdU
+	 UOeeV6Bdvaq0JmFs8NurxjM5bsuWLIrY7x8rOt+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guodong Liu <Guodong.Liu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0384/1001] pinctrl: mediatek: Initialize variable pullen and pullup to zero
-Date: Tue,  7 Mar 2023 17:52:36 +0100
-Message-Id: <20230307170038.052121382@linuxfoundation.org>
+Subject: [PATCH 6.2 0358/1001] scsi: qla2xxx: edif: Fix clang warning
+Date: Tue,  7 Mar 2023 17:52:10 +0100
+Message-Id: <20230307170036.969560258@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,39 +37,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guodong Liu <Guodong.Liu@mediatek.com>
+From: Quinn Tran <qutran@marvell.com>
 
-[ Upstream commit a298c70a10c604a6b3df5a0aa56597b705ba0f6b ]
+[ Upstream commit 2f5fab1b6c3a8efc93ba52c28539c45a8d0142ad ]
 
-Coverity spotted that pullen and pullup is not initialized to zero in
-mtk_pctrl_show_one_pin. The uninitialized variable pullen is used in
-assignment statement "rsel = pullen;" in mtk_pctrl_show_one_pin, and
-Uninitialized variable pullup is used when calling scnprintf. Fix this
-coverity by initializing pullen and pullup as zero.
+clang warning:
 
-Fixes: 184d8e13f9b1 ("pinctrl: mediatek: Add support for pin configuration dump via debugfs.")
-Signed-off-by: Guodong Liu <Guodong.Liu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230118062036.26258-2-Guodong.Liu@mediatek.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+  drivers/scsi/qla2xxx/qla_edif_bsg.h:93:12: warning: field remote_pid
+  within 'struct app_pinfo_req' is less aligned than 'port_id_t' and is
+  usually due to 'struct app_pinfo_req' being packed, which can lead to
+  unaligned accesses [-Wunaligned-access]
+  port_id_t remote_pid;
+	        ^
+  2 warnings generated.
+
+Remove u32 field in remote_pid to silence warning.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Fixes: 7ebb336e45ef ("scsi: qla2xxx: edif: Add start + stop bsgs")
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-paris.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_edif.c     |  4 +++-
+ drivers/scsi/qla2xxx/qla_edif_bsg.h | 15 ++++++++++++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-paris.c b/drivers/pinctrl/mediatek/pinctrl-paris.c
-index 475f4172d5085..3330f0ce9bd1d 100644
---- a/drivers/pinctrl/mediatek/pinctrl-paris.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
-@@ -640,7 +640,7 @@ static int mtk_hw_get_value_wrap(struct mtk_pinctrl *hw, unsigned int gpio, int
- ssize_t mtk_pctrl_show_one_pin(struct mtk_pinctrl *hw,
- 	unsigned int gpio, char *buf, unsigned int buf_len)
- {
--	int pinmux, pullup, pullen, len = 0, r1 = -1, r0 = -1, rsel = -1;
-+	int pinmux, pullup = 0, pullen = 0, len = 0, r1 = -1, r0 = -1, rsel = -1;
- 	const struct mtk_pin_desc *desc;
- 	u32 try_all_type = 0;
+diff --git a/drivers/scsi/qla2xxx/qla_edif.c b/drivers/scsi/qla2xxx/qla_edif.c
+index 53186a1459629..38d5bda1f2748 100644
+--- a/drivers/scsi/qla2xxx/qla_edif.c
++++ b/drivers/scsi/qla2xxx/qla_edif.c
+@@ -925,7 +925,9 @@ qla_edif_app_getfcinfo(scsi_qla_host_t *vha, struct bsg_job *bsg_job)
+ 			if (!(fcport->flags & FCF_FCSP_DEVICE))
+ 				continue;
  
+-			tdid = app_req.remote_pid;
++			tdid.b.domain = app_req.remote_pid.domain;
++			tdid.b.area = app_req.remote_pid.area;
++			tdid.b.al_pa = app_req.remote_pid.al_pa;
+ 
+ 			ql_dbg(ql_dbg_edif, vha, 0x2058,
+ 			    "APP request entry - portid=%06x.\n", tdid.b24);
+diff --git a/drivers/scsi/qla2xxx/qla_edif_bsg.h b/drivers/scsi/qla2xxx/qla_edif_bsg.h
+index 0931f4e4e127a..514c265ba86e2 100644
+--- a/drivers/scsi/qla2xxx/qla_edif_bsg.h
++++ b/drivers/scsi/qla2xxx/qla_edif_bsg.h
+@@ -89,7 +89,20 @@ struct app_plogi_reply {
+ struct app_pinfo_req {
+ 	struct app_id app_info;
+ 	uint8_t	 num_ports;
+-	port_id_t remote_pid;
++	struct {
++#ifdef __BIG_ENDIAN
++		uint8_t domain;
++		uint8_t area;
++		uint8_t al_pa;
++#elif defined(__LITTLE_ENDIAN)
++		uint8_t al_pa;
++		uint8_t area;
++		uint8_t domain;
++#else
++#error "__BIG_ENDIAN or __LITTLE_ENDIAN must be defined!"
++#endif
++		uint8_t rsvd_1;
++	} remote_pid;
+ 	uint8_t		version;
+ 	uint8_t		pad[VND_CMD_PAD_SIZE];
+ 	uint8_t		reserved[VND_CMD_APP_RESERVED_SIZE];
 -- 
 2.39.2
 
