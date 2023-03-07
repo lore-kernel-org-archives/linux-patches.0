@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3636BBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBBDC433EF;
-	Tue,  7 Mar 2023 17:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF4CBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:23:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C2AC433EF;
+	Tue,  7 Mar 2023 17:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209781;
-	bh=Y4XhTvTJtu9isXzeHVGmEMeefYc+LcObVMQKEBoZcMA=;
+	s=korg; t=1678209784;
+	bh=rysGY3fl1GI2r2EmkrcMHoOZNa9GgV4KxA9Fbnj1t88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cezx4fvVxJERn2PMU3I+u1UmDvSzzT9ZlFuu2XVK8r+PcImUm0D9VM8xERp5CsxSP
-	 SjKMwOpjEJVKh4XxtOog/OALdjphQui/0p7p4gjpThLmhEW4SaY6+PWvUPpW8b4sfC
-	 Era/sX4edAHfQSzVAxrs/42os/RoJFaDsdt+p+30=
+	b=QAVz9kQMherq1tVaua+N2y06bUUJQHr4gLgfCivNySEAEpgEUoFMOAy+4PDV51fYb
+	 2lNCY+higqs8f7F2jzf7i+NA9/zkhp2TCrOJFmwOEiYQv0ccul8Pz8xH72Zp5wNOP9
+	 7H/b1frQibd99A+nf0sLPyHkxu95rnqlHf4EFt+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Hector Martin <marcan@marcan.st>,
-	Kalle Valo <kvalo@kernel.org>,
+	Josef Oskera <joskera@redhat.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Kees Cook <keescook@chromium.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0288/1001] wifi: brcmfmac: pcie: Add IDs/properties for BCM4377
-Date: Tue,  7 Mar 2023 17:51:00 +0100
-Message-Id: <20230307170034.148310399@linuxfoundation.org>
+Subject: [PATCH 6.2 0323/1001] net/mlx4_en: Introduce flexible array to silence overflow warning
+Date: Tue,  7 Mar 2023 17:51:35 +0100
+Message-Id: <20230307170035.544009903@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,99 +38,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hector Martin <marcan@marcan.st>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit bf8bbd903f07aabfef8d4cb3b513163a3e974d2b ]
+[ Upstream commit f8f185e39b4de91bc5235e5be0d829bea69d9b06 ]
 
-This chip is present on at least these Apple T2 Macs:
+The call "skb_copy_from_linear_data(skb, inl + 1, spc)" triggers a FORTIFY
+memcpy() warning on ppc64 platform:
 
-* tahiti:  MacBook Pro 13" (2020, 2 TB3)
-* formosa: MacBook Pro 13" (Touch/2019)
-* fiji:    MacBook Air 13" (Scissor, 2020)
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘skb_copy_from_linear_data’ at ./include/linux/skbuff.h:4029:2,
+    inlined from ‘build_inline_wqe’ at drivers/net/ethernet/mellanox/mlx4/en_tx.c:722:4,
+    inlined from ‘mlx4_en_xmit’ at drivers/net/ethernet/mellanox/mlx4/en_tx.c:1066:3:
+./include/linux/fortify-string.h:513:25: error: call to ‘__write_overflow_field’ declared with
+attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()?
+[-Werror=attribute-warning]
+  513 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230212063813.27622-4-marcan@marcan.st
-Stable-dep-of: 6a142f70774f ("wifi: brcmfmac: pcie: Perform correct BCM4364 firmware selection")
+Same behaviour on x86 you can get if you use "__always_inline" instead of
+"inline" for skb_copy_from_linear_data() in skbuff.h
+
+The call here copies data into inlined tx destricptor, which has 104
+bytes (MAX_INLINE) space for data payload. In this case "spc" is known
+in compile-time but the destination is used with hidden knowledge
+(real structure of destination is different from that the compiler
+can see). That cause the fortify warning because compiler can check
+bounds, but the real bounds are different.  "spc" can't be bigger than
+64 bytes (MLX4_INLINE_ALIGN), so the data can always fit into inlined
+tx descriptor. The fact that "inl" points into inlined tx descriptor is
+determined earlier in mlx4_en_xmit().
+
+Avoid confusing the compiler with "inl + 1" constructions to get to past
+the inl header by introducing a flexible array "data" to the struct so
+that the compiler can see that we are not dealing with an array of inl
+structs, but rather, arbitrary data following the structure. There are
+no changes to the structure layout reported by pahole, and the resulting
+machine code is actually smaller.
+
+Reported-by: Josef Oskera <joskera@redhat.com>
+Link: https://lore.kernel.org/lkml/20230217094541.2362873-1-joskera@redhat.com
+Fixes: f68f2ff91512 ("fortify: Detect struct member overflows in memcpy() at compile-time")
+Cc: Yishai Hadas <yishaih@nvidia.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://lore.kernel.org/r/20230218183842.never.954-kees@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c      | 1 +
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c      | 5 +++++
- .../net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h    | 2 ++
- 3 files changed, 8 insertions(+)
+ drivers/net/ethernet/mellanox/mlx4/en_tx.c | 22 +++++++++++-----------
+ include/linux/mlx4/qp.h                    |  1 +
+ 2 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-index 3e42c2bd0d9ad..8073f31be27d9 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-@@ -733,6 +733,7 @@ static u32 brcmf_chip_tcm_rambase(struct brcmf_chip_priv *ci)
- 	case CY_CC_4373_CHIP_ID:
- 		return 0x160000;
- 	case CY_CC_43752_CHIP_ID:
-+	case BRCM_CC_4377_CHIP_ID:
- 		return 0x170000;
- 	case BRCM_CC_4378_CHIP_ID:
- 		return 0x352000;
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-index a8d77569faf70..b752a65de2dcb 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -63,6 +63,7 @@ BRCMF_FW_DEF(4365C, "brcmfmac4365c-pcie");
- BRCMF_FW_DEF(4366B, "brcmfmac4366b-pcie");
- BRCMF_FW_DEF(4366C, "brcmfmac4366c-pcie");
- BRCMF_FW_DEF(4371, "brcmfmac4371-pcie");
-+BRCMF_FW_CLM_DEF(4377B3, "brcmfmac4377b3-pcie");
- BRCMF_FW_CLM_DEF(4378B1, "brcmfmac4378b1-pcie");
+diff --git a/drivers/net/ethernet/mellanox/mlx4/en_tx.c b/drivers/net/ethernet/mellanox/mlx4/en_tx.c
+index c5758637b7bed..2f79378fbf6ec 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/en_tx.c
++++ b/drivers/net/ethernet/mellanox/mlx4/en_tx.c
+@@ -699,32 +699,32 @@ static void build_inline_wqe(struct mlx4_en_tx_desc *tx_desc,
+ 			inl->byte_count = cpu_to_be32(1 << 31 | skb->len);
+ 		} else {
+ 			inl->byte_count = cpu_to_be32(1 << 31 | MIN_PKT_LEN);
+-			memset(((void *)(inl + 1)) + skb->len, 0,
++			memset(inl->data + skb->len, 0,
+ 			       MIN_PKT_LEN - skb->len);
+ 		}
+-		skb_copy_from_linear_data(skb, inl + 1, hlen);
++		skb_copy_from_linear_data(skb, inl->data, hlen);
+ 		if (shinfo->nr_frags)
+-			memcpy(((void *)(inl + 1)) + hlen, fragptr,
++			memcpy(inl->data + hlen, fragptr,
+ 			       skb_frag_size(&shinfo->frags[0]));
  
- /* firmware config files */
-@@ -95,6 +96,7 @@ static const struct brcmf_firmware_mapping brcmf_pcie_fwnames[] = {
- 	BRCMF_FW_ENTRY(BRCM_CC_43664_CHIP_ID, 0xFFFFFFF0, 4366C),
- 	BRCMF_FW_ENTRY(BRCM_CC_43666_CHIP_ID, 0xFFFFFFF0, 4366C),
- 	BRCMF_FW_ENTRY(BRCM_CC_4371_CHIP_ID, 0xFFFFFFFF, 4371),
-+	BRCMF_FW_ENTRY(BRCM_CC_4377_CHIP_ID, 0xFFFFFFFF, 4377B3), /* revision ID 4 */
- 	BRCMF_FW_ENTRY(BRCM_CC_4378_CHIP_ID, 0xFFFFFFFF, 4378B1), /* revision ID 3 */
+ 	} else {
+ 		inl->byte_count = cpu_to_be32(1 << 31 | spc);
+ 		if (hlen <= spc) {
+-			skb_copy_from_linear_data(skb, inl + 1, hlen);
++			skb_copy_from_linear_data(skb, inl->data, hlen);
+ 			if (hlen < spc) {
+-				memcpy(((void *)(inl + 1)) + hlen,
++				memcpy(inl->data + hlen,
+ 				       fragptr, spc - hlen);
+ 				fragptr +=  spc - hlen;
+ 			}
+-			inl = (void *) (inl + 1) + spc;
+-			memcpy(((void *)(inl + 1)), fragptr, skb->len - spc);
++			inl = (void *)inl->data + spc;
++			memcpy(inl->data, fragptr, skb->len - spc);
+ 		} else {
+-			skb_copy_from_linear_data(skb, inl + 1, spc);
+-			inl = (void *) (inl + 1) + spc;
+-			skb_copy_from_linear_data_offset(skb, spc, inl + 1,
++			skb_copy_from_linear_data(skb, inl->data, spc);
++			inl = (void *)inl->data + spc;
++			skb_copy_from_linear_data_offset(skb, spc, inl->data,
+ 							 hlen - spc);
+ 			if (shinfo->nr_frags)
+-				memcpy(((void *)(inl + 1)) + hlen - spc,
++				memcpy(inl->data + hlen - spc,
+ 				       fragptr,
+ 				       skb_frag_size(&shinfo->frags[0]));
+ 		}
+diff --git a/include/linux/mlx4/qp.h b/include/linux/mlx4/qp.h
+index 9db93e487496a..b6b626157b03a 100644
+--- a/include/linux/mlx4/qp.h
++++ b/include/linux/mlx4/qp.h
+@@ -446,6 +446,7 @@ enum {
+ 
+ struct mlx4_wqe_inline_seg {
+ 	__be32			byte_count;
++	__u8			data[];
  };
  
-@@ -2001,6 +2003,7 @@ static int brcmf_pcie_read_otp(struct brcmf_pciedev_info *devinfo)
- 		base = 0x8c0;
- 		words = 0xb2;
- 		break;
-+	case BRCM_CC_4377_CHIP_ID:
- 	case BRCM_CC_4378_CHIP_ID:
- 		coreid = BCMA_CORE_GCI;
- 		base = 0x1120;
-@@ -2618,7 +2621,9 @@ static const struct pci_device_id brcmf_pcie_devid_table[] = {
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4366_5G_DEVICE_ID, BCA),
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4371_DEVICE_ID, WCC),
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43596_DEVICE_ID, CYW),
-+	BRCMF_PCIE_DEVICE(BRCM_PCIE_4377_DEVICE_ID, WCC),
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4378_DEVICE_ID, WCC),
-+
- 	{ /* end: all zeroes */ }
- };
- 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
-index 6e27e39666551..896615f579522 100644
---- a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
-@@ -52,6 +52,7 @@
- #define BRCM_CC_43664_CHIP_ID		43664
- #define BRCM_CC_43666_CHIP_ID		43666
- #define BRCM_CC_4371_CHIP_ID		0x4371
-+#define BRCM_CC_4377_CHIP_ID		0x4377
- #define BRCM_CC_4378_CHIP_ID		0x4378
- #define CY_CC_4373_CHIP_ID		0x4373
- #define CY_CC_43012_CHIP_ID		43012
-@@ -92,6 +93,7 @@
- #define BRCM_PCIE_4366_5G_DEVICE_ID	0x43c5
- #define BRCM_PCIE_4371_DEVICE_ID	0x440d
- #define BRCM_PCIE_43596_DEVICE_ID	0x4415
-+#define BRCM_PCIE_4377_DEVICE_ID	0x4488
- #define BRCM_PCIE_4378_DEVICE_ID	0x4425
- 
- /* brcmsmac IDs */
+ enum mlx4_update_qp_attr {
 -- 
 2.39.2
 
