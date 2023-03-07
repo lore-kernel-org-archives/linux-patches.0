@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AE7BA34
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:30:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495FFC433EF;
-	Tue,  7 Mar 2023 17:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19FDBA34
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:30:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5865AC4339B;
+	Tue,  7 Mar 2023 17:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210254;
-	bh=tPZ71qCox8w2ZDs50xdWfUE2VuyEUqyj2wCJR+q0DAQ=;
+	s=korg; t=1678210257;
+	bh=TKa6nft5aMk4gVFZO0PgfnEPhVn9SKKaJGyONJLl6lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sJPc8ihyffSNQvKA63hOxc6HfHgfPWiAjWLiA1Tx1B/8JGQaHghZAgahHPf9IHZnl
-	 M6Mn0bsJj1X7ULdvF92TOHhVdUfn5twgvoy1eyKvH5elv7tK1IczaW6iG6MZZemfHK
-	 +v7WheqeuyY7yhWalGs4TQfklkmXMMhVc27U54WM=
+	b=enzH0IuIbxkzbCSYfrMrAOSHaSQ0ruz3bfriVno1Qp8Or6sOK+MVaDZO3F9lWrpVz
+	 3F60rW0AgGI+p8koWjfA1ydo1w6DztEq5KR4tPIT5EPjS7pOdAp8kFOQ7wcAcv90fo
+	 5Sc4Ruo3NGg48lgspNpHjOxqgs0D+/yc1TsFcwQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Kees Cook <keescook@chromium.org>,
-	Luis Chamberlain <mcgrof@kernel.org>,
+	Tom Fitzhenry <tom@tom-fitzhenry.me.uk>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0482/1001] sysctl: fix proc_dobool() usability
-Date: Tue,  7 Mar 2023 17:54:14 +0100
-Message-Id: <20230307170042.319685305@linuxfoundation.org>
+Subject: [PATCH 6.2 0483/1001] mfd: rk808: Re-add rk808-clkout to RK818
+Date: Tue,  7 Mar 2023 17:54:15 +0100
+Message-Id: <20230307170042.360109198@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,167 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Tom Fitzhenry <tom@tom-fitzhenry.me.uk>
 
-[ Upstream commit f1aa2eb5ea05ccd1fd92d235346e60e90a1ed949 ]
+[ Upstream commit 5d69b181cd0db10dc8327d28ce837b3623cd531a ]
 
-Currently proc_dobool expects a (bool *) in table->data, but sizeof(int)
-in table->maxsize, because it uses do_proc_dointvec() directly.
+Fixes RK818 (e.g. on Pinephone Pro) to register its clock, without which
+dependent devices (e.g. wifi/BT, via sdio-wifi-pwrseq) fail to probe.
 
-This is unsafe for at least two reasons:
-1. A sysctl table definition may use { .data = &variable, .maxsize =
-   sizeof(variable) }, not realizing that this makes the sysctl unusable
-   (see the Fixes: tag) and that they need to use the completely
-   counterintuitive sizeof(int) instead.
-2. proc_dobool() will currently try to parse an array of values if given
-   .maxsize >= 2*sizeof(int), but will try to write values of type bool
-   by offsets of sizeof(int), so it will not work correctly with neither
-   an (int *) nor a (bool *). There is no .maxsize validation to prevent
-   this.
+This line was removed in commit 3633daacea2e
+("mfd: rk808: Permit having multiple PMIC instances"), but only from RK818.
 
-Fix this by:
-1. Constraining proc_dobool() to allow only one value and .maxsize ==
-   sizeof(bool).
-2. Wrapping the original struct ctl_table in a temporary one with .data
-   pointing to a local int variable and .maxsize set to sizeof(int) and
-   passing this one to proc_dointvec(), converting the value to/from
-   bool as needed (using proc_dou8vec_minmax() as an example).
-3. Extending sysctl_check_table() to enforce proc_dobool() expectations.
-4. Fixing the proc_dobool() docstring (it was just copy-pasted from
-   proc_douintvec, apparently...).
-5. Converting all existing proc_dobool() users to set .maxsize to
-   sizeof(bool) instead of sizeof(int).
-
-Fixes: 83efeeeb3d04 ("tty: Allow TIOCSTI to be disabled")
-Fixes: a2071573d634 ("sysctl: introduce new proc handler proc_dobool")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Acked-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Fixes: 3633daacea2e ("mfd: rk808: Permit having multiple PMIC instances")
+Signed-off-by: Tom Fitzhenry <tom@tom-fitzhenry.me.uk>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20230102111147.2580861-1-tom@tom-fitzhenry.me.uk
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svc.c        |  2 +-
- fs/proc/proc_sysctl.c |  6 ++++++
- kernel/sysctl.c       | 43 ++++++++++++++++++++++++-------------------
- mm/hugetlb_vmemmap.c  |  2 +-
- 4 files changed, 32 insertions(+), 21 deletions(-)
+ drivers/mfd/rk808.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
-index 59ef8a1f843f3..914ea1c3537d1 100644
---- a/fs/lockd/svc.c
-+++ b/fs/lockd/svc.c
-@@ -496,7 +496,7 @@ static struct ctl_table nlm_sysctls[] = {
+diff --git a/drivers/mfd/rk808.c b/drivers/mfd/rk808.c
+index f44fc3f080a8e..0f22ef61e8170 100644
+--- a/drivers/mfd/rk808.c
++++ b/drivers/mfd/rk808.c
+@@ -189,6 +189,7 @@ static const struct mfd_cell rk817s[] = {
+ };
+ 
+ static const struct mfd_cell rk818s[] = {
++	{ .name = "rk808-clkout", .id = PLATFORM_DEVID_NONE, },
+ 	{ .name = "rk808-regulator", .id = PLATFORM_DEVID_NONE, },
  	{
- 		.procname	= "nsm_use_hostnames",
- 		.data		= &nsm_use_hostnames,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(bool),
- 		.mode		= 0644,
- 		.proc_handler	= proc_dobool,
- 	},
-diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
-index 48f2d60bd78a2..436025e0f77a6 100644
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -1124,6 +1124,11 @@ static int sysctl_check_table_array(const char *path, struct ctl_table *table)
- 			err |= sysctl_err(path, table, "array not allowed");
- 	}
- 
-+	if (table->proc_handler == proc_dobool) {
-+		if (table->maxlen != sizeof(bool))
-+			err |= sysctl_err(path, table, "array not allowed");
-+	}
-+
- 	return err;
- }
- 
-@@ -1136,6 +1141,7 @@ static int sysctl_check_table(const char *path, struct ctl_table *table)
- 			err |= sysctl_err(path, entry, "Not a file");
- 
- 		if ((entry->proc_handler == proc_dostring) ||
-+		    (entry->proc_handler == proc_dobool) ||
- 		    (entry->proc_handler == proc_dointvec) ||
- 		    (entry->proc_handler == proc_douintvec) ||
- 		    (entry->proc_handler == proc_douintvec_minmax) ||
-diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 137d4abe3eda1..1c240d2c99bcb 100644
---- a/kernel/sysctl.c
-+++ b/kernel/sysctl.c
-@@ -425,21 +425,6 @@ static void proc_put_char(void **buf, size_t *size, char c)
- 	}
- }
- 
--static int do_proc_dobool_conv(bool *negp, unsigned long *lvalp,
--				int *valp,
--				int write, void *data)
--{
--	if (write) {
--		*(bool *)valp = *lvalp;
--	} else {
--		int val = *(bool *)valp;
--
--		*lvalp = (unsigned long)val;
--		*negp = false;
--	}
--	return 0;
--}
--
- static int do_proc_dointvec_conv(bool *negp, unsigned long *lvalp,
- 				 int *valp,
- 				 int write, void *data)
-@@ -710,16 +695,36 @@ int do_proc_douintvec(struct ctl_table *table, int write,
-  * @lenp: the size of the user buffer
-  * @ppos: file position
-  *
-- * Reads/writes up to table->maxlen/sizeof(unsigned int) integer
-- * values from/to the user buffer, treated as an ASCII string.
-+ * Reads/writes one integer value from/to the user buffer,
-+ * treated as an ASCII string.
-+ *
-+ * table->data must point to a bool variable and table->maxlen must
-+ * be sizeof(bool).
-  *
-  * Returns 0 on success.
-  */
- int proc_dobool(struct ctl_table *table, int write, void *buffer,
- 		size_t *lenp, loff_t *ppos)
- {
--	return do_proc_dointvec(table, write, buffer, lenp, ppos,
--				do_proc_dobool_conv, NULL);
-+	struct ctl_table tmp;
-+	bool *data = table->data;
-+	int res, val;
-+
-+	/* Do not support arrays yet. */
-+	if (table->maxlen != sizeof(bool))
-+		return -EINVAL;
-+
-+	tmp = *table;
-+	tmp.maxlen = sizeof(val);
-+	tmp.data = &val;
-+
-+	val = READ_ONCE(*data);
-+	res = proc_dointvec(&tmp, write, buffer, lenp, ppos);
-+	if (res)
-+		return res;
-+	if (write)
-+		WRITE_ONCE(*data, val);
-+	return 0;
- }
- 
- /**
-diff --git a/mm/hugetlb_vmemmap.c b/mm/hugetlb_vmemmap.c
-index 45e93a545dd7e..a559037cce00c 100644
---- a/mm/hugetlb_vmemmap.c
-+++ b/mm/hugetlb_vmemmap.c
-@@ -581,7 +581,7 @@ static struct ctl_table hugetlb_vmemmap_sysctls[] = {
- 	{
- 		.procname	= "hugetlb_optimize_vmemmap",
- 		.data		= &vmemmap_optimize_enabled,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(vmemmap_optimize_enabled),
- 		.mode		= 0644,
- 		.proc_handler	= proc_dobool,
- 	},
+ 		.name = "rk808-rtc",
 -- 
 2.39.2
 
