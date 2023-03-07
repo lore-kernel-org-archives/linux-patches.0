@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87B5BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:51:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D60C433D2;
-	Tue,  7 Mar 2023 18:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC30BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:51:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51238C433EF;
+	Tue,  7 Mar 2023 18:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215081;
-	bh=4kZZwJ+ftZ/O9uKO+WRLiH93SOW07IPvo6aFklykatI=;
+	s=korg; t=1678215084;
+	bh=m8dMrLUT60KO6NwDFvLQWhSrTOcmqnruM/DAt6Hei5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r9uKzNuehPfR9mtqx4uIuqQUB/6VV4KKuhLPiL/Pzjy7ep2BB365eHuyiOuV6EKQ5
-	 3t/hf2OZI0WaBjygXYAx3XRDcmdKVwhy+i33zlpd6KUKihmQOPsvc6f43VxJpSxUCY
-	 TYI2BsllW/kW24wAVdPjDpdj9jjxzYyp6KE3KXso=
+	b=Qf+7qDgfvP0CaohqewW5b1OZwFw614ZNo221Q09YnBEBwzS3YI43yQfG+reoXDG/o
+	 QQZRqNdom2+Qkh2SclflcksDA1tCAZUKmFaP/NrTiqVOPQZFl7QavJ8lPtM7w9Qxpi
+	 4pcdJb7EYLJp5HuxRGZJxHUtWRVUvOG9xKHF4Ey0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel@sholland.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Anup Patel <apatel@ventanamicro.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 145/567] RISC-V: time: initialize hrtimer based broadcast clock event device
-Date: Tue,  7 Mar 2023 17:58:01 +0100
-Message-Id: <20230307165912.214612226@linuxfoundation.org>
+Subject: [PATCH 5.15 146/567] wifi: iwl3945: Add missing check for create_singlethread_workqueue
+Date: Tue,  7 Mar 2023 17:58:02 +0100
+Message-Id: <20230307165912.263176586@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -38,63 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 8b3b8fbb4896984b5564789a42240e4b3caddb61 ]
+[ Upstream commit 1fdeb8b9f29dfd64805bb49475ac7566a3cb06cb ]
 
-Similarly to commit 022eb8ae8b5e ("ARM: 8938/1: kernel: initialize
-broadcast hrtimer based clock event device"), RISC-V needs to initiate
-hrtimer based broadcast clock event device before C3STOP can be used.
-Otherwise, the introduction of C3STOP for the RISC-V arch timer in
-commit 232ccac1bd9b ("clocksource/drivers/riscv: Events are stopped
-during CPU suspend") leaves us without any broadcast timer registered.
-This prevents the kernel from entering oneshot mode, which breaks timer
-behaviour, for example clock_nanosleep().
+Add the check for the return value of the create_singlethread_workqueue
+in order to avoid NULL pointer dereference.
 
-A test app that sleeps each cpu for 6, 5, 4, 3 ms respectively, HZ=250
-& C3STOP enabled, the sleep times are rounded up to the next jiffy:
-== CPU: 1 ==      == CPU: 2 ==      == CPU: 3 ==      == CPU: 4 ==
-Mean: 7.974992    Mean: 7.976534    Mean: 7.962591    Mean: 3.952179
-Std Dev: 0.154374 Std Dev: 0.156082 Std Dev: 0.171018 Std Dev: 0.076193
-Hi: 9.472000      Hi: 10.495000     Hi: 8.864000      Hi: 4.736000
-Lo: 6.087000      Lo: 6.380000      Lo: 4.872000      Lo: 3.403000
-Samples: 521      Samples: 521      Samples: 521      Samples: 521
-
-Link: https://lore.kernel.org/linux-riscv/YzYTNQRxLr7Q9JR0@spud/
-Fixes: 232ccac1bd9b ("clocksource/drivers/riscv: Events are stopped during CPU suspend")
-Suggested-by: Samuel Holland <samuel@sholland.org>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Reviewed-by: Samuel Holland <samuel@sholland.org>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Link: https://lore.kernel.org/r/20230103141102.772228-2-apatel@ventanamicro.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Fixes: b481de9ca074 ("[IWLWIFI]: add iwlwifi wireless drivers")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230208063032.42763-2-jiasheng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/time.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/intel/iwlegacy/3945-mac.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/kernel/time.c b/arch/riscv/kernel/time.c
-index 8217b0f67c6cb..1cf21db4fcc77 100644
---- a/arch/riscv/kernel/time.c
-+++ b/arch/riscv/kernel/time.c
-@@ -5,6 +5,7 @@
-  */
+diff --git a/drivers/net/wireless/intel/iwlegacy/3945-mac.c b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
+index 45abb25b65a9f..04c149ff745e9 100644
+--- a/drivers/net/wireless/intel/iwlegacy/3945-mac.c
++++ b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
+@@ -3378,10 +3378,12 @@ static DEVICE_ATTR(dump_errors, 0200, NULL, il3945_dump_error_log);
+  *
+  *****************************************************************************/
  
- #include <linux/of_clk.h>
-+#include <linux/clockchips.h>
- #include <linux/clocksource.h>
- #include <linux/delay.h>
- #include <asm/sbi.h>
-@@ -29,6 +30,8 @@ void __init time_init(void)
+-static void
++static int
+ il3945_setup_deferred_work(struct il_priv *il)
+ {
+ 	il->workqueue = create_singlethread_workqueue(DRV_NAME);
++	if (!il->workqueue)
++		return -ENOMEM;
  
- 	of_clk_init(NULL);
- 	timer_probe();
+ 	init_waitqueue_head(&il->wait_command_queue);
+ 
+@@ -3398,6 +3400,8 @@ il3945_setup_deferred_work(struct il_priv *il)
+ 	timer_setup(&il->watchdog, il_bg_watchdog, 0);
+ 
+ 	tasklet_setup(&il->irq_tasklet, il3945_irq_tasklet);
 +
-+	tick_setup_hrtimer_broadcast();
++	return 0;
  }
  
- void clocksource_arch_init(struct clocksource *cs)
+ static void
+@@ -3717,7 +3721,10 @@ il3945_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	}
+ 
+ 	il_set_rxon_channel(il, &il->bands[NL80211_BAND_2GHZ].channels[5]);
+-	il3945_setup_deferred_work(il);
++	err = il3945_setup_deferred_work(il);
++	if (err)
++		goto out_remove_sysfs;
++
+ 	il3945_setup_handlers(il);
+ 	il_power_initialize(il);
+ 
+@@ -3729,7 +3736,7 @@ il3945_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 
+ 	err = il3945_setup_mac(il);
+ 	if (err)
+-		goto out_remove_sysfs;
++		goto out_destroy_workqueue;
+ 
+ 	il_dbgfs_register(il, DRV_NAME);
+ 
+@@ -3738,9 +3745,10 @@ il3945_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 
+ 	return 0;
+ 
+-out_remove_sysfs:
++out_destroy_workqueue:
+ 	destroy_workqueue(il->workqueue);
+ 	il->workqueue = NULL;
++out_remove_sysfs:
+ 	sysfs_remove_group(&pdev->dev.kobj, &il3945_attribute_group);
+ out_release_irq:
+ 	free_irq(il->pci_dev->irq, il);
 -- 
 2.39.2
 
