@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FC3BA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:25:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBDDC433D2;
-	Tue,  7 Mar 2023 18:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F04CBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:25:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6EF6C433A7;
+	Tue,  7 Mar 2023 18:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213517;
-	bh=W0X+bglo/2EJq1DlaNXfa7q21jxRw4oo7JaOBAQ6veU=;
+	s=korg; t=1678213520;
+	bh=sQcxH7vedrnRouSgE6hxqiNfNEwO3psISQDDgVQwpro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ym4a62Tg0prAUmN4vs9Wn+uGYcvvh6qeQzxtDDgmhRdza2WVYTIk5NSdyAXAa0d/t
-	 N+EHfjgZuLjZ5nSnwB4CQyRPVZ+KqgEIkVpBqfuiGAtf6EgGAVSsd9JFOOyS5r/BCx
-	 cEu9AdUWKssVby2Y0p979Oc5ZjqHEnprsysdDVmA=
+	b=AxdVOX2qV5keiGW7XunJaDi/vaIrbOHy3pNUnntUuEKAVxBcaXs9tvNa7a5A2fHC9
+	 TzR6AFZ23hNgxrvsed4G5wGlqv0AAfwMFrVzCkfci9UbJ+VCymkfj+zfTpt1aYpJ3Q
+	 m7Im3X6m8NPbJr+FowTE0WN7RvIQvBgD8PvAUcsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Nishanth Menon <nm@ti.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 531/885] exit: Detect and fix irq disabled state in oops
-Date: Tue,  7 Mar 2023 17:57:45 +0100
-Message-Id: <20230307170025.545378180@linuxfoundation.org>
+Subject: [PATCH 6.1 505/885] media: ov5640: Handle delays when no reset_gpio set
+Date: Tue,  7 Mar 2023 17:57:19 +0100
+Message-Id: <20230307170024.393710946@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,57 +38,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Jai Luthra <j-luthra@ti.com>
 
-[ Upstream commit 001c28e57187570e4b5aa4492c7a957fb6d65d7b ]
+[ Upstream commit d7ff69139908842adf824be4f50c7e9ac5886c04 ]
 
-If a task oopses with irqs disabled, this can cause various cascading
-problems in the oops path such as sleep-from-invalid warnings, and
-potentially worse.
+Some module manufacturers [1][2] don't expose the RESETB and PWDN pins
+of the sensor directly through the 15-pin FFC connector. Instead wiring
+~PWDN gpio to the sensor pins with appropriate delays.
 
-Since commit 0258b5fd7c712 ("coredump: Limit coredumps to a single
-thread group"), the unconditional irq enable in coredump_task_exit()
-will "fix" the irq state to be enabled early in do_exit(), so currently
-this may not be triggerable, but that is coincidental and fragile.
+In such cases, reset_gpio will not be available to the driver, but it
+will still be toggled when the sensor is powered on, and thus we should
+still honor the wait time of >= 5ms + 1ms + 20ms (see figure 2-3 in [3])
+before attempting any i/o operations over SCCB.
 
-Detect and fix the irqs_disabled() condition in the oops path before
-calling do_exit(), similarly to the way in_atomic() is handled.
+Also, rename the function to ov5640_powerup_sequence to better match the
+datasheet (section 2.7).
 
-Reported-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: "Eric W. Biederman" <ebiederm@xmission.com>
-Link: https://lore.kernel.org/lkml/20221004094401.708299-1-npiggin@gmail.com/
+[1] https://digilent.com/reference/_media/reference/add-ons/pcam-5c/pcam_5c_sch.pdf
+[2] https://www.alinx.com/public/upload/file/AN5641_User_Manual.pdf
+[3] https://cdn.sparkfun.com/datasheets/Sensors/LightImaging/OV5640_datasheet.pdf
+
+Fixes: 19a81c1426c1 ("[media] add Omnivision OV5640 sensor driver")
+Reported-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/exit.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/media/i2c/ov5640.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/exit.c b/kernel/exit.c
-index 15dc2ec80c467..bccfa4218356e 100644
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -807,6 +807,8 @@ void __noreturn do_exit(long code)
- 	struct task_struct *tsk = current;
- 	int group_dead;
+diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
+index f31b096e018f2..873087e180561 100644
+--- a/drivers/media/i2c/ov5640.c
++++ b/drivers/media/i2c/ov5640.c
+@@ -2425,11 +2425,22 @@ static void ov5640_power(struct ov5640_dev *sensor, bool enable)
+ 	gpiod_set_value_cansleep(sensor->pwdn_gpio, enable ? 0 : 1);
+ }
  
-+	WARN_ON(irqs_disabled());
-+
- 	synchronize_group_exit(tsk, code);
+-static void ov5640_reset(struct ov5640_dev *sensor)
++/*
++ * From section 2.7 power up sequence:
++ * t0 + t1 + t2 >= 5ms	Delay from DOVDD stable to PWDN pull down
++ * t3 >= 1ms		Delay from PWDN pull down to RESETB pull up
++ * t4 >= 20ms		Delay from RESETB pull up to SCCB (i2c) stable
++ *
++ * Some modules don't expose RESETB/PWDN pins directly, instead providing a
++ * "PWUP" GPIO which is wired through appropriate delays and inverters to the
++ * pins.
++ *
++ * In such cases, this gpio should be mapped to pwdn_gpio in the driver, and we
++ * should still toggle the pwdn_gpio below with the appropriate delays, while
++ * the calls to reset_gpio will be ignored.
++ */
++static void ov5640_powerup_sequence(struct ov5640_dev *sensor)
+ {
+-	if (!sensor->reset_gpio)
+-		return;
+-
+ 	if (sensor->pwdn_gpio) {
+ 		gpiod_set_value_cansleep(sensor->reset_gpio, 0);
  
- 	WARN_ON(tsk->plug);
-@@ -938,6 +940,11 @@ void __noreturn make_task_dead(int signr)
- 	if (unlikely(!tsk->pid))
- 		panic("Attempted to kill the idle task!");
+@@ -2478,8 +2489,7 @@ static int ov5640_set_power_on(struct ov5640_dev *sensor)
+ 		goto xclk_off;
+ 	}
  
-+	if (unlikely(irqs_disabled())) {
-+		pr_info("note: %s[%d] exited with irqs disabled\n",
-+			current->comm, task_pid_nr(current));
-+		local_irq_enable();
-+	}
- 	if (unlikely(in_atomic())) {
- 		pr_info("note: %s[%d] exited with preempt_count %d\n",
- 			current->comm, task_pid_nr(current),
+-	ov5640_reset(sensor);
+-	ov5640_power(sensor, true);
++	ov5640_powerup_sequence(sensor);
+ 
+ 	ret = ov5640_init_slave_id(sensor);
+ 	if (ret)
 -- 
 2.39.2
 
