@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACBDBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:20:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0021C4339C;
-	Tue,  7 Mar 2023 18:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9522FBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:20:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19BCBC4339C;
+	Tue,  7 Mar 2023 18:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213223;
-	bh=3rPI78Rna/M4IO1jepLaX6WMos6OzFgeOeCiKBqh6OY=;
+	s=korg; t=1678213226;
+	bh=sy24AILUPaEfYDFT/WeQ+y/AMwpO/G8nbiq+P1kbGls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=defCtm3bI6jO5jwwFrr3ZwRTX+EDR/qzkel+Y+pFhAbKVV/oh1gnAVF7yew68OdQq
-	 5DRIZ00M6r9JbO/jMii5PgZDngHbNBAdK0VIbAzKgIeEFD1HVzG9KQZuAhVm7Z+Mp5
-	 uNc9OmCwtiwE0cO3kIU2hVwgNMcU60BcEIOVVu8Y=
+	b=yNM/sqml+WBKcXNVm8T78EWuadvwMhcwqqenmLuXc32qD401Xd+W63G+7Wwkm55+/
+	 ng+qvyM52OcDRDx/8Kz9PwnX72K5GYEn4xNY7LuZTeKAYoAUD6Kro7Ou5Ro02vGOSz
+	 lG1Zffs24fntjAwaPwQaLxcUz/xyxV4sg+CJAoNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ferry Toth <ftoth@exalondelft.nl>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 408/885] iio: light: tsl2563: Do not hardcode interrupt trigger type
-Date: Tue,  7 Mar 2023 17:55:42 +0100
-Message-Id: <20230307170020.136939568@linuxfoundation.org>
+Subject: [PATCH 6.1 409/885] usb: gadget: fusb300_udc: free irq on the error path in fusb300_probe()
+Date: Tue,  7 Mar 2023 17:55:43 +0100
+Message-Id: <20230307170020.187827325@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,55 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ferry Toth <ftoth@exalondelft.nl>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 027641b52fe37b64af61025298ce160c8b9b7a73 ]
+[ Upstream commit a8d3392e0e5cfeb03f0cea1f2bc3f5f183c1deb4 ]
 
-Instead of hardcoding IRQ trigger type to IRQF_TRIGGER_RAISING,
-let's respect the settings specified in the firmware description.
-To be compatible with the older firmware descriptions, if trigger
-type is not set up there, we'll set it to default (raising edge).
+When request_irq(ires1->start) failed in w5300_hw_probe(), irq
+ires->start has not been freed, and on the clean_up3 error path,
+we also need to free ires1->start irq, fix it.
 
-Fixes: 388be4883952 ("staging:iio: tsl2563 abi fixes and interrupt handling")
-Fixes: bdab1001738f ("staging:iio:light:tsl2563 remove old style event registration.")
-Signed-off-by: Ferry Toth <ftoth@exalondelft.nl>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20221207190348.9347-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+In addition, We should add free_irq in fusb300_remove(), and give
+the lables a proper name so that they can be understood easily,
+so add free_irq in fusb300_remove(), and update clean_up3 to
+err_alloc_request.
+
+Fixes: 0fe6f1d1f612 ("usb: udc: add Faraday fusb300 driver")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221123014121.1989721-1-cuigaosheng1@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/tsl2563.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/fusb300_udc.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iio/light/tsl2563.c b/drivers/iio/light/tsl2563.c
-index 951f35ef3f41d..47a4626e94610 100644
---- a/drivers/iio/light/tsl2563.c
-+++ b/drivers/iio/light/tsl2563.c
-@@ -705,6 +705,7 @@ static int tsl2563_probe(struct i2c_client *client,
- 	struct iio_dev *indio_dev;
- 	struct tsl2563_chip *chip;
- 	struct tsl2563_platform_data *pdata = client->dev.platform_data;
-+	unsigned long irq_flags;
- 	int err = 0;
- 	u8 id = 0;
+diff --git a/drivers/usb/gadget/udc/fusb300_udc.c b/drivers/usb/gadget/udc/fusb300_udc.c
+index 5954800d652ca..08ba9c8c1e677 100644
+--- a/drivers/usb/gadget/udc/fusb300_udc.c
++++ b/drivers/usb/gadget/udc/fusb300_udc.c
+@@ -1346,6 +1346,7 @@ static int fusb300_remove(struct platform_device *pdev)
+ 	usb_del_gadget_udc(&fusb300->gadget);
+ 	iounmap(fusb300->reg);
+ 	free_irq(platform_get_irq(pdev, 0), fusb300);
++	free_irq(platform_get_irq(pdev, 1), fusb300);
  
-@@ -760,10 +761,15 @@ static int tsl2563_probe(struct i2c_client *client,
- 		indio_dev->info = &tsl2563_info_no_irq;
+ 	fusb300_free_request(&fusb300->ep[0]->ep, fusb300->ep0_req);
+ 	for (i = 0; i < FUSB300_MAX_NUM_EP; i++)
+@@ -1431,7 +1432,7 @@ static int fusb300_probe(struct platform_device *pdev)
+ 			IRQF_SHARED, udc_name, fusb300);
+ 	if (ret < 0) {
+ 		pr_err("request_irq1 error (%d)\n", ret);
+-		goto clean_up;
++		goto err_request_irq1;
+ 	}
  
- 	if (client->irq) {
-+		irq_flags = irq_get_trigger_type(client->irq);
-+		if (irq_flags == IRQF_TRIGGER_NONE)
-+			irq_flags = IRQF_TRIGGER_RISING;
-+		irq_flags |= IRQF_ONESHOT;
+ 	INIT_LIST_HEAD(&fusb300->gadget.ep_list);
+@@ -1470,7 +1471,7 @@ static int fusb300_probe(struct platform_device *pdev)
+ 				GFP_KERNEL);
+ 	if (fusb300->ep0_req == NULL) {
+ 		ret = -ENOMEM;
+-		goto clean_up3;
++		goto err_alloc_request;
+ 	}
+ 
+ 	init_controller(fusb300);
+@@ -1485,7 +1486,10 @@ static int fusb300_probe(struct platform_device *pdev)
+ err_add_udc:
+ 	fusb300_free_request(&fusb300->ep[0]->ep, fusb300->ep0_req);
+ 
+-clean_up3:
++err_alloc_request:
++	free_irq(ires1->start, fusb300);
 +
- 		err = devm_request_threaded_irq(&client->dev, client->irq,
- 					   NULL,
- 					   &tsl2563_event_handler,
--					   IRQF_TRIGGER_RISING | IRQF_ONESHOT,
-+					   irq_flags,
- 					   "tsl2563_event",
- 					   indio_dev);
- 		if (err) {
++err_request_irq1:
+ 	free_irq(ires->start, fusb300);
+ 
+ clean_up:
 -- 
 2.39.2
 
