@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8D0BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:56:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75019C4339C;
-	Tue,  7 Mar 2023 17:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1B3BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:56:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BF3C433D2;
+	Tue,  7 Mar 2023 17:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211774;
-	bh=SImXVM1pVWr+m/iM8SNl9XtBcn1kvgY9BQxWI+guvak=;
+	s=korg; t=1678211777;
+	bh=CXlDenawu3Itgf4btIX3b9grnyUPTMgCmQcYJWbGoOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iSHahpwWo55hJWhnogflx9ifeW1gwapssA7EMSskQd04qozZ2Mg2Mz7C5S0ra2RAE
-	 +mKH1yxbdVxDKXuF1trZZWHxZQ9xhNyheRJCP05YbU29aVJ5goZUtpw0qnRPuQbSHL
-	 FhXy9Sk2YMXATYqBIdJAmfsdomx4ME1cUtzhDSMA=
+	b=znCOQ/tQnPQ2qqCzgOr5diBaSON25O8syekQkM+5bQdPPFCh1H3pLuKZ99I50dGa/
+	 f1akGkTE0/qMCH2f0sjoYOZu/jxtO2AD6Y/YV/LYg1MnmdfuKIXsqW2JYdIV195UUi
+	 Bzwzk+hG+zm7hL8kPzsnLClFuyzmhseGT3zw9wmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Chiu <andy.chiu@sifive.com>,
-	Guo Ren <guoren@kernel.org>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.2 0973/1001] riscv: ftrace: Fixup panic by disabling preemption
-Date: Tue,  7 Mar 2023 18:02:25 +0100
-Message-Id: <20230307170104.449974155@linuxfoundation.org>
+Subject: [PATCH 6.2 0974/1001] riscv, mm: Perform BPF exhandler fixup on page fault
+Date: Tue,  7 Mar 2023 18:02:26 +0100
+Message-Id: <20230307170104.488263063@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,52 +34,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Chiu <andy.chiu@sifive.com>
+From: Björn Töpel <bjorn@rivosinc.com>
 
-commit 8547649981e6631328cd64f583667501ae385531 upstream.
+commit 416721ff05fddc58ca531b6f069de250301de6e5 upstream.
 
-In RISCV, we must use an AUIPC + JALR pair to encode an immediate,
-forming a jump that jumps to an address over 4K. This may cause errors
-if we want to enable kernel preemption and remove dependency from
-patching code with stop_machine(). For example, if a task was switched
-out on auipc. And, if we changed the ftrace function before it was
-switched back, then it would jump to an address that has updated 11:0
-bits mixing with previous XLEN:12 part.
+Commit 21855cac82d3 ("riscv/mm: Prevent kernel module to access user
+memory without uaccess routines") added early exits/deaths for page
+faults stemming from accesses to user-space without using proper
+uaccess routines (where sstatus.SUM is set).
 
-p: patched area performed by dynamic ftrace
-ftrace_prologue:
-p|      REG_S   ra, -SZREG(sp)
-p|      auipc   ra, 0x? ------------> preempted
-					...
-				change ftrace function
-					...
-p|      jalr    -?(ra) <------------- switched back
-p|      REG_L   ra, -SZREG(sp)
-func:
-	xxx
-	ret
+Unfortunatly, this is too strict for some BPF programs, which relies
+on BPF exhandler fixups. These BPF programs loads "BTF pointers". A
+BTF pointers could either be a valid kernel pointer or NULL, but not a
+userspace address.
 
-Fixes: afc76b8b8011 ("riscv: Using PATCHABLE_FUNCTION_ENTRY instead of MCOUNT")
-Signed-off-by: Andy Chiu <andy.chiu@sifive.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20230112090603.1295340-2-guoren@kernel.org
+Resolve the problem by calling the fixup handler in the early exit
+path.
+
+Fixes: 21855cac82d3 ("riscv/mm: Prevent kernel module to access user memory without uaccess routines")
+Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
+Link: https://lore.kernel.org/r/20230214162515.184827-1-bjorn@kernel.org
 Cc: stable@vger.kernel.org
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/mm/fault.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -138,7 +138,7 @@ config RISCV
- 	select HAVE_DYNAMIC_FTRACE_WITH_REGS if HAVE_DYNAMIC_FTRACE
- 	select HAVE_FTRACE_MCOUNT_RECORD if !XIP_KERNEL
- 	select HAVE_FUNCTION_GRAPH_TRACER
--	select HAVE_FUNCTION_TRACER if !XIP_KERNEL
-+	select HAVE_FUNCTION_TRACER if !XIP_KERNEL && !PREEMPTION
+--- a/arch/riscv/mm/fault.c
++++ b/arch/riscv/mm/fault.c
+@@ -267,10 +267,12 @@ asmlinkage void do_page_fault(struct pt_
+ 	if (user_mode(regs))
+ 		flags |= FAULT_FLAG_USER;
  
- config ARCH_MMAP_RND_BITS_MIN
- 	default 18 if 64BIT
+-	if (!user_mode(regs) && addr < TASK_SIZE &&
+-			unlikely(!(regs->status & SR_SUM)))
+-		die_kernel_fault("access to user memory without uaccess routines",
+-				addr, regs);
++	if (!user_mode(regs) && addr < TASK_SIZE && unlikely(!(regs->status & SR_SUM))) {
++		if (fixup_exception(regs))
++			return;
++
++		die_kernel_fault("access to user memory without uaccess routines", addr, regs);
++	}
+ 
+ 	perf_sw_event(PERF_COUNT_SW_PAGE_FAULTS, 1, regs, addr);
+ 
 
 
