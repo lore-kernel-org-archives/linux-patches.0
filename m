@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA28BA46
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:11:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346A1C4339C;
-	Tue,  7 Mar 2023 18:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D347DBA46
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:11:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5D0C433D2;
+	Tue,  7 Mar 2023 18:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212671;
-	bh=z40oeayFFrYnpsk6Fx60Of6CpMi+R6C2VJUsIl8Et2Q=;
+	s=korg; t=1678212674;
+	bh=tpWQ3pQ0YRv95/CN5dI+MV41MpEypJwHkvMGlvUE/e8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UbpkdWDWBTml+vbg8oe4mo4ykwXUPsJ/AVNDBNte/gEGjhMm97hZDS+h7gr3ar8tv
-	 ACBCsVUkXa9t/CAUqqXGMt/1wOTfooOcYednawPahn02S2BAmwLz5do8ixmp3fItdr
-	 Q1rSwq2DflHbBIlSIQIOnrZoKJu96Z1ROUVbRiWc=
+	b=eXw++bKdbYU3XUc9KT5PtTc7DJG42US93IzUrTL1P2qGNTTk7gZq9s7Me6oqXgYIJ
+	 UwX/HtbzYVCoWO9x7acPn3PoYI0uoKKPoQEQRJCF2yIARjCSQrB08h2RxloMsQkaU/
+	 Op94u9gR2MiXSjs5sVZOrTQ95XG8ObiiWU74QsYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Oskera <joskera@redhat.com>,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Kees Cook <keescook@chromium.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Stanislav Fomichev <sdf@google.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 260/885] net/mlx4_en: Introduce flexible array to silence overflow warning
-Date: Tue,  7 Mar 2023 17:53:14 +0100
-Message-Id: <20230307170013.311892734@linuxfoundation.org>
+Subject: [PATCH 6.1 243/885] selftests/bpf: Fix map_kptr test.
+Date: Tue,  7 Mar 2023 17:52:57 +0100
+Message-Id: <20230307170012.580474372@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,117 +37,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit f8f185e39b4de91bc5235e5be0d829bea69d9b06 ]
+[ Upstream commit 62d101d5f422cde39b269f7eb4cbbe2f1e26f9d4 ]
 
-The call "skb_copy_from_linear_data(skb, inl + 1, spc)" triggers a FORTIFY
-memcpy() warning on ppc64 platform:
+The compiler is optimizing out majority of unref_ptr read/writes, so the test
+wasn't testing much. For example, one could delete '__kptr' tag from
+'struct prog_test_ref_kfunc __kptr *unref_ptr;' and the test would still "pass".
 
-In function ‘fortify_memcpy_chk’,
-    inlined from ‘skb_copy_from_linear_data’ at ./include/linux/skbuff.h:4029:2,
-    inlined from ‘build_inline_wqe’ at drivers/net/ethernet/mellanox/mlx4/en_tx.c:722:4,
-    inlined from ‘mlx4_en_xmit’ at drivers/net/ethernet/mellanox/mlx4/en_tx.c:1066:3:
-./include/linux/fortify-string.h:513:25: error: call to ‘__write_overflow_field’ declared with
-attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()?
-[-Werror=attribute-warning]
-  513 |                         __write_overflow_field(p_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Convert it to volatile stores. Confirmed by comparing bpf asm before/after.
 
-Same behaviour on x86 you can get if you use "__always_inline" instead of
-"inline" for skb_copy_from_linear_data() in skbuff.h
-
-The call here copies data into inlined tx destricptor, which has 104
-bytes (MAX_INLINE) space for data payload. In this case "spc" is known
-in compile-time but the destination is used with hidden knowledge
-(real structure of destination is different from that the compiler
-can see). That cause the fortify warning because compiler can check
-bounds, but the real bounds are different.  "spc" can't be bigger than
-64 bytes (MLX4_INLINE_ALIGN), so the data can always fit into inlined
-tx descriptor. The fact that "inl" points into inlined tx descriptor is
-determined earlier in mlx4_en_xmit().
-
-Avoid confusing the compiler with "inl + 1" constructions to get to past
-the inl header by introducing a flexible array "data" to the struct so
-that the compiler can see that we are not dealing with an array of inl
-structs, but rather, arbitrary data following the structure. There are
-no changes to the structure layout reported by pahole, and the resulting
-machine code is actually smaller.
-
-Reported-by: Josef Oskera <joskera@redhat.com>
-Link: https://lore.kernel.org/lkml/20230217094541.2362873-1-joskera@redhat.com
-Fixes: f68f2ff91512 ("fortify: Detect struct member overflows in memcpy() at compile-time")
-Cc: Yishai Hadas <yishaih@nvidia.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20230218183842.never.954-kees@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2cbc469a6fc3 ("selftests/bpf: Add C tests for kptr")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20230214235051.22938-1-alexei.starovoitov@gmail.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx4/en_tx.c | 22 +++++++++++-----------
- include/linux/mlx4/qp.h                    |  1 +
- 2 files changed, 12 insertions(+), 11 deletions(-)
+ tools/testing/selftests/bpf/progs/map_kptr.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx4/en_tx.c b/drivers/net/ethernet/mellanox/mlx4/en_tx.c
-index 43a4102e9c091..7fccf1a79f09b 100644
---- a/drivers/net/ethernet/mellanox/mlx4/en_tx.c
-+++ b/drivers/net/ethernet/mellanox/mlx4/en_tx.c
-@@ -697,32 +697,32 @@ static void build_inline_wqe(struct mlx4_en_tx_desc *tx_desc,
- 			inl->byte_count = cpu_to_be32(1 << 31 | skb->len);
- 		} else {
- 			inl->byte_count = cpu_to_be32(1 << 31 | MIN_PKT_LEN);
--			memset(((void *)(inl + 1)) + skb->len, 0,
-+			memset(inl->data + skb->len, 0,
- 			       MIN_PKT_LEN - skb->len);
- 		}
--		skb_copy_from_linear_data(skb, inl + 1, hlen);
-+		skb_copy_from_linear_data(skb, inl->data, hlen);
- 		if (shinfo->nr_frags)
--			memcpy(((void *)(inl + 1)) + hlen, fragptr,
-+			memcpy(inl->data + hlen, fragptr,
- 			       skb_frag_size(&shinfo->frags[0]));
+diff --git a/tools/testing/selftests/bpf/progs/map_kptr.c b/tools/testing/selftests/bpf/progs/map_kptr.c
+index eb82178034934..228ec45365a8d 100644
+--- a/tools/testing/selftests/bpf/progs/map_kptr.c
++++ b/tools/testing/selftests/bpf/progs/map_kptr.c
+@@ -62,21 +62,23 @@ extern struct prog_test_ref_kfunc *
+ bpf_kfunc_call_test_kptr_get(struct prog_test_ref_kfunc **p, int a, int b) __ksym;
+ extern void bpf_kfunc_call_test_release(struct prog_test_ref_kfunc *p) __ksym;
  
- 	} else {
- 		inl->byte_count = cpu_to_be32(1 << 31 | spc);
- 		if (hlen <= spc) {
--			skb_copy_from_linear_data(skb, inl + 1, hlen);
-+			skb_copy_from_linear_data(skb, inl->data, hlen);
- 			if (hlen < spc) {
--				memcpy(((void *)(inl + 1)) + hlen,
-+				memcpy(inl->data + hlen,
- 				       fragptr, spc - hlen);
- 				fragptr +=  spc - hlen;
- 			}
--			inl = (void *) (inl + 1) + spc;
--			memcpy(((void *)(inl + 1)), fragptr, skb->len - spc);
-+			inl = (void *)inl->data + spc;
-+			memcpy(inl->data, fragptr, skb->len - spc);
- 		} else {
--			skb_copy_from_linear_data(skb, inl + 1, spc);
--			inl = (void *) (inl + 1) + spc;
--			skb_copy_from_linear_data_offset(skb, spc, inl + 1,
-+			skb_copy_from_linear_data(skb, inl->data, spc);
-+			inl = (void *)inl->data + spc;
-+			skb_copy_from_linear_data_offset(skb, spc, inl->data,
- 							 hlen - spc);
- 			if (shinfo->nr_frags)
--				memcpy(((void *)(inl + 1)) + hlen - spc,
-+				memcpy(inl->data + hlen - spc,
- 				       fragptr,
- 				       skb_frag_size(&shinfo->frags[0]));
- 		}
-diff --git a/include/linux/mlx4/qp.h b/include/linux/mlx4/qp.h
-index 9db93e487496a..b6b626157b03a 100644
---- a/include/linux/mlx4/qp.h
-+++ b/include/linux/mlx4/qp.h
-@@ -446,6 +446,7 @@ enum {
++#define WRITE_ONCE(x, val) ((*(volatile typeof(x) *) &(x)) = (val))
++
+ static void test_kptr_unref(struct map_value *v)
+ {
+ 	struct prog_test_ref_kfunc *p;
  
- struct mlx4_wqe_inline_seg {
- 	__be32			byte_count;
-+	__u8			data[];
- };
+ 	p = v->unref_ptr;
+ 	/* store untrusted_ptr_or_null_ */
+-	v->unref_ptr = p;
++	WRITE_ONCE(v->unref_ptr, p);
+ 	if (!p)
+ 		return;
+ 	if (p->a + p->b > 100)
+ 		return;
+ 	/* store untrusted_ptr_ */
+-	v->unref_ptr = p;
++	WRITE_ONCE(v->unref_ptr, p);
+ 	/* store NULL */
+-	v->unref_ptr = NULL;
++	WRITE_ONCE(v->unref_ptr, NULL);
+ }
  
- enum mlx4_update_qp_attr {
+ static void test_kptr_ref(struct map_value *v)
+@@ -85,7 +87,7 @@ static void test_kptr_ref(struct map_value *v)
+ 
+ 	p = v->ref_ptr;
+ 	/* store ptr_or_null_ */
+-	v->unref_ptr = p;
++	WRITE_ONCE(v->unref_ptr, p);
+ 	if (!p)
+ 		return;
+ 	if (p->a + p->b > 100)
+@@ -99,7 +101,7 @@ static void test_kptr_ref(struct map_value *v)
+ 		return;
+ 	}
+ 	/* store ptr_ */
+-	v->unref_ptr = p;
++	WRITE_ONCE(v->unref_ptr, p);
+ 	bpf_kfunc_call_test_release(p);
+ 
+ 	p = bpf_kfunc_call_test_acquire(&(unsigned long){0});
 -- 
 2.39.2
 
