@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14CFFBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:19:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D656C433EF;
-	Tue,  7 Mar 2023 18:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D24FBA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:19:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A025C433D2;
+	Tue,  7 Mar 2023 18:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213195;
-	bh=oPX0rJt4z7n9guvBarabCHYceq3zpoRIC6U5sWO4xNQ=;
+	s=korg; t=1678213199;
+	bh=FrKyh+tjljhwezt9WqS6MhAMttatdxu2QHrUIYCY510=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TTz2MK/y8YGwlBdh+5ajA5zEqfu4+gY6qONUGhDpQxHLRBXwIBc8sewizpg7GEUom
-	 j1l3wvgebkPHxG2QIvpZcW3M+uJFkeeiBK4m46YtghruI5cfZVf1OTefkHsIAtcPPO
-	 MGoMzMmHCp/kR/IjadJbix2myN5vMMRmTV34gYyQ=
+	b=Ss807cCPUvIbjwGOG+s3f6tKoqHKQ3VCeOkBsTdTctpW2j5wjEZEW3qkzSspITMgm
+	 ucMGkHg7YnD5Jm4xK90YwqUzbiYZdgOTYxAYkNXoKr3dz/2xkmnlemu1h0ynPhnW+X
+	 6D50U5idfNcRuTBYw+R9bddl8fOTm98TZd9QImSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sherry Sun <sherry.sun@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 429/885] tty: serial: fsl_lpuart: disable Rx/Tx DMA in lpuart32_shutdown()
-Date: Tue,  7 Mar 2023 17:56:03 +0100
-Message-Id: <20230307170021.043775423@linuxfoundation.org>
+Subject: [PATCH 6.1 430/885] tty: serial: fsl_lpuart: clear LPUART Status Register in lpuart32_shutdown()
+Date: Tue,  7 Mar 2023 17:56:04 +0100
+Message-Id: <20230307170021.089547777@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,38 +36,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit 1d4bd0e4ae4ba95892bef919a8d4d3f08f122d7e ]
+[ Upstream commit 4029dfc034febb54f6dd8ea83568accc943bc088 ]
 
-UARTBAUD_RDMAE and UARTBAUD_TDMAE are enabled in lpuart32_startup(), but
-lpuart32_shutdown() not disable them, only free the dma ring buffer and
-release the dma channels, so here disable the Rx/Tx DMA first in
-lpuart32_shutdown().
+The LPUART Status Register needs to be cleared when closing the uart
+port to get a clean environment when reopening the uart.
 
-Fixes: 42b68768e51b ("serial: fsl_lpuart: DMA support for 32-bit variant")
+Fixes: 380c966c093e ("tty: serial: fsl_lpuart: add 32-bit register interface support")
 Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Link: https://lore.kernel.org/r/20221125101953.18753-3-sherry.sun@nxp.com
+Link: https://lore.kernel.org/r/20221125101953.18753-4-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/tty/serial/fsl_lpuart.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index 888e01fbd9c5f..262b059e3ee11 100644
+index 262b059e3ee11..110c8720af47a 100644
 --- a/drivers/tty/serial/fsl_lpuart.c
 +++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -1791,6 +1791,11 @@ static void lpuart32_shutdown(struct uart_port *port)
+@@ -1791,6 +1791,10 @@ static void lpuart32_shutdown(struct uart_port *port)
  
  	spin_lock_irqsave(&port->lock, flags);
  
-+	/* disable Rx/Tx DMA */
-+	temp = lpuart32_read(port, UARTBAUD);
-+	temp &= ~(UARTBAUD_TDMAE | UARTBAUD_RDMAE);
-+	lpuart32_write(port, temp, UARTBAUD);
++	/* clear status */
++	temp = lpuart32_read(&sport->port, UARTSTAT);
++	lpuart32_write(&sport->port, temp, UARTSTAT);
 +
- 	/* disable Rx/Tx and interrupts */
- 	temp = lpuart32_read(port, UARTCTRL);
- 	temp &= ~(UARTCTRL_TE | UARTCTRL_RE |
+ 	/* disable Rx/Tx DMA */
+ 	temp = lpuart32_read(port, UARTBAUD);
+ 	temp &= ~(UARTBAUD_TDMAE | UARTBAUD_RDMAE);
 -- 
 2.39.2
 
