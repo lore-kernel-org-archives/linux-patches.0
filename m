@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F2EBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:22:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E880C433EF;
-	Tue,  7 Mar 2023 18:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F290BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:23:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C718BC433EF;
+	Tue,  7 Mar 2023 18:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213378;
-	bh=K7OAofMcBcsBizNF6JrI8agwwADP2el0GAH2cgFNZNo=;
+	s=korg; t=1678213381;
+	bh=cGk+zTdHgqk+6y/xroC7BPL2QM2Y92Xstss8k2IjGNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c7aTpEhLekJfxC8E94rqXUq6uvlqnsGAu84Rs2DsvYRl0dbvkVLEX8nQBWTPCdP+P
-	 DGYrR3FZ9McOftrO/XR+N7ETv3fCUbX5lP7XK9UkM/KQ5csxDAVtNt3WN2rJqzrltN
-	 ptq9Eo6IfEdm5PAm7zRruwlBgPNvcDvjlxMdYGis=
+	b=m8hyY1pTVBjFYKmirv+F/dCEV46TdjsRfOvvb8UdBwanRdy8i2gqcYBY16O++p39d
+	 H9gBeK+KY4w8g3b1Ngtd3LMVPtb0gtPUS8BUosKLaSLLTN5jIJHn+eKTnY95IdcwpB
+	 vWKtcfRhc34Gd7M1CSvzbieZgh4hqJ6WPkOC4Ud4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunsheng Lin <linyunsheng@huawei.com>,
-	Haoyue Xu <xuhaoyue1@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 489/885] RDMA/rxe: cleanup some error handling in rxe_verbs.c
-Date: Tue,  7 Mar 2023 17:57:03 +0100
-Message-Id: <20230307170023.711554858@linuxfoundation.org>
+	Saravana Kannan <saravanak@google.com>,
+	Colin Foster <colin.foster@in-advantage.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sasha Levin <sashal@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 6.1 472/885] driver core: fw_devlink: Consolidate device link flag computation
+Date: Tue,  7 Mar 2023 17:56:46 +0100
+Message-Id: <20230307170023.014965938@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,236 +39,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunsheng Lin <linyunsheng@huawei.com>
+From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit 692373d186205dfb1b56f35f22702412d94d9420 ]
+[ Upstream commit cd115c0409f283edde94bd5a9a42dc42bee0aba8 ]
 
-Instead of 'goto and return', just return directly to
-simplify the error handling, and avoid some unnecessary
-return value check.
+Consolidate the code that computes the flags to be used when creating a
+device link from a fwnode link.
 
-Link: https://lore.kernel.org/r/20221028075053.3990467-1-xuhaoyue1@hisilicon.com
-Signed-off-by: Yunsheng Lin <linyunsheng@huawei.com>
-Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Stable-dep-of: a77a52385e9a ("RDMA/rxe: Fix missing memory barriers in rxe_queue.h")
+Fixes: 2de9d8e0d2fe ("driver core: fw_devlink: Improve handling of cyclic dependencies")
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Colin Foster <colin.foster@in-advantage.com>
+Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
+Link: https://lore.kernel.org/r/20230207014207.1678715-8-saravanak@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_verbs.c | 80 ++++++++-------------------
- 1 file changed, 23 insertions(+), 57 deletions(-)
+ drivers/base/core.c    | 28 +++++++++++++++-------------
+ include/linux/fwnode.h |  1 -
+ 2 files changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
-index 88825edc7dce1..3bc0448f56deb 100644
---- a/drivers/infiniband/sw/rxe/rxe_verbs.c
-+++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
-@@ -238,7 +238,6 @@ static int rxe_destroy_ah(struct ib_ah *ibah, u32 flags)
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index 24c48fe3a0252..f623ebc131f8d 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -1726,8 +1726,11 @@ static int __init fw_devlink_strict_setup(char *arg)
+ }
+ early_param("fw_devlink.strict", fw_devlink_strict_setup);
  
- static int post_one_recv(struct rxe_rq *rq, const struct ib_recv_wr *ibwr)
+-u32 fw_devlink_get_flags(void)
++static inline u32 fw_devlink_get_flags(u8 fwlink_flags)
  {
--	int err;
- 	int i;
- 	u32 length;
- 	struct rxe_recv_wqe *recv_wqe;
-@@ -246,15 +245,11 @@ static int post_one_recv(struct rxe_rq *rq, const struct ib_recv_wr *ibwr)
- 	int full;
++	if (fwlink_flags & FWLINK_FLAG_CYCLE)
++		return FW_DEVLINK_FLAGS_PERMISSIVE | DL_FLAG_CYCLE;
++
+ 	return fw_devlink_flags;
+ }
  
- 	full = queue_full(rq->queue, QUEUE_TYPE_TO_DRIVER);
--	if (unlikely(full)) {
--		err = -ENOMEM;
--		goto err1;
--	}
-+	if (unlikely(full))
-+		return -ENOMEM;
+@@ -1908,7 +1911,7 @@ static int fw_devlink_relax_cycle(struct device *con, void *sup)
+  * fw_devlink_create_devlink - Create a device link from a consumer to fwnode
+  * @con: consumer device for the device link
+  * @sup_handle: fwnode handle of supplier
+- * @flags: devlink flags
++ * @link: fwnode link that's being converted to a device link
+  *
+  * This function will try to create a device link between the consumer device
+  * @con and the supplier device represented by @sup_handle.
+@@ -1925,10 +1928,17 @@ static int fw_devlink_relax_cycle(struct device *con, void *sup)
+  *  possible to do that in the future
+  */
+ static int fw_devlink_create_devlink(struct device *con,
+-				     struct fwnode_handle *sup_handle, u32 flags)
++				     struct fwnode_handle *sup_handle,
++				     struct fwnode_link *link)
+ {
+ 	struct device *sup_dev;
+ 	int ret = 0;
++	u32 flags;
++
++	if (con->fwnode == link->consumer)
++		flags = fw_devlink_get_flags(link->flags);
++	else
++		flags = FW_DEVLINK_FLAGS_PERMISSIVE;
  
--	if (unlikely(num_sge > rq->max_sge)) {
--		err = -EINVAL;
--		goto err1;
--	}
-+	if (unlikely(num_sge > rq->max_sge))
-+		return -EINVAL;
+ 	/*
+ 	 * In some cases, a device P might also be a supplier to its child node
+@@ -2054,7 +2064,6 @@ static void __fw_devlink_link_to_consumers(struct device *dev)
+ 	struct fwnode_link *link, *tmp;
  
- 	length = 0;
- 	for (i = 0; i < num_sge; i++)
-@@ -275,9 +270,6 @@ static int post_one_recv(struct rxe_rq *rq, const struct ib_recv_wr *ibwr)
- 	queue_advance_producer(rq->queue, QUEUE_TYPE_TO_DRIVER);
+ 	list_for_each_entry_safe(link, tmp, &fwnode->consumers, s_hook) {
+-		u32 dl_flags = fw_devlink_get_flags();
+ 		struct device *con_dev;
+ 		bool own_link = true;
+ 		int ret;
+@@ -2084,14 +2093,13 @@ static void __fw_devlink_link_to_consumers(struct device *dev)
+ 				con_dev = NULL;
+ 			} else {
+ 				own_link = false;
+-				dl_flags = FW_DEVLINK_FLAGS_PERMISSIVE;
+ 			}
+ 		}
  
- 	return 0;
+ 		if (!con_dev)
+ 			continue;
+ 
+-		ret = fw_devlink_create_devlink(con_dev, fwnode, dl_flags);
++		ret = fw_devlink_create_devlink(con_dev, fwnode, link);
+ 		put_device(con_dev);
+ 		if (!own_link || ret == -EAGAIN)
+ 			continue;
+@@ -2132,19 +2140,13 @@ static void __fw_devlink_link_to_suppliers(struct device *dev,
+ 	bool own_link = (dev->fwnode == fwnode);
+ 	struct fwnode_link *link, *tmp;
+ 	struct fwnode_handle *child = NULL;
+-	u32 dl_flags;
 -
--err1:
--	return err;
+-	if (own_link)
+-		dl_flags = fw_devlink_get_flags();
+-	else
+-		dl_flags = FW_DEVLINK_FLAGS_PERMISSIVE;
+ 
+ 	list_for_each_entry_safe(link, tmp, &fwnode->suppliers, c_hook) {
+ 		int ret;
+ 		struct device *sup_dev;
+ 		struct fwnode_handle *sup = link->supplier;
+ 
+-		ret = fw_devlink_create_devlink(dev, sup, dl_flags);
++		ret = fw_devlink_create_devlink(dev, sup, link);
+ 		if (!own_link || ret == -EAGAIN)
+ 			continue;
+ 
+diff --git a/include/linux/fwnode.h b/include/linux/fwnode.h
+index fdf2ee0285b7a..5700451b300fb 100644
+--- a/include/linux/fwnode.h
++++ b/include/linux/fwnode.h
+@@ -207,7 +207,6 @@ static inline void fwnode_dev_initialized(struct fwnode_handle *fwnode,
+ 		fwnode->flags &= ~FWNODE_FLAG_INITIALIZED;
  }
  
- static int rxe_create_srq(struct ib_srq *ibsrq, struct ib_srq_init_attr *init,
-@@ -343,10 +335,7 @@ static int rxe_modify_srq(struct ib_srq *ibsrq, struct ib_srq_attr *attr,
- 	if (err)
- 		return err;
- 
--	err = rxe_srq_from_attr(rxe, srq, attr, mask, &ucmd, udata);
--	if (err)
--		return err;
--	return 0;
-+	return rxe_srq_from_attr(rxe, srq, attr, mask, &ucmd, udata);
- }
- 
- static int rxe_query_srq(struct ib_srq *ibsrq, struct ib_srq_attr *attr)
-@@ -453,11 +442,11 @@ static int rxe_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
- 
- 	err = rxe_qp_chk_attr(rxe, qp, attr, mask);
- 	if (err)
--		goto err1;
-+		return err;
- 
- 	err = rxe_qp_from_attr(qp, attr, mask, udata);
- 	if (err)
--		goto err1;
-+		return err;
- 
- 	if ((mask & IB_QP_AV) && (attr->ah_attr.ah_flags & IB_AH_GRH))
- 		qp->src_port = rdma_get_udp_sport(attr->ah_attr.grh.flow_label,
-@@ -465,9 +454,6 @@ static int rxe_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
- 						  qp->attr.dest_qp_num);
- 
- 	return 0;
--
--err1:
--	return err;
- }
- 
- static int rxe_query_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
-@@ -501,24 +487,21 @@ static int validate_send_wr(struct rxe_qp *qp, const struct ib_send_wr *ibwr,
- 	struct rxe_sq *sq = &qp->sq;
- 
- 	if (unlikely(num_sge > sq->max_sge))
--		goto err1;
-+		return -EINVAL;
- 
- 	if (unlikely(mask & WR_ATOMIC_MASK)) {
- 		if (length < 8)
--			goto err1;
-+			return -EINVAL;
- 
- 		if (atomic_wr(ibwr)->remote_addr & 0x7)
--			goto err1;
-+			return -EINVAL;
- 	}
- 
- 	if (unlikely((ibwr->send_flags & IB_SEND_INLINE) &&
- 		     (length > sq->max_inline)))
--		goto err1;
-+		return -EINVAL;
- 
- 	return 0;
--
--err1:
--	return -EINVAL;
- }
- 
- static void init_send_wr(struct rxe_qp *qp, struct rxe_send_wr *wr,
-@@ -735,14 +718,12 @@ static int rxe_post_recv(struct ib_qp *ibqp, const struct ib_recv_wr *wr,
- 
- 	if (unlikely((qp_state(qp) < IB_QPS_INIT) || !qp->valid)) {
- 		*bad_wr = wr;
--		err = -EINVAL;
--		goto err1;
-+		return -EINVAL;
- 	}
- 
- 	if (unlikely(qp->srq)) {
- 		*bad_wr = wr;
--		err = -EINVAL;
--		goto err1;
-+		return -EINVAL;
- 	}
- 
- 	spin_lock_irqsave(&rq->producer_lock, flags);
-@@ -761,7 +742,6 @@ static int rxe_post_recv(struct ib_qp *ibqp, const struct ib_recv_wr *wr,
- 	if (qp->resp.state == QP_STATE_ERROR)
- 		rxe_run_task(&qp->resp.task, 1);
- 
--err1:
- 	return err;
- }
- 
-@@ -826,16 +806,9 @@ static int rxe_resize_cq(struct ib_cq *ibcq, int cqe, struct ib_udata *udata)
- 
- 	err = rxe_cq_chk_attr(rxe, cq, cqe, 0);
- 	if (err)
--		goto err1;
--
--	err = rxe_cq_resize_queue(cq, cqe, uresp, udata);
--	if (err)
--		goto err1;
--
--	return 0;
-+		return err;
- 
--err1:
--	return err;
-+	return rxe_cq_resize_queue(cq, cqe, uresp, udata);
- }
- 
- static int rxe_poll_cq(struct ib_cq *ibcq, int num_entries, struct ib_wc *wc)
-@@ -921,26 +894,22 @@ static struct ib_mr *rxe_reg_user_mr(struct ib_pd *ibpd,
- 	struct rxe_mr *mr;
- 
- 	mr = rxe_alloc(&rxe->mr_pool);
--	if (!mr) {
--		err = -ENOMEM;
--		goto err2;
--	}
--
-+	if (!mr)
-+		return ERR_PTR(-ENOMEM);
- 
- 	rxe_get(pd);
- 	mr->ibmr.pd = ibpd;
- 
- 	err = rxe_mr_init_user(rxe, start, length, iova, access, mr);
- 	if (err)
--		goto err3;
-+		goto err1;
- 
- 	rxe_finalize(mr);
- 
- 	return &mr->ibmr;
- 
--err3:
-+err1:
- 	rxe_cleanup(mr);
--err2:
- 	return ERR_PTR(err);
- }
- 
-@@ -956,25 +925,22 @@ static struct ib_mr *rxe_alloc_mr(struct ib_pd *ibpd, enum ib_mr_type mr_type,
- 		return ERR_PTR(-EINVAL);
- 
- 	mr = rxe_alloc(&rxe->mr_pool);
--	if (!mr) {
--		err = -ENOMEM;
--		goto err1;
--	}
-+	if (!mr)
-+		return ERR_PTR(-ENOMEM);
- 
- 	rxe_get(pd);
- 	mr->ibmr.pd = ibpd;
- 
- 	err = rxe_mr_init_fast(max_num_sg, mr);
- 	if (err)
--		goto err2;
-+		goto err1;
- 
- 	rxe_finalize(mr);
- 
- 	return &mr->ibmr;
- 
--err2:
--	rxe_cleanup(mr);
- err1:
-+	rxe_cleanup(mr);
- 	return ERR_PTR(err);
- }
- 
+-extern u32 fw_devlink_get_flags(void);
+ extern bool fw_devlink_is_strict(void);
+ int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup);
+ void fwnode_links_purge(struct fwnode_handle *fwnode);
 -- 
 2.39.2
 
