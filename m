@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A8CBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:23:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D24EC433EF;
-	Tue,  7 Mar 2023 18:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16406BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:23:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE41C433D2;
+	Tue,  7 Mar 2023 18:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213431;
-	bh=gVK+vHDxhgfc05MESC6t6rqKAnLRDv5wRzzOFiCR5OI=;
+	s=korg; t=1678213434;
+	bh=WmeQqNMIn0d+Al//BZrKLExRSzZUo3r6VfBDLM4B2QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l0RHOcMV0jeBaOAIwz1UcczIseUiLT9RiB/Fy/zKEOWIsBj5ZvXShRV0yTVGVre5S
-	 VC8MScwjmQnf0O9f1edVSOxhypYE/mtYbsWjUf88AQHuJqgedjrakJ3JSnWKfLB0Uo
-	 kMjK0PEHWq/9urkqXu0BT+8O7leBzYBpHoFnwwDk=
+	b=ZLvVnTAQHa5kX4wKerJu8FaT0Dfc0ERzYb0zbdvgyVMy+iqvhQFZnesrTQX72Taxb
+	 k/NStZnk9+94vVK7K1o2+dRwgPRyYZtGAci9ORIx62HKAATDWzlnpx9hmeFs8ua3kz
+	 BEdVhgQGSEpwCE7/N9V9eCRd+ig2hDGfEhgntunI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Kiselev <bigunclemax@gmail.com>,
-	Saravana Kannan <saravanak@google.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Sasha Levin <sashal@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 6.1 475/885] mtd: mtdpart: Dont create platform device thatll never probe
-Date: Tue,  7 Mar 2023 17:56:49 +0100
-Message-Id: <20230307170023.127011505@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Rob Herring <robh@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 476/885] usb: host: fsl-mph-dr-of: reuse device_set_of_node_from_dev
+Date: Tue,  7 Mar 2023 17:56:50 +0100
+Message-Id: <20230307170023.166167738@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,61 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saravana Kannan <saravanak@google.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit fb42378dcc7f247df56f0ecddfdae85487495fbc ]
+[ Upstream commit e2ffae3ed92a9f768902c1cf82642c3a09cd0345 ]
 
-These "nvmem-cells" platform devices never get probed because there's no
-platform driver for it and it's never used anywhere else. So it's a
-waste of memory. These devices also cause fw_devlink to block nvmem
-consumers of "nvmem-cells" partition from probing because the supplier
-device never probes.
+This sets both of_node fields and takes a of_node reference as well.
 
-So stop creating platform devices for nvmem-cells partitions to avoid
-wasting memory and to avoid blocking probing of consumers.
-
-Reported-by: Maxim Kiselev <bigunclemax@gmail.com>
-Fixes: bcdf0315a61a ("mtd: call of_platform_populate() for MTD partitions")
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Tested-by: Maksim Kiselev <bigunclemax@gmail.com>
-Tested-by: Douglas Anderson <dianders@chromium.org>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
-Link: https://lore.kernel.org/r/20230207014207.1678715-13-saravanak@google.com
+Fixes: bb160ee61c04 ("drivers/usb/host/ehci-fsl: Fix interrupt setup in host mode.")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20230207110531.1060252-4-alexander.stein@ew.tq-group.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdpart.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/usb/host/fsl-mph-dr-of.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/mtdpart.c b/drivers/mtd/mtdpart.c
-index d442fa94c8720..85f5ee6f06fc6 100644
---- a/drivers/mtd/mtdpart.c
-+++ b/drivers/mtd/mtdpart.c
-@@ -577,6 +577,7 @@ static int mtd_part_of_parse(struct mtd_info *master,
- {
- 	struct mtd_part_parser *parser;
- 	struct device_node *np;
-+	struct device_node *child;
- 	struct property *prop;
- 	struct device *dev;
- 	const char *compat;
-@@ -594,6 +595,15 @@ static int mtd_part_of_parse(struct mtd_info *master,
- 	else
- 		np = of_get_child_by_name(np, "partitions");
+diff --git a/drivers/usb/host/fsl-mph-dr-of.c b/drivers/usb/host/fsl-mph-dr-of.c
+index e5df175228928..46c6a152b8655 100644
+--- a/drivers/usb/host/fsl-mph-dr-of.c
++++ b/drivers/usb/host/fsl-mph-dr-of.c
+@@ -112,8 +112,7 @@ static struct platform_device *fsl_usb2_device_register(
+ 			goto error;
+ 	}
  
-+	/*
-+	 * Don't create devices that are added to a bus but will never get
-+	 * probed. That'll cause fw_devlink to block probing of consumers of
-+	 * this partition until the partition device is probed.
-+	 */
-+	for_each_child_of_node(np, child)
-+		if (of_device_is_compatible(child, "nvmem-cells"))
-+			of_node_set_flag(child, OF_POPULATED);
-+
- 	of_property_for_each_string(np, "compatible", prop, compat) {
- 		parser = mtd_part_get_compatible_parser(compat);
- 		if (!parser)
+-	pdev->dev.of_node = ofdev->dev.of_node;
+-	pdev->dev.of_node_reused = true;
++	device_set_of_node_from_dev(&pdev->dev, &ofdev->dev);
+ 
+ 	retval = platform_device_add(pdev);
+ 	if (retval)
 -- 
 2.39.2
 
