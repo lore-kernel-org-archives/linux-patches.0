@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E537BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:41:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A832BC433EF;
-	Tue,  7 Mar 2023 18:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E606BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:41:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A82C4339B;
+	Tue,  7 Mar 2023 18:41:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214477;
-	bh=NmmvMCI4L15u2gO+UI+1NoCsj1SQNho/qWkeHRMcW3I=;
+	s=korg; t=1678214480;
+	bh=LUkVtC5AYQvxaTmeuTp8hV33VpT8kS1fvNgHTpvjK90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nXJzFihTiXkeoClVrWi31ZhDa/0yVERjm+6NxLCBoNXfx3kWNKULrAnHK/Y/yhb5C
-	 nmM9sU63kS6TU4bTvs/omuZYnRPKXAmvL+3IhTyaPjSxU4rkpK84PRhsSKhPbAqWG2
-	 TAdoPeB3qokt1R17qNO6bnd4DhSB5802phoRh2cg=
+	b=ShrYmOwXxEmw8yUBn6tpPUS0KhA607igjQw9qXcKmbsn8FT8WF5XFbm0aVjCnYAlj
+	 hbyH8MjfdcVIR7Ncq4F5D5pdbhKQXYouLB0Kg+ps7kBqNhiEPD65lZoQOOTmj01FIY
+	 PPTPQaKXYfXdhYqXyx4ukZxwwsns/a+4XjTj5Djs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Joe Thornber <ejt@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
 	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 805/885] dm cache: free background trackers queued work in btracker_destroy
-Date: Tue,  7 Mar 2023 18:02:19 +0100
-Message-Id: <20230307170036.862113738@linuxfoundation.org>
+Subject: [PATCH 6.1 806/885] dm flakey: dont corrupt the zero page
+Date: Tue,  7 Mar 2023 18:02:20 +0100
+Message-Id: <20230307170036.903483113@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,84 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Thornber <ejt@redhat.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 95ab80a8a0fef2ce0cc494a306dd283948066ce7 upstream.
+commit f50714b57aecb6b3dc81d578e295f86d9c73f078 upstream.
 
-Otherwise the kernel can BUG with:
+When we need to zero some range on a block device, the function
+__blkdev_issue_zero_pages submits a write bio with the bio vector pointing
+to the zero page. If we use dm-flakey with corrupt bio writes option, it
+will corrupt the content of the zero page which results in crashes of
+various userspace programs. Glibc assumes that memory returned by mmap is
+zeroed and it uses it for calloc implementation; if the newly mapped
+memory is not zeroed, calloc will return non-zeroed memory.
 
-[ 2245.426978] =============================================================================
-[ 2245.435155] BUG bt_work (Tainted: G    B   W         ): Objects remaining in bt_work on __kmem_cache_shutdown()
-[ 2245.445233] -----------------------------------------------------------------------------
-[ 2245.445233]
-[ 2245.454879] Slab 0x00000000b0ce2b30 objects=64 used=2 fp=0x000000000a3c6a4e flags=0x17ffffc0000200(slab|node=0|zone=2|lastcpupid=0x1fffff)
-[ 2245.467300] CPU: 7 PID: 10805 Comm: lvm Kdump: loaded Tainted: G    B   W          6.0.0-rc2 #19
-[ 2245.476078] Hardware name: Dell Inc. PowerEdge R7525/0590KW, BIOS 2.5.6 10/06/2021
-[ 2245.483646] Call Trace:
-[ 2245.486100]  <TASK>
-[ 2245.488206]  dump_stack_lvl+0x34/0x48
-[ 2245.491878]  slab_err+0x95/0xcd
-[ 2245.495028]  __kmem_cache_shutdown.cold+0x31/0x136
-[ 2245.499821]  kmem_cache_destroy+0x49/0x130
-[ 2245.503928]  btracker_destroy+0x12/0x20 [dm_cache]
-[ 2245.508728]  smq_destroy+0x15/0x60 [dm_cache_smq]
-[ 2245.513435]  dm_cache_policy_destroy+0x12/0x20 [dm_cache]
-[ 2245.518834]  destroy+0xc0/0x110 [dm_cache]
-[ 2245.522933]  dm_table_destroy+0x5c/0x120 [dm_mod]
-[ 2245.527649]  __dm_destroy+0x10e/0x1c0 [dm_mod]
-[ 2245.532102]  dev_remove+0x117/0x190 [dm_mod]
-[ 2245.536384]  ctl_ioctl+0x1a2/0x290 [dm_mod]
-[ 2245.540579]  dm_ctl_ioctl+0xa/0x20 [dm_mod]
-[ 2245.544773]  __x64_sys_ioctl+0x8a/0xc0
-[ 2245.548524]  do_syscall_64+0x5c/0x90
-[ 2245.552104]  ? syscall_exit_to_user_mode+0x12/0x30
-[ 2245.556897]  ? do_syscall_64+0x69/0x90
-[ 2245.560648]  ? do_syscall_64+0x69/0x90
-[ 2245.564394]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[ 2245.569447] RIP: 0033:0x7fe52583ec6b
-...
-[ 2245.646771] ------------[ cut here ]------------
-[ 2245.651395] kmem_cache_destroy bt_work: Slab cache still has objects when called from btracker_destroy+0x12/0x20 [dm_cache]
-[ 2245.651408] WARNING: CPU: 7 PID: 10805 at mm/slab_common.c:478 kmem_cache_destroy+0x128/0x130
+Fix this bug by testing if the page is equal to ZERO_PAGE(0) and
+avoiding the corruption in this case.
 
-Found using: lvm2-testsuite --only "cache-single-split.sh"
-
-Ben bisected and found that commit 0495e337b703 ("mm/slab_common:
-Deleting kobject in kmem_cache_destroy() without holding
-slab_mutex/cpu_hotplug_lock") first exposed dm-cache's incomplete
-cleanup of its background tracker work objects.
-
-Reported-by: Benjamin Marzinski <bmarzins@redhat.com>
-Tested-by: Benjamin Marzinski <bmarzins@redhat.com>
-Cc: stable@vger.kernel.org # 6.0+
-Signed-off-by: Joe Thornber <ejt@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: a00f5276e266 ("dm flakey: Properly corrupt multi-page bios.")
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-background-tracker.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/md/dm-flakey.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm-cache-background-tracker.c b/drivers/md/dm-cache-background-tracker.c
-index 84814e819e4c..7887f99b82bd 100644
---- a/drivers/md/dm-cache-background-tracker.c
-+++ b/drivers/md/dm-cache-background-tracker.c
-@@ -60,6 +60,14 @@ EXPORT_SYMBOL_GPL(btracker_create);
- 
- void btracker_destroy(struct background_tracker *b)
- {
-+	struct bt_work *w, *tmp;
-+
-+	BUG_ON(!list_empty(&b->issued));
-+	list_for_each_entry_safe (w, tmp, &b->queued, list) {
-+		list_del(&w->list);
-+		kmem_cache_free(b->work_cache, w);
-+	}
-+
- 	kmem_cache_destroy(b->work_cache);
- 	kfree(b);
- }
--- 
-2.39.2
-
+--- a/drivers/md/dm-flakey.c
++++ b/drivers/md/dm-flakey.c
+@@ -303,8 +303,11 @@ static void corrupt_bio_data(struct bio
+ 	 */
+ 	bio_for_each_segment(bvec, bio, iter) {
+ 		if (bio_iter_len(bio, iter) > corrupt_bio_byte) {
+-			char *segment = (page_address(bio_iter_page(bio, iter))
+-					 + bio_iter_offset(bio, iter));
++			char *segment;
++			struct page *page = bio_iter_page(bio, iter);
++			if (unlikely(page == ZERO_PAGE(0)))
++				break;
++			segment = (page_address(page) + bio_iter_offset(bio, iter));
+ 			segment[corrupt_bio_byte] = fc->corrupt_bio_value;
+ 			DMDEBUG("Corrupting data bio=%p by writing %u to byte %u "
+ 				"(rw=%c bi_opf=%u bi_sector=%llu size=%u)\n",
 
 
