@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2C2BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:37:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850A1C433D2;
-	Tue,  7 Mar 2023 18:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01985BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:38:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB7DC433EF;
+	Tue,  7 Mar 2023 18:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214279;
-	bh=peMj1H8Fg/54Pv4XRKvNcLEm2pQRTCKN4oj4T7e5jxw=;
+	s=korg; t=1678214305;
+	bh=X/CIFZYkuHnBJPTugB2XmSb3qLkHNEpW2+l8VV1/jnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCkaeOZYTELJ2ZtLCQtFjYTLIUkrlVv8ocu3z4CwA/dgkESxL1QPQinw3DPkLhKcX
-	 WFbEF0iYqMQbnq3eosZBOnFC+pDM7ehfj6Yp38rh6eseuAOpiR+ENPpnqZELB8su0M
-	 RLtkz3LlGSil/o1TvlscfbV9a/+Sj3UWYLmAbY2Y=
+	b=bkekahURpUEqXfbtYAtHwQDHTAIPTAb1BrAhWT0Bk5azj+0FvwP5rGIQ9KtZGC2R1
+	 CFGg9F4ITD2B6SYhjpsk+dn5Nk2tgm+ZjHpSItrxTUiuOKAx7kC//4Ex7jhjZmMtPT
+	 rgCeH8gH33Xsj0ra86QlWXcjFz7sYKvEyBWk4yH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dtor@chromium.org>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 779/885] irqdomain: Fix mapping-creation race
-Date: Tue,  7 Mar 2023 18:01:53 +0100
-Message-Id: <20230307170035.773151103@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 6.1 780/885] irqdomain: Fix domain registration race
+Date: Tue,  7 Mar 2023 18:01:54 +0100
+Message-Id: <20230307170035.821418796@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,179 +34,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 601363cc08da25747feb87c55573dd54de91d66a upstream.
+commit 8932c32c3053accd50702b36e944ac2016cd103c upstream.
 
-Parallel probing of devices that share interrupts (e.g. when a driver
-uses asynchronous probing) can currently result in two mappings for the
-same hardware interrupt to be created due to missing serialisation.
+Hierarchical domains created using irq_domain_create_hierarchy() are
+currently added to the domain list before having been fully initialised.
 
-Make sure to hold the irq_domain_mutex when creating mappings so that
-looking for an existing mapping before creating a new one is done
-atomically.
+This specifically means that a racing allocation request might fail to
+allocate irq data for the inner domains of a hierarchy in case the
+parent domain pointer has not yet been set up.
 
-Fixes: 765230b5f084 ("driver-core: add asynchronous probing support for drivers")
-Fixes: b62b2cf5759b ("irqdomain: Fix handling of type settings for existing mappings")
-Link: https://lore.kernel.org/r/YuJXMHoT4ijUxnRb@hovoldconsulting.com
-Cc: stable@vger.kernel.org      # 4.8
-Cc: Dmitry Torokhov <dtor@chromium.org>
-Cc: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Hsin-Yi Wang <hsinyi@chromium.org>
-Tested-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
+Note that this is not really any issue for irqchip drivers that are
+registered early (e.g. via IRQCHIP_DECLARE() or IRQCHIP_ACPI_DECLARE())
+but could potentially cause trouble with drivers that are registered
+later (e.g. modular drivers using IRQCHIP_PLATFORM_DRIVER_BEGIN(),
+gpiochip drivers, etc.).
+
+Fixes: afb7da83b9f4 ("irqdomain: Introduce helper function irq_domain_add_hierarchy()")
+Cc: stable@vger.kernel.org      # 3.19
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[ johan: add commit message ]
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230213104302.17307-7-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20230213104302.17307-8-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/irq/irqdomain.c |   64 +++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 46 insertions(+), 18 deletions(-)
+ kernel/irq/irqdomain.c |   62 +++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 43 insertions(+), 19 deletions(-)
 
 --- a/kernel/irq/irqdomain.c
 +++ b/kernel/irq/irqdomain.c
-@@ -25,6 +25,9 @@ static DEFINE_MUTEX(irq_domain_mutex);
+@@ -126,23 +126,12 @@ void irq_domain_free_fwnode(struct fwnod
+ }
+ EXPORT_SYMBOL_GPL(irq_domain_free_fwnode);
  
- static struct irq_domain *irq_default_domain;
- 
-+static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
-+					unsigned int nr_irqs, int node, void *arg,
-+					bool realloc, const struct irq_affinity_desc *affinity);
- static void irq_domain_check_hierarchy(struct irq_domain *domain);
- 
- struct irqchip_fwid {
-@@ -682,9 +685,9 @@ unsigned int irq_create_direct_mapping(s
- EXPORT_SYMBOL_GPL(irq_create_direct_mapping);
- #endif
- 
--static unsigned int __irq_create_mapping_affinity(struct irq_domain *domain,
--						  irq_hw_number_t hwirq,
--						  const struct irq_affinity_desc *affinity)
-+static unsigned int irq_create_mapping_affinity_locked(struct irq_domain *domain,
-+						       irq_hw_number_t hwirq,
-+						       const struct irq_affinity_desc *affinity)
+-/**
+- * __irq_domain_add() - Allocate a new irq_domain data structure
+- * @fwnode: firmware node for the interrupt controller
+- * @size: Size of linear map; 0 for radix mapping only
+- * @hwirq_max: Maximum number of interrupts supported by controller
+- * @direct_max: Maximum value of direct maps; Use ~0 for no limit; 0 for no
+- *              direct mapping
+- * @ops: domain callbacks
+- * @host_data: Controller private data pointer
+- *
+- * Allocates and initializes an irq_domain structure.
+- * Returns pointer to IRQ domain, or NULL on failure.
+- */
+-struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int size,
+-				    irq_hw_number_t hwirq_max, int direct_max,
+-				    const struct irq_domain_ops *ops,
+-				    void *host_data)
++static struct irq_domain *__irq_domain_create(struct fwnode_handle *fwnode,
++					      unsigned int size,
++					      irq_hw_number_t hwirq_max,
++					      int direct_max,
++					      const struct irq_domain_ops *ops,
++					      void *host_data)
  {
- 	struct device_node *of_node = irq_domain_get_of_node(domain);
- 	int virq;
-@@ -699,7 +702,7 @@ static unsigned int __irq_create_mapping
- 		return 0;
- 	}
+ 	struct irqchip_fwid *fwid;
+ 	struct irq_domain *domain;
+@@ -230,12 +219,44 @@ struct irq_domain *__irq_domain_add(stru
  
--	if (irq_domain_associate(domain, virq, hwirq)) {
-+	if (irq_domain_associate_locked(domain, virq, hwirq)) {
- 		irq_free_desc(virq);
- 		return 0;
- 	}
-@@ -735,14 +738,20 @@ unsigned int irq_create_mapping_affinity
- 		return 0;
- 	}
+ 	irq_domain_check_hierarchy(domain);
  
-+	mutex_lock(&irq_domain_mutex);
-+
- 	/* Check if mapping already exists */
- 	virq = irq_find_mapping(domain, hwirq);
- 	if (virq) {
- 		pr_debug("existing mapping on virq %d\n", virq);
--		return virq;
-+		goto out;
- 	}
- 
--	return __irq_create_mapping_affinity(domain, hwirq, affinity);
-+	virq = irq_create_mapping_affinity_locked(domain, hwirq, affinity);
-+out:
-+	mutex_unlock(&irq_domain_mutex);
-+
-+	return virq;
- }
- EXPORT_SYMBOL_GPL(irq_create_mapping_affinity);
- 
-@@ -809,6 +818,8 @@ unsigned int irq_create_fwspec_mapping(s
- 	if (WARN_ON(type & ~IRQ_TYPE_SENSE_MASK))
- 		type &= IRQ_TYPE_SENSE_MASK;
- 
-+	mutex_lock(&irq_domain_mutex);
-+
- 	/*
- 	 * If we've already configured this interrupt,
- 	 * don't do it again, or hell will break loose.
-@@ -821,7 +832,7 @@ unsigned int irq_create_fwspec_mapping(s
- 		 * interrupt number.
- 		 */
- 		if (type == IRQ_TYPE_NONE || type == irq_get_trigger_type(virq))
--			return virq;
-+			goto out;
- 
- 		/*
- 		 * If the trigger type has not been set yet, then set
-@@ -829,35 +840,45 @@ unsigned int irq_create_fwspec_mapping(s
- 		 */
- 		if (irq_get_trigger_type(virq) == IRQ_TYPE_NONE) {
- 			irq_data = irq_get_irq_data(virq);
--			if (!irq_data)
--				return 0;
-+			if (!irq_data) {
-+				virq = 0;
-+				goto out;
-+			}
- 
- 			irqd_set_trigger_type(irq_data, type);
--			return virq;
-+			goto out;
- 		}
- 
- 		pr_warn("type mismatch, failed to map hwirq-%lu for %s!\n",
- 			hwirq, of_node_full_name(to_of_node(fwspec->fwnode)));
--		return 0;
-+		virq = 0;
-+		goto out;
- 	}
- 
- 	if (irq_domain_is_hierarchy(domain)) {
--		virq = irq_domain_alloc_irqs(domain, 1, NUMA_NO_NODE, fwspec);
--		if (virq <= 0)
--			return 0;
-+		virq = irq_domain_alloc_irqs_locked(domain, -1, 1, NUMA_NO_NODE,
-+						    fwspec, false, NULL);
-+		if (virq <= 0) {
-+			virq = 0;
-+			goto out;
-+		}
- 	} else {
- 		/* Create mapping */
--		virq = __irq_create_mapping_affinity(domain, hwirq, NULL);
-+		virq = irq_create_mapping_affinity_locked(domain, hwirq, NULL);
- 		if (!virq)
--			return virq;
-+			goto out;
- 	}
- 
- 	irq_data = irq_get_irq_data(virq);
--	if (WARN_ON(!irq_data))
--		return 0;
-+	if (WARN_ON(!irq_data)) {
-+		virq = 0;
-+		goto out;
-+	}
- 
- 	/* Store trigger type */
- 	irqd_set_trigger_type(irq_data, type);
-+out:
-+	mutex_unlock(&irq_domain_mutex);
- 
- 	return virq;
- }
-@@ -1888,6 +1909,13 @@ void irq_domain_set_info(struct irq_doma
- 	irq_set_handler_data(virq, handler_data);
- }
- 
-+static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
-+					unsigned int nr_irqs, int node, void *arg,
-+					bool realloc, const struct irq_affinity_desc *affinity)
-+{
-+	return -EINVAL;
++	return domain;
 +}
 +
- static void irq_domain_check_hierarchy(struct irq_domain *domain)
- {
++static void __irq_domain_publish(struct irq_domain *domain)
++{
+ 	mutex_lock(&irq_domain_mutex);
+ 	debugfs_add_domain_dir(domain);
+ 	list_add(&domain->link, &irq_domain_list);
+ 	mutex_unlock(&irq_domain_mutex);
+ 
+ 	pr_debug("Added domain %s\n", domain->name);
++}
++
++/**
++ * __irq_domain_add() - Allocate a new irq_domain data structure
++ * @fwnode: firmware node for the interrupt controller
++ * @size: Size of linear map; 0 for radix mapping only
++ * @hwirq_max: Maximum number of interrupts supported by controller
++ * @direct_max: Maximum value of direct maps; Use ~0 for no limit; 0 for no
++ *              direct mapping
++ * @ops: domain callbacks
++ * @host_data: Controller private data pointer
++ *
++ * Allocates and initializes an irq_domain structure.
++ * Returns pointer to IRQ domain, or NULL on failure.
++ */
++struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int size,
++				    irq_hw_number_t hwirq_max, int direct_max,
++				    const struct irq_domain_ops *ops,
++				    void *host_data)
++{
++	struct irq_domain *domain;
++
++	domain = __irq_domain_create(fwnode, size, hwirq_max, direct_max,
++				     ops, host_data);
++	if (domain)
++		__irq_domain_publish(domain);
++
+ 	return domain;
  }
+ EXPORT_SYMBOL_GPL(__irq_domain_add);
+@@ -1138,12 +1159,15 @@ struct irq_domain *irq_domain_create_hie
+ 	struct irq_domain *domain;
+ 
+ 	if (size)
+-		domain = irq_domain_create_linear(fwnode, size, ops, host_data);
++		domain = __irq_domain_create(fwnode, size, size, 0, ops, host_data);
+ 	else
+-		domain = irq_domain_create_tree(fwnode, ops, host_data);
++		domain = __irq_domain_create(fwnode, 0, ~0, 0, ops, host_data);
++
+ 	if (domain) {
+ 		domain->parent = parent;
+ 		domain->flags |= flags;
++
++		__irq_domain_publish(domain);
+ 	}
+ 
+ 	return domain;
 
 
