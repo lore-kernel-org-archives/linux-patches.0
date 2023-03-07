@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7D9BA34
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:32:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169E3C433D2;
-	Tue,  7 Mar 2023 17:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2AB0BA35
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:32:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEFEC4339B;
+	Tue,  7 Mar 2023 17:32:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210364;
-	bh=SM1GI1EP0XdNredmYV8rw9i5Ps7Z/TjaBcz2Bxa1uAs=;
+	s=korg; t=1678210367;
+	bh=sy24AILUPaEfYDFT/WeQ+y/AMwpO/G8nbiq+P1kbGls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RcpFOaVS77i8BCIrmmMrLFqOvXxfgu8Yp3CKJHItoJB1fvXnsb7ny1PmjLXp19YpM
-	 pSqqeSSkAZqSeQb3z8WBDRUUSF6lp0nXdqpbpK2ZM2Y0k4HurtDu7ZGrV4lgJ8HUJu
-	 8ke/InqpTPzClckMg/t9OVlbYNjlphWKCANmuqr4=
+	b=CPTBeeiMpoFgLdzo9z3LMr0mpawqSOPssyN5ShuaZ69f2v+XveAe+pTO5He6WDf35
+	 REEye1QMVnmoDyjT9Qa82QpdA2JWGziP5QOY2Jx/A+rEcpCUhXRSc0XFu0sSpaFbEN
+	 xf0MHhkrFbjNm3dRC6dvAdhb4ZXsXKa34OU0UgVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0517/1001] firmware: stratix10-svc: add missing gen_pool_destroy() in stratix10_svc_drv_probe()
-Date: Tue,  7 Mar 2023 17:54:49 +0100
-Message-Id: <20230307170043.871938943@linuxfoundation.org>
+Subject: [PATCH 6.2 0491/1001] usb: gadget: fusb300_udc: free irq on the error path in fusb300_probe()
+Date: Tue,  7 Mar 2023 17:54:23 +0100
+Message-Id: <20230307170042.699054231@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,67 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 9175ee1a99d57ec07d66ff572e1d5a724477ab37 ]
+[ Upstream commit a8d3392e0e5cfeb03f0cea1f2bc3f5f183c1deb4 ]
 
-In error path in stratix10_svc_drv_probe(), gen_pool_destroy() should be called
-to destroy the memory pool that created by svc_create_memory_pool().
+When request_irq(ires1->start) failed in w5300_hw_probe(), irq
+ires->start has not been freed, and on the clean_up3 error path,
+we also need to free ires1->start irq, fix it.
 
-Fixes: 7ca5ce896524 ("firmware: add Intel Stratix10 service layer driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
-Link: https://lore.kernel.org/r/20221129163602.462369-1-dinguyen@kernel.org
+In addition, We should add free_irq in fusb300_remove(), and give
+the lables a proper name so that they can be understood easily,
+so add free_irq in fusb300_remove(), and update clean_up3 to
+err_alloc_request.
+
+Fixes: 0fe6f1d1f612 ("usb: udc: add Faraday fusb300 driver")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221123014121.1989721-1-cuigaosheng1@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/stratix10-svc.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/usb/gadget/udc/fusb300_udc.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
-index b4081f4d88a37..1a5640b3ab422 100644
---- a/drivers/firmware/stratix10-svc.c
-+++ b/drivers/firmware/stratix10-svc.c
-@@ -1138,13 +1138,17 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
+diff --git a/drivers/usb/gadget/udc/fusb300_udc.c b/drivers/usb/gadget/udc/fusb300_udc.c
+index 5954800d652ca..08ba9c8c1e677 100644
+--- a/drivers/usb/gadget/udc/fusb300_udc.c
++++ b/drivers/usb/gadget/udc/fusb300_udc.c
+@@ -1346,6 +1346,7 @@ static int fusb300_remove(struct platform_device *pdev)
+ 	usb_del_gadget_udc(&fusb300->gadget);
+ 	iounmap(fusb300->reg);
+ 	free_irq(platform_get_irq(pdev, 0), fusb300);
++	free_irq(platform_get_irq(pdev, 1), fusb300);
  
- 	/* allocate service controller and supporting channel */
- 	controller = devm_kzalloc(dev, sizeof(*controller), GFP_KERNEL);
--	if (!controller)
--		return -ENOMEM;
-+	if (!controller) {
-+		ret = -ENOMEM;
-+		goto err_destroy_pool;
-+	}
- 
- 	chans = devm_kmalloc_array(dev, SVC_NUM_CHANNEL,
- 				   sizeof(*chans), GFP_KERNEL | __GFP_ZERO);
--	if (!chans)
--		return -ENOMEM;
-+	if (!chans) {
-+		ret = -ENOMEM;
-+		goto err_destroy_pool;
-+	}
- 
- 	controller->dev = dev;
- 	controller->num_chans = SVC_NUM_CHANNEL;
-@@ -1159,7 +1163,7 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
- 	ret = kfifo_alloc(&controller->svc_fifo, fifo_size, GFP_KERNEL);
- 	if (ret) {
- 		dev_err(dev, "failed to allocate FIFO\n");
--		return ret;
-+		goto err_destroy_pool;
+ 	fusb300_free_request(&fusb300->ep[0]->ep, fusb300->ep0_req);
+ 	for (i = 0; i < FUSB300_MAX_NUM_EP; i++)
+@@ -1431,7 +1432,7 @@ static int fusb300_probe(struct platform_device *pdev)
+ 			IRQF_SHARED, udc_name, fusb300);
+ 	if (ret < 0) {
+ 		pr_err("request_irq1 error (%d)\n", ret);
+-		goto clean_up;
++		goto err_request_irq1;
  	}
- 	spin_lock_init(&controller->svc_fifo_lock);
  
-@@ -1221,6 +1225,8 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
+ 	INIT_LIST_HEAD(&fusb300->gadget.ep_list);
+@@ -1470,7 +1471,7 @@ static int fusb300_probe(struct platform_device *pdev)
+ 				GFP_KERNEL);
+ 	if (fusb300->ep0_req == NULL) {
+ 		ret = -ENOMEM;
+-		goto clean_up3;
++		goto err_alloc_request;
+ 	}
  
- err_free_kfifo:
- 	kfifo_free(&controller->svc_fifo);
-+err_destroy_pool:
-+	gen_pool_destroy(genpool);
- 	return ret;
- }
+ 	init_controller(fusb300);
+@@ -1485,7 +1486,10 @@ static int fusb300_probe(struct platform_device *pdev)
+ err_add_udc:
+ 	fusb300_free_request(&fusb300->ep[0]->ep, fusb300->ep0_req);
  
+-clean_up3:
++err_alloc_request:
++	free_irq(ires1->start, fusb300);
++
++err_request_irq1:
+ 	free_irq(ires->start, fusb300);
+ 
+ clean_up:
 -- 
 2.39.2
 
