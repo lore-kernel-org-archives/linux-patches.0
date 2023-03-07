@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1FABA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:33:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89611C433EF;
-	Tue,  7 Mar 2023 18:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572ADBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:33:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3086C433EF;
+	Tue,  7 Mar 2023 18:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214028;
-	bh=hD2BvJLSd/M3aiKh7/fdmWlFxABG0f6fyzt4dUZfTZk=;
+	s=korg; t=1678214031;
+	bh=snydt9SDylcvlEycW7Cq3ohmB91GMuioW7jmWWjzlHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aWwrunPuhl5uKtQc2QIA9t+aVrm/cmyd3zXrGg2M/7KaGNkzTilGYWBZuc/3hKXDg
-	 cS0QmEOqbiAWylmxR/BwF3B4qF5rA7VPbJGmnwkCWyQdedDmJvlVHC8DwV37Nv0e3A
-	 Bj9/HwmdQtciss6roMQ1iWHGWLiWutMm5XbtFwdI=
+	b=X1swpYXhojZipc2mRw2luojwXHDv7/N7f2gkrVqQdgkbWtCVJwcLMVTH+cf4Cg6AZ
+	 PoPu1nFSaVszDHcVqT/101068nVL2fmOgpEJhHfGMV7Azt/nVxtiLqchtmsbvrUNxi
+	 2U6jnjOL3M5Lu8njHTp7+pAX58trU133VxjzJ+nA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexander Aring <aahringo@redhat.com>,
 	David Teigland <teigland@redhat.com>
-Subject: [PATCH 6.1 696/885] fs: dlm: move sending fin message into state change handling
-Date: Tue,  7 Mar 2023 18:00:30 +0100
-Message-Id: <20230307170032.338734383@linuxfoundation.org>
+Subject: [PATCH 6.1 697/885] fs: dlm: send FIN ack back in right cases
+Date: Tue,  7 Mar 2023 18:00:31 +0100
+Message-Id: <20230307170032.379767301@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,12 +36,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Aring <aahringo@redhat.com>
 
-commit a58496361802070996f9bd76e941d109c4a85ebd upstream.
+commit 00908b3388255fc1d3782b744d07f327712f401f upstream.
 
-This patch moves the send fin handling, which should appear in a specific
-state change, into the state change handling while the per node
-state_lock is held. I experienced issues with other messages because
-we changed the state and a fin message was sent out in a different state.
+This patch moves to send a ack back for receiving a FIN message only
+when we are in valid states. In other cases and there might be a sender
+waiting for a ack we just let it timeout at the senders time and
+hopefully all other cleanups will remove the FIN message on their
+sending queue. As an example we should never send out an ACK being in
+LAST_ACK state or we cannot assume a working socket communication when
+we are in CLOSED state.
 
 Cc: stable@vger.kernel.org
 Fixes: 489d8e559c65 ("fs: dlm: add reliable connection if reconnect")
@@ -49,94 +52,52 @@ Signed-off-by: Alexander Aring <aahringo@redhat.com>
 Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/midcomms.c |   33 +++++++++------------------------
- 1 file changed, 9 insertions(+), 24 deletions(-)
+ fs/dlm/midcomms.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 --- a/fs/dlm/midcomms.c
 +++ b/fs/dlm/midcomms.c
-@@ -401,7 +401,7 @@ static int dlm_send_fin(struct midcomms_
- 	struct dlm_mhandle *mh;
+@@ -374,7 +374,7 @@ static int dlm_send_ack(int nodeid, uint
+ 	struct dlm_msg *msg;
  	char *ppc;
  
--	mh = dlm_midcomms_get_mhandle(node->nodeid, mb_len, GFP_NOFS, &ppc);
-+	mh = dlm_midcomms_get_mhandle(node->nodeid, mb_len, GFP_ATOMIC, &ppc);
- 	if (!mh)
+-	msg = dlm_lowcomms_new_msg(nodeid, mb_len, GFP_NOFS, &ppc,
++	msg = dlm_lowcomms_new_msg(nodeid, mb_len, GFP_ATOMIC, &ppc,
+ 				   NULL, NULL);
+ 	if (!msg)
  		return -ENOMEM;
+@@ -483,15 +483,14 @@ static void dlm_midcomms_receive_buffer(
  
-@@ -503,8 +503,8 @@ static void dlm_midcomms_receive_buffer(
- 					node->state = DLM_LAST_ACK;
- 					pr_debug("switch node %d to state %s case 1\n",
- 						 node->nodeid, dlm_state_str(node->state));
--					spin_unlock(&node->state_lock);
--					goto send_fin;
-+					set_bit(DLM_NODE_FLAG_STOP_RX, &node->flags);
-+					dlm_send_fin(node, dlm_pas_fin_ack_rcv);
+ 		switch (p->header.h_cmd) {
+ 		case DLM_FIN:
+-			/* send ack before fin */
+-			dlm_send_ack(node->nodeid, node->seq_next);
+-
+ 			spin_lock(&node->state_lock);
+ 			pr_debug("receive fin msg from node %d with state %s\n",
+ 				 node->nodeid, dlm_state_str(node->state));
+ 
+ 			switch (node->state) {
+ 			case DLM_ESTABLISHED:
++				dlm_send_ack(node->nodeid, node->seq_next);
++
+ 				node->state = DLM_CLOSE_WAIT;
+ 				pr_debug("switch node %d to state %s\n",
+ 					 node->nodeid, dlm_state_str(node->state));
+@@ -508,12 +507,14 @@ static void dlm_midcomms_receive_buffer(
  				}
  				break;
  			case DLM_FIN_WAIT1:
-@@ -547,12 +547,6 @@ static void dlm_midcomms_receive_buffer(
- 		log_print_ratelimited("ignore dlm msg because seq mismatch, seq: %u, expected: %u, nodeid: %d",
- 				      seq, node->seq_next, node->nodeid);
- 	}
--
--	return;
--
--send_fin:
--	set_bit(DLM_NODE_FLAG_STOP_RX, &node->flags);
--	dlm_send_fin(node, dlm_pas_fin_ack_rcv);
- }
- 
- static struct midcomms_node *
-@@ -1286,11 +1280,11 @@ void dlm_midcomms_remove_member(int node
- 		case DLM_CLOSE_WAIT:
- 			/* passive shutdown DLM_LAST_ACK case 2 */
- 			node->state = DLM_LAST_ACK;
--			spin_unlock(&node->state_lock);
--
- 			pr_debug("switch node %d to state %s case 2\n",
- 				 node->nodeid, dlm_state_str(node->state));
--			goto send_fin;
-+			set_bit(DLM_NODE_FLAG_STOP_RX, &node->flags);
-+			dlm_send_fin(node, dlm_pas_fin_ack_rcv);
-+			break;
- 		case DLM_LAST_ACK:
- 			/* probably receive fin caught it, do nothing */
- 			break;
-@@ -1306,12 +1300,6 @@ void dlm_midcomms_remove_member(int node
- 	spin_unlock(&node->state_lock);
- 
- 	srcu_read_unlock(&nodes_srcu, idx);
--	return;
--
--send_fin:
--	set_bit(DLM_NODE_FLAG_STOP_RX, &node->flags);
--	dlm_send_fin(node, dlm_pas_fin_ack_rcv);
--	srcu_read_unlock(&nodes_srcu, idx);
- }
- 
- static void midcomms_node_release(struct rcu_head *rcu)
-@@ -1342,6 +1330,7 @@ static void midcomms_shutdown(struct mid
- 		node->state = DLM_FIN_WAIT1;
- 		pr_debug("switch node %d to state %s case 2\n",
- 			 node->nodeid, dlm_state_str(node->state));
-+		dlm_send_fin(node, dlm_act_fin_ack_rcv);
- 		break;
- 	case DLM_CLOSED:
- 		/* we have what we want */
-@@ -1355,12 +1344,8 @@ static void midcomms_shutdown(struct mid
- 	}
- 	spin_unlock(&node->state_lock);
- 
--	if (node->state == DLM_FIN_WAIT1) {
--		dlm_send_fin(node, dlm_act_fin_ack_rcv);
--
--		if (DLM_DEBUG_FENCE_TERMINATION)
--			msleep(5000);
--	}
-+	if (DLM_DEBUG_FENCE_TERMINATION)
-+		msleep(5000);
- 
- 	/* wait for other side dlm + fin */
- 	ret = wait_event_timeout(node->shutdown_wait,
++				dlm_send_ack(node->nodeid, node->seq_next);
+ 				node->state = DLM_CLOSING;
+ 				set_bit(DLM_NODE_FLAG_STOP_RX, &node->flags);
+ 				pr_debug("switch node %d to state %s\n",
+ 					 node->nodeid, dlm_state_str(node->state));
+ 				break;
+ 			case DLM_FIN_WAIT2:
++				dlm_send_ack(node->nodeid, node->seq_next);
+ 				midcomms_node_reset(node);
+ 				pr_debug("switch node %d to state %s\n",
+ 					 node->nodeid, dlm_state_str(node->state));
 
 
