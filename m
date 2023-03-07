@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640BABA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:46:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF055C433D2;
-	Tue,  7 Mar 2023 17:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E90CBA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:46:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8E0C433D2;
+	Tue,  7 Mar 2023 17:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211201;
-	bh=uVl/eah+6h8ysObM2Lge6bkmzbjcFM3n5bfX/rW/rmc=;
+	s=korg; t=1678211204;
+	bh=n6LUhVn7bdVk4clH3u1syOhGDn86LCozKVda6/RIdko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQXo8Ht3jC2BZr7Ki/fn0Lo+7VSpy3pJEk5Vh5PuZzXKvyeGCwrBU8fZ1PSQvciQv
-	 EEdukp8GAktF7aVNfmMlPNciyfwCV1/s1px8PXp5fdOth5vuFWuciiFBKI2HWIAMze
-	 z2dgWDzpwX1Su+rJjV92v7lCk3ty6+Qsx+DycSFs=
+	b=OtpQr0p3BQdAPmCAkRX4GgtMLRyGMy7y26imJS7VUHGSsuZruAQ1NaKaXgI2vgEas
+	 pZs4buNFLvxZWNIvPr768TrJZEuZuh6WnPJ+rQrsr5a+cV+HucN3r+PyCDBNM+ZVY7
+	 xTQOzE5WPsqhiMmecD6Lhavm/yJzmddDTxJyHxeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.2 0785/1001] ksmbd: fix wrong data area length for smb2 lock request
-Date: Tue,  7 Mar 2023 17:59:17 +0100
-Message-Id: <20230307170055.810591784@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.2 0759/1001] io_uring/rsrc: disallow multi-source reg buffers
+Date: Tue,  7 Mar 2023 17:58:51 +0100
+Message-Id: <20230307170054.677971181@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,47 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 8f8c43b125882ac14372f8dca0c8e50a59e78d79 upstream.
+commit edd478269640b360c6f301f2baa04abdda563ef3 upstream.
 
-When turning debug mode on, The following error message from
-ksmbd_smb2_check_message() is coming.
+If two or more mappings go back to back to each other they can be passed
+into io_uring to be registered as a single registered buffer. That would
+even work if mappings came from different sources, e.g. it's possible to
+mix in this way anon pages and pages from shmem or hugetlb. That is not
+a problem but it'd rather be less prone if we forbid such mixing.
 
-ksmbd: cli req padded more than expected. Length 112 not 88 for cmd:10 mid:14
-
-data area length calculation for smb2 lock request in smb2_get_data_area_len() is
-incorrect.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2misc.c |   10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ io_uring/rsrc.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/fs/ksmbd/smb2misc.c
-+++ b/fs/ksmbd/smb2misc.c
-@@ -149,15 +149,11 @@ static int smb2_get_data_area_len(unsign
- 		break;
- 	case SMB2_LOCK:
- 	{
--		int lock_count;
-+		unsigned short lock_count;
- 
--		/*
--		 * smb2_lock request size is 48 included single
--		 * smb2_lock_element structure size.
--		 */
--		lock_count = le16_to_cpu(((struct smb2_lock_req *)hdr)->LockCount) - 1;
-+		lock_count = le16_to_cpu(((struct smb2_lock_req *)hdr)->LockCount);
- 		if (lock_count > 0) {
--			*off = __SMB2_HEADER_STRUCTURE_SIZE + 48;
-+			*off = offsetof(struct smb2_lock_req, locks);
- 			*len = sizeof(struct smb2_lock_element) * lock_count;
- 		}
- 		break;
+--- a/io_uring/rsrc.c
++++ b/io_uring/rsrc.c
+@@ -1162,14 +1162,17 @@ struct page **io_pin_pages(unsigned long
+ 	pret = pin_user_pages(ubuf, nr_pages, FOLL_WRITE | FOLL_LONGTERM,
+ 			      pages, vmas);
+ 	if (pret == nr_pages) {
++		struct file *file = vmas[0]->vm_file;
++
+ 		/* don't support file backed memory */
+ 		for (i = 0; i < nr_pages; i++) {
+-			struct vm_area_struct *vma = vmas[i];
+-
+-			if (vma_is_shmem(vma))
++			if (vmas[i]->vm_file != file) {
++				ret = -EINVAL;
++				break;
++			}
++			if (!file)
+ 				continue;
+-			if (vma->vm_file &&
+-			    !is_file_hugepages(vma->vm_file)) {
++			if (!vma_is_shmem(vmas[i]) && !is_file_hugepages(file)) {
+ 				ret = -EOPNOTSUPP;
+ 				break;
+ 			}
 
 
