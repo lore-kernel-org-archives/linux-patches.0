@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17378BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:51:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728E6C433EF;
-	Tue,  7 Mar 2023 17:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA14BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:51:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8474DC433EF;
+	Tue,  7 Mar 2023 17:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211511;
-	bh=X/CIFZYkuHnBJPTugB2XmSb3qLkHNEpW2+l8VV1/jnU=;
+	s=korg; t=1678211515;
+	bh=tO4logdoC5Brx41FVyy0YsJFB3DcPXXmPPfZbwtQ/BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d2qRfH2xRpSL7W/Lc8yvCU6OWWasORtfRy73ygPP/SPz9n6gc7VuQKwKaVFmI2pWA
-	 c3VJpeDrEcVhBq6a08ZNfRS3YohYV6yUK7i6P1sYzHHqccYNC39NO2wjYW/JOP+8c5
-	 URqcm1OnbXqzcoO+TMNRmM7vwjFqnbfeQ/CCnnEA=
+	b=M9pFFTxMeqAoj7BETqAOqj2qBEiF3aYKVbQZp8WjvNoqCJCFqr6qezbgviaXDzDUy
+	 FmFMOXzXWga65cqJ8bPks80qhd1tlvG2mnqkcOeW2I989/YVHa/l53NvYWl6YBiRUI
+	 IDXjl2iPgb6/JraoLiQVa8D3OXE0KPoFanbTY40k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 6.2 0886/1001] irqdomain: Fix domain registration race
-Date: Tue,  7 Mar 2023 18:00:58 +0100
-Message-Id: <20230307170100.400585843@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Shuah Khan <shuah@kernel.org>,
+	linux-kselftest@vger.kernel.org,
+	Ingo Molnar <mingo@redhat.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.2 0860/1001] selftests: clone3: Fix incorrect kernel headers search path
+Date: Tue,  7 Mar 2023 18:00:32 +0100
+Message-Id: <20230307170059.158075370@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,129 +38,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-commit 8932c32c3053accd50702b36e944ac2016cd103c upstream.
+commit 612cf4d283414a5ee2733db6608d917deb45fa46 upstream.
 
-Hierarchical domains created using irq_domain_create_hierarchy() are
-currently added to the domain list before having been fully initialised.
+Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
+building against kernel headers from the build environment in scenarios
+where kernel headers are installed into a specific output directory
+(O=...).
 
-This specifically means that a racing allocation request might fail to
-allocate irq data for the inner domains of a hierarchy in case the
-parent domain pointer has not yet been set up.
-
-Note that this is not really any issue for irqchip drivers that are
-registered early (e.g. via IRQCHIP_DECLARE() or IRQCHIP_ACPI_DECLARE())
-but could potentially cause trouble with drivers that are registered
-later (e.g. modular drivers using IRQCHIP_PLATFORM_DRIVER_BEGIN(),
-gpiochip drivers, etc.).
-
-Fixes: afb7da83b9f4 ("irqdomain: Introduce helper function irq_domain_add_hierarchy()")
-Cc: stable@vger.kernel.org      # 3.19
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ johan: add commit message ]
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230213104302.17307-8-johan+linaro@kernel.org
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: linux-kselftest@vger.kernel.org
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: <stable@vger.kernel.org>  # 5.18+
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Acked-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/irq/irqdomain.c |   62 +++++++++++++++++++++++++++++++++----------------
- 1 file changed, 43 insertions(+), 19 deletions(-)
+ tools/testing/selftests/clone3/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/irq/irqdomain.c
-+++ b/kernel/irq/irqdomain.c
-@@ -126,23 +126,12 @@ void irq_domain_free_fwnode(struct fwnod
- }
- EXPORT_SYMBOL_GPL(irq_domain_free_fwnode);
+--- a/tools/testing/selftests/clone3/Makefile
++++ b/tools/testing/selftests/clone3/Makefile
+@@ -1,5 +1,5 @@
+ # SPDX-License-Identifier: GPL-2.0
+-CFLAGS += -g -std=gnu99 -I../../../../usr/include/
++CFLAGS += -g -std=gnu99 $(KHDR_INCLUDES)
+ LDLIBS += -lcap
  
--/**
-- * __irq_domain_add() - Allocate a new irq_domain data structure
-- * @fwnode: firmware node for the interrupt controller
-- * @size: Size of linear map; 0 for radix mapping only
-- * @hwirq_max: Maximum number of interrupts supported by controller
-- * @direct_max: Maximum value of direct maps; Use ~0 for no limit; 0 for no
-- *              direct mapping
-- * @ops: domain callbacks
-- * @host_data: Controller private data pointer
-- *
-- * Allocates and initializes an irq_domain structure.
-- * Returns pointer to IRQ domain, or NULL on failure.
-- */
--struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int size,
--				    irq_hw_number_t hwirq_max, int direct_max,
--				    const struct irq_domain_ops *ops,
--				    void *host_data)
-+static struct irq_domain *__irq_domain_create(struct fwnode_handle *fwnode,
-+					      unsigned int size,
-+					      irq_hw_number_t hwirq_max,
-+					      int direct_max,
-+					      const struct irq_domain_ops *ops,
-+					      void *host_data)
- {
- 	struct irqchip_fwid *fwid;
- 	struct irq_domain *domain;
-@@ -230,12 +219,44 @@ struct irq_domain *__irq_domain_add(stru
- 
- 	irq_domain_check_hierarchy(domain);
- 
-+	return domain;
-+}
-+
-+static void __irq_domain_publish(struct irq_domain *domain)
-+{
- 	mutex_lock(&irq_domain_mutex);
- 	debugfs_add_domain_dir(domain);
- 	list_add(&domain->link, &irq_domain_list);
- 	mutex_unlock(&irq_domain_mutex);
- 
- 	pr_debug("Added domain %s\n", domain->name);
-+}
-+
-+/**
-+ * __irq_domain_add() - Allocate a new irq_domain data structure
-+ * @fwnode: firmware node for the interrupt controller
-+ * @size: Size of linear map; 0 for radix mapping only
-+ * @hwirq_max: Maximum number of interrupts supported by controller
-+ * @direct_max: Maximum value of direct maps; Use ~0 for no limit; 0 for no
-+ *              direct mapping
-+ * @ops: domain callbacks
-+ * @host_data: Controller private data pointer
-+ *
-+ * Allocates and initializes an irq_domain structure.
-+ * Returns pointer to IRQ domain, or NULL on failure.
-+ */
-+struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int size,
-+				    irq_hw_number_t hwirq_max, int direct_max,
-+				    const struct irq_domain_ops *ops,
-+				    void *host_data)
-+{
-+	struct irq_domain *domain;
-+
-+	domain = __irq_domain_create(fwnode, size, hwirq_max, direct_max,
-+				     ops, host_data);
-+	if (domain)
-+		__irq_domain_publish(domain);
-+
- 	return domain;
- }
- EXPORT_SYMBOL_GPL(__irq_domain_add);
-@@ -1138,12 +1159,15 @@ struct irq_domain *irq_domain_create_hie
- 	struct irq_domain *domain;
- 
- 	if (size)
--		domain = irq_domain_create_linear(fwnode, size, ops, host_data);
-+		domain = __irq_domain_create(fwnode, size, size, 0, ops, host_data);
- 	else
--		domain = irq_domain_create_tree(fwnode, ops, host_data);
-+		domain = __irq_domain_create(fwnode, 0, ~0, 0, ops, host_data);
-+
- 	if (domain) {
- 		domain->parent = parent;
- 		domain->flags |= flags;
-+
-+		__irq_domain_publish(domain);
- 	}
- 
- 	return domain;
+ TEST_GEN_PROGS := clone3 clone3_clear_sighand clone3_set_tid \
 
 
