@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CAAABA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:34:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83476C4339C;
-	Tue,  7 Mar 2023 17:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3883ABA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:34:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968C9C433D2;
+	Tue,  7 Mar 2023 17:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210440;
-	bh=gfONuWEebLiMUwQloAWvwxGVe151Wz9OjS/itLDjZN0=;
+	s=korg; t=1678210443;
+	bh=6wMqLdSOYR3sPFJG6DLiR5hsLBzTh5UrPZMaujcHyS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eu+bnU0ZhDHQdH594kZc4qPxhTnBGSWQJ7Hlyfb8yMHDo1huM+EV2W/Z22VFzizCD
-	 Uvcs9E9jmbgHWh9cxEMwSpnOvY4iQ4Gai/Gz6VYBdexowCojWIqdEYcJaEh3Lg7Y2j
-	 dVFvx6OKhywN4ILYOS713+4W8+dkESWuMAxiInW0=
+	b=KHr2f2msx5/ZVfbqPapEp5Er4tQWJ7P1VJ2zrsRFyzZSKrY3jSRoN6yW12CTyo8OD
+	 XoHQyoebYTjaApIdvxZXUkYcKg2qDeABy0n57mUAZ8HFrRlfJWAveaEzHW+AARJsiL
+	 DtEYwecA8ED7bO2rO0wyR/WJfFTB0BndoKC+GvP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Ashok Raj <ashok.raj@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0524/1001] driver core: fix resource leak in device_add()
-Date: Tue,  7 Mar 2023 17:54:56 +0100
-Message-Id: <20230307170044.195004837@linuxfoundation.org>
+Subject: [PATCH 6.2 0542/1001] iommu/vt-d: Set No Execute Enable bit in PASID table entry
+Date: Tue,  7 Mar 2023 17:55:14 +0100
+Message-Id: <20230307170044.975759598@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,77 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit 6977b1a5d67097eaa4d02b0c126c04cc6e8917c0 ]
+[ Upstream commit e06d24435596c8afcaa81c0c498f5b0ec4ee2b7c ]
 
-When calling kobject_add() failed in device_add(), it will call
-cleanup_glue_dir() to free resource. But in kobject_add(),
-dev->kobj.parent has been set to NULL. This will cause resource leak.
+Setup No Execute Enable bit (Bit 133) of a scalable mode PASID entry.
+This is to allow the use of XD bit of the first level page table.
 
-The process is as follows:
-device_add()
-	get_device_parent()
-		class_dir_create_and_add()
-			kobject_add()		//kobject_get()
-	...
-	dev->kobj.parent = kobj;
-	...
-	kobject_add()		//failed, but set dev->kobj.parent = NULL
-	...
-	glue_dir = get_glue_dir(dev)	//glue_dir = NULL, and goto
-					//"Error" label
-	...
-	cleanup_glue_dir()	//becaues glue_dir is NULL, not call
-				//kobject_put()
-
-The preceding problem may cause insmod mac80211_hwsim.ko to failed.
-sysfs: cannot create duplicate filename '/devices/virtual/mac80211_hwsim'
-Call Trace:
-<TASK>
-dump_stack_lvl+0x8e/0xd1
-sysfs_warn_dup.cold+0x1c/0x29
-sysfs_create_dir_ns+0x224/0x280
-kobject_add_internal+0x2aa/0x880
-kobject_add+0x135/0x1a0
-get_device_parent+0x3d7/0x590
-device_add+0x2aa/0x1cb0
-device_create_groups_vargs+0x1eb/0x260
-device_create+0xdc/0x110
-mac80211_hwsim_new_radio+0x31e/0x4790 [mac80211_hwsim]
-init_mac80211_hwsim+0x48d/0x1000 [mac80211_hwsim]
-do_one_initcall+0x10f/0x630
-do_init_module+0x19f/0x5e0
-load_module+0x64b7/0x6eb0
-__do_sys_finit_module+0x140/0x200
-do_syscall_64+0x35/0x80
-entry_SYSCALL_64_after_hwframe+0x46/0xb0
-</TASK>
-kobject_add_internal failed for mac80211_hwsim with -EEXIST, don't try to
-register things with the same name in the same directory.
-
-Fixes: cebf8fd16900 ("driver core: fix race between creating/querying glue dir and its cleanup")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20221123012042.335252-1-shaozhengchao@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ddf09b6d43ec ("iommu/vt-d: Setup pasid entries for iova over first level")
+Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20230126095438.354205-1-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/intel/pasid.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 506289e6b04dd..9fccf7b4e7ea3 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -3413,7 +3413,7 @@ int device_add(struct device *dev)
- 	/* we require the name to be set before, and pass NULL */
- 	error = kobject_add(&dev->kobj, dev->kobj.parent, NULL);
- 	if (error) {
--		glue_dir = get_glue_dir(dev);
-+		glue_dir = kobj;
- 		goto Error;
- 	}
+diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
+index fb3c7020028d0..ec964ac7d7972 100644
+--- a/drivers/iommu/intel/pasid.c
++++ b/drivers/iommu/intel/pasid.c
+@@ -364,6 +364,16 @@ static inline void pasid_set_page_snoop(struct pasid_entry *pe, bool value)
+ 	pasid_set_bits(&pe->val[1], 1 << 23, value << 23);
+ }
  
++/*
++ * Setup No Execute Enable bit (Bit 133) of a scalable mode PASID
++ * entry. It is required when XD bit of the first level page table
++ * entry is about to be set.
++ */
++static inline void pasid_set_nxe(struct pasid_entry *pe)
++{
++	pasid_set_bits(&pe->val[2], 1 << 5, 1 << 5);
++}
++
+ /*
+  * Setup the Page Snoop (PGSNP) field (Bit 88) of a scalable mode
+  * PASID entry.
+@@ -557,6 +567,7 @@ int intel_pasid_setup_first_level(struct intel_iommu *iommu,
+ 	pasid_set_domain_id(pte, did);
+ 	pasid_set_address_width(pte, iommu->agaw);
+ 	pasid_set_page_snoop(pte, !!ecap_smpwc(iommu->ecap));
++	pasid_set_nxe(pte);
+ 
+ 	/* Setup Present and PASID Granular Transfer Type: */
+ 	pasid_set_translation_type(pte, PASID_ENTRY_PGTT_FL_ONLY);
 -- 
 2.39.2
 
