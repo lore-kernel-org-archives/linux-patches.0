@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87276BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:02:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07439C433EF;
-	Tue,  7 Mar 2023 18:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74BD4BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:02:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1CE3C4339E;
+	Tue,  7 Mar 2023 18:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212157;
-	bh=UZxM7+bT71Dgy83bdohcWlm3OEw/8x0nTjlbBh/+eXc=;
+	s=korg; t=1678212160;
+	bh=4GUtBWMX+AypxFqzqyVpo2AMVvZ0Vbp10oWwUTeCDfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x0i6OsAOQHFUYaVnhFcCPNomhENkPX+wrLaxAaJWfbe1vh4b+NcE3utJCPXtPFLbQ
-	 Z8ALA2k3rigUsa87ENZwXoQJLeI8JCbdwSzUwLb6Flrvzr4sFfJkloCpea3gj9oo66
-	 T6Lq9IhNdfj7HNslQYxnmTBr4yNqp1lgzc3ZwTjA=
+	b=vdoatmVygvPPfUUocmlkjAWlD+EWaiIbNu6CVAp2sPEwaiaJMEjDBOLwKDKzFUdFw
+	 J9YoUKtN1k1gLee47+p3bQyq09on6a2cssyppI6tErRdGk8S8eWYtUyAVehIwzQOdE
+	 0c+umMxRP0CXd1vvg/pj1R/M55+MPBoBu80zB2nI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 096/885] arm64: dts: qcom: msm8992-*: Fix up comments
-Date: Tue,  7 Mar 2023 17:50:30 +0100
-Message-Id: <20230307170006.010256436@linuxfoundation.org>
+Subject: [PATCH 6.1 079/885] arm64: dts: mt8186: Fix CPU map for single-cluster SoC
+Date: Tue,  7 Mar 2023 17:50:13 +0100
+Message-Id: <20230307170005.237676537@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,138 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 290d43062d261cebd17ff590dc91f1d1e3fe6eed ]
+[ Upstream commit 1c473804b0c8a68c6ef2cf519b38ec6725ca4aa5 ]
 
-Make sure all multiline C-style commends begin with just '/*' with
-the comment text starting on a new line.
+MT8186 features the ARM DynamIQ technology and combines both two
+Cortex-A76 (big) and six Cortex-A55 (LITTLE) CPUs in one cluster:
+fix the CPU map to reflect that.
 
-Also, trim off downstream regulator properties from comments to prevent
-them from accidentally landing into mainline one day..
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221107145522.6706-9-konrad.dybcio@linaro.org
-Stable-dep-of: 2866527093dd ("arm64: dts: qcom: msm8992-lg-bullhead: Enable regulators")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 2e78620b1350 ("arm64: dts: Add MediaTek MT8186 dts and evaluation board and Makefile")
+Link: https://lore.kernel.org/r/20230126103526.417039-4-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/qcom/msm8992-lg-bullhead-rev-10.dts   |  3 +-
- .../dts/qcom/msm8992-lg-bullhead-rev-101.dts  |  3 +-
- .../boot/dts/qcom/msm8992-lg-bullhead.dtsi    | 41 ++++++++++---------
- arch/arm64/boot/dts/qcom/msm8992.dtsi         |  3 +-
- 4 files changed, 28 insertions(+), 22 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8186.dtsi | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts
-index 7e6bce4af4410..4159fc35571a6 100644
---- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
--/* Copyright (c) Jean Thomas <virgule@jeanthomas.me>
-+/*
-+ * Copyright (c) Jean Thomas <virgule@jeanthomas.me>
-  */
+diff --git a/arch/arm64/boot/dts/mediatek/mt8186.dtsi b/arch/arm64/boot/dts/mediatek/mt8186.dtsi
+index fb32e3efcdb12..48e15c8ad3b95 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8186.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8186.dtsi
+@@ -47,14 +47,12 @@ core4 {
+ 				core5 {
+ 					cpu = <&cpu5>;
+ 				};
+-			};
  
- /dts-v1/;
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dts
-index e6a5ebd30e2f5..ad9702dd171be 100644
---- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dts
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
--/* Copyright (c) Jean Thomas <virgule@jeanthomas.me>
-+/*
-+ * Copyright (c) Jean Thomas <virgule@jeanthomas.me>
-  */
+-			cluster1 {
+-				core0 {
++				core6 {
+ 					cpu = <&cpu6>;
+ 				};
  
- /dts-v1/;
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-index d1962dc24bb7e..db05dc3ba16df 100644
---- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
--/* Copyright (c) 2015, LGE Inc. All rights reserved.
-+/*
-+ * Copyright (c) 2015, LGE Inc. All rights reserved.
-  * Copyright (c) 2016, The Linux Foundation. All rights reserved.
-  * Copyright (c) 2021-2022, Petr Vorel <petr.vorel@gmail.com>
-  * Copyright (c) 2022, Dominik Kobinski <dominikkobinski314@gmail.com>
-@@ -250,9 +251,11 @@ pm8994_l25: l25 {
- 		};
- 
- 		pm8994_l26: l26 {
--			/* TODO: value from downstream
--			regulator-min-microvolt = <987500>;
--			fails to apply */
-+			/*
-+			 * TODO: value from downstream
-+			 * regulator-min-microvolt = <987500>;
-+			 * fails to apply
-+			 */
- 		};
- 
- 		pm8994_l27: l27 {
-@@ -266,19 +269,19 @@ pm8994_l28: l28 {
- 		};
- 
- 		pm8994_l29: l29 {
--			/* TODO: Unsupported voltage range.
--			regulator-min-microvolt = <2800000>;
--			regulator-max-microvolt = <2800000>;
--			qcom,init-voltage = <2800000>;
--			*/
-+			/*
-+			 * TODO: Unsupported voltage range.
-+			 * regulator-min-microvolt = <2800000>;
-+			 * regulator-max-microvolt = <2800000>;
-+			 */
- 		};
- 
- 		pm8994_l30: l30 {
--			/* TODO: get this verified
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1800000>;
--			qcom,init-voltage = <1800000>;
--			*/
-+			/*
-+			 * TODO: get this verified
-+			 * regulator-min-microvolt = <1800000>;
-+			 * regulator-max-microvolt = <1800000>;
-+			 */
- 		};
- 
- 		pm8994_l31: l31 {
-@@ -287,11 +290,11 @@ pm8994_l31: l31 {
- 		};
- 
- 		pm8994_l32: l32 {
--			/* TODO: get this verified
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1800000>;
--			qcom,init-voltage = <1800000>;
--			*/
-+			/*
-+			 * TODO: get this verified
-+			 * regulator-min-microvolt = <1800000>;
-+			 * regulator-max-microvolt = <1800000>;
-+			 */
- 		};
- 	};
- 
-diff --git a/arch/arm64/boot/dts/qcom/msm8992.dtsi b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-index f4be09fc1b151..02fc3795dbfd7 100644
---- a/arch/arm64/boot/dts/qcom/msm8992.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
--/* Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
-+/*
-+ * Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
-  */
- 
- #include "msm8994.dtsi"
+-				core1 {
++				core7 {
+ 					cpu = <&cpu7>;
+ 				};
+ 			};
 -- 
 2.39.2
 
