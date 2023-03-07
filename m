@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07158BA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:33:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F36C433D2;
-	Tue,  7 Mar 2023 17:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33024BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:33:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E40DC433EF;
+	Tue,  7 Mar 2023 17:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210433;
-	bh=pgWK7iDobdFd0IOjlILgXLxRznXKjkiZPmIYrwy8efU=;
+	s=korg; t=1678210437;
+	bh=AF769B30T8DbAb9bQNz2IbMFDjrXhdFLVYPbCj+khD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ItIrOas/aKqxk84LkAtwFkSuPthtJTRrT5D8gO8J1dMC8k1pCqof7JDJTUt6r08C6
-	 dT06a0CMva2GIEp/s7LxK/KXaSSkY20Of08itAJFY1pQe9pCscLxVmfEhqEXreTwl0
-	 kxmwMJMt4VR7lJlcPALsjjwFEmRKBMz9D53v+isk=
+	b=NxPhPOTtbeTuhT61xNAXVPAIOmBvkSNXhn1My21d80ZBJsoOiVOFlTkO4NrLPkJ4H
+	 /is/MjQfS9XS2M+jA70JhvoJy2gzVRMxENspBdXtjPfJhKF4c04uIq7QrGXq7urhYc
+	 b8inUFgrBxMA5j3aJFwprN6UHFJ4UjoW4ozQwDQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Chunfeng Yun <chunfeng.yun@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0540/1001] phy: mediatek: remove temporary variable @mask_
-Date: Tue,  7 Mar 2023 17:55:12 +0100
-Message-Id: <20230307170044.890913179@linuxfoundation.org>
+Subject: [PATCH 6.2 0541/1001] PCI: mt7621: Delay phy ports initialization
+Date: Tue,  7 Mar 2023 17:55:13 +0100
+Message-Id: <20230307170044.940510257@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,50 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chunfeng Yun <chunfeng.yun@mediatek.com>
+From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 
-[ Upstream commit 49094d928618309877c50e589f23e639a3b0c453 ]
+[ Upstream commit 0cb2a8f3456ff1cc51d571e287a48e8fddc98ec2 ]
 
-Remove the temporary @mask_, this may cause build warning when use clang
-compiler for powerpc, but can't reproduce it when compile for arm64.
-the build warning is caused by:
+Some devices like ZBT WE1326 and ZBT WF3526-P and some Netgear models need
+to delay phy port initialization after calling the mt7621_pcie_init_port()
+driver function to get into reliable boots for both warm and hard resets.
 
-"warning: result of comparison of constant 18446744073709551615 with
-expression of type (aka 'unsigned long') is always false
-[-Wtautological-constant-out-of-range-compare]"
+The delay required to detect the ports seems to be in the range [75-100]
+milliseconds.
 
-More information provided in below lore link.
+If the ports are not detected the controller is not functional.
 
-After removing @mask_, there is a "CHECK:MACRO_ARG_REUSE" when run
-checkpatch.pl, but due to @mask is constant, no reuse problem will happen.
+There is no datasheet or something similar to really understand why this
+extra delay is needed only for these devices and it is not for most of
+the boards that are built on mt7621 SoC.
 
-Link: https://lore.kernel.org/lkml/202212160357.jJuesD8n-lkp@intel.com/t/
-Fixes: 84513eccd678 ("phy: mediatek: fix build warning of FIELD_PREP()")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Chunfeng Yun <chunfeng.yun@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230118084343.26913-1-chunfeng.yun@mediatek.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+This issue has been reported by openWRT community and the complete
+discussion is in [0]. The 100 milliseconds delay has been tested in all
+devices to validate it.
+
+Add the extra 100 milliseconds delay to fix the issue.
+
+[0]: https://github.com/openwrt/openwrt/pull/11220
+
+Link: https://lore.kernel.org/r/20221231074041.264738-1-sergio.paracuellos@gmail.com
+Fixes: 2bdd5238e756 ("PCI: mt7621: Add MediaTek MT7621 PCIe host controller driver")
+Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/mediatek/phy-mtk-io.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pcie-mt7621.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/phy/mediatek/phy-mtk-io.h b/drivers/phy/mediatek/phy-mtk-io.h
-index d20ad5e5be814..58f06db822cb0 100644
---- a/drivers/phy/mediatek/phy-mtk-io.h
-+++ b/drivers/phy/mediatek/phy-mtk-io.h
-@@ -39,8 +39,8 @@ static inline void mtk_phy_update_bits(void __iomem *reg, u32 mask, u32 val)
- /* field @mask shall be constant and continuous */
- #define mtk_phy_update_field(reg, mask, val) \
- ({ \
--	typeof(mask) mask_ = (mask);	\
--	mtk_phy_update_bits(reg, mask_, FIELD_PREP(mask_, val)); \
-+	BUILD_BUG_ON_MSG(!__builtin_constant_p(mask), "mask is not constant"); \
-+	mtk_phy_update_bits(reg, mask, FIELD_PREP(mask, val)); \
- })
+diff --git a/drivers/pci/controller/pcie-mt7621.c b/drivers/pci/controller/pcie-mt7621.c
+index ee7aad09d6277..63a5f4463a9f6 100644
+--- a/drivers/pci/controller/pcie-mt7621.c
++++ b/drivers/pci/controller/pcie-mt7621.c
+@@ -60,6 +60,7 @@
+ #define PCIE_PORT_LINKUP		BIT(0)
+ #define PCIE_PORT_CNT			3
  
- #endif
++#define INIT_PORTS_DELAY_MS		100
+ #define PERST_DELAY_MS			100
+ 
+ /**
+@@ -369,6 +370,7 @@ static int mt7621_pcie_init_ports(struct mt7621_pcie *pcie)
+ 		}
+ 	}
+ 
++	msleep(INIT_PORTS_DELAY_MS);
+ 	mt7621_pcie_reset_ep_deassert(pcie);
+ 
+ 	tmp = NULL;
 -- 
 2.39.2
 
