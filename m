@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D33BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:02:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9602C433D2;
-	Tue,  7 Mar 2023 18:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413A7BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:03:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5F79C433EF;
+	Tue,  7 Mar 2023 18:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212179;
-	bh=/CiLiZ4ZhIUoIABFC7/F5Aq1DKQhCCrH8EVglSmFoNY=;
+	s=korg; t=1678212182;
+	bh=Dt9QAMKPw+Z1C0SFGdnrRflwdCKsaO31FmicX3CvGnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OYcGNtOnyivTtmGU3Fad/OOqiPfGYTfExlCNQKlR9C/RjvNxlpqcZYgtsYW9ABn70
-	 Pu6w018eDfPKMK9nacLgADSktjTeb6BmzsqAvgAqHrOHbewDQyyx60vHytnKwmZOT+
-	 2FEiswen2SsFWPzQcdWHtnVapGkYAw+DgmXU/tnM=
+	b=uoFzz/5lkwAZ+S9YGNHffe911/OKe1n2LqqAhhJaCVpFIZAwdEoR37mT+FqPPj1Eb
+	 JlDlOn2ew3jFQoCza9kPGfNV66OklpFMss1gwMb4O5HXdaQhZmDEalryHt3mnTS4BM
+	 O019CrLmTVUVRnOo7/yPWLoO19FRgTbx4GfiGkjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Kenzior <denkenz@gmail.com>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Liu Xiaodong <xiaodong.liu@intel.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/885] KEYS: asymmetric: Fix ECDSA use via keyctl uapi
-Date: Tue,  7 Mar 2023 17:50:36 +0100
-Message-Id: <20230307170006.298506011@linuxfoundation.org>
+Subject: [PATCH 6.1 103/885] block: ublk: check IO buffer based on flag need_get_data
+Date: Tue,  7 Mar 2023 17:50:37 +0100
+Message-Id: <20230307170006.348647958@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,63 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Denis Kenzior <denkenz@gmail.com>
+From: Liu Xiaodong <xiaodong.liu@intel.com>
 
-[ Upstream commit 10de7b54293995368c52d9aa153f3e7a359f04a1 ]
+[ Upstream commit 2f1e07dda1e1310873647abc40bbc49eaf3b10e3 ]
 
-When support for ECDSA keys was added, constraints for data & signature
-sizes were never updated.  This makes it impossible to use such keys via
-keyctl API from userspace.
+Currently, uring_cmd with UBLK_IO_FETCH_REQ or
+UBLK_IO_COMMIT_AND_FETCH_REQ is always checked whether
+userspace server has provided IO buffer even flag
+UBLK_F_NEED_GET_DATA is configured.
 
-Update constraint on max_data_size to 64 bytes in order to support
-SHA512-based signatures. Also update the signature length constraints
-per ECDSA signature encoding described in RFC 5480.
+This is a excessive check. If UBLK_F_NEED_GET_DATA is
+configured, FETCH_RQ doesn't need to provide IO buffer;
+COMMIT_AND_FETCH_REQ also doesn't need to do that if
+the IO type is not READ.
 
-Fixes: 299f561a6693 ("x509: Add support for parsing x509 certs with ECDSA keys")
-Signed-off-by: Denis Kenzior <denkenz@gmail.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Check ub_cmd->addr together with ublk_need_get_data()
+and IO type in ublk_ch_uring_cmd().
+
+With this fix, userspace server doesn't need to preserve
+buffers for every ublk_io when flag UBLK_F_NEED_GET_DATA
+is configured, in order to save memory.
+
+Signed-off-by: Liu Xiaodong <xiaodong.liu@intel.com>
+Fixes: c86019ff75c1 ("ublk_drv: add support for UBLK_IO_NEED_GET_DATA")
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20230210141356.112321-1-xiaodong.liu@intel.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/public_key.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ drivers/block/ublk_drv.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/crypto/asymmetric_keys/public_key.c b/crypto/asymmetric_keys/public_key.c
-index 2f8352e888602..eca5671ad3f22 100644
---- a/crypto/asymmetric_keys/public_key.c
-+++ b/crypto/asymmetric_keys/public_key.c
-@@ -186,8 +186,28 @@ static int software_key_query(const struct kernel_pkey_params *params,
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 450bd54fd0061..4aec9be0ab77e 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1206,6 +1206,7 @@ static int ublk_ch_uring_cmd(struct io_uring_cmd *cmd, unsigned int issue_flags)
+ 	u32 cmd_op = cmd->cmd_op;
+ 	unsigned tag = ub_cmd->tag;
+ 	int ret = -EINVAL;
++	struct request *req;
  
- 	len = crypto_akcipher_maxsize(tfm);
- 	info->key_size = len * 8;
--	info->max_data_size = len;
--	info->max_sig_size = len;
-+
-+	if (strncmp(pkey->pkey_algo, "ecdsa", 5) == 0) {
+ 	pr_devel("%s: received: cmd op %d queue %d tag %d result %d\n",
+ 			__func__, cmd->cmd_op, ub_cmd->q_id, tag,
+@@ -1256,8 +1257,8 @@ static int ublk_ch_uring_cmd(struct io_uring_cmd *cmd, unsigned int issue_flags)
+ 		 */
+ 		if (io->flags & UBLK_IO_FLAG_OWNED_BY_SRV)
+ 			goto out;
+-		/* FETCH_RQ has to provide IO buffer */
+-		if (!ub_cmd->addr)
++		/* FETCH_RQ has to provide IO buffer if NEED GET DATA is not enabled */
++		if (!ub_cmd->addr && !ublk_need_get_data(ubq))
+ 			goto out;
+ 		io->cmd = cmd;
+ 		io->flags |= UBLK_IO_FLAG_ACTIVE;
+@@ -1266,8 +1267,12 @@ static int ublk_ch_uring_cmd(struct io_uring_cmd *cmd, unsigned int issue_flags)
+ 		ublk_mark_io_ready(ub, ubq);
+ 		break;
+ 	case UBLK_IO_COMMIT_AND_FETCH_REQ:
+-		/* FETCH_RQ has to provide IO buffer */
+-		if (!ub_cmd->addr)
++		req = blk_mq_tag_to_rq(ub->tag_set.tags[ub_cmd->q_id], tag);
 +		/*
-+		 * ECDSA key sizes are much smaller than RSA, and thus could
-+		 * operate on (hashed) inputs that are larger than key size.
-+		 * For example SHA384-hashed input used with secp256r1
-+		 * based keys.  Set max_data_size to be at least as large as
-+		 * the largest supported hash size (SHA512)
++		 * COMMIT_AND_FETCH_REQ has to provide IO buffer if NEED GET DATA is
++		 * not enabled or it is Read IO.
 +		 */
-+		info->max_data_size = 64;
-+
-+		/*
-+		 * Verify takes ECDSA-Sig (described in RFC 5480) as input,
-+		 * which is actually 2 'key_size'-bit integers encoded in
-+		 * ASN.1.  Account for the ASN.1 encoding overhead here.
-+		 */
-+		info->max_sig_size = 2 * (len + 3) + 2;
-+	} else {
-+		info->max_data_size = len;
-+		info->max_sig_size = len;
-+	}
-+
- 	info->max_enc_size = len;
- 	info->max_dec_size = len;
- 	info->supported_ops = (KEYCTL_SUPPORTS_ENCRYPT |
++		if (!ub_cmd->addr && (!ublk_need_get_data(ubq) || req_op(req) == REQ_OP_READ))
+ 			goto out;
+ 		if (!(io->flags & UBLK_IO_FLAG_OWNED_BY_SRV))
+ 			goto out;
 -- 
 2.39.2
 
