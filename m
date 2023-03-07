@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FC1BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:55:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188E4C433EF;
-	Tue,  7 Mar 2023 18:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A50BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:55:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E48ECC4339B;
+	Tue,  7 Mar 2023 18:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215304;
-	bh=hohzx7YtLDHZuen14UNSRCf7V0BUR5R22iIrE21iQM4=;
+	s=korg; t=1678215307;
+	bh=H78v4yoDsXx60NrZH61rRRVX438mKYVnaUKsRmQUQtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bVPWzEwQgyzPLAQMjLMVdDdelwFDjpxEtuD4tRaC/UbvLqWRIS/wXyFXSgVOqr/RV
-	 z0sQq9hXdbUazIsv4UulzYhi5SIJqIUv6+TsOjtnuZgA2B890EsZuMIzqCmrNhnRSG
-	 YZuR67AVGYhhJ4VppKbKQJFSEn9985FkmEX0GvaE=
+	b=AQ3YTaVr5WITQJI9LDQn/wSxzb7t+ChRrVodsOqX2sQxb8x9vEZGNAvdZQ1PVCqGq
+	 +Dzz51HML60Uign9HZBVAnplIW6JjJVf67G8RC7DE83Q5rztwJbckGUUgUiHFcv65v
+	 i33KxivVQb1t/BHwpFa04IUziHYaxnkW9sS7Do2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 217/567] drm/mediatek: Clean dangling pointer on bind error path
-Date: Tue,  7 Mar 2023 17:59:13 +0100
-Message-Id: <20230307165915.291893113@linuxfoundation.org>
+Subject: [PATCH 5.15 191/567] drm/msm/gem: Add check for kmalloc
+Date: Tue,  7 Mar 2023 17:58:47 +0100
+Message-Id: <20230307165914.224420105@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,39 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 36aa8c61af55675ed967900fbe5deb32d776f051 ]
+[ Upstream commit d839f0811a31322c087a859c2b181e2383daa7be ]
 
-mtk_drm_bind() can fail, in which case drm_dev_put() is called,
-destroying the drm_device object. However a pointer to it was still
-being held in the private object, and that pointer would be passed along
-to DRM in mtk_drm_sys_prepare() if a suspend were triggered at that
-point, resulting in a panic. Clean the pointer when destroying the
-object in the error path to prevent this from happening.
+Add the check for the return value of kmalloc in order to avoid
+NULL pointer dereference in copy_from_user.
 
-Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20221122143949.3493104-1-nfraprado@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 20224d715a88 ("drm/msm/submit: Move copy_from_user ahead of locking bos")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/514678/
+Link: https://lore.kernel.org/r/20221212091117.43511-1-jiasheng@iscas.ac.cn
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/msm_gem_submit.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-index aec39724ebeb6..8b3928c2c7d78 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -376,6 +376,7 @@ static int mtk_drm_bind(struct device *dev)
- err_deinit:
- 	mtk_drm_kms_deinit(drm);
- err_free:
-+	private->drm = NULL;
- 	drm_dev_put(drm);
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 1f74bab9e231a..83e6ccad77286 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -220,6 +220,10 @@ static int submit_lookup_cmds(struct msm_gem_submit *submit,
+ 			goto out;
+ 		}
+ 		submit->cmd[i].relocs = kmalloc(sz, GFP_KERNEL);
++		if (!submit->cmd[i].relocs) {
++			ret = -ENOMEM;
++			goto out;
++		}
+ 		ret = copy_from_user(submit->cmd[i].relocs, userptr, sz);
+ 		if (ret) {
+ 			ret = -EFAULT;
 -- 
 2.39.2
 
