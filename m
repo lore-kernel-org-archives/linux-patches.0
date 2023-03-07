@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B40CBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:45:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F573C433EF;
-	Tue,  7 Mar 2023 18:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F85BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:45:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E82FC433D2;
+	Tue,  7 Mar 2023 18:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214702;
-	bh=VlpYTmL+iQlTYLQIkH/0LcjVLUtZZesgf07shiWVEbU=;
+	s=korg; t=1678214705;
+	bh=mkvU2wlEMwNJJYoh/3n1OiSpTRZ1WNPSUojezGiE2sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YUNWujydvA0T+W/Oiv+h0f1v7LTH0wlw7ngR08Cppkj7G4P3FonPaF9omxUlAQQn3
-	 xNoCv78F2n48MywPZQ3z2DwP3QveqNzvG8aO+PhfUTb/tV4L9zUaWjWqDVN/PfuDDL
-	 6QLT6VA1YJMb4W1OqFtXxk6suqK3QADOYW0WOwFk=
+	b=RqtKCszRqXv/vPabEGm3FvhDmQ50AZqcHfOiKts4IXm7zSUm2lEtkEpEp/3fSPRdZ
+	 MOB6Z9GK3FR965g68kIShAw3QHNFKGtgmu3DzJi+WPAkffTKbqgoGewgO8Mvtfxtu8
+	 M830aeZ5tDZszFtKE3Hl9BF0HGVU+zLasRNU8Zy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 006/567] arm64: dts: qcom: msm8996-tone: Fix USB taking 6 minutes to wake up
-Date: Tue,  7 Mar 2023 17:55:42 +0100
-Message-Id: <20230307165906.105577615@linuxfoundation.org>
+Subject: [PATCH 5.15 007/567] arm64: dts: qcom: sm8150-kumano: Panel framebuffer is 2.5k instead of 4k
+Date: Tue,  7 Mar 2023 17:55:43 +0100
+Message-Id: <20230307165906.135577289@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -36,49 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit 43069b9cd358aebc692e654de91ee06ff66e26af ]
+[ Upstream commit be8de06dc397c45cb0f3fe04084089c3f06c419f ]
 
-The hardware turns out to be pretty sluggish at assuming it can only
-do USB2 with just a USB2 phy assigned to it - before it needed about
-6 minutes to acknowledge that.
+The framebuffer configuration for kumano griffin, written in kumano dtsi
+(which is overwritten in bahamut dts for its smaller panel) has to use a
+1096x2560 configuration as this is what the panel (and framebuffer area)
+has been initialized to.  Downstream userspace also has access to (and
+uses) this 2.5k mode by default, and only switches the panel to 4k when
+requested.
 
-Limit it to USB-HS explicitly to make USB come up about 720x faster.
-
-Fixes: 9da65e441d4d ("arm64: dts: qcom: Add support for SONY Xperia X Performance / XZ / XZs (msm8996, Tone platform)")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: d0a6ce59ea4e ("arm64: dts: qcom: sm8150: Add support for SONY Xperia 1 / 5 (Kumano platform)")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221124220147.102611-1-konrad.dybcio@linaro.org
+Link: https://lore.kernel.org/r/20221209191733.1458031-1-marijn.suijten@somainline.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-index 507396c4d23b6..7802abac39fa5 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-@@ -938,10 +938,6 @@ touch_int_sleep: touch-int-sleep {
- 	};
- };
- 
--/*
-- * For reasons that are currently unknown (but probably related to fusb301), USB takes about
-- * 6 minutes to wake up (nothing interesting in kernel logs), but then it works as it should.
-- */
- &usb3 {
- 	status = "okay";
- 	qcom,select-utmi-as-pipe-clk;
-@@ -950,6 +946,7 @@ &usb3 {
- &usb3_dwc3 {
- 	extcon = <&usb3_id>;
- 	dr_mode = "peripheral";
-+	maximum-speed = "high-speed";
- 	phys = <&hsusb_phy1>;
- 	phy-names = "usb2-phy";
- 	snps,hird-threshold = /bits/ 8 <0>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi b/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
+index fb6e5a140c9f6..04c71f74ab72d 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
+@@ -33,9 +33,10 @@ chosen {
+ 		framebuffer: framebuffer@9c000000 {
+ 			compatible = "simple-framebuffer";
+ 			reg = <0 0x9c000000 0 0x2300000>;
+-			width = <1644>;
+-			height = <3840>;
+-			stride = <(1644 * 4)>;
++			/* Griffin BL initializes in 2.5k mode, not 4k */
++			width = <1096>;
++			height = <2560>;
++			stride = <(1096 * 4)>;
+ 			format = "a8r8g8b8";
+ 			/*
+ 			 * That's (going to be) a lot of clocks, but it's necessary due
 -- 
 2.39.2
 
