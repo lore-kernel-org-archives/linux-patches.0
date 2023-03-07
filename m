@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAD1BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C34C433EF;
-	Tue,  7 Mar 2023 18:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1270BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:05:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB87C433EF;
+	Tue,  7 Mar 2023 18:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212309;
-	bh=0FUQUf3tFMdapdNJSPv+2g5rn/pSoqfGPS9OJiaNXFM=;
+	s=korg; t=1678212312;
+	bh=2A80Z58Hp2NSVCCFodeok3KSXLHNndCp9od2ZunT07U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7ZvrFnSTOg5ejgswU+HcE13VO7jHF0B2xEQt3X8r2hlgmMf9ZAM4rwFsgInw8ny0
-	 LNaqmPQww2vD8FUS8NpIQ9nVwsjfPe3x3NGVzsMleH0RK5m8yNR2D+HWb+oEFi4JhH
-	 QG38JXKUQZTMXiQZdidxsGZglUhvl9/nQKIvAF/U=
+	b=kb0m9+QVsugnzcMVjoadcACIIHvrZuKp8wzjhvOnbsOCa8v8/pmUJWSivUSNgwFMv
+	 YsAZmaL4k7S42GtcngBLS3t/zaIBvpKpwiUTXtbNFFLeGiSFsZgKGbv5Ic6spA23tZ
+	 no5CyA6ATnryjN/QKcheYtbY+kffm5q9MjQgbmCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
 	Ryder Lee <ryder.lee@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 114/885] wifi: mt76: mt7915: drop always true condition of __mt7915_reg_addr()
-Date: Tue,  7 Mar 2023 17:50:48 +0100
-Message-Id: <20230307170006.836654728@linuxfoundation.org>
+Subject: [PATCH 6.1 115/885] wifi: mt76: mt7915: fix unintended sign extension of mt7915_hw_queue_read()
+Date: Tue,  7 Mar 2023 17:50:49 +0100
+Message-Id: <20230307170006.878516966@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -38,47 +37,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryder Lee <ryder.lee@mediatek.com>
 
-[ Upstream commit b0f7b9563358493dfe70d3e4c3ebeffc92d4b494 ]
+[ Upstream commit edb0406bda4629ef496f52eb11cbea7e92ed301b ]
 
-smatch warnings:
-addr <= MT_CBTOP2_PHY_END(0xffffffff) is always true (<= u32max),
-so drop it.
+In the expression "map[i].qid << 24" starts as u8, but is promoted to
+"signed int", then sign-extended to type "unsigned long", which is not
+intended. Cast to u32 to avoid the sign extension.
 
-Fixes: cd4c314a65d3 ("mt76: mt7915: refine register definition")
-Reported-by: kernel test robot <lkp@intel.com>
+Fixes: 776ec4e77aa6 ("mt76: mt7915: rework debugfs queue info")
 Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/mmio.c | 2 +-
- drivers/net/wireless/mediatek/mt76/mt7915/regs.h | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
-index 7bd5f6725d7b7..bc68ede64ddbb 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
-@@ -436,7 +436,7 @@ static u32 __mt7915_reg_addr(struct mt7915_dev *dev, u32 addr)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c b/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
+index 6ef3431cad648..2975128a78c90 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
+@@ -759,7 +759,7 @@ mt7915_hw_queue_read(struct seq_file *s, u32 size,
+ 		if (val & BIT(map[i].index))
+ 			continue;
  
- 	if (dev_is_pci(dev->mt76.dev) &&
- 	    ((addr >= MT_CBTOP1_PHY_START && addr <= MT_CBTOP1_PHY_END) ||
--	     (addr >= MT_CBTOP2_PHY_START && addr <= MT_CBTOP2_PHY_END)))
-+	    addr >= MT_CBTOP2_PHY_START))
- 		return mt7915_reg_map_l1(dev, addr);
+-		ctrl = BIT(31) | (map[i].pid << 10) | (map[i].qid << 24);
++		ctrl = BIT(31) | (map[i].pid << 10) | ((u32)map[i].qid << 24);
+ 		mt76_wr(dev, MT_FL_Q0_CTRL, ctrl);
  
- 	/* CONN_INFRA: covert to phyiscal addr and use layer 1 remap */
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/regs.h b/drivers/net/wireless/mediatek/mt76/mt7915/regs.h
-index 5920e705835a7..bf569aa0057a7 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/regs.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/regs.h
-@@ -740,7 +740,6 @@ enum offs_rev {
- #define MT_CBTOP1_PHY_START		0x70000000
- #define MT_CBTOP1_PHY_END		__REG(CBTOP1_PHY_END)
- #define MT_CBTOP2_PHY_START		0xf0000000
--#define MT_CBTOP2_PHY_END		0xffffffff
- #define MT_INFRA_MCU_START		0x7c000000
- #define MT_INFRA_MCU_END		__REG(INFRA_MCU_ADDR_END)
- #define MT_CONN_INFRA_OFFSET(p)		((p) - MT_INFRA_BASE)
+ 		head = mt76_get_field(dev, MT_FL_Q2_CTRL,
 -- 
 2.39.2
 
