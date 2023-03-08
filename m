@@ -1,114 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6838462
-	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 18:01:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB152C433EF;
-	Wed,  8 Mar 2023 18:01:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678298474;
-	bh=36z7JsjW1FtWV0KV3rqWtnvlzfxSrcWjPrZxaEf2Esg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GMNqwkd4HYKTXC0rpgC65JtFDlJ9BBwOpvpZ2nS0DQPo+x/h2i8LPENUUo82bhTBN
-	 wp+IH1u9W9OplSi0VqXJuJEWLsSHnAIwbNbODXlntN3Dbcf9Rb+pk8HRz8igZOFXx3
-	 oOLwAPZ9ak5bfRlRANEN7k/bwn8JiE0J92IrOz6EjFEEiG5WmbS3g8PVEwx6QDag56
-	 86TtTEmm1cc+l3ooX0omspbIzDpU3W8RfM+M064di4QYPkwB4coB939PduZVYBuHu2
-	 nt2FgLz+FPT7v5QHu74DztdMN7bjqCMasFPNScYBUGQWWLwhMTsk7+tUcY1PewyNyi
-	 xcA9nUMB6NXfA==
-Received: by pali.im (Postfix)
-	id 66BEA6AE; Wed,  8 Mar 2023 19:01:11 +0100 (CET)
-Date: Wed, 8 Mar 2023 19:01:11 +0100
-From: Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>
-To: Daniel =?utf-8?B?RMOtYXo=?= <daniel.diaz@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, christophe.leroy@csgroup.eu,
-	mpe@ellerman.id.au
-Subject: Re: [PATCH 6.2 0000/1001] 6.2.3-rc1 review
-Message-ID: <20230308180111.cxa2fdyfwbqwzdgg@pali>
-References: <20230307170022.094103862@linuxfoundation.org>
- <81cd2720-0414-1213-3826-31bd240d5c75@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF05A8462;
+	Wed,  8 Mar 2023 18:22:49 +0000 (UTC)
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-176b90e14a9so12026870fac.9;
+        Wed, 08 Mar 2023 10:22:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678299769;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=8z6n4C9XCAy5Bw4ajsCdMIph1S7zKL5qZxtL5AjXJBo=;
+        b=FQemDoLY2ZXL9MuSOsQ1LEnLoobDl7UTBOXq5NhxdYdBygo/MHA4FIyoM9OX4v0djM
+         NJoWvM8SaxmFdz2Nv48yn1z2d3ITwHIRvV3efQKEQ4B/ectCd6z+caMem4x1CVw6xUHO
+         6gloshNqIDzg5AE8AAepQBGk1bIMLxCFGJZDf/aFWDNhq34sJcJZpes5ea5V6QH6vuvx
+         PyUZlMdfnZvxvOf2+IkU5lbMVUx4h4kYcYdNcmLyItCfxRHQP6lzViOaB4Ndhm5mkD6x
+         tFd5B2kN5fjG01kbsw8jwpBK2G3JSDLDheF869pBpoEN5oR1QDG1bAGwR22MykVNW2Ve
+         tEfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678299769;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8z6n4C9XCAy5Bw4ajsCdMIph1S7zKL5qZxtL5AjXJBo=;
+        b=B4T6FjO0snjWS1xTx5ScaD6oGTdyy7pXQDyfAdPcJ+YoZMz+zArxL6mRFb3bxg6FF0
+         qQcZz0UhHlWRHC+7jJcH8Zuvz+NzhH21QqaCzKUxqKaDSYf9drKOFrxsYhIflbsnl30h
+         8eaT/w+ebZwCnDXjrN6Z7G/Oqyanwrh88Xxk9GxyucKkLrRcmdaWLi/s1n4kXZR/9+k4
+         +S1qCvnkqj+67FLwU1YVwoBwEKy5812hFIEr1IoPFEpGQ6r+tx7e+InSWVi9AqAv/tA/
+         ebdYWHxyKenwTZLgWMapbVT/n/6zFtMFQKPwrdG48GWSkSk3dDFM3E81M+G9igLrbnur
+         PsBw==
+X-Gm-Message-State: AO0yUKUOkOjggemg0OjQA/QbgO/ciGKZ4MoLvC/jdUvP/rPlez8M94TK
+	12pwb/S4tv/Dxs2+O7ddR3A=
+X-Google-Smtp-Source: AK7set+w1q0e+Y/3UYZQjFrI2TwtL046YUtJOne6Q9BeFnre51uAeHILEQb48rkjPcwNZUbG2XqdJQ==
+X-Received: by 2002:a05:6870:73cc:b0:176:4920:bf8c with SMTP id a12-20020a05687073cc00b001764920bf8cmr12070018oan.55.1678299768839;
+        Wed, 08 Mar 2023 10:22:48 -0800 (PST)
+Received: from [192.168.1.119] ([216.130.59.33])
+        by smtp.gmail.com with ESMTPSA id v2-20020a05687105c200b0017299192eb1sm6391758oan.25.2023.03.08.10.22.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Mar 2023 10:22:48 -0800 (PST)
+Sender: Larry Finger <larry.finger@gmail.com>
+Message-ID: <c5721099-ef49-feaa-1624-813ba2034cd2@lwfinger.net>
+Date: Wed, 8 Mar 2023 12:22:47 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <81cd2720-0414-1213-3826-31bd240d5c75@linaro.org>
-User-Agent: NeoMutt/20180716
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] staging: r8188eu: delete driver
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ linux-staging@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ Hans de Goede <hdegoede@redhat.com>, Martin Kaiser <martin@kaiser.cx>,
+ Phillip Potter <phil@philpotter.co.uk>, Pavel Skripkin <paskripkin@gmail.com>
+References: <20230308131934.380395-1-gregkh@linuxfoundation.org>
+From: Larry Finger <Larry.Finger@lwfinger.net>
+In-Reply-To: <20230308131934.380395-1-gregkh@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tuesday 07 March 2023 18:01:42 Daniel Díaz wrote:
-> Hello!
+On 3/8/23 07:19, Greg Kroah-Hartman wrote:
+> Now that the same hardware that the r8188eu driver supported is
+> supported by the real wireless driver rtl8xxxu, the r8188eu driver can
+> be deleted.
 > 
-> On 07/03/23 10:46, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.2.3 release.
-> > There are 1001 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Thu, 09 Mar 2023 16:57:34 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.3-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
+> Also the rtl8xxxu driver supports way more devices, and is a fraction of
+> the overall size, making this a much better overall solution.
 > 
-> We see a regression with PowerPC's ppc64e_defconfig, using GCC 8 and GCC 12:
-> -----8<-----
-> powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
-> powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
-> make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:237: arch/powerpc/boot/crt0.o] Error 1
-> make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:237: arch/powerpc/boot/crtsavres.o] Error 1
-> powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
-> make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:235: arch/powerpc/boot/cuboot.o] Error 1
-> [...]
-> make[2]: Target 'arch/powerpc/boot/zImage' not remade because of errors.
-> make[1]: *** [/builds/linux/arch/powerpc/Makefile:247: zImage] Error 2
-> make[1]: Target '__all' not remade because of errors.
-> make: *** [Makefile:242: __sub-make] Error 2
-> make: Target '__all' not remade because of errors.
-> ----->8-----
+> Thanks to the r8188eu developers and maintainers and reviewers over the
+> years, your work allowed Linux users to use their hardware before the
+> real driver was implemented properly.
 > 
-> Bisection points to "powerpc/boot: Don't always pass -mcpu=powerpc when building 32-bit uImage" (upstream ff7c76f66d8bad4e694c264c789249e1d3a8205d).
+> Reported-by: Hans de Goede<hdegoede@redhat.com>
+> Cc: Martin Kaiser<martin@kaiser.cx>
+> Cc: Larry Finger<Larry.Finger@lwfinger.net>
+> Cc: Phillip Potter<phil@philpotter.co.uk>
+> Cc: Pavel Skripkin<paskripkin@gmail.com>
+> Signed-off-by: Greg Kroah-Hartman<gregkh@linuxfoundation.org>
 
-Hello! You hit another issue that CONFIG_TARGET_CPU_BOOL is set but
-CONFIG_TARGET_CPU is not. This issue was fixed in upstream by commit:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=45f7091aac3546ef8112bf62836650ca0bbf0b79
+Acked-by: Larry Finger <LarryFinger@lwfinger.net>
 
-See discussion about that issue:
-https://lore.kernel.org/linuxppc-dev/20221208191602.diywrt3g2f6zmt4s@pali/
+This staging driver satisfied a need at the time it was first added to the 
+kernel, but that time is over!
 
-Can you check that above commit was also backported during your testing?
-If not then apply it too and test again.
+Larry
 
-Commit ff7c76f66d8bad4e694c264c789249e1d3a8205d is needed to backport
-because it is fixing compile error issue for e500v2 platforms when
-compiling kernel with e500v2 cross compiler.
-
-> Reproducer:
->   tuxmake \
->     --runtime podman \
->     --target-arch powerpc \
->     --toolchain gcc-8 \
->     --kconfig ppc64e_defconfig \
->     config debugkernel dtbs kernel modules xipkernel
-> 
-> Greetings!
-> 
-> Daniel Díaz
-> daniel.diaz@linaro.org
-> 
-> 
