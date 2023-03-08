@@ -1,198 +1,159 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2074.outbound.protection.outlook.com [40.107.244.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437B86ADE
-	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 13:49:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E43AC433EF
-	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 13:49:32 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=bang-olufsen.dk header.i=@bang-olufsen.dk header.b="ZSQcJLNg"
-Resent-From: Mark Brown <broonie@kernel.org>
-Resent-Date: Wed, 8 Mar 2023 13:49:29 +0000
-Resent-Message-ID: <ZAiSaXSt+HTa8e/d@sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Wed, 08 Mar 2023 12:56:21 +0000
-Received: from dfw.source.kernel.org ([139.178.84.217])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=PO25=7A=bang-olufsen.dk=EMAS@kernel.org>)
-	id 1pZtL8-00609O-Kp
-	for broonie@sirena.co.uk; Wed, 08 Mar 2023 12:56:21 +0000
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id DF6DB61758
-	for <broonie@sirena.co.uk>; Wed,  8 Mar 2023 12:56:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id 67FB5C4339B; Wed,  8 Mar 2023 12:56:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0951BC433EF
-	for <broonie@kernel.org>; Wed,  8 Mar 2023 12:56:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 0951BC433EF
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=bang-olufsen.dk
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=bang-olufsen.dk
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAB66ADE
+	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 13:49:40 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JRqbpbGSKho310tp42C9QAxlrG+OAI6F3X2YGvmUtjcxD06X6McZlzClC9QVIm/6whYunMMVZV61KTcyNbM549/WGm1s6Lc5oODmq77Z/xajJovnD9N0RrvfTn/12lqUff1mMucdUpxEINj7AnRGENnwpWPZkyGZqMg1kJS/XrBx/hN5xXI+STfLOcsywb8Dn9nc5gZ2o9dN/YppaBvnHF2mZz8SPWPDpGh9+feitXK87Qh0zkC8URnqGCfRiwSip50xacyHn8U0+k59Vt6pvUy1CEKP09YZph/dlbi8ITbkzTKjI674vyHG9rhDe8K5ILvX0U5yrNS9vRE2WctLNg==
+ b=bfP59tABrAzA7BK3ZvmBq+gGBoRljvMXkcHKyJJmAh7nNEFY/Lp3MtF21bzKeJH3mlVn1j1KAJRhRBj0THJb65hzmo/NIMZIs3DkzNM1hq1VvfmYs7UstktgPs8kP2aQLop6pAJ1/kL0Mzb9uEBbnlKcUJE49X4+KGeKjlMTO57VtcWOsK6hWAQeicB6rkRdTREm+0Fl/LoQs9jFVSy6+hmAuR+N4pPri9+/jPOEyCpMOJhJjnE6aOfMXfyCYCeFYVo8UrIhuzcYFROJjGhJkhRlxbCTTN5I3b/RfmisY1TxBFDwEtG1Lr629xPU+N4o4RMtefSrQkDdwl8dSO46Ew==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ktRpb3JwHd34NrTpnWNlFogS474NKwJpSSI5Ty+7GCg=;
- b=i5vV4I3UadnZhucMjjnDPo1HIaNPj14145qqToyvBvMDIr5W9hNY6aiHr3PoTLIhd5It33vAjjldxIn3bAk5HBSZ1Q+ZgqDqL32Xo7DpXx79Tp3qZZ1SpJItyVPgTprlMW2SbcXR6I1qUPHP5Gc+A5AqM3i001HrKm/EHoB6iSw79kn6jk3TeKdYz5m20qbbbS3BpfIl7Ro7jac5oC4k0L+1MXfWHQDB3m0cxz3BuR0aZp4kXLdQEq71EFD2c7W783jur5nJjxGkRmu68+Ms5YYOg0iqFqgc30aypieXWD5XFiJmv7NlA+3EitE5ZY7TR65yDQ+kjyhAWv/dz6H8RA==
+ bh=mjDvhHFuIqO+68yPhkgOtUD17SnTf1C8t5IV2DJITjM=;
+ b=XxdnWJOz+IcUyHTVetIvBbR8YD7me7+el7QLua5O3ByimILHa2/Il+qeWMLAMVD3a9KnSJcF7v1Zgya9z573GERp8zYOA0EseYMNmSA9J3q8oLnElkFyKM2rHBK8yd7E8GGc/z14+MmefisoI1f9aCnUeGRs6HjylM3GnjhbtJ90NdY6s2EgzdIofcew1gSoj3j/GNlNxBiLDmjORaesPa4bahZ+2tBgjHdgudKxfojW68Vtas0/pv/pGh+6IKcx0zOx1t9gbZJme40qO+mD0fCxu/UbFjNtNrwxtpL76xqgtl8IYMO1hRs2Y6hEjFpmRJSF/b0gt3ie8Ye6YWlLoA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bang-olufsen.dk; dmarc=pass action=none
- header.from=bang-olufsen.dk; dkim=pass header.d=bang-olufsen.dk; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bang-olufsen.dk;
- s=selector1;
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ktRpb3JwHd34NrTpnWNlFogS474NKwJpSSI5Ty+7GCg=;
- b=ZSQcJLNg7oj4uVlS66vWIHKTWqd04X/Q5T9W0X7p+B32IZEQJuPu6imwNGYtB0VshW8zBfs6n3G1f02kbwSITVBwiZPY3LWuSWahAm1JihsvmERopWwc3wpwWMMQdxxdDjHZZgCJ8VEolntgzgoQp7BkbGi43r3TVbcF5enMTEo=
-Received: from VI1PR03MB4942.eurprd03.prod.outlook.com (2603:10a6:803:b6::20)
- by VI1PR03MB6541.eurprd03.prod.outlook.com (2603:10a6:800:19b::17) with
+ bh=mjDvhHFuIqO+68yPhkgOtUD17SnTf1C8t5IV2DJITjM=;
+ b=HFoetddLLXXwiDIQHSvRUxsLJt1Ixh96rtCRdRKTTPPPihs9S/+uG0938TCxHAdfQGtltKU5aiSkKX/gOMlc4AXv4SFDmk5qAH4KayMvg1uwDtyGk1YQ4sfD++NDxCia3EtSidgGSucv5Jl0dR2q2sN+iY1Foy8aq31mGmPEXnSMuEmPqZF6nO4rP+XIhm/xgieQXj3Qy7XHaXdvxmsnm4F1GgikVWOJmDkBoSyneTPwrqBcpF8MsaVGiyAbwoBER6HHvcfoSy5JhKxKUovW6DSBKGLKGr2JSN/EIWwTS/t+JgrJugLML8oFsi5mlGrFmZrLzC84JGsEt3iOYTM6rg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CO6PR12MB5444.namprd12.prod.outlook.com (2603:10b6:5:35e::8) by
+ MN2PR12MB4440.namprd12.prod.outlook.com (2603:10b6:208:26e::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6156.23; Wed, 8 Mar
- 2023 12:56:12 +0000
-Received: from VI1PR03MB4942.eurprd03.prod.outlook.com
- ([fe80::7ccd:3294:6981:aef7]) by VI1PR03MB4942.eurprd03.prod.outlook.com
- ([fe80::7ccd:3294:6981:aef7%3]) with mapi id 15.20.6156.029; Wed, 8 Mar 2023
- 12:56:12 +0000
-From: Emil Abildgaard Svendsen <EMAS@bang-olufsen.dk>
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
-CC: =?Windows-1252?Q?Alvin_=8Aipraga?= <ALSI@bang-olufsen.dk>,
-	"linux-patches@vger.kernel.org" <linux-patches@vger.kernel.org>, Emil
- Abildgaard Svendsen <EMAS@bang-olufsen.dk>, "alsa-devel@alsa-project.org"
-	<alsa-devel@alsa-project.org>
-Thread-Topic: [PATCH RFC] ASoC: hdmi-codec: only startup/shutdown on supported
- streams
-Thread-Index: AQHZUb1cPfbvxzEpSEC6JSyEyPaHPw==
-Date: Wed, 8 Mar 2023 12:56:12 +0000
-Message-ID: <20230308125503.3917903-1-emas@bang-olufsen.dk>
-Accept-Language: en-US
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.16; Wed, 8 Mar
+ 2023 13:49:38 +0000
+Received: from CO6PR12MB5444.namprd12.prod.outlook.com
+ ([fe80::5464:997b:389:4b07]) by CO6PR12MB5444.namprd12.prod.outlook.com
+ ([fe80::5464:997b:389:4b07%9]) with mapi id 15.20.6156.031; Wed, 8 Mar 2023
+ 13:49:38 +0000
+Message-ID: <6883f095-cf2b-2c45-5786-a46ba1c13dd7@nvidia.com>
+Date: Wed, 8 Mar 2023 13:49:30 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 6.2 0000/1000] 6.2.3-rc2 review
 Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=bang-olufsen.dk;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: VI1PR03MB4942:EE_|VI1PR03MB6541:EE_
-x-ms-office365-filtering-correlation-id: 4f4b2b96-c30f-4197-b09c-08db1fd47eac
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- +8U2q+PZ/DR+ZX9jYk4NCkLZl1FEk9DegNhGM8VwXnuT2YOsDapEQxRUpa/MwSGzxYxIowhz0o+/kNLa0BXp4fe75cvAYCnffQvo6llCxv47Ia4jcw46sSt0+h9y82tDnInmmRw/dDBBIJ5abbKAVUfhKxKm5RrcNPdgcjg+7yVbmVyLBF9NRl2Z38PKcC7ckgpj07KoPRp7V30OHbniHCFQoEJxn3ApRRnQr7ZBQk+98gebTAmsDe896FRGJWelezqBoVi4hQrxcCMxweY8N9AfTarj8pd0QRn1M+q40Nr3aFIWnFpGrfWResDIKST8xL6CPJ/vkrdbZWQqmpSQ8OQiXG+HZg3IXEFtiFQfbFIQUNdgL1yJWIIXYT914KZAOVx6laWC0qCbUs25XfBvSWlVD5YTeRA7hIQbVitLNyjL1tYdP6pHVwFR7kd2NNY0VBWzFt1ZWqJqT35UavsQ3NgKBh7RwColemo+4dCIPPEUgKVjCmK24wx/HyyRRirKLTdFna7c2fggaQiILCgnjsK0w7zPu1jHKFqDiLhVjWB7oIProZhpieY0KWcRU3ywoBPd7dptaLoDeGwLKyLoeVkN9+/pFzx9TFwr77Qfb6wIcDUh8zmipReXpmxP46nY7dD9UdLwqhVOxWo08BIkkZT3GoVSxAL3hLG4bV6tCk/Nhe3C90PXRIHUJsOSK1DYE9AGD6wOoosPrx2lpHldKA==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR03MB4942.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(396003)(346002)(376002)(39850400004)(136003)(366004)(451199018)(71200400001)(4326008)(6486002)(1076003)(83380400001)(478600001)(6506007)(6512007)(38100700002)(2616005)(66476007)(66946007)(54906003)(26005)(66556008)(91956017)(66446008)(186003)(316002)(64756008)(110136005)(8676002)(76116006)(8936002)(8976002)(5660300002)(122000001)(41300700001)(86362001)(2906002)(38070700005)(36756003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?Windows-1252?Q?clR98CBqXqSuNaR3PUVI1V9Jt2ZM3fCsjowdaUKtwxtatjOQVHPQQ7I6?=
- =?Windows-1252?Q?4FhwRXeXwG+ZBPOSg/Ans6RPRsi3XOQGaaAp3pzwcAWOW9nOuEnV+TLf?=
- =?Windows-1252?Q?4ebOtuxNBmtltO5MAQ1dlaGttsAPET3RiGmFWgp9VCfkiMMm2WJFbA09?=
- =?Windows-1252?Q?IlqLAaYce9Y0tQjNuAsXlw2k02YKeugIwYSCkaTXqsuAodHLD2Vel9I6?=
- =?Windows-1252?Q?sGcCfuJ4UUXbQan5FlloONj2KrLLPpK6xIUV20M1Th5T3xCzMPi1cQUB?=
- =?Windows-1252?Q?bJS+OquJrZfc24I/z5ucF1SnHKUgC0q/5V+mf4Z2jQFrrdWukmFI+lcb?=
- =?Windows-1252?Q?UFT5fEwSKK0dCJASTDSD5FEhV7t1GONKQoaovKwYjwnNTNImjIgM6Cde?=
- =?Windows-1252?Q?lQ5jp/iiH8ftocDA9/PyB0zWU8+Glr+kvztLFbC3710SsoQ7GKeanQ/9?=
- =?Windows-1252?Q?86pwjM5yxTUqSvNIezeLhR+f2cwZGDzs+AVS/N7rglTF/PQ2bsuC9zmv?=
- =?Windows-1252?Q?sPdojxPNKQxwRGNby3Wopza0M9n/fF5rfbbISH6LqMqNStS84EToLA0+?=
- =?Windows-1252?Q?5q0oT8afvWVExA2kst8Rz9mkHwXUkHy0XFU3HDxAYsuZt61TkfPfBe44?=
- =?Windows-1252?Q?cyLbV++KTYiSJkj8MDYgshtkAqVYz+7iJE9FZz9bOeCKPxdWc7wyhETe?=
- =?Windows-1252?Q?KaFLtEO5eHxqDLVSS1lieic4ncVxSZVBwu237qWlpCHpReFbwwAnmHgj?=
- =?Windows-1252?Q?/S4SckGbxwVxvkGAuVNN7kf8lZN72Eoxo54BLgRvghQrONL0VXHnii5Q?=
- =?Windows-1252?Q?1bm9KEodemaEYbpFcZNxKPD9+LchUM97RZ4XavY8qsM/kn4nt5jKTt4t?=
- =?Windows-1252?Q?JWDmWQcU5ffCmYTs6+ZDzDarjVCt2QJvGJPk69vkgISvcDDaRPdm8LSu?=
- =?Windows-1252?Q?kec0RUFBoeqdA8rTPXAoUhgoDW4qAjA+BWLCctvEbNpYmMhm4amY2rNl?=
- =?Windows-1252?Q?0A14f8IJ0GIbdGlC4LqpKvQVNEE2M2TR7dFeioKThIKyGxqAKGSf8LHp?=
- =?Windows-1252?Q?0T4Cat7SIPOu/NOAWVtDwFyRPZ8D5o2XzN8YsGEDqGAa8pEeOi/gW2P+?=
- =?Windows-1252?Q?iNUxomJ5tYoJ9lxMsnCqDj7Ka1EWr8Q9zdor9uA93NGmTzmfMsIhWGdE?=
- =?Windows-1252?Q?r5y2hzu20VGD8wDBcqQoKFDMLlf5zbufxIfPBu6kjHK8Q3PxI1Q6UxTk?=
- =?Windows-1252?Q?I5wbqriByce+SG5Jnfx6M/9RIAVeCUudlt9kHzHU6RhTmFvkx+OCGYDD?=
- =?Windows-1252?Q?G+sOecllcdFrHYkZTklxDGdEHL454Zl9R/Ptp0BkgETYjWEHm7DOrbN7?=
- =?Windows-1252?Q?IJcV3mYsaFjD7bLHmIEGkoqVKCAvIDV6TpO50xIByWD9Z93eVZfkhKDy?=
- =?Windows-1252?Q?brCWXhakidH7cRdZiDIUdz0qUH/8cqP1sMp/LQN8VMz+FNCCebb1dDTb?=
- =?Windows-1252?Q?aSKRxgLpMX1pJ1/TT0vJYV0DgM2h03U+2fHRqntad0TUIPyYD+cWpGEv?=
- =?Windows-1252?Q?uIoYWjzecDmnFg4K2xWeMqNpJtbsv2tD6uCN1HIAWf5xF4lpKM/snRa3?=
- =?Windows-1252?Q?dOjd//Hu4XKdyMWQZAkZ81rYw4pPubyHrvZkeMMlxt3HzXhnFhN9ZfgK?=
- =?Windows-1252?Q?m6xChNlu+Hmm0n8/W5eeRTWDCn4SUTUo1bEIONlKskTzxUt63XBnYg?=
- =?Windows-1252?Q?=3D=3D?=
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ Thierry Reding <treding@nvidia.com>
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230308091912.362228731@linuxfoundation.org>
+From: Jon Hunter <jonathanh@nvidia.com>
+In-Reply-To: <20230308091912.362228731@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO4P123CA0265.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:194::18) To CO6PR12MB5444.namprd12.prod.outlook.com
+ (2603:10b6:5:35e::8)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: bang-olufsen.dk
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO6PR12MB5444:EE_|MN2PR12MB4440:EE_
+X-MS-Office365-Filtering-Correlation-Id: 66ad3889-111b-464f-4250-08db1fdbf56b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	lAhaj8fAq4+r0P9P2c9VpHWax4M+DPy4kkC1t9mQf525/xtELAzonB+ovYQesCTbZ6Aj7/wPxx4PY8F9zHQfHa5WUJq0GMKuP6dOfnYT9OVz56yPc1o7Pd7G0l8I2DFSI8wb7aHQNf+FreITJOV6lPjaazd1FpCswqGv/CCZah3QVH3Z/Z7NtRBcKSgII7pQYUCIfRJBQ3PlZnolCis/IJDLS4IKP62ZDrpjirQeXRWi5CHAWVnGv5+2DasVuuO28FXd0K/A/S5eNiJY3+sLD1I8uG26PNJ/HuzL2alFGMFiQvBirIJfai7gCRQ13oQouloNE0olStoLH+02KFBk+IUc6wgLTM5UEAhKA2Zgii5+vjpw8jIOqiDopxWQ3sJSnx2eZ2cEfYdfwzD7CfzPoXHNLq7XHcEFIx1DietCKzdEnHIG9ZU9Rvn/aGudEbyTQxrWB4UtR4jL6hvcYWDkEOhckcicotFwec5iOk5gxcXc9Z5JVOOE3Eka54bKMZ/emSmS2lLK2pp2x5FnrYfWWwmAedJ+T7q3v+8ncTn0WdkggOD/WXx1GeAo+sSitXpNetCqtmkA0rRaAzUyrJXiBU6g4csXHFRH83V9SWGAGQfyuJPge0/e2xl+kCzVUQF1SARS3WX0oAmA9XxE/Viw3+5jCdaDuhR+BKw+CcrghTTb2uUZGixqtHMKOZB4OVagwcbTrCIAvPb/YU1/2q4kfQkQpQYkTMRoznvXNxGF21gLjszwlOeYMbFvVN/e9w1qAt1zbRfZEMe2s3ze+dVMKyixhZL3kymTGF1Kdtb8YgBiTg4otW2wpotJbD5p1KT/
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5444.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(39860400002)(376002)(396003)(366004)(136003)(346002)(451199018)(8936002)(966005)(6486002)(7416002)(5660300002)(186003)(478600001)(6666004)(36756003)(53546011)(6506007)(6512007)(6636002)(2616005)(31686004)(110136005)(316002)(86362001)(41300700001)(38100700002)(66556008)(8676002)(66946007)(66476007)(4326008)(2906002)(31696002)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?ekdUMCtoK2cxam83bW5mK1dhS3VYS2kzQ2pqZmdycGNOSXdJdzYwUEwzUlpx?=
+ =?utf-8?B?bE5aL2wyYmRjaU94OFE3cStvR2trV2tSZjZLZERjZHhWaVNJT2dqNTVneG9G?=
+ =?utf-8?B?TXN1Vlcrd09jeGRvRThRa1lnNlQra1BQUzd3ZFN5cXdzYllHc2R1RVhPZytO?=
+ =?utf-8?B?QWlNZytEdEhORXNrTHBMQjlFRGtKbG1EaEg2anltSkp1Y3FiWmJwbG81QUta?=
+ =?utf-8?B?OGVRRm1oemNlcjFHTExhblQrL0JPS2l6T0RFY2Y3Umo3VjUrMk8vOTRtUHpR?=
+ =?utf-8?B?ZDdnL2RVbnYrc0tYYysyUWd1TUw4TnovUm44UW9MZ1FIOG52M1Q4Zy82L3Iy?=
+ =?utf-8?B?bDdkWEk5OXA4L0k5SWlHMGU3VTR0UHAwNTlZVXBhanZBeGpsRXFXSUpqWTBL?=
+ =?utf-8?B?cmUvMEJLTVlhRUNKcHR0Q21TaVB3cE44a3BKek5KWldNajBjTm5jcmRabngr?=
+ =?utf-8?B?dkJENENPdklTbTFtcmF0UU9mdVhJV0hoazhURU5zWUV0WUl6eTVxSVRnSlFW?=
+ =?utf-8?B?MkR4Y21Id1JuL0JjdHN5L2lPRjNiWnZmSk1lWmdscWNiRDZJUitKNlh5NVBx?=
+ =?utf-8?B?cDJwdVVNcy91Q1IwQi9JMDFBOUt0ZG9GZ3BIZUV4K2I4SUFHQzZxOVl1OVkv?=
+ =?utf-8?B?QWIvVlpuVVF4THZEWTZvUHF5OFFwWkFvNVF3YnQ1c2kveTZ6YUtxSlVFa1B1?=
+ =?utf-8?B?Vlo3SFY5YS9mWWxlMk93SVJMK2d6ZzV1WkN5N0RkQldZU29QR1dGWHV6Q2ZN?=
+ =?utf-8?B?bURFK0FkcEtSelc4YlNKTWlqdXgzZUtmYzJqRzdpMzRhcXZ3UTVlN1o5bTdL?=
+ =?utf-8?B?RmtUSkZsN2xnN09RS3c4bGtiZXllcmxtbFBkd1JpaUxwSVdURWJWOEg1QlFl?=
+ =?utf-8?B?Y3RKWi9VbHFHMGszaFRZVE9EMzNFMHB0U3FZY3FjWXpPN2dycFJoT0VidVFl?=
+ =?utf-8?B?VURFZ0JvOC9senNRcGpwekJySzlncE5tWCtyd0orUEVpY09jMHR1NnFaTHRr?=
+ =?utf-8?B?WDNUZDJMNlNSL2RxaVNCRVY5RFFtSU4wRDBwVG53WFFpVXdyelRZTTZteGlq?=
+ =?utf-8?B?RWZHMk9tYXBhWE9scTNWTi94eVp3NE1PR0ZDOFFaaExtZGNTNWowdmNad2JB?=
+ =?utf-8?B?bElzWkhsTmc3eGo5UzdNeEU0alprRGYvd2VPTU5iajU4bVhoK3o1ZTBJNStS?=
+ =?utf-8?B?KzdYOTRTU2lrc20zZEovMnBTOUE0eHR1aHluUC9hZlhTb0IzTVdvV0tBSk8w?=
+ =?utf-8?B?MTdacjIrakJxN1NtM09Bd1g5emFzQXlweUlSTjRhTDllRmVRNHR5bWZPbHp1?=
+ =?utf-8?B?VVFKakVVcHRCNi9lNDJOMm0xRkMyYlRWdE55a0w5SFhXTnpaaUtDZHNpVy83?=
+ =?utf-8?B?QWpISnJGcTlodnlmcEY2U1BkSW93cFBLN21BYkl1eWlHWEc0Q3ppV2l0dC8z?=
+ =?utf-8?B?MkFOdEtPODVEZ004N0xoczBuT3VNYkNSSzZsR3d1NkxqZWdleHYvSnBaeFdS?=
+ =?utf-8?B?a0RjM2JOQS9rUkQ5anFhdmo4ckg0dE1UaW1SL3BVNGtScWVrZUlKVzFwNWxp?=
+ =?utf-8?B?azRaNnYwQTVtQldYRHh6NExUdTZHT3BWUXA1T00vK0RVaUVOV09GTEdPbWlw?=
+ =?utf-8?B?TVRhcFNoN1RLS1FmOElOY0pLNkFqNmRaQVNheUpheURHVVUxNk5jakxjQ2FE?=
+ =?utf-8?B?bmdJYkxXemVaVVhaT2g1TGJ2VnM4MTUwbVN1bnoyT0dSd09vV2hGWTNkc0Fq?=
+ =?utf-8?B?RmcvaGo0M2FEb2doK2tUdFMremdYbm1yZFdrcW13eUZQK3pibjdrWUEybW9h?=
+ =?utf-8?B?ZmQxOU04NTZPM1Q0V3lhYjZGMURaT2UxSUl4QnY2RTJCdGZoeWdiTldiZ1VV?=
+ =?utf-8?B?YmYvdlpYMkJWTWYvYkQ3ZGZNaUxZeURQM1p5ZDZDdW1qT1dYVFRxbSs0b0lM?=
+ =?utf-8?B?a0xxWlZRdDlxZlowbFYwRjduWHV1cHhQNVBlc3lucHV0NGJKQnptTExSclhJ?=
+ =?utf-8?B?amZmd0JQSDlOZ2FKOHNOaTZldGtPUy9XY291SHArdDJlRm1SUzNXZnZNNUtE?=
+ =?utf-8?B?Tm1BZUZ1VTk4ODBMa0s2VWtYQzhvWS9OSm9OblNKU0hXQWU2UVR5MVJGbWpN?=
+ =?utf-8?B?bUZkbHM2aGREZmlFcWFzWHlCY3BrSTFYTDFKZjBNRW1MMk55bFlHM0ZiTXpK?=
+ =?utf-8?B?Q243aWkwSjQxRWtUZHorSHBvK0NYcWVlNVNBbFFlZUZwNlNlM3JPcjh4N0dO?=
+ =?utf-8?B?VkFqd2xXNEx0OWFlTG4zS0l6c0J3PT0=?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 66ad3889-111b-464f-4250-08db1fdbf56b
+X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5444.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: VI1PR03MB4942.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4f4b2b96-c30f-4197-b09c-08db1fd47eac
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Mar 2023 12:56:12.1362
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Mar 2023 13:49:38.1771
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 210d08b8-83f7-470a-bc96-381193ca14a1
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: WqQpVVnIVMXqXZWYD8/eCRY9dNn17LuI5N4QNRMr0mx50qY8WqWAKv0Vb/qZFzWy3GtD1oKnsWD4XnsGK2iqbQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR03MB6541
-X-SA-Exim-Connect-IP: 139.178.84.217
-X-SA-Exim-Mail-From: SRS0=PO25=7A=bang-olufsen.dk=EMAS@kernel.org
-Subject: [PATCH RFC] ASoC: hdmi-codec: only startup/shutdown on supported
- streams
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: elvXp1NzUfYn
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xWjTTQ97o4PerpuXeQ0hMmdEhZYAnevNO1VlNk22PNkuUM8rVz2pwnYaD75/sM2NL0/Hwx73YdEWiBTsLUAKrQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4440
 
-Currently only one stream is supported. This isn't usally a problem
-until you have a multi codec audio card. Because the audio card will run
-startup and shutdown on both capture and playback streams. So if your
-hdmi-codec only support either playback or capture. Then ALSA can't open
-for playback and capture.
+Hi Greg,
 
-This patch will ignore if startup and shutdown are called with a non
-supported stream. Thus, allowing an audio card like this:
+On 08/03/2023 09:29, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.2.3 release.
+> There are 1000 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 10 Mar 2023 09:16:12 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.3-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
+> -------------
+> Pseudo-Shortlog of commits:
 
-           +-+
- cpu1 <--@-| |-> codec1 (HDMI-CODEC)
-           | |<- codec2 (NOT HDMI-CODEC)
-           +-+
+...
 
-Signed-off-by: Emil Svendsen <emas@bang-olufsen.dk>
----
- sound/soc/codecs/hdmi-codec.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+> Thierry Reding <treding@nvidia.com>
+>      arm64: tegra: Bump #address-cells and #size-cells
 
-diff --git a/sound/soc/codecs/hdmi-codec.c b/sound/soc/codecs/hdmi-codec.c
-index 74cbbe16f9ae..07ad7e5083ae 100644
---- a/sound/soc/codecs/hdmi-codec.c
-+++ b/sound/soc/codecs/hdmi-codec.c
-@@ -428,8 +428,13 @@ static int hdmi_codec_startup(struct snd_pcm_substream=
- *substream,
- {
- 	struct hdmi_codec_priv *hcp =3D snd_soc_dai_get_drvdata(dai);
- 	bool tx =3D substream->stream =3D=3D SNDRV_PCM_STREAM_PLAYBACK;
-+	bool has_capture =3D !hcp->hcd.no_i2s_capture;
-+	bool has_playback =3D !hcp->hcd.no_i2s_playback;
- 	int ret =3D 0;
-=20
-+	if (!((has_playback && !tx) || (has_capture && tx)))
-+		return 0;
-+
- 	mutex_lock(&hcp->lock);
- 	if (hcp->busy) {
- 		dev_err(dai->dev, "Only one simultaneous stream supported!\n");
-@@ -468,6 +473,12 @@ static void hdmi_codec_shutdown(struct snd_pcm_substre=
-am *substream,
- 				struct snd_soc_dai *dai)
- {
- 	struct hdmi_codec_priv *hcp =3D snd_soc_dai_get_drvdata(dai);
-+	bool tx =3D substream->stream =3D=3D SNDRV_PCM_STREAM_PLAYBACK;
-+	bool has_capture =3D !hcp->hcd.no_i2s_capture;
-+	bool has_playback =3D !hcp->hcd.no_i2s_playback;
-+
-+	if (!((has_playback && !tx) || (has_capture && tx)))
-+		return;
-=20
- 	hcp->chmap_idx =3D HDMI_CODEC_CHMAP_IDX_UNKNOWN;
- 	hcp->hcd.ops->audio_shutdown(dai->dev->parent, hcp->hcd.data);
---=20
-2.34.1
+
+The above change introduced a regression for Tegra, which Thierry has 
+since fixed [0]. Please can you drop this for now?
+
+Thanks
+Jon
+
+https://lore.kernel.org/linux-tegra/20230302094213.3874449-1-thierry.reding@gmail.com/
+-- 
+nvpublic
