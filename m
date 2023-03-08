@@ -1,105 +1,68 @@
-Received: from qproxy1-pub.mail.unifiedlayer.com (qproxy1-pub.mail.unifiedlayer.com [173.254.64.10])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1568657
-	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 20:42:38 +0000 (UTC)
-Received: from progateway7-pub.mail.pro1.eigbox.com (unknown [67.222.38.55])
-	by qproxy1.mail.unifiedlayer.com (Postfix) with ESMTP id 9A3DD8029467
-	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 20:42:32 +0000 (UTC)
-Received: from cmgw10.mail.unifiedlayer.com (unknown [10.0.90.125])
-	by progateway7.mail.pro1.eigbox.com (Postfix) with ESMTP id 38B431004741D
-	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 20:42:25 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id a0cCpCUYQevcba0cDpdEbN; Wed, 08 Mar 2023 20:42:25 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=afmkITkt c=1 sm=1 tr=0 ts=6408f331
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=k__wU0fu6RkA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=WzVMo6mmhJd9EY20C/Af9KjmQLQ/fvgOnPTPasIwdW0=; b=iBQUPhlx+4bW7G4WWiD8kz5lRs
-	BKHZL975RfHIb3mZhXFGJwfykdGvCUaypfrxrAPEJywKVrOYa3kkiawVOD6lUV7Q35ZNGeT4lgE/w
-	cazvBWjtK6OBTYE5p3R/Oj1GYtnDdJEr/NOMD16yHAf919ezxNbphP1jSox7Gpt8Bf+vW4PD3C87u
-	2PfI+OR2V7DHnBgOhv+BuyUNHP0amdEgRX/LR3KhM1XLAmE6FWowF/TkUDi33ZUTf6TQvdV1t5Prj
-	VzA/Q2I/DL1xQZs5FdUYaufxvkO7oftuavh1QgSBRgY64n8H9Pjb9n7hMGy8+I7EO0t4OTtyjjafi
-	rDehkn8A==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:59618 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1pa0cB-001eoR-AB;
-	Wed, 08 Mar 2023 13:42:23 -0700
-Subject: Re: [PATCH 6.1 000/887] 6.1.16-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230308091853.132772149@linuxfoundation.org>
-In-Reply-To: <20230308091853.132772149@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <d91ecd0b-f26f-a8fc-2e69-9e92758ec367@w6rz.net>
-Date: Wed, 8 Mar 2023 12:42:18 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0609657
+	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 21:30:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=IzQFIWT46znk5i0D+MsYj76CTFCg/0EZ16e6Y2m5SD0=; b=3w3cdJetO/jogLTcUKjz0RGSni
+	IUo2+CUDSUDwyw1g5lIuMk93u9eS7FEdD66wbpagj57lKjufAMc7CxPIUqtTeQN8iBMftrOKARX4D
+	8GprGyZL33+5LqB7mcTudokFAGvCDq9AU6ZyA9bKQSjgUS3iI/5Dajy4PmuuJaOrf0uIN74Ga1raI
+	WQ3/7sV5LzeIlXx+GZSslVjv8KtL6eq7hh+OsX+fm/dv+qEj2fPc1hWmY2KNr8JAgc7Y2pdO161nM
+	ONJc4YluOrPm0G+S/VeqCvSf97P7aDdqHlO2uXTWTxRniKRGfc7uxGXmAayHNlgCNxG1bNH+00OeP
+	gpQrA7tQ==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1pa1My-006qYJ-C6; Wed, 08 Mar 2023 21:30:44 +0000
+Date: Wed, 8 Mar 2023 13:30:44 -0800
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: David Hildenbrand <david@redhat.com>
+Cc: hughd@google.com, akpm@linux-foundation.org, willy@infradead.org,
+	brauner@kernel.org, linux-mm@kvack.org, p.raghav@samsung.com,
+	da.gomez@samsung.com, a.manzanares@samsung.com, dave@stgolabs.net,
+	yosryahmed@google.com, keescook@chromium.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/6] shmem: move reclaim check early on writepages()
+Message-ID: <ZAj+hMFcr4NeclZs@bombadil.infradead.org>
+References: <20230302232758.888157-1-mcgrof@kernel.org>
+ <20230302232758.888157-4-mcgrof@kernel.org>
+ <2a3386e7-9b09-f22e-ee39-a37a046d54ec@redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1pa0cB-001eoR-AB
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:59618
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2a3386e7-9b09-f22e-ee39-a37a046d54ec@redhat.com>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On 3/8/23 1:29 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.16 release.
-> There are 887 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 10 Mar 2023 09:16:12 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.16-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Mon, Mar 06, 2023 at 03:01:52PM +0100, David Hildenbrand wrote:
+> On 03.03.23 00:27, Luis Chamberlain wrote:
+> > @@ -1340,6 +1340,18 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
+> >   	swp_entry_t swap;
+> >   	pgoff_t index;
+> > +	/*
+> > +	 * Our capabilities prevent regular writeback or sync from ever calling
+> > +	 * shmem_writepage; but a stacking filesystem might use ->writepage of
+> > +	 * its underlying filesystem, in which case tmpfs should write out to
+> > +	 * swap only in response to memory pressure, and not for the writeback
+> > +	 * threads or sync.
+> > +	 */
+> > +	if (!wbc->for_reclaim) {
+> 
+> if (WARN_ON_ONCE(!wbc->for_reclaim))
+> 
+> > +		WARN_ON_ONCE(1);	/* Still happens? Tell us about it! */
+> 
+> And drop the comment :) That's what WARN_ON_ONCE is all about.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Good call, will add that to v2.
 
-Tested-by: Ron Economos <re@w6rz.net>
+> Acked-by: David Hildenbrand <david@redhat.com>
 
+Great thanks,
+
+  Luis
