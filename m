@@ -1,97 +1,119 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199A562B
-	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 04:20:22 +0000 (UTC)
-Received: by mail-pf1-f171.google.com with SMTP id y10so9462752pfi.8
-        for <patches@lists.linux.dev>; Tue, 07 Mar 2023 20:20:22 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6020362B
+	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 04:29:45 +0000 (UTC)
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-17711f56136so2643908fac.12
+        for <patches@lists.linux.dev>; Tue, 07 Mar 2023 20:29:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678249221;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rnkjn4DRhnRW1sqD+uqYuOcNZEzPfc0ZfZT3Ap1tve8=;
-        b=JTUKI9GzKGdU2vqgieL04tyhdzhJpItt1SnEO5D0vB476SThNsAX1UfcBtyb1gY3bK
-         UaUORef+lozKR6JtHvbLwElN+TGTHIPxvjIW11qTIFoz8Q7JxoAG6gERXKpI8JbStz3C
-         volQKrrQyeMK8b5Ehmnx/wuh/wtcNQY/fvzQPt4s/N/ZBHEDafuUGd3e7Bx0n1QsQp03
-         8ZipfFcpEDIl29ncU5u3xdC5xV/VO1Z7sBBVls1AH62TM0fljXN9ktzIFr83pPR6bcGI
-         UytZ/E2L6JGZ4X/K2mSo/AVVeCQO+VeMrdPLONROPKDpoJ2zIiihEadmu7HU2jX5aMmh
-         Q14g==
+        d=linaro.org; s=google; t=1678249784;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jhAOE71Ompgdm0ng6gusjFFxPb/vUHlh3eJ25cLU//w=;
+        b=IOviJkpeBA6AfHMftrqOMYww5gkDtKQ4vL6tCHkCi6DblrdgUjvd+wQi0O+wsCYLlB
+         m9yOwTPmqn88KqybOsSC+MrpyemRI7MFKZP4hk01GSj7g0ZJvqP1HcndlzNe7EZN3SIA
+         Uf4HGSX8spu4vPsDOiM9WixhWcEXyOR2MmMhl2b2n48hPF9shCSJHMwJ0fmm5lxJgaZX
+         9Fjfsv9NIKU1WWErD9sJiWAAs8ST3sCV+KtrWVLXOqlrZxRUiUSoFWp81tbhW2nYBu6O
+         mN0S1vQeR6XZ6Z2AlLSSwaobXCfltLHEcHTuiAo4823nYB7S7RToLvOwuu2Vd4vYgLYS
+         Y5Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678249221;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Rnkjn4DRhnRW1sqD+uqYuOcNZEzPfc0ZfZT3Ap1tve8=;
-        b=roRFVsSp83peficGT4ghTVfd7uMi7MkZEhj1rI3FXSfbvr9vEdHU+SiC0hCvCnp3iP
-         +8yrly3znK+52BpI2x7FivqodW67E6SQlSfQVCUfHjTopvTexpLPuayIBvKXGK+qZjkn
-         4mgMAsPB+KXICM/XVowwcivKhlCsUzb3OiJgKNE26Ud5hnSWeKX0nyaZKyhPDWP9fATI
-         lq3UJ2RYrHmKcOozRGmJmdJSrjii1ADEo3MiCwpPdX0XXf7SSNmtmS65qP05zHnmHRFf
-         hZp4QrroPiqmhRbCASZvRWgJtjB/E9fNw6YZCvnLt2I7z88UvXJ9/DMTbsjjpmfgtQU1
-         ENlA==
-X-Gm-Message-State: AO0yUKXHG87kGbZ9uk023emd5UO6p99071+OdUMXczD21sl+HTsF+nMM
-	Fpp/e9ETdhI2jrl3Yq5grlA=
-X-Google-Smtp-Source: AK7set/xQnzesADq/Y3cuIKCqmm2rBd9Sol2Rl1vb3XaTJEh+0t3JSzqhoiCfDNX8cbQkZwFt4y3gg==
-X-Received: by 2002:a05:6a00:796:b0:5a8:e3d5:d7d4 with SMTP id g22-20020a056a00079600b005a8e3d5d7d4mr18761104pfu.7.1678249221505;
-        Tue, 07 Mar 2023 20:20:21 -0800 (PST)
-Received: from debian.me (subs02-180-214-232-18.three.co.id. [180.214.232.18])
-        by smtp.gmail.com with ESMTPSA id j7-20020a62e907000000b005aa60d8545esm8669245pfh.61.2023.03.07.20.20.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 20:20:20 -0800 (PST)
-Received: by debian.me (Postfix, from userid 1000)
-	id 7482F1065C4; Wed,  8 Mar 2023 11:20:18 +0700 (WIB)
-Date: Wed, 8 Mar 2023 11:20:18 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/885] 6.1.16-rc1 review
-Message-ID: <ZAgNArfjHFbigSZR@debian.me>
-References: <20230307170001.594919529@linuxfoundation.org>
+        d=1e100.net; s=20210112; t=1678249784;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jhAOE71Ompgdm0ng6gusjFFxPb/vUHlh3eJ25cLU//w=;
+        b=F8YN9LF9R21wiEQW5G8jxHQ+iqbZylLr/laNMPxiA3KAhSVz/WPQR/UyIGRmkTpc7G
+         dyTpgRTIF6phNsbQB2l4EdewsNCJWdsGERTYBbQTQHZSwRmeVJHrQKsDy9DfnOaP8FXE
+         Xfb2lLSpQtIjVmfjaaAj72R3f7T8U+lc0xJtWUyhDCbDw/Mhw4h3mSmvcPOoEEamVg7G
+         Nbdd9fiCEitREiKsQH++IyrRpwKWF2KhiM0TqcNW2/cmye2GsBaCSg9P+hG1pE1yX3qL
+         N/Zjhp44rwfO4cq7Md/og3RC56EMVGAiPlgOswo4OA9rSscoI+4eoVpZbgdV1laDCHqo
+         eJJg==
+X-Gm-Message-State: AO0yUKVrg8yP2qmhcNaIdw2BUdO+VpLWm6f7tzxRvRU0StDQNHmuBMQj
+	LR3ILrahcFtkb9dijy1PKgSbEQ==
+X-Google-Smtp-Source: AK7set9NNer1Dg+UCMTqbXRORLV+qQo1RfmIm2Hp52ZDRwRVj6VXTGsUCo8OhXInLU5tl4OuOwl+DA==
+X-Received: by 2002:a05:6871:810:b0:16e:8b9f:93e1 with SMTP id q16-20020a056871081000b0016e8b9f93e1mr10643789oap.5.1678249784362;
+        Tue, 07 Mar 2023 20:29:44 -0800 (PST)
+Received: from [192.168.17.16] ([189.219.75.19])
+        by smtp.gmail.com with ESMTPSA id j2-20020a056870a48200b001723d62f997sm5844734oal.32.2023.03.07.20.29.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Mar 2023 20:29:43 -0800 (PST)
+Message-ID: <29636c67-aab7-1235-27af-469bcec7ae66@linaro.org>
+Date: Tue, 7 Mar 2023 22:29:42 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="PVn/FJYx3o++izsw"
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 6.1 000/885] 6.1.16-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, pali@kernel.org, christophe.leroy@csgroup.eu,
+ mpe@ellerman.id.au
+References: <20230307170001.594919529@linuxfoundation.org>
+From: =?UTF-8?Q?Daniel_D=c3=adaz?= <daniel.diaz@linaro.org>
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Hello!
 
---PVn/FJYx3o++izsw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Mar 07, 2023 at 05:48:54PM +0100, Greg Kroah-Hartman wrote:
+On 07/03/23 10:48, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.1.16 release.
 > There are 885 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
+> 
+> Responses should be made by Thu, 09 Mar 2023 16:57:34 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.16-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
-powerpc (ps3_defconfig, GCC 12.2.0).
+Same regression with PowerPC's ppc64e_defconfig, using GCC 8 and GCC 12, as reported with 6.2
+-----8<-----
+powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
+powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
+make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:237: arch/powerpc/boot/crt0.o] Error 1
+make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:237: arch/powerpc/boot/crtsavres.o] Error 1
+powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
+make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:235: arch/powerpc/boot/cuboot.o] Error 1
+[...]
+make[2]: Target 'arch/powerpc/boot/zImage' not remade because of errors.
+make[1]: *** [/builds/linux/arch/powerpc/Makefile:247: zImage] Error 2
+make[1]: Target '__all' not remade because of errors.
+make: *** [Makefile:242: __sub-make] Error 2
+make: Target '__all' not remade because of errors.
+----->8-----
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Bisection points to "powerpc/boot: Don't always pass -mcpu=powerpc when building 32-bit uImage" (upstream ff7c76f66d8bad4e694c264c789249e1d3a8205d).
 
---=20
-An old man doll... just what I always wanted! - Clara
+Reproducer:
+   tuxmake \
+     --runtime podman \
+     --target-arch powerpc \
+     --toolchain gcc-8 \
+     --kconfig ppc64e_defconfig \
+     config debugkernel dtbs kernel modules xipkernel
 
---PVn/FJYx3o++izsw
-Content-Type: application/pgp-signature; name="signature.asc"
+Greetings!
 
------BEGIN PGP SIGNATURE-----
+Daniel Díaz
+daniel.diaz@linaro.org
 
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZAgNAgAKCRD2uYlJVVFO
-ozJeAQCQ8qnWnsmEVPqgV/Pe4uCnAAGVaiZu/N1T1uM4L43MSwD6Aimb7LLSdFLs
-wkF2xJW9XPwPpB9gW7R6nafVWfpskQw=
-=fXZE
------END PGP SIGNATURE-----
 
---PVn/FJYx3o++izsw--
