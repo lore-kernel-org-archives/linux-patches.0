@@ -1,119 +1,105 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from qproxy6-pub.mail.unifiedlayer.com (qproxy6-pub.mail.unifiedlayer.com [69.89.23.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6020362B
-	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 04:29:45 +0000 (UTC)
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-17711f56136so2643908fac.12
-        for <patches@lists.linux.dev>; Tue, 07 Mar 2023 20:29:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678249784;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jhAOE71Ompgdm0ng6gusjFFxPb/vUHlh3eJ25cLU//w=;
-        b=IOviJkpeBA6AfHMftrqOMYww5gkDtKQ4vL6tCHkCi6DblrdgUjvd+wQi0O+wsCYLlB
-         m9yOwTPmqn88KqybOsSC+MrpyemRI7MFKZP4hk01GSj7g0ZJvqP1HcndlzNe7EZN3SIA
-         Uf4HGSX8spu4vPsDOiM9WixhWcEXyOR2MmMhl2b2n48hPF9shCSJHMwJ0fmm5lxJgaZX
-         9Fjfsv9NIKU1WWErD9sJiWAAs8ST3sCV+KtrWVLXOqlrZxRUiUSoFWp81tbhW2nYBu6O
-         mN0S1vQeR6XZ6Z2AlLSSwaobXCfltLHEcHTuiAo4823nYB7S7RToLvOwuu2Vd4vYgLYS
-         Y5Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678249784;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jhAOE71Ompgdm0ng6gusjFFxPb/vUHlh3eJ25cLU//w=;
-        b=F8YN9LF9R21wiEQW5G8jxHQ+iqbZylLr/laNMPxiA3KAhSVz/WPQR/UyIGRmkTpc7G
-         dyTpgRTIF6phNsbQB2l4EdewsNCJWdsGERTYBbQTQHZSwRmeVJHrQKsDy9DfnOaP8FXE
-         Xfb2lLSpQtIjVmfjaaAj72R3f7T8U+lc0xJtWUyhDCbDw/Mhw4h3mSmvcPOoEEamVg7G
-         Nbdd9fiCEitREiKsQH++IyrRpwKWF2KhiM0TqcNW2/cmye2GsBaCSg9P+hG1pE1yX3qL
-         N/Zjhp44rwfO4cq7Md/og3RC56EMVGAiPlgOswo4OA9rSscoI+4eoVpZbgdV1laDCHqo
-         eJJg==
-X-Gm-Message-State: AO0yUKVrg8yP2qmhcNaIdw2BUdO+VpLWm6f7tzxRvRU0StDQNHmuBMQj
-	LR3ILrahcFtkb9dijy1PKgSbEQ==
-X-Google-Smtp-Source: AK7set9NNer1Dg+UCMTqbXRORLV+qQo1RfmIm2Hp52ZDRwRVj6VXTGsUCo8OhXInLU5tl4OuOwl+DA==
-X-Received: by 2002:a05:6871:810:b0:16e:8b9f:93e1 with SMTP id q16-20020a056871081000b0016e8b9f93e1mr10643789oap.5.1678249784362;
-        Tue, 07 Mar 2023 20:29:44 -0800 (PST)
-Received: from [192.168.17.16] ([189.219.75.19])
-        by smtp.gmail.com with ESMTPSA id j2-20020a056870a48200b001723d62f997sm5844734oal.32.2023.03.07.20.29.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Mar 2023 20:29:43 -0800 (PST)
-Message-ID: <29636c67-aab7-1235-27af-469bcec7ae66@linaro.org>
-Date: Tue, 7 Mar 2023 22:29:42 -0600
-Precedence: bulk
-X-Mailing-List: patches@lists.linux.dev
-List-Id: <patches.lists.linux.dev>
-List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 6.1 000/885] 6.1.16-rc1 review
-Content-Language: en-US
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48034647
+	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 06:24:00 +0000 (UTC)
+Received: from gproxy1-pub.mail.unifiedlayer.com (unknown [69.89.25.95])
+	by qproxy6.mail.unifiedlayer.com (Postfix) with ESMTP id 4F91480329B4
+	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 06:00:07 +0000 (UTC)
+Received: from cmgw10.mail.unifiedlayer.com (unknown [10.0.90.125])
+	by progateway3.mail.pro1.eigbox.com (Postfix) with ESMTP id A3F36100423EC
+	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 05:59:58 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id ZmqEp3UAoevcbZmqEpUJRa; Wed, 08 Mar 2023 05:59:58 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=afmkITkt c=1 sm=1 tr=0 ts=6408245e
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=k__wU0fu6RkA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=_-jcId0ihTy8Ey0B1v8A:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=W4+u8IZJciZA23D+SSuEYlXJu3REO42h8WDDTvhmXEU=; b=M9NHov/Z43Bp/rR1cxfKFU5Kiw
+	1r8Q86BVOp9tVxSTP5tm1r0XZGeNILwPpZDr+ovffMAX/TxljhQMGabzzGM1KCSmJScB+GDUjmyFT
+	Ok3ZepsYzmOhWMLdBxORfFN1hEaVaOVWEg034iflPJW/SnoExqI1gPEmU05r5FEvw7t+cleJuFHq9
+	a9Ot/fhHOxOE8AigOekHa6P5tP6H7JzDj/2/7xNv0/3RSdTy4XnkjWnpr3QjeuoieFC3LE/ZylxzO
+	bETSqYG6L+ms+Xxk+v9sKxRfgSkQvA9jgJaa4273YD30rnfGUgcPuhyqzfvQdHjJlgbA/8ds82SOF
+	TxT4lFWg==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:59514 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1pZmqD-004BZr-LD;
+	Tue, 07 Mar 2023 22:59:57 -0700
+Subject: Re: [PATCH 6.2 0000/1001] 6.2.3-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, pali@kernel.org, christophe.leroy@csgroup.eu,
- mpe@ellerman.id.au
-References: <20230307170001.594919529@linuxfoundation.org>
-From: =?UTF-8?Q?Daniel_D=c3=adaz?= <daniel.diaz@linaro.org>
-In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ rwarsow@gmx.de
+References: <20230307170022.094103862@linuxfoundation.org>
+In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <6d222e3f-f6bb-8934-0bd7-6aef77462965@w6rz.net>
+Date: Tue, 7 Mar 2023 21:59:52 -0800
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+Precedence: bulk
+X-Mailing-List: patches@lists.linux.dev
+List-Id: <patches.lists.linux.dev>
+List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1pZmqD-004BZr-LD
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:59514
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-Hello!
-
-On 07/03/23 10:48, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.16 release.
-> There are 885 patches in this series, all will be posted as a response
+On 3/7/23 8:46 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.2.3 release.
+> There are 1001 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Thu, 09 Mar 2023 16:57:34 +0000.
 > Anything received after that time might be too late.
-> 
+>
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.16-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.3-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
 > and the diffstat can be found below.
-> 
+>
 > thanks,
-> 
+>
 > greg k-h
 
-Same regression with PowerPC's ppc64e_defconfig, using GCC 8 and GCC 12, as reported with 6.2
------8<-----
-powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
-powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
-make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:237: arch/powerpc/boot/crt0.o] Error 1
-make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:237: arch/powerpc/boot/crtsavres.o] Error 1
-powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
-make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:235: arch/powerpc/boot/cuboot.o] Error 1
-[...]
-make[2]: Target 'arch/powerpc/boot/zImage' not remade because of errors.
-make[1]: *** [/builds/linux/arch/powerpc/Makefile:247: zImage] Error 2
-make[1]: Target '__all' not remade because of errors.
-make: *** [Makefile:242: __sub-make] Error 2
-make: Target '__all' not remade because of errors.
------>8-----
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Bisection points to "powerpc/boot: Don't always pass -mcpu=powerpc when building 32-bit uImage" (upstream ff7c76f66d8bad4e694c264c789249e1d3a8205d).
-
-Reproducer:
-   tuxmake \
-     --runtime podman \
-     --target-arch powerpc \
-     --toolchain gcc-8 \
-     --kconfig ppc64e_defconfig \
-     config debugkernel dtbs kernel modules xipkernel
-
-Greetings!
-
-Daniel Díaz
-daniel.diaz@linaro.org
-
+Tested-by: Ron Economos <re@w6rz.net>
 
