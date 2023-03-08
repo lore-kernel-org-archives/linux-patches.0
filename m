@@ -1,106 +1,101 @@
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BF8647
-	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 06:24:51 +0000 (UTC)
-Received: by mail-oi1-f179.google.com with SMTP id s41so11412496oiw.13
-        for <patches@lists.linux.dev>; Tue, 07 Mar 2023 22:24:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678256690;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5X5KlJGh8wmufQGIV2D/tgCOyLpAoiqef77SrBzKk+k=;
-        b=ieBDziEaCEOU5BTCib18PBto1Gq5N8s4DoCs5oN8h2hdjXaemKKmCueAMJzohRt9yY
-         /Gei/ehKN/NcqqFfZGgtuEWlmxkNbDgWV4SjU4QlFSOwuBDKPHV6YWZ1fH5032apXv3s
-         87sXd5enefs6y2/+peP4zA6oHoeTMjvEgk2A/1a+TuBN1t93PK3mh9Bc2JKAe612cd18
-         v5NRaCvPyqPyNpgrsULfjrXvoREpm9wUHegUVNHt4VEMITEsJZy2M6ZwmvRD4q+YhVhS
-         hqOpwZrzBvrOSwNJdaTp54Xe+izDIIHc8uECIphieTuRcjj0r3DVDnoTGLYFu206Oosc
-         fpOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678256690;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5X5KlJGh8wmufQGIV2D/tgCOyLpAoiqef77SrBzKk+k=;
-        b=bdcau1dD8Ii2RBuikjedF8uzq+HxORisJ9i9ZTF5DZgemdG35UIb1F0oLYyPLSYoOc
-         PlGmvYF7EjqvnDsN911nHOVaa795aGrVKOh2tJ1DPs9wy0d/AsAOfSB9TgPHL21N1dDF
-         TRiH/QpSfB3mgwzptl1lx9n6HRbddeSWBWlv6W1jxPgIb4HkQMfSZQZ8l9hErM7A6i9B
-         kFAqrPbDSBg/fX/jzKV697yR/KkFUj6ftG1bSIsBQcWSqNhO9QiOoKqnG0x0K9Us5BAY
-         eeEV+9i49nVnmd02cKfPW5PKMUFXT4iRYFqCsnAanbAfHJxVXWrct6OjatgMCFd3Ia7Z
-         JveA==
-X-Gm-Message-State: AO0yUKUP3til263AUnZIXGEnVns29eMEuCxz7XW+Gfc7fI/LyNXXy7m3
-	lFt1AmHjN7JsrbwqcnWZxjDbpg==
-X-Google-Smtp-Source: AK7set/IqnTdfkK2/5VmcLj+50JMgv5m//T40wTxcdYkzR0RXiu0N8C4nqtywJqs3YseiF8959OW8w==
-X-Received: by 2002:a05:6808:5ce:b0:383:b777:8518 with SMTP id d14-20020a05680805ce00b00383b7778518mr7587929oij.24.1678256688725;
-        Tue, 07 Mar 2023 22:24:48 -0800 (PST)
-Received: from [192.168.17.16] ([189.219.75.19])
-        by smtp.gmail.com with ESMTPSA id s82-20020acadb55000000b00383ecd10ea6sm6016159oig.20.2023.03.07.22.24.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Mar 2023 22:24:48 -0800 (PST)
-Message-ID: <4ce8fe57-53eb-4a83-a468-ebfc98fed496@linaro.org>
-Date: Wed, 8 Mar 2023 00:24:45 -0600
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1857B
+	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 07:13:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5C1C433D2;
+	Wed,  8 Mar 2023 07:13:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1678259587;
+	bh=86BwgrdtTe7yUiHXE8WjEpVeMs2BETlUnDFVbARJ/7I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=0BRdstG2z13Jd6t7HQz/Ra6kkRC6fN7BtSemTfqfginDjvwGnwxBYmrqLJt7Mo8nr
+	 U9TIdQwaWyWsV2xYDh2T9drLlrYfmZp9PE+wUFqf9HW6CIwsGlcIe7sniV9IiJIYCj
+	 qCY9DhCPzpL+U7+DqVEBm4ImpMFVClPSTStckImY=
+Date: Wed, 8 Mar 2023 08:13:03 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Saravana Kannan <saravanak@google.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Colin Foster <colin.foster@in-advantage.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sasha Levin <sashal@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: Re: [PATCH 5.15 330/567] driver core: fw_devlink: Add DL_FLAG_CYCLE
+ support to device links
+Message-ID: <ZAg1f1lArvf7JE9U@kroah.com>
+References: <20230307165905.838066027@linuxfoundation.org>
+ <20230307165920.205338995@linuxfoundation.org>
+ <CAGETcx-sDPx3HySkP-8Rb7TZLZUVP8xTK97Hi2ZJ7PcRva5xkQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 5.15 000/567] 5.15.99-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, peterz@infradead.org, jpoimboe@redhat.com
-References: <20230307165905.838066027@linuxfoundation.org>
-From: =?UTF-8?Q?Daniel_D=c3=adaz?= <daniel.diaz@linaro.org>
-In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGETcx-sDPx3HySkP-8Rb7TZLZUVP8xTK97Hi2ZJ7PcRva5xkQ@mail.gmail.com>
 
-Hello!
-
-On 07/03/23 10:55, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.99 release.
-> There are 567 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Mar 07, 2023 at 11:09:01AM -0800, Saravana Kannan wrote:
+> On Tue, Mar 7, 2023 at 11:02 AM Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > From: Saravana Kannan <saravanak@google.com>
+> >
+> > [ Upstream commit 67cad5c67019c38126b749621665b6723d3ae7e6 ]
+> >
+> > fw_devlink uses DL_FLAG_SYNC_STATE_ONLY device link flag for two
+> > purposes:
+> >
+> > 1. To allow a parent device to proxy its child device's dependency on a
+> >    supplier so that the supplier doesn't get its sync_state() callback
+> >    before the child device/consumer can be added and probed. In this
+> >    usage scenario, we need to ignore cycles for ensure correctness of
+> >    sync_state() callbacks.
+> >
+> > 2. When there are dependency cycles in firmware, we don't know which of
+> >    those dependencies are valid. So, we have to ignore them all wrt
+> >    probe ordering while still making sure the sync_state() callbacks
+> >    come correctly.
+> >
+> > However, when detecting dependency cycles, there can be multiple
+> > dependency cycles between two devices that we need to detect. For
+> > example:
+> >
+> > A -> B -> A and A -> C -> B -> A.
+> >
+> > To detect multiple cycles correct, we need to be able to differentiate
+> > DL_FLAG_SYNC_STATE_ONLY device links used for (1) vs (2) above.
+> >
+> > To allow this differentiation, add a DL_FLAG_CYCLE that can be use to
+> > mark use case (2). We can then use the DL_FLAG_CYCLE to decide which
+> > DL_FLAG_SYNC_STATE_ONLY device links to follow when looking for
+> > dependency cycles.
+> >
+> > Fixes: 2de9d8e0d2fe ("driver core: fw_devlink: Improve handling of cyclic dependencies")
+> > Signed-off-by: Saravana Kannan <saravanak@google.com>
+> > Tested-by: Colin Foster <colin.foster@in-advantage.com>
+> > Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+> > Tested-by: Douglas Anderson <dianders@chromium.org>
+> > Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> > Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
+> > Link: https://lore.kernel.org/r/20230207014207.1678715-6-saravanak@google.com
+> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > ---
 > 
-> Responses should be made by Thu, 09 Mar 2023 16:57:34 +0000.
-> Anything received after that time might be too late.
+> These fw_devlink patches weren't tested with 5.15. It's also an
+> extensive refactor. So I'm a little worried if it'll be finicky and
+> break things in a kernel that's a year old.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.99-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> Unless someone specifically wants these patches in 5.15, I'd prefer we
+> don't pick it up in 5.15.
 
-A new warning has been introduced on x86_64; we've seen it with GCC 8, 11, 12, and Clang 16.
+Good point, I'll go drop this from the 5.15.y queue.
 
-   arch/x86/kernel/smp.o: warning: objtool: sysvec_reboot()+0x54: unreachable instruction
+thanks,
 
-Bisection pointed towards "x86: Mark stop_this_cpu() __noreturn" (upstream commit f9cdf7ca57cada055f61ef6d0eb4db21c3f200db). Reverting this commit did remove the warning.
-
-Reproducer:
-
-   tuxmake \
-     --runtime podman \
-     --target-arch x86_64 \
-     --toolchain gcc-11 \
-     --kconfig https://storage.tuxsuite.com/public/linaro/lkft/builds/2MhGKYH63pYIllJIDAxH3FsvakK/config
-
-
-Greetings!
-
-Daniel Díaz
-daniel.diaz@linaro.org
-
+greg k-h
