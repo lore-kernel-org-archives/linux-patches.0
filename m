@@ -1,170 +1,97 @@
-Received: from mx0a-002e3701.pphosted.com (mx0a-002e3701.pphosted.com [148.163.147.86])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72697B
-	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 00:12:20 +0000 (UTC)
-Received: from pps.filterd (m0148663.ppops.net [127.0.0.1])
-	by mx0a-002e3701.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 327L5gJ4028321;
-	Tue, 7 Mar 2023 22:24:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hpe.com; h=date : from : to : cc :
- subject : message-id : references : mime-version : content-type :
- in-reply-to; s=pps0720; bh=LaaPqV7Flc0GLDHQpIpi/BIcyjij0wSdtMhbcCHYsgA=;
- b=KucE5UTqJQpxT11mxXz+EBR8v0tavcjUv9Ui2FHab40WoQiuV3yFIDgqKk3q5kcdvuwo
- drWjaXC7Yx+uiwl1OenpwWu47udmJqwKjE9dILefQUZGqLmGaEP1NLYCkNLYgQXE55IH
- pJ+yRhi5GSJ5jKQ8RWB3Nr3EtesnmJ05hdKeHlS8cBLT36zWyHn3FQ9/R6GqQyfwyefx
- YeGHnWIch0H3I5hz2qQ78crYlcNTY741RdGLewUR/aekyotj3MBUgHiSeyPnIKvgWPEK
- jg+AIfQknv6WWMr+5LSHk3ZVcc7cEeQsQPCw1ideabEOY7fb99n90BFJHjYRpVRpYa7A Vw== 
-Received: from p1lg14878.it.hpe.com (p1lg14878.it.hpe.com [16.230.97.204])
-	by mx0a-002e3701.pphosted.com (PPS) with ESMTPS id 3p6bu8114b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Mar 2023 22:24:17 +0000
-Received: from p1lg14886.dc01.its.hpecorp.net (unknown [10.119.18.237])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by p1lg14878.it.hpe.com (Postfix) with ESMTPS id CBB17130A9;
-	Tue,  7 Mar 2023 22:24:16 +0000 (UTC)
-Received: from swahl-home.5wahls.com (unknown [16.231.227.36])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by p1lg14886.dc01.its.hpecorp.net (Postfix) with ESMTPS id 9C74F80AD9E;
-	Tue,  7 Mar 2023 22:24:12 +0000 (UTC)
-Date: Tue, 7 Mar 2023 16:24:10 -0600
-From: Steve Wahl <steve.wahl@hpe.com>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com,
-        jejb@linux.ibm.com, martin.petersen@oracle.com, minyard@acm.org,
-        kys@microsoft.com, haiyangz@microsoft.com, wei.liu@kernel.org,
-        decui@microsoft.com, song@kernel.org, robinmholt@gmail.com,
-        steve.wahl@hpe.com, arnd@arndb.de, gregkh@linuxfoundation.org,
-        jirislaby@kernel.org, jgross@suse.com, sstabellini@kernel.org,
-        oleksandr_tyshchenko@epam.com, xen-devel@lists.xenproject.org,
-        j.granados@samsung.com, zhangpeng362@huawei.com,
-        tangmeng@uniontech.com, willy@infradead.org, nixiaoming@huawei.com,
-        sujiaxun@uniontech.com, patches@lists.linux.dev,
-        linux-fsdevel@vger.kernel.org, apparmor@lists.ubuntu.com,
-        linux-raid@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-hyperv@vger.kernel.org, openipmi-developer@lists.sourceforge.net,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/7] sgi-xp: simplify sysctl registration
-Message-ID: <ZAe5batlkUwlKoxx@swahl-home.5wahls.com>
-References: <20230302204612.782387-1-mcgrof@kernel.org>
- <20230302204612.782387-6-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553BA62B
+	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 04:19:46 +0000 (UTC)
+Received: by mail-pl1-f182.google.com with SMTP id a9so16504844plh.11
+        for <patches@lists.linux.dev>; Tue, 07 Mar 2023 20:19:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678249186;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NdnP2NuqTUPQR9c97oNwJuHVigZrUCMRYT3RPXB4eg8=;
+        b=CGW32gDUCcp59MH5OiqxQi4X/6gx3MXDB8I8Ct3qXET3WQhZ/Bnkc1I9D38/g3OrB9
+         rCXrf+TgjAvAxsq725JWYYtXxpXgaQt5VSRmqXC9DJ6SqmGJmjTF5MX+g6HNjThlPE9E
+         WRkDWkEtCL+zOB44OMU5hg+Lb+BKMXMxApSl9yzrWGI/WrILwKta7+DQ703n5YMx7Zqt
+         K0QArZGzeU40rsTCXDbGlZ3SOnGL0j5/N5ZParu3xXmR42PJFXaKP+hAjdex93eSncqP
+         VEQxYraDPElrsVIbkVn0hoiqlMxR55bLRnwC5H7l70n3JZHNmQ5aYT0CEuI/4ETBUMRX
+         vJ0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678249186;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NdnP2NuqTUPQR9c97oNwJuHVigZrUCMRYT3RPXB4eg8=;
+        b=FWTC5FPBy8r5mEdgxP5PcJtgm3ZtPxKZ2oqUEOrTC4MKv6Vth3jHFisb6TdkWJlTqm
+         yGezvlAYOUGtdDqlTxY3vNMqsISrKM+2NHwEjSsEcHmXOGsgYrf1xrCjZbUYAAEUsE0/
+         /qDrplJeqm9lVMev4MiO5L0/rPI86FYEML7p6cab6iwcFK/Trgpyq8TavpZ7lutbi5IS
+         Hf3AjZi/JHKlmymbjJ1Wvl4jyAKDL2amT2iahSDDpyhNXloS05g4HM7ksGfsd8PurSnb
+         FtRQK4qU6shiaz+Z5Wz2Ply5SrC03+qC3xColDuPXhkQjh8l6O9W3u0YqTZiQ8xKVzfx
+         9cbw==
+X-Gm-Message-State: AO0yUKXqaIwr0CzJoCBfABRPs5f8n7HyoflqiFyrmDp1sffLK38CgiHp
+	7Mad1B/W3bYXPdAfGhhVnlk=
+X-Google-Smtp-Source: AK7set9jbSODgLHbXn/kAV+3HwfXtJO5bm8WTPGni05zefS9xzKFRCjNuJf0+6IAVIjT35vJc3HJyg==
+X-Received: by 2002:a05:6a20:4290:b0:bf:5d4e:704b with SMTP id o16-20020a056a20429000b000bf5d4e704bmr18072653pzj.32.1678249185667;
+        Tue, 07 Mar 2023 20:19:45 -0800 (PST)
+Received: from debian.me (subs02-180-214-232-18.three.co.id. [180.214.232.18])
+        by smtp.gmail.com with ESMTPSA id s2-20020aa78282000000b005905d2fe760sm8640309pfm.155.2023.03.07.20.19.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Mar 2023 20:19:45 -0800 (PST)
+Received: by debian.me (Postfix, from userid 1000)
+	id B189F1065BB; Wed,  8 Mar 2023 11:19:41 +0700 (WIB)
+Date: Wed, 8 Mar 2023 11:19:41 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.15 000/567] 5.15.99-rc1 review
+Message-ID: <ZAgM3QKYAjAwUPAC@debian.me>
+References: <20230307165905.838066027@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="bUJ/i8HoDBY6xz5R"
 Content-Disposition: inline
-In-Reply-To: <20230302204612.782387-6-mcgrof@kernel.org>
-X-Proofpoint-GUID: -gScpSVwE5aPWwo4gsaN-rEbeWVyAJK_
-X-Proofpoint-ORIG-GUID: -gScpSVwE5aPWwo4gsaN-rEbeWVyAJK_
-X-HPE-SCL: -1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-07_16,2023-03-07_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- mlxscore=0 malwarescore=0 impostorscore=0 adultscore=0 priorityscore=1501
- suspectscore=0 phishscore=0 mlxlogscore=999 lowpriorityscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303070197
+In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 
-On Thu, Mar 02, 2023 at 12:46:10PM -0800, Luis Chamberlain wrote:
-> Although this driver is a good use case for having a directory
-> that is not other directories and then subdirectories with more
-> entries, the usage of register_sysctl_table() can recurse and
-> increases complexity so to avoid that just split out the
-> registration to each directory with its own entries.
-> 
-> register_sysctl_table() is a deprecated compatibility wrapper.
-> register_sysctl() can do the directory creation for you so just use
-> that.
-> 
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 
-Reviewed-by: Steve Wahl <steve.wahl@hpe.com>
+--bUJ/i8HoDBY6xz5R
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> ---
->  drivers/misc/sgi-xp/xpc_main.c | 24 ++++++++++--------------
->  1 file changed, 10 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/misc/sgi-xp/xpc_main.c b/drivers/misc/sgi-xp/xpc_main.c
-> index b2c3c22fc13c..6da509d692bb 100644
-> --- a/drivers/misc/sgi-xp/xpc_main.c
-> +++ b/drivers/misc/sgi-xp/xpc_main.c
-> @@ -93,7 +93,7 @@ int xpc_disengage_timelimit = XPC_DISENGAGE_DEFAULT_TIMELIMIT;
->  static int xpc_disengage_min_timelimit;	/* = 0 */
->  static int xpc_disengage_max_timelimit = 120;
->  
-> -static struct ctl_table xpc_sys_xpc_hb_dir[] = {
-> +static struct ctl_table xpc_sys_xpc_hb[] = {
->  	{
->  	 .procname = "hb_interval",
->  	 .data = &xpc_hb_interval,
-> @@ -112,11 +112,7 @@ static struct ctl_table xpc_sys_xpc_hb_dir[] = {
->  	 .extra2 = &xpc_hb_check_max_interval},
->  	{}
->  };
-> -static struct ctl_table xpc_sys_xpc_dir[] = {
-> -	{
-> -	 .procname = "hb",
-> -	 .mode = 0555,
-> -	 .child = xpc_sys_xpc_hb_dir},
-> +static struct ctl_table xpc_sys_xpc[] = {
->  	{
->  	 .procname = "disengage_timelimit",
->  	 .data = &xpc_disengage_timelimit,
-> @@ -127,14 +123,9 @@ static struct ctl_table xpc_sys_xpc_dir[] = {
->  	 .extra2 = &xpc_disengage_max_timelimit},
->  	{}
->  };
-> -static struct ctl_table xpc_sys_dir[] = {
-> -	{
-> -	 .procname = "xpc",
-> -	 .mode = 0555,
-> -	 .child = xpc_sys_xpc_dir},
-> -	{}
-> -};
-> +
->  static struct ctl_table_header *xpc_sysctl;
-> +static struct ctl_table_header *xpc_sysctl_hb;
->  
->  /* non-zero if any remote partition disengage was timed out */
->  int xpc_disengage_timedout;
-> @@ -1041,6 +1032,8 @@ xpc_do_exit(enum xp_retval reason)
->  
->  	if (xpc_sysctl)
->  		unregister_sysctl_table(xpc_sysctl);
-> +	if (xpc_sysctl_hb)
-> +		unregister_sysctl_table(xpc_sysctl_hb);
->  
->  	xpc_teardown_partitions();
->  
-> @@ -1243,7 +1236,8 @@ xpc_init(void)
->  		goto out_1;
->  	}
->  
-> -	xpc_sysctl = register_sysctl_table(xpc_sys_dir);
-> +	xpc_sysctl = register_sysctl("xpc", xpc_sys_xpc);
-> +	xpc_sysctl_hb = register_sysctl("xpc/hb", xpc_sys_xpc_hb);
->  
->  	/*
->  	 * Fill the partition reserved page with the information needed by
-> @@ -1308,6 +1302,8 @@ xpc_init(void)
->  	(void)unregister_die_notifier(&xpc_die_notifier);
->  	(void)unregister_reboot_notifier(&xpc_reboot_notifier);
->  out_2:
-> +	if (xpc_sysctl_hb)
-> +		unregister_sysctl_table(xpc_sysctl_hb);
->  	if (xpc_sysctl)
->  		unregister_sysctl_table(xpc_sysctl);
->  
-> -- 
-> 2.39.1
-> 
+On Tue, Mar 07, 2023 at 05:55:36PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.99 release.
+> There are 567 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
 
--- 
-Steve Wahl, Hewlett Packard Enterprise
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
+
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--bUJ/i8HoDBY6xz5R
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZAgM1wAKCRD2uYlJVVFO
+ozYNAP9XfjII4wqBZaXGJxzXWRLdClapsON4hmRauDKRPGMM9QEAkWpRvIRY0hFX
+Jr8fqUFjjsTY59i1MLn15rW0FiNJqAI=
+=jRwl
+-----END PGP SIGNATURE-----
+
+--bUJ/i8HoDBY6xz5R--
