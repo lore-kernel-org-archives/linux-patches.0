@@ -1,54 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4AF747F
-	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 14:44:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506A6C433D2;
-	Wed,  8 Mar 2023 14:44:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678286675;
-	bh=x7K563D1bIPVbxvD9d60t5KyNe2ANsTBa7TdsK1Ilp4=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6838462
+	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 18:01:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB152C433EF;
+	Wed,  8 Mar 2023 18:01:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1678298474;
+	bh=36z7JsjW1FtWV0KV3rqWtnvlzfxSrcWjPrZxaEf2Esg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DNPAEiW0QndoNYuOw3x1ioiPS/T4IXPPHRn2fXqkMUSPPq+srjASJOidgqQ2xznt5
-	 yruCKQY+EkPuy7DryxJxvSbyzOrVTldp0Ptzg53glTSjffsYpxXi6B7T15W/8+fDFe
-	 GYv3pSGOS7IqnA9ciVEA2jSncLT80neJnnz77fGw=
-Date: Wed, 8 Mar 2023 15:44:32 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: stable@vger.kernel.org, Thierry Reding <treding@nvidia.com>,
+	b=GMNqwkd4HYKTXC0rpgC65JtFDlJ9BBwOpvpZ2nS0DQPo+x/h2i8LPENUUo82bhTBN
+	 wp+IH1u9W9OplSi0VqXJuJEWLsSHnAIwbNbODXlntN3Dbcf9Rb+pk8HRz8igZOFXx3
+	 oOLwAPZ9ak5bfRlRANEN7k/bwn8JiE0J92IrOz6EjFEEiG5WmbS3g8PVEwx6QDag56
+	 86TtTEmm1cc+l3ooX0omspbIzDpU3W8RfM+M064di4QYPkwB4coB939PduZVYBuHu2
+	 nt2FgLz+FPT7v5QHu74DztdMN7bjqCMasFPNScYBUGQWWLwhMTsk7+tUcY1PewyNyi
+	 xcA9nUMB6NXfA==
+Received: by pali.im (Postfix)
+	id 66BEA6AE; Wed,  8 Mar 2023 19:01:11 +0100 (CET)
+Date: Wed, 8 Mar 2023 19:01:11 +0100
+From: Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>
+To: Daniel =?utf-8?B?RMOtYXo=?= <daniel.diaz@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
 	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 	torvalds@linux-foundation.org, akpm@linux-foundation.org,
 	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.2 0000/1000] 6.2.3-rc2 review
-Message-ID: <ZAifUN1XpQ/ojXz8@kroah.com>
-References: <20230308091912.362228731@linuxfoundation.org>
- <6883f095-cf2b-2c45-5786-a46ba1c13dd7@nvidia.com>
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, christophe.leroy@csgroup.eu,
+	mpe@ellerman.id.au
+Subject: Re: [PATCH 6.2 0000/1001] 6.2.3-rc1 review
+Message-ID: <20230308180111.cxa2fdyfwbqwzdgg@pali>
+References: <20230307170022.094103862@linuxfoundation.org>
+ <81cd2720-0414-1213-3826-31bd240d5c75@linaro.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <6883f095-cf2b-2c45-5786-a46ba1c13dd7@nvidia.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <81cd2720-0414-1213-3826-31bd240d5c75@linaro.org>
+User-Agent: NeoMutt/20180716
 
-On Wed, Mar 08, 2023 at 01:49:30PM +0000, Jon Hunter wrote:
-> Hi Greg,
+On Tuesday 07 March 2023 18:01:42 Daniel Díaz wrote:
+> Hello!
 > 
-> On 08/03/2023 09:29, Greg Kroah-Hartman wrote:
+> On 07/03/23 10:46, Greg Kroah-Hartman wrote:
 > > This is the start of the stable review cycle for the 6.2.3 release.
-> > There are 1000 patches in this series, all will be posted as a response
+> > There are 1001 patches in this series, all will be posted as a response
 > > to this one.  If anyone has any issues with these being applied, please
 > > let me know.
 > > 
-> > Responses should be made by Fri, 10 Mar 2023 09:16:12 +0000.
+> > Responses should be made by Thu, 09 Mar 2023 16:57:34 +0000.
 > > Anything received after that time might be too late.
 > > 
 > > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.3-rc2.gz
+> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.3-rc1.gz
 > > or in the git tree and branch at:
 > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
 > > and the diffstat can be found below.
@@ -56,21 +65,50 @@ On Wed, Mar 08, 2023 at 01:49:30PM +0000, Jon Hunter wrote:
 > > thanks,
 > > 
 > > greg k-h
-> > 
-> > -------------
-> > Pseudo-Shortlog of commits:
 > 
-> ...
+> We see a regression with PowerPC's ppc64e_defconfig, using GCC 8 and GCC 12:
+> -----8<-----
+> powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
+> powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
+> make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:237: arch/powerpc/boot/crt0.o] Error 1
+> make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:237: arch/powerpc/boot/crtsavres.o] Error 1
+> powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
+> make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:235: arch/powerpc/boot/cuboot.o] Error 1
+> [...]
+> make[2]: Target 'arch/powerpc/boot/zImage' not remade because of errors.
+> make[1]: *** [/builds/linux/arch/powerpc/Makefile:247: zImage] Error 2
+> make[1]: Target '__all' not remade because of errors.
+> make: *** [Makefile:242: __sub-make] Error 2
+> make: Target '__all' not remade because of errors.
+> ----->8-----
 > 
-> > Thierry Reding <treding@nvidia.com>
-> >      arm64: tegra: Bump #address-cells and #size-cells
-> 
-> 
-> The above change introduced a regression for Tegra, which Thierry has since
-> fixed [0]. Please can you drop this for now?
+> Bisection points to "powerpc/boot: Don't always pass -mcpu=powerpc when building 32-bit uImage" (upstream ff7c76f66d8bad4e694c264c789249e1d3a8205d).
 
-Now dropped, and the patch after this in the series as well.
+Hello! You hit another issue that CONFIG_TARGET_CPU_BOOL is set but
+CONFIG_TARGET_CPU is not. This issue was fixed in upstream by commit:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=45f7091aac3546ef8112bf62836650ca0bbf0b79
 
-thanks,
+See discussion about that issue:
+https://lore.kernel.org/linuxppc-dev/20221208191602.diywrt3g2f6zmt4s@pali/
 
-greg k-h
+Can you check that above commit was also backported during your testing?
+If not then apply it too and test again.
+
+Commit ff7c76f66d8bad4e694c264c789249e1d3a8205d is needed to backport
+because it is fixing compile error issue for e500v2 platforms when
+compiling kernel with e500v2 cross compiler.
+
+> Reproducer:
+>   tuxmake \
+>     --runtime podman \
+>     --target-arch powerpc \
+>     --toolchain gcc-8 \
+>     --kconfig ppc64e_defconfig \
+>     config debugkernel dtbs kernel modules xipkernel
+> 
+> Greetings!
+> 
+> Daniel Díaz
+> daniel.diaz@linaro.org
+> 
+> 
