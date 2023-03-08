@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A4B7B
-	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 07:19:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F931C433EF;
-	Wed,  8 Mar 2023 07:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D7B7B
+	for <patches@lists.linux.dev>; Wed,  8 Mar 2023 07:20:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0051BC433EF;
+	Wed,  8 Mar 2023 07:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678259969;
-	bh=T79gADW5BJP58DL1ihiPjZCsFdOC5qR/ClSIWFq1bfU=;
+	s=korg; t=1678260000;
+	bh=aR6bB2GGlBtO9BARFVyUtoh6bM7DG1ldubDV47rx5cg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MnBfyA4CPK+uMi2a/tdZgGM/O3AAsRJtwj0xtgWMWz5hqiJxeY+J6UlU62FLAwk6V
-	 1PySqQONH2JXPd0E7N93ObfM2/PNivUXvzhTwIMF8uulVHph4LFvkkzBX50FFke+C9
-	 rXcWaq6OXWhnceUTt3BjUtoxF6euCQEx8tQXgx9Y=
-Date: Wed, 8 Mar 2023 08:19:19 +0100
+	b=t8Y+LsjLtiqDxF4P7mv2mNOJTMJI18lFa4TEDU7fUtTfKMyz52MUx1UKkzr93JeKe
+	 310D5G0rC5S2G7tuFjqgaCln5fpy+VrE/eSNkKsBTHBDWwYVO+rN9imBxa8SA95q8/
+	 LKz1rvSNLSaRLvtabVBCi0MNnCwZzI13+LmmLdPw=
+Date: Wed, 8 Mar 2023 08:19:57 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Vegard Nossum <vegard.nossum@oracle.com>
-Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
+To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	Darren Kenny <darren.kenny@oracle.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
 Subject: Re: [PATCH 5.15 000/567] 5.15.99-rc1 review
-Message-ID: <ZAg2989Hzuc1Wmlp@kroah.com>
+Message-ID: <ZAg3HXzHaE1SQQAg@kroah.com>
 References: <20230307165905.838066027@linuxfoundation.org>
- <6f792ece-b7c0-3af0-b1c0-631f1cc4f5fb@oracle.com>
- <583f7dd7-dc40-724e-aa49-33287754cc5c@oracle.com>
+ <c1bc24d9-0977-4d7e-bee8-aa897b1cb435@linaro.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -39,44 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <583f7dd7-dc40-724e-aa49-33287754cc5c@oracle.com>
+In-Reply-To: <c1bc24d9-0977-4d7e-bee8-aa897b1cb435@linaro.org>
 
-On Tue, Mar 07, 2023 at 09:12:48PM +0100, Vegard Nossum wrote:
+On Tue, Mar 07, 2023 at 05:06:23PM -0600, Daniel Díaz wrote:
+> Hello!
 > 
-> On 3/7/23 21:02, Harshit Mogalapalli wrote:
-> > On 07/03/23 10:25 pm, Greg Kroah-Hartman wrote:
-> > > This is the start of the stable review cycle for the 5.15.99 release.
-> > > There are 567 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > > 
+> On 07/03/23 10:55, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.15.99 release.
+> > There are 567 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > While trying to build 5.15.99-rc1 with
-> > * make -C tools/perf all
+> > Responses should be made by Thu, 09 Mar 2023 16:57:34 +0000.
+> > Anything received after that time might be too late.
 > > 
-> > The following build errors are seen.
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.99-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > and the diffstat can be found below.
 > > 
-> > util/intel-pt-decoder/intel-pt-decoder.c: In function
-> > 'intel_pt_eptw_lookahead_cb':
-> > util/intel-pt-decoder/intel-pt-decoder.c:1445:14: error: 'INTEL_PT_CFE'
-> [...]
+> > thanks,
 > > 
-> > [PATCH 5.15 264/567] perf intel-pt: Add support for emulated ptwrite
-> > is causing this error.
+> > greg k-h
 > 
-> In addition, cherry-picking this fixes the build (but we haven't done a
-> full test with it):
+> We see Perf failing to compile on: arm, arm64, i386, x86_64, under OpenEmbedded (GCC 11.3) when building for the following machines:
+> * Dragonboard 410c (arm64)
+> * Dragonboard 845c (arm64)
+> * Juno (arm64)
+> * X15 (arm)
+> * intel-core2-32 (i386)
+> * intel-corei7-64 (x86_64)
 > 
-> commit 2750af50a360b52c6df1f5652ae728878bececc0
-> Author: Adrian Hunter <adrian.hunter@intel.com>
-> Date:   Mon Jan 24 10:41:39 2022 +0200
-> 
->     perf intel-pt: pkt-decoder: Add CFE and EVD packets
-> 
-> Greg: Do you prefer this kind of error report go to the 0/N email (like
-> in this case) or to the specific problematic patch email if we've
-> already identified it?
+> Error:
+> -----8<-----
+> util/intel-pt-decoder/intel-pt-decoder.c: In function 'intel_pt_eptw_lookahead_cb':
+> util/intel-pt-decoder/intel-pt-decoder.c:1445:7: error: 'INTEL_PT_CFE' undeclared (first use in this function); did you mean 'INTEL_PT_CBR'?
+>  1445 |  case INTEL_PT_CFE:
+>       |       ^~~~~~~~~~~~
+>       |       INTEL_PT_CBR
+> util/intel-pt-decoder/intel-pt-decoder.c:1445:7: note: each undeclared identifier is reported only once for each function it appears in
+> util/intel-pt-decoder/intel-pt-decoder.c:1446:7: error: 'INTEL_PT_CFE_IP' undeclared (first use in this function); did you mean 'INTEL_PT_BEP_IP'?
+>  1446 |  case INTEL_PT_CFE_IP:
+>       |       ^~~~~~~~~~~~~~~
+>       |       INTEL_PT_BEP_IP
+> util/intel-pt-decoder/intel-pt-decoder.c:1447:7: error: 'INTEL_PT_EVD' undeclared (first use in this function); did you mean 'INTEL_PT_OVF'?
+>  1447 |  case INTEL_PT_EVD:
+>       |       ^~~~~~~~~~~~
+>       |       INTEL_PT_OVF
+> ----->8-----
 
-Either works for me, I'll go queue this up now, thanks!
+Should now be fixed.
+
+thanks,
 
 greg k-h
