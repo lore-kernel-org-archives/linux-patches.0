@@ -1,103 +1,94 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAD49447
-	for <patches@lists.linux.dev>; Thu,  9 Mar 2023 11:13:13 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 7CE9821E8C;
-	Thu,  9 Mar 2023 11:13:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1678360391; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wE1al//pCc1to1HvUyvkZo2jQrSNJIISu5e3jqOmb4s=;
-	b=veUZEMzEMFoFQBSMkP7TVCeLql/YYD/acm4DYFiB8bth7DfTCzjmSL7zWAGRSKNsFvCzPv
-	80vdMoqx0HTQ4/7N9cFLCg8kRPqV7ipaRyEJY3x42qSIis4ntpoOTThU2WXvVT+g36j1KN
-	RtXw5mM+Lk132MHltILMEq5ZhGqMj0Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1678360391;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wE1al//pCc1to1HvUyvkZo2jQrSNJIISu5e3jqOmb4s=;
-	b=uNtMsgjSDTk/7Nv8XNxPldzlzzfl+cS/tPmooh3HejHqR7vHiuhfcC3t1a+EIzZdoeipTI
-	HFfyME6YvqFto0Bg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 5DE691391B;
-	Thu,  9 Mar 2023 11:13:11 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id qHtIFke/CWRiRwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Thu, 09 Mar 2023 11:13:11 +0000
-From: Vlastimil Babka <vbabka@suse.cz>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	maple-tree@lists.infradead.org,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 04/10] mm/mmap/vma_merge: use the proper vma pointer in case 4
-Date: Thu,  9 Mar 2023 12:12:52 +0100
-Message-Id: <20230309111258.24079-5-vbabka@suse.cz>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230309111258.24079-1-vbabka@suse.cz>
-References: <20230309111258.24079-1-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3333B6AD9
+	for <patches@lists.linux.dev>; Thu,  9 Mar 2023 11:37:14 +0000 (UTC)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 6BE0C1C0DFD; Thu,  9 Mar 2023 12:30:29 +0100 (CET)
+Date: Thu, 9 Mar 2023 12:30:28 +0100
+From: Pavel Machek <pavel@denx.de>
+To: Chris Paterson <Chris.Paterson2@renesas.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"stable@vger.kernel.org" <stable@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
+	"akpm@linux-foundation.org" <akpm@linux-foundation.org>,
+	"linux@roeck-us.net" <linux@roeck-us.net>,
+	"shuah@kernel.org" <shuah@kernel.org>,
+	"patches@kernelci.org" <patches@kernelci.org>,
+	"lkft-triage@lists.linaro.org" <lkft-triage@lists.linaro.org>,
+	"pavel@denx.de" <pavel@denx.de>,
+	"jonathanh@nvidia.com" <jonathanh@nvidia.com>,
+	"f.fainelli@gmail.com" <f.fainelli@gmail.com>,
+	"sudipm.mukherjee@gmail.com" <sudipm.mukherjee@gmail.com>,
+	"srw@sladewatkins.net" <srw@sladewatkins.net>,
+	"rwarsow@gmx.de" <rwarsow@gmx.de>
+Subject: CIP doing -stable kernel testing -- was Re: [PATCH 6.1 000/887]
+ 6.1.16-rc2 review
+Message-ID: <ZAnDVIl09wDaFNXy@duo.ucw.cz>
+References: <20230308091853.132772149@linuxfoundation.org>
+ <TYCPR01MB105885F25AAE8A2FDBD2E577FB7B59@TYCPR01MB10588.jpnprd01.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="3uryvEXGq31Vxb63"
+Content-Disposition: inline
+In-Reply-To: <TYCPR01MB105885F25AAE8A2FDBD2E577FB7B59@TYCPR01MB10588.jpnprd01.prod.outlook.com>
 
-Almost all cases now use the 'next' pointer for the vma following
-the merged area, and the cases diagram shows it as XXXX. Case 4 is
-different as it uses 'mid' and NNNN, so change it for consistency. No
-functional change.
 
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
----
- mm/mmap.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+--3uryvEXGq31Vxb63
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/mm/mmap.c b/mm/mmap.c
-index c33237b283c9..420d6847c94c 100644
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -851,9 +851,9 @@ can_vma_merge_after(struct vm_area_struct *vma, unsigned long vm_flags,
-  * vma, PPPPPP is the prev vma specified, and NNNNNN the next vma after:
-  *
-  *     AAAA             AAAA                   AAAA
-- *    PPPPPPNNNNNN    PPPPPPNNNNNN       PPPPPPNNNNNN
-+ *    PPPPPPNNNNNN    PPPPPPXXXXXX       PPPPPPNNNNNN
-  *    cannot merge    might become       might become
-- *                    PPNNNNNNNNNN       PPPPPPPPPPNN
-+ *                    PPXXXXXXXXXX       PPPPPPPPPPNN
-  *    mmap, brk or    case 4 below       case 5 below
-  *    mremap move:
-  *                        AAAA               AAAA
-@@ -972,9 +972,9 @@ struct vm_area_struct *vma_merge(struct vma_iterator *vmi, struct mm_struct *mm,
- 		res = next;
- 		if (prev && addr < prev->vm_end) {	/* case 4 */
- 			vma_end = addr;
--			adjust = mid;
-+			adjust = next;
- 			adj_next = -(prev->vm_end - addr);
--			err = dup_anon_vma(mid, prev);
-+			err = dup_anon_vma(next, prev);
- 		} else {
- 			vma = next;			/* case 3 */
- 			vma_start = addr;
--- 
-2.39.2
+Hi!
 
+> > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > Sent: 08 March 2023 09:30
+> >=20
+> > This is the start of the stable review cycle for the 6.1.16 release.
+> > There are 887 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+>=20
+> CIP testing did not find any problems with Linux 6.1.16-rc2 (bb4e875c8c41=
+):
+> https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines=
+/800470660
+> https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/l=
+inux-6.1.y
+
+Hey, that was supposed to be my line! :-).
+
+Well, in fact Chris is doing testing for CIP, and I was just
+announcing the results. We decided to test all the -stable releases,
+and due to increased ammount of emails, likely Chris will be
+announcing successful tests from now on.
+
+-stable is rather important for our work (and we'll likely be
+maintaining 6.1 for 10 years). We do have some resources we can
+dedicate to testing and stable maintainance, so if there's something
+else we could do, let us know and we might be able to arrange that.
+
+Best regards,
+								Pavel
+--=20
+DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--3uryvEXGq31Vxb63
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZAnDVAAKCRAw5/Bqldv6
+8swPAJ43oyH290iaCbEvc9yCQo3wrwDhKwCfaB1Y1bywyCo/qEpb6ei8zIa0VQE=
+=fdjY
+-----END PGP SIGNATURE-----
+
+--3uryvEXGq31Vxb63--
