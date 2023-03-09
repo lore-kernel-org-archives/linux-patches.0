@@ -1,88 +1,97 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9AA36D;
-	Wed,  8 Mar 2023 22:36:05 +0000 (UTC)
-Received: by mail-ed1-f50.google.com with SMTP id i34so71833472eda.7;
-        Wed, 08 Mar 2023 14:36:05 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA4D628
+	for <patches@lists.linux.dev>; Thu,  9 Mar 2023 02:05:37 +0000 (UTC)
+Received: by mail-pl1-f175.google.com with SMTP id y11so516745plg.1
+        for <patches@lists.linux.dev>; Wed, 08 Mar 2023 18:05:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678314964;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jzDf4+4sG/Th13nL0Nk+rTjw3K6s3TCf1TZrS78TwVk=;
-        b=TKYPU3ZRnNzZcIrmpbFdrOELb3qHa4Mmd5uxjy5Awp0yXXXvcwOqQf7P4LJRy6hkvm
-         356DfYqVabeiY6tfx37KrcRPlwazFBeFFB9Tfnx+EGs0XQr2QklDBe15O3uLbQEeDkAH
-         JmAbzE6hh+DjMf80YADuMmOQEB+qci9YSSMdgo0AIOXb5GeAeoAx5z2V/5hfke90LAtN
-         4HhBVyxVkWoEeVADYD4Ktn11RWIcpUdql83m+s3RlPW/v5kQ1tvko9IhKGHHdQcs5GRS
-         tH19/5tiBmopZIsq2eiEuXXp73MF6ezkSL6HYF1SHmoSgQJ7NYIHmtkVH/LK0IG3dBK1
-         7Lsg==
+        d=gmail.com; s=20210112; t=1678327537;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JSZXkOzWUjU6JkgJilE0EIcfpIeJHdOfJ4nnNvrZU68=;
+        b=XJPjoCLTEcQrAL+uS+zWq6HfsAci4uyg+eY8/vBMIG+3sbi+IR6C2eBojMmBIBIV2z
+         QlkjM14BmsGqGKS9Zl0AkiNWi+IqCcE+igss0acaKUVQls3IXDNR6pmGAgTu9PSFAzvk
+         xFFuKR9a7bMEIn+oiBWo5rJp6Qk6oKWwUWRBaoV1UhXOjwZ2g2PYnuZGlH0UXx+bVlYD
+         NSRlUy4OmjpuwVh4Y8mYheShU3YmeIVCmDxJdLIBhbLGnnpL/6UpCweJ0Yshi3y0Mruh
+         0HiHXHqINKLQFE1Ddy1uNhKWCvkM6snexuoVhycerpvrvi+KYEebJT9IdIcpNPhyGJiP
+         IbcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678314964;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jzDf4+4sG/Th13nL0Nk+rTjw3K6s3TCf1TZrS78TwVk=;
-        b=v449lZ5i+rxjYap1bKcrZtO1TPq37dZe0LMBhom125r98H5Zeaq4TEgAstuX/Qp+7O
-         tVtU8braG0Gbyo/qt3VCuFqCgaa05EyNlvbtXR7KMvSRO8AeyQRTz7HFtW1ft0fba1zb
-         1shlAIect1BrQtgghCq0Bjh8I9GfRkDibJC9GCJG8OB9aesv1pRHNo604diiGcPh6f1K
-         0dZU2AoGOe2GIwr6QHRW9BkwskltJ+HW9kFJ8+6FuuO342ppCuZwHPxgZY0TTiv4ujZ3
-         AKL0Wt9F2qq8bssUjRCSoUWa3eUOAS/MJzmpfXpucKzqy5hWjum6ZhwEXvTgH22J7Dsl
-         2a4A==
-X-Gm-Message-State: AO0yUKWJ+XoBO0rbj8dgmUETKXdNccOWV8IoN4erAYDCh8M3bMuDbmrK
-	eaqXFCG+yRmsPU0sbR0FV1Q=
-X-Google-Smtp-Source: AK7set/8kMxm9e7Ww76G9dAgDiHgWhS+pXwdbv/atF+1sdRH7bnZyj6ZiiACFFD6T7xTA7L5lspPLA==
-X-Received: by 2002:a17:907:7748:b0:8e8:6b69:2093 with SMTP id kx8-20020a170907774800b008e86b692093mr22362157ejc.25.1678314963862;
-        Wed, 08 Mar 2023 14:36:03 -0800 (PST)
-Received: from [192.168.0.151] (ip5f5abbd3.dynamic.kabel-deutschland.de. [95.90.187.211])
-        by smtp.gmail.com with ESMTPSA id q1-20020a50c341000000b004bbb691a334sm8862127edb.2.2023.03.08.14.36.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 14:36:03 -0800 (PST)
-Message-ID: <9e4d7f04-3114-8240-341b-1fff5ae69b0b@gmail.com>
-Date: Wed, 8 Mar 2023 23:36:02 +0100
+        d=1e100.net; s=20210112; t=1678327537;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JSZXkOzWUjU6JkgJilE0EIcfpIeJHdOfJ4nnNvrZU68=;
+        b=hzJvQ7Zun8eI57pRlJtWJUQAIXDYAzgZTMDb/i1w1gYblG6uzxyCEIsItmV4Jp91Qi
+         Uxu98u0ofttNTdd/sqWY5ozGnDyawRMMozld6eRw39ZiY3WlSfyoXCnI1K2gL3h1I9GQ
+         HoeQgxH24/KWji4UmAqa+aZq7kx3PUIvYfV/3TFDTkbACh1Ebe7fqvKLuGAAFJhgqXHx
+         oxvBMUXy87DVj4f7ufuMeDN3GePPFK9/tDCzuD/GYGJI9q8Qtbk2V/aYUe0VuCoctAki
+         7GUStYdaPmeYP9RST8s9jrsC6y3zmsrzoMREHoQxJoSgVTet87Dc2usKGxiYcyXqu4IO
+         uY6Q==
+X-Gm-Message-State: AO0yUKXOQvQf19RnhkpZ/G693UHvuB0YUmCNHqkkh3jNW+Gs8jY/oacp
+	WBxpz+kx6johrNCjA/XufcU=
+X-Google-Smtp-Source: AK7set9KMrycEaQIMCOptQv4UT7+AbalKdsIeTLKSqkyR3TqZxUx1Nbt0u02LxXIQ9uuCkmBCUeTHw==
+X-Received: by 2002:a17:902:ea10:b0:19e:f86c:255a with SMTP id s16-20020a170902ea1000b0019ef86c255amr4673190plg.7.1678327536757;
+        Wed, 08 Mar 2023 18:05:36 -0800 (PST)
+Received: from debian.me (subs02-180-214-232-87.three.co.id. [180.214.232.87])
+        by smtp.gmail.com with ESMTPSA id t3-20020a170902d20300b0019adbef6a63sm10402008ply.235.2023.03.08.18.05.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Mar 2023 18:05:36 -0800 (PST)
+Received: by debian.me (Postfix, from userid 1000)
+	id 061A61065B8; Thu,  9 Mar 2023 09:05:31 +0700 (WIB)
+Date: Thu, 9 Mar 2023 09:05:31 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.15 000/570] 5.15.99-rc2 review
+Message-ID: <ZAk+6wv5eexfOK2y@debian.me>
+References: <20230308091759.112425121@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] staging: r8188eu: delete driver
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- linux-staging@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- Hans de Goede <hdegoede@redhat.com>, Martin Kaiser <martin@kaiser.cx>,
- Larry Finger <Larry.Finger@lwfinger.net>,
- Phillip Potter <phil@philpotter.co.uk>, Pavel Skripkin <paskripkin@gmail.com>
-References: <20230308131934.380395-1-gregkh@linuxfoundation.org>
-Content-Language: en-US
-From: Michael Straube <straube.linux@gmail.com>
-In-Reply-To: <20230308131934.380395-1-gregkh@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="AK/Nxp/4nin2VaLk"
+Content-Disposition: inline
+In-Reply-To: <20230308091759.112425121@linuxfoundation.org>
 
-On 3/8/23 14:19, Greg Kroah-Hartman wrote:
-> Now that the same hardware that the r8188eu driver supported is
-> supported by the real wireless driver rtl8xxxu, the r8188eu driver can
-> be deleted.
-> 
-> Also the rtl8xxxu driver supports way more devices, and is a fraction of
-> the overall size, making this a much better overall solution.
-> 
-> Thanks to the r8188eu developers and maintainers and reviewers over the
-> years, your work allowed Linux users to use their hardware before the
-> real driver was implemented properly.
-> 
-> Reported-by: Hans de Goede <hdegoede@redhat.com>
-> Cc: Martin Kaiser <martin@kaiser.cx>
-> Cc: Larry Finger <Larry.Finger@lwfinger.net>
-> Cc: Phillip Potter <phil@philpotter.co.uk>
-> Cc: Pavel Skripkin <paskripkin@gmail.com>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
 
-The rtl8xxxu driver works well for me.
+--AK/Nxp/4nin2VaLk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Acked-by: Michael Straube <straube.linux@gmail.com>
+On Wed, Mar 08, 2023 at 10:29:40AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.99 release.
+> There are 570 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
 
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
+
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--AK/Nxp/4nin2VaLk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZAk+5QAKCRD2uYlJVVFO
+o/RGAP9plKGEYwy7w+0FDYLJsdZE7lqs3D/R7+/iF52p7Bu9+AEA1rwLzsstnJMd
+fwj0jI9QzV9R3VtD9DdVSNIHuFAfRA0=
+=rmHJ
+-----END PGP SIGNATURE-----
+
+--AK/Nxp/4nin2VaLk--
