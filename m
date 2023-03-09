@@ -1,41 +1,41 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6F49443
-	for <patches@lists.linux.dev>; Thu,  9 Mar 2023 11:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC17F944C
+	for <patches@lists.linux.dev>; Thu,  9 Mar 2023 11:13:13 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 47ACB2003B;
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 28AA521E8D;
 	Thu,  9 Mar 2023 11:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
 	t=1678360392; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Am3Z7D3PJEF75x3/HiQBrnXvVKIlV3/Qp4c3FogRta0=;
-	b=IN9yYJDPpAsUzcK/lBOeD2OcF3abAzwQ1DWsa1jg7+7eKnFdayh/P6CMtsBy7OtrQm00nA
-	+0vQ3fFLUakpP8Rn+BjzZ5fmS5nIOFNikGqmEYsrfsawuNGhaI1yOvLmxMGMeyqPH1PF3a
-	nm4+jG513He9UWKRAiy73yO6m8P43sc=
+	bh=2Qu5xXTySwPTF8dLZgi/I8vkKzIjKqyV6OaDVaB++xA=;
+	b=smy++lI06RTR8P0db6O40WjBYDL0CeoTsxIDL+R5wzE6TncyoEn05HoKhjDWqaGzli6JEI
+	3GPGSrV0LDlKChKJhDhqhxVaooJcuqBjs0RN+6O6N1NHB8W9t1Iyg0t2hLpFQzhKeULqs2
+	dgjXsXdgZiumNxXHEFV8o0dUFaFQGfI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
 	s=susede2_ed25519; t=1678360392;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Am3Z7D3PJEF75x3/HiQBrnXvVKIlV3/Qp4c3FogRta0=;
-	b=hsyPFizFKqJYnSdS3E6xpTXq9S6r1rJ5Jji3li+g88rTqmX7AeSbhzGXDyIih4Pl7bflMh
-	GAWJAY6loxrLWZCw==
+	bh=2Qu5xXTySwPTF8dLZgi/I8vkKzIjKqyV6OaDVaB++xA=;
+	b=e4ZqfoNDC7qdrfkIKt0ip7rtx+nWJSRX54u1pQUZUHNLoo3srPoDVcEHGdEnh7PdXiVbw2
+	e9byDlL3I6x1iZAA==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 2AA711391B;
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 09FA513A73;
 	Thu,  9 Mar 2023 11:13:12 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id mBDLCUi/CWRiRwAAMHmgww
+	id YLbTAUi/CWRiRwAAMHmgww
 	(envelope-from <vbabka@suse.cz>); Thu, 09 Mar 2023 11:13:12 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Andrew Morton <akpm@linux-foundation.org>
@@ -46,9 +46,9 @@ Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	patches@lists.linux.dev,
 	maple-tree@lists.infradead.org,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 10/10] mm/mremap: simplify vma expansion again
-Date: Thu,  9 Mar 2023 12:12:58 +0100
-Message-Id: <20230309111258.24079-11-vbabka@suse.cz>
+Subject: [PATCH 09/10] mm/mmap: start distinguishing if vma can be removed in mergeability test
+Date: Thu,  9 Mar 2023 12:12:57 +0100
+Message-Id: <20230309111258.24079-10-vbabka@suse.cz>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230309111258.24079-1-vbabka@suse.cz>
 References: <20230309111258.24079-1-vbabka@suse.cz>
@@ -60,49 +60,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This effectively reverts d014cd7c1c35 ("mm, mremap: fix mremap()
-expanding for vma's with vm_ops->close()"). After the recent changes,
-vma_merge() is able to handle the expansion properly even when the vma
-being expanded has a vm_ops->close operation, so we don't need to
-special case it anymore.
+Since pre-git times, is_mergeable_vma() returns false for a vma with
+vm_ops->close, so that no owner assumptions are violated in case the vma
+is removed as part of the merge.
+
+This check is currently very conservative and can prevent merging even
+situations where vma can't be removed, such as simple expansion of
+previous vma, as evidenced by commit d014cd7c1c35 ("mm, mremap: fix
+mremap() expanding for vma's with vm_ops->close()")
+
+In order to allow more merging when appropriate and simplify the code
+that was made more complex by commit d014cd7c1c35, start distinguishing
+cases where the vma can be really removed, and allow merging with
+vm_ops->close otherwise.
+
+As a first step, add a may_remove_vma parameter to is_mergeable_vma().
+can_vma_merge_before() sets it to true, because when called from
+vma_merge(), a removal of the vma is possible.
+
+In can_vma_merge_after(), pass the parameter as false, because no
+removal can occur in each of its callers:
+- vma_merge() calls it on the 'prev' vma, which is never removed
+- mmap_region() and do_brk_flags() call it to determine if it can expand
+  a vma, which is not removed
+
+As a result, vma's with vm_ops->close may now merge with compatible
+ranges in more situations than previously. We can also revert commit
+d014cd7c1c35 as the next step to simplify mremap code again.
 
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- mm/mremap.c | 20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+ mm/mmap.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index 411a85682b58..65f5b545601e 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -1040,23 +1040,11 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
- 			 * vma (expand operation itself) and possibly also with
- 			 * the next vma if it becomes adjacent to the expanded
- 			 * vma and  otherwise compatible.
--			 *
--			 * However, vma_merge() can currently fail due to
--			 * is_mergeable_vma() check for vm_ops->close (see the
--			 * comment there). Yet this should not prevent vma
--			 * expanding, so perform a simple expand for such vma.
--			 * Ideally the check for close op should be only done
--			 * when a vma would be actually removed due to a merge.
- 			 */
--			if (!vma->vm_ops || !vma->vm_ops->close) {
--				vma = vma_merge(&vmi, mm, vma, extension_start,
--					extension_end, vma->vm_flags, vma->anon_vma,
--					vma->vm_file, extension_pgoff, vma_policy(vma),
--					vma->vm_userfaultfd_ctx, anon_vma_name(vma));
--			} else if (vma_expand(&vmi, vma, vma->vm_start,
--					addr + new_len, vma->vm_pgoff, NULL)) {
--				vma = NULL;
--			}
-+			vma = vma_merge(&vmi, mm, vma, extension_start,
-+				extension_end, vma->vm_flags, vma->anon_vma,
-+				vma->vm_file, extension_pgoff, vma_policy(vma),
-+				vma->vm_userfaultfd_ctx, anon_vma_name(vma));
- 			if (!vma) {
- 				vm_unacct_memory(pages);
- 				ret = -ENOMEM;
+diff --git a/mm/mmap.c b/mm/mmap.c
+index d20bbe9ec613..65503ea07f32 100644
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -742,12 +742,13 @@ int vma_shrink(struct vma_iterator *vmi, struct vm_area_struct *vma,
+ 
+ /*
+  * If the vma has a ->close operation then the driver probably needs to release
+- * per-vma resources, so we don't attempt to merge those.
++ * per-vma resources, so we don't attempt to merge those in case the caller
++ * indicates the current vma may be removed as part of the merge.
+  */
+ static inline bool is_mergeable_vma(struct vm_area_struct *vma,
+ 		struct file *file, unsigned long vm_flags,
+ 		struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
+-		struct anon_vma_name *anon_name)
++		struct anon_vma_name *anon_name, bool may_remove_vma)
+ {
+ 	/*
+ 	 * VM_SOFTDIRTY should not prevent from VMA merging, if we
+@@ -761,7 +762,7 @@ static inline bool is_mergeable_vma(struct vm_area_struct *vma,
+ 		return false;
+ 	if (vma->vm_file != file)
+ 		return false;
+-	if (vma->vm_ops && vma->vm_ops->close)
++	if (may_remove_vma && vma->vm_ops && vma->vm_ops->close)
+ 		return false;
+ 	if (!is_mergeable_vm_userfaultfd_ctx(vma, vm_userfaultfd_ctx))
+ 		return false;
+@@ -793,6 +794,8 @@ static inline bool is_mergeable_anon_vma(struct anon_vma *anon_vma1,
+  * We don't check here for the merged mmap wrapping around the end of pagecache
+  * indices (16TB on ia32) because do_mmap() does not permit mmap's which
+  * wrap, nor mmaps which cover the final page at index -1UL.
++ *
++ * We assume the vma may be removed as part of the merge.
+  */
+ static bool
+ can_vma_merge_before(struct vm_area_struct *vma, unsigned long vm_flags,
+@@ -800,7 +803,7 @@ can_vma_merge_before(struct vm_area_struct *vma, unsigned long vm_flags,
+ 		pgoff_t vm_pgoff, struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
+ 		struct anon_vma_name *anon_name)
+ {
+-	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name) &&
++	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name, true) &&
+ 	    is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma)) {
+ 		if (vma->vm_pgoff == vm_pgoff)
+ 			return true;
+@@ -814,6 +817,8 @@ can_vma_merge_before(struct vm_area_struct *vma, unsigned long vm_flags,
+  *
+  * We cannot merge two vmas if they have differently assigned (non-NULL)
+  * anon_vmas, nor if same anon_vma is assigned but offsets incompatible.
++ *
++ * We assume that vma is not removed as part of the merge.
+  */
+ static bool
+ can_vma_merge_after(struct vm_area_struct *vma, unsigned long vm_flags,
+@@ -821,7 +826,7 @@ can_vma_merge_after(struct vm_area_struct *vma, unsigned long vm_flags,
+ 		pgoff_t vm_pgoff, struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
+ 		struct anon_vma_name *anon_name)
+ {
+-	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name) &&
++	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name, false) &&
+ 	    is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma)) {
+ 		pgoff_t vm_pglen;
+ 		vm_pglen = vma_pages(vma);
 -- 
 2.39.2
 
