@@ -1,74 +1,52 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E116ABA57
-	for <patches@lists.linux.dev>; Thu,  9 Mar 2023 22:19:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=jK36Zpm8T2on+df54b6OGLN8ramQR+T+L8HPs8R5yHE=; b=MQBnApNDuji9teSFgOuyjM3C/p
-	Lgjgf584li4FUT3/bLPnV5yqTuo2UTXDrn/714v2Ip8g3XpbRRwZD7nJgpfEz6h2qyYzLRoVFAzS5
-	tMd/9xsj+xvHf9pg1aj6/tfQOstrhGZ+G1zt8z2KHggdwT/JzAOm9MQzVoQv6izhooEbpCzv0yw5r
-	tM+8qfELGYvw7DcEBgzyGxOP+nBEwfiCipPOReirB45OyXkLojYq6dLPJAZ2LdHzds1OUB+inU0LV
-	2hzU4mCm7TVY5QLhVwYJxgZVITHlU54t7YIlOR63U6xiYpBenGFdRnv1EDD5XMZzQjyOtadrDKozg
-	W7Wm31lw==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1paOao-00C8rx-Vc; Thu, 09 Mar 2023 22:18:34 +0000
-Date: Thu, 9 Mar 2023 14:18:34 -0800
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com,
-	jejb@linux.ibm.com, martin.petersen@oracle.com, minyard@acm.org,
-	kys@microsoft.com, haiyangz@microsoft.com, wei.liu@kernel.org,
-	decui@microsoft.com, song@kernel.org, robinmholt@gmail.com,
-	steve.wahl@hpe.com, mike.travis@hpe.com, arnd@arndb.de,
-	gregkh@linuxfoundation.org, jirislaby@kernel.org, jgross@suse.com,
-	sstabellini@kernel.org, oleksandr_tyshchenko@epam.com,
-	xen-devel@lists.xenproject.org
-Cc: j.granados@samsung.com, zhangpeng362@huawei.com, tangmeng@uniontech.com,
-	willy@infradead.org, nixiaoming@huawei.com, sujiaxun@uniontech.com,
-	patches@lists.linux.dev, linux-fsdevel@vger.kernel.org,
-	apparmor@lists.ubuntu.com, linux-raid@vger.kernel.org,
-	linux-scsi@vger.kernel.org, linux-hyperv@vger.kernel.org,
-	openipmi-developer@lists.sourceforge.net,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/7] sysctl: slowly deprecate register_sysctl_table()
-Message-ID: <ZApbOilWsw9Sk/k4@bombadil.infradead.org>
-References: <20230302204612.782387-1-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D280DC94E
+	for <patches@lists.linux.dev>; Thu,  9 Mar 2023 22:27:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4FCC433D2;
+	Thu,  9 Mar 2023 22:27:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1678400868;
+	bh=8ypCYFnJ44r5UZkUrRg3YEA023GJRxYOCkGkfnGE1rI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=LrikRTauMWxorofVtFJUp/PBs3uUKJgK6V3mYsnNSRpNYK3BImPEY6YjP0wUhuNLo
+	 QUcCIZjm8X/yGI8zhtzvFEKQfPm8e6WopsnDGU3LdJNXEddBFgUuPDHeh0wO6LzEMt
+	 h43MST25WcQmDjkkaZBS2Wsit/I/gAU1diaptB9Q=
+Date: Thu, 9 Mar 2023 14:27:46 -0800
+From: Andrew Morton <akpm@linux-foundation.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Jeff Xu <jeffxu@google.com>, Eric Biggers <ebiggers@kernel.org>,
+ ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com,
+ john.johansen@canonical.com, paul@paul-moore.com, jmorris@namei.org,
+ serge@hallyn.com, luto@amacapital.net, wad@chromium.org,
+ dverkamp@chromium.org, paulmck@kernel.org, baihaowen@meizu.com,
+ frederic@kernel.org, tytso@mit.edu, guoren@kernel.org,
+ j.granados@samsung.com, zhangpeng362@huawei.com, tangmeng@uniontech.com,
+ willy@infradead.org, nixiaoming@huawei.com, sujiaxun@uniontech.com,
+ patches@lists.linux.dev, linux-fsdevel@vger.kernel.org,
+ apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org,
+ linux-csky@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 08/11] kernel: pid_namespace: simplify sysctls with
+ register_sysctl()
+Message-Id: <20230309142746.0bc649a31e76bc46fd929304@linux-foundation.org>
+In-Reply-To: <ZApZj9DmMYKuCQ3g@bombadil.infradead.org>
+References: <20230302202826.776286-1-mcgrof@kernel.org>
+	<20230302202826.776286-9-mcgrof@kernel.org>
+	<CALmYWFucv6-9yfS=gamwSsqjgxSKZS0nvVjj_QfBmsLmQD5XOQ@mail.gmail.com>
+	<ZApZj9DmMYKuCQ3g@bombadil.infradead.org>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230302204612.782387-1-mcgrof@kernel.org>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 02, 2023 at 12:46:05PM -0800, Luis Chamberlain wrote:
-> I'm happy to take these via sysctl-next [0] but since
-> I don' think register_sysctl_table() will be nuked on v6.4 I think
-> it's fine for each of these to go into each respective tree. I can
-> pick up last stragglers on sysctl-next. If you want me to take this
-> via sysctl-next too, just let me know and I'm happy to do that. Either
-> way works.
+On Thu, 9 Mar 2023 14:11:27 -0800 Luis Chamberlain <mcgrof@kernel.org> wrote:
 
-As I noted I've dropped the following already-picked-up patches from
-my queue:
+> Andrew, kernel/pid_sysctl.h is new, not on v6.3-rc1 and so I cannot
+> carry this on sysctl-next. Can you carry this patch on your tree?
 
-ipmi: simplify sysctl registration
-sgi-xp: simplify sysctl registration
-tty: simplify sysctl registration
-
-I've taken the rest now through sysctl-next:
-
-scsi: simplify sysctl registration with register_sysctl()
-hv: simplify sysctl registration
-md: simplify sysctl registration
-xen: simplify sysctl registration for balloon
-
-If a maintainer would prefer to take one on through their
-tree fine by me too, just let me know and I'll drop the patch.
-
-  Luis
+Sure, no probs.
