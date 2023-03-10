@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66700848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:22:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96FAC433D2;
-	Fri, 10 Mar 2023 14:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456AC848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:22:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8285C433EF;
+	Fri, 10 Mar 2023 14:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458147;
-	bh=7fSwCMymNBDW6iX6URjxPMkq5fAjqtYYusAOuC6ryVY=;
+	s=korg; t=1678458150;
+	bh=HE5Ibmt1HgqCO8v1OICBoka3GgC3KgJnt2cx1UBasg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XcpQmtBqIxgZQexMtjzBqVZ2rTLJ+xdnBtIzbJbuapLYqbZi8TuqzwQqWAgGcJ3iI
-	 6OLAVdFlDf21wpd29EDz8pOWsDp1ogNEMNUS04S1eLJ+3d+MfV9zuwGYuUqqGmeozj
-	 Kiktx0+G4WU5YczSooLhSxpXZr9H2YGCmHN7Iocc=
+	b=soWAr8ED5yq983VZbmVR1xMMsLCHymCFEftui16SJAzu/izswRsMkY++81uTH7sD2
+	 SL3JhInPx7D7XiwhN3QWM/bOCa6pcypQ390au/ewsHdSnAXzh3iTK4m1BbGKvjwWFd
+	 HetOaqdsNos9a9IyQNpa7ffvsWQykwrG694S/XAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 4.19 179/252] rbd: avoid use-after-free in do_rbd_add() when rbd_dev_create() fails
-Date: Fri, 10 Mar 2023 14:39:09 +0100
-Message-Id: <20230310133724.298376649@linuxfoundation.org>
+	Richard Henderson <rth@twiddle.net>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 4.19 180/252] alpha: fix FEN fault handling
+Date: Fri, 10 Mar 2023 14:39:10 +0100
+Message-Id: <20230310133724.337759612@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -33,94 +34,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit f7c4d9b133c7a04ca619355574e96b6abf209fba upstream.
+commit 977a3009547dad4a5bc95d91be4a58c9f7eedac0 upstream.
 
-If getting an ID or setting up a work queue in rbd_dev_create() fails,
-use-after-free on rbd_dev->rbd_client, rbd_dev->spec and rbd_dev->opts
-is triggered in do_rbd_add().  The root cause is that the ownership of
-these structures is transfered to rbd_dev prematurely and they all end
-up getting freed when rbd_dev_create() calls rbd_dev_free() prior to
-returning to do_rbd_add().
+Type 3 instruction fault (FPU insn with FPU disabled) is handled
+by quietly enabling FPU and returning.  Which is fine, except that
+we need to do that both for fault in userland and in the kernel;
+the latter *can* legitimately happen - all it takes is this:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE, an
-incomplete patch submitted by Natalia Petrova <n.petrova@fintech.ru>.
+.global _start
+_start:
+        call_pal 0xae
+	lda $0, 0
+	ldq $0, 0($0)
+
+- call_pal CLRFEN to clear "FPU enabled" flag and arrange for
+a signal delivery (SIGSEGV in this case).
+
+Fixed by moving the handling of type 3 into the common part of
+do_entIF(), before we check for kernel vs. user mode.
+
+Incidentally, the check for kernel mode is unidiomatic; the normal
+way to do that is !user_mode(regs).  The difference is that
+the open-coded variant treats any of bits 63..3 of regs->ps being
+set as "it's user mode" while the normal approach is to check just
+the bit 3.  PS is a 4-bit register and regs->ps always will have
+bits 63..4 clear, so the open-coded variant here is actually equivalent
+to !user_mode(regs).  Harder to follow, though...
 
 Cc: stable@vger.kernel.org
-Fixes: 1643dfa4c2c8 ("rbd: introduce a per-device ordered workqueue")
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Richard Henderson <rth@twiddle.net>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ arch/alpha/kernel/traps.c |   30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -4381,8 +4381,7 @@ static void rbd_dev_release(struct devic
- 		module_put(THIS_MODULE);
- }
- 
--static struct rbd_device *__rbd_dev_create(struct rbd_client *rbdc,
--					   struct rbd_spec *spec)
-+static struct rbd_device *__rbd_dev_create(struct rbd_spec *spec)
+--- a/arch/alpha/kernel/traps.c
++++ b/arch/alpha/kernel/traps.c
+@@ -235,7 +235,21 @@ do_entIF(unsigned long type, struct pt_r
  {
- 	struct rbd_device *rbd_dev;
+ 	int signo, code;
  
-@@ -4421,9 +4420,6 @@ static struct rbd_device *__rbd_dev_crea
- 	rbd_dev->dev.parent = &rbd_root_dev;
- 	device_initialize(&rbd_dev->dev);
- 
--	rbd_dev->rbd_client = rbdc;
--	rbd_dev->spec = spec;
--
- 	return rbd_dev;
- }
- 
-@@ -4436,12 +4432,10 @@ static struct rbd_device *rbd_dev_create
- {
- 	struct rbd_device *rbd_dev;
- 
--	rbd_dev = __rbd_dev_create(rbdc, spec);
-+	rbd_dev = __rbd_dev_create(spec);
- 	if (!rbd_dev)
- 		return NULL;
- 
--	rbd_dev->opts = opts;
--
- 	/* get an id and fill in device name */
- 	rbd_dev->dev_id = ida_simple_get(&rbd_dev_id_ida, 0,
- 					 minor_to_rbd_dev_id(1 << MINORBITS),
-@@ -4458,6 +4452,10 @@ static struct rbd_device *rbd_dev_create
- 	/* we have a ref from do_rbd_add() */
- 	__module_get(THIS_MODULE);
- 
-+	rbd_dev->rbd_client = rbdc;
-+	rbd_dev->spec = spec;
-+	rbd_dev->opts = opts;
+-	if ((regs->ps & ~IPL_MAX) == 0) {
++	if (type == 3) { /* FEN fault */
++		/* Irritating users can call PAL_clrfen to disable the
++		   FPU for the process.  The kernel will then trap in
++		   do_switch_stack and undo_switch_stack when we try
++		   to save and restore the FP registers.
 +
- 	dout("%s rbd_dev %p dev_id %d\n", __func__, rbd_dev, rbd_dev->dev_id);
- 	return rbd_dev;
++		   Given that GCC by default generates code that uses the
++		   FP registers, PAL_clrfen is not useful except for DoS
++		   attacks.  So turn the bleeding FPU back on and be done
++		   with it.  */
++		current_thread_info()->pcb.flags |= 1;
++		__reload_thread(&current_thread_info()->pcb);
++		return;
++	}
++	if (!user_mode(regs)) {
+ 		if (type == 1) {
+ 			const unsigned int *data
+ 			  = (const unsigned int *) regs->pc;
+@@ -368,20 +382,6 @@ do_entIF(unsigned long type, struct pt_r
+ 		}
+ 		break;
  
-@@ -5618,7 +5616,7 @@ static int rbd_dev_probe_parent(struct r
- 		goto out_err;
- 	}
- 
--	parent = __rbd_dev_create(rbd_dev->rbd_client, rbd_dev->parent_spec);
-+	parent = __rbd_dev_create(rbd_dev->parent_spec);
- 	if (!parent) {
- 		ret = -ENOMEM;
- 		goto out_err;
-@@ -5628,8 +5626,8 @@ static int rbd_dev_probe_parent(struct r
- 	 * Images related by parent/child relationships always share
- 	 * rbd_client and spec/parent_spec, so bump their refcounts.
- 	 */
--	__rbd_get_client(rbd_dev->rbd_client);
--	rbd_spec_get(rbd_dev->parent_spec);
-+	parent->rbd_client = __rbd_get_client(rbd_dev->rbd_client);
-+	parent->spec = rbd_spec_get(rbd_dev->parent_spec);
- 
- 	ret = rbd_dev_image_probe(parent, depth);
- 	if (ret < 0)
+-	      case 3: /* FEN fault */
+-		/* Irritating users can call PAL_clrfen to disable the
+-		   FPU for the process.  The kernel will then trap in
+-		   do_switch_stack and undo_switch_stack when we try
+-		   to save and restore the FP registers.
+-
+-		   Given that GCC by default generates code that uses the
+-		   FP registers, PAL_clrfen is not useful except for DoS
+-		   attacks.  So turn the bleeding FPU back on and be done
+-		   with it.  */
+-		current_thread_info()->pcb.flags |= 1;
+-		__reload_thread(&current_thread_info()->pcb);
+-		return;
+-
+ 	      case 5: /* illoc */
+ 	      default: /* unexpected instruction-fault type */
+ 		      ;
 
 
