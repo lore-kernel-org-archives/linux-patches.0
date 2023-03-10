@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E332F36
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E25FC433D2;
-	Fri, 10 Mar 2023 14:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FD52F36
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF00C433EF;
+	Fri, 10 Mar 2023 14:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458604;
-	bh=UszNZULP8SX9tR1oLOSCJpA7L4oX4LpBoTgnhNMxF9s=;
+	s=korg; t=1678458606;
+	bh=+X0N3zqhQB0ZxY0kR9Px393TVm4xIQcPrL6KKHYAxFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x1UVK5Or59kehbfcujfmNSmqIBFFJ8+wUkIoxBsyC32qKAc+eSmrDoCc3RZiEF1JK
-	 /rxhCJBCeF7/wIPCCHZFpU95Xg2TeSFgcNQz9vRhqKg+bufiCvrtj7DmgjUrSoHlXV
-	 mW10Ulx/UEAmV9TUeztjQQRTxc5dew0F6OM8zkDk=
+	b=q7eRskdAlUQG+KIErqAPo8XgvJu02fVVQeXO6LgwfR+OGp1BeGIyUElHjqi/8oh1e
+	 dJvEcJaf10zTiSgMrEkG6dMLP8ps2C64ka51FMKKXlwc16Sh/g7K85PmFcjHW4bDvh
+	 nQ0BSekFmfKTLcC6bYGvwMLVDGW5zotUz7bOGXm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Samuel Holland <samuel@sholland.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Anup Patel <apatel@ventanamicro.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 081/357] m68k: /proc/hardware should depend on PROC_FS
-Date: Fri, 10 Mar 2023 14:36:10 +0100
-Message-Id: <20230310133737.562469417@linuxfoundation.org>
+Subject: [PATCH 5.4 082/357] RISC-V: time: initialize hrtimer based broadcast clock event device
+Date: Fri, 10 Mar 2023 14:36:11 +0100
+Message-Id: <20230310133737.601206912@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,40 +38,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 1e5b5df65af99013b4d31607ddb3ca5731dbe44d ]
+[ Upstream commit 8b3b8fbb4896984b5564789a42240e4b3caddb61 ]
 
-When CONFIG_PROC_FS is not set, there is a build error for an unused
-function. Make PROC_HARDWARE depend on PROC_FS to prevent this error.
+Similarly to commit 022eb8ae8b5e ("ARM: 8938/1: kernel: initialize
+broadcast hrtimer based clock event device"), RISC-V needs to initiate
+hrtimer based broadcast clock event device before C3STOP can be used.
+Otherwise, the introduction of C3STOP for the RISC-V arch timer in
+commit 232ccac1bd9b ("clocksource/drivers/riscv: Events are stopped
+during CPU suspend") leaves us without any broadcast timer registered.
+This prevents the kernel from entering oneshot mode, which breaks timer
+behaviour, for example clock_nanosleep().
 
-In file included from ../arch/m68k/kernel/setup.c:3:
-../arch/m68k/kernel/setup_mm.c:477:12: error: 'hardware_proc_show' defined but not used [-Werror=unused-function]
-  477 | static int hardware_proc_show(struct seq_file *m, void *v)
-      |            ^~~~~~~~~~~~~~~~~~
+A test app that sleeps each cpu for 6, 5, 4, 3 ms respectively, HZ=250
+& C3STOP enabled, the sleep times are rounded up to the next jiffy:
+== CPU: 1 ==      == CPU: 2 ==      == CPU: 3 ==      == CPU: 4 ==
+Mean: 7.974992    Mean: 7.976534    Mean: 7.962591    Mean: 3.952179
+Std Dev: 0.154374 Std Dev: 0.156082 Std Dev: 0.171018 Std Dev: 0.076193
+Hi: 9.472000      Hi: 10.495000     Hi: 8.864000      Hi: 4.736000
+Lo: 6.087000      Lo: 6.380000      Lo: 4.872000      Lo: 3.403000
+Samples: 521      Samples: 521      Samples: 521      Samples: 521
 
-Fixes: 66d857b08b8c ("m68k: merge m68k and m68knommu arch directories") # v3.0
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20230209010825.24136-1-rdunlap@infradead.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/linux-riscv/YzYTNQRxLr7Q9JR0@spud/
+Fixes: 232ccac1bd9b ("clocksource/drivers/riscv: Events are stopped during CPU suspend")
+Suggested-by: Samuel Holland <samuel@sholland.org>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
+Reviewed-by: Samuel Holland <samuel@sholland.org>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://lore.kernel.org/r/20230103141102.772228-2-apatel@ventanamicro.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/Kconfig.devices | 1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/kernel/time.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/m68k/Kconfig.devices b/arch/m68k/Kconfig.devices
-index 3e9b0b826f8a1..6fb693bb0771c 100644
---- a/arch/m68k/Kconfig.devices
-+++ b/arch/m68k/Kconfig.devices
-@@ -19,6 +19,7 @@ config HEARTBEAT
- # We have a dedicated heartbeat LED. :-)
- config PROC_HARDWARE
- 	bool "/proc/hardware support"
-+	depends on PROC_FS
- 	help
- 	  Say Y here to support the /proc/hardware file, which gives you
- 	  access to information about the machine you're running on,
+diff --git a/arch/riscv/kernel/time.c b/arch/riscv/kernel/time.c
+index 8aa70b519e04f..726860a490f36 100644
+--- a/arch/riscv/kernel/time.c
++++ b/arch/riscv/kernel/time.c
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include <linux/of_clk.h>
++#include <linux/clockchips.h>
+ #include <linux/clocksource.h>
+ #include <linux/delay.h>
+ #include <asm/sbi.h>
+@@ -28,4 +29,6 @@ void __init time_init(void)
+ 
+ 	of_clk_init(NULL);
+ 	timer_probe();
++
++	tick_setup_hrtimer_broadcast();
+ }
 -- 
 2.39.2
 
