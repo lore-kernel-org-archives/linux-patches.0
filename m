@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1B8847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5A7C433EF;
-	Fri, 10 Mar 2023 13:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4784847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:53:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E836C433EF;
+	Fri, 10 Mar 2023 13:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456378;
-	bh=kH6AnnRV6w6c0S0NoITbfcwZB2dF9DDXWRuGqA3ne5s=;
+	s=korg; t=1678456380;
+	bh=DebMMl5JVaCccNPwj0VWexdoM2ZHUJyfI0s2IbXJf2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ccXqwkrDGlTaNPGngsTJEJSCuwA/0oP9WbMAXaM2Uc2eJrej5cYCSGwOeEZgn3yWZ
-	 XMTWCTJmJHPYIBBDsCvlVHN1ZXYDocZj5BcCoSU/juOyqXnsKIqP+FW5szgMumdxAb
-	 NTpsdKOz7nsXC2WsnHFCR6wETKJnsVj3wtcstYbs=
+	b=sA4AKfHaFuBakOCX49RzWjsM9yrOOQ2xMkK3PSR+AZHeBvYjYKkJtwz9DrIBmMmpz
+	 XvOLim2FXD2irKlSnQPxPCkMwLIzT1dHxXA9cLBJkW1AUIU7ADluehPehsZ74mybbF
+	 /qypbukiR12Lh4c/s09AE9Yr8qJIJ5qu7buyIU8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TOTE Robot <oslab@tsinghua.edu.cn>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Darrell Kavanagh <darrell.kavanagh@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 177/193] tracing: Add NULL checks for buffer in ring_buffer_free_read_page()
-Date: Fri, 10 Mar 2023 14:39:19 +0100
-Message-Id: <20230310133716.997314854@linuxfoundation.org>
+Subject: [PATCH 4.14 178/193] firmware/efi sysfb_efi: Add quirk for Lenovo IdeaPad Duet 3
+Date: Fri, 10 Mar 2023 14:39:20 +0100
+Message-Id: <20230310133717.027777586@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -36,60 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jia-Ju Bai <baijiaju1990@gmail.com>
+From: Darrell Kavanagh <darrell.kavanagh@gmail.com>
 
-[ Upstream commit 3e4272b9954094907f16861199728f14002fcaf6 ]
+[ Upstream commit e1d447157f232c650e6f32c9fb89ff3d0207c69a ]
 
-In a previous commit 7433632c9ff6, buffer, buffer->buffers and
-buffer->buffers[cpu] in ring_buffer_wake_waiters() can be NULL,
-and thus the related checks are added.
+Another Lenovo convertable which reports a landscape resolution of
+1920x1200 with a pitch of (1920 * 4) bytes, while the actual framebuffer
+has a resolution of 1200x1920 with a pitch of (1200 * 4) bytes.
 
-However, in the same call stack, these variables are also used in
-ring_buffer_free_read_page():
-
-tracing_buffers_release()
-  ring_buffer_wake_waiters(iter->array_buffer->buffer)
-    cpu_buffer = buffer->buffers[cpu] -> Add checks by previous commit
-  ring_buffer_free_read_page(iter->array_buffer->buffer)
-    cpu_buffer = buffer->buffers[cpu] -> No check
-
-Thus, to avod possible null-pointer derefernces, the related checks
-should be added.
-
-These results are reported by a static tool designed by myself.
-
-Link: https://lkml.kernel.org/r/20230113125501.760324-1-baijiaju1990@gmail.com
-
-Reported-by: TOTE Robot <oslab@tsinghua.edu.cn>
-Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Darrell Kavanagh <darrell.kavanagh@gmail.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/kernel/sysfb_efi.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 999dae39f12e5..a7808f8b6f56a 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -4554,11 +4554,16 @@ EXPORT_SYMBOL_GPL(ring_buffer_alloc_read_page);
-  */
- void ring_buffer_free_read_page(struct ring_buffer *buffer, int cpu, void *data)
- {
--	struct ring_buffer_per_cpu *cpu_buffer = buffer->buffers[cpu];
-+	struct ring_buffer_per_cpu *cpu_buffer;
- 	struct buffer_data_page *bpage = data;
- 	struct page *page = virt_to_page(bpage);
- 	unsigned long flags;
+diff --git a/arch/x86/kernel/sysfb_efi.c b/arch/x86/kernel/sysfb_efi.c
+index 897da526e40e6..dd8d7636c5420 100644
+--- a/arch/x86/kernel/sysfb_efi.c
++++ b/arch/x86/kernel/sysfb_efi.c
+@@ -265,6 +265,14 @@ static const struct dmi_system_id efifb_dmi_swap_width_height[] __initconst = {
+ 					"Lenovo ideapad D330-10IGM"),
+ 		},
+ 	},
++	{
++		/* Lenovo IdeaPad Duet 3 10IGL5 with 1200x1920 portrait screen */
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION,
++					"IdeaPad Duet 3 10IGL5"),
++		},
++	},
+ 	{},
+ };
  
-+	if (!buffer || !buffer->buffers || !buffer->buffers[cpu])
-+		return;
-+
-+	cpu_buffer = buffer->buffers[cpu];
-+
- 	/* If the page is still in use someplace else, we can't reuse it */
- 	if (page_ref_count(page) > 1)
- 		goto out;
 -- 
 2.39.2
 
