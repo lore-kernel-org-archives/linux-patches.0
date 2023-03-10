@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9E3847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:47:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C464CC4339B;
-	Fri, 10 Mar 2023 13:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599F5847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:47:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7631C433EF;
+	Fri, 10 Mar 2023 13:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456020;
-	bh=RDVHfFsRKPSe2pOEMh0COdjqiVwCq5yoqhTKfwjMMPE=;
+	s=korg; t=1678456023;
+	bh=UxIiMJ47gfDi53bLF3+W95PgTA2tHkU3QURPZyQOYLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qf+c0Vqp9NRptJ2Z0gtQRk0zDI1BsKrh9/Ouq+lBWfkuIddq8s6eFKy1/FhSDZPW6
-	 Qp6p5em3AoPSpvwI7n+BkyKLZonOqlANz3WYYEZJp4EnTI5ZfDbhVOaTpJhN7eumap
-	 +fhXi9r42H2a0Dd61P/j0WeC8HlrobHjAgpW+5Tw=
+	b=UUBJUrmKYcerYwZewVamwHKETWyCoksWFbAAJK7q2uUx2DJ6zk5WMmVXXc+2w7WOp
+	 dNzaYrjVLYXYIqm5ImV2MbbU54+Vm/BS3vw0fLqbv5CQEfCGaVgzviuk337wpWjJpP
+	 sasL+7JW1efV97FINTocwMLbnVplCZaX9JdhkqM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Ian Ray <ian.ray@ge.com>,
-	Robert Foss <robert.foss@linaro.org>,
+	Liang He <windhl@126.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 053/193] drm/bridge: megachips: Fix error handling in i2c_register_driver()
-Date: Fri, 10 Mar 2023 14:37:15 +0100
-Message-Id: <20230310133712.773647070@linuxfoundation.org>
+Subject: [PATCH 4.14 054/193] gpu: ipu-v3: common: Add of_node_put() for reference returned by of_graph_get_port_by_id()
+Date: Fri, 10 Mar 2023 14:37:16 +0100
+Message-Id: <20230310133712.804088372@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -37,62 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit 4ecff954c370b82bce45bdca2846c5c5563e8a8a ]
+[ Upstream commit 9afdf98cfdfa2ba8ec068cf08c5fcdc1ed8daf3f ]
 
-A problem about insmod megachips-stdpxxxx-ge-b850v3-fw.ko failed is
-triggered with the following log given:
+In ipu_add_client_devices(), we need to call of_node_put() for
+reference returned by of_graph_get_port_by_id() in fail path.
 
-[ 4497.981497] Error: Driver 'stdp4028-ge-b850v3-fw' is already registered, aborting...
-insmod: ERROR: could not insert module megachips-stdpxxxx-ge-b850v3-fw.ko: Device or resource busy
-
-The reason is that stdpxxxx_ge_b850v3_init() returns i2c_add_driver()
-directly without checking its return value, if i2c_add_driver() failed,
-it returns without calling i2c_del_driver() on the previous i2c driver,
-resulting the megachips-stdpxxxx-ge-b850v3-fw can never be installed
-later.
-A simple call graph is shown as below:
-
- stdpxxxx_ge_b850v3_init()
-   i2c_add_driver(&stdp4028_ge_b850v3_fw_driver)
-   i2c_add_driver(&stdp2690_ge_b850v3_fw_driver)
-     i2c_register_driver()
-       driver_register()
-         bus_add_driver()
-           priv = kzalloc(...) # OOM happened
-   # return without delete stdp4028_ge_b850v3_fw_driver
-
-Fix by calling i2c_del_driver() on stdp4028_ge_b850v3_fw_driver when
-i2c_add_driver() returns error.
-
-Fixes: fcfa0ddc18ed ("drm/bridge: Drivers for megachips-stdpxxxx-ge-b850v3-fw (LVDS-DP++)")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Tested-by: Ian Ray <ian.ray@ge.com>
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221108091226.114524-1-yuancan@huawei.com
+Fixes: 17e052175039 ("gpu: ipu-v3: Do not bail out on missing optional port nodes")
+Signed-off-by: Liang He <windhl@126.com>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://lore.kernel.org/r/20220720152227.1288413-1-windhl@126.com
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220720152227.1288413-1-windhl@126.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/ipu-v3/ipu-common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c b/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
-index 313c80f299722..89454d1d2d998 100644
---- a/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
-+++ b/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
-@@ -437,7 +437,11 @@ static int __init stdpxxxx_ge_b850v3_init(void)
- 	if (ret)
- 		return ret;
- 
--	return i2c_add_driver(&stdp2690_ge_b850v3_fw_driver);
-+	ret = i2c_add_driver(&stdp2690_ge_b850v3_fw_driver);
-+	if (ret)
-+		i2c_del_driver(&stdp4028_ge_b850v3_fw_driver);
-+
-+	return ret;
- }
- module_init(stdpxxxx_ge_b850v3_init);
+diff --git a/drivers/gpu/ipu-v3/ipu-common.c b/drivers/gpu/ipu-v3/ipu-common.c
+index f3a57c0500f30..1a7ca888546f7 100644
+--- a/drivers/gpu/ipu-v3/ipu-common.c
++++ b/drivers/gpu/ipu-v3/ipu-common.c
+@@ -1234,6 +1234,7 @@ static int ipu_add_client_devices(struct ipu_soc *ipu, unsigned long ipu_base)
+ 		pdev = platform_device_alloc(reg->name, id++);
+ 		if (!pdev) {
+ 			ret = -ENOMEM;
++			of_node_put(of_node);
+ 			goto err_register;
+ 		}
  
 -- 
 2.39.2
