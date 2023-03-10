@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7958B847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:51:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5023C433EF;
-	Fri, 10 Mar 2023 13:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55FE1847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:51:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B191DC433D2;
+	Fri, 10 Mar 2023 13:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456303;
-	bh=cuDIGFBwpr+l7WKq1+/J8WPbVMwnV8Tn+7uc7lJeek4=;
+	s=korg; t=1678456306;
+	bh=NaX7V+gohbtE2nO5s3MCd4BEQz1hWz649rSjz779D2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H4Y9kjh4U+DNuSStOyO73GK6Nyhr3M4y0pMz5N+kVV4Yrf10W9N1UY5BdBiaix2cG
-	 7J1hl4TYuVL5ELaZ9rZIj8GOw0JZqcZGkMSyxSB27riZcavth1ww+cESrfFHyoJ9ks
-	 4PMWLlO75Sbz6hCDWAdRiV+uKAniSAZy4rpkMNZY=
+	b=YW+4La74Aqo/fSKDEvizuHVYSwh27dHdrHwJAQzELWGwwQcy1qpTT/+dpfQIRe4Vj
+	 FoxW3mik8IiG0Xn9bl8/U1iig17O1QfJ1P2IyyoGTgWu2tQCyOFHmCxXEiMXiQNx/y
+	 deqoM+iiLd+v40BXT7f6wBIXoez2RnGYOcmK5LGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 151/193] pwm: stm32-lp: fix the check on arr and cmp registers update
-Date: Fri, 10 Mar 2023 14:38:53 +0100
-Message-Id: <20230310133716.229901987@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 4.14 134/193] ARM: dts: exynos: correct TMU phandle in Odroid XU
+Date: Fri, 10 Mar 2023 14:38:36 +0100
+Message-Id: <20230310133715.695445468@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -36,41 +33,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 3066bc2d58be31275afb51a589668f265e419c37 ]
+commit 9372eca505e7a19934d750b4b4c89a3652738e66 upstream.
 
-The ARR (auto reload register) and CMP (compare) registers are
-successively written. The status bits to check the update of these
-registers are polled together with regmap_read_poll_timeout().
-The condition to end the loop may become true, even if one of the
-register isn't correctly updated.
-So ensure both status bits are set before clearing them.
+TMU node uses 0 as thermal-sensor-cells, thus thermal zone referencing
+it must not have an argument to phandle.  Since thermal-sensors property
+is already defined in included exynosi5410.dtsi, drop it from
+exynos5410-odroidxu.dts to fix the error and remoev redundancy.
 
-Fixes: e70a540b4e02 ("pwm: Add STM32 LPTimer PWM driver")
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 88644b4c750b ("ARM: dts: exynos: Configure PWM, usb3503, PMIC and thermal on Odroid XU board")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230209105841.779596-4-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-stm32-lp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/exynos5410-odroidxu.dts |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-stm32-lp.c b/drivers/pwm/pwm-stm32-lp.c
-index 3f2e4ef695d75..ba0aa3b8076b1 100644
---- a/drivers/pwm/pwm-stm32-lp.c
-+++ b/drivers/pwm/pwm-stm32-lp.c
-@@ -127,7 +127,7 @@ static int stm32_pwm_lp_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+--- a/arch/arm/boot/dts/exynos5410-odroidxu.dts
++++ b/arch/arm/boot/dts/exynos5410-odroidxu.dts
+@@ -116,7 +116,6 @@
+ };
  
- 	/* ensure CMP & ARR registers are properly written */
- 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
--				       (val & STM32_LPTIM_CMPOK_ARROK),
-+				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
- 				       100, 1000);
- 	if (ret) {
- 		dev_err(priv->chip.dev, "ARR/CMP registers write issue\n");
--- 
-2.39.2
-
+ &cpu0_thermal {
+-	thermal-sensors = <&tmu_cpu0 0>;
+ 	polling-delay-passive = <0>;
+ 	polling-delay = <0>;
+ 
 
 
