@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390FE882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F6FC433EF;
-	Fri, 10 Mar 2023 15:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179C0882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A521C433EF;
+	Fri, 10 Mar 2023 15:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460809;
-	bh=weKv8IpUpMMdEIjuY6uajbPgFSpct6/oy03r1lXkj/0=;
+	s=korg; t=1678460811;
+	bh=dpsCJHlwcgU8at/MHlGCfTyGGtD89VwRP84yZeE0ePw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N2WDuBrM9kLdFlqNrteXLlIVaZ28IJmlkfiJK9ZxKCWDS0eyWM4dVYoYZwsR/mqXS
-	 qrnU7XK7DbMaySFFFfAQK3AayCJT4Gxd6yJ5A9+O9sgzxnpdGoovvQb4YGrV33LAEM
-	 zWOSDLHyGV1O232FuooeezF6w8XMPsyiqUG90HQk=
+	b=REovKqsyPaAoXNQhhy+4FTAGoNDeSPXHjKNMqIPrIA8u6HEx9yrUMUZ5CIFr4Nupx
+	 sWHbz3Dm7ux0IXT3Orh6rF5WAN3LbnUJ6WfkY+JVp2Ppy/i5OAsISDfcO/aGdBwYV4
+	 pR2GNX2c70wislDM31QvtYE64gscBXAySnK/bD8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Jun <chenjun102@huawei.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 459/529] watchdog: Fix kmemleak in watchdog_cdev_register
-Date: Fri, 10 Mar 2023 14:40:02 +0100
-Message-Id: <20230310133826.164416926@linuxfoundation.org>
+Subject: [PATCH 5.10 442/529] ubifs: Rectify space budget for ubifs_symlink() if symlink is encrypted
+Date: Fri, 10 Mar 2023 14:39:45 +0100
+Message-Id: <20230310133825.406997984@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,89 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Jun <chenjun102@huawei.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 13721a2ac66b246f5802ba1b75ad8637e53eeecc ]
+[ Upstream commit c2c36cc6ca23e614f9e4238d0ecf48549ee9002a ]
 
-kmemleak reports memory leaks in watchdog_dev_register, as follows:
-unreferenced object 0xffff888116233000 (size 2048):
-  comm ""modprobe"", pid 28147, jiffies 4353426116 (age 61.741s)
-  hex dump (first 32 bytes):
-    80 fa b9 05 81 88 ff ff 08 30 23 16 81 88 ff ff  .........0#.....
-    08 30 23 16 81 88 ff ff 00 00 00 00 00 00 00 00  .0#.............
-  backtrace:
-    [<000000007f001ffd>] __kmem_cache_alloc_node+0x157/0x220
-    [<000000006a389304>] kmalloc_trace+0x21/0x110
-    [<000000008d640eea>] watchdog_dev_register+0x4e/0x780 [watchdog]
-    [<0000000053c9f248>] __watchdog_register_device+0x4f0/0x680 [watchdog]
-    [<00000000b2979824>] watchdog_register_device+0xd2/0x110 [watchdog]
-    [<000000001f730178>] 0xffffffffc10880ae
-    [<000000007a1a8bcc>] do_one_initcall+0xcb/0x4d0
-    [<00000000b98be325>] do_init_module+0x1ca/0x5f0
-    [<0000000046d08e7c>] load_module+0x6133/0x70f0
-    ...
+Fix bad space budget when symlink file is encrypted. Bad space budget
+may let make_reservation() return with -ENOSPC, which could turn ubifs
+to read-only mode in do_writepage() process.
 
-unreferenced object 0xffff888105b9fa80 (size 16):
-  comm ""modprobe"", pid 28147, jiffies 4353426116 (age 61.741s)
-  hex dump (first 16 bytes):
-    77 61 74 63 68 64 6f 67 31 00 b9 05 81 88 ff ff  watchdog1.......
-  backtrace:
-    [<000000007f001ffd>] __kmem_cache_alloc_node+0x157/0x220
-    [<00000000486ab89b>] __kmalloc_node_track_caller+0x44/0x1b0
-    [<000000005a39aab0>] kvasprintf+0xb5/0x140
-    [<0000000024806f85>] kvasprintf_const+0x55/0x180
-    [<000000009276cb7f>] kobject_set_name_vargs+0x56/0x150
-    [<00000000a92e820b>] dev_set_name+0xab/0xe0
-    [<00000000cec812c6>] watchdog_dev_register+0x285/0x780 [watchdog]
-    [<0000000053c9f248>] __watchdog_register_device+0x4f0/0x680 [watchdog]
-    [<00000000b2979824>] watchdog_register_device+0xd2/0x110 [watchdog]
-    [<000000001f730178>] 0xffffffffc10880ae
-    [<000000007a1a8bcc>] do_one_initcall+0xcb/0x4d0
-    [<00000000b98be325>] do_init_module+0x1ca/0x5f0
-    [<0000000046d08e7c>] load_module+0x6133/0x70f0
-    ...
+Fetch a reproducer in [Link].
 
-The reason is that put_device is not be called if cdev_device_add fails
-and wdd->id != 0.
-
-watchdog_cdev_register
-  wd_data = kzalloc                             [1]
-  err = dev_set_name                            [2]
-  ..
-  err = cdev_device_add
-  if (err) {
-    if (wdd->id == 0) {  // wdd->id != 0
-      ..
-    }
-    return err;  // [1],[2] would be leaked
-
-To fix it, call put_device in all wdd->id cases.
-
-Fixes: 72139dfa2464 ("watchdog: Fix the race between the release of watchdog_core_data and cdev")
-Signed-off-by: Chen Jun <chenjun102@huawei.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20221116012714.102066-1-chenjun102@huawei.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216490
+Fixes: ca7f85be8d6cf9 ("ubifs: Add support for encrypted symlinks")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/watchdog_dev.c | 2 +-
+ fs/ubifs/dir.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/watchdog_dev.c b/drivers/watchdog/watchdog_dev.c
-index 2ee017442dfcd..f37255cd75fdf 100644
---- a/drivers/watchdog/watchdog_dev.c
-+++ b/drivers/watchdog/watchdog_dev.c
-@@ -1037,8 +1037,8 @@ static int watchdog_cdev_register(struct watchdog_device *wdd)
- 		if (wdd->id == 0) {
- 			misc_deregister(&watchdog_miscdev);
- 			old_wd_data = NULL;
--			put_device(&wd_data->dev);
- 		}
-+		put_device(&wd_data->dev);
- 		return err;
- 	}
+diff --git a/fs/ubifs/dir.c b/fs/ubifs/dir.c
+index 9257ee893bdb8..7dceca1be9b5d 100644
+--- a/fs/ubifs/dir.c
++++ b/fs/ubifs/dir.c
+@@ -1117,7 +1117,6 @@ static int ubifs_symlink(struct inode *dir, struct dentry *dentry,
+ 	int err, sz_change, len = strlen(symname);
+ 	struct fscrypt_str disk_link;
+ 	struct ubifs_budget_req req = { .new_ino = 1, .new_dent = 1,
+-					.new_ino_d = ALIGN(len, 8),
+ 					.dirtied_ino = 1 };
+ 	struct fscrypt_name nm;
  
+@@ -1133,6 +1132,7 @@ static int ubifs_symlink(struct inode *dir, struct dentry *dentry,
+ 	 * Budget request settings: new inode, new direntry and changing parent
+ 	 * directory inode.
+ 	 */
++	req.new_ino_d = ALIGN(disk_link.len - 1, 8);
+ 	err = ubifs_budget_space(c, &req);
+ 	if (err)
+ 		return err;
 -- 
 2.39.2
 
