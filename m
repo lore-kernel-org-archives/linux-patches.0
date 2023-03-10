@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A6B847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:53:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE77C433EF;
-	Fri, 10 Mar 2023 13:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC65847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:53:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA1AC433D2;
+	Fri, 10 Mar 2023 13:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456400;
-	bh=bwC5HJgR07ZZG6q2HHF3Byask16j4MYZgOnEHyp4knA=;
+	s=korg; t=1678456403;
+	bh=efsVJJO2rQXwFiX784SBqHx8wtk/GX6rikqdYMN8mVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qj67VGn0pY+MB20i1CrpU6+Pk6fA/iIKvMlHL+Tu/eOtdOX0s4OxVUFwX+AXGfwmD
-	 TBL7/6PLXD4TCHNgO4jaaMMU52O83/64moBbeC1R9ZQdWr8qQdTwj6K+Xj/T44+QAu
-	 9oR06K9rEQjBX8wM35b3GSsdPxwIim4Cm0kGJhoA=
+	b=PSuS45ofySZ2CL1Fx46F+qn8TmoxzlhvDQ0b0zXih/zz/NhpeAXuslb3oR0WuJU4T
+	 bo2s1SvH6odOUnK4GDZAeL9FxGQtRI2zrgLgcDzHGHX+Z7IXfZ3OXGly7kd2FoSO/s
+	 6MRf6+0p+bcUtqBz3eWAnMGg0oE22iUkeerC2518=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@intel.com>,
-	Kees Cook <keescook@chromium.org>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 185/193] usb: host: xhci: mvebu: Iterate over array indexes instead of using pointer math
-Date: Fri, 10 Mar 2023 14:39:27 +0100
-Message-Id: <20230310133717.230856748@linuxfoundation.org>
+Subject: [PATCH 4.14 168/193] netfilter: ctnetlink: fix possible refcount leak in ctnetlink_create_conntrack()
+Date: Fri, 10 Mar 2023 14:39:10 +0100
+Message-Id: <20230310133716.728064535@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,43 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-[ Upstream commit 0fbd2cda92cdb00f72080665554a586f88bca821 ]
+[ Upstream commit ac4893980bbe79ce383daf9a0885666a30fe4c83 ]
 
-Walking the dram->cs array was seen as accesses beyond the first array
-item by the compiler. Instead, use the array index directly. This allows
-for run-time bounds checking under CONFIG_UBSAN_BOUNDS as well. Seen
-with GCC 13 with -fstrict-flex-arrays:
+nf_ct_put() needs to be called to put the refcount got by
+nf_conntrack_find_get() to avoid refcount leak when
+nf_conntrack_hash_check_insert() fails.
 
-In function 'xhci_mvebu_mbus_config',
-    inlined from 'xhci_mvebu_mbus_init_quirk' at ../drivers/usb/host/xhci-mvebu.c:66:2:
-../drivers/usb/host/xhci-mvebu.c:37:28: warning: array subscript 0 is outside array bounds of 'const struct mbus_dram_window[0]' [-Warray-bounds=]
-   37 |                 writel(((cs->size - 1) & 0xffff0000) | (cs->mbus_attr << 8) |
-      |                          ~~^~~~~~
-
-Cc: Mathias Nyman <mathias.nyman@intel.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230204183651.never.663-kees@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7d367e06688d ("netfilter: ctnetlink: fix soft lockup when netlink adds new entries (v2)")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Acked-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mvebu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_netlink.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-mvebu.c b/drivers/usb/host/xhci-mvebu.c
-index 85908a3ecb8f6..285a5f75fe048 100644
---- a/drivers/usb/host/xhci-mvebu.c
-+++ b/drivers/usb/host/xhci-mvebu.c
-@@ -34,7 +34,7 @@ static void xhci_mvebu_mbus_config(void __iomem *base,
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index b084659bd34bc..733e61fc50433 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -1906,12 +1906,15 @@ ctnetlink_create_conntrack(struct net *net,
  
- 	/* Program each DRAM CS in a seperate window */
- 	for (win = 0; win < dram->num_cs; win++) {
--		const struct mbus_dram_window *cs = dram->cs + win;
-+		const struct mbus_dram_window *cs = &dram->cs[win];
+ 	err = nf_conntrack_hash_check_insert(ct);
+ 	if (err < 0)
+-		goto err2;
++		goto err3;
  
- 		writel(((cs->size - 1) & 0xffff0000) | (cs->mbus_attr << 8) |
- 		       (dram->mbus_dram_target_id << 4) | 1,
+ 	rcu_read_unlock();
+ 
+ 	return ct;
+ 
++err3:
++	if (ct->master)
++		nf_ct_put(ct->master);
+ err2:
+ 	rcu_read_unlock();
+ err1:
 -- 
 2.39.2
 
