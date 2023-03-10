@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E5A8489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:18:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D26CC4339B;
-	Fri, 10 Mar 2023 14:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48BB8489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:18:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381B0C433D2;
+	Fri, 10 Mar 2023 14:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457895;
-	bh=bZ07+7nW2xHIhtdNpmwNyCbmgpnBuBcZdlIR9//8Lgc=;
+	s=korg; t=1678457897;
+	bh=PqhsQ6S7zmvacUucSCaS0AzAsUP+dm+k8tfHWUDyNIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ATEB2KI7ZfmWX7Px5fyRC68M8NgKgfmpPIE0tOLfhZUAML51ixGGhU61pKvl0NzCR
-	 zZ/M3gBoqKwWRZCfagVWhGgTwmhtJ4O6wfISVtCF6zVrnpXGySnACiOZxtbdH65XOB
-	 +YqE2C6fz70RDnAGEmmbiHVX8BZNAO8f16PlixOU=
+	b=GPH2/Xq8/WEcvvm6SJDEhCEROCLFQc1NRY3En3WB31G8A6+2AuxfMEZgfMbX822iT
+	 3+RpNDf1y6P4LxCE2d7dE80FXRWJv7FzRfx3xt8z3k/1bImbZa7ILCp5qBkQc9f3lS
+	 7nWOp6PDdC3ml7WyEW7356VCEnvbHEKe6Fn4Xrbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	"David S. Miller" <davem@davemloft.net>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 053/252] rds: rds_rm_zerocopy_callback() correct order for list_add_tail()
-Date: Fri, 10 Mar 2023 14:37:03 +0100
-Message-Id: <20230310133720.413459641@linuxfoundation.org>
+Subject: [PATCH 4.19 088/252] hwmon: (mlxreg-fan) Return zero speed for broken fan
+Date: Fri, 10 Mar 2023 14:37:38 +0100
+Message-Id: <20230310133721.487306467@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,36 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Vadim Pasternak <vadimp@nvidia.com>
 
-[ Upstream commit 68762148d1b011d47bc2ceed7321739b5aea1e63 ]
+[ Upstream commit a1ffd3c46267ee5c807acd780e15df9bb692223f ]
 
-rds_rm_zerocopy_callback() uses list_add_tail() with swapped
-arguments. This links the list head with the new entry, losing
-the references to the remaining part of the list.
+Currently for broken fan driver returns value calculated based on error
+code (0xFF) in related fan speed register.
+Thus, for such fan user gets fan{n}_fault to 1 and fan{n}_input with
+misleading value.
 
-Fixes: 9426bbc6de99 ("rds: use list structure to track information for zerocopy completion notification")
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Add check for fan fault prior return speed value and return zero if
+fault is detected.
+
+Fixes: 65afb4c8e7e4 ("hwmon: (mlxreg-fan) Add support for Mellanox FAN driver")
+Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
+Link: https://lore.kernel.org/r/20230212145730.24247-1-vadimp@nvidia.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/message.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/mlxreg-fan.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/rds/message.c b/net/rds/message.c
-index 309b54cc62ae3..29f67ad483ea6 100644
---- a/net/rds/message.c
-+++ b/net/rds/message.c
-@@ -118,7 +118,7 @@ static void rds_rm_zerocopy_callback(struct rds_sock *rs,
- 	ck = &info->zcookies;
- 	memset(ck, 0, sizeof(*ck));
- 	WARN_ON(!rds_zcookie_add(info, cookie));
--	list_add_tail(&q->zcookie_head, &info->rs_zcookie_next);
-+	list_add_tail(&info->rs_zcookie_next, &q->zcookie_head);
+diff --git a/drivers/hwmon/mlxreg-fan.c b/drivers/hwmon/mlxreg-fan.c
+index e57b0c5119ce4..ec68dace3cf93 100644
+--- a/drivers/hwmon/mlxreg-fan.c
++++ b/drivers/hwmon/mlxreg-fan.c
+@@ -125,6 +125,12 @@ mlxreg_fan_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+ 			if (err)
+ 				return err;
  
- 	spin_unlock_irqrestore(&q->lock, flags);
- 	/* caller invokes rds_wake_sk_sleep() */
++			if (MLXREG_FAN_GET_FAULT(regval, tacho->mask)) {
++				/* FAN is broken - return zero for FAN speed. */
++				*val = 0;
++				return 0;
++			}
++
+ 			*val = MLXREG_FAN_GET_RPM(regval, fan->divider,
+ 						  fan->samples);
+ 			break;
 -- 
 2.39.2
 
