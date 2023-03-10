@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A37B848D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:29:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0F8C433EF;
-	Fri, 10 Mar 2023 14:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D5F848D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:29:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6D5C433EF;
+	Fri, 10 Mar 2023 14:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458595;
-	bh=iRKDiuORhUFkc+Gbczn67gqxzJMbbQEtLKuC6ktFWlc=;
+	s=korg; t=1678458598;
+	bh=AMTNLbKu3mTpJ10XBUDvWgsu9qwR0xPi015YckndyLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uZFi6FQ2cyQUThWmvezpn/J+6XxUFQwiis3UPSnSJbiqlJCm1Lo4HyaPUl/wZmwDQ
-	 yW6EmGDrLXGGxFDxs9JowWhguTp8mCNkjv9rKmQf6CVjVHaWy43NIZ1WaXUmRfSKRL
-	 MoKvKChRgsB7K7BxiioU8+rkThRBwtju/UbgosEw=
+	b=XOVkwMx9NDM2MDX+OyiT1FJI2ETd3aDVBEVASKROnIT6xVUpZp6uwEHXg3tWl93WR
+	 JmrETzITr6v+Z3M2MgbMmkIlCHyYyYQnceKgnR2ivHKv/jStwlNaWTjcSaeawVWS08
+	 LOl9LEe8A3af6zFnZhYTCpmz6FsfJTdUG319wUI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 052/357] ACPICA: Drop port I/O validation for some regions
-Date: Fri, 10 Mar 2023 14:35:41 +0100
-Message-Id: <20230310133736.269575543@linuxfoundation.org>
+Subject: [PATCH 5.4 079/357] rds: rds_rm_zerocopy_callback() correct order for list_add_tail()
+Date: Fri, 10 Mar 2023 14:36:08 +0100
+Message-Id: <20230310133737.469811356@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,73 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit e1d9148582ab2c3dada5c5cf8ca7531ca269fee5 ]
+[ Upstream commit 68762148d1b011d47bc2ceed7321739b5aea1e63 ]
 
-Microsoft introduced support in Windows XP for blocking port I/O
-to various regions.  For Windows compatibility ACPICA has adopted
-the same protections and will disallow writes to those
-(presumably) the same regions.
+rds_rm_zerocopy_callback() uses list_add_tail() with swapped
+arguments. This links the list head with the new entry, losing
+the references to the remaining part of the list.
 
-On some systems the AML included with the firmware will issue 4 byte
-long writes to 0x80.  These writes aren't making it over because of this
-blockage. The first 4 byte write attempt is rejected, and then
-subsequently 1 byte at a time each offset is tried. The first at 0x80
-works, but then the next 3 bytes are rejected.
-
-This manifests in bizarre failures for devices that expected the AML to
-write all 4 bytes.  Trying the same AML on Windows 10 or 11 doesn't hit
-this failure and all 4 bytes are written.
-
-Either some of these regions were wrong or some point after Windows XP
-some of these regions blocks have been lifted.
-
-In the last 15 years there doesn't seem to be any reports popping up of
-this error in the Windows event viewer anymore.  There is no documentation
-at Microsoft's developer site indicating that Windows ACPI interpreter
-blocks these regions. Between the lack of documentation and the fact that
-the writes actually do work in Windows 10 and 11, it's quite likely
-Windows doesn't actually enforce this anymore.
-
-So to help the issue, only enforce Windows XP specific entries if the
-latest _OSI supported is Windows XP. Continue to enforce the
-ALWAYS_ILLEGAL entries.
-
-Link: https://github.com/acpica/acpica/pull/817
-Fixes: 7f0719039085 ("ACPICA: New: I/O port protection")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 9426bbc6de99 ("rds: use list structure to track information for zerocopy completion notification")
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/hwvalid.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/rds/message.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/hwvalid.c b/drivers/acpi/acpica/hwvalid.c
-index cd576153257c6..f1495b88bf138 100644
---- a/drivers/acpi/acpica/hwvalid.c
-+++ b/drivers/acpi/acpica/hwvalid.c
-@@ -23,8 +23,8 @@ acpi_hw_validate_io_request(acpi_io_address address, u32 bit_width);
-  *
-  * The table is used to implement the Microsoft port access rules that
-  * first appeared in Windows XP. Some ports are always illegal, and some
-- * ports are only illegal if the BIOS calls _OSI with a win_XP string or
-- * later (meaning that the BIOS itelf is post-XP.)
-+ * ports are only illegal if the BIOS calls _OSI with nothing newer than
-+ * the specific _OSI strings.
-  *
-  * This provides ACPICA with the desired port protections and
-  * Microsoft compatibility.
-@@ -145,7 +145,8 @@ acpi_hw_validate_io_request(acpi_io_address address, u32 bit_width)
+diff --git a/net/rds/message.c b/net/rds/message.c
+index be6a0a073b12a..75043742d243c 100644
+--- a/net/rds/message.c
++++ b/net/rds/message.c
+@@ -118,7 +118,7 @@ static void rds_rm_zerocopy_callback(struct rds_sock *rs,
+ 	ck = &info->zcookies;
+ 	memset(ck, 0, sizeof(*ck));
+ 	WARN_ON(!rds_zcookie_add(info, cookie));
+-	list_add_tail(&q->zcookie_head, &info->rs_zcookie_next);
++	list_add_tail(&info->rs_zcookie_next, &q->zcookie_head);
  
- 			/* Port illegality may depend on the _OSI calls made by the BIOS */
- 
--			if (acpi_gbl_osi_data >= port_info->osi_dependency) {
-+			if (port_info->osi_dependency == ACPI_ALWAYS_ILLEGAL ||
-+			    acpi_gbl_osi_data == port_info->osi_dependency) {
- 				ACPI_DEBUG_PRINT((ACPI_DB_VALUES,
- 						  "Denied AML access to port 0x%8.8X%8.8X/%X (%s 0x%.4X-0x%.4X)\n",
- 						  ACPI_FORMAT_UINT64(address),
+ 	spin_unlock_irqrestore(&q->lock, flags);
+ 	/* caller invokes rds_wake_sk_sleep() */
 -- 
 2.39.2
 
