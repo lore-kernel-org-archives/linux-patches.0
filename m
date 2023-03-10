@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE15E882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6497AC433D2;
-	Fri, 10 Mar 2023 15:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDEE882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AE3C433D2;
+	Fri, 10 Mar 2023 15:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460779;
-	bh=SJ2h/f4CPJM9sjsEjp37Z0Bnw/TnuBiqry36BW1c61E=;
+	s=korg; t=1678460782;
+	bh=BiTlZ0t+9vOyhxEWctkJitM66twrlqdki/NzHsji7UI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s5N28Z0Oee4/x9Pg9BJXCszOLrJ3uvOOWjga91FIAxyQRd+xOSoru0BbHuBMw7dzt
-	 0bnzqRm0flSRxP6u8/hnIqShaT4BDJ+s1UPrpLjBOO9JZXYhbvsMD9/VYhEoy1rwRD
-	 m+L6YFldlVNrAjlqvqsv2WAzuLsmpjqUbDHnqxT4=
+	b=n08zDlIxZdwccP6zQFjRrNheAmb6sufCBexsWzEXWmKJRfxbS8lXwPVeFEqEDfW+f
+	 jNAr0pVuk2zBH5zq7+p1hNVbLjr/blgKCOBPWTM2DBou1K0VH9xZEp5yHA9giVnYrt
+	 gMaj/5CbEuHO64KR3XQyA8cVAQ9TSq7I/JNNdsPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Hua <hucool.lihua@huawei.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 441/529] ubifs: Fix build errors as symbol undefined
-Date: Fri, 10 Mar 2023 14:39:44 +0100
-Message-Id: <20230310133825.358811535@linuxfoundation.org>
+Subject: [PATCH 5.10 450/529] ubi: Fix possible null-ptr-deref in ubi_free_volume()
+Date: Fri, 10 Mar 2023 14:39:53 +0100
+Message-Id: <20230310133825.751230817@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,47 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Hua <hucool.lihua@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit aa6d148e6d6270274e3d5a529b71c54cd329d17f ]
+[ Upstream commit c15859bfd326c10230f09cb48a17f8a35f190342 ]
 
-With CONFIG_UBIFS_FS_AUTHENTICATION not set, the compiler can assume that
-ubifs_node_check_hash() is never true and drops the call to ubifs_bad_hash().
-Is CONFIG_CC_OPTIMIZE_FOR_SIZE enabled this optimization does not happen anymore.
+It willl cause null-ptr-deref in the following case:
 
-So When CONFIG_UBIFS_FS and CONFIG_CC_OPTIMIZE_FOR_SIZE is enabled but
-CONFIG_UBIFS_FS_AUTHENTICATION is not set, the build errors is as followd:
-    ERROR: modpost: "ubifs_bad_hash" [fs/ubifs/ubifs.ko] undefined!
+uif_init()
+  ubi_add_volume()
+    cdev_add() -> if it fails, call kill_volumes()
+    device_register()
 
-Fix it by add no-op ubifs_bad_hash() for the CONFIG_UBIFS_FS_AUTHENTICATION=n case.
+kill_volumes() -> if ubi_add_volume() fails call this function
+  ubi_free_volume()
+    cdev_del()
+    device_unregister() -> trying to delete a not added device,
+			   it causes null-ptr-deref
 
-Fixes: 16a26b20d2af ("ubifs: authentication: Add hashes to index nodes")
-Signed-off-by: Li Hua <hucool.lihua@huawei.com>
-Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
+So in ubi_free_volume(), it delete devices whether they are added
+or not, it will causes null-ptr-deref.
+
+Handle the error case whlie calling ubi_add_volume() to fix this
+problem. If add volume fails, set the corresponding vol to null,
+so it can not be accessed in kill_volumes() and release the
+resource in ubi_add_volume() error path.
+
+Fixes: 801c135ce73d ("UBI: Unsorted Block Images")
+Suggested-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/ubifs.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/mtd/ubi/build.c |  1 +
+ drivers/mtd/ubi/vmt.c   | 12 ++++++------
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ubifs/ubifs.h b/fs/ubifs/ubifs.h
-index e7e48f3b179ab..b66ebab5c5dec 100644
---- a/fs/ubifs/ubifs.h
-+++ b/fs/ubifs/ubifs.h
-@@ -1594,8 +1594,13 @@ static inline int ubifs_check_hmac(const struct ubifs_info *c,
- 	return crypto_memneq(expected, got, c->hmac_desc_len);
+diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
+index 8747569e793d4..e45fdc1bf66a4 100644
+--- a/drivers/mtd/ubi/build.c
++++ b/drivers/mtd/ubi/build.c
+@@ -467,6 +467,7 @@ static int uif_init(struct ubi_device *ubi)
+ 			err = ubi_add_volume(ubi, ubi->volumes[i]);
+ 			if (err) {
+ 				ubi_err(ubi, "cannot add volume %d", i);
++				ubi->volumes[i] = NULL;
+ 				goto out_volumes;
+ 			}
+ 		}
+diff --git a/drivers/mtd/ubi/vmt.c b/drivers/mtd/ubi/vmt.c
+index 2e5bd473e5e25..d79323e8ea29d 100644
+--- a/drivers/mtd/ubi/vmt.c
++++ b/drivers/mtd/ubi/vmt.c
+@@ -582,6 +582,7 @@ int ubi_add_volume(struct ubi_device *ubi, struct ubi_volume *vol)
+ 	if (err) {
+ 		ubi_err(ubi, "cannot add character device for volume %d, error %d",
+ 			vol_id, err);
++		vol_release(&vol->dev);
+ 		return err;
+ 	}
+ 
+@@ -592,15 +593,14 @@ int ubi_add_volume(struct ubi_device *ubi, struct ubi_volume *vol)
+ 	vol->dev.groups = volume_dev_groups;
+ 	dev_set_name(&vol->dev, "%s_%d", ubi->ubi_name, vol->vol_id);
+ 	err = device_register(&vol->dev);
+-	if (err)
+-		goto out_cdev;
++	if (err) {
++		cdev_del(&vol->cdev);
++		put_device(&vol->dev);
++		return err;
++	}
+ 
+ 	self_check_volumes(ubi);
+ 	return err;
+-
+-out_cdev:
+-	cdev_del(&vol->cdev);
+-	return err;
  }
  
-+#ifdef CONFIG_UBIFS_FS_AUTHENTICATION
- void ubifs_bad_hash(const struct ubifs_info *c, const void *node,
- 		    const u8 *hash, int lnum, int offs);
-+#else
-+static inline void ubifs_bad_hash(const struct ubifs_info *c, const void *node,
-+				  const u8 *hash, int lnum, int offs) {};
-+#endif
- 
- int __ubifs_node_check_hash(const struct ubifs_info *c, const void *buf,
- 			  const u8 *expected);
+ /**
 -- 
 2.39.2
 
