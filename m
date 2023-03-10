@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2408489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:18:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0DE5C433D2;
-	Fri, 10 Mar 2023 14:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF1F8489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:18:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85824C433AF;
+	Fri, 10 Mar 2023 14:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457928;
-	bh=akcG0TXqyqxMwyESgca7hpY2wS4MPmevEaoWxI8ZF3A=;
+	s=korg; t=1678457931;
+	bh=T1vWZdKK377nmvTLqQV1BO6XCQ2mQP9Hsr48IA/SG5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h+9RYgou7t+4uFrOZdgCay8ZfG/vWPnmQLKflr/Fid5MgjunpAtOv6SzVgo5M1puJ
-	 +6GyuU1HonoDAJR8eZ1kYRaifWpbQMM7M7cWCmTywKgSE6dNq4MMOfqFBRK/VUD6YI
-	 8AYxPaKdy6hvn446bRSPtnmv9qKS9S3VwQCfA7BU=
+	b=lziPI7FMT0rf8wgMd42flMd/b0Khm9l5MRlp23Svm6qw9fbSrBQmrpDn878WLb02x
+	 MAKVqggesslHpsh3OF3APXq6R9jSVcjzyGEqRWbBNU/+pJn0PgaHitKpZLfDYfyMJF
+	 FzMukq15AfyYT2DQo4wDKJaf3I4AhZqSLAOAsQO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 106/252] powerpc/rtas: ensure 4KB alignment for rtas_data_buf
-Date: Fri, 10 Mar 2023 14:37:56 +0100
-Message-Id: <20230310133722.014731153@linuxfoundation.org>
+Subject: [PATCH 4.19 089/252] dm: remove flush_scheduled_work() during local_exit()
+Date: Fri, 10 Mar 2023 14:37:39 +0100
+Message-Id: <20230310133721.515879758@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -35,55 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit 836b5b9fcc8e09cea7e8a59a070349a00e818308 ]
+[ Upstream commit 0b22ff5360f5c4e11050b89206370fdf7dc0a226 ]
 
-Some RTAS functions that have work area parameters impose alignment
-requirements on the work area passed to them by the OS. Examples
-include:
+Commit acfe0ad74d2e1 ("dm: allocate a special workqueue for deferred
+device removal") switched from using system workqueue to a single
+workqueue local to DM.  But it didn't eliminate the call to
+flush_scheduled_work() that was introduced purely for the benefit of
+deferred device removal with commit 2c140a246dc ("dm: allow remove to
+be deferred").
 
-- ibm,configure-connector
-- ibm,update-nodes
-- ibm,update-properties
+Since DM core uses its own workqueue (and queue_work) there is no need
+to call flush_scheduled_work() from local_exit().  local_exit()'s
+destroy_workqueue(deferred_remove_workqueue) handles flushing work
+started with queue_work().
 
-4KB is the greatest alignment required by PAPR for such
-buffers. rtas_data_buf used to have a __page_aligned attribute in the
-arch/ppc64 days, but that was changed to __cacheline_aligned for
-unknown reasons by commit 033ef338b6e0 ("powerpc: Merge rtas.c into
-arch/powerpc/kernel"). That works out to 128-byte alignment
-on ppc64, which isn't right.
-
-This was found by inspection and I'm not aware of any real problems
-caused by this. Either current RTAS implementations don't enforce the
-alignment constraints, or rtas_data_buf is always being placed at a
-4KB boundary by accident (or both, perhaps).
-
-Use __aligned(SZ_4K) to ensure the rtas_data_buf has alignment
-appropriate for all users.
-
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Fixes: 033ef338b6e0 ("powerpc: Merge rtas.c into arch/powerpc/kernel")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230125-b4-powerpc-rtas-queue-v3-6-26929c8cce78@linux.ibm.com
+Fixes: acfe0ad74d2e1 ("dm: allocate a special workqueue for deferred device removal")
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/rtas.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/rtas.c b/arch/powerpc/kernel/rtas.c
-index 07d1ef762936d..7c7648e6f1c22 100644
---- a/arch/powerpc/kernel/rtas.c
-+++ b/arch/powerpc/kernel/rtas.c
-@@ -56,7 +56,7 @@ EXPORT_SYMBOL(rtas);
- DEFINE_SPINLOCK(rtas_data_buf_lock);
- EXPORT_SYMBOL_GPL(rtas_data_buf_lock);
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index 324d1dd58e2bc..3d9a77f4e20f8 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -279,7 +279,6 @@ static int __init local_init(void)
  
--char rtas_data_buf[RTAS_DATA_BUF_SIZE] __cacheline_aligned;
-+char rtas_data_buf[RTAS_DATA_BUF_SIZE] __aligned(SZ_4K);
- EXPORT_SYMBOL_GPL(rtas_data_buf);
+ static void local_exit(void)
+ {
+-	flush_scheduled_work();
+ 	destroy_workqueue(deferred_remove_workqueue);
  
- unsigned long rtas_rmo_buf;
+ 	kmem_cache_destroy(_rq_cache);
 -- 
 2.39.2
 
