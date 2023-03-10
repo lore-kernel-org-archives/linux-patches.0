@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094F9848D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:28:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86375C433D2;
-	Fri, 10 Mar 2023 14:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB74F848D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:28:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4515EC4339B;
+	Fri, 10 Mar 2023 14:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458497;
-	bh=+fmJLEoy7lM7hC3xaU/uvQC6kP3O6RHvbSQcvxWdY+o=;
+	s=korg; t=1678458500;
+	bh=11WK8pcdcLgcV9qs2ZAllq7UfOxadUX5mSIH0u0OQcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=InwAPLbnQIA1afIwnoILM7KXybBlgBP6uy/OCGsy2bg9ny3Da0KCeqRQE/LvEJPc5
-	 W/v6y1BsrY+evYN92DFmVCVEzE/kKNuGx3mnkTa1dIpFYIjogQF8UIZUcIovaZ83+v
-	 BsK71camG+2COxajvUk6Ke3w5v0diO/Hu+LvBeZU=
+	b=dKQ3eVnP40EeCYwPWzviZyVc0OItgr/yjLPEO+1RDLqmSTayb6gRxqT5xa5xAtVTo
+	 rszMAYdblBC/RI3a0X9kgof3TFswCBW9TYs9xj/P3zGq2mw78C9XIDRXVvV0j03xB/
+	 Cxd/mgEVnmNpH9rQUFcjSAOYJProZyWxv/kAhCXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 019/357] arm64: dts: amlogic: meson-gxl-s905d-phicomm-n1: fix led node name
-Date: Fri, 10 Mar 2023 14:35:08 +0100
-Message-Id: <20230310133734.858201706@linuxfoundation.org>
+Subject: [PATCH 5.4 046/357] wifi: libertas_tf: dont call kfree_skb() under spin_lock_irqsave()
+Date: Fri, 10 Mar 2023 14:35:35 +0100
+Message-Id: <20230310133736.008151660@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -34,33 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit eee64d8fbbdaab72bbab3e462f3a7b742d20c8c2 ]
+[ Upstream commit 9388ce97b98216833c969191ee6df61a7201d797 ]
 
-Fixes:
-leds: status: {...} is not of type 'array'
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave(). Compile
+tested only.
 
-Link: https://lore.kernel.org/r/20230124-b4-amlogic-bindings-fixups-v1-12-44351528957e@linaro.org
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: fc75122fabb5 ("libertas_tf: use irqsave() in USB's complete callback")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221207150008.111743-2-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-gxl-s905d-phicomm-n1.dts | 2 +-
+ drivers/net/wireless/marvell/libertas_tf/if_usb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-phicomm-n1.dts b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-phicomm-n1.dts
-index b5667f1fb2c8f..22fb3e324da5d 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-phicomm-n1.dts
-+++ b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-phicomm-n1.dts
-@@ -18,7 +18,7 @@ cvbs-connector {
- 	leds {
- 		compatible = "gpio-leds";
- 
--		status {
-+		led {
- 			label = "n1:white:status";
- 			gpios = <&gpio_ao GPIOAO_9 GPIO_ACTIVE_HIGH>;
- 			default-state = "on";
+diff --git a/drivers/net/wireless/marvell/libertas_tf/if_usb.c b/drivers/net/wireless/marvell/libertas_tf/if_usb.c
+index b30bcb28503ae..f47db95299f37 100644
+--- a/drivers/net/wireless/marvell/libertas_tf/if_usb.c
++++ b/drivers/net/wireless/marvell/libertas_tf/if_usb.c
+@@ -613,7 +613,7 @@ static inline void process_cmdrequest(int recvlength, uint8_t *recvbuff,
+ 	spin_lock_irqsave(&priv->driver_lock, flags);
+ 	memcpy(priv->cmd_resp_buff, recvbuff + MESSAGE_HEADER_LEN,
+ 	       recvlength - MESSAGE_HEADER_LEN);
+-	kfree_skb(skb);
++	dev_kfree_skb_irq(skb);
+ 	lbtf_cmd_response_rx(priv);
+ 	spin_unlock_irqrestore(&priv->driver_lock, flags);
+ }
 -- 
 2.39.2
 
