@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00507847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77515C433D2;
-	Fri, 10 Mar 2023 13:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1109A847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C53BC433D2;
+	Fri, 10 Mar 2023 13:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456640;
-	bh=gLsH/uL6Z+svyRgcK+yjXGRB5bC9JgA2SJY6tUyB6Cc=;
+	s=korg; t=1678456643;
+	bh=m0A2m/g5i6xtnRGlFfR+WiTR7634F73azjHuILsEqck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CVdYXgbZC3+qOmuK+PXWT1YOSgJbleDtGjzwSiDQcbsBPtJix6e2N0AQ6dKQE86Wy
-	 VZo19zdcOkOdm0QUd4FX9g0lROxik6K1DipR3Z3RvUpXuoraC9I2RmvWvEEiGzdFTr
-	 ABAWcNwU+Xt8KufKONdFXdiMHwiTRU7jiRYnZLV0=
+	b=e0fIIJe64SFGbBQzjopgV9+3GJK/GdhxlEUAv6ogfZ6F51/hvNyJoeAv184paimOT
+	 dZHim2PM962xkA4AXve+GsXSyasM10FzcOzeMSRyulNjvRdXMv5zkoBG43DbCFthNR
+	 M27wdpUV56jxREadQrYdOR8e/4Fkv/dk1gHkF3jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Yangtao Li <frank.li@vivo.com>,
+	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 045/211] f2fs: fix to avoid potential memory corruption in __update_iostat_latency()
-Date: Fri, 10 Mar 2023 14:37:05 +0100
-Message-Id: <20230310133720.106601692@linuxfoundation.org>
+Subject: [PATCH 6.2 072/211] netfilter: x_tables: fix percpu counter block leak on error path when creating new netns
+Date: Fri, 10 Mar 2023 14:37:32 +0100
+Message-Id: <20230310133720.969849339@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -38,73 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yangtao Li <frank.li@vivo.com>
+From: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
 
-[ Upstream commit 0dbbf0fb38d5ec5d4138d1aeaeb43d9217b9a592 ]
+[ Upstream commit 0af8c09c896810879387decfba8c942994bb61f5 ]
 
-Add iotype sanity check to avoid potential memory corruption.
-This is to fix the compile error below:
+Here is the stack where we allocate percpu counter block:
 
-fs/f2fs/iostat.c:231 __update_iostat_latency() error: buffer overflow
-'io_lat->peak_lat[type]' 3 <= 3
+  +-< __alloc_percpu
+    +-< xt_percpu_counter_alloc
+      +-< find_check_entry # {arp,ip,ip6}_tables.c
+        +-< translate_table
 
-vim +228 fs/f2fs/iostat.c
+And it can be leaked on this code path:
 
-  211  static inline void __update_iostat_latency(struct bio_iostat_ctx
-	*iostat_ctx,
-  212					enum iostat_lat_type type)
-  213  {
-  214		unsigned long ts_diff;
-  215		unsigned int page_type = iostat_ctx->type;
-  216		struct f2fs_sb_info *sbi = iostat_ctx->sbi;
-  217		struct iostat_lat_info *io_lat = sbi->iostat_io_lat;
-  218		unsigned long flags;
-  219
-  220		if (!sbi->iostat_enable)
-  221			return;
-  222
-  223		ts_diff = jiffies - iostat_ctx->submit_ts;
-  224		if (page_type >= META_FLUSH)
-                                 ^^^^^^^^^^
+  +-> ip6t_register_table
+    +-> translate_table # allocates percpu counter block
+    +-> xt_register_table # fails
 
-  225			page_type = META;
-  226
-  227		spin_lock_irqsave(&sbi->iostat_lat_lock, flags);
- @228		io_lat->sum_lat[type][page_type] += ts_diff;
-                                      ^^^^^^^^^
-Mixup between META_FLUSH and NR_PAGE_TYPE leads to memory corruption.
+there is no freeing of the counter block on xt_register_table fail.
+Note: xt_percpu_counter_free should be called to free it like we do in
+do_replace through cleanup_entry helper (or in __ip6t_unregister_table).
 
-Fixes: a4b6817625e7 ("f2fs: introduce periodic iostat io latency traces")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Suggested-by: Chao Yu <chao@kernel.org>
-Suggested-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Probability of hitting this error path is low AFAICS (xt_register_table
+can only return ENOMEM here, as it is not replacing anything, as we are
+creating new netns, and it is hard to imagine that all previous
+allocations succeeded and after that one in xt_register_table failed).
+But it's worth fixing even the rare leak.
+
+Fixes: 71ae0dff02d7 ("netfilter: xtables: use percpu rule counters")
+Signed-off-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/iostat.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/ipv4/netfilter/arp_tables.c | 4 ++++
+ net/ipv4/netfilter/ip_tables.c  | 4 ++++
+ net/ipv6/netfilter/ip6_tables.c | 4 ++++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/fs/f2fs/iostat.c b/fs/f2fs/iostat.c
-index 3166a8939ed4f..02393c95c9f86 100644
---- a/fs/f2fs/iostat.c
-+++ b/fs/f2fs/iostat.c
-@@ -227,8 +227,12 @@ static inline void __update_iostat_latency(struct bio_iostat_ctx *iostat_ctx,
- 		return;
+diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
+index ffc0cab7cf189..2407066b0fec1 100644
+--- a/net/ipv4/netfilter/arp_tables.c
++++ b/net/ipv4/netfilter/arp_tables.c
+@@ -1525,6 +1525,10 @@ int arpt_register_table(struct net *net,
  
- 	ts_diff = jiffies - iostat_ctx->submit_ts;
--	if (iotype >= META_FLUSH)
-+	if (iotype == META_FLUSH) {
- 		iotype = META;
-+	} else if (iotype >= NR_PAGE_TYPE) {
-+		f2fs_warn(sbi, "%s: %d over NR_PAGE_TYPE", __func__, iotype);
-+		return;
-+	}
+ 	new_table = xt_register_table(net, table, &bootstrap, newinfo);
+ 	if (IS_ERR(new_table)) {
++		struct arpt_entry *iter;
++
++		xt_entry_foreach(iter, loc_cpu_entry, newinfo->size)
++			cleanup_entry(iter, net);
+ 		xt_free_table_info(newinfo);
+ 		return PTR_ERR(new_table);
+ 	}
+diff --git a/net/ipv4/netfilter/ip_tables.c b/net/ipv4/netfilter/ip_tables.c
+index aae5fd51dfd74..da5998011ab9b 100644
+--- a/net/ipv4/netfilter/ip_tables.c
++++ b/net/ipv4/netfilter/ip_tables.c
+@@ -1741,6 +1741,10 @@ int ipt_register_table(struct net *net, const struct xt_table *table,
  
- 	if (rw == 0) {
- 		idx = READ_IO;
+ 	new_table = xt_register_table(net, table, &bootstrap, newinfo);
+ 	if (IS_ERR(new_table)) {
++		struct ipt_entry *iter;
++
++		xt_entry_foreach(iter, loc_cpu_entry, newinfo->size)
++			cleanup_entry(iter, net);
+ 		xt_free_table_info(newinfo);
+ 		return PTR_ERR(new_table);
+ 	}
+diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
+index ac902f7bca477..0ce0ed17c7583 100644
+--- a/net/ipv6/netfilter/ip6_tables.c
++++ b/net/ipv6/netfilter/ip6_tables.c
+@@ -1750,6 +1750,10 @@ int ip6t_register_table(struct net *net, const struct xt_table *table,
+ 
+ 	new_table = xt_register_table(net, table, &bootstrap, newinfo);
+ 	if (IS_ERR(new_table)) {
++		struct ip6t_entry *iter;
++
++		xt_entry_foreach(iter, loc_cpu_entry, newinfo->size)
++			cleanup_entry(iter, net);
+ 		xt_free_table_info(newinfo);
+ 		return PTR_ERR(new_table);
+ 	}
 -- 
 2.39.2
 
