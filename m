@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450C78827
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:04:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D50DC433D2;
-	Fri, 10 Mar 2023 15:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0BD8827
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:04:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9EDCC4339B;
+	Fri, 10 Mar 2023 15:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460683;
-	bh=nYuq2o5eb4wYtsjeyzvGm18lhbe2ui94uepoDV0W7NE=;
+	s=korg; t=1678460686;
+	bh=VmbxrgafW2e0fXEbeVAAUmDJdMLM5fVptlG2sbA7UNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INIxqWlQxxnsvQexK5kbmMAJNVI5wWz1NpRwuviseYCUirj4tioHV817SDakNIx0D
-	 vyD6e/riTZ24DKZsxkGygpevQRRDstXRQCBOP1gd+6xa+Nm0zAkk/EJ02j/E0cDfX6
-	 iPtvdfnYcBsJG6sKF17IQWfYQR5TZj273dmQUT+s=
+	b=HXcOxsTaUzRMfASexLhweR2CQR57SHglfTHnX8VTSWRiL8S4hSzk6bScW5hx0xaui
+	 VI8JnoQK3aXNa1ONzYxiXvFm5x36XHqYFDu/JKWai2Y+xTUD7kCr5YdSj2bDwEYSmm
+	 TZ4DoSU1XRlXb9WddY085/ZWHDaf7vaKOKZhaW3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 409/529] ring-buffer: Handle race between rb_move_tail and rb_check_pages
-Date: Fri, 10 Mar 2023 14:39:12 +0100
-Message-Id: <20230310133823.946767518@linuxfoundation.org>
+	Greentime Hu <greentime.hu@sifive.com>,
+	Andy Chiu <andy.chiu@sifive.com>,
+	Guo Ren <guoren@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.10 418/529] riscv: jump_label: Fixup unaligned arch_static_branch function
+Date: Fri, 10 Mar 2023 14:39:21 +0100
+Message-Id: <20230310133824.362088727@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,175 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mukesh Ojha <quic_mojha@quicinc.com>
+From: Andy Chiu <andy.chiu@sifive.com>
 
-commit 8843e06f67b14f71c044bf6267b2387784c7e198 upstream.
+commit 9ddfc3cd806081ce1f6c9c2f988cbb031f35d28f upstream.
 
-It seems a data race between ring_buffer writing and integrity check.
-That is, RB_FLAG of head_page is been updating, while at same time
-RB_FLAG was cleared when doing integrity check rb_check_pages():
+Runtime code patching must be done at a naturally aligned address, or we
+may execute on a partial instruction.
 
-  rb_check_pages()            rb_handle_head_page():
-  --------                    --------
-  rb_head_page_deactivate()
-                              rb_head_page_set_normal()
-  rb_head_page_activate()
+We have encountered problems traced back to static jump functions during
+the test. We switched the tracer randomly for every 1~5 seconds on a
+dual-core QEMU setup and found the kernel sucking at a static branch
+where it jumps to itself.
 
-We do intergrity test of the list to check if the list is corrupted and
-it is still worth doing it. So, let's refactor rb_check_pages() such that
-we no longer clear and set flag during the list sanity checking.
+The reason is that the static branch was 2-byte but not 4-byte aligned.
+Then, the kernel would patch the instruction, either J or NOP, with two
+half-word stores if the machine does not have efficient unaligned
+accesses. Thus, moments exist where half of the NOP mixes with the other
+half of the J when transitioning the branch. In our particular case, on
+a little-endian machine, the upper half of the NOP was mixed with the
+lower part of the J when enabling the branch, resulting in a jump that
+jumped to itself. Conversely, it would result in a HINT instruction when
+disabling the branch, but it might not be observable.
 
-[1] and [2] are the test to reproduce and the crash report respectively.
+ARM64 does not have this problem since all instructions must be 4-byte
+aligned.
 
-1:
-``` read_trace.sh
-  while true;
-  do
-    # the "trace" file is closed after read
-    head -1 /sys/kernel/tracing/trace > /dev/null
-  done
-```
-``` repro.sh
-  sysctl -w kernel.panic_on_warn=1
-  # function tracer will writing enough data into ring_buffer
-  echo function > /sys/kernel/tracing/current_tracer
-  ./read_trace.sh &
-  ./read_trace.sh &
-  ./read_trace.sh &
-  ./read_trace.sh &
-  ./read_trace.sh &
-  ./read_trace.sh &
-  ./read_trace.sh &
-  ./read_trace.sh &
-```
-
-2:
-------------[ cut here ]------------
-WARNING: CPU: 9 PID: 62 at kernel/trace/ring_buffer.c:2653
-rb_move_tail+0x450/0x470
-Modules linked in:
-CPU: 9 PID: 62 Comm: ksoftirqd/9 Tainted: G        W          6.2.0-rc6+
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
-RIP: 0010:rb_move_tail+0x450/0x470
-Code: ff ff 4c 89 c8 f0 4d 0f b1 02 48 89 c2 48 83 e2 fc 49 39 d0 75 24
-83 e0 03 83 f8 02 0f 84 e1 fb ff ff 48 8b 57 10 f0 ff 42 08 <0f> 0b 83
-f8 02 0f 84 ce fb ff ff e9 db
-RSP: 0018:ffffb5564089bd00 EFLAGS: 00000203
-RAX: 0000000000000000 RBX: ffff9db385a2bf81 RCX: ffffb5564089bd18
-RDX: ffff9db281110100 RSI: 0000000000000fe4 RDI: ffff9db380145400
-RBP: ffff9db385a2bf80 R08: ffff9db385a2bfc0 R09: ffff9db385a2bfc2
-R10: ffff9db385a6c000 R11: ffff9db385a2bf80 R12: 0000000000000000
-R13: 00000000000003e8 R14: ffff9db281110100 R15: ffffffffbb006108
-FS:  0000000000000000(0000) GS:ffff9db3bdcc0000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005602323024c8 CR3: 0000000022e0c000 CR4: 00000000000006e0
-Call Trace:
- <TASK>
- ring_buffer_lock_reserve+0x136/0x360
- ? __do_softirq+0x287/0x2df
- ? __pfx_rcu_softirq_qs+0x10/0x10
- trace_function+0x21/0x110
- ? __pfx_rcu_softirq_qs+0x10/0x10
- ? __do_softirq+0x287/0x2df
- function_trace_call+0xf6/0x120
- 0xffffffffc038f097
- ? rcu_softirq_qs+0x5/0x140
- rcu_softirq_qs+0x5/0x140
- __do_softirq+0x287/0x2df
- run_ksoftirqd+0x2a/0x30
- smpboot_thread_fn+0x188/0x220
- ? __pfx_smpboot_thread_fn+0x10/0x10
- kthread+0xe7/0x110
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x2c/0x50
- </TASK>
----[ end trace 0000000000000000 ]---
-
-[ crash report and test reproducer credit goes to Zheng Yejian]
-
-Link: https://lore.kernel.org/linux-trace-kernel/1676376403-16462-1-git-send-email-quic_mojha@quicinc.com
-
-Cc: <mhiramat@kernel.org>
+Fixes: ebc00dde8a97 ("riscv: Add jump-label implementation")
+Link: https://lore.kernel.org/linux-riscv/20220913094252.3555240-6-andy.chiu@sifive.com/
+Reviewed-by: Greentime Hu <greentime.hu@sifive.com>
+Signed-off-by: Andy Chiu <andy.chiu@sifive.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
+Link: https://lore.kernel.org/r/20230206090440.1255001-1-guoren@kernel.org
 Cc: stable@vger.kernel.org
-Fixes: 1039221cc278 ("ring-buffer: Do not disable recording when there is an iterator")
-Reported-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |   42 ++++++++++--------------------------------
- 1 file changed, 10 insertions(+), 32 deletions(-)
+ arch/riscv/include/asm/jump_label.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1450,19 +1450,6 @@ static int rb_check_bpage(struct ring_bu
- }
- 
- /**
-- * rb_check_list - make sure a pointer to a list has the last bits zero
-- */
--static int rb_check_list(struct ring_buffer_per_cpu *cpu_buffer,
--			 struct list_head *list)
--{
--	if (RB_WARN_ON(cpu_buffer, rb_list_head(list->prev) != list->prev))
--		return 1;
--	if (RB_WARN_ON(cpu_buffer, rb_list_head(list->next) != list->next))
--		return 1;
--	return 0;
--}
--
--/**
-  * rb_check_pages - integrity check of buffer pages
-  * @cpu_buffer: CPU buffer with pages to test
-  *
-@@ -1471,36 +1458,27 @@ static int rb_check_list(struct ring_buf
-  */
- static int rb_check_pages(struct ring_buffer_per_cpu *cpu_buffer)
+--- a/arch/riscv/include/asm/jump_label.h
++++ b/arch/riscv/include/asm/jump_label.h
+@@ -18,6 +18,7 @@ static __always_inline bool arch_static_
+ 					       bool branch)
  {
--	struct list_head *head = cpu_buffer->pages;
--	struct buffer_page *bpage, *tmp;
-+	struct list_head *head = rb_list_head(cpu_buffer->pages);
-+	struct list_head *tmp;
- 
--	/* Reset the head page if it exists */
--	if (cpu_buffer->head_page)
--		rb_set_head_page(cpu_buffer);
--
--	rb_head_page_deactivate(cpu_buffer);
--
--	if (RB_WARN_ON(cpu_buffer, head->next->prev != head))
--		return -1;
--	if (RB_WARN_ON(cpu_buffer, head->prev->next != head))
-+	if (RB_WARN_ON(cpu_buffer,
-+			rb_list_head(rb_list_head(head->next)->prev) != head))
- 		return -1;
- 
--	if (rb_check_list(cpu_buffer, head))
-+	if (RB_WARN_ON(cpu_buffer,
-+			rb_list_head(rb_list_head(head->prev)->next) != head))
- 		return -1;
- 
--	list_for_each_entry_safe(bpage, tmp, head, list) {
-+	for (tmp = rb_list_head(head->next); tmp != head; tmp = rb_list_head(tmp->next)) {
- 		if (RB_WARN_ON(cpu_buffer,
--			       bpage->list.next->prev != &bpage->list))
-+				rb_list_head(rb_list_head(tmp->next)->prev) != tmp))
- 			return -1;
-+
- 		if (RB_WARN_ON(cpu_buffer,
--			       bpage->list.prev->next != &bpage->list))
--			return -1;
--		if (rb_check_list(cpu_buffer, &bpage->list))
-+				rb_list_head(rb_list_head(tmp->prev)->next) != tmp))
- 			return -1;
- 	}
- 
--	rb_head_page_activate(cpu_buffer);
--
- 	return 0;
- }
- 
+ 	asm_volatile_goto(
++		"	.align		2			\n\t"
+ 		"	.option push				\n\t"
+ 		"	.option norelax				\n\t"
+ 		"	.option norvc				\n\t"
+@@ -39,6 +40,7 @@ static __always_inline bool arch_static_
+ 						    bool branch)
+ {
+ 	asm_volatile_goto(
++		"	.align		2			\n\t"
+ 		"	.option push				\n\t"
+ 		"	.option norelax				\n\t"
+ 		"	.option norvc				\n\t"
 
 
