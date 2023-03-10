@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6388F846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:34:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE60C433EF;
-	Fri, 10 Mar 2023 14:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE2D846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:34:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D489AC433A7;
+	Fri, 10 Mar 2023 14:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458894;
-	bh=yGPjqMG810Z6jKaOYLpDFbzat1RHhVbl/gGt7L+NLOc=;
+	s=korg; t=1678458897;
+	bh=QmLfZ0LmzAWF/kVcVsdTQFhQvRLZJ8+08lDjN1ULUCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qPFgaO+uJHMpKT9QEWvelcGl6UibtqZJ53fB3FDS2I0sK5JNSLwHtQvDvTX4I47OM
-	 13U926MRv+bv3B10Lvd+axfYQyKBa7YKYWP5Kze55KMP/7doPf0/B6HdAxV4GmnljV
-	 l1JJKpg6fBihoJey8Nb4bI9MP0l/Yt5bszjoult8=
+	b=lDt+i2d+aYRmr4A4CUjhjMoYzlBNSPshxAm4KnVZboJ+fyIk2hXdnEi7XqLUB93t/
+	 dniJU5HU5xuMTIQzh6/B5o2qehQHmY30Mx9RcVXgV7TYrXdFGDuRv6OF9TOW0KDW1e
+	 NKtPg5zZiFi5pKYwfPaWGxhL1NRhX51NadibEvYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Dokyung Song <dokyungs@yonsei.ac.kr>,
+	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
+	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 152/357] clk: renesas: cpg-mssr: Use enum clk_reg_layout instead of a boolean flag
-Date: Fri, 10 Mar 2023 14:37:21 +0100
-Message-Id: <20230310133741.421217454@linuxfoundation.org>
+Subject: [PATCH 5.4 179/357] wifi: brcmfmac: Fix potential stack-out-of-bounds in brcmf_c_preinit_dcmds()
+Date: Fri, 10 Mar 2023 14:37:48 +0100
+Message-Id: <20230310133742.646044198@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,211 +37,157 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
 
-[ Upstream commit ffbf9cf3f9460e320c3f1a90a51145da86c16781 ]
+[ Upstream commit 0a06cadcc2a0044e4a117cc0e61436fc3a0dad69 ]
 
-Geert suggested defining multiple register layout variants using an enum
-[1] to support further devices like R-Car V3U.  So, use enum
-clk_reg_layout instead of a boolean .stbyctrl flag.  No behavioral
-change.
+This patch fixes a stack-out-of-bounds read in brcmfmac that occurs
+when 'buf' that is not null-terminated is passed as an argument of
+strsep() in brcmf_c_preinit_dcmds(). This buffer is filled with a firmware
+version string by memcpy() in brcmf_fil_iovar_data_get().
+The patch ensures buf is null-terminated.
 
-[1] https://lore.kernel.org/linux-renesas-soc/CAMuHMdVAgN69p9FFnQdO4iHk2CHkeNaVui2Q-FOY6_BFVjQ-Nw@mail.gmail.com/
+Found by a modified version of syzkaller.
 
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://lore.kernel.org/r/1599810232-29035-2-git-send-email-yoshihiro.shimoda.uh@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Stable-dep-of: 1c052043c79a ("clk: renesas: cpg-mssr: Remove superfluous check in resume code")
+[   47.569679][ T1897] brcmfmac: brcmf_fw_alloc_request: using brcm/brcmfmac43236b for chip BCM43236/3
+[   47.582839][ T1897] brcmfmac: brcmf_c_process_clm_blob: no clm_blob available (err=-2), device may have limited channels available
+[   47.601565][ T1897] ==================================================================
+[   47.602574][ T1897] BUG: KASAN: stack-out-of-bounds in strsep+0x1b2/0x1f0
+[   47.603447][ T1897] Read of size 1 at addr ffffc90001f6f000 by task kworker/0:2/1897
+[   47.604336][ T1897]
+[   47.604621][ T1897] CPU: 0 PID: 1897 Comm: kworker/0:2 Tainted: G           O      5.14.0+ #131
+[   47.605617][ T1897] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
+[   47.606907][ T1897] Workqueue: usb_hub_wq hub_event
+[   47.607453][ T1897] Call Trace:
+[   47.607801][ T1897]  dump_stack_lvl+0x8e/0xd1
+[   47.608295][ T1897]  print_address_description.constprop.0.cold+0xf/0x334
+[   47.609009][ T1897]  ? strsep+0x1b2/0x1f0
+[   47.609434][ T1897]  ? strsep+0x1b2/0x1f0
+[   47.609863][ T1897]  kasan_report.cold+0x83/0xdf
+[   47.610366][ T1897]  ? strsep+0x1b2/0x1f0
+[   47.610882][ T1897]  strsep+0x1b2/0x1f0
+[   47.611300][ T1897]  ? brcmf_fil_iovar_data_get+0x3a/0xf0
+[   47.611883][ T1897]  brcmf_c_preinit_dcmds+0x995/0xc40
+[   47.612434][ T1897]  ? brcmf_c_set_joinpref_default+0x100/0x100
+[   47.613078][ T1897]  ? rcu_read_lock_sched_held+0xa1/0xd0
+[   47.613662][ T1897]  ? rcu_read_lock_bh_held+0xb0/0xb0
+[   47.614208][ T1897]  ? lock_acquire+0x19d/0x4e0
+[   47.614704][ T1897]  ? find_held_lock+0x2d/0x110
+[   47.615236][ T1897]  ? brcmf_usb_deq+0x1a7/0x260
+[   47.615741][ T1897]  ? brcmf_usb_rx_fill_all+0x5a/0xf0
+[   47.616288][ T1897]  brcmf_attach+0x246/0xd40
+[   47.616758][ T1897]  ? wiphy_new_nm+0x1703/0x1dd0
+[   47.617280][ T1897]  ? kmemdup+0x43/0x50
+[   47.617720][ T1897]  brcmf_usb_probe+0x12de/0x1690
+[   47.618244][ T1897]  ? brcmf_usbdev_qinit.constprop.0+0x470/0x470
+[   47.618901][ T1897]  usb_probe_interface+0x2aa/0x760
+[   47.619429][ T1897]  ? usb_probe_device+0x250/0x250
+[   47.619950][ T1897]  really_probe+0x205/0xb70
+[   47.620435][ T1897]  ? driver_allows_async_probing+0x130/0x130
+[   47.621048][ T1897]  __driver_probe_device+0x311/0x4b0
+[   47.621595][ T1897]  ? driver_allows_async_probing+0x130/0x130
+[   47.622209][ T1897]  driver_probe_device+0x4e/0x150
+[   47.622739][ T1897]  __device_attach_driver+0x1cc/0x2a0
+[   47.623287][ T1897]  bus_for_each_drv+0x156/0x1d0
+[   47.623796][ T1897]  ? bus_rescan_devices+0x30/0x30
+[   47.624309][ T1897]  ? lockdep_hardirqs_on_prepare+0x273/0x3e0
+[   47.624907][ T1897]  ? trace_hardirqs_on+0x46/0x160
+[   47.625437][ T1897]  __device_attach+0x23f/0x3a0
+[   47.625924][ T1897]  ? device_bind_driver+0xd0/0xd0
+[   47.626433][ T1897]  ? kobject_uevent_env+0x287/0x14b0
+[   47.627057][ T1897]  bus_probe_device+0x1da/0x290
+[   47.627557][ T1897]  device_add+0xb7b/0x1eb0
+[   47.628027][ T1897]  ? wait_for_completion+0x290/0x290
+[   47.628593][ T1897]  ? __fw_devlink_link_to_suppliers+0x5a0/0x5a0
+[   47.629249][ T1897]  usb_set_configuration+0xf59/0x16f0
+[   47.629829][ T1897]  usb_generic_driver_probe+0x82/0xa0
+[   47.630385][ T1897]  usb_probe_device+0xbb/0x250
+[   47.630927][ T1897]  ? usb_suspend+0x590/0x590
+[   47.631397][ T1897]  really_probe+0x205/0xb70
+[   47.631855][ T1897]  ? driver_allows_async_probing+0x130/0x130
+[   47.632469][ T1897]  __driver_probe_device+0x311/0x4b0
+[   47.633002][ T1897]  ? usb_generic_driver_match+0x75/0x90
+[   47.633573][ T1897]  ? driver_allows_async_probing+0x130/0x130
+[   47.634170][ T1897]  driver_probe_device+0x4e/0x150
+[   47.634703][ T1897]  __device_attach_driver+0x1cc/0x2a0
+[   47.635248][ T1897]  bus_for_each_drv+0x156/0x1d0
+[   47.635748][ T1897]  ? bus_rescan_devices+0x30/0x30
+[   47.636271][ T1897]  ? lockdep_hardirqs_on_prepare+0x273/0x3e0
+[   47.636881][ T1897]  ? trace_hardirqs_on+0x46/0x160
+[   47.637396][ T1897]  __device_attach+0x23f/0x3a0
+[   47.637904][ T1897]  ? device_bind_driver+0xd0/0xd0
+[   47.638426][ T1897]  ? kobject_uevent_env+0x287/0x14b0
+[   47.638985][ T1897]  bus_probe_device+0x1da/0x290
+[   47.639512][ T1897]  device_add+0xb7b/0x1eb0
+[   47.639977][ T1897]  ? __fw_devlink_link_to_suppliers+0x5a0/0x5a0
+[   47.640612][ T1897]  ? kfree+0x14a/0x6b0
+[   47.641055][ T1897]  ? __usb_get_extra_descriptor+0x116/0x160
+[   47.641679][ T1897]  usb_new_device.cold+0x49c/0x1029
+[   47.642245][ T1897]  ? hub_disconnect+0x450/0x450
+[   47.642756][ T1897]  ? rwlock_bug.part.0+0x90/0x90
+[   47.643273][ T1897]  ? _raw_spin_unlock_irq+0x24/0x30
+[   47.643822][ T1897]  ? lockdep_hardirqs_on_prepare+0x273/0x3e0
+[   47.644445][ T1897]  hub_event+0x1c98/0x3950
+[   47.644939][ T1897]  ? hub_port_debounce+0x2e0/0x2e0
+[   47.645467][ T1897]  ? check_irq_usage+0x861/0xf20
+[   47.645975][ T1897]  ? drain_workqueue+0x280/0x360
+[   47.646506][ T1897]  ? lock_release+0x640/0x640
+[   47.646994][ T1897]  ? rcu_read_lock_sched_held+0xa1/0xd0
+[   47.647572][ T1897]  ? rcu_read_lock_bh_held+0xb0/0xb0
+[   47.648111][ T1897]  ? lockdep_hardirqs_on_prepare+0x273/0x3e0
+[   47.648735][ T1897]  process_one_work+0x92b/0x1460
+[   47.649262][ T1897]  ? pwq_dec_nr_in_flight+0x330/0x330
+[   47.649816][ T1897]  ? rwlock_bug.part.0+0x90/0x90
+[   47.650336][ T1897]  worker_thread+0x95/0xe00
+[   47.650830][ T1897]  ? __kthread_parkme+0x115/0x1e0
+[   47.651361][ T1897]  ? process_one_work+0x1460/0x1460
+[   47.651904][ T1897]  kthread+0x3a1/0x480
+[   47.652329][ T1897]  ? set_kthread_struct+0x120/0x120
+[   47.652878][ T1897]  ret_from_fork+0x1f/0x30
+[   47.653370][ T1897]
+[   47.653608][ T1897]
+[   47.653848][ T1897] addr ffffc90001f6f000 is located in stack of task kworker/0:2/1897 at offset 512 in frame:
+[   47.654891][ T1897]  brcmf_c_preinit_dcmds+0x0/0xc40
+[   47.655442][ T1897]
+[   47.655690][ T1897] this frame has 4 objects:
+[   47.656151][ T1897]  [48, 56) 'ptr'
+[   47.656159][ T1897]  [80, 148) 'revinfo'
+[   47.656534][ T1897]  [192, 210) 'eventmask'
+[   47.656953][ T1897]  [256, 512) 'buf'
+[   47.657410][ T1897]
+[   47.658035][ T1897] Memory state around the buggy address:
+[   47.658743][ T1897]  ffffc90001f6ef00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   47.659577][ T1897]  ffffc90001f6ef80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   47.660394][ T1897] >ffffc90001f6f000: f3 f3 f3 f3 f3 f3 f3 f3 00 00 00 00 00 00 00 00
+[   47.661199][ T1897]                    ^
+[   47.661625][ T1897]  ffffc90001f6f080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   47.662455][ T1897]  ffffc90001f6f100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 f1 f1
+[   47.663318][ T1897] ==================================================================
+[   47.664147][ T1897] Disabling lock debugging due to kernel taint
+
+Reported-by: Dokyung Song <dokyungs@yonsei.ac.kr>
+Reported-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+Reported-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Signed-off-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221115043458.37562-1-jisoo.jang@yonsei.ac.kr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r7s9210-cpg-mssr.c |  2 +-
- drivers/clk/renesas/renesas-cpg-mssr.c | 27 +++++++++++++-------------
- drivers/clk/renesas/renesas-cpg-mssr.h | 12 +++++++-----
- 3 files changed, 22 insertions(+), 19 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/renesas/r7s9210-cpg-mssr.c b/drivers/clk/renesas/r7s9210-cpg-mssr.c
-index cf65d4e0e1166..2772eb0b8ba76 100644
---- a/drivers/clk/renesas/r7s9210-cpg-mssr.c
-+++ b/drivers/clk/renesas/r7s9210-cpg-mssr.c
-@@ -213,7 +213,7 @@ const struct cpg_mssr_info r7s9210_cpg_mssr_info __initconst = {
- 	.cpg_clk_register = rza2_cpg_clk_register,
- 
- 	/* RZ/A2 has Standby Control Registers */
--	.stbyctrl = true,
-+	.reg_layout = CLK_REG_LAYOUT_RZ_A,
- };
- 
- static void __init r7s9210_cpg_mssr_early_init(struct device_node *np)
-diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
-index 9ffd1bf80b6a3..fd9ca86cc60f6 100644
---- a/drivers/clk/renesas/renesas-cpg-mssr.c
-+++ b/drivers/clk/renesas/renesas-cpg-mssr.c
-@@ -111,12 +111,12 @@ static const u16 srcr[] = {
-  * @rcdev: Optional reset controller entity
-  * @dev: CPG/MSSR device
-  * @base: CPG/MSSR register block base address
-+ * @reg_layout: CPG/MSSR register layout
-  * @rmw_lock: protects RMW register accesses
-  * @np: Device node in DT for this CPG/MSSR module
-  * @num_core_clks: Number of Core Clocks in clks[]
-  * @num_mod_clks: Number of Module Clocks in clks[]
-  * @last_dt_core_clk: ID of the last Core Clock exported to DT
-- * @stbyctrl: This device has Standby Control Registers
-  * @notifiers: Notifier chain to save/restore clock state for system resume
-  * @smstpcr_saved[].mask: Mask of SMSTPCR[] bits under our control
-  * @smstpcr_saved[].val: Saved values of SMSTPCR[]
-@@ -128,13 +128,13 @@ struct cpg_mssr_priv {
- #endif
- 	struct device *dev;
- 	void __iomem *base;
-+	enum clk_reg_layout reg_layout;
- 	spinlock_t rmw_lock;
- 	struct device_node *np;
- 
- 	unsigned int num_core_clks;
- 	unsigned int num_mod_clks;
- 	unsigned int last_dt_core_clk;
--	bool stbyctrl;
- 
- 	struct raw_notifier_head notifiers;
- 	struct {
-@@ -177,7 +177,7 @@ static int cpg_mstp_clock_endisable(struct clk_hw *hw, bool enable)
- 		enable ? "ON" : "OFF");
- 	spin_lock_irqsave(&priv->rmw_lock, flags);
- 
--	if (priv->stbyctrl) {
-+	if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A) {
- 		value = readb(priv->base + STBCR(reg));
- 		if (enable)
- 			value &= ~bitmask;
-@@ -199,7 +199,7 @@ static int cpg_mstp_clock_endisable(struct clk_hw *hw, bool enable)
- 
- 	spin_unlock_irqrestore(&priv->rmw_lock, flags);
- 
--	if (!enable || priv->stbyctrl)
-+	if (!enable || priv->reg_layout == CLK_REG_LAYOUT_RZ_A)
- 		return 0;
- 
- 	for (i = 1000; i > 0; --i) {
-@@ -233,7 +233,7 @@ static int cpg_mstp_clock_is_enabled(struct clk_hw *hw)
- 	struct cpg_mssr_priv *priv = clock->priv;
- 	u32 value;
- 
--	if (priv->stbyctrl)
-+	if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A)
- 		value = readb(priv->base + STBCR(clock->index / 32));
- 	else
- 		value = readl(priv->base + MSTPSR(clock->index / 32));
-@@ -272,7 +272,7 @@ struct clk *cpg_mssr_clk_src_twocell_get(struct of_phandle_args *clkspec,
- 
- 	case CPG_MOD:
- 		type = "module";
--		if (priv->stbyctrl) {
-+		if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A) {
- 			idx = MOD_CLK_PACK_10(clkidx);
- 			range_check = 7 - (clkidx % 10);
- 		} else {
-@@ -800,7 +800,8 @@ static int cpg_mssr_suspend_noirq(struct device *dev)
- 	/* Save module registers with bits under our control */
- 	for (reg = 0; reg < ARRAY_SIZE(priv->smstpcr_saved); reg++) {
- 		if (priv->smstpcr_saved[reg].mask)
--			priv->smstpcr_saved[reg].val = priv->stbyctrl ?
-+			priv->smstpcr_saved[reg].val =
-+				priv->reg_layout == CLK_REG_LAYOUT_RZ_A ?
- 				readb(priv->base + STBCR(reg)) :
- 				readl(priv->base + SMSTPCR(reg));
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+index dec25e4156199..0c967b45f76f7 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+@@ -264,6 +264,7 @@ int brcmf_c_preinit_dcmds(struct brcmf_if *ifp)
+ 			 err);
+ 		goto done;
  	}
-@@ -830,7 +831,7 @@ static int cpg_mssr_resume_noirq(struct device *dev)
- 		if (!mask)
- 			continue;
++	buf[sizeof(buf) - 1] = '\0';
+ 	ptr = (char *)buf;
+ 	strsep(&ptr, "\n");
  
--		if (priv->stbyctrl)
-+		if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A)
- 			oldval = readb(priv->base + STBCR(reg));
- 		else
- 			oldval = readl(priv->base + SMSTPCR(reg));
-@@ -839,7 +840,7 @@ static int cpg_mssr_resume_noirq(struct device *dev)
- 		if (newval == oldval)
- 			continue;
- 
--		if (priv->stbyctrl) {
-+		if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A) {
- 			writeb(newval, priv->base + STBCR(reg));
- 			/* dummy read to ensure write has completed */
- 			readb(priv->base + STBCR(reg));
-@@ -862,8 +863,8 @@ static int cpg_mssr_resume_noirq(struct device *dev)
- 
- 		if (!i)
- 			dev_warn(dev, "Failed to enable %s%u[0x%x]\n",
--				 priv->stbyctrl ? "STB" : "SMSTP", reg,
--				 oldval & mask);
-+				 priv->reg_layout == CLK_REG_LAYOUT_RZ_A ?
-+				 "STB" : "SMSTP", reg, oldval & mask);
- 	}
- 
- 	return 0;
-@@ -911,7 +912,7 @@ static int __init cpg_mssr_common_init(struct device *dev,
- 	priv->num_mod_clks = info->num_hw_mod_clks;
- 	priv->last_dt_core_clk = info->last_dt_core_clk;
- 	RAW_INIT_NOTIFIER_HEAD(&priv->notifiers);
--	priv->stbyctrl = info->stbyctrl;
-+	priv->reg_layout = info->reg_layout;
- 
- 	for (i = 0; i < nclks; i++)
- 		priv->clks[i] = ERR_PTR(-ENOENT);
-@@ -991,7 +992,7 @@ static int __init cpg_mssr_probe(struct platform_device *pdev)
- 		return error;
- 
- 	/* Reset Controller not supported for Standby Control SoCs */
--	if (info->stbyctrl)
-+	if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A)
- 		return 0;
- 
- 	error = cpg_mssr_reset_controller_register(priv);
-diff --git a/drivers/clk/renesas/renesas-cpg-mssr.h b/drivers/clk/renesas/renesas-cpg-mssr.h
-index 4ddcdf3bfb95f..f05521b5fa6e2 100644
---- a/drivers/clk/renesas/renesas-cpg-mssr.h
-+++ b/drivers/clk/renesas/renesas-cpg-mssr.h
-@@ -85,6 +85,11 @@ struct mssr_mod_clk {
- 
- struct device_node;
- 
-+enum clk_reg_layout {
-+	CLK_REG_LAYOUT_RCAR_GEN2_AND_GEN3 = 0,
-+	CLK_REG_LAYOUT_RZ_A,
-+};
-+
-     /**
-      * SoC-specific CPG/MSSR Description
-      *
-@@ -105,6 +110,7 @@ struct device_node;
-      * @crit_mod_clks: Array with Module Clock IDs of critical clocks that
-      *                 should not be disabled without a knowledgeable driver
-      * @num_crit_mod_clks: Number of entries in crit_mod_clks[]
-+     * @reg_layout: CPG/MSSR register layout from enum clk_reg_layout
-      *
-      * @core_pm_clks: Array with IDs of Core Clocks that are suitable for Power
-      *                Management, in addition to Module Clocks
-@@ -112,10 +118,6 @@ struct device_node;
-      *
-      * @init: Optional callback to perform SoC-specific initialization
-      * @cpg_clk_register: Optional callback to handle special Core Clock types
--     *
--     * @stbyctrl: This device has Standby Control Registers which are 8-bits
--     *            wide, no status registers (MSTPSR) and have different address
--     *            offsets.
-      */
- 
- struct cpg_mssr_info {
-@@ -130,7 +132,7 @@ struct cpg_mssr_info {
- 	unsigned int num_core_clks;
- 	unsigned int last_dt_core_clk;
- 	unsigned int num_total_core_clks;
--	bool stbyctrl;
-+	enum clk_reg_layout reg_layout;
- 
- 	/* Module Clocks */
- 	const struct mssr_mod_clk *mod_clks;
 -- 
 2.39.2
 
