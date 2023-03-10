@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F888489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:19:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3BEC433D2;
-	Fri, 10 Mar 2023 14:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062CF8489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:19:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D61C433EF;
+	Fri, 10 Mar 2023 14:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457943;
-	bh=34p6pUekLLRF8oI1vy9aTu5Ltjgeq5q4dDzHUeu50vg=;
+	s=korg; t=1678457945;
+	bh=0lBHX3qXVc3JxCFl6+DwYNF1FvVd05iTzs1YJMjPgSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npBpM6Q6LeHxT14eor2Bnj5s6adJZU5sgH+/4PX+vf/f1IW1avpuUyW9Dd9QdqAhH
-	 k2CE/xpxxxU4lthXo9nfMRfXAYwYJqpukJsBIgD2MSyDu/eOvWweraX3VSqhPB5KVw
-	 GiN4VX/FCaoJDeGGqZqh7Yw27wAAhhnlxuP6y7q8=
+	b=qJgZJtriu6f1sarjJrJvytEHxkKdcBTugjK4NePALVtnaYJlpmfeF2vMdLC2iFP5m
+	 blyvcGeDE2VOYQZAqZxnRq4b76X3z6OMjCQ+fDJNDpPv6P9MfSNqYIDqJQDO9cIPuP
+	 IjOSPzEXReOhpW+RF7yq02TlF0eyudxHFOHasiaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Sean Young <sean@mess.org>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 110/252] media: i2c: ov772x: Fix memleak in ov772x_probe()
-Date: Fri, 10 Mar 2023 14:38:00 +0100
-Message-Id: <20230310133722.130102751@linuxfoundation.org>
+Subject: [PATCH 4.19 111/252] media: rc: Fix use-after-free bugs caused by ene_tx_irqsim()
+Date: Fri, 10 Mar 2023 14:38:01 +0100
+Message-Id: <20230310133722.158357823@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -37,92 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 7485edb2b6ca5960205c0a49bedfd09bba30e521 ]
+[ Upstream commit 29b0589a865b6f66d141d79b2dd1373e4e50fe17 ]
 
-A memory leak was reported when testing ov772x with bpf mock device:
+When the ene device is detaching, function ene_remove() will
+be called. But there is no function to cancel tx_sim_timer
+in ene_remove(), the timer handler ene_tx_irqsim() could race
+with ene_remove(). As a result, the UAF bugs could happen,
+the process is shown below.
 
-AssertionError: unreferenced object 0xffff888109afa7a8 (size 8):
-  comm "python3", pid 279, jiffies 4294805921 (age 20.681s)
-  hex dump (first 8 bytes):
-    80 22 88 15 81 88 ff ff                          ."......
-  backtrace:
-    [<000000009990b438>] __kmalloc_node+0x44/0x1b0
-    [<000000009e32f7d7>] kvmalloc_node+0x34/0x180
-    [<00000000faf48134>] v4l2_ctrl_handler_init_class+0x11d/0x180 [videodev]
-    [<00000000da376937>] ov772x_probe+0x1c3/0x68c [ov772x]
-    [<000000003f0d225e>] i2c_device_probe+0x28d/0x680
-    [<00000000e0b6db89>] really_probe+0x17c/0x3f0
-    [<000000001b19fcee>] __driver_probe_device+0xe3/0x170
-    [<0000000048370519>] driver_probe_device+0x49/0x120
-    [<000000005ead07a0>] __device_attach_driver+0xf7/0x150
-    [<0000000043f452b8>] bus_for_each_drv+0x114/0x180
-    [<00000000358e5596>] __device_attach+0x1e5/0x2d0
-    [<0000000043f83c5d>] bus_probe_device+0x126/0x140
-    [<00000000ee0f3046>] device_add+0x810/0x1130
-    [<00000000e0278184>] i2c_new_client_device+0x359/0x4f0
-    [<0000000070baf34f>] of_i2c_register_device+0xf1/0x110
-    [<00000000a9f2159d>] of_i2c_notify+0x100/0x160
-unreferenced object 0xffff888119825c00 (size 256):
-  comm "python3", pid 279, jiffies 4294805921 (age 20.681s)
-  hex dump (first 32 bytes):
-    00 b4 a5 17 81 88 ff ff 00 5e 82 19 81 88 ff ff  .........^......
-    10 5c 82 19 81 88 ff ff 10 5c 82 19 81 88 ff ff  .\.......\......
-  backtrace:
-    [<000000009990b438>] __kmalloc_node+0x44/0x1b0
-    [<000000009e32f7d7>] kvmalloc_node+0x34/0x180
-    [<0000000073d88e0b>] v4l2_ctrl_new.cold+0x19b/0x86f [videodev]
-    [<00000000b1f576fb>] v4l2_ctrl_new_std+0x16f/0x210 [videodev]
-    [<00000000caf7ac99>] ov772x_probe+0x1fa/0x68c [ov772x]
-    [<000000003f0d225e>] i2c_device_probe+0x28d/0x680
-    [<00000000e0b6db89>] really_probe+0x17c/0x3f0
-    [<000000001b19fcee>] __driver_probe_device+0xe3/0x170
-    [<0000000048370519>] driver_probe_device+0x49/0x120
-    [<000000005ead07a0>] __device_attach_driver+0xf7/0x150
-    [<0000000043f452b8>] bus_for_each_drv+0x114/0x180
-    [<00000000358e5596>] __device_attach+0x1e5/0x2d0
-    [<0000000043f83c5d>] bus_probe_device+0x126/0x140
-    [<00000000ee0f3046>] device_add+0x810/0x1130
-    [<00000000e0278184>] i2c_new_client_device+0x359/0x4f0
-    [<0000000070baf34f>] of_i2c_register_device+0xf1/0x110
+    (cleanup routine)          |        (timer routine)
+                               | mod_timer(&dev->tx_sim_timer, ..)
+ene_remove()                   | (wait a time)
+                               | ene_tx_irqsim()
+                               |   dev->hw_lock //USE
+                               |   ene_tx_sample(dev) //USE
 
-The reason is that if priv->hdl.error is set, ov772x_probe() jumps to the
-error_mutex_destroy without doing v4l2_ctrl_handler_free(), and all
-resources allocated in v4l2_ctrl_handler_init() and v4l2_ctrl_new_std()
-are leaked.
+Fix by adding del_timer_sync(&dev->tx_sim_timer) in ene_remove(),
+The tx_sim_timer could stop before ene device is deallocated.
 
-Fixes: 1112babde214 ("media: i2c: Copy ov772x soc_camera sensor driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+What's more, The rc_unregister_device() and del_timer_sync()
+should be called first in ene_remove() and the deallocated
+functions such as free_irq(), release_region() and so on
+should be called behind them. Because the rc_unregister_device()
+is well synchronized. Otherwise, race conditions may happen. The
+situations that may lead to race conditions are shown below.
+
+Firstly, the rx receiver is disabled with ene_rx_disable()
+before rc_unregister_device() in ene_remove(), which means it
+can be enabled again if a process opens /dev/lirc0 between
+ene_rx_disable() and rc_unregister_device().
+
+Secondly, the irqaction descriptor is freed by free_irq()
+before the rc device is unregistered, which means irqaction
+descriptor may be accessed again after it is deallocated.
+
+Thirdly, the timer can call ene_tx_sample() that can write
+to the io ports, which means the io ports could be accessed
+again after they are deallocated by release_region().
+
+Therefore, the rc_unregister_device() and del_timer_sync()
+should be called first in ene_remove().
+
+Suggested by: Sean Young <sean@mess.org>
+
+Fixes: 9ea53b74df9c ("V4L/DVB: STAGING: remove lirc_ene0100 driver")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov772x.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/media/rc/ene_ir.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ov772x.c b/drivers/media/i2c/ov772x.c
-index 4eae5f2f7d318..11deaec9afbfb 100644
---- a/drivers/media/i2c/ov772x.c
-+++ b/drivers/media/i2c/ov772x.c
-@@ -1424,7 +1424,7 @@ static int ov772x_probe(struct i2c_client *client,
- 	priv->subdev.ctrl_handler = &priv->hdl;
- 	if (priv->hdl.error) {
- 		ret = priv->hdl.error;
--		goto error_mutex_destroy;
-+		goto error_ctrl_free;
- 	}
+diff --git a/drivers/media/rc/ene_ir.c b/drivers/media/rc/ene_ir.c
+index 71b8c9bbf6c40..8cf2a5c0575ab 100644
+--- a/drivers/media/rc/ene_ir.c
++++ b/drivers/media/rc/ene_ir.c
+@@ -1116,6 +1116,8 @@ static void ene_remove(struct pnp_dev *pnp_dev)
+ 	struct ene_device *dev = pnp_get_drvdata(pnp_dev);
+ 	unsigned long flags;
  
- 	priv->clk = clk_get(&client->dev, NULL);
-@@ -1473,7 +1473,6 @@ static int ov772x_probe(struct i2c_client *client,
- 	clk_put(priv->clk);
- error_ctrl_free:
- 	v4l2_ctrl_handler_free(&priv->hdl);
--error_mutex_destroy:
- 	mutex_destroy(&priv->lock);
++	rc_unregister_device(dev->rdev);
++	del_timer_sync(&dev->tx_sim_timer);
+ 	spin_lock_irqsave(&dev->hw_lock, flags);
+ 	ene_rx_disable(dev);
+ 	ene_rx_restore_hw_buffer(dev);
+@@ -1123,7 +1125,6 @@ static void ene_remove(struct pnp_dev *pnp_dev)
  
- 	return ret;
+ 	free_irq(dev->irq, dev);
+ 	release_region(dev->hw_io, ENE_IO_SIZE);
+-	rc_unregister_device(dev->rdev);
+ 	kfree(dev);
+ }
+ 
 -- 
 2.39.2
 
