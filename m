@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A58B848D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:26:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F2CC433EF;
-	Fri, 10 Mar 2023 14:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAE2848D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:26:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5C2C433EF;
+	Fri, 10 Mar 2023 14:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458415;
-	bh=J7mb6ofHizPLjvjgbic5lVFIuNp5l/c9JP7LYYCio/o=;
+	s=korg; t=1678458418;
+	bh=fg+x+bkFX6ZUErlos+KNhs00/QnMBAaIv1Y9TMxot/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oV/M3ucFRZfaXHQmqw0mAjytK/P+2ZK2pcYhm9Cz0/tHiD7h/xD8uY9JHln5suqdV
-	 gGRFdLQsSwa9pKpGe0RPMMgIFIMqprxHw4G5Bv6z0ui3lIrHoipTI6/oW9WznSIYz+
-	 Y5ZmNxaS922G7W2kRYPZGleWqh7TOGE/FrC1gJfQ=
+	b=v/X+xPBY1jqx9z8Xu6PQOsZaxXDGT/NUGMolxHjg7TJDSTLeFsCWGDbBdZJDxrEj6
+	 GHW9nnmrfR6SEre4kuk1k6Z2lqcLHz3yaJgCgGT/bdMuGEYZ132kNkvQsgU/03awTV
+	 Oo8G2KSMmjMA5Rf9LWFITCo8EuHMaZIkpghbkE50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Qiheng Lin <linqiheng@huawei.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 005/357] arm64: dts: qcom: qcs404: use symbol names for PCIe resets
-Date: Fri, 10 Mar 2023 14:34:54 +0100
-Message-Id: <20230310133734.210437366@linuxfoundation.org>
+Subject: [PATCH 5.4 006/357] ARM: zynq: Fix refcount leak in zynq_early_slcr_init
+Date: Fri, 10 Mar 2023 14:34:55 +0100
+Message-Id: <20230310133734.250306456@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,56 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Qiheng Lin <linqiheng@huawei.com>
 
-[ Upstream commit 41a37d157a613444c97e8f71a5fb2a21116b70d7 ]
+[ Upstream commit 9eedb910a3be0005b88c696a8552c0d4c9937cd4 ]
 
-The commit e5bbbff5b7d7 ("clk: gcc-qcs404: Add PCIe resets") added names
-for PCIe resets, but it did not change the existing qcs404.dtsi to use
-these names. Do it now and use symbol names to make it easier to check
-and modify the dtsi in future.
+of_find_compatible_node() returns a node pointer with refcount incremented,
+we should use of_node_put() on error path.
+Add missing of_node_put() to avoid refcount leak.
 
-Fixes: e5bbbff5b7d7 ("clk: gcc-qcs404: Add PCIe resets")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221226042154.2666748-14-dmitry.baryshkov@linaro.org
+Fixes: 3329659df030 ("ARM: zynq: Simplify SLCR initialization")
+Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
+Link: https://lore.kernel.org/r/20221129140544.41293-1-linqiheng@huawei.com
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcs404.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm/mach-zynq/slcr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index a97eeb4569c00..1eb51b12cfac7 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -533,7 +533,7 @@ pcie_phy: phy@7786000 {
+diff --git a/arch/arm/mach-zynq/slcr.c b/arch/arm/mach-zynq/slcr.c
+index 37707614885a5..9765b3f4c2fc5 100644
+--- a/arch/arm/mach-zynq/slcr.c
++++ b/arch/arm/mach-zynq/slcr.c
+@@ -213,6 +213,7 @@ int __init zynq_early_slcr_init(void)
+ 	zynq_slcr_regmap = syscon_regmap_lookup_by_compatible("xlnx,zynq-slcr");
+ 	if (IS_ERR(zynq_slcr_regmap)) {
+ 		pr_err("%s: failed to find zynq-slcr\n", __func__);
++		of_node_put(np);
+ 		return -ENODEV;
+ 	}
  
- 			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>;
- 			resets = <&gcc GCC_PCIEPHY_0_PHY_BCR>,
--				 <&gcc 21>;
-+				 <&gcc GCC_PCIE_0_PIPE_ARES>;
- 			reset-names = "phy", "pipe";
- 
- 			clock-output-names = "pcie_0_pipe_clk";
-@@ -991,12 +991,12 @@ pcie: pci@10000000 {
- 				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>;
- 			clock-names = "iface", "aux", "master_bus", "slave_bus";
- 
--			resets = <&gcc 18>,
--				 <&gcc 17>,
--				 <&gcc 15>,
--				 <&gcc 19>,
-+			resets = <&gcc GCC_PCIE_0_AXI_MASTER_ARES>,
-+				 <&gcc GCC_PCIE_0_AXI_SLAVE_ARES>,
-+				 <&gcc GCC_PCIE_0_AXI_MASTER_STICKY_ARES>,
-+				 <&gcc GCC_PCIE_0_CORE_STICKY_ARES>,
- 				 <&gcc GCC_PCIE_0_BCR>,
--				 <&gcc 16>;
-+				 <&gcc GCC_PCIE_0_AHB_ARES>;
- 			reset-names = "axi_m",
- 				      "axi_s",
- 				      "axi_m_sticky",
 -- 
 2.39.2
 
