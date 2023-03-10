@@ -1,91 +1,84 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA1CED0
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 07:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40592ED0
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 07:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:
-	Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Reply-To:Content-ID:Content-Description;
-	bh=ObS7kHIMNEO6/K+lu7Q5QaoN1Z0BkLGx2U6foA9qvp0=; b=VhDT+c0yOIEcyNND/R8fz60Uuv
-	wvpQ4v7W8XgR4H0orSmpUv0rh4QGHHrUl/XKBabOi5eujNKNFCyO5dSdL/wI8X+IrZTjYbAvWmNMS
-	zmZtFY7VsqCv7urBpM1GVULFyW9mG2YtuUu6LWphxQOC1MJSps6xMDKs7Gomm2RluGpMbFCrH2au4
-	6BGM0zQTHm2Tg/qHLHDyKPnjf2BqJfXSl7vbMqtqQyuD+HHagTXSiRAVu9h+ToMu7LTBYwncMsYIl
-	bQ3oLOYUXig1NMnqNlYzckfloUwFYdK926X/DyDup+DWNyEKe02OXkXcvvix8dF3eMoWbgTnN3p0z
-	9f36tHvg==;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=0N+SCtcY/k9CimqgVMe/YX4md4YEbNQzEDvTCcqt4bw=; b=TbHcAKwtP7qVQnyr4M3BCyYIa9
+	/0zMoVu1Ym18t94ZPKH+tFOvb05xiFTdpVwC6jwn/i8aWIfnathj3m2nd+Fz/WuY6K+sj1gnbIrJw
+	PLDE5rtBFWDjO8xqpWgtSV+v7c/cZooSVNk+OWZnYWUfuOpDR7H3LV29R6TOwEN1+8fpgTxENcRrN
+	Vk5E2dz3TZTGLbzB/xxNiLvMzRNND6Xb1fYjLRDR9K5vOZvqInK/MTtgg8RzRwvLq61MMSRU8Kksp
+	qm2jVnkmnbSN62TJt7mvrf5Uw2cddBqIVlrEL4EqgGEdcmBpFlQAduFI+Hsk2g1cx0r2tLMgsSepe
+	DNHJzz+A==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1paWkE-00DKg8-7z; Fri, 10 Mar 2023 07:00:50 +0000
-Date: Thu, 9 Mar 2023 23:00:50 -0800
+	id 1paWkT-00DKkw-B4; Fri, 10 Mar 2023 07:01:05 +0000
+Date: Thu, 9 Mar 2023 23:01:05 -0800
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: Eric Biggers <ebiggers@kernel.org>
-Cc: Jeff Xu <jeffxu@google.com>, Andrew Morton <akpm@linux-foundation.org>,
-	ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com,
+Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com,
 	john.johansen@canonical.com, paul@paul-moore.com, jmorris@namei.org,
 	serge@hallyn.com, luto@amacapital.net, wad@chromium.org,
 	dverkamp@chromium.org, paulmck@kernel.org, baihaowen@meizu.com,
-	frederic@kernel.org, tytso@mit.edu, guoren@kernel.org,
-	j.granados@samsung.com, zhangpeng362@huawei.com,
+	frederic@kernel.org, jeffxu@google.com, tytso@mit.edu,
+	guoren@kernel.org, j.granados@samsung.com, zhangpeng362@huawei.com,
 	tangmeng@uniontech.com, willy@infradead.org, nixiaoming@huawei.com,
 	sujiaxun@uniontech.com, patches@lists.linux.dev,
 	linux-fsdevel@vger.kernel.org, apparmor@lists.ubuntu.com,
 	linux-security-module@vger.kernel.org, linux-csky@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 08/11] kernel: pid_namespace: simplify sysctls with
- register_sysctl()
-Message-ID: <ZArVonOBry+PtBRn@bombadil.infradead.org>
+Subject: Re: [PATCH 11/11] proc_sysctl: deprecate register_sysctl_paths()
+Message-ID: <ZArVscnCxYfZXwLR@bombadil.infradead.org>
 References: <20230302202826.776286-1-mcgrof@kernel.org>
- <20230302202826.776286-9-mcgrof@kernel.org>
- <CALmYWFucv6-9yfS=gamwSsqjgxSKZS0nvVjj_QfBmsLmQD5XOQ@mail.gmail.com>
- <ZApZj9DmMYKuCQ3g@bombadil.infradead.org>
- <ZAquqQg2ZhpKL3x9@sol.localdomain>
+ <20230302202826.776286-12-mcgrof@kernel.org>
+ <ZAqvQ57PmdDoNo+F@sol.localdomain>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZAquqQg2ZhpKL3x9@sol.localdomain>
+In-Reply-To: <ZAqvQ57PmdDoNo+F@sol.localdomain>
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Thu, Mar 09, 2023 at 08:14:33PM -0800, Eric Biggers wrote:
-> On Thu, Mar 09, 2023 at 02:11:27PM -0800, Luis Chamberlain wrote:
-> > On Thu, Mar 02, 2023 at 03:13:54PM -0800, Jeff Xu wrote:
-> > > On Thu, Mar 2, 2023 at 12:28 PM Luis Chamberlain <mcgrof@kernel.org> wrote:
-> > > >  kernel/pid_sysctl.h    | 3 +--
-> > > >  2 files changed, 2 insertions(+), 4 deletions(-)
-> > > >
-> > > Acked-by: Jeff Xu <jeffxu@google.com>
-> > 
-> > Andrew, kernel/pid_sysctl.h is new, not on v6.3-rc1 and so I cannot
-> > carry this on sysctl-next. Can you carry this patch on your tree?
-> > 
-> > I see Eric Biggers already took in the fs-verity patch, so I will drop
-> > that from my queue.
-> > 
-> > I can take the rest in this series.
-> > 
-> > I will also hold off on the last patch which deprecates the routine
-> > register_sysctl_paths() until after say the first part of the merge
-> > window.
-> > 
-> > This will allow all of our trees to work on linux-next without conflict.
-> > 
-> > Let me know if this is OK with you and Eric!
-> > 
+On Thu, Mar 09, 2023 at 08:17:07PM -0800, Eric Biggers wrote:
+> On Thu, Mar 02, 2023 at 12:28:26PM -0800, Luis Chamberlain wrote:
+> > diff --git a/include/linux/sysctl.h b/include/linux/sysctl.h
+> > index 780690dc08cd..e8459fc56b50 100644
+> > --- a/include/linux/sysctl.h
+> > +++ b/include/linux/sysctl.h
+> > @@ -221,13 +221,8 @@ extern void retire_sysctl_set(struct ctl_table_set *set);
+> >  struct ctl_table_header *__register_sysctl_table(
+> >  	struct ctl_table_set *set,
+> >  	const char *path, struct ctl_table *table);
+> > -struct ctl_table_header *__register_sysctl_paths(
+> > -	struct ctl_table_set *set,
+> > -	const struct ctl_path *path, struct ctl_table *table);
+> >  struct ctl_table_header *register_sysctl(const char *path, struct ctl_table *table);
+> >  struct ctl_table_header *register_sysctl_table(struct ctl_table * table);
+> > -struct ctl_table_header *register_sysctl_paths(const struct ctl_path *path,
+> > -						struct ctl_table *table);
+> >  
+> >  void unregister_sysctl_table(struct ctl_table_header * table);
+> >  
+> > @@ -277,12 +272,6 @@ static inline struct ctl_table_header *register_sysctl_mount_point(const char *p
+> >  	return NULL;
+> >  }
+> >  
+> > -static inline struct ctl_table_header *register_sysctl_paths(
+> > -			const struct ctl_path *path, struct ctl_table *table)
+> > -{
+> > -	return NULL;
+> > -}
+> > -
 > 
-> That's fine with me.  I applied the fsverity patch based on your cover letter
-> that said it was okay
-> (https://lore.kernel.org/r/20230302202826.776286-1-mcgrof@kernel.org).
+> Seems that this patch should be titled "remove register_sysctl_paths()", not
+> "deprecate register_sysctl_paths()"?
 
-Yeah it perfectly fine!
-
-> If you'd
-> like to take all the patches so that you can remove register_sysctl_paths() in
-> the same cycle, that would be fine too; it's up to you.
-
-Nah it's fine, no rush in this. One small step at a time.
+Good call! Will adjust.
 
   Luis
