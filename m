@@ -1,81 +1,124 @@
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61178DABA
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 21:03:48 +0000 (UTC)
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-176d1a112bfso7269253fac.5
-        for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:03:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678482227;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wfmqX3V1ZCMWpCaHCjTnFuP7SeP5Oijt1dgEqyxc0ec=;
-        b=Tohs15PHiP3AGywZuBUeePIxJNM6k6cXJPOsRCmia/nnLX8gGJU2hmmAyMktSuwV8z
-         G5UPNuWhEE295VA1kW44TBxfRmlmlEvm5W6lQHSGEWSQ6c5JlqQG+/ceZPkLDuAPoC8R
-         NFq3MACnCwPYF/RNZhAoIL5yQOC6MI3MGCQEVdJXiA1We8mX2Ym/qvL7BZUEDUZVo7lL
-         57ylFP2lYkPau/z7rG2IfCckVfMcW1AvDER+/teP0emAAbpHUeaNkna36OxDwE5pHVYu
-         sWuDcY2aXB3O6/sU7X+5VpGONcSwZkIDsuUg6W/gSI/IoLnBqKxDdHNHCt/i22GPt08Y
-         fWWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678482227;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wfmqX3V1ZCMWpCaHCjTnFuP7SeP5Oijt1dgEqyxc0ec=;
-        b=ssV360G3eYmd7wJ4RU5ziY1belL7TMZaRRXAVyCNZKJBxXpdnvTPLvM68+6TDUmkwo
-         pqeTkuNmYiRp+7Y2H6CsIubkawCorUevRRnCVaCivVzR77Ln1+Ql897DZxYEzIlZCMqz
-         kBL5cIrT+43nbqZUacOL92/xTW13Mms15fkmsfz/YHcOxHTMqyg1gisMN8Nu09R2TtSB
-         36AsTDnzh1oO0y6ExsWgcoV2mZbRG5ZXW9vaiSgOmHPH6kQOpM/hungdPW82NJGyr8T8
-         ZpgXneZFF5n3tpVDPKep4bItK+egMLNKpt+XJQ2hrnVYOumdqqgd4JrAqpMu/3Igyrcz
-         VPjg==
-X-Gm-Message-State: AO0yUKVjiAmo3cRn0glf7Ut8UhQmf7IGTxuVj87Z8SXJuI3KkLzZLivt
-	QCOWuzdKq1FDRwy+xmyJPoI=
-X-Google-Smtp-Source: AK7set/1Xb/AfJoR5VcPyo6dEOREDGGhMPrBMiaN+2aTEuBNnWsl1eab75EmL9ehA0wrBF27WH7gyw==
-X-Received: by 2002:a05:6870:b619:b0:176:4e22:1b9f with SMTP id cm25-20020a056870b61900b001764e221b9fmr17523813oab.24.1678482227474;
-        Fri, 10 Mar 2023 13:03:47 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id ds26-20020a0568705b1a00b0017243edbe5bsm412262oab.58.2023.03.10.13.03.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Mar 2023 13:03:47 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Fri, 10 Mar 2023 13:03:46 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 4.14 000/193] 4.14.308-rc1 review
-Message-ID: <fa9bb069-e298-4984-931d-40e151fab15e@roeck-us.net>
-References: <20230310133710.926811681@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB68F8838
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 22:40:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=kyWpWo0acxXgbXOKbiq5AQoZeq7yr4dxSGGgNTZKgqM=; b=R+OzvH3LAmf4i0wBfbnsej4V56
+	OLQQKIarbjmZMH5HZc3IWX98s8S8ONBA80HxhNDI8I0UvzO0ql4Cq+tbWgx+JoiBcf+j3lU2mApWD
+	GZr6uCLJ9qJTHB3Bn6fE4CdwKhPbKiApnEyzng3TvckRtlJ5d9pSahYoPzEOCZofyO5MNd3s8wGIR
+	8WLdzdA9ltlA/9cez3MYrN/2uMn3ajjSq8qa4p1/82bnZlZnGpmDjZydx2UsKLU7nsamsGh557+Hf
+	mjDh0yWii6rJgOQePz8cvbgbjmOhQjtppKdaXfnu53yG3FElaSbVoY+boyOzxtYaDsYIJY2+f2K69
+	FITGTriA==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1palOu-00GRBO-J4; Fri, 10 Mar 2023 22:39:48 +0000
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: ebiederm@xmission.com,
+	keescook@chromium.org,
+	yzaikin@google.com
+Cc: j.granados@samsung.com,
+	patches@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH] proc_sysctl: enhance documentation
+Date: Fri, 10 Mar 2023 14:39:47 -0800
+Message-Id: <20230310223947.3917711-1-mcgrof@kernel.org>
+X-Mailer: git-send-email 2.37.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Fri, Mar 10, 2023 at 02:36:22PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.14.308 release.
-> There are 193 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 12 Mar 2023 13:36:38 +0000.
-> Anything received after that time might be too late.
-> 
+Expand documentation to clarify:
 
-s390:
+  o that paths don't need to exist for the new API callers
+  o clarify that we *require* callers to keep the memory of
+    the table around during the lifetime of the sysctls
+  o annotate routines we are trying to deprecate and later remove
 
-arch/s390/net/bpf_jit_comp.c: In function 'bpf_jit_insn':
-arch/s390/net/bpf_jit_comp.c:1122:7: error: implicit declaration of function 'nospec_uses_trampoline'
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
 
-arch/s390/net/bpf_jit_comp.c:1127:4: error: implicit declaration of function 'EMIT6_PCREL_RILC'
+I'm sending this out separately from the rest of the changes so I can
+refer to this new documentation update separately. With the next few
+patches I am posting we should be able to deprecate the recursion path
+of sysctl registration in about 1-2 kernel cycles max!
 
-Guenter
+ fs/proc/proc_sysctl.c | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
+
+diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
+index 15d5e02f1ec0..7ad07435828f 100644
+--- a/fs/proc/proc_sysctl.c
++++ b/fs/proc/proc_sysctl.c
+@@ -1316,7 +1316,10 @@ static struct ctl_dir *sysctl_mkdir_p(struct ctl_dir *dir, const char *path)
+  * __register_sysctl_table - register a leaf sysctl table
+  * @set: Sysctl tree to register on
+  * @path: The path to the directory the sysctl table is in.
+- * @table: the top-level table structure without any child
++ * @table: the top-level table structure without any child. This table
++ * 	 should not be free'd after registration. So it should not be
++ * 	 used on stack. It can either be a global or dynamically allocated
++ * 	 by the caller and free'd later after sysctl unregistration.
+  *
+  * Register a sysctl table hierarchy. @table should be a filled in ctl_table
+  * array. A completely 0 filled entry terminates the table.
+@@ -1410,8 +1413,15 @@ struct ctl_table_header *__register_sysctl_table(
+ 
+ /**
+  * register_sysctl - register a sysctl table
+- * @path: The path to the directory the sysctl table is in.
+- * @table: the table structure
++ * @path: The path to the directory the sysctl table is in. If the path
++ * 	doesn't exist we will create it for you.
++ * @table: the table structure. The calller must ensure the life of the @table
++ * 	will be kept during the lifetime use of the syctl. It must not be freed
++ * 	until unregister_sysctl_table() is called with the given returned table
++ * 	with this registration. If your code is non modular then you don't need
++ * 	to call unregister_sysctl_table() and can instead use something like
++ * 	register_sysctl_init() which does not care for the result of the syctl
++ * 	registration.
+  *
+  * Register a sysctl table. @table should be a filled in ctl_table
+  * array. A completely 0 filled entry terminates the table.
+@@ -1427,8 +1437,11 @@ EXPORT_SYMBOL(register_sysctl);
+ 
+ /**
+  * __register_sysctl_init() - register sysctl table to path
+- * @path: path name for sysctl base
+- * @table: This is the sysctl table that needs to be registered to the path
++ * @path: path name for sysctl base. If that path doesn't exist we will create
++ * 	it for you.
++ * @table: This is the sysctl table that needs to be registered to the path.
++ * 	The caller must ensure the life of the @table will be kept during the
++ * 	lifetime use of the sysctl.
+  * @table_name: The name of sysctl table, only used for log printing when
+  *              registration fails
+  *
+@@ -1570,6 +1583,7 @@ static int register_leaf_sysctl_tables(const char *path, char *pos,
+  *
+  * Register a sysctl table hierarchy. @table should be a filled in ctl_table
+  * array. A completely 0 filled entry terminates the table.
++ * We are slowly deprecating this call so avoid its use.
+  *
+  * See __register_sysctl_table for more details.
+  */
+@@ -1641,6 +1655,7 @@ struct ctl_table_header *__register_sysctl_paths(
+  *
+  * Register a sysctl table hierarchy. @table should be a filled in ctl_table
+  * array. A completely 0 filled entry terminates the table.
++ * We are slowly deprecating this caller so avoid future uses of it.
+  *
+  * See __register_sysctl_paths for more details.
+  */
+-- 
+2.39.1
+
