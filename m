@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B42848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:24:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2E5C433EF;
-	Fri, 10 Mar 2023 14:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3D9848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:24:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415A3C4339C;
+	Fri, 10 Mar 2023 14:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458264;
-	bh=KL9hPz71IEo7VOzGZ1i6diJVLiusUUuBVhlIbiv0BLY=;
+	s=korg; t=1678458267;
+	bh=QIlAN8joKU9hoWiLyMc5pj40O+R97F8T7XIxJfqVqd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AE8TkQLy+0BJa3S93NdB9l1YszVeHXCm2EHyWoY5gFb615ybujjM1Jk8ymfQmd+oW
-	 HaabMI8V7XJFsrQRhfOoDoNJjYrTbGzND1qIThmgamYB5e0pUpCR4RBnLcZg5dQRZr
-	 /bLJVWWgoxFypVNaB69wSLzWoVNWX/VD6yDvDu3c=
+	b=NwmL7eojbLpw1UeKCcq5ahzZCVGasRQHfqT5YiS8Oim+haIoPa3Q6zdx4dXps9joQ
+	 Fi8O4TcqDYdh9O/XEBUahMirqNUnHNCzYnMan9V0U2cx14a81Iy/sSxRY5/TNE8IKL
+	 uvoUeY57fpacAmGO5lgLd1oKN2QTqVjYTTi+KeWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Hua <hucool.lihua@huawei.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 218/252] watchdog: pcwd_usb: Fix attempting to access uninitialized memory
-Date: Fri, 10 Mar 2023 14:39:48 +0100
-Message-Id: <20230310133725.783514938@linuxfoundation.org>
+Subject: [PATCH 4.19 219/252] netfilter: ctnetlink: fix possible refcount leak in ctnetlink_create_conntrack()
+Date: Fri, 10 Mar 2023 14:39:49 +0100
+Message-Id: <20230310133725.828171254@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,59 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Hua <hucool.lihua@huawei.com>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-[ Upstream commit 7d06c07c67100fd0f8e6b3ab7145ce789f788117 ]
+[ Upstream commit ac4893980bbe79ce383daf9a0885666a30fe4c83 ]
 
-The stack variable msb and lsb may be used uninitialized in function
-usb_pcwd_get_temperature and usb_pcwd_get_timeleft when usb card no response.
+nf_ct_put() needs to be called to put the refcount got by
+nf_conntrack_find_get() to avoid refcount leak when
+nf_conntrack_hash_check_insert() fails.
 
-The build waring is:
-drivers/watchdog/pcwd_usb.c:336:22: error: ‘lsb’ is used uninitialized in this function [-Werror=uninitialized]
-  *temperature = (lsb * 9 / 5) + 32;
-                  ~~~~^~~
-drivers/watchdog/pcwd_usb.c:328:21: note: ‘lsb’ was declared here
-  unsigned char msb, lsb;
-                     ^~~
-cc1: all warnings being treated as errors
-scripts/Makefile.build:250: recipe for target 'drivers/watchdog/pcwd_usb.o' failed
-make[3]: *** [drivers/watchdog/pcwd_usb.o] Error 1
-
-Fixes: b7e04f8c61a4 ("mv watchdog tree under drivers")
-Signed-off-by: Li Hua <hucool.lihua@huawei.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20221116020706.70847-1-hucool.lihua@huawei.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 7d367e06688d ("netfilter: ctnetlink: fix soft lockup when netlink adds new entries (v2)")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Acked-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/pcwd_usb.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/netfilter/nf_conntrack_netlink.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/pcwd_usb.c b/drivers/watchdog/pcwd_usb.c
-index 4d02f26156f9c..b7b9d562da137 100644
---- a/drivers/watchdog/pcwd_usb.c
-+++ b/drivers/watchdog/pcwd_usb.c
-@@ -329,7 +329,8 @@ static int usb_pcwd_set_heartbeat(struct usb_pcwd_private *usb_pcwd, int t)
- static int usb_pcwd_get_temperature(struct usb_pcwd_private *usb_pcwd,
- 							int *temperature)
- {
--	unsigned char msb, lsb;
-+	unsigned char msb = 0x00;
-+	unsigned char lsb = 0x00;
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index 2850a638401d5..58bba2e2691fa 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -2056,12 +2056,15 @@ ctnetlink_create_conntrack(struct net *net,
  
- 	usb_pcwd_send_command(usb_pcwd, CMD_READ_TEMP, &msb, &lsb);
+ 	err = nf_conntrack_hash_check_insert(ct);
+ 	if (err < 0)
+-		goto err2;
++		goto err3;
  
-@@ -345,7 +346,8 @@ static int usb_pcwd_get_temperature(struct usb_pcwd_private *usb_pcwd,
- static int usb_pcwd_get_timeleft(struct usb_pcwd_private *usb_pcwd,
- 								int *time_left)
- {
--	unsigned char msb, lsb;
-+	unsigned char msb = 0x00;
-+	unsigned char lsb = 0x00;
+ 	rcu_read_unlock();
  
- 	/* Read the time that's left before rebooting */
- 	/* Note: if the board is not yet armed then we will read 0xFFFF */
+ 	return ct;
+ 
++err3:
++	if (ct->master)
++		nf_ct_put(ct->master);
+ err2:
+ 	rcu_read_unlock();
+ err1:
 -- 
 2.39.2
 
