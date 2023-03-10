@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30658494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:35:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691EBC433EF;
-	Fri, 10 Mar 2023 14:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33F98494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:35:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615F0C433EF;
+	Fri, 10 Mar 2023 14:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458933;
-	bh=o/Xn5fPhgY5EnJOkQoljEMRrsl9xZQ1av9VFSBV7dAs=;
+	s=korg; t=1678458936;
+	bh=cTTTpAImm4spEbGfphMmFMfPxetuJ0aXloV/irLSgCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iGx4RcEMaSHfJUl5DCFZJ1EygAPWAKdjz41tON9hzmf2NVBhFAGBhu6+ZHW+i0XP7
-	 tODunLA1FwwH/QqcLukMSOoLPzlck7fQtfMUDr7LG/0th16Bf7yRH/b5Civ8NE+bwK
-	 +ek3ssjAGunZU2tR5TgMIGR//maTw1kjoBxTBN/U=
+	b=FcgeP1viXBO802w4ua4hoxqBq9oga8xYQTBpxR6a6OnumtQt/2gG17Ori2oohu8wQ
+	 8xAdIn3sA+twWTttbVHjXjB4JbrWSwNkU1Pg2evp3ffH65GsExHRTK35MJ02VhYz8p
+	 Dl/PF5RhT9sIebnQrviYXuZFBdr8Fu1kQGz70jbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Jan Harkes <jaharkes@cs.cmu.edu>,
+	coda@cs.cmu.edu,
+	codalist@coda.cs.cmu.edu,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 193/357] net/mlx5: fw_tracer: Fix debug print
-Date: Fri, 10 Mar 2023 14:38:02 +0100
-Message-Id: <20230310133743.225127734@linuxfoundation.org>
+Subject: [PATCH 5.4 194/357] coda: Avoid partial allocation of sig_inputArgs
+Date: Fri, 10 Mar 2023 14:38:03 +0100
+Message-Id: <20230310133743.276826940@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,34 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 988c2352273997a242f15c4fc3711773515006a2 ]
+[ Upstream commit 48df133578c70185a95a49390d42df1996ddba2a ]
 
-The debug message specify tdsn, but takes as an argument the
-tmsn. The correct argument is tmsn, hence, fix the print.
+GCC does not like having a partially allocated object, since it cannot
+reason about it for bounds checking when it is passed to other code.
+Instead, fully allocate sig_inputArgs. (Alternatively, sig_inputArgs
+should be defined as a struct coda_in_hdr, if it is actually not using
+any other part of the union.) Seen under GCC 13:
 
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+../fs/coda/upcall.c: In function 'coda_upcall':
+../fs/coda/upcall.c:801:22: warning: array subscript 'union inputArgs[0]' is partly outside array bounds of 'unsigned char[20]' [-Warray-bounds=]
+  801 |         sig_inputArgs->ih.opcode = CODA_SIGNAL;
+      |                      ^~
+
+Cc: Jan Harkes <jaharkes@cs.cmu.edu>
+Cc: coda@cs.cmu.edu
+Cc: codalist@coda.cs.cmu.edu
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230127223921.never.882-kees@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 2 +-
+ fs/coda/upcall.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-index db9ecc3a8c67a..fcf5fef7c195d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-@@ -600,7 +600,7 @@ static int mlx5_tracer_handle_string_trace(struct mlx5_fw_tracer *tracer,
- 	} else {
- 		cur_string = mlx5_tracer_message_get(tracer, tracer_event);
- 		if (!cur_string) {
--			pr_debug("%s Got string event for unknown string tdsm: %d\n",
-+			pr_debug("%s Got string event for unknown string tmsn: %d\n",
- 				 __func__, tracer_event->string_event.tmsn);
- 			return -1;
- 		}
+diff --git a/fs/coda/upcall.c b/fs/coda/upcall.c
+index eb3b1898da462..610484c90260b 100644
+--- a/fs/coda/upcall.c
++++ b/fs/coda/upcall.c
+@@ -790,7 +790,7 @@ static int coda_upcall(struct venus_comm *vcp,
+ 	sig_req = kmalloc(sizeof(struct upc_req), GFP_KERNEL);
+ 	if (!sig_req) goto exit;
+ 
+-	sig_inputArgs = kvzalloc(sizeof(struct coda_in_hdr), GFP_KERNEL);
++	sig_inputArgs = kvzalloc(sizeof(*sig_inputArgs), GFP_KERNEL);
+ 	if (!sig_inputArgs) {
+ 		kfree(sig_req);
+ 		goto exit;
 -- 
 2.39.2
 
