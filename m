@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF4F882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:13:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A831C4339B;
-	Fri, 10 Mar 2023 15:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A03D882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:13:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750FCC433EF;
+	Fri, 10 Mar 2023 15:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461184;
-	bh=8NYr7VQebUlneeWKlUhe/VFAj04djVjUC3i+zkX1bzc=;
+	s=korg; t=1678461187;
+	bh=7DHvn9zXh64o3pkxAJ+Fq/fggnxigBTWsWRlcq7ajIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gEW+w5Em36ZW2knNiR+ZtiuMc1nKJYu9UEM72lZ5p+c8CzeTlDU88HJRso4C2/lV+
-	 GgC0uOkumBcBIH9pcTBiCNj79d3Tmc5DUySXPMbrln+DUmUT+HP6p10Vf0MGlpK+3w
-	 eJuT5aQpbDyKEJkJhnVI2cqwxMwGvoIMF8UZ+njQ=
+	b=w4NrBNSlTpkb0Qodn/5P5uPilzSi/R/H56TxeunuXMigDZV9RuSWeR38ilp/OwgQ+
+	 oI7P5fJqu2EJUKpoKhri6EeezYkqoh6GYOsQG2AkfE3YORG7NpKL2GAavCSnmhAdK8
+	 bD0uujiBmZs8D3F3ruy0YvqnctPoD2CvnChw8BaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+df64c0a2e8d68e78a4fa@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	"David S. Miller" <davem@davemloft.net>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 053/136] nfc: fix memory leak of se_io context in nfc_genl_se_io
-Date: Fri, 10 Mar 2023 14:42:55 +0100
-Message-Id: <20230310133708.726488302@linuxfoundation.org>
+Subject: [PATCH 5.15 027/136] ubi: Fix UAF wear-leveling entry in eraseblk_count_seq_show()
+Date: Fri, 10 Mar 2023 14:42:29 +0100
+Message-Id: <20230310133707.807962105@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -37,83 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 25ff6f8a5a3b8dc48e8abda6f013e8cc4b14ffea ]
+[ Upstream commit a240bc5c43130c6aa50831d7caaa02a1d84e1bce ]
 
-The callback context for sending/receiving APDUs to/from the selected
-secure element is allocated inside nfc_genl_se_io and supposed to be
-eventually freed in se_io_cb callback function. However, there are several
-error paths where the bwi_timer is not charged to call se_io_cb later, and
-the cb_context is leaked.
+Wear-leveling entry could be freed in error path, which may be accessed
+again in eraseblk_count_seq_show(), for example:
 
-The patch proposes to free the cb_context explicitly on those error paths.
+__erase_worker                eraseblk_count_seq_show
+                                wl = ubi->lookuptbl[*block_number]
+				if (wl)
+  wl_entry_destroy
+    ubi->lookuptbl[e->pnum] = NULL
+    kmem_cache_free(ubi_wl_entry_slab, e)
+		                   erase_count = wl->ec  // UAF!
 
-At the moment we can't simply check 'dev->ops->se_io()' return value as it
-may be negative in both cases: when the timer was charged and was not.
+Wear-leveling entry updating/accessing in ubi->lookuptbl should be
+protected by ubi->wl_lock, fix it by adding ubi->wl_lock to serialize
+wl entry accessing between wl_entry_destroy() and
+eraseblk_count_seq_show().
 
-Fixes: 5ce3f32b5264 ("NFC: netlink: SE API implementation")
-Reported-by: syzbot+df64c0a2e8d68e78a4fa@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fetch a reproducer in [Link].
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216305
+Fixes: 7bccd12d27b7e3 ("ubi: Add debugfs file for tracking PEB state")
+Fixes: 801c135ce73d5d ("UBI: Unsorted Block Images")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/st-nci/se.c   | 6 ++++++
- drivers/nfc/st21nfca/se.c | 6 ++++++
- net/nfc/netlink.c         | 4 ++++
- 3 files changed, 16 insertions(+)
+ drivers/mtd/ubi/wl.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
-index 04a2cea6d6b61..57d09dbf627b4 100644
---- a/drivers/nfc/st-nci/se.c
-+++ b/drivers/nfc/st-nci/se.c
-@@ -674,6 +674,12 @@ int st_nci_se_io(struct nci_dev *ndev, u32 se_idx,
- 					ST_NCI_EVT_TRANSMIT_DATA, apdu,
- 					apdu_length);
- 	default:
-+		/* Need to free cb_context here as at the moment we can't
-+		 * clearly indicate to the caller if the callback function
-+		 * would be called (and free it) or not. In both cases a
-+		 * negative value may be returned to the caller.
-+		 */
-+		kfree(cb_context);
- 		return -ENODEV;
- 	}
- }
-diff --git a/drivers/nfc/st21nfca/se.c b/drivers/nfc/st21nfca/se.c
-index d416365042462..6a1d3b2752fbf 100644
---- a/drivers/nfc/st21nfca/se.c
-+++ b/drivers/nfc/st21nfca/se.c
-@@ -236,6 +236,12 @@ int st21nfca_hci_se_io(struct nfc_hci_dev *hdev, u32 se_idx,
- 					ST21NFCA_EVT_TRANSMIT_DATA,
- 					apdu, apdu_length);
- 	default:
-+		/* Need to free cb_context here as at the moment we can't
-+		 * clearly indicate to the caller if the callback function
-+		 * would be called (and free it) or not. In both cases a
-+		 * negative value may be returned to the caller.
-+		 */
-+		kfree(cb_context);
- 		return -ENODEV;
- 	}
- }
-diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
-index d928d5a24bbc1..9ba3676ab37f4 100644
---- a/net/nfc/netlink.c
-+++ b/net/nfc/netlink.c
-@@ -1442,7 +1442,11 @@ static int nfc_se_io(struct nfc_dev *dev, u32 se_idx,
- 	rc = dev->ops->se_io(dev, se_idx, apdu,
- 			apdu_length, cb, cb_context);
+diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
+index afcdacb9d0e99..4a672e925d869 100644
+--- a/drivers/mtd/ubi/wl.c
++++ b/drivers/mtd/ubi/wl.c
+@@ -886,8 +886,11 @@ static int wear_leveling_worker(struct ubi_device *ubi, struct ubi_work *wrk,
  
-+	device_unlock(&dev->dev);
-+	return rc;
-+
- error:
-+	kfree(cb_context);
- 	device_unlock(&dev->dev);
- 	return rc;
- }
+ 	err = do_sync_erase(ubi, e1, vol_id, lnum, 0);
+ 	if (err) {
+-		if (e2)
++		if (e2) {
++			spin_lock(&ubi->wl_lock);
+ 			wl_entry_destroy(ubi, e2);
++			spin_unlock(&ubi->wl_lock);
++		}
+ 		goto out_ro;
+ 	}
+ 
+@@ -1120,14 +1123,18 @@ static int __erase_worker(struct ubi_device *ubi, struct ubi_work *wl_wrk)
+ 		/* Re-schedule the LEB for erasure */
+ 		err1 = schedule_erase(ubi, e, vol_id, lnum, 0, false);
+ 		if (err1) {
++			spin_lock(&ubi->wl_lock);
+ 			wl_entry_destroy(ubi, e);
++			spin_unlock(&ubi->wl_lock);
+ 			err = err1;
+ 			goto out_ro;
+ 		}
+ 		return err;
+ 	}
+ 
++	spin_lock(&ubi->wl_lock);
+ 	wl_entry_destroy(ubi, e);
++	spin_unlock(&ubi->wl_lock);
+ 	if (err != -EIO)
+ 		/*
+ 		 * If this is not %-EIO, we have no idea what to do. Scheduling
 -- 
 2.39.2
 
