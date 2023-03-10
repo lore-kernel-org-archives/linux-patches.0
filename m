@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DBE847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:58:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769F1C433EF;
-	Fri, 10 Mar 2023 13:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B391B847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:58:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D1EC4339B;
+	Fri, 10 Mar 2023 13:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456726;
-	bh=gBrUsZocqROLSfFJ8Gr7fct03DvDQo5pJ+woAxhEgFs=;
+	s=korg; t=1678456729;
+	bh=CpiyB0KE4oedlvZbYzeZxrtOK5jpCAYmfI3DsnQgxOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lqylKuH0hpjeb+GvJCUuMdxhUpYko9nuOHu8gRRWjTWJYZAW7eIZJJUo/Z2zST/+P
-	 1E6nHqaYgdvyB1lbYb9KBgWrzB9I0M/si8XCZJeDMrywxSZMvdj/q99JEhj+xk3uPu
-	 6fC2kZtyTluvooopVH9Ud+UcZ8Vq/7zA3EAsX2bE=
+	b=Dv+Dg2tB9DDH6WyNe1v2uAIlAo+sc2900lW/OIfxWCrX1hs4xlE1YRiqjBgyWZRvn
+	 6FNpDdWxSHhd2s7wx/gC505nY2AtI1db9V/x/3G8lrd8IAdiYzOie1yKZ+f75ykbz1
+	 bL/mrtZ44mxypA9IDkmv62JXstkASC7TMmzyWQF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Frederick Lawler <fred@cloudflare.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	George Kennedy <george.kennedy@oracle.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 102/211] tcp: tcp_check_req() can be called from process context
-Date: Fri, 10 Mar 2023 14:38:02 +0100
-Message-Id: <20230310133721.867796281@linuxfoundation.org>
+Subject: [PATCH 6.2 103/211] vc_screen: modify vcs_size() handling in vcs_read()
+Date: Fri, 10 Mar 2023 14:38:03 +0100
+Message-Id: <20230310133721.895926194@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,66 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: George Kennedy <george.kennedy@oracle.com>
 
-[ Upstream commit 580f98cc33a260bb8c6a39ae2921b29586b84fdf ]
+[ Upstream commit 46d733d0efc79bc8430d63b57ab88011806d5180 ]
 
-This is a follow up of commit 0a375c822497 ("tcp: tcp_rtx_synack()
-can be called from process context").
+Restore the vcs_size() handling in vcs_read() to what
+it had been in previous version.
 
-Frederick Lawler reported another "__this_cpu_add() in preemptible"
-warning caused by the same reason.
-
-In my former patch I took care of tcp_rtx_synack()
-but forgot that tcp_check_req() also contained some SNMP updates.
-
-Note that some parts of tcp_check_req() always run in BH context,
-I added a comment to clarify this.
-
-Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
-Link: https://lore.kernel.org/netdev/8cd33923-a21d-397c-e46b-2a068c287b03@cloudflare.com/T/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: Frederick Lawler <fred@cloudflare.com>
-Tested-by: Frederick Lawler <fred@cloudflare.com>
-Link: https://lore.kernel.org/r/20230227083336.4153089-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 226fae124b2d ("vc_screen: move load of struct vc_data pointer in vcs_read() to avoid UAF")
+Suggested-by: Jiri Slaby <jirislaby@kernel.org>
+Signed-off-by: George Kennedy <george.kennedy@oracle.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_minisocks.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/tty/vt/vc_screen.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index e002f2e1d4f2d..9a7ef7732c24c 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -597,6 +597,9 @@ EXPORT_SYMBOL(tcp_create_openreq_child);
-  * validation and inside tcp_v4_reqsk_send_ack(). Can we do better?
-  *
-  * We don't need to initialize tmp_opt.sack_ok as we don't use the results
-+ *
-+ * Note: If @fastopen is true, this can be called from process context.
-+ *       Otherwise, this is from BH context.
-  */
- 
- struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
-@@ -748,7 +751,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 					  &tcp_rsk(req)->last_oow_ack_time))
- 			req->rsk_ops->send_ack(sk, skb, req);
- 		if (paws_reject)
--			__NET_INC_STATS(sock_net(sk), LINUX_MIB_PAWSESTABREJECTED);
-+			NET_INC_STATS(sock_net(sk), LINUX_MIB_PAWSESTABREJECTED);
- 		return NULL;
- 	}
- 
-@@ -767,7 +770,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 	 *	   "fourth, check the SYN bit"
- 	 */
- 	if (flg & (TCP_FLAG_RST|TCP_FLAG_SYN)) {
--		__TCP_INC_STATS(sock_net(sk), TCP_MIB_ATTEMPTFAILS);
-+		TCP_INC_STATS(sock_net(sk), TCP_MIB_ATTEMPTFAILS);
- 		goto embryonic_reset;
- 	}
- 
+diff --git a/drivers/tty/vt/vc_screen.c b/drivers/tty/vt/vc_screen.c
+index 71e091f879f0e..1dc07f9214d57 100644
+--- a/drivers/tty/vt/vc_screen.c
++++ b/drivers/tty/vt/vc_screen.c
+@@ -415,10 +415,8 @@ vcs_read(struct file *file, char __user *buf, size_t count, loff_t *ppos)
+ 		 */
+ 		size = vcs_size(vc, attr, uni_mode);
+ 		if (size < 0) {
+-			if (read)
+-				break;
+ 			ret = size;
+-			goto unlock_out;
++			break;
+ 		}
+ 		if (pos >= size)
+ 			break;
 -- 
 2.39.2
 
