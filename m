@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DEE847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:58:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1BBC4339B;
-	Fri, 10 Mar 2023 13:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A68847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:58:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5077C433EF;
+	Fri, 10 Mar 2023 13:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456732;
-	bh=fMGz2DWCGd41BOKS0mJl82IWM79KeKk4E+6XC8PH7VY=;
+	s=korg; t=1678456735;
+	bh=4lnI+5Kb8MywBCiDi5A3cBTfxTbIBDrqoA3KNl/THWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pLul98dAcU3WW8VyiDYXf1UUvVGzWQc2HzA6xD6cEDf5aOJgukxnmzSGNdjbeaUoc
-	 eZlko0BcOl1bOB+a+DcsREOCKPP1bs5OrJhBQ6l1wlDt6a9/gfyBywgYiAW+jBF0nF
-	 8pYWNNFwawtyH7DT1c7ajWz4fVEmpXCCTd6ZC4Pc=
+	b=LDJSjL+1TrmCb1GRtoOdjRNyc1VP9Ivur0Kgj1+FcDwnvKHvjWwQuQgueOI3nIniO
+	 J/yJIf/2xsvlzEJyrfvHL8DdIlhl6oUA3LH+KxVAPYSBmoygN1LHuziYjPmYGci4RN
+	 0weXr3RKDnnm+ppxqtA7sBbJOBjo+DP2xBx7cFjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Krishna Yarlagadda <kyarlagadda@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
+	Sai Krishna <saikrishnag@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 104/211] spi: tegra210-quad: Fix iterator outside loop
-Date: Fri, 10 Mar 2023 14:38:04 +0100
-Message-Id: <20230310133721.924845433@linuxfoundation.org>
+Subject: [PATCH 6.2 078/211] octeontx2-pf: Recalculate UDP checksum for ptp 1-step sync packet
+Date: Fri, 10 Mar 2023 14:37:38 +0100
+Message-Id: <20230310133721.152024808@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,60 +38,171 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krishna Yarlagadda <kyarlagadda@nvidia.com>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit 2449d436681d40bc63ec2c766fd51b632270d8a7 ]
+[ Upstream commit edea0c5a994b7829c9ada8f5bc762c4e32f4f797 ]
 
-Fix warn: iterator used outside loop: 'xfer'. 'xfer' variable contain
-invalid value in few conditions. Complete transfer within DATA phase
-in successful case and at the end for failed transfer.
+When checksum offload is disabled in the driver via ethtool,
+the PTP 1-step sync packets contain incorrect checksum, since
+the stack calculates the checksum before driver updates
+PTP timestamp field in the packet. This results in PTP packets
+getting dropped at the other end. This patch fixes the issue by
+re-calculating the UDP checksum after updating PTP
+timestamp field in the driver.
 
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Link:https://lore.kernel.org/all/202210191211.46FkzKmv-lkp@intel.com/
-Fixes: 8777dd9dff40 ("spi: tegra210-quad: Fix combined sequence")
-
-Signed-off-by: Krishna Yarlagadda <kyarlagadda@nvidia.com>
-Link: https://lore.kernel.org/r/20230227200428.45832-1-kyarlagadda@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2958d17a8984 ("octeontx2-pf: Add support for ptp 1-step mode on CN10K silicon")
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
+Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
+Link: https://lore.kernel.org/r/20230222113600.1965116-1-saikrishnag@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra210-quad.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ .../marvell/octeontx2/nic/otx2_txrx.c         | 76 ++++++++++++++-----
+ 1 file changed, 57 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index 6498948e150a5..06c54d49076ae 100644
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1156,6 +1156,10 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
- 				ret = -EIO;
- 				goto exit;
- 			}
-+			if (!xfer->cs_change) {
-+				tegra_qspi_transfer_end(spi);
-+				spi_transfer_delay_exec(xfer);
-+			}
- 			break;
- 		default:
- 			ret = -EINVAL;
-@@ -1164,14 +1168,14 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
- 		msg->actual_length += xfer->len;
- 		transfer_phase++;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
+index ef10aef3cda02..7045fedfd73a0 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
+@@ -10,6 +10,7 @@
+ #include <net/tso.h>
+ #include <linux/bpf.h>
+ #include <linux/bpf_trace.h>
++#include <net/ip6_checksum.h>
+ 
+ #include "otx2_reg.h"
+ #include "otx2_common.h"
+@@ -699,7 +700,7 @@ static void otx2_sqe_add_ext(struct otx2_nic *pfvf, struct otx2_snd_queue *sq,
+ 
+ static void otx2_sqe_add_mem(struct otx2_snd_queue *sq, int *offset,
+ 			     int alg, u64 iova, int ptp_offset,
+-			     u64 base_ns, int udp_csum)
++			     u64 base_ns, bool udp_csum_crt)
+ {
+ 	struct nix_sqe_mem_s *mem;
+ 
+@@ -711,7 +712,7 @@ static void otx2_sqe_add_mem(struct otx2_snd_queue *sq, int *offset,
+ 
+ 	if (ptp_offset) {
+ 		mem->start_offset = ptp_offset;
+-		mem->udp_csum_crt = udp_csum;
++		mem->udp_csum_crt = !!udp_csum_crt;
+ 		mem->base_ns = base_ns;
+ 		mem->step_type = 1;
  	}
--	if (!xfer->cs_change) {
--		tegra_qspi_transfer_end(spi);
--		spi_transfer_delay_exec(xfer);
--	}
- 	ret = 0;
- 
- exit:
- 	msg->status = ret;
-+	if (ret < 0) {
-+		tegra_qspi_transfer_end(spi);
-+		spi_transfer_delay_exec(xfer);
-+	}
- 
- 	return ret;
+@@ -986,10 +987,11 @@ static bool otx2_validate_network_transport(struct sk_buff *skb)
+ 	return false;
  }
+ 
+-static bool otx2_ptp_is_sync(struct sk_buff *skb, int *offset, int *udp_csum)
++static bool otx2_ptp_is_sync(struct sk_buff *skb, int *offset, bool *udp_csum_crt)
+ {
+ 	struct ethhdr *eth = (struct ethhdr *)(skb->data);
+ 	u16 nix_offload_hlen = 0, inner_vhlen = 0;
++	bool udp_hdr_present = false, is_sync;
+ 	u8 *data = skb->data, *msgtype;
+ 	__be16 proto = eth->h_proto;
+ 	int network_depth = 0;
+@@ -1029,45 +1031,81 @@ static bool otx2_ptp_is_sync(struct sk_buff *skb, int *offset, int *udp_csum)
+ 		if (!otx2_validate_network_transport(skb))
+ 			return false;
+ 
+-		*udp_csum = 1;
+ 		*offset = nix_offload_hlen + skb_transport_offset(skb) +
+ 			  sizeof(struct udphdr);
++		udp_hdr_present = true;
++
+ 	}
+ 
+ 	msgtype = data + *offset;
+-
+ 	/* Check PTP messageId is SYNC or not */
+-	return (*msgtype & 0xf) == 0;
++	is_sync = !(*msgtype & 0xf);
++	if (is_sync)
++		*udp_csum_crt = udp_hdr_present;
++	else
++		*offset = 0;
++
++	return is_sync;
+ }
+ 
+ static void otx2_set_txtstamp(struct otx2_nic *pfvf, struct sk_buff *skb,
+ 			      struct otx2_snd_queue *sq, int *offset)
+ {
++	struct ethhdr	*eth = (struct ethhdr *)(skb->data);
+ 	struct ptpv2_tstamp *origin_tstamp;
+-	int ptp_offset = 0, udp_csum = 0;
++	bool udp_csum_crt = false;
++	unsigned int udphoff;
+ 	struct timespec64 ts;
++	int ptp_offset = 0;
++	__wsum skb_csum;
+ 	u64 iova;
+ 
+ 	if (unlikely(!skb_shinfo(skb)->gso_size &&
+ 		     (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP))) {
+-		if (unlikely(pfvf->flags & OTX2_FLAG_PTP_ONESTEP_SYNC)) {
+-			if (otx2_ptp_is_sync(skb, &ptp_offset, &udp_csum)) {
+-				origin_tstamp = (struct ptpv2_tstamp *)
+-						((u8 *)skb->data + ptp_offset +
+-						 PTP_SYNC_SEC_OFFSET);
+-				ts = ns_to_timespec64(pfvf->ptp->tstamp);
+-				origin_tstamp->seconds_msb = htons((ts.tv_sec >> 32) & 0xffff);
+-				origin_tstamp->seconds_lsb = htonl(ts.tv_sec & 0xffffffff);
+-				origin_tstamp->nanoseconds = htonl(ts.tv_nsec);
+-				/* Point to correction field in PTP packet */
+-				ptp_offset += 8;
++		if (unlikely(pfvf->flags & OTX2_FLAG_PTP_ONESTEP_SYNC &&
++			     otx2_ptp_is_sync(skb, &ptp_offset, &udp_csum_crt))) {
++			origin_tstamp = (struct ptpv2_tstamp *)
++					((u8 *)skb->data + ptp_offset +
++					 PTP_SYNC_SEC_OFFSET);
++			ts = ns_to_timespec64(pfvf->ptp->tstamp);
++			origin_tstamp->seconds_msb = htons((ts.tv_sec >> 32) & 0xffff);
++			origin_tstamp->seconds_lsb = htonl(ts.tv_sec & 0xffffffff);
++			origin_tstamp->nanoseconds = htonl(ts.tv_nsec);
++			/* Point to correction field in PTP packet */
++			ptp_offset += 8;
++
++			/* When user disables hw checksum, stack calculates the csum,
++			 * but it does not cover ptp timestamp which is added later.
++			 * Recalculate the checksum manually considering the timestamp.
++			 */
++			if (udp_csum_crt) {
++				struct udphdr *uh = udp_hdr(skb);
++
++				if (skb->ip_summed != CHECKSUM_PARTIAL && uh->check != 0) {
++					udphoff = skb_transport_offset(skb);
++					uh->check = 0;
++					skb_csum = skb_checksum(skb, udphoff, skb->len - udphoff,
++								0);
++					if (ntohs(eth->h_proto) == ETH_P_IPV6)
++						uh->check = csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
++									    &ipv6_hdr(skb)->daddr,
++									    skb->len - udphoff,
++									    ipv6_hdr(skb)->nexthdr,
++									    skb_csum);
++					else
++						uh->check = csum_tcpudp_magic(ip_hdr(skb)->saddr,
++									      ip_hdr(skb)->daddr,
++									      skb->len - udphoff,
++									      IPPROTO_UDP,
++									      skb_csum);
++				}
+ 			}
+ 		} else {
+ 			skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
+ 		}
+ 		iova = sq->timestamps->iova + (sq->head * sizeof(u64));
+ 		otx2_sqe_add_mem(sq, offset, NIX_SENDMEMALG_E_SETTSTMP, iova,
+-				 ptp_offset, pfvf->ptp->base_ns, udp_csum);
++				 ptp_offset, pfvf->ptp->base_ns, udp_csum_crt);
+ 	} else {
+ 		skb_tx_timestamp(skb);
+ 	}
 -- 
 2.39.2
 
