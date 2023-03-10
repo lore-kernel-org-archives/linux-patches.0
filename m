@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BE9848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:20:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652ABC433EF;
-	Fri, 10 Mar 2023 14:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFE8848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:20:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A62EC433EF;
+	Fri, 10 Mar 2023 14:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458043;
-	bh=hmbipynkZ3xyesuRebinrVCrCqTYVTGhjDuwcWPTpQU=;
+	s=korg; t=1678458046;
+	bh=GdbKForBwhzdKtaiuUPQIKix80NxJ489Hcmiv1XOYZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pYVFDVeKVbaJQ8lndNQfl3yqJR3T4hZi/ja3ANU6axS30N4U43Rwwqb/zd/9Hd8xY
-	 5nlDI49mjuWcuxjvzJjekkBatEn6z/zYUxqoonoykAcIO63XCvLq7Q623BPvWgklSg
-	 3l+4dQJRLTGlivR5yjyHGAqMseTRvO6+ukoxX9Pg=
+	b=vKqc2dfUqEmgA5noKR6/OzukpHwSX1JeaVWg16t1qI7ZtLrafgb4CO4S/D38WDd9R
+	 /pXxl7U1GGZ+F5L4Nk79Y3/cfXfEuncQIafq2uMGDS+BqxT+7e1n7gnbTBRWJgtUNh
+	 6ZbKwym8S7YDCuDlQN4ETXjgxd9QAK5hg9riGLb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 4.19 144/252] s390/kprobes: fix current_kprobe never cleared after kprobes reenter
-Date: Fri, 10 Mar 2023 14:38:34 +0100
-Message-Id: <20230310133723.150784718@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 4.19 145/252] ARM: dts: exynos: correct HDMI phy compatible in Exynos4
+Date: Fri, 10 Mar 2023 14:38:35 +0100
+Message-Id: <20230310133723.184061105@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -34,54 +33,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit cd57953936f2213dfaccce10d20f396956222c7d upstream.
+commit af1c89ddb74f170eccd5a57001d7317560b638ea upstream.
 
-Recent test_kprobe_missed kprobes kunit test uncovers the following
-problem. Once kprobe is triggered from another kprobe (kprobe reenter),
-all future kprobes on this cpu are considered as kprobe reenter, thus
-pre_handler and post_handler are not being called and kprobes are counted
-as "missed".
+The HDMI phy compatible was missing vendor prefix.
 
-Commit b9599798f953 ("[S390] kprobes: activation and deactivation")
-introduced a simpler scheme for kprobes (de)activation and status
-tracking by using push_kprobe/pop_kprobe, which supposed to work for
-both initial kprobe entry as well as kprobe reentry and helps to avoid
-handling those two cases differently. The problem is that a sequence of
-calls in case of kprobes reenter:
-push_kprobe() <- NULL (current_kprobe)
-push_kprobe() <- kprobe1 (current_kprobe)
-pop_kprobe() -> kprobe1 (current_kprobe)
-pop_kprobe() -> kprobe1 (current_kprobe)
-leaves "kprobe1" as "current_kprobe" on this cpu, instead of setting it
-to NULL. In fact push_kprobe/pop_kprobe can only store a single state
-(there is just one prev_kprobe in kprobe_ctlblk). Which is a hack but
-sufficient, there is no need to have another prev_kprobe just to store
-NULL. To make a simple and backportable fix simply reset "prev_kprobe"
-when kprobe is poped from this "stack". No need to worry about
-"kprobe_status" in this case, because its value is only checked when
-current_kprobe != NULL.
-
-Cc: stable@vger.kernel.org
-Fixes: b9599798f953 ("[S390] kprobes: activation and deactivation")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: ed80d4cab772 ("ARM: dts: add hdmi related nodes for exynos4 SoCs")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230125094513.155063-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/kprobes.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/exynos4.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/kernel/kprobes.c
-+++ b/arch/s390/kernel/kprobes.c
-@@ -254,6 +254,7 @@ static void pop_kprobe(struct kprobe_ctl
- {
- 	__this_cpu_write(current_kprobe, kcb->prev_kprobe.kp);
- 	kcb->kprobe_status = kcb->prev_kprobe.status;
-+	kcb->prev_kprobe.kp = NULL;
- }
- NOKPROBE_SYMBOL(pop_kprobe);
+--- a/arch/arm/boot/dts/exynos4.dtsi
++++ b/arch/arm/boot/dts/exynos4.dtsi
+@@ -611,7 +611,7 @@
+ 			status = "disabled";
  
+ 			hdmi_i2c_phy: hdmiphy@38 {
+-				compatible = "exynos4210-hdmiphy";
++				compatible = "samsung,exynos4210-hdmiphy";
+ 				reg = <0x38>;
+ 			};
+ 		};
 
 
