@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A898481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:03:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B106C433D2;
-	Fri, 10 Mar 2023 14:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68E98481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:03:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AEEFC433D2;
+	Fri, 10 Mar 2023 14:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457007;
-	bh=3K4fMajgtqarFNGP+3HuePl4MWLnaJTPjuUnR3fXFic=;
+	s=korg; t=1678457010;
+	bh=F3qQD6N+1h7dNl+LJ+lDg3z/E7I0j0DYBS8kKRf7vkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZItkdBqhginwWW/bLigp0jDq+7rBYmZJah0GUtKXDRvhz4dls+eujH5jbKi5TQpOG
-	 vmXmZArqac6Pcla5hdEbd7Ym4QJS4tbVlIqA9CV+ocKY/hRPh7gf48iUCdNWKJLsNc
-	 GpBPYukjZXGTx8n+XmmNhr8RJaXEiPLlj9/GY2Ow=
+	b=LHFRixk1qFotzeuipFtK6NAPX7e61dMPZPn26z2q0LypXEt6jMO0e5t0W9Jyik4U8
+	 Yju0FcisF9QWPWIio5gc95L4wbjW+zE8hwDZ4aqDcSEHCaSWJ/sApkyTHs+T2YIPJF
+	 zt2mNRvO3/BtzaYHuDYsugSxdh1uSlLkt7/HcPGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Lingshan <lingshan.zhu@intel.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.2 200/211] vDPA/ifcvf: allocate the adapter in dev_add()
-Date: Fri, 10 Mar 2023 14:39:40 +0100
-Message-Id: <20230310133724.976545882@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	dri-devel@lists.freedesktop.org,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>
+Subject: [PATCH 6.2 201/211] drm/display/dp_mst: Add drm_atomic_get_old_mst_topology_state()
+Date: Fri, 10 Mar 2023 14:39:41 +0100
+Message-Id: <20230310133725.016840060@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -34,93 +39,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhu Lingshan <lingshan.zhu@intel.com>
+From: Imre Deak <imre.deak@intel.com>
 
-commit 93139037b582134deb1ed894bbc4bc1d34ff35e7 upstream.
+commit 9ffdb67af0ee625ae127711845532f670cc6a4e7 upstream.
 
-The adapter is the container of the vdpa_device,
-this commits allocate the adapter in dev_add()
-rather than in probe(). So that the vdpa_device()
-could be re-created when the userspace creates
-the vdpa device, and free-ed in dev_del()
+Add a function to get the old MST topology state, required by a
+follow-up i915 patch.
 
-Signed-off-by: Zhu Lingshan <lingshan.zhu@intel.com>
-Cc: stable@vger.kernel.org
-Message-Id: <20221125145724.1129962-11-lingshan.zhu@intel.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+While at it clarify the code comment of
+drm_atomic_get_new_mst_topology_state() and add _new prefix
+to the new state pointer to remind about its difference from the old
+state.
+
+v2: Use old_/new_ prefixes for the state pointers. (Ville)
+
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: stable@vger.kernel.org # 6.1
+Cc: dri-devel@lists.freedesktop.org
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Acked-by: Lyude Paul <lyude@redhat.com>
+Acked-by: Daniel Vetter <daniel@ffwll.ch>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Acked-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230206114856.2665066-3-imre.deak@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/ifcvf/ifcvf_main.c |   34 +++++++++++++---------------------
- 1 file changed, 13 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c |   33 ++++++++++++++++++++++----
+ include/drm/display/drm_dp_mst_helper.h       |    3 ++
+ 2 files changed, 32 insertions(+), 4 deletions(-)
 
---- a/drivers/vdpa/ifcvf/ifcvf_main.c
-+++ b/drivers/vdpa/ifcvf/ifcvf_main.c
-@@ -746,12 +746,20 @@ static int ifcvf_vdpa_dev_add(struct vdp
- 	int ret;
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -5355,27 +5355,52 @@ struct drm_dp_mst_topology_state *drm_at
+ EXPORT_SYMBOL(drm_atomic_get_mst_topology_state);
  
- 	ifcvf_mgmt_dev = container_of(mdev, struct ifcvf_vdpa_mgmt_dev, mdev);
--	if (!ifcvf_mgmt_dev->adapter)
--		return -EOPNOTSUPP;
-+	vf = &ifcvf_mgmt_dev->vf;
-+	pdev = vf->pdev;
-+	adapter = vdpa_alloc_device(struct ifcvf_adapter, vdpa,
-+				    &pdev->dev, &ifc_vdpa_ops, 1, 1, NULL, false);
-+	if (IS_ERR(adapter)) {
-+		IFCVF_ERR(pdev, "Failed to allocate vDPA structure");
-+		return PTR_ERR(adapter);
-+	}
+ /**
++ * drm_atomic_get_old_mst_topology_state: get old MST topology state in atomic state, if any
++ * @state: global atomic state
++ * @mgr: MST topology manager, also the private object in this case
++ *
++ * This function wraps drm_atomic_get_old_private_obj_state() passing in the MST atomic
++ * state vtable so that the private object state returned is that of a MST
++ * topology object.
++ *
++ * Returns:
++ *
++ * The old MST topology state, or NULL if there's no topology state for this MST mgr
++ * in the global atomic state
++ */
++struct drm_dp_mst_topology_state *
++drm_atomic_get_old_mst_topology_state(struct drm_atomic_state *state,
++				      struct drm_dp_mst_topology_mgr *mgr)
++{
++	struct drm_private_state *old_priv_state =
++		drm_atomic_get_old_private_obj_state(state, &mgr->base);
++
++	return old_priv_state ? to_dp_mst_topology_state(old_priv_state) : NULL;
++}
++EXPORT_SYMBOL(drm_atomic_get_old_mst_topology_state);
++
++/**
+  * drm_atomic_get_new_mst_topology_state: get new MST topology state in atomic state, if any
+  * @state: global atomic state
+  * @mgr: MST topology manager, also the private object in this case
+  *
+- * This function wraps drm_atomic_get_priv_obj_state() passing in the MST atomic
++ * This function wraps drm_atomic_get_new_private_obj_state() passing in the MST atomic
+  * state vtable so that the private object state returned is that of a MST
+  * topology object.
+  *
+  * Returns:
+  *
+- * The MST topology state, or NULL if there's no topology state for this MST mgr
++ * The new MST topology state, or NULL if there's no topology state for this MST mgr
+  * in the global atomic state
+  */
+ struct drm_dp_mst_topology_state *
+ drm_atomic_get_new_mst_topology_state(struct drm_atomic_state *state,
+ 				      struct drm_dp_mst_topology_mgr *mgr)
+ {
+-	struct drm_private_state *priv_state =
++	struct drm_private_state *new_priv_state =
+ 		drm_atomic_get_new_private_obj_state(state, &mgr->base);
  
--	adapter = ifcvf_mgmt_dev->adapter;
--	vf = adapter->vf;
--	pdev = adapter->pdev;
-+	ifcvf_mgmt_dev->adapter = adapter;
-+	adapter->pdev = pdev;
-+	adapter->vdpa.dma_dev = &pdev->dev;
-+	adapter->vdpa.mdev = mdev;
-+	adapter->vf = vf;
- 	vdpa_dev = &adapter->vdpa;
- 
- 	if (name)
-@@ -769,7 +777,6 @@ static int ifcvf_vdpa_dev_add(struct vdp
- 	return 0;
+-	return priv_state ? to_dp_mst_topology_state(priv_state) : NULL;
++	return new_priv_state ? to_dp_mst_topology_state(new_priv_state) : NULL;
  }
+ EXPORT_SYMBOL(drm_atomic_get_new_mst_topology_state);
  
--
- static void ifcvf_vdpa_dev_del(struct vdpa_mgmt_dev *mdev, struct vdpa_device *dev)
- {
- 	struct ifcvf_vdpa_mgmt_dev *ifcvf_mgmt_dev;
-@@ -788,7 +795,6 @@ static int ifcvf_probe(struct pci_dev *p
- {
- 	struct ifcvf_vdpa_mgmt_dev *ifcvf_mgmt_dev;
- 	struct device *dev = &pdev->dev;
--	struct ifcvf_adapter *adapter;
- 	struct ifcvf_hw *vf;
- 	u32 dev_type;
- 	int ret, i;
-@@ -825,24 +831,10 @@ static int ifcvf_probe(struct pci_dev *p
- 		return -ENOMEM;
- 	}
- 
--	adapter = vdpa_alloc_device(struct ifcvf_adapter, vdpa,
--				    dev, &ifc_vdpa_ops, 1, 1, NULL, false);
--	if (IS_ERR(adapter)) {
--		IFCVF_ERR(pdev, "Failed to allocate vDPA structure");
--		ret = PTR_ERR(adapter);
--		goto err;
--	}
--
--	adapter->pdev = pdev;
--	adapter->vdpa.dma_dev = &pdev->dev;
--	adapter->vdpa.mdev = &ifcvf_mgmt_dev->mdev;
--	ifcvf_mgmt_dev->adapter = adapter;
--
- 	vf = &ifcvf_mgmt_dev->vf;
- 	vf->dev_type = get_dev_type(pdev);
- 	vf->base = pcim_iomap_table(pdev);
- 	vf->pdev = pdev;
--	adapter->vf = vf;
- 
- 	ret = ifcvf_init_hw(vf, pdev);
- 	if (ret) {
+--- a/include/drm/display/drm_dp_mst_helper.h
++++ b/include/drm/display/drm_dp_mst_helper.h
+@@ -867,6 +867,9 @@ struct drm_dp_mst_topology_state *
+ drm_atomic_get_mst_topology_state(struct drm_atomic_state *state,
+ 				  struct drm_dp_mst_topology_mgr *mgr);
+ struct drm_dp_mst_topology_state *
++drm_atomic_get_old_mst_topology_state(struct drm_atomic_state *state,
++				      struct drm_dp_mst_topology_mgr *mgr);
++struct drm_dp_mst_topology_state *
+ drm_atomic_get_new_mst_topology_state(struct drm_atomic_state *state,
+ 				      struct drm_dp_mst_topology_mgr *mgr);
+ struct drm_dp_mst_atomic_payload *
 
 
