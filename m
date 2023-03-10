@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50314882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:14:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCCFDC433EF;
-	Fri, 10 Mar 2023 15:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EE0882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:14:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA78EC433EF;
+	Fri, 10 Mar 2023 15:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461288;
-	bh=CpiyB0KE4oedlvZbYzeZxrtOK5jpCAYmfI3DsnQgxOU=;
+	s=korg; t=1678461291;
+	bh=cLmJF7CPOGWQHYROjzZqrG6jJUlLGunFxYHwR1IDVnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6UVcH+C7w0HgQJW7NTGicFhaUW05TJ/BOqrb2NIDPDsWLzH20eJ2hxLFh3a2SNoA
-	 1Ox9RjdgAtLziwR0iPlyU3xvDmDE0ixgX5Xo1hTuGri9st4ZtNS+dn/w287WW7tkT9
-	 MMB3kH5J+Ph6GJrPTVXLiFwL7diZR1azzJrpTDSw=
+	b=n3OGZmiCfb/l2WENmjrOu9KUiIRDzZw3pR46agcws+VTyv0+/GfbHfNfPzWqQtgiC
+	 gAJjHb9frlbWnPuOdFoXVg/NRsxfJ4zK78xN4m/xbMfeicrUohHnRSf1HEeleQhyrb
+	 D8gV7XVoXNJ1MiGLEPT/ajwlWZmou+Kk45Y3/OsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sven Schnelle <svens@linux.ibm.com>,
 	Jiri Slaby <jirislaby@kernel.org>,
-	George Kennedy <george.kennedy@oracle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/136] vc_screen: modify vcs_size() handling in vcs_read()
-Date: Fri, 10 Mar 2023 14:43:02 +0100
-Message-Id: <20230310133708.963587654@linuxfoundation.org>
+Subject: [PATCH 5.15 087/136] tty: fix out-of-bounds access in tty_driver_lookup_tty()
+Date: Fri, 10 Mar 2023 14:43:29 +0100
+Message-Id: <20230310133709.796057823@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -36,38 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: George Kennedy <george.kennedy@oracle.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit 46d733d0efc79bc8430d63b57ab88011806d5180 ]
+[ Upstream commit db4df8e9d79e7d37732c1a1b560958e8dadfefa1 ]
 
-Restore the vcs_size() handling in vcs_read() to what
-it had been in previous version.
+When specifying an invalid console= device like console=tty3270,
+tty_driver_lookup_tty() returns the tty struct without checking
+whether index is a valid number.
 
-Fixes: 226fae124b2d ("vc_screen: move load of struct vc_data pointer in vcs_read() to avoid UAF")
-Suggested-by: Jiri Slaby <jirislaby@kernel.org>
-Signed-off-by: George Kennedy <george.kennedy@oracle.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+To reproduce:
+
+qemu-system-x86_64 -enable-kvm -nographic -serial mon:stdio \
+-kernel ../linux-build-x86/arch/x86/boot/bzImage \
+-append "console=ttyS0 console=tty3270"
+
+This crashes with:
+
+[    0.770599] BUG: kernel NULL pointer dereference, address: 00000000000000ef
+[    0.771265] #PF: supervisor read access in kernel mode
+[    0.771773] #PF: error_code(0x0000) - not-present page
+[    0.772609] Oops: 0000 [#1] PREEMPT SMP PTI
+[    0.774878] RIP: 0010:tty_open+0x268/0x6f0
+[    0.784013]  chrdev_open+0xbd/0x230
+[    0.784444]  ? cdev_device_add+0x80/0x80
+[    0.784920]  do_dentry_open+0x1e0/0x410
+[    0.785389]  path_openat+0xca9/0x1050
+[    0.785813]  do_filp_open+0xaa/0x150
+[    0.786240]  file_open_name+0x133/0x1b0
+[    0.786746]  filp_open+0x27/0x50
+[    0.787244]  console_on_rootfs+0x14/0x4d
+[    0.787800]  kernel_init_freeable+0x1e4/0x20d
+[    0.788383]  ? rest_init+0xc0/0xc0
+[    0.788881]  kernel_init+0x11/0x120
+[    0.789356]  ret_from_fork+0x22/0x30
+
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20221209112737.3222509-2-svens@linux.ibm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/vt/vc_screen.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/tty/tty_io.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/vt/vc_screen.c b/drivers/tty/vt/vc_screen.c
-index 71e091f879f0e..1dc07f9214d57 100644
---- a/drivers/tty/vt/vc_screen.c
-+++ b/drivers/tty/vt/vc_screen.c
-@@ -415,10 +415,8 @@ vcs_read(struct file *file, char __user *buf, size_t count, loff_t *ppos)
- 		 */
- 		size = vcs_size(vc, attr, uni_mode);
- 		if (size < 0) {
--			if (read)
--				break;
- 			ret = size;
--			goto unlock_out;
-+			break;
- 		}
- 		if (pos >= size)
- 			break;
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index 6616d4a0d41de..64dd6439d1797 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -1244,14 +1244,16 @@ static struct tty_struct *tty_driver_lookup_tty(struct tty_driver *driver,
+ {
+ 	struct tty_struct *tty;
+ 
+-	if (driver->ops->lookup)
++	if (driver->ops->lookup) {
+ 		if (!file)
+ 			tty = ERR_PTR(-EIO);
+ 		else
+ 			tty = driver->ops->lookup(driver, file, idx);
+-	else
++	} else {
++		if (idx >= driver->num)
++			return ERR_PTR(-EINVAL);
+ 		tty = driver->ttys[idx];
+-
++	}
+ 	if (!IS_ERR(tty))
+ 		tty_kref_get(tty);
+ 	return tty;
 -- 
 2.39.2
 
