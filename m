@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39C3846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B73C433EF;
-	Fri, 10 Mar 2023 14:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB118846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6111FC433EF;
+	Fri, 10 Mar 2023 14:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458751;
-	bh=6/OwhqZEoCnWMvzWTG606iTH0y7ZrDpAltPe5w4+44o=;
+	s=korg; t=1678458754;
+	bh=pKC5SUn+6r5WoKP321iL1CLINKrmo4rQjVPecAqjBgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MQlPcDC/i0lP2NkLI8w/mqOYveTmZVel5bkc0MVlyVdcIJPcA1nngxgNFhcJHVPRm
-	 RY0KSHpULNGUBYFFZTQghzXPkvJ7JcmDcY4BrUa9pgja5Zez4BrPxsGiFhKaLUY8C0
-	 FcsNge3fj+cns0oEngfa+5CwwX2QVaSlG1Vh/wG0=
+	b=ia5Eg/Vbq3IWskHpOu8FFrR/iSolBMOKC2ieMHhjMpiIJZWQZRmaoqn6PElS5AjGq
+	 7uRaMPZL0akQpxAb1YTuYK6P/Mu5+fldJxCQpZSYYSZCcjnRlOeCC8Bfdi5T+phXhR
+	 IgDi2U9X+VlBCqjAr3lVN1WeEDEKl8UAZ6ofbYUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 133/357] HID: bigben: use spinlock to safely schedule workers
-Date: Fri, 10 Mar 2023 14:37:02 +0100
-Message-Id: <20230310133740.557076941@linuxfoundation.org>
+Subject: [PATCH 5.4 134/357] HID: asus: Only set EV_REP if we are adding a mapping
+Date: Fri, 10 Mar 2023 14:37:03 +0100
+Message-Id: <20230310133740.605929243@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,80 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 76ca8da989c7d97a7f76c75d475fe95a584439d7 ]
+[ Upstream commit 4e4c60f826772dfeaacdf718f64afa38f46b6875 ]
 
-Use spinlocks to deal with workers introducing a wrapper
-bigben_schedule_work(), and several spinlock checks.
-Otherwise, bigben_set_led() may schedule bigben->worker after the
-structure has been freed, causing a use-after-free.
+Make asus_input_mapping() only set EV_REP if we are adding a mapping.
 
-Fixes: 4eb1b01de5b9 ("HID: hid-bigbenff: fix race condition for scheduled work during removal")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-3-7860c5763c38@diag.uniroma1.it
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+The T100CHI bluetooth keyboard dock has a few input reports for which
+we do not create any mappings (these input-reports are present in the
+descriptors but never send).
+
+The hid-asus code relies on the HID core not creating input devices for
+input-reports without any mappings. But the present of the EV_REP but
+counts as a mapping causing 6 /dev/input/event# nodes to be created for
+the T100CHI bluetooth keyboard dock. This change brings the amount of
+created /dev/input/event# nodes / input-devices down to 4.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Stable-dep-of: 4ab3a086d10e ("HID: asus: use spinlock to safely schedule workers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-bigbenff.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/hid/hid-asus.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-bigbenff.c b/drivers/hid/hid-bigbenff.c
-index b98c5f31c184b..9d6560db762b1 100644
---- a/drivers/hid/hid-bigbenff.c
-+++ b/drivers/hid/hid-bigbenff.c
-@@ -185,6 +185,15 @@ struct bigben_device {
- 	struct work_struct worker;
- };
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index e1e27d87c86be..5ea4d678b7413 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -714,7 +714,6 @@ static int asus_input_mapping(struct hid_device *hdev,
  
-+static inline void bigben_schedule_work(struct bigben_device *bigben)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&bigben->lock, flags);
-+	if (!bigben->removed)
-+		schedule_work(&bigben->worker);
-+	spin_unlock_irqrestore(&bigben->lock, flags);
-+}
+ 	/* ASUS-specific keyboard hotkeys */
+ 	if ((usage->hid & HID_USAGE_PAGE) == 0xff310000) {
+-		set_bit(EV_REP, hi->input->evbit);
+ 		switch (usage->hid & HID_USAGE) {
+ 		case 0x10: asus_map_key_clear(KEY_BRIGHTNESSDOWN);	break;
+ 		case 0x20: asus_map_key_clear(KEY_BRIGHTNESSUP);		break;
+@@ -757,11 +756,11 @@ static int asus_input_mapping(struct hid_device *hdev,
+ 		if (drvdata->quirks & QUIRK_USE_KBD_BACKLIGHT)
+ 			drvdata->enable_backlight = true;
  
- static void bigben_worker(struct work_struct *work)
- {
-@@ -197,9 +206,6 @@ static void bigben_worker(struct work_struct *work)
- 	u32 len;
- 	unsigned long flags;
- 
--	if (bigben->removed)
--		return;
--
- 	buf = hid_alloc_report_buf(bigben->report, GFP_KERNEL);
- 	if (!buf)
- 		return;
-@@ -285,7 +291,7 @@ static int hid_bigben_play_effect(struct input_dev *dev, void *data,
- 		bigben->work_ff = true;
- 		spin_unlock_irqrestore(&bigben->lock, flags);
- 
--		schedule_work(&bigben->worker);
-+		bigben_schedule_work(bigben);
++		set_bit(EV_REP, hi->input->evbit);
+ 		return 1;
  	}
  
- 	return 0;
-@@ -320,7 +326,7 @@ static void bigben_set_led(struct led_classdev *led,
- 
- 			if (work) {
- 				bigben->work_led = true;
--				schedule_work(&bigben->worker);
-+				bigben_schedule_work(bigben);
- 			}
- 			return;
+ 	if ((usage->hid & HID_USAGE_PAGE) == HID_UP_MSVENDOR) {
+-		set_bit(EV_REP, hi->input->evbit);
+ 		switch (usage->hid & HID_USAGE) {
+ 		case 0xff01: asus_map_key_clear(BTN_1);	break;
+ 		case 0xff02: asus_map_key_clear(BTN_2);	break;
+@@ -784,6 +783,7 @@ static int asus_input_mapping(struct hid_device *hdev,
+ 			return 0;
  		}
-@@ -450,7 +456,7 @@ static int bigben_probe(struct hid_device *hid,
- 	bigben->left_motor_force = 0;
- 	bigben->work_led = true;
- 	bigben->work_ff = true;
--	schedule_work(&bigben->worker);
-+	bigben_schedule_work(bigben);
  
- 	hid_info(hid, "LED and force feedback support for BigBen gamepad\n");
++		set_bit(EV_REP, hi->input->evbit);
+ 		return 1;
+ 	}
  
 -- 
 2.39.2
