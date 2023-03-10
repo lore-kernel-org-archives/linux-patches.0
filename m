@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433148481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:09:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF856C4339B;
-	Fri, 10 Mar 2023 14:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A698481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:09:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BC4C433D2;
+	Fri, 10 Mar 2023 14:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457372;
-	bh=qgBWcSuqsd86vyiJtME/EBTG/dZrfhB4LIYVvAuMZL0=;
+	s=korg; t=1678457375;
+	bh=AmsC547uSXmXyK287P2JTaYoJ8wz5Tiynu3Ja2stwuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=doUDJQckr0+mKi9gnqRZWr6TyTiW9XDdhRu2H7UGL4zAG+3o58ZljztyBQnC2sDOf
-	 H7t74tb9zJN/MAcrLgHyjdJ8ngLPcN1Lrnjfp4xE5iBN4vJMRRVuy0x0HgUrNufTn6
-	 W4IwOIeLV6hqAY34WITbRZFWK/LuSvq1GvyR6Vog=
+	b=o1TtCL6z4IOdPHNNPStwGlNeWq4SMcGPD/9THShAdT+QhGV8aIXBT9uNxqY6EYFft
+	 pqBx0wYZ2hNdOkykAjh2TOXhJV9KziqbNd4SMiAf49uwPB19dIsHWtFAcM5ciTZXPK
+	 kMJhOn2LRJ0q7y3neUJUowcZ9b3ht5ZMd6J9B9nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	TOTE Robot <oslab@tsinghua.edu.cn>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/200] genirq/ipi: Fix NULL pointer deref in irq_data_get_affinity_mask()
-Date: Fri, 10 Mar 2023 14:38:24 +0100
-Message-Id: <20230310133720.093864809@linuxfoundation.org>
+Subject: [PATCH 6.1 115/200] tracing: Add NULL checks for buffer in ring_buffer_free_read_page()
+Date: Fri, 10 Mar 2023 14:38:42 +0100
+Message-Id: <20230310133720.638366938@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,57 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Jia-Ju Bai <baijiaju1990@gmail.com>
 
-[ Upstream commit feabecaff5902f896531dde90646ca5dfa9d4f7d ]
+[ Upstream commit 3e4272b9954094907f16861199728f14002fcaf6 ]
 
-If ipi_send_{mask|single}() is called with an invalid interrupt number, all
-the local variables there will be NULL. ipi_send_verify() which is invoked
-from these functions does verify its 'data' parameter, resulting in a
-kernel oops in irq_data_get_affinity_mask() as the passed NULL pointer gets
-dereferenced.
+In a previous commit 7433632c9ff6, buffer, buffer->buffers and
+buffer->buffers[cpu] in ring_buffer_wake_waiters() can be NULL,
+and thus the related checks are added.
 
-Add a missing NULL pointer check in ipi_send_verify()...
+However, in the same call stack, these variables are also used in
+ring_buffer_free_read_page():
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE static
-analysis tool.
+tracing_buffers_release()
+  ring_buffer_wake_waiters(iter->array_buffer->buffer)
+    cpu_buffer = buffer->buffers[cpu] -> Add checks by previous commit
+  ring_buffer_free_read_page(iter->array_buffer->buffer)
+    cpu_buffer = buffer->buffers[cpu] -> No check
 
-Fixes: 3b8e29a82dd1 ("genirq: Implement ipi_send_mask/single()")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/b541232d-c2b6-1fe9-79b4-a7129459e4d0@omp.ru
+Thus, to avod possible null-pointer derefernces, the related checks
+should be added.
+
+These results are reported by a static tool designed by myself.
+
+Link: https://lkml.kernel.org/r/20230113125501.760324-1-baijiaju1990@gmail.com
+
+Reported-by: TOTE Robot <oslab@tsinghua.edu.cn>
+Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/ipi.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/irq/ipi.c b/kernel/irq/ipi.c
-index bbd945bacef08..961d4af76af37 100644
---- a/kernel/irq/ipi.c
-+++ b/kernel/irq/ipi.c
-@@ -188,9 +188,9 @@ EXPORT_SYMBOL_GPL(ipi_get_hwirq);
- static int ipi_send_verify(struct irq_chip *chip, struct irq_data *data,
- 			   const struct cpumask *dest, unsigned int cpu)
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index c35e08b74014f..361bd8beafdff 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -5588,11 +5588,16 @@ EXPORT_SYMBOL_GPL(ring_buffer_alloc_read_page);
+  */
+ void ring_buffer_free_read_page(struct trace_buffer *buffer, int cpu, void *data)
  {
--	const struct cpumask *ipimask = irq_data_get_affinity_mask(data);
-+	const struct cpumask *ipimask;
+-	struct ring_buffer_per_cpu *cpu_buffer = buffer->buffers[cpu];
++	struct ring_buffer_per_cpu *cpu_buffer;
+ 	struct buffer_data_page *bpage = data;
+ 	struct page *page = virt_to_page(bpage);
+ 	unsigned long flags;
  
--	if (!chip || !ipimask)
-+	if (!chip || !data)
- 		return -EINVAL;
- 
- 	if (!chip->ipi_send_single && !chip->ipi_send_mask)
-@@ -199,6 +199,10 @@ static int ipi_send_verify(struct irq_chip *chip, struct irq_data *data,
- 	if (cpu >= nr_cpu_ids)
- 		return -EINVAL;
- 
-+	ipimask = irq_data_get_affinity_mask(data);
-+	if (!ipimask)
-+		return -EINVAL;
++	if (!buffer || !buffer->buffers || !buffer->buffers[cpu])
++		return;
 +
- 	if (dest) {
- 		if (!cpumask_subset(dest, ipimask))
- 			return -EINVAL;
++	cpu_buffer = buffer->buffers[cpu];
++
+ 	/* If the page is still in use someplace else, we can't reuse it */
+ 	if (page_ref_count(page) > 1)
+ 		goto out;
 -- 
 2.39.2
 
