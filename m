@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69280847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:53:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0EEC433EF;
-	Fri, 10 Mar 2023 13:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB9A847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:53:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4483C433EF;
+	Fri, 10 Mar 2023 13:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456423;
-	bh=GI6BGBr45Px0kVaMQOsvuH6bA9ow98rDMmVptW52C9Y=;
+	s=korg; t=1678456426;
+	bh=3/hLmWewTAnRQ3f5N1F3icsbR+2eZD1EpO5hvcYONSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uiy5DEno/32mMyZJuAn8i/aVZ+xnYagTfZnYAGb6TVTSZuzf80HMmaK8mqzZBURPn
-	 uTxTk7j61qvhr19YrP4cX2brw07eeTRJPhYcL6EKvb7IsWV+/4tx288yGmx/HevkLE
-	 ra0DzVDEcP9SyNPvkvh7Dz9cIwTfy5eTeF6yOkCw=
+	b=VmW0VVld+LFk1gaNxPQXVYjp9yigg4tKsDTqSj0K7xUq32xH6lR+Vt4zTEN083Db0
+	 ikIOk0A3dP2yaHesQGqH7UR0IyhrqsnffPxub9qPEBiGGqzJLVXvCpuY/EsK87y/Al
+	 sCARJJNvOCU4bBrwo1uNQph+feRdA9SeL7ZrXyH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Winter <winter@winter.cafe>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>
-Subject: [PATCH 4.14 192/193] tcp: Fix listen() regression in 4.14.303.
-Date: Fri, 10 Mar 2023 14:39:34 +0100
-Message-Id: <20230310133717.445624759@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 4.14 193/193] thermal: intel: powerclamp: Fix cur_state for multi package system
+Date: Fri, 10 Mar 2023 14:39:35 +0100
+Message-Id: <20230310133717.473828953@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -34,38 +34,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit fdaf88531cfd17b2a710cceb3141ef6f9085ff40 upstream.
+commit 8e47363588377e1bdb65e2b020b409cfb44dd260 upstream.
 
-When we backport dadd0dcaa67d ("net/ulp: prevent ULP without clone op from
-entering the LISTEN status"), we have accidentally backported a part of
-7a7160edf1bf ("net: Return errno in sk->sk_prot->get_port().") and removed
-err = -EADDRINUSE in inet_csk_listen_start().
+The powerclamp cooling device cur_state shows actual idle observed by
+package C-state idle counters. But the implementation is not sufficient
+for multi package or multi die system. The cur_state value is incorrect.
+On these systems, these counters must be read from each package/die and
+somehow aggregate them. But there is no good method for aggregation.
 
-Thus, listen() no longer returns -EADDRINUSE even if ->get_port() failed
-as reported in [0].
+It was not a problem when explicit CPU model addition was required to
+enable intel powerclamp. In this way certain CPU models could have
+been avoided. But with the removal of CPU model check with the
+availability of Package C-state counters, the driver is loaded on most
+of the recent systems.
 
-We set -EADDRINUSE to err just before ->get_port() to fix the regression.
+For multi package/die systems, just show the actual target idle state,
+the system is trying to achieve. In powerclamp this is the user set
+state minus one.
 
-[0]: https://lore.kernel.org/stable/EF8A45D0-768A-4CD5-9A8A-0FA6E610ABF7@winter.cafe/
+Also there is no use of starting a worker thread for polling package
+C-state counters and applying any compensation for multiple package
+or multiple die systems.
 
-Reported-by: Winter <winter@winter.cafe>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Fixes: b721ca0d1927 ("thermal/powerclamp: remove cpu whitelist")
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: 4.14+ <stable@vger.kernel.org> # 4.14+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/thermal/intel_powerclamp.c |   20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -925,6 +925,7 @@ int inet_csk_listen_start(struct sock *s
- 	 * It is OK, because this socket enters to hash table only
- 	 * after validation is complete.
- 	 */
-+	err = -EADDRINUSE;
- 	sk_state_store(sk, TCP_LISTEN);
- 	if (!sk->sk_prot->get_port(sk, inet->inet_num)) {
- 		inet->inet_sport = htons(inet->inet_num);
+--- a/drivers/thermal/intel_powerclamp.c
++++ b/drivers/thermal/intel_powerclamp.c
+@@ -72,6 +72,7 @@
+ 
+ static unsigned int target_mwait;
+ static struct dentry *debug_dir;
++static bool poll_pkg_cstate_enable;
+ 
+ /* user selected target */
+ static unsigned int set_target_ratio;
+@@ -280,6 +281,9 @@ static unsigned int get_compensation(int
+ {
+ 	unsigned int comp = 0;
+ 
++	if (!poll_pkg_cstate_enable)
++		return 0;
++
+ 	/* we only use compensation if all adjacent ones are good */
+ 	if (ratio == 1 &&
+ 		cal_data[ratio].confidence >= CONFIDENCE_OK &&
+@@ -552,7 +556,8 @@ static int start_power_clamp(void)
+ 	control_cpu = cpumask_first(cpu_online_mask);
+ 
+ 	clamping = true;
+-	schedule_delayed_work(&poll_pkg_cstate_work, 0);
++	if (poll_pkg_cstate_enable)
++		schedule_delayed_work(&poll_pkg_cstate_work, 0);
+ 
+ 	/* start one kthread worker per online cpu */
+ 	for_each_online_cpu(cpu) {
+@@ -621,11 +626,15 @@ static int powerclamp_get_max_state(stru
+ static int powerclamp_get_cur_state(struct thermal_cooling_device *cdev,
+ 				 unsigned long *state)
+ {
+-	if (true == clamping)
+-		*state = pkg_cstate_ratio_cur;
+-	else
++	if (clamping) {
++		if (poll_pkg_cstate_enable)
++			*state = pkg_cstate_ratio_cur;
++		else
++			*state = set_target_ratio;
++	} else {
+ 		/* to save power, do not poll idle ratio while not clamping */
+ 		*state = -1; /* indicates invalid state */
++	}
+ 
+ 	return 0;
+ }
+@@ -770,6 +779,9 @@ static int __init powerclamp_init(void)
+ 		goto exit_unregister;
+ 	}
+ 
++	if (topology_max_packages() == 1)
++		poll_pkg_cstate_enable = true;
++
+ 	cooling_dev = thermal_cooling_device_register("intel_powerclamp", NULL,
+ 						&powerclamp_cooling_ops);
+ 	if (IS_ERR(cooling_dev)) {
 
 
