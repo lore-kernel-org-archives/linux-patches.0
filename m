@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8CA846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:34:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897BAC4339B;
-	Fri, 10 Mar 2023 14:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C32846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:34:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5114CC433EF;
+	Fri, 10 Mar 2023 14:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458858;
-	bh=gERNU5lNMlV0zGRrVHWniyZnXdphFTxBcGoj0aAvC8c=;
+	s=korg; t=1678458861;
+	bh=12OrUunPROg9fNe41Yixt3FKTnnM7aTpNHMCgzEojmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z5WHJ2/CMBZANzobZovvmBVUxC/YlJLbbYTUg0NftHeD7WIcioGKi9VETZ8hRQyoD
-	 hre+q63LKj+88OrNd3DxafGyp7ysGu8DXXsv9H/0ZJmyc8Z23okdYdj99S7eYTbM7T
-	 Z1Iijiuo9JTwfNYpvYyU/WZ/z2TSmQrjIaA4NELU=
+	b=KtvQx7/Ezi0FP10hu4nblfkBTFuWlJ1vAZK/hABuYr3sTRq4Qxf8gW0NKIIV93/aL
+	 uclXEQv/aqRZkzx8RE5WoGFBOn4cNtVs5sD+n6kNmt5b7PrB944Kn2OLAQ1owtH92x
+	 ppLPcDoOzC1HBqCnKhTC5a3pglj/2EJSrlWSjfbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 168/357] media: platform: ti: Add missing check for devm_regulator_get
-Date: Fri, 10 Mar 2023 14:37:37 +0100
-Message-Id: <20230310133742.129054682@linuxfoundation.org>
+Subject: [PATCH 5.4 151/357] clk: renesas: cpg-mssr: Fix use after free if cpg_mssr_common_init() failed
+Date: Fri, 10 Mar 2023 14:37:20 +0100
+Message-Id: <20230310133741.372886580@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,43 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Alexey Khoroshilov <khoroshilov@ispras.ru>
 
-[ Upstream commit da8e05f84a11c3cc3b0ba0a3c62d20e358002d99 ]
+[ Upstream commit fbfd614aeaa2853c2c575299dfe2458db8eff67e ]
 
-Add check for the return value of devm_regulator_get since it may return
-error pointer.
+If cpg_mssr_common_init() fails after assigning priv to global variable
+cpg_mssr_priv, it deallocates priv, but cpg_mssr_priv keeps dangling
+pointer that potentially can be used later.
 
-Fixes: 448de7e7850b ("[media] omap3isp: OMAP3 ISP core")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 1f7db7bbf031 ("clk: renesas: cpg-mssr: Add early clock support")
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/1671806417-32623-1-git-send-email-khoroshilov@ispras.ru
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/omap3isp/isp.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/clk/renesas/renesas-cpg-mssr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/omap3isp/isp.c b/drivers/media/platform/omap3isp/isp.c
-index dce6b3685e135..88d491a8e326b 100644
---- a/drivers/media/platform/omap3isp/isp.c
-+++ b/drivers/media/platform/omap3isp/isp.c
-@@ -2312,7 +2312,16 @@ static int isp_probe(struct platform_device *pdev)
+diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
+index 6f9612c169afe..9ffd1bf80b6a3 100644
+--- a/drivers/clk/renesas/renesas-cpg-mssr.c
++++ b/drivers/clk/renesas/renesas-cpg-mssr.c
+@@ -907,7 +907,6 @@ static int __init cpg_mssr_common_init(struct device *dev,
+ 		goto out_err;
+ 	}
  
- 	/* Regulators */
- 	isp->isp_csiphy1.vdd = devm_regulator_get(&pdev->dev, "vdd-csiphy1");
-+	if (IS_ERR(isp->isp_csiphy1.vdd)) {
-+		ret = PTR_ERR(isp->isp_csiphy1.vdd);
-+		goto error;
-+	}
+-	cpg_mssr_priv = priv;
+ 	priv->num_core_clks = info->num_total_core_clks;
+ 	priv->num_mod_clks = info->num_hw_mod_clks;
+ 	priv->last_dt_core_clk = info->last_dt_core_clk;
+@@ -921,6 +920,8 @@ static int __init cpg_mssr_common_init(struct device *dev,
+ 	if (error)
+ 		goto out_err;
+ 
++	cpg_mssr_priv = priv;
 +
- 	isp->isp_csiphy2.vdd = devm_regulator_get(&pdev->dev, "vdd-csiphy2");
-+	if (IS_ERR(isp->isp_csiphy2.vdd)) {
-+		ret = PTR_ERR(isp->isp_csiphy2.vdd);
-+		goto error;
-+	}
+ 	return 0;
  
- 	/* Clocks
- 	 *
+ out_err:
 -- 
 2.39.2
 
