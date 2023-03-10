@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333ED847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:47:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1C9C433D2;
-	Fri, 10 Mar 2023 13:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495EB847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:47:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00F2C433EF;
+	Fri, 10 Mar 2023 13:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456053;
-	bh=AHH8+V25j04dYhHbB6RZNyhY6wrLnlvtMgRictoQFyc=;
+	s=korg; t=1678456056;
+	bh=t/PQe2PqVeQA/uidFz14Vi5or1yoZVTOCxK4FbeLzxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFAM0tLHvKbVAxlc+/g81xKN4EoXdmPyfnBO8CuOCTng4gYHulu7L4NAqk+qzk7Zt
-	 /K1K8OLZ2yoPnOYO5YwEZFrjCI2BDKZy62SmdPU2hoay+UM+eCwyu7SI6mMZwtPmEz
-	 C+GKOeOGuhneQh8kYcSbIHx4+Bzt9hOpbYnvW00k=
+	b=UW1HZB9vvkX71c401vqwESyc3cIokAM9rY6g9xCVNlRnfcSZxdfZZxQMnU97vBxcR
+	 uWNOzrohfcwptGmAF0z2X+ZignVNF2I8MBsopR84YHBr59plGIMZUG/w5WsYBiOu5E
+	 aWaoZwcmVazXAqWCXfRQdrwPQTqedAVpekXudVwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Jason Yan <yanaijie@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 063/193] scsi: aic94xx: Add missing check for dma_map_single()
-Date: Fri, 10 Mar 2023 14:37:25 +0100
-Message-Id: <20230310133713.130983965@linuxfoundation.org>
+Subject: [PATCH 4.14 036/193] wifi: orinoco: check return value of hermes_write_wordrec()
+Date: Fri, 10 Mar 2023 14:36:58 +0100
+Message-Id: <20230310133712.155384600@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -36,37 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
 
-[ Upstream commit 32fe45274edb5926abc0fac7263d9f889d02d9cf ]
+[ Upstream commit 1e346cbb096a5351a637ec1992beffbf330547f0 ]
 
-Add check for dma_map_single() and return error if it fails in order to
-avoid invalid DMA address.
+There is currently no return check for writing an authentication
+type (HERMES_AUTH_SHARED_KEY or HERMES_AUTH_OPEN). It looks like
+it was accidentally skipped.
 
-Fixes: 2908d778ab3e ("[SCSI] aic94xx: new driver")
-Link: https://lore.kernel.org/r/20230128110832.6792-1-jiasheng@iscas.ac.cn
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This patch adds a return check similar to the other checks in
+__orinoco_hw_setup_enc() for hermes_write_wordrec().
+
+Detected using the static analysis tool - Svace.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221227133306.201356-1-aleksei.kodanev@bell-sw.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aic94xx/aic94xx_task.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/intersil/orinoco/hw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/aic94xx/aic94xx_task.c b/drivers/scsi/aic94xx/aic94xx_task.c
-index cdd4ab683be98..4de4bbca1f925 100644
---- a/drivers/scsi/aic94xx/aic94xx_task.c
-+++ b/drivers/scsi/aic94xx/aic94xx_task.c
-@@ -68,6 +68,9 @@ static int asd_map_scatterlist(struct sas_task *task,
- 		dma_addr_t dma = pci_map_single(asd_ha->pcidev, p,
- 						task->total_xfer_len,
- 						task->data_dir);
-+		if (dma_mapping_error(&asd_ha->pcidev->dev, dma))
-+			return -ENOMEM;
-+
- 		sg_arr[0].bus_addr = cpu_to_le64((u64)dma);
- 		sg_arr[0].size = cpu_to_le32(task->total_xfer_len);
- 		sg_arr[0].flags |= ASD_SG_EL_LIST_EOL;
+diff --git a/drivers/net/wireless/intersil/orinoco/hw.c b/drivers/net/wireless/intersil/orinoco/hw.c
+index 61af5a28f269f..af49aa421e47f 100644
+--- a/drivers/net/wireless/intersil/orinoco/hw.c
++++ b/drivers/net/wireless/intersil/orinoco/hw.c
+@@ -931,6 +931,8 @@ int __orinoco_hw_setup_enc(struct orinoco_private *priv)
+ 			err = hermes_write_wordrec(hw, USER_BAP,
+ 					HERMES_RID_CNFAUTHENTICATION_AGERE,
+ 					auth_flag);
++			if (err)
++				return err;
+ 		}
+ 		err = hermes_write_wordrec(hw, USER_BAP,
+ 					   HERMES_RID_CNFWEPENABLED_AGERE,
 -- 
 2.39.2
 
