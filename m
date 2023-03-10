@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F585847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:47:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E81C4339B;
-	Fri, 10 Mar 2023 13:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32048847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:47:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892E6C4339B;
+	Fri, 10 Mar 2023 13:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456032;
-	bh=Om8PxE6ZB+ne0XDEq6sArrC+EiRImwTx6kG/KFseuFE=;
+	s=korg; t=1678456035;
+	bh=omikLraQGxzALQl5Bprp0pTRRXTWRYp+/DprOQI1TsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TUgaZIWgBtXT51VTO1/yvvLKy9hkQgWikZJQJs0Amj1XJBsNFZ6QZx64ZEmdvUH9e
-	 tNPRXh+RRX8FVKGYE+7zcyhMRv1Ogk2+b7gHOBjoUnITZTk6DWad6cVHLdki+kOa+p
-	 rui5Jd13Gu7qI7VokQrTFkWg6gfgnefGiPmaFrFc=
+	b=W2Yezt8wkb5Xem07rAvxY6RqQHJS91AVyms1YiEwsKnzGNK2raCuPO97xkPKa+Okb
+	 hlVh6gq3cMUaf1qaym+R8b1Q3//QcqzcoXmoJWiQNN9XAD5z0cu1BaCp5suLPknmtQ
+	 tHmTxzhAYQAuUW4FwY6Lwd6qVhzG5RRM19kgYSB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Daniel Mentz <danielmentz@google.com>,
+	Richard Acayan <mailingradian@gmail.com>,
+	Caleb Connolly <caleb@connolly.tech>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sam Ravnborg <sam@ravnborg.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 057/193] ALSA: hda/ca0132: minor fix for allocation size
-Date: Fri, 10 Mar 2023 14:37:19 +0100
-Message-Id: <20230310133712.922927556@linuxfoundation.org>
+Subject: [PATCH 4.14 058/193] drm/mipi-dsi: Fix byte order of 16-bit DCS set/get brightness
+Date: Fri, 10 Mar 2023 14:37:20 +0100
+Message-Id: <20230310133712.958686789@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,38 +38,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey V. Vissarionov <gremlin@altlinux.org>
+From: Daniel Mentz <danielmentz@google.com>
 
-[ Upstream commit 3ee0fe7fa39b14d1cea455b7041f2df933bd97d2 ]
+[ Upstream commit c9d27c6be518b4ef2966d9564654ef99292ea1b3 ]
 
-Although the "dma_chan" pointer occupies more or equal space compared
-to "*dma_chan", the allocation size should use the size of variable
-itself.
+The MIPI DCS specification demands that brightness values are sent in
+big endian byte order. It also states that one parameter (i.e. one byte)
+shall be sent/received for 8 bit wide values, and two parameters shall
+be used for values that are between 9 and 16 bits wide.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Add new functions to properly handle 16-bit brightness in big endian,
+since the two 8- and 16-bit cases are distinct from each other.
 
-Fixes: 01ef7dbffb41 ("ALSA: hda - Update CA0132 codec to load DSP firmware binary")
-Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
-Link: https://lore.kernel.org/r/20230117111522.GA15213@altlinux.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[richard: use separate functions instead of switch/case]
+[richard: split into 16-bit component]
+
+Fixes: 1a9d759331b8 ("drm/dsi: Implement DCS set/get display brightness")
+Signed-off-by: Daniel Mentz <danielmentz@google.com>
+Link: https://android.googlesource.com/kernel/msm/+/754affd62d0ee268c686c53169b1dbb7deac8550
+[richard: fix 16-bit brightness_get]
+Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+Tested-by: Caleb Connolly <caleb@connolly.tech>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230116224909.23884-2-mailingradian@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_ca0132.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_mipi_dsi.c | 52 ++++++++++++++++++++++++++++++++++
+ include/drm/drm_mipi_dsi.h     |  4 +++
+ 2 files changed, 56 insertions(+)
 
-diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
-index 369f812d70722..280643f72c6e2 100644
---- a/sound/pci/hda/patch_ca0132.c
-+++ b/sound/pci/hda/patch_ca0132.c
-@@ -1523,7 +1523,7 @@ static int dspio_set_uint_param(struct hda_codec *codec, int mod_id,
- static int dspio_alloc_dma_chan(struct hda_codec *codec, unsigned int *dma_chan)
- {
- 	int status = 0;
--	unsigned int size = sizeof(dma_chan);
-+	unsigned int size = sizeof(*dma_chan);
+diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
+index bd5e8661f826a..6995bee5ad0fb 100644
+--- a/drivers/gpu/drm/drm_mipi_dsi.c
++++ b/drivers/gpu/drm/drm_mipi_dsi.c
+@@ -1091,6 +1091,58 @@ int mipi_dsi_dcs_get_display_brightness(struct mipi_dsi_device *dsi,
+ }
+ EXPORT_SYMBOL(mipi_dsi_dcs_get_display_brightness);
  
- 	codec_dbg(codec, "     dspio_alloc_dma_chan() -- begin\n");
- 	status = dspio_scp(codec, MASTERCONTROL, MASTERCONTROL_ALLOC_DMA_CHAN,
++/**
++ * mipi_dsi_dcs_set_display_brightness_large() - sets the 16-bit brightness value
++ *    of the display
++ * @dsi: DSI peripheral device
++ * @brightness: brightness value
++ *
++ * Return: 0 on success or a negative error code on failure.
++ */
++int mipi_dsi_dcs_set_display_brightness_large(struct mipi_dsi_device *dsi,
++					     u16 brightness)
++{
++	u8 payload[2] = { brightness >> 8, brightness & 0xff };
++	ssize_t err;
++
++	err = mipi_dsi_dcs_write(dsi, MIPI_DCS_SET_DISPLAY_BRIGHTNESS,
++				 payload, sizeof(payload));
++	if (err < 0)
++		return err;
++
++	return 0;
++}
++EXPORT_SYMBOL(mipi_dsi_dcs_set_display_brightness_large);
++
++/**
++ * mipi_dsi_dcs_get_display_brightness_large() - gets the current 16-bit
++ *    brightness value of the display
++ * @dsi: DSI peripheral device
++ * @brightness: brightness value
++ *
++ * Return: 0 on success or a negative error code on failure.
++ */
++int mipi_dsi_dcs_get_display_brightness_large(struct mipi_dsi_device *dsi,
++					     u16 *brightness)
++{
++	u8 brightness_be[2];
++	ssize_t err;
++
++	err = mipi_dsi_dcs_read(dsi, MIPI_DCS_GET_DISPLAY_BRIGHTNESS,
++				brightness_be, sizeof(brightness_be));
++	if (err <= 0) {
++		if (err == 0)
++			err = -ENODATA;
++
++		return err;
++	}
++
++	*brightness = (brightness_be[0] << 8) | brightness_be[1];
++
++	return 0;
++}
++EXPORT_SYMBOL(mipi_dsi_dcs_get_display_brightness_large);
++
+ static int mipi_dsi_drv_probe(struct device *dev)
+ {
+ 	struct mipi_dsi_driver *drv = to_mipi_dsi_driver(dev->driver);
+diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+index 4fef19064b0f1..689f615471ab1 100644
+--- a/include/drm/drm_mipi_dsi.h
++++ b/include/drm/drm_mipi_dsi.h
+@@ -274,6 +274,10 @@ int mipi_dsi_dcs_set_display_brightness(struct mipi_dsi_device *dsi,
+ 					u16 brightness);
+ int mipi_dsi_dcs_get_display_brightness(struct mipi_dsi_device *dsi,
+ 					u16 *brightness);
++int mipi_dsi_dcs_set_display_brightness_large(struct mipi_dsi_device *dsi,
++					     u16 brightness);
++int mipi_dsi_dcs_get_display_brightness_large(struct mipi_dsi_device *dsi,
++					     u16 *brightness);
+ 
+ /**
+  * struct mipi_dsi_driver - DSI driver
 -- 
 2.39.2
 
