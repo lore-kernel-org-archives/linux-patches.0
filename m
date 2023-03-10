@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9018494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:36:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AC6C4339B;
-	Fri, 10 Mar 2023 14:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A8D8494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:36:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA54C433EF;
+	Fri, 10 Mar 2023 14:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459013;
-	bh=TZb+Ln/vqJKypBMBTJ/WbrqzyFVVdxsMbtK+kgXNUwg=;
+	s=korg; t=1678459016;
+	bh=Z0NxsGNxpNeaLfUDIH62MZCxCtFaynYX0FYTsLoDios=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgqzqZBhpeg5kgOem6JyDlktHk2slPcbhNORzUr2fJDeBxE6ky2N5XZIw1TIf9YUo
-	 GiGoiJqsw4cOuAjCmrWEMkHTwoRqEJ7mAp4kT7QA0O0zq1Bzdup5IX2KGDGHCy6+Of
-	 APo13Qegqn91YpFcPDS3uX2FGR5n9EKxn7cOddco=
+	b=tVlZn0CYokw2jWPri/k/adUN+Gvxb9OSlXQSdEx9h0NQkrsjEZYq1p0rrXl826w7/
+	 4V0BiMzuW1pCiUyYk/5Ux0X0bpYkJlobkqnHWoIOqHXuzYJ/JnKGswSoM7QGO4vQ9r
+	 lcrDAFKofFm+NCw5ztkk2M56aNHPiG9rWsot4ezc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 189/357] net: bcmgenet: Add a check for oversized packets
-Date: Fri, 10 Mar 2023 14:37:58 +0100
-Message-Id: <20230310133743.077155747@linuxfoundation.org>
+Subject: [PATCH 5.4 190/357] m68k: Check syscall_trace_enter() return code
+Date: Fri, 10 Mar 2023 14:37:59 +0100
+Message-Id: <20230310133743.113840023@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,41 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Michael Schmitz <schmitzmic@gmail.com>
 
-[ Upstream commit 5c0862c2c962052ed5055220a00ac1cefb92fbcd ]
+[ Upstream commit 2ca8a1de4437f21562e57f9ac123914747a8e7a1 ]
 
-Occasionnaly we may get oversized packets from the hardware which
-exceed the nomimal 2KiB buffer size we allocate SKBs with. Add an early
-check which drops the packet to avoid invoking skb_over_panic() and move
-on to processing the next packet.
+Check return code of syscall_trace_enter(), and skip syscall
+if -1. Return code will be left at what had been set by
+ptrace or seccomp (in regs->d0).
 
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+No regression seen in testing with strace on ARAnyM.
+
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20230112035529.13521-2-schmitzmic@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/m68k/68000/entry.S    | 2 ++
+ arch/m68k/coldfire/entry.S | 2 ++
+ arch/m68k/kernel/entry.S   | 3 +++
+ 3 files changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index e03e2bfcc6a10..1b725a021455b 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -1823,6 +1823,14 @@ static unsigned int bcmgenet_desc_rx(struct bcmgenet_rx_ring *ring,
- 			  __func__, p_index, ring->c_index,
- 			  ring->read_ptr, dma_length_status);
- 
-+		if (unlikely(len > RX_BUF_LENGTH)) {
-+			netif_err(priv, rx_status, dev, "oversized packet\n");
-+			dev->stats.rx_length_errors++;
-+			dev->stats.rx_errors++;
-+			dev_kfree_skb_any(skb);
-+			goto next;
-+		}
-+
- 		if (unlikely(!(dma_flag & DMA_EOP) || !(dma_flag & DMA_SOP))) {
- 			netif_err(priv, rx_status, dev,
- 				  "dropping fragmented packet!\n");
+diff --git a/arch/m68k/68000/entry.S b/arch/m68k/68000/entry.S
+index 259b3661b6141..94abf3d8afc52 100644
+--- a/arch/m68k/68000/entry.S
++++ b/arch/m68k/68000/entry.S
+@@ -47,6 +47,8 @@ do_trace:
+ 	jbsr	syscall_trace_enter
+ 	RESTORE_SWITCH_STACK
+ 	addql	#4,%sp
++	addql	#1,%d0
++	jeq	ret_from_exception
+ 	movel	%sp@(PT_OFF_ORIG_D0),%d1
+ 	movel	#-ENOSYS,%d0
+ 	cmpl	#NR_syscalls,%d1
+diff --git a/arch/m68k/coldfire/entry.S b/arch/m68k/coldfire/entry.S
+index 52d312d5b4d4f..fb3b065677459 100644
+--- a/arch/m68k/coldfire/entry.S
++++ b/arch/m68k/coldfire/entry.S
+@@ -92,6 +92,8 @@ ENTRY(system_call)
+ 	jbsr	syscall_trace_enter
+ 	RESTORE_SWITCH_STACK
+ 	addql	#4,%sp
++	addql	#1,%d0
++	jeq	ret_from_exception
+ 	movel	%d3,%a0
+ 	jbsr	%a0@
+ 	movel	%d0,%sp@(PT_OFF_D0)		/* save the return value */
+diff --git a/arch/m68k/kernel/entry.S b/arch/m68k/kernel/entry.S
+index 97cd3ea5f10b8..9a66657773beb 100644
+--- a/arch/m68k/kernel/entry.S
++++ b/arch/m68k/kernel/entry.S
+@@ -160,9 +160,12 @@ do_trace_entry:
+ 	jbsr	syscall_trace
+ 	RESTORE_SWITCH_STACK
+ 	addql	#4,%sp
++	addql	#1,%d0			| optimization for cmpil #-1,%d0
++	jeq	ret_from_syscall
+ 	movel	%sp@(PT_OFF_ORIG_D0),%d0
+ 	cmpl	#NR_syscalls,%d0
+ 	jcs	syscall
++	jra	ret_from_syscall
+ badsys:
+ 	movel	#-ENOSYS,%sp@(PT_OFF_D0)
+ 	jra	ret_from_syscall
 -- 
 2.39.2
 
