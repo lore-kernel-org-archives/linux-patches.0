@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3291847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C829C4339B;
-	Fri, 10 Mar 2023 13:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647EF847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C76B7C433EF;
+	Fri, 10 Mar 2023 13:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456655;
-	bh=NZi9uK0HBQ3YlzFMeNMn/3txjdwTn3C5yj3oQIB5MGY=;
+	s=korg; t=1678456658;
+	bh=imXWIlqL+70FKbWdGg/sk3cDePFqS/WJog3cjHnOprc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p26JaZCuQfO+8mV9BmMbA1Gz4AjW0jNLmT5LfMMVr6P30Jiygp99sGeqf6c/UC8cB
-	 WaGuONLEwAC2rSRjH8odVkYkGGfZMUnB4xn5avrcnqLPFO/6EkshuAIm9Nu4Y1YBBi
-	 pwU0SOHVf7PyflEFu3Z5DIj0Ex3oRev3RuDGC764=
+	b=azVUIVBKpJtkN2ITTzUw3+9bgNsR1+AQw71TWFeD5rJABSofTYKxeqfAHpbFEeAyw
+	 F7bnStsE+eO9s4VXjOrvCeXjD0GMX+1ldwk2+zK5pXdhJ9fv9u0vT18Wy8fZV/rpVs
+	 ItQYVgUDAXlrhm4IqdvBeRrfxRG7x0V9BkxK3R2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Matthias Kaehlcke <mka@chromium.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 047/211] f2fs: fix to update age extent in f2fs_do_zero_range()
-Date: Fri, 10 Mar 2023 14:37:07 +0100
-Message-Id: <20230310133720.168036512@linuxfoundation.org>
+Subject: [PATCH 6.2 048/211] soc: qcom: stats: Populate all subsystem debugfs files
+Date: Fri, 10 Mar 2023 14:37:08 +0100
+Message-Id: <20230310133720.197059730@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,33 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit a84153f939808102dfa10904aa0f743e734a3e1d ]
+[ Upstream commit acdbf5f9b2c492505145f6e50c65418521a547c4 ]
 
-We should update age extent in f2fs_do_zero_range() like we
-did in f2fs_truncate_data_blocks_range().
+This driver relies on SMEM to populate items for each subsystem before
+the device probes. The items in SMEM that are being looked for are
+populated by the subsystems lazily, and therefore may not exist until
+the device has booted. For example, if I build this driver into the
+kernel on Trogdor Lazor and boot up, I don't see a 'modem' debugfs file
+populated, because the modem boots and populates the SMEM item after
+this driver probes.
 
-Fixes: 71644dff4811 ("f2fs: add block_age-based extent cache")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Always populate the files for the subsystems if they're in SMEM, and
+make the qcom_subsystem_sleep_stats_show() function return 0 if the SMEM
+items still isn't there. This way we can run a simple command like
+
+	grep ^ /sys/kernel/debug/qcom_stats/*
+
+and collect the subsystem sleep stats without interspersed errors or
+missing details entirely because this driver probed first.
+
+Fixes: 1d7724690344 ("soc: qcom: Add Sleep stats driver")
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230119032329.2909383-1-swboyd@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/soc/qcom/qcom_stats.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index cd1c6ed89d5ef..8583c098bc985 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1498,6 +1498,7 @@ static int f2fs_do_zero_range(struct dnode_of_data *dn, pgoff_t start,
- 	}
+diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
+index 6228af057120b..c207bb96c523a 100644
+--- a/drivers/soc/qcom/qcom_stats.c
++++ b/drivers/soc/qcom/qcom_stats.c
+@@ -92,7 +92,7 @@ static int qcom_subsystem_sleep_stats_show(struct seq_file *s, void *unused)
+ 	/* Items are allocated lazily, so lookup pointer each time */
+ 	stat = qcom_smem_get(subsystem->pid, subsystem->smem_item, NULL);
+ 	if (IS_ERR(stat))
+-		return -EIO;
++		return 0;
  
- 	f2fs_update_read_extent_cache_range(dn, start, 0, index - start);
-+	f2fs_update_age_extent_cache_range(dn, start, index - start);
+ 	qcom_print_stats(s, stat);
  
- 	return ret;
+@@ -170,20 +170,14 @@ static void qcom_create_soc_sleep_stat_files(struct dentry *root, void __iomem *
+ static void qcom_create_subsystem_stat_files(struct dentry *root,
+ 					     const struct stats_config *config)
+ {
+-	const struct sleep_stats *stat;
+ 	int i;
+ 
+ 	if (!config->subsystem_stats_in_smem)
+ 		return;
+ 
+-	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
+-		stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
+-		if (IS_ERR(stat))
+-			continue;
+-
++	for (i = 0; i < ARRAY_SIZE(subsystems); i++)
+ 		debugfs_create_file(subsystems[i].name, 0400, root, (void *)&subsystems[i],
+ 				    &qcom_subsystem_sleep_stats_fops);
+-	}
  }
+ 
+ static int qcom_stats_probe(struct platform_device *pdev)
 -- 
 2.39.2
 
