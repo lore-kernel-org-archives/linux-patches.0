@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1CA881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BD6C4339C;
-	Fri, 10 Mar 2023 14:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BE0881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD646C4339C;
+	Fri, 10 Mar 2023 14:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459211;
-	bh=vo9OZxlQwQHyHQ+XMOAr46e9Cnxk2fp3YDvXV/kghWA=;
+	s=korg; t=1678459214;
+	bh=YMhqX6C/YupTdxYUJbs1W5Sgg6QuNyNZja+Sqq+eLGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G4eFHnjwzgcXmHJIm6TOuXp969tgjKp62caJ/QzWKUY9F8f8A+zYrMbQmwVvoXcs4
-	 Vyi8MzY5c7aOrMkYiW32Es/nlIzsFRbEJCmrMdWRn9kERxdEC2qXJ34CW3b2UD0aCH
-	 YCrNaQtS5l30JflAwDMK5xXBPANUrnLmPmIBZoXE=
+	b=GnJts50fTsB3i8YsX7vELZvDXT/BO+NJAQCDhAhZg17gCpG+Ao3kB/cxEz4S8pG5D
+	 24lY/pH+XQuX1Ke9UhKw78RG9DbVWSId6R2hMnqW1s131GOXhSO4LGD+H/cCALplho
+	 mZci5noiFRociDOdgNofAQ3qvZCcfYhJmtleU+oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.4 254/357] thermal: intel: powerclamp: Fix cur_state for multi package system
-Date: Fri, 10 Mar 2023 14:39:03 +0100
-Message-Id: <20230310133745.966410576@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 5.4 255/357] dm flakey: fix logic when corrupting a bio
+Date: Fri, 10 Mar 2023 14:39:04 +0100
+Message-Id: <20230310133746.006719122@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -34,97 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 8e47363588377e1bdb65e2b020b409cfb44dd260 upstream.
+commit aa56b9b75996ff4c76a0a4181c2fa0206c3d91cc upstream.
 
-The powerclamp cooling device cur_state shows actual idle observed by
-package C-state idle counters. But the implementation is not sufficient
-for multi package or multi die system. The cur_state value is incorrect.
-On these systems, these counters must be read from each package/die and
-somehow aggregate them. But there is no good method for aggregation.
+If "corrupt_bio_byte" is set to corrupt reads and corrupt_bio_flags is
+used, dm-flakey would erroneously return all writes as errors. Likewise,
+if "corrupt_bio_byte" is set to corrupt writes, dm-flakey would return
+errors for all reads.
 
-It was not a problem when explicit CPU model addition was required to
-enable intel powerclamp. In this way certain CPU models could have
-been avoided. But with the removal of CPU model check with the
-availability of Package C-state counters, the driver is loaded on most
-of the recent systems.
+Fix the logic so that if fc->corrupt_bio_byte is non-zero, dm-flakey
+will not abort reads on writes with an error.
 
-For multi package/die systems, just show the actual target idle state,
-the system is trying to achieve. In powerclamp this is the user set
-state minus one.
-
-Also there is no use of starting a worker thread for polling package
-C-state counters and applying any compensation for multiple package
-or multiple die systems.
-
-Fixes: b721ca0d1927 ("thermal/powerclamp: remove cpu whitelist")
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Cc: 4.14+ <stable@vger.kernel.org> # 4.14+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/intel/intel_powerclamp.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ drivers/md/dm-flakey.c |   23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
---- a/drivers/thermal/intel/intel_powerclamp.c
-+++ b/drivers/thermal/intel/intel_powerclamp.c
-@@ -57,6 +57,7 @@
+--- a/drivers/md/dm-flakey.c
++++ b/drivers/md/dm-flakey.c
+@@ -360,9 +360,11 @@ static int flakey_map(struct dm_target *
+ 		/*
+ 		 * Corrupt matching writes.
+ 		 */
+-		if (fc->corrupt_bio_byte && (fc->corrupt_bio_rw == WRITE)) {
+-			if (all_corrupt_bio_flags_match(bio, fc))
+-				corrupt_bio_data(bio, fc);
++		if (fc->corrupt_bio_byte) {
++			if (fc->corrupt_bio_rw == WRITE) {
++				if (all_corrupt_bio_flags_match(bio, fc))
++					corrupt_bio_data(bio, fc);
++			}
+ 			goto map_bio;
+ 		}
  
- static unsigned int target_mwait;
- static struct dentry *debug_dir;
-+static bool poll_pkg_cstate_enable;
+@@ -388,13 +390,14 @@ static int flakey_end_io(struct dm_targe
+ 		return DM_ENDIO_DONE;
  
- /* user selected target */
- static unsigned int set_target_ratio;
-@@ -265,6 +266,9 @@ static unsigned int get_compensation(int
- {
- 	unsigned int comp = 0;
- 
-+	if (!poll_pkg_cstate_enable)
-+		return 0;
-+
- 	/* we only use compensation if all adjacent ones are good */
- 	if (ratio == 1 &&
- 		cal_data[ratio].confidence >= CONFIDENCE_OK &&
-@@ -537,7 +541,8 @@ static int start_power_clamp(void)
- 	control_cpu = cpumask_first(cpu_online_mask);
- 
- 	clamping = true;
--	schedule_delayed_work(&poll_pkg_cstate_work, 0);
-+	if (poll_pkg_cstate_enable)
-+		schedule_delayed_work(&poll_pkg_cstate_work, 0);
- 
- 	/* start one kthread worker per online cpu */
- 	for_each_online_cpu(cpu) {
-@@ -606,11 +611,15 @@ static int powerclamp_get_max_state(stru
- static int powerclamp_get_cur_state(struct thermal_cooling_device *cdev,
- 				 unsigned long *state)
- {
--	if (true == clamping)
--		*state = pkg_cstate_ratio_cur;
--	else
-+	if (clamping) {
-+		if (poll_pkg_cstate_enable)
-+			*state = pkg_cstate_ratio_cur;
-+		else
-+			*state = set_target_ratio;
-+	} else {
- 		/* to save power, do not poll idle ratio while not clamping */
- 		*state = -1; /* indicates invalid state */
-+	}
- 
- 	return 0;
- }
-@@ -735,6 +744,9 @@ static int __init powerclamp_init(void)
- 		goto exit_unregister;
- 	}
- 
-+	if (topology_max_packages() == 1 && topology_max_die_per_package() == 1)
-+		poll_pkg_cstate_enable = true;
-+
- 	cooling_dev = thermal_cooling_device_register("intel_powerclamp", NULL,
- 						&powerclamp_cooling_ops);
- 	if (IS_ERR(cooling_dev)) {
+ 	if (!*error && pb->bio_submitted && (bio_data_dir(bio) == READ)) {
+-		if (fc->corrupt_bio_byte && (fc->corrupt_bio_rw == READ) &&
+-		    all_corrupt_bio_flags_match(bio, fc)) {
+-			/*
+-			 * Corrupt successful matching READs while in down state.
+-			 */
+-			corrupt_bio_data(bio, fc);
+-
++		if (fc->corrupt_bio_byte) {
++			if ((fc->corrupt_bio_rw == READ) &&
++			    all_corrupt_bio_flags_match(bio, fc)) {
++				/*
++				 * Corrupt successful matching READs while in down state.
++				 */
++				corrupt_bio_data(bio, fc);
++			}
+ 		} else if (!test_bit(DROP_WRITES, &fc->flags) &&
+ 			   !test_bit(ERROR_WRITES, &fc->flags)) {
+ 			/*
 
 
