@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86440847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:55:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1296C4339E;
-	Fri, 10 Mar 2023 13:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CC0847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:55:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB6C6C433EF;
+	Fri, 10 Mar 2023 13:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456519;
-	bh=ORrQwT7B8uh8P1WHVWre5/RWCEtz1yoJf8NTPsGdDi0=;
+	s=korg; t=1678456522;
+	bh=3cmznv8an2kdzhfWa1qltY0CQ3ppfedg+qrQnlgV8og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z5S+nalONrAMkEoo8EjdncGNxCkJZxCVtMEnK59NsTLm4eykQ/692XeJiEcgCx3G9
-	 O5DB5IGvxTKgZdfxEZO0cd9vgIRFXin0jAPiUNwnbfpKmTPJERUtfRL0S2zApAbzBq
-	 Y/oBuZJq2ADYEElQdyjiQKpHhndELyOInpUjgPzE=
+	b=RW/JeGmU9ZaN3z/Cw3typkzhJQkuq4YQFzUXOLPuAiOcj7vWsMCFK2qPLXdJ/CCp6
+	 xqqd+Es7c1napqdQtW8bBIGPX3tx0jWQHvXRLDTUm2UnHt9FJV/9DEbdEjwFkS8vOi
+	 2ciu/IKW6AlxpvZpVVEF8MBiQCF74zR2IUZGLlpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 030/211] ubifs: Fix wrong dirty space budget for dirty inode
-Date: Fri, 10 Mar 2023 14:36:50 +0100
-Message-Id: <20230310133719.647608596@linuxfoundation.org>
+Subject: [PATCH 6.2 031/211] ubifs: do_rename: Fix wrong space budget when target inodes nlink > 1
+Date: Fri, 10 Mar 2023 14:36:51 +0100
+Message-Id: <20230310133719.685709748@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -37,33 +37,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit b248eaf049d9cdc5eb76b59399e4d3de233f02ac ]
+[ Upstream commit 25fce616a61fc2f1821e4a9ce212d0e064707093 ]
 
-Each dirty inode should reserve 'c->bi.inode_budget' bytes in space
-budget calculation. Currently, space budget for dirty inode reports
-more space than what UBIFS actually needs to write.
+If target inode is a special file (eg. block/char device) with nlink
+count greater than 1, the inode with ui->data will be re-written on
+disk. However, UBIFS losts target inode's data_len while doing space
+budget. Bad space budget may let make_reservation() return with -ENOSPC,
+which could turn ubifs to read-only mode in do_writepage() process.
 
+Fetch a reproducer in [Link].
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216494
 Fixes: 1e51764a3c2ac0 ("UBIFS: add new flash file system")
 Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/budget.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ubifs/dir.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ubifs/budget.c b/fs/ubifs/budget.c
-index e8b9b756f0aca..986e6e4081c76 100644
---- a/fs/ubifs/budget.c
-+++ b/fs/ubifs/budget.c
-@@ -400,7 +400,7 @@ static int calc_dd_growth(const struct ubifs_info *c,
- 	dd_growth = req->dirtied_page ? c->bi.page_budget : 0;
+diff --git a/fs/ubifs/dir.c b/fs/ubifs/dir.c
+index 94634b872e382..5e6bcce94e641 100644
+--- a/fs/ubifs/dir.c
++++ b/fs/ubifs/dir.c
+@@ -1324,6 +1324,8 @@ static int do_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 	if (unlink) {
+ 		ubifs_assert(c, inode_is_locked(new_inode));
  
- 	if (req->dirtied_ino)
--		dd_growth += c->bi.inode_budget << (req->dirtied_ino - 1);
-+		dd_growth += c->bi.inode_budget * req->dirtied_ino;
- 	if (req->mod_dent)
- 		dd_growth += c->bi.dent_budget;
- 	dd_growth += req->dirtied_ino_d;
++		/* Budget for old inode's data when its nlink > 1. */
++		req.dirtied_ino_d = ALIGN(ubifs_inode(new_inode)->data_len, 8);
+ 		err = ubifs_purge_xattrs(new_inode);
+ 		if (err)
+ 			return err;
 -- 
 2.39.2
 
