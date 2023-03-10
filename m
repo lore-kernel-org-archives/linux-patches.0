@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3D9848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:24:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415A3C4339C;
-	Fri, 10 Mar 2023 14:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938C7848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:24:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A9AC433D2;
+	Fri, 10 Mar 2023 14:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458267;
-	bh=QIlAN8joKU9hoWiLyMc5pj40O+R97F8T7XIxJfqVqd8=;
+	s=korg; t=1678458270;
+	bh=ijCXFOkYf7aFyvpDhcEbtPNUyJC71TCcohMI/0GejNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NwmL7eojbLpw1UeKCcq5ahzZCVGasRQHfqT5YiS8Oim+haIoPa3Q6zdx4dXps9joQ
-	 Fi8O4TcqDYdh9O/XEBUahMirqNUnHNCzYnMan9V0U2cx14a81Iy/sSxRY5/TNE8IKL
-	 uvoUeY57fpacAmGO5lgLd1oKN2QTqVjYTTi+KeWM=
+	b=nmJPvonT79KBn3/tc+OPbIIvnetFKInK9CPo2Eg1z5VUBqd1wOavBR5fBbybNLp0/
+	 2xP9NhC/wfhGcHwKVeGb+PIbC7d90B0hEvb6x8hBCc5W6rmzmKCNxwe/ipPRUPYl61
+	 QpHElBioQ+1b31Ho1Beg6n+T+N4af9R+dCA24Fzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Yunsheng Lin <linyunsheng@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 219/252] netfilter: ctnetlink: fix possible refcount leak in ctnetlink_create_conntrack()
-Date: Fri, 10 Mar 2023 14:39:49 +0100
-Message-Id: <20230310133725.828171254@linuxfoundation.org>
+Subject: [PATCH 4.19 220/252] net: fix __dev_kfree_skb_any() vs drop monitor
+Date: Fri, 10 Mar 2023 14:39:50 +0100
+Message-Id: <20230310133725.864122826@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,44 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ac4893980bbe79ce383daf9a0885666a30fe4c83 ]
+[ Upstream commit ac3ad19584b26fae9ac86e4faebe790becc74491 ]
 
-nf_ct_put() needs to be called to put the refcount got by
-nf_conntrack_find_get() to avoid refcount leak when
-nf_conntrack_hash_check_insert() fails.
+dev_kfree_skb() is aliased to consume_skb().
 
-Fixes: 7d367e06688d ("netfilter: ctnetlink: fix soft lockup when netlink adds new entries (v2)")
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Acked-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+When a driver is dropping a packet by calling dev_kfree_skb_any()
+we should propagate the drop reason instead of pretending
+the packet was consumed.
+
+Note: Now we have enum skb_drop_reason we could remove
+enum skb_free_reason (for linux-6.4)
+
+v2: added an unlikely(), suggested by Yunsheng Lin.
+
+Fixes: e6247027e517 ("net: introduce dev_consume_skb_any()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Yunsheng Lin <linyunsheng@huawei.com>
+Reviewed-by: Yunsheng Lin <linyunsheng@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/core/dev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 2850a638401d5..58bba2e2691fa 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -2056,12 +2056,15 @@ ctnetlink_create_conntrack(struct net *net,
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 880b096eef8a6..b778f35965433 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -2794,8 +2794,10 @@ void __dev_kfree_skb_any(struct sk_buff *skb, enum skb_free_reason reason)
+ {
+ 	if (in_irq() || irqs_disabled())
+ 		__dev_kfree_skb_irq(skb, reason);
++	else if (unlikely(reason == SKB_REASON_DROPPED))
++		kfree_skb(skb);
+ 	else
+-		dev_kfree_skb(skb);
++		consume_skb(skb);
+ }
+ EXPORT_SYMBOL(__dev_kfree_skb_any);
  
- 	err = nf_conntrack_hash_check_insert(ct);
- 	if (err < 0)
--		goto err2;
-+		goto err3;
- 
- 	rcu_read_unlock();
- 
- 	return ct;
- 
-+err3:
-+	if (ct->master)
-+		nf_ct_put(ct->master);
- err2:
- 	rcu_read_unlock();
- err1:
 -- 
 2.39.2
 
