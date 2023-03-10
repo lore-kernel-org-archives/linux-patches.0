@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B026882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:05:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02923C433D2;
-	Fri, 10 Mar 2023 15:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52B5882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C12C433EF;
+	Fri, 10 Mar 2023 15:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460758;
-	bh=DQ5UxYLeTP7NrfUspdajFITjFCvX8P/LXBHnt9i89zc=;
+	s=korg; t=1678460761;
+	bh=v5ljIiQWZBHCGZvt3PnAC5FrftRBxOoDU6VDJZi+kH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o90Ax+h6Fcmjr6ExbyXUEISAW0OHSo/X/Lq1BTap1VIkjPaPhRRLHaxVKFRIlEPXT
-	 w0B3EDCGhj2n6qf7oS+7WiEzXBP78mbsB01mGo8DZYalhMWLvmlmxlhaPStl4KpK27
-	 IcOGgCclbUAM/00aVOauEpcf2E9VIQhuccR064Ns=
+	b=ExsBbn79pMU2PaMqAWxYIX0tNZAXHZYmsmQosOLP6vwe4/oxyQRF/I1tKh2QP/rlD
+	 kkAxwtfvN+K97ny96Yds1vPg6c5fGso+MuCuRiMBrszEO8mMAP0T/Z/i3rK3r+l7mX
+	 piFKrY6ANRQJq1HkOEDXIB5pWXX+3LoCDOSdaNRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	Ding Hui <dinghui@sangfor.com.cn>,
+	James Bottomley <James.Bottomley@HansenPartnership.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 412/529] scsi: qla2xxx: Fix erroneous link down
-Date: Fri, 10 Mar 2023 14:39:15 +0100
-Message-Id: <20230310133824.093116635@linuxfoundation.org>
+Subject: [PATCH 5.10 413/529] scsi: ses: Dont attach if enclosure has no components
+Date: Fri, 10 Mar 2023 14:39:16 +0100
+Message-Id: <20230310133824.131340638@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,50 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Quinn Tran <qutran@marvell.com>
+From: James Bottomley <jejb@linux.ibm.com>
 
-commit 3fbc74feb642deb688cc97f76d40b7287ddd4cb1 upstream.
+commit 3fe97ff3d94934649abb0652028dd7296170c8d0 upstream.
 
-If after an adapter reset the appearance of link is not recovered, the
-devices are not rediscovered.  This is result of a race condition between
-adapter reset (abort_isp) and the topology scan.  During adapter reset, the
-ABORT_ISP_ACTIVE flag is set.  Topology scan usually occurred after adapter
-reset.  In this case, the topology scan came earlier than usual where it
-ran into problem due to ABORT_ISP_ACTIVE flag was still set.
+An enclosure with no components can't usefully be operated by the driver
+(since effectively it has nothing to manage), so report the problem and
+don't attach. Not attaching also fixes an oops which could occur if the
+driver tries to manage a zero component enclosure.
 
-kernel: qla2xxx [0000:13:00.0]-1005:1: Cmd 0x6a aborted with timeout since ISP Abort is pending
-kernel: qla2xxx [0000:13:00.0]-28a0:1: MBX_GET_PORT_NAME failed, No FL Port.
-kernel: qla2xxx [0000:13:00.0]-286b:1: qla2x00_configure_loop: exiting normally. local port wwpn 51402ec0123d9a80 id 012300)
-kernel: qla2xxx [0000:13:00.0]-8017:1: ADAPTER RESET SUCCEEDED nexus=1:0:15.
+[mkp: Switched to KERN_WARNING since this scenario is common]
 
-Allow adapter reset to complete before any scan can start.
-
+Link: https://lore.kernel.org/r/c5deac044ac409e32d9ad9968ce0dcbc996bfc7a.camel@linux.ibm.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Quinn Tran <qutran@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Reported-by: Ding Hui <dinghui@sangfor.com.cn>
+Signed-off-by: James Bottomley <James.Bottomley@HansenPartnership.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/scsi/ses.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -6899,9 +6899,12 @@ qla2x00_do_dpc(void *data)
- 			}
- 		}
- loop_resync_check:
--		if (test_and_clear_bit(LOOP_RESYNC_NEEDED,
-+		if (!qla2x00_reset_active(base_vha) &&
-+		    test_and_clear_bit(LOOP_RESYNC_NEEDED,
- 		    &base_vha->dpc_flags)) {
--
-+			/*
-+			 * Allow abort_isp to complete before moving on to scanning.
-+			 */
- 			ql_dbg(ql_dbg_dpc, base_vha, 0x400f,
- 			    "Loop resync scheduled.\n");
- 
+--- a/drivers/scsi/ses.c
++++ b/drivers/scsi/ses.c
+@@ -704,6 +704,12 @@ static int ses_intf_add(struct device *c
+ 		    type_ptr[0] == ENCLOSURE_COMPONENT_ARRAY_DEVICE)
+ 			components += type_ptr[1];
+ 	}
++
++	if (components == 0) {
++		sdev_printk(KERN_WARNING, sdev, "enclosure has no enumerated components\n");
++		goto err_free;
++	}
++
+ 	ses_dev->page1 = buf;
+ 	ses_dev->page1_len = len;
+ 	buf = NULL;
 
 
