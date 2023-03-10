@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825CB8821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:03:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072EEC433EF;
-	Fri, 10 Mar 2023 15:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65EF28821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:03:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB974C433D2;
+	Fri, 10 Mar 2023 15:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460584;
-	bh=RGiB+QXgTEXwKYb5bAjIPsMTIT/f9dGgIClOp0tifG8=;
+	s=korg; t=1678460587;
+	bh=bNtznkHANNGICO6vyTjXG+NWodryo0S9sIbQbrjo9nY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBodio/bVo0UB7OTIC2hdzVwAEQZT6TiRIzsCD+RqqCSh3dnH4S2gvE9H2ncGaaD2
-	 QbF/JYslzE7tA7SvuS4+JCWADNERoJw2biDQ+DhrzLN8cB3aTGqTW2ytqM513lkyL8
-	 5HtAbsyx3kkBTlSpCNCwu0f4lWLRvDWvdPCeuTRE=
+	b=dSwQ/qdX3g9EkJzj/teAndq5xOKMzmbkSeEjQ5yeafjpt/QaKJCI3tiqQd5ZUVin0
+	 mZzrrA9W7zCEsFfP3iZrbBDPescVOTN7qxwE5E2K/Ulzvne1mfapvEyP9pvHynnlbS
+	 yJe3P09M4DjKofeG5qU8JIEmVg5gNDIAV+FLptGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yugui <wangyugui@e16-tech.com>,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Andy Wu <Andy.Wu@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 5.10 343/529] exfat: fix inode->i_blocks for non-512 byte sector size device
-Date: Fri, 10 Mar 2023 14:38:06 +0100
-Message-Id: <20230310133820.908105666@linuxfoundation.org>
+	David Lamparter <equinox@diac24.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 377/529] io_uring: remove MSG_NOSIGNAL from recvmsg
+Date: Fri, 10 Mar 2023 14:38:40 +0100
+Message-Id: <20230310133822.475053307@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,83 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: David Lamparter <equinox@diac24.net>
 
-commit 39c1ce8eafc0ff64fb9e28536ccc7df6a8e2999d upstream.
+commit 7605c43d67face310b4b87dee1a28bc0c8cd8c0f upstream.
 
-inode->i_blocks is not real number of blocks, but 512 byte ones.
+MSG_NOSIGNAL is not applicable for the receiving side, SIGPIPE is
+generated when trying to write to a "broken pipe".  AF_PACKET's
+packet_recvmsg() does enforce this, giving back EINVAL when MSG_NOSIGNAL
+is set - making it unuseable in io_uring's recvmsg.
 
-Fixes: 98d917047e8b ("exfat: add file operations")
-Cc: stable@vger.kernel.org # v5.7+
-Reported-by: Wang Yugui <wangyugui@e16-tech.com>
-Tested-by: Wang Yugui <wangyugui@e16-tech.com>
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Andy Wu <Andy.Wu@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Remove MSG_NOSIGNAL from io_recvmsg_prep().
+
+Cc: stable@vger.kernel.org # v5.10+
+Signed-off-by: David Lamparter <equinox@diac24.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230224150123.128346-1-equinox@diac24.net
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/file.c  |    3 +--
- fs/exfat/inode.c |    6 ++----
- fs/exfat/namei.c |    2 +-
- fs/exfat/super.c |    3 +--
- 4 files changed, 5 insertions(+), 9 deletions(-)
+ io_uring/io_uring.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/exfat/file.c
-+++ b/fs/exfat/file.c
-@@ -250,8 +250,7 @@ void exfat_truncate(struct inode *inode,
- 	else
- 		mark_inode_dirty(inode);
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -4995,7 +4995,7 @@ static int io_recvmsg_prep(struct io_kio
+ 	sr->umsg = u64_to_user_ptr(READ_ONCE(sqe->addr));
+ 	sr->len = READ_ONCE(sqe->len);
+ 	sr->bgid = READ_ONCE(sqe->buf_group);
+-	sr->msg_flags = READ_ONCE(sqe->msg_flags) | MSG_NOSIGNAL;
++	sr->msg_flags = READ_ONCE(sqe->msg_flags);
+ 	if (sr->msg_flags & MSG_DONTWAIT)
+ 		req->flags |= REQ_F_NOWAIT;
  
--	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >>
--				inode->i_blkbits;
-+	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >> 9;
- write_size:
- 	aligned_size = i_size_read(inode);
- 	if (aligned_size & (blocksize - 1)) {
---- a/fs/exfat/inode.c
-+++ b/fs/exfat/inode.c
-@@ -242,8 +242,7 @@ static int exfat_map_cluster(struct inod
- 				return err;
- 		} /* end of if != DIR_DELETED */
- 
--		inode->i_blocks +=
--			num_to_be_allocated << sbi->sect_per_clus_bits;
-+		inode->i_blocks += EXFAT_CLU_TO_B(num_to_be_allocated, sbi) >> 9;
- 
- 		/*
- 		 * Move *clu pointer along FAT chains (hole care) because the
-@@ -600,8 +599,7 @@ static int exfat_fill_inode(struct inode
- 
- 	exfat_save_attr(inode, info->attr);
- 
--	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >>
--				inode->i_blkbits;
-+	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >> 9;
- 	inode->i_mtime = info->mtime;
- 	inode->i_ctime = info->mtime;
- 	ei->i_crtime = info->crtime;
---- a/fs/exfat/namei.c
-+++ b/fs/exfat/namei.c
-@@ -398,7 +398,7 @@ static int exfat_find_empty_entry(struct
- 		ei->i_size_ondisk += sbi->cluster_size;
- 		ei->i_size_aligned += sbi->cluster_size;
- 		ei->flags = p_dir->flags;
--		inode->i_blocks += 1 << sbi->sect_per_clus_bits;
-+		inode->i_blocks += sbi->cluster_size >> 9;
- 	}
- 
- 	return dentry;
---- a/fs/exfat/super.c
-+++ b/fs/exfat/super.c
-@@ -364,8 +364,7 @@ static int exfat_read_root(struct inode
- 	inode->i_op = &exfat_dir_inode_operations;
- 	inode->i_fop = &exfat_dir_operations;
- 
--	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >>
--				inode->i_blkbits;
-+	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >> 9;
- 	ei->i_pos = ((loff_t)sbi->root_dir << 32) | 0xffffffff;
- 	ei->i_size_aligned = i_size_read(inode);
- 	ei->i_size_ondisk = i_size_read(inode);
 
 
