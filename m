@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669FC846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:31:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB75AC433D2;
-	Fri, 10 Mar 2023 14:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D705846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:31:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EAEBC4339B;
+	Fri, 10 Mar 2023 14:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458667;
-	bh=/YOATX8XtpUjmYc6XebEFqVJBW/YHKJ9gLrDO5g3S3U=;
+	s=korg; t=1678458670;
+	bh=aNqc6Gvixadh0S43TjARw9DXWmYfZc8j93pyMOvT3BQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1TP+097dGFB6CDSps2FODBKmGsOJbdNeEvNjc/MbGxZt75sXdw2KQqa2mXKo3Vbd1
-	 fSHUdCgkEvfEMag0Z+7XHD0S0nYudtBxaeuQX7tiXfBcEazYfcjHPorii+hoKg03XV
-	 RAAnRQ/4F2R3Flba9oIUqSKQ6uU+8SaX/rEgifYY=
+	b=Gw6yWultiC+hrmsb1npu43sro7CcupgPhDvnk0LJR1OUj6VyMg9NwEyQ+SZLucAtu
+	 34xdZY7+YKajOrfQxxE0ckZvtIMywkOPkHR2LTNak8BA6/mTnbVyjIPOGwZJmFB5QM
+	 2D+KeH4dbWOXSSH/twBifDA57XvG4/SxYtDUNzvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Iuliana Prodan <iuliana.prodan@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 104/357] ASoC: fsl_sai: initialize is_dsp_mode flag
-Date: Fri, 10 Mar 2023 14:36:33 +0100
-Message-Id: <20230310133738.607459505@linuxfoundation.org>
+Subject: [PATCH 5.4 105/357] ALSA: hda/ca0132: minor fix for allocation size
+Date: Fri, 10 Mar 2023 14:36:34 +0100
+Message-Id: <20230310133739.277260490@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,40 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Alexey V. Vissarionov <gremlin@altlinux.org>
 
-[ Upstream commit a23924b7dd7b748fff8e305e1daf590fed2af21b ]
+[ Upstream commit 3ee0fe7fa39b14d1cea455b7041f2df933bd97d2 ]
 
-Initialize is_dsp_mode flag in the beginning of function
-fsl_sai_set_dai_fmt_tr().
+Although the "dma_chan" pointer occupies more or equal space compared
+to "*dma_chan", the allocation size should use the size of variable
+itself.
 
-When the DAIFMT is DAIFMT_DSP_B the first time, is_dsp_mode is
-true, then the second time DAIFMT is DAIFMT_I2S, is_dsp_mode
-still true, which is a wrong state. So need to initialize
-is_dsp_mode flag every time.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: a3f7dcc9cc03 ("ASoC: fsl-sai: Add SND_SOC_DAIFMT_DSP_A/B support.")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
-Link: https://lore.kernel.org/r/1673852874-32200-1-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 01ef7dbffb41 ("ALSA: hda - Update CA0132 codec to load DSP firmware binary")
+Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
+Link: https://lore.kernel.org/r/20230117111522.GA15213@altlinux.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_sai.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_ca0132.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index 027259695551c..f8445231ad782 100644
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -212,6 +212,7 @@ static int fsl_sai_set_dai_fmt_tr(struct snd_soc_dai *cpu_dai,
- 	if (!sai->is_lsb_first)
- 		val_cr4 |= FSL_SAI_CR4_MF;
+diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
+index 3ef1084b66884..574c39120df86 100644
+--- a/sound/pci/hda/patch_ca0132.c
++++ b/sound/pci/hda/patch_ca0132.c
+@@ -2047,7 +2047,7 @@ static int dspio_set_uint_param_no_source(struct hda_codec *codec, int mod_id,
+ static int dspio_alloc_dma_chan(struct hda_codec *codec, unsigned int *dma_chan)
+ {
+ 	int status = 0;
+-	unsigned int size = sizeof(dma_chan);
++	unsigned int size = sizeof(*dma_chan);
  
-+	sai->is_dsp_mode = false;
- 	/* DAI mode */
- 	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
- 	case SND_SOC_DAIFMT_I2S:
+ 	codec_dbg(codec, "     dspio_alloc_dma_chan() -- begin\n");
+ 	status = dspio_scp(codec, MASTERCONTROL, 0x20,
 -- 
 2.39.2
 
