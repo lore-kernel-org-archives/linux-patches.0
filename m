@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957BE8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023E8C433EF;
-	Fri, 10 Mar 2023 14:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB6B8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56BAC433EF;
+	Fri, 10 Mar 2023 14:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456837;
-	bh=8f8Ca2P4/DCVy36Sz/3w9Q2j158LSYZkMZpYjOzCLAY=;
+	s=korg; t=1678456840;
+	bh=eE/1O82/JK0GqartCbommbN7PP/Y7+YzsQTl9N56zic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kdh5sxNfyhMs813lHP0x3zHBYt31UIdPBF1KYM4pMACQHuIIwGX0plXGTxHixnWvf
-	 3ELuKr9OkpEqg/z5jVVL59cWSW+Hv2Uj/GlBmTXlvkju8E+QS9LLaH0BtOJjXxqEpw
-	 hfhBJg0xAzRmO32JUqHJRBa9cKYUtdW8Dw0C3qek=
+	b=KMGSpS/Mc/i8LPlkEwPYeCYKVGAyWuvRMeCCDba5tWYy47sT+GZTAivokBOpBQFKP
+	 KKaB0zZWIkG94S0csfHJ1gKpcAUX2bqCxhRK55tzN/hq18AC/t3WfLE3QmAs5WPvFO
+	 6TG6C/nss7aMQ0xEfZtNuALv53TirKWTY8LO+hWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Zhong Jinghua <zhongjinghua@huawei.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 140/211] usb: fotg210: List different variants
-Date: Fri, 10 Mar 2023 14:38:40 +0100
-Message-Id: <20230310133722.995365901@linuxfoundation.org>
+Subject: [PATCH 6.2 112/211] loop: loop_set_status_from_info() check before assignment
+Date: Fri, 10 Mar 2023 14:38:12 +0100
+Message-Id: <20230310133722.156032076@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -34,36 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Zhong Jinghua <zhongjinghua@huawei.com>
 
-[ Upstream commit 170da81aab077c9e85fc2b786413ca07942774a0 ]
+[ Upstream commit 9f6ad5d533d1c71e51bdd06a5712c4fbc8768dfa ]
 
-There are at least two variants of the FOTG: FOTG200 and
-FOTG210. Handle them in this driver and let's add
-more quirks as we go along.
+In loop_set_status_from_info(), lo->lo_offset and lo->lo_sizelimit should
+be checked before reassignment, because if an overflow error occurs, the
+original correct value will be changed to the wrong value, and it will not
+be changed back.
 
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20230103-gemini-fotg210-usb-v2-2-100388af9810@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+More, the original patch did not solve the problem, the value was set and
+ioctl returned an error, but the subsequent io used the value in the loop
+driver, which still caused an alarm:
+
+loop_handle_cmd
+ do_req_filebacked
+  loff_t pos = ((loff_t) blk_rq_pos(rq) << 9) + lo->lo_offset;
+  lo_rw_aio
+   cmd->iocb.ki_pos = pos
+
+Fixes: c490a0b5a4f3 ("loop: Check for overflow while configuring loop")
+Signed-off-by: Zhong Jinghua <zhongjinghua@huawei.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://lore.kernel.org/r/20230221095027.3656193-1-zhongjinghua@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/fotg210/fotg210-core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/loop.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/fotg210/fotg210-core.c b/drivers/usb/fotg210/fotg210-core.c
-index ee740a6da463f..da9ea5957ccff 100644
---- a/drivers/usb/fotg210/fotg210-core.c
-+++ b/drivers/usb/fotg210/fotg210-core.c
-@@ -127,7 +127,9 @@ static int fotg210_remove(struct platform_device *pdev)
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 1518a6423279b..1b35cbd029c7c 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -977,13 +977,13 @@ loop_set_status_from_info(struct loop_device *lo,
+ 		return -EINVAL;
+ 	}
  
- #ifdef CONFIG_OF
- static const struct of_device_id fotg210_of_match[] = {
-+	{ .compatible = "faraday,fotg200" },
- 	{ .compatible = "faraday,fotg210" },
-+	/* TODO: can we also handle FUSB220? */
- 	{},
- };
- MODULE_DEVICE_TABLE(of, fotg210_of_match);
++	/* Avoid assigning overflow values */
++	if (info->lo_offset > LLONG_MAX || info->lo_sizelimit > LLONG_MAX)
++		return -EOVERFLOW;
++
+ 	lo->lo_offset = info->lo_offset;
+ 	lo->lo_sizelimit = info->lo_sizelimit;
+ 
+-	/* loff_t vars have been assigned __u64 */
+-	if (lo->lo_offset < 0 || lo->lo_sizelimit < 0)
+-		return -EOVERFLOW;
+-
+ 	memcpy(lo->lo_file_name, info->lo_file_name, LO_NAME_SIZE);
+ 	lo->lo_file_name[LO_NAME_SIZE-1] = 0;
+ 	lo->lo_flags = info->lo_flags;
 -- 
 2.39.2
 
