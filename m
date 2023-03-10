@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603D68489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:18:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96494C4339B;
-	Fri, 10 Mar 2023 14:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011138489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:18:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A38C433D2;
+	Fri, 10 Mar 2023 14:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457884;
-	bh=VS7LWcHHsNhAV/RMgRi1UWR0GLTYwLhFgkaMkFV2iU0=;
+	s=korg; t=1678457886;
+	bh=Ym3Cy3jSvals939UdmMvlfezLDv05VBE5VVkmQFwUiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X/xodEnMg7ArzhC0vUHTAqUF/lLderNcj2eSg/jmvUWNOLaGAj3cRmVS9u3FewYF8
-	 y4yrWUUg07eDz41LedSoJuqPyDj1csxFYdkZon8qEYQRav7Y26S3F5a4ANYqTMjH/q
-	 zWEUXfr6yPilqX5xgwDetdmHP6EEb82kxoCUCEuk=
+	b=zlubuyg+UI71tQDtlPv3YXTJsaQsVv25bXeXG4CnbS0OFxVSfNa7sANltfOpIbXRh
+	 9LmhfjMRIM8687e9lw6C0vfUJdPtILDQ/qHs91mA8SAMUOKRHAfuFFGmcABsw7Mut2
+	 eXtIr3iGhQ0GTOHRC8VrDz/r1/moFbc6q5nCykac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Christian Lamparter <chunkeey@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 059/252] wifi: mwifiex: fix loop iterator in mwifiex_update_ampdu_txwinsize()
-Date: Fri, 10 Mar 2023 14:37:09 +0100
-Message-Id: <20230310133720.608275145@linuxfoundation.org>
+Subject: [PATCH 4.19 060/252] crypto: crypto4xx - Call dma_unmap_page when done
+Date: Fri, 10 Mar 2023 14:37:10 +0100
+Message-Id: <20230310133720.641296082@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -35,46 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 3cfb7df24cee0f5fdc4cc5d3176cab9aadfcb430 ]
+[ Upstream commit bcdda4301bdc4955d45f7e1ffefb6207967b067e ]
 
-This code re-uses "i" to be the iterator for both the inside and outside
-loops.  It means the outside loop will exit earlier than intended.
+In crypto4xx_cipher_done, we should be unmapping the dst page, not
+mapping it.
 
-Fixes: d219b7eb3792 ("mwifiex: handle BT coex event to adjust Rx BA window size")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/Y+ERnaDaZD7RtLvX@kili
+This was flagged by a sparse warning about the unused addr variable.
+While we're at it, also fix a sparse warning regarding the unused
+ctx variable in crypto4xx_ahash_done (by actually using it).
+
+Fixes: 049359d65527 ("crypto: amcc - Add crypt4xx driver")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Tested-by: Christian Lamparter <chunkeey@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/11n.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/crypto/amcc/crypto4xx_core.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/11n.c b/drivers/net/wireless/marvell/mwifiex/11n.c
-index 5dcc305cc8127..452ac56cdc923 100644
---- a/drivers/net/wireless/marvell/mwifiex/11n.c
-+++ b/drivers/net/wireless/marvell/mwifiex/11n.c
-@@ -901,7 +901,7 @@ mwifiex_send_delba_txbastream_tbl(struct mwifiex_private *priv, u8 tid)
-  */
- void mwifiex_update_ampdu_txwinsize(struct mwifiex_adapter *adapter)
+diff --git a/drivers/crypto/amcc/crypto4xx_core.c b/drivers/crypto/amcc/crypto4xx_core.c
+index cd00afb5786e8..2c70a64cc8317 100644
+--- a/drivers/crypto/amcc/crypto4xx_core.c
++++ b/drivers/crypto/amcc/crypto4xx_core.c
+@@ -529,7 +529,6 @@ static void crypto4xx_cipher_done(struct crypto4xx_device *dev,
  {
--	u8 i;
-+	u8 i, j;
- 	u32 tx_win_size;
- 	struct mwifiex_private *priv;
+ 	struct skcipher_request *req;
+ 	struct scatterlist *dst;
+-	dma_addr_t addr;
  
-@@ -932,8 +932,8 @@ void mwifiex_update_ampdu_txwinsize(struct mwifiex_adapter *adapter)
- 		if (tx_win_size != priv->add_ba_param.tx_win_size) {
- 			if (!priv->media_connected)
- 				continue;
--			for (i = 0; i < MAX_NUM_TID; i++)
--				mwifiex_send_delba_txbastream_tbl(priv, i);
-+			for (j = 0; j < MAX_NUM_TID; j++)
-+				mwifiex_send_delba_txbastream_tbl(priv, j);
- 		}
+ 	req = skcipher_request_cast(pd_uinfo->async_req);
+ 
+@@ -538,8 +537,8 @@ static void crypto4xx_cipher_done(struct crypto4xx_device *dev,
+ 					  req->cryptlen, req->dst);
+ 	} else {
+ 		dst = pd_uinfo->dest_va;
+-		addr = dma_map_page(dev->core_dev->device, sg_page(dst),
+-				    dst->offset, dst->length, DMA_FROM_DEVICE);
++		dma_unmap_page(dev->core_dev->device, pd->dest, dst->length,
++			       DMA_FROM_DEVICE);
  	}
- }
+ 
+ 	if (pd_uinfo->sa_va->sa_command_0.bf.save_iv == SA_SAVE_IV) {
+@@ -564,10 +563,9 @@ static void crypto4xx_ahash_done(struct crypto4xx_device *dev,
+ 	struct ahash_request *ahash_req;
+ 
+ 	ahash_req = ahash_request_cast(pd_uinfo->async_req);
+-	ctx  = crypto_tfm_ctx(ahash_req->base.tfm);
++	ctx = crypto_ahash_ctx(crypto_ahash_reqtfm(ahash_req));
+ 
+-	crypto4xx_copy_digest_to_dst(ahash_req->result, pd_uinfo,
+-				     crypto_tfm_ctx(ahash_req->base.tfm));
++	crypto4xx_copy_digest_to_dst(ahash_req->result, pd_uinfo, ctx);
+ 	crypto4xx_ret_sg_desc(dev, pd_uinfo);
+ 
+ 	if (pd_uinfo->state & PD_ENTRY_BUSY)
 -- 
 2.39.2
 
