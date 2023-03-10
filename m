@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329D9847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A888CC433D2;
-	Fri, 10 Mar 2023 13:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18834847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B26C433D2;
+	Fri, 10 Mar 2023 13:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456488;
-	bh=k7RKJ4vBt+RHbIddyslBZNzUIWuELE7Ou2WLCmjtEL8=;
+	s=korg; t=1678456490;
+	bh=CTHlNB3qIZ35ZflIL19XJpoq2a/Zlii4ZXH3ayJ5LC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U311OhmIYvTAV0+2dF6PisiwWnXix4rZGONwmDwc3TWpkaNK0MrpkSwkgaVqpYYH0
-	 HHr6rGLuxsJnWl63EXBUMprFDPE1xSdFfkwvdCVId3VUWfhsXYlvJZMRtY/aKSwZ5Q
-	 XuY3L8lNGZnQDPfyeUbWsl6HrUzoX8I1DROAHbqo=
+	b=gT5DcZ5AFHJW9JMsI76FFjmbd2BpR+3OnSQaCRRXuum4jrH21Beg9ebH4NP3mdW8U
+	 VDetTDpi+dz0lvUIoU++3SeecVH92PjahnnXtSJ+iAGzYpauA9kiV9c6XVW7WWUhIm
+	 yLEdEeIGfOa0P4m05j72RV7LxNPjwWOTfNIhBmMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Alexander Potapenko <glider@google.com>,
+	Eric Biggers <ebiggers@google.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 020/211] f2fs: fix to do sanity check on extent cache correctly
-Date: Fri, 10 Mar 2023 14:36:40 +0100
-Message-Id: <20230310133719.348391176@linuxfoundation.org>
+Subject: [PATCH 6.2 021/211] fs: f2fs: initialize fsdata in pagecache_write()
+Date: Fri, 10 Mar 2023 14:36:41 +0100
+Message-Id: <20230310133719.376815488@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,51 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Alexander Potapenko <glider@google.com>
 
-[ Upstream commit d48a7b3a72f121655d95b5157c32c7d555e44c05 ]
+[ Upstream commit b1b9896718bc1a212dc288ad66a5fa2fef11353d ]
 
-In do_read_inode(), sanity_check_inode() should be called after
-f2fs_init_read_extent_tree(), fix it.
+When aops->write_begin() does not initialize fsdata, KMSAN may report
+an error passing the latter to aops->write_end().
 
-Fixes: 72840cccc0a1 ("f2fs: allocate the extent_cache by default")
-Signed-off-by: Chao Yu <chao@kernel.org>
+Fix this by unconditionally initializing fsdata.
+
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Fixes: 95ae251fe828 ("f2fs: add fs-verity support")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/inode.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/f2fs/verity.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index fb489f55fef3a..622eb7963afac 100644
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -413,12 +413,6 @@ static int do_read_inode(struct inode *inode)
- 		fi->i_inline_xattr_size = 0;
- 	}
+diff --git a/fs/f2fs/verity.c b/fs/f2fs/verity.c
+index c352fff88a5e6..3f4f3295f1c66 100644
+--- a/fs/f2fs/verity.c
++++ b/fs/f2fs/verity.c
+@@ -81,7 +81,7 @@ static int pagecache_write(struct inode *inode, const void *buf, size_t count,
+ 		size_t n = min_t(size_t, count,
+ 				 PAGE_SIZE - offset_in_page(pos));
+ 		struct page *page;
+-		void *fsdata;
++		void *fsdata = NULL;
+ 		int res;
  
--	if (!sanity_check_inode(inode, node_page)) {
--		f2fs_put_page(node_page, 1);
--		f2fs_handle_error(sbi, ERROR_CORRUPTED_INODE);
--		return -EFSCORRUPTED;
--	}
--
- 	/* check data exist */
- 	if (f2fs_has_inline_data(inode) && !f2fs_exist_data(inode))
- 		__recover_inline_status(inode, node_page);
-@@ -482,6 +476,12 @@ static int do_read_inode(struct inode *inode)
- 	f2fs_init_read_extent_tree(inode, node_page);
- 	f2fs_init_age_extent_tree(inode);
- 
-+	if (!sanity_check_inode(inode, node_page)) {
-+		f2fs_put_page(node_page, 1);
-+		f2fs_handle_error(sbi, ERROR_CORRUPTED_INODE);
-+		return -EFSCORRUPTED;
-+	}
-+
- 	f2fs_put_page(node_page, 1);
- 
- 	stat_inc_inline_xattr(inode);
+ 		res = aops->write_begin(NULL, mapping, pos, n, &page, &fsdata);
 -- 
 2.39.2
 
