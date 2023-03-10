@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E49A881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:41:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CF0C4339C;
-	Fri, 10 Mar 2023 14:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C80881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:41:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97209C4339C;
+	Fri, 10 Mar 2023 14:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459276;
-	bh=p8qAilVfLW95SAuIzXWlmatxP+ZYpjlHfEVbcc003/8=;
+	s=korg; t=1678459279;
+	bh=9NJBLsx4qiq15RUbJYGha3cnPvyqWDhaEgc5KV9Rns0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PI3cREZmvxMx4SZGn6Ly1cyfREd5N9rq3WC7+wxvya6N+E2fSDF/FFyTbFbxmqF1+
-	 MGQ7Okgv9iuTlDn1TS6NpPYmnflfzZVmcTjDQ1TyGFWI0OXMJmo7yd6MdH0HnarFUx
-	 gdjH42u0vDnpYq5AS1NtG8oOQnRZlxpf0Xkw1a6Q=
+	b=BWz08E2nS/+r5JlaEW/omDATVHpw6/HCbSEOSHFQAX6YZjEXbhjQty5dJpfOMdMMb
+	 i5xWuCIem9HxlPbHelikPlZgDwbBs4sq6IaP6cCbewxurDDtv5Nu8d0+baMpGacbxG
+	 VGytIroTJTQ4qIsZ0NRvORIeEd7XO47YHAw0KIJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ammar Faizi <ammarfaizi2@gnuweeb.org>,
-	Richard Weinberger <richard@nod.at>,
+	ruanjinjie <ruanjinjie@huawei.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 307/357] x86: um: vdso: Add %rcx and %r11 to the syscall clobber list
-Date: Fri, 10 Mar 2023 14:39:56 +0100
-Message-Id: <20230310133748.248926457@linuxfoundation.org>
+Subject: [PATCH 5.4 308/357] watchdog: at91sam9_wdt: use devm_request_irq to avoid missing free_irq() in error path
+Date: Fri, 10 Mar 2023 14:39:57 +0100
+Message-Id: <20230310133748.285837522@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,57 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+From: ruanjinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 5541992e512de8c9133110809f767bd1b54ee10d ]
+[ Upstream commit 07bec0e09c1afbab4c5674fd2341f4f52d594f30 ]
 
-The 'syscall' instruction clobbers '%rcx' and '%r11', but they are not
-listed in the inline Assembly that performs the syscall instruction.
+free_irq() is missing in case of error in at91_wdt_init(), use
+devm_request_irq to fix that.
 
-No real bug is found. It wasn't buggy by luck because '%rcx' and '%r11'
-are caller-saved registers, and not used in the functions, and the
-functions are never inlined.
-
-Add them to the clobber list for code correctness.
-
-Fixes: f1c2bb8b9964ed31de988910f8b1cfb586d30091 ("um: implement a x86_64 vDSO")
-Signed-off-by: Ammar Faizi <ammarfaizi2@gnuweeb.org>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: 5161b31dc39a ("watchdog: at91sam9_wdt: better watchdog support")
+Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20221116094950.3141943-1-ruanjinjie@huawei.com
+[groeck: Adjust multi-line alignment]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/um/vdso/um_vdso.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/watchdog/at91sam9_wdt.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/um/vdso/um_vdso.c b/arch/x86/um/vdso/um_vdso.c
-index 891868756a51f..6d5269093f7ce 100644
---- a/arch/x86/um/vdso/um_vdso.c
-+++ b/arch/x86/um/vdso/um_vdso.c
-@@ -17,8 +17,10 @@ int __vdso_clock_gettime(clockid_t clock, struct timespec *ts)
- {
- 	long ret;
+diff --git a/drivers/watchdog/at91sam9_wdt.c b/drivers/watchdog/at91sam9_wdt.c
+index 292b5a1ca8318..fed7be2464420 100644
+--- a/drivers/watchdog/at91sam9_wdt.c
++++ b/drivers/watchdog/at91sam9_wdt.c
+@@ -206,10 +206,9 @@ static int at91_wdt_init(struct platform_device *pdev, struct at91wdt *wdt)
+ 			 "min heartbeat and max heartbeat might be too close for the system to handle it correctly\n");
  
--	asm("syscall" : "=a" (ret) :
--		"0" (__NR_clock_gettime), "D" (clock), "S" (ts) : "memory");
-+	asm("syscall"
-+		: "=a" (ret)
-+		: "0" (__NR_clock_gettime), "D" (clock), "S" (ts)
-+		: "rcx", "r11", "memory");
- 
- 	return ret;
- }
-@@ -29,8 +31,10 @@ int __vdso_gettimeofday(struct timeval *tv, struct timezone *tz)
- {
- 	long ret;
- 
--	asm("syscall" : "=a" (ret) :
--		"0" (__NR_gettimeofday), "D" (tv), "S" (tz) : "memory");
-+	asm("syscall"
-+		: "=a" (ret)
-+		: "0" (__NR_gettimeofday), "D" (tv), "S" (tz)
-+		: "rcx", "r11", "memory");
- 
- 	return ret;
- }
+ 	if ((tmp & AT91_WDT_WDFIEN) && wdt->irq) {
+-		err = request_irq(wdt->irq, wdt_interrupt,
+-				  IRQF_SHARED | IRQF_IRQPOLL |
+-				  IRQF_NO_SUSPEND,
+-				  pdev->name, wdt);
++		err = devm_request_irq(dev, wdt->irq, wdt_interrupt,
++				       IRQF_SHARED | IRQF_IRQPOLL | IRQF_NO_SUSPEND,
++				       pdev->name, wdt);
+ 		if (err)
+ 			return err;
+ 	}
 -- 
 2.39.2
 
