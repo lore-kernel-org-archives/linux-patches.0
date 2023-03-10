@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECB48494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:37:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD36BC4339C;
-	Fri, 10 Mar 2023 14:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771F38494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:37:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA35C4339B;
+	Fri, 10 Mar 2023 14:37:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459055;
-	bh=fvPjdJoipcX+5J74BPGp5qgLlDN8G4K/mQtfLv0973I=;
+	s=korg; t=1678459058;
+	bh=hnn7QVvZ0BtluZVTN8+T5OX0LbRMmzOp32QiGhJFGHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTv7F2aCavV4fEsTBP7P9Mu+FGzrGvF2W6pvKdO1268kH+Lr2BB0WEH8HMdKeieGu
-	 w+8EDmbtk/yiDNvZYk8zO5ubgl4OgHqlVYN2md6epNk6bBbU8sWMS3ZZs9aAv6sPaz
-	 xOUzs7EIxLhLmmZuw85/xbYkHSsju+0D6aVhsntE=
+	b=iusSvFniF450qm0LGDF0XeVPBh7RvyuokJZSoq6ap02PfLLJdkcvDLiMNhmvZNSzy
+	 fBjvRIhbEFRBnL0cvGZtU52NW2hK9ReohQWp95eiCHcpcLucCxAsc9GSqywO0ayRF8
+	 MduPK+LCoa5PwkQgaoFPORyPwm6ew8QWBB54rwW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.4 234/357] x86/crash: Disable virt in core NMI crash handler to avoid double shootdown
-Date: Fri, 10 Mar 2023 14:38:43 +0100
-Message-Id: <20230310133745.069608988@linuxfoundation.org>
+Subject: [PATCH 5.4 235/357] x86/reboot: Disable virtualization in an emergency if SVM is supported
+Date: Fri, 10 Mar 2023 14:38:44 +0100
+Message-Id: <20230310133745.111015978@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -39,241 +36,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 26044aff37a5455b19a91785086914fd33053ef4 upstream.
+commit d81f952aa657b76cea381384bef1fea35c5fd266 upstream.
 
-Disable virtualization in crash_nmi_callback() and rework the
-emergency_vmx_disable_all() path to do an NMI shootdown if and only if a
-shootdown has not already occurred.   NMI crash shootdown fundamentally
-can't support multiple invocations as responding CPUs are deliberately
-put into halt state without unblocking NMIs.  But, the emergency reboot
-path doesn't have any work of its own, it simply cares about disabling
-virtualization, i.e. so long as a shootdown occurred, emergency reboot
-doesn't care who initiated the shootdown, or when.
+Disable SVM on all CPUs via NMI shootdown during an emergency reboot.
+Like VMX, SVM can block INIT, e.g. if the emergency reboot is triggered
+between CLGI and STGI, and thus can prevent bringing up other CPUs via
+INIT-SIPI-SIPI.
 
-If "crash_kexec_post_notifiers" is specified on the kernel command line,
-panic() will invoke crash_smp_send_stop() and result in a second call to
-nmi_shootdown_cpus() during native_machine_emergency_restart().
-
-Invoke the callback _before_ disabling virtualization, as the current
-VMCS needs to be cleared before doing VMXOFF.  Note, this results in a
-subtle change in ordering between disabling virtualization and stopping
-Intel PT on the responding CPUs.  While VMX and Intel PT do interact,
-VMXOFF and writes to MSR_IA32_RTIT_CTL do not induce faults between one
-another, which is all that matters when panicking.
-
-Harden nmi_shootdown_cpus() against multiple invocations to try and
-capture any such kernel bugs via a WARN instead of hanging the system
-during a crash/dump, e.g. prior to the recent hardening of
-register_nmi_handler(), re-registering the NMI handler would trigger a
-double list_add() and hang the system if CONFIG_BUG_ON_DATA_CORRUPTION=y.
-
- list_add double add: new=ffffffff82220800, prev=ffffffff8221cfe8, next=ffffffff82220800.
- WARNING: CPU: 2 PID: 1319 at lib/list_debug.c:29 __list_add_valid+0x67/0x70
- Call Trace:
-  __register_nmi_handler+0xcf/0x130
-  nmi_shootdown_cpus+0x39/0x90
-  native_machine_emergency_restart+0x1c9/0x1d0
-  panic+0x237/0x29b
-
-Extract the disabling logic to a common helper to deduplicate code, and
-to prepare for doing the shootdown in the emergency reboot path if SVM
-is supported.
-
-Note, prior to commit ed72736183c4 ("x86/reboot: Force all cpus to exit
-VMX root if VMX is supported"), nmi_shootdown_cpus() was subtly protected
-against a second invocation by a cpu_vmx_enabled() check as the kdump
-handler would disable VMX if it ran first.
-
-Fixes: ed72736183c4 ("x86/reboot: Force all cpus to exit VMX root if VMX is supported")
 Cc: stable@vger.kernel.org
-Reported-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/all/20220427224924.592546-2-gpiccoli@igalia.com
-Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
 Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221130233650.1404148-2-seanjc@google.com
+Link: https://lore.kernel.org/r/20221130233650.1404148-4-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/reboot.h |    2 +
- arch/x86/kernel/crash.c       |   17 ----------
- arch/x86/kernel/reboot.c      |   65 ++++++++++++++++++++++++++++++++++--------
- 3 files changed, 56 insertions(+), 28 deletions(-)
+ arch/x86/kernel/reboot.c |   23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
---- a/arch/x86/include/asm/reboot.h
-+++ b/arch/x86/include/asm/reboot.h
-@@ -25,6 +25,8 @@ void __noreturn machine_real_restart(uns
- #define MRR_BIOS	0
- #define MRR_APM		1
- 
-+void cpu_emergency_disable_virtualization(void);
-+
- typedef void (*nmi_shootdown_cb)(int, struct pt_regs*);
- void nmi_panic_self_stop(struct pt_regs *regs);
- void nmi_shootdown_cpus(nmi_shootdown_cb callback);
---- a/arch/x86/kernel/crash.c
-+++ b/arch/x86/kernel/crash.c
-@@ -37,7 +37,6 @@
- #include <linux/kdebug.h>
- #include <asm/cpu.h>
- #include <asm/reboot.h>
--#include <asm/virtext.h>
- #include <asm/intel_pt.h>
- #include <asm/crash.h>
- #include <asm/cmdline.h>
-@@ -94,15 +93,6 @@ static void kdump_nmi_callback(int cpu,
- 	 */
- 	cpu_crash_vmclear_loaded_vmcss();
- 
--	/* Disable VMX or SVM if needed.
--	 *
--	 * We need to disable virtualization on all CPUs.
--	 * Having VMX or SVM enabled on any CPU may break rebooting
--	 * after the kdump kernel has finished its task.
--	 */
--	cpu_emergency_vmxoff();
--	cpu_emergency_svm_disable();
--
- 	/*
- 	 * Disable Intel PT to stop its logging
- 	 */
-@@ -161,12 +151,7 @@ void native_machine_crash_shutdown(struc
- 	 */
- 	cpu_crash_vmclear_loaded_vmcss();
- 
--	/* Booting kdump kernel with VMX or SVM enabled won't work,
--	 * because (among other limitations) we can't disable paging
--	 * with the virt flags.
--	 */
--	cpu_emergency_vmxoff();
--	cpu_emergency_svm_disable();
-+	cpu_emergency_disable_virtualization();
- 
- 	/*
- 	 * Disable Intel PT to stop its logging
 --- a/arch/x86/kernel/reboot.c
 +++ b/arch/x86/kernel/reboot.c
-@@ -528,10 +528,7 @@ static inline void kb_wait(void)
- 	}
- }
+@@ -530,27 +530,26 @@ static inline void kb_wait(void)
  
--static void vmxoff_nmi(int cpu, struct pt_regs *regs)
--{
--	cpu_emergency_vmxoff();
--}
-+static inline void nmi_shootdown_cpus_on_restart(void);
+ static inline void nmi_shootdown_cpus_on_restart(void);
  
- /* Use NMIs as IPIs to tell all CPUs to disable virtualization */
- static void emergency_vmx_disable_all(void)
-@@ -554,7 +551,7 @@ static void emergency_vmx_disable_all(vo
- 		__cpu_emergency_vmxoff();
- 
- 		/* Halt and exit VMX root operation on the other CPUs. */
--		nmi_shootdown_cpus(vmxoff_nmi);
-+		nmi_shootdown_cpus_on_restart();
- 
- 	}
- }
-@@ -796,6 +793,17 @@ void machine_crash_shutdown(struct pt_re
- /* This is the CPU performing the emergency shutdown work. */
- int crashing_cpu = -1;
- 
-+/*
-+ * Disable virtualization, i.e. VMX or SVM, to ensure INIT is recognized during
-+ * reboot.  VMX blocks INIT if the CPU is post-VMXON, and SVM blocks INIT if
-+ * GIF=0, i.e. if the crash occurred between CLGI and STGI.
-+ */
-+void cpu_emergency_disable_virtualization(void)
-+{
-+	cpu_emergency_vmxoff();
-+	cpu_emergency_svm_disable();
-+}
-+
- #if defined(CONFIG_SMP)
- 
- static nmi_shootdown_cb shootdown_callback;
-@@ -818,7 +826,14 @@ static int crash_nmi_callback(unsigned i
- 		return NMI_HANDLED;
+-/* Use NMIs as IPIs to tell all CPUs to disable virtualization */
+-static void emergency_vmx_disable_all(void)
++static void emergency_reboot_disable_virtualization(void)
+ {
+ 	/* Just make sure we won't change CPUs while doing this */
  	local_irq_disable();
  
--	shootdown_callback(cpu, regs);
-+	if (shootdown_callback)
-+		shootdown_callback(cpu, regs);
-+
-+	/*
-+	 * Prepare the CPU for reboot _after_ invoking the callback so that the
-+	 * callback can safely use virtualization instructions, e.g. VMCLEAR.
-+	 */
-+	cpu_emergency_disable_virtualization();
+ 	/*
+-	 * Disable VMX on all CPUs before rebooting, otherwise we risk hanging
+-	 * the machine, because the CPU blocks INIT when it's in VMX root.
++	 * Disable virtualization on all CPUs before rebooting to avoid hanging
++	 * the system, as VMX and SVM block INIT when running in the host.
+ 	 *
+ 	 * We can't take any locks and we may be on an inconsistent state, so
+-	 * use NMIs as IPIs to tell the other CPUs to exit VMX root and halt.
++	 * use NMIs as IPIs to tell the other CPUs to disable VMX/SVM and halt.
+ 	 *
+-	 * Do the NMI shootdown even if VMX if off on _this_ CPU, as that
+-	 * doesn't prevent a different CPU from being in VMX root operation.
++	 * Do the NMI shootdown even if virtualization is off on _this_ CPU, as
++	 * other CPUs may have virtualization enabled.
+ 	 */
+-	if (cpu_has_vmx()) {
+-		/* Safely force _this_ CPU out of VMX root operation. */
+-		__cpu_emergency_vmxoff();
++	if (cpu_has_vmx() || cpu_has_svm(NULL)) {
++		/* Safely force _this_ CPU out of VMX/SVM operation. */
++		cpu_emergency_disable_virtualization();
  
- 	atomic_dec(&waiting_for_crash_ipi);
- 	/* Assume hlt works */
-@@ -829,18 +844,32 @@ static int crash_nmi_callback(unsigned i
- 	return NMI_HANDLED;
- }
+-		/* Halt and exit VMX root operation on the other CPUs. */
++		/* Disable VMX/SVM and halt on other CPUs. */
+ 		nmi_shootdown_cpus_on_restart();
  
--/*
-- * Halt all other CPUs, calling the specified function on each of them
-+/**
-+ * nmi_shootdown_cpus - Stop other CPUs via NMI
-+ * @callback:	Optional callback to be invoked from the NMI handler
-+ *
-+ * The NMI handler on the remote CPUs invokes @callback, if not
-+ * NULL, first and then disables virtualization to ensure that
-+ * INIT is recognized during reboot.
-  *
-- * This function can be used to halt all other CPUs on crash
-- * or emergency reboot time. The function passed as parameter
-- * will be called inside a NMI handler on all CPUs.
-+ * nmi_shootdown_cpus() can only be invoked once. After the first
-+ * invocation all other CPUs are stuck in crash_nmi_callback() and
-+ * cannot respond to a second NMI.
-  */
- void nmi_shootdown_cpus(nmi_shootdown_cb callback)
- {
- 	unsigned long msecs;
-+
- 	local_irq_disable();
- 
-+	/*
-+	 * Avoid certain doom if a shootdown already occurred; re-registering
-+	 * the NMI handler will cause list corruption, modifying the callback
-+	 * will do who knows what, etc...
-+	 */
-+	if (WARN_ON_ONCE(crash_ipi_issued))
-+		return;
-+
- 	/* Make a note of crashing cpu. Will be used in NMI callback. */
- 	crashing_cpu = safe_smp_processor_id();
- 
-@@ -868,7 +897,17 @@ void nmi_shootdown_cpus(nmi_shootdown_cb
- 		msecs--;
  	}
+@@ -588,7 +587,7 @@ static void native_machine_emergency_res
+ 	unsigned short mode;
  
--	/* Leave the nmi callback set */
-+	/*
-+	 * Leave the nmi callback set, shootdown is a one-time thing.  Clearing
-+	 * the callback could result in a NULL pointer dereference if a CPU
-+	 * (finally) responds after the timeout expires.
-+	 */
-+}
-+
-+static inline void nmi_shootdown_cpus_on_restart(void)
-+{
-+	if (!crash_ipi_issued)
-+		nmi_shootdown_cpus(NULL);
- }
+ 	if (reboot_emergency)
+-		emergency_vmx_disable_all();
++		emergency_reboot_disable_virtualization();
  
- /*
-@@ -898,6 +937,8 @@ void nmi_shootdown_cpus(nmi_shootdown_cb
- 	/* No other CPUs to shoot down */
- }
+ 	tboot_shutdown(TB_SHUTDOWN_REBOOT);
  
-+static inline void nmi_shootdown_cpus_on_restart(void) { }
-+
- void run_crash_ipi_callback(struct pt_regs *regs)
- {
- }
 
 
