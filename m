@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CB98481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:07:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACD4C433D2;
-	Fri, 10 Mar 2023 14:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6C38481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:07:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCF3C433EF;
+	Fri, 10 Mar 2023 14:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457246;
-	bh=kYhV3wnT7fuYbfYEGiwkZ36vZ9VdMUCtUpvcDiOuSGk=;
+	s=korg; t=1678457249;
+	bh=fqVOai8jpFqtw3BKA1blUcEKQAkzQsfDttOcJGifJmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xZ1rmAHQEv4zEZHCy+GsfnabpE0M37sjY2hud9KvMUoZaWh2BHVZy0+K3CUBif6FN
-	 hkM0CanM5jwsMiHxEtF1/7H6g5jlUIDheffrkkJPBIT4wKmLTSodb/kRu9h+yt2xhM
-	 2a7vuwaPbv01XqLLU/Yzt39T0reHkhC1VLOPMJ30=
+	b=mAU9DFycocO0FiuYH3CQxsbBfsbHZBtGOKLBa21hjFhAwicZgyyVaLJRkeHfmWQ/6
+	 odjgiEKjJuhSak1+LwA13ACKTeSs2G9ioseE+xnIzTXPD/y8FM3y21MgORmcIvUijE
+	 Kdt0OSJZGQZJvWqlgXRrV6A4dbYjX41F2SLWnrkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f61594de72d6705aea03@syzkaller.appspotmail.com,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Ying Xu <yinxu@redhat.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/200] netfilter: ebtables: fix table blob use-after-free
-Date: Fri, 10 Mar 2023 14:37:50 +0100
-Message-Id: <20230310133719.059456673@linuxfoundation.org>
+Subject: [PATCH 6.1 072/200] sctp: add a refcnt in sctp_stream_priorities to avoid a nested loop
+Date: Fri, 10 Mar 2023 14:37:59 +0100
+Message-Id: <20230310133719.330636788@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -36,103 +37,164 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit e58a171d35e32e6e8c37cfe0e8a94406732a331f ]
+[ Upstream commit 68ba44639537de6f91fe32783766322d41848127 ]
 
-We are not allowed to return an error at this point.
-Looking at the code it looks like ret is always 0 at this
-point, but its not.
+With this refcnt added in sctp_stream_priorities, we don't need to
+traverse all streams to check if the prio is used by other streams
+when freeing one stream's prio in sctp_sched_prio_free_sid(). This
+can avoid a nested loop (up to 65535 * 65535), which may cause a
+stuck as Ying reported:
 
-t = find_table_lock(net, repl->name, &ret, &ebt_mutex);
+    watchdog: BUG: soft lockup - CPU#23 stuck for 26s! [ksoftirqd/23:136]
+    Call Trace:
+     <TASK>
+     sctp_sched_prio_free_sid+0xab/0x100 [sctp]
+     sctp_stream_free_ext+0x64/0xa0 [sctp]
+     sctp_stream_free+0x31/0x50 [sctp]
+     sctp_association_free+0xa5/0x200 [sctp]
 
-... this can return a valid table, with ret != 0.
+Note that it doesn't need to use refcount_t type for this counter,
+as its accessing is always protected under the sock lock.
 
-This bug causes update of table->private with the new
-blob, but then frees the blob right away in the caller.
+v1->v2:
+ - add a check in sctp_sched_prio_set to avoid the possible prio_head
+   refcnt overflow.
 
-Syzbot report:
-
-BUG: KASAN: vmalloc-out-of-bounds in __ebt_unregister_table+0xc00/0xcd0 net/bridge/netfilter/ebtables.c:1168
-Read of size 4 at addr ffffc90005425000 by task kworker/u4:4/74
-Workqueue: netns cleanup_net
-Call Trace:
- kasan_report+0xbf/0x1f0 mm/kasan/report.c:517
- __ebt_unregister_table+0xc00/0xcd0 net/bridge/netfilter/ebtables.c:1168
- ebt_unregister_table+0x35/0x40 net/bridge/netfilter/ebtables.c:1372
- ops_exit_list+0xb0/0x170 net/core/net_namespace.c:169
- cleanup_net+0x4ee/0xb10 net/core/net_namespace.c:613
-...
-
-ip(6)tables appears to be ok (ret should be 0 at this point) but make
-this more obvious.
-
-Fixes: c58dd2dd443c ("netfilter: Can't fail and free after table replacement")
-Reported-by: syzbot+f61594de72d6705aea03@syzkaller.appspotmail.com
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 9ed7bfc79542 ("sctp: fix memory leak in sctp_stream_outq_migrate()")
+Reported-by: Ying Xu <yinxu@redhat.com>
+Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/825eb0c905cb864991eba335f4a2b780e543f06b.1677085641.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebtables.c | 2 +-
- net/ipv4/netfilter/ip_tables.c  | 3 +--
- net/ipv6/netfilter/ip6_tables.c | 3 +--
- 3 files changed, 3 insertions(+), 5 deletions(-)
+ include/net/sctp/structs.h   |  1 +
+ net/sctp/stream_sched_prio.c | 52 +++++++++++++++---------------------
+ 2 files changed, 22 insertions(+), 31 deletions(-)
 
-diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
-index ce5dfa3babd26..757ec46fc45a0 100644
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1090,7 +1090,7 @@ static int do_replace_finish(struct net *net, struct ebt_replace *repl,
+diff --git a/include/net/sctp/structs.h b/include/net/sctp/structs.h
+index 350f250b0dc75..00ee9eb601a6f 100644
+--- a/include/net/sctp/structs.h
++++ b/include/net/sctp/structs.h
+@@ -1409,6 +1409,7 @@ struct sctp_stream_priorities {
+ 	/* The next stream in line */
+ 	struct sctp_stream_out_ext *next;
+ 	__u16 prio;
++	__u16 users;
+ };
  
- 	audit_log_nfcfg(repl->name, AF_BRIDGE, repl->nentries,
- 			AUDIT_XT_OP_REPLACE, GFP_KERNEL);
--	return ret;
-+	return 0;
+ struct sctp_stream_out_ext {
+diff --git a/net/sctp/stream_sched_prio.c b/net/sctp/stream_sched_prio.c
+index 4fc9f2923ed11..7dd9f8b387cca 100644
+--- a/net/sctp/stream_sched_prio.c
++++ b/net/sctp/stream_sched_prio.c
+@@ -25,6 +25,18 @@
  
- free_unlock:
- 	mutex_unlock(&ebt_mutex);
-diff --git a/net/ipv4/netfilter/ip_tables.c b/net/ipv4/netfilter/ip_tables.c
-index 2ed7c58b471ac..aae5fd51dfd74 100644
---- a/net/ipv4/netfilter/ip_tables.c
-+++ b/net/ipv4/netfilter/ip_tables.c
-@@ -1045,7 +1045,6 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
- 	struct xt_counters *counters;
- 	struct ipt_entry *iter;
+ static void sctp_sched_prio_unsched_all(struct sctp_stream *stream);
  
--	ret = 0;
- 	counters = xt_counters_alloc(num_counters);
- 	if (!counters) {
- 		ret = -ENOMEM;
-@@ -1091,7 +1090,7 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
- 		net_warn_ratelimited("iptables: counters copy to user failed while replacing table\n");
++static struct sctp_stream_priorities *sctp_sched_prio_head_get(struct sctp_stream_priorities *p)
++{
++	p->users++;
++	return p;
++}
++
++static void sctp_sched_prio_head_put(struct sctp_stream_priorities *p)
++{
++	if (p && --p->users == 0)
++		kfree(p);
++}
++
+ static struct sctp_stream_priorities *sctp_sched_prio_new_head(
+ 			struct sctp_stream *stream, int prio, gfp_t gfp)
+ {
+@@ -38,6 +50,7 @@ static struct sctp_stream_priorities *sctp_sched_prio_new_head(
+ 	INIT_LIST_HEAD(&p->active);
+ 	p->next = NULL;
+ 	p->prio = prio;
++	p->users = 1;
+ 
+ 	return p;
+ }
+@@ -53,7 +66,7 @@ static struct sctp_stream_priorities *sctp_sched_prio_get_head(
+ 	 */
+ 	list_for_each_entry(p, &stream->prio_list, prio_sched) {
+ 		if (p->prio == prio)
+-			return p;
++			return sctp_sched_prio_head_get(p);
+ 		if (p->prio > prio)
+ 			break;
  	}
- 	vfree(counters);
--	return ret;
-+	return 0;
- 
-  put_module:
- 	module_put(t->me);
-diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
-index 2d816277f2c5a..ac902f7bca477 100644
---- a/net/ipv6/netfilter/ip6_tables.c
-+++ b/net/ipv6/netfilter/ip6_tables.c
-@@ -1062,7 +1062,6 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
- 	struct xt_counters *counters;
- 	struct ip6t_entry *iter;
- 
--	ret = 0;
- 	counters = xt_counters_alloc(num_counters);
- 	if (!counters) {
- 		ret = -ENOMEM;
-@@ -1108,7 +1107,7 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
- 		net_warn_ratelimited("ip6tables: counters copy to user failed while replacing table\n");
+@@ -70,7 +83,7 @@ static struct sctp_stream_priorities *sctp_sched_prio_get_head(
+ 			 */
+ 			break;
+ 		if (p->prio == prio)
+-			return p;
++			return sctp_sched_prio_head_get(p);
  	}
- 	vfree(counters);
--	return ret;
-+	return 0;
  
-  put_module:
- 	module_put(t->me);
+ 	/* If not even there, allocate a new one. */
+@@ -154,32 +167,21 @@ static int sctp_sched_prio_set(struct sctp_stream *stream, __u16 sid,
+ 	struct sctp_stream_out_ext *soute = sout->ext;
+ 	struct sctp_stream_priorities *prio_head, *old;
+ 	bool reschedule = false;
+-	int i;
++
++	old = soute->prio_head;
++	if (old && old->prio == prio)
++		return 0;
+ 
+ 	prio_head = sctp_sched_prio_get_head(stream, prio, gfp);
+ 	if (!prio_head)
+ 		return -ENOMEM;
+ 
+ 	reschedule = sctp_sched_prio_unsched(soute);
+-	old = soute->prio_head;
+ 	soute->prio_head = prio_head;
+ 	if (reschedule)
+ 		sctp_sched_prio_sched(stream, soute);
+ 
+-	if (!old)
+-		/* Happens when we set the priority for the first time */
+-		return 0;
+-
+-	for (i = 0; i < stream->outcnt; i++) {
+-		soute = SCTP_SO(stream, i)->ext;
+-		if (soute && soute->prio_head == old)
+-			/* It's still in use, nothing else to do here. */
+-			return 0;
+-	}
+-
+-	/* No hits, we are good to free it. */
+-	kfree(old);
+-
++	sctp_sched_prio_head_put(old);
+ 	return 0;
+ }
+ 
+@@ -206,20 +208,8 @@ static int sctp_sched_prio_init_sid(struct sctp_stream *stream, __u16 sid,
+ 
+ static void sctp_sched_prio_free_sid(struct sctp_stream *stream, __u16 sid)
+ {
+-	struct sctp_stream_priorities *prio = SCTP_SO(stream, sid)->ext->prio_head;
+-	int i;
+-
+-	if (!prio)
+-		return;
+-
++	sctp_sched_prio_head_put(SCTP_SO(stream, sid)->ext->prio_head);
+ 	SCTP_SO(stream, sid)->ext->prio_head = NULL;
+-	for (i = 0; i < stream->outcnt; i++) {
+-		if (SCTP_SO(stream, i)->ext &&
+-		    SCTP_SO(stream, i)->ext->prio_head == prio)
+-			return;
+-	}
+-
+-	kfree(prio);
+ }
+ 
+ static void sctp_sched_prio_free(struct sctp_stream *stream)
 -- 
 2.39.2
 
