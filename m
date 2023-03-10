@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1251847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F2DC4339C;
-	Fri, 10 Mar 2023 14:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2E6847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258E4C4339B;
+	Fri, 10 Mar 2023 14:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456828;
-	bh=hcByI9mFwHsH45SjqbYtjaeavj496MDu6pUdBBiR7N8=;
+	s=korg; t=1678456831;
+	bh=F3Q4jKopnnXfzlnJ8qnU5EeFLtFycAZFH7iwqJimz+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z096UqGc0g9SDC2sVHnxGtpJRhxurDfe0FchGcWajSmta+RKgPVlT4qhnjo1oMI50
-	 NK6wlLvkKhM7Uf6Y0qhDWb5IN1895kjWVGH43a0wv6+oLA3ndWU8ju3DtC62eXzlED
-	 1TH3MokPu1vjnasVM9ZQyESM2D5rvzAT3uhIjYuY=
+	b=VLoLTfztw2TTvf2/bofEzHChxQump/D1trsyWJXgi6AJUyLtrSqOoy7c+974qA2VS
+	 99G+ngFUkPVGU9B7I2DGxsqEdZ8hkDq/zZrOmjXg1c5MMEOfyHVdZ5R3CgXWqve2jT
+	 CTQmnjSLafth0TaivogBBT6BtbpDxsx/4HosR8ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Lukowicz <wlukowicz01@gmail.com>,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Jilin Yuan <yuanjilin@cdjrlc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 111/211] io_uring: fix size calculation when registering buf ring
-Date: Fri, 10 Mar 2023 14:38:11 +0100
-Message-Id: <20230310133722.127326326@linuxfoundation.org>
+Subject: [PATCH 6.2 138/211] USB: fix memory leak with using debugfs_lookup()
+Date: Fri, 10 Mar 2023 14:38:38 +0100
+Message-Id: <20230310133722.934253481@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,47 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wojciech Lukowicz <wlukowicz01@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 48ba08374e779421ca34bd14b4834aae19fc3e6a ]
+[ Upstream commit 30374434edab20e25776f8ecb4bc9d1e54309487 ]
 
-Using struct_size() to calculate the size of io_uring_buf_ring will sum
-the size of the struct and of the bufs array. However, the struct's fields
-are overlaid with the array making the calculated size larger than it
-should be.
+When calling debugfs_lookup() the result must have dput() called on it,
+otherwise the memory will leak over time.  To make things simpler, just
+call debugfs_lookup_and_remove() instead which handles all of the logic at
+once.
 
-When registering a ring with N * PAGE_SIZE / sizeof(struct io_uring_buf)
-entries, i.e. with fully filled pages, the calculated size will span one
-more page than it should and io_uring will try to pin the following page.
-Depending on how the application allocated the ring, it might succeed
-using an unrelated page or fail returning EFAULT.
-
-The size of the ring should be the product of ring_entries and the size
-of io_uring_buf, i.e. the size of the bufs array only.
-
-Fixes: c7fb19428d67 ("io_uring: add support for ring mapped supplied buffers")
-Signed-off-by: Wojciech Lukowicz <wlukowicz01@gmail.com>
-Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://lore.kernel.org/r/20230218184141.70891-1-wlukowicz01@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: Jilin Yuan <yuanjilin@cdjrlc.com>
+Link: https://lore.kernel.org/r/20230106152828.3790902-1-gregkh@linuxfoundation.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/kbuf.c | 2 +-
+ drivers/usb/core/usb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
-index 4a6401080c1f8..3002dc8271959 100644
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -505,7 +505,7 @@ int io_register_pbuf_ring(struct io_ring_ctx *ctx, void __user *arg)
- 	}
+diff --git a/drivers/usb/core/usb.c b/drivers/usb/core/usb.c
+index 11b15d7b357ad..a415206cab043 100644
+--- a/drivers/usb/core/usb.c
++++ b/drivers/usb/core/usb.c
+@@ -998,7 +998,7 @@ static void usb_debugfs_init(void)
  
- 	pages = io_pin_pages(reg.ring_addr,
--			     struct_size(br, bufs, reg.ring_entries),
-+			     flex_array_size(br, bufs, reg.ring_entries),
- 			     &nr_pages);
- 	if (IS_ERR(pages)) {
- 		kfree(free_bl);
+ static void usb_debugfs_cleanup(void)
+ {
+-	debugfs_remove(debugfs_lookup("devices", usb_debug_root));
++	debugfs_lookup_and_remove("devices", usb_debug_root);
+ }
+ 
+ /*
 -- 
 2.39.2
 
