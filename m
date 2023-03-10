@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B489848D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:29:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A513EC433D2;
-	Fri, 10 Mar 2023 14:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16661848D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:29:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0B4C433D2;
+	Fri, 10 Mar 2023 14:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458569;
-	bh=fVg5T/di/f/pkK7TX69srjkUk/zAxCGI9v7LEm9B5Co=;
+	s=korg; t=1678458571;
+	bh=dOyGtgEoquZpppBRGeLcbyPe5UMgmj9mzV4Iu9UiE9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AoyIu3cu3jnMFHUHO9Bfgl0X+QDf7nvqf/ooo/GdX+ygcJId3eUX3pSlSbxiK8+QJ
-	 EvjfxfCOUe+8H750qcLTF7dJ/5BwQn0IFifIVg30DKVB9xxMP9Cmawbkdytptny2AG
-	 alh4R/IBpyvCcO5VGNycooqmrz0884H42+p/3vfg=
+	b=T21qiG86arADAM6rTKrSHskR+ldGSLXdIUakGn7WeHQgQb3n3BN7dT2UcsovnDQH9
+	 Wg/xljqy7HXy/l4KgQZhcnesNYNXlN3iDXiNfOhlc/Y06MhB7kxvuQOab3Q9gGYwwH
+	 zKo1Nm9uOE7ZcnUfyPTrXlPNnSD0myw7EOi5qLB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Miaoqian Lin <linmq006@gmail.com>,
 	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 070/357] irqchip/irq-mvebu-gicp: Fix refcount leak in mvebu_gicp_probe
-Date: Fri, 10 Mar 2023 14:35:59 +0100
-Message-Id: <20230310133737.063722227@linuxfoundation.org>
+Subject: [PATCH 5.4 071/357] irqchip/ti-sci: Fix refcount leak in ti_sci_intr_irq_domain_probe
+Date: Fri, 10 Mar 2023 14:36:00 +0100
+Message-Id: <20230310133737.113161706@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -37,32 +37,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 9419e700021a393f67be36abd0c4f3acc6139041 ]
+[ Upstream commit 02298b7bae12936ca313975b02e7f98b06670d37 ]
 
 of_irq_find_parent() returns a node pointer with refcount incremented,
 We should use of_node_put() on it when not needed anymore.
 Add missing of_node_put() to avoid refcount leak.
 
-Fixes: a68a63cb4dfc ("irqchip/irq-mvebu-gicp: Add new driver for Marvell GICP")
+Fixes: cd844b0715ce ("irqchip/ti-sci-intr: Add support for Interrupt Router driver")
 Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230102084208.3951758-1-linmq006@gmail.com
+Link: https://lore.kernel.org/r/20230102085611.3955984-1-linmq006@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mvebu-gicp.c | 1 +
+ drivers/irqchip/irq-ti-sci-intr.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/irqchip/irq-mvebu-gicp.c b/drivers/irqchip/irq-mvebu-gicp.c
-index 3be5c5dba1dab..5caec411059f5 100644
---- a/drivers/irqchip/irq-mvebu-gicp.c
-+++ b/drivers/irqchip/irq-mvebu-gicp.c
-@@ -223,6 +223,7 @@ static int mvebu_gicp_probe(struct platform_device *pdev)
+diff --git a/drivers/irqchip/irq-ti-sci-intr.c b/drivers/irqchip/irq-ti-sci-intr.c
+index 59d51a20bbd86..7d0163d85fb9b 100644
+--- a/drivers/irqchip/irq-ti-sci-intr.c
++++ b/drivers/irqchip/irq-ti-sci-intr.c
+@@ -205,6 +205,7 @@ static int ti_sci_intr_irq_domain_probe(struct platform_device *pdev)
  	}
  
- 	parent_domain = irq_find_host(irq_parent_dn);
-+	of_node_put(irq_parent_dn);
+ 	parent_domain = irq_find_host(parent_node);
++	of_node_put(parent_node);
  	if (!parent_domain) {
- 		dev_err(&pdev->dev, "failed to find parent IRQ domain\n");
+ 		dev_err(dev, "Failed to find IRQ parent domain\n");
  		return -ENODEV;
 -- 
 2.39.2
