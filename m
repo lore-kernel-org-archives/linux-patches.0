@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2A98481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:04:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E92C4339C;
-	Fri, 10 Mar 2023 14:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854E78481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:04:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC43C433D2;
+	Fri, 10 Mar 2023 14:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457054;
-	bh=ZrtyA0A7hrz6MWSDZccImiLlC87UAiLyjk0epvMRlh0=;
+	s=korg; t=1678457057;
+	bh=i3ZJtE2xBZNxQFezLYZc+LxXAyj4rlWfptqIAIxNKa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vMeDdvOn8mA17huL+ikq1GnQrNNCoOKclroIaboOy5NKBnfH08tnYlIT9i8Hjy3kG
-	 qgnKIgJBzzeZ4Mxc3TCXYxbmjGuAL40Re5DR9jWTBLbCCDYX/Lc+qdE8U73tjt3QEA
-	 FqSNX14LeJA76LK6Dbtw6k6G1PO9JYDoPTH2fD6k=
+	b=ZhJkizwH9iFsUBj63wv98Cp31geWr9KW8APJ4cPH2wf8FJYiwsfGZYcCkw6Tk6QYV
+	 ci2ulIDQxxl7X4T8WsCFaAsDKsQdRxlyI5++Y9wA/Mtb4ZTCMbyRatQOfSbtLNmTcS
+	 cnhbGsS6Dl6/qne+j6T2bgHrcmL+gzlbXMw8xkoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunke Cao <yunkec@chromium.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: [PATCH 6.2 209/211] media: uvcvideo: Fix race condition with usb_kill_urb
-Date: Fri, 10 Mar 2023 14:39:49 +0100
-Message-Id: <20230310133725.308420734@linuxfoundation.org>
+	Pierre Gondois <pierre.gondois@arm.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.2 210/211] arm64: efi: Make efi_rt_lock a raw_spinlock
+Date: Fri, 10 Mar 2023 14:39:50 +0100
+Message-Id: <20230310133725.343527000@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,140 +34,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Pierre Gondois <pierre.gondois@arm.com>
 
-commit 619d9b710cf06f7a00a17120ca92333684ac45a8 upstream.
+commit 0e68b5517d3767562889f1d83fdb828c26adb24f upstream.
 
-usb_kill_urb warranties that all the handlers are finished when it
-returns, but does not protect against threads that might be handling
-asynchronously the urb.
+Running a rt-kernel base on 6.2.0-rc3-rt1 on an Ampere Altra outputs
+the following:
+  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:46
+  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 9, name: kworker/u320:0
+  preempt_count: 2, expected: 0
+  RCU nest depth: 0, expected: 0
+  3 locks held by kworker/u320:0/9:
+  #0: ffff3fff8c27d128 ((wq_completion)efi_rts_wq){+.+.}-{0:0}, at: process_one_work (./include/linux/atomic/atomic-long.h:41)
+  #1: ffff80000861bdd0 ((work_completion)(&efi_rts_work.work)){+.+.}-{0:0}, at: process_one_work (./include/linux/atomic/atomic-long.h:41)
+  #2: ffffdf7e1ed3e460 (efi_rt_lock){+.+.}-{3:3}, at: efi_call_rts (drivers/firmware/efi/runtime-wrappers.c:101)
+  Preemption disabled at:
+  efi_virtmap_load (./arch/arm64/include/asm/mmu_context.h:248)
+  CPU: 0 PID: 9 Comm: kworker/u320:0 Tainted: G        W          6.2.0-rc3-rt1
+  Hardware name: WIWYNN Mt.Jade Server System B81.03001.0005/Mt.Jade Motherboard, BIOS 1.08.20220218 (SCP: 1.08.20220218) 2022/02/18
+  Workqueue: efi_rts_wq efi_call_rts
+  Call trace:
+  dump_backtrace (arch/arm64/kernel/stacktrace.c:158)
+  show_stack (arch/arm64/kernel/stacktrace.c:165)
+  dump_stack_lvl (lib/dump_stack.c:107 (discriminator 4))
+  dump_stack (lib/dump_stack.c:114)
+  __might_resched (kernel/sched/core.c:10134)
+  rt_spin_lock (kernel/locking/rtmutex.c:1769 (discriminator 4))
+  efi_call_rts (drivers/firmware/efi/runtime-wrappers.c:101)
+  [...]
 
-For UVC, the function uvc_ctrl_status_event_async() takes care of
-control changes asynchronously.
+This seems to come from commit ff7a167961d1 ("arm64: efi: Execute
+runtime services from a dedicated stack") which adds a spinlock. This
+spinlock is taken through:
+efi_call_rts()
+\-efi_call_virt()
+  \-efi_call_virt_pointer()
+    \-arch_efi_call_virt_setup()
 
-If the code is executed in the following order:
+Make 'efi_rt_lock' a raw_spinlock to avoid being preempted.
 
-CPU 0					CPU 1
-===== 					=====
-uvc_status_complete()
-					uvc_status_stop()
-uvc_ctrl_status_event_work()
-					uvc_status_start() -> FAIL
+[ardb: The EFI runtime services are called with a different set of
+       translation tables, and are permitted to use the SIMD registers.
+       The context switch code preserves/restores neither, and so EFI
+       calls must be made with preemption disabled, rather than only
+       disabling migration.]
 
-Then uvc_status_start will keep failing and this error will be shown:
-
-<4>[    5.540139] URB 0000000000000000 submitted while active
-drivers/usb/core/urb.c:378 usb_submit_urb+0x4c3/0x528
-
-Let's improve the current situation, by not re-submiting the urb if
-we are stopping the status event. Also process the queued work
-(if any) during stop.
-
-CPU 0					CPU 1
-===== 					=====
-uvc_status_complete()
-					uvc_status_stop()
-					uvc_status_start()
-uvc_ctrl_status_event_work() -> FAIL
-
-Hopefully, with the usb layer protection this should be enough to cover
-all the cases.
-
-Cc: stable@vger.kernel.org
-Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
-Reviewed-by: Yunke Cao <yunkec@chromium.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: ff7a167961d1 ("arm64: efi: Execute runtime services from a dedicated stack")
+Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
+Cc: <stable@vger.kernel.org> # v6.1+
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c   |    5 +++++
- drivers/media/usb/uvc/uvc_status.c |   37 +++++++++++++++++++++++++++++++++++++
- drivers/media/usb/uvc/uvcvideo.h   |    1 +
- 3 files changed, 43 insertions(+)
+ arch/arm64/include/asm/efi.h |    6 +++---
+ arch/arm64/kernel/efi.c      |    2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -6,6 +6,7 @@
-  *          Laurent Pinchart (laurent.pinchart@ideasonboard.com)
-  */
+--- a/arch/arm64/include/asm/efi.h
++++ b/arch/arm64/include/asm/efi.h
+@@ -33,7 +33,7 @@ int efi_set_mapping_permissions(struct m
+ ({									\
+ 	efi_virtmap_load();						\
+ 	__efi_fpsimd_begin();						\
+-	spin_lock(&efi_rt_lock);					\
++	raw_spin_lock(&efi_rt_lock);					\
+ })
  
-+#include <asm/barrier.h>
- #include <linux/bitops.h>
- #include <linux/kernel.h>
- #include <linux/list.h>
-@@ -1509,6 +1510,10 @@ static void uvc_ctrl_status_event_work(s
+ #undef arch_efi_call_virt
+@@ -42,12 +42,12 @@ int efi_set_mapping_permissions(struct m
  
- 	uvc_ctrl_status_event(w->chain, w->ctrl, w->data);
+ #define arch_efi_call_virt_teardown()					\
+ ({									\
+-	spin_unlock(&efi_rt_lock);					\
++	raw_spin_unlock(&efi_rt_lock);					\
+ 	__efi_fpsimd_end();						\
+ 	efi_virtmap_unload();						\
+ })
  
-+	/* The barrier is needed to synchronize with uvc_status_stop(). */
-+	if (smp_load_acquire(&dev->flush_status))
-+		return;
-+
- 	/* Resubmit the URB. */
- 	w->urb->interval = dev->int_ep->desc.bInterval;
- 	ret = usb_submit_urb(w->urb, GFP_KERNEL);
---- a/drivers/media/usb/uvc/uvc_status.c
-+++ b/drivers/media/usb/uvc/uvc_status.c
-@@ -6,6 +6,7 @@
-  *          Laurent Pinchart (laurent.pinchart@ideasonboard.com)
-  */
+-extern spinlock_t efi_rt_lock;
++extern raw_spinlock_t efi_rt_lock;
+ extern u64 *efi_rt_stack_top;
+ efi_status_t __efi_rt_asm_wrapper(void *, const char *, ...);
  
-+#include <asm/barrier.h>
- #include <linux/kernel.h>
- #include <linux/input.h>
- #include <linux/slab.h>
-@@ -309,5 +310,41 @@ int uvc_status_start(struct uvc_device *
- 
- void uvc_status_stop(struct uvc_device *dev)
- {
-+	struct uvc_ctrl_work *w = &dev->async_ctrl;
-+
-+	/*
-+	 * Prevent the asynchronous control handler from requeing the URB. The
-+	 * barrier is needed so the flush_status change is visible to other
-+	 * CPUs running the asynchronous handler before usb_kill_urb() is
-+	 * called below.
-+	 */
-+	smp_store_release(&dev->flush_status, true);
-+
-+	/*
-+	 * Cancel any pending asynchronous work. If any status event was queued,
-+	 * process it synchronously.
-+	 */
-+	if (cancel_work_sync(&w->work))
-+		uvc_ctrl_status_event(w->chain, w->ctrl, w->data);
-+
-+	/* Kill the urb. */
- 	usb_kill_urb(dev->int_urb);
-+
-+	/*
-+	 * The URB completion handler may have queued asynchronous work. This
-+	 * won't resubmit the URB as flush_status is set, but it needs to be
-+	 * cancelled before returning or it could then race with a future
-+	 * uvc_status_start() call.
-+	 */
-+	if (cancel_work_sync(&w->work))
-+		uvc_ctrl_status_event(w->chain, w->ctrl, w->data);
-+
-+	/*
-+	 * From this point, there are no events on the queue and the status URB
-+	 * is dead. No events will be queued until uvc_status_start() is called.
-+	 * The barrier is needed to make sure that flush_status is visible to
-+	 * uvc_ctrl_status_event_work() when uvc_status_start() will be called
-+	 * again.
-+	 */
-+	smp_store_release(&dev->flush_status, false);
+--- a/arch/arm64/kernel/efi.c
++++ b/arch/arm64/kernel/efi.c
+@@ -146,7 +146,7 @@ asmlinkage efi_status_t efi_handle_corru
+ 	return s;
  }
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -558,6 +558,7 @@ struct uvc_device {
- 	/* Status Interrupt Endpoint */
- 	struct usb_host_endpoint *int_ep;
- 	struct urb *int_urb;
-+	bool flush_status;
- 	u8 *status;
- 	struct input_dev *input;
- 	char input_phys[64];
+ 
+-DEFINE_SPINLOCK(efi_rt_lock);
++DEFINE_RAW_SPINLOCK(efi_rt_lock);
+ 
+ asmlinkage u64 *efi_rt_stack_top __ro_after_init;
+ 
 
 
