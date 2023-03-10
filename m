@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FD18821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:02:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89351C433EF;
-	Fri, 10 Mar 2023 15:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA618821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:02:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2C7C433D2;
+	Fri, 10 Mar 2023 15:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460547;
-	bh=cf7Y2M9VYQEyJ+TV0DCwDQW351JEYE2Da3ijU/YZfIg=;
+	s=korg; t=1678460550;
+	bh=gj2NPqzvJg5aXfw4NfVzJoiRNI9hw8LOJqW3Ml6V2cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yLfOIfFmqKyZXu9Fd0RrX916MVVuHl6a/t8RKyMXm+pOoLTafCZpt73LJTB6ZvXjm
-	 TbSCfIw3QNliq5bSxQRj4QEy+qhP+em5PWO88j5KPTgod047x+ouTY9idcGNeXXPtW
-	 4ZC54vdq6mPwNW4kPwO3oDUyTOW/Al8RXgkAI3iQ=
+	b=YHNPZUX+nR/COvRDy0mkw2nh7s/CAkRQFDKC9td6qYH4zvcV1JP/RvMDnKykHDoDX
+	 ihR6Jxho9e3pjMdLTu9Osh4Axi+xaMpMhrBU/mer+DJXD63tLv6pVtw9ISWm0AvhYs
+	 sFHZ27SQlHwgFP06nVSscVAqcIbk++26fV5mtcns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 5.10 371/529] irqdomain: Fix disassociation race
-Date: Fri, 10 Mar 2023 14:38:34 +0100
-Message-Id: <20230310133822.178907750@linuxfoundation.org>
+Subject: [PATCH 5.10 372/529] irqdomain: Drop bogus fwspec-mapping error handling
+Date: Fri, 10 Mar 2023 14:38:35 +0100
+Message-Id: <20230310133822.227647967@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -38,49 +38,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 3f883c38f5628f46b30bccf090faec054088e262 upstream.
+commit e3b7ab025e931accdc2c12acf9b75c6197f1c062 upstream.
 
-The global irq_domain_mutex is held when mapping interrupts from
-non-hierarchical domains but currently not when disposing them.
+In case a newly allocated IRQ ever ends up not having any associated
+struct irq_data it would not even be possible to dispose the mapping.
 
-This specifically means that updates of the domain mapcount is racy
-(currently only used for statistics in debugfs).
+Replace the bogus disposal with a WARN_ON().
 
-Make sure to hold the global irq_domain_mutex also when disposing
-mappings from non-hierarchical domains.
+This will also be used to fix a shared-interrupt mapping race, hence the
+CC-stable tag.
 
-Fixes: 9dc6be3d4193 ("genirq/irqdomain: Add map counter")
-Cc: stable@vger.kernel.org      # 4.13
+Fixes: 1e2a7d78499e ("irqdomain: Don't set type when mapping an IRQ")
+Cc: stable@vger.kernel.org      # 4.8
 Tested-by: Hsin-Yi Wang <hsinyi@chromium.org>
 Tested-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230213104302.17307-3-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20230213104302.17307-4-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/irq/irqdomain.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/irq/irqdomain.c |    7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
 --- a/kernel/irq/irqdomain.c
 +++ b/kernel/irq/irqdomain.c
-@@ -495,6 +495,9 @@ void irq_domain_disassociate(struct irq_
- 		return;
+@@ -837,13 +837,8 @@ unsigned int irq_create_fwspec_mapping(s
+ 	}
  
- 	hwirq = irq_data->hwirq;
-+
-+	mutex_lock(&irq_domain_mutex);
-+
- 	irq_set_status_flags(irq, IRQ_NOREQUEST);
+ 	irq_data = irq_get_irq_data(virq);
+-	if (!irq_data) {
+-		if (irq_domain_is_hierarchy(domain))
+-			irq_domain_free_irqs(virq, 1);
+-		else
+-			irq_dispose_mapping(virq);
++	if (WARN_ON(!irq_data))
+ 		return 0;
+-	}
  
- 	/* remove chip and handler */
-@@ -514,6 +517,8 @@ void irq_domain_disassociate(struct irq_
- 
- 	/* Clear reverse map for this hwirq */
- 	irq_domain_clear_mapping(domain, hwirq);
-+
-+	mutex_unlock(&irq_domain_mutex);
- }
- 
- static int irq_domain_associate_locked(struct irq_domain *domain, unsigned int virq,
+ 	/* Store trigger type */
+ 	irqd_set_trigger_type(irq_data, type);
 
 
