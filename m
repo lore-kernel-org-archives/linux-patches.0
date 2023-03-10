@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEB38820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:52:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C966FC433D2;
-	Fri, 10 Mar 2023 14:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31848820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:52:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B68BC433A0;
+	Fri, 10 Mar 2023 14:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459940;
-	bh=wYqADMD4cTHT1W35dsoBIFxITUkwOMKAAmcNYatRO0E=;
+	s=korg; t=1678459943;
+	bh=V/NKCi/fxG1NnUo+e3tbEbovrFW2pa+udvzYoKWUXZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m/U4JjImD14ZfRr7LzMiPWBLgyzrOwx2vzo63bIbNJbtpDDet0jrfRm5xb4lvMgh+
-	 IOyHz7xo5/0E/vDdt2ma/V2obc+r9qPJGV9gBG6En4FUl06pAzrMw56E3Ntxi1HzQf
-	 muU7Ywo834r9Es+AF6CGbjyvjkUN994ylLERfmX0=
+	b=zfkUpNhUyOULBGzUndVOzRWw00vdxYJ3X5vwWwyjrMKcnokXHIBehN0R+LMti5Jvy
+	 HYMe2vPP1XSB7K48RDN4ALMmoO68Qo9Rc583GIT0a04OPLPCyTmKRP9XNG8fJDVlC8
+	 Tdvf+JVI88a0hXgsqOvwEL4KSAQh+gY77s8gYuw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 170/529] drm/bridge: lt9611: fix sleep mode setup
-Date: Fri, 10 Mar 2023 14:35:13 +0100
-Message-Id: <20230310133812.813121679@linuxfoundation.org>
+Subject: [PATCH 5.10 171/529] drm/bridge: lt9611: fix HPD reenablement
+Date: Fri, 10 Mar 2023 14:35:14 +0100
+Message-Id: <20230310133812.855009764@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -37,42 +37,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit ae2d329f104b75a0a78dcaded29fe6283289cdf9 ]
+[ Upstream commit a7790f6bd38f3642b60ae3504a2c749135b89451 ]
 
-On atomic_post_disable the bridge goes to the low power state. However
-the code disables too much of the chip, so the HPD event is not being
-detected and delivered to the host. Reduce the power saving in order to
-get the HPD event.
+The driver will reset the bridge in the atomic_pre_enable(). However
+this will also drop the HPD interrupt state. Instead of resetting the
+bridge, properly wake it up. This fixes the HPD interrupt delivery after
+the disable/enable cycle.
 
 Fixes: 23278bf54afe ("drm/bridge: Introduce LT9611 DSI to HDMI bridge")
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230118081658.2198520-2-dmitry.baryshkov@linaro.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20230118081658.2198520-3-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/bridge/lontium-lt9611.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-index 1dcc28a4d8537..5e5641ac5ea3d 100644
+index 5e5641ac5ea3d..fe660d667daf6 100644
 --- a/drivers/gpu/drm/bridge/lontium-lt9611.c
 +++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -446,12 +446,11 @@ static void lt9611_sleep_setup(struct lt9611 *lt9611)
- 		{ 0x8023, 0x01 },
- 		{ 0x8157, 0x03 }, /* set addr pin as output */
- 		{ 0x8149, 0x0b },
--		{ 0x8151, 0x30 }, /* disable IRQ */
-+
- 		{ 0x8102, 0x48 }, /* MIPI Rx power down */
- 		{ 0x8123, 0x80 },
- 		{ 0x8130, 0x00 },
--		{ 0x8100, 0x01 }, /* bandgap power down */
--		{ 0x8101, 0x00 }, /* system clk power down */
-+		{ 0x8011, 0x0a },
- 	};
+@@ -880,12 +880,18 @@ static enum drm_mode_status lt9611_bridge_mode_valid(struct drm_bridge *bridge,
+ static void lt9611_bridge_pre_enable(struct drm_bridge *bridge)
+ {
+ 	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
++	static const struct reg_sequence reg_cfg[] = {
++		{ 0x8102, 0x12 },
++		{ 0x8123, 0x40 },
++		{ 0x8130, 0xea },
++		{ 0x8011, 0xfa },
++	};
  
- 	regmap_multi_reg_write(lt9611->regmap,
+ 	if (!lt9611->sleep)
+ 		return;
+ 
+-	lt9611_reset(lt9611);
+-	regmap_write(lt9611->regmap, 0x80ee, 0x01);
++	regmap_multi_reg_write(lt9611->regmap,
++			       reg_cfg, ARRAY_SIZE(reg_cfg));
+ 
+ 	lt9611->sleep = false;
+ }
 -- 
 2.39.2
 
