@@ -1,29 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCB9847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6175C433EF;
-	Fri, 10 Mar 2023 13:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4DB847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A58C4339B;
+	Fri, 10 Mar 2023 13:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456761;
-	bh=CHzhDt5YKfpnCveuLrDX8+WCuQozbGmrFhgFSp4fLoM=;
+	s=korg; t=1678456764;
+	bh=FiGWTSRi8jwQPxcgYZ80FI0oc0kERnP0xwXyK8GlclA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zRkytJ/QNdccRataCKq6syyV6DeyQLIRq2ekCuaHWxm4++6FjiMb6+mCYpuH5wgpL
-	 FqAowS72HvVgPYEoJvHjfcilDwUJTyPDMfJPgjfSgjg0YMYhJLSaOGKvESLPSradnR
-	 Xr6aRzZ0eiJayJYjASf8nGyWI+i1xmwKXNIwkT1c=
+	b=Ewcl2s42hOBuS7bvmFdp9M4QLVoPUTv22xBkhIMe1osZc+2sX9RUgmYseIvDF/imY
+	 ey0s+aujCRLLFajRzBPMheckI5jSbxbYrOc6bCAhYFqGx/7VJIA2NLFjyD8Vpo7A/H
+	 EiKCis9c9qLa+P7ExoLkjhBwzm7mMynLk0abkl1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Zhi Wang <zhi.a.wang@intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	Zhenyu Wang <zhenyuw@linux.intel.com>,
+	intel-gfx@lists.freedesktop.org,
+	intel-gvt-dev@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 084/211] 9p/xen: fix connection sequence
-Date: Fri, 10 Mar 2023 14:37:44 +0100
-Message-Id: <20230310133721.338123686@linuxfoundation.org>
+Subject: [PATCH 6.2 075/211] drm/i915: move a Kconfig symbol to unbreak the menu presentation
+Date: Fri, 10 Mar 2023 14:37:35 +0100
+Message-Id: <20230310133721.064604104@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -37,115 +44,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit c15fe55d14b3b4ded5af2a3260877460a6ffb8ad ]
+[ Upstream commit 0b93efca3659f6d55ed31cff6722dca5f6e4d6e2 ]
 
-Today the connection sequence of the Xen 9pfs frontend doesn't match
-the documented sequence. It can work reliably only for a PV 9pfs device
-having been added at boot time already, as the frontend is not waiting
-for the backend to have set its state to "XenbusStateInitWait" before
-reading the backend properties from Xenstore.
+Inserting a Kconfig symbol that does not have a dependency (DRM_I915_GVT)
+into a list of other symbols that do have a dependency (on DRM_I915)
+breaks the driver menu presentation in 'make *config'.
 
-Fix that by following the documented sequence [1] (the documentation
-has a bug, so the reference is for the patch fixing that).
+Relocate the DRM_I915_GVT symbol so that it does not cause this
+problem.
 
-[1]: https://lore.kernel.org/xen-devel/20230130090937.31623-1-jgross@suse.com/T/#u
-
-Link: https://lkml.kernel.org/r/20230130113036.7087-3-jgross@suse.com
-Fixes: 868eb122739a ("xen/9pfs: introduce Xen 9pfs transport driver")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Fixes: 8b750bf74418 ("drm/i915/gvt: move the gvt code into kvmgt.ko")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Zhi Wang <zhi.a.wang@intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc: Zhenyu Wang <zhenyuw@linux.intel.com>
+Cc: intel-gfx@lists.freedesktop.org
+Cc: intel-gvt-dev@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Zhenyu Wang <zhenyuw@linux.intel.com>
+Signed-off-by: Zhenyu Wang <zhenyuw@linux.intel.com>
+Link: http://patchwork.freedesktop.org/patch/msgid/20230215044533.4847-1-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_xen.c | 38 +++++++++++++++++++++++---------------
- 1 file changed, 23 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/i915/Kconfig | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index ad2947a3b3760..c64050e839ac6 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -372,12 +372,11 @@ static int xen_9pfs_front_alloc_dataring(struct xenbus_device *dev,
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/i915/Kconfig b/drivers/gpu/drm/i915/Kconfig
+index 3efce05d7b57c..3a6e176d77aa5 100644
+--- a/drivers/gpu/drm/i915/Kconfig
++++ b/drivers/gpu/drm/i915/Kconfig
+@@ -107,9 +107,6 @@ config DRM_I915_USERPTR
  
--static int xen_9pfs_front_probe(struct xenbus_device *dev,
--				const struct xenbus_device_id *id)
-+static int xen_9pfs_front_init(struct xenbus_device *dev)
- {
- 	int ret, i;
- 	struct xenbus_transaction xbt;
--	struct xen_9pfs_front_priv *priv = NULL;
-+	struct xen_9pfs_front_priv *priv = dev_get_drvdata(&dev->dev);
- 	char *versions, *v;
- 	unsigned int max_rings, max_ring_order, len = 0;
+ 	  If in doubt, say "Y".
  
-@@ -405,11 +404,6 @@ static int xen_9pfs_front_probe(struct xenbus_device *dev,
- 	if (p9_xen_trans.maxsize > XEN_FLEX_RING_SIZE(max_ring_order))
- 		p9_xen_trans.maxsize = XEN_FLEX_RING_SIZE(max_ring_order) / 2;
- 
--	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
--	if (!priv)
--		return -ENOMEM;
+-config DRM_I915_GVT
+-	bool
 -
--	priv->dev = dev;
- 	priv->num_rings = XEN_9PFS_NUM_RINGS;
- 	priv->rings = kcalloc(priv->num_rings, sizeof(*priv->rings),
- 			      GFP_KERNEL);
-@@ -468,23 +462,35 @@ static int xen_9pfs_front_probe(struct xenbus_device *dev,
- 		goto error;
- 	}
- 
--	write_lock(&xen_9pfs_lock);
--	list_add_tail(&priv->list, &xen_9pfs_devs);
--	write_unlock(&xen_9pfs_lock);
--	dev_set_drvdata(&dev->dev, priv);
--	xenbus_switch_state(dev, XenbusStateInitialised);
--
- 	return 0;
- 
-  error_xenbus:
- 	xenbus_transaction_end(xbt, 1);
- 	xenbus_dev_fatal(dev, ret, "writing xenstore");
-  error:
--	dev_set_drvdata(&dev->dev, NULL);
- 	xen_9pfs_front_free(priv);
- 	return ret;
- }
- 
-+static int xen_9pfs_front_probe(struct xenbus_device *dev,
-+				const struct xenbus_device_id *id)
-+{
-+	struct xen_9pfs_front_priv *priv = NULL;
+ config DRM_I915_GVT_KVMGT
+ 	tristate "Enable KVM host support Intel GVT-g graphics virtualization"
+ 	depends on DRM_I915
+@@ -160,3 +157,6 @@ menu "drm/i915 Unstable Evolution"
+ 	depends on DRM_I915
+ 	source "drivers/gpu/drm/i915/Kconfig.unstable"
+ endmenu
 +
-+	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	priv->dev = dev;
-+	dev_set_drvdata(&dev->dev, priv);
-+
-+	write_lock(&xen_9pfs_lock);
-+	list_add_tail(&priv->list, &xen_9pfs_devs);
-+	write_unlock(&xen_9pfs_lock);
-+
-+	return 0;
-+}
-+
- static int xen_9pfs_front_resume(struct xenbus_device *dev)
- {
- 	dev_warn(&dev->dev, "suspend/resume unsupported\n");
-@@ -503,6 +509,8 @@ static void xen_9pfs_front_changed(struct xenbus_device *dev,
- 		break;
- 
- 	case XenbusStateInitWait:
-+		if (!xen_9pfs_front_init(dev))
-+			xenbus_switch_state(dev, XenbusStateInitialised);
- 		break;
- 
- 	case XenbusStateConnected:
++config DRM_I915_GVT
++	bool
 -- 
 2.39.2
 
