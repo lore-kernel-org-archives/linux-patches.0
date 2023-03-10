@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132A4881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:44:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A8FC4339E;
-	Fri, 10 Mar 2023 14:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D185881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:44:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77806C4339C;
+	Fri, 10 Mar 2023 14:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459440;
-	bh=MIbt3APg5iNz8T4F+mWpefPk9jD8nkK0fU0Zo6TzF3s=;
+	s=korg; t=1678459444;
+	bh=bDmUGFc83/swHURkFx4KBn6JMdwyqgpHXTS8l63yB/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ty7zzAIskjHCxy/Rkr+sMOj0zw+UfdYqJ7s9Loe/oO5gKjXQaolpJrbRk+7YOBkFy
-	 94GfyGd7lrkBLtpdVHxQ9lF9k3vYWzVs5eMV+YmpBSSFujL2sX3DbsgpIJxMQqvcG4
-	 UFZkTcKqwLCq8KfDtSxoA9lIzNQstHqvoCkEt1XE=
+	b=pSL+UvByqZulLdLL/7OQARX3Po52MLqBFYrjWR+qjRtQujfr35hwIzHgf57fTZr2P
+	 vMKr5t2+aw3q35rRTrM0hrD/4/RYfHryfSOBOSG60ZEXvzXNxpfm18H1oaIpbrH596
+	 dSKSppQdxBS7gfuS6Jg9a8WYZqJNoLiVDzeiDEAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunke Cao <yunkec@chromium.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: [PATCH 5.4 355/357] media: uvcvideo: Fix race condition with usb_kill_urb
-Date: Fri, 10 Mar 2023 14:40:44 +0100
-Message-Id: <20230310133750.332449022@linuxfoundation.org>
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Cornelia Huck <cohuck@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.4 356/357] s390/dasd: add missing discipline function
+Date: Fri, 10 Mar 2023 14:40:45 +0100
+Message-Id: <20230310133750.380800885@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,140 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 619d9b710cf06f7a00a17120ca92333684ac45a8 upstream.
+commit c0c8a8397fa8a74d04915f4d3d28cb4a5d401427 upstream.
 
-usb_kill_urb warranties that all the handlers are finished when it
-returns, but does not protect against threads that might be handling
-asynchronously the urb.
+Fix crash with illegal operation exception in dasd_device_tasklet.
+Commit b72949328869 ("s390/dasd: Prepare for additional path event handling")
+renamed the verify_path function for ECKD but not for FBA and DIAG.
+This leads to a panic when the path verification function is called for a
+FBA or DIAG device.
 
-For UVC, the function uvc_ctrl_status_event_async() takes care of
-control changes asynchronously.
+Fix by defining a wrapper function for dasd_generic_verify_path().
 
-If the code is executed in the following order:
-
-CPU 0					CPU 1
-===== 					=====
-uvc_status_complete()
-					uvc_status_stop()
-uvc_ctrl_status_event_work()
-					uvc_status_start() -> FAIL
-
-Then uvc_status_start will keep failing and this error will be shown:
-
-<4>[    5.540139] URB 0000000000000000 submitted while active
-drivers/usb/core/urb.c:378 usb_submit_urb+0x4c3/0x528
-
-Let's improve the current situation, by not re-submiting the urb if
-we are stopping the status event. Also process the queued work
-(if any) during stop.
-
-CPU 0					CPU 1
-===== 					=====
-uvc_status_complete()
-					uvc_status_stop()
-					uvc_status_start()
-uvc_ctrl_status_event_work() -> FAIL
-
-Hopefully, with the usb layer protection this should be enough to cover
-all the cases.
-
-Cc: stable@vger.kernel.org
-Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
-Reviewed-by: Yunke Cao <yunkec@chromium.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: b72949328869 ("s390/dasd: Prepare for additional path event handling")
+Cc: <stable@vger.kernel.org> #5.11
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Link: https://lore.kernel.org/r/20210525125006.157531-2-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c   |    5 +++++
- drivers/media/usb/uvc/uvc_status.c |   37 +++++++++++++++++++++++++++++++++++++
- drivers/media/usb/uvc/uvcvideo.h   |    1 +
- 3 files changed, 43 insertions(+)
+ drivers/s390/block/dasd_diag.c |    8 +++++++-
+ drivers/s390/block/dasd_fba.c  |    8 +++++++-
+ drivers/s390/block/dasd_int.h  |    1 -
+ 3 files changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -6,6 +6,7 @@
-  *          Laurent Pinchart (laurent.pinchart@ideasonboard.com)
-  */
- 
-+#include <asm/barrier.h>
- #include <linux/kernel.h>
- #include <linux/list.h>
- #include <linux/module.h>
-@@ -1318,6 +1319,10 @@ static void uvc_ctrl_status_event_work(s
- 
- 	uvc_ctrl_status_event(w->chain, w->ctrl, w->data);
- 
-+	/* The barrier is needed to synchronize with uvc_status_stop(). */
-+	if (smp_load_acquire(&dev->flush_status))
-+		return;
-+
- 	/* Resubmit the URB. */
- 	w->urb->interval = dev->int_ep->desc.bInterval;
- 	ret = usb_submit_urb(w->urb, GFP_KERNEL);
---- a/drivers/media/usb/uvc/uvc_status.c
-+++ b/drivers/media/usb/uvc/uvc_status.c
-@@ -6,6 +6,7 @@
-  *          Laurent Pinchart (laurent.pinchart@ideasonboard.com)
-  */
- 
-+#include <asm/barrier.h>
- #include <linux/kernel.h>
- #include <linux/input.h>
- #include <linux/slab.h>
-@@ -310,5 +311,41 @@ int uvc_status_start(struct uvc_device *
- 
- void uvc_status_stop(struct uvc_device *dev)
- {
-+	struct uvc_ctrl_work *w = &dev->async_ctrl;
-+
-+	/*
-+	 * Prevent the asynchronous control handler from requeing the URB. The
-+	 * barrier is needed so the flush_status change is visible to other
-+	 * CPUs running the asynchronous handler before usb_kill_urb() is
-+	 * called below.
-+	 */
-+	smp_store_release(&dev->flush_status, true);
-+
-+	/*
-+	 * Cancel any pending asynchronous work. If any status event was queued,
-+	 * process it synchronously.
-+	 */
-+	if (cancel_work_sync(&w->work))
-+		uvc_ctrl_status_event(w->chain, w->ctrl, w->data);
-+
-+	/* Kill the urb. */
- 	usb_kill_urb(dev->int_urb);
-+
-+	/*
-+	 * The URB completion handler may have queued asynchronous work. This
-+	 * won't resubmit the URB as flush_status is set, but it needs to be
-+	 * cancelled before returning or it could then race with a future
-+	 * uvc_status_start() call.
-+	 */
-+	if (cancel_work_sync(&w->work))
-+		uvc_ctrl_status_event(w->chain, w->ctrl, w->data);
-+
-+	/*
-+	 * From this point, there are no events on the queue and the status URB
-+	 * is dead. No events will be queued until uvc_status_start() is called.
-+	 * The barrier is needed to make sure that flush_status is visible to
-+	 * uvc_ctrl_status_event_work() when uvc_status_start() will be called
-+	 * again.
-+	 */
-+	smp_store_release(&dev->flush_status, false);
+--- a/drivers/s390/block/dasd_diag.c
++++ b/drivers/s390/block/dasd_diag.c
+@@ -644,12 +644,18 @@ static void dasd_diag_setup_blk_queue(st
+ 	blk_queue_segment_boundary(q, PAGE_SIZE - 1);
  }
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -664,6 +664,7 @@ struct uvc_device {
- 	/* Status Interrupt Endpoint */
- 	struct usb_host_endpoint *int_ep;
- 	struct urb *int_urb;
-+	bool flush_status;
- 	u8 *status;
- 	struct input_dev *input;
- 	char input_phys[64];
+ 
++static int dasd_diag_pe_handler(struct dasd_device *device,
++				__u8 tbvpm, __u8 fcsecpm)
++{
++	return dasd_generic_verify_path(device, tbvpm);
++}
++
+ static struct dasd_discipline dasd_diag_discipline = {
+ 	.owner = THIS_MODULE,
+ 	.name = "DIAG",
+ 	.ebcname = "DIAG",
+ 	.check_device = dasd_diag_check_device,
+-	.verify_path = dasd_generic_verify_path,
++	.pe_handler = dasd_diag_pe_handler,
+ 	.fill_geometry = dasd_diag_fill_geometry,
+ 	.setup_blk_queue = dasd_diag_setup_blk_queue,
+ 	.start_IO = dasd_start_diag,
+--- a/drivers/s390/block/dasd_fba.c
++++ b/drivers/s390/block/dasd_fba.c
+@@ -803,13 +803,19 @@ static void dasd_fba_setup_blk_queue(str
+ 	blk_queue_flag_set(QUEUE_FLAG_DISCARD, q);
+ }
+ 
++static int dasd_fba_pe_handler(struct dasd_device *device,
++			       __u8 tbvpm, __u8 fcsecpm)
++{
++	return dasd_generic_verify_path(device, tbvpm);
++}
++
+ static struct dasd_discipline dasd_fba_discipline = {
+ 	.owner = THIS_MODULE,
+ 	.name = "FBA ",
+ 	.ebcname = "FBA ",
+ 	.check_device = dasd_fba_check_characteristics,
+ 	.do_analysis = dasd_fba_do_analysis,
+-	.verify_path = dasd_generic_verify_path,
++	.pe_handler = dasd_fba_pe_handler,
+ 	.setup_blk_queue = dasd_fba_setup_blk_queue,
+ 	.fill_geometry = dasd_fba_fill_geometry,
+ 	.start_IO = dasd_start_IO,
+--- a/drivers/s390/block/dasd_int.h
++++ b/drivers/s390/block/dasd_int.h
+@@ -298,7 +298,6 @@ struct dasd_discipline {
+ 	 * e.g. verify that new path is compatible with the current
+ 	 * configuration.
+ 	 */
+-	int (*verify_path)(struct dasd_device *, __u8);
+ 	int (*pe_handler)(struct dasd_device *, __u8);
+ 
+ 	/*
 
 
