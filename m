@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20680881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:45:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B88C4339E;
-	Fri, 10 Mar 2023 14:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7B2881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:45:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61375C4339B;
+	Fri, 10 Mar 2023 14:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459538;
-	bh=7oZSva1FA8vGWD1d9KPqPQNdfebha4lMmOuTYN6uq6U=;
+	s=korg; t=1678459540;
+	bh=pEu1utJQ4svlCPZl72Vv/ouOy1JSEefHG+l7CMxK5tE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EBEn7HoYJeHEDmGLdk3vLIpxvxK8iq24RlA+CGPjEP0QhRfOhbW7VZc6ioxHjWtCf
-	 JM9sTymaFxJ4rUOL4abzQ5cAKkgBjXcbbwXHy8fBwEWSzOQEfSGJVMZ8Cs4I5JBzTl
-	 HOb0TJf0fbtla8G2758LG/HuXIsw9kREn88OhdQ0=
+	b=xJfBGAZAR1+RF6uiB6Sle1xr63FgzJAl/pqRB3drKDVg2jGTdwJz0HWpu9NIURyHZ
+	 FsGlwsoLJOxhVzAINOHxN6LqP2NNhtHCrQlF5lAygbuiybLRmpFAzKCk+BVNwrSyxf
+	 XCVGNfqHv0m7JgQem1CN6dqA8jIxwER4GuPUlw6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 036/529] arm64: dts: renesas: beacon-renesom: Fix gpio expander reference
-Date: Fri, 10 Mar 2023 14:32:59 +0100
-Message-Id: <20230310133806.661685442@linuxfoundation.org>
+Subject: [PATCH 5.10 037/529] ARM: dts: sun8i: nanopi-duo2: Fix regulator GPIO reference
+Date: Fri, 10 Mar 2023 14:33:00 +0100
+Message-Id: <20230310133806.710199012@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,74 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adam Ford <aford173@gmail.com>
+From: Samuel Holland <samuel@sholland.org>
 
-[ Upstream commit d7f9492dfc03153ac56ab59066a196558748f575 ]
+[ Upstream commit 2177d4ae971f79b4a9a3c411f2fb8ae6113d1430 ]
 
-The board used to originally introduce the Beacon Embedded RZ/G2[M/N/H]
-boards had a GPIO expander with address 20, but this was changed when
-the final board went to production.
+The property named in the schema is 'enable-gpios', not 'enable-gpio'.
+This makes no difference at runtime, because the regulator is marked as
+always-on, but it breaks validation.
 
-The production boards changed both the part itself and the address.
-With the incorrect address, the LCD cannot come up.  If the LCD fails,
-the rcar-du driver fails to come up, and that also breaks HDMI.
-
-Pre-release board were not shipped to the general public, so it should
-be safe to push this as a fix.  Anyone with a production board would
-have video fail due to this GPIO expander change.
-
-Fixes: a1d8a344f1ca ("arm64: dts: renesas: Introduce r8a774a1-beacon-rzg2m-kit")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230114225647.227972-1-aford173@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 4701fc6e5dd9 ("ARM: dts: sun8i: add FriendlyARM NanoPi Duo2")
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Link: https://lore.kernel.org/r/20221231225854.16320-2-samuel@sholland.org
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/renesas/beacon-renesom-baseboard.dtsi | 24 ++++++++-----------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ arch/arm/boot/dts/sun8i-h3-nanopi-duo2.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi b/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
-index 53e1d43cbecf8..663adf79471bc 100644
---- a/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
-+++ b/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
-@@ -399,20 +399,6 @@ wm8962_endpoint: endpoint {
- 		};
- 	};
+diff --git a/arch/arm/boot/dts/sun8i-h3-nanopi-duo2.dts b/arch/arm/boot/dts/sun8i-h3-nanopi-duo2.dts
+index 6b149271ef13f..8722fdf77ebc2 100644
+--- a/arch/arm/boot/dts/sun8i-h3-nanopi-duo2.dts
++++ b/arch/arm/boot/dts/sun8i-h3-nanopi-duo2.dts
+@@ -57,7 +57,7 @@ reg_vdd_cpux: vdd-cpux-regulator {
+ 		regulator-ramp-delay = <50>; /* 4ms */
  
--	/* 0 - lcd_reset */
--	/* 1 - lcd_pwr */
--	/* 2 - lcd_select */
--	/* 3 - backlight-enable */
--	/* 4 - Touch_shdwn */
--	/* 5 - LCD_H_pol */
--	/* 6 - lcd_V_pol */
--	gpio_exp1: gpio@20 {
--		compatible = "onnn,pca9654";
--		reg = <0x20>;
--		gpio-controller;
--		#gpio-cells = <2>;
--	};
--
- 	touchscreen@26 {
- 		compatible = "ilitek,ili2117";
- 		reg = <0x26>;
-@@ -445,6 +431,16 @@ hd3ss3220_ep: endpoint {
- 			};
- 		};
- 	};
-+
-+	gpio_exp1: gpio@70 {
-+		compatible = "nxp,pca9538";
-+		reg = <0x70>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names = "lcd_reset", "lcd_pwr", "lcd_select",
-+				  "backlight-enable", "Touch_shdwn",
-+				  "LCD_H_pol", "lcd_V_pol";
-+	};
- };
- 
- &lvds0 {
+ 		enable-active-high;
+-		enable-gpio = <&r_pio 0 8 GPIO_ACTIVE_HIGH>; /* PL8 */
++		enable-gpios = <&r_pio 0 8 GPIO_ACTIVE_HIGH>; /* PL8 */
+ 		gpios = <&r_pio 0 6 GPIO_ACTIVE_HIGH>; /* PL6 */
+ 		gpios-states = <0x1>;
+ 		states = <1100000 0>, <1300000 1>;
 -- 
 2.39.2
 
