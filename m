@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2409A848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:24:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E961C433D2;
-	Fri, 10 Mar 2023 14:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5054F848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:24:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C2CC433EF;
+	Fri, 10 Mar 2023 14:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458282;
-	bh=XtRTcAba1WgPLgsnqtuOtGTHfzwm60mxyvNTS9Do5a8=;
+	s=korg; t=1678458285;
+	bh=Xg0X9O+oqwbhf1s+xLJNY0gJv2vvHl/xwF7HhHu8Eyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rjL5ysaQyzrUX8gPYOJNvNmg1Fnx0uqdKlYZXRRsfKBxBdzJ0FXXNIBqH1jKNqbey
-	 GP8mgwRXwIpj66hdskLi21uutMqs/N+ZGY8hfWzuRKfYqT75L6Ydj17wt9IVi2tUwC
-	 fGb28XfqcxOn85WjHogfPDwVQ4yqFVETBv467SsA=
+	b=xhXnn+l9mz6X1tfnd8VABwB2cwFozvdX+6q7QxsdNY8B6sSWoUkS6ql0rGRS2INA0
+	 w6oN/aZTLN0YLI1n/eJ5EE3hRYClMksjnhgiqOeePwgX9ZH/nLSBGQr2MGh+VprROM
+	 ZdHpKrEauvrdBahoe882RRBFbrNFaES76f057PuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 4.19 193/252] PCI: Avoid FLR for AMD FCH AHCI adapters
-Date: Fri, 10 Mar 2023 14:39:23 +0100
-Message-Id: <20230310133724.813874642@linuxfoundation.org>
+	Mark Hawrylak <mark.hawrylak@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 4.19 194/252] drm/radeon: Fix eDP for single-display iMac11,2
+Date: Fri, 10 Mar 2023 14:39:24 +0100
+Message-Id: <20230310133724.852006762@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -35,48 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Mark Hawrylak <mark.hawrylak@gmail.com>
 
-commit 63ba51db24ed1b8f8088a897290eb6c036c5435d upstream.
+commit 05eacc198c68cbb35a7281ce4011f8899ee1cfb8 upstream.
 
-PCI passthrough to VMs does not work with AMD FCH AHCI adapters: the guest
-OS fails to correctly probe devices attached to the controller due to FIS
-communication failures:
+Apple iMac11,2 (mid 2010) also with Radeon HD-4670 that has the same
+issue as iMac10,1 (late 2009) where the internal eDP panel stays dark on
+driver load.  This patch treats iMac11,2 the same as iMac10,1,
+so the eDP panel stays active.
 
-  ata4: softreset failed (1st FIS failed)
-  ...
-  ata4.00: qc timeout after 5000 msecs (cmd 0xec)
-  ata4.00: failed to IDENTIFY (I/O error, err_mask=0x4)
+Additional steps:
+Kernel boot parameter radeon.nomodeset=0 required to keep the eDP
+panel active.
 
-Forcing the "bus" reset method before unbinding & binding the adapter to
-the vfio-pci driver solves this issue, e.g.:
-
-  echo "bus" > /sys/bus/pci/devices/<ID>/reset_method
-
-gives a working guest OS, indicating that the default FLR reset method
-doesn't work correctly.
-
-Apply quirk_no_flr() to AMD FCH AHCI devices to work around this issue.
-
-Link: https://lore.kernel.org/r/20230128013951.523247-1-damien.lemoal@opensource.wdc.com
-Reported-by: Niklas Cassel <niklas.cassel@wdc.com>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+This patch is an extension of
+commit 564d8a2cf3ab ("drm/radeon: Fix eDP for single-display iMac10,1 (v2)")
+Link: https://lore.kernel.org/all/lsq.1507553064.833262317@decadent.org.uk/
+Signed-off-by: Mark Hawrylak <mark.hawrylak@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/radeon/atombios_encoders.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5153,6 +5153,7 @@ static void quirk_no_flr(struct pci_dev
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x1487, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x148c, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x149c, quirk_no_flr);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x7901, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1502, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1503, quirk_no_flr);
+--- a/drivers/gpu/drm/radeon/atombios_encoders.c
++++ b/drivers/gpu/drm/radeon/atombios_encoders.c
+@@ -2188,11 +2188,12 @@ int radeon_atom_pick_dig_encoder(struct
  
+ 	/*
+ 	 * On DCE32 any encoder can drive any block so usually just use crtc id,
+-	 * but Apple thinks different at least on iMac10,1, so there use linkb,
++	 * but Apple thinks different at least on iMac10,1 and iMac11,2, so there use linkb,
+ 	 * otherwise the internal eDP panel will stay dark.
+ 	 */
+ 	if (ASIC_IS_DCE32(rdev)) {
+-		if (dmi_match(DMI_PRODUCT_NAME, "iMac10,1"))
++		if (dmi_match(DMI_PRODUCT_NAME, "iMac10,1") ||
++		    dmi_match(DMI_PRODUCT_NAME, "iMac11,2"))
+ 			enc_idx = (dig->linkb) ? 1 : 0;
+ 		else
+ 			enc_idx = radeon_crtc->crtc_id;
 
 
