@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514DF846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA583C433EF;
-	Fri, 10 Mar 2023 14:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A878846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5372C433EF;
+	Fri, 10 Mar 2023 14:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458647;
-	bh=HPD4wT44TXc6FJkK6bysETcJ69toq5QgoIfAwP/SNOM=;
+	s=korg; t=1678458650;
+	bh=nqdcyTdsSkZqlkRtq1Eg3GUNRadtoGvt318GK88tTEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pGCdpiRjQRDZY6TFXuq8tF0Qw/lTHNV57YV/J63szMgoF3XNJv65OrOULy9bdZQ2/
-	 rz3DRUO2rhjW0d7lbLr6YHVbCvM6eC0Gcsodg/hzfVvVXuj9+1tNm+Z+h6S/66J27q
-	 iT6UsdROX3qM+Z+ag+WvlQgPEqiQ4fCxH3umaXmk=
+	b=kdLuBBWzwMb3l1a46orntAT2hGofbTngPKesIflwQUln99BcCLunaQ+hhFrT1lmX7
+	 SRjNZMUbhXngjRjjWps9qIOdtwzs/p0xBPDrDWn82llIxMHeHkGZjSqWop5RMZpzqY
+	 jRIrfbQ5+8UDcojAJL7UskOSe7z03icn+mudc9nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Ian Ray <ian.ray@ge.com>,
-	Robert Foss <robert.foss@linaro.org>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 098/357] drm/bridge: megachips: Fix error handling in i2c_register_driver()
-Date: Fri, 10 Mar 2023 14:36:27 +0100
-Message-Id: <20230310133738.328326637@linuxfoundation.org>
+Subject: [PATCH 5.4 099/357] drm/vc4: dpi: Add option for inverting pixel clock and output enable
+Date: Fri, 10 Mar 2023 14:36:28 +0100
+Message-Id: <20230310133738.373334320@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -37,63 +35,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-[ Upstream commit 4ecff954c370b82bce45bdca2846c5c5563e8a8a ]
+[ Upstream commit 3c2707632146b22e97b0fbf6778bab8add2eaa1d ]
 
-A problem about insmod megachips-stdpxxxx-ge-b850v3-fw.ko failed is
-triggered with the following log given:
+DRM provides flags for inverting pixel clock and output enable
+signals, but these were not mapped to the relevant registers.
 
-[ 4497.981497] Error: Driver 'stdp4028-ge-b850v3-fw' is already registered, aborting...
-insmod: ERROR: could not insert module megachips-stdpxxxx-ge-b850v3-fw.ko: Device or resource busy
+Add those mappings.
 
-The reason is that stdpxxxx_ge_b850v3_init() returns i2c_add_driver()
-directly without checking its return value, if i2c_add_driver() failed,
-it returns without calling i2c_del_driver() on the previous i2c driver,
-resulting the megachips-stdpxxxx-ge-b850v3-fw can never be installed
-later.
-A simple call graph is shown as below:
-
- stdpxxxx_ge_b850v3_init()
-   i2c_add_driver(&stdp4028_ge_b850v3_fw_driver)
-   i2c_add_driver(&stdp2690_ge_b850v3_fw_driver)
-     i2c_register_driver()
-       driver_register()
-         bus_add_driver()
-           priv = kzalloc(...) # OOM happened
-   # return without delete stdp4028_ge_b850v3_fw_driver
-
-Fix by calling i2c_del_driver() on stdp4028_ge_b850v3_fw_driver when
-i2c_add_driver() returns error.
-
-Fixes: fcfa0ddc18ed ("drm/bridge: Drivers for megachips-stdpxxxx-ge-b850v3-fw (LVDS-DP++)")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Tested-by: Ian Ray <ian.ray@ge.com>
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221108091226.114524-1-yuancan@huawei.com
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Link: https://lore.kernel.org/r/20220613144800.326124-10-maxime@cerno.tech
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Stable-dep-of: 0870d86eac8a ("drm/vc4: dpi: Fix format mapping for RGB565")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_dpi.c | 66 ++++++++++++++++++++---------------
+ 1 file changed, 38 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c b/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
-index b72f6f541d4ef..14d578fce09f9 100644
---- a/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
-+++ b/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
-@@ -426,7 +426,11 @@ static int __init stdpxxxx_ge_b850v3_init(void)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/gpu/drm/vc4/vc4_dpi.c b/drivers/gpu/drm/vc4/vc4_dpi.c
+index 8a27a6acee61c..c567396f050e9 100644
+--- a/drivers/gpu/drm/vc4/vc4_dpi.c
++++ b/drivers/gpu/drm/vc4/vc4_dpi.c
+@@ -151,35 +151,45 @@ static void vc4_dpi_encoder_enable(struct drm_encoder *encoder)
+ 	}
+ 	drm_connector_list_iter_end(&conn_iter);
  
--	return i2c_add_driver(&stdp2690_ge_b850v3_fw_driver);
-+	ret = i2c_add_driver(&stdp2690_ge_b850v3_fw_driver);
-+	if (ret)
-+		i2c_del_driver(&stdp4028_ge_b850v3_fw_driver);
+-	if (connector && connector->display_info.num_bus_formats) {
+-		u32 bus_format = connector->display_info.bus_formats[0];
+-
+-		switch (bus_format) {
+-		case MEDIA_BUS_FMT_RGB888_1X24:
+-			dpi_c |= VC4_SET_FIELD(DPI_FORMAT_24BIT_888_RGB,
+-					       DPI_FORMAT);
+-			break;
+-		case MEDIA_BUS_FMT_BGR888_1X24:
+-			dpi_c |= VC4_SET_FIELD(DPI_FORMAT_24BIT_888_RGB,
+-					       DPI_FORMAT);
+-			dpi_c |= VC4_SET_FIELD(DPI_ORDER_BGR, DPI_ORDER);
+-			break;
+-		case MEDIA_BUS_FMT_RGB666_1X24_CPADHI:
+-			dpi_c |= VC4_SET_FIELD(DPI_FORMAT_18BIT_666_RGB_2,
+-					       DPI_FORMAT);
+-			break;
+-		case MEDIA_BUS_FMT_RGB666_1X18:
+-			dpi_c |= VC4_SET_FIELD(DPI_FORMAT_18BIT_666_RGB_1,
+-					       DPI_FORMAT);
+-			break;
+-		case MEDIA_BUS_FMT_RGB565_1X16:
+-			dpi_c |= VC4_SET_FIELD(DPI_FORMAT_16BIT_565_RGB_3,
+-					       DPI_FORMAT);
+-			break;
+-		default:
+-			DRM_ERROR("Unknown media bus format %d\n", bus_format);
+-			break;
++	if (connector) {
++		if (connector->display_info.num_bus_formats) {
++			u32 bus_format = connector->display_info.bus_formats[0];
 +
-+	return ret;
- }
- module_init(stdpxxxx_ge_b850v3_init);
- 
++			switch (bus_format) {
++			case MEDIA_BUS_FMT_RGB888_1X24:
++				dpi_c |= VC4_SET_FIELD(DPI_FORMAT_24BIT_888_RGB,
++						       DPI_FORMAT);
++				break;
++			case MEDIA_BUS_FMT_BGR888_1X24:
++				dpi_c |= VC4_SET_FIELD(DPI_FORMAT_24BIT_888_RGB,
++						       DPI_FORMAT);
++				dpi_c |= VC4_SET_FIELD(DPI_ORDER_BGR,
++						       DPI_ORDER);
++				break;
++			case MEDIA_BUS_FMT_RGB666_1X24_CPADHI:
++				dpi_c |= VC4_SET_FIELD(DPI_FORMAT_18BIT_666_RGB_2,
++						       DPI_FORMAT);
++				break;
++			case MEDIA_BUS_FMT_RGB666_1X18:
++				dpi_c |= VC4_SET_FIELD(DPI_FORMAT_18BIT_666_RGB_1,
++						       DPI_FORMAT);
++				break;
++			case MEDIA_BUS_FMT_RGB565_1X16:
++				dpi_c |= VC4_SET_FIELD(DPI_FORMAT_16BIT_565_RGB_3,
++						       DPI_FORMAT);
++				break;
++			default:
++				DRM_ERROR("Unknown media bus format %d\n",
++					  bus_format);
++				break;
++			}
+ 		}
++
++		if (connector->display_info.bus_flags & DRM_BUS_FLAG_PIXDATA_DRIVE_NEGEDGE)
++			dpi_c |= DPI_PIXEL_CLK_INVERT;
++
++		if (connector->display_info.bus_flags & DRM_BUS_FLAG_DE_LOW)
++			dpi_c |= DPI_OUTPUT_ENABLE_INVERT;
+ 	} else {
+ 		/* Default to 24bit if no connector found. */
+ 		dpi_c |= VC4_SET_FIELD(DPI_FORMAT_24BIT_888_RGB, DPI_FORMAT);
 -- 
 2.39.2
 
