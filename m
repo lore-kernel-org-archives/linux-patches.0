@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1991B8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84937C433A0;
-	Fri, 10 Mar 2023 14:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79188481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C852C4339B;
+	Fri, 10 Mar 2023 14:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456842;
-	bh=LOYjDsy62Hb8HMECGXe/ToF4xlSzflh09K6bV4/KwfU=;
+	s=korg; t=1678456845;
+	bh=NOCtR16MvCE5si4/jGeWf/tHDwOeSNEGL7wKjhq/Jo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OMHhuGaELSKgZi1nRhakoaHQAKpfr1kEoOMGZf1F1JRMK04/cb5y3lyduhGYkqp3N
-	 kt2DvxgGk5U9+0TymzcIJTfBP9tmKnaXr5XceH+O6qIpFmcWWZg/xArK9qpaT/zRWg
-	 Umn0i2bnXjwul3CLzJmymG6atL04rKkl3B9ua6JI=
+	b=w1evCRHZzVnXRUcaqES60zz3aCdSszpkDfMNmbWaFqEvUrxfVT86ts8aFlq+KJuOy
+	 PJIQFKhKI5qwpG2UNgNyxycgiAWZ/A+eYE2lxeac842v+9fvnHGVNuHivcm4dMIKjj
+	 DpBTGulG9rb/ovxYSNb6ulaZNI3Q7YH/in0lPTlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 113/211] ASoC: adau7118: dont disable regulators on device unbind
-Date: Fri, 10 Mar 2023 14:38:13 +0100
-Message-Id: <20230310133722.184522536@linuxfoundation.org>
+Subject: [PATCH 6.2 114/211] ASoC: apple: mca: Fix final status read on SERDES reset
+Date: Fri, 10 Mar 2023 14:38:14 +0100
+Message-Id: <20230310133722.213152827@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,61 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Martin Povišer <povik+lin@cutebit.org>
 
-[ Upstream commit b5bfa7277ee7d944421e0ef193586c6e34d7492c ]
+[ Upstream commit aaf5f0d76b6e1870e3674408de2b13a92a4d4059 ]
 
-The regulators are supposed to be controlled through the
-set_bias_level() component callback. Moreover, the regulators are not
-enabled during probe and so, this would lead to a regulator unbalanced
-use count.
+>From within the early trigger we are doing a reset of the SERDES unit,
+but the final status read is on a bad address. Add the missing SERDES
+unit offset in calculation of the address.
 
-Fixes: ca514c0f12b02 ("ASOC: Add ADAU7118 8 Channel PDM-to-I2S/TDM Converter driver")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20230224104551.1139981-1-nuno.sa@analog.com
+Fixes: 3df5d0d97289 ("ASoC: apple: mca: Start new platform driver")
+Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
+Link: https://lore.kernel.org/r/20230224153302.45365-1-povik+lin@cutebit.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/adau7118.c | 19 +------------------
- 1 file changed, 1 insertion(+), 18 deletions(-)
+ sound/soc/apple/mca.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/adau7118.c b/sound/soc/codecs/adau7118.c
-index bbb0972498876..a663d37e57760 100644
---- a/sound/soc/codecs/adau7118.c
-+++ b/sound/soc/codecs/adau7118.c
-@@ -444,22 +444,6 @@ static const struct snd_soc_component_driver adau7118_component_driver = {
- 	.endianness		= 1,
- };
- 
--static void adau7118_regulator_disable(void *data)
--{
--	struct adau7118_data *st = data;
--	int ret;
--	/*
--	 * If we fail to disable DVDD, don't bother in trying IOVDD. We
--	 * actually don't want to be left in the situation where DVDD
--	 * is enabled and IOVDD is disabled.
--	 */
--	ret = regulator_disable(st->dvdd);
--	if (ret)
--		return;
--
--	regulator_disable(st->iovdd);
--}
--
- static int adau7118_regulator_setup(struct adau7118_data *st)
- {
- 	st->iovdd = devm_regulator_get(st->dev, "iovdd");
-@@ -481,8 +465,7 @@ static int adau7118_regulator_setup(struct adau7118_data *st)
- 		regcache_cache_only(st->map, true);
- 	}
- 
--	return devm_add_action_or_reset(st->dev, adau7118_regulator_disable,
--					st);
-+	return 0;
- }
- 
- static int adau7118_parset_dt(const struct adau7118_data *st)
+diff --git a/sound/soc/apple/mca.c b/sound/soc/apple/mca.c
+index 24381c42eb54c..9cceeb2599524 100644
+--- a/sound/soc/apple/mca.c
++++ b/sound/soc/apple/mca.c
+@@ -210,7 +210,7 @@ static void mca_fe_early_trigger(struct snd_pcm_substream *substream, int cmd,
+ 			   SERDES_CONF_SOME_RST);
+ 		readl_relaxed(cl->base + serdes_conf);
+ 		mca_modify(cl, serdes_conf, SERDES_STATUS_RST, 0);
+-		WARN_ON(readl_relaxed(cl->base + REG_SERDES_STATUS) &
++		WARN_ON(readl_relaxed(cl->base + serdes_unit + REG_SERDES_STATUS) &
+ 			SERDES_STATUS_RST);
+ 		break;
+ 	default:
 -- 
 2.39.2
 
