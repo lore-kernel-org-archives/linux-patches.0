@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E70E882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:14:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968A2C433EF;
-	Fri, 10 Mar 2023 15:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F65882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:14:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6407DC433D2;
+	Fri, 10 Mar 2023 15:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461279;
-	bh=3roV8uW1v31n5edmx9W0JG+kRuQVOwex91joNPZwoSw=;
+	s=korg; t=1678461281;
+	bh=vWjZYVCyqOa7QEyu/N9kEW1AAi5cQG0o8QSHeR20/1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GOr/mdSVEi627+aujQhWQwZeuIWkQYZLMMm+vYURd1Ebc5uUSWQrLs7WVDdlpBxNa
-	 T2DeqTPhc14Rro6mKBc8a/Aw2YW/AHxWbLPni4BuVxDR5ZeMXSy0t6PN9uZRGg9O8t
-	 Jgv0rznmO23wpMiHi+FpHQyWYAref2PL7h3Hvt9Y=
+	b=NrjlXXybhQHR9LYpXeQN+QdHS5/CP0XnVLFK8nvJKe6h5gGGQ4f1cfUqjcxTpX/HC
+	 qqVl0uleeTBqIDipbXpzbo9jAEhIS5ECIYV69q4KJm+4NndPqSB9HYF5Ip8+C2Q/sm
+	 f2GdTO+NF+fXi5e4Q5TNK/zapfHDphs8Azk+HuM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ionut_n2001@yahoo.com,
-	Kees Cook <keescook@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Jilin Yuan <yuanjilin@cdjrlc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 084/136] media: uvcvideo: Silence memcpy() run-time false positive warnings
-Date: Fri, 10 Mar 2023 14:43:26 +0100
-Message-Id: <20230310133709.708819844@linuxfoundation.org>
+Subject: [PATCH 5.15 085/136] USB: fix memory leak with using debugfs_lookup()
+Date: Fri, 10 Mar 2023 14:43:27 +0100
+Message-Id: <20230310133709.737987433@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -36,58 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit b839212988575c701aab4d3d9ca15e44c87e383c ]
+[ Upstream commit 30374434edab20e25776f8ecb4bc9d1e54309487 ]
 
-The memcpy() in uvc_video_decode_meta() intentionally copies across the
-length and flags members and into the trailing buf flexible array.
-Split the copy so that the compiler can better reason about (the lack
-of) buffer overflows here. Avoid the run-time false positive warning:
+When calling debugfs_lookup() the result must have dput() called on it,
+otherwise the memory will leak over time.  To make things simpler, just
+call debugfs_lookup_and_remove() instead which handles all of the logic at
+once.
 
-  memcpy: detected field-spanning write (size 12) of single field "&meta->length" at drivers/media/usb/uvc/uvc_video.c:1355 (size 1)
-
-Additionally fix a typo in the documentation for struct uvc_meta_buf.
-
-Reported-by: ionut_n2001@yahoo.com
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216810
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: Jilin Yuan <yuanjilin@cdjrlc.com>
+Link: https://lore.kernel.org/r/20230106152828.3790902-1-gregkh@linuxfoundation.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_video.c | 4 +++-
- include/uapi/linux/uvcvideo.h     | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/core/usb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index af2c6cb9fa3c4..f477cfbbb905a 100644
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -1334,7 +1334,9 @@ static void uvc_video_decode_meta(struct uvc_streaming *stream,
- 	if (has_scr)
- 		memcpy(stream->clock.last_scr, scr, 6);
+diff --git a/drivers/usb/core/usb.c b/drivers/usb/core/usb.c
+index 62368c4ed37af..cc36f9f228148 100644
+--- a/drivers/usb/core/usb.c
++++ b/drivers/usb/core/usb.c
+@@ -1036,7 +1036,7 @@ static void usb_debugfs_init(void)
  
--	memcpy(&meta->length, mem, length);
-+	meta->length = mem[0];
-+	meta->flags  = mem[1];
-+	memcpy(meta->buf, &mem[2], length - 2);
- 	meta_buf->bytesused += length + sizeof(meta->ns) + sizeof(meta->sof);
+ static void usb_debugfs_cleanup(void)
+ {
+-	debugfs_remove(debugfs_lookup("devices", usb_debug_root));
++	debugfs_lookup_and_remove("devices", usb_debug_root);
+ }
  
- 	uvc_dbg(stream->dev, FRAME,
-diff --git a/include/uapi/linux/uvcvideo.h b/include/uapi/linux/uvcvideo.h
-index 8288137387c0d..a9d0a64007ba5 100644
---- a/include/uapi/linux/uvcvideo.h
-+++ b/include/uapi/linux/uvcvideo.h
-@@ -86,7 +86,7 @@ struct uvc_xu_control_query {
-  * struct. The first two fields are added by the driver, they can be used for
-  * clock synchronisation. The rest is an exact copy of a UVC payload header.
-  * Only complete objects with complete buffers are included. Therefore it's
-- * always sizeof(meta->ts) + sizeof(meta->sof) + meta->length bytes large.
-+ * always sizeof(meta->ns) + sizeof(meta->sof) + meta->length bytes large.
-  */
- struct uvc_meta_buf {
- 	__u64 ns;
+ /*
 -- 
 2.39.2
 
