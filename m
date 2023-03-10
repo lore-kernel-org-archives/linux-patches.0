@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FCE38481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:04:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0690AC433EF;
-	Fri, 10 Mar 2023 14:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B648481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:04:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C92C433D2;
+	Fri, 10 Mar 2023 14:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457095;
-	bh=+0x302HVA94pD7u0OKvIqfzTRP+nx4DiV6FamS1tsgE=;
+	s=korg; t=1678457098;
+	bh=s8HttMRlfxiQVjgYNpcGtmLGKklX1y1jNFUtoylxP2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQ8FomFhLHh89JSbnbtKY/5ednsMiZcQFbtH9LwK6p8Bv8ng4TJm2jBIbEaPwkv1F
-	 iQ+/lctuRhlzsxUPemNI8+EasWd+euSEMawGPFOR1BsenUyoZauWpzBhx+zL/ibFnm
-	 3hiHBo+drn3aOVNA3MQjujVkmrTVdlTilX/LZ6zo=
+	b=vy1iO4xWcwhXALSga23gWDVRcYSxbv0JBvRVrVfFgcbw2Ja1HiTClszSqyg4nOrK6
+	 r0gShSYjEBmtSc2/TrJ0+iOSVJIdxFmgiCjG3PO81g9eAj1kGXTAc6dGjt0EOuN8+v
+	 dTmSH1xskae4+lxQVm+R5aMvsXhmDbl3p51gdwew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Roger Lu <roger.lu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Jianglei Nie <niejianglei2021@163.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/200] soc: mediatek: mtk-svs: Use pm_runtime_resume_and_get() in svs_init01()
-Date: Fri, 10 Mar 2023 14:37:06 +0100
-Message-Id: <20230310133717.629894530@linuxfoundation.org>
+Subject: [PATCH 6.1 002/200] auxdisplay: hd44780: Fix potential memory leak in hd44780_remove()
+Date: Fri, 10 Mar 2023 14:36:49 +0100
+Message-Id: <20230310133717.132481820@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -37,39 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Jianglei Nie <niejianglei2021@163.com>
 
-[ Upstream commit 37fa2aff8fe490771f2229b0f2fcd15796b1bfca ]
+[ Upstream commit ddf75a86aba2cfb7ec4497e8692b60c8c8fe0ee7 ]
 
-svs_init01() calls pm_runtime_get_sync() and added fail path as
-svs_init01_finish to put usage_counter. However, pm_runtime_get_sync()
-will increment usage_counter even it failed. Fix it by replacing it with
-pm_runtime_resume_and_get() to keep usage counter balanced.
+hd44780_probe() allocates a memory chunk for hd with kzalloc() and
+makes "lcd->drvdata->hd44780" point to it. When we call hd44780_remove(),
+we should release all relevant memory and resource. But "lcd->drvdata
+->hd44780" is not released, which will lead to a memory leak.
 
-Fixes: 681a02e95000 ("soc: mediatek: SVS: introduce MTK SVS engine")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: Roger Lu <roger.lu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230111074528.29354-5-roger.lu@mediatek.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+We should release the "lcd->drvdata->hd44780" in hd44780_remove() to fix
+the memory leak bug.
+
+Fixes: 718e05ed92ec ("auxdisplay: Introduce hd44780_common.[ch]")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Jianglei Nie <niejianglei2021@163.com>
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/mediatek/mtk-svs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/auxdisplay/hd44780.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/soc/mediatek/mtk-svs.c b/drivers/soc/mediatek/mtk-svs.c
-index e0b8aa75c84b6..00526fd37d7b8 100644
---- a/drivers/soc/mediatek/mtk-svs.c
-+++ b/drivers/soc/mediatek/mtk-svs.c
-@@ -1324,7 +1324,7 @@ static int svs_init01(struct svs_platform *svsp)
- 				svsb->pm_runtime_enabled_count++;
- 			}
+diff --git a/drivers/auxdisplay/hd44780.c b/drivers/auxdisplay/hd44780.c
+index 8b2a0eb3f32a4..d56a5d508ccd7 100644
+--- a/drivers/auxdisplay/hd44780.c
++++ b/drivers/auxdisplay/hd44780.c
+@@ -322,8 +322,10 @@ static int hd44780_probe(struct platform_device *pdev)
+ static int hd44780_remove(struct platform_device *pdev)
+ {
+ 	struct charlcd *lcd = platform_get_drvdata(pdev);
++	struct hd44780_common *hdc = lcd->drvdata;
  
--			ret = pm_runtime_get_sync(svsb->opp_dev);
-+			ret = pm_runtime_resume_and_get(svsb->opp_dev);
- 			if (ret < 0) {
- 				dev_err(svsb->dev, "mtcmos on fail: %d\n", ret);
- 				goto svs_init01_resume_cpuidle;
+ 	charlcd_unregister(lcd);
++	kfree(hdc->hd44780);
+ 	kfree(lcd->drvdata);
+ 
+ 	kfree(lcd);
 -- 
 2.39.2
 
