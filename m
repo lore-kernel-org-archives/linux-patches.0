@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21886847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:50:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98DE5C433D2;
-	Fri, 10 Mar 2023 13:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC01847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:50:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82872C433EF;
+	Fri, 10 Mar 2023 13:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456238;
-	bh=5q8bH48Z9CAZvylkeGw0grwrnk/ayXpIo8y53ET8IpA=;
+	s=korg; t=1678456241;
+	bh=po/2gNyyaQZWSeGCo/DfBC5O8IG74SYUlCFbh3ZA+Lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NAbX8tnsVZtQG0ji0Kr+YTvYnwBHynfqVuB3MBWzUZYGR4Jgadf8Cgzt1VcUYm5Xd
-	 KwZcG8mdP7/UhW2keMfPnQ4HmU4GYnkNR9pk10oxSuAk5vzFBSeH5mpj84hh0CpxFr
-	 owX5MEPPiwVOMzaw60yDGejASYvmJ05dmkNXiLz4=
+	b=YY+q69qcjitrylBiSSGeU5V0O8SHzaxMX9d1tDDi6RXuFszDzyDWN1aNeytb+eubk
+	 huv7jjZ2ZS5g0hEwaS26Ypqg5glitDCsld1wa0rHHdbQG7UD44bYGd1bOr1tJpCFGH
+	 SzYDnwPtXClPyQJ8PP0VaQVw6jtOznnvMnTDnVS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 4.14 100/193] s390/kprobes: fix irq mask clobbering on kprobe reenter from post_handler
-Date: Fri, 10 Mar 2023 14:38:02 +0100
-Message-Id: <20230310133714.588272034@linuxfoundation.org>
+	syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Jun Nie <jun.nie@linaro.org>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.14 127/193] ext4: optimize ea_inode block expansion
+Date: Fri, 10 Mar 2023 14:38:29 +0100
+Message-Id: <20230310133715.472460558@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -34,80 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Jun Nie <jun.nie@linaro.org>
 
-commit 42e19e6f04984088b6f9f0507c4c89a8152d9730 upstream.
+commit 1e9d62d252812575ded7c620d8fc67c32ff06c16 upstream.
 
-Recent test_kprobe_missed kprobes kunit test uncovers the following error
-(reported when CONFIG_DEBUG_ATOMIC_SLEEP is enabled):
+Copy ea data from inode entry when expanding ea block if possible.
+Then remove the ea entry if expansion success. Thus memcpy to a
+temporary buffer may be avoided.
 
-BUG: sleeping function called from invalid context at kernel/locking/mutex.c:580
-in_atomic(): 0, irqs_disabled(): 1, non_block: 0, pid: 662, name: kunit_try_catch
-preempt_count: 0, expected: 0
-RCU nest depth: 0, expected: 0
-no locks held by kunit_try_catch/662.
-irq event stamp: 280
-hardirqs last  enabled at (279): [<00000003e60a3d42>] __do_pgm_check+0x17a/0x1c0
-hardirqs last disabled at (280): [<00000003e3bd774a>] kprobe_exceptions_notify+0x27a/0x318
-softirqs last  enabled at (0): [<00000003e3c5c890>] copy_process+0x14a8/0x4c80
-softirqs last disabled at (0): [<0000000000000000>] 0x0
-CPU: 46 PID: 662 Comm: kunit_try_catch Tainted: G                 N 6.2.0-173644-g44c18d77f0c0 #2
-Hardware name: IBM 3931 A01 704 (LPAR)
-Call Trace:
- [<00000003e60a3a00>] dump_stack_lvl+0x120/0x198
- [<00000003e3d02e82>] __might_resched+0x60a/0x668
- [<00000003e60b9908>] __mutex_lock+0xc0/0x14e0
- [<00000003e60bad5a>] mutex_lock_nested+0x32/0x40
- [<00000003e3f7b460>] unregister_kprobe+0x30/0xd8
- [<00000003e51b2602>] test_kprobe_missed+0xf2/0x268
- [<00000003e51b5406>] kunit_try_run_case+0x10e/0x290
- [<00000003e51b7dfa>] kunit_generic_run_threadfn_adapter+0x62/0xb8
- [<00000003e3ce30f8>] kthread+0x2d0/0x398
- [<00000003e3b96afa>] __ret_from_fork+0x8a/0xe8
- [<00000003e60ccada>] ret_from_fork+0xa/0x40
+If the expansion fails, we do not need to recovery the removed ea
+entry neither in this way.
 
-The reason for this error report is that kprobes handling code failed
-to restore irqs.
-
-The problem is that when kprobe is triggered from another kprobe
-post_handler current sequence of enable_singlestep / disable_singlestep
-is the following:
-enable_singlestep  <- original kprobe (saves kprobe_saved_imask)
-enable_singlestep  <- kprobe triggered from post_handler (clobbers kprobe_saved_imask)
-disable_singlestep <- kprobe triggered from post_handler (restores kprobe_saved_imask)
-disable_singlestep <- original kprobe (restores wrong clobbered kprobe_saved_imask)
-
-There is just one kprobe_ctlblk per cpu and both calls saves and
-loads irq mask to kprobe_saved_imask. To fix the problem simply move
-resume_execution (which calls disable_singlestep) before calling
-post_handler. This also fixes the problem that post_handler is called
-with pt_regs which were not yet adjusted after single-stepping.
-
-Cc: stable@vger.kernel.org
-Fixes: 4ba069b802c2 ("[S390] add kprobes support.")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reported-by: syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=3613786cb88c93aa1c6a279b1df6a7b201347d08
+Link: https://lore.kernel.org/r/20230103014517.495275-2-jun.nie@linaro.org
+Cc: stable@kernel.org
+Signed-off-by: Jun Nie <jun.nie@linaro.org>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/kprobes.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/ext4/xattr.c |   28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
---- a/arch/s390/kernel/kprobes.c
-+++ b/arch/s390/kernel/kprobes.c
-@@ -546,12 +546,11 @@ static int post_kprobe_handler(struct pt
- 	if (!p)
- 		return 0;
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -2569,9 +2569,8 @@ static int ext4_xattr_move_to_block(hand
  
-+	resume_execution(p, regs);
- 	if (kcb->kprobe_status != KPROBE_REENTER && p->post_handler) {
- 		kcb->kprobe_status = KPROBE_HIT_SSDONE;
- 		p->post_handler(p, regs, 0);
+ 	is = kzalloc(sizeof(struct ext4_xattr_ibody_find), GFP_NOFS);
+ 	bs = kzalloc(sizeof(struct ext4_xattr_block_find), GFP_NOFS);
+-	buffer = kvmalloc(value_size, GFP_NOFS);
+ 	b_entry_name = kmalloc(entry->e_name_len + 1, GFP_NOFS);
+-	if (!is || !bs || !buffer || !b_entry_name) {
++	if (!is || !bs || !b_entry_name) {
+ 		error = -ENOMEM;
+ 		goto out;
  	}
--
--	resume_execution(p, regs);
- 	pop_kprobe(kcb);
- 	preempt_enable_no_resched();
+@@ -2583,12 +2582,18 @@ static int ext4_xattr_move_to_block(hand
  
+ 	/* Save the entry name and the entry value */
+ 	if (entry->e_value_inum) {
++		buffer = kvmalloc(value_size, GFP_NOFS);
++		if (!buffer) {
++			error = -ENOMEM;
++			goto out;
++		}
++
+ 		error = ext4_xattr_inode_get(inode, entry, buffer, value_size);
+ 		if (error)
+ 			goto out;
+ 	} else {
+ 		size_t value_offs = le16_to_cpu(entry->e_value_offs);
+-		memcpy(buffer, (void *)IFIRST(header) + value_offs, value_size);
++		buffer = (void *)IFIRST(header) + value_offs;
+ 	}
+ 
+ 	memcpy(b_entry_name, entry->e_name, entry->e_name_len);
+@@ -2603,25 +2608,26 @@ static int ext4_xattr_move_to_block(hand
+ 	if (error)
+ 		goto out;
+ 
+-	/* Remove the chosen entry from the inode */
+-	error = ext4_xattr_ibody_set(handle, inode, &i, is);
+-	if (error)
+-		goto out;
+-
+ 	i.value = buffer;
+ 	i.value_len = value_size;
+ 	error = ext4_xattr_block_find(inode, &i, bs);
+ 	if (error)
+ 		goto out;
+ 
+-	/* Add entry which was removed from the inode into the block */
++	/* Move ea entry from the inode into the block */
+ 	error = ext4_xattr_block_set(handle, inode, &i, bs);
+ 	if (error)
+ 		goto out;
+-	error = 0;
++
++	/* Remove the chosen entry from the inode */
++	i.value = NULL;
++	i.value_len = 0;
++	error = ext4_xattr_ibody_set(handle, inode, &i, is);
++
+ out:
+ 	kfree(b_entry_name);
+-	kvfree(buffer);
++	if (entry->e_value_inum && buffer)
++		kvfree(buffer);
+ 	if (is)
+ 		brelse(is->iloc.bh);
+ 	if (bs)
 
 
