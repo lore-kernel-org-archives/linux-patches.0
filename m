@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17AE8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:05:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5115DC433EF;
-	Fri, 10 Mar 2023 14:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2418481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:05:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DCC3C433EF;
+	Fri, 10 Mar 2023 14:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457133;
-	bh=wC8R+wNu6Gk+Oet3H6S30cGHJYid4YHFtSzjJFUWOi4=;
+	s=korg; t=1678457136;
+	bh=n9SKXHsAiKzB4lwgf7LpC7XKRDC3wD6c2/YrtV/ycls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hXIUnNt2pGAs+fOhpMkPcSGKymwcco5iRFrRKqgGLJhFqEI4MFqiYM+5KvLWMq5ZM
-	 qF2wujKRaFa/0tY7krLOdv1Y8CfqTdPHhwLg61Xbffqto+sMGLiNI6kvzdLtnSPnGF
-	 8bAJtFMSUC1GR8AdrYkJ2XiTZpwklcXPOhJHBGlM=
+	b=qH6FKHSkBgBVLiaAnD3rDPqbvsbxNC59d12FaENQw8QzXekPg9NlnV0ePaaX6fbZT
+	 J5HlGVoqtqlJG/PpiIocp7Sn9PnB8bcnsmLrPSoz/KEwjPAtEWgomceb/o0wCFkZau
+	 D5kDwLeN+94PqgA7HT5lY5RKU09RKk8sjKjS+z9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4793f6096d174c90b4f7@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Eric Biggers <ebiggers@google.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/200] f2fs: fix to avoid potential deadlock
-Date: Fri, 10 Mar 2023 14:36:53 +0100
-Message-Id: <20230310133717.250133328@linuxfoundation.org>
+Subject: [PATCH 6.1 007/200] objtool: Fix memory leak in create_static_call_sections()
+Date: Fri, 10 Mar 2023 14:36:54 +0100
+Message-Id: <20230310133717.278571070@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -37,84 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 5eaac835f27f2de6b73412d7c24e755733b49de0 ]
+[ Upstream commit 3da73f102309fe29150e5c35acd20dd82063ff67 ]
 
-There is a potential deadlock reported by syzbot as below:
+strdup() allocates memory for key_name. We need to release the memory in
+the following error paths. Add free() to avoid memory leak.
 
-F2FS-fs (loop2): invalid crc value
-F2FS-fs (loop2): Found nat_bits in checkpoint
-F2FS-fs (loop2): Mounted with checkpoint version = 48b305e4
-======================================================
-WARNING: possible circular locking dependency detected
-6.1.0-rc8-syzkaller-33330-ga5541c0811a0 #0 Not tainted
-------------------------------------------------------
-syz-executor.2/32123 is trying to acquire lock:
-ffff0000c0e1a608 (&mm->mmap_lock){++++}-{3:3}, at: __might_fault+0x54/0xb4 mm/memory.c:5644
-
-but task is already holding lock:
-ffff0001317c6088 (&sbi->sb_lock){++++}-{3:3}, at: f2fs_down_write fs/f2fs/f2fs.h:2205 [inline]
-ffff0001317c6088 (&sbi->sb_lock){++++}-{3:3}, at: f2fs_ioc_get_encryption_pwsalt fs/f2fs/file.c:2334 [inline]
-ffff0001317c6088 (&sbi->sb_lock){++++}-{3:3}, at: __f2fs_ioctl+0x1370/0x3318 fs/f2fs/file.c:4151
-
-which lock already depends on the new lock.
-
-Chain exists of:
-  &mm->mmap_lock --> &nm_i->nat_tree_lock --> &sbi->sb_lock
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&sbi->sb_lock);
-                               lock(&nm_i->nat_tree_lock);
-                               lock(&sbi->sb_lock);
-  lock(&mm->mmap_lock);
-
-Let's try to avoid above deadlock condition by moving __might_fault()
-out of sbi->sb_lock coverage.
-
-Fixes: 95fa90c9e5a7 ("f2fs: support recording errors into superblock")
-Link: https://lore.kernel.org/linux-f2fs-devel/000000000000cd5fe305ef617fe2@google.com/T/#u
-Reported-by: syzbot+4793f6096d174c90b4f7@syzkaller.appspotmail.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 1e7e47883830 ("x86/static_call: Add inline static call implementation for x86-64")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20221205080642.558583-1-linmq006@gmail.com
+Cc: Josh Poimboeuf <jpoimboe@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/objtool/check.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index f96bbfa8b3991..a03c61bd70165 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2326,6 +2326,7 @@ static int f2fs_ioc_get_encryption_pwsalt(struct file *filp, unsigned long arg)
- {
- 	struct inode *inode = file_inode(filp);
- 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
-+	u8 encrypt_pw_salt[16];
- 	int err;
- 
- 	if (!f2fs_sb_has_encrypt(sbi))
-@@ -2350,12 +2351,14 @@ static int f2fs_ioc_get_encryption_pwsalt(struct file *filp, unsigned long arg)
- 		goto out_err;
- 	}
- got_it:
--	if (copy_to_user((__u8 __user *)arg, sbi->raw_super->encrypt_pw_salt,
--									16))
--		err = -EFAULT;
-+	memcpy(encrypt_pw_salt, sbi->raw_super->encrypt_pw_salt, 16);
- out_err:
- 	f2fs_up_write(&sbi->sb_lock);
- 	mnt_drop_write_file(filp);
-+
-+	if (!err && copy_to_user((__u8 __user *)arg, encrypt_pw_salt, 16))
-+		err = -EFAULT;
-+
- 	return err;
- }
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 0c1b6acad141f..730b49e255e44 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -668,6 +668,7 @@ static int create_static_call_sections(struct objtool_file *file)
+ 		if (strncmp(key_name, STATIC_CALL_TRAMP_PREFIX_STR,
+ 			    STATIC_CALL_TRAMP_PREFIX_LEN)) {
+ 			WARN("static_call: trampoline name malformed: %s", key_name);
++			free(key_name);
+ 			return -1;
+ 		}
+ 		tmp = key_name + STATIC_CALL_TRAMP_PREFIX_LEN - STATIC_CALL_KEY_PREFIX_LEN;
+@@ -677,6 +678,7 @@ static int create_static_call_sections(struct objtool_file *file)
+ 		if (!key_sym) {
+ 			if (!opts.module) {
+ 				WARN("static_call: can't find static_call_key symbol: %s", tmp);
++				free(key_name);
+ 				return -1;
+ 			}
  
 -- 
 2.39.2
