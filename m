@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8FE8825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:56:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B791C4339B;
-	Fri, 10 Mar 2023 14:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD6B8825
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:56:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39029C4339B;
+	Fri, 10 Mar 2023 14:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460186;
-	bh=Pdi6NSkmzicvgTj2oN0t38B4uf2wZ5psyikolP1nC4k=;
+	s=korg; t=1678460189;
+	bh=vxdWZ70ib5BDiLR6LhHPkD+GzH66K4L25tY+ATDqTPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RPMCElniglAv5X90MZbcQAy6+TMZuq8XfpQZFY8CeVx2csSps5N4GYbZg5Yf1MNFk
-	 hH1JwWCMdgKRuGbArBX09L3dLXKWlLUvCauWtPEVja3FaMa+IXmYAOxAclPi4Y/mcQ
-	 eLfWkUYU2BeZfdvxO18Vb2IPlVzIHeHI9uy4vjBk=
+	b=U0j95Iuzm++pznJj6GMKf8RT0r4V4PNqqsHg3cDFHTYhxL413Tluu4ktU6JIz8UTX
+	 kqs1yjRoxLHn7LM8m8AUO+KdA4mT1CH7I1WSxQJVpEqHJ7YxO8o1Y4mKLg3f1ZmIYz
+	 yFoTqfsknE+1JCxXp6YRTkYrFIuSrrJ+p+YXZrXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Tom Talpey <tom@talpey.com>,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Steve French <stfrench@microsoft.com>,
+	Olga Kornievskaia <aglo@umich.edu>,
+	NeilBrown <neilb@suse.de>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 221/529] cifs: Fix warning and UAF when destroy the MR list
-Date: Fri, 10 Mar 2023 14:36:04 +0100
-Message-Id: <20230310133815.238790630@linuxfoundation.org>
+Subject: [PATCH 5.10 212/529] NFS: fix disabling of swap
+Date: Fri, 10 Mar 2023 14:35:55 +0100
+Message-Id: <20230310133814.825236149@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -37,131 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 3e161c2791f8e661eed24a2c624087084d910215 ]
+[ Upstream commit 5bab56fff53ce161ed859d9559a10361d4f79578 ]
 
-If the MR allocate failed, the MR recovery work not initialized
-and list not cleared. Then will be warning and UAF when release
-the MR:
+When swap is activated to a file on an NFSv4 mount we arrange that the
+state manager thread is always present as starting a new thread requires
+memory allocations that might block waiting for swap.
 
-  WARNING: CPU: 4 PID: 824 at kernel/workqueue.c:3066 __flush_work.isra.0+0xf7/0x110
-  CPU: 4 PID: 824 Comm: mount.cifs Not tainted 6.1.0-rc5+ #82
-  RIP: 0010:__flush_work.isra.0+0xf7/0x110
-  Call Trace:
-   <TASK>
-   __cancel_work_timer+0x2ba/0x2e0
-   smbd_destroy+0x4e1/0x990
-   _smbd_get_connection+0x1cbd/0x2110
-   smbd_get_connection+0x21/0x40
-   cifs_get_tcp_session+0x8ef/0xda0
-   mount_get_conns+0x60/0x750
-   cifs_mount+0x103/0xd00
-   cifs_smb3_do_mount+0x1dd/0xcb0
-   smb3_get_tree+0x1d5/0x300
-   vfs_get_tree+0x41/0xf0
-   path_mount+0x9b3/0xdd0
-   __x64_sys_mount+0x190/0x1d0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+Unfortunately the code for allowing the state manager thread to exit when
+swap is disabled was not tested properly and does not work.
+This can be seen by examining /proc/fs/nfsfs/servers after disabling swap
+and unmounting the filesystem.  The servers file will still list one
+entry.  Also a "ps" listing will show the state manager thread is still
+present.
 
-  BUG: KASAN: use-after-free in smbd_destroy+0x4fc/0x990
-  Read of size 8 at addr ffff88810b156a08 by task mount.cifs/824
-  CPU: 4 PID: 824 Comm: mount.cifs Tainted: G        W          6.1.0-rc5+ #82
-  Call Trace:
-   dump_stack_lvl+0x34/0x44
-   print_report+0x171/0x472
-   kasan_report+0xad/0x130
-   smbd_destroy+0x4fc/0x990
-   _smbd_get_connection+0x1cbd/0x2110
-   smbd_get_connection+0x21/0x40
-   cifs_get_tcp_session+0x8ef/0xda0
-   mount_get_conns+0x60/0x750
-   cifs_mount+0x103/0xd00
-   cifs_smb3_do_mount+0x1dd/0xcb0
-   smb3_get_tree+0x1d5/0x300
-   vfs_get_tree+0x41/0xf0
-   path_mount+0x9b3/0xdd0
-   __x64_sys_mount+0x190/0x1d0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+There are two problems.
+ 1/ rpc_clnt_swap_deactivate() doesn't walk up the ->cl_parent list to
+    find the primary client on which the state manager runs.
 
-  Allocated by task 824:
-   kasan_save_stack+0x1e/0x40
-   kasan_set_track+0x21/0x30
-   __kasan_kmalloc+0x7a/0x90
-   _smbd_get_connection+0x1b6f/0x2110
-   smbd_get_connection+0x21/0x40
-   cifs_get_tcp_session+0x8ef/0xda0
-   mount_get_conns+0x60/0x750
-   cifs_mount+0x103/0xd00
-   cifs_smb3_do_mount+0x1dd/0xcb0
-   smb3_get_tree+0x1d5/0x300
-   vfs_get_tree+0x41/0xf0
-   path_mount+0x9b3/0xdd0
-   __x64_sys_mount+0x190/0x1d0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+ 2/ The thread is not woken up properly and it immediately goes back to
+    sleep without checking whether it is really needed.  Using
+    nfs4_schedule_state_manager() ensures a proper wake-up.
 
-  Freed by task 824:
-   kasan_save_stack+0x1e/0x40
-   kasan_set_track+0x21/0x30
-   kasan_save_free_info+0x2a/0x40
-   ____kasan_slab_free+0x143/0x1b0
-   __kmem_cache_free+0xc8/0x330
-   _smbd_get_connection+0x1c6a/0x2110
-   smbd_get_connection+0x21/0x40
-   cifs_get_tcp_session+0x8ef/0xda0
-   mount_get_conns+0x60/0x750
-   cifs_mount+0x103/0xd00
-   cifs_smb3_do_mount+0x1dd/0xcb0
-   smb3_get_tree+0x1d5/0x300
-   vfs_get_tree+0x41/0xf0
-   path_mount+0x9b3/0xdd0
-   __x64_sys_mount+0x190/0x1d0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Let's initialize the MR recovery work before MR allocate to prevent
-the warning, remove the MRs from the list to prevent the UAF.
-
-Fixes: c7398583340a ("CIFS: SMBD: Implement RDMA memory registration")
-Acked-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Reviewed-by: Tom Talpey <tom@talpey.com>
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Olga Kornievskaia <aglo@umich.edu>
+Fixes: 4dc73c679114 ("NFSv4: keep state manager thread active if swap is enabled")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smbdirect.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfs/nfs4proc.c | 4 +++-
+ net/sunrpc/clnt.c | 2 ++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/cifs/smbdirect.c b/fs/cifs/smbdirect.c
-index c93d4ec843beb..bcc611069308a 100644
---- a/fs/cifs/smbdirect.c
-+++ b/fs/cifs/smbdirect.c
-@@ -2240,6 +2240,7 @@ static int allocate_mr_list(struct smbd_connection *info)
- 	atomic_set(&info->mr_ready_count, 0);
- 	atomic_set(&info->mr_used_count, 0);
- 	init_waitqueue_head(&info->wait_for_mr_cleanup);
-+	INIT_WORK(&info->mr_recovery_work, smbd_mr_recovery_work);
- 	/* Allocate more MRs (2x) than hardware responder_resources */
- 	for (i = 0; i < info->responder_resources * 2; i++) {
- 		smbdirect_mr = kzalloc(sizeof(*smbdirect_mr), GFP_KERNEL);
-@@ -2267,13 +2268,13 @@ static int allocate_mr_list(struct smbd_connection *info)
- 		list_add_tail(&smbdirect_mr->list, &info->mr_list);
- 		atomic_inc(&info->mr_ready_count);
- 	}
--	INIT_WORK(&info->mr_recovery_work, smbd_mr_recovery_work);
- 	return 0;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 8f502e2ac34fd..8653335c17b67 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -10400,7 +10400,9 @@ static void nfs4_disable_swap(struct inode *inode)
+ 	/* The state manager thread will now exit once it is
+ 	 * woken.
+ 	 */
+-	wake_up_var(&NFS_SERVER(inode)->nfs_client->cl_state);
++	struct nfs_client *clp = NFS_SERVER(inode)->nfs_client;
++
++	nfs4_schedule_state_manager(clp);
+ }
  
- out:
- 	kfree(smbdirect_mr);
- 
- 	list_for_each_entry_safe(smbdirect_mr, tmp, &info->mr_list, list) {
-+		list_del(&smbdirect_mr->list);
- 		ib_dereg_mr(smbdirect_mr->mr);
- 		kfree(smbdirect_mr->sgl);
- 		kfree(smbdirect_mr);
+ static const struct inode_operations nfs4_dir_inode_operations = {
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index e190d38c4c827..c6e8bd78e35d6 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -3047,6 +3047,8 @@ rpc_clnt_swap_deactivate_callback(struct rpc_clnt *clnt,
+ void
+ rpc_clnt_swap_deactivate(struct rpc_clnt *clnt)
+ {
++	while (clnt != clnt->cl_parent)
++		clnt = clnt->cl_parent;
+ 	if (atomic_dec_if_positive(&clnt->cl_swapper) == 0)
+ 		rpc_clnt_iterate_for_each_xprt(clnt,
+ 				rpc_clnt_swap_deactivate_callback, NULL);
 -- 
 2.39.2
 
