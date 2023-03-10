@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C588494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:38:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11877C4339E;
-	Fri, 10 Mar 2023 14:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609828494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:38:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DABD1C4339E;
+	Fri, 10 Mar 2023 14:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459130;
-	bh=7IBCn/nH9gL5Mc0IQ74fGPll+52yvaw+Qi16mKP9omw=;
+	s=korg; t=1678459133;
+	bh=HE5Ibmt1HgqCO8v1OICBoka3GgC3KgJnt2cx1UBasg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TboxsQmCrZa1OOFtBQKW044uZQHOsqOOIMtyJRw5opXmvGe6G0AjhkOg5sutbPMcm
-	 bFgK3ii0yKuDYidwL5LsxoA6hyV3RJDQsUDxsTXi/UyhyELegNUQwNYUQzT8FEmABF
-	 c0ISBfooj1CPB74foJ16l5y9TjggIS0GoFWZ2x2Y=
+	b=srSgvsmQVaSZsbsK5z//XWSU9sseoWny12wvnhwMZDvJZi/U6lhOCu8EL4GU3D91g
+	 d/US8NC3+NbQG90Cdm1lj/HiBGryOmSyJoIJdNuX/NIyQVWtGlwgQnK2oZaYt27RSP
+	 rLdvmQvKv8qvtrXsBjbEStD3PfuUywFB4s4AQ+0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com,
-	stable@kernel.org,
-	Jun Nie <jun.nie@linaro.org>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.4 251/357] ext4: refuse to create ea block when umounted
-Date: Fri, 10 Mar 2023 14:39:00 +0100
-Message-Id: <20230310133745.840485853@linuxfoundation.org>
+	Richard Henderson <rth@twiddle.net>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 5.4 260/357] alpha: fix FEN fault handling
+Date: Fri, 10 Mar 2023 14:39:09 +0100
+Message-Id: <20230310133746.207748496@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,40 +34,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jun Nie <jun.nie@linaro.org>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit f31173c19901a96bb2ebf6bcfec8a08df7095c91 upstream.
+commit 977a3009547dad4a5bc95d91be4a58c9f7eedac0 upstream.
 
-The ea block expansion need to access s_root while it is
-already set as NULL when umount is triggered. Refuse this
-request to avoid panic.
+Type 3 instruction fault (FPU insn with FPU disabled) is handled
+by quietly enabling FPU and returning.  Which is fine, except that
+we need to do that both for fault in userland and in the kernel;
+the latter *can* legitimately happen - all it takes is this:
 
-Reported-by: syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=3613786cb88c93aa1c6a279b1df6a7b201347d08
-Link: https://lore.kernel.org/r/20230103014517.495275-3-jun.nie@linaro.org
-Cc: stable@kernel.org
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+.global _start
+_start:
+        call_pal 0xae
+	lda $0, 0
+	ldq $0, 0($0)
+
+- call_pal CLRFEN to clear "FPU enabled" flag and arrange for
+a signal delivery (SIGSEGV in this case).
+
+Fixed by moving the handling of type 3 into the common part of
+do_entIF(), before we check for kernel vs. user mode.
+
+Incidentally, the check for kernel mode is unidiomatic; the normal
+way to do that is !user_mode(regs).  The difference is that
+the open-coded variant treats any of bits 63..3 of regs->ps being
+set as "it's user mode" while the normal approach is to check just
+the bit 3.  PS is a 4-bit register and regs->ps always will have
+bits 63..4 clear, so the open-coded variant here is actually equivalent
+to !user_mode(regs).  Harder to follow, though...
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Richard Henderson <rth@twiddle.net>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/alpha/kernel/traps.c |   30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1432,6 +1432,13 @@ static struct inode *ext4_xattr_inode_cr
- 	uid_t owner[2] = { i_uid_read(inode), i_gid_read(inode) };
- 	int err;
+--- a/arch/alpha/kernel/traps.c
++++ b/arch/alpha/kernel/traps.c
+@@ -235,7 +235,21 @@ do_entIF(unsigned long type, struct pt_r
+ {
+ 	int signo, code;
  
-+	if (inode->i_sb->s_root == NULL) {
-+		ext4_warning(inode->i_sb,
-+			     "refuse to create EA inode when umounting");
-+		WARN_ON(1);
-+		return ERR_PTR(-EINVAL);
-+	}
+-	if ((regs->ps & ~IPL_MAX) == 0) {
++	if (type == 3) { /* FEN fault */
++		/* Irritating users can call PAL_clrfen to disable the
++		   FPU for the process.  The kernel will then trap in
++		   do_switch_stack and undo_switch_stack when we try
++		   to save and restore the FP registers.
 +
- 	/*
- 	 * Let the next inode be the goal, so we try and allocate the EA inode
- 	 * in the same group, or nearby one.
++		   Given that GCC by default generates code that uses the
++		   FP registers, PAL_clrfen is not useful except for DoS
++		   attacks.  So turn the bleeding FPU back on and be done
++		   with it.  */
++		current_thread_info()->pcb.flags |= 1;
++		__reload_thread(&current_thread_info()->pcb);
++		return;
++	}
++	if (!user_mode(regs)) {
+ 		if (type == 1) {
+ 			const unsigned int *data
+ 			  = (const unsigned int *) regs->pc;
+@@ -368,20 +382,6 @@ do_entIF(unsigned long type, struct pt_r
+ 		}
+ 		break;
+ 
+-	      case 3: /* FEN fault */
+-		/* Irritating users can call PAL_clrfen to disable the
+-		   FPU for the process.  The kernel will then trap in
+-		   do_switch_stack and undo_switch_stack when we try
+-		   to save and restore the FP registers.
+-
+-		   Given that GCC by default generates code that uses the
+-		   FP registers, PAL_clrfen is not useful except for DoS
+-		   attacks.  So turn the bleeding FPU back on and be done
+-		   with it.  */
+-		current_thread_info()->pcb.flags |= 1;
+-		__reload_thread(&current_thread_info()->pcb);
+-		return;
+-
+ 	      case 5: /* illoc */
+ 	      default: /* unexpected instruction-fault type */
+ 		      ;
 
 
