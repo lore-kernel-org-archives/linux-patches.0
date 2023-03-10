@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12CE8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:04:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A3EC4339C;
-	Fri, 10 Mar 2023 14:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BEF8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:04:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B71C433D2;
+	Fri, 10 Mar 2023 14:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457048;
-	bh=Tk7/Rw+80MlNNf/xacnOtkIg6sDsTd5KY4CQNyU0E88=;
+	s=korg; t=1678457051;
+	bh=BeFhbC8F914UtRXtE/cB3q/D5yaQtaMipFrNhFw3DAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZFSJKkS8/Gq4yG+i2t9nmtEKovF4k+Qgk/F4Qyb6O5O4GLkx7UbGhOVJJeUVOdPC
-	 qyVhUDOe76haAtYB3L8V4SwIQurIJqK3YQqz/TRnvvYmCto7RHgwkuLCGMSThmVlw2
-	 bH7Xs7jN3LOVsghmELc0iqs4wngXPoECAkoy/ecU=
+	b=HsYTyl+hPeDo6GajPASwGCq8+e1C6+Bx4Jb/n7rMCBcNdz98/sFB0kotx8M8sM48q
+	 kaUaBIqdsU+aYTqbah+IhHHE9JsA5yQO5FWblZZdoZlhcrO/CLm5leFVh+Ilh9CzST
+	 c9jZVXbQD3REjIZjaxKWrhi8EHw2VvZbLkgBIFyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Wayne Lin <wayne.lin@amd.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	iczero <iczero@hellomouse.net>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Imre Deak <imre.deak@intel.com>
-Subject: [PATCH 6.2 207/211] drm/i915/dp_mst: Fix payload removal during output disabling
-Date: Fri, 10 Mar 2023 14:39:47 +0100
-Message-Id: <20230310133725.226733282@linuxfoundation.org>
+Subject: [PATCH 6.2 208/211] drm/i915: Fix system suspend without fbdev being initialized
+Date: Fri, 10 Mar 2023 14:39:48 +0100
+Message-Id: <20230310133725.267932666@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -40,78 +38,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Imre Deak <imre.deak@intel.com>
 
-commit eb50912ec931913e70640cecf75cb993fd26995f upstream.
+commit 8038510b1fe443ffbc0e356db5f47cbb8678a594 upstream.
 
-Use the correct old/new topology and payload states in
-intel_mst_disable_dp(). So far drm_atomic_get_mst_topology_state() it
-used returned either the old state, in case the state was added already
-earlier during the atomic check phase or otherwise the new state (but
-the latter could fail, which can't be handled in the enable/disable
-hooks). After the first patch in the patchset, the state should always
-get added already during the check phase, so here we can get the
-old/new states without a failure.
+If fbdev is not initialized for some reason - in practice on platforms
+without display - suspending fbdev should be skipped during system
+suspend, fix this up. While at it add an assert that suspending fbdev
+only happens with the display present.
 
-drm_dp_remove_payload() should use time_slots from the old payload state
-and vc_start_slot in the new one. It should update the new payload
-states to reflect the sink's current payload table after the payload is
-removed. Pass the new topology state and the old and new payload states
-accordingly.
+This fixes the following:
 
-This also fixes a problem where the payload allocations for multiple MST
-streams on the same link got inconsistent after a few commits, as
-during payload removal the old instead of the new payload state got
-updated, so the subsequent enabling sequence and commits used a stale
-payload state.
+[   91.227923] PM: suspend entry (s2idle)
+[   91.254598] Filesystems sync: 0.025 seconds
+[   91.270518] Freezing user space processes
+[   91.272266] Freezing user space processes completed (elapsed 0.001 seconds)
+[   91.272686] OOM killer disabled.
+[   91.272872] Freezing remaining freezable tasks
+[   91.274295] Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
+[   91.659622] BUG: kernel NULL pointer dereference, address: 00000000000001c8
+[   91.659981] #PF: supervisor write access in kernel mode
+[   91.660252] #PF: error_code(0x0002) - not-present page
+[   91.660511] PGD 0 P4D 0
+[   91.660647] Oops: 0002 [#1] PREEMPT SMP NOPTI
+[   91.660875] CPU: 4 PID: 917 Comm: bash Not tainted 6.2.0-rc7+ #54
+[   91.661185] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20221117gitfff6d81270b5-9.fc37 unknown
+[   91.661680] RIP: 0010:mutex_lock+0x19/0x30
+[   91.661914] Code: 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 00 00 53 48 89 fb e8 62 d3 ff ff 31 c0 65 48 8b 14 25 00 15 03 00 <f0> 48 0f b1 13 75 06 5b c3 cc cc cc cc 48 89 df 5b eb b4 0f 1f 40
+[   91.662840] RSP: 0018:ffffa1e8011ffc08 EFLAGS: 00010246
+[   91.663087] RAX: 0000000000000000 RBX: 00000000000001c8 RCX: 0000000000000000
+[   91.663440] RDX: ffff8be455eb0000 RSI: 0000000000000001 RDI: 00000000000001c8
+[   91.663802] RBP: ffff8be459440000 R08: ffff8be459441f08 R09: ffffffff8e1432c0
+[   91.664167] R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000001
+[   91.664532] R13: 00000000000001c8 R14: 0000000000000000 R15: ffff8be442f4fb20
+[   91.664905] FS:  00007f28ffc16740(0000) GS:ffff8be4bb900000(0000) knlGS:0000000000000000
+[   91.665334] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   91.665626] CR2: 00000000000001c8 CR3: 0000000114926006 CR4: 0000000000770ee0
+[   91.665988] PKRU: 55555554
+[   91.666131] Call Trace:
+[   91.666265]  <TASK>
+[   91.666381]  intel_fbdev_set_suspend+0x97/0x1b0 [i915]
+[   91.666738]  i915_drm_suspend+0xb9/0x100 [i915]
+[   91.667029]  pci_pm_suspend+0x78/0x170
+[   91.667234]  ? __pfx_pci_pm_suspend+0x10/0x10
+[   91.667461]  dpm_run_callback+0x47/0x150
+[   91.667673]  __device_suspend+0x10a/0x4e0
+[   91.667880]  dpm_suspend+0x134/0x270
+[   91.668069]  dpm_suspend_start+0x79/0x80
+[   91.668272]  suspend_devices_and_enter+0x11b/0x890
+[   91.668526]  pm_suspend.cold+0x270/0x2fc
+[   91.668737]  state_store+0x46/0x90
+[   91.668916]  kernfs_fop_write_iter+0x11b/0x200
+[   91.669153]  vfs_write+0x1e1/0x3a0
+[   91.669336]  ksys_write+0x53/0xd0
+[   91.669510]  do_syscall_64+0x58/0xc0
+[   91.669699]  ? syscall_exit_to_user_mode_prepare+0x18e/0x1c0
+[   91.669980]  ? syscall_exit_to_user_mode_prepare+0x18e/0x1c0
+[   91.670278]  ? syscall_exit_to_user_mode+0x17/0x40
+[   91.670524]  ? do_syscall_64+0x67/0xc0
+[   91.670717]  ? __irq_exit_rcu+0x3d/0x140
+[   91.670931]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+[   91.671202] RIP: 0033:0x7f28ffd14284
 
-v2: Constify the old payload state pointer. (Ville)
+v2: CC stable. (Jani)
 
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: stable@vger.kernel.org # 6.1
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Acked-by: Lyude Paul <lyude@redhat.com>
-Acked-by: Daniel Vetter <daniel@ffwll.ch>
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: f8cc091e0530 ("drm/i915/fbdev: suspend HPD before fbdev unregistration")
+Reported-and-tested-by: iczero <iczero@hellomouse.net>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+Cc: iczero <iczero@hellomouse.net>
+Cc: <stable@vger.kernel.org> # v6.1+
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230206114856.2665066-4-imre.deak@intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20230208114300.3123934-2-imre.deak@intel.com
+(cherry picked from commit 9542d708409a41449e99c9a464deb5e062c4bee2)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp_mst.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/i915/display/intel_fbdev.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_dp_mst.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_mst.c
-@@ -365,10 +365,14 @@ static void intel_mst_disable_dp(struct
- 	struct intel_dp *intel_dp = &dig_port->dp;
- 	struct intel_connector *connector =
- 		to_intel_connector(old_conn_state->connector);
--	struct drm_dp_mst_topology_state *mst_state =
--		drm_atomic_get_mst_topology_state(&state->base, &intel_dp->mst_mgr);
--	struct drm_dp_mst_atomic_payload *payload =
--		drm_atomic_get_mst_payload_state(mst_state, connector->port);
-+	struct drm_dp_mst_topology_state *old_mst_state =
-+		drm_atomic_get_old_mst_topology_state(&state->base, &intel_dp->mst_mgr);
-+	struct drm_dp_mst_topology_state *new_mst_state =
-+		drm_atomic_get_new_mst_topology_state(&state->base, &intel_dp->mst_mgr);
-+	const struct drm_dp_mst_atomic_payload *old_payload =
-+		drm_atomic_get_mst_payload_state(old_mst_state, connector->port);
-+	struct drm_dp_mst_atomic_payload *new_payload =
-+		drm_atomic_get_mst_payload_state(new_mst_state, connector->port);
- 	struct drm_i915_private *i915 = to_i915(connector->base.dev);
+--- a/drivers/gpu/drm/i915/display/intel_fbdev.c
++++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
+@@ -638,7 +638,13 @@ void intel_fbdev_set_suspend(struct drm_
+ 	struct intel_fbdev *ifbdev = dev_priv->display.fbdev.fbdev;
+ 	struct fb_info *info;
  
- 	drm_dbg_kms(&i915->drm, "active links %d\n",
-@@ -376,8 +380,8 @@ static void intel_mst_disable_dp(struct
+-	if (!ifbdev || !ifbdev->vma)
++	if (!ifbdev)
++		return;
++
++	if (drm_WARN_ON(&dev_priv->drm, !HAS_DISPLAY(dev_priv)))
++		return;
++
++	if (!ifbdev->vma)
+ 		goto set_suspend;
  
- 	intel_hdcp_disable(intel_mst->connector);
- 
--	drm_dp_remove_payload(&intel_dp->mst_mgr, mst_state,
--			      payload, payload);
-+	drm_dp_remove_payload(&intel_dp->mst_mgr, new_mst_state,
-+			      old_payload, new_payload);
- 
- 	intel_audio_codec_disable(encoder, old_crtc_state, old_conn_state);
- }
+ 	info = ifbdev->helper.info;
 
 
