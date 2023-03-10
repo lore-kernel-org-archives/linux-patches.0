@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5211C881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:39:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E7DC4339E;
-	Fri, 10 Mar 2023 14:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543E2881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:39:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5218C433D2;
+	Fri, 10 Mar 2023 14:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459160;
-	bh=ZticIFORbSCPcpGpqQbGeZo/8Hao8JCv1jJd2GTPcTw=;
+	s=korg; t=1678459163;
+	bh=UXRimoONqfbZazMESu81OGCrdYgzMu6rKMb7OMVI6jU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jg6dIt9DV8kCNunA6/BRbnu0LDft+NFNbPRuWraEKlGFh3siNdX2qvF8eSDoj33co
-	 QaoFBp5HRvCKnz/+iwlrFwA0tq2wYPiABjtPlaklUERLcgywiaqiIJ6PXoKIdlHo4s
-	 mvIKOI0CHOmZAy7BvtxkLE9RCpu3h5cbR+0Ou8uI=
+	b=x9ev3Q8AzRisqZ259jlGDqvP99ueIr/RVDD3es2WKUdClK6b6KspDd27kek16YFBm
+	 Uh0j4TamZDTpOyyipVZpnI9qjmT+wuRdSVuohCDRF5HiFFK0bgBkq+ROx3k/V5DKjQ
+	 tEI4PgujW6QVGyWqEsp1hFQs5K98ZpyvOXooTWm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arun Easi <aeasi@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 269/357] scsi: qla2xxx: Fix DMA-API call trace on NVMe LS requests
-Date: Fri, 10 Mar 2023 14:39:18 +0100
-Message-Id: <20230310133746.608550140@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 5.4 252/357] wifi: rtl8xxxu: Use a longer retry limit of 48
+Date: Fri, 10 Mar 2023 14:39:01 +0100
+Message-Id: <20230310133745.887515743@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,87 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arun Easi <aeasi@marvell.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit c75e6aef5039830cce5d4cf764dd204522f89e6b upstream.
+commit 2a86aa9a1892d60ef2e3f310f5b42b8b05546d65 upstream.
 
-The following message and call trace was seen with debug kernels:
+The Realtek rate control algorithm goes back and forth a lot between
+the highest and the lowest rate it's allowed to use. This is due to
+a lot of frames being dropped because the retry limits set by
+IEEE80211_CONF_CHANGE_RETRY_LIMITS are too low. (Experimentally, they
+are 4 for long frames and 7 for short frames.)
 
-DMA-API: qla2xxx 0000:41:00.0: device driver failed to check map
-error [device address=0x00000002a3ff38d8] [size=1024 bytes] [mapped as
-single]
-WARNING: CPU: 0 PID: 2930 at kernel/dma/debug.c:1017
-	 check_unmap+0xf42/0x1990
+The vendor drivers hardcode the value 48 for both retry limits (for
+station mode), which makes dropped frames very rare and thus the rate
+control is more stable.
 
-Call Trace:
-	debug_dma_unmap_page+0xc9/0x100
-	qla_nvme_ls_unmap+0x141/0x210 [qla2xxx]
+Because most Realtek chips handle the rate control in the firmware,
+which can't be modified, ignore the limits set by
+IEEE80211_CONF_CHANGE_RETRY_LIMITS and use the value 48 (set during
+chip initialisation), same as the vendor drivers.
 
-Remove DMA mapping from the driver altogether, as it is already done by FC
-layer. This prevents the warning.
-
-Fixes: c85ab7d9e27a ("scsi: qla2xxx: Fix missed DMA unmap for NVMe ls requests")
 Cc: stable@vger.kernel.org
-Signed-off-by: Arun Easi <aeasi@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/477d745b-6bac-111d-403c-487fc19aa30d@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c |   19 +------------------
- 1 file changed, 1 insertion(+), 18 deletions(-)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c |    9 ---------
+ 1 file changed, 9 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -152,18 +152,6 @@ out:
- 	qla2xxx_rel_qpair_sp(sp->qpair, sp);
- }
- 
--static void qla_nvme_ls_unmap(struct srb *sp, struct nvmefc_ls_req *fd)
--{
--	if (sp->flags & SRB_DMA_VALID) {
--		struct srb_iocb *nvme = &sp->u.iocb_cmd;
--		struct qla_hw_data *ha = sp->fcport->vha->hw;
--
--		dma_unmap_single(&ha->pdev->dev, nvme->u.nvme.cmd_dma,
--				 fd->rqstlen, DMA_TO_DEVICE);
--		sp->flags &= ~SRB_DMA_VALID;
--	}
--}
--
- static void qla_nvme_release_ls_cmd_kref(struct kref *kref)
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -5494,7 +5494,6 @@ static int rtl8xxxu_config(struct ieee80
  {
- 	struct srb *sp = container_of(kref, struct srb, cmd_kref);
-@@ -181,7 +169,6 @@ static void qla_nvme_release_ls_cmd_kref
+ 	struct rtl8xxxu_priv *priv = hw->priv;
+ 	struct device *dev = &priv->udev->dev;
+-	u16 val16;
+ 	int ret = 0, channel;
+ 	bool ht40;
  
- 	fd = priv->fd;
+@@ -5504,14 +5503,6 @@ static int rtl8xxxu_config(struct ieee80
+ 			 __func__, hw->conf.chandef.chan->hw_value,
+ 			 changed, hw->conf.chandef.width);
  
--	qla_nvme_ls_unmap(sp, fd);
- 	fd->done(fd, priv->comp_status);
- out:
- 	qla2x00_rel_sp(sp);
-@@ -323,13 +310,10 @@ static int qla_nvme_ls_req(struct nvme_f
- 	nvme->u.nvme.rsp_len = fd->rsplen;
- 	nvme->u.nvme.rsp_dma = fd->rspdma;
- 	nvme->u.nvme.timeout_sec = fd->timeout;
--	nvme->u.nvme.cmd_dma = dma_map_single(&ha->pdev->dev, fd->rqstaddr,
--	    fd->rqstlen, DMA_TO_DEVICE);
-+	nvme->u.nvme.cmd_dma = fd->rqstdma;
- 	dma_sync_single_for_device(&ha->pdev->dev, nvme->u.nvme.cmd_dma,
- 	    fd->rqstlen, DMA_TO_DEVICE);
- 
--	sp->flags |= SRB_DMA_VALID;
+-	if (changed & IEEE80211_CONF_CHANGE_RETRY_LIMITS) {
+-		val16 = ((hw->conf.long_frame_max_tx_count <<
+-			  RETRY_LIMIT_LONG_SHIFT) & RETRY_LIMIT_LONG_MASK) |
+-			((hw->conf.short_frame_max_tx_count <<
+-			  RETRY_LIMIT_SHORT_SHIFT) & RETRY_LIMIT_SHORT_MASK);
+-		rtl8xxxu_write16(priv, REG_RETRY_LIMIT, val16);
+-	}
 -
- 	rval = qla2x00_start_sp(sp);
- 	if (rval != QLA_SUCCESS) {
- 		ql_log(ql_log_warn, vha, 0x700e,
-@@ -337,7 +321,6 @@ static int qla_nvme_ls_req(struct nvme_f
- 		wake_up(&sp->nvme_ls_waitq);
- 		sp->priv = NULL;
- 		priv->sp = NULL;
--		qla_nvme_ls_unmap(sp, fd);
- 		qla2x00_rel_sp(sp);
- 		return rval;
- 	}
+ 	if (changed & IEEE80211_CONF_CHANGE_CHANNEL) {
+ 		switch (hw->conf.chandef.width) {
+ 		case NL80211_CHAN_WIDTH_20_NOHT:
 
 
