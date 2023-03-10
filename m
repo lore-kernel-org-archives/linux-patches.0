@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D3F846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35E5C433D2;
-	Fri, 10 Mar 2023 14:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A5A846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A95C433D2;
+	Fri, 10 Mar 2023 14:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458624;
-	bh=Jt1/z6jTpPmPUy5JNtwJfcFWYr6kRp/vUNBouuelTM4=;
+	s=korg; t=1678458626;
+	bh=8qUSd8qFqXDVE2tRzc75YIJRifZI3a0iG1fbuxCpw0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGW/GPBXDTXpLq6+3s8ZPc9MuPlZWpJYuAiGZwdZ+NdYV6khL0hz8NGefZ7cI8o+e
-	 9bpfGClUIx1odwbwK5JvhS0nSO1HduduDnEnHPDXVFyiqTr94ZYM0YecGzScNu3unx
-	 nreKKHOGEVzDWkweFmCbM3l1Z4N5UmAlPoge2PwI=
+	b=DXfWqvknogyY6rXtHxtBmbLRhhfWJ3ZoFRIPtMr2mQJssnsI7X/Ch9zfYkNYhDZm7
+	 iUwx0Srxno0F606ci06xTw7OLTbhDSOlXBYvq0D1qS+c+aTbjmDfrGZf+90h2Ia8TV
+	 KYLBaA2aLZHa9UySg+xLfodNwA5IA7JihjBnVugM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wan Jiabing <wanjiabing@vivo.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 058/357] ath9k: hif_usb: simplify if-if to if-else
-Date: Fri, 10 Mar 2023 14:35:47 +0100
-Message-Id: <20230310133736.524911707@linuxfoundation.org>
+Subject: [PATCH 5.4 049/357] wifi: libertas: cmdresp: dont call kfree_skb() under spin_lock_irqsave()
+Date: Fri, 10 Mar 2023 14:35:38 +0100
+Message-Id: <20230310133736.139801357@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,39 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wan Jiabing <wanjiabing@vivo.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 2950833f10cfa601813262e1d9c8473f9415681b ]
+[ Upstream commit 708a49a64237f19bd404852f297aaadbc9e7fee0 ]
 
-Use if and else instead of if(A) and if (!A).
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave(). Compile
+tested only.
 
-Signed-off-by: Wan Jiabing <wanjiabing@vivo.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20220424094441.104937-1-wanjiabing@vivo.com
-Stable-dep-of: 0af54343a762 ("wifi: ath9k: hif_usb: clean up skbs if ath9k_hif_usb_rx_stream() fails")
+Fixes: f52b041aed77 ("libertas: Add spinlock to avoid race condition")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221207150008.111743-5-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/hif_usb.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/wireless/marvell/libertas/cmdresp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
-index 8a18a33b5b59f..15c8b512a1d9f 100644
---- a/drivers/net/wireless/ath/ath9k/hif_usb.c
-+++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
-@@ -368,10 +368,9 @@ static int __hif_usb_tx(struct hif_device_usb *hif_dev)
- 		__skb_queue_head_init(&tx_buf->skb_queue);
- 		list_move_tail(&tx_buf->list, &hif_dev->tx.tx_buf);
- 		hif_dev->tx.tx_buf_cnt++;
--	}
--
--	if (!ret)
-+	} else {
- 		TX_STAT_INC(buf_queued);
-+	}
+diff --git a/drivers/net/wireless/marvell/libertas/cmdresp.c b/drivers/net/wireless/marvell/libertas/cmdresp.c
+index b73d083813985..5908f07d62ed7 100644
+--- a/drivers/net/wireless/marvell/libertas/cmdresp.c
++++ b/drivers/net/wireless/marvell/libertas/cmdresp.c
+@@ -48,7 +48,7 @@ void lbs_mac_event_disconnected(struct lbs_private *priv,
  
- 	return ret;
- }
+ 	/* Free Tx and Rx packets */
+ 	spin_lock_irqsave(&priv->driver_lock, flags);
+-	kfree_skb(priv->currenttxskb);
++	dev_kfree_skb_irq(priv->currenttxskb);
+ 	priv->currenttxskb = NULL;
+ 	priv->tx_pending_len = 0;
+ 	spin_unlock_irqrestore(&priv->driver_lock, flags);
 -- 
 2.39.2
 
