@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF6C847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:47:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E61C433D2;
-	Fri, 10 Mar 2023 13:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B961847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:47:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED49C4339C;
+	Fri, 10 Mar 2023 13:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456047;
-	bh=6rt+XxjV6OAPw/yYTV8NQ+X8q/ZcfS0mZLo4YedyOis=;
+	s=korg; t=1678456050;
+	bh=6dr/J/7dEG3YI4o2FHkASAm0CBPKyRgbPmG0hJ5e2kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VFPetzziNYiC6ZVyT+c9qbQzaZiq592QYTm8H30jG6UTmpheWxwD25a1M0ylfxgC9
-	 blnhdmgPC5BEg3VsqU9BvugHRyvmLPUg2dBft5fkVKC7FQAiikKDiEexXabCAr3Toj
-	 /Yk5oZJv3QCC5mluqNvuBKPoCb8GntxEKv55MLE8=
+	b=XFRJSk/nuyG6W+KU2Rc2kZglkvkKjEt976PGoMXqMqIyCDwPPe6s2tLjAqFhTOr3R
+	 gAmqFG6lwXB59HMpHyHWgYpEb0pUH+C5mpnOJ//RLH60UjZ3XPrhHEydnBKL8N8gYG
+	 jDH/Dbm+FKLnm8sqdVburqy9350lrBj1WW1bHXmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jonathan Cormier <jcormier@criticallink.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 035/193] ACPICA: nsrepair: handle cases without a return value correctly
-Date: Fri, 10 Mar 2023 14:36:57 +0100
-Message-Id: <20230310133712.111760185@linuxfoundation.org>
+Subject: [PATCH 4.14 062/193] hwmon: (ltc2945) Handle error case in ltc2945_value_store
+Date: Fri, 10 Mar 2023 14:37:24 +0100
+Message-Id: <20230310133713.092285797@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,63 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Jonathan Cormier <jcormier@criticallink.com>
 
-[ Upstream commit ca843a4c79486e99a19b859ef0b9887854afe146 ]
+[ Upstream commit 178b01eccfb0b8149682f61388400bd3d903dddc ]
 
-Previously acpi_ns_simple_repair() would crash if expected_btypes
-contained any combination of ACPI_RTYPE_NONE with a different type,
-e.g | ACPI_RTYPE_INTEGER because of slightly incorrect logic in the
-!return_object branch, which wouldn't return AE_AML_NO_RETURN_VALUE
-for such cases.
+ltc2945_val_to_reg errors were not being handled
+which would have resulted in register being set to
+0 (clamped) instead of being left alone.
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE
-static analysis tool.
+Fixes: 6700ce035f83 ("hwmon: Driver for Linear Technologies LTC2945")
 
-Link: https://github.com/acpica/acpica/pull/811
-Fixes: 61db45ca2163 ("ACPICA: Restore code that repairs NULL package elements in return values.")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Jonathan Cormier <jcormier@criticallink.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/nsrepair.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/hwmon/ltc2945.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/acpica/nsrepair.c b/drivers/acpi/acpica/nsrepair.c
-index 418ef2ac82abe..9f95369772ddc 100644
---- a/drivers/acpi/acpica/nsrepair.c
-+++ b/drivers/acpi/acpica/nsrepair.c
-@@ -215,8 +215,9 @@ acpi_ns_simple_repair(struct acpi_evaluate_info *info,
- 	 * Try to fix if there was no return object. Warning if failed to fix.
- 	 */
- 	if (!return_object) {
--		if (expected_btypes && (!(expected_btypes & ACPI_RTYPE_NONE))) {
--			if (package_index != ACPI_NOT_PACKAGE_ELEMENT) {
-+		if (expected_btypes) {
-+			if (!(expected_btypes & ACPI_RTYPE_NONE) &&
-+			    package_index != ACPI_NOT_PACKAGE_ELEMENT) {
- 				ACPI_WARN_PREDEFINED((AE_INFO,
- 						      info->full_pathname,
- 						      ACPI_WARN_ALWAYS,
-@@ -230,14 +231,15 @@ acpi_ns_simple_repair(struct acpi_evaluate_info *info,
- 				if (ACPI_SUCCESS(status)) {
- 					return (AE_OK);	/* Repair was successful */
- 				}
--			} else {
-+			}
-+
-+			if (expected_btypes != ACPI_RTYPE_NONE) {
- 				ACPI_WARN_PREDEFINED((AE_INFO,
- 						      info->full_pathname,
- 						      ACPI_WARN_ALWAYS,
- 						      "Missing expected return value"));
-+				return (AE_AML_NO_RETURN_VALUE);
- 			}
--
--			return (AE_AML_NO_RETURN_VALUE);
- 		}
- 	}
+diff --git a/drivers/hwmon/ltc2945.c b/drivers/hwmon/ltc2945.c
+index 1b92e4f6e2349..efabe514ec560 100644
+--- a/drivers/hwmon/ltc2945.c
++++ b/drivers/hwmon/ltc2945.c
+@@ -257,6 +257,8 @@ static ssize_t ltc2945_set_value(struct device *dev,
  
+ 	/* convert to register value, then clamp and write result */
+ 	regval = ltc2945_val_to_reg(dev, reg, val);
++	if (regval < 0)
++		return regval;
+ 	if (is_power_reg(reg)) {
+ 		regval = clamp_val(regval, 0, 0xffffff);
+ 		regbuf[0] = regval >> 16;
 -- 
 2.39.2
 
