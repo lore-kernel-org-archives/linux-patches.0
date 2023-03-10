@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412DB881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:47:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DB2C433A4;
-	Fri, 10 Mar 2023 14:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACA48495
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:47:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF8EC43327;
+	Fri, 10 Mar 2023 14:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459659;
-	bh=ZLiJnHjlLIZSOIMAJZqAW4NoMMwoJahbJugPoUf7trI=;
+	s=korg; t=1678459662;
+	bh=ZoydsZQcik9UuE+HGWRo20gb4MULBUcqolIqn1cTGlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cv18Us1A7zTN3oNX1jF//AruEcR8Kg5NlNg4QgOi3WBCIC6cSwNl4RCh6WvEsjl9V
-	 4jM3tR2+eZpOIJER3WCIa909Lxzc5feIYbV+VyU1MWUM/L4UJeCmmgc4a86fB2m4gB
-	 u2f6E6bExF6XJpCsMFUloI4mE7Tmx1ADUM0Lw+s0=
+	b=Wyrp46tNOVFXr66tIUj/s3VqjT5sJYHiYRhZvx61zdgAns+xASBJ1m5r5eruWFeGv
+	 uwmwKb+0JGLWMOJTOKAyJdM8Y03bqaf3nR2QnV2LWqhbpEIWNw3f0FX0nD/Ye/p2L4
+	 jRi2qO66HInX3B7XOSV75yLlAyYUcUOZauY6jBck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Brijesh Singh <brijesh.singh@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Andy Nguyen <theflow@google.com>,
+	David Rientjes <rientjes@google.com>,
+	Peter Gonda <pgonda@google.com>,
+	John Allen <john.allen@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 077/529] crypto: ccp: Use the stack and common buffer for status commands
-Date: Fri, 10 Mar 2023 14:33:40 +0100
-Message-Id: <20230310133808.545360240@linuxfoundation.org>
+Subject: [PATCH 5.10 078/529] crypto: ccp - Use kzalloc for sev ioctl interfaces to prevent kernel memory leak
+Date: Fri, 10 Mar 2023 14:33:41 +0100
+Message-Id: <20230310133808.593869070@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -37,109 +38,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: John Allen <john.allen@amd.com>
 
-[ Upstream commit 38103671aad38e888743dd26c767869cfc15adca ]
+[ Upstream commit 13dc15a3f5fd7f884e4bfa8c011a0ae868df12ae ]
 
-Drop the dedicated status_cmd_buf and instead use a local variable for
-PLATFORM_STATUS.  Now that the low level helper uses an internal buffer
-for all commands, using the stack for the upper layers is safe even when
-running with CONFIG_VMAP_STACK=y.
+For some sev ioctl interfaces, input may be passed that is less than or
+equal to SEV_FW_BLOB_MAX_SIZE, but larger than the data that PSP
+firmware returns. In this case, kmalloc will allocate memory that is the
+size of the input rather than the size of the data. Since PSP firmware
+doesn't fully overwrite the buffer, the sev ioctl interfaces with the
+issue may return uninitialized slab memory.
 
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20210406224952.4177376-7-seanjc@google.com>
-Reviewed-by: Brijesh Singh <brijesh.singh@amd.com>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Currently, all of the ioctl interfaces in the ccp driver are safe, but
+to prevent future problems, change all ioctl interfaces that allocate
+memory with kmalloc to use kzalloc and memset the data buffer to zero
+in sev_ioctl_do_platform_status.
+
+Fixes: 38103671aad3 ("crypto: ccp: Use the stack and common buffer for status commands")
+Fixes: e799035609e15 ("crypto: ccp: Implement SEV_PEK_CSR ioctl command")
+Fixes: 76a2b524a4b1d ("crypto: ccp: Implement SEV_PDH_CERT_EXPORT ioctl command")
+Fixes: d6112ea0cb344 ("crypto: ccp - introduce SEV_GET_ID2 command")
+Cc: stable@vger.kernel.org
+Reported-by: Andy Nguyen <theflow@google.com>
+Suggested-by: David Rientjes <rientjes@google.com>
+Suggested-by: Peter Gonda <pgonda@google.com>
+Signed-off-by: John Allen <john.allen@amd.com>
+Reviewed-by: Peter Gonda <pgonda@google.com>
+Acked-by: David Rientjes <rientjes@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Stable-dep-of: 91dfd98216d8 ("crypto: ccp - Avoid page allocation failure warning for SEV_GET_ID2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sev-dev.c | 27 ++++++++++++---------------
- drivers/crypto/ccp/sev-dev.h |  1 -
- 2 files changed, 12 insertions(+), 16 deletions(-)
+ drivers/crypto/ccp/sev-dev.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
-index 75341ad2fdd8a..1aac3a12a6c7c 100644
+index 1aac3a12a6c7c..6edd938ce6acc 100644
 --- a/drivers/crypto/ccp/sev-dev.c
 +++ b/drivers/crypto/ccp/sev-dev.c
-@@ -304,15 +304,14 @@ static int sev_platform_shutdown(int *error)
- 
- static int sev_get_platform_state(int *state, int *error)
- {
--	struct sev_device *sev = psp_master->sev_data;
-+	struct sev_user_data_status data;
- 	int rc;
- 
--	rc = __sev_do_cmd_locked(SEV_CMD_PLATFORM_STATUS,
--				 &sev->status_cmd_buf, error);
-+	rc = __sev_do_cmd_locked(SEV_CMD_PLATFORM_STATUS, &data, error);
- 	if (rc)
- 		return rc;
- 
--	*state = sev->status_cmd_buf.state;
-+	*state = data.state;
- 	return rc;
- }
- 
-@@ -350,15 +349,14 @@ static int sev_ioctl_do_reset(struct sev_issue_cmd *argp, bool writable)
- 
- static int sev_ioctl_do_platform_status(struct sev_issue_cmd *argp)
- {
--	struct sev_device *sev = psp_master->sev_data;
--	struct sev_user_data_status *data = &sev->status_cmd_buf;
-+	struct sev_user_data_status data;
+@@ -352,6 +352,8 @@ static int sev_ioctl_do_platform_status(struct sev_issue_cmd *argp)
+ 	struct sev_user_data_status data;
  	int ret;
  
--	ret = __sev_do_cmd_locked(SEV_CMD_PLATFORM_STATUS, data, &argp->error);
-+	ret = __sev_do_cmd_locked(SEV_CMD_PLATFORM_STATUS, &data, &argp->error);
++	memset(&data, 0, sizeof(data));
++
+ 	ret = __sev_do_cmd_locked(SEV_CMD_PLATFORM_STATUS, &data, &argp->error);
  	if (ret)
  		return ret;
+@@ -405,7 +407,7 @@ static int sev_ioctl_do_pek_csr(struct sev_issue_cmd *argp, bool writable)
+ 	if (input.length > SEV_FW_BLOB_MAX_SIZE)
+ 		return -EFAULT;
  
--	if (copy_to_user((void __user *)argp->data, data, sizeof(*data)))
-+	if (copy_to_user((void __user *)argp->data, &data, sizeof(data)))
- 		ret = -EFAULT;
+-	blob = kmalloc(input.length, GFP_KERNEL);
++	blob = kzalloc(input.length, GFP_KERNEL);
+ 	if (!blob)
+ 		return -ENOMEM;
  
- 	return ret;
-@@ -457,21 +455,20 @@ EXPORT_SYMBOL_GPL(psp_copy_user_blob);
- static int sev_get_api_version(void)
- {
- 	struct sev_device *sev = psp_master->sev_data;
--	struct sev_user_data_status *status;
-+	struct sev_user_data_status status;
- 	int error = 0, ret;
+@@ -629,7 +631,7 @@ static int sev_ioctl_do_get_id2(struct sev_issue_cmd *argp)
+ 	input_address = (void __user *)input.address;
  
--	status = &sev->status_cmd_buf;
--	ret = sev_platform_status(status, &error);
-+	ret = sev_platform_status(&status, &error);
- 	if (ret) {
- 		dev_err(sev->dev,
- 			"SEV: failed to get status. Error: %#x\n", error);
- 		return 1;
- 	}
+ 	if (input.address && input.length) {
+-		id_blob = kmalloc(input.length, GFP_KERNEL);
++		id_blob = kzalloc(input.length, GFP_KERNEL);
+ 		if (!id_blob)
+ 			return -ENOMEM;
  
--	sev->api_major = status->api_major;
--	sev->api_minor = status->api_minor;
--	sev->build = status->build;
--	sev->state = status->state;
-+	sev->api_major = status.api_major;
-+	sev->api_minor = status.api_minor;
-+	sev->build = status.build;
-+	sev->state = status.state;
+@@ -748,14 +750,14 @@ static int sev_ioctl_do_pdh_export(struct sev_issue_cmd *argp, bool writable)
+ 	if (input.cert_chain_len > SEV_FW_BLOB_MAX_SIZE)
+ 		return -EFAULT;
  
- 	return 0;
- }
-diff --git a/drivers/crypto/ccp/sev-dev.h b/drivers/crypto/ccp/sev-dev.h
-index dd5c4fe82914c..3b0cd0f854df9 100644
---- a/drivers/crypto/ccp/sev-dev.h
-+++ b/drivers/crypto/ccp/sev-dev.h
-@@ -46,7 +46,6 @@ struct sev_device {
- 	unsigned int int_rcvd;
- 	wait_queue_head_t int_queue;
- 	struct sev_misc_dev *misc;
--	struct sev_user_data_status status_cmd_buf;
- 	struct sev_data_init init_cmd_buf;
+-	pdh_blob = kmalloc(input.pdh_cert_len, GFP_KERNEL);
++	pdh_blob = kzalloc(input.pdh_cert_len, GFP_KERNEL);
+ 	if (!pdh_blob)
+ 		return -ENOMEM;
  
- 	u8 api_major;
+ 	data.pdh_cert_address = __psp_pa(pdh_blob);
+ 	data.pdh_cert_len = input.pdh_cert_len;
+ 
+-	cert_blob = kmalloc(input.cert_chain_len, GFP_KERNEL);
++	cert_blob = kzalloc(input.cert_chain_len, GFP_KERNEL);
+ 	if (!cert_blob) {
+ 		ret = -ENOMEM;
+ 		goto e_free_pdh;
 -- 
 2.39.2
 
