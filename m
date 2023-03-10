@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B72848D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:29:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F9AC4339B;
-	Fri, 10 Mar 2023 14:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92083848D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:29:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1434C433EF;
+	Fri, 10 Mar 2023 14:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458557;
-	bh=LeZwEzZD+UzedaVVR1KVJ2jnyHGNZwPLj4DAPpfXGq4=;
+	s=korg; t=1678458560;
+	bh=mzJ/Gxe0zHEIlrhaDFm7JoAcc+yqQyk25WhQ9qX1pbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XYNqE6Uvv5a8XBeD8p1bROky+/3tO9DRwuxgLQZsDiGFmyy2Ww/HHzdVxenHY/4+O
-	 +QmlguUmsUvJa7R3sEe2x+Jy3/pTdqd+Usjynk35QF3oMCRENsmxFwvtjYfnERlKkL
-	 Uwjykr66zccpyc+SkQOKFQjDWpWkZIpsoCnEoj/I=
+	b=1vJ7rNKg4oI0VlUMv4hsCuSrU5sqO9nnivLWjIlva/yiFmPqjzZZQzbSMpWWG9MLX
+	 vcCNWVnHGrwtul+Px389PRhvjMXVvuG6WgvJBCV5pfGwAccaOATqXDgbz4yCAOzFV0
+	 Iml8gXoTofPQnzWD/zusNAD/RYA+h3gUHdVo2fjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Eran Ben Elisha <eranbe@nvidia.com>,
+	Majd Dibbiny <majd@nvidia.com>,
+	Jack Morgenstein <jackm@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 067/357] powercap: fix possible name leak in powercap_register_zone()
-Date: Fri, 10 Mar 2023 14:35:56 +0100
-Message-Id: <20230310133736.935620362@linuxfoundation.org>
+Subject: [PATCH 5.4 068/357] net/mlx5: Enhance debug print in page allocation failure
+Date: Fri, 10 Mar 2023 14:35:57 +0100
+Message-Id: <20230310133736.967505394@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,58 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jack Morgenstein <jackm@nvidia.com>
 
-[ Upstream commit 1b6599f741a4525ca761ecde46e5885ff1e6ba58 ]
+[ Upstream commit 7eef93003e5d20e1a6a6e59e12d914b5431cbda2 ]
 
-In the error path after calling dev_set_name(), the device
-name is leaked. To fix this, calling dev_set_name() before
-device_register(), and call put_device() if it returns error.
+Provide more details to aid debugging.
 
-All the resources is released in powercap_release(), so it
-can return from powercap_register_zone() directly.
-
-Fixes: 75d2364ea0ca ("PowerCap: Add class driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: bf0bf77f6519 ("mlx5: Support communicating arbitrary host page size to firmware")
+Signed-off-by: Eran Ben Elisha <eranbe@nvidia.com>
+Signed-off-by: Majd Dibbiny <majd@nvidia.com>
+Signed-off-by: Jack Morgenstein <jackm@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/powercap_sys.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/powercap/powercap_sys.c b/drivers/powercap/powercap_sys.c
-index 3f0b8e2ef3d46..7a3109a538813 100644
---- a/drivers/powercap/powercap_sys.c
-+++ b/drivers/powercap/powercap_sys.c
-@@ -530,9 +530,6 @@ struct powercap_zone *powercap_register_zone(
- 	power_zone->name = kstrdup(name, GFP_KERNEL);
- 	if (!power_zone->name)
- 		goto err_name_alloc;
--	dev_set_name(&power_zone->dev, "%s:%x",
--					dev_name(power_zone->dev.parent),
--					power_zone->id);
- 	power_zone->constraints = kcalloc(nr_constraints,
- 					  sizeof(*power_zone->constraints),
- 					  GFP_KERNEL);
-@@ -555,9 +552,16 @@ struct powercap_zone *powercap_register_zone(
- 	power_zone->dev_attr_groups[0] = &power_zone->dev_zone_attr_group;
- 	power_zone->dev_attr_groups[1] = NULL;
- 	power_zone->dev.groups = power_zone->dev_attr_groups;
-+	dev_set_name(&power_zone->dev, "%s:%x",
-+					dev_name(power_zone->dev.parent),
-+					power_zone->id);
- 	result = device_register(&power_zone->dev);
--	if (result)
--		goto err_dev_ret;
-+	if (result) {
-+		put_device(&power_zone->dev);
-+		mutex_unlock(&control_type->lock);
-+
-+		return ERR_PTR(result);
-+	}
- 
- 	control_type->nr_zones++;
- 	mutex_unlock(&control_type->lock);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
+index db76c92b75e29..7f7693b709d72 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
+@@ -167,7 +167,8 @@ static int alloc_4k(struct mlx5_core_dev *dev, u64 *addr)
+ 	fp = list_entry(dev->priv.free_list.next, struct fw_page, list);
+ 	n = find_first_bit(&fp->bitmask, 8 * sizeof(fp->bitmask));
+ 	if (n >= MLX5_NUM_4K_IN_PAGE) {
+-		mlx5_core_warn(dev, "alloc 4k bug\n");
++		mlx5_core_warn(dev, "alloc 4k bug: fw page = 0x%llx, n = %u, bitmask: %lu, max num of 4K pages: %d\n",
++			       fp->addr, n, fp->bitmask,  MLX5_NUM_4K_IN_PAGE);
+ 		return -ENOENT;
+ 	}
+ 	clear_bit(n, &fp->bitmask);
 -- 
 2.39.2
 
