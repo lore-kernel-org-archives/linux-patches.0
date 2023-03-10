@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B65847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BF6C433D2;
-	Fri, 10 Mar 2023 13:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B88D847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AC7C433D2;
+	Fri, 10 Mar 2023 13:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456170;
-	bh=VKykDTUHooAK051sbc7bIWJbAFqQk3nuU3UA+vXmKdQ=;
+	s=korg; t=1678456173;
+	bh=ScYuq9JgJnBnS8GzXZwY+7wFFiHFiTJUrnlfqmlmXUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TIOLzhDWa5LUW3dHwOJn3d8UPOMyrk53UrPQyVnv4oKBMBEq3l+F3QGwyQUWSx4ve
-	 1+MESnjoehGdLgeCR84iFoXDvYqSALZMU/8fq0aFV0Im0kMNEMIai3ZslBVE0rcJjq
-	 uNVVSlmJUQoLfyEYKrYMu7jYZaybkwTGLFnovF74=
+	b=Chl0hVbs+lrEWRhor5PVLQP44O/l7KzDCW1S64TD39lihTWzBwA4l5Q/vt63sWUry
+	 so2KG8GWj5zGA4L9FfkFq7HirTj4PnX8LvIHVmH5J3XMkZpqWHDdv8eQ8u8Vpsjwze
+	 ibW2Uxyz8l51GTg93da1UpbrnXIsXamY+tgzAfNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 064/193] dm: remove flush_scheduled_work() during local_exit()
-Date: Fri, 10 Mar 2023 14:37:26 +0100
-Message-Id: <20230310133713.160515002@linuxfoundation.org>
+	Jun ASAKA <JunASAKA@zzy040330.moe>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 4.14 098/193] wifi: rtl8xxxu: fixing transmisison failure for rtl8192eu
+Date: Fri, 10 Mar 2023 14:38:00 +0100
+Message-Id: <20230310133714.508155090@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -34,43 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Jun ASAKA <JunASAKA@zzy040330.moe>
 
-[ Upstream commit 0b22ff5360f5c4e11050b89206370fdf7dc0a226 ]
+commit c6015bf3ff1ffb3caa27eb913797438a0fc634a0 upstream.
 
-Commit acfe0ad74d2e1 ("dm: allocate a special workqueue for deferred
-device removal") switched from using system workqueue to a single
-workqueue local to DM.  But it didn't eliminate the call to
-flush_scheduled_work() that was introduced purely for the benefit of
-deferred device removal with commit 2c140a246dc ("dm: allow remove to
-be deferred").
+Fixing transmission failure which results in
+"authentication with ... timed out". This can be
+fixed by disable the REG_TXPAUSE.
 
-Since DM core uses its own workqueue (and queue_work) there is no need
-to call flush_scheduled_work() from local_exit().  local_exit()'s
-destroy_workqueue(deferred_remove_workqueue) handles flushing work
-started with queue_work().
-
-Fixes: acfe0ad74d2e1 ("dm: allocate a special workqueue for deferred device removal")
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jun ASAKA <JunASAKA@zzy040330.moe>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221217030659.12577-1-JunASAKA@zzy040330.moe
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index 9e6689fd22730..e3facf14f6149 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -220,7 +220,6 @@ static int __init local_init(void)
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
+@@ -1629,6 +1629,11 @@ static void rtl8192e_enable_rf(struct rt
+ 	val8 = rtl8xxxu_read8(priv, REG_PAD_CTRL1);
+ 	val8 &= ~BIT(0);
+ 	rtl8xxxu_write8(priv, REG_PAD_CTRL1, val8);
++
++	/*
++	 * Fix transmission failure of rtl8192e.
++	 */
++	rtl8xxxu_write8(priv, REG_TXPAUSE, 0x00);
+ }
  
- static void local_exit(void)
- {
--	flush_scheduled_work();
- 	destroy_workqueue(deferred_remove_workqueue);
- 
- 	kmem_cache_destroy(_rq_cache);
--- 
-2.39.2
-
+ struct rtl8xxxu_fileops rtl8192eu_fops = {
 
 
