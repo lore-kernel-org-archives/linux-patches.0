@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1A0881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:42:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3B4C433EF;
-	Fri, 10 Mar 2023 14:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610B7881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:42:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB375C433EF;
+	Fri, 10 Mar 2023 14:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459363;
-	bh=5Z4WyCGEprzoQfjY3rb8HtEZpboMJHRCnc2kjlMZ31Q=;
+	s=korg; t=1678459366;
+	bh=nhI+dErhOR7W6KnBDPC6kIMB6vX+XedcG9dfbS8rOFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DsUMEN4xBUh+l1fEapG+4MsQmDvyNAzuenuJoZN32KRS4Bsj0KeshItGdENwDjwk4
-	 OGlsXibyd7pUIKaIELFAIWwrn8IXlsmt+ILsRWtxnFC1ieObA0rn5dYoZ3tZXfygqs
-	 /NvNJqbidb+5UyCMn5vsnbNgK2yzvlR8tB92035U=
+	b=l+r8RTdhbOGSigLntz1P3PGLk5GnGHgB/dt+Zklg36MAe1s7/9m+vdp9i1bMgfuoy
+	 NjXFYQfA/X0HhDOymB146h/6WTltwgnfDxgO1YQVevgFuUWUSgy8ML1/ieahA79OKm
+	 tnsoVlF+ZHkScmAwkLvBHIBXwgQc6ytsxYOay2Q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+df64c0a2e8d68e78a4fa@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	"David S. Miller" <davem@davemloft.net>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 319/357] nfc: fix memory leak of se_io context in nfc_genl_se_io
-Date: Fri, 10 Mar 2023 14:40:08 +0100
-Message-Id: <20230310133748.761243838@linuxfoundation.org>
+Subject: [PATCH 5.4 337/357] tty: fix out-of-bounds access in tty_driver_lookup_tty()
+Date: Fri, 10 Mar 2023 14:40:26 +0100
+Message-Id: <20230310133749.529580027@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -37,83 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit 25ff6f8a5a3b8dc48e8abda6f013e8cc4b14ffea ]
+[ Upstream commit db4df8e9d79e7d37732c1a1b560958e8dadfefa1 ]
 
-The callback context for sending/receiving APDUs to/from the selected
-secure element is allocated inside nfc_genl_se_io and supposed to be
-eventually freed in se_io_cb callback function. However, there are several
-error paths where the bwi_timer is not charged to call se_io_cb later, and
-the cb_context is leaked.
+When specifying an invalid console= device like console=tty3270,
+tty_driver_lookup_tty() returns the tty struct without checking
+whether index is a valid number.
 
-The patch proposes to free the cb_context explicitly on those error paths.
+To reproduce:
 
-At the moment we can't simply check 'dev->ops->se_io()' return value as it
-may be negative in both cases: when the timer was charged and was not.
+qemu-system-x86_64 -enable-kvm -nographic -serial mon:stdio \
+-kernel ../linux-build-x86/arch/x86/boot/bzImage \
+-append "console=ttyS0 console=tty3270"
 
-Fixes: 5ce3f32b5264 ("NFC: netlink: SE API implementation")
-Reported-by: syzbot+df64c0a2e8d68e78a4fa@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This crashes with:
+
+[    0.770599] BUG: kernel NULL pointer dereference, address: 00000000000000ef
+[    0.771265] #PF: supervisor read access in kernel mode
+[    0.771773] #PF: error_code(0x0000) - not-present page
+[    0.772609] Oops: 0000 [#1] PREEMPT SMP PTI
+[    0.774878] RIP: 0010:tty_open+0x268/0x6f0
+[    0.784013]  chrdev_open+0xbd/0x230
+[    0.784444]  ? cdev_device_add+0x80/0x80
+[    0.784920]  do_dentry_open+0x1e0/0x410
+[    0.785389]  path_openat+0xca9/0x1050
+[    0.785813]  do_filp_open+0xaa/0x150
+[    0.786240]  file_open_name+0x133/0x1b0
+[    0.786746]  filp_open+0x27/0x50
+[    0.787244]  console_on_rootfs+0x14/0x4d
+[    0.787800]  kernel_init_freeable+0x1e4/0x20d
+[    0.788383]  ? rest_init+0xc0/0xc0
+[    0.788881]  kernel_init+0x11/0x120
+[    0.789356]  ret_from_fork+0x22/0x30
+
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20221209112737.3222509-2-svens@linux.ibm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/st-nci/se.c   | 6 ++++++
- drivers/nfc/st21nfca/se.c | 6 ++++++
- net/nfc/netlink.c         | 4 ++++
- 3 files changed, 16 insertions(+)
+ drivers/tty/tty_io.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
-index 0cd70cd680dc7..17793f6888e1f 100644
---- a/drivers/nfc/st-nci/se.c
-+++ b/drivers/nfc/st-nci/se.c
-@@ -665,6 +665,12 @@ int st_nci_se_io(struct nci_dev *ndev, u32 se_idx,
- 					ST_NCI_EVT_TRANSMIT_DATA, apdu,
- 					apdu_length);
- 	default:
-+		/* Need to free cb_context here as at the moment we can't
-+		 * clearly indicate to the caller if the callback function
-+		 * would be called (and free it) or not. In both cases a
-+		 * negative value may be returned to the caller.
-+		 */
-+		kfree(cb_context);
- 		return -ENODEV;
- 	}
- }
-diff --git a/drivers/nfc/st21nfca/se.c b/drivers/nfc/st21nfca/se.c
-index d416365042462..6a1d3b2752fbf 100644
---- a/drivers/nfc/st21nfca/se.c
-+++ b/drivers/nfc/st21nfca/se.c
-@@ -236,6 +236,12 @@ int st21nfca_hci_se_io(struct nfc_hci_dev *hdev, u32 se_idx,
- 					ST21NFCA_EVT_TRANSMIT_DATA,
- 					apdu, apdu_length);
- 	default:
-+		/* Need to free cb_context here as at the moment we can't
-+		 * clearly indicate to the caller if the callback function
-+		 * would be called (and free it) or not. In both cases a
-+		 * negative value may be returned to the caller.
-+		 */
-+		kfree(cb_context);
- 		return -ENODEV;
- 	}
- }
-diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
-index b53d5eb868647..c4c57830e9636 100644
---- a/net/nfc/netlink.c
-+++ b/net/nfc/netlink.c
-@@ -1450,7 +1450,11 @@ static int nfc_se_io(struct nfc_dev *dev, u32 se_idx,
- 	rc = dev->ops->se_io(dev, se_idx, apdu,
- 			apdu_length, cb, cb_context);
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index ddfe873b5fccb..37c46c65a65f4 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -1156,14 +1156,16 @@ static struct tty_struct *tty_driver_lookup_tty(struct tty_driver *driver,
+ {
+ 	struct tty_struct *tty;
  
-+	device_unlock(&dev->dev);
-+	return rc;
-+
- error:
-+	kfree(cb_context);
- 	device_unlock(&dev->dev);
- 	return rc;
- }
+-	if (driver->ops->lookup)
++	if (driver->ops->lookup) {
+ 		if (!file)
+ 			tty = ERR_PTR(-EIO);
+ 		else
+ 			tty = driver->ops->lookup(driver, file, idx);
+-	else
++	} else {
++		if (idx >= driver->num)
++			return ERR_PTR(-EINVAL);
+ 		tty = driver->ttys[idx];
+-
++	}
+ 	if (!IS_ERR(tty))
+ 		tty_kref_get(tty);
+ 	return tty;
 -- 
 2.39.2
 
