@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0F6881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED99C4339C;
-	Fri, 10 Mar 2023 14:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6B7881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC71C433D2;
+	Fri, 10 Mar 2023 14:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459217;
-	bh=+IP/fh65Tid+QFwQ/E/Xk79ipBaq6faNhxoE/8VcMMY=;
+	s=korg; t=1678459220;
+	bh=QZ/J5c16T3DlhoxUHH4nItPt0x0tksRPap4dyxd48Xg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wn+Pud2875cb/la+pZ+1ONP5hXzLv3Wh/LLjTYWarFq+2ohptXgNSKEyduxMNKOlw
-	 QVjIm5HU7WO22+KJn335EHR5LeZKHA/vFl8hpgJeJws6lLyGjE3cmj7Z5ZIooiG30Z
-	 P7BDvFo74sMWoSY3wW8DX4oU3hI5JSxqUX/nY65E=
+	b=Xb3DRXm4eqnpg5dLA/qhuvPfiifKgfKjYQHvt3eVYcSZtzi9WMGGQAJz1fYu/eE+f
+	 4b6AXjBlXVddUedfs7Vl8HNPscBwqTZdYVuVcj0rZT/83vXUgi5JH1BJ/LVth7JTet
+	 WQXej7/sQ8MwMPjHrE4XJDSfWg2H/TcUJi1BFW3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.4 256/357] dm flakey: dont corrupt the zero page
-Date: Fri, 10 Mar 2023 14:39:05 +0100
-Message-Id: <20230310133746.055739732@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 5.4 257/357] ARM: dts: exynos: correct TMU phandle in Exynos4
+Date: Fri, 10 Mar 2023 14:39:06 +0100
+Message-Id: <20230310133746.094611945@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,46 +33,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit f50714b57aecb6b3dc81d578e295f86d9c73f078 upstream.
+commit 8e4505e617a80f601e2f53a917611777f128f925 upstream.
 
-When we need to zero some range on a block device, the function
-__blkdev_issue_zero_pages submits a write bio with the bio vector pointing
-to the zero page. If we use dm-flakey with corrupt bio writes option, it
-will corrupt the content of the zero page which results in crashes of
-various userspace programs. Glibc assumes that memory returned by mmap is
-zeroed and it uses it for calloc implementation; if the newly mapped
-memory is not zeroed, calloc will return non-zeroed memory.
+TMU node uses 0 as thermal-sensor-cells, thus thermal zone referencing
+it must not have an argument to phandle.
 
-Fix this bug by testing if the page is equal to ZERO_PAGE(0) and
-avoiding the corruption in this case.
-
-Cc: stable@vger.kernel.org
-Fixes: a00f5276e266 ("dm flakey: Properly corrupt multi-page bios.")
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: 328829a6ad70 ("ARM: dts: define default thermal-zones for exynos4")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230209105841.779596-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-flakey.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/exynos4-cpu-thermal.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-flakey.c
-+++ b/drivers/md/dm-flakey.c
-@@ -301,8 +301,11 @@ static void corrupt_bio_data(struct bio
- 	 */
- 	bio_for_each_segment(bvec, bio, iter) {
- 		if (bio_iter_len(bio, iter) > corrupt_bio_byte) {
--			char *segment = (page_address(bio_iter_page(bio, iter))
--					 + bio_iter_offset(bio, iter));
-+			char *segment;
-+			struct page *page = bio_iter_page(bio, iter);
-+			if (unlikely(page == ZERO_PAGE(0)))
-+				break;
-+			segment = (page_address(page) + bio_iter_offset(bio, iter));
- 			segment[corrupt_bio_byte] = fc->corrupt_bio_value;
- 			DMDEBUG("Corrupting data bio=%p by writing %u to byte %u "
- 				"(rw=%c bi_opf=%u bi_sector=%llu size=%u)\n",
+--- a/arch/arm/boot/dts/exynos4-cpu-thermal.dtsi
++++ b/arch/arm/boot/dts/exynos4-cpu-thermal.dtsi
+@@ -10,7 +10,7 @@
+ / {
+ thermal-zones {
+ 	cpu_thermal: cpu-thermal {
+-		thermal-sensors = <&tmu 0>;
++		thermal-sensors = <&tmu>;
+ 		polling-delay-passive = <0>;
+ 		polling-delay = <0>;
+ 		trips {
 
 
