@@ -1,38 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D211846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:33:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB9AC433D2;
-	Fri, 10 Mar 2023 14:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17133846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:33:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74093C433EF;
+	Fri, 10 Mar 2023 14:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458786;
-	bh=+gG78ObpD8v6Uhmrv4zUkPa2t7eYN91BNznaEBr2Ekw=;
+	s=korg; t=1678458789;
+	bh=vqlWkucSLYOnNk+7/tzybszhBlrvVcLE9QqytjMe1lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i59F0GYyeNNMtiLWRn8xkdf6+h/w9/9s1BoT8a34sjbesJqpnmxTsJ8YOJjTWzrfv
-	 ix8K67Ivr/u5yhrLpNSe6E5+QR0TKuSf09WQnO635q0l6UwlmZjTDn8D+tUjUUd6dD
-	 H6XOcnT+YMod0gfrJG9ISiX836WS+PKbW3zmneaU=
+	b=qkpVg7pc0OIzNb0mOJcEL1lMJgBAo2MY07682pBhFt4J3+vL7bT8Lsari1wXKrQg+
+	 OEARUW7OWe/Hol2OJ5t0tQJ2EPpORSEKOnYwxavue+0fBhTVAg3VqHX4WSXPDlxqGx
+	 QDOlpJq1kH3sEaRuc7Udlsgnrnvju8Huzzqd1AWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@arm.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jin Yao <yao.jin@linux.intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linuxarm@huawei.com,
-	prime.zeng@hisilicon.com,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Kirill Tkhai <tkhai@yandex.ru>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 144/357] perf tools: Fix auto-complete on aarch64
-Date: Fri, 10 Mar 2023 14:37:13 +0100
-Message-Id: <20230310133741.056117475@linuxfoundation.org>
+Subject: [PATCH 5.4 145/357] sparc: allow PM configs for sparc32 COMPILE_TEST
+Date: Fri, 10 Mar 2023 14:37:14 +0100
+Message-Id: <20230310133741.105495213@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -46,70 +39,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit ffd1240e8f0814262ceb957dbe961f6e0aef1e7a ]
+[ Upstream commit 7be6a87c2473957090995b7eb541e31d57a2c801 ]
 
-On aarch64 CPU related events are not under event_source/devices/cpu/events,
-they're under event_source/devices/armv8_pmuv3_0/events on my machine.
-Using current auto-complete script will generate below error:
+When doing randconfig builds for sparc32 with COMPILE_TEST, some
+(non-Sparc) drivers cause kconfig warnings with the Kconfig symbols PM,
+PM_GENERIC_DOMAINS, or PM_GENERIC_DOMAINS_OF.
 
-  [root@localhost bin]# perf stat -e
-  ls: cannot access '/sys/bus/event_source/devices/cpu/events': No such file or directory
+This is due to arch/sparc/Kconfig not using the PM Kconfig for
+Sparc32:
 
-Fix this by not testing /sys/bus/event_source/devices/cpu/events on
-aarch64 machine.
+  if SPARC64
+  source "kernel/power/Kconfig"
+  endif
 
-Fixes: 74cd5815d9af6e6c ("perf tool: Improve bash command line auto-complete for multiple events with comma")
-Reviewed-by: James Clark <james.clark@arm.com>
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jin Yao <yao.jin@linux.intel.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linuxarm@huawei.com
-Cc: prime.zeng@hisilicon.com
-Link: https://lore.kernel.org/r/20230207035057.43394-1-yangyicong@huawei.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Arnd suggested adding "|| COMPILE_TEST" to the conditional,
+instead of trying to track down every driver that selects
+any of these PM symbols.
+
+Fixes the following kconfig warnings:
+
+WARNING: unmet direct dependencies detected for PM
+  Depends on [n]: SPARC64 [=n]
+  Selected by [y]:
+  - SUN20I_PPU [=y] && (ARCH_SUNXI || COMPILE_TEST [=y])
+
+WARNING: unmet direct dependencies detected for PM
+  Depends on [n]: SPARC64 [=n]
+  Selected by [y]:
+  - SUN20I_PPU [=y] && (ARCH_SUNXI || COMPILE_TEST [=y])
+
+WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS
+  Depends on [n]: SPARC64 [=n] && PM [=y]
+  Selected by [y]:
+  - QCOM_GDSC [=y] && COMMON_CLK [=y] && PM [=y]
+  - SUN20I_PPU [=y] && (ARCH_SUNXI || COMPILE_TEST [=y])
+  - MESON_GX_PM_DOMAINS [=y] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
+  - BCM2835_POWER [=y] && (ARCH_BCM2835 || COMPILE_TEST [=y] && OF [=y]) && PM [=y]
+  - BCM_PMB [=y] && (ARCH_BCMBCA || COMPILE_TEST [=y] && OF [=y]) && PM [=y]
+  - ROCKCHIP_PM_DOMAINS [=y] && (ARCH_ROCKCHIP || COMPILE_TEST [=y]) && PM [=y]
+  Selected by [m]:
+  - ARM_SCPI_POWER_DOMAIN [=m] && (ARM_SCPI_PROTOCOL [=m] || COMPILE_TEST [=y] && OF [=y]) && PM [=y]
+  - MESON_EE_PM_DOMAINS [=m] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
+  - QCOM_AOSS_QMP [=m] && (ARCH_QCOM || COMPILE_TEST [=y]) && MAILBOX [=y] && COMMON_CLK [=y] && PM [=y]
+
+WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS_OF
+  Depends on [n]: SPARC64 [=n] && PM_GENERIC_DOMAINS [=y] && OF [=y]
+  Selected by [y]:
+  - MESON_GX_PM_DOMAINS [=y] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
+  Selected by [m]:
+  - MESON_EE_PM_DOMAINS [=m] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
+
+Link: https://lkml.kernel.org/r/20230205004357.29459-1-rdunlap@infradead.org
+Fixes: bdde6b3c8ba4 ("sparc64: Hibernation support")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Sam Ravnborg <sam@ravnborg.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Kirill Tkhai <tkhai@yandex.ru>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/perf-completion.sh | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/sparc/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/perf-completion.sh b/tools/perf/perf-completion.sh
-index fdf75d45efff7..978249d7868c2 100644
---- a/tools/perf/perf-completion.sh
-+++ b/tools/perf/perf-completion.sh
-@@ -165,7 +165,12 @@ __perf_main ()
+diff --git a/arch/sparc/Kconfig b/arch/sparc/Kconfig
+index 349e27771ceaf..8cb5bb020b4b6 100644
+--- a/arch/sparc/Kconfig
++++ b/arch/sparc/Kconfig
+@@ -321,7 +321,7 @@ config FORCE_MAX_ZONEORDER
+ 	  This config option is actually maximum order plus one. For example,
+ 	  a value of 13 means that the largest free memory block is 2^12 pages.
  
- 		local cur1=${COMP_WORDS[COMP_CWORD]}
- 		local raw_evts=$($cmd list --raw-dump)
--		local arr s tmp result
-+		local arr s tmp result cpu_evts
-+
-+		# aarch64 doesn't have /sys/bus/event_source/devices/cpu/events
-+		if [[ `uname -m` != aarch64 ]]; then
-+			cpu_evts=$(ls /sys/bus/event_source/devices/cpu/events)
-+		fi
+-if SPARC64
++if SPARC64 || COMPILE_TEST
+ source "kernel/power/Kconfig"
+ endif
  
- 		if [[ "$cur1" == */* && ${cur1#*/} =~ ^[A-Z] ]]; then
- 			OLD_IFS="$IFS"
-@@ -183,9 +188,9 @@ __perf_main ()
- 				fi
- 			done
- 
--			evts=${result}" "$(ls /sys/bus/event_source/devices/cpu/events)
-+			evts=${result}" "${cpu_evts}
- 		else
--			evts=${raw_evts}" "$(ls /sys/bus/event_source/devices/cpu/events)
-+			evts=${raw_evts}" "${cpu_evts}
- 		fi
- 
- 		if [[ "$cur1" == , ]]; then
 -- 
 2.39.2
 
