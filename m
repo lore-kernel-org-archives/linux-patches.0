@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542DC882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:15:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3CDC433EF;
-	Fri, 10 Mar 2023 15:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18501882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:15:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5ECC433D2;
+	Fri, 10 Mar 2023 15:15:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461300;
-	bh=5JSMuEJiMfns9KT6AvTaiK/XYpx8YYTOJuzpaCvtI/I=;
+	s=korg; t=1678461302;
+	bh=n9HIzfW9zUY/LGygjXlPo2BnJxVkEXukBbQA5ynWBWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m1M4K080r8rwVzN5czJ/zf4FQS1C2siH0Giz76ODxpW9IrLNPXOHKsTEP2z/1JAAC
-	 U+cBTUQNDfxzygDZGFEXUVRHd7lMxolW88xpuWQPGdAt9sFw5sHIlmmpdrFMDjAfCC
-	 UCFbkBki7t39dQeKIs589nyIznitxVnHwDzm0PhQ=
+	b=JpHDq2UTJJNn7AfKNc4GM8ZwmyvKzOXY5xqNtddWrIsZPuGbmTr6gTu2TDba6U7Dj
+	 2gg2uvc6BLj6NAr4l4OdTFCE3B+MhP+n64IfjwR3p/annJE69alJoSvETR63JfFKTF
+	 uQqbezdX/ek5uyfwyhsVJTu/YxEzbrkA7dptmIEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Samuel Holland <samuel@sholland.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/136] rtc: sun6i: Always export the internal oscillator
-Date: Fri, 10 Mar 2023 14:43:03 +0100
-Message-Id: <20230310133708.993692658@linuxfoundation.org>
+Subject: [PATCH 5.15 062/136] genirq: Refactor accessors to use irq_data_get_affinity_mask
+Date: Fri, 10 Mar 2023 14:43:04 +0100
+Message-Id: <20230310133709.022574009@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -38,79 +37,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Samuel Holland <samuel@sholland.org>
 
-[ Upstream commit 344f4030f6c50a9db2d03021884c4bf36191b53a ]
+[ Upstream commit 961343d7822624d0e329ab4167c7e1d02bb53112 ]
 
-On all variants of the hardware, the internal oscillator is one possible
-parent for the AR100 clock. It needs to be exported so we can model that
-relationship correctly in the devicetree.
+A couple of functions directly reference the affinity mask. Route them
+through irq_data_get_affinity_mask so they will pick up any refactoring
+done there.
 
-Fixes: c56afc1844d6 ("rtc: sun6i: Expose internal oscillator through device tree")
 Signed-off-by: Samuel Holland <samuel@sholland.org>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20221229215319.14145-1-samuel@sholland.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20220701200056.46555-6-samuel@sholland.org
+Stable-dep-of: feabecaff590 ("genirq/ipi: Fix NULL pointer deref in irq_data_get_affinity_mask()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-sun6i.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ include/linux/irq.h | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/rtc/rtc-sun6i.c b/drivers/rtc/rtc-sun6i.c
-index c551ebf0ac00f..536bd023c4800 100644
---- a/drivers/rtc/rtc-sun6i.c
-+++ b/drivers/rtc/rtc-sun6i.c
-@@ -128,7 +128,6 @@ struct sun6i_rtc_clk_data {
- 	unsigned int fixed_prescaler : 16;
- 	unsigned int has_prescaler : 1;
- 	unsigned int has_out_clk : 1;
--	unsigned int export_iosc : 1;
- 	unsigned int has_losc_en : 1;
- 	unsigned int has_auto_swt : 1;
- };
-@@ -260,10 +259,8 @@ static void __init sun6i_rtc_clk_init(struct device_node *node,
- 	/* Yes, I know, this is ugly. */
- 	sun6i_rtc = rtc;
+diff --git a/include/linux/irq.h b/include/linux/irq.h
+index c8293c817646c..5f8f0f24a2801 100644
+--- a/include/linux/irq.h
++++ b/include/linux/irq.h
+@@ -875,16 +875,16 @@ static inline int irq_data_get_node(struct irq_data *d)
+ 	return irq_common_data_get_node(d->common);
+ }
  
--	/* Only read IOSC name from device tree if it is exported */
--	if (rtc->data->export_iosc)
--		of_property_read_string_index(node, "clock-output-names", 2,
--					      &iosc_name);
-+	of_property_read_string_index(node, "clock-output-names", 2,
-+				      &iosc_name);
+-static inline struct cpumask *irq_get_affinity_mask(int irq)
++static inline struct cpumask *irq_data_get_affinity_mask(struct irq_data *d)
+ {
+-	struct irq_data *d = irq_get_irq_data(irq);
+-
+-	return d ? d->common->affinity : NULL;
++	return d->common->affinity;
+ }
  
- 	rtc->int_osc = clk_hw_register_fixed_rate_with_accuracy(NULL,
- 								iosc_name,
-@@ -304,13 +301,10 @@ static void __init sun6i_rtc_clk_init(struct device_node *node,
- 		goto err_register;
- 	}
+-static inline struct cpumask *irq_data_get_affinity_mask(struct irq_data *d)
++static inline struct cpumask *irq_get_affinity_mask(int irq)
+ {
+-	return d->common->affinity;
++	struct irq_data *d = irq_get_irq_data(irq);
++
++	return d ? irq_data_get_affinity_mask(d) : NULL;
+ }
  
--	clk_data->num = 2;
-+	clk_data->num = 3;
- 	clk_data->hws[0] = &rtc->hw;
- 	clk_data->hws[1] = __clk_get_hw(rtc->ext_losc);
--	if (rtc->data->export_iosc) {
--		clk_data->hws[2] = rtc->int_osc;
--		clk_data->num = 3;
--	}
-+	clk_data->hws[2] = rtc->int_osc;
- 	of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- 	return;
+ #ifdef CONFIG_GENERIC_IRQ_EFFECTIVE_AFF_MASK
+@@ -906,7 +906,7 @@ static inline void irq_data_update_effective_affinity(struct irq_data *d,
+ static inline
+ struct cpumask *irq_data_get_effective_affinity_mask(struct irq_data *d)
+ {
+-	return d->common->affinity;
++	return irq_data_get_affinity_mask(d);
+ }
+ #endif
  
-@@ -350,7 +344,6 @@ static const struct sun6i_rtc_clk_data sun8i_h3_rtc_data = {
- 	.fixed_prescaler = 32,
- 	.has_prescaler = 1,
- 	.has_out_clk = 1,
--	.export_iosc = 1,
- };
- 
- static void __init sun8i_h3_rtc_clk_init(struct device_node *node)
-@@ -368,7 +361,6 @@ static const struct sun6i_rtc_clk_data sun50i_h6_rtc_data = {
- 	.fixed_prescaler = 32,
- 	.has_prescaler = 1,
- 	.has_out_clk = 1,
--	.export_iosc = 1,
- 	.has_losc_en = 1,
- 	.has_auto_swt = 1,
- };
 -- 
 2.39.2
 
