@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108D0846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5F9C433EF;
-	Fri, 10 Mar 2023 14:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F94846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D984C4339B;
+	Fri, 10 Mar 2023 14:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458733;
-	bh=6zhjW/dmDLAgHvp74HUxrTczAgBFAH8J3BMFCeY1aKo=;
+	s=korg; t=1678458737;
+	bh=LZgzC/keyEq3KL93RHGZ2KyWodxrflgFnpxDEBIwpaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0eV81c4ZK6XM04oMj4sn1m/IvoOF9HomQJZroBA9+d9uI9NfcVcBKvTa7xnbGMVBU
-	 hDdagHwQG/P8XpSvw6Hr9vIeGlfZ0b94b+Kb8SgFS6e5jdMi0CLggfXmcTEBg320qv
-	 vy1k/NgBXKkOdBhox4PBWpv7nVlNrr/Z0IQbinG0=
+	b=QJVQa47+gESFE3xKIuOHsbwghdEEJZnM+xfpNXT9EapbQIT6XoVZCN5G5ZchPXotB
+	 sBCQPsNOPMv1Y6NzTAT3ZLetinCAauCZw103BGjiaEUlquALriO0+n8op51P9bbAuY
+	 l/eGk8lCsQ0cuwsfSOmcPQrVTGW7L/+0vH2+JCec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 127/357] dm: remove flush_scheduled_work() during local_exit()
-Date: Fri, 10 Mar 2023 14:36:56 +0100
-Message-Id: <20230310133740.275382159@linuxfoundation.org>
+Subject: [PATCH 5.4 128/357] spi: synquacer: Fix timeout handling in synquacer_spi_transfer_one()
+Date: Fri, 10 Mar 2023 14:36:57 +0100
+Message-Id: <20230310133740.318003694@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -34,41 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 0b22ff5360f5c4e11050b89206370fdf7dc0a226 ]
+[ Upstream commit e6a0b671880207566e1ece983bf989dde60bc1d7 ]
 
-Commit acfe0ad74d2e1 ("dm: allocate a special workqueue for deferred
-device removal") switched from using system workqueue to a single
-workqueue local to DM.  But it didn't eliminate the call to
-flush_scheduled_work() that was introduced purely for the benefit of
-deferred device removal with commit 2c140a246dc ("dm: allow remove to
-be deferred").
+wait_for_completion_timeout() never returns a <0 value. It returns either
+on timeout or a positive value (at least 1, or number of jiffies left
+till timeout)
 
-Since DM core uses its own workqueue (and queue_work) there is no need
-to call flush_scheduled_work() from local_exit().  local_exit()'s
-destroy_workqueue(deferred_remove_workqueue) handles flushing work
-started with queue_work().
+So, fix the error handling path and return -ETIMEDOUT should a timeout
+occur.
 
-Fixes: acfe0ad74d2e1 ("dm: allocate a special workqueue for deferred device removal")
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: b0823ee35cf9 ("spi: Add spi driver for Socionext SynQuacer platform")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Jassi Brar <jaswinder.singh@linaro.org>
+Link: https://lore.kernel.org/r/c2040bf3cfa201fd8890cfab14fa5a701ffeca14.1676466072.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/spi/spi-synquacer.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index d4cebb38709bd..b58ff1a0fda7d 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -263,7 +263,6 @@ static int __init local_init(void)
+diff --git a/drivers/spi/spi-synquacer.c b/drivers/spi/spi-synquacer.c
+index 1e10af6e10a90..5d6e4a59ce29b 100644
+--- a/drivers/spi/spi-synquacer.c
++++ b/drivers/spi/spi-synquacer.c
+@@ -472,10 +472,9 @@ static int synquacer_spi_transfer_one(struct spi_master *master,
+ 		read_fifo(sspi);
+ 	}
  
- static void local_exit(void)
- {
--	flush_scheduled_work();
- 	destroy_workqueue(deferred_remove_workqueue);
+-	if (status < 0) {
+-		dev_err(sspi->dev, "failed to transfer. status: 0x%x\n",
+-			status);
+-		return status;
++	if (status == 0) {
++		dev_err(sspi->dev, "failed to transfer. Timeout.\n");
++		return -ETIMEDOUT;
+ 	}
  
- 	unregister_blkdev(_major, _name);
+ 	return 0;
 -- 
 2.39.2
 
