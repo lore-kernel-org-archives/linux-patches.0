@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F908846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:35:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE50C433EF;
-	Fri, 10 Mar 2023 14:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260F2846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:35:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D55C4339B;
+	Fri, 10 Mar 2023 14:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458920;
-	bh=/5qzUNehwR6VOaUQTzxrEyfDJdliRzDYisWRPDqXMk0=;
+	s=korg; t=1678458925;
+	bh=Q+czA8BMcxhFuCShtXTm1UjpwiFvRSyo6OmeTnk4khU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SH7kJe1jmJ1pxL2XjeAxMX8va7HZWlnALqn4iTaKEUa8XmTNGIimnWuZPndQiLIhd
-	 urPe8xa7W1cBscLDUuaTtEh36tpWuiY6CvJd7XBT5fTv2y396Wb2BlnyiZ1KSCH4Rl
-	 x9dwi5uLwweO9lAr0CStBPHOuB2uMeFiC1rvvFqM=
+	b=uRvltl1522n8VbHm+sSOgjWA8Zbkz3N52o3e7iR5GZnIthlK58nr+xhZSxoEOBLPN
+	 sIQu8+LaEz2FRHJMltflk8fwxKSz3tXtdfwXmQWGpRL6aLQvQkq/od4C01xv0ctUuA
+	 xbryJINB1fct5/50BHNvMfOFsihM8eouJe1VtT2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jeffery <andrew@aj.id.au>,
-	Frederic Barrat <fbarrat@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 157/357] powerpc/powernv/ioda: Skip unallocated resources when mapping to PE
-Date: Fri, 10 Mar 2023 14:37:26 +0100
-Message-Id: <20230310133741.635948839@linuxfoundation.org>
+Subject: [PATCH 5.4 158/357] clk: Honor CLK_OPS_PARENT_ENABLE in clk_core_is_enabled()
+Date: Fri, 10 Mar 2023 14:37:27 +0100
+Message-Id: <20230310133741.688596331@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,91 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frederic Barrat <fbarrat@linux.ibm.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit e64e71056f323a1e178dccf04d4c0f032d84436c ]
+[ Upstream commit 79200d5851c8e7179f68a4a6f162d8f1bde4986f ]
 
-pnv_ioda_setup_pe_res() calls opal to map a resource with a PE. However,
-the code assumes the resource is allocated and it uses the resource
-address to find out the segment(s) which need to be mapped to the
-PE. In the unlikely case where the resource hasn't been allocated, the
-computation for the segment number is garbage, which can lead to
-invalid memory access and potentially a kernel crash, such as:
+In the previous commits that added CLK_OPS_PARENT_ENABLE, support for
+this flag was only added to rate change operations (rate setting and
+reparent) and disabling unused subtree. It was not added to the
+clock gate related operations. Any hardware driver that needs it for
+these operations will either see bogus results, or worse, hang.
 
-[ ] pci_bus 0002:02: Configuring PE for bus
-[ ] pci 0002:02     : [PE# fc] Secondary bus 0x0000000000000002..0x0000000000000002 associated with PE#fc
-[ ] BUG: Kernel NULL pointer dereference on write at 0x00000000
-[ ] Faulting instruction address: 0xc00000000005eac4
-[ ] Oops: Kernel access of bad area, sig: 7 [#1]
-[ ] LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA PowerNV
-[ ] Modules linked in:
-[ ] CPU: 12 PID: 1 Comm: swapper/20 Not tainted 5.10.50-openpower1 #2
-[ ] NIP:  c00000000005eac4 LR: c00000000005ea44 CTR: 0000000030061b9c
-[ ] REGS: c000200007383650 TRAP: 0300   Not tainted  (5.10.50-openpower1)
-[ ] MSR:  9000000000009033 <SF,HV,EE,ME,IR,DR,RI,LE>  CR: 44000224  XER: 20040000
-[ ] CFAR: c00000000005eaa0 DAR: 0000000000000000 DSISR: 02080000 IRQMASK: 0
-[ ] GPR00: c00000000005dd98 c0002000073838e0 c00000000185de00 c000200fff018960
-[ ] GPR04: 00000000000000fc 0000000000000003 0000000000000000 0000000000000000
-[ ] GPR08: 0000000000000000 0000000000000000 0000000000000000 9000000000001033
-[ ] GPR12: 0000000031cb0000 c000000ffffe6a80 c000000000010a58 0000000000000000
-[ ] GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-[ ] GPR20: 0000000000000000 0000000000000000 0000000000000000 c00000000711e200
-[ ] GPR24: 0000000000000100 c000200009501120 c00020000cee2800 00000000000003ff
-[ ] GPR28: c000200fff018960 0000000000000000 c000200ffcb7fd00 0000000000000000
-[ ] NIP [c00000000005eac4] pnv_ioda_setup_pe_res+0x94/0x1a0
-[ ] LR [c00000000005ea44] pnv_ioda_setup_pe_res+0x14/0x1a0
-[ ] Call Trace:
-[ ] [c0002000073838e0] [c00000000005eb98] pnv_ioda_setup_pe_res+0x168/0x1a0 (unreliable)
-[ ] [c000200007383970] [c00000000005dd98] pnv_pci_ioda_dma_dev_setup+0x43c/0x970
-[ ] [c000200007383a60] [c000000000032cdc] pcibios_bus_add_device+0x78/0x18c
-[ ] [c000200007383aa0] [c00000000028f2bc] pci_bus_add_device+0x28/0xbc
-[ ] [c000200007383b10] [c00000000028f3a0] pci_bus_add_devices+0x50/0x7c
-[ ] [c000200007383b50] [c00000000028f3c4] pci_bus_add_devices+0x74/0x7c
-[ ] [c000200007383b90] [c00000000028f3c4] pci_bus_add_devices+0x74/0x7c
-[ ] [c000200007383bd0] [c00000000069ad0c] pcibios_init+0xf0/0x104
-[ ] [c000200007383c50] [c0000000000106d8] do_one_initcall+0x84/0x1c4
-[ ] [c000200007383d20] [c0000000006910b8] kernel_init_freeable+0x264/0x268
-[ ] [c000200007383dc0] [c000000000010a68] kernel_init+0x18/0x138
-[ ] [c000200007383e20] [c00000000000cbfc] ret_from_kernel_thread+0x5c/0x80
-[ ] Instruction dump:
-[ ] 7f89e840 409d000c 7fbbf840 409c000c 38210090 4848f448 809c002c e95e0120
-[ ] 7ba91764 38a00003 57a7043e 38c00000 <7c8a492e> 5484043e e87e0018 4bff23bd
+This has been seen on MT8192 and MT8195, where the imp_ii2_* clk
+drivers set this, but dumping debugfs clk_summary would cause it
+to hang.
 
-Hitting the problem is not that easy. It was seen with a (semi-bogus)
-PCI device with a class code of 0. The generic PCI framework doesn't
-allocate resources in such a case.
+Prepare parent on prepare and enable parent on enable dependencies are
+already handled automatically by the core as part of its sequencing.
+Whether the case for "enable parent on prepare" should be supported by
+this flag or not is not clear, and thus ignored for now.
 
-The patch is simply skipping resources which are still flagged with
-IORESOURCE_UNSET.
+This change solely fixes the handling of clk_core_is_enabled, i.e.
+enabling the parent clock when reading the hardware state. Unfortunately
+clk_core_is_enabled is called in a variety of places, sometimes with
+the enable clock already held. To avoid deadlocking, the core will
+ignore readouts and just return false if CLK_OPS_PARENT_ENABLE is set
+but the parent isn't currently enabled.
 
-We don't have the problem with 64-bit mem resources, as the address of
-the resource is checked to be within the range of the 64-bit mmio
-window. See pnv_ioda_reserve_dev_m64_pe() and pnv_pci_is_m64().
-
-Reported-by: Andrew Jeffery <andrew@aj.id.au>
-Fixes: 23e79425fe7c ("powerpc/powernv: Simplify pnv_ioda_setup_pe_seg()")
-Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230120093215.19496-1-fbarrat@linux.ibm.com
+Fixes: fc8726a2c021 ("clk: core: support clocks which requires parents enable (part 2)")
+Fixes: a4b3518d146f ("clk: core: support clocks which requires parents enable (part 1)")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://lore.kernel.org/r/20230103092330.494102-1-wenst@chromium.org
+Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/powernv/pci-ioda.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/clk.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/arch/powerpc/platforms/powernv/pci-ioda.c b/arch/powerpc/platforms/powernv/pci-ioda.c
-index 058223233088e..df4457e743d33 100644
---- a/arch/powerpc/platforms/powernv/pci-ioda.c
-+++ b/arch/powerpc/platforms/powernv/pci-ioda.c
-@@ -3008,7 +3008,8 @@ static void pnv_ioda_setup_pe_res(struct pnv_ioda_pe *pe,
- 	int index;
- 	int64_t rc;
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index c002f83adf573..1c73668b43755 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -251,6 +251,17 @@ static bool clk_core_is_enabled(struct clk_core *core)
+ 		}
+ 	}
  
--	if (!res || !res->flags || res->start > res->end)
-+	if (!res || !res->flags || res->start > res->end ||
-+	    res->flags & IORESOURCE_UNSET)
- 		return;
- 
- 	if (res->flags & IORESOURCE_IO) {
++	/*
++	 * This could be called with the enable lock held, or from atomic
++	 * context. If the parent isn't enabled already, we can't do
++	 * anything here. We can also assume this clock isn't enabled.
++	 */
++	if ((core->flags & CLK_OPS_PARENT_ENABLE) && core->parent)
++		if (!clk_core_is_enabled(core->parent)) {
++			ret = false;
++			goto done;
++		}
++
+ 	ret = core->ops->is_enabled(core->hw);
+ done:
+ 	if (core->rpm_enabled)
 -- 
 2.39.2
 
