@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B067847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:51:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5975EC433D2;
-	Fri, 10 Mar 2023 13:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7CB847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FB7C4339C;
+	Fri, 10 Mar 2023 13:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456317;
-	bh=VpcG1AZ0emDEqJyoMMSnm9UG10t0qu8aLPPcDB2spek=;
+	s=korg; t=1678456320;
+	bh=j+Mz+/XiGVAQ1YTEftHlbb4QIF68gxtpTqpPuudJUnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nRd/XHyx7rO988NVK3GuHkTGsTTwfcaRVf/nK6mx8b3N3QONuxD/AJB185IjvUUr8
-	 Mv2j5H7FC7oZxV/nDv576Z2iQtK1dzAHig7OfcPiMi7M+/Op07S1nshcb86FRaCmfy
-	 gR6AHjlvm1/7uS2J4hV78x/Ejki9XBTNeaoSUrEU=
+	b=TUZshsd3YVkI7LSvl1bxx/3+lmPRlwFNFXhnfaGEBbWdkVKDrttgiFLH0io64ugYs
+	 7RI3il2Fo/a48UEhBMqcc1DrLOHZlfsRpvERuiUzxI6RZDcQP9vXGAXB7mVcdZ2OIb
+	 3Hg5+lugZ6rSXQN3AGSiKtt82LLzP87XLLyN7yK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Li Zetao <lizetao1@huawei.com>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 155/193] ubifs: Reserve one leb for each journal head while doing budget
-Date: Fri, 10 Mar 2023 14:38:57 +0100
-Message-Id: <20230310133716.347772914@linuxfoundation.org>
+Subject: [PATCH 4.14 156/193] ubi: Fix use-after-free when volume resizing failed
+Date: Fri, 10 Mar 2023 14:38:58 +0100
+Message-Id: <20230310133716.376518075@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,63 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit e874dcde1cbf82c786c0e7f2899811c02630cc52 ]
+[ Upstream commit 9af31d6ec1a4be4caab2550096c6bd2ba8fba472 ]
 
-UBIFS calculates available space by c->main_bytes - c->lst.total_used
-(which means non-index lebs' free and dirty space is accounted into
-total available), then index lebs and four lebs (one for gc_lnum, one
-for deletions, two for journal heads) are deducted.
-In following situation, ubifs may get -ENOSPC from make_reservation():
- LEB 84: DATAHD   free 122880 used 1920  dirty 2176  dark 6144
- LEB 110:DELETION free 126976 used 0     dirty 0     dark 6144 (empty)
- LEB 201:gc_lnum  free 126976 used 0     dirty 0     dark 6144
- LEB 272:GCHD     free 77824  used 47672 dirty 1480  dark 6144
- LEB 356:BASEHD   free 0      used 39776 dirty 87200 dark 6144
- OTHERS: index lebs, zero-available non-index lebs
+There is an use-after-free problem reported by KASAN:
+  ==================================================================
+  BUG: KASAN: use-after-free in ubi_eba_copy_table+0x11f/0x1c0 [ubi]
+  Read of size 8 at addr ffff888101eec008 by task ubirsvol/4735
 
-UBIFS calculates the available bytes is 6888 (How to calculate it:
-126976 * 5[remain main bytes] - 1920[used] - 47672[used] - 39776[used] -
-126976 * 1[deletions] - 126976 * 1[gc_lnum] - 126976 * 2[journal heads]
-- 6144 * 5[dark] = 6888) after doing budget, however UBIFS cannot use
-BASEHD's dirty space(87200), because UBIFS cannot find next BASEHD to
-reclaim current BASEHD. (c->bi.min_idx_lebs equals to c->lst.idx_lebs,
-the empty leb won't be found by ubifs_find_free_space(), and dirty index
-lebs won't be picked as gced lebs. All non-index lebs has dirty space
-less then c->dead_wm, non-index lebs won't be picked as gced lebs
-either. So new free lebs won't be produced.). See more details in Link.
+  CPU: 2 PID: 4735 Comm: ubirsvol
+  Not tainted 6.1.0-rc1-00003-g84fa3304a7fc-dirty #14
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+  BIOS 1.14.0-1.fc33 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   print_report+0x171/0x472
+   kasan_report+0xad/0x130
+   ubi_eba_copy_table+0x11f/0x1c0 [ubi]
+   ubi_resize_volume+0x4f9/0xbc0 [ubi]
+   ubi_cdev_ioctl+0x701/0x1850 [ubi]
+   __x64_sys_ioctl+0x11d/0x170
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+   </TASK>
 
-To fix it, reserve one leb for each journal head while doing budget.
+When ubi_change_vtbl_record() returns an error in ubi_resize_volume(),
+"new_eba_tbl" will be freed on error handing path, but it is holded
+by "vol->eba_tbl" in ubi_eba_replace_table(). It means that the liftcycle
+of "vol->eba_tbl" and "vol" are different, so when resizing volume in
+next time, it causing an use-after-free fault.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216562
-Fixes: 1e51764a3c2ac0 ("UBIFS: add new flash file system")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Fix it by not freeing "new_eba_tbl" after it replaced in
+ubi_eba_replace_table(), while will be freed in next volume resizing.
+
+Fixes: 801c135ce73d ("UBI: Unsorted Block Images")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/budget.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/mtd/ubi/vmt.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ubifs/budget.c b/fs/ubifs/budget.c
-index e6b5d61a4e203..a06f7f7870740 100644
---- a/fs/ubifs/budget.c
-+++ b/fs/ubifs/budget.c
-@@ -224,11 +224,10 @@ long long ubifs_calc_available(const struct ubifs_info *c, int min_idx_lebs)
- 	subtract_lebs += 1;
- 
- 	/*
--	 * The GC journal head LEB is not really accessible. And since
--	 * different write types go to different heads, we may count only on
--	 * one head's space.
-+	 * Since different write types go to different heads, we should
-+	 * reserve one leb for each head.
- 	 */
--	subtract_lebs += c->jhead_cnt - 1;
-+	subtract_lebs += c->jhead_cnt;
- 
- 	/* We also reserve one LEB for deletions, which bypass budgeting */
- 	subtract_lebs += 1;
+diff --git a/drivers/mtd/ubi/vmt.c b/drivers/mtd/ubi/vmt.c
+index d32144c0098a9..bbf4b61733708 100644
+--- a/drivers/mtd/ubi/vmt.c
++++ b/drivers/mtd/ubi/vmt.c
+@@ -470,7 +470,7 @@ int ubi_resize_volume(struct ubi_volume_desc *desc, int reserved_pebs)
+ 		for (i = 0; i < -pebs; i++) {
+ 			err = ubi_eba_unmap_leb(ubi, vol, reserved_pebs + i);
+ 			if (err)
+-				goto out_acc;
++				goto out_free;
+ 		}
+ 		spin_lock(&ubi->volumes_lock);
+ 		ubi->rsvd_pebs += pebs;
+@@ -518,6 +518,8 @@ int ubi_resize_volume(struct ubi_volume_desc *desc, int reserved_pebs)
+ 		ubi->avail_pebs += pebs;
+ 		spin_unlock(&ubi->volumes_lock);
+ 	}
++	return err;
++
+ out_free:
+ 	kfree(new_eba_tbl);
+ 	return err;
 -- 
 2.39.2
 
