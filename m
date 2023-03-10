@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B67E882C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:12:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940BAC433EF;
-	Fri, 10 Mar 2023 15:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178DA882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:12:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA8CC433D2;
+	Fri, 10 Mar 2023 15:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461122;
-	bh=5z8blZHEvLB3lKyKkoZPKJQJCvvw/9zOyKhtNuKZpVc=;
+	s=korg; t=1678461124;
+	bh=qREsFasx0S61F3MN9KA4rvgDMswWgbPeM14sdMTeMSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mP8XA0SvYCovAZJ1R6I5XY6rNI59Al/V8ih9/1SfkzsW7zoQhCyFKDVD+4ErCMgYN
-	 kizZ/C1tWANhgY3rW7qS7isvzgl7Ch2oAZc6V7I/XCoWpsMMAKuHqhs2ly0/bhFMjV
-	 2WqQh0AI/Zg0O+LCZQ8rILg62T3doDKckZyG/ybU=
+	b=nfyMEgr0G9+gIHl3EXqpALHuyFJ+pr99t3HBodB5V3cpk3oB8LFl+mngeB6D3oool
+	 pDNIJOc9BJsSXN2DQf3h945taOovJPB9UvGG5GzYPyRjKvilpdUXi5gcooMUeMEMQZ
+	 W46tUKJZ7PtRNgdQWEzwA1S8g2YqO+WiSDBZXFxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/136] ubifs: ubifs_writepage: Mark page dirty after writing inode failed
-Date: Fri, 10 Mar 2023 14:42:27 +0100
-Message-Id: <20230310133707.737897988@linuxfoundation.org>
+Subject: [PATCH 5.15 034/136] um: virtio_uml: mark device as unregistered when breaking it
+Date: Fri, 10 Mar 2023 14:42:36 +0100
+Message-Id: <20230310133708.074396977@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -35,112 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit fb8bc4c74ae4526d9489362ab2793a936d072b84 ]
+[ Upstream commit 8e9cd85139a2149d5a7c121b05e0cdb8287311f9 ]
 
-There are two states for ubifs writing pages:
-1. Dirty, Private
-2. Not Dirty, Not Private
+Mark the device as not registered anymore when scheduling the work to
+remove it. Otherwise we could end up scheduling the work multiple times
+in a row, including scheduling it while it is already running.
 
-There is a third possibility which maybe related to [1] that page is
-private but not dirty caused by following process:
-
-          PA
-lock(page)
-ubifs_write_end
-  attach_page_private		// set Private
-    __set_page_dirty_nobuffers	// set Dirty
-unlock(page)
-
-write_cache_pages
-  lock(page)
-  clear_page_dirty_for_io(page)	// clear Dirty
-  ubifs_writepage
-    write_inode
-    // fail, goto out, following codes are not executed
-    // do_writepage
-    //   set_page_writeback 	// set Writeback
-    //   detach_page_private	// clear Private
-    //   end_page_writeback 	// clear Writeback
-    out:
-    unlock(page)		// Private, Not Dirty
-
-                                       PB
-				ksys_fadvise64_64
-				  generic_fadvise
-				     invalidate_inode_page
-				     // page is neither Dirty nor Writeback
-				       invalidate_complete_page
-				       // page_has_private is true
-					 try_to_release_page
-					   ubifs_releasepage
-					     ubifs_assert(c, 0) !!!
-
-Then we may get following assertion failed:
-  UBIFS error (ubi0:0 pid 1492): ubifs_assert_failed [ubifs]:
-  UBIFS assert failed: 0, in fs/ubifs/file.c:1499
-  UBIFS warning (ubi0:0 pid 1492): ubifs_ro_mode [ubifs]:
-  switched to read-only mode, error -22
-  CPU: 2 PID: 1492 Comm: aa Not tainted 5.16.0-rc2-00012-g7bb767dee0ba-dirty
-  Call Trace:
-    dump_stack+0x13/0x1b
-    ubifs_ro_mode+0x54/0x60 [ubifs]
-    ubifs_assert_failed+0x4b/0x80 [ubifs]
-    ubifs_releasepage+0x7e/0x1e0 [ubifs]
-    try_to_release_page+0x57/0xe0
-    invalidate_inode_page+0xfb/0x130
-    invalidate_mapping_pagevec+0x12/0x20
-    generic_fadvise+0x303/0x3c0
-    vfs_fadvise+0x35/0x40
-    ksys_fadvise64_64+0x4c/0xb0
-
-Jump [2] to find a reproducer.
-
-[1] https://linux-mtd.infradead.narkive.com/NQoBeT1u/patch-rfc-ubifs-fix-assert-failed-in-ubifs-set-page-dirty
-[2] https://bugzilla.kernel.org/show_bug.cgi?id=215357
-
-Fixes: 1e51764a3c2ac0 ("UBIFS: add new flash file system")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Fixes: af9fb41ed315 ("um: virtio_uml: Fix broken device handling in time-travel")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/file.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ arch/um/drivers/virtio_uml.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ubifs/file.c b/fs/ubifs/file.c
-index 6b45a037a0471..7cc2abcb70ae8 100644
---- a/fs/ubifs/file.c
-+++ b/fs/ubifs/file.c
-@@ -1031,7 +1031,7 @@ static int ubifs_writepage(struct page *page, struct writeback_control *wbc)
- 		if (page->index >= synced_i_size >> PAGE_SHIFT) {
- 			err = inode->i_sb->s_op->write_inode(inode, NULL);
- 			if (err)
--				goto out_unlock;
-+				goto out_redirty;
- 			/*
- 			 * The inode has been written, but the write-buffer has
- 			 * not been synchronized, so in case of an unclean
-@@ -1059,11 +1059,17 @@ static int ubifs_writepage(struct page *page, struct writeback_control *wbc)
- 	if (i_size > synced_i_size) {
- 		err = inode->i_sb->s_op->write_inode(inode, NULL);
- 		if (err)
--			goto out_unlock;
-+			goto out_redirty;
- 	}
+diff --git a/arch/um/drivers/virtio_uml.c b/arch/um/drivers/virtio_uml.c
+index 82ff3785bf69f..c16ae3676ee08 100644
+--- a/arch/um/drivers/virtio_uml.c
++++ b/arch/um/drivers/virtio_uml.c
+@@ -168,6 +168,8 @@ static void vhost_user_check_reset(struct virtio_uml_device *vu_dev,
+ 	if (!vu_dev->registered)
+ 		return;
  
- 	return do_writepage(page, len);
--
-+out_redirty:
-+	/*
-+	 * redirty_page_for_writepage() won't call ubifs_dirty_inode() because
-+	 * it passes I_DIRTY_PAGES flag while calling __mark_inode_dirty(), so
-+	 * there is no need to do space budget for dirty inode.
-+	 */
-+	redirty_page_for_writepage(wbc, page);
- out_unlock:
- 	unlock_page(page);
- 	return err;
++	vu_dev->registered = 0;
++
+ 	virtio_break_device(&vu_dev->vdev);
+ 	schedule_work(&pdata->conn_broken_wk);
+ }
 -- 
 2.39.2
 
