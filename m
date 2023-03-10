@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA29B847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:51:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E38C433D2;
-	Fri, 10 Mar 2023 13:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843C6847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:51:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9F5C433D2;
+	Fri, 10 Mar 2023 13:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456269;
-	bh=CHmQsQVxXqQdmBOa8Q7J5NMME4QZQiGIWIVD0eQOt9c=;
+	s=korg; t=1678456272;
+	bh=N+HUng+xE/p296+jmkFRdadb5vaHhs3k+RX5H/kAlks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqxjn4rxeBhMO4lxKIKSb0h5lmEdwKMYSNllL8+2n6ODuJG0LZKzpnj1LbrAZQmwc
-	 1kPP8i5fsCRYNfqb4CjAPj4fsIzURHaKN73Rvz+zYUa00hfb/WxuWAmG93RbWt5TBK
-	 zeb0IYgMPeXzuDpNAGIRi6P1MuNAhQ3wBzs1f9xs=
+	b=usEOgHwOxYtd2prrQKRMp0llXf2v4GTIXjMT8vSD35IUz+NWTcEHs2Ypgt4YEmYlc
+	 /PjM1AlnovaFR+EBZx++eA7ueKd3EccOUfgr9IBA7WCYR3xTWhKlKnbz/0bz8aBQc6
+	 H+bicP0cT0g6Ot9T2twI5cDw4yFiV7ca6eafgSEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 106/193] ocfs2: fix non-auto defrag path not working issue
-Date: Fri, 10 Mar 2023 14:38:08 +0100
-Message-Id: <20230310133714.799087839@linuxfoundation.org>
+	William Zhang <william.zhang@broadcom.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 097/193] spi: bcm63xx-hsspi: Fix multi-bit mode setting
+Date: Fri, 10 Mar 2023 14:37:59 +0100
+Message-Id: <20230310133714.469678191@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -41,91 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heming Zhao via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
+From: William Zhang <william.zhang@broadcom.com>
 
-commit 236b9254f8d1edc273ad88b420aa85fbd84f492d upstream.
+[ Upstream commit 811ff802aaf878ebbbaeac0307a0164fa21e7d40 ]
 
-This fixes three issues on move extents ioctl without auto defrag:
+Currently the driver always sets the controller to dual data bit mode
+for both tx and rx data in the profile mode control register even for
+single data bit transfer. Luckily the opcode is set correctly according
+to SPI transfer data bit width so it does not actually cause issues.
 
-a) In ocfs2_find_victim_alloc_group(), we have to convert bits to block
-   first in case of global bitmap.
+This change fixes the problem by setting tx and rx data bit mode field
+correctly according to the actual SPI transfer tx and rx data bit width.
 
-b) In ocfs2_probe_alloc_group(), when finding enough bits in block
-   group bitmap, we have to back off move_len to start pos as well,
-   otherwise it may corrupt filesystem.
-
-c) In ocfs2_ioctl_move_extents(), set me_threshold both for non-auto
-   and auto defrag paths.  Otherwise it will set move_max_hop to 0 and
-   finally cause unexpectedly ENOSPC error.
-
-Currently there are no tools triggering the above issues since
-defragfs.ocfs2 enables auto defrag by default.  Tested with manually
-changing defragfs.ocfs2 to run non auto defrag path.
-
-Link: https://lkml.kernel.org/r/20230220050526.22020-1-heming.zhao@suse.com
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 142168eba9dc ("spi: bcm63xx-hsspi: add bcm63xx HSSPI driver")
+Signed-off-by: William Zhang <william.zhang@broadcom.com>
+Link: https://lore.kernel.org/r/20230209200246.141520-11-william.zhang@broadcom.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/move_extents.c |   24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/spi/spi-bcm63xx-hsspi.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/ocfs2/move_extents.c
-+++ b/fs/ocfs2/move_extents.c
-@@ -444,7 +444,7 @@ static int ocfs2_find_victim_alloc_group
- 			bg = (struct ocfs2_group_desc *)gd_bh->b_data;
+diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
+index bc539010f2b98..6071756149ef4 100644
+--- a/drivers/spi/spi-bcm63xx-hsspi.c
++++ b/drivers/spi/spi-bcm63xx-hsspi.c
+@@ -160,6 +160,7 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
+ 	int step_size = HSSPI_BUFFER_LEN;
+ 	const u8 *tx = t->tx_buf;
+ 	u8 *rx = t->rx_buf;
++	u32 val = 0;
  
- 			if (vict_blkno < (le64_to_cpu(bg->bg_blkno) +
--						le16_to_cpu(bg->bg_bits))) {
-+						(le16_to_cpu(bg->bg_bits) << bits_per_unit))) {
+ 	bcm63xx_hsspi_set_clk(bs, spi, t->speed_hz);
+ 	bcm63xx_hsspi_set_cs(bs, spi->chip_select, true);
+@@ -175,11 +176,16 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
+ 		step_size -= HSSPI_OPCODE_LEN;
  
- 				*ret_bh = gd_bh;
- 				*vict_bit = (vict_blkno - blkno) >>
-@@ -559,6 +559,7 @@ static void ocfs2_probe_alloc_group(stru
- 			last_free_bits++;
+ 	if ((opcode == HSSPI_OP_READ && t->rx_nbits == SPI_NBITS_DUAL) ||
+-	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL))
++	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL)) {
+ 		opcode |= HSSPI_OP_MULTIBIT;
  
- 		if (last_free_bits == move_len) {
-+			i -= move_len;
- 			*goal_bit = i;
- 			*phys_cpos = base_cpos + i;
- 			break;
-@@ -1030,18 +1031,19 @@ int ocfs2_ioctl_move_extents(struct file
- 
- 	context->range = &range;
- 
-+	/*
-+	 * ok, the default theshold for the defragmentation
-+	 * is 1M, since our maximum clustersize was 1M also.
-+	 * any thought?
-+	 */
-+	if (!range.me_threshold)
-+		range.me_threshold = 1024 * 1024;
+-	__raw_writel(1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT |
+-		     1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT | 0xff,
++		if (t->rx_nbits == SPI_NBITS_DUAL)
++			val |= 1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT;
++		if (t->tx_nbits == SPI_NBITS_DUAL)
++			val |= 1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT;
++	}
 +
-+	if (range.me_threshold > i_size_read(inode))
-+		range.me_threshold = i_size_read(inode);
-+
- 	if (range.me_flags & OCFS2_MOVE_EXT_FL_AUTO_DEFRAG) {
- 		context->auto_defrag = 1;
--		/*
--		 * ok, the default theshold for the defragmentation
--		 * is 1M, since our maximum clustersize was 1M also.
--		 * any thought?
--		 */
--		if (!range.me_threshold)
--			range.me_threshold = 1024 * 1024;
--
--		if (range.me_threshold > i_size_read(inode))
--			range.me_threshold = i_size_read(inode);
++	__raw_writel(val | 0xff,
+ 		     bs->regs + HSSPI_PROFILE_MODE_CTRL_REG(chip_select));
  
- 		if (range.me_flags & OCFS2_MOVE_EXT_FL_PART_DEFRAG)
- 			context->partial = 1;
+ 	while (pending > 0) {
+-- 
+2.39.2
+
 
 
