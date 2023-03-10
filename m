@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5054F848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:24:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C2CC433EF;
-	Fri, 10 Mar 2023 14:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481C9848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:24:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22ABC433D2;
+	Fri, 10 Mar 2023 14:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458285;
-	bh=Xg0X9O+oqwbhf1s+xLJNY0gJv2vvHl/xwF7HhHu8Eyc=;
+	s=korg; t=1678458288;
+	bh=9NGX+tZCERSlXMEQimSbLKGyFWCrfYWtSx9ciOgQbr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xhXnn+l9mz6X1tfnd8VABwB2cwFozvdX+6q7QxsdNY8B6sSWoUkS6ql0rGRS2INA0
-	 w6oN/aZTLN0YLI1n/eJ5EE3hRYClMksjnhgiqOeePwgX9ZH/nLSBGQr2MGh+VprROM
-	 ZdHpKrEauvrdBahoe882RRBFbrNFaES76f057PuU=
+	b=AvX+6wptPz6Pp2ZDBQskIYry8QWUnDmdHTkjYF7AaTuFgRR8KlWNPxsVNZ5NExQQ4
+	 J3+h9n9z9THsbJE9LY20GQOgHH5LSNFwdCMC6ZanOjYoutgo2tG9bIIVDVZnE8BkU2
+	 AyUNXYUTA9ypYn1BfSc71/b9yk0YMuEmCho/doXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Hawrylak <mark.hawrylak@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 4.19 194/252] drm/radeon: Fix eDP for single-display iMac11,2
-Date: Fri, 10 Mar 2023 14:39:24 +0100
-Message-Id: <20230310133724.852006762@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 4.19 195/252] wifi: ath9k: use proper statements in conditionals
+Date: Fri, 10 Mar 2023 14:39:25 +0100
+Message-Id: <20230310133724.881368609@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -34,46 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Hawrylak <mark.hawrylak@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 05eacc198c68cbb35a7281ce4011f8899ee1cfb8 upstream.
+commit b7dc753fe33a707379e2254317794a4dad6c0fe2 upstream.
 
-Apple iMac11,2 (mid 2010) also with Radeon HD-4670 that has the same
-issue as iMac10,1 (late 2009) where the internal eDP panel stays dark on
-driver load.  This patch treats iMac11,2 the same as iMac10,1,
-so the eDP panel stays active.
+A previous cleanup patch accidentally broke some conditional
+expressions by replacing the safe "do {} while (0)" constructs
+with empty macros. gcc points this out when extra warnings
+are enabled:
 
-Additional steps:
-Kernel boot parameter radeon.nomodeset=0 required to keep the eDP
-panel active.
+drivers/net/wireless/ath/ath9k/hif_usb.c: In function 'ath9k_skb_queue_complete':
+drivers/net/wireless/ath/ath9k/hif_usb.c:251:57: error: suggest braces around empty body in an 'else' statement [-Werror=empty-body]
+  251 |                         TX_STAT_INC(hif_dev, skb_failed);
 
-This patch is an extension of
-commit 564d8a2cf3ab ("drm/radeon: Fix eDP for single-display iMac10,1 (v2)")
-Link: https://lore.kernel.org/all/lsq.1507553064.833262317@decadent.org.uk/
-Signed-off-by: Mark Hawrylak <mark.hawrylak@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Make both sets of macros proper expressions again.
+
+Fixes: d7fc76039b74 ("ath9k: htc: clean up statistics macros")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221215165553.1950307-1-arnd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/atombios_encoders.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath9k/htc.h |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/radeon/atombios_encoders.c
-+++ b/drivers/gpu/drm/radeon/atombios_encoders.c
-@@ -2188,11 +2188,12 @@ int radeon_atom_pick_dig_encoder(struct
+--- a/drivers/net/wireless/ath/ath9k/htc.h
++++ b/drivers/net/wireless/ath/ath9k/htc.h
+@@ -325,9 +325,9 @@ static inline struct ath9k_htc_tx_ctl *H
+ }
  
- 	/*
- 	 * On DCE32 any encoder can drive any block so usually just use crtc id,
--	 * but Apple thinks different at least on iMac10,1, so there use linkb,
-+	 * but Apple thinks different at least on iMac10,1 and iMac11,2, so there use linkb,
- 	 * otherwise the internal eDP panel will stay dark.
- 	 */
- 	if (ASIC_IS_DCE32(rdev)) {
--		if (dmi_match(DMI_PRODUCT_NAME, "iMac10,1"))
-+		if (dmi_match(DMI_PRODUCT_NAME, "iMac10,1") ||
-+		    dmi_match(DMI_PRODUCT_NAME, "iMac11,2"))
- 			enc_idx = (dig->linkb) ? 1 : 0;
- 		else
- 			enc_idx = radeon_crtc->crtc_id;
+ #ifdef CONFIG_ATH9K_HTC_DEBUGFS
+-#define __STAT_SAFE(hif_dev, expr)	((hif_dev)->htc_handle->drv_priv ? (expr) : 0)
+-#define CAB_STAT_INC(priv)		((priv)->debug.tx_stats.cab_queued++)
+-#define TX_QSTAT_INC(priv, q)		((priv)->debug.tx_stats.queue_stats[q]++)
++#define __STAT_SAFE(hif_dev, expr)	do { ((hif_dev)->htc_handle->drv_priv ? (expr) : 0); } while (0)
++#define CAB_STAT_INC(priv)		do { ((priv)->debug.tx_stats.cab_queued++); } while (0)
++#define TX_QSTAT_INC(priv, q)		do { ((priv)->debug.tx_stats.queue_stats[q]++); } while (0)
+ 
+ #define TX_STAT_INC(hif_dev, c) \
+ 		__STAT_SAFE((hif_dev), (hif_dev)->htc_handle->drv_priv->debug.tx_stats.c++)
+@@ -376,10 +376,10 @@ void ath9k_htc_get_et_stats(struct ieee8
+ 			    struct ethtool_stats *stats, u64 *data);
+ #else
+ 
+-#define TX_STAT_INC(hif_dev, c)
+-#define TX_STAT_ADD(hif_dev, c, a)
+-#define RX_STAT_INC(hif_dev, c)
+-#define RX_STAT_ADD(hif_dev, c, a)
++#define TX_STAT_INC(hif_dev, c)		do { } while (0)
++#define TX_STAT_ADD(hif_dev, c, a)	do { } while (0)
++#define RX_STAT_INC(hif_dev, c)		do { } while (0)
++#define RX_STAT_ADD(hif_dev, c, a)	do { } while (0)
+ 
+ #define CAB_STAT_INC(priv)
+ #define TX_QSTAT_INC(priv, c)
 
 
