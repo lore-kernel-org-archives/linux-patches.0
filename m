@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34ACF881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:43:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A23C433D2;
-	Fri, 10 Mar 2023 14:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4E8881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:43:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DB2C4339E;
+	Fri, 10 Mar 2023 14:43:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459402;
-	bh=Q7GN1C1Ku0/LoFstXzIDGUQwzwKCHcF5ZS4mrewWO34=;
+	s=korg; t=1678459405;
+	bh=LHqLFl+/fOZFWWQJ3KlO5ul5w3jaKnYXlkH7sYD4U3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c1sYHSvK3hdlBvDZHnUDOgeDJn2DKAcwEUt23kwO3MOVWnplaNr7e5nZhi3AFfKog
-	 +qOkGSjd3EP6kYZ/urN6eP+m3KyEFd5z2jrArvUuz8MzZgrvwdknf6MtmTpKct9p0G
-	 mffKIvqpZrQxZ9dHvrPyIt/vqgvob5zhT9ff/aBc=
+	b=brNMGuX40U1J8BEPCU3ThiLlIjymUqJkBDUuNc+tq9hch1VDEf/2zu5Eifc18e8AN
+	 VpRocZgjExvdmjO+J9QCfi2a2w5XvSU/wBse46ZnikzivrhUx05wwypTg5bKfujOkt
+	 PrrQ0ZJtmuvlyqtcwjyRtQF5U8Cq5IOq3RfJhVrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abaci Robot <abaci@linux.alibaba.com>,
-	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 348/357] phy: rockchip-typec: Fix unsigned comparison with less than zero
-Date: Fri, 10 Mar 2023 14:40:37 +0100
-Message-Id: <20230310133750.026960925@linuxfoundation.org>
+	syzbot+9c0268252b8ef967c62e@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 349/357] net: tls: avoid hanging tasks on the tx_lock
+Date: Fri, 10 Mar 2023 14:40:38 +0100
+Message-Id: <20230310133750.073720437@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,43 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit f765c59c5a72546a2d74a92ae5d0eb0329d8e247 ]
+commit f3221361dc85d4de22586ce8441ec2c67b454f5d upstream.
 
-The dp and ufp are defined as bool type, the return value type of
-function extcon_get_state should be int, so the type of dp and ufp
-are modified to int.
+syzbot sent a hung task report and Eric explains that adversarial
+receiver may keep RWIN at 0 for a long time, so we are not guaranteed
+to make forward progress. Thread which took tx_lock and went to sleep
+may not release tx_lock for hours. Use interruptible sleep where
+possible and reschedule the work if it can't take the lock.
 
-./drivers/phy/rockchip/phy-rockchip-typec.c:827:12-14: WARNING: Unsigned expression compared with zero: dp > 0.
+Testing: existing selftest passes
 
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3962
-Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230213035709.99027-1-jiapeng.chong@linux.alibaba.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+9c0268252b8ef967c62e@syzkaller.appspotmail.com
+Fixes: 79ffe6087e91 ("net/tls: add a TX lock")
+Link: https://lore.kernel.org/all/000000000000e412e905f5b46201@google.com/
+Cc: stable@vger.kernel.org # wait 4 weeks
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230301002857.2101894-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/rockchip/phy-rockchip-typec.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/tls/tls_sw.c |   26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-typec.c b/drivers/phy/rockchip/phy-rockchip-typec.c
-index 24563160197f5..ba805f1d4f6a8 100644
---- a/drivers/phy/rockchip/phy-rockchip-typec.c
-+++ b/drivers/phy/rockchip/phy-rockchip-typec.c
-@@ -808,9 +808,8 @@ static int tcphy_get_mode(struct rockchip_typec_phy *tcphy)
- 	struct extcon_dev *edev = tcphy->extcon;
- 	union extcon_property_value property;
- 	unsigned int id;
--	bool ufp, dp;
- 	u8 mode;
--	int ret;
-+	int ret, ufp, dp;
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -945,7 +945,9 @@ int tls_sw_sendmsg(struct sock *sk, stru
+ 	if (msg->msg_flags & ~(MSG_MORE | MSG_DONTWAIT | MSG_NOSIGNAL))
+ 		return -EOPNOTSUPP;
  
- 	if (!edev)
- 		return MODE_DFP_USB;
--- 
-2.39.2
-
+-	mutex_lock(&tls_ctx->tx_lock);
++	ret = mutex_lock_interruptible(&tls_ctx->tx_lock);
++	if (ret)
++		return ret;
+ 	lock_sock(sk);
+ 
+ 	if (unlikely(msg->msg_controllen)) {
+@@ -1279,7 +1281,9 @@ int tls_sw_sendpage(struct sock *sk, str
+ 		      MSG_SENDPAGE_NOTLAST | MSG_SENDPAGE_NOPOLICY))
+ 		return -EOPNOTSUPP;
+ 
+-	mutex_lock(&tls_ctx->tx_lock);
++	ret = mutex_lock_interruptible(&tls_ctx->tx_lock);
++	if (ret)
++		return ret;
+ 	lock_sock(sk);
+ 	ret = tls_sw_do_sendpage(sk, page, offset, size, flags);
+ 	release_sock(sk);
+@@ -2263,11 +2267,19 @@ static void tx_work_handler(struct work_
+ 
+ 	if (!test_and_clear_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask))
+ 		return;
+-	mutex_lock(&tls_ctx->tx_lock);
+-	lock_sock(sk);
+-	tls_tx_records(sk, -1);
+-	release_sock(sk);
+-	mutex_unlock(&tls_ctx->tx_lock);
++
++	if (mutex_trylock(&tls_ctx->tx_lock)) {
++		lock_sock(sk);
++		tls_tx_records(sk, -1);
++		release_sock(sk);
++		mutex_unlock(&tls_ctx->tx_lock);
++	} else if (!test_and_set_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask)) {
++		/* Someone is holding the tx_lock, they will likely run Tx
++		 * and cancel the work on their way out of the lock section.
++		 * Schedule a long delay just in case.
++		 */
++		schedule_delayed_work(&ctx->tx_work.work, msecs_to_jiffies(10));
++	}
+ }
+ 
+ void tls_sw_write_space(struct sock *sk, struct tls_context *ctx)
 
 
