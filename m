@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489C4848D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:20:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A025BC433D2;
-	Fri, 10 Mar 2023 14:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C32F848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:20:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 808C2C433EF;
+	Fri, 10 Mar 2023 14:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458035;
-	bh=YLgIk4cPUnScvWfwmKjP7cXSUFW5yrUfFsMnGSVD44s=;
+	s=korg; t=1678458037;
+	bh=7er0dUp6f2qUVvBIVDM9ra233QsI6nY3wyGM8TYPjHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qh5D7RIqTpLou3/PFQpUWxgbdiR9sJLOsDS4c5oWQPkaM4RgBKNs77DM7rGJsUelh
-	 kOpiWo5LltSjEIE+L/8HPFHNE8jpqoK6NpuwjH2CMB22cFIhDFhsEqLQlVLhnzocO6
-	 VJAHNI6f42ZON58YeyTUKIqXZoWLTTYFGL4HVUBQ=
+	b=Jxp2Fbza5BFGvFsAWYhqvLXp1uJeR9AOjLkaoOVjPi71GcTYymPgDLz65FWdZPpyj
+	 L5diDUeic1sF5Po0AqUnUC2C2SCbRy0SspGOZZCXNYquBSIVtNPgd229sMvySqi1sX
+	 DXkjxvXMEOAKY8zl1spzI9Pia8/ta/TU1BuUVeEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	David Collins <quic_collinsd@quicinc.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 4.19 141/252] rtc: pm8xxx: fix set-alarm race
-Date: Fri, 10 Mar 2023 14:38:31 +0100
-Message-Id: <20230310133723.064459230@linuxfoundation.org>
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 4.19 142/252] s390: discard .interp section
+Date: Fri, 10 Mar 2023 14:38:32 +0100
+Message-Id: <20230310133723.093502108@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -35,74 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-commit c88db0eff9722fc2b6c4d172a50471d20e08ecc6 upstream.
+commit e9c9cb90e76ffaabcc7ca8f275d9e82195fd6367 upstream.
 
-Make sure to disable the alarm before updating the four alarm time
-registers to avoid spurious alarms during the update.
+When debugging vmlinux with QEMU + GDB, the following GDB error may
+occur:
 
-Note that the disable needs to be done outside of the ctrl_reg_lock
-section to prevent a racing alarm interrupt from disabling the newly set
-alarm when the lock is released.
+    (gdb) c
+    Continuing.
+    Warning:
+    Cannot insert breakpoint -1.
+    Cannot access memory at address 0xffffffffffff95c0
 
-Fixes: 9a9a54ad7aa2 ("drivers/rtc: add support for Qualcomm PMIC8xxx RTC")
-Cc: stable@vger.kernel.org      # 3.1
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: David Collins <quic_collinsd@quicinc.com>
-Link: https://lore.kernel.org/r/20230202155448.6715-2-johan+linaro@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+    Command aborted.
+    (gdb)
+
+The reason is that, when .interp section is present, GDB tries to
+locate the file specified in it in memory and put a number of
+breakpoints there (see enable_break() function in gdb/solib-svr4.c).
+Sometimes GDB finds a bogus location that matches its heuristics,
+fails to set a breakpoint and stops. This makes further debugging
+impossible.
+
+The .interp section contains misleading information anyway (vmlinux
+does not need ld.so), so fix by discarding it.
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-pm8xxx.c |   24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ arch/s390/kernel/vmlinux.lds.S |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/rtc/rtc-pm8xxx.c
-+++ b/drivers/rtc/rtc-pm8xxx.c
-@@ -229,7 +229,6 @@ static int pm8xxx_rtc_set_alarm(struct d
- {
- 	int rc, i;
- 	u8 value[NUM_8_BIT_RTC_REGS];
--	unsigned int ctrl_reg;
- 	unsigned long secs, irq_flags;
- 	struct pm8xxx_rtc *rtc_dd = dev_get_drvdata(dev);
- 	const struct pm8xxx_rtc_regs *regs = rtc_dd->regs;
-@@ -241,6 +240,11 @@ static int pm8xxx_rtc_set_alarm(struct d
- 		secs >>= 8;
+--- a/arch/s390/kernel/vmlinux.lds.S
++++ b/arch/s390/kernel/vmlinux.lds.S
+@@ -153,5 +153,6 @@ SECTIONS
+ 	DISCARDS
+ 	/DISCARD/ : {
+ 		*(.eh_frame)
++		*(.interp)
  	}
- 
-+	rc = regmap_update_bits(rtc_dd->regmap, regs->alarm_ctrl,
-+				regs->alarm_en, 0);
-+	if (rc)
-+		return rc;
-+
- 	spin_lock_irqsave(&rtc_dd->ctrl_reg_lock, irq_flags);
- 
- 	rc = regmap_bulk_write(rtc_dd->regmap, regs->alarm_rw, value,
-@@ -250,19 +254,11 @@ static int pm8xxx_rtc_set_alarm(struct d
- 		goto rtc_rw_fail;
- 	}
- 
--	rc = regmap_read(rtc_dd->regmap, regs->alarm_ctrl, &ctrl_reg);
--	if (rc)
--		goto rtc_rw_fail;
--
--	if (alarm->enabled)
--		ctrl_reg |= regs->alarm_en;
--	else
--		ctrl_reg &= ~regs->alarm_en;
--
--	rc = regmap_write(rtc_dd->regmap, regs->alarm_ctrl, ctrl_reg);
--	if (rc) {
--		dev_err(dev, "Write to RTC alarm control register failed\n");
--		goto rtc_rw_fail;
-+	if (alarm->enabled) {
-+		rc = regmap_update_bits(rtc_dd->regmap, regs->alarm_ctrl,
-+					regs->alarm_en, regs->alarm_en);
-+		if (rc)
-+			goto rtc_rw_fail;
- 	}
- 
- 	dev_dbg(dev, "Alarm Set for h:r:s=%d:%d:%d, d/m/y=%d/%d/%d\n",
+ }
 
 
