@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891508821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:01:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF26AC4339E;
-	Fri, 10 Mar 2023 15:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793C38821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:01:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F01DCC433D2;
+	Fri, 10 Mar 2023 15:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460464;
-	bh=y8ijsG2h02xzR2ry/W6aYhQ2DubvJ4bKezImAwMuvCk=;
+	s=korg; t=1678460467;
+	bh=+dAeZUBo1tgHtmKQMXYrXFTTr9mpxj48/QZb/IK5kJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V8gIbuBCSdphcLobgtNwj99uoQXS0No+c/UsboGFeK5siWLeuXdcs7QFIX3R1o1J0
-	 1kDjgENCbtRa7zIEOC2fDuxQjw0EmiOt1kQ3U13M0tCrgFHr2mZvVzArwv67fUvZa5
-	 oZ9hOd9emcGDHnZ00DRYI9Ms9r8dFADul7DsL/nM=
+	b=Os0hXTvksJRvtuBhl/S8+z1At7ZnDCYt0Umx6t4O5r3Ufxm9qoSpHD8zur+OFCr61
+	 KRhbCWLLmU37cO6cd+FV5mJPMfrISz/VsiSmMND8/LzHTVgFlOYqA8WeBXj0FPgXmX
+	 GfGM6Etg0YhGJTli+LhwxYsFp63+ArEznuRe7ljA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 5.10 342/529] exfat: redefine DIR_DELETED as the bad cluster number
-Date: Fri, 10 Mar 2023 14:38:05 +0100
-Message-Id: <20230310133820.858718064@linuxfoundation.org>
+	Liwei Song <liwei.song@windriver.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 313/529] drm/radeon: free iio for atombios when driver shutdown
+Date: Fri, 10 Mar 2023 14:37:36 +0100
+Message-Id: <20230310133819.504559424@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,38 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sungjong Seo <sj1557.seo@samsung.com>
+From: Liwei Song <liwei.song@windriver.com>
 
-commit bdaadfd343e3cba49ad0b009ff4b148dad0fa404 upstream.
+[ Upstream commit 4773fadedca918faec443daaca5e4ea1c0ced144 ]
 
-When a file or a directory is deleted, the hint for the cluster of
-its parent directory in its in-memory inode is set as DIR_DELETED.
-Therefore, DIR_DELETED must be one of invalid cluster numbers. According
-to the exFAT specification, a volume can have at most 2^32-11 clusters.
-However, DIR_DELETED is wrongly defined as 0xFFFF0321, which could be
-a valid cluster number. To fix it, let's redefine DIR_DELETED as
-0xFFFFFFF7, the bad cluster number.
+Fix below kmemleak when unload radeon driver:
 
-Fixes: 1acf1a564b60 ("exfat: add in-memory and on-disk structures and headers")
-Cc: stable@vger.kernel.org # v5.7+
-Reported-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+unreferenced object 0xffff9f8608ede200 (size 512):
+  comm "systemd-udevd", pid 326, jiffies 4294682822 (age 716.338s)
+  hex dump (first 32 bytes):
+    00 00 00 00 c4 aa ec aa 14 ab 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<0000000062fadebe>] kmem_cache_alloc_trace+0x2f1/0x500
+    [<00000000b6883cea>] atom_parse+0x117/0x230 [radeon]
+    [<00000000158c23fd>] radeon_atombios_init+0xab/0x170 [radeon]
+    [<00000000683f672e>] si_init+0x57/0x750 [radeon]
+    [<00000000566cc31f>] radeon_device_init+0x559/0x9c0 [radeon]
+    [<0000000046efabb3>] radeon_driver_load_kms+0xc1/0x1a0 [radeon]
+    [<00000000b5155064>] drm_dev_register+0xdd/0x1d0
+    [<0000000045fec835>] radeon_pci_probe+0xbd/0x100 [radeon]
+    [<00000000e69ecca3>] pci_device_probe+0xe1/0x160
+    [<0000000019484b76>] really_probe.part.0+0xc1/0x2c0
+    [<000000003f2649da>] __driver_probe_device+0x96/0x130
+    [<00000000231c5bb1>] driver_probe_device+0x24/0xf0
+    [<0000000000a42377>] __driver_attach+0x77/0x190
+    [<00000000d7574da6>] bus_for_each_dev+0x7f/0xd0
+    [<00000000633166d2>] driver_attach+0x1e/0x30
+    [<00000000313b05b8>] bus_add_driver+0x12c/0x1e0
+
+iio was allocated in atom_index_iio() called by atom_parse(),
+but it doesn't got released when the dirver is shutdown.
+Fix this kmemleak by free it in radeon_atombios_fini().
+
+Signed-off-by: Liwei Song <liwei.song@windriver.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/exfat_fs.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/radeon_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/exfat/exfat_fs.h
-+++ b/fs/exfat/exfat_fs.h
-@@ -42,7 +42,7 @@ enum {
- #define ES_2_ENTRIES		2
- #define ES_ALL_ENTRIES		0
- 
--#define DIR_DELETED		0xFFFF0321
-+#define DIR_DELETED		0xFFFFFFF7
- 
- /* type values */
- #define TYPE_UNUSED		0x0000
+diff --git a/drivers/gpu/drm/radeon/radeon_device.c b/drivers/gpu/drm/radeon/radeon_device.c
+index 8287410f471fb..131f425c363a5 100644
+--- a/drivers/gpu/drm/radeon/radeon_device.c
++++ b/drivers/gpu/drm/radeon/radeon_device.c
+@@ -1022,6 +1022,7 @@ void radeon_atombios_fini(struct radeon_device *rdev)
+ {
+ 	if (rdev->mode_info.atom_context) {
+ 		kfree(rdev->mode_info.atom_context->scratch);
++		kfree(rdev->mode_info.atom_context->iio);
+ 	}
+ 	kfree(rdev->mode_info.atom_context);
+ 	rdev->mode_info.atom_context = NULL;
+-- 
+2.39.2
+
 
 
