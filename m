@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746D58481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:01:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE4AC433A4;
-	Fri, 10 Mar 2023 14:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28E28481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:02:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588CBC433EF;
+	Fri, 10 Mar 2023 14:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456918;
-	bh=AqOAN5MsuC+Txm4zaQVwJ1Yne8wHW7ioMDhthdxxXDY=;
+	s=korg; t=1678456923;
+	bh=l/7rep5Vw4wUyxCxHBOzvipVYHawSAdC9kuA8/SsFyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6DgOVY8wJA7e8cvvYT1ragds5nEaA3D0G1pn1R+5ZNRqTF+ZGkeQebcGlrhyaVZs
-	 z4uzBxmkYF4knTYeFmL+EQ8GyUtUCWgdWUk+nh7r1b+dwkanuTV6fqLjmp/cJHnot3
-	 HRuk6hsYbr9mwcCSotPL+dDiAdG/6DCDQ94iUnLk=
+	b=EnaVeMhfcJaeKnhhwYTs/UxW9CgooQnQ8q6xh9T0fm9tfDmostqLbHk65kWnt2aTK
+	 QwQIrKdP2zVBGRbTZ/PQSXFsi550tbDOg0wU+frOyTVjstaZEyzQSnrUleJ3H28kXB
+	 ihz0HTAsFylYMQeThXYngLsBxhkjv7wwfbLBaoUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@intel.com>,
-	Kees Cook <keescook@chromium.org>,
+	Sherry Sun <sherry.sun@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 169/211] usb: host: xhci: mvebu: Iterate over array indexes instead of using pointer math
-Date: Fri, 10 Mar 2023 14:39:09 +0100
-Message-Id: <20230310133723.929481038@linuxfoundation.org>
+Subject: [PATCH 6.2 144/211] tty: serial: fsl_lpuart: disable the CTS when send break signal
+Date: Fri, 10 Mar 2023 14:38:44 +0100
+Message-Id: <20230310133723.114636048@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,43 +34,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit 0fbd2cda92cdb00f72080665554a586f88bca821 ]
+[ Upstream commit c4c81db5cf8bc53d6160c3abf26d382c841aa434 ]
 
-Walking the dram->cs array was seen as accesses beyond the first array
-item by the compiler. Instead, use the array index directly. This allows
-for run-time bounds checking under CONFIG_UBSAN_BOUNDS as well. Seen
-with GCC 13 with -fstrict-flex-arrays:
+LPUART IP has a bug that it treats the CTS as higher priority than the
+break signal, which cause the break signal sending through UARTCTRL_SBK
+may impacted by the CTS input if the HW flow control is enabled.
 
-In function 'xhci_mvebu_mbus_config',
-    inlined from 'xhci_mvebu_mbus_init_quirk' at ../drivers/usb/host/xhci-mvebu.c:66:2:
-../drivers/usb/host/xhci-mvebu.c:37:28: warning: array subscript 0 is outside array bounds of 'const struct mbus_dram_window[0]' [-Warray-bounds=]
-   37 |                 writel(((cs->size - 1) & 0xffff0000) | (cs->mbus_attr << 8) |
-      |                          ~~^~~~~~
+Add this workaround patch to fix the IP bug, we can disable CTS before
+asserting SBK to avoid any interference from CTS, and re-enable it when
+break off.
 
-Cc: Mathias Nyman <mathias.nyman@intel.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230204183651.never.663-kees@kernel.org
+Such as for the bluetooth chip power save feature, host can let the BT
+chip get into sleep state by sending a UART break signal, and wake it up
+by turning off the UART break. If the BT chip enters the sleep mode
+successfully, it will pull up the CTS line, if the BT chip is woken up,
+it will pull down the CTS line. If without this workaround patch, the
+UART TX pin cannot send the break signal successfully as it affected by
+the BT CTS pin. After adding this patch, the BT power save feature can
+work well.
+
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://lore.kernel.org/r/20221214031137.28815-2-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mvebu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/fsl_lpuart.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-mvebu.c b/drivers/usb/host/xhci-mvebu.c
-index 60651a50770f9..87f1597a0e5ab 100644
---- a/drivers/usb/host/xhci-mvebu.c
-+++ b/drivers/usb/host/xhci-mvebu.c
-@@ -32,7 +32,7 @@ static void xhci_mvebu_mbus_config(void __iomem *base,
+diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
+index 23910ac724b11..b136c596fe6ae 100644
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -1462,12 +1462,32 @@ static void lpuart_break_ctl(struct uart_port *port, int break_state)
  
- 	/* Program each DRAM CS in a seperate window */
- 	for (win = 0; win < dram->num_cs; win++) {
--		const struct mbus_dram_window *cs = dram->cs + win;
-+		const struct mbus_dram_window *cs = &dram->cs[win];
+ static void lpuart32_break_ctl(struct uart_port *port, int break_state)
+ {
+-	unsigned long temp;
++	unsigned long temp, modem;
++	struct tty_struct *tty;
++	unsigned int cflag = 0;
++
++	tty = tty_port_tty_get(&port->state->port);
++	if (tty) {
++		cflag = tty->termios.c_cflag;
++		tty_kref_put(tty);
++	}
  
- 		writel(((cs->size - 1) & 0xffff0000) | (cs->mbus_attr << 8) |
- 		       (dram->mbus_dram_target_id << 4) | 1,
+ 	temp = lpuart32_read(port, UARTCTRL) & ~UARTCTRL_SBK;
++	modem = lpuart32_read(port, UARTMODIR);
+ 
+-	if (break_state != 0)
++	if (break_state != 0) {
+ 		temp |= UARTCTRL_SBK;
++		/*
++		 * LPUART CTS has higher priority than SBK, need to disable CTS before
++		 * asserting SBK to avoid any interference if flow control is enabled.
++		 */
++		if (cflag & CRTSCTS && modem & UARTMODIR_TXCTSE)
++			lpuart32_write(port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
++	} else {
++		/* Re-enable the CTS when break off. */
++		if (cflag & CRTSCTS && !(modem & UARTMODIR_TXCTSE))
++			lpuart32_write(port, modem | UARTMODIR_TXCTSE, UARTMODIR);
++	}
+ 
+ 	lpuart32_write(port, temp, UARTCTRL);
+ }
 -- 
 2.39.2
 
