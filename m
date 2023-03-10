@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BA88481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:06:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F37DC4339C;
-	Fri, 10 Mar 2023 14:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16688481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:06:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FBBC433D2;
+	Fri, 10 Mar 2023 14:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457166;
-	bh=gLsH/uL6Z+svyRgcK+yjXGRB5bC9JgA2SJY6tUyB6Cc=;
+	s=korg; t=1678457169;
+	bh=6XUcGncTS9Qe8AaaVqGKkGa2F2qNA+Hb9sTapvYbQzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fsW+gSTGklrs3yAF0ClB7dXyZnO1ruJas9TN0GkzWml5OC3UWE/0LrvLKwVrS+CDM
-	 iDCaZRBvrQ70iWwubqyj+RSg5l4gsKNQshik/PVy6s22YoXTxsO6TxTRDXPn6OwUbn
-	 9El1nFjPDp9RbaootBgJAClA3YPGajdXjUCgYgT0=
+	b=PUi32oEjXZJ7fDVAOMwyQxCa22451CrD/p9VhXBSF+i/2yoDu6GF6ro+YaY09UxRW
+	 5v9b8QbG0dOMWT6PKk8kErIYdpdemA30r7G/xwDeR6aDgHqJVTfxwHKDjI9eb0QmvZ
+	 YeY2eXvCGfu8/V8wBwRz74O+fNkA81hf47FqXwPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Yangtao Li <frank.li@vivo.com>,
+	Matthias Kaehlcke <mka@chromium.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/200] f2fs: fix to avoid potential memory corruption in __update_iostat_latency()
-Date: Fri, 10 Mar 2023 14:37:30 +0100
-Message-Id: <20230310133718.414667642@linuxfoundation.org>
+Subject: [PATCH 6.1 044/200] soc: qcom: stats: Populate all subsystem debugfs files
+Date: Fri, 10 Mar 2023 14:37:31 +0100
+Message-Id: <20230310133718.449359992@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -38,73 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yangtao Li <frank.li@vivo.com>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit 0dbbf0fb38d5ec5d4138d1aeaeb43d9217b9a592 ]
+[ Upstream commit acdbf5f9b2c492505145f6e50c65418521a547c4 ]
 
-Add iotype sanity check to avoid potential memory corruption.
-This is to fix the compile error below:
+This driver relies on SMEM to populate items for each subsystem before
+the device probes. The items in SMEM that are being looked for are
+populated by the subsystems lazily, and therefore may not exist until
+the device has booted. For example, if I build this driver into the
+kernel on Trogdor Lazor and boot up, I don't see a 'modem' debugfs file
+populated, because the modem boots and populates the SMEM item after
+this driver probes.
 
-fs/f2fs/iostat.c:231 __update_iostat_latency() error: buffer overflow
-'io_lat->peak_lat[type]' 3 <= 3
+Always populate the files for the subsystems if they're in SMEM, and
+make the qcom_subsystem_sleep_stats_show() function return 0 if the SMEM
+items still isn't there. This way we can run a simple command like
 
-vim +228 fs/f2fs/iostat.c
+	grep ^ /sys/kernel/debug/qcom_stats/*
 
-  211  static inline void __update_iostat_latency(struct bio_iostat_ctx
-	*iostat_ctx,
-  212					enum iostat_lat_type type)
-  213  {
-  214		unsigned long ts_diff;
-  215		unsigned int page_type = iostat_ctx->type;
-  216		struct f2fs_sb_info *sbi = iostat_ctx->sbi;
-  217		struct iostat_lat_info *io_lat = sbi->iostat_io_lat;
-  218		unsigned long flags;
-  219
-  220		if (!sbi->iostat_enable)
-  221			return;
-  222
-  223		ts_diff = jiffies - iostat_ctx->submit_ts;
-  224		if (page_type >= META_FLUSH)
-                                 ^^^^^^^^^^
+and collect the subsystem sleep stats without interspersed errors or
+missing details entirely because this driver probed first.
 
-  225			page_type = META;
-  226
-  227		spin_lock_irqsave(&sbi->iostat_lat_lock, flags);
- @228		io_lat->sum_lat[type][page_type] += ts_diff;
-                                      ^^^^^^^^^
-Mixup between META_FLUSH and NR_PAGE_TYPE leads to memory corruption.
-
-Fixes: a4b6817625e7 ("f2fs: introduce periodic iostat io latency traces")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Suggested-by: Chao Yu <chao@kernel.org>
-Suggested-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 1d7724690344 ("soc: qcom: Add Sleep stats driver")
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230119032329.2909383-1-swboyd@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/iostat.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/qcom_stats.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/fs/f2fs/iostat.c b/fs/f2fs/iostat.c
-index 3166a8939ed4f..02393c95c9f86 100644
---- a/fs/f2fs/iostat.c
-+++ b/fs/f2fs/iostat.c
-@@ -227,8 +227,12 @@ static inline void __update_iostat_latency(struct bio_iostat_ctx *iostat_ctx,
+diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
+index 121ea409fafcd..b252bedf0cf10 100644
+--- a/drivers/soc/qcom/qcom_stats.c
++++ b/drivers/soc/qcom/qcom_stats.c
+@@ -92,7 +92,7 @@ static int qcom_subsystem_sleep_stats_show(struct seq_file *s, void *unused)
+ 	/* Items are allocated lazily, so lookup pointer each time */
+ 	stat = qcom_smem_get(subsystem->pid, subsystem->smem_item, NULL);
+ 	if (IS_ERR(stat))
+-		return -EIO;
++		return 0;
+ 
+ 	qcom_print_stats(s, stat);
+ 
+@@ -170,20 +170,14 @@ static void qcom_create_soc_sleep_stat_files(struct dentry *root, void __iomem *
+ static void qcom_create_subsystem_stat_files(struct dentry *root,
+ 					     const struct stats_config *config)
+ {
+-	const struct sleep_stats *stat;
+ 	int i;
+ 
+ 	if (!config->subsystem_stats_in_smem)
  		return;
  
- 	ts_diff = jiffies - iostat_ctx->submit_ts;
--	if (iotype >= META_FLUSH)
-+	if (iotype == META_FLUSH) {
- 		iotype = META;
-+	} else if (iotype >= NR_PAGE_TYPE) {
-+		f2fs_warn(sbi, "%s: %d over NR_PAGE_TYPE", __func__, iotype);
-+		return;
-+	}
+-	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
+-		stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
+-		if (IS_ERR(stat))
+-			continue;
+-
++	for (i = 0; i < ARRAY_SIZE(subsystems); i++)
+ 		debugfs_create_file(subsystems[i].name, 0400, root, (void *)&subsystems[i],
+ 				    &qcom_subsystem_sleep_stats_fops);
+-	}
+ }
  
- 	if (rw == 0) {
- 		idx = READ_IO;
+ static int qcom_stats_probe(struct platform_device *pdev)
 -- 
 2.39.2
 
