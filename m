@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676A1848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:23:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63FBC433EF;
-	Fri, 10 Mar 2023 14:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452A8848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:23:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C22C4339B;
+	Fri, 10 Mar 2023 14:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458229;
-	bh=vEtQuDi1vVl7+YtfoI2EAd0aBrx/HFxmKNxuhs98Uyo=;
+	s=korg; t=1678458232;
+	bh=+JmuqMPqk99q9gYVh9/Sjf3Rdc//K4afcH15cFZOeWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YgxwJgAy6Spfya9fRQeUflY1jX+e1Pkd1A1cgvEUE55LPmjkERbUUFW11zSAsWT12
-	 Gb+39sNBO6lZ/ZM0OSJcoP9kaSVfNXZsup8BAG3H28MptKcyCwlPmh5Sc42hhYM6mO
-	 NlzLOnnxUq4kfF6qTZHB3kWutZJJL7iZhR0ymTjE=
+	b=Lcjgti6j0it1UscQXucvLdgYMpnFkSI8VdAqHqbotEO7pseuCW3fugrKPOP6Dsvuu
+	 8Mv3JohfAneLXJ6hH4+q6/yjUvXIVmGqjt72+L24yp8bsNU5sHkEF+ZTBumaWCaOoW
+	 NZgwDEENCBhf0fHhHczOeLcD/K2R2wS+uq5ZxO3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 207/252] ubi: Fix use-after-free when volume resizing failed
-Date: Fri, 10 Mar 2023 14:39:37 +0100
-Message-Id: <20230310133725.352078965@linuxfoundation.org>
+Subject: [PATCH 4.19 208/252] ubi: Fix unreferenced object reported by kmemleak in ubi_resize_volume()
+Date: Fri, 10 Mar 2023 14:39:38 +0100
+Message-Id: <20230310133725.391069552@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -38,70 +38,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit 9af31d6ec1a4be4caab2550096c6bd2ba8fba472 ]
+[ Upstream commit 1e591ea072df7211f64542a09482b5f81cb3ad27 ]
 
-There is an use-after-free problem reported by KASAN:
-  ==================================================================
-  BUG: KASAN: use-after-free in ubi_eba_copy_table+0x11f/0x1c0 [ubi]
-  Read of size 8 at addr ffff888101eec008 by task ubirsvol/4735
+There is a memory leaks problem reported by kmemleak:
 
-  CPU: 2 PID: 4735 Comm: ubirsvol
-  Not tainted 6.1.0-rc1-00003-g84fa3304a7fc-dirty #14
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
-  BIOS 1.14.0-1.fc33 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x34/0x44
-   print_report+0x171/0x472
-   kasan_report+0xad/0x130
-   ubi_eba_copy_table+0x11f/0x1c0 [ubi]
-   ubi_resize_volume+0x4f9/0xbc0 [ubi]
-   ubi_cdev_ioctl+0x701/0x1850 [ubi]
-   __x64_sys_ioctl+0x11d/0x170
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
-   </TASK>
+unreferenced object 0xffff888102007a00 (size 128):
+  comm "ubirsvol", pid 32090, jiffies 4298464136 (age 2361.231s)
+  hex dump (first 32 bytes):
+ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  ................
+ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  ................
+  backtrace:
+[<ffffffff8176cecd>] __kmalloc+0x4d/0x150
+[<ffffffffa02a9a36>] ubi_eba_create_table+0x76/0x170 [ubi]
+[<ffffffffa029764e>] ubi_resize_volume+0x1be/0xbc0 [ubi]
+[<ffffffffa02a3321>] ubi_cdev_ioctl+0x701/0x1850 [ubi]
+[<ffffffff81975d2d>] __x64_sys_ioctl+0x11d/0x170
+[<ffffffff83c142a5>] do_syscall_64+0x35/0x80
+[<ffffffff83e0006a>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-When ubi_change_vtbl_record() returns an error in ubi_resize_volume(),
-"new_eba_tbl" will be freed on error handing path, but it is holded
-by "vol->eba_tbl" in ubi_eba_replace_table(). It means that the liftcycle
-of "vol->eba_tbl" and "vol" are different, so when resizing volume in
-next time, it causing an use-after-free fault.
+This is due to a mismatch between create and destroy interfaces, and
+in detail that "new_eba_tbl" created by ubi_eba_create_table() but
+destroyed by kfree(), while will causing "new_eba_tbl->entries" not
+freed.
 
-Fix it by not freeing "new_eba_tbl" after it replaced in
-ubi_eba_replace_table(), while will be freed in next volume resizing.
+Fix it by replacing kfree(new_eba_tbl) with
+ubi_eba_destroy_table(new_eba_tbl)
 
-Fixes: 801c135ce73d ("UBI: Unsorted Block Images")
+Fixes: 799dca34ac54 ("UBI: hide EBA internals")
 Signed-off-by: Li Zetao <lizetao1@huawei.com>
 Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/vmt.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mtd/ubi/vmt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/mtd/ubi/vmt.c b/drivers/mtd/ubi/vmt.c
-index 9f6ffd340a3ef..525aa795f934d 100644
+index 525aa795f934d..405cc5289d89f 100644
 --- a/drivers/mtd/ubi/vmt.c
 +++ b/drivers/mtd/ubi/vmt.c
-@@ -477,7 +477,7 @@ int ubi_resize_volume(struct ubi_volume_desc *desc, int reserved_pebs)
- 		for (i = 0; i < -pebs; i++) {
- 			err = ubi_eba_unmap_leb(ubi, vol, reserved_pebs + i);
- 			if (err)
--				goto out_acc;
-+				goto out_free;
- 		}
- 		spin_lock(&ubi->volumes_lock);
- 		ubi->rsvd_pebs += pebs;
-@@ -525,6 +525,8 @@ int ubi_resize_volume(struct ubi_volume_desc *desc, int reserved_pebs)
- 		ubi->avail_pebs += pebs;
- 		spin_unlock(&ubi->volumes_lock);
- 	}
-+	return err;
-+
- out_free:
- 	kfree(new_eba_tbl);
+@@ -528,7 +528,7 @@ int ubi_resize_volume(struct ubi_volume_desc *desc, int reserved_pebs)
  	return err;
+ 
+ out_free:
+-	kfree(new_eba_tbl);
++	ubi_eba_destroy_table(new_eba_tbl);
+ 	return err;
+ }
+ 
 -- 
 2.39.2
 
