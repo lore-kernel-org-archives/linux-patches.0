@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846DF8489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:18:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F17C4339B;
-	Fri, 10 Mar 2023 14:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94BC38489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:18:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F07B7C433EF;
+	Fri, 10 Mar 2023 14:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457922;
-	bh=i6gaGnVzRcWf31hXLHgvuw0jX/qrWoHwBTtRwgqO1M4=;
+	s=korg; t=1678457925;
+	bh=hnKt2k255I1xAGarFm4yHVMmncnDCVr5dczd2H3cJYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M93mcNZ15LqnEEsAxvwsSyPM+AE+zyDzEKBfFPM+Bq6hY565iVJ0+pnulKe9/el1E
-	 znpMgEW9q9j68RILKweIjexlg1k8dTMd9iaSzIKavxT6iVgSrPzdt8A2pTCqEHuVHK
-	 7ImoGssr0K8VqlYB3B7VGMYE4wDvo6Kvgm2sgx/o=
+	b=JBDexButCcYxc6dR8MSyeiyfbqG1nWjyM5tUpL0U4G+/1iO/OBogU9NwGly8vqpYb
+	 qFIZZhz4uDbDYOKWOWRMpL3+oJmiOzSuDXpPyoggYnYXbW9NuqNYkRSmbeNbg3FxN6
+	 5YBmrKDBCClu++53DU0zLQUtcTUeZVoOy0hcjqPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Nathan Lynch <nathanl@linux.ibm.com>,
+	Laurent Dufour <laurent.dufour@fr.ibm.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 104/252] powerpc/pseries/lparcfg: add missing RTAS retry status handling
-Date: Fri, 10 Mar 2023 14:37:54 +0100
-Message-Id: <20230310133721.957569412@linuxfoundation.org>
+Subject: [PATCH 4.19 105/252] powerpc/rtas: make all exports GPL
+Date: Fri, 10 Mar 2023 14:37:55 +0100
+Message-Id: <20230310133721.986410532@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -37,63 +38,136 @@ Content-Transfer-Encoding: 8bit
 
 From: Nathan Lynch <nathanl@linux.ibm.com>
 
-[ Upstream commit 5d08633e5f6564b60f1cbe09af3af40a74d66431 ]
+[ Upstream commit 9bce6243848dfd0ff7c2be6e8d82ab9b1e6c7858 ]
 
-The ibm,get-system-parameter RTAS function may return -2 or 990x,
-which indicate that the caller should try again.
+The first symbol exports of RTAS functions and data came with the (now
+removed) scanlog driver in 2003:
 
-lparcfg's parse_system_parameter_string() ignores this, making it
-possible to intermittently report incorrect SPLPAR characteristics.
+https://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git/commit/?id=f92e361842d5251e50562b09664082dcbd0548bb
 
-Move the RTAS call into a coventional rtas_busy_delay()-based loop.
+At the time this was applied, EXPORT_SYMBOL_GPL() was very new, and
+the exports of rtas_call() etc have remained non-GPL. As new APIs have
+been added to the RTAS subsystem, their symbol exports have followed
+the convention set by existing code.
+
+However, the historical evidence is that RTAS function exports have been
+added over time only to satisfy the needs of in-kernel users, and these
+clients must have fairly intimate knowledge of how the APIs work to use
+them safely. No out of tree users are known, and future ones seem
+unlikely.
+
+Arguably the default for RTAS symbols should have become
+EXPORT_SYMBOL_GPL once it was available. Let's make it so now, and
+exceptions can be evaluated as needed.
 
 Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reviewed-by: Laurent Dufour <laurent.dufour@fr.ibm.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230125-b4-powerpc-rtas-queue-v3-4-26929c8cce78@linux.ibm.com
+Link: https://lore.kernel.org/r/20230124140448.45938-3-nathanl@linux.ibm.com
+Stable-dep-of: 836b5b9fcc8e ("powerpc/rtas: ensure 4KB alignment for rtas_data_buf")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/lparcfg.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ arch/powerpc/kernel/rtas.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/lparcfg.c b/arch/powerpc/platforms/pseries/lparcfg.c
-index 7c872dc01bdb0..d1b338b7dbded 100644
---- a/arch/powerpc/platforms/pseries/lparcfg.c
-+++ b/arch/powerpc/platforms/pseries/lparcfg.c
-@@ -291,6 +291,7 @@ static void parse_mpp_x_data(struct seq_file *m)
+diff --git a/arch/powerpc/kernel/rtas.c b/arch/powerpc/kernel/rtas.c
+index a3f08a380c992..07d1ef762936d 100644
+--- a/arch/powerpc/kernel/rtas.c
++++ b/arch/powerpc/kernel/rtas.c
+@@ -54,10 +54,10 @@ struct rtas_t rtas = {
+ EXPORT_SYMBOL(rtas);
+ 
+ DEFINE_SPINLOCK(rtas_data_buf_lock);
+-EXPORT_SYMBOL(rtas_data_buf_lock);
++EXPORT_SYMBOL_GPL(rtas_data_buf_lock);
+ 
+ char rtas_data_buf[RTAS_DATA_BUF_SIZE] __cacheline_aligned;
+-EXPORT_SYMBOL(rtas_data_buf);
++EXPORT_SYMBOL_GPL(rtas_data_buf);
+ 
+ unsigned long rtas_rmo_buf;
+ 
+@@ -66,7 +66,7 @@ unsigned long rtas_rmo_buf;
+  * This is done like this so rtas_flash can be a module.
   */
- static void parse_system_parameter_string(struct seq_file *m)
+ void (*rtas_flash_term_hook)(int);
+-EXPORT_SYMBOL(rtas_flash_term_hook);
++EXPORT_SYMBOL_GPL(rtas_flash_term_hook);
+ 
+ /* RTAS use home made raw locking instead of spin_lock_irqsave
+  * because those can be called from within really nasty contexts
+@@ -314,7 +314,7 @@ void rtas_progress(char *s, unsigned short hex)
+  
+ 	spin_unlock(&progress_lock);
+ }
+-EXPORT_SYMBOL(rtas_progress);		/* needed by rtas_flash module */
++EXPORT_SYMBOL_GPL(rtas_progress);		/* needed by rtas_flash module */
+ 
+ int rtas_token(const char *service)
  {
-+	const s32 token = rtas_token("ibm,get-system-parameter");
- 	int call_status;
+@@ -324,7 +324,7 @@ int rtas_token(const char *service)
+ 	tokp = of_get_property(rtas.dev, service, NULL);
+ 	return tokp ? be32_to_cpu(*tokp) : RTAS_UNKNOWN_SERVICE;
+ }
+-EXPORT_SYMBOL(rtas_token);
++EXPORT_SYMBOL_GPL(rtas_token);
  
- 	unsigned char *local_buffer = kmalloc(SPLPAR_MAXLENGTH, GFP_KERNEL);
-@@ -300,16 +301,15 @@ static void parse_system_parameter_string(struct seq_file *m)
- 		return;
+ int rtas_service_present(const char *service)
+ {
+@@ -484,7 +484,7 @@ int rtas_call(int token, int nargs, int nret, int *outputs, ...)
  	}
+ 	return ret;
+ }
+-EXPORT_SYMBOL(rtas_call);
++EXPORT_SYMBOL_GPL(rtas_call);
  
--	spin_lock(&rtas_data_buf_lock);
--	memset(rtas_data_buf, 0, SPLPAR_MAXLENGTH);
--	call_status = rtas_call(rtas_token("ibm,get-system-parameter"), 3, 1,
--				NULL,
--				SPLPAR_CHARACTERISTICS_TOKEN,
--				__pa(rtas_data_buf),
--				RTAS_DATA_BUF_SIZE);
--	memcpy(local_buffer, rtas_data_buf, SPLPAR_MAXLENGTH);
--	local_buffer[SPLPAR_MAXLENGTH - 1] = '\0';
--	spin_unlock(&rtas_data_buf_lock);
-+	do {
-+		spin_lock(&rtas_data_buf_lock);
-+		memset(rtas_data_buf, 0, SPLPAR_MAXLENGTH);
-+		call_status = rtas_call(token, 3, 1, NULL, SPLPAR_CHARACTERISTICS_TOKEN,
-+					__pa(rtas_data_buf), RTAS_DATA_BUF_SIZE);
-+		memcpy(local_buffer, rtas_data_buf, SPLPAR_MAXLENGTH);
-+		local_buffer[SPLPAR_MAXLENGTH - 1] = '\0';
-+		spin_unlock(&rtas_data_buf_lock);
-+	} while (rtas_busy_delay(call_status));
+ /* For RTAS_BUSY (-2), delay for 1 millisecond.  For an extended busy status
+  * code of 990n, perform the hinted delay of 10^n (last digit) milliseconds.
+@@ -519,7 +519,7 @@ unsigned int rtas_busy_delay(int status)
  
- 	if (call_status != 0) {
- 		printk(KERN_INFO
+ 	return ms;
+ }
+-EXPORT_SYMBOL(rtas_busy_delay);
++EXPORT_SYMBOL_GPL(rtas_busy_delay);
+ 
+ static int rtas_error_rc(int rtas_rc)
+ {
+@@ -565,7 +565,7 @@ int rtas_get_power_level(int powerdomain, int *level)
+ 		return rtas_error_rc(rc);
+ 	return rc;
+ }
+-EXPORT_SYMBOL(rtas_get_power_level);
++EXPORT_SYMBOL_GPL(rtas_get_power_level);
+ 
+ int rtas_set_power_level(int powerdomain, int level, int *setlevel)
+ {
+@@ -583,7 +583,7 @@ int rtas_set_power_level(int powerdomain, int level, int *setlevel)
+ 		return rtas_error_rc(rc);
+ 	return rc;
+ }
+-EXPORT_SYMBOL(rtas_set_power_level);
++EXPORT_SYMBOL_GPL(rtas_set_power_level);
+ 
+ int rtas_get_sensor(int sensor, int index, int *state)
+ {
+@@ -601,7 +601,7 @@ int rtas_get_sensor(int sensor, int index, int *state)
+ 		return rtas_error_rc(rc);
+ 	return rc;
+ }
+-EXPORT_SYMBOL(rtas_get_sensor);
++EXPORT_SYMBOL_GPL(rtas_get_sensor);
+ 
+ int rtas_get_sensor_fast(int sensor, int index, int *state)
+ {
+@@ -662,7 +662,7 @@ int rtas_set_indicator(int indicator, int index, int new_value)
+ 		return rtas_error_rc(rc);
+ 	return rc;
+ }
+-EXPORT_SYMBOL(rtas_set_indicator);
++EXPORT_SYMBOL_GPL(rtas_set_indicator);
+ 
+ /*
+  * Ignoring RTAS extended delay
 -- 
 2.39.2
 
