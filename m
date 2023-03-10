@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5BB8489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:19:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656DDC4339C;
-	Fri, 10 Mar 2023 14:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB988489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:19:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76ADCC433D2;
+	Fri, 10 Mar 2023 14:19:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457960;
-	bh=3qZuyZq1wOCuzkHFzySZMLrOvH4xBj1LpMQEorLlC2M=;
+	s=korg; t=1678457964;
+	bh=75z8RKc9ZtGmJy5P9fzQVbJLNHn9rhFOkKwNXr9FIBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nz0vw+UAdQMLr04mmF6fQhxrBvI7CrQZlfCeInC68H7ynXceDCzwbpP+qe4DxdPhh
-	 nqPPp5yaNzekdtfNNLAqE7erbIr1yy8MFLzGrE8uDaUWDgybdcLqwzL3T9D5tjLnVf
-	 eixsLY1I8iW0CQqy8rCj/ZeTTr+qAPh8b8qyPWwU=
+	b=GDm3ms4lsSGx4Ycmq5wGZWL6KKj7A64Q7/fIXST07vWFOSUUvU2aO0K6XmRRTaFbg
+	 XZJt9awZ+Mo58XnIyhO3FsFUd7Qjz1BxWXayywKOtV/0kO6LsybaHhF/42BqUdaLQb
+	 0TUYaqzr1K9MBeJ3Lba5AtTaftGeX3XGtxmhhPHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markuss Broks <markuss.broks@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 116/252] ARM: dts: exynos: Use Exynos5420 compatible for the MIPI video phy
-Date: Fri, 10 Mar 2023 14:38:06 +0100
-Message-Id: <20230310133722.301605125@linuxfoundation.org>
+Subject: [PATCH 4.19 090/252] nfsd: fix race to check ls_layouts
+Date: Fri, 10 Mar 2023 14:37:40 +0100
+Message-Id: <20230310133721.549229654@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -35,35 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Markuss Broks <markuss.broks@gmail.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit 5d5aa219a790d61cad2c38e1aa32058f16ad2f0b ]
+[ Upstream commit fb610c4dbc996415d57d7090957ecddd4fd64fb6 ]
 
-For some reason, the driver adding support for Exynos5420 MIPI phy
-back in 2016 wasn't used on Exynos5420, which caused a kernel panic.
-Add the proper compatible for it.
+Its possible for __break_lease to find the layout's lease before we've
+added the layout to the owner's ls_layouts list.  In that case, setting
+ls_recalled = true without actually recalling the layout will cause the
+server to never send a recall callback.
 
-Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
-Link: https://lore.kernel.org/r/20230121201844.46872-2-markuss.broks@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Move the check for ls_layouts before setting ls_recalled.
+
+Fixes: c5c707f96fc9 ("nfsd: implement pNFS layout recalls")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/exynos5420.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4layouts.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/exynos5420.dtsi b/arch/arm/boot/dts/exynos5420.dtsi
-index aaff158807613..99e2e0b0b9cd4 100644
---- a/arch/arm/boot/dts/exynos5420.dtsi
-+++ b/arch/arm/boot/dts/exynos5420.dtsi
-@@ -530,7 +530,7 @@ dp_phy: dp-video-phy {
- 		};
+diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
+index f4cf1c0793c6a..cf81b5bc3e156 100644
+--- a/fs/nfsd/nfs4layouts.c
++++ b/fs/nfsd/nfs4layouts.c
+@@ -322,11 +322,11 @@ nfsd4_recall_file_layout(struct nfs4_layout_stateid *ls)
+ 	if (ls->ls_recalled)
+ 		goto out_unlock;
  
- 		mipi_phy: mipi-video-phy {
--			compatible = "samsung,s5pv210-mipi-video-phy";
-+			compatible = "samsung,exynos5420-mipi-video-phy";
- 			syscon = <&pmu_system_controller>;
- 			#phy-cells = <1>;
- 		};
+-	ls->ls_recalled = true;
+-	atomic_inc(&ls->ls_stid.sc_file->fi_lo_recalls);
+ 	if (list_empty(&ls->ls_layouts))
+ 		goto out_unlock;
+ 
++	ls->ls_recalled = true;
++	atomic_inc(&ls->ls_stid.sc_file->fi_lo_recalls);
+ 	trace_nfsd_layout_recall(&ls->ls_stid.sc_stateid);
+ 
+ 	refcount_inc(&ls->ls_stid.sc_count);
 -- 
 2.39.2
 
