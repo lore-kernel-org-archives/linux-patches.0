@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D81B847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:46:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3EBC433EF;
-	Fri, 10 Mar 2023 13:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9E3847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:47:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C464CC4339B;
+	Fri, 10 Mar 2023 13:46:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456017;
-	bh=PnFPcGnSqGG/kE3uz3cio9R00rJwc4VZbUG+/gwUNss=;
+	s=korg; t=1678456020;
+	bh=RDVHfFsRKPSe2pOEMh0COdjqiVwCq5yoqhTKfwjMMPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nDWrelTdkeyhgYh7z0zlTuJBEiHf37M5SO9ijtGraBnCZ9PWmSuySvsKeoiP4DheU
-	 GtMEPgS5o/yfqzkDQcIiOyabNfE6VqT/UWDFVR3ywRHpMertADkxZSVslDIcptiE0u
-	 P4IIw8RBnNgiVnB9utMhE1QUnMoepym/ZZjgIylE=
+	b=Qf+c0Vqp9NRptJ2Z0gtQRk0zDI1BsKrh9/Ouq+lBWfkuIddq8s6eFKy1/FhSDZPW6
+	 Qp6p5em3AoPSpvwI7n+BkyKLZonOqlANz3WYYEZJp4EnTI5ZfDbhVOaTpJhN7eumap
+	 +fhXi9r42H2a0Dd61P/j0WeC8HlrobHjAgpW+5Tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marek Vasut <marex@denx.de>,
+	Yuan Can <yuancan@huawei.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Ian Ray <ian.ray@ge.com>,
+	Robert Foss <robert.foss@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 052/193] drm: mxsfb: DRM_MXSFB should depend on ARCH_MXS || ARCH_MXC
-Date: Fri, 10 Mar 2023 14:37:14 +0100
-Message-Id: <20230310133712.732911632@linuxfoundation.org>
+Subject: [PATCH 4.14 053/193] drm/bridge: megachips: Fix error handling in i2c_register_driver()
+Date: Fri, 10 Mar 2023 14:37:15 +0100
+Message-Id: <20230310133712.773647070@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,37 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 7783cc67862f9166c901bfa0f80b717aa8d354dd ]
+[ Upstream commit 4ecff954c370b82bce45bdca2846c5c5563e8a8a ]
 
-Freescale/NXP i.MX LCDIF and eLCDIF LCD controllers are only present on
-Freescale/NXP i.MX SoCs.  Hence add a dependency on ARCH_MXS ||
-ARCH_MXC, to prevent asking the user about this driver when configuring
-a kernel without Freescale/NXP i.MX support.
+A problem about insmod megachips-stdpxxxx-ge-b850v3-fw.ko failed is
+triggered with the following log given:
 
-Fixes: 45d59d704080cc0c ("drm: Add new driver for MXSFB controller")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Marek Vasut <marex@denx.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/98e74779ca2bc575d91afff03369e86b080c01ac.1669046358.git.geert+renesas@glider.be
+[ 4497.981497] Error: Driver 'stdp4028-ge-b850v3-fw' is already registered, aborting...
+insmod: ERROR: could not insert module megachips-stdpxxxx-ge-b850v3-fw.ko: Device or resource busy
+
+The reason is that stdpxxxx_ge_b850v3_init() returns i2c_add_driver()
+directly without checking its return value, if i2c_add_driver() failed,
+it returns without calling i2c_del_driver() on the previous i2c driver,
+resulting the megachips-stdpxxxx-ge-b850v3-fw can never be installed
+later.
+A simple call graph is shown as below:
+
+ stdpxxxx_ge_b850v3_init()
+   i2c_add_driver(&stdp4028_ge_b850v3_fw_driver)
+   i2c_add_driver(&stdp2690_ge_b850v3_fw_driver)
+     i2c_register_driver()
+       driver_register()
+         bus_add_driver()
+           priv = kzalloc(...) # OOM happened
+   # return without delete stdp4028_ge_b850v3_fw_driver
+
+Fix by calling i2c_del_driver() on stdp4028_ge_b850v3_fw_driver when
+i2c_add_driver() returns error.
+
+Fixes: fcfa0ddc18ed ("drm/bridge: Drivers for megachips-stdpxxxx-ge-b850v3-fw (LVDS-DP++)")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Tested-by: Ian Ray <ian.ray@ge.com>
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221108091226.114524-1-yuancan@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mxsfb/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/mxsfb/Kconfig b/drivers/gpu/drm/mxsfb/Kconfig
-index 3ed6849d63cba..1a2805c7a0eb7 100644
---- a/drivers/gpu/drm/mxsfb/Kconfig
-+++ b/drivers/gpu/drm/mxsfb/Kconfig
-@@ -7,6 +7,7 @@ config DRM_MXSFB
- 	tristate "i.MX23/i.MX28/i.MX6SX MXSFB LCD controller"
- 	depends on DRM && OF
- 	depends on COMMON_CLK
-+	depends on ARCH_MXS || ARCH_MXC || COMPILE_TEST
- 	select DRM_MXS
- 	select DRM_KMS_HELPER
- 	select DRM_KMS_CMA_HELPER
+diff --git a/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c b/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
+index 313c80f299722..89454d1d2d998 100644
+--- a/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
++++ b/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
+@@ -437,7 +437,11 @@ static int __init stdpxxxx_ge_b850v3_init(void)
+ 	if (ret)
+ 		return ret;
+ 
+-	return i2c_add_driver(&stdp2690_ge_b850v3_fw_driver);
++	ret = i2c_add_driver(&stdp2690_ge_b850v3_fw_driver);
++	if (ret)
++		i2c_del_driver(&stdp4028_ge_b850v3_fw_driver);
++
++	return ret;
+ }
+ module_init(stdpxxxx_ge_b850v3_init);
+ 
 -- 
 2.39.2
 
