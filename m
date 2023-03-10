@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8B9881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:46:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5DA2C433A4;
-	Fri, 10 Mar 2023 14:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67064881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:46:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6C8C4339B;
+	Fri, 10 Mar 2023 14:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459564;
-	bh=W/F1RDm1ip5lH1HOwxsafEE4/+ZbE7E4MuzkO3akoes=;
+	s=korg; t=1678459567;
+	bh=ZU+yxYviQ6eC4PX1A7391J8Sl2ynHYYIzS9B7ixUsCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JwzpT3w6Vp+6ba6fX9kyLj4HR63g1NKMIvkdbB43o8THHDqafyb74ys+Y+WECIdx/
-	 Tb7Cqa2QzFULDRCBB4MK3mhmT+rf9wWC8vAejw8iDCEm8x575j+NgBwjALJ+1pCqjj
-	 t2FV4Xi9EP6VJqiYVAnEoUGHqqhq++8wZnP07570=
+	b=FOMCsOM4GinNpkhXfmqP6QKfswmVNfWGM6IF0pu58gX+d2SIwwQviEqQYCLXl32qG
+	 GmkR86EJtO/2dLUzGZg2j7RmVEpgRPrrMRfZkb13V1RS3S21lp71E3gIVaAG9Hwv8r
+	 Yf7R/mCfgHjLTAX9AYe7HwOKFgT0lrdY/ZEWKAAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
+	Robert Marko <robimarko@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 045/529] sched/deadline,rt: Remove unused parameter from pick_next_[rt|dl]_entity()
-Date: Fri, 10 Mar 2023 14:33:08 +0100
-Message-Id: <20230310133807.078813974@linuxfoundation.org>
+Subject: [PATCH 5.10 019/529] arm64: dts: qcom: ipq8074: fix Gen3 PCIe node
+Date: Fri, 10 Mar 2023 14:32:42 +0100
+Message-Id: <20230310133805.882413692@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,69 +35,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dietmar Eggemann <dietmar.eggemann@arm.com>
+From: Robert Marko <robimarko@gmail.com>
 
-[ Upstream commit 821aecd09e5ad2f8d4c3d8195333d272b392f7d3 ]
+[ Upstream commit 3e83a9c41ab0244a45a4a2800b9adb8de0d15f82 ]
 
-The `struct rq *rq` parameter isn't used. Remove it.
+IPQ8074 comes in 2 silicon versions:
+* v1 with 2x Gen2 PCIe ports and QMP PHY-s
+* v2 with 1x Gen3 and 1x Gen2 PCIe ports and QMP PHY-s
 
-Signed-off-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Juri Lelli <juri.lelli@redhat.com>
-Link: https://lore.kernel.org/r/20220302183433.333029-7-dietmar.eggemann@arm.com
-Stable-dep-of: 7c4a5b89a0b5 ("sched/rt: pick_next_rt_entity(): check list_entry")
+v2 is the final and production version that is actually supported by the
+kernel, however it looks like PCIe related nodes were added for the v1 SoC.
+
+Finish the PCIe fixup by using the correct compatible, adding missing ATU
+register space, declaring max-link-speed, use correct ranges, add missing
+clocks and resets.
+
+Fixes: 33057e1672fe ("ARM: dts: ipq8074: Add pcie nodes")
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230113164449.906002-8-robimarko@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 5 ++---
- kernel/sched/rt.c       | 5 ++---
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 30 +++++++++++++++------------
+ 1 file changed, 17 insertions(+), 13 deletions(-)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index aaf98771f9357..f59cb3e8a6130 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -1847,8 +1847,7 @@ static void set_next_task_dl(struct rq *rq, struct task_struct *p, bool first)
- 	deadline_queue_push_tasks(rq);
- }
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index 1dbae9c73c590..4ef364c010125 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -655,16 +655,18 @@ IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+ 		};
  
--static struct sched_dl_entity *pick_next_dl_entity(struct rq *rq,
--						   struct dl_rq *dl_rq)
-+static struct sched_dl_entity *pick_next_dl_entity(struct dl_rq *dl_rq)
- {
- 	struct rb_node *left = rb_first_cached(&dl_rq->root);
+ 		pcie0: pci@20000000 {
+-			compatible = "qcom,pcie-ipq8074";
++			compatible = "qcom,pcie-ipq8074-gen3";
+ 			reg = <0x20000000 0xf1d>,
+ 			      <0x20000f20 0xa8>,
+-			      <0x00080000 0x2000>,
++			      <0x20001000 0x1000>,
++			      <0x00080000 0x4000>,
+ 			      <0x20100000 0x1000>;
+-			reg-names = "dbi", "elbi", "parf", "config";
++			reg-names = "dbi", "elbi", "atu", "parf", "config";
+ 			device_type = "pci";
+ 			linux,pci-domain = <0>;
+ 			bus-range = <0x00 0xff>;
+ 			num-lanes = <1>;
++			max-link-speed = <3>;
+ 			#address-cells = <3>;
+ 			#size-cells = <2>;
  
-@@ -1867,7 +1866,7 @@ static struct task_struct *pick_next_task_dl(struct rq *rq)
- 	if (!sched_dl_runnable(rq))
- 		return NULL;
+@@ -672,9 +674,9 @@ pcie0: pci@20000000 {
+ 			phy-names = "pciephy";
  
--	dl_se = pick_next_dl_entity(rq, dl_rq);
-+	dl_se = pick_next_dl_entity(dl_rq);
- 	BUG_ON(!dl_se);
- 	p = dl_task_of(dl_se);
- 	set_next_task_dl(rq, p, true);
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index e6f22836c600b..e1ce5d1868b50 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -1605,8 +1605,7 @@ static inline void set_next_task_rt(struct rq *rq, struct task_struct *p, bool f
- 	rt_queue_push_tasks(rq);
- }
+ 			ranges = <0x81000000 0 0x20200000 0x20200000
+-				  0 0x100000   /* downstream I/O */
+-				  0x82000000 0 0x20300000 0x20300000
+-				  0 0xd00000>; /* non-prefetchable memory */
++				  0 0x10000>, /* downstream I/O */
++				 <0x82000000 0 0x20220000 0x20220000
++				  0 0xfde0000>; /* non-prefetchable memory */
  
--static struct sched_rt_entity *pick_next_rt_entity(struct rq *rq,
--						   struct rt_rq *rt_rq)
-+static struct sched_rt_entity *pick_next_rt_entity(struct rt_rq *rt_rq)
- {
- 	struct rt_prio_array *array = &rt_rq->active;
- 	struct sched_rt_entity *next = NULL;
-@@ -1628,7 +1627,7 @@ static struct task_struct *_pick_next_task_rt(struct rq *rq)
- 	struct rt_rq *rt_rq  = &rq->rt;
- 
- 	do {
--		rt_se = pick_next_rt_entity(rq, rt_rq);
-+		rt_se = pick_next_rt_entity(rt_rq);
- 		BUG_ON(!rt_se);
- 		rt_rq = group_rt_rq(rt_se);
- 	} while (rt_rq);
+ 			interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "msi";
+@@ -692,28 +694,30 @@ IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+ 			clocks = <&gcc GCC_SYS_NOC_PCIE0_AXI_CLK>,
+ 				 <&gcc GCC_PCIE0_AXI_M_CLK>,
+ 				 <&gcc GCC_PCIE0_AXI_S_CLK>,
+-				 <&gcc GCC_PCIE0_AHB_CLK>,
+-				 <&gcc GCC_PCIE0_AUX_CLK>;
+-
++				 <&gcc GCC_PCIE0_AXI_S_BRIDGE_CLK>,
++				 <&gcc GCC_PCIE0_RCHNG_CLK>;
+ 			clock-names = "iface",
+ 				      "axi_m",
+ 				      "axi_s",
+-				      "ahb",
+-				      "aux";
++				      "axi_bridge",
++				      "rchng";
++
+ 			resets = <&gcc GCC_PCIE0_PIPE_ARES>,
+ 				 <&gcc GCC_PCIE0_SLEEP_ARES>,
+ 				 <&gcc GCC_PCIE0_CORE_STICKY_ARES>,
+ 				 <&gcc GCC_PCIE0_AXI_MASTER_ARES>,
+ 				 <&gcc GCC_PCIE0_AXI_SLAVE_ARES>,
+ 				 <&gcc GCC_PCIE0_AHB_ARES>,
+-				 <&gcc GCC_PCIE0_AXI_MASTER_STICKY_ARES>;
++				 <&gcc GCC_PCIE0_AXI_MASTER_STICKY_ARES>,
++				 <&gcc GCC_PCIE0_AXI_SLAVE_STICKY_ARES>;
+ 			reset-names = "pipe",
+ 				      "sleep",
+ 				      "sticky",
+ 				      "axi_m",
+ 				      "axi_s",
+ 				      "ahb",
+-				      "axi_m_sticky";
++				      "axi_m_sticky",
++				      "axi_s_sticky";
+ 			status = "disabled";
+ 		};
+ 	};
 -- 
 2.39.2
 
