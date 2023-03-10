@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3B8847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42779C433EF;
-	Fri, 10 Mar 2023 13:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE2B847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F17FC4339C;
+	Fri, 10 Mar 2023 13:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456786;
-	bh=9HOBJ1TxNXYuQBwhsHcBeEMK8IuCImffiBxY3RwP/JI=;
+	s=korg; t=1678456789;
+	bh=yEocyvpjW3kXWlnbIVuc3GSwiYbjoFqbUTV9hn5YZks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qPUbq/PQmk/9jO6JGJOJJuInFOjwDUsmlVGY0pcSlwmqUyt0u4SxWcRpWy83d9A8P
-	 Wa2uwLqPie1kjK5RgRBBWEnzyc8NZbhDf8Fn/xRrPEOn495U+WsTv29kyEMJRuBxcx
-	 ogqRzrNPjO4GB7gbJgGNBQgLXfwW0bXx3s+O4dc8=
+	b=KHR+dStZ10OVHuKNYI40o8qhONwo1te+J4mWkM6bpJZkxmXcGUG5/l7kZWCKG3Iko
+	 oFCnjLGRp0wz7HiUMWpkE81Keub5MSg57Xqyz4PKvQieb2yTESJILcD6leZUua5j7y
+	 nuOR/53p8Jj38VeDRED3EjnUIsKQS2kmBt6R9PiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Eric Curtin <ecurtin@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	TOTE Robot <oslab@tsinghua.edu.cn>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 124/211] cpufreq: apple-soc: Fix an IS_ERR() vs NULL check
-Date: Fri, 10 Mar 2023 14:38:24 +0100
-Message-Id: <20230310133722.498544116@linuxfoundation.org>
+Subject: [PATCH 6.2 125/211] tracing: Add NULL checks for buffer in ring_buffer_free_read_page()
+Date: Fri, 10 Mar 2023 14:38:25 +0100
+Message-Id: <20230310133722.536368889@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,37 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Jia-Ju Bai <baijiaju1990@gmail.com>
 
-[ Upstream commit f43523620f646c89ffd8ada840a0068290e51266 ]
+[ Upstream commit 3e4272b9954094907f16861199728f14002fcaf6 ]
 
-The of_iomap() function returns NULL if it fails.  It never returns
-error pointers.  Fix the check accordingly.
+In a previous commit 7433632c9ff6, buffer, buffer->buffers and
+buffer->buffers[cpu] in ring_buffer_wake_waiters() can be NULL,
+and thus the related checks are added.
 
-Fixes: 6286bbb40576 ("cpufreq: apple-soc: Add new driver to control Apple SoC CPU P-states")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Eric Curtin <ecurtin@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+However, in the same call stack, these variables are also used in
+ring_buffer_free_read_page():
+
+tracing_buffers_release()
+  ring_buffer_wake_waiters(iter->array_buffer->buffer)
+    cpu_buffer = buffer->buffers[cpu] -> Add checks by previous commit
+  ring_buffer_free_read_page(iter->array_buffer->buffer)
+    cpu_buffer = buffer->buffers[cpu] -> No check
+
+Thus, to avod possible null-pointer derefernces, the related checks
+should be added.
+
+These results are reported by a static tool designed by myself.
+
+Link: https://lkml.kernel.org/r/20230113125501.760324-1-baijiaju1990@gmail.com
+
+Reported-by: TOTE Robot <oslab@tsinghua.edu.cn>
+Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/apple-soc-cpufreq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/apple-soc-cpufreq.c b/drivers/cpufreq/apple-soc-cpufreq.c
-index c11d22fd84c37..021f423705e1b 100644
---- a/drivers/cpufreq/apple-soc-cpufreq.c
-+++ b/drivers/cpufreq/apple-soc-cpufreq.c
-@@ -189,8 +189,8 @@ static int apple_soc_cpufreq_find_cluster(struct cpufreq_policy *policy,
- 	*info = match->data;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index b641cab2745e9..20cd8c9d245e2 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -5604,11 +5604,16 @@ EXPORT_SYMBOL_GPL(ring_buffer_alloc_read_page);
+  */
+ void ring_buffer_free_read_page(struct trace_buffer *buffer, int cpu, void *data)
+ {
+-	struct ring_buffer_per_cpu *cpu_buffer = buffer->buffers[cpu];
++	struct ring_buffer_per_cpu *cpu_buffer;
+ 	struct buffer_data_page *bpage = data;
+ 	struct page *page = virt_to_page(bpage);
+ 	unsigned long flags;
  
- 	*reg_base = of_iomap(args.np, 0);
--	if (IS_ERR(*reg_base))
--		return PTR_ERR(*reg_base);
-+	if (!*reg_base)
-+		return -ENOMEM;
- 
- 	return 0;
- }
++	if (!buffer || !buffer->buffers || !buffer->buffers[cpu])
++		return;
++
++	cpu_buffer = buffer->buffers[cpu];
++
+ 	/* If the page is still in use someplace else, we can't reuse it */
+ 	if (page_ref_count(page) > 1)
+ 		goto out;
 -- 
 2.39.2
 
