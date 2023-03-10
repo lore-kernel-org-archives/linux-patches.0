@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94EC98494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:36:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E690BC4339C;
-	Fri, 10 Mar 2023 14:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE7A8494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:36:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A736C4339B;
+	Fri, 10 Mar 2023 14:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459004;
-	bh=18b0VtJeatDWdr6Sssa89b09xyzb0PdeDS8EuZt3M4g=;
+	s=korg; t=1678459007;
+	bh=1OyiesipED1Dj6TzOUPesX9mNkH/QdufO8gAHpiMW8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zz6fC0I3o58GO86pACNbdmXhDwPv0nYI4IcrW/ksZdFR6nK7hXtWBhBT3QG8DP2dQ
-	 KJRSHx2xytoMXGYgqVk231BRVUbS7f3ZBhuNwp73kWgCcS4tBAt/A8qysZLHysrIks
-	 us9oqmzwTn0v6vDkVvtm/+MI1mbt7vqwulBu/g94=
+	b=C/y1SVsvIGZtnqTIVZkng0xlvVKI5VeK2uCmwQYhOrLyUEim8G6gLGCKSoi/amIDN
+	 acN5LNiYPl5ZlIMBIP2ZD/yZMaJnYglHxHnGZpbFXpE+MiPPWWGJtIAHzXp+1nDcEz
+	 nlMRTqBlHrZHARqBicvHmb6GzzMVwRvL5TkI/7rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 5.4 215/357] s390: discard .interp section
-Date: Fri, 10 Mar 2023 14:38:24 +0100
-Message-Id: <20230310133744.193393738@linuxfoundation.org>
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Gurucharan G <gurucharanx.g@intel.com>
+Subject: [PATCH 5.4 187/357] ice: add missing checks for PF vsi type
+Date: Fri, 10 Mar 2023 14:37:56 +0100
+Message-Id: <20230310133742.992340795@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -34,48 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Jesse Brandeburg <jesse.brandeburg@intel.com>
 
-commit e9c9cb90e76ffaabcc7ca8f275d9e82195fd6367 upstream.
+[ Upstream commit 6a8d013e904ad9a66706fcc926ec9993bed7d190 ]
 
-When debugging vmlinux with QEMU + GDB, the following GDB error may
-occur:
+There were a few places we had missed checking the VSI type to make sure
+it was definitely a PF VSI, before calling setup functions intended only
+for the PF VSI.
 
-    (gdb) c
-    Continuing.
-    Warning:
-    Cannot insert breakpoint -1.
-    Cannot access memory at address 0xffffffffffff95c0
+This doesn't fix any explicit bugs but cleans up the code in a few
+places and removes one explicit != vsi->type check that can be
+superseded by this code (it's a super set)
 
-    Command aborted.
-    (gdb)
-
-The reason is that, when .interp section is present, GDB tries to
-locate the file specified in it in memory and put a number of
-breakpoints there (see enable_break() function in gdb/solib-svr4.c).
-Sometimes GDB finds a bogus location that matches its heuristics,
-fails to set a breakpoint and stops. This makes further debugging
-impossible.
-
-The .interp section contains misleading information anyway (vmlinux
-does not need ld.so), so fix by discarding it.
-
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/vmlinux.lds.S |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/ice/ice_main.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/arch/s390/kernel/vmlinux.lds.S
-+++ b/arch/s390/kernel/vmlinux.lds.S
-@@ -189,5 +189,6 @@ SECTIONS
- 	DISCARDS
- 	/DISCARD/ : {
- 		*(.eh_frame)
-+		*(.interp)
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index ae1d305672259..209ae96875849 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -3492,15 +3492,12 @@ int ice_vsi_cfg(struct ice_vsi *vsi)
+ {
+ 	int err;
+ 
+-	if (vsi->netdev) {
++	if (vsi->netdev && vsi->type == ICE_VSI_PF) {
+ 		ice_set_rx_mode(vsi->netdev);
+ 
+-		if (vsi->type != ICE_VSI_LB) {
+-			err = ice_vsi_vlan_setup(vsi);
+-
+-			if (err)
+-				return err;
+-		}
++		err = ice_vsi_vlan_setup(vsi);
++		if (err)
++			return err;
  	}
+ 	ice_vsi_cfg_dcb_rings(vsi);
+ 
+@@ -3557,7 +3554,7 @@ static int ice_up_complete(struct ice_vsi *vsi)
+ 
+ 	if (vsi->port_info &&
+ 	    (vsi->port_info->phy.link_info.link_info & ICE_AQ_LINK_UP) &&
+-	    vsi->netdev) {
++	    vsi->netdev && vsi->type == ICE_VSI_PF) {
+ 		ice_print_link_msg(vsi, true);
+ 		netif_tx_start_all_queues(vsi->netdev);
+ 		netif_carrier_on(vsi->netdev);
+@@ -3567,7 +3564,9 @@ static int ice_up_complete(struct ice_vsi *vsi)
+ 	 * set the baseline so counters are ready when interface is up
+ 	 */
+ 	ice_update_eth_stats(vsi);
+-	ice_service_task_schedule(pf);
++
++	if (vsi->type == ICE_VSI_PF)
++		ice_service_task_schedule(pf);
+ 
+ 	return 0;
  }
+-- 
+2.39.2
+
 
 
