@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A08846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:33:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9BFC433D2;
-	Fri, 10 Mar 2023 14:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89566846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:33:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4261C433EF;
+	Fri, 10 Mar 2023 14:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458807;
-	bh=KOXnq/ZGzYbXe5yukVoh4jIAH6bIVpYRK589NZtmF1Y=;
+	s=korg; t=1678458810;
+	bh=SIQjfbK/VPjSfRPCYTyYi/yXepEm4KYKcTmVziNAguU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m6nRYImK7bYfPeDC/p+J0zMEepvYtvZssGfGo3w8O76OhJGbxaE3CAm4y0Qe1Zc8z
-	 a2o2dZT0RAU8NO8UL/yAAs2gRGl4yLGTn3OwNT1sfmcI/bF73PjHMCRFHkAkpYy8WO
-	 jlWNP2dtteyD6ketPwB0o4ZAGxd4TttGLywnELMI=
+	b=ZjuLZ0UFXLSLs25X7BYLkbN3UaHtJUNgRDf11I55dLT3ppk7UE+ZjrC4Hupk3Yb2h
+	 IkjpOO+3deGDtSXzD/+dMtBQj/WIzZ3TaD2QDQ2g9B61V01+T7H9OAn7NAr93dIOA4
+	 2vHAD+0dR5HBoWQI/pOGDCc7bcVgdEBfs13RskVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clark Wang <xiaoning.wang@nxp.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Jonathan Cormier <jcormier@criticallink.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 121/357] gpio: vf610: connect GPIO label to dev name
-Date: Fri, 10 Mar 2023 14:36:50 +0100
-Message-Id: <20230310133740.007405055@linuxfoundation.org>
+Subject: [PATCH 5.4 122/357] hwmon: (ltc2945) Handle error case in ltc2945_value_store
+Date: Fri, 10 Mar 2023 14:36:51 +0100
+Message-Id: <20230310133740.046283839@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -37,36 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Jonathan Cormier <jcormier@criticallink.com>
 
-[ Upstream commit 6f8ecb7f85f441eb7d78ba2a4df45ee8a821934e ]
+[ Upstream commit 178b01eccfb0b8149682f61388400bd3d903dddc ]
 
-Current GPIO label is fixed, so can't distinguish different GPIO
-controllers through labels. Use dev name instead.
+ltc2945_val_to_reg errors were not being handled
+which would have resulted in register being set to
+0 (clamped) instead of being left alone.
 
-Fixes: 7f2691a19627 ("gpio: vf610: add gpiolib/IRQ chip driver for Vybrid")
-Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: 6700ce035f83 ("hwmon: Driver for Linear Technologies LTC2945")
+
+Signed-off-by: Jonathan Cormier <jcormier@criticallink.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-vf610.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/ltc2945.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpio/gpio-vf610.c b/drivers/gpio/gpio-vf610.c
-index 1ae612c796eef..396a687e020f5 100644
---- a/drivers/gpio/gpio-vf610.c
-+++ b/drivers/gpio/gpio-vf610.c
-@@ -304,7 +304,7 @@ static int vf610_gpio_probe(struct platform_device *pdev)
- 	gc = &port->gc;
- 	gc->of_node = np;
- 	gc->parent = dev;
--	gc->label = "vf610-gpio";
-+	gc->label = dev_name(dev);
- 	gc->ngpio = VF610_GPIO_PER_PORT;
- 	gc->base = of_alias_get_id(np, "gpio") * VF610_GPIO_PER_PORT;
+diff --git a/drivers/hwmon/ltc2945.c b/drivers/hwmon/ltc2945.c
+index 2818276ed3d6b..a1dd1ef40b565 100644
+--- a/drivers/hwmon/ltc2945.c
++++ b/drivers/hwmon/ltc2945.c
+@@ -248,6 +248,8 @@ static ssize_t ltc2945_value_store(struct device *dev,
  
+ 	/* convert to register value, then clamp and write result */
+ 	regval = ltc2945_val_to_reg(dev, reg, val);
++	if (regval < 0)
++		return regval;
+ 	if (is_power_reg(reg)) {
+ 		regval = clamp_val(regval, 0, 0xffffff);
+ 		regbuf[0] = regval >> 16;
 -- 
 2.39.2
 
