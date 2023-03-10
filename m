@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FCA882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B89BC433EF;
-	Fri, 10 Mar 2023 15:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1132C882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:07:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4B4C4339B;
+	Fri, 10 Mar 2023 15:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460817;
-	bh=3Zc7OSn/wc9CX+0XE+msT5aThJ5QaYGUwCviHOxPdWs=;
+	s=korg; t=1678460820;
+	bh=pnPIPA/rUcwx2SgUP7RwWMtmdPlHUUCyUI0DAmzmgpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KJWFk++ehNHwsFpSNrTl55als0UPdxu1JB2f331S0/R/jNkhQaKedtL8wzZrmwu58
-	 pjd+dHvIxYJe+bWjzgb9nsxf+dXWPxEcKPcHF8UCJXbHPk5JxN+x6MZ9AN+J0FtyJN
-	 GcdJyegrLG4ahMLDrmpJ2V+xBy7F2NuAH3w705Og=
+	b=2H/BvQzu6RHL+bYRDl9g5hRsggRHrwZya1EWWUW5JexkkchTC494dhCWLXtXm5UEZ
+	 WcoV3Wn9fSMVdpMgdGMmhfGKZyxXS3d2HjLk56kWVHLqIIBiGpsS0JINKH89x99eQR
+	 L3xtkD5vEv+7h6FAaSVjDicSbb3QZnY4ydC9Ae/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
+	syzbot+f61594de72d6705aea03@syzkaller.appspotmail.com,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 461/529] netfilter: ctnetlink: fix possible refcount leak in ctnetlink_create_conntrack()
-Date: Fri, 10 Mar 2023 14:40:04 +0100
-Message-Id: <20230310133826.257419202@linuxfoundation.org>
+Subject: [PATCH 5.10 462/529] netfilter: ebtables: fix table blob use-after-free
+Date: Fri, 10 Mar 2023 14:40:05 +0100
+Message-Id: <20230310133826.297684563@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,44 +36,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit ac4893980bbe79ce383daf9a0885666a30fe4c83 ]
+[ Upstream commit e58a171d35e32e6e8c37cfe0e8a94406732a331f ]
 
-nf_ct_put() needs to be called to put the refcount got by
-nf_conntrack_find_get() to avoid refcount leak when
-nf_conntrack_hash_check_insert() fails.
+We are not allowed to return an error at this point.
+Looking at the code it looks like ret is always 0 at this
+point, but its not.
 
-Fixes: 7d367e06688d ("netfilter: ctnetlink: fix soft lockup when netlink adds new entries (v2)")
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Acked-by: Florian Westphal <fw@strlen.de>
+t = find_table_lock(net, repl->name, &ret, &ebt_mutex);
+
+... this can return a valid table, with ret != 0.
+
+This bug causes update of table->private with the new
+blob, but then frees the blob right away in the caller.
+
+Syzbot report:
+
+BUG: KASAN: vmalloc-out-of-bounds in __ebt_unregister_table+0xc00/0xcd0 net/bridge/netfilter/ebtables.c:1168
+Read of size 4 at addr ffffc90005425000 by task kworker/u4:4/74
+Workqueue: netns cleanup_net
+Call Trace:
+ kasan_report+0xbf/0x1f0 mm/kasan/report.c:517
+ __ebt_unregister_table+0xc00/0xcd0 net/bridge/netfilter/ebtables.c:1168
+ ebt_unregister_table+0x35/0x40 net/bridge/netfilter/ebtables.c:1372
+ ops_exit_list+0xb0/0x170 net/core/net_namespace.c:169
+ cleanup_net+0x4ee/0xb10 net/core/net_namespace.c:613
+...
+
+ip(6)tables appears to be ok (ret should be 0 at this point) but make
+this more obvious.
+
+Fixes: c58dd2dd443c ("netfilter: Can't fail and free after table replacement")
+Reported-by: syzbot+f61594de72d6705aea03@syzkaller.appspotmail.com
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bridge/netfilter/ebtables.c | 2 +-
+ net/ipv4/netfilter/ip_tables.c  | 3 +--
+ net/ipv6/netfilter/ip6_tables.c | 3 +--
+ 3 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 2efdc50f978b0..f8ba3bc25cf34 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -2359,12 +2359,15 @@ ctnetlink_create_conntrack(struct net *net,
+diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
+index 06b80b5843819..8335b7e4bcf6f 100644
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -1049,7 +1049,7 @@ static int do_replace_finish(struct net *net, struct ebt_replace *repl,
  
- 	err = nf_conntrack_hash_check_insert(ct);
- 	if (err < 0)
--		goto err2;
-+		goto err3;
+ 	audit_log_nfcfg(repl->name, AF_BRIDGE, repl->nentries,
+ 			AUDIT_XT_OP_REPLACE, GFP_KERNEL);
+-	return ret;
++	return 0;
  
- 	rcu_read_unlock();
+ free_unlock:
+ 	mutex_unlock(&ebt_mutex);
+diff --git a/net/ipv4/netfilter/ip_tables.c b/net/ipv4/netfilter/ip_tables.c
+index f77ea0dbe6562..ec981618b7b22 100644
+--- a/net/ipv4/netfilter/ip_tables.c
++++ b/net/ipv4/netfilter/ip_tables.c
+@@ -1044,7 +1044,6 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
+ 	struct xt_counters *counters;
+ 	struct ipt_entry *iter;
  
- 	return ct;
+-	ret = 0;
+ 	counters = xt_counters_alloc(num_counters);
+ 	if (!counters) {
+ 		ret = -ENOMEM;
+@@ -1090,7 +1089,7 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
+ 		net_warn_ratelimited("iptables: counters copy to user failed while replacing table\n");
+ 	}
+ 	vfree(counters);
+-	return ret;
++	return 0;
  
-+err3:
-+	if (ct->master)
-+		nf_ct_put(ct->master);
- err2:
- 	rcu_read_unlock();
- err1:
+  put_module:
+ 	module_put(t->me);
+diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
+index d36168baf6776..99bb11d167127 100644
+--- a/net/ipv6/netfilter/ip6_tables.c
++++ b/net/ipv6/netfilter/ip6_tables.c
+@@ -1062,7 +1062,6 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
+ 	struct xt_counters *counters;
+ 	struct ip6t_entry *iter;
+ 
+-	ret = 0;
+ 	counters = xt_counters_alloc(num_counters);
+ 	if (!counters) {
+ 		ret = -ENOMEM;
+@@ -1108,7 +1107,7 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
+ 		net_warn_ratelimited("ip6tables: counters copy to user failed while replacing table\n");
+ 	}
+ 	vfree(counters);
+-	return ret;
++	return 0;
+ 
+  put_module:
+ 	module_put(t->me);
 -- 
 2.39.2
 
