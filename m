@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782B9846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B99C433EF;
-	Fri, 10 Mar 2023 14:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B862846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA06C433EF;
+	Fri, 10 Mar 2023 14:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458615;
-	bh=PYK8onxS01aT7/GWezj3mKdLWGMe20WrEM3Y7ElsjeM=;
+	s=korg; t=1678458618;
+	bh=t/PQe2PqVeQA/uidFz14Vi5or1yoZVTOCxK4FbeLzxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pNKNA8qu6SOmGn/eMo0k/4rUiFcSuKpU7lLAclCyen+ubMCRe56CCaIVAgL1pyl1v
-	 0uIdPloWje7S9nz8qnqRUg16+0T6FO2KJZ5aSMTksHrHG/aIQixG3leBiVUxeGt2iK
-	 Dhrmr9HpYdj5ydV9JrvNu2IfadQrTdGWft+W9AS8=
+	b=aMuXuutyaoNTeS48Ab/zCbhqnxCd+ByIuEOnUeijeUVhfhY0xqTRm7kKIPsIBPGGg
+	 5PMfv3IV3qxAStN6OfMqpGzBX/rQYCiIrXqDmR06Dhhd/U3X6hPfxx5NTZD0x+C9fw
+	 oTkf1AOn/oGv8DROuS/9nLHY0c5SeVdnsMkLC8YM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 055/357] ACPICA: nsrepair: handle cases without a return value correctly
-Date: Fri, 10 Mar 2023 14:35:44 +0100
-Message-Id: <20230310133736.396789972@linuxfoundation.org>
+Subject: [PATCH 5.4 056/357] wifi: orinoco: check return value of hermes_write_wordrec()
+Date: Fri, 10 Mar 2023 14:35:45 +0100
+Message-Id: <20230310133736.436535423@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,63 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
 
-[ Upstream commit ca843a4c79486e99a19b859ef0b9887854afe146 ]
+[ Upstream commit 1e346cbb096a5351a637ec1992beffbf330547f0 ]
 
-Previously acpi_ns_simple_repair() would crash if expected_btypes
-contained any combination of ACPI_RTYPE_NONE with a different type,
-e.g | ACPI_RTYPE_INTEGER because of slightly incorrect logic in the
-!return_object branch, which wouldn't return AE_AML_NO_RETURN_VALUE
-for such cases.
+There is currently no return check for writing an authentication
+type (HERMES_AUTH_SHARED_KEY or HERMES_AUTH_OPEN). It looks like
+it was accidentally skipped.
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE
-static analysis tool.
+This patch adds a return check similar to the other checks in
+__orinoco_hw_setup_enc() for hermes_write_wordrec().
 
-Link: https://github.com/acpica/acpica/pull/811
-Fixes: 61db45ca2163 ("ACPICA: Restore code that repairs NULL package elements in return values.")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Detected using the static analysis tool - Svace.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221227133306.201356-1-aleksei.kodanev@bell-sw.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/nsrepair.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/wireless/intersil/orinoco/hw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/acpica/nsrepair.c b/drivers/acpi/acpica/nsrepair.c
-index be86fea8e4d48..57e6488f6933f 100644
---- a/drivers/acpi/acpica/nsrepair.c
-+++ b/drivers/acpi/acpica/nsrepair.c
-@@ -181,8 +181,9 @@ acpi_ns_simple_repair(struct acpi_evaluate_info *info,
- 	 * Try to fix if there was no return object. Warning if failed to fix.
- 	 */
- 	if (!return_object) {
--		if (expected_btypes && (!(expected_btypes & ACPI_RTYPE_NONE))) {
--			if (package_index != ACPI_NOT_PACKAGE_ELEMENT) {
-+		if (expected_btypes) {
-+			if (!(expected_btypes & ACPI_RTYPE_NONE) &&
-+			    package_index != ACPI_NOT_PACKAGE_ELEMENT) {
- 				ACPI_WARN_PREDEFINED((AE_INFO,
- 						      info->full_pathname,
- 						      ACPI_WARN_ALWAYS,
-@@ -196,14 +197,15 @@ acpi_ns_simple_repair(struct acpi_evaluate_info *info,
- 				if (ACPI_SUCCESS(status)) {
- 					return (AE_OK);	/* Repair was successful */
- 				}
--			} else {
-+			}
-+
-+			if (expected_btypes != ACPI_RTYPE_NONE) {
- 				ACPI_WARN_PREDEFINED((AE_INFO,
- 						      info->full_pathname,
- 						      ACPI_WARN_ALWAYS,
- 						      "Missing expected return value"));
-+				return (AE_AML_NO_RETURN_VALUE);
- 			}
--
--			return (AE_AML_NO_RETURN_VALUE);
+diff --git a/drivers/net/wireless/intersil/orinoco/hw.c b/drivers/net/wireless/intersil/orinoco/hw.c
+index 61af5a28f269f..af49aa421e47f 100644
+--- a/drivers/net/wireless/intersil/orinoco/hw.c
++++ b/drivers/net/wireless/intersil/orinoco/hw.c
+@@ -931,6 +931,8 @@ int __orinoco_hw_setup_enc(struct orinoco_private *priv)
+ 			err = hermes_write_wordrec(hw, USER_BAP,
+ 					HERMES_RID_CNFAUTHENTICATION_AGERE,
+ 					auth_flag);
++			if (err)
++				return err;
  		}
- 	}
- 
+ 		err = hermes_write_wordrec(hw, USER_BAP,
+ 					   HERMES_RID_CNFWEPENABLED_AGERE,
 -- 
 2.39.2
 
