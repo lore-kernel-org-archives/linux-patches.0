@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A818481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:10:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38B6C4339E;
-	Fri, 10 Mar 2023 14:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DA98481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:10:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A31C4339B;
+	Fri, 10 Mar 2023 14:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457441;
-	bh=WQ/AFTgJmQr/mPiSgZxL3KFvJ3Y/Dj8btyJ8583Tz6Y=;
+	s=korg; t=1678457444;
+	bh=EW9lfzBa7CkIkb2KhLWSsi2h78M/5udjB0wcRun9UlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=enl0NfCMUc3kG0hJeYnfQN7wVFM7IG/pnqSv00d6BtknzylVIt5h8sPeD2lweO1B6
-	 Lv84YjRQ1to7qt4byMu/KqIIb46q1OeegGhEofWmEO3eBebfZ6I2BNp9aLcIvABv0D
-	 8zwqZq+N9QF7GS3OMYtq/f2r5d8vOtsV6S9hXDQ8=
+	b=zoId5ETfI3Ryjll5LnRL2i9EgHycUMgJWCn0qFcI5a6xz+ceWAwLi0aJ1zBc24kdp
+	 4j2Clv7C2qT+8KQmdgBTrUW61hq6WK9GUSxv9qd+wjfiDZQNG40U9xlcxovxjaC7Ja
+	 BzDZqgcGc/t3LZnO4A2dgQ5SodUw7T37pt+f/s0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Ricardo Ribalda <ricardo@ribalda.com>,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 139/200] media: uvcvideo: Add GUID for BGRA/X 8:8:8:8
-Date: Fri, 10 Mar 2023 14:39:06 +0100
-Message-Id: <20230310133721.404751578@linuxfoundation.org>
+Subject: [PATCH 6.1 140/200] soundwire: bus_type: Avoid lockdep assert in sdw_drv_probe()
+Date: Fri, 10 Mar 2023 14:39:07 +0100
+Message-Id: <20230310133721.433743347@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -37,69 +36,275 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 015d44c2b700ba9639dd29672ba362796cc0be54 ]
+[ Upstream commit 3dca1f89ae3455963d7b53245ecf298ea9bae857 ]
 
-The Cypress EZUSB FX3 UVC example can be configured to report pixel
-format "e436eb7e-524f-11ce-9f53-0020af0ba770". This is its GUID for
-BGRA/X 8:8:8:8.
+Don't hold sdw_dev_lock while calling the peripheral driver
+probe() and remove() callbacks.
 
-The UVC 1.5 spec [1] only defines GUIDs for YUY2, NV12, M420 and I420.
-This seems to be an extension documented in the Microsoft Windows Media
-Format SDK[2]. This Media Format SDK defines this GUID as corresponding
-to `MEDIASUBTYPE_RGB32`, which is confirmed by [4] as `MEDIASUBTYPE_ARGB32`
-has different GUID.
+Holding sdw_dev_lock around the probe() and remove() calls causes
+a theoretical mutex inversion which lockdep will assert on.
 
-Note that in my case, the FX3 UVC can output either channel order,
-BGR or RGB or any other mix for that matter. Since Linux commit
-1b8dc32286a1a ("[media] uvcvideo: Add GUID for BGR 8:8:8")
-defined a GUID for `MEDIASUBTYPE_RGB24` channel order as BGR, keep
-this change consistent and define `MEDIASUBTYPE_RGB32` as BGR as well.
-Document [3] also indicates the channel order is BGR.
+During probe() the sdw_dev_lock mutex is taken first and then
+ASoC/ALSA locks are taken by the probe() implementation.
 
-[1] https://www.usb.org/document-library/video-class-v15-document-set
-[2] https://learn.microsoft.com/en-us/windows/win32/wmformat/media-type-identifiers
-[3] https://learn.microsoft.com/en-us/windows/win32/directshow/uncompressed-rgb-video-subtypes
-[4] https://gix.github.io/media-types/
+During normal operation ASoC can take its locks and then trigger
+a runtime resume of the component. The SoundWire resume will then
+take sdw_dev_lock. This is the reverse order compared to probe().
 
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Ricardo Ribalda <ricardo@ribalda.com>
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Link: https://lore.kernel.org/r/20230126231456.3402323-2-m.grzeschik@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+It's not necessary to hold sdw_dev_lock when calling the probe()
+and remove(), it is only used to prevent the bus core calling the
+driver callbacks if there isn't a driver or the driver is removing.
+
+All calls to the driver callbacks are guarded by the 'probed' flag.
+So if sdw_dev_lock is held while setting and clearing the 'probed'
+flag this is sufficient to guarantee the safety of callback
+functions.
+
+Removing the mutex from around the call to probe() means that it
+is now possible for a bus event (PING response) to be handled in
+parallel with the probe(). But sdw_bus_probe() already has
+handling for this by calling the device update_status() after
+the probe() has completed.
+
+Example lockdep assert:
+[   46.098514] ======================================================
+[   46.104736] WARNING: possible circular locking dependency detected
+[   46.110961] 6.1.0-rc4-jamerson #1 Tainted: G            E
+[   46.116842] ------------------------------------------------------
+[   46.123063] mpg123/1130 is trying to acquire lock:
+[   46.127883] ffff8b445031fb80 (&slave->sdw_dev_lock){+.+.}-{3:3}, at: sdw_update_slave_status+0x26/0x70
+[   46.137225]
+               but task is already holding lock:
+[   46.143074] ffffffffc1455310 (&card->pcm_mutex){+.+.}-{3:3}, at: dpcm_fe_dai_open+0x49/0x830
+[   46.151536]
+               which lock already depends on the new lock.[   46.159732]
+               the existing dependency chain (in reverse order) is:
+[   46.167231]
+               -> #4 (&card->pcm_mutex){+.+.}-{3:3}:
+[   46.173428]        __mutex_lock+0x94/0x920
+[   46.177542]        snd_soc_dpcm_runtime_update+0x2e/0x100
+[   46.182958]        snd_soc_dapm_put_enum_double+0x1c2/0x200
+[   46.188548]        snd_ctl_elem_write+0x10c/0x1d0
+[   46.193268]        snd_ctl_ioctl+0x126/0x850
+[   46.197556]        __x64_sys_ioctl+0x87/0xc0
+[   46.201845]        do_syscall_64+0x38/0x90
+[   46.205959]        entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[   46.211553]
+               -> #3 (&card->controls_rwsem){++++}-{3:3}:
+[   46.218188]        down_write+0x2b/0xd0
+[   46.222038]        snd_ctl_add_replace+0x39/0xb0
+[   46.226672]        snd_soc_add_controls+0x53/0x80
+[   46.231393]        soc_probe_component+0x1e4/0x2a0
+[   46.236202]        snd_soc_bind_card+0x51a/0xc80
+[   46.240836]        devm_snd_soc_register_card+0x43/0x90
+[   46.246079]        mc_probe+0x982/0xfe0 [snd_soc_sof_sdw]
+[   46.251500]        platform_probe+0x3c/0xa0
+[   46.255700]        really_probe+0xde/0x390
+[   46.259814]        __driver_probe_device+0x78/0x180
+[   46.264710]        driver_probe_device+0x1e/0x90
+[   46.269347]        __driver_attach+0x9f/0x1f0
+[   46.273721]        bus_for_each_dev+0x78/0xc0
+[   46.278098]        bus_add_driver+0x1ac/0x200
+[   46.282473]        driver_register+0x8f/0xf0
+[   46.286759]        do_one_initcall+0x58/0x310
+[   46.291136]        do_init_module+0x4c/0x1f0
+[   46.295422]        __do_sys_finit_module+0xb4/0x130
+[   46.300321]        do_syscall_64+0x38/0x90
+[   46.304434]        entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[   46.310027]
+               -> #2 (&card->mutex){+.+.}-{3:3}:
+[   46.315883]        __mutex_lock+0x94/0x920
+[   46.320000]        snd_soc_bind_card+0x3e/0xc80
+[   46.324551]        devm_snd_soc_register_card+0x43/0x90
+[   46.329798]        mc_probe+0x982/0xfe0 [snd_soc_sof_sdw]
+[   46.335219]        platform_probe+0x3c/0xa0
+[   46.339420]        really_probe+0xde/0x390
+[   46.343532]        __driver_probe_device+0x78/0x180
+[   46.348430]        driver_probe_device+0x1e/0x90
+[   46.353065]        __driver_attach+0x9f/0x1f0
+[   46.357437]        bus_for_each_dev+0x78/0xc0
+[   46.361812]        bus_add_driver+0x1ac/0x200
+[   46.366716]        driver_register+0x8f/0xf0
+[   46.371528]        do_one_initcall+0x58/0x310
+[   46.376424]        do_init_module+0x4c/0x1f0
+[   46.381239]        __do_sys_finit_module+0xb4/0x130
+[   46.386665]        do_syscall_64+0x38/0x90
+[   46.391299]        entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[   46.397416]
+               -> #1 (client_mutex){+.+.}-{3:3}:
+[   46.404307]        __mutex_lock+0x94/0x920
+[   46.408941]        snd_soc_add_component+0x24/0x2c0
+[   46.414345]        devm_snd_soc_register_component+0x54/0xa0
+[   46.420522]        cs35l56_common_probe+0x280/0x370 [snd_soc_cs35l56]
+[   46.427487]        cs35l56_sdw_probe+0xf4/0x170 [snd_soc_cs35l56_sdw]
+[   46.434442]        sdw_drv_probe+0x80/0x1a0
+[   46.439136]        really_probe+0xde/0x390
+[   46.443738]        __driver_probe_device+0x78/0x180
+[   46.449120]        driver_probe_device+0x1e/0x90
+[   46.454247]        __driver_attach+0x9f/0x1f0
+[   46.459106]        bus_for_each_dev+0x78/0xc0
+[   46.463971]        bus_add_driver+0x1ac/0x200
+[   46.468825]        driver_register+0x8f/0xf0
+[   46.473592]        do_one_initcall+0x58/0x310
+[   46.478441]        do_init_module+0x4c/0x1f0
+[   46.483202]        __do_sys_finit_module+0xb4/0x130
+[   46.488572]        do_syscall_64+0x38/0x90
+[   46.493158]        entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[   46.499229]
+               -> #0 (&slave->sdw_dev_lock){+.+.}-{3:3}:
+[   46.506737]        __lock_acquire+0x1121/0x1df0
+[   46.511765]        lock_acquire+0xd5/0x300
+[   46.516360]        __mutex_lock+0x94/0x920
+[   46.520949]        sdw_update_slave_status+0x26/0x70
+[   46.526409]        sdw_clear_slave_status+0xd8/0xe0
+[   46.531783]        intel_resume_runtime+0x139/0x2a0
+[   46.537155]        __rpm_callback+0x41/0x120
+[   46.541919]        rpm_callback+0x5d/0x70
+[   46.546422]        rpm_resume+0x531/0x7e0
+[   46.550920]        __pm_runtime_resume+0x4a/0x80
+[   46.556024]        snd_soc_pcm_component_pm_runtime_get+0x2f/0xc0
+[   46.562611]        __soc_pcm_open+0x62/0x520
+[   46.567375]        dpcm_be_dai_startup+0x116/0x210
+[   46.572661]        dpcm_fe_dai_open+0xf7/0x830
+[   46.577597]        snd_pcm_open_substream+0x54a/0x8b0
+[   46.583145]        snd_pcm_open.part.0+0xdc/0x200
+[   46.588341]        snd_pcm_playback_open+0x51/0x80
+[   46.593625]        chrdev_open+0xc0/0x250
+[   46.598129]        do_dentry_open+0x15f/0x430
+[   46.602981]        path_openat+0x75e/0xa80
+[   46.607575]        do_filp_open+0xb2/0x160
+[   46.612162]        do_sys_openat2+0x9a/0x160
+[   46.616922]        __x64_sys_openat+0x53/0xa0
+[   46.621767]        do_syscall_64+0x38/0x90
+[   46.626352]        entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[   46.632414]
+               other info that might help us debug this:[   46.641862] Chain exists of:
+                 &slave->sdw_dev_lock --> &card->controls_rwsem --> &card->pcm_mutex[   46.655145]  Possible unsafe locking scenario:[   46.662048]        CPU0                    CPU1
+[   46.667080]        ----                    ----
+[   46.672108]   lock(&card->pcm_mutex);
+[   46.676267]                                lock(&card->controls_rwsem);
+[   46.683382]                                lock(&card->pcm_mutex);
+[   46.690063]   lock(&slave->sdw_dev_lock);
+[   46.694574]
+                *** DEADLOCK ***[   46.701942] 2 locks held by mpg123/1130:
+[   46.706356]  #0: ffff8b4457b22b90 (&pcm->open_mutex){+.+.}-{3:3}, at: snd_pcm_open.part.0+0xc9/0x200
+[   46.715999]  #1: ffffffffc1455310 (&card->pcm_mutex){+.+.}-{3:3}, at: dpcm_fe_dai_open+0x49/0x830
+[   46.725390]
+               stack backtrace:
+[   46.730752] CPU: 0 PID: 1130 Comm: mpg123 Tainted: G            E      6.1.0-rc4-jamerson #1
+[   46.739703] Hardware name: AAEON UP-WHL01/UP-WHL01, BIOS UPW1AM19 11/10/2020
+[   46.747270] Call Trace:
+[   46.750239]  <TASK>
+[   46.752857]  dump_stack_lvl+0x56/0x73
+[   46.757045]  check_noncircular+0x102/0x120
+[   46.761664]  __lock_acquire+0x1121/0x1df0
+[   46.766197]  lock_acquire+0xd5/0x300
+[   46.770292]  ? sdw_update_slave_status+0x26/0x70
+[   46.775432]  ? lock_is_held_type+0xe2/0x140
+[   46.780143]  __mutex_lock+0x94/0x920
+[   46.784241]  ? sdw_update_slave_status+0x26/0x70
+[   46.789387]  ? find_held_lock+0x2b/0x80
+[   46.793750]  ? sdw_update_slave_status+0x26/0x70
+[   46.798894]  ? lock_release+0x147/0x2f0
+[   46.803262]  ? lockdep_init_map_type+0x47/0x250
+[   46.808315]  ? sdw_update_slave_status+0x26/0x70
+[   46.813456]  sdw_update_slave_status+0x26/0x70
+[   46.818422]  sdw_clear_slave_status+0xd8/0xe0
+[   46.823302]  ? pm_generic_runtime_suspend+0x30/0x30
+[   46.828706]  intel_resume_runtime+0x139/0x2a0
+[   46.833583]  ? _raw_spin_unlock_irq+0x24/0x50
+[   46.838462]  ? pm_generic_runtime_suspend+0x30/0x30
+[   46.843866]  __rpm_callback+0x41/0x120
+[   46.848142]  ? pm_generic_runtime_suspend+0x30/0x30
+[   46.853550]  rpm_callback+0x5d/0x70
+[   46.857568]  rpm_resume+0x531/0x7e0
+[   46.861578]  ? _raw_spin_lock_irqsave+0x62/0x70
+[   46.866634]  __pm_runtime_resume+0x4a/0x80
+[   46.871258]  snd_soc_pcm_component_pm_runtime_get+0x2f/0xc0
+[   46.877358]  __soc_pcm_open+0x62/0x520
+[   46.881634]  ? dpcm_add_paths.isra.0+0x35d/0x4c0
+[   46.886784]  dpcm_be_dai_startup+0x116/0x210
+[   46.891592]  dpcm_fe_dai_open+0xf7/0x830
+[   46.896046]  ? debug_mutex_init+0x33/0x50
+[   46.900591]  snd_pcm_open_substream+0x54a/0x8b0
+[   46.905658]  snd_pcm_open.part.0+0xdc/0x200
+[   46.910376]  ? wake_up_q+0x90/0x90
+[   46.914312]  snd_pcm_playback_open+0x51/0x80
+[   46.919118]  chrdev_open+0xc0/0x250
+[   46.923147]  ? cdev_device_add+0x90/0x90
+[   46.927608]  do_dentry_open+0x15f/0x430
+[   46.931976]  path_openat+0x75e/0xa80
+[   46.936086]  do_filp_open+0xb2/0x160
+[   46.940194]  ? lock_release+0x147/0x2f0
+[   46.944563]  ? _raw_spin_unlock+0x29/0x50
+[   46.949101]  do_sys_openat2+0x9a/0x160
+[   46.953377]  __x64_sys_openat+0x53/0xa0
+[   46.957733]  do_syscall_64+0x38/0x90
+[   46.961829]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[   46.967402] RIP: 0033:0x7fa6397ccd3b
+[   46.971506] Code: 25 00 00 41 00 3d 00 00 41 00 74 4b 64 8b 04 25 18 00 00 00 85 c0 75 67 44 89 e2 48 89 ee bf 9c ff ff ff b8 01 01 00 00 0f 05 <48> 3d 00 f0 ff ff 0f 87 91 00 00 00 48 8b 4c 24 28 64 48 33 0c 25
+[   46.991413] RSP: 002b:00007fff838e8990 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
+[   46.999580] RAX: ffffffffffffffda RBX: 0000000000080802 RCX: 00007fa6397ccd3b
+[   47.007311] RDX: 0000000000080802 RSI: 00007fff838e8b50 RDI: 00000000ffffff9c
+[   47.015047] RBP: 00007fff838e8b50 R08: 0000000000000000 R09: 0000000000000011
+[   47.022787] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000080802
+[   47.030539] R13: 0000000000000004 R14: 0000000000000000 R15: 00007fff838e8b50
+[   47.038289]  </TASK>
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20230123172520.339367-1-rf@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/media/v4l2-uvc.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/soundwire/bus_type.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/include/media/v4l2-uvc.h b/include/media/v4l2-uvc.h
-index f83e31661333b..b010a36fc1d95 100644
---- a/include/media/v4l2-uvc.h
-+++ b/include/media/v4l2-uvc.h
-@@ -99,6 +99,9 @@
- #define UVC_GUID_FORMAT_BGR3 \
- 	{ 0x7d, 0xeb, 0x36, 0xe4, 0x4f, 0x52, 0xce, 0x11, \
- 	 0x9f, 0x53, 0x00, 0x20, 0xaf, 0x0b, 0xa7, 0x70}
-+#define UVC_GUID_FORMAT_BGR4 \
-+	{ 0x7e, 0xeb, 0x36, 0xe4, 0x4f, 0x52, 0xce, 0x11, \
-+	 0x9f, 0x53, 0x00, 0x20, 0xaf, 0x0b, 0xa7, 0x70}
- #define UVC_GUID_FORMAT_M420 \
- 	{ 'M',  '4',  '2',  '0', 0x00, 0x00, 0x10, 0x00, \
- 	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
-@@ -266,6 +269,11 @@ static struct uvc_format_desc uvc_fmts[] = {
- 		.guid		= UVC_GUID_FORMAT_BGR3,
- 		.fcc		= V4L2_PIX_FMT_BGR24,
- 	},
-+	{
-+		.name		= "BGRA/X 8:8:8:8 (BGR4)",
-+		.guid		= UVC_GUID_FORMAT_BGR4,
-+		.fcc		= V4L2_PIX_FMT_XBGR32,
-+	},
- 	{
- 		.name		= "H.264",
- 		.guid		= UVC_GUID_FORMAT_H264,
+diff --git a/drivers/soundwire/bus_type.c b/drivers/soundwire/bus_type.c
+index 04b3529f89293..963498db0fd22 100644
+--- a/drivers/soundwire/bus_type.c
++++ b/drivers/soundwire/bus_type.c
+@@ -105,20 +105,19 @@ static int sdw_drv_probe(struct device *dev)
+ 	if (ret)
+ 		return ret;
+ 
+-	mutex_lock(&slave->sdw_dev_lock);
+-
+ 	ret = drv->probe(slave, id);
+ 	if (ret) {
+ 		name = drv->name;
+ 		if (!name)
+ 			name = drv->driver.name;
+-		mutex_unlock(&slave->sdw_dev_lock);
+ 
+ 		dev_err(dev, "Probe of %s failed: %d\n", name, ret);
+ 		dev_pm_domain_detach(dev, false);
+ 		return ret;
+ 	}
+ 
++	mutex_lock(&slave->sdw_dev_lock);
++
+ 	/* device is probed so let's read the properties now */
+ 	if (drv->ops && drv->ops->read_prop)
+ 		drv->ops->read_prop(slave);
+@@ -167,14 +166,12 @@ static int sdw_drv_remove(struct device *dev)
+ 	int ret = 0;
+ 
+ 	mutex_lock(&slave->sdw_dev_lock);
+-
+ 	slave->probed = false;
++	mutex_unlock(&slave->sdw_dev_lock);
+ 
+ 	if (drv->remove)
+ 		ret = drv->remove(slave);
+ 
+-	mutex_unlock(&slave->sdw_dev_lock);
+-
+ 	dev_pm_domain_detach(dev, false);
+ 
+ 	return ret;
 -- 
 2.39.2
 
