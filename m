@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A58847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04EC7C4339C;
-	Fri, 10 Mar 2023 14:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BC3847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02ACC433EF;
+	Fri, 10 Mar 2023 14:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456809;
-	bh=Y3pN0w1O2a3aFOcYxVhlTjd273zONYfeq6yPvxEfHFw=;
+	s=korg; t=1678456812;
+	bh=c0BcERzg5mF7NYDYXKq4lbEnyuY36ja+gkncF1XNcI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvskQlYHjqcUekxQPuDq/mG7S+TX5qstSf2IhwMQOOQADjJRQXh5hDjyoj5okByBK
-	 J2CEfYkqP4RLJxgeGaD1Ue6FZVodabxaMqwKiViwl+ImClTXSMiR6PC8LfsH/qZz0x
-	 kEzuOtR3gfjrOBvXECgOjz/MKXBMFBDIIo7y9cyg=
+	b=kZ1htX/s+JEBSddpgmU0XyxUN+4rP6nXRPNfmjjysI/4LEMEsdKXvhtomBuk0Bubo
+	 zfpMCjXAxW3xpN8R4I3orsHsGrdfAPXS0CIDUJFJxshTMh+jQdRaF1bcfCO4LijSww
+	 5IB3+RLhJAOHEua3J0ooyr7+tRvNh7V2Kb7GEH68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 131/211] iommu: Remove deferred attach check from __iommu_detach_device()
-Date: Fri, 10 Mar 2023 14:38:31 +0100
-Message-Id: <20230310133722.719895460@linuxfoundation.org>
+Subject: [PATCH 6.2 132/211] PCI/ACPI: Account for _S0W of the target bridge in acpi_pci_bridge_d3()
+Date: Fri, 10 Mar 2023 14:38:32 +0100
+Message-Id: <20230310133722.753428655@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,195 +36,164 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit dd8a25c557e109f868430bd2e3e8f394cb40eaa7 ]
+[ Upstream commit 8133844a8f2434be9576850c6978179d7cca5c81 ]
 
-At the current moment, __iommu_detach_device() is only called via call
-chains that are after the device driver is attached - eg via explicit
-attach APIs called by the device driver.
+It is questionable to allow a PCI bridge to go into D3 if it has _S0W
+returning D2 or a shallower power state, so modify acpi_pci_bridge_d3(() to
+always take the return value of _S0W for the target bridge into account.
+That is, make it return 'false' if _S0W returns D2 or a shallower power
+state for the target bridge regardless of its ancestor Root Port
+properties.  Of course, this also causes 'false' to be returned if the Root
+Port itself is the target and its _S0W returns D2 or a shallower power
+state.
 
-Commit bd421264ed30 ("iommu: Fix deferred domain attachment") has removed
-deferred domain attachment check from __iommu_attach_device() path, so it
-should just unconditionally work in the __iommu_detach_device() path.
+However, still allow bridges without _S0W that are power-manageable via
+ACPI to enter D3 to retain the current code behavior in that case.
 
-It actually looks like a bug that we were blocking detach on these paths
-since the attach was unconditional and the caller is going to free the
-(probably) UNAMANGED domain once this returns.
+This fixes problems where a hotplug notification is missed because a bridge
+is in D3.  That means hot-added devices such as USB4 docks (and the devices
+they contain) and Thunderbolt 3 devices may not work.
 
-The only place we should be testing for deferred attach is during the
-initial point the dma device is linked to the group, and then again
-during the dma api calls.
-
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20230110025408.667767-5-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Link: https://lore.kernel.org/linux-pci/20221031223356.32570-1-mario.limonciello@amd.com/
+Link: https://lore.kernel.org/r/12155458.O9o76ZdvQC@kreacher
+Reported-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommu.c | 70 ++++++++++++++++++++++---------------------
- include/linux/iommu.h |  2 ++
- 2 files changed, 38 insertions(+), 34 deletions(-)
+ drivers/acpi/device_pm.c | 19 +++++++++++++++++
+ drivers/pci/pci-acpi.c   | 45 +++++++++++++++++++++++++++-------------
+ include/acpi/acpi_bus.h  |  1 +
+ 3 files changed, 51 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 50d858f36a81b..f8100067502fb 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -371,6 +371,30 @@ static int __iommu_probe_device(struct device *dev, struct list_head *group_list
- 	return ret;
+diff --git a/drivers/acpi/device_pm.c b/drivers/acpi/device_pm.c
+index 97450f4003cc9..f007116a84276 100644
+--- a/drivers/acpi/device_pm.c
++++ b/drivers/acpi/device_pm.c
+@@ -484,6 +484,25 @@ void acpi_dev_power_up_children_with_adr(struct acpi_device *adev)
+ 	acpi_dev_for_each_child(adev, acpi_power_up_if_adr_present, NULL);
  }
  
-+static bool iommu_is_attach_deferred(struct device *dev)
++/**
++ * acpi_dev_power_state_for_wake - Deepest power state for wakeup signaling
++ * @adev: ACPI companion of the target device.
++ *
++ * Evaluate _S0W for @adev and return the value produced by it or return
++ * ACPI_STATE_UNKNOWN on errors (including _S0W not present).
++ */
++u8 acpi_dev_power_state_for_wake(struct acpi_device *adev)
 +{
-+	const struct iommu_ops *ops = dev_iommu_ops(dev);
++	unsigned long long state;
++	acpi_status status;
 +
-+	if (ops->is_attach_deferred)
-+		return ops->is_attach_deferred(dev);
++	status = acpi_evaluate_integer(adev->handle, "_S0W", NULL, &state);
++	if (ACPI_FAILURE(status))
++		return ACPI_STATE_UNKNOWN;
 +
-+	return false;
++	return state;
 +}
 +
-+static int iommu_group_do_dma_first_attach(struct device *dev, void *data)
-+{
-+	struct iommu_domain *domain = data;
+ #ifdef CONFIG_PM
+ static DEFINE_MUTEX(acpi_pm_notifier_lock);
+ static DEFINE_MUTEX(acpi_pm_notifier_install_lock);
+diff --git a/drivers/pci/pci-acpi.c b/drivers/pci/pci-acpi.c
+index 068d6745bf98c..052a611081ecd 100644
+--- a/drivers/pci/pci-acpi.c
++++ b/drivers/pci/pci-acpi.c
+@@ -976,24 +976,41 @@ bool acpi_pci_power_manageable(struct pci_dev *dev)
+ bool acpi_pci_bridge_d3(struct pci_dev *dev)
+ {
+ 	struct pci_dev *rpdev;
+-	struct acpi_device *adev;
+-	acpi_status status;
+-	unsigned long long state;
++	struct acpi_device *adev, *rpadev;
+ 	const union acpi_object *obj;
+ 
+ 	if (acpi_pci_disabled || !dev->is_hotplug_bridge)
+ 		return false;
+ 
+-	/* Assume D3 support if the bridge is power-manageable by ACPI. */
+-	if (acpi_pci_power_manageable(dev))
+-		return true;
++	adev = ACPI_COMPANION(&dev->dev);
++	if (adev) {
++		/*
++		 * If the bridge has _S0W, whether or not it can go into D3
++		 * depends on what is returned by that object.  In particular,
++		 * if the power state returned by _S0W is D2 or shallower,
++		 * entering D3 should not be allowed.
++		 */
++		if (acpi_dev_power_state_for_wake(adev) <= ACPI_STATE_D2)
++			return false;
 +
-+	lockdep_assert_held(&dev->iommu_group->mutex);
-+
-+	if (iommu_is_attach_deferred(dev)) {
-+		dev->iommu->attach_deferred = 1;
-+		return 0;
++		/*
++		 * Otherwise, assume that the bridge can enter D3 so long as it
++		 * is power-manageable via ACPI.
++		 */
++		if (acpi_device_power_manageable(adev))
++			return true;
 +	}
+ 
+ 	rpdev = pcie_find_root_port(dev);
+ 	if (!rpdev)
+ 		return false;
+ 
+-	adev = ACPI_COMPANION(&rpdev->dev);
+-	if (!adev)
++	if (rpdev == dev)
++		rpadev = adev;
++	else
++		rpadev = ACPI_COMPANION(&rpdev->dev);
 +
-+	return __iommu_attach_device(domain, dev);
-+}
-+
- int iommu_probe_device(struct device *dev)
- {
- 	const struct iommu_ops *ops;
-@@ -401,7 +425,7 @@ int iommu_probe_device(struct device *dev)
- 	 * attach the default domain.
++	if (!rpadev)
+ 		return false;
+ 
+ 	/*
+@@ -1001,15 +1018,15 @@ bool acpi_pci_bridge_d3(struct pci_dev *dev)
+ 	 * doesn't supply a wakeup GPE via _PRW, it cannot signal hotplug
+ 	 * events from low-power states including D3hot and D3cold.
  	 */
- 	if (group->default_domain && !group->owner) {
--		ret = __iommu_attach_device(group->default_domain, dev);
-+		ret = iommu_group_do_dma_first_attach(dev, group->default_domain);
- 		if (ret) {
- 			mutex_unlock(&group->mutex);
- 			iommu_group_put(group);
-@@ -951,16 +975,6 @@ static int iommu_create_device_direct_mappings(struct iommu_group *group,
- 	return ret;
- }
+-	if (!adev->wakeup.flags.valid)
++	if (!rpadev->wakeup.flags.valid)
+ 		return false;
  
--static bool iommu_is_attach_deferred(struct device *dev)
--{
--	const struct iommu_ops *ops = dev_iommu_ops(dev);
--
--	if (ops->is_attach_deferred)
--		return ops->is_attach_deferred(dev);
--
--	return false;
--}
--
- /**
-  * iommu_group_add_device - add a device to an iommu group
-  * @group: the group into which to add the device (reference should be held)
-@@ -1013,8 +1027,8 @@ int iommu_group_add_device(struct iommu_group *group, struct device *dev)
+ 	/*
+-	 * If the Root Port cannot wake itself from D3hot or D3cold, we
+-	 * can't use D3.
++	 * In the bridge-below-a-Root-Port case, evaluate _S0W for the Root Port
++	 * to verify whether or not it can signal wakeup from D3.
+ 	 */
+-	status = acpi_evaluate_integer(adev->handle, "_S0W", NULL, &state);
+-	if (ACPI_SUCCESS(status) && state < ACPI_STATE_D3_HOT)
++	if (rpadev != adev &&
++	    acpi_dev_power_state_for_wake(rpadev) <= ACPI_STATE_D2)
+ 		return false;
  
- 	mutex_lock(&group->mutex);
- 	list_add_tail(&device->list, &group->devices);
--	if (group->domain  && !iommu_is_attach_deferred(dev))
--		ret = __iommu_attach_device(group->domain, dev);
-+	if (group->domain)
-+		ret = iommu_group_do_dma_first_attach(dev, group->domain);
- 	mutex_unlock(&group->mutex);
- 	if (ret)
- 		goto err_put_group;
-@@ -1780,21 +1794,10 @@ static void probe_alloc_default_domain(struct bus_type *bus,
- 
- }
- 
--static int iommu_group_do_dma_attach(struct device *dev, void *data)
--{
--	struct iommu_domain *domain = data;
--	int ret = 0;
--
--	if (!iommu_is_attach_deferred(dev))
--		ret = __iommu_attach_device(domain, dev);
--
--	return ret;
--}
--
--static int __iommu_group_dma_attach(struct iommu_group *group)
-+static int __iommu_group_dma_first_attach(struct iommu_group *group)
- {
- 	return __iommu_group_for_each_dev(group, group->default_domain,
--					  iommu_group_do_dma_attach);
-+					  iommu_group_do_dma_first_attach);
- }
- 
- static int iommu_group_do_probe_finalize(struct device *dev, void *data)
-@@ -1859,7 +1862,7 @@ int bus_iommu_probe(struct bus_type *bus)
- 
- 		iommu_group_create_direct_mappings(group);
- 
--		ret = __iommu_group_dma_attach(group);
-+		ret = __iommu_group_dma_first_attach(group);
- 
- 		mutex_unlock(&group->mutex);
- 
-@@ -1991,9 +1994,11 @@ static int __iommu_attach_device(struct iommu_domain *domain,
- 		return -ENODEV;
- 
- 	ret = domain->ops->attach_dev(domain, dev);
--	if (!ret)
--		trace_attach_device_to_domain(dev);
--	return ret;
-+	if (ret)
-+		return ret;
-+	dev->iommu->attach_deferred = 0;
-+	trace_attach_device_to_domain(dev);
-+	return 0;
- }
- 
- /**
-@@ -2038,7 +2043,7 @@ EXPORT_SYMBOL_GPL(iommu_attach_device);
- 
- int iommu_deferred_attach(struct device *dev, struct iommu_domain *domain)
- {
--	if (iommu_is_attach_deferred(dev))
-+	if (dev->iommu && dev->iommu->attach_deferred)
- 		return __iommu_attach_device(domain, dev);
- 
- 	return 0;
-@@ -2047,9 +2052,6 @@ int iommu_deferred_attach(struct device *dev, struct iommu_domain *domain)
- static void __iommu_detach_device(struct iommu_domain *domain,
- 				  struct device *dev)
- {
--	if (iommu_is_attach_deferred(dev))
--		return;
--
- 	domain->ops->detach_dev(domain, dev);
- 	trace_detach_device_from_domain(dev);
- }
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 46e1347bfa228..7695d9e14277f 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -401,6 +401,7 @@ struct iommu_fault_param {
-  * @iommu_dev:	 IOMMU device this device is linked to
-  * @priv:	 IOMMU Driver private data
-  * @max_pasids:  number of PASIDs this device can consume
-+ * @attach_deferred: the dma domain attachment is deferred
-  *
-  * TODO: migrate other per device data pointers under iommu_dev_data, e.g.
-  *	struct iommu_group	*iommu_group;
-@@ -413,6 +414,7 @@ struct dev_iommu {
- 	struct iommu_device		*iommu_dev;
- 	void				*priv;
- 	u32				max_pasids;
-+	u32				attach_deferred:1;
- };
- 
- int iommu_device_register(struct iommu_device *iommu,
+ 	/*
+@@ -1018,7 +1035,7 @@ bool acpi_pci_bridge_d3(struct pci_dev *dev)
+ 	 * bridges *below* that Root Port can also signal hotplug events
+ 	 * while in D3.
+ 	 */
+-	if (!acpi_dev_get_property(adev, "HotPlugSupportInD3",
++	if (!acpi_dev_get_property(rpadev, "HotPlugSupportInD3",
+ 				   ACPI_TYPE_INTEGER, &obj) &&
+ 	    obj->integer.value == 1)
+ 		return true;
+diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
+index e44be31115a67..0584e9f6e3397 100644
+--- a/include/acpi/acpi_bus.h
++++ b/include/acpi/acpi_bus.h
+@@ -534,6 +534,7 @@ int acpi_bus_update_power(acpi_handle handle, int *state_p);
+ int acpi_device_update_power(struct acpi_device *device, int *state_p);
+ bool acpi_bus_power_manageable(acpi_handle handle);
+ void acpi_dev_power_up_children_with_adr(struct acpi_device *adev);
++u8 acpi_dev_power_state_for_wake(struct acpi_device *adev);
+ int acpi_device_power_add_dependent(struct acpi_device *adev,
+ 				    struct device *dev);
+ void acpi_device_power_remove_dependent(struct acpi_device *adev,
 -- 
 2.39.2
 
