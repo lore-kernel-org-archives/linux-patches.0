@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5AF8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:04:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62E4C433EF;
-	Fri, 10 Mar 2023 14:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1778481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:04:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D64C4339C;
+	Fri, 10 Mar 2023 14:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457072;
-	bh=G5Tt5UtAX9wH11AZdDhFBNI+5/gV5rrhZrVOdn0oV9k=;
+	s=korg; t=1678457075;
+	bh=0zI6VcRu3luBut8F6KbuWZP04gPQ/ZDrZxiRTlAOrFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uAmnZnDdlt9ibODDYTKBe5RQZ7pc47GjxVM68/zbXKzHdf0ItIjxCUeEYYdQhjtUU
-	 X5Ed0nz55i1IHaKLYVj+lUdTFKePSFkZOrHahWT1ZKfxxrI6uidIrtgMiDRjD9Zeff
-	 Iz0CydmGag159xiToNTlWhq7sBEG9UMWxZHcCVdU=
+	b=B4QwmdR68cenzUfamkv6vZPKyfTjzXZuGSGayulCA2+hV6MDSyJ+x+5MdmiK5Bp5q
+	 GYcnzyDTlI27M3OM+kadkRlckRknDtmBkRe70aTo59Nn6ILKyFX/S5sCfc7iWFU2jn
+	 jnSB2gEO3i7tB9kw+DdXeKs+lOzaRPXLtdZVdRko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/200] soc: mediatek: mtk-svs: Enable the IRQ later
-Date: Fri, 10 Mar 2023 14:36:58 +0100
-Message-Id: <20230310133717.396616425@linuxfoundation.org>
+Subject: [PATCH 6.1 012/200] pwm: sifive: Always let the first pwm_apply_state succeed
+Date: Fri, 10 Mar 2023 14:36:59 +0100
+Message-Id: <20230310133717.425371015@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,62 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Emil Renner Berthing <emil.renner.berthing@canonical.com>
 
-[ Upstream commit b74952aba6c3f47e7f2c5165abaeefa44c377140 ]
+[ Upstream commit 334c7b13d38321e47d1a51dba0bef9f4c403ec75 ]
 
-If the system does not come from reset (like when is booted via
-kexec()), the peripheral might triger an IRQ before the data structures
-are initialised.
+Commit 2cfe9bbec56ea579135cdd92409fff371841904f added support for the
+RGB and green PWM controlled LEDs on the HiFive Unmatched board
+managed by the leds-pwm-multicolor and leds-pwm drivers respectively.
+All three colours of the RGB LED and the green LED run from different
+lines of the same PWM, but with the same period so this works fine when
+the LED drivers are loaded one after the other.
 
-Fixes:
+Unfortunately it does expose a race in the PWM driver when both LED
+drivers are loaded at roughly the same time. Here is an example:
 
-[    0.227710] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000f08
-[    0.227913] Call trace:
-[    0.227918]  svs_isr+0x8c/0x538
+  |          Thread A           |          Thread B           |
+  |  led_pwm_mc_probe           |  led_pwm_probe              |
+  |    devm_fwnode_pwm_get      |                             |
+  |      pwm_sifive_request     |                             |
+  |        ddata->user_count++  |                             |
+  |                             |    devm_fwnode_pwm_get      |
+  |                             |      pwm_sifive_request     |
+  |                             |        ddata->user_count++  |
+  |         ...                 |          ...                |
+  |    pwm_state_apply          |    pwm_state_apply          |
+  |      pwm_sifive_apply       |      pwm_sifive_apply       |
 
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://lore.kernel.org/r/20221127-mtk-svs-v2-0-145b07663ea8@chromium.org
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Now both calls to pwm_sifive_apply will see that ddata->approx_period,
+initially 0, is different from the requested period and the clock needs
+to be updated. But since ddata->user_count >= 2 both calls will fail
+with -EBUSY, which will then cause both LED drivers to fail to probe.
+
+Fix it by letting the first call to pwm_sifive_apply update the clock
+even when ddata->user_count != 1.
+
+Fixes: 9e37a53eb051 ("pwm: sifive: Add a driver for SiFive SoC PWM")
+Signed-off-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/mediatek/mtk-svs.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/pwm/pwm-sifive.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/mediatek/mtk-svs.c b/drivers/soc/mediatek/mtk-svs.c
-index 0469c9dfeb04e..75b2f534aa9d0 100644
---- a/drivers/soc/mediatek/mtk-svs.c
-+++ b/drivers/soc/mediatek/mtk-svs.c
-@@ -2385,14 +2385,6 @@ static int svs_probe(struct platform_device *pdev)
- 		goto svs_probe_free_resource;
- 	}
+diff --git a/drivers/pwm/pwm-sifive.c b/drivers/pwm/pwm-sifive.c
+index bb72393134016..89d53a0f91e65 100644
+--- a/drivers/pwm/pwm-sifive.c
++++ b/drivers/pwm/pwm-sifive.c
+@@ -159,7 +159,13 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
  
--	ret = devm_request_threaded_irq(svsp->dev, svsp_irq, NULL, svs_isr,
--					IRQF_ONESHOT, svsp->name, svsp);
--	if (ret) {
--		dev_err(svsp->dev, "register irq(%d) failed: %d\n",
--			svsp_irq, ret);
--		goto svs_probe_free_resource;
--	}
--
- 	svsp->main_clk = devm_clk_get(svsp->dev, "main");
- 	if (IS_ERR(svsp->main_clk)) {
- 		dev_err(svsp->dev, "failed to get clock: %ld\n",
-@@ -2414,6 +2406,14 @@ static int svs_probe(struct platform_device *pdev)
- 		goto svs_probe_clk_disable;
- 	}
- 
-+	ret = devm_request_threaded_irq(svsp->dev, svsp_irq, NULL, svs_isr,
-+					IRQF_ONESHOT, svsp->name, svsp);
-+	if (ret) {
-+		dev_err(svsp->dev, "register irq(%d) failed: %d\n",
-+			svsp_irq, ret);
-+		goto svs_probe_iounmap;
-+	}
-+
- 	ret = svs_start(svsp);
- 	if (ret) {
- 		dev_err(svsp->dev, "svs start fail: %d\n", ret);
+ 	mutex_lock(&ddata->lock);
+ 	if (state->period != ddata->approx_period) {
+-		if (ddata->user_count != 1) {
++		/*
++		 * Don't let a 2nd user change the period underneath the 1st user.
++		 * However if ddate->approx_period == 0 this is the first time we set
++		 * any period, so let whoever gets here first set the period so other
++		 * users who agree on the period won't fail.
++		 */
++		if (ddata->user_count != 1 && ddata->approx_period) {
+ 			mutex_unlock(&ddata->lock);
+ 			return -EBUSY;
+ 		}
 -- 
 2.39.2
 
