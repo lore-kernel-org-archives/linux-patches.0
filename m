@@ -1,25 +1,23 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF50E4E0
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 23:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3588838
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 23:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
 	Content-ID:Content-Description:In-Reply-To:References;
-	bh=Vl75lOivwxRd2Gq7JNUD53sjLJaqgVHzQJHDdO+38Jc=; b=fSLTvqIpq4dw1JrHrXBJ7039LX
-	4ywebvj4dFbVA3TjRRJuPgWV9StjK8zXQ+a33IdDsS2fX/Q4QMGirL1WDRqizNZaVxL5GOW/eEKcH
-	knTkNc3fPmnsodNzCJSQadU7ceRhoWNXvAXAs42kFHGQFUWyqoveZ9fBzX/NNfX8HVOjxC8jM3sha
-	Fh4x1QLHlaygVz3C8Z86xLsrXpJTorZ9XEO5EPD694G1HxD2WxvbNUGi6mI9cGTPiwWzuF97RmKfc
-	dOJl8U0pKM/8OMtSaGldSYx7rtCmXJF6/pjxFkUfmKc4VNxBgosIrj9LkAOyJaDzbbf5sArUfdQ7w
-	taZI1tcQ==;
+	bh=n3ibBOSHwLtyYWSPz4byfz4X1HpWIu7EDA2VdrWLfGg=; b=oY5BhI0UKiQJz+oVu3mMg8gY7t
+	zqnqSgmo9/fkhKmgDQNJSot1ASq8dmZpKF3mHqTbtmtmRukQ/tB7GS1fAluaTbQfhd4TOlTqMapR5
+	PPp1v2kxfb5Tqdx3/FAIg9O3eYr8KFWck+wdleTjGP4Dfsym9ZsKEUpRKs19Cz2nigJ8ilbF+zrIC
+	/ZzQ3KQ2Ih8LAvctLYJv4LfZUEpXXms0Lmu3Wix/wtbK5SmHjF8VFe4zBfvTuQcL1dZWHikG+huRl
+	yp5D0i3FpTXu5kH5iMkVSi4ZOoRVeNxM4PhFF7utzvjjCUfJkKJVAfmVtesXWAtp2oqeOqc99R+U9
+	Sc/kDHhw==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pam3b-00GbRI-Jz; Fri, 10 Mar 2023 23:21:51 +0000
+	id 1pam5w-00Gbr0-MM; Fri, 10 Mar 2023 23:24:16 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
-To: herbert@gondor.apana.org.au,
-	davem@davemloft.net
+To: linux-ia64@vger.kernel.org
 Cc: ebiederm@xmission.com,
-	linux-crypto@vger.kernel.org,
 	keescook@chromium.org,
 	yzaikin@google.com,
 	j.granados@samsung.com,
@@ -27,9 +25,9 @@ Cc: ebiederm@xmission.com,
 	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH] crypto: simplify one-level sysctl registration for crypto_sysctl_table
-Date: Fri, 10 Mar 2023 15:21:50 -0800
-Message-Id: <20230310232150.3957148-1-mcgrof@kernel.org>
+Subject: [PATCH] ia64: simplify one-level sysctl registration for kdump_ctl_table
+Date: Fri, 10 Mar 2023 15:24:16 -0800
+Message-Id: <20230310232416.3958751-1-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -48,42 +46,41 @@ Simplify this registration.
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
 
-If not clear, see this new doc:
+If ia64 is not removed from the kernel feel free to take this or I can
+take it through sysctl-next.
 
-https://lore.kernel.org/all/20230310223947.3917711-1-mcgrof@kernel.org/T/#u     
-
-But the skinny is we can deprecate long term APIs from sysctl that
-uses recursion.
-
- crypto/fips.c | 11 +----------
+ arch/ia64/kernel/crash.c | 11 +----------
  1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/crypto/fips.c b/crypto/fips.c
-index b05d3c7b3ca5..92fd506abb21 100644
---- a/crypto/fips.c
-+++ b/crypto/fips.c
-@@ -66,20 +66,11 @@ static struct ctl_table crypto_sysctl_table[] = {
- 	{}
+diff --git a/arch/ia64/kernel/crash.c b/arch/ia64/kernel/crash.c
+index 76730f34685c..88b3ce3e66cd 100644
+--- a/arch/ia64/kernel/crash.c
++++ b/arch/ia64/kernel/crash.c
+@@ -234,15 +234,6 @@ static struct ctl_table kdump_ctl_table[] = {
+ 	},
+ 	{ }
  };
- 
--static struct ctl_table crypto_dir_table[] = {
--	{
--		.procname       = "crypto",
--		.mode           = 0555,
--		.child          = crypto_sysctl_table
--	},
--	{}
--};
 -
- static struct ctl_table_header *crypto_sysctls;
+-static struct ctl_table sys_table[] = {
+-	{
+-	  .procname = "kernel",
+-	  .mode = 0555,
+-	  .child = kdump_ctl_table,
+-	},
+-	{ }
+-};
+ #endif
  
- static void crypto_proc_fips_init(void)
- {
--	crypto_sysctls = register_sysctl_table(crypto_dir_table);
-+	crypto_sysctls = register_sysctl("crypto", crypto_sysctl_table);
+ static int
+@@ -257,7 +248,7 @@ machine_crash_setup(void)
+ 	if((ret = register_die_notifier(&kdump_init_notifier_nb)) != 0)
+ 		return ret;
+ #ifdef CONFIG_SYSCTL
+-	register_sysctl_table(sys_table);
++	register_sysctl("kernel", kdump_ctl_table);
+ #endif
+ 	return 0;
  }
- 
- static void crypto_proc_fips_exit(void)
 -- 
 2.39.1
 
