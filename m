@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE2B847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F17FC4339C;
-	Fri, 10 Mar 2023 13:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE3C847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26464C433EF;
+	Fri, 10 Mar 2023 13:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456789;
-	bh=yEocyvpjW3kXWlnbIVuc3GSwiYbjoFqbUTV9hn5YZks=;
+	s=korg; t=1678456792;
+	bh=QUVyWcpNPiRRb0YcbMLuwPP4ifg6zlz8Ly/SlacKjmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KHR+dStZ10OVHuKNYI40o8qhONwo1te+J4mWkM6bpJZkxmXcGUG5/l7kZWCKG3Iko
-	 oFCnjLGRp0wz7HiUMWpkE81Keub5MSg57Xqyz4PKvQieb2yTESJILcD6leZUua5j7y
-	 nuOR/53p8Jj38VeDRED3EjnUIsKQS2kmBt6R9PiQ=
+	b=EiATd6AAeocnQCAiRswg+oMqifYdZGhRuFyA5BD6PcQURRZhQ/Cls1T9HZJ2pzJS/
+	 VB2w1DKzi4r31pZMp+divYSdikLbZ2a/lZC0OCnDZkgBa2v2bTLpUIVf9Ad0UUAQY2
+	 gWEBuQ9mXnXiWOa1jByN4rSuHxgwlgZm0TYs2ryQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TOTE Robot <oslab@tsinghua.edu.cn>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Chris Down <chris@chrisdown.name>,
+	Petr Mladek <pmladek@suse.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	John Ogness <john.ogness@linutronix.de>,
+	linux-kernel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 125/211] tracing: Add NULL checks for buffer in ring_buffer_free_read_page()
-Date: Fri, 10 Mar 2023 14:38:25 +0100
-Message-Id: <20230310133722.536368889@linuxfoundation.org>
+Subject: [PATCH 6.2 126/211] kernel/printk/index.c: fix memory leak with using debugfs_lookup()
+Date: Fri, 10 Mar 2023 14:38:26 +0100
+Message-Id: <20230310133722.564658451@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,60 +39,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jia-Ju Bai <baijiaju1990@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 3e4272b9954094907f16861199728f14002fcaf6 ]
+[ Upstream commit 55bf243c514553e907efcf2bda92ba090eca8c64 ]
 
-In a previous commit 7433632c9ff6, buffer, buffer->buffers and
-buffer->buffers[cpu] in ring_buffer_wake_waiters() can be NULL,
-and thus the related checks are added.
+When calling debugfs_lookup() the result must have dput() called on it,
+otherwise the memory will leak over time.  To make things simpler, just
+call debugfs_lookup_and_remove() instead which handles all of the logic
+at once.
 
-However, in the same call stack, these variables are also used in
-ring_buffer_free_read_page():
-
-tracing_buffers_release()
-  ring_buffer_wake_waiters(iter->array_buffer->buffer)
-    cpu_buffer = buffer->buffers[cpu] -> Add checks by previous commit
-  ring_buffer_free_read_page(iter->array_buffer->buffer)
-    cpu_buffer = buffer->buffers[cpu] -> No check
-
-Thus, to avod possible null-pointer derefernces, the related checks
-should be added.
-
-These results are reported by a static tool designed by myself.
-
-Link: https://lkml.kernel.org/r/20230113125501.760324-1-baijiaju1990@gmail.com
-
-Reported-by: TOTE Robot <oslab@tsinghua.edu.cn>
-Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Cc: Chris Down <chris@chrisdown.name>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: John Ogness <john.ogness@linutronix.de>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20230202151411.2308576-1-gregkh@linuxfoundation.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/printk/index.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index b641cab2745e9..20cd8c9d245e2 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -5604,11 +5604,16 @@ EXPORT_SYMBOL_GPL(ring_buffer_alloc_read_page);
-  */
- void ring_buffer_free_read_page(struct trace_buffer *buffer, int cpu, void *data)
+diff --git a/kernel/printk/index.c b/kernel/printk/index.c
+index c85be186a7832..a6b27526baaf6 100644
+--- a/kernel/printk/index.c
++++ b/kernel/printk/index.c
+@@ -145,7 +145,7 @@ static void pi_create_file(struct module *mod)
+ #ifdef CONFIG_MODULES
+ static void pi_remove_file(struct module *mod)
  {
--	struct ring_buffer_per_cpu *cpu_buffer = buffer->buffers[cpu];
-+	struct ring_buffer_per_cpu *cpu_buffer;
- 	struct buffer_data_page *bpage = data;
- 	struct page *page = virt_to_page(bpage);
- 	unsigned long flags;
+-	debugfs_remove(debugfs_lookup(pi_get_module_name(mod), dfs_index));
++	debugfs_lookup_and_remove(pi_get_module_name(mod), dfs_index);
+ }
  
-+	if (!buffer || !buffer->buffers || !buffer->buffers[cpu])
-+		return;
-+
-+	cpu_buffer = buffer->buffers[cpu];
-+
- 	/* If the page is still in use someplace else, we can't reuse it */
- 	if (page_ref_count(page) > 1)
- 		goto out;
+ static int pi_module_notify(struct notifier_block *nb, unsigned long op,
 -- 
 2.39.2
 
