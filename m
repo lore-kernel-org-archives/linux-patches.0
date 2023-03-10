@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECB98825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:00:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0F4C4339C;
-	Fri, 10 Mar 2023 15:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDC68825
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:00:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAA1C4339E;
+	Fri, 10 Mar 2023 15:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460417;
-	bh=cCH7VQG9oHwEHtMIfZAQ+VE25nBoMuZ8zCtrHLV57SI=;
+	s=korg; t=1678460420;
+	bh=6IUbwt/HFUXdXxQZm22wjqNzax327Qpb/kuKe/vU8us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aLEZlHTFw4ocBXxf8QaiQIQQGogvzcnhRLjya2k04XLOoTITGHdKtFzsSk7sS0QlM
-	 oVaRIzwRyph76MYHaSWrok0Mk2+8lTnyUdF0oT33i8GWjc0e5IbL6I9s/xbHJw/xs2
-	 /JB+uVMYQwUxvDK3s8TsSsnoUpQDaCrP3sZNYH6c=
+	b=Mm9xrjhzCfCKhr4F2DHA8kLGFri1O7nkQxRvZDp7gINnuyFJoEUs3lLggTChFsXAN
+	 kWSNhVVcrbmHvcV6RbDoiEcd09F7dD8/Ou/vpQeALZm/5SFmvlokrJgwQM/XsgsQye
+	 svdAxSBt1CRcp6wVj/jAmEOW/jKimcBa6KMay+a8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun ASAKA <JunASAKA@zzy040330.moe>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.10 328/529] wifi: rtl8xxxu: fixing transmisison failure for rtl8192eu
-Date: Fri, 10 Mar 2023 14:37:51 +0100
-Message-Id: <20230310133820.209567644@linuxfoundation.org>
+	Jingyuan Liang <jingyliang@chromium.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Jiri Kosina <jkosina@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 311/529] HID: Add Mapping for System Microphone Mute
+Date: Fri, 10 Mar 2023 14:37:34 +0100
+Message-Id: <20230310133819.408834921@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,36 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jun ASAKA <JunASAKA@zzy040330.moe>
+From: Jingyuan Liang <jingyliang@chromium.org>
 
-commit c6015bf3ff1ffb3caa27eb913797438a0fc634a0 upstream.
+[ Upstream commit 2d60f9f4f26785a00273cb81fe60eff129ebd449 ]
 
-Fixing transmission failure which results in
-"authentication with ... timed out". This can be
-fixed by disable the REG_TXPAUSE.
+HUTRR110 added a new usage code for a key that is supposed to
+mute/unmute microphone system-wide.
 
-Signed-off-by: Jun ASAKA <JunASAKA@zzy040330.moe>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221217030659.12577-1-JunASAKA@zzy040330.moe
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Map the new usage code(0x01 0xa9) to keycode KEY_MICMUTE.
+Additionally hid-debug is adjusted to recognize this keycode as well.
+
+Signed-off-by: Jingyuan Liang <jingyliang@chromium.org>
+Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/hid/hid-debug.c | 1 +
+ drivers/hid/hid-input.c | 8 ++++++++
+ 2 files changed, 9 insertions(+)
 
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
-@@ -1671,6 +1671,11 @@ static void rtl8192e_enable_rf(struct rt
- 	val8 = rtl8xxxu_read8(priv, REG_PAD_CTRL1);
- 	val8 &= ~BIT(0);
- 	rtl8xxxu_write8(priv, REG_PAD_CTRL1, val8);
-+
-+	/*
-+	 * Fix transmission failure of rtl8192e.
-+	 */
-+	rtl8xxxu_write8(priv, REG_TXPAUSE, 0x00);
- }
+diff --git a/drivers/hid/hid-debug.c b/drivers/hid/hid-debug.c
+index f4e2e69377589..1f60a381ae63e 100644
+--- a/drivers/hid/hid-debug.c
++++ b/drivers/hid/hid-debug.c
+@@ -933,6 +933,7 @@ static const char *keys[KEY_MAX + 1] = {
+ 	[KEY_VOICECOMMAND] = "VoiceCommand",
+ 	[KEY_EMOJI_PICKER] = "EmojiPicker",
+ 	[KEY_DICTATE] = "Dictate",
++	[KEY_MICMUTE] = "MicrophoneMute",
+ 	[KEY_BRIGHTNESS_MIN] = "BrightnessMin",
+ 	[KEY_BRIGHTNESS_MAX] = "BrightnessMax",
+ 	[KEY_BRIGHTNESS_AUTO] = "BrightnessAuto",
+diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
+index 75a4d8d6bb0fd..3399953256d85 100644
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -675,6 +675,14 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
+ 			break;
+ 		}
  
- struct rtl8xxxu_fileops rtl8192eu_fops = {
++		if ((usage->hid & 0xf0) == 0xa0) {	/* SystemControl */
++			switch (usage->hid & 0xf) {
++			case 0x9: map_key_clear(KEY_MICMUTE); break;
++			default: goto ignore;
++			}
++			break;
++		}
++
+ 		if ((usage->hid & 0xf0) == 0xb0) {	/* SC - Display */
+ 			switch (usage->hid & 0xf) {
+ 			case 0x05: map_key_clear(KEY_SWITCHVIDEOMODE); break;
+-- 
+2.39.2
+
 
 
