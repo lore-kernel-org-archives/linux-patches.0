@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072E1847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:55:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86711C433EF;
-	Fri, 10 Mar 2023 13:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECB3847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:55:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4659DC433D2;
+	Fri, 10 Mar 2023 13:55:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456541;
-	bh=8lY5SP0eMFjUYMDwZ22966vW7MGBnjlSuuYs2z0LYfs=;
+	s=korg; t=1678456544;
+	bh=G5Tt5UtAX9wH11AZdDhFBNI+5/gV5rrhZrVOdn0oV9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JVaWX5JCJERolMwvkWePUVoOnkYJIR6MvwulnGDmFJ6cma/bZgz0AFOVJV5lTGMro
-	 AbK3qdogrnIFttdFSpK8hIU2nINEfeJw51AkDwomn9YUn7ALTym4WAndswCHTEkQ6A
-	 KS2dybp51FN3MCjm696eD1mV13qvDmiFZz26tYDQ=
+	b=VY3aPBxZSqnxeSAPnem2+ddkjswse5zJIIcyu/GvT0MCKPKJORDPyrDuOM5mcOz1b
+	 NSioq7zOkmK1Gsz0TgaPc2VPrWCmzTsp3kKBtseaCZm8WQGaS6oX36UeDCvvAB2TzR
+	 s0/Tj4acNim44c80r9ykuc1mrpfmFCl1eYJyt+h0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 038/211] ubifs: dirty_cow_znode: Fix memleak in error handling path
-Date: Fri, 10 Mar 2023 14:36:58 +0100
-Message-Id: <20230310133719.892713029@linuxfoundation.org>
+Subject: [PATCH 6.2 012/211] soc: mediatek: mtk-svs: Enable the IRQ later
+Date: Fri, 10 Mar 2023 14:36:32 +0100
+Message-Id: <20230310133719.098447739@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,56 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 122deabfe1428bffe95e2bf364ff8a5059bdf089 ]
+[ Upstream commit b74952aba6c3f47e7f2c5165abaeefa44c377140 ]
 
-Following process will cause a memleak for copied up znode:
+If the system does not come from reset (like when is booted via
+kexec()), the peripheral might triger an IRQ before the data structures
+are initialised.
 
-dirty_cow_znode
-  zn = copy_znode(c, znode);
-  err = insert_old_idx(c, zbr->lnum, zbr->offs);
-  if (unlikely(err))
-     return ERR_PTR(err);   // No one refers to zn.
+Fixes:
 
-Fix it by adding copied znode back to tnc, then it will be freed
-by ubifs_destroy_tnc_subtree() while closing tnc.
+[    0.227710] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000f08
+[    0.227913] Call trace:
+[    0.227918]  svs_isr+0x8c/0x538
 
-Fetch a reproducer in [Link].
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216705
-Fixes: 1e51764a3c2a ("UBIFS: add new flash file system")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20221127-mtk-svs-v2-0-145b07663ea8@chromium.org
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/tnc.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/soc/mediatek/mtk-svs.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ubifs/tnc.c b/fs/ubifs/tnc.c
-index 2df56bbc68657..2469f72eeaabb 100644
---- a/fs/ubifs/tnc.c
-+++ b/fs/ubifs/tnc.c
-@@ -267,11 +267,18 @@ static struct ubifs_znode *dirty_cow_znode(struct ubifs_info *c,
- 	if (zbr->len) {
- 		err = insert_old_idx(c, zbr->lnum, zbr->offs);
- 		if (unlikely(err))
--			return ERR_PTR(err);
-+			/*
-+			 * Obsolete znodes will be freed by tnc_destroy_cnext()
-+			 * or free_obsolete_znodes(), copied up znodes should
-+			 * be added back to tnc and freed by
-+			 * ubifs_destroy_tnc_subtree().
-+			 */
-+			goto out;
- 		err = add_idx_dirt(c, zbr->lnum, zbr->len);
- 	} else
- 		err = 0;
+diff --git a/drivers/soc/mediatek/mtk-svs.c b/drivers/soc/mediatek/mtk-svs.c
+index 0469c9dfeb04e..75b2f534aa9d0 100644
+--- a/drivers/soc/mediatek/mtk-svs.c
++++ b/drivers/soc/mediatek/mtk-svs.c
+@@ -2385,14 +2385,6 @@ static int svs_probe(struct platform_device *pdev)
+ 		goto svs_probe_free_resource;
+ 	}
  
-+out:
- 	zbr->znode = zn;
- 	zbr->lnum = 0;
- 	zbr->offs = 0;
+-	ret = devm_request_threaded_irq(svsp->dev, svsp_irq, NULL, svs_isr,
+-					IRQF_ONESHOT, svsp->name, svsp);
+-	if (ret) {
+-		dev_err(svsp->dev, "register irq(%d) failed: %d\n",
+-			svsp_irq, ret);
+-		goto svs_probe_free_resource;
+-	}
+-
+ 	svsp->main_clk = devm_clk_get(svsp->dev, "main");
+ 	if (IS_ERR(svsp->main_clk)) {
+ 		dev_err(svsp->dev, "failed to get clock: %ld\n",
+@@ -2414,6 +2406,14 @@ static int svs_probe(struct platform_device *pdev)
+ 		goto svs_probe_clk_disable;
+ 	}
+ 
++	ret = devm_request_threaded_irq(svsp->dev, svsp_irq, NULL, svs_isr,
++					IRQF_ONESHOT, svsp->name, svsp);
++	if (ret) {
++		dev_err(svsp->dev, "register irq(%d) failed: %d\n",
++			svsp_irq, ret);
++		goto svs_probe_iounmap;
++	}
++
+ 	ret = svs_start(svsp);
+ 	if (ret) {
+ 		dev_err(svsp->dev, "svs start fail: %d\n", ret);
 -- 
 2.39.2
 
