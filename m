@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E128821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:03:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6C1C433D2;
-	Fri, 10 Mar 2023 15:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825CB8821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:03:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072EEC433EF;
+	Fri, 10 Mar 2023 15:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460581;
-	bh=/7Bnecys/UYg8QRXBubyt9f4KDPUIwuBhIGITMq9Zu0=;
+	s=korg; t=1678460584;
+	bh=RGiB+QXgTEXwKYb5bAjIPsMTIT/f9dGgIClOp0tifG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xVEz++HWXQYZFw0UAFKJ++9DNrWsMrGiCs4F8gmWNVE+O9LgBYkNicJtKQWvkqxx2
-	 tWVu5/77KcwC1w4B4EoE+kwXn9L/95NoOHGbNtpXu2VA86tYjoaMUlPtd2ZlUiv1/6
-	 10qmJypIFhByJLGnIsiwt8IYHo+tB8Kvf0pOZ6Ok=
+	b=ZBodio/bVo0UB7OTIC2hdzVwAEQZT6TiRIzsCD+RqqCSh3dnH4S2gvE9H2ncGaaD2
+	 QbF/JYslzE7tA7SvuS4+JCWADNERoJw2biDQ+DhrzLN8cB3aTGqTW2ytqM513lkyL8
+	 5HtAbsyx3kkBTlSpCNCwu0f4lWLRvDWvdPCeuTRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+38695a20b8addcbc1084@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.10 352/529] udf: Detect system inodes linked into directory hierarchy
-Date: Fri, 10 Mar 2023 14:38:15 +0100
-Message-Id: <20230310133821.329561956@linuxfoundation.org>
+	Wang Yugui <wangyugui@e16-tech.com>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Andy Wu <Andy.Wu@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 5.10 343/529] exfat: fix inode->i_blocks for non-512 byte sector size device
+Date: Fri, 10 Mar 2023 14:38:06 +0100
+Message-Id: <20230310133820.908105666@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -34,40 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-commit 85a37983ec69cc9fcd188bc37c4de15ee326355a upstream.
+commit 39c1ce8eafc0ff64fb9e28536ccc7df6a8e2999d upstream.
 
-When UDF filesystem is corrupted, hidden system inodes can be linked
-into directory hierarchy which is an avenue for further serious
-corruption of the filesystem and kernel confusion as noticed by syzbot
-fuzzed images. Refuse to access system inodes linked into directory
-hierarchy and vice versa.
+inode->i_blocks is not real number of blocks, but 512 byte ones.
 
-CC: stable@vger.kernel.org
-Reported-by: syzbot+38695a20b8addcbc1084@syzkaller.appspotmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 98d917047e8b ("exfat: add file operations")
+Cc: stable@vger.kernel.org # v5.7+
+Reported-by: Wang Yugui <wangyugui@e16-tech.com>
+Tested-by: Wang Yugui <wangyugui@e16-tech.com>
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Andy Wu <Andy.Wu@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/exfat/file.c  |    3 +--
+ fs/exfat/inode.c |    6 ++----
+ fs/exfat/namei.c |    2 +-
+ fs/exfat/super.c |    3 +--
+ 4 files changed, 5 insertions(+), 9 deletions(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -1897,8 +1897,13 @@ struct inode *__udf_iget(struct super_bl
- 	if (!inode)
- 		return ERR_PTR(-ENOMEM);
+--- a/fs/exfat/file.c
++++ b/fs/exfat/file.c
+@@ -250,8 +250,7 @@ void exfat_truncate(struct inode *inode,
+ 	else
+ 		mark_inode_dirty(inode);
  
--	if (!(inode->i_state & I_NEW))
-+	if (!(inode->i_state & I_NEW)) {
-+		if (UDF_I(inode)->i_hidden != hidden_inode) {
-+			iput(inode);
-+			return ERR_PTR(-EFSCORRUPTED);
-+		}
- 		return inode;
-+	}
+-	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >>
+-				inode->i_blkbits;
++	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >> 9;
+ write_size:
+ 	aligned_size = i_size_read(inode);
+ 	if (aligned_size & (blocksize - 1)) {
+--- a/fs/exfat/inode.c
++++ b/fs/exfat/inode.c
+@@ -242,8 +242,7 @@ static int exfat_map_cluster(struct inod
+ 				return err;
+ 		} /* end of if != DIR_DELETED */
  
- 	memcpy(&UDF_I(inode)->i_location, ino, sizeof(struct kernel_lb_addr));
- 	err = udf_read_inode(inode, hidden_inode);
+-		inode->i_blocks +=
+-			num_to_be_allocated << sbi->sect_per_clus_bits;
++		inode->i_blocks += EXFAT_CLU_TO_B(num_to_be_allocated, sbi) >> 9;
+ 
+ 		/*
+ 		 * Move *clu pointer along FAT chains (hole care) because the
+@@ -600,8 +599,7 @@ static int exfat_fill_inode(struct inode
+ 
+ 	exfat_save_attr(inode, info->attr);
+ 
+-	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >>
+-				inode->i_blkbits;
++	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >> 9;
+ 	inode->i_mtime = info->mtime;
+ 	inode->i_ctime = info->mtime;
+ 	ei->i_crtime = info->crtime;
+--- a/fs/exfat/namei.c
++++ b/fs/exfat/namei.c
+@@ -398,7 +398,7 @@ static int exfat_find_empty_entry(struct
+ 		ei->i_size_ondisk += sbi->cluster_size;
+ 		ei->i_size_aligned += sbi->cluster_size;
+ 		ei->flags = p_dir->flags;
+-		inode->i_blocks += 1 << sbi->sect_per_clus_bits;
++		inode->i_blocks += sbi->cluster_size >> 9;
+ 	}
+ 
+ 	return dentry;
+--- a/fs/exfat/super.c
++++ b/fs/exfat/super.c
+@@ -364,8 +364,7 @@ static int exfat_read_root(struct inode
+ 	inode->i_op = &exfat_dir_inode_operations;
+ 	inode->i_fop = &exfat_dir_operations;
+ 
+-	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >>
+-				inode->i_blkbits;
++	inode->i_blocks = round_up(i_size_read(inode), sbi->cluster_size) >> 9;
+ 	ei->i_pos = ((loff_t)sbi->root_dir << 32) | 0xffffffff;
+ 	ei->i_size_aligned = i_size_read(inode);
+ 	ei->i_size_ondisk = i_size_read(inode);
 
 
