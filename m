@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7A9847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B0FC433D2;
-	Fri, 10 Mar 2023 13:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47169847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F09C433EF;
+	Fri, 10 Mar 2023 13:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456340;
-	bh=nLakX7cwSUYBuJ1Y1LZS1EnCS21adUAUaK8od5UgV1M=;
+	s=korg; t=1678456343;
+	bh=PxEU8ji8uNOd9HYk4pDPCv/Cw91MlqoJG09RlzuEelI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=faGA43WUBoU8EAeT4QQEAlC74OQevm1aQzC50a1Oe/zaoqGRbo1Wu4vP5RtMJkQG+
-	 mFxdlbfz/WBRlTw28Z55yBnfOkHMTHI4D5HNPPTQhROIBvJogKj8ZYTAa2jP52k1/B
-	 NTTL3qWHbghdTNc1IsCIS+PjlBKQVj0D8ODjKNs0=
+	b=M3yx1e5q1JB81VHxAR7Ry9qX1MC5xSi4HxQE5p0AR0ggw4bX0i3ozKWpeFZWvK0R7
+	 CqSu4ehd//Q6l5QqYkIq8RRJtSW8Bq/a+JrF6bNm5xIXp+SKtodbQ0sz2Z5dwQ92Vt
+	 RAnpYObrMNo/cdKI4MPIzK3KzDZ4eU8XfVtwzq/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 162/193] ubi: Fix UAF wear-leveling entry in eraseblk_count_seq_show()
-Date: Fri, 10 Mar 2023 14:39:04 +0100
-Message-Id: <20230310133716.552815727@linuxfoundation.org>
+Subject: [PATCH 4.14 163/193] ubi: ubi_wl_put_peb: Fix infinite loop when wear-leveling work failed
+Date: Fri, 10 Mar 2023 14:39:05 +0100
+Message-Id: <20230310133716.581777427@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -37,72 +37,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit a240bc5c43130c6aa50831d7caaa02a1d84e1bce ]
+[ Upstream commit 4d57a7333e26040f2b583983e1970d9d460e56b0 ]
 
-Wear-leveling entry could be freed in error path, which may be accessed
-again in eraseblk_count_seq_show(), for example:
+Following process will trigger an infinite loop in ubi_wl_put_peb():
 
-__erase_worker                eraseblk_count_seq_show
-                                wl = ubi->lookuptbl[*block_number]
-				if (wl)
-  wl_entry_destroy
-    ubi->lookuptbl[e->pnum] = NULL
-    kmem_cache_free(ubi_wl_entry_slab, e)
-		                   erase_count = wl->ec  // UAF!
+	ubifs_bgt		ubi_bgt
+ubifs_leb_unmap
+  ubi_leb_unmap
+    ubi_eba_unmap_leb
+      ubi_wl_put_peb	wear_leveling_worker
+                          e1 = rb_entry(rb_first(&ubi->used)
+			  e2 = get_peb_for_wl(ubi)
+			  ubi_io_read_vid_hdr  // return err (flash fault)
+			  out_error:
+			    ubi->move_from = ubi->move_to = NULL
+			    wl_entry_destroy(ubi, e1)
+			      ubi->lookuptbl[e->pnum] = NULL
+      retry:
+        e = ubi->lookuptbl[pnum];	// return NULL
+	if (e == ubi->move_from) {	// NULL == NULL gets true
+	  goto retry;			// infinite loop !!!
 
-Wear-leveling entry updating/accessing in ubi->lookuptbl should be
-protected by ubi->wl_lock, fix it by adding ubi->wl_lock to serialize
-wl entry accessing between wl_entry_destroy() and
-eraseblk_count_seq_show().
+$ top
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     COMMAND
+  7676 root     20   0       0      0      0 R 100.0  0.0  ubifs_bgt0_0
+
+Fix it by:
+ 1) Letting ubi_wl_put_peb() returns directly if wearl leveling entry has
+    been removed from 'ubi->lookuptbl'.
+ 2) Using 'ubi->wl_lock' protecting wl entry deletion to preventing an
+    use-after-free problem for wl entry in ubi_wl_put_peb().
 
 Fetch a reproducer in [Link].
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216305
-Fixes: 7bccd12d27b7e3 ("ubi: Add debugfs file for tracking PEB state")
-Fixes: 801c135ce73d5d ("UBI: Unsorted Block Images")
+Fixes: 43f9b25a9cdd7b1 ("UBI: bugfix: protect from volume removal")
+Fixes: ee59ba8b064f692 ("UBI: Fix stale pointers in ubi->lookuptbl")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216111
 Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/wl.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/mtd/ubi/wl.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
-index 545a92eb8f569..e267e0519d94a 100644
+index e267e0519d94a..4411ce5d1c8fc 100644
 --- a/drivers/mtd/ubi/wl.c
 +++ b/drivers/mtd/ubi/wl.c
-@@ -878,8 +878,11 @@ static int wear_leveling_worker(struct ubi_device *ubi, struct ubi_work *wrk,
+@@ -964,11 +964,11 @@ static int wear_leveling_worker(struct ubi_device *ubi, struct ubi_work *wrk,
+ 	spin_lock(&ubi->wl_lock);
+ 	ubi->move_from = ubi->move_to = NULL;
+ 	ubi->move_to_put = ubi->wl_scheduled = 0;
++	wl_entry_destroy(ubi, e1);
++	wl_entry_destroy(ubi, e2);
+ 	spin_unlock(&ubi->wl_lock);
  
- 	err = do_sync_erase(ubi, e1, vol_id, lnum, 0);
- 	if (err) {
--		if (e2)
-+		if (e2) {
-+			spin_lock(&ubi->wl_lock);
- 			wl_entry_destroy(ubi, e2);
-+			spin_unlock(&ubi->wl_lock);
-+		}
- 		goto out_ro;
- 	}
+ 	ubi_free_vid_buf(vidb);
+-	wl_entry_destroy(ubi, e1);
+-	wl_entry_destroy(ubi, e2);
  
-@@ -1103,14 +1106,18 @@ static int __erase_worker(struct ubi_device *ubi, struct ubi_work *wl_wrk)
- 		/* Re-schedule the LEB for erasure */
- 		err1 = schedule_erase(ubi, e, vol_id, lnum, 0, false);
- 		if (err1) {
-+			spin_lock(&ubi->wl_lock);
- 			wl_entry_destroy(ubi, e);
-+			spin_unlock(&ubi->wl_lock);
- 			err = err1;
- 			goto out_ro;
- 		}
- 		return err;
- 	}
- 
-+	spin_lock(&ubi->wl_lock);
- 	wl_entry_destroy(ubi, e);
-+	spin_unlock(&ubi->wl_lock);
- 	if (err != -EIO)
+ out_ro:
+ 	ubi_ro_mode(ubi);
+@@ -1233,6 +1233,18 @@ int ubi_wl_put_peb(struct ubi_device *ubi, int vol_id, int lnum,
+ retry:
+ 	spin_lock(&ubi->wl_lock);
+ 	e = ubi->lookuptbl[pnum];
++	if (!e) {
++		/*
++		 * This wl entry has been removed for some errors by other
++		 * process (eg. wear leveling worker), corresponding process
++		 * (except __erase_worker, which cannot concurrent with
++		 * ubi_wl_put_peb) will set ubi ro_mode at the same time,
++		 * just ignore this wl entry.
++		 */
++		spin_unlock(&ubi->wl_lock);
++		up_read(&ubi->fm_protect);
++		return 0;
++	}
+ 	if (e == ubi->move_from) {
  		/*
- 		 * If this is not %-EIO, we have no idea what to do. Scheduling
+ 		 * User is putting the physical eraseblock which was selected to
 -- 
 2.39.2
 
