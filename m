@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AA98494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:38:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1414FC4339C;
-	Fri, 10 Mar 2023 14:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66DA8494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:38:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C306C4339C;
+	Fri, 10 Mar 2023 14:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459094;
-	bh=6JY7nC9havmw34Q/i5vEwNC6TiD475MMcz0qJV0pXMk=;
+	s=korg; t=1678459097;
+	bh=qBdIMnChHF7gI12WtzrqELC3IT7yk5d25GmltChWsow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgn+BP+pKu59pbPR7fY836TGAfAmaQjmdHOT+6SNAX7ncXvuEutACFJbiIVh3V2iS
-	 kKP8oojoO/4tiz6P42sOWIejPtYGHF0vyU7X7+bk6X2GPYmmI7h0oBjJOqGn7zx0rS
-	 A14wQSlPwwd6FKH/yb1LpISjw/o1jea6hm5q96zY=
+	b=xvjO0ev8jA3RbXOVbbqKNL5vas+2qUnnY2NQ9o61gB6Flc7lrPHVWLNroFmIlrVNN
+	 aIYIgv5w+kKXQEp0lUUfpLgxde5Ch/FzfqghEy4W04Cjfy6/Ac2Pv2Pmcg3EKHgwy4
+	 +4xBlZ9T51dfd2n2ls5vQZh9Cv1V0XRDRuUWfI6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5b04b49a7ec7226c7426@syzkaller.appspotmail.com,
-	Liu Shixin <liushixin2@huawei.com>,
-	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 219/357] hfs: fix missing hfs_bnode_get() in __hfs_bnode_create
-Date: Fri, 10 Mar 2023 14:38:28 +0100
-Message-Id: <20230310133744.382998424@linuxfoundation.org>
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.4 246/357] irqdomain: Fix disassociation race
+Date: Fri, 10 Mar 2023 14:38:55 +0100
+Message-Id: <20230310133745.601096931@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -37,98 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit a9dc087fd3c484fd1ed18c5efb290efaaf44ce03 upstream.
+commit 3f883c38f5628f46b30bccf090faec054088e262 upstream.
 
-Syzbot found a kernel BUG in hfs_bnode_put():
+The global irq_domain_mutex is held when mapping interrupts from
+non-hierarchical domains but currently not when disposing them.
 
- kernel BUG at fs/hfs/bnode.c:466!
- invalid opcode: 0000 [#1] PREEMPT SMP KASAN
- CPU: 0 PID: 3634 Comm: kworker/u4:5 Not tainted 6.1.0-rc7-syzkaller-00190-g97ee9d1c1696 #0
- Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
- Workqueue: writeback wb_workfn (flush-7:0)
- RIP: 0010:hfs_bnode_put+0x46f/0x480 fs/hfs/bnode.c:466
- Code: 8a 80 ff e9 73 fe ff ff 89 d9 80 e1 07 80 c1 03 38 c1 0f 8c a0 fe ff ff 48 89 df e8 db 8a 80 ff e9 93 fe ff ff e8 a1 68 2c ff <0f> 0b e8 9a 68 2c ff 0f 0b 0f 1f 84 00 00 00 00 00 55 41 57 41 56
- RSP: 0018:ffffc90003b4f258 EFLAGS: 00010293
- RAX: ffffffff825e318f RBX: 0000000000000000 RCX: ffff8880739dd7c0
- RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
- RBP: ffffc90003b4f430 R08: ffffffff825e2d9b R09: ffffed10045157d1
- R10: ffffed10045157d1 R11: 1ffff110045157d0 R12: ffff8880228abe80
- R13: ffff88807016c000 R14: dffffc0000000000 R15: ffff8880228abe00
- FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007fa6ebe88718 CR3: 000000001e93d000 CR4: 00000000003506f0
- DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- Call Trace:
-  <TASK>
-  hfs_write_inode+0x1bc/0xb40
-  write_inode fs/fs-writeback.c:1440 [inline]
-  __writeback_single_inode+0x4d6/0x670 fs/fs-writeback.c:1652
-  writeback_sb_inodes+0xb3b/0x18f0 fs/fs-writeback.c:1878
-  __writeback_inodes_wb+0x125/0x420 fs/fs-writeback.c:1949
-  wb_writeback+0x440/0x7b0 fs/fs-writeback.c:2054
-  wb_check_start_all fs/fs-writeback.c:2176 [inline]
-  wb_do_writeback fs/fs-writeback.c:2202 [inline]
-  wb_workfn+0x827/0xef0 fs/fs-writeback.c:2235
-  process_one_work+0x877/0xdb0 kernel/workqueue.c:2289
-  worker_thread+0xb14/0x1330 kernel/workqueue.c:2436
-  kthread+0x266/0x300 kernel/kthread.c:376
-  ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
-  </TASK>
+This specifically means that updates of the domain mapcount is racy
+(currently only used for statistics in debugfs).
 
-The BUG_ON() is triggered at here:
+Make sure to hold the global irq_domain_mutex also when disposing
+mappings from non-hierarchical domains.
 
-/* Dispose of resources used by a node */
-void hfs_bnode_put(struct hfs_bnode *node)
-{
-	if (node) {
- 		<skipped>
- 		BUG_ON(!atomic_read(&node->refcnt)); <- we have issue here!!!!
- 		<skipped>
- 	}
-}
-
-By tracing the refcnt, I found the node is created by hfs_bmap_alloc()
-with refcnt 1.  Then the node is used by hfs_btree_write().  There is a
-missing of hfs_bnode_get() after find the node.  The issue happened in
-following path:
-
-<alloc>
- hfs_bmap_alloc
-   hfs_bnode_find
-     __hfs_bnode_create   <- allocate a new node with refcnt 1.
-   hfs_bnode_put          <- decrease the refcnt
-
-<write>
- hfs_btree_write
-   hfs_bnode_find
-     __hfs_bnode_create
-       hfs_bnode_findhash <- find the node without refcnt increased.
-   hfs_bnode_put	  <- trigger the BUG_ON() since refcnt is 0.
-
-Link: https://lkml.kernel.org/r/20221212021627.3766829-1-liushixin2@huawei.com
-Reported-by: syzbot+5b04b49a7ec7226c7426@syzkaller.appspotmail.com
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Cc: Fabio M. De Francesco <fmdefrancesco@gmail.com>
-Cc: Viacheslav Dubeyko <slava@dubeyko.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 9dc6be3d4193 ("genirq/irqdomain: Add map counter")
+Cc: stable@vger.kernel.org      # 4.13
+Tested-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Tested-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230213104302.17307-3-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfs/bnode.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/irq/irqdomain.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -281,6 +281,7 @@ static struct hfs_bnode *__hfs_bnode_cre
- 		tree->node_hash[hash] = node;
- 		tree->node_hash_cnt++;
- 	} else {
-+		hfs_bnode_get(node2);
- 		spin_unlock(&tree->hash_lock);
- 		kfree(node);
- 		wait_event(node2->lock_wq, !test_bit(HFS_BNODE_NEW, &node2->flags));
+--- a/kernel/irq/irqdomain.c
++++ b/kernel/irq/irqdomain.c
+@@ -509,6 +509,9 @@ void irq_domain_disassociate(struct irq_
+ 		return;
+ 
+ 	hwirq = irq_data->hwirq;
++
++	mutex_lock(&irq_domain_mutex);
++
+ 	irq_set_status_flags(irq, IRQ_NOREQUEST);
+ 
+ 	/* remove chip and handler */
+@@ -528,6 +531,8 @@ void irq_domain_disassociate(struct irq_
+ 
+ 	/* Clear reverse map for this hwirq */
+ 	irq_domain_clear_mapping(domain, hwirq);
++
++	mutex_unlock(&irq_domain_mutex);
+ }
+ 
+ static int irq_domain_associate_locked(struct irq_domain *domain, unsigned int virq,
 
 
