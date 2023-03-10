@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43A8882C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:16:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E28C433A0;
-	Fri, 10 Mar 2023 15:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A5B882C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:17:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59419C4339C;
+	Fri, 10 Mar 2023 15:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461418;
-	bh=K+vZFxiLKaOq2WxwW9z5D7FcXoFr8eKY/Xplcrby9xM=;
+	s=korg; t=1678461421;
+	bh=lXiGA6r98FsbVlMErcreZXcuj69aBLp8zIAuBv7v4Sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qv/xeTCHcynlpogNYJAXPIHwjCAgAiWttzrI3zBvYbC3otSrhiFIEz3k4SlQpJIad
-	 rmfXmWB+00le0GLwNzP+8psE9ZDseOXzLH9zdfTpUo5j1W1UscIIRcXw0hHjUjKHcR
-	 MbdPPkpRwRbWtPKJp9F/7Nn8SiXHv1cn4pmHRfVg=
+	b=sPSe3yKamC+JkRqi3NOF+Uk0ZKRUmQmf2HMkT8BFWzVvQBL5KG4XEOMvT31llROdY
+	 TOadd7bxUHAfzvoUZph8dfXZ/LIaYVctAjvF6f4OvpZi3bhFuiRRdC4gz6bTwrfxIe
+	 m1sFwcoQZ6iEOUMMNRuXjFdzH86HvXB/YUsFUDlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 090/136] mei: bus-fixup:upon error print return values of send and receive
-Date: Fri, 10 Mar 2023 14:43:32 +0100
-Message-Id: <20230310133709.882789692@linuxfoundation.org>
+	Stephane Eranian <eranian@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Babu Moger <babu.moger@amd.com>,
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.15 125/136] x86/resctl: fix scheduler confusion with current
+Date: Fri, 10 Mar 2023 14:44:07 +0100
+Message-Id: <20230310133711.002528099@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -35,64 +38,178 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 4b8659e2c258e4fdac9ccdf06cc20c0677894ef9 ]
+commit 7fef099702527c3b2c5234a2ea6a24411485a13a upstream.
 
-For easier debugging, upon error, print also return values
-from __mei_cl_recv() and __mei_cl_send() functions.
+The implementation of 'current' on x86 is very intentionally special: it
+is a very common thing to look up, and it uses 'this_cpu_read_stable()'
+to get the current thread pointer efficiently from per-cpu storage.
 
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20221212214933.275434-1-tomas.winkler@intel.com
+And the keyword in there is 'stable': the current thread pointer never
+changes as far as a single thread is concerned.  Even if when a thread
+is preempted, or moved to another CPU, or even across an explicit call
+'schedule()' that thread will still have the same value for 'current'.
+
+It is, after all, the kernel base pointer to thread-local storage.
+That's why it's stable to begin with, but it's also why it's important
+enough that we have that special 'this_cpu_read_stable()' access for it.
+
+So this is all done very intentionally to allow the compiler to treat
+'current' as a value that never visibly changes, so that the compiler
+can do CSE and combine multiple different 'current' accesses into one.
+
+However, there is obviously one very special situation when the
+currently running thread does actually change: inside the scheduler
+itself.
+
+So the scheduler code paths are special, and do not have a 'current'
+thread at all.  Instead there are _two_ threads: the previous and the
+next thread - typically called 'prev' and 'next' (or prev_p/next_p)
+internally.
+
+So this is all actually quite straightforward and simple, and not all
+that complicated.
+
+Except for when you then have special code that is run in scheduler
+context, that code then has to be aware that 'current' isn't really a
+valid thing.  Did you mean 'prev'? Did you mean 'next'?
+
+In fact, even if then look at the code, and you use 'current' after the
+new value has been assigned to the percpu variable, we have explicitly
+told the compiler that 'current' is magical and always stable.  So the
+compiler is quite free to use an older (or newer) value of 'current',
+and the actual assignment to the percpu storage is not relevant even if
+it might look that way.
+
+Which is exactly what happened in the resctl code, that blithely used
+'current' in '__resctrl_sched_in()' when it really wanted the new
+process state (as implied by the name: we're scheduling 'into' that new
+resctl state).  And clang would end up just using the old thread pointer
+value at least in some configurations.
+
+This could have happened with gcc too, and purely depends on random
+compiler details.  Clang just seems to have been more aggressive about
+moving the read of the per-cpu current_task pointer around.
+
+The fix is trivial: just make the resctl code adhere to the scheduler
+rules of using the prev/next thread pointer explicitly, instead of using
+'current' in a situation where it just wasn't valid.
+
+That same code is then also used outside of the scheduler context (when
+a thread resctl state is explicitly changed), and then we will just pass
+in 'current' as that pointer, of course.  There is no ambiguity in that
+case.
+
+The fix may be trivial, but noticing and figuring out what went wrong
+was not.  The credit for that goes to Stephane Eranian.
+
+Reported-by: Stephane Eranian <eranian@google.com>
+Link: https://lore.kernel.org/lkml/20230303231133.1486085-1-eranian@google.com/
+Link: https://lore.kernel.org/lkml/alpine.LFD.2.01.0908011214330.3304@localhost.localdomain/
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Tony Luck <tony.luck@intel.com>
+Tested-by: Stephane Eranian <eranian@google.com>
+Tested-by: Babu Moger <babu.moger@amd.com>
+Cc: stable@kernel.org
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/bus-fixup.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/include/asm/resctrl.h         |   12 ++++++------
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c |    4 ++--
+ arch/x86/kernel/process_32.c           |    2 +-
+ arch/x86/kernel/process_64.c           |    2 +-
+ 4 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/misc/mei/bus-fixup.c b/drivers/misc/mei/bus-fixup.c
-index 67844089db216..9d082287dbe02 100644
---- a/drivers/misc/mei/bus-fixup.c
-+++ b/drivers/misc/mei/bus-fixup.c
-@@ -175,7 +175,7 @@ static int mei_fwver(struct mei_cl_device *cldev)
- 	ret = __mei_cl_send(cldev->cl, (u8 *)&req, sizeof(req), 0,
- 			    MEI_CL_IO_TX_BLOCKING);
- 	if (ret < 0) {
--		dev_err(&cldev->dev, "Could not send ReqFWVersion cmd\n");
-+		dev_err(&cldev->dev, "Could not send ReqFWVersion cmd ret = %d\n", ret);
- 		return ret;
+--- a/arch/x86/include/asm/resctrl.h
++++ b/arch/x86/include/asm/resctrl.h
+@@ -51,7 +51,7 @@ DECLARE_STATIC_KEY_FALSE(rdt_mon_enable_
+  *   simple as possible.
+  * Must be called with preemption disabled.
+  */
+-static void __resctrl_sched_in(void)
++static inline void __resctrl_sched_in(struct task_struct *tsk)
+ {
+ 	struct resctrl_pqr_state *state = this_cpu_ptr(&pqr_state);
+ 	u32 closid = state->default_closid;
+@@ -63,13 +63,13 @@ static void __resctrl_sched_in(void)
+ 	 * Else use the closid/rmid assigned to this cpu.
+ 	 */
+ 	if (static_branch_likely(&rdt_alloc_enable_key)) {
+-		tmp = READ_ONCE(current->closid);
++		tmp = READ_ONCE(tsk->closid);
+ 		if (tmp)
+ 			closid = tmp;
  	}
  
-@@ -187,7 +187,7 @@ static int mei_fwver(struct mei_cl_device *cldev)
- 		 * Should be at least one version block,
- 		 * error out if nothing found
- 		 */
--		dev_err(&cldev->dev, "Could not read FW version\n");
-+		dev_err(&cldev->dev, "Could not read FW version ret = %d\n", bytes_recv);
- 		return -EIO;
+ 	if (static_branch_likely(&rdt_mon_enable_key)) {
+-		tmp = READ_ONCE(current->rmid);
++		tmp = READ_ONCE(tsk->rmid);
+ 		if (tmp)
+ 			rmid = tmp;
+ 	}
+@@ -81,17 +81,17 @@ static void __resctrl_sched_in(void)
+ 	}
+ }
+ 
+-static inline void resctrl_sched_in(void)
++static inline void resctrl_sched_in(struct task_struct *tsk)
+ {
+ 	if (static_branch_likely(&rdt_enable_key))
+-		__resctrl_sched_in();
++		__resctrl_sched_in(tsk);
+ }
+ 
+ void resctrl_cpu_detect(struct cpuinfo_x86 *c);
+ 
+ #else
+ 
+-static inline void resctrl_sched_in(void) {}
++static inline void resctrl_sched_in(struct task_struct *tsk) {}
+ static inline void resctrl_cpu_detect(struct cpuinfo_x86 *c) {}
+ 
+ #endif /* CONFIG_X86_CPU_RESCTRL */
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -314,7 +314,7 @@ static void update_cpu_closid_rmid(void
+ 	 * executing task might have its own closid selected. Just reuse
+ 	 * the context switch code.
+ 	 */
+-	resctrl_sched_in();
++	resctrl_sched_in(current);
+ }
+ 
+ /*
+@@ -535,7 +535,7 @@ static void _update_task_closid_rmid(voi
+ 	 * Otherwise, the MSR is updated when the task is scheduled in.
+ 	 */
+ 	if (task == current)
+-		resctrl_sched_in();
++		resctrl_sched_in(task);
+ }
+ 
+ static void update_task_closid_rmid(struct task_struct *t)
+--- a/arch/x86/kernel/process_32.c
++++ b/arch/x86/kernel/process_32.c
+@@ -216,7 +216,7 @@ __switch_to(struct task_struct *prev_p,
+ 	switch_fpu_finish(next_fpu);
+ 
+ 	/* Load the Intel cache allocation PQR MSR. */
+-	resctrl_sched_in();
++	resctrl_sched_in(next_p);
+ 
+ 	return prev_p;
+ }
+--- a/arch/x86/kernel/process_64.c
++++ b/arch/x86/kernel/process_64.c
+@@ -656,7 +656,7 @@ __switch_to(struct task_struct *prev_p,
  	}
  
-@@ -337,7 +337,7 @@ static int mei_nfc_if_version(struct mei_cl *cl,
- 	ret = __mei_cl_send(cl, (u8 *)&cmd, sizeof(cmd), 0,
- 			    MEI_CL_IO_TX_BLOCKING);
- 	if (ret < 0) {
--		dev_err(bus->dev, "Could not send IF version cmd\n");
-+		dev_err(bus->dev, "Could not send IF version cmd ret = %d\n", ret);
- 		return ret;
- 	}
+ 	/* Load the Intel cache allocation PQR MSR. */
+-	resctrl_sched_in();
++	resctrl_sched_in(next_p);
  
-@@ -352,7 +352,7 @@ static int mei_nfc_if_version(struct mei_cl *cl,
- 	bytes_recv = __mei_cl_recv(cl, (u8 *)reply, if_version_length, &vtag,
- 				   0, 0);
- 	if (bytes_recv < 0 || (size_t)bytes_recv < if_version_length) {
--		dev_err(bus->dev, "Could not read IF version\n");
-+		dev_err(bus->dev, "Could not read IF version ret = %d\n", bytes_recv);
- 		ret = -EIO;
- 		goto err;
- 	}
--- 
-2.39.2
-
+ 	return prev_p;
+ }
 
 
