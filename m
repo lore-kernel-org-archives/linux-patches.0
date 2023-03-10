@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CFD847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A67C433EF;
-	Fri, 10 Mar 2023 13:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7A9847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B0FC433D2;
+	Fri, 10 Mar 2023 13:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456337;
-	bh=BQ9Skkjq+REIP476nYzqPXBPPNhVOGC16g6URGwTH08=;
+	s=korg; t=1678456340;
+	bh=nLakX7cwSUYBuJ1Y1LZS1EnCS21adUAUaK8od5UgV1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wOKDJnFfdl1RSWdPeeTtBi7n0HKE6zuu44QSJkWYHg4w5azD72OnSlx/aRWto72e/
-	 WSVWuSBeCfKer6r7Jxj8dfJsPSf7nMow62YfE/Hlio+4BH0XyWdJ1qwdbXa4HwNRn1
-	 A4DoBYsT4UgWwiEArW07zLoThi7ejstvcsjraZck=
+	b=faGA43WUBoU8EAeT4QQEAlC74OQevm1aQzC50a1Oe/zaoqGRbo1Wu4vP5RtMJkQG+
+	 mFxdlbfz/WBRlTw28Z55yBnfOkHMTHI4D5HNPPTQhROIBvJogKj8ZYTAa2jP52k1/B
+	 NTTL3qWHbghdTNc1IsCIS+PjlBKQVj0D8ODjKNs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 4.14 135/193] rbd: avoid use-after-free in do_rbd_add() when rbd_dev_create() fails
-Date: Fri, 10 Mar 2023 14:38:37 +0100
-Message-Id: <20230310133715.730479366@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 162/193] ubi: Fix UAF wear-leveling entry in eraseblk_count_seq_show()
+Date: Fri, 10 Mar 2023 14:39:04 +0100
+Message-Id: <20230310133716.552815727@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -33,94 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit f7c4d9b133c7a04ca619355574e96b6abf209fba upstream.
+[ Upstream commit a240bc5c43130c6aa50831d7caaa02a1d84e1bce ]
 
-If getting an ID or setting up a work queue in rbd_dev_create() fails,
-use-after-free on rbd_dev->rbd_client, rbd_dev->spec and rbd_dev->opts
-is triggered in do_rbd_add().  The root cause is that the ownership of
-these structures is transfered to rbd_dev prematurely and they all end
-up getting freed when rbd_dev_create() calls rbd_dev_free() prior to
-returning to do_rbd_add().
+Wear-leveling entry could be freed in error path, which may be accessed
+again in eraseblk_count_seq_show(), for example:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE, an
-incomplete patch submitted by Natalia Petrova <n.petrova@fintech.ru>.
+__erase_worker                eraseblk_count_seq_show
+                                wl = ubi->lookuptbl[*block_number]
+				if (wl)
+  wl_entry_destroy
+    ubi->lookuptbl[e->pnum] = NULL
+    kmem_cache_free(ubi_wl_entry_slab, e)
+		                   erase_count = wl->ec  // UAF!
 
-Cc: stable@vger.kernel.org
-Fixes: 1643dfa4c2c8 ("rbd: introduce a per-device ordered workqueue")
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Wear-leveling entry updating/accessing in ubi->lookuptbl should be
+protected by ubi->wl_lock, fix it by adding ubi->wl_lock to serialize
+wl entry accessing between wl_entry_destroy() and
+eraseblk_count_seq_show().
+
+Fetch a reproducer in [Link].
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216305
+Fixes: 7bccd12d27b7e3 ("ubi: Add debugfs file for tracking PEB state")
+Fixes: 801c135ce73d5d ("UBI: Unsorted Block Images")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rbd.c |   20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ drivers/mtd/ubi/wl.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -4778,8 +4778,7 @@ static void rbd_dev_release(struct devic
- 		module_put(THIS_MODULE);
- }
+diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
+index 545a92eb8f569..e267e0519d94a 100644
+--- a/drivers/mtd/ubi/wl.c
++++ b/drivers/mtd/ubi/wl.c
+@@ -878,8 +878,11 @@ static int wear_leveling_worker(struct ubi_device *ubi, struct ubi_work *wrk,
  
--static struct rbd_device *__rbd_dev_create(struct rbd_client *rbdc,
--					   struct rbd_spec *spec)
-+static struct rbd_device *__rbd_dev_create(struct rbd_spec *spec)
- {
- 	struct rbd_device *rbd_dev;
- 
-@@ -4812,9 +4811,6 @@ static struct rbd_device *__rbd_dev_crea
- 	rbd_dev->dev.parent = &rbd_root_dev;
- 	device_initialize(&rbd_dev->dev);
- 
--	rbd_dev->rbd_client = rbdc;
--	rbd_dev->spec = spec;
--
- 	return rbd_dev;
- }
- 
-@@ -4827,12 +4823,10 @@ static struct rbd_device *rbd_dev_create
- {
- 	struct rbd_device *rbd_dev;
- 
--	rbd_dev = __rbd_dev_create(rbdc, spec);
-+	rbd_dev = __rbd_dev_create(spec);
- 	if (!rbd_dev)
- 		return NULL;
- 
--	rbd_dev->opts = opts;
--
- 	/* get an id and fill in device name */
- 	rbd_dev->dev_id = ida_simple_get(&rbd_dev_id_ida, 0,
- 					 minor_to_rbd_dev_id(1 << MINORBITS),
-@@ -4849,6 +4843,10 @@ static struct rbd_device *rbd_dev_create
- 	/* we have a ref from do_rbd_add() */
- 	__module_get(THIS_MODULE);
- 
-+	rbd_dev->rbd_client = rbdc;
-+	rbd_dev->spec = spec;
-+	rbd_dev->opts = opts;
-+
- 	dout("%s rbd_dev %p dev_id %d\n", __func__, rbd_dev, rbd_dev->dev_id);
- 	return rbd_dev;
- 
-@@ -5934,7 +5932,7 @@ static int rbd_dev_probe_parent(struct r
- 		goto out_err;
+ 	err = do_sync_erase(ubi, e1, vol_id, lnum, 0);
+ 	if (err) {
+-		if (e2)
++		if (e2) {
++			spin_lock(&ubi->wl_lock);
+ 			wl_entry_destroy(ubi, e2);
++			spin_unlock(&ubi->wl_lock);
++		}
+ 		goto out_ro;
  	}
  
--	parent = __rbd_dev_create(rbd_dev->rbd_client, rbd_dev->parent_spec);
-+	parent = __rbd_dev_create(rbd_dev->parent_spec);
- 	if (!parent) {
- 		ret = -ENOMEM;
- 		goto out_err;
-@@ -5944,8 +5942,8 @@ static int rbd_dev_probe_parent(struct r
- 	 * Images related by parent/child relationships always share
- 	 * rbd_client and spec/parent_spec, so bump their refcounts.
- 	 */
--	__rbd_get_client(rbd_dev->rbd_client);
--	rbd_spec_get(rbd_dev->parent_spec);
-+	parent->rbd_client = __rbd_get_client(rbd_dev->rbd_client);
-+	parent->spec = rbd_spec_get(rbd_dev->parent_spec);
+@@ -1103,14 +1106,18 @@ static int __erase_worker(struct ubi_device *ubi, struct ubi_work *wl_wrk)
+ 		/* Re-schedule the LEB for erasure */
+ 		err1 = schedule_erase(ubi, e, vol_id, lnum, 0, false);
+ 		if (err1) {
++			spin_lock(&ubi->wl_lock);
+ 			wl_entry_destroy(ubi, e);
++			spin_unlock(&ubi->wl_lock);
+ 			err = err1;
+ 			goto out_ro;
+ 		}
+ 		return err;
+ 	}
  
- 	ret = rbd_dev_image_probe(parent, depth);
- 	if (ret < 0)
++	spin_lock(&ubi->wl_lock);
+ 	wl_entry_destroy(ubi, e);
++	spin_unlock(&ubi->wl_lock);
+ 	if (err != -EIO)
+ 		/*
+ 		 * If this is not %-EIO, we have no idea what to do. Scheduling
+-- 
+2.39.2
+
 
 
