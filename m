@@ -1,42 +1,42 @@
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598C9C97B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105582598
 	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 10:32:16 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 8563D20653;
-	Fri, 10 Mar 2023 10:32:14 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 3BDB120655;
+	Fri, 10 Mar 2023 10:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1678444334; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1678444335; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=AadlA5Ixh0fCoPEBLO98G7bQ7AGSZJpNvfUKk6JlaZA=;
-	b=xL0cbeEQboJcFPAwwkkO/x/Lg47bim2ZlZj9ADRe8B70qRZnfrKkRVOb7tQAtQEuRJ8oWd
-	4xODf5QTjwba+ye05JFiG1g6juG97Xrhm+cHsP2CZtaBlrgRm3dG9tloj5sM82aaq5UrnA
-	rSpocyNABRsaIoyrwB+6HJvIKLuAZZs=
+	bh=SABMsfykBuZLlX/EID5G4jmWDCswPlY6bB+XmpUmDDI=;
+	b=foj1gEREC5pFoZcss66MTasW9SmKGZ8VO45QQ5RxFr2/gbLbCBrgbYL8TlQQxufdOQ3EFE
+	czVB8jboaSapWQSAvTbgzlr6p+6za4Flui5sC1W23abuExTqIegh6cm1gPfGqBzmxekr0H
+	TCUXtSdOonDGjPPPUlKUoc9FsmC5aAE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1678444334;
+	s=susede2_ed25519; t=1678444335;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=AadlA5Ixh0fCoPEBLO98G7bQ7AGSZJpNvfUKk6JlaZA=;
-	b=Tp3d18/cjDXI1xemJ2Ql0+pg8xRv7dJpjAQipryYAFQS1kFeT7CjhYVlubYfS85pvh7d3s
-	+8uiaUrOMfmUtODg==
+	bh=SABMsfykBuZLlX/EID5G4jmWDCswPlY6bB+XmpUmDDI=;
+	b=JCOpFCvpQJqkp5/VtYAnLRuXjAB156OkLDECkwvRNK9kuNoHX2iWKKVfw/Gx5/VOde/eYE
+	9dMcNAa9idgNdMBg==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 52ECF139F9;
-	Fri, 10 Mar 2023 10:32:14 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0984B13592;
+	Fri, 10 Mar 2023 10:32:15 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id aJWPEy4HC2SsXQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Fri, 10 Mar 2023 10:32:14 +0000
+	id 6Ay0AS8HC2SsXQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 10 Mar 2023 10:32:15 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Christoph Lameter <cl@linux.com>,
 	David Rientjes <rientjes@google.com>,
@@ -53,9 +53,9 @@ Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>,
 	netdev@vger.kernel.org,
 	linux-doc@vger.kernel.org,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 1/7] mm/slob: remove CONFIG_SLOB
-Date: Fri, 10 Mar 2023 11:32:03 +0100
-Message-Id: <20230310103210.22372-2-vbabka@suse.cz>
+Subject: [PATCH 4/7] mm, pagemap: remove SLOB and SLQB from comments and documentation
+Date: Fri, 10 Mar 2023 11:32:06 +0100
+Message-Id: <20230310103210.22372-5-vbabka@suse.cz>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310103210.22372-1-vbabka@suse.cz>
 References: <20230310103210.22372-1-vbabka@suse.cz>
@@ -67,88 +67,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Remove SLOB from Kconfig and Makefile. Everything under #ifdef
-CONFIG_SLOB, and mm/slob.c is now dead code.
+SLOB has been removed and SLQB never merged, so remove their mentions
+from comments and documentation of pagemap.
 
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- init/Kconfig               |  2 +-
- kernel/configs/tiny.config |  1 -
- mm/Kconfig                 | 22 ----------------------
- mm/Makefile                |  1 -
- 4 files changed, 1 insertion(+), 25 deletions(-)
+ Documentation/admin-guide/mm/pagemap.rst | 6 +++---
+ fs/proc/page.c                           | 5 ++---
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/init/Kconfig b/init/Kconfig
-index 1fb5f313d18f..72ac3f66bc27 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -973,7 +973,7 @@ config MEMCG
+diff --git a/Documentation/admin-guide/mm/pagemap.rst b/Documentation/admin-guide/mm/pagemap.rst
+index b5f970dc91e7..bb4aa897a773 100644
+--- a/Documentation/admin-guide/mm/pagemap.rst
++++ b/Documentation/admin-guide/mm/pagemap.rst
+@@ -91,9 +91,9 @@ Short descriptions to the page flags
+    The page is being locked for exclusive access, e.g. by undergoing read/write
+    IO.
+ 7 - SLAB
+-   The page is managed by the SLAB/SLOB/SLUB/SLQB kernel memory allocator.
+-   When compound page is used, SLUB/SLQB will only set this flag on the head
+-   page; SLOB will not flag it at all.
++   The page is managed by the SLAB/SLUB kernel memory allocator.
++   When compound page is used, either will only set this flag on the head
++   page..
+ 10 - BUDDY
+     A free memory block managed by the buddy system allocator.
+     The buddy system organizes free memory in blocks of various orders.
+diff --git a/fs/proc/page.c b/fs/proc/page.c
+index 6249c347809a..1356aeffd8dc 100644
+--- a/fs/proc/page.c
++++ b/fs/proc/page.c
+@@ -125,7 +125,7 @@ u64 stable_page_flags(struct page *page)
+ 	/*
+ 	 * pseudo flags for the well known (anonymous) memory mapped pages
+ 	 *
+-	 * Note that page->_mapcount is overloaded in SLOB/SLUB/SLQB, so the
++	 * Note that page->_mapcount is overloaded in SLAB/SLUB, so the
+ 	 * simple test in page_mapped() is not enough.
+ 	 */
+ 	if (!PageSlab(page) && page_mapped(page))
+@@ -166,8 +166,7 @@ u64 stable_page_flags(struct page *page)
  
- config MEMCG_KMEM
- 	bool
--	depends on MEMCG && !SLOB
-+	depends on MEMCG
- 	default y
- 
- config BLK_CGROUP
-diff --git a/kernel/configs/tiny.config b/kernel/configs/tiny.config
-index c2f9c912df1c..144b2bd86b14 100644
---- a/kernel/configs/tiny.config
-+++ b/kernel/configs/tiny.config
-@@ -7,6 +7,5 @@ CONFIG_KERNEL_XZ=y
- # CONFIG_KERNEL_LZO is not set
- # CONFIG_KERNEL_LZ4 is not set
- # CONFIG_SLAB is not set
--# CONFIG_SLOB_DEPRECATED is not set
- CONFIG_SLUB=y
- CONFIG_SLUB_TINY=y
-diff --git a/mm/Kconfig b/mm/Kconfig
-index 4751031f3f05..669399ab693c 100644
---- a/mm/Kconfig
-+++ b/mm/Kconfig
-@@ -238,30 +238,8 @@ config SLUB
- 	   and has enhanced diagnostics. SLUB is the default choice for
- 	   a slab allocator.
- 
--config SLOB_DEPRECATED
--	depends on EXPERT
--	bool "SLOB (Simple Allocator - DEPRECATED)"
--	depends on !PREEMPT_RT
--	help
--	   Deprecated and scheduled for removal in a few cycles. SLUB
--	   recommended as replacement. CONFIG_SLUB_TINY can be considered
--	   on systems with 16MB or less RAM.
--
--	   If you need SLOB to stay, please contact linux-mm@kvack.org and
--	   people listed in the SLAB ALLOCATOR section of MAINTAINERS file,
--	   with your use case.
--
--	   SLOB replaces the stock allocator with a drastically simpler
--	   allocator. SLOB is generally more space efficient but
--	   does not perform as well on large systems.
--
- endchoice
- 
--config SLOB
--	bool
--	default y
--	depends on SLOB_DEPRECATED
--
- config SLUB_TINY
- 	bool "Configure SLUB for minimal memory footprint"
- 	depends on SLUB && EXPERT
-diff --git a/mm/Makefile b/mm/Makefile
-index 8e105e5b3e29..2d9c1e7f6085 100644
---- a/mm/Makefile
-+++ b/mm/Makefile
-@@ -81,7 +81,6 @@ obj-$(CONFIG_HUGETLB_PAGE_OPTIMIZE_VMEMMAP)	+= hugetlb_vmemmap.o
- obj-$(CONFIG_NUMA) 	+= mempolicy.o
- obj-$(CONFIG_SPARSEMEM)	+= sparse.o
- obj-$(CONFIG_SPARSEMEM_VMEMMAP) += sparse-vmemmap.o
--obj-$(CONFIG_SLOB) += slob.o
- obj-$(CONFIG_MMU_NOTIFIER) += mmu_notifier.o
- obj-$(CONFIG_KSM) += ksm.o
- obj-$(CONFIG_PAGE_POISONING) += page_poison.o
+ 	/*
+ 	 * Caveats on high order pages: page->_refcount will only be set
+-	 * -1 on the head page; SLUB/SLQB do the same for PG_slab;
+-	 * SLOB won't set PG_slab at all on compound pages.
++	 * -1 on the head page; SLAB/SLUB do the same for PG_slab;
+ 	 */
+ 	if (PageBuddy(page))
+ 		u |= 1 << KPF_BUDDY;
 -- 
 2.39.2
 
