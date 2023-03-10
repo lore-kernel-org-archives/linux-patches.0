@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6168481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:03:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C46C4339C;
-	Fri, 10 Mar 2023 14:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFB18481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:03:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFA8C433D2;
+	Fri, 10 Mar 2023 14:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456993;
-	bh=WHWFpoQ1nrjbpody8adXpagBLdlcYWceEFt87NMVy4Q=;
+	s=korg; t=1678456996;
+	bh=sUiRhxewCgC3dtqFzN+Sq11Vm+nXjivcxsoRaI+Rd/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ATboc5VgP+MPjtHF64R6csIXA/laApvh8mr59EnzYSA/6nyRHmhLp9tKm+vIRSo4V
-	 LyvvO/NklCiqzsVj4aYHV7s64z35KyISEySe3JXTkKQu/23gouMOSjNj6/Ep64Pf/R
-	 ZA7HH1Uo7jY30mPjK3Gmu/Keqkx7sOpSKN7bRd0A=
+	b=dsudtV2PypqNvmLqVjkLp1HhUHw4iPaQ7+zVXznzc7ZbueOJnUsYwzohZTjopduQl
+	 ddDYqcGqgoobAt1ifj8n/Uhcsw5RN+o6A91jPlBPMO6aScaCWR7xiK8s8clc3U77c9
+	 2oPNjnZc2ClytTt1VwuG1iJJJxVViqaI0XTaMvLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhu Lingshan <lingshan.zhu@intel.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.2 195/211] vDPA/ifcvf: decouple config IRQ releaser from the adapter
-Date: Fri, 10 Mar 2023 14:39:35 +0100
-Message-Id: <20230310133724.811251456@linuxfoundation.org>
+Subject: [PATCH 6.2 196/211] vDPA/ifcvf: decouple vq irq requester from the adapter
+Date: Fri, 10 Mar 2023 14:39:36 +0100
+Message-Id: <20230310133724.845601236@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,97 +36,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhu Lingshan <lingshan.zhu@intel.com>
 
-commit 23dac55cec3afdbc1b4eaed1c79f2cee00477f8b upstream.
+commit f9a9ffb2e4dbde81090416fc51662441c2a7b73b upstream.
 
-This commit decouples config IRQ releaser from the adapter,
-so that it could be invoked once probe or in err handlers.
-ifcvf_free_irq() works on ifcvf_hw in this commit
+This commit decouples the vq irq requester from the adapter,
+so that these functions can be invoked since probe.
 
 Signed-off-by: Zhu Lingshan <lingshan.zhu@intel.com>
 Cc: stable@vger.kernel.org
-Message-Id: <20221125145724.1129962-6-lingshan.zhu@intel.com>
+Message-Id: <20221125145724.1129962-7-lingshan.zhu@intel.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/ifcvf/ifcvf_main.c |   22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ drivers/vdpa/ifcvf/ifcvf_main.c |   19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
 --- a/drivers/vdpa/ifcvf/ifcvf_main.c
 +++ b/drivers/vdpa/ifcvf/ifcvf_main.c
-@@ -101,10 +101,9 @@ static void ifcvf_free_vq_irq(struct ifc
- 		ifcvf_free_vqs_reused_irq(vf);
+@@ -155,10 +155,9 @@ static int ifcvf_alloc_vectors(struct if
+ 	return ret;
  }
  
--static void ifcvf_free_config_irq(struct ifcvf_adapter *adapter)
-+static void ifcvf_free_config_irq(struct ifcvf_hw *vf)
+-static int ifcvf_request_per_vq_irq(struct ifcvf_adapter *adapter)
++static int ifcvf_request_per_vq_irq(struct ifcvf_hw *vf)
  {
 -	struct pci_dev *pdev = adapter->pdev;
 -	struct ifcvf_hw *vf = &adapter->vf;
 +	struct pci_dev *pdev = vf->pdev;
+ 	int i, vector, ret, irq;
  
- 	if (vf->config_irq == -EINVAL)
- 		return;
-@@ -119,13 +118,12 @@ static void ifcvf_free_config_irq(struct
- 	}
+ 	vf->vqs_reused_irq = -EINVAL;
+@@ -190,10 +189,9 @@ err:
+ 	return -EFAULT;
  }
  
--static void ifcvf_free_irq(struct ifcvf_adapter *adapter)
-+static void ifcvf_free_irq(struct ifcvf_hw *vf)
+-static int ifcvf_request_vqs_reused_irq(struct ifcvf_adapter *adapter)
++static int ifcvf_request_vqs_reused_irq(struct ifcvf_hw *vf)
  {
 -	struct pci_dev *pdev = adapter->pdev;
 -	struct ifcvf_hw *vf = &adapter->vf;
 +	struct pci_dev *pdev = vf->pdev;
+ 	int i, vector, ret, irq;
  
- 	ifcvf_free_vq_irq(vf);
--	ifcvf_free_config_irq(adapter);
-+	ifcvf_free_config_irq(vf);
- 	ifcvf_free_irq_vectors(pdev);
+ 	vector = 0;
+@@ -266,15 +264,14 @@ err:
+ 
  }
  
-@@ -187,7 +185,7 @@ static int ifcvf_request_per_vq_irq(stru
+-static int ifcvf_request_vq_irq(struct ifcvf_adapter *adapter)
++static int ifcvf_request_vq_irq(struct ifcvf_hw *vf)
+ {
+-	struct ifcvf_hw *vf = &adapter->vf;
+ 	int ret;
  
- 	return 0;
- err:
--	ifcvf_free_irq(adapter);
-+	ifcvf_free_irq(vf);
+ 	if (vf->msix_vector_status == MSIX_VECTOR_PER_VQ_AND_CONFIG)
+-		ret = ifcvf_request_per_vq_irq(adapter);
++		ret = ifcvf_request_per_vq_irq(vf);
+ 	else
+-		ret = ifcvf_request_vqs_reused_irq(adapter);
++		ret = ifcvf_request_vqs_reused_irq(vf);
  
- 	return -EFAULT;
+ 	return ret;
  }
-@@ -221,7 +219,7 @@ static int ifcvf_request_vqs_reused_irq(
- 
- 	return 0;
- err:
--	ifcvf_free_irq(adapter);
-+	ifcvf_free_irq(vf);
- 
- 	return -EFAULT;
- }
-@@ -262,7 +260,7 @@ static int ifcvf_request_dev_irq(struct
- 
- 	return 0;
- err:
--	ifcvf_free_irq(adapter);
-+	ifcvf_free_irq(vf);
- 
- 	return -EFAULT;
- 
-@@ -317,7 +315,7 @@ static int ifcvf_request_config_irq(stru
- 
- 	return 0;
- err:
--	ifcvf_free_irq(adapter);
-+	ifcvf_free_irq(vf);
- 
- 	return -EFAULT;
- }
-@@ -508,7 +506,7 @@ static int ifcvf_vdpa_reset(struct vdpa_
- 
- 	if (status_old & VIRTIO_CONFIG_S_DRIVER_OK) {
- 		ifcvf_stop_datapath(adapter);
--		ifcvf_free_irq(adapter);
-+		ifcvf_free_irq(vf);
+@@ -341,7 +338,7 @@ static int ifcvf_request_irq(struct ifcv
+ 		return ret;
  	}
  
- 	ifcvf_reset_vring(adapter);
+-	ret = ifcvf_request_vq_irq(adapter);
++	ret = ifcvf_request_vq_irq(vf);
+ 	if (ret)
+ 		return ret;
+ 
 
 
