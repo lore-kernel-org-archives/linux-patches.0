@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265F8847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:56:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE86C4339C;
-	Fri, 10 Mar 2023 13:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68E1847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:56:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A767C433D2;
+	Fri, 10 Mar 2023 13:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456576;
-	bh=rAVK09GvI0sZ+tjgMiU6r2EeyV9OP5l4Xml8V9iKA3E=;
+	s=korg; t=1678456578;
+	bh=e/clle4sniBocbV6pcTXWpCG2LhZMYCTy5zhJhkHGRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZYbOgGihkYfqGcgoVR2RtkoVO3mXyV1KXqZZSePMP9Mapnf7DvR2YEXWybjx3E/tj
-	 /o5JrkBOcaQT1eaEt85sKr5sYsgadA4caZHEclHw2MZeBsFh4/TZ1Z+e/FW+R1J0/l
-	 Wky02y8X8Q9ViXky/p8vuSy1HY/vuqBlCHCXqUfg=
+	b=JLhHQ8GUcmtpRjEVeFXHdppbYp6n5Ps7zufXR8b5Zt9HD19ARCC5EkuZTX9vx5MVy
+	 JVLkDpvsCiDzxtMrn/77IQBNUPaZ/yUG1LEfpU8hHD6tOmFAtiTrXtagpUFZ/z64tf
+	 9rVHP+9Bns0bxGDumjhPV4SJMYyOID6XbgZ7t2dU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Wang Jianjian <wangjianjian3@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 043/211] ubi: ubi_wl_put_peb: Fix infinite loop when wear-leveling work failed
-Date: Fri, 10 Mar 2023 14:37:03 +0100
-Message-Id: <20230310133720.049335531@linuxfoundation.org>
+Subject: [PATCH 6.2 052/211] ext4: dont show commit interval if it is zero
+Date: Fri, 10 Mar 2023 14:37:12 +0100
+Message-Id: <20230310133720.316756816@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,88 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Wang Jianjian <wangjianjian3@huawei.com>
 
-[ Upstream commit 4d57a7333e26040f2b583983e1970d9d460e56b0 ]
+[ Upstream commit 934b0de1e9fdea93c4c7f2e18915c54fae67bdc6 ]
 
-Following process will trigger an infinite loop in ubi_wl_put_peb():
+If commit interval is 0, it means using default value.
 
-	ubifs_bgt		ubi_bgt
-ubifs_leb_unmap
-  ubi_leb_unmap
-    ubi_eba_unmap_leb
-      ubi_wl_put_peb	wear_leveling_worker
-                          e1 = rb_entry(rb_first(&ubi->used)
-			  e2 = get_peb_for_wl(ubi)
-			  ubi_io_read_vid_hdr  // return err (flash fault)
-			  out_error:
-			    ubi->move_from = ubi->move_to = NULL
-			    wl_entry_destroy(ubi, e1)
-			      ubi->lookuptbl[e->pnum] = NULL
-      retry:
-        e = ubi->lookuptbl[pnum];	// return NULL
-	if (e == ubi->move_from) {	// NULL == NULL gets true
-	  goto retry;			// infinite loop !!!
-
-$ top
-  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     COMMAND
-  7676 root     20   0       0      0      0 R 100.0  0.0  ubifs_bgt0_0
-
-Fix it by:
- 1) Letting ubi_wl_put_peb() returns directly if wearl leveling entry has
-    been removed from 'ubi->lookuptbl'.
- 2) Using 'ubi->wl_lock' protecting wl entry deletion to preventing an
-    use-after-free problem for wl entry in ubi_wl_put_peb().
-
-Fetch a reproducer in [Link].
-
-Fixes: 43f9b25a9cdd7b1 ("UBI: bugfix: protect from volume removal")
-Fixes: ee59ba8b064f692 ("UBI: Fix stale pointers in ubi->lookuptbl")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216111
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: 6e47a3cc68fc ("ext4: get rid of super block and sbi from handle_mount_ops()")
+Signed-off-by: Wang Jianjian <wangjianjian3@huawei.com>
+Link: https://lore.kernel.org/r/20221219015128.876717-1-wangjianjian3@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/wl.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ fs/ext4/super.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
-index f45df3b773739..9e14319225c97 100644
---- a/drivers/mtd/ubi/wl.c
-+++ b/drivers/mtd/ubi/wl.c
-@@ -976,11 +976,11 @@ static int wear_leveling_worker(struct ubi_device *ubi, struct ubi_work *wrk,
- 	spin_lock(&ubi->wl_lock);
- 	ubi->move_from = ubi->move_to = NULL;
- 	ubi->move_to_put = ubi->wl_scheduled = 0;
-+	wl_entry_destroy(ubi, e1);
-+	wl_entry_destroy(ubi, e2);
- 	spin_unlock(&ubi->wl_lock);
- 
- 	ubi_free_vid_buf(vidb);
--	wl_entry_destroy(ubi, e1);
--	wl_entry_destroy(ubi, e2);
- 
- out_ro:
- 	ubi_ro_mode(ubi);
-@@ -1260,6 +1260,18 @@ int ubi_wl_put_peb(struct ubi_device *ubi, int vol_id, int lnum,
- retry:
- 	spin_lock(&ubi->wl_lock);
- 	e = ubi->lookuptbl[pnum];
-+	if (!e) {
-+		/*
-+		 * This wl entry has been removed for some errors by other
-+		 * process (eg. wear leveling worker), corresponding process
-+		 * (except __erase_worker, which cannot concurrent with
-+		 * ubi_wl_put_peb) will set ubi ro_mode at the same time,
-+		 * just ignore this wl entry.
-+		 */
-+		spin_unlock(&ubi->wl_lock);
-+		up_read(&ubi->fm_protect);
-+		return 0;
-+	}
- 	if (e == ubi->move_from) {
- 		/*
- 		 * User is putting the physical eraseblock which was selected to
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 260c1b3e3ef2c..3b9e30e1afd91 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -2146,7 +2146,7 @@ static int ext4_parse_param(struct fs_context *fc, struct fs_parameter *param)
+ 		return 0;
+ 	case Opt_commit:
+ 		if (result.uint_32 == 0)
+-			ctx->s_commit_interval = JBD2_DEFAULT_MAX_COMMIT_AGE;
++			result.uint_32 = JBD2_DEFAULT_MAX_COMMIT_AGE;
+ 		else if (result.uint_32 > INT_MAX / HZ) {
+ 			ext4_msg(NULL, KERN_ERR,
+ 				 "Invalid commit interval %d, "
 -- 
 2.39.2
 
