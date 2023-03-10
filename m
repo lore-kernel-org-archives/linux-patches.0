@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E0B8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:01:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1469C433A1;
-	Fri, 10 Mar 2023 14:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0F78481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:01:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6AB1C433EF;
+	Fri, 10 Mar 2023 14:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456871;
-	bh=Q9jxn3Wr7kc38QVx7x7JbpqH1/uDMpoRV96i6dtUSWg=;
+	s=korg; t=1678456874;
+	bh=mdXaVsMHHRpVXUk+uZ9EYwJv98Vwf3VmgKDN7QRilxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=142jt8U+ddIEqOck4B7SQyKxF0yM8ttCm1jurOnTGlfuAGCr6lEQaVFzQBq9qq+nF
-	 m74SnzVGKr7pX69WHV0JJ0BlmYOstkAJ7ge8DaCPUA+SQO/yMWbVcawPUMwq4nz4Qx
-	 lHeXjnKK5RDgOx9a+qMHyMVvjpk+2+DUnIOAePm0=
+	b=jCwJ9am9S3xObZriBUm7kGyG/8LHyn9Q78Ki+sVzmErGlMgao+cq6KTn+2pLOWzYE
+	 cwm0axiHDctBl5cFKk0KI7zu2XugHlfpT2KVuO/l7dUuJW+VBP6BtOgzpP/ZWHyxX9
+	 8exHSmXApr9eV3pHdJb55UG2TPqexN3rN1e7bfoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Sidong Yang <realwakka@gmail.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 154/211] PCI: loongson: Prevent LS7A MRRS increases
-Date: Fri, 10 Mar 2023 14:38:54 +0100
-Message-Id: <20230310133723.432670705@linuxfoundation.org>
+Subject: [PATCH 6.2 155/211] staging: pi433: fix memory leak with using debugfs_lookup()
+Date: Fri, 10 Mar 2023 14:38:55 +0100
+Message-Id: <20230310133723.461567484@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,139 +38,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 8b3517f88ff2983f52698893519227c10aac90b2 ]
+[ Upstream commit 2f36e789e540df6a9fbf471b3a2ba62a8b361586 ]
 
-Except for isochronous-configured devices, software may set
-Max_Read_Request_Size (MRRS) to any value up to 4096.  If a device issues a
-read request with size greater than the completer's Max_Payload_Size (MPS),
-the completer is required to break the response into multiple completions.
+When calling debugfs_lookup() the result must have dput() called on it,
+otherwise the memory will leak over time.  To make things simpler, just
+call debugfs_lookup_and_remove() instead which handles all of the logic
+at once.  This requires saving off the root directory dentry to make
+creation of individual device subdirectories easier.
 
-Instead of correctly responding with multiple completions to a large read
-request, some LS7A Root Ports respond with a Completer Abort.  To prevent
-this, the MRRS must be limited to an implementation-specific value.
-
-The OS cannot detect that value, so rely on BIOS to configure MRRS before
-booting, and quirk the Root Ports so we never set an MRRS larger than that
-BIOS value for any downstream device.
-
-N.B. Hot-added devices are not configured by BIOS, and they power up with
-MRRS = 512 bytes, so these devices will be limited to 512 bytes.  If the
-LS7A limit is smaller, those hot-added devices may not work correctly, but
-per [1], hotplug is not supported with this chipset revision.
-
-[1] https://lore.kernel.org/r/073638a7-ae68-2847-ac3d-29e5e760d6af@loongson.cn
-
-[bhelgaas: commit log]
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216884
-Link: https://lore.kernel.org/r/20230201043018.778499-3-chenhuacai@loongson.cn
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>
+Cc: Dan Carpenter <error27@gmail.com>
+Cc: Sidong Yang <realwakka@gmail.com>
+Cc: Liu Shixin <liushixin2@huawei.com>
+Cc: "Uwe Kleine-König" <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230202141138.2291946-1-gregkh@linuxfoundation.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-loongson.c | 44 +++++++++------------------
- drivers/pci/pci.c                     | 10 ++++++
- include/linux/pci.h                   |  1 +
- 3 files changed, 26 insertions(+), 29 deletions(-)
+ drivers/staging/pi433/pi433_if.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/controller/pci-loongson.c b/drivers/pci/controller/pci-loongson.c
-index 05c50408f13b7..759ec211c17bf 100644
---- a/drivers/pci/controller/pci-loongson.c
-+++ b/drivers/pci/controller/pci-loongson.c
-@@ -75,37 +75,23 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
- 			DEV_LS7A_LPC, system_bus_quirk);
+diff --git a/drivers/staging/pi433/pi433_if.c b/drivers/staging/pi433/pi433_if.c
+index d4e06a3929f3d..b59f6a4cb611a 100644
+--- a/drivers/staging/pi433/pi433_if.c
++++ b/drivers/staging/pi433/pi433_if.c
+@@ -55,6 +55,7 @@
+ static dev_t pi433_dev;
+ static DEFINE_IDR(pi433_idr);
+ static DEFINE_MUTEX(minor_lock); /* Protect idr accesses */
++static struct dentry *root_dir;	/* debugfs root directory for the driver */
  
--static void loongson_mrrs_quirk(struct pci_dev *dev)
-+static void loongson_mrrs_quirk(struct pci_dev *pdev)
+ static struct class *pi433_class; /* mainly for udev to create /dev/pi433 */
+ 
+@@ -1306,8 +1307,7 @@ static int pi433_probe(struct spi_device *spi)
+ 	/* spi setup */
+ 	spi_set_drvdata(spi, device);
+ 
+-	entry = debugfs_create_dir(dev_name(device->dev),
+-				   debugfs_lookup(KBUILD_MODNAME, NULL));
++	entry = debugfs_create_dir(dev_name(device->dev), root_dir);
+ 	debugfs_create_file("regs", 0400, entry, device, &pi433_debugfs_regs_fops);
+ 
+ 	return 0;
+@@ -1333,9 +1333,8 @@ static int pi433_probe(struct spi_device *spi)
+ static void pi433_remove(struct spi_device *spi)
  {
--	struct pci_bus *bus = dev->bus;
--	struct pci_dev *bridge;
--	static const struct pci_device_id bridge_devids[] = {
--		{ PCI_VDEVICE(LOONGSON, DEV_PCIE_PORT_0) },
--		{ PCI_VDEVICE(LOONGSON, DEV_PCIE_PORT_1) },
--		{ PCI_VDEVICE(LOONGSON, DEV_PCIE_PORT_2) },
--		{ 0, },
--	};
--
--	/* look for the matching bridge */
--	while (!pci_is_root_bus(bus)) {
--		bridge = bus->self;
--		bus = bus->parent;
--		/*
--		 * Some Loongson PCIe ports have a h/w limitation of
--		 * 256 bytes maximum read request size. They can't handle
--		 * anything larger than this. So force this limit on
--		 * any devices attached under these ports.
--		 */
--		if (pci_match_id(bridge_devids, bridge)) {
--			if (pcie_get_readrq(dev) > 256) {
--				pci_info(dev, "limiting MRRS to 256\n");
--				pcie_set_readrq(dev, 256);
--			}
--			break;
--		}
--	}
-+	/*
-+	 * Some Loongson PCIe ports have h/w limitations of maximum read
-+	 * request size. They can't handle anything larger than this. So
-+	 * force this limit on any devices attached under these ports.
-+	 */
-+	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
-+
-+	bridge->no_inc_mrrs = 1;
+ 	struct pi433_device	*device = spi_get_drvdata(spi);
+-	struct dentry *mod_entry = debugfs_lookup(KBUILD_MODNAME, NULL);
+ 
+-	debugfs_remove(debugfs_lookup(dev_name(device->dev), mod_entry));
++	debugfs_lookup_and_remove(dev_name(device->dev), root_dir);
+ 
+ 	/* free GPIOs */
+ 	free_gpio(device);
+@@ -1408,7 +1407,7 @@ static int __init pi433_init(void)
+ 		return PTR_ERR(pi433_class);
+ 	}
+ 
+-	debugfs_create_dir(KBUILD_MODNAME, NULL);
++	root_dir = debugfs_create_dir(KBUILD_MODNAME, NULL);
+ 
+ 	status = spi_register_driver(&pi433_spi_driver);
+ 	if (status < 0) {
+@@ -1427,7 +1426,7 @@ static void __exit pi433_exit(void)
+ 	spi_unregister_driver(&pi433_spi_driver);
+ 	class_destroy(pi433_class);
+ 	unregister_chrdev(MAJOR(pi433_dev), pi433_spi_driver.driver.name);
+-	debugfs_remove_recursive(debugfs_lookup(KBUILD_MODNAME, NULL));
++	debugfs_remove(root_dir);
  }
--DECLARE_PCI_FIXUP_ENABLE(PCI_ANY_ID, PCI_ANY_ID, loongson_mrrs_quirk);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
-+			DEV_PCIE_PORT_0, loongson_mrrs_quirk);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
-+			DEV_PCIE_PORT_1, loongson_mrrs_quirk);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
-+			DEV_PCIE_PORT_2, loongson_mrrs_quirk);
+ module_exit(pi433_exit);
  
- static void loongson_pci_pin_quirk(struct pci_dev *pdev)
- {
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index da748247061d2..7a67611dc5f48 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -6017,6 +6017,7 @@ int pcie_set_readrq(struct pci_dev *dev, int rq)
- {
- 	u16 v;
- 	int ret;
-+	struct pci_host_bridge *bridge = pci_find_host_bridge(dev->bus);
- 
- 	if (rq < 128 || rq > 4096 || !is_power_of_2(rq))
- 		return -EINVAL;
-@@ -6035,6 +6036,15 @@ int pcie_set_readrq(struct pci_dev *dev, int rq)
- 
- 	v = (ffs(rq) - 8) << 12;
- 
-+	if (bridge->no_inc_mrrs) {
-+		int max_mrrs = pcie_get_readrq(dev);
-+
-+		if (rq > max_mrrs) {
-+			pci_info(dev, "can't set Max_Read_Request_Size to %d; max is %d\n", rq, max_mrrs);
-+			return -EINVAL;
-+		}
-+	}
-+
- 	ret = pcie_capability_clear_and_set_word(dev, PCI_EXP_DEVCTL,
- 						  PCI_EXP_DEVCTL_READRQ, v);
- 
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 254c8a4126a89..50042ea8e0083 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -572,6 +572,7 @@ struct pci_host_bridge {
- 	void		*release_data;
- 	unsigned int	ignore_reset_delay:1;	/* For entire hierarchy */
- 	unsigned int	no_ext_tags:1;		/* No Extended Tags */
-+	unsigned int	no_inc_mrrs:1;		/* No Increase MRRS */
- 	unsigned int	native_aer:1;		/* OS may use PCIe AER */
- 	unsigned int	native_pcie_hotplug:1;	/* OS may use PCIe hotplug */
- 	unsigned int	native_shpc_hotplug:1;	/* OS may use SHPC hotplug */
 -- 
 2.39.2
 
