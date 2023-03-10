@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99678489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:20:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DFEDC4339B;
-	Fri, 10 Mar 2023 14:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826708489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:20:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A05C4339B;
+	Fri, 10 Mar 2023 14:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458014;
-	bh=e0kjNd8dXWiayVzUnyofvlTCsuC6QsMuMAlfe1EJO04=;
+	s=korg; t=1678458017;
+	bh=A7IRnukhHXspiMg9l31IM0CQm2/H6bC3kecCt3X3HNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s2i464Go4qhhkOkn/jWcshkGyAidvBNeICuMrv7JQKSgkwDwd+3t1tPXD5bze1qgn
-	 W4/gb6rMI1JW4daym9W7PNmR5NcGKukmSbfBPf7FZbjos62QHfZeOUb52k9tawUplp
-	 PBHHKBkXuxoxjeVe5UFlYfA8mm6ddIPHuLF27ukY=
+	b=p8H9TBolIWaAGvPWtSSkyJheWuhR6WTMUxx1ceo0IJ+u8QLZGAvGOUd7Is2OuGY32
+	 1gT8imuEjD4MTP+C+X/IUcuOhQOZWmfuM66bi37dIcwaGTCaZjOfPLg/IGgx+F1ZSZ
+	 1eEZSy7KEdyKu1KSWIu294MFVenNbK+Fq7/1v3xA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	linux-samsung-soc@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 135/252] regulator: s5m8767: Bounds check id indexing into arrays
-Date: Fri, 10 Mar 2023 14:38:25 +0100
-Message-Id: <20230310133722.887417444@linuxfoundation.org>
+Subject: [PATCH 4.19 136/252] pinctrl: at91: use devm_kasprintf() to avoid potential leaks
+Date: Fri, 10 Mar 2023 14:38:26 +0100
+Message-Id: <20230310133722.916027856@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -38,53 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit e314e15a0b58f9d051c00b25951073bcdae61953 ]
+[ Upstream commit 1c4e5c470a56f7f7c649c0c70e603abc1eab15c4 ]
 
-The compiler has no way to know if "id" is within the array bounds of
-the regulators array. Add a check for this and a build-time check that
-the regulators and reg_voltage_map arrays are sized the same. Seen with
-GCC 13:
+Use devm_kasprintf() instead of kasprintf() to avoid any potential
+leaks. At the moment drivers have no remove functionality thus
+there is no need for fixes tag.
 
-../drivers/regulator/s5m8767.c: In function 's5m8767_pmic_probe':
-../drivers/regulator/s5m8767.c:936:35: warning: array subscript [0, 36] is outside array bounds of 'struct regulator_desc[37]' [-Warray-bounds=]
-  936 |                         regulators[id].vsel_reg =
-      |                         ~~~~~~~~~~^~~~
-
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: linux-samsung-soc@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230128005358.never.313-kees@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230203132714.1931596-1-claudiu.beznea@microchip.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/s5m8767.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-at91-pio4.c | 4 ++--
+ drivers/pinctrl/pinctrl-at91.c      | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/regulator/s5m8767.c b/drivers/regulator/s5m8767.c
-index 4818df3f8ec91..24c0c82b08a5d 100644
---- a/drivers/regulator/s5m8767.c
-+++ b/drivers/regulator/s5m8767.c
-@@ -922,10 +922,14 @@ static int s5m8767_pmic_probe(struct platform_device *pdev)
+diff --git a/drivers/pinctrl/pinctrl-at91-pio4.c b/drivers/pinctrl/pinctrl-at91-pio4.c
+index 9e2f3738bf3ec..89d88e447d44f 100644
+--- a/drivers/pinctrl/pinctrl-at91-pio4.c
++++ b/drivers/pinctrl/pinctrl-at91-pio4.c
+@@ -1022,8 +1022,8 @@ static int atmel_pinctrl_probe(struct platform_device *pdev)
  
- 	for (i = 0; i < pdata->num_regulators; i++) {
- 		const struct sec_voltage_desc *desc;
--		int id = pdata->regulators[i].id;
-+		unsigned int id = pdata->regulators[i].id;
- 		int enable_reg, enable_val;
- 		struct regulator_dev *rdev;
+ 		pin_desc[i].number = i;
+ 		/* Pin naming convention: P(bank_name)(bank_pin_number). */
+-		pin_desc[i].name = kasprintf(GFP_KERNEL, "P%c%d",
+-					     bank + 'A', line);
++		pin_desc[i].name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "P%c%d",
++						  bank + 'A', line);
  
-+		BUILD_BUG_ON(ARRAY_SIZE(regulators) != ARRAY_SIZE(reg_voltage_map));
-+		if (WARN_ON_ONCE(id >= ARRAY_SIZE(regulators)))
-+			continue;
-+
- 		desc = reg_voltage_map[id];
- 		if (desc) {
- 			regulators[id].n_voltages =
+ 		group->name = group_names[i] = pin_desc[i].name;
+ 		group->pin = pin_desc[i].number;
+diff --git a/drivers/pinctrl/pinctrl-at91.c b/drivers/pinctrl/pinctrl-at91.c
+index fad0e132ead84..ad01cc5798232 100644
+--- a/drivers/pinctrl/pinctrl-at91.c
++++ b/drivers/pinctrl/pinctrl-at91.c
+@@ -1782,7 +1782,7 @@ static int at91_gpio_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	for (i = 0; i < chip->ngpio; i++)
+-		names[i] = kasprintf(GFP_KERNEL, "pio%c%d", alias_idx + 'A', i);
++		names[i] = devm_kasprintf(&pdev->dev, GFP_KERNEL, "pio%c%d", alias_idx + 'A', i);
+ 
+ 	chip->names = (const char *const *)names;
+ 
 -- 
 2.39.2
 
