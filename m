@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362778481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:09:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71F0C433A4;
-	Fri, 10 Mar 2023 14:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433148481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:09:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF856C4339B;
+	Fri, 10 Mar 2023 14:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457369;
-	bh=enrpPGyCyXmJUJ1zT9AXYi/ZX6uyEVhhZZIeMLKtn7c=;
+	s=korg; t=1678457372;
+	bh=qgBWcSuqsd86vyiJtME/EBTG/dZrfhB4LIYVvAuMZL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lXi55DVIQxrckqjUjPV2oG3/cHRAP1aP1bJmvZVDHpmVWrgwSN6t35P8OehkiAyXs
-	 vx6QSY6ygKo2YJ6PTo62CD098uysuuqlZxFc9xY9aefQExBhwp78zEUaHoW1igwESu
-	 Dbgpjx6orLOQGNLHPEqLJCpVBmWV7lSddUYodGNA=
+	b=doUDJQckr0+mKi9gnqRZWr6TyTiW9XDdhRu2H7UGL4zAG+3o58ZljztyBQnC2sDOf
+	 H7t74tb9zJN/MAcrLgHyjdJ8ngLPcN1Lrnjfp4xE5iBN4vJMRRVuy0x0HgUrNufTn6
+	 W4IwOIeLV6hqAY34WITbRZFWK/LuSvq1GvyR6Vog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 114/200] thermal: intel: BXT_PMIC: select REGMAP instead of depending on it
-Date: Fri, 10 Mar 2023 14:38:41 +0100
-Message-Id: <20230310133720.609810677@linuxfoundation.org>
+Subject: [PATCH 6.1 097/200] genirq/ipi: Fix NULL pointer deref in irq_data_get_affinity_mask()
+Date: Fri, 10 Mar 2023 14:38:24 +0100
+Message-Id: <20230310133720.093864809@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,41 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 1467fb960349dfa5e300658f1a409dde2cfb0c51 ]
+[ Upstream commit feabecaff5902f896531dde90646ca5dfa9d4f7d ]
 
-REGMAP is a hidden (not user visible) symbol. Users cannot set it
-directly thru "make *config", so drivers should select it instead of
-depending on it if they need it.
+If ipi_send_{mask|single}() is called with an invalid interrupt number, all
+the local variables there will be NULL. ipi_send_verify() which is invoked
+from these functions does verify its 'data' parameter, resulting in a
+kernel oops in irq_data_get_affinity_mask() as the passed NULL pointer gets
+dereferenced.
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
+Add a missing NULL pointer check in ipi_send_verify()...
 
-Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+Found by Linux Verification Center (linuxtesting.org) with the SVACE static
+analysis tool.
 
-Fixes: b474303ffd57 ("thermal: add Intel BXT WhiskeyCove PMIC thermal driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 3b8e29a82dd1 ("genirq: Implement ipi_send_mask/single()")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/b541232d-c2b6-1fe9-79b4-a7129459e4d0@omp.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/irq/ipi.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/intel/Kconfig b/drivers/thermal/intel/Kconfig
-index f0c8456792509..e3cfad10d5dd4 100644
---- a/drivers/thermal/intel/Kconfig
-+++ b/drivers/thermal/intel/Kconfig
-@@ -64,7 +64,8 @@ endmenu
+diff --git a/kernel/irq/ipi.c b/kernel/irq/ipi.c
+index bbd945bacef08..961d4af76af37 100644
+--- a/kernel/irq/ipi.c
++++ b/kernel/irq/ipi.c
+@@ -188,9 +188,9 @@ EXPORT_SYMBOL_GPL(ipi_get_hwirq);
+ static int ipi_send_verify(struct irq_chip *chip, struct irq_data *data,
+ 			   const struct cpumask *dest, unsigned int cpu)
+ {
+-	const struct cpumask *ipimask = irq_data_get_affinity_mask(data);
++	const struct cpumask *ipimask;
  
- config INTEL_BXT_PMIC_THERMAL
- 	tristate "Intel Broxton PMIC thermal driver"
--	depends on X86 && INTEL_SOC_PMIC_BXTWC && REGMAP
-+	depends on X86 && INTEL_SOC_PMIC_BXTWC
-+	select REGMAP
- 	help
- 	  Select this driver for Intel Broxton PMIC with ADC channels monitoring
- 	  system temperature measurements and alerts.
+-	if (!chip || !ipimask)
++	if (!chip || !data)
+ 		return -EINVAL;
+ 
+ 	if (!chip->ipi_send_single && !chip->ipi_send_mask)
+@@ -199,6 +199,10 @@ static int ipi_send_verify(struct irq_chip *chip, struct irq_data *data,
+ 	if (cpu >= nr_cpu_ids)
+ 		return -EINVAL;
+ 
++	ipimask = irq_data_get_affinity_mask(data);
++	if (!ipimask)
++		return -EINVAL;
++
+ 	if (dest) {
+ 		if (!cpumask_subset(dest, ipimask))
+ 			return -EINVAL;
 -- 
 2.39.2
 
