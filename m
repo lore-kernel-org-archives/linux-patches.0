@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5772882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:05:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C23BC4339B;
-	Fri, 10 Mar 2023 15:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AD9882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:05:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30EEFC4339B;
+	Fri, 10 Mar 2023 15:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460746;
-	bh=8U7CrPzgOVOvc9vbEpaq7LRg4iunOu0CUuh1sdJGNOA=;
+	s=korg; t=1678460749;
+	bh=QbIrpss5qE2Z+/U8AMOEQ3D0lXgfkkKb3SuKvfXCgCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EsRxrZzfXo+j2j+q7qmWLnpdU0jD6mvqtzXleURkMFMRLmpSB5YjJ1L5O0V0lY3Pc
-	 ADFEv8lhX/osCavL843wKVH31n+9cQPvv0BizC+jNVW0RhkX4SqDrXuMrGluT4ZtOS
-	 eknoExDqrLXU6Uxm0H78xpptwWUcwMXuWV4Mdta8=
+	b=ntp+hE5Jatgbx9Jsd53TL5f9AOo9pLb1cU6VuueYbtLphW57UkFD3ygyH5BaRaNdn
+	 b+Ej8e04xuJ1ZEYpxMdML0IG/ryL+C+0C8wHHcQ1zCe+tV05PLOJyTXe1kbOH734E7
+	 wZxvPWDfZEKOrUYFqfp2F8DsKcPTWyDvZ6J9i/ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 437/529] f2fs: use memcpy_{to,from}_page() where possible
-Date: Fri, 10 Mar 2023 14:39:40 +0100
-Message-Id: <20230310133825.176690172@linuxfoundation.org>
+	Arun Easi <aeasi@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 411/529] scsi: qla2xxx: Fix DMA-API call trace on NVMe LS requests
+Date: Fri, 10 Mar 2023 14:39:14 +0100
+Message-Id: <20230310133824.042299200@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -37,158 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Arun Easi <aeasi@marvell.com>
 
-[ Upstream commit b87846bd61c7c09560617da416208a5454530d57 ]
+commit c75e6aef5039830cce5d4cf764dd204522f89e6b upstream.
 
-This is simpler, and as a side effect it replaces several uses of
-kmap_atomic() with its recommended replacement kmap_local_page().
+The following message and call trace was seen with debug kernels:
 
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Reviewed-by: Fabio M. De Francesco <fmdefrancesco@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: b1b9896718bc ("fs: f2fs: initialize fsdata in pagecache_write()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+DMA-API: qla2xxx 0000:41:00.0: device driver failed to check map
+error [device address=0x00000002a3ff38d8] [size=1024 bytes] [mapped as
+single]
+WARNING: CPU: 0 PID: 2930 at kernel/dma/debug.c:1017
+	 check_unmap+0xf42/0x1990
+
+Call Trace:
+	debug_dma_unmap_page+0xc9/0x100
+	qla_nvme_ls_unmap+0x141/0x210 [qla2xxx]
+
+Remove DMA mapping from the driver altogether, as it is already done by FC
+layer. This prevents the warning.
+
+Fixes: c85ab7d9e27a ("scsi: qla2xxx: Fix missed DMA unmap for NVMe ls requests")
+Cc: stable@vger.kernel.org
+Signed-off-by: Arun Easi <aeasi@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/inline.c | 15 ++++-----------
- fs/f2fs/super.c  | 11 ++---------
- fs/f2fs/verity.c | 10 ++--------
- 3 files changed, 8 insertions(+), 28 deletions(-)
+ drivers/scsi/qla2xxx/qla_nvme.c |   19 +------------------
+ 1 file changed, 1 insertion(+), 18 deletions(-)
 
-diff --git a/fs/f2fs/inline.c b/fs/f2fs/inline.c
-index 4e794c1390cc1..df1a0cbfa1be4 100644
---- a/fs/f2fs/inline.c
-+++ b/fs/f2fs/inline.c
-@@ -64,7 +64,6 @@ bool f2fs_may_inline_dentry(struct inode *inode)
- void f2fs_do_read_inline_data(struct page *page, struct page *ipage)
- {
- 	struct inode *inode = page->mapping->host;
--	void *src_addr, *dst_addr;
- 
- 	if (PageUptodate(page))
- 		return;
-@@ -74,11 +73,8 @@ void f2fs_do_read_inline_data(struct page *page, struct page *ipage)
- 	zero_user_segment(page, MAX_INLINE_DATA(inode), PAGE_SIZE);
- 
- 	/* Copy the whole inline data block */
--	src_addr = inline_data_addr(inode, ipage);
--	dst_addr = kmap_atomic(page);
--	memcpy(dst_addr, src_addr, MAX_INLINE_DATA(inode));
--	flush_dcache_page(page);
--	kunmap_atomic(dst_addr);
-+	memcpy_to_page(page, 0, inline_data_addr(inode, ipage),
-+		       MAX_INLINE_DATA(inode));
- 	if (!PageUptodate(page))
- 		SetPageUptodate(page);
+--- a/drivers/scsi/qla2xxx/qla_nvme.c
++++ b/drivers/scsi/qla2xxx/qla_nvme.c
+@@ -165,18 +165,6 @@ out:
+ 	qla2xxx_rel_qpair_sp(sp->qpair, sp);
  }
-@@ -245,7 +241,6 @@ int f2fs_convert_inline_inode(struct inode *inode)
  
- int f2fs_write_inline_data(struct inode *inode, struct page *page)
+-static void qla_nvme_ls_unmap(struct srb *sp, struct nvmefc_ls_req *fd)
+-{
+-	if (sp->flags & SRB_DMA_VALID) {
+-		struct srb_iocb *nvme = &sp->u.iocb_cmd;
+-		struct qla_hw_data *ha = sp->fcport->vha->hw;
+-
+-		dma_unmap_single(&ha->pdev->dev, nvme->u.nvme.cmd_dma,
+-				 fd->rqstlen, DMA_TO_DEVICE);
+-		sp->flags &= ~SRB_DMA_VALID;
+-	}
+-}
+-
+ static void qla_nvme_release_ls_cmd_kref(struct kref *kref)
  {
--	void *src_addr, *dst_addr;
- 	struct dnode_of_data dn;
- 	int err;
+ 	struct srb *sp = container_of(kref, struct srb, cmd_kref);
+@@ -194,7 +182,6 @@ static void qla_nvme_release_ls_cmd_kref
  
-@@ -262,10 +257,8 @@ int f2fs_write_inline_data(struct inode *inode, struct page *page)
- 	f2fs_bug_on(F2FS_I_SB(inode), page->index);
+ 	fd = priv->fd;
  
- 	f2fs_wait_on_page_writeback(dn.inode_page, NODE, true, true);
--	src_addr = kmap_atomic(page);
--	dst_addr = inline_data_addr(inode, dn.inode_page);
--	memcpy(dst_addr, src_addr, MAX_INLINE_DATA(inode));
--	kunmap_atomic(src_addr);
-+	memcpy_from_page(inline_data_addr(inode, dn.inode_page),
-+			 page, 0, MAX_INLINE_DATA(inode));
- 	set_page_dirty(dn.inode_page);
+-	qla_nvme_ls_unmap(sp, fd);
+ 	fd->done(fd, priv->comp_status);
+ out:
+ 	qla2x00_rel_sp(sp);
+@@ -336,13 +323,10 @@ static int qla_nvme_ls_req(struct nvme_f
+ 	nvme->u.nvme.rsp_len = fd->rsplen;
+ 	nvme->u.nvme.rsp_dma = fd->rspdma;
+ 	nvme->u.nvme.timeout_sec = fd->timeout;
+-	nvme->u.nvme.cmd_dma = dma_map_single(&ha->pdev->dev, fd->rqstaddr,
+-	    fd->rqstlen, DMA_TO_DEVICE);
++	nvme->u.nvme.cmd_dma = fd->rqstdma;
+ 	dma_sync_single_for_device(&ha->pdev->dev, nvme->u.nvme.cmd_dma,
+ 	    fd->rqstlen, DMA_TO_DEVICE);
  
- 	f2fs_clear_page_cache_dirty_tag(page);
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index fba413ced9826..0bba5c72fc77e 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2034,7 +2034,6 @@ static ssize_t f2fs_quota_read(struct super_block *sb, int type, char *data,
- 	size_t toread;
- 	loff_t i_size = i_size_read(inode);
- 	struct page *page;
--	char *kaddr;
- 
- 	if (off > i_size)
- 		return 0;
-@@ -2068,9 +2067,7 @@ static ssize_t f2fs_quota_read(struct super_block *sb, int type, char *data,
- 			return -EIO;
- 		}
- 
--		kaddr = kmap_atomic(page);
--		memcpy(data, kaddr + offset, tocopy);
--		kunmap_atomic(kaddr);
-+		memcpy_from_page(data, page, offset, tocopy);
- 		f2fs_put_page(page, 1);
- 
- 		offset = 0;
-@@ -2092,7 +2089,6 @@ static ssize_t f2fs_quota_write(struct super_block *sb, int type,
- 	size_t towrite = len;
- 	struct page *page;
- 	void *fsdata = NULL;
--	char *kaddr;
- 	int err = 0;
- 	int tocopy;
- 
-@@ -2112,10 +2108,7 @@ static ssize_t f2fs_quota_write(struct super_block *sb, int type,
- 			break;
- 		}
- 
--		kaddr = kmap_atomic(page);
--		memcpy(kaddr + offset, data, tocopy);
--		kunmap_atomic(kaddr);
--		flush_dcache_page(page);
-+		memcpy_to_page(page, offset, data, tocopy);
- 
- 		a_ops->write_end(NULL, mapping, off, tocopy, tocopy,
- 						page, fsdata);
-diff --git a/fs/f2fs/verity.c b/fs/f2fs/verity.c
-index cff94d095d0fe..dafdb19ec0dba 100644
---- a/fs/f2fs/verity.c
-+++ b/fs/f2fs/verity.c
-@@ -47,16 +47,13 @@ static int pagecache_read(struct inode *inode, void *buf, size_t count,
- 		size_t n = min_t(size_t, count,
- 				 PAGE_SIZE - offset_in_page(pos));
- 		struct page *page;
--		void *addr;
- 
- 		page = read_mapping_page(inode->i_mapping, pos >> PAGE_SHIFT,
- 					 NULL);
- 		if (IS_ERR(page))
- 			return PTR_ERR(page);
- 
--		addr = kmap_atomic(page);
--		memcpy(buf, addr + offset_in_page(pos), n);
--		kunmap_atomic(addr);
-+		memcpy_from_page(buf, page, offset_in_page(pos), n);
- 
- 		put_page(page);
- 
-@@ -82,7 +79,6 @@ static int pagecache_write(struct inode *inode, const void *buf, size_t count,
- 				 PAGE_SIZE - offset_in_page(pos));
- 		struct page *page;
- 		void *fsdata;
--		void *addr;
- 		int res;
- 
- 		res = pagecache_write_begin(NULL, inode->i_mapping, pos, n, 0,
-@@ -90,9 +86,7 @@ static int pagecache_write(struct inode *inode, const void *buf, size_t count,
- 		if (res)
- 			return res;
- 
--		addr = kmap_atomic(page);
--		memcpy(addr + offset_in_page(pos), buf, n);
--		kunmap_atomic(addr);
-+		memcpy_to_page(page, offset_in_page(pos), buf, n);
- 
- 		res = pagecache_write_end(NULL, inode->i_mapping, pos, n, n,
- 					  page, fsdata);
--- 
-2.39.2
-
+-	sp->flags |= SRB_DMA_VALID;
+-
+ 	rval = qla2x00_start_sp(sp);
+ 	if (rval != QLA_SUCCESS) {
+ 		ql_log(ql_log_warn, vha, 0x700e,
+@@ -350,7 +334,6 @@ static int qla_nvme_ls_req(struct nvme_f
+ 		wake_up(&sp->nvme_ls_waitq);
+ 		sp->priv = NULL;
+ 		priv->sp = NULL;
+-		qla_nvme_ls_unmap(sp, fd);
+ 		qla2x00_rel_sp(sp);
+ 		return rval;
+ 	}
 
 
