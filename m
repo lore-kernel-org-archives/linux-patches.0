@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A376882C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:17:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1119C433D2;
-	Fri, 10 Mar 2023 15:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5AD882C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:17:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B656BC4339C;
+	Fri, 10 Mar 2023 15:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461454;
-	bh=qRdkDBJzjniMX4/AR6INQbkg4Pgvj2AG6J3R29bhKbk=;
+	s=korg; t=1678461457;
+	bh=GNTLtPps92aaRkFEiOLa35XgtAKVKLqFy1J7wlkwcY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1CFonq/Y9eMoWbJOO/2SlpHIdy+meen5sjQRRJGi/KbKbwgVa3ETNGJGtFuzanyoN
-	 sGeRaLRKx+aYubMILj76KO34j2rpSevtSiJzOtgKvyg8kwKvTnbFmlvzdVRJefn82R
-	 7GFXN3o+7VIYqASiqcB2ljrR8UcxaUmGm96Jg1Ew=
+	b=sY2e7g5w55BTruWYhbZ6Uen1kL35v1Yloo+HIHVN0fr8JBWmZNl0ZVZSetw0iQKBz
+	 SGXHRPIaCG6bXPhPESE1FvxpygCc4hzebLJyzUBzVpXhwYp77xrcGMIjRgZizkjQB9
+	 qAqVljsSpxOSt9BPmijA1AdQf05KSA5W7L8fPmfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Salvatore Bonaccorso <carnil@debian.org>
-Subject: [PATCH 5.15 133/136] scsi: mpt3sas: re-do lost mpt3sas DMA mask fix
-Date: Fri, 10 Mar 2023 14:44:15 +0100
-Message-Id: <20230310133711.259307848@linuxfoundation.org>
+	syzbot+9c0268252b8ef967c62e@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 124/136] net: tls: avoid hanging tasks on the tx_lock
+Date: Fri, 10 Mar 2023 14:44:06 +0100
+Message-Id: <20230310133710.972136927@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -35,51 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 1a2dcbdde82e3a5f1db9b2f4c48aa1aeba534fb2 upstream.
+commit f3221361dc85d4de22586ce8441ec2c67b454f5d upstream.
 
-This is a re-do of commit e0e0747de0ea ("scsi: mpt3sas: Fix return value
-check of dma_get_required_mask()"), which I ended up undoing in a
-mis-merge in commit 62e6e5940c0c ("Merge tag 'scsi-misc' of
-git://git.kernel.org/pub/scm/linux/kernel/git/jejb/scsi").
+syzbot sent a hung task report and Eric explains that adversarial
+receiver may keep RWIN at 0 for a long time, so we are not guaranteed
+to make forward progress. Thread which took tx_lock and went to sleep
+may not release tx_lock for hours. Use interruptible sleep where
+possible and reschedule the work if it can't take the lock.
 
-The original commit message was
+Testing: existing selftest passes
 
-  scsi: mpt3sas: Fix return value check of dma_get_required_mask()
-
-  Fix the incorrect return value check of dma_get_required_mask().  Due to
-  this incorrect check, the driver was always setting the DMA mask to 63 bit.
-
-  Link: https://lore.kernel.org/r/20220913120538.18759-2-sreekanth.reddy@broadcom.com
-  Fixes: ba27c5cf286d ("scsi: mpt3sas: Don't change the DMA coherent mask after allocations")
-  Signed-off-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
-  Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-
-and this fix was lost when I mis-merged the conflict with commit
-9df650963bf6 ("scsi: mpt3sas: Don't change DMA mask while reallocating
-pools").
-
-Reported-by: Juergen Gross <jgross@suse.com>
-Fixes: 62e6e5940c0c ("Merge tag 'scsi-misc' of git://git.kernel.org/pub/scm/linux/kernel/git/jejb/scsi")
-Link: https://lore.kernel.org/all/CAHk-=wjaK-TxrNaGtFDpL9qNHL1MVkWXO1TT6vObD5tXMSC4Zg@mail.gmail.com
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Salvatore Bonaccorso <carnil@debian.org>
+Reported-by: syzbot+9c0268252b8ef967c62e@syzkaller.appspotmail.com
+Fixes: 79ffe6087e91 ("net/tls: add a TX lock")
+Link: https://lore.kernel.org/all/000000000000e412e905f5b46201@google.com/
+Cc: stable@vger.kernel.org # wait 4 weeks
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230301002857.2101894-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_base.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tls/tls_sw.c |   26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
---- a/drivers/scsi/mpt3sas/mpt3sas_base.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
-@@ -2993,7 +2993,7 @@ _base_config_dma_addressing(struct MPT3S
- 	u64 coherent_dma_mask, dma_mask;
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -950,7 +950,9 @@ int tls_sw_sendmsg(struct sock *sk, stru
+ 			       MSG_CMSG_COMPAT))
+ 		return -EOPNOTSUPP;
  
- 	if (ioc->is_mcpu_endpoint || sizeof(dma_addr_t) == 4 ||
--	    dma_get_required_mask(&pdev->dev) <= 32) {
-+	    dma_get_required_mask(&pdev->dev) <= DMA_BIT_MASK(32)) {
- 		ioc->dma_mask = 32;
- 		coherent_dma_mask = dma_mask = DMA_BIT_MASK(32);
- 	/* Set 63 bit DMA mask for all SAS3 and SAS35 controllers */
+-	mutex_lock(&tls_ctx->tx_lock);
++	ret = mutex_lock_interruptible(&tls_ctx->tx_lock);
++	if (ret)
++		return ret;
+ 	lock_sock(sk);
+ 
+ 	if (unlikely(msg->msg_controllen)) {
+@@ -1284,7 +1286,9 @@ int tls_sw_sendpage(struct sock *sk, str
+ 		      MSG_SENDPAGE_NOTLAST | MSG_SENDPAGE_NOPOLICY))
+ 		return -EOPNOTSUPP;
+ 
+-	mutex_lock(&tls_ctx->tx_lock);
++	ret = mutex_lock_interruptible(&tls_ctx->tx_lock);
++	if (ret)
++		return ret;
+ 	lock_sock(sk);
+ 	ret = tls_sw_do_sendpage(sk, page, offset, size, flags);
+ 	release_sock(sk);
+@@ -2284,11 +2288,19 @@ static void tx_work_handler(struct work_
+ 
+ 	if (!test_and_clear_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask))
+ 		return;
+-	mutex_lock(&tls_ctx->tx_lock);
+-	lock_sock(sk);
+-	tls_tx_records(sk, -1);
+-	release_sock(sk);
+-	mutex_unlock(&tls_ctx->tx_lock);
++
++	if (mutex_trylock(&tls_ctx->tx_lock)) {
++		lock_sock(sk);
++		tls_tx_records(sk, -1);
++		release_sock(sk);
++		mutex_unlock(&tls_ctx->tx_lock);
++	} else if (!test_and_set_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask)) {
++		/* Someone is holding the tx_lock, they will likely run Tx
++		 * and cancel the work on their way out of the lock section.
++		 * Schedule a long delay just in case.
++		 */
++		schedule_delayed_work(&ctx->tx_work.work, msecs_to_jiffies(10));
++	}
+ }
+ 
+ void tls_sw_write_space(struct sock *sk, struct tls_context *ctx)
 
 
