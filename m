@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0887B881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:43:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A347C433EF;
-	Fri, 10 Mar 2023 14:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021AF881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:43:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A523C4339B;
+	Fri, 10 Mar 2023 14:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459422;
-	bh=EIMlHqTQ1x0ngLz9cQsQs7zbPSlQ8zwPpQG9OIYTZaM=;
+	s=korg; t=1678459425;
+	bh=5c8AitNH/yphUC4ws+qyz6mZb6RsWvB5aetFQpQbIhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A2QkJARXLwF2NmAmx2mYr4O9dmZLsFG1KyK4+yAUN7ZVivdF8jthy/yZ5tYovJ/X8
-	 G48sPx1kqdcAKQ8E1U1rxAHtk5Fb6lPk51rX+UrET0abbAHixk1aT8btYJWqm7rAyC
-	 CRd68hxkzClSReE3SxFCCKN7dWkGJpNs4P3a6Ewg=
+	b=mZMRYmc2rg0EeLWBrxUmcpz3RleBmR71dT06aEbvYrDXlXi7IA7oZYuVcSWBDHV7A
+	 SJ13F714aoX9iLx7dNhfigiR1DrxkCGQVIXHZnWsLTFB/gw64KrriUUWlXdfPRvSVb
+	 YVIlguhxZUuy8g5veO/5msxuZAUaTHEoCsU6wWSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Brian King <brking@linux.vnet.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 326/357] scsi: ipr: Work around fortify-string warning
-Date: Fri, 10 Mar 2023 14:40:15 +0100
-Message-Id: <20230310133749.036717236@linuxfoundation.org>
+Subject: [PATCH 5.4 317/357] 9p/rdma: unmap receive dma buffer in rdma_request()/post_recv()
+Date: Fri, 10 Mar 2023 14:40:06 +0100
+Message-Id: <20230310133748.682707645@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -38,112 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit ee4e7dfe4ffc9ca50c6875757bd119abfe22b5c5 ]
+[ Upstream commit 74a25e6e916cb57dab4267a96fbe8864ed21abdb ]
 
-The ipr_log_vpd_compact() function triggers a fortified memcpy() warning
-about a potential string overflow with all versions of clang:
+When down_interruptible() or ib_post_send() failed in rdma_request(),
+receive dma buffer is not unmapped. Add unmap action to error path.
+Also if ib_post_recv() failed in post_recv(), dma buffer is not unmapped.
+Add unmap action to error path.
 
-In file included from drivers/scsi/ipr.c:43:
-In file included from include/linux/string.h:254:
-include/linux/fortify-string.h:520:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
-                        __write_overflow_field(p_size_field, size);
-                        ^
-include/linux/fortify-string.h:520:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
-2 errors generated.
-
-I don't see anything actually wrong with the function, but this is the only
-instance I can reproduce of the fortification going wrong in the kernel at
-the moment, so the easiest solution may be to rewrite the function into
-something that does not trigger the warning.
-
-Instead of having a combined buffer for vendor/device/serial strings, use
-three separate local variables and just truncate the whitespace
-individually.
-
-Link: https://lore.kernel.org/r/20230214132831.2118392-1-arnd@kernel.org
-Cc: Kees Cook <keescook@chromium.org>
-Fixes: 8cf093e275d0 ("[SCSI] ipr: Improved dual adapter errors")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Acked-by: Brian King <brking@linux.vnet.ibm.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lkml.kernel.org/r/20230104020424.611926-1-shaozhengchao@huawei.com
+Fixes: fc79d4b104f0 ("9p: rdma: RDMA Transport Support for 9P")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ipr.c | 41 +++++++++++++++++++++--------------------
- 1 file changed, 21 insertions(+), 20 deletions(-)
+ net/9p/trans_rdma.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/ipr.c b/drivers/scsi/ipr.c
-index a42837340edfc..205ab65c3e28e 100644
---- a/drivers/scsi/ipr.c
-+++ b/drivers/scsi/ipr.c
-@@ -1517,23 +1517,22 @@ static void ipr_process_ccn(struct ipr_cmnd *ipr_cmd)
- }
+diff --git a/net/9p/trans_rdma.c b/net/9p/trans_rdma.c
+index b21c3c2098159..c00e965c082bf 100644
+--- a/net/9p/trans_rdma.c
++++ b/net/9p/trans_rdma.c
+@@ -385,6 +385,7 @@ post_recv(struct p9_client *client, struct p9_rdma_context *c)
+ 	struct p9_trans_rdma *rdma = client->trans;
+ 	struct ib_recv_wr wr;
+ 	struct ib_sge sge;
++	int ret;
  
- /**
-- * strip_and_pad_whitespace - Strip and pad trailing whitespace.
-- * @i:		index into buffer
-- * @buf:		string to modify
-+ * strip_whitespace - Strip and pad trailing whitespace.
-+ * @i:		size of buffer
-+ * @buf:	string to modify
-  *
-- * This function will strip all trailing whitespace, pad the end
-- * of the string with a single space, and NULL terminate the string.
-+ * This function will strip all trailing whitespace and
-+ * NUL terminate the string.
-  *
-- * Return value:
-- * 	new length of string
-  **/
--static int strip_and_pad_whitespace(int i, char *buf)
-+static void strip_whitespace(int i, char *buf)
- {
-+	if (i < 1)
-+		return;
-+	i--;
- 	while (i && buf[i] == ' ')
- 		i--;
--	buf[i+1] = ' ';
--	buf[i+2] = '\0';
--	return i + 2;
-+	buf[i+1] = '\0';
- }
+ 	c->busa = ib_dma_map_single(rdma->cm_id->device,
+ 				    c->rc.sdata, client->msize,
+@@ -402,7 +403,12 @@ post_recv(struct p9_client *client, struct p9_rdma_context *c)
+ 	wr.wr_cqe = &c->cqe;
+ 	wr.sg_list = &sge;
+ 	wr.num_sge = 1;
+-	return ib_post_recv(rdma->qp, &wr, NULL);
++
++	ret = ib_post_recv(rdma->qp, &wr, NULL);
++	if (ret)
++		ib_dma_unmap_single(rdma->cm_id->device, c->busa,
++				    client->msize, DMA_FROM_DEVICE);
++	return ret;
  
- /**
-@@ -1548,19 +1547,21 @@ static int strip_and_pad_whitespace(int i, char *buf)
- static void ipr_log_vpd_compact(char *prefix, struct ipr_hostrcb *hostrcb,
- 				struct ipr_vpd *vpd)
- {
--	char buffer[IPR_VENDOR_ID_LEN + IPR_PROD_ID_LEN + IPR_SERIAL_NUM_LEN + 3];
--	int i = 0;
-+	char vendor_id[IPR_VENDOR_ID_LEN + 1];
-+	char product_id[IPR_PROD_ID_LEN + 1];
-+	char sn[IPR_SERIAL_NUM_LEN + 1];
+  error:
+ 	p9_debug(P9_DEBUG_ERROR, "EIO\n");
+@@ -499,7 +505,7 @@ static int rdma_request(struct p9_client *client, struct p9_req_t *req)
  
--	memcpy(buffer, vpd->vpids.vendor_id, IPR_VENDOR_ID_LEN);
--	i = strip_and_pad_whitespace(IPR_VENDOR_ID_LEN - 1, buffer);
-+	memcpy(vendor_id, vpd->vpids.vendor_id, IPR_VENDOR_ID_LEN);
-+	strip_whitespace(IPR_VENDOR_ID_LEN, vendor_id);
+ 	if (down_interruptible(&rdma->sq_sem)) {
+ 		err = -EINTR;
+-		goto send_error;
++		goto dma_unmap;
+ 	}
  
--	memcpy(&buffer[i], vpd->vpids.product_id, IPR_PROD_ID_LEN);
--	i = strip_and_pad_whitespace(i + IPR_PROD_ID_LEN - 1, buffer);
-+	memcpy(product_id, vpd->vpids.product_id, IPR_PROD_ID_LEN);
-+	strip_whitespace(IPR_PROD_ID_LEN, product_id);
+ 	/* Mark request as `sent' *before* we actually send it,
+@@ -509,11 +515,14 @@ static int rdma_request(struct p9_client *client, struct p9_req_t *req)
+ 	req->status = REQ_STATUS_SENT;
+ 	err = ib_post_send(rdma->qp, &wr, NULL);
+ 	if (err)
+-		goto send_error;
++		goto dma_unmap;
  
--	memcpy(&buffer[i], vpd->sn, IPR_SERIAL_NUM_LEN);
--	buffer[IPR_SERIAL_NUM_LEN + i] = '\0';
-+	memcpy(sn, vpd->sn, IPR_SERIAL_NUM_LEN);
-+	strip_whitespace(IPR_SERIAL_NUM_LEN, sn);
+ 	/* Success */
+ 	return 0;
  
--	ipr_hcam_err(hostrcb, "%s VPID/SN: %s\n", prefix, buffer);
-+	ipr_hcam_err(hostrcb, "%s VPID/SN: %s %s %s\n", prefix,
-+		     vendor_id, product_id, sn);
- }
- 
- /**
++dma_unmap:
++	ib_dma_unmap_single(rdma->cm_id->device, c->busa,
++			    c->req->tc.size, DMA_TO_DEVICE);
+  /* Handle errors that happened during or while preparing the send: */
+  send_error:
+ 	req->status = REQ_STATUS_ERROR;
 -- 
 2.39.2
 
