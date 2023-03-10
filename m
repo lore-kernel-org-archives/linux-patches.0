@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9AF8820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:50:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40AEC433A7;
-	Fri, 10 Mar 2023 14:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C918820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:51:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94D2C433D2;
+	Fri, 10 Mar 2023 14:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459859;
-	bh=s45eB0R8juTjlWTD+m+madG1BptmyRT70x9JDqDwhck=;
+	s=korg; t=1678459862;
+	bh=adfI7gkBjRPe8wcG6BmEMiI08lGy4cdEBvKMLwubp/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JphxXBi2usHPhzCxbrrzUNzi5vr+Bf6Lo7AgqYxAzU4HOZ7SSCCYXDmbikZED8JG7
-	 lcwB7mZj6KIkrCUZQ0djcetzbiwdjBa0ZYWn8F/ruhB2eTtiDTuDkV+1kwdSNH6MIk
-	 FMrTH2TB/fTXZ6B08TrWKwbleG2SX6WU90lQPtJM=
+	b=PUJuwGacaFhHYx4f/5+LR9yJzN0LpNLpFJyvXooM5CBUN+rcfsTJoflf3CikhTZFg
+	 NYhUYUmjzVdp/spJkKZ6VQv0GMGdH3hDsSRRqPJHlpMiQUstW8n0d6oF1/IVXnxI3k
+	 6Lg6F6/re1xCYzy0bCJCsaSf+oVFFFJukc2Qwn5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 143/529] selftests/net: Interpret UDP_GRO cmsg data as an int value
-Date: Fri, 10 Mar 2023 14:34:46 +0100
-Message-Id: <20230310133811.600021189@linuxfoundation.org>
+Subject: [PATCH 5.10 117/529] irqchip: Fix refcount leak in platform_irqchip_probe
+Date: Fri, 10 Mar 2023 14:34:20 +0100
+Message-Id: <20230310133810.405772992@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,64 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Sitnicki <jakub@cloudflare.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 436864095a95fcc611c20c44a111985fa9848730 ]
+[ Upstream commit 6caa5a2b78f5f53c433d3a3781e53325da22f0ac ]
 
-Data passed to user-space with a (SOL_UDP, UDP_GRO) cmsg carries an
-int (see udp_cmsg_recv), not a u16 value, as strace confirms:
+of_irq_find_parent() returns a node pointer with refcount incremented,
+We should use of_node_put() on it when not needed anymore.
+Add missing of_node_put() to avoid refcount leak.
 
-  recvmsg(8, {msg_name=...,
-              msg_iov=[{iov_base="\0\0..."..., iov_len=96000}],
-              msg_iovlen=1,
-              msg_control=[{cmsg_len=20,         <-- sizeof(cmsghdr) + 4
-                            cmsg_level=SOL_UDP,
-                            cmsg_type=0x68}],    <-- UDP_GRO
-                            msg_controllen=24,
-                            msg_flags=0}, 0) = 11200
-
-Interpreting the data as an u16 value won't work on big-endian platforms.
-Since it is too late to back out of this API decision [1], fix the test.
-
-[1]: https://lore.kernel.org/netdev/20230131174601.203127-1-jakub@cloudflare.com/
-
-Fixes: 3327a9c46352 ("selftests: add functionals test for UDP GRO")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: f8410e626569 ("irqchip: Add IRQCHIP_PLATFORM_DRIVER_BEGIN/END and IRQCHIP_MATCH helper macros")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230102121318.3990586-1-linmq006@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/udpgso_bench_rx.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/irqchip/irqchip.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/udpgso_bench_rx.c b/tools/testing/selftests/net/udpgso_bench_rx.c
-index 4058c7451e70d..f35a924d4a303 100644
---- a/tools/testing/selftests/net/udpgso_bench_rx.c
-+++ b/tools/testing/selftests/net/udpgso_bench_rx.c
-@@ -214,11 +214,10 @@ static void do_verify_udp(const char *data, int len)
+diff --git a/drivers/irqchip/irqchip.c b/drivers/irqchip/irqchip.c
+index 3570f0a588c4b..7899607fbee8d 100644
+--- a/drivers/irqchip/irqchip.c
++++ b/drivers/irqchip/irqchip.c
+@@ -38,8 +38,10 @@ int platform_irqchip_probe(struct platform_device *pdev)
+ 	struct device_node *par_np = of_irq_find_parent(np);
+ 	of_irq_init_cb_t irq_init_cb = of_device_get_match_data(&pdev->dev);
  
- static int recv_msg(int fd, char *buf, int len, int *gso_size)
- {
--	char control[CMSG_SPACE(sizeof(uint16_t))] = {0};
-+	char control[CMSG_SPACE(sizeof(int))] = {0};
- 	struct msghdr msg = {0};
- 	struct iovec iov = {0};
- 	struct cmsghdr *cmsg;
--	uint16_t *gsosizeptr;
- 	int ret;
+-	if (!irq_init_cb)
++	if (!irq_init_cb) {
++		of_node_put(par_np);
+ 		return -EINVAL;
++	}
  
- 	iov.iov_base = buf;
-@@ -237,8 +236,7 @@ static int recv_msg(int fd, char *buf, int len, int *gso_size)
- 		     cmsg = CMSG_NXTHDR(&msg, cmsg)) {
- 			if (cmsg->cmsg_level == SOL_UDP
- 			    && cmsg->cmsg_type == UDP_GRO) {
--				gsosizeptr = (uint16_t *) CMSG_DATA(cmsg);
--				*gso_size = *gsosizeptr;
-+				*gso_size = *(int *)CMSG_DATA(cmsg);
- 				break;
- 			}
- 		}
+ 	if (par_np == np)
+ 		par_np = NULL;
+@@ -52,8 +54,10 @@ int platform_irqchip_probe(struct platform_device *pdev)
+ 	 * interrupt controller. The actual initialization callback of this
+ 	 * interrupt controller can check for specific domains as necessary.
+ 	 */
+-	if (par_np && !irq_find_matching_host(par_np, DOMAIN_BUS_ANY))
++	if (par_np && !irq_find_matching_host(par_np, DOMAIN_BUS_ANY)) {
++		of_node_put(par_np);
+ 		return -EPROBE_DEFER;
++	}
+ 
+ 	return irq_init_cb(np, par_np);
+ }
 -- 
 2.39.2
 
