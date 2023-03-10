@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F1D882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73996C4339E;
-	Fri, 10 Mar 2023 15:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095E1882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA60C433EF;
+	Fri, 10 Mar 2023 15:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460773;
-	bh=lGpvSeXcNX1cM0uufaZvRIAj2MCEdhVX/90mepeVURo=;
+	s=korg; t=1678460776;
+	bh=SvPNXhxvzIQ9HUI1qxe8JlFbSpONuJU6zUPZIRFNgeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GM39d0YqHok/vIy5C0hoiyPqd8GsNeWj+2f3I4IBtq7bBtGi47etdWkPUXg5TdKFA
-	 5k0n/XwSorCBN7KJtkhjODWwzKdPON5WzaMK7pW7hSV7D2vPaHfioL+V1ZF3EsReNk
-	 3OLgKuLGjIaiRogWhVOaTUhSGIcSaxlSCFo2wYP4=
+	b=Z7HLA2jNTe5MntVoU51LwoA4l1hDaVOlAoRoEhbyLGA4qkNPBJG80dpO1Ac2U5StA
+	 fsTh+6GtYwy3+h84wQbcRrRRtOuWZIQGzcr+bJrRLlsj2BTYPXRbv2kOWqvW9Pkwje
+	 4rMf2x7IvR9g9ZN05qsaDS2Qyrmezsq2/ML2umZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 417/529] scsi: ses: Fix slab-out-of-bounds in ses_intf_remove()
-Date: Fri, 10 Mar 2023 14:39:20 +0100
-Message-Id: <20230310133824.318902352@linuxfoundation.org>
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.10 408/529] ktest.pl: Add RUN_TIMEOUT option with default unlimited
+Date: Fri, 10 Mar 2023 14:39:11 +0100
+Message-Id: <20230310133823.898225171@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -34,38 +33,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 578797f0c8cbc2e3ec5fc0dab87087b4c7073686 upstream.
+commit 4e7d2a8f0b52abf23b1dc13b3d88bc0923383cd5 upstream.
 
-A fix for:
+There is a disconnect between the run_command function and the
+wait_for_input. The wait_for_input has a default timeout of 2 minutes. But
+if that happens, the run_command loop will exit out to the waitpid() of
+the executing command. This fails in that it no longer monitors the
+command, and also, the ssh to the test box can hang when its finished, as
+it's waiting for the pipe it's writing to to flush, but the loop that
+reads that pipe has already exited, leaving the command stuck, and the
+test hangs.
 
-BUG: KASAN: slab-out-of-bounds in ses_intf_remove+0x23f/0x270 [ses]
-Read of size 8 at addr ffff88a10d32e5d8 by task rmmod/12013
+Instead, make the default "wait_for_input" of the run_command infinite,
+and allow the user to override it if they want with a default timeout
+option "RUN_TIMEOUT".
 
-When edev->components is zero, accessing edev->component[0] members is
-wrong.
+But this fixes the hang that happens when the pipe is full and the ssh
+session never exits.
 
-Link: https://lore.kernel.org/r/20230202162451.15346-5-thenzl@redhat.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 6e98d1b4415fe ("ktest: Add timeout to ssh command")
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/ses.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/ktest/ktest.pl    |   20 ++++++++++++++++----
+ tools/testing/ktest/sample.conf |    5 +++++
+ 2 files changed, 21 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/ses.c
-+++ b/drivers/scsi/ses.c
-@@ -856,7 +856,8 @@ static void ses_intf_remove_enclosure(st
- 	kfree(ses_dev->page2);
- 	kfree(ses_dev);
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -178,6 +178,7 @@ my $store_failures;
+ my $store_successes;
+ my $test_name;
+ my $timeout;
++my $run_timeout;
+ my $connect_timeout;
+ my $config_bisect_exec;
+ my $booted_timeout;
+@@ -340,6 +341,7 @@ my %option_map = (
+     "STORE_SUCCESSES"		=> \$store_successes,
+     "TEST_NAME"			=> \$test_name,
+     "TIMEOUT"			=> \$timeout,
++    "RUN_TIMEOUT"		=> \$run_timeout,
+     "CONNECT_TIMEOUT"		=> \$connect_timeout,
+     "CONFIG_BISECT_EXEC"	=> \$config_bisect_exec,
+     "BOOTED_TIMEOUT"		=> \$booted_timeout,
+@@ -1800,6 +1802,14 @@ sub run_command {
+     $command =~ s/\$SSH_USER/$ssh_user/g;
+     $command =~ s/\$MACHINE/$machine/g;
  
--	kfree(edev->component[0].scratch);
-+	if (edev->components)
-+		kfree(edev->component[0].scratch);
++    if (!defined($timeout)) {
++	$timeout = $run_timeout;
++    }
++
++    if (!defined($timeout)) {
++	$timeout = -1; # tell wait_for_input to wait indefinitely
++    }
++
+     doprint("$command ... ");
+     $start_time = time;
  
- 	put_device(&edev->edev);
- 	enclosure_unregister(edev);
+@@ -1826,13 +1836,10 @@ sub run_command {
+ 
+     while (1) {
+ 	my $fp = \*CMD;
+-	if (defined($timeout)) {
+-	    doprint "timeout = $timeout\n";
+-	}
+ 	my $line = wait_for_input($fp, $timeout);
+ 	if (!defined($line)) {
+ 	    my $now = time;
+-	    if (defined($timeout) && (($now - $start_time) >= $timeout)) {
++	    if ($timeout >= 0 && (($now - $start_time) >= $timeout)) {
+ 		doprint "Hit timeout of $timeout, killing process\n";
+ 		$hit_timeout = 1;
+ 		kill 9, $pid;
+@@ -2005,6 +2012,11 @@ sub wait_for_input
+ 	$time = $timeout;
+     }
+ 
++    if ($time < 0) {
++	# Negative number means wait indefinitely
++	undef $time;
++    }
++
+     $rin = '';
+     vec($rin, fileno($fp), 1) = 1;
+     vec($rin, fileno(\*STDIN), 1) = 1;
+--- a/tools/testing/ktest/sample.conf
++++ b/tools/testing/ktest/sample.conf
+@@ -809,6 +809,11 @@
+ # is issued instead of a reboot.
+ # CONNECT_TIMEOUT = 25
+ 
++# The timeout in seconds for how long to wait for any running command
++# to timeout. If not defined, it will let it go indefinitely.
++# (default undefined)
++#RUN_TIMEOUT = 600
++
+ # In between tests, a reboot of the box may occur, and this
+ # is the time to wait for the console after it stops producing
+ # output. Some machines may not produce a large lag on reboot
 
 
