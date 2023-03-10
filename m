@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF800882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E653AC433D2;
-	Fri, 10 Mar 2023 15:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB06882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D849BC433D2;
+	Fri, 10 Mar 2023 15:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460788;
-	bh=/NgX5l/LVsT1/lQA1jkWP5gQHcJzbeFNxAJ/PF+aCyc=;
+	s=korg; t=1678460791;
+	bh=MUyFBHOgVcb184SN6l7njyAw+uF2brWnQdsB9Ybzebk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UCqL9qoz2lhA3+V3Y8Z7MvmpPaGMwYOVZSaRnmx3lZJh2VXbe0M99yYP4tWKtQrM8
-	 j/y1AuhOYTBNOifk5SioG6a9cKJNwVaMB78Vik7yiW5hfNiskanIeUhZaJooMqWM49
-	 j3xD/CgMQxG9634cnaGky6aLeVq1jNjPG8I2ANwU=
+	b=ofWBnwJG+Vn4GX7JlYANrRFHEqupcKvpvIA1u4Ohd/B2psN+x1RGvPYab1lIjPtxw
+	 l4VChPLhLsMwCQcnkMGrQhq1SWSgUjwgvs8l3Atx3q3gx5hsqzV7GZyg5LF0irc1sh
+	 5urtSU8iK8nNcYComiAqnbx8cwPeI6xe1xXh13Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 452/529] ubifs: dirty_cow_znode: Fix memleak in error handling path
-Date: Fri, 10 Mar 2023 14:39:55 +0100
-Message-Id: <20230310133825.838963732@linuxfoundation.org>
+Subject: [PATCH 5.10 453/529] ubifs: ubifs_writepage: Mark page dirty after writing inode failed
+Date: Fri, 10 Mar 2023 14:39:56 +0100
+Message-Id: <20230310133825.886850312@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -37,54 +37,110 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 122deabfe1428bffe95e2bf364ff8a5059bdf089 ]
+[ Upstream commit fb8bc4c74ae4526d9489362ab2793a936d072b84 ]
 
-Following process will cause a memleak for copied up znode:
+There are two states for ubifs writing pages:
+1. Dirty, Private
+2. Not Dirty, Not Private
 
-dirty_cow_znode
-  zn = copy_znode(c, znode);
-  err = insert_old_idx(c, zbr->lnum, zbr->offs);
-  if (unlikely(err))
-     return ERR_PTR(err);   // No one refers to zn.
+There is a third possibility which maybe related to [1] that page is
+private but not dirty caused by following process:
 
-Fix it by adding copied znode back to tnc, then it will be freed
-by ubifs_destroy_tnc_subtree() while closing tnc.
+          PA
+lock(page)
+ubifs_write_end
+  attach_page_private		// set Private
+    __set_page_dirty_nobuffers	// set Dirty
+unlock(page)
 
-Fetch a reproducer in [Link].
+write_cache_pages
+  lock(page)
+  clear_page_dirty_for_io(page)	// clear Dirty
+  ubifs_writepage
+    write_inode
+    // fail, goto out, following codes are not executed
+    // do_writepage
+    //   set_page_writeback 	// set Writeback
+    //   detach_page_private	// clear Private
+    //   end_page_writeback 	// clear Writeback
+    out:
+    unlock(page)		// Private, Not Dirty
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216705
-Fixes: 1e51764a3c2a ("UBIFS: add new flash file system")
+                                       PB
+				ksys_fadvise64_64
+				  generic_fadvise
+				     invalidate_inode_page
+				     // page is neither Dirty nor Writeback
+				       invalidate_complete_page
+				       // page_has_private is true
+					 try_to_release_page
+					   ubifs_releasepage
+					     ubifs_assert(c, 0) !!!
+
+Then we may get following assertion failed:
+  UBIFS error (ubi0:0 pid 1492): ubifs_assert_failed [ubifs]:
+  UBIFS assert failed: 0, in fs/ubifs/file.c:1499
+  UBIFS warning (ubi0:0 pid 1492): ubifs_ro_mode [ubifs]:
+  switched to read-only mode, error -22
+  CPU: 2 PID: 1492 Comm: aa Not tainted 5.16.0-rc2-00012-g7bb767dee0ba-dirty
+  Call Trace:
+    dump_stack+0x13/0x1b
+    ubifs_ro_mode+0x54/0x60 [ubifs]
+    ubifs_assert_failed+0x4b/0x80 [ubifs]
+    ubifs_releasepage+0x7e/0x1e0 [ubifs]
+    try_to_release_page+0x57/0xe0
+    invalidate_inode_page+0xfb/0x130
+    invalidate_mapping_pagevec+0x12/0x20
+    generic_fadvise+0x303/0x3c0
+    vfs_fadvise+0x35/0x40
+    ksys_fadvise64_64+0x4c/0xb0
+
+Jump [2] to find a reproducer.
+
+[1] https://linux-mtd.infradead.narkive.com/NQoBeT1u/patch-rfc-ubifs-fix-assert-failed-in-ubifs-set-page-dirty
+[2] https://bugzilla.kernel.org/show_bug.cgi?id=215357
+
+Fixes: 1e51764a3c2ac0 ("UBIFS: add new flash file system")
 Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/tnc.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/ubifs/file.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ubifs/tnc.c b/fs/ubifs/tnc.c
-index 7c36b66774301..07470449b9602 100644
---- a/fs/ubifs/tnc.c
-+++ b/fs/ubifs/tnc.c
-@@ -267,11 +267,18 @@ static struct ubifs_znode *dirty_cow_znode(struct ubifs_info *c,
- 	if (zbr->len) {
- 		err = insert_old_idx(c, zbr->lnum, zbr->offs);
- 		if (unlikely(err))
--			return ERR_PTR(err);
-+			/*
-+			 * Obsolete znodes will be freed by tnc_destroy_cnext()
-+			 * or free_obsolete_znodes(), copied up znodes should
-+			 * be added back to tnc and freed by
-+			 * ubifs_destroy_tnc_subtree().
-+			 */
-+			goto out;
- 		err = add_idx_dirt(c, zbr->lnum, zbr->len);
- 	} else
- 		err = 0;
+diff --git a/fs/ubifs/file.c b/fs/ubifs/file.c
+index 354457e846cda..19fdcda045890 100644
+--- a/fs/ubifs/file.c
++++ b/fs/ubifs/file.c
+@@ -1031,7 +1031,7 @@ static int ubifs_writepage(struct page *page, struct writeback_control *wbc)
+ 		if (page->index >= synced_i_size >> PAGE_SHIFT) {
+ 			err = inode->i_sb->s_op->write_inode(inode, NULL);
+ 			if (err)
+-				goto out_unlock;
++				goto out_redirty;
+ 			/*
+ 			 * The inode has been written, but the write-buffer has
+ 			 * not been synchronized, so in case of an unclean
+@@ -1059,11 +1059,17 @@ static int ubifs_writepage(struct page *page, struct writeback_control *wbc)
+ 	if (i_size > synced_i_size) {
+ 		err = inode->i_sb->s_op->write_inode(inode, NULL);
+ 		if (err)
+-			goto out_unlock;
++			goto out_redirty;
+ 	}
  
-+out:
- 	zbr->znode = zn;
- 	zbr->lnum = 0;
- 	zbr->offs = 0;
+ 	return do_writepage(page, len);
+-
++out_redirty:
++	/*
++	 * redirty_page_for_writepage() won't call ubifs_dirty_inode() because
++	 * it passes I_DIRTY_PAGES flag while calling __mark_inode_dirty(), so
++	 * there is no need to do space budget for dirty inode.
++	 */
++	redirty_page_for_writepage(wbc, page);
+ out_unlock:
+ 	unlock_page(page);
+ 	return err;
 -- 
 2.39.2
 
