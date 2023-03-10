@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CB88489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:17:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F70C433EF;
-	Fri, 10 Mar 2023 14:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B0F8489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:17:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0782DC433EF;
+	Fri, 10 Mar 2023 14:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457833;
-	bh=yzUcrVSDuRAfsXkYo9mMNAuQiF80ov9CUQJbQOGRYNs=;
+	s=korg; t=1678457836;
+	bh=AlPPXK9Ndz98AiwdhMLTtGNFjierJ7y96qVV8JuEy8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1hdddlQP3Gmplcg6gI1uD7jCvz2lFIeE5TI8tuhPObJmqGdus0WiJGSEmhAMhBfvT
-	 xRImqf85VTFAiKgriPzBrjufYKCf97nI0F4A5sWfNuGdqG2pbr/fYIec5C3NJDk9FH
-	 PnYsxmaMWoZBqX0zhi7/GW/XT5MoGwaHIBefkzks=
+	b=LNc19UplIrnJB+RfJKV77OdKNo4RCbRtyX7YOk6LdtxPSGf7+1XZZ4uzzssz/VDJP
+	 65/xkF264ldA2nxvOEeTSplWXclW54erSWN/rEznL94WclsDAx7osWhm89V3VXbH5g
+	 ISrdbwBQ2mhwUd/u2G0lUah7FydUO+b1/JLE/vFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee.jones@linaro.org>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Jean-Christophe PLAGNIOL-VILLARD <plagnioj@jcrosoft.com>,
-	linux-rockchip@lists.infradead.org,
+	Miaoqian Lin <linmq006@gmail.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 073/252] pinctrl: pinctrl-rockchip: Fix a bunch of kerneldoc misdemeanours
-Date: Fri, 10 Mar 2023 14:37:23 +0100
-Message-Id: <20230310133721.031541397@linuxfoundation.org>
+Subject: [PATCH 4.19 074/252] pinctrl: rockchip: Fix refcount leak in rockchip_pinctrl_parse_groups
+Date: Fri, 10 Mar 2023 14:37:24 +0100
+Message-Id: <20230310133721.060363976@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -38,153 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee.jones@linaro.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit e1524ea84af7172acc20827f8dca3fc8f72b8f37 ]
+[ Upstream commit c818ae563bf99457f02e8170aabd6b174f629f65 ]
 
-Demote headers which are clearly not kerneldoc, provide titles for
-struct definition blocks, fix API slip (bitrot) misspellings and
-provide some missing entries.
+of_find_node_by_phandle() returns a node pointer with refcount incremented,
+We should use of_node_put() on it when not needed anymore.
+Add missing of_node_put() to avoid refcount leak.
 
-Fixes the following W=1 kernel build warning(s):
-
- drivers/pinctrl/pinctrl-rockchip.c:82: warning: cannot understand function prototype: 'struct rockchip_iomux '
- drivers/pinctrl/pinctrl-rockchip.c:97: warning: Enum value 'DRV_TYPE_IO_DEFAULT' not described in enum 'rockchip_pin_drv_type'
- drivers/pinctrl/pinctrl-rockchip.c:97: warning: Enum value 'DRV_TYPE_IO_1V8_OR_3V0' not described in enum 'rockchip_pin_drv_type'
- drivers/pinctrl/pinctrl-rockchip.c:97: warning: Enum value 'DRV_TYPE_IO_1V8_ONLY' not described in enum 'rockchip_pin_drv_type'
- drivers/pinctrl/pinctrl-rockchip.c:97: warning: Enum value 'DRV_TYPE_IO_1V8_3V0_AUTO' not described in enum 'rockchip_pin_drv_type'
- drivers/pinctrl/pinctrl-rockchip.c:97: warning: Enum value 'DRV_TYPE_IO_3V3_ONLY' not described in enum 'rockchip_pin_drv_type'
- drivers/pinctrl/pinctrl-rockchip.c:97: warning: Enum value 'DRV_TYPE_MAX' not described in enum 'rockchip_pin_drv_type'
- drivers/pinctrl/pinctrl-rockchip.c:106: warning: Enum value 'PULL_TYPE_IO_DEFAULT' not described in enum 'rockchip_pin_pull_type'
- drivers/pinctrl/pinctrl-rockchip.c:106: warning: Enum value 'PULL_TYPE_IO_1V8_ONLY' not described in enum 'rockchip_pin_pull_type'
- drivers/pinctrl/pinctrl-rockchip.c:106: warning: Enum value 'PULL_TYPE_MAX' not described in enum 'rockchip_pin_pull_type'
- drivers/pinctrl/pinctrl-rockchip.c:109: warning: Cannot understand  * @drv_type: drive strength variant using rockchip_perpin_drv_type
- on line 109 - I thought it was a doc line
- drivers/pinctrl/pinctrl-rockchip.c:122: warning: Cannot understand  * @reg_base: register base of the gpio bank
- on line 109 - I thought it was a doc line
- drivers/pinctrl/pinctrl-rockchip.c:325: warning: Function parameter or member 'route_location' not described in 'rockchip_mux_route_data'
- drivers/pinctrl/pinctrl-rockchip.c:328: warning: Cannot understand  */
- on line 109 - I thought it was a doc line
- drivers/pinctrl/pinctrl-rockchip.c:375: warning: Function parameter or member 'data' not described in 'rockchip_pin_group'
- drivers/pinctrl/pinctrl-rockchip.c:387: warning: Function parameter or member 'ngroups' not described in 'rockchip_pmx_func'
-
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Cc: Heiko Stuebner <heiko@sntech.de>
-Cc: Jean-Christophe PLAGNIOL-VILLARD <plagnioj@jcrosoft.com>
-Cc: linux-rockchip@lists.infradead.org
-Link: https://lore.kernel.org/r/20200713144930.1034632-20-lee.jones@linaro.org
+Fixes: d3e5116119bd ("pinctrl: add pinctrl driver for Rockchip SoCs")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20230102112845.3982407-1-linmq006@gmail.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: c818ae563bf9 ("pinctrl: rockchip: Fix refcount leak in rockchip_pinctrl_parse_groups")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/pinctrl/pinctrl-rockchip.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
-index dc405d7aa1b78..d9b9bbb45a630 100644
+index d9b9bbb45a630..fb7f2282635e8 100644
 --- a/drivers/pinctrl/pinctrl-rockchip.c
 +++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -70,7 +70,7 @@ enum rockchip_pinctrl_type {
- 	RK3399,
- };
- 
--/**
-+/*
-  * Encode variants of iomux registers into a type variable
-  */
- #define IOMUX_GPIO_ONLY		BIT(0)
-@@ -80,6 +80,7 @@ enum rockchip_pinctrl_type {
- #define IOMUX_WIDTH_3BIT	BIT(4)
- 
- /**
-+ * struct rockchip_iomux
-  * @type: iomux variant using IOMUX_* constants
-  * @offset: if initialized to -1 it will be autocalculated, by specifying
-  *	    an initial offset value the relevant source offset can be reset
-@@ -90,7 +91,7 @@ struct rockchip_iomux {
- 	int				offset;
- };
- 
--/**
-+/*
-  * enum type index corresponding to rockchip_perpin_drv_list arrays index.
-  */
- enum rockchip_pin_drv_type {
-@@ -102,7 +103,7 @@ enum rockchip_pin_drv_type {
- 	DRV_TYPE_MAX
- };
- 
--/**
-+/*
-  * enum type index corresponding to rockchip_pull_list arrays index.
-  */
- enum rockchip_pin_pull_type {
-@@ -112,6 +113,7 @@ enum rockchip_pin_pull_type {
- };
- 
- /**
-+ * struct rockchip_drv
-  * @drv_type: drive strength variant using rockchip_perpin_drv_type
-  * @offset: if initialized to -1 it will be autocalculated, by specifying
-  *	    an initial offset value the relevant source offset can be reset
-@@ -125,8 +127,9 @@ struct rockchip_drv {
- };
- 
- /**
-+ * struct rockchip_pin_bank
-  * @reg_base: register base of the gpio bank
-- * @reg_pull: optional separate register for additional pull settings
-+ * @regmap_pull: optional separate register for additional pull settings
-  * @clk: clock of the gpio bank
-  * @irq: interrupt of the gpio bank
-  * @saved_masks: Saved content of GPIO_INTEN at suspend time.
-@@ -144,6 +147,8 @@ struct rockchip_drv {
-  * @gpio_chip: gpiolib chip
-  * @grange: gpio range
-  * @slock: spinlock for the gpio bank
-+ * @toggle_edge_mode: bit mask to toggle (falling/rising) edge mode
-+ * @recalced_mask: bit mask to indicate a need to recalulate the mask
-  * @route_mask: bits describing the routing pins of per bank
-  */
- struct rockchip_pin_bank {
-@@ -312,6 +317,7 @@ struct rockchip_mux_recalced_data {
-  * @bank_num: bank number.
-  * @pin: index at register or used to calc index.
-  * @func: the min pin.
-+ * @route_location: the mux route location (same, pmu, grf).
-  * @route_offset: the max pin.
-  * @route_val: the register offset.
-  */
-@@ -323,8 +329,6 @@ struct rockchip_mux_route_data {
- 	u32 route_val;
- };
- 
--/**
-- */
- struct rockchip_pin_ctrl {
- 	struct rockchip_pin_bank	*pin_banks;
- 	u32				nr_banks;
-@@ -362,9 +366,7 @@ struct rockchip_pin_config {
-  * @name: name of the pin group, used to lookup the group.
-  * @pins: the pins included in this group.
-  * @npins: number of pins included in this group.
-- * @func: the mux function number to be programmed when selected.
-- * @configs: the config values to be set for each pin
-- * @nconfigs: number of configs for each pin
-+ * @data: local pin configuration
-  */
- struct rockchip_pin_group {
- 	const char			*name;
-@@ -377,7 +379,7 @@ struct rockchip_pin_group {
-  * struct rockchip_pmx_func: represent a pin function.
-  * @name: name of the pin function, used to lookup the function.
-  * @groups: one or more names of pin groups that provide this function.
-- * @num_groups: number of groups included in @groups.
-+ * @ngroups: number of groups included in @groups.
-  */
- struct rockchip_pmx_func {
- 	const char		*name;
+@@ -2504,6 +2504,7 @@ static int rockchip_pinctrl_parse_groups(struct device_node *np,
+ 		np_config = of_find_node_by_phandle(be32_to_cpup(phandle));
+ 		ret = pinconf_generic_parse_dt_config(np_config, NULL,
+ 				&grp->data[j].configs, &grp->data[j].nconfigs);
++		of_node_put(np_config);
+ 		if (ret)
+ 			return ret;
+ 	}
 -- 
 2.39.2
 
