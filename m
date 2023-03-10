@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EAA8820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:52:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B5DC4339C;
-	Fri, 10 Mar 2023 14:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752C78820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:52:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE08AC4339B;
+	Fri, 10 Mar 2023 14:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459925;
-	bh=OQP5N8N26CM8/YoXTaCEiLPv8c1O8CRX1Q8EbwkqysM=;
+	s=korg; t=1678459928;
+	bh=8JK2gKWvLJ1HEKbL8QI6uqQExWKk+gT3nB30IisO/GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKu4hAmUlP+kKuKqYV8tA+AuLMJmOTf9ToqQCaJWB+puoapl/nFRg04ndjo7qGMZF
-	 CTmX3v/q7Caseb377S+XzPfyUyi82hdjVEENQpPyZW8b13aotTPYEbFDCh7BMlzWAN
-	 WCTPL98NUQonV55c11ixW9On3iqOEJbJ6Mc+rwYo=
+	b=gwHj7C5wsT9FpZpKa4fwWRBd8svIifw41mNIUX69KJBzZQD4wpqyyPbKh1joUy7Du
+	 Bd4A21/vwT7DQ7nbF92CP78wBqYa49mkPOGrmnZa6FECSXarEhNEUDr/PemNirbc42
+	 Vv8zFz9+FJQ+WQ4bE+ZefHYdjWOAsl60RwHPw/JU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Iuliana Prodan <iuliana.prodan@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 166/529] ASoC: fsl_sai: initialize is_dsp_mode flag
-Date: Fri, 10 Mar 2023 14:35:09 +0100
-Message-Id: <20230310133812.635269526@linuxfoundation.org>
+Subject: [PATCH 5.10 149/529] drm/fourcc: Add missing big-endian XRGB1555 and RGB565 formats
+Date: Fri, 10 Mar 2023 14:34:52 +0100
+Message-Id: <20230310133811.850205722@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,40 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-[ Upstream commit a23924b7dd7b748fff8e305e1daf590fed2af21b ]
+[ Upstream commit 6fb6c979ca628583d4d0c59a0f8ff977e581ecc0 ]
 
-Initialize is_dsp_mode flag in the beginning of function
-fsl_sai_set_dai_fmt_tr().
+As of commit eae06120f1974e1a ("drm: refuse ADDFB2 ioctl for broken
+bigendian drivers"), drivers must set the
+quirk_addfb_prefer_host_byte_order quirk to make the drm_mode_addfb()
+compat code work correctly on big-endian machines.
 
-When the DAIFMT is DAIFMT_DSP_B the first time, is_dsp_mode is
-true, then the second time DAIFMT is DAIFMT_I2S, is_dsp_mode
-still true, which is a wrong state. So need to initialize
-is_dsp_mode flag every time.
+While that works fine for big-endian XRGB8888 and ARGB8888, which are
+mapped to the existing little-endian BGRX8888 and BGRA8888 formats, it
+does not work for big-endian XRGB1555 and RGB565, as the latter are not
+listed in the format database.
 
-Fixes: a3f7dcc9cc03 ("ASoC: fsl-sai: Add SND_SOC_DAIFMT_DSP_A/B support.")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
-Link: https://lore.kernel.org/r/1673852874-32200-1-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this by adding the missing formats.  Limit this to big-endian
+platforms, as there is currently no need to support these formats on
+little-endian platforms.
+
+Fixes: 6960e6da9cec3f66 ("drm: fix drm_mode_addfb() on big endian machines.")
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/3ee1f8144feb96c28742b22384189f1f83bcfc1a.1669221671.git.geert@linux-m68k.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_sai.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/drm_fourcc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index 3e5c1eaccd5e7..6a5d2b08e2713 100644
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -230,6 +230,7 @@ static int fsl_sai_set_dai_fmt_tr(struct snd_soc_dai *cpu_dai,
- 	if (!sai->is_lsb_first)
- 		val_cr4 |= FSL_SAI_CR4_MF;
- 
-+	sai->is_dsp_mode = false;
- 	/* DAI mode */
- 	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
- 	case SND_SOC_DAIFMT_I2S:
+diff --git a/drivers/gpu/drm/drm_fourcc.c b/drivers/gpu/drm/drm_fourcc.c
+index 92152c06b75b7..8d1064061e836 100644
+--- a/drivers/gpu/drm/drm_fourcc.c
++++ b/drivers/gpu/drm/drm_fourcc.c
+@@ -178,6 +178,10 @@ const struct drm_format_info *__drm_format_info(u32 format)
+ 		{ .format = DRM_FORMAT_BGRA5551,	.depth = 15, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1, .has_alpha = true },
+ 		{ .format = DRM_FORMAT_RGB565,		.depth = 16, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1 },
+ 		{ .format = DRM_FORMAT_BGR565,		.depth = 16, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1 },
++#ifdef __BIG_ENDIAN
++		{ .format = DRM_FORMAT_XRGB1555 | DRM_FORMAT_BIG_ENDIAN, .depth = 15, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1 },
++		{ .format = DRM_FORMAT_RGB565 | DRM_FORMAT_BIG_ENDIAN, .depth = 16, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1 },
++#endif
+ 		{ .format = DRM_FORMAT_RGB888,		.depth = 24, .num_planes = 1, .cpp = { 3, 0, 0 }, .hsub = 1, .vsub = 1 },
+ 		{ .format = DRM_FORMAT_BGR888,		.depth = 24, .num_planes = 1, .cpp = { 3, 0, 0 }, .hsub = 1, .vsub = 1 },
+ 		{ .format = DRM_FORMAT_XRGB8888,	.depth = 24, .num_planes = 1, .cpp = { 4, 0, 0 }, .hsub = 1, .vsub = 1 },
 -- 
 2.39.2
 
