@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938C7848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:24:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A9AC433D2;
-	Fri, 10 Mar 2023 14:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747AD848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:24:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6ABAC4339B;
+	Fri, 10 Mar 2023 14:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458270;
-	bh=ijCXFOkYf7aFyvpDhcEbtPNUyJC71TCcohMI/0GejNc=;
+	s=korg; t=1678458273;
+	bh=GJ3KZbABA+l7AWrAESMedG78EQzzgEfJdzf3o6YauBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nmJPvonT79KBn3/tc+OPbIIvnetFKInK9CPo2Eg1z5VUBqd1wOavBR5fBbybNLp0/
-	 2xP9NhC/wfhGcHwKVeGb+PIbC7d90B0hEvb6x8hBCc5W6rmzmKCNxwe/ipPRUPYl61
-	 QpHElBioQ+1b31Ho1Beg6n+T+N4af9R+dCA24Fzc=
+	b=g2Avpm4OA61JpHd+RFK6KKE1jTFa08kDRkQgshqTVCrjdLeHXNX7T1V1rtt1YkvxO
+	 beeMj8HxiLYsQdjMulxNUDu7h7Z940XKJnAJm6geZ1giciA/tdhOLWgEtbPUavTwBg
+	 7k8bOuZWWxTk/YjfhqvRCAuTnQfLj7ERzIBUsWW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Yunsheng Lin <linyunsheng@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 220/252] net: fix __dev_kfree_skb_any() vs drop monitor
-Date: Fri, 10 Mar 2023 14:39:50 +0100
-Message-Id: <20230310133725.864122826@linuxfoundation.org>
+	Tomas Henzl <thenzl@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 4.19 190/252] scsi: ses: Fix possible addl_desc_ptr out-of-bounds accesses
+Date: Fri, 10 Mar 2023 14:39:20 +0100
+Message-Id: <20230310133724.699668440@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,49 +34,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tomas Henzl <thenzl@redhat.com>
 
-[ Upstream commit ac3ad19584b26fae9ac86e4faebe790becc74491 ]
+commit db95d4df71cb55506425b6e4a5f8d68e3a765b63 upstream.
 
-dev_kfree_skb() is aliased to consume_skb().
+Sanitize possible addl_desc_ptr out-of-bounds accesses in
+ses_enclosure_data_process().
 
-When a driver is dropping a packet by calling dev_kfree_skb_any()
-we should propagate the drop reason instead of pretending
-the packet was consumed.
-
-Note: Now we have enum skb_drop_reason we could remove
-enum skb_free_reason (for linux-6.4)
-
-v2: added an unlikely(), suggested by Yunsheng Lin.
-
-Fixes: e6247027e517 ("net: introduce dev_consume_skb_any()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Yunsheng Lin <linyunsheng@huawei.com>
-Reviewed-by: Yunsheng Lin <linyunsheng@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20230202162451.15346-3-thenzl@redhat.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/dev.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/ses.c |   35 ++++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 880b096eef8a6..b778f35965433 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -2794,8 +2794,10 @@ void __dev_kfree_skb_any(struct sk_buff *skb, enum skb_free_reason reason)
- {
- 	if (in_irq() || irqs_disabled())
- 		__dev_kfree_skb_irq(skb, reason);
-+	else if (unlikely(reason == SKB_REASON_DROPPED))
-+		kfree_skb(skb);
- 	else
--		dev_kfree_skb(skb);
-+		consume_skb(skb);
+--- a/drivers/scsi/ses.c
++++ b/drivers/scsi/ses.c
+@@ -449,8 +449,8 @@ int ses_match_host(struct enclosure_devi
  }
- EXPORT_SYMBOL(__dev_kfree_skb_any);
+ #endif  /*  0  */
  
--- 
-2.39.2
-
+-static void ses_process_descriptor(struct enclosure_component *ecomp,
+-				   unsigned char *desc)
++static int ses_process_descriptor(struct enclosure_component *ecomp,
++				   unsigned char *desc, int max_desc_len)
+ {
+ 	int eip = desc[0] & 0x10;
+ 	int invalid = desc[0] & 0x80;
+@@ -461,22 +461,32 @@ static void ses_process_descriptor(struc
+ 	unsigned char *d;
+ 
+ 	if (invalid)
+-		return;
++		return 0;
+ 
+ 	switch (proto) {
+ 	case SCSI_PROTOCOL_FCP:
+ 		if (eip) {
++			if (max_desc_len <= 7)
++				return 1;
+ 			d = desc + 4;
+ 			slot = d[3];
+ 		}
+ 		break;
+ 	case SCSI_PROTOCOL_SAS:
++
+ 		if (eip) {
++			if (max_desc_len <= 27)
++				return 1;
+ 			d = desc + 4;
+ 			slot = d[3];
+ 			d = desc + 8;
+-		} else
++		} else {
++			if (max_desc_len <= 23)
++				return 1;
+ 			d = desc + 4;
++		}
++
++
+ 		/* only take the phy0 addr */
+ 		addr = (u64)d[12] << 56 |
+ 			(u64)d[13] << 48 |
+@@ -493,6 +503,8 @@ static void ses_process_descriptor(struc
+ 	}
+ 	ecomp->slot = slot;
+ 	scomp->addr = addr;
++
++	return 0;
+ }
+ 
+ struct efd {
+@@ -565,7 +577,7 @@ static void ses_enclosure_data_process(s
+ 		/* skip past overall descriptor */
+ 		desc_ptr += len + 4;
+ 	}
+-	if (ses_dev->page10)
++	if (ses_dev->page10 && ses_dev->page10_len > 9)
+ 		addl_desc_ptr = ses_dev->page10 + 8;
+ 	type_ptr = ses_dev->page1_types;
+ 	components = 0;
+@@ -573,6 +585,7 @@ static void ses_enclosure_data_process(s
+ 		for (j = 0; j < type_ptr[1]; j++) {
+ 			char *name = NULL;
+ 			struct enclosure_component *ecomp;
++			int max_desc_len;
+ 
+ 			if (desc_ptr) {
+ 				if (desc_ptr >= buf + page7_len) {
+@@ -599,10 +612,14 @@ static void ses_enclosure_data_process(s
+ 					ecomp = &edev->component[components++];
+ 
+ 				if (!IS_ERR(ecomp)) {
+-					if (addl_desc_ptr)
+-						ses_process_descriptor(
+-							ecomp,
+-							addl_desc_ptr);
++					if (addl_desc_ptr) {
++						max_desc_len = ses_dev->page10_len -
++						    (addl_desc_ptr - ses_dev->page10);
++						if (ses_process_descriptor(ecomp,
++						    addl_desc_ptr,
++						    max_desc_len))
++							addl_desc_ptr = NULL;
++					}
+ 					if (create)
+ 						enclosure_component_register(
+ 							ecomp);
 
 
