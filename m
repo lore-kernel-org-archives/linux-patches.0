@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A9C8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:10:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D448C433A1;
-	Fri, 10 Mar 2023 14:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F117B8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:11:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE27C433D2;
+	Fri, 10 Mar 2023 14:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457458;
-	bh=jBO+9yF13EmApSE0R4KjaJE9woEJGEqHfkyOh+W2jNs=;
+	s=korg; t=1678457460;
+	bh=uuFptdgdXONQlpP314S7OqYZlmrK8PnW/w/gUmsCNCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F18uczbrmHd43miETWtDt8vyGDrlrIS3ou/fKrPdwvfu9rw7qskTuzJJ8Y0kV793q
-	 dp3VHO4B2nlZ78zKcZriaoH767jgG8vV1ZdMA3YNjumZfr0yw3UAnpD2uDeao/VBTb
-	 IAiON6L87DvwpXHnbM939KuIgSm1MrjSawJz/MN8=
+	b=W2ua1+1QshzCNh8NBYy3JkE1MW5dslqGlx5oR2FgqVoDwDH7Cde8Voa1qwhMbx+7/
+	 YHq8iDi/Sc3PuTeGnAyGId9n3G4JqFBIkCb5mXbJYixPAUSNdeiSC0u1RlWWeJfwH2
+	 0zACTS6meTnHYGTPUl/7usqOtWWZRRcbj3oIcTBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 145/200] USB: ULPI: fix memory leak with using debugfs_lookup()
-Date: Fri, 10 Mar 2023 14:39:12 +0100
-Message-Id: <20230310133721.584887758@linuxfoundation.org>
+Subject: [PATCH 6.1 146/200] USB: uhci: fix memory leak with using debugfs_lookup()
+Date: Fri, 10 Mar 2023 14:39:13 +0100
+Message-Id: <20230310133721.613074071@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -36,77 +36,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 8f4d25eba599c4bd4b5ea8ae8752cda480a9d563 ]
+[ Upstream commit 0a3f82c79c86278e7f144564b1cb6cc5c3657144 ]
 
 When calling debugfs_lookup() the result must have dput() called on it,
 otherwise the memory will leak over time.  To make things simpler, just
 call debugfs_lookup_and_remove() instead which handles all of the logic
 at once.
 
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230202153235.2412790-2-gregkh@linuxfoundation.org
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20230202153235.2412790-3-gregkh@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/common/ulpi.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/usb/host/uhci-hcd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/common/ulpi.c b/drivers/usb/common/ulpi.c
-index d7c8461976ce0..38703781ee2d1 100644
---- a/drivers/usb/common/ulpi.c
-+++ b/drivers/usb/common/ulpi.c
-@@ -271,7 +271,7 @@ static int ulpi_regs_show(struct seq_file *seq, void *data)
+diff --git a/drivers/usb/host/uhci-hcd.c b/drivers/usb/host/uhci-hcd.c
+index c22b51af83fcb..7cdc2fa7c28fb 100644
+--- a/drivers/usb/host/uhci-hcd.c
++++ b/drivers/usb/host/uhci-hcd.c
+@@ -536,8 +536,8 @@ static void release_uhci(struct uhci_hcd *uhci)
+ 	uhci->is_initialized = 0;
+ 	spin_unlock_irq(&uhci->lock);
+ 
+-	debugfs_remove(debugfs_lookup(uhci_to_hcd(uhci)->self.bus_name,
+-				      uhci_debugfs_root));
++	debugfs_lookup_and_remove(uhci_to_hcd(uhci)->self.bus_name,
++				  uhci_debugfs_root);
+ 
+ 	for (i = 0; i < UHCI_NUM_SKELQH; i++)
+ 		uhci_free_qh(uhci, uhci->skelqh[i]);
+@@ -700,7 +700,7 @@ static int uhci_start(struct usb_hcd *hcd)
+ 			uhci->frame, uhci->frame_dma_handle);
+ 
+ err_alloc_frame:
+-	debugfs_remove(debugfs_lookup(hcd->self.bus_name, uhci_debugfs_root));
++	debugfs_lookup_and_remove(hcd->self.bus_name, uhci_debugfs_root);
+ 
+ 	return retval;
  }
- DEFINE_SHOW_ATTRIBUTE(ulpi_regs);
- 
--#define ULPI_ROOT debugfs_lookup(KBUILD_MODNAME, NULL)
-+static struct dentry *ulpi_root;
- 
- static int ulpi_register(struct device *dev, struct ulpi *ulpi)
- {
-@@ -301,7 +301,7 @@ static int ulpi_register(struct device *dev, struct ulpi *ulpi)
- 		return ret;
- 	}
- 
--	root = debugfs_create_dir(dev_name(dev), ULPI_ROOT);
-+	root = debugfs_create_dir(dev_name(dev), ulpi_root);
- 	debugfs_create_file("regs", 0444, root, ulpi, &ulpi_regs_fops);
- 
- 	dev_dbg(&ulpi->dev, "registered ULPI PHY: vendor %04x, product %04x\n",
-@@ -349,8 +349,7 @@ EXPORT_SYMBOL_GPL(ulpi_register_interface);
-  */
- void ulpi_unregister_interface(struct ulpi *ulpi)
- {
--	debugfs_remove_recursive(debugfs_lookup(dev_name(&ulpi->dev),
--						ULPI_ROOT));
-+	debugfs_lookup_and_remove(dev_name(&ulpi->dev), ulpi_root);
- 	device_unregister(&ulpi->dev);
- }
- EXPORT_SYMBOL_GPL(ulpi_unregister_interface);
-@@ -360,12 +359,11 @@ EXPORT_SYMBOL_GPL(ulpi_unregister_interface);
- static int __init ulpi_init(void)
- {
- 	int ret;
--	struct dentry *root;
- 
--	root = debugfs_create_dir(KBUILD_MODNAME, NULL);
-+	ulpi_root = debugfs_create_dir(KBUILD_MODNAME, NULL);
- 	ret = bus_register(&ulpi_bus);
- 	if (ret)
--		debugfs_remove(root);
-+		debugfs_remove(ulpi_root);
- 	return ret;
- }
- subsys_initcall(ulpi_init);
-@@ -373,7 +371,7 @@ subsys_initcall(ulpi_init);
- static void __exit ulpi_exit(void)
- {
- 	bus_unregister(&ulpi_bus);
--	debugfs_remove_recursive(ULPI_ROOT);
-+	debugfs_remove(ulpi_root);
- }
- module_exit(ulpi_exit);
- 
 -- 
 2.39.2
 
