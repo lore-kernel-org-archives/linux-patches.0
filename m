@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27796881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:39:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9842FC4339C;
-	Fri, 10 Mar 2023 14:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA82881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:39:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E21C4339C;
+	Fri, 10 Mar 2023 14:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459181;
-	bh=lGpvSeXcNX1cM0uufaZvRIAj2MCEdhVX/90mepeVURo=;
+	s=korg; t=1678459184;
+	bh=RVLTcJhYJntpUregILNp9hVDn8VK0ojAgvqQ2pfK1lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rRqrdCHb3m/DVW7NdFiTLiBKsstYRjU3gM8mJ19gMVd5LDKAjCD1Z3uhC1sIg6SEx
-	 BvRaofgyQEpqPi+qQAbyPhOEVKx0joOaR6Gp5mPi8sETosEpqkZ+9D+Qmc4hQtvHIZ
-	 +dErNUZ75aIlXuJLdLSIJHlu0AmB+M/CnqaBiVZY=
+	b=GaTLDJoQ3fNpYMa/PmD3t8wQiuZbMP35EkGInvn8eztkYATORXfr6IyQV3xR8b2HC
+	 IWxchrNRLESKAUw6hdbr8uTubv71Z6vSeNjSNsCUqBIlZY1mcSwxiZf1g/W0kiHUzF
+	 5M/MnePRpmVaV0h3sy393oTuR83/3lK8u8t3AtxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 275/357] scsi: ses: Fix slab-out-of-bounds in ses_intf_remove()
-Date: Fri, 10 Mar 2023 14:39:24 +0100
-Message-Id: <20230310133746.879839942@linuxfoundation.org>
+	Ravi Kishore Koppuravuri <ravi.kishore.koppuravuri@intel.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Subject: [PATCH 5.4 276/357] PCI/PM: Observe reset delay irrespective of bridge_d3
+Date: Fri, 10 Mar 2023 14:39:25 +0100
+Message-Id: <20230310133746.926663594@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -34,38 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 578797f0c8cbc2e3ec5fc0dab87087b4c7073686 upstream.
+commit 8ef0217227b42e2c34a18de316cee3da16c9bf1e upstream.
 
-A fix for:
+If a PCI bridge is suspended to D3cold upon entering system sleep,
+resuming it entails a Fundamental Reset per PCIe r6.0 sec 5.8.
 
-BUG: KASAN: slab-out-of-bounds in ses_intf_remove+0x23f/0x270 [ses]
-Read of size 8 at addr ffff88a10d32e5d8 by task rmmod/12013
+The delay prescribed after a Fundamental Reset in PCIe r6.0 sec 6.6.1
+is sought to be observed by:
 
-When edev->components is zero, accessing edev->component[0] members is
-wrong.
+  pci_pm_resume_noirq()
+    pci_pm_bridge_power_up_actions()
+      pci_bridge_wait_for_secondary_bus()
 
-Link: https://lore.kernel.org/r/20230202162451.15346-5-thenzl@redhat.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+However, pci_bridge_wait_for_secondary_bus() bails out if the bridge_d3
+flag is not set.  That flag indicates whether a bridge is allowed to
+suspend to D3cold at *runtime*.
+
+Hence *no* delay is observed on resume from system sleep if runtime
+D3cold is forbidden.  That doesn't make any sense, so drop the bridge_d3
+check from pci_bridge_wait_for_secondary_bus().
+
+The purpose of the bridge_d3 check was probably to avoid delays if a
+bridge remained in D0 during suspend.  However the sole caller of
+pci_bridge_wait_for_secondary_bus(), pci_pm_bridge_power_up_actions(),
+is only invoked if the previous power state was D3cold.  Hence the
+additional bridge_d3 check seems superfluous.
+
+Fixes: ad9001f2f411 ("PCI/PM: Add missing link delays required by the PCIe spec")
+Link: https://lore.kernel.org/r/eb37fa345285ec8bacabbf06b020b803f77bdd3d.1673769517.git.lukas@wunner.de
+Tested-by: Ravi Kishore Koppuravuri <ravi.kishore.koppuravuri@intel.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Cc: stable@vger.kernel.org # v5.5+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/ses.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/pci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/ses.c
-+++ b/drivers/scsi/ses.c
-@@ -856,7 +856,8 @@ static void ses_intf_remove_enclosure(st
- 	kfree(ses_dev->page2);
- 	kfree(ses_dev);
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -4743,7 +4743,7 @@ void pci_bridge_wait_for_secondary_bus(s
+ 	if (pci_dev_is_disconnected(dev))
+ 		return;
  
--	kfree(edev->component[0].scratch);
-+	if (edev->components)
-+		kfree(edev->component[0].scratch);
+-	if (!pci_is_bridge(dev) || !dev->bridge_d3)
++	if (!pci_is_bridge(dev))
+ 		return;
  
- 	put_device(&edev->edev);
- 	enclosure_unregister(edev);
+ 	down_read(&pci_bus_sem);
 
 
