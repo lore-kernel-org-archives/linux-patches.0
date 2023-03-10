@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDC68825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:00:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAA1C4339E;
-	Fri, 10 Mar 2023 15:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348958825
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:00:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93165C433D2;
+	Fri, 10 Mar 2023 15:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460420;
-	bh=6IUbwt/HFUXdXxQZm22wjqNzax327Qpb/kuKe/vU8us=;
+	s=korg; t=1678460423;
+	bh=UJG2yLRgAPyWqdYK9/H3/GB16kLkik00kOREtcReAF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mm9xrjhzCfCKhr4F2DHA8kLGFri1O7nkQxRvZDp7gINnuyFJoEUs3lLggTChFsXAN
-	 kWSNhVVcrbmHvcV6RbDoiEcd09F7dD8/Ou/vpQeALZm/5SFmvlokrJgwQM/XsgsQye
-	 svdAxSBt1CRcp6wVj/jAmEOW/jKimcBa6KMay+a8=
+	b=F9BFxAk0HDDcX5HTosZPZjaCG3Op2Iu5MXQMXA/BiCCzobYK9TYmmUcrYc4cyZb0o
+	 zHawOgwvqueCnpyuDbT+2nuZg8LimxN6rRU825TkvmGNWfOIYxOCbwnx5OamxsN/Da
+	 LgA+sBJgcUF1ioGA76CUof9cCaVe4cLVxc/HI1fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingyuan Liang <jingyliang@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 311/529] HID: Add Mapping for System Microphone Mute
-Date: Fri, 10 Mar 2023 14:37:34 +0100
-Message-Id: <20230310133819.408834921@linuxfoundation.org>
+	Alper Nebi Yasak <alpernebiyasak@gmail.com>,
+	Salvatore Bonaccorso <carnil@debian.org>
+Subject: [PATCH 5.10 329/529] firmware: coreboot: framebuffer: Ignore reserved pixel color bits
+Date: Fri, 10 Mar 2023 14:37:52 +0100
+Message-Id: <20230310133820.260588137@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,58 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jingyuan Liang <jingyliang@chromium.org>
+From: Alper Nebi Yasak <alpernebiyasak@gmail.com>
 
-[ Upstream commit 2d60f9f4f26785a00273cb81fe60eff129ebd449 ]
+commit e6acaf25cba14661211bb72181c35dd13b24f5b3 upstream.
 
-HUTRR110 added a new usage code for a key that is supposed to
-mute/unmute microphone system-wide.
+The coreboot framebuffer doesn't support transparency, its 'reserved'
+bit field is merely padding for byte/word alignment of pixel colors [1].
+When trying to match the framebuffer to a simplefb format, the kernel
+driver unnecessarily requires the format's transparency bit field to
+exactly match this padding, even if the former is zero-width.
 
-Map the new usage code(0x01 0xa9) to keycode KEY_MICMUTE.
-Additionally hid-debug is adjusted to recognize this keycode as well.
+Due to a coreboot bug [2] (fixed upstream), some boards misreport the
+reserved field's size as equal to its position (0x18 for both on a
+'Lick' Chromebook), and the driver fails to probe where it would have
+otherwise worked fine with e.g. the a8r8g8b8 or x8r8g8b8 formats.
 
-Signed-off-by: Jingyuan Liang <jingyliang@chromium.org>
-Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Remove the transparency comparison with reserved bits. When the
+bits-per-pixel and other color components match, transparency will
+already be in a subset of the reserved field. Not forcing it to match
+reserved bits allows the driver to work on the boards which misreport
+the reserved field. It also enables using simplefb formats that don't
+have transparency bits, although this doesn't currently happen due to
+format support and ordering in linux/platform_data/simplefb.h.
+
+[1] https://review.coreboot.org/plugins/gitiles/coreboot/+/4.19/src/commonlib/include/commonlib/coreboot_tables.h#255
+[2] https://review.coreboot.org/plugins/gitiles/coreboot/+/4.13/src/drivers/intel/fsp2_0/graphics.c#82
+
+Signed-off-by: Alper Nebi Yasak <alpernebiyasak@gmail.com>
+Link: https://lore.kernel.org/r/20230122190433.195941-1-alpernebiyasak@gmail.com
+Cc: Salvatore Bonaccorso <carnil@debian.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-debug.c | 1 +
- drivers/hid/hid-input.c | 8 ++++++++
- 2 files changed, 9 insertions(+)
+ drivers/firmware/google/framebuffer-coreboot.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-debug.c b/drivers/hid/hid-debug.c
-index f4e2e69377589..1f60a381ae63e 100644
---- a/drivers/hid/hid-debug.c
-+++ b/drivers/hid/hid-debug.c
-@@ -933,6 +933,7 @@ static const char *keys[KEY_MAX + 1] = {
- 	[KEY_VOICECOMMAND] = "VoiceCommand",
- 	[KEY_EMOJI_PICKER] = "EmojiPicker",
- 	[KEY_DICTATE] = "Dictate",
-+	[KEY_MICMUTE] = "MicrophoneMute",
- 	[KEY_BRIGHTNESS_MIN] = "BrightnessMin",
- 	[KEY_BRIGHTNESS_MAX] = "BrightnessMax",
- 	[KEY_BRIGHTNESS_AUTO] = "BrightnessAuto",
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index 75a4d8d6bb0fd..3399953256d85 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -675,6 +675,14 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
- 			break;
- 		}
- 
-+		if ((usage->hid & 0xf0) == 0xa0) {	/* SystemControl */
-+			switch (usage->hid & 0xf) {
-+			case 0x9: map_key_clear(KEY_MICMUTE); break;
-+			default: goto ignore;
-+			}
-+			break;
-+		}
-+
- 		if ((usage->hid & 0xf0) == 0xb0) {	/* SC - Display */
- 			switch (usage->hid & 0xf) {
- 			case 0x05: map_key_clear(KEY_SWITCHVIDEOMODE); break;
--- 
-2.39.2
-
+--- a/drivers/firmware/google/framebuffer-coreboot.c
++++ b/drivers/firmware/google/framebuffer-coreboot.c
+@@ -43,9 +43,7 @@ static int framebuffer_probe(struct core
+ 		    fb->green_mask_pos     == formats[i].green.offset &&
+ 		    fb->green_mask_size    == formats[i].green.length &&
+ 		    fb->blue_mask_pos      == formats[i].blue.offset &&
+-		    fb->blue_mask_size     == formats[i].blue.length &&
+-		    fb->reserved_mask_pos  == formats[i].transp.offset &&
+-		    fb->reserved_mask_size == formats[i].transp.length)
++		    fb->blue_mask_size     == formats[i].blue.length)
+ 			pdata.format = formats[i].name;
+ 	}
+ 	if (!pdata.format)
 
 
