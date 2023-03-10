@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC158481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:10:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686C8C433D2;
-	Fri, 10 Mar 2023 14:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C925F8484
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:10:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB5FC433D2;
+	Fri, 10 Mar 2023 14:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457432;
-	bh=fMGz2DWCGd41BOKS0mJl82IWM79KeKk4E+6XC8PH7VY=;
+	s=korg; t=1678457435;
+	bh=0T9+8+7+BL7xXnvPFs6hZTxkcUV34Tqod1GgJ/+Aq6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oo65F/xdmni8a5iGD+NGvsKvAxqpwG0uioHBWVu79mlD+lBV6rClRvjX6TlI+GTwq
-	 B9h/+rVJDA4xmLi1TDwKVmG9KiH6vuVAGM5KhWqTkP1LiaDGLE+96dSP+9F+YD1G1p
-	 M/bPoJWpnCJBf6lPHscAwLQNNxbrKyCNl46/b8UM=
+	b=Y+Rk1WWdqwpz78EKGlrdvvYacgVjXWyEHoG2ic6KcCEpLSrGJVn4Q7NBEnrZLp5Iq
+	 +CUG55ugCD1Iq81wd5r6XMEmDLPZTYJWGVvAemnKrqUOBDhfzROAuys5Fq87F/O0ev
+	 grUgPM0tguOls3nyecoJQ4RZVOWuKXj8HJTGbHPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Krishna Yarlagadda <kyarlagadda@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
+	Pierre Gondois <pierre.gondois@arm.com>,
+	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/200] spi: tegra210-quad: Fix iterator outside loop
-Date: Fri, 10 Mar 2023 14:38:22 +0100
-Message-Id: <20230310133720.031384275@linuxfoundation.org>
+Subject: [PATCH 6.1 129/200] cacheinfo: Fix shared_cpu_map to handle shared caches at different levels
+Date: Fri, 10 Mar 2023 14:38:56 +0100
+Message-Id: <20230310133721.086945297@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -36,60 +36,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krishna Yarlagadda <kyarlagadda@nvidia.com>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
-[ Upstream commit 2449d436681d40bc63ec2c766fd51b632270d8a7 ]
+[ Upstream commit 198102c9103fc78d8478495971947af77edb05c1 ]
 
-Fix warn: iterator used outside loop: 'xfer'. 'xfer' variable contain
-invalid value in few conditions. Complete transfer within DATA phase
-in successful case and at the end for failed transfer.
+The cacheinfo sets up the shared_cpu_map by checking whether the caches
+with the same index are shared between CPUs. However, this will trigger
+slab-out-of-bounds access if the CPUs do not have the same cache hierarchy.
+Another problem is the mismatched shared_cpu_map when the shared cache does
+not have the same index between CPUs.
 
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Link:https://lore.kernel.org/all/202210191211.46FkzKmv-lkp@intel.com/
-Fixes: 8777dd9dff40 ("spi: tegra210-quad: Fix combined sequence")
+CPU0	I	D	L3
+index	0	1	2	x
+	^	^	^	^
+index	0	1	2	3
+CPU1	I	D	L2	L3
 
-Signed-off-by: Krishna Yarlagadda <kyarlagadda@nvidia.com>
-Link: https://lore.kernel.org/r/20230227200428.45832-1-kyarlagadda@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This patch checks each cache is shared with all caches on other CPUs.
+
+Reviewed-by: Pierre Gondois <pierre.gondois@arm.com>
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Link: https://lore.kernel.org/r/20230117105133.4445-2-yongxuan.wang@sifive.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra210-quad.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/base/cacheinfo.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index 6498948e150a5..06c54d49076ae 100644
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1156,6 +1156,10 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
- 				ret = -EIO;
- 				goto exit;
+diff --git a/drivers/base/cacheinfo.c b/drivers/base/cacheinfo.c
+index 4b5cd08c5a657..f30256a524be6 100644
+--- a/drivers/base/cacheinfo.c
++++ b/drivers/base/cacheinfo.c
+@@ -251,7 +251,7 @@ static int cache_shared_cpu_map_setup(unsigned int cpu)
+ {
+ 	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
+ 	struct cacheinfo *this_leaf, *sib_leaf;
+-	unsigned int index;
++	unsigned int index, sib_index;
+ 	int ret = 0;
+ 
+ 	if (this_cpu_ci->cpu_map_populated)
+@@ -279,11 +279,13 @@ static int cache_shared_cpu_map_setup(unsigned int cpu)
+ 
+ 			if (i == cpu || !sib_cpu_ci->info_list)
+ 				continue;/* skip if itself or no cacheinfo */
+-
+-			sib_leaf = per_cpu_cacheinfo_idx(i, index);
+-			if (cache_leaves_are_shared(this_leaf, sib_leaf)) {
+-				cpumask_set_cpu(cpu, &sib_leaf->shared_cpu_map);
+-				cpumask_set_cpu(i, &this_leaf->shared_cpu_map);
++			for (sib_index = 0; sib_index < cache_leaves(i); sib_index++) {
++				sib_leaf = per_cpu_cacheinfo_idx(i, sib_index);
++				if (cache_leaves_are_shared(this_leaf, sib_leaf)) {
++					cpumask_set_cpu(cpu, &sib_leaf->shared_cpu_map);
++					cpumask_set_cpu(i, &this_leaf->shared_cpu_map);
++					break;
++				}
  			}
-+			if (!xfer->cs_change) {
-+				tegra_qspi_transfer_end(spi);
-+				spi_transfer_delay_exec(xfer);
+ 		}
+ 		/* record the maximum cache line size */
+@@ -297,7 +299,7 @@ static int cache_shared_cpu_map_setup(unsigned int cpu)
+ static void cache_shared_cpu_map_remove(unsigned int cpu)
+ {
+ 	struct cacheinfo *this_leaf, *sib_leaf;
+-	unsigned int sibling, index;
++	unsigned int sibling, index, sib_index;
+ 
+ 	for (index = 0; index < cache_leaves(cpu); index++) {
+ 		this_leaf = per_cpu_cacheinfo_idx(cpu, index);
+@@ -308,9 +310,14 @@ static void cache_shared_cpu_map_remove(unsigned int cpu)
+ 			if (sibling == cpu || !sib_cpu_ci->info_list)
+ 				continue;/* skip if itself or no cacheinfo */
+ 
+-			sib_leaf = per_cpu_cacheinfo_idx(sibling, index);
+-			cpumask_clear_cpu(cpu, &sib_leaf->shared_cpu_map);
+-			cpumask_clear_cpu(sibling, &this_leaf->shared_cpu_map);
++			for (sib_index = 0; sib_index < cache_leaves(sibling); sib_index++) {
++				sib_leaf = per_cpu_cacheinfo_idx(sibling, sib_index);
++				if (cache_leaves_are_shared(this_leaf, sib_leaf)) {
++					cpumask_clear_cpu(cpu, &sib_leaf->shared_cpu_map);
++					cpumask_clear_cpu(sibling, &this_leaf->shared_cpu_map);
++					break;
++				}
 +			}
- 			break;
- 		default:
- 			ret = -EINVAL;
-@@ -1164,14 +1168,14 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
- 		msg->actual_length += xfer->len;
- 		transfer_phase++;
- 	}
--	if (!xfer->cs_change) {
--		tegra_qspi_transfer_end(spi);
--		spi_transfer_delay_exec(xfer);
--	}
- 	ret = 0;
- 
- exit:
- 	msg->status = ret;
-+	if (ret < 0) {
-+		tegra_qspi_transfer_end(spi);
-+		spi_transfer_delay_exec(xfer);
-+	}
- 
- 	return ret;
- }
+ 		}
+ 		if (of_have_populated_dt())
+ 			of_node_put(this_leaf->fw_token);
 -- 
 2.39.2
 
