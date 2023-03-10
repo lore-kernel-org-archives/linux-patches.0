@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3FE846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2261AC433EF;
-	Fri, 10 Mar 2023 14:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E6E846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC1BC43445;
+	Fri, 10 Mar 2023 14:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458641;
-	bh=MOg6PeMeAo6TkmDBX9O5pSTlFO6JKewO5HWRJ2edMtU=;
+	s=korg; t=1678458644;
+	bh=RT4s2/oFfiS1+4UmZeWEprWchzJoRaCpPslgf5EoBfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRA05Ac+vJRZZ42ZK1AuTl3Ns/2+RYe6r07f7hwvSSLBI83XIPnmvLaFT3q4mqk4x
-	 Tuu2wq+TZRA8QlYYxkY9FzwuB2fOStJmQLGFd9Ylba4hesNqG6fxC29BqEjJIo3JeV
-	 4/8WYOJYzAJaSO6ZogSuR6fOlZgBGw9MBKajXzvA=
+	b=R33o/kkk89lHUF4oj78dquZCThlmw7DCvXPZ8WJ+0JFx+D7Hfpalf3z5sK2Q60dm8
+	 AHM8TC062OSCp7xr1Zoh6Khf9A5O4I4T/Wwcp0dlMkCW9CKUB5U4EsOL1AfsH76Yt5
+	 xHQepGYltlE8+Gix+O0HxXlsHnBOIGYL+IbnPCI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marek Vasut <marex@denx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 096/357] drm/fourcc: Add missing big-endian XRGB1555 and RGB565 formats
-Date: Fri, 10 Mar 2023 14:36:25 +0100
-Message-Id: <20230310133738.229938566@linuxfoundation.org>
+Subject: [PATCH 5.4 097/357] drm: mxsfb: DRM_MXSFB should depend on ARCH_MXS || ARCH_MXC
+Date: Fri, 10 Mar 2023 14:36:26 +0100
+Message-Id: <20230310133738.280581099@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,48 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert@linux-m68k.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 6fb6c979ca628583d4d0c59a0f8ff977e581ecc0 ]
+[ Upstream commit 7783cc67862f9166c901bfa0f80b717aa8d354dd ]
 
-As of commit eae06120f1974e1a ("drm: refuse ADDFB2 ioctl for broken
-bigendian drivers"), drivers must set the
-quirk_addfb_prefer_host_byte_order quirk to make the drm_mode_addfb()
-compat code work correctly on big-endian machines.
+Freescale/NXP i.MX LCDIF and eLCDIF LCD controllers are only present on
+Freescale/NXP i.MX SoCs.  Hence add a dependency on ARCH_MXS ||
+ARCH_MXC, to prevent asking the user about this driver when configuring
+a kernel without Freescale/NXP i.MX support.
 
-While that works fine for big-endian XRGB8888 and ARGB8888, which are
-mapped to the existing little-endian BGRX8888 and BGRA8888 formats, it
-does not work for big-endian XRGB1555 and RGB565, as the latter are not
-listed in the format database.
-
-Fix this by adding the missing formats.  Limit this to big-endian
-platforms, as there is currently no need to support these formats on
-little-endian platforms.
-
-Fixes: 6960e6da9cec3f66 ("drm: fix drm_mode_addfb() on big endian machines.")
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/3ee1f8144feb96c28742b22384189f1f83bcfc1a.1669221671.git.geert@linux-m68k.org
+Fixes: 45d59d704080cc0c ("drm: Add new driver for MXSFB controller")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/98e74779ca2bc575d91afff03369e86b080c01ac.1669046358.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_fourcc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/mxsfb/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/drm_fourcc.c b/drivers/gpu/drm/drm_fourcc.c
-index c630064ccf416..d88a312962b3d 100644
---- a/drivers/gpu/drm/drm_fourcc.c
-+++ b/drivers/gpu/drm/drm_fourcc.c
-@@ -178,6 +178,10 @@ const struct drm_format_info *__drm_format_info(u32 format)
- 		{ .format = DRM_FORMAT_BGRA5551,	.depth = 15, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1, .has_alpha = true },
- 		{ .format = DRM_FORMAT_RGB565,		.depth = 16, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1 },
- 		{ .format = DRM_FORMAT_BGR565,		.depth = 16, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1 },
-+#ifdef __BIG_ENDIAN
-+		{ .format = DRM_FORMAT_XRGB1555 | DRM_FORMAT_BIG_ENDIAN, .depth = 15, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1 },
-+		{ .format = DRM_FORMAT_RGB565 | DRM_FORMAT_BIG_ENDIAN, .depth = 16, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1 },
-+#endif
- 		{ .format = DRM_FORMAT_RGB888,		.depth = 24, .num_planes = 1, .cpp = { 3, 0, 0 }, .hsub = 1, .vsub = 1 },
- 		{ .format = DRM_FORMAT_BGR888,		.depth = 24, .num_planes = 1, .cpp = { 3, 0, 0 }, .hsub = 1, .vsub = 1 },
- 		{ .format = DRM_FORMAT_XRGB8888,	.depth = 24, .num_planes = 1, .cpp = { 4, 0, 0 }, .hsub = 1, .vsub = 1 },
+diff --git a/drivers/gpu/drm/mxsfb/Kconfig b/drivers/gpu/drm/mxsfb/Kconfig
+index 33916b7b2c501..e8cb02803d9b6 100644
+--- a/drivers/gpu/drm/mxsfb/Kconfig
++++ b/drivers/gpu/drm/mxsfb/Kconfig
+@@ -8,6 +8,7 @@ config DRM_MXSFB
+ 	tristate "i.MX23/i.MX28/i.MX6SX MXSFB LCD controller"
+ 	depends on DRM && OF
+ 	depends on COMMON_CLK
++	depends on ARCH_MXS || ARCH_MXC || COMPILE_TEST
+ 	select DRM_MXS
+ 	select DRM_KMS_HELPER
+ 	select DRM_KMS_CMA_HELPER
 -- 
 2.39.2
 
