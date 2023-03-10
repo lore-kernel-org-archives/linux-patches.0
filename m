@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6435882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:11:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1560FC433D2;
-	Fri, 10 Mar 2023 15:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD27882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:11:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16983C433EF;
+	Fri, 10 Mar 2023 15:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461094;
-	bh=0x/+WmQzqu8GiFGj5lbXFO2fyb5nHNBnxZJqnBAU9jY=;
+	s=korg; t=1678461097;
+	bh=ZFcSvZW/wXJCskVMaZmBwep1WQut9EA8EGFSb8pcrrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XaqTzgbqx30t5RrulFdNvhoTCiO6ueAjIInWpcLNr5hZd5BpgSBNAq1fq2Z0FFAu4
-	 RmUDjrQRlrKBZD5JXoLxuz5gI26hVJGYd8fC6kn46qp19lUZVspvJWGPliDtWDbAIs
-	 hUfJwJ1yNkpB4Job00mAlcJmSCMf39LAOh8N3Bu8=
+	b=HuThkDvez+woO4KaS5VTfNY9EzticffDLebCrJIsL5CcmYRY/2SciYy2PQFy7Y6p5
+	 S5GuE8rX2dx63IlWLDTh/LapotXanAH+Asp/0oP+vLYyzgqgVHg53H8QdOxUkRdSyq
+	 JKazzFhThkxA1dB/5kYFSq5oNwalZNB1RM75aFoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	syzbot+0be96567042453c0c820@syzkaller.appspotmail.com,
+	Liu Shixin <liushixin2@huawei.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 023/136] ubifs: Re-statistic cleaned znode count if commit failed
-Date: Fri, 10 Mar 2023 14:42:25 +0100
-Message-Id: <20230310133707.670588086@linuxfoundation.org>
+Subject: [PATCH 5.15 003/136] fs/jfs: fix shift exponent db_agl2size negative
+Date: Fri, 10 Mar 2023 14:42:05 +0100
+Message-Id: <20230310133706.967739072@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -35,84 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Liu Shixin via Jfs-discussion <jfs-discussion@lists.sourceforge.net>
 
-[ Upstream commit 944e096aa24071d3fe22822f6249d3ae309e39ea ]
+[ Upstream commit fad376fce0af58deebc5075b8539dc05bf639af3 ]
 
-Dirty znodes will be written on flash in committing process with
-following states:
+As a shift exponent, db_agl2size can not be less than 0. Add the missing
+check to fix the shift-out-of-bounds bug reported by syzkaller:
 
-	      process A			|  znode state
-------------------------------------------------------
-do_commit				| DIRTY_ZNODE
-  ubifs_tnc_start_commit		| DIRTY_ZNODE
-   get_znodes_to_commit			| DIRTY_ZNODE | COW_ZNODE
-    layout_commit			| DIRTY_ZNODE | COW_ZNODE
-     fill_gap                           | 0
-  write master				| 0 or OBSOLETE_ZNODE
+ UBSAN: shift-out-of-bounds in fs/jfs/jfs_dmap.c:2227:15
+ shift exponent -744642816 is negative
 
-	      process B			|  znode state
-------------------------------------------------------
-do_commit				| DIRTY_ZNODE[1]
-  ubifs_tnc_start_commit		| DIRTY_ZNODE
-   get_znodes_to_commit			| DIRTY_ZNODE | COW_ZNODE
-  ubifs_tnc_end_commit			| DIRTY_ZNODE | COW_ZNODE
-   write_index                          | 0
-  write master				| 0 or OBSOLETE_ZNODE[2] or
-					| DIRTY_ZNODE[3]
-
-[1] znode is dirtied without concurrent committing process
-[2] znode is copied up (re-dirtied by other process) before cleaned
-    up in committing process
-[3] znode is re-dirtied after cleaned up in committing process
-
-Currently, the clean znode count is updated in free_obsolete_znodes(),
-which is called only in normal path. If do_commit failed, clean znode
-count won't be updated, which triggers a failure ubifs assertion[4] in
-ubifs_tnc_close():
- ubifs_assert_failed [ubifs]: UBIFS assert failed: freed == n
-
-[4] Commit 380347e9ca7682 ("UBIFS: Add an assertion for clean_zn_cnt").
-
-Fix it by re-statisticing cleaned znode count in tnc_destroy_cnext().
-
-Fetch a reproducer in [Link].
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216704
-Fixes: 1e51764a3c2a ("UBIFS: add new flash file system")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Reported-by: syzbot+0be96567042453c0c820@syzkaller.appspotmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/tnc.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/jfs/jfs_dmap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ubifs/tnc.c b/fs/ubifs/tnc.c
-index 488f3da7a6c6c..2df56bbc68657 100644
---- a/fs/ubifs/tnc.c
-+++ b/fs/ubifs/tnc.c
-@@ -3053,6 +3053,21 @@ static void tnc_destroy_cnext(struct ubifs_info *c)
- 		cnext = cnext->cnext;
- 		if (ubifs_zn_obsolete(znode))
- 			kfree(znode);
-+		else if (!ubifs_zn_cow(znode)) {
-+			/*
-+			 * Don't forget to update clean znode count after
-+			 * committing failed, because ubifs will check this
-+			 * count while closing tnc. Non-obsolete znode could
-+			 * be re-dirtied during committing process, so dirty
-+			 * flag is untrustable. The flag 'COW_ZNODE' is set
-+			 * for each dirty znode before committing, and it is
-+			 * cleared as long as the znode become clean, so we
-+			 * can statistic clean znode count according to this
-+			 * flag.
-+			 */
-+			atomic_long_inc(&c->clean_zn_cnt);
-+			atomic_long_inc(&ubifs_clean_zn_cnt);
-+		}
- 	} while (cnext && cnext != c->cnext);
- }
- 
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index f401bc05d5ff6..0034b0f397153 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -193,7 +193,8 @@ int dbMount(struct inode *ipbmap)
+ 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
+ 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
+ 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
+-	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) {
++	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG ||
++	    bmp->db_agl2size < 0) {
+ 		err = -EINVAL;
+ 		goto err_release_metapage;
+ 	}
 -- 
 2.39.2
 
