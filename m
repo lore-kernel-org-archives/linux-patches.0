@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF5A8825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:58:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41302C433D2;
-	Fri, 10 Mar 2023 14:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAACC8825
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:59:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D453C4339C;
+	Fri, 10 Mar 2023 14:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460338;
-	bh=5vq/6iRXvQFKqBz5hG3lYi9543/s4f05JWP5YlTa8jY=;
+	s=korg; t=1678460341;
+	bh=td2K2RP7PyBJQBfIedxWBKQECqjRZG8QDwO42ZfpJM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s2wI3B+8/QTiBegPM3q5d4dH34Lu7XfrM2h5kLa9ljG7o8Z8VK69g6jJqoFq4aKnU
-	 NcldTLzsEku0YyPo6eIqg7bL6yZhCHX2eZJtLLgUiOHQsSDOEahUVD8+Y5dHDgyom6
-	 EVTLUJQipiGEPOOtpXibXT1FeODVTfeqWSC1pkXc=
+	b=ykhZ9gBVmuGQziRzl/mfAVoIhBN7r4fDXfHQUx3RzXpEl+oywP6iswyJz0ZmdYyTC
+	 w6MNRV4nKi3tJKtfNB3uPcDTJno2C3AKKkZtC60NxoWrK5SUWo3z4N+fdw5lssHojE
+	 BTv0KRMFNRlZ+v2kns/VrO0bLhopT9Olz1I16yU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 301/529] m68k: Check syscall_trace_enter() return code
-Date: Fri, 10 Mar 2023 14:37:24 +0100
-Message-Id: <20230310133818.945612955@linuxfoundation.org>
+Subject: [PATCH 5.10 302/529] wifi: mt76: dma: free rx_head in mt76_dma_rx_cleanup
+Date: Fri, 10 Mar 2023 14:37:25 +0100
+Message-Id: <20230310133818.991661606@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,70 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 2ca8a1de4437f21562e57f9ac123914747a8e7a1 ]
+[ Upstream commit 1b88b47e898edef0e56e3a2f4e49f052a136153d ]
 
-Check return code of syscall_trace_enter(), and skip syscall
-if -1. Return code will be left at what had been set by
-ptrace or seccomp (in regs->d0).
+Free rx_head skb in mt76_dma_rx_cleanup routine in order to avoid
+possible memory leak at module unload.
 
-No regression seen in testing with strace on ARAnyM.
-
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20230112035529.13521-2-schmitzmic@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/68000/entry.S    | 2 ++
- arch/m68k/coldfire/entry.S | 2 ++
- arch/m68k/kernel/entry.S   | 3 +++
- 3 files changed, 7 insertions(+)
+ drivers/net/wireless/mediatek/mt76/dma.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/arch/m68k/68000/entry.S b/arch/m68k/68000/entry.S
-index 259b3661b6141..94abf3d8afc52 100644
---- a/arch/m68k/68000/entry.S
-+++ b/arch/m68k/68000/entry.S
-@@ -47,6 +47,8 @@ do_trace:
- 	jbsr	syscall_trace_enter
- 	RESTORE_SWITCH_STACK
- 	addql	#4,%sp
-+	addql	#1,%d0
-+	jeq	ret_from_exception
- 	movel	%sp@(PT_OFF_ORIG_D0),%d1
- 	movel	#-ENOSYS,%d0
- 	cmpl	#NR_syscalls,%d1
-diff --git a/arch/m68k/coldfire/entry.S b/arch/m68k/coldfire/entry.S
-index d43a02795a4a4..f1d41a9328a27 100644
---- a/arch/m68k/coldfire/entry.S
-+++ b/arch/m68k/coldfire/entry.S
-@@ -92,6 +92,8 @@ ENTRY(system_call)
- 	jbsr	syscall_trace_enter
- 	RESTORE_SWITCH_STACK
- 	addql	#4,%sp
-+	addql	#1,%d0
-+	jeq	ret_from_exception
- 	movel	%d3,%a0
- 	jbsr	%a0@
- 	movel	%d0,%sp@(PT_OFF_D0)		/* save the return value */
-diff --git a/arch/m68k/kernel/entry.S b/arch/m68k/kernel/entry.S
-index 9dd76fbb7c6b2..546bab6bfc273 100644
---- a/arch/m68k/kernel/entry.S
-+++ b/arch/m68k/kernel/entry.S
-@@ -167,9 +167,12 @@ do_trace_entry:
- 	jbsr	syscall_trace
- 	RESTORE_SWITCH_STACK
- 	addql	#4,%sp
-+	addql	#1,%d0			| optimization for cmpil #-1,%d0
-+	jeq	ret_from_syscall
- 	movel	%sp@(PT_OFF_ORIG_D0),%d0
- 	cmpl	#NR_syscalls,%d0
- 	jcs	syscall
-+	jra	ret_from_syscall
- badsys:
- 	movel	#-ENOSYS,%sp@(PT_OFF_D0)
- 	jra	ret_from_syscall
+diff --git a/drivers/net/wireless/mediatek/mt76/dma.c b/drivers/net/wireless/mediatek/mt76/dma.c
+index f01b455783b23..7991705e9d134 100644
+--- a/drivers/net/wireless/mediatek/mt76/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/dma.c
+@@ -476,6 +476,7 @@ mt76_dma_rx_cleanup(struct mt76_dev *dev, struct mt76_queue *q)
+ 	bool more;
+ 
+ 	spin_lock_bh(&q->lock);
++
+ 	do {
+ 		buf = mt76_dma_dequeue(dev, q, true, NULL, NULL, &more);
+ 		if (!buf)
+@@ -483,6 +484,12 @@ mt76_dma_rx_cleanup(struct mt76_dev *dev, struct mt76_queue *q)
+ 
+ 		skb_free_frag(buf);
+ 	} while (1);
++
++	if (q->rx_head) {
++		dev_kfree_skb(q->rx_head);
++		q->rx_head = NULL;
++	}
++
+ 	spin_unlock_bh(&q->lock);
+ 
+ 	if (!q->rx_page.va)
+@@ -505,12 +512,6 @@ mt76_dma_rx_reset(struct mt76_dev *dev, enum mt76_rxq_id qid)
+ 	mt76_dma_rx_cleanup(dev, q);
+ 	mt76_dma_sync_idx(dev, q);
+ 	mt76_dma_rx_fill(dev, q);
+-
+-	if (!q->rx_head)
+-		return;
+-
+-	dev_kfree_skb(q->rx_head);
+-	q->rx_head = NULL;
+ }
+ 
+ static void
 -- 
 2.39.2
 
