@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44C4881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B4BC433D2;
-	Fri, 10 Mar 2023 14:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAA7881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A32EC433D2;
+	Fri, 10 Mar 2023 14:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459232;
-	bh=ROSyo5ngZS9Ug8j1MSM0nKZdYkzVepIeflrMLwM5Z9o=;
+	s=korg; t=1678459235;
+	bh=nASo2f4JR8ZSOoYzvCW9dDL1De1xlQ+pb1BhFDIja5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mqCrOYVya7X+wWmJV8+NlAcVdxKiwx9krTov3D3PoDQ7K0kfkseNkzpZ9wZWXU5IP
-	 bif7enanSnO/GptgfK7Brp7QO8Awil5sjxtPJkq/lBcgpCKF8je+QpxBMNHAg7nKFS
-	 SSUk25i9wmG4gnwYvQTknqWuMpu55cwFrz07AB7Q=
+	b=Uy407Hls1Ha6INccJrJRuAdhAsAfxwvynnGETSK1cBdIbgx1Oifv5vgzXG0b5vnI7
+	 rfdKAhQXSyzQCvtQARsYbzvI7E6LBuYZFJZqhkW7xkt6owGWyfwkFIQtcRugshg2G/
+	 5+ZFkuqliTN6jq2M6lNGLhXESz1+NV79rpHfziAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 285/357] pwm: sifive: Reduce time the controller lock is held
-Date: Fri, 10 Mar 2023 14:39:34 +0100
-Message-Id: <20230310133747.337202186@linuxfoundation.org>
+Subject: [PATCH 5.4 294/357] ubifs: Rectify space budget for ubifs_xrename()
+Date: Fri, 10 Mar 2023 14:39:43 +0100
+Message-Id: <20230310133747.734492728@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,79 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 0f02f491b786143f08eb19840f1cf4f12aec6dee ]
+[ Upstream commit 1b2ba09060e41adb356b9ae58ef94a7390928004 ]
 
-The lock is only to serialize access and update to user_count and
-approx_period between different PWMs served by the same pwm_chip.
-So the lock needs only to be taken during the check if the (chip global)
-period can and/or needs to be changed.
+There is no space budget for ubifs_xrename(). It may let
+make_reservation() return with -ENOSPC, which could turn
+ubifs to read-only mode in do_writepage() process.
+Fix it by adding space budget for ubifs_xrename().
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Tested-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Stable-dep-of: 334c7b13d383 ("pwm: sifive: Always let the first pwm_apply_state succeed")
+Fetch a reproducer in [Link].
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216569
+Fixes: 9ec64962afb170 ("ubifs: Implement RENAME_EXCHANGE")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-sifive.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/ubifs/dir.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/pwm/pwm-sifive.c b/drivers/pwm/pwm-sifive.c
-index 538297ef82558..980ddcdd52953 100644
---- a/drivers/pwm/pwm-sifive.c
-+++ b/drivers/pwm/pwm-sifive.c
-@@ -43,7 +43,7 @@
- 
- struct pwm_sifive_ddata {
- 	struct pwm_chip	chip;
--	struct mutex lock; /* lock to protect user_count */
-+	struct mutex lock; /* lock to protect user_count and approx_period */
- 	struct notifier_block notifier;
- 	struct clk *clk;
- 	void __iomem *regs;
-@@ -78,6 +78,7 @@ static void pwm_sifive_free(struct pwm_chip *chip, struct pwm_device *pwm)
- 	mutex_unlock(&ddata->lock);
- }
- 
-+/* Called holding ddata->lock */
- static void pwm_sifive_update_clock(struct pwm_sifive_ddata *ddata,
- 				    unsigned long rate)
- {
-@@ -166,7 +167,6 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 		return ret;
+diff --git a/fs/ubifs/dir.c b/fs/ubifs/dir.c
+index 0c012f8fabbb2..9a4f9563aceea 100644
+--- a/fs/ubifs/dir.c
++++ b/fs/ubifs/dir.c
+@@ -1538,6 +1538,10 @@ static int ubifs_xrename(struct inode *old_dir, struct dentry *old_dentry,
+ 		return err;
  	}
  
--	mutex_lock(&ddata->lock);
- 	cur_state = pwm->state;
- 	enabled = cur_state.enabled;
++	err = ubifs_budget_space(c, &req);
++	if (err)
++		goto out;
++
+ 	lock_4_inodes(old_dir, new_dir, NULL, NULL);
  
-@@ -185,14 +185,17 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 	/* The hardware cannot generate a 100% duty cycle */
- 	frac = min(frac, (1U << PWM_SIFIVE_CMPWIDTH) - 1);
+ 	time = current_time(old_dir);
+@@ -1563,6 +1567,7 @@ static int ubifs_xrename(struct inode *old_dir, struct dentry *old_dentry,
+ 	unlock_4_inodes(old_dir, new_dir, NULL, NULL);
+ 	ubifs_release_budget(c, &req);
  
-+	mutex_lock(&ddata->lock);
- 	if (state->period != ddata->approx_period) {
- 		if (ddata->user_count != 1) {
-+			mutex_unlock(&ddata->lock);
- 			ret = -EBUSY;
- 			goto exit;
- 		}
- 		ddata->approx_period = state->period;
- 		pwm_sifive_update_clock(ddata, clk_get_rate(ddata->clk));
- 	}
-+	mutex_unlock(&ddata->lock);
- 
- 	writel(frac, ddata->regs + PWM_SIFIVE_PWMCMP0 +
- 	       pwm->hwpwm * PWM_SIFIVE_SIZE_PWMCMP);
-@@ -202,7 +205,6 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 
- exit:
- 	clk_disable(ddata->clk);
--	mutex_unlock(&ddata->lock);
- 	return ret;
- }
- 
++out:
+ 	fscrypt_free_filename(&fst_nm);
+ 	fscrypt_free_filename(&snd_nm);
+ 	return err;
 -- 
 2.39.2
 
