@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BF88481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:06:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 792C6C433D2;
-	Fri, 10 Mar 2023 14:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CF68481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:06:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523CBC433D2;
+	Fri, 10 Mar 2023 14:06:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457177;
-	bh=/pOJYxD46R/dxAJ9FZa7wUCpI6f2861qRI/sz6R6K4Y=;
+	s=korg; t=1678457180;
+	bh=3cmznv8an2kdzhfWa1qltY0CQ3ppfedg+qrQnlgV8og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K9XkKJD4nJvZfSFBldf/NXYMOzf8JKCULKWW34xf2tF8CrRqhCPh882V0CyXvwBoy
-	 WVKMly3yp9qwJPYoB7dYEaCXrUlaMXsCKfTz9fP8NUtSUXGtLpI1jEMhDbALu5wZj9
-	 nPAX9Tyjyu8K7wvM6U6k4au/rIuI3tz+TWhCIisk=
+	b=gD1AW5GBPVLEzydobtxn0K9RlczEXmuLhFgLmMJY4qNf383IALMCEs1x0rf99l/oL
+	 f04cIXnMC9/5loBWh/Z+A0M996rqsRq82niQHSu/mUiiqY04bYdv4HXzykN1YuAZca
+	 g8X9G5A4xySeDQIvFgKQX7/SCehCznfbN4uti/PY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/200] netfilter: nf_tables: allow to fetch set elements when table has an owner
-Date: Fri, 10 Mar 2023 14:37:34 +0100
-Message-Id: <20230310133718.543031844@linuxfoundation.org>
+Subject: [PATCH 6.1 030/200] ubifs: do_rename: Fix wrong space budget when target inodes nlink > 1
+Date: Fri, 10 Mar 2023 14:37:17 +0100
+Message-Id: <20230310133717.974825054@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -34,34 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 92f3e96d642f5e05b9dc710c06fedc669f1b4f00 ]
+[ Upstream commit 25fce616a61fc2f1821e4a9ce212d0e064707093 ]
 
-NFT_MSG_GETSETELEM returns -EPERM when fetching set elements that belong
-to table that has an owner. This results in empty set/map listing from
-userspace.
+If target inode is a special file (eg. block/char device) with nlink
+count greater than 1, the inode with ui->data will be re-written on
+disk. However, UBIFS losts target inode's data_len while doing space
+budget. Bad space budget may let make_reservation() return with -ENOSPC,
+which could turn ubifs to read-only mode in do_writepage() process.
 
-Fixes: 6001a930ce03 ("netfilter: nftables: introduce table ownership")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fetch a reproducer in [Link].
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216494
+Fixes: 1e51764a3c2ac0 ("UBIFS: add new flash file system")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ubifs/dir.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index dca5352bdf3d7..1a9d759d0a026 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -5439,7 +5439,7 @@ static int nf_tables_getsetelem(struct sk_buff *skb,
- 	int rem, err = 0;
+diff --git a/fs/ubifs/dir.c b/fs/ubifs/dir.c
+index 94634b872e382..5e6bcce94e641 100644
+--- a/fs/ubifs/dir.c
++++ b/fs/ubifs/dir.c
+@@ -1324,6 +1324,8 @@ static int do_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 	if (unlink) {
+ 		ubifs_assert(c, inode_is_locked(new_inode));
  
- 	table = nft_table_lookup(net, nla[NFTA_SET_ELEM_LIST_TABLE], family,
--				 genmask, NETLINK_CB(skb).portid);
-+				 genmask, 0);
- 	if (IS_ERR(table)) {
- 		NL_SET_BAD_ATTR(extack, nla[NFTA_SET_ELEM_LIST_TABLE]);
- 		return PTR_ERR(table);
++		/* Budget for old inode's data when its nlink > 1. */
++		req.dirtied_ino_d = ALIGN(ubifs_inode(new_inode)->data_len, 8);
+ 		err = ubifs_purge_xattrs(new_inode);
+ 		if (err)
+ 			return err;
 -- 
 2.39.2
 
