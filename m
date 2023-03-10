@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75B7882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:13:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E952C433D2;
-	Fri, 10 Mar 2023 15:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CE9882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:13:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3085DC433EF;
+	Fri, 10 Mar 2023 15:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461215;
-	bh=fI7CotlMsLlDkTVS+E+4UC6pqgSvzurq+2ExBeIu+LQ=;
+	s=korg; t=1678461218;
+	bh=8lY5SP0eMFjUYMDwZ22966vW7MGBnjlSuuYs2z0LYfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ynUO1mEUhuFxodJvjfs2FNAGmrromhO7ID6hbb8hL7TGEcoi1KX0bbZiHwjtJBj1J
-	 i5BEE3xvqvVLwf7YAH3bG01zFm95SVDQMWIV6MM4vpH3f0PE1/F+h0IcYlWw9TiYzM
-	 OseeyoUHCskLQr3jRQV+KU9Wq/uQ7YtV8qmYPNyk=
+	b=IJsfubW92jWf6Oq3KzKDPx2uaIqM23OrcJEdRg91NAB5El7BRkh7yPdZJhJuK3Ch7
+	 pMa/Em8bTnTvwPEuVaTetAW4fhsQe96K4k3f1qw0zb/3l9eL5gBGfhheYxdQqX4YCm
+	 valPa9QZVQxelg/6WWHnoXht7GqUM+cCcwqVoapA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/136] um: virtio_uml: free command if adding to virtqueue failed
-Date: Fri, 10 Mar 2023 14:42:35 +0100
-Message-Id: <20230310133708.035407740@linuxfoundation.org>
+Subject: [PATCH 5.15 024/136] ubifs: dirty_cow_znode: Fix memleak in error handling path
+Date: Fri, 10 Mar 2023 14:42:26 +0100
+Message-Id: <20230310133707.708839769@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -35,38 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 8a6ca543646f2940832665dbf4e04105262505e2 ]
+[ Upstream commit 122deabfe1428bffe95e2bf364ff8a5059bdf089 ]
 
-If adding the command fails (i.e. the virtqueue is broken) then free it
-again if the function allocated a new buffer for it.
+Following process will cause a memleak for copied up znode:
 
-Fixes: 68f5d3f3b654 ("um: add PCI over virtio emulation driver")
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+dirty_cow_znode
+  zn = copy_znode(c, znode);
+  err = insert_old_idx(c, zbr->lnum, zbr->offs);
+  if (unlikely(err))
+     return ERR_PTR(err);   // No one refers to zn.
+
+Fix it by adding copied znode back to tnc, then it will be freed
+by ubifs_destroy_tnc_subtree() while closing tnc.
+
+Fetch a reproducer in [Link].
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216705
+Fixes: 1e51764a3c2a ("UBIFS: add new flash file system")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/drivers/virt-pci.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ubifs/tnc.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/arch/um/drivers/virt-pci.c b/arch/um/drivers/virt-pci.c
-index 0ab58016db22f..2829347d1e906 100644
---- a/arch/um/drivers/virt-pci.c
-+++ b/arch/um/drivers/virt-pci.c
-@@ -131,8 +131,11 @@ static int um_pci_send_cmd(struct um_pci_device *dev,
- 				out ? 1 : 0,
- 				posted ? cmd : HANDLE_NO_FREE(cmd),
- 				GFP_ATOMIC);
--	if (ret)
-+	if (ret) {
-+		if (posted)
-+			kfree(cmd);
- 		goto out;
-+	}
+diff --git a/fs/ubifs/tnc.c b/fs/ubifs/tnc.c
+index 2df56bbc68657..2469f72eeaabb 100644
+--- a/fs/ubifs/tnc.c
++++ b/fs/ubifs/tnc.c
+@@ -267,11 +267,18 @@ static struct ubifs_znode *dirty_cow_znode(struct ubifs_info *c,
+ 	if (zbr->len) {
+ 		err = insert_old_idx(c, zbr->lnum, zbr->offs);
+ 		if (unlikely(err))
+-			return ERR_PTR(err);
++			/*
++			 * Obsolete znodes will be freed by tnc_destroy_cnext()
++			 * or free_obsolete_znodes(), copied up znodes should
++			 * be added back to tnc and freed by
++			 * ubifs_destroy_tnc_subtree().
++			 */
++			goto out;
+ 		err = add_idx_dirt(c, zbr->lnum, zbr->len);
+ 	} else
+ 		err = 0;
  
- 	if (posted) {
- 		virtqueue_kick(dev->cmd_vq);
++out:
+ 	zbr->znode = zn;
+ 	zbr->lnum = 0;
+ 	zbr->offs = 0;
 -- 
 2.39.2
 
