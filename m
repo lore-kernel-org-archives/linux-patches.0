@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD668481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:14:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A15C433EF;
-	Fri, 10 Mar 2023 14:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613258481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:14:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA5DC4339E;
+	Fri, 10 Mar 2023 14:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457685;
-	bh=66dWPDY6YQiRJZ/wdMnTaRXpUh5VpRssfKqmzur64bo=;
+	s=korg; t=1678457688;
+	bh=h+AA5rhOUm/qbgFYYAyBRv5oXGeWsHthe1l+TFjSY7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VXlhCMmTtU9anmJQj4gaFByCM1Bw/+idw7MrcLKAJpyOQWuIwHhV8T5SRtHLyHGou
-	 nSBwI2GWO77Hy+Dzfe91oxuQ8959crH88PJB9yXMFoSfZJYWZIxU/UG1CqVACzqVHH
-	 ONguWkchyP87FwHYAzMZtmI/DLKnQm6DSgTf3oww=
+	b=xPrrgQQRUMa+GoiuHh8c8qTnfU4e9uQehAGQjPvMSNWKsI8wBvIGSXPGka+N7sI3R
+	 M8ZxWOTE9Iaqe3uSYSmI4C7cD5VGfjcqA2hLootqEw2SgddBTutfsg/JkTkJiJyQXk
+	 qx+qMqabcCOmIp2Sq16CqYrMIvQ0Ng9BEAlWxnDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiheng Lin <linqiheng@huawei.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Vyacheslav Bocharov <adeep@lexina.in>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 005/252] ARM: zynq: Fix refcount leak in zynq_early_slcr_init
-Date: Fri, 10 Mar 2023 14:36:15 +0100
-Message-Id: <20230310133718.975094913@linuxfoundation.org>
+Subject: [PATCH 4.19 006/252] arm64: dts: meson-gx: Fix Ethernet MAC address unit name
+Date: Fri, 10 Mar 2023 14:36:16 +0100
+Message-Id: <20230310133719.004393209@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -35,34 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiheng Lin <linqiheng@huawei.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit 9eedb910a3be0005b88c696a8552c0d4c9937cd4 ]
+[ Upstream commit 8ed5310356bfa47cc6bb4221ae6b21258c52e3d1 ]
 
-of_find_compatible_node() returns a node pointer with refcount incremented,
-we should use of_node_put() on error path.
-Add missing of_node_put() to avoid refcount leak.
+Unit names should use hyphens instead of underscores to not cause
+warnings.
 
-Fixes: 3329659df030 ("ARM: zynq: Simplify SLCR initialization")
-Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
-Link: https://lore.kernel.org/r/20221129140544.41293-1-linqiheng@huawei.com
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Fixes: bfe59f92d306 ("ARM64: dts: amlogic: gxbb: Enable NVMEM")
+Suggested-by: Vyacheslav Bocharov <adeep@lexina.in>
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230111211350.1461860-5-martin.blumenstingl@googlemail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-zynq/slcr.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/amlogic/meson-gx.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-zynq/slcr.c b/arch/arm/mach-zynq/slcr.c
-index f0292a30e6f69..6b75ef7be3fda 100644
---- a/arch/arm/mach-zynq/slcr.c
-+++ b/arch/arm/mach-zynq/slcr.c
-@@ -222,6 +222,7 @@ int __init zynq_early_slcr_init(void)
- 	zynq_slcr_regmap = syscon_regmap_lookup_by_compatible("xlnx,zynq-slcr");
- 	if (IS_ERR(zynq_slcr_regmap)) {
- 		pr_err("%s: failed to find zynq-slcr\n", __func__);
-+		of_node_put(np);
- 		return -ENODEV;
- 	}
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
+index a127657526c7f..19feaec6a1ae8 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
+@@ -150,7 +150,7 @@ sn: sn@14 {
+ 			reg = <0x14 0x10>;
+ 		};
+ 
+-		eth_mac: eth_mac@34 {
++		eth_mac: eth-mac@34 {
+ 			reg = <0x34 0x10>;
+ 		};
  
 -- 
 2.39.2
