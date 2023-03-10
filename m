@@ -1,137 +1,89 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113342F32
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 23:21:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3CB6C433D2;
-	Fri, 10 Mar 2023 23:21:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678490489;
-	bh=Npny9ESbzIr4YnzQ03Gj3yQ775wdrfEdkosmTVaC0Uw=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=EIVro1bu+N3OK/q5OEERqChLs25DFQCNhj78gEv8fI8l0BIBByNN1mFCkamda+yhK
-	 dLzFUW1UtR1ojJGlSZ4KsUPueDd1wbdRhqx985fisdjBgM8vr3X/eZg4XtNEcPa7/G
-	 gZ4Pfo28UVWrqvEoYmaZ8Yey6Ov1Yf97tR29NPBKMjvs4sXT+Ejjny2BSX70iqYPDC
-	 RsYZHJnXfbcHlRJu+KoxkLjBDTSkBh/LwZAFdnefQiBHdrp0DSgA4FlJ9G9yNnnNAS
-	 N2fq1RI9yFhA4SV8nIuKaaIAKfCy06anbGm3vWJi/WmQrzdwblSGslTTdLBkdgoZ5I
-	 0WzTNMHlXfhWA==
-Message-ID: <77b315f6b89eb256c516ee08b1c17312.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF50E4E0
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 23:22:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=Vl75lOivwxRd2Gq7JNUD53sjLJaqgVHzQJHDdO+38Jc=; b=fSLTvqIpq4dw1JrHrXBJ7039LX
+	4ywebvj4dFbVA3TjRRJuPgWV9StjK8zXQ+a33IdDsS2fX/Q4QMGirL1WDRqizNZaVxL5GOW/eEKcH
+	knTkNc3fPmnsodNzCJSQadU7ceRhoWNXvAXAs42kFHGQFUWyqoveZ9fBzX/NNfX8HVOjxC8jM3sha
+	Fh4x1QLHlaygVz3C8Z86xLsrXpJTorZ9XEO5EPD694G1HxD2WxvbNUGi6mI9cGTPiwWzuF97RmKfc
+	dOJl8U0pKM/8OMtSaGldSYx7rtCmXJF6/pjxFkUfmKc4VNxBgosIrj9LkAOyJaDzbbf5sArUfdQ7w
+	taZI1tcQ==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1pam3b-00GbRI-Jz; Fri, 10 Mar 2023 23:21:51 +0000
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: herbert@gondor.apana.org.au,
+	davem@davemloft.net
+Cc: ebiederm@xmission.com,
+	linux-crypto@vger.kernel.org,
+	keescook@chromium.org,
+	yzaikin@google.com,
+	j.granados@samsung.com,
+	patches@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH] crypto: simplify one-level sysctl registration for crypto_sysctl_table
+Date: Fri, 10 Mar 2023 15:21:50 -0800
+Message-Id: <20230310232150.3957148-1-mcgrof@kernel.org>
+X-Mailer: git-send-email 2.37.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CABVgOSkahumU6T+rCVx+k7Y9=iMszveseVYE0wfKjXwkNJpFxQ@mail.gmail.com>
-References: <20230302013822.1808711-1-sboyd@kernel.org> <20230302013822.1808711-5-sboyd@kernel.org> <CABVgOSkahumU6T+rCVx+k7Y9=iMszveseVYE0wfKjXwkNJpFxQ@mail.gmail.com>
-Subject: Re: [PATCH 4/8] clk: Add test managed clk provider/consumer APIs
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Brendan Higgins <brendan.higgins@linux.dev>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Richard Weinberger <richard@nod.at>, Anton Ivanov <anton.ivanov@cambridgegreys.com>, Johannes Berg <johannes@sipsolutions.net>, Vincent Whitchurch <vincent.whitchurch@axis.com>, Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, linux-um@lists.infradead.org, linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com
-To: David Gow <davidgow@google.com>
-Date: Fri, 10 Mar 2023 15:21:27 -0800
-User-Agent: alot/0.10
+Content-Transfer-Encoding: 8bit
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Quoting David Gow (2023-03-02 23:15:35)
-> On Thu, 2 Mar 2023 at 09:38, Stephen Boyd <sboyd@kernel.org> wrote:
-> >
-> > Unit tests are more ergonomic and simpler to understand if they don't
-> > have to hoist a bunch of code into the test harness init and exit
-> > functions. Add some test managed wrappers for the clk APIs so that clk
-> > unit tests can write more code in the actual test and less code in the
-> > harness.
-> >
-> > Only add APIs that are used for now. More wrappers can be added in the
-> > future as necessary.
-> >
-> > Cc: Brendan Higgins <brendan.higgins@linux.dev>
-> > Cc: David Gow <davidgow@google.com>
-> > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> > ---
->=20
-> Looks good, modulo bikeshedding below.
+There is no need to declare an extra tables to just create directory,
+this can be easily be done with a prefix path with register_sysctl().
 
-Cool!
+Simplify this registration.
 
-> >
-> > diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
-> > index e3ca0d058a25..7efce649b0d3 100644
-> > --- a/drivers/clk/Makefile
-> > +++ b/drivers/clk/Makefile
-> > @@ -17,6 +17,11 @@ ifeq ($(CONFIG_OF), y)
-> >  obj-$(CONFIG_COMMON_CLK)       +=3D clk-conf.o
-> >  endif
-> >
-> > +# KUnit specific helpers
-> > +ifeq ($(CONFIG_COMMON_CLK), y)
-> > +obj-$(CONFIG_KUNIT)            +=3D clk-kunit.o
->=20
-> Do we want to compile these in whenever KUnit is enabled, or only when
-> we're building clk tests specifically? I suspect this would be served
-> better by being under a CLK_KUNIT config option, which all of the
-> tests then depend on. (Whether that's the existing
-> CONFIG_CLK_KUNIT_TEST, and all of the clk tests live under the same
-> config option, or a separate parent option would be up to you).
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
 
-I was thinking of building it in with whatever mode CONFIG_KUNIT is
-built as. If this is a module because CONFIG_KUNIT=3Dm, then unit tests
-would depend on that, and this would be a module as well. modprobe would
-know that some unit test module depends on symbols provided by
-clk-kunit.ko and thus load clk-kunit.ko first.
+If not clear, see this new doc:
 
->=20
-> Equally, this could be a bit interesting if CONFIG_KUNIT=3Dm. Given
-> CONFIG_COMMON_CLK=3Dy, this would end up as a clk-kunit module, no?
+https://lore.kernel.org/all/20230310223947.3917711-1-mcgrof@kernel.org/T/#u     
 
-Yes, that is the intent.
+But the skinny is we can deprecate long term APIs from sysctl that
+uses recursion.
 
->=20
-> > +endif
-> > +
-> >  # hardware specific clock types
-> >  # please keep this section sorted lexicographically by file path name
-> >  obj-$(CONFIG_COMMON_CLK_APPLE_NCO)     +=3D clk-apple-nco.o
-> > diff --git a/drivers/clk/clk-kunit.c b/drivers/clk/clk-kunit.c
-> > new file mode 100644
-> > index 000000000000..78d85b3a7a4a
-> > --- /dev/null
-> > +++ b/drivers/clk/clk-kunit.c
-> > @@ -0,0 +1,204 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +/*
-> > + * KUnit helpers for clk tests
-> > + */
-> > +#include <linux/clk.h>
-> > +#include <linux/clk-provider.h>
-> > +#include <linux/err.h>
-> > +#include <linux/kernel.h>
-> > +#include <linux/slab.h>
-> > +
-> > +#include <kunit/resource.h>
-> > +
-> > +#include "clk-kunit.h"
-> > +
-> > +static void kunit_clk_disable_unprepare(struct kunit_resource *res)
->=20
-> We need to decide on the naming scheme of these, and in particular if
-> they should be kunit_clk or clk_kunit (or something else).
->=20
-> I'd lean to clk_kunit, if only to match DRM's KUnit helpers being
-> drm_kunit_helper better, and so that these are more tightly bound to
-> the subsystem being tested.
-> (i.e., so I don't have to scroll through every subsystem's helpers
-> when autocompleting kunit_).
+ crypto/fips.c | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-Ok, got it. I was trying to match kunit_kzalloc() style. It makes it
-easy to slap the 'kunit_' prefix on existing auto-completed function
-names like kzalloc() or clk_prepare_enable().
+diff --git a/crypto/fips.c b/crypto/fips.c
+index b05d3c7b3ca5..92fd506abb21 100644
+--- a/crypto/fips.c
++++ b/crypto/fips.c
+@@ -66,20 +66,11 @@ static struct ctl_table crypto_sysctl_table[] = {
+ 	{}
+ };
+ 
+-static struct ctl_table crypto_dir_table[] = {
+-	{
+-		.procname       = "crypto",
+-		.mode           = 0555,
+-		.child          = crypto_sysctl_table
+-	},
+-	{}
+-};
+-
+ static struct ctl_table_header *crypto_sysctls;
+ 
+ static void crypto_proc_fips_init(void)
+ {
+-	crypto_sysctls = register_sysctl_table(crypto_dir_table);
++	crypto_sysctls = register_sysctl("crypto", crypto_sysctl_table);
+ }
+ 
+ static void crypto_proc_fips_exit(void)
+-- 
+2.39.1
 
-I wasn't aware of drm_kunit_helper. That's a mouthful! We don't call it
-slab_kunit_helper_kzalloc(). Maybe to satisfy all conditions it should
-be:
-
-	clk_prepare_enable_kunit()
-
-so that kunit_ autocomplete doesn't have a big scroll list, and clk
-subsystem autocompletes, and we know it is kunit specific.
