@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D87C8489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:18:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FDBC433EF;
-	Fri, 10 Mar 2023 14:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCF28489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:18:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7575EC433D2;
+	Fri, 10 Mar 2023 14:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457900;
-	bh=U3i1RJQwvFWKC+wTdZSVlgAf3c98rYi+a/wZUZmMj8o=;
+	s=korg; t=1678457902;
+	bh=JwiaiJePlYKy+Z6LmfFH7t3aPBmB+Po3NczqPZBfy58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocKMJ352MIlsRs+qnjOqcdcJVKDjhDxHIhz8y0CNXO5hUw5HkkqqWVynxf2th3yKI
-	 6ja517G/l6IySMpc027sn+hPlaxO2jpr0lFlvQxxgpy5NkVRffsZosVsh02MEWHdYo
-	 +GrTMayiT1vQKCtbI16RlD3ouACoS3YZDF6SwGmU=
+	b=H6IniPwiv7rGQ8tmm5V1FZ1cC0j1Qd8SqLgc9Di2+cmCNHJUCwwpLYf2m+Gi3rPTX
+	 LBH3Dw2YiVDKgJb0i293AYNHPDalxFxj6yvpal0Zcskw7wRoYIc/4LXNWGVY5/GWQN
+	 btVXxxmEUW7++dwZ0YoKe82hGoAhXInQtwaEPE5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Qiheng Lin <linqiheng@huawei.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 097/252] selftests/ftrace: Fix bash specific "==" operator
-Date: Fri, 10 Mar 2023 14:37:47 +0100
-Message-Id: <20230310133721.755940604@linuxfoundation.org>
+Subject: [PATCH 4.19 098/252] mfd: pcf50633-adc: Fix potential memleak in pcf50633_adc_async_read()
+Date: Fri, 10 Mar 2023 14:37:48 +0100
+Message-Id: <20230310133721.784634885@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,42 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Qiheng Lin <linqiheng@huawei.com>
 
-[ Upstream commit 1e6b485c922fbedf41d5a9f4e6449c5aeb923a32 ]
+[ Upstream commit 8b450dcff23aa254844492831a8e2b508a9d522d ]
 
-Since commit a1d6cd88c897 ("selftests/ftrace: event_triggers: wait
-longer for test_event_enable") introduced bash specific "=="
-comparation operator, that test will fail when we run it on a
-posix-shell. `checkbashisms` warned it as below.
+`req` is allocated in pcf50633_adc_async_read(), but
+adc_enqueue_request() could fail to insert the `req` into queue.
+We need to check the return value and free it in the case of failure.
 
-possible bashism in ftrace/func_event_triggers.tc line 45 (should be 'b = a'):
-        if [ "$e" == $val ]; then
-
-This replaces it with "=".
-
-Fixes: a1d6cd88c897 ("selftests/ftrace: event_triggers: wait longer for test_event_enable")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 08c3e06a5eb2 ("mfd: PCF50633 adc driver")
+Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20221208061555.8776-1-linqiheng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/ftrace/test.d/ftrace/func_event_triggers.tc       | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/pcf50633-adc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-index 79d614f1fe8e4..d620223a3f0f6 100644
---- a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-+++ b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-@@ -49,7 +49,7 @@ test_event_enabled() {
+diff --git a/drivers/mfd/pcf50633-adc.c b/drivers/mfd/pcf50633-adc.c
+index c1984b0d1b652..a4a765055ee6b 100644
+--- a/drivers/mfd/pcf50633-adc.c
++++ b/drivers/mfd/pcf50633-adc.c
+@@ -140,6 +140,7 @@ int pcf50633_adc_async_read(struct pcf50633 *pcf, int mux, int avg,
+ 			     void *callback_param)
+ {
+ 	struct pcf50633_adc_request *req;
++	int ret;
  
-     while [ $check_times -ne 0 ]; do
- 	e=`cat $EVENT_ENABLE`
--	if [ "$e" == $val ]; then
-+	if [ "$e" = $val ]; then
- 	    return 0
- 	fi
- 	sleep $SLEEP_TIME
+ 	/* req is freed when the result is ready, in interrupt handler */
+ 	req = kmalloc(sizeof(*req), GFP_KERNEL);
+@@ -151,7 +152,11 @@ int pcf50633_adc_async_read(struct pcf50633 *pcf, int mux, int avg,
+ 	req->callback = callback;
+ 	req->callback_param = callback_param;
+ 
+-	return adc_enqueue_request(pcf, req);
++	ret = adc_enqueue_request(pcf, req);
++	if (ret)
++		kfree(req);
++
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(pcf50633_adc_async_read);
+ 
 -- 
 2.39.2
 
