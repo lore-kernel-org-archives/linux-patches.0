@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5FA847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B33C433EF;
-	Fri, 10 Mar 2023 13:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3B8847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42779C433EF;
+	Fri, 10 Mar 2023 13:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456783;
-	bh=enrpPGyCyXmJUJ1zT9AXYi/ZX6uyEVhhZZIeMLKtn7c=;
+	s=korg; t=1678456786;
+	bh=9HOBJ1TxNXYuQBwhsHcBeEMK8IuCImffiBxY3RwP/JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ywq3qyxUSpKZ21w9NYJvfsgMNHBFPzrcUxDJ69VVz3Ejc8dyHE7m14GIzBvkSj+1y
-	 ozOJyHbBjvd1OXzMRkLkW5+KrBYuzXaDVCSP3I8nQfMd6qOpTwTaBiuLz3R0AlCmJW
-	 WwhOJ45agmN0NhWDtQsbCTyfi9iAv1A4lBXa3kwo=
+	b=qPUbq/PQmk/9jO6JGJOJJuInFOjwDUsmlVGY0pcSlwmqUyt0u4SxWcRpWy83d9A8P
+	 Wa2uwLqPie1kjK5RgRBBWEnzyc8NZbhDf8Fn/xRrPEOn495U+WsTv29kyEMJRuBxcx
+	 ogqRzrNPjO4GB7gbJgGNBQgLXfwW0bXx3s+O4dc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Eric Curtin <ecurtin@redhat.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 123/211] thermal: intel: BXT_PMIC: select REGMAP instead of depending on it
-Date: Fri, 10 Mar 2023 14:38:23 +0100
-Message-Id: <20230310133722.469398039@linuxfoundation.org>
+Subject: [PATCH 6.2 124/211] cpufreq: apple-soc: Fix an IS_ERR() vs NULL check
+Date: Fri, 10 Mar 2023 14:38:24 +0100
+Message-Id: <20230310133722.498544116@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,41 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 1467fb960349dfa5e300658f1a409dde2cfb0c51 ]
+[ Upstream commit f43523620f646c89ffd8ada840a0068290e51266 ]
 
-REGMAP is a hidden (not user visible) symbol. Users cannot set it
-directly thru "make *config", so drivers should select it instead of
-depending on it if they need it.
+The of_iomap() function returns NULL if it fails.  It never returns
+error pointers.  Fix the check accordingly.
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
-
-Therefore, change the use of "depends on REGMAP" to "select REGMAP".
-
-Fixes: b474303ffd57 ("thermal: add Intel BXT WhiskeyCove PMIC thermal driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Fixes: 6286bbb40576 ("cpufreq: apple-soc: Add new driver to control Apple SoC CPU P-states")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Eric Curtin <ecurtin@redhat.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cpufreq/apple-soc-cpufreq.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/intel/Kconfig b/drivers/thermal/intel/Kconfig
-index f0c8456792509..e3cfad10d5dd4 100644
---- a/drivers/thermal/intel/Kconfig
-+++ b/drivers/thermal/intel/Kconfig
-@@ -64,7 +64,8 @@ endmenu
+diff --git a/drivers/cpufreq/apple-soc-cpufreq.c b/drivers/cpufreq/apple-soc-cpufreq.c
+index c11d22fd84c37..021f423705e1b 100644
+--- a/drivers/cpufreq/apple-soc-cpufreq.c
++++ b/drivers/cpufreq/apple-soc-cpufreq.c
+@@ -189,8 +189,8 @@ static int apple_soc_cpufreq_find_cluster(struct cpufreq_policy *policy,
+ 	*info = match->data;
  
- config INTEL_BXT_PMIC_THERMAL
- 	tristate "Intel Broxton PMIC thermal driver"
--	depends on X86 && INTEL_SOC_PMIC_BXTWC && REGMAP
-+	depends on X86 && INTEL_SOC_PMIC_BXTWC
-+	select REGMAP
- 	help
- 	  Select this driver for Intel Broxton PMIC with ADC channels monitoring
- 	  system temperature measurements and alerts.
+ 	*reg_base = of_iomap(args.np, 0);
+-	if (IS_ERR(*reg_base))
+-		return PTR_ERR(*reg_base);
++	if (!*reg_base)
++		return -ENOMEM;
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
