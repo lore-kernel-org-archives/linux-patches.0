@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EC5882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:09:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB3AC433D2;
-	Fri, 10 Mar 2023 15:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DE1882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:09:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611ABC433EF;
+	Fri, 10 Mar 2023 15:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460976;
-	bh=zaF0VsMp1l2Gd+WqzoyktK0v1rK3cxgJjZh2sckP8/I=;
+	s=korg; t=1678460979;
+	bh=GyjC6RuYu+fA84S+Esm5qD9WEZ5NLZCfPGgsMUEzBrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f1jivCgLZzOcs6LnyJBdhT4yZCC/maj1NKfnDJueRlbfYdB03fhGa57pMk6aqEsle
-	 cRCK+DqmQLXf4mg7kJNTvZxVMLxvCbaSV/p8aoocfMgGmjz2Bi28FkWXIZbUlSoGkq
-	 9GtYUMOhXmHjTAAGE7+jxYhJglVTuS5jNVxI+OOQ=
+	b=WCRLKuyq4n9PXyfGe14bblLgnWjc2X68xiGAHgG2XuX/GsIHO5VwFufeeXFdvIAYg
+	 XwOH+g1wCNSEc2bso4LlVrPlUv6l+PyBA0wioGu2gFCxQUaqI0pjNAuAmWHLzgoFa9
+	 uEfs53Tst9/wA0AdDoS2DTIZ/L1z+5SPS7qmLav8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 507/529] kernel/fail_function: fix memory leak with using debugfs_lookup()
-Date: Fri, 10 Mar 2023 14:40:50 +0100
-Message-Id: <20230310133828.311796862@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Imre Deak <imre.deak@intel.com>
+Subject: [PATCH 5.10 516/529] drm/display/dp_mst: Fix down/up message handling after sink disconnect
+Date: Fri, 10 Mar 2023 14:40:59 +0100
+Message-Id: <20230310133828.733606521@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,42 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Imre Deak <imre.deak@intel.com>
 
-[ Upstream commit 2bb3669f576559db273efe49e0e69f82450efbca ]
+commit 1d082618bbf3b6755b8cc68c0a8122af2842d593 upstream.
 
-When calling debugfs_lookup() the result must have dput() called on it,
-otherwise the memory will leak over time.  To make things simpler, just
-call debugfs_lookup_and_remove() instead which handles all of the logic
-at once.
+If the sink gets disconnected during receiving a multi-packet DP MST AUX
+down-reply/up-request sideband message, the state keeping track of which
+packets have been received already is not reset. This results in a failed
+sanity check for the subsequent message packet received after a sink is
+reconnected (due to the pending message not yet completed with an
+end-of-message-transfer packet), indicated by the
 
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20230202151633.2310897-1-gregkh@linuxfoundation.org
+"sideband msg set header failed"
+
+error.
+
+Fix the above by resetting the up/down message reception state after a
+disconnect event.
+
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: <stable@vger.kernel.org> # v3.17+
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221214184258.2869417-1-imre.deak@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/fail_function.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/gpu/drm/drm_dp_mst_topology.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/fail_function.c b/kernel/fail_function.c
-index b0b1ad93fa957..8f3795d8ac5b0 100644
---- a/kernel/fail_function.c
-+++ b/kernel/fail_function.c
-@@ -163,10 +163,7 @@ static void fei_debugfs_add_attr(struct fei_attr *attr)
+--- a/drivers/gpu/drm/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/drm_dp_mst_topology.c
+@@ -3769,6 +3769,9 @@ int drm_dp_mst_topology_mgr_set_mst(stru
+ 		set_bit(0, &mgr->payload_mask);
+ 		mgr->vcpi_mask = 0;
+ 		mgr->payload_id_table_cleared = false;
++
++		memset(&mgr->down_rep_recv, 0, sizeof(mgr->down_rep_recv));
++		memset(&mgr->up_req_recv, 0, sizeof(mgr->up_req_recv));
+ 	}
  
- static void fei_debugfs_remove_attr(struct fei_attr *attr)
- {
--	struct dentry *dir;
--
--	dir = debugfs_lookup(attr->kp.symbol_name, fei_debugfs_dir);
--	debugfs_remove_recursive(dir);
-+	debugfs_lookup_and_remove(attr->kp.symbol_name, fei_debugfs_dir);
- }
- 
- static int fei_kprobe_handler(struct kprobe *kp, struct pt_regs *regs)
--- 
-2.39.2
-
+ out_unlock:
 
 
