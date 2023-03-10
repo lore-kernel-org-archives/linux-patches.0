@@ -1,36 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12F58821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:55:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2260DC433EF;
-	Fri, 10 Mar 2023 14:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03738821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:55:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03771C433EF;
+	Fri, 10 Mar 2023 14:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460117;
-	bh=LmWFxfga1BlXuQaJH8jJoOjrDtsHXcfds/zNubj7S/I=;
+	s=korg; t=1678460120;
+	bh=IvegPonRFZ27fozfMfL+WMmN/6XRuSp+MW08wHsAWew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=InODhgzLbQofQ1lhKx9kWXbB0ihihN+ap+bRMU6hRfCLcnZiJXSroGeyK42VFm4ra
-	 ykG12rjKbAiytWNS1d0jMUgyMFfEDmvnScn0IjhkhjN/H1DCRiHSFQX5u/Y9d1ctVW
-	 9WdR3NHypGQItgFLAB86JrFq3NVr3xmSYMa4Mn98=
+	b=QmDHroJDFbyk4QqMOur7CO9s6118SxEI5L6BcUlpO5NQG513+d+7V27cb1BY7qVjt
+	 /DVzMopTAyCMNBiRvPvQdCy6FTOFu1QTurYULYg2I9JnLdwPL84SAWGQRyxkXMFcAr
+	 KQsG6lyTVnLwSkW0UOm2Iui1TEUhJ5rUQaFsjtnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Marco Elver <elver@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Qiheng Lin <linqiheng@huawei.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 229/529] objtool: add UACCESS exceptions for __tsan_volatile_read/write
-Date: Fri, 10 Mar 2023 14:36:12 +0100
-Message-Id: <20230310133815.608566166@linuxfoundation.org>
+Subject: [PATCH 5.10 230/529] mfd: pcf50633-adc: Fix potential memleak in pcf50633_adc_async_read()
+Date: Fri, 10 Mar 2023 14:36:13 +0100
+Message-Id: <20230310133815.656377748@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -44,54 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Qiheng Lin <linqiheng@huawei.com>
 
-[ Upstream commit d5d469247264e56960705dc5ae7e1d014861fe40 ]
+[ Upstream commit 8b450dcff23aa254844492831a8e2b508a9d522d ]
 
-A lot of the tsan helpers are already excempt from the UACCESS warnings,
-but some more functions were added that need the same thing:
+`req` is allocated in pcf50633_adc_async_read(), but
+adc_enqueue_request() could fail to insert the `req` into queue.
+We need to check the return value and free it in the case of failure.
 
-kernel/kcsan/core.o: warning: objtool: __tsan_volatile_read16+0x0: call to __tsan_unaligned_read16() with UACCESS enabled
-kernel/kcsan/core.o: warning: objtool: __tsan_volatile_write16+0x0: call to __tsan_unaligned_write16() with UACCESS enabled
-vmlinux.o: warning: objtool: __tsan_unaligned_volatile_read16+0x4: call to __tsan_unaligned_read16() with UACCESS enabled
-vmlinux.o: warning: objtool: __tsan_unaligned_volatile_write16+0x4: call to __tsan_unaligned_write16() with UACCESS enabled
-
-As Marco points out, these functions don't even call each other
-explicitly but instead gcc (but not clang) notices the functions
-being identical and turns one symbol into a direct branch to the
-other.
-
-Link: https://lkml.kernel.org/r/20230215130058.3836177-4-arnd@kernel.org
-Fixes: 75d75b7a4d54 ("kcsan: Support distinguishing volatile accesses")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Marco Elver <elver@google.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>
-Cc: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 08c3e06a5eb2 ("mfd: PCF50633 adc driver")
+Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20221208061555.8776-1-linqiheng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mfd/pcf50633-adc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index ff47aed7ef6fe..5c4190382a51a 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -864,6 +864,8 @@ static const char *uaccess_safe_builtin[] = {
- 	"__tsan_atomic64_compare_exchange_val",
- 	"__tsan_atomic_thread_fence",
- 	"__tsan_atomic_signal_fence",
-+	"__tsan_unaligned_read16",
-+	"__tsan_unaligned_write16",
- 	/* KCOV */
- 	"write_comp_data",
- 	"check_kcov_mode",
+diff --git a/drivers/mfd/pcf50633-adc.c b/drivers/mfd/pcf50633-adc.c
+index 5cd653e615125..191b1bc6141c2 100644
+--- a/drivers/mfd/pcf50633-adc.c
++++ b/drivers/mfd/pcf50633-adc.c
+@@ -136,6 +136,7 @@ int pcf50633_adc_async_read(struct pcf50633 *pcf, int mux, int avg,
+ 			     void *callback_param)
+ {
+ 	struct pcf50633_adc_request *req;
++	int ret;
+ 
+ 	/* req is freed when the result is ready, in interrupt handler */
+ 	req = kmalloc(sizeof(*req), GFP_KERNEL);
+@@ -147,7 +148,11 @@ int pcf50633_adc_async_read(struct pcf50633 *pcf, int mux, int avg,
+ 	req->callback = callback;
+ 	req->callback_param = callback_param;
+ 
+-	return adc_enqueue_request(pcf, req);
++	ret = adc_enqueue_request(pcf, req);
++	if (ret)
++		kfree(req);
++
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(pcf50633_adc_async_read);
+ 
 -- 
 2.39.2
 
