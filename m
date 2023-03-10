@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F1B847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:55:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF7EC433EF;
-	Fri, 10 Mar 2023 13:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86440847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:55:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1296C4339E;
+	Fri, 10 Mar 2023 13:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456516;
-	bh=cS+DtdsVu+fYrOFvYk2bwSQL9yt3KSAJFFbJxu8sRaY=;
+	s=korg; t=1678456519;
+	bh=ORrQwT7B8uh8P1WHVWre5/RWCEtz1yoJf8NTPsGdDi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n8d/IDw5kselYH+zwE+Bnz5Ac7LYBXSj5PR7nYN38q0O54+48GMswe8dj1kNfltw5
-	 g/DN3U1hYCU9OjpLo8cAo6MAIahUrkbgGKa+QXLZW0Z6Sw5X9R3MGzLi48wsRtJtQ7
-	 gcjlxrkfyZUksG/Gl4Kyk3Q+IfMo4HuNMisiEAQY=
+	b=Z5S+nalONrAMkEoo8EjdncGNxCkJZxCVtMEnK59NsTLm4eykQ/692XeJiEcgCx3G9
+	 O5DB5IGvxTKgZdfxEZO0cd9vgIRFXin0jAPiUNwnbfpKmTPJERUtfRL0S2zApAbzBq
+	 Y/oBuZJq2ADYEElQdyjiQKpHhndELyOInpUjgPzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 029/211] ubifs: Rectify space budget for ubifs_xrename()
-Date: Fri, 10 Mar 2023 14:36:49 +0100
-Message-Id: <20230310133719.618795716@linuxfoundation.org>
+Subject: [PATCH 6.2 030/211] ubifs: Fix wrong dirty space budget for dirty inode
+Date: Fri, 10 Mar 2023 14:36:50 +0100
+Message-Id: <20230310133719.647608596@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -37,47 +37,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 1b2ba09060e41adb356b9ae58ef94a7390928004 ]
+[ Upstream commit b248eaf049d9cdc5eb76b59399e4d3de233f02ac ]
 
-There is no space budget for ubifs_xrename(). It may let
-make_reservation() return with -ENOSPC, which could turn
-ubifs to read-only mode in do_writepage() process.
-Fix it by adding space budget for ubifs_xrename().
+Each dirty inode should reserve 'c->bi.inode_budget' bytes in space
+budget calculation. Currently, space budget for dirty inode reports
+more space than what UBIFS actually needs to write.
 
-Fetch a reproducer in [Link].
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216569
-Fixes: 9ec64962afb170 ("ubifs: Implement RENAME_EXCHANGE")
+Fixes: 1e51764a3c2ac0 ("UBIFS: add new flash file system")
 Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/dir.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ubifs/budget.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ubifs/dir.c b/fs/ubifs/dir.c
-index aaff3f3f0aa3b..94634b872e382 100644
---- a/fs/ubifs/dir.c
-+++ b/fs/ubifs/dir.c
-@@ -1576,6 +1576,10 @@ static int ubifs_xrename(struct inode *old_dir, struct dentry *old_dentry,
- 		return err;
- 	}
+diff --git a/fs/ubifs/budget.c b/fs/ubifs/budget.c
+index e8b9b756f0aca..986e6e4081c76 100644
+--- a/fs/ubifs/budget.c
++++ b/fs/ubifs/budget.c
+@@ -400,7 +400,7 @@ static int calc_dd_growth(const struct ubifs_info *c,
+ 	dd_growth = req->dirtied_page ? c->bi.page_budget : 0;
  
-+	err = ubifs_budget_space(c, &req);
-+	if (err)
-+		goto out;
-+
- 	lock_4_inodes(old_dir, new_dir, NULL, NULL);
- 
- 	time = current_time(old_dir);
-@@ -1601,6 +1605,7 @@ static int ubifs_xrename(struct inode *old_dir, struct dentry *old_dentry,
- 	unlock_4_inodes(old_dir, new_dir, NULL, NULL);
- 	ubifs_release_budget(c, &req);
- 
-+out:
- 	fscrypt_free_filename(&fst_nm);
- 	fscrypt_free_filename(&snd_nm);
- 	return err;
+ 	if (req->dirtied_ino)
+-		dd_growth += c->bi.inode_budget << (req->dirtied_ino - 1);
++		dd_growth += c->bi.inode_budget * req->dirtied_ino;
+ 	if (req->mod_dent)
+ 		dd_growth += c->bi.dent_budget;
+ 	dd_growth += req->dirtied_ino_d;
 -- 
 2.39.2
 
