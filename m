@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11938821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:55:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E023C433D2;
-	Fri, 10 Mar 2023 14:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989908821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:55:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE2DC433EF;
+	Fri, 10 Mar 2023 14:55:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460123;
-	bh=EGXnPYYtfA0qrite3Q3VZN59thw4eEWSIsbvyx8F8Xc=;
+	s=korg; t=1678460126;
+	bh=ShLdE/4dbnsDhRpnFbbINmptL16Jv6alT+/S+1NKV3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tz570Lywrl3EnIOep0blS7ZV0IBMzAv8XACAcQ4RHf+EpxYcjDxHwqOeYWtUAJchz
-	 l5Q8QVJFUcn49QIRBD39sedP16TAx5n4rnXAWuoBlFhP51dX6aTH3xp3TPOO7WO0WM
-	 VCuszNM+5RDo0rmbrThaIylXdP7WNkU39ybFseXs=
+	b=wh24LbfjbrGUOfhuy5r89UIR2ISQFr/W6CJ3xuiMB/7vfog58OjS/hvw/peFbD/tH
+	 vVB2z0xRjGESWxf5qzZmeC6zo3i8mpWg44deHgOj0tP2TOFjBPU43+JMl9n7ksq/wp
+	 djf9McH8I4kSZtvBXYmFSD0ndvEv3aPY7Vcs4AoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Lucas Tanure <lucas.tanure@collabora.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 231/529] clk: qcom: gcc-qcs404: disable gpll[04]_out_aux parents
-Date: Fri, 10 Mar 2023 14:36:14 +0100
-Message-Id: <20230310133815.705234465@linuxfoundation.org>
+Subject: [PATCH 5.10 214/529] ASoC: soc-dapm.h: fixup warning struct snd_pcm_substream not declared
+Date: Fri, 10 Mar 2023 14:35:57 +0100
+Message-Id: <20230310133814.915747712@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,143 +37,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Lucas Tanure <lucas.tanure@collabora.com>
 
-[ Upstream commit 712c64caf31374de57aa193a9dff57172b2f6f82 ]
+[ Upstream commit fdff966bfde7cf0c85562d2bfb1ff1ba83da5f7b ]
 
-On the QCS404 platform the driver for the Global Clock Controller
-doens't define gpll0_out_aux and gpll4_out_aux clocks, so it's not
-possible to use them as parents. Remove entries for these clocks.
+Add struct snd_pcm_substream forward declaration
 
-Note: backporting this patch to earlier kernels would also require a
-previous patch which switches the gcc driver to use ARRAY_SIZE for
-parent data arrays.
-
-Fixes: 652f1813c113 ("clk: qcom: gcc: Add global clock controller driver for QCS404")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221226042154.2666748-6-dmitry.baryshkov@linaro.org
+Fixes: 078a85f2806f ("ASoC: dapm: Only power up active channels from a DAI")
+Signed-off-by: Lucas Tanure <lucas.tanure@collabora.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230215132851.1626881-1-lucas.tanure@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-qcs404.c | 16 ----------------
- 1 file changed, 16 deletions(-)
+ include/sound/soc-dapm.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/qcom/gcc-qcs404.c b/drivers/clk/qcom/gcc-qcs404.c
-index 46d314d692505..4299fe8f19274 100644
---- a/drivers/clk/qcom/gcc-qcs404.c
-+++ b/drivers/clk/qcom/gcc-qcs404.c
-@@ -25,11 +25,9 @@ enum {
- 	P_CORE_BI_PLL_TEST_SE,
- 	P_DSI0_PHY_PLL_OUT_BYTECLK,
- 	P_DSI0_PHY_PLL_OUT_DSICLK,
--	P_GPLL0_OUT_AUX,
- 	P_GPLL0_OUT_MAIN,
- 	P_GPLL1_OUT_MAIN,
- 	P_GPLL3_OUT_MAIN,
--	P_GPLL4_OUT_AUX,
- 	P_GPLL4_OUT_MAIN,
- 	P_GPLL6_OUT_AUX,
- 	P_HDMI_PHY_PLL_CLK,
-@@ -109,28 +107,24 @@ static const char * const gcc_parent_names_4[] = {
- static const struct parent_map gcc_parent_map_5[] = {
- 	{ P_XO, 0 },
- 	{ P_DSI0_PHY_PLL_OUT_BYTECLK, 1 },
--	{ P_GPLL0_OUT_AUX, 2 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
+diff --git a/include/sound/soc-dapm.h b/include/sound/soc-dapm.h
+index c3039e97929a5..32e93d55acf73 100644
+--- a/include/sound/soc-dapm.h
++++ b/include/sound/soc-dapm.h
+@@ -16,6 +16,7 @@
+ #include <sound/asoc.h>
  
- static const char * const gcc_parent_names_5[] = {
- 	"cxo",
- 	"dsi0pll_byteclk_src",
--	"gpll0_out_aux",
- 	"core_bi_pll_test_se",
- };
- 
- static const struct parent_map gcc_parent_map_6[] = {
- 	{ P_XO, 0 },
- 	{ P_DSI0_PHY_PLL_OUT_BYTECLK, 2 },
--	{ P_GPLL0_OUT_AUX, 3 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const char * const gcc_parent_names_6[] = {
- 	"cxo",
- 	"dsi0_phy_pll_out_byteclk",
--	"gpll0_out_aux",
- 	"core_bi_pll_test_se",
- };
- 
-@@ -139,7 +133,6 @@ static const struct parent_map gcc_parent_map_7[] = {
- 	{ P_GPLL0_OUT_MAIN, 1 },
- 	{ P_GPLL3_OUT_MAIN, 2 },
- 	{ P_GPLL6_OUT_AUX, 3 },
--	{ P_GPLL4_OUT_AUX, 4 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
-@@ -148,7 +141,6 @@ static const char * const gcc_parent_names_7[] = {
- 	"gpll0_out_main",
- 	"gpll3_out_main",
- 	"gpll6_out_aux",
--	"gpll4_out_aux",
- 	"core_bi_pll_test_se",
- };
- 
-@@ -207,14 +199,12 @@ static const char * const gcc_parent_names_11[] = {
- static const struct parent_map gcc_parent_map_12[] = {
- 	{ P_XO, 0 },
- 	{ P_DSI0_PHY_PLL_OUT_DSICLK, 1 },
--	{ P_GPLL0_OUT_AUX, 2 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const char * const gcc_parent_names_12[] = {
- 	"cxo",
- 	"dsi0pll_pclk_src",
--	"gpll0_out_aux",
- 	"core_bi_pll_test_se",
- };
- 
-@@ -237,40 +227,34 @@ static const char * const gcc_parent_names_13[] = {
- static const struct parent_map gcc_parent_map_14[] = {
- 	{ P_XO, 0 },
- 	{ P_GPLL0_OUT_MAIN, 1 },
--	{ P_GPLL4_OUT_AUX, 2 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const char * const gcc_parent_names_14[] = {
- 	"cxo",
- 	"gpll0_out_main",
--	"gpll4_out_aux",
- 	"core_bi_pll_test_se",
- };
- 
- static const struct parent_map gcc_parent_map_15[] = {
- 	{ P_XO, 0 },
--	{ P_GPLL0_OUT_AUX, 2 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const char * const gcc_parent_names_15[] = {
- 	"cxo",
--	"gpll0_out_aux",
- 	"core_bi_pll_test_se",
- };
- 
- static const struct parent_map gcc_parent_map_16[] = {
- 	{ P_XO, 0 },
- 	{ P_GPLL0_OUT_MAIN, 1 },
--	{ P_GPLL0_OUT_AUX, 2 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const char * const gcc_parent_names_16[] = {
- 	"cxo",
- 	"gpll0_out_main",
--	"gpll0_out_aux",
- 	"core_bi_pll_test_se",
- };
+ struct device;
++struct snd_pcm_substream;
+ struct snd_soc_pcm_runtime;
+ struct soc_enum;
  
 -- 
 2.39.2
