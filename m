@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D6B8820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:51:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A886C433D2;
-	Fri, 10 Mar 2023 14:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEBE8820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:51:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736A8C4339B;
+	Fri, 10 Mar 2023 14:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459901;
-	bh=3rgg1ydyVCb7or55iwhukbvWvIEmGl1GH875ZvD8e8I=;
+	s=korg; t=1678459903;
+	bh=oxmmiXYISxLLpuPc0AV5Or/kwc07aad/G/Z3bNrp1Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i/AP6ZpMqOxheMPUYdVmWJntvaLcQZ1f37vQweGoMFegBT4eVJ4YBD+eLd1YNX1hC
-	 vxQkomVRt3rtMaC+ApU74UzzN6pWUJKxx3FCtLgXbvi2UaGHIv0Zwk6xPhOY9frLQT
-	 CqasZ5ux7/56Y+39FqxkT1G6Ee1XmxJ1ULiqek7U=
+	b=cRNpnVNXtR/Tr6fOdbwQdHjrEqJAirgj///ptuJVB6kY0Sa35oIhhkpkNoS993C65
+	 LPlsGjKazW8y/HD+aijVQ0z6snT51ucUkCgfkhX1M/HLMhLo0XecQbIrNSIIHzkJr8
+	 uaW7MpyQpk3PxTr+RZdkLjWOl+49uY65jzmKhkEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Skladowski <a39.skl@gmail.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 158/529] pinctrl: qcom: pinctrl-msm8976: Correct function names for wcss pins
-Date: Fri, 10 Mar 2023 14:35:01 +0100
-Message-Id: <20230310133812.282033659@linuxfoundation.org>
+Subject: [PATCH 5.10 159/529] pinctrl: stm32: Fix refcount leak in stm32_pctrl_get_irq_domain
+Date: Fri, 10 Mar 2023 14:35:02 +0100
+Message-Id: <20230310133812.329368884@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,48 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adam Skladowski <a39.skl@gmail.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit a7cc0e2685082a0d79baec02df184dfa83cbfac3 ]
+[ Upstream commit dcef18c8ac40aa85bb339f64c1dd31dd458b06fb ]
 
-Adjust names of function for wcss pins, also fix third gpio in bt group.
+of_irq_find_parent() returns a node pointer with refcount incremented,
+We should use of_node_put() on it when not needed anymore.
+Add missing of_node_put() to avoid refcount leak.
 
-Fixes: bcd11493f0ab ("pinctrl: qcom: Add a pinctrl driver for MSM8976 and 8956")
-Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Link: https://lore.kernel.org/r/20221231164250.74550-1-a39.skl@gmail.com
+Fixes: d86f4d71e42a ("pinctrl: stm32: check irq controller availability at probe")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20230102082503.3944927-1-linmq006@gmail.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-msm8976.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8976.c b/drivers/pinctrl/qcom/pinctrl-msm8976.c
-index ec43edf9b660a..e11d845847190 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8976.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8976.c
-@@ -733,7 +733,7 @@ static const char * const codec_int2_groups[] = {
- 	"gpio74",
- };
- static const char * const wcss_bt_groups[] = {
--	"gpio39", "gpio47", "gpio88",
-+	"gpio39", "gpio47", "gpio48",
- };
- static const char * const sdc3_groups[] = {
- 	"gpio39", "gpio40", "gpio41",
-@@ -958,9 +958,9 @@ static const struct msm_pingroup msm8976_groups[] = {
- 	PINGROUP(37, NA, NA, NA, qdss_tracedata_b, NA, NA, NA, NA, NA),
- 	PINGROUP(38, NA, NA, NA, NA, NA, NA, NA, qdss_tracedata_b, NA),
- 	PINGROUP(39, wcss_bt, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
--	PINGROUP(40, wcss_wlan, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
--	PINGROUP(41, wcss_wlan, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
--	PINGROUP(42, wcss_wlan, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
-+	PINGROUP(40, wcss_wlan2, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
-+	PINGROUP(41, wcss_wlan1, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
-+	PINGROUP(42, wcss_wlan0, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
- 	PINGROUP(43, wcss_wlan, sdc3, NA, NA, qdss_tracedata_a, NA, NA, NA, NA),
- 	PINGROUP(44, wcss_wlan, sdc3, NA, NA, NA, NA, NA, NA, NA),
- 	PINGROUP(45, wcss_fm, NA, qdss_tracectl_a, NA, NA, NA, NA, NA, NA),
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index 60406f1f8337e..2d852f15cc501 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -1338,6 +1338,7 @@ static struct irq_domain *stm32_pctrl_get_irq_domain(struct device_node *np)
+ 		return ERR_PTR(-ENXIO);
+ 
+ 	domain = irq_find_host(parent);
++	of_node_put(parent);
+ 	if (!domain)
+ 		/* domain not registered yet */
+ 		return ERR_PTR(-EPROBE_DEFER);
 -- 
 2.39.2
 
