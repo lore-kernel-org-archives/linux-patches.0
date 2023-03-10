@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DAC78481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:13:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E67C433D2;
-	Fri, 10 Mar 2023 14:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBEB8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:14:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2395C433EF;
+	Fri, 10 Mar 2023 14:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457639;
-	bh=4BwReLaZ5wA1dlh0zI2K26R9S3JhYUDjXUIbnw+0Rtw=;
+	s=korg; t=1678457642;
+	bh=opavH/SUZltEg9QKd6fjyOn6r1eV/jpmnKjpEphS6Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d5DOfmiCPRU1ameMd9uDpT/BRE7mCTo+Oj2PDl8Pjp6BmImwaxuKGSNfmaYW8aMeO
-	 PAU7i/GfvAtIy5KvL+ozJsQe99PHcD2X5gajra42rZyxpOVEF1lnA1hBcUb/uZCAqQ
-	 b3sp4GxJGGzZjVstydWaSpsyXZoM1oJAeLCszJ44=
+	b=p2BMGMunZeCQLb9LQTFnW5fnuhd10aR75N6q5GklqFFy+gk74A95K3nZipTD1Y5Ek
+	 L7A5VNux2h5YH69UcOM5ExM2Nx0j36uY/q2LWFenzyegsSoEwHHJzIQPIiRvUgXv0J
+	 /ySyKslOWAnZcFPrfn2yyXoZbRbZBQQe6iXlhP7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>
-Subject: [PATCH 6.1 200/200] usb: gadget: uvc: fix missing mutex_unlock() if kstrtou8() fails
-Date: Fri, 10 Mar 2023 14:40:07 +0100
-Message-Id: <20230310133723.219194041@linuxfoundation.org>
+	Xinghui Li <korantli@tencent.com>,
+	kernel test robot <lkp@intel.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 195/200] io_uring: fix two assignments in if conditions
+Date: Fri, 10 Mar 2023 14:40:02 +0100
+Message-Id: <20230310133723.073697611@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -33,45 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Xinghui Li <korantli@tencent.com>
 
-commit 7ebb605d2283fb2647b4fa82030307ce00bee436 upstream.
+commit df730ec21f7ba395b1b22e7f93a3a85b1d1b7882 upstream.
 
-If kstrtou8() fails, the mutex_unlock() is missed, move kstrtou8()
-before mutex_lock() to fix it up.
+Fixes two errors:
 
-Fixes: 0525210c9840 ("usb: gadget: uvc: Allow definition of XUs in configfs")
-Fixes: b3c839bd8a07 ("usb: gadget: uvc: Make bSourceID read/write")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20230213070926.776447-1-yangyingliang@huawei.com
+"ERROR: do not use assignment in if condition
+130: FILE: io_uring/net.c:130:
++       if (!(issue_flags & IO_URING_F_UNLOCKED) &&
+
+ERROR: do not use assignment in if condition
+599: FILE: io_uring/poll.c:599:
++       } else if (!(issue_flags & IO_URING_F_UNLOCKED) &&"
+reported by checkpatch.pl in net.c and poll.c .
+
+Signed-off-by: Xinghui Li <korantli@tencent.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/r/20221102082503.32236-1-korantwork@gmail.com
+[axboe: style tweaks]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/uvc_configfs.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ io_uring/net.c  |   16 +++++++++-------
+ io_uring/poll.c |    7 +++++--
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/gadget/function/uvc_configfs.c
-+++ b/drivers/usb/gadget/function/uvc_configfs.c
-@@ -524,6 +524,10 @@ static ssize_t uvcg_default_output_b_sou
- 	int result;
- 	u8 num;
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -126,13 +126,15 @@ static struct io_async_msghdr *io_msg_al
+ 	struct io_cache_entry *entry;
+ 	struct io_async_msghdr *hdr;
  
-+	result = kstrtou8(page, 0, &num);
-+	if (result)
-+		return result;
-+
- 	mutex_lock(su_mutex); /* for navigating configfs hierarchy */
+-	if (!(issue_flags & IO_URING_F_UNLOCKED) &&
+-	    (entry = io_alloc_cache_get(&ctx->netmsg_cache)) != NULL) {
+-		hdr = container_of(entry, struct io_async_msghdr, cache);
+-		hdr->free_iov = NULL;
+-		req->flags |= REQ_F_ASYNC_DATA;
+-		req->async_data = hdr;
+-		return hdr;
++	if (!(issue_flags & IO_URING_F_UNLOCKED)) {
++		entry = io_alloc_cache_get(&ctx->netmsg_cache);
++		if (entry) {
++			hdr = container_of(entry, struct io_async_msghdr, cache);
++			hdr->free_iov = NULL;
++			req->flags |= REQ_F_ASYNC_DATA;
++			req->async_data = hdr;
++			return hdr;
++		}
+ 	}
  
- 	opts_item = group->cg_item.ci_parent->ci_parent->
-@@ -531,10 +535,6 @@ static ssize_t uvcg_default_output_b_sou
- 	opts = to_f_uvc_opts(opts_item);
- 	cd = &opts->uvc_output_terminal;
- 
--	result = kstrtou8(page, 0, &num);
--	if (result)
--		return result;
--
- 	mutex_lock(&opts->lock);
- 	cd->bSourceID = num;
- 	mutex_unlock(&opts->lock);
+ 	if (!io_alloc_async_data(req)) {
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -678,10 +678,13 @@ static struct async_poll *io_req_alloc_a
+ 	if (req->flags & REQ_F_POLLED) {
+ 		apoll = req->apoll;
+ 		kfree(apoll->double_poll);
+-	} else if (!(issue_flags & IO_URING_F_UNLOCKED) &&
+-		   (entry = io_alloc_cache_get(&ctx->apoll_cache)) != NULL) {
++	} else if (!(issue_flags & IO_URING_F_UNLOCKED)) {
++		entry = io_alloc_cache_get(&ctx->apoll_cache);
++		if (entry == NULL)
++			goto alloc_apoll;
+ 		apoll = container_of(entry, struct async_poll, cache);
+ 	} else {
++alloc_apoll:
+ 		apoll = kmalloc(sizeof(*apoll), GFP_ATOMIC);
+ 		if (unlikely(!apoll))
+ 			return NULL;
 
 
