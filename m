@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E00847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:53:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC445C4339C;
-	Fri, 10 Mar 2023 13:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145CB847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:53:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4A4C433D2;
+	Fri, 10 Mar 2023 13:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456389;
-	bh=Wjfb+YRLC1NEK8zBuLN+wCNzsONaxtttRw0Vlt7BWmY=;
+	s=korg; t=1678456391;
+	bh=qgeCQRjGsIKhjVG4XE2Nzt7Z4eC9JqSynobBXDT/Ln0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jq+O97L++oCE5/IKXSt+kmIyhz9E0ZQx+PCMiIM5k52Bbk4MUxbR28THzIvamKXv1
-	 1w2VDuuusubkPyw/ihhntecKHQg76zxs41MRX3JOJtMT+TeycA56VqmURhVNJnuKWH
-	 u2y4d3d8yDnDf8FANCROy/e0CXS83TedcunqVgF4=
+	b=izNfx9zyGMIzOEwSZWA/UfcvC1XCvJdVQsN0qYgVh1Bfrr1aWcqMWofuAkU77WtS6
+	 WBSBzCKzigEeUfSXCHk0dVSYHwqGAUjnDG8E8YhGRVDXEXKkOa//tDyGu0OX2/4Ow0
+	 1yDg5i77P4k7jqIHrhhaHis9iPsq6W8bSeyLpaOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sherry Sun <sherry.sun@nxp.com>,
+	Yulong Zhang <yulong.zhang@metoak.net>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 181/193] tty: serial: fsl_lpuart: disable the CTS when send break signal
-Date: Fri, 10 Mar 2023 14:39:23 +0100
-Message-Id: <20230310133717.115064121@linuxfoundation.org>
+Subject: [PATCH 4.14 182/193] tools/iio/iio_utils:fix memory leak
+Date: Fri, 10 Mar 2023 14:39:24 +0100
+Message-Id: <20230310133717.143540743@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -34,74 +35,152 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Yulong Zhang <yulong.zhang@metoak.net>
 
-[ Upstream commit c4c81db5cf8bc53d6160c3abf26d382c841aa434 ]
+[ Upstream commit f2edf0c819a4823cd6c288801ce737e8d4fcde06 ]
 
-LPUART IP has a bug that it treats the CTS as higher priority than the
-break signal, which cause the break signal sending through UARTCTRL_SBK
-may impacted by the CTS input if the HW flow control is enabled.
+1. fopen sysfs without fclose.
+2. asprintf filename without free.
+3. if asprintf return error,do not need to free the buffer.
 
-Add this workaround patch to fix the IP bug, we can disable CTS before
-asserting SBK to avoid any interference from CTS, and re-enable it when
-break off.
-
-Such as for the bluetooth chip power save feature, host can let the BT
-chip get into sleep state by sending a UART break signal, and wake it up
-by turning off the UART break. If the BT chip enters the sleep mode
-successfully, it will pull up the CTS line, if the BT chip is woken up,
-it will pull down the CTS line. If without this workaround patch, the
-UART TX pin cannot send the break signal successfully as it affected by
-the BT CTS pin. After adding this patch, the BT power save feature can
-work well.
-
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Link: https://lore.kernel.org/r/20221214031137.28815-2-sherry.sun@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yulong Zhang <yulong.zhang@metoak.net>
+Link: https://lore.kernel.org/r/20230117025147.69890-1-yulong.zhang@metoak.net
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ tools/iio/iio_utils.c | 23 ++++++-----------------
+ 1 file changed, 6 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index cbbdb94592ce7..20dd476e4d1a1 100644
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -1199,12 +1199,32 @@ static void lpuart_break_ctl(struct uart_port *port, int break_state)
+diff --git a/tools/iio/iio_utils.c b/tools/iio/iio_utils.c
+index d60a252577f0b..d174487b2f226 100644
+--- a/tools/iio/iio_utils.c
++++ b/tools/iio/iio_utils.c
+@@ -265,6 +265,7 @@ int iioutils_get_param_float(float *output, const char *param_name,
+ 			if (fscanf(sysfsfp, "%f", output) != 1)
+ 				ret = errno ? -errno : -ENODATA;
  
- static void lpuart32_break_ctl(struct uart_port *port, int break_state)
- {
--	unsigned long temp;
-+	unsigned long temp, modem;
-+	struct tty_struct *tty;
-+	unsigned int cflag = 0;
-+
-+	tty = tty_port_tty_get(&port->state->port);
-+	if (tty) {
-+		cflag = tty->termios.c_cflag;
-+		tty_kref_put(tty);
-+	}
++			fclose(sysfsfp);
+ 			break;
+ 		}
+ error_free_filename:
+@@ -345,9 +346,9 @@ int build_channel_array(const char *device_dir,
+ 			}
  
- 	temp = lpuart32_read(port, UARTCTRL) & ~UARTCTRL_SBK;
-+	modem = lpuart32_read(port, UARTMODIR);
+ 			sysfsfp = fopen(filename, "r");
++			free(filename);
+ 			if (!sysfsfp) {
+ 				ret = -errno;
+-				free(filename);
+ 				goto error_close_dir;
+ 			}
  
--	if (break_state != 0)
-+	if (break_state != 0) {
- 		temp |= UARTCTRL_SBK;
-+		/*
-+		 * LPUART CTS has higher priority than SBK, need to disable CTS before
-+		 * asserting SBK to avoid any interference if flow control is enabled.
-+		 */
-+		if (cflag & CRTSCTS && modem & UARTMODIR_TXCTSE)
-+			lpuart32_write(port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
-+	} else {
-+		/* Re-enable the CTS when break off. */
-+		if (cflag & CRTSCTS && !(modem & UARTMODIR_TXCTSE))
-+			lpuart32_write(port, modem | UARTMODIR_TXCTSE, UARTMODIR);
-+	}
+@@ -357,7 +358,6 @@ int build_channel_array(const char *device_dir,
+ 				if (fclose(sysfsfp))
+ 					perror("build_channel_array(): Failed to close file");
  
- 	lpuart32_write(port, temp, UARTCTRL);
- }
+-				free(filename);
+ 				goto error_close_dir;
+ 			}
+ 			if (ret == 1)
+@@ -365,11 +365,9 @@ int build_channel_array(const char *device_dir,
+ 
+ 			if (fclose(sysfsfp)) {
+ 				ret = -errno;
+-				free(filename);
+ 				goto error_close_dir;
+ 			}
+ 
+-			free(filename);
+ 		}
+ 
+ 	*ci_array = malloc(sizeof(**ci_array) * (*counter));
+@@ -395,9 +393,9 @@ int build_channel_array(const char *device_dir,
+ 			}
+ 
+ 			sysfsfp = fopen(filename, "r");
++			free(filename);
+ 			if (!sysfsfp) {
+ 				ret = -errno;
+-				free(filename);
+ 				count--;
+ 				goto error_cleanup_array;
+ 			}
+@@ -405,20 +403,17 @@ int build_channel_array(const char *device_dir,
+ 			errno = 0;
+ 			if (fscanf(sysfsfp, "%i", &current_enabled) != 1) {
+ 				ret = errno ? -errno : -ENODATA;
+-				free(filename);
+ 				count--;
+ 				goto error_cleanup_array;
+ 			}
+ 
+ 			if (fclose(sysfsfp)) {
+ 				ret = -errno;
+-				free(filename);
+ 				count--;
+ 				goto error_cleanup_array;
+ 			}
+ 
+ 			if (!current_enabled) {
+-				free(filename);
+ 				count--;
+ 				continue;
+ 			}
+@@ -429,7 +424,6 @@ int build_channel_array(const char *device_dir,
+ 						strlen(ent->d_name) -
+ 						strlen("_en"));
+ 			if (!current->name) {
+-				free(filename);
+ 				ret = -ENOMEM;
+ 				count--;
+ 				goto error_cleanup_array;
+@@ -439,7 +433,6 @@ int build_channel_array(const char *device_dir,
+ 			ret = iioutils_break_up_name(current->name,
+ 						     &current->generic_name);
+ 			if (ret) {
+-				free(filename);
+ 				free(current->name);
+ 				count--;
+ 				goto error_cleanup_array;
+@@ -450,17 +443,16 @@ int build_channel_array(const char *device_dir,
+ 				       scan_el_dir,
+ 				       current->name);
+ 			if (ret < 0) {
+-				free(filename);
+ 				ret = -ENOMEM;
+ 				goto error_cleanup_array;
+ 			}
+ 
+ 			sysfsfp = fopen(filename, "r");
++			free(filename);
+ 			if (!sysfsfp) {
+ 				ret = -errno;
+-				fprintf(stderr, "failed to open %s\n",
+-					filename);
+-				free(filename);
++				fprintf(stderr, "failed to open %s/%s_index\n",
++					scan_el_dir, current->name);
+ 				goto error_cleanup_array;
+ 			}
+ 
+@@ -470,17 +462,14 @@ int build_channel_array(const char *device_dir,
+ 				if (fclose(sysfsfp))
+ 					perror("build_channel_array(): Failed to close file");
+ 
+-				free(filename);
+ 				goto error_cleanup_array;
+ 			}
+ 
+ 			if (fclose(sysfsfp)) {
+ 				ret = -errno;
+-				free(filename);
+ 				goto error_cleanup_array;
+ 			}
+ 
+-			free(filename);
+ 			/* Find the scale */
+ 			ret = iioutils_get_param_float(&current->scale,
+ 						       "scale",
 -- 
 2.39.2
 
