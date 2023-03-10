@@ -1,35 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D6F8494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:35:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9575C4339B;
-	Fri, 10 Mar 2023 14:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB3B8494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:35:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070F1C4339B;
+	Fri, 10 Mar 2023 14:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458939;
-	bh=/yzfvrZyqxBoRkFzD/Ki9tffHSLmWGN7t6q4PB/PVo4=;
+	s=korg; t=1678458942;
+	bh=febVS2vAUITUBmnAC5YZXJQkasw+eqr17zEL2NtJFoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iXnRa62reohvuryh6NM1QX7LebO+OnB9beaZSfMJ/tj6feh2/ub/PvNsKvxH2IZhS
-	 MRp6KOfJZ2ojOwGRH7npzqWtXzD51jmKyOGv5Lsrj0LV5028nNkpWRWIK9nEYdI/T0
-	 NvybzqAS0E9U731Zw9TyaHkhZPjrDP8dl46NKHbI=
+	b=bCieWoVTqirVmOaZhWmgoUUCWRBlJz9vQYUQdONSpS9n/2ZmLANNvy6qeg0s/Aid6
+	 SAWw9SVZZieHJGshN0EmFI3tIeBztfguwl6YqFM0yKr0Rf3Ce1n4P2rXFNPbodi4rf
+	 Ejs2WaW0/kof6htCV9x8g8Cv5D2Zku+foAujy48w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Alexander Potapenko <glider@google.com>,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Kees Cook <keescook@chromium.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Jasdeep Dhillon <jdhillon@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 195/357] uaccess: Add minimum bounds check on kernel buffer size
-Date: Fri, 10 Mar 2023 14:38:04 +0100
-Message-Id: <20230310133743.325969449@linuxfoundation.org>
+Subject: [PATCH 5.4 196/357] drm/amd/display: Fix potential null-deref in dm_resume
+Date: Fri, 10 Mar 2023 14:38:05 +0100
+Message-Id: <20230310133743.374386754@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -43,68 +39,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Roman Li <roman.li@amd.com>
 
-[ Upstream commit 04ffde1319a715bd0550ded3580d4ea3bc003776 ]
+[ Upstream commit 7a7175a2cd84b7874bebbf8e59f134557a34161b ]
 
-While there is logic about the difference between ksize and usize,
-copy_struct_from_user() didn't check the size of the destination buffer
-(when it was known) against ksize. Add this check so there is an upper
-bounds check on the possible memset() call, otherwise lower bounds
-checks made by callers will trigger bounds warnings under -Warray-bounds.
-Seen under GCC 13:
+[Why]
+Fixing smatch error:
+dm_resume() error: we previously assumed 'aconnector->dc_link' could be null
 
-In function 'copy_struct_from_user',
-    inlined from 'iommufd_fops_ioctl' at
-../drivers/iommu/iommufd/main.c:333:8:
-../include/linux/fortify-string.h:59:33: warning: '__builtin_memset' offset [57, 4294967294] is out of the bounds [0, 56] of object 'buf' with type 'union ucmd_buffer' [-Warray-bounds=]
-   59 | #define __underlying_memset     __builtin_memset
-      |                                 ^
-../include/linux/fortify-string.h:453:9: note: in expansion of macro '__underlying_memset'
-  453 |         __underlying_memset(p, c, __fortify_size); \
-      |         ^~~~~~~~~~~~~~~~~~~
-../include/linux/fortify-string.h:461:25: note: in expansion of macro '__fortify_memset_chk'
-  461 | #define memset(p, c, s) __fortify_memset_chk(p, c, s, \
-      |                         ^~~~~~~~~~~~~~~~~~~~
-../include/linux/uaccess.h:334:17: note: in expansion of macro 'memset'
-  334 |                 memset(dst + size, 0, rest);
-      |                 ^~~~~~
-../drivers/iommu/iommufd/main.c: In function 'iommufd_fops_ioctl':
-../drivers/iommu/iommufd/main.c:311:27: note: 'buf' declared here
-  311 |         union ucmd_buffer buf;
-      |                           ^~~
+[How]
+Check if dc_link null at the beginning of the loop,
+so further checks can be dropped.
 
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Dinh Nguyen <dinguyen@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Alexander Potapenko <glider@google.com>
-Acked-by: Aleksa Sarai <cyphar@cyphar.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/lkml/20230203193523.never.667-kees@kernel.org/
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+
+Reviewed-by: Wayne Lin <Wayne.Lin@amd.com>
+Acked-by: Jasdeep Dhillon <jdhillon@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/uaccess.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/uaccess.h b/include/linux/uaccess.h
-index 38555435a64a3..70941f49d66ee 100644
---- a/include/linux/uaccess.h
-+++ b/include/linux/uaccess.h
-@@ -287,6 +287,10 @@ copy_struct_from_user(void *dst, size_t ksize, const void __user *src,
- 	size_t size = min(ksize, usize);
- 	size_t rest = max(ksize, usize) - size;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 9fd711005c1f5..1e7083bc8a527 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1206,12 +1206,14 @@ static int dm_resume(void *handle)
+ 	list_for_each_entry(connector, &ddev->mode_config.connector_list, head) {
+ 		aconnector = to_amdgpu_dm_connector(connector);
  
-+	/* Double check if ksize is larger than a known object size. */
-+	if (WARN_ON_ONCE(ksize > __builtin_object_size(dst, 1)))
-+		return -E2BIG;
++		if (!aconnector->dc_link)
++			continue;
 +
- 	/* Deal with trailing bytes. */
- 	if (usize < ksize) {
- 		memset(dst + size, 0, rest);
+ 		/*
+ 		 * this is the case when traversing through already created
+ 		 * MST connectors, should be skipped
+ 		 */
+-		if (aconnector->dc_link &&
+-		    aconnector->dc_link->type == dc_connection_mst_branch)
++		if (aconnector->dc_link->type == dc_connection_mst_branch)
+ 			continue;
+ 
+ 		mutex_lock(&aconnector->hpd_lock);
 -- 
 2.39.2
 
