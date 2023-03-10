@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F00847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:50:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C429DC4339B;
-	Fri, 10 Mar 2023 13:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3207C847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:50:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F11AC433EF;
+	Fri, 10 Mar 2023 13:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456249;
-	bh=dwjk4MqKV8Plta4pZ0qNQeyJcvbXYxKxLPSDtQlWrlw=;
+	s=korg; t=1678456252;
+	bh=sHVyyNHYI5vjxby4TKYMDIHiTJ6KYSmWpyqJS2DRaPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ffIoTz4t6BQWMCEeHhVAE25zyyueGNkH9jlwIhMR4+7L/UnKMpJEGeAyRZ2cBCLca
-	 wVMzVhU1kmnTgbI6KU8bl45K7FvKJKXv6lhEFfXbsNWRdRJkF128B6nSN8axMyGGSV
-	 AiE1Bzq9X0Nbd6Dshsu82zF4XK/QFBs8F5G1XZKE=
+	b=b5XTG/ABaPrZ2E2YWGzwQvzpEepw/zEI0Y3RzkLA3cEKya7WQi1/B0ntwasNKy4PL
+	 hbVk1sU3G5yYZjJxuro3XpAhawoS3pGPIn5bkYiYLzfRuJ8Vs9fXylSitP3Z0nE6qB
+	 JlgU4Poth8qxeOkK5hXCMVC4SMJZxopsUqZYkEbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Wetzel <alexander@wetzel-home.de>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 4.14 130/193] wifi: cfg80211: Fix use after free for wext
-Date: Fri, 10 Mar 2023 14:38:32 +0100
-Message-Id: <20230310133715.567564053@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 4.14 131/193] dm flakey: fix logic when corrupting a bio
+Date: Fri, 10 Mar 2023 14:38:33 +0100
+Message-Id: <20230310133715.597342928@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -34,96 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Wetzel <alexander@wetzel-home.de>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 015b8cc5e7c4d7bb671f1984d7b7338c310b185b upstream.
+commit aa56b9b75996ff4c76a0a4181c2fa0206c3d91cc upstream.
 
-Key information in wext.connect is not reset on (re)connect and can hold
-data from a previous connection.
+If "corrupt_bio_byte" is set to corrupt reads and corrupt_bio_flags is
+used, dm-flakey would erroneously return all writes as errors. Likewise,
+if "corrupt_bio_byte" is set to corrupt writes, dm-flakey would return
+errors for all reads.
 
-Reset key data to avoid that drivers or mac80211 incorrectly detect a
-WEP connection request and access the freed or already reused memory.
+Fix the logic so that if fc->corrupt_bio_byte is non-zero, dm-flakey
+will not abort reads on writes with an error.
 
-Additionally optimize cfg80211_sme_connect() and avoid an useless
-schedule of conn_work.
-
-Fixes: fffd0934b939 ("cfg80211: rework key operation")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230124141856.356646-1-alexander@wetzel-home.de
-Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/sme.c |   31 ++++++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ drivers/md/dm-flakey.c |   23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
---- a/net/wireless/sme.c
-+++ b/net/wireless/sme.c
-@@ -269,6 +269,15 @@ void cfg80211_conn_work(struct work_stru
- 	rtnl_unlock();
- }
+--- a/drivers/md/dm-flakey.c
++++ b/drivers/md/dm-flakey.c
+@@ -364,9 +364,11 @@ static int flakey_map(struct dm_target *
+ 		/*
+ 		 * Corrupt matching writes.
+ 		 */
+-		if (fc->corrupt_bio_byte && (fc->corrupt_bio_rw == WRITE)) {
+-			if (all_corrupt_bio_flags_match(bio, fc))
+-				corrupt_bio_data(bio, fc);
++		if (fc->corrupt_bio_byte) {
++			if (fc->corrupt_bio_rw == WRITE) {
++				if (all_corrupt_bio_flags_match(bio, fc))
++					corrupt_bio_data(bio, fc);
++			}
+ 			goto map_bio;
+ 		}
  
-+static void cfg80211_step_auth_next(struct cfg80211_conn *conn,
-+				    struct cfg80211_bss *bss)
-+{
-+	memcpy(conn->bssid, bss->bssid, ETH_ALEN);
-+	conn->params.bssid = conn->bssid;
-+	conn->params.channel = bss->channel;
-+	conn->state = CFG80211_CONN_AUTHENTICATE_NEXT;
-+}
-+
- /* Returned bss is reference counted and must be cleaned up appropriately. */
- static struct cfg80211_bss *cfg80211_get_conn_bss(struct wireless_dev *wdev)
- {
-@@ -286,10 +295,7 @@ static struct cfg80211_bss *cfg80211_get
- 	if (!bss)
- 		return NULL;
- 
--	memcpy(wdev->conn->bssid, bss->bssid, ETH_ALEN);
--	wdev->conn->params.bssid = wdev->conn->bssid;
--	wdev->conn->params.channel = bss->channel;
--	wdev->conn->state = CFG80211_CONN_AUTHENTICATE_NEXT;
-+	cfg80211_step_auth_next(wdev->conn, bss);
- 	schedule_work(&rdev->conn_work);
- 
- 	return bss;
-@@ -568,7 +574,12 @@ static int cfg80211_sme_connect(struct w
- 	wdev->conn->params.ssid_len = wdev->ssid_len;
- 
- 	/* see if we have the bss already */
--	bss = cfg80211_get_conn_bss(wdev);
-+	bss = cfg80211_get_bss(wdev->wiphy, wdev->conn->params.channel,
-+			       wdev->conn->params.bssid,
-+			       wdev->conn->params.ssid,
-+			       wdev->conn->params.ssid_len,
-+			       wdev->conn_bss_type,
-+			       IEEE80211_PRIVACY(wdev->conn->params.privacy));
- 
- 	if (prev_bssid) {
- 		memcpy(wdev->conn->prev_bssid, prev_bssid, ETH_ALEN);
-@@ -579,6 +590,7 @@ static int cfg80211_sme_connect(struct w
- 	if (bss) {
- 		enum nl80211_timeout_reason treason;
- 
-+		cfg80211_step_auth_next(wdev->conn, bss);
- 		err = cfg80211_conn_do_work(wdev, &treason);
- 		cfg80211_put_bss(wdev->wiphy, bss);
- 	} else {
-@@ -1128,6 +1140,15 @@ int cfg80211_connect(struct cfg80211_reg
- 	} else {
- 		if (WARN_ON(connkeys))
- 			return -EINVAL;
-+
-+		/* connect can point to wdev->wext.connect which
-+		 * can hold key data from a previous connection
-+		 */
-+		connect->key = NULL;
-+		connect->key_len = 0;
-+		connect->key_idx = 0;
-+		connect->crypto.cipher_group = 0;
-+		connect->crypto.n_ciphers_pairwise = 0;
+@@ -397,13 +399,14 @@ static int flakey_end_io(struct dm_targe
  	}
  
- 	wdev->connect_keys = connkeys;
+ 	if (!*error && pb->bio_submitted && (bio_data_dir(bio) == READ)) {
+-		if (fc->corrupt_bio_byte && (fc->corrupt_bio_rw == READ) &&
+-		    all_corrupt_bio_flags_match(bio, fc)) {
+-			/*
+-			 * Corrupt successful matching READs while in down state.
+-			 */
+-			corrupt_bio_data(bio, fc);
+-
++		if (fc->corrupt_bio_byte) {
++			if ((fc->corrupt_bio_rw == READ) &&
++			    all_corrupt_bio_flags_match(bio, fc)) {
++				/*
++				 * Corrupt successful matching READs while in down state.
++				 */
++				corrupt_bio_data(bio, fc);
++			}
+ 		} else if (!test_bit(DROP_WRITES, &fc->flags) &&
+ 			   !test_bit(ERROR_WRITES, &fc->flags)) {
+ 			/*
 
 
