@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0E58481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:13:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA152C433D2;
-	Fri, 10 Mar 2023 14:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCFF8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:13:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47ACFC433D2;
+	Fri, 10 Mar 2023 14:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457605;
-	bh=ZrtyA0A7hrz6MWSDZccImiLlC87UAiLyjk0epvMRlh0=;
+	s=korg; t=1678457607;
+	bh=F9liIfmRQVktoAn8wyKTNdmFd0qpqDIml8xV+QZbMDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=om7d7zcWzbaRFX4mLz9PUpgyv20QNMumYZdV7g89o0qjLUeuXbnWymMmcdYJjuuFz
-	 X7yVCR3MPXh0jFOz1C71Lrl89cgc61/CJ33YIalJkKfVCoKE2OCHPequp9FXq0IRVC
-	 Z+XI0exga+2KcIXLubLSDrd25a/mYpzy33xqTqus=
+	b=uZlJ0Ul8Fk62Q3SYcmASxBxRwj55UuhqRJHADghVLMgklHZfSmNyxK2xPfJXDINGd
+	 J1ME7e450mPufZXnfwEuKkNsCR2cdE01teFHh2tGAluQSABZ1YfXVBB/PUjbmbE7/b
+	 5rATOGfymVs5XnEpawD190lckU8/s+dSmlGWctLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunke Cao <yunkec@chromium.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: [PATCH 6.1 194/200] media: uvcvideo: Fix race condition with usb_kill_urb
-Date: Fri, 10 Mar 2023 14:40:01 +0100
-Message-Id: <20230310133723.045260440@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 165/200] drivers: base: component: fix memory leak with using debugfs_lookup()
+Date: Fri, 10 Mar 2023 14:39:32 +0100
+Message-Id: <20230310133722.174045711@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,140 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 619d9b710cf06f7a00a17120ca92333684ac45a8 upstream.
+[ Upstream commit 8deb87b1e810dd558371e88ffd44339fbef27870 ]
 
-usb_kill_urb warranties that all the handlers are finished when it
-returns, but does not protect against threads that might be handling
-asynchronously the urb.
+When calling debugfs_lookup() the result must have dput() called on it,
+otherwise the memory will leak over time.  To make things simpler, just
+call debugfs_lookup_and_remove() instead which handles all of the logic
+at once.
 
-For UVC, the function uvc_ctrl_status_event_async() takes care of
-control changes asynchronously.
-
-If the code is executed in the following order:
-
-CPU 0					CPU 1
-===== 					=====
-uvc_status_complete()
-					uvc_status_stop()
-uvc_ctrl_status_event_work()
-					uvc_status_start() -> FAIL
-
-Then uvc_status_start will keep failing and this error will be shown:
-
-<4>[    5.540139] URB 0000000000000000 submitted while active
-drivers/usb/core/urb.c:378 usb_submit_urb+0x4c3/0x528
-
-Let's improve the current situation, by not re-submiting the urb if
-we are stopping the status event. Also process the queued work
-(if any) during stop.
-
-CPU 0					CPU 1
-===== 					=====
-uvc_status_complete()
-					uvc_status_stop()
-					uvc_status_start()
-uvc_ctrl_status_event_work() -> FAIL
-
-Hopefully, with the usb layer protection this should be enough to cover
-all the cases.
-
-Cc: stable@vger.kernel.org
-Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
-Reviewed-by: Yunke Cao <yunkec@chromium.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Link: https://lore.kernel.org/r/20230202141621.2296458-1-gregkh@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c   |    5 +++++
- drivers/media/usb/uvc/uvc_status.c |   37 +++++++++++++++++++++++++++++++++++++
- drivers/media/usb/uvc/uvcvideo.h   |    1 +
- 3 files changed, 43 insertions(+)
+ drivers/base/component.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -6,6 +6,7 @@
-  *          Laurent Pinchart (laurent.pinchart@ideasonboard.com)
-  */
+diff --git a/drivers/base/component.c b/drivers/base/component.c
+index 5eadeac6c5322..7dbf14a1d9157 100644
+--- a/drivers/base/component.c
++++ b/drivers/base/component.c
+@@ -125,7 +125,7 @@ static void component_debugfs_add(struct aggregate_device *m)
  
-+#include <asm/barrier.h>
- #include <linux/bitops.h>
- #include <linux/kernel.h>
- #include <linux/list.h>
-@@ -1509,6 +1510,10 @@ static void uvc_ctrl_status_event_work(s
- 
- 	uvc_ctrl_status_event(w->chain, w->ctrl, w->data);
- 
-+	/* The barrier is needed to synchronize with uvc_status_stop(). */
-+	if (smp_load_acquire(&dev->flush_status))
-+		return;
-+
- 	/* Resubmit the URB. */
- 	w->urb->interval = dev->int_ep->desc.bInterval;
- 	ret = usb_submit_urb(w->urb, GFP_KERNEL);
---- a/drivers/media/usb/uvc/uvc_status.c
-+++ b/drivers/media/usb/uvc/uvc_status.c
-@@ -6,6 +6,7 @@
-  *          Laurent Pinchart (laurent.pinchart@ideasonboard.com)
-  */
- 
-+#include <asm/barrier.h>
- #include <linux/kernel.h>
- #include <linux/input.h>
- #include <linux/slab.h>
-@@ -309,5 +310,41 @@ int uvc_status_start(struct uvc_device *
- 
- void uvc_status_stop(struct uvc_device *dev)
+ static void component_debugfs_del(struct aggregate_device *m)
  {
-+	struct uvc_ctrl_work *w = &dev->async_ctrl;
-+
-+	/*
-+	 * Prevent the asynchronous control handler from requeing the URB. The
-+	 * barrier is needed so the flush_status change is visible to other
-+	 * CPUs running the asynchronous handler before usb_kill_urb() is
-+	 * called below.
-+	 */
-+	smp_store_release(&dev->flush_status, true);
-+
-+	/*
-+	 * Cancel any pending asynchronous work. If any status event was queued,
-+	 * process it synchronously.
-+	 */
-+	if (cancel_work_sync(&w->work))
-+		uvc_ctrl_status_event(w->chain, w->ctrl, w->data);
-+
-+	/* Kill the urb. */
- 	usb_kill_urb(dev->int_urb);
-+
-+	/*
-+	 * The URB completion handler may have queued asynchronous work. This
-+	 * won't resubmit the URB as flush_status is set, but it needs to be
-+	 * cancelled before returning or it could then race with a future
-+	 * uvc_status_start() call.
-+	 */
-+	if (cancel_work_sync(&w->work))
-+		uvc_ctrl_status_event(w->chain, w->ctrl, w->data);
-+
-+	/*
-+	 * From this point, there are no events on the queue and the status URB
-+	 * is dead. No events will be queued until uvc_status_start() is called.
-+	 * The barrier is needed to make sure that flush_status is visible to
-+	 * uvc_ctrl_status_event_work() when uvc_status_start() will be called
-+	 * again.
-+	 */
-+	smp_store_release(&dev->flush_status, false);
+-	debugfs_remove(debugfs_lookup(dev_name(m->parent), component_debugfs_dir));
++	debugfs_lookup_and_remove(dev_name(m->parent), component_debugfs_dir);
  }
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -558,6 +558,7 @@ struct uvc_device {
- 	/* Status Interrupt Endpoint */
- 	struct usb_host_endpoint *int_ep;
- 	struct urb *int_urb;
-+	bool flush_status;
- 	u8 *status;
- 	struct input_dev *input;
- 	char input_phys[64];
+ 
+ #else
+-- 
+2.39.2
+
 
 
