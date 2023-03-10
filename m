@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42AA88489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:16:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5644C433EF;
-	Fri, 10 Mar 2023 14:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186C98489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:16:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9232BC433D2;
+	Fri, 10 Mar 2023 14:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457804;
-	bh=+xUMu1Yq6bwwcXKDXoN7WG1N9Lqljdat3QOwoNJGF6Q=;
+	s=korg; t=1678457806;
+	bh=3AP2ffMQ3SuMsK+DrdXZvcZxoaw1M3EGXEmz/jf9NfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFUs902DV05bMdrZdSCmZhZFVFy2rPu3VFbiukDB9iKWi/V9U/LvhH1F8p7oR37Ed
-	 8lnJiYYJF4qODUG57rSYhF8unly2IcRDSvVZ5S8/lGuMcejD9ODUlgGLKJ2C8odz6y
-	 ikYjqxn4R7wNs1NdHKEAvs4r7jhFwRQZQpXet9nc=
+	b=sRA70ZcZkOY8JAiPf+zxyc3oPaPT64Qnu30asxmdDJnM+ewNwRzUkZaEFRIlFZOpS
+	 QkroMvh2PtAne0A5170MiSnMrnAkbYZM/5+pA4c7EhjtbwoPSjV2VVnn35HZCnCC30
+	 uyts9HA6fi/cBtSRVZLTMbd2jyi6vz5KG+uQwMLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Roxana Nicolescu <roxana.nicolescu@canonical.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 064/252] irqchip/irq-bcm7120-l2: Set IRQ_LEVEL for level triggered interrupts
-Date: Fri, 10 Mar 2023 14:37:14 +0100
-Message-Id: <20230310133720.775299363@linuxfoundation.org>
+Subject: [PATCH 4.19 065/252] selftest: fib_tests: Always cleanup before exit
+Date: Fri, 10 Mar 2023 14:37:15 +0100
+Message-Id: <20230310133720.803704226@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,39 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Roxana Nicolescu <roxana.nicolescu@canonical.com>
 
-[ Upstream commit 13a157b38ca5b4f9eed81442b8821db293755961 ]
+[ Upstream commit b60417a9f2b890a8094477b2204d4f73c535725e ]
 
-When support for the interrupt controller was added with a5042de2688d,
-we forgot to update the flags to be set to contain IRQ_LEVEL. While the
-flow handler is correct, the output from /proc/interrupts does not show
-such interrupts as being level triggered when they are, correct that.
+Usage of `set -e` before executing a command causes immediate exit
+on failure, without cleanup up the resources allocated at setup.
+This can affect the next tests that use the same resources,
+leading to a chain of failures.
 
-Fixes: a5042de2688d ("irqchip: bcm7120-l2: Add Broadcom BCM7120-style Level 2 interrupt controller")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221216230934.2478345-3-f.fainelli@gmail.com
+A simple fix is to always call cleanup function when the script exists.
+This approach is already used by other existing tests.
+
+Fixes: 1056691b2680 ("selftests: fib_tests: Make test results more verbose")
+Signed-off-by: Roxana Nicolescu <roxana.nicolescu@canonical.com>
+Link: https://lore.kernel.org/r/20230220110400.26737-2-roxana.nicolescu@canonical.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-bcm7120-l2.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/fib_tests.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/irqchip/irq-bcm7120-l2.c b/drivers/irqchip/irq-bcm7120-l2.c
-index 8968e5e93fcb8..fefafe1af1167 100644
---- a/drivers/irqchip/irq-bcm7120-l2.c
-+++ b/drivers/irqchip/irq-bcm7120-l2.c
-@@ -271,7 +271,8 @@ static int __init bcm7120_l2_intc_probe(struct device_node *dn,
- 		flags |= IRQ_GC_BE_IO;
+diff --git a/tools/testing/selftests/net/fib_tests.sh b/tools/testing/selftests/net/fib_tests.sh
+index a5ba149761bf9..f34e14e34d0d4 100755
+--- a/tools/testing/selftests/net/fib_tests.sh
++++ b/tools/testing/selftests/net/fib_tests.sh
+@@ -1379,6 +1379,8 @@ EOF
+ ################################################################################
+ # main
  
- 	ret = irq_alloc_domain_generic_chips(data->domain, IRQS_PER_WORD, 1,
--				dn->full_name, handle_level_irq, clr, 0, flags);
-+				dn->full_name, handle_level_irq, clr,
-+				IRQ_LEVEL, flags);
- 	if (ret) {
- 		pr_err("failed to allocate generic irq chip\n");
- 		goto out_free_domain;
++trap cleanup EXIT
++
+ while getopts :t:pPhv o
+ do
+ 	case $o in
 -- 
 2.39.2
 
