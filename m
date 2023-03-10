@@ -1,82 +1,127 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7D823A1
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 08:47:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDDAC4339B;
-	Fri, 10 Mar 2023 08:47:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678438058;
-	bh=8OIu7w5/Qm1MD2KVThRTovTz0f9qZOkpY/+NF/2wECE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=zNToo8VQ1vC2sP9YR0/rWu7yuLeqE5EsGePB3Cp76EkBaqUDjSgSeOxJlV5pgY9u1
-	 gIScWOJC7dRHnqPk7Hbi1hCSKxS0bUQI0JZmsDTXk+nL/B8Yr4CPfPElcqReWszQiY
-	 7GR2WzDDzVWJwCfUKuCpFVWMAJ51vNU6eNbecm/s=
-Date: Fri, 10 Mar 2023 09:19:56 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH 6.2 0512/1001] tty: serial: qcom-geni-serial: stop
- operations in progress at shutdown
-Message-ID: <ZAroLFDc5nPWrFzl@kroah.com>
-References: <20230307170022.094103862@linuxfoundation.org>
- <20230307170043.650684610@linuxfoundation.org>
- <CACMJSetcAiz6nwCdAuZekwOavZji8HfHOU4hv6d9xp9pE_zf+g@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404597EF
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 10:32:16 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 4FCF020652;
+	Fri, 10 Mar 2023 10:32:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1678444334; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=+UxaHT8mKSvWC1QwdfPHOIKK79hhmlWoe1rpbrZg63I=;
+	b=Pi4jmECIhq9mt7ExG5YPIfVLCnWAsu13s1ZcnGG8QMsXvppeWz1uSPuiQAAUb4TWtAnyIK
+	FFaCIxvGmlNxUZwx+6E7paW4fJEQ4r+txzLRaCowoeYJsr2zCk53dGc5tmS0m3rN5Lr0/K
+	Kt/Mg6W6ijqhwCTTXPogOO/aOCVXxr0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1678444334;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=+UxaHT8mKSvWC1QwdfPHOIKK79hhmlWoe1rpbrZg63I=;
+	b=qc9mtv8oEd3rdK+9AU0fRFP6mEP8TogXgGtqfBKs7DxeOUmeHcrefoqf50gZ3br6pltm6a
+	mpmzxQWPR95dfxBA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E502D13592;
+	Fri, 10 Mar 2023 10:32:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id bBceNy0HC2SsXQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 10 Mar 2023 10:32:13 +0000
+From: Vlastimil Babka <vbabka@suse.cz>
+To: Christoph Lameter <cl@linux.com>,
+	David Rientjes <rientjes@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-mm@kvack.org,
+	rcu@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	netdev@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 0/7] remove SLOB and allow kfree() with kmem_cache_alloc()
+Date: Fri, 10 Mar 2023 11:32:02 +0100
+Message-Id: <20230310103210.22372-1-vbabka@suse.cz>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACMJSetcAiz6nwCdAuZekwOavZji8HfHOU4hv6d9xp9pE_zf+g@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 07, 2023 at 06:53:46PM +0100, Bartosz Golaszewski wrote:
-> On Tue, 7 Mar 2023 at 18:32, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > [ Upstream commit d8aca2f96813d51df574a811eda9a2cbed00f261 ]
-> >
-> > We don't stop transmissions in progress at shutdown. This is fine with
-> > FIFO SE mode but with DMA (support for which we'll introduce later) it
-> > causes trouble so fix it now.
-> >
-> > Fixes: e83766334f96 ("tty: serial: qcom_geni_serial: No need to stop tx/rx on UART shutdown")
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > Link: https://lore.kernel.org/r/20221229155030.418800-2-brgl@bgdev.pl
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> >  drivers/tty/serial/qcom_geni_serial.c | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> > index 57f04f8bf5043..851a5d2133aa2 100644
-> > --- a/drivers/tty/serial/qcom_geni_serial.c
-> > +++ b/drivers/tty/serial/qcom_geni_serial.c
-> > @@ -891,6 +891,8 @@ static int setup_fifos(struct qcom_geni_serial_port *port)
-> >  static void qcom_geni_serial_shutdown(struct uart_port *uport)
-> >  {
-> >         disable_irq(uport->irq);
-> > +       qcom_geni_serial_stop_tx(uport);
-> > +       qcom_geni_serial_stop_rx(uport);
-> >  }
-> >
-> 
-> Greg,
-> 
-> Please drop this patch from all stable branches as it has caused a
-> problem in current master and - once fixed - is only relevant for new
-> (DMA) code.
+Also in git:
+https://git.kernel.org/vbabka/h/slab-remove-slob-v1r1
 
-Now dropped from all queues, thanks.
+The SLOB allocator was deprecated in 6.2 so I think we can start
+exposing the complete removal in for-next and aim at 6.4 if there are no
+complaints.
 
-greg k-h
+Besides code cleanup, the main immediate benefit will be allowing
+kfree() family of function to work on kmem_cache_alloc() objects (Patch
+7), which was incompatible with SLOB.
+
+This includes kfree_rcu() so I've updated the comment there to remove
+the mention of potential future addition of kmem_cache_free_rcu() as
+there should be no need for that now.
+
+Otherwise it's straightforward. Patch 2 is a cleanup in net area, that I
+can either handle in slab tree or submit in net after SLOB is removed.
+Another cleanup in tomoyo is already in the tomoyo tree as that didn't
+need to wait until SLOB removal.
+
+Vlastimil Babka (7):
+  mm/slob: remove CONFIG_SLOB
+  net: skbuff: remove SLOB-specific ifdefs
+  mm, page_flags: remove PG_slob_free
+  mm, pagemap: remove SLOB and SLQB from comments and documentation
+  mm/slab: remove CONFIG_SLOB code from slab common code
+  mm/slob: remove slob.c
+  mm/slab: document kfree() as allowed for kmem_cache_alloc() objects
+
+ Documentation/admin-guide/mm/pagemap.rst     |   6 +-
+ Documentation/core-api/memory-allocation.rst |  15 +-
+ fs/proc/page.c                               |   5 +-
+ include/linux/page-flags.h                   |   4 -
+ include/linux/rcupdate.h                     |   6 +-
+ include/linux/slab.h                         |  39 -
+ init/Kconfig                                 |   2 +-
+ kernel/configs/tiny.config                   |   1 -
+ mm/Kconfig                                   |  22 -
+ mm/Makefile                                  |   1 -
+ mm/slab.h                                    |  61 --
+ mm/slab_common.c                             |   7 +-
+ mm/slob.c                                    | 757 -------------------
+ net/core/skbuff.c                            |  16 -
+ tools/mm/page-types.c                        |   6 +-
+ 15 files changed, 23 insertions(+), 925 deletions(-)
+ delete mode 100644 mm/slob.c
+
+-- 
+2.39.2
+
