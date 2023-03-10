@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAEE847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDC4C433EF;
-	Fri, 10 Mar 2023 13:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F169847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB483C433EF;
+	Fri, 10 Mar 2023 13:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456194;
-	bh=3ESICwBBXTPzePQ57qR1TG39JF5H3fr/JWZ32Y25Y3U=;
+	s=korg; t=1678456197;
+	bh=B1xh+lrs1fZ4j2Kl3Mt2VWZgP87ErU5TTPzr/ZhzpRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A0MFidAj2Z5D35sXFIhg5GHBA52z4pT8t1aHIHVKIpW8Ctt4k/VQRp/0wBCvK/o3U
-	 0lCR0Ja85QYwUqnkTpdTbtbpjCu8lPiDXTwHJsRCo3AS6mktLg0FLPZrB/+IAxnagc
-	 neWK1GpMWDpJCItAoNEYClvqJUfnr+RkzTE3pKpw=
+	b=FDlmMApQZqm3xaSJnQJkACgwwR1cJhToOZxqZQxkZEdw2IY4DroNappd81O+f2ktv
+	 h+dOk2Pre7jfENsTpwOpY9ONBzp9zg9oPtEeoItFC1bAxDj2KLWyoZ/ZwKL8EnaZdz
+	 juYy3SnufFzIWMeji8eKrx7inwrFLO7SY82n/0lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 4.14 113/193] x86/reboot: Disable virtualization in an emergency if SVM is supported
-Date: Fri, 10 Mar 2023 14:38:15 +0100
-Message-Id: <20230310133715.046347424@linuxfoundation.org>
+Subject: [PATCH 4.14 114/193] x86/reboot: Disable SVM, not just VMX, when stopping CPUs
+Date: Fri, 10 Mar 2023 14:38:16 +0100
+Message-Id: <20230310133715.075309133@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -36,70 +36,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit d81f952aa657b76cea381384bef1fea35c5fd266 upstream.
+commit a2b07fa7b93321c059af0c6d492cc9a4f1e390aa upstream.
 
-Disable SVM on all CPUs via NMI shootdown during an emergency reboot.
-Like VMX, SVM can block INIT, e.g. if the emergency reboot is triggered
-between CLGI and STGI, and thus can prevent bringing up other CPUs via
-INIT-SIPI-SIPI.
+Disable SVM and more importantly force GIF=1 when halting a CPU or
+rebooting the machine.  Similar to VMX, SVM allows software to block
+INITs via CLGI, and thus can be problematic for a crash/reboot.  The
+window for failure is smaller with SVM as INIT is only blocked while
+GIF=0, i.e. between CLGI and STGI, but the window does exist.
 
+Fixes: fba4f472b33a ("x86/reboot: Turn off KVM when halting a CPU")
 Cc: stable@vger.kernel.org
 Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221130233650.1404148-4-seanjc@google.com
+Link: https://lore.kernel.org/r/20221130233650.1404148-5-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/reboot.c |   23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ arch/x86/kernel/smp.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/reboot.c
-+++ b/arch/x86/kernel/reboot.c
-@@ -538,27 +538,26 @@ static inline void kb_wait(void)
+--- a/arch/x86/kernel/smp.c
++++ b/arch/x86/kernel/smp.c
+@@ -33,7 +33,7 @@
+ #include <asm/mce.h>
+ #include <asm/trace/irq_vectors.h>
+ #include <asm/kexec.h>
+-#include <asm/virtext.h>
++#include <asm/reboot.h>
  
- static inline void nmi_shootdown_cpus_on_restart(void);
+ /*
+  *	Some notes on x86 processor bugs affecting SMP operation:
+@@ -163,7 +163,7 @@ static int smp_stop_nmi_callback(unsigne
+ 	if (raw_smp_processor_id() == atomic_read(&stopping_cpu))
+ 		return NMI_HANDLED;
  
--/* Use NMIs as IPIs to tell all CPUs to disable virtualization */
--static void emergency_vmx_disable_all(void)
-+static void emergency_reboot_disable_virtualization(void)
+-	cpu_emergency_vmxoff();
++	cpu_emergency_disable_virtualization();
+ 	stop_this_cpu(NULL);
+ 
+ 	return NMI_HANDLED;
+@@ -176,7 +176,7 @@ static int smp_stop_nmi_callback(unsigne
+ asmlinkage __visible void smp_reboot_interrupt(void)
  {
- 	/* Just make sure we won't change CPUs while doing this */
- 	local_irq_disable();
- 
- 	/*
--	 * Disable VMX on all CPUs before rebooting, otherwise we risk hanging
--	 * the machine, because the CPU blocks INIT when it's in VMX root.
-+	 * Disable virtualization on all CPUs before rebooting to avoid hanging
-+	 * the system, as VMX and SVM block INIT when running in the host.
- 	 *
- 	 * We can't take any locks and we may be on an inconsistent state, so
--	 * use NMIs as IPIs to tell the other CPUs to exit VMX root and halt.
-+	 * use NMIs as IPIs to tell the other CPUs to disable VMX/SVM and halt.
- 	 *
--	 * Do the NMI shootdown even if VMX if off on _this_ CPU, as that
--	 * doesn't prevent a different CPU from being in VMX root operation.
-+	 * Do the NMI shootdown even if virtualization is off on _this_ CPU, as
-+	 * other CPUs may have virtualization enabled.
- 	 */
--	if (cpu_has_vmx()) {
--		/* Safely force _this_ CPU out of VMX root operation. */
--		__cpu_emergency_vmxoff();
-+	if (cpu_has_vmx() || cpu_has_svm(NULL)) {
-+		/* Safely force _this_ CPU out of VMX/SVM operation. */
-+		cpu_emergency_disable_virtualization();
- 
--		/* Halt and exit VMX root operation on the other CPUs. */
-+		/* Disable VMX/SVM and halt on other CPUs. */
- 		nmi_shootdown_cpus_on_restart();
- 
- 	}
-@@ -596,7 +595,7 @@ static void native_machine_emergency_res
- 	unsigned short mode;
- 
- 	if (reboot_emergency)
--		emergency_vmx_disable_all();
-+		emergency_reboot_disable_virtualization();
- 
- 	tboot_shutdown(TB_SHUTDOWN_REBOOT);
- 
+ 	ipi_entering_ack_irq();
+-	cpu_emergency_vmxoff();
++	cpu_emergency_disable_virtualization();
+ 	stop_this_cpu(NULL);
+ 	irq_exit();
+ }
 
 
