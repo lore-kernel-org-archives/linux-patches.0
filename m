@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D781881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:47:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203A9C4339B;
-	Fri, 10 Mar 2023 14:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12FB881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:47:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135DFC4339B;
+	Fri, 10 Mar 2023 14:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459632;
-	bh=YL3XW/pKVeC1k18gp5HoChxcSpHm9kU+FZN6gNDd46U=;
+	s=korg; t=1678459635;
+	bh=3DwLHOYp38wdLyy+Ft282z31473iRxPK0HdVsTsI04U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=acYQcuNUqBtfObFHKl/9neyIgDJeEs+kwXfsgCBhFDimY2UZCxed28KqRUCVbwq3m
-	 k9TH2hlnF61/FO69R6ZdcezyOsovr+gyL3yl0Z89nD3aP6XFaU1zBp+855hYwX+hzl
-	 Vr5zEL4UFpFQXDAv4+cmgG+ULjzOAw/onu6Kywr4=
+	b=kgXF3f3kGeQG2ijBa9Xee/cA0QOR+Snv85vLLzc0+zEHKM45oBf1NtgSQBGf4jd+X
+	 P0e51O6IIb6Z9tpOTEaitnJ6XKyG12MSlM52apo6n7Dp/O/oQ1mK9lqe7ujhctX9A4
+	 2kQ/R8vwOrpJoOyfxK5npUxP27fmzca0e3qooK4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 051/529] wifi: rtlwifi: rtl8188ee: dont call kfree_skb() under spin_lock_irqsave()
-Date: Fri, 10 Mar 2023 14:33:14 +0100
-Message-Id: <20230310133807.361105579@linuxfoundation.org>
+Subject: [PATCH 5.10 069/529] crypto: x86/ghash - fix unaligned access in ghash_setkey()
+Date: Fri, 10 Mar 2023 14:33:32 +0100
+Message-Id: <20230310133808.161586781@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,55 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 2611687fa7ffc84190f92292de0b80468de17220 ]
+[ Upstream commit 116db2704c193fff6d73ea6c2219625f0c9bdfc8 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. All the SKBs have
-been dequeued from the old queue, so it's safe to enqueue these
-SKBs to a free queue, then free them after spin_unlock_irqrestore()
-at once. Compile tested only.
+The key can be unaligned, so use the unaligned memory access helpers.
 
-Fixes: 7fe3b3abb5da ("rtlwifi: rtl8188ee: rtl8821ae: Fix a queue locking problem")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221207141411.46098-3-yangyingliang@huawei.com
+Fixes: 8ceee72808d1 ("crypto: ghash-clmulni-intel - use C implementation for setkey()")
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/x86/crypto/ghash-clmulni-intel_glue.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c
-index 63f9ea21962f2..335a3c9cdbab6 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c
-@@ -68,8 +68,10 @@ static void _rtl88ee_return_beacon_queue_skb(struct ieee80211_hw *hw)
- 	struct rtl_priv *rtlpriv = rtl_priv(hw);
- 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
- 	struct rtl8192_tx_ring *ring = &rtlpci->tx_ring[BEACON_QUEUE];
-+	struct sk_buff_head free_list;
- 	unsigned long flags;
+diff --git a/arch/x86/crypto/ghash-clmulni-intel_glue.c b/arch/x86/crypto/ghash-clmulni-intel_glue.c
+index 1f1a95f3dd0ca..c0ab0ff4af655 100644
+--- a/arch/x86/crypto/ghash-clmulni-intel_glue.c
++++ b/arch/x86/crypto/ghash-clmulni-intel_glue.c
+@@ -19,6 +19,7 @@
+ #include <crypto/internal/simd.h>
+ #include <asm/cpu_device_id.h>
+ #include <asm/simd.h>
++#include <asm/unaligned.h>
  
-+	skb_queue_head_init(&free_list);
- 	spin_lock_irqsave(&rtlpriv->locks.irq_th_lock, flags);
- 	while (skb_queue_len(&ring->queue)) {
- 		struct rtl_tx_desc *entry = &ring->desc[ring->idx];
-@@ -79,10 +81,12 @@ static void _rtl88ee_return_beacon_queue_skb(struct ieee80211_hw *hw)
- 				 rtlpriv->cfg->ops->get_desc(hw, (u8 *)entry,
- 						true, HW_DESC_TXBUFF_ADDR),
- 				 skb->len, DMA_TO_DEVICE);
--		kfree_skb(skb);
-+		__skb_queue_tail(&free_list, skb);
- 		ring->idx = (ring->idx + 1) % ring->entries;
- 	}
- 	spin_unlock_irqrestore(&rtlpriv->locks.irq_th_lock, flags);
-+
-+	__skb_queue_purge(&free_list);
- }
+ #define GHASH_BLOCK_SIZE	16
+ #define GHASH_DIGEST_SIZE	16
+@@ -54,15 +55,14 @@ static int ghash_setkey(struct crypto_shash *tfm,
+ 			const u8 *key, unsigned int keylen)
+ {
+ 	struct ghash_ctx *ctx = crypto_shash_ctx(tfm);
+-	be128 *x = (be128 *)key;
+ 	u64 a, b;
  
- static void _rtl88ee_disable_bcn_sub_func(struct ieee80211_hw *hw)
+ 	if (keylen != GHASH_BLOCK_SIZE)
+ 		return -EINVAL;
+ 
+ 	/* perform multiplication by 'x' in GF(2^128) */
+-	a = be64_to_cpu(x->a);
+-	b = be64_to_cpu(x->b);
++	a = get_unaligned_be64(key);
++	b = get_unaligned_be64(key + 8);
+ 
+ 	ctx->shash.a = (b << 1) | (a >> 63);
+ 	ctx->shash.b = (a << 1) | (b >> 63);
 -- 
 2.39.2
 
