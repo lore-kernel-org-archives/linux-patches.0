@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AEB847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A92C433D2;
-	Fri, 10 Mar 2023 13:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0584F847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EACC433EF;
+	Fri, 10 Mar 2023 13:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456156;
-	bh=/Tq1KfffpsIyg77UJj94OUlHumQjg2M0xPQ9az5/zBA=;
+	s=korg; t=1678456158;
+	bh=XV1gQK8iGN1GT9c2+Sx0SjtmLszZjWWL3OHBrUQZj7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yhEj5//LxJfT7Q0UvUpHCoW7ikgVhALMx2bmYuwhPiBHJZVT9QkkI6xF3gb6xcxNx
-	 akIYGU6noi8Uin5oVrVbSzwU/SVARYQuY91NGng5oIkwony0NpLSSI9gGOn4Dre2qr
-	 YqXG5eZ09hxlU2SGNRNHWcMX/+BhxTG9xHnJONKU=
+	b=Wg5M9U0fRtUjbW+bGJCjc3l4C1pXLtkIU8hyQr/FnCUvJ340jxTsyFzlKuo2DOHeJ
+	 AdWqLYRhHY3ZwilfpTPeO3BC2SMTqKFJPCWNPczH44KV/AgBVo2c1hMqaKoXFUMRU4
+	 pshgeKeQMzur/qT9rx+wFSghDh/sjpA3C6eMiQhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jeffery <andrew@aj.id.au>,
-	Frederic Barrat <fbarrat@linux.ibm.com>,
+	Nathan Lynch <nathanl@linux.ibm.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 069/193] powerpc/powernv/ioda: Skip unallocated resources when mapping to PE
-Date: Fri, 10 Mar 2023 14:37:31 +0100
-Message-Id: <20230310133713.337643962@linuxfoundation.org>
+Subject: [PATCH 4.14 070/193] powerpc/pseries/lparcfg: add missing RTAS retry status handling
+Date: Fri, 10 Mar 2023 14:37:32 +0100
+Message-Id: <20230310133713.369608715@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -36,91 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frederic Barrat <fbarrat@linux.ibm.com>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-[ Upstream commit e64e71056f323a1e178dccf04d4c0f032d84436c ]
+[ Upstream commit 5d08633e5f6564b60f1cbe09af3af40a74d66431 ]
 
-pnv_ioda_setup_pe_res() calls opal to map a resource with a PE. However,
-the code assumes the resource is allocated and it uses the resource
-address to find out the segment(s) which need to be mapped to the
-PE. In the unlikely case where the resource hasn't been allocated, the
-computation for the segment number is garbage, which can lead to
-invalid memory access and potentially a kernel crash, such as:
+The ibm,get-system-parameter RTAS function may return -2 or 990x,
+which indicate that the caller should try again.
 
-[ ] pci_bus 0002:02: Configuring PE for bus
-[ ] pci 0002:02     : [PE# fc] Secondary bus 0x0000000000000002..0x0000000000000002 associated with PE#fc
-[ ] BUG: Kernel NULL pointer dereference on write at 0x00000000
-[ ] Faulting instruction address: 0xc00000000005eac4
-[ ] Oops: Kernel access of bad area, sig: 7 [#1]
-[ ] LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA PowerNV
-[ ] Modules linked in:
-[ ] CPU: 12 PID: 1 Comm: swapper/20 Not tainted 5.10.50-openpower1 #2
-[ ] NIP:  c00000000005eac4 LR: c00000000005ea44 CTR: 0000000030061b9c
-[ ] REGS: c000200007383650 TRAP: 0300   Not tainted  (5.10.50-openpower1)
-[ ] MSR:  9000000000009033 <SF,HV,EE,ME,IR,DR,RI,LE>  CR: 44000224  XER: 20040000
-[ ] CFAR: c00000000005eaa0 DAR: 0000000000000000 DSISR: 02080000 IRQMASK: 0
-[ ] GPR00: c00000000005dd98 c0002000073838e0 c00000000185de00 c000200fff018960
-[ ] GPR04: 00000000000000fc 0000000000000003 0000000000000000 0000000000000000
-[ ] GPR08: 0000000000000000 0000000000000000 0000000000000000 9000000000001033
-[ ] GPR12: 0000000031cb0000 c000000ffffe6a80 c000000000010a58 0000000000000000
-[ ] GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-[ ] GPR20: 0000000000000000 0000000000000000 0000000000000000 c00000000711e200
-[ ] GPR24: 0000000000000100 c000200009501120 c00020000cee2800 00000000000003ff
-[ ] GPR28: c000200fff018960 0000000000000000 c000200ffcb7fd00 0000000000000000
-[ ] NIP [c00000000005eac4] pnv_ioda_setup_pe_res+0x94/0x1a0
-[ ] LR [c00000000005ea44] pnv_ioda_setup_pe_res+0x14/0x1a0
-[ ] Call Trace:
-[ ] [c0002000073838e0] [c00000000005eb98] pnv_ioda_setup_pe_res+0x168/0x1a0 (unreliable)
-[ ] [c000200007383970] [c00000000005dd98] pnv_pci_ioda_dma_dev_setup+0x43c/0x970
-[ ] [c000200007383a60] [c000000000032cdc] pcibios_bus_add_device+0x78/0x18c
-[ ] [c000200007383aa0] [c00000000028f2bc] pci_bus_add_device+0x28/0xbc
-[ ] [c000200007383b10] [c00000000028f3a0] pci_bus_add_devices+0x50/0x7c
-[ ] [c000200007383b50] [c00000000028f3c4] pci_bus_add_devices+0x74/0x7c
-[ ] [c000200007383b90] [c00000000028f3c4] pci_bus_add_devices+0x74/0x7c
-[ ] [c000200007383bd0] [c00000000069ad0c] pcibios_init+0xf0/0x104
-[ ] [c000200007383c50] [c0000000000106d8] do_one_initcall+0x84/0x1c4
-[ ] [c000200007383d20] [c0000000006910b8] kernel_init_freeable+0x264/0x268
-[ ] [c000200007383dc0] [c000000000010a68] kernel_init+0x18/0x138
-[ ] [c000200007383e20] [c00000000000cbfc] ret_from_kernel_thread+0x5c/0x80
-[ ] Instruction dump:
-[ ] 7f89e840 409d000c 7fbbf840 409c000c 38210090 4848f448 809c002c e95e0120
-[ ] 7ba91764 38a00003 57a7043e 38c00000 <7c8a492e> 5484043e e87e0018 4bff23bd
+lparcfg's parse_system_parameter_string() ignores this, making it
+possible to intermittently report incorrect SPLPAR characteristics.
 
-Hitting the problem is not that easy. It was seen with a (semi-bogus)
-PCI device with a class code of 0. The generic PCI framework doesn't
-allocate resources in such a case.
+Move the RTAS call into a coventional rtas_busy_delay()-based loop.
 
-The patch is simply skipping resources which are still flagged with
-IORESOURCE_UNSET.
-
-We don't have the problem with 64-bit mem resources, as the address of
-the resource is checked to be within the range of the 64-bit mmio
-window. See pnv_ioda_reserve_dev_m64_pe() and pnv_pci_is_m64().
-
-Reported-by: Andrew Jeffery <andrew@aj.id.au>
-Fixes: 23e79425fe7c ("powerpc/powernv: Simplify pnv_ioda_setup_pe_seg()")
-Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230120093215.19496-1-fbarrat@linux.ibm.com
+Link: https://lore.kernel.org/r/20230125-b4-powerpc-rtas-queue-v3-4-26929c8cce78@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/powernv/pci-ioda.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/lparcfg.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/arch/powerpc/platforms/powernv/pci-ioda.c b/arch/powerpc/platforms/powernv/pci-ioda.c
-index 36ef504eeab32..58798ced4dbbf 100644
---- a/arch/powerpc/platforms/powernv/pci-ioda.c
-+++ b/arch/powerpc/platforms/powernv/pci-ioda.c
-@@ -3155,7 +3155,8 @@ static void pnv_ioda_setup_pe_res(struct pnv_ioda_pe *pe,
- 	int index;
- 	int64_t rc;
+diff --git a/arch/powerpc/platforms/pseries/lparcfg.c b/arch/powerpc/platforms/pseries/lparcfg.c
+index 779fc2a1c8f77..f40dabf7d163f 100644
+--- a/arch/powerpc/platforms/pseries/lparcfg.c
++++ b/arch/powerpc/platforms/pseries/lparcfg.c
+@@ -289,6 +289,7 @@ static void parse_mpp_x_data(struct seq_file *m)
+  */
+ static void parse_system_parameter_string(struct seq_file *m)
+ {
++	const s32 token = rtas_token("ibm,get-system-parameter");
+ 	int call_status;
  
--	if (!res || !res->flags || res->start > res->end)
-+	if (!res || !res->flags || res->start > res->end ||
-+	    res->flags & IORESOURCE_UNSET)
+ 	unsigned char *local_buffer = kmalloc(SPLPAR_MAXLENGTH, GFP_KERNEL);
+@@ -298,16 +299,15 @@ static void parse_system_parameter_string(struct seq_file *m)
  		return;
+ 	}
  
- 	if (res->flags & IORESOURCE_IO) {
+-	spin_lock(&rtas_data_buf_lock);
+-	memset(rtas_data_buf, 0, SPLPAR_MAXLENGTH);
+-	call_status = rtas_call(rtas_token("ibm,get-system-parameter"), 3, 1,
+-				NULL,
+-				SPLPAR_CHARACTERISTICS_TOKEN,
+-				__pa(rtas_data_buf),
+-				RTAS_DATA_BUF_SIZE);
+-	memcpy(local_buffer, rtas_data_buf, SPLPAR_MAXLENGTH);
+-	local_buffer[SPLPAR_MAXLENGTH - 1] = '\0';
+-	spin_unlock(&rtas_data_buf_lock);
++	do {
++		spin_lock(&rtas_data_buf_lock);
++		memset(rtas_data_buf, 0, SPLPAR_MAXLENGTH);
++		call_status = rtas_call(token, 3, 1, NULL, SPLPAR_CHARACTERISTICS_TOKEN,
++					__pa(rtas_data_buf), RTAS_DATA_BUF_SIZE);
++		memcpy(local_buffer, rtas_data_buf, SPLPAR_MAXLENGTH);
++		local_buffer[SPLPAR_MAXLENGTH - 1] = '\0';
++		spin_unlock(&rtas_data_buf_lock);
++	} while (rtas_busy_delay(call_status));
+ 
+ 	if (call_status != 0) {
+ 		printk(KERN_INFO
 -- 
 2.39.2
 
