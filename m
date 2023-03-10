@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65EF28821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:03:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB974C433D2;
-	Fri, 10 Mar 2023 15:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629ED8821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:03:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D399BC433EF;
+	Fri, 10 Mar 2023 15:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460587;
-	bh=bNtznkHANNGICO6vyTjXG+NWodryo0S9sIbQbrjo9nY=;
+	s=korg; t=1678460590;
+	bh=mGOTvhT10kr3HBdlWc4oVYr5iFFuzh9c95yCZ4R8I04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dSwQ/qdX3g9EkJzj/teAndq5xOKMzmbkSeEjQ5yeafjpt/QaKJCI3tiqQd5ZUVin0
-	 mZzrrA9W7zCEsFfP3iZrbBDPescVOTN7qxwE5E2K/Ulzvne1mfapvEyP9pvHynnlbS
-	 yJe3P09M4DjKofeG5qU8JIEmVg5gNDIAV+FLptGM=
+	b=vblJGRpB9FfOiNBYCo5aGFuFk8ICjSw3XFkhZDA30kcSTzdoYJMAaQv8OpZxH21vF
+	 O8XvHOZk+xiZ+eY2D+J+KpJhYWLVdtZZ0mDA1QSMKL3JwkYLyPn2yrjURAcZa4zvXk
+	 frCheiJnBajs2V8bn3TRq0ed8FW9tXUaMBbAYQbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lamparter <equinox@diac24.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 377/529] io_uring: remove MSG_NOSIGNAL from recvmsg
-Date: Fri, 10 Mar 2023 14:38:40 +0100
-Message-Id: <20230310133822.475053307@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 5.10 386/529] wifi: rtl8xxxu: Use a longer retry limit of 48
+Date: Fri, 10 Mar 2023 14:38:49 +0100
+Message-Id: <20230310133822.900150816@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,39 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Lamparter <equinox@diac24.net>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit 7605c43d67face310b4b87dee1a28bc0c8cd8c0f upstream.
+commit 2a86aa9a1892d60ef2e3f310f5b42b8b05546d65 upstream.
 
-MSG_NOSIGNAL is not applicable for the receiving side, SIGPIPE is
-generated when trying to write to a "broken pipe".  AF_PACKET's
-packet_recvmsg() does enforce this, giving back EINVAL when MSG_NOSIGNAL
-is set - making it unuseable in io_uring's recvmsg.
+The Realtek rate control algorithm goes back and forth a lot between
+the highest and the lowest rate it's allowed to use. This is due to
+a lot of frames being dropped because the retry limits set by
+IEEE80211_CONF_CHANGE_RETRY_LIMITS are too low. (Experimentally, they
+are 4 for long frames and 7 for short frames.)
 
-Remove MSG_NOSIGNAL from io_recvmsg_prep().
+The vendor drivers hardcode the value 48 for both retry limits (for
+station mode), which makes dropped frames very rare and thus the rate
+control is more stable.
 
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: David Lamparter <equinox@diac24.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230224150123.128346-1-equinox@diac24.net
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Because most Realtek chips handle the rate control in the firmware,
+which can't be modified, ignore the limits set by
+IEEE80211_CONF_CHANGE_RETRY_LIMITS and use the value 48 (set during
+chip initialisation), same as the vendor drivers.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/477d745b-6bac-111d-403c-487fc19aa30d@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c |    9 ---------
+ 1 file changed, 9 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -4995,7 +4995,7 @@ static int io_recvmsg_prep(struct io_kio
- 	sr->umsg = u64_to_user_ptr(READ_ONCE(sqe->addr));
- 	sr->len = READ_ONCE(sqe->len);
- 	sr->bgid = READ_ONCE(sqe->buf_group);
--	sr->msg_flags = READ_ONCE(sqe->msg_flags) | MSG_NOSIGNAL;
-+	sr->msg_flags = READ_ONCE(sqe->msg_flags);
- 	if (sr->msg_flags & MSG_DONTWAIT)
- 		req->flags |= REQ_F_NOWAIT;
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -5908,7 +5908,6 @@ static int rtl8xxxu_config(struct ieee80
+ {
+ 	struct rtl8xxxu_priv *priv = hw->priv;
+ 	struct device *dev = &priv->udev->dev;
+-	u16 val16;
+ 	int ret = 0, channel;
+ 	bool ht40;
  
+@@ -5918,14 +5917,6 @@ static int rtl8xxxu_config(struct ieee80
+ 			 __func__, hw->conf.chandef.chan->hw_value,
+ 			 changed, hw->conf.chandef.width);
+ 
+-	if (changed & IEEE80211_CONF_CHANGE_RETRY_LIMITS) {
+-		val16 = ((hw->conf.long_frame_max_tx_count <<
+-			  RETRY_LIMIT_LONG_SHIFT) & RETRY_LIMIT_LONG_MASK) |
+-			((hw->conf.short_frame_max_tx_count <<
+-			  RETRY_LIMIT_SHORT_SHIFT) & RETRY_LIMIT_SHORT_MASK);
+-		rtl8xxxu_write16(priv, REG_RETRY_LIMIT, val16);
+-	}
+-
+ 	if (changed & IEEE80211_CONF_CHANGE_CHANNEL) {
+ 		switch (hw->conf.chandef.width) {
+ 		case NL80211_CHAN_WIDTH_20_NOHT:
 
 
