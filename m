@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5EFE4EC
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 23:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B868838
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 23:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=LMz951lH+GTlXBdT5Z97YwiBE8EmQ72In88ZwOJtlek=; b=OflQ0N4/CEo1p1GvnhPn14bpjg
-	vmz+hv+Jy3oouD/nIf1Vs6OZVTZLHssU2qrv5wXv26MXvSDxbzSf/ixlaGq9di1FLc3Tt+NaldRzl
-	gVkepqTIr+4FuiUK0XdHT/UeYiYo8Xp7YYrDphAe04rmoUut+n/Iv0DkWyLbvTbzbM7EwE2raaTmg
-	3dD+DLd3lGYlD8qCF+wZi0zvK7gWAapuOSVbXih5eWvfZ/3xzZwVEzDLXlMO7Z2JZaY6eGW15pOaR
-	CN27Hg3mEWxeTKsLrPi17eAX6fCPSZuiDaBT18bXXVPZtUwwUtLkxbZeNKuOONRADTL4BZLYiluq3
-	ag/IEb0Q==;
+	bh=nHMN7uwZ1jz4t3b3KbBdxN2XO9S9Ia12wFzWNFd3opY=; b=3GDvwXXQTMtsfQLNqy0vJ3E8tc
+	6n7irTuEwDXgM6CQLVv8I1yk6aK+TDHsXV86/H2xr6+YRZTiP0ByLSm8F7t8FVREr2m4jd5VaVRLa
+	Rq63/fdFYH5SdwcxIz+v2kxZC7QiYkwwbQ8/BlfNQxBOncdyV5fuBBUsPxkWc7+xlY7t9OAy/aBGs
+	+vpbqjiAfwhDgDAxTemRveRQB+7DdGJCae8xMhSFN1OAYe0bsNxr0zQW94wypu6N3TY3zyKGSdFFS
+	vbDpisKqOX1y+h6VL7kC1FIRNbL4ZUHRIcIdZ1Y+AIi/5E1eM5nmaM/J5JAsEeniE9bUanhpP4xCZ
+	ddqDO9xw==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pamQS-00Gj2v-1v; Fri, 10 Mar 2023 23:45:28 +0000
+	id 1pamQS-00Gj33-7A; Fri, 10 Mar 2023 23:45:28 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hca@linux.ibm.com,
 	agordeev@linux.ibm.com,
@@ -30,9 +30,9 @@ Cc: ebiederm@xmission.com,
 	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 2/6] s390: simplify one-level syctl registration for s390dbf_table
-Date: Fri, 10 Mar 2023 15:45:21 -0800
-Message-Id: <20230310234525.3986352-3-mcgrof@kernel.org>
+Subject: [PATCH 5/6] s390: simplify one-level sysctl registration for page_table_sysctl
+Date: Fri, 10 Mar 2023 15:45:24 -0800
+Message-Id: <20230310234525.3986352-6-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20230310234525.3986352-1-mcgrof@kernel.org>
 References: <20230310234525.3986352-1-mcgrof@kernel.org>
@@ -52,39 +52,34 @@ Simplify this registration.
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- arch/s390/kernel/debug.c | 12 +-----------
+ arch/s390/mm/pgalloc.c | 12 +-----------
  1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/arch/s390/kernel/debug.c b/arch/s390/kernel/debug.c
-index b376f0377a2c..221c865785c2 100644
---- a/arch/s390/kernel/debug.c
-+++ b/arch/s390/kernel/debug.c
-@@ -981,16 +981,6 @@ static struct ctl_table s390dbf_table[] = {
+diff --git a/arch/s390/mm/pgalloc.c b/arch/s390/mm/pgalloc.c
+index 2de48b2c1b04..0f68b7257e08 100644
+--- a/arch/s390/mm/pgalloc.c
++++ b/arch/s390/mm/pgalloc.c
+@@ -33,19 +33,9 @@ static struct ctl_table page_table_sysctl[] = {
  	{ }
  };
  
--static struct ctl_table s390dbf_dir_table[] = {
+-static struct ctl_table page_table_sysctl_dir[] = {
 -	{
--		.procname	= "s390dbf",
+-		.procname	= "vm",
 -		.maxlen		= 0,
--		.mode		= S_IRUGO | S_IXUGO,
--		.child		= s390dbf_table,
+-		.mode		= 0555,
+-		.child		= page_table_sysctl,
 -	},
 -	{ }
 -};
 -
- static struct ctl_table_header *s390dbf_sysctl_header;
- 
- /**
-@@ -1574,7 +1564,7 @@ static int debug_sprintf_format_fn(debug_info_t *id, struct debug_view *view,
-  */
- static int __init debug_init(void)
+ static int __init page_table_register_sysctl(void)
  {
--	s390dbf_sysctl_header = register_sysctl_table(s390dbf_dir_table);
-+	s390dbf_sysctl_header = register_sysctl("s390dbf", s390dbf_table);
- 	mutex_lock(&debug_mutex);
- 	debug_debugfs_root_entry = debugfs_create_dir(DEBUG_DIR_ROOT, NULL);
- 	initialized = 1;
+-	return register_sysctl_table(page_table_sysctl_dir) ? 0 : -ENOMEM;
++	return register_sysctl("vm", page_table_sysctl) ? 0 : -ENOMEM;
+ }
+ __initcall(page_table_register_sysctl);
+ 
 -- 
 2.39.1
 
