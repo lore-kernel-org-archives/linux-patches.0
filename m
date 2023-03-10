@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232CB846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65968C433EF;
-	Fri, 10 Mar 2023 14:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE162846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BAC6C433D2;
+	Fri, 10 Mar 2023 14:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458656;
-	bh=RmXnX4O5gi5wdoQMcgShlUdW8JUpiGkDCnDglZCJ81M=;
+	s=korg; t=1678458658;
+	bh=D9eLthNh5EEAQ6sVCxZ1HvQ/c3BXx+SHpS5pCRLrbco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o1Bv+RwIvqbKnMn8RcTETlvQB2NBTIfkeclKAfxOeRrGKx25T+OYmWCQGvEE0fokd
-	 7Q0GLoD+ZvN19UZ4YHAlOlko8ppxkEAuv2f18EOa5GwSyuOacEjwqOgYg23NnriHuM
-	 yvSFsZgqKH9ib2HY3Jxo26LImXlVTReSUHKB7Ajg=
+	b=c+qsLcRU7FU69NnoqtReB/1oMjElv8SnzpngtlAuYon09+G96DqKuWW3Aac5sg87O
+	 6GGOijsAC2K4OOWYW4Vww/cwPlNvx34Co1JCHQqxP1WteVGnmEBNuqyBLujUqJ3WMT
+	 Mcyd+PmWNNXZ1xQyf6AgpnQSgk61dJwwMWb8XBIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 101/357] gpu: ipu-v3: common: Add of_node_put() for reference returned by of_graph_get_port_by_id()
-Date: Fri, 10 Mar 2023 14:36:30 +0100
-Message-Id: <20230310133738.461992021@linuxfoundation.org>
+Subject: [PATCH 5.4 102/357] drm/msm/hdmi: Add missing check for alloc_ordered_workqueue
+Date: Fri, 10 Mar 2023 14:36:31 +0100
+Message-Id: <20230310133738.511654340@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,36 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 9afdf98cfdfa2ba8ec068cf08c5fcdc1ed8daf3f ]
+[ Upstream commit afe4cb96153a0d8003e4e4ebd91b5c543e10df84 ]
 
-In ipu_add_client_devices(), we need to call of_node_put() for
-reference returned by of_graph_get_port_by_id() in fail path.
+Add check for the return value of alloc_ordered_workqueue as it may return
+NULL pointer and cause NULL pointer dereference in `hdmi_hdcp.c` and
+`hdmi_hpd.c`.
 
-Fixes: 17e052175039 ("gpu: ipu-v3: Do not bail out on missing optional port nodes")
-Signed-off-by: Liang He <windhl@126.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://lore.kernel.org/r/20220720152227.1288413-1-windhl@126.com
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220720152227.1288413-1-windhl@126.com
+Fixes: c6a57a50ad56 ("drm/msm/hdmi: add hdmi hdcp support (V3)")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/517211/
+Link: https://lore.kernel.org/r/20230106023011.3985-1-jiasheng@iscas.ac.cn
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/ipu-v3/ipu-common.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/hdmi/hdmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/ipu-v3/ipu-common.c b/drivers/gpu/ipu-v3/ipu-common.c
-index b3dae9ec1a38b..528812bf84da7 100644
---- a/drivers/gpu/ipu-v3/ipu-common.c
-+++ b/drivers/gpu/ipu-v3/ipu-common.c
-@@ -1235,6 +1235,7 @@ static int ipu_add_client_devices(struct ipu_soc *ipu, unsigned long ipu_base)
- 		pdev = platform_device_alloc(reg->name, id++);
- 		if (!pdev) {
- 			ret = -ENOMEM;
-+			of_node_put(of_node);
- 			goto err_register;
- 		}
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+index 74759bcc68ff0..74b806b3e65f4 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+@@ -248,6 +248,10 @@ static struct hdmi *msm_hdmi_init(struct platform_device *pdev)
+ 	pm_runtime_enable(&pdev->dev);
  
+ 	hdmi->workq = alloc_ordered_workqueue("msm_hdmi", 0);
++	if (!hdmi->workq) {
++		ret = -ENOMEM;
++		goto fail;
++	}
+ 
+ 	hdmi->i2c = msm_hdmi_i2c_init(hdmi);
+ 	if (IS_ERR(hdmi->i2c)) {
 -- 
 2.39.2
 
