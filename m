@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03738821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:55:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03771C433EF;
-	Fri, 10 Mar 2023 14:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11938821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:55:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E023C433D2;
+	Fri, 10 Mar 2023 14:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460120;
-	bh=IvegPonRFZ27fozfMfL+WMmN/6XRuSp+MW08wHsAWew=;
+	s=korg; t=1678460123;
+	bh=EGXnPYYtfA0qrite3Q3VZN59thw4eEWSIsbvyx8F8Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QmDHroJDFbyk4QqMOur7CO9s6118SxEI5L6BcUlpO5NQG513+d+7V27cb1BY7qVjt
-	 /DVzMopTAyCMNBiRvPvQdCy6FTOFu1QTurYULYg2I9JnLdwPL84SAWGQRyxkXMFcAr
-	 KQsG6lyTVnLwSkW0UOm2Iui1TEUhJ5rUQaFsjtnw=
+	b=Tz570Lywrl3EnIOep0blS7ZV0IBMzAv8XACAcQ4RHf+EpxYcjDxHwqOeYWtUAJchz
+	 l5Q8QVJFUcn49QIRBD39sedP16TAx5n4rnXAWuoBlFhP51dX6aTH3xp3TPOO7WO0WM
+	 VCuszNM+5RDo0rmbrThaIylXdP7WNkU39ybFseXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiheng Lin <linqiheng@huawei.com>,
-	Lee Jones <lee@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 230/529] mfd: pcf50633-adc: Fix potential memleak in pcf50633_adc_async_read()
-Date: Fri, 10 Mar 2023 14:36:13 +0100
-Message-Id: <20230310133815.656377748@linuxfoundation.org>
+Subject: [PATCH 5.10 231/529] clk: qcom: gcc-qcs404: disable gpll[04]_out_aux parents
+Date: Fri, 10 Mar 2023 14:36:14 +0100
+Message-Id: <20230310133815.705234465@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,47 +35,143 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiheng Lin <linqiheng@huawei.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 8b450dcff23aa254844492831a8e2b508a9d522d ]
+[ Upstream commit 712c64caf31374de57aa193a9dff57172b2f6f82 ]
 
-`req` is allocated in pcf50633_adc_async_read(), but
-adc_enqueue_request() could fail to insert the `req` into queue.
-We need to check the return value and free it in the case of failure.
+On the QCS404 platform the driver for the Global Clock Controller
+doens't define gpll0_out_aux and gpll4_out_aux clocks, so it's not
+possible to use them as parents. Remove entries for these clocks.
 
-Fixes: 08c3e06a5eb2 ("mfd: PCF50633 adc driver")
-Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20221208061555.8776-1-linqiheng@huawei.com
+Note: backporting this patch to earlier kernels would also require a
+previous patch which switches the gcc driver to use ARRAY_SIZE for
+parent data arrays.
+
+Fixes: 652f1813c113 ("clk: qcom: gcc: Add global clock controller driver for QCS404")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221226042154.2666748-6-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/pcf50633-adc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-qcs404.c | 16 ----------------
+ 1 file changed, 16 deletions(-)
 
-diff --git a/drivers/mfd/pcf50633-adc.c b/drivers/mfd/pcf50633-adc.c
-index 5cd653e615125..191b1bc6141c2 100644
---- a/drivers/mfd/pcf50633-adc.c
-+++ b/drivers/mfd/pcf50633-adc.c
-@@ -136,6 +136,7 @@ int pcf50633_adc_async_read(struct pcf50633 *pcf, int mux, int avg,
- 			     void *callback_param)
- {
- 	struct pcf50633_adc_request *req;
-+	int ret;
+diff --git a/drivers/clk/qcom/gcc-qcs404.c b/drivers/clk/qcom/gcc-qcs404.c
+index 46d314d692505..4299fe8f19274 100644
+--- a/drivers/clk/qcom/gcc-qcs404.c
++++ b/drivers/clk/qcom/gcc-qcs404.c
+@@ -25,11 +25,9 @@ enum {
+ 	P_CORE_BI_PLL_TEST_SE,
+ 	P_DSI0_PHY_PLL_OUT_BYTECLK,
+ 	P_DSI0_PHY_PLL_OUT_DSICLK,
+-	P_GPLL0_OUT_AUX,
+ 	P_GPLL0_OUT_MAIN,
+ 	P_GPLL1_OUT_MAIN,
+ 	P_GPLL3_OUT_MAIN,
+-	P_GPLL4_OUT_AUX,
+ 	P_GPLL4_OUT_MAIN,
+ 	P_GPLL6_OUT_AUX,
+ 	P_HDMI_PHY_PLL_CLK,
+@@ -109,28 +107,24 @@ static const char * const gcc_parent_names_4[] = {
+ static const struct parent_map gcc_parent_map_5[] = {
+ 	{ P_XO, 0 },
+ 	{ P_DSI0_PHY_PLL_OUT_BYTECLK, 1 },
+-	{ P_GPLL0_OUT_AUX, 2 },
+ 	{ P_CORE_BI_PLL_TEST_SE, 7 },
+ };
  
- 	/* req is freed when the result is ready, in interrupt handler */
- 	req = kmalloc(sizeof(*req), GFP_KERNEL);
-@@ -147,7 +148,11 @@ int pcf50633_adc_async_read(struct pcf50633 *pcf, int mux, int avg,
- 	req->callback = callback;
- 	req->callback_param = callback_param;
+ static const char * const gcc_parent_names_5[] = {
+ 	"cxo",
+ 	"dsi0pll_byteclk_src",
+-	"gpll0_out_aux",
+ 	"core_bi_pll_test_se",
+ };
  
--	return adc_enqueue_request(pcf, req);
-+	ret = adc_enqueue_request(pcf, req);
-+	if (ret)
-+		kfree(req);
-+
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(pcf50633_adc_async_read);
+ static const struct parent_map gcc_parent_map_6[] = {
+ 	{ P_XO, 0 },
+ 	{ P_DSI0_PHY_PLL_OUT_BYTECLK, 2 },
+-	{ P_GPLL0_OUT_AUX, 3 },
+ 	{ P_CORE_BI_PLL_TEST_SE, 7 },
+ };
+ 
+ static const char * const gcc_parent_names_6[] = {
+ 	"cxo",
+ 	"dsi0_phy_pll_out_byteclk",
+-	"gpll0_out_aux",
+ 	"core_bi_pll_test_se",
+ };
+ 
+@@ -139,7 +133,6 @@ static const struct parent_map gcc_parent_map_7[] = {
+ 	{ P_GPLL0_OUT_MAIN, 1 },
+ 	{ P_GPLL3_OUT_MAIN, 2 },
+ 	{ P_GPLL6_OUT_AUX, 3 },
+-	{ P_GPLL4_OUT_AUX, 4 },
+ 	{ P_CORE_BI_PLL_TEST_SE, 7 },
+ };
+ 
+@@ -148,7 +141,6 @@ static const char * const gcc_parent_names_7[] = {
+ 	"gpll0_out_main",
+ 	"gpll3_out_main",
+ 	"gpll6_out_aux",
+-	"gpll4_out_aux",
+ 	"core_bi_pll_test_se",
+ };
+ 
+@@ -207,14 +199,12 @@ static const char * const gcc_parent_names_11[] = {
+ static const struct parent_map gcc_parent_map_12[] = {
+ 	{ P_XO, 0 },
+ 	{ P_DSI0_PHY_PLL_OUT_DSICLK, 1 },
+-	{ P_GPLL0_OUT_AUX, 2 },
+ 	{ P_CORE_BI_PLL_TEST_SE, 7 },
+ };
+ 
+ static const char * const gcc_parent_names_12[] = {
+ 	"cxo",
+ 	"dsi0pll_pclk_src",
+-	"gpll0_out_aux",
+ 	"core_bi_pll_test_se",
+ };
+ 
+@@ -237,40 +227,34 @@ static const char * const gcc_parent_names_13[] = {
+ static const struct parent_map gcc_parent_map_14[] = {
+ 	{ P_XO, 0 },
+ 	{ P_GPLL0_OUT_MAIN, 1 },
+-	{ P_GPLL4_OUT_AUX, 2 },
+ 	{ P_CORE_BI_PLL_TEST_SE, 7 },
+ };
+ 
+ static const char * const gcc_parent_names_14[] = {
+ 	"cxo",
+ 	"gpll0_out_main",
+-	"gpll4_out_aux",
+ 	"core_bi_pll_test_se",
+ };
+ 
+ static const struct parent_map gcc_parent_map_15[] = {
+ 	{ P_XO, 0 },
+-	{ P_GPLL0_OUT_AUX, 2 },
+ 	{ P_CORE_BI_PLL_TEST_SE, 7 },
+ };
+ 
+ static const char * const gcc_parent_names_15[] = {
+ 	"cxo",
+-	"gpll0_out_aux",
+ 	"core_bi_pll_test_se",
+ };
+ 
+ static const struct parent_map gcc_parent_map_16[] = {
+ 	{ P_XO, 0 },
+ 	{ P_GPLL0_OUT_MAIN, 1 },
+-	{ P_GPLL0_OUT_AUX, 2 },
+ 	{ P_CORE_BI_PLL_TEST_SE, 7 },
+ };
+ 
+ static const char * const gcc_parent_names_16[] = {
+ 	"cxo",
+ 	"gpll0_out_main",
+-	"gpll0_out_aux",
+ 	"core_bi_pll_test_se",
+ };
  
 -- 
 2.39.2
