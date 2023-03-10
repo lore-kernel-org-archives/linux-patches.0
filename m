@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB248494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:37:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124B9C4339B;
-	Fri, 10 Mar 2023 14:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D5A8494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:37:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F17C4339C;
+	Fri, 10 Mar 2023 14:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459046;
-	bh=bkH/MSHh1vG3qxFVj3SFFzY6BLBc2XZzTikb04xmBFI=;
+	s=korg; t=1678459049;
+	bh=XekkeiB0nqgvmEBWLBDoWAYjM5yMd4JBd7kj0YSDrSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Pa7slcMimq0ZdNgmserumNs6jWNRJwQ6x7QQEG1vLvzM6LY1Pz/7uKv8ytFILEu/
-	 6JcwUO/rzoxZAa1nKnRGF+N3r1kroNclqxbOnp4gKsV4ZEjTUjFECxbu/pEs8KMOsY
-	 Vknq7s2j5mDJTyE3OOZkb5ZyiDHhuGQfzqQ3aYTE=
+	b=BsFv4zVC7tlmmhK0gUfg2oj5NeWxybL4X1FQSP/ESnqSVO6F9UyA0CWZ1HR7E+XjT
+	 xjRfVZLreUNJ7fdFThM/P5BqCL3aD5KPd38jlA4v4psTxxtishuldG7PCQQUBPkOMe
+	 tH0SJ6qJ3GaG9OUhBB5m6qyoOqIQoZ/DofqTgsV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E6=9F=B3=E8=8F=81=E5=B3=B0?= <liujingfeng@qianxin.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.4 231/357] KVM: Destroy target device if coalesced MMIO unregistration fails
-Date: Fri, 10 Mar 2023 14:38:40 +0100
-Message-Id: <20230310133744.958874705@linuxfoundation.org>
+	Nico Boehr <nrb@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>
+Subject: [PATCH 5.4 232/357] KVM: s390: disable migration mode when dirty tracking is disabled
+Date: Fri, 10 Mar 2023 14:38:41 +0100
+Message-Id: <20230310133744.999516639@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,71 +35,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Nico Boehr <nrb@linux.ibm.com>
 
-commit b1cb1fac22abf102ffeb29dd3eeca208a3869d54 upstream.
+commit f2d3155e2a6bac44d16f04415a321e8707d895c6 upstream.
 
-Destroy and free the target coalesced MMIO device if unregistering said
-device fails.  As clearly noted in the code, kvm_io_bus_unregister_dev()
-does not destroy the target device.
+Migration mode is a VM attribute which enables tracking of changes in
+storage attributes (PGSTE). It assumes dirty tracking is enabled on all
+memslots to keep a dirty bitmap of pages with changed storage attributes.
 
-  BUG: memory leak
-  unreferenced object 0xffff888112a54880 (size 64):
-    comm "syz-executor.2", pid 5258, jiffies 4297861402 (age 14.129s)
-    hex dump (first 32 bytes):
-      38 c7 67 15 00 c9 ff ff 38 c7 67 15 00 c9 ff ff  8.g.....8.g.....
-      e0 c7 e1 83 ff ff ff ff 00 30 67 15 00 c9 ff ff  .........0g.....
-    backtrace:
-      [<0000000006995a8a>] kmalloc include/linux/slab.h:556 [inline]
-      [<0000000006995a8a>] kzalloc include/linux/slab.h:690 [inline]
-      [<0000000006995a8a>] kvm_vm_ioctl_register_coalesced_mmio+0x8e/0x3d0 arch/x86/kvm/../../../virt/kvm/coalesced_mmio.c:150
-      [<00000000022550c2>] kvm_vm_ioctl+0x47d/0x1600 arch/x86/kvm/../../../virt/kvm/kvm_main.c:3323
-      [<000000008a75102f>] vfs_ioctl fs/ioctl.c:46 [inline]
-      [<000000008a75102f>] file_ioctl fs/ioctl.c:509 [inline]
-      [<000000008a75102f>] do_vfs_ioctl+0xbab/0x1160 fs/ioctl.c:696
-      [<0000000080e3f669>] ksys_ioctl+0x76/0xa0 fs/ioctl.c:713
-      [<0000000059ef4888>] __do_sys_ioctl fs/ioctl.c:720 [inline]
-      [<0000000059ef4888>] __se_sys_ioctl fs/ioctl.c:718 [inline]
-      [<0000000059ef4888>] __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:718
-      [<000000006444fa05>] do_syscall_64+0x9f/0x4e0 arch/x86/entry/common.c:290
-      [<000000009a4ed50b>] entry_SYSCALL_64_after_hwframe+0x49/0xbe
+When enabling migration mode, we currently check that dirty tracking is
+enabled for all memslots. However, userspace can disable dirty tracking
+without disabling migration mode.
 
-  BUG: leak checking failed
+Since migration mode is pointless with dirty tracking disabled, disable
+migration mode whenever userspace disables dirty tracking on any slot.
 
-Fixes: 5d3c4c79384a ("KVM: Stop looking for coalesced MMIO zones if the bus is destroyed")
+Also update the documentation to clarify that dirty tracking must be
+enabled when enabling migration mode, which is already enforced by the
+code in kvm_s390_vm_start_migration().
+
+Also highlight in the documentation for KVM_S390_GET_CMMA_BITS that it
+can now fail with -EINVAL when dirty tracking is disabled while
+migration mode is on. Move all the error codes to a table so this stays
+readable.
+
+To disable migration mode, slots_lock should be held, which is taken
+in kvm_set_memory_region() and thus held in
+kvm_arch_prepare_memory_region().
+
+Restructure the prepare code a bit so all the sanity checking is done
+before disabling migration mode. This ensures migration mode isn't
+disabled when some sanity check fails.
+
 Cc: stable@vger.kernel.org
-Reported-by: 柳菁峰 <liujingfeng@qianxin.com>
-Reported-by: Michal Luczaj <mhal@rbox.co>
-Link: https://lore.kernel.org/r/20221219171924.67989-1-seanjc@google.com
-Link: https://lore.kernel.org/all/20230118220003.1239032-1-mhal@rbox.co
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 190df4a212a7 ("KVM: s390: CMMA tracking, ESSA emulation, migration mode")
+Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230127140532.230651-2-nrb@linux.ibm.com
+Message-Id: <20230127140532.230651-2-nrb@linux.ibm.com>
+[frankja@linux.ibm.com: fixed commit message typo, moved api.rst error table upwards]
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/coalesced_mmio.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ Documentation/virt/kvm/api.txt        |   18 ++++++++++++------
+ Documentation/virt/kvm/devices/vm.txt |    4 ++++
+ arch/s390/kvm/kvm-s390.c              |   16 ++++++++++++++++
+ 3 files changed, 32 insertions(+), 6 deletions(-)
 
---- a/virt/kvm/coalesced_mmio.c
-+++ b/virt/kvm/coalesced_mmio.c
-@@ -191,15 +191,17 @@ int kvm_vm_ioctl_unregister_coalesced_mm
- 			r = kvm_io_bus_unregister_dev(kvm,
- 				zone->pio ? KVM_PIO_BUS : KVM_MMIO_BUS, &dev->dev);
+--- a/Documentation/virt/kvm/api.txt
++++ b/Documentation/virt/kvm/api.txt
+@@ -3615,6 +3615,18 @@ Type: vm ioctl
+ Parameters: struct kvm_s390_cmma_log (in, out)
+ Returns: 0 on success, a negative value on error
  
-+			kvm_iodevice_destructor(&dev->dev);
++Errors:
 +
- 			/*
- 			 * On failure, unregister destroys all devices on the
- 			 * bus _except_ the target device, i.e. coalesced_zones
--			 * has been modified.  No need to restart the walk as
--			 * there aren't any zones left.
-+			 * has been modified.  Bail after destroying the target
-+			 * device, there's no need to restart the walk as there
-+			 * aren't any zones left.
- 			 */
- 			if (r)
- 				break;
--			kvm_iodevice_destructor(&dev->dev);
- 		}
- 	}
++  ======     =============================================================
++  ENOMEM     not enough memory can be allocated to complete the task
++  ENXIO      if CMMA is not enabled
++  EINVAL     if KVM_S390_CMMA_PEEK is not set but migration mode was not enabled
++  EINVAL     if KVM_S390_CMMA_PEEK is not set but dirty tracking has been
++             disabled (and thus migration mode was automatically disabled)
++  EFAULT     if the userspace address is invalid or if no page table is
++             present for the addresses (e.g. when using hugepages).
++  ======     =============================================================
++
+ This ioctl is used to get the values of the CMMA bits on the s390
+ architecture. It is meant to be used in two scenarios:
+ - During live migration to save the CMMA values. Live migration needs
+@@ -3691,12 +3703,6 @@ mask is unused.
+ 
+ values points to the userspace buffer where the result will be stored.
+ 
+-This ioctl can fail with -ENOMEM if not enough memory can be allocated to
+-complete the task, with -ENXIO if CMMA is not enabled, with -EINVAL if
+-KVM_S390_CMMA_PEEK is not set but migration mode was not enabled, with
+--EFAULT if the userspace address is invalid or if no page table is
+-present for the addresses (e.g. when using hugepages).
+-
+ 4.108 KVM_S390_SET_CMMA_BITS
+ 
+ Capability: KVM_CAP_S390_CMMA_MIGRATION
+--- a/Documentation/virt/kvm/devices/vm.txt
++++ b/Documentation/virt/kvm/devices/vm.txt
+@@ -254,6 +254,10 @@ Allows userspace to start migration mode
+ Setting this attribute when migration mode is already active will have
+ no effects.
+ 
++Dirty tracking must be enabled on all memslots, else -EINVAL is returned. When
++dirty tracking is disabled on any memslot, migration mode is automatically
++stopped.
++
+ Parameters: none
+ Returns:    -ENOMEM if there is not enough free memory to start migration mode
+ 	    -EINVAL if the state of the VM is invalid (e.g. no memory defined)
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -4527,6 +4527,22 @@ int kvm_arch_prepare_memory_region(struc
+ 	if (mem->guest_phys_addr + mem->memory_size > kvm->arch.mem_limit)
+ 		return -EINVAL;
+ 
++	if (!kvm->arch.migration_mode)
++		return 0;
++
++	/*
++	 * Turn off migration mode when:
++	 * - userspace creates a new memslot with dirty logging off,
++	 * - userspace modifies an existing memslot (MOVE or FLAGS_ONLY) and
++	 *   dirty logging is turned off.
++	 * Migration mode expects dirty page logging being enabled to store
++	 * its dirty bitmap.
++	 */
++	if (change != KVM_MR_DELETE &&
++	    !(mem->flags & KVM_MEM_LOG_DIRTY_PAGES))
++		WARN(kvm_s390_vm_stop_migration(kvm),
++		     "Failed to stop migration mode");
++
+ 	return 0;
+ }
  
 
 
