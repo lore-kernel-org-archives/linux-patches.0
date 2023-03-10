@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6983C847D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:45:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B07C433D2;
-	Fri, 10 Mar 2023 13:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F82847D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:45:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24A5C4339C;
+	Fri, 10 Mar 2023 13:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678455942;
-	bh=WCBACU70P87hYKjXFIK4UB2vTm452CMVcS+ce7wCrmA=;
+	s=korg; t=1678455945;
+	bh=0xDsLSsV6SEBNtuAAJ2hEO9Qy7u870I976j/NVk4rLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+2t5UrSEaZmomRC38DMtCspDBTJwI+X/YvJSvnEr6pKrPewhOblFXshTJve8D0HQ
-	 w60bfxY2YiH7ZO7IN+uiHzM/3IoEfGGukmdJ7KIPLMZEUacZU0EpkaqkpmT+2OX0z/
-	 i8zogo/wpdL6wmDuNYHB3TDSTfsTwIvx1Bn0eB9o=
+	b=u5RDJyqH1JNRcmdA0HcbHPn4xYmNtAsAO2ECFPfQs5YiKbqg2GCb4R+yD/XfQL5TX
+	 SDHFwINMhwCNna82WF8X5jdeCqDuuyxithy1RVtiEAGMx4eq/s3BXMDEIhCsGlZ3UW
+	 lpWHuqnUc93senGIUgSICrdlhd22PZ8YPerliBlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 027/193] wifi: ipw2200: fix memory leak in ipw_wdev_init()
-Date: Fri, 10 Mar 2023 14:36:49 +0100
-Message-Id: <20230310133711.855837704@linuxfoundation.org>
+Subject: [PATCH 4.14 028/193] wifi: brcmfmac: fix potential memory leak in brcmf_netdev_start_xmit()
+Date: Fri, 10 Mar 2023 14:36:50 +0100
+Message-Id: <20230310133711.886431165@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,45 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 9fe21dc626117fb44a8eb393713a86a620128ce3 ]
+[ Upstream commit 212fde3fe76e962598ce1d47b97cc78afdfc71b3 ]
 
-In the error path of ipw_wdev_init(), exception value is returned, and
-the memory applied for in the function is not released. Also the memory
-is not released in ipw_pci_probe(). As a result, memory leakage occurs.
-So memory release needs to be added to the error path of ipw_wdev_init().
+The brcmf_netdev_start_xmit() returns NETDEV_TX_OK without freeing skb
+in case of pskb_expand_head() fails, add dev_kfree_skb() to fix it.
+Compile tested only.
 
-Fixes: a3caa99e6c68 ("libipw: initiate cfg80211 API conversion (v2)")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Fixes: 270a6c1f65fe ("brcmfmac: rework headroom check in .start_xmit()")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221209012422.182669-1-shaozhengchao@huawei.com
+Link: https://lore.kernel.org/r/1668684782-47422-1-git-send-email-zhangchangzhong@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/ipw2x00/ipw2200.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/ipw2x00/ipw2200.c b/drivers/net/wireless/intel/ipw2x00/ipw2200.c
-index 2d0734ab3f747..3c447d6f84af5 100644
---- a/drivers/net/wireless/intel/ipw2x00/ipw2200.c
-+++ b/drivers/net/wireless/intel/ipw2x00/ipw2200.c
-@@ -11437,9 +11437,14 @@ static int ipw_wdev_init(struct net_device *dev)
- 	set_wiphy_dev(wdev->wiphy, &priv->pci_dev->dev);
- 
- 	/* With that information in place, we can now register the wiphy... */
--	if (wiphy_register(wdev->wiphy))
--		rc = -EIO;
-+	rc = wiphy_register(wdev->wiphy);
-+	if (rc)
-+		goto out;
-+
-+	return 0;
- out:
-+	kfree(priv->ieee->a_band.channels);
-+	kfree(priv->ieee->bg_band.channels);
- 	return rc;
- }
- 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+index 9c8102be1d0b3..55027886f4041 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -226,6 +226,7 @@ static netdev_tx_t brcmf_netdev_start_xmit(struct sk_buff *skb,
+ 			brcmf_err("%s: failed to expand headroom\n",
+ 				  brcmf_ifname(ifp));
+ 			atomic_inc(&drvr->bus_if->stats.pktcow_failed);
++			dev_kfree_skb(skb);
+ 			goto done;
+ 		}
+ 	}
 -- 
 2.39.2
 
