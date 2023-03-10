@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CE9882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:13:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3085DC433EF;
-	Fri, 10 Mar 2023 15:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47D5882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:13:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31208C433EF;
+	Fri, 10 Mar 2023 15:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461218;
-	bh=8lY5SP0eMFjUYMDwZ22966vW7MGBnjlSuuYs2z0LYfs=;
+	s=korg; t=1678461221;
+	bh=W42HJaRPvV2pPpgSJmFSi5F2KT5nC2MuyQGSy1TBjyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IJsfubW92jWf6Oq3KzKDPx2uaIqM23OrcJEdRg91NAB5El7BRkh7yPdZJhJuK3Ch7
-	 pMa/Em8bTnTvwPEuVaTetAW4fhsQe96K4k3f1qw0zb/3l9eL5gBGfhheYxdQqX4YCm
-	 valPa9QZVQxelg/6WWHnoXht7GqUM+cCcwqVoapA=
+	b=GrDPX7AV6WY9YSwtLlVPfbbcjn6JfkyfNsKlR+2QyKinBAeQ/k/xZsN127TQoNdYs
+	 stczWBWZ0CQIVBL/+E//BCYA7blxjBGjyCZDkhAGWxDofr2vY2e4LttdwUyjlgVLdV
+	 GXktmAN4Uv/rGBFJAySsQ/oIFNVxghsdblj+Xcqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/136] ubifs: dirty_cow_znode: Fix memleak in error handling path
-Date: Fri, 10 Mar 2023 14:42:26 +0100
-Message-Id: <20230310133707.708839769@linuxfoundation.org>
+Subject: [PATCH 5.15 058/136] ARM: dts: spear320-hmi: correct STMPE GPIO compatible
+Date: Fri, 10 Mar 2023 14:43:00 +0100
+Message-Id: <20230310133708.905184236@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -35,56 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 122deabfe1428bffe95e2bf364ff8a5059bdf089 ]
+[ Upstream commit 33a0c1b850c8c85f400531dab3a0b022cdb164b1 ]
 
-Following process will cause a memleak for copied up znode:
+The compatible is st,stmpe-gpio.
 
-dirty_cow_znode
-  zn = copy_znode(c, znode);
-  err = insert_old_idx(c, zbr->lnum, zbr->offs);
-  if (unlikely(err))
-     return ERR_PTR(err);   // No one refers to zn.
-
-Fix it by adding copied znode back to tnc, then it will be freed
-by ubifs_destroy_tnc_subtree() while closing tnc.
-
-Fetch a reproducer in [Link].
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216705
-Fixes: 1e51764a3c2a ("UBIFS: add new flash file system")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: e2eb69183ec4 ("ARM: SPEAr320: DT: Add SPEAr 320 HMI board support")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://lore.kernel.org/r/20230225162237.40242-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/tnc.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/spear320-hmi.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ubifs/tnc.c b/fs/ubifs/tnc.c
-index 2df56bbc68657..2469f72eeaabb 100644
---- a/fs/ubifs/tnc.c
-+++ b/fs/ubifs/tnc.c
-@@ -267,11 +267,18 @@ static struct ubifs_znode *dirty_cow_znode(struct ubifs_info *c,
- 	if (zbr->len) {
- 		err = insert_old_idx(c, zbr->lnum, zbr->offs);
- 		if (unlikely(err))
--			return ERR_PTR(err);
-+			/*
-+			 * Obsolete znodes will be freed by tnc_destroy_cnext()
-+			 * or free_obsolete_znodes(), copied up znodes should
-+			 * be added back to tnc and freed by
-+			 * ubifs_destroy_tnc_subtree().
-+			 */
-+			goto out;
- 		err = add_idx_dirt(c, zbr->lnum, zbr->len);
- 	} else
- 		err = 0;
+diff --git a/arch/arm/boot/dts/spear320-hmi.dts b/arch/arm/boot/dts/spear320-hmi.dts
+index 367ba48aac3e5..5c562fb4886f4 100644
+--- a/arch/arm/boot/dts/spear320-hmi.dts
++++ b/arch/arm/boot/dts/spear320-hmi.dts
+@@ -242,7 +242,7 @@
+ 					irq-trigger = <0x1>;
  
-+out:
- 	zbr->znode = zn;
- 	zbr->lnum = 0;
- 	zbr->offs = 0;
+ 					stmpegpio: stmpe-gpio {
+-						compatible = "stmpe,gpio";
++						compatible = "st,stmpe-gpio";
+ 						reg = <0>;
+ 						gpio-controller;
+ 						#gpio-cells = <2>;
 -- 
 2.39.2
 
