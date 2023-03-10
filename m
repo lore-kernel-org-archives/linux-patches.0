@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5168825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:57:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726A3C433D2;
-	Fri, 10 Mar 2023 14:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB9C8825
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:57:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BABC4339B;
+	Fri, 10 Mar 2023 14:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460261;
-	bh=nmGpkPzSADV+CpFECU9s/I5AvOFORyLFcmBB2tBb/P4=;
+	s=korg; t=1678460265;
+	bh=TItNAgtP/E7/tEGF1cRq/A1AGqaclXGzOMTHHlVY3/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CVP5tnGcnthG/X2wmaMAEekqfYYJ80s0l3fH1xefinwN/sd1hIaX2NkKJNzir5l+r
-	 dn1OlZTJvM6KOIvHh+6iB+2VyIlqO/JHZ9or1A4AoZdvkc9IDrghE6nv+xxb5jD4ur
-	 +vI57/NpnJtuSd5935LMmbom+WuF3C1/9fuVxRgM=
+	b=HFaU342+kcy5ubDTdQ9pIuoF9VcO6qbFsev1El263KRmqNZXHZBFTXaKeyZ2UJwVe
+	 HjGm6IPufAaLDWf61cZSHpzEObhgoyNCKv1PpIRFLKLIBDrNZuOGs9Z+wG8g+EKhzW
+	 3gv08Gb8G5PGzKwDilLsURyVX+SMbZpYvKpRmq60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jai Luthra <j-luthra@ti.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Andrew Jeffery <andrew@aj.id.au>,
+	Frederic Barrat <fbarrat@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 275/529] media: i2c: imx219: Fix binning for RAW8 capture
-Date: Fri, 10 Mar 2023 14:36:58 +0100
-Message-Id: <20230310133817.702618268@linuxfoundation.org>
+Subject: [PATCH 5.10 249/529] powerpc/powernv/ioda: Skip unallocated resources when mapping to PE
+Date: Fri, 10 Mar 2023 14:36:32 +0100
+Message-Id: <20230310133816.496376628@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -37,178 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jai Luthra <j-luthra@ti.com>
+From: Frederic Barrat <fbarrat@linux.ibm.com>
 
-[ Upstream commit ef86447e775fb1f2ced00d4c7fff2c0a1c63f165 ]
+[ Upstream commit e64e71056f323a1e178dccf04d4c0f032d84436c ]
 
-2x2 binning works fine for RAW10 capture, but for RAW8 1232p mode it
-leads to corrupted frames [1][2].
+pnv_ioda_setup_pe_res() calls opal to map a resource with a PE. However,
+the code assumes the resource is allocated and it uses the resource
+address to find out the segment(s) which need to be mapped to the
+PE. In the unlikely case where the resource hasn't been allocated, the
+computation for the segment number is garbage, which can lead to
+invalid memory access and potentially a kernel crash, such as:
 
-Using the special 2x2 analog binning mode fixes the issue, but causes
-artefacts for RAW10 1232p capture. So here we choose the binning mode
-depending upon the frame format selected.
+[ ] pci_bus 0002:02: Configuring PE for bus
+[ ] pci 0002:02     : [PE# fc] Secondary bus 0x0000000000000002..0x0000000000000002 associated with PE#fc
+[ ] BUG: Kernel NULL pointer dereference on write at 0x00000000
+[ ] Faulting instruction address: 0xc00000000005eac4
+[ ] Oops: Kernel access of bad area, sig: 7 [#1]
+[ ] LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA PowerNV
+[ ] Modules linked in:
+[ ] CPU: 12 PID: 1 Comm: swapper/20 Not tainted 5.10.50-openpower1 #2
+[ ] NIP:  c00000000005eac4 LR: c00000000005ea44 CTR: 0000000030061b9c
+[ ] REGS: c000200007383650 TRAP: 0300   Not tainted  (5.10.50-openpower1)
+[ ] MSR:  9000000000009033 <SF,HV,EE,ME,IR,DR,RI,LE>  CR: 44000224  XER: 20040000
+[ ] CFAR: c00000000005eaa0 DAR: 0000000000000000 DSISR: 02080000 IRQMASK: 0
+[ ] GPR00: c00000000005dd98 c0002000073838e0 c00000000185de00 c000200fff018960
+[ ] GPR04: 00000000000000fc 0000000000000003 0000000000000000 0000000000000000
+[ ] GPR08: 0000000000000000 0000000000000000 0000000000000000 9000000000001033
+[ ] GPR12: 0000000031cb0000 c000000ffffe6a80 c000000000010a58 0000000000000000
+[ ] GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+[ ] GPR20: 0000000000000000 0000000000000000 0000000000000000 c00000000711e200
+[ ] GPR24: 0000000000000100 c000200009501120 c00020000cee2800 00000000000003ff
+[ ] GPR28: c000200fff018960 0000000000000000 c000200ffcb7fd00 0000000000000000
+[ ] NIP [c00000000005eac4] pnv_ioda_setup_pe_res+0x94/0x1a0
+[ ] LR [c00000000005ea44] pnv_ioda_setup_pe_res+0x14/0x1a0
+[ ] Call Trace:
+[ ] [c0002000073838e0] [c00000000005eb98] pnv_ioda_setup_pe_res+0x168/0x1a0 (unreliable)
+[ ] [c000200007383970] [c00000000005dd98] pnv_pci_ioda_dma_dev_setup+0x43c/0x970
+[ ] [c000200007383a60] [c000000000032cdc] pcibios_bus_add_device+0x78/0x18c
+[ ] [c000200007383aa0] [c00000000028f2bc] pci_bus_add_device+0x28/0xbc
+[ ] [c000200007383b10] [c00000000028f3a0] pci_bus_add_devices+0x50/0x7c
+[ ] [c000200007383b50] [c00000000028f3c4] pci_bus_add_devices+0x74/0x7c
+[ ] [c000200007383b90] [c00000000028f3c4] pci_bus_add_devices+0x74/0x7c
+[ ] [c000200007383bd0] [c00000000069ad0c] pcibios_init+0xf0/0x104
+[ ] [c000200007383c50] [c0000000000106d8] do_one_initcall+0x84/0x1c4
+[ ] [c000200007383d20] [c0000000006910b8] kernel_init_freeable+0x264/0x268
+[ ] [c000200007383dc0] [c000000000010a68] kernel_init+0x18/0x138
+[ ] [c000200007383e20] [c00000000000cbfc] ret_from_kernel_thread+0x5c/0x80
+[ ] Instruction dump:
+[ ] 7f89e840 409d000c 7fbbf840 409c000c 38210090 4848f448 809c002c e95e0120
+[ ] 7ba91764 38a00003 57a7043e 38c00000 <7c8a492e> 5484043e e87e0018 4bff23bd
 
-As both binning modes work fine for 480p RAW8 and RAW10 capture, it can
-share the same code path as 1232p for selecting binning mode.
+Hitting the problem is not that easy. It was seen with a (semi-bogus)
+PCI device with a class code of 0. The generic PCI framework doesn't
+allocate resources in such a case.
 
-[1] https://forums.raspberrypi.com/viewtopic.php?t=332103
-[2] https://github.com/raspberrypi/libcamera-apps/issues/281
+The patch is simply skipping resources which are still flagged with
+IORESOURCE_UNSET.
 
-Fixes: 22da1d56e982 ("media: i2c: imx219: Add support for RAW8 bit bayer format")
-Signed-off-by: Jai Luthra <j-luthra@ti.com>
-Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+We don't have the problem with 64-bit mem resources, as the address of
+the resource is checked to be within the range of the 64-bit mmio
+window. See pnv_ioda_reserve_dev_m64_pe() and pnv_pci_is_m64().
+
+Reported-by: Andrew Jeffery <andrew@aj.id.au>
+Fixes: 23e79425fe7c ("powerpc/powernv: Simplify pnv_ioda_setup_pe_seg()")
+Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20230120093215.19496-1-fbarrat@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/imx219.c | 57 ++++++++++++++++++++++++++++++++------
- 1 file changed, 49 insertions(+), 8 deletions(-)
+ arch/powerpc/platforms/powernv/pci-ioda.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/imx219.c b/drivers/media/i2c/imx219.c
-index a28926069b82b..b975636d94401 100644
---- a/drivers/media/i2c/imx219.c
-+++ b/drivers/media/i2c/imx219.c
-@@ -89,6 +89,12 @@
+diff --git a/arch/powerpc/platforms/powernv/pci-ioda.c b/arch/powerpc/platforms/powernv/pci-ioda.c
+index 2b4ceb5e6ce4c..a1e6dd47743f1 100644
+--- a/arch/powerpc/platforms/powernv/pci-ioda.c
++++ b/arch/powerpc/platforms/powernv/pci-ioda.c
+@@ -2260,7 +2260,8 @@ static void pnv_ioda_setup_pe_res(struct pnv_ioda_pe *pe,
+ 	int index;
+ 	int64_t rc;
  
- #define IMX219_REG_ORIENTATION		0x0172
+-	if (!res || !res->flags || res->start > res->end)
++	if (!res || !res->flags || res->start > res->end ||
++	    res->flags & IORESOURCE_UNSET)
+ 		return;
  
-+/* Binning  Mode */
-+#define IMX219_REG_BINNING_MODE		0x0174
-+#define IMX219_BINNING_NONE		0x0000
-+#define IMX219_BINNING_2X2		0x0101
-+#define IMX219_BINNING_2X2_ANALOG	0x0303
-+
- /* Test Pattern Control */
- #define IMX219_REG_TEST_PATTERN		0x0600
- #define IMX219_TEST_PATTERN_DISABLE	0
-@@ -143,6 +149,9 @@ struct imx219_mode {
- 
- 	/* Default register values */
- 	struct imx219_reg_list reg_list;
-+
-+	/* 2x2 binning is used */
-+	bool binning;
- };
- 
- static const struct imx219_reg imx219_common_regs[] = {
-@@ -212,8 +221,6 @@ static const struct imx219_reg mode_3280x2464_regs[] = {
- 	{0x016d, 0xd0},
- 	{0x016e, 0x09},
- 	{0x016f, 0xa0},
--	{0x0174, 0x00},	/* No-Binning */
--	{0x0175, 0x00},
- 	{0x0624, 0x0c},
- 	{0x0625, 0xd0},
- 	{0x0626, 0x09},
-@@ -233,8 +240,6 @@ static const struct imx219_reg mode_1920_1080_regs[] = {
- 	{0x016d, 0x80},
- 	{0x016e, 0x04},
- 	{0x016f, 0x38},
--	{0x0174, 0x00},	/* No-Binning */
--	{0x0175, 0x00},
- 	{0x0624, 0x07},
- 	{0x0625, 0x80},
- 	{0x0626, 0x04},
-@@ -254,8 +259,6 @@ static const struct imx219_reg mode_1640_1232_regs[] = {
- 	{0x016d, 0x68},
- 	{0x016e, 0x04},
- 	{0x016f, 0xd0},
--	{0x0174, 0x01},	/* x2-Binning */
--	{0x0175, 0x01},
- 	{0x0624, 0x06},
- 	{0x0625, 0x68},
- 	{0x0626, 0x04},
-@@ -275,8 +278,6 @@ static const struct imx219_reg mode_640_480_regs[] = {
- 	{0x016d, 0x80},
- 	{0x016e, 0x01},
- 	{0x016f, 0xe0},
--	{0x0174, 0x03},	/* x2-analog binning */
--	{0x0175, 0x03},
- 	{0x0624, 0x06},
- 	{0x0625, 0x68},
- 	{0x0626, 0x04},
-@@ -386,6 +387,7 @@ static const struct imx219_mode supported_modes[] = {
- 			.num_of_regs = ARRAY_SIZE(mode_3280x2464_regs),
- 			.regs = mode_3280x2464_regs,
- 		},
-+		.binning = false,
- 	},
- 	{
- 		/* 1080P 30fps cropped */
-@@ -402,6 +404,7 @@ static const struct imx219_mode supported_modes[] = {
- 			.num_of_regs = ARRAY_SIZE(mode_1920_1080_regs),
- 			.regs = mode_1920_1080_regs,
- 		},
-+		.binning = false,
- 	},
- 	{
- 		/* 2x2 binned 30fps mode */
-@@ -418,6 +421,7 @@ static const struct imx219_mode supported_modes[] = {
- 			.num_of_regs = ARRAY_SIZE(mode_1640_1232_regs),
- 			.regs = mode_1640_1232_regs,
- 		},
-+		.binning = true,
- 	},
- 	{
- 		/* 640x480 30fps mode */
-@@ -434,6 +438,7 @@ static const struct imx219_mode supported_modes[] = {
- 			.num_of_regs = ARRAY_SIZE(mode_640_480_regs),
- 			.regs = mode_640_480_regs,
- 		},
-+		.binning = true,
- 	},
- };
- 
-@@ -872,6 +877,35 @@ static int imx219_set_framefmt(struct imx219 *imx219)
- 	return -EINVAL;
- }
- 
-+static int imx219_set_binning(struct imx219 *imx219)
-+{
-+	if (!imx219->mode->binning) {
-+		return imx219_write_reg(imx219, IMX219_REG_BINNING_MODE,
-+					IMX219_REG_VALUE_16BIT,
-+					IMX219_BINNING_NONE);
-+	}
-+
-+	switch (imx219->fmt.code) {
-+	case MEDIA_BUS_FMT_SRGGB8_1X8:
-+	case MEDIA_BUS_FMT_SGRBG8_1X8:
-+	case MEDIA_BUS_FMT_SGBRG8_1X8:
-+	case MEDIA_BUS_FMT_SBGGR8_1X8:
-+		return imx219_write_reg(imx219, IMX219_REG_BINNING_MODE,
-+					IMX219_REG_VALUE_16BIT,
-+					IMX219_BINNING_2X2_ANALOG);
-+
-+	case MEDIA_BUS_FMT_SRGGB10_1X10:
-+	case MEDIA_BUS_FMT_SGRBG10_1X10:
-+	case MEDIA_BUS_FMT_SGBRG10_1X10:
-+	case MEDIA_BUS_FMT_SBGGR10_1X10:
-+		return imx219_write_reg(imx219, IMX219_REG_BINNING_MODE,
-+					IMX219_REG_VALUE_16BIT,
-+					IMX219_BINNING_2X2);
-+	}
-+
-+	return -EINVAL;
-+}
-+
- static const struct v4l2_rect *
- __imx219_get_pad_crop(struct imx219 *imx219, struct v4l2_subdev_pad_config *cfg,
- 		      unsigned int pad, enum v4l2_subdev_format_whence which)
-@@ -957,6 +991,13 @@ static int imx219_start_streaming(struct imx219 *imx219)
- 		goto err_rpm_put;
- 	}
- 
-+	ret = imx219_set_binning(imx219);
-+	if (ret) {
-+		dev_err(&client->dev, "%s failed to set binning: %d\n",
-+			__func__, ret);
-+		goto err_rpm_put;
-+	}
-+
- 	/* Apply customized values from user */
- 	ret =  __v4l2_ctrl_handler_setup(imx219->sd.ctrl_handler);
- 	if (ret)
+ 	if (res->flags & IORESOURCE_IO) {
 -- 
 2.39.2
 
