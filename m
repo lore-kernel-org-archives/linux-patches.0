@@ -1,42 +1,42 @@
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105582598
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B2223B1
 	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 10:32:16 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 3BDB120655;
-	Fri, 10 Mar 2023 10:32:15 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id C680520654;
+	Fri, 10 Mar 2023 10:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1678444335; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1678444334; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SABMsfykBuZLlX/EID5G4jmWDCswPlY6bB+XmpUmDDI=;
-	b=foj1gEREC5pFoZcss66MTasW9SmKGZ8VO45QQ5RxFr2/gbLbCBrgbYL8TlQQxufdOQ3EFE
-	czVB8jboaSapWQSAvTbgzlr6p+6za4Flui5sC1W23abuExTqIegh6cm1gPfGqBzmxekr0H
-	TCUXtSdOonDGjPPPUlKUoc9FsmC5aAE=
+	bh=wKAQjtPeEdruvdiu+k5gGLS8R7rVo9ZpEqr34/mOg1w=;
+	b=jM/aSqo5eeEsG1bbB+HEHDUxiDbo5qCgxkS1lMdG/LTijo7v609GwIH6wOGPK5ENW25w5B
+	aLm6T/mGGqOwcuE9DxA+GKqD2ccwar2W9/NBSOeEe5sv4m5mnrq+A1XLnPFkk6V8+rT26N
+	0xdaTOXfF4GxqANU4uwlYiu8VUgjyOs=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1678444335;
+	s=susede2_ed25519; t=1678444334;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SABMsfykBuZLlX/EID5G4jmWDCswPlY6bB+XmpUmDDI=;
-	b=JCOpFCvpQJqkp5/VtYAnLRuXjAB156OkLDECkwvRNK9kuNoHX2iWKKVfw/Gx5/VOde/eYE
-	9dMcNAa9idgNdMBg==
+	bh=wKAQjtPeEdruvdiu+k5gGLS8R7rVo9ZpEqr34/mOg1w=;
+	b=ZxQ4ujXvWDQr+knM1ffeWycdMvA+7Hpc5bwayOqfox5fa6vKydvQWhBrjfL8vVJIsvKsYZ
+	ruYlhz5R2udyovCQ==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0984B13592;
-	Fri, 10 Mar 2023 10:32:15 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 89A8813592;
+	Fri, 10 Mar 2023 10:32:14 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 6Ay0AS8HC2SsXQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Fri, 10 Mar 2023 10:32:15 +0000
+	id UIQAIS4HC2SsXQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 10 Mar 2023 10:32:14 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Christoph Lameter <cl@linux.com>,
 	David Rientjes <rientjes@google.com>,
@@ -52,10 +52,14 @@ Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>,
 	patches@lists.linux.dev,
 	netdev@vger.kernel.org,
 	linux-doc@vger.kernel.org,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 4/7] mm, pagemap: remove SLOB and SLQB from comments and documentation
-Date: Fri, 10 Mar 2023 11:32:06 +0100
-Message-Id: <20230310103210.22372-5-vbabka@suse.cz>
+	Vlastimil Babka <vbabka@suse.cz>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 2/7] net: skbuff: remove SLOB-specific ifdefs
+Date: Fri, 10 Mar 2023 11:32:04 +0100
+Message-Id: <20230310103210.22372-3-vbabka@suse.cz>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310103210.22372-1-vbabka@suse.cz>
 References: <20230310103210.22372-1-vbabka@suse.cz>
@@ -67,55 +71,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-SLOB has been removed and SLQB never merged, so remove their mentions
-from comments and documentation of pagemap.
+As the comment for HAVE_SKB_SMALL_HEAD_CACHE says:
+
+> skb_small_head_cache and related code is only supported
+> for CONFIG_SLAB and CONFIG_SLUB.
+> As soon as SLOB is removed from the kernel, we can clean up this.
+
+With CONFIG_SLOB removed, remove HAVE_SKB_SMALL_HEAD_CACHE and make all
+code that it guards unconditional.
 
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
 ---
- Documentation/admin-guide/mm/pagemap.rst | 6 +++---
- fs/proc/page.c                           | 5 ++---
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ net/core/skbuff.c | 16 ----------------
+ 1 file changed, 16 deletions(-)
 
-diff --git a/Documentation/admin-guide/mm/pagemap.rst b/Documentation/admin-guide/mm/pagemap.rst
-index b5f970dc91e7..bb4aa897a773 100644
---- a/Documentation/admin-guide/mm/pagemap.rst
-+++ b/Documentation/admin-guide/mm/pagemap.rst
-@@ -91,9 +91,9 @@ Short descriptions to the page flags
-    The page is being locked for exclusive access, e.g. by undergoing read/write
-    IO.
- 7 - SLAB
--   The page is managed by the SLAB/SLOB/SLUB/SLQB kernel memory allocator.
--   When compound page is used, SLUB/SLQB will only set this flag on the head
--   page; SLOB will not flag it at all.
-+   The page is managed by the SLAB/SLUB kernel memory allocator.
-+   When compound page is used, either will only set this flag on the head
-+   page..
- 10 - BUDDY
-     A free memory block managed by the buddy system allocator.
-     The buddy system organizes free memory in blocks of various orders.
-diff --git a/fs/proc/page.c b/fs/proc/page.c
-index 6249c347809a..1356aeffd8dc 100644
---- a/fs/proc/page.c
-+++ b/fs/proc/page.c
-@@ -125,7 +125,7 @@ u64 stable_page_flags(struct page *page)
- 	/*
- 	 * pseudo flags for the well known (anonymous) memory mapped pages
- 	 *
--	 * Note that page->_mapcount is overloaded in SLOB/SLUB/SLQB, so the
-+	 * Note that page->_mapcount is overloaded in SLAB/SLUB, so the
- 	 * simple test in page_mapped() is not enough.
- 	 */
- 	if (!PageSlab(page) && page_mapped(page))
-@@ -166,8 +166,7 @@ u64 stable_page_flags(struct page *page)
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index eb7d33b41e71..8bba4e91d0d5 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -90,15 +90,6 @@ static struct kmem_cache *skbuff_fclone_cache __ro_after_init;
+ static struct kmem_cache *skbuff_ext_cache __ro_after_init;
+ #endif
  
+-/* skb_small_head_cache and related code is only supported
+- * for CONFIG_SLAB and CONFIG_SLUB.
+- * As soon as SLOB is removed from the kernel, we can clean up this.
+- */
+-#if !defined(CONFIG_SLOB)
+-# define HAVE_SKB_SMALL_HEAD_CACHE 1
+-#endif
+-
+-#ifdef HAVE_SKB_SMALL_HEAD_CACHE
+ static struct kmem_cache *skb_small_head_cache __ro_after_init;
+ 
+ #define SKB_SMALL_HEAD_SIZE SKB_HEAD_ALIGN(MAX_TCP_HEADER)
+@@ -115,7 +106,6 @@ static struct kmem_cache *skb_small_head_cache __ro_after_init;
+ 
+ #define SKB_SMALL_HEAD_HEADROOM						\
+ 	SKB_WITH_OVERHEAD(SKB_SMALL_HEAD_CACHE_SIZE)
+-#endif /* HAVE_SKB_SMALL_HEAD_CACHE */
+ 
+ int sysctl_max_skb_frags __read_mostly = MAX_SKB_FRAGS;
+ EXPORT_SYMBOL(sysctl_max_skb_frags);
+@@ -514,7 +504,6 @@ static void *kmalloc_reserve(unsigned int *size, gfp_t flags, int node,
+ 	void *obj;
+ 
+ 	obj_size = SKB_HEAD_ALIGN(*size);
+-#ifdef HAVE_SKB_SMALL_HEAD_CACHE
+ 	if (obj_size <= SKB_SMALL_HEAD_CACHE_SIZE &&
+ 	    !(flags & KMALLOC_NOT_NORMAL_BITS)) {
+ 
+@@ -530,7 +519,6 @@ static void *kmalloc_reserve(unsigned int *size, gfp_t flags, int node,
+ 			goto out;
+ 		}
+ 	}
+-#endif
+ 	*size = obj_size = kmalloc_size_roundup(obj_size);
  	/*
- 	 * Caveats on high order pages: page->_refcount will only be set
--	 * -1 on the head page; SLUB/SLQB do the same for PG_slab;
--	 * SLOB won't set PG_slab at all on compound pages.
-+	 * -1 on the head page; SLAB/SLUB do the same for PG_slab;
- 	 */
- 	if (PageBuddy(page))
- 		u |= 1 << KPF_BUDDY;
+ 	 * Try a regular allocation, when that fails and we're not entitled
+@@ -852,11 +840,9 @@ static bool skb_pp_recycle(struct sk_buff *skb, void *data)
+ 
+ static void skb_kfree_head(void *head, unsigned int end_offset)
+ {
+-#ifdef HAVE_SKB_SMALL_HEAD_CACHE
+ 	if (end_offset == SKB_SMALL_HEAD_HEADROOM)
+ 		kmem_cache_free(skb_small_head_cache, head);
+ 	else
+-#endif
+ 		kfree(head);
+ }
+ 
+@@ -4692,7 +4678,6 @@ void __init skb_init(void)
+ 						0,
+ 						SLAB_HWCACHE_ALIGN|SLAB_PANIC,
+ 						NULL);
+-#ifdef HAVE_SKB_SMALL_HEAD_CACHE
+ 	/* usercopy should only access first SKB_SMALL_HEAD_HEADROOM bytes.
+ 	 * struct skb_shared_info is located at the end of skb->head,
+ 	 * and should not be copied to/from user.
+@@ -4704,7 +4689,6 @@ void __init skb_init(void)
+ 						0,
+ 						SKB_SMALL_HEAD_HEADROOM,
+ 						NULL);
+-#endif
+ 	skb_extensions_init();
+ }
+ 
 -- 
 2.39.2
 
