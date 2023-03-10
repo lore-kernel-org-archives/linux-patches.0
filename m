@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9748494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:36:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C47C433A8;
-	Fri, 10 Mar 2023 14:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B678494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:36:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB594C433EF;
+	Fri, 10 Mar 2023 14:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458960;
-	bh=JXrBPWK6v7XL22BY75zHtPOkPrMbMF4KH72BNj9Zy1E=;
+	s=korg; t=1678458963;
+	bh=2HSodINfxgFUGRSMhJjUMkxZ+musJha5RGIvWfxfBuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlLl1HQP2n7GGyOwkBSG5RmNsysBXVmok6F6o51UF6nRrlmHig3Xc/q5BJ26Rm/mJ
-	 3nDrhAYHOroA2BpwxwSq0GTKaiYYNUYf6r+oLqO3PNNxrqYtZQiXoyNSXLeBNKBw6f
-	 s9zkgp59W0VSB+KkTVaNRK6FrMz52U4ZYuf7OPuU=
+	b=tDRjof91bxCfP6uxgkZMmo6fqdNqMjbJ2g5ksu6eIBu74nfh75aPZUmS/NNqL9YyI
+	 oiNlwJ+o+gR4exHP5evaBhEoHYyziLPgkcLaLRS66rMiCs88xhzQI3+fvCbE7M726x
+	 tVK1cUZ43Mcy0mKFurVPaj+CR9oYNqytGdlteoWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	alsa-devel@alsa-project.org,
-	Kees Cook <keescook@chromium.org>,
+	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 202/357] ASoC: kirkwood: Iterate over array indexes instead of using pointer math
-Date: Fri, 10 Mar 2023 14:38:11 +0100
-Message-Id: <20230310133743.639722209@linuxfoundation.org>
+Subject: [PATCH 5.4 185/357] wifi: mt7601u: fix an integer underflow
+Date: Fri, 10 Mar 2023 14:37:54 +0100
+Message-Id: <20230310133742.908113881@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -39,47 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
 
-[ Upstream commit b3bcedc0402fcdc5c8624c433562d9d1882749d8 ]
+[ Upstream commit 803f3176c5df3b5582c27ea690f204abb60b19b9 ]
 
-Walking the dram->cs array was seen as accesses beyond the first array
-item by the compiler. Instead, use the array index directly. This allows
-for run-time bounds checking under CONFIG_UBSAN_BOUNDS as well. Seen
-with GCC 13 with -fstrict-flex-arrays:
+Fix an integer underflow that leads to a null pointer dereference in
+'mt7601u_rx_skb_from_seg()'. The variable 'dma_len' in the URB packet
+could be manipulated, which could trigger an integer underflow of
+'seg_len' in 'mt7601u_rx_process_seg()'. This underflow subsequently
+causes the 'bad_frame' checks in 'mt7601u_rx_skb_from_seg()' to be
+bypassed, eventually leading to a dereference of the pointer 'p', which
+is a null pointer.
 
-../sound/soc/kirkwood/kirkwood-dma.c: In function
-'kirkwood_dma_conf_mbus_windows.constprop':
-../sound/soc/kirkwood/kirkwood-dma.c:90:24: warning: array subscript 0 is outside array bounds of 'const struct mbus_dram_window[0]' [-Warray-bounds=]
-   90 |                 if ((cs->base & 0xffff0000) < (dma & 0xffff0000)) {
-      |                      ~~^~~~~~
+Ensure that 'dma_len' is greater than 'min_seg_len'.
 
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: alsa-devel@alsa-project.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230127224128.never.410-kees@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Found by a modified version of syzkaller.
+
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+CPU: 0 PID: 12 Comm: ksoftirqd/0 Tainted: G        W  O      5.14.0+
+#139
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
+RIP: 0010:skb_add_rx_frag+0x143/0x370
+Code: e2 07 83 c2 03 38 ca 7c 08 84 c9 0f 85 86 01 00 00 4c 8d 7d 08 44
+89 68 08 48 b8 00 00 00 00 00 fc ff df 4c 89 fa 48 c1 ea 03 <80> 3c 02
+00 0f 85 cd 01 00 00 48 8b 45 08 a8 01 0f 85 3d 01 00 00
+RSP: 0018:ffffc900000cfc90 EFLAGS: 00010202
+RAX: dffffc0000000000 RBX: ffff888115520dc0 RCX: 0000000000000000
+RDX: 0000000000000001 RSI: ffff8881118430c0 RDI: ffff8881118430f8
+RBP: 0000000000000000 R08: 0000000000000e09 R09: 0000000000000010
+R10: ffff888111843017 R11: ffffed1022308602 R12: 0000000000000000
+R13: 0000000000000e09 R14: 0000000000000010 R15: 0000000000000008
+FS:  0000000000000000(0000) GS:ffff88811a800000(0000)
+knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000004035af40 CR3: 00000001157f2000 CR4: 0000000000750ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ mt7601u_rx_tasklet+0xc73/0x1270
+ ? mt7601u_submit_rx_buf.isra.0+0x510/0x510
+ ? tasklet_action_common.isra.0+0x79/0x2f0
+ tasklet_action_common.isra.0+0x206/0x2f0
+ __do_softirq+0x1b5/0x880
+ ? tasklet_unlock+0x30/0x30
+ run_ksoftirqd+0x26/0x50
+ smpboot_thread_fn+0x34f/0x7d0
+ ? smpboot_register_percpu_thread+0x370/0x370
+ kthread+0x3a1/0x480
+ ? set_kthread_struct+0x120/0x120
+ ret_from_fork+0x1f/0x30
+Modules linked in: 88XXau(O) 88x2bu(O)
+---[ end trace 57f34f93b4da0f9b ]---
+RIP: 0010:skb_add_rx_frag+0x143/0x370
+Code: e2 07 83 c2 03 38 ca 7c 08 84 c9 0f 85 86 01 00 00 4c 8d 7d 08 44
+89 68 08 48 b8 00 00 00 00 00 fc ff df 4c 89 fa 48 c1 ea 03 <80> 3c 02
+00 0f 85 cd 01 00 00 48 8b 45 08 a8 01 0f 85 3d 01 00 00
+RSP: 0018:ffffc900000cfc90 EFLAGS: 00010202
+RAX: dffffc0000000000 RBX: ffff888115520dc0 RCX: 0000000000000000
+RDX: 0000000000000001 RSI: ffff8881118430c0 RDI: ffff8881118430f8
+RBP: 0000000000000000 R08: 0000000000000e09 R09: 0000000000000010
+R10: ffff888111843017 R11: ffffed1022308602 R12: 0000000000000000
+R13: 0000000000000e09 R14: 0000000000000010 R15: 0000000000000008
+FS:  0000000000000000(0000) GS:ffff88811a800000(0000)
+knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000004035af40 CR3: 00000001157f2000 CR4: 0000000000750ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+
+Signed-off-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+Acked-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221229092906.2328282-1-jisoo.jang@yonsei.ac.kr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/kirkwood/kirkwood-dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt7601u/dma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/kirkwood/kirkwood-dma.c b/sound/soc/kirkwood/kirkwood-dma.c
-index d2d5c25bf5502..0215d187bdff5 100644
---- a/sound/soc/kirkwood/kirkwood-dma.c
-+++ b/sound/soc/kirkwood/kirkwood-dma.c
-@@ -86,7 +86,7 @@ kirkwood_dma_conf_mbus_windows(void __iomem *base, int win,
+diff --git a/drivers/net/wireless/mediatek/mt7601u/dma.c b/drivers/net/wireless/mediatek/mt7601u/dma.c
+index 6f2172be7b66a..072888072b0db 100644
+--- a/drivers/net/wireless/mediatek/mt7601u/dma.c
++++ b/drivers/net/wireless/mediatek/mt7601u/dma.c
+@@ -118,7 +118,8 @@ static u16 mt7601u_rx_next_seg_len(u8 *data, u32 data_len)
+ 	if (data_len < min_seg_len ||
+ 	    WARN_ON_ONCE(!dma_len) ||
+ 	    WARN_ON_ONCE(dma_len + MT_DMA_HDRS > data_len) ||
+-	    WARN_ON_ONCE(dma_len & 0x3))
++	    WARN_ON_ONCE(dma_len & 0x3) ||
++	    WARN_ON_ONCE(dma_len < min_seg_len))
+ 		return 0;
  
- 	/* try to find matching cs for current dma address */
- 	for (i = 0; i < dram->num_cs; i++) {
--		const struct mbus_dram_window *cs = dram->cs + i;
-+		const struct mbus_dram_window *cs = &dram->cs[i];
- 		if ((cs->base & 0xffff0000) < (dma & 0xffff0000)) {
- 			writel(cs->base & 0xffff0000,
- 				base + KIRKWOOD_AUDIO_WIN_BASE_REG(win));
+ 	return MT_DMA_HDRS + dma_len;
 -- 
 2.39.2
 
