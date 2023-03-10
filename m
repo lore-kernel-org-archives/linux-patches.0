@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2480F847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E64EC433D2;
-	Fri, 10 Mar 2023 13:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CFD847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A67C433EF;
+	Fri, 10 Mar 2023 13:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456334;
-	bh=L5y/UZwXvSJOHC0VtF8iOXHeM3zL2thrzWvjraecig8=;
+	s=korg; t=1678456337;
+	bh=BQ9Skkjq+REIP476nYzqPXBPPNhVOGC16g6URGwTH08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UL9ecqvpXY1NFhhPVhHdyaZ3S0mGmf/TC9c68F/RM82bEak1uX0gPZAm/eIjJ0GHB
-	 AlVPizjal5aE3oT7w1R66dDQG6NypHjcWfQSLddie35qhpsH262HouieoD1qm8qYkq
-	 gG54CdMHmQeNLYxq62ckLx7jgiipZ54yVt+sB4Os=
+	b=wOKDJnFfdl1RSWdPeeTtBi7n0HKE6zuu44QSJkWYHg4w5azD72OnSlx/aRWto72e/
+	 WSVWuSBeCfKer6r7Jxj8dfJsPSf7nMow62YfE/Hlio+4BH0XyWdJ1qwdbXa4HwNRn1
+	 A4DoBYsT4UgWwiEArW07zLoThi7ejstvcsjraZck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 161/193] ubifs: ubifs_writepage: Mark page dirty after writing inode failed
-Date: Fri, 10 Mar 2023 14:39:03 +0100
-Message-Id: <20230310133716.523271501@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 4.14 135/193] rbd: avoid use-after-free in do_rbd_add() when rbd_dev_create() fails
+Date: Fri, 10 Mar 2023 14:38:37 +0100
+Message-Id: <20230310133715.730479366@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,114 +33,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-[ Upstream commit fb8bc4c74ae4526d9489362ab2793a936d072b84 ]
+commit f7c4d9b133c7a04ca619355574e96b6abf209fba upstream.
 
-There are two states for ubifs writing pages:
-1. Dirty, Private
-2. Not Dirty, Not Private
+If getting an ID or setting up a work queue in rbd_dev_create() fails,
+use-after-free on rbd_dev->rbd_client, rbd_dev->spec and rbd_dev->opts
+is triggered in do_rbd_add().  The root cause is that the ownership of
+these structures is transfered to rbd_dev prematurely and they all end
+up getting freed when rbd_dev_create() calls rbd_dev_free() prior to
+returning to do_rbd_add().
 
-There is a third possibility which maybe related to [1] that page is
-private but not dirty caused by following process:
+Found by Linux Verification Center (linuxtesting.org) with SVACE, an
+incomplete patch submitted by Natalia Petrova <n.petrova@fintech.ru>.
 
-          PA
-lock(page)
-ubifs_write_end
-  attach_page_private		// set Private
-    __set_page_dirty_nobuffers	// set Dirty
-unlock(page)
-
-write_cache_pages
-  lock(page)
-  clear_page_dirty_for_io(page)	// clear Dirty
-  ubifs_writepage
-    write_inode
-    // fail, goto out, following codes are not executed
-    // do_writepage
-    //   set_page_writeback 	// set Writeback
-    //   detach_page_private	// clear Private
-    //   end_page_writeback 	// clear Writeback
-    out:
-    unlock(page)		// Private, Not Dirty
-
-                                       PB
-				ksys_fadvise64_64
-				  generic_fadvise
-				     invalidate_inode_page
-				     // page is neither Dirty nor Writeback
-				       invalidate_complete_page
-				       // page_has_private is true
-					 try_to_release_page
-					   ubifs_releasepage
-					     ubifs_assert(c, 0) !!!
-
-Then we may get following assertion failed:
-  UBIFS error (ubi0:0 pid 1492): ubifs_assert_failed [ubifs]:
-  UBIFS assert failed: 0, in fs/ubifs/file.c:1499
-  UBIFS warning (ubi0:0 pid 1492): ubifs_ro_mode [ubifs]:
-  switched to read-only mode, error -22
-  CPU: 2 PID: 1492 Comm: aa Not tainted 5.16.0-rc2-00012-g7bb767dee0ba-dirty
-  Call Trace:
-    dump_stack+0x13/0x1b
-    ubifs_ro_mode+0x54/0x60 [ubifs]
-    ubifs_assert_failed+0x4b/0x80 [ubifs]
-    ubifs_releasepage+0x7e/0x1e0 [ubifs]
-    try_to_release_page+0x57/0xe0
-    invalidate_inode_page+0xfb/0x130
-    invalidate_mapping_pagevec+0x12/0x20
-    generic_fadvise+0x303/0x3c0
-    vfs_fadvise+0x35/0x40
-    ksys_fadvise64_64+0x4c/0xb0
-
-Jump [2] to find a reproducer.
-
-[1] https://linux-mtd.infradead.narkive.com/NQoBeT1u/patch-rfc-ubifs-fix-assert-failed-in-ubifs-set-page-dirty
-[2] https://bugzilla.kernel.org/show_bug.cgi?id=215357
-
-Fixes: 1e51764a3c2ac0 ("UBIFS: add new flash file system")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 1643dfa4c2c8 ("rbd: introduce a per-device ordered workqueue")
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ubifs/file.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/block/rbd.c |   20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/fs/ubifs/file.c b/fs/ubifs/file.c
-index 46e5a58c4b05a..0e9cfeca5daf7 100644
---- a/fs/ubifs/file.c
-+++ b/fs/ubifs/file.c
-@@ -1041,7 +1041,7 @@ static int ubifs_writepage(struct page *page, struct writeback_control *wbc)
- 		if (page->index >= synced_i_size >> PAGE_SHIFT) {
- 			err = inode->i_sb->s_op->write_inode(inode, NULL);
- 			if (err)
--				goto out_unlock;
-+				goto out_redirty;
- 			/*
- 			 * The inode has been written, but the write-buffer has
- 			 * not been synchronized, so in case of an unclean
-@@ -1069,11 +1069,17 @@ static int ubifs_writepage(struct page *page, struct writeback_control *wbc)
- 	if (i_size > synced_i_size) {
- 		err = inode->i_sb->s_op->write_inode(inode, NULL);
- 		if (err)
--			goto out_unlock;
-+			goto out_redirty;
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -4778,8 +4778,7 @@ static void rbd_dev_release(struct devic
+ 		module_put(THIS_MODULE);
+ }
+ 
+-static struct rbd_device *__rbd_dev_create(struct rbd_client *rbdc,
+-					   struct rbd_spec *spec)
++static struct rbd_device *__rbd_dev_create(struct rbd_spec *spec)
+ {
+ 	struct rbd_device *rbd_dev;
+ 
+@@ -4812,9 +4811,6 @@ static struct rbd_device *__rbd_dev_crea
+ 	rbd_dev->dev.parent = &rbd_root_dev;
+ 	device_initialize(&rbd_dev->dev);
+ 
+-	rbd_dev->rbd_client = rbdc;
+-	rbd_dev->spec = spec;
+-
+ 	return rbd_dev;
+ }
+ 
+@@ -4827,12 +4823,10 @@ static struct rbd_device *rbd_dev_create
+ {
+ 	struct rbd_device *rbd_dev;
+ 
+-	rbd_dev = __rbd_dev_create(rbdc, spec);
++	rbd_dev = __rbd_dev_create(spec);
+ 	if (!rbd_dev)
+ 		return NULL;
+ 
+-	rbd_dev->opts = opts;
+-
+ 	/* get an id and fill in device name */
+ 	rbd_dev->dev_id = ida_simple_get(&rbd_dev_id_ida, 0,
+ 					 minor_to_rbd_dev_id(1 << MINORBITS),
+@@ -4849,6 +4843,10 @@ static struct rbd_device *rbd_dev_create
+ 	/* we have a ref from do_rbd_add() */
+ 	__module_get(THIS_MODULE);
+ 
++	rbd_dev->rbd_client = rbdc;
++	rbd_dev->spec = spec;
++	rbd_dev->opts = opts;
++
+ 	dout("%s rbd_dev %p dev_id %d\n", __func__, rbd_dev, rbd_dev->dev_id);
+ 	return rbd_dev;
+ 
+@@ -5934,7 +5932,7 @@ static int rbd_dev_probe_parent(struct r
+ 		goto out_err;
  	}
  
- 	return do_writepage(page, len);
--
-+out_redirty:
-+	/*
-+	 * redirty_page_for_writepage() won't call ubifs_dirty_inode() because
-+	 * it passes I_DIRTY_PAGES flag while calling __mark_inode_dirty(), so
-+	 * there is no need to do space budget for dirty inode.
-+	 */
-+	redirty_page_for_writepage(wbc, page);
- out_unlock:
- 	unlock_page(page);
- 	return err;
--- 
-2.39.2
-
+-	parent = __rbd_dev_create(rbd_dev->rbd_client, rbd_dev->parent_spec);
++	parent = __rbd_dev_create(rbd_dev->parent_spec);
+ 	if (!parent) {
+ 		ret = -ENOMEM;
+ 		goto out_err;
+@@ -5944,8 +5942,8 @@ static int rbd_dev_probe_parent(struct r
+ 	 * Images related by parent/child relationships always share
+ 	 * rbd_client and spec/parent_spec, so bump their refcounts.
+ 	 */
+-	__rbd_get_client(rbd_dev->rbd_client);
+-	rbd_spec_get(rbd_dev->parent_spec);
++	parent->rbd_client = __rbd_get_client(rbd_dev->rbd_client);
++	parent->spec = rbd_spec_get(rbd_dev->parent_spec);
+ 
+ 	ret = rbd_dev_image_probe(parent, depth);
+ 	if (ret < 0)
 
 
