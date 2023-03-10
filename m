@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6ED882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:07:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE8BC433EF;
-	Fri, 10 Mar 2023 15:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F6C882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:07:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CADDC433D2;
+	Fri, 10 Mar 2023 15:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460872;
-	bh=5BK/jSlyZ9SY5awyzUWgZDUs9rksbeEZAf1Mp+Ag51k=;
+	s=korg; t=1678460875;
+	bh=QqqSGclLpt3hxyLOsKmhZqZ9JbMkYAHOPVp55o+9138=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xtBanQNF9uU3ZHtOVrEQMTyeKXhY07ef9+oMOL38BQ7P/gkKefFfCu5XItBulyDJX
-	 4JQHGF/INC58V176X5AtckItTOsKXVPc7FUMl6UVCNUEgI6IUGy2ghMTsunES46ziY
-	 AP2BN0KRbBBqvMkCJUOAD22eVvTjsaVtk6cWNnic=
+	b=k5XFJJ7mU1nW94gGNMkCpsu+wTvLzj5uSYRlJglPWaxa9I+9AMQoPpuGbtDZm7VKw
+	 FwyQt9+UlBMImKBZsCJe360V4b74J/MtssD89azZ+J9tFnarFEd9RaRh9OyiV6funm
+	 gqirPr8CFcqMqm3+MlcxWn7Fm3onSJNjEOc1f3qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	George Kennedy <george.kennedy@oracle.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 449/529] ubifs: Fix memory leak in alloc_wbufs()
-Date: Fri, 10 Mar 2023 14:39:52 +0100
-Message-Id: <20230310133825.708646348@linuxfoundation.org>
+Subject: [PATCH 5.10 440/529] ubi: ensure that VID header offset + VID header size <= alloc, size
+Date: Fri, 10 Mar 2023 14:39:43 +0100
+Message-Id: <20230310133825.309284703@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,102 +36,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zetao <lizetao1@huawei.com>
+From: George Kennedy <george.kennedy@oracle.com>
 
-[ Upstream commit 4a1ff3c5d04b9079b4f768d9a71b51c4af578dd2 ]
+[ Upstream commit 1b42b1a36fc946f0d7088425b90d491b4257ca3e ]
 
-kmemleak reported a sequence of memory leaks, and show them as following:
+Ensure that the VID header offset + VID header size does not exceed
+the allocated area to avoid slab OOB.
 
-  unreferenced object 0xffff8881575f8400 (size 1024):
-    comm "mount", pid 19625, jiffies 4297119604 (age 20.383s)
-    hex dump (first 32 bytes):
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<ffffffff8176cecd>] __kmalloc+0x4d/0x150
-      [<ffffffffa0406b2b>] ubifs_mount+0x307b/0x7170 [ubifs]
-      [<ffffffff819fa8fd>] legacy_get_tree+0xed/0x1d0
-      [<ffffffff81936f2d>] vfs_get_tree+0x7d/0x230
-      [<ffffffff819b2bd4>] path_mount+0xdd4/0x17b0
-      [<ffffffff819b37aa>] __x64_sys_mount+0x1fa/0x270
-      [<ffffffff83c14295>] do_syscall_64+0x35/0x80
-      [<ffffffff83e0006a>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+BUG: KASAN: slab-out-of-bounds in crc32_body lib/crc32.c:111 [inline]
+BUG: KASAN: slab-out-of-bounds in crc32_le_generic lib/crc32.c:179 [inline]
+BUG: KASAN: slab-out-of-bounds in crc32_le_base+0x58c/0x626 lib/crc32.c:197
+Read of size 4 at addr ffff88802bb36f00 by task syz-executor136/1555
 
-  unreferenced object 0xffff8881798a6e00 (size 512):
-    comm "mount", pid 19677, jiffies 4297121912 (age 37.816s)
-    hex dump (first 32 bytes):
-      6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
-      6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
-    backtrace:
-      [<ffffffff8176cecd>] __kmalloc+0x4d/0x150
-      [<ffffffffa0418342>] ubifs_wbuf_init+0x52/0x480 [ubifs]
-      [<ffffffffa0406ca5>] ubifs_mount+0x31f5/0x7170 [ubifs]
-      [<ffffffff819fa8fd>] legacy_get_tree+0xed/0x1d0
-      [<ffffffff81936f2d>] vfs_get_tree+0x7d/0x230
-      [<ffffffff819b2bd4>] path_mount+0xdd4/0x17b0
-      [<ffffffff819b37aa>] __x64_sys_mount+0x1fa/0x270
-      [<ffffffff83c14295>] do_syscall_64+0x35/0x80
-      [<ffffffff83e0006a>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+CPU: 2 PID: 1555 Comm: syz-executor136 Tainted: G        W
+6.0.0-1868 #1
+Hardware name: Red Hat KVM, BIOS 1.13.0-2.module+el8.3.0+7860+a7792d29
+04/01/2014
+Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x85/0xad lib/dump_stack.c:106
+  print_address_description mm/kasan/report.c:317 [inline]
+  print_report.cold.13+0xb6/0x6bb mm/kasan/report.c:433
+  kasan_report+0xa7/0x11b mm/kasan/report.c:495
+  crc32_body lib/crc32.c:111 [inline]
+  crc32_le_generic lib/crc32.c:179 [inline]
+  crc32_le_base+0x58c/0x626 lib/crc32.c:197
+  ubi_io_write_vid_hdr+0x1b7/0x472 drivers/mtd/ubi/io.c:1067
+  create_vtbl+0x4d5/0x9c4 drivers/mtd/ubi/vtbl.c:317
+  create_empty_lvol drivers/mtd/ubi/vtbl.c:500 [inline]
+  ubi_read_volume_table+0x67b/0x288a drivers/mtd/ubi/vtbl.c:812
+  ubi_attach+0xf34/0x1603 drivers/mtd/ubi/attach.c:1601
+  ubi_attach_mtd_dev+0x6f3/0x185e drivers/mtd/ubi/build.c:965
+  ctrl_cdev_ioctl+0x2db/0x347 drivers/mtd/ubi/cdev.c:1043
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:870 [inline]
+  __se_sys_ioctl fs/ioctl.c:856 [inline]
+  __x64_sys_ioctl+0x193/0x213 fs/ioctl.c:856
+  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+  do_syscall_64+0x3e/0x86 arch/x86/entry/common.c:80
+  entry_SYSCALL_64_after_hwframe+0x63/0x0
+RIP: 0033:0x7f96d5cf753d
+Code:
+RSP: 002b:00007fffd72206f8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f96d5cf753d
+RDX: 0000000020000080 RSI: 0000000040186f40 RDI: 0000000000000003
+RBP: 0000000000400cd0 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000400be0
+R13: 00007fffd72207e0 R14: 0000000000000000 R15: 0000000000000000
+  </TASK>
 
-The problem is that the ubifs_wbuf_init() returns an error in the
-loop which in the alloc_wbufs(), then the wbuf->buf and wbuf->inodes
-that were successfully alloced before are not freed.
+Allocated by task 1555:
+  kasan_save_stack+0x20/0x3d mm/kasan/common.c:38
+  kasan_set_track mm/kasan/common.c:45 [inline]
+  set_alloc_info mm/kasan/common.c:437 [inline]
+  ____kasan_kmalloc mm/kasan/common.c:516 [inline]
+  __kasan_kmalloc+0x88/0xa3 mm/kasan/common.c:525
+  kasan_kmalloc include/linux/kasan.h:234 [inline]
+  __kmalloc+0x138/0x257 mm/slub.c:4429
+  kmalloc include/linux/slab.h:605 [inline]
+  ubi_alloc_vid_buf drivers/mtd/ubi/ubi.h:1093 [inline]
+  create_vtbl+0xcc/0x9c4 drivers/mtd/ubi/vtbl.c:295
+  create_empty_lvol drivers/mtd/ubi/vtbl.c:500 [inline]
+  ubi_read_volume_table+0x67b/0x288a drivers/mtd/ubi/vtbl.c:812
+  ubi_attach+0xf34/0x1603 drivers/mtd/ubi/attach.c:1601
+  ubi_attach_mtd_dev+0x6f3/0x185e drivers/mtd/ubi/build.c:965
+  ctrl_cdev_ioctl+0x2db/0x347 drivers/mtd/ubi/cdev.c:1043
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:870 [inline]
+  __se_sys_ioctl fs/ioctl.c:856 [inline]
+  __x64_sys_ioctl+0x193/0x213 fs/ioctl.c:856
+  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+  do_syscall_64+0x3e/0x86 arch/x86/entry/common.c:80
+  entry_SYSCALL_64_after_hwframe+0x63/0x0
 
-Fix it by adding error hanging path in alloc_wbufs() which frees
-the memory alloced before when ubifs_wbuf_init() returns an error.
+The buggy address belongs to the object at ffff88802bb36e00
+  which belongs to the cache kmalloc-256 of size 256
+The buggy address is located 0 bytes to the right of
+  256-byte region [ffff88802bb36e00, ffff88802bb36f00)
 
-Fixes: 1e51764a3c2a ("UBIFS: add new flash file system")
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+The buggy address belongs to the physical page:
+page:00000000ea4d1263 refcount:1 mapcount:0 mapping:0000000000000000
+index:0x0 pfn:0x2bb36
+head:00000000ea4d1263 order:1 compound_mapcount:0 compound_pincount:0
+flags: 0xfffffc0010200(slab|head|node=0|zone=1|lastcpupid=0x1fffff)
+raw: 000fffffc0010200 ffffea000066c300 dead000000000003 ffff888100042b40
+raw: 0000000000000000 0000000000100010 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+  ffff88802bb36e00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  ffff88802bb36e80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff88802bb36f00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+                    ^
+  ffff88802bb36f80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+  ffff88802bb37000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+
+Fixes: 801c135ce73d ("UBI: Unsorted Block Images")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: George Kennedy <george.kennedy@oracle.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/super.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/mtd/ubi/build.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/ubifs/super.c b/fs/ubifs/super.c
-index 6a8f9efc2e2f0..1df193c87e920 100644
---- a/fs/ubifs/super.c
-+++ b/fs/ubifs/super.c
-@@ -833,7 +833,7 @@ static int alloc_wbufs(struct ubifs_info *c)
- 		INIT_LIST_HEAD(&c->jheads[i].buds_list);
- 		err = ubifs_wbuf_init(c, &c->jheads[i].wbuf);
- 		if (err)
--			return err;
-+			goto out_wbuf;
+diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
+index 4153e0d15c5f9..8747569e793d4 100644
+--- a/drivers/mtd/ubi/build.c
++++ b/drivers/mtd/ubi/build.c
+@@ -664,6 +664,12 @@ static int io_init(struct ubi_device *ubi, int max_beb_per1024)
+ 	ubi->ec_hdr_alsize = ALIGN(UBI_EC_HDR_SIZE, ubi->hdrs_min_io_size);
+ 	ubi->vid_hdr_alsize = ALIGN(UBI_VID_HDR_SIZE, ubi->hdrs_min_io_size);
  
- 		c->jheads[i].wbuf.sync_callback = &bud_wbuf_callback;
- 		c->jheads[i].wbuf.jhead = i;
-@@ -841,7 +841,7 @@ static int alloc_wbufs(struct ubifs_info *c)
- 		c->jheads[i].log_hash = ubifs_hash_get_desc(c);
- 		if (IS_ERR(c->jheads[i].log_hash)) {
- 			err = PTR_ERR(c->jheads[i].log_hash);
--			goto out;
-+			goto out_log_hash;
- 		}
- 	}
- 
-@@ -854,9 +854,18 @@ static int alloc_wbufs(struct ubifs_info *c)
- 
- 	return 0;
- 
--out:
--	while (i--)
-+out_log_hash:
-+	kfree(c->jheads[i].wbuf.buf);
-+	kfree(c->jheads[i].wbuf.inodes);
-+
-+out_wbuf:
-+	while (i--) {
-+		kfree(c->jheads[i].wbuf.buf);
-+		kfree(c->jheads[i].wbuf.inodes);
- 		kfree(c->jheads[i].log_hash);
++	if (ubi->vid_hdr_offset && ((ubi->vid_hdr_offset + UBI_VID_HDR_SIZE) >
++	    ubi->vid_hdr_alsize)) {
++		ubi_err(ubi, "VID header offset %d too large.", ubi->vid_hdr_offset);
++		return -EINVAL;
 +	}
-+	kfree(c->jheads);
-+	c->jheads = NULL;
- 
- 	return err;
- }
++
+ 	dbg_gen("min_io_size      %d", ubi->min_io_size);
+ 	dbg_gen("max_write_size   %d", ubi->max_write_size);
+ 	dbg_gen("hdrs_min_io_size %d", ubi->hdrs_min_io_size);
 -- 
 2.39.2
 
