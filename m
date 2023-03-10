@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D739A8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:13:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF68C433A7;
-	Fri, 10 Mar 2023 14:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25528481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:13:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8C7C433D2;
+	Fri, 10 Mar 2023 14:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457630;
-	bh=i3ZJtE2xBZNxQFezLYZc+LxXAyj4rlWfptqIAIxNKa0=;
+	s=korg; t=1678457633;
+	bh=XDbIqOjVStOKA90C5EH2Js/HyVXZVdddZGhRbicevvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OYnO00kxrd49abwn4PG3T8r0LTy7ObG9R5iJ0C9VD55s+UhDJ0RwN2wuGWaX+8cIN
-	 /va9Y9+HL5ymQec6rS1LJMIswFzHmHzV9Lki/5M8RWmOZlo3NZVN6cqRfMKLJvxvGm
-	 6Ivtrnr9fMtq0b8BUnuY3MXCzts8DDKhhK7hK3aA=
+	b=YV7vFZoawU6+VUzDqC4AyqbeVsmjdrJEuNl1Jr+4HZUMT5TynTGq1DipoubynUyiD
+	 Y+1jI084/spKRLrFEguGARaEcivV0WjLIjL24pGeZ56qJsAK4RwX0/VpPbVjpRZQ28
+	 +/Xpzi12nsIhuuy1xY1k2C7MN/O4nWPU6eBNUMVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.1 197/200] arm64: efi: Make efi_rt_lock a raw_spinlock
-Date: Fri, 10 Mar 2023 14:40:04 +0100
-Message-Id: <20230310133723.132137926@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Peter Collingbourne <pcc@google.com>,
+	Cornelia Huck <cohuck@redhat.com>,
+	Steven Price <steven.price@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.1 198/200] arm64: mte: Fix/clarify the PG_mte_tagged semantics
+Date: Fri, 10 Mar 2023 14:40:05 +0100
+Message-Id: <20230310133723.161327844@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -34,97 +38,272 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre Gondois <pierre.gondois@arm.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-commit 0e68b5517d3767562889f1d83fdb828c26adb24f upstream.
+commit e059853d14ca4ed0f6a190d7109487918a22a976 upstream.
 
-Running a rt-kernel base on 6.2.0-rc3-rt1 on an Ampere Altra outputs
-the following:
-  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:46
-  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 9, name: kworker/u320:0
-  preempt_count: 2, expected: 0
-  RCU nest depth: 0, expected: 0
-  3 locks held by kworker/u320:0/9:
-  #0: ffff3fff8c27d128 ((wq_completion)efi_rts_wq){+.+.}-{0:0}, at: process_one_work (./include/linux/atomic/atomic-long.h:41)
-  #1: ffff80000861bdd0 ((work_completion)(&efi_rts_work.work)){+.+.}-{0:0}, at: process_one_work (./include/linux/atomic/atomic-long.h:41)
-  #2: ffffdf7e1ed3e460 (efi_rt_lock){+.+.}-{3:3}, at: efi_call_rts (drivers/firmware/efi/runtime-wrappers.c:101)
-  Preemption disabled at:
-  efi_virtmap_load (./arch/arm64/include/asm/mmu_context.h:248)
-  CPU: 0 PID: 9 Comm: kworker/u320:0 Tainted: G        W          6.2.0-rc3-rt1
-  Hardware name: WIWYNN Mt.Jade Server System B81.03001.0005/Mt.Jade Motherboard, BIOS 1.08.20220218 (SCP: 1.08.20220218) 2022/02/18
-  Workqueue: efi_rts_wq efi_call_rts
-  Call trace:
-  dump_backtrace (arch/arm64/kernel/stacktrace.c:158)
-  show_stack (arch/arm64/kernel/stacktrace.c:165)
-  dump_stack_lvl (lib/dump_stack.c:107 (discriminator 4))
-  dump_stack (lib/dump_stack.c:114)
-  __might_resched (kernel/sched/core.c:10134)
-  rt_spin_lock (kernel/locking/rtmutex.c:1769 (discriminator 4))
-  efi_call_rts (drivers/firmware/efi/runtime-wrappers.c:101)
-  [...]
+Currently the PG_mte_tagged page flag mostly means the page contains
+valid tags and it should be set after the tags have been cleared or
+restored. However, in mte_sync_tags() it is set before setting the tags
+to avoid, in theory, a race with concurrent mprotect(PROT_MTE) for
+shared pages. However, a concurrent mprotect(PROT_MTE) with a copy on
+write in another thread can cause the new page to have stale tags.
+Similarly, tag reading via ptrace() can read stale tags if the
+PG_mte_tagged flag is set before actually clearing/restoring the tags.
 
-This seems to come from commit ff7a167961d1 ("arm64: efi: Execute
-runtime services from a dedicated stack") which adds a spinlock. This
-spinlock is taken through:
-efi_call_rts()
-\-efi_call_virt()
-  \-efi_call_virt_pointer()
-    \-arch_efi_call_virt_setup()
+Fix the PG_mte_tagged semantics so that it is only set after the tags
+have been cleared or restored. This is safe for swap restoring into a
+MAP_SHARED or CoW page since the core code takes the page lock. Add two
+functions to test and set the PG_mte_tagged flag with acquire and
+release semantics. The downside is that concurrent mprotect(PROT_MTE) on
+a MAP_SHARED page may cause tag loss. This is already the case for KVM
+guests if a VMM changes the page protection while the guest triggers a
+user_mem_abort().
 
-Make 'efi_rt_lock' a raw_spinlock to avoid being preempted.
-
-[ardb: The EFI runtime services are called with a different set of
-       translation tables, and are permitted to use the SIMD registers.
-       The context switch code preserves/restores neither, and so EFI
-       calls must be made with preemption disabled, rather than only
-       disabling migration.]
-
-Fixes: ff7a167961d1 ("arm64: efi: Execute runtime services from a dedicated stack")
-Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
-Cc: <stable@vger.kernel.org> # v6.1+
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[pcc@google.com: fix build with CONFIG_ARM64_MTE disabled]
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Peter Collingbourne <pcc@google.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20221104011041.290951-3-pcc@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/efi.h |    6 +++---
- arch/arm64/kernel/efi.c      |    2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/include/asm/mte.h     |   30 ++++++++++++++++++++++++++++++
+ arch/arm64/include/asm/pgtable.h |    2 +-
+ arch/arm64/kernel/cpufeature.c   |    4 +++-
+ arch/arm64/kernel/elfcore.c      |    2 +-
+ arch/arm64/kernel/hibernate.c    |    2 +-
+ arch/arm64/kernel/mte.c          |   17 +++++++++++------
+ arch/arm64/kvm/guest.c           |    4 ++--
+ arch/arm64/kvm/mmu.c             |    4 ++--
+ arch/arm64/mm/copypage.c         |    5 +++--
+ arch/arm64/mm/fault.c            |    2 +-
+ arch/arm64/mm/mteswap.c          |    2 +-
+ 11 files changed, 56 insertions(+), 18 deletions(-)
 
---- a/arch/arm64/include/asm/efi.h
-+++ b/arch/arm64/include/asm/efi.h
-@@ -33,7 +33,7 @@ int efi_set_mapping_permissions(struct m
- ({									\
- 	efi_virtmap_load();						\
- 	__efi_fpsimd_begin();						\
--	spin_lock(&efi_rt_lock);					\
-+	raw_spin_lock(&efi_rt_lock);					\
- })
+--- a/arch/arm64/include/asm/mte.h
++++ b/arch/arm64/include/asm/mte.h
+@@ -37,6 +37,29 @@ void mte_free_tag_storage(char *storage)
+ /* track which pages have valid allocation tags */
+ #define PG_mte_tagged	PG_arch_2
  
- #undef arch_efi_call_virt
-@@ -42,12 +42,12 @@ int efi_set_mapping_permissions(struct m
++static inline void set_page_mte_tagged(struct page *page)
++{
++	/*
++	 * Ensure that the tags written prior to this function are visible
++	 * before the page flags update.
++	 */
++	smp_wmb();
++	set_bit(PG_mte_tagged, &page->flags);
++}
++
++static inline bool page_mte_tagged(struct page *page)
++{
++	bool ret = test_bit(PG_mte_tagged, &page->flags);
++
++	/*
++	 * If the page is tagged, ensure ordering with a likely subsequent
++	 * read of the tags.
++	 */
++	if (ret)
++		smp_rmb();
++	return ret;
++}
++
+ void mte_zero_clear_page_tags(void *addr);
+ void mte_sync_tags(pte_t old_pte, pte_t pte);
+ void mte_copy_page_tags(void *kto, const void *kfrom);
+@@ -56,6 +79,13 @@ size_t mte_probe_user_range(const char _
+ /* unused if !CONFIG_ARM64_MTE, silence the compiler */
+ #define PG_mte_tagged	0
  
- #define arch_efi_call_virt_teardown()					\
- ({									\
--	spin_unlock(&efi_rt_lock);					\
-+	raw_spin_unlock(&efi_rt_lock);					\
- 	__efi_fpsimd_end();						\
- 	efi_virtmap_unload();						\
- })
- 
--extern spinlock_t efi_rt_lock;
-+extern raw_spinlock_t efi_rt_lock;
- extern u64 *efi_rt_stack_top;
- efi_status_t __efi_rt_asm_wrapper(void *, const char *, ...);
- 
---- a/arch/arm64/kernel/efi.c
-+++ b/arch/arm64/kernel/efi.c
-@@ -146,7 +146,7 @@ asmlinkage efi_status_t efi_handle_corru
- 	return s;
++static inline void set_page_mte_tagged(struct page *page)
++{
++}
++static inline bool page_mte_tagged(struct page *page)
++{
++	return false;
++}
+ static inline void mte_zero_clear_page_tags(void *addr)
+ {
+ }
+--- a/arch/arm64/include/asm/pgtable.h
++++ b/arch/arm64/include/asm/pgtable.h
+@@ -1050,7 +1050,7 @@ static inline void arch_swap_invalidate_
+ static inline void arch_swap_restore(swp_entry_t entry, struct folio *folio)
+ {
+ 	if (system_supports_mte() && mte_restore_tags(entry, &folio->page))
+-		set_bit(PG_mte_tagged, &folio->flags);
++		set_page_mte_tagged(&folio->page);
  }
  
--DEFINE_SPINLOCK(efi_rt_lock);
-+DEFINE_RAW_SPINLOCK(efi_rt_lock);
+ #endif /* CONFIG_ARM64_MTE */
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -2074,8 +2074,10 @@ static void cpu_enable_mte(struct arm64_
+ 	 * Clear the tags in the zero page. This needs to be done via the
+ 	 * linear map which has the Tagged attribute.
+ 	 */
+-	if (!test_and_set_bit(PG_mte_tagged, &ZERO_PAGE(0)->flags))
++	if (!page_mte_tagged(ZERO_PAGE(0))) {
+ 		mte_clear_page_tags(lm_alias(empty_zero_page));
++		set_page_mte_tagged(ZERO_PAGE(0));
++	}
  
- asmlinkage u64 *efi_rt_stack_top __ro_after_init;
+ 	kasan_init_hw_tags_cpu();
+ }
+--- a/arch/arm64/kernel/elfcore.c
++++ b/arch/arm64/kernel/elfcore.c
+@@ -46,7 +46,7 @@ static int mte_dump_tag_range(struct cor
+ 		 * Pages mapped in user space as !pte_access_permitted() (e.g.
+ 		 * PROT_EXEC only) may not have the PG_mte_tagged flag set.
+ 		 */
+-		if (!test_bit(PG_mte_tagged, &page->flags)) {
++		if (!page_mte_tagged(page)) {
+ 			put_page(page);
+ 			dump_skip(cprm, MTE_PAGE_TAG_STORAGE);
+ 			continue;
+--- a/arch/arm64/kernel/hibernate.c
++++ b/arch/arm64/kernel/hibernate.c
+@@ -271,7 +271,7 @@ static int swsusp_mte_save_tags(void)
+ 			if (!page)
+ 				continue;
  
+-			if (!test_bit(PG_mte_tagged, &page->flags))
++			if (!page_mte_tagged(page))
+ 				continue;
+ 
+ 			ret = save_tags(page, pfn);
+--- a/arch/arm64/kernel/mte.c
++++ b/arch/arm64/kernel/mte.c
+@@ -41,8 +41,10 @@ static void mte_sync_page_tags(struct pa
+ 	if (check_swap && is_swap_pte(old_pte)) {
+ 		swp_entry_t entry = pte_to_swp_entry(old_pte);
+ 
+-		if (!non_swap_entry(entry) && mte_restore_tags(entry, page))
++		if (!non_swap_entry(entry) && mte_restore_tags(entry, page)) {
++			set_page_mte_tagged(page);
+ 			return;
++		}
+ 	}
+ 
+ 	if (!pte_is_tagged)
+@@ -52,8 +54,10 @@ static void mte_sync_page_tags(struct pa
+ 	 * Test PG_mte_tagged again in case it was racing with another
+ 	 * set_pte_at().
+ 	 */
+-	if (!test_and_set_bit(PG_mte_tagged, &page->flags))
++	if (!page_mte_tagged(page)) {
+ 		mte_clear_page_tags(page_address(page));
++		set_page_mte_tagged(page);
++	}
+ }
+ 
+ void mte_sync_tags(pte_t old_pte, pte_t pte)
+@@ -69,9 +73,11 @@ void mte_sync_tags(pte_t old_pte, pte_t
+ 
+ 	/* if PG_mte_tagged is set, tags have already been initialised */
+ 	for (i = 0; i < nr_pages; i++, page++) {
+-		if (!test_bit(PG_mte_tagged, &page->flags))
++		if (!page_mte_tagged(page)) {
+ 			mte_sync_page_tags(page, old_pte, check_swap,
+ 					   pte_is_tagged);
++			set_page_mte_tagged(page);
++		}
+ 	}
+ 
+ 	/* ensure the tags are visible before the PTE is set */
+@@ -96,8 +102,7 @@ int memcmp_pages(struct page *page1, str
+ 	 * pages is tagged, set_pte_at() may zero or change the tags of the
+ 	 * other page via mte_sync_tags().
+ 	 */
+-	if (test_bit(PG_mte_tagged, &page1->flags) ||
+-	    test_bit(PG_mte_tagged, &page2->flags))
++	if (page_mte_tagged(page1) || page_mte_tagged(page2))
+ 		return addr1 != addr2;
+ 
+ 	return ret;
+@@ -454,7 +459,7 @@ static int __access_remote_tags(struct m
+ 			put_page(page);
+ 			break;
+ 		}
+-		WARN_ON_ONCE(!test_bit(PG_mte_tagged, &page->flags));
++		WARN_ON_ONCE(!page_mte_tagged(page));
+ 
+ 		/* limit access to the end of the page */
+ 		offset = offset_in_page(addr);
+--- a/arch/arm64/kvm/guest.c
++++ b/arch/arm64/kvm/guest.c
+@@ -1059,7 +1059,7 @@ long kvm_vm_ioctl_mte_copy_tags(struct k
+ 		maddr = page_address(page);
+ 
+ 		if (!write) {
+-			if (test_bit(PG_mte_tagged, &page->flags))
++			if (page_mte_tagged(page))
+ 				num_tags = mte_copy_tags_to_user(tags, maddr,
+ 							MTE_GRANULES_PER_PAGE);
+ 			else
+@@ -1076,7 +1076,7 @@ long kvm_vm_ioctl_mte_copy_tags(struct k
+ 			 * completed fully
+ 			 */
+ 			if (num_tags == MTE_GRANULES_PER_PAGE)
+-				set_bit(PG_mte_tagged, &page->flags);
++				set_page_mte_tagged(page);
+ 
+ 			kvm_release_pfn_dirty(pfn);
+ 		}
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -1110,9 +1110,9 @@ static int sanitise_mte_tags(struct kvm
+ 		return -EFAULT;
+ 
+ 	for (i = 0; i < nr_pages; i++, page++) {
+-		if (!test_bit(PG_mte_tagged, &page->flags)) {
++		if (!page_mte_tagged(page)) {
+ 			mte_clear_page_tags(page_address(page));
+-			set_bit(PG_mte_tagged, &page->flags);
++			set_page_mte_tagged(page);
+ 		}
+ 	}
+ 
+--- a/arch/arm64/mm/copypage.c
++++ b/arch/arm64/mm/copypage.c
+@@ -21,9 +21,10 @@ void copy_highpage(struct page *to, stru
+ 
+ 	copy_page(kto, kfrom);
+ 
+-	if (system_supports_mte() && test_bit(PG_mte_tagged, &from->flags)) {
+-		set_bit(PG_mte_tagged, &to->flags);
++	if (system_supports_mte() && page_mte_tagged(from)) {
++		page_kasan_tag_reset(to);
+ 		mte_copy_page_tags(kto, kfrom);
++		set_page_mte_tagged(to);
+ 	}
+ }
+ EXPORT_SYMBOL(copy_highpage);
+--- a/arch/arm64/mm/fault.c
++++ b/arch/arm64/mm/fault.c
+@@ -944,5 +944,5 @@ struct page *alloc_zeroed_user_highpage_
+ void tag_clear_highpage(struct page *page)
+ {
+ 	mte_zero_clear_page_tags(page_address(page));
+-	set_bit(PG_mte_tagged, &page->flags);
++	set_page_mte_tagged(page);
+ }
+--- a/arch/arm64/mm/mteswap.c
++++ b/arch/arm64/mm/mteswap.c
+@@ -24,7 +24,7 @@ int mte_save_tags(struct page *page)
+ {
+ 	void *tag_storage, *ret;
+ 
+-	if (!test_bit(PG_mte_tagged, &page->flags))
++	if (!page_mte_tagged(page))
+ 		return 0;
+ 
+ 	tag_storage = mte_allocate_tag_storage();
 
 
