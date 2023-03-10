@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C80881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:41:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97209C4339C;
-	Fri, 10 Mar 2023 14:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9165881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:41:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB1FC433D2;
+	Fri, 10 Mar 2023 14:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459279;
-	bh=9NJBLsx4qiq15RUbJYGha3cnPvyqWDhaEgc5KV9Rns0=;
+	s=korg; t=1678459281;
+	bh=3nnSUJu64yALl54e7NXN/0askP7tTzkb4OppPgDzs1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWz08E2nS/+r5JlaEW/omDATVHpw6/HCbSEOSHFQAX6YZjEXbhjQty5dJpfOMdMMb
-	 i5xWuCIem9HxlPbHelikPlZgDwbBs4sq6IaP6cCbewxurDDtv5Nu8d0+baMpGacbxG
-	 VGytIroTJTQ4qIsZ0NRvORIeEd7XO47YHAw0KIJw=
+	b=qBx8QqG+qNFF3Ay65iGZYymqGUdnafg5wzlv4ewpPllDenhNbDriwRyKdB5Ij8EF+
+	 M2GkQRHGpDTm9lx6p1bgHPL1uOfbLZgiG0KH8PT22IlVx5begpZq0A9dwom0Impbzp
+	 kRQgzCFTMP3YqEhO8LhhkHYxFGyF3y+W7qHg6LM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ruanjinjie <ruanjinjie@huawei.com>,
+	Chen Jun <chenjun102@huawei.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 308/357] watchdog: at91sam9_wdt: use devm_request_irq to avoid missing free_irq() in error path
-Date: Fri, 10 Mar 2023 14:39:57 +0100
-Message-Id: <20230310133748.285837522@linuxfoundation.org>
+Subject: [PATCH 5.4 309/357] watchdog: Fix kmemleak in watchdog_cdev_register
+Date: Fri, 10 Mar 2023 14:39:58 +0100
+Message-Id: <20230310133748.335808167@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,43 +36,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ruanjinjie <ruanjinjie@huawei.com>
+From: Chen Jun <chenjun102@huawei.com>
 
-[ Upstream commit 07bec0e09c1afbab4c5674fd2341f4f52d594f30 ]
+[ Upstream commit 13721a2ac66b246f5802ba1b75ad8637e53eeecc ]
 
-free_irq() is missing in case of error in at91_wdt_init(), use
-devm_request_irq to fix that.
+kmemleak reports memory leaks in watchdog_dev_register, as follows:
+unreferenced object 0xffff888116233000 (size 2048):
+  comm ""modprobe"", pid 28147, jiffies 4353426116 (age 61.741s)
+  hex dump (first 32 bytes):
+    80 fa b9 05 81 88 ff ff 08 30 23 16 81 88 ff ff  .........0#.....
+    08 30 23 16 81 88 ff ff 00 00 00 00 00 00 00 00  .0#.............
+  backtrace:
+    [<000000007f001ffd>] __kmem_cache_alloc_node+0x157/0x220
+    [<000000006a389304>] kmalloc_trace+0x21/0x110
+    [<000000008d640eea>] watchdog_dev_register+0x4e/0x780 [watchdog]
+    [<0000000053c9f248>] __watchdog_register_device+0x4f0/0x680 [watchdog]
+    [<00000000b2979824>] watchdog_register_device+0xd2/0x110 [watchdog]
+    [<000000001f730178>] 0xffffffffc10880ae
+    [<000000007a1a8bcc>] do_one_initcall+0xcb/0x4d0
+    [<00000000b98be325>] do_init_module+0x1ca/0x5f0
+    [<0000000046d08e7c>] load_module+0x6133/0x70f0
+    ...
 
-Fixes: 5161b31dc39a ("watchdog: at91sam9_wdt: better watchdog support")
-Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
+unreferenced object 0xffff888105b9fa80 (size 16):
+  comm ""modprobe"", pid 28147, jiffies 4353426116 (age 61.741s)
+  hex dump (first 16 bytes):
+    77 61 74 63 68 64 6f 67 31 00 b9 05 81 88 ff ff  watchdog1.......
+  backtrace:
+    [<000000007f001ffd>] __kmem_cache_alloc_node+0x157/0x220
+    [<00000000486ab89b>] __kmalloc_node_track_caller+0x44/0x1b0
+    [<000000005a39aab0>] kvasprintf+0xb5/0x140
+    [<0000000024806f85>] kvasprintf_const+0x55/0x180
+    [<000000009276cb7f>] kobject_set_name_vargs+0x56/0x150
+    [<00000000a92e820b>] dev_set_name+0xab/0xe0
+    [<00000000cec812c6>] watchdog_dev_register+0x285/0x780 [watchdog]
+    [<0000000053c9f248>] __watchdog_register_device+0x4f0/0x680 [watchdog]
+    [<00000000b2979824>] watchdog_register_device+0xd2/0x110 [watchdog]
+    [<000000001f730178>] 0xffffffffc10880ae
+    [<000000007a1a8bcc>] do_one_initcall+0xcb/0x4d0
+    [<00000000b98be325>] do_init_module+0x1ca/0x5f0
+    [<0000000046d08e7c>] load_module+0x6133/0x70f0
+    ...
+
+The reason is that put_device is not be called if cdev_device_add fails
+and wdd->id != 0.
+
+watchdog_cdev_register
+  wd_data = kzalloc                             [1]
+  err = dev_set_name                            [2]
+  ..
+  err = cdev_device_add
+  if (err) {
+    if (wdd->id == 0) {  // wdd->id != 0
+      ..
+    }
+    return err;  // [1],[2] would be leaked
+
+To fix it, call put_device in all wdd->id cases.
+
+Fixes: 72139dfa2464 ("watchdog: Fix the race between the release of watchdog_core_data and cdev")
+Signed-off-by: Chen Jun <chenjun102@huawei.com>
 Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20221116094950.3141943-1-ruanjinjie@huawei.com
-[groeck: Adjust multi-line alignment]
+Link: https://lore.kernel.org/r/20221116012714.102066-1-chenjun102@huawei.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/at91sam9_wdt.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/watchdog/watchdog_dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/at91sam9_wdt.c b/drivers/watchdog/at91sam9_wdt.c
-index 292b5a1ca8318..fed7be2464420 100644
---- a/drivers/watchdog/at91sam9_wdt.c
-+++ b/drivers/watchdog/at91sam9_wdt.c
-@@ -206,10 +206,9 @@ static int at91_wdt_init(struct platform_device *pdev, struct at91wdt *wdt)
- 			 "min heartbeat and max heartbeat might be too close for the system to handle it correctly\n");
- 
- 	if ((tmp & AT91_WDT_WDFIEN) && wdt->irq) {
--		err = request_irq(wdt->irq, wdt_interrupt,
--				  IRQF_SHARED | IRQF_IRQPOLL |
--				  IRQF_NO_SUSPEND,
--				  pdev->name, wdt);
-+		err = devm_request_irq(dev, wdt->irq, wdt_interrupt,
-+				       IRQF_SHARED | IRQF_IRQPOLL | IRQF_NO_SUSPEND,
-+				       pdev->name, wdt);
- 		if (err)
- 			return err;
+diff --git a/drivers/watchdog/watchdog_dev.c b/drivers/watchdog/watchdog_dev.c
+index 8494846ccdc5f..c670d13ab3d98 100644
+--- a/drivers/watchdog/watchdog_dev.c
++++ b/drivers/watchdog/watchdog_dev.c
+@@ -1016,8 +1016,8 @@ static int watchdog_cdev_register(struct watchdog_device *wdd)
+ 		if (wdd->id == 0) {
+ 			misc_deregister(&watchdog_miscdev);
+ 			old_wd_data = NULL;
+-			put_device(&wd_data->dev);
+ 		}
++		put_device(&wd_data->dev);
+ 		return err;
  	}
+ 
 -- 
 2.39.2
 
