@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4527882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:10:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22660C433D2;
-	Fri, 10 Mar 2023 15:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CA3882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:10:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E693EC4339B;
+	Fri, 10 Mar 2023 15:10:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461028;
-	bh=AcUeaZ5u33CmXMBFHG0u/+HaGtroRQCtse3ILQH54nk=;
+	s=korg; t=1678461031;
+	bh=cEgpfTO+tojAyddBmQF60UPcj8eS0eXsQZgOpH8A7+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yirTNAHt7hy1X+bIRIbc70akrzaBQFc5DlMPdhdDzDhUVd9FLETNW8CiGFm2dSckG
-	 c2hg3ToOHtZe7LcezsheE2eWxLS4RYiGQCdNcL9vjEIAMNx0yTxBpXms+JciNNhndE
-	 dAKd8jGbvwMXVTTM5oV+hTGTgA6Wba+51H/dvUyY=
+	b=xBVxwlyLPn2N1pJ4VMZe4R6AAHYc0eM47oI5G7sggoIq10XRl/eZ+SQbL3pwhdP+l
+	 MTVRmrxhrFz3mC3gmiodMmMvwKPJaf1r64DiaLjsAEdBzo7yxSC7O5X4+G8dMt6ZlR
+	 rr7HUxNQGceNRrwNCnzaiLu/J8KH3PWAn0jii1Ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abaci Robot <abaci@linux.alibaba.com>,
-	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 510/529] phy: rockchip-typec: Fix unsigned comparison with less than zero
-Date: Fri, 10 Mar 2023 14:40:53 +0100
-Message-Id: <20230310133828.459043413@linuxfoundation.org>
+Subject: [PATCH 5.10 511/529] soundwire: cadence: Remove wasted space in response_buf
+Date: Fri, 10 Mar 2023 14:40:54 +0100
+Message-Id: <20230310133828.499679091@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,41 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit f765c59c5a72546a2d74a92ae5d0eb0329d8e247 ]
+[ Upstream commit 827c32d0df4bbe0d1c47d79f6a5eabfe9ac75216 ]
 
-The dp and ufp are defined as bool type, the return value type of
-function extcon_get_state should be int, so the type of dp and ufp
-are modified to int.
+The response_buf was declared much larger (128 entries) than the number
+of responses that could ever be written into it. The Cadence IP is
+configurable up to a maximum of 32 entries, and the datasheet says
+that RX_FIFO_AVAIL can be 2 larger than this. So allow up to 34
+responses.
 
-./drivers/phy/rockchip/phy-rockchip-typec.c:827:12-14: WARNING: Unsigned expression compared with zero: dp > 0.
+Also add checking in cdns_read_response() to prevent overflowing
+reponse_buf if RX_FIFO_AVAIL contains an unexpectedly large number.
 
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3962
-Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230213035709.99027-1-jiapeng.chong@linux.alibaba.com
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20221202161812.4186897-3-rf@opensource.cirrus.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-typec.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/soundwire/cadence_master.c |  7 +++++++
+ drivers/soundwire/cadence_master.h | 13 ++++++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-typec.c b/drivers/phy/rockchip/phy-rockchip-typec.c
-index 70a31251b202b..20f787d5ec581 100644
---- a/drivers/phy/rockchip/phy-rockchip-typec.c
-+++ b/drivers/phy/rockchip/phy-rockchip-typec.c
-@@ -808,9 +808,8 @@ static int tcphy_get_mode(struct rockchip_typec_phy *tcphy)
- 	struct extcon_dev *edev = tcphy->extcon;
- 	union extcon_property_value property;
- 	unsigned int id;
--	bool ufp, dp;
- 	u8 mode;
--	int ret;
-+	int ret, ufp, dp;
+diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
+index a3247692ddc07..292c4460eaaa3 100644
+--- a/drivers/soundwire/cadence_master.c
++++ b/drivers/soundwire/cadence_master.c
+@@ -725,8 +725,15 @@ static void cdns_read_response(struct sdw_cdns *cdns)
+ 	u32 num_resp, cmd_base;
+ 	int i;
  
- 	if (!edev)
- 		return MODE_DFP_USB;
++	/* RX_FIFO_AVAIL can be 2 entries more than the FIFO size */
++	BUILD_BUG_ON(ARRAY_SIZE(cdns->response_buf) < CDNS_MCP_CMD_LEN + 2);
++
+ 	num_resp = cdns_readl(cdns, CDNS_MCP_FIFOSTAT);
+ 	num_resp &= CDNS_MCP_RX_FIFO_AVAIL;
++	if (num_resp > ARRAY_SIZE(cdns->response_buf)) {
++		dev_warn(cdns->dev, "RX AVAIL %d too long\n", num_resp);
++		num_resp = ARRAY_SIZE(cdns->response_buf);
++	}
+ 
+ 	cmd_base = CDNS_MCP_CMD_BASE;
+ 
+diff --git a/drivers/soundwire/cadence_master.h b/drivers/soundwire/cadence_master.h
+index 4d1aab5b5ec2d..e7f0108d417ca 100644
+--- a/drivers/soundwire/cadence_master.h
++++ b/drivers/soundwire/cadence_master.h
+@@ -8,6 +8,12 @@
+ #define SDW_CADENCE_GSYNC_KHZ		4 /* 4 kHz */
+ #define SDW_CADENCE_GSYNC_HZ		(SDW_CADENCE_GSYNC_KHZ * 1000)
+ 
++/*
++ * The Cadence IP supports up to 32 entries in the FIFO, though implementations
++ * can configure the IP to have a smaller FIFO.
++ */
++#define CDNS_MCP_IP_MAX_CMD_LEN		32
++
+ /**
+  * struct sdw_cdns_pdi: PDI (Physical Data Interface) instance
+  *
+@@ -119,7 +125,12 @@ struct sdw_cdns {
+ 	struct sdw_bus bus;
+ 	unsigned int instance;
+ 
+-	u32 response_buf[0x80];
++	/*
++	 * The datasheet says the RX FIFO AVAIL can be 2 entries more
++	 * than the FIFO capacity, so allow for this.
++	 */
++	u32 response_buf[CDNS_MCP_IP_MAX_CMD_LEN + 2];
++
+ 	struct completion tx_complete;
+ 	struct sdw_defer *defer;
+ 
 -- 
 2.39.2
 
