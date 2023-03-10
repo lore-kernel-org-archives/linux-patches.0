@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095E1882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA60C433EF;
-	Fri, 10 Mar 2023 15:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE15E882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6497AC433D2;
+	Fri, 10 Mar 2023 15:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460776;
-	bh=SvPNXhxvzIQ9HUI1qxe8JlFbSpONuJU6zUPZIRFNgeU=;
+	s=korg; t=1678460779;
+	bh=SJ2h/f4CPJM9sjsEjp37Z0Bnw/TnuBiqry36BW1c61E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z7HLA2jNTe5MntVoU51LwoA4l1hDaVOlAoRoEhbyLGA4qkNPBJG80dpO1Ac2U5StA
-	 fsTh+6GtYwy3+h84wQbcRrRRtOuWZIQGzcr+bJrRLlsj2BTYPXRbv2kOWqvW9Pkwje
-	 4rMf2x7IvR9g9ZN05qsaDS2Qyrmezsq2/ML2umZU=
+	b=s5N28Z0Oee4/x9Pg9BJXCszOLrJ3uvOOWjga91FIAxyQRd+xOSoru0BbHuBMw7dzt
+	 0bnzqRm0flSRxP6u8/hnIqShaT4BDJ+s1UPrpLjBOO9JZXYhbvsMD9/VYhEoy1rwRD
+	 m+L6YFldlVNrAjlqvqsv2WAzuLsmpjqUbDHnqxT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.10 408/529] ktest.pl: Add RUN_TIMEOUT option with default unlimited
-Date: Fri, 10 Mar 2023 14:39:11 +0100
-Message-Id: <20230310133823.898225171@linuxfoundation.org>
+	Li Hua <hucool.lihua@huawei.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Richard Weinberger <richard@nod.at>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 441/529] ubifs: Fix build errors as symbol undefined
+Date: Fri, 10 Mar 2023 14:39:44 +0100
+Message-Id: <20230310133825.358811535@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -33,108 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Li Hua <hucool.lihua@huawei.com>
 
-commit 4e7d2a8f0b52abf23b1dc13b3d88bc0923383cd5 upstream.
+[ Upstream commit aa6d148e6d6270274e3d5a529b71c54cd329d17f ]
 
-There is a disconnect between the run_command function and the
-wait_for_input. The wait_for_input has a default timeout of 2 minutes. But
-if that happens, the run_command loop will exit out to the waitpid() of
-the executing command. This fails in that it no longer monitors the
-command, and also, the ssh to the test box can hang when its finished, as
-it's waiting for the pipe it's writing to to flush, but the loop that
-reads that pipe has already exited, leaving the command stuck, and the
-test hangs.
+With CONFIG_UBIFS_FS_AUTHENTICATION not set, the compiler can assume that
+ubifs_node_check_hash() is never true and drops the call to ubifs_bad_hash().
+Is CONFIG_CC_OPTIMIZE_FOR_SIZE enabled this optimization does not happen anymore.
 
-Instead, make the default "wait_for_input" of the run_command infinite,
-and allow the user to override it if they want with a default timeout
-option "RUN_TIMEOUT".
+So When CONFIG_UBIFS_FS and CONFIG_CC_OPTIMIZE_FOR_SIZE is enabled but
+CONFIG_UBIFS_FS_AUTHENTICATION is not set, the build errors is as followd:
+    ERROR: modpost: "ubifs_bad_hash" [fs/ubifs/ubifs.ko] undefined!
 
-But this fixes the hang that happens when the pipe is full and the ssh
-session never exits.
+Fix it by add no-op ubifs_bad_hash() for the CONFIG_UBIFS_FS_AUTHENTICATION=n case.
 
-Cc: stable@vger.kernel.org
-Fixes: 6e98d1b4415fe ("ktest: Add timeout to ssh command")
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 16a26b20d2af ("ubifs: authentication: Add hashes to index nodes")
+Signed-off-by: Li Hua <hucool.lihua@huawei.com>
+Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl    |   20 ++++++++++++++++----
- tools/testing/ktest/sample.conf |    5 +++++
- 2 files changed, 21 insertions(+), 4 deletions(-)
+ fs/ubifs/ubifs.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -178,6 +178,7 @@ my $store_failures;
- my $store_successes;
- my $test_name;
- my $timeout;
-+my $run_timeout;
- my $connect_timeout;
- my $config_bisect_exec;
- my $booted_timeout;
-@@ -340,6 +341,7 @@ my %option_map = (
-     "STORE_SUCCESSES"		=> \$store_successes,
-     "TEST_NAME"			=> \$test_name,
-     "TIMEOUT"			=> \$timeout,
-+    "RUN_TIMEOUT"		=> \$run_timeout,
-     "CONNECT_TIMEOUT"		=> \$connect_timeout,
-     "CONFIG_BISECT_EXEC"	=> \$config_bisect_exec,
-     "BOOTED_TIMEOUT"		=> \$booted_timeout,
-@@ -1800,6 +1802,14 @@ sub run_command {
-     $command =~ s/\$SSH_USER/$ssh_user/g;
-     $command =~ s/\$MACHINE/$machine/g;
+diff --git a/fs/ubifs/ubifs.h b/fs/ubifs/ubifs.h
+index e7e48f3b179ab..b66ebab5c5dec 100644
+--- a/fs/ubifs/ubifs.h
++++ b/fs/ubifs/ubifs.h
+@@ -1594,8 +1594,13 @@ static inline int ubifs_check_hmac(const struct ubifs_info *c,
+ 	return crypto_memneq(expected, got, c->hmac_desc_len);
+ }
  
-+    if (!defined($timeout)) {
-+	$timeout = $run_timeout;
-+    }
-+
-+    if (!defined($timeout)) {
-+	$timeout = -1; # tell wait_for_input to wait indefinitely
-+    }
-+
-     doprint("$command ... ");
-     $start_time = time;
++#ifdef CONFIG_UBIFS_FS_AUTHENTICATION
+ void ubifs_bad_hash(const struct ubifs_info *c, const void *node,
+ 		    const u8 *hash, int lnum, int offs);
++#else
++static inline void ubifs_bad_hash(const struct ubifs_info *c, const void *node,
++				  const u8 *hash, int lnum, int offs) {};
++#endif
  
-@@ -1826,13 +1836,10 @@ sub run_command {
- 
-     while (1) {
- 	my $fp = \*CMD;
--	if (defined($timeout)) {
--	    doprint "timeout = $timeout\n";
--	}
- 	my $line = wait_for_input($fp, $timeout);
- 	if (!defined($line)) {
- 	    my $now = time;
--	    if (defined($timeout) && (($now - $start_time) >= $timeout)) {
-+	    if ($timeout >= 0 && (($now - $start_time) >= $timeout)) {
- 		doprint "Hit timeout of $timeout, killing process\n";
- 		$hit_timeout = 1;
- 		kill 9, $pid;
-@@ -2005,6 +2012,11 @@ sub wait_for_input
- 	$time = $timeout;
-     }
- 
-+    if ($time < 0) {
-+	# Negative number means wait indefinitely
-+	undef $time;
-+    }
-+
-     $rin = '';
-     vec($rin, fileno($fp), 1) = 1;
-     vec($rin, fileno(\*STDIN), 1) = 1;
---- a/tools/testing/ktest/sample.conf
-+++ b/tools/testing/ktest/sample.conf
-@@ -809,6 +809,11 @@
- # is issued instead of a reboot.
- # CONNECT_TIMEOUT = 25
- 
-+# The timeout in seconds for how long to wait for any running command
-+# to timeout. If not defined, it will let it go indefinitely.
-+# (default undefined)
-+#RUN_TIMEOUT = 600
-+
- # In between tests, a reboot of the box may occur, and this
- # is the time to wait for the console after it stops producing
- # output. Some machines may not produce a large lag on reboot
+ int __ubifs_node_check_hash(const struct ubifs_info *c, const void *buf,
+ 			  const u8 *expected);
+-- 
+2.39.2
+
 
 
