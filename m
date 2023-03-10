@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798418481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:02:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A99C433EF;
-	Fri, 10 Mar 2023 14:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE768481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:02:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18AFBC4339E;
+	Fri, 10 Mar 2023 14:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456926;
-	bh=uyxFHVNf5vtn8pWkum9VdF0p4lE4oPAAwoZvnSf5epk=;
+	s=korg; t=1678456929;
+	bh=+awWbt7bTlrfLs3bFFUgNux9NwQjcb3WXATa6YXnYjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZArwvXaCwU9H+jjvkBGd6iZ+3Xujuh3P+kgFq9MU5b+yH8LKfWRz8mZvpBI1ei9AQ
-	 CMnRKSgKEKLPTHVK2v3htccOij8P7S29+qx/nUCF85/zrBHEhYpgCgHq2cF67Wih42
-	 VX69LC8gOwJPtqpPUNd/SDDFNOYMkIMpmbh5RKMo=
+	b=023D6hlI5s/42o7K1p5a2181PGYke1aAtoZrQe+P1PmzsQdQQhxfIOwhFMATMv5UJ
+	 GJcynss00hOkoAUHCW7zq1X1X3eLVVWQ4ODIXUL4rzH+ipy1QCF55/yhjjRhB9p6lA
+	 q1OwGizXk/6LFeOvCF3pm2V7NL3Nzm44r8QG06tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Daniel Scally <dan.scally@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 171/211] usb: uvc: Enumerate valid values for color matching
-Date: Fri, 10 Mar 2023 14:39:11 +0100
-Message-Id: <20230310133723.987324026@linuxfoundation.org>
+Subject: [PATCH 6.2 172/211] usb: gadget: uvc: Make bSourceID read/write
+Date: Fri, 10 Mar 2023 14:39:12 +0100
+Message-Id: <20230310133724.027155007@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -37,63 +36,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Scally <dan.scally@ideasonboard.com>
 
-[ Upstream commit e16cab9c1596e251761d2bfb5e1467950d616963 ]
+[ Upstream commit b3c839bd8a07d303bc59a900d55dd35c7826562c ]
 
-The color matching descriptors defined in the UVC Specification
-contain 3 fields with discrete numeric values representing particular
-settings. Enumerate those values so that later code setting them can
-be more readable.
+At the moment, the UVC function graph is hardcoded IT -> PU -> OT.
+To add XU support we need the ability to insert the XU descriptors
+into the chain. To facilitate that, make the output terminal's
+bSourceID attribute writeable so that we can configure its source.
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Daniel Scally <dan.scally@ideasonboard.com>
-Link: https://lore.kernel.org/r/20230202114142.300858-2-dan.scally@ideasonboard.com
+Link: https://lore.kernel.org/r/20230206161802.892954-2-dan.scally@ideasonboard.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/usb/video.h | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ .../ABI/testing/configfs-usb-gadget-uvc       |  2 +-
+ drivers/usb/gadget/function/uvc_configfs.c    | 59 ++++++++++++++++++-
+ 2 files changed, 59 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/usb/video.h b/include/uapi/linux/usb/video.h
-index 6e8e572c2980a..2ff0e8a3a683d 100644
---- a/include/uapi/linux/usb/video.h
-+++ b/include/uapi/linux/usb/video.h
-@@ -179,6 +179,36 @@
- #define UVC_CONTROL_CAP_AUTOUPDATE			(1 << 3)
- #define UVC_CONTROL_CAP_ASYNCHRONOUS			(1 << 4)
+diff --git a/Documentation/ABI/testing/configfs-usb-gadget-uvc b/Documentation/ABI/testing/configfs-usb-gadget-uvc
+index f00cff6d8c5cb..c25cc2823fc8f 100644
+--- a/Documentation/ABI/testing/configfs-usb-gadget-uvc
++++ b/Documentation/ABI/testing/configfs-usb-gadget-uvc
+@@ -52,7 +52,7 @@ Date:		Dec 2014
+ KernelVersion:	4.0
+ Description:	Default output terminal descriptors
  
-+/* 3.9.2.6 Color Matching Descriptor Values */
-+enum uvc_color_primaries_values {
-+	UVC_COLOR_PRIMARIES_UNSPECIFIED,
-+	UVC_COLOR_PRIMARIES_BT_709_SRGB,
-+	UVC_COLOR_PRIMARIES_BT_470_2_M,
-+	UVC_COLOR_PRIMARIES_BT_470_2_B_G,
-+	UVC_COLOR_PRIMARIES_SMPTE_170M,
-+	UVC_COLOR_PRIMARIES_SMPTE_240M,
-+};
+-		All attributes read only:
++		All attributes read only except bSourceID:
+ 
+ 		==============	=============================================
+ 		iTerminal	index of string descriptor
+diff --git a/drivers/usb/gadget/function/uvc_configfs.c b/drivers/usb/gadget/function/uvc_configfs.c
+index 76cb60d13049f..0a3095c0450bb 100644
+--- a/drivers/usb/gadget/function/uvc_configfs.c
++++ b/drivers/usb/gadget/function/uvc_configfs.c
+@@ -483,11 +483,68 @@ UVC_ATTR_RO(uvcg_default_output_, cname, aname)
+ UVCG_DEFAULT_OUTPUT_ATTR(b_terminal_id, bTerminalID, 8);
+ UVCG_DEFAULT_OUTPUT_ATTR(w_terminal_type, wTerminalType, 16);
+ UVCG_DEFAULT_OUTPUT_ATTR(b_assoc_terminal, bAssocTerminal, 8);
+-UVCG_DEFAULT_OUTPUT_ATTR(b_source_id, bSourceID, 8);
+ UVCG_DEFAULT_OUTPUT_ATTR(i_terminal, iTerminal, 8);
+ 
+ #undef UVCG_DEFAULT_OUTPUT_ATTR
+ 
++static ssize_t uvcg_default_output_b_source_id_show(struct config_item *item,
++						    char *page)
++{
++	struct config_group *group = to_config_group(item);
++	struct f_uvc_opts *opts;
++	struct config_item *opts_item;
++	struct mutex *su_mutex = &group->cg_subsys->su_mutex;
++	struct uvc_output_terminal_descriptor *cd;
++	int result;
 +
-+enum uvc_transfer_characteristics_values {
-+	UVC_TRANSFER_CHARACTERISTICS_UNSPECIFIED,
-+	UVC_TRANSFER_CHARACTERISTICS_BT_709,
-+	UVC_TRANSFER_CHARACTERISTICS_BT_470_2_M,
-+	UVC_TRANSFER_CHARACTERISTICS_BT_470_2_B_G,
-+	UVC_TRANSFER_CHARACTERISTICS_SMPTE_170M,
-+	UVC_TRANSFER_CHARACTERISTICS_SMPTE_240M,
-+	UVC_TRANSFER_CHARACTERISTICS_LINEAR,
-+	UVC_TRANSFER_CHARACTERISTICS_SRGB,
-+};
++	mutex_lock(su_mutex); /* for navigating configfs hierarchy */
 +
-+enum uvc_matrix_coefficients {
-+	UVC_MATRIX_COEFFICIENTS_UNSPECIFIED,
-+	UVC_MATRIX_COEFFICIENTS_BT_709,
-+	UVC_MATRIX_COEFFICIENTS_FCC,
-+	UVC_MATRIX_COEFFICIENTS_BT_470_2_B_G,
-+	UVC_MATRIX_COEFFICIENTS_SMPTE_170M,
-+	UVC_MATRIX_COEFFICIENTS_SMPTE_240M,
-+};
++	opts_item = group->cg_item.ci_parent->ci_parent->
++			ci_parent->ci_parent;
++	opts = to_f_uvc_opts(opts_item);
++	cd = &opts->uvc_output_terminal;
 +
- /* ------------------------------------------------------------------------
-  * UVC structures
-  */
++	mutex_lock(&opts->lock);
++	result = sprintf(page, "%u\n", le8_to_cpu(cd->bSourceID));
++	mutex_unlock(&opts->lock);
++
++	mutex_unlock(su_mutex);
++
++	return result;
++}
++
++static ssize_t uvcg_default_output_b_source_id_store(struct config_item *item,
++						     const char *page, size_t len)
++{
++	struct config_group *group = to_config_group(item);
++	struct f_uvc_opts *opts;
++	struct config_item *opts_item;
++	struct mutex *su_mutex = &group->cg_subsys->su_mutex;
++	struct uvc_output_terminal_descriptor *cd;
++	int result;
++	u8 num;
++
++	mutex_lock(su_mutex); /* for navigating configfs hierarchy */
++
++	opts_item = group->cg_item.ci_parent->ci_parent->
++			ci_parent->ci_parent;
++	opts = to_f_uvc_opts(opts_item);
++	cd = &opts->uvc_output_terminal;
++
++	result = kstrtou8(page, 0, &num);
++	if (result)
++		return result;
++
++	mutex_lock(&opts->lock);
++	cd->bSourceID = num;
++	mutex_unlock(&opts->lock);
++
++	mutex_unlock(su_mutex);
++
++	return len;
++}
++UVC_ATTR(uvcg_default_output_, b_source_id, bSourceID);
++
+ static struct configfs_attribute *uvcg_default_output_attrs[] = {
+ 	&uvcg_default_output_attr_b_terminal_id,
+ 	&uvcg_default_output_attr_w_terminal_type,
 -- 
 2.39.2
 
