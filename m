@@ -1,43 +1,37 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EA9DA81
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 23:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474EAE4E0
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 23:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=9kwFCfwOIqZ8Cdb+WBuaqm9+ckdViHa0b9t6sNQLN/s=; b=R88tOJvPjmUunQU7dZm8jO9RCR
-	l90YURDFXcS3uhgoLjy2AsuPdkqFCaUXepuIa3HeeX8QIN9KUe0HRtEEyJ8RIgLZfWK/8xY6pRk7J
-	mYi9s18nulh+IGbd/oTDJF4ljHi0EmMXlTHpxvL0tim0eRzoD0vy/Leoz94bP/WqIQI6xR3RSZb9O
-	ZpNoP6DKThNQPgVtkJXudFNIr0nN/aLro0Hpn7rzqJl8sNb2L0OcxeiWafdFIfswJzX4gkY8kkuOn
-	epEKcW/dR8hUe0UAgZi92hDM6ly1bNcuU7lEoN3MmWPyoVsm8fec3LVqZhDenNKv5U9dXg8TbVrbl
-	ukJY/clg==;
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=pgG6wYlLqJqvOJPF09LlwBdJHikie1Bdz5Z0msFQ56w=; b=TkhZQ2cn7q9bRC5SaYpuPU/sGh
+	xEaOEmXy+0FpiXlLGjGcIbaxqiMxVQidMvumKg3n2TynZ3ZrSduuLIced1VHPCaYbbzqihJRv3foY
+	oeLwO/0oLXTpdPsahHbMorMbWfGRHqN5bpN72J/qRsrCO4wYsgp/aGVdAiu5lcoDIOxQ5G3AHoWEy
+	mXE852Anb7wm0aaiBirm7KOVdJYo1cY/BpWVrOkp4v4F25COfBsQb9xUH3kX2l0ScmCnSYcHqOkDH
+	KE+rIsMUlk9qZYM/y++Cyc4lv7ipARhlgSfusrravVsNnwmEInWIrsph01SN/Cy/ppaOcB6HgIKoZ
+	rZFNY/JQ==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1paluB-00GaJD-6J; Fri, 10 Mar 2023 23:12:07 +0000
+	id 1palyr-00GatI-5f; Fri, 10 Mar 2023 23:16:57 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
-To: dhowells@redhat.com,
-	linux-cachefs@redhat.com,
-	jack@suse.com,
-	jaharkes@cs.cmu.edu,
-	coda@cs.cmu.edu,
-	codalist@coda.cs.cmu.edu,
-	anton@tuxera.com,
-	linux-ntfs-dev@lists.sourceforge.net
-Cc: ebiederm@xmission.com,
+To: pvorel@suse.cz,
+	akpm@linux-foundation.org,
+	gregkh@linuxfoundation.org,
 	keescook@chromium.org,
+	Jason@zx2c4.com
+Cc: ebiederm@xmission.com,
 	yzaikin@google.com,
 	j.granados@samsung.com,
 	patches@lists.linux.dev,
 	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 1/5] fs/cachefiles: simplify one-level sysctl registration for cachefiles_sysctls
-Date: Fri, 10 Mar 2023 15:12:02 -0800
-Message-Id: <20230310231206.3952808-2-mcgrof@kernel.org>
+Subject: [PATCH] utsname: simplify one-level sysctl registration for uts_kern_table
+Date: Fri, 10 Mar 2023 15:16:56 -0800
+Message-Id: <20230310231656.3955051-1-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20230310231206.3952808-1-mcgrof@kernel.org>
-References: <20230310231206.3952808-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,33 +48,49 @@ Simplify this registration.
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- fs/cachefiles/error_inject.c | 11 +----------
+
+This is part of the effort to phase out calls that can recurse from
+sysctl registration [0]. If you have a tree to take this in feel free
+to take it, or I can take it too through sysclt-next. Let me know!
+
+This file has no explicit maintainer, so I assume there is no tree.
+
+If I so no one taking it I can take in as part of sysctl-next later.
+
+[0] https://lore.kernel.org/all/20230310223947.3917711-1-mcgrof@kernel.org/T/#u
+
+ kernel/utsname_sysctl.c | 11 +----------
  1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/fs/cachefiles/error_inject.c b/fs/cachefiles/error_inject.c
-index 58f8aec964e4..18de8a876b02 100644
---- a/fs/cachefiles/error_inject.c
-+++ b/fs/cachefiles/error_inject.c
-@@ -22,18 +22,9 @@ static struct ctl_table cachefiles_sysctls[] = {
+diff --git a/kernel/utsname_sysctl.c b/kernel/utsname_sysctl.c
+index f50398cb790d..019e3a1566cf 100644
+--- a/kernel/utsname_sysctl.c
++++ b/kernel/utsname_sysctl.c
+@@ -123,15 +123,6 @@ static struct ctl_table uts_kern_table[] = {
  	{}
  };
  
--static struct ctl_table cachefiles_sysctls_root[] = {
+-static struct ctl_table uts_root_table[] = {
 -	{
--		.procname	= "cachefiles",
+-		.procname	= "kernel",
 -		.mode		= 0555,
--		.child		= cachefiles_sysctls,
+-		.child		= uts_kern_table,
 -	},
 -	{}
 -};
 -
- int __init cachefiles_register_error_injection(void)
+ #ifdef CONFIG_PROC_SYSCTL
+ /*
+  * Notify userspace about a change in a certain entry of uts_kern_table,
+@@ -147,7 +138,7 @@ void uts_proc_notify(enum uts_proc proc)
+ 
+ static int __init utsname_sysctl_init(void)
  {
--	cachefiles_sysctl = register_sysctl_table(cachefiles_sysctls_root);
-+	cachefiles_sysctl = register_sysctl("cachefiles", cachefiles_sysctls);
- 	if (!cachefiles_sysctl)
- 		return -ENOMEM;
+-	register_sysctl_table(uts_root_table);
++	register_sysctl("kernel", uts_kern_table);
  	return 0;
+ }
+ 
 -- 
 2.39.1
 
