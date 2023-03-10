@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C4C848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:23:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C385EC433D2;
-	Fri, 10 Mar 2023 14:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496D5848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:23:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6AEC4339C;
+	Fri, 10 Mar 2023 14:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458203;
-	bh=iKVQPWO1uRe7XlP+pAt0xGPjBWMrnU1CzF1f5lNF7qk=;
+	s=korg; t=1678458206;
+	bh=femLk/G21cWkDK85w7A/7MbapcoWiK8uWhe6w1wRuoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jaHtwcGfFcg/vbB2W89+yQLyEoOfbyJhJLS3A/jQM1383D1Ubgba0aIzzAy6P6ELE
-	 FQnbyatT1gKYl1adztkYMqQ15vXFWhk2p3fNXazDYVW2xwnXXjCdw/KjAxBZxOPJwf
-	 ATQMBIfiNqCEfhhXqW/9wrtJVN+ezyChd4y19KNY=
+	b=AJI/Wf13dZCgnpDdP8O+ZBj2/AxcmYhrl+AeMlff/ozJeDLTE36WI3TS8zN9mvaK3
+	 MHfg2iFPSgTcrhNx5wk24mccFsIERhKc7CwGtj9JII/MpNMdLUYYateTogkyA+8AKL
+	 hleL/f+kntgCADSIdDejrq+MA5Gr3GLaXcktEtfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Xiang Yang <xiangyang3@huawei.com>,
+	Anton Ivanov <anton.ivanov@kot-begemot.co.uk>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 199/252] pwm: stm32-lp: fix the check on arr and cmp registers update
-Date: Fri, 10 Mar 2023 14:39:29 +0100
-Message-Id: <20230310133725.046754774@linuxfoundation.org>
+Subject: [PATCH 4.19 200/252] um: vector: Fix memory leak in vector_config
+Date: Fri, 10 Mar 2023 14:39:30 +0100
+Message-Id: <20230310133725.095607138@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,39 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Xiang Yang <xiangyang3@huawei.com>
 
-[ Upstream commit 3066bc2d58be31275afb51a589668f265e419c37 ]
+[ Upstream commit 8f88c73afe481f93d40801596927e8c0047b6d96 ]
 
-The ARR (auto reload register) and CMP (compare) registers are
-successively written. The status bits to check the update of these
-registers are polled together with regmap_read_poll_timeout().
-The condition to end the loop may become true, even if one of the
-register isn't correctly updated.
-So ensure both status bits are set before clearing them.
+If the return value of the uml_parse_vector_ifspec function is NULL,
+we should call kfree(params) to prevent memory leak.
 
-Fixes: e70a540b4e02 ("pwm: Add STM32 LPTimer PWM driver")
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: 49da7e64f33e ("High Performance UML Vector Network Driver")
+Signed-off-by: Xiang Yang <xiangyang3@huawei.com>
+Acked-By: Anton Ivanov <anton.ivanov@kot-begemot.co.uk>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32-lp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/um/drivers/vector_kern.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pwm/pwm-stm32-lp.c b/drivers/pwm/pwm-stm32-lp.c
-index e92a140074221..7c8c2bb8f6a28 100644
---- a/drivers/pwm/pwm-stm32-lp.c
-+++ b/drivers/pwm/pwm-stm32-lp.c
-@@ -126,7 +126,7 @@ static int stm32_pwm_lp_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+diff --git a/arch/um/drivers/vector_kern.c b/arch/um/drivers/vector_kern.c
+index 50ee3bb5a63a9..b0b124025b486 100644
+--- a/arch/um/drivers/vector_kern.c
++++ b/arch/um/drivers/vector_kern.c
+@@ -741,6 +741,7 @@ static int vector_config(char *str, char **error_out)
  
- 	/* ensure CMP & ARR registers are properly written */
- 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
--				       (val & STM32_LPTIM_CMPOK_ARROK),
-+				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
- 				       100, 1000);
- 	if (ret) {
- 		dev_err(priv->chip.dev, "ARR/CMP registers write issue\n");
+ 	if (parsed == NULL) {
+ 		*error_out = "vector_config failed to parse parameters";
++		kfree(params);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.39.2
 
