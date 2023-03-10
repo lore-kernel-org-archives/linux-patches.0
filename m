@@ -1,33 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF198821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:02:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342F0C433EF;
-	Fri, 10 Mar 2023 15:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0AE8821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:02:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76624C4339E;
+	Fri, 10 Mar 2023 15:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460553;
-	bh=j3uMb5TGfwkIElInFn2WVdoViw7VLToFNvcIgUad+6A=;
+	s=korg; t=1678460556;
+	bh=IIMQdk/pq2T6PUL9kEChOSc+fiB1XAYvRjkMCWhn9lM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oNPbWc+z54g2NtBdu4NXNIG1E+yvnJDETC/RxpPAxBNq0GeMhDhl1bz0hqGhDUa2M
-	 D5B4DpGQ4912NP00mGeZXK0tNWlk7SFHAHWeRm3uR61XHnlb/DfQ7vvDeH8Pva/YWZ
-	 QsJlG2sLx4oD/1rmySMEc8mQNmAp38c/VxXtTG/c=
+	b=p7rXedpg4VQpk7n5Gr7ewUvdQNPj7JpW6Lo+JZSOK8/DXYWXyB1HkwvAWFtE000IU
+	 3/RY1EtjTrYkVjcqVw2QmavMiTrd7pmx3RjMs6uVKdF/skgAqI8XjX1e+c5S66D7gW
+	 QucdDOX1FJ9QTmZWsWrB8fUBZc/dQ3Y6fiUjQT3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 346/529] ocfs2: fix defrag path triggering jbd2 ASSERT
-Date: Fri, 10 Mar 2023 14:38:09 +0100
-Message-Id: <20230310133821.041352706@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 373/529] io_uring: handle TIF_NOTIFY_RESUME when checking for task_work
+Date: Fri, 10 Mar 2023 14:38:36 +0100
+Message-Id: <20230310133822.278967669@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -41,100 +33,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heming Zhao via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 60eed1e3d45045623e46944ebc7c42c30a4350f0 upstream.
+commit b5d3ae202fbfe055aa2a8ae8524531ee1dcab717 upstream.
 
-code path:
+If TIF_NOTIFY_RESUME is set, then we need to call resume_user_mode_work()
+for PF_IO_WORKER threads. They never return to usermode, hence never get
+a chance to process any items that are marked by this flag. Most notably
+this includes the final put of files, but also any throttling markers set
+by block cgroups.
 
-ocfs2_ioctl_move_extents
- ocfs2_move_extents
-  ocfs2_defrag_extent
-   __ocfs2_move_extent
-    + ocfs2_journal_access_di
-    + ocfs2_split_extent  //sub-paths call jbd2_journal_restart
-    + ocfs2_journal_dirty //crash by jbs2 ASSERT
-
-crash stacks:
-
-PID: 11297  TASK: ffff974a676dcd00  CPU: 67  COMMAND: "defragfs.ocfs2"
- #0 [ffffb25d8dad3900] machine_kexec at ffffffff8386fe01
- #1 [ffffb25d8dad3958] __crash_kexec at ffffffff8395959d
- #2 [ffffb25d8dad3a20] crash_kexec at ffffffff8395a45d
- #3 [ffffb25d8dad3a38] oops_end at ffffffff83836d3f
- #4 [ffffb25d8dad3a58] do_trap at ffffffff83833205
- #5 [ffffb25d8dad3aa0] do_invalid_op at ffffffff83833aa6
- #6 [ffffb25d8dad3ac0] invalid_op at ffffffff84200d18
-    [exception RIP: jbd2_journal_dirty_metadata+0x2ba]
-    RIP: ffffffffc09ca54a  RSP: ffffb25d8dad3b70  RFLAGS: 00010207
-    RAX: 0000000000000000  RBX: ffff9706eedc5248  RCX: 0000000000000000
-    RDX: 0000000000000001  RSI: ffff97337029ea28  RDI: ffff9706eedc5250
-    RBP: ffff9703c3520200   R8: 000000000f46b0b2   R9: 0000000000000000
-    R10: 0000000000000001  R11: 00000001000000fe  R12: ffff97337029ea28
-    R13: 0000000000000000  R14: ffff9703de59bf60  R15: ffff9706eedc5250
-    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
- #7 [ffffb25d8dad3ba8] ocfs2_journal_dirty at ffffffffc137fb95 [ocfs2]
- #8 [ffffb25d8dad3be8] __ocfs2_move_extent at ffffffffc139a950 [ocfs2]
- #9 [ffffb25d8dad3c80] ocfs2_defrag_extent at ffffffffc139b2d2 [ocfs2]
-
-Analysis
-
-This bug has the same root cause of 'commit 7f27ec978b0e ("ocfs2: call
-ocfs2_journal_access_di() before ocfs2_journal_dirty() in
-ocfs2_write_end_nolock()")'.  For this bug, jbd2_journal_restart() is
-called by ocfs2_split_extent() during defragmenting.
-
-How to fix
-
-For ocfs2_split_extent() can handle journal operations totally by itself.
-Caller doesn't need to call journal access/dirty pair, and caller only
-needs to call journal start/stop pair.  The fix method is to remove
-journal access/dirty from __ocfs2_move_extent().
-
-The discussion for this patch:
-https://oss.oracle.com/pipermail/ocfs2-devel/2023-February/000647.html
-
-Link: https://lkml.kernel.org/r/20230217003717.32469-1-heming.zhao@suse.com
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org # 5.10+
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/move_extents.c |   10 ----------
- 1 file changed, 10 deletions(-)
+ io_uring/io_uring.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/ocfs2/move_extents.c
-+++ b/fs/ocfs2/move_extents.c
-@@ -107,14 +107,6 @@ static int __ocfs2_move_extent(handle_t
- 	 */
- 	replace_rec.e_flags = ext_flags & ~OCFS2_EXT_REFCOUNTED;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2460,6 +2460,13 @@ static inline unsigned int io_put_rw_kbu
  
--	ret = ocfs2_journal_access_di(handle, INODE_CACHE(inode),
--				      context->et.et_root_bh,
--				      OCFS2_JOURNAL_ACCESS_WRITE);
--	if (ret) {
--		mlog_errno(ret);
--		goto out;
--	}
--
- 	ret = ocfs2_split_extent(handle, &context->et, path, index,
- 				 &replace_rec, context->meta_ac,
- 				 &context->dealloc);
-@@ -123,8 +115,6 @@ static int __ocfs2_move_extent(handle_t
- 		goto out;
- 	}
- 
--	ocfs2_journal_dirty(handle, context->et.et_root_bh);
--
- 	context->new_phys_cpos = new_p_cpos;
- 
- 	/*
+ static inline bool io_run_task_work(void)
+ {
++	/*
++	 * PF_IO_WORKER never returns to userspace, so check here if we have
++	 * notify work that needs processing.
++	 */
++	if (current->flags & PF_IO_WORKER &&
++	    test_thread_flag(TIF_NOTIFY_RESUME))
++		tracehook_notify_resume(NULL);
+ 	if (test_thread_flag(TIF_NOTIFY_SIGNAL) || current->task_works) {
+ 		__set_current_state(TASK_RUNNING);
+ 		tracehook_notify_signal();
 
 
