@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50320847D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:45:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C8AC433EF;
-	Fri, 10 Mar 2023 13:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D37847D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:45:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BF2C433EF;
+	Fri, 10 Mar 2023 13:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678455951;
-	bh=Wrgszqam3H0U9ZtK88EhXjGfJ2dTvh+1ZrPpUc7MA10=;
+	s=korg; t=1678455954;
+	bh=fYb8+l0hrrk0Jwm3RFGyewuODzOuVzizMzIt76nAau4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CjrV6EQlaV2QvYKzgcnru71Jw531Gfg5jtVNGD3dc8O87sG/CvG7YMLOiI9U7qFlU
-	 RSkTaVrMdcs+zRODP+Be34LSUU8K7p61cx5qQ2uCuM3zUpZotvhbM1rotZTGxNyA1v
-	 NbglfTSeQUKMtW1a3sRWLOaX+BC5To6wtIaAs1Bs=
+	b=WCDnYzjoDU0pZm8JReQfJhcQyiGQaA0fVdN+irVfufQMGCQQqnoB1VTxL4tR4hZVU
+	 ppGsAsVcUS5b/R7+6fD6NP1aj5K28l4J1/l3kYpicdGufI8JbL7rX9AG/zqQkdxawq
+	 mWZDWbuwqNlEZHC9G/AM3nw1jMmNvsrZhtSX987M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dean Luick <dean.luick@cornelisnetworks.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 003/193] IB/hfi1: Assign npages earlier
-Date: Fri, 10 Mar 2023 14:36:25 +0100
-Message-Id: <20230310133711.033270449@linuxfoundation.org>
+Subject: [PATCH 4.14 030/193] wifi: libertas: main: dont call kfree_skb() under spin_lock_irqsave()
+Date: Fri, 10 Mar 2023 14:36:52 +0100
+Message-Id: <20230310133711.955602275@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -37,64 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dean Luick <dean.luick@cornelisnetworks.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit f9c47b2caa7ffc903ec950b454b59c209afe3182 ]
+[ Upstream commit f393df151540bf858effbd29ff572ab94e76a4c4 ]
 
-Improve code clarity and enable earlier use of
-tidbuf->npages by moving its assignment to
-structure creation time.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave(). Compile
+tested only.
 
-Signed-off-by: Dean Luick <dean.luick@cornelisnetworks.com>
-Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Link: https://lore.kernel.org/r/167329104884.1472990.4639750192433251493.stgit@awfm-02.cornelisnetworks.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: d2e7b3425c47 ("libertas: disable functionality when interface is down")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221207150008.111743-4-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/user_exp_rcv.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/net/wireless/marvell/libertas/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/user_exp_rcv.c b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-index b17c1fc59f7e4..1987bb8412a23 100644
---- a/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-+++ b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-@@ -213,16 +213,11 @@ static void unpin_rcv_pages(struct hfi1_filedata *fd,
- static int pin_rcv_pages(struct hfi1_filedata *fd, struct tid_user_buf *tidbuf)
- {
- 	int pinned;
--	unsigned int npages;
-+	unsigned int npages = tidbuf->npages;
- 	unsigned long vaddr = tidbuf->vaddr;
- 	struct page **pages = NULL;
- 	struct hfi1_devdata *dd = fd->uctxt->dd;
+diff --git a/drivers/net/wireless/marvell/libertas/main.c b/drivers/net/wireless/marvell/libertas/main.c
+index feb204cd74a9a..21816f0e9e930 100644
+--- a/drivers/net/wireless/marvell/libertas/main.c
++++ b/drivers/net/wireless/marvell/libertas/main.c
+@@ -216,7 +216,7 @@ int lbs_stop_iface(struct lbs_private *priv)
  
--	/* Get the number of pages the user buffer spans */
--	npages = num_user_pages(vaddr, tidbuf->length);
--	if (!npages)
--		return -EINVAL;
--
- 	if (npages > fd->uctxt->expected_count) {
- 		dd_dev_err(dd, "Expected buffer too big\n");
- 		return -EINVAL;
-@@ -256,7 +251,6 @@ static int pin_rcv_pages(struct hfi1_filedata *fd, struct tid_user_buf *tidbuf)
- 		return pinned;
- 	}
- 	tidbuf->pages = pages;
--	tidbuf->npages = npages;
- 	fd->tid_n_pinned += pinned;
- 	return pinned;
- }
-@@ -332,6 +326,7 @@ int hfi1_user_exp_rcv_setup(struct hfi1_filedata *fd,
- 
- 	tidbuf->vaddr = tinfo->vaddr;
- 	tidbuf->length = tinfo->length;
-+	tidbuf->npages = num_user_pages(tidbuf->vaddr, tidbuf->length);
- 	tidbuf->psets = kcalloc(uctxt->expected_count, sizeof(*tidbuf->psets),
- 				GFP_KERNEL);
- 	if (!tidbuf->psets) {
+ 	spin_lock_irqsave(&priv->driver_lock, flags);
+ 	priv->iface_running = false;
+-	kfree_skb(priv->currenttxskb);
++	dev_kfree_skb_irq(priv->currenttxskb);
+ 	priv->currenttxskb = NULL;
+ 	priv->tx_pending_len = 0;
+ 	spin_unlock_irqrestore(&priv->driver_lock, flags);
 -- 
-2.39.0
+2.39.2
 
 
 
