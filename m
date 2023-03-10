@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1778481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:04:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D64C4339C;
-	Fri, 10 Mar 2023 14:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361BD8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:04:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15B0C433D2;
+	Fri, 10 Mar 2023 14:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457075;
-	bh=0zI6VcRu3luBut8F6KbuWZP04gPQ/ZDrZxiRTlAOrFg=;
+	s=korg; t=1678457078;
+	bh=lrOgtRX0CXM8M9jrMPuK8reO8h8RTCzgWyxsDXJPBy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B4QwmdR68cenzUfamkv6vZPKyfTjzXZuGSGayulCA2+hV6MDSyJ+x+5MdmiK5Bp5q
-	 GYcnzyDTlI27M3OM+kadkRlckRknDtmBkRe70aTo59Nn6ILKyFX/S5sCfc7iWFU2jn
-	 jnSB2gEO3i7tB9kw+DdXeKs+lOzaRPXLtdZVdRko=
+	b=pURN5kh+HeCxmnBH1Eo89BOlWdtoe163KK44qT73giPseoMKBa1YpxzP6msgCM4JJ
+	 3yua7NJ6kgJG8C/Mzo7KwJesmBIT/d/WuhZuuSDeZJIMZPUQQtT3iTYoQmc9g4vL4l
+	 wuJAa91HJQtHzk9qx3+bxzcj/AOHcKcef99KHr+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/200] pwm: sifive: Always let the first pwm_apply_state succeed
-Date: Fri, 10 Mar 2023 14:36:59 +0100
-Message-Id: <20230310133717.425371015@linuxfoundation.org>
+Subject: [PATCH 6.1 013/200] pwm: stm32-lp: fix the check on arr and cmp registers update
+Date: Fri, 10 Mar 2023 14:37:00 +0100
+Message-Id: <20230310133717.454811372@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,67 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-[ Upstream commit 334c7b13d38321e47d1a51dba0bef9f4c403ec75 ]
+[ Upstream commit 3066bc2d58be31275afb51a589668f265e419c37 ]
 
-Commit 2cfe9bbec56ea579135cdd92409fff371841904f added support for the
-RGB and green PWM controlled LEDs on the HiFive Unmatched board
-managed by the leds-pwm-multicolor and leds-pwm drivers respectively.
-All three colours of the RGB LED and the green LED run from different
-lines of the same PWM, but with the same period so this works fine when
-the LED drivers are loaded one after the other.
+The ARR (auto reload register) and CMP (compare) registers are
+successively written. The status bits to check the update of these
+registers are polled together with regmap_read_poll_timeout().
+The condition to end the loop may become true, even if one of the
+register isn't correctly updated.
+So ensure both status bits are set before clearing them.
 
-Unfortunately it does expose a race in the PWM driver when both LED
-drivers are loaded at roughly the same time. Here is an example:
-
-  |          Thread A           |          Thread B           |
-  |  led_pwm_mc_probe           |  led_pwm_probe              |
-  |    devm_fwnode_pwm_get      |                             |
-  |      pwm_sifive_request     |                             |
-  |        ddata->user_count++  |                             |
-  |                             |    devm_fwnode_pwm_get      |
-  |                             |      pwm_sifive_request     |
-  |                             |        ddata->user_count++  |
-  |         ...                 |          ...                |
-  |    pwm_state_apply          |    pwm_state_apply          |
-  |      pwm_sifive_apply       |      pwm_sifive_apply       |
-
-Now both calls to pwm_sifive_apply will see that ddata->approx_period,
-initially 0, is different from the requested period and the clock needs
-to be updated. But since ddata->user_count >= 2 both calls will fail
-with -EBUSY, which will then cause both LED drivers to fail to probe.
-
-Fix it by letting the first call to pwm_sifive_apply update the clock
-even when ddata->user_count != 1.
-
-Fixes: 9e37a53eb051 ("pwm: sifive: Add a driver for SiFive SoC PWM")
-Signed-off-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Fixes: e70a540b4e02 ("pwm: Add STM32 LPTimer PWM driver")
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-sifive.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/pwm/pwm-stm32-lp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-sifive.c b/drivers/pwm/pwm-sifive.c
-index bb72393134016..89d53a0f91e65 100644
---- a/drivers/pwm/pwm-sifive.c
-+++ b/drivers/pwm/pwm-sifive.c
-@@ -159,7 +159,13 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+diff --git a/drivers/pwm/pwm-stm32-lp.c b/drivers/pwm/pwm-stm32-lp.c
+index 3115abb3f52ab..61a1c87cd5016 100644
+--- a/drivers/pwm/pwm-stm32-lp.c
++++ b/drivers/pwm/pwm-stm32-lp.c
+@@ -127,7 +127,7 @@ static int stm32_pwm_lp_apply(struct pwm_chip *chip, struct pwm_device *pwm,
  
- 	mutex_lock(&ddata->lock);
- 	if (state->period != ddata->approx_period) {
--		if (ddata->user_count != 1) {
-+		/*
-+		 * Don't let a 2nd user change the period underneath the 1st user.
-+		 * However if ddate->approx_period == 0 this is the first time we set
-+		 * any period, so let whoever gets here first set the period so other
-+		 * users who agree on the period won't fail.
-+		 */
-+		if (ddata->user_count != 1 && ddata->approx_period) {
- 			mutex_unlock(&ddata->lock);
- 			return -EBUSY;
- 		}
+ 	/* ensure CMP & ARR registers are properly written */
+ 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
+-				       (val & STM32_LPTIM_CMPOK_ARROK),
++				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
+ 				       100, 1000);
+ 	if (ret) {
+ 		dev_err(priv->chip.dev, "ARR/CMP registers write issue\n");
 -- 
 2.39.2
 
