@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202918825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:57:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DC2C433D2;
-	Fri, 10 Mar 2023 14:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5168825
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:57:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726A3C433D2;
+	Fri, 10 Mar 2023 14:57:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460259;
-	bh=qis+eYYzC2GGf9NGKeVBnzSivi6anabzUl8GqOHH+ko=;
+	s=korg; t=1678460261;
+	bh=nmGpkPzSADV+CpFECU9s/I5AvOFORyLFcmBB2tBb/P4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tmviwX5Gdk17ya+NliuVSmeP1JRL/ZQe3oEaT8DwUDsZIVwfrvXdMfkXi2gHi7jJm
-	 PsdvuqeECtTbDkgGa3SDgcgf592U8CjSQfv1ducnBjTSpfUAySdN1VkDLXsBZypWWN
-	 wf21K02LasuaIyb+DlQv5PcLohqTH9r72DzKN3O0=
+	b=CVP5tnGcnthG/X2wmaMAEekqfYYJ80s0l3fH1xefinwN/sd1hIaX2NkKJNzir5l+r
+	 dn1OlZTJvM6KOIvHh+6iB+2VyIlqO/JHZ9or1A4AoZdvkc9IDrghE6nv+xxb5jD4ur
+	 +vI57/NpnJtuSd5935LMmbom+WuF3C1/9fuVxRgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <sboyd@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jai Luthra <j-luthra@ti.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 248/529] clk: qcom: gpucc-sdm845: fix clk_dis_wait being programmed for CX GDSC
-Date: Fri, 10 Mar 2023 14:36:31 +0100
-Message-Id: <20230310133816.455745826@linuxfoundation.org>
+Subject: [PATCH 5.10 275/529] media: i2c: imx219: Fix binning for RAW8 capture
+Date: Fri, 10 Mar 2023 14:36:58 +0100
+Message-Id: <20230310133817.702618268@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -37,60 +37,178 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Jai Luthra <j-luthra@ti.com>
 
-[ Upstream commit cb81719e3c1165ef1bc33137dc628f750eed8ea4 ]
+[ Upstream commit ef86447e775fb1f2ced00d4c7fff2c0a1c63f165 ]
 
-The gdsc_init() function will rewrite the CLK_DIS_WAIT field while
-registering the GDSC (writing the value 0x2 by default). This will
-override the setting done in the driver's probe function.
+2x2 binning works fine for RAW10 capture, but for RAW8 1232p mode it
+leads to corrupted frames [1][2].
 
-Set cx_gdsc.clk_dis_wait_val to 8 to follow the intention of the probe
-function.
+Using the special 2x2 analog binning mode fixes the issue, but causes
+artefacts for RAW10 1232p capture. So here we choose the binning mode
+depending upon the frame format selected.
 
-Fixes: 453361cdd757 ("clk: qcom: Add graphics clock controller driver for SDM845")
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230201172305.993146-2-dmitry.baryshkov@linaro.org
+As both binning modes work fine for 480p RAW8 and RAW10 capture, it can
+share the same code path as 1232p for selecting binning mode.
+
+[1] https://forums.raspberrypi.com/viewtopic.php?t=332103
+[2] https://github.com/raspberrypi/libcamera-apps/issues/281
+
+Fixes: 22da1d56e982 ("media: i2c: imx219: Add support for RAW8 bit bayer format")
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gpucc-sdm845.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/media/i2c/imx219.c | 57 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 49 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/qcom/gpucc-sdm845.c b/drivers/clk/qcom/gpucc-sdm845.c
-index 5663698b306b9..658c6ac700e1e 100644
---- a/drivers/clk/qcom/gpucc-sdm845.c
-+++ b/drivers/clk/qcom/gpucc-sdm845.c
-@@ -22,8 +22,6 @@
- #define CX_GMU_CBCR_SLEEP_SHIFT		4
- #define CX_GMU_CBCR_WAKE_MASK		0xf
- #define CX_GMU_CBCR_WAKE_SHIFT		8
--#define CLK_DIS_WAIT_SHIFT		12
--#define CLK_DIS_WAIT_MASK		(0xf << CLK_DIS_WAIT_SHIFT)
+diff --git a/drivers/media/i2c/imx219.c b/drivers/media/i2c/imx219.c
+index a28926069b82b..b975636d94401 100644
+--- a/drivers/media/i2c/imx219.c
++++ b/drivers/media/i2c/imx219.c
+@@ -89,6 +89,12 @@
  
- enum {
- 	P_BI_TCXO,
-@@ -124,6 +122,7 @@ static struct clk_branch gpu_cc_cxo_clk = {
- static struct gdsc gpu_cx_gdsc = {
- 	.gdscr = 0x106c,
- 	.gds_hw_ctrl = 0x1540,
-+	.clk_dis_wait_val = 0x8,
- 	.pd = {
- 		.name = "gpu_cx_gdsc",
+ #define IMX219_REG_ORIENTATION		0x0172
+ 
++/* Binning  Mode */
++#define IMX219_REG_BINNING_MODE		0x0174
++#define IMX219_BINNING_NONE		0x0000
++#define IMX219_BINNING_2X2		0x0101
++#define IMX219_BINNING_2X2_ANALOG	0x0303
++
+ /* Test Pattern Control */
+ #define IMX219_REG_TEST_PATTERN		0x0600
+ #define IMX219_TEST_PATTERN_DISABLE	0
+@@ -143,6 +149,9 @@ struct imx219_mode {
+ 
+ 	/* Default register values */
+ 	struct imx219_reg_list reg_list;
++
++	/* 2x2 binning is used */
++	bool binning;
+ };
+ 
+ static const struct imx219_reg imx219_common_regs[] = {
+@@ -212,8 +221,6 @@ static const struct imx219_reg mode_3280x2464_regs[] = {
+ 	{0x016d, 0xd0},
+ 	{0x016e, 0x09},
+ 	{0x016f, 0xa0},
+-	{0x0174, 0x00},	/* No-Binning */
+-	{0x0175, 0x00},
+ 	{0x0624, 0x0c},
+ 	{0x0625, 0xd0},
+ 	{0x0626, 0x09},
+@@ -233,8 +240,6 @@ static const struct imx219_reg mode_1920_1080_regs[] = {
+ 	{0x016d, 0x80},
+ 	{0x016e, 0x04},
+ 	{0x016f, 0x38},
+-	{0x0174, 0x00},	/* No-Binning */
+-	{0x0175, 0x00},
+ 	{0x0624, 0x07},
+ 	{0x0625, 0x80},
+ 	{0x0626, 0x04},
+@@ -254,8 +259,6 @@ static const struct imx219_reg mode_1640_1232_regs[] = {
+ 	{0x016d, 0x68},
+ 	{0x016e, 0x04},
+ 	{0x016f, 0xd0},
+-	{0x0174, 0x01},	/* x2-Binning */
+-	{0x0175, 0x01},
+ 	{0x0624, 0x06},
+ 	{0x0625, 0x68},
+ 	{0x0626, 0x04},
+@@ -275,8 +278,6 @@ static const struct imx219_reg mode_640_480_regs[] = {
+ 	{0x016d, 0x80},
+ 	{0x016e, 0x01},
+ 	{0x016f, 0xe0},
+-	{0x0174, 0x03},	/* x2-analog binning */
+-	{0x0175, 0x03},
+ 	{0x0624, 0x06},
+ 	{0x0625, 0x68},
+ 	{0x0626, 0x04},
+@@ -386,6 +387,7 @@ static const struct imx219_mode supported_modes[] = {
+ 			.num_of_regs = ARRAY_SIZE(mode_3280x2464_regs),
+ 			.regs = mode_3280x2464_regs,
+ 		},
++		.binning = false,
  	},
-@@ -196,10 +195,6 @@ static int gpu_cc_sdm845_probe(struct platform_device *pdev)
- 	value = 0xf << CX_GMU_CBCR_WAKE_SHIFT | 0xf << CX_GMU_CBCR_SLEEP_SHIFT;
- 	regmap_update_bits(regmap, 0x1098, mask, value);
+ 	{
+ 		/* 1080P 30fps cropped */
+@@ -402,6 +404,7 @@ static const struct imx219_mode supported_modes[] = {
+ 			.num_of_regs = ARRAY_SIZE(mode_1920_1080_regs),
+ 			.regs = mode_1920_1080_regs,
+ 		},
++		.binning = false,
+ 	},
+ 	{
+ 		/* 2x2 binned 30fps mode */
+@@ -418,6 +421,7 @@ static const struct imx219_mode supported_modes[] = {
+ 			.num_of_regs = ARRAY_SIZE(mode_1640_1232_regs),
+ 			.regs = mode_1640_1232_regs,
+ 		},
++		.binning = true,
+ 	},
+ 	{
+ 		/* 640x480 30fps mode */
+@@ -434,6 +438,7 @@ static const struct imx219_mode supported_modes[] = {
+ 			.num_of_regs = ARRAY_SIZE(mode_640_480_regs),
+ 			.regs = mode_640_480_regs,
+ 		},
++		.binning = true,
+ 	},
+ };
  
--	/* Configure clk_dis_wait for gpu_cx_gdsc */
--	regmap_update_bits(regmap, 0x106c, CLK_DIS_WAIT_MASK,
--						8 << CLK_DIS_WAIT_SHIFT);
--
- 	return qcom_cc_really_probe(pdev, &gpu_cc_sdm845_desc, regmap);
+@@ -872,6 +877,35 @@ static int imx219_set_framefmt(struct imx219 *imx219)
+ 	return -EINVAL;
  }
  
++static int imx219_set_binning(struct imx219 *imx219)
++{
++	if (!imx219->mode->binning) {
++		return imx219_write_reg(imx219, IMX219_REG_BINNING_MODE,
++					IMX219_REG_VALUE_16BIT,
++					IMX219_BINNING_NONE);
++	}
++
++	switch (imx219->fmt.code) {
++	case MEDIA_BUS_FMT_SRGGB8_1X8:
++	case MEDIA_BUS_FMT_SGRBG8_1X8:
++	case MEDIA_BUS_FMT_SGBRG8_1X8:
++	case MEDIA_BUS_FMT_SBGGR8_1X8:
++		return imx219_write_reg(imx219, IMX219_REG_BINNING_MODE,
++					IMX219_REG_VALUE_16BIT,
++					IMX219_BINNING_2X2_ANALOG);
++
++	case MEDIA_BUS_FMT_SRGGB10_1X10:
++	case MEDIA_BUS_FMT_SGRBG10_1X10:
++	case MEDIA_BUS_FMT_SGBRG10_1X10:
++	case MEDIA_BUS_FMT_SBGGR10_1X10:
++		return imx219_write_reg(imx219, IMX219_REG_BINNING_MODE,
++					IMX219_REG_VALUE_16BIT,
++					IMX219_BINNING_2X2);
++	}
++
++	return -EINVAL;
++}
++
+ static const struct v4l2_rect *
+ __imx219_get_pad_crop(struct imx219 *imx219, struct v4l2_subdev_pad_config *cfg,
+ 		      unsigned int pad, enum v4l2_subdev_format_whence which)
+@@ -957,6 +991,13 @@ static int imx219_start_streaming(struct imx219 *imx219)
+ 		goto err_rpm_put;
+ 	}
+ 
++	ret = imx219_set_binning(imx219);
++	if (ret) {
++		dev_err(&client->dev, "%s failed to set binning: %d\n",
++			__func__, ret);
++		goto err_rpm_put;
++	}
++
+ 	/* Apply customized values from user */
+ 	ret =  __v4l2_ctrl_handler_setup(imx219->sd.ctrl_handler);
+ 	if (ret)
 -- 
 2.39.2
 
