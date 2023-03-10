@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49498481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:07:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE59C433EF;
-	Fri, 10 Mar 2023 14:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923C98481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:08:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE25C433D2;
+	Fri, 10 Mar 2023 14:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457277;
-	bh=Sv95kdFySrsjl9+4w5/3YJcgN44/fRFjPuyWdpLD328=;
+	s=korg; t=1678457280;
+	bh=CjCi/aHlYU2pdzm3FvsJL7WNyrMwv3hLVX7hEXUJZZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gLir9VOpteI3rsZZBgzC19zya1UZN2w6q27QXy1V6U/W8JL08ICb1c7G7YQDXGyqs
-	 WsGzu4qlk/BVqN2cs2L7/Jmu6e068lC7jFOD1siAz3RYme2xXxPmcTelnGuW6tWlbI
-	 4uejc+ryQI97422WhU7VNn2nw8akXvvnVZerMmqA=
+	b=LVyXEtjSptMir6pBkfkJQkQPF4jIDQincHc3Hwg6VvgIO42taNit0ntgNcN4Fq4WB
+	 82eJmC464A4+Td+8J1ezjys+ycAZOshSDoD6zRwUKmwbQHQ3KCqiDm47590EWOTyOQ
+	 9Cgjirg3yyWzMFJ+RzXVlFB//Hf713TOpLPyeEDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Roi Dayan <roid@nvidia.com>,
+	Maor Dickman <maord@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 064/200] netfilter: xt_length: use skb len to match in length_mt6
-Date: Fri, 10 Mar 2023 14:37:51 +0100
-Message-Id: <20230310133719.093455055@linuxfoundation.org>
+Subject: [PATCH 6.1 082/200] net/mlx5e: Verify flow_source cap before using it
+Date: Fri, 10 Mar 2023 14:38:09 +0100
+Message-Id: <20230310133719.627588651@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,51 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Roi Dayan <roid@nvidia.com>
 
-[ Upstream commit 05c07c0c6cc8ec2278ace9871618c41f1365d1f5 ]
+[ Upstream commit 1bf8b0dae8dde6f02520a5ea34fdaa3b39342e69 ]
 
-For IPv6 Jumbo packets, the ipv6_hdr(skb)->payload_len is always 0,
-and its real payload_len ( > 65535) is saved in hbh exthdr. With 0
-length for the jumbo packets, it may mismatch.
+When adding send to vport rule verify flow_source matching is
+supported by checking the flow_source cap.
 
-To fix this, we can just use skb->len instead of parsing exthdrs, as
-the hbh exthdr parsing has been done before coming to length_mt6 in
-ip6_rcv_core() and br_validate_ipv6() and also the packet has been
-trimmed according to the correct IPv6 (ext)hdr length there, and skb
-len is trustable in length_mt6().
-
-Note that this patch is especially needed after the IPv6 BIG TCP was
-supported in kernel, which is using IPv6 Jumbo packets. Besides, to
-match the packets greater than 65535 more properly, a v1 revision of
-xt_length may be needed to extend "min, max" to u32 in the future,
-and for now the IPv6 Jumbo packets can be matched by:
-
-  # ip6tables -m length ! --length 0:65535
-
-Fixes: 7c4e983c4f3c ("net: allow gso_max_size to exceed 65536")
-Fixes: 0fe79f28bfaf ("net: allow gro_max_size to exceed 65536")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: d04442540372 ("net/mlx5: E-Switch, set flow source for send to uplink rule")
+Signed-off-by: Roi Dayan <roid@nvidia.com>
+Reviewed-by: Maor Dickman <maord@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_length.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/xt_length.c b/net/netfilter/xt_length.c
-index 1873da3a945ab..9fbfad13176f0 100644
---- a/net/netfilter/xt_length.c
-+++ b/net/netfilter/xt_length.c
-@@ -30,8 +30,7 @@ static bool
- length_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- {
- 	const struct xt_length_info *info = par->matchinfo;
--	const u_int16_t pktlen = ntohs(ipv6_hdr(skb)->payload_len) +
--				 sizeof(struct ipv6hdr);
-+	u32 pktlen = skb->len;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index b4e263e8cfb87..235f6f0a70523 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -1043,7 +1043,8 @@ mlx5_eswitch_add_send_to_vport_rule(struct mlx5_eswitch *on_esw,
+ 	dest.vport.flags |= MLX5_FLOW_DEST_VPORT_VHCA_ID;
+ 	flow_act.action = MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
  
- 	return (pktlen >= info->min && pktlen <= info->max) ^ info->invert;
- }
+-	if (rep->vport == MLX5_VPORT_UPLINK)
++	if (MLX5_CAP_ESW_FLOWTABLE(on_esw->dev, flow_source) &&
++	    rep->vport == MLX5_VPORT_UPLINK)
+ 		spec->flow_context.flow_source = MLX5_FLOW_CONTEXT_FLOW_SOURCE_LOCAL_VPORT;
+ 
+ 	flow_rule = mlx5_add_flow_rules(on_esw->fdb_table.offloads.slow_fdb,
 -- 
 2.39.2
 
