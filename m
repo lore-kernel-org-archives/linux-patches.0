@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EB8881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:43:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0243C433D2;
-	Fri, 10 Mar 2023 14:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E46881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:43:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B257CC4339C;
+	Fri, 10 Mar 2023 14:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459393;
-	bh=zaF0VsMp1l2Gd+WqzoyktK0v1rK3cxgJjZh2sckP8/I=;
+	s=korg; t=1678459396;
+	bh=vbZNqDIJYgGpYLsXqklnkUQLXVhTSP76uLHsC1BrEuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icJeVg8gRuQxCbRv8s8INrqVBorroOEjGqIgnIYfJWCcsn3+ZQKaqBAr6qSQ/miPB
-	 jKXlzVnDUWBUigVoF/xtwS3uyg6+qDbAL7gdhPVBKMzl6pTUFbCBJV2TRrblBYcpIl
-	 Y7HKg76aOCLQSntogSWG1xbVwJlcR2P+9U6D+Nmw=
+	b=jGo3N5p7xwzLKsBj+7YzQ58o0ECS56E23YKBCaHi82TbKv4T90WSWXVDn5tOr1y/v
+	 C/eWssTOilXhik42dB7Ip9LxHKwtVyX3FKhWkd/cBnPOIebYH2W97A4uLkG8YHeiIZ
+	 SY6v7MwdNQuLxyuwJI8g8wVk67u95DA3eNmE0aEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 346/357] kernel/fail_function: fix memory leak with using debugfs_lookup()
-Date: Fri, 10 Mar 2023 14:40:35 +0100
-Message-Id: <20230310133749.937126672@linuxfoundation.org>
+Subject: [PATCH 5.4 320/357] net/sched: act_sample: fix action bind logic
+Date: Fri, 10 Mar 2023 14:40:09 +0100
+Message-Id: <20230310133748.789835046@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,40 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-[ Upstream commit 2bb3669f576559db273efe49e0e69f82450efbca ]
+[ Upstream commit 4a20056a49a1854966562241922f68197f950539 ]
 
-When calling debugfs_lookup() the result must have dput() called on it,
-otherwise the memory will leak over time.  To make things simpler, just
-call debugfs_lookup_and_remove() instead which handles all of the logic
-at once.
+The TC architecture allows filters and actions to be created independently.
+In filters the user can reference action objects using:
+tc action add action sample ... index 1
+tc filter add ... action pedit index 1
 
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20230202151633.2310897-1-gregkh@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In the current code for act_sample this is broken as it checks netlink
+attributes for create/update before actually checking if we are binding to an
+existing action.
+
+tdc results:
+1..29
+ok 1 9784 - Add valid sample action with mandatory arguments
+ok 2 5c91 - Add valid sample action with mandatory arguments and continue control action
+ok 3 334b - Add valid sample action with mandatory arguments and drop control action
+ok 4 da69 - Add valid sample action with mandatory arguments and reclassify control action
+ok 5 13ce - Add valid sample action with mandatory arguments and pipe control action
+ok 6 1886 - Add valid sample action with mandatory arguments and jump control action
+ok 7 7571 - Add sample action with invalid rate
+ok 8 b6d4 - Add sample action with mandatory arguments and invalid control action
+ok 9 a874 - Add invalid sample action without mandatory arguments
+ok 10 ac01 - Add invalid sample action without mandatory argument rate
+ok 11 4203 - Add invalid sample action without mandatory argument group
+ok 12 14a7 - Add invalid sample action without mandatory argument group
+ok 13 8f2e - Add valid sample action with trunc argument
+ok 14 45f8 - Add sample action with maximum rate argument
+ok 15 ad0c - Add sample action with maximum trunc argument
+ok 16 83a9 - Add sample action with maximum group argument
+ok 17 ed27 - Add sample action with invalid rate argument
+ok 18 2eae - Add sample action with invalid group argument
+ok 19 6ff3 - Add sample action with invalid trunc size
+ok 20 2b2a - Add sample action with invalid index
+ok 21 dee2 - Add sample action with maximum allowed index
+ok 22 560e - Add sample action with cookie
+ok 23 704a - Replace existing sample action with new rate argument
+ok 24 60eb - Replace existing sample action with new group argument
+ok 25 2cce - Replace existing sample action with new trunc argument
+ok 26 59d1 - Replace existing sample action with new control argument
+ok 27 0a6e - Replace sample action with invalid goto chain control
+ok 28 3872 - Delete sample action with valid index
+ok 29 a394 - Delete sample action with invalid index
+
+Fixes: 5c5670fae430 ("net/sched: Introduce sample tc action")
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/fail_function.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/sched/act_sample.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/fail_function.c b/kernel/fail_function.c
-index b0b1ad93fa957..8f3795d8ac5b0 100644
---- a/kernel/fail_function.c
-+++ b/kernel/fail_function.c
-@@ -163,10 +163,7 @@ static void fei_debugfs_add_attr(struct fei_attr *attr)
+diff --git a/net/sched/act_sample.c b/net/sched/act_sample.c
+index 214f4efdd9920..909a685b91621 100644
+--- a/net/sched/act_sample.c
++++ b/net/sched/act_sample.c
+@@ -54,8 +54,8 @@ static int tcf_sample_init(struct net *net, struct nlattr *nla,
+ 					  sample_policy, NULL);
+ 	if (ret < 0)
+ 		return ret;
+-	if (!tb[TCA_SAMPLE_PARMS] || !tb[TCA_SAMPLE_RATE] ||
+-	    !tb[TCA_SAMPLE_PSAMPLE_GROUP])
++
++	if (!tb[TCA_SAMPLE_PARMS])
+ 		return -EINVAL;
  
- static void fei_debugfs_remove_attr(struct fei_attr *attr)
- {
--	struct dentry *dir;
--
--	dir = debugfs_lookup(attr->kp.symbol_name, fei_debugfs_dir);
--	debugfs_remove_recursive(dir);
-+	debugfs_lookup_and_remove(attr->kp.symbol_name, fei_debugfs_dir);
- }
- 
- static int fei_kprobe_handler(struct kprobe *kp, struct pt_regs *regs)
+ 	parm = nla_data(tb[TCA_SAMPLE_PARMS]);
+@@ -79,6 +79,13 @@ static int tcf_sample_init(struct net *net, struct nlattr *nla,
+ 		tcf_idr_release(*a, bind);
+ 		return -EEXIST;
+ 	}
++
++	if (!tb[TCA_SAMPLE_RATE] || !tb[TCA_SAMPLE_PSAMPLE_GROUP]) {
++		NL_SET_ERR_MSG(extack, "sample rate and group are required");
++		err = -EINVAL;
++		goto release_idr;
++	}
++
+ 	err = tcf_action_check_ctrlact(parm->action, tp, &goto_ch, extack);
+ 	if (err < 0)
+ 		goto release_idr;
 -- 
 2.39.2
 
