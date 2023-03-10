@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40508489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:16:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484F0C433EF;
-	Fri, 10 Mar 2023 14:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7928489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:16:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093B7C433EF;
+	Fri, 10 Mar 2023 14:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457769;
-	bh=fVg5T/di/f/pkK7TX69srjkUk/zAxCGI9v7LEm9B5Co=;
+	s=korg; t=1678457772;
+	bh=xNXfbujEGb1VgDQlUtdjO9NkELFni8YXSWdLmdWro3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+R9QyknxZHqJE+eRzHWCo4GPT2K6l4FJxO4fy++EGJ5Y5Hy9jalvzlOTfrAnbZvW
-	 am2y1n04q1tOBHoAs11b/c68bgm1mEADn3O8TmUv5QqvSlcmgktE1JuQU40hmMs+Dl
-	 Did0HJ9voSvkNlWp2AqGpQs/6Flq3O8XA9JnnIFA=
+	b=efZgegaRI1WPv2Rz4laCE8jfM2NDoNtR2HwdRbHWH9FI9CnNipG31WJ3b6axcNqtu
+	 wJJ5X9k+gG2Iug7RWf3GulUEPQrqC/LWbTYVHX/sjWw26+tQmXePMBgxinWc95cHbM
+	 3WAzxaY5rMbZ2q1qmy2WdXoXA/9pmj7ebuPI+QAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Alexander Coffin <alex.coffin@matician.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 050/252] irqchip/irq-mvebu-gicp: Fix refcount leak in mvebu_gicp_probe
-Date: Fri, 10 Mar 2023 14:37:00 +0100
-Message-Id: <20230310133720.327968937@linuxfoundation.org>
+Subject: [PATCH 4.19 051/252] Bluetooth: L2CAP: Fix potential user-after-free
+Date: Fri, 10 Mar 2023 14:37:01 +0100
+Message-Id: <20230310133720.356578288@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -35,35 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 9419e700021a393f67be36abd0c4f3acc6139041 ]
+[ Upstream commit df5703348813235874d851934e957c3723d71644 ]
 
-of_irq_find_parent() returns a node pointer with refcount incremented,
-We should use of_node_put() on it when not needed anymore.
-Add missing of_node_put() to avoid refcount leak.
+This fixes all instances of which requires to allocate a buffer calling
+alloc_skb which may release the chan lock and reacquire later which
+makes it possible that the chan is disconnected in the meantime.
 
-Fixes: a68a63cb4dfc ("irqchip/irq-mvebu-gicp: Add new driver for Marvell GICP")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230102084208.3951758-1-linmq006@gmail.com
+Fixes: a6a5568c03c4 ("Bluetooth: Lock the L2CAP channel when sending")
+Reported-by: Alexander Coffin <alex.coffin@matician.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mvebu-gicp.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/l2cap_core.c | 24 ------------------------
+ net/bluetooth/l2cap_sock.c |  8 ++++++++
+ 2 files changed, 8 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/irqchip/irq-mvebu-gicp.c b/drivers/irqchip/irq-mvebu-gicp.c
-index 3be5c5dba1dab..5caec411059f5 100644
---- a/drivers/irqchip/irq-mvebu-gicp.c
-+++ b/drivers/irqchip/irq-mvebu-gicp.c
-@@ -223,6 +223,7 @@ static int mvebu_gicp_probe(struct platform_device *pdev)
- 	}
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index fd95631205a6a..0e034925e3601 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -2517,14 +2517,6 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
+ 		if (IS_ERR(skb))
+ 			return PTR_ERR(skb);
  
- 	parent_domain = irq_find_host(irq_parent_dn);
-+	of_node_put(irq_parent_dn);
- 	if (!parent_domain) {
- 		dev_err(&pdev->dev, "failed to find parent IRQ domain\n");
- 		return -ENODEV;
+-		/* Channel lock is released before requesting new skb and then
+-		 * reacquired thus we need to recheck channel state.
+-		 */
+-		if (chan->state != BT_CONNECTED) {
+-			kfree_skb(skb);
+-			return -ENOTCONN;
+-		}
+-
+ 		l2cap_do_send(chan, skb);
+ 		return len;
+ 	}
+@@ -2568,14 +2560,6 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
+ 		if (IS_ERR(skb))
+ 			return PTR_ERR(skb);
+ 
+-		/* Channel lock is released before requesting new skb and then
+-		 * reacquired thus we need to recheck channel state.
+-		 */
+-		if (chan->state != BT_CONNECTED) {
+-			kfree_skb(skb);
+-			return -ENOTCONN;
+-		}
+-
+ 		l2cap_do_send(chan, skb);
+ 		err = len;
+ 		break;
+@@ -2596,14 +2580,6 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
+ 		 */
+ 		err = l2cap_segment_sdu(chan, &seg_queue, msg, len);
+ 
+-		/* The channel could have been closed while segmenting,
+-		 * check that it is still connected.
+-		 */
+-		if (chan->state != BT_CONNECTED) {
+-			__skb_queue_purge(&seg_queue);
+-			err = -ENOTCONN;
+-		}
+-
+ 		if (err)
+ 			break;
+ 
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index d938311c58a8d..1c6d01a27e0e8 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1414,6 +1414,14 @@ static struct sk_buff *l2cap_sock_alloc_skb_cb(struct l2cap_chan *chan,
+ 	if (!skb)
+ 		return ERR_PTR(err);
+ 
++	/* Channel lock is released before requesting new skb and then
++	 * reacquired thus we need to recheck channel state.
++	 */
++	if (chan->state != BT_CONNECTED) {
++		kfree_skb(skb);
++		return ERR_PTR(-ENOTCONN);
++	}
++
+ 	skb->priority = sk->sk_priority;
+ 
+ 	bt_cb(skb)->l2cap.chan = chan;
 -- 
 2.39.2
 
