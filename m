@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340E1847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:53:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D50CC433D2;
-	Fri, 10 Mar 2023 13:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2B7847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:53:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81F3C4339B;
+	Fri, 10 Mar 2023 13:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456435;
-	bh=gK7V0rnWsctmtKHaiIwmAgaGVyU08nM1EhXuLcEXXdI=;
+	s=korg; t=1678456438;
+	bh=vAflRujeIwd5yjmRltTAMz6oUcD44FHsFvN0BM2wRmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RDiYxJ1nKczYC3VDds7OPibi57gAu1q9cNTkmkMxGePeZil+h9KT01XdmS2q/rj1m
-	 lQvAFShoq3LtMW/t1cd7iGiFEb6MczKGqksBqOG/Dxg38AQfb3z14GGxWJFrEHhltN
-	 wMEmXGoK7+091ftVn5pRXYAQfQL8lDnFPBuBnR24=
+	b=oqK+W/MWKFiZ+K6frfOM4hGwFKlM5gBn82U9hGUD9lrtJ4bjvJLE5ZzHTef5Pn7/V
+	 6ADQnAXd9bhjsF/gC6plXxJpvYcVhLdLFZdzymSvnYRND4ovfgkTcM/NCuoXsl52fo
+	 xFvLilDX4hF21bXWEEIppBg2vQj4iaEG+RLreVIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	syzbot+df64c0a2e8d68e78a4fa@syzkaller.appspotmail.com,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 171/193] 9p/xen: fix connection sequence
-Date: Fri, 10 Mar 2023 14:39:13 +0100
-Message-Id: <20230310133716.820252055@linuxfoundation.org>
+Subject: [PATCH 4.14 172/193] nfc: fix memory leak of se_io context in nfc_genl_se_io
+Date: Fri, 10 Mar 2023 14:39:14 +0100
+Message-Id: <20230310133716.849553363@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -37,115 +37,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit c15fe55d14b3b4ded5af2a3260877460a6ffb8ad ]
+[ Upstream commit 25ff6f8a5a3b8dc48e8abda6f013e8cc4b14ffea ]
 
-Today the connection sequence of the Xen 9pfs frontend doesn't match
-the documented sequence. It can work reliably only for a PV 9pfs device
-having been added at boot time already, as the frontend is not waiting
-for the backend to have set its state to "XenbusStateInitWait" before
-reading the backend properties from Xenstore.
+The callback context for sending/receiving APDUs to/from the selected
+secure element is allocated inside nfc_genl_se_io and supposed to be
+eventually freed in se_io_cb callback function. However, there are several
+error paths where the bwi_timer is not charged to call se_io_cb later, and
+the cb_context is leaked.
 
-Fix that by following the documented sequence [1] (the documentation
-has a bug, so the reference is for the patch fixing that).
+The patch proposes to free the cb_context explicitly on those error paths.
 
-[1]: https://lore.kernel.org/xen-devel/20230130090937.31623-1-jgross@suse.com/T/#u
+At the moment we can't simply check 'dev->ops->se_io()' return value as it
+may be negative in both cases: when the timer was charged and was not.
 
-Link: https://lkml.kernel.org/r/20230130113036.7087-3-jgross@suse.com
-Fixes: 868eb122739a ("xen/9pfs: introduce Xen 9pfs transport driver")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Fixes: 5ce3f32b5264 ("NFC: netlink: SE API implementation")
+Reported-by: syzbot+df64c0a2e8d68e78a4fa@syzkaller.appspotmail.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_xen.c | 38 +++++++++++++++++++++++---------------
- 1 file changed, 23 insertions(+), 15 deletions(-)
+ drivers/nfc/st-nci/se.c   | 6 ++++++
+ drivers/nfc/st21nfca/se.c | 6 ++++++
+ net/nfc/netlink.c         | 4 ++++
+ 3 files changed, 16 insertions(+)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index 6bb14f33b1b5d..ebe232fd45f74 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -380,12 +380,11 @@ static int xen_9pfs_front_alloc_dataring(struct xenbus_device *dev,
- 	return ret;
- }
- 
--static int xen_9pfs_front_probe(struct xenbus_device *dev,
--				const struct xenbus_device_id *id)
-+static int xen_9pfs_front_init(struct xenbus_device *dev)
- {
- 	int ret, i;
- 	struct xenbus_transaction xbt;
--	struct xen_9pfs_front_priv *priv = NULL;
-+	struct xen_9pfs_front_priv *priv = dev_get_drvdata(&dev->dev);
- 	char *versions, *v;
- 	unsigned int max_rings, max_ring_order, len = 0;
- 
-@@ -411,11 +410,6 @@ static int xen_9pfs_front_probe(struct xenbus_device *dev,
- 	if (max_ring_order < XEN_9PFS_RING_ORDER)
- 		return -EINVAL;
- 
--	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
--	if (!priv)
--		return -ENOMEM;
--
--	priv->dev = dev;
- 	priv->num_rings = XEN_9PFS_NUM_RINGS;
- 	priv->rings = kcalloc(priv->num_rings, sizeof(*priv->rings),
- 			      GFP_KERNEL);
-@@ -473,23 +467,35 @@ static int xen_9pfs_front_probe(struct xenbus_device *dev,
- 		goto error;
+diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
+index b1d23b35aac4f..c0fbd88651b12 100644
+--- a/drivers/nfc/st-nci/se.c
++++ b/drivers/nfc/st-nci/se.c
+@@ -676,6 +676,12 @@ int st_nci_se_io(struct nci_dev *ndev, u32 se_idx,
+ 					ST_NCI_EVT_TRANSMIT_DATA, apdu,
+ 					apdu_length);
+ 	default:
++		/* Need to free cb_context here as at the moment we can't
++		 * clearly indicate to the caller if the callback function
++		 * would be called (and free it) or not. In both cases a
++		 * negative value may be returned to the caller.
++		 */
++		kfree(cb_context);
+ 		return -ENODEV;
  	}
- 
--	write_lock(&xen_9pfs_lock);
--	list_add_tail(&priv->list, &xen_9pfs_devs);
--	write_unlock(&xen_9pfs_lock);
--	dev_set_drvdata(&dev->dev, priv);
--	xenbus_switch_state(dev, XenbusStateInitialised);
--
- 	return 0;
- 
-  error_xenbus:
- 	xenbus_transaction_end(xbt, 1);
- 	xenbus_dev_fatal(dev, ret, "writing xenstore");
-  error:
--	dev_set_drvdata(&dev->dev, NULL);
- 	xen_9pfs_front_free(priv);
- 	return ret;
  }
+diff --git a/drivers/nfc/st21nfca/se.c b/drivers/nfc/st21nfca/se.c
+index 21ab3e678cf36..7946a2ee7bff5 100644
+--- a/drivers/nfc/st21nfca/se.c
++++ b/drivers/nfc/st21nfca/se.c
+@@ -247,6 +247,12 @@ int st21nfca_hci_se_io(struct nfc_hci_dev *hdev, u32 se_idx,
+ 					ST21NFCA_EVT_TRANSMIT_DATA,
+ 					apdu, apdu_length);
+ 	default:
++		/* Need to free cb_context here as at the moment we can't
++		 * clearly indicate to the caller if the callback function
++		 * would be called (and free it) or not. In both cases a
++		 * negative value may be returned to the caller.
++		 */
++		kfree(cb_context);
+ 		return -ENODEV;
+ 	}
+ }
+diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
+index be06f4e37c436..9898b6a27fefc 100644
+--- a/net/nfc/netlink.c
++++ b/net/nfc/netlink.c
+@@ -1450,7 +1450,11 @@ static int nfc_se_io(struct nfc_dev *dev, u32 se_idx,
+ 	rc = dev->ops->se_io(dev, se_idx, apdu,
+ 			apdu_length, cb, cb_context);
  
-+static int xen_9pfs_front_probe(struct xenbus_device *dev,
-+				const struct xenbus_device_id *id)
-+{
-+	struct xen_9pfs_front_priv *priv = NULL;
++	device_unlock(&dev->dev);
++	return rc;
 +
-+	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	priv->dev = dev;
-+	dev_set_drvdata(&dev->dev, priv);
-+
-+	write_lock(&xen_9pfs_lock);
-+	list_add_tail(&priv->list, &xen_9pfs_devs);
-+	write_unlock(&xen_9pfs_lock);
-+
-+	return 0;
-+}
-+
- static int xen_9pfs_front_resume(struct xenbus_device *dev)
- {
- 	dev_warn(&dev->dev, "suspsend/resume unsupported\n");
-@@ -508,6 +514,8 @@ static void xen_9pfs_front_changed(struct xenbus_device *dev,
- 		break;
- 
- 	case XenbusStateInitWait:
-+		if (!xen_9pfs_front_init(dev))
-+			xenbus_switch_state(dev, XenbusStateInitialised);
- 		break;
- 
- 	case XenbusStateConnected:
+ error:
++	kfree(cb_context);
+ 	device_unlock(&dev->dev);
+ 	return rc;
+ }
 -- 
 2.39.2
 
