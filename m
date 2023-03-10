@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C49A8825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:57:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8AA6C4339B;
-	Fri, 10 Mar 2023 14:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC9F8825
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:57:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF91C4339B;
+	Fri, 10 Mar 2023 14:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460241;
-	bh=XHRExzQx1j+rJ6c+5fMshPmq1Nz1olsd3O2cFC4Ho4s=;
+	s=korg; t=1678460243;
+	bh=1xOG5zF6VSvK8Su5d/4OIB3/VxXRnz5Kyb5Udgtlexk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oLm6n05wHEwAkJjuFoph0FlJQQl/hHcorDjqChR2vB8iNUH+omM25APt7drBaYeS8
-	 VtyU1CsqQlxllwZoeOzAeKXo+4vPhW5u45jHjLycqJOyeCaLL61EMi0/ILE92JxDKI
-	 KbG91Kh9MUup/j85gtevokiRt2rya0rlQZ3HfIkU=
+	b=OycSOwHGP0o1EMDx+be7jFOlt2VKVfBZrlBjM8I3SV1bxdnNPiecFXpFioVeiCl9l
+	 N7h3LFJirXFdKutEhjZh3a+vaGmCpF6wWCAb07Mb5S7q7KQB+u2gdlJQVfxJG8MgrI
+	 25fLbBmrUmOF676iN9G4VNKfT5ChjE+s0VuqCABA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 269/529] media: max9286: Fix memleak in max9286_v4l2_register()
-Date: Fri, 10 Mar 2023 14:36:52 +0100
-Message-Id: <20230310133817.420209772@linuxfoundation.org>
+Subject: [PATCH 5.10 270/529] media: ov2740: Fix memleak in ov2740_init_controls()
+Date: Fri, 10 Mar 2023 14:36:53 +0100
+Message-Id: <20230310133817.469230928@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -39,62 +38,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 8636c5fc7658c7c6299fb8b352d24ea4b9ba99e2 ]
+[ Upstream commit 2d899592ed7829d0d5140853bac4d58742a6b8af ]
 
-There is a kmemleak when testing the media/i2c/max9286.c with bpf mock
+There is a kmemleak when testing the media/i2c/ov2740.c with bpf mock
 device:
 
-kmemleak: 5 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
-
-unreferenced object 0xffff88810defc400 (size 256):
-  comm "python3", pid 278, jiffies 4294737563 (age 31.978s)
-  hex dump (first 32 bytes):
-    28 06 a7 0a 81 88 ff ff 00 fe 22 12 81 88 ff ff  (.........".....
-    10 c4 ef 0d 81 88 ff ff 10 c4 ef 0d 81 88 ff ff  ................
+unreferenced object 0xffff8881090e19e0 (size 16):
+  comm "51-i2c-ov2740", pid 278, jiffies 4294781584 (age 23.613s)
+  hex dump (first 16 bytes):
+    00 f3 7c 0b 81 88 ff ff 80 75 6a 09 81 88 ff ff  ..|......uj.....
   backtrace:
-    [<00000000191de6a7>] __kmalloc_node+0x44/0x1b0
-    [<000000002f4912b7>] kvmalloc_node+0x34/0x180
-    [<0000000057dc4cae>] v4l2_ctrl_new+0x325/0x10f0 [videodev]
-    [<0000000026030272>] v4l2_ctrl_new_std+0x16f/0x210 [videodev]
-    [<00000000f0d9ea2f>] max9286_probe+0x76e/0xbff [max9286]
-    [<00000000ea8f6455>] i2c_device_probe+0x28d/0x680
-    [<0000000087529af3>] really_probe+0x17c/0x3f0
-    [<00000000b08be526>] __driver_probe_device+0xe3/0x170
-    [<000000004382edea>] driver_probe_device+0x49/0x120
-    [<000000007bde528a>] __device_attach_driver+0xf7/0x150
-    [<000000009f9c6ab4>] bus_for_each_drv+0x114/0x180
-    [<00000000c8aaf588>] __device_attach+0x1e5/0x2d0
-    [<0000000041cc06b9>] bus_probe_device+0x126/0x140
-    [<000000002309860d>] device_add+0x810/0x1130
-    [<000000002827bf98>] i2c_new_client_device+0x359/0x4f0
-    [<00000000593bdc85>] of_i2c_register_device+0xf1/0x110
+    [<000000004e9fad8f>] __kmalloc_node+0x44/0x1b0
+    [<0000000039c802f4>] kvmalloc_node+0x34/0x180
+    [<000000009b8b5c63>] v4l2_ctrl_handler_init_class+0x11d/0x180
+[videodev]
+    [<0000000038644056>] ov2740_probe+0x37d/0x84f [ov2740]
+    [<0000000092489f59>] i2c_device_probe+0x28d/0x680
+    [<000000001038babe>] really_probe+0x17c/0x3f0
+    [<0000000098c7af1c>] __driver_probe_device+0xe3/0x170
+    [<00000000e1b3dc24>] device_driver_attach+0x34/0x80
+    [<000000005a04a34d>] bind_store+0x10b/0x1a0
+    [<00000000ce25d4f2>] drv_attr_store+0x49/0x70
+    [<000000007d9f4e9a>] sysfs_kf_write+0x8c/0xb0
+    [<00000000be6cff0f>] kernfs_fop_write_iter+0x216/0x2e0
+    [<0000000031ddb40a>] vfs_write+0x658/0x810
+    [<0000000041beecdd>] ksys_write+0xd6/0x1b0
+    [<0000000023755840>] do_syscall_64+0x38/0x90
+    [<00000000b2cc2da2>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-max9286_v4l2_register() calls v4l2_ctrl_new_std(), but won't free the
-created v412_ctrl when fwnode_graph_get_endpoint_by_id() failed, which
-causes the memleak. Call v4l2_ctrl_handler_free() to free the v412_ctrl.
+ov2740_init_controls() won't clean all the allocated resources in fail
+path, which may causes the memleaks. Add v4l2_ctrl_handler_free() to
+prevent memleak.
 
-Fixes: 66d8c9d2422d ("media: i2c: Add MAX9286 driver")
+Fixes: 866edc895171 ("media: i2c: Add ov2740 image sensor driver")
 Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/max9286.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/i2c/ov2740.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/max9286.c b/drivers/media/i2c/max9286.c
-index b1e2476d3c9e6..79a11c0184c65 100644
---- a/drivers/media/i2c/max9286.c
-+++ b/drivers/media/i2c/max9286.c
-@@ -890,6 +890,7 @@ static int max9286_v4l2_register(struct max9286_priv *priv)
- err_put_node:
- 	fwnode_handle_put(ep);
- err_async:
-+	v4l2_ctrl_handler_free(&priv->ctrls);
- 	max9286_v4l2_notifier_unregister(priv);
+diff --git a/drivers/media/i2c/ov2740.c b/drivers/media/i2c/ov2740.c
+index bd0d45b0d43f5..34d74e575a431 100644
+--- a/drivers/media/i2c/ov2740.c
++++ b/drivers/media/i2c/ov2740.c
+@@ -577,8 +577,10 @@ static int ov2740_init_controls(struct ov2740 *ov2740)
+ 				     V4L2_CID_TEST_PATTERN,
+ 				     ARRAY_SIZE(ov2740_test_pattern_menu) - 1,
+ 				     0, 0, ov2740_test_pattern_menu);
+-	if (ctrl_hdlr->error)
++	if (ctrl_hdlr->error) {
++		v4l2_ctrl_handler_free(ctrl_hdlr);
+ 		return ctrl_hdlr->error;
++	}
  
- 	return ret;
+ 	ov2740->sd.ctrl_handler = ctrl_hdlr;
+ 
 -- 
 2.39.2
 
