@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD6B8825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:56:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39029C4339B;
-	Fri, 10 Mar 2023 14:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D9B8825
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:56:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB52C433D2;
+	Fri, 10 Mar 2023 14:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460189;
-	bh=vxdWZ70ib5BDiLR6LhHPkD+GzH66K4L25tY+ATDqTPw=;
+	s=korg; t=1678460192;
+	bh=AIIVqu2N5Ht/vwSzmhL714X2QfHfG+2igVdoJxiaMxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U0j95Iuzm++pznJj6GMKf8RT0r4V4PNqqsHg3cDFHTYhxL413Tluu4ktU6JIz8UTX
-	 kqs1yjRoxLHn7LM8m8AUO+KdA4mT1CH7I1WSxQJVpEqHJ7YxO8o1Y4mKLg3f1ZmIYz
-	 yFoTqfsknE+1JCxXp6YRTkYrFIuSrrJ+p+YXZrXo=
+	b=nU4KiS45A6OPJ1tUGzKSIKKH04kw7L29hVIuoqET6Aar4cy5kHs35jFUj5i4aYSzh
+	 FAoD/LO0LGvBKOvrMtm5yynd7IqxjrXpmfQODGKZ5W6ZifxGAUpaIp0Rr+B+kJqqmL
+	 81OvrI4hzoWmgY0tz5zWfDNrs4dTLpwno3z6DpYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <aglo@umich.edu>,
-	NeilBrown <neilb@suse.de>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Luca Ellero <l.ellero@asem.it>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 212/529] NFS: fix disabling of swap
-Date: Fri, 10 Mar 2023 14:35:55 +0100
-Message-Id: <20230310133814.825236149@linuxfoundation.org>
+Subject: [PATCH 5.10 246/529] Input: ads7846 - dont check penirq immediately for 7845
+Date: Fri, 10 Mar 2023 14:36:29 +0100
+Message-Id: <20230310133816.359562306@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,67 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: NeilBrown <neilb@suse.de>
+From: Luca Ellero <l.ellero@asem.it>
 
-[ Upstream commit 5bab56fff53ce161ed859d9559a10361d4f79578 ]
+[ Upstream commit fa9f4275b20ec7b2a8fb05c66362d10b36f9efec ]
 
-When swap is activated to a file on an NFSv4 mount we arrange that the
-state manager thread is always present as starting a new thread requires
-memory allocations that might block waiting for swap.
+To discard false readings, one should use "ti,penirq-recheck-delay-usecs".
+Checking get_pendown_state() at the beginning, most of the time fails
+causing malfunctioning.
 
-Unfortunately the code for allowing the state manager thread to exit when
-swap is disabled was not tested properly and does not work.
-This can be seen by examining /proc/fs/nfsfs/servers after disabling swap
-and unmounting the filesystem.  The servers file will still list one
-entry.  Also a "ps" listing will show the state manager thread is still
-present.
-
-There are two problems.
- 1/ rpc_clnt_swap_deactivate() doesn't walk up the ->cl_parent list to
-    find the primary client on which the state manager runs.
-
- 2/ The thread is not woken up properly and it immediately goes back to
-    sleep without checking whether it is really needed.  Using
-    nfs4_schedule_state_manager() ensures a proper wake-up.
-
-Reported-by: Olga Kornievskaia <aglo@umich.edu>
-Fixes: 4dc73c679114 ("NFSv4: keep state manager thread active if swap is enabled")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: ffa458c1bd9b ("spi: ads7846 driver")
+Signed-off-by: Luca Ellero <l.ellero@asem.it>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230126105227.47648-4-l.ellero@asem.it
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 4 +++-
- net/sunrpc/clnt.c | 2 ++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/input/touchscreen/ads7846.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 8f502e2ac34fd..8653335c17b67 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -10400,7 +10400,9 @@ static void nfs4_disable_swap(struct inode *inode)
- 	/* The state manager thread will now exit once it is
- 	 * woken.
- 	 */
--	wake_up_var(&NFS_SERVER(inode)->nfs_client->cl_state);
-+	struct nfs_client *clp = NFS_SERVER(inode)->nfs_client;
-+
-+	nfs4_schedule_state_manager(clp);
- }
+diff --git a/drivers/input/touchscreen/ads7846.c b/drivers/input/touchscreen/ads7846.c
+index 9f5cc42a567a5..1753288cedde7 100644
+--- a/drivers/input/touchscreen/ads7846.c
++++ b/drivers/input/touchscreen/ads7846.c
+@@ -852,14 +852,8 @@ static void ads7846_report_state(struct ads7846 *ts)
+ 	if (x == MAX_12BIT)
+ 		x = 0;
  
- static const struct inode_operations nfs4_dir_inode_operations = {
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index e190d38c4c827..c6e8bd78e35d6 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -3047,6 +3047,8 @@ rpc_clnt_swap_deactivate_callback(struct rpc_clnt *clnt,
- void
- rpc_clnt_swap_deactivate(struct rpc_clnt *clnt)
- {
-+	while (clnt != clnt->cl_parent)
-+		clnt = clnt->cl_parent;
- 	if (atomic_dec_if_positive(&clnt->cl_swapper) == 0)
- 		rpc_clnt_iterate_for_each_xprt(clnt,
- 				rpc_clnt_swap_deactivate_callback, NULL);
+-	if (ts->model == 7843) {
++	if (ts->model == 7843 || ts->model == 7845) {
+ 		Rt = ts->pressure_max / 2;
+-	} else if (ts->model == 7845) {
+-		if (get_pendown_state(ts))
+-			Rt = ts->pressure_max / 2;
+-		else
+-			Rt = 0;
+-		dev_vdbg(&ts->spi->dev, "x/y: %d/%d, PD %d\n", x, y, Rt);
+ 	} else if (likely(x && z1)) {
+ 		/* compute touch pressure resistance using equation #2 */
+ 		Rt = z2;
 -- 
 2.39.2
 
