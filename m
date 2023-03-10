@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23B18821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:04:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2908EC433EF;
-	Fri, 10 Mar 2023 15:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CC88821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:04:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118AAC433EF;
+	Fri, 10 Mar 2023 15:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460655;
-	bh=nc7JkrhSCyWhyYeRYgscxZ/n38adIn35egzYd/INvgk=;
+	s=korg; t=1678460658;
+	bh=fq8ArX5XJf2iYIoI/4WeKo1Rl7tL3QXnwEECDEkCM8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x7i/5IfuhC1aG9xhVEgu3vtei3zUEJWfgovzk3Ay7QgoiNYmrjd8ptnwChDNgKosS
-	 gso8pBnlxzC9piH5FK6buOnDEPQP35037AwsZn+RcGAZzrUMstfIk1vZFKO3yau4o+
-	 ep3qR3MxgubsbErh6Mo50g6q8iljdoxbWJzUm9yI=
+	b=19VePUqXnZgdqcNjiAJAq1xgKK+22jM4iRyvB8j65q4FzxH4Rbt90ol9hTJ3VAsOL
+	 S4ax/6s4tAKNqHzfuizIMKjeQSRqBH5ImXb3xskM3AsAbARw31QZJguhup/x4H4Fvc
+	 Q762T887dvy8V7ASocFUZ2Km9jd2WFAXvm97IlGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.10 406/529] ktest.pl: Give back console on Ctrt^C on monitor
-Date: Fri, 10 Mar 2023 14:39:09 +0100
-Message-Id: <20230310133823.803920621@linuxfoundation.org>
+Subject: [PATCH 5.10 407/529] ktest.pl: Fix missing "end_monitor" when machine check fails
+Date: Fri, 10 Mar 2023 14:39:10 +0100
+Message-Id: <20230310133823.852143710@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,34 +35,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 83d29d439cd3ef23041570d55841f814af2ecac0 upstream.
+commit e8bf9b98d40dbdf4e39362e3b85a70c61da68cb7 upstream.
 
-When monitoring the console output, the stdout is being redirected to do
-so. If Ctrl^C is hit during this mode, the stdout is not back to the
-console, the user does not see anything they type (no echo).
+In the "reboot" command, it does a check of the machine to see if it is
+still alive with a simple "ssh echo" command. If it fails, it will assume
+that a normal "ssh reboot" is not possible and force a power cycle.
 
-Add "end_monitor" to the SIGINT interrupt handler to give back the console
-on Ctrl^C.
+In this case, the "start_monitor" is executed, but the "end_monitor" is
+not, and this causes the screen will not be given back to the console. That
+is, after the test, a "reset" command needs to be performed, as "echo" is
+turned off.
 
 Cc: stable@vger.kernel.org
-Fixes: 9f2cdcbbb90e7 ("ktest: Give console process a dedicated tty")
+Fixes: 6474ace999edd ("ktest.pl: Powercycle the box on reboot if no connection can be made")
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/ktest/ktest.pl |    3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/ktest/ktest.pl |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/tools/testing/ktest/ktest.pl
 +++ b/tools/testing/ktest/ktest.pl
-@@ -4283,6 +4283,9 @@ sub send_email {
- }
+@@ -1433,7 +1433,8 @@ sub reboot {
  
- sub cancel_test {
-+    if ($monitor_cnt) {
-+	end_monitor;
+ 	# Still need to wait for the reboot to finish
+ 	wait_for_monitor($time, $reboot_success_line);
+-
 +    }
-     if ($email_when_canceled) {
- 	my $name = get_test_name;
-         send_email("KTEST: Your [$name] test was cancelled",
++    if ($powercycle || $time) {
+ 	end_monitor;
+     }
+ }
 
 
