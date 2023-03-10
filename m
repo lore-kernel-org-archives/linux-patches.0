@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49378847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:55:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE02BC4339B;
-	Fri, 10 Mar 2023 13:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49672847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:55:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63CFC4339C;
+	Fri, 10 Mar 2023 13:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456553;
-	bh=+9GtUFLrq2JWqwYfiSAIwqSNcX+otGgpJwthgRTfhlI=;
+	s=korg; t=1678456556;
+	bh=2gjPKvElEvXj4BXZy5Cfn7/owezuJGNeHeAltZaJjUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eso1hc+7ykts+L2tweyMYVe2/yiPtheQMHozmVKjqDRak8xRD6Dw1ZhGlJv+hh2hY
-	 fR7kMPnDfYO5AWM5n8dJj+k4edxPCdgaD5nH9XS5yokMMx/+B37lWs0lP/ZRqyJ5GR
-	 AzqSIxjk5p2+81cQM/wgKisblYCH/6JmeDD/NtQ8=
+	b=SQOKTjQRhSmUaWvHJmmMhcvwQfevscNdIyKgq697KEK1hV/KDUXFhuBSoMs0xjACD
+	 t6uNgLIdn97vs2HOPpRzZ4EQzOeKgBUdH1ZcC7DoqFvFZ26cwDPaMgzSTOrzmAOPKl
+	 1gtRVbTGP/+hjTAdnPFg3BF678ch6glaFOX1lil0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 041/211] ubi: fastmap: Fix missed fm_anchor PEB in wear-leveling after disabling fastmap
-Date: Fri, 10 Mar 2023 14:37:01 +0100
-Message-Id: <20230310133719.981966513@linuxfoundation.org>
+Subject: [PATCH 6.2 013/211] pwm: sifive: Always let the first pwm_apply_state succeed
+Date: Fri, 10 Mar 2023 14:36:33 +0100
+Message-Id: <20230310133719.128533352@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,61 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Emil Renner Berthing <emil.renner.berthing@canonical.com>
 
-[ Upstream commit 76f9476ece445a07aeb72df9d896cd563fb5b50f ]
+[ Upstream commit 334c7b13d38321e47d1a51dba0bef9f4c403ec75 ]
 
-After disabling fastmap(ubi->fm_disabled = 1), fastmap won't be updated,
-fm_anchor PEB is missed being scheduled for erasing. Besides, fm_anchor
-PEB may have smallest erase count, it doesn't participate wear-leveling.
-The difference of erase count between fm_anchor PEB and other PEBs will
-be larger and larger later on.
+Commit 2cfe9bbec56ea579135cdd92409fff371841904f added support for the
+RGB and green PWM controlled LEDs on the HiFive Unmatched board
+managed by the leds-pwm-multicolor and leds-pwm drivers respectively.
+All three colours of the RGB LED and the green LED run from different
+lines of the same PWM, but with the same period so this works fine when
+the LED drivers are loaded one after the other.
 
-In which situation fastmap can be disabled? Initially, we have an UBI
-image with fastmap. Then the image will be atttached without module
-parameter 'fm_autoconvert', ubi turns to full scanning mode in one
-random attaching process(eg. bad fastmap caused by powercut), ubi
-fastmap is disabled since then.
+Unfortunately it does expose a race in the PWM driver when both LED
+drivers are loaded at roughly the same time. Here is an example:
 
-Fix it by not getting fm_anchor if fastmap is disabled in
-ubi_refill_pools().
+  |          Thread A           |          Thread B           |
+  |  led_pwm_mc_probe           |  led_pwm_probe              |
+  |    devm_fwnode_pwm_get      |                             |
+  |      pwm_sifive_request     |                             |
+  |        ddata->user_count++  |                             |
+  |                             |    devm_fwnode_pwm_get      |
+  |                             |      pwm_sifive_request     |
+  |                             |        ddata->user_count++  |
+  |         ...                 |          ...                |
+  |    pwm_state_apply          |    pwm_state_apply          |
+  |      pwm_sifive_apply       |      pwm_sifive_apply       |
 
-Fetch a reproducer in [Link].
+Now both calls to pwm_sifive_apply will see that ddata->approx_period,
+initially 0, is different from the requested period and the clock needs
+to be updated. But since ddata->user_count >= 2 both calls will fail
+with -EBUSY, which will then cause both LED drivers to fail to probe.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216341
-Fixes: 4b68bf9a69d22d ("ubi: Select fastmap anchor PEBs considering ...")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fix it by letting the first call to pwm_sifive_apply update the clock
+even when ddata->user_count != 1.
+
+Fixes: 9e37a53eb051 ("pwm: sifive: Add a driver for SiFive SoC PWM")
+Signed-off-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/fastmap-wl.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/pwm/pwm-sifive.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/ubi/fastmap-wl.c b/drivers/mtd/ubi/fastmap-wl.c
-index 0ee452275578d..863f571f1adb5 100644
---- a/drivers/mtd/ubi/fastmap-wl.c
-+++ b/drivers/mtd/ubi/fastmap-wl.c
-@@ -146,13 +146,15 @@ void ubi_refill_pools(struct ubi_device *ubi)
- 	if (ubi->fm_anchor) {
- 		wl_tree_add(ubi->fm_anchor, &ubi->free);
- 		ubi->free_count++;
-+		ubi->fm_anchor = NULL;
- 	}
+diff --git a/drivers/pwm/pwm-sifive.c b/drivers/pwm/pwm-sifive.c
+index 62b6acc6373db..393a4b97fc19e 100644
+--- a/drivers/pwm/pwm-sifive.c
++++ b/drivers/pwm/pwm-sifive.c
+@@ -161,7 +161,13 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
  
--	/*
--	 * All available PEBs are in ubi->free, now is the time to get
--	 * the best anchor PEBs.
--	 */
--	ubi->fm_anchor = ubi_wl_get_fm_peb(ubi, 1);
-+	if (!ubi->fm_disabled)
+ 	mutex_lock(&ddata->lock);
+ 	if (state->period != ddata->approx_period) {
+-		if (ddata->user_count != 1) {
 +		/*
-+		 * All available PEBs are in ubi->free, now is the time to get
-+		 * the best anchor PEBs.
++		 * Don't let a 2nd user change the period underneath the 1st user.
++		 * However if ddate->approx_period == 0 this is the first time we set
++		 * any period, so let whoever gets here first set the period so other
++		 * users who agree on the period won't fail.
 +		 */
-+		ubi->fm_anchor = ubi_wl_get_fm_peb(ubi, 1);
- 
- 	for (;;) {
- 		enough = 0;
++		if (ddata->user_count != 1 && ddata->approx_period) {
+ 			mutex_unlock(&ddata->lock);
+ 			return -EBUSY;
+ 		}
 -- 
 2.39.2
 
