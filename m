@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222048481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:13:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925BDC433EF;
-	Fri, 10 Mar 2023 14:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D739A8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:13:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF68C433A7;
+	Fri, 10 Mar 2023 14:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457628;
-	bh=0HITnteQuNIvLvxYnx65uwQVO2WBGbt0UdUWh0FFSQE=;
+	s=korg; t=1678457630;
+	bh=i3ZJtE2xBZNxQFezLYZc+LxXAyj4rlWfptqIAIxNKa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bcD5nT2/XHb8tPCIDT4r74ZoNh2g2mwcPjeBuERo0ExyhzNkpiXs+K3Z5nfKtNjK4
-	 FPylCzuPr7bbobfCHA+3csdVJZorYKEC5+l6YMx18vtqflcHqOEtPZ7T+10+1Gw/c5
-	 hopxji4vbjrsyX1m51n/iTKN9YLLsli5KwQzLHAk=
+	b=OYnO00kxrd49abwn4PG3T8r0LTy7ObG9R5iJ0C9VD55s+UhDJ0RwN2wuGWaX+8cIN
+	 /va9Y9+HL5ymQec6rS1LJMIswFzHmHzV9Lki/5M8RWmOZlo3NZVN6cqRfMKLJvxvGm
+	 6Ivtrnr9fMtq0b8BUnuY3MXCzts8DDKhhK7hK3aA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 196/200] io_uring/poll: allow some retries for poll triggering spuriously
-Date: Fri, 10 Mar 2023 14:40:03 +0100
-Message-Id: <20230310133723.101779685@linuxfoundation.org>
+	Pierre Gondois <pierre.gondois@arm.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.1 197/200] arm64: efi: Make efi_rt_lock a raw_spinlock
+Date: Fri, 10 Mar 2023 14:40:04 +0100
+Message-Id: <20230310133723.132137926@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -33,93 +34,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Pierre Gondois <pierre.gondois@arm.com>
 
-commit c16bda37594f83147b167d381d54c010024efecf upstream.
+commit 0e68b5517d3767562889f1d83fdb828c26adb24f upstream.
 
-If we get woken spuriously when polling and fail the operation with
--EAGAIN again, then we generally only allow polling again if data
-had been transferred at some point. This is indicated with
-REQ_F_PARTIAL_IO. However, if the spurious poll triggers when the socket
-was originally empty, then we haven't transferred data yet and we will
-fail the poll re-arm. This either punts the socket to io-wq if it's
-blocking, or it fails the request with -EAGAIN if not. Neither condition
-is desirable, as the former will slow things down, while the latter
-will make the application confused.
+Running a rt-kernel base on 6.2.0-rc3-rt1 on an Ampere Altra outputs
+the following:
+  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:46
+  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 9, name: kworker/u320:0
+  preempt_count: 2, expected: 0
+  RCU nest depth: 0, expected: 0
+  3 locks held by kworker/u320:0/9:
+  #0: ffff3fff8c27d128 ((wq_completion)efi_rts_wq){+.+.}-{0:0}, at: process_one_work (./include/linux/atomic/atomic-long.h:41)
+  #1: ffff80000861bdd0 ((work_completion)(&efi_rts_work.work)){+.+.}-{0:0}, at: process_one_work (./include/linux/atomic/atomic-long.h:41)
+  #2: ffffdf7e1ed3e460 (efi_rt_lock){+.+.}-{3:3}, at: efi_call_rts (drivers/firmware/efi/runtime-wrappers.c:101)
+  Preemption disabled at:
+  efi_virtmap_load (./arch/arm64/include/asm/mmu_context.h:248)
+  CPU: 0 PID: 9 Comm: kworker/u320:0 Tainted: G        W          6.2.0-rc3-rt1
+  Hardware name: WIWYNN Mt.Jade Server System B81.03001.0005/Mt.Jade Motherboard, BIOS 1.08.20220218 (SCP: 1.08.20220218) 2022/02/18
+  Workqueue: efi_rts_wq efi_call_rts
+  Call trace:
+  dump_backtrace (arch/arm64/kernel/stacktrace.c:158)
+  show_stack (arch/arm64/kernel/stacktrace.c:165)
+  dump_stack_lvl (lib/dump_stack.c:107 (discriminator 4))
+  dump_stack (lib/dump_stack.c:114)
+  __might_resched (kernel/sched/core.c:10134)
+  rt_spin_lock (kernel/locking/rtmutex.c:1769 (discriminator 4))
+  efi_call_rts (drivers/firmware/efi/runtime-wrappers.c:101)
+  [...]
 
-We want to ensure that a repeated poll trigger doesn't lead to infinite
-work making no progress, that's what the REQ_F_PARTIAL_IO check was
-for. But it doesn't protect against a loop post the first receive, and
-it's unnecessarily strict if we started out with an empty socket.
+This seems to come from commit ff7a167961d1 ("arm64: efi: Execute
+runtime services from a dedicated stack") which adds a spinlock. This
+spinlock is taken through:
+efi_call_rts()
+\-efi_call_virt()
+  \-efi_call_virt_pointer()
+    \-arch_efi_call_virt_setup()
 
-Add a somewhat random retry count, just to put an upper limit on the
-potential number of retries that will be done. This should be high enough
-that we won't really hit it in practice, unless something needs to be
-aborted anyway.
+Make 'efi_rt_lock' a raw_spinlock to avoid being preempted.
 
-Cc: stable@vger.kernel.org # v5.10+
-Link: https://github.com/axboe/liburing/issues/364
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ardb: The EFI runtime services are called with a different set of
+       translation tables, and are permitted to use the SIMD registers.
+       The context switch code preserves/restores neither, and so EFI
+       calls must be made with preemption disabled, rather than only
+       disabling migration.]
+
+Fixes: ff7a167961d1 ("arm64: efi: Execute runtime services from a dedicated stack")
+Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
+Cc: <stable@vger.kernel.org> # v6.1+
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c |   14 ++++++++++++--
- io_uring/poll.h |    1 +
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/efi.h |    6 +++---
+ arch/arm64/kernel/efi.c      |    2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -668,6 +668,14 @@ static void io_async_queue_proc(struct f
- 	__io_queue_proc(&apoll->poll, pt, head, &apoll->double_poll);
+--- a/arch/arm64/include/asm/efi.h
++++ b/arch/arm64/include/asm/efi.h
+@@ -33,7 +33,7 @@ int efi_set_mapping_permissions(struct m
+ ({									\
+ 	efi_virtmap_load();						\
+ 	__efi_fpsimd_begin();						\
+-	spin_lock(&efi_rt_lock);					\
++	raw_spin_lock(&efi_rt_lock);					\
+ })
+ 
+ #undef arch_efi_call_virt
+@@ -42,12 +42,12 @@ int efi_set_mapping_permissions(struct m
+ 
+ #define arch_efi_call_virt_teardown()					\
+ ({									\
+-	spin_unlock(&efi_rt_lock);					\
++	raw_spin_unlock(&efi_rt_lock);					\
+ 	__efi_fpsimd_end();						\
+ 	efi_virtmap_unload();						\
+ })
+ 
+-extern spinlock_t efi_rt_lock;
++extern raw_spinlock_t efi_rt_lock;
+ extern u64 *efi_rt_stack_top;
+ efi_status_t __efi_rt_asm_wrapper(void *, const char *, ...);
+ 
+--- a/arch/arm64/kernel/efi.c
++++ b/arch/arm64/kernel/efi.c
+@@ -146,7 +146,7 @@ asmlinkage efi_status_t efi_handle_corru
+ 	return s;
  }
  
-+/*
-+ * We can't reliably detect loops in repeated poll triggers and issue
-+ * subsequently failing. But rather than fail these immediately, allow a
-+ * certain amount of retries before we give up. Given that this condition
-+ * should _rarely_ trigger even once, we should be fine with a larger value.
-+ */
-+#define APOLL_MAX_RETRY		128
-+
- static struct async_poll *io_req_alloc_apoll(struct io_kiocb *req,
- 					     unsigned issue_flags)
- {
-@@ -683,14 +691,18 @@ static struct async_poll *io_req_alloc_a
- 		if (entry == NULL)
- 			goto alloc_apoll;
- 		apoll = container_of(entry, struct async_poll, cache);
-+		apoll->poll.retries = APOLL_MAX_RETRY;
- 	} else {
- alloc_apoll:
- 		apoll = kmalloc(sizeof(*apoll), GFP_ATOMIC);
- 		if (unlikely(!apoll))
- 			return NULL;
-+		apoll->poll.retries = APOLL_MAX_RETRY;
- 	}
- 	apoll->double_poll = NULL;
- 	req->apoll = apoll;
-+	if (unlikely(!--apoll->poll.retries))
-+		return NULL;
- 	return apoll;
- }
+-DEFINE_SPINLOCK(efi_rt_lock);
++DEFINE_RAW_SPINLOCK(efi_rt_lock);
  
-@@ -712,8 +724,6 @@ int io_arm_poll_handler(struct io_kiocb
- 		return IO_APOLL_ABORTED;
- 	if (!file_can_poll(req->file))
- 		return IO_APOLL_ABORTED;
--	if ((req->flags & (REQ_F_POLLED|REQ_F_PARTIAL_IO)) == REQ_F_POLLED)
--		return IO_APOLL_ABORTED;
- 	if (!(req->flags & REQ_F_APOLL_MULTISHOT))
- 		mask |= EPOLLONESHOT;
- 
---- a/io_uring/poll.h
-+++ b/io_uring/poll.h
-@@ -12,6 +12,7 @@ struct io_poll {
- 	struct file			*file;
- 	struct wait_queue_head		*head;
- 	__poll_t			events;
-+	int				retries;
- 	struct wait_queue_entry		wait;
- };
+ asmlinkage u64 *efi_rt_stack_top __ro_after_init;
  
 
 
