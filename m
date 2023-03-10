@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1039A8820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:51:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E406C433A4;
-	Fri, 10 Mar 2023 14:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D6B8820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:51:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A886C433D2;
+	Fri, 10 Mar 2023 14:51:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459897;
-	bh=Jq5PD/8pF/W8fAe2diH5ny8ln+MUEP/FGZzcRbZ1JqI=;
+	s=korg; t=1678459901;
+	bh=3rgg1ydyVCb7or55iwhukbvWvIEmGl1GH875ZvD8e8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sAg7wDmIHjr2aGvkSiEFnW2pXNV94Xghp9G2sVlioHYKUWh32KNqmqni8tGsEqqSM
-	 yeRocmp9i5fZ4ccTC7rO90vCzEwakgBtPbl9/clrWhcseaBqVcJjoCJKNIPWkZBeO1
-	 iJ4N8UbcXVirQ/jy3RB8XqRjULIkSJewtXAzXAW0=
+	b=i/AP6ZpMqOxheMPUYdVmWJntvaLcQZ1f37vQweGoMFegBT4eVJ4YBD+eLd1YNX1hC
+	 vxQkomVRt3rtMaC+ApU74UzzN6pWUJKxx3FCtLgXbvi2UaGHIv0Zwk6xPhOY9frLQT
+	 CqasZ5ux7/56Y+39FqxkT1G6Ee1XmxJ1ULiqek7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Adam Skladowski <a39.skl@gmail.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 157/529] drm/msm/hdmi: Add missing check for alloc_ordered_workqueue
-Date: Fri, 10 Mar 2023 14:35:00 +0100
-Message-Id: <20230310133812.230317137@linuxfoundation.org>
+Subject: [PATCH 5.10 158/529] pinctrl: qcom: pinctrl-msm8976: Correct function names for wcss pins
+Date: Fri, 10 Mar 2023 14:35:01 +0100
+Message-Id: <20230310133812.282033659@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,40 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Adam Skladowski <a39.skl@gmail.com>
 
-[ Upstream commit afe4cb96153a0d8003e4e4ebd91b5c543e10df84 ]
+[ Upstream commit a7cc0e2685082a0d79baec02df184dfa83cbfac3 ]
 
-Add check for the return value of alloc_ordered_workqueue as it may return
-NULL pointer and cause NULL pointer dereference in `hdmi_hdcp.c` and
-`hdmi_hpd.c`.
+Adjust names of function for wcss pins, also fix third gpio in bt group.
 
-Fixes: c6a57a50ad56 ("drm/msm/hdmi: add hdmi hdcp support (V3)")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/517211/
-Link: https://lore.kernel.org/r/20230106023011.3985-1-jiasheng@iscas.ac.cn
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: bcd11493f0ab ("pinctrl: qcom: Add a pinctrl driver for MSM8976 and 8956")
+Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Link: https://lore.kernel.org/r/20221231164250.74550-1-a39.skl@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pinctrl/qcom/pinctrl-msm8976.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-index efb14043a6ec4..bee208773beec 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -264,6 +264,10 @@ static struct hdmi *msm_hdmi_init(struct platform_device *pdev)
- 	pm_runtime_enable(&pdev->dev);
- 
- 	hdmi->workq = alloc_ordered_workqueue("msm_hdmi", 0);
-+	if (!hdmi->workq) {
-+		ret = -ENOMEM;
-+		goto fail;
-+	}
- 
- 	hdmi->i2c = msm_hdmi_i2c_init(hdmi);
- 	if (IS_ERR(hdmi->i2c)) {
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm8976.c b/drivers/pinctrl/qcom/pinctrl-msm8976.c
+index ec43edf9b660a..e11d845847190 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm8976.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm8976.c
+@@ -733,7 +733,7 @@ static const char * const codec_int2_groups[] = {
+ 	"gpio74",
+ };
+ static const char * const wcss_bt_groups[] = {
+-	"gpio39", "gpio47", "gpio88",
++	"gpio39", "gpio47", "gpio48",
+ };
+ static const char * const sdc3_groups[] = {
+ 	"gpio39", "gpio40", "gpio41",
+@@ -958,9 +958,9 @@ static const struct msm_pingroup msm8976_groups[] = {
+ 	PINGROUP(37, NA, NA, NA, qdss_tracedata_b, NA, NA, NA, NA, NA),
+ 	PINGROUP(38, NA, NA, NA, NA, NA, NA, NA, qdss_tracedata_b, NA),
+ 	PINGROUP(39, wcss_bt, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
+-	PINGROUP(40, wcss_wlan, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
+-	PINGROUP(41, wcss_wlan, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
+-	PINGROUP(42, wcss_wlan, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
++	PINGROUP(40, wcss_wlan2, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
++	PINGROUP(41, wcss_wlan1, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
++	PINGROUP(42, wcss_wlan0, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
+ 	PINGROUP(43, wcss_wlan, sdc3, NA, NA, qdss_tracedata_a, NA, NA, NA, NA),
+ 	PINGROUP(44, wcss_wlan, sdc3, NA, NA, NA, NA, NA, NA, NA),
+ 	PINGROUP(45, wcss_fm, NA, qdss_tracectl_a, NA, NA, NA, NA, NA, NA),
 -- 
 2.39.2
 
