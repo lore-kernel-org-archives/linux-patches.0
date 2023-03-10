@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A928489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:16:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D99CC4339E;
-	Fri, 10 Mar 2023 14:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8888489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:16:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778F0C433EF;
+	Fri, 10 Mar 2023 14:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457815;
-	bh=soEhcfaTjSO10CnrPchrIkT+gxivah+YgRmHIN9+IVs=;
+	s=korg; t=1678457819;
+	bh=xG5OAh2aZVcZFCgSs2UjSME2n33x0jHjFLBmL9uBHs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A93sma50U8wsjIDcmrKaQhYFBrOuqMX4y9V9Eq7VDApPGwUTFZtECt6FJzQM4CotQ
-	 AS504eA2dM6QfK28N5Ic+F8E8cdxM75jx1GoqPu7mdEHtAo3Y44jR2JUnIXz2s1xdd
-	 Q9C9FA83jhHrHAxPP28mcIsS2YXxq8x2QLRUxj60=
+	b=pVsdVlZZ2pLF8W0aaSHR1Up5LfKmz3sAYWTr2+XgfuGzss4PztqCWn+XIvVlJpxht
+	 x0QOg0rtQNHTz9dUcliu7Ob3C+rWPrjGRhu1ICQnXdtAG4THY3zYhOK8qgAhzlhGLe
+	 leJoQsYvswF4lyzcnctptisx7apO3af/U78ERC0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Stefan Agner <stefan@agner.ch>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Tomi Valkeinen <tomi.valkeinen@ti.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 068/252] drm: Clarify definition of the DRM_BUS_FLAG_(PIXDATA|SYNC)_* macros
-Date: Fri, 10 Mar 2023 14:37:18 +0100
-Message-Id: <20230310133720.888500543@linuxfoundation.org>
+Subject: [PATCH 4.19 069/252] drm/vc4: dpi: Add option for inverting pixel clock and output enable
+Date: Fri, 10 Mar 2023 14:37:19 +0100
+Message-Id: <20230310133720.917316643@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -38,90 +35,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-[ Upstream commit a792fa0e21876c9cbae7cc170083016299153051 ]
+[ Upstream commit 3c2707632146b22e97b0fbf6778bab8add2eaa1d ]
 
-The DRM_BUS_FLAG_PIXDATA_POSEDGE and DRM_BUS_FLAG_PIXDATA_NEGEDGE macros
-and their DRM_BUS_FLAG_SYNC_* counterparts define on which pixel clock
-edge data and sync signals are driven. They are however used in some
-drivers to define on which pixel clock edge data and sync signals are
-sampled, which should usually (but not always) be the opposite edge of
-the driving edge. This creates confusion.
+DRM provides flags for inverting pixel clock and output enable
+signals, but these were not mapped to the relevant registers.
 
-Create four new macros for both PIXDATA and SYNC that explicitly state
-the driving and sampling edge in their name to remove the confusion. The
-driving macros are defined as the opposite of the sampling macros to
-made code simpler based on the assumption that the driving and sampling
-edges are opposite.
+Add those mappings.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Stefan Agner <stefan@agner.ch>
-Tested-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ti.com>
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Link: https://lore.kernel.org/r/20220613144800.326124-10-maxime@cerno.tech
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
 Stable-dep-of: 0870d86eac8a ("drm/vc4: dpi: Fix format mapping for RGB565")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/drm_connector.h | 36 ++++++++++++++++++++++++++++++++----
- 1 file changed, 32 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/vc4/vc4_dpi.c | 66 ++++++++++++++++++++---------------
+ 1 file changed, 38 insertions(+), 28 deletions(-)
 
-diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
-index e5f641cdab5a4..f9f85a466cb8a 100644
---- a/include/drm/drm_connector.h
-+++ b/include/drm/drm_connector.h
-@@ -329,19 +329,47 @@ struct drm_display_info {
+diff --git a/drivers/gpu/drm/vc4/vc4_dpi.c b/drivers/gpu/drm/vc4/vc4_dpi.c
+index f185812970da7..2e6608c57a11a 100644
+--- a/drivers/gpu/drm/vc4/vc4_dpi.c
++++ b/drivers/gpu/drm/vc4/vc4_dpi.c
+@@ -186,35 +186,45 @@ static void vc4_dpi_encoder_enable(struct drm_encoder *encoder)
+ 	}
+ 	drm_connector_list_iter_end(&conn_iter);
  
- #define DRM_BUS_FLAG_DE_LOW		(1<<0)
- #define DRM_BUS_FLAG_DE_HIGH		(1<<1)
--/* drive data on pos. edge */
+-	if (connector && connector->display_info.num_bus_formats) {
+-		u32 bus_format = connector->display_info.bus_formats[0];
+-
+-		switch (bus_format) {
+-		case MEDIA_BUS_FMT_RGB888_1X24:
+-			dpi_c |= VC4_SET_FIELD(DPI_FORMAT_24BIT_888_RGB,
+-					       DPI_FORMAT);
+-			break;
+-		case MEDIA_BUS_FMT_BGR888_1X24:
+-			dpi_c |= VC4_SET_FIELD(DPI_FORMAT_24BIT_888_RGB,
+-					       DPI_FORMAT);
+-			dpi_c |= VC4_SET_FIELD(DPI_ORDER_BGR, DPI_ORDER);
+-			break;
+-		case MEDIA_BUS_FMT_RGB666_1X24_CPADHI:
+-			dpi_c |= VC4_SET_FIELD(DPI_FORMAT_18BIT_666_RGB_2,
+-					       DPI_FORMAT);
+-			break;
+-		case MEDIA_BUS_FMT_RGB666_1X18:
+-			dpi_c |= VC4_SET_FIELD(DPI_FORMAT_18BIT_666_RGB_1,
+-					       DPI_FORMAT);
+-			break;
+-		case MEDIA_BUS_FMT_RGB565_1X16:
+-			dpi_c |= VC4_SET_FIELD(DPI_FORMAT_16BIT_565_RGB_3,
+-					       DPI_FORMAT);
+-			break;
+-		default:
+-			DRM_ERROR("Unknown media bus format %d\n", bus_format);
+-			break;
++	if (connector) {
++		if (connector->display_info.num_bus_formats) {
++			u32 bus_format = connector->display_info.bus_formats[0];
 +
-+/*
-+ * Don't use those two flags directly, use the DRM_BUS_FLAG_PIXDATA_DRIVE_*
-+ * and DRM_BUS_FLAG_PIXDATA_SAMPLE_* variants to qualify the flags explicitly.
-+ * The DRM_BUS_FLAG_PIXDATA_SAMPLE_* flags are defined as the opposite of the
-+ * DRM_BUS_FLAG_PIXDATA_DRIVE_* flags to make code simpler, as signals are
-+ * usually to be sampled on the opposite edge of the driving edge.
-+ */
- #define DRM_BUS_FLAG_PIXDATA_POSEDGE	(1<<2)
--/* drive data on neg. edge */
- #define DRM_BUS_FLAG_PIXDATA_NEGEDGE	(1<<3)
++			switch (bus_format) {
++			case MEDIA_BUS_FMT_RGB888_1X24:
++				dpi_c |= VC4_SET_FIELD(DPI_FORMAT_24BIT_888_RGB,
++						       DPI_FORMAT);
++				break;
++			case MEDIA_BUS_FMT_BGR888_1X24:
++				dpi_c |= VC4_SET_FIELD(DPI_FORMAT_24BIT_888_RGB,
++						       DPI_FORMAT);
++				dpi_c |= VC4_SET_FIELD(DPI_ORDER_BGR,
++						       DPI_ORDER);
++				break;
++			case MEDIA_BUS_FMT_RGB666_1X24_CPADHI:
++				dpi_c |= VC4_SET_FIELD(DPI_FORMAT_18BIT_666_RGB_2,
++						       DPI_FORMAT);
++				break;
++			case MEDIA_BUS_FMT_RGB666_1X18:
++				dpi_c |= VC4_SET_FIELD(DPI_FORMAT_18BIT_666_RGB_1,
++						       DPI_FORMAT);
++				break;
++			case MEDIA_BUS_FMT_RGB565_1X16:
++				dpi_c |= VC4_SET_FIELD(DPI_FORMAT_16BIT_565_RGB_3,
++						       DPI_FORMAT);
++				break;
++			default:
++				DRM_ERROR("Unknown media bus format %d\n",
++					  bus_format);
++				break;
++			}
+ 		}
 +
-+/* Drive data on rising edge */
-+#define DRM_BUS_FLAG_PIXDATA_DRIVE_POSEDGE	DRM_BUS_FLAG_PIXDATA_POSEDGE
-+/* Drive data on falling edge */
-+#define DRM_BUS_FLAG_PIXDATA_DRIVE_NEGEDGE	DRM_BUS_FLAG_PIXDATA_NEGEDGE
-+/* Sample data on rising edge */
-+#define DRM_BUS_FLAG_PIXDATA_SAMPLE_POSEDGE	DRM_BUS_FLAG_PIXDATA_NEGEDGE
-+/* Sample data on falling edge */
-+#define DRM_BUS_FLAG_PIXDATA_SAMPLE_NEGEDGE	DRM_BUS_FLAG_PIXDATA_POSEDGE
++		if (connector->display_info.bus_flags & DRM_BUS_FLAG_PIXDATA_DRIVE_NEGEDGE)
++			dpi_c |= DPI_PIXEL_CLK_INVERT;
 +
- /* data is transmitted MSB to LSB on the bus */
- #define DRM_BUS_FLAG_DATA_MSB_TO_LSB	(1<<4)
- /* data is transmitted LSB to MSB on the bus */
- #define DRM_BUS_FLAG_DATA_LSB_TO_MSB	(1<<5)
--/* drive sync on pos. edge */
-+
-+/*
-+ * Similarly to the DRM_BUS_FLAG_PIXDATA_* flags, don't use these two flags
-+ * directly, use one of the DRM_BUS_FLAG_SYNC_(DRIVE|SAMPLE)_* instead.
-+ */
- #define DRM_BUS_FLAG_SYNC_POSEDGE	(1<<6)
--/* drive sync on neg. edge */
- #define DRM_BUS_FLAG_SYNC_NEGEDGE	(1<<7)
- 
-+/* Drive sync on rising edge */
-+#define DRM_BUS_FLAG_SYNC_DRIVE_POSEDGE		DRM_BUS_FLAG_SYNC_POSEDGE
-+/* Drive sync on falling edge */
-+#define DRM_BUS_FLAG_SYNC_DRIVE_NEGEDGE		DRM_BUS_FLAG_SYNC_NEGEDGE
-+/* Sample sync on rising edge */
-+#define DRM_BUS_FLAG_SYNC_SAMPLE_POSEDGE	DRM_BUS_FLAG_SYNC_NEGEDGE
-+/* Sample sync on falling edge */
-+#define DRM_BUS_FLAG_SYNC_SAMPLE_NEGEDGE	DRM_BUS_FLAG_SYNC_POSEDGE
-+
- 	/**
- 	 * @bus_flags: Additional information (like pixel signal polarity) for
- 	 * the pixel data on the bus, using DRM_BUS_FLAGS\_ defines.
++		if (connector->display_info.bus_flags & DRM_BUS_FLAG_DE_LOW)
++			dpi_c |= DPI_OUTPUT_ENABLE_INVERT;
+ 	} else {
+ 		/* Default to 24bit if no connector found. */
+ 		dpi_c |= VC4_SET_FIELD(DPI_FORMAT_24BIT_888_RGB, DPI_FORMAT);
 -- 
 2.39.2
 
