@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC01847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:50:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82872C433EF;
-	Fri, 10 Mar 2023 13:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D677F847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:50:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE33C433EF;
+	Fri, 10 Mar 2023 13:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456241;
-	bh=po/2gNyyaQZWSeGCo/DfBC5O8IG74SYUlCFbh3ZA+Lg=;
+	s=korg; t=1678456243;
+	bh=g9Lv4qTeLQdX9C55kCFkrGGrESf4pXX0d1ZWauN1kUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YY+q69qcjitrylBiSSGeU5V0O8SHzaxMX9d1tDDi6RXuFszDzyDWN1aNeytb+eubk
-	 huv7jjZ2ZS5g0hEwaS26Ypqg5glitDCsld1wa0rHHdbQG7UD44bYGd1bOr1tJpCFGH
-	 SzYDnwPtXClPyQJ8PP0VaQVw6jtOznnvMnTDnVS8=
+	b=NHYfNPcdj2T9RJxTiDWXKdDjc/494gvqm1lQhipIyWYh4wSXz2YwxeUjDNGjXj7Oj
+	 PYzcMFda/HWKJYHGxRsXf53h4r8gwg98hIUFchSpqsHcUsCLZ+CZA1UqqTgo5aoE6E
+	 rlPx2MHGL4KQ4ta0lCT9Wb1DUQX/id1IFrnmD8bY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Jun Nie <jun.nie@linaro.org>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 4.14 127/193] ext4: optimize ea_inode block expansion
-Date: Fri, 10 Mar 2023 14:38:29 +0100
-Message-Id: <20230310133715.472460558@linuxfoundation.org>
+Subject: [PATCH 4.14 128/193] ext4: refuse to create ea block when umounted
+Date: Fri, 10 Mar 2023 14:38:30 +0100
+Message-Id: <20230310133715.502156354@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -38,93 +38,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Jun Nie <jun.nie@linaro.org>
 
-commit 1e9d62d252812575ded7c620d8fc67c32ff06c16 upstream.
+commit f31173c19901a96bb2ebf6bcfec8a08df7095c91 upstream.
 
-Copy ea data from inode entry when expanding ea block if possible.
-Then remove the ea entry if expansion success. Thus memcpy to a
-temporary buffer may be avoided.
-
-If the expansion fails, we do not need to recovery the removed ea
-entry neither in this way.
+The ea block expansion need to access s_root while it is
+already set as NULL when umount is triggered. Refuse this
+request to avoid panic.
 
 Reported-by: syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com
 Link: https://syzkaller.appspot.com/bug?id=3613786cb88c93aa1c6a279b1df6a7b201347d08
-Link: https://lore.kernel.org/r/20230103014517.495275-2-jun.nie@linaro.org
+Link: https://lore.kernel.org/r/20230103014517.495275-3-jun.nie@linaro.org
 Cc: stable@kernel.org
 Signed-off-by: Jun Nie <jun.nie@linaro.org>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |   28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ fs/ext4/xattr.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
 --- a/fs/ext4/xattr.c
 +++ b/fs/ext4/xattr.c
-@@ -2569,9 +2569,8 @@ static int ext4_xattr_move_to_block(hand
+@@ -1426,6 +1426,13 @@ static struct inode *ext4_xattr_inode_cr
+ 	uid_t owner[2] = { i_uid_read(inode), i_gid_read(inode) };
+ 	int err;
  
- 	is = kzalloc(sizeof(struct ext4_xattr_ibody_find), GFP_NOFS);
- 	bs = kzalloc(sizeof(struct ext4_xattr_block_find), GFP_NOFS);
--	buffer = kvmalloc(value_size, GFP_NOFS);
- 	b_entry_name = kmalloc(entry->e_name_len + 1, GFP_NOFS);
--	if (!is || !bs || !buffer || !b_entry_name) {
-+	if (!is || !bs || !b_entry_name) {
- 		error = -ENOMEM;
- 		goto out;
- 	}
-@@ -2583,12 +2582,18 @@ static int ext4_xattr_move_to_block(hand
- 
- 	/* Save the entry name and the entry value */
- 	if (entry->e_value_inum) {
-+		buffer = kvmalloc(value_size, GFP_NOFS);
-+		if (!buffer) {
-+			error = -ENOMEM;
-+			goto out;
-+		}
++	if (inode->i_sb->s_root == NULL) {
++		ext4_warning(inode->i_sb,
++			     "refuse to create EA inode when umounting");
++		WARN_ON(1);
++		return ERR_PTR(-EINVAL);
++	}
 +
- 		error = ext4_xattr_inode_get(inode, entry, buffer, value_size);
- 		if (error)
- 			goto out;
- 	} else {
- 		size_t value_offs = le16_to_cpu(entry->e_value_offs);
--		memcpy(buffer, (void *)IFIRST(header) + value_offs, value_size);
-+		buffer = (void *)IFIRST(header) + value_offs;
- 	}
- 
- 	memcpy(b_entry_name, entry->e_name, entry->e_name_len);
-@@ -2603,25 +2608,26 @@ static int ext4_xattr_move_to_block(hand
- 	if (error)
- 		goto out;
- 
--	/* Remove the chosen entry from the inode */
--	error = ext4_xattr_ibody_set(handle, inode, &i, is);
--	if (error)
--		goto out;
--
- 	i.value = buffer;
- 	i.value_len = value_size;
- 	error = ext4_xattr_block_find(inode, &i, bs);
- 	if (error)
- 		goto out;
- 
--	/* Add entry which was removed from the inode into the block */
-+	/* Move ea entry from the inode into the block */
- 	error = ext4_xattr_block_set(handle, inode, &i, bs);
- 	if (error)
- 		goto out;
--	error = 0;
-+
-+	/* Remove the chosen entry from the inode */
-+	i.value = NULL;
-+	i.value_len = 0;
-+	error = ext4_xattr_ibody_set(handle, inode, &i, is);
-+
- out:
- 	kfree(b_entry_name);
--	kvfree(buffer);
-+	if (entry->e_value_inum && buffer)
-+		kvfree(buffer);
- 	if (is)
- 		brelse(is->iloc.bh);
- 	if (bs)
+ 	/*
+ 	 * Let the next inode be the goal, so we try and allocate the EA inode
+ 	 * in the same group, or nearby one.
 
 
