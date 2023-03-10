@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A46847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C0CC4339B;
-	Fri, 10 Mar 2023 13:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFDB847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB78C4339C;
+	Fri, 10 Mar 2023 13:59:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456746;
-	bh=vMw/KvoENkUA9MFbFksvsi+yNjoGUrGvqWqocmtou6A=;
+	s=korg; t=1678456749;
+	bh=gxMMqMxrIZ9Mh5oUnqRVX2jTs7d2FUWQqRJppSgg/W0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vLmCIJnaGDsDtVOwxmgDwL1zpJEiGCIzCd3wAaWMGoqKfiuJp4go9mkvnq9uTo2XY
-	 DVHVEV1uJ3I1odYqA6fmBz5IWCRtRlTXhiBlTpyNPc0ltl+f5YN6JfWMsstpHDZu+a
-	 EY77y5huUemvNLTeoSt9QTgZzB1/T+peQxTptpag=
+	b=k+ypdpotXr2WAr8kNfkd3jFdEKt6i1T9P+9SXfbSUmCauzX/Ki1Dl4fCdNIrnV+dr
+	 zXAOCt/Wyc9eJsqdTMDj2j3ObOu0wDRuy83iGZpBgVh/l3DAHogpqryz8YnwtCTh2/
+	 yfdJxRUK0UvLpFh3ml9U1AjI+99CrqgtHpsVRolE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <seanga2@gmail.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Ying Xu <yinxu@redhat.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 079/211] net: sunhme: Fix region request
-Date: Fri, 10 Mar 2023 14:37:39 +0100
-Message-Id: <20230310133721.185649392@linuxfoundation.org>
+Subject: [PATCH 6.2 080/211] sctp: add a refcnt in sctp_stream_priorities to avoid a nested loop
+Date: Fri, 10 Mar 2023 14:37:40 +0100
+Message-Id: <20230310133721.214293813@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,42 +37,164 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Anderson <seanga2@gmail.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit ee0a735fd97ccde766ab557d1fc722c92cebacda ]
+[ Upstream commit 68ba44639537de6f91fe32783766322d41848127 ]
 
-devm_request_region is for I/O regions. Use devm_request_mem_region
-instead.  This fixes the driver failing to probe since 99df45c9e0a4
-("sunhme: fix an IS_ERR() vs NULL check in probe"), which checked the
-result.
+With this refcnt added in sctp_stream_priorities, we don't need to
+traverse all streams to check if the prio is used by other streams
+when freeing one stream's prio in sctp_sched_prio_free_sid(). This
+can avoid a nested loop (up to 65535 * 65535), which may cause a
+stuck as Ying reported:
 
-Fixes: 914d9b2711dd ("sunhme: switch to devres")
-Signed-off-by: Sean Anderson <seanga2@gmail.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://lore.kernel.org/r/20230222204242.2658247-1-seanga2@gmail.com
+    watchdog: BUG: soft lockup - CPU#23 stuck for 26s! [ksoftirqd/23:136]
+    Call Trace:
+     <TASK>
+     sctp_sched_prio_free_sid+0xab/0x100 [sctp]
+     sctp_stream_free_ext+0x64/0xa0 [sctp]
+     sctp_stream_free+0x31/0x50 [sctp]
+     sctp_association_free+0xa5/0x200 [sctp]
+
+Note that it doesn't need to use refcount_t type for this counter,
+as its accessing is always protected under the sock lock.
+
+v1->v2:
+ - add a check in sctp_sched_prio_set to avoid the possible prio_head
+   refcnt overflow.
+
+Fixes: 9ed7bfc79542 ("sctp: fix memory leak in sctp_stream_outq_migrate()")
+Reported-by: Ying Xu <yinxu@redhat.com>
+Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/825eb0c905cb864991eba335f4a2b780e543f06b.1677085641.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/sunhme.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/net/sctp/structs.h   |  1 +
+ net/sctp/stream_sched_prio.c | 52 +++++++++++++++---------------------
+ 2 files changed, 22 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/net/ethernet/sun/sunhme.c b/drivers/net/ethernet/sun/sunhme.c
-index 1c16548415cdd..b0c7ab74a82ed 100644
---- a/drivers/net/ethernet/sun/sunhme.c
-+++ b/drivers/net/ethernet/sun/sunhme.c
-@@ -2894,8 +2894,10 @@ static int happy_meal_pci_probe(struct pci_dev *pdev,
- 		goto err_out_clear_quattro;
+diff --git a/include/net/sctp/structs.h b/include/net/sctp/structs.h
+index afa3781e3ca21..e1f6e7fc2b11e 100644
+--- a/include/net/sctp/structs.h
++++ b/include/net/sctp/structs.h
+@@ -1412,6 +1412,7 @@ struct sctp_stream_priorities {
+ 	/* The next stream in line */
+ 	struct sctp_stream_out_ext *next;
+ 	__u16 prio;
++	__u16 users;
+ };
+ 
+ struct sctp_stream_out_ext {
+diff --git a/net/sctp/stream_sched_prio.c b/net/sctp/stream_sched_prio.c
+index 42d4800f263dd..4d4d9da331f4c 100644
+--- a/net/sctp/stream_sched_prio.c
++++ b/net/sctp/stream_sched_prio.c
+@@ -25,6 +25,18 @@
+ 
+ static void sctp_sched_prio_unsched_all(struct sctp_stream *stream);
+ 
++static struct sctp_stream_priorities *sctp_sched_prio_head_get(struct sctp_stream_priorities *p)
++{
++	p->users++;
++	return p;
++}
++
++static void sctp_sched_prio_head_put(struct sctp_stream_priorities *p)
++{
++	if (p && --p->users == 0)
++		kfree(p);
++}
++
+ static struct sctp_stream_priorities *sctp_sched_prio_new_head(
+ 			struct sctp_stream *stream, int prio, gfp_t gfp)
+ {
+@@ -38,6 +50,7 @@ static struct sctp_stream_priorities *sctp_sched_prio_new_head(
+ 	INIT_LIST_HEAD(&p->active);
+ 	p->next = NULL;
+ 	p->prio = prio;
++	p->users = 1;
+ 
+ 	return p;
+ }
+@@ -53,7 +66,7 @@ static struct sctp_stream_priorities *sctp_sched_prio_get_head(
+ 	 */
+ 	list_for_each_entry(p, &stream->prio_list, prio_sched) {
+ 		if (p->prio == prio)
+-			return p;
++			return sctp_sched_prio_head_get(p);
+ 		if (p->prio > prio)
+ 			break;
+ 	}
+@@ -70,7 +83,7 @@ static struct sctp_stream_priorities *sctp_sched_prio_get_head(
+ 			 */
+ 			break;
+ 		if (p->prio == prio)
+-			return p;
++			return sctp_sched_prio_head_get(p);
  	}
  
--	hpreg_res = devm_request_region(&pdev->dev, pci_resource_start(pdev, 0),
--					pci_resource_len(pdev, 0), DRV_NAME);
-+	hpreg_res = devm_request_mem_region(&pdev->dev,
-+					    pci_resource_start(pdev, 0),
-+					    pci_resource_len(pdev, 0),
-+					    DRV_NAME);
- 	if (!hpreg_res) {
- 		err = -EBUSY;
- 		dev_err(&pdev->dev, "Cannot obtain PCI resources, aborting.\n");
+ 	/* If not even there, allocate a new one. */
+@@ -154,32 +167,21 @@ static int sctp_sched_prio_set(struct sctp_stream *stream, __u16 sid,
+ 	struct sctp_stream_out_ext *soute = sout->ext;
+ 	struct sctp_stream_priorities *prio_head, *old;
+ 	bool reschedule = false;
+-	int i;
++
++	old = soute->prio_head;
++	if (old && old->prio == prio)
++		return 0;
+ 
+ 	prio_head = sctp_sched_prio_get_head(stream, prio, gfp);
+ 	if (!prio_head)
+ 		return -ENOMEM;
+ 
+ 	reschedule = sctp_sched_prio_unsched(soute);
+-	old = soute->prio_head;
+ 	soute->prio_head = prio_head;
+ 	if (reschedule)
+ 		sctp_sched_prio_sched(stream, soute);
+ 
+-	if (!old)
+-		/* Happens when we set the priority for the first time */
+-		return 0;
+-
+-	for (i = 0; i < stream->outcnt; i++) {
+-		soute = SCTP_SO(stream, i)->ext;
+-		if (soute && soute->prio_head == old)
+-			/* It's still in use, nothing else to do here. */
+-			return 0;
+-	}
+-
+-	/* No hits, we are good to free it. */
+-	kfree(old);
+-
++	sctp_sched_prio_head_put(old);
+ 	return 0;
+ }
+ 
+@@ -206,20 +208,8 @@ static int sctp_sched_prio_init_sid(struct sctp_stream *stream, __u16 sid,
+ 
+ static void sctp_sched_prio_free_sid(struct sctp_stream *stream, __u16 sid)
+ {
+-	struct sctp_stream_priorities *prio = SCTP_SO(stream, sid)->ext->prio_head;
+-	int i;
+-
+-	if (!prio)
+-		return;
+-
++	sctp_sched_prio_head_put(SCTP_SO(stream, sid)->ext->prio_head);
+ 	SCTP_SO(stream, sid)->ext->prio_head = NULL;
+-	for (i = 0; i < stream->outcnt; i++) {
+-		if (SCTP_SO(stream, i)->ext &&
+-		    SCTP_SO(stream, i)->ext->prio_head == prio)
+-			return;
+-	}
+-
+-	kfree(prio);
+ }
+ 
+ static void sctp_sched_prio_enqueue(struct sctp_outq *q,
 -- 
 2.39.2
 
