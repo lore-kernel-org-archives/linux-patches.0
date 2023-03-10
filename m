@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE944881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:41:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BEDC4339E;
-	Fri, 10 Mar 2023 14:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F44881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:41:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57BACC4339E;
+	Fri, 10 Mar 2023 14:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459296;
-	bh=9Wd3+A7H74RVfJiZ95w/ViiZImUKdM+UsNe/rGiW5IE=;
+	s=korg; t=1678459299;
+	bh=Q4pY6Vuso7R22lRpu5bLa0CR9HFE/MNmbS1Rg/Ml1Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wA2XuBys4EbgtVsV/zDco33LhzDFqJYjpXRWU0ZJddM2TSnKkHNPPMXms/EV6rd7S
-	 Cu/FrUBn1UK5eRpJE1uczSEvqKQF+do377qhFyq1cEE31KioIOebDNihntXHYhPQMM
-	 IO2BSWfyIDtcpkQ2MvBm6VbvuNnBkNYFbCEaYHXc=
+	b=qFmhDLhnUmmaUZNY/AhSmofpvLYZUpLgfceIAj2vJ9R4Vvl6cy6EAWt5VbYAJ1XxF
+	 1DDY0BlLa1CTb1sJkuqe0641fiwU+yDwM2Ws45W9iyOje9kkCG1s/kK0aHaZ76ttZ+
+	 BGauZrAzVAU+mrhxUnDGQCC1tqrwpiKfaCuQRoYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Yunsheng Lin <linyunsheng@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 287/357] pwm: stm32-lp: fix the check on arr and cmp registers update
-Date: Fri, 10 Mar 2023 14:39:36 +0100
-Message-Id: <20230310133747.424753491@linuxfoundation.org>
+Subject: [PATCH 5.4 314/357] net: fix __dev_kfree_skb_any() vs drop monitor
+Date: Fri, 10 Mar 2023 14:40:03 +0100
+Message-Id: <20230310133748.548296099@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,39 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3066bc2d58be31275afb51a589668f265e419c37 ]
+[ Upstream commit ac3ad19584b26fae9ac86e4faebe790becc74491 ]
 
-The ARR (auto reload register) and CMP (compare) registers are
-successively written. The status bits to check the update of these
-registers are polled together with regmap_read_poll_timeout().
-The condition to end the loop may become true, even if one of the
-register isn't correctly updated.
-So ensure both status bits are set before clearing them.
+dev_kfree_skb() is aliased to consume_skb().
 
-Fixes: e70a540b4e02 ("pwm: Add STM32 LPTimer PWM driver")
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+When a driver is dropping a packet by calling dev_kfree_skb_any()
+we should propagate the drop reason instead of pretending
+the packet was consumed.
+
+Note: Now we have enum skb_drop_reason we could remove
+enum skb_free_reason (for linux-6.4)
+
+v2: added an unlikely(), suggested by Yunsheng Lin.
+
+Fixes: e6247027e517 ("net: introduce dev_consume_skb_any()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Yunsheng Lin <linyunsheng@huawei.com>
+Reviewed-by: Yunsheng Lin <linyunsheng@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32-lp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/dev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-stm32-lp.c b/drivers/pwm/pwm-stm32-lp.c
-index 05bb1f95a7739..20657c649c65e 100644
---- a/drivers/pwm/pwm-stm32-lp.c
-+++ b/drivers/pwm/pwm-stm32-lp.c
-@@ -127,7 +127,7 @@ static int stm32_pwm_lp_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 615cdaac3e729..1a4e20c4ba053 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -2735,8 +2735,10 @@ void __dev_kfree_skb_any(struct sk_buff *skb, enum skb_free_reason reason)
+ {
+ 	if (in_irq() || irqs_disabled())
+ 		__dev_kfree_skb_irq(skb, reason);
++	else if (unlikely(reason == SKB_REASON_DROPPED))
++		kfree_skb(skb);
+ 	else
+-		dev_kfree_skb(skb);
++		consume_skb(skb);
+ }
+ EXPORT_SYMBOL(__dev_kfree_skb_any);
  
- 	/* ensure CMP & ARR registers are properly written */
- 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
--				       (val & STM32_LPTIM_CMPOK_ARROK),
-+				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
- 				       100, 1000);
- 	if (ret) {
- 		dev_err(priv->chip.dev, "ARR/CMP registers write issue\n");
 -- 
 2.39.2
 
