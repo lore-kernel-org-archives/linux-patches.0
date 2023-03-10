@@ -1,29 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C118481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:13:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA016C4339E;
-	Fri, 10 Mar 2023 14:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222048481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:13:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925BDC433EF;
+	Fri, 10 Mar 2023 14:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457625;
-	bh=k0RF+a3AhoRQllXllO7JwwmPs6fYeQVPqzJoQ3FDxy0=;
+	s=korg; t=1678457628;
+	bh=0HITnteQuNIvLvxYnx65uwQVO2WBGbt0UdUWh0FFSQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ch/CSgOsxxTZh4rrhbpUgZCND0eAa8rMju3NsZY0r+qZe0m0mm/z0Tfh/Zoa/J8Ph
-	 q6cX23+/zYjrB87YUGSWMVg/dnIkbhsi9uytUWmE9NbhUzivf3coalgY0GMcE4WmYg
-	 mHmDDY9DoC98IGMZSWdE/GyRpPAJb+XgFvO090Pk=
+	b=bcD5nT2/XHb8tPCIDT4r74ZoNh2g2mwcPjeBuERo0ExyhzNkpiXs+K3Z5nfKtNjK4
+	 FPylCzuPr7bbobfCHA+3csdVJZorYKEC5+l6YMx18vtqflcHqOEtPZ7T+10+1Gw/c5
+	 hopxji4vbjrsyX1m51n/iTKN9YLLsli5KwQzLHAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Alexander Motin <mav@ixsystems.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 161/200] PCI: Take other bus devices into account when distributing resources
-Date: Fri, 10 Mar 2023 14:39:28 +0100
-Message-Id: <20230310133722.059385120@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 196/200] io_uring/poll: allow some retries for poll triggering spuriously
+Date: Fri, 10 Mar 2023 14:40:03 +0100
+Message-Id: <20230310133723.101779685@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -37,281 +33,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 9db0b9b6a14249ef65a5f1e5e3b37762af96f425 ]
+commit c16bda37594f83147b167d381d54c010024efecf upstream.
 
-A PCI bridge may reside on a bus with other devices as well. The resource
-distribution code does not take this into account and therefore it expands
-the bridge resource windows too much, not leaving space for the other
-devices (or functions of a multifunction device).  This leads to an issue
-that Jonathan reported when running QEMU with the following topology (QEMU
-parameters):
+If we get woken spuriously when polling and fail the operation with
+-EAGAIN again, then we generally only allow polling again if data
+had been transferred at some point. This is indicated with
+REQ_F_PARTIAL_IO. However, if the spurious poll triggers when the socket
+was originally empty, then we haven't transferred data yet and we will
+fail the poll re-arm. This either punts the socket to io-wq if it's
+blocking, or it fails the request with -EAGAIN if not. Neither condition
+is desirable, as the former will slow things down, while the latter
+will make the application confused.
 
-  -device pcie-root-port,port=0,id=root_port13,chassis=0,slot=2  \
-  -device x3130-upstream,id=sw1,bus=root_port13,multifunction=on \
-  -device e1000,bus=root_port13,addr=0.1                         \
-  -device xio3130-downstream,id=fun1,bus=sw1,chassis=0,slot=3    \
-  -device e1000,bus=fun1
+We want to ensure that a repeated poll trigger doesn't lead to infinite
+work making no progress, that's what the REQ_F_PARTIAL_IO check was
+for. But it doesn't protect against a loop post the first receive, and
+it's unnecessarily strict if we started out with an empty socket.
 
-The first e1000 NIC here is another function in the switch upstream port.
-This leads to following errors:
+Add a somewhat random retry count, just to put an upper limit on the
+potential number of retries that will be done. This should be high enough
+that we won't really hit it in practice, unless something needs to be
+aborted anyway.
 
-  pci 0000:00:04.0: bridge window [mem 0x10200000-0x103fffff] to [bus 02-04]
-  pci 0000:02:00.0: bridge window [mem 0x10200000-0x103fffff] to [bus 03-04]
-  pci 0000:02:00.1: BAR 0: failed to assign [mem size 0x00020000]
-  e1000 0000:02:00.1: can't ioremap BAR 0: [??? 0x00000000 flags 0x0]
-
-Fix this by taking into account bridge windows, device BARs and SR-IOV PF
-BARs on the bus (PF BARs include space for VF BARS so only account PF
-BARs), including the ones belonging to bridges themselves if it has any.
-
-Link: https://lore.kernel.org/linux-pci/20221014124553.0000696f@huawei.com/
-Link: https://lore.kernel.org/linux-pci/6053736d-1923-41e7-def9-7585ce1772d9@ixsystems.com/
-Link: https://lore.kernel.org/r/20230131092405.29121-3-mika.westerberg@linux.intel.com
-Reported-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reported-by: Alexander Motin <mav@ixsystems.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v5.10+
+Link: https://github.com/axboe/liburing/issues/364
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/setup-bus.c | 176 ++++++++++++++++++++++++----------------
- 1 file changed, 106 insertions(+), 70 deletions(-)
+ io_uring/poll.c |   14 ++++++++++++--
+ io_uring/poll.h |    1 +
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index e440f264accb8..b7b8dddb77722 100644
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -1765,12 +1765,67 @@ static void adjust_bridge_window(struct pci_dev *bridge, struct resource *res,
- 		add_size = size - new_size;
- 		pci_dbg(bridge, "bridge window %pR shrunken by %pa\n", res,
- 			&add_size);
-+	} else {
-+		return;
- 	}
- 
- 	res->end = res->start + new_size - 1;
- 	remove_from_list(add_list, res);
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -668,6 +668,14 @@ static void io_async_queue_proc(struct f
+ 	__io_queue_proc(&apoll->poll, pt, head, &apoll->double_poll);
  }
  
-+static void remove_dev_resource(struct resource *avail, struct pci_dev *dev,
-+				struct resource *res)
-+{
-+	resource_size_t size, align, tmp;
-+
-+	size = resource_size(res);
-+	if (!size)
-+		return;
-+
-+	align = pci_resource_alignment(dev, res);
-+	align = align ? ALIGN(avail->start, align) - avail->start : 0;
-+	tmp = align + size;
-+	avail->start = min(avail->start + tmp, avail->end + 1);
-+}
-+
-+static void remove_dev_resources(struct pci_dev *dev, struct resource *io,
-+				 struct resource *mmio,
-+				 struct resource *mmio_pref)
-+{
-+	int i;
-+
-+	for (i = 0; i < PCI_NUM_RESOURCES; i++) {
-+		struct resource *res = &dev->resource[i];
-+
-+		if (resource_type(res) == IORESOURCE_IO) {
-+			remove_dev_resource(io, dev, res);
-+		} else if (resource_type(res) == IORESOURCE_MEM) {
-+
-+			/*
-+			 * Make sure prefetchable memory is reduced from
-+			 * the correct resource. Specifically we put 32-bit
-+			 * prefetchable memory in non-prefetchable window
-+			 * if there is an 64-bit pretchable window.
-+			 *
-+			 * See comments in __pci_bus_size_bridges() for
-+			 * more information.
-+			 */
-+			if ((res->flags & IORESOURCE_PREFETCH) &&
-+			    ((res->flags & IORESOURCE_MEM_64) ==
-+			     (mmio_pref->flags & IORESOURCE_MEM_64)))
-+				remove_dev_resource(mmio_pref, dev, res);
-+			else
-+				remove_dev_resource(mmio, dev, res);
-+		}
-+	}
-+}
-+
 +/*
-+ * io, mmio and mmio_pref contain the total amount of bridge window space
-+ * available. This includes the minimal space needed to cover all the
-+ * existing devices on the bus and the possible extra space that can be
-+ * shared with the bridges.
++ * We can't reliably detect loops in repeated poll triggers and issue
++ * subsequently failing. But rather than fail these immediately, allow a
++ * certain amount of retries before we give up. Given that this condition
++ * should _rarely_ trigger even once, we should be fine with a larger value.
 + */
- static void pci_bus_distribute_available_resources(struct pci_bus *bus,
- 					    struct list_head *add_list,
- 					    struct resource io,
-@@ -1780,7 +1835,7 @@ static void pci_bus_distribute_available_resources(struct pci_bus *bus,
- 	unsigned int normal_bridges = 0, hotplug_bridges = 0;
- 	struct resource *io_res, *mmio_res, *mmio_pref_res;
- 	struct pci_dev *dev, *bridge = bus->self;
--	resource_size_t io_per_hp, mmio_per_hp, mmio_pref_per_hp, align;
-+	resource_size_t io_per_b, mmio_per_b, mmio_pref_per_b, align;
- 
- 	io_res = &bridge->resource[PCI_BRIDGE_IO_WINDOW];
- 	mmio_res = &bridge->resource[PCI_BRIDGE_MEM_WINDOW];
-@@ -1824,100 +1879,81 @@ static void pci_bus_distribute_available_resources(struct pci_bus *bus,
- 			normal_bridges++;
++#define APOLL_MAX_RETRY		128
++
+ static struct async_poll *io_req_alloc_apoll(struct io_kiocb *req,
+ 					     unsigned issue_flags)
+ {
+@@ -683,14 +691,18 @@ static struct async_poll *io_req_alloc_a
+ 		if (entry == NULL)
+ 			goto alloc_apoll;
+ 		apoll = container_of(entry, struct async_poll, cache);
++		apoll->poll.retries = APOLL_MAX_RETRY;
+ 	} else {
+ alloc_apoll:
+ 		apoll = kmalloc(sizeof(*apoll), GFP_ATOMIC);
+ 		if (unlikely(!apoll))
+ 			return NULL;
++		apoll->poll.retries = APOLL_MAX_RETRY;
  	}
+ 	apoll->double_poll = NULL;
+ 	req->apoll = apoll;
++	if (unlikely(!--apoll->poll.retries))
++		return NULL;
+ 	return apoll;
+ }
  
--	/*
--	 * There is only one bridge on the bus so it gets all available
--	 * resources which it can then distribute to the possible hotplug
--	 * bridges below.
--	 */
--	if (hotplug_bridges + normal_bridges == 1) {
--		dev = list_first_entry(&bus->devices, struct pci_dev, bus_list);
--		if (dev->subordinate)
--			pci_bus_distribute_available_resources(dev->subordinate,
--				add_list, io, mmio, mmio_pref);
--		return;
--	}
--
--	if (hotplug_bridges == 0)
-+	if (!(hotplug_bridges + normal_bridges))
- 		return;
+@@ -712,8 +724,6 @@ int io_arm_poll_handler(struct io_kiocb
+ 		return IO_APOLL_ABORTED;
+ 	if (!file_can_poll(req->file))
+ 		return IO_APOLL_ABORTED;
+-	if ((req->flags & (REQ_F_POLLED|REQ_F_PARTIAL_IO)) == REQ_F_POLLED)
+-		return IO_APOLL_ABORTED;
+ 	if (!(req->flags & REQ_F_APOLL_MULTISHOT))
+ 		mask |= EPOLLONESHOT;
  
- 	/*
--	 * Calculate the total amount of extra resource space we can
--	 * pass to bridges below this one.  This is basically the
--	 * extra space reduced by the minimal required space for the
--	 * non-hotplug bridges.
-+	 * Calculate the amount of space we can forward from "bus" to any
-+	 * downstream buses, i.e., the space left over after assigning the
-+	 * BARs and windows on "bus".
- 	 */
--	for_each_pci_bridge(dev, bus) {
--		resource_size_t used_size;
--		struct resource *res;
--
--		if (dev->is_hotplug_bridge)
--			continue;
--
--		/*
--		 * Reduce the available resource space by what the
--		 * bridge and devices below it occupy.
--		 */
--		res = &dev->resource[PCI_BRIDGE_IO_WINDOW];
--		align = pci_resource_alignment(dev, res);
--		align = align ? ALIGN(io.start, align) - io.start : 0;
--		used_size = align + resource_size(res);
--		if (!res->parent)
--			io.start = min(io.start + used_size, io.end + 1);
--
--		res = &dev->resource[PCI_BRIDGE_MEM_WINDOW];
--		align = pci_resource_alignment(dev, res);
--		align = align ? ALIGN(mmio.start, align) - mmio.start : 0;
--		used_size = align + resource_size(res);
--		if (!res->parent)
--			mmio.start = min(mmio.start + used_size, mmio.end + 1);
--
--		res = &dev->resource[PCI_BRIDGE_PREF_MEM_WINDOW];
--		align = pci_resource_alignment(dev, res);
--		align = align ? ALIGN(mmio_pref.start, align) -
--			mmio_pref.start : 0;
--		used_size = align + resource_size(res);
--		if (!res->parent)
--			mmio_pref.start = min(mmio_pref.start + used_size,
--				mmio_pref.end + 1);
-+	list_for_each_entry(dev, &bus->devices, bus_list) {
-+		if (!dev->is_virtfn)
-+			remove_dev_resources(dev, &io, &mmio, &mmio_pref);
- 	}
+--- a/io_uring/poll.h
++++ b/io_uring/poll.h
+@@ -12,6 +12,7 @@ struct io_poll {
+ 	struct file			*file;
+ 	struct wait_queue_head		*head;
+ 	__poll_t			events;
++	int				retries;
+ 	struct wait_queue_entry		wait;
+ };
  
--	io_per_hp = div64_ul(resource_size(&io), hotplug_bridges);
--	mmio_per_hp = div64_ul(resource_size(&mmio), hotplug_bridges);
--	mmio_pref_per_hp = div64_ul(resource_size(&mmio_pref),
--		hotplug_bridges);
--
- 	/*
--	 * Go over devices on this bus and distribute the remaining
--	 * resource space between hotplug bridges.
-+	 * If there is at least one hotplug bridge on this bus it gets all
-+	 * the extra resource space that was left after the reductions
-+	 * above.
-+	 *
-+	 * If there are no hotplug bridges the extra resource space is
-+	 * split between non-hotplug bridges. This is to allow possible
-+	 * hotplug bridges below them to get the extra space as well.
- 	 */
-+	if (hotplug_bridges) {
-+		io_per_b = div64_ul(resource_size(&io), hotplug_bridges);
-+		mmio_per_b = div64_ul(resource_size(&mmio), hotplug_bridges);
-+		mmio_pref_per_b = div64_ul(resource_size(&mmio_pref),
-+					   hotplug_bridges);
-+	} else {
-+		io_per_b = div64_ul(resource_size(&io), normal_bridges);
-+		mmio_per_b = div64_ul(resource_size(&mmio), normal_bridges);
-+		mmio_pref_per_b = div64_ul(resource_size(&mmio_pref),
-+					   normal_bridges);
-+	}
-+
- 	for_each_pci_bridge(dev, bus) {
- 		struct resource *res;
- 		struct pci_bus *b;
- 
- 		b = dev->subordinate;
--		if (!b || !dev->is_hotplug_bridge)
-+		if (!b)
- 			continue;
-+		if (hotplug_bridges && !dev->is_hotplug_bridge)
-+			continue;
-+
-+		res = &dev->resource[PCI_BRIDGE_IO_WINDOW];
- 
- 		/*
--		 * Distribute available extra resources equally between
--		 * hotplug-capable downstream ports taking alignment into
--		 * account.
-+		 * Make sure the split resource space is properly aligned
-+		 * for bridge windows (align it down to avoid going above
-+		 * what is available).
- 		 */
--		res = &dev->resource[PCI_BRIDGE_IO_WINDOW];
- 		align = pci_resource_alignment(dev, res);
--		io.end = align ? io.start + ALIGN_DOWN(io_per_hp, align) - 1
--			       : io.start + io_per_hp - 1;
-+		io.end = align ? io.start + ALIGN_DOWN(io_per_b, align) - 1
-+			       : io.start + io_per_b - 1;
-+
-+		/*
-+		 * The x_per_b holds the extra resource space that can be
-+		 * added for each bridge but there is the minimal already
-+		 * reserved as well so adjust x.start down accordingly to
-+		 * cover the whole space.
-+		 */
-+		io.start -= resource_size(res);
- 
- 		res = &dev->resource[PCI_BRIDGE_MEM_WINDOW];
- 		align = pci_resource_alignment(dev, res);
--		mmio.end = align ? mmio.start + ALIGN_DOWN(mmio_per_hp, align) - 1
--				 : mmio.start + mmio_per_hp - 1;
-+		mmio.end = align ? mmio.start + ALIGN_DOWN(mmio_per_b, align) - 1
-+				 : mmio.start + mmio_per_b - 1;
-+		mmio.start -= resource_size(res);
- 
- 		res = &dev->resource[PCI_BRIDGE_PREF_MEM_WINDOW];
- 		align = pci_resource_alignment(dev, res);
- 		mmio_pref.end = align ? mmio_pref.start +
--					ALIGN_DOWN(mmio_pref_per_hp, align) - 1
--				      : mmio_pref.start + mmio_pref_per_hp - 1;
-+					ALIGN_DOWN(mmio_pref_per_b, align) - 1
-+				      : mmio_pref.start + mmio_pref_per_b - 1;
-+		mmio_pref.start -= resource_size(res);
- 
- 		pci_bus_distribute_available_resources(b, add_list, io, mmio,
- 						       mmio_pref);
--- 
-2.39.2
-
 
 
