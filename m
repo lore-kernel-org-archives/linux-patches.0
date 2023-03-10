@@ -1,25 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104D38821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:02:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E79CC433D2;
-	Fri, 10 Mar 2023 15:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33ED8821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:02:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4332CC433EF;
+	Fri, 10 Mar 2023 15:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460562;
-	bh=bMerPbJpnT8Cjgz4DtA5bKmA19Qi56zwhw4BT3Bkjdk=;
+	s=korg; t=1678460565;
+	bh=noPyn0pyVQ1GGu/VIZLDUb1HrmUSFyiFCC2K9CQ2CyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cieumXGhGTukO2Cg3YgqmKp5JMJdSAVRCDI6Mer8ucKkudw4++Pfl5UpfBBfS1UXO
-	 21PlnhctgxdmoHVHSWcZILpcksk/GFmWXunefloRBhLhi94KeShip/UrhmK7t5Z5HA
-	 GhC3zyQh/34eUoSpHvRyfIwItPJ1o9fD5JOKgZ70=
+	b=TSI2sIwzAq5FCl6e5DqDXSxnag2SbfQp/DXPGIJ1WO2O2MW2/lSllOKRqjJ1Jhm8u
+	 ne+Zqxp9QpPU6EjQndWXNHiDZ9TNNwbCuUYdOmiyfPioMeFfnocNcqfJO3K8eE0Mxi
+	 cz7stENqEma5tSi1n1iTCK3sCDb38Xzbz6d/NGl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 375/529] io_uring: add a conditional reschedule to the IOPOLL cancelation loop
-Date: Fri, 10 Mar 2023 14:38:38 +0100
-Message-Id: <20230310133822.372025905@linuxfoundation.org>
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 347/529] ocfs2: fix non-auto defrag path not working issue
+Date: Fri, 10 Mar 2023 14:38:10 +0100
+Message-Id: <20230310133821.089996022@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -33,81 +41,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Heming Zhao via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
 
-commit fcc926bb857949dbfa51a7d95f3f5ebc657f198c upstream.
+commit 236b9254f8d1edc273ad88b420aa85fbd84f492d upstream.
 
-If the kernel is configured with CONFIG_PREEMPT_NONE, we could be
-sitting in a tight loop reaping events but not giving them a chance to
-finish. This results in a trace ala:
+This fixes three issues on move extents ioctl without auto defrag:
 
-rcu: INFO: rcu_sched self-detected stall on CPU
-rcu:    2-...!: (5249 ticks this GP) idle=935c/1/0x4000000000000000 softirq=4265/4274 fqs=1
-        (t=5251 jiffies g=465 q=4135 ncpus=4)
-rcu: rcu_sched kthread starved for 5249 jiffies! g465 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x0 ->cpu=0
-rcu:    Unless rcu_sched kthread gets sufficient CPU time, OOM is now expected behavior.
-rcu: RCU grace-period kthread stack dump:
-task:rcu_sched       state:R  running task     stack:0     pid:12    ppid:2      flags:0x00000008
-Call trace:
- __switch_to+0xb0/0xc8
- __schedule+0x43c/0x520
- schedule+0x4c/0x98
- schedule_timeout+0xbc/0xdc
- rcu_gp_fqs_loop+0x308/0x344
- rcu_gp_kthread+0xd8/0xf0
- kthread+0xb8/0xc8
- ret_from_fork+0x10/0x20
-rcu: Stack dump where RCU GP kthread last ran:
-Task dump for CPU 0:
-task:kworker/u8:10   state:R  running task     stack:0     pid:89    ppid:2      flags:0x0000000a
-Workqueue: events_unbound io_ring_exit_work
-Call trace:
- __switch_to+0xb0/0xc8
- 0xffff0000c8fefd28
-CPU: 2 PID: 95 Comm: kworker/u8:13 Not tainted 6.2.0-rc5-00042-g40316e337c80-dirty #2759
-Hardware name: linux,dummy-virt (DT)
-Workqueue: events_unbound io_ring_exit_work
-pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-pc : io_do_iopoll+0x344/0x360
-lr : io_do_iopoll+0xb8/0x360
-sp : ffff800009bebc60
-x29: ffff800009bebc60 x28: 0000000000000000 x27: 0000000000000000
-x26: ffff0000c0f67d48 x25: ffff0000c0f67840 x24: ffff800008950024
-x23: 0000000000000001 x22: 0000000000000000 x21: ffff0000c27d3200
-x20: ffff0000c0f67840 x19: ffff0000c0f67800 x18: 0000000000000000
-x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-x14: 0000000000000001 x13: 0000000000000001 x12: 0000000000000000
-x11: 0000000000000179 x10: 0000000000000870 x9 : ffff800009bebd60
-x8 : ffff0000c27d3ad0 x7 : fefefefefefefeff x6 : 0000646e756f626e
-x5 : ffff0000c0f67840 x4 : 0000000000000000 x3 : ffff0000c2398000
-x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
-Call trace:
- io_do_iopoll+0x344/0x360
- io_uring_try_cancel_requests+0x21c/0x334
- io_ring_exit_work+0x90/0x40c
- process_one_work+0x1a4/0x254
- worker_thread+0x1ec/0x258
- kthread+0xb8/0xc8
- ret_from_fork+0x10/0x20
+a) In ocfs2_find_victim_alloc_group(), we have to convert bits to block
+   first in case of global bitmap.
 
-Add a cond_resched() in the cancelation IOPOLL loop to fix this.
+b) In ocfs2_probe_alloc_group(), when finding enough bits in block
+   group bitmap, we have to back off move_len to start pos as well,
+   otherwise it may corrupt filesystem.
 
-Cc: stable@vger.kernel.org # 5.10+
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+c) In ocfs2_ioctl_move_extents(), set me_threshold both for non-auto
+   and auto defrag paths.  Otherwise it will set move_max_hop to 0 and
+   finally cause unexpectedly ENOSPC error.
+
+Currently there are no tools triggering the above issues since
+defragfs.ocfs2 enables auto defrag by default.  Tested with manually
+changing defragfs.ocfs2 to run non auto defrag path.
+
+Link: https://lkml.kernel.org/r/20230220050526.22020-1-heming.zhao@suse.com
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ocfs2/move_extents.c |   24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -9690,6 +9690,7 @@ static void io_uring_try_cancel_requests
- 			while (!list_empty_careful(&ctx->iopoll_list)) {
- 				io_iopoll_try_reap_events(ctx);
- 				ret = true;
-+				cond_resched();
- 			}
- 		}
+--- a/fs/ocfs2/move_extents.c
++++ b/fs/ocfs2/move_extents.c
+@@ -436,7 +436,7 @@ static int ocfs2_find_victim_alloc_group
+ 			bg = (struct ocfs2_group_desc *)gd_bh->b_data;
  
+ 			if (vict_blkno < (le64_to_cpu(bg->bg_blkno) +
+-						le16_to_cpu(bg->bg_bits))) {
++						(le16_to_cpu(bg->bg_bits) << bits_per_unit))) {
+ 
+ 				*ret_bh = gd_bh;
+ 				*vict_bit = (vict_blkno - blkno) >>
+@@ -551,6 +551,7 @@ static void ocfs2_probe_alloc_group(stru
+ 			last_free_bits++;
+ 
+ 		if (last_free_bits == move_len) {
++			i -= move_len;
+ 			*goal_bit = i;
+ 			*phys_cpos = base_cpos + i;
+ 			break;
+@@ -1022,18 +1023,19 @@ int ocfs2_ioctl_move_extents(struct file
+ 
+ 	context->range = &range;
+ 
++	/*
++	 * ok, the default theshold for the defragmentation
++	 * is 1M, since our maximum clustersize was 1M also.
++	 * any thought?
++	 */
++	if (!range.me_threshold)
++		range.me_threshold = 1024 * 1024;
++
++	if (range.me_threshold > i_size_read(inode))
++		range.me_threshold = i_size_read(inode);
++
+ 	if (range.me_flags & OCFS2_MOVE_EXT_FL_AUTO_DEFRAG) {
+ 		context->auto_defrag = 1;
+-		/*
+-		 * ok, the default theshold for the defragmentation
+-		 * is 1M, since our maximum clustersize was 1M also.
+-		 * any thought?
+-		 */
+-		if (!range.me_threshold)
+-			range.me_threshold = 1024 * 1024;
+-
+-		if (range.me_threshold > i_size_read(inode))
+-			range.me_threshold = i_size_read(inode);
+ 
+ 		if (range.me_flags & OCFS2_MOVE_EXT_FL_PART_DEFRAG)
+ 			context->partial = 1;
 
 
