@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C853848D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:25:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18879C433EF;
-	Fri, 10 Mar 2023 14:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E392848D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:26:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C3EC433D2;
+	Fri, 10 Mar 2023 14:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458357;
-	bh=52ck6VNxn4X2LNZ4a2TXlq93jy2WiySASKsClkwVQLs=;
+	s=korg; t=1678458360;
+	bh=9YnypwYQpihCst+WgcQEOLTet+xEiqZhBLwSAQ5gzFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SQ3tFNI2YMYyUpIbew19qm/zm6P5htJGYec/pyzQtOMRemZSslM4n4JHcIpFKkeXm
-	 oHCnaOeDqLRq9SgiAyBhOCIxOfokmN1Dy0SNPxMyBSu2kp55s4XC3rPZoe6NL1vQJb
-	 D6Ax2n1SPJEOEPXYyhIUKe6Ew29+/SBccflVdnhc=
+	b=sBGC89D5yX116/uzGlXYbAIn8WxvCMYnorQ/TzK43SMaExrpgiRdOO8nFVmIT9XBt
+	 MkpafElqpYugOAUwPT3Si/OUcf/I+iMHTvNDI8cH3zNyx8CR+/9cJaifvCSj4QADeE
+	 XYpiWkZAlm2DE7963c55nLMz8IHO3AUqlBrY1RaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+df64c0a2e8d68e78a4fa@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 224/252] nfc: fix memory leak of se_io context in nfc_genl_se_io
-Date: Fri, 10 Mar 2023 14:39:54 +0100
-Message-Id: <20230310133726.017793281@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Tejun Heo <tj@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 4.19 251/252] f2fs: fix cgroup writeback accounting with fs-layer encryption
+Date: Fri, 10 Mar 2023 14:40:21 +0100
+Message-Id: <20230310133727.239052985@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -37,85 +37,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 25ff6f8a5a3b8dc48e8abda6f013e8cc4b14ffea ]
+commit 844545c51a5b2a524b22a2fe9d0b353b827d24b4 upstream.
 
-The callback context for sending/receiving APDUs to/from the selected
-secure element is allocated inside nfc_genl_se_io and supposed to be
-eventually freed in se_io_cb callback function. However, there are several
-error paths where the bwi_timer is not charged to call se_io_cb later, and
-the cb_context is leaked.
+When writing a page from an encrypted file that is using
+filesystem-layer encryption (not inline encryption), f2fs encrypts the
+pagecache page into a bounce page, then writes the bounce page.
 
-The patch proposes to free the cb_context explicitly on those error paths.
+It also passes the bounce page to wbc_account_cgroup_owner().  That's
+incorrect, because the bounce page is a newly allocated temporary page
+that doesn't have the memory cgroup of the original pagecache page.
+This makes wbc_account_cgroup_owner() not account the I/O to the owner
+of the pagecache page as it should.
 
-At the moment we can't simply check 'dev->ops->se_io()' return value as it
-may be negative in both cases: when the timer was charged and was not.
+Fix this by always passing the pagecache page to
+wbc_account_cgroup_owner().
 
-Fixes: 5ce3f32b5264 ("NFC: netlink: SE API implementation")
-Reported-by: syzbot+df64c0a2e8d68e78a4fa@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 578c647879f7 ("f2fs: implement cgroup writeback support")
+Cc: stable@vger.kernel.org
+Reported-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/st-nci/se.c   | 6 ++++++
- drivers/nfc/st21nfca/se.c | 6 ++++++
- net/nfc/netlink.c         | 4 ++++
- 3 files changed, 16 insertions(+)
+ fs/f2fs/data.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
-index cdf9e915c974b..f702aa9c7cf5b 100644
---- a/drivers/nfc/st-nci/se.c
-+++ b/drivers/nfc/st-nci/se.c
-@@ -676,6 +676,12 @@ int st_nci_se_io(struct nci_dev *ndev, u32 se_idx,
- 					ST_NCI_EVT_TRANSMIT_DATA, apdu,
- 					apdu_length);
- 	default:
-+		/* Need to free cb_context here as at the moment we can't
-+		 * clearly indicate to the caller if the callback function
-+		 * would be called (and free it) or not. In both cases a
-+		 * negative value may be returned to the caller.
-+		 */
-+		kfree(cb_context);
- 		return -ENODEV;
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -464,7 +464,7 @@ int f2fs_submit_page_bio(struct f2fs_io_
  	}
- }
-diff --git a/drivers/nfc/st21nfca/se.c b/drivers/nfc/st21nfca/se.c
-index 52e209950c436..8a96354796c76 100644
---- a/drivers/nfc/st21nfca/se.c
-+++ b/drivers/nfc/st21nfca/se.c
-@@ -247,6 +247,12 @@ int st21nfca_hci_se_io(struct nfc_hci_dev *hdev, u32 se_idx,
- 					ST21NFCA_EVT_TRANSMIT_DATA,
- 					apdu, apdu_length);
- 	default:
-+		/* Need to free cb_context here as at the moment we can't
-+		 * clearly indicate to the caller if the callback function
-+		 * would be called (and free it) or not. In both cases a
-+		 * negative value may be returned to the caller.
-+		 */
-+		kfree(cb_context);
- 		return -ENODEV;
- 	}
- }
-diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
-index 8953b03d5a529..2c5443ce449c3 100644
---- a/net/nfc/netlink.c
-+++ b/net/nfc/netlink.c
-@@ -1460,7 +1460,11 @@ static int nfc_se_io(struct nfc_dev *dev, u32 se_idx,
- 	rc = dev->ops->se_io(dev, se_idx, apdu,
- 			apdu_length, cb, cb_context);
  
-+	device_unlock(&dev->dev);
-+	return rc;
-+
- error:
-+	kfree(cb_context);
- 	device_unlock(&dev->dev);
- 	return rc;
- }
--- 
-2.39.2
-
+ 	if (fio->io_wbc && !is_read_io(fio->op))
+-		wbc_account_io(fio->io_wbc, page, PAGE_SIZE);
++		wbc_account_io(fio->io_wbc, fio->page, PAGE_SIZE);
+ 
+ 	bio_set_op_attrs(bio, fio->op, fio->op_flags);
+ 
+@@ -533,7 +533,7 @@ alloc_new:
+ 	}
+ 
+ 	if (fio->io_wbc)
+-		wbc_account_io(fio->io_wbc, bio_page, PAGE_SIZE);
++		wbc_account_io(fio->io_wbc, fio->page, PAGE_SIZE);
+ 
+ 	io->last_block_in_bio = fio->new_blkaddr;
+ 	f2fs_trace_ios(fio, 0);
 
 
