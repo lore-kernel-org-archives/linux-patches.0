@@ -1,28 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BF38825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:59:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3BCC4339C;
-	Fri, 10 Mar 2023 14:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC0E8825
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:59:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E801C433D2;
+	Fri, 10 Mar 2023 14:59:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460354;
-	bh=9fHF7P1AiLGpPTD96ZyklxedyvP4yUS86bNkDQzEqkk=;
+	s=korg; t=1678460357;
+	bh=5PrBgJt4B+VBbpX7Bb7lMY2qS+O7auD9PYXk2HAa5S4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7D+l5pcG3oEby0RXwfxosgwGLLI48E4dkIFLxSGc8o8C9pPxIVJiJgtKe8pPd8qW
-	 E5nUt7yT019jyfBhlThoMf98VVSTnvMmzF0Jur4jPPEuGOmNkFEyoWBh3zNCElsMOY
-	 NJJH5K7AMX+634xQmg5S1wJdYdVfGLVdwPUqz+r0=
+	b=u1F5u8SaLwwJEOLsNRg7r/RtDYe1azemfPpTpZCLRQR6ZoLz1KW61Tdc2tJBFmoz9
+	 2X9RwKz50GhHp73E250TTQGr2Evy4URMlAIphzSQ8oE+MapX1xC97vU4hOm6ne0Afq
+	 VPu5gZjQZRzSC3oXNsVQkVU1g9TpToH3YHJ4wdJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tasos Sahanidis <tasos@tasossah.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dinh Nguyen <dinguyen@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Alexander Potapenko <glider@google.com>,
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 279/529] media: saa7134: Use video_unregister_device for radio_dev
-Date: Fri, 10 Mar 2023 14:37:02 +0100
-Message-Id: <20230310133817.877991621@linuxfoundation.org>
+Subject: [PATCH 5.10 306/529] uaccess: Add minimum bounds check on kernel buffer size
+Date: Fri, 10 Mar 2023 14:37:29 +0100
+Message-Id: <20230310133819.183399780@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,37 +43,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tasos Sahanidis <tasos@tasossah.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit bc7635c6435c77a0c168e2cc6535740adfaff4e4 ]
+[ Upstream commit 04ffde1319a715bd0550ded3580d4ea3bc003776 ]
 
-The radio device doesn't use vb2, thus calling vb2_video_unregister_device()
-which results in the following warning being printed on module unload.
+While there is logic about the difference between ksize and usize,
+copy_struct_from_user() didn't check the size of the destination buffer
+(when it was known) against ksize. Add this check so there is an upper
+bounds check on the possible memset() call, otherwise lower bounds
+checks made by callers will trigger bounds warnings under -Warray-bounds.
+Seen under GCC 13:
 
-WARNING: CPU: 1 PID: 215963 at drivers/media/common/videobuf2/videobuf2-v4l2.c:1236 vb2_video_unregister_device+0xc6/0xe0 [videobuf2_v4l2]
+In function 'copy_struct_from_user',
+    inlined from 'iommufd_fops_ioctl' at
+../drivers/iommu/iommufd/main.c:333:8:
+../include/linux/fortify-string.h:59:33: warning: '__builtin_memset' offset [57, 4294967294] is out of the bounds [0, 56] of object 'buf' with type 'union ucmd_buffer' [-Warray-bounds=]
+   59 | #define __underlying_memset     __builtin_memset
+      |                                 ^
+../include/linux/fortify-string.h:453:9: note: in expansion of macro '__underlying_memset'
+  453 |         __underlying_memset(p, c, __fortify_size); \
+      |         ^~~~~~~~~~~~~~~~~~~
+../include/linux/fortify-string.h:461:25: note: in expansion of macro '__fortify_memset_chk'
+  461 | #define memset(p, c, s) __fortify_memset_chk(p, c, s, \
+      |                         ^~~~~~~~~~~~~~~~~~~~
+../include/linux/uaccess.h:334:17: note: in expansion of macro 'memset'
+  334 |                 memset(dst + size, 0, rest);
+      |                 ^~~~~~
+../drivers/iommu/iommufd/main.c: In function 'iommufd_fops_ioctl':
+../drivers/iommu/iommufd/main.c:311:27: note: 'buf' declared here
+  311 |         union ucmd_buffer buf;
+      |                           ^~~
 
-Fixes: 11788d9b7e91 ("media: media/pci: use vb2_video_unregister_device()")
-Signed-off-by: Tasos Sahanidis <tasos@tasossah.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Dinh Nguyen <dinguyen@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Alexander Potapenko <glider@google.com>
+Acked-by: Aleksa Sarai <cyphar@cyphar.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/lkml/20230203193523.never.667-kees@kernel.org/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/saa7134/saa7134-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/uaccess.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/pci/saa7134/saa7134-core.c b/drivers/media/pci/saa7134/saa7134-core.c
-index efb757d5168a6..e97c30070fc64 100644
---- a/drivers/media/pci/saa7134/saa7134-core.c
-+++ b/drivers/media/pci/saa7134/saa7134-core.c
-@@ -977,7 +977,7 @@ static void saa7134_unregister_video(struct saa7134_dev *dev)
- 	}
- 	if (dev->radio_dev) {
- 		if (video_is_registered(dev->radio_dev))
--			vb2_video_unregister_device(dev->radio_dev);
-+			video_unregister_device(dev->radio_dev);
- 		else
- 			video_device_release(dev->radio_dev);
- 		dev->radio_dev = NULL;
+diff --git a/include/linux/uaccess.h b/include/linux/uaccess.h
+index c7c6e8b8344d4..20668760daa02 100644
+--- a/include/linux/uaccess.h
++++ b/include/linux/uaccess.h
+@@ -348,6 +348,10 @@ copy_struct_from_user(void *dst, size_t ksize, const void __user *src,
+ 	size_t size = min(ksize, usize);
+ 	size_t rest = max(ksize, usize) - size;
+ 
++	/* Double check if ksize is larger than a known object size. */
++	if (WARN_ON_ONCE(ksize > __builtin_object_size(dst, 1)))
++		return -E2BIG;
++
+ 	/* Deal with trailing bytes. */
+ 	if (usize < ksize) {
+ 		memset(dst + size, 0, rest);
 -- 
 2.39.2
 
