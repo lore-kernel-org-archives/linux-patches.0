@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB438484
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:07:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D13CC433D2;
-	Fri, 10 Mar 2023 14:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB048481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:07:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFF7EC4339B;
+	Fri, 10 Mar 2023 14:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457266;
-	bh=Bqq13GJ0RrJRkDyXIzePBxHdJWcN/44R6Id0IGAHTZk=;
+	s=korg; t=1678457269;
+	bh=GrS2Lw7JbN7t+iWzXR/rT0Zpd69CCXz6DPiigDbnBxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ebiz5l+sf2FRovEzX6W2VjuQWD+EJFZwIHjTf3e2P9f2USXDmvQ1gx2u9QBxUCatt
-	 BlBt0YJCfDEJb4naUadB56cch4OweqBqPoBHX+TdLr/jA/evaLZyEaJ9Xh+k18vJUj
-	 r4MTVBXunERlDcgFk16IkQDG9QqkGGBvtclZAnYY=
+	b=ohWB8Hdl5ARHThCDKlO5HH2mkgEOiD2jDMNxFBPo/cWKXS6UM9PllZtJFmQDkPpmh
+	 M5JYkJ9QHccsrMntCanH34arz0RSNYs3p20ouB4oM7LW1J2GkIEyqto3xZtCL5WMUR
+	 4f1a/tUs1UDC4qWsBvCc4D7hZ9q4qrFZ0/ErCNSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Yarlagadda <kyarlagadda@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
+	Gal Pressman <gal@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Vadim Fedorenko <vadfed@meta.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/200] spi: tegra210-quad: Fix validate combined sequence
-Date: Fri, 10 Mar 2023 14:38:05 +0100
-Message-Id: <20230310133719.501576427@linuxfoundation.org>
+Subject: [PATCH 6.1 079/200] mlx5: fix skb leak while fifo resync and push
+Date: Fri, 10 Mar 2023 14:38:06 +0100
+Message-Id: <20230310133719.530242278@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,36 +37,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krishna Yarlagadda <kyarlagadda@nvidia.com>
+From: Vadim Fedorenko <vadfed@meta.com>
 
-[ Upstream commit 047ee71ae4f412d8819e39e4b08c588fa299cfc2 ]
+[ Upstream commit e435941b1da1a0be4ff8a7ae425774c76a5ac514 ]
 
-Check for non dma transfers that do not fit in FIFO has issue and skips
-combined sequence for Tegra234 & Tegra241 which does not have GPCDMA.
+During ptp resync operation SKBs were poped from the fifo but were never
+freed neither by napi_consume nor by dev_kfree_skb_any. Add call to
+napi_consume_skb to properly free SKBs.
 
-Fixes: 1b8342cc4a38 ("spi: tegra210-quad: combined sequence mode")
+Another leak was happening because mlx5e_skb_fifo_has_room() had an error
+in the check. Comparing free running counters works well unless C promotes
+the types to something wider than the counter. In this case counters are
+u16 but the result of the substraction is promouted to int and it causes
+wrong result (negative value) of the check when producer have already
+overlapped but consumer haven't yet. Explicit cast to u16 fixes the issue.
 
-Signed-off-by: Krishna Yarlagadda <kyarlagadda@nvidia.com>
-Link: https://lore.kernel.org/r/20230224164034.56933-1-kyarlagadda@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 58a518948f60 ("net/mlx5e: Add resiliency for PTP TX port timestamp")
+Reviewed-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Vadim Fedorenko <vadfed@meta.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra210-quad.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c  | 6 ++++--
+ drivers/net/ethernet/mellanox/mlx5/core/en/txrx.h | 2 +-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index 9f356612ba7e5..6498948e150a5 100644
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1297,7 +1297,7 @@ static bool tegra_qspi_validate_cmb_seq(struct tegra_qspi *tqspi,
- 	if (xfer->len > 4 || xfer->len < 3)
- 		return false;
- 	xfer = list_next_entry(xfer, transfer_list);
--	if (!tqspi->soc_data->has_dma || xfer->len > (QSPI_FIFO_DEPTH << 2))
-+	if (!tqspi->soc_data->has_dma && xfer->len > (QSPI_FIFO_DEPTH << 2))
- 		return false;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
+index 8469e9c386706..b72de2b520ecb 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
+@@ -86,7 +86,8 @@ static bool mlx5e_ptp_ts_cqe_drop(struct mlx5e_ptpsq *ptpsq, u16 skb_cc, u16 skb
+ 	return (ptpsq->ts_cqe_ctr_mask && (skb_cc != skb_id));
+ }
  
- 	return true;
+-static void mlx5e_ptp_skb_fifo_ts_cqe_resync(struct mlx5e_ptpsq *ptpsq, u16 skb_cc, u16 skb_id)
++static void mlx5e_ptp_skb_fifo_ts_cqe_resync(struct mlx5e_ptpsq *ptpsq, u16 skb_cc,
++					     u16 skb_id, int budget)
+ {
+ 	struct skb_shared_hwtstamps hwts = {};
+ 	struct sk_buff *skb;
+@@ -98,6 +99,7 @@ static void mlx5e_ptp_skb_fifo_ts_cqe_resync(struct mlx5e_ptpsq *ptpsq, u16 skb_
+ 		hwts.hwtstamp = mlx5e_skb_cb_get_hwts(skb)->cqe_hwtstamp;
+ 		skb_tstamp_tx(skb, &hwts);
+ 		ptpsq->cq_stats->resync_cqe++;
++		napi_consume_skb(skb, budget);
+ 		skb_cc = PTP_WQE_CTR2IDX(ptpsq->skb_fifo_cc);
+ 	}
+ }
+@@ -119,7 +121,7 @@ static void mlx5e_ptp_handle_ts_cqe(struct mlx5e_ptpsq *ptpsq,
+ 	}
+ 
+ 	if (mlx5e_ptp_ts_cqe_drop(ptpsq, skb_cc, skb_id))
+-		mlx5e_ptp_skb_fifo_ts_cqe_resync(ptpsq, skb_cc, skb_id);
++		mlx5e_ptp_skb_fifo_ts_cqe_resync(ptpsq, skb_cc, skb_id, budget);
+ 
+ 	skb = mlx5e_skb_fifo_pop(&ptpsq->skb_fifo);
+ 	hwtstamp = mlx5e_cqe_ts_to_ns(sq->ptp_cyc2time, sq->clock, get_cqe_ts(cqe));
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/txrx.h b/drivers/net/ethernet/mellanox/mlx5/core/en/txrx.h
+index 853f312cd7572..15a5a57b47b85 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/txrx.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/txrx.h
+@@ -81,7 +81,7 @@ void mlx5e_free_txqsq_descs(struct mlx5e_txqsq *sq);
+ static inline bool
+ mlx5e_skb_fifo_has_room(struct mlx5e_skb_fifo *fifo)
+ {
+-	return (*fifo->pc - *fifo->cc) < fifo->mask;
++	return (u16)(*fifo->pc - *fifo->cc) < fifo->mask;
+ }
+ 
+ static inline bool
 -- 
 2.39.2
 
