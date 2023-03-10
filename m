@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81538882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:10:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B55C433EF;
-	Fri, 10 Mar 2023 15:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD0A882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:10:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5415C433D2;
+	Fri, 10 Mar 2023 15:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461009;
-	bh=eaqxMiW+hFInlOzEsD+yg/ipaGPuNxTLH2jXqymyuGk=;
+	s=korg; t=1678461012;
+	bh=e6C0tvxYVW2gYPTu3FFCcqhQ5IdV0NPlKQwsHdgXgIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/MYuYRRyD9NyEn0kP6IbBbRbq8yWNJdQYkCQxFa0kBT3908ds43OFkwmCNpuy7s4
-	 OLApei/xerZ0ySRTqWiNhsT9LGUiVVrmIo+r0Tn0p1mgHe0IBtsYJYdrJbKAhWL5co
-	 eKgcBhTDly5/ppZVirZdHyWAS2d/0yuypqkSEyv4=
+	b=u196FCAOwrZ4fpjz+4sRQp1AdE/kvtFf6zPdESKM3H5n2/TrJE7e7oyCJ6NAQ/X0x
+	 9PK3a1dLFyC4jIlhDd2E1/kBoM2myrfTuGI3HhnI/fEPpcqgi6h/vFyJygcdHjjP5n
+	 A/5wu2Ml34OZikEVHThxfJY/yET537HjCLRaF2aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 508/529] PCI: loongson: Add more devices that need MRRS quirk
-Date: Fri, 10 Mar 2023 14:40:51 +0100
-Message-Id: <20230310133828.363909499@linuxfoundation.org>
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Salvatore Bonaccorso <carnil@debian.org>
+Subject: [PATCH 5.10 526/529] scsi: mpt3sas: Remove usage of dma_get_required_mask() API
+Date: Fri, 10 Mar 2023 14:41:09 +0100
+Message-Id: <20230310133829.188475150@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,85 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
 
-[ Upstream commit c768f8c5f40fcdc6f058cc2f02592163d6c6716c ]
+commit 06e472acf964649a58b7de35fc9cdc3151acb970 upstream.
 
-Loongson-2K SOC and LS7A2000 chipset add new PCI IDs that need MRRS
-quirk.  Add them.
+Remove the usage of dma_get_required_mask() API.  Directly set the DMA mask
+to 63/64 if the system is a 64bit machine.
 
-Link: https://lore.kernel.org/r/20230211023321.3530080-1-chenhuacai@loongson.cn
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Link: https://lore.kernel.org/r/20221028091655.17741-2-sreekanth.reddy@broadcom.com
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Salvatore Bonaccorso <carnil@debian.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-loongson.c | 33 +++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 9 deletions(-)
+ drivers/scsi/mpt3sas/mpt3sas_base.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/pci-loongson.c b/drivers/pci/controller/pci-loongson.c
-index dc7b4e4293ced..e73e18a73833b 100644
---- a/drivers/pci/controller/pci-loongson.c
-+++ b/drivers/pci/controller/pci-loongson.c
-@@ -13,9 +13,14 @@
- #include "../pci.h"
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -2824,8 +2824,7 @@ _base_config_dma_addressing(struct MPT3S
+ 	struct sysinfo s;
+ 	u64 coherent_dma_mask, dma_mask;
  
- /* Device IDs */
--#define DEV_PCIE_PORT_0	0x7a09
--#define DEV_PCIE_PORT_1	0x7a19
--#define DEV_PCIE_PORT_2	0x7a29
-+#define DEV_LS2K_PCIE_PORT0	0x1a05
-+#define DEV_LS7A_PCIE_PORT0	0x7a09
-+#define DEV_LS7A_PCIE_PORT1	0x7a19
-+#define DEV_LS7A_PCIE_PORT2	0x7a29
-+#define DEV_LS7A_PCIE_PORT3	0x7a39
-+#define DEV_LS7A_PCIE_PORT4	0x7a49
-+#define DEV_LS7A_PCIE_PORT5	0x7a59
-+#define DEV_LS7A_PCIE_PORT6	0x7a69
- 
- #define DEV_LS2K_APB	0x7a02
- #define DEV_LS7A_CONF	0x7a10
-@@ -38,11 +43,11 @@ static void bridge_class_quirk(struct pci_dev *dev)
- 	dev->class = PCI_CLASS_BRIDGE_PCI << 8;
- }
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
--			DEV_PCIE_PORT_0, bridge_class_quirk);
-+			DEV_LS7A_PCIE_PORT0, bridge_class_quirk);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
--			DEV_PCIE_PORT_1, bridge_class_quirk);
-+			DEV_LS7A_PCIE_PORT1, bridge_class_quirk);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
--			DEV_PCIE_PORT_2, bridge_class_quirk);
-+			DEV_LS7A_PCIE_PORT2, bridge_class_quirk);
- 
- static void system_bus_quirk(struct pci_dev *pdev)
- {
-@@ -72,11 +77,21 @@ static void loongson_mrrs_quirk(struct pci_dev *pdev)
- 	bridge->no_inc_mrrs = 1;
- }
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
--			DEV_PCIE_PORT_0, loongson_mrrs_quirk);
-+			DEV_LS2K_PCIE_PORT0, loongson_mrrs_quirk);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
--			DEV_PCIE_PORT_1, loongson_mrrs_quirk);
-+			DEV_LS7A_PCIE_PORT0, loongson_mrrs_quirk);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
--			DEV_PCIE_PORT_2, loongson_mrrs_quirk);
-+			DEV_LS7A_PCIE_PORT1, loongson_mrrs_quirk);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
-+			DEV_LS7A_PCIE_PORT2, loongson_mrrs_quirk);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
-+			DEV_LS7A_PCIE_PORT3, loongson_mrrs_quirk);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
-+			DEV_LS7A_PCIE_PORT4, loongson_mrrs_quirk);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
-+			DEV_LS7A_PCIE_PORT5, loongson_mrrs_quirk);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
-+			DEV_LS7A_PCIE_PORT6, loongson_mrrs_quirk);
- 
- static void __iomem *cfg1_map(struct loongson_pci *priv, int bus,
- 				unsigned int devfn, int where)
--- 
-2.39.2
-
+-	if (ioc->is_mcpu_endpoint || sizeof(dma_addr_t) == 4 ||
+-	    dma_get_required_mask(&pdev->dev) <= DMA_BIT_MASK(32)) {
++	if (ioc->is_mcpu_endpoint || sizeof(dma_addr_t) == 4) {
+ 		ioc->dma_mask = 32;
+ 		coherent_dma_mask = dma_mask = DMA_BIT_MASK(32);
+ 	/* Set 63 bit DMA mask for all SAS3 and SAS35 controllers */
 
 
