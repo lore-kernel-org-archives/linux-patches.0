@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F41847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:51:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BED8C433D2;
-	Fri, 10 Mar 2023 13:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7958B847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:51:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5023C433EF;
+	Fri, 10 Mar 2023 13:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456300;
-	bh=ZUZZb2WIgYRmeV4k6Up47FPZ8FOaO9rxv8UVlgTHkTg=;
+	s=korg; t=1678456303;
+	bh=cuDIGFBwpr+l7WKq1+/J8WPbVMwnV8Tn+7uc7lJeek4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vn029iLzUdUs+4OmLMVa0Mft3Cx7yIBdg8SSS99sDFN2vZWbdNZNFlVI30Pz8vh7r
-	 EAuS09OgqXZs1UYLrdQ6bqZMNEhdTNjGBVpIRCKDWdIUa74cNd0RqLz8DxJdVgxVKC
-	 lQexVzRyZJ81npLSHl/4TRxAmWnmmNfJMfD5GK0c=
+	b=H4Y9kjh4U+DNuSStOyO73GK6Nyhr3M4y0pMz5N+kVV4Yrf10W9N1UY5BdBiaix2cG
+	 7J1hl4TYuVL5ELaZ9rZIj8GOw0JZqcZGkMSyxSB27riZcavth1ww+cESrfFHyoJ9ks
+	 4PMWLlO75Sbz6hCDWAdRiV+uKAniSAZy4rpkMNZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0be96567042453c0c820@syzkaller.appspotmail.com,
-	Liu Shixin <liushixin2@huawei.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 150/193] fs/jfs: fix shift exponent db_agl2size negative
-Date: Fri, 10 Mar 2023 14:38:52 +0100
-Message-Id: <20230310133716.200164862@linuxfoundation.org>
+Subject: [PATCH 4.14 151/193] pwm: stm32-lp: fix the check on arr and cmp registers update
+Date: Fri, 10 Mar 2023 14:38:53 +0100
+Message-Id: <20230310133716.229901987@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -36,39 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin via Jfs-discussion <jfs-discussion@lists.sourceforge.net>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-[ Upstream commit fad376fce0af58deebc5075b8539dc05bf639af3 ]
+[ Upstream commit 3066bc2d58be31275afb51a589668f265e419c37 ]
 
-As a shift exponent, db_agl2size can not be less than 0. Add the missing
-check to fix the shift-out-of-bounds bug reported by syzkaller:
+The ARR (auto reload register) and CMP (compare) registers are
+successively written. The status bits to check the update of these
+registers are polled together with regmap_read_poll_timeout().
+The condition to end the loop may become true, even if one of the
+register isn't correctly updated.
+So ensure both status bits are set before clearing them.
 
- UBSAN: shift-out-of-bounds in fs/jfs/jfs_dmap.c:2227:15
- shift exponent -744642816 is negative
-
-Reported-by: syzbot+0be96567042453c0c820@syzkaller.appspotmail.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Fixes: e70a540b4e02 ("pwm: Add STM32 LPTimer PWM driver")
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pwm/pwm-stm32-lp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 0ca1ad2610df9..6a0f564e58ddb 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -206,7 +206,8 @@ int dbMount(struct inode *ipbmap)
- 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
- 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
- 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
--	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) {
-+	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG ||
-+	    bmp->db_agl2size < 0) {
- 		err = -EINVAL;
- 		goto err_release_metapage;
- 	}
+diff --git a/drivers/pwm/pwm-stm32-lp.c b/drivers/pwm/pwm-stm32-lp.c
+index 3f2e4ef695d75..ba0aa3b8076b1 100644
+--- a/drivers/pwm/pwm-stm32-lp.c
++++ b/drivers/pwm/pwm-stm32-lp.c
+@@ -127,7 +127,7 @@ static int stm32_pwm_lp_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 
+ 	/* ensure CMP & ARR registers are properly written */
+ 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
+-				       (val & STM32_LPTIM_CMPOK_ARROK),
++				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
+ 				       100, 1000);
+ 	if (ret) {
+ 		dev_err(priv->chip.dev, "ARR/CMP registers write issue\n");
 -- 
 2.39.2
 
