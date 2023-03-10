@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A281E848D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:29:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B011C433D2;
-	Fri, 10 Mar 2023 14:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A37B848D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:29:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0F8C433EF;
+	Fri, 10 Mar 2023 14:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458592;
-	bh=Az3N/3XPSg9v745Mfocz9qQnO+r1aek9yqfMVuJ3a/w=;
+	s=korg; t=1678458595;
+	bh=iRKDiuORhUFkc+Gbczn67gqxzJMbbQEtLKuC6ktFWlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WEXKmhamo06VfdL7wZjqNgkAd4gcOdvmHU0ARpgwj7D0qCK0ktzHt5BDj6Hsp92xt
-	 KxdnkPwbZB2VKTdkcunFnstbc/NkmKn1uRIV5HCT/bO92p8rdDDmD6Q8rlLZvl/WNS
-	 ycWyg8HevZty99pFlwaq6yb0Dlwu8ZxM7qmxJutQ=
+	b=uZFi6FQ2cyQUThWmvezpn/J+6XxUFQwiis3UPSnSJbiqlJCm1Lo4HyaPUl/wZmwDQ
+	 yW6EmGDrLXGGxFDxs9JowWhguTp8mCNkjv9rKmQf6CVjVHaWy43NIZ1WaXUmRfSKRL
+	 MoKvKChRgsB7K7BxiioU8+rkThRBwtju/UbgosEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 078/357] libbpf: Fix alen calculation in libbpf_nla_dump_errormsg()
-Date: Fri, 10 Mar 2023 14:36:07 +0100
-Message-Id: <20230310133737.425071271@linuxfoundation.org>
+Subject: [PATCH 5.4 052/357] ACPICA: Drop port I/O validation for some regions
+Date: Fri, 10 Mar 2023 14:35:41 +0100
+Message-Id: <20230310133736.269575543@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,36 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 17bcd27a08a21397698edf143084d7c87ce17946 ]
+[ Upstream commit e1d9148582ab2c3dada5c5cf8ca7531ca269fee5 ]
 
-The code assumes that everything that comes after nlmsgerr are nlattrs.
-When calculating their size, it does not account for the initial
-nlmsghdr. This may lead to accessing uninitialized memory.
+Microsoft introduced support in Windows XP for blocking port I/O
+to various regions.  For Windows compatibility ACPICA has adopted
+the same protections and will disallow writes to those
+(presumably) the same regions.
 
-Fixes: bbf48c18ee0c ("libbpf: add error reporting in XDP")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230210001210.395194-8-iii@linux.ibm.com
+On some systems the AML included with the firmware will issue 4 byte
+long writes to 0x80.  These writes aren't making it over because of this
+blockage. The first 4 byte write attempt is rejected, and then
+subsequently 1 byte at a time each offset is tried. The first at 0x80
+works, but then the next 3 bytes are rejected.
+
+This manifests in bizarre failures for devices that expected the AML to
+write all 4 bytes.  Trying the same AML on Windows 10 or 11 doesn't hit
+this failure and all 4 bytes are written.
+
+Either some of these regions were wrong or some point after Windows XP
+some of these regions blocks have been lifted.
+
+In the last 15 years there doesn't seem to be any reports popping up of
+this error in the Windows event viewer anymore.  There is no documentation
+at Microsoft's developer site indicating that Windows ACPI interpreter
+blocks these regions. Between the lack of documentation and the fact that
+the writes actually do work in Windows 10 and 11, it's quite likely
+Windows doesn't actually enforce this anymore.
+
+So to help the issue, only enforce Windows XP specific entries if the
+latest _OSI supported is Windows XP. Continue to enforce the
+ALWAYS_ILLEGAL entries.
+
+Link: https://github.com/acpica/acpica/pull/817
+Fixes: 7f0719039085 ("ACPICA: New: I/O port protection")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/nlattr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpica/hwvalid.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/tools/lib/bpf/nlattr.c b/tools/lib/bpf/nlattr.c
-index 1e69c0c8d413f..e610becd03e85 100644
---- a/tools/lib/bpf/nlattr.c
-+++ b/tools/lib/bpf/nlattr.c
-@@ -177,7 +177,7 @@ int libbpf_nla_dump_errormsg(struct nlmsghdr *nlh)
- 		hlen += nlmsg_len(&err->msg);
+diff --git a/drivers/acpi/acpica/hwvalid.c b/drivers/acpi/acpica/hwvalid.c
+index cd576153257c6..f1495b88bf138 100644
+--- a/drivers/acpi/acpica/hwvalid.c
++++ b/drivers/acpi/acpica/hwvalid.c
+@@ -23,8 +23,8 @@ acpi_hw_validate_io_request(acpi_io_address address, u32 bit_width);
+  *
+  * The table is used to implement the Microsoft port access rules that
+  * first appeared in Windows XP. Some ports are always illegal, and some
+- * ports are only illegal if the BIOS calls _OSI with a win_XP string or
+- * later (meaning that the BIOS itelf is post-XP.)
++ * ports are only illegal if the BIOS calls _OSI with nothing newer than
++ * the specific _OSI strings.
+  *
+  * This provides ACPICA with the desired port protections and
+  * Microsoft compatibility.
+@@ -145,7 +145,8 @@ acpi_hw_validate_io_request(acpi_io_address address, u32 bit_width)
  
- 	attr = (struct nlattr *) ((void *) err + hlen);
--	alen = nlh->nlmsg_len - hlen;
-+	alen = (void *)nlh + nlh->nlmsg_len - (void *)attr;
+ 			/* Port illegality may depend on the _OSI calls made by the BIOS */
  
- 	if (libbpf_nla_parse(tb, NLMSGERR_ATTR_MAX, attr, alen,
- 			     extack_policy) != 0) {
+-			if (acpi_gbl_osi_data >= port_info->osi_dependency) {
++			if (port_info->osi_dependency == ACPI_ALWAYS_ILLEGAL ||
++			    acpi_gbl_osi_data == port_info->osi_dependency) {
+ 				ACPI_DEBUG_PRINT((ACPI_DB_VALUES,
+ 						  "Denied AML access to port 0x%8.8X%8.8X/%X (%s 0x%.4X-0x%.4X)\n",
+ 						  ACPI_FORMAT_UINT64(address),
 -- 
 2.39.2
 
