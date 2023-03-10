@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E127882C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:15:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A85C433D2;
-	Fri, 10 Mar 2023 15:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F9E882C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:15:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4280C4339E;
+	Fri, 10 Mar 2023 15:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461318;
-	bh=L/M7AfeMZ+1KjwlQk5qV32KH32HR1F4+KfI9VCxH8bA=;
+	s=korg; t=1678461321;
+	bh=vK5yQ45E+qHgdpbNyIIWfKmPjp/7AjgM+6mb2yjleXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fUr2g4Md5JLnzNNmHw086bZeEZqgOSeRe/GFy7WTzH1QuFBJlY9DvMNyU3op6juYn
-	 nLPtcJmsdF8m3yjgZI5IBcdYGg63cCli44bmjVWIqZ4+MvoU7RDYSECX/8bqbcFOeh
-	 777oQaC2jPXgR99v3dkt/88O8KWFcvqi3ktBtYnI=
+	b=UFobvNrZ3DlRZR2HO9njT3ecA7r6rt5/+YekDONubJM5OBFVNCaA/z0KZyEqDUXYA
+	 OhXs2eKW30l/oDlvLmo84jra2YPQE4+nzYgaCRpsxdqQlAU2p7E6LZBVZ6Jc6HbTZn
+	 80z4NysFKVAggBklVwiwJzpFP1LEHjdXSh/n7n5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yulong Zhang <yulong.zhang@metoak.net>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 057/136] net/sched: act_sample: fix action bind logic
-Date: Fri, 10 Mar 2023 14:42:59 +0100
-Message-Id: <20230310133708.865792531@linuxfoundation.org>
+Subject: [PATCH 5.15 091/136] tools/iio/iio_utils:fix memory leak
+Date: Fri, 10 Mar 2023 14:43:33 +0100
+Message-Id: <20230310133709.911302945@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -37,90 +35,152 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Yulong Zhang <yulong.zhang@metoak.net>
 
-[ Upstream commit 4a20056a49a1854966562241922f68197f950539 ]
+[ Upstream commit f2edf0c819a4823cd6c288801ce737e8d4fcde06 ]
 
-The TC architecture allows filters and actions to be created independently.
-In filters the user can reference action objects using:
-tc action add action sample ... index 1
-tc filter add ... action pedit index 1
+1. fopen sysfs without fclose.
+2. asprintf filename without free.
+3. if asprintf return error,do not need to free the buffer.
 
-In the current code for act_sample this is broken as it checks netlink
-attributes for create/update before actually checking if we are binding to an
-existing action.
-
-tdc results:
-1..29
-ok 1 9784 - Add valid sample action with mandatory arguments
-ok 2 5c91 - Add valid sample action with mandatory arguments and continue control action
-ok 3 334b - Add valid sample action with mandatory arguments and drop control action
-ok 4 da69 - Add valid sample action with mandatory arguments and reclassify control action
-ok 5 13ce - Add valid sample action with mandatory arguments and pipe control action
-ok 6 1886 - Add valid sample action with mandatory arguments and jump control action
-ok 7 7571 - Add sample action with invalid rate
-ok 8 b6d4 - Add sample action with mandatory arguments and invalid control action
-ok 9 a874 - Add invalid sample action without mandatory arguments
-ok 10 ac01 - Add invalid sample action without mandatory argument rate
-ok 11 4203 - Add invalid sample action without mandatory argument group
-ok 12 14a7 - Add invalid sample action without mandatory argument group
-ok 13 8f2e - Add valid sample action with trunc argument
-ok 14 45f8 - Add sample action with maximum rate argument
-ok 15 ad0c - Add sample action with maximum trunc argument
-ok 16 83a9 - Add sample action with maximum group argument
-ok 17 ed27 - Add sample action with invalid rate argument
-ok 18 2eae - Add sample action with invalid group argument
-ok 19 6ff3 - Add sample action with invalid trunc size
-ok 20 2b2a - Add sample action with invalid index
-ok 21 dee2 - Add sample action with maximum allowed index
-ok 22 560e - Add sample action with cookie
-ok 23 704a - Replace existing sample action with new rate argument
-ok 24 60eb - Replace existing sample action with new group argument
-ok 25 2cce - Replace existing sample action with new trunc argument
-ok 26 59d1 - Replace existing sample action with new control argument
-ok 27 0a6e - Replace sample action with invalid goto chain control
-ok 28 3872 - Delete sample action with valid index
-ok 29 a394 - Delete sample action with invalid index
-
-Fixes: 5c5670fae430 ("net/sched: Introduce sample tc action")
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Yulong Zhang <yulong.zhang@metoak.net>
+Link: https://lore.kernel.org/r/20230117025147.69890-1-yulong.zhang@metoak.net
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_sample.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ tools/iio/iio_utils.c | 23 ++++++-----------------
+ 1 file changed, 6 insertions(+), 17 deletions(-)
 
-diff --git a/net/sched/act_sample.c b/net/sched/act_sample.c
-index ab4ae24ab886f..ca67d96449176 100644
---- a/net/sched/act_sample.c
-+++ b/net/sched/act_sample.c
-@@ -55,8 +55,8 @@ static int tcf_sample_init(struct net *net, struct nlattr *nla,
- 					  sample_policy, NULL);
- 	if (ret < 0)
- 		return ret;
--	if (!tb[TCA_SAMPLE_PARMS] || !tb[TCA_SAMPLE_RATE] ||
--	    !tb[TCA_SAMPLE_PSAMPLE_GROUP])
-+
-+	if (!tb[TCA_SAMPLE_PARMS])
- 		return -EINVAL;
+diff --git a/tools/iio/iio_utils.c b/tools/iio/iio_utils.c
+index 8d35893b2fa85..6a00a6eecaef0 100644
+--- a/tools/iio/iio_utils.c
++++ b/tools/iio/iio_utils.c
+@@ -264,6 +264,7 @@ int iioutils_get_param_float(float *output, const char *param_name,
+ 			if (fscanf(sysfsfp, "%f", output) != 1)
+ 				ret = errno ? -errno : -ENODATA;
  
- 	parm = nla_data(tb[TCA_SAMPLE_PARMS]);
-@@ -80,6 +80,13 @@ static int tcf_sample_init(struct net *net, struct nlattr *nla,
- 		tcf_idr_release(*a, bind);
- 		return -EEXIST;
- 	}
-+
-+	if (!tb[TCA_SAMPLE_RATE] || !tb[TCA_SAMPLE_PSAMPLE_GROUP]) {
-+		NL_SET_ERR_MSG(extack, "sample rate and group are required");
-+		err = -EINVAL;
-+		goto release_idr;
-+	}
-+
- 	err = tcf_action_check_ctrlact(parm->action, tp, &goto_ch, extack);
- 	if (err < 0)
- 		goto release_idr;
++			fclose(sysfsfp);
+ 			break;
+ 		}
+ error_free_filename:
+@@ -345,9 +346,9 @@ int build_channel_array(const char *device_dir, int buffer_idx,
+ 			}
+ 
+ 			sysfsfp = fopen(filename, "r");
++			free(filename);
+ 			if (!sysfsfp) {
+ 				ret = -errno;
+-				free(filename);
+ 				goto error_close_dir;
+ 			}
+ 
+@@ -357,7 +358,6 @@ int build_channel_array(const char *device_dir, int buffer_idx,
+ 				if (fclose(sysfsfp))
+ 					perror("build_channel_array(): Failed to close file");
+ 
+-				free(filename);
+ 				goto error_close_dir;
+ 			}
+ 			if (ret == 1)
+@@ -365,11 +365,9 @@ int build_channel_array(const char *device_dir, int buffer_idx,
+ 
+ 			if (fclose(sysfsfp)) {
+ 				ret = -errno;
+-				free(filename);
+ 				goto error_close_dir;
+ 			}
+ 
+-			free(filename);
+ 		}
+ 
+ 	*ci_array = malloc(sizeof(**ci_array) * (*counter));
+@@ -395,9 +393,9 @@ int build_channel_array(const char *device_dir, int buffer_idx,
+ 			}
+ 
+ 			sysfsfp = fopen(filename, "r");
++			free(filename);
+ 			if (!sysfsfp) {
+ 				ret = -errno;
+-				free(filename);
+ 				count--;
+ 				goto error_cleanup_array;
+ 			}
+@@ -405,20 +403,17 @@ int build_channel_array(const char *device_dir, int buffer_idx,
+ 			errno = 0;
+ 			if (fscanf(sysfsfp, "%i", &current_enabled) != 1) {
+ 				ret = errno ? -errno : -ENODATA;
+-				free(filename);
+ 				count--;
+ 				goto error_cleanup_array;
+ 			}
+ 
+ 			if (fclose(sysfsfp)) {
+ 				ret = -errno;
+-				free(filename);
+ 				count--;
+ 				goto error_cleanup_array;
+ 			}
+ 
+ 			if (!current_enabled) {
+-				free(filename);
+ 				count--;
+ 				continue;
+ 			}
+@@ -429,7 +424,6 @@ int build_channel_array(const char *device_dir, int buffer_idx,
+ 						strlen(ent->d_name) -
+ 						strlen("_en"));
+ 			if (!current->name) {
+-				free(filename);
+ 				ret = -ENOMEM;
+ 				count--;
+ 				goto error_cleanup_array;
+@@ -439,7 +433,6 @@ int build_channel_array(const char *device_dir, int buffer_idx,
+ 			ret = iioutils_break_up_name(current->name,
+ 						     &current->generic_name);
+ 			if (ret) {
+-				free(filename);
+ 				free(current->name);
+ 				count--;
+ 				goto error_cleanup_array;
+@@ -450,17 +443,16 @@ int build_channel_array(const char *device_dir, int buffer_idx,
+ 				       scan_el_dir,
+ 				       current->name);
+ 			if (ret < 0) {
+-				free(filename);
+ 				ret = -ENOMEM;
+ 				goto error_cleanup_array;
+ 			}
+ 
+ 			sysfsfp = fopen(filename, "r");
++			free(filename);
+ 			if (!sysfsfp) {
+ 				ret = -errno;
+-				fprintf(stderr, "failed to open %s\n",
+-					filename);
+-				free(filename);
++				fprintf(stderr, "failed to open %s/%s_index\n",
++					scan_el_dir, current->name);
+ 				goto error_cleanup_array;
+ 			}
+ 
+@@ -470,17 +462,14 @@ int build_channel_array(const char *device_dir, int buffer_idx,
+ 				if (fclose(sysfsfp))
+ 					perror("build_channel_array(): Failed to close file");
+ 
+-				free(filename);
+ 				goto error_cleanup_array;
+ 			}
+ 
+ 			if (fclose(sysfsfp)) {
+ 				ret = -errno;
+-				free(filename);
+ 				goto error_cleanup_array;
+ 			}
+ 
+-			free(filename);
+ 			/* Find the scale */
+ 			ret = iioutils_get_param_float(&current->scale,
+ 						       "scale",
 -- 
 2.39.2
 
