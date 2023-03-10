@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940028481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:12:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E67C4339C;
-	Fri, 10 Mar 2023 14:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8E98481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:12:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A895DC4339E;
+	Fri, 10 Mar 2023 14:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457541;
-	bh=NqyLywQdr+GjqxAN5/Ok/tyfg5uViJIHxKLt5nmQYBs=;
+	s=korg; t=1678457544;
+	bh=wgOvNNT4YbR9WNPv+UltzsUQ9FQfS82J/oIRqgcNIf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=boCwXBHrprpq9ZfXSQi3R/3MAScFHBQ5eKnfPbzKTr8xbEfXp9md9tWs7KTQrwA6L
-	 RFS8vHDuD3UKB/O6yylWL/bYhS8U8bL/KpiSdI6OlFdaEqJMI+H8O3/cwBEAEYF++Y
-	 0S0U4P5B9Cg3hq5+SVlG0f7pRj/7y7T41uUShxoM=
+	b=nWZN6tbIfM2FhkQ2OzqAxz6yata+jHU9rN/OihjeyRAENPrPF1EHkm+x9t0kICcS7
+	 IfSjNo92oWLFYODrnPIhe5O/D1lfvdKt5rfm92I6sjNVx1GVno87qBHkCBWIFTvLp/
+	 WdlJxJqKE/rKA2xMGqyUGUJH0W1X1WpzPn4EuPwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Matt Fagnani <matt.fagnani@bell.net>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 173/200] iommu: Attach device group to old domain in error path
-Date: Fri, 10 Mar 2023 14:39:40 +0100
-Message-Id: <20230310133722.414436375@linuxfoundation.org>
+Subject: [PATCH 6.1 174/200] soundwire: cadence: Remove wasted space in response_buf
+Date: Fri, 10 Mar 2023 14:39:41 +0100
+Message-Id: <20230310133722.443301004@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -38,74 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 2cc73c5712f97de98c38c2fafc1f288354a9f3c3 ]
+[ Upstream commit 827c32d0df4bbe0d1c47d79f6a5eabfe9ac75216 ]
 
-iommu_attach_group() attaches all devices in a group to domain and then
-sets group domain (group->domain). Current code (__iommu_attach_group())
-does not handle error path. This creates problem as devices to domain
-attachment is in inconsistent state.
+The response_buf was declared much larger (128 entries) than the number
+of responses that could ever be written into it. The Cadence IP is
+configurable up to a maximum of 32 entries, and the datasheet says
+that RX_FIFO_AVAIL can be 2 larger than this. So allow up to 34
+responses.
 
-Flow:
-  - During boot iommu attach devices to default domain
-  - Later some device driver (like amd/iommu_v2 or vfio) tries to attach
-    device to new domain.
-  - In iommu_attach_group() path we detach device from current domain.
-    Then it tries to attach devices to new domain.
-  - If it fails to attach device to new domain then device to domain link
-    is broken.
-  - iommu_attach_group() returns error.
-  - At this stage iommu_attach_group() caller thinks, attaching device to
-    new domain failed and devices are still attached to old domain.
-  - But in reality device to old domain link is broken. It will result
-    in all sort of failures (like IO page fault) later.
+Also add checking in cdns_read_response() to prevent overflowing
+reponse_buf if RX_FIFO_AVAIL contains an unexpectedly large number.
 
-To recover from this situation, we need to attach all devices back to the
-old domain. Also log warning if it fails attach device back to old domain.
-
-Suggested-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reported-by: Matt Fagnani <matt.fagnani@bell.net>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Tested-by: Matt Fagnani <matt.fagnani@bell.net>
-Link: https://lore.kernel.org/r/20230215052642.6016-1-vasant.hegde@amd.com
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216865
-Link: https://lore.kernel.org/lkml/15d0f9ff-2a56-b3e9-5b45-e6b23300ae3b@leemhuis.info/
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20221202161812.4186897-3-rf@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommu.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/soundwire/cadence_master.c |  7 +++++++
+ drivers/soundwire/cadence_master.h | 13 ++++++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index fd8c8aeb3c504..bfb2f163c6914 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -2089,8 +2089,22 @@ static int __iommu_attach_group(struct iommu_domain *domain,
+diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
+index b65cdf2a7593e..6cd9db19758c9 100644
+--- a/drivers/soundwire/cadence_master.c
++++ b/drivers/soundwire/cadence_master.c
+@@ -774,8 +774,15 @@ static void cdns_read_response(struct sdw_cdns *cdns)
+ 	u32 num_resp, cmd_base;
+ 	int i;
  
- 	ret = __iommu_group_for_each_dev(group, domain,
- 					 iommu_group_do_attach_device);
--	if (ret == 0)
-+	if (ret == 0) {
- 		group->domain = domain;
-+	} else {
-+		/*
-+		 * To recover from the case when certain device within the
-+		 * group fails to attach to the new domain, we need force
-+		 * attaching all devices back to the old domain. The old
-+		 * domain is compatible for all devices in the group,
-+		 * hence the iommu driver should always return success.
-+		 */
-+		struct iommu_domain *old_domain = group->domain;
++	/* RX_FIFO_AVAIL can be 2 entries more than the FIFO size */
++	BUILD_BUG_ON(ARRAY_SIZE(cdns->response_buf) < CDNS_MCP_CMD_LEN + 2);
 +
-+		group->domain = NULL;
-+		WARN(__iommu_group_set_domain(group, old_domain),
-+		     "iommu driver failed to attach a compatible domain");
+ 	num_resp = cdns_readl(cdns, CDNS_MCP_FIFOSTAT);
+ 	num_resp &= CDNS_MCP_RX_FIFO_AVAIL;
++	if (num_resp > ARRAY_SIZE(cdns->response_buf)) {
++		dev_warn(cdns->dev, "RX AVAIL %d too long\n", num_resp);
++		num_resp = ARRAY_SIZE(cdns->response_buf);
 +	}
  
- 	return ret;
- }
+ 	cmd_base = CDNS_MCP_CMD_BASE;
+ 
+diff --git a/drivers/soundwire/cadence_master.h b/drivers/soundwire/cadence_master.h
+index ca9e805bab88f..51e6ecc027cbc 100644
+--- a/drivers/soundwire/cadence_master.h
++++ b/drivers/soundwire/cadence_master.h
+@@ -8,6 +8,12 @@
+ #define SDW_CADENCE_GSYNC_KHZ		4 /* 4 kHz */
+ #define SDW_CADENCE_GSYNC_HZ		(SDW_CADENCE_GSYNC_KHZ * 1000)
+ 
++/*
++ * The Cadence IP supports up to 32 entries in the FIFO, though implementations
++ * can configure the IP to have a smaller FIFO.
++ */
++#define CDNS_MCP_IP_MAX_CMD_LEN		32
++
+ /**
+  * struct sdw_cdns_pdi: PDI (Physical Data Interface) instance
+  *
+@@ -114,7 +120,12 @@ struct sdw_cdns {
+ 	struct sdw_bus bus;
+ 	unsigned int instance;
+ 
+-	u32 response_buf[0x80];
++	/*
++	 * The datasheet says the RX FIFO AVAIL can be 2 entries more
++	 * than the FIFO capacity, so allow for this.
++	 */
++	u32 response_buf[CDNS_MCP_IP_MAX_CMD_LEN + 2];
++
+ 	struct completion tx_complete;
+ 	struct sdw_defer *defer;
+ 
 -- 
 2.39.2
 
