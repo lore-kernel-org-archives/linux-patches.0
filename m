@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629FC847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB441C433D2;
-	Fri, 10 Mar 2023 13:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EE6847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B341DC433D2;
+	Fri, 10 Mar 2023 13:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456150;
-	bh=k8apr88Pa4dOKFGhsCWanATlqNL60BvGN6PQ8i+aMms=;
+	s=korg; t=1678456153;
+	bh=l60yho8Sb9pU7IYkvb9QgTfr7q5Xh796upMFjawI7C8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lPG4y0Z4pleOOyvF2xxpioM3F+r6an4XHFmmr5NCQiUVkpz/ThTnjMOSGLVFo4EVd
-	 LnM5k2EmYEwp81uMr8TllGw/06ddz5ug6Eoz48ruDNA7PT1m17YXjh8LxkWh1Qcqpc
-	 4pac4r+asyGuvEUUO3osx7LdTWLkhDM70WJM3oHg=
+	b=oh95FBIJ8ptZ4hzy1aSMfg8P8imCI6awTf19cHYVALJaDGKB7Em58JAgJnCAP3gSX
+	 TUZXeCRzxMtaDcDJDjbg2BOqqOjJosuGXNNIad/ZVf4kawjGEn9m3zO0LaWGJ/T6Pr
+	 f3c8tNGH4IMWmaf9OUaTwyxXigNBh43AaT/FLrN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
+	Luca Ellero <l.ellero@asem.it>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 096/193] dm cache: add cond_resched() to various workqueue loops
-Date: Fri, 10 Mar 2023 14:37:58 +0100
-Message-Id: <20230310133714.429716689@linuxfoundation.org>
+Subject: [PATCH 4.14 068/193] Input: ads7846 - dont check penirq immediately for 7845
+Date: Fri, 10 Mar 2023 14:37:30 +0100
+Message-Id: <20230310133713.307448418@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -34,48 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Luca Ellero <l.ellero@asem.it>
 
-[ Upstream commit 76227f6dc805e9e960128bcc6276647361e0827c ]
+[ Upstream commit fa9f4275b20ec7b2a8fb05c66362d10b36f9efec ]
 
-Otherwise on resource constrained systems these workqueues may be too
-greedy.
+To discard false readings, one should use "ti,penirq-recheck-delay-usecs".
+Checking get_pendown_state() at the beginning, most of the time fails
+causing malfunctioning.
 
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: ffa458c1bd9b ("spi: ads7846 driver")
+Signed-off-by: Luca Ellero <l.ellero@asem.it>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230126105227.47648-4-l.ellero@asem.it
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-target.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/input/touchscreen/ads7846.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index 5458a06971670..590aff275acb8 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -1952,6 +1952,7 @@ static void process_deferred_bios(struct work_struct *ws)
+diff --git a/drivers/input/touchscreen/ads7846.c b/drivers/input/touchscreen/ads7846.c
+index 491cc7efecf9e..fe6c9e1870414 100644
+--- a/drivers/input/touchscreen/ads7846.c
++++ b/drivers/input/touchscreen/ads7846.c
+@@ -790,14 +790,8 @@ static void ads7846_report_state(struct ads7846 *ts)
+ 	if (x == MAX_12BIT)
+ 		x = 0;
  
- 		else
- 			commit_needed = process_bio(cache, bio) || commit_needed;
-+		cond_resched();
- 	}
- 
- 	if (commit_needed)
-@@ -1974,6 +1975,7 @@ static void requeue_deferred_bios(struct cache *cache)
- 	while ((bio = bio_list_pop(&bios))) {
- 		bio->bi_status = BLK_STS_DM_REQUEUE;
- 		bio_endio(bio);
-+		cond_resched();
- 	}
- }
- 
-@@ -2014,6 +2016,8 @@ static void check_migrations(struct work_struct *ws)
- 		r = mg_start(cache, op, NULL);
- 		if (r)
- 			break;
-+
-+		cond_resched();
- 	}
- }
- 
+-	if (ts->model == 7843) {
++	if (ts->model == 7843 || ts->model == 7845) {
+ 		Rt = ts->pressure_max / 2;
+-	} else if (ts->model == 7845) {
+-		if (get_pendown_state(ts))
+-			Rt = ts->pressure_max / 2;
+-		else
+-			Rt = 0;
+-		dev_vdbg(&ts->spi->dev, "x/y: %d/%d, PD %d\n", x, y, Rt);
+ 	} else if (likely(x && z1)) {
+ 		/* compute touch pressure resistance using equation #2 */
+ 		Rt = z2;
 -- 
 2.39.2
 
