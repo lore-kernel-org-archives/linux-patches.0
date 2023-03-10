@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BD98820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:51:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C2ECC433D2;
-	Fri, 10 Mar 2023 14:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E164B8820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:51:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17323C433D2;
+	Fri, 10 Mar 2023 14:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459888;
-	bh=YN0SInd6+Dot+Q+ojHIihZgXP+9QbKyBdmkEP7S/lXU=;
+	s=korg; t=1678459891;
+	bh=4vDGlHjjAZ7lkA9qagRZTFX/d5ouXNPzzQJxDo+ctmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fFh/fH7jUwOikE97eqwO7m5LeO3Ozc1LXqeTCS/Na3vvXMszuGhDrk6StcOZsqqhX
-	 XZwBVR2Bu4MiAf/PY59XKhW8gmA892uUOFhRbCv+dSWdBJSgdWIFNs7GGuIivEs7oE
-	 aBQT6SBerJ/rE13bJcHz1+/31TZzxPDY7SkrhGrY=
+	b=Ne9AH65XEqdvqRxWnGxW3w3yTHtxJKZXyausHlJgyo0jhzlLQUh4iUz8jTSmKqJvl
+	 YV5xJtJ8LuxGR2eG16wSA2/MC6wp+TRSKUl3ZE+DfCtE00Jsy+syFvATqaatjpZix4
+	 vH4lylMP1KJL4/40s/VtJAnkl6j0NzNN8XPsosMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 123/529] tun: tun_chr_open(): correctly initialize socket uid
-Date: Fri, 10 Mar 2023 14:34:26 +0100
-Message-Id: <20230310133810.678341957@linuxfoundation.org>
+Subject: [PATCH 5.10 114/529] crypto: ccp - Flush the SEV-ES TMR memory before giving it to firmware
+Date: Fri, 10 Mar 2023 14:34:17 +0100
+Message-Id: <20230310133810.279427252@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,45 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Tom Lendacky <thomas.lendacky@amd.com>
 
-[ Upstream commit a096ccca6e503a5c575717ff8a36ace27510ab0a ]
+[ Upstream commit 46a334a98f585ef78d51d8f5736596887bdd7f54 ]
 
-sock_init_data() assumes that the `struct socket` passed in input is
-contained in a `struct socket_alloc` allocated with sock_alloc().
-However, tun_chr_open() passes a `struct socket` embedded in a `struct
-tun_file` allocated with sk_alloc().
-This causes a type confusion when issuing a container_of() with
-SOCK_INODE() in sock_init_data() which results in assigning a wrong
-sk_uid to the `struct sock` in input.
-On default configuration, the type confused field overlaps with the
-high 4 bytes of `struct tun_struct __rcu *tun` of `struct tun_file`,
-NULL at the time of call, which makes the uid of all tun sockets 0,
-i.e., the root one.
-Fix the assignment by using sock_init_data_uid().
+Perform a cache flush on the SEV-ES TMR memory after allocation to prevent
+any possibility of the firmware encountering an error should dirty cache
+lines be present. Use clflush_cache_range() to flush the SEV-ES TMR memory.
 
-Fixes: 86741ec25462 ("net: core: Add a UID field to struct sock.")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 97f9ac3db661 ("crypto: ccp - Add support for SEV-ES to the PSP driver")
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/ccp/sev-dev.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 67ce7b779af61..f1d46aea8a2ba 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -3457,7 +3457,7 @@ static int tun_chr_open(struct inode *inode, struct file * file)
- 	tfile->socket.file = file;
- 	tfile->socket.ops = &tun_socket_ops;
+diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
+index 8a900226d73a3..856d867f46ebb 100644
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -23,6 +23,7 @@
+ #include <linux/gfp.h>
  
--	sock_init_data(&tfile->socket, &tfile->sk);
-+	sock_init_data_uid(&tfile->socket, &tfile->sk, inode->i_uid);
+ #include <asm/smp.h>
++#include <asm/cacheflush.h>
  
- 	tfile->sk.sk_write_space = tun_sock_write_space;
- 	tfile->sk.sk_sndbuf = INT_MAX;
+ #include "psp-dev.h"
+ #include "sev-dev.h"
+@@ -1067,7 +1068,10 @@ void sev_pci_init(void)
+ 
+ 	/* Obtain the TMR memory area for SEV-ES use */
+ 	sev_es_tmr = sev_fw_alloc(SEV_ES_TMR_SIZE);
+-	if (!sev_es_tmr)
++	if (sev_es_tmr)
++		/* Must flush the cache before giving it to the firmware */
++		clflush_cache_range(sev_es_tmr, SEV_ES_TMR_SIZE);
++	else
+ 		dev_warn(sev->dev,
+ 			 "SEV: TMR allocation failed, SEV-ES support unavailable\n");
+ 
 -- 
 2.39.2
 
