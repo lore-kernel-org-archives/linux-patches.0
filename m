@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C4B881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:41:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D84DC4339C;
-	Fri, 10 Mar 2023 14:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B90881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:41:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DDDC4339C;
+	Fri, 10 Mar 2023 14:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459305;
-	bh=Kz30x7qeVI0eOKRJ9XU/0uuK2LRBrXmze+ya30VssIU=;
+	s=korg; t=1678459308;
+	bh=FYccJEXC129+lYzQPsHq224q5RlxDj0WuYo8eE9I/zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kuBGyiyRD1t6VJDTLp7JFKSBeLZcIhIgz10bCR3qbfYcprBM/I40KOrMLkMTEPOcq
-	 /+l9S7ExF7z1/Rlq/iXAtWsM9lTjJxBgNjEDyHw3rTXkJetk3cVH4o5m3bbRxT01Q/
-	 jh6CCz9SHApPVhYQM9fWcQENVFuQahkb2U57xKqE=
+	b=P7Ln0XulouGDQsTZx8jDlZMELW6Ko8uWXdOmNE9utiN4byH4SHIaMY2/Ab9m+ufHx
+	 QHeDTdRfBp/u5OtRbwOKjsT2s3a/w8HvCGNZGuSgMXYIojZ7TmvHSJwsvbmFI96l6t
+	 owwMTfpGMm4CP1AjlTMh/cckgIYCA4k6OWicGees=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	Eric Biggers <ebiggers@google.com>,
+	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 316/357] 9p/xen: fix connection sequence
-Date: Fri, 10 Mar 2023 14:40:05 +0100
-Message-Id: <20230310133748.634883679@linuxfoundation.org>
+Subject: [PATCH 5.4 288/357] f2fs: use memcpy_{to,from}_page() where possible
+Date: Fri, 10 Mar 2023 14:39:37 +0100
+Message-Id: <20230310133747.458269223@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -37,115 +37,156 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit c15fe55d14b3b4ded5af2a3260877460a6ffb8ad ]
+[ Upstream commit b87846bd61c7c09560617da416208a5454530d57 ]
 
-Today the connection sequence of the Xen 9pfs frontend doesn't match
-the documented sequence. It can work reliably only for a PV 9pfs device
-having been added at boot time already, as the frontend is not waiting
-for the backend to have set its state to "XenbusStateInitWait" before
-reading the backend properties from Xenstore.
+This is simpler, and as a side effect it replaces several uses of
+kmap_atomic() with its recommended replacement kmap_local_page().
 
-Fix that by following the documented sequence [1] (the documentation
-has a bug, so the reference is for the patch fixing that).
-
-[1]: https://lore.kernel.org/xen-devel/20230130090937.31623-1-jgross@suse.com/T/#u
-
-Link: https://lkml.kernel.org/r/20230130113036.7087-3-jgross@suse.com
-Fixes: 868eb122739a ("xen/9pfs: introduce Xen 9pfs transport driver")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Fabio M. De Francesco <fmdefrancesco@gmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: b1b9896718bc ("fs: f2fs: initialize fsdata in pagecache_write()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_xen.c | 38 +++++++++++++++++++++++---------------
- 1 file changed, 23 insertions(+), 15 deletions(-)
+ fs/f2fs/inline.c | 15 ++++-----------
+ fs/f2fs/super.c  | 11 ++---------
+ fs/f2fs/verity.c | 10 ++--------
+ 3 files changed, 8 insertions(+), 28 deletions(-)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index 131757aa0e6e2..67e9a7085e13b 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -389,12 +389,11 @@ static int xen_9pfs_front_alloc_dataring(struct xenbus_device *dev,
- 	return ret;
- }
- 
--static int xen_9pfs_front_probe(struct xenbus_device *dev,
--				const struct xenbus_device_id *id)
-+static int xen_9pfs_front_init(struct xenbus_device *dev)
+diff --git a/fs/f2fs/inline.c b/fs/f2fs/inline.c
+index 58b77f0b0a05a..a700df05cd182 100644
+--- a/fs/f2fs/inline.c
++++ b/fs/f2fs/inline.c
+@@ -43,7 +43,6 @@ bool f2fs_may_inline_dentry(struct inode *inode)
+ void f2fs_do_read_inline_data(struct page *page, struct page *ipage)
  {
- 	int ret, i;
- 	struct xenbus_transaction xbt;
--	struct xen_9pfs_front_priv *priv = NULL;
-+	struct xen_9pfs_front_priv *priv = dev_get_drvdata(&dev->dev);
- 	char *versions, *v;
- 	unsigned int max_rings, max_ring_order, len = 0;
+ 	struct inode *inode = page->mapping->host;
+-	void *src_addr, *dst_addr;
  
-@@ -420,11 +419,6 @@ static int xen_9pfs_front_probe(struct xenbus_device *dev,
- 	if (max_ring_order < XEN_9PFS_RING_ORDER)
- 		return -EINVAL;
+ 	if (PageUptodate(page))
+ 		return;
+@@ -53,11 +52,8 @@ void f2fs_do_read_inline_data(struct page *page, struct page *ipage)
+ 	zero_user_segment(page, MAX_INLINE_DATA(inode), PAGE_SIZE);
  
--	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
--	if (!priv)
--		return -ENOMEM;
--
--	priv->dev = dev;
- 	priv->num_rings = XEN_9PFS_NUM_RINGS;
- 	priv->rings = kcalloc(priv->num_rings, sizeof(*priv->rings),
- 			      GFP_KERNEL);
-@@ -482,23 +476,35 @@ static int xen_9pfs_front_probe(struct xenbus_device *dev,
- 		goto error;
- 	}
- 
--	write_lock(&xen_9pfs_lock);
--	list_add_tail(&priv->list, &xen_9pfs_devs);
--	write_unlock(&xen_9pfs_lock);
--	dev_set_drvdata(&dev->dev, priv);
--	xenbus_switch_state(dev, XenbusStateInitialised);
--
- 	return 0;
- 
-  error_xenbus:
- 	xenbus_transaction_end(xbt, 1);
- 	xenbus_dev_fatal(dev, ret, "writing xenstore");
-  error:
--	dev_set_drvdata(&dev->dev, NULL);
- 	xen_9pfs_front_free(priv);
- 	return ret;
+ 	/* Copy the whole inline data block */
+-	src_addr = inline_data_addr(inode, ipage);
+-	dst_addr = kmap_atomic(page);
+-	memcpy(dst_addr, src_addr, MAX_INLINE_DATA(inode));
+-	flush_dcache_page(page);
+-	kunmap_atomic(dst_addr);
++	memcpy_to_page(page, 0, inline_data_addr(inode, ipage),
++		       MAX_INLINE_DATA(inode));
+ 	if (!PageUptodate(page))
+ 		SetPageUptodate(page);
  }
+@@ -224,7 +220,6 @@ int f2fs_convert_inline_inode(struct inode *inode)
  
-+static int xen_9pfs_front_probe(struct xenbus_device *dev,
-+				const struct xenbus_device_id *id)
-+{
-+	struct xen_9pfs_front_priv *priv = NULL;
-+
-+	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	priv->dev = dev;
-+	dev_set_drvdata(&dev->dev, priv);
-+
-+	write_lock(&xen_9pfs_lock);
-+	list_add_tail(&priv->list, &xen_9pfs_devs);
-+	write_unlock(&xen_9pfs_lock);
-+
-+	return 0;
-+}
-+
- static int xen_9pfs_front_resume(struct xenbus_device *dev)
+ int f2fs_write_inline_data(struct inode *inode, struct page *page)
  {
- 	dev_warn(&dev->dev, "suspend/resume unsupported\n");
-@@ -517,6 +523,8 @@ static void xen_9pfs_front_changed(struct xenbus_device *dev,
- 		break;
+-	void *src_addr, *dst_addr;
+ 	struct dnode_of_data dn;
+ 	int err;
  
- 	case XenbusStateInitWait:
-+		if (!xen_9pfs_front_init(dev))
-+			xenbus_switch_state(dev, XenbusStateInitialised);
- 		break;
+@@ -241,10 +236,8 @@ int f2fs_write_inline_data(struct inode *inode, struct page *page)
+ 	f2fs_bug_on(F2FS_I_SB(inode), page->index);
  
- 	case XenbusStateConnected:
+ 	f2fs_wait_on_page_writeback(dn.inode_page, NODE, true, true);
+-	src_addr = kmap_atomic(page);
+-	dst_addr = inline_data_addr(inode, dn.inode_page);
+-	memcpy(dst_addr, src_addr, MAX_INLINE_DATA(inode));
+-	kunmap_atomic(src_addr);
++	memcpy_from_page(inline_data_addr(inode, dn.inode_page),
++			 page, 0, MAX_INLINE_DATA(inode));
+ 	set_page_dirty(dn.inode_page);
+ 
+ 	f2fs_clear_page_cache_dirty_tag(page);
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 3f2fe60346401..401bc0e7f6eb0 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1824,7 +1824,6 @@ static ssize_t f2fs_quota_read(struct super_block *sb, int type, char *data,
+ 	size_t toread;
+ 	loff_t i_size = i_size_read(inode);
+ 	struct page *page;
+-	char *kaddr;
+ 
+ 	if (off > i_size)
+ 		return 0;
+@@ -1857,9 +1856,7 @@ static ssize_t f2fs_quota_read(struct super_block *sb, int type, char *data,
+ 			return -EIO;
+ 		}
+ 
+-		kaddr = kmap_atomic(page);
+-		memcpy(data, kaddr + offset, tocopy);
+-		kunmap_atomic(kaddr);
++		memcpy_from_page(data, page, offset, tocopy);
+ 		f2fs_put_page(page, 1);
+ 
+ 		offset = 0;
+@@ -1881,7 +1878,6 @@ static ssize_t f2fs_quota_write(struct super_block *sb, int type,
+ 	size_t towrite = len;
+ 	struct page *page;
+ 	void *fsdata = NULL;
+-	char *kaddr;
+ 	int err = 0;
+ 	int tocopy;
+ 
+@@ -1900,10 +1896,7 @@ static ssize_t f2fs_quota_write(struct super_block *sb, int type,
+ 			break;
+ 		}
+ 
+-		kaddr = kmap_atomic(page);
+-		memcpy(kaddr + offset, data, tocopy);
+-		kunmap_atomic(kaddr);
+-		flush_dcache_page(page);
++		memcpy_to_page(page, offset, data, tocopy);
+ 
+ 		a_ops->write_end(NULL, mapping, off, tocopy, tocopy,
+ 						page, fsdata);
+diff --git a/fs/f2fs/verity.c b/fs/f2fs/verity.c
+index 7944a08a3977e..e5a47782a97ef 100644
+--- a/fs/f2fs/verity.c
++++ b/fs/f2fs/verity.c
+@@ -45,16 +45,13 @@ static int pagecache_read(struct inode *inode, void *buf, size_t count,
+ 		size_t n = min_t(size_t, count,
+ 				 PAGE_SIZE - offset_in_page(pos));
+ 		struct page *page;
+-		void *addr;
+ 
+ 		page = read_mapping_page(inode->i_mapping, pos >> PAGE_SHIFT,
+ 					 NULL);
+ 		if (IS_ERR(page))
+ 			return PTR_ERR(page);
+ 
+-		addr = kmap_atomic(page);
+-		memcpy(buf, addr + offset_in_page(pos), n);
+-		kunmap_atomic(addr);
++		memcpy_from_page(buf, page, offset_in_page(pos), n);
+ 
+ 		put_page(page);
+ 
+@@ -80,7 +77,6 @@ static int pagecache_write(struct inode *inode, const void *buf, size_t count,
+ 				 PAGE_SIZE - offset_in_page(pos));
+ 		struct page *page;
+ 		void *fsdata;
+-		void *addr;
+ 		int res;
+ 
+ 		res = pagecache_write_begin(NULL, inode->i_mapping, pos, n, 0,
+@@ -88,9 +84,7 @@ static int pagecache_write(struct inode *inode, const void *buf, size_t count,
+ 		if (res)
+ 			return res;
+ 
+-		addr = kmap_atomic(page);
+-		memcpy(addr + offset_in_page(pos), buf, n);
+-		kunmap_atomic(addr);
++		memcpy_to_page(page, offset_in_page(pos), buf, n);
+ 
+ 		res = pagecache_write_end(NULL, inode->i_mapping, pos, n, n,
+ 					  page, fsdata);
 -- 
 2.39.2
 
