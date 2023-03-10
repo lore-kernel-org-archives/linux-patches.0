@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021498481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:03:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 648FEC433D2;
-	Fri, 10 Mar 2023 14:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFF78481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:03:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76609C433EF;
+	Fri, 10 Mar 2023 14:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457030;
-	bh=QIksLOTKxJRO+YhmoAGEvE/OjudrTc2cq7yyNzLfAiU=;
+	s=korg; t=1678457033;
+	bh=42NXa3rkxB0hPj2cneXedkTKdbGvXlgJG/EirB3pMUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/52nfS5eUcvpRLF/Tgcd32Yel3MKl7EtwnAHH+8OG7cYL53x+/nuQm1nzuVOZDqC
-	 CdIPSzijsl9u2SkeQmbR7s5+W9w171F2Y35Y8t4C23eYUeHKtLqXb2PKed4CsicZju
-	 ev+1JRmVAL7SkR9knMcmguHPZNMi/M85kKxGTJ04=
+	b=obbi5e9jWLHS8ukfs5dpMAdqeIxFfcboMeplOb9f/THC7ABr62khmMh/7lhoe7fSq
+	 nTGvMA5gwdwuhR+J1+fdmGvCKhyEAMQ+EdNM/SjYWDG7fwk/fzYCqqfEnhMLxDRIXT
+	 8mYUFEL7hyln0r7nk0Q3yCzGZ/omztVZJ1uRLGeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 179/211] drivers: base: dd: fix memory leak with using debugfs_lookup()
-Date: Fri, 10 Mar 2023 14:39:19 +0100
-Message-Id: <20230310133724.266669525@linuxfoundation.org>
+Subject: [PATCH 6.2 180/211] kernel/fail_function: fix memory leak with using debugfs_lookup()
+Date: Fri, 10 Mar 2023 14:39:20 +0100
+Message-Id: <20230310133724.295714313@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,34 +37,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 36c893d3a759ae7c91ee7d4871ebfc7504f08c40 ]
+[ Upstream commit 2bb3669f576559db273efe49e0e69f82450efbca ]
 
 When calling debugfs_lookup() the result must have dput() called on it,
 otherwise the memory will leak over time.  To make things simpler, just
 call debugfs_lookup_and_remove() instead which handles all of the logic
 at once.
 
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Link: https://lore.kernel.org/r/20230202141621.2296458-2-gregkh@linuxfoundation.org
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20230202151633.2310897-1-gregkh@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/dd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/fail_function.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index e9b2f9c25efe4..959fe018d0dd7 100644
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -372,7 +372,7 @@ late_initcall(deferred_probe_initcall);
+diff --git a/kernel/fail_function.c b/kernel/fail_function.c
+index a7ccd2930c5f4..d971a01893197 100644
+--- a/kernel/fail_function.c
++++ b/kernel/fail_function.c
+@@ -163,10 +163,7 @@ static void fei_debugfs_add_attr(struct fei_attr *attr)
  
- static void __exit deferred_probe_exit(void)
+ static void fei_debugfs_remove_attr(struct fei_attr *attr)
  {
--	debugfs_remove_recursive(debugfs_lookup("devices_deferred", NULL));
-+	debugfs_lookup_and_remove("devices_deferred", NULL);
+-	struct dentry *dir;
+-
+-	dir = debugfs_lookup(attr->kp.symbol_name, fei_debugfs_dir);
+-	debugfs_remove_recursive(dir);
++	debugfs_lookup_and_remove(attr->kp.symbol_name, fei_debugfs_dir);
  }
- __exitcall(deferred_probe_exit);
  
+ static int fei_kprobe_handler(struct kprobe *kp, struct pt_regs *regs)
 -- 
 2.39.2
 
