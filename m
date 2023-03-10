@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A9B846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:34:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32469C4339C;
-	Fri, 10 Mar 2023 14:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6875846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:34:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334BBC4339B;
+	Fri, 10 Mar 2023 14:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458864;
-	bh=r4sQguZ+i/cZlqPM1CYzJ3qXU0fSxlMDDzyhokLGqzE=;
+	s=korg; t=1678458867;
+	bh=bcUvaelcIR/fHDTJauh8j+glCKCOa9JiE5GgEkicGA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWFhNHR/7J9JGNN+APqzA1h16oHJW9t0qIgCgujMfmR1g9a7A9ZHgh4yu8etkG6Ux
-	 IuQfdk28hSZrgVOK1jujhsH0m2Z7uorksHSI/fcGfdyMiAJ2Cyq9nt7zpBXIB9gi3k
-	 aOPntw+GZP7fvuYXHVrxFM5h0MDsNGGCrGxk3tlE=
+	b=GTvgne+Kjr/eXGXQ7fleqVHR2YDGIOZVJnqwb9QwifBjghCbyyFixSuVh3oLKev6R
+	 uzF1MPntl7pZP8Tp8v9II9+zDodC3OcepWWLSKXcZiwNq0aL9R7RoV2jPirv2W5Giw
+	 Utia3rf/1B6rK+DGEndcm96t2MdOCDLtPJjuPNNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 169/357] powerpc: Remove linker flag from KBUILD_AFLAGS
-Date: Fri, 10 Mar 2023 14:37:38 +0100
-Message-Id: <20230310133742.178515761@linuxfoundation.org>
+Subject: [PATCH 5.4 170/357] media: ov5675: Fix memleak in ov5675_init_controls()
+Date: Fri, 10 Mar 2023 14:37:39 +0100
+Message-Id: <20230310133742.227316923@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -39,69 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 31f48f16264bc70962fb3e7ec62da64d0a2ba04a ]
+[ Upstream commit dd74ed6c213003533e3abf4c204374ef01d86978 ]
 
-When clang's -Qunused-arguments is dropped from KBUILD_CPPFLAGS, it
-points out that KBUILD_AFLAGS contains a linker flag, which will be
-unused:
+There is a kmemleak when testing the media/i2c/ov5675.c with bpf mock
+device:
 
-  clang: error: -Wl,-a32: 'linker' input unused [-Werror,-Wunused-command-line-argument]
+AssertionError: unreferenced object 0xffff888107362160 (size 16):
+  comm "python3", pid 277, jiffies 4294832798 (age 20.722s)
+  hex dump (first 16 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<00000000abe7d67c>] __kmalloc_node+0x44/0x1b0
+    [<000000008a725aac>] kvmalloc_node+0x34/0x180
+    [<000000009a53cd11>] v4l2_ctrl_handler_init_class+0x11d/0x180
+[videodev]
+    [<0000000055b46db0>] ov5675_probe+0x38b/0x897 [ov5675]
+    [<00000000153d886c>] i2c_device_probe+0x28d/0x680
+    [<000000004afb7e8f>] really_probe+0x17c/0x3f0
+    [<00000000ff2f18e4>] __driver_probe_device+0xe3/0x170
+    [<000000000a001029>] driver_probe_device+0x49/0x120
+    [<00000000e39743c7>] __device_attach_driver+0xf7/0x150
+    [<00000000d32fd070>] bus_for_each_drv+0x114/0x180
+    [<000000009083ac41>] __device_attach+0x1e5/0x2d0
+    [<0000000015b4a830>] bus_probe_device+0x126/0x140
+    [<000000007813deaf>] device_add+0x810/0x1130
+    [<000000007becb867>] i2c_new_client_device+0x386/0x540
+    [<000000007f9cf4b4>] of_i2c_register_device+0xf1/0x110
+    [<00000000ebfdd032>] of_i2c_notify+0xfc/0x1f0
 
-This was likely supposed to be '-Wa,-a$(BITS)'. However, this change is
-unnecessary, as all supported versions of clang and gcc will pass '-a64'
-or '-a32' to GNU as based on the value of '-m'; the behavior of the
-latest stable release of the oldest supported major version of each
-compiler is shown below and each compiler's latest release exhibits the
-same behavior (GCC 12.2.0 and Clang 15.0.6).
+ov5675_init_controls() won't clean all the allocated resources in fail
+path, which may causes the memleaks. Add v4l2_ctrl_handler_free() to
+prevent memleak.
 
-  $ powerpc64-linux-gcc --version | head -1
-  powerpc64-linux-gcc (GCC) 5.5.0
-
-  $ powerpc64-linux-gcc -m64 -### -x assembler-with-cpp -c -o /dev/null /dev/null &| grep 'as '
-  .../as -a64 -mppc64 -many -mbig -o /dev/null /tmp/cctwuBzZ.s
-
-  $ powerpc64-linux-gcc -m32 -### -x assembler-with-cpp -c -o /dev/null /dev/null &| grep 'as '
-  .../as -a32 -mppc -many -mbig -o /dev/null /tmp/ccaZP4mF.sg
-
-  $ clang --version | head -1
-  Ubuntu clang version 11.1.0-++20211011094159+1fdec59bffc1-1~exp1~20211011214622.5
-
-  $ clang --target=powerpc64-linux-gnu -fno-integrated-as -m64 -### \
-    -x assembler-with-cpp -c -o /dev/null /dev/null &| grep gnu-as
-   "/usr/bin/powerpc64-linux-gnu-as" "-a64" "-mppc64" "-many" "-o" "/dev/null" "/tmp/null-80267c.s"
-
-  $ clang --target=powerpc64-linux-gnu -fno-integrated-as -m64 -### \
-    -x assembler-with-cpp -c -o /dev/null /dev/null &| grep gnu-as
-   "/usr/bin/powerpc64-linux-gnu-as" "-a32" "-mppc" "-many" "-o" "/dev/null" "/tmp/null-ab8f8d.s"
-
-Remove this flag altogether to avoid future issues.
-
-Fixes: 1421dc6d4829 ("powerpc/kbuild: Use flags variables rather than overriding LD/CC/AS")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Acked-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: bf27502b1f3b ("media: ov5675: Add support for OV5675 sensor")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/ov5675.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/Makefile b/arch/powerpc/Makefile
-index 95183a717eb67..6c32ea6dc7558 100644
---- a/arch/powerpc/Makefile
-+++ b/arch/powerpc/Makefile
-@@ -93,7 +93,7 @@ aflags-$(CONFIG_CPU_LITTLE_ENDIAN)	+= -mlittle-endian
+diff --git a/drivers/media/i2c/ov5675.c b/drivers/media/i2c/ov5675.c
+index 1ae252378799e..477f61b8559c2 100644
+--- a/drivers/media/i2c/ov5675.c
++++ b/drivers/media/i2c/ov5675.c
+@@ -722,8 +722,10 @@ static int ov5675_init_controls(struct ov5675 *ov5675)
+ 				     V4L2_CID_TEST_PATTERN,
+ 				     ARRAY_SIZE(ov5675_test_pattern_menu) - 1,
+ 				     0, 0, ov5675_test_pattern_menu);
+-	if (ctrl_hdlr->error)
++	if (ctrl_hdlr->error) {
++		v4l2_ctrl_handler_free(ctrl_hdlr);
+ 		return ctrl_hdlr->error;
++	}
  
- ifeq ($(HAS_BIARCH),y)
- KBUILD_CFLAGS	+= -m$(BITS)
--KBUILD_AFLAGS	+= -m$(BITS) -Wl,-a$(BITS)
-+KBUILD_AFLAGS	+= -m$(BITS)
- KBUILD_LDFLAGS	+= -m elf$(BITS)$(LDEMULATION)
- endif
+ 	ov5675->sd.ctrl_handler = ctrl_hdlr;
  
 -- 
 2.39.2
