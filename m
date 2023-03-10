@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB775847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:55:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4970AC433D2;
-	Fri, 10 Mar 2023 13:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99C4847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:55:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683F1C4339E;
+	Fri, 10 Mar 2023 13:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456507;
-	bh=m6I0DbXTTC/yHeEPTZG3myrJaut4dZ/WycagR6r/h28=;
+	s=korg; t=1678456510;
+	bh=0jnhNvrlKn30wVjlFBOUvGzWkvXykFW7rEF1WPQrEZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xafaB15ILxm0HxqvoPxF+CE5ylMGUVXDMkc8WcpviR4UP0gWMuT5q3AdfKq6uU4kn
-	 5wBB5Swa9anh/mvaPfUBnMrx6zbPNOd64PtkLtm88YHbE1tgF89vmNCpMLUwjVYgxa
-	 9v1TvcFJr8O+k7NPtNKzccy5OmnUQdhFl1mTaUvU=
+	b=BMwsQY2DI5+jbOJfWesI4BSkQh9yI8ZmVquynXT/1uxwW1oaVou09vLP7LdMfymLJ
+	 9p7Coa3wPypXTuLKeUu+6RIspHh06YLNM1aSC5OCSsHW+ZniTBeudwglo0Il/uvx+n
+	 dLY0BK7xDOJesQYNv88It6yH9jUQLJ/OleX0oMHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 027/211] ubifs: Fix memory leak in ubifs_sysfs_init()
-Date: Fri, 10 Mar 2023 14:36:47 +0100
-Message-Id: <20230310133719.553873494@linuxfoundation.org>
+Subject: [PATCH 6.2 028/211] ubifs: Rectify space budget for ubifs_symlink() if symlink is encrypted
+Date: Fri, 10 Mar 2023 14:36:48 +0100
+Message-Id: <20230310133719.590868012@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,55 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 203a55f04f66eea1a1ca7e5a302a7f5c99c62327 ]
+[ Upstream commit c2c36cc6ca23e614f9e4238d0ecf48549ee9002a ]
 
-When insmod ubifs.ko, a kmemleak reported as below:
+Fix bad space budget when symlink file is encrypted. Bad space budget
+may let make_reservation() return with -ENOSPC, which could turn ubifs
+to read-only mode in do_writepage() process.
 
- unreferenced object 0xffff88817fb1a780 (size 8):
-   comm "insmod", pid 25265, jiffies 4295239702 (age 100.130s)
-   hex dump (first 8 bytes):
-     75 62 69 66 73 00 ff ff                          ubifs...
-   backtrace:
-     [<ffffffff81b3fc4c>] slab_post_alloc_hook+0x9c/0x3c0
-     [<ffffffff81b44bf3>] __kmalloc_track_caller+0x183/0x410
-     [<ffffffff8198d3da>] kstrdup+0x3a/0x80
-     [<ffffffff8198d486>] kstrdup_const+0x66/0x80
-     [<ffffffff83989325>] kvasprintf_const+0x155/0x190
-     [<ffffffff83bf55bb>] kobject_set_name_vargs+0x5b/0x150
-     [<ffffffff83bf576b>] kobject_set_name+0xbb/0xf0
-     [<ffffffff8100204c>] do_one_initcall+0x14c/0x5a0
-     [<ffffffff8157e380>] do_init_module+0x1f0/0x660
-     [<ffffffff815857be>] load_module+0x6d7e/0x7590
-     [<ffffffff8158644f>] __do_sys_finit_module+0x19f/0x230
-     [<ffffffff815866b3>] __x64_sys_finit_module+0x73/0xb0
-     [<ffffffff88c98e85>] do_syscall_64+0x35/0x80
-     [<ffffffff88e00087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Fetch a reproducer in [Link].
 
-When kset_register() failed, we should call kset_put to cleanup it.
-
-Fixes: 2e3cbf425804 ("ubifs: Export filesystem error counters")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216490
+Fixes: ca7f85be8d6cf9 ("ubifs: Add support for encrypted symlinks")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/sysfs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ubifs/dir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ubifs/sysfs.c b/fs/ubifs/sysfs.c
-index 06ad8fa1fcfb0..54270ad36321e 100644
---- a/fs/ubifs/sysfs.c
-+++ b/fs/ubifs/sysfs.c
-@@ -144,6 +144,8 @@ int __init ubifs_sysfs_init(void)
- 	kobject_set_name(&ubifs_kset.kobj, "ubifs");
- 	ubifs_kset.kobj.parent = fs_kobj;
- 	ret = kset_register(&ubifs_kset);
-+	if (ret)
-+		kset_put(&ubifs_kset);
+diff --git a/fs/ubifs/dir.c b/fs/ubifs/dir.c
+index 0f29cf2011361..aaff3f3f0aa3b 100644
+--- a/fs/ubifs/dir.c
++++ b/fs/ubifs/dir.c
+@@ -1151,7 +1151,6 @@ static int ubifs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
+ 	int err, sz_change, len = strlen(symname);
+ 	struct fscrypt_str disk_link;
+ 	struct ubifs_budget_req req = { .new_ino = 1, .new_dent = 1,
+-					.new_ino_d = ALIGN(len, 8),
+ 					.dirtied_ino = 1 };
+ 	struct fscrypt_name nm;
  
- 	return ret;
- }
+@@ -1167,6 +1166,7 @@ static int ubifs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
+ 	 * Budget request settings: new inode, new direntry and changing parent
+ 	 * directory inode.
+ 	 */
++	req.new_ino_d = ALIGN(disk_link.len - 1, 8);
+ 	err = ubifs_budget_space(c, &req);
+ 	if (err)
+ 		return err;
 -- 
 2.39.2
 
