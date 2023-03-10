@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53E5881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:47:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8726C433A1;
-	Fri, 10 Mar 2023 14:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D781881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:47:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203A9C4339B;
+	Fri, 10 Mar 2023 14:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459629;
-	bh=e1FTUrSPGA2FkHOgGUIbzLJkXA6lgGLOdKXamCp5CVo=;
+	s=korg; t=1678459632;
+	bh=YL3XW/pKVeC1k18gp5HoChxcSpHm9kU+FZN6gNDd46U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=voGmNcTz3PcgSbXKPDMtxNK1PYi9jpGvyJmdmb6L6V6YTABYc85692NNrtok6GFBf
-	 LNCgA9KcMRXhBZB1T3gTZECQG9zkdzrIeYGlFqiYORRjoWBXwSKdIY7ILjRmVZlOCk
-	 Dtrw21vKHw7AoSJPq0Hyh0xRKgNa7HAjzqKZ6Ruo=
+	b=acYQcuNUqBtfObFHKl/9neyIgDJeEs+kwXfsgCBhFDimY2UZCxed28KqRUCVbwq3m
+	 k9TH2hlnF61/FO69R6ZdcezyOsovr+gyL3yl0Z89nD3aP6XFaU1zBp+855hYwX+hzl
+	 Vr5zEL4UFpFQXDAv4+cmgG+ULjzOAw/onu6Kywr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 068/529] wifi: wl3501_cs: dont call kfree_skb() under spin_lock_irqsave()
-Date: Fri, 10 Mar 2023 14:33:31 +0100
-Message-Id: <20230310133808.124571340@linuxfoundation.org>
+Subject: [PATCH 5.10 051/529] wifi: rtlwifi: rtl8188ee: dont call kfree_skb() under spin_lock_irqsave()
+Date: Fri, 10 Mar 2023 14:33:14 +0100
+Message-Id: <20230310133807.361105579@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -37,35 +38,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 44bacbdf9066c590423259dbd6d520baac99c1a8 ]
+[ Upstream commit 2611687fa7ffc84190f92292de0b80468de17220 ]
 
 It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So replace kfree_skb()
-with dev_kfree_skb_irq() under spin_lock_irqsave(). Compile
-tested only.
+context or with interrupts being disabled. All the SKBs have
+been dequeued from the old queue, so it's safe to enqueue these
+SKBs to a free queue, then free them after spin_unlock_irqrestore()
+at once. Compile tested only.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 7fe3b3abb5da ("rtlwifi: rtl8188ee: rtl8821ae: Fix a queue locking problem")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221207150453.114742-1-yangyingliang@huawei.com
+Link: https://lore.kernel.org/r/20221207141411.46098-3-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/wl3501_cs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/wl3501_cs.c b/drivers/net/wireless/wl3501_cs.c
-index ff1701adbb179..ccf6344ed6fd2 100644
---- a/drivers/net/wireless/wl3501_cs.c
-+++ b/drivers/net/wireless/wl3501_cs.c
-@@ -1330,7 +1330,7 @@ static netdev_tx_t wl3501_hard_start_xmit(struct sk_buff *skb,
- 	} else {
- 		++dev->stats.tx_packets;
- 		dev->stats.tx_bytes += skb->len;
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c
+index 63f9ea21962f2..335a3c9cdbab6 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/hw.c
+@@ -68,8 +68,10 @@ static void _rtl88ee_return_beacon_queue_skb(struct ieee80211_hw *hw)
+ 	struct rtl_priv *rtlpriv = rtl_priv(hw);
+ 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
+ 	struct rtl8192_tx_ring *ring = &rtlpci->tx_ring[BEACON_QUEUE];
++	struct sk_buff_head free_list;
+ 	unsigned long flags;
  
- 		if (this->tx_buffer_cnt < 2)
- 			netif_stop_queue(dev);
++	skb_queue_head_init(&free_list);
+ 	spin_lock_irqsave(&rtlpriv->locks.irq_th_lock, flags);
+ 	while (skb_queue_len(&ring->queue)) {
+ 		struct rtl_tx_desc *entry = &ring->desc[ring->idx];
+@@ -79,10 +81,12 @@ static void _rtl88ee_return_beacon_queue_skb(struct ieee80211_hw *hw)
+ 				 rtlpriv->cfg->ops->get_desc(hw, (u8 *)entry,
+ 						true, HW_DESC_TXBUFF_ADDR),
+ 				 skb->len, DMA_TO_DEVICE);
+-		kfree_skb(skb);
++		__skb_queue_tail(&free_list, skb);
+ 		ring->idx = (ring->idx + 1) % ring->entries;
+ 	}
+ 	spin_unlock_irqrestore(&rtlpriv->locks.irq_th_lock, flags);
++
++	__skb_queue_purge(&free_list);
+ }
+ 
+ static void _rtl88ee_disable_bcn_sub_func(struct ieee80211_hw *hw)
 -- 
 2.39.2
 
