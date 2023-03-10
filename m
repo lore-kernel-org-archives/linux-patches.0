@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF1D847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:56:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFA95C433EF;
-	Fri, 10 Mar 2023 13:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265F8847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:56:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE86C4339C;
+	Fri, 10 Mar 2023 13:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456573;
-	bh=DOxsvfip4GQt/ADkpiPkMcR8fo+u7bhjEwSFmzwbxIg=;
+	s=korg; t=1678456576;
+	bh=rAVK09GvI0sZ+tjgMiU6r2EeyV9OP5l4Xml8V9iKA3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JW2JIUcNg4zVLgEK2isAz+IiM//z6OhwQFvTN0/H/4zXCpC/qZAlhx9tO+ZPMg8y0
-	 D5MOGtaoIxf0mKQxosLl+TJTy4ySmDBSdgwUWQHave9H6lpFif8rLQEA1Z0PKKnlke
-	 j4I+WMyH7wpnz36auU9hCp8S9K4jJ6rV832C7PeM=
+	b=ZYbOgGihkYfqGcgoVR2RtkoVO3mXyV1KXqZZSePMP9Mapnf7DvR2YEXWybjx3E/tj
+	 /o5JrkBOcaQT1eaEt85sKr5sYsgadA4caZHEclHw2MZeBsFh4/TZ1Z+e/FW+R1J0/l
+	 Wky02y8X8Q9ViXky/p8vuSy1HY/vuqBlCHCXqUfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 009/211] soc: qcom: socinfo: Fix soc_id order
-Date: Fri, 10 Mar 2023 14:36:29 +0100
-Message-Id: <20230310133719.011283074@linuxfoundation.org>
+Subject: [PATCH 6.2 043/211] ubi: ubi_wl_put_peb: Fix infinite loop when wear-leveling work failed
+Date: Fri, 10 Mar 2023 14:37:03 +0100
+Message-Id: <20230310133720.049335531@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,65 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 017a7c11a8a29e266aa40c6d1bf2ba83f880f719 ]
+[ Upstream commit 4d57a7333e26040f2b583983e1970d9d460e56b0 ]
 
-The soc_id array is mostly ordered by the numeric "msm-id" defined in
-qcom,ids.h but some recent entries were added at the wrong place.
+Following process will trigger an infinite loop in ubi_wl_put_peb():
 
-While it does not make a functional difference it does make it harder
-to regenerate the entire array after adding a bunch of new IDs.
+	ubifs_bgt		ubi_bgt
+ubifs_leb_unmap
+  ubi_leb_unmap
+    ubi_eba_unmap_leb
+      ubi_wl_put_peb	wear_leveling_worker
+                          e1 = rb_entry(rb_first(&ubi->used)
+			  e2 = get_peb_for_wl(ubi)
+			  ubi_io_read_vid_hdr  // return err (flash fault)
+			  out_error:
+			    ubi->move_from = ubi->move_to = NULL
+			    wl_entry_destroy(ubi, e1)
+			      ubi->lookuptbl[e->pnum] = NULL
+      retry:
+        e = ubi->lookuptbl[pnum];	// return NULL
+	if (e == ubi->move_from) {	// NULL == NULL gets true
+	  goto retry;			// infinite loop !!!
 
-Fixes: de320c07da3d ("soc: qcom: socinfo: Add MSM8956/76 SoC IDs to the soc_id table")
-Fixes: 147f6534b8ff ("soc: qcom: socinfo: Add SM8550 ID")
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230104115348.25046-2-stephan@gerhold.net
+$ top
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     COMMAND
+  7676 root     20   0       0      0      0 R 100.0  0.0  ubifs_bgt0_0
+
+Fix it by:
+ 1) Letting ubi_wl_put_peb() returns directly if wearl leveling entry has
+    been removed from 'ubi->lookuptbl'.
+ 2) Using 'ubi->wl_lock' protecting wl entry deletion to preventing an
+    use-after-free problem for wl entry in ubi_wl_put_peb().
+
+Fetch a reproducer in [Link].
+
+Fixes: 43f9b25a9cdd7b1 ("UBI: bugfix: protect from volume removal")
+Fixes: ee59ba8b064f692 ("UBI: Fix stale pointers in ubi->lookuptbl")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216111
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/socinfo.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/mtd/ubi/wl.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index ebcbf9b9c18bc..7ce28be9f435e 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -250,8 +250,6 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(MSM8926) },
- 	{ qcom_board_id(MSM8326) },
- 	{ qcom_board_id(MSM8916) },
--	{ qcom_board_id(MSM8956) },
--	{ qcom_board_id(MSM8976) },
- 	{ qcom_board_id(MSM8994) },
- 	{ qcom_board_id_named(APQ8074PRO_AA, "APQ8074PRO-AA") },
- 	{ qcom_board_id_named(APQ8074PRO_AB, "APQ8074PRO-AB") },
-@@ -283,6 +281,8 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(MSM8616) },
- 	{ qcom_board_id(MSM8992) },
- 	{ qcom_board_id(APQ8094) },
-+	{ qcom_board_id(MSM8956) },
-+	{ qcom_board_id(MSM8976) },
- 	{ qcom_board_id(MDM9607) },
- 	{ qcom_board_id(APQ8096) },
- 	{ qcom_board_id(MSM8998) },
-@@ -341,7 +341,6 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(IPQ6005) },
- 	{ qcom_board_id(QRB5165) },
- 	{ qcom_board_id(SM8450) },
--	{ qcom_board_id(SM8550) },
- 	{ qcom_board_id(SM7225) },
- 	{ qcom_board_id(SA8295P) },
- 	{ qcom_board_id(SA8540P) },
-@@ -352,6 +351,7 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(SC7280) },
- 	{ qcom_board_id(SC7180P) },
- 	{ qcom_board_id(SM6375) },
-+	{ qcom_board_id(SM8550) },
- 	{ qcom_board_id(QRU1000) },
- 	{ qcom_board_id(QDU1000) },
- 	{ qcom_board_id(QDU1010) },
+diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
+index f45df3b773739..9e14319225c97 100644
+--- a/drivers/mtd/ubi/wl.c
++++ b/drivers/mtd/ubi/wl.c
+@@ -976,11 +976,11 @@ static int wear_leveling_worker(struct ubi_device *ubi, struct ubi_work *wrk,
+ 	spin_lock(&ubi->wl_lock);
+ 	ubi->move_from = ubi->move_to = NULL;
+ 	ubi->move_to_put = ubi->wl_scheduled = 0;
++	wl_entry_destroy(ubi, e1);
++	wl_entry_destroy(ubi, e2);
+ 	spin_unlock(&ubi->wl_lock);
+ 
+ 	ubi_free_vid_buf(vidb);
+-	wl_entry_destroy(ubi, e1);
+-	wl_entry_destroy(ubi, e2);
+ 
+ out_ro:
+ 	ubi_ro_mode(ubi);
+@@ -1260,6 +1260,18 @@ int ubi_wl_put_peb(struct ubi_device *ubi, int vol_id, int lnum,
+ retry:
+ 	spin_lock(&ubi->wl_lock);
+ 	e = ubi->lookuptbl[pnum];
++	if (!e) {
++		/*
++		 * This wl entry has been removed for some errors by other
++		 * process (eg. wear leveling worker), corresponding process
++		 * (except __erase_worker, which cannot concurrent with
++		 * ubi_wl_put_peb) will set ubi ro_mode at the same time,
++		 * just ignore this wl entry.
++		 */
++		spin_unlock(&ubi->wl_lock);
++		up_read(&ubi->fm_protect);
++		return 0;
++	}
+ 	if (e == ubi->move_from) {
+ 		/*
+ 		 * User is putting the physical eraseblock which was selected to
 -- 
 2.39.2
 
