@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278A58481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:14:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89086C433EF;
-	Fri, 10 Mar 2023 14:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512F18481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:14:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B37C3C433D2;
+	Fri, 10 Mar 2023 14:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457677;
-	bh=rVmzu436hL6wpCEbeJGCB8yDDzgA+Enkw6jZj/ZF+0o=;
+	s=korg; t=1678457680;
+	bh=kju98cya56pYJO0rW6Gyc9bk1VFg/IQYwxDZYJ0HL7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J4948zf/60M/eNmWEVibOkG3VnLrSUcJoNT4vomHdoCeNexKc7fN3MWbUcu6h0WiG
-	 CvwYpwxpfPGOiOT/Dr6XqUbb9pvpQJauRohmHJQRz5NhhXPOZHrJadwpnRm25kVbBv
-	 BOZ8FTtPxcG0EJNE0C3EfEn77JpSIMY2rKOFNWK0=
+	b=kfAI2toC9Kho6qEZsrciB/Qb95xx8QPQzdg7USHXLUq7COz4g+TwT9eXDL2PZiOv8
+	 1pBdXwFEoSzcWtnBhnmrtFrE/rAtia5qqAAPIShEVzRM9y5RNY01IsdzKC9sxcwlT1
+	 QHAGoKsbeqAvw63q2Kd747maV9V2AMJKgwwsJtPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pietro Borrello <borrello@diag.uniroma1.it>,
 	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Stefan Ghinea <stefan.ghinea@windriver.com>
-Subject: [PATCH 4.19 002/252] HID: asus: use spinlock to protect concurrent accesses
-Date: Fri, 10 Mar 2023 14:36:12 +0100
-Message-Id: <20230310133718.885032142@linuxfoundation.org>
+Subject: [PATCH 4.19 003/252] HID: asus: use spinlock to safely schedule workers
+Date: Fri, 10 Mar 2023 14:36:13 +0100
+Message-Id: <20230310133718.913167925@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -37,96 +37,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-commit 315c537068a13f0b5681d33dd045a912f4bece6f upstream.
+commit 4ab3a086d10eeec1424f2e8a968827a6336203df upstream.
 
-asus driver has a worker that may access data concurrently.
-Proct the accesses using a spinlock.
+Use spinlocks to deal with workers introducing a wrapper
+asus_schedule_work(), and several spinlock checks.
+Otherwise, asus_kbd_backlight_set() may schedule led->work after the
+structure has been freed, causing a use-after-free.
 
 Fixes: af22a610bc38 ("HID: asus: support backlight on USB keyboards")
 Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-4-7860c5763c38@diag.uniroma1.it
+Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-5-7860c5763c38@diag.uniroma1.it
 Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-asus.c |   22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ drivers/hid/hid-asus.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
 --- a/drivers/hid/hid-asus.c
 +++ b/drivers/hid/hid-asus.c
-@@ -84,6 +84,7 @@ struct asus_kbd_leds {
- 	struct hid_device *hdev;
- 	struct work_struct work;
- 	unsigned int brightness;
-+	spinlock_t lock;
- 	bool removed;
- };
+@@ -314,6 +314,16 @@ static int asus_kbd_get_functions(struct
+ 	return ret;
+ }
  
-@@ -318,7 +319,12 @@ static void asus_kbd_backlight_set(struc
- {
- 	struct asus_kbd_leds *led = container_of(led_cdev, struct asus_kbd_leds,
- 						 cdev);
++static void asus_schedule_work(struct asus_kbd_leds *led)
++{
 +	unsigned long flags;
 +
 +	spin_lock_irqsave(&led->lock, flags);
++	if (!led->removed)
++		schedule_work(&led->work);
++	spin_unlock_irqrestore(&led->lock, flags);
++}
++
+ static void asus_kbd_backlight_set(struct led_classdev *led_cdev,
+ 				   enum led_brightness brightness)
+ {
+@@ -325,7 +335,7 @@ static void asus_kbd_backlight_set(struc
  	led->brightness = brightness;
-+	spin_unlock_irqrestore(&led->lock, flags);
-+
- 	schedule_work(&led->work);
+ 	spin_unlock_irqrestore(&led->lock, flags);
+ 
+-	schedule_work(&led->work);
++	asus_schedule_work(led);
  }
  
-@@ -326,8 +332,14 @@ static enum led_brightness asus_kbd_back
- {
- 	struct asus_kbd_leds *led = container_of(led_cdev, struct asus_kbd_leds,
- 						 cdev);
-+	enum led_brightness brightness;
-+	unsigned long flags;
- 
--	return led->brightness;
-+	spin_lock_irqsave(&led->lock, flags);
-+	brightness = led->brightness;
-+	spin_unlock_irqrestore(&led->lock, flags);
-+
-+	return brightness;
- }
- 
- static void asus_kbd_backlight_work(struct work_struct *work)
-@@ -335,11 +347,14 @@ static void asus_kbd_backlight_work(stru
- 	struct asus_kbd_leds *led = container_of(work, struct asus_kbd_leds, work);
- 	u8 buf[] = { FEATURE_KBD_REPORT_ID, 0xba, 0xc5, 0xc4, 0x00 };
+ static enum led_brightness asus_kbd_backlight_get(struct led_classdev *led_cdev)
+@@ -349,9 +359,6 @@ static void asus_kbd_backlight_work(stru
  	int ret;
-+	unsigned long flags;
+ 	unsigned long flags;
  
- 	if (led->removed)
- 		return;
- 
-+	spin_lock_irqsave(&led->lock, flags);
+-	if (led->removed)
+-		return;
+-
+ 	spin_lock_irqsave(&led->lock, flags);
  	buf[4] = led->brightness;
-+	spin_unlock_irqrestore(&led->lock, flags);
- 
- 	ret = asus_kbd_set_report(led->hdev, buf, sizeof(buf));
- 	if (ret < 0)
-@@ -380,6 +395,7 @@ static int asus_kbd_register_leds(struct
- 	drvdata->kbd_backlight->cdev.brightness_set = asus_kbd_backlight_set;
- 	drvdata->kbd_backlight->cdev.brightness_get = asus_kbd_backlight_get;
- 	INIT_WORK(&drvdata->kbd_backlight->work, asus_kbd_backlight_work);
-+	spin_lock_init(&drvdata->kbd_backlight->lock);
- 
- 	ret = devm_led_classdev_register(&hdev->dev, &drvdata->kbd_backlight->cdev);
- 	if (ret < 0) {
-@@ -689,9 +705,13 @@ err_stop_hw:
- static void asus_remove(struct hid_device *hdev)
- {
- 	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
-+	unsigned long flags;
- 
- 	if (drvdata->kbd_backlight) {
-+		spin_lock_irqsave(&drvdata->kbd_backlight->lock, flags);
- 		drvdata->kbd_backlight->removed = true;
-+		spin_unlock_irqrestore(&drvdata->kbd_backlight->lock, flags);
-+
- 		cancel_work_sync(&drvdata->kbd_backlight->work);
- 	}
- 
+ 	spin_unlock_irqrestore(&led->lock, flags);
 
 
