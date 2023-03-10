@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0440E882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:13:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68FADC433EF;
-	Fri, 10 Mar 2023 15:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98CD882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:13:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E63EC433EF;
+	Fri, 10 Mar 2023 15:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461196;
-	bh=Xn2MQuYs60bbxWU/ven4fKXqlrJFBbd1L/jVOWcwh7Q=;
+	s=korg; t=1678461199;
+	bh=rLWiCETR7DLdPDV5hE63q9oyGNn+uqL0W9kDx5oLStg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jU2f+7qg2qxw8UYYW4Bm5zYOWle940YjNYMM+AnCZdqKaFHf6FFdrWLbNHIbYHn2L
-	 SWU1KXnjDrOE5I3GZT+Ht+0Ccb0Csg/yo05Irdso0fwL2TBjNxZkixFtxChpwRyHah
-	 6TmyHOel+rpsO/317fsLpqcnv9Ji8+UO53XN1r2U=
+	b=qXY3uRv89crQynKIchOJq8trrxuelvDKQQjlbTW0y8jzbeStH2zsOMcynDA4feFwY
+	 nOXDqkb0gOtO8+HvG3jAgbDZaAcUWmg67igOi4tYVhF20yOKE4ppD1gDG/kcgigSOj
+	 tlyR/v9pmGHDbehRGFuIS06EOw7MzEQlerLf1x4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/136] net/sched: act_mpls: fix action bind logic
-Date: Fri, 10 Mar 2023 14:42:58 +0100
-Message-Id: <20230310133708.834954330@linuxfoundation.org>
+Subject: [PATCH 5.15 028/136] ubi: ubi_wl_put_peb: Fix infinite loop when wear-leveling work failed
+Date: Fri, 10 Mar 2023 14:42:30 +0100
+Message-Id: <20230310133707.847348712@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -37,201 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit e88d78a773cb5242e933930c8855bf4b2e8c2397 ]
+[ Upstream commit 4d57a7333e26040f2b583983e1970d9d460e56b0 ]
 
-The TC architecture allows filters and actions to be created independently.
-In filters the user can reference action objects using:
-tc action add action mpls ... index 1
-tc filter add ... action mpls index 1
+Following process will trigger an infinite loop in ubi_wl_put_peb():
 
-In the current code for act_mpls this is broken as it checks netlink
-attributes for create/update before actually checking if we are binding to an
-existing action.
+	ubifs_bgt		ubi_bgt
+ubifs_leb_unmap
+  ubi_leb_unmap
+    ubi_eba_unmap_leb
+      ubi_wl_put_peb	wear_leveling_worker
+                          e1 = rb_entry(rb_first(&ubi->used)
+			  e2 = get_peb_for_wl(ubi)
+			  ubi_io_read_vid_hdr  // return err (flash fault)
+			  out_error:
+			    ubi->move_from = ubi->move_to = NULL
+			    wl_entry_destroy(ubi, e1)
+			      ubi->lookuptbl[e->pnum] = NULL
+      retry:
+        e = ubi->lookuptbl[pnum];	// return NULL
+	if (e == ubi->move_from) {	// NULL == NULL gets true
+	  goto retry;			// infinite loop !!!
 
-tdc results:
-1..53
-ok 1 a933 - Add MPLS dec_ttl action with pipe opcode
-ok 2 08d1 - Add mpls dec_ttl action with pass opcode
-ok 3 d786 - Add mpls dec_ttl action with drop opcode
-ok 4 f334 - Add mpls dec_ttl action with reclassify opcode
-ok 5 29bd - Add mpls dec_ttl action with continue opcode
-ok 6 48df - Add mpls dec_ttl action with jump opcode
-ok 7 62eb - Add mpls dec_ttl action with trap opcode
-ok 8 09d2 - Add mpls dec_ttl action with opcode and cookie
-ok 9 c170 - Add mpls dec_ttl action with opcode and cookie of max length
-ok 10 9118 - Add mpls dec_ttl action with invalid opcode
-ok 11 6ce1 - Add mpls dec_ttl action with label (invalid)
-ok 12 352f - Add mpls dec_ttl action with tc (invalid)
-ok 13 fa1c - Add mpls dec_ttl action with ttl (invalid)
-ok 14 6b79 - Add mpls dec_ttl action with bos (invalid)
-ok 15 d4c4 - Add mpls pop action with ip proto
-ok 16 91fb - Add mpls pop action with ip proto and cookie
-ok 17 92fe - Add mpls pop action with mpls proto
-ok 18 7e23 - Add mpls pop action with no protocol (invalid)
-ok 19 6182 - Add mpls pop action with label (invalid)
-ok 20 6475 - Add mpls pop action with tc (invalid)
-ok 21 067b - Add mpls pop action with ttl (invalid)
-ok 22 7316 - Add mpls pop action with bos (invalid)
-ok 23 38cc - Add mpls push action with label
-ok 24 c281 - Add mpls push action with mpls_mc protocol
-ok 25 5db4 - Add mpls push action with label, tc and ttl
-ok 26 7c34 - Add mpls push action with label, tc ttl and cookie of max length
-ok 27 16eb - Add mpls push action with label and bos
-ok 28 d69d - Add mpls push action with no label (invalid)
-ok 29 e8e4 - Add mpls push action with ipv4 protocol (invalid)
-ok 30 ecd0 - Add mpls push action with out of range label (invalid)
-ok 31 d303 - Add mpls push action with out of range tc (invalid)
-ok 32 fd6e - Add mpls push action with ttl of 0 (invalid)
-ok 33 19e9 - Add mpls mod action with mpls label
-ok 34 1fde - Add mpls mod action with max mpls label
-ok 35 0c50 - Add mpls mod action with mpls label exceeding max (invalid)
-ok 36 10b6 - Add mpls mod action with mpls label of MPLS_LABEL_IMPLNULL (invalid)
-ok 37 57c9 - Add mpls mod action with mpls min tc
-ok 38 6872 - Add mpls mod action with mpls max tc
-ok 39 a70a - Add mpls mod action with mpls tc exceeding max (invalid)
-ok 40 6ed5 - Add mpls mod action with mpls ttl
-ok 41 77c1 - Add mpls mod action with mpls ttl and cookie
-ok 42 b80f - Add mpls mod action with mpls max ttl
-ok 43 8864 - Add mpls mod action with mpls min ttl
-ok 44 6c06 - Add mpls mod action with mpls ttl of 0 (invalid)
-ok 45 b5d8 - Add mpls mod action with mpls ttl exceeding max (invalid)
-ok 46 451f - Add mpls mod action with mpls max bos
-ok 47 a1ed - Add mpls mod action with mpls min bos
-ok 48 3dcf - Add mpls mod action with mpls bos exceeding max (invalid)
-ok 49 db7c - Add mpls mod action with protocol (invalid)
-ok 50 b070 - Replace existing mpls push action with new ID
-ok 51 95a9 - Replace existing mpls push action with new label, tc, ttl and cookie
-ok 52 6cce - Delete mpls pop action
-ok 53 d138 - Flush mpls actions
+$ top
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     COMMAND
+  7676 root     20   0       0      0      0 R 100.0  0.0  ubifs_bgt0_0
 
-Fixes: 2a2ea50870ba ("net: sched: add mpls manipulation actions to TC")
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix it by:
+ 1) Letting ubi_wl_put_peb() returns directly if wearl leveling entry has
+    been removed from 'ubi->lookuptbl'.
+ 2) Using 'ubi->wl_lock' protecting wl entry deletion to preventing an
+    use-after-free problem for wl entry in ubi_wl_put_peb().
+
+Fetch a reproducer in [Link].
+
+Fixes: 43f9b25a9cdd7b1 ("UBI: bugfix: protect from volume removal")
+Fixes: ee59ba8b064f692 ("UBI: Fix stale pointers in ubi->lookuptbl")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216111
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_mpls.c | 66 +++++++++++++++++++++++++-------------------
- 1 file changed, 37 insertions(+), 29 deletions(-)
+ drivers/mtd/ubi/wl.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/act_mpls.c b/net/sched/act_mpls.c
-index 980ad795727e9..d010c5b8e83b1 100644
---- a/net/sched/act_mpls.c
-+++ b/net/sched/act_mpls.c
-@@ -189,40 +189,67 @@ static int tcf_mpls_init(struct net *net, struct nlattr *nla,
- 	parm = nla_data(tb[TCA_MPLS_PARMS]);
- 	index = parm->index;
+diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
+index 4a672e925d869..2ee0e60c43c2e 100644
+--- a/drivers/mtd/ubi/wl.c
++++ b/drivers/mtd/ubi/wl.c
+@@ -972,11 +972,11 @@ static int wear_leveling_worker(struct ubi_device *ubi, struct ubi_work *wrk,
+ 	spin_lock(&ubi->wl_lock);
+ 	ubi->move_from = ubi->move_to = NULL;
+ 	ubi->move_to_put = ubi->wl_scheduled = 0;
++	wl_entry_destroy(ubi, e1);
++	wl_entry_destroy(ubi, e2);
+ 	spin_unlock(&ubi->wl_lock);
  
-+	err = tcf_idr_check_alloc(tn, &index, a, bind);
-+	if (err < 0)
-+		return err;
-+	exists = err;
-+	if (exists && bind)
+ 	ubi_free_vid_buf(vidb);
+-	wl_entry_destroy(ubi, e1);
+-	wl_entry_destroy(ubi, e2);
+ 
+ out_ro:
+ 	ubi_ro_mode(ubi);
+@@ -1250,6 +1250,18 @@ int ubi_wl_put_peb(struct ubi_device *ubi, int vol_id, int lnum,
+ retry:
+ 	spin_lock(&ubi->wl_lock);
+ 	e = ubi->lookuptbl[pnum];
++	if (!e) {
++		/*
++		 * This wl entry has been removed for some errors by other
++		 * process (eg. wear leveling worker), corresponding process
++		 * (except __erase_worker, which cannot concurrent with
++		 * ubi_wl_put_peb) will set ubi ro_mode at the same time,
++		 * just ignore this wl entry.
++		 */
++		spin_unlock(&ubi->wl_lock);
++		up_read(&ubi->fm_protect);
 +		return 0;
-+
-+	if (!exists) {
-+		ret = tcf_idr_create(tn, index, est, a, &act_mpls_ops, bind,
-+				     true, flags);
-+		if (ret) {
-+			tcf_idr_cleanup(tn, index);
-+			return ret;
-+		}
-+
-+		ret = ACT_P_CREATED;
-+	} else if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
-+		tcf_idr_release(*a, bind);
-+		return -EEXIST;
 +	}
-+
- 	/* Verify parameters against action type. */
- 	switch (parm->m_action) {
- 	case TCA_MPLS_ACT_POP:
- 		if (!tb[TCA_MPLS_PROTO]) {
- 			NL_SET_ERR_MSG_MOD(extack, "Protocol must be set for MPLS pop");
--			return -EINVAL;
-+			err = -EINVAL;
-+			goto release_idr;
- 		}
- 		if (!eth_proto_is_802_3(nla_get_be16(tb[TCA_MPLS_PROTO]))) {
- 			NL_SET_ERR_MSG_MOD(extack, "Invalid protocol type for MPLS pop");
--			return -EINVAL;
-+			err = -EINVAL;
-+			goto release_idr;
- 		}
- 		if (tb[TCA_MPLS_LABEL] || tb[TCA_MPLS_TTL] || tb[TCA_MPLS_TC] ||
- 		    tb[TCA_MPLS_BOS]) {
- 			NL_SET_ERR_MSG_MOD(extack, "Label, TTL, TC or BOS cannot be used with MPLS pop");
--			return -EINVAL;
-+			err = -EINVAL;
-+			goto release_idr;
- 		}
- 		break;
- 	case TCA_MPLS_ACT_DEC_TTL:
- 		if (tb[TCA_MPLS_PROTO] || tb[TCA_MPLS_LABEL] ||
- 		    tb[TCA_MPLS_TTL] || tb[TCA_MPLS_TC] || tb[TCA_MPLS_BOS]) {
- 			NL_SET_ERR_MSG_MOD(extack, "Label, TTL, TC, BOS or protocol cannot be used with MPLS dec_ttl");
--			return -EINVAL;
-+			err = -EINVAL;
-+			goto release_idr;
- 		}
- 		break;
- 	case TCA_MPLS_ACT_PUSH:
- 	case TCA_MPLS_ACT_MAC_PUSH:
- 		if (!tb[TCA_MPLS_LABEL]) {
- 			NL_SET_ERR_MSG_MOD(extack, "Label is required for MPLS push");
--			return -EINVAL;
-+			err = -EINVAL;
-+			goto release_idr;
- 		}
- 		if (tb[TCA_MPLS_PROTO] &&
- 		    !eth_p_mpls(nla_get_be16(tb[TCA_MPLS_PROTO]))) {
- 			NL_SET_ERR_MSG_MOD(extack, "Protocol must be an MPLS type for MPLS push");
--			return -EPROTONOSUPPORT;
-+			err = -EPROTONOSUPPORT;
-+			goto release_idr;
- 		}
- 		/* Push needs a TTL - if not specified, set a default value. */
- 		if (!tb[TCA_MPLS_TTL]) {
-@@ -237,33 +264,14 @@ static int tcf_mpls_init(struct net *net, struct nlattr *nla,
- 	case TCA_MPLS_ACT_MODIFY:
- 		if (tb[TCA_MPLS_PROTO]) {
- 			NL_SET_ERR_MSG_MOD(extack, "Protocol cannot be used with MPLS modify");
--			return -EINVAL;
-+			err = -EINVAL;
-+			goto release_idr;
- 		}
- 		break;
- 	default:
- 		NL_SET_ERR_MSG_MOD(extack, "Unknown MPLS action");
--		return -EINVAL;
--	}
--
--	err = tcf_idr_check_alloc(tn, &index, a, bind);
--	if (err < 0)
--		return err;
--	exists = err;
--	if (exists && bind)
--		return 0;
--
--	if (!exists) {
--		ret = tcf_idr_create(tn, index, est, a,
--				     &act_mpls_ops, bind, true, flags);
--		if (ret) {
--			tcf_idr_cleanup(tn, index);
--			return ret;
--		}
--
--		ret = ACT_P_CREATED;
--	} else if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
--		tcf_idr_release(*a, bind);
--		return -EEXIST;
-+		err = -EINVAL;
-+		goto release_idr;
- 	}
- 
- 	err = tcf_action_check_ctrlact(parm->action, tp, &goto_ch, extack);
+ 	if (e == ubi->move_from) {
+ 		/*
+ 		 * User is putting the physical eraseblock which was selected to
 -- 
 2.39.2
 
