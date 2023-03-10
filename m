@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1797847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:51:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CB1C433D2;
-	Fri, 10 Mar 2023 13:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220C9847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:51:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C19C4339B;
+	Fri, 10 Mar 2023 13:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456260;
-	bh=h0gkbHx/Utiz4VT1kjLd4LZ5lPuLdZIz/T9F3Rdtv2o=;
+	s=korg; t=1678456263;
+	bh=RpOmuauEYjtMLoriIZbJFJmWeKeIrJOA/3GRyk9GS2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=clutRItrGNzLc6GcUt1geifRHzhWSgw4e1wJ0dd3pIp5f9j95WYtKJdbczi+J937x
-	 pXUcIM+qJsUxCKZWPsngZeEiAEID38LxzV1KxUpoXbpDoBhqVhml+sY5twkVhwsVBG
-	 8czqx4IgZxJKpcfQrJ/AMu/HIRj8kqNqth01Adgg=
+	b=Sz3xhE9R3sqaaQPlkXaEBttAy4p7pGqBTIlANdipTwncXbGj2yk1P5obw6p37QCWZ
+	 GXx2hOzSxyTYPKu+zUwGxRhNV/mqseL7EHR5/hFS9GvpVd4IJ0+1xi95PQva9osgP2
+	 FGitPwZtzW5oE/Hv3VAKeGbuZPQCKW98Pdlb+fBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+57e3e98f7e3b80f64d56@syzkaller.appspotmail.com,
-	Dongliang Mu <mudongliangabcd@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	"Theodore Tso" <tytso@mit.edu>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 103/193] fs: hfsplus: fix UAF issue in hfsplus_put_super
-Date: Fri, 10 Mar 2023 14:38:05 +0100
-Message-Id: <20230310133714.697522207@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 4.14 104/193] f2fs: fix information leak in f2fs_move_inline_dirents()
+Date: Fri, 10 Mar 2023 14:38:06 +0100
+Message-Id: <20230310133714.731003932@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -40,52 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dongliang Mu <mudongliangabcd@gmail.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 07db5e247ab5858439b14dd7cc1fe538b9efcf32 upstream.
+commit 9a5571cff4ffcfc24847df9fd545cc5799ac0ee5 upstream.
 
-The current hfsplus_put_super first calls hfs_btree_close on
-sbi->ext_tree, then invokes iput on sbi->hidden_dir, resulting in an
-use-after-free issue in hfsplus_release_folio.
+When converting an inline directory to a regular one, f2fs is leaking
+uninitialized memory to disk because it doesn't initialize the entire
+directory block.  Fix this by zero-initializing the block.
 
-As shown in hfsplus_fill_super, the error handling code also calls iput
-before hfs_btree_close.
+This bug was introduced by commit 4ec17d688d74 ("f2fs: avoid unneeded
+initializing when converting inline dentry"), which didn't consider the
+security implications of leaking uninitialized memory to disk.
 
-To fix this error, we move all iput calls before hfsplus_btree_close.
+This was found by running xfstest generic/435 on a KMSAN-enabled kernel.
 
-Note that this patch is tested on Syzbot.
-
-Link: https://lkml.kernel.org/r/20230226124948.3175736-1-mudongliangabcd@gmail.com
-Reported-by: syzbot+57e3e98f7e3b80f64d56@syzkaller.appspotmail.com
-Tested-by: Dongliang Mu <mudongliangabcd@gmail.com>
-Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
-Cc: Bart Van Assche <bvanassche@acm.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: "Theodore Ts'o" <tytso@mit.edu>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4ec17d688d74 ("f2fs: avoid unneeded initializing when converting inline dentry")
+Cc: <stable@vger.kernel.org> # v4.3+
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfsplus/super.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/inline.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/fs/hfsplus/super.c
-+++ b/fs/hfsplus/super.c
-@@ -294,11 +294,11 @@ static void hfsplus_put_super(struct sup
- 		hfsplus_sync_fs(sb, 1);
- 	}
+--- a/fs/f2fs/inline.c
++++ b/fs/f2fs/inline.c
+@@ -392,18 +392,17 @@ static int f2fs_move_inline_dirents(stru
  
-+	iput(sbi->alloc_file);
-+	iput(sbi->hidden_dir);
- 	hfs_btree_close(sbi->attr_tree);
- 	hfs_btree_close(sbi->cat_tree);
- 	hfs_btree_close(sbi->ext_tree);
--	iput(sbi->alloc_file);
--	iput(sbi->hidden_dir);
- 	kfree(sbi->s_vhdr_buf);
- 	kfree(sbi->s_backup_vhdr_buf);
- 	unload_nls(sbi->nls);
+ 	dentry_blk = kmap_atomic(page);
+ 
++	/*
++	 * Start by zeroing the full block, to ensure that all unused space is
++	 * zeroed and no uninitialized memory is leaked to disk.
++	 */
++	memset(dentry_blk, 0, F2FS_BLKSIZE);
++
+ 	make_dentry_ptr_inline(dir, &src, inline_dentry);
+ 	make_dentry_ptr_block(dir, &dst, dentry_blk);
+ 
+ 	/* copy data from inline dentry block to new dentry block */
+ 	memcpy(dst.bitmap, src.bitmap, src.nr_bitmap);
+-	memset(dst.bitmap + src.nr_bitmap, 0, dst.nr_bitmap - src.nr_bitmap);
+-	/*
+-	 * we do not need to zero out remainder part of dentry and filename
+-	 * field, since we have used bitmap for marking the usage status of
+-	 * them, besides, we can also ignore copying/zeroing reserved space
+-	 * of dentry block, because them haven't been used so far.
+-	 */
+ 	memcpy(dst.dentry, src.dentry, SIZE_OF_DIR_ENTRY * src.max);
+ 	memcpy(dst.filename, src.filename, src.max * F2FS_SLOT_LEN);
+ 
 
 
