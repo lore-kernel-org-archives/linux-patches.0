@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B548481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:07:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F64C4339B;
-	Fri, 10 Mar 2023 14:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990798481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:07:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18542C4339B;
+	Fri, 10 Mar 2023 14:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457223;
-	bh=v39AbY21yJH2RbjjHHoqHB0sqEV9P+UMlIe3bHbqTY8=;
+	s=korg; t=1678457226;
+	bh=VnPJPX8u6PzYEvPCEKx44H/8+7RQBSRycCUW8IiM29o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YcUiTTDKTVaTvcmK2Y4w46CMkBn4Khv+jLHX6VnHt3wrXp1L8SmFAs/glRwCi1f+F
-	 m5fk5QMt83XT5EDurH1x1chtfaQQasrU9nd+IPaG1a0ji5hD2UdePfYU20wY6w289G
-	 bvT2L0SFweGWQ5A6csayS4kC1RKOfwPl34sCgiHg=
+	b=EnFqqIcC92VnATlfaEQVd23nPjCCuOQaFZLoaLgP2hXL/rKbhm/PCpEAiZt8T/5zM
+	 rKMroAhB/j5iRKtg0ceWeUOV3jOr8LJXGlAWUMVilr7r/9XQnBdav1iKIxmbpHcGbR
+	 yJzSE3GlcjgXwfsHRHyMSFIlD2YSHAgB4K+9+qG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Li Zetao <lizetao1@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/200] netfilter: conntrack: fix rmmod double-free race
-Date: Fri, 10 Mar 2023 14:37:48 +0100
-Message-Id: <20230310133719.002715458@linuxfoundation.org>
+Subject: [PATCH 6.1 032/200] ubi: Fix use-after-free when volume resizing failed
+Date: Fri, 10 Mar 2023 14:37:19 +0100
+Message-Id: <20230310133718.034088995@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,123 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit e6d57e9ff0aec323717ee36fc9ea34ad89217151 ]
+[ Upstream commit 9af31d6ec1a4be4caab2550096c6bd2ba8fba472 ]
 
-nf_conntrack_hash_check_insert() callers free the ct entry directly, via
-nf_conntrack_free.
+There is an use-after-free problem reported by KASAN:
+  ==================================================================
+  BUG: KASAN: use-after-free in ubi_eba_copy_table+0x11f/0x1c0 [ubi]
+  Read of size 8 at addr ffff888101eec008 by task ubirsvol/4735
 
-This isn't safe anymore because
-nf_conntrack_hash_check_insert() might place the entry into the conntrack
-table and then delteted the entry again because it found that a conntrack
-extension has been removed at the same time.
+  CPU: 2 PID: 4735 Comm: ubirsvol
+  Not tainted 6.1.0-rc1-00003-g84fa3304a7fc-dirty #14
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+  BIOS 1.14.0-1.fc33 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   print_report+0x171/0x472
+   kasan_report+0xad/0x130
+   ubi_eba_copy_table+0x11f/0x1c0 [ubi]
+   ubi_resize_volume+0x4f9/0xbc0 [ubi]
+   ubi_cdev_ioctl+0x701/0x1850 [ubi]
+   __x64_sys_ioctl+0x11d/0x170
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+   </TASK>
 
-In this case, the just-added entry is removed again and an error is
-returned to the caller.
+When ubi_change_vtbl_record() returns an error in ubi_resize_volume(),
+"new_eba_tbl" will be freed on error handing path, but it is holded
+by "vol->eba_tbl" in ubi_eba_replace_table(). It means that the liftcycle
+of "vol->eba_tbl" and "vol" are different, so when resizing volume in
+next time, it causing an use-after-free fault.
 
-Problem is that another cpu might have picked up this entry and
-incremented its reference count.
+Fix it by not freeing "new_eba_tbl" after it replaced in
+ubi_eba_replace_table(), while will be freed in next volume resizing.
 
-This results in a use-after-free/double-free, once by the other cpu and
-once by the caller of nf_conntrack_hash_check_insert().
-
-Fix this by making nf_conntrack_hash_check_insert() not fail anymore
-after the insertion, just like before the 'Fixes' commit.
-
-This is safe because a racing nf_ct_iterate() has to wait for us
-to release the conntrack hash spinlocks.
-
-While at it, make the function return -EAGAIN in the rmmod (genid
-changed) case, this makes nfnetlink replay the command (suggested
-by Pablo Neira).
-
-Fixes: c56716c69ce1 ("netfilter: extensions: introduce extension genid count")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 801c135ce73d ("UBI: Unsorted Block Images")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_bpf.c     |  1 -
- net/netfilter/nf_conntrack_core.c    | 25 +++++++++++++++----------
- net/netfilter/nf_conntrack_netlink.c |  3 ---
- 3 files changed, 15 insertions(+), 14 deletions(-)
+ drivers/mtd/ubi/vmt.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_bpf.c b/net/netfilter/nf_conntrack_bpf.c
-index 8639e7efd0e22..adae86e8e02e8 100644
---- a/net/netfilter/nf_conntrack_bpf.c
-+++ b/net/netfilter/nf_conntrack_bpf.c
-@@ -384,7 +384,6 @@ struct nf_conn *bpf_ct_insert_entry(struct nf_conn___init *nfct_i)
- 	struct nf_conn *nfct = (struct nf_conn *)nfct_i;
- 	int err;
- 
--	nfct->status |= IPS_CONFIRMED;
- 	err = nf_conntrack_hash_check_insert(nfct);
- 	if (err < 0) {
- 		nf_conntrack_free(nfct);
-diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index 23b3fedd619a5..7f0f3bcaae031 100644
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -890,10 +890,8 @@ nf_conntrack_hash_check_insert(struct nf_conn *ct)
- 
- 	zone = nf_ct_zone(ct);
- 
--	if (!nf_ct_ext_valid_pre(ct->ext)) {
--		NF_CT_STAT_INC_ATOMIC(net, insert_failed);
--		return -ETIMEDOUT;
--	}
-+	if (!nf_ct_ext_valid_pre(ct->ext))
-+		return -EAGAIN;
- 
- 	local_bh_disable();
- 	do {
-@@ -928,6 +926,19 @@ nf_conntrack_hash_check_insert(struct nf_conn *ct)
- 			goto chaintoolong;
+diff --git a/drivers/mtd/ubi/vmt.c b/drivers/mtd/ubi/vmt.c
+index 8fcc0bdf06358..74637575346e8 100644
+--- a/drivers/mtd/ubi/vmt.c
++++ b/drivers/mtd/ubi/vmt.c
+@@ -464,7 +464,7 @@ int ubi_resize_volume(struct ubi_volume_desc *desc, int reserved_pebs)
+ 		for (i = 0; i < -pebs; i++) {
+ 			err = ubi_eba_unmap_leb(ubi, vol, reserved_pebs + i);
+ 			if (err)
+-				goto out_acc;
++				goto out_free;
+ 		}
+ 		spin_lock(&ubi->volumes_lock);
+ 		ubi->rsvd_pebs += pebs;
+@@ -512,6 +512,8 @@ int ubi_resize_volume(struct ubi_volume_desc *desc, int reserved_pebs)
+ 		ubi->avail_pebs += pebs;
+ 		spin_unlock(&ubi->volumes_lock);
  	}
- 
-+	/* If genid has changed, we can't insert anymore because ct
-+	 * extensions could have stale pointers and nf_ct_iterate_destroy
-+	 * might have completed its table scan already.
-+	 *
-+	 * Increment of the ext genid right after this check is fine:
-+	 * nf_ct_iterate_destroy blocks until locks are released.
-+	 */
-+	if (!nf_ct_ext_valid_post(ct->ext)) {
-+		err = -EAGAIN;
-+		goto out;
-+	}
++	return err;
 +
-+	ct->status |= IPS_CONFIRMED;
- 	smp_wmb();
- 	/* The caller holds a reference to this object */
- 	refcount_set(&ct->ct_general.use, 2);
-@@ -936,12 +947,6 @@ nf_conntrack_hash_check_insert(struct nf_conn *ct)
- 	NF_CT_STAT_INC(net, insert);
- 	local_bh_enable();
- 
--	if (!nf_ct_ext_valid_post(ct->ext)) {
--		nf_ct_kill(ct);
--		NF_CT_STAT_INC_ATOMIC(net, drop);
--		return -ETIMEDOUT;
--	}
--
- 	return 0;
- chaintoolong:
- 	NF_CT_STAT_INC(net, chaintoolong);
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index ca4d5bb1ea524..733bb56950c14 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -2316,9 +2316,6 @@ ctnetlink_create_conntrack(struct net *net,
- 	nfct_seqadj_ext_add(ct);
- 	nfct_synproxy_ext_add(ct);
- 
--	/* we must add conntrack extensions before confirmation. */
--	ct->status |= IPS_CONFIRMED;
--
- 	if (cda[CTA_STATUS]) {
- 		err = ctnetlink_change_status(ct, cda);
- 		if (err < 0)
+ out_free:
+ 	kfree(new_eba_tbl);
+ 	return err;
 -- 
 2.39.2
 
