@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1FE882C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:16:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96202C4339E;
-	Fri, 10 Mar 2023 15:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52928882C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:16:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F93EC4339E;
+	Fri, 10 Mar 2023 15:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461382;
-	bh=eaqxMiW+hFInlOzEsD+yg/ipaGPuNxTLH2jXqymyuGk=;
+	s=korg; t=1678461386;
+	bh=WWKbL0XAaTcC2WdR556Ciru5qUvwI0Tp6k1Vu5sihl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x8+4oBo/xLMGfXiYzVNgUX0jg6rVutpRnCUrOEERiN1FGRnx/tc+lmhvoQxz+CS1X
-	 KmkfYTjhBroiQFFX5DK0o7mGPRopZQ0ufN5KexuD1wUk1JYPIVb9Xitn86pnPR+3Jv
-	 /wMsKW+es880OVmzoMdKmaN8Y8ClLrf/QnFsZgb8=
+	b=b8BFhSo5MOzdXxuZYAp4RkXx6byEn31PB0E3G+qfE0jPMjqpUTemivrddBIELQzny
+	 Ssxv1VLLzSK6ls90yAQC1xHz9MXjVh5nelpSzClex/Geh2mL02ncf05iyh7rro2/VN
+	 djxmP21KqiTkeVDLWSQeiNU8eb/ep2ETRNJWXT+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/136] PCI: loongson: Add more devices that need MRRS quirk
-Date: Fri, 10 Mar 2023 14:44:01 +0100
-Message-Id: <20230310133710.811638169@linuxfoundation.org>
+Subject: [PATCH 5.15 093/136] iio: accel: mma9551_core: Prevent uninitialized variable in mma9551_read_config_word()
+Date: Fri, 10 Mar 2023 14:43:35 +0100
+Message-Id: <20230310133709.970781547@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -35,83 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit c768f8c5f40fcdc6f058cc2f02592163d6c6716c ]
+[ Upstream commit 64a68158738ec8f520347144352f7a09bdb9e169 ]
 
-Loongson-2K SOC and LS7A2000 chipset add new PCI IDs that need MRRS
-quirk.  Add them.
+Smatch Warns:
+drivers/iio/accel/mma9551_core.c:299
+	mma9551_read_config_word() error: uninitialized symbol 'v'.
 
-Link: https://lore.kernel.org/r/20230211023321.3530080-1-chenhuacai@loongson.cn
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+When (offset >= 1 << 12) is true mma9551_transfer() will return -EINVAL
+without 'v' being initialized, so check for the error and return.
+
+Note: No actual bug as caller checks the return value and does not
+use the parameter in the problem case.
+
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Link: https://lore.kernel.org/r/20230126153610.3586243-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-loongson.c | 33 +++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 9 deletions(-)
+ drivers/iio/accel/mma9551_core.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pci-loongson.c b/drivers/pci/controller/pci-loongson.c
-index dc7b4e4293ced..e73e18a73833b 100644
---- a/drivers/pci/controller/pci-loongson.c
-+++ b/drivers/pci/controller/pci-loongson.c
-@@ -13,9 +13,14 @@
- #include "../pci.h"
+diff --git a/drivers/iio/accel/mma9551_core.c b/drivers/iio/accel/mma9551_core.c
+index 413610a749c24..9023c07bb57b4 100644
+--- a/drivers/iio/accel/mma9551_core.c
++++ b/drivers/iio/accel/mma9551_core.c
+@@ -296,9 +296,12 @@ int mma9551_read_config_word(struct i2c_client *client, u8 app_id,
  
- /* Device IDs */
--#define DEV_PCIE_PORT_0	0x7a09
--#define DEV_PCIE_PORT_1	0x7a19
--#define DEV_PCIE_PORT_2	0x7a29
-+#define DEV_LS2K_PCIE_PORT0	0x1a05
-+#define DEV_LS7A_PCIE_PORT0	0x7a09
-+#define DEV_LS7A_PCIE_PORT1	0x7a19
-+#define DEV_LS7A_PCIE_PORT2	0x7a29
-+#define DEV_LS7A_PCIE_PORT3	0x7a39
-+#define DEV_LS7A_PCIE_PORT4	0x7a49
-+#define DEV_LS7A_PCIE_PORT5	0x7a59
-+#define DEV_LS7A_PCIE_PORT6	0x7a69
+ 	ret = mma9551_transfer(client, app_id, MMA9551_CMD_READ_CONFIG,
+ 			       reg, NULL, 0, (u8 *)&v, 2);
++	if (ret < 0)
++		return ret;
++
+ 	*val = be16_to_cpu(v);
  
- #define DEV_LS2K_APB	0x7a02
- #define DEV_LS7A_CONF	0x7a10
-@@ -38,11 +43,11 @@ static void bridge_class_quirk(struct pci_dev *dev)
- 	dev->class = PCI_CLASS_BRIDGE_PCI << 8;
+-	return ret;
++	return 0;
  }
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
--			DEV_PCIE_PORT_0, bridge_class_quirk);
-+			DEV_LS7A_PCIE_PORT0, bridge_class_quirk);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
--			DEV_PCIE_PORT_1, bridge_class_quirk);
-+			DEV_LS7A_PCIE_PORT1, bridge_class_quirk);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
--			DEV_PCIE_PORT_2, bridge_class_quirk);
-+			DEV_LS7A_PCIE_PORT2, bridge_class_quirk);
+ EXPORT_SYMBOL(mma9551_read_config_word);
  
- static void system_bus_quirk(struct pci_dev *pdev)
- {
-@@ -72,11 +77,21 @@ static void loongson_mrrs_quirk(struct pci_dev *pdev)
- 	bridge->no_inc_mrrs = 1;
- }
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
--			DEV_PCIE_PORT_0, loongson_mrrs_quirk);
-+			DEV_LS2K_PCIE_PORT0, loongson_mrrs_quirk);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
--			DEV_PCIE_PORT_1, loongson_mrrs_quirk);
-+			DEV_LS7A_PCIE_PORT0, loongson_mrrs_quirk);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
--			DEV_PCIE_PORT_2, loongson_mrrs_quirk);
-+			DEV_LS7A_PCIE_PORT1, loongson_mrrs_quirk);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
-+			DEV_LS7A_PCIE_PORT2, loongson_mrrs_quirk);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
-+			DEV_LS7A_PCIE_PORT3, loongson_mrrs_quirk);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
-+			DEV_LS7A_PCIE_PORT4, loongson_mrrs_quirk);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
-+			DEV_LS7A_PCIE_PORT5, loongson_mrrs_quirk);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
-+			DEV_LS7A_PCIE_PORT6, loongson_mrrs_quirk);
- 
- static void __iomem *cfg1_map(struct loongson_pci *priv, int bus,
- 				unsigned int devfn, int where)
 -- 
 2.39.2
 
