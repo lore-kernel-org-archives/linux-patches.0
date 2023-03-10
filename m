@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4754F882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:05:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C135BC433D2;
-	Fri, 10 Mar 2023 15:05:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2F3882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:05:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E49C4339B;
+	Fri, 10 Mar 2023 15:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460719;
-	bh=YwKlZlN2yfv1u9w0U/R/EUE/SVb0huevL8Ivxt0iWro=;
+	s=korg; t=1678460722;
+	bh=eJNTLNrICSyIt8nx5A/4In7SIJbgHcuvY7gS3TWRXcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uxL89HL/Vv6Qp1G3qTmc0SmBGZVPgH0FdINn/v7tbEOrBXKu3f40SdzQ/QICeqd3d
-	 DrH45ADqje+4mdmDY2e98ooXCdhKxjq+YrREO3yznQMgzstfQeDEgcsNnWzVnIkgmQ
-	 jL9sX4MtC6fcoeLvo9Ao+YabjL+qGTKHsSCq8wg4=
+	b=Y0gTRcDFq6VPtmwHtgJUkCOVRspkPOKDJpiyQ1CTj/z9LzejJH5rwE4/sBNLJ+hE2
+	 dcrjmLE+CXX2w1KbHF9rzXfxOkT32oNKGM+B6cPFHLYvhk1r1HvOWWcQMHlwh+dcQ9
+	 H726g0EWHLR9RMZonGcCjmAXDNrNJSfGAnGW2Qkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jonas Karlman <jonas@kwiboo.se>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Jianqun Xu <jay.xu@rock-chips.com>,
 	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.10 428/529] pinctrl: rockchip: fix mux route data for rk3568
-Date: Fri, 10 Mar 2023 14:39:31 +0100
-Message-Id: <20230310133824.804027182@linuxfoundation.org>
+Subject: [PATCH 5.10 429/529] pinctrl: rockchip: fix reading pull type on rk3568
+Date: Fri, 10 Mar 2023 14:39:32 +0100
+Message-Id: <20230310133824.836188459@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,91 +38,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonas Karlman <jonas@kwiboo.se>
 
-commit 431d1531466033909d2e8c754a7dc3704b70843f upstream.
+commit 31b62a98de42cf65d76e4dcfb571af067d27d83a upstream.
 
-IO mux selection is configured in PMU_GRF_SOC_CON4 and GRF_IOFUNC_SEL0-5
-regs on RK3568. pwm0-2 is configured in PMU_GRF reg and the rest is
-configured in GRF_IOFUNC regs according to TRM [1].
+When reading pinconf-pins from debugfs it fails to get the configured pull
+type on RK3568, "unsupported pinctrl type" error messages is also reported.
 
-Update mux route data to reflect this and use proper detection pin for
-UART1 IO mux M1.
-
-This fixes HDMITX IO mux M1 selection and makes it possible to enable
-HDMI CEC on my Radxa ROCK 3 Model A v1.31 board.
-
-[1] http://opensource.rock-chips.com/images/2/26/Rockchip_RK3568_TRM_Part1_V1.3-20220930P.PDF
+Fix this by adding support for RK3568 in rockchip_get_pull, including a
+reverse of the pull-up value swap applied in rockchip_set_pull so that
+pull-up is correctly reported in pinconf-pins.
+Also update the workaround comment to reflect affected pins, GPIO0_D3-D6.
 
 Fixes: c0dadc0e47a8 ("pinctrl: rockchip: add support for rk3568")
 Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20230110084636.1141740-1-jonas@kwiboo.se
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Reviewed-by: Jianqun Xu <jay.xu@rock-chips.com>
+Link: https://lore.kernel.org/r/20230110172955.1258840-1-jonas@kwiboo.se
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/pinctrl/pinctrl-rockchip.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 --- a/drivers/pinctrl/pinctrl-rockchip.c
 +++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -954,19 +954,19 @@ static struct rockchip_mux_route_data rk
- 	RK_MUXROUTE_PMU(0, RK_PB5, 4, 0x0110, WRITE_MASK_VAL(3, 2, 1)), /* PWM1 IO mux M1 */
- 	RK_MUXROUTE_PMU(0, RK_PC1, 1, 0x0110, WRITE_MASK_VAL(5, 4, 0)), /* PWM2 IO mux M0 */
- 	RK_MUXROUTE_PMU(0, RK_PB6, 4, 0x0110, WRITE_MASK_VAL(5, 4, 1)), /* PWM2 IO mux M1 */
--	RK_MUXROUTE_PMU(0, RK_PB3, 2, 0x0300, WRITE_MASK_VAL(0, 0, 0)), /* CAN0 IO mux M0 */
-+	RK_MUXROUTE_GRF(0, RK_PB3, 2, 0x0300, WRITE_MASK_VAL(0, 0, 0)), /* CAN0 IO mux M0 */
- 	RK_MUXROUTE_GRF(2, RK_PA1, 4, 0x0300, WRITE_MASK_VAL(0, 0, 1)), /* CAN0 IO mux M1 */
- 	RK_MUXROUTE_GRF(1, RK_PA1, 3, 0x0300, WRITE_MASK_VAL(2, 2, 0)), /* CAN1 IO mux M0 */
- 	RK_MUXROUTE_GRF(4, RK_PC3, 3, 0x0300, WRITE_MASK_VAL(2, 2, 1)), /* CAN1 IO mux M1 */
- 	RK_MUXROUTE_GRF(4, RK_PB5, 3, 0x0300, WRITE_MASK_VAL(4, 4, 0)), /* CAN2 IO mux M0 */
- 	RK_MUXROUTE_GRF(2, RK_PB2, 4, 0x0300, WRITE_MASK_VAL(4, 4, 1)), /* CAN2 IO mux M1 */
- 	RK_MUXROUTE_GRF(4, RK_PC4, 1, 0x0300, WRITE_MASK_VAL(6, 6, 0)), /* HPDIN IO mux M0 */
--	RK_MUXROUTE_PMU(0, RK_PC2, 2, 0x0300, WRITE_MASK_VAL(6, 6, 1)), /* HPDIN IO mux M1 */
-+	RK_MUXROUTE_GRF(0, RK_PC2, 2, 0x0300, WRITE_MASK_VAL(6, 6, 1)), /* HPDIN IO mux M1 */
- 	RK_MUXROUTE_GRF(3, RK_PB1, 3, 0x0300, WRITE_MASK_VAL(8, 8, 0)), /* GMAC1 IO mux M0 */
- 	RK_MUXROUTE_GRF(4, RK_PA7, 3, 0x0300, WRITE_MASK_VAL(8, 8, 1)), /* GMAC1 IO mux M1 */
- 	RK_MUXROUTE_GRF(4, RK_PD1, 1, 0x0300, WRITE_MASK_VAL(10, 10, 0)), /* HDMITX IO mux M0 */
--	RK_MUXROUTE_PMU(0, RK_PC7, 1, 0x0300, WRITE_MASK_VAL(10, 10, 1)), /* HDMITX IO mux M1 */
--	RK_MUXROUTE_PMU(0, RK_PB6, 1, 0x0300, WRITE_MASK_VAL(14, 14, 0)), /* I2C2 IO mux M0 */
-+	RK_MUXROUTE_GRF(0, RK_PC7, 1, 0x0300, WRITE_MASK_VAL(10, 10, 1)), /* HDMITX IO mux M1 */
-+	RK_MUXROUTE_GRF(0, RK_PB6, 1, 0x0300, WRITE_MASK_VAL(14, 14, 0)), /* I2C2 IO mux M0 */
- 	RK_MUXROUTE_GRF(4, RK_PB4, 1, 0x0300, WRITE_MASK_VAL(14, 14, 1)), /* I2C2 IO mux M1 */
- 	RK_MUXROUTE_GRF(1, RK_PA0, 1, 0x0304, WRITE_MASK_VAL(0, 0, 0)), /* I2C3 IO mux M0 */
- 	RK_MUXROUTE_GRF(3, RK_PB6, 4, 0x0304, WRITE_MASK_VAL(0, 0, 1)), /* I2C3 IO mux M1 */
-@@ -992,7 +992,7 @@ static struct rockchip_mux_route_data rk
- 	RK_MUXROUTE_GRF(4, RK_PC3, 1, 0x0308, WRITE_MASK_VAL(12, 12, 1)), /* PWM15 IO mux M1 */
- 	RK_MUXROUTE_GRF(3, RK_PD2, 3, 0x0308, WRITE_MASK_VAL(14, 14, 0)), /* SDMMC2 IO mux M0 */
- 	RK_MUXROUTE_GRF(3, RK_PA5, 5, 0x0308, WRITE_MASK_VAL(14, 14, 1)), /* SDMMC2 IO mux M1 */
--	RK_MUXROUTE_PMU(0, RK_PB5, 2, 0x030c, WRITE_MASK_VAL(0, 0, 0)), /* SPI0 IO mux M0 */
-+	RK_MUXROUTE_GRF(0, RK_PB5, 2, 0x030c, WRITE_MASK_VAL(0, 0, 0)), /* SPI0 IO mux M0 */
- 	RK_MUXROUTE_GRF(2, RK_PD3, 3, 0x030c, WRITE_MASK_VAL(0, 0, 1)), /* SPI0 IO mux M1 */
- 	RK_MUXROUTE_GRF(2, RK_PB5, 3, 0x030c, WRITE_MASK_VAL(2, 2, 0)), /* SPI1 IO mux M0 */
- 	RK_MUXROUTE_GRF(3, RK_PC3, 3, 0x030c, WRITE_MASK_VAL(2, 2, 1)), /* SPI1 IO mux M1 */
-@@ -1001,8 +1001,8 @@ static struct rockchip_mux_route_data rk
- 	RK_MUXROUTE_GRF(4, RK_PB3, 4, 0x030c, WRITE_MASK_VAL(6, 6, 0)), /* SPI3 IO mux M0 */
- 	RK_MUXROUTE_GRF(4, RK_PC2, 2, 0x030c, WRITE_MASK_VAL(6, 6, 1)), /* SPI3 IO mux M1 */
- 	RK_MUXROUTE_GRF(2, RK_PB4, 2, 0x030c, WRITE_MASK_VAL(8, 8, 0)), /* UART1 IO mux M0 */
--	RK_MUXROUTE_PMU(0, RK_PD1, 1, 0x030c, WRITE_MASK_VAL(8, 8, 1)), /* UART1 IO mux M1 */
--	RK_MUXROUTE_PMU(0, RK_PD1, 1, 0x030c, WRITE_MASK_VAL(10, 10, 0)), /* UART2 IO mux M0 */
-+	RK_MUXROUTE_GRF(3, RK_PD6, 4, 0x030c, WRITE_MASK_VAL(8, 8, 1)), /* UART1 IO mux M1 */
-+	RK_MUXROUTE_GRF(0, RK_PD1, 1, 0x030c, WRITE_MASK_VAL(10, 10, 0)), /* UART2 IO mux M0 */
- 	RK_MUXROUTE_GRF(1, RK_PD5, 2, 0x030c, WRITE_MASK_VAL(10, 10, 1)), /* UART2 IO mux M1 */
- 	RK_MUXROUTE_GRF(1, RK_PA1, 2, 0x030c, WRITE_MASK_VAL(12, 12, 0)), /* UART3 IO mux M0 */
- 	RK_MUXROUTE_GRF(3, RK_PB7, 4, 0x030c, WRITE_MASK_VAL(12, 12, 1)), /* UART3 IO mux M1 */
-@@ -1032,13 +1032,13 @@ static struct rockchip_mux_route_data rk
- 	RK_MUXROUTE_GRF(3, RK_PD6, 5, 0x0314, WRITE_MASK_VAL(1, 0, 1)), /* PDM IO mux M1 */
- 	RK_MUXROUTE_GRF(4, RK_PA0, 4, 0x0314, WRITE_MASK_VAL(1, 0, 1)), /* PDM IO mux M1 */
- 	RK_MUXROUTE_GRF(3, RK_PC4, 5, 0x0314, WRITE_MASK_VAL(1, 0, 2)), /* PDM IO mux M2 */
--	RK_MUXROUTE_PMU(0, RK_PA5, 3, 0x0314, WRITE_MASK_VAL(3, 2, 0)), /* PCIE20 IO mux M0 */
-+	RK_MUXROUTE_GRF(0, RK_PA5, 3, 0x0314, WRITE_MASK_VAL(3, 2, 0)), /* PCIE20 IO mux M0 */
- 	RK_MUXROUTE_GRF(2, RK_PD0, 4, 0x0314, WRITE_MASK_VAL(3, 2, 1)), /* PCIE20 IO mux M1 */
- 	RK_MUXROUTE_GRF(1, RK_PB0, 4, 0x0314, WRITE_MASK_VAL(3, 2, 2)), /* PCIE20 IO mux M2 */
--	RK_MUXROUTE_PMU(0, RK_PA4, 3, 0x0314, WRITE_MASK_VAL(5, 4, 0)), /* PCIE30X1 IO mux M0 */
-+	RK_MUXROUTE_GRF(0, RK_PA4, 3, 0x0314, WRITE_MASK_VAL(5, 4, 0)), /* PCIE30X1 IO mux M0 */
- 	RK_MUXROUTE_GRF(2, RK_PD2, 4, 0x0314, WRITE_MASK_VAL(5, 4, 1)), /* PCIE30X1 IO mux M1 */
- 	RK_MUXROUTE_GRF(1, RK_PA5, 4, 0x0314, WRITE_MASK_VAL(5, 4, 2)), /* PCIE30X1 IO mux M2 */
--	RK_MUXROUTE_PMU(0, RK_PA6, 2, 0x0314, WRITE_MASK_VAL(7, 6, 0)), /* PCIE30X2 IO mux M0 */
-+	RK_MUXROUTE_GRF(0, RK_PA6, 2, 0x0314, WRITE_MASK_VAL(7, 6, 0)), /* PCIE30X2 IO mux M0 */
- 	RK_MUXROUTE_GRF(2, RK_PD4, 4, 0x0314, WRITE_MASK_VAL(7, 6, 1)), /* PCIE30X2 IO mux M1 */
- 	RK_MUXROUTE_GRF(4, RK_PC2, 4, 0x0314, WRITE_MASK_VAL(7, 6, 2)), /* PCIE30X2 IO mux M2 */
- };
+@@ -2045,9 +2045,18 @@ static int rockchip_get_pull(struct rock
+ 	case RK3308:
+ 	case RK3368:
+ 	case RK3399:
++	case RK3568:
+ 		pull_type = bank->pull_type[pin_num / 8];
+ 		data >>= bit;
+ 		data &= (1 << RK3188_PULL_BITS_PER_PIN) - 1;
++		/*
++		 * In the TRM, pull-up being 1 for everything except the GPIO0_D3-D6,
++		 * where that pull up value becomes 3.
++		 */
++		if (ctrl->type == RK3568 && bank->bank_num == 0 && pin_num >= 27 && pin_num <= 30) {
++			if (data == 3)
++				data = 1;
++		}
+ 
+ 		return rockchip_pull_list[pull_type][data];
+ 	default:
+@@ -2101,7 +2110,7 @@ static int rockchip_set_pull(struct rock
+ 			}
+ 		}
+ 		/*
+-		 * In the TRM, pull-up being 1 for everything except the GPIO0_D0-D6,
++		 * In the TRM, pull-up being 1 for everything except the GPIO0_D3-D6,
+ 		 * where that pull up value becomes 3.
+ 		 */
+ 		if (ctrl->type == RK3568 && bank->bank_num == 0 && pin_num >= 27 && pin_num <= 30) {
 
 
