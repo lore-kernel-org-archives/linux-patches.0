@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087EF8825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:58:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A45C4339C;
-	Fri, 10 Mar 2023 14:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD3B8825
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:58:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F5FC433D2;
+	Fri, 10 Mar 2023 14:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460279;
-	bh=Xv0BEOXvvSHKw4X3BLxCN9b9mZfsj2LhDUUAAsPtMeQ=;
+	s=korg; t=1678460283;
+	bh=MF7/InnPekrYkOvoJMv0v19YbXNTr85ToW7zSbDLnhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a2Z/PpH5hSI0OAgvsplM1rLG09ViM4Xd14Zcl9cQvasM89kaDLuIWFdIORiuad4uA
-	 EVsyhvXM7DUSHb8YYb/cjZfYHsYJnJ58HjITXimGulw3sNS7NHWoIp4g+JH5u1gJxE
-	 qSWTFZs3hx9ABkd1oaRy18NsD2IQLjnywfSz/aQ8=
+	b=XP6QZa7Y5yCOhLKag8/Oy0WTjueL3GhlTFWtFXx/6mxZdrv/x59uMudC34PgWrpqk
+	 wOvAJmrTOKq7pEwX49YSjGepzqJx0cEywQSpRrEUOpyG4go6IKdgwV2Us9vlX8noLC
+	 pzAVN0FIx6a8OXguP2v/cYIf/VQ7r7gmSwX5WeFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Laurent Dufour <laurent.dufour@fr.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Luca Ellero <l.ellero@asem.it>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 254/529] powerpc/rtas: make all exports GPL
-Date: Fri, 10 Mar 2023 14:36:37 +0100
-Message-Id: <20230310133816.741069938@linuxfoundation.org>
+Subject: [PATCH 5.10 245/529] Input: ads7846 - always set last command to PWRDOWN
+Date: Fri, 10 Mar 2023 14:36:28 +0100
+Message-Id: <20230310133816.319564011@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,138 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Luca Ellero <l.ellero@asem.it>
 
-[ Upstream commit 9bce6243848dfd0ff7c2be6e8d82ab9b1e6c7858 ]
+[ Upstream commit 13f82ca3878db8284a70ef9711d7f710a31eb562 ]
 
-The first symbol exports of RTAS functions and data came with the (now
-removed) scanlog driver in 2003:
+Controllers that report pressure (e.g. ADS7846) use 5 commands and the
+correct sequence is READ_X, READ_Y, READ_Z1, READ_Z2, PWRDOWN.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git/commit/?id=f92e361842d5251e50562b09664082dcbd0548bb
+Controllers that don't report pressure (e.g. ADS7845/ADS7843) use only 3
+commands and the correct sequence should be READ_X, READ_Y, PWRDOWN. But
+the sequence sent was incorrect: READ_X, READ_Y, READ_Z1.
 
-At the time this was applied, EXPORT_SYMBOL_GPL() was very new, and
-the exports of rtas_call() etc have remained non-GPL. As new APIs have
-been added to the RTAS subsystem, their symbol exports have followed
-the convention set by existing code.
+Fix this by setting the third (and last) command to PWRDOWN.
 
-However, the historical evidence is that RTAS function exports have been
-added over time only to satisfy the needs of in-kernel users, and these
-clients must have fairly intimate knowledge of how the APIs work to use
-them safely. No out of tree users are known, and future ones seem
-unlikely.
-
-Arguably the default for RTAS symbols should have become
-EXPORT_SYMBOL_GPL once it was available. Let's make it so now, and
-exceptions can be evaluated as needed.
-
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Reviewed-by: Laurent Dufour <laurent.dufour@fr.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230124140448.45938-3-nathanl@linux.ibm.com
-Stable-dep-of: 836b5b9fcc8e ("powerpc/rtas: ensure 4KB alignment for rtas_data_buf")
+Fixes: ffa458c1bd9b ("spi: ads7846 driver")
+Signed-off-by: Luca Ellero <l.ellero@asem.it>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230126105227.47648-3-l.ellero@asem.it
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/rtas.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/input/touchscreen/ads7846.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/rtas.c b/arch/powerpc/kernel/rtas.c
-index 014229c40435a..7d0bcc515a058 100644
---- a/arch/powerpc/kernel/rtas.c
-+++ b/arch/powerpc/kernel/rtas.c
-@@ -52,10 +52,10 @@ struct rtas_t rtas = {
- EXPORT_SYMBOL(rtas);
+diff --git a/drivers/input/touchscreen/ads7846.c b/drivers/input/touchscreen/ads7846.c
+index 0610fab5ed93b..9f5cc42a567a5 100644
+--- a/drivers/input/touchscreen/ads7846.c
++++ b/drivers/input/touchscreen/ads7846.c
+@@ -1075,6 +1075,9 @@ static int ads7846_setup_spi_msg(struct ads7846 *ts,
+ 		struct ads7846_buf_layout *l = &packet->l[cmd_idx];
+ 		unsigned int max_count;
  
- DEFINE_SPINLOCK(rtas_data_buf_lock);
--EXPORT_SYMBOL(rtas_data_buf_lock);
-+EXPORT_SYMBOL_GPL(rtas_data_buf_lock);
++		if (cmd_idx == packet->cmds - 1)
++			cmd_idx = ADS7846_PWDOWN;
++
+ 		if (ads7846_cmd_need_settle(cmd_idx))
+ 			max_count = packet->count + packet->count_skip;
+ 		else
+@@ -1111,7 +1114,12 @@ static int ads7846_setup_spi_msg(struct ads7846 *ts,
  
- char rtas_data_buf[RTAS_DATA_BUF_SIZE] __cacheline_aligned;
--EXPORT_SYMBOL(rtas_data_buf);
-+EXPORT_SYMBOL_GPL(rtas_data_buf);
+ 	for (cmd_idx = 0; cmd_idx < packet->cmds; cmd_idx++) {
+ 		struct ads7846_buf_layout *l = &packet->l[cmd_idx];
+-		u8 cmd = ads7846_get_cmd(cmd_idx, vref);
++		u8 cmd;
++
++		if (cmd_idx == packet->cmds - 1)
++			cmd_idx = ADS7846_PWDOWN;
++
++		cmd = ads7846_get_cmd(cmd_idx, vref);
  
- unsigned long rtas_rmo_buf;
- 
-@@ -64,7 +64,7 @@ unsigned long rtas_rmo_buf;
-  * This is done like this so rtas_flash can be a module.
-  */
- void (*rtas_flash_term_hook)(int);
--EXPORT_SYMBOL(rtas_flash_term_hook);
-+EXPORT_SYMBOL_GPL(rtas_flash_term_hook);
- 
- /* RTAS use home made raw locking instead of spin_lock_irqsave
-  * because those can be called from within really nasty contexts
-@@ -312,7 +312,7 @@ void rtas_progress(char *s, unsigned short hex)
-  
- 	spin_unlock(&progress_lock);
- }
--EXPORT_SYMBOL(rtas_progress);		/* needed by rtas_flash module */
-+EXPORT_SYMBOL_GPL(rtas_progress);		/* needed by rtas_flash module */
- 
- int rtas_token(const char *service)
- {
-@@ -322,7 +322,7 @@ int rtas_token(const char *service)
- 	tokp = of_get_property(rtas.dev, service, NULL);
- 	return tokp ? be32_to_cpu(*tokp) : RTAS_UNKNOWN_SERVICE;
- }
--EXPORT_SYMBOL(rtas_token);
-+EXPORT_SYMBOL_GPL(rtas_token);
- 
- int rtas_service_present(const char *service)
- {
-@@ -482,7 +482,7 @@ int rtas_call(int token, int nargs, int nret, int *outputs, ...)
- 	}
- 	return ret;
- }
--EXPORT_SYMBOL(rtas_call);
-+EXPORT_SYMBOL_GPL(rtas_call);
- 
- /* For RTAS_BUSY (-2), delay for 1 millisecond.  For an extended busy status
-  * code of 990n, perform the hinted delay of 10^n (last digit) milliseconds.
-@@ -517,7 +517,7 @@ unsigned int rtas_busy_delay(int status)
- 
- 	return ms;
- }
--EXPORT_SYMBOL(rtas_busy_delay);
-+EXPORT_SYMBOL_GPL(rtas_busy_delay);
- 
- static int rtas_error_rc(int rtas_rc)
- {
-@@ -563,7 +563,7 @@ int rtas_get_power_level(int powerdomain, int *level)
- 		return rtas_error_rc(rc);
- 	return rc;
- }
--EXPORT_SYMBOL(rtas_get_power_level);
-+EXPORT_SYMBOL_GPL(rtas_get_power_level);
- 
- int rtas_set_power_level(int powerdomain, int level, int *setlevel)
- {
-@@ -581,7 +581,7 @@ int rtas_set_power_level(int powerdomain, int level, int *setlevel)
- 		return rtas_error_rc(rc);
- 	return rc;
- }
--EXPORT_SYMBOL(rtas_set_power_level);
-+EXPORT_SYMBOL_GPL(rtas_set_power_level);
- 
- int rtas_get_sensor(int sensor, int index, int *state)
- {
-@@ -599,7 +599,7 @@ int rtas_get_sensor(int sensor, int index, int *state)
- 		return rtas_error_rc(rc);
- 	return rc;
- }
--EXPORT_SYMBOL(rtas_get_sensor);
-+EXPORT_SYMBOL_GPL(rtas_get_sensor);
- 
- int rtas_get_sensor_fast(int sensor, int index, int *state)
- {
-@@ -660,7 +660,7 @@ int rtas_set_indicator(int indicator, int index, int new_value)
- 		return rtas_error_rc(rc);
- 	return rc;
- }
--EXPORT_SYMBOL(rtas_set_indicator);
-+EXPORT_SYMBOL_GPL(rtas_set_indicator);
- 
- /*
-  * Ignoring RTAS extended delay
+ 		for (b = 0; b < l->count; b++)
+ 			packet->tx[l->offset + b].cmd = cmd;
 -- 
 2.39.2
 
