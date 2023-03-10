@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3FA2846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:31:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B58FC433EF;
-	Fri, 10 Mar 2023 14:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51C8846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:31:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46682C433D2;
+	Fri, 10 Mar 2023 14:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458704;
-	bh=0MZmzu3ZgniHZsSQKhm9l8As2r21XFYi58o2yCCkRSo=;
+	s=korg; t=1678458707;
+	bh=8Mn9WFMsr8HqliZn3JEuqHyTcWqqmoXVhAv+VXJ8HEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jbvnU5rv9QMNBjygtkxUr61EK6+UHeCQpnWCYx4cw6VKNZvnj65xU71uhqI/N4jil
-	 vyXU4VKktCO9xJHez1oVljNNG03v6YTxPRQ0WeNTVHKg72x6CLQ5PjaBDdfYA2X31i
-	 +QunnpLuFAs9aNI2fMVCjMChcivKMXfbF0/FQS8U=
+	b=ytkRsjGSEwDYpHMlpXGcVXTv8YMX9sqRTKJvZYbz6BWwQnPrlmy45kTGxipJ7tBbY
+	 aYGkxRMsj0dE2kVS3HxoSiXzZ0m9fXxO0oYeW5ZoJZMM9nXrmkKp4Odbzjf/hO1//j
+	 Zc6ck2vZQ07qh6QiXBKasseKa5IFKymg7crQ9FDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 115/357] gpu: host1x: Dont skip assigning syncpoints to channels
-Date: Fri, 10 Mar 2023 14:36:44 +0100
-Message-Id: <20230310133739.736814964@linuxfoundation.org>
+Subject: [PATCH 5.4 087/357] wifi: mwifiex: fix loop iterator in mwifiex_update_ampdu_txwinsize()
+Date: Fri, 10 Mar 2023 14:36:16 +0100
+Message-Id: <20230310133737.831201180@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,38 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit eb258cc1fd458e584082be987dbc6ec42668c05e ]
+[ Upstream commit 3cfb7df24cee0f5fdc4cc5d3176cab9aadfcb430 ]
 
-The code to write the syncpoint channel assignment register
-incorrectly skips the write if hypervisor registers are not available.
+This code re-uses "i" to be the iterator for both the inside and outside
+loops.  It means the outside loop will exit earlier than intended.
 
-The register, however, is within the guest aperture so remove the
-check and assign syncpoints properly even on virtualized systems.
-
-Fixes: c3f52220f276 ("gpu: host1x: Enable Tegra186 syncpoint protection")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: d219b7eb3792 ("mwifiex: handle BT coex event to adjust Rx BA window size")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/Y+ERnaDaZD7RtLvX@kili
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/hw/syncpt_hw.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/11n.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/host1x/hw/syncpt_hw.c b/drivers/gpu/host1x/hw/syncpt_hw.c
-index dd39d67ccec36..8cf35b2eff3db 100644
---- a/drivers/gpu/host1x/hw/syncpt_hw.c
-+++ b/drivers/gpu/host1x/hw/syncpt_hw.c
-@@ -106,9 +106,6 @@ static void syncpt_assign_to_channel(struct host1x_syncpt *sp,
- #if HOST1X_HW >= 6
- 	struct host1x *host = sp->host;
+diff --git a/drivers/net/wireless/marvell/mwifiex/11n.c b/drivers/net/wireless/marvell/mwifiex/11n.c
+index acbef9f1a83b6..b397a7e85e6b0 100644
+--- a/drivers/net/wireless/marvell/mwifiex/11n.c
++++ b/drivers/net/wireless/marvell/mwifiex/11n.c
+@@ -890,7 +890,7 @@ mwifiex_send_delba_txbastream_tbl(struct mwifiex_private *priv, u8 tid)
+  */
+ void mwifiex_update_ampdu_txwinsize(struct mwifiex_adapter *adapter)
+ {
+-	u8 i;
++	u8 i, j;
+ 	u32 tx_win_size;
+ 	struct mwifiex_private *priv;
  
--	if (!host->hv_regs)
--		return;
--
- 	host1x_sync_writel(host,
- 			   HOST1X_SYNC_SYNCPT_CH_APP_CH(ch ? ch->id : 0xff),
- 			   HOST1X_SYNC_SYNCPT_CH_APP(sp->id));
+@@ -921,8 +921,8 @@ void mwifiex_update_ampdu_txwinsize(struct mwifiex_adapter *adapter)
+ 		if (tx_win_size != priv->add_ba_param.tx_win_size) {
+ 			if (!priv->media_connected)
+ 				continue;
+-			for (i = 0; i < MAX_NUM_TID; i++)
+-				mwifiex_send_delba_txbastream_tbl(priv, i);
++			for (j = 0; j < MAX_NUM_TID; j++)
++				mwifiex_send_delba_txbastream_tbl(priv, j);
+ 		}
+ 	}
+ }
 -- 
 2.39.2
 
