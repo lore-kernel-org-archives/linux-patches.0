@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA4A8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:09:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC0EC4339B;
-	Fri, 10 Mar 2023 14:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722908481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:09:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED534C433D2;
+	Fri, 10 Mar 2023 14:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457360;
-	bh=Q17zExphoCBt19sRePr89iq4XZhdz3XvwQ2GfhKX0Zw=;
+	s=korg; t=1678457363;
+	bh=rXFzxb7jhWiX/anZkxrUeOxUc2zSdHxJZmDQVP+y1lM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HFXyVvPGpNas9KH/AmZDj9YvAnO7/m2CkcoEyWo/Zfg8jeOY0iDY5utieVV6RW/gj
-	 SOF6PuZCxpUDWkCFYbH4PWGrHdzZci9abMEKVKuf1UPEIFJmumuTbMLK3BkOAIWx6g
-	 CSj4KaPp9IrpqUvDa8FGlG67XonAtldus49QSCbU=
+	b=FzwNkhPXE/aKlScqJF+USLaR4oxoK2jSoG2G4mTBlDClCnTXCOoPQPjubpWOJSopf
+	 cNO13qx4hWA4ezVEL3YjM6kF1X5Sm46Sea06rNBR86HKzCm95I2/5HXE/KJz1Ozq8T
+	 IDevVdkn2Dixp9c8lSNGg3y/kpBMwQYpF3FAoLCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	Trevor Wu <trevor.wu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/200] ASoC: zl38060 add gpiolib dependency
-Date: Fri, 10 Mar 2023 14:38:38 +0100
-Message-Id: <20230310133720.511551240@linuxfoundation.org>
+Subject: [PATCH 6.1 112/200] ASoC: mediatek: mt8195: add missing initialization
+Date: Fri, 10 Mar 2023 14:38:39 +0100
+Message-Id: <20230310133720.541107286@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,42 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Trevor Wu <trevor.wu@mediatek.com>
 
-[ Upstream commit 0de2cc3707b6b6e2ad40bd24ce09a5c1f65d01e1 ]
+[ Upstream commit b56ec2992a2e43bc3e60d6db86849d31640e791f ]
 
-Without gpiolib, this driver fails to link:
+In etdm dai driver, dai_etdm_parse_of() function is used to parse dts
+properties to get parameters. There are two for-loops which are
+sepearately for all etdm and etdm input only cases. In etdm in only
+loop, dai_id is not initialized, so it keeps the value intiliazed in
+another loop.
 
-arm-linux-gnueabi-ld: sound/soc/codecs/zl38060.o: in function `chip_gpio_get':
-zl38060.c:(.text+0x30): undefined reference to `gpiochip_get_data'
-arm-linux-gnueabi-ld: sound/soc/codecs/zl38060.o: in function `zl38_spi_probe':
-zl38060.c:(.text+0xa18): undefined reference to `devm_gpiochip_add_data_with_key'
+In the patch, add the missing initialization to fix the unexpected
+parsing problem.
 
-This appears to have been in the driver since the start, but is hard to
-hit in randconfig testing since gpiolib is almost always selected by something
-else.
-
-Fixes: 52e8a94baf90 ("ASoC: Add initial ZL38060 driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230227085850.2503725-1-arnd@kernel.org
+Fixes: 1de9a54acafb ("ASoC: mediatek: mt8195: support etdm in platform driver")
+Signed-off-by: Trevor Wu <trevor.wu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230301110200.26177-3-trevor.wu@mediatek.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/mediatek/mt8195/mt8195-dai-etdm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
-index 7022e6286e6cb..3f16ad1c37585 100644
---- a/sound/soc/codecs/Kconfig
-+++ b/sound/soc/codecs/Kconfig
-@@ -2039,6 +2039,7 @@ config SND_SOC_WSA883X
- config SND_SOC_ZL38060
- 	tristate "Microsemi ZL38060 Connected Home Audio Processor"
- 	depends on SPI_MASTER
-+	depends on GPIOLIB
- 	select REGMAP
- 	help
- 	  Support for ZL38060 Connected Home Audio Processor from Microsemi,
+diff --git a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
+index c2e268054773d..f2c9a1fdbe0d0 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
++++ b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
+@@ -2567,6 +2567,9 @@ static void mt8195_dai_etdm_parse_of(struct mtk_base_afe *afe)
+ 
+ 	/* etdm in only */
+ 	for (i = 0; i < 2; i++) {
++		dai_id = ETDM_TO_DAI_ID(i);
++		etdm_data = afe_priv->dai_priv[dai_id];
++
+ 		ret = snprintf(prop, sizeof(prop),
+ 			       "mediatek,%s-chn-disabled",
+ 			       of_afe_etdms[i].name);
 -- 
 2.39.2
 
