@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44BF8820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:48:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00234C4339B;
-	Fri, 10 Mar 2023 14:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAA18820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:48:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150AFC433EF;
+	Fri, 10 Mar 2023 14:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459726;
-	bh=vRgMfeOexHw5neJBidKdK3+m3QFD2NsjH94XdW0v5g8=;
+	s=korg; t=1678459729;
+	bh=q32WouwlW/oQlXDtB9DVJNGGDT3wUatS07rS1fyIyk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2nBvasPxmQvQ227CEjMtCvCVNI0/tb9ognWCb5hFbYhDo8YvTO/JulV5TjuZgkSVT
-	 SFcK4lTaJ9Z17EQewHWmShRAacWWb4ldgEfHJVKxpEH/P3YlOtijkrcf8sIDKwgrvd
-	 bfpnjR5Ip9WOCv8DBy7Yaaw4zEbVB/6q2mo1GFkE=
+	b=ZCsiv6nWtQXm+rkrS45fJnv2CsKeyAgJwjjtxSGOSWgwJbpQ6Kf30HuBIKoIqE3o5
+	 5JXANunMKXMTXj9V17ZJsZ+nc4wpxsttsCN/FDZZta15JOFkjrzfvM0edLcOWt/64J
+	 zjWxw4bXwZab7zzE/71fc9KDBD5G2L7cIOZkpzAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 100/529] x86/microcode: Replace deprecated CPU-hotplug functions.
-Date: Fri, 10 Mar 2023 14:34:03 +0100
-Message-Id: <20230310133809.602269171@linuxfoundation.org>
+Subject: [PATCH 5.10 083/529] thermal/drivers/tsens: Add compat string for the qcom,msm8960
+Date: Fri, 10 Mar 2023 14:33:46 +0100
+Message-Id: <20230310133808.824434941@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,108 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 2089f34f8c5b91f7235023ec72e71e3247261ecc ]
+[ Upstream commit 2caf73969de6675318a711d0622406c8c66afc03 ]
 
-The functions get_online_cpus() and put_online_cpus() have been
-deprecated during the CPU hotplug rework. They map directly to
-cpus_read_lock() and cpus_read_unlock().
+On apq8064 (msm8960) platforms the tsens device is created manually by
+the gcc driver. Prepare the tsens driver for the qcom,msm8960-tsens
+device instantiated from the device tree.
 
-Replace deprecated CPU-hotplug functions with the official version.
-The behavior remains unchanged.
-
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20210803141621.780504-9-bigeasy@linutronix.de
-Stable-dep-of: c0dd9245aa9e ("x86/microcode: Check CPU capabilities after late microcode update correctly")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20220406002648.393486-3-dmitry.baryshkov@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Stable-dep-of: a7d3006be5ca ("thermal/drivers/tsens: Sort out msm8976 vs msm8956 data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/microcode/core.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/thermal/qcom/tsens.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index 0b1732b98e719..38a58819c1b9b 100644
---- a/arch/x86/kernel/cpu/microcode/core.c
-+++ b/arch/x86/kernel/cpu/microcode/core.c
-@@ -55,7 +55,7 @@ LIST_HEAD(microcode_cache);
-  * All non cpu-hotplug-callback call sites use:
-  *
-  * - microcode_mutex to synchronize with each other;
-- * - get/put_online_cpus() to synchronize with
-+ * - cpus_read_lock/unlock() to synchronize with
-  *   the cpu-hotplug-callback call sites.
-  *
-  * We guarantee that only a single cpu is being
-@@ -431,7 +431,7 @@ static ssize_t microcode_write(struct file *file, const char __user *buf,
- 		return ret;
- 	}
- 
--	get_online_cpus();
-+	cpus_read_lock();
- 	mutex_lock(&microcode_mutex);
- 
- 	if (do_microcode_update(buf, len) == 0)
-@@ -441,7 +441,7 @@ static ssize_t microcode_write(struct file *file, const char __user *buf,
- 		perf_check_microcode();
- 
- 	mutex_unlock(&microcode_mutex);
--	put_online_cpus();
-+	cpus_read_unlock();
- 
- 	return ret;
- }
-@@ -629,7 +629,7 @@ static ssize_t reload_store(struct device *dev,
- 	if (val != 1)
- 		return size;
- 
--	get_online_cpus();
-+	cpus_read_lock();
- 
- 	ret = check_online_cpus();
- 	if (ret)
-@@ -644,7 +644,7 @@ static ssize_t reload_store(struct device *dev,
- 	mutex_unlock(&microcode_mutex);
- 
- put:
--	put_online_cpus();
-+	cpus_read_unlock();
- 
- 	if (ret == 0)
- 		ret = size;
-@@ -853,14 +853,14 @@ int __init microcode_init(void)
- 	if (IS_ERR(microcode_pdev))
- 		return PTR_ERR(microcode_pdev);
- 
--	get_online_cpus();
-+	cpus_read_lock();
- 	mutex_lock(&microcode_mutex);
- 
- 	error = subsys_interface_register(&mc_cpu_interface);
- 	if (!error)
- 		perf_check_microcode();
- 	mutex_unlock(&microcode_mutex);
--	put_online_cpus();
-+	cpus_read_unlock();
- 
- 	if (error)
- 		goto out_pdev;
-@@ -892,13 +892,13 @@ int __init microcode_init(void)
- 			   &cpu_root_microcode_group);
- 
-  out_driver:
--	get_online_cpus();
-+	cpus_read_lock();
- 	mutex_lock(&microcode_mutex);
- 
- 	subsys_interface_unregister(&mc_cpu_interface);
- 
- 	mutex_unlock(&microcode_mutex);
--	put_online_cpus();
-+	cpus_read_unlock();
- 
-  out_pdev:
- 	platform_device_unregister(microcode_pdev);
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index cb4f4b5224460..9e4a60db6e23b 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -902,6 +902,9 @@ static const struct of_device_id tsens_table[] = {
+ 	}, {
+ 		.compatible = "qcom,msm8939-tsens",
+ 		.data = &data_8939,
++	}, {
++		.compatible = "qcom,msm8960-tsens",
++		.data = &data_8960,
+ 	}, {
+ 		.compatible = "qcom,msm8974-tsens",
+ 		.data = &data_8974,
 -- 
 2.39.2
 
