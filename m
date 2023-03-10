@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB17E847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B296C433D2;
-	Fri, 10 Mar 2023 13:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B65847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BF6C433D2;
+	Fri, 10 Mar 2023 13:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456167;
-	bh=y7TpPtCe26W0jBtJAHGTxLCFzCDA+ixaXfVMzKhRv2s=;
+	s=korg; t=1678456170;
+	bh=VKykDTUHooAK051sbc7bIWJbAFqQk3nuU3UA+vXmKdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3pONzFbRFyqT/1sRbbtjctcUigBSOse8Ir5Acs1ZKo6gF8BL55EtQsnMOooNrQIy
-	 /fahu7yxnrjMwUZBRa5mC+G8mpShfg/sPJtgyT+PT+5Cb3hsgqIkPyYw/qvzkb0tRh
-	 HKBZWLuB351HuBzECJJFijmC4h4Y5p+g8Gl1cb+A=
+	b=TIOLzhDWa5LUW3dHwOJn3d8UPOMyrk53UrPQyVnv4oKBMBEq3l+F3QGwyQUWSx4ve
+	 1+MESnjoehGdLgeCR84iFoXDvYqSALZMU/8fq0aFV0Im0kMNEMIai3ZslBVE0rcJjq
+	 uNVVSlmJUQoLfyEYKrYMu7jYZaybkwTGLFnovF74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Sean Young <sean@mess.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 073/193] media: rc: Fix use-after-free bugs caused by ene_tx_irqsim()
-Date: Fri, 10 Mar 2023 14:37:35 +0100
-Message-Id: <20230310133713.460679603@linuxfoundation.org>
+Subject: [PATCH 4.14 064/193] dm: remove flush_scheduled_work() during local_exit()
+Date: Fri, 10 Mar 2023 14:37:26 +0100
+Message-Id: <20230310133713.160515002@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -36,81 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit 29b0589a865b6f66d141d79b2dd1373e4e50fe17 ]
+[ Upstream commit 0b22ff5360f5c4e11050b89206370fdf7dc0a226 ]
 
-When the ene device is detaching, function ene_remove() will
-be called. But there is no function to cancel tx_sim_timer
-in ene_remove(), the timer handler ene_tx_irqsim() could race
-with ene_remove(). As a result, the UAF bugs could happen,
-the process is shown below.
+Commit acfe0ad74d2e1 ("dm: allocate a special workqueue for deferred
+device removal") switched from using system workqueue to a single
+workqueue local to DM.  But it didn't eliminate the call to
+flush_scheduled_work() that was introduced purely for the benefit of
+deferred device removal with commit 2c140a246dc ("dm: allow remove to
+be deferred").
 
-    (cleanup routine)          |        (timer routine)
-                               | mod_timer(&dev->tx_sim_timer, ..)
-ene_remove()                   | (wait a time)
-                               | ene_tx_irqsim()
-                               |   dev->hw_lock //USE
-                               |   ene_tx_sample(dev) //USE
+Since DM core uses its own workqueue (and queue_work) there is no need
+to call flush_scheduled_work() from local_exit().  local_exit()'s
+destroy_workqueue(deferred_remove_workqueue) handles flushing work
+started with queue_work().
 
-Fix by adding del_timer_sync(&dev->tx_sim_timer) in ene_remove(),
-The tx_sim_timer could stop before ene device is deallocated.
-
-What's more, The rc_unregister_device() and del_timer_sync()
-should be called first in ene_remove() and the deallocated
-functions such as free_irq(), release_region() and so on
-should be called behind them. Because the rc_unregister_device()
-is well synchronized. Otherwise, race conditions may happen. The
-situations that may lead to race conditions are shown below.
-
-Firstly, the rx receiver is disabled with ene_rx_disable()
-before rc_unregister_device() in ene_remove(), which means it
-can be enabled again if a process opens /dev/lirc0 between
-ene_rx_disable() and rc_unregister_device().
-
-Secondly, the irqaction descriptor is freed by free_irq()
-before the rc device is unregistered, which means irqaction
-descriptor may be accessed again after it is deallocated.
-
-Thirdly, the timer can call ene_tx_sample() that can write
-to the io ports, which means the io ports could be accessed
-again after they are deallocated by release_region().
-
-Therefore, the rc_unregister_device() and del_timer_sync()
-should be called first in ene_remove().
-
-Suggested by: Sean Young <sean@mess.org>
-
-Fixes: 9ea53b74df9c ("V4L/DVB: STAGING: remove lirc_ene0100 driver")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: acfe0ad74d2e1 ("dm: allocate a special workqueue for deferred device removal")
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/ene_ir.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/media/rc/ene_ir.c b/drivers/media/rc/ene_ir.c
-index af7ba23e16e12..4761b2a72d8eb 100644
---- a/drivers/media/rc/ene_ir.c
-+++ b/drivers/media/rc/ene_ir.c
-@@ -1117,6 +1117,8 @@ static void ene_remove(struct pnp_dev *pnp_dev)
- 	struct ene_device *dev = pnp_get_drvdata(pnp_dev);
- 	unsigned long flags;
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index 9e6689fd22730..e3facf14f6149 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -220,7 +220,6 @@ static int __init local_init(void)
  
-+	rc_unregister_device(dev->rdev);
-+	del_timer_sync(&dev->tx_sim_timer);
- 	spin_lock_irqsave(&dev->hw_lock, flags);
- 	ene_rx_disable(dev);
- 	ene_rx_restore_hw_buffer(dev);
-@@ -1124,7 +1126,6 @@ static void ene_remove(struct pnp_dev *pnp_dev)
+ static void local_exit(void)
+ {
+-	flush_scheduled_work();
+ 	destroy_workqueue(deferred_remove_workqueue);
  
- 	free_irq(dev->irq, dev);
- 	release_region(dev->hw_io, ENE_IO_SIZE);
--	rc_unregister_device(dev->rdev);
- 	kfree(dev);
- }
- 
+ 	kmem_cache_destroy(_rq_cache);
 -- 
 2.39.2
 
