@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBDD8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:10:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510BAC433D2;
-	Fri, 10 Mar 2023 14:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA7C8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:10:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E0FC4339B;
+	Fri, 10 Mar 2023 14:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457401;
-	bh=+O1tPn4wrXUQ1XEJE0xzcUDk4ho6GG93RTc/wxWagL0=;
+	s=korg; t=1678457404;
+	bh=9kj2c9l6jOQhUMEtZZWXwSksuyOkTZy7xGtWlof1MaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ugT2+rh+ugT2pf3JVtVyGbk685Gm8DOnSOzXpD71eGdN/0aLbTLNmUDiLPEpFQvVB
-	 s6EDGqzKucaiPiiOu2kC1E6nP9n6qWlLQfze7taG4TwVHk8RBC6JirrLtsTM6WDpfD
-	 vhij/7PHUK4ZVrWJE/h4X19nTp9iKautkOQxFRcM=
+	b=J2f1+XrHoInGnqce14iT3pZRRI1efjI9d5VFo3pAZHLxVFgFnnepCyim1KWsvE893
+	 UoSLACeT0R2WVge0hZdmhu1DzaLMgl68QkrYk3D6vZLub4eCqjUY6Gc5xtz9Dvz+fU
+	 ixvxyjOQZCApf0WSpzpt2u3MqcmiziD9tsT6snfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Kees Cook <keescook@chromium.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Brian King <brking@linux.vnet.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/200] media: uvcvideo: Handle cameras with invalid descriptors
-Date: Fri, 10 Mar 2023 14:38:51 +0100
-Message-Id: <20230310133720.932051776@linuxfoundation.org>
+Subject: [PATCH 6.1 098/200] scsi: ipr: Work around fortify-string warning
+Date: Fri, 10 Mar 2023 14:38:25 +0100
+Message-Id: <20230310133720.122480060@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -36,34 +38,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 41ddb251c68ac75c101d3a50a68c4629c9055e4c ]
+[ Upstream commit ee4e7dfe4ffc9ca50c6875757bd119abfe22b5c5 ]
 
-If the source entity does not contain any pads, do not create a link.
+The ipr_log_vpd_compact() function triggers a fortified memcpy() warning
+about a potential string overflow with all versions of clang:
 
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+In file included from drivers/scsi/ipr.c:43:
+In file included from include/linux/string.h:254:
+include/linux/fortify-string.h:520:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+                        __write_overflow_field(p_size_field, size);
+                        ^
+include/linux/fortify-string.h:520:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+2 errors generated.
+
+I don't see anything actually wrong with the function, but this is the only
+instance I can reproduce of the fortification going wrong in the kernel at
+the moment, so the easiest solution may be to rewrite the function into
+something that does not trigger the warning.
+
+Instead of having a combined buffer for vendor/device/serial strings, use
+three separate local variables and just truncate the whitespace
+individually.
+
+Link: https://lore.kernel.org/r/20230214132831.2118392-1-arnd@kernel.org
+Cc: Kees Cook <keescook@chromium.org>
+Fixes: 8cf093e275d0 ("[SCSI] ipr: Improved dual adapter errors")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Acked-by: Brian King <brking@linux.vnet.ibm.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_entity.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/ipr.c | 41 +++++++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_entity.c b/drivers/media/usb/uvc/uvc_entity.c
-index 7c4d2f93d3513..cc68dd24eb42d 100644
---- a/drivers/media/usb/uvc/uvc_entity.c
-+++ b/drivers/media/usb/uvc/uvc_entity.c
-@@ -37,7 +37,7 @@ static int uvc_mc_create_links(struct uvc_video_chain *chain,
- 			continue;
+diff --git a/drivers/scsi/ipr.c b/drivers/scsi/ipr.c
+index 2022ffb450417..8c062afb2918d 100644
+--- a/drivers/scsi/ipr.c
++++ b/drivers/scsi/ipr.c
+@@ -1516,23 +1516,22 @@ static void ipr_process_ccn(struct ipr_cmnd *ipr_cmd)
+ }
  
- 		remote = uvc_entity_by_id(chain->dev, entity->baSourceID[i]);
--		if (remote == NULL)
-+		if (remote == NULL || remote->num_pads == 0)
- 			return -EINVAL;
+ /**
+- * strip_and_pad_whitespace - Strip and pad trailing whitespace.
+- * @i:		index into buffer
+- * @buf:		string to modify
++ * strip_whitespace - Strip and pad trailing whitespace.
++ * @i:		size of buffer
++ * @buf:	string to modify
+  *
+- * This function will strip all trailing whitespace, pad the end
+- * of the string with a single space, and NULL terminate the string.
++ * This function will strip all trailing whitespace and
++ * NUL terminate the string.
+  *
+- * Return value:
+- * 	new length of string
+  **/
+-static int strip_and_pad_whitespace(int i, char *buf)
++static void strip_whitespace(int i, char *buf)
+ {
++	if (i < 1)
++		return;
++	i--;
+ 	while (i && buf[i] == ' ')
+ 		i--;
+-	buf[i+1] = ' ';
+-	buf[i+2] = '\0';
+-	return i + 2;
++	buf[i+1] = '\0';
+ }
  
- 		source = (UVC_ENTITY_TYPE(remote) == UVC_TT_STREAMING)
+ /**
+@@ -1547,19 +1546,21 @@ static int strip_and_pad_whitespace(int i, char *buf)
+ static void ipr_log_vpd_compact(char *prefix, struct ipr_hostrcb *hostrcb,
+ 				struct ipr_vpd *vpd)
+ {
+-	char buffer[IPR_VENDOR_ID_LEN + IPR_PROD_ID_LEN + IPR_SERIAL_NUM_LEN + 3];
+-	int i = 0;
++	char vendor_id[IPR_VENDOR_ID_LEN + 1];
++	char product_id[IPR_PROD_ID_LEN + 1];
++	char sn[IPR_SERIAL_NUM_LEN + 1];
+ 
+-	memcpy(buffer, vpd->vpids.vendor_id, IPR_VENDOR_ID_LEN);
+-	i = strip_and_pad_whitespace(IPR_VENDOR_ID_LEN - 1, buffer);
++	memcpy(vendor_id, vpd->vpids.vendor_id, IPR_VENDOR_ID_LEN);
++	strip_whitespace(IPR_VENDOR_ID_LEN, vendor_id);
+ 
+-	memcpy(&buffer[i], vpd->vpids.product_id, IPR_PROD_ID_LEN);
+-	i = strip_and_pad_whitespace(i + IPR_PROD_ID_LEN - 1, buffer);
++	memcpy(product_id, vpd->vpids.product_id, IPR_PROD_ID_LEN);
++	strip_whitespace(IPR_PROD_ID_LEN, product_id);
+ 
+-	memcpy(&buffer[i], vpd->sn, IPR_SERIAL_NUM_LEN);
+-	buffer[IPR_SERIAL_NUM_LEN + i] = '\0';
++	memcpy(sn, vpd->sn, IPR_SERIAL_NUM_LEN);
++	strip_whitespace(IPR_SERIAL_NUM_LEN, sn);
+ 
+-	ipr_hcam_err(hostrcb, "%s VPID/SN: %s\n", prefix, buffer);
++	ipr_hcam_err(hostrcb, "%s VPID/SN: %s %s %s\n", prefix,
++		     vendor_id, product_id, sn);
+ }
+ 
+ /**
 -- 
 2.39.2
 
