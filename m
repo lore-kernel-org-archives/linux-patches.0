@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5FE847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66964C433D2;
-	Fri, 10 Mar 2023 13:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DAD847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401E2C433D2;
+	Fri, 10 Mar 2023 13:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456323;
-	bh=uEu+2Rs4uWmfpMB5T6wQk8UGk9Oub8psbftkPFeFGM4=;
+	s=korg; t=1678456326;
+	bh=E43R0iNdn+mVOhgYm4YgbbFq03pcBGhufSJwQRkWytY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KwP0C/yMP6zzHLVJ2XApC0FJBtt7Jb+sCrv9qZZR6u+XrE97bx/LlsSJ7vxCONAAb
-	 aUx54uBJu5Qb0zUPG/O7AY3lTCBYuAJoD0MOhhf0spVCpJ62ZK2szlhcTbIb2WuoJ4
-	 6tXTHjGDAf3Z3lDPvVlgVv+lcjqQJtYj2zmu/1wY=
+	b=hdwYMcr1lU7g2CzMrshw9Zon8r6Ghs1dZ5NFyVKU0i+N26cVWd99mwj0AgqwtfYpj
+	 Sx6Z1P8kBlQWa85yTAErFl8aaYZMb1j7oejJVE1nqNGqIceVScF991D+BY/MaPFvW1
+	 rjK8TKfgjUEH0MMQ8BC4w5dQLKemogdMkeOZAHbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 157/193] ubi: Fix unreferenced object reported by kmemleak in ubi_resize_volume()
-Date: Fri, 10 Mar 2023 14:38:59 +0100
-Message-Id: <20230310133716.406197411@linuxfoundation.org>
+Subject: [PATCH 4.14 158/193] ubi: Fix possible null-ptr-deref in ubi_free_volume()
+Date: Fri, 10 Mar 2023 14:39:00 +0100
+Message-Id: <20230310133716.435991826@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -36,56 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 1e591ea072df7211f64542a09482b5f81cb3ad27 ]
+[ Upstream commit c15859bfd326c10230f09cb48a17f8a35f190342 ]
 
-There is a memory leaks problem reported by kmemleak:
+It willl cause null-ptr-deref in the following case:
 
-unreferenced object 0xffff888102007a00 (size 128):
-  comm "ubirsvol", pid 32090, jiffies 4298464136 (age 2361.231s)
-  hex dump (first 32 bytes):
-ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  ................
-ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  ................
-  backtrace:
-[<ffffffff8176cecd>] __kmalloc+0x4d/0x150
-[<ffffffffa02a9a36>] ubi_eba_create_table+0x76/0x170 [ubi]
-[<ffffffffa029764e>] ubi_resize_volume+0x1be/0xbc0 [ubi]
-[<ffffffffa02a3321>] ubi_cdev_ioctl+0x701/0x1850 [ubi]
-[<ffffffff81975d2d>] __x64_sys_ioctl+0x11d/0x170
-[<ffffffff83c142a5>] do_syscall_64+0x35/0x80
-[<ffffffff83e0006a>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+uif_init()
+  ubi_add_volume()
+    cdev_add() -> if it fails, call kill_volumes()
+    device_register()
 
-This is due to a mismatch between create and destroy interfaces, and
-in detail that "new_eba_tbl" created by ubi_eba_create_table() but
-destroyed by kfree(), while will causing "new_eba_tbl->entries" not
-freed.
+kill_volumes() -> if ubi_add_volume() fails call this function
+  ubi_free_volume()
+    cdev_del()
+    device_unregister() -> trying to delete a not added device,
+			   it causes null-ptr-deref
 
-Fix it by replacing kfree(new_eba_tbl) with
-ubi_eba_destroy_table(new_eba_tbl)
+So in ubi_free_volume(), it delete devices whether they are added
+or not, it will causes null-ptr-deref.
 
-Fixes: 799dca34ac54 ("UBI: hide EBA internals")
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Handle the error case whlie calling ubi_add_volume() to fix this
+problem. If add volume fails, set the corresponding vol to null,
+so it can not be accessed in kill_volumes() and release the
+resource in ubi_add_volume() error path.
+
+Fixes: 801c135ce73d ("UBI: Unsorted Block Images")
+Suggested-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/vmt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/ubi/build.c |  1 +
+ drivers/mtd/ubi/vmt.c   | 12 ++++++------
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
+diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
+index 211fa2770a4eb..c6765210a6fc8 100644
+--- a/drivers/mtd/ubi/build.c
++++ b/drivers/mtd/ubi/build.c
+@@ -480,6 +480,7 @@ static int uif_init(struct ubi_device *ubi)
+ 			err = ubi_add_volume(ubi, ubi->volumes[i]);
+ 			if (err) {
+ 				ubi_err(ubi, "cannot add volume %d", i);
++				ubi->volumes[i] = NULL;
+ 				goto out_volumes;
+ 			}
+ 		}
 diff --git a/drivers/mtd/ubi/vmt.c b/drivers/mtd/ubi/vmt.c
-index bbf4b61733708..26dcffb624e87 100644
+index 26dcffb624e87..8815673e2e57d 100644
 --- a/drivers/mtd/ubi/vmt.c
 +++ b/drivers/mtd/ubi/vmt.c
-@@ -521,7 +521,7 @@ int ubi_resize_volume(struct ubi_volume_desc *desc, int reserved_pebs)
- 	return err;
+@@ -588,6 +588,7 @@ int ubi_add_volume(struct ubi_device *ubi, struct ubi_volume *vol)
+ 	if (err) {
+ 		ubi_err(ubi, "cannot add character device for volume %d, error %d",
+ 			vol_id, err);
++		vol_release(&vol->dev);
+ 		return err;
+ 	}
  
- out_free:
--	kfree(new_eba_tbl);
-+	ubi_eba_destroy_table(new_eba_tbl);
+@@ -598,15 +599,14 @@ int ubi_add_volume(struct ubi_device *ubi, struct ubi_volume *vol)
+ 	vol->dev.groups = volume_dev_groups;
+ 	dev_set_name(&vol->dev, "%s_%d", ubi->ubi_name, vol->vol_id);
+ 	err = device_register(&vol->dev);
+-	if (err)
+-		goto out_cdev;
++	if (err) {
++		cdev_del(&vol->cdev);
++		put_device(&vol->dev);
++		return err;
++	}
+ 
+ 	self_check_volumes(ubi);
  	return err;
+-
+-out_cdev:
+-	cdev_del(&vol->cdev);
+-	return err;
  }
  
+ /**
 -- 
 2.39.2
 
