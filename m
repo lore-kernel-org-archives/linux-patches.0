@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B54881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8290AC4339C;
-	Fri, 10 Mar 2023 14:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14AF881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305F5C4339E;
+	Fri, 10 Mar 2023 14:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459223;
-	bh=NaX7V+gohbtE2nO5s3MCd4BEQz1hWz649rSjz779D2Q=;
+	s=korg; t=1678459226;
+	bh=Z7rXs6G1Bw1wJR8vYBikkDf05k0gYJcZtBy8sJ1qV48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wvrsxStLiP1O9uKYtmQTZkp5UPk4ixuZgjqxx+2iz2mmUA/yB5i8FevnkbonLWmCy
-	 eGv4MxnBCgV4dh7jHP2akQMr6PkXWcyUI7nZeVh+AZTlJkwe0+0gFv0c7urnsrMpMP
-	 GNfAt//p4pQmN1YqRVuvxcqJN/D3X0FyV/K7eZHU=
+	b=kyN7CmVSHjk0AJtzqkngzhVzOKVac3Qw20NlTUGbknA1c0VHAkkmUMBJdcTVrS4Zg
+	 wVvc6jgi6nH9e8OUs4d3IkK3oc3ZMDRsHmrnuHTN8FDfll8gNQgrdG3pMSqgvhJO0F
+	 52kNTWEPvefyppVINiIS1q5ESl3BrkzL/bU2utWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5.4 258/357] ARM: dts: exynos: correct TMU phandle in Odroid XU
-Date: Fri, 10 Mar 2023 14:39:07 +0100
-Message-Id: <20230310133746.126469016@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.4 259/357] rbd: avoid use-after-free in do_rbd_add() when rbd_dev_create() fails
+Date: Fri, 10 Mar 2023 14:39:08 +0100
+Message-Id: <20230310133746.166475034@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -33,33 +33,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 9372eca505e7a19934d750b4b4c89a3652738e66 upstream.
+commit f7c4d9b133c7a04ca619355574e96b6abf209fba upstream.
 
-TMU node uses 0 as thermal-sensor-cells, thus thermal zone referencing
-it must not have an argument to phandle.  Since thermal-sensors property
-is already defined in included exynosi5410.dtsi, drop it from
-exynos5410-odroidxu.dts to fix the error and remoev redundancy.
+If getting an ID or setting up a work queue in rbd_dev_create() fails,
+use-after-free on rbd_dev->rbd_client, rbd_dev->spec and rbd_dev->opts
+is triggered in do_rbd_add().  The root cause is that the ownership of
+these structures is transfered to rbd_dev prematurely and they all end
+up getting freed when rbd_dev_create() calls rbd_dev_free() prior to
+returning to do_rbd_add().
 
-Fixes: 88644b4c750b ("ARM: dts: exynos: Configure PWM, usb3503, PMIC and thermal on Odroid XU board")
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230209105841.779596-4-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE, an
+incomplete patch submitted by Natalia Petrova <n.petrova@fintech.ru>.
+
+Cc: stable@vger.kernel.org
+Fixes: 1643dfa4c2c8 ("rbd: introduce a per-device ordered workqueue")
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/exynos5410-odroidxu.dts |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/block/rbd.c |   20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
---- a/arch/arm/boot/dts/exynos5410-odroidxu.dts
-+++ b/arch/arm/boot/dts/exynos5410-odroidxu.dts
-@@ -116,7 +116,6 @@
- };
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -5529,8 +5529,7 @@ static void rbd_dev_release(struct devic
+ 		module_put(THIS_MODULE);
+ }
  
- &cpu0_thermal {
--	thermal-sensors = <&tmu_cpu0 0>;
- 	polling-delay-passive = <0>;
- 	polling-delay = <0>;
+-static struct rbd_device *__rbd_dev_create(struct rbd_client *rbdc,
+-					   struct rbd_spec *spec)
++static struct rbd_device *__rbd_dev_create(struct rbd_spec *spec)
+ {
+ 	struct rbd_device *rbd_dev;
  
+@@ -5575,9 +5574,6 @@ static struct rbd_device *__rbd_dev_crea
+ 	rbd_dev->dev.parent = &rbd_root_dev;
+ 	device_initialize(&rbd_dev->dev);
+ 
+-	rbd_dev->rbd_client = rbdc;
+-	rbd_dev->spec = spec;
+-
+ 	return rbd_dev;
+ }
+ 
+@@ -5590,12 +5586,10 @@ static struct rbd_device *rbd_dev_create
+ {
+ 	struct rbd_device *rbd_dev;
+ 
+-	rbd_dev = __rbd_dev_create(rbdc, spec);
++	rbd_dev = __rbd_dev_create(spec);
+ 	if (!rbd_dev)
+ 		return NULL;
+ 
+-	rbd_dev->opts = opts;
+-
+ 	/* get an id and fill in device name */
+ 	rbd_dev->dev_id = ida_simple_get(&rbd_dev_id_ida, 0,
+ 					 minor_to_rbd_dev_id(1 << MINORBITS),
+@@ -5612,6 +5606,10 @@ static struct rbd_device *rbd_dev_create
+ 	/* we have a ref from do_rbd_add() */
+ 	__module_get(THIS_MODULE);
+ 
++	rbd_dev->rbd_client = rbdc;
++	rbd_dev->spec = spec;
++	rbd_dev->opts = opts;
++
+ 	dout("%s rbd_dev %p dev_id %d\n", __func__, rbd_dev, rbd_dev->dev_id);
+ 	return rbd_dev;
+ 
+@@ -6827,7 +6825,7 @@ static int rbd_dev_probe_parent(struct r
+ 		goto out_err;
+ 	}
+ 
+-	parent = __rbd_dev_create(rbd_dev->rbd_client, rbd_dev->parent_spec);
++	parent = __rbd_dev_create(rbd_dev->parent_spec);
+ 	if (!parent) {
+ 		ret = -ENOMEM;
+ 		goto out_err;
+@@ -6837,8 +6835,8 @@ static int rbd_dev_probe_parent(struct r
+ 	 * Images related by parent/child relationships always share
+ 	 * rbd_client and spec/parent_spec, so bump their refcounts.
+ 	 */
+-	__rbd_get_client(rbd_dev->rbd_client);
+-	rbd_spec_get(rbd_dev->parent_spec);
++	parent->rbd_client = __rbd_get_client(rbd_dev->rbd_client);
++	parent->spec = rbd_spec_get(rbd_dev->parent_spec);
+ 
+ 	ret = rbd_dev_image_probe(parent, depth);
+ 	if (ret < 0)
 
 
