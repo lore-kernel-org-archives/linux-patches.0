@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F918825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:00:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB5EC433D2;
-	Fri, 10 Mar 2023 15:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8078C8821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:00:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB68C433D2;
+	Fri, 10 Mar 2023 15:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460452;
-	bh=W64VR52fNnwU9m0yK9XAqGXz2oTfbsDC4wnFZb6HZFM=;
+	s=korg; t=1678460455;
+	bh=HtEflstP9YVFSqBhKRZ5o60xntNJ2+/ynZx50FIm420=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G5pBauVZUYpBlcDY7xNu3MSFPvi0K84aQKluRRr/SNPu93SCguftghbvUlsHt/52z
-	 Npl66ldw9LEyj4TCg+aZMTD3kirCE4zzcwvsBzSG9ma384WTvDa8V5pSRGESmnQ9P7
-	 aplPmcX+D7WelFj8qlOqZzxoz3pTSeabwgj9D0aw=
+	b=BjaHkcaB6xggfNQxwyjE9IPAjbTuOaX19+ui2zmdddOUWApjTtWisnfGcokbDLVne
+	 VTGLnyVjd1hYoxAUp4P9Znk8ggCkov9xqsAA5RrVJ8ny6k4REE26SrFW4GNg7+FJDe
+	 +Rp6czCEkPsCJOycWQc2xKtyHmHA6nFlno0ugg+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Carlo Caione <ccaione@baylibre.com>,
-	Kamlesh Gurudasani <kamlesh.gurudasani@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 312/529] drm/tiny: ili9486: Do not assume 8-bit only SPI controllers
-Date: Fri, 10 Mar 2023 14:37:35 +0100
-Message-Id: <20230310133819.457342779@linuxfoundation.org>
+	syzbot+57e3e98f7e3b80f64d56@syzkaller.appspotmail.com,
+	Dongliang Mu <mudongliangabcd@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	"Theodore Tso" <tytso@mit.edu>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 339/529] fs: hfsplus: fix UAF issue in hfsplus_put_super
+Date: Fri, 10 Mar 2023 14:38:02 +0100
+Message-Id: <20230310133820.718268793@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,85 +40,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlo Caione <ccaione@baylibre.com>
+From: Dongliang Mu <mudongliangabcd@gmail.com>
 
-[ Upstream commit 77772e607522daa61f3af74df018559db75c43d6 ]
+commit 07db5e247ab5858439b14dd7cc1fe538b9efcf32 upstream.
 
-The pixel data for the ILI9486 is always 16-bits wide and it must be
-sent over the SPI bus. When the controller is only able to deal with
-8-bit transfers, this 16-bits data needs to be swapped before the
-sending to account for the big endian bus, this is on the contrary not
-needed when the SPI controller already supports 16-bits transfers.
+The current hfsplus_put_super first calls hfs_btree_close on
+sbi->ext_tree, then invokes iput on sbi->hidden_dir, resulting in an
+use-after-free issue in hfsplus_release_folio.
 
-The decision about swapping the pixel data or not is taken in the MIPI
-DBI code by probing the controller capabilities: if the controller only
-suppors 8-bit transfers the data is swapped, otherwise it is not.
+As shown in hfsplus_fill_super, the error handling code also calls iput
+before hfs_btree_close.
 
-This swapping/non-swapping is relying on the assumption that when the
-controller does support 16-bit transactions then the data is sent
-unswapped in 16-bits-per-word over SPI.
+To fix this error, we move all iput calls before hfsplus_btree_close.
 
-The problem with the ILI9486 driver is that it is forcing 8-bit
-transactions also for controllers supporting 16-bits, violating the
-assumption and corrupting the pixel data.
+Note that this patch is tested on Syzbot.
 
-Align the driver to what is done in the MIPI DBI code by adjusting the
-transfer size to the maximum allowed by the SPI controller.
-
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Carlo Caione <ccaione@baylibre.com>
-Reviewed-by: Kamlesh Gurudasani <kamlesh.gurudasani@gmail.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221116-s905x_spi_ili9486-v4-2-f86b4463b9e4@baylibre.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20230226124948.3175736-1-mudongliangabcd@gmail.com
+Reported-by: syzbot+57e3e98f7e3b80f64d56@syzkaller.appspotmail.com
+Tested-by: Dongliang Mu <mudongliangabcd@gmail.com>
+Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
+Cc: Bart Van Assche <bvanassche@acm.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: "Theodore Ts'o" <tytso@mit.edu>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tiny/ili9486.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/hfsplus/super.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/tiny/ili9486.c b/drivers/gpu/drm/tiny/ili9486.c
-index 403af68fa4400..7ea26e5fbcb28 100644
---- a/drivers/gpu/drm/tiny/ili9486.c
-+++ b/drivers/gpu/drm/tiny/ili9486.c
-@@ -43,6 +43,7 @@ static int waveshare_command(struct mipi_dbi *mipi, u8 *cmd, u8 *par,
- 			     size_t num)
- {
- 	struct spi_device *spi = mipi->spi;
-+	unsigned int bpw = 8;
- 	void *data = par;
- 	u32 speed_hz;
- 	int i, ret;
-@@ -56,8 +57,6 @@ static int waveshare_command(struct mipi_dbi *mipi, u8 *cmd, u8 *par,
- 	 * The displays are Raspberry Pi HATs and connected to the 8-bit only
- 	 * SPI controller, so 16-bit command and parameters need byte swapping
- 	 * before being transferred as 8-bit on the big endian SPI bus.
--	 * Pixel data bytes have already been swapped before this function is
--	 * called.
- 	 */
- 	buf[0] = cpu_to_be16(*cmd);
- 	gpiod_set_value_cansleep(mipi->dc, 0);
-@@ -71,12 +70,18 @@ static int waveshare_command(struct mipi_dbi *mipi, u8 *cmd, u8 *par,
- 		for (i = 0; i < num; i++)
- 			buf[i] = cpu_to_be16(par[i]);
- 		num *= 2;
--		speed_hz = mipi_dbi_spi_cmd_max_speed(spi, num);
- 		data = buf;
+--- a/fs/hfsplus/super.c
++++ b/fs/hfsplus/super.c
+@@ -295,11 +295,11 @@ static void hfsplus_put_super(struct sup
+ 		hfsplus_sync_fs(sb, 1);
  	}
  
-+	/*
-+	 * Check whether pixel data bytes needs to be swapped or not
-+	 */
-+	if (*cmd == MIPI_DCS_WRITE_MEMORY_START && !mipi->swap_bytes)
-+		bpw = 16;
-+
- 	gpiod_set_value_cansleep(mipi->dc, 1);
--	ret = mipi_dbi_spi_transfer(spi, speed_hz, 8, data, num);
-+	speed_hz = mipi_dbi_spi_cmd_max_speed(spi, num);
-+	ret = mipi_dbi_spi_transfer(spi, speed_hz, bpw, data, num);
-  free:
- 	kfree(buf);
- 
--- 
-2.39.2
-
++	iput(sbi->alloc_file);
++	iput(sbi->hidden_dir);
+ 	hfs_btree_close(sbi->attr_tree);
+ 	hfs_btree_close(sbi->cat_tree);
+ 	hfs_btree_close(sbi->ext_tree);
+-	iput(sbi->alloc_file);
+-	iput(sbi->hidden_dir);
+ 	kfree(sbi->s_vhdr_buf);
+ 	kfree(sbi->s_backup_vhdr_buf);
+ 	unload_nls(sbi->nls);
 
 
