@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0308494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:36:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C730BC4339B;
-	Fri, 10 Mar 2023 14:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEC88494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:36:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F012C4339B;
+	Fri, 10 Mar 2023 14:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458992;
-	bh=UJG2yLRgAPyWqdYK9/H3/GB16kLkik00kOREtcReAF8=;
+	s=korg; t=1678458995;
+	bh=S0xWlDYxi86v6D9WPXhqTlrFu+RiKjQFSb8wGercS98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dbEef5FbBsPpERJtZ/XP+5o0vx54+DkkzqYw+Kt73G661OVNHev8IoYZSZz5QhhsZ
-	 ndfUD8o3NCoAxDUj8bP3Xl9hhITQtEyQdwoMKVU5U81UNCbwRJXCwhDGjr7gAk0YwX
-	 y9vh79/Rhs1DKDxkQ+K097UZ4GpnITzjfN6JHEYo=
+	b=N7ocjsDU03qPWMu5xEdx/yTlRO5pBvEV57xwD2eGr/zKWPjXaxYTzpHdil9PBQm3c
+	 mgYJEdYOwYq1sgBnEsOV2qbNEzsf3NoUcg2IE8sWBxZ5Et5t1qyQkNrwlEcjzLQG9m
+	 rJvK+/98+6dwMEObK7D+Ayyik4TexPWMKJb6jfuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alper Nebi Yasak <alpernebiyasak@gmail.com>,
-	Salvatore Bonaccorso <carnil@debian.org>
-Subject: [PATCH 5.4 212/357] firmware: coreboot: framebuffer: Ignore reserved pixel color bits
-Date: Fri, 10 Mar 2023 14:38:21 +0100
-Message-Id: <20230310133744.071719043@linuxfoundation.org>
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 186/357] inet: fix fast path in __inet_hash_connect()
+Date: Fri, 10 Mar 2023 14:37:55 +0100
+Message-Id: <20230310133742.957745229@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -34,52 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alper Nebi Yasak <alpernebiyasak@gmail.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-commit e6acaf25cba14661211bb72181c35dd13b24f5b3 upstream.
+[ Upstream commit 21cbd90a6fab7123905386985e3e4a80236b8714 ]
 
-The coreboot framebuffer doesn't support transparency, its 'reserved'
-bit field is merely padding for byte/word alignment of pixel colors [1].
-When trying to match the framebuffer to a simplefb format, the kernel
-driver unnecessarily requires the format's transparency bit field to
-exactly match this padding, even if the former is zero-width.
+__inet_hash_connect() has a fast path taken if sk_head(&tb->owners) is
+equal to the sk parameter.
+sk_head() returns the hlist_entry() with respect to the sk_node field.
+However entries in the tb->owners list are inserted with respect to the
+sk_bind_node field with sk_add_bind_node().
+Thus the check would never pass and the fast path never execute.
 
-Due to a coreboot bug [2] (fixed upstream), some boards misreport the
-reserved field's size as equal to its position (0x18 for both on a
-'Lick' Chromebook), and the driver fails to probe where it would have
-otherwise worked fine with e.g. the a8r8g8b8 or x8r8g8b8 formats.
+This fast path has never been executed or tested as this bug seems
+to be present since commit 1da177e4c3f4 ("Linux-2.6.12-rc2"), thus
+remove it to reduce code complexity.
 
-Remove the transparency comparison with reserved bits. When the
-bits-per-pixel and other color components match, transparency will
-already be in a subset of the reserved field. Not forcing it to match
-reserved bits allows the driver to work on the boards which misreport
-the reserved field. It also enables using simplefb formats that don't
-have transparency bits, although this doesn't currently happen due to
-format support and ordering in linux/platform_data/simplefb.h.
-
-[1] https://review.coreboot.org/plugins/gitiles/coreboot/+/4.19/src/commonlib/include/commonlib/coreboot_tables.h#255
-[2] https://review.coreboot.org/plugins/gitiles/coreboot/+/4.13/src/drivers/intel/fsp2_0/graphics.c#82
-
-Signed-off-by: Alper Nebi Yasak <alpernebiyasak@gmail.com>
-Link: https://lore.kernel.org/r/20230122190433.195941-1-alpernebiyasak@gmail.com
-Cc: Salvatore Bonaccorso <carnil@debian.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230112-inet_hash_connect_bind_head-v3-1-b591fd212b93@diag.uniroma1.it
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/google/framebuffer-coreboot.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/ipv4/inet_hashtables.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
---- a/drivers/firmware/google/framebuffer-coreboot.c
-+++ b/drivers/firmware/google/framebuffer-coreboot.c
-@@ -43,9 +43,7 @@ static int framebuffer_probe(struct core
- 		    fb->green_mask_pos     == formats[i].green.offset &&
- 		    fb->green_mask_size    == formats[i].green.length &&
- 		    fb->blue_mask_pos      == formats[i].blue.offset &&
--		    fb->blue_mask_size     == formats[i].blue.length &&
--		    fb->reserved_mask_pos  == formats[i].transp.offset &&
--		    fb->reserved_mask_size == formats[i].transp.length)
-+		    fb->blue_mask_size     == formats[i].blue.length)
- 			pdata.format = formats[i].name;
- 	}
- 	if (!pdata.format)
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index 33292983b8cfb..9d14b3289f003 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -714,17 +714,7 @@ int __inet_hash_connect(struct inet_timewait_death_row *death_row,
+ 	u32 index;
+ 
+ 	if (port) {
+-		head = &hinfo->bhash[inet_bhashfn(net, port,
+-						  hinfo->bhash_size)];
+-		tb = inet_csk(sk)->icsk_bind_hash;
+-		spin_lock_bh(&head->lock);
+-		if (sk_head(&tb->owners) == sk && !sk->sk_bind_node.next) {
+-			inet_ehash_nolisten(sk, NULL, NULL);
+-			spin_unlock_bh(&head->lock);
+-			return 0;
+-		}
+-		spin_unlock(&head->lock);
+-		/* No definite answer... Walk to established hash table */
++		local_bh_disable();
+ 		ret = check_established(death_row, sk, port, NULL);
+ 		local_bh_enable();
+ 		return ret;
+-- 
+2.39.2
+
 
 
