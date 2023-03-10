@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88FF8494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:37:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2F4C433A0;
-	Fri, 10 Mar 2023 14:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD76C8494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:37:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2583FC4339B;
+	Fri, 10 Mar 2023 14:37:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459025;
-	bh=g1bKCxQu/pjEbppwzQRQCjx3Xpu9L29seE2/Rzfg6Ao=;
+	s=korg; t=1678459028;
+	bh=+l7zOQ56DtVh0IMdm20/OB3CezTKlI53c4+VSHTH7Io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M23heoHcCM1mhSuKY6WxLtdUa1eVJuQAzYmmNioXQ1+kSm2QBMx+YVoLoFCfbNVB4
-	 UnEpny3asd/bJLrbWqYgJ+lf9DOem+AeAshXVZlF1fNoI5iiRhFllYWvKgrATLFhCS
-	 nLYb6etmSb1HWu9jDgr/fibZZNYapdOIJHLUvE7w=
+	b=fJUDts214uuxdSPhN1s+hQ/JWt4MMqYSQNpv9Tf3Fed4+uDQ3Td/t9CllFGZRKhBJ
+	 VtCClQbkSM9G0hT6NjQf8Aj5jqKMNg5ocmXDdfjZv+6MhzVt9Bc93TGbBt67rPn2yQ
+	 nAOttS16na6+YnfRTSm+2wszPiYCdRya3fdw9NbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Breno Leitao <leitao@debian.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 183/357] x86/bugs: Reset speculation control settings on init
-Date: Fri, 10 Mar 2023 14:37:52 +0100
-Message-Id: <20230310133742.814665865@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 5.4 217/357] s390/kprobes: fix current_kprobe never cleared after kprobes reenter
+Date: Fri, 10 Mar 2023 14:38:26 +0100
+Message-Id: <20230310133744.284882174@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,75 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Breno Leitao <leitao@debian.org>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit 0125acda7d76b943ca55811df40ed6ec0ecf670f ]
+commit cd57953936f2213dfaccce10d20f396956222c7d upstream.
 
-Currently, x86_spec_ctrl_base is read at boot time and speculative bits
-are set if Kconfig items are enabled. For example, IBRS is enabled if
-CONFIG_CPU_IBRS_ENTRY is configured, etc. These MSR bits are not cleared
-if the mitigations are disabled.
+Recent test_kprobe_missed kprobes kunit test uncovers the following
+problem. Once kprobe is triggered from another kprobe (kprobe reenter),
+all future kprobes on this cpu are considered as kprobe reenter, thus
+pre_handler and post_handler are not being called and kprobes are counted
+as "missed".
 
-This is a problem when kexec-ing a kernel that has the mitigation
-disabled from a kernel that has the mitigation enabled. In this case,
-the MSR bits are not cleared during the new kernel boot. As a result,
-this might have some performance degradation that is hard to pinpoint.
+Commit b9599798f953 ("[S390] kprobes: activation and deactivation")
+introduced a simpler scheme for kprobes (de)activation and status
+tracking by using push_kprobe/pop_kprobe, which supposed to work for
+both initial kprobe entry as well as kprobe reentry and helps to avoid
+handling those two cases differently. The problem is that a sequence of
+calls in case of kprobes reenter:
+push_kprobe() <- NULL (current_kprobe)
+push_kprobe() <- kprobe1 (current_kprobe)
+pop_kprobe() -> kprobe1 (current_kprobe)
+pop_kprobe() -> kprobe1 (current_kprobe)
+leaves "kprobe1" as "current_kprobe" on this cpu, instead of setting it
+to NULL. In fact push_kprobe/pop_kprobe can only store a single state
+(there is just one prev_kprobe in kprobe_ctlblk). Which is a hack but
+sufficient, there is no need to have another prev_kprobe just to store
+NULL. To make a simple and backportable fix simply reset "prev_kprobe"
+when kprobe is poped from this "stack". No need to worry about
+"kprobe_status" in this case, because its value is only checked when
+current_kprobe != NULL.
 
-This problem does not happen if the machine is (hard) rebooted because
-the bit will be cleared by default.
-
-  [ bp: Massage. ]
-
-Suggested-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20221128153148.1129350-1-leitao@debian.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: b9599798f953 ("[S390] kprobes: activation and deactivation")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/msr-index.h |  4 ++++
- arch/x86/kernel/cpu/bugs.c       | 10 +++++++++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ arch/s390/kernel/kprobes.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
-index 7fa0b213b0079..67d43645a2b6b 100644
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -50,6 +50,10 @@
- #define SPEC_CTRL_RRSBA_DIS_S_SHIFT	6	   /* Disable RRSBA behavior */
- #define SPEC_CTRL_RRSBA_DIS_S		BIT(SPEC_CTRL_RRSBA_DIS_S_SHIFT)
+--- a/arch/s390/kernel/kprobes.c
++++ b/arch/s390/kernel/kprobes.c
+@@ -255,6 +255,7 @@ static void pop_kprobe(struct kprobe_ctl
+ {
+ 	__this_cpu_write(current_kprobe, kcb->prev_kprobe.kp);
+ 	kcb->kprobe_status = kcb->prev_kprobe.status;
++	kcb->prev_kprobe.kp = NULL;
+ }
+ NOKPROBE_SYMBOL(pop_kprobe);
  
-+/* A mask for bits which the kernel toggles when controlling mitigations */
-+#define SPEC_CTRL_MITIGATIONS_MASK	(SPEC_CTRL_IBRS | SPEC_CTRL_STIBP | SPEC_CTRL_SSBD \
-+							| SPEC_CTRL_RRSBA_DIS_S)
-+
- #define MSR_IA32_PRED_CMD		0x00000049 /* Prediction Command */
- #define PRED_CMD_IBPB			BIT(0)	   /* Indirect Branch Prediction Barrier */
- 
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index 8dca326a9e78a..ab5e91700ab7d 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -135,9 +135,17 @@ void __init check_bugs(void)
- 	 * have unknown values. AMD64_LS_CFG MSR is cached in the early AMD
- 	 * init code as it is not enumerated and depends on the family.
- 	 */
--	if (boot_cpu_has(X86_FEATURE_MSR_SPEC_CTRL))
-+	if (cpu_feature_enabled(X86_FEATURE_MSR_SPEC_CTRL)) {
- 		rdmsrl(MSR_IA32_SPEC_CTRL, x86_spec_ctrl_base);
- 
-+		/*
-+		 * Previously running kernel (kexec), may have some controls
-+		 * turned ON. Clear them and let the mitigations setup below
-+		 * rediscover them based on configuration.
-+		 */
-+		x86_spec_ctrl_base &= ~SPEC_CTRL_MITIGATIONS_MASK;
-+	}
-+
- 	/* Select the proper CPU mitigations before patching alternatives: */
- 	spectre_v1_select_mitigation();
- 	spectre_v2_select_mitigation();
--- 
-2.39.2
-
 
 
