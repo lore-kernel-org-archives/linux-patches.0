@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1EA846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:35:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C630EC433A0;
-	Fri, 10 Mar 2023 14:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B082846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:35:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939DDC4339C;
+	Fri, 10 Mar 2023 14:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458900;
-	bh=uVzkbQnU8y61ZlIBt9r8EbfrInfDtktuAPbEq3+6eG4=;
+	s=korg; t=1678458902;
+	bh=3V1ay/dICWIQHa/vjldJ3fuJAYyffG02M0Qmty0ulxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=loK87V97xIvtuntPmqy2zj1qhKkLCGEfYrQ1HTrNELbYZMuiClwNQhvWGXrsvwDlN
-	 zGYJzEWhkqSOe3jEOOqmplaB13c/LG52OChVFy45CnGwg97Z9zzKIZjCIzsThYoTVD
-	 f4TCfo7Q0Ql8rVG1dn1vkJOeQxiUSml9sbVs20RA=
+	b=0KQDx439ftt/o7MP6sz73SZjYgSwPftFyiLuajiUZHQ1zCX245TM2rbGEoWuJlZ6K
+	 IgNZ0twukthsfHACs16jL3bhORTOGRs4sOnqSmJpC0WA5U4+3JJF3JL/bISWoPZZyD
+	 gu69V9SMpRsBw8/bt8OYNGpdnk3/o5CYvDTuKulw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Yang Li <yang.lee@linux.alibaba.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 180/357] rcu: Suppress smp_processor_id() complaint in synchronize_rcu_expedited_wait()
-Date: Fri, 10 Mar 2023 14:37:49 +0100
-Message-Id: <20230310133742.695638135@linuxfoundation.org>
+Subject: [PATCH 5.4 181/357] thermal: intel: Fix unsigned comparison with less than zero
+Date: Fri, 10 Mar 2023 14:37:50 +0100
+Message-Id: <20230310133742.727824845@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -34,40 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Yang Li <yang.lee@linux.alibaba.com>
 
-[ Upstream commit 2d7f00b2f01301d6e41fd4a28030dab0442265be ]
+[ Upstream commit e7fcfe67f9f410736b758969477b17ea285e8e6c ]
 
-The normal grace period's RCU CPU stall warnings are invoked from the
-scheduling-clock interrupt handler, and can thus invoke smp_processor_id()
-with impunity, which allows them to directly invoke dump_cpu_task().
-In contrast, the expedited grace period's RCU CPU stall warnings are
-invoked from process context, which causes the dump_cpu_task() function's
-calls to smp_processor_id() to complain bitterly in debug kernels.
+The return value from the call to intel_tcc_get_tjmax() is int, which can
+be a negative error code. However, the return value is being assigned to
+an u32 variable 'tj_max', so making 'tj_max' an int.
 
-This commit therefore causes synchronize_rcu_expedited_wait() to disable
-preemption around its call to dump_cpu_task().
+Eliminate the following warning:
+./drivers/thermal/intel/intel_soc_dts_iosf.c:394:5-11: WARNING: Unsigned expression compared with zero: tj_max < 0
 
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3637
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+Acked-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree_exp.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/thermal/intel/intel_soc_dts_iosf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/tree_exp.h b/kernel/rcu/tree_exp.h
-index 173e3ce607900..eca3df7f041c5 100644
---- a/kernel/rcu/tree_exp.h
-+++ b/kernel/rcu/tree_exp.h
-@@ -523,7 +523,9 @@ static void synchronize_sched_expedited_wait(void)
- 				mask = leaf_node_cpu_bit(rnp, cpu);
- 				if (!(READ_ONCE(rnp->expmask) & mask))
- 					continue;
-+				preempt_disable(); // For smp_processor_id() in dump_cpu_task().
- 				dump_cpu_task(cpu);
-+				preempt_enable();
- 			}
- 		}
- 		jiffies_stall = 3 * rcu_jiffies_till_stall_check() + 3;
+diff --git a/drivers/thermal/intel/intel_soc_dts_iosf.c b/drivers/thermal/intel/intel_soc_dts_iosf.c
+index 5716b62e0f732..410f13f6cba48 100644
+--- a/drivers/thermal/intel/intel_soc_dts_iosf.c
++++ b/drivers/thermal/intel/intel_soc_dts_iosf.c
+@@ -396,7 +396,7 @@ struct intel_soc_dts_sensors *intel_soc_dts_iosf_init(
+ {
+ 	struct intel_soc_dts_sensors *sensors;
+ 	bool notification;
+-	u32 tj_max;
++	int tj_max;
+ 	int ret;
+ 	int i;
+ 
 -- 
 2.39.2
 
