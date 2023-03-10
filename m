@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A50F8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:10:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B690BC433D2;
-	Fri, 10 Mar 2023 14:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8528481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:10:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71066C4339E;
+	Fri, 10 Mar 2023 14:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457413;
-	bh=27YCleqUjTg3cu6L16iWgrj9g+J8Xmv6fZe8VvJvwjM=;
+	s=korg; t=1678457415;
+	bh=bm2WJ1roVdn9VBIkoVkk3KE1nkq8Xz3lJOvX4cwpvjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ld44vyABzeUDRHArs9wpPCKTN2NhGaSHkrP7Rvnc/L9n11CkTnKzag7IkBcNyRt7i
-	 A+nt0cpVwwK6q/PTBe9W2B/EROZGMmlbzSjN2Xs3HJeilinCnUqByAMlwUlKPfEppg
-	 AnryVK4k8Y+HaC3PcDRcRqkDOsDOLO3kzELoJhfU=
+	b=keA3qPlfj3FkpMNj+mTn1tUa27hOmuulYAqC1o9IiibZEcUgCHYMMjGYrdDtgfQku
+	 7SWqHCZr9D5ACE4+Rz0Ix53wKRZtRrRetBaXFnGHT7zdFvTuwKLm/QXEZCQ8BOCZsc
+	 A1jR8mgUcvHlKvMjls7sBZAc9bqfvibBS4Aw0G8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ionut_n2001@yahoo.com,
-	Kees Cook <keescook@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Tomas Henzl <thenzl@redhat.com>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 127/200] media: uvcvideo: Silence memcpy() run-time false positive warnings
-Date: Fri, 10 Mar 2023 14:38:54 +0100
-Message-Id: <20230310133721.028912700@linuxfoundation.org>
+Subject: [PATCH 6.1 099/200] scsi: mpi3mr: Fix an issue found by KASAN
+Date: Fri, 10 Mar 2023 14:38:26 +0100
+Message-Id: <20230310133720.150625983@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -36,58 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Tomas Henzl <thenzl@redhat.com>
 
-[ Upstream commit b839212988575c701aab4d3d9ca15e44c87e383c ]
+[ Upstream commit ae7d45f5283d30274039b95d3e6d53d33c66e991 ]
 
-The memcpy() in uvc_video_decode_meta() intentionally copies across the
-length and flags members and into the trailing buf flexible array.
-Split the copy so that the compiler can better reason about (the lack
-of) buffer overflows here. Avoid the run-time false positive warning:
+Write only correct size (32 instead of 64 bytes).
 
-  memcpy: detected field-spanning write (size 12) of single field "&meta->length" at drivers/media/usb/uvc/uvc_video.c:1355 (size 1)
-
-Additionally fix a typo in the documentation for struct uvc_meta_buf.
-
-Reported-by: ionut_n2001@yahoo.com
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216810
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20230213193752.6859-1-thenzl@redhat.com
+Fixes: 42fc9fee116f ("scsi: mpi3mr: Add helper functions to manage device's port")
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_video.c | 4 +++-
- include/uapi/linux/uvcvideo.h     | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_transport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index 53ea225972478..0d3a3b697b2d8 100644
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -1352,7 +1352,9 @@ static void uvc_video_decode_meta(struct uvc_streaming *stream,
- 	if (has_scr)
- 		memcpy(stream->clock.last_scr, scr, 6);
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+index 3fc897336b5e0..3b61815979dab 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+@@ -1280,7 +1280,7 @@ void mpi3mr_sas_host_add(struct mpi3mr_ioc *mrioc)
  
--	memcpy(&meta->length, mem, length);
-+	meta->length = mem[0];
-+	meta->flags  = mem[1];
-+	memcpy(meta->buf, &mem[2], length - 2);
- 	meta_buf->bytesused += length + sizeof(meta->ns) + sizeof(meta->sof);
- 
- 	uvc_dbg(stream->dev, FRAME,
-diff --git a/include/uapi/linux/uvcvideo.h b/include/uapi/linux/uvcvideo.h
-index 8288137387c0d..a9d0a64007ba5 100644
---- a/include/uapi/linux/uvcvideo.h
-+++ b/include/uapi/linux/uvcvideo.h
-@@ -86,7 +86,7 @@ struct uvc_xu_control_query {
-  * struct. The first two fields are added by the driver, they can be used for
-  * clock synchronisation. The rest is an exact copy of a UVC payload header.
-  * Only complete objects with complete buffers are included. Therefore it's
-- * always sizeof(meta->ts) + sizeof(meta->sof) + meta->length bytes large.
-+ * always sizeof(meta->ns) + sizeof(meta->sof) + meta->length bytes large.
-  */
- struct uvc_meta_buf {
- 	__u64 ns;
+ 	if (mrioc->sas_hba.enclosure_handle) {
+ 		if (!(mpi3mr_cfg_get_enclosure_pg0(mrioc, &ioc_status,
+-		    &encl_pg0, sizeof(dev_pg0),
++		    &encl_pg0, sizeof(encl_pg0),
+ 		    MPI3_ENCLOS_PGAD_FORM_HANDLE,
+ 		    mrioc->sas_hba.enclosure_handle)) &&
+ 		    (ioc_status == MPI3_IOCSTATUS_SUCCESS))
 -- 
 2.39.2
 
