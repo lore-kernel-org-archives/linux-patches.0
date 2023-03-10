@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28E28481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:02:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588CBC433EF;
-	Fri, 10 Mar 2023 14:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798418481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:02:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A99C433EF;
+	Fri, 10 Mar 2023 14:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456923;
-	bh=l/7rep5Vw4wUyxCxHBOzvipVYHawSAdC9kuA8/SsFyg=;
+	s=korg; t=1678456926;
+	bh=uyxFHVNf5vtn8pWkum9VdF0p4lE4oPAAwoZvnSf5epk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EnaVeMhfcJaeKnhhwYTs/UxW9CgooQnQ8q6xh9T0fm9tfDmostqLbHk65kWnt2aTK
-	 QwQIrKdP2zVBGRbTZ/PQSXFsi550tbDOg0wU+frOyTVjstaZEyzQSnrUleJ3H28kXB
-	 ihz0HTAsFylYMQeThXYngLsBxhkjv7wwfbLBaoUY=
+	b=ZArwvXaCwU9H+jjvkBGd6iZ+3Xujuh3P+kgFq9MU5b+yH8LKfWRz8mZvpBI1ei9AQ
+	 CMnRKSgKEKLPTHVK2v3htccOij8P7S29+qx/nUCF85/zrBHEhYpgCgHq2cF67Wih42
+	 VX69LC8gOwJPtqpPUNd/SDDFNOYMkIMpmbh5RKMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sherry Sun <sherry.sun@nxp.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Daniel Scally <dan.scally@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 144/211] tty: serial: fsl_lpuart: disable the CTS when send break signal
-Date: Fri, 10 Mar 2023 14:38:44 +0100
-Message-Id: <20230310133723.114636048@linuxfoundation.org>
+Subject: [PATCH 6.2 171/211] usb: uvc: Enumerate valid values for color matching
+Date: Fri, 10 Mar 2023 14:39:11 +0100
+Message-Id: <20230310133723.987324026@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -34,74 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Daniel Scally <dan.scally@ideasonboard.com>
 
-[ Upstream commit c4c81db5cf8bc53d6160c3abf26d382c841aa434 ]
+[ Upstream commit e16cab9c1596e251761d2bfb5e1467950d616963 ]
 
-LPUART IP has a bug that it treats the CTS as higher priority than the
-break signal, which cause the break signal sending through UARTCTRL_SBK
-may impacted by the CTS input if the HW flow control is enabled.
+The color matching descriptors defined in the UVC Specification
+contain 3 fields with discrete numeric values representing particular
+settings. Enumerate those values so that later code setting them can
+be more readable.
 
-Add this workaround patch to fix the IP bug, we can disable CTS before
-asserting SBK to avoid any interference from CTS, and re-enable it when
-break off.
-
-Such as for the bluetooth chip power save feature, host can let the BT
-chip get into sleep state by sending a UART break signal, and wake it up
-by turning off the UART break. If the BT chip enters the sleep mode
-successfully, it will pull up the CTS line, if the BT chip is woken up,
-it will pull down the CTS line. If without this workaround patch, the
-UART TX pin cannot send the break signal successfully as it affected by
-the BT CTS pin. After adding this patch, the BT power save feature can
-work well.
-
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Link: https://lore.kernel.org/r/20221214031137.28815-2-sherry.sun@nxp.com
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Daniel Scally <dan.scally@ideasonboard.com>
+Link: https://lore.kernel.org/r/20230202114142.300858-2-dan.scally@ideasonboard.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ include/uapi/linux/usb/video.h | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index 23910ac724b11..b136c596fe6ae 100644
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -1462,12 +1462,32 @@ static void lpuart_break_ctl(struct uart_port *port, int break_state)
+diff --git a/include/uapi/linux/usb/video.h b/include/uapi/linux/usb/video.h
+index 6e8e572c2980a..2ff0e8a3a683d 100644
+--- a/include/uapi/linux/usb/video.h
++++ b/include/uapi/linux/usb/video.h
+@@ -179,6 +179,36 @@
+ #define UVC_CONTROL_CAP_AUTOUPDATE			(1 << 3)
+ #define UVC_CONTROL_CAP_ASYNCHRONOUS			(1 << 4)
  
- static void lpuart32_break_ctl(struct uart_port *port, int break_state)
- {
--	unsigned long temp;
-+	unsigned long temp, modem;
-+	struct tty_struct *tty;
-+	unsigned int cflag = 0;
++/* 3.9.2.6 Color Matching Descriptor Values */
++enum uvc_color_primaries_values {
++	UVC_COLOR_PRIMARIES_UNSPECIFIED,
++	UVC_COLOR_PRIMARIES_BT_709_SRGB,
++	UVC_COLOR_PRIMARIES_BT_470_2_M,
++	UVC_COLOR_PRIMARIES_BT_470_2_B_G,
++	UVC_COLOR_PRIMARIES_SMPTE_170M,
++	UVC_COLOR_PRIMARIES_SMPTE_240M,
++};
 +
-+	tty = tty_port_tty_get(&port->state->port);
-+	if (tty) {
-+		cflag = tty->termios.c_cflag;
-+		tty_kref_put(tty);
-+	}
- 
- 	temp = lpuart32_read(port, UARTCTRL) & ~UARTCTRL_SBK;
-+	modem = lpuart32_read(port, UARTMODIR);
- 
--	if (break_state != 0)
-+	if (break_state != 0) {
- 		temp |= UARTCTRL_SBK;
-+		/*
-+		 * LPUART CTS has higher priority than SBK, need to disable CTS before
-+		 * asserting SBK to avoid any interference if flow control is enabled.
-+		 */
-+		if (cflag & CRTSCTS && modem & UARTMODIR_TXCTSE)
-+			lpuart32_write(port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
-+	} else {
-+		/* Re-enable the CTS when break off. */
-+		if (cflag & CRTSCTS && !(modem & UARTMODIR_TXCTSE))
-+			lpuart32_write(port, modem | UARTMODIR_TXCTSE, UARTMODIR);
-+	}
- 
- 	lpuart32_write(port, temp, UARTCTRL);
- }
++enum uvc_transfer_characteristics_values {
++	UVC_TRANSFER_CHARACTERISTICS_UNSPECIFIED,
++	UVC_TRANSFER_CHARACTERISTICS_BT_709,
++	UVC_TRANSFER_CHARACTERISTICS_BT_470_2_M,
++	UVC_TRANSFER_CHARACTERISTICS_BT_470_2_B_G,
++	UVC_TRANSFER_CHARACTERISTICS_SMPTE_170M,
++	UVC_TRANSFER_CHARACTERISTICS_SMPTE_240M,
++	UVC_TRANSFER_CHARACTERISTICS_LINEAR,
++	UVC_TRANSFER_CHARACTERISTICS_SRGB,
++};
++
++enum uvc_matrix_coefficients {
++	UVC_MATRIX_COEFFICIENTS_UNSPECIFIED,
++	UVC_MATRIX_COEFFICIENTS_BT_709,
++	UVC_MATRIX_COEFFICIENTS_FCC,
++	UVC_MATRIX_COEFFICIENTS_BT_470_2_B_G,
++	UVC_MATRIX_COEFFICIENTS_SMPTE_170M,
++	UVC_MATRIX_COEFFICIENTS_SMPTE_240M,
++};
++
+ /* ------------------------------------------------------------------------
+  * UVC structures
+  */
 -- 
 2.39.2
 
