@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5892F8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:05:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA68C4339E;
-	Fri, 10 Mar 2023 14:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FAB8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:05:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CE2C433A0;
+	Fri, 10 Mar 2023 14:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457101;
-	bh=CTHlNB3qIZ35ZflIL19XJpoq2a/Zlii4ZXH3ayJ5LC4=;
+	s=korg; t=1678457104;
+	bh=/cjJdSAhUZSONa21kxmpyuZu0v4WVF2y75F+zuJHNfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Svb2jWi//bWSNk0zMgEyxhHm44V4u78aDh8AR0ud1N8jqiZ6SHE9AM/bLs5eiXGXd
-	 BONracgkqU1Ghnbh0w2JhX8LoFeqE6ooYmkoFeHwVLDyHk0IMqFi/tbDE+Q+6hjsQv
-	 WBwkr1GwbuteLyJXNt//cRUYUHEpnB5wkjYQjTfA=
+	b=UpYqhpQTu42ALrBxJewwZ7v2rTiu2kCn50wQrOOtPrLiGRrdriceEX85nKad1GV8Y
+	 E6+IFJj/H4zzR4XxvQot7PlcHxRAps8ojCFRJuKPZb7SahZ8p1+CyoDLDG9sa6JTjX
+	 9xWOG4VEfwQnIqK6R9UrT2IU49LXAUx+tCF9kxZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
-	Eric Biggers <ebiggers@google.com>,
+	Yangtao Li <frank.li@vivo.com>,
+	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 020/200] fs: f2fs: initialize fsdata in pagecache_write()
-Date: Fri, 10 Mar 2023 14:37:07 +0100
-Message-Id: <20230310133717.669483474@linuxfoundation.org>
+Subject: [PATCH 6.1 021/200] f2fs: allow set compression option of files without blocks
+Date: Fri, 10 Mar 2023 14:37:08 +0100
+Message-Id: <20230310133717.698188075@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -37,38 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Potapenko <glider@google.com>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit b1b9896718bc1a212dc288ad66a5fa2fef11353d ]
+[ Upstream commit e6261beb0c629403dc58997294dd521bd23664af ]
 
-When aops->write_begin() does not initialize fsdata, KMSAN may report
-an error passing the latter to aops->write_end().
+Files created by truncate have a size but no blocks, so
+they can be allowed to set compression option.
 
-Fix this by unconditionally initializing fsdata.
-
-Suggested-by: Eric Biggers <ebiggers@kernel.org>
-Fixes: 95ae251fe828 ("f2fs: add fs-verity support")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
+Fixes: e1e8debec656 ("f2fs: add F2FS_IOC_SET_COMPRESS_OPTION ioctl")
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/verity.c | 2 +-
+ fs/f2fs/file.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/verity.c b/fs/f2fs/verity.c
-index c352fff88a5e6..3f4f3295f1c66 100644
---- a/fs/f2fs/verity.c
-+++ b/fs/f2fs/verity.c
-@@ -81,7 +81,7 @@ static int pagecache_write(struct inode *inode, const void *buf, size_t count,
- 		size_t n = min_t(size_t, count,
- 				 PAGE_SIZE - offset_in_page(pos));
- 		struct page *page;
--		void *fsdata;
-+		void *fsdata = NULL;
- 		int res;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 7bb0c05e943cf..88eecd7149cd5 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -3937,7 +3937,7 @@ static int f2fs_ioc_set_compress_option(struct file *filp, unsigned long arg)
+ 		goto out;
+ 	}
  
- 		res = aops->write_begin(NULL, mapping, pos, n, &page, &fsdata);
+-	if (inode->i_size != 0) {
++	if (F2FS_HAS_BLOCKS(inode)) {
+ 		ret = -EFBIG;
+ 		goto out;
+ 	}
 -- 
 2.39.2
 
