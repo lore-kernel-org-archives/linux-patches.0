@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185F08484
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:02:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87052C4339E;
-	Fri, 10 Mar 2023 14:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CF88481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:02:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E870C433EF;
+	Fri, 10 Mar 2023 14:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456972;
-	bh=7++CaNJPou4HECccnvXg20nu6jpxpsYURDpEWgDM21k=;
+	s=korg; t=1678456975;
+	bh=dBTsLu//wPTCybYhpTArSJuGcrqFh0DTD/luHiHMvmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SPoKBSXkIaFhGYqUHCllsVmcBwDaBkjKSi9zagi3oo8qawrMSrSZ6bvCCbZD9DYtk
-	 hK9hczIAzkgLzEHU0kQkyb4mY4ZqU3KpXIe7hX6HKhSlg8V1o8J3rooKIsba2YUNGX
-	 JolxzslZd0lFRLahGoEwhirciYe9aQjdYo4tIEdY=
+	b=RtLngo2DJCXveNfDUEJvcwW7thYuSE6f9eEa3gTTovHP2M23iW0GQ60Zt+vjo7puD
+	 WD2IqKP9Dmoli9juqTBA30OtqiTc70k+51pnryprU0cgY1Mal1dFMQCs8aN60yc6hF
+	 44Q8gMNPSOUSAEsD66sAjOj2aA9VUmbIH1YubsH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9c0268252b8ef967c62e@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.2 189/211] net: tls: avoid hanging tasks on the tx_lock
-Date: Fri, 10 Mar 2023 14:39:29 +0100
-Message-Id: <20230310133724.594421140@linuxfoundation.org>
+	Stephane Eranian <eranian@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Babu Moger <babu.moger@amd.com>,
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.2 190/211] x86/resctl: fix scheduler confusion with current
+Date: Fri, 10 Mar 2023 14:39:30 +0100
+Message-Id: <20230310133724.634254262@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,78 +38,178 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit f3221361dc85d4de22586ce8441ec2c67b454f5d upstream.
+commit 7fef099702527c3b2c5234a2ea6a24411485a13a upstream.
 
-syzbot sent a hung task report and Eric explains that adversarial
-receiver may keep RWIN at 0 for a long time, so we are not guaranteed
-to make forward progress. Thread which took tx_lock and went to sleep
-may not release tx_lock for hours. Use interruptible sleep where
-possible and reschedule the work if it can't take the lock.
+The implementation of 'current' on x86 is very intentionally special: it
+is a very common thing to look up, and it uses 'this_cpu_read_stable()'
+to get the current thread pointer efficiently from per-cpu storage.
 
-Testing: existing selftest passes
+And the keyword in there is 'stable': the current thread pointer never
+changes as far as a single thread is concerned.  Even if when a thread
+is preempted, or moved to another CPU, or even across an explicit call
+'schedule()' that thread will still have the same value for 'current'.
 
-Reported-by: syzbot+9c0268252b8ef967c62e@syzkaller.appspotmail.com
-Fixes: 79ffe6087e91 ("net/tls: add a TX lock")
-Link: https://lore.kernel.org/all/000000000000e412e905f5b46201@google.com/
-Cc: stable@vger.kernel.org # wait 4 weeks
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230301002857.2101894-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+It is, after all, the kernel base pointer to thread-local storage.
+That's why it's stable to begin with, but it's also why it's important
+enough that we have that special 'this_cpu_read_stable()' access for it.
+
+So this is all done very intentionally to allow the compiler to treat
+'current' as a value that never visibly changes, so that the compiler
+can do CSE and combine multiple different 'current' accesses into one.
+
+However, there is obviously one very special situation when the
+currently running thread does actually change: inside the scheduler
+itself.
+
+So the scheduler code paths are special, and do not have a 'current'
+thread at all.  Instead there are _two_ threads: the previous and the
+next thread - typically called 'prev' and 'next' (or prev_p/next_p)
+internally.
+
+So this is all actually quite straightforward and simple, and not all
+that complicated.
+
+Except for when you then have special code that is run in scheduler
+context, that code then has to be aware that 'current' isn't really a
+valid thing.  Did you mean 'prev'? Did you mean 'next'?
+
+In fact, even if then look at the code, and you use 'current' after the
+new value has been assigned to the percpu variable, we have explicitly
+told the compiler that 'current' is magical and always stable.  So the
+compiler is quite free to use an older (or newer) value of 'current',
+and the actual assignment to the percpu storage is not relevant even if
+it might look that way.
+
+Which is exactly what happened in the resctl code, that blithely used
+'current' in '__resctrl_sched_in()' when it really wanted the new
+process state (as implied by the name: we're scheduling 'into' that new
+resctl state).  And clang would end up just using the old thread pointer
+value at least in some configurations.
+
+This could have happened with gcc too, and purely depends on random
+compiler details.  Clang just seems to have been more aggressive about
+moving the read of the per-cpu current_task pointer around.
+
+The fix is trivial: just make the resctl code adhere to the scheduler
+rules of using the prev/next thread pointer explicitly, instead of using
+'current' in a situation where it just wasn't valid.
+
+That same code is then also used outside of the scheduler context (when
+a thread resctl state is explicitly changed), and then we will just pass
+in 'current' as that pointer, of course.  There is no ambiguity in that
+case.
+
+The fix may be trivial, but noticing and figuring out what went wrong
+was not.  The credit for that goes to Stephane Eranian.
+
+Reported-by: Stephane Eranian <eranian@google.com>
+Link: https://lore.kernel.org/lkml/20230303231133.1486085-1-eranian@google.com/
+Link: https://lore.kernel.org/lkml/alpine.LFD.2.01.0908011214330.3304@localhost.localdomain/
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Tony Luck <tony.luck@intel.com>
+Tested-by: Stephane Eranian <eranian@google.com>
+Tested-by: Babu Moger <babu.moger@amd.com>
+Cc: stable@kernel.org
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c |   26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ arch/x86/include/asm/resctrl.h         |   12 ++++++------
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c |    4 ++--
+ arch/x86/kernel/process_32.c           |    2 +-
+ arch/x86/kernel/process_64.c           |    2 +-
+ 4 files changed, 10 insertions(+), 10 deletions(-)
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -941,7 +941,9 @@ int tls_sw_sendmsg(struct sock *sk, stru
- 			       MSG_CMSG_COMPAT))
- 		return -EOPNOTSUPP;
+--- a/arch/x86/include/asm/resctrl.h
++++ b/arch/x86/include/asm/resctrl.h
+@@ -49,7 +49,7 @@ DECLARE_STATIC_KEY_FALSE(rdt_mon_enable_
+  *   simple as possible.
+  * Must be called with preemption disabled.
+  */
+-static void __resctrl_sched_in(void)
++static inline void __resctrl_sched_in(struct task_struct *tsk)
+ {
+ 	struct resctrl_pqr_state *state = this_cpu_ptr(&pqr_state);
+ 	u32 closid = state->default_closid;
+@@ -61,13 +61,13 @@ static void __resctrl_sched_in(void)
+ 	 * Else use the closid/rmid assigned to this cpu.
+ 	 */
+ 	if (static_branch_likely(&rdt_alloc_enable_key)) {
+-		tmp = READ_ONCE(current->closid);
++		tmp = READ_ONCE(tsk->closid);
+ 		if (tmp)
+ 			closid = tmp;
+ 	}
  
--	mutex_lock(&tls_ctx->tx_lock);
-+	ret = mutex_lock_interruptible(&tls_ctx->tx_lock);
-+	if (ret)
-+		return ret;
- 	lock_sock(sk);
- 
- 	if (unlikely(msg->msg_controllen)) {
-@@ -1275,7 +1277,9 @@ int tls_sw_sendpage(struct sock *sk, str
- 		      MSG_SENDPAGE_NOTLAST | MSG_SENDPAGE_NOPOLICY))
- 		return -EOPNOTSUPP;
- 
--	mutex_lock(&tls_ctx->tx_lock);
-+	ret = mutex_lock_interruptible(&tls_ctx->tx_lock);
-+	if (ret)
-+		return ret;
- 	lock_sock(sk);
- 	ret = tls_sw_do_sendpage(sk, page, offset, size, flags);
- 	release_sock(sk);
-@@ -2416,11 +2420,19 @@ static void tx_work_handler(struct work_
- 
- 	if (!test_and_clear_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask))
- 		return;
--	mutex_lock(&tls_ctx->tx_lock);
--	lock_sock(sk);
--	tls_tx_records(sk, -1);
--	release_sock(sk);
--	mutex_unlock(&tls_ctx->tx_lock);
-+
-+	if (mutex_trylock(&tls_ctx->tx_lock)) {
-+		lock_sock(sk);
-+		tls_tx_records(sk, -1);
-+		release_sock(sk);
-+		mutex_unlock(&tls_ctx->tx_lock);
-+	} else if (!test_and_set_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask)) {
-+		/* Someone is holding the tx_lock, they will likely run Tx
-+		 * and cancel the work on their way out of the lock section.
-+		 * Schedule a long delay just in case.
-+		 */
-+		schedule_delayed_work(&ctx->tx_work.work, msecs_to_jiffies(10));
-+	}
+ 	if (static_branch_likely(&rdt_mon_enable_key)) {
+-		tmp = READ_ONCE(current->rmid);
++		tmp = READ_ONCE(tsk->rmid);
+ 		if (tmp)
+ 			rmid = tmp;
+ 	}
+@@ -88,17 +88,17 @@ static inline unsigned int resctrl_arch_
+ 	return val * scale;
  }
  
- static bool tls_is_tx_ready(struct tls_sw_context_tx *ctx)
+-static inline void resctrl_sched_in(void)
++static inline void resctrl_sched_in(struct task_struct *tsk)
+ {
+ 	if (static_branch_likely(&rdt_enable_key))
+-		__resctrl_sched_in();
++		__resctrl_sched_in(tsk);
+ }
+ 
+ void resctrl_cpu_detect(struct cpuinfo_x86 *c);
+ 
+ #else
+ 
+-static inline void resctrl_sched_in(void) {}
++static inline void resctrl_sched_in(struct task_struct *tsk) {}
+ static inline void resctrl_cpu_detect(struct cpuinfo_x86 *c) {}
+ 
+ #endif /* CONFIG_X86_CPU_RESCTRL */
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -314,7 +314,7 @@ static void update_cpu_closid_rmid(void
+ 	 * executing task might have its own closid selected. Just reuse
+ 	 * the context switch code.
+ 	 */
+-	resctrl_sched_in();
++	resctrl_sched_in(current);
+ }
+ 
+ /*
+@@ -535,7 +535,7 @@ static void _update_task_closid_rmid(voi
+ 	 * Otherwise, the MSR is updated when the task is scheduled in.
+ 	 */
+ 	if (task == current)
+-		resctrl_sched_in();
++		resctrl_sched_in(task);
+ }
+ 
+ static void update_task_closid_rmid(struct task_struct *t)
+--- a/arch/x86/kernel/process_32.c
++++ b/arch/x86/kernel/process_32.c
+@@ -212,7 +212,7 @@ __switch_to(struct task_struct *prev_p,
+ 	switch_fpu_finish();
+ 
+ 	/* Load the Intel cache allocation PQR MSR. */
+-	resctrl_sched_in();
++	resctrl_sched_in(next_p);
+ 
+ 	return prev_p;
+ }
+--- a/arch/x86/kernel/process_64.c
++++ b/arch/x86/kernel/process_64.c
+@@ -656,7 +656,7 @@ __switch_to(struct task_struct *prev_p,
+ 	}
+ 
+ 	/* Load the Intel cache allocation PQR MSR. */
+-	resctrl_sched_in();
++	resctrl_sched_in(next_p);
+ 
+ 	return prev_p;
+ }
 
 
