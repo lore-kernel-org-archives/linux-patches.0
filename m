@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A40F846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F754C4339E;
-	Fri, 10 Mar 2023 14:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0936C846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82593C433D2;
+	Fri, 10 Mar 2023 14:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458728;
-	bh=s8yHcZVaOQAgNvPpDAMqPZSYcjHwohxvjb96+RbeQL4=;
+	s=korg; t=1678458730;
+	bh=zz/PTPwM8i//+kMyOt9rE7zmlKll+ty7ismdgbou/WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGslZ2nR0GyGHpBHE8/d9NfwDpmiLF2ecSnwnmw3UdbSqvTutpWsrPaq5N+kZB8Bo
-	 6t2Z2bdKLcHSNIw4n9d5833lmVMRxKVwANp0GTg8EHaWF12MfqIs4dMrAxWSIiNBis
-	 LxoizxikfagTRsT2mya/i6dLtoXt5gCTcXYZmcXE=
+	b=U5DOJNOvou+Vrmt44sxFL3y5+8ZyGKPUmKnlt8k1VrX7mCoFIQJRaVhiEw7wb0NaG
+	 OAKeRIPaf6my2taiFdQRv6vPqnSZhUGf/OrYFQpTcLlEVzl17ph7OdAFB1995/hPgU
+	 OIPwIX8USnX+8n+I1jiNoXa8TJg6xB3bZP7Ox6+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miles Chen <miles.chen@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 117/357] drm/mediatek: Use NULL instead of 0 for NULL pointer
-Date: Fri, 10 Mar 2023 14:36:46 +0100
-Message-Id: <20230310133739.837032905@linuxfoundation.org>
+Subject: [PATCH 5.4 126/357] hwmon: (mlxreg-fan) Return zero speed for broken fan
+Date: Fri, 10 Mar 2023 14:36:55 +0100
+Message-Id: <20230310133740.225112835@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,35 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miles Chen <miles.chen@mediatek.com>
+From: Vadim Pasternak <vadimp@nvidia.com>
 
-[ Upstream commit 4744cde06f57dd6fbaac468663b1fe2f653eaa16 ]
+[ Upstream commit a1ffd3c46267ee5c807acd780e15df9bb692223f ]
 
-Use NULL for NULL pointer to fix the following sparse warning:
-drivers/gpu/drm/mediatek/mtk_drm_gem.c:265:27: sparse: warning: Using plain integer as NULL pointer
+Currently for broken fan driver returns value calculated based on error
+code (0xFF) in related fan speed register.
+Thus, for such fan user gets fan{n}_fault to 1 and fan{n}_input with
+misleading value.
 
-Fixes: 3df64d7b0a4f ("drm/mediatek: Implement gem prime vmap/vunmap function")
-Signed-off-by: Miles Chen <miles.chen@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20230111024443.24559-1-miles.chen@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Add check for fan fault prior return speed value and return zero if
+fault is detected.
+
+Fixes: 65afb4c8e7e4 ("hwmon: (mlxreg-fan) Add support for Mellanox FAN driver")
+Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
+Link: https://lore.kernel.org/r/20230212145730.24247-1-vadimp@nvidia.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_gem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/mlxreg-fan.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-index b04a3c2b111e0..7ff6de44a9fa8 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-@@ -284,6 +284,6 @@ void mtk_drm_gem_prime_vunmap(struct drm_gem_object *obj, void *vaddr)
- 		return;
+diff --git a/drivers/hwmon/mlxreg-fan.c b/drivers/hwmon/mlxreg-fan.c
+index bd8f5a3aaad9c..052c897a635d5 100644
+--- a/drivers/hwmon/mlxreg-fan.c
++++ b/drivers/hwmon/mlxreg-fan.c
+@@ -127,6 +127,12 @@ mlxreg_fan_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+ 			if (err)
+ 				return err;
  
- 	vunmap(vaddr);
--	mtk_gem->kvaddr = 0;
-+	mtk_gem->kvaddr = NULL;
- 	kfree(mtk_gem->pages);
- }
++			if (MLXREG_FAN_GET_FAULT(regval, tacho->mask)) {
++				/* FAN is broken - return zero for FAN speed. */
++				*val = 0;
++				return 0;
++			}
++
+ 			*val = MLXREG_FAN_GET_RPM(regval, fan->divider,
+ 						  fan->samples);
+ 			break;
 -- 
 2.39.2
 
