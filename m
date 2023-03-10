@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15064881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:44:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801B4C433D2;
-	Fri, 10 Mar 2023 14:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12634881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:44:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689C3C4339E;
+	Fri, 10 Mar 2023 14:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459446;
-	bh=Q3Ccn6+avdyZUjRwNngl/J8lBc5dVmMZBvEgw2ByqrM=;
+	s=korg; t=1678459449;
+	bh=51J+DjP2V28KQkpv+0RnHKAwsuKzvMf0gOMfTNDOJzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hzh5Xqx/Q3qYIpZOtl/qASD8phhB92K/5rJX5rpdK9qihOlUGPl9jzPVre4TONJdC
-	 ymh/eqsrF2RnPDooD/oxOXKnMqJNthlt+pJZKLzTwHxD25HodKVILS0xwCzcqVTLmg
-	 GOsezFHZwdyzpPFXb4tj/azFir0FquFzEqHS173s=
+	b=xlmot18N8czmUbsViD1jQPVxJAHRTQu5t2Ps7fYhAEUb+2WyzoMPpZE/vN4w9m+EX
+	 SW39L79VmRGjGCmRswhgyUTNesrq5uOVjBtX/5YkAQAxcFgkF9+JUUNC++gnIUeB8o
+	 Cp7NnQlOb+7TozC6sp/K1uyL2YQvX5ZyFOGcb15o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Maxime Ripard <maxime@cerno.tech>,
-	Jernej Skrabec <jernej.skrabec@siol.net>,
-	Chen-Yu Tsai <wens@csie.org>
-Subject: [PATCH 5.4 357/357] dt-bindings: rtc: sun6i-a31-rtc: Loosen the requirements on the clocks
-Date: Fri, 10 Mar 2023 14:40:46 +0100
-Message-Id: <20230310133750.431080818@linuxfoundation.org>
+	Valentin Schneider <valentin.schneider@arm.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Borislav Petkov <bp@suse.de>
+Subject: [PATCH 5.4 350/357] x86/resctrl: Apply READ_ONCE/WRITE_ONCE to task_struct.{rmid,closid}
+Date: Fri, 10 Mar 2023 14:40:39 +0100
+Message-Id: <20230310133750.112162762@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,34 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxime Ripard <maxime@cerno.tech>
+From: Valentin Schneider <valentin.schneider@arm.com>
 
-commit 48b47749e334b3891f33b9425b470a3c92be8dae upstream.
+commit 6d3b47ddffed70006cf4ba360eef61e9ce097d8f upstream.
 
-The commit ec98a87509f4 ("rtc: sun6i: Make external 32k oscillator
-optional") loosened the requirement of the clocks property, making it
-optional. However, the binding still required it to be present.
+A CPU's current task can have its {closid, rmid} fields read locally
+while they are being concurrently written to from another CPU.
+This can happen anytime __resctrl_sched_in() races with either
+__rdtgroup_move_task() or rdt_move_group_tasks().
 
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Fixes: ec98a87509f4 ("rtc: sun6i: Make external 32k oscillator optional")
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Acked-by: Jernej Skrabec <jernej.skrabec@siol.net>
-Acked-by: Chen-Yu Tsai <wens@csie.org>
-Link: https://lore.kernel.org/r/20210114113538.1233933-3-maxime@cerno.tech
+Prevent load / store tearing for those accesses by giving them the
+READ_ONCE() / WRITE_ONCE() treatment.
+
+Signed-off-by: Valentin Schneider <valentin.schneider@arm.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Link: https://lkml.kernel.org/r/9921fda88ad81afb9885b517fbe864a2bc7c35a9.1608243147.git.reinette.chatre@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml |    1 -
- 1 file changed, 1 deletion(-)
+ arch/x86/include/asm/resctrl_sched.h   |   11 +++++++----
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c |   10 +++++-----
+ 2 files changed, 12 insertions(+), 9 deletions(-)
 
---- a/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml
-@@ -128,7 +128,6 @@ required:
-   - compatible
-   - reg
-   - interrupts
--  - clocks
-   - clock-output-names
+--- a/arch/x86/include/asm/resctrl_sched.h
++++ b/arch/x86/include/asm/resctrl_sched.h
+@@ -56,19 +56,22 @@ static void __resctrl_sched_in(void)
+ 	struct resctrl_pqr_state *state = this_cpu_ptr(&pqr_state);
+ 	u32 closid = state->default_closid;
+ 	u32 rmid = state->default_rmid;
++	u32 tmp;
  
- additionalProperties: false
+ 	/*
+ 	 * If this task has a closid/rmid assigned, use it.
+ 	 * Else use the closid/rmid assigned to this cpu.
+ 	 */
+ 	if (static_branch_likely(&rdt_alloc_enable_key)) {
+-		if (current->closid)
+-			closid = current->closid;
++		tmp = READ_ONCE(current->closid);
++		if (tmp)
++			closid = tmp;
+ 	}
+ 
+ 	if (static_branch_likely(&rdt_mon_enable_key)) {
+-		if (current->rmid)
+-			rmid = current->rmid;
++		tmp = READ_ONCE(current->rmid);
++		if (tmp)
++			rmid = tmp;
+ 	}
+ 
+ 	if (closid != state->cur_closid || rmid != state->cur_rmid) {
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -563,11 +563,11 @@ static int __rdtgroup_move_task(struct t
+ 	 */
+ 
+ 	if (rdtgrp->type == RDTCTRL_GROUP) {
+-		tsk->closid = rdtgrp->closid;
+-		tsk->rmid = rdtgrp->mon.rmid;
++		WRITE_ONCE(tsk->closid, rdtgrp->closid);
++		WRITE_ONCE(tsk->rmid, rdtgrp->mon.rmid);
+ 	} else if (rdtgrp->type == RDTMON_GROUP) {
+ 		if (rdtgrp->mon.parent->closid == tsk->closid) {
+-			tsk->rmid = rdtgrp->mon.rmid;
++			WRITE_ONCE(tsk->rmid, rdtgrp->mon.rmid);
+ 		} else {
+ 			rdt_last_cmd_puts("Can't move task to different control group\n");
+ 			return -EINVAL;
+@@ -2177,8 +2177,8 @@ static void rdt_move_group_tasks(struct
+ 	for_each_process_thread(p, t) {
+ 		if (!from || is_closid_match(t, from) ||
+ 		    is_rmid_match(t, from)) {
+-			t->closid = to->closid;
+-			t->rmid = to->mon.rmid;
++			WRITE_ONCE(t->closid, to->closid);
++			WRITE_ONCE(t->rmid, to->mon.rmid);
+ 
+ 			/*
+ 			 * Order the closid/rmid stores above before the loads
 
 
