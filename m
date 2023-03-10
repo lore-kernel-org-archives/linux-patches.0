@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163EA882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:09:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5E9C433D2;
-	Fri, 10 Mar 2023 15:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75C7882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:09:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D4BC433EF;
+	Fri, 10 Mar 2023 15:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460985;
-	bh=UPGqe62O/SR5F0hAdEN40U4Y8B6sp7Ziq1NEsyzcAl4=;
+	s=korg; t=1678460988;
+	bh=qwgSiQi+P2JY9PnHNYVZtOzSuxZMAtqCMIQ8HVYiqYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jdb/HjlWHQw/UWVo1cWKsGSU5faRXflpYoHGJElOlxXe0krljrpe2PdHpwz0Ks77d
-	 lnp0QeAUHKRbzM6ArQUyo1E24u2GrbFU/cem8rY3pO38bqtLkWjIgo0wgk6kti6dWw
-	 F6jswFmAKydpUmjECPEH+CdyU+sQWFp06nMwPnGk=
+	b=j+LV0c9rwEBFoPRvWWRH79Mwrbf+tO5Sp3AUY90VRrO6lDazd+f3oTAlxVS/0EWLX
+	 Urv5SUAc6Cl1/R94Cc//psuMh824bSPzaWjygw+gl138H7xDRRgtjvvLOyrUdKmoy2
+	 kEaxZ+7nT1qwlpOdkz+Ob6RTe4Hny2rVi5ZJSrG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nguyen Dinh Phi <phind.uet@gmail.com>,
-	syzbot+4c4ffd1e1094dae61035@syzkaller.appspotmail.com,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>
-Subject: [PATCH 5.10 518/529] Bluetooth: hci_sock: purge socket queues in the destruct() callback
-Date: Fri, 10 Mar 2023 14:41:01 +0100
-Message-Id: <20230310133828.833039951@linuxfoundation.org>
+	Winter <winter@winter.cafe>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>
+Subject: [PATCH 5.10 519/529] tcp: Fix listen() regression in 5.10.163
+Date: Fri, 10 Mar 2023 14:41:02 +0100
+Message-Id: <20230310133828.873199694@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,60 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nguyen Dinh Phi <phind.uet@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 709fca500067524381e28a5f481882930eebac88 upstream.
+commit fdaf88531cfd17b2a710cceb3141ef6f9085ff40 upstream.
 
-The receive path may take the socket right before hci_sock_release(),
-but it may enqueue the packets to the socket queues after the call to
-skb_queue_purge(), therefore the socket can be destroyed without clear
-its queues completely.
+When we backport dadd0dcaa67d ("net/ulp: prevent ULP without clone op from
+entering the LISTEN status"), we have accidentally backported a part of
+7a7160edf1bf ("net: Return errno in sk->sk_prot->get_port().") and removed
+err = -EADDRINUSE in inet_csk_listen_start().
 
-Moving these skb_queue_purge() to the hci_sock_destruct() will fix this
-issue, because nothing is referencing the socket at this point.
+Thus, listen() no longer returns -EADDRINUSE even if ->get_port() failed
+as reported in [0].
 
-Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
-Reported-by: syzbot+4c4ffd1e1094dae61035@syzkaller.appspotmail.com
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+We set -EADDRINUSE to err just before ->get_port() to fix the regression.
+
+[0]: https://lore.kernel.org/stable/EF8A45D0-768A-4CD5-9A8A-0FA6E610ABF7@winter.cafe/
+
+Reported-by: Winter <winter@winter.cafe>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sock.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/ipv4/inet_connection_sock.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/bluetooth/hci_sock.c
-+++ b/net/bluetooth/hci_sock.c
-@@ -888,10 +888,6 @@ static int hci_sock_release(struct socke
- 	}
- 
- 	sock_orphan(sk);
--
--	skb_queue_purge(&sk->sk_receive_queue);
--	skb_queue_purge(&sk->sk_write_queue);
--
- 	release_sock(sk);
- 	sock_put(sk);
- 	return 0;
-@@ -2012,6 +2008,12 @@ done:
- 	return err;
- }
- 
-+static void hci_sock_destruct(struct sock *sk)
-+{
-+	skb_queue_purge(&sk->sk_receive_queue);
-+	skb_queue_purge(&sk->sk_write_queue);
-+}
-+
- static const struct proto_ops hci_sock_ops = {
- 	.family		= PF_BLUETOOTH,
- 	.owner		= THIS_MODULE,
-@@ -2065,6 +2067,7 @@ static int hci_sock_create(struct net *n
- 
- 	sock->state = SS_UNCONNECTED;
- 	sk->sk_state = BT_OPEN;
-+	sk->sk_destruct = hci_sock_destruct;
- 
- 	bt_sock_link(&hci_sk_list, sk);
- 	return 0;
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -946,6 +946,7 @@ int inet_csk_listen_start(struct sock *s
+ 	 * It is OK, because this socket enters to hash table only
+ 	 * after validation is complete.
+ 	 */
++	err = -EADDRINUSE;
+ 	inet_sk_state_store(sk, TCP_LISTEN);
+ 	if (!sk->sk_prot->get_port(sk, inet->inet_num)) {
+ 		inet->inet_sport = htons(inet->inet_num);
 
 
