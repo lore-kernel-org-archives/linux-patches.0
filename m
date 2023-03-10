@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78DE847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D937C433D2;
-	Fri, 10 Mar 2023 13:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E740C847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 383AEC433D2;
+	Fri, 10 Mar 2023 13:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456443;
-	bh=tGZrE5RsUHxyVgFh8Oclc0pNwUCohNtA6FkoIdw5jDY=;
+	s=korg; t=1678456446;
+	bh=bcLPaxuokOnaXrN3ygeCigG14iYLUkS//iXeTSdnWmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GWduGGQXrnMixpmhp0qGwMyqOX4ewzs1+bLAqu8XzrWTkaOMr12CXcpNz29pa95Ru
-	 NOFoezWUZ0TzpVIvM3z1o+Ev0BJP4o9X7GXJbtlQ8m1nf8UmCzVvJEG7POQBPLpLWK
-	 a9n7hgGFS3LtFpmdim3mGlfKOnQtscAzTsWaVFnM=
+	b=tl2zhEDEWgaAe6OwK8nP0XRP+ScL7QalyMPxx9b87Vg/Re4+E3t/hTA7hccuSj9+s
+	 2t0pX0hi7x9PASnTlQd6eaciLGMVFH9AK+O2PW3LNmKnSHRqzVKdxXYyniBYahLC6+
+	 Vqux/0swDtjW1K21hjmgP+gZIubKCmKpTjw6IPIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Frederick Lawler <fred@cloudflare.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Brian King <brking@linux.vnet.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 174/193] tcp: tcp_check_req() can be called from process context
-Date: Fri, 10 Mar 2023 14:39:16 +0100
-Message-Id: <20230310133716.908762655@linuxfoundation.org>
+Subject: [PATCH 4.14 175/193] scsi: ipr: Work around fortify-string warning
+Date: Fri, 10 Mar 2023 14:39:17 +0100
+Message-Id: <20230310133716.938236991@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -36,66 +38,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 580f98cc33a260bb8c6a39ae2921b29586b84fdf ]
+[ Upstream commit ee4e7dfe4ffc9ca50c6875757bd119abfe22b5c5 ]
 
-This is a follow up of commit 0a375c822497 ("tcp: tcp_rtx_synack()
-can be called from process context").
+The ipr_log_vpd_compact() function triggers a fortified memcpy() warning
+about a potential string overflow with all versions of clang:
 
-Frederick Lawler reported another "__this_cpu_add() in preemptible"
-warning caused by the same reason.
+In file included from drivers/scsi/ipr.c:43:
+In file included from include/linux/string.h:254:
+include/linux/fortify-string.h:520:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+                        __write_overflow_field(p_size_field, size);
+                        ^
+include/linux/fortify-string.h:520:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+2 errors generated.
 
-In my former patch I took care of tcp_rtx_synack()
-but forgot that tcp_check_req() also contained some SNMP updates.
+I don't see anything actually wrong with the function, but this is the only
+instance I can reproduce of the fortification going wrong in the kernel at
+the moment, so the easiest solution may be to rewrite the function into
+something that does not trigger the warning.
 
-Note that some parts of tcp_check_req() always run in BH context,
-I added a comment to clarify this.
+Instead of having a combined buffer for vendor/device/serial strings, use
+three separate local variables and just truncate the whitespace
+individually.
 
-Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
-Link: https://lore.kernel.org/netdev/8cd33923-a21d-397c-e46b-2a068c287b03@cloudflare.com/T/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: Frederick Lawler <fred@cloudflare.com>
-Tested-by: Frederick Lawler <fred@cloudflare.com>
-Link: https://lore.kernel.org/r/20230227083336.4153089-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20230214132831.2118392-1-arnd@kernel.org
+Cc: Kees Cook <keescook@chromium.org>
+Fixes: 8cf093e275d0 ("[SCSI] ipr: Improved dual adapter errors")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Acked-by: Brian King <brking@linux.vnet.ibm.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_minisocks.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/scsi/ipr.c | 41 +++++++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index 61584638dba7f..21fe6f6a0e4fe 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -557,6 +557,9 @@ EXPORT_SYMBOL(tcp_create_openreq_child);
-  * validation and inside tcp_v4_reqsk_send_ack(). Can we do better?
+diff --git a/drivers/scsi/ipr.c b/drivers/scsi/ipr.c
+index 86e2d3033a2db..030d26f7d50c8 100644
+--- a/drivers/scsi/ipr.c
++++ b/drivers/scsi/ipr.c
+@@ -1531,23 +1531,22 @@ static void ipr_process_ccn(struct ipr_cmnd *ipr_cmd)
+ }
+ 
+ /**
+- * strip_and_pad_whitespace - Strip and pad trailing whitespace.
+- * @i:		index into buffer
+- * @buf:		string to modify
++ * strip_whitespace - Strip and pad trailing whitespace.
++ * @i:		size of buffer
++ * @buf:	string to modify
   *
-  * We don't need to initialize tmp_opt.sack_ok as we don't use the results
-+ *
-+ * Note: If @fastopen is true, this can be called from process context.
-+ *       Otherwise, this is from BH context.
-  */
+- * This function will strip all trailing whitespace, pad the end
+- * of the string with a single space, and NULL terminate the string.
++ * This function will strip all trailing whitespace and
++ * NUL terminate the string.
+  *
+- * Return value:
+- * 	new length of string
+  **/
+-static int strip_and_pad_whitespace(int i, char *buf)
++static void strip_whitespace(int i, char *buf)
+ {
++	if (i < 1)
++		return;
++	i--;
+ 	while (i && buf[i] == ' ')
+ 		i--;
+-	buf[i+1] = ' ';
+-	buf[i+2] = '\0';
+-	return i + 2;
++	buf[i+1] = '\0';
+ }
  
- struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
-@@ -709,7 +712,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 					  &tcp_rsk(req)->last_oow_ack_time))
- 			req->rsk_ops->send_ack(sk, skb, req);
- 		if (paws_reject)
--			__NET_INC_STATS(sock_net(sk), LINUX_MIB_PAWSESTABREJECTED);
-+			NET_INC_STATS(sock_net(sk), LINUX_MIB_PAWSESTABREJECTED);
- 		return NULL;
- 	}
+ /**
+@@ -1562,19 +1561,21 @@ static int strip_and_pad_whitespace(int i, char *buf)
+ static void ipr_log_vpd_compact(char *prefix, struct ipr_hostrcb *hostrcb,
+ 				struct ipr_vpd *vpd)
+ {
+-	char buffer[IPR_VENDOR_ID_LEN + IPR_PROD_ID_LEN + IPR_SERIAL_NUM_LEN + 3];
+-	int i = 0;
++	char vendor_id[IPR_VENDOR_ID_LEN + 1];
++	char product_id[IPR_PROD_ID_LEN + 1];
++	char sn[IPR_SERIAL_NUM_LEN + 1];
  
-@@ -728,7 +731,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 	 *	   "fourth, check the SYN bit"
- 	 */
- 	if (flg & (TCP_FLAG_RST|TCP_FLAG_SYN)) {
--		__TCP_INC_STATS(sock_net(sk), TCP_MIB_ATTEMPTFAILS);
-+		TCP_INC_STATS(sock_net(sk), TCP_MIB_ATTEMPTFAILS);
- 		goto embryonic_reset;
- 	}
+-	memcpy(buffer, vpd->vpids.vendor_id, IPR_VENDOR_ID_LEN);
+-	i = strip_and_pad_whitespace(IPR_VENDOR_ID_LEN - 1, buffer);
++	memcpy(vendor_id, vpd->vpids.vendor_id, IPR_VENDOR_ID_LEN);
++	strip_whitespace(IPR_VENDOR_ID_LEN, vendor_id);
  
+-	memcpy(&buffer[i], vpd->vpids.product_id, IPR_PROD_ID_LEN);
+-	i = strip_and_pad_whitespace(i + IPR_PROD_ID_LEN - 1, buffer);
++	memcpy(product_id, vpd->vpids.product_id, IPR_PROD_ID_LEN);
++	strip_whitespace(IPR_PROD_ID_LEN, product_id);
+ 
+-	memcpy(&buffer[i], vpd->sn, IPR_SERIAL_NUM_LEN);
+-	buffer[IPR_SERIAL_NUM_LEN + i] = '\0';
++	memcpy(sn, vpd->sn, IPR_SERIAL_NUM_LEN);
++	strip_whitespace(IPR_SERIAL_NUM_LEN, sn);
+ 
+-	ipr_hcam_err(hostrcb, "%s VPID/SN: %s\n", prefix, buffer);
++	ipr_hcam_err(hostrcb, "%s VPID/SN: %s %s %s\n", prefix,
++		     vendor_id, product_id, sn);
+ }
+ 
+ /**
 -- 
 2.39.2
 
