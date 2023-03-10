@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31751847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:46:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B47CC4339C;
-	Fri, 10 Mar 2023 13:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D81B847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:46:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3EBC433EF;
+	Fri, 10 Mar 2023 13:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456014;
-	bh=kd/SeC9jIRhLgozTPhc7Y7tsg4XYWE5Fr9tTqQgpTjw=;
+	s=korg; t=1678456017;
+	bh=PnFPcGnSqGG/kE3uz3cio9R00rJwc4VZbUG+/gwUNss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xZY0bXf1vQuYgg+OO6MQd/EuCZiZqDSUVkC0wiAD2w83gnsfvO4HWOSFmFUYSAqOv
-	 qLuby9Aue9PJ/nYAW+6QOOt1FJj9PM4IxvYkzBKPEH3qjyXT34MSgObxxRisi9XQnP
-	 bLtjVtuh/Cc9Rq2O9CCnOQA2dQN4BpGbzQYR40Js=
+	b=nDWrelTdkeyhgYh7z0zlTuJBEiHf37M5SO9ijtGraBnCZ9PWmSuySvsKeoiP4DheU
+	 GtMEPgS5o/yfqzkDQcIiOyabNfE6VqT/UWDFVR3ywRHpMertADkxZSVslDIcptiE0u
+	 P4IIw8RBnNgiVnB9utMhE1QUnMoepym/ZZjgIylE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huaweicloud.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Eric Biggers <ebiggers@google.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marek Vasut <marex@denx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 034/193] lib/mpi: Fix buffer overrun when SG is too long
-Date: Fri, 10 Mar 2023 14:36:56 +0100
-Message-Id: <20230310133712.076304590@linuxfoundation.org>
+Subject: [PATCH 4.14 052/193] drm: mxsfb: DRM_MXSFB should depend on ARCH_MXS || ARCH_MXC
+Date: Fri, 10 Mar 2023 14:37:14 +0100
+Message-Id: <20230310133712.732911632@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -36,39 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 7361d1bc307b926cbca214ab67b641123c2d6357 ]
+[ Upstream commit 7783cc67862f9166c901bfa0f80b717aa8d354dd ]
 
-The helper mpi_read_raw_from_sgl sets the number of entries in
-the SG list according to nbytes.  However, if the last entry
-in the SG list contains more data than nbytes, then it may overrun
-the buffer because it only allocates enough memory for nbytes.
+Freescale/NXP i.MX LCDIF and eLCDIF LCD controllers are only present on
+Freescale/NXP i.MX SoCs.  Hence add a dependency on ARCH_MXS ||
+ARCH_MXC, to prevent asking the user about this driver when configuring
+a kernel without Freescale/NXP i.MX support.
 
-Fixes: 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers")
-Reported-by: Roberto Sassu <roberto.sassu@huaweicloud.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 45d59d704080cc0c ("drm: Add new driver for MXSFB controller")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/98e74779ca2bc575d91afff03369e86b080c01ac.1669046358.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/mpi/mpicoder.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/mxsfb/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/lib/mpi/mpicoder.c b/lib/mpi/mpicoder.c
-index eead4b3394668..4f73db248009e 100644
---- a/lib/mpi/mpicoder.c
-+++ b/lib/mpi/mpicoder.c
-@@ -397,7 +397,8 @@ MPI mpi_read_raw_from_sgl(struct scatterlist *sgl, unsigned int nbytes)
- 
- 	while (sg_miter_next(&miter)) {
- 		buff = miter.addr;
--		len = miter.length;
-+		len = min_t(unsigned, miter.length, nbytes);
-+		nbytes -= len;
- 
- 		for (x = 0; x < len; x++) {
- 			a <<= 8;
+diff --git a/drivers/gpu/drm/mxsfb/Kconfig b/drivers/gpu/drm/mxsfb/Kconfig
+index 3ed6849d63cba..1a2805c7a0eb7 100644
+--- a/drivers/gpu/drm/mxsfb/Kconfig
++++ b/drivers/gpu/drm/mxsfb/Kconfig
+@@ -7,6 +7,7 @@ config DRM_MXSFB
+ 	tristate "i.MX23/i.MX28/i.MX6SX MXSFB LCD controller"
+ 	depends on DRM && OF
+ 	depends on COMMON_CLK
++	depends on ARCH_MXS || ARCH_MXC || COMPILE_TEST
+ 	select DRM_MXS
+ 	select DRM_KMS_HELPER
+ 	select DRM_KMS_CMA_HELPER
 -- 
 2.39.2
 
