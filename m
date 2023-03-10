@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAB0848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:22:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762F0C433EF;
-	Fri, 10 Mar 2023 14:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA53848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:22:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71612C4339B;
+	Fri, 10 Mar 2023 14:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458161;
-	bh=YWCsMAj4Y+Ykmv89GZUoCpQZXgbbx4ta0JnN5VKTQaY=;
+	s=korg; t=1678458164;
+	bh=lj+dYBKRFJg7HlK+lf/6wH6J6NCcGZpt7SgN61rWKII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=On6KaYNIAeyUV7da3lAJt97eG1RKTQpcoJh7cmhFiWTy7pVL7xDA9npN4RMY0dZFo
-	 TRdPqAZ2qUiHpsXJASOhgygxvaDGc7J8koikLqLSa8XTy07UQiCFjAbPwInWSTeXA5
-	 rCSymVXaPh4/tO2NH+lfC7XmW3Dc71kr7mCKpDHY=
+	b=Y93btMIOtsdvE7ZnG+Hgy/ZPp16ju1MWPsXiv8l1ScOR+fWrVJs+cCEYj3ZRFKXDw
+	 RwS0soTShwbGjFBOymTuSnLZ4FjjFPLWSkrGpFkcmfr5L28KycIAiaTBkZrNyPnt5G
+	 RwoEDmsyxaG51Xji3dOBajXwJUNfnWNB1lAcIMJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 4.19 183/252] ktest.pl: Give back console on Ctrt^C on monitor
-Date: Fri, 10 Mar 2023 14:39:13 +0100
-Message-Id: <20230310133724.448282485@linuxfoundation.org>
+Subject: [PATCH 4.19 184/252] ktest.pl: Fix missing "end_monitor" when machine check fails
+Date: Fri, 10 Mar 2023 14:39:14 +0100
+Message-Id: <20230310133724.480971754@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -35,34 +35,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 83d29d439cd3ef23041570d55841f814af2ecac0 upstream.
+commit e8bf9b98d40dbdf4e39362e3b85a70c61da68cb7 upstream.
 
-When monitoring the console output, the stdout is being redirected to do
-so. If Ctrl^C is hit during this mode, the stdout is not back to the
-console, the user does not see anything they type (no echo).
+In the "reboot" command, it does a check of the machine to see if it is
+still alive with a simple "ssh echo" command. If it fails, it will assume
+that a normal "ssh reboot" is not possible and force a power cycle.
 
-Add "end_monitor" to the SIGINT interrupt handler to give back the console
-on Ctrl^C.
+In this case, the "start_monitor" is executed, but the "end_monitor" is
+not, and this causes the screen will not be given back to the console. That
+is, after the test, a "reset" command needs to be performed, as "echo" is
+turned off.
 
 Cc: stable@vger.kernel.org
-Fixes: 9f2cdcbbb90e7 ("ktest: Give console process a dedicated tty")
+Fixes: 6474ace999edd ("ktest.pl: Powercycle the box on reboot if no connection can be made")
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/ktest/ktest.pl |    3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/ktest/ktest.pl |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/tools/testing/ktest/ktest.pl
 +++ b/tools/testing/ktest/ktest.pl
-@@ -4243,6 +4243,9 @@ sub send_email {
- }
+@@ -1419,7 +1419,8 @@ sub reboot {
  
- sub cancel_test {
-+    if ($monitor_cnt) {
-+	end_monitor;
+ 	# Still need to wait for the reboot to finish
+ 	wait_for_monitor($time, $reboot_success_line);
+-
 +    }
-     if ($email_when_canceled) {
-         send_email("KTEST: Your [$test_type] test was cancelled",
-                 "Your test started at $script_start_time was cancelled: sig int");
++    if ($powercycle || $time) {
+ 	end_monitor;
+     }
+ }
 
 
