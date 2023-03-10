@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE15847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E6DC433A0;
-	Fri, 10 Mar 2023 13:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA9A847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFECC433EF;
+	Fri, 10 Mar 2023 14:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456798;
-	bh=ZDtaJ+Pku9ltf7LMRyEQSlhtgUUvicAr1sbpy4EFaFg=;
+	s=korg; t=1678456800;
+	bh=YKefre9Jvc6Lxl3JY7rnaim0zfA+qJGhlhH0R3hZHcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lNbnEEXOSojnBj4qYFJ/eZXFtyqkCSKMIHTb8zP3fYWK+uriEOiFRVuLHqIrG9l/U
-	 S1aQKNad4QViUvmgS/eRwI5dOFwFiSmjoYD7uL01z3J5TpVSKbLaa1Fj59lkhbptnz
-	 8d61niMkQlxe3VQOEM6vutEhA7SUEvAoYuLzDfas=
+	b=oWslYoiKKu8hbX6suCukDUGPmppR4qhfPqezqpUAam0GUol/cAStJY9GNrd1ZZYQO
+	 c6f2H7bm8RAIZd+tuvceAZzAdYUuUWlLHZtxJ8Ttb0PVEsGeZLRx9MzzsuA+xZK1ii
+	 /6etZFABBDN2HHvYVjbdlP4HsCURd7elKauq/G3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Wang <zhipeng.wang_1@nxp.com>,
-	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
-	Philippe Schenker <philippe.schenker@toradex.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 110/211] rtc: allow rtc_read_alarm without read_alarm callback
-Date: Fri, 10 Mar 2023 14:38:10 +0100
-Message-Id: <20230310133722.097950529@linuxfoundation.org>
+Subject: [PATCH 6.2 128/211] bootconfig: Increase max nodes of bootconfig from 1024 to 8192 for DCC support
+Date: Fri, 10 Mar 2023 14:38:28 +0100
+Message-Id: <20230310133722.622817997@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -37,38 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+From: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
 
-[ Upstream commit a783c962619271a8b905efad1d89adfec11ae0c8 ]
+[ Upstream commit 6c40624930c58529185a257380442547580ed837 ]
 
-.read_alarm is not necessary to read the current alarm because it is
-recorded in the aie_timer and so rtc_read_alarm() will never call
-rtc_read_alarm_internal() which is the only function calling the callback.
+The Data Capture and Compare(DCC) is a debugging tool that uses the bootconfig
+for configuring the register values during boot-time. Increase the max nodes
+supported by bootconfig to cater to the requirements of the Data Capture and
+Compare Driver.
 
-Reported-by: Zhipeng Wang <zhipeng.wang_1@nxp.com>
-Reported-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
-Fixes: 7ae41220ef58 ("rtc: introduce features bitfield")
-Tested-by: Philippe Schenker <philippe.schenker@toradex.com>
-Link: https://lore.kernel.org/r/20230214222754.582582-1-alexandre.belloni@bootlin.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/all/1674536682-18404-1-git-send-email-quic_schowdhu@quicinc.com/
+
+Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/interface.c | 2 +-
+ include/linux/bootconfig.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/interface.c b/drivers/rtc/interface.c
-index 7c30cb3c764d8..499d89150afc9 100644
---- a/drivers/rtc/interface.c
-+++ b/drivers/rtc/interface.c
-@@ -392,7 +392,7 @@ int rtc_read_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
- 		return err;
- 	if (!rtc->ops) {
- 		err = -ENODEV;
--	} else if (!test_bit(RTC_FEATURE_ALARM, rtc->features) || !rtc->ops->read_alarm) {
-+	} else if (!test_bit(RTC_FEATURE_ALARM, rtc->features)) {
- 		err = -EINVAL;
- 	} else {
- 		memset(alarm, 0, sizeof(struct rtc_wkalrm));
+diff --git a/include/linux/bootconfig.h b/include/linux/bootconfig.h
+index 1611f9db878e7..ca73940e26df8 100644
+--- a/include/linux/bootconfig.h
++++ b/include/linux/bootconfig.h
+@@ -59,7 +59,7 @@ struct xbc_node {
+ /* Maximum size of boot config is 32KB - 1 */
+ #define XBC_DATA_MAX	(XBC_VALUE - 1)
+ 
+-#define XBC_NODE_MAX	1024
++#define XBC_NODE_MAX	8192
+ #define XBC_KEYLEN_MAX	256
+ #define XBC_DEPTH_MAX	16
+ 
 -- 
 2.39.2
 
