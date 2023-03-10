@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6588489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:19:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15289C433D2;
-	Fri, 10 Mar 2023 14:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5BB8489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:19:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656DDC4339C;
+	Fri, 10 Mar 2023 14:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457957;
-	bh=9rDQLbc4tV9PQ/S+MuaaEV0weDjAj9tK7jnoxbpAz6s=;
+	s=korg; t=1678457960;
+	bh=3qZuyZq1wOCuzkHFzySZMLrOvH4xBj1LpMQEorLlC2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2CMLtxT+YFE5Ip7zYDZ0UWyzBtGGjhEidaCKKptQ/MmOp9HViP61esMASTeAQ3qzt
-	 tBtlwWTw/RqJoYzGeDpXN4qm/ldj/R9qIfEg2kPDZT4yxLLNZ0jwbsATWJ08Couv7j
-	 TAFJBPkVEEuY60+pNYD67mVXSyRCs1UQU6ZPFyWs=
+	b=Nz0vw+UAdQMLr04mmF6fQhxrBvI7CrQZlfCeInC68H7ynXceDCzwbpP+qe4DxdPhh
+	 nqPPp5yaNzekdtfNNLAqE7erbIr1yy8MFLzGrE8uDaUWDgybdcLqwzL3T9D5tjLnVf
+	 eixsLY1I8iW0CQqy8rCj/ZeTTr+qAPh8b8qyPWwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	Markuss Broks <markuss.broks@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 115/252] udf: Define EFSCORRUPTED error code
-Date: Fri, 10 Mar 2023 14:38:05 +0100
-Message-Id: <20230310133722.273204344@linuxfoundation.org>
+Subject: [PATCH 4.19 116/252] ARM: dts: exynos: Use Exynos5420 compatible for the MIPI video phy
+Date: Fri, 10 Mar 2023 14:38:06 +0100
+Message-Id: <20230310133722.301605125@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -34,32 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Markuss Broks <markuss.broks@gmail.com>
 
-[ Upstream commit 3d2d7e61553dbcc8ba45201d8ae4f383742c8202 ]
+[ Upstream commit 5d5aa219a790d61cad2c38e1aa32058f16ad2f0b ]
 
-Similarly to other filesystems define EFSCORRUPTED error code for
-reporting internal filesystem corruption.
+For some reason, the driver adding support for Exynos5420 MIPI phy
+back in 2016 wasn't used on Exynos5420, which caused a kernel panic.
+Add the proper compatible for it.
 
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
+Link: https://lore.kernel.org/r/20230121201844.46872-2-markuss.broks@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/udf_sb.h | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/boot/dts/exynos5420.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/udf/udf_sb.h b/fs/udf/udf_sb.h
-index d12e507e9eb2a..aa58173b468fb 100644
---- a/fs/udf/udf_sb.h
-+++ b/fs/udf/udf_sb.h
-@@ -57,6 +57,8 @@
- #define MF_DUPLICATE_MD		0x01
- #define MF_MIRROR_FE_LOADED	0x02
+diff --git a/arch/arm/boot/dts/exynos5420.dtsi b/arch/arm/boot/dts/exynos5420.dtsi
+index aaff158807613..99e2e0b0b9cd4 100644
+--- a/arch/arm/boot/dts/exynos5420.dtsi
++++ b/arch/arm/boot/dts/exynos5420.dtsi
+@@ -530,7 +530,7 @@ dp_phy: dp-video-phy {
+ 		};
  
-+#define EFSCORRUPTED EUCLEAN
-+
- struct udf_meta_data {
- 	__u32	s_meta_file_loc;
- 	__u32	s_mirror_file_loc;
+ 		mipi_phy: mipi-video-phy {
+-			compatible = "samsung,s5pv210-mipi-video-phy";
++			compatible = "samsung,exynos5420-mipi-video-phy";
+ 			syscon = <&pmu_system_controller>;
+ 			#phy-cells = <1>;
+ 		};
 -- 
 2.39.2
 
