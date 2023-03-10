@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E972A8484
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:07:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4C5C4339E;
-	Fri, 10 Mar 2023 14:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB438484
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:07:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D13CC433D2;
+	Fri, 10 Mar 2023 14:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457263;
-	bh=fKMLIisuKxN2IsUu+quvm9sR7r2tdZoEdvnLhOKsPgY=;
+	s=korg; t=1678457266;
+	bh=Bqq13GJ0RrJRkDyXIzePBxHdJWcN/44R6Id0IGAHTZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SfWDx3ZbPcaEThAVcRu8dPebLCkdzl4/TEZnOnZICRL+hnnbp40gAW/8E2kkQEJO4
-	 y7jsLf6PXjHm1h42Z9+yXiamEUFrZYDq6fRvKzDjddo6eAXSyskjKKSQOioiDpjWCO
-	 weJos7CMp0Rxbd5No7+wFxewv9FCN2Tva6o+4pjs=
+	b=Ebiz5l+sf2FRovEzX6W2VjuQWD+EJFZwIHjTf3e2P9f2USXDmvQ1gx2u9QBxUCatt
+	 BlBt0YJCfDEJb4naUadB56cch4OweqBqPoBHX+TdLr/jA/evaLZyEaJ9Xh+k18vJUj
+	 r4MTVBXunERlDcgFk16IkQDG9QqkGGBvtclZAnYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	Krishna Yarlagadda <kyarlagadda@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/200] 9p/rdma: unmap receive dma buffer in rdma_request()/post_recv()
-Date: Fri, 10 Mar 2023 14:38:04 +0100
-Message-Id: <20230310133719.473422804@linuxfoundation.org>
+Subject: [PATCH 6.1 078/200] spi: tegra210-quad: Fix validate combined sequence
+Date: Fri, 10 Mar 2023 14:38:05 +0100
+Message-Id: <20230310133719.501576427@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -37,77 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Krishna Yarlagadda <kyarlagadda@nvidia.com>
 
-[ Upstream commit 74a25e6e916cb57dab4267a96fbe8864ed21abdb ]
+[ Upstream commit 047ee71ae4f412d8819e39e4b08c588fa299cfc2 ]
 
-When down_interruptible() or ib_post_send() failed in rdma_request(),
-receive dma buffer is not unmapped. Add unmap action to error path.
-Also if ib_post_recv() failed in post_recv(), dma buffer is not unmapped.
-Add unmap action to error path.
+Check for non dma transfers that do not fit in FIFO has issue and skips
+combined sequence for Tegra234 & Tegra241 which does not have GPCDMA.
 
-Link: https://lkml.kernel.org/r/20230104020424.611926-1-shaozhengchao@huawei.com
-Fixes: fc79d4b104f0 ("9p: rdma: RDMA Transport Support for 9P")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Fixes: 1b8342cc4a38 ("spi: tegra210-quad: combined sequence mode")
+
+Signed-off-by: Krishna Yarlagadda <kyarlagadda@nvidia.com>
+Link: https://lore.kernel.org/r/20230224164034.56933-1-kyarlagadda@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_rdma.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/spi/spi-tegra210-quad.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/9p/trans_rdma.c b/net/9p/trans_rdma.c
-index e9a830c69058c..29a9292303ea3 100644
---- a/net/9p/trans_rdma.c
-+++ b/net/9p/trans_rdma.c
-@@ -386,6 +386,7 @@ post_recv(struct p9_client *client, struct p9_rdma_context *c)
- 	struct p9_trans_rdma *rdma = client->trans;
- 	struct ib_recv_wr wr;
- 	struct ib_sge sge;
-+	int ret;
+diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
+index 9f356612ba7e5..6498948e150a5 100644
+--- a/drivers/spi/spi-tegra210-quad.c
++++ b/drivers/spi/spi-tegra210-quad.c
+@@ -1297,7 +1297,7 @@ static bool tegra_qspi_validate_cmb_seq(struct tegra_qspi *tqspi,
+ 	if (xfer->len > 4 || xfer->len < 3)
+ 		return false;
+ 	xfer = list_next_entry(xfer, transfer_list);
+-	if (!tqspi->soc_data->has_dma || xfer->len > (QSPI_FIFO_DEPTH << 2))
++	if (!tqspi->soc_data->has_dma && xfer->len > (QSPI_FIFO_DEPTH << 2))
+ 		return false;
  
- 	c->busa = ib_dma_map_single(rdma->cm_id->device,
- 				    c->rc.sdata, client->msize,
-@@ -403,7 +404,12 @@ post_recv(struct p9_client *client, struct p9_rdma_context *c)
- 	wr.wr_cqe = &c->cqe;
- 	wr.sg_list = &sge;
- 	wr.num_sge = 1;
--	return ib_post_recv(rdma->qp, &wr, NULL);
-+
-+	ret = ib_post_recv(rdma->qp, &wr, NULL);
-+	if (ret)
-+		ib_dma_unmap_single(rdma->cm_id->device, c->busa,
-+				    client->msize, DMA_FROM_DEVICE);
-+	return ret;
- 
-  error:
- 	p9_debug(P9_DEBUG_ERROR, "EIO\n");
-@@ -500,7 +506,7 @@ static int rdma_request(struct p9_client *client, struct p9_req_t *req)
- 
- 	if (down_interruptible(&rdma->sq_sem)) {
- 		err = -EINTR;
--		goto send_error;
-+		goto dma_unmap;
- 	}
- 
- 	/* Mark request as `sent' *before* we actually send it,
-@@ -510,11 +516,14 @@ static int rdma_request(struct p9_client *client, struct p9_req_t *req)
- 	WRITE_ONCE(req->status, REQ_STATUS_SENT);
- 	err = ib_post_send(rdma->qp, &wr, NULL);
- 	if (err)
--		goto send_error;
-+		goto dma_unmap;
- 
- 	/* Success */
- 	return 0;
- 
-+dma_unmap:
-+	ib_dma_unmap_single(rdma->cm_id->device, c->busa,
-+			    c->req->tc.size, DMA_TO_DEVICE);
-  /* Handle errors that happened during or while preparing the send: */
-  send_error:
- 	WRITE_ONCE(req->status, REQ_STATUS_ERROR);
+ 	return true;
 -- 
 2.39.2
 
