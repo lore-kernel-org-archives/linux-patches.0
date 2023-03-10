@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF99848E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:27:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0446C4339B;
-	Fri, 10 Mar 2023 14:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65372848D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:27:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB64C433EF;
+	Fri, 10 Mar 2023 14:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458451;
-	bh=CcP5LYOwVFnlVTm+leKXpZ/wLPDpZvvsaX2P0EAwDQo=;
+	s=korg; t=1678458454;
+	bh=f0nVKhNDPzhfCKNRFI3VygVHIA+Vz8P9OjPnVWdO9iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUp0l56lBPzleQNjbAHxCYYuUkipGq3eBCtr+Wv0H22E2edglZXktzsBLaBykoJ3r
-	 A1ciHBeO6G8dLY9brQHVRN7RivGFWZvW5H18v/SKv2sK7MT7zd+W9EXTYuinQYzaLF
-	 kKWgOUV5vDT6gQnL0IN7IxF4f8/q+GuGm6c7LB94=
+	b=LjlD5YIGFcQipe5YUELf7KCc6m9Vl+qtEsfKyN/uf/z8mpDaN8fBrwVKtWmJbZMYe
+	 dX1ASQRNpx8FBs5qQRgZcym3wl+/5XgKm+oIioGEVrMM3CHAzvqvAVWEBr2wjOlAHx
+	 WvfI35Ocwfd1miMVRg0Pm3UWGPLojmJ9/esCMsrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yuan Can <yuancan@huawei.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 031/357] block: bio-integrity: Copy flags when bio_integrity_payload is cloned
-Date: Fri, 10 Mar 2023 14:35:20 +0100
-Message-Id: <20230310133735.388047316@linuxfoundation.org>
+Subject: [PATCH 5.4 032/357] wifi: rsi: Fix memory leak in rsi_coex_attach()
+Date: Fri, 10 Mar 2023 14:35:21 +0100
+Message-Id: <20230310133735.426673563@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -38,42 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin K. Petersen <martin.petersen@oracle.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit b6a4bdcda430e3ca43bbb9cb1d4d4d34ebe15c40 ]
+[ Upstream commit 956fb851a6e19da5ab491e19c1bc323bb2c2cf6f ]
 
-Make sure to copy the flags when a bio_integrity_payload is cloned.
-Otherwise per-I/O properties such as IP checksum flag will not be
-passed down to the HBA driver. Since the integrity buffer is owned by
-the original bio, the BIP_BLOCK_INTEGRITY flag needs to be masked off
-to avoid a double free in the completion path.
+The coex_cb needs to be freed when rsi_create_kthread() failed in
+rsi_coex_attach().
 
-Fixes: aae7df50190a ("block: Integrity checksum flag")
-Fixes: b1f01388574c ("block: Relocate bio integrity flags")
-Reported-by: Saurav Kashyap <skashyap@marvell.com>
-Tested-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://lore.kernel.org/r/20230215171801.21062-1-martin.petersen@oracle.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 2108df3c4b18 ("rsi: add coex support")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221205061441.114632-1-yuancan@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bio-integrity.c | 1 +
+ drivers/net/wireless/rsi/rsi_91x_coex.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/block/bio-integrity.c b/block/bio-integrity.c
-index ec295be93ca0d..247f7c480e662 100644
---- a/block/bio-integrity.c
-+++ b/block/bio-integrity.c
-@@ -424,6 +424,7 @@ int bio_integrity_clone(struct bio *bio, struct bio *bio_src,
- 
- 	bip->bip_vcnt = bip_src->bip_vcnt;
- 	bip->bip_iter = bip_src->bip_iter;
-+	bip->bip_flags = bip_src->bip_flags & ~BIP_BLOCK_INTEGRITY;
- 
+diff --git a/drivers/net/wireless/rsi/rsi_91x_coex.c b/drivers/net/wireless/rsi/rsi_91x_coex.c
+index c8ba148f8c6cf..acf4d8cb4b479 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_coex.c
++++ b/drivers/net/wireless/rsi/rsi_91x_coex.c
+@@ -160,6 +160,7 @@ int rsi_coex_attach(struct rsi_common *common)
+ 			       rsi_coex_scheduler_thread,
+ 			       "Coex-Tx-Thread")) {
+ 		rsi_dbg(ERR_ZONE, "%s: Unable to init tx thrd\n", __func__);
++		kfree(coex_cb);
+ 		return -EINVAL;
+ 	}
  	return 0;
- }
 -- 
 2.39.2
 
