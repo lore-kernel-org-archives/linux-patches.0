@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76D0847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:56:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF7BC433EF;
-	Fri, 10 Mar 2023 13:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A695F847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:56:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0FAC433EF;
+	Fri, 10 Mar 2023 13:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456567;
-	bh=6EYrF6M0qUJmbvXb+T/4fpb0RDE97dt16mHUJG9yEEk=;
+	s=korg; t=1678456570;
+	bh=BtpRRmAwmp+wle9T2F+1zMPKEBYiOKFCztRZkmdwxY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qniAAyZIc3evdZARxF5mcN3mtGqmYLPsz76dVrOZRTSMdVuzrHI3e1b2jf2Z9go47
-	 9/rCDdR4oqpH+fKLKnJHl2YttqCfL0HZHR793iDmhcJrmOK6fSTTwDAki/WGoTX4Wm
-	 34k/FLxDyAS2eUvo5EVityvKmCd7mqQcvYgdZuzM=
+	b=tnZX29Nl2HMA3Pql0YQYZjYvhswTTv4vFXXnIP1arZ5HSaGZm2z+nMNh87jYBY8Hw
+	 fboerDP53AF+gS2xTAmNt2r5kwZM6/vcl3egldvBak4aAW7LLIAArnpyVcHB1OR1vi
+	 GertKBxsqpj6629MiC7zoCngDkWzAhjNvYbmoLiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Roger Lu <roger.lu@mediatek.com>,
 	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 017/211] soc: mediatek: mtk-svs: restore default voltages when svs_init02() fail
-Date: Fri, 10 Mar 2023 14:36:37 +0100
-Message-Id: <20230310133719.260851372@linuxfoundation.org>
+Subject: [PATCH 6.2 018/211] soc: mediatek: mtk-svs: reset svs when svs_resume() fail
+Date: Fri, 10 Mar 2023 14:36:38 +0100
+Message-Id: <20230310133719.290234390@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -37,76 +37,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Roger Lu <roger.lu@mediatek.com>
 
-[ Upstream commit a0674cd237fc24b08c7dcb4f8e48df3ee769293a ]
+[ Upstream commit f4f8ad204a15d57c1a3e8ea7eca62157b44cbf59 ]
 
-If svs init02 fail, it means we cannot rely on svs bank voltages anymore.
-We need to disable svs function and restore DVFS opp voltages back to the
-default voltages for making sure we have enough DVFS voltages.
+Add svs reset when svs_resume() fail.
 
-Fixes: 681a02e95000 ("soc: mediatek: SVS: introduce MTK SVS engine")
-Fixes: 0bbb09b2af9d ("soc: mediatek: SVS: add mt8192 SVS GPU driver")
+Fixes: a825d72f74a3 ("soc: mediatek: fix missing clk_disable_unprepare() on err in svs_resume()")
 Signed-off-by: Roger Lu <roger.lu@mediatek.com>
-Link: https://lore.kernel.org/r/20230111074528.29354-2-roger.lu@mediatek.com
+Link: https://lore.kernel.org/r/20230111074528.29354-3-roger.lu@mediatek.com
 Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/mediatek/mtk-svs.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ drivers/soc/mediatek/mtk-svs.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/soc/mediatek/mtk-svs.c b/drivers/soc/mediatek/mtk-svs.c
-index 75b2f534aa9d0..9859e6cf6b8f9 100644
+index 9859e6cf6b8f9..e0b8aa75c84b6 100644
 --- a/drivers/soc/mediatek/mtk-svs.c
 +++ b/drivers/soc/mediatek/mtk-svs.c
-@@ -1461,6 +1461,7 @@ static int svs_init02(struct svs_platform *svsp)
- {
- 	struct svs_bank *svsb;
- 	unsigned long flags, time_left;
-+	int ret;
- 	u32 idx;
+@@ -1614,12 +1614,16 @@ static int svs_resume(struct device *dev)
  
- 	for (idx = 0; idx < svsp->bank_max; idx++) {
-@@ -1479,7 +1480,8 @@ static int svs_init02(struct svs_platform *svsp)
- 							msecs_to_jiffies(5000));
- 		if (!time_left) {
- 			dev_err(svsb->dev, "init02 completion timeout\n");
--			return -EBUSY;
-+			ret = -EBUSY;
-+			goto out_of_init02;
- 		}
- 	}
+ 	ret = svs_init02(svsp);
+ 	if (ret)
+-		goto out_of_resume;
++		goto svs_resume_reset_assert;
  
-@@ -1497,12 +1499,30 @@ static int svs_init02(struct svs_platform *svsp)
- 		if (svsb->type == SVSB_HIGH || svsb->type == SVSB_LOW) {
- 			if (svs_sync_bank_volts_from_opp(svsb)) {
- 				dev_err(svsb->dev, "sync volt fail\n");
--				return -EPERM;
-+				ret = -EPERM;
-+				goto out_of_init02;
- 			}
- 		}
- 	}
+ 	svs_mon_mode(svsp);
  
  	return 0;
-+
-+out_of_init02:
-+	for (idx = 0; idx < svsp->bank_max; idx++) {
-+		svsb = &svsp->banks[idx];
-+
-+		spin_lock_irqsave(&svs_lock, flags);
-+		svsp->pbank = svsb;
-+		svs_switch_bank(svsp);
-+		svs_writel_relaxed(svsp, SVSB_PTPEN_OFF, SVSEN);
-+		svs_writel_relaxed(svsp, SVSB_INTSTS_VAL_CLEAN, INTSTS);
-+		spin_unlock_irqrestore(&svs_lock, flags);
-+
-+		svsb->phase = SVSB_PHASE_ERROR;
-+		svs_adjust_pm_opp_volts(svsb);
-+	}
-+
-+	return ret;
- }
  
- static void svs_mon_mode(struct svs_platform *svsp)
++svs_resume_reset_assert:
++	dev_err(svsp->dev, "assert reset: %d\n",
++		reset_control_assert(svsp->rst));
++
+ out_of_resume:
+ 	clk_disable_unprepare(svsp->main_clk);
+ 	return ret;
 -- 
 2.39.2
 
