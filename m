@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B678494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:36:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB594C433EF;
-	Fri, 10 Mar 2023 14:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900128494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:36:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2228C4339B;
+	Fri, 10 Mar 2023 14:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458963;
-	bh=2HSodINfxgFUGRSMhJjUMkxZ+musJha5RGIvWfxfBuI=;
+	s=korg; t=1678458966;
+	bh=sP0DEDAVyxqPmniB1L/clxILwd4W528DtTbX2r+2pY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tDRjof91bxCfP6uxgkZMmo6fqdNqMjbJ2g5ksu6eIBu74nfh75aPZUmS/NNqL9YyI
-	 oiNlwJ+o+gR4exHP5evaBhEoHYyziLPgkcLaLRS66rMiCs88xhzQI3+fvCbE7M726x
-	 tVK1cUZ43Mcy0mKFurVPaj+CR9oYNqytGdlteoWU=
+	b=f/zFAHEt0KZD+GK9Wy34/yk1JYmZpuA32cdCEaZl2rJHK0txYb3KZcTW4AcKe/LEF
+	 xZGKP15TdsuavDfEbqYhtVT7c+ftX54EUdwNr8ndO6wFBCsEZybyK6MmowKqQ/jTym
+	 u5zMMZ8kLwgkSMqSqzg0UsduklYeAweEeEO1WooQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Javier Martinez Canillas <javier@dowhile0.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 185/357] wifi: mt7601u: fix an integer underflow
-Date: Fri, 10 Mar 2023 14:37:54 +0100
-Message-Id: <20230310133742.908113881@linuxfoundation.org>
+Subject: [PATCH 5.4 203/357] regulator: max77802: Bounds check regulator id against opmode
+Date: Fri, 10 Mar 2023 14:38:12 +0100
+Message-Id: <20230310133743.678996702@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,100 +38,135 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 803f3176c5df3b5582c27ea690f204abb60b19b9 ]
+[ Upstream commit 4fd8bcec5fd7c0d586206fa2f42bd67b06cdaa7e ]
 
-Fix an integer underflow that leads to a null pointer dereference in
-'mt7601u_rx_skb_from_seg()'. The variable 'dma_len' in the URB packet
-could be manipulated, which could trigger an integer underflow of
-'seg_len' in 'mt7601u_rx_process_seg()'. This underflow subsequently
-causes the 'bad_frame' checks in 'mt7601u_rx_skb_from_seg()' to be
-bypassed, eventually leading to a dereference of the pointer 'p', which
-is a null pointer.
+Explicitly bounds-check the id before accessing the opmode array. Seen
+with GCC 13:
 
-Ensure that 'dma_len' is greater than 'min_seg_len'.
+../drivers/regulator/max77802-regulator.c: In function 'max77802_enable':
+../drivers/regulator/max77802-regulator.c:217:29: warning: array subscript [0, 41] is outside array bounds of 'unsigned int[42]' [-Warray-bounds=]
+  217 |         if (max77802->opmode[id] == MAX77802_OFF_PWRREQ)
+      |             ~~~~~~~~~~~~~~~~^~~~
+../drivers/regulator/max77802-regulator.c:62:22: note: while referencing 'opmode'
+   62 |         unsigned int opmode[MAX77802_REG_MAX];
+      |                      ^~~~~~
 
-Found by a modified version of syzkaller.
-
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 0 PID: 12 Comm: ksoftirqd/0 Tainted: G        W  O      5.14.0+
-#139
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
-RIP: 0010:skb_add_rx_frag+0x143/0x370
-Code: e2 07 83 c2 03 38 ca 7c 08 84 c9 0f 85 86 01 00 00 4c 8d 7d 08 44
-89 68 08 48 b8 00 00 00 00 00 fc ff df 4c 89 fa 48 c1 ea 03 <80> 3c 02
-00 0f 85 cd 01 00 00 48 8b 45 08 a8 01 0f 85 3d 01 00 00
-RSP: 0018:ffffc900000cfc90 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: ffff888115520dc0 RCX: 0000000000000000
-RDX: 0000000000000001 RSI: ffff8881118430c0 RDI: ffff8881118430f8
-RBP: 0000000000000000 R08: 0000000000000e09 R09: 0000000000000010
-R10: ffff888111843017 R11: ffffed1022308602 R12: 0000000000000000
-R13: 0000000000000e09 R14: 0000000000000010 R15: 0000000000000008
-FS:  0000000000000000(0000) GS:ffff88811a800000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000004035af40 CR3: 00000001157f2000 CR4: 0000000000750ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- mt7601u_rx_tasklet+0xc73/0x1270
- ? mt7601u_submit_rx_buf.isra.0+0x510/0x510
- ? tasklet_action_common.isra.0+0x79/0x2f0
- tasklet_action_common.isra.0+0x206/0x2f0
- __do_softirq+0x1b5/0x880
- ? tasklet_unlock+0x30/0x30
- run_ksoftirqd+0x26/0x50
- smpboot_thread_fn+0x34f/0x7d0
- ? smpboot_register_percpu_thread+0x370/0x370
- kthread+0x3a1/0x480
- ? set_kthread_struct+0x120/0x120
- ret_from_fork+0x1f/0x30
-Modules linked in: 88XXau(O) 88x2bu(O)
----[ end trace 57f34f93b4da0f9b ]---
-RIP: 0010:skb_add_rx_frag+0x143/0x370
-Code: e2 07 83 c2 03 38 ca 7c 08 84 c9 0f 85 86 01 00 00 4c 8d 7d 08 44
-89 68 08 48 b8 00 00 00 00 00 fc ff df 4c 89 fa 48 c1 ea 03 <80> 3c 02
-00 0f 85 cd 01 00 00 48 8b 45 08 a8 01 0f 85 3d 01 00 00
-RSP: 0018:ffffc900000cfc90 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: ffff888115520dc0 RCX: 0000000000000000
-RDX: 0000000000000001 RSI: ffff8881118430c0 RDI: ffff8881118430f8
-RBP: 0000000000000000 R08: 0000000000000e09 R09: 0000000000000010
-R10: ffff888111843017 R11: ffffed1022308602 R12: 0000000000000000
-R13: 0000000000000e09 R14: 0000000000000010 R15: 0000000000000008
-FS:  0000000000000000(0000) GS:ffff88811a800000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000004035af40 CR3: 00000001157f2000 CR4: 0000000000750ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-
-Signed-off-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221229092906.2328282-1-jisoo.jang@yonsei.ac.kr
+Cc: Javier Martinez Canillas <javier@dowhile0.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Acked-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://lore.kernel.org/r/20230127225203.never.864-kees@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt7601u/dma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/regulator/max77802-regulator.c | 34 ++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt7601u/dma.c b/drivers/net/wireless/mediatek/mt7601u/dma.c
-index 6f2172be7b66a..072888072b0db 100644
---- a/drivers/net/wireless/mediatek/mt7601u/dma.c
-+++ b/drivers/net/wireless/mediatek/mt7601u/dma.c
-@@ -118,7 +118,8 @@ static u16 mt7601u_rx_next_seg_len(u8 *data, u32 data_len)
- 	if (data_len < min_seg_len ||
- 	    WARN_ON_ONCE(!dma_len) ||
- 	    WARN_ON_ONCE(dma_len + MT_DMA_HDRS > data_len) ||
--	    WARN_ON_ONCE(dma_len & 0x3))
-+	    WARN_ON_ONCE(dma_len & 0x3) ||
-+	    WARN_ON_ONCE(dma_len < min_seg_len))
- 		return 0;
+diff --git a/drivers/regulator/max77802-regulator.c b/drivers/regulator/max77802-regulator.c
+index 7b8ec8c0bd151..660e179a82a2c 100644
+--- a/drivers/regulator/max77802-regulator.c
++++ b/drivers/regulator/max77802-regulator.c
+@@ -95,9 +95,11 @@ static int max77802_set_suspend_disable(struct regulator_dev *rdev)
+ {
+ 	unsigned int val = MAX77802_OFF_PWRREQ;
+ 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
+-	int id = rdev_get_id(rdev);
++	unsigned int id = rdev_get_id(rdev);
+ 	int shift = max77802_get_opmode_shift(id);
  
- 	return MT_DMA_HDRS + dma_len;
++	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
++		return -EINVAL;
+ 	max77802->opmode[id] = val;
+ 	return regmap_update_bits(rdev->regmap, rdev->desc->enable_reg,
+ 				  rdev->desc->enable_mask, val << shift);
+@@ -111,7 +113,7 @@ static int max77802_set_suspend_disable(struct regulator_dev *rdev)
+ static int max77802_set_mode(struct regulator_dev *rdev, unsigned int mode)
+ {
+ 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
+-	int id = rdev_get_id(rdev);
++	unsigned int id = rdev_get_id(rdev);
+ 	unsigned int val;
+ 	int shift = max77802_get_opmode_shift(id);
+ 
+@@ -128,6 +130,9 @@ static int max77802_set_mode(struct regulator_dev *rdev, unsigned int mode)
+ 		return -EINVAL;
+ 	}
+ 
++	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
++		return -EINVAL;
++
+ 	max77802->opmode[id] = val;
+ 	return regmap_update_bits(rdev->regmap, rdev->desc->enable_reg,
+ 				  rdev->desc->enable_mask, val << shift);
+@@ -136,8 +141,10 @@ static int max77802_set_mode(struct regulator_dev *rdev, unsigned int mode)
+ static unsigned max77802_get_mode(struct regulator_dev *rdev)
+ {
+ 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
+-	int id = rdev_get_id(rdev);
++	unsigned int id = rdev_get_id(rdev);
+ 
++	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
++		return -EINVAL;
+ 	return max77802_map_mode(max77802->opmode[id]);
+ }
+ 
+@@ -161,10 +168,13 @@ static int max77802_set_suspend_mode(struct regulator_dev *rdev,
+ 				     unsigned int mode)
+ {
+ 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
+-	int id = rdev_get_id(rdev);
++	unsigned int id = rdev_get_id(rdev);
+ 	unsigned int val;
+ 	int shift = max77802_get_opmode_shift(id);
+ 
++	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
++		return -EINVAL;
++
+ 	/*
+ 	 * If the regulator has been disabled for suspend
+ 	 * then is invalid to try setting a suspend mode.
+@@ -210,9 +220,11 @@ static int max77802_set_suspend_mode(struct regulator_dev *rdev,
+ static int max77802_enable(struct regulator_dev *rdev)
+ {
+ 	struct max77802_regulator_prv *max77802 = rdev_get_drvdata(rdev);
+-	int id = rdev_get_id(rdev);
++	unsigned int id = rdev_get_id(rdev);
+ 	int shift = max77802_get_opmode_shift(id);
+ 
++	if (WARN_ON_ONCE(id >= ARRAY_SIZE(max77802->opmode)))
++		return -EINVAL;
+ 	if (max77802->opmode[id] == MAX77802_OFF_PWRREQ)
+ 		max77802->opmode[id] = MAX77802_OPMODE_NORMAL;
+ 
+@@ -541,7 +553,7 @@ static int max77802_pmic_probe(struct platform_device *pdev)
+ 
+ 	for (i = 0; i < MAX77802_REG_MAX; i++) {
+ 		struct regulator_dev *rdev;
+-		int id = regulators[i].id;
++		unsigned int id = regulators[i].id;
+ 		int shift = max77802_get_opmode_shift(id);
+ 		int ret;
+ 
+@@ -559,10 +571,12 @@ static int max77802_pmic_probe(struct platform_device *pdev)
+ 		 * the hardware reports OFF as the regulator operating mode.
+ 		 * Default to operating mode NORMAL in that case.
+ 		 */
+-		if (val == MAX77802_STATUS_OFF)
+-			max77802->opmode[id] = MAX77802_OPMODE_NORMAL;
+-		else
+-			max77802->opmode[id] = val;
++		if (id < ARRAY_SIZE(max77802->opmode)) {
++			if (val == MAX77802_STATUS_OFF)
++				max77802->opmode[id] = MAX77802_OPMODE_NORMAL;
++			else
++				max77802->opmode[id] = val;
++		}
+ 
+ 		rdev = devm_regulator_register(&pdev->dev,
+ 					       &regulators[i], &config);
 -- 
 2.39.2
 
