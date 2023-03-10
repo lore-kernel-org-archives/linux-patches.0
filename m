@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004248481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:02:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2E5C4339C;
-	Fri, 10 Mar 2023 14:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95CC8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:02:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CBBC433EF;
+	Fri, 10 Mar 2023 14:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456960;
-	bh=JuKjRaZVkoaiQEQB+xyXbpZsFWy1BStMRXTHDE0ZbCM=;
+	s=korg; t=1678456963;
+	bh=efSu9qO0KE2SDyHLMjSfHUgimsNFTJBvJP/gCLcuA9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VuJTYhLMiQiAiYH++mswNWZrJt71eWfeg9e/ZduNWjrmxy4dKNlXTbpspP1Nepad4
-	 GA58fnPCbMm9cyZ7+/zoYzvx84yU5Abf996zrzKnWWOp5qWiWzNAp3MpvXiadK7CaK
-	 rsJkKPwTRdd6Pi0rAydelsqkLig3LGRKNQHOHz7A=
+	b=Cy8XUnIeCjSlM06Y+XPF/4CAMwgM8AVWD57cspx6Eh+otLvTXD6QO7a4Wbrmjfic8
+	 mwZLUHJDKNQF8e98jO8jVjoT321NiDkiv3J7BB7/1iqVTFFzJwIq6JKX6VzW3zeJw0
+	 DQCXqNjHOaConJiLtJUuiBmrEgP/rToI7n7JJZfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.2 185/211] RDMA/cma: Distinguish between sockaddr_in and sockaddr_in6 by size
-Date: Fri, 10 Mar 2023 14:39:25 +0100
-Message-Id: <20230310133724.461889354@linuxfoundation.org>
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 186/211] soundwire: cadence: Remove wasted space in response_buf
+Date: Fri, 10 Mar 2023 14:39:26 +0100
+Message-Id: <20230310133724.492441613@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,73 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 876e480da2f74715fc70e37723e77ca16a631e35 ]
+[ Upstream commit 827c32d0df4bbe0d1c47d79f6a5eabfe9ac75216 ]
 
-Clang can do some aggressive inlining, which provides it with greater
-visibility into the sizes of various objects that are passed into
-helpers. Specifically, compare_netdev_and_ip() can see through the type
-given to the "sa" argument, which means it can generate code for "struct
-sockaddr_in" that would have been passed to ipv6_addr_cmp() (that expects
-to operate on the larger "struct sockaddr_in6"), which would result in a
-compile-time buffer overflow condition detected by memcmp(). Logically,
-this state isn't reachable due to the sa_family assignment two callers
-above and the check in compare_netdev_and_ip(). Instead, provide a
-compile-time check on sizes so the size-mismatched code will be elided
-when inlining. Avoids the following warning from Clang:
+The response_buf was declared much larger (128 entries) than the number
+of responses that could ever be written into it. The Cadence IP is
+configurable up to a maximum of 32 entries, and the datasheet says
+that RX_FIFO_AVAIL can be 2 larger than this. So allow up to 34
+responses.
 
-../include/linux/fortify-string.h:652:4: error: call to '__read_overflow' declared with 'error' attribute: detected read beyond size of object (1st parameter)
-                        __read_overflow();
-                        ^
-note: In function 'cma_netevent_callback'
-note:   which inlined function 'node_from_ndev_ip'
-1 error generated.
+Also add checking in cdns_read_response() to prevent overflowing
+reponse_buf if RX_FIFO_AVAIL contains an unexpectedly large number.
 
-When the underlying object size is not known (e.g. with GCC and older
-Clang), the result of __builtin_object_size() is SIZE_MAX, which will also
-compile away, leaving the code as it was originally.
-
-Link: https://lore.kernel.org/r/20230208232549.never.139-kees@kernel.org
-Link: https://github.com/ClangBuiltLinux/linux/issues/1687
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org> # build
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20221202161812.4186897-3-rf@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cma.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/soundwire/cadence_master.c |  7 +++++++
+ drivers/soundwire/cadence_master.h | 13 ++++++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
-index 68721ff10255e..7e508b15e7761 100644
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -479,13 +479,20 @@ static int compare_netdev_and_ip(int ifindex_a, struct sockaddr *sa,
- 	if (sa->sa_family != sb->sa_family)
- 		return sa->sa_family - sb->sa_family;
+diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
+index 27699f341f2c5..a6635f7f350ef 100644
+--- a/drivers/soundwire/cadence_master.c
++++ b/drivers/soundwire/cadence_master.c
+@@ -774,8 +774,15 @@ static void cdns_read_response(struct sdw_cdns *cdns)
+ 	u32 num_resp, cmd_base;
+ 	int i;
  
--	if (sa->sa_family == AF_INET)
--		return memcmp((char *)&((struct sockaddr_in *)sa)->sin_addr,
--			      (char *)&((struct sockaddr_in *)sb)->sin_addr,
-+	if (sa->sa_family == AF_INET &&
-+	    __builtin_object_size(sa, 0) >= sizeof(struct sockaddr_in)) {
-+		return memcmp(&((struct sockaddr_in *)sa)->sin_addr,
-+			      &((struct sockaddr_in *)sb)->sin_addr,
- 			      sizeof(((struct sockaddr_in *)sa)->sin_addr));
-+	}
++	/* RX_FIFO_AVAIL can be 2 entries more than the FIFO size */
++	BUILD_BUG_ON(ARRAY_SIZE(cdns->response_buf) < CDNS_MCP_CMD_LEN + 2);
 +
-+	if (sa->sa_family == AF_INET6 &&
-+	    __builtin_object_size(sa, 0) >= sizeof(struct sockaddr_in6)) {
-+		return ipv6_addr_cmp(&((struct sockaddr_in6 *)sa)->sin6_addr,
-+				     &((struct sockaddr_in6 *)sb)->sin6_addr);
+ 	num_resp = cdns_readl(cdns, CDNS_MCP_FIFOSTAT);
+ 	num_resp &= CDNS_MCP_RX_FIFO_AVAIL;
++	if (num_resp > ARRAY_SIZE(cdns->response_buf)) {
++		dev_warn(cdns->dev, "RX AVAIL %d too long\n", num_resp);
++		num_resp = ARRAY_SIZE(cdns->response_buf);
 +	}
  
--	return ipv6_addr_cmp(&((struct sockaddr_in6 *)sa)->sin6_addr,
--			     &((struct sockaddr_in6 *)sb)->sin6_addr);
-+	return -1;
- }
+ 	cmd_base = CDNS_MCP_CMD_BASE;
  
- static int cma_add_id_to_tree(struct rdma_id_private *node_id_priv)
+diff --git a/drivers/soundwire/cadence_master.h b/drivers/soundwire/cadence_master.h
+index 0434d70d4b1f5..e0a64b28c6b9c 100644
+--- a/drivers/soundwire/cadence_master.h
++++ b/drivers/soundwire/cadence_master.h
+@@ -8,6 +8,12 @@
+ #define SDW_CADENCE_GSYNC_KHZ		4 /* 4 kHz */
+ #define SDW_CADENCE_GSYNC_HZ		(SDW_CADENCE_GSYNC_KHZ * 1000)
+ 
++/*
++ * The Cadence IP supports up to 32 entries in the FIFO, though implementations
++ * can configure the IP to have a smaller FIFO.
++ */
++#define CDNS_MCP_IP_MAX_CMD_LEN		32
++
+ /**
+  * struct sdw_cdns_pdi: PDI (Physical Data Interface) instance
+  *
+@@ -117,7 +123,12 @@ struct sdw_cdns {
+ 	struct sdw_bus bus;
+ 	unsigned int instance;
+ 
+-	u32 response_buf[0x80];
++	/*
++	 * The datasheet says the RX FIFO AVAIL can be 2 entries more
++	 * than the FIFO capacity, so allow for this.
++	 */
++	u32 response_buf[CDNS_MCP_IP_MAX_CMD_LEN + 2];
++
+ 	struct completion tx_complete;
+ 	struct sdw_defer *defer;
+ 
 -- 
 2.39.2
 
