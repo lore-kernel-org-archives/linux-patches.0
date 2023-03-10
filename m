@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF748821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:04:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F97C433D2;
-	Fri, 10 Mar 2023 15:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23B18821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:04:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2908EC433EF;
+	Fri, 10 Mar 2023 15:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460652;
-	bh=c3yN5AO8+TlYyEqfkiwD6JSt1wrYlJu+bnbzdXwX40I=;
+	s=korg; t=1678460655;
+	bh=nc7JkrhSCyWhyYeRYgscxZ/n38adIn35egzYd/INvgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dR6lKs1w6SJZvPNcBOZoU7g333zBoXxVJoE5enVIvk9yJLPaaNy2DqsQLqIWsLXlv
-	 x0t6XAmJRbfjCR1PbfI/kmu7dk0+kNN0TJ59qp6iY0qfccl7IyWd1hghXKeZkZgDo/
-	 FIOIg016tA0zYPC149/ztzVgS1gYPDYIWBWergJ4=
+	b=x7i/5IfuhC1aG9xhVEgu3vtei3zUEJWfgovzk3Ay7QgoiNYmrjd8ptnwChDNgKosS
+	 gso8pBnlxzC9piH5FK6buOnDEPQP35037AwsZn+RcGAZzrUMstfIk1vZFKO3yau4o+
+	 ep3qR3MxgubsbErh6Mo50g6q8iljdoxbWJzUm9yI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Fomin <fomindmitriyfoma@mail.ru>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 379/529] ALSA: ice1712: Do not left ice->gpio_mutex locked in aureon_add_controls()
-Date: Fri, 10 Mar 2023 14:38:42 +0100
-Message-Id: <20230310133822.568240474@linuxfoundation.org>
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.10 406/529] ktest.pl: Give back console on Ctrt^C on monitor
+Date: Fri, 10 Mar 2023 14:39:09 +0100
+Message-Id: <20230310133823.803920621@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -34,48 +33,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Fomin <fomindmitriyfoma@mail.ru>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 951606a14a8901e3551fe4d8d3cedd73fe954ce1 upstream.
+commit 83d29d439cd3ef23041570d55841f814af2ecac0 upstream.
 
-If snd_ctl_add() fails in aureon_add_controls(), it immediately returns
-and leaves ice->gpio_mutex locked. ice->gpio_mutex locks in
-snd_ice1712_save_gpio_status and unlocks in
-snd_ice1712_restore_gpio_status(ice).
+When monitoring the console output, the stdout is being redirected to do
+so. If Ctrl^C is hit during this mode, the stdout is not back to the
+console, the user does not see anything they type (no echo).
 
-It seems that the mutex is required only for aureon_cs8415_get(),
-so snd_ice1712_restore_gpio_status(ice) can be placed
-just after that. Compile tested only.
+Add "end_monitor" to the SIGINT interrupt handler to give back the console
+on Ctrl^C.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Dmitry Fomin <fomindmitriyfoma@mail.ru>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230225184322.6286-1-fomindmitriyfoma@mail.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Fixes: 9f2cdcbbb90e7 ("ktest: Give console process a dedicated tty")
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ice1712/aureon.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/ktest/ktest.pl |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/pci/ice1712/aureon.c
-+++ b/sound/pci/ice1712/aureon.c
-@@ -1892,6 +1892,7 @@ static int aureon_add_controls(struct sn
- 		unsigned char id;
- 		snd_ice1712_save_gpio_status(ice);
- 		id = aureon_cs8415_get(ice, CS8415_ID);
-+		snd_ice1712_restore_gpio_status(ice);
- 		if (id != 0x41)
- 			dev_info(ice->card->dev,
- 				 "No CS8415 chip. Skipping CS8415 controls.\n");
-@@ -1909,7 +1910,6 @@ static int aureon_add_controls(struct sn
- 					kctl->id.device = ice->pcm->device;
- 			}
- 		}
--		snd_ice1712_restore_gpio_status(ice);
- 	}
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -4283,6 +4283,9 @@ sub send_email {
+ }
  
- 	return 0;
+ sub cancel_test {
++    if ($monitor_cnt) {
++	end_monitor;
++    }
+     if ($email_when_canceled) {
+ 	my $name = get_test_name;
+         send_email("KTEST: Your [$name] test was cancelled",
 
 
