@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BF2881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:44:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A2EC4339C;
-	Fri, 10 Mar 2023 14:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0723881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:44:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527ADC433D2;
+	Fri, 10 Mar 2023 14:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459455;
-	bh=soLU0T4d9G4mvTJHtO+h9hFqZnELfE4DFTQE0qyzeAI=;
+	s=korg; t=1678459458;
+	bh=CC3P9P9Xh9Iz/rDmbM07ldoDebjgR++qHA3nbP0yTfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fkgnLrQ6yVDezAM2yBlP6hC7Cz+M4Fb1tmy2jpxOEbeTfx41CLAPMHUseBapHlwKk
-	 UkmzFAd9Fn7d+kp9f6vYb4WADiHJGuKcutn+4zky5iLIK80eeDbQTLucaiJV9rr/dz
-	 TdbzdadIb9vFEVfUMiwomRKfcDz8LLbR5cZLQcaU=
+	b=CiWhS6EANtLVrKaiMIhCc8k6U5cwn6r3d56ydmkEadW/JOLFDF9TevFutCUsbUpXp
+	 TnWL8VuQkmT6adtKmNyNDdEjQu/qvf4GSs/98Hq9x0qOq2MW5bOF53eZlwc+LJGtEn
+	 /7UdPwEy0gsmrZ0u35gJLSaFQMDYhCfPyjKroXCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Vyacheslav Bocharov <adeep@lexina.in>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 010/529] arm64: dts: qcom: sc7180: correct SPMI bus address cells
-Date: Fri, 10 Mar 2023 14:32:33 +0100
-Message-Id: <20230310133805.503146106@linuxfoundation.org>
+Subject: [PATCH 5.10 011/529] arm64: dts: meson-gx: Fix Ethernet MAC address unit name
+Date: Fri, 10 Mar 2023 14:32:34 +0100
+Message-Id: <20230310133805.548838460@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -37,41 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit 1f75745537222172f84783d369bbd1fb2d4b6414 ]
+[ Upstream commit 8ed5310356bfa47cc6bb4221ae6b21258c52e3d1 ]
 
-The SPMI bus uses two address cells and zero size cells (second reg
-entry - SPMI_USID - is not the size):
+Unit names should use hyphens instead of underscores to not cause
+warnings.
 
-  spmi@c440000: #address-cells:0:0: 2 was expected
-
-Fixes: 0f9dc5f09fbd ("arm64: dts: qcom: sc7180: Add SPMI PMIC arbiter device")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221213101921.47924-1-krzysztof.kozlowski@linaro.org
+Fixes: bfe59f92d306 ("ARM64: dts: amlogic: gxbb: Enable NVMEM")
+Suggested-by: Vyacheslav Bocharov <adeep@lexina.in>
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230111211350.1461860-5-martin.blumenstingl@googlemail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/amlogic/meson-gx.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index c71f3afc1cc9f..eb07a882d43b3 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -3066,8 +3066,8 @@ spmi_bus: spmi@c440000 {
- 			interrupts-extended = <&pdc 1 IRQ_TYPE_LEVEL_HIGH>;
- 			qcom,ee = <0>;
- 			qcom,channel = <0>;
--			#address-cells = <1>;
--			#size-cells = <1>;
-+			#address-cells = <2>;
-+			#size-cells = <0>;
- 			interrupt-controller;
- 			#interrupt-cells = <4>;
- 			cell-index = <0>;
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
+index 88a7db5c55a07..46018df13cc24 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
+@@ -226,7 +226,7 @@ sn: sn@14 {
+ 			reg = <0x14 0x10>;
+ 		};
+ 
+-		eth_mac: eth_mac@34 {
++		eth_mac: eth-mac@34 {
+ 			reg = <0x34 0x10>;
+ 		};
+ 
 -- 
 2.39.2
 
