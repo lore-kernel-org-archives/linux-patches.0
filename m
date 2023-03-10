@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A17A848D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:27:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2866C433D2;
-	Fri, 10 Mar 2023 14:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3923A848D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:27:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8BDC4339B;
+	Fri, 10 Mar 2023 14:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458463;
-	bh=l1UqvGZYtMVp5vaOEznFtIy4S9BUTmOCZ2PXrj77veI=;
+	s=korg; t=1678458466;
+	bh=YsKgzisQSqEqzhbdgCwFncxYLcXC5m7G9YTrvOwGjuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJOJN6AQq1l8K/6g2HxK5Hs1kTPoDgU3ZkgkNhcFbX5A9YujGYEnF+oZxyDEsQrlu
-	 F6m0J+i7UH5UqLpTVz/h1CDkCRiXOevYxg1MLB3gP8LQElZlAVmuOU7DeC3EuOvprL
-	 UpeslEs0tFtUUkdykBd6FZgH7bE5fuKkTeDr7iNA=
+	b=Wf6vuiGelfAbDw/bmFvQ7ew+zsH6PoYsDa64dchR044Z3OiYjmXzEA/ErI+OzbUFx
+	 ucvorzEbY0nI1VM/BIruZL6IEe03IR3nIW6OCNiH6yeJhSz1g1rnfHlkUxh9iZDDdY
+	 qNUWVa0KTQqiU+8WYtTLT8fRMwN9LanD4iLv+5oE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 035/357] wifi: libertas: fix memory leak in lbs_init_adapter()
-Date: Fri, 10 Mar 2023 14:35:24 +0100
-Message-Id: <20230310133735.560918406@linuxfoundation.org>
+Subject: [PATCH 5.4 018/357] arm64: dts: amlogic: meson-gxl: add missing unit address to eth-phy-mux node name
+Date: Fri, 10 Mar 2023 14:35:07 +0100
+Message-Id: <20230310133734.803694054@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,35 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 16a03958618fb91bb1bc7077cf3211055162cc2f ]
+[ Upstream commit d19189f70ba596798ea49166d2d1ef36a8df5289 ]
 
-When kfifo_alloc() failed in lbs_init_adapter(), cmd buffer is not
-released. Add free memory to processing error path.
+Fixes:
+bus@c8834000: eth-phy-mux: {...} should not be valid under {'type': 'object'}
 
-Fixes: 7919b89c8276 ("libertas: convert libertas driver to use an event/cmdresp queue")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221208121448.2845986-1-shaozhengchao@huawei.com
+Link: https://lore.kernel.org/r/20230124-b4-amlogic-bindings-fixups-v1-9-44351528957e@linaro.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas/main.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/amlogic/meson-gxl.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/marvell/libertas/main.c b/drivers/net/wireless/marvell/libertas/main.c
-index 2233b59cdf444..a94e50eb34bfb 100644
---- a/drivers/net/wireless/marvell/libertas/main.c
-+++ b/drivers/net/wireless/marvell/libertas/main.c
-@@ -870,6 +870,7 @@ static int lbs_init_adapter(struct lbs_private *priv)
- 	ret = kfifo_alloc(&priv->event_fifo, sizeof(u32) * 16, GFP_KERNEL);
- 	if (ret) {
- 		pr_err("Out of memory allocating event FIFO buffer\n");
-+		lbs_free_cmd_buffer(priv);
- 		goto out;
- 	}
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
+index e3cfa24dca5ab..6809f495a5030 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
+@@ -700,7 +700,7 @@ mux {
+ 		};
+ 	};
  
+-	eth-phy-mux {
++	eth-phy-mux@55c {
+ 		compatible = "mdio-mux-mmioreg", "mdio-mux";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
 -- 
 2.39.2
 
