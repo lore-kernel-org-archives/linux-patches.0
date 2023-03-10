@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1989881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:46:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285DEC4339B;
-	Fri, 10 Mar 2023 14:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A17881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:46:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CCCC4339B;
+	Fri, 10 Mar 2023 14:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459584;
-	bh=LDaJy4Bc+2oN7kq7ywF7BTVGjXNnKd1/9uCRA+fMpds=;
+	s=korg; t=1678459587;
+	bh=v4jX79Ehyah2vsbCTFBNpXEWQOgNH+O8ga9XaJwvRIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1DPVeFU1ykJFHvP+VIxB1cIJ91yCjDovgq9dPAl54yRWnp2BMlxVqlq+VIQFVAMya
-	 k+W7K89nOZs2nyP5SESKnlkXuxn20SsQNDTy0YOO2MGdB3wLcbV0sEdOaKGfVqj22q
-	 Bxk0dto8IN+cQ2+9saYpdYMe2WZWKLeh0izGAu+I=
+	b=xdVRf1JhXjLnUShGVYJMuphsISXRJN6/ev4YEKtRh1gFLGQC9gJKyAZAhr5Kcpgyv
+	 ek6SCwI5vo9clULMycd8A6r05kucESmOVB9E/R17UrSp+4PuN97gaJgKssE7NnQMo+
+	 eQ/+9HY+UhkjSEYAgLuI31bm7lDKZCa2R7syCEoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hulk Robot <hulkci@huawei.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 022/529] ARM: OMAP1: call platform_device_put() in error case in omap1_dm_timer_init()
-Date: Fri, 10 Mar 2023 14:32:45 +0100
-Message-Id: <20230310133806.014928442@linuxfoundation.org>
+Subject: [PATCH 5.10 023/529] ARM: s3c: fix s3c64xx_set_timer_source prototype
+Date: Fri, 10 Mar 2023 14:32:46 +0100
+Message-Id: <20230310133806.065566401@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,36 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 0414a100d6ab32721efa70ab55524540fdfe0ede ]
+[ Upstream commit 5bf52f5e4d12b8109f348cab60cb7d51092c4270 ]
 
-If platform_device_add() is not called or failed, it should call
-platform_device_put() in error case.
+The prototype does not match the definition, as gcc-13 points
+out:
 
-Fixes: 97933d6ced60 ("ARM: OMAP1: dmtimer: conversion to platform devices")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Message-Id: <20220701094602.2365099-1-yangyingliang@huawei.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+arch/arm/mach-s3c/s3c64xx.c:169:13: error: conflicting types for 's3c64xx_set_timer_source' due to enum/integer mismatch; have 'void(unsigned int,  unsigned int)' [-Werror=enum-int-mismatch]
+  169 | void __init s3c64xx_set_timer_source(unsigned int event, unsigned int source)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from arch/arm/mach-s3c/s3c64xx.c:50:
+arch/arm/mach-s3c/s3c64xx.h:62:20: note: previous declaration of 's3c64xx_set_timer_source' with type 'void(enum s3c64xx_timer_mode,  enum s3c64xx_timer_mode)'
+   62 | extern void __init s3c64xx_set_timer_source(enum s3c64xx_timer_mode event,
+      |                    ^~~~~~~~~~~~~~~~~~~~~~~~
+
+Fixes: 4280506ac9bb ("ARM: SAMSUNG: Move all platforms to new clocksource driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230118090224.2162863-1-arnd@kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap1/timer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mach-s3c/s3c64xx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-omap1/timer.c b/arch/arm/mach-omap1/timer.c
-index 97fc2096b9709..05f016d5e9f67 100644
---- a/arch/arm/mach-omap1/timer.c
-+++ b/arch/arm/mach-omap1/timer.c
-@@ -165,7 +165,7 @@ static int __init omap1_dm_timer_init(void)
- 	kfree(pdata);
+diff --git a/arch/arm/mach-s3c/s3c64xx.c b/arch/arm/mach-s3c/s3c64xx.c
+index 4dfb648142f2a..17f0065031490 100644
+--- a/arch/arm/mach-s3c/s3c64xx.c
++++ b/arch/arm/mach-s3c/s3c64xx.c
+@@ -173,7 +173,8 @@ static struct samsung_pwm_variant s3c64xx_pwm_variant = {
+ 	.tclk_mask	= (1 << 7) | (1 << 6) | (1 << 5),
+ };
  
- err_free_pdev:
--	platform_device_unregister(pdev);
-+	platform_device_put(pdev);
- 
- 	return ret;
- }
+-void __init s3c64xx_set_timer_source(unsigned int event, unsigned int source)
++void __init s3c64xx_set_timer_source(enum s3c64xx_timer_mode event,
++				     enum s3c64xx_timer_mode source)
+ {
+ 	s3c64xx_pwm_variant.output_mask = BIT(SAMSUNG_PWM_NUM) - 1;
+ 	s3c64xx_pwm_variant.output_mask &= ~(BIT(event) | BIT(source));
 -- 
 2.39.2
 
