@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E254847D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:45:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD060C433EF;
-	Fri, 10 Mar 2023 13:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6034D847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:45:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BA1C4339B;
+	Fri, 10 Mar 2023 13:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678455903;
-	bh=POcUt5lCiclXJ1VNntnaTdFfcYH/gbO0XR7A62cXd/8=;
+	s=korg; t=1678455906;
+	bh=66dWPDY6YQiRJZ/wdMnTaRXpUh5VpRssfKqmzur64bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pTUOBPTtiUYCEFYHqkl663a33GwOMVHmUYbmAhXRmhw1E2ikR9sRazQJWNtppkKhw
-	 EbA9HRWxvu+Z26hoLvjscw06lBdihGQHr9A0r10VmfRKST6zt4SOaoHi4xwjzM5FJh
-	 Tvz9FX2NLj+cletqRW6ba+HQwIENY9As00Ol3PBc=
+	b=g6bvX1Q/WN7mYefCbHnyYVkVqJdJ1k5n3Gms/nmXqVe8OI1a57vi3O6JhGbXL976T
+	 AAa7CeOaQBuLPKCNRmbRSLgpYXLcirqogay15FWqaexPWlvWGIuxyShUbcUMMTYCS7
+	 TsI7TYF8ADewj9Irwj/fjJpKct967jUGEhUMSMhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Hui <judy.chenhui@huawei.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Qiheng Lin <linqiheng@huawei.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 015/193] ARM: OMAP2+: Fix memory leak in realtime_counter_init()
-Date: Fri, 10 Mar 2023 14:36:37 +0100
-Message-Id: <20230310133711.440157049@linuxfoundation.org>
+Subject: [PATCH 4.14 016/193] ARM: zynq: Fix refcount leak in zynq_early_slcr_init
+Date: Fri, 10 Mar 2023 14:36:38 +0100
+Message-Id: <20230310133711.471146109@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,34 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Hui <judy.chenhui@huawei.com>
+From: Qiheng Lin <linqiheng@huawei.com>
 
-[ Upstream commit ed8167cbf65c2b6ff6faeb0f96ded4d6d581e1ac ]
+[ Upstream commit 9eedb910a3be0005b88c696a8552c0d4c9937cd4 ]
 
-The "sys_clk" resource is malloced by clk_get(),
-it is not released when the function return.
+of_find_compatible_node() returns a node pointer with refcount incremented,
+we should use of_node_put() on error path.
+Add missing of_node_put() to avoid refcount leak.
 
-Fixes: fa6d79d27614 ("ARM: OMAP: Add initialisation for the real-time counter.")
-Signed-off-by: Chen Hui <judy.chenhui@huawei.com>
-Message-Id: <20221108141917.46796-1-judy.chenhui@huawei.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+Fixes: 3329659df030 ("ARM: zynq: Simplify SLCR initialization")
+Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
+Link: https://lore.kernel.org/r/20221129140544.41293-1-linqiheng@huawei.com
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/timer.c | 1 +
+ arch/arm/mach-zynq/slcr.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/mach-omap2/timer.c b/arch/arm/mach-omap2/timer.c
-index d61fbd7a2840a..c421d12b32038 100644
---- a/arch/arm/mach-omap2/timer.c
-+++ b/arch/arm/mach-omap2/timer.c
-@@ -562,6 +562,7 @@ static void __init realtime_counter_init(void)
+diff --git a/arch/arm/mach-zynq/slcr.c b/arch/arm/mach-zynq/slcr.c
+index f0292a30e6f69..6b75ef7be3fda 100644
+--- a/arch/arm/mach-zynq/slcr.c
++++ b/arch/arm/mach-zynq/slcr.c
+@@ -222,6 +222,7 @@ int __init zynq_early_slcr_init(void)
+ 	zynq_slcr_regmap = syscon_regmap_lookup_by_compatible("xlnx,zynq-slcr");
+ 	if (IS_ERR(zynq_slcr_regmap)) {
+ 		pr_err("%s: failed to find zynq-slcr\n", __func__);
++		of_node_put(np);
+ 		return -ENODEV;
  	}
  
- 	rate = clk_get_rate(sys_clk);
-+	clk_put(sys_clk);
- 
- 	if (soc_is_dra7xx()) {
- 		/*
 -- 
 2.39.2
 
