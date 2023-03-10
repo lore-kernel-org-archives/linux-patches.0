@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5277846C;
-	Fri, 10 Mar 2023 14:33:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33FD7C433EF;
-	Fri, 10 Mar 2023 14:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D211846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:33:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB9AC433D2;
+	Fri, 10 Mar 2023 14:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458783;
-	bh=yQJSZcfYXWTDUyGGmtHOLv8S1mP2iPgVwEZ5UYp+008=;
+	s=korg; t=1678458786;
+	bh=+gG78ObpD8v6Uhmrv4zUkPa2t7eYN91BNznaEBr2Ekw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/kcfRgzt/O/ESEOhBn13h287+KB9MMp1z9OmuZOjteSq4JQnA8zE+FwxpMfDWXsY
-	 h5YAfhDXgzzlqGb+W376pZ+PnVTpRFlZpXLGDfLHUvn8KEZRi/IGyKLzqzo02aF1Lf
-	 QltaId+S7W1VSpArMtHIVdhGY5WVsHppUgcsN5Dc=
+	b=i59F0GYyeNNMtiLWRn8xkdf6+h/w9/9s1BoT8a34sjbesJqpnmxTsJ8YOJjTWzrfv
+	 ix8K67Ivr/u5yhrLpNSe6E5+QR0TKuSf09WQnO635q0l6UwlmZjTDn8D+tUjUUd6dD
+	 H6XOcnT+YMod0gfrJG9ISiX836WS+PKbW3zmneaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@arm.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	bpf@vger.kernel.org,
 	Ingo Molnar <mingo@redhat.com>,
+	Jin Yao <yao.jin@linux.intel.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	llvm@lists.linux.dev,
 	Mark Rutland <mark.rutland@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Tom Rix <trix@redhat.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linuxarm@huawei.com,
+	prime.zeng@hisilicon.com,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 143/357] perf llvm: Fix inadvertent file creation
-Date: Fri, 10 Mar 2023 14:37:12 +0100
-Message-Id: <20230310133741.006036179@linuxfoundation.org>
+Subject: [PATCH 5.4 144/357] perf tools: Fix auto-complete on aarch64
+Date: Fri, 10 Mar 2023 14:37:13 +0100
+Message-Id: <20230310133741.056117475@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -47,89 +46,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Rogers <irogers@google.com>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-[ Upstream commit 9f19aab47ced012eddef1e2bc96007efc7713b61 ]
+[ Upstream commit ffd1240e8f0814262ceb957dbe961f6e0aef1e7a ]
 
-The LLVM template is first echo-ed into command_out and then
-command_out executed. The echo surrounds the template with double
-quotes, however, the template itself may contain quotes. This is
-generally innocuous but in tools/perf/tests/bpf-script-test-prologue.c
-we see:
-...
-SEC("func=null_lseek file->f_mode offset orig")
-...
-where the first double quote ends the double quote of the echo, then
-the > redirects output into a file called f_mode.
+On aarch64 CPU related events are not under event_source/devices/cpu/events,
+they're under event_source/devices/armv8_pmuv3_0/events on my machine.
+Using current auto-complete script will generate below error:
 
-To avoid this inadvertent behavior substitute redirects and similar
-characters to be ASCII control codes, then substitute the output in
-the echo back again.
+  [root@localhost bin]# perf stat -e
+  ls: cannot access '/sys/bus/event_source/devices/cpu/events': No such file or directory
 
-Fixes: 5eab5a7ee032acaa ("perf llvm: Display eBPF compiling command in debug output")
-Signed-off-by: Ian Rogers <irogers@google.com>
+Fix this by not testing /sys/bus/event_source/devices/cpu/events on
+aarch64 machine.
+
+Fixes: 74cd5815d9af6e6c ("perf tool: Improve bash command line auto-complete for multiple events with comma")
+Reviewed-by: James Clark <james.clark@arm.com>
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: bpf@vger.kernel.org
 Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jin Yao <yao.jin@linux.intel.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: llvm@lists.linux.dev
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Tom Rix <trix@redhat.com>
-Link: https://lore.kernel.org/r/20230105082609.344538-1-irogers@google.com
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linuxarm@huawei.com
+Cc: prime.zeng@hisilicon.com
+Link: https://lore.kernel.org/r/20230207035057.43394-1-yangyicong@huawei.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/llvm-utils.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ tools/perf/perf-completion.sh | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/llvm-utils.c b/tools/perf/util/llvm-utils.c
-index e7c7e3232fc5a..b275a1b297c30 100644
---- a/tools/perf/util/llvm-utils.c
-+++ b/tools/perf/util/llvm-utils.c
-@@ -523,14 +523,37 @@ int llvm__compile_bpf(const char *path, void **p_obj_buf,
+diff --git a/tools/perf/perf-completion.sh b/tools/perf/perf-completion.sh
+index fdf75d45efff7..978249d7868c2 100644
+--- a/tools/perf/perf-completion.sh
++++ b/tools/perf/perf-completion.sh
+@@ -165,7 +165,12 @@ __perf_main ()
  
- 	pr_debug("llvm compiling command template: %s\n", template);
+ 		local cur1=${COMP_WORDS[COMP_CWORD]}
+ 		local raw_evts=$($cmd list --raw-dump)
+-		local arr s tmp result
++		local arr s tmp result cpu_evts
++
++		# aarch64 doesn't have /sys/bus/event_source/devices/cpu/events
++		if [[ `uname -m` != aarch64 ]]; then
++			cpu_evts=$(ls /sys/bus/event_source/devices/cpu/events)
++		fi
  
-+	/*
-+	 * Below, substitute control characters for values that can cause the
-+	 * echo to misbehave, then substitute the values back.
-+	 */
- 	err = -ENOMEM;
--	if (asprintf(&command_echo, "echo -n \"%s\"", template) < 0)
-+	if (asprintf(&command_echo, "echo -n \a%s\a", template) < 0)
- 		goto errout;
+ 		if [[ "$cur1" == */* && ${cur1#*/} =~ ^[A-Z] ]]; then
+ 			OLD_IFS="$IFS"
+@@ -183,9 +188,9 @@ __perf_main ()
+ 				fi
+ 			done
  
-+#define SWAP_CHAR(a, b) do { if (*p == a) *p = b; } while (0)
-+	for (char *p = command_echo; *p; p++) {
-+		SWAP_CHAR('<', '\001');
-+		SWAP_CHAR('>', '\002');
-+		SWAP_CHAR('"', '\003');
-+		SWAP_CHAR('\'', '\004');
-+		SWAP_CHAR('|', '\005');
-+		SWAP_CHAR('&', '\006');
-+		SWAP_CHAR('\a', '"');
-+	}
- 	err = read_from_pipe(command_echo, (void **) &command_out, NULL);
- 	if (err)
- 		goto errout;
+-			evts=${result}" "$(ls /sys/bus/event_source/devices/cpu/events)
++			evts=${result}" "${cpu_evts}
+ 		else
+-			evts=${raw_evts}" "$(ls /sys/bus/event_source/devices/cpu/events)
++			evts=${raw_evts}" "${cpu_evts}
+ 		fi
  
-+	for (char *p = command_out; *p; p++) {
-+		SWAP_CHAR('\001', '<');
-+		SWAP_CHAR('\002', '>');
-+		SWAP_CHAR('\003', '"');
-+		SWAP_CHAR('\004', '\'');
-+		SWAP_CHAR('\005', '|');
-+		SWAP_CHAR('\006', '&');
-+	}
-+#undef SWAP_CHAR
- 	pr_debug("llvm compiling command : %s\n", command_out);
- 
- 	err = read_from_pipe(template, &obj_buf, &obj_buf_sz);
+ 		if [[ "$cur1" == , ]]; then
 -- 
 2.39.2
 
