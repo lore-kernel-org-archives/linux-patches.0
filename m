@@ -1,26 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E260846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:33:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C62EC433EF;
-	Fri, 10 Mar 2023 14:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5277846C;
+	Fri, 10 Mar 2023 14:33:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33FD7C433EF;
+	Fri, 10 Mar 2023 14:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458780;
-	bh=yf1V2yYku1Tb2D38hbQzvy58pR0jhpqtt7MShKtSbEQ=;
+	s=korg; t=1678458783;
+	bh=yQJSZcfYXWTDUyGGmtHOLv8S1mP2iPgVwEZ5UYp+008=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HlicrhXUuC/nxKDNSvV8hjAQXNRS4LR6QDh7qRk/PnwF+YKlavtwOejQEj/2uOJAP
-	 KLfi73WJFEuEVqr1mk4T0y498xS9tu6b0qCi2OlDmy7BubGwaah/J2WwFndg03xZ3I
-	 jJ4WNxUvMB/5EQqui4DPFLN7KWYijh8bGIoEEiGg=
+	b=s/kcfRgzt/O/ESEOhBn13h287+KB9MMp1z9OmuZOjteSq4JQnA8zE+FwxpMfDWXsY
+	 h5YAfhDXgzzlqGb+W376pZ+PnVTpRFlZpXLGDfLHUvn8KEZRi/IGyKLzqzo02aF1Lf
+	 QltaId+S7W1VSpArMtHIVdhGY5WVsHppUgcsN5Dc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	bpf@vger.kernel.org,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	llvm@lists.linux.dev,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Tom Rix <trix@redhat.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 142/357] gfs2: jdata writepage fix
-Date: Fri, 10 Mar 2023 14:37:11 +0100
-Message-Id: <20230310133740.959202477@linuxfoundation.org>
+Subject: [PATCH 5.4 143/357] perf llvm: Fix inadvertent file creation
+Date: Fri, 10 Mar 2023 14:37:12 +0100
+Message-Id: <20230310133741.006036179@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -34,43 +47,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit cbb60951ce18c9b6e91d2eb97deb41d8ff616622 ]
+[ Upstream commit 9f19aab47ced012eddef1e2bc96007efc7713b61 ]
 
-The ->writepage() and ->writepages() operations are supposed to write
-entire pages.  However, on filesystems with a block size smaller than
-PAGE_SIZE, __gfs2_jdata_writepage() only adds the first block to the
-current transaction instead of adding the entire page.  Fix that.
+The LLVM template is first echo-ed into command_out and then
+command_out executed. The echo surrounds the template with double
+quotes, however, the template itself may contain quotes. This is
+generally innocuous but in tools/perf/tests/bpf-script-test-prologue.c
+we see:
+...
+SEC("func=null_lseek file->f_mode offset orig")
+...
+where the first double quote ends the double quote of the echo, then
+the > redirects output into a file called f_mode.
 
-Fixes: 18ec7d5c3f43 ("[GFS2] Make journaled data files identical to normal files on disk")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+To avoid this inadvertent behavior substitute redirects and similar
+characters to be ASCII control codes, then substitute the output in
+the echo back again.
+
+Fixes: 5eab5a7ee032acaa ("perf llvm: Display eBPF compiling command in debug output")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: bpf@vger.kernel.org
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: llvm@lists.linux.dev
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Tom Rix <trix@redhat.com>
+Link: https://lore.kernel.org/r/20230105082609.344538-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/aops.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/perf/util/llvm-utils.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/aops.c b/fs/gfs2/aops.c
-index b9fe975d7625a..c21383fab33b7 100644
---- a/fs/gfs2/aops.c
-+++ b/fs/gfs2/aops.c
-@@ -156,7 +156,6 @@ static int __gfs2_jdata_writepage(struct page *page, struct writeback_control *w
- {
- 	struct inode *inode = page->mapping->host;
- 	struct gfs2_inode *ip = GFS2_I(inode);
--	struct gfs2_sbd *sdp = GFS2_SB(inode);
+diff --git a/tools/perf/util/llvm-utils.c b/tools/perf/util/llvm-utils.c
+index e7c7e3232fc5a..b275a1b297c30 100644
+--- a/tools/perf/util/llvm-utils.c
++++ b/tools/perf/util/llvm-utils.c
+@@ -523,14 +523,37 @@ int llvm__compile_bpf(const char *path, void **p_obj_buf,
  
- 	if (PageChecked(page)) {
- 		ClearPageChecked(page);
-@@ -164,7 +163,7 @@ static int __gfs2_jdata_writepage(struct page *page, struct writeback_control *w
- 			create_empty_buffers(page, inode->i_sb->s_blocksize,
- 					     BIT(BH_Dirty)|BIT(BH_Uptodate));
- 		}
--		gfs2_page_add_databufs(ip, page, 0, sdp->sd_vfs->s_blocksize);
-+		gfs2_page_add_databufs(ip, page, 0, PAGE_SIZE);
- 	}
- 	return gfs2_write_full_page(page, gfs2_get_block_noalloc, wbc);
- }
+ 	pr_debug("llvm compiling command template: %s\n", template);
+ 
++	/*
++	 * Below, substitute control characters for values that can cause the
++	 * echo to misbehave, then substitute the values back.
++	 */
+ 	err = -ENOMEM;
+-	if (asprintf(&command_echo, "echo -n \"%s\"", template) < 0)
++	if (asprintf(&command_echo, "echo -n \a%s\a", template) < 0)
+ 		goto errout;
+ 
++#define SWAP_CHAR(a, b) do { if (*p == a) *p = b; } while (0)
++	for (char *p = command_echo; *p; p++) {
++		SWAP_CHAR('<', '\001');
++		SWAP_CHAR('>', '\002');
++		SWAP_CHAR('"', '\003');
++		SWAP_CHAR('\'', '\004');
++		SWAP_CHAR('|', '\005');
++		SWAP_CHAR('&', '\006');
++		SWAP_CHAR('\a', '"');
++	}
+ 	err = read_from_pipe(command_echo, (void **) &command_out, NULL);
+ 	if (err)
+ 		goto errout;
+ 
++	for (char *p = command_out; *p; p++) {
++		SWAP_CHAR('\001', '<');
++		SWAP_CHAR('\002', '>');
++		SWAP_CHAR('\003', '"');
++		SWAP_CHAR('\004', '\'');
++		SWAP_CHAR('\005', '|');
++		SWAP_CHAR('\006', '&');
++	}
++#undef SWAP_CHAR
+ 	pr_debug("llvm compiling command : %s\n", command_out);
+ 
+ 	err = read_from_pipe(template, &obj_buf, &obj_buf_sz);
 -- 
 2.39.2
 
