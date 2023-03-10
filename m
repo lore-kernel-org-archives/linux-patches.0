@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265F2848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:22:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDA1C4339B;
-	Fri, 10 Mar 2023 14:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01791848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:22:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6E2C433EF;
+	Fri, 10 Mar 2023 14:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458127;
-	bh=s7/xobAQRrsurvzSjHrXxO+rqxzENtSff3QKSZbLo/Q=;
+	s=korg; t=1678458129;
+	bh=AupI8DZLa6c/BV/RNHMnzl3sW9pXeR1CABduRzjM2Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbezsOkkPKmSUWzRYi8dCgzH8iaF9bPr60/SlfGECNJVGMPGHTKfe+qAx55v5z0m6
-	 /Kzth+Oef+H6ec3GFcjZO/A4h4U1Do3GZn9PzEfG0P1ESpu7I4sbwMkZ3fBJWbhQEN
-	 QBrzufh1tQ/MTLphIOA7JUEgQUdq+t6TPb82iFh8=
+	b=GXBubnuItKGNVFPgKu/b7wSezVx3sGeQnXFAKwfKBRNMFhQErP+cP1RBVonGptH+I
+	 /UzNNtE08YMMadpOk3Crk8v5ZBvlR+DOdEuPBtSoo9kIQ4NQPRVd7QGsEWJ4Sv53fu
+	 MdOg4qVVRLz5Ft4LaK1j+Fx1g1H5t3ckS5owsjSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <Andrew.Cooper3@citrix.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 4.19 155/252] x86/virt: Force GIF=1 prior to disabling SVM (for reboot flows)
-Date: Fri, 10 Mar 2023 14:38:45 +0100
-Message-Id: <20230310133723.510316289@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 4.19 173/252] wifi: rtl8xxxu: Use a longer retry limit of 48
+Date: Fri, 10 Mar 2023 14:39:03 +0100
+Message-Id: <20230310133724.097252891@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,54 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit 6a3236580b0b1accc3976345e723104f74f6f8e6 upstream.
+commit 2a86aa9a1892d60ef2e3f310f5b42b8b05546d65 upstream.
 
-Set GIF=1 prior to disabling SVM to ensure that INIT is recognized if the
-kernel is disabling SVM in an emergency, e.g. if the kernel is about to
-jump into a crash kernel or may reboot without doing a full CPU RESET.
-If GIF is left cleared, the new kernel (or firmware) will be unabled to
-awaken APs.  Eat faults on STGI (due to EFER.SVME=0) as it's possible
-that SVM could be disabled via NMI shootdown between reading EFER.SVME
-and executing STGI.
+The Realtek rate control algorithm goes back and forth a lot between
+the highest and the lowest rate it's allowed to use. This is due to
+a lot of frames being dropped because the retry limits set by
+IEEE80211_CONF_CHANGE_RETRY_LIMITS are too low. (Experimentally, they
+are 4 for long frames and 7 for short frames.)
 
-Link: https://lore.kernel.org/all/cbcb6f35-e5d7-c1c9-4db9-fe5cc4de579a@amd.com
+The vendor drivers hardcode the value 48 for both retry limits (for
+station mode), which makes dropped frames very rare and thus the rate
+control is more stable.
+
+Because most Realtek chips handle the rate control in the firmware,
+which can't be modified, ignore the limits set by
+IEEE80211_CONF_CHANGE_RETRY_LIMITS and use the value 48 (set during
+chip initialisation), same as the vendor drivers.
+
 Cc: stable@vger.kernel.org
-Cc: Andrew Cooper <Andrew.Cooper3@citrix.com>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221130233650.1404148-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/477d745b-6bac-111d-403c-487fc19aa30d@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/virtext.h |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c |    9 ---------
+ 1 file changed, 9 deletions(-)
 
---- a/arch/x86/include/asm/virtext.h
-+++ b/arch/x86/include/asm/virtext.h
-@@ -114,7 +114,21 @@ static inline void cpu_svm_disable(void)
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -5500,7 +5500,6 @@ static int rtl8xxxu_config(struct ieee80
+ {
+ 	struct rtl8xxxu_priv *priv = hw->priv;
+ 	struct device *dev = &priv->udev->dev;
+-	u16 val16;
+ 	int ret = 0, channel;
+ 	bool ht40;
  
- 	wrmsrl(MSR_VM_HSAVE_PA, 0);
- 	rdmsrl(MSR_EFER, efer);
--	wrmsrl(MSR_EFER, efer & ~EFER_SVME);
-+	if (efer & EFER_SVME) {
-+		/*
-+		 * Force GIF=1 prior to disabling SVM to ensure INIT and NMI
-+		 * aren't blocked, e.g. if a fatal error occurred between CLGI
-+		 * and STGI.  Note, STGI may #UD if SVM is disabled from NMI
-+		 * context between reading EFER and executing STGI.  In that
-+		 * case, GIF must already be set, otherwise the NMI would have
-+		 * been blocked, so just eat the fault.
-+		 */
-+		asm_volatile_goto("1: stgi\n\t"
-+				  _ASM_EXTABLE(1b, %l[fault])
-+				  ::: "memory" : fault);
-+fault:
-+		wrmsrl(MSR_EFER, efer & ~EFER_SVME);
-+	}
- }
+@@ -5510,14 +5509,6 @@ static int rtl8xxxu_config(struct ieee80
+ 			 __func__, hw->conf.chandef.chan->hw_value,
+ 			 changed, hw->conf.chandef.width);
  
- /** Makes sure SVM is disabled, if it is supported on the CPU
+-	if (changed & IEEE80211_CONF_CHANGE_RETRY_LIMITS) {
+-		val16 = ((hw->conf.long_frame_max_tx_count <<
+-			  RETRY_LIMIT_LONG_SHIFT) & RETRY_LIMIT_LONG_MASK) |
+-			((hw->conf.short_frame_max_tx_count <<
+-			  RETRY_LIMIT_SHORT_SHIFT) & RETRY_LIMIT_SHORT_MASK);
+-		rtl8xxxu_write16(priv, REG_RETRY_LIMIT, val16);
+-	}
+-
+ 	if (changed & IEEE80211_CONF_CHANGE_CHANNEL) {
+ 		switch (hw->conf.chandef.width) {
+ 		case NL80211_CHAN_WIDTH_20_NOHT:
 
 
