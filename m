@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B607847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2221FC433EF;
-	Fri, 10 Mar 2023 13:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E24A847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C716BC433EF;
+	Fri, 10 Mar 2023 13:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456329;
-	bh=6/zJmf2SYelbT0s1d/RgD6Eug/2uVcW14vAO905zeQM=;
+	s=korg; t=1678456332;
+	bh=UAUPl9AJpD3+bESpazGPh8x5h/nQp5bOsQJrj00x5Es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lNPdQVSfp9Rk4E5nOoeB0Z02hEfgVvX6J69gEKct1du3fcHKt28pOv+ez5PYoGhli
-	 XP76NYGqcGMUg/9bRdAL7iVidfWaMfn25AYA/g0O9MCwxZITUNzemt1umNoO12UNzg
-	 Wyj1Mknst8G0EbSzBP80asuSdYE2gCMB05MYXxII=
+	b=jvWdR0WfOeity1KHgIZEcStsKDqnj6iAK6WOm4dpZJbhRQe/2l8z4MWN0Kg4qCPFZ
+	 /OpDVhVnU1zcTUElfelIgXXjZNzvYIQJtjpGqmtWH8sifcAwydD+XSXPl4qk/A3tDt
+	 jwRKrTm5yKffwmWZ01Dy9VChHZ/1LQKFcueYSg4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 159/193] ubifs: Re-statistic cleaned znode count if commit failed
-Date: Fri, 10 Mar 2023 14:39:01 +0100
-Message-Id: <20230310133716.464999185@linuxfoundation.org>
+Subject: [PATCH 4.14 160/193] ubifs: dirty_cow_znode: Fix memleak in error handling path
+Date: Fri, 10 Mar 2023 14:39:02 +0100
+Message-Id: <20230310133716.493945564@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -37,82 +37,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 944e096aa24071d3fe22822f6249d3ae309e39ea ]
+[ Upstream commit 122deabfe1428bffe95e2bf364ff8a5059bdf089 ]
 
-Dirty znodes will be written on flash in committing process with
-following states:
+Following process will cause a memleak for copied up znode:
 
-	      process A			|  znode state
-------------------------------------------------------
-do_commit				| DIRTY_ZNODE
-  ubifs_tnc_start_commit		| DIRTY_ZNODE
-   get_znodes_to_commit			| DIRTY_ZNODE | COW_ZNODE
-    layout_commit			| DIRTY_ZNODE | COW_ZNODE
-     fill_gap                           | 0
-  write master				| 0 or OBSOLETE_ZNODE
+dirty_cow_znode
+  zn = copy_znode(c, znode);
+  err = insert_old_idx(c, zbr->lnum, zbr->offs);
+  if (unlikely(err))
+     return ERR_PTR(err);   // No one refers to zn.
 
-	      process B			|  znode state
-------------------------------------------------------
-do_commit				| DIRTY_ZNODE[1]
-  ubifs_tnc_start_commit		| DIRTY_ZNODE
-   get_znodes_to_commit			| DIRTY_ZNODE | COW_ZNODE
-  ubifs_tnc_end_commit			| DIRTY_ZNODE | COW_ZNODE
-   write_index                          | 0
-  write master				| 0 or OBSOLETE_ZNODE[2] or
-					| DIRTY_ZNODE[3]
-
-[1] znode is dirtied without concurrent committing process
-[2] znode is copied up (re-dirtied by other process) before cleaned
-    up in committing process
-[3] znode is re-dirtied after cleaned up in committing process
-
-Currently, the clean znode count is updated in free_obsolete_znodes(),
-which is called only in normal path. If do_commit failed, clean znode
-count won't be updated, which triggers a failure ubifs assertion[4] in
-ubifs_tnc_close():
- ubifs_assert_failed [ubifs]: UBIFS assert failed: freed == n
-
-[4] Commit 380347e9ca7682 ("UBIFS: Add an assertion for clean_zn_cnt").
-
-Fix it by re-statisticing cleaned znode count in tnc_destroy_cnext().
+Fix it by adding copied znode back to tnc, then it will be freed
+by ubifs_destroy_tnc_subtree() while closing tnc.
 
 Fetch a reproducer in [Link].
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216704
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216705
 Fixes: 1e51764a3c2a ("UBIFS: add new flash file system")
 Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/tnc.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/ubifs/tnc.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/fs/ubifs/tnc.c b/fs/ubifs/tnc.c
-index c7828db206bc0..20b70e178c4fa 100644
+index 20b70e178c4fa..6c4af1cfce346 100644
 --- a/fs/ubifs/tnc.c
 +++ b/fs/ubifs/tnc.c
-@@ -3044,6 +3044,21 @@ static void tnc_destroy_cnext(struct ubifs_info *c)
- 		cnext = cnext->cnext;
- 		if (ubifs_zn_obsolete(znode))
- 			kfree(znode);
-+		else if (!ubifs_zn_cow(znode)) {
+@@ -279,11 +279,18 @@ static struct ubifs_znode *dirty_cow_znode(struct ubifs_info *c,
+ 	if (zbr->len) {
+ 		err = insert_old_idx(c, zbr->lnum, zbr->offs);
+ 		if (unlikely(err))
+-			return ERR_PTR(err);
 +			/*
-+			 * Don't forget to update clean znode count after
-+			 * committing failed, because ubifs will check this
-+			 * count while closing tnc. Non-obsolete znode could
-+			 * be re-dirtied during committing process, so dirty
-+			 * flag is untrustable. The flag 'COW_ZNODE' is set
-+			 * for each dirty znode before committing, and it is
-+			 * cleared as long as the znode become clean, so we
-+			 * can statistic clean znode count according to this
-+			 * flag.
++			 * Obsolete znodes will be freed by tnc_destroy_cnext()
++			 * or free_obsolete_znodes(), copied up znodes should
++			 * be added back to tnc and freed by
++			 * ubifs_destroy_tnc_subtree().
 +			 */
-+			atomic_long_inc(&c->clean_zn_cnt);
-+			atomic_long_inc(&ubifs_clean_zn_cnt);
-+		}
- 	} while (cnext && cnext != c->cnext);
- }
++			goto out;
+ 		err = add_idx_dirt(c, zbr->lnum, zbr->len);
+ 	} else
+ 		err = 0;
  
++out:
+ 	zbr->znode = zn;
+ 	zbr->lnum = 0;
+ 	zbr->offs = 0;
 -- 
 2.39.2
 
