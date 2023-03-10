@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179C0882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A521C433EF;
-	Fri, 10 Mar 2023 15:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07EB7882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:06:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6CBC4339B;
+	Fri, 10 Mar 2023 15:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460811;
-	bh=dpsCJHlwcgU8at/MHlGCfTyGGtD89VwRP84yZeE0ePw=;
+	s=korg; t=1678460814;
+	bh=n1qF7fzpWNzZ5zZTD0zbhX1zKEYefHOlgum6rwpaJD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=REovKqsyPaAoXNQhhy+4FTAGoNDeSPXHjKNMqIPrIA8u6HEx9yrUMUZ5CIFr4Nupx
-	 sWHbz3Dm7ux0IXT3Orh6rF5WAN3LbnUJ6WfkY+JVp2Ppy/i5OAsISDfcO/aGdBwYV4
-	 pR2GNX2c70wislDM31QvtYE64gscBXAySnK/bD8o=
+	b=pKlWHTPxdwEBBc4+wF9F5XzqLUA0b4kk9YxclmCtZe2U2WE8jrN64Eo6GVm27DQJc
+	 TwURk/EQlbxz/pvXKDXBZLThBysO3aLz7rNamDJvV897eAshGjpHM/gcUB8/a6JZlp
+	 0pJgBX3njq8fa5Glh2PHaZDugOLj7w/ktLpAWvzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Li Hua <hucool.lihua@huawei.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 442/529] ubifs: Rectify space budget for ubifs_symlink() if symlink is encrypted
-Date: Fri, 10 Mar 2023 14:39:45 +0100
-Message-Id: <20230310133825.406997984@linuxfoundation.org>
+Subject: [PATCH 5.10 460/529] watchdog: pcwd_usb: Fix attempting to access uninitialized memory
+Date: Fri, 10 Mar 2023 14:40:03 +0100
+Message-Id: <20230310133826.212297437@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,45 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Li Hua <hucool.lihua@huawei.com>
 
-[ Upstream commit c2c36cc6ca23e614f9e4238d0ecf48549ee9002a ]
+[ Upstream commit 7d06c07c67100fd0f8e6b3ab7145ce789f788117 ]
 
-Fix bad space budget when symlink file is encrypted. Bad space budget
-may let make_reservation() return with -ENOSPC, which could turn ubifs
-to read-only mode in do_writepage() process.
+The stack variable msb and lsb may be used uninitialized in function
+usb_pcwd_get_temperature and usb_pcwd_get_timeleft when usb card no response.
 
-Fetch a reproducer in [Link].
+The build waring is:
+drivers/watchdog/pcwd_usb.c:336:22: error: ‘lsb’ is used uninitialized in this function [-Werror=uninitialized]
+  *temperature = (lsb * 9 / 5) + 32;
+                  ~~~~^~~
+drivers/watchdog/pcwd_usb.c:328:21: note: ‘lsb’ was declared here
+  unsigned char msb, lsb;
+                     ^~~
+cc1: all warnings being treated as errors
+scripts/Makefile.build:250: recipe for target 'drivers/watchdog/pcwd_usb.o' failed
+make[3]: *** [drivers/watchdog/pcwd_usb.o] Error 1
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216490
-Fixes: ca7f85be8d6cf9 ("ubifs: Add support for encrypted symlinks")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: b7e04f8c61a4 ("mv watchdog tree under drivers")
+Signed-off-by: Li Hua <hucool.lihua@huawei.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20221116020706.70847-1-hucool.lihua@huawei.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/watchdog/pcwd_usb.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ubifs/dir.c b/fs/ubifs/dir.c
-index 9257ee893bdb8..7dceca1be9b5d 100644
---- a/fs/ubifs/dir.c
-+++ b/fs/ubifs/dir.c
-@@ -1117,7 +1117,6 @@ static int ubifs_symlink(struct inode *dir, struct dentry *dentry,
- 	int err, sz_change, len = strlen(symname);
- 	struct fscrypt_str disk_link;
- 	struct ubifs_budget_req req = { .new_ino = 1, .new_dent = 1,
--					.new_ino_d = ALIGN(len, 8),
- 					.dirtied_ino = 1 };
- 	struct fscrypt_name nm;
+diff --git a/drivers/watchdog/pcwd_usb.c b/drivers/watchdog/pcwd_usb.c
+index 1bdaf17c1d38d..8202f0a6b0935 100644
+--- a/drivers/watchdog/pcwd_usb.c
++++ b/drivers/watchdog/pcwd_usb.c
+@@ -325,7 +325,8 @@ static int usb_pcwd_set_heartbeat(struct usb_pcwd_private *usb_pcwd, int t)
+ static int usb_pcwd_get_temperature(struct usb_pcwd_private *usb_pcwd,
+ 							int *temperature)
+ {
+-	unsigned char msb, lsb;
++	unsigned char msb = 0x00;
++	unsigned char lsb = 0x00;
  
-@@ -1133,6 +1132,7 @@ static int ubifs_symlink(struct inode *dir, struct dentry *dentry,
- 	 * Budget request settings: new inode, new direntry and changing parent
- 	 * directory inode.
- 	 */
-+	req.new_ino_d = ALIGN(disk_link.len - 1, 8);
- 	err = ubifs_budget_space(c, &req);
- 	if (err)
- 		return err;
+ 	usb_pcwd_send_command(usb_pcwd, CMD_READ_TEMP, &msb, &lsb);
+ 
+@@ -341,7 +342,8 @@ static int usb_pcwd_get_temperature(struct usb_pcwd_private *usb_pcwd,
+ static int usb_pcwd_get_timeleft(struct usb_pcwd_private *usb_pcwd,
+ 								int *time_left)
+ {
+-	unsigned char msb, lsb;
++	unsigned char msb = 0x00;
++	unsigned char lsb = 0x00;
+ 
+ 	/* Read the time that's left before rebooting */
+ 	/* Note: if the board is not yet armed then we will read 0xFFFF */
 -- 
 2.39.2
 
