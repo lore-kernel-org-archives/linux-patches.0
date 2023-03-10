@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10509848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:22:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84133C433D2;
-	Fri, 10 Mar 2023 14:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265F2848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:22:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDA1C4339B;
+	Fri, 10 Mar 2023 14:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458123;
-	bh=dWaOxSTuuVnsoufbcY5U6XTajXN1PhzScfpEn9gN9EU=;
+	s=korg; t=1678458127;
+	bh=s7/xobAQRrsurvzSjHrXxO+rqxzENtSff3QKSZbLo/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RnQgW53u88Tz8taqKRG6QpZguAevwnOU8sR6M6Y7XVsId9j+OQHh0OSPKy739YJzQ
-	 07n+9OpUkvBlrF9bMDufhjSSyXE7EgbVXQ9UYChXa0RCL0Zb1e9FnDSY1qYSy5amBp
-	 IrLhMkZYeRYE3jq7eE51cnKrTs8KJ4GbjnCnfve8=
+	b=xbezsOkkPKmSUWzRYi8dCgzH8iaF9bPr60/SlfGECNJVGMPGHTKfe+qAx55v5z0m6
+	 /Kzth+Oef+H6ec3GFcjZO/A4h4U1Do3GZn9PzEfG0P1ESpu7I4sbwMkZ3fBJWbhQEN
+	 QBrzufh1tQ/MTLphIOA7JUEgQUdq+t6TPb82iFh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com,
-	stable@kernel.org,
-	Jun Nie <jun.nie@linaro.org>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 4.19 172/252] ext4: refuse to create ea block when umounted
-Date: Fri, 10 Mar 2023 14:39:02 +0100
-Message-Id: <20230310133724.067471607@linuxfoundation.org>
+	Andrew Cooper <Andrew.Cooper3@citrix.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 4.19 155/252] x86/virt: Force GIF=1 prior to disabling SVM (for reboot flows)
+Date: Fri, 10 Mar 2023 14:38:45 +0100
+Message-Id: <20230310133723.510316289@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,40 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jun Nie <jun.nie@linaro.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit f31173c19901a96bb2ebf6bcfec8a08df7095c91 upstream.
+commit 6a3236580b0b1accc3976345e723104f74f6f8e6 upstream.
 
-The ea block expansion need to access s_root while it is
-already set as NULL when umount is triggered. Refuse this
-request to avoid panic.
+Set GIF=1 prior to disabling SVM to ensure that INIT is recognized if the
+kernel is disabling SVM in an emergency, e.g. if the kernel is about to
+jump into a crash kernel or may reboot without doing a full CPU RESET.
+If GIF is left cleared, the new kernel (or firmware) will be unabled to
+awaken APs.  Eat faults on STGI (due to EFER.SVME=0) as it's possible
+that SVM could be disabled via NMI shootdown between reading EFER.SVME
+and executing STGI.
 
-Reported-by: syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=3613786cb88c93aa1c6a279b1df6a7b201347d08
-Link: https://lore.kernel.org/r/20230103014517.495275-3-jun.nie@linaro.org
-Cc: stable@kernel.org
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/all/cbcb6f35-e5d7-c1c9-4db9-fe5cc4de579a@amd.com
+Cc: stable@vger.kernel.org
+Cc: Andrew Cooper <Andrew.Cooper3@citrix.com>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20221130233650.1404148-3-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/x86/include/asm/virtext.h |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1436,6 +1436,13 @@ static struct inode *ext4_xattr_inode_cr
- 	uid_t owner[2] = { i_uid_read(inode), i_gid_read(inode) };
- 	int err;
+--- a/arch/x86/include/asm/virtext.h
++++ b/arch/x86/include/asm/virtext.h
+@@ -114,7 +114,21 @@ static inline void cpu_svm_disable(void)
  
-+	if (inode->i_sb->s_root == NULL) {
-+		ext4_warning(inode->i_sb,
-+			     "refuse to create EA inode when umounting");
-+		WARN_ON(1);
-+		return ERR_PTR(-EINVAL);
+ 	wrmsrl(MSR_VM_HSAVE_PA, 0);
+ 	rdmsrl(MSR_EFER, efer);
+-	wrmsrl(MSR_EFER, efer & ~EFER_SVME);
++	if (efer & EFER_SVME) {
++		/*
++		 * Force GIF=1 prior to disabling SVM to ensure INIT and NMI
++		 * aren't blocked, e.g. if a fatal error occurred between CLGI
++		 * and STGI.  Note, STGI may #UD if SVM is disabled from NMI
++		 * context between reading EFER and executing STGI.  In that
++		 * case, GIF must already be set, otherwise the NMI would have
++		 * been blocked, so just eat the fault.
++		 */
++		asm_volatile_goto("1: stgi\n\t"
++				  _ASM_EXTABLE(1b, %l[fault])
++				  ::: "memory" : fault);
++fault:
++		wrmsrl(MSR_EFER, efer & ~EFER_SVME);
 +	}
-+
- 	/*
- 	 * Let the next inode be the goal, so we try and allocate the EA inode
- 	 * in the same group, or nearby one.
+ }
+ 
+ /** Makes sure SVM is disabled, if it is supported on the CPU
 
 
