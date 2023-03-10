@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0938481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:12:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E41C433D2;
-	Fri, 10 Mar 2023 14:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FA48481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:12:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE5CC4339C;
+	Fri, 10 Mar 2023 14:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457532;
-	bh=BPvNuEoIcrDhMCnlwaSg0666iVjyarZBp9q3ys8goR4=;
+	s=korg; t=1678457536;
+	bh=GDmLQ+aTiJGcMD1+TPY0cS8W5hJPVFzQLOpB0ioHuiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eIYyhytKjjKwtr7flwQOVykCJRMPjpWrrS10XoPsTPTxGVC2QOhUwTDpv23x6OGT+
-	 jCWzObx91brM/fmt96ECAnBeB4SwYn6UqrBD1CGn695jPGmxGKLQhpJcYZeX6sr1EZ
-	 jKSxiOk8PBfZmWspBCMSikf0E4d4U6UY87CoBxn8=
+	b=OVUhTRm8XUlT8GpPSuqKbmd4YTa60JQLepJ5dYGJQDwaYCIuQmxag3Bu2LiRu3adR
+	 N42ic6NNUenaqdqyj5hZQMp2VJuXRPrsDrvVj+1QHHhZLYUOu4PcN8bR8t30txfIAj
+	 8iKqDGW3ITBa4MXULivJrxDOt3681eORCuxNlbus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Chiu <chris.chiu@canonical.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 162/200] PCI: Distribute available resources for root buses, too
-Date: Fri, 10 Mar 2023 14:39:29 +0100
-Message-Id: <20230310133722.088313970@linuxfoundation.org>
+Subject: [PATCH 6.1 171/200] phy: rockchip-typec: Fix unsigned comparison with less than zero
+Date: Fri, 10 Mar 2023 14:39:38 +0100
+Message-Id: <20230310133722.354508049@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -36,130 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 
-[ Upstream commit 7180c1d08639f28e63110ad35815f7a1785b8a19 ]
+[ Upstream commit f765c59c5a72546a2d74a92ae5d0eb0329d8e247 ]
 
-Previously we distributed spare resources only upon hot-add, so if the
-initial root bus scan found devices that had not been fully configured by
-the BIOS, we allocated only enough resources to cover what was then
-present. If some of those devices were hotplug bridges, we did not leave
-any additional resource space for future expansion.
+The dp and ufp are defined as bool type, the return value type of
+function extcon_get_state should be int, so the type of dp and ufp
+are modified to int.
 
-Distribute the available resources for root buses, too, to make this work
-the same way as the normal hotplug case.
+./drivers/phy/rockchip/phy-rockchip-typec.c:827:12-14: WARNING: Unsigned expression compared with zero: dp > 0.
 
-A previous commit to do this was reverted due to a regression reported by
-Jonathan Cameron:
-
-  e96e27fc6f79 ("PCI: Distribute available resources for root buses, too")
-  5632e2beaf9d ("Revert "PCI: Distribute available resources for root buses, too"")
-
-This commit changes pci_bridge_resources_not_assigned() to work with
-bridges that do not have all the resource windows programmed by the boot
-firmware (previously we expected all I/O, memory and prefetchable memory
-were programmed).
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216000
-Link: https://lore.kernel.org/r/20220905080232.36087-5-mika.westerberg@linux.intel.com
-Link: https://lore.kernel.org/r/20230131092405.29121-4-mika.westerberg@linux.intel.com
-Reported-by: Chris Chiu <chris.chiu@canonical.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3962
+Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20230213035709.99027-1-jiapeng.chong@linux.alibaba.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/setup-bus.c | 57 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 56 insertions(+), 1 deletion(-)
+ drivers/phy/rockchip/phy-rockchip-typec.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index b7b8dddb77722..c690572b10ce7 100644
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -1770,7 +1770,10 @@ static void adjust_bridge_window(struct pci_dev *bridge, struct resource *res,
- 	}
+diff --git a/drivers/phy/rockchip/phy-rockchip-typec.c b/drivers/phy/rockchip/phy-rockchip-typec.c
+index 6aea512e5d4ee..39db8acde61af 100644
+--- a/drivers/phy/rockchip/phy-rockchip-typec.c
++++ b/drivers/phy/rockchip/phy-rockchip-typec.c
+@@ -808,9 +808,8 @@ static int tcphy_get_mode(struct rockchip_typec_phy *tcphy)
+ 	struct extcon_dev *edev = tcphy->extcon;
+ 	union extcon_property_value property;
+ 	unsigned int id;
+-	bool ufp, dp;
+ 	u8 mode;
+-	int ret;
++	int ret, ufp, dp;
  
- 	res->end = res->start + new_size - 1;
--	remove_from_list(add_list, res);
-+
-+	/* If the resource is part of the add_list, remove it now */
-+	if (add_list)
-+		remove_from_list(add_list, res);
- }
- 
- static void remove_dev_resource(struct resource *avail, struct pci_dev *dev,
-@@ -1972,6 +1975,8 @@ static void pci_bridge_distribute_available_resources(struct pci_dev *bridge,
- 	if (!bridge->is_hotplug_bridge)
- 		return;
- 
-+	pci_dbg(bridge, "distributing available resources\n");
-+
- 	/* Take the initial extra resources from the hotplug port */
- 	available_io = bridge->resource[PCI_BRIDGE_IO_WINDOW];
- 	available_mmio = bridge->resource[PCI_BRIDGE_MEM_WINDOW];
-@@ -1983,6 +1988,54 @@ static void pci_bridge_distribute_available_resources(struct pci_dev *bridge,
- 					       available_mmio_pref);
- }
- 
-+static bool pci_bridge_resources_not_assigned(struct pci_dev *dev)
-+{
-+	const struct resource *r;
-+
-+	/*
-+	 * If the child device's resources are not yet assigned it means we
-+	 * are configuring them (not the boot firmware), so we should be
-+	 * able to extend the upstream bridge resources in the same way we
-+	 * do with the normal hotplug case.
-+	 */
-+	r = &dev->resource[PCI_BRIDGE_IO_WINDOW];
-+	if (r->flags && !(r->flags & IORESOURCE_STARTALIGN))
-+		return false;
-+	r = &dev->resource[PCI_BRIDGE_MEM_WINDOW];
-+	if (r->flags && !(r->flags & IORESOURCE_STARTALIGN))
-+		return false;
-+	r = &dev->resource[PCI_BRIDGE_PREF_MEM_WINDOW];
-+	if (r->flags && !(r->flags & IORESOURCE_STARTALIGN))
-+		return false;
-+
-+	return true;
-+}
-+
-+static void
-+pci_root_bus_distribute_available_resources(struct pci_bus *bus,
-+					    struct list_head *add_list)
-+{
-+	struct pci_dev *dev, *bridge = bus->self;
-+
-+	for_each_pci_bridge(dev, bus) {
-+		struct pci_bus *b;
-+
-+		b = dev->subordinate;
-+		if (!b)
-+			continue;
-+
-+		/*
-+		 * Need to check "bridge" here too because it is NULL
-+		 * in case of root bus.
-+		 */
-+		if (bridge && pci_bridge_resources_not_assigned(dev))
-+			pci_bridge_distribute_available_resources(bridge,
-+								  add_list);
-+		else
-+			pci_root_bus_distribute_available_resources(b, add_list);
-+	}
-+}
-+
- /*
-  * First try will not touch PCI bridge res.
-  * Second and later try will clear small leaf bridge res.
-@@ -2022,6 +2075,8 @@ void pci_assign_unassigned_root_bus_resources(struct pci_bus *bus)
- 	 */
- 	__pci_bus_size_bridges(bus, add_list);
- 
-+	pci_root_bus_distribute_available_resources(bus, add_list);
-+
- 	/* Depth last, allocate resources and update the hardware. */
- 	__pci_bus_assign_resources(bus, add_list, &fail_head);
- 	if (add_list)
+ 	if (!edev)
+ 		return MODE_DFP_USB;
 -- 
 2.39.2
 
