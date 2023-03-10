@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B88D847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AC7C433D2;
-	Fri, 10 Mar 2023 13:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82D8847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146F3C4339B;
+	Fri, 10 Mar 2023 13:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456173;
-	bh=ScYuq9JgJnBnS8GzXZwY+7wFFiHFiTJUrnlfqmlmXUw=;
+	s=korg; t=1678456176;
+	bh=sCja9kFKxvazSSIFNujiaQJCWOT4abt5tKVj4rRGjiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Chl0hVbs+lrEWRhor5PVLQP44O/l7KzDCW1S64TD39lihTWzBwA4l5Q/vt63sWUry
-	 so2KG8GWj5zGA4L9FfkFq7HirTj4PnX8LvIHVmH5J3XMkZpqWHDdv8eQ8u8Vpsjwze
-	 ibW2Uxyz8l51GTg93da1UpbrnXIsXamY+tgzAfNg=
+	b=e9YXKpIEDU6ALbZQiCWnEzOgpim1pZkO+GBy5FifxYAd2tcWVF8g0JNpTDLsrW3nT
+	 GyiGZOXefb1PGQjlszfKKYwEAMEA7Dmlnay5lvB/ZMZ4L2px5mXjofua5st16qap+3
+	 wCpF5Nj8I00U6+weoXZZPGNvFzLOY9ziWMQbDVBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun ASAKA <JunASAKA@zzy040330.moe>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 4.14 098/193] wifi: rtl8xxxu: fixing transmisison failure for rtl8192eu
-Date: Fri, 10 Mar 2023 14:38:00 +0100
-Message-Id: <20230310133714.508155090@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 4.14 107/193] udf: Truncate added extents on failed expansion
+Date: Fri, 10 Mar 2023 14:38:09 +0100
+Message-Id: <20230310133714.833504019@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,36 +33,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jun ASAKA <JunASAKA@zzy040330.moe>
+From: Jan Kara <jack@suse.cz>
 
-commit c6015bf3ff1ffb3caa27eb913797438a0fc634a0 upstream.
+commit 70bfb3a8d661d4fdc742afc061b88a7f3fc9f500 upstream.
 
-Fixing transmission failure which results in
-"authentication with ... timed out". This can be
-fixed by disable the REG_TXPAUSE.
+When a file expansion failed because we didn't have enough space for
+indirect extents make sure we truncate extents created so far so that we
+don't leave extents beyond EOF.
 
-Signed-off-by: Jun ASAKA <JunASAKA@zzy040330.moe>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221217030659.12577-1-JunASAKA@zzy040330.moe
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/udf/inode.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
-@@ -1629,6 +1629,11 @@ static void rtl8192e_enable_rf(struct rt
- 	val8 = rtl8xxxu_read8(priv, REG_PAD_CTRL1);
- 	val8 &= ~BIT(0);
- 	rtl8xxxu_write8(priv, REG_PAD_CTRL1, val8);
-+
-+	/*
-+	 * Fix transmission failure of rtl8192e.
-+	 */
-+	rtl8xxxu_write8(priv, REG_TXPAUSE, 0x00);
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -521,8 +521,10 @@ static int udf_do_extend_file(struct ino
+ 	}
+ 
+ 	if (fake) {
+-		udf_add_aext(inode, last_pos, &last_ext->extLocation,
+-			     last_ext->extLength, 1);
++		err = udf_add_aext(inode, last_pos, &last_ext->extLocation,
++				   last_ext->extLength, 1);
++		if (err < 0)
++			goto out_err;
+ 		count++;
+ 	} else {
+ 		struct kernel_lb_addr tmploc;
+@@ -556,7 +558,7 @@ static int udf_do_extend_file(struct ino
+ 		err = udf_add_aext(inode, last_pos, &last_ext->extLocation,
+ 				   last_ext->extLength, 1);
+ 		if (err)
+-			return err;
++			goto out_err;
+ 		count++;
+ 	}
+ 	if (new_block_bytes) {
+@@ -565,7 +567,7 @@ static int udf_do_extend_file(struct ino
+ 		err = udf_add_aext(inode, last_pos, &last_ext->extLocation,
+ 				   last_ext->extLength, 1);
+ 		if (err)
+-			return err;
++			goto out_err;
+ 		count++;
+ 	}
+ 
+@@ -579,6 +581,11 @@ out:
+ 		return -EIO;
+ 
+ 	return count;
++out_err:
++	/* Remove extents we've created so far */
++	udf_clear_extent_cache(inode);
++	udf_truncate_extents(inode);
++	return err;
  }
  
- struct rtl8xxxu_fileops rtl8192eu_fops = {
+ /* Extend the final block of the file to final_block_len bytes */
 
 
