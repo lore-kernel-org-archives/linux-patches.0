@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9937B8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:10:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F50FC4339B;
-	Fri, 10 Mar 2023 14:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABCF8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:10:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED190C433D2;
+	Fri, 10 Mar 2023 14:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457418;
-	bh=5Tcv+cUXZYYx9FdClNlip7nlLE+iip8idBhq8P9aQ4g=;
+	s=korg; t=1678457421;
+	bh=aPEfjUGtaJxBpK3yGvFT0lxxhbxkZp62JOMqdkptNSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kbpUKsiO4ClkRhwd5sN/HhmBjjNNKeybHzKvljSHHKNER4dnsOypHdLehX8HXwhzH
-	 d8GvskTGJf8kRXELvsFFz9NuwjWAdpF85dUvYK4POLtLS+w8aQVR/2eodE7XJVjoXT
-	 +pqfKBgQ11t4HEWuW7tCpKBJrWVSrPPlR29bgVIk=
+	b=MYOFCxgowoi6w8yTzpU62tfMLhYBwNv5ljl4LqqQWbaGwutIkBeD1UDfHcGP5LyPx
+	 N9Q32EGaUyYocPLf2lf/02hl0lO6uQ/0L4Jd3UZ4q19o05k1A6kdJ8gFS70WHIAgac
+	 YzC2mU3hVGREpXkjoOx36o204IDx+2F/4auJBGi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Zhipeng Wang <zhipeng.wang_1@nxp.com>,
+	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
+	Philippe Schenker <philippe.schenker@toradex.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 100/200] scsi: mpi3mr: Use number of bits to manage bitmap sizes
-Date: Fri, 10 Mar 2023 14:38:27 +0100
-Message-Id: <20230310133720.179122804@linuxfoundation.org>
+Subject: [PATCH 6.1 101/200] rtc: allow rtc_read_alarm without read_alarm callback
+Date: Fri, 10 Mar 2023 14:38:28 +0100
+Message-Id: <20230310133720.208212332@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -36,236 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 
-[ Upstream commit 339e61565f81a6534afdc18fd854b2e2628bf5db ]
+[ Upstream commit a783c962619271a8b905efad1d89adfec11ae0c8 ]
 
-To allocate bitmaps, the mpi3mr driver calculates sizes of bitmaps using
-byte as unit. However, bitmap helper functions assume that bitmaps are
-allocated using unsigned long as unit. This gap causes memory access beyond
-the bitmap sizes and results in "BUG: KASAN: slab-out-of-bounds".  The BUG
-was observed at firmware download to eHBA-9600. Call trace indicated that
-the out-of-bounds access happened in find_first_zero_bit() called from
-mpi3mr_send_event_ack() for miroc->evtack_cmds_bitmap.
+.read_alarm is not necessary to read the current alarm because it is
+recorded in the aie_timer and so rtc_read_alarm() will never call
+rtc_read_alarm_internal() which is the only function calling the callback.
 
-To fix the BUG, do not use bytes to manage bitmap sizes. Instead, use
-number of bits, and call bitmap helper functions which take number of bits
-as arguments. For memory allocation, call bitmap_zalloc() instead of
-kzalloc() and krealloc(). For memory free, call bitmap_free() instead of
-kfree(). For zero clear, call bitmap_clear() instead of memset().
-
-Remove three fields for bitmap byte sizes in struct scmd_priv which are no
-longer required. Replace the field dev_handle_bitmap_sz with
-dev_handle_bitmap_bits to keep number of bits of removepend_bitmap across
-resize.
-
-Link: https://lore.kernel.org/r/20230214005019.1897251-4-shinichiro.kawasaki@wdc.com
-Fixes: c5758fc72b92 ("scsi: mpi3mr: Gracefully handle online FW update operation")
-Fixes: e844adb1fbdc ("scsi: mpi3mr: Implement SCSI error handler hooks")
-Fixes: c1af985d27da ("scsi: mpi3mr: Add Event acknowledgment logic")
-Fixes: 824a156633df ("scsi: mpi3mr: Base driver code")
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Zhipeng Wang <zhipeng.wang_1@nxp.com>
+Reported-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
+Fixes: 7ae41220ef58 ("rtc: introduce features bitfield")
+Tested-by: Philippe Schenker <philippe.schenker@toradex.com>
+Link: https://lore.kernel.org/r/20230214222754.582582-1-alexandre.belloni@bootlin.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr.h    | 10 +----
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 75 ++++++++++++++-------------------
- 2 files changed, 33 insertions(+), 52 deletions(-)
+ drivers/rtc/interface.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr.h b/drivers/scsi/mpi3mr/mpi3mr.h
-index def4c5e15cd89..8a438f248a820 100644
---- a/drivers/scsi/mpi3mr/mpi3mr.h
-+++ b/drivers/scsi/mpi3mr/mpi3mr.h
-@@ -955,19 +955,16 @@ struct scmd_priv {
-  * @chain_buf_count: Chain buffer count
-  * @chain_buf_pool: Chain buffer pool
-  * @chain_sgl_list: Chain SGL list
-- * @chain_bitmap_sz: Chain buffer allocator bitmap size
-  * @chain_bitmap: Chain buffer allocator bitmap
-  * @chain_buf_lock: Chain buffer list lock
-  * @bsg_cmds: Command tracker for BSG command
-  * @host_tm_cmds: Command tracker for task management commands
-  * @dev_rmhs_cmds: Command tracker for device removal commands
-  * @evtack_cmds: Command tracker for event ack commands
-- * @devrem_bitmap_sz: Device removal bitmap size
-  * @devrem_bitmap: Device removal bitmap
-- * @dev_handle_bitmap_sz: Device handle bitmap size
-+ * @dev_handle_bitmap_bits: Number of bits in device handle bitmap
-  * @removepend_bitmap: Remove pending bitmap
-  * @delayed_rmhs_list: Delayed device removal list
-- * @evtack_cmds_bitmap_sz: Event Ack bitmap size
-  * @evtack_cmds_bitmap: Event Ack bitmap
-  * @delayed_evtack_cmds_list: Delayed event acknowledgment list
-  * @ts_update_counter: Timestamp update counter
-@@ -1128,7 +1125,6 @@ struct mpi3mr_ioc {
- 	u32 chain_buf_count;
- 	struct dma_pool *chain_buf_pool;
- 	struct chain_element *chain_sgl_list;
--	u16  chain_bitmap_sz;
- 	void *chain_bitmap;
- 	spinlock_t chain_buf_lock;
- 
-@@ -1136,12 +1132,10 @@ struct mpi3mr_ioc {
- 	struct mpi3mr_drv_cmd host_tm_cmds;
- 	struct mpi3mr_drv_cmd dev_rmhs_cmds[MPI3MR_NUM_DEVRMCMD];
- 	struct mpi3mr_drv_cmd evtack_cmds[MPI3MR_NUM_EVTACKCMD];
--	u16 devrem_bitmap_sz;
- 	void *devrem_bitmap;
--	u16 dev_handle_bitmap_sz;
-+	u16 dev_handle_bitmap_bits;
- 	void *removepend_bitmap;
- 	struct list_head delayed_rmhs_list;
--	u16 evtack_cmds_bitmap_sz;
- 	void *evtack_cmds_bitmap;
- 	struct list_head delayed_evtack_cmds_list;
- 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index 0c4aabaefdcc4..1e4467ea8472a 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -1128,7 +1128,6 @@ static int mpi3mr_issue_and_process_mur(struct mpi3mr_ioc *mrioc,
- static int
- mpi3mr_revalidate_factsdata(struct mpi3mr_ioc *mrioc)
- {
--	u16 dev_handle_bitmap_sz;
- 	void *removepend_bitmap;
- 
- 	if (mrioc->facts.reply_sz > mrioc->reply_sz) {
-@@ -1160,25 +1159,23 @@ mpi3mr_revalidate_factsdata(struct mpi3mr_ioc *mrioc)
- 		    "\tcontroller while sas transport support is enabled at the\n"
- 		    "\tdriver, please reboot the system or reload the driver\n");
- 
--	dev_handle_bitmap_sz = mrioc->facts.max_devhandle / 8;
--	if (mrioc->facts.max_devhandle % 8)
--		dev_handle_bitmap_sz++;
--	if (dev_handle_bitmap_sz > mrioc->dev_handle_bitmap_sz) {
--		removepend_bitmap = krealloc(mrioc->removepend_bitmap,
--		    dev_handle_bitmap_sz, GFP_KERNEL);
-+	if (mrioc->facts.max_devhandle > mrioc->dev_handle_bitmap_bits) {
-+		removepend_bitmap = bitmap_zalloc(mrioc->facts.max_devhandle,
-+						  GFP_KERNEL);
- 		if (!removepend_bitmap) {
- 			ioc_err(mrioc,
--			    "failed to increase removepend_bitmap sz from: %d to %d\n",
--			    mrioc->dev_handle_bitmap_sz, dev_handle_bitmap_sz);
-+				"failed to increase removepend_bitmap bits from %d to %d\n",
-+				mrioc->dev_handle_bitmap_bits,
-+				mrioc->facts.max_devhandle);
- 			return -EPERM;
- 		}
--		memset(removepend_bitmap + mrioc->dev_handle_bitmap_sz, 0,
--		    dev_handle_bitmap_sz - mrioc->dev_handle_bitmap_sz);
-+		bitmap_free(mrioc->removepend_bitmap);
- 		mrioc->removepend_bitmap = removepend_bitmap;
- 		ioc_info(mrioc,
--		    "increased dev_handle_bitmap_sz from %d to %d\n",
--		    mrioc->dev_handle_bitmap_sz, dev_handle_bitmap_sz);
--		mrioc->dev_handle_bitmap_sz = dev_handle_bitmap_sz;
-+			 "increased bits of dev_handle_bitmap from %d to %d\n",
-+			 mrioc->dev_handle_bitmap_bits,
-+			 mrioc->facts.max_devhandle);
-+		mrioc->dev_handle_bitmap_bits = mrioc->facts.max_devhandle;
- 	}
- 
- 	return 0;
-@@ -2957,27 +2954,18 @@ static int mpi3mr_alloc_reply_sense_bufs(struct mpi3mr_ioc *mrioc)
- 	if (!mrioc->pel_abort_cmd.reply)
- 		goto out_failed;
- 
--	mrioc->dev_handle_bitmap_sz = mrioc->facts.max_devhandle / 8;
--	if (mrioc->facts.max_devhandle % 8)
--		mrioc->dev_handle_bitmap_sz++;
--	mrioc->removepend_bitmap = kzalloc(mrioc->dev_handle_bitmap_sz,
--	    GFP_KERNEL);
-+	mrioc->dev_handle_bitmap_bits = mrioc->facts.max_devhandle;
-+	mrioc->removepend_bitmap = bitmap_zalloc(mrioc->dev_handle_bitmap_bits,
-+						 GFP_KERNEL);
- 	if (!mrioc->removepend_bitmap)
- 		goto out_failed;
- 
--	mrioc->devrem_bitmap_sz = MPI3MR_NUM_DEVRMCMD / 8;
--	if (MPI3MR_NUM_DEVRMCMD % 8)
--		mrioc->devrem_bitmap_sz++;
--	mrioc->devrem_bitmap = kzalloc(mrioc->devrem_bitmap_sz,
--	    GFP_KERNEL);
-+	mrioc->devrem_bitmap = bitmap_zalloc(MPI3MR_NUM_DEVRMCMD, GFP_KERNEL);
- 	if (!mrioc->devrem_bitmap)
- 		goto out_failed;
- 
--	mrioc->evtack_cmds_bitmap_sz = MPI3MR_NUM_EVTACKCMD / 8;
--	if (MPI3MR_NUM_EVTACKCMD % 8)
--		mrioc->evtack_cmds_bitmap_sz++;
--	mrioc->evtack_cmds_bitmap = kzalloc(mrioc->evtack_cmds_bitmap_sz,
--	    GFP_KERNEL);
-+	mrioc->evtack_cmds_bitmap = bitmap_zalloc(MPI3MR_NUM_EVTACKCMD,
-+						  GFP_KERNEL);
- 	if (!mrioc->evtack_cmds_bitmap)
- 		goto out_failed;
- 
-@@ -3415,10 +3403,7 @@ static int mpi3mr_alloc_chain_bufs(struct mpi3mr_ioc *mrioc)
- 		if (!mrioc->chain_sgl_list[i].addr)
- 			goto out_failed;
- 	}
--	mrioc->chain_bitmap_sz = num_chains / 8;
--	if (num_chains % 8)
--		mrioc->chain_bitmap_sz++;
--	mrioc->chain_bitmap = kzalloc(mrioc->chain_bitmap_sz, GFP_KERNEL);
-+	mrioc->chain_bitmap = bitmap_zalloc(num_chains, GFP_KERNEL);
- 	if (!mrioc->chain_bitmap)
- 		goto out_failed;
- 	return retval;
-@@ -4190,10 +4175,11 @@ void mpi3mr_memset_buffers(struct mpi3mr_ioc *mrioc)
- 		for (i = 0; i < MPI3MR_NUM_EVTACKCMD; i++)
- 			memset(mrioc->evtack_cmds[i].reply, 0,
- 			    sizeof(*mrioc->evtack_cmds[i].reply));
--		memset(mrioc->removepend_bitmap, 0, mrioc->dev_handle_bitmap_sz);
--		memset(mrioc->devrem_bitmap, 0, mrioc->devrem_bitmap_sz);
--		memset(mrioc->evtack_cmds_bitmap, 0,
--		    mrioc->evtack_cmds_bitmap_sz);
-+		bitmap_clear(mrioc->removepend_bitmap, 0,
-+			     mrioc->dev_handle_bitmap_bits);
-+		bitmap_clear(mrioc->devrem_bitmap, 0, MPI3MR_NUM_DEVRMCMD);
-+		bitmap_clear(mrioc->evtack_cmds_bitmap, 0,
-+			     MPI3MR_NUM_EVTACKCMD);
- 	}
- 
- 	for (i = 0; i < mrioc->num_queues; i++) {
-@@ -4319,16 +4305,16 @@ void mpi3mr_free_mem(struct mpi3mr_ioc *mrioc)
- 		mrioc->evtack_cmds[i].reply = NULL;
- 	}
- 
--	kfree(mrioc->removepend_bitmap);
-+	bitmap_free(mrioc->removepend_bitmap);
- 	mrioc->removepend_bitmap = NULL;
- 
--	kfree(mrioc->devrem_bitmap);
-+	bitmap_free(mrioc->devrem_bitmap);
- 	mrioc->devrem_bitmap = NULL;
- 
--	kfree(mrioc->evtack_cmds_bitmap);
-+	bitmap_free(mrioc->evtack_cmds_bitmap);
- 	mrioc->evtack_cmds_bitmap = NULL;
- 
--	kfree(mrioc->chain_bitmap);
-+	bitmap_free(mrioc->chain_bitmap);
- 	mrioc->chain_bitmap = NULL;
- 
- 	kfree(mrioc->transport_cmds.reply);
-@@ -4887,9 +4873,10 @@ int mpi3mr_soft_reset_handler(struct mpi3mr_ioc *mrioc,
- 
- 	mpi3mr_flush_delayed_cmd_lists(mrioc);
- 	mpi3mr_flush_drv_cmds(mrioc);
--	memset(mrioc->devrem_bitmap, 0, mrioc->devrem_bitmap_sz);
--	memset(mrioc->removepend_bitmap, 0, mrioc->dev_handle_bitmap_sz);
--	memset(mrioc->evtack_cmds_bitmap, 0, mrioc->evtack_cmds_bitmap_sz);
-+	bitmap_clear(mrioc->devrem_bitmap, 0, MPI3MR_NUM_DEVRMCMD);
-+	bitmap_clear(mrioc->removepend_bitmap, 0,
-+		     mrioc->dev_handle_bitmap_bits);
-+	bitmap_clear(mrioc->evtack_cmds_bitmap, 0, MPI3MR_NUM_EVTACKCMD);
- 	mpi3mr_flush_host_io(mrioc);
- 	mpi3mr_cleanup_fwevt_list(mrioc);
- 	mpi3mr_invalidate_devhandles(mrioc);
+diff --git a/drivers/rtc/interface.c b/drivers/rtc/interface.c
+index 9edd662c69ace..3d0fbc644f578 100644
+--- a/drivers/rtc/interface.c
++++ b/drivers/rtc/interface.c
+@@ -392,7 +392,7 @@ int rtc_read_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
+ 		return err;
+ 	if (!rtc->ops) {
+ 		err = -ENODEV;
+-	} else if (!test_bit(RTC_FEATURE_ALARM, rtc->features) || !rtc->ops->read_alarm) {
++	} else if (!test_bit(RTC_FEATURE_ALARM, rtc->features)) {
+ 		err = -EINVAL;
+ 	} else {
+ 		memset(alarm, 0, sizeof(struct rtc_wkalrm));
 -- 
 2.39.2
 
