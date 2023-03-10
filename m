@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB27E847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F964C4339B;
-	Fri, 10 Mar 2023 13:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83FA847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DE38C4339C;
+	Fri, 10 Mar 2023 13:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456769;
-	bh=bUIzCqwq+n2+tYcPNfaXq7TtMeamf3nTUQAXN31hIgk=;
+	s=korg; t=1678456772;
+	bh=GnFaU6znMvVjgYZwqXmjwHHmNCtVX80BE4HkEbnvA3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bfhIRDNy4NbrVyrOIbVA6rb5cxqlLI/W6eob/TrmzqwFMNv2t716JvpznBBP745Zl
-	 oj2/ZxSOONTlopdhz+a+cV/I8J7g9fqDNL3TjGFd4Hmo9u+AO1rjPT/c5TrnJGG5Ce
-	 80jlZpynaK+uMsJ+EZwWBYDytOBdLS1cRxT5Bv/g=
+	b=orxSOZdacxB6C3O4I3713LZrXPskxozcYZ/6unvj2dNQNcclwBf3ckCSW1obuLnv3
+	 pWkzsD9X01LcLTCMSt1k48XM4wYrMDrOPWLzUfShuBUwK3s80vTGsJ6kY+KmzR0OJj
+	 wiMVyXMwj2qHghaJaC9sZ/sC/eiW2iU3ADC7OyZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Martin Belanger <martin.belanger@dell.com>,
+	Daniel Wagner <dwagner@suse.de>,
 	Hannes Reinecke <hare@suse.de>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 118/211] nvme-tcp: dont access released socket during error recovery
-Date: Fri, 10 Mar 2023 14:38:18 +0100
-Message-Id: <20230310133722.326065888@linuxfoundation.org>
+Subject: [PATCH 6.2 119/211] nvme-fabrics: show well known discovery name
+Date: Fri, 10 Mar 2023 14:38:19 +0100
+Message-Id: <20230310133722.354699218@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -37,50 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akinobu Mita <akinobu.mita@gmail.com>
+From: Daniel Wagner <dwagner@suse.de>
 
-[ Upstream commit 76d54bf20cdcc1ed7569a89885e09636e9a8d71d ]
+[ Upstream commit 26a57cb35548ae67c14871cccbf50da3edb01ea4 ]
 
-While the error recovery work is temporarily failing reconnect attempts,
-running the 'nvme list' command causes a kernel NULL pointer dereference
-by calling getsockname() with a released socket.
+The kernel always logs the unique subsystem name for a discovery
+controller, even in the case user space asked for the well known.
 
-During error recovery work, the nvme tcp socket is released and a new one
-created, so it is not safe to access the socket without proper check.
+This has lead to confusion as the logs of nvme-cli and the kernel
+logs didn't match.
 
-Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
-Fixes: 02c57a82c008 ("nvme-tcp: print actual source IP address through sysfs "address" attr")
-Reviewed-by: Martin Belanger <martin.belanger@dell.com>
+First, nvme-cli connects to the well known discovery controller to
+figure out if it supports TP8013. If so then nvme-cli disconnects and
+connects to the unique discovery controller. Currently, the kernel show
+that user space connected twice to the unique one.
+
+To avoid further confusion, show the well known discovery controller if
+user space asked for it:
+
+  $ nvme connect-all -v -t tcp -a 192.168.0.1
+  nvme0: nqn.2014-08.org.nvmexpress.discovery connected
+  nvme0: nqn.2014-08.org.nvmexpress.discovery disconnected
+  nvme0: nqn.discovery connected
+
+  kernel log:
+  nvme nvme0: new ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery", addr 192.168.0.1:8009
+  nvme nvme0: Removing ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery"
+  nvme nvme0: new ctrl: NQN "nqn.discovery", addr 192.168.0.1:8009
+
+Fixes: e5ea42faa773 ("nvme: display correct subsystem NQN")
+Signed-off-by: Daniel Wagner <dwagner@suse.de>
 Reviewed-by: Hannes Reinecke <hare@suse.de>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/host/fabrics.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 8cedc1ef496c7..1ca52ac163c2f 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -2486,6 +2486,10 @@ static int nvme_tcp_get_address(struct nvme_ctrl *ctrl, char *buf, int size)
+diff --git a/drivers/nvme/host/fabrics.h b/drivers/nvme/host/fabrics.h
+index a6e22116e1396..dcac3df8a5f76 100644
+--- a/drivers/nvme/host/fabrics.h
++++ b/drivers/nvme/host/fabrics.h
+@@ -189,7 +189,8 @@ nvmf_ctlr_matches_baseopts(struct nvme_ctrl *ctrl,
  
- 	len = nvmf_get_address(ctrl, buf, size);
- 
-+	mutex_lock(&queue->queue_lock);
-+
-+	if (!test_bit(NVME_TCP_Q_LIVE, &queue->flags))
-+		goto done;
- 	ret = kernel_getsockname(queue->sock, (struct sockaddr *)&src_addr);
- 	if (ret > 0) {
- 		if (len > 0)
-@@ -2493,6 +2497,8 @@ static int nvme_tcp_get_address(struct nvme_ctrl *ctrl, char *buf, int size)
- 		len += scnprintf(buf + len, size - len, "%ssrc_addr=%pISc\n",
- 				(len) ? "," : "", &src_addr);
- 	}
-+done:
-+	mutex_unlock(&queue->queue_lock);
- 
- 	return len;
+ static inline char *nvmf_ctrl_subsysnqn(struct nvme_ctrl *ctrl)
+ {
+-	if (!ctrl->subsys)
++	if (!ctrl->subsys ||
++	    !strcmp(ctrl->opts->subsysnqn, NVME_DISC_SUBSYS_NAME))
+ 		return ctrl->opts->subsysnqn;
+ 	return ctrl->subsys->subnqn;
  }
 -- 
 2.39.2
