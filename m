@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0C0847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:58:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C44C4339B;
-	Fri, 10 Mar 2023 13:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298D2847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:58:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66482C4339B;
+	Fri, 10 Mar 2023 13:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456686;
-	bh=UKEoYjS25wgGroJqPbxWtKDzt69mI2UKt5Q+dewr1z0=;
+	s=korg; t=1678456689;
+	bh=ZtF8I0e8C9GGOUn6OuDhC9e7IQyAjJDJAm3yzabemKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2lj66c8BBM2X6FS7+P0VzJOCN8OENWGamP3zrMbnzjt2LSi6am6kUSYJMnIgOiarD
-	 Nt0EFVsqB8+4veHvIFLKwrVDGLv3owS3ENnEMx0eMpZQxhbXvdNCtY56reOa3plIUp
-	 XnPwJmorwvg483KHNEbJWYxh+45QQ8BuOtSx8Dgk=
+	b=0RP+reTA/9OOWa7qfq88IMtW8sO0/Hbs9lZ6TgrBv2dMnVXMIYD0i3yw9tsmXLStk
+	 XEZaeifh4HkL8vKkw+aq3VLYkBLjfEK3L3aWCikkVC07aQYMiiKZoRwX70zA2/YHeQ
+	 w7gz/dZoOMA8U2ZyBg9K1kGTMs4NGQbdSaYeiWv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
+	Roi Dayan <roid@nvidia.com>,
+	Maor Dickman <maord@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 089/211] net/mlx5: ECPF, wait for VF pages only after disabling host PFs
-Date: Fri, 10 Mar 2023 14:37:49 +0100
-Message-Id: <20230310133721.491004758@linuxfoundation.org>
+Subject: [PATCH 6.2 090/211] net/mlx5e: Verify flow_source cap before using it
+Date: Fri, 10 Mar 2023 14:37:50 +0100
+Message-Id: <20230310133721.519726388@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,62 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maher Sanalla <msanalla@nvidia.com>
+From: Roi Dayan <roid@nvidia.com>
 
-[ Upstream commit e1ed30c8c09abc85a01c897845bdbd08c0333353 ]
+[ Upstream commit 1bf8b0dae8dde6f02520a5ea34fdaa3b39342e69 ]
 
-Currently,  during the early stages of their unloading, particularly
-during SRIOV disablement, PFs/ECPFs wait on the release of all of
-their VFs memory pages. Furthermore, ECPFs are considered the page
-supplier for host VFs, hence the host VFs memory pages are freed only
-during ECPF cleanup when host interfaces get disabled.
+When adding send to vport rule verify flow_source matching is
+supported by checking the flow_source cap.
 
-Thus, disabling SRIOV early in unload timeline causes the DPU ECPF
-to stall on driver unload while waiting on the release of host VF pages
-that won't be freed before host interfaces get disabled later on.
-
-Therefore, for ECPFs, wait on the release of VFs pages only after the
-disablement of host PFs during ECPF cleanup flow. Then, host PFs and VFs
-are disabled and their memory shall be freed accordingly.
-
-Fixes: 143a41d7623d ("net/mlx5: Disable SRIOV before PF removal")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Fixes: d04442540372 ("net/mlx5: E-Switch, set flow source for send to uplink rule")
+Signed-off-by: Roi Dayan <roid@nvidia.com>
+Reviewed-by: Maor Dickman <maord@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/ecpf.c  | 4 ++++
- drivers/net/ethernet/mellanox/mlx5/core/sriov.c | 4 ++++
- 2 files changed, 8 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ecpf.c b/drivers/net/ethernet/mellanox/mlx5/core/ecpf.c
-index cdc87ecae5d39..d000236ddbac5 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/ecpf.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/ecpf.c
-@@ -90,4 +90,8 @@ void mlx5_ec_cleanup(struct mlx5_core_dev *dev)
- 	err = mlx5_wait_for_pages(dev, &dev->priv.page_counters[MLX5_HOST_PF]);
- 	if (err)
- 		mlx5_core_warn(dev, "Timeout reclaiming external host PF pages err(%d)\n", err);
-+
-+	err = mlx5_wait_for_pages(dev, &dev->priv.page_counters[MLX5_VF]);
-+	if (err)
-+		mlx5_core_warn(dev, "Timeout reclaiming external host VFs pages err(%d)\n", err);
- }
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/sriov.c b/drivers/net/ethernet/mellanox/mlx5/core/sriov.c
-index 3008e9ce2bbff..20d7662c10fb6 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/sriov.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/sriov.c
-@@ -147,6 +147,10 @@ mlx5_device_disable_sriov(struct mlx5_core_dev *dev, int num_vfs, bool clear_vf)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index c981fa77f4398..f3b74cb67b71c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -1070,7 +1070,8 @@ mlx5_eswitch_add_send_to_vport_rule(struct mlx5_eswitch *on_esw,
+ 	dest.vport.flags |= MLX5_FLOW_DEST_VPORT_VHCA_ID;
+ 	flow_act.action = MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
  
- 	mlx5_eswitch_disable_sriov(dev->priv.eswitch, clear_vf);
+-	if (rep->vport == MLX5_VPORT_UPLINK)
++	if (MLX5_CAP_ESW_FLOWTABLE(on_esw->dev, flow_source) &&
++	    rep->vport == MLX5_VPORT_UPLINK)
+ 		spec->flow_context.flow_source = MLX5_FLOW_CONTEXT_FLOW_SOURCE_LOCAL_VPORT;
  
-+	/* For ECPFs, skip waiting for host VF pages until ECPF is destroyed */
-+	if (mlx5_core_is_ecpf(dev))
-+		return;
-+
- 	if (mlx5_wait_for_pages(dev, &dev->priv.page_counters[MLX5_VF]))
- 		mlx5_core_warn(dev, "timeout reclaiming VFs pages\n");
- }
+ 	flow_rule = mlx5_add_flow_rules(mlx5_eswitch_get_slow_fdb(on_esw),
 -- 
 2.39.2
 
