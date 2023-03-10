@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839E88825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:00:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04536C433D2;
-	Fri, 10 Mar 2023 15:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECB98825
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:00:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0F4C4339C;
+	Fri, 10 Mar 2023 15:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460414;
-	bh=1WXDtx0niy87W0hzq3YqC+r2CJ55Kv25CuYzZxpvPC4=;
+	s=korg; t=1678460417;
+	bh=cCH7VQG9oHwEHtMIfZAQ+VE25nBoMuZ8zCtrHLV57SI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=POafQRhdYcXlig+sDUN4OxWg+U+LhKzbbBIU6A2yJHFgvcf3PvWQdAqraRMhit+oY
-	 02rdoTUqpm08+YtekfRJIh7m0Hf3vm85/qZN9bJLnNSVKxItriTg01gt0JUY9Jmcs9
-	 m/ZQgWSmXFpxxESMxpnNxM6HDDW/di9YJLDrLWCY=
+	b=aLEZlHTFw4ocBXxf8QaiQIQQGogvzcnhRLjya2k04XLOoTITGHdKtFzsSk7sS0QlM
+	 oVaRIzwRyph76MYHaSWrok0Mk2+8lTnyUdF0oT33i8GWjc0e5IbL6I9s/xbHJw/xs2
+	 /JB+uVMYQwUxvDK3s8TsSsnoUpQDaCrP3sZNYH6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 327/529] nfsd: zero out pointers after putting nfsd_files on COPY setup error
-Date: Fri, 10 Mar 2023 14:37:50 +0100
-Message-Id: <20230310133820.160212390@linuxfoundation.org>
+	Jun ASAKA <JunASAKA@zzy040330.moe>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 5.10 328/529] wifi: rtl8xxxu: fixing transmisison failure for rtl8192eu
+Date: Fri, 10 Mar 2023 14:37:51 +0100
+Message-Id: <20230310133820.209567644@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,42 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Jun ASAKA <JunASAKA@zzy040330.moe>
 
-[ Upstream commit 1f0001d43d0c0ac2a19a34a914f6595ad97cbc1d ]
+commit c6015bf3ff1ffb3caa27eb913797438a0fc634a0 upstream.
 
-At first, I thought this might be a source of nfsd_file overputs, but
-the current callers seem to avoid an extra put when nfsd4_verify_copy
-returns an error.
+Fixing transmission failure which results in
+"authentication with ... timed out". This can be
+fixed by disable the REG_TXPAUSE.
 
-Still, it's "bad form" to leave the pointers filled out when we don't
-have a reference to them anymore, and that might lead to bugs later.
-Zero them out as a defensive coding measure.
-
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jun ASAKA <JunASAKA@zzy040330.moe>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221217030659.12577-1-JunASAKA@zzy040330.moe
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 735ee8a798705..f82cfe843b99b 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1075,8 +1075,10 @@ nfsd4_verify_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	return status;
- out_put_dst:
- 	nfsd_file_put(*dst);
-+	*dst = NULL;
- out_put_src:
- 	nfsd_file_put(*src);
-+	*src = NULL;
- 	goto out;
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
+@@ -1671,6 +1671,11 @@ static void rtl8192e_enable_rf(struct rt
+ 	val8 = rtl8xxxu_read8(priv, REG_PAD_CTRL1);
+ 	val8 &= ~BIT(0);
+ 	rtl8xxxu_write8(priv, REG_PAD_CTRL1, val8);
++
++	/*
++	 * Fix transmission failure of rtl8192e.
++	 */
++	rtl8xxxu_write8(priv, REG_TXPAUSE, 0x00);
  }
  
--- 
-2.39.2
-
+ struct rtl8xxxu_fileops rtl8192eu_fops = {
 
 
