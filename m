@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C6C848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:21:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444FAC433D2;
-	Fri, 10 Mar 2023 14:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1F9848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:21:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F16C433D2;
+	Fri, 10 Mar 2023 14:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458093;
-	bh=d1dp6JNQeJPY+H9hZ+j2WuSZvF7qtPaj64eo0JtTz+8=;
+	s=korg; t=1678458096;
+	bh=zPct63Z4+AehcZ6OMqHS+3OlfTiG22VT9D5oSjBaZAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fkfD+gFk3Fgud1v1nbe6DUYUuB/1YUJHwDPa953g/B8YpuT7fqSrwMNu1wISN3Kbu
-	 bd+48RdO6TyIVdWozA1CHDF1HFVVf/W9U2DtwZqRVZESS9KuTaGNHCiptZSkN5bjwF
-	 qFihudfuvbEZWe8EqM13V7LGJUFpqmHu00aUvOp0=
+	b=usdBXlPv8czB9lS6E1rFXsrmctdRcmQaReJRYjpo50IH6o0qWAaZM8P7y/AcOwZFM
+	 x5JLJrJiRxsHDRfgj+4m3l6y0uF6hA9O/ZElqDY+axlvfzRqPFWdxnOPHlxpI9OjlE
+	 mnJgBkHM3di69sW7to3AvuxvEJCB+IjoMFtNuksY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 4.19 154/252] udf: Fix file corruption when appending just after end of preallocated extent
-Date: Fri, 10 Mar 2023 14:38:44 +0100
-Message-Id: <20230310133723.480430215@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 4.19 163/252] x86/microcode/AMD: Fix mixed steppings support
+Date: Fri, 10 Mar 2023 14:38:53 +0100
+Message-Id: <20230310133723.782874925@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -33,63 +34,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 36ec52ea038b18a53e198116ef7d7e70c87db046 upstream.
+commit 7ff6edf4fef38ab404ee7861f257e28eaaeed35f upstream.
 
-When we append new block just after the end of preallocated extent, the
-code in inode_getblk() wrongly determined we're going to use the
-preallocated extent which resulted in adding block into a wrong logical
-offset in the file. Sequence like this manifests it:
+The AMD side of the loader has always claimed to support mixed
+steppings. But somewhere along the way, it broke that by assuming that
+the cached patch blob is a single one instead of it being one per
+*node*.
 
-xfs_io -f -c "pwrite 0x2cacf 0xd122" -c "truncate 0x2dd6f" \
-  -c "pwrite 0x27fd9 0x69a9" -c "pwrite 0x32981 0x7244" <file>
+So turn it into a per-node one so that each node can stash the blob
+relevant for it.
 
-The code that determined the use of preallocated extent is actually
-stale because udf_do_extend_file() does not create preallocation anymore
-so after calling that function we are sure there's no usable
-preallocation. Just remove the faulty condition.
+  [ NB: Fixes tag is not really the exactly correct one but it is good
+    enough. ]
 
-CC: stable@vger.kernel.org
-Fixes: 16d055656814 ("udf: Discard preallocation before extending file with a hole")
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: fe055896c040 ("x86/microcode: Merge the early microcode loader")
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org> # 2355370cd941 ("x86/microcode/amd: Remove load_microcode_amd()'s bsp parameter")
+Cc: <stable@kernel.org> # a5ad92134bd1 ("x86/microcode/AMD: Add a @cpu parameter to the reloading functions")
+Link: https://lore.kernel.org/r/20230130161709.11615-4-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c |   24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ arch/x86/kernel/cpu/microcode/amd.c |   34 +++++++++++++++++++++-------------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -800,19 +800,17 @@ static sector_t inode_getblk(struct inod
- 		c = 0;
- 		offset = 0;
- 		count += ret;
--		/* We are not covered by a preallocated extent? */
--		if ((laarr[0].extLength & UDF_EXTENT_FLAG_MASK) !=
--						EXT_NOT_RECORDED_ALLOCATED) {
--			/* Is there any real extent? - otherwise we overwrite
--			 * the fake one... */
--			if (count)
--				c = !c;
--			laarr[c].extLength = EXT_NOT_RECORDED_NOT_ALLOCATED |
--				inode->i_sb->s_blocksize;
--			memset(&laarr[c].extLocation, 0x00,
--				sizeof(struct kernel_lb_addr));
--			count++;
--		}
-+		/*
-+		 * Is there any real extent? - otherwise we overwrite the fake
-+		 * one...
-+		 */
-+		if (count)
-+			c = !c;
-+		laarr[c].extLength = EXT_NOT_RECORDED_NOT_ALLOCATED |
-+			inode->i_sb->s_blocksize;
-+		memset(&laarr[c].extLocation, 0x00,
-+			sizeof(struct kernel_lb_addr));
-+		count++;
- 		endnum = c + 1;
- 		lastblock = 1;
- 	} else {
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -54,7 +54,9 @@ struct cont_desc {
+ };
+ 
+ static u32 ucode_new_rev;
+-static u8 amd_ucode_patch[PATCH_MAX_SIZE];
++
++/* One blob per node. */
++static u8 amd_ucode_patch[MAX_NUMNODES][PATCH_MAX_SIZE];
+ 
+ /*
+  * Microcode patch container file is prepended to the initrd in cpio
+@@ -210,7 +212,7 @@ apply_microcode_early_amd(u32 cpuid_1_ea
+ 	patch	= (u8 (*)[PATCH_MAX_SIZE])__pa_nodebug(&amd_ucode_patch);
+ #else
+ 	new_rev = &ucode_new_rev;
+-	patch	= &amd_ucode_patch;
++	patch	= &amd_ucode_patch[0];
+ #endif
+ 
+ 	desc.cpuid_1_eax = cpuid_1_eax;
+@@ -356,10 +358,10 @@ int __init save_microcode_in_initrd_amd(
+ 
+ void reload_ucode_amd(unsigned int cpu)
+ {
+-	struct microcode_amd *mc;
+ 	u32 rev, dummy;
++	struct microcode_amd *mc;
+ 
+-	mc = (struct microcode_amd *)amd_ucode_patch;
++	mc = (struct microcode_amd *)amd_ucode_patch[cpu_to_node(cpu)];
+ 
+ 	rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+ 
+@@ -699,6 +701,8 @@ static enum ucode_state __load_microcode
+ 
+ static enum ucode_state load_microcode_amd(u8 family, const u8 *data, size_t size)
+ {
++	struct cpuinfo_x86 *c;
++	unsigned int nid, cpu;
+ 	struct ucode_patch *p;
+ 	enum ucode_state ret;
+ 
+@@ -711,18 +715,22 @@ static enum ucode_state load_microcode_a
+ 		return ret;
+ 	}
+ 
+-	p = find_patch(0);
+-	if (!p) {
+-		return ret;
+-	} else {
+-		if (boot_cpu_data.microcode >= p->patch_id)
+-			return ret;
++	for_each_node(nid) {
++		cpu = cpumask_first(cpumask_of_node(nid));
++		c = &cpu_data(cpu);
++
++		p = find_patch(cpu);
++		if (!p)
++			continue;
++
++		if (c->microcode >= p->patch_id)
++			continue;
+ 
+ 		ret = UCODE_NEW;
+-	}
+ 
+-	memset(amd_ucode_patch, 0, PATCH_MAX_SIZE);
+-	memcpy(amd_ucode_patch, p->data, min_t(u32, ksize(p->data), PATCH_MAX_SIZE));
++		memset(&amd_ucode_patch[nid], 0, PATCH_MAX_SIZE);
++		memcpy(&amd_ucode_patch[nid], p->data, min_t(u32, ksize(p->data), PATCH_MAX_SIZE));
++	}
+ 
+ 	return ret;
+ }
 
 
