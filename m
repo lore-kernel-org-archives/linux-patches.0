@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07897881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:46:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814BEC433A1;
-	Fri, 10 Mar 2023 14:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1989881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:46:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285DEC4339B;
+	Fri, 10 Mar 2023 14:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459581;
-	bh=XvN+vnBs1AdgJkMmCEvqpw5yTPyAUwzo9AIP6A9gYw4=;
+	s=korg; t=1678459584;
+	bh=LDaJy4Bc+2oN7kq7ywF7BTVGjXNnKd1/9uCRA+fMpds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R1vFfqTKuEj5rWYYyuV6SeVLXYfBRqEwgi45PKEg8jmrwBTwS0zToqfEbyvuKwssR
-	 mIxbi3/RdAJwfXrt7HHirSQSH+Yp96+r4C04gTv5tNRpnO+DhKVovF8+aSYurWfGeY
-	 vG0YPVhSQZL8AQSvNMHVOLa/azf882elQhkG/oWc=
+	b=1DPVeFU1ykJFHvP+VIxB1cIJ91yCjDovgq9dPAl54yRWnp2BMlxVqlq+VIQFVAMya
+	 k+W7K89nOZs2nyP5SESKnlkXuxn20SsQNDTy0YOO2MGdB3wLcbV0sEdOaKGfVqj22q
+	 Bxk0dto8IN+cQ2+9saYpdYMe2WZWKLeh0izGAu+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Hulk Robot <hulkci@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/529] arm64: dts: meson: remove CPU opps below 1GHz for G12A boards
-Date: Fri, 10 Mar 2023 14:32:44 +0100
-Message-Id: <20230310133805.965789635@linuxfoundation.org>
+Subject: [PATCH 5.10 022/529] ARM: OMAP1: call platform_device_put() in error case in omap1_dm_timer_init()
+Date: Fri, 10 Mar 2023 14:32:45 +0100
+Message-Id: <20230310133806.014928442@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,57 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Hewitt <christianshewitt@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 3cbd431c2b34d84605d358c8c57654193fd661fb ]
+[ Upstream commit 0414a100d6ab32721efa70ab55524540fdfe0ede ]
 
-Amlogic G12A devices experience CPU stalls and random board wedges when
-the system idles and CPU cores clock down to lower opp points. Recent
-vendor kernels include a change to remove 100-250MHz and other distro
-sources also remove the 500/667MHz points. Unless all 100-667Mhz opps
-are removed or the CPU governor forced to performance stalls are still
-observed, so let's remove them to improve stability and uptime.
+If platform_device_add() is not called or failed, it should call
+platform_device_put() in error case.
 
-Fixes: b190056fa9ee ("arm64: dts: meson-g12a: add cpus OPP table")
-Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Link: https://lore.kernel.org/r/20230119053031.21400-1-christianshewitt@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: 97933d6ced60 ("ARM: OMAP1: dmtimer: conversion to platform devices")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Message-Id: <20220701094602.2365099-1-yangyingliang@huawei.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-g12a.dtsi | 20 --------------------
- 1 file changed, 20 deletions(-)
+ arch/arm/mach-omap1/timer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-g12a.dtsi b/arch/arm64/boot/dts/amlogic/meson-g12a.dtsi
-index fb0ab27d1f642..6eaceb717d617 100644
---- a/arch/arm64/boot/dts/amlogic/meson-g12a.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-g12a.dtsi
-@@ -57,26 +57,6 @@ cpu_opp_table: opp-table {
- 		compatible = "operating-points-v2";
- 		opp-shared;
+diff --git a/arch/arm/mach-omap1/timer.c b/arch/arm/mach-omap1/timer.c
+index 97fc2096b9709..05f016d5e9f67 100644
+--- a/arch/arm/mach-omap1/timer.c
++++ b/arch/arm/mach-omap1/timer.c
+@@ -165,7 +165,7 @@ static int __init omap1_dm_timer_init(void)
+ 	kfree(pdata);
  
--		opp-100000000 {
--			opp-hz = /bits/ 64 <100000000>;
--			opp-microvolt = <731000>;
--		};
--
--		opp-250000000 {
--			opp-hz = /bits/ 64 <250000000>;
--			opp-microvolt = <731000>;
--		};
--
--		opp-500000000 {
--			opp-hz = /bits/ 64 <500000000>;
--			opp-microvolt = <731000>;
--		};
--
--		opp-667000000 {
--			opp-hz = /bits/ 64 <666666666>;
--			opp-microvolt = <731000>;
--		};
--
- 		opp-1000000000 {
- 			opp-hz = /bits/ 64 <1000000000>;
- 			opp-microvolt = <731000>;
+ err_free_pdev:
+-	platform_device_unregister(pdev);
++	platform_device_put(pdev);
+ 
+ 	return ret;
+ }
 -- 
 2.39.2
 
