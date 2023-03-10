@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C204881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:44:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359B3C4339E;
-	Fri, 10 Mar 2023 14:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0571A881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:44:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63184C433A0;
+	Fri, 10 Mar 2023 14:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459470;
-	bh=bnVtclUmmXEPzZLM9aqxdAVB6W6bbyQDnpg0zk+o3rY=;
+	s=korg; t=1678459473;
+	bh=lj1PJE0ir+xa164UCEUwMInZv0AhE26JQpooob8JSWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yagY6z6fMw3WwbdtJaG08bW8x6KWhtGfShOc9FMQeXoZhQ/aVpsu0h836ucICxiGg
-	 wMaeH032kjX5f92uG8Tkx6V9m0TFE6rWpWW62IIbY0EdD7J+Od672c9EFb2vLMcMbm
-	 2VsIZYIWPybvPAUc47s6vJQLBgp3wFk08H4FNzTU=
+	b=RvY/TQRvO0lhSSWdClCg6d1vSKEv+2zRG6qJSCqT5UBT5Wdf5MeDkUBjfNJ3iZrO5
+	 U4WPaFok1EiNHtFSURYPiYxDAam2mR/jW+MU+/FKGlVY0khZINSj90JRxptQqYJKid
+	 RrKzdIiB7nhN+jRLY2bIlkA3a9Db/XMvwY+Xkn7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Guo <shawn.guo@linaro.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/529] arm64: dts: qcom: Fix IPQ8074 PCIe PHY nodes
-Date: Fri, 10 Mar 2023 14:32:38 +0100
-Message-Id: <20230310133805.721755344@linuxfoundation.org>
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Stefan Ghinea <stefan.ghinea@windriver.com>
+Subject: [PATCH 5.10 002/529] HID: asus: use spinlock to protect concurrent accesses
+Date: Fri, 10 Mar 2023 14:32:25 +0100
+Message-Id: <20230310133805.110921149@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,105 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shawn Guo <shawn.guo@linaro.org>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 942bcd33ed455ad40b71a59901bd926bbf4a500e ]
+commit 315c537068a13f0b5681d33dd045a912f4bece6f upstream.
 
-IPQ8074 PCIe PHY nodes are broken in the many ways:
+asus driver has a worker that may access data concurrently.
+Proct the accesses using a spinlock.
 
-- '#address-cells', '#size-cells' and 'ranges' are missing.
-- Child phy/lane node is missing, and the child properties like
-  '#phy-cells' and 'clocks' are mistakenly put into parent node.
-- The clocks properties for parent node are missing.
-
-Fix them to get the nodes comply with the bindings schema.
-
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20210929034253.24570-9-shawn.guo@linaro.org
-Stable-dep-of: 7ba33591b45f ("arm64: dts: qcom: ipq8074: fix Gen3 PCIe QMP PHY")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: af22a610bc38 ("HID: asus: support backlight on USB keyboards")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-4-7860c5763c38@diag.uniroma1.it
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 46 +++++++++++++++++++++------
- 1 file changed, 36 insertions(+), 10 deletions(-)
+ drivers/hid/hid-asus.c |   22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 9114402c044b3..5b17dbefe5cfd 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -167,34 +167,60 @@ qusb_phy_0: phy@79000 {
- 			resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
- 		};
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -95,6 +95,7 @@ struct asus_kbd_leds {
+ 	struct hid_device *hdev;
+ 	struct work_struct work;
+ 	unsigned int brightness;
++	spinlock_t lock;
+ 	bool removed;
+ };
  
--		pcie_phy0: phy@86000 {
-+		pcie_qmp0: phy@86000 {
- 			compatible = "qcom,ipq8074-qmp-pcie-phy";
- 			reg = <0x00086000 0x1000>;
--			#phy-cells = <0>;
--			clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
--			clock-names = "pipe_clk";
--			clock-output-names = "pcie20_phy0_pipe_clk";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
- 
-+			clocks = <&gcc GCC_PCIE0_AUX_CLK>,
-+				<&gcc GCC_PCIE0_AHB_CLK>;
-+			clock-names = "aux", "cfg_ahb";
- 			resets = <&gcc GCC_PCIE0_PHY_BCR>,
- 				<&gcc GCC_PCIE0PHY_PHY_BCR>;
- 			reset-names = "phy",
- 				      "common";
- 			status = "disabled";
+@@ -402,7 +403,12 @@ static void asus_kbd_backlight_set(struc
+ {
+ 	struct asus_kbd_leds *led = container_of(led_cdev, struct asus_kbd_leds,
+ 						 cdev);
++	unsigned long flags;
 +
-+			pcie_phy0: phy@86200 {
-+				reg = <0x86200 0x16c>,
-+				      <0x86400 0x200>,
-+				      <0x86800 0x4f4>;
-+				#phy-cells = <0>;
-+				#clock-cells = <0>;
-+				clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
-+				clock-names = "pipe0";
-+				clock-output-names = "pcie_0_pipe_clk";
-+			};
- 		};
- 
--		pcie_phy1: phy@8e000 {
-+		pcie_qmp1: phy@8e000 {
- 			compatible = "qcom,ipq8074-qmp-pcie-phy";
- 			reg = <0x0008e000 0x1000>;
--			#phy-cells = <0>;
--			clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
--			clock-names = "pipe_clk";
--			clock-output-names = "pcie20_phy1_pipe_clk";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
- 
-+			clocks = <&gcc GCC_PCIE1_AUX_CLK>,
-+				<&gcc GCC_PCIE1_AHB_CLK>;
-+			clock-names = "aux", "cfg_ahb";
- 			resets = <&gcc GCC_PCIE1_PHY_BCR>,
- 				<&gcc GCC_PCIE1PHY_PHY_BCR>;
- 			reset-names = "phy",
- 				      "common";
- 			status = "disabled";
++	spin_lock_irqsave(&led->lock, flags);
+ 	led->brightness = brightness;
++	spin_unlock_irqrestore(&led->lock, flags);
 +
-+			pcie_phy1: phy@8e200 {
-+				reg = <0x8e200 0x16c>,
-+				      <0x8e400 0x200>,
-+				      <0x8e800 0x4f4>;
-+				#phy-cells = <0>;
-+				#clock-cells = <0>;
-+				clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
-+				clock-names = "pipe0";
-+				clock-output-names = "pcie_1_pipe_clk";
-+			};
- 		};
+ 	schedule_work(&led->work);
+ }
  
- 		tlmm: pinctrl@1000000 {
--- 
-2.39.2
-
+@@ -410,8 +416,14 @@ static enum led_brightness asus_kbd_back
+ {
+ 	struct asus_kbd_leds *led = container_of(led_cdev, struct asus_kbd_leds,
+ 						 cdev);
++	enum led_brightness brightness;
++	unsigned long flags;
+ 
+-	return led->brightness;
++	spin_lock_irqsave(&led->lock, flags);
++	brightness = led->brightness;
++	spin_unlock_irqrestore(&led->lock, flags);
++
++	return brightness;
+ }
+ 
+ static void asus_kbd_backlight_work(struct work_struct *work)
+@@ -419,11 +431,14 @@ static void asus_kbd_backlight_work(stru
+ 	struct asus_kbd_leds *led = container_of(work, struct asus_kbd_leds, work);
+ 	u8 buf[] = { FEATURE_KBD_REPORT_ID, 0xba, 0xc5, 0xc4, 0x00 };
+ 	int ret;
++	unsigned long flags;
+ 
+ 	if (led->removed)
+ 		return;
+ 
++	spin_lock_irqsave(&led->lock, flags);
+ 	buf[4] = led->brightness;
++	spin_unlock_irqrestore(&led->lock, flags);
+ 
+ 	ret = asus_kbd_set_report(led->hdev, buf, sizeof(buf));
+ 	if (ret < 0)
+@@ -485,6 +500,7 @@ static int asus_kbd_register_leds(struct
+ 	drvdata->kbd_backlight->cdev.brightness_set = asus_kbd_backlight_set;
+ 	drvdata->kbd_backlight->cdev.brightness_get = asus_kbd_backlight_get;
+ 	INIT_WORK(&drvdata->kbd_backlight->work, asus_kbd_backlight_work);
++	spin_lock_init(&drvdata->kbd_backlight->lock);
+ 
+ 	ret = devm_led_classdev_register(&hdev->dev, &drvdata->kbd_backlight->cdev);
+ 	if (ret < 0) {
+@@ -1013,9 +1029,13 @@ err_stop_hw:
+ static void asus_remove(struct hid_device *hdev)
+ {
+ 	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
++	unsigned long flags;
+ 
+ 	if (drvdata->kbd_backlight) {
++		spin_lock_irqsave(&drvdata->kbd_backlight->lock, flags);
+ 		drvdata->kbd_backlight->removed = true;
++		spin_unlock_irqrestore(&drvdata->kbd_backlight->lock, flags);
++
+ 		cancel_work_sync(&drvdata->kbd_backlight->work);
+ 	}
+ 
 
 
