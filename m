@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D732E8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:06:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A34EC4339E;
-	Fri, 10 Mar 2023 14:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A178481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:06:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37080C433D2;
+	Fri, 10 Mar 2023 14:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457211;
-	bh=NP4P2s9LfI66JnA7bcRK68Z6EJWM1pEy3e3+6m3epxg=;
+	s=korg; t=1678457214;
+	bh=n1qF7fzpWNzZ5zZTD0zbhX1zKEYefHOlgum6rwpaJD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6XzeOXH1cZ5D2/6DbcH2AO5mwN++xgE13CvZTgMYuXM5lFWhSj7fs9o9r2I9PVwZ
-	 hDhTeW9k1Bt0aW3SV8rVr1ryCBsbcqlwV8QtHImVydq9qjMWsmoOgntxKyoo5eCDQB
-	 DVf3Dgjlyt7ttOHHtesk4J363qKdhdEvQOjy7f04=
+	b=uSvBC9aZJqUjNiidLPhjF29/p7WJzWSqC3FnUE/jLkMu8ARw0/q5Wp6bHPzIVTEiI
+	 nFQK4CX2Se5WNFte++I+LjC6FSneA2SYRo7RpLyGGjKGJZ/w0vSS5bNVxI0GNHXs54
+	 cY85NWOUtg/DPyJ0OY43fbx2KvFfIE57lT2dV1OE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Li Hua <hucool.lihua@huawei.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/200] ubifs: Reserve one leb for each journal head while doing budget
-Date: Fri, 10 Mar 2023 14:37:18 +0100
-Message-Id: <20230310133718.003958953@linuxfoundation.org>
+Subject: [PATCH 6.1 058/200] watchdog: pcwd_usb: Fix attempting to access uninitialized memory
+Date: Fri, 10 Mar 2023 14:37:45 +0100
+Message-Id: <20230310133718.901249627@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,63 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Li Hua <hucool.lihua@huawei.com>
 
-[ Upstream commit e874dcde1cbf82c786c0e7f2899811c02630cc52 ]
+[ Upstream commit 7d06c07c67100fd0f8e6b3ab7145ce789f788117 ]
 
-UBIFS calculates available space by c->main_bytes - c->lst.total_used
-(which means non-index lebs' free and dirty space is accounted into
-total available), then index lebs and four lebs (one for gc_lnum, one
-for deletions, two for journal heads) are deducted.
-In following situation, ubifs may get -ENOSPC from make_reservation():
- LEB 84: DATAHD   free 122880 used 1920  dirty 2176  dark 6144
- LEB 110:DELETION free 126976 used 0     dirty 0     dark 6144 (empty)
- LEB 201:gc_lnum  free 126976 used 0     dirty 0     dark 6144
- LEB 272:GCHD     free 77824  used 47672 dirty 1480  dark 6144
- LEB 356:BASEHD   free 0      used 39776 dirty 87200 dark 6144
- OTHERS: index lebs, zero-available non-index lebs
+The stack variable msb and lsb may be used uninitialized in function
+usb_pcwd_get_temperature and usb_pcwd_get_timeleft when usb card no response.
 
-UBIFS calculates the available bytes is 6888 (How to calculate it:
-126976 * 5[remain main bytes] - 1920[used] - 47672[used] - 39776[used] -
-126976 * 1[deletions] - 126976 * 1[gc_lnum] - 126976 * 2[journal heads]
-- 6144 * 5[dark] = 6888) after doing budget, however UBIFS cannot use
-BASEHD's dirty space(87200), because UBIFS cannot find next BASEHD to
-reclaim current BASEHD. (c->bi.min_idx_lebs equals to c->lst.idx_lebs,
-the empty leb won't be found by ubifs_find_free_space(), and dirty index
-lebs won't be picked as gced lebs. All non-index lebs has dirty space
-less then c->dead_wm, non-index lebs won't be picked as gced lebs
-either. So new free lebs won't be produced.). See more details in Link.
+The build waring is:
+drivers/watchdog/pcwd_usb.c:336:22: error: ‘lsb’ is used uninitialized in this function [-Werror=uninitialized]
+  *temperature = (lsb * 9 / 5) + 32;
+                  ~~~~^~~
+drivers/watchdog/pcwd_usb.c:328:21: note: ‘lsb’ was declared here
+  unsigned char msb, lsb;
+                     ^~~
+cc1: all warnings being treated as errors
+scripts/Makefile.build:250: recipe for target 'drivers/watchdog/pcwd_usb.o' failed
+make[3]: *** [drivers/watchdog/pcwd_usb.o] Error 1
 
-To fix it, reserve one leb for each journal head while doing budget.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216562
-Fixes: 1e51764a3c2ac0 ("UBIFS: add new flash file system")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: b7e04f8c61a4 ("mv watchdog tree under drivers")
+Signed-off-by: Li Hua <hucool.lihua@huawei.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20221116020706.70847-1-hucool.lihua@huawei.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/budget.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/watchdog/pcwd_usb.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ubifs/budget.c b/fs/ubifs/budget.c
-index 986e6e4081c76..d76eb7b39f564 100644
---- a/fs/ubifs/budget.c
-+++ b/fs/ubifs/budget.c
-@@ -209,11 +209,10 @@ long long ubifs_calc_available(const struct ubifs_info *c, int min_idx_lebs)
- 	subtract_lebs += 1;
+diff --git a/drivers/watchdog/pcwd_usb.c b/drivers/watchdog/pcwd_usb.c
+index 1bdaf17c1d38d..8202f0a6b0935 100644
+--- a/drivers/watchdog/pcwd_usb.c
++++ b/drivers/watchdog/pcwd_usb.c
+@@ -325,7 +325,8 @@ static int usb_pcwd_set_heartbeat(struct usb_pcwd_private *usb_pcwd, int t)
+ static int usb_pcwd_get_temperature(struct usb_pcwd_private *usb_pcwd,
+ 							int *temperature)
+ {
+-	unsigned char msb, lsb;
++	unsigned char msb = 0x00;
++	unsigned char lsb = 0x00;
  
- 	/*
--	 * The GC journal head LEB is not really accessible. And since
--	 * different write types go to different heads, we may count only on
--	 * one head's space.
-+	 * Since different write types go to different heads, we should
-+	 * reserve one leb for each head.
- 	 */
--	subtract_lebs += c->jhead_cnt - 1;
-+	subtract_lebs += c->jhead_cnt;
+ 	usb_pcwd_send_command(usb_pcwd, CMD_READ_TEMP, &msb, &lsb);
  
- 	/* We also reserve one LEB for deletions, which bypass budgeting */
- 	subtract_lebs += 1;
+@@ -341,7 +342,8 @@ static int usb_pcwd_get_temperature(struct usb_pcwd_private *usb_pcwd,
+ static int usb_pcwd_get_timeleft(struct usb_pcwd_private *usb_pcwd,
+ 								int *time_left)
+ {
+-	unsigned char msb, lsb;
++	unsigned char msb = 0x00;
++	unsigned char lsb = 0x00;
+ 
+ 	/* Read the time that's left before rebooting */
+ 	/* Note: if the board is not yet armed then we will read 0xFFFF */
 -- 
 2.39.2
 
