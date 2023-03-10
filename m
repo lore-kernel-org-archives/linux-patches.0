@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D37847D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:45:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BF2C433EF;
-	Fri, 10 Mar 2023 13:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B179847D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:45:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C1C3C4339B;
+	Fri, 10 Mar 2023 13:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678455954;
-	bh=fYb8+l0hrrk0Jwm3RFGyewuODzOuVzizMzIt76nAau4=;
+	s=korg; t=1678455957;
+	bh=8qUSd8qFqXDVE2tRzc75YIJRifZI3a0iG1fbuxCpw0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WCDnYzjoDU0pZm8JReQfJhcQyiGQaA0fVdN+irVfufQMGCQQqnoB1VTxL4tR4hZVU
-	 ppGsAsVcUS5b/R7+6fD6NP1aj5K28l4J1/l3kYpicdGufI8JbL7rX9AG/zqQkdxawq
-	 mWZDWbuwqNlEZHC9G/AM3nw1jMmNvsrZhtSX987M=
+	b=yjdF9fXeheUUKyahPWGykvANG9VwQpytkBOp5ZuNxRKcdKASbzX82kEq7QqimMzhg
+	 yUKmmfVJeCKUZZbo/Ag9jBfxjyt/tUhUK8WlFzNKFN5vCH5SWu9aTzpHoYxL5OLPnG
+	 Tcot0hLgtLrcVoUe6piV3e+Ch9/9XYIbbIRwveo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yang Yingliang <yangyingliang@huawei.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 030/193] wifi: libertas: main: dont call kfree_skb() under spin_lock_irqsave()
-Date: Fri, 10 Mar 2023 14:36:52 +0100
-Message-Id: <20230310133711.955602275@linuxfoundation.org>
+Subject: [PATCH 4.14 031/193] wifi: libertas: cmdresp: dont call kfree_skb() under spin_lock_irqsave()
+Date: Fri, 10 Mar 2023 14:36:53 +0100
+Message-Id: <20230310133711.984636825@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -37,30 +37,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit f393df151540bf858effbd29ff572ab94e76a4c4 ]
+[ Upstream commit 708a49a64237f19bd404852f297aaadbc9e7fee0 ]
 
 It is not allowed to call kfree_skb() from hardware interrupt
 context or with interrupts being disabled. So replace kfree_skb()
 with dev_kfree_skb_irq() under spin_lock_irqsave(). Compile
 tested only.
 
-Fixes: d2e7b3425c47 ("libertas: disable functionality when interface is down")
+Fixes: f52b041aed77 ("libertas: Add spinlock to avoid race condition")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221207150008.111743-4-yangyingliang@huawei.com
+Link: https://lore.kernel.org/r/20221207150008.111743-5-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas/main.c | 2 +-
+ drivers/net/wireless/marvell/libertas/cmdresp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/marvell/libertas/main.c b/drivers/net/wireless/marvell/libertas/main.c
-index feb204cd74a9a..21816f0e9e930 100644
---- a/drivers/net/wireless/marvell/libertas/main.c
-+++ b/drivers/net/wireless/marvell/libertas/main.c
-@@ -216,7 +216,7 @@ int lbs_stop_iface(struct lbs_private *priv)
+diff --git a/drivers/net/wireless/marvell/libertas/cmdresp.c b/drivers/net/wireless/marvell/libertas/cmdresp.c
+index b73d083813985..5908f07d62ed7 100644
+--- a/drivers/net/wireless/marvell/libertas/cmdresp.c
++++ b/drivers/net/wireless/marvell/libertas/cmdresp.c
+@@ -48,7 +48,7 @@ void lbs_mac_event_disconnected(struct lbs_private *priv,
  
+ 	/* Free Tx and Rx packets */
  	spin_lock_irqsave(&priv->driver_lock, flags);
- 	priv->iface_running = false;
 -	kfree_skb(priv->currenttxskb);
 +	dev_kfree_skb_irq(priv->currenttxskb);
  	priv->currenttxskb = NULL;
