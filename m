@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1626D8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:14:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D245C433EF;
-	Fri, 10 Mar 2023 14:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54928481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:14:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49114C433D2;
+	Fri, 10 Mar 2023 14:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457650;
-	bh=5qYyQ+vtAphYOk68y64AO/SFXobx9y1XBLhNQiwMFyk=;
+	s=korg; t=1678457653;
+	bh=ewqXe+se3Dtm7L/y7Q6qBL5WoYOKs4IoxjNI7ntSo1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNd5cU6CVj47KoxCp+3Mb1Okvp2hUnL/NZCN7CqHgvOjWmvb0UwAZRa1NBVhU8YKJ
-	 V7M71uVTwZ3W0NQEFWZeKPRJDOOMyxTlgnaoI9Wnj735qAPRMcZ3Dbv6xZPrh9BNtQ
-	 X2gngHI3Iz4Xvg4mzIBvnpgcXoQBz629YUgL41Ig=
+	b=qPYjxq0t/447etbUEJz7isRxctf3rKmFOdtvGxOuFyhSihtzD0TdDCWLXZJhvDlPV
+	 TjAz5XA8tNqGNWR0g3BK+DfEmanQ1GVeW9fMfZy4Qr0zF42ibe8lbExO16k1izqV2b
+	 4gybaJn3dKGvF/hLZRmKkdi9d1aBN7uGmtA9YKc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Neil Armstrong <narmstrong@baylibre.com>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 011/252] arm64: dts: amlogic: meson-gx: fix SCPI clock dvfs node name
-Date: Fri, 10 Mar 2023 14:36:21 +0100
-Message-Id: <20230310133719.173095950@linuxfoundation.org>
+Subject: [PATCH 4.19 012/252] arm64: dts: meson-axg: enable SCPI
+Date: Fri, 10 Mar 2023 14:36:22 +0100
+Message-Id: <20230310133719.202007590@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -34,33 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 127f79212b07c5d9a6657a87e3eafdd889335814 ]
+[ Upstream commit 2c130695ad5265ce2eb38f55ee0cce26238f7891 ]
 
-Fixes:
-scpi: clocks: 'clock-controller' does not match any of the regexes: '^clocks-[0-9a-f]+$', 'pinctrl-[0-9]+'
+Enable SCPI on the axg platform, with cpu clock and hwmon
+(core temperature) support
 
-Link: https://lore.kernel.org/r/20230124-b4-amlogic-bindings-fixups-v1-1-44351528957e@linaro.org
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Reviewed-by: Neil Armstrong <narmstrong@baylibre.com>
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Stable-dep-of: 5b7069d72f03 ("arm64: dts: amlogic: meson-axg: fix SCPI clock dvfs node name")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-gx.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/amlogic/meson-axg.dtsi | 26 ++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-index daadf0edf8bde..85e69bfd21744 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-@@ -167,7 +167,7 @@ scpi {
- 		scpi_clocks: clocks {
- 			compatible = "arm,scpi-clocks";
+diff --git a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
+index 90e9cbcc891f2..8355818153775 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
+@@ -47,6 +47,7 @@ cpu0: cpu@0 {
+ 			reg = <0x0 0x0>;
+ 			enable-method = "psci";
+ 			next-level-cache = <&l2>;
++			clocks = <&scpi_dvfs 0>;
+ 		};
  
--			scpi_dvfs: clock-controller {
-+			scpi_dvfs: clocks-0 {
- 				compatible = "arm,scpi-dvfs-clocks";
- 				#clock-cells = <1>;
- 				clock-indices = <0>;
+ 		cpu1: cpu@1 {
+@@ -55,6 +56,7 @@ cpu1: cpu@1 {
+ 			reg = <0x0 0x1>;
+ 			enable-method = "psci";
+ 			next-level-cache = <&l2>;
++			clocks = <&scpi_dvfs 0>;
+ 		};
+ 
+ 		cpu2: cpu@2 {
+@@ -63,6 +65,7 @@ cpu2: cpu@2 {
+ 			reg = <0x0 0x2>;
+ 			enable-method = "psci";
+ 			next-level-cache = <&l2>;
++			clocks = <&scpi_dvfs 0>;
+ 		};
+ 
+ 		cpu3: cpu@3 {
+@@ -71,6 +74,7 @@ cpu3: cpu@3 {
+ 			reg = <0x0 0x3>;
+ 			enable-method = "psci";
+ 			next-level-cache = <&l2>;
++			clocks = <&scpi_dvfs 0>;
+ 		};
+ 
+ 		l2: l2-cache0 {
+@@ -151,6 +155,28 @@ ao_alt_xtal: ao_alt_xtal-clk {
+ 		#clock-cells = <0>;
+ 	};
+ 
++	scpi {
++		compatible = "arm,scpi-pre-1.0";
++		mboxes = <&mailbox 1 &mailbox 2>;
++		shmem = <&cpu_scp_lpri &cpu_scp_hpri>;
++
++		scpi_clocks: clocks {
++			compatible = "arm,scpi-clocks";
++
++			scpi_dvfs: clock-controller {
++				compatible = "arm,scpi-dvfs-clocks";
++				#clock-cells = <1>;
++				clock-indices = <0>;
++				clock-output-names = "vcpu";
++			};
++		};
++
++		scpi_sensors: sensors {
++			compatible = "amlogic,meson-gxbb-scpi-sensors";
++			#thermal-sensor-cells = <1>;
++		};
++	};
++
+ 	soc {
+ 		compatible = "simple-bus";
+ 		#address-cells = <2>;
 -- 
 2.39.2
 
