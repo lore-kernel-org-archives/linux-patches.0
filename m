@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E258481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:09:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93935C4339E;
-	Fri, 10 Mar 2023 14:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F4B8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:09:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72470C433D2;
+	Fri, 10 Mar 2023 14:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457346;
-	bh=I9LMU2nZLKl9c1k1I1vIBYQRQYDE/9gFVnCwbePCPKk=;
+	s=korg; t=1678457348;
+	bh=dX4rEmIFO27bO7AQOKWNI2F8gHXYOMoxqFMOzaz+fNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sBnd+4VjeuvvdLdvrR8K91YmbyFlT9vHfSjVKY64OwGVNcO3h1PhnpHvENaGKTTL5
-	 MyRGCWSPoy4YfS+hGJtoXo0ot/DdfwXKxE+VK+rgwK7COxQz4RNh3u6d7MP3zEshy3
-	 CNtRmzeiytbo8rRYkdRRWRIuH+9/g8Z2kDkaZqgE=
+	b=OjrlTbcWAmTB6nQZvk1tLh4AucXMS0epQ5l7ZN3XY7YhbP8tHrHB5JuDL8SxrpUJL
+	 Vl/GPuxELDzL6/TICi7TErA12fFivJnYvhyFYEnB2sgsIO6VWU2rbB6oSpDnBPDvFN
+	 ixnPaxGGQgji7BG+5Ouu0HGBK6b9GPYB3TF2BVbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/200] ASoC: apple: mca: Fix SERDES reset sequence
-Date: Fri, 10 Mar 2023 14:38:33 +0100
-Message-Id: <20230310133720.351076307@linuxfoundation.org>
+Subject: [PATCH 6.1 107/200] ASoC: apple: mca: Improve handling of unavailable DMA channels
+Date: Fri, 10 Mar 2023 14:38:34 +0100
+Message-Id: <20230310133720.379127060@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -37,72 +37,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Martin Povišer <povik+lin@cutebit.org>
 
-[ Upstream commit d8b3e396088d787771f19fd3b7949e080dc31d6f ]
+[ Upstream commit fb1847cc460c127b12720119eae5f438ffc62e85 ]
 
-Fix the reset sequence of reads and writes that we invoke from within
-the early trigger. It looks like there never was a SERDES_CONF_SOME_RST
-bit that should be involved in the reset sequence, and its presence in
-the driver code is a mistake from earlier.
+When we fail to obtain a DMA channel, don't return a blanket -EINVAL,
+instead return the original error code if there's one. This makes
+deferring work as it should. Also don't print an error message for
+-EPROBE_DEFER.
 
-Instead, the reset sequence should go as follows: We should switch the
-the SERDES unit's SYNC_SEL mux to the value of 7 (so outside the range
-of 1...6 representing cluster's SYNCGEN units), then raise the RST bit
-in SERDES_STATUS and wait for it to clear.
-
-Properly resetting the SERDES unit fixes frame desynchronization hazard
-in case of long frames (longer than 4 used slots). The desynchronization
-manifests itself by rotating the PCM channels.
-
-Fixes: 3df5d0d97289 ("ASoC: apple: mca: Start new platform driver")
+Fixes: 4ec8179c212f ("ASoC: apple: mca: Postpone requesting of DMA channels")
 Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
-Link: https://lore.kernel.org/r/20230224153302.45365-2-povik+lin@cutebit.org
+Link: https://lore.kernel.org/r/20230224153302.45365-3-povik+lin@cutebit.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/apple/mca.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ sound/soc/apple/mca.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/sound/soc/apple/mca.c b/sound/soc/apple/mca.c
-index 9cceeb2599524..aea08c7b2ee85 100644
+index aea08c7b2ee85..64750db9b9639 100644
 --- a/sound/soc/apple/mca.c
 +++ b/sound/soc/apple/mca.c
-@@ -101,7 +101,6 @@
- #define SERDES_CONF_UNK3	BIT(14)
- #define SERDES_CONF_NO_DATA_FEEDBACK	BIT(15)
- #define SERDES_CONF_SYNC_SEL	GENMASK(18, 16)
--#define SERDES_CONF_SOME_RST	BIT(19)
- #define REG_TX_SERDES_BITSTART	0x08
- #define REG_RX_SERDES_BITSTART	0x0c
- #define REG_TX_SERDES_SLOTMASK	0x0c
-@@ -203,15 +202,24 @@ static void mca_fe_early_trigger(struct snd_pcm_substream *substream, int cmd,
- 	case SNDRV_PCM_TRIGGER_START:
- 	case SNDRV_PCM_TRIGGER_RESUME:
- 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-+		mca_modify(cl, serdes_conf, SERDES_CONF_SYNC_SEL,
-+			   FIELD_PREP(SERDES_CONF_SYNC_SEL, 0));
-+		mca_modify(cl, serdes_conf, SERDES_CONF_SYNC_SEL,
-+			   FIELD_PREP(SERDES_CONF_SYNC_SEL, 7));
- 		mca_modify(cl, serdes_unit + REG_SERDES_STATUS,
- 			   SERDES_STATUS_EN | SERDES_STATUS_RST,
- 			   SERDES_STATUS_RST);
--		mca_modify(cl, serdes_conf, SERDES_CONF_SOME_RST,
--			   SERDES_CONF_SOME_RST);
--		readl_relaxed(cl->base + serdes_conf);
--		mca_modify(cl, serdes_conf, SERDES_STATUS_RST, 0);
-+		/*
-+		 * Experiments suggest that it takes at most ~1 us
-+		 * for the bit to clear, so wait 2 us for good measure.
-+		 */
-+		udelay(2);
- 		WARN_ON(readl_relaxed(cl->base + serdes_unit + REG_SERDES_STATUS) &
- 			SERDES_STATUS_RST);
-+		mca_modify(cl, serdes_conf, SERDES_CONF_SYNC_SEL,
-+			   FIELD_PREP(SERDES_CONF_SYNC_SEL, 0));
-+		mca_modify(cl, serdes_conf, SERDES_CONF_SYNC_SEL,
-+			   FIELD_PREP(SERDES_CONF_SYNC_SEL, cl->no + 1));
- 		break;
- 	default:
- 		break;
+@@ -950,10 +950,17 @@ static int mca_pcm_new(struct snd_soc_component *component,
+ 		chan = mca_request_dma_channel(cl, i);
+ 
+ 		if (IS_ERR_OR_NULL(chan)) {
++			mca_pcm_free(component, rtd->pcm);
++
++			if (chan && PTR_ERR(chan) == -EPROBE_DEFER)
++				return PTR_ERR(chan);
++
+ 			dev_err(component->dev, "unable to obtain DMA channel (stream %d cluster %d): %pe\n",
+ 				i, cl->no, chan);
+-			mca_pcm_free(component, rtd->pcm);
+-			return -EINVAL;
++
++			if (!chan)
++				return -EINVAL;
++			return PTR_ERR(chan);
+ 		}
+ 
+ 		cl->dma_chans[i] = chan;
 -- 
 2.39.2
 
