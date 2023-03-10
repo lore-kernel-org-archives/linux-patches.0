@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CFF847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA28C433EF;
-	Fri, 10 Mar 2023 13:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329D9847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A888CC433D2;
+	Fri, 10 Mar 2023 13:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456485;
-	bh=+0x302HVA94pD7u0OKvIqfzTRP+nx4DiV6FamS1tsgE=;
+	s=korg; t=1678456488;
+	bh=k7RKJ4vBt+RHbIddyslBZNzUIWuELE7Ou2WLCmjtEL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zmWyROD2L276CgKoIMLtp57qFrPjRO4qOvATOoJ+97SnRq/nwO2wUXoNJpZlCDLbD
-	 jg5IrN2gpjmZ4QZOj4qJjvMZJW2OdBi8UvV55gfkjOM9YyAbvKDUrApAjgvumKk/FF
-	 jCn+VqpaeRNw8cdEAIKLhvTk7p5CThFKl+rmuxYo=
+	b=U311OhmIYvTAV0+2dF6PisiwWnXix4rZGONwmDwc3TWpkaNK0MrpkSwkgaVqpYYH0
+	 HHr6rGLuxsJnWl63EXBUMprFDPE1xSdFfkwvdCVId3VUWfhsXYlvJZMRtY/aKSwZ5Q
+	 XuY3L8lNGZnQDPfyeUbWsl6HrUzoX8I1DROAHbqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Roger Lu <roger.lu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 019/211] soc: mediatek: mtk-svs: Use pm_runtime_resume_and_get() in svs_init01()
-Date: Fri, 10 Mar 2023 14:36:39 +0100
-Message-Id: <20230310133719.319533626@linuxfoundation.org>
+Subject: [PATCH 6.2 020/211] f2fs: fix to do sanity check on extent cache correctly
+Date: Fri, 10 Mar 2023 14:36:40 +0100
+Message-Id: <20230310133719.348391176@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -37,39 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 37fa2aff8fe490771f2229b0f2fcd15796b1bfca ]
+[ Upstream commit d48a7b3a72f121655d95b5157c32c7d555e44c05 ]
 
-svs_init01() calls pm_runtime_get_sync() and added fail path as
-svs_init01_finish to put usage_counter. However, pm_runtime_get_sync()
-will increment usage_counter even it failed. Fix it by replacing it with
-pm_runtime_resume_and_get() to keep usage counter balanced.
+In do_read_inode(), sanity_check_inode() should be called after
+f2fs_init_read_extent_tree(), fix it.
 
-Fixes: 681a02e95000 ("soc: mediatek: SVS: introduce MTK SVS engine")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: Roger Lu <roger.lu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230111074528.29354-5-roger.lu@mediatek.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Fixes: 72840cccc0a1 ("f2fs: allocate the extent_cache by default")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/mediatek/mtk-svs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/inode.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/soc/mediatek/mtk-svs.c b/drivers/soc/mediatek/mtk-svs.c
-index e0b8aa75c84b6..00526fd37d7b8 100644
---- a/drivers/soc/mediatek/mtk-svs.c
-+++ b/drivers/soc/mediatek/mtk-svs.c
-@@ -1324,7 +1324,7 @@ static int svs_init01(struct svs_platform *svsp)
- 				svsb->pm_runtime_enabled_count++;
- 			}
+diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
+index fb489f55fef3a..622eb7963afac 100644
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -413,12 +413,6 @@ static int do_read_inode(struct inode *inode)
+ 		fi->i_inline_xattr_size = 0;
+ 	}
  
--			ret = pm_runtime_get_sync(svsb->opp_dev);
-+			ret = pm_runtime_resume_and_get(svsb->opp_dev);
- 			if (ret < 0) {
- 				dev_err(svsb->dev, "mtcmos on fail: %d\n", ret);
- 				goto svs_init01_resume_cpuidle;
+-	if (!sanity_check_inode(inode, node_page)) {
+-		f2fs_put_page(node_page, 1);
+-		f2fs_handle_error(sbi, ERROR_CORRUPTED_INODE);
+-		return -EFSCORRUPTED;
+-	}
+-
+ 	/* check data exist */
+ 	if (f2fs_has_inline_data(inode) && !f2fs_exist_data(inode))
+ 		__recover_inline_status(inode, node_page);
+@@ -482,6 +476,12 @@ static int do_read_inode(struct inode *inode)
+ 	f2fs_init_read_extent_tree(inode, node_page);
+ 	f2fs_init_age_extent_tree(inode);
+ 
++	if (!sanity_check_inode(inode, node_page)) {
++		f2fs_put_page(node_page, 1);
++		f2fs_handle_error(sbi, ERROR_CORRUPTED_INODE);
++		return -EFSCORRUPTED;
++	}
++
+ 	f2fs_put_page(node_page, 1);
+ 
+ 	stat_inc_inline_xattr(inode);
 -- 
 2.39.2
 
