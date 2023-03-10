@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A678481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:15:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D7CC4339E;
-	Fri, 10 Mar 2023 14:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EF78481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:15:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2781C4339E;
+	Fri, 10 Mar 2023 14:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457702;
-	bh=RK59v+7tkIof8xQyvhmhP4ktorEGLlFM/C0HX10/00c=;
+	s=korg; t=1678457705;
+	bh=881xeg0KCA0uC5/lHp5WWXAzA4dcI057X+G0QJFcq9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jcMBuinvaj/dp94RjmxYVezY+7fihdbBh9oJL2BylUaslKquFoD4b9vnCGaYbhcxD
-	 ITH1gbA+j+MnXLe4SYcO3rdcyyho5l4hJ9aFUoF5HuZroVgYzxeYHqXSZ31WQkPST5
-	 aAPc0Wfs0o1F4TWWzd3Bnuk3/N44601ArLYhP17s=
+	b=pY0QDgebQbvsYOkVFKJ3yle6LmPpq3pE+gDSSUk+TA56GBTKeGlaF5UAFfi3XbbIr
+	 NcJMv7ugWSGg+F+J0MC4D4okHYvO2t/SbAq/bm99NLhCt7rk+vjW2bX+busPdX/uRC
+	 II59o69Y6GwB6KrxJQKxsXHcHwgfEbXY3BcwES68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jiri Pirko <jiri@nvidia.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 021/252] wifi: libertas: fix memory leak in lbs_init_adapter()
-Date: Fri, 10 Mar 2023 14:36:31 +0100
-Message-Id: <20230310133719.464871719@linuxfoundation.org>
+Subject: [PATCH 4.19 030/252] wifi: libertas_tf: dont call kfree_skb() under spin_lock_irqsave()
+Date: Fri, 10 Mar 2023 14:36:40 +0100
+Message-Id: <20230310133719.738370323@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,35 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 16a03958618fb91bb1bc7077cf3211055162cc2f ]
+[ Upstream commit 9388ce97b98216833c969191ee6df61a7201d797 ]
 
-When kfifo_alloc() failed in lbs_init_adapter(), cmd buffer is not
-released. Add free memory to processing error path.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave(). Compile
+tested only.
 
-Fixes: 7919b89c8276 ("libertas: convert libertas driver to use an event/cmdresp queue")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Fixes: fc75122fabb5 ("libertas_tf: use irqsave() in USB's complete callback")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221208121448.2845986-1-shaozhengchao@huawei.com
+Link: https://lore.kernel.org/r/20221207150008.111743-2-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas/main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/marvell/libertas_tf/if_usb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/marvell/libertas/main.c b/drivers/net/wireless/marvell/libertas/main.c
-index f22e1c220cba1..41e37c17d9c28 100644
---- a/drivers/net/wireless/marvell/libertas/main.c
-+++ b/drivers/net/wireless/marvell/libertas/main.c
-@@ -869,6 +869,7 @@ static int lbs_init_adapter(struct lbs_private *priv)
- 	ret = kfifo_alloc(&priv->event_fifo, sizeof(u32) * 16, GFP_KERNEL);
- 	if (ret) {
- 		pr_err("Out of memory allocating event FIFO buffer\n");
-+		lbs_free_cmd_buffer(priv);
- 		goto out;
- 	}
- 
+diff --git a/drivers/net/wireless/marvell/libertas_tf/if_usb.c b/drivers/net/wireless/marvell/libertas_tf/if_usb.c
+index 60941c319b421..5e7edc0309751 100644
+--- a/drivers/net/wireless/marvell/libertas_tf/if_usb.c
++++ b/drivers/net/wireless/marvell/libertas_tf/if_usb.c
+@@ -616,7 +616,7 @@ static inline void process_cmdrequest(int recvlength, uint8_t *recvbuff,
+ 	spin_lock_irqsave(&priv->driver_lock, flags);
+ 	memcpy(priv->cmd_resp_buff, recvbuff + MESSAGE_HEADER_LEN,
+ 	       recvlength - MESSAGE_HEADER_LEN);
+-	kfree_skb(skb);
++	dev_kfree_skb_irq(skb);
+ 	lbtf_cmd_response_rx(priv);
+ 	spin_unlock_irqrestore(&priv->driver_lock, flags);
+ }
 -- 
 2.39.2
 
