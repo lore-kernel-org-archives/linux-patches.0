@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1EE847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:46:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B4BC433D2;
-	Fri, 10 Mar 2023 13:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C28847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:46:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653FFC433D2;
+	Fri, 10 Mar 2023 13:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678455995;
-	bh=erJIb9Hr0YbucJckBfGCz07Quml/JdTbXYBKdidNY4s=;
+	s=korg; t=1678455998;
+	bh=AAqE9qz1cOEJHa3AHWEZ8e8dMnNGRDwHnT5OtzQQdxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WsRZbtqKQrJIHYPSkGJRyyQ+BwDvw1UTN4KQM19apeTiW+8/0W/Zl/B4Y4BMddx8S
-	 6X9y84d8nk2M7ey9n5jOxzdwY+3cDmWu5Sf8OcnrBLVPV9P1deBXSgOPGdVKMTY9Nk
-	 hGlP1lUejmJGGGKc6VRKr+S6yIpEpm7q8CnLz0/Q=
+	b=BApFdOnPFN6vzXdKwXtiOdG8Fo/YJ0/EM9B4+YCWp931lT2Hm1jHXvP2x4bWzvFA7
+	 y49plGZotUfFamQTNSoiU0UASiiAUym6GIpz5BQ1F5K8qAiRSAkv8OOz5zITzaJoly
+	 H6ff97LMMnvGKM33ID6YrZR2mKMkSn0B6I4Lnnes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Coffin <alex.coffin@matician.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 046/193] Bluetooth: L2CAP: Fix potential user-after-free
-Date: Fri, 10 Mar 2023 14:37:08 +0100
-Message-Id: <20230310133712.516962742@linuxfoundation.org>
+Subject: [PATCH 4.14 047/193] crypto: rsa-pkcs1pad - Use akcipher_request_complete
+Date: Fri, 10 Mar 2023 14:37:09 +0100
+Message-Id: <20230310133712.557179094@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,91 +34,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit df5703348813235874d851934e957c3723d71644 ]
+[ Upstream commit 564cabc0ca0bdfa8f0fc1ae74b24d0a7554522c5 ]
 
-This fixes all instances of which requires to allocate a buffer calling
-alloc_skb which may release the chan lock and reacquire later which
-makes it possible that the chan is disconnected in the meantime.
+Use the akcipher_request_complete helper instead of calling the
+completion function directly.  In fact the previous code was buggy
+in that EINPROGRESS was never passed back to the original caller.
 
-Fixes: a6a5568c03c4 ("Bluetooth: Lock the L2CAP channel when sending")
-Reported-by: Alexander Coffin <alex.coffin@matician.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 3d5b1ecdea6f ("crypto: rsa - RSA padding algorithm")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 24 ------------------------
- net/bluetooth/l2cap_sock.c |  8 ++++++++
- 2 files changed, 8 insertions(+), 24 deletions(-)
+ crypto/rsa-pkcs1pad.c | 34 +++++++++++++++-------------------
+ 1 file changed, 15 insertions(+), 19 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index a5a19be51aff0..9fdd2260961e6 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -2517,14 +2517,6 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
- 		if (IS_ERR(skb))
- 			return PTR_ERR(skb);
+diff --git a/crypto/rsa-pkcs1pad.c b/crypto/rsa-pkcs1pad.c
+index 3279b457c4ede..0c70fbcd293d9 100644
+--- a/crypto/rsa-pkcs1pad.c
++++ b/crypto/rsa-pkcs1pad.c
+@@ -216,16 +216,14 @@ static void pkcs1pad_encrypt_sign_complete_cb(
+ 		struct crypto_async_request *child_async_req, int err)
+ {
+ 	struct akcipher_request *req = child_async_req->data;
+-	struct crypto_async_request async_req;
  
--		/* Channel lock is released before requesting new skb and then
--		 * reacquired thus we need to recheck channel state.
--		 */
--		if (chan->state != BT_CONNECTED) {
--			kfree_skb(skb);
--			return -ENOTCONN;
--		}
--
- 		l2cap_do_send(chan, skb);
- 		return len;
- 	}
-@@ -2568,14 +2560,6 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
- 		if (IS_ERR(skb))
- 			return PTR_ERR(skb);
- 
--		/* Channel lock is released before requesting new skb and then
--		 * reacquired thus we need to recheck channel state.
--		 */
--		if (chan->state != BT_CONNECTED) {
--			kfree_skb(skb);
--			return -ENOTCONN;
--		}
--
- 		l2cap_do_send(chan, skb);
- 		err = len;
- 		break;
-@@ -2596,14 +2580,6 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
- 		 */
- 		err = l2cap_segment_sdu(chan, &seg_queue, msg, len);
- 
--		/* The channel could have been closed while segmenting,
--		 * check that it is still connected.
--		 */
--		if (chan->state != BT_CONNECTED) {
--			__skb_queue_purge(&seg_queue);
--			err = -ENOTCONN;
--		}
--
- 		if (err)
- 			break;
- 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 13d070e7738db..47a16f6e741b8 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1415,6 +1415,14 @@ static struct sk_buff *l2cap_sock_alloc_skb_cb(struct l2cap_chan *chan,
- 	if (!skb)
- 		return ERR_PTR(err);
- 
-+	/* Channel lock is released before requesting new skb and then
-+	 * reacquired thus we need to recheck channel state.
-+	 */
-+	if (chan->state != BT_CONNECTED) {
-+		kfree_skb(skb);
-+		return ERR_PTR(-ENOTCONN);
-+	}
+ 	if (err == -EINPROGRESS)
+-		return;
++		goto out;
 +
- 	skb->priority = sk->sk_priority;
++	err = pkcs1pad_encrypt_sign_complete(req, err);
  
- 	bt_cb(skb)->l2cap.chan = chan;
+-	async_req.data = req->base.data;
+-	async_req.tfm = crypto_akcipher_tfm(crypto_akcipher_reqtfm(req));
+-	async_req.flags = child_async_req->flags;
+-	req->base.complete(&async_req,
+-			pkcs1pad_encrypt_sign_complete(req, err));
++out:
++	akcipher_request_complete(req, err);
+ }
+ 
+ static int pkcs1pad_encrypt(struct akcipher_request *req)
+@@ -336,15 +334,14 @@ static void pkcs1pad_decrypt_complete_cb(
+ 		struct crypto_async_request *child_async_req, int err)
+ {
+ 	struct akcipher_request *req = child_async_req->data;
+-	struct crypto_async_request async_req;
+ 
+ 	if (err == -EINPROGRESS)
+-		return;
++		goto out;
++
++	err = pkcs1pad_decrypt_complete(req, err);
+ 
+-	async_req.data = req->base.data;
+-	async_req.tfm = crypto_akcipher_tfm(crypto_akcipher_reqtfm(req));
+-	async_req.flags = child_async_req->flags;
+-	req->base.complete(&async_req, pkcs1pad_decrypt_complete(req, err));
++out:
++	akcipher_request_complete(req, err);
+ }
+ 
+ static int pkcs1pad_decrypt(struct akcipher_request *req)
+@@ -506,15 +503,14 @@ static void pkcs1pad_verify_complete_cb(
+ 		struct crypto_async_request *child_async_req, int err)
+ {
+ 	struct akcipher_request *req = child_async_req->data;
+-	struct crypto_async_request async_req;
+ 
+ 	if (err == -EINPROGRESS)
+-		return;
++		goto out;
+ 
+-	async_req.data = req->base.data;
+-	async_req.tfm = crypto_akcipher_tfm(crypto_akcipher_reqtfm(req));
+-	async_req.flags = child_async_req->flags;
+-	req->base.complete(&async_req, pkcs1pad_verify_complete(req, err));
++	err = pkcs1pad_verify_complete(req, err);
++
++out:
++	akcipher_request_complete(req, err);
+ }
+ 
+ /*
 -- 
 2.39.2
 
