@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220C9847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:51:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C19C4339B;
-	Fri, 10 Mar 2023 13:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4515847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:51:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25116C433D2;
+	Fri, 10 Mar 2023 13:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456263;
-	bh=RpOmuauEYjtMLoriIZbJFJmWeKeIrJOA/3GRyk9GS2Y=;
+	s=korg; t=1678456266;
+	bh=SPh9Cr0VLqWYefx9jhcVnscVgtjzDfdP9eEjl8T4Ftc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sz3xhE9R3sqaaQPlkXaEBttAy4p7pGqBTIlANdipTwncXbGj2yk1P5obw6p37QCWZ
-	 GXx2hOzSxyTYPKu+zUwGxRhNV/mqseL7EHR5/hFS9GvpVd4IJ0+1xi95PQva9osgP2
-	 FGitPwZtzW5oE/Hv3VAKeGbuZPQCKW98Pdlb+fBg=
+	b=gvyTY2IvFAEnAbqseLliS8Luf9gRZT7wfVNbyWgtkdyKjDeIGXSv2G7/Vl5ITyyCt
+	 09H8ItbQieCOBO5gv+9DYm+0e9NWu8NtmHLvxNKYdZ6Hgk8qxrHfWCE7p16ae7zRso
+	 pg4Q78CsnNeoqTNXPTmeKGoOey9PmwZxU+IQ9pik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 4.14 104/193] f2fs: fix information leak in f2fs_move_inline_dirents()
-Date: Fri, 10 Mar 2023 14:38:06 +0100
-Message-Id: <20230310133714.731003932@linuxfoundation.org>
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.14 105/193] ocfs2: fix defrag path triggering jbd2 ASSERT
+Date: Fri, 10 Mar 2023 14:38:07 +0100
+Message-Id: <20230310133714.767754282@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,56 +41,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Heming Zhao via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
 
-commit 9a5571cff4ffcfc24847df9fd545cc5799ac0ee5 upstream.
+commit 60eed1e3d45045623e46944ebc7c42c30a4350f0 upstream.
 
-When converting an inline directory to a regular one, f2fs is leaking
-uninitialized memory to disk because it doesn't initialize the entire
-directory block.  Fix this by zero-initializing the block.
+code path:
 
-This bug was introduced by commit 4ec17d688d74 ("f2fs: avoid unneeded
-initializing when converting inline dentry"), which didn't consider the
-security implications of leaking uninitialized memory to disk.
+ocfs2_ioctl_move_extents
+ ocfs2_move_extents
+  ocfs2_defrag_extent
+   __ocfs2_move_extent
+    + ocfs2_journal_access_di
+    + ocfs2_split_extent  //sub-paths call jbd2_journal_restart
+    + ocfs2_journal_dirty //crash by jbs2 ASSERT
 
-This was found by running xfstest generic/435 on a KMSAN-enabled kernel.
+crash stacks:
 
-Fixes: 4ec17d688d74 ("f2fs: avoid unneeded initializing when converting inline dentry")
-Cc: <stable@vger.kernel.org> # v4.3+
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+PID: 11297  TASK: ffff974a676dcd00  CPU: 67  COMMAND: "defragfs.ocfs2"
+ #0 [ffffb25d8dad3900] machine_kexec at ffffffff8386fe01
+ #1 [ffffb25d8dad3958] __crash_kexec at ffffffff8395959d
+ #2 [ffffb25d8dad3a20] crash_kexec at ffffffff8395a45d
+ #3 [ffffb25d8dad3a38] oops_end at ffffffff83836d3f
+ #4 [ffffb25d8dad3a58] do_trap at ffffffff83833205
+ #5 [ffffb25d8dad3aa0] do_invalid_op at ffffffff83833aa6
+ #6 [ffffb25d8dad3ac0] invalid_op at ffffffff84200d18
+    [exception RIP: jbd2_journal_dirty_metadata+0x2ba]
+    RIP: ffffffffc09ca54a  RSP: ffffb25d8dad3b70  RFLAGS: 00010207
+    RAX: 0000000000000000  RBX: ffff9706eedc5248  RCX: 0000000000000000
+    RDX: 0000000000000001  RSI: ffff97337029ea28  RDI: ffff9706eedc5250
+    RBP: ffff9703c3520200   R8: 000000000f46b0b2   R9: 0000000000000000
+    R10: 0000000000000001  R11: 00000001000000fe  R12: ffff97337029ea28
+    R13: 0000000000000000  R14: ffff9703de59bf60  R15: ffff9706eedc5250
+    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
+ #7 [ffffb25d8dad3ba8] ocfs2_journal_dirty at ffffffffc137fb95 [ocfs2]
+ #8 [ffffb25d8dad3be8] __ocfs2_move_extent at ffffffffc139a950 [ocfs2]
+ #9 [ffffb25d8dad3c80] ocfs2_defrag_extent at ffffffffc139b2d2 [ocfs2]
+
+Analysis
+
+This bug has the same root cause of 'commit 7f27ec978b0e ("ocfs2: call
+ocfs2_journal_access_di() before ocfs2_journal_dirty() in
+ocfs2_write_end_nolock()")'.  For this bug, jbd2_journal_restart() is
+called by ocfs2_split_extent() during defragmenting.
+
+How to fix
+
+For ocfs2_split_extent() can handle journal operations totally by itself.
+Caller doesn't need to call journal access/dirty pair, and caller only
+needs to call journal start/stop pair.  The fix method is to remove
+journal access/dirty from __ocfs2_move_extent().
+
+The discussion for this patch:
+https://oss.oracle.com/pipermail/ocfs2-devel/2023-February/000647.html
+
+Link: https://lkml.kernel.org/r/20230217003717.32469-1-heming.zhao@suse.com
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/inline.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ fs/ocfs2/move_extents.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
---- a/fs/f2fs/inline.c
-+++ b/fs/f2fs/inline.c
-@@ -392,18 +392,17 @@ static int f2fs_move_inline_dirents(stru
+--- a/fs/ocfs2/move_extents.c
++++ b/fs/ocfs2/move_extents.c
+@@ -115,14 +115,6 @@ static int __ocfs2_move_extent(handle_t
+ 	 */
+ 	replace_rec.e_flags = ext_flags & ~OCFS2_EXT_REFCOUNTED;
  
- 	dentry_blk = kmap_atomic(page);
+-	ret = ocfs2_journal_access_di(handle, INODE_CACHE(inode),
+-				      context->et.et_root_bh,
+-				      OCFS2_JOURNAL_ACCESS_WRITE);
+-	if (ret) {
+-		mlog_errno(ret);
+-		goto out;
+-	}
+-
+ 	ret = ocfs2_split_extent(handle, &context->et, path, index,
+ 				 &replace_rec, context->meta_ac,
+ 				 &context->dealloc);
+@@ -131,8 +123,6 @@ static int __ocfs2_move_extent(handle_t
+ 		goto out;
+ 	}
  
-+	/*
-+	 * Start by zeroing the full block, to ensure that all unused space is
-+	 * zeroed and no uninitialized memory is leaked to disk.
-+	 */
-+	memset(dentry_blk, 0, F2FS_BLKSIZE);
-+
- 	make_dentry_ptr_inline(dir, &src, inline_dentry);
- 	make_dentry_ptr_block(dir, &dst, dentry_blk);
+-	ocfs2_journal_dirty(handle, context->et.et_root_bh);
+-
+ 	context->new_phys_cpos = new_p_cpos;
  
- 	/* copy data from inline dentry block to new dentry block */
- 	memcpy(dst.bitmap, src.bitmap, src.nr_bitmap);
--	memset(dst.bitmap + src.nr_bitmap, 0, dst.nr_bitmap - src.nr_bitmap);
--	/*
--	 * we do not need to zero out remainder part of dentry and filename
--	 * field, since we have used bitmap for marking the usage status of
--	 * them, besides, we can also ignore copying/zeroing reserved space
--	 * of dentry block, because them haven't been used so far.
--	 */
- 	memcpy(dst.dentry, src.dentry, SIZE_OF_DIR_ENTRY * src.max);
- 	memcpy(dst.filename, src.filename, src.max * F2FS_SLOT_LEN);
- 
+ 	/*
 
 
