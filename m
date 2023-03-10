@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEAA7847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:48:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E454C433EF;
-	Fri, 10 Mar 2023 13:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2991847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:48:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68257C433D2;
+	Fri, 10 Mar 2023 13:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456106;
-	bh=gpQW+R9HmffdpY/muO/Fuck2asHsWmi9eGSv+5i37PY=;
+	s=korg; t=1678456109;
+	bh=fQcbWdZlEAn3dN/zGjeT/fwx29F+MX4mQ9DIN4r9IMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CsmdWL9CPQqxxoqZr86CTUfhdSlS68qD6lr4Uv+R2+sWNOQ33PWFybnd6Y+JhRH+q
-	 VJcsiq5afmPtqWEN9AIJg6L1vOMOVrPAA3j29+ZliBHr2bM9Q8SjMNX24InRpjQ84o
-	 QbnNSKZ7PPjh083rayCpr47QR9FXA7mdh0+E3r34=
+	b=wPhhGt+4dQ54SlhdWIJ1zeOmsdGgi3z16At6oFkLBJIkxs3ybw8cZadm1J721J3/X
+	 RuX+zFf747WDDMq40qwQ7hGdKZTRI8O9x2zgAGPtuIvSKSNOQHXV41GbVoIgEdUS1V
+	 OmSxfBi1wnijdRACzx+UUpXGJnbIuj0U6t59SaHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Dhruva Gole <d-gole@ti.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 083/193] inet: fix fast path in __inet_hash_connect()
-Date: Fri, 10 Mar 2023 14:37:45 +0100
-Message-Id: <20230310133713.841082947@linuxfoundation.org>
+Subject: [PATCH 4.14 066/193] mtd: rawnand: sunxi: Fix the size of the last OOB region
+Date: Fri, 10 Mar 2023 14:37:28 +0100
+Message-Id: <20230310133713.229452883@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -37,54 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Samuel Holland <samuel@sholland.org>
 
-[ Upstream commit 21cbd90a6fab7123905386985e3e4a80236b8714 ]
+[ Upstream commit 34569d869532b54d6e360d224a0254dcdd6a1785 ]
 
-__inet_hash_connect() has a fast path taken if sk_head(&tb->owners) is
-equal to the sk parameter.
-sk_head() returns the hlist_entry() with respect to the sk_node field.
-However entries in the tb->owners list are inserted with respect to the
-sk_bind_node field with sk_add_bind_node().
-Thus the check would never pass and the fast path never execute.
+The previous code assigned to the wrong structure member.
 
-This fast path has never been executed or tested as this bug seems
-to be present since commit 1da177e4c3f4 ("Linux-2.6.12-rc2"), thus
-remove it to reduce code complexity.
-
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230112-inet_hash_connect_bind_head-v3-1-b591fd212b93@diag.uniroma1.it
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c66811e6d350 ("mtd: nand: sunxi: switch to mtd_ooblayout_ops")
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Acked-By: Dhruva Gole <d-gole@ti.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20221229181526.53766-6-samuel@sholland.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_hashtables.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ drivers/mtd/nand/sunxi_nand.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index 590801a7487f7..c5092e2b5933e 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -616,17 +616,7 @@ int __inet_hash_connect(struct inet_timewait_death_row *death_row,
- 	u32 index;
+diff --git a/drivers/mtd/nand/sunxi_nand.c b/drivers/mtd/nand/sunxi_nand.c
+index 916e0ccd1e27e..f8e98b1eaede7 100644
+--- a/drivers/mtd/nand/sunxi_nand.c
++++ b/drivers/mtd/nand/sunxi_nand.c
+@@ -1786,7 +1786,7 @@ static int sunxi_nand_ooblayout_free(struct mtd_info *mtd, int section,
+ 	if (section < ecc->steps)
+ 		oobregion->length = 4;
+ 	else
+-		oobregion->offset = mtd->oobsize - oobregion->offset;
++		oobregion->length = mtd->oobsize - oobregion->offset;
  
- 	if (port) {
--		head = &hinfo->bhash[inet_bhashfn(net, port,
--						  hinfo->bhash_size)];
--		tb = inet_csk(sk)->icsk_bind_hash;
--		spin_lock_bh(&head->lock);
--		if (sk_head(&tb->owners) == sk && !sk->sk_bind_node.next) {
--			inet_ehash_nolisten(sk, NULL, NULL);
--			spin_unlock_bh(&head->lock);
--			return 0;
--		}
--		spin_unlock(&head->lock);
--		/* No definite answer... Walk to established hash table */
-+		local_bh_disable();
- 		ret = check_established(death_row, sk, port, NULL);
- 		local_bh_enable();
- 		return ret;
+ 	return 0;
+ }
 -- 
 2.39.2
 
