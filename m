@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE0A847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F320DC433EF;
-	Fri, 10 Mar 2023 13:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B718847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBAC5C4339B;
+	Fri, 10 Mar 2023 13:54:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456464;
-	bh=sJZDY+aWkKUI3CILtPsReX7IbCQldm3Pb8oHvdYdd3s=;
+	s=korg; t=1678456467;
+	bh=muR00quUMrGE9lCMB9cIq5+pwzBFjaf/e5at22Q5aFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e8Tv3jfqLdLZCK2ysMsvALfS5YpVpFcXhdsSD4yW6yuwvx50GYac+q8nySijTONkE
-	 s8vOkDmiIjYHX/n8dBMd5lC6P7DUbeMT0EMC/upSkyQezKu57TXsHRQfrJUvRNDudE
-	 XYTsoMQofvlUuQvTM+JpayMhU6dYZRk7hH0QBwlc=
+	b=QHhCQuh8dv/Ke03EZJvrT+puAWehV+3Bv/O1UdWGHxR63Bd+GsU0sFxIUlSfDas3c
+	 Z0DvxhX08jV1r5QmZ1jAi/JVR6PuK4VCL52uJhFd9GtFeE3u6wYJFDypJ1+G7va+06
+	 qsAcNOzahrC5AuLiv2u9cZEZV4uJ9Z1fnov8HZiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 004/211] driver: soc: xilinx: fix memory leak in xlnx_add_cb_for_notify_event()
-Date: Fri, 10 Mar 2023 14:36:24 +0100
-Message-Id: <20230310133718.855261576@linuxfoundation.org>
+Subject: [PATCH 6.2 005/211] f2fs: dont rely on F2FS_MAP_* in f2fs_iomap_begin
+Date: Fri, 10 Mar 2023 14:36:25 +0100
+Message-Id: <20230310133718.884555974@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,40 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 1bea534991b9b35c41848a397666ada436456beb ]
+[ Upstream commit 8d3c1fa3fa5eacfd14f5b018eddb6c1a91c57783 ]
 
-The kfree() should be called when memory fails to be allocated for
-cb_data in xlnx_add_cb_for_notify_event(), otherwise there will be
-a memory leak, so add kfree() to fix it.
+When testing with a mixed zoned / convention device combination, there
+are regular but not 100% reproducible failures in xfstests generic/113
+where the __is_valid_data_blkaddr assert hits due to finding a hole.
 
-Fixes: 05e5ba40ea7a ("driver: soc: xilinx: Add support of multiple callbacks for same event in event management driver")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/20221129010146.1026685-1-cuigaosheng1@huawei.com
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+This seems to be because f2fs_map_blocks can set this flag on a hole
+when it was found in the extent cache.
+
+Rework f2fs_iomap_begin to just check the special block numbers directly.
+This has the added benefits of the WARN_ON showing which invalid block
+address we found, and being properly error out on delalloc blocks that
+are confusingly called unwritten but not actually suitable for direct
+I/O.
+
+Fixes: 1517c1a7a445 ("f2fs: implement iomap operations")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/xilinx/xlnx_event_manager.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/f2fs/data.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/soc/xilinx/xlnx_event_manager.c b/drivers/soc/xilinx/xlnx_event_manager.c
-index 2de082765befa..c76381899ef49 100644
---- a/drivers/soc/xilinx/xlnx_event_manager.c
-+++ b/drivers/soc/xilinx/xlnx_event_manager.c
-@@ -116,8 +116,10 @@ static int xlnx_add_cb_for_notify_event(const u32 node_id, const u32 event, cons
- 		INIT_LIST_HEAD(&eve_data->cb_list_head);
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 8cca566baf3ab..5263d97bef1dd 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -4155,20 +4155,24 @@ static int f2fs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
+ 	 */
+ 	map.m_len = fscrypt_limit_io_blocks(inode, map.m_lblk, map.m_len);
  
- 		cb_data = kmalloc(sizeof(*cb_data), GFP_KERNEL);
--		if (!cb_data)
-+		if (!cb_data) {
-+			kfree(eve_data);
- 			return -ENOMEM;
-+		}
- 		cb_data->eve_cb = cb_fun;
- 		cb_data->agent_data = data;
+-	if (map.m_flags & (F2FS_MAP_MAPPED | F2FS_MAP_UNWRITTEN)) {
+-		iomap->length = blks_to_bytes(inode, map.m_len);
+-		if (map.m_flags & F2FS_MAP_MAPPED) {
+-			iomap->type = IOMAP_MAPPED;
+-			iomap->flags |= IOMAP_F_MERGED;
+-		} else {
+-			iomap->type = IOMAP_UNWRITTEN;
+-		}
+-		if (WARN_ON_ONCE(!__is_valid_data_blkaddr(map.m_pblk)))
+-			return -EINVAL;
++	/*
++	 * We should never see delalloc or compressed extents here based on
++	 * prior flushing and checks.
++	 */
++	if (WARN_ON_ONCE(map.m_pblk == NEW_ADDR))
++		return -EINVAL;
++	if (WARN_ON_ONCE(map.m_pblk == COMPRESS_ADDR))
++		return -EINVAL;
  
++	if (map.m_pblk != NULL_ADDR) {
++		iomap->length = blks_to_bytes(inode, map.m_len);
++		iomap->type = IOMAP_MAPPED;
++		iomap->flags |= IOMAP_F_MERGED;
+ 		iomap->bdev = map.m_bdev;
+ 		iomap->addr = blks_to_bytes(inode, map.m_pblk);
+ 	} else {
++		if (flags & IOMAP_WRITE)
++			return -ENOTBLK;
+ 		iomap->length = blks_to_bytes(inode, next_pgofs) -
+ 				iomap->offset;
+ 		iomap->type = IOMAP_HOLE;
 -- 
 2.39.2
 
