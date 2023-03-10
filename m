@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BA98489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:16:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1689AC433EF;
-	Fri, 10 Mar 2023 14:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1B4848A
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:16:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F31C433D2;
+	Fri, 10 Mar 2023 14:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457792;
-	bh=H1KQT47QQ4AuzrxyTvDF7wUC4H2W4gp6dVZ2BViqDUo=;
+	s=korg; t=1678457795;
+	bh=f0nVKhNDPzhfCKNRFI3VygVHIA+Vz8P9OjPnVWdO9iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ftTxuvcP7bmx2427dNzQtPG6TmBZsPCDVozt3gnEjeXtjlCVh/M+EK55VlwJQWITd
-	 xscq7wXt9QAb7lUDMtHKtrvFGfIvS/1gXTDpBUWl95j8/i8OuN9uz+tujcUiAxbY0k
-	 JACkhFDijJjx6wT11xQP9BWMpP4+3oXpEix58BgU=
+	b=sLTXkCgD0zTV5zFy8zFWexYBP0WGMnbT4kh5HpQx41j/7qlhKrvsZGK2k67q7FJ+0
+	 GIHO9y4S3x2yhiF/3+mV6O9KZCG5T7028O3BHo74N8wkjQx19gg/1YUkjf2zoP0PGu
+	 uDQb1acxOD4dRpol93LMt88TvyEutVN75Yu5+tK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Yuan Can <yuancan@huawei.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 029/252] wifi: brcmfmac: unmap dma buffer in brcmf_msgbuf_alloc_pktid()
-Date: Fri, 10 Mar 2023 14:36:39 +0100
-Message-Id: <20230310133719.706623778@linuxfoundation.org>
+Subject: [PATCH 4.19 020/252] wifi: rsi: Fix memory leak in rsi_coex_attach()
+Date: Fri, 10 Mar 2023 14:36:30 +0100
+Message-Id: <20230310133719.436885955@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,44 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit b9f420032f2ba1e634b22ca7b433e5c40ea663af ]
+[ Upstream commit 956fb851a6e19da5ab491e19c1bc323bb2c2cf6f ]
 
-After the DMA buffer is mapped to a physical address, address is stored
-in pktids in brcmf_msgbuf_alloc_pktid(). Then, pktids is parsed in
-brcmf_msgbuf_get_pktid()/brcmf_msgbuf_release_array() to obtain physaddr
-and later unmap the DMA buffer. But when count is always equal to
-pktids->array_size, physaddr isn't stored in pktids and the DMA buffer
-will not be unmapped anyway.
+The coex_cb needs to be freed when rsi_create_kthread() failed in
+rsi_coex_attach().
 
-Fixes: 9a1bb60250d2 ("brcmfmac: Adding msgbuf protocol.")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Fixes: 2108df3c4b18 ("rsi: add coex support")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221207013114.1748936-1-shaozhengchao@huawei.com
+Link: https://lore.kernel.org/r/20221205061441.114632-1-yuancan@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/rsi/rsi_91x_coex.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-index 768a99c15c08b..e81e892ddacc5 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-@@ -339,8 +339,11 @@ brcmf_msgbuf_alloc_pktid(struct device *dev,
- 		count++;
- 	} while (count < pktids->array_size);
- 
--	if (count == pktids->array_size)
-+	if (count == pktids->array_size) {
-+		dma_unmap_single(dev, *physaddr, skb->len - data_offset,
-+				 pktids->direction);
- 		return -ENOMEM;
-+	}
- 
- 	array[*idx].data_offset = data_offset;
- 	array[*idx].physaddr = *physaddr;
+diff --git a/drivers/net/wireless/rsi/rsi_91x_coex.c b/drivers/net/wireless/rsi/rsi_91x_coex.c
+index c8ba148f8c6cf..acf4d8cb4b479 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_coex.c
++++ b/drivers/net/wireless/rsi/rsi_91x_coex.c
+@@ -160,6 +160,7 @@ int rsi_coex_attach(struct rsi_common *common)
+ 			       rsi_coex_scheduler_thread,
+ 			       "Coex-Tx-Thread")) {
+ 		rsi_dbg(ERR_ZONE, "%s: Unable to init tx thrd\n", __func__);
++		kfree(coex_cb);
+ 		return -EINVAL;
+ 	}
+ 	return 0;
 -- 
 2.39.2
 
