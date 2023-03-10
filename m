@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747AD848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:24:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6ABAC4339B;
-	Fri, 10 Mar 2023 14:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A7F848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:24:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38C3C433D2;
+	Fri, 10 Mar 2023 14:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458273;
-	bh=GJ3KZbABA+l7AWrAESMedG78EQzzgEfJdzf3o6YauBU=;
+	s=korg; t=1678458276;
+	bh=p2bZOgehJ4DmOBPea7v6KYn+JokJdFVcBZSbH9GKNsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g2Avpm4OA61JpHd+RFK6KKE1jTFa08kDRkQgshqTVCrjdLeHXNX7T1V1rtt1YkvxO
-	 beeMj8HxiLYsQdjMulxNUDu7h7Z940XKJnAJm6geZ1giciA/tdhOLWgEtbPUavTwBg
-	 7k8bOuZWWxTk/YjfhqvRCAuTnQfLj7ERzIBUsWW4=
+	b=1xV1X3PYTSUgxPtHhyVTPH3h5bzgnfJQ8MZtf5VdkT4UdDwkq3r0GuCvqrIoAvHRz
+	 4Vk/a0jJkbzNKhYv2OM9XoDCZRJheRLYnyLEN63XDop1CK6Ytw/4ng9K+zig/wyBi5
+	 ms51TgTL7AuBIQl84DYv7FIzMdX+40JvcZBshUrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tomas Henzl <thenzl@redhat.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 4.19 190/252] scsi: ses: Fix possible addl_desc_ptr out-of-bounds accesses
-Date: Fri, 10 Mar 2023 14:39:20 +0100
-Message-Id: <20230310133724.699668440@linuxfoundation.org>
+Subject: [PATCH 4.19 191/252] scsi: ses: Fix possible desc_ptr out-of-bounds accesses
+Date: Fri, 10 Mar 2023 14:39:21 +0100
+Message-Id: <20230310133724.729446374@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,112 +36,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomas Henzl <thenzl@redhat.com>
 
-commit db95d4df71cb55506425b6e4a5f8d68e3a765b63 upstream.
+commit 801ab13d50cf3d26170ee073ea8bb4eececb76ab upstream.
 
-Sanitize possible addl_desc_ptr out-of-bounds accesses in
+Sanitize possible desc_ptr out-of-bounds accesses in
 ses_enclosure_data_process().
 
-Link: https://lore.kernel.org/r/20230202162451.15346-3-thenzl@redhat.com
+Link: https://lore.kernel.org/r/20230202162451.15346-4-thenzl@redhat.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Tomas Henzl <thenzl@redhat.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/ses.c |   35 ++++++++++++++++++++++++++---------
- 1 file changed, 26 insertions(+), 9 deletions(-)
+ drivers/scsi/ses.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 --- a/drivers/scsi/ses.c
 +++ b/drivers/scsi/ses.c
-@@ -449,8 +449,8 @@ int ses_match_host(struct enclosure_devi
- }
- #endif  /*  0  */
- 
--static void ses_process_descriptor(struct enclosure_component *ecomp,
--				   unsigned char *desc)
-+static int ses_process_descriptor(struct enclosure_component *ecomp,
-+				   unsigned char *desc, int max_desc_len)
- {
- 	int eip = desc[0] & 0x10;
- 	int invalid = desc[0] & 0x80;
-@@ -461,22 +461,32 @@ static void ses_process_descriptor(struc
- 	unsigned char *d;
- 
- 	if (invalid)
--		return;
-+		return 0;
- 
- 	switch (proto) {
- 	case SCSI_PROTOCOL_FCP:
- 		if (eip) {
-+			if (max_desc_len <= 7)
-+				return 1;
- 			d = desc + 4;
- 			slot = d[3];
- 		}
- 		break;
- 	case SCSI_PROTOCOL_SAS:
-+
- 		if (eip) {
-+			if (max_desc_len <= 27)
-+				return 1;
- 			d = desc + 4;
- 			slot = d[3];
- 			d = desc + 8;
--		} else
-+		} else {
-+			if (max_desc_len <= 23)
-+				return 1;
- 			d = desc + 4;
-+		}
-+
-+
- 		/* only take the phy0 addr */
- 		addr = (u64)d[12] << 56 |
- 			(u64)d[13] << 48 |
-@@ -493,6 +503,8 @@ static void ses_process_descriptor(struc
- 	}
- 	ecomp->slot = slot;
- 	scomp->addr = addr;
-+
-+	return 0;
- }
- 
- struct efd {
-@@ -565,7 +577,7 @@ static void ses_enclosure_data_process(s
- 		/* skip past overall descriptor */
- 		desc_ptr += len + 4;
- 	}
--	if (ses_dev->page10)
-+	if (ses_dev->page10 && ses_dev->page10_len > 9)
- 		addl_desc_ptr = ses_dev->page10 + 8;
- 	type_ptr = ses_dev->page1_types;
- 	components = 0;
-@@ -573,6 +585,7 @@ static void ses_enclosure_data_process(s
- 		for (j = 0; j < type_ptr[1]; j++) {
- 			char *name = NULL;
- 			struct enclosure_component *ecomp;
-+			int max_desc_len;
+@@ -588,15 +588,19 @@ static void ses_enclosure_data_process(s
+ 			int max_desc_len;
  
  			if (desc_ptr) {
- 				if (desc_ptr >= buf + page7_len) {
-@@ -599,10 +612,14 @@ static void ses_enclosure_data_process(s
- 					ecomp = &edev->component[components++];
- 
- 				if (!IS_ERR(ecomp)) {
--					if (addl_desc_ptr)
--						ses_process_descriptor(
--							ecomp,
--							addl_desc_ptr);
-+					if (addl_desc_ptr) {
-+						max_desc_len = ses_dev->page10_len -
-+						    (addl_desc_ptr - ses_dev->page10);
-+						if (ses_process_descriptor(ecomp,
-+						    addl_desc_ptr,
-+						    max_desc_len))
-+							addl_desc_ptr = NULL;
+-				if (desc_ptr >= buf + page7_len) {
++				if (desc_ptr + 3 >= buf + page7_len) {
+ 					desc_ptr = NULL;
+ 				} else {
+ 					len = (desc_ptr[2] << 8) + desc_ptr[3];
+ 					desc_ptr += 4;
+-					/* Add trailing zero - pushes into
+-					 * reserved space */
+-					desc_ptr[len] = '\0';
+-					name = desc_ptr;
++					if (desc_ptr + len > buf + page7_len)
++						desc_ptr = NULL;
++					else {
++						/* Add trailing zero - pushes into
++						 * reserved space */
++						desc_ptr[len] = '\0';
++						name = desc_ptr;
 +					}
- 					if (create)
- 						enclosure_component_register(
- 							ecomp);
+ 				}
+ 			}
+ 			if (type_ptr[0] == ENCLOSURE_COMPONENT_DEVICE ||
 
 
