@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CF68481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:06:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523CBC433D2;
-	Fri, 10 Mar 2023 14:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EEEA8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:06:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B22C433EF;
+	Fri, 10 Mar 2023 14:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457180;
-	bh=3cmznv8an2kdzhfWa1qltY0CQ3ppfedg+qrQnlgV8og=;
+	s=korg; t=1678457183;
+	bh=NvTI4qf5sKzalATCqRQ8nzW4CH2chdRl2A4V7MhqBQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gD1AW5GBPVLEzydobtxn0K9RlczEXmuLhFgLmMJY4qNf383IALMCEs1x0rf99l/oL
-	 f04cIXnMC9/5loBWh/Z+A0M996rqsRq82niQHSu/mUiiqY04bYdv4HXzykN1YuAZca
-	 g8X9G5A4xySeDQIvFgKQX7/SCehCznfbN4uti/PY=
+	b=McNVAsxL/Hbr2gX9ZBNHOww+M0YZg5U2V0KEcDzdispX84iGW6E1gRkdUi8Z1GCB+
+	 Qd+l1yurZ+Qh0uxChV0HnQJZtRzBhGPStULeMywN9ZSD+G9bWezFc7Xs6GuUYSJsSd
+	 LqE6L4nPbG2vaXWN+kKHxgUDw0NWspfCYAi5YW3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Ammar Faizi <ammarfaizi2@gnuweeb.org>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/200] ubifs: do_rename: Fix wrong space budget when target inodes nlink > 1
-Date: Fri, 10 Mar 2023 14:37:17 +0100
-Message-Id: <20230310133717.974825054@linuxfoundation.org>
+Subject: [PATCH 6.1 048/200] x86: um: vdso: Add %rcx and %r11 to the syscall clobber list
+Date: Fri, 10 Mar 2023 14:37:35 +0100
+Message-Id: <20230310133718.575836293@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,40 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Ammar Faizi <ammarfaizi2@gnuweeb.org>
 
-[ Upstream commit 25fce616a61fc2f1821e4a9ce212d0e064707093 ]
+[ Upstream commit 5541992e512de8c9133110809f767bd1b54ee10d ]
 
-If target inode is a special file (eg. block/char device) with nlink
-count greater than 1, the inode with ui->data will be re-written on
-disk. However, UBIFS losts target inode's data_len while doing space
-budget. Bad space budget may let make_reservation() return with -ENOSPC,
-which could turn ubifs to read-only mode in do_writepage() process.
+The 'syscall' instruction clobbers '%rcx' and '%r11', but they are not
+listed in the inline Assembly that performs the syscall instruction.
 
-Fetch a reproducer in [Link].
+No real bug is found. It wasn't buggy by luck because '%rcx' and '%r11'
+are caller-saved registers, and not used in the functions, and the
+functions are never inlined.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216494
-Fixes: 1e51764a3c2ac0 ("UBIFS: add new flash file system")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Add them to the clobber list for code correctness.
+
+Fixes: f1c2bb8b9964ed31de988910f8b1cfb586d30091 ("um: implement a x86_64 vDSO")
+Signed-off-by: Ammar Faizi <ammarfaizi2@gnuweeb.org>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/dir.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/um/vdso/um_vdso.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ubifs/dir.c b/fs/ubifs/dir.c
-index 94634b872e382..5e6bcce94e641 100644
---- a/fs/ubifs/dir.c
-+++ b/fs/ubifs/dir.c
-@@ -1324,6 +1324,8 @@ static int do_rename(struct inode *old_dir, struct dentry *old_dentry,
- 	if (unlink) {
- 		ubifs_assert(c, inode_is_locked(new_inode));
+diff --git a/arch/x86/um/vdso/um_vdso.c b/arch/x86/um/vdso/um_vdso.c
+index 2112b8d146688..ff0f3b4b6c45e 100644
+--- a/arch/x86/um/vdso/um_vdso.c
++++ b/arch/x86/um/vdso/um_vdso.c
+@@ -17,8 +17,10 @@ int __vdso_clock_gettime(clockid_t clock, struct __kernel_old_timespec *ts)
+ {
+ 	long ret;
  
-+		/* Budget for old inode's data when its nlink > 1. */
-+		req.dirtied_ino_d = ALIGN(ubifs_inode(new_inode)->data_len, 8);
- 		err = ubifs_purge_xattrs(new_inode);
- 		if (err)
- 			return err;
+-	asm("syscall" : "=a" (ret) :
+-		"0" (__NR_clock_gettime), "D" (clock), "S" (ts) : "memory");
++	asm("syscall"
++		: "=a" (ret)
++		: "0" (__NR_clock_gettime), "D" (clock), "S" (ts)
++		: "rcx", "r11", "memory");
+ 
+ 	return ret;
+ }
+@@ -29,8 +31,10 @@ int __vdso_gettimeofday(struct __kernel_old_timeval *tv, struct timezone *tz)
+ {
+ 	long ret;
+ 
+-	asm("syscall" : "=a" (ret) :
+-		"0" (__NR_gettimeofday), "D" (tv), "S" (tz) : "memory");
++	asm("syscall"
++		: "=a" (ret)
++		: "0" (__NR_gettimeofday), "D" (tv), "S" (tz)
++		: "rcx", "r11", "memory");
+ 
+ 	return ret;
+ }
 -- 
 2.39.2
 
