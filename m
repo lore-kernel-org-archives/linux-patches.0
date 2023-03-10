@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15E98481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:11:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A868C4339B;
-	Fri, 10 Mar 2023 14:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37408481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:11:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52649C4339B;
+	Fri, 10 Mar 2023 14:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457463;
-	bh=4OwnsPE4H33XJHzWTzuz/cql0vvfoxRUgJnjZXxn1VA=;
+	s=korg; t=1678457466;
+	bh=yiAICD4Wt1AkeY5b6PGkTtvDc/urevGYv04TIFZDSis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WwyFAcyCZf8+BzOeK59kam0yVWkCodScE5lC/6L5QSxUF6GumpzA57PiZ/yZcF4En
-	 +J5yfwuQz/m8QYo1Q2mnGwgyQZvcHdHtRZxp1csThiGi2QORKYUdO67SPAnJEwAk3z
-	 QxMkfZ/iGXpqQkuB8k0EFhho8BxbJQR5A90arOtk=
+	b=T0kuS+cdCyjseZhs1fCGINzmbNnb7oMAmvtFzdwPyFPVFmBhEVkL14BCLE3Hea0VV
+	 jAzRK1DB4kErg+fyEYo3qYgGjz+aSDuDp5l9SIZ8qnFUFsclFnQAOJAQXs5m1Ga6gC
+	 oe7eHSBJNTqz3y2G0W6ubaw+cNeUUqlx8uJWwEv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Yuan Can <yuancan@huawei.com>,
+	Simon Horman <horms@verge.net.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 147/200] USB: sl811: fix memory leak with using debugfs_lookup()
-Date: Fri, 10 Mar 2023 14:39:14 +0100
-Message-Id: <20230310133721.645517661@linuxfoundation.org>
+Subject: [PATCH 6.1 130/200] staging: emxx_udc: Add checks for dma_alloc_coherent()
+Date: Fri, 10 Mar 2023 14:38:57 +0100
+Message-Id: <20230310133721.115642027@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -34,36 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit e1523c4dbc54e164638ff8729d511cf91e27be04 ]
+[ Upstream commit f6510a93cfd8c6c79b4dda0f2967cdc6df42eff4 ]
 
-When calling debugfs_lookup() the result must have dput() called on it,
-otherwise the memory will leak over time.  To make things simpler, just
-call debugfs_lookup_and_remove() instead which handles all of the logic
-at once.
+As the dma_alloc_coherent may return NULL, the return value needs to be
+checked to avoid NULL poineter dereference.
 
-Cc: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://lore.kernel.org/r/20230202153235.2412790-4-gregkh@linuxfoundation.org
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Simon Horman <horms@verge.net.au>
+Link: https://lore.kernel.org/r/20230119083119.16956-1-yuancan@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/sl811-hcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/emxx_udc/emxx_udc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/sl811-hcd.c b/drivers/usb/host/sl811-hcd.c
-index d206bd95c7bbc..b8b90eec91078 100644
---- a/drivers/usb/host/sl811-hcd.c
-+++ b/drivers/usb/host/sl811-hcd.c
-@@ -1501,7 +1501,7 @@ static void create_debug_file(struct sl811 *sl811)
+diff --git a/drivers/staging/emxx_udc/emxx_udc.c b/drivers/staging/emxx_udc/emxx_udc.c
+index b6abd3770e81c..edd20a03f7a26 100644
+--- a/drivers/staging/emxx_udc/emxx_udc.c
++++ b/drivers/staging/emxx_udc/emxx_udc.c
+@@ -2590,10 +2590,15 @@ static int nbu2ss_ep_queue(struct usb_ep *_ep,
+ 		req->unaligned = false;
  
- static void remove_debug_file(struct sl811 *sl811)
- {
--	debugfs_remove(debugfs_lookup("sl811h", usb_debug_root));
-+	debugfs_lookup_and_remove("sl811h", usb_debug_root);
- }
- 
- /*-------------------------------------------------------------------------*/
+ 	if (req->unaligned) {
+-		if (!ep->virt_buf)
++		if (!ep->virt_buf) {
+ 			ep->virt_buf = dma_alloc_coherent(udc->dev, PAGE_SIZE,
+ 							  &ep->phys_buf,
+ 							  GFP_ATOMIC | GFP_DMA);
++			if (!ep->virt_buf) {
++				spin_unlock_irqrestore(&udc->lock, flags);
++				return -ENOMEM;
++			}
++		}
+ 		if (ep->epnum > 0)  {
+ 			if (ep->direct == USB_DIR_IN)
+ 				memcpy(ep->virt_buf, req->req.buf,
 -- 
 2.39.2
 
