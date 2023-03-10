@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1109A847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C53BC433D2;
-	Fri, 10 Mar 2023 13:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B8B847F;
+	Fri, 10 Mar 2023 13:57:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADC2C433EF;
+	Fri, 10 Mar 2023 13:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456643;
-	bh=m0A2m/g5i6xtnRGlFfR+WiTR7634F73azjHuILsEqck=;
+	s=korg; t=1678456646;
+	bh=sycv6iu5K5F3S5Tr2gJLFuQPxHuazObeqeVF4t+R/m4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e0fIIJe64SFGbBQzjopgV9+3GJK/GdhxlEUAv6ogfZ6F51/hvNyJoeAv184paimOT
-	 dZHim2PM962xkA4AXve+GsXSyasM10FzcOzeMSRyulNjvRdXMv5zkoBG43DbCFthNR
-	 M27wdpUV56jxREadQrYdOR8e/4Fkv/dk1gHkF3jw=
+	b=K9mE1dVnmEvfMoyBn/cg5CdMdRAX/akaDpQwafzRM4KKYx5cjwEemUE8+BZTkax6C
+	 bUCGp+iKc+54aLqZ98AGvwHxI0X7P8BYWTZFFM6mhVCixfM3LRJeYYzy/qko8RB6aL
+	 cQrhalVASLsNeosdM/hUyqiowu85KXdPX08Z2EB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	Christoph Hellwig <hch@lst.de>,
+	iommu@lists.linux.dev,
+	Mike Rapoport <rppt@kernel.org>,
+	linux-mm@kvack.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 072/211] netfilter: x_tables: fix percpu counter block leak on error path when creating new netns
-Date: Fri, 10 Mar 2023 14:37:32 +0100
-Message-Id: <20230310133720.969849339@linuxfoundation.org>
+Subject: [PATCH 6.2 073/211] swiotlb: mark swiotlb_memblock_alloc() as __init
+Date: Fri, 10 Mar 2023 14:37:33 +0100
+Message-Id: <20230310133721.005935440@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,88 +39,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 0af8c09c896810879387decfba8c942994bb61f5 ]
+[ Upstream commit 9b07d27d0fbb7f7441aa986859a0f53ec93a0335 ]
 
-Here is the stack where we allocate percpu counter block:
+swiotlb_memblock_alloc() calls memblock_alloc(), which calls
+(__init) memblock_alloc_try_nid(). However, swiotlb_membloc_alloc()
+can be marked as __init since it is only called by swiotlb_init_remap(),
+which is already marked as __init. This prevents a modpost build
+warning/error:
 
-  +-< __alloc_percpu
-    +-< xt_percpu_counter_alloc
-      +-< find_check_entry # {arp,ip,ip6}_tables.c
-        +-< translate_table
+WARNING: modpost: vmlinux.o: section mismatch in reference: swiotlb_memblock_alloc (section: .text) -> memblock_alloc_try_nid (section: .init.text)
+WARNING: modpost: vmlinux.o: section mismatch in reference: swiotlb_memblock_alloc (section: .text) -> memblock_alloc_try_nid (section: .init.text)
 
-And it can be leaked on this code path:
+This fixes the build warning/error seen on ARM64, PPC64, S390, i386,
+and x86_64.
 
-  +-> ip6t_register_table
-    +-> translate_table # allocates percpu counter block
-    +-> xt_register_table # fails
-
-there is no freeing of the counter block on xt_register_table fail.
-Note: xt_percpu_counter_free should be called to free it like we do in
-do_replace through cleanup_entry helper (or in __ip6t_unregister_table).
-
-Probability of hitting this error path is low AFAICS (xt_register_table
-can only return ENOMEM here, as it is not replacing anything, as we are
-creating new netns, and it is hard to imagine that all previous
-allocations succeeded and after that one in xt_register_table failed).
-But it's worth fixing even the rare leak.
-
-Fixes: 71ae0dff02d7 ("netfilter: xtables: use percpu rule counters")
-Signed-off-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 8d58aa484920 ("swiotlb: reduce the swiotlb buffer size on allocation failure")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Alexey Kardashevskiy <aik@amd.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: iommu@lists.linux.dev
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: linux-mm@kvack.org
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/arp_tables.c | 4 ++++
- net/ipv4/netfilter/ip_tables.c  | 4 ++++
- net/ipv6/netfilter/ip6_tables.c | 4 ++++
- 3 files changed, 12 insertions(+)
+ kernel/dma/swiotlb.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
-index ffc0cab7cf189..2407066b0fec1 100644
---- a/net/ipv4/netfilter/arp_tables.c
-+++ b/net/ipv4/netfilter/arp_tables.c
-@@ -1525,6 +1525,10 @@ int arpt_register_table(struct net *net,
+diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
+index a34c38bbe28f1..ef3bc3a5bbed3 100644
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -300,7 +300,8 @@ static void swiotlb_init_io_tlb_mem(struct io_tlb_mem *mem, phys_addr_t start,
+ 	return;
+ }
  
- 	new_table = xt_register_table(net, table, &bootstrap, newinfo);
- 	if (IS_ERR(new_table)) {
-+		struct arpt_entry *iter;
-+
-+		xt_entry_foreach(iter, loc_cpu_entry, newinfo->size)
-+			cleanup_entry(iter, net);
- 		xt_free_table_info(newinfo);
- 		return PTR_ERR(new_table);
- 	}
-diff --git a/net/ipv4/netfilter/ip_tables.c b/net/ipv4/netfilter/ip_tables.c
-index aae5fd51dfd74..da5998011ab9b 100644
---- a/net/ipv4/netfilter/ip_tables.c
-+++ b/net/ipv4/netfilter/ip_tables.c
-@@ -1741,6 +1741,10 @@ int ipt_register_table(struct net *net, const struct xt_table *table,
- 
- 	new_table = xt_register_table(net, table, &bootstrap, newinfo);
- 	if (IS_ERR(new_table)) {
-+		struct ipt_entry *iter;
-+
-+		xt_entry_foreach(iter, loc_cpu_entry, newinfo->size)
-+			cleanup_entry(iter, net);
- 		xt_free_table_info(newinfo);
- 		return PTR_ERR(new_table);
- 	}
-diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
-index ac902f7bca477..0ce0ed17c7583 100644
---- a/net/ipv6/netfilter/ip6_tables.c
-+++ b/net/ipv6/netfilter/ip6_tables.c
-@@ -1750,6 +1750,10 @@ int ip6t_register_table(struct net *net, const struct xt_table *table,
- 
- 	new_table = xt_register_table(net, table, &bootstrap, newinfo);
- 	if (IS_ERR(new_table)) {
-+		struct ip6t_entry *iter;
-+
-+		xt_entry_foreach(iter, loc_cpu_entry, newinfo->size)
-+			cleanup_entry(iter, net);
- 		xt_free_table_info(newinfo);
- 		return PTR_ERR(new_table);
- 	}
+-static void *swiotlb_memblock_alloc(unsigned long nslabs, unsigned int flags,
++static void __init *swiotlb_memblock_alloc(unsigned long nslabs,
++		unsigned int flags,
+ 		int (*remap)(void *tlb, unsigned long nslabs))
+ {
+ 	size_t bytes = PAGE_ALIGN(nslabs << IO_TLB_SHIFT);
 -- 
 2.39.2
 
