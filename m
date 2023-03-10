@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D487846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:34:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB63C4339B;
-	Fri, 10 Mar 2023 14:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D54B846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:34:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95C1C4339C;
+	Fri, 10 Mar 2023 14:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458847;
-	bh=mxTeQGmIFFUDS6wM4oUvN7vB3/pjqRWDhUqFxPJ9n2U=;
+	s=korg; t=1678458850;
+	bh=p3Ejt/L/+lps40p14tFbIqn6GnlgrRDC0h1j8Oxdbr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1gl3cS9H4f/e6gmV7sls5FgZKi2PIOI7jXgFiUyBv5CU9fE0pCORItyqSM3NMF3c8
-	 /8qy2P8wQXdK6ZBJTw5VJ+KDk53oJViFB4uJlx+Gj4O8YL6UWe9GLMgQ8kysjG/Qcm
-	 6+wClr0E77ZhrkQ5ooKyOQIhTC+5vhNkERJJ9eFg=
+	b=MEsxh2QMDw0KadwiwMs4gvqNcLsBHeHLek7bPjUdKZAJ1qq05R/hnKDhH1jsK4WTC
+	 kvlbnnQLDchwJFbalWRwoLpYEb4qAcYGExpHpyKT1B5HDU1tolmrYus+SdbLgY43Dj
+	 /AYgrXVPGYz+WZc7Ahm/Pkh5nFBjx/9XhFfXPfVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
-	Ganesh Goudar <ganeshgr@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Dengcheng Zhu <dzhu@wavecomp.com>,
+	Paul Burton <paulburton@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	linux-mips@vger.kernel.org,
+	Sergei Shtylyov <sergei.shtylyov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 164/357] powerpc/eeh: Set channel state after notifying the drivers
-Date: Fri, 10 Mar 2023 14:37:33 +0100
-Message-Id: <20230310133741.953279881@linuxfoundation.org>
+Subject: [PATCH 5.4 165/357] MIPS: SMP-CPS: fix build error when HOTPLUG_CPU not set
+Date: Fri, 10 Mar 2023 14:37:34 +0100
+Message-Id: <20230310133742.001276488@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,81 +39,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ganesh Goudar <ganeshgr@linux.ibm.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 9efcdaac36e1643a1b7f5337e6143ce142d381b1 ]
+[ Upstream commit 6f02e39fa40f16c24e7a5c599a854c0d1682788d ]
 
-When a PCI error is encountered 6th time in an hour we
-set the channel state to perm_failure and notify the
-driver about the permanent failure.
+When MIPS_CPS=y, MIPS_CPS_PM is not set, HOTPLUG_CPU is not set, and
+KEXEC=y, cps_shutdown_this_cpu() attempts to call cps_pm_enter_state(),
+which is not built when MIPS_CPS_PM is not set.
+Conditionally execute the else branch based on CONFIG_HOTPLUG_CPU
+to remove the build error.
+This build failure is from a randconfig file.
 
-However, after upstream commit 38ddc011478e ("powerpc/eeh:
-Make permanently failed devices non-actionable"), EEH handler
-stops calling any routine once the device is marked as
-permanent failure. This issue can lead to fatal consequences
-like kernel hang with certain PCI devices.
+mips-linux-ld: arch/mips/kernel/smp-cps.o: in function `$L162':
+smp-cps.c:(.text.cps_kexec_nonboot_cpu+0x31c): undefined reference to `cps_pm_enter_state'
 
-Following log is observed with lpfc driver, with and without
-this change, Without this change kernel hangs, If PCI error
-is encountered 6 times for a device in an hour.
-
-Without the change
-
- EEH: Beginning: 'error_detected(permanent failure)'
- PCI 0132:60:00.0#600000: EEH: not actionable (1,1,1)
- PCI 0132:60:00.1#600000: EEH: not actionable (1,1,1)
- EEH: Finished:'error_detected(permanent failure)'
-
-With the change
-
- EEH: Beginning: 'error_detected(permanent failure)'
- EEH: Invoking lpfc->error_detected(permanent failure)
- EEH: lpfc driver reports: 'disconnect'
- EEH: Invoking lpfc->error_detected(permanent failure)
- EEH: lpfc driver reports: 'disconnect'
- EEH: Finished:'error_detected(permanent failure)'
-
-To fix the issue, set channel state to permanent failure after
-notifying the drivers.
-
-Fixes: 38ddc011478e ("powerpc/eeh: Make permanently failed devices non-actionable")
-Suggested-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Signed-off-by: Ganesh Goudar <ganeshgr@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230209105649.127707-1-ganeshgr@linux.ibm.com
+Fixes: 1447864bee4c ("MIPS: kexec: CPS systems to halt nonboot CPUs")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Dengcheng Zhu <dzhu@wavecomp.com>
+Cc: Paul Burton <paulburton@kernel.org>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: linux-mips@vger.kernel.org
+Cc: Sergei Shtylyov <sergei.shtylyov@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/eeh_driver.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/mips/kernel/smp-cps.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/kernel/eeh_driver.c b/arch/powerpc/kernel/eeh_driver.c
-index ee12e335fed8f..68decc2bf42bc 100644
---- a/arch/powerpc/kernel/eeh_driver.c
-+++ b/arch/powerpc/kernel/eeh_driver.c
-@@ -1087,10 +1087,10 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
- 	eeh_slot_error_detail(pe, EEH_LOG_PERM);
+diff --git a/arch/mips/kernel/smp-cps.c b/arch/mips/kernel/smp-cps.c
+index dbb3f1fc71ab6..f659adb681bc3 100644
+--- a/arch/mips/kernel/smp-cps.c
++++ b/arch/mips/kernel/smp-cps.c
+@@ -423,9 +423,11 @@ static void cps_shutdown_this_cpu(enum cpu_death death)
+ 			wmb();
+ 		}
+ 	} else {
+-		pr_debug("Gating power to core %d\n", core);
+-		/* Power down the core */
+-		cps_pm_enter_state(CPS_PM_POWER_GATED);
++		if (IS_ENABLED(CONFIG_HOTPLUG_CPU)) {
++			pr_debug("Gating power to core %d\n", core);
++			/* Power down the core */
++			cps_pm_enter_state(CPS_PM_POWER_GATED);
++		}
+ 	}
+ }
  
- 	/* Notify all devices that they're about to go down. */
--	eeh_set_channel_state(pe, pci_channel_io_perm_failure);
- 	eeh_set_irq_state(pe, false);
- 	eeh_pe_report("error_detected(permanent failure)", pe,
- 		      eeh_report_failure, NULL);
-+	eeh_set_channel_state(pe, pci_channel_io_perm_failure);
- 
- 	/* Mark the PE to be removed permanently */
- 	eeh_pe_state_mark(pe, EEH_PE_REMOVED);
-@@ -1207,10 +1207,10 @@ void eeh_handle_special_event(void)
- 
- 			/* Notify all devices to be down */
- 			eeh_pe_state_clear(pe, EEH_PE_PRI_BUS, true);
--			eeh_set_channel_state(pe, pci_channel_io_perm_failure);
- 			eeh_pe_report(
- 				"error_detected(permanent failure)", pe,
- 				eeh_report_failure, NULL);
-+			eeh_set_channel_state(pe, pci_channel_io_perm_failure);
- 
- 			pci_lock_rescan_remove();
- 			list_for_each_entry(hose, &hose_list, list_node) {
 -- 
 2.39.2
 
