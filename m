@@ -1,114 +1,92 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743B4C957
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 23:34:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183E9C433D2;
-	Fri, 10 Mar 2023 23:34:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678491281;
-	bh=uSd0tEmCWXupTOgTFvb2AvRm/aeTqjIy6WaKA0Y9qqo=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=UCctW/WRBbQbVKQrrWl4XjTtfmz2ED/hswy7+PYcUnUJr5RPbyg06ckgY8EWIma3Z
-	 /ZbzFocRpIsFlElSvJvQZhJ5ZWzFHUSJN1NSEpnxEG08/8z2nx+75kq7JMCEMcwaYz
-	 rhMHlAJXsB8BZyt5qXpe6ByYBhtKa8/hmriG+PKHWUuUgTDOhEyR8pSDqzVjNjGafW
-	 FD/nAeBTaiVUFjVZZHXUBqotSs/g7dnbuJ681VXJ/j4uHbTqso1JV60Nb3pZgfcILz
-	 YTC/x8bfFFy7zG1R0gtpCvHsXbrq+reclJRfW1cxNYHH84sEoOsYhytZ+X9/RF9jZy
-	 mtwZ/AZxg3mkQ==
-Message-ID: <d64a086ddcb7c5ca5abecab0ca654259.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0BCE4E5
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 23:35:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=hPK/fuqWGb+L/yq0FoqZh+t2EUt8CyQKsPoCgU3n1N4=; b=WyfomRn9EHkdBQ+D/rCj4zc+2d
+	r1EkjoZHO3xPwW9cM6oVpfstEGHHLjaz7SIF2ztkAnQJE1Iz67ybBYXnt5DbPlwRcLyxjBM7CdK6Z
+	3G5wGOORt71OnSCkdt+LgvoPKi4hcWBiV0dRwd4UzJodzpMlrsIL0mxYojGnHLBp2MajyRA2MubuA
+	hqPgTuwbAXnWNGtKuQFgphJrHQVW+KbudGfyvVmrwvtwbGPfT8+VXPevRh/qAW17qFfMUVWMWO53n
+	UJuLTolXNEXGWjwbq+fBz6npkmEEP+5V+5VoYdJtYiote9/eo/NXh0Sx1pGmtx5XMhtw7EX4O7sUd
+	zzMRjGsw==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1pamGh-00GfIo-DK; Fri, 10 Mar 2023 23:35:23 +0000
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: linux@armlinux.org.uk,
+	linux-arm-kernel@lists.infradead.org
+Cc: ebiederm@xmission.com,
+	keescook@chromium.org,
+	yzaikin@google.com,
+	j.granados@samsung.com,
+	patches@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH] arm: simplify two-level sysctl registration for ctl_isa_vars
+Date: Fri, 10 Mar 2023 15:35:21 -0800
+Message-Id: <20230310233521.3971907-1-mcgrof@kernel.org>
+X-Mailer: git-send-email 2.37.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CABVgOSkJ4mw_DtFzn5EwcsuYixWY_j13YotxEYqWhO+ZCL1KPg@mail.gmail.com>
-References: <20230302013822.1808711-1-sboyd@kernel.org> <20230302013822.1808711-3-sboyd@kernel.org> <CABVgOSkomwwgKZ9N0_0YMDL--QaZiTV7ONgSRABU2Ph1Z0CG-g@mail.gmail.com> <a97c9bb3a5addfb34af8ccabaa513026.sboyd@kernel.org> <CABVgOSkJ4mw_DtFzn5EwcsuYixWY_j13YotxEYqWhO+ZCL1KPg@mail.gmail.com>
-Subject: Re: [PATCH 2/8] of: Enable DTB loading on UML for KUnit tests
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Brendan Higgins <brendan.higgins@linux.dev>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Richard Weinberger <richard@nod.at>, Anton Ivanov <anton.ivanov@cambridgegreys.com>, Johannes Berg <johannes@sipsolutions.net>, Vincent Whitchurch <vincent.whitchurch@axis.com>, Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, linux-um@lists.infradead.org, linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com
-To: David Gow <davidgow@google.com>
-Date: Fri, 10 Mar 2023 15:34:38 -0800
-User-Agent: alot/0.10
+Content-Transfer-Encoding: 8bit
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Quoting David Gow (2023-03-10 00:09:48)
-> On Fri, 10 Mar 2023 at 07:19, Stephen Boyd <sboyd@kernel.org> wrote:
-> >
-> >
-> > Hmm. I think you're suggesting that the unit test data be loaded
-> > whenever CONFIG_OF=3Dy and CONFIG_KUNIT=3Dy. Then tests can check for
-> > CONFIG_OF and skip if it isn't enabled?
-> >
->=20
-> More of the opposite: that we should have some way of supporting tests
-> which might want to use a DTB other than the built-in one. Mostly for
-> non-UML situations where an actual devicetree is needed to even boot
-> far enough to get test output (so we wouldn't be able to override it
-> with a compiled-in test one).
+There is no need to declare two tables to just create directories,
+this can be easily be done with a prefix path with register_sysctl().
 
-Ok, got it.
+Simplify this registration.
 
->=20
-> I think moving to overlays probably will render this idea obsolete:
-> but the thought was to give test code a way to check for the required
-> devicetree nodes at runtime, and skip the test if they weren't found.
-> That way, the failure mode for trying to boot this on something which
-> required another device tree for, e.g., serial, would be "these tests
-> are skipped because the wrong device tree is loaded", not "I get no
-> output because serial isn't working".
->=20
-> Again, though, it's only really needed for non-UML, and just loading
-> overlays as needed should be much more sensible anyway.
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
 
-I still have one niggle here. Loading overlays requires
-CONFIG_OF_OVERLAY, and the overlay loading API returns -ENOTSUPP when
-CONFIG_OF_OVERLAY=3Dn. For now I'm checking for the config being enabled
-in each test, but I'm thinking it may be better to simply call
-kunit_skip() from the overlay loading function if the config is
-disabled. This way tests can simply call the overlay loading function
-and we'll halt the test immediately if the config isn't enabled.
+For more details see the new docs being updated [0].
 
->=20
-> > >
-> > > That being said, I do think that there's probably some sense in
-> > > supporting the compiled-in DTB as well (it's definitely simpler than
-> > > patching kunit.py to always pass the extra command-line option in, for
-> > > example).
-> > > But maybe it'd be nice to have the command-line option override the
-> > > built-in one if present.
-> >
-> > Got it. I need to test loading another DTB on the commandline still, but
-> > I think this won't be a problem. We'll load the unittest-data DTB even
-> > with KUnit on UML, so assuming that works on UML right now it should be
-> > unchanged by this series once I resend.
->=20
-> Again, moving to overlays should render this mostly obsolete, no? Or
-> am I misunderstanding how the overlay stuff will work?
+[0] https://lore.kernel.org/all/20230310223947.3917711-1-mcgrof@kernel.org/T/#u     
 
-Right, overlays make it largely a moot issue. The way the OF unit tests
-work today is by grafting a DTB onto the live tree. I'm reusing that
-logic to graft a container node target for kunit tests to add their
-overlays too. It will be clearer once I post v2.
+ arch/arm/kernel/isa.c | 18 +-----------------
+ 1 file changed, 1 insertion(+), 17 deletions(-)
 
->=20
-> One possible future advantage of being able to test with custom DTs at
-> boot time would be for fuzzing (provide random DT properties, see what
-> happens in the test). We've got some vague plans to support a way of
-> passing custom data to tests to support this kind of case (though, if
-> we're using overlays, maybe the test could just patch those if we
-> wanted to do that).
+diff --git a/arch/arm/kernel/isa.c b/arch/arm/kernel/isa.c
+index d8a509c5d5bd..20218876bef2 100644
+--- a/arch/arm/kernel/isa.c
++++ b/arch/arm/kernel/isa.c
+@@ -40,27 +40,11 @@ static struct ctl_table ctl_isa_vars[4] = {
+ 
+ static struct ctl_table_header *isa_sysctl_header;
+ 
+-static struct ctl_table ctl_isa[2] = {
+-	{
+-		.procname	= "isa",
+-		.mode		= 0555,
+-		.child		= ctl_isa_vars,
+-	}, {}
+-};
+-
+-static struct ctl_table ctl_bus[2] = {
+-	{
+-		.procname	= "bus",
+-		.mode		= 0555,
+-		.child		= ctl_isa,
+-	}, {}
+-};
+-
+ void __init
+ register_isa_ports(unsigned int membase, unsigned int portbase, unsigned int portshift)
+ {
+ 	isa_membase = membase;
+ 	isa_portbase = portbase;
+ 	isa_portshift = portshift;
+-	isa_sysctl_header = register_sysctl_table(ctl_bus);
++	isa_sysctl_header = register_sysctl("bus/isa", ctl_isa_vars);
+ }
+-- 
+2.39.1
 
-Ah ok. I can see someone making a fuzzer that modifies devicetree
-properties randomly, e.g. using different strings for clock-names.
-
-This reminds me of another issue I ran into. I wanted to test adding the
-same platform device to the platform bus twice to confirm that the
-second device can't be added. That prints a warning, which makes
-kunit.py think that the test has failed because it printed a warning. Is
-there some way to avoid that? I want something like
-
-	KUNIT_EXPECT_WARNING(test, <call some function>)
-
-so I can test error cases.
