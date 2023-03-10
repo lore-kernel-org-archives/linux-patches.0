@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8002B846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:33:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B73C433EF;
-	Fri, 10 Mar 2023 14:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82053846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:33:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC77C433EF;
+	Fri, 10 Mar 2023 14:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458801;
-	bh=XIq+RbDIa0bvEVuR/N/H+jhodfmIA4k2ZbejOaErUXw=;
+	s=korg; t=1678458804;
+	bh=UgoPtPAhoj/u43kJKnFSX4Uw/HXzV5J0B+ZbP0hxNs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Norr1rsGDNR8I8MA2SU1VtG6DerLlzPv5UU4ZnFQ/p+QgHu0dcCH8yj8fjn+yChi7
-	 2bhEAJNXmF7nI80vsUYIROdXtvk1kAeV9CWxitGrGmBHTbj7DcOqtPArntKhdmpYva
-	 q2SxFlGYF31WazKJIf1/9lQQqYatsaqmOX82nh2M=
+	b=KxDjsZ69EMiCq6mUbjtJI1lJCNqy1s0tD+EUykub9+Pj1PVvgZ2XXcpYiIfwmXdEM
+	 XRcsYgjSrsT2ECIdGOpngHWuqw8yhKvm14UKIHjrq9FGzeJdIuqBJodwYv8hca/A4I
+	 QrTnAWpYtWrAy94RVBKK4qNer5uoIex/xJu+lwEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 148/357] clk: qcom: gcc-qcs404: disable gpll[04]_out_aux parents
-Date: Fri, 10 Mar 2023 14:37:17 +0100
-Message-Id: <20230310133741.236430491@linuxfoundation.org>
+Subject: [PATCH 5.4 120/357] ASoC: soc-compress.c: fixup private_data on snd_soc_new_compress()
+Date: Fri, 10 Mar 2023 14:36:49 +0100
+Message-Id: <20230310133739.960538293@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,144 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 712c64caf31374de57aa193a9dff57172b2f6f82 ]
+[ Upstream commit ffe4c0f0bfaa571a676a0e946d4a6a0607f94294 ]
 
-On the QCS404 platform the driver for the Global Clock Controller
-doens't define gpll0_out_aux and gpll4_out_aux clocks, so it's not
-possible to use them as parents. Remove entries for these clocks.
+commit d3268a40d4b19f ("ASoC: soc-compress.c: fix NULL dereference")
+enables DPCM capture, but it should independent from playback.
+This patch fixup it.
 
-Note: backporting this patch to earlier kernels would also require a
-previous patch which switches the gcc driver to use ARRAY_SIZE for
-parent data arrays.
-
-Fixes: 652f1813c113 ("clk: qcom: gcc: Add global clock controller driver for QCS404")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221226042154.2666748-6-dmitry.baryshkov@linaro.org
+Fixes: d3268a40d4b1 ("ASoC: soc-compress.c: fix NULL dereference")
+Link: https://lore.kernel.org/r/87tu0i6j7j.wl-kuninori.morimoto.gx@renesas.com
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/871qnkvo1s.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-qcs404.c | 16 ----------------
- 1 file changed, 16 deletions(-)
+ sound/soc/soc-compress.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-qcs404.c b/drivers/clk/qcom/gcc-qcs404.c
-index bd32212f37e64..265e774d63476 100644
---- a/drivers/clk/qcom/gcc-qcs404.c
-+++ b/drivers/clk/qcom/gcc-qcs404.c
-@@ -25,11 +25,9 @@ enum {
- 	P_CORE_BI_PLL_TEST_SE,
- 	P_DSI0_PHY_PLL_OUT_BYTECLK,
- 	P_DSI0_PHY_PLL_OUT_DSICLK,
--	P_GPLL0_OUT_AUX,
- 	P_GPLL0_OUT_MAIN,
- 	P_GPLL1_OUT_MAIN,
- 	P_GPLL3_OUT_MAIN,
--	P_GPLL4_OUT_AUX,
- 	P_GPLL4_OUT_MAIN,
- 	P_GPLL6_OUT_AUX,
- 	P_HDMI_PHY_PLL_CLK,
-@@ -109,28 +107,24 @@ static const char * const gcc_parent_names_4[] = {
- static const struct parent_map gcc_parent_map_5[] = {
- 	{ P_XO, 0 },
- 	{ P_DSI0_PHY_PLL_OUT_BYTECLK, 1 },
--	{ P_GPLL0_OUT_AUX, 2 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const char * const gcc_parent_names_5[] = {
- 	"cxo",
- 	"dsi0pll_byteclk_src",
--	"gpll0_out_aux",
- 	"core_bi_pll_test_se",
- };
- 
- static const struct parent_map gcc_parent_map_6[] = {
- 	{ P_XO, 0 },
- 	{ P_DSI0_PHY_PLL_OUT_BYTECLK, 2 },
--	{ P_GPLL0_OUT_AUX, 3 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const char * const gcc_parent_names_6[] = {
- 	"cxo",
- 	"dsi0_phy_pll_out_byteclk",
--	"gpll0_out_aux",
- 	"core_bi_pll_test_se",
- };
- 
-@@ -139,7 +133,6 @@ static const struct parent_map gcc_parent_map_7[] = {
- 	{ P_GPLL0_OUT_MAIN, 1 },
- 	{ P_GPLL3_OUT_MAIN, 2 },
- 	{ P_GPLL6_OUT_AUX, 3 },
--	{ P_GPLL4_OUT_AUX, 4 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
-@@ -148,7 +141,6 @@ static const char * const gcc_parent_names_7[] = {
- 	"gpll0_out_main",
- 	"gpll3_out_main",
- 	"gpll6_out_aux",
--	"gpll4_out_aux",
- 	"core_bi_pll_test_se",
- };
- 
-@@ -207,14 +199,12 @@ static const char * const gcc_parent_names_11[] = {
- static const struct parent_map gcc_parent_map_12[] = {
- 	{ P_XO, 0 },
- 	{ P_DSI0_PHY_PLL_OUT_DSICLK, 1 },
--	{ P_GPLL0_OUT_AUX, 2 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const char * const gcc_parent_names_12[] = {
- 	"cxo",
- 	"dsi0pll_pclk_src",
--	"gpll0_out_aux",
- 	"core_bi_pll_test_se",
- };
- 
-@@ -237,40 +227,34 @@ static const char * const gcc_parent_names_13[] = {
- static const struct parent_map gcc_parent_map_14[] = {
- 	{ P_XO, 0 },
- 	{ P_GPLL0_OUT_MAIN, 1 },
--	{ P_GPLL4_OUT_AUX, 2 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const char * const gcc_parent_names_14[] = {
- 	"cxo",
- 	"gpll0_out_main",
--	"gpll4_out_aux",
- 	"core_bi_pll_test_se",
- };
- 
- static const struct parent_map gcc_parent_map_15[] = {
- 	{ P_XO, 0 },
--	{ P_GPLL0_OUT_AUX, 2 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const char * const gcc_parent_names_15[] = {
- 	"cxo",
--	"gpll0_out_aux",
- 	"core_bi_pll_test_se",
- };
- 
- static const struct parent_map gcc_parent_map_16[] = {
- 	{ P_XO, 0 },
- 	{ P_GPLL0_OUT_MAIN, 1 },
--	{ P_GPLL0_OUT_AUX, 2 },
- 	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const char * const gcc_parent_names_16[] = {
- 	"cxo",
- 	"gpll0_out_main",
--	"gpll0_out_aux",
- 	"core_bi_pll_test_se",
- };
- 
+diff --git a/sound/soc/soc-compress.c b/sound/soc/soc-compress.c
+index da6e40aef7b6e..1e37bb7436ecc 100644
+--- a/sound/soc/soc-compress.c
++++ b/sound/soc/soc-compress.c
+@@ -927,7 +927,7 @@ int snd_soc_new_compress(struct snd_soc_pcm_runtime *rtd, int num)
+ 		rtd->fe_compr = 1;
+ 		if (rtd->dai_link->dpcm_playback)
+ 			be_pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream->private_data = rtd;
+-		else if (rtd->dai_link->dpcm_capture)
++		if (rtd->dai_link->dpcm_capture)
+ 			be_pcm->streams[SNDRV_PCM_STREAM_CAPTURE].substream->private_data = rtd;
+ 		memcpy(compr->ops, &soc_compr_dyn_ops, sizeof(soc_compr_dyn_ops));
+ 	} else {
 -- 
 2.39.2
 
