@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02729882C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:17:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF37C4339E;
-	Fri, 10 Mar 2023 15:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00A8882C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:17:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56782C4339E;
+	Fri, 10 Mar 2023 15:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461430;
-	bh=5f1BYfMrrvm2K95uuqXp0UE0kR9Po0RPJl77QJ/a1a8=;
+	s=korg; t=1678461433;
+	bh=DZaCYSRo0NyDNMgDLmTs+CC/NU3Ive8CY5yxMX3Q0Bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a11NEXEO0w9Wu5DObZHq65i6wPc/HZQ3pPoWQeouJrSi7xoQXTTo3y3ROQi4uZwRx
-	 5ogoseWCgMHngmsLplyLvRDetAzaw812w5e/b9HA3guzqWZkD3jzBdWKwo/mH51m6P
-	 iOm/TfVyuOK05R8hB/NJleRyV1BORjmrYdKFBbqk=
+	b=ZGtqgid2w0jPSTiyVSGbRFh9bOheOJFaCITD3Vl0jBc8f9WwZSfQJSAdjTCl9Z1vq
+	 NRK4TCY0QFeDbRHe54PY1R+RvtMbJcMESYsMJ/Zn/Xi1VcfodjC9rcjABAtRjwBiTf
+	 AWW6Cqj4WWgVwG80MXZ5ZIWiT+i8eeVWzc5GugVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>
-Subject: [PATCH 5.15 136/136] usb: gadget: uvc: fix missing mutex_unlock() if kstrtou8() fails
-Date: Fri, 10 Mar 2023 14:44:18 +0100
-Message-Id: <20230310133711.349752118@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Imre Deak <imre.deak@intel.com>
+Subject: [PATCH 5.15 126/136] drm/display/dp_mst: Fix down/up message handling after sink disconnect
+Date: Fri, 10 Mar 2023 14:44:08 +0100
+Message-Id: <20230310133711.032419184@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -33,45 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Imre Deak <imre.deak@intel.com>
 
-commit 7ebb605d2283fb2647b4fa82030307ce00bee436 upstream.
+commit 1d082618bbf3b6755b8cc68c0a8122af2842d593 upstream.
 
-If kstrtou8() fails, the mutex_unlock() is missed, move kstrtou8()
-before mutex_lock() to fix it up.
+If the sink gets disconnected during receiving a multi-packet DP MST AUX
+down-reply/up-request sideband message, the state keeping track of which
+packets have been received already is not reset. This results in a failed
+sanity check for the subsequent message packet received after a sink is
+reconnected (due to the pending message not yet completed with an
+end-of-message-transfer packet), indicated by the
 
-Fixes: 0525210c9840 ("usb: gadget: uvc: Allow definition of XUs in configfs")
-Fixes: b3c839bd8a07 ("usb: gadget: uvc: Make bSourceID read/write")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20230213070926.776447-1-yangyingliang@huawei.com
+"sideband msg set header failed"
+
+error.
+
+Fix the above by resetting the up/down message reception state after a
+disconnect event.
+
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: <stable@vger.kernel.org> # v3.17+
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221214184258.2869417-1-imre.deak@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/uvc_configfs.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/drm_dp_mst_topology.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/gadget/function/uvc_configfs.c
-+++ b/drivers/usb/gadget/function/uvc_configfs.c
-@@ -546,6 +546,10 @@ static ssize_t uvcg_default_output_b_sou
- 	int result;
- 	u8 num;
- 
-+	result = kstrtou8(page, 0, &num);
-+	if (result)
-+		return result;
+--- a/drivers/gpu/drm/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/drm_dp_mst_topology.c
+@@ -3781,6 +3781,9 @@ int drm_dp_mst_topology_mgr_set_mst(stru
+ 		set_bit(0, &mgr->payload_mask);
+ 		mgr->vcpi_mask = 0;
+ 		mgr->payload_id_table_cleared = false;
 +
- 	mutex_lock(su_mutex); /* for navigating configfs hierarchy */
++		memset(&mgr->down_rep_recv, 0, sizeof(mgr->down_rep_recv));
++		memset(&mgr->up_req_recv, 0, sizeof(mgr->up_req_recv));
+ 	}
  
- 	opts_item = group->cg_item.ci_parent->ci_parent->
-@@ -553,10 +557,6 @@ static ssize_t uvcg_default_output_b_sou
- 	opts = to_f_uvc_opts(opts_item);
- 	cd = &opts->uvc_output_terminal;
- 
--	result = kstrtou8(page, 0, &num);
--	if (result)
--		return result;
--
- 	mutex_lock(&opts->lock);
- 	cd->bSourceID = num;
- 	mutex_unlock(&opts->lock);
+ out_unlock:
 
 
