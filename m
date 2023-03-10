@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74AD8825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:59:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3E9C4339C;
-	Fri, 10 Mar 2023 14:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3814C8825
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:59:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D565C433D2;
+	Fri, 10 Mar 2023 14:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460344;
-	bh=LifT2ccxy5FWo9Po8YasioVG9xrekmIu1bSPE9O3bwk=;
+	s=korg; t=1678460348;
+	bh=q7q0vhpP5EDbtfq0XQMlYN2j8y5A6PCx4dJkx1d9pNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tgeRs91V9zPDP99PhUEDge/G/kBfEydRv5TgXSjcQSvADALgCH+JJraAC+5ajjJ4a
-	 ieNmoJBmy95xBh6kK6rIagkKTGDTeua2kWao2iURFpWs7HNNrioiF7wM5LJRWlV7D5
-	 pIa/l3Lz5GTaoFuM018zw0WKnQzbfm57YaOenAU8=
+	b=oTOejGO3WEXOdEuNPUBn9WHQtEMh0Kv4Z5cTPHfhV1NiUd/0t8tmFuCnkkywoPhdr
+	 PpvTMVuKUbWdNXBYJSrMhdkHBs7PwcdPx6kNEOxmU4A6g9Zm1oUOUjYGMeXtNDTnwt
+	 nLm6k40cWYIrzreQenuB3umlGvKhtywKaRvCPm2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 303/529] ACPI: video: Fix Lenovo Ideapad Z570 DMI match
-Date: Fri, 10 Mar 2023 14:37:26 +0100
-Message-Id: <20230310133819.042106094@linuxfoundation.org>
+Subject: [PATCH 5.10 304/529] net/mlx5: fw_tracer: Fix debug print
+Date: Fri, 10 Mar 2023 14:37:27 +0100
+Message-Id: <20230310133819.092910169@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,40 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 2d11eae42d52a131f06061015e49dc0f085c5bfc ]
+[ Upstream commit 988c2352273997a242f15c4fc3711773515006a2 ]
 
-Multiple Ideapad Z570 variants need acpi_backlight=native to force native
-use on these pre Windows 8 machines since acpi_video backlight control
-does not work here.
+The debug message specify tdsn, but takes as an argument the
+tmsn. The correct argument is tmsn, hence, fix the print.
 
-The original DMI quirk matches on a product_name of "102434U" but other
-variants may have different product_name-s such as e.g. "1024D9U".
-
-Move to checking product_version instead as is more or less standard for
-Lenovo DMI quirks for similar reasons.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index b13713199ad94..038542b3a80a7 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -313,7 +313,7 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
- 	 .ident = "Lenovo Ideapad Z570",
- 	 .matches = {
- 		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
--		DMI_MATCH(DMI_PRODUCT_NAME, "102434U"),
-+		DMI_MATCH(DMI_PRODUCT_VERSION, "Ideapad Z570"),
- 		},
- 	},
- 	{
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+index 40d7bfca37499..0a011a41c039e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+@@ -603,7 +603,7 @@ static int mlx5_tracer_handle_string_trace(struct mlx5_fw_tracer *tracer,
+ 	} else {
+ 		cur_string = mlx5_tracer_message_get(tracer, tracer_event);
+ 		if (!cur_string) {
+-			pr_debug("%s Got string event for unknown string tdsm: %d\n",
++			pr_debug("%s Got string event for unknown string tmsn: %d\n",
+ 				 __func__, tracer_event->string_event.tmsn);
+ 			return -1;
+ 		}
 -- 
 2.39.2
 
