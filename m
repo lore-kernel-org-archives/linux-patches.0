@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43322847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3918C433EF;
-	Fri, 10 Mar 2023 13:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C111847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95847C433EF;
+	Fri, 10 Mar 2023 13:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456661;
-	bh=rv/+sNTyjAtIKfSftO6PLtF/hk99jZf4GcTu2Mc3q44=;
+	s=korg; t=1678456664;
+	bh=sjTCY6DiJKy+05lhXb0ZWq6h3nG7hU3WJ7x5I0zLqQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TUYUslT5TUoHXJbiyXIgaZXYjTrk9BOZah9XPJrMwofcq3fKJa+jNasT+4Qt6AI8G
-	 msJ8v9D0ha9Wx+i/ShfhiuBT68YXZzGdxbhsrH2vtLPMelNS3bkjoidLWS6wecM50I
-	 EMLX4jOVzoNmjArUY1tMG2s6PmXhzq2d+P+yHdHo=
+	b=WuiVB0kjJ4DrOZxjRE/BHuQuj6d11nP4vuamJQufcAd4In5Vsj7IOuTmik7YtxKuf
+	 PfYbPkmbX+Hne8zQZjRBAslRbYXaGPHVc2jcIY61DK6vJNTNupa5RZEQOSiI5NJp5y
+	 VkeU9FxK7j9gMEyzzekcVqBlAjpuNbcWW0NIUSAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yangtao Li <frank.li@vivo.com>,
+	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 049/211] f2fs: introduce IS_F2FS_IPU_* macro
-Date: Fri, 10 Mar 2023 14:37:09 +0100
-Message-Id: <20230310133720.226359618@linuxfoundation.org>
+Subject: [PATCH 6.2 050/211] f2fs: fix to set ipu policy
+Date: Fri, 10 Mar 2023 14:37:10 +0100
+Message-Id: <20230310133720.259506044@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -37,136 +38,121 @@ Content-Transfer-Encoding: 8bit
 
 From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit fdb7ccc3f9cb316c399b072c7a75a106678eb421 ]
+[ Upstream commit c5bf83483382600988d7db5ffe9fcd1936b491fd ]
 
-IS_F2FS_IPU_* macro can be used to identify whether
-f2fs ipu related policies are enabled.
+For LFS mode, it should update outplace and no need inplace update.
+When using LFS mode for small-volume devices, IPU will not be used,
+and the OPU writing method is actually used, but F2FS_IPU_FORCE can
+be read from the ipu_policy node, which is different from the actual
+situation. And remount to lfs mode should be disallowed when
+f2fs ipu is enabled, let's fix it.
 
-BTW, convert to use BIT() instead of open code.
-
+Fixes: 84b89e5d943d ("f2fs: add auto tuning for small devices")
 Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: c5bf83483382 ("f2fs: fix to set ipu policy")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c    | 25 ++++++++++---------------
- fs/f2fs/segment.c |  4 ++--
- fs/f2fs/segment.h | 15 +++++++++++++++
- fs/f2fs/super.c   |  4 ++--
- 4 files changed, 29 insertions(+), 19 deletions(-)
+ fs/f2fs/segment.h | 10 +++++++++-
+ fs/f2fs/super.c   | 15 +++++++++++----
+ fs/f2fs/sysfs.c   |  9 +++++++++
+ 3 files changed, 29 insertions(+), 5 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 5263d97bef1dd..a28d05895f5c7 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2535,34 +2535,29 @@ static inline bool check_inplace_update_policy(struct inode *inode,
- 				struct f2fs_io_info *fio)
- {
- 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
--	unsigned int policy = SM_I(sbi)->ipu_policy;
- 
--	if (policy & (0x1 << F2FS_IPU_HONOR_OPU_WRITE) &&
--			is_inode_flag_set(inode, FI_OPU_WRITE))
-+	if (IS_F2FS_IPU_HONOR_OPU_WRITE(sbi) &&
-+	    is_inode_flag_set(inode, FI_OPU_WRITE))
- 		return false;
--	if (policy & (0x1 << F2FS_IPU_FORCE))
-+	if (IS_F2FS_IPU_FORCE(sbi))
- 		return true;
--	if (policy & (0x1 << F2FS_IPU_SSR) && f2fs_need_SSR(sbi))
-+	if (IS_F2FS_IPU_SSR(sbi) && f2fs_need_SSR(sbi))
- 		return true;
--	if (policy & (0x1 << F2FS_IPU_UTIL) &&
--			utilization(sbi) > SM_I(sbi)->min_ipu_util)
-+	if (IS_F2FS_IPU_UTIL(sbi) && utilization(sbi) > SM_I(sbi)->min_ipu_util)
- 		return true;
--	if (policy & (0x1 << F2FS_IPU_SSR_UTIL) && f2fs_need_SSR(sbi) &&
--			utilization(sbi) > SM_I(sbi)->min_ipu_util)
-+	if (IS_F2FS_IPU_SSR_UTIL(sbi) && f2fs_need_SSR(sbi) &&
-+	    utilization(sbi) > SM_I(sbi)->min_ipu_util)
- 		return true;
- 
- 	/*
- 	 * IPU for rewrite async pages
- 	 */
--	if (policy & (0x1 << F2FS_IPU_ASYNC) &&
--			fio && fio->op == REQ_OP_WRITE &&
--			!(fio->op_flags & REQ_SYNC) &&
--			!IS_ENCRYPTED(inode))
-+	if (IS_F2FS_IPU_ASYNC(sbi) && fio && fio->op == REQ_OP_WRITE &&
-+	    !(fio->op_flags & REQ_SYNC) && !IS_ENCRYPTED(inode))
- 		return true;
- 
- 	/* this is only set during fdatasync */
--	if (policy & (0x1 << F2FS_IPU_FSYNC) &&
--			is_inode_flag_set(inode, FI_NEED_IPU))
-+	if (IS_F2FS_IPU_FSYNC(sbi) && is_inode_flag_set(inode, FI_NEED_IPU))
- 		return true;
- 
- 	if (unlikely(fio && is_sbi_flag_set(sbi, SBI_CP_DISABLED) &&
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index cf430f34d1968..06cae55265841 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -3498,7 +3498,7 @@ int f2fs_inplace_write_data(struct f2fs_io_info *fio)
- 
- 	stat_inc_inplace_blocks(fio->sbi);
- 
--	if (fio->bio && !(SM_I(sbi)->ipu_policy & (1 << F2FS_IPU_NOCACHE)))
-+	if (fio->bio && !IS_F2FS_IPU_NOCACHE(sbi))
- 		err = f2fs_merge_page_bio(fio);
- 	else
- 		err = f2fs_submit_page_bio(fio);
-@@ -5137,7 +5137,7 @@ int f2fs_build_segment_manager(struct f2fs_sb_info *sbi)
- 		sm_info->rec_prefree_segments = DEF_MAX_RECLAIM_PREFREE_SEGMENTS;
- 
- 	if (!f2fs_lfs_mode(sbi))
--		sm_info->ipu_policy = 1 << F2FS_IPU_FSYNC;
-+		sm_info->ipu_policy = BIT(F2FS_IPU_FSYNC);
- 	sm_info->min_ipu_util = DEF_MIN_IPU_UTIL;
- 	sm_info->min_fsync_blocks = DEF_MIN_FSYNC_BLOCKS;
- 	sm_info->min_seq_blocks = sbi->blocks_per_seg;
 diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
-index 3ad1b7b6fa946..e77518c49f388 100644
+index e77518c49f388..6eb5922a25361 100644
 --- a/fs/f2fs/segment.h
 +++ b/fs/f2fs/segment.h
-@@ -681,6 +681,21 @@ enum {
+@@ -670,6 +670,8 @@ static inline int utilization(struct f2fs_sb_info *sbi)
+ 
+ #define SMALL_VOLUME_SEGMENTS	(16 * 512)	/* 16GB */
+ 
++#define F2FS_IPU_DISABLE	0
++
+ enum {
+ 	F2FS_IPU_FORCE,
+ 	F2FS_IPU_SSR,
+@@ -679,10 +681,16 @@ enum {
+ 	F2FS_IPU_ASYNC,
+ 	F2FS_IPU_NOCACHE,
  	F2FS_IPU_HONOR_OPU_WRITE,
++	F2FS_IPU_MAX,
  };
  
-+#define F2FS_IPU_POLICY(name)					\
-+static inline int IS_##name(struct f2fs_sb_info *sbi)		\
-+{								\
-+	return SM_I(sbi)->ipu_policy & BIT(name);		\
++static inline bool IS_F2FS_IPU_DISABLE(struct f2fs_sb_info *sbi)
++{
++	return SM_I(sbi)->ipu_policy == F2FS_IPU_DISABLE;
 +}
 +
-+F2FS_IPU_POLICY(F2FS_IPU_FORCE);
-+F2FS_IPU_POLICY(F2FS_IPU_SSR);
-+F2FS_IPU_POLICY(F2FS_IPU_UTIL);
-+F2FS_IPU_POLICY(F2FS_IPU_SSR_UTIL);
-+F2FS_IPU_POLICY(F2FS_IPU_FSYNC);
-+F2FS_IPU_POLICY(F2FS_IPU_ASYNC);
-+F2FS_IPU_POLICY(F2FS_IPU_NOCACHE);
-+F2FS_IPU_POLICY(F2FS_IPU_HONOR_OPU_WRITE);
-+
- static inline unsigned int curseg_segno(struct f2fs_sb_info *sbi,
- 		int type)
- {
+ #define F2FS_IPU_POLICY(name)					\
+-static inline int IS_##name(struct f2fs_sb_info *sbi)		\
++static inline bool IS_##name(struct f2fs_sb_info *sbi)		\
+ {								\
+ 	return SM_I(sbi)->ipu_policy & BIT(name);		\
+ }
 diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 1f812b9ce985b..87d56a9883e65 100644
+index 87d56a9883e65..53878feb69d33 100644
 --- a/fs/f2fs/super.c
 +++ b/fs/f2fs/super.c
-@@ -4089,8 +4089,8 @@ static void f2fs_tuning_parameters(struct f2fs_sb_info *sbi)
+@@ -1347,12 +1347,12 @@ static int parse_options(struct super_block *sb, char *options, bool is_remount)
+ 	}
+ 
+ 	if (test_opt(sbi, DISABLE_CHECKPOINT) && f2fs_lfs_mode(sbi)) {
+-		f2fs_err(sbi, "LFS not compatible with checkpoint=disable");
++		f2fs_err(sbi, "LFS is not compatible with checkpoint=disable");
+ 		return -EINVAL;
+ 	}
+ 
+ 	if (test_opt(sbi, ATGC) && f2fs_lfs_mode(sbi)) {
+-		f2fs_err(sbi, "LFS not compatible with ATGC");
++		f2fs_err(sbi, "LFS is not compatible with ATGC");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -2306,6 +2306,12 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
+ 		}
+ 	}
+ #endif
++	if (f2fs_lfs_mode(sbi) && !IS_F2FS_IPU_DISABLE(sbi)) {
++		err = -EINVAL;
++		f2fs_warn(sbi, "LFS is not compatible with IPU");
++		goto restore_opts;
++	}
++
+ 	/* disallow enable atgc dynamically */
+ 	if (no_atgc == !!test_opt(sbi, ATGC)) {
+ 		err = -EINVAL;
+@@ -4089,8 +4095,9 @@ static void f2fs_tuning_parameters(struct f2fs_sb_info *sbi)
  		if (f2fs_block_unit_discard(sbi))
  			SM_I(sbi)->dcc_info->discard_granularity =
  						MIN_DISCARD_GRANULARITY;
--		SM_I(sbi)->ipu_policy = 1 << F2FS_IPU_FORCE |
--					1 << F2FS_IPU_HONOR_OPU_WRITE;
-+		SM_I(sbi)->ipu_policy = BIT(F2FS_IPU_FORCE) |
-+					BIT(F2FS_IPU_HONOR_OPU_WRITE);
+-		SM_I(sbi)->ipu_policy = BIT(F2FS_IPU_FORCE) |
+-					BIT(F2FS_IPU_HONOR_OPU_WRITE);
++		if (!f2fs_lfs_mode(sbi))
++			SM_I(sbi)->ipu_policy = BIT(F2FS_IPU_FORCE) |
++						BIT(F2FS_IPU_HONOR_OPU_WRITE);
  	}
  
  	sbi->readdir_ra = true;
+diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
+index 83a366f3ee80e..088b816127ecb 100644
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -686,6 +686,15 @@ static ssize_t __sbi_store(struct f2fs_attr *a,
+ 		return count;
+ 	}
+ 
++	if (!strcmp(a->attr.name, "ipu_policy")) {
++		if (t >= BIT(F2FS_IPU_MAX))
++			return -EINVAL;
++		if (t && f2fs_lfs_mode(sbi))
++			return -EINVAL;
++		SM_I(sbi)->ipu_policy = (unsigned int)t;
++		return count;
++	}
++
+ 	*ui = (unsigned int)t;
+ 
+ 	return count;
 -- 
 2.39.2
 
