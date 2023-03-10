@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E03881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:43:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A9FC433D2;
-	Fri, 10 Mar 2023 14:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0887B881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:43:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A347C433EF;
+	Fri, 10 Mar 2023 14:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459420;
-	bh=JxlKZZaxKDEi6CwtfQJ+vTDPUSZ6VISDjPIxDAhGkyM=;
+	s=korg; t=1678459422;
+	bh=EIMlHqTQ1x0ngLz9cQsQs7zbPSlQ8zwPpQG9OIYTZaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pxlk2TTrirHV8DiIdrn0/wKMcWqm7xbzN+WcCAC9NDa76j/ZM6MgwFpo0cEDKc6nm
-	 1qqw9wCiWVfP0ea/28pkevPn/lhLjBx83oAqYWfP561jnelcMUNVb02aMfKQNS21ba
-	 OXwMTRzffBn6mY73zPmgp5obJ8OH4zCPi6yTKB/Y=
+	b=A2QkJARXLwF2NmAmx2mYr4O9dmZLsFG1KyK4+yAUN7ZVivdF8jthy/yZ5tYovJ/X8
+	 G48sPx1kqdcAKQ8E1U1rxAHtk5Fb6lPk51rX+UrET0abbAHixk1aT8btYJWqm7rAyC
+	 CRd68hxkzClSReE3SxFCCKN7dWkGJpNs4P3a6Ewg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel@sholland.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Kees Cook <keescook@chromium.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Brian King <brking@linux.vnet.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 325/357] rtc: sun6i: Always export the internal oscillator
-Date: Fri, 10 Mar 2023 14:40:14 +0100
-Message-Id: <20230310133748.988434971@linuxfoundation.org>
+Subject: [PATCH 5.4 326/357] scsi: ipr: Work around fortify-string warning
+Date: Fri, 10 Mar 2023 14:40:15 +0100
+Message-Id: <20230310133749.036717236@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,81 +38,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samuel Holland <samuel@sholland.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 344f4030f6c50a9db2d03021884c4bf36191b53a ]
+[ Upstream commit ee4e7dfe4ffc9ca50c6875757bd119abfe22b5c5 ]
 
-On all variants of the hardware, the internal oscillator is one possible
-parent for the AR100 clock. It needs to be exported so we can model that
-relationship correctly in the devicetree.
+The ipr_log_vpd_compact() function triggers a fortified memcpy() warning
+about a potential string overflow with all versions of clang:
 
-Fixes: c56afc1844d6 ("rtc: sun6i: Expose internal oscillator through device tree")
-Signed-off-by: Samuel Holland <samuel@sholland.org>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20221229215319.14145-1-samuel@sholland.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+In file included from drivers/scsi/ipr.c:43:
+In file included from include/linux/string.h:254:
+include/linux/fortify-string.h:520:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+                        __write_overflow_field(p_size_field, size);
+                        ^
+include/linux/fortify-string.h:520:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+2 errors generated.
+
+I don't see anything actually wrong with the function, but this is the only
+instance I can reproduce of the fortification going wrong in the kernel at
+the moment, so the easiest solution may be to rewrite the function into
+something that does not trigger the warning.
+
+Instead of having a combined buffer for vendor/device/serial strings, use
+three separate local variables and just truncate the whitespace
+individually.
+
+Link: https://lore.kernel.org/r/20230214132831.2118392-1-arnd@kernel.org
+Cc: Kees Cook <keescook@chromium.org>
+Fixes: 8cf093e275d0 ("[SCSI] ipr: Improved dual adapter errors")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Acked-by: Brian King <brking@linux.vnet.ibm.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-sun6i.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ drivers/scsi/ipr.c | 41 +++++++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/rtc/rtc-sun6i.c b/drivers/rtc/rtc-sun6i.c
-index b13af0368ef61..5bef4148c623e 100644
---- a/drivers/rtc/rtc-sun6i.c
-+++ b/drivers/rtc/rtc-sun6i.c
-@@ -129,7 +129,6 @@ struct sun6i_rtc_clk_data {
- 	unsigned int fixed_prescaler : 16;
- 	unsigned int has_prescaler : 1;
- 	unsigned int has_out_clk : 1;
--	unsigned int export_iosc : 1;
- 	unsigned int has_losc_en : 1;
- 	unsigned int has_auto_swt : 1;
- };
-@@ -262,10 +261,8 @@ static void __init sun6i_rtc_clk_init(struct device_node *node,
- 	/* Yes, I know, this is ugly. */
- 	sun6i_rtc = rtc;
+diff --git a/drivers/scsi/ipr.c b/drivers/scsi/ipr.c
+index a42837340edfc..205ab65c3e28e 100644
+--- a/drivers/scsi/ipr.c
++++ b/drivers/scsi/ipr.c
+@@ -1517,23 +1517,22 @@ static void ipr_process_ccn(struct ipr_cmnd *ipr_cmd)
+ }
  
--	/* Only read IOSC name from device tree if it is exported */
--	if (rtc->data->export_iosc)
--		of_property_read_string_index(node, "clock-output-names", 2,
--					      &iosc_name);
-+	of_property_read_string_index(node, "clock-output-names", 2,
-+				      &iosc_name);
+ /**
+- * strip_and_pad_whitespace - Strip and pad trailing whitespace.
+- * @i:		index into buffer
+- * @buf:		string to modify
++ * strip_whitespace - Strip and pad trailing whitespace.
++ * @i:		size of buffer
++ * @buf:	string to modify
+  *
+- * This function will strip all trailing whitespace, pad the end
+- * of the string with a single space, and NULL terminate the string.
++ * This function will strip all trailing whitespace and
++ * NUL terminate the string.
+  *
+- * Return value:
+- * 	new length of string
+  **/
+-static int strip_and_pad_whitespace(int i, char *buf)
++static void strip_whitespace(int i, char *buf)
+ {
++	if (i < 1)
++		return;
++	i--;
+ 	while (i && buf[i] == ' ')
+ 		i--;
+-	buf[i+1] = ' ';
+-	buf[i+2] = '\0';
+-	return i + 2;
++	buf[i+1] = '\0';
+ }
  
- 	rtc->int_osc = clk_hw_register_fixed_rate_with_accuracy(NULL,
- 								iosc_name,
-@@ -306,13 +303,10 @@ static void __init sun6i_rtc_clk_init(struct device_node *node,
- 		goto err_register;
- 	}
+ /**
+@@ -1548,19 +1547,21 @@ static int strip_and_pad_whitespace(int i, char *buf)
+ static void ipr_log_vpd_compact(char *prefix, struct ipr_hostrcb *hostrcb,
+ 				struct ipr_vpd *vpd)
+ {
+-	char buffer[IPR_VENDOR_ID_LEN + IPR_PROD_ID_LEN + IPR_SERIAL_NUM_LEN + 3];
+-	int i = 0;
++	char vendor_id[IPR_VENDOR_ID_LEN + 1];
++	char product_id[IPR_PROD_ID_LEN + 1];
++	char sn[IPR_SERIAL_NUM_LEN + 1];
  
--	clk_data->num = 2;
-+	clk_data->num = 3;
- 	clk_data->hws[0] = &rtc->hw;
- 	clk_data->hws[1] = __clk_get_hw(rtc->ext_losc);
--	if (rtc->data->export_iosc) {
--		clk_data->hws[2] = rtc->int_osc;
--		clk_data->num = 3;
--	}
-+	clk_data->hws[2] = rtc->int_osc;
- 	of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- 	return;
+-	memcpy(buffer, vpd->vpids.vendor_id, IPR_VENDOR_ID_LEN);
+-	i = strip_and_pad_whitespace(IPR_VENDOR_ID_LEN - 1, buffer);
++	memcpy(vendor_id, vpd->vpids.vendor_id, IPR_VENDOR_ID_LEN);
++	strip_whitespace(IPR_VENDOR_ID_LEN, vendor_id);
  
-@@ -352,7 +346,6 @@ static const struct sun6i_rtc_clk_data sun8i_h3_rtc_data = {
- 	.fixed_prescaler = 32,
- 	.has_prescaler = 1,
- 	.has_out_clk = 1,
--	.export_iosc = 1,
- };
+-	memcpy(&buffer[i], vpd->vpids.product_id, IPR_PROD_ID_LEN);
+-	i = strip_and_pad_whitespace(i + IPR_PROD_ID_LEN - 1, buffer);
++	memcpy(product_id, vpd->vpids.product_id, IPR_PROD_ID_LEN);
++	strip_whitespace(IPR_PROD_ID_LEN, product_id);
  
- static void __init sun8i_h3_rtc_clk_init(struct device_node *node)
-@@ -370,7 +363,6 @@ static const struct sun6i_rtc_clk_data sun50i_h6_rtc_data = {
- 	.fixed_prescaler = 32,
- 	.has_prescaler = 1,
- 	.has_out_clk = 1,
--	.export_iosc = 1,
- 	.has_losc_en = 1,
- 	.has_auto_swt = 1,
- };
+-	memcpy(&buffer[i], vpd->sn, IPR_SERIAL_NUM_LEN);
+-	buffer[IPR_SERIAL_NUM_LEN + i] = '\0';
++	memcpy(sn, vpd->sn, IPR_SERIAL_NUM_LEN);
++	strip_whitespace(IPR_SERIAL_NUM_LEN, sn);
+ 
+-	ipr_hcam_err(hostrcb, "%s VPID/SN: %s\n", prefix, buffer);
++	ipr_hcam_err(hostrcb, "%s VPID/SN: %s %s %s\n", prefix,
++		     vendor_id, product_id, sn);
+ }
+ 
+ /**
 -- 
 2.39.2
 
