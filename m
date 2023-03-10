@@ -1,26 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88FE8494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:38:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08377C4339B;
-	Fri, 10 Mar 2023 14:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF688494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:38:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF179C4339C;
+	Fri, 10 Mar 2023 14:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459106;
-	bh=V8YMFZj9ADcpt4n8RBkijL2UUcdV7hBbknhK5smue10=;
+	s=korg; t=1678459109;
+	bh=HtEflstP9YVFSqBhKRZ5o60xntNJ2+/ynZx50FIm420=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CzB17wlenDUorcRNSw0HpknKjHuXs6PUSir+cvdDdax0H68PXJKPs30UqanqGkIyN
-	 Y3hx1Yj47VS2ZDYH+fJTRnpQcOIgBHmS/zYIGbF6Y9oG7IGNItjf154CGjuTJlg23R
-	 G2hOoCJynY3MZdZ+oyZe0k6nW5MZpJcTrxQ1nxb0=
+	b=O4gfpn/uuRGfWaSi9Iplr3SHGKRcXPRX9HmSHK0Zw8L+5Fr/j5HybhuIfVJ793/02
+	 6mElemQpLIo248G/HHkbuatX/fTX4WaLAsGrakftLXdvnC6KPeIS6MFmbzWAyOlrWu
+	 zcadWlGpgven4C7qX9aUcbT4EYA83bV0NNJDTODw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 249/357] ALSA: hda/realtek: Add quirk for HP EliteDesk 800 G6 Tower PC
-Date: Fri, 10 Mar 2023 14:38:58 +0100
-Message-Id: <20230310133745.744372062@linuxfoundation.org>
+	syzbot+57e3e98f7e3b80f64d56@syzkaller.appspotmail.com,
+	Dongliang Mu <mudongliangabcd@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	"Theodore Tso" <tytso@mit.edu>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 220/357] fs: hfsplus: fix UAF issue in hfsplus_put_super
+Date: Fri, 10 Mar 2023 14:38:29 +0100
+Message-Id: <20230310133744.436478631@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -34,32 +40,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Łukasz Stelmach <l.stelmach@samsung.com>
+From: Dongliang Mu <mudongliangabcd@gmail.com>
 
-commit ea24b9953bcd3889f77a66e7f1d7e86e995dd9c3 upstream.
+commit 07db5e247ab5858439b14dd7cc1fe538b9efcf32 upstream.
 
-HP EliteDesk 800 G6 Tower PC (103c:870c) requires a quirk for enabling
-headset-mic.
+The current hfsplus_put_super first calls hfs_btree_close on
+sbi->ext_tree, then invokes iput on sbi->hidden_dir, resulting in an
+use-after-free issue in hfsplus_release_folio.
 
-Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
+As shown in hfsplus_fill_super, the error handling code also calls iput
+before hfs_btree_close.
+
+To fix this error, we move all iput calls before hfsplus_btree_close.
+
+Note that this patch is tested on Syzbot.
+
+Link: https://lkml.kernel.org/r/20230226124948.3175736-1-mudongliangabcd@gmail.com
+Reported-by: syzbot+57e3e98f7e3b80f64d56@syzkaller.appspotmail.com
+Tested-by: Dongliang Mu <mudongliangabcd@gmail.com>
+Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
+Cc: Bart Van Assche <bvanassche@acm.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: "Theodore Ts'o" <tytso@mit.edu>
 Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217008
-Link: https://lore.kernel.org/r/20230223074749.1026060-1-l.stelmach@samsung.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/hfsplus/super.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10339,6 +10339,7 @@ static const struct snd_pci_quirk alc662
- 	SND_PCI_QUIRK(0x1028, 0x0698, "Dell", ALC668_FIXUP_DELL_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1028, 0x069f, "Dell", ALC668_FIXUP_DELL_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x1632, "HP RP5800", ALC662_FIXUP_HP_RP5800),
-+	SND_PCI_QUIRK(0x103c, 0x870c, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
- 	SND_PCI_QUIRK(0x103c, 0x8719, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
- 	SND_PCI_QUIRK(0x103c, 0x873e, "HP", ALC671_FIXUP_HP_HEADSET_MIC2),
- 	SND_PCI_QUIRK(0x103c, 0x877e, "HP 288 Pro G6", ALC671_FIXUP_HP_HEADSET_MIC2),
+--- a/fs/hfsplus/super.c
++++ b/fs/hfsplus/super.c
+@@ -295,11 +295,11 @@ static void hfsplus_put_super(struct sup
+ 		hfsplus_sync_fs(sb, 1);
+ 	}
+ 
++	iput(sbi->alloc_file);
++	iput(sbi->hidden_dir);
+ 	hfs_btree_close(sbi->attr_tree);
+ 	hfs_btree_close(sbi->cat_tree);
+ 	hfs_btree_close(sbi->ext_tree);
+-	iput(sbi->alloc_file);
+-	iput(sbi->hidden_dir);
+ 	kfree(sbi->s_vhdr_buf);
+ 	kfree(sbi->s_backup_vhdr_buf);
+ 	unload_nls(sbi->nls);
 
 
