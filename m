@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7FC847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79455C4339B;
-	Fri, 10 Mar 2023 13:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6098847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:59:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50FB2C433EF;
+	Fri, 10 Mar 2023 13:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456753;
-	bh=DVVrkBgjn5EXojWRc8zhmQAmgBqcgNBiMEOd0OiUSQU=;
+	s=korg; t=1678456755;
+	bh=1mDhX9Oqb00SGeeSGRieKFuAmeVyAv5Huz4IP63BC8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrK/c+NdBtK+V/2pjCK68i/koBP+z+/SyITEKV9ta9zVoFjYsCiqELdZRU458BhL1
-	 7SLXpRXiYZXy8mCV4Jwqs4Iray9WXyHuRLi7TaK4DkYdjXmxStrwtN2Ie/7fRLpLW7
-	 5o3/7/lz24pNu3EDhbbcxKJJV6a/aZd5fW94jnu0=
+	b=2ZBU6kKl4bJMZ+SYpnqYM1Heyb47kWokK9PZbIutDf9LOzLpW8tJjKDN4ccdNnBRm
+	 aNQ6wTCm1mkMtxl6LNfFTqOUvBlPTEn2U59tnX8GACRMyw0BokUDtnqTa3BpV7uoi7
+	 KuxtO0sT+ucUc2Z0sJO6YtLrqI6ca3ithc/QKts4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deepak R Varma <drv@mailo.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Yunsheng Lin <linyunsheng@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 081/211] octeontx2-pf: Use correct struct reference in test condition
-Date: Fri, 10 Mar 2023 14:37:41 +0100
-Message-Id: <20230310133721.244168197@linuxfoundation.org>
+Subject: [PATCH 6.2 082/211] net: fix __dev_kfree_skb_any() vs drop monitor
+Date: Fri, 10 Mar 2023 14:37:42 +0100
+Message-Id: <20230310133721.279279824@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,37 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deepak R Varma <drv@mailo.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3acd9db9293f3b33ac04e8d44ed05b604ad1ac26 ]
+[ Upstream commit ac3ad19584b26fae9ac86e4faebe790becc74491 ]
 
-Fix the typo/copy-paste error by replacing struct variable ah_esp_mask name
-by ah_esp_hdr.
-Issue identified using doublebitand.cocci Coccinelle semantic patch.
+dev_kfree_skb() is aliased to consume_skb().
 
-Fixes: b7cf966126eb ("octeontx2-pf: Add flow classification using IP next level protocol")
-Link: https://lore.kernel.org/all/20210111112537.3277-1-naveenm@marvell.com/
-Signed-off-by: Deepak R Varma <drv@mailo.com>
-Link: https://lore.kernel.org/r/Y/YYkKddeHOt80cO@ubun2204.myguest.virtualbox.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+When a driver is dropping a packet by calling dev_kfree_skb_any()
+we should propagate the drop reason instead of pretending
+the packet was consumed.
+
+Note: Now we have enum skb_drop_reason we could remove
+enum skb_free_reason (for linux-6.4)
+
+v2: added an unlikely(), suggested by Yunsheng Lin.
+
+Fixes: e6247027e517 ("net: introduce dev_consume_skb_any()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Yunsheng Lin <linyunsheng@huawei.com>
+Reviewed-by: Yunsheng Lin <linyunsheng@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/dev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-index 684cb8ec9f21b..10e11262d48a0 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-@@ -793,7 +793,7 @@ static int otx2_prepare_ipv6_flow(struct ethtool_rx_flow_spec *fsp,
+diff --git a/net/core/dev.c b/net/core/dev.c
+index f23e287602b7e..fce980d531bdc 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3131,8 +3131,10 @@ void __dev_kfree_skb_any(struct sk_buff *skb, enum skb_free_reason reason)
+ {
+ 	if (in_hardirq() || irqs_disabled())
+ 		__dev_kfree_skb_irq(skb, reason);
++	else if (unlikely(reason == SKB_REASON_DROPPED))
++		kfree_skb(skb);
+ 	else
+-		dev_kfree_skb(skb);
++		consume_skb(skb);
+ }
+ EXPORT_SYMBOL(__dev_kfree_skb_any);
  
- 		/* NPC profile doesn't extract AH/ESP header fields */
- 		if ((ah_esp_mask->spi & ah_esp_hdr->spi) ||
--		    (ah_esp_mask->tclass & ah_esp_mask->tclass))
-+		    (ah_esp_mask->tclass & ah_esp_hdr->tclass))
- 			return -EOPNOTSUPP;
- 
- 		if (flow_type == AH_V6_FLOW)
 -- 
 2.39.2
 
