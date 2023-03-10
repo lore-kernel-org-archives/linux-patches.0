@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D04846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF944C433EF;
-	Fri, 10 Mar 2023 14:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE54846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0B08C433D2;
+	Fri, 10 Mar 2023 14:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458766;
-	bh=Dir9XLVPOhx7BWAxHbcQWkoUQYaPQ3fIV/s6qVIhpLc=;
+	s=korg; t=1678458769;
+	bh=w/OFUmNltoAFo66qK+uQlG9sHZGyUPwRkXH2JuihsB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bq9awBQ+3IiTJNOITYxbRfBaP5iiLc1X/zftzO1OUCKJjEW1QIkirqY6sHJvcN0+t
-	 9VHvLmpTWk/jUtTBjlgX72vXa/MZfYFlSNAWxFLfciL0R55EbdNyMXc+LiKzQ/+M34
-	 xly7FP7KhhK5s/M9ubpfN65/k+iptuPf69LIlS1k=
+	b=VLpVY5+2RH3/dPD7qcWSRKNJy9DRmhHujdkjGKluJixFtvTqapsZihr0YljyO6lKd
+	 N5Ik1AiLDzKBHUOxmWBE5WIK+YqG92oMKoroSksZ8tkycn/fLm/mU8BEtsYRwuykaY
+	 3H7ykzuEXENZYK89XiP55PWBBbhf/FU1VAXVPQfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 137/357] HID: asus: Fix mute and touchpad-toggle keys on Medion Akoya E1239T
-Date: Fri, 10 Mar 2023 14:37:06 +0100
-Message-Id: <20230310133740.726750385@linuxfoundation.org>
+Subject: [PATCH 5.4 138/357] hid: bigben_probe(): validate report count
+Date: Fri, 10 Mar 2023 14:37:07 +0100
+Message-Id: <20230310133740.767944477@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,143 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 350bd245fc180032b442633d40ab37ff8e60e8eb ]
+[ Upstream commit b94335f899542a0da5fafc38af8edcaf90195843 ]
 
-The mute key, is broken. All the consumer keys on the keyboard USB
-interface work normally, except for mute which only sends press events
-and never sends release events.
+bigben_probe() does not validate that the output report has the
+needed report values in the first field.
+A malicious device registering a report with one field and a single
+value causes an head OOB write in bigben_worker() when
+accessing report_field->value[1] to report_field->value[7].
+Use hid_validate_values() which takes care of all the needed checks.
 
-The touchpad key sends the otherwise unused input report with a report-id
-of 5 on the touchpad interface. It too only sends press events. This also
-requires extra special handling since the multi-touch touchpad events and
-the KEY_F21 events for the touchpad toggle must not be send from the same
-input_dev (userspace cannot handle this).
-
-This commit adds special handlig for both, fixing these keys not working.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Stable-dep-of: 4ab3a086d10e ("HID: asus: use spinlock to safely schedule workers")
+Fixes: 256a90ed9e46 ("HID: hid-bigbenff: driver for BigBen Interactive PS3OFMINIPAD gamepad")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Link: https://lore.kernel.org/r/20230211-bigben-oob-v1-1-d2849688594c@diag.uniroma1.it
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-asus.c | 60 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ drivers/hid/hid-bigbenff.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index bfe754419253e..e15ba7f5fe0a0 100644
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -42,6 +42,7 @@ MODULE_DESCRIPTION("Asus HID Keyboard and TouchPad");
- #define T100_TPAD_INTF 2
- #define MEDION_E1239T_TPAD_INTF 1
- 
-+#define E1239T_TP_TOGGLE_REPORT_ID 0x05
- #define T100CHI_MOUSE_REPORT_ID 0x06
- #define FEATURE_REPORT_ID 0x0d
- #define INPUT_REPORT_ID 0x5d
-@@ -112,6 +113,7 @@ struct asus_drvdata {
- 	unsigned long quirks;
- 	struct hid_device *hdev;
- 	struct input_dev *input;
-+	struct input_dev *tp_kbd_input;
- 	struct asus_kbd_leds *kbd_backlight;
- 	const struct asus_touchpad_info *tp;
- 	bool enable_backlight;
-@@ -276,6 +278,34 @@ static int asus_report_input(struct asus_drvdata *drvdat, u8 *data, int size)
- 	return 1;
- }
- 
-+static int asus_e1239t_event(struct asus_drvdata *drvdat, u8 *data, int size)
-+{
-+	if (size != 3)
-+		return 0;
-+
-+	/* Handle broken mute key which only sends press events */
-+	if (!drvdat->tp &&
-+	    data[0] == 0x02 && data[1] == 0xe2 && data[2] == 0x00) {
-+		input_report_key(drvdat->input, KEY_MUTE, 1);
-+		input_sync(drvdat->input);
-+		input_report_key(drvdat->input, KEY_MUTE, 0);
-+		input_sync(drvdat->input);
-+		return 1;
-+	}
-+
-+	/* Handle custom touchpad toggle key which only sends press events */
-+	if (drvdat->tp_kbd_input &&
-+	    data[0] == 0x05 && data[1] == 0x02 && data[2] == 0x28) {
-+		input_report_key(drvdat->tp_kbd_input, KEY_F21, 1);
-+		input_sync(drvdat->tp_kbd_input);
-+		input_report_key(drvdat->tp_kbd_input, KEY_F21, 0);
-+		input_sync(drvdat->tp_kbd_input);
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
- static int asus_event(struct hid_device *hdev, struct hid_field *field,
- 		      struct hid_usage *usage, __s32 value)
+diff --git a/drivers/hid/hid-bigbenff.c b/drivers/hid/hid-bigbenff.c
+index 9d6560db762b1..a02cb517b4c47 100644
+--- a/drivers/hid/hid-bigbenff.c
++++ b/drivers/hid/hid-bigbenff.c
+@@ -371,7 +371,6 @@ static int bigben_probe(struct hid_device *hid,
  {
-@@ -300,6 +330,9 @@ static int asus_raw_event(struct hid_device *hdev,
- 	if (drvdata->tp && data[0] == INPUT_REPORT_ID)
- 		return asus_report_input(drvdata, data, size);
- 
-+	if (drvdata->quirks & QUIRK_MEDION_E1239T)
-+		return asus_e1239t_event(drvdata, data, size);
-+
- 	return 0;
- }
- 
-@@ -653,6 +686,21 @@ static int asus_input_configured(struct hid_device *hdev, struct hid_input *hi)
- 	    hi->report->id != T100CHI_MOUSE_REPORT_ID)
- 		return 0;
- 
-+	/* Handle MULTI_INPUT on E1239T mouse/touchpad USB interface */
-+	if (drvdata->tp && (drvdata->quirks & QUIRK_MEDION_E1239T)) {
-+		switch (hi->report->id) {
-+		case E1239T_TP_TOGGLE_REPORT_ID:
-+			input_set_capability(input, EV_KEY, KEY_F21);
-+			input->name = "Asus Touchpad Keys";
-+			drvdata->tp_kbd_input = input;
-+			return 0;
-+		case INPUT_REPORT_ID:
-+			break; /* Touchpad report, handled below */
-+		default:
-+			return 0; /* Ignore other reports */
-+		}
-+	}
-+
- 	if (drvdata->tp) {
- 		int ret;
- 
-@@ -820,6 +868,16 @@ static int asus_input_mapping(struct hid_device *hdev,
- 		}
+ 	struct bigben_device *bigben;
+ 	struct hid_input *hidinput;
+-	struct list_head *report_list;
+ 	struct led_classdev *led;
+ 	char *name;
+ 	size_t name_sz;
+@@ -396,14 +395,12 @@ static int bigben_probe(struct hid_device *hid,
+ 		return error;
  	}
  
-+	/*
-+	 * The mute button is broken and only sends press events, we
-+	 * deal with this in our raw_event handler, so do not map it.
-+	 */
-+	if ((drvdata->quirks & QUIRK_MEDION_E1239T) &&
-+	    usage->hid == (HID_UP_CONSUMER | 0xe2)) {
-+		input_set_capability(hi->input, EV_KEY, KEY_MUTE);
-+		return -1;
-+	}
-+
- 	return 0;
- }
+-	report_list = &hid->report_enum[HID_OUTPUT_REPORT].report_list;
+-	if (list_empty(report_list)) {
++	bigben->report = hid_validate_values(hid, HID_OUTPUT_REPORT, 0, 0, 8);
++	if (!bigben->report) {
+ 		hid_err(hid, "no output report found\n");
+ 		error = -ENODEV;
+ 		goto error_hw_stop;
+ 	}
+-	bigben->report = list_entry(report_list->next,
+-		struct hid_report, list);
  
-@@ -921,6 +979,8 @@ static int asus_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 			to_usb_interface(hdev->dev.parent)->altsetting;
- 
- 		if (alt->desc.bInterfaceNumber == MEDION_E1239T_TPAD_INTF) {
-+			/* For separate input-devs for tp and tp toggle key */
-+			hdev->quirks |= HID_QUIRK_MULTI_INPUT;
- 			drvdata->quirks |= QUIRK_SKIP_INPUT_MAPPING;
- 			drvdata->tp = &medion_e1239t_tp;
- 		}
+ 	if (list_empty(&hid->inputs)) {
+ 		hid_err(hid, "no inputs found\n");
 -- 
 2.39.2
 
