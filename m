@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C33A846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92FDC433D2;
-	Fri, 10 Mar 2023 14:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF2E846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D2BC433EF;
+	Fri, 10 Mar 2023 14:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458772;
-	bh=mTNZKvhyqmQYgZqzhiB9DdBHJh7T6jLuxu0B+M8QpkQ=;
+	s=korg; t=1678458775;
+	bh=iZ/l1D7n9bUaD2CVwAjGbidvRBZxgkUpNuSq4Ha1DH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BoEbmRdDiqJRNwXPpsl/nnWS33bXhUfhImgTzhAkWrvAboZ9R8QHZtx0mtLSnjdH6
-	 ZxccCorPMFSIGa2KBNe4oWrO1qq3BuKQsH7XfS3/ZM6UYEKLRv7g8CgzpxWfv7JHUT
-	 KkgCJA9vNmrGsbjmteEUSUJsuLLVrn6+f+3nt790=
+	b=reFY077DEr/FSwkRAhVWXZgCbnvWQO/zSk7sYBxievnu8FpniduNYpuv5tnPW4PQn
+	 YGPHGW8hBH4Vhw7JcID+sxkZfSrCdiDNGd1t4LBI72XvQ0J46C3MfqQOrRxNyDE5VM
+	 OKu2CY44oNXOy2wN0d7ukhi2WJMqu8aHzu8gSZP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	David Howells <dhowells@redhat.com>,
+	Tom Talpey <tom@talpey.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 139/357] nfsd: fix race to check ls_layouts
-Date: Fri, 10 Mar 2023 14:37:08 +0100
-Message-Id: <20230310133740.816616440@linuxfoundation.org>
+Subject: [PATCH 5.4 140/357] cifs: Fix lost destroy smbd connection when MR allocate failed
+Date: Fri, 10 Mar 2023 14:37:09 +0100
+Message-Id: <20230310133740.863234673@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,44 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit fb610c4dbc996415d57d7090957ecddd4fd64fb6 ]
+[ Upstream commit e9d3401d95d62a9531082cd2453ed42f2740e3fd ]
 
-Its possible for __break_lease to find the layout's lease before we've
-added the layout to the owner's ls_layouts list.  In that case, setting
-ls_recalled = true without actually recalling the layout will cause the
-server to never send a recall callback.
+If the MR allocate failed, the smb direct connection info is NULL,
+then smbd_destroy() will directly return, then the connection info
+will be leaked.
 
-Move the check for ls_layouts before setting ls_recalled.
+Let's set the smb direct connection info to the server before call
+smbd_destroy().
 
-Fixes: c5c707f96fc9 ("nfsd: implement pNFS layout recalls")
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: c7398583340a ("CIFS: SMBD: Implement RDMA memory registration")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Acked-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Tom Talpey <tom@talpey.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4layouts.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/cifs/smbdirect.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
-index e12409eca7cc4..215362144aece 100644
---- a/fs/nfsd/nfs4layouts.c
-+++ b/fs/nfsd/nfs4layouts.c
-@@ -322,11 +322,11 @@ nfsd4_recall_file_layout(struct nfs4_layout_stateid *ls)
- 	if (ls->ls_recalled)
- 		goto out_unlock;
+diff --git a/fs/cifs/smbdirect.c b/fs/cifs/smbdirect.c
+index 2cea6c25d1b0e..66265e7303cd4 100644
+--- a/fs/cifs/smbdirect.c
++++ b/fs/cifs/smbdirect.c
+@@ -1784,6 +1784,7 @@ static struct smbd_connection *_smbd_get_connection(
  
--	ls->ls_recalled = true;
--	atomic_inc(&ls->ls_stid.sc_file->fi_lo_recalls);
- 	if (list_empty(&ls->ls_layouts))
- 		goto out_unlock;
+ allocate_mr_failed:
+ 	/* At this point, need to a full transport shutdown */
++	server->smbd_conn = info;
+ 	smbd_destroy(server);
+ 	return NULL;
  
-+	ls->ls_recalled = true;
-+	atomic_inc(&ls->ls_stid.sc_file->fi_lo_recalls);
- 	trace_nfsd_layout_recall(&ls->ls_stid.sc_stateid);
- 
- 	refcount_inc(&ls->ls_stid.sc_count);
 -- 
 2.39.2
 
