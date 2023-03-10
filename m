@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEC88494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:36:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F012C4339B;
-	Fri, 10 Mar 2023 14:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8C88494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:36:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822BBC433EF;
+	Fri, 10 Mar 2023 14:36:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458995;
-	bh=S0xWlDYxi86v6D9WPXhqTlrFu+RiKjQFSb8wGercS98=;
+	s=korg; t=1678458997;
+	bh=BPPX9JLlnk477fbxhIhEPVrL/A5quUKMyrQmgDlOn84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N7ocjsDU03qPWMu5xEdx/yTlRO5pBvEV57xwD2eGr/zKWPjXaxYTzpHdil9PBQm3c
-	 mgYJEdYOwYq1sgBnEsOV2qbNEzsf3NoUcg2IE8sWBxZ5Et5t1qyQkNrwlEcjzLQG9m
-	 rJvK+/98+6dwMEObK7D+Ayyik4TexPWMKJb6jfuY=
+	b=1pm3rZQQcmSyvBxPz0WYhAWswKQxno6vZfYYqDtnPis8IaJYC6Mn9xXuQNiSGpOdX
+	 0iht0Apz/PCx5uz5HWNeTvXOrPR7/womV3Jpz2aTJi2T5EMvtbw7GWXD2Zj2vX4Cdk
+	 ZbgFu0qYMJEdekQiSWWOHIKKXGTG8VCF89xM0dZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 186/357] inet: fix fast path in __inet_hash_connect()
-Date: Fri, 10 Mar 2023 14:37:55 +0100
-Message-Id: <20230310133742.957745229@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	David Collins <quic_collinsd@quicinc.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.4 213/357] rtc: pm8xxx: fix set-alarm race
+Date: Fri, 10 Mar 2023 14:38:22 +0100
+Message-Id: <20230310133744.116980613@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -37,56 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 21cbd90a6fab7123905386985e3e4a80236b8714 ]
+commit c88db0eff9722fc2b6c4d172a50471d20e08ecc6 upstream.
 
-__inet_hash_connect() has a fast path taken if sk_head(&tb->owners) is
-equal to the sk parameter.
-sk_head() returns the hlist_entry() with respect to the sk_node field.
-However entries in the tb->owners list are inserted with respect to the
-sk_bind_node field with sk_add_bind_node().
-Thus the check would never pass and the fast path never execute.
+Make sure to disable the alarm before updating the four alarm time
+registers to avoid spurious alarms during the update.
 
-This fast path has never been executed or tested as this bug seems
-to be present since commit 1da177e4c3f4 ("Linux-2.6.12-rc2"), thus
-remove it to reduce code complexity.
+Note that the disable needs to be done outside of the ctrl_reg_lock
+section to prevent a racing alarm interrupt from disabling the newly set
+alarm when the lock is released.
 
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230112-inet_hash_connect_bind_head-v3-1-b591fd212b93@diag.uniroma1.it
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9a9a54ad7aa2 ("drivers/rtc: add support for Qualcomm PMIC8xxx RTC")
+Cc: stable@vger.kernel.org      # 3.1
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: David Collins <quic_collinsd@quicinc.com>
+Link: https://lore.kernel.org/r/20230202155448.6715-2-johan+linaro@kernel.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_hashtables.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ drivers/rtc/rtc-pm8xxx.c |   24 ++++++++++--------------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index 33292983b8cfb..9d14b3289f003 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -714,17 +714,7 @@ int __inet_hash_connect(struct inet_timewait_death_row *death_row,
- 	u32 index;
+--- a/drivers/rtc/rtc-pm8xxx.c
++++ b/drivers/rtc/rtc-pm8xxx.c
+@@ -219,7 +219,6 @@ static int pm8xxx_rtc_set_alarm(struct d
+ {
+ 	int rc, i;
+ 	u8 value[NUM_8_BIT_RTC_REGS];
+-	unsigned int ctrl_reg;
+ 	unsigned long secs, irq_flags;
+ 	struct pm8xxx_rtc *rtc_dd = dev_get_drvdata(dev);
+ 	const struct pm8xxx_rtc_regs *regs = rtc_dd->regs;
+@@ -231,6 +230,11 @@ static int pm8xxx_rtc_set_alarm(struct d
+ 		secs >>= 8;
+ 	}
  
- 	if (port) {
--		head = &hinfo->bhash[inet_bhashfn(net, port,
--						  hinfo->bhash_size)];
--		tb = inet_csk(sk)->icsk_bind_hash;
--		spin_lock_bh(&head->lock);
--		if (sk_head(&tb->owners) == sk && !sk->sk_bind_node.next) {
--			inet_ehash_nolisten(sk, NULL, NULL);
--			spin_unlock_bh(&head->lock);
--			return 0;
--		}
--		spin_unlock(&head->lock);
--		/* No definite answer... Walk to established hash table */
-+		local_bh_disable();
- 		ret = check_established(death_row, sk, port, NULL);
- 		local_bh_enable();
- 		return ret;
--- 
-2.39.2
-
++	rc = regmap_update_bits(rtc_dd->regmap, regs->alarm_ctrl,
++				regs->alarm_en, 0);
++	if (rc)
++		return rc;
++
+ 	spin_lock_irqsave(&rtc_dd->ctrl_reg_lock, irq_flags);
+ 
+ 	rc = regmap_bulk_write(rtc_dd->regmap, regs->alarm_rw, value,
+@@ -240,19 +244,11 @@ static int pm8xxx_rtc_set_alarm(struct d
+ 		goto rtc_rw_fail;
+ 	}
+ 
+-	rc = regmap_read(rtc_dd->regmap, regs->alarm_ctrl, &ctrl_reg);
+-	if (rc)
+-		goto rtc_rw_fail;
+-
+-	if (alarm->enabled)
+-		ctrl_reg |= regs->alarm_en;
+-	else
+-		ctrl_reg &= ~regs->alarm_en;
+-
+-	rc = regmap_write(rtc_dd->regmap, regs->alarm_ctrl, ctrl_reg);
+-	if (rc) {
+-		dev_err(dev, "Write to RTC alarm control register failed\n");
+-		goto rtc_rw_fail;
++	if (alarm->enabled) {
++		rc = regmap_update_bits(rtc_dd->regmap, regs->alarm_ctrl,
++					regs->alarm_en, regs->alarm_en);
++		if (rc)
++			goto rtc_rw_fail;
+ 	}
+ 
+ 	dev_dbg(dev, "Alarm Set for h:m:s=%ptRt, y-m-d=%ptRdr\n",
 
 
