@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67546847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:53:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBBEC433D2;
-	Fri, 10 Mar 2023 13:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69280847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:53:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0EEC433EF;
+	Fri, 10 Mar 2023 13:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456420;
-	bh=ZaLQcEE0HiG7s7GAUpH1sXoj6rMJ27q6byadrVK+Uz0=;
+	s=korg; t=1678456423;
+	bh=GI6BGBr45Px0kVaMQOsvuH6bA9ow98rDMmVptW52C9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wp6YWb08mnLiG/082W5VvAcX4npNr8sgI8e98KjJlZdCC20uCrqcxfFnAkezGbMnc
-	 r3zwre35bu5C5mIzzbktvwWmcBIi3TwVDdR2FXhy4JQGoUxfnMrx7LLgO4H+bPZp/0
-	 DPHGT777uecH8U83EyZjiFwCPbeVwVS7+2TY9woc=
+	b=uiy5DEno/32mMyZJuAn8i/aVZ+xnYagTfZnYAGb6TVTSZuzf80HMmaK8mqzZBURPn
+	 uTxTk7j61qvhr19YrP4cX2brw07eeTRJPhYcL6EKvb7IsWV+/4tx288yGmx/HevkLE
+	 ra0DzVDEcP9SyNPvkvh7Dz9cIwTfy5eTeF6yOkCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <heiko.carstens@de.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 4.14 191/193] s390/setup: init jump labels before command line parsing
-Date: Fri, 10 Mar 2023 14:39:33 +0100
-Message-Id: <20230310133717.416213162@linuxfoundation.org>
+	Winter <winter@winter.cafe>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>
+Subject: [PATCH 4.14 192/193] tcp: Fix listen() regression in 4.14.303.
+Date: Fri, 10 Mar 2023 14:39:34 +0100
+Message-Id: <20230310133717.445624759@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -34,41 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 95e61b1b5d6394b53d147c0fcbe2ae70fbe09446 upstream.
+commit fdaf88531cfd17b2a710cceb3141ef6f9085ff40 upstream.
 
-Command line parameters might set static keys. This is true for s390 at
-least since commit 6471384af2a6 ("mm: security: introduce init_on_alloc=1
-and init_on_free=1 boot options"). To avoid the following WARN:
+When we backport dadd0dcaa67d ("net/ulp: prevent ULP without clone op from
+entering the LISTEN status"), we have accidentally backported a part of
+7a7160edf1bf ("net: Return errno in sk->sk_prot->get_port().") and removed
+err = -EADDRINUSE in inet_csk_listen_start().
 
-static_key_enable_cpuslocked(): static key 'init_on_alloc+0x0/0x40' used
-before call to jump_label_init()
+Thus, listen() no longer returns -EADDRINUSE even if ->get_port() failed
+as reported in [0].
 
-call jump_label_init() just before parse_early_param().
-jump_label_init() is safe to call multiple times (x86 does that), doesn't
-do any memory allocations and hence should be safe to call that early.
+We set -EADDRINUSE to err just before ->get_port() to fix the regression.
 
-Fixes: 6471384af2a6 ("mm: security: introduce init_on_alloc=1 and init_on_free=1 boot options")
-Cc: <stable@vger.kernel.org> # 5.3: d6df52e9996d: s390/maccess: add no DAT mode to kernel_write
-Cc: <stable@vger.kernel.org> # 5.3
-Reviewed-by: Heiko Carstens <heiko.carstens@de.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <heiko.carstens@de.ibm.com>
+[0]: https://lore.kernel.org/stable/EF8A45D0-768A-4CD5-9A8A-0FA6E610ABF7@winter.cafe/
+
+Reported-by: Winter <winter@winter.cafe>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/setup.c |    1 +
+ net/ipv4/inet_connection_sock.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/arch/s390/kernel/setup.c
-+++ b/arch/s390/kernel/setup.c
-@@ -911,6 +911,7 @@ void __init setup_arch(char **cmdline_p)
- 	if (IS_ENABLED(CONFIG_EXPOLINE_AUTO))
- 		nospec_auto_detect();
- 
-+	jump_label_init();
- 	parse_early_param();
- #ifdef CONFIG_CRASH_DUMP
- 	/* Deactivate elfcorehdr= kernel parameter */
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -925,6 +925,7 @@ int inet_csk_listen_start(struct sock *s
+ 	 * It is OK, because this socket enters to hash table only
+ 	 * after validation is complete.
+ 	 */
++	err = -EADDRINUSE;
+ 	sk_state_store(sk, TCP_LISTEN);
+ 	if (!sk->sk_prot->get_port(sk, inet->inet_num)) {
+ 		inet->inet_sport = htons(inet->inet_num);
 
 
