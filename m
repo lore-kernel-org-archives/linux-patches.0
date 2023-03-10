@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBE58489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:17:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73691C433EF;
-	Fri, 10 Mar 2023 14:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6C48489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:17:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACADC433EF;
+	Fri, 10 Mar 2023 14:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457827;
-	bh=4asVLtVFUUDyCxNA8OheF6Xwnoh8An8F/w579dKdNAI=;
+	s=korg; t=1678457830;
+	bh=UszNZULP8SX9tR1oLOSCJpA7L4oX4LpBoTgnhNMxF9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UxJzS/ynU3eO5W2PbD+lbqHSBwPA2wls4SPREb9BjAUut8efG6KRG6ka8Gk8DPzL3
-	 bfIdN//IimK7Yf0IzstjCpaazo1sFkjbO203CASJLl/g08GMJDS5AuGHgwsHdhXRjP
-	 FVS+KQmxm20MG2u7ibjUYrPm0OzHXFk6DMC5G8xs=
+	b=v9bOvyfHBMshUDETbwlVXRk0Ei23v9rXUWt3DRUPmmb8PNWufbi6nSQ44zZpBjr0d
+	 kwHJxboQUlxWbHtABJ3Ouzv0VzLVCHV06+W+sr4pKeQ+QGXiYSL1rPv6rfQHp3oAZM
+	 j5I4xdmlN0/KD+tIpwiSG/MHZSE44+aabuzhv5bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 072/252] drm/msm/hdmi: Add missing check for alloc_ordered_workqueue
-Date: Fri, 10 Mar 2023 14:37:22 +0100
-Message-Id: <20230310133721.002642508@linuxfoundation.org>
+Subject: [PATCH 4.19 055/252] m68k: /proc/hardware should depend on PROC_FS
+Date: Fri, 10 Mar 2023 14:37:05 +0100
+Message-Id: <20230310133720.470500784@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -35,40 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit afe4cb96153a0d8003e4e4ebd91b5c543e10df84 ]
+[ Upstream commit 1e5b5df65af99013b4d31607ddb3ca5731dbe44d ]
 
-Add check for the return value of alloc_ordered_workqueue as it may return
-NULL pointer and cause NULL pointer dereference in `hdmi_hdcp.c` and
-`hdmi_hpd.c`.
+When CONFIG_PROC_FS is not set, there is a build error for an unused
+function. Make PROC_HARDWARE depend on PROC_FS to prevent this error.
 
-Fixes: c6a57a50ad56 ("drm/msm/hdmi: add hdmi hdcp support (V3)")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/517211/
-Link: https://lore.kernel.org/r/20230106023011.3985-1-jiasheng@iscas.ac.cn
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In file included from ../arch/m68k/kernel/setup.c:3:
+../arch/m68k/kernel/setup_mm.c:477:12: error: 'hardware_proc_show' defined but not used [-Werror=unused-function]
+  477 | static int hardware_proc_show(struct seq_file *m, void *v)
+      |            ^~~~~~~~~~~~~~~~~~
+
+Fixes: 66d857b08b8c ("m68k: merge m68k and m68knommu arch directories") # v3.0
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20230209010825.24136-1-rdunlap@infradead.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/m68k/Kconfig.devices | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-index e03f08757b252..b75067854b4d7 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -254,6 +254,10 @@ static struct hdmi *msm_hdmi_init(struct platform_device *pdev)
- 	pm_runtime_enable(&pdev->dev);
- 
- 	hdmi->workq = alloc_ordered_workqueue("msm_hdmi", 0);
-+	if (!hdmi->workq) {
-+		ret = -ENOMEM;
-+		goto fail;
-+	}
- 
- 	hdmi->i2c = msm_hdmi_i2c_init(hdmi);
- 	if (IS_ERR(hdmi->i2c)) {
+diff --git a/arch/m68k/Kconfig.devices b/arch/m68k/Kconfig.devices
+index 3e9b0b826f8a1..6fb693bb0771c 100644
+--- a/arch/m68k/Kconfig.devices
++++ b/arch/m68k/Kconfig.devices
+@@ -19,6 +19,7 @@ config HEARTBEAT
+ # We have a dedicated heartbeat LED. :-)
+ config PROC_HARDWARE
+ 	bool "/proc/hardware support"
++	depends on PROC_FS
+ 	help
+ 	  Say Y here to support the /proc/hardware file, which gives you
+ 	  access to information about the machine you're running on,
 -- 
 2.39.2
 
