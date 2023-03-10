@@ -1,142 +1,132 @@
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2070.outbound.protection.outlook.com [40.107.93.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A10FD516
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 17:30:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678469456; x=1710005456;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=r5sCe+bXJxE3gAbet8BVS3dL7duJqreakgvTk5MI2+0=;
-  b=JmAf6S+nSAuUd1mTqqh++PdV3lpMoGizSdjoOpW5UU1y0JDqqYjsqGfh
-   RtJ3oTaqJJb3/EQlzQuakGYmqU0wIagrY6sK72Bzog2F3EftZeCyjXmNv
-   N84SO3Q1N+9Y3UFtQXSZ5LXZp8r3KBo29RdvdWGI8yVLOoDrzamyRTeFE
-   pDQ1eYKdNRVdA+QB399xpiWGxcw0V9eLHgHzE3v5QtBx7m8bU9ksBbylK
-   mItRJSMZraxNlVMquN8UuFBDpeJRFzSJ649qu9/aA1J27F/vJo59aYRSY
-   K6WK7VcGxzX+7mi3EHOx8jT8CGHKqI26jZrLXHjigFFueLmpqf+CbUy4r
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10645"; a="399382444"
-X-IronPort-AV: E=Sophos;i="5.98,250,1673942400"; 
-   d="scan'208";a="399382444"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2023 09:30:55 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10645"; a="852003050"
-X-IronPort-AV: E=Sophos;i="5.98,250,1673942400"; 
-   d="scan'208";a="852003050"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2023 09:30:55 -0800
-Date: Fri, 10 Mar 2023 09:30:54 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Peter Newman <peternewman@google.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Jonathan Corbet <corbet@lwn.net>, x86@kernel.org,
-	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>, linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org, patches@lists.linux.dev,
-	tony.luck@intel.com
-Subject: Re: [PATCH 7/7] x86/resctrl: Determine if Sub-NUMA Cluster is
- enabled and initialize.
-Message-ID: <ZAtpTl+um3nbCOz8@agluck-desk3.sc.intel.com>
-References: <20230126184157.27626-1-tony.luck@intel.com>
- <20230126184157.27626-8-tony.luck@intel.com>
- <CALPaoCgnOWLdEqKtonNeq+d_Fj0yr3Y7tgwwmAHmuhL5xBhqyg@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08DCDA94
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 18:57:57 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=A9wdDWa3eLWT+QWcKe0E7nwxpbD6QtuL1tjrlkM2MOqzJ7PGl2c6RxuRvoQwAbRR9dQiczqlppZpduLN4bFHg6A4Umv1tFEt46T5ryAhJ9DBDRUhf1R+dzWJDYfSbHeRw4q/9n4CYMFUrcZ89GgGJwlEF1TkjU/cSe7BJ2SzUUto2Rw/PixA+uLqWNJy1vaHUHFOOnFBtWCE5fFVFe08j9GGl1iypWjCSl/yHb9DTiptXvkouiEEcjlsspgf/vffFsxNiLVSGtprXU8O/guYM8LEV17ISqLqitZiDxwfJmmg66nDaibDIFQMKk3j/Tmf9WvCAeWB3mJPZStzFkEGPg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9eSKQXXsuO4BsiBWbmbMjU9V6KmH4POtqOJVvP/do6g=;
+ b=EIOeL+R/YDuW4h5FpqFiArxL8W1MSNc63ceKSy6gzvJbKUrjRUIGfbQLXHgypUwXSkz0AqkjUiE8je1uW+MIu4mQ6a/UbcJQJC+Q2dWjRsIFg2c5jm5oJ5KUOWdWFwGiyZXTMfDi29Zu0KUQXoCV5tVsoy3x+YVxkzcDxk0gFQO8Dz1spMMEGmErGvN8/4UT0mi2em/Z9e06Ct/Qim48GnmnTMIuWY0Oy0yyGCEAhEyjWsKjBoDG2hn0ZbXgSlUeL8Pox2nfIUyCnooJAG+a/YuMxrx36AFPnFIfhXhls+1gYPGJBq3cNVG4OGwUl50QM/69jF4UNw3bcA1VeBI2ng==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9eSKQXXsuO4BsiBWbmbMjU9V6KmH4POtqOJVvP/do6g=;
+ b=IcdDnxVcxJfRwerHkIAyeIIDcxOVPsQWjlwlcNzsb1iLhNPAQp2XWHvWfvxLQp6ceeDpNqVh+kQj93TWZlvWRWYNCi+qIa+dM31I4Tv05IloLYhgGygSDus2abXfmEY9UibUWyag2km1roI2oIc53etXDIdgAS0RsFZ8AZ3ZgPJmkQW+feRXVc6y72ASw1jcle2fBpdFDOpOUi3dMg+asVypXZr3w3qP1xIiVGho/pqk/1HdwKPPVH0xc9jNVjet/ZoBon967jdkM08SPzowIkKnzQIOoKv6CpIRuCggqDLrQDseTfuJIW38Bq5ORZlFh+vPolE135ZckhAhGMNgTw==
+Received: from CYZPR05CA0043.namprd05.prod.outlook.com (2603:10b6:930:a3::25)
+ by BY5PR12MB4195.namprd12.prod.outlook.com (2603:10b6:a03:200::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.19; Fri, 10 Mar
+ 2023 18:57:55 +0000
+Received: from CY4PEPF0000C978.namprd02.prod.outlook.com
+ (2603:10b6:930:a3:cafe::7) by CYZPR05CA0043.outlook.office365.com
+ (2603:10b6:930:a3::25) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.20 via Frontend
+ Transport; Fri, 10 Mar 2023 18:57:55 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ CY4PEPF0000C978.mail.protection.outlook.com (10.167.241.139) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6178.12 via Frontend Transport; Fri, 10 Mar 2023 18:57:55 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Fri, 10 Mar 2023
+ 10:57:46 -0800
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.37; Fri, 10 Mar 2023 10:57:46 -0800
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5 via Frontend
+ Transport; Fri, 10 Mar 2023 10:57:46 -0800
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 4.14 000/193] 4.14.308-rc1 review
+In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
+References: <20230310133710.926811681@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALPaoCgnOWLdEqKtonNeq+d_Fj0yr3Y7tgwwmAHmuhL5xBhqyg@mail.gmail.com>
+Message-ID: <34edc6d7-3cbe-4e5c-b2d7-665ea33f2efd@drhqmail202.nvidia.com>
+Date: Fri, 10 Mar 2023 10:57:46 -0800
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000C978:EE_|BY5PR12MB4195:EE_
+X-MS-Office365-Filtering-Correlation-Id: d7b6ab8f-1ed1-42db-33f6-08db21995baa
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	9Sj6WmUHHaEdTFeCcpr1Tialdoqm/JJE24KJJgwYgLYFyK2UY5agP+bT5oV7lMeiGZvidECtcfpMzmjBDSBhw/Tl+5RU2rrW4d/x9pvseRJBauD23uAWVPq2yRkx/SFuwMKoVp5Bqo3PpVyIfQ4aS4+axbvxiC7RMJUDwPk4Nvz6Wgf0xhKMK55j44AtB1NmjIJDkbJiYJMPy65FEsJL/YiR9Je1TUPfHgIEG+4b5CUva/ob1N3zcx5LoMwBg06dufueZ5At6qiHE+/PdZUyiH11DsAXAFVxwaEvjd/osM/UoIK8nZlbYk9ByvEz//owwfWRtqn3wG114kbWVLObthxrph7whfZHWOYBhgToiXNZfDcG8fPU8nA/ttE5P9A2RbvV5PyToFY5Q3JcZp4EYlBjZMv2hhl0JHdggxjz29wzkZqieVQbcyatZTH9wcSaB/k++JOFM9obQru1oW+ES4pJ//EB8onthhPv3woigOVpD3Ls0RAv4DQ7tmhgSvSH1Hs0CbKNcfCW0/RUzSe4oYjI3M98eCJB+35RgW4T3YWKrcav8qYpsIyMQckHIjFPBfebHxlVa43R/JNqeZweDq6EXjObuzYxhue/wK1K0VqD1k8MEXB8xlLpdChfjONrzgYKZU6Xn1179DgaYWw5/Y+wBUI5iqkAuN60rqrX02yoi9ezCa/TdPOsZ53PdB7elUqRXA39c4uilCj+0ONyoVIYJkd5+42Y0kast5x83ERRwZ4I666BPqbDF2WuOldp+rXt1WZIvWYfw2PnBhI4/A==
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230025)(4636009)(346002)(39860400002)(136003)(396003)(376002)(451199018)(46966006)(36840700001)(70206006)(31686004)(2906002)(5660300002)(7416002)(26005)(356005)(8936002)(4326008)(31696002)(41300700001)(6916009)(8676002)(70586007)(86362001)(316002)(54906003)(40480700001)(478600001)(966005)(36860700001)(82740400003)(7636003)(82310400005)(336012)(186003)(426003)(47076005);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2023 18:57:55.3713
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d7b6ab8f-1ed1-42db-33f6-08db21995baa
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CY4PEPF0000C978.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4195
 
-On Mon, Feb 27, 2023 at 02:30:38PM +0100, Peter Newman wrote:
-> Hi Tony,
+On Fri, 10 Mar 2023 14:36:22 +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.14.308 release.
+> There are 193 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> On Thu, Jan 26, 2023 at 7:42 PM Tony Luck <tony.luck@intel.com> wrote:
-> > +static __init int find_snc_ways(void)
-> > +{
-> > +       unsigned long *node_caches;
-> > +       int cpu, node, ret;
-> > +
-> > +       node_caches = kcalloc(BITS_TO_LONGS(nr_node_ids), sizeof(*node_caches), GFP_KERNEL);
-> > +       if (!node_caches)
-> > +               return 1;
-> > +
-> > +       cpus_read_lock();
-> > +       for_each_node(node) {
+> Responses should be made by Sun, 12 Mar 2023 13:36:38 +0000.
+> Anything received after that time might be too late.
 > 
-> Someone tried this patch on a machine with a CPU-less node...
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.308-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+> and the diffstat can be found below.
 > 
-> We need to check for this:
+> thanks,
 > 
-> +               if (cpumask_empty(cpumask_of_node(node)))
-> +                       continue;
-> 
-> > +               cpu = cpumask_first(cpumask_of_node(node));
-> > +               set_bit(get_cpu_cacheinfo_id(cpu, 3), node_caches);
-> > +       }
-> > +       cpus_read_unlock();
+> greg k-h
 
-Peter,
+All tests passing for Tegra ...
 
-Tell me more about your CPU-less nodes.  Your fix avoids a bad
-pointer reference (because cpumask_first() returns cpu >= nr_cpu_ids
-for an empty bitmask).
+Test results for stable-v4.14:
+    8 builds:	8 pass, 0 fail
+    16 boots:	16 pass, 0 fail
+    32 tests:	32 pass, 0 fail
 
-But now I'm worried about whether I have the right values in the
-formula:
+Linux version:	4.14.308-rc1-g6eaf98b65d62
+Boards tested:	tegra124-jetson-tk1, tegra20-ventana,
+                tegra210-p2371-2180, tegra30-cardhu-a04
 
-	nr_node_ids / bitmap_weight(node_caches, nr_node_ids);
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
-This fix avoids counting the L3 from a non-existent CPU, but still
-counts the node in the numerator.
-
-Is your CPU-less node a full (non-SNC) node? Like this:
-
-          Socket 0                 Socket 1
-    +--------------------+  +--------------------+
-    |          .         |  |          .         |
-    |  SNC 0.0 . SNC 0.1 |  |  zero    . zero    |
-    |          .         |  |  CPUs    . CPUs    |
-    |          .         |  |          .         |
-    |          .         |  |          .         |
-    +--------------------+  +--------------------+
-    |      L3 Cache      |  |      L3 Cache      |
-    +--------------------+  +--------------------+
-
-I could fix this case by counting how many CPU-less
-nodes I find, and reducing the numerator (the denominator
-didn't count the L3 cache from socket 1 because there
-are no CPUs there)
-
-	(nr_node_ids - n_empty_nodes) / bitmap_weight(node_caches, nr_node_ids);
-
-	=> 2 / 1
-
-But that won't work if your CPU-less node is an SNC node
-and the other SNC node in the same socket does have some
-CPUs:
-
-          Socket 0                 Socket 1
-    +--------------------+  +--------------------+
-    |          .         |  |          .         |
-    |  SNC 0.0 . SNC 0.1 |  |  zero    . SNC 1.1 |
-    |          .         |  |  CPUs    .         |
-    |          .         |  |          .         |
-    |          .         |  |          .         |
-    +--------------------+  +--------------------+
-    |      L3 Cache      |  |      L3 Cache      |
-    +--------------------+  +--------------------+
-
-This would get 3 / 2 ... i.e. I should still count the
-empty node because its cache was counted by its SNC
-buddy.
-
--Tony
+Jon
