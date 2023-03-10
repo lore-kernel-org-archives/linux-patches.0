@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752C78820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:52:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE08AC4339B;
-	Fri, 10 Mar 2023 14:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FC28820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:52:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF6C5C4339B;
+	Fri, 10 Mar 2023 14:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459928;
-	bh=8JK2gKWvLJ1HEKbL8QI6uqQExWKk+gT3nB30IisO/GY=;
+	s=korg; t=1678459931;
+	bh=lSMvMQpOZh+Dms/qGfSfgrP6eWp/HXSmoKGu35dTz5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gwHj7C5wsT9FpZpKa4fwWRBd8svIifw41mNIUX69KJBzZQD4wpqyyPbKh1joUy7Du
-	 Bd4A21/vwT7DQ7nbF92CP78wBqYa49mkPOGrmnZa6FECSXarEhNEUDr/PemNirbc42
-	 Vv8zFz9+FJQ+WQ4bE+ZefHYdjWOAsl60RwHPw/JU=
+	b=ie34rwzctoSZKqnUFPlGr4l58BNXqICYtrQhzJWiDkkI1/tu0f1T53I1Zs3HfbMwY
+	 W8r2O373yDF6smVIFmi9n1lAEc8dVY5cYKc+PyQKg0HXk+wYgCjWO1I7baq3LyCDlE
+	 4R4wHAYt61ABdR9PIygN5ehGndVSsnDfvENL/f0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 149/529] drm/fourcc: Add missing big-endian XRGB1555 and RGB565 formats
-Date: Fri, 10 Mar 2023 14:34:52 +0100
-Message-Id: <20230310133811.850205722@linuxfoundation.org>
+Subject: [PATCH 5.10 167/529] drm/msm/adreno: Fix null ptr access in adreno_gpu_cleanup()
+Date: Fri, 10 Mar 2023 14:35:10 +0100
+Message-Id: <20230310133812.683845095@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,48 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert@linux-m68k.org>
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-[ Upstream commit 6fb6c979ca628583d4d0c59a0f8ff977e581ecc0 ]
+[ Upstream commit dbeedbcb268d055d8895aceca427f897e12c2b50 ]
 
-As of commit eae06120f1974e1a ("drm: refuse ADDFB2 ioctl for broken
-bigendian drivers"), drivers must set the
-quirk_addfb_prefer_host_byte_order quirk to make the drm_mode_addfb()
-compat code work correctly on big-endian machines.
+Fix the below kernel panic due to null pointer access:
+[   18.504431] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000048
+[   18.513464] Mem abort info:
+[   18.516346]   ESR = 0x0000000096000005
+[   18.520204]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   18.525706]   SET = 0, FnV = 0
+[   18.528878]   EA = 0, S1PTW = 0
+[   18.532117]   FSC = 0x05: level 1 translation fault
+[   18.537138] Data abort info:
+[   18.540110]   ISV = 0, ISS = 0x00000005
+[   18.544060]   CM = 0, WnR = 0
+[   18.547109] user pgtable: 4k pages, 39-bit VAs, pgdp=0000000112826000
+[   18.553738] [0000000000000048] pgd=0000000000000000, p4d=0000000000000000, pud=0000000000000000
+[   18.562690] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
+**Snip**
+[   18.696758] Call trace:
+[   18.699278]  adreno_gpu_cleanup+0x30/0x88
+[   18.703396]  a6xx_destroy+0xc0/0x130
+[   18.707066]  a6xx_gpu_init+0x308/0x424
+[   18.710921]  adreno_bind+0x178/0x288
+[   18.714590]  component_bind_all+0xe0/0x214
+[   18.718797]  msm_drm_bind+0x1d4/0x614
+[   18.722566]  try_to_bring_up_aggregate_device+0x16c/0x1b8
+[   18.728105]  __component_add+0xa0/0x158
+[   18.732048]  component_add+0x20/0x2c
+[   18.735719]  adreno_probe+0x40/0xc0
+[   18.739300]  platform_probe+0xb4/0xd4
+[   18.743068]  really_probe+0xfc/0x284
+[   18.746738]  __driver_probe_device+0xc0/0xec
+[   18.751129]  driver_probe_device+0x48/0x110
+[   18.755421]  __device_attach_driver+0xa8/0xd0
+[   18.759900]  bus_for_each_drv+0x90/0xdc
+[   18.763843]  __device_attach+0xfc/0x174
+[   18.767786]  device_initial_probe+0x20/0x2c
+[   18.772090]  bus_probe_device+0x40/0xa0
+[   18.776032]  deferred_probe_work_func+0x94/0xd0
+[   18.780686]  process_one_work+0x190/0x3d0
+[   18.784805]  worker_thread+0x280/0x3d4
+[   18.788659]  kthread+0x104/0x1c0
+[   18.791981]  ret_from_fork+0x10/0x20
+[   18.795654] Code: f9400408 aa0003f3 aa1f03f4 91142015 (f9402516)
+[   18.801913] ---[ end trace 0000000000000000 ]---
+[   18.809039] Kernel panic - not syncing: Oops: Fatal exception
 
-While that works fine for big-endian XRGB8888 and ARGB8888, which are
-mapped to the existing little-endian BGRX8888 and BGRA8888 formats, it
-does not work for big-endian XRGB1555 and RGB565, as the latter are not
-listed in the format database.
-
-Fix this by adding the missing formats.  Limit this to big-endian
-platforms, as there is currently no need to support these formats on
-little-endian platforms.
-
-Fixes: 6960e6da9cec3f66 ("drm: fix drm_mode_addfb() on big endian machines.")
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/3ee1f8144feb96c28742b22384189f1f83bcfc1a.1669221671.git.geert@linux-m68k.org
+Fixes: 17e822f7591f ("drm/msm: fix unbalanced pm_runtime_enable in adreno_gpu_{init, cleanup}")
+Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/515605/
+Link: https://lore.kernel.org/r/20221221203925.v2.1.Ib978de92c4bd000b515486aad72e96c2481f84d0@changeid
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_fourcc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_fourcc.c b/drivers/gpu/drm/drm_fourcc.c
-index 92152c06b75b7..8d1064061e836 100644
---- a/drivers/gpu/drm/drm_fourcc.c
-+++ b/drivers/gpu/drm/drm_fourcc.c
-@@ -178,6 +178,10 @@ const struct drm_format_info *__drm_format_info(u32 format)
- 		{ .format = DRM_FORMAT_BGRA5551,	.depth = 15, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1, .has_alpha = true },
- 		{ .format = DRM_FORMAT_RGB565,		.depth = 16, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1 },
- 		{ .format = DRM_FORMAT_BGR565,		.depth = 16, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1 },
-+#ifdef __BIG_ENDIAN
-+		{ .format = DRM_FORMAT_XRGB1555 | DRM_FORMAT_BIG_ENDIAN, .depth = 15, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1 },
-+		{ .format = DRM_FORMAT_RGB565 | DRM_FORMAT_BIG_ENDIAN, .depth = 16, .num_planes = 1, .cpp = { 2, 0, 0 }, .hsub = 1, .vsub = 1 },
-+#endif
- 		{ .format = DRM_FORMAT_RGB888,		.depth = 24, .num_planes = 1, .cpp = { 3, 0, 0 }, .hsub = 1, .vsub = 1 },
- 		{ .format = DRM_FORMAT_BGR888,		.depth = 24, .num_planes = 1, .cpp = { 3, 0, 0 }, .hsub = 1, .vsub = 1 },
- 		{ .format = DRM_FORMAT_XRGB8888,	.depth = 24, .num_planes = 1, .cpp = { 4, 0, 0 }, .hsub = 1, .vsub = 1 },
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index de8cc25506d61..78181e2d78a97 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -954,13 +954,13 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
+ {
+ 	struct msm_gpu *gpu = &adreno_gpu->base;
+-	struct msm_drm_private *priv = gpu->dev->dev_private;
++	struct msm_drm_private *priv = gpu->dev ? gpu->dev->dev_private : NULL;
+ 	unsigned int i;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(adreno_gpu->info->fw); i++)
+ 		release_firmware(adreno_gpu->fw[i]);
+ 
+-	if (pm_runtime_enabled(&priv->gpu_pdev->dev))
++	if (priv && pm_runtime_enabled(&priv->gpu_pdev->dev))
+ 		pm_runtime_disable(&priv->gpu_pdev->dev);
+ 
+ 	msm_gpu_cleanup(&adreno_gpu->base);
 -- 
 2.39.2
 
