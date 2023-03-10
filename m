@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82C1881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D83C4339C;
-	Fri, 10 Mar 2023 14:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44C4881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B4BC433D2;
+	Fri, 10 Mar 2023 14:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459229;
-	bh=0WA3IHubj7aabl6dGo8czV/q1qGiMevt/BKsQnFKFwM=;
+	s=korg; t=1678459232;
+	bh=ROSyo5ngZS9Ug8j1MSM0nKZdYkzVepIeflrMLwM5Z9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nmMZsEp5Q/3aQRsbgWexYrkVnBvGj2YOj7XmeET3rKSB2JbKeGouiITOccSGRDg9P
-	 5MrZKmGdvdUT1vOl+gJ1NvYTMTzrh0IQVgVTvYqhBqIzu4jRxCqhZDjGH4wd0nb+0M
-	 ouX2EydQ9J5MRquozSmOfN3xOnyvR1F2hEfMTP6Y=
+	b=mqCrOYVya7X+wWmJV8+NlAcVdxKiwx9krTov3D3PoDQ7K0kfkseNkzpZ9wZWXU5IP
+	 bif7enanSnO/GptgfK7Brp7QO8Awil5sjxtPJkq/lBcgpCKF8je+QpxBMNHAg7nKFS
+	 SSUk25i9wmG4gnwYvQTknqWuMpu55cwFrz07AB7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com,
-	stable@kernel.org,
-	Jun Nie <jun.nie@linaro.org>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.4 250/357] ext4: optimize ea_inode block expansion
-Date: Fri, 10 Mar 2023 14:38:59 +0100
-Message-Id: <20230310133745.792885515@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 285/357] pwm: sifive: Reduce time the controller lock is held
+Date: Fri, 10 Mar 2023 14:39:34 +0100
+Message-Id: <20230310133747.337202186@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,95 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jun Nie <jun.nie@linaro.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 1e9d62d252812575ded7c620d8fc67c32ff06c16 upstream.
+[ Upstream commit 0f02f491b786143f08eb19840f1cf4f12aec6dee ]
 
-Copy ea data from inode entry when expanding ea block if possible.
-Then remove the ea entry if expansion success. Thus memcpy to a
-temporary buffer may be avoided.
+The lock is only to serialize access and update to user_count and
+approx_period between different PWMs served by the same pwm_chip.
+So the lock needs only to be taken during the check if the (chip global)
+period can and/or needs to be changed.
 
-If the expansion fails, we do not need to recovery the removed ea
-entry neither in this way.
-
-Reported-by: syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=3613786cb88c93aa1c6a279b1df6a7b201347d08
-Link: https://lore.kernel.org/r/20230103014517.495275-2-jun.nie@linaro.org
-Cc: stable@kernel.org
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Tested-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: 334c7b13d383 ("pwm: sifive: Always let the first pwm_apply_state succeed")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/xattr.c |   28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ drivers/pwm/pwm-sifive.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -2579,9 +2579,8 @@ static int ext4_xattr_move_to_block(hand
+diff --git a/drivers/pwm/pwm-sifive.c b/drivers/pwm/pwm-sifive.c
+index 538297ef82558..980ddcdd52953 100644
+--- a/drivers/pwm/pwm-sifive.c
++++ b/drivers/pwm/pwm-sifive.c
+@@ -43,7 +43,7 @@
  
- 	is = kzalloc(sizeof(struct ext4_xattr_ibody_find), GFP_NOFS);
- 	bs = kzalloc(sizeof(struct ext4_xattr_block_find), GFP_NOFS);
--	buffer = kvmalloc(value_size, GFP_NOFS);
- 	b_entry_name = kmalloc(entry->e_name_len + 1, GFP_NOFS);
--	if (!is || !bs || !buffer || !b_entry_name) {
-+	if (!is || !bs || !b_entry_name) {
- 		error = -ENOMEM;
- 		goto out;
- 	}
-@@ -2593,12 +2592,18 @@ static int ext4_xattr_move_to_block(hand
+ struct pwm_sifive_ddata {
+ 	struct pwm_chip	chip;
+-	struct mutex lock; /* lock to protect user_count */
++	struct mutex lock; /* lock to protect user_count and approx_period */
+ 	struct notifier_block notifier;
+ 	struct clk *clk;
+ 	void __iomem *regs;
+@@ -78,6 +78,7 @@ static void pwm_sifive_free(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	mutex_unlock(&ddata->lock);
+ }
  
- 	/* Save the entry name and the entry value */
- 	if (entry->e_value_inum) {
-+		buffer = kvmalloc(value_size, GFP_NOFS);
-+		if (!buffer) {
-+			error = -ENOMEM;
-+			goto out;
-+		}
-+
- 		error = ext4_xattr_inode_get(inode, entry, buffer, value_size);
- 		if (error)
- 			goto out;
- 	} else {
- 		size_t value_offs = le16_to_cpu(entry->e_value_offs);
--		memcpy(buffer, (void *)IFIRST(header) + value_offs, value_size);
-+		buffer = (void *)IFIRST(header) + value_offs;
++/* Called holding ddata->lock */
+ static void pwm_sifive_update_clock(struct pwm_sifive_ddata *ddata,
+ 				    unsigned long rate)
+ {
+@@ -166,7 +167,6 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 		return ret;
  	}
  
- 	memcpy(b_entry_name, entry->e_name, entry->e_name_len);
-@@ -2613,25 +2618,26 @@ static int ext4_xattr_move_to_block(hand
- 	if (error)
- 		goto out;
+-	mutex_lock(&ddata->lock);
+ 	cur_state = pwm->state;
+ 	enabled = cur_state.enabled;
  
--	/* Remove the chosen entry from the inode */
--	error = ext4_xattr_ibody_set(handle, inode, &i, is);
--	if (error)
--		goto out;
--
- 	i.value = buffer;
- 	i.value_len = value_size;
- 	error = ext4_xattr_block_find(inode, &i, bs);
- 	if (error)
- 		goto out;
+@@ -185,14 +185,17 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	/* The hardware cannot generate a 100% duty cycle */
+ 	frac = min(frac, (1U << PWM_SIFIVE_CMPWIDTH) - 1);
  
--	/* Add entry which was removed from the inode into the block */
-+	/* Move ea entry from the inode into the block */
- 	error = ext4_xattr_block_set(handle, inode, &i, bs);
- 	if (error)
- 		goto out;
--	error = 0;
-+
-+	/* Remove the chosen entry from the inode */
-+	i.value = NULL;
-+	i.value_len = 0;
-+	error = ext4_xattr_ibody_set(handle, inode, &i, is);
-+
- out:
- 	kfree(b_entry_name);
--	kvfree(buffer);
-+	if (entry->e_value_inum && buffer)
-+		kvfree(buffer);
- 	if (is)
- 		brelse(is->iloc.bh);
- 	if (bs)
++	mutex_lock(&ddata->lock);
+ 	if (state->period != ddata->approx_period) {
+ 		if (ddata->user_count != 1) {
++			mutex_unlock(&ddata->lock);
+ 			ret = -EBUSY;
+ 			goto exit;
+ 		}
+ 		ddata->approx_period = state->period;
+ 		pwm_sifive_update_clock(ddata, clk_get_rate(ddata->clk));
+ 	}
++	mutex_unlock(&ddata->lock);
+ 
+ 	writel(frac, ddata->regs + PWM_SIFIVE_PWMCMP0 +
+ 	       pwm->hwpwm * PWM_SIFIVE_SIZE_PWMCMP);
+@@ -202,7 +205,6 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 
+ exit:
+ 	clk_disable(ddata->clk);
+-	mutex_unlock(&ddata->lock);
+ 	return ret;
+ }
+ 
+-- 
+2.39.2
+
 
 
