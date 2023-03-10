@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F4F847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E743C433EF;
-	Fri, 10 Mar 2023 13:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE0A847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F320DC433EF;
+	Fri, 10 Mar 2023 13:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456461;
-	bh=Kxv1Rboy2AqethexMtI0i9KUwVskqnjYgnCO9voOlLw=;
+	s=korg; t=1678456464;
+	bh=sJZDY+aWkKUI3CILtPsReX7IbCQldm3Pb8oHvdYdd3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nSwZAoXw3NVNGZDgKhXN9I9owcrkVXVeZqD0omqcCMd/gRu4mKivz7ynID98k1bGn
-	 RgwveL0Lxi6C2ZMjymkZPu7QQM/BbIuQ3GNgigdP954Ff7U5jcmnb3yjACLiF/KQiu
-	 Oa2EIEVIGuOcVFTboNu73dK5PHYDFxfgWNu+sGTI=
+	b=e8Tv3jfqLdLZCK2ysMsvALfS5YpVpFcXhdsSD4yW6yuwvx50GYac+q8nySijTONkE
+	 s8vOkDmiIjYHX/n8dBMd5lC6P7DUbeMT0EMC/upSkyQezKu57TXsHRQfrJUvRNDudE
+	 XYTsoMQofvlUuQvTM+JpayMhU6dYZRk7hH0QBwlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0be96567042453c0c820@syzkaller.appspotmail.com,
-	Liu Shixin <liushixin2@huawei.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 003/211] fs/jfs: fix shift exponent db_agl2size negative
-Date: Fri, 10 Mar 2023 14:36:23 +0100
-Message-Id: <20230310133718.811263116@linuxfoundation.org>
+Subject: [PATCH 6.2 004/211] driver: soc: xilinx: fix memory leak in xlnx_add_cb_for_notify_event()
+Date: Fri, 10 Mar 2023 14:36:24 +0100
+Message-Id: <20230310133718.855261576@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,39 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin via Jfs-discussion <jfs-discussion@lists.sourceforge.net>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit fad376fce0af58deebc5075b8539dc05bf639af3 ]
+[ Upstream commit 1bea534991b9b35c41848a397666ada436456beb ]
 
-As a shift exponent, db_agl2size can not be less than 0. Add the missing
-check to fix the shift-out-of-bounds bug reported by syzkaller:
+The kfree() should be called when memory fails to be allocated for
+cb_data in xlnx_add_cb_for_notify_event(), otherwise there will be
+a memory leak, so add kfree() to fix it.
 
- UBSAN: shift-out-of-bounds in fs/jfs/jfs_dmap.c:2227:15
- shift exponent -744642816 is negative
-
-Reported-by: syzbot+0be96567042453c0c820@syzkaller.appspotmail.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Fixes: 05e5ba40ea7a ("driver: soc: xilinx: Add support of multiple callbacks for same event in event management driver")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Link: https://lore.kernel.org/r/20221129010146.1026685-1-cuigaosheng1@huawei.com
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/soc/xilinx/xlnx_event_manager.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 765838578a722..a3eb1e8269477 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -193,7 +193,8 @@ int dbMount(struct inode *ipbmap)
- 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
- 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
- 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
--	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) {
-+	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG ||
-+	    bmp->db_agl2size < 0) {
- 		err = -EINVAL;
- 		goto err_release_metapage;
- 	}
+diff --git a/drivers/soc/xilinx/xlnx_event_manager.c b/drivers/soc/xilinx/xlnx_event_manager.c
+index 2de082765befa..c76381899ef49 100644
+--- a/drivers/soc/xilinx/xlnx_event_manager.c
++++ b/drivers/soc/xilinx/xlnx_event_manager.c
+@@ -116,8 +116,10 @@ static int xlnx_add_cb_for_notify_event(const u32 node_id, const u32 event, cons
+ 		INIT_LIST_HEAD(&eve_data->cb_list_head);
+ 
+ 		cb_data = kmalloc(sizeof(*cb_data), GFP_KERNEL);
+-		if (!cb_data)
++		if (!cb_data) {
++			kfree(eve_data);
+ 			return -ENOMEM;
++		}
+ 		cb_data->eve_cb = cb_fun;
+ 		cb_data->agent_data = data;
+ 
 -- 
 2.39.2
 
