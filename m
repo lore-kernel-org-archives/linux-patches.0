@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB2E8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:14:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A43C433EF;
-	Fri, 10 Mar 2023 14:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6A88481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:14:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5935C433EF;
+	Fri, 10 Mar 2023 14:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457671;
-	bh=MzHVV2SAdIaosX4r2iT03klKd05bYP278kyQ9k4Ngwg=;
+	s=korg; t=1678457674;
+	bh=qb+KCG4feqfcL+4WEq3pRq76ehB7utZ3BMRoQoUz9R4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdNQFkV6Uyb2IXhAL0LJalFlhJpFg1oDvYQBWe9ZB79BtBPGB/877xbpdsOy5YfAy
-	 t3Gn5PnOuWye5mSu+uiSZAldgVM5ZVBJeeJ/iHYTxPmPPqAH4tDD7ql5BKxjyEKIfn
-	 btn5cfOwmBoDjo83F1ftoZZ87NXddr0fJojrDRwc=
+	b=0/lWKt7IecUd/LTA7M2vPOpbXhmlSkGv9wST0JNdifTBOL+4Oow5zrxRNIi0MAHdB
+	 CSBDuObwg+bFwvjLa1amZpV1hGG6/kgljiomei6W9GtD80uSACmmDJHzg9bnX0D3BO
+	 coiZdb6I0LDvYQH9D4mTjcnHkJL8tY00nqQ3UKfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Saurav Kashyap <skashyap@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Christoph Hellwig <hch@lst.de>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 018/252] blk-mq: remove stale comment for blk_mq_sched_mark_restart_hctx
-Date: Fri, 10 Mar 2023 14:36:28 +0100
-Message-Id: <20230310133719.378845457@linuxfoundation.org>
+Subject: [PATCH 4.19 019/252] block: bio-integrity: Copy flags when bio_integrity_payload is cloned
+Date: Fri, 10 Mar 2023 14:36:29 +0100
+Message-Id: <20230310133719.407589198@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,39 +38,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Martin K. Petersen <martin.petersen@oracle.com>
 
-[ Upstream commit c31e76bcc379182fe67a82c618493b7b8868c672 ]
+[ Upstream commit b6a4bdcda430e3ca43bbb9cb1d4d4d34ebe15c40 ]
 
-Commit 97889f9ac24f8 ("blk-mq: remove synchronize_rcu() from
-blk_mq_del_queue_tag_set()") remove handle of TAG_SHARED in restart,
-then shared_hctx_restart counted for how many hardware queues are marked
-for restart is removed too.
-Remove the stale comment that we still count hardware queues need restart.
+Make sure to copy the flags when a bio_integrity_payload is cloned.
+Otherwise per-I/O properties such as IP checksum flag will not be
+passed down to the HBA driver. Since the integrity buffer is owned by
+the original bio, the BIP_BLOCK_INTEGRITY flag needs to be masked off
+to avoid a double free in the completion path.
 
-Fixes: 97889f9ac24f ("blk-mq: remove synchronize_rcu() from blk_mq_del_queue_tag_set()")
+Fixes: aae7df50190a ("block: Integrity checksum flag")
+Fixes: b1f01388574c ("block: Relocate bio integrity flags")
+Reported-by: Saurav Kashyap <skashyap@marvell.com>
+Tested-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://lore.kernel.org/r/20230215171801.21062-1-martin.petersen@oracle.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq-sched.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ block/bio-integrity.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
-index d89a757cbde0f..dfa0a21a1fe46 100644
---- a/block/blk-mq-sched.c
-+++ b/block/blk-mq-sched.c
-@@ -51,8 +51,7 @@ void blk_mq_sched_assign_ioc(struct request *rq, struct bio *bio)
- }
+diff --git a/block/bio-integrity.c b/block/bio-integrity.c
+index 2e22a3f7466a8..469e30a6d3cde 100644
+--- a/block/bio-integrity.c
++++ b/block/bio-integrity.c
+@@ -444,6 +444,7 @@ int bio_integrity_clone(struct bio *bio, struct bio *bio_src,
  
- /*
-- * Mark a hardware queue as needing a restart. For shared queues, maintain
-- * a count of how many hardware queues are marked for restart.
-+ * Mark a hardware queue as needing a restart.
-  */
- void blk_mq_sched_mark_restart_hctx(struct blk_mq_hw_ctx *hctx)
- {
+ 	bip->bip_vcnt = bip_src->bip_vcnt;
+ 	bip->bip_iter = bip_src->bip_iter;
++	bip->bip_flags = bip_src->bip_flags & ~BIP_BLOCK_INTEGRITY;
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
