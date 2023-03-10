@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C12848D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:28:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45690C4339B;
-	Fri, 10 Mar 2023 14:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8153848D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:28:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD08C43442;
+	Fri, 10 Mar 2023 14:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458530;
-	bh=nkRve9aclC+qspXjZwuZGXgI3thVPZkEDpijKOSznV8=;
+	s=korg; t=1678458533;
+	bh=Cbfnipa5jg+QyfwfolkbGlJbbRZ+80Q5TGRkp8LJTvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DTeUyJD8G7Xjv3C8EYhzpGoWpFmrWekkl4JUgJfl5d+/T8HHUueuxlG0uOs0OL3UH
-	 8DFKd+n6M4SrBYRe8c35njeajGfDKjyXr0bsB2l881M8uu1XodfAjygjMhVn7V+1iX
-	 NKLvA8InZoQtmSfVDEHWL9Gjc7622M6yBbp/TFjg=
+	b=ePP4GX5L3Zhux7MJ+K64bQSsGPof6Y5uInfA6mrJzPKooeQw+nW1ke4pQYLOLPmW9
+	 w4GqWgdv4SHaZO4ZXw2Hd1jpcSxF/qbgUH+r/E6sXK4ETaHcvKEJ3BegUNC8pInYPx
+	 tzBwdNRbbgfUYQlyNLQqJyhr/bHbggQ2PzrW6IW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Pavel Skripkin <paskripkin@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 050/357] wifi: wl3501_cs: dont call kfree_skb() under spin_lock_irqsave()
-Date: Fri, 10 Mar 2023 14:35:39 +0100
-Message-Id: <20230310133736.170782513@linuxfoundation.org>
+Subject: [PATCH 5.4 059/357] ath9k: htc: clean up statistics macros
+Date: Fri, 10 Mar 2023 14:35:48 +0100
+Message-Id: <20230310133736.575165762@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,37 +37,227 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Pavel Skripkin <paskripkin@gmail.com>
 
-[ Upstream commit 44bacbdf9066c590423259dbd6d520baac99c1a8 ]
+[ Upstream commit d7fc76039b74ad37b7056d5607b05d7cb31a5404 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So replace kfree_skb()
-with dev_kfree_skb_irq() under spin_lock_irqsave(). Compile
-tested only.
+I've changed *STAT_* macros a bit in previous patch and I seems like
+they become really unreadable. Align these macros definitions to make
+code cleaner and fix folllowing checkpatch warning
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221207150453.114742-1-yangyingliang@huawei.com
+ERROR: Macros with complex values should be enclosed in parentheses
+
+Also, statistics macros now accept an hif_dev as argument, since
+macros that depend on having a local variable with a magic name
+don't abide by the coding style.
+
+No functional change
+
+Suggested-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/ebb2306d06a496cd1b032155ae52fdc5fa8cc2c5.1655145743.git.paskripkin@gmail.com
+Stable-dep-of: 0af54343a762 ("wifi: ath9k: hif_usb: clean up skbs if ath9k_hif_usb_rx_stream() fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/wl3501_cs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/hif_usb.c      | 26 +++++++--------
+ drivers/net/wireless/ath/ath9k/htc.h          | 32 +++++++++++--------
+ drivers/net/wireless/ath/ath9k/htc_drv_txrx.c | 10 +++---
+ 3 files changed, 36 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/net/wireless/wl3501_cs.c b/drivers/net/wireless/wl3501_cs.c
-index 122d36439319c..8638c7c72bc30 100644
---- a/drivers/net/wireless/wl3501_cs.c
-+++ b/drivers/net/wireless/wl3501_cs.c
-@@ -1328,7 +1328,7 @@ static netdev_tx_t wl3501_hard_start_xmit(struct sk_buff *skb,
- 	} else {
- 		++dev->stats.tx_packets;
- 		dev->stats.tx_bytes += skb->len;
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
+index 15c8b512a1d9f..f68e47f9b01e2 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.c
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
+@@ -244,11 +244,11 @@ static inline void ath9k_skb_queue_complete(struct hif_device_usb *hif_dev,
+ 		ath9k_htc_txcompletion_cb(hif_dev->htc_handle,
+ 					  skb, txok);
+ 		if (txok) {
+-			TX_STAT_INC(skb_success);
+-			TX_STAT_ADD(skb_success_bytes, ln);
++			TX_STAT_INC(hif_dev, skb_success);
++			TX_STAT_ADD(hif_dev, skb_success_bytes, ln);
+ 		}
+ 		else
+-			TX_STAT_INC(skb_failed);
++			TX_STAT_INC(hif_dev, skb_failed);
+ 	}
+ }
  
- 		if (this->tx_buffer_cnt < 2)
- 			netif_stop_queue(dev);
+@@ -302,7 +302,7 @@ static void hif_usb_tx_cb(struct urb *urb)
+ 	hif_dev->tx.tx_buf_cnt++;
+ 	if (!(hif_dev->tx.flags & HIF_USB_TX_STOP))
+ 		__hif_usb_tx(hif_dev); /* Check for pending SKBs */
+-	TX_STAT_INC(buf_completed);
++	TX_STAT_INC(hif_dev, buf_completed);
+ 	spin_unlock(&hif_dev->tx.tx_lock);
+ }
+ 
+@@ -353,7 +353,7 @@ static int __hif_usb_tx(struct hif_device_usb *hif_dev)
+ 			tx_buf->len += tx_buf->offset;
+ 
+ 		__skb_queue_tail(&tx_buf->skb_queue, nskb);
+-		TX_STAT_INC(skb_queued);
++		TX_STAT_INC(hif_dev, skb_queued);
+ 	}
+ 
+ 	usb_fill_bulk_urb(tx_buf->urb, hif_dev->udev,
+@@ -369,7 +369,7 @@ static int __hif_usb_tx(struct hif_device_usb *hif_dev)
+ 		list_move_tail(&tx_buf->list, &hif_dev->tx.tx_buf);
+ 		hif_dev->tx.tx_buf_cnt++;
+ 	} else {
+-		TX_STAT_INC(buf_queued);
++		TX_STAT_INC(hif_dev, buf_queued);
+ 	}
+ 
+ 	return ret;
+@@ -514,7 +514,7 @@ static void hif_usb_sta_drain(void *hif_handle, u8 idx)
+ 			ath9k_htc_txcompletion_cb(hif_dev->htc_handle,
+ 						  skb, false);
+ 			hif_dev->tx.tx_skb_cnt--;
+-			TX_STAT_INC(skb_failed);
++			TX_STAT_INC(hif_dev, skb_failed);
+ 		}
+ 	}
+ 
+@@ -585,14 +585,14 @@ static void ath9k_hif_usb_rx_stream(struct hif_device_usb *hif_dev,
+ 		pkt_tag = get_unaligned_le16(ptr + index + 2);
+ 
+ 		if (pkt_tag != ATH_USB_RX_STREAM_MODE_TAG) {
+-			RX_STAT_INC(skb_dropped);
++			RX_STAT_INC(hif_dev, skb_dropped);
+ 			return;
+ 		}
+ 
+ 		if (pkt_len > 2 * MAX_RX_BUF_SIZE) {
+ 			dev_err(&hif_dev->udev->dev,
+ 				"ath9k_htc: invalid pkt_len (%x)\n", pkt_len);
+-			RX_STAT_INC(skb_dropped);
++			RX_STAT_INC(hif_dev, skb_dropped);
+ 			return;
+ 		}
+ 
+@@ -618,7 +618,7 @@ static void ath9k_hif_usb_rx_stream(struct hif_device_usb *hif_dev,
+ 				goto err;
+ 			}
+ 			skb_reserve(nskb, 32);
+-			RX_STAT_INC(skb_allocated);
++			RX_STAT_INC(hif_dev, skb_allocated);
+ 
+ 			memcpy(nskb->data, &(skb->data[chk_idx+4]),
+ 			       hif_dev->rx_transfer_len);
+@@ -639,7 +639,7 @@ static void ath9k_hif_usb_rx_stream(struct hif_device_usb *hif_dev,
+ 				goto err;
+ 			}
+ 			skb_reserve(nskb, 32);
+-			RX_STAT_INC(skb_allocated);
++			RX_STAT_INC(hif_dev, skb_allocated);
+ 
+ 			memcpy(nskb->data, &(skb->data[chk_idx+4]), pkt_len);
+ 			skb_put(nskb, pkt_len);
+@@ -649,10 +649,10 @@ static void ath9k_hif_usb_rx_stream(struct hif_device_usb *hif_dev,
+ 
+ err:
+ 	for (i = 0; i < pool_index; i++) {
+-		RX_STAT_ADD(skb_completed_bytes, skb_pool[i]->len);
++		RX_STAT_ADD(hif_dev, skb_completed_bytes, skb_pool[i]->len);
+ 		ath9k_htc_rx_msg(hif_dev->htc_handle, skb_pool[i],
+ 				 skb_pool[i]->len, USB_WLAN_RX_PIPE);
+-		RX_STAT_INC(skb_completed);
++		RX_STAT_INC(hif_dev, skb_completed);
+ 	}
+ }
+ 
+diff --git a/drivers/net/wireless/ath/ath9k/htc.h b/drivers/net/wireless/ath/ath9k/htc.h
+index 81107100e3682..655238a59ee03 100644
+--- a/drivers/net/wireless/ath/ath9k/htc.h
++++ b/drivers/net/wireless/ath/ath9k/htc.h
+@@ -325,14 +325,18 @@ static inline struct ath9k_htc_tx_ctl *HTC_SKB_CB(struct sk_buff *skb)
+ }
+ 
+ #ifdef CONFIG_ATH9K_HTC_DEBUGFS
+-#define __STAT_SAFE(expr) (hif_dev->htc_handle->drv_priv ? (expr) : 0)
+-#define TX_STAT_INC(c) __STAT_SAFE(hif_dev->htc_handle->drv_priv->debug.tx_stats.c++)
+-#define TX_STAT_ADD(c, a) __STAT_SAFE(hif_dev->htc_handle->drv_priv->debug.tx_stats.c += a)
+-#define RX_STAT_INC(c) __STAT_SAFE(hif_dev->htc_handle->drv_priv->debug.skbrx_stats.c++)
+-#define RX_STAT_ADD(c, a) __STAT_SAFE(hif_dev->htc_handle->drv_priv->debug.skbrx_stats.c += a)
+-#define CAB_STAT_INC   priv->debug.tx_stats.cab_queued++
+-
+-#define TX_QSTAT_INC(q) (priv->debug.tx_stats.queue_stats[q]++)
++#define __STAT_SAFE(hif_dev, expr)	((hif_dev)->htc_handle->drv_priv ? (expr) : 0)
++#define CAB_STAT_INC(priv)		((priv)->debug.tx_stats.cab_queued++)
++#define TX_QSTAT_INC(priv, q)		((priv)->debug.tx_stats.queue_stats[q]++)
++
++#define TX_STAT_INC(hif_dev, c) \
++		__STAT_SAFE((hif_dev), (hif_dev)->htc_handle->drv_priv->debug.tx_stats.c++)
++#define TX_STAT_ADD(hif_dev, c, a) \
++		__STAT_SAFE((hif_dev), (hif_dev)->htc_handle->drv_priv->debug.tx_stats.c += a)
++#define RX_STAT_INC(hif_dev, c) \
++		__STAT_SAFE((hif_dev), (hif_dev)->htc_handle->drv_priv->debug.skbrx_stats.c++)
++#define RX_STAT_ADD(hif_dev, c, a) \
++		__STAT_SAFE((hif_dev), (hif_dev)->htc_handle->drv_priv->debug.skbrx_stats.c += a)
+ 
+ void ath9k_htc_err_stat_rx(struct ath9k_htc_priv *priv,
+ 			   struct ath_rx_status *rs);
+@@ -372,13 +376,13 @@ void ath9k_htc_get_et_stats(struct ieee80211_hw *hw,
+ 			    struct ethtool_stats *stats, u64 *data);
+ #else
+ 
+-#define TX_STAT_INC(c) do { } while (0)
+-#define TX_STAT_ADD(c, a) do { } while (0)
+-#define RX_STAT_INC(c) do { } while (0)
+-#define RX_STAT_ADD(c, a) do { } while (0)
+-#define CAB_STAT_INC   do { } while (0)
++#define TX_STAT_INC(hif_dev, c)
++#define TX_STAT_ADD(hif_dev, c, a)
++#define RX_STAT_INC(hif_dev, c)
++#define RX_STAT_ADD(hif_dev, c, a)
+ 
+-#define TX_QSTAT_INC(c) do { } while (0)
++#define CAB_STAT_INC(priv)
++#define TX_QSTAT_INC(priv, c)
+ 
+ static inline void ath9k_htc_err_stat_rx(struct ath9k_htc_priv *priv,
+ 					 struct ath_rx_status *rs)
+diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_txrx.c b/drivers/net/wireless/ath/ath9k/htc_drv_txrx.c
+index eeaf63de71bfd..ee021738bef02 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_drv_txrx.c
++++ b/drivers/net/wireless/ath/ath9k/htc_drv_txrx.c
+@@ -106,20 +106,20 @@ static inline enum htc_endpoint_id get_htc_epid(struct ath9k_htc_priv *priv,
+ 
+ 	switch (qnum) {
+ 	case 0:
+-		TX_QSTAT_INC(IEEE80211_AC_VO);
++		TX_QSTAT_INC(priv, IEEE80211_AC_VO);
+ 		epid = priv->data_vo_ep;
+ 		break;
+ 	case 1:
+-		TX_QSTAT_INC(IEEE80211_AC_VI);
++		TX_QSTAT_INC(priv, IEEE80211_AC_VI);
+ 		epid = priv->data_vi_ep;
+ 		break;
+ 	case 2:
+-		TX_QSTAT_INC(IEEE80211_AC_BE);
++		TX_QSTAT_INC(priv, IEEE80211_AC_BE);
+ 		epid = priv->data_be_ep;
+ 		break;
+ 	case 3:
+ 	default:
+-		TX_QSTAT_INC(IEEE80211_AC_BK);
++		TX_QSTAT_INC(priv, IEEE80211_AC_BK);
+ 		epid = priv->data_bk_ep;
+ 		break;
+ 	}
+@@ -323,7 +323,7 @@ static void ath9k_htc_tx_data(struct ath9k_htc_priv *priv,
+ 	memcpy(tx_fhdr, (u8 *) &tx_hdr, sizeof(tx_hdr));
+ 
+ 	if (is_cab) {
+-		CAB_STAT_INC;
++		CAB_STAT_INC(priv);
+ 		tx_ctl->epid = priv->cab_ep;
+ 		return;
+ 	}
 -- 
 2.39.2
 
