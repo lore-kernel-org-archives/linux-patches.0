@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BC3847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02ACC433EF;
-	Fri, 10 Mar 2023 14:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44504847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8E9C4339B;
+	Fri, 10 Mar 2023 14:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456812;
-	bh=c0BcERzg5mF7NYDYXKq4lbEnyuY36ja+gkncF1XNcI8=;
+	s=korg; t=1678456815;
+	bh=B8nEV4KOCrLZOIy7dCR6uEXXxAHsgzhY9gkRZzxqpbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZ1htX/s+JEBSddpgmU0XyxUN+4rP6nXRPNfmjjysI/4LEMEsdKXvhtomBuk0Bubo
-	 zfpMCjXAxW3xpN8R4I3orsHsGrdfAPXS0CIDUJFJxshTMh+jQdRaF1bcfCO4LijSww
-	 5IB3+RLhJAOHEua3J0ooyr7+tRvNh7V2Kb7GEH68=
+	b=EB4xDPwoNKjg5spey4PQ72F7xXOWGy5WZR2EihdcKKYI8SveiIdTvukKACrbv92Ql
+	 UCVVXV43MTpZeUzgg1TRfxpDK8nDrU9i2SklD57vyZOgZIs+gbQ9xIMoERFNkSqohn
+	 1kDweN8ymXAXnB9yq9R7UIOoCq5GOq334Eaikrhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Michael Grzeschik <m.grzeschik@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 132/211] PCI/ACPI: Account for _S0W of the target bridge in acpi_pci_bridge_d3()
-Date: Fri, 10 Mar 2023 14:38:32 +0100
-Message-Id: <20230310133722.753428655@linuxfoundation.org>
+Subject: [PATCH 6.2 133/211] media: uvcvideo: Remove format descriptions
+Date: Fri, 10 Mar 2023 14:38:33 +0100
+Message-Id: <20230310133722.782433293@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,164 +36,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 8133844a8f2434be9576850c6978179d7cca5c81 ]
+[ Upstream commit 50459f103edfe47c9a599d766a850ef6014936c5 ]
 
-It is questionable to allow a PCI bridge to go into D3 if it has _S0W
-returning D2 or a shallower power state, so modify acpi_pci_bridge_d3(() to
-always take the return value of _S0W for the target bridge into account.
-That is, make it return 'false' if _S0W returns D2 or a shallower power
-state for the target bridge regardless of its ancestor Root Port
-properties.  Of course, this also causes 'false' to be returned if the Root
-Port itself is the target and its _S0W returns D2 or a shallower power
-state.
+The V4L2 core overwrites format descriptions in v4l_fill_fmtdesc(),
+there's no need to manually set the descriptions in the driver. This
+prepares for removal of the format descriptions from the uvc_fmts table.
 
-However, still allow bridges without _S0W that are power-manageable via
-ACPI to enter D3 to retain the current code behavior in that case.
+Unlike V4L2, UVC makes a distinction between the SD-DV, SDL-DV and HD-DV
+formats. It also indicates whether the DV format uses 50Hz or 60Hz. This
+information is parsed by the driver to construct a format name string
+that is printed in a debug message, but serves no other purpose as V4L2
+has a single V4L2_PIX_FMT_DV pixel format that covers all those cases.
 
-This fixes problems where a hotplug notification is missed because a bridge
-is in D3.  That means hot-added devices such as USB4 docks (and the devices
-they contain) and Thunderbolt 3 devices may not work.
+As the information is available in the UVC descriptors, and thus
+accessible to users with lsusb if they really care, don't log it in a
+debug message and drop the format name string to simplify the code.
 
-Link: https://lore.kernel.org/linux-pci/20221031223356.32570-1-mario.limonciello@amd.com/
-Link: https://lore.kernel.org/r/12155458.O9o76ZdvQC@kreacher
-Reported-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/device_pm.c | 19 +++++++++++++++++
- drivers/pci/pci-acpi.c   | 45 +++++++++++++++++++++++++++-------------
- include/acpi/acpi_bus.h  |  1 +
- 3 files changed, 51 insertions(+), 14 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c | 24 ++----------------------
+ drivers/media/usb/uvc/uvc_v4l2.c   |  2 --
+ drivers/media/usb/uvc/uvcvideo.h   |  2 --
+ 3 files changed, 2 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/acpi/device_pm.c b/drivers/acpi/device_pm.c
-index 97450f4003cc9..f007116a84276 100644
---- a/drivers/acpi/device_pm.c
-+++ b/drivers/acpi/device_pm.c
-@@ -484,6 +484,25 @@ void acpi_dev_power_up_children_with_adr(struct acpi_device *adev)
- 	acpi_dev_for_each_child(adev, acpi_power_up_if_adr_present, NULL);
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index d5ff8df20f18a..d30f77d89598c 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -252,14 +252,10 @@ static int uvc_parse_format(struct uvc_device *dev,
+ 		fmtdesc = uvc_format_by_guid(&buffer[5]);
+ 
+ 		if (fmtdesc != NULL) {
+-			strscpy(format->name, fmtdesc->name,
+-				sizeof(format->name));
+ 			format->fcc = fmtdesc->fcc;
+ 		} else {
+ 			dev_info(&streaming->intf->dev,
+ 				 "Unknown video format %pUl\n", &buffer[5]);
+-			snprintf(format->name, sizeof(format->name), "%pUl\n",
+-				&buffer[5]);
+ 			format->fcc = 0;
+ 		}
+ 
+@@ -271,8 +267,6 @@ static int uvc_parse_format(struct uvc_device *dev,
+ 		 */
+ 		if (dev->quirks & UVC_QUIRK_FORCE_Y8) {
+ 			if (format->fcc == V4L2_PIX_FMT_YUYV) {
+-				strscpy(format->name, "Greyscale 8-bit (Y8  )",
+-					sizeof(format->name));
+ 				format->fcc = V4L2_PIX_FMT_GREY;
+ 				format->bpp = 8;
+ 				width_multiplier = 2;
+@@ -313,7 +307,6 @@ static int uvc_parse_format(struct uvc_device *dev,
+ 			return -EINVAL;
+ 		}
+ 
+-		strscpy(format->name, "MJPEG", sizeof(format->name));
+ 		format->fcc = V4L2_PIX_FMT_MJPEG;
+ 		format->flags = UVC_FMT_FLAG_COMPRESSED;
+ 		format->bpp = 0;
+@@ -329,17 +322,7 @@ static int uvc_parse_format(struct uvc_device *dev,
+ 			return -EINVAL;
+ 		}
+ 
+-		switch (buffer[8] & 0x7f) {
+-		case 0:
+-			strscpy(format->name, "SD-DV", sizeof(format->name));
+-			break;
+-		case 1:
+-			strscpy(format->name, "SDL-DV", sizeof(format->name));
+-			break;
+-		case 2:
+-			strscpy(format->name, "HD-DV", sizeof(format->name));
+-			break;
+-		default:
++		if ((buffer[8] & 0x7f) > 2) {
+ 			uvc_dbg(dev, DESCR,
+ 				"device %d videostreaming interface %d: unknown DV format %u\n",
+ 				dev->udev->devnum,
+@@ -347,9 +330,6 @@ static int uvc_parse_format(struct uvc_device *dev,
+ 			return -EINVAL;
+ 		}
+ 
+-		strlcat(format->name, buffer[8] & (1 << 7) ? " 60Hz" : " 50Hz",
+-			sizeof(format->name));
+-
+ 		format->fcc = V4L2_PIX_FMT_DV;
+ 		format->flags = UVC_FMT_FLAG_COMPRESSED | UVC_FMT_FLAG_STREAM;
+ 		format->bpp = 0;
+@@ -376,7 +356,7 @@ static int uvc_parse_format(struct uvc_device *dev,
+ 		return -EINVAL;
+ 	}
+ 
+-	uvc_dbg(dev, DESCR, "Found format %s\n", format->name);
++	uvc_dbg(dev, DESCR, "Found format %p4cc", &format->fcc);
+ 
+ 	buflen -= buffer[0];
+ 	buffer += buffer[0];
+diff --git a/drivers/media/usb/uvc/uvc_v4l2.c b/drivers/media/usb/uvc/uvc_v4l2.c
+index 0774a11360c03..950b42d78a107 100644
+--- a/drivers/media/usb/uvc/uvc_v4l2.c
++++ b/drivers/media/usb/uvc/uvc_v4l2.c
+@@ -661,8 +661,6 @@ static int uvc_ioctl_enum_fmt(struct uvc_streaming *stream,
+ 	fmt->flags = 0;
+ 	if (format->flags & UVC_FMT_FLAG_COMPRESSED)
+ 		fmt->flags |= V4L2_FMT_FLAG_COMPRESSED;
+-	strscpy(fmt->description, format->name, sizeof(fmt->description));
+-	fmt->description[sizeof(fmt->description) - 1] = 0;
+ 	fmt->pixelformat = format->fcc;
+ 	return 0;
  }
+diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
+index 1227ae63f85b7..4c89bf08171f2 100644
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -264,8 +264,6 @@ struct uvc_format {
+ 	u32 fcc;
+ 	u32 flags;
  
-+/**
-+ * acpi_dev_power_state_for_wake - Deepest power state for wakeup signaling
-+ * @adev: ACPI companion of the target device.
-+ *
-+ * Evaluate _S0W for @adev and return the value produced by it or return
-+ * ACPI_STATE_UNKNOWN on errors (including _S0W not present).
-+ */
-+u8 acpi_dev_power_state_for_wake(struct acpi_device *adev)
-+{
-+	unsigned long long state;
-+	acpi_status status;
-+
-+	status = acpi_evaluate_integer(adev->handle, "_S0W", NULL, &state);
-+	if (ACPI_FAILURE(status))
-+		return ACPI_STATE_UNKNOWN;
-+
-+	return state;
-+}
-+
- #ifdef CONFIG_PM
- static DEFINE_MUTEX(acpi_pm_notifier_lock);
- static DEFINE_MUTEX(acpi_pm_notifier_install_lock);
-diff --git a/drivers/pci/pci-acpi.c b/drivers/pci/pci-acpi.c
-index 068d6745bf98c..052a611081ecd 100644
---- a/drivers/pci/pci-acpi.c
-+++ b/drivers/pci/pci-acpi.c
-@@ -976,24 +976,41 @@ bool acpi_pci_power_manageable(struct pci_dev *dev)
- bool acpi_pci_bridge_d3(struct pci_dev *dev)
- {
- 	struct pci_dev *rpdev;
--	struct acpi_device *adev;
--	acpi_status status;
--	unsigned long long state;
-+	struct acpi_device *adev, *rpadev;
- 	const union acpi_object *obj;
- 
- 	if (acpi_pci_disabled || !dev->is_hotplug_bridge)
- 		return false;
- 
--	/* Assume D3 support if the bridge is power-manageable by ACPI. */
--	if (acpi_pci_power_manageable(dev))
--		return true;
-+	adev = ACPI_COMPANION(&dev->dev);
-+	if (adev) {
-+		/*
-+		 * If the bridge has _S0W, whether or not it can go into D3
-+		 * depends on what is returned by that object.  In particular,
-+		 * if the power state returned by _S0W is D2 or shallower,
-+		 * entering D3 should not be allowed.
-+		 */
-+		if (acpi_dev_power_state_for_wake(adev) <= ACPI_STATE_D2)
-+			return false;
-+
-+		/*
-+		 * Otherwise, assume that the bridge can enter D3 so long as it
-+		 * is power-manageable via ACPI.
-+		 */
-+		if (acpi_device_power_manageable(adev))
-+			return true;
-+	}
- 
- 	rpdev = pcie_find_root_port(dev);
- 	if (!rpdev)
- 		return false;
- 
--	adev = ACPI_COMPANION(&rpdev->dev);
--	if (!adev)
-+	if (rpdev == dev)
-+		rpadev = adev;
-+	else
-+		rpadev = ACPI_COMPANION(&rpdev->dev);
-+
-+	if (!rpadev)
- 		return false;
- 
- 	/*
-@@ -1001,15 +1018,15 @@ bool acpi_pci_bridge_d3(struct pci_dev *dev)
- 	 * doesn't supply a wakeup GPE via _PRW, it cannot signal hotplug
- 	 * events from low-power states including D3hot and D3cold.
- 	 */
--	if (!adev->wakeup.flags.valid)
-+	if (!rpadev->wakeup.flags.valid)
- 		return false;
- 
- 	/*
--	 * If the Root Port cannot wake itself from D3hot or D3cold, we
--	 * can't use D3.
-+	 * In the bridge-below-a-Root-Port case, evaluate _S0W for the Root Port
-+	 * to verify whether or not it can signal wakeup from D3.
- 	 */
--	status = acpi_evaluate_integer(adev->handle, "_S0W", NULL, &state);
--	if (ACPI_SUCCESS(status) && state < ACPI_STATE_D3_HOT)
-+	if (rpadev != adev &&
-+	    acpi_dev_power_state_for_wake(rpadev) <= ACPI_STATE_D2)
- 		return false;
- 
- 	/*
-@@ -1018,7 +1035,7 @@ bool acpi_pci_bridge_d3(struct pci_dev *dev)
- 	 * bridges *below* that Root Port can also signal hotplug events
- 	 * while in D3.
- 	 */
--	if (!acpi_dev_get_property(adev, "HotPlugSupportInD3",
-+	if (!acpi_dev_get_property(rpadev, "HotPlugSupportInD3",
- 				   ACPI_TYPE_INTEGER, &obj) &&
- 	    obj->integer.value == 1)
- 		return true;
-diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
-index e44be31115a67..0584e9f6e3397 100644
---- a/include/acpi/acpi_bus.h
-+++ b/include/acpi/acpi_bus.h
-@@ -534,6 +534,7 @@ int acpi_bus_update_power(acpi_handle handle, int *state_p);
- int acpi_device_update_power(struct acpi_device *device, int *state_p);
- bool acpi_bus_power_manageable(acpi_handle handle);
- void acpi_dev_power_up_children_with_adr(struct acpi_device *adev);
-+u8 acpi_dev_power_state_for_wake(struct acpi_device *adev);
- int acpi_device_power_add_dependent(struct acpi_device *adev,
- 				    struct device *dev);
- void acpi_device_power_remove_dependent(struct acpi_device *adev,
+-	char name[32];
+-
+ 	unsigned int nframes;
+ 	struct uvc_frame *frame;
+ };
 -- 
 2.39.2
 
