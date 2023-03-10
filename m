@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5348481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7EAC4339B;
-	Fri, 10 Mar 2023 14:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5E88481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30AFCC4339B;
+	Fri, 10 Mar 2023 14:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456856;
-	bh=bm2WJ1roVdn9VBIkoVkk3KE1nkq8Xz3lJOvX4cwpvjs=;
+	s=korg; t=1678456859;
+	bh=gBacpPObbsTaKF3BXzGCiOFfFP+HyV+HIQY11zBlvIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HGEgmMMOFPxMR58NjXdbvd6sy98l8pLmsUZpTIH12Jo+xNDBwZxl1POhRR7cnYCoF
-	 eSH58O49TZpRbKnhOwN83w3dj1JaUsybm8aMMZG+4aVSBLLb2FAnqgGdCs3w3Ibmnb
-	 jc94wwLt+8zutiDCZndpNbqBKw5XPzU3t/fgK5rA=
+	b=rmo33aFWV6eWEwyUys+cxM2hwC6AWVbYiROkqYJYvXGb8BzJHIQr+NnrBpYT9qlMF
+	 g83rZ/OedQchUjawc3b1N6hJPrQKf613fi1dB6KBKwR1IgPii9dWYejxY5yxwMM7wU
+	 MhcO4MPIHbEbfJ6MYksWzt/MWxZp0GcjUn6r+nuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Simon Horman <horms@verge.net.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 108/211] scsi: mpi3mr: Fix an issue found by KASAN
-Date: Fri, 10 Mar 2023 14:38:08 +0100
-Message-Id: <20230310133722.040765188@linuxfoundation.org>
+Subject: [PATCH 6.2 142/211] staging: emxx_udc: Add checks for dma_alloc_coherent()
+Date: Fri, 10 Mar 2023 14:38:42 +0100
+Message-Id: <20230310133723.057456236@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,35 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit ae7d45f5283d30274039b95d3e6d53d33c66e991 ]
+[ Upstream commit f6510a93cfd8c6c79b4dda0f2967cdc6df42eff4 ]
 
-Write only correct size (32 instead of 64 bytes).
+As the dma_alloc_coherent may return NULL, the return value needs to be
+checked to avoid NULL poineter dereference.
 
-Link: https://lore.kernel.org/r/20230213193752.6859-1-thenzl@redhat.com
-Fixes: 42fc9fee116f ("scsi: mpi3mr: Add helper functions to manage device's port")
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Simon Horman <horms@verge.net.au>
+Link: https://lore.kernel.org/r/20230119083119.16956-1-yuancan@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_transport.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/emxx_udc/emxx_udc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-index 3fc897336b5e0..3b61815979dab 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-@@ -1280,7 +1280,7 @@ void mpi3mr_sas_host_add(struct mpi3mr_ioc *mrioc)
+diff --git a/drivers/staging/emxx_udc/emxx_udc.c b/drivers/staging/emxx_udc/emxx_udc.c
+index b4e19174bef2e..f9765841c4aa3 100644
+--- a/drivers/staging/emxx_udc/emxx_udc.c
++++ b/drivers/staging/emxx_udc/emxx_udc.c
+@@ -2587,10 +2587,15 @@ static int nbu2ss_ep_queue(struct usb_ep *_ep,
+ 		req->unaligned = false;
  
- 	if (mrioc->sas_hba.enclosure_handle) {
- 		if (!(mpi3mr_cfg_get_enclosure_pg0(mrioc, &ioc_status,
--		    &encl_pg0, sizeof(dev_pg0),
-+		    &encl_pg0, sizeof(encl_pg0),
- 		    MPI3_ENCLOS_PGAD_FORM_HANDLE,
- 		    mrioc->sas_hba.enclosure_handle)) &&
- 		    (ioc_status == MPI3_IOCSTATUS_SUCCESS))
+ 	if (req->unaligned) {
+-		if (!ep->virt_buf)
++		if (!ep->virt_buf) {
+ 			ep->virt_buf = dma_alloc_coherent(udc->dev, PAGE_SIZE,
+ 							  &ep->phys_buf,
+ 							  GFP_ATOMIC | GFP_DMA);
++			if (!ep->virt_buf) {
++				spin_unlock_irqrestore(&udc->lock, flags);
++				return -ENOMEM;
++			}
++		}
+ 		if (ep->epnum > 0)  {
+ 			if (ep->direct == USB_DIR_IN)
+ 				memcpy(ep->virt_buf, req->req.buf,
 -- 
 2.39.2
 
