@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B718847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBAC5C4339B;
-	Fri, 10 Mar 2023 13:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C0E847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48E2C433EF;
+	Fri, 10 Mar 2023 13:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456467;
-	bh=muR00quUMrGE9lCMB9cIq5+pwzBFjaf/e5at22Q5aFk=;
+	s=korg; t=1678456470;
+	bh=nggTsU2HE3w1Am1s4BXYMJB9hWSPXbOe4p+QtxxzCUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QHhCQuh8dv/Ke03EZJvrT+puAWehV+3Bv/O1UdWGHxR63Bd+GsU0sFxIUlSfDas3c
-	 Z0DvxhX08jV1r5QmZ1jAi/JVR6PuK4VCL52uJhFd9GtFeE3u6wYJFDypJ1+G7va+06
-	 qsAcNOzahrC5AuLiv2u9cZEZV4uJ9Z1fnov8HZiU=
+	b=ltZRPMFkNQfbkW6xPKRKs2EhkYxMypPYUEzw76DUAuwNGsKjyX5b/fhXlc4b9ASaH
+	 IRy0WFuiORFdmsddPP3JGiv+r9yoH/NLAKJJpSjSMkiLQQfoKADR1MDtP7zsFSUNDk
+	 UsSN0LJJljk3t53jT1JMthXsm0ZnUkJzCrxS5glk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
+	syzbot+4793f6096d174c90b4f7@syzkaller.appspotmail.com,
 	Chao Yu <chao@kernel.org>,
+	Eric Biggers <ebiggers@google.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 005/211] f2fs: dont rely on F2FS_MAP_* in f2fs_iomap_begin
-Date: Fri, 10 Mar 2023 14:36:25 +0100
-Message-Id: <20230310133718.884555974@linuxfoundation.org>
+Subject: [PATCH 6.2 006/211] f2fs: fix to avoid potential deadlock
+Date: Fri, 10 Mar 2023 14:36:26 +0100
+Message-Id: <20230310133718.913490363@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,71 +37,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 8d3c1fa3fa5eacfd14f5b018eddb6c1a91c57783 ]
+[ Upstream commit 5eaac835f27f2de6b73412d7c24e755733b49de0 ]
 
-When testing with a mixed zoned / convention device combination, there
-are regular but not 100% reproducible failures in xfstests generic/113
-where the __is_valid_data_blkaddr assert hits due to finding a hole.
+There is a potential deadlock reported by syzbot as below:
 
-This seems to be because f2fs_map_blocks can set this flag on a hole
-when it was found in the extent cache.
+F2FS-fs (loop2): invalid crc value
+F2FS-fs (loop2): Found nat_bits in checkpoint
+F2FS-fs (loop2): Mounted with checkpoint version = 48b305e4
+======================================================
+WARNING: possible circular locking dependency detected
+6.1.0-rc8-syzkaller-33330-ga5541c0811a0 #0 Not tainted
+------------------------------------------------------
+syz-executor.2/32123 is trying to acquire lock:
+ffff0000c0e1a608 (&mm->mmap_lock){++++}-{3:3}, at: __might_fault+0x54/0xb4 mm/memory.c:5644
 
-Rework f2fs_iomap_begin to just check the special block numbers directly.
-This has the added benefits of the WARN_ON showing which invalid block
-address we found, and being properly error out on delalloc blocks that
-are confusingly called unwritten but not actually suitable for direct
-I/O.
+but task is already holding lock:
+ffff0001317c6088 (&sbi->sb_lock){++++}-{3:3}, at: f2fs_down_write fs/f2fs/f2fs.h:2205 [inline]
+ffff0001317c6088 (&sbi->sb_lock){++++}-{3:3}, at: f2fs_ioc_get_encryption_pwsalt fs/f2fs/file.c:2334 [inline]
+ffff0001317c6088 (&sbi->sb_lock){++++}-{3:3}, at: __f2fs_ioctl+0x1370/0x3318 fs/f2fs/file.c:4151
 
-Fixes: 1517c1a7a445 ("f2fs: implement iomap operations")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chao Yu <chao@kernel.org>
+which lock already depends on the new lock.
+
+Chain exists of:
+  &mm->mmap_lock --> &nm_i->nat_tree_lock --> &sbi->sb_lock
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(&sbi->sb_lock);
+                               lock(&nm_i->nat_tree_lock);
+                               lock(&sbi->sb_lock);
+  lock(&mm->mmap_lock);
+
+Let's try to avoid above deadlock condition by moving __might_fault()
+out of sbi->sb_lock coverage.
+
+Fixes: 95fa90c9e5a7 ("f2fs: support recording errors into superblock")
+Link: https://lore.kernel.org/linux-f2fs-devel/000000000000cd5fe305ef617fe2@google.com/T/#u
+Reported-by: syzbot+4793f6096d174c90b4f7@syzkaller.appspotmail.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ fs/f2fs/file.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 8cca566baf3ab..5263d97bef1dd 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -4155,20 +4155,24 @@ static int f2fs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
- 	 */
- 	map.m_len = fscrypt_limit_io_blocks(inode, map.m_lblk, map.m_len);
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index ecbc8c135b494..2498e5c70fd83 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2338,6 +2338,7 @@ static int f2fs_ioc_get_encryption_pwsalt(struct file *filp, unsigned long arg)
+ {
+ 	struct inode *inode = file_inode(filp);
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
++	u8 encrypt_pw_salt[16];
+ 	int err;
  
--	if (map.m_flags & (F2FS_MAP_MAPPED | F2FS_MAP_UNWRITTEN)) {
--		iomap->length = blks_to_bytes(inode, map.m_len);
--		if (map.m_flags & F2FS_MAP_MAPPED) {
--			iomap->type = IOMAP_MAPPED;
--			iomap->flags |= IOMAP_F_MERGED;
--		} else {
--			iomap->type = IOMAP_UNWRITTEN;
--		}
--		if (WARN_ON_ONCE(!__is_valid_data_blkaddr(map.m_pblk)))
--			return -EINVAL;
-+	/*
-+	 * We should never see delalloc or compressed extents here based on
-+	 * prior flushing and checks.
-+	 */
-+	if (WARN_ON_ONCE(map.m_pblk == NEW_ADDR))
-+		return -EINVAL;
-+	if (WARN_ON_ONCE(map.m_pblk == COMPRESS_ADDR))
-+		return -EINVAL;
+ 	if (!f2fs_sb_has_encrypt(sbi))
+@@ -2362,12 +2363,14 @@ static int f2fs_ioc_get_encryption_pwsalt(struct file *filp, unsigned long arg)
+ 		goto out_err;
+ 	}
+ got_it:
+-	if (copy_to_user((__u8 __user *)arg, sbi->raw_super->encrypt_pw_salt,
+-									16))
+-		err = -EFAULT;
++	memcpy(encrypt_pw_salt, sbi->raw_super->encrypt_pw_salt, 16);
+ out_err:
+ 	f2fs_up_write(&sbi->sb_lock);
+ 	mnt_drop_write_file(filp);
++
++	if (!err && copy_to_user((__u8 __user *)arg, encrypt_pw_salt, 16))
++		err = -EFAULT;
++
+ 	return err;
+ }
  
-+	if (map.m_pblk != NULL_ADDR) {
-+		iomap->length = blks_to_bytes(inode, map.m_len);
-+		iomap->type = IOMAP_MAPPED;
-+		iomap->flags |= IOMAP_F_MERGED;
- 		iomap->bdev = map.m_bdev;
- 		iomap->addr = blks_to_bytes(inode, map.m_pblk);
- 	} else {
-+		if (flags & IOMAP_WRITE)
-+			return -ENOTBLK;
- 		iomap->length = blks_to_bytes(inode, next_pgofs) -
- 				iomap->offset;
- 		iomap->type = IOMAP_HOLE;
 -- 
 2.39.2
 
