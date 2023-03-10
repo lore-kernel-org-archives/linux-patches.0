@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EDF8489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:17:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F57C433D2;
-	Fri, 10 Mar 2023 14:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F148489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:17:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D2FC433D2;
+	Fri, 10 Mar 2023 14:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457872;
-	bh=AHH8+V25j04dYhHbB6RZNyhY6wrLnlvtMgRictoQFyc=;
+	s=korg; t=1678457875;
+	bh=agRvrc553inuw8bLKRfOvr93QnBTsezd3/j6fB9nvHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYERPSPFitCcPvQKb94/519ECnstC6dEbfnYECsrHirh84T8wgs7XOpE/pG5fJz5v
-	 FMWAge/8GRNpAm2iV9E5889jciu3fcgTmwaBF/CKaaMXzNzPr6lrP6lWlkeCZJjfpT
-	 BeVBHBom2a9e8Xio4et+KJq5RCZw4wBpGPQv9P6w=
+	b=KopcQVj7aUrvbNTRhOWBM8Ll4qIh5a53vggROGtU30qeRzyrgxjixmuvsyRLzsStx
+	 TE1oc/TQ4m3nFIggfa1RJaSV3uCoB/GwUEZ4JQm0ucS+1+ehlDvWjQsQyQA5swgHRA
+	 FKHh4CpZiJOHeooOslSSFQ2+sGBi3W4gBLzResC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Jason Yan <yanaijie@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 085/252] scsi: aic94xx: Add missing check for dma_map_single()
-Date: Fri, 10 Mar 2023 14:37:35 +0100
-Message-Id: <20230310133721.391531137@linuxfoundation.org>
+Subject: [PATCH 4.19 086/252] spi: bcm63xx-hsspi: fix pm_runtime
+Date: Fri, 10 Mar 2023 14:37:36 +0100
+Message-Id: <20230310133721.429431000@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,37 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit 32fe45274edb5926abc0fac7263d9f889d02d9cf ]
+[ Upstream commit 216e8e80057a9f0b6366327881acf88eaf9f1fd4 ]
 
-Add check for dma_map_single() and return error if it fails in order to
-avoid invalid DMA address.
+The driver sets auto_runtime_pm to true, but it doesn't call
+pm_runtime_enable(), which results in "Failed to power device" when PM support
+is enabled.
 
-Fixes: 2908d778ab3e ("[SCSI] aic94xx: new driver")
-Link: https://lore.kernel.org/r/20230128110832.6792-1-jiasheng@iscas.ac.cn
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Link: https://lore.kernel.org/r/20210223151851.4110-3-noltari@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 811ff802aaf8 ("spi: bcm63xx-hsspi: Fix multi-bit mode setting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aic94xx/aic94xx_task.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-bcm63xx-hsspi.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/aic94xx/aic94xx_task.c b/drivers/scsi/aic94xx/aic94xx_task.c
-index cdd4ab683be98..4de4bbca1f925 100644
---- a/drivers/scsi/aic94xx/aic94xx_task.c
-+++ b/drivers/scsi/aic94xx/aic94xx_task.c
-@@ -68,6 +68,9 @@ static int asd_map_scatterlist(struct sas_task *task,
- 		dma_addr_t dma = pci_map_single(asd_ha->pcidev, p,
- 						task->total_xfer_len,
- 						task->data_dir);
-+		if (dma_mapping_error(&asd_ha->pcidev->dev, dma))
-+			return -ENOMEM;
+diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
+index 443a480767e09..f45df86cc95a0 100644
+--- a/drivers/spi/spi-bcm63xx-hsspi.c
++++ b/drivers/spi/spi-bcm63xx-hsspi.c
+@@ -20,6 +20,8 @@
+ #include <linux/spi/spi.h>
+ #include <linux/mutex.h>
+ #include <linux/of.h>
++#include <linux/reset.h>
++#include <linux/pm_runtime.h>
+ 
+ #define HSSPI_GLOBAL_CTRL_REG			0x0
+ #define GLOBAL_CTRL_CS_POLARITY_SHIFT		0
+@@ -432,13 +434,17 @@ static int bcm63xx_hsspi_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto out_put_master;
+ 
++	pm_runtime_enable(&pdev->dev);
 +
- 		sg_arr[0].bus_addr = cpu_to_le64((u64)dma);
- 		sg_arr[0].size = cpu_to_le32(task->total_xfer_len);
- 		sg_arr[0].flags |= ASD_SG_EL_LIST_EOL;
+ 	/* register and we are done */
+ 	ret = devm_spi_register_master(dev, master);
+ 	if (ret)
+-		goto out_put_master;
++		goto out_pm_disable;
+ 
+ 	return 0;
+ 
++out_pm_disable:
++	pm_runtime_disable(&pdev->dev);
+ out_put_master:
+ 	spi_master_put(master);
+ out_disable_pll_clk:
 -- 
 2.39.2
 
