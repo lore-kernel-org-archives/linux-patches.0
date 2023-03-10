@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF278820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:52:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EE8C433D2;
-	Fri, 10 Mar 2023 14:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF0E8820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:52:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17E1C4339B;
+	Fri, 10 Mar 2023 14:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459934;
-	bh=7c8m30BdcwP+54vQ6GLhcEOURqUqIiQ89ay8ji102NE=;
+	s=korg; t=1678459937;
+	bh=B5yuMADHyt40iT4m4guo0ffiqeio4f8Shp3i+HNdFmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWKi63gYrIUm7k6S2RqGRzpAe6C3lcFIAqaCAVBUvUj1SDkYK/BPLvh3ls8yRcGiD
-	 Uy256XxZhGnuAwUQC+GHpCvqTcH2mOW8hoxFU13aaAFicVh3U90rkVexevmNRZouAV
-	 BJwW//0Ev9jJpG9q8eGOVos+cthHvv2iYelnIgk8=
+	b=LiVTU6qGgXnuRHnG5xnMx8TnL4MbW0ru7IvbsOaOqF7zm0z4m9/w5yaSYDquu3Wpd
+	 xR3VFnQSKaqb4SW3oYHI2FmljVSKnK0skqx2b9q5YQeODNSC49INqZFeKtFmBjwEsw
+	 3qKCNoa7AytveEcTU2GfFZucVEjB9i3fO5p8FdPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 168/529] ALSA: hda/ca0132: minor fix for allocation size
-Date: Fri, 10 Mar 2023 14:35:11 +0100
-Message-Id: <20230310133812.733193280@linuxfoundation.org>
+Subject: [PATCH 5.10 169/529] drm/msm/dpu: Disallow unallocated resources to be returned
+Date: Fri, 10 Mar 2023 14:35:12 +0100
+Message-Id: <20230310133812.779670170@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,38 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey V. Vissarionov <gremlin@altlinux.org>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit 3ee0fe7fa39b14d1cea455b7041f2df933bd97d2 ]
+[ Upstream commit abc40122d9a69f56c04efb5a7485795f5ac799d1 ]
 
-Although the "dma_chan" pointer occupies more or equal space compared
-to "*dma_chan", the allocation size should use the size of variable
-itself.
+In the event that the topology requests resources that have not been
+created by the system (because they are typically not represented in
+dpu_mdss_cfg ^1), the resource(s) in global_state (in this case DSC
+blocks, until their allocation/assignment is being sanity-checked in
+"drm/msm/dpu: Reject topologies for which no DSC blocks are available")
+remain NULL but will still be returned out of
+dpu_rm_get_assigned_resources, where the caller expects to get an array
+containing num_blks valid pointers (but instead gets these NULLs).
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+To prevent this from happening, where null-pointer dereferences
+typically result in a hard-to-debug platform lockup, num_blks shouldn't
+increase past NULL blocks and will print an error and break instead.
+After all, max_blks represents the static size of the maximum number of
+blocks whereas the actual amount varies per platform.
 
-Fixes: 01ef7dbffb41 ("ALSA: hda - Update CA0132 codec to load DSP firmware binary")
-Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
-Link: https://lore.kernel.org/r/20230117111522.GA15213@altlinux.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+^1: which can happen after a git rebase ended up moving additions to
+_dpu_cfg to a different struct which has the same patch context.
+
+Fixes: bb00a452d6f7 ("drm/msm/dpu: Refactor resource manager")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/517636/
+Link: https://lore.kernel.org/r/20230109231556.344977-1-marijn.suijten@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_ca0132.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
-index 82f14c3f642bd..24c2638cde376 100644
---- a/sound/pci/hda/patch_ca0132.c
-+++ b/sound/pci/hda/patch_ca0132.c
-@@ -2331,7 +2331,7 @@ static int dspio_set_uint_param_no_source(struct hda_codec *codec, int mod_id,
- static int dspio_alloc_dma_chan(struct hda_codec *codec, unsigned int *dma_chan)
- {
- 	int status = 0;
--	unsigned int size = sizeof(dma_chan);
-+	unsigned int size = sizeof(*dma_chan);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+index 74a13ccad34c0..9483005297438 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+@@ -633,6 +633,11 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+ 				  blks_size, enc_id);
+ 			break;
+ 		}
++		if (!hw_blks[i]) {
++			DPU_ERROR("Allocated resource %d unavailable to assign to enc %d\n",
++				  type, enc_id);
++			break;
++		}
+ 		blks[num_blks++] = hw_blks[i];
+ 	}
  
- 	codec_dbg(codec, "     dspio_alloc_dma_chan() -- begin\n");
- 	status = dspio_scp(codec, MASTERCONTROL, 0x20,
 -- 
 2.39.2
 
