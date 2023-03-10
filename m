@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE84848D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:29:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E16C433EF;
-	Fri, 10 Mar 2023 14:29:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F09848D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:29:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F0FC433D2;
+	Fri, 10 Mar 2023 14:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458551;
-	bh=vbWed7N8SLciAMWPNCptG+dDcf8uyVJTDJAS9NVJfOk=;
+	s=korg; t=1678458554;
+	bh=LGimQt+6dNXwokJc5xu8GpMMoO4jVRT0UP6maRZM9Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zt5/fMY7JCpiqTPTJO0cLvhCLryKXTWtsienMVAIRD8B3eG8HCI3IthJk6+Kjuy7w
-	 lLVHVksFLjS9q+6dsp51JpGmws+SpJ2w454HQdYV1546VD4Vioq2d15gpQXSSv6Far
-	 +G4ONveMd4d/bx28+HMvp3i3WOBTctqYLkFjJgZk=
+	b=2SLhpAcrjQ3YXYckwlwdvfUFo5jc1tJvzUqTeSwpmpYxx1xm069t34GEmXDkfzmzl
+	 sO3KX7mVFQIWv/nOpPC2SuB8cM4AT0G4fn+F46s1j6wy6Psw4STlhv/9oUqLk5Gfvw
+	 /gnn8L4UUNpmL0nwKGlDV+hUsyODUtEI9Ud+E8pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Herbert Xu <herbert@gondor.apana.org.au>,
-	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 065/357] crypto: essiv - Handle EBUSY correctly
-Date: Fri, 10 Mar 2023 14:35:54 +0100
-Message-Id: <20230310133736.852135232@linuxfoundation.org>
+Subject: [PATCH 5.4 066/357] crypto: seqiv - Handle EBUSY correctly
+Date: Fri, 10 Mar 2023 14:35:55 +0100
+Message-Id: <20230310133736.888414431@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -37,51 +36,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit b5a772adf45a32c68bef28e60621f12617161556 ]
+[ Upstream commit 32e62025e5e52fbe4812ef044759de7010b15dbc ]
 
-As it is essiv only handles the special return value of EINPROGERSS,
+As it is seqiv only handles the special return value of EINPROGERSS,
 which means that in all other cases it will free data related to the
 request.
 
-However, as the caller of essiv may specify MAY_BACKLOG, we also need
+However, as the caller of seqiv may specify MAY_BACKLOG, we also need
 to expect EBUSY and treat it in the same way.  Otherwise backlogged
 requests will trigger a use-after-free.
 
-Fixes: be1eb7f78aa8 ("crypto: essiv - create wrapper template...")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 0a270321dbf9 ("[CRYPTO] seqiv: Add Sequence Number IV Generator")
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/essiv.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ crypto/seqiv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/crypto/essiv.c b/crypto/essiv.c
-index 3d3f9d7f607ca..aa6b89e91ac80 100644
---- a/crypto/essiv.c
-+++ b/crypto/essiv.c
-@@ -188,7 +188,12 @@ static void essiv_aead_done(struct crypto_async_request *areq, int err)
- 	struct aead_request *req = areq->data;
- 	struct essiv_aead_request_ctx *rctx = aead_request_ctx(req);
+diff --git a/crypto/seqiv.c b/crypto/seqiv.c
+index 96d222c32accc..ae1d67d036259 100644
+--- a/crypto/seqiv.c
++++ b/crypto/seqiv.c
+@@ -25,7 +25,7 @@ static void seqiv_aead_encrypt_complete2(struct aead_request *req, int err)
+ 	struct aead_request *subreq = aead_request_ctx(req);
+ 	struct crypto_aead *geniv;
  
-+	if (err == -EINPROGRESS)
-+		goto out;
-+
- 	kfree(rctx->assoc);
-+
-+out:
- 	aead_request_complete(req, err);
- }
+-	if (err == -EINPROGRESS)
++	if (err == -EINPROGRESS || err == -EBUSY)
+ 		return;
  
-@@ -264,7 +269,7 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
- 	err = enc ? crypto_aead_encrypt(subreq) :
- 		    crypto_aead_decrypt(subreq);
- 
--	if (rctx->assoc && err != -EINPROGRESS)
-+	if (rctx->assoc && err != -EINPROGRESS && err != -EBUSY)
- 		kfree(rctx->assoc);
- 	return err;
- }
+ 	if (err)
 -- 
 2.39.2
 
