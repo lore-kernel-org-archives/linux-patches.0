@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0868481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:07:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63828C433D2;
-	Fri, 10 Mar 2023 14:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CB98481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:07:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACD4C433D2;
+	Fri, 10 Mar 2023 14:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457243;
-	bh=cS+DtdsVu+fYrOFvYk2bwSQL9yt3KSAJFFbJxu8sRaY=;
+	s=korg; t=1678457246;
+	bh=kYhV3wnT7fuYbfYEGiwkZ36vZ9VdMUCtUpvcDiOuSGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TflovSLSbuPCDfdGny8FHVNTYsdqKGfI8GYin+zvB12bgW1nAblCnZ3sFnc0nkaEK
-	 IpeeY1rh0oQFGRRkLJsFDMOhu3XgXpjP5yhq8fDGVBH1TIw+cAgMFyttgevRU03WNu
-	 8sl9vQ8FpvWiCZaFJHs9SJS7wqf7jMl8QQFaAdpM=
+	b=xZ1rmAHQEv4zEZHCy+GsfnabpE0M37sjY2hud9KvMUoZaWh2BHVZy0+K3CUBif6FN
+	 hkM0CanM5jwsMiHxEtF1/7H6g5jlUIDheffrkkJPBIT4wKmLTSodb/kRu9h+yt2xhM
+	 2a7vuwaPbv01XqLLU/Yzt39T0reHkhC1VLOPMJ30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	syzbot+f61594de72d6705aea03@syzkaller.appspotmail.com,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/200] ubifs: Rectify space budget for ubifs_xrename()
-Date: Fri, 10 Mar 2023 14:37:15 +0100
-Message-Id: <20230310133717.907059657@linuxfoundation.org>
+Subject: [PATCH 6.1 063/200] netfilter: ebtables: fix table blob use-after-free
+Date: Fri, 10 Mar 2023 14:37:50 +0100
+Message-Id: <20230310133719.059456673@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,49 +36,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 1b2ba09060e41adb356b9ae58ef94a7390928004 ]
+[ Upstream commit e58a171d35e32e6e8c37cfe0e8a94406732a331f ]
 
-There is no space budget for ubifs_xrename(). It may let
-make_reservation() return with -ENOSPC, which could turn
-ubifs to read-only mode in do_writepage() process.
-Fix it by adding space budget for ubifs_xrename().
+We are not allowed to return an error at this point.
+Looking at the code it looks like ret is always 0 at this
+point, but its not.
 
-Fetch a reproducer in [Link].
+t = find_table_lock(net, repl->name, &ret, &ebt_mutex);
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216569
-Fixes: 9ec64962afb170 ("ubifs: Implement RENAME_EXCHANGE")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+... this can return a valid table, with ret != 0.
+
+This bug causes update of table->private with the new
+blob, but then frees the blob right away in the caller.
+
+Syzbot report:
+
+BUG: KASAN: vmalloc-out-of-bounds in __ebt_unregister_table+0xc00/0xcd0 net/bridge/netfilter/ebtables.c:1168
+Read of size 4 at addr ffffc90005425000 by task kworker/u4:4/74
+Workqueue: netns cleanup_net
+Call Trace:
+ kasan_report+0xbf/0x1f0 mm/kasan/report.c:517
+ __ebt_unregister_table+0xc00/0xcd0 net/bridge/netfilter/ebtables.c:1168
+ ebt_unregister_table+0x35/0x40 net/bridge/netfilter/ebtables.c:1372
+ ops_exit_list+0xb0/0x170 net/core/net_namespace.c:169
+ cleanup_net+0x4ee/0xb10 net/core/net_namespace.c:613
+...
+
+ip(6)tables appears to be ok (ret should be 0 at this point) but make
+this more obvious.
+
+Fixes: c58dd2dd443c ("netfilter: Can't fail and free after table replacement")
+Reported-by: syzbot+f61594de72d6705aea03@syzkaller.appspotmail.com
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/dir.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/bridge/netfilter/ebtables.c | 2 +-
+ net/ipv4/netfilter/ip_tables.c  | 3 +--
+ net/ipv6/netfilter/ip6_tables.c | 3 +--
+ 3 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ubifs/dir.c b/fs/ubifs/dir.c
-index aaff3f3f0aa3b..94634b872e382 100644
---- a/fs/ubifs/dir.c
-+++ b/fs/ubifs/dir.c
-@@ -1576,6 +1576,10 @@ static int ubifs_xrename(struct inode *old_dir, struct dentry *old_dentry,
- 		return err;
+diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
+index ce5dfa3babd26..757ec46fc45a0 100644
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -1090,7 +1090,7 @@ static int do_replace_finish(struct net *net, struct ebt_replace *repl,
+ 
+ 	audit_log_nfcfg(repl->name, AF_BRIDGE, repl->nentries,
+ 			AUDIT_XT_OP_REPLACE, GFP_KERNEL);
+-	return ret;
++	return 0;
+ 
+ free_unlock:
+ 	mutex_unlock(&ebt_mutex);
+diff --git a/net/ipv4/netfilter/ip_tables.c b/net/ipv4/netfilter/ip_tables.c
+index 2ed7c58b471ac..aae5fd51dfd74 100644
+--- a/net/ipv4/netfilter/ip_tables.c
++++ b/net/ipv4/netfilter/ip_tables.c
+@@ -1045,7 +1045,6 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
+ 	struct xt_counters *counters;
+ 	struct ipt_entry *iter;
+ 
+-	ret = 0;
+ 	counters = xt_counters_alloc(num_counters);
+ 	if (!counters) {
+ 		ret = -ENOMEM;
+@@ -1091,7 +1090,7 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
+ 		net_warn_ratelimited("iptables: counters copy to user failed while replacing table\n");
  	}
+ 	vfree(counters);
+-	return ret;
++	return 0;
  
-+	err = ubifs_budget_space(c, &req);
-+	if (err)
-+		goto out;
-+
- 	lock_4_inodes(old_dir, new_dir, NULL, NULL);
+  put_module:
+ 	module_put(t->me);
+diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
+index 2d816277f2c5a..ac902f7bca477 100644
+--- a/net/ipv6/netfilter/ip6_tables.c
++++ b/net/ipv6/netfilter/ip6_tables.c
+@@ -1062,7 +1062,6 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
+ 	struct xt_counters *counters;
+ 	struct ip6t_entry *iter;
  
- 	time = current_time(old_dir);
-@@ -1601,6 +1605,7 @@ static int ubifs_xrename(struct inode *old_dir, struct dentry *old_dentry,
- 	unlock_4_inodes(old_dir, new_dir, NULL, NULL);
- 	ubifs_release_budget(c, &req);
+-	ret = 0;
+ 	counters = xt_counters_alloc(num_counters);
+ 	if (!counters) {
+ 		ret = -ENOMEM;
+@@ -1108,7 +1107,7 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
+ 		net_warn_ratelimited("ip6tables: counters copy to user failed while replacing table\n");
+ 	}
+ 	vfree(counters);
+-	return ret;
++	return 0;
  
-+out:
- 	fscrypt_free_filename(&fst_nm);
- 	fscrypt_free_filename(&snd_nm);
- 	return err;
+  put_module:
+ 	module_put(t->me);
 -- 
 2.39.2
 
