@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771F38494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:37:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA35C4339B;
-	Fri, 10 Mar 2023 14:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1D08494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:37:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD490C433A8;
+	Fri, 10 Mar 2023 14:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459058;
-	bh=hnn7QVvZ0BtluZVTN8+T5OX0LbRMmzOp32QiGhJFGHQ=;
+	s=korg; t=1678459061;
+	bh=EqPvwCpfLxqn8WfVFVduOkeI7AUGN58iR0FX4sEGzJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iusSvFniF450qm0LGDF0XeVPBh7RvyuokJZSoq6ap02PfLLJdkcvDLiMNhmvZNSzy
-	 fBjvRIhbEFRBnL0cvGZtU52NW2hK9ReohQWp95eiCHcpcLucCxAsc9GSqywO0ayRF8
-	 MduPK+LCoa5PwkQgaoFPORyPwm6ew8QWBB54rwW0=
+	b=Qx/KbAXWwgHdBG/kOMcT9/baaedbi+NUV1AM+p71adGlO4hcOz7LLa5zizJ48S5vZ
+	 o8k2KxhVJtGxkuYya7/1gsCIte8kfSCRnQirhzzEVCDSeqCT95HyA6GGnvbHyZ9ent
+	 t57HIRsRQB3H3ogExq1fo9rLOxnPhYi72PPDdRlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.4 235/357] x86/reboot: Disable virtualization in an emergency if SVM is supported
-Date: Fri, 10 Mar 2023 14:38:44 +0100
-Message-Id: <20230310133745.111015978@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 5.4 218/357] ARM: dts: exynos: correct HDMI phy compatible in Exynos4
+Date: Fri, 10 Mar 2023 14:38:27 +0100
+Message-Id: <20230310133744.333161998@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -34,72 +33,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit d81f952aa657b76cea381384bef1fea35c5fd266 upstream.
+commit af1c89ddb74f170eccd5a57001d7317560b638ea upstream.
 
-Disable SVM on all CPUs via NMI shootdown during an emergency reboot.
-Like VMX, SVM can block INIT, e.g. if the emergency reboot is triggered
-between CLGI and STGI, and thus can prevent bringing up other CPUs via
-INIT-SIPI-SIPI.
+The HDMI phy compatible was missing vendor prefix.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221130233650.1404148-4-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: ed80d4cab772 ("ARM: dts: add hdmi related nodes for exynos4 SoCs")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230125094513.155063-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/reboot.c |   23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ arch/arm/boot/dts/exynos4.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/reboot.c
-+++ b/arch/x86/kernel/reboot.c
-@@ -530,27 +530,26 @@ static inline void kb_wait(void)
+--- a/arch/arm/boot/dts/exynos4.dtsi
++++ b/arch/arm/boot/dts/exynos4.dtsi
+@@ -605,7 +605,7 @@
+ 			status = "disabled";
  
- static inline void nmi_shootdown_cpus_on_restart(void);
- 
--/* Use NMIs as IPIs to tell all CPUs to disable virtualization */
--static void emergency_vmx_disable_all(void)
-+static void emergency_reboot_disable_virtualization(void)
- {
- 	/* Just make sure we won't change CPUs while doing this */
- 	local_irq_disable();
- 
- 	/*
--	 * Disable VMX on all CPUs before rebooting, otherwise we risk hanging
--	 * the machine, because the CPU blocks INIT when it's in VMX root.
-+	 * Disable virtualization on all CPUs before rebooting to avoid hanging
-+	 * the system, as VMX and SVM block INIT when running in the host.
- 	 *
- 	 * We can't take any locks and we may be on an inconsistent state, so
--	 * use NMIs as IPIs to tell the other CPUs to exit VMX root and halt.
-+	 * use NMIs as IPIs to tell the other CPUs to disable VMX/SVM and halt.
- 	 *
--	 * Do the NMI shootdown even if VMX if off on _this_ CPU, as that
--	 * doesn't prevent a different CPU from being in VMX root operation.
-+	 * Do the NMI shootdown even if virtualization is off on _this_ CPU, as
-+	 * other CPUs may have virtualization enabled.
- 	 */
--	if (cpu_has_vmx()) {
--		/* Safely force _this_ CPU out of VMX root operation. */
--		__cpu_emergency_vmxoff();
-+	if (cpu_has_vmx() || cpu_has_svm(NULL)) {
-+		/* Safely force _this_ CPU out of VMX/SVM operation. */
-+		cpu_emergency_disable_virtualization();
- 
--		/* Halt and exit VMX root operation on the other CPUs. */
-+		/* Disable VMX/SVM and halt on other CPUs. */
- 		nmi_shootdown_cpus_on_restart();
- 
- 	}
-@@ -588,7 +587,7 @@ static void native_machine_emergency_res
- 	unsigned short mode;
- 
- 	if (reboot_emergency)
--		emergency_vmx_disable_all();
-+		emergency_reboot_disable_virtualization();
- 
- 	tboot_shutdown(TB_SHUTDOWN_REBOOT);
- 
+ 			hdmi_i2c_phy: hdmiphy@38 {
+-				compatible = "exynos4210-hdmiphy";
++				compatible = "samsung,exynos4210-hdmiphy";
+ 				reg = <0x38>;
+ 			};
+ 		};
 
 
