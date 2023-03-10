@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29C28821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:55:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BCD8C433EF;
-	Fri, 10 Mar 2023 14:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75FD8821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:55:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4A8C433D2;
+	Fri, 10 Mar 2023 14:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460111;
-	bh=tW6pPbvq/FsEVqpHWHHkP0VtmcJhUb58fh2/TklyZFs=;
+	s=korg; t=1678460114;
+	bh=D4dvNcq8xjbTUr4h9uc6mevetF+gwlJVtMbmO5qv1UE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n4lQeq8oy9ViMz/fJkrOVwkQC4nwzBGMK8R161Jedx0lWxELJsWve141QVcLFIhrg
-	 QvghEfN8lRiHvR/0nNOzUE9oIqFlFluTNnbNvfmwB3/gkM4XS7gMbOvTnfCYkIw41a
-	 pDvBt/PCt7wr8DW6qVAkj/1yfPiiZBezeWgWUY9Q=
+	b=JPXvdxrTB6oZ6vfaq917UMfArIc90e6EuuI7KW1vibuOt9tzQ5kMQrRVWWpI6GH/R
+	 rRczd2kMwEzZOEFvtFNN+aPBp/hNMJP/AU/yxxxPLkOrJKJbVjfM+tswzinbdthimd
+	 k3SDOm+a+O1feuIa3hSDxUS+3JGGiYr4I4fX/KD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <uwe@kleine-koenig.org>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 227/529] selftests/ftrace: Fix bash specific "==" operator
-Date: Fri, 10 Mar 2023 14:36:10 +0100
-Message-Id: <20230310133815.521992973@linuxfoundation.org>
+Subject: [PATCH 5.10 228/529] printf: fix errname.c list
+Date: Fri, 10 Mar 2023 14:36:11 +0100
+Message-Id: <20230310133815.570474362@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,42 +39,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 1e6b485c922fbedf41d5a9f4e6449c5aeb923a32 ]
+[ Upstream commit 0c2baf6509af1d11310ae4c1c839481a6e9a4bc4 ]
 
-Since commit a1d6cd88c897 ("selftests/ftrace: event_triggers: wait
-longer for test_event_enable") introduced bash specific "=="
-comparation operator, that test will fail when we run it on a
-posix-shell. `checkbashisms` warned it as below.
+On most architectures, gcc -Wextra warns about the list of error
+numbers containing both EDEADLK and EDEADLOCK:
 
-possible bashism in ftrace/func_event_triggers.tc line 45 (should be 'b = a'):
-        if [ "$e" == $val ]; then
+lib/errname.c:15:67: warning: initialized field overwritten [-Woverride-init]
+   15 | #define E(err) [err + BUILD_BUG_ON_ZERO(err <= 0 || err > 300)] = "-" #err
+      |                                                                   ^~~
+lib/errname.c:172:2: note: in expansion of macro 'E'
+  172 |  E(EDEADLK), /* EDEADLOCK */
+      |  ^
 
-This replaces it with "=".
+On parisc, a similar error happens with -ECANCELLED, which is an
+alias for ECANCELED.
 
-Fixes: a1d6cd88c897 ("selftests/ftrace: event_triggers: wait longer for test_event_enable")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Make the EDEADLK printing conditional on the number being distinct
+from EDEADLOCK, and remove the -ECANCELLED bit completely as it
+can never be hit.
+
+To ensure these are correct, add static_assert lines that verify
+all the remaining aliases are in fact identical to the canonical
+name.
+
+Fixes: 57f5677e535b ("printf: add support for printing symbolic error names")
+Cc: Petr Mladek <pmladek@suse.com>
+Suggested-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Acked-by: Uwe Kleine-König <uwe@kleine-koenig.org>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/all/20210514213456.745039-1-arnd@kernel.org/
+Link: https://lore.kernel.org/all/20210927123409.1109737-1-arnd@kernel.org/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Acked-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20230206194126.380350-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/ftrace/test.d/ftrace/func_event_triggers.tc       | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/errname.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-index 27a68bbe778be..d9b8127950771 100644
---- a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-+++ b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-@@ -42,7 +42,7 @@ test_event_enabled() {
+diff --git a/lib/errname.c b/lib/errname.c
+index 0c4d3e66170e9..a5799a8c9cab9 100644
+--- a/lib/errname.c
++++ b/lib/errname.c
+@@ -20,6 +20,7 @@ static const char *names_0[] = {
+ 	E(EADDRNOTAVAIL),
+ 	E(EADV),
+ 	E(EAFNOSUPPORT),
++	E(EAGAIN), /* EWOULDBLOCK */
+ 	E(EALREADY),
+ 	E(EBADE),
+ 	E(EBADF),
+@@ -30,15 +31,17 @@ static const char *names_0[] = {
+ 	E(EBADSLT),
+ 	E(EBFONT),
+ 	E(EBUSY),
+-#ifdef ECANCELLED
+-	E(ECANCELLED),
+-#endif
++	E(ECANCELED), /* ECANCELLED */
+ 	E(ECHILD),
+ 	E(ECHRNG),
+ 	E(ECOMM),
+ 	E(ECONNABORTED),
++	E(ECONNREFUSED), /* EREFUSED */
+ 	E(ECONNRESET),
++	E(EDEADLK), /* EDEADLOCK */
++#if EDEADLK != EDEADLOCK /* mips, sparc, powerpc */
+ 	E(EDEADLOCK),
++#endif
+ 	E(EDESTADDRREQ),
+ 	E(EDOM),
+ 	E(EDOTDOT),
+@@ -165,14 +168,17 @@ static const char *names_0[] = {
+ 	E(EUSERS),
+ 	E(EXDEV),
+ 	E(EXFULL),
+-
+-	E(ECANCELED), /* ECANCELLED */
+-	E(EAGAIN), /* EWOULDBLOCK */
+-	E(ECONNREFUSED), /* EREFUSED */
+-	E(EDEADLK), /* EDEADLOCK */
+ };
+ #undef E
  
-     while [ $check_times -ne 0 ]; do
- 	e=`cat $EVENT_ENABLE`
--	if [ "$e" == $val ]; then
-+	if [ "$e" = $val ]; then
- 	    return 0
- 	fi
- 	sleep $SLEEP_TIME
++#ifdef EREFUSED /* parisc */
++static_assert(EREFUSED == ECONNREFUSED);
++#endif
++#ifdef ECANCELLED /* parisc */
++static_assert(ECANCELLED == ECANCELED);
++#endif
++static_assert(EAGAIN == EWOULDBLOCK); /* everywhere */
++
+ #define E(err) [err - 512 + BUILD_BUG_ON_ZERO(err < 512 || err > 550)] = "-" #err
+ static const char *names_512[] = {
+ 	E(ERESTARTSYS),
 -- 
 2.39.2
 
