@@ -1,29 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80A28820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:49:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469C7C433D2;
-	Fri, 10 Mar 2023 14:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6868820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:49:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289DEC4339B;
+	Fri, 10 Mar 2023 14:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459793;
-	bh=0VeodUMJTBRbZqLK49ph21v9shNBDYEcasCXj0+IXFg=;
+	s=korg; t=1678459796;
+	bh=SzeRQSaaemqRQBA85vC5gqgW86YG+oHshR96xvZW1gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=miBJDjVpASZB6b8xhJVltNIZpQ9LGQBfMZpdSZ+q7BJJQ5bKzAqqzveeSxWMPRIf4
-	 yVv7rmNKXLPovtqZfrQJYw/HtGQkvaPgYKpw7rpGyPWxO4bV241IAicVDvM5+I8JXi
-	 IAOEs1zT8ci+2prKUIVp3hWpengD+FAEKgRxVBec=
+	b=sepxbhhSRafOzDvzvkVFjUxJTTXQ44Zfm0zEKTbhwC1QcJ+tokPIlpfmvTxyQrE+N
+	 6aFS8l1I1I3zeEOiCzAsGzC61Qp4FdmZVM6WAz+JIL9+Ot5ubJWVGZPhgNpNi1yI2q
+	 m17OSG4s9LKGiVFIRwVgVakhDV3F9EZ7m9YOCAwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Tonghao Zhang <tong@infragraf.org>,
+	Quentin Monnet <quentin@isovalent.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Song Liu <song@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	KP Singh <kpsingh@kernel.org>,
+	Stanislav Fomichev <sdf@google.com>,
+	Hao Luo <haoluo@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 081/529] thermal/drivers/tsens: Drop msm8976-specific defines
-Date: Fri, 10 Mar 2023 14:33:44 +0100
-Message-Id: <20230310133808.731897168@linuxfoundation.org>
+Subject: [PATCH 5.10 115/529] bpftool: profile online CPUs instead of possible
+Date: Fri, 10 Mar 2023 14:34:18 +0100
+Message-Id: <20230310133810.328606797@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -37,50 +47,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Tonghao Zhang <tong@infragraf.org>
 
-[ Upstream commit 3bf0ea99e2e32b0335106b86d84404cc85bcd113 ]
+[ Upstream commit 377c16fa3f3c60d21e4b05314c8be034ce37f2eb ]
 
-Drop msm8976-specific defines, which duplicate generic ones.
+The number of online cpu may be not equal to possible cpu.
+"bpftool prog profile" can not create pmu event on possible
+but on online cpu.
 
-Fixes: 0e580290170d ("thermal: qcom: tsens-v1: Add support for MSM8956 and MSM8976")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230101194034.831222-6-dmitry.baryshkov@linaro.org
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+$ dmidecode -s system-product-name
+PowerEdge R620
+$ cat /sys/devices/system/cpu/possible
+0-47
+$ cat /sys/devices/system/cpu/online
+0-31
+
+Disable cpu dynamically:
+$ echo 0 > /sys/devices/system/cpu/cpuX/online
+
+If one cpu is offline, perf_event_open will return ENODEV.
+To fix this issue:
+* check value returned and skip offline cpu.
+* close pmu_fd immediately on error path, avoid fd leaking.
+
+Fixes: 47c09d6a9f67 ("bpftool: Introduce "prog profile" command")
+Signed-off-by: Tonghao Zhang <tong@infragraf.org>
+Cc: Quentin Monnet <quentin@isovalent.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>
+Cc: Song Liu <song@kernel.org>
+Cc: Yonghong Song <yhs@fb.com>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Cc: KP Singh <kpsingh@kernel.org>
+Cc: Stanislav Fomichev <sdf@google.com>
+Cc: Hao Luo <haoluo@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20230202131701.29519-1-tong@infragraf.org
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/tsens-v1.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ tools/bpf/bpftool/prog.c | 38 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 30 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-index 3c19a3800c6d6..bff50f3b9d0b6 100644
---- a/drivers/thermal/qcom/tsens-v1.c
-+++ b/drivers/thermal/qcom/tsens-v1.c
-@@ -78,11 +78,6 @@
- 
- #define MSM8976_CAL_SEL_MASK	0x3
- 
--#define MSM8976_CAL_DEGC_PT1	30
--#define MSM8976_CAL_DEGC_PT2	120
--#define MSM8976_SLOPE_FACTOR	1000
--#define MSM8976_SLOPE_DEFAULT	3200
--
- /* eeprom layout data for qcs404/405 (v1) */
- #define BASE0_MASK	0x000007f8
- #define BASE1_MASK	0x0007f800
-@@ -160,8 +155,8 @@ static void compute_intercept_slope_8976(struct tsens_priv *priv,
- 	priv->sensor[10].slope = 3286;
- 
- 	for (i = 0; i < priv->num_sensors; i++) {
--		priv->sensor[i].offset = (p1[i] * MSM8976_SLOPE_FACTOR) -
--				(MSM8976_CAL_DEGC_PT1 *
-+		priv->sensor[i].offset = (p1[i] * SLOPE_FACTOR) -
-+				(CAL_DEGC_PT1 *
- 				priv->sensor[i].slope);
- 	}
+diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
+index 592536904dde2..d2bcce627b320 100644
+--- a/tools/bpf/bpftool/prog.c
++++ b/tools/bpf/bpftool/prog.c
+@@ -1912,10 +1912,38 @@ static void profile_close_perf_events(struct profiler_bpf *obj)
+ 	profile_perf_event_cnt = 0;
  }
+ 
++static int profile_open_perf_event(int mid, int cpu, int map_fd)
++{
++	int pmu_fd;
++
++	pmu_fd = syscall(__NR_perf_event_open, &metrics[mid].attr,
++			 -1 /*pid*/, cpu, -1 /*group_fd*/, 0);
++	if (pmu_fd < 0) {
++		if (errno == ENODEV) {
++			p_info("cpu %d may be offline, skip %s profiling.",
++				cpu, metrics[mid].name);
++			profile_perf_event_cnt++;
++			return 0;
++		}
++		return -1;
++	}
++
++	if (bpf_map_update_elem(map_fd,
++				&profile_perf_event_cnt,
++				&pmu_fd, BPF_ANY) ||
++	    ioctl(pmu_fd, PERF_EVENT_IOC_ENABLE, 0)) {
++		close(pmu_fd);
++		return -1;
++	}
++
++	profile_perf_events[profile_perf_event_cnt++] = pmu_fd;
++	return 0;
++}
++
+ static int profile_open_perf_events(struct profiler_bpf *obj)
+ {
+ 	unsigned int cpu, m;
+-	int map_fd, pmu_fd;
++	int map_fd;
+ 
+ 	profile_perf_events = calloc(
+ 		sizeof(int), obj->rodata->num_cpu * obj->rodata->num_metric);
+@@ -1934,17 +1962,11 @@ static int profile_open_perf_events(struct profiler_bpf *obj)
+ 		if (!metrics[m].selected)
+ 			continue;
+ 		for (cpu = 0; cpu < obj->rodata->num_cpu; cpu++) {
+-			pmu_fd = syscall(__NR_perf_event_open, &metrics[m].attr,
+-					 -1/*pid*/, cpu, -1/*group_fd*/, 0);
+-			if (pmu_fd < 0 ||
+-			    bpf_map_update_elem(map_fd, &profile_perf_event_cnt,
+-						&pmu_fd, BPF_ANY) ||
+-			    ioctl(pmu_fd, PERF_EVENT_IOC_ENABLE, 0)) {
++			if (profile_open_perf_event(m, cpu, map_fd)) {
+ 				p_err("failed to create event %s on cpu %d",
+ 				      metrics[m].name, cpu);
+ 				return -1;
+ 			}
+-			profile_perf_events[profile_perf_event_cnt++] = pmu_fd;
+ 		}
+ 	}
+ 	return 0;
 -- 
 2.39.2
 
