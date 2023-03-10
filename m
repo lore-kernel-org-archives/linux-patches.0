@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E308820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:52:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FDDC433D2;
-	Fri, 10 Mar 2023 14:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386348820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:52:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B46C4339B;
+	Fri, 10 Mar 2023 14:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459958;
-	bh=uNnGhA/nBH2HyfW6rkLj8D4Dgda4hFNjm76cjDnTi2U=;
+	s=korg; t=1678459962;
+	bh=rKQy7ey6ElBUvbB4KDDRuMG2JhIKKKpQC3FYFX2B1qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qs5vVXlwIuSDYmysPmOaFZZwPDdlc63HFi0hi4D+l+SsQwVt+FVtHIULm32Z3fKco
-	 2qaNjIduOxzr9tbdSdZoYB7wmEGnzuWkhpYxZR5G37q2JU/ltQW4QRKutSAsl6+fAX
-	 BA9inSDsSngxmKuLSp4vymx5TYSccBdyAJoL3VFw=
+	b=KstczGCdeNgVU5dHBxEjJveVJC4AOgI3WZ0/Mwyr1eeEc+teks6Dv39k459wW5Bb0
+	 V3sWCeDXQtFzUcWyqkT7U0qVG6eLV9EMoazlgGI3NAxgBh6T4AFosX+eMJxxmHTl0/
+	 OQicJdAtnFwWwrwa3TmFetpsquy+aqG3b5KT0Vo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Mentz <danielmentz@google.com>,
-	Richard Acayan <mailingradian@gmail.com>,
-	Caleb Connolly <caleb@connolly.tech>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sam Ravnborg <sam@ravnborg.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marek Vasut <marex@denx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 176/529] drm/mipi-dsi: Fix byte order of 16-bit DCS set/get brightness
-Date: Fri, 10 Mar 2023 14:35:19 +0100
-Message-Id: <20230310133813.087348703@linuxfoundation.org>
+Subject: [PATCH 5.10 150/529] drm: mxsfb: DRM_MXSFB should depend on ARCH_MXS || ARCH_MXC
+Date: Fri, 10 Mar 2023 14:34:53 +0100
+Message-Id: <20230310133811.901927674@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -38,115 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Mentz <danielmentz@google.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit c9d27c6be518b4ef2966d9564654ef99292ea1b3 ]
+[ Upstream commit 7783cc67862f9166c901bfa0f80b717aa8d354dd ]
 
-The MIPI DCS specification demands that brightness values are sent in
-big endian byte order. It also states that one parameter (i.e. one byte)
-shall be sent/received for 8 bit wide values, and two parameters shall
-be used for values that are between 9 and 16 bits wide.
+Freescale/NXP i.MX LCDIF and eLCDIF LCD controllers are only present on
+Freescale/NXP i.MX SoCs.  Hence add a dependency on ARCH_MXS ||
+ARCH_MXC, to prevent asking the user about this driver when configuring
+a kernel without Freescale/NXP i.MX support.
 
-Add new functions to properly handle 16-bit brightness in big endian,
-since the two 8- and 16-bit cases are distinct from each other.
-
-[richard: use separate functions instead of switch/case]
-[richard: split into 16-bit component]
-
-Fixes: 1a9d759331b8 ("drm/dsi: Implement DCS set/get display brightness")
-Signed-off-by: Daniel Mentz <danielmentz@google.com>
-Link: https://android.googlesource.com/kernel/msm/+/754affd62d0ee268c686c53169b1dbb7deac8550
-[richard: fix 16-bit brightness_get]
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-Tested-by: Caleb Connolly <caleb@connolly.tech>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230116224909.23884-2-mailingradian@gmail.com
+Fixes: 45d59d704080cc0c ("drm: Add new driver for MXSFB controller")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/98e74779ca2bc575d91afff03369e86b080c01ac.1669046358.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_mipi_dsi.c | 52 ++++++++++++++++++++++++++++++++++
- include/drm/drm_mipi_dsi.h     |  4 +++
- 2 files changed, 56 insertions(+)
+ drivers/gpu/drm/mxsfb/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
-index 2c43d54766f34..19fb1d93a4f07 100644
---- a/drivers/gpu/drm/drm_mipi_dsi.c
-+++ b/drivers/gpu/drm/drm_mipi_dsi.c
-@@ -1143,6 +1143,58 @@ int mipi_dsi_dcs_get_display_brightness(struct mipi_dsi_device *dsi,
- }
- EXPORT_SYMBOL(mipi_dsi_dcs_get_display_brightness);
- 
-+/**
-+ * mipi_dsi_dcs_set_display_brightness_large() - sets the 16-bit brightness value
-+ *    of the display
-+ * @dsi: DSI peripheral device
-+ * @brightness: brightness value
-+ *
-+ * Return: 0 on success or a negative error code on failure.
-+ */
-+int mipi_dsi_dcs_set_display_brightness_large(struct mipi_dsi_device *dsi,
-+					     u16 brightness)
-+{
-+	u8 payload[2] = { brightness >> 8, brightness & 0xff };
-+	ssize_t err;
-+
-+	err = mipi_dsi_dcs_write(dsi, MIPI_DCS_SET_DISPLAY_BRIGHTNESS,
-+				 payload, sizeof(payload));
-+	if (err < 0)
-+		return err;
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL(mipi_dsi_dcs_set_display_brightness_large);
-+
-+/**
-+ * mipi_dsi_dcs_get_display_brightness_large() - gets the current 16-bit
-+ *    brightness value of the display
-+ * @dsi: DSI peripheral device
-+ * @brightness: brightness value
-+ *
-+ * Return: 0 on success or a negative error code on failure.
-+ */
-+int mipi_dsi_dcs_get_display_brightness_large(struct mipi_dsi_device *dsi,
-+					     u16 *brightness)
-+{
-+	u8 brightness_be[2];
-+	ssize_t err;
-+
-+	err = mipi_dsi_dcs_read(dsi, MIPI_DCS_GET_DISPLAY_BRIGHTNESS,
-+				brightness_be, sizeof(brightness_be));
-+	if (err <= 0) {
-+		if (err == 0)
-+			err = -ENODATA;
-+
-+		return err;
-+	}
-+
-+	*brightness = (brightness_be[0] << 8) | brightness_be[1];
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL(mipi_dsi_dcs_get_display_brightness_large);
-+
- static int mipi_dsi_drv_probe(struct device *dev)
- {
- 	struct mipi_dsi_driver *drv = to_mipi_dsi_driver(dev->driver);
-diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-index 360e6377e84ba..31ba85a4110a8 100644
---- a/include/drm/drm_mipi_dsi.h
-+++ b/include/drm/drm_mipi_dsi.h
-@@ -283,6 +283,10 @@ int mipi_dsi_dcs_set_display_brightness(struct mipi_dsi_device *dsi,
- 					u16 brightness);
- int mipi_dsi_dcs_get_display_brightness(struct mipi_dsi_device *dsi,
- 					u16 *brightness);
-+int mipi_dsi_dcs_set_display_brightness_large(struct mipi_dsi_device *dsi,
-+					     u16 brightness);
-+int mipi_dsi_dcs_get_display_brightness_large(struct mipi_dsi_device *dsi,
-+					     u16 *brightness);
- 
- /**
-  * struct mipi_dsi_driver - DSI driver
+diff --git a/drivers/gpu/drm/mxsfb/Kconfig b/drivers/gpu/drm/mxsfb/Kconfig
+index ee22cd25d3e3d..e7201e16119a4 100644
+--- a/drivers/gpu/drm/mxsfb/Kconfig
++++ b/drivers/gpu/drm/mxsfb/Kconfig
+@@ -8,6 +8,7 @@ config DRM_MXSFB
+ 	tristate "i.MX (e)LCDIF LCD controller"
+ 	depends on DRM && OF
+ 	depends on COMMON_CLK
++	depends on ARCH_MXS || ARCH_MXC || COMPILE_TEST
+ 	select DRM_MXS
+ 	select DRM_KMS_HELPER
+ 	select DRM_KMS_CMA_HELPER
 -- 
 2.39.2
 
