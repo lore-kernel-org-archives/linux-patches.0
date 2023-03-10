@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABEE881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:43:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B3CC433A0;
-	Fri, 10 Mar 2023 14:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EB8881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:43:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0243C433D2;
+	Fri, 10 Mar 2023 14:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459390;
-	bh=7DncJ7Sp55/QaL5AZ2gDo9EjANT0in8LnumekkBM47o=;
+	s=korg; t=1678459393;
+	bh=zaF0VsMp1l2Gd+WqzoyktK0v1rK3cxgJjZh2sckP8/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TL36BDYBn6tLYEy6ancpkxghSeQ2oJ/gJORhSNym+7vOhb5S2iuMjhOnKzocBm/q4
-	 Ax6DjkrTcfVa47KZVMJrTGUzgdjz6AJXy4Dm+Zp09BbpUQdnU8zcB+SVgvfxgRqiYX
-	 Oit3rPL+iyXLeN7p4O7Y+8d2+oU4YdvzUQEDEiFo=
+	b=icJeVg8gRuQxCbRv8s8INrqVBorroOEjGqIgnIYfJWCcsn3+ZQKaqBAr6qSQ/miPB
+	 jKXlzVnDUWBUigVoF/xtwS3uyg6+qDbAL7gdhPVBKMzl6pTUFbCBJV2TRrblBYcpIl
+	 Y7HKg76aOCLQSntogSWG1xbVwJlcR2P+9U6D+Nmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Daniel Scally <dan.scally@ideasonboard.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 345/357] usb: uvc: Enumerate valid values for color matching
-Date: Fri, 10 Mar 2023 14:40:34 +0100
-Message-Id: <20230310133749.889525616@linuxfoundation.org>
+Subject: [PATCH 5.4 346/357] kernel/fail_function: fix memory leak with using debugfs_lookup()
+Date: Fri, 10 Mar 2023 14:40:35 +0100
+Message-Id: <20230310133749.937126672@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,65 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Scally <dan.scally@ideasonboard.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit e16cab9c1596e251761d2bfb5e1467950d616963 ]
+[ Upstream commit 2bb3669f576559db273efe49e0e69f82450efbca ]
 
-The color matching descriptors defined in the UVC Specification
-contain 3 fields with discrete numeric values representing particular
-settings. Enumerate those values so that later code setting them can
-be more readable.
+When calling debugfs_lookup() the result must have dput() called on it,
+otherwise the memory will leak over time.  To make things simpler, just
+call debugfs_lookup_and_remove() instead which handles all of the logic
+at once.
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Daniel Scally <dan.scally@ideasonboard.com>
-Link: https://lore.kernel.org/r/20230202114142.300858-2-dan.scally@ideasonboard.com
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20230202151633.2310897-1-gregkh@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/usb/video.h | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ kernel/fail_function.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/include/uapi/linux/usb/video.h b/include/uapi/linux/usb/video.h
-index bfdae12cdacf8..c58854fb7d94a 100644
---- a/include/uapi/linux/usb/video.h
-+++ b/include/uapi/linux/usb/video.h
-@@ -179,6 +179,36 @@
- #define UVC_CONTROL_CAP_AUTOUPDATE			(1 << 3)
- #define UVC_CONTROL_CAP_ASYNCHRONOUS			(1 << 4)
+diff --git a/kernel/fail_function.c b/kernel/fail_function.c
+index b0b1ad93fa957..8f3795d8ac5b0 100644
+--- a/kernel/fail_function.c
++++ b/kernel/fail_function.c
+@@ -163,10 +163,7 @@ static void fei_debugfs_add_attr(struct fei_attr *attr)
  
-+/* 3.9.2.6 Color Matching Descriptor Values */
-+enum uvc_color_primaries_values {
-+	UVC_COLOR_PRIMARIES_UNSPECIFIED,
-+	UVC_COLOR_PRIMARIES_BT_709_SRGB,
-+	UVC_COLOR_PRIMARIES_BT_470_2_M,
-+	UVC_COLOR_PRIMARIES_BT_470_2_B_G,
-+	UVC_COLOR_PRIMARIES_SMPTE_170M,
-+	UVC_COLOR_PRIMARIES_SMPTE_240M,
-+};
-+
-+enum uvc_transfer_characteristics_values {
-+	UVC_TRANSFER_CHARACTERISTICS_UNSPECIFIED,
-+	UVC_TRANSFER_CHARACTERISTICS_BT_709,
-+	UVC_TRANSFER_CHARACTERISTICS_BT_470_2_M,
-+	UVC_TRANSFER_CHARACTERISTICS_BT_470_2_B_G,
-+	UVC_TRANSFER_CHARACTERISTICS_SMPTE_170M,
-+	UVC_TRANSFER_CHARACTERISTICS_SMPTE_240M,
-+	UVC_TRANSFER_CHARACTERISTICS_LINEAR,
-+	UVC_TRANSFER_CHARACTERISTICS_SRGB,
-+};
-+
-+enum uvc_matrix_coefficients {
-+	UVC_MATRIX_COEFFICIENTS_UNSPECIFIED,
-+	UVC_MATRIX_COEFFICIENTS_BT_709,
-+	UVC_MATRIX_COEFFICIENTS_FCC,
-+	UVC_MATRIX_COEFFICIENTS_BT_470_2_B_G,
-+	UVC_MATRIX_COEFFICIENTS_SMPTE_170M,
-+	UVC_MATRIX_COEFFICIENTS_SMPTE_240M,
-+};
-+
- /* ------------------------------------------------------------------------
-  * UVC structures
-  */
+ static void fei_debugfs_remove_attr(struct fei_attr *attr)
+ {
+-	struct dentry *dir;
+-
+-	dir = debugfs_lookup(attr->kp.symbol_name, fei_debugfs_dir);
+-	debugfs_remove_recursive(dir);
++	debugfs_lookup_and_remove(attr->kp.symbol_name, fei_debugfs_dir);
+ }
+ 
+ static int fei_kprobe_handler(struct kprobe *kp, struct pt_regs *regs)
 -- 
 2.39.2
 
