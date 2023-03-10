@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A72882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:14:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8754CC433D2;
-	Fri, 10 Mar 2023 15:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CDB882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:14:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C981C4339C;
+	Fri, 10 Mar 2023 15:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461255;
-	bh=uWI9WzY0T7LSCMJn4PkhTk1SRorxfCtgpIVF7gCdNYQ=;
+	s=korg; t=1678461258;
+	bh=CW33IO//KhJPIEIGWxpkNIatwRfc3YQJq8WMPo3KJxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w0cK+yMe4Bz+zmj2TbHqFBhnvusJPfzAU6xdyRC+LafBk2szlqW8ABusOzRolrZeC
-	 tN7tUJRv7sCDzFOYKeNQqxm/oP9qUt8ijlASobz/Y8zfA5CylRoLk+l6z+e/l2aVDy
-	 nxwnH5gGoHDJOMgSrMr6ST6ZQUXbZRxKllxoiivk=
+	b=jyp3YV0jhIe96uY9djFm25vC8e/espkWjMCpyBko7NrK0uH86a0zA9Qp5uQ9vAlQJ
+	 bodGY4qQ7DS7rWKGyjJl/k2WxJTDQLNkwEcm2HLodp31lr7OiEWLWWfXfh1bZEiBMG
+	 if07hcQzMCYHgti+bA5+mZl7JfjJzCdtLXCWoEsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Frederick Lawler <fred@cloudflare.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Liang He <windhl@126.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/136] tcp: tcp_check_req() can be called from process context
-Date: Fri, 10 Mar 2023 14:43:01 +0100
-Message-Id: <20230310133708.934170767@linuxfoundation.org>
+Subject: [PATCH 5.15 077/136] mfd: arizona: Use pm_runtime_resume_and_get() to prevent refcnt leak
+Date: Fri, 10 Mar 2023 14:43:19 +0100
+Message-Id: <20230310133709.483640161@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -36,66 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit 580f98cc33a260bb8c6a39ae2921b29586b84fdf ]
+[ Upstream commit 4414a7ab80cebf715045e3c4d465feefbad21139 ]
 
-This is a follow up of commit 0a375c822497 ("tcp: tcp_rtx_synack()
-can be called from process context").
+In arizona_clk32k_enable(), we should use pm_runtime_resume_and_get()
+as pm_runtime_get_sync() will increase the refcnt even when it
+returns an error.
 
-Frederick Lawler reported another "__this_cpu_add() in preemptible"
-warning caused by the same reason.
-
-In my former patch I took care of tcp_rtx_synack()
-but forgot that tcp_check_req() also contained some SNMP updates.
-
-Note that some parts of tcp_check_req() always run in BH context,
-I added a comment to clarify this.
-
-Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
-Link: https://lore.kernel.org/netdev/8cd33923-a21d-397c-e46b-2a068c287b03@cloudflare.com/T/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: Frederick Lawler <fred@cloudflare.com>
-Tested-by: Frederick Lawler <fred@cloudflare.com>
-Link: https://lore.kernel.org/r/20230227083336.4153089-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Liang He <windhl@126.com>
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20230105061055.1509261-1-windhl@126.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_minisocks.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/mfd/arizona-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index 41368e77fbb81..aa67d5adcbca9 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -565,6 +565,9 @@ EXPORT_SYMBOL(tcp_create_openreq_child);
-  * validation and inside tcp_v4_reqsk_send_ack(). Can we do better?
-  *
-  * We don't need to initialize tmp_opt.sack_ok as we don't use the results
-+ *
-+ * Note: If @fastopen is true, this can be called from process context.
-+ *       Otherwise, this is from BH context.
-  */
- 
- struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
-@@ -717,7 +720,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 					  &tcp_rsk(req)->last_oow_ack_time))
- 			req->rsk_ops->send_ack(sk, skb, req);
- 		if (paws_reject)
--			__NET_INC_STATS(sock_net(sk), LINUX_MIB_PAWSESTABREJECTED);
-+			NET_INC_STATS(sock_net(sk), LINUX_MIB_PAWSESTABREJECTED);
- 		return NULL;
- 	}
- 
-@@ -736,7 +739,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 	 *	   "fourth, check the SYN bit"
- 	 */
- 	if (flg & (TCP_FLAG_RST|TCP_FLAG_SYN)) {
--		__TCP_INC_STATS(sock_net(sk), TCP_MIB_ATTEMPTFAILS);
-+		TCP_INC_STATS(sock_net(sk), TCP_MIB_ATTEMPTFAILS);
- 		goto embryonic_reset;
- 	}
- 
+diff --git a/drivers/mfd/arizona-core.c b/drivers/mfd/arizona-core.c
+index 9323b1e3a69ef..5c8317bd4d98b 100644
+--- a/drivers/mfd/arizona-core.c
++++ b/drivers/mfd/arizona-core.c
+@@ -45,7 +45,7 @@ int arizona_clk32k_enable(struct arizona *arizona)
+ 	if (arizona->clk32k_ref == 1) {
+ 		switch (arizona->pdata.clk32k_src) {
+ 		case ARIZONA_32KZ_MCLK1:
+-			ret = pm_runtime_get_sync(arizona->dev);
++			ret = pm_runtime_resume_and_get(arizona->dev);
+ 			if (ret != 0)
+ 				goto err_ref;
+ 			ret = clk_prepare_enable(arizona->mclk[ARIZONA_MCLK1]);
 -- 
 2.39.2
 
