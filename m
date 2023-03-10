@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D6E847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80966C433D2;
-	Fri, 10 Mar 2023 13:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1072F847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5ABC4339B;
+	Fri, 10 Mar 2023 13:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456622;
-	bh=6u0ePQZ+YiBDfRz2rvDVDPqI5rsE7kLJA+yOsD1wlK8=;
+	s=korg; t=1678456624;
+	bh=dE+5LADuhZBVnsFfNFjhlvGqNXHwb1Hr6Eeh0eL1FXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d6Lw3E3/M2pIOynIGGm5oB40QI81dcfDGlYlJnVHWny5ulOJKmmRjEL/zV7i29F70
-	 eTATL3tDPOA/i6JQlfRW1+1BOS+M0neO/d7MxBwM3GqvxbTE8nkXvax+wlGa/WeCAw
-	 swaYjwTn2FyCyKwNfeBO1tQXF5u/tB82VzA1CtLE=
+	b=JUeM3R8k8tAnrDv/tz6GkmTcWjLV+/bwE++AOIvg0kvPDh/eem1BcVCTSo9LBTQxm
+	 yIleKbeoaeGaw0Xp5dK0J0m+eE+6CBaHmDJbBDOUoYnb0U7C62ajrxh58y1/cAjfjz
+	 JVT4/9+3xeaDb+2SCZMkY1UALK0nFPcDNk6UDGT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 066/211] netfilter: ctnetlink: fix possible refcount leak in ctnetlink_create_conntrack()
-Date: Fri, 10 Mar 2023 14:37:26 +0100
-Message-Id: <20230310133720.760669020@linuxfoundation.org>
+Subject: [PATCH 6.2 067/211] netfilter: conntrack: fix rmmod double-free race
+Date: Fri, 10 Mar 2023 14:37:27 +0100
+Message-Id: <20230310133720.788881842@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,44 +35,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit ac4893980bbe79ce383daf9a0885666a30fe4c83 ]
+[ Upstream commit e6d57e9ff0aec323717ee36fc9ea34ad89217151 ]
 
-nf_ct_put() needs to be called to put the refcount got by
-nf_conntrack_find_get() to avoid refcount leak when
-nf_conntrack_hash_check_insert() fails.
+nf_conntrack_hash_check_insert() callers free the ct entry directly, via
+nf_conntrack_free.
 
-Fixes: 7d367e06688d ("netfilter: ctnetlink: fix soft lockup when netlink adds new entries (v2)")
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Acked-by: Florian Westphal <fw@strlen.de>
+This isn't safe anymore because
+nf_conntrack_hash_check_insert() might place the entry into the conntrack
+table and then delteted the entry again because it found that a conntrack
+extension has been removed at the same time.
+
+In this case, the just-added entry is removed again and an error is
+returned to the caller.
+
+Problem is that another cpu might have picked up this entry and
+incremented its reference count.
+
+This results in a use-after-free/double-free, once by the other cpu and
+once by the caller of nf_conntrack_hash_check_insert().
+
+Fix this by making nf_conntrack_hash_check_insert() not fail anymore
+after the insertion, just like before the 'Fixes' commit.
+
+This is safe because a racing nf_ct_iterate() has to wait for us
+to release the conntrack hash spinlocks.
+
+While at it, make the function return -EAGAIN in the rmmod (genid
+changed) case, this makes nfnetlink replay the command (suggested
+by Pablo Neira).
+
+Fixes: c56716c69ce1 ("netfilter: extensions: introduce extension genid count")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_bpf.c     |  1 -
+ net/netfilter/nf_conntrack_core.c    | 25 +++++++++++++++----------
+ net/netfilter/nf_conntrack_netlink.c |  3 ---
+ 3 files changed, 15 insertions(+), 14 deletions(-)
 
+diff --git a/net/netfilter/nf_conntrack_bpf.c b/net/netfilter/nf_conntrack_bpf.c
+index 24002bc61e07e..e1af14e3b63c5 100644
+--- a/net/netfilter/nf_conntrack_bpf.c
++++ b/net/netfilter/nf_conntrack_bpf.c
+@@ -381,7 +381,6 @@ struct nf_conn *bpf_ct_insert_entry(struct nf_conn___init *nfct_i)
+ 	struct nf_conn *nfct = (struct nf_conn *)nfct_i;
+ 	int err;
+ 
+-	nfct->status |= IPS_CONFIRMED;
+ 	err = nf_conntrack_hash_check_insert(nfct);
+ 	if (err < 0) {
+ 		nf_conntrack_free(nfct);
+diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+index 496c4920505b3..ead11a9c261f3 100644
+--- a/net/netfilter/nf_conntrack_core.c
++++ b/net/netfilter/nf_conntrack_core.c
+@@ -886,10 +886,8 @@ nf_conntrack_hash_check_insert(struct nf_conn *ct)
+ 
+ 	zone = nf_ct_zone(ct);
+ 
+-	if (!nf_ct_ext_valid_pre(ct->ext)) {
+-		NF_CT_STAT_INC_ATOMIC(net, insert_failed);
+-		return -ETIMEDOUT;
+-	}
++	if (!nf_ct_ext_valid_pre(ct->ext))
++		return -EAGAIN;
+ 
+ 	local_bh_disable();
+ 	do {
+@@ -924,6 +922,19 @@ nf_conntrack_hash_check_insert(struct nf_conn *ct)
+ 			goto chaintoolong;
+ 	}
+ 
++	/* If genid has changed, we can't insert anymore because ct
++	 * extensions could have stale pointers and nf_ct_iterate_destroy
++	 * might have completed its table scan already.
++	 *
++	 * Increment of the ext genid right after this check is fine:
++	 * nf_ct_iterate_destroy blocks until locks are released.
++	 */
++	if (!nf_ct_ext_valid_post(ct->ext)) {
++		err = -EAGAIN;
++		goto out;
++	}
++
++	ct->status |= IPS_CONFIRMED;
+ 	smp_wmb();
+ 	/* The caller holds a reference to this object */
+ 	refcount_set(&ct->ct_general.use, 2);
+@@ -932,12 +943,6 @@ nf_conntrack_hash_check_insert(struct nf_conn *ct)
+ 	NF_CT_STAT_INC(net, insert);
+ 	local_bh_enable();
+ 
+-	if (!nf_ct_ext_valid_post(ct->ext)) {
+-		nf_ct_kill(ct);
+-		NF_CT_STAT_INC_ATOMIC(net, drop);
+-		return -ETIMEDOUT;
+-	}
+-
+ 	return 0;
+ chaintoolong:
+ 	NF_CT_STAT_INC(net, chaintoolong);
 diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 1286ae7d46096..ca4d5bb1ea524 100644
+index ca4d5bb1ea524..733bb56950c14 100644
 --- a/net/netfilter/nf_conntrack_netlink.c
 +++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -2375,12 +2375,15 @@ ctnetlink_create_conntrack(struct net *net,
+@@ -2316,9 +2316,6 @@ ctnetlink_create_conntrack(struct net *net,
+ 	nfct_seqadj_ext_add(ct);
+ 	nfct_synproxy_ext_add(ct);
  
- 	err = nf_conntrack_hash_check_insert(ct);
- 	if (err < 0)
--		goto err2;
-+		goto err3;
- 
- 	rcu_read_unlock();
- 
- 	return ct;
- 
-+err3:
-+	if (ct->master)
-+		nf_ct_put(ct->master);
- err2:
- 	rcu_read_unlock();
- err1:
+-	/* we must add conntrack extensions before confirmation. */
+-	ct->status |= IPS_CONFIRMED;
+-
+ 	if (cda[CTA_STATUS]) {
+ 		err = ctnetlink_change_status(ct, cda);
+ 		if (err < 0)
 -- 
 2.39.2
 
