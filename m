@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32CF48481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:12:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C4AC4339C;
-	Fri, 10 Mar 2023 14:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0938481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:12:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E41C433D2;
+	Fri, 10 Mar 2023 14:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457530;
-	bh=F3Q4jKopnnXfzlnJ8qnU5EeFLtFycAZFH7iwqJimz+U=;
+	s=korg; t=1678457532;
+	bh=BPvNuEoIcrDhMCnlwaSg0666iVjyarZBp9q3ys8goR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=prcU1ODHT13EuVY59i4pdM9xZiNDCvCBKtPh7IvQLQu/8kRyAJ8wJbmxIQWAHLB06
-	 f9+yb4MI5iEqyvVhU7iHedVdZRqmENVt+kIrvc/w6pv5fTPTKZATHgjkju98GXHvyP
-	 9EVQUrMVYoMhpphfsnXDiM947CvbjptAs83mduxs=
+	b=eIYyhytKjjKwtr7flwQOVykCJRMPjpWrrS10XoPsTPTxGVC2QOhUwTDpv23x6OGT+
+	 jCWzObx91brM/fmt96ECAnBeB4SwYn6UqrBD1CGn695jPGmxGKLQhpJcYZeX6sr1EZ
+	 jKSxiOk8PBfZmWspBCMSikf0E4d4U6UY87CoBxn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Jilin Yuan <yuanjilin@cdjrlc.com>,
+	Chris Chiu <chris.chiu@canonical.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 128/200] USB: fix memory leak with using debugfs_lookup()
-Date: Fri, 10 Mar 2023 14:38:55 +0100
-Message-Id: <20230310133721.057687050@linuxfoundation.org>
+Subject: [PATCH 6.1 162/200] PCI: Distribute available resources for root buses, too
+Date: Fri, 10 Mar 2023 14:39:29 +0100
+Message-Id: <20230310133722.088313970@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,37 +36,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 30374434edab20e25776f8ecb4bc9d1e54309487 ]
+[ Upstream commit 7180c1d08639f28e63110ad35815f7a1785b8a19 ]
 
-When calling debugfs_lookup() the result must have dput() called on it,
-otherwise the memory will leak over time.  To make things simpler, just
-call debugfs_lookup_and_remove() instead which handles all of the logic at
-once.
+Previously we distributed spare resources only upon hot-add, so if the
+initial root bus scan found devices that had not been fully configured by
+the BIOS, we allocated only enough resources to cover what was then
+present. If some of those devices were hotplug bridges, we did not leave
+any additional resource space for future expansion.
 
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Jilin Yuan <yuanjilin@cdjrlc.com>
-Link: https://lore.kernel.org/r/20230106152828.3790902-1-gregkh@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Distribute the available resources for root buses, too, to make this work
+the same way as the normal hotplug case.
+
+A previous commit to do this was reverted due to a regression reported by
+Jonathan Cameron:
+
+  e96e27fc6f79 ("PCI: Distribute available resources for root buses, too")
+  5632e2beaf9d ("Revert "PCI: Distribute available resources for root buses, too"")
+
+This commit changes pci_bridge_resources_not_assigned() to work with
+bridges that do not have all the resource windows programmed by the boot
+firmware (previously we expected all I/O, memory and prefetchable memory
+were programmed).
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216000
+Link: https://lore.kernel.org/r/20220905080232.36087-5-mika.westerberg@linux.intel.com
+Link: https://lore.kernel.org/r/20230131092405.29121-4-mika.westerberg@linux.intel.com
+Reported-by: Chris Chiu <chris.chiu@canonical.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/usb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/setup-bus.c | 57 ++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 56 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/core/usb.c b/drivers/usb/core/usb.c
-index 11b15d7b357ad..a415206cab043 100644
---- a/drivers/usb/core/usb.c
-+++ b/drivers/usb/core/usb.c
-@@ -998,7 +998,7 @@ static void usb_debugfs_init(void)
+diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
+index b7b8dddb77722..c690572b10ce7 100644
+--- a/drivers/pci/setup-bus.c
++++ b/drivers/pci/setup-bus.c
+@@ -1770,7 +1770,10 @@ static void adjust_bridge_window(struct pci_dev *bridge, struct resource *res,
+ 	}
  
- static void usb_debugfs_cleanup(void)
- {
--	debugfs_remove(debugfs_lookup("devices", usb_debug_root));
-+	debugfs_lookup_and_remove("devices", usb_debug_root);
+ 	res->end = res->start + new_size - 1;
+-	remove_from_list(add_list, res);
++
++	/* If the resource is part of the add_list, remove it now */
++	if (add_list)
++		remove_from_list(add_list, res);
  }
  
+ static void remove_dev_resource(struct resource *avail, struct pci_dev *dev,
+@@ -1972,6 +1975,8 @@ static void pci_bridge_distribute_available_resources(struct pci_dev *bridge,
+ 	if (!bridge->is_hotplug_bridge)
+ 		return;
+ 
++	pci_dbg(bridge, "distributing available resources\n");
++
+ 	/* Take the initial extra resources from the hotplug port */
+ 	available_io = bridge->resource[PCI_BRIDGE_IO_WINDOW];
+ 	available_mmio = bridge->resource[PCI_BRIDGE_MEM_WINDOW];
+@@ -1983,6 +1988,54 @@ static void pci_bridge_distribute_available_resources(struct pci_dev *bridge,
+ 					       available_mmio_pref);
+ }
+ 
++static bool pci_bridge_resources_not_assigned(struct pci_dev *dev)
++{
++	const struct resource *r;
++
++	/*
++	 * If the child device's resources are not yet assigned it means we
++	 * are configuring them (not the boot firmware), so we should be
++	 * able to extend the upstream bridge resources in the same way we
++	 * do with the normal hotplug case.
++	 */
++	r = &dev->resource[PCI_BRIDGE_IO_WINDOW];
++	if (r->flags && !(r->flags & IORESOURCE_STARTALIGN))
++		return false;
++	r = &dev->resource[PCI_BRIDGE_MEM_WINDOW];
++	if (r->flags && !(r->flags & IORESOURCE_STARTALIGN))
++		return false;
++	r = &dev->resource[PCI_BRIDGE_PREF_MEM_WINDOW];
++	if (r->flags && !(r->flags & IORESOURCE_STARTALIGN))
++		return false;
++
++	return true;
++}
++
++static void
++pci_root_bus_distribute_available_resources(struct pci_bus *bus,
++					    struct list_head *add_list)
++{
++	struct pci_dev *dev, *bridge = bus->self;
++
++	for_each_pci_bridge(dev, bus) {
++		struct pci_bus *b;
++
++		b = dev->subordinate;
++		if (!b)
++			continue;
++
++		/*
++		 * Need to check "bridge" here too because it is NULL
++		 * in case of root bus.
++		 */
++		if (bridge && pci_bridge_resources_not_assigned(dev))
++			pci_bridge_distribute_available_resources(bridge,
++								  add_list);
++		else
++			pci_root_bus_distribute_available_resources(b, add_list);
++	}
++}
++
  /*
+  * First try will not touch PCI bridge res.
+  * Second and later try will clear small leaf bridge res.
+@@ -2022,6 +2075,8 @@ void pci_assign_unassigned_root_bus_resources(struct pci_bus *bus)
+ 	 */
+ 	__pci_bus_size_bridges(bus, add_list);
+ 
++	pci_root_bus_distribute_available_resources(bus, add_list);
++
+ 	/* Depth last, allocate resources and update the hardware. */
+ 	__pci_bus_assign_resources(bus, add_list, &fail_head);
+ 	if (add_list)
 -- 
 2.39.2
 
