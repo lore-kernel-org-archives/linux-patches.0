@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4420D8489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:15:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C08CEC433D2;
-	Fri, 10 Mar 2023 14:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499CD8489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:15:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8D9C433D2;
+	Fri, 10 Mar 2023 14:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457752;
-	bh=7J5HSHDxRcVkjVxdnbAAcNS0Ikr0EXVHLtr0MbZclHk=;
+	s=korg; t=1678457755;
+	bh=Ow8oS7myItr+rGPZnrLY9dSkLx/rPUrh4hb7O61uRoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/nbBPJmKbDqfSclsp8LRkKFIVbnCJTOftblNPA72q8nv4EZ5aSDMTyku/0PUSwhq
-	 bPoPV+V3FLp44P0wuGmBW3zsWdKGrCVwZsCWFCYc0pSUyej6yv9JghGMss2lu8icdO
-	 TyUuDxbq8X+f5s7jPo8iwKiJyIZAp2i7GYjtd8fQ=
+	b=xC9iLgRV3/jJ4hiQ1zVP0dO4FroUGDyqACTbFxLdrVmPKB2IHPVy75jTmydIrq5tk
+	 sur6SqjTfY9LGqVRf4eSnte6nUtRJ9vpTSQcF93dY2jIwjTIAgwq+zVJYicR0Gi4Mm
+	 nZ2OJu87ME19cEB+YxDhOB9UiLMMM2kw39u1dSDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 045/252] ACPI: battery: Fix missing NUL-termination with large strings
-Date: Fri, 10 Mar 2023 14:36:55 +0100
-Message-Id: <20230310133720.185112503@linuxfoundation.org>
+Subject: [PATCH 4.19 046/252] crypto: seqiv - Handle EBUSY correctly
+Date: Fri, 10 Mar 2023 14:36:56 +0100
+Message-Id: <20230310133720.213713934@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -35,42 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit f2ac14b5f197e4a2dec51e5ceaa56682ff1592bc ]
+[ Upstream commit 32e62025e5e52fbe4812ef044759de7010b15dbc ]
 
-When encountering a string bigger than the destination buffer (32 bytes),
-the string is not properly NUL-terminated, causing buffer overreads later.
+As it is seqiv only handles the special return value of EINPROGERSS,
+which means that in all other cases it will free data related to the
+request.
 
-This for example happens on the Inspiron 3505, where the battery
-model name is larger than 32 bytes, which leads to sysfs showing
-the model name together with the serial number string (which is
-NUL-terminated and thus prevents worse).
+However, as the caller of seqiv may specify MAY_BACKLOG, we also need
+to expect EBUSY and treat it in the same way.  Otherwise backlogged
+requests will trigger a use-after-free.
 
-Fix this by using strscpy() which ensures that the result is
-always NUL-terminated.
-
-Fixes: 106449e870b3 ("ACPI: Battery: Allow extract string from integer")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 0a270321dbf9 ("[CRYPTO] seqiv: Add Sequence Number IV Generator")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/battery.c | 2 +-
+ crypto/seqiv.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index c0c533206e02d..88f4040d6c1f2 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -478,7 +478,7 @@ static int extract_package(struct acpi_battery *battery,
- 			u8 *ptr = (u8 *)battery + offsets[i].offset;
- 			if (element->type == ACPI_TYPE_STRING ||
- 			    element->type == ACPI_TYPE_BUFFER)
--				strncpy(ptr, element->string.pointer, 32);
-+				strscpy(ptr, element->string.pointer, 32);
- 			else if (element->type == ACPI_TYPE_INTEGER) {
- 				strncpy(ptr, (u8 *)&element->integer.value,
- 					sizeof(u64));
+diff --git a/crypto/seqiv.c b/crypto/seqiv.c
+index 39dbf2f7e5f5c..ca68608ab14e1 100644
+--- a/crypto/seqiv.c
++++ b/crypto/seqiv.c
+@@ -30,7 +30,7 @@ static void seqiv_aead_encrypt_complete2(struct aead_request *req, int err)
+ 	struct aead_request *subreq = aead_request_ctx(req);
+ 	struct crypto_aead *geniv;
+ 
+-	if (err == -EINPROGRESS)
++	if (err == -EINPROGRESS || err == -EBUSY)
+ 		return;
+ 
+ 	if (err)
 -- 
 2.39.2
 
