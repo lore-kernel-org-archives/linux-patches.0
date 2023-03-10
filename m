@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924148820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:50:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D75C4339B;
-	Fri, 10 Mar 2023 14:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8045E8820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:50:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28B4C433D2;
+	Fri, 10 Mar 2023 14:50:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459835;
-	bh=Jqbw3s2CuE8wbRmwz/SEgem1CEglRObBL4yKCUluc64=;
+	s=korg; t=1678459838;
+	bh=aDLSNJ736VfCho1t2vIDXF1aeAi+Lc8JSc5Ke7rr0tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J5GFyrAESh9y2qBy/748WgQQZeErLkDgyXJHXvuz26pBgYU7Ml1VQpYw8JjvZPWO5
-	 WIsCV43ZAk+Jbq64lJ9x2mZm4vELzsaSpGL41srFASVV+8NCHDUwYQ8HIOsocaPTCd
-	 ZgLmj89AKJyl+PHK+k3y1iHb7Kuk47mvNrdEXoyg=
+	b=cmWWsqNP9NX2xmTxO2kMDsMdXcr1nqhO2u0OUBCJy9jppHL+6CXNxleE8D4abNPQf
+	 r5hpM1i4TLD8vPUYzKbcvkpaBT94zSyjnKvNUkNimIxmqxoKWXvN6lrFPFJscALbpc
+	 y5e7ljkovUxiB3zZ8TUrV64HrRfS1hp4wRBH6uiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Christian Lamparter <chunkeey@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 135/529] selftests/bpf: Fix out-of-srctree build
-Date: Fri, 10 Mar 2023 14:34:38 +0100
-Message-Id: <20230310133811.225901952@linuxfoundation.org>
+Subject: [PATCH 5.10 136/529] crypto: crypto4xx - Call dma_unmap_page when done
+Date: Fri, 10 Mar 2023 14:34:39 +0100
+Message-Id: <20230310133811.265291370@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,47 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 0b0757244754ea1d0721195c824770f5576e119e ]
+[ Upstream commit bcdda4301bdc4955d45f7e1ffefb6207967b067e ]
 
-Building BPF selftests out of srctree fails with:
+In crypto4xx_cipher_done, we should be unmapping the dst page, not
+mapping it.
 
-  make: *** No rule to make target '/linux-build//ima_setup.sh', needed by 'ima_setup.sh'.  Stop.
+This was flagged by a sparse warning about the unused addr variable.
+While we're at it, also fix a sparse warning regarding the unused
+ctx variable in crypto4xx_ahash_done (by actually using it).
 
-The culprit is the rule that defines convenient shorthands like
-"make test_progs", which builds $(OUTPUT)/test_progs. These shorthands
-make sense only for binaries that are built though; scripts that live
-in the source tree do not end up in $(OUTPUT).
-
-Therefore drop $(TEST_PROGS) and $(TEST_PROGS_EXTENDED) from the rule.
-
-The issue exists for a while, but it became a problem only after commit
-d68ae4982cb7 ("selftests/bpf: Install all required files to run selftests"),
-which added dependencies on these scripts.
-
-Fixes: 03dcb78460c2 ("selftests/bpf: Add simple per-test targets to Makefile")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230208231211.283606-1-iii@linux.ibm.com
+Fixes: 049359d65527 ("crypto: amcc - Add crypt4xx driver")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Tested-by: Christian Lamparter <chunkeey@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/Makefile | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/crypto/amcc/crypto4xx_core.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
-index 1d91555333608..a845724e0906a 100644
---- a/tools/testing/selftests/bpf/Makefile
-+++ b/tools/testing/selftests/bpf/Makefile
-@@ -119,8 +119,6 @@ RESOLVE_BTFIDS := $(BUILD_DIR)/resolve_btfids/resolve_btfids
- # NOTE: Semicolon at the end is critical to override lib.mk's default static
- # rule for binaries.
- $(notdir $(TEST_GEN_PROGS)						\
--	 $(TEST_PROGS)							\
--	 $(TEST_PROGS_EXTENDED)						\
- 	 $(TEST_GEN_PROGS_EXTENDED)					\
- 	 $(TEST_CUSTOM_PROGS)): %: $(OUTPUT)/% ;
+diff --git a/drivers/crypto/amcc/crypto4xx_core.c b/drivers/crypto/amcc/crypto4xx_core.c
+index 2e3690f65786d..6d05ac0c05134 100644
+--- a/drivers/crypto/amcc/crypto4xx_core.c
++++ b/drivers/crypto/amcc/crypto4xx_core.c
+@@ -522,7 +522,6 @@ static void crypto4xx_cipher_done(struct crypto4xx_device *dev,
+ {
+ 	struct skcipher_request *req;
+ 	struct scatterlist *dst;
+-	dma_addr_t addr;
  
+ 	req = skcipher_request_cast(pd_uinfo->async_req);
+ 
+@@ -531,8 +530,8 @@ static void crypto4xx_cipher_done(struct crypto4xx_device *dev,
+ 					  req->cryptlen, req->dst);
+ 	} else {
+ 		dst = pd_uinfo->dest_va;
+-		addr = dma_map_page(dev->core_dev->device, sg_page(dst),
+-				    dst->offset, dst->length, DMA_FROM_DEVICE);
++		dma_unmap_page(dev->core_dev->device, pd->dest, dst->length,
++			       DMA_FROM_DEVICE);
+ 	}
+ 
+ 	if (pd_uinfo->sa_va->sa_command_0.bf.save_iv == SA_SAVE_IV) {
+@@ -557,10 +556,9 @@ static void crypto4xx_ahash_done(struct crypto4xx_device *dev,
+ 	struct ahash_request *ahash_req;
+ 
+ 	ahash_req = ahash_request_cast(pd_uinfo->async_req);
+-	ctx  = crypto_tfm_ctx(ahash_req->base.tfm);
++	ctx = crypto_ahash_ctx(crypto_ahash_reqtfm(ahash_req));
+ 
+-	crypto4xx_copy_digest_to_dst(ahash_req->result, pd_uinfo,
+-				     crypto_tfm_ctx(ahash_req->base.tfm));
++	crypto4xx_copy_digest_to_dst(ahash_req->result, pd_uinfo, ctx);
+ 	crypto4xx_ret_sg_desc(dev, pd_uinfo);
+ 
+ 	if (pd_uinfo->state & PD_ENTRY_BUSY)
 -- 
 2.39.2
 
