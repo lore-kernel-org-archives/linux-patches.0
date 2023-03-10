@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6236882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:05:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C3DC433D2;
-	Fri, 10 Mar 2023 15:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B026882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:05:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02923C433D2;
+	Fri, 10 Mar 2023 15:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460755;
-	bh=9VOc0mhSqhqmXrxo7YEm+8Zeipgg+26k82nRhbO1Uiw=;
+	s=korg; t=1678460758;
+	bh=DQ5UxYLeTP7NrfUspdajFITjFCvX8P/LXBHnt9i89zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Z/nnN0jb4ah1re6LkidW9MHl8FCB9FhkK//E+56QmDynLyVlkT/6WqDNM/UKr+k5
-	 nSNZzj1edF+RIyf3EQYIjRml5ca0U+84dT0zopcNDQTYco1VKqL0+yc3zx8nYVSjS7
-	 phRf5KExtLaL+sMTwSvF9w3bb83JNudvTdNsqrIA=
+	b=o90Ax+h6Fcmjr6ExbyXUEISAW0OHSo/X/Lq1BTap1VIkjPaPhRRLHaxVKFRIlEPXT
+	 w0B3EDCGhj2n6qf7oS+7WiEzXBP78mbsB01mGo8DZYalhMWLvmlmxlhaPStl4KpK27
+	 IcOGgCclbUAM/00aVOauEpcf2E9VIQhuccR064Ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Yang <xiangyang3@huawei.com>,
-	Anton Ivanov <anton.ivanov@kot-begemot.co.uk>,
-	Richard Weinberger <richard@nod.at>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 439/529] um: vector: Fix memory leak in vector_config
-Date: Fri, 10 Mar 2023 14:39:42 +0100
-Message-Id: <20230310133825.270234246@linuxfoundation.org>
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 412/529] scsi: qla2xxx: Fix erroneous link down
+Date: Fri, 10 Mar 2023 14:39:15 +0100
+Message-Id: <20230310133824.093116635@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,36 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiang Yang <xiangyang3@huawei.com>
+From: Quinn Tran <qutran@marvell.com>
 
-[ Upstream commit 8f88c73afe481f93d40801596927e8c0047b6d96 ]
+commit 3fbc74feb642deb688cc97f76d40b7287ddd4cb1 upstream.
 
-If the return value of the uml_parse_vector_ifspec function is NULL,
-we should call kfree(params) to prevent memory leak.
+If after an adapter reset the appearance of link is not recovered, the
+devices are not rediscovered.  This is result of a race condition between
+adapter reset (abort_isp) and the topology scan.  During adapter reset, the
+ABORT_ISP_ACTIVE flag is set.  Topology scan usually occurred after adapter
+reset.  In this case, the topology scan came earlier than usual where it
+ran into problem due to ABORT_ISP_ACTIVE flag was still set.
 
-Fixes: 49da7e64f33e ("High Performance UML Vector Network Driver")
-Signed-off-by: Xiang Yang <xiangyang3@huawei.com>
-Acked-By: Anton Ivanov <anton.ivanov@kot-begemot.co.uk>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+kernel: qla2xxx [0000:13:00.0]-1005:1: Cmd 0x6a aborted with timeout since ISP Abort is pending
+kernel: qla2xxx [0000:13:00.0]-28a0:1: MBX_GET_PORT_NAME failed, No FL Port.
+kernel: qla2xxx [0000:13:00.0]-286b:1: qla2x00_configure_loop: exiting normally. local port wwpn 51402ec0123d9a80 id 012300)
+kernel: qla2xxx [0000:13:00.0]-8017:1: ADAPTER RESET SUCCEEDED nexus=1:0:15.
+
+Allow adapter reset to complete before any scan can start.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/drivers/vector_kern.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/qla2xxx/qla_os.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/um/drivers/vector_kern.c b/arch/um/drivers/vector_kern.c
-index 555203e3e7b45..fc662f7cc2afb 100644
---- a/arch/um/drivers/vector_kern.c
-+++ b/arch/um/drivers/vector_kern.c
-@@ -771,6 +771,7 @@ static int vector_config(char *str, char **error_out)
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -6899,9 +6899,12 @@ qla2x00_do_dpc(void *data)
+ 			}
+ 		}
+ loop_resync_check:
+-		if (test_and_clear_bit(LOOP_RESYNC_NEEDED,
++		if (!qla2x00_reset_active(base_vha) &&
++		    test_and_clear_bit(LOOP_RESYNC_NEEDED,
+ 		    &base_vha->dpc_flags)) {
+-
++			/*
++			 * Allow abort_isp to complete before moving on to scanning.
++			 */
+ 			ql_dbg(ql_dbg_dpc, base_vha, 0x400f,
+ 			    "Loop resync scheduled.\n");
  
- 	if (parsed == NULL) {
- 		*error_out = "vector_config failed to parse parameters";
-+		kfree(params);
- 		return -EINVAL;
- 	}
- 
--- 
-2.39.2
-
 
 
