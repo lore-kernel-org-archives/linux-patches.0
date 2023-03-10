@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647EF847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C76B7C433EF;
-	Fri, 10 Mar 2023 13:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43322847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3918C433EF;
+	Fri, 10 Mar 2023 13:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456658;
-	bh=imXWIlqL+70FKbWdGg/sk3cDePFqS/WJog3cjHnOprc=;
+	s=korg; t=1678456661;
+	bh=rv/+sNTyjAtIKfSftO6PLtF/hk99jZf4GcTu2Mc3q44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=azVUIVBKpJtkN2ITTzUw3+9bgNsR1+AQw71TWFeD5rJABSofTYKxeqfAHpbFEeAyw
-	 F7bnStsE+eO9s4VXjOrvCeXjD0GMX+1ldwk2+zK5pXdhJ9fv9u0vT18Wy8fZV/rpVs
-	 ItQYVgUDAXlrhm4IqdvBeRrfxRG7x0V9BkxK3R2Q=
+	b=TUYUslT5TUoHXJbiyXIgaZXYjTrk9BOZah9XPJrMwofcq3fKJa+jNasT+4Qt6AI8G
+	 msJ8v9D0ha9Wx+i/ShfhiuBT68YXZzGdxbhsrH2vtLPMelNS3bkjoidLWS6wecM50I
+	 EMLX4jOVzoNmjArUY1tMG2s6PmXhzq2d+P+yHdHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yangtao Li <frank.li@vivo.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 048/211] soc: qcom: stats: Populate all subsystem debugfs files
-Date: Fri, 10 Mar 2023 14:37:08 +0100
-Message-Id: <20230310133720.197059730@linuxfoundation.org>
+Subject: [PATCH 6.2 049/211] f2fs: introduce IS_F2FS_IPU_* macro
+Date: Fri, 10 Mar 2023 14:37:09 +0100
+Message-Id: <20230310133720.226359618@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,72 +35,138 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit acdbf5f9b2c492505145f6e50c65418521a547c4 ]
+[ Upstream commit fdb7ccc3f9cb316c399b072c7a75a106678eb421 ]
 
-This driver relies on SMEM to populate items for each subsystem before
-the device probes. The items in SMEM that are being looked for are
-populated by the subsystems lazily, and therefore may not exist until
-the device has booted. For example, if I build this driver into the
-kernel on Trogdor Lazor and boot up, I don't see a 'modem' debugfs file
-populated, because the modem boots and populates the SMEM item after
-this driver probes.
+IS_F2FS_IPU_* macro can be used to identify whether
+f2fs ipu related policies are enabled.
 
-Always populate the files for the subsystems if they're in SMEM, and
-make the qcom_subsystem_sleep_stats_show() function return 0 if the SMEM
-items still isn't there. This way we can run a simple command like
+BTW, convert to use BIT() instead of open code.
 
-	grep ^ /sys/kernel/debug/qcom_stats/*
-
-and collect the subsystem sleep stats without interspersed errors or
-missing details entirely because this driver probed first.
-
-Fixes: 1d7724690344 ("soc: qcom: Add Sleep stats driver")
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230119032329.2909383-1-swboyd@chromium.org
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: c5bf83483382 ("f2fs: fix to set ipu policy")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/qcom_stats.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ fs/f2fs/data.c    | 25 ++++++++++---------------
+ fs/f2fs/segment.c |  4 ++--
+ fs/f2fs/segment.h | 15 +++++++++++++++
+ fs/f2fs/super.c   |  4 ++--
+ 4 files changed, 29 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
-index 6228af057120b..c207bb96c523a 100644
---- a/drivers/soc/qcom/qcom_stats.c
-+++ b/drivers/soc/qcom/qcom_stats.c
-@@ -92,7 +92,7 @@ static int qcom_subsystem_sleep_stats_show(struct seq_file *s, void *unused)
- 	/* Items are allocated lazily, so lookup pointer each time */
- 	stat = qcom_smem_get(subsystem->pid, subsystem->smem_item, NULL);
- 	if (IS_ERR(stat))
--		return -EIO;
-+		return 0;
- 
- 	qcom_print_stats(s, stat);
- 
-@@ -170,20 +170,14 @@ static void qcom_create_soc_sleep_stat_files(struct dentry *root, void __iomem *
- static void qcom_create_subsystem_stat_files(struct dentry *root,
- 					     const struct stats_config *config)
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 5263d97bef1dd..a28d05895f5c7 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2535,34 +2535,29 @@ static inline bool check_inplace_update_policy(struct inode *inode,
+ 				struct f2fs_io_info *fio)
  {
--	const struct sleep_stats *stat;
- 	int i;
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
+-	unsigned int policy = SM_I(sbi)->ipu_policy;
  
- 	if (!config->subsystem_stats_in_smem)
- 		return;
+-	if (policy & (0x1 << F2FS_IPU_HONOR_OPU_WRITE) &&
+-			is_inode_flag_set(inode, FI_OPU_WRITE))
++	if (IS_F2FS_IPU_HONOR_OPU_WRITE(sbi) &&
++	    is_inode_flag_set(inode, FI_OPU_WRITE))
+ 		return false;
+-	if (policy & (0x1 << F2FS_IPU_FORCE))
++	if (IS_F2FS_IPU_FORCE(sbi))
+ 		return true;
+-	if (policy & (0x1 << F2FS_IPU_SSR) && f2fs_need_SSR(sbi))
++	if (IS_F2FS_IPU_SSR(sbi) && f2fs_need_SSR(sbi))
+ 		return true;
+-	if (policy & (0x1 << F2FS_IPU_UTIL) &&
+-			utilization(sbi) > SM_I(sbi)->min_ipu_util)
++	if (IS_F2FS_IPU_UTIL(sbi) && utilization(sbi) > SM_I(sbi)->min_ipu_util)
+ 		return true;
+-	if (policy & (0x1 << F2FS_IPU_SSR_UTIL) && f2fs_need_SSR(sbi) &&
+-			utilization(sbi) > SM_I(sbi)->min_ipu_util)
++	if (IS_F2FS_IPU_SSR_UTIL(sbi) && f2fs_need_SSR(sbi) &&
++	    utilization(sbi) > SM_I(sbi)->min_ipu_util)
+ 		return true;
  
--	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
--		stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
--		if (IS_ERR(stat))
--			continue;
--
-+	for (i = 0; i < ARRAY_SIZE(subsystems); i++)
- 		debugfs_create_file(subsystems[i].name, 0400, root, (void *)&subsystems[i],
- 				    &qcom_subsystem_sleep_stats_fops);
--	}
- }
+ 	/*
+ 	 * IPU for rewrite async pages
+ 	 */
+-	if (policy & (0x1 << F2FS_IPU_ASYNC) &&
+-			fio && fio->op == REQ_OP_WRITE &&
+-			!(fio->op_flags & REQ_SYNC) &&
+-			!IS_ENCRYPTED(inode))
++	if (IS_F2FS_IPU_ASYNC(sbi) && fio && fio->op == REQ_OP_WRITE &&
++	    !(fio->op_flags & REQ_SYNC) && !IS_ENCRYPTED(inode))
+ 		return true;
  
- static int qcom_stats_probe(struct platform_device *pdev)
+ 	/* this is only set during fdatasync */
+-	if (policy & (0x1 << F2FS_IPU_FSYNC) &&
+-			is_inode_flag_set(inode, FI_NEED_IPU))
++	if (IS_F2FS_IPU_FSYNC(sbi) && is_inode_flag_set(inode, FI_NEED_IPU))
+ 		return true;
+ 
+ 	if (unlikely(fio && is_sbi_flag_set(sbi, SBI_CP_DISABLED) &&
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index cf430f34d1968..06cae55265841 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -3498,7 +3498,7 @@ int f2fs_inplace_write_data(struct f2fs_io_info *fio)
+ 
+ 	stat_inc_inplace_blocks(fio->sbi);
+ 
+-	if (fio->bio && !(SM_I(sbi)->ipu_policy & (1 << F2FS_IPU_NOCACHE)))
++	if (fio->bio && !IS_F2FS_IPU_NOCACHE(sbi))
+ 		err = f2fs_merge_page_bio(fio);
+ 	else
+ 		err = f2fs_submit_page_bio(fio);
+@@ -5137,7 +5137,7 @@ int f2fs_build_segment_manager(struct f2fs_sb_info *sbi)
+ 		sm_info->rec_prefree_segments = DEF_MAX_RECLAIM_PREFREE_SEGMENTS;
+ 
+ 	if (!f2fs_lfs_mode(sbi))
+-		sm_info->ipu_policy = 1 << F2FS_IPU_FSYNC;
++		sm_info->ipu_policy = BIT(F2FS_IPU_FSYNC);
+ 	sm_info->min_ipu_util = DEF_MIN_IPU_UTIL;
+ 	sm_info->min_fsync_blocks = DEF_MIN_FSYNC_BLOCKS;
+ 	sm_info->min_seq_blocks = sbi->blocks_per_seg;
+diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
+index 3ad1b7b6fa946..e77518c49f388 100644
+--- a/fs/f2fs/segment.h
++++ b/fs/f2fs/segment.h
+@@ -681,6 +681,21 @@ enum {
+ 	F2FS_IPU_HONOR_OPU_WRITE,
+ };
+ 
++#define F2FS_IPU_POLICY(name)					\
++static inline int IS_##name(struct f2fs_sb_info *sbi)		\
++{								\
++	return SM_I(sbi)->ipu_policy & BIT(name);		\
++}
++
++F2FS_IPU_POLICY(F2FS_IPU_FORCE);
++F2FS_IPU_POLICY(F2FS_IPU_SSR);
++F2FS_IPU_POLICY(F2FS_IPU_UTIL);
++F2FS_IPU_POLICY(F2FS_IPU_SSR_UTIL);
++F2FS_IPU_POLICY(F2FS_IPU_FSYNC);
++F2FS_IPU_POLICY(F2FS_IPU_ASYNC);
++F2FS_IPU_POLICY(F2FS_IPU_NOCACHE);
++F2FS_IPU_POLICY(F2FS_IPU_HONOR_OPU_WRITE);
++
+ static inline unsigned int curseg_segno(struct f2fs_sb_info *sbi,
+ 		int type)
+ {
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 1f812b9ce985b..87d56a9883e65 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -4089,8 +4089,8 @@ static void f2fs_tuning_parameters(struct f2fs_sb_info *sbi)
+ 		if (f2fs_block_unit_discard(sbi))
+ 			SM_I(sbi)->dcc_info->discard_granularity =
+ 						MIN_DISCARD_GRANULARITY;
+-		SM_I(sbi)->ipu_policy = 1 << F2FS_IPU_FORCE |
+-					1 << F2FS_IPU_HONOR_OPU_WRITE;
++		SM_I(sbi)->ipu_policy = BIT(F2FS_IPU_FORCE) |
++					BIT(F2FS_IPU_HONOR_OPU_WRITE);
+ 	}
+ 
+ 	sbi->readdir_ra = true;
 -- 
 2.39.2
 
