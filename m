@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BAF8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:12:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74860C433D2;
-	Fri, 10 Mar 2023 14:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940028481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:12:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E67C4339C;
+	Fri, 10 Mar 2023 14:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457538;
-	bh=08JKqLomuqR8Z+WnXh9Rr9/MR0OoAsnToT9vuZiLzkg=;
+	s=korg; t=1678457541;
+	bh=NqyLywQdr+GjqxAN5/Ok/tyfg5uViJIHxKLt5nmQYBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E+ofMxx6jAaa1L0ZwKPpQjrlwzr9fbjeXSG6ZGZzmSliHrZlLctZLi2oEYENzfSpI
-	 XOH7b24C8rjTAANHbEOupJloqbAcINMY1PSUIJnP80ab+3EeyZCigNSj9hDmdJlenN
-	 pze5ODHBCigEDEkVKqGuwFZmsBHei+pisiX5PVkg=
+	b=boCwXBHrprpq9ZfXSQi3R/3MAScFHBQ5eKnfPbzKTr8xbEfXp9md9tWs7KTQrwA6L
+	 RFS8vHDuD3UKB/O6yylWL/bYhS8U8bL/KpiSdI6OlFdaEqJMI+H8O3/cwBEAEYF++Y
+	 0S0U4P5B9Cg3hq5+SVlG0f7pRj/7y7T41uUShxoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Matt Fagnani <matt.fagnani@bell.net>,
+	Vasant Hegde <vasant.hegde@amd.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.1 172/200] RDMA/cma: Distinguish between sockaddr_in and sockaddr_in6 by size
-Date: Fri, 10 Mar 2023 14:39:39 +0100
-Message-Id: <20230310133722.384562012@linuxfoundation.org>
+	Joerg Roedel <jroedel@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 173/200] iommu: Attach device group to old domain in error path
+Date: Fri, 10 Mar 2023 14:39:40 +0100
+Message-Id: <20230310133722.414436375@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -36,73 +38,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-[ Upstream commit 876e480da2f74715fc70e37723e77ca16a631e35 ]
+[ Upstream commit 2cc73c5712f97de98c38c2fafc1f288354a9f3c3 ]
 
-Clang can do some aggressive inlining, which provides it with greater
-visibility into the sizes of various objects that are passed into
-helpers. Specifically, compare_netdev_and_ip() can see through the type
-given to the "sa" argument, which means it can generate code for "struct
-sockaddr_in" that would have been passed to ipv6_addr_cmp() (that expects
-to operate on the larger "struct sockaddr_in6"), which would result in a
-compile-time buffer overflow condition detected by memcmp(). Logically,
-this state isn't reachable due to the sa_family assignment two callers
-above and the check in compare_netdev_and_ip(). Instead, provide a
-compile-time check on sizes so the size-mismatched code will be elided
-when inlining. Avoids the following warning from Clang:
+iommu_attach_group() attaches all devices in a group to domain and then
+sets group domain (group->domain). Current code (__iommu_attach_group())
+does not handle error path. This creates problem as devices to domain
+attachment is in inconsistent state.
 
-../include/linux/fortify-string.h:652:4: error: call to '__read_overflow' declared with 'error' attribute: detected read beyond size of object (1st parameter)
-                        __read_overflow();
-                        ^
-note: In function 'cma_netevent_callback'
-note:   which inlined function 'node_from_ndev_ip'
-1 error generated.
+Flow:
+  - During boot iommu attach devices to default domain
+  - Later some device driver (like amd/iommu_v2 or vfio) tries to attach
+    device to new domain.
+  - In iommu_attach_group() path we detach device from current domain.
+    Then it tries to attach devices to new domain.
+  - If it fails to attach device to new domain then device to domain link
+    is broken.
+  - iommu_attach_group() returns error.
+  - At this stage iommu_attach_group() caller thinks, attaching device to
+    new domain failed and devices are still attached to old domain.
+  - But in reality device to old domain link is broken. It will result
+    in all sort of failures (like IO page fault) later.
 
-When the underlying object size is not known (e.g. with GCC and older
-Clang), the result of __builtin_object_size() is SIZE_MAX, which will also
-compile away, leaving the code as it was originally.
+To recover from this situation, we need to attach all devices back to the
+old domain. Also log warning if it fails attach device back to old domain.
 
-Link: https://lore.kernel.org/r/20230208232549.never.139-kees@kernel.org
-Link: https://github.com/ClangBuiltLinux/linux/issues/1687
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org> # build
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Suggested-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reported-by: Matt Fagnani <matt.fagnani@bell.net>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Tested-by: Matt Fagnani <matt.fagnani@bell.net>
+Link: https://lore.kernel.org/r/20230215052642.6016-1-vasant.hegde@amd.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216865
+Link: https://lore.kernel.org/lkml/15d0f9ff-2a56-b3e9-5b45-e6b23300ae3b@leemhuis.info/
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cma.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/iommu/iommu.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
-index 26d1772179b8f..8730674ceb2e1 100644
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -479,13 +479,20 @@ static int compare_netdev_and_ip(int ifindex_a, struct sockaddr *sa,
- 	if (sa->sa_family != sb->sa_family)
- 		return sa->sa_family - sb->sa_family;
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index fd8c8aeb3c504..bfb2f163c6914 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -2089,8 +2089,22 @@ static int __iommu_attach_group(struct iommu_domain *domain,
  
--	if (sa->sa_family == AF_INET)
--		return memcmp((char *)&((struct sockaddr_in *)sa)->sin_addr,
--			      (char *)&((struct sockaddr_in *)sb)->sin_addr,
-+	if (sa->sa_family == AF_INET &&
-+	    __builtin_object_size(sa, 0) >= sizeof(struct sockaddr_in)) {
-+		return memcmp(&((struct sockaddr_in *)sa)->sin_addr,
-+			      &((struct sockaddr_in *)sb)->sin_addr,
- 			      sizeof(((struct sockaddr_in *)sa)->sin_addr));
-+	}
+ 	ret = __iommu_group_for_each_dev(group, domain,
+ 					 iommu_group_do_attach_device);
+-	if (ret == 0)
++	if (ret == 0) {
+ 		group->domain = domain;
++	} else {
++		/*
++		 * To recover from the case when certain device within the
++		 * group fails to attach to the new domain, we need force
++		 * attaching all devices back to the old domain. The old
++		 * domain is compatible for all devices in the group,
++		 * hence the iommu driver should always return success.
++		 */
++		struct iommu_domain *old_domain = group->domain;
 +
-+	if (sa->sa_family == AF_INET6 &&
-+	    __builtin_object_size(sa, 0) >= sizeof(struct sockaddr_in6)) {
-+		return ipv6_addr_cmp(&((struct sockaddr_in6 *)sa)->sin6_addr,
-+				     &((struct sockaddr_in6 *)sb)->sin6_addr);
++		group->domain = NULL;
++		WARN(__iommu_group_set_domain(group, old_domain),
++		     "iommu driver failed to attach a compatible domain");
 +	}
  
--	return ipv6_addr_cmp(&((struct sockaddr_in6 *)sa)->sin6_addr,
--			     &((struct sockaddr_in6 *)sb)->sin6_addr);
-+	return -1;
+ 	return ret;
  }
- 
- static int cma_add_id_to_tree(struct rdma_id_private *node_id_priv)
 -- 
 2.39.2
 
