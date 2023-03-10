@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52928882C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:16:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F93EC4339E;
-	Fri, 10 Mar 2023 15:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB3F882C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:16:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D1CC433A7;
+	Fri, 10 Mar 2023 15:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461386;
-	bh=WWKbL0XAaTcC2WdR556Ciru5qUvwI0Tp6k1Vu5sihl4=;
+	s=korg; t=1678461389;
+	bh=tNL2XF0os55xkhHC+FWFhjPd+UipkHZntSlEIBCAKgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b8BFhSo5MOzdXxuZYAp4RkXx6byEn31PB0E3G+qfE0jPMjqpUTemivrddBIELQzny
-	 Ssxv1VLLzSK6ls90yAQC1xHz9MXjVh5nelpSzClex/Geh2mL02ncf05iyh7rro2/VN
-	 djxmP21KqiTkeVDLWSQeiNU8eb/ep2ETRNJWXT+o=
+	b=FZaMZEHsERzMVHgn6mBPieW7jmDB8BKuB+hhqAH6tUPW6P2bmXGFZQn2hIsP40DDt
+	 QEACxRvyeDcMnAuuNFjdun5BSSWt5Lp3Ap8rwC0NfbKBRlXSj3elD1s5mVsc2SpQZV
+	 vwhF93N+KmrnaIMBH+TN/2/sYva9rZE8Il2AjTds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Mengyuan Lou <mengyuanlou@net-swift.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 093/136] iio: accel: mma9551_core: Prevent uninitialized variable in mma9551_read_config_word()
-Date: Fri, 10 Mar 2023 14:43:35 +0100
-Message-Id: <20230310133709.970781547@linuxfoundation.org>
+Subject: [PATCH 5.15 120/136] PCI: Add ACS quirk for Wangxun NICs
+Date: Fri, 10 Mar 2023 14:44:02 +0100
+Message-Id: <20230310133710.841202395@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -35,45 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Mengyuan Lou <mengyuanlou@net-swift.com>
 
-[ Upstream commit 64a68158738ec8f520347144352f7a09bdb9e169 ]
+[ Upstream commit a2b9b123ccac913e9f9b80337d687a2fe786a634 ]
 
-Smatch Warns:
-drivers/iio/accel/mma9551_core.c:299
-	mma9551_read_config_word() error: uninitialized symbol 'v'.
+Wangxun has verified there is no peer-to-peer between functions for the
+below selection of SFxxx, RP1000 and RP2000 NICS.  They may be
+multi-function devices, but the hardware does not advertise ACS capability.
 
-When (offset >= 1 << 12) is true mma9551_transfer() will return -EINVAL
-without 'v' being initialized, so check for the error and return.
+Add an ACS quirk for these devices so the functions can be in independent
+IOMMU groups.
 
-Note: No actual bug as caller checks the return value and does not
-use the parameter in the problem case.
-
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20230126153610.3586243-1-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20230207102419.44326-1-mengyuanlou@net-swift.com
+Signed-off-by: Mengyuan Lou <mengyuanlou@net-swift.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/mma9551_core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/pci/quirks.c    | 22 ++++++++++++++++++++++
+ include/linux/pci_ids.h |  2 ++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/drivers/iio/accel/mma9551_core.c b/drivers/iio/accel/mma9551_core.c
-index 413610a749c24..9023c07bb57b4 100644
---- a/drivers/iio/accel/mma9551_core.c
-+++ b/drivers/iio/accel/mma9551_core.c
-@@ -296,9 +296,12 @@ int mma9551_read_config_word(struct i2c_client *client, u8 app_id,
- 
- 	ret = mma9551_transfer(client, app_id, MMA9551_CMD_READ_CONFIG,
- 			       reg, NULL, 0, (u8 *)&v, 2);
-+	if (ret < 0)
-+		return ret;
-+
- 	*val = be16_to_cpu(v);
- 
--	return ret;
-+	return 0;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 305ff5bd1a20c..643a3b292f0b6 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -4823,6 +4823,26 @@ static int pci_quirk_brcm_acs(struct pci_dev *dev, u16 acs_flags)
+ 		PCI_ACS_SV | PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_UF);
  }
- EXPORT_SYMBOL(mma9551_read_config_word);
+ 
++/*
++ * Wangxun 10G/1G NICs have no ACS capability, and on multi-function
++ * devices, peer-to-peer transactions are not be used between the functions.
++ * So add an ACS quirk for below devices to isolate functions.
++ * SFxxx 1G NICs(em).
++ * RP1000/RP2000 10G NICs(sp).
++ */
++static int  pci_quirk_wangxun_nic_acs(struct pci_dev *dev, u16 acs_flags)
++{
++	switch (dev->device) {
++	case 0x0100 ... 0x010F:
++	case 0x1001:
++	case 0x2001:
++		return pci_acs_ctrl_enabled(acs_flags,
++			PCI_ACS_SV | PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_UF);
++	}
++
++	return false;
++}
++
+ static const struct pci_dev_acs_enabled {
+ 	u16 vendor;
+ 	u16 device;
+@@ -4968,6 +4988,8 @@ static const struct pci_dev_acs_enabled {
+ 	{ PCI_VENDOR_ID_NXP, 0x8d9b, pci_quirk_nxp_rp_acs },
+ 	/* Zhaoxin Root/Downstream Ports */
+ 	{ PCI_VENDOR_ID_ZHAOXIN, PCI_ANY_ID, pci_quirk_zhaoxin_pcie_ports_acs },
++	/* Wangxun nics */
++	{ PCI_VENDOR_ID_WANGXUN, PCI_ANY_ID, pci_quirk_wangxun_nic_acs },
+ 	{ 0 }
+ };
+ 
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index 04f44a4694a2e..4853538bf1561 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -3012,6 +3012,8 @@
+ #define PCI_DEVICE_ID_INTEL_VMD_9A0B	0x9a0b
+ #define PCI_DEVICE_ID_INTEL_S21152BB	0xb152
+ 
++#define PCI_VENDOR_ID_WANGXUN		0x8088
++
+ #define PCI_VENDOR_ID_SCALEMP		0x8686
+ #define PCI_DEVICE_ID_SCALEMP_VSMP_CTL	0x1010
  
 -- 
 2.39.2
