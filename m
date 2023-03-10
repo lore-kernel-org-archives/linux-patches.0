@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189788481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:03:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E7FC433D2;
-	Fri, 10 Mar 2023 14:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6168481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:03:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C46C4339C;
+	Fri, 10 Mar 2023 14:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456990;
-	bh=UPqmlEwRSziVrqYgqVNYMyaxL2DbuOy2Dmlzgry/sIo=;
+	s=korg; t=1678456993;
+	bh=WHWFpoQ1nrjbpody8adXpagBLdlcYWceEFt87NMVy4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w5ljgE5LJKyhATVRhPX7evF0UdAzuhiB15MiVj5C+th8pg5vVXBwCaCjZxFf3j2tA
-	 a/fGvrfTZsPXVGQ6ZPcyAxxeJRwxXTqHST+EJPwrUoKEgw2G/4ygWbWEUfHGegI4Uf
-	 BntmOD0UsIQixUcpSUOgUrNMpZN/aYZmKprsClhE=
+	b=ATboc5VgP+MPjtHF64R6csIXA/laApvh8mr59EnzYSA/6nyRHmhLp9tKm+vIRSo4V
+	 LyvvO/NklCiqzsVj4aYHV7s64z35KyISEySe3JXTkKQu/23gouMOSjNj6/Ep64Pf/R
+	 ZA7HH1Uo7jY30mPjK3Gmu/Keqkx7sOpSKN7bRd0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhu Lingshan <lingshan.zhu@intel.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.2 194/211] vDPA/ifcvf: decouple vq IRQ releasers from the adapter
-Date: Fri, 10 Mar 2023 14:39:34 +0100
-Message-Id: <20230310133724.782107338@linuxfoundation.org>
+Subject: [PATCH 6.2 195/211] vDPA/ifcvf: decouple config IRQ releaser from the adapter
+Date: Fri, 10 Mar 2023 14:39:35 +0100
+Message-Id: <20230310133724.811251456@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,77 +36,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhu Lingshan <lingshan.zhu@intel.com>
 
-commit 004cbcabab46d9346e2524c4eedd71ea57fe4f3c upstream.
+commit 23dac55cec3afdbc1b4eaed1c79f2cee00477f8b upstream.
 
-This commit decouples the IRQ releasers from the
-adapter, so that these functions could be
-safely invoked once probe
+This commit decouples config IRQ releaser from the adapter,
+so that it could be invoked once probe or in err handlers.
+ifcvf_free_irq() works on ifcvf_hw in this commit
 
 Signed-off-by: Zhu Lingshan <lingshan.zhu@intel.com>
 Cc: stable@vger.kernel.org
-Message-Id: <20221125145724.1129962-5-lingshan.zhu@intel.com>
+Message-Id: <20221125145724.1129962-6-lingshan.zhu@intel.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/ifcvf/ifcvf_main.c |   21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ drivers/vdpa/ifcvf/ifcvf_main.c |   22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
 --- a/drivers/vdpa/ifcvf/ifcvf_main.c
 +++ b/drivers/vdpa/ifcvf/ifcvf_main.c
-@@ -69,10 +69,9 @@ static void ifcvf_free_irq_vectors(void
- 	pci_free_irq_vectors(data);
+@@ -101,10 +101,9 @@ static void ifcvf_free_vq_irq(struct ifc
+ 		ifcvf_free_vqs_reused_irq(vf);
  }
  
--static void ifcvf_free_per_vq_irq(struct ifcvf_adapter *adapter)
-+static void ifcvf_free_per_vq_irq(struct ifcvf_hw *vf)
+-static void ifcvf_free_config_irq(struct ifcvf_adapter *adapter)
++static void ifcvf_free_config_irq(struct ifcvf_hw *vf)
  {
 -	struct pci_dev *pdev = adapter->pdev;
 -	struct ifcvf_hw *vf = &adapter->vf;
 +	struct pci_dev *pdev = vf->pdev;
- 	int i;
  
- 	for (i = 0; i < vf->nr_vring; i++) {
-@@ -83,10 +82,9 @@ static void ifcvf_free_per_vq_irq(struct
+ 	if (vf->config_irq == -EINVAL)
+ 		return;
+@@ -119,13 +118,12 @@ static void ifcvf_free_config_irq(struct
  	}
  }
  
--static void ifcvf_free_vqs_reused_irq(struct ifcvf_adapter *adapter)
-+static void ifcvf_free_vqs_reused_irq(struct ifcvf_hw *vf)
+-static void ifcvf_free_irq(struct ifcvf_adapter *adapter)
++static void ifcvf_free_irq(struct ifcvf_hw *vf)
  {
 -	struct pci_dev *pdev = adapter->pdev;
 -	struct ifcvf_hw *vf = &adapter->vf;
 +	struct pci_dev *pdev = vf->pdev;
  
- 	if (vf->vqs_reused_irq != -EINVAL) {
- 		devm_free_irq(&pdev->dev, vf->vqs_reused_irq, vf);
-@@ -95,14 +93,12 @@ static void ifcvf_free_vqs_reused_irq(st
- 
- }
- 
--static void ifcvf_free_vq_irq(struct ifcvf_adapter *adapter)
-+static void ifcvf_free_vq_irq(struct ifcvf_hw *vf)
- {
--	struct ifcvf_hw *vf = &adapter->vf;
--
- 	if (vf->msix_vector_status == MSIX_VECTOR_PER_VQ_AND_CONFIG)
--		ifcvf_free_per_vq_irq(adapter);
-+		ifcvf_free_per_vq_irq(vf);
- 	else
--		ifcvf_free_vqs_reused_irq(adapter);
-+		ifcvf_free_vqs_reused_irq(vf);
- }
- 
- static void ifcvf_free_config_irq(struct ifcvf_adapter *adapter)
-@@ -126,8 +122,9 @@ static void ifcvf_free_config_irq(struct
- static void ifcvf_free_irq(struct ifcvf_adapter *adapter)
- {
- 	struct pci_dev *pdev = adapter->pdev;
-+	struct ifcvf_hw *vf = &adapter->vf;
- 
--	ifcvf_free_vq_irq(adapter);
-+	ifcvf_free_vq_irq(vf);
- 	ifcvf_free_config_irq(adapter);
+ 	ifcvf_free_vq_irq(vf);
+-	ifcvf_free_config_irq(adapter);
++	ifcvf_free_config_irq(vf);
  	ifcvf_free_irq_vectors(pdev);
  }
+ 
+@@ -187,7 +185,7 @@ static int ifcvf_request_per_vq_irq(stru
+ 
+ 	return 0;
+ err:
+-	ifcvf_free_irq(adapter);
++	ifcvf_free_irq(vf);
+ 
+ 	return -EFAULT;
+ }
+@@ -221,7 +219,7 @@ static int ifcvf_request_vqs_reused_irq(
+ 
+ 	return 0;
+ err:
+-	ifcvf_free_irq(adapter);
++	ifcvf_free_irq(vf);
+ 
+ 	return -EFAULT;
+ }
+@@ -262,7 +260,7 @@ static int ifcvf_request_dev_irq(struct
+ 
+ 	return 0;
+ err:
+-	ifcvf_free_irq(adapter);
++	ifcvf_free_irq(vf);
+ 
+ 	return -EFAULT;
+ 
+@@ -317,7 +315,7 @@ static int ifcvf_request_config_irq(stru
+ 
+ 	return 0;
+ err:
+-	ifcvf_free_irq(adapter);
++	ifcvf_free_irq(vf);
+ 
+ 	return -EFAULT;
+ }
+@@ -508,7 +506,7 @@ static int ifcvf_vdpa_reset(struct vdpa_
+ 
+ 	if (status_old & VIRTIO_CONFIG_S_DRIVER_OK) {
+ 		ifcvf_stop_datapath(adapter);
+-		ifcvf_free_irq(adapter);
++		ifcvf_free_irq(vf);
+ 	}
+ 
+ 	ifcvf_reset_vring(adapter);
 
 
