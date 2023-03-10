@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459F7882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:08:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DE1C433D2;
-	Fri, 10 Mar 2023 15:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35AAE882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:08:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98690C4339B;
+	Fri, 10 Mar 2023 15:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460884;
-	bh=tgeLc7UXDEzXXhY1MdmXH1yOGMjkSL8ZA45eJlQ2DBk=;
+	s=korg; t=1678460887;
+	bh=IOpSy9e0pg/S/x7wRcGSFA+IZpQ3MyoJMN0TNT1S0+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yl3zLOuCT+xfYJMyVt2rI7tYbOjX1b/Z0eS1QT4PK673DP8zL7DSTQ35hP7NEJiJR
-	 TuIq6fvfeYzp7tz0k3lPeVi12q935SfolYoDDd1ZSPiREHdFcRs9LTWRUcLC76WLJF
-	 IsL391aLo77ou9n96Tp65VsLNvTAA3JNnc3Sogzs=
+	b=OW2IAabpeEO+HtINrvMPlbAY00TCCgiaknzqKyR/2otfg2F8w1DvhYmDwZIDiCYnJ
+	 QCz2SNyA6fgUAZNUL9H+2WiMPtvdB8JoNvEwkJw75yc/uUuxj6ltvS12srPvGTkFNb
+	 6AeyfNgCPO3Lho2pbTN08kHuDMi/W/Ted9jXlg7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Darrell Kavanagh <darrell.kavanagh@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 484/529] firmware/efi sysfb_efi: Add quirk for Lenovo IdeaPad Duet 3
-Date: Fri, 10 Mar 2023 14:40:27 +0100
-Message-Id: <20230310133827.274694873@linuxfoundation.org>
+Subject: [PATCH 5.10 485/529] bootconfig: Increase max nodes of bootconfig from 1024 to 8192 for DCC support
+Date: Fri, 10 Mar 2023 14:40:28 +0100
+Message-Id: <20230310133827.324632221@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,40 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Darrell Kavanagh <darrell.kavanagh@gmail.com>
+From: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
 
-[ Upstream commit e1d447157f232c650e6f32c9fb89ff3d0207c69a ]
+[ Upstream commit 6c40624930c58529185a257380442547580ed837 ]
 
-Another Lenovo convertable which reports a landscape resolution of
-1920x1200 with a pitch of (1920 * 4) bytes, while the actual framebuffer
-has a resolution of 1200x1920 with a pitch of (1200 * 4) bytes.
+The Data Capture and Compare(DCC) is a debugging tool that uses the bootconfig
+for configuring the register values during boot-time. Increase the max nodes
+supported by bootconfig to cater to the requirements of the Data Capture and
+Compare Driver.
 
-Signed-off-by: Darrell Kavanagh <darrell.kavanagh@gmail.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/all/1674536682-18404-1-git-send-email-quic_schowdhu@quicinc.com/
+
+Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/sysfb_efi.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/linux/bootconfig.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/sysfb_efi.c b/arch/x86/kernel/sysfb_efi.c
-index 653b7f617b61b..9ea65611fba0b 100644
---- a/arch/x86/kernel/sysfb_efi.c
-+++ b/arch/x86/kernel/sysfb_efi.c
-@@ -264,6 +264,14 @@ static const struct dmi_system_id efifb_dmi_swap_width_height[] __initconst = {
- 					"Lenovo ideapad D330-10IGM"),
- 		},
- 	},
-+	{
-+		/* Lenovo IdeaPad Duet 3 10IGL5 with 1200x1920 portrait screen */
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION,
-+					"IdeaPad Duet 3 10IGL5"),
-+		},
-+	},
- 	{},
- };
+diff --git a/include/linux/bootconfig.h b/include/linux/bootconfig.h
+index 2696eb0fc1497..df9cbf02d0303 100644
+--- a/include/linux/bootconfig.h
++++ b/include/linux/bootconfig.h
+@@ -29,7 +29,7 @@ struct xbc_node {
+ /* Maximum size of boot config is 32KB - 1 */
+ #define XBC_DATA_MAX	(XBC_VALUE - 1)
+ 
+-#define XBC_NODE_MAX	1024
++#define XBC_NODE_MAX	8192
+ #define XBC_KEYLEN_MAX	256
+ #define XBC_DEPTH_MAX	16
  
 -- 
 2.39.2
