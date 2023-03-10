@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9972881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:41:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 268F6C433A0;
-	Fri, 10 Mar 2023 14:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E49A881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:41:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CF0C4339C;
+	Fri, 10 Mar 2023 14:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459273;
-	bh=XPSQUU+1WX1CmYZ1uqbSOXQsSpDQiSz//uIy7l/ki68=;
+	s=korg; t=1678459276;
+	bh=p8qAilVfLW95SAuIzXWlmatxP+ZYpjlHfEVbcc003/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CenV1Eh/9kEGy6wKyLOjLzccmmiq0Btel7cv8tyrLq4429UycRWpgLZiuaBP4rmcf
-	 GhunxzSxcVFWdjmHyB07sfNhWCnZ7gysTVOp9jw5bJ6HCR8EmvTHK+0Yalz1XuHciX
-	 gXsdascE4RngfZSVzrZSw7btfoFyoUYhovZkXK7Y=
+	b=PI3cREZmvxMx4SZGn6Ly1cyfREd5N9rq3WC7+wxvya6N+E2fSDF/FFyTbFbxmqF1+
+	 MGQ7Okgv9iuTlDn1TS6NpPYmnflfzZVmcTjDQ1TyGFWI0OXMJmo7yd6MdH0HnarFUx
+	 gdjH42u0vDnpYq5AS1NtG8oOQnRZlxpf0Xkw1a6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Ammar Faizi <ammarfaizi2@gnuweeb.org>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 306/357] ubi: ubi_wl_put_peb: Fix infinite loop when wear-leveling work failed
-Date: Fri, 10 Mar 2023 14:39:55 +0100
-Message-Id: <20230310133748.200693634@linuxfoundation.org>
+Subject: [PATCH 5.4 307/357] x86: um: vdso: Add %rcx and %r11 to the syscall clobber list
+Date: Fri, 10 Mar 2023 14:39:56 +0100
+Message-Id: <20230310133748.248926457@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,88 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Ammar Faizi <ammarfaizi2@gnuweeb.org>
 
-[ Upstream commit 4d57a7333e26040f2b583983e1970d9d460e56b0 ]
+[ Upstream commit 5541992e512de8c9133110809f767bd1b54ee10d ]
 
-Following process will trigger an infinite loop in ubi_wl_put_peb():
+The 'syscall' instruction clobbers '%rcx' and '%r11', but they are not
+listed in the inline Assembly that performs the syscall instruction.
 
-	ubifs_bgt		ubi_bgt
-ubifs_leb_unmap
-  ubi_leb_unmap
-    ubi_eba_unmap_leb
-      ubi_wl_put_peb	wear_leveling_worker
-                          e1 = rb_entry(rb_first(&ubi->used)
-			  e2 = get_peb_for_wl(ubi)
-			  ubi_io_read_vid_hdr  // return err (flash fault)
-			  out_error:
-			    ubi->move_from = ubi->move_to = NULL
-			    wl_entry_destroy(ubi, e1)
-			      ubi->lookuptbl[e->pnum] = NULL
-      retry:
-        e = ubi->lookuptbl[pnum];	// return NULL
-	if (e == ubi->move_from) {	// NULL == NULL gets true
-	  goto retry;			// infinite loop !!!
+No real bug is found. It wasn't buggy by luck because '%rcx' and '%r11'
+are caller-saved registers, and not used in the functions, and the
+functions are never inlined.
 
-$ top
-  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     COMMAND
-  7676 root     20   0       0      0      0 R 100.0  0.0  ubifs_bgt0_0
+Add them to the clobber list for code correctness.
 
-Fix it by:
- 1) Letting ubi_wl_put_peb() returns directly if wearl leveling entry has
-    been removed from 'ubi->lookuptbl'.
- 2) Using 'ubi->wl_lock' protecting wl entry deletion to preventing an
-    use-after-free problem for wl entry in ubi_wl_put_peb().
-
-Fetch a reproducer in [Link].
-
-Fixes: 43f9b25a9cdd7b1 ("UBI: bugfix: protect from volume removal")
-Fixes: ee59ba8b064f692 ("UBI: Fix stale pointers in ubi->lookuptbl")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216111
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Fixes: f1c2bb8b9964ed31de988910f8b1cfb586d30091 ("um: implement a x86_64 vDSO")
+Signed-off-by: Ammar Faizi <ammarfaizi2@gnuweeb.org>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/wl.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ arch/x86/um/vdso/um_vdso.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
-index 585c5273b1fb5..4f88433d4adc7 100644
---- a/drivers/mtd/ubi/wl.c
-+++ b/drivers/mtd/ubi/wl.c
-@@ -965,11 +965,11 @@ static int wear_leveling_worker(struct ubi_device *ubi, struct ubi_work *wrk,
- 	spin_lock(&ubi->wl_lock);
- 	ubi->move_from = ubi->move_to = NULL;
- 	ubi->move_to_put = ubi->wl_scheduled = 0;
-+	wl_entry_destroy(ubi, e1);
-+	wl_entry_destroy(ubi, e2);
- 	spin_unlock(&ubi->wl_lock);
+diff --git a/arch/x86/um/vdso/um_vdso.c b/arch/x86/um/vdso/um_vdso.c
+index 891868756a51f..6d5269093f7ce 100644
+--- a/arch/x86/um/vdso/um_vdso.c
++++ b/arch/x86/um/vdso/um_vdso.c
+@@ -17,8 +17,10 @@ int __vdso_clock_gettime(clockid_t clock, struct timespec *ts)
+ {
+ 	long ret;
  
- 	ubi_free_vid_buf(vidb);
--	wl_entry_destroy(ubi, e1);
--	wl_entry_destroy(ubi, e2);
+-	asm("syscall" : "=a" (ret) :
+-		"0" (__NR_clock_gettime), "D" (clock), "S" (ts) : "memory");
++	asm("syscall"
++		: "=a" (ret)
++		: "0" (__NR_clock_gettime), "D" (clock), "S" (ts)
++		: "rcx", "r11", "memory");
  
- out_ro:
- 	ubi_ro_mode(ubi);
-@@ -1240,6 +1240,18 @@ int ubi_wl_put_peb(struct ubi_device *ubi, int vol_id, int lnum,
- retry:
- 	spin_lock(&ubi->wl_lock);
- 	e = ubi->lookuptbl[pnum];
-+	if (!e) {
-+		/*
-+		 * This wl entry has been removed for some errors by other
-+		 * process (eg. wear leveling worker), corresponding process
-+		 * (except __erase_worker, which cannot concurrent with
-+		 * ubi_wl_put_peb) will set ubi ro_mode at the same time,
-+		 * just ignore this wl entry.
-+		 */
-+		spin_unlock(&ubi->wl_lock);
-+		up_read(&ubi->fm_protect);
-+		return 0;
-+	}
- 	if (e == ubi->move_from) {
- 		/*
- 		 * User is putting the physical eraseblock which was selected to
+ 	return ret;
+ }
+@@ -29,8 +31,10 @@ int __vdso_gettimeofday(struct timeval *tv, struct timezone *tz)
+ {
+ 	long ret;
+ 
+-	asm("syscall" : "=a" (ret) :
+-		"0" (__NR_gettimeofday), "D" (tv), "S" (tz) : "memory");
++	asm("syscall"
++		: "=a" (ret)
++		: "0" (__NR_gettimeofday), "D" (tv), "S" (tz)
++		: "rcx", "r11", "memory");
+ 
+ 	return ret;
+ }
 -- 
 2.39.2
 
