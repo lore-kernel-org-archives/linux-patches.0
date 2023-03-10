@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374AF881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7535C433D2;
-	Fri, 10 Mar 2023 14:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF03881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A25C433D2;
+	Fri, 10 Mar 2023 14:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459202;
-	bh=9NGX+tZCERSlXMEQimSbLKGyFWCrfYWtSx9ciOgQbr0=;
+	s=korg; t=1678459204;
+	bh=61ysLNg1WME2nuIRcdNo/JyX1oNHIovtnm9eDNfF/+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uTknzA52adhkOpGGPJBirxmHDemYtt5CUgkKZRuc18eblmg4IzZNVK3eg+AgwAirf
-	 bW+b20v/AYoLkJs798dplVW7zsaBz6NMMQ5P7KaxqwatMLW3BKIEQzNdtBhnlDFJmC
-	 tHRtdM2aSRrxzzfBKeuYhGOI7Lo9YOskhiLuqWO4=
+	b=MuVTIOT51iY7OITcc41xrgtIUcftntaOHPkPVdT2BJ/S9h0Alas7ASUjK0+Sm2wDP
+	 qAuHxUtV1sk8cGgFrhvZfNS5fLnUkicZ8qdVwiv+7oyomLsFVKhU0F7kyb3pKOg2mb
+	 0FhBR7cmziERqb91dWwDIRWy1fUn+A6+IA23vY9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.4 281/357] wifi: ath9k: use proper statements in conditionals
-Date: Fri, 10 Mar 2023 14:39:30 +0100
-Message-Id: <20230310133747.155917898@linuxfoundation.org>
+	Jan Palus <jpalus+gnu@fastmail.com>,
+	Dmitry Goncharov <dgoncharov@users.sf.net>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 5.4 282/357] kbuild: Port silent mode detection to future gnu make.
+Date: Fri, 10 Mar 2023 14:39:31 +0100
+Message-Id: <20230310133747.204665499@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,60 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dmitry Goncharov <dgoncharov@users.sf.net>
 
-commit b7dc753fe33a707379e2254317794a4dad6c0fe2 upstream.
+commit 4bf73588165ba7d32131a043775557a54b6e1db5 upstream.
 
-A previous cleanup patch accidentally broke some conditional
-expressions by replacing the safe "do {} while (0)" constructs
-with empty macros. gcc points this out when extra warnings
-are enabled:
+Port silent mode detection to the future (post make-4.4) versions of gnu make.
 
-drivers/net/wireless/ath/ath9k/hif_usb.c: In function 'ath9k_skb_queue_complete':
-drivers/net/wireless/ath/ath9k/hif_usb.c:251:57: error: suggest braces around empty body in an 'else' statement [-Werror=empty-body]
-  251 |                         TX_STAT_INC(hif_dev, skb_failed);
+Makefile contains the following piece of make code to detect if option -s is
+specified on the command line.
 
-Make both sets of macros proper expressions again.
+ifneq ($(findstring s,$(filter-out --%,$(MAKEFLAGS))),)
 
-Fixes: d7fc76039b74 ("ath9k: htc: clean up statistics macros")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221215165553.1950307-1-arnd@kernel.org
+This code is executed by make at parse time and assumes that MAKEFLAGS
+does not contain command line variable definitions.
+Currently if the user defines a=s on the command line, then at build only
+time MAKEFLAGS contains " -- a=s".
+However, starting with commit dc2d963989b96161472b2cd38cef5d1f4851ea34
+MAKEFLAGS contains command line definitions at both parse time and
+build time.
+
+This '-s' detection code then confuses a command line variable
+definition which contains letter 's' with option -s.
+
+$ # old make
+$ make net/wireless/ocb.o a=s
+  CALL    scripts/checksyscalls.sh
+  DESCEND objtool
+$ # this a new make which defines makeflags at parse time
+$ ~/src/gmake/make/l64/make net/wireless/ocb.o a=s
+$
+
+We can see here that the letter 's' from 'a=s' was confused with -s.
+
+This patch checks for presence of -s using a method recommended by the
+make manual here
+https://www.gnu.org/software/make/manual/make.html#Testing-Flags.
+
+Link: https://lists.gnu.org/archive/html/bug-make/2022-11/msg00190.html
+Reported-by: Jan Palus <jpalus+gnu@fastmail.com>
+Signed-off-by: Dmitry Goncharov <dgoncharov@users.sf.net>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath9k/htc.h |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ Makefile |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/ath/ath9k/htc.h
-+++ b/drivers/net/wireless/ath/ath9k/htc.h
-@@ -325,9 +325,9 @@ static inline struct ath9k_htc_tx_ctl *H
- }
+--- a/Makefile
++++ b/Makefile
+@@ -89,9 +89,16 @@ endif
  
- #ifdef CONFIG_ATH9K_HTC_DEBUGFS
--#define __STAT_SAFE(hif_dev, expr)	((hif_dev)->htc_handle->drv_priv ? (expr) : 0)
--#define CAB_STAT_INC(priv)		((priv)->debug.tx_stats.cab_queued++)
--#define TX_QSTAT_INC(priv, q)		((priv)->debug.tx_stats.queue_stats[q]++)
-+#define __STAT_SAFE(hif_dev, expr)	do { ((hif_dev)->htc_handle->drv_priv ? (expr) : 0); } while (0)
-+#define CAB_STAT_INC(priv)		do { ((priv)->debug.tx_stats.cab_queued++); } while (0)
-+#define TX_QSTAT_INC(priv, q)		do { ((priv)->debug.tx_stats.queue_stats[q]++); } while (0)
+ # If the user is running make -s (silent mode), suppress echoing of
+ # commands
++# make-4.0 (and later) keep single letter options in the 1st word of MAKEFLAGS.
  
- #define TX_STAT_INC(hif_dev, c) \
- 		__STAT_SAFE((hif_dev), (hif_dev)->htc_handle->drv_priv->debug.tx_stats.c++)
-@@ -376,10 +376,10 @@ void ath9k_htc_get_et_stats(struct ieee8
- 			    struct ethtool_stats *stats, u64 *data);
- #else
+-ifneq ($(findstring s,$(filter-out --%,$(MAKEFLAGS))),)
+-  quiet=silent_
++ifeq ($(filter 3.%,$(MAKE_VERSION)),)
++silence:=$(findstring s,$(firstword -$(MAKEFLAGS)))
++else
++silence:=$(findstring s,$(filter-out --%,$(MAKEFLAGS)))
++endif
++
++ifeq ($(silence),s)
++quiet=silent_
+ endif
  
--#define TX_STAT_INC(hif_dev, c)
--#define TX_STAT_ADD(hif_dev, c, a)
--#define RX_STAT_INC(hif_dev, c)
--#define RX_STAT_ADD(hif_dev, c, a)
-+#define TX_STAT_INC(hif_dev, c)		do { } while (0)
-+#define TX_STAT_ADD(hif_dev, c, a)	do { } while (0)
-+#define RX_STAT_INC(hif_dev, c)		do { } while (0)
-+#define RX_STAT_ADD(hif_dev, c, a)	do { } while (0)
- 
- #define CAB_STAT_INC(priv)
- #define TX_QSTAT_INC(priv, c)
+ export quiet Q KBUILD_VERBOSE
 
 
