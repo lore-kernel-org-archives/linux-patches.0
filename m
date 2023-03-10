@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17928881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:39:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D17C4339E;
-	Fri, 10 Mar 2023 14:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD95881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:39:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E660C433D2;
+	Fri, 10 Mar 2023 14:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459195;
-	bh=zT0yCGT/RBc/lvcBHTqmO1n8iAi8+YdOzeIUZDQvo+E=;
+	s=korg; t=1678459199;
+	bh=boUZcNcovaUdbWQr+onI2Y/r8sdyizDNwfxRAFQuXOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zqaaxVjBEUt+t0NTYij8ryMNy9mre7Q5KDd4JxLWX/ryFwahGTgtrov/T8muf/UJw
-	 vZHB3wxaIVkgy4Vg+NkOIBvitS12kK+JJ7muVHVc/AS0+NI2JzxD6GGu4ZeVwP0Y9s
-	 C9NuJN5coFUhFOmIHuzLKjQPmrTxQeuhv++DQReY=
+	b=SQcPRKPkiGWBJho+0rSRCByRbfKlgaF59k+lYRmi/B+PZbG61dd/tox1XGBOUnp5V
+	 w9fzigdCh+x5/D7d9KPcuFVaWzo0RDDEwQ6C8SbOH1UcRBgmOnsQrIoRkJMmQ721DY
+	 VfSPloDgWNVEPHP/4M2/XSp7IvHP4Ht5d91m2MxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Wetzel <alexander@wetzel-home.de>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.4 253/357] wifi: cfg80211: Fix use after free for wext
-Date: Fri, 10 Mar 2023 14:39:02 +0100
-Message-Id: <20230310133745.923941650@linuxfoundation.org>
+	Mark Hawrylak <mark.hawrylak@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.4 280/357] drm/radeon: Fix eDP for single-display iMac11,2
+Date: Fri, 10 Mar 2023 14:39:29 +0100
+Message-Id: <20230310133747.108336661@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -34,96 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Wetzel <alexander@wetzel-home.de>
+From: Mark Hawrylak <mark.hawrylak@gmail.com>
 
-commit 015b8cc5e7c4d7bb671f1984d7b7338c310b185b upstream.
+commit 05eacc198c68cbb35a7281ce4011f8899ee1cfb8 upstream.
 
-Key information in wext.connect is not reset on (re)connect and can hold
-data from a previous connection.
+Apple iMac11,2 (mid 2010) also with Radeon HD-4670 that has the same
+issue as iMac10,1 (late 2009) where the internal eDP panel stays dark on
+driver load.  This patch treats iMac11,2 the same as iMac10,1,
+so the eDP panel stays active.
 
-Reset key data to avoid that drivers or mac80211 incorrectly detect a
-WEP connection request and access the freed or already reused memory.
+Additional steps:
+Kernel boot parameter radeon.nomodeset=0 required to keep the eDP
+panel active.
 
-Additionally optimize cfg80211_sme_connect() and avoid an useless
-schedule of conn_work.
-
-Fixes: fffd0934b939 ("cfg80211: rework key operation")
+This patch is an extension of
+commit 564d8a2cf3ab ("drm/radeon: Fix eDP for single-display iMac10,1 (v2)")
+Link: https://lore.kernel.org/all/lsq.1507553064.833262317@decadent.org.uk/
+Signed-off-by: Mark Hawrylak <mark.hawrylak@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230124141856.356646-1-alexander@wetzel-home.de
-Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/sme.c |   31 ++++++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/radeon/atombios_encoders.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/wireless/sme.c
-+++ b/net/wireless/sme.c
-@@ -269,6 +269,15 @@ void cfg80211_conn_work(struct work_stru
- 	rtnl_unlock();
- }
+--- a/drivers/gpu/drm/radeon/atombios_encoders.c
++++ b/drivers/gpu/drm/radeon/atombios_encoders.c
+@@ -2192,11 +2192,12 @@ int radeon_atom_pick_dig_encoder(struct
  
-+static void cfg80211_step_auth_next(struct cfg80211_conn *conn,
-+				    struct cfg80211_bss *bss)
-+{
-+	memcpy(conn->bssid, bss->bssid, ETH_ALEN);
-+	conn->params.bssid = conn->bssid;
-+	conn->params.channel = bss->channel;
-+	conn->state = CFG80211_CONN_AUTHENTICATE_NEXT;
-+}
-+
- /* Returned bss is reference counted and must be cleaned up appropriately. */
- static struct cfg80211_bss *cfg80211_get_conn_bss(struct wireless_dev *wdev)
- {
-@@ -286,10 +295,7 @@ static struct cfg80211_bss *cfg80211_get
- 	if (!bss)
- 		return NULL;
- 
--	memcpy(wdev->conn->bssid, bss->bssid, ETH_ALEN);
--	wdev->conn->params.bssid = wdev->conn->bssid;
--	wdev->conn->params.channel = bss->channel;
--	wdev->conn->state = CFG80211_CONN_AUTHENTICATE_NEXT;
-+	cfg80211_step_auth_next(wdev->conn, bss);
- 	schedule_work(&rdev->conn_work);
- 
- 	return bss;
-@@ -568,7 +574,12 @@ static int cfg80211_sme_connect(struct w
- 	wdev->conn->params.ssid_len = wdev->ssid_len;
- 
- 	/* see if we have the bss already */
--	bss = cfg80211_get_conn_bss(wdev);
-+	bss = cfg80211_get_bss(wdev->wiphy, wdev->conn->params.channel,
-+			       wdev->conn->params.bssid,
-+			       wdev->conn->params.ssid,
-+			       wdev->conn->params.ssid_len,
-+			       wdev->conn_bss_type,
-+			       IEEE80211_PRIVACY(wdev->conn->params.privacy));
- 
- 	if (prev_bssid) {
- 		memcpy(wdev->conn->prev_bssid, prev_bssid, ETH_ALEN);
-@@ -579,6 +590,7 @@ static int cfg80211_sme_connect(struct w
- 	if (bss) {
- 		enum nl80211_timeout_reason treason;
- 
-+		cfg80211_step_auth_next(wdev->conn, bss);
- 		err = cfg80211_conn_do_work(wdev, &treason);
- 		cfg80211_put_bss(wdev->wiphy, bss);
- 	} else {
-@@ -1233,6 +1245,15 @@ int cfg80211_connect(struct cfg80211_reg
- 	} else {
- 		if (WARN_ON(connkeys))
- 			return -EINVAL;
-+
-+		/* connect can point to wdev->wext.connect which
-+		 * can hold key data from a previous connection
-+		 */
-+		connect->key = NULL;
-+		connect->key_len = 0;
-+		connect->key_idx = 0;
-+		connect->crypto.cipher_group = 0;
-+		connect->crypto.n_ciphers_pairwise = 0;
- 	}
- 
- 	wdev->connect_keys = connkeys;
+ 	/*
+ 	 * On DCE32 any encoder can drive any block so usually just use crtc id,
+-	 * but Apple thinks different at least on iMac10,1, so there use linkb,
++	 * but Apple thinks different at least on iMac10,1 and iMac11,2, so there use linkb,
+ 	 * otherwise the internal eDP panel will stay dark.
+ 	 */
+ 	if (ASIC_IS_DCE32(rdev)) {
+-		if (dmi_match(DMI_PRODUCT_NAME, "iMac10,1"))
++		if (dmi_match(DMI_PRODUCT_NAME, "iMac10,1") ||
++		    dmi_match(DMI_PRODUCT_NAME, "iMac11,2"))
+ 			enc_idx = (dig->linkb) ? 1 : 0;
+ 		else
+ 			enc_idx = radeon_crtc->crtc_id;
 
 
