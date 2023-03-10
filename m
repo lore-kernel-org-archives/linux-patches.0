@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0806ADB
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:44:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CEEC433D2;
-	Fri, 10 Mar 2023 13:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A0D6ADB
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:44:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4E8C433EF;
+	Fri, 10 Mar 2023 13:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678455885;
-	bh=TGryrwuA6HKr9VvU/8RU+K/sgCT6aPGkXxCYLy38lwc=;
+	s=korg; t=1678455888;
+	bh=/RhQubbgjR3Nx7/cr7K0N2rhLKwZwhmgjCzlE592XvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bh6gK51E1vsmGzNjzBK9lIVWUzpR5iT9e/455BopE6Hon2OKzNdJMqTed2uEKJO6M
-	 PyDslfR5FE0Y1M2RAlmfrKhZJGXm7ziYTymjLI4kq/UcG6KtBiPDXZ+5jZ1QYheVuw
-	 4sOyZFGF+dHjiinsE37N+czKBIEmA0ANGyi6Q+Y8=
+	b=GQXdGUSHuZjDRlWiVYTVay5gNQgnB4f0QtuO/POKPytt7YzhfOpiOswnpwWlpuxus
+	 NP4VmJ1gZvCfwJPI5btFmzkufn6ceXVDVVQ+6DaKxrCm95drZR1xVxM26aMaif2YU0
+	 fkCf6bha+bVBti8pFFbg7mHDJB7cLjglPMq9HRpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Jonker <jbx6244@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 001/193] ARM: dts: rockchip: add power-domains property to dp node on rk3288
-Date: Fri, 10 Mar 2023 14:36:23 +0100
-Message-Id: <20230310133710.974830282@linuxfoundation.org>
+	Florian Zumbiehl <florz@florz.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 4.14 010/193] USB: serial: option: add support for VW/Skoda "Carstick LTE"
+Date: Fri, 10 Mar 2023 14:36:32 +0100
+Message-Id: <20230310133711.279139654@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,36 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: Florian Zumbiehl <florz@florz.de>
 
-[ Upstream commit 80422339a75088322b4d3884bd12fa0fe5d11050 ]
+commit 617c331d91077f896111044628c096802551dc66 upstream.
 
-The clocks in the Rockchip rk3288 DisplayPort node are
-included in the power-domain@RK3288_PD_VIO logic, but the
-power-domains property in the dp node is missing, so fix it.
+Add support for VW/Skoda "Carstick LTE"
 
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Link: https://lore.kernel.org/r/dab85bfb-9f55-86a1-5cd5-7388c43e0ec5@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1c9e ProdID=7605 Rev=02.00
+S:  Manufacturer=USB Modem
+S:  Product=USB Modem
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#=0x0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+I:  If#=0x1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+I:  If#=0x2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+I:  If#=0x3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+
+The stick has AT command interfaces on interfaces 1, 2, and 3, and does PPP
+on interface 3.
+
+Signed-off-by: Florian Zumbiehl <florz@florz.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/rk3288.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/serial/option.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm/boot/dts/rk3288.dtsi b/arch/arm/boot/dts/rk3288.dtsi
-index 872e4e690beb4..c3440adc763ce 100644
---- a/arch/arm/boot/dts/rk3288.dtsi
-+++ b/arch/arm/boot/dts/rk3288.dtsi
-@@ -1096,6 +1096,7 @@ edp: dp@ff970000 {
- 		clock-names = "dp", "pclk";
- 		phys = <&edp_phy>;
- 		phy-names = "dp";
-+		power-domains = <&power RK3288_PD_VIO>;
- 		resets = <&cru SRST_EDP>;
- 		reset-names = "dp";
- 		rockchip,grf = <&grf>;
--- 
-2.39.0
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -405,6 +405,8 @@ static void option_instat_callback(struc
+ #define LONGCHEER_VENDOR_ID			0x1c9e
+ 
+ /* 4G Systems products */
++/* This one was sold as the VW and Skoda "Carstick LTE" */
++#define FOUR_G_SYSTEMS_PRODUCT_CARSTICK_LTE	0x7605
+ /* This is the 4G XS Stick W14 a.k.a. Mobilcom Debitel Surf-Stick *
+  * It seems to contain a Qualcomm QSC6240/6290 chipset            */
+ #define FOUR_G_SYSTEMS_PRODUCT_W14		0x9603
+@@ -1979,6 +1981,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(2) },
+ 	{ USB_DEVICE(AIRPLUS_VENDOR_ID, AIRPLUS_PRODUCT_MCD650) },
+ 	{ USB_DEVICE(TLAYTECH_VENDOR_ID, TLAYTECH_PRODUCT_TEU800) },
++	{ USB_DEVICE(LONGCHEER_VENDOR_ID, FOUR_G_SYSTEMS_PRODUCT_CARSTICK_LTE),
++	  .driver_info = RSVD(0) },
+ 	{ USB_DEVICE(LONGCHEER_VENDOR_ID, FOUR_G_SYSTEMS_PRODUCT_W14),
+ 	  .driver_info = NCTRL(0) | NCTRL(1) },
+ 	{ USB_DEVICE(LONGCHEER_VENDOR_ID, FOUR_G_SYSTEMS_PRODUCT_W100),
 
 
