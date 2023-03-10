@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB9C8821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:01:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6241C4339E;
-	Fri, 10 Mar 2023 15:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5987D8821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:02:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B43C433D2;
+	Fri, 10 Mar 2023 15:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460518;
-	bh=2HpE1UT4lTQ9/DrEMKIWTbGgKAqYWe/OguKP14Y9XPs=;
+	s=korg; t=1678460521;
+	bh=zw0ud984ToxvO8ZuUPcsLQpD6kfo084/EMokdg0GKuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SGykbVjBa+WJBkui2qS/j2T2NBBP3He4LW6xgjW6V8UOCd/7lm+s94ThVDXKALQsd
-	 mEVJ06VjibDPiSIBmfDpBpaYaVyuPFUdmZ/t6vmYfYeCYQjrshJkEg5HedSVNQ6bdi
-	 r5lgmMKD45d02YXupik1GJI6aIlwZruiGc4TY34Y=
+	b=BxGCAdU+orA5zJvjMnYVlkidKO7z0y9BSyw992+8mOKXJiT8WFnki4utsctT4JIGT
+	 9bdPbWhz64KYJVhPqMwN2QJYSL/wfUyvD0vz6pylvtFJIx7DV8przzL/nwNYe0akOG
+	 q/IwyzgLiiezDOlfZKVOmqxwJfqQrLk3nJja+jLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 5.10 362/529] x86/kprobes: Fix arch_check_optimized_kprobe check within optimized_kprobe range
-Date: Fri, 10 Mar 2023 14:38:25 +0100
-Message-Id: <20230310133821.780637276@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Tejun Heo <tj@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 5.10 345/529] f2fs: fix cgroup writeback accounting with fs-layer encryption
+Date: Fri, 10 Mar 2023 14:38:08 +0100
+Message-Id: <20230310133820.992290970@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -34,146 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit f1c97a1b4ef709e3f066f82e3ba3108c3b133ae6 upstream.
+commit 844545c51a5b2a524b22a2fe9d0b353b827d24b4 upstream.
 
-When arch_prepare_optimized_kprobe calculating jump destination address,
-it copies original instructions from jmp-optimized kprobe (see
-__recover_optprobed_insn), and calculated based on length of original
-instruction.
+When writing a page from an encrypted file that is using
+filesystem-layer encryption (not inline encryption), f2fs encrypts the
+pagecache page into a bounce page, then writes the bounce page.
 
-arch_check_optimized_kprobe does not check KPROBE_FLAG_OPTIMATED when
-checking whether jmp-optimized kprobe exists.
-As a result, setup_detour_execution may jump to a range that has been
-overwritten by jump destination address, resulting in an inval opcode error.
+It also passes the bounce page to wbc_account_cgroup_owner().  That's
+incorrect, because the bounce page is a newly allocated temporary page
+that doesn't have the memory cgroup of the original pagecache page.
+This makes wbc_account_cgroup_owner() not account the I/O to the owner
+of the pagecache page as it should.
 
-For example, assume that register two kprobes whose addresses are
-<func+9> and <func+11> in "func" function.
-The original code of "func" function is as follows:
+Fix this by always passing the pagecache page to
+wbc_account_cgroup_owner().
 
-   0xffffffff816cb5e9 <+9>:     push   %r12
-   0xffffffff816cb5eb <+11>:    xor    %r12d,%r12d
-   0xffffffff816cb5ee <+14>:    test   %rdi,%rdi
-   0xffffffff816cb5f1 <+17>:    setne  %r12b
-   0xffffffff816cb5f5 <+21>:    push   %rbp
-
-1.Register the kprobe for <func+11>, assume that is kp1, corresponding optimized_kprobe is op1.
-  After the optimization, "func" code changes to:
-
-   0xffffffff816cc079 <+9>:     push   %r12
-   0xffffffff816cc07b <+11>:    jmp    0xffffffffa0210000
-   0xffffffff816cc080 <+16>:    incl   0xf(%rcx)
-   0xffffffff816cc083 <+19>:    xchg   %eax,%ebp
-   0xffffffff816cc084 <+20>:    (bad)
-   0xffffffff816cc085 <+21>:    push   %rbp
-
-Now op1->flags == KPROBE_FLAG_OPTIMATED;
-
-2. Register the kprobe for <func+9>, assume that is kp2, corresponding optimized_kprobe is op2.
-
-register_kprobe(kp2)
-  register_aggr_kprobe
-    alloc_aggr_kprobe
-      __prepare_optimized_kprobe
-        arch_prepare_optimized_kprobe
-          __recover_optprobed_insn    // copy original bytes from kp1->optinsn.copied_insn,
-                                      // jump address = <func+14>
-
-3. disable kp1:
-
-disable_kprobe(kp1)
-  __disable_kprobe
-    ...
-    if (p == orig_p || aggr_kprobe_disabled(orig_p)) {
-      ret = disarm_kprobe(orig_p, true)       // add op1 in unoptimizing_list, not unoptimized
-      orig_p->flags |= KPROBE_FLAG_DISABLED;  // op1->flags ==  KPROBE_FLAG_OPTIMATED | KPROBE_FLAG_DISABLED
-    ...
-
-4. unregister kp2
-__unregister_kprobe_top
-  ...
-  if (!kprobe_disabled(ap) && !kprobes_all_disarmed) {
-    optimize_kprobe(op)
-      ...
-      if (arch_check_optimized_kprobe(op) < 0) // because op1 has KPROBE_FLAG_DISABLED, here not return
-        return;
-      p->kp.flags |= KPROBE_FLAG_OPTIMIZED;   //  now op2 has KPROBE_FLAG_OPTIMIZED
-  }
-
-"func" code now is:
-
-   0xffffffff816cc079 <+9>:     int3
-   0xffffffff816cc07a <+10>:    push   %rsp
-   0xffffffff816cc07b <+11>:    jmp    0xffffffffa0210000
-   0xffffffff816cc080 <+16>:    incl   0xf(%rcx)
-   0xffffffff816cc083 <+19>:    xchg   %eax,%ebp
-   0xffffffff816cc084 <+20>:    (bad)
-   0xffffffff816cc085 <+21>:    push   %rbp
-
-5. if call "func", int3 handler call setup_detour_execution:
-
-  if (p->flags & KPROBE_FLAG_OPTIMIZED) {
-    ...
-    regs->ip = (unsigned long)op->optinsn.insn + TMPL_END_IDX;
-    ...
-  }
-
-The code for the destination address is
-
-   0xffffffffa021072c:  push   %r12
-   0xffffffffa021072e:  xor    %r12d,%r12d
-   0xffffffffa0210731:  jmp    0xffffffff816cb5ee <func+14>
-
-However, <func+14> is not a valid start instruction address. As a result, an error occurs.
-
-Link: https://lore.kernel.org/all/20230216034247.32348-3-yangjihong1@huawei.com/
-
-Fixes: f66c0447cca1 ("kprobes: Set unoptimized flag after unoptimizing code")
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Fixes: 578c647879f7 ("f2fs: implement cgroup writeback support")
 Cc: stable@vger.kernel.org
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reported-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/kprobes/opt.c |    2 +-
- include/linux/kprobes.h       |    1 +
- kernel/kprobes.c              |    4 ++--
- 3 files changed, 4 insertions(+), 3 deletions(-)
+ fs/f2fs/data.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/kprobes/opt.c
-+++ b/arch/x86/kernel/kprobes/opt.c
-@@ -346,7 +346,7 @@ int arch_check_optimized_kprobe(struct o
- 
- 	for (i = 1; i < op->optinsn.size; i++) {
- 		p = get_kprobe(op->kp.addr + i);
--		if (p && !kprobe_disabled(p))
-+		if (p && !kprobe_disarmed(p))
- 			return -EEXIST;
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -721,7 +721,7 @@ int f2fs_submit_page_bio(struct f2fs_io_
  	}
  
---- a/include/linux/kprobes.h
-+++ b/include/linux/kprobes.h
-@@ -343,6 +343,7 @@ extern int proc_kprobes_optimization_han
- #endif
- extern void wait_for_kprobe_optimizer(void);
- bool optprobe_queued_unopt(struct optimized_kprobe *op);
-+bool kprobe_disarmed(struct kprobe *p);
- #else
- static inline void wait_for_kprobe_optimizer(void) { }
- #endif /* CONFIG_OPTPROBES */
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -447,8 +447,8 @@ static inline int kprobe_optready(struct
- 	return 0;
- }
+ 	if (fio->io_wbc && !is_read_io(fio->op))
+-		wbc_account_cgroup_owner(fio->io_wbc, page, PAGE_SIZE);
++		wbc_account_cgroup_owner(fio->io_wbc, fio->page, PAGE_SIZE);
  
--/* Return true(!0) if the kprobe is disarmed. Note: p must be on hash list */
--static inline int kprobe_disarmed(struct kprobe *p)
-+/* Return true if the kprobe is disarmed. Note: p must be on hash list */
-+bool kprobe_disarmed(struct kprobe *p)
- {
- 	struct optimized_kprobe *op;
+ 	__attach_io_flag(fio);
+ 	bio_set_op_attrs(bio, fio->op, fio->op_flags);
+@@ -929,7 +929,7 @@ alloc_new:
+ 	}
  
+ 	if (fio->io_wbc)
+-		wbc_account_cgroup_owner(fio->io_wbc, page, PAGE_SIZE);
++		wbc_account_cgroup_owner(fio->io_wbc, fio->page, PAGE_SIZE);
+ 
+ 	inc_page_count(fio->sbi, WB_DATA_TYPE(page));
+ 
+@@ -1003,7 +1003,7 @@ alloc_new:
+ 	}
+ 
+ 	if (fio->io_wbc)
+-		wbc_account_cgroup_owner(fio->io_wbc, bio_page, PAGE_SIZE);
++		wbc_account_cgroup_owner(fio->io_wbc, fio->page, PAGE_SIZE);
+ 
+ 	io->last_block_in_bio = fio->new_blkaddr;
+ 	f2fs_trace_ios(fio, 0);
 
 
