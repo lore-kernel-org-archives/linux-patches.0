@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676A08481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:05:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96F4C4339C;
-	Fri, 10 Mar 2023 14:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DCC48481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:05:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0B7C433EF;
+	Fri, 10 Mar 2023 14:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457149;
-	bh=ORrQwT7B8uh8P1WHVWre5/RWCEtz1yoJf8NTPsGdDi0=;
+	s=korg; t=1678457152;
+	bh=f6u2J5NWjV8c4KTosZEvfTBzhiZcVzUNJVqIcEqQBNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DrtimSS278hjYNenp+RP9ZRqo2dHTM7My8voVe4QCbtEK8ntgVOFhu8qdPQnzfxMw
-	 obmy7efsKaHbzGob+uFrztMlgFSdCrvcdEhuy9eamxzNNU4as6EPkTRk9i7+7Tnvj/
-	 NPGqh27f2EgZj74TWP/pThGN47mh964Ryys/MeMs=
+	b=in2/ZL5n6CJv+9R8Y8xn+4j0wYc9MHTZsHVuTLAb4PkE3k4gsVb8rshTET6eXKzQT
+	 mCuzLvwEfNSprdCoLvn2yrIz3M4fBwOwvMS+ys0+AsqsP6zvvf4NPCET1b+j7ECAon
+	 eZ2RiJhNUA8aLLWi8hQBKAI+EZHX+VWzTKszYIxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/200] ubifs: Fix wrong dirty space budget for dirty inode
-Date: Fri, 10 Mar 2023 14:37:16 +0100
-Message-Id: <20230310133717.936277245@linuxfoundation.org>
+Subject: [PATCH 6.1 038/200] ubifs: ubifs_writepage: Mark page dirty after writing inode failed
+Date: Fri, 10 Mar 2023 14:37:25 +0100
+Message-Id: <20230310133718.224930832@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -37,33 +37,110 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit b248eaf049d9cdc5eb76b59399e4d3de233f02ac ]
+[ Upstream commit fb8bc4c74ae4526d9489362ab2793a936d072b84 ]
 
-Each dirty inode should reserve 'c->bi.inode_budget' bytes in space
-budget calculation. Currently, space budget for dirty inode reports
-more space than what UBIFS actually needs to write.
+There are two states for ubifs writing pages:
+1. Dirty, Private
+2. Not Dirty, Not Private
+
+There is a third possibility which maybe related to [1] that page is
+private but not dirty caused by following process:
+
+          PA
+lock(page)
+ubifs_write_end
+  attach_page_private		// set Private
+    __set_page_dirty_nobuffers	// set Dirty
+unlock(page)
+
+write_cache_pages
+  lock(page)
+  clear_page_dirty_for_io(page)	// clear Dirty
+  ubifs_writepage
+    write_inode
+    // fail, goto out, following codes are not executed
+    // do_writepage
+    //   set_page_writeback 	// set Writeback
+    //   detach_page_private	// clear Private
+    //   end_page_writeback 	// clear Writeback
+    out:
+    unlock(page)		// Private, Not Dirty
+
+                                       PB
+				ksys_fadvise64_64
+				  generic_fadvise
+				     invalidate_inode_page
+				     // page is neither Dirty nor Writeback
+				       invalidate_complete_page
+				       // page_has_private is true
+					 try_to_release_page
+					   ubifs_releasepage
+					     ubifs_assert(c, 0) !!!
+
+Then we may get following assertion failed:
+  UBIFS error (ubi0:0 pid 1492): ubifs_assert_failed [ubifs]:
+  UBIFS assert failed: 0, in fs/ubifs/file.c:1499
+  UBIFS warning (ubi0:0 pid 1492): ubifs_ro_mode [ubifs]:
+  switched to read-only mode, error -22
+  CPU: 2 PID: 1492 Comm: aa Not tainted 5.16.0-rc2-00012-g7bb767dee0ba-dirty
+  Call Trace:
+    dump_stack+0x13/0x1b
+    ubifs_ro_mode+0x54/0x60 [ubifs]
+    ubifs_assert_failed+0x4b/0x80 [ubifs]
+    ubifs_releasepage+0x7e/0x1e0 [ubifs]
+    try_to_release_page+0x57/0xe0
+    invalidate_inode_page+0xfb/0x130
+    invalidate_mapping_pagevec+0x12/0x20
+    generic_fadvise+0x303/0x3c0
+    vfs_fadvise+0x35/0x40
+    ksys_fadvise64_64+0x4c/0xb0
+
+Jump [2] to find a reproducer.
+
+[1] https://linux-mtd.infradead.narkive.com/NQoBeT1u/patch-rfc-ubifs-fix-assert-failed-in-ubifs-set-page-dirty
+[2] https://bugzilla.kernel.org/show_bug.cgi?id=215357
 
 Fixes: 1e51764a3c2ac0 ("UBIFS: add new flash file system")
 Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/budget.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ubifs/file.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ubifs/budget.c b/fs/ubifs/budget.c
-index e8b9b756f0aca..986e6e4081c76 100644
---- a/fs/ubifs/budget.c
-+++ b/fs/ubifs/budget.c
-@@ -400,7 +400,7 @@ static int calc_dd_growth(const struct ubifs_info *c,
- 	dd_growth = req->dirtied_page ? c->bi.page_budget : 0;
+diff --git a/fs/ubifs/file.c b/fs/ubifs/file.c
+index f2353dd676ef0..1f429260a85fc 100644
+--- a/fs/ubifs/file.c
++++ b/fs/ubifs/file.c
+@@ -1032,7 +1032,7 @@ static int ubifs_writepage(struct page *page, struct writeback_control *wbc)
+ 		if (page->index >= synced_i_size >> PAGE_SHIFT) {
+ 			err = inode->i_sb->s_op->write_inode(inode, NULL);
+ 			if (err)
+-				goto out_unlock;
++				goto out_redirty;
+ 			/*
+ 			 * The inode has been written, but the write-buffer has
+ 			 * not been synchronized, so in case of an unclean
+@@ -1060,11 +1060,17 @@ static int ubifs_writepage(struct page *page, struct writeback_control *wbc)
+ 	if (i_size > synced_i_size) {
+ 		err = inode->i_sb->s_op->write_inode(inode, NULL);
+ 		if (err)
+-			goto out_unlock;
++			goto out_redirty;
+ 	}
  
- 	if (req->dirtied_ino)
--		dd_growth += c->bi.inode_budget << (req->dirtied_ino - 1);
-+		dd_growth += c->bi.inode_budget * req->dirtied_ino;
- 	if (req->mod_dent)
- 		dd_growth += c->bi.dent_budget;
- 	dd_growth += req->dirtied_ino_d;
+ 	return do_writepage(page, len);
+-
++out_redirty:
++	/*
++	 * redirty_page_for_writepage() won't call ubifs_dirty_inode() because
++	 * it passes I_DIRTY_PAGES flag while calling __mark_inode_dirty(), so
++	 * there is no need to do space budget for dirty inode.
++	 */
++	redirty_page_for_writepage(wbc, page);
+ out_unlock:
+ 	unlock_page(page);
+ 	return err;
 -- 
 2.39.2
 
