@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB94848D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:26:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3C9C4339B;
-	Fri, 10 Mar 2023 14:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E76848D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:26:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D698AC433D2;
+	Fri, 10 Mar 2023 14:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458374;
-	bh=PphqDK3pjCQjO9Dip+TRWoS85RLEi3Q1epVt7hsVIRs=;
+	s=korg; t=1678458377;
+	bh=z9Av7GPwa8suSv/7ygSdWHqXrR0LyMPHIQ7VukyEij8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aHxga9+Hwe1vlg1M3sjqe0MQI0v0I323HvPuLPQ9x9Yvl6u2vxpWe7/j8J1rN16vR
-	 9qTMi8KpMy0e+pg3RQZz6o4VuSH7nT1Drj9zwNcAq79iNqJHdmiGCpExPAIkwCPpVI
-	 1uv+9dtImtELNDeQS9TLFWvdb73WmkZGyxImLYn8=
+	b=ao5gxc7ofj+UVN1zE/DmXAXn88blaf7ywLe90XCRonmzkq6vnDmscRQLvnfph8r7e
+	 e70vybT2pzP42tDvrC4LDlsAH0O2rVvtr88V0dAc8SNeM8dEW/X9ff7iOIvfVkc0fx
+	 MRczoDJaBIMxDhJ7IHNSIfs6d7cj/FsOPjd7H3C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Brian King <brking@linux.vnet.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Dan Carpenter <error27@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 228/252] scsi: ipr: Work around fortify-string warning
-Date: Fri, 10 Mar 2023 14:39:58 +0100
-Message-Id: <20230310133726.185280204@linuxfoundation.org>
+Subject: [PATCH 4.19 229/252] thermal: intel: quark_dts: fix error pointer dereference
+Date: Fri, 10 Mar 2023 14:39:59 +0100
+Message-Id: <20230310133726.233927109@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -38,112 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit ee4e7dfe4ffc9ca50c6875757bd119abfe22b5c5 ]
+[ Upstream commit f1b930e740811d416de4d2074da48b6633a672c8 ]
 
-The ipr_log_vpd_compact() function triggers a fortified memcpy() warning
-about a potential string overflow with all versions of clang:
+If alloc_soc_dts() fails, then we can just return.  Trying to free
+"soc_dts" will lead to an Oops.
 
-In file included from drivers/scsi/ipr.c:43:
-In file included from include/linux/string.h:254:
-include/linux/fortify-string.h:520:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
-                        __write_overflow_field(p_size_field, size);
-                        ^
-include/linux/fortify-string.h:520:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
-2 errors generated.
-
-I don't see anything actually wrong with the function, but this is the only
-instance I can reproduce of the fortification going wrong in the kernel at
-the moment, so the easiest solution may be to rewrite the function into
-something that does not trigger the warning.
-
-Instead of having a combined buffer for vendor/device/serial strings, use
-three separate local variables and just truncate the whitespace
-individually.
-
-Link: https://lore.kernel.org/r/20230214132831.2118392-1-arnd@kernel.org
-Cc: Kees Cook <keescook@chromium.org>
-Fixes: 8cf093e275d0 ("[SCSI] ipr: Improved dual adapter errors")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Acked-by: Brian King <brking@linux.vnet.ibm.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 8c1876939663 ("thermal: intel Quark SoC X1000 DTS thermal driver")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ipr.c | 41 +++++++++++++++++++++--------------------
- 1 file changed, 21 insertions(+), 20 deletions(-)
+ drivers/thermal/intel_quark_dts_thermal.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/scsi/ipr.c b/drivers/scsi/ipr.c
-index 5989c868bfe08..921ecaf33c9b4 100644
---- a/drivers/scsi/ipr.c
-+++ b/drivers/scsi/ipr.c
-@@ -1531,23 +1531,22 @@ static void ipr_process_ccn(struct ipr_cmnd *ipr_cmd)
- }
+diff --git a/drivers/thermal/intel_quark_dts_thermal.c b/drivers/thermal/intel_quark_dts_thermal.c
+index 5d33b350da1c6..ad92d8f0add19 100644
+--- a/drivers/thermal/intel_quark_dts_thermal.c
++++ b/drivers/thermal/intel_quark_dts_thermal.c
+@@ -440,22 +440,14 @@ MODULE_DEVICE_TABLE(x86cpu, qrk_thermal_ids);
  
- /**
-- * strip_and_pad_whitespace - Strip and pad trailing whitespace.
-- * @i:		index into buffer
-- * @buf:		string to modify
-+ * strip_whitespace - Strip and pad trailing whitespace.
-+ * @i:		size of buffer
-+ * @buf:	string to modify
-  *
-- * This function will strip all trailing whitespace, pad the end
-- * of the string with a single space, and NULL terminate the string.
-+ * This function will strip all trailing whitespace and
-+ * NUL terminate the string.
-  *
-- * Return value:
-- * 	new length of string
-  **/
--static int strip_and_pad_whitespace(int i, char *buf)
-+static void strip_whitespace(int i, char *buf)
+ static int __init intel_quark_thermal_init(void)
  {
-+	if (i < 1)
-+		return;
-+	i--;
- 	while (i && buf[i] == ' ')
- 		i--;
--	buf[i+1] = ' ';
--	buf[i+2] = '\0';
--	return i + 2;
-+	buf[i+1] = '\0';
+-	int err = 0;
+-
+ 	if (!x86_match_cpu(qrk_thermal_ids) || !iosf_mbi_available())
+ 		return -ENODEV;
+ 
+ 	soc_dts = alloc_soc_dts();
+-	if (IS_ERR(soc_dts)) {
+-		err = PTR_ERR(soc_dts);
+-		goto err_free;
+-	}
++	if (IS_ERR(soc_dts))
++		return PTR_ERR(soc_dts);
+ 
+ 	return 0;
+-
+-err_free:
+-	free_soc_dts(soc_dts);
+-	return err;
  }
  
- /**
-@@ -1562,19 +1561,21 @@ static int strip_and_pad_whitespace(int i, char *buf)
- static void ipr_log_vpd_compact(char *prefix, struct ipr_hostrcb *hostrcb,
- 				struct ipr_vpd *vpd)
- {
--	char buffer[IPR_VENDOR_ID_LEN + IPR_PROD_ID_LEN + IPR_SERIAL_NUM_LEN + 3];
--	int i = 0;
-+	char vendor_id[IPR_VENDOR_ID_LEN + 1];
-+	char product_id[IPR_PROD_ID_LEN + 1];
-+	char sn[IPR_SERIAL_NUM_LEN + 1];
- 
--	memcpy(buffer, vpd->vpids.vendor_id, IPR_VENDOR_ID_LEN);
--	i = strip_and_pad_whitespace(IPR_VENDOR_ID_LEN - 1, buffer);
-+	memcpy(vendor_id, vpd->vpids.vendor_id, IPR_VENDOR_ID_LEN);
-+	strip_whitespace(IPR_VENDOR_ID_LEN, vendor_id);
- 
--	memcpy(&buffer[i], vpd->vpids.product_id, IPR_PROD_ID_LEN);
--	i = strip_and_pad_whitespace(i + IPR_PROD_ID_LEN - 1, buffer);
-+	memcpy(product_id, vpd->vpids.product_id, IPR_PROD_ID_LEN);
-+	strip_whitespace(IPR_PROD_ID_LEN, product_id);
- 
--	memcpy(&buffer[i], vpd->sn, IPR_SERIAL_NUM_LEN);
--	buffer[IPR_SERIAL_NUM_LEN + i] = '\0';
-+	memcpy(sn, vpd->sn, IPR_SERIAL_NUM_LEN);
-+	strip_whitespace(IPR_SERIAL_NUM_LEN, sn);
- 
--	ipr_hcam_err(hostrcb, "%s VPID/SN: %s\n", prefix, buffer);
-+	ipr_hcam_err(hostrcb, "%s VPID/SN: %s %s %s\n", prefix,
-+		     vendor_id, product_id, sn);
- }
- 
- /**
+ static void __exit intel_quark_thermal_exit(void)
 -- 
 2.39.2
 
