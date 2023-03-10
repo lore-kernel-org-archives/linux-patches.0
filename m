@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CAC847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:46:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33FCC433D2;
-	Fri, 10 Mar 2023 13:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDE6847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:46:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80865C433EF;
+	Fri, 10 Mar 2023 13:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456008;
-	bh=okvNbCqdqw6+HV+m9K1jD8aNUPH7VSFb5Y15lhHHhcs=;
+	s=korg; t=1678456011;
+	bh=hBwrKp8RsYROW3BwMVi0GovjOjFkdxdpDQWl+rBSdwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eo3+nfMktz8VPtKVL2ZjZtVrT7iAiyEr/ORDssqcgxAEMjdC6NmpDRGpukJdHtnec
-	 +XfJyJeb5RUgOvqoM4oXuJSETSL4fpyp3wm6XEdGkbq/Rdxy/4gN5X5I8NOIdnge8l
-	 aRg06Fw5ykmuRPBrfSAxpx7DSoGDuEO8cjN9OprQ=
+	b=t87gE5bMd7lwhBzYwAQ4jTwOXiBJXsJQ1vC92aBX6IYZ7f4s5zt99I7576Z+KaKob
+	 UfjnXLvR+CA8uNscIEt6w8IOZddno6Y/cIQKghnCdluaebuBPixhYcsmErgKH7qi+R
+	 B4ribl9t5W4l6VrD3Q2C1PylrkQsAwhqAXKSRHho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Jungclaus <frank.jungclaus@esd.eu>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 050/193] can: esd_usb: Move mislocated storage of SJA1000_ECC_SEG bits in case of a bus error
-Date: Fri, 10 Mar 2023 14:37:12 +0100
-Message-Id: <20230310133712.664588796@linuxfoundation.org>
+Subject: [PATCH 4.14 051/193] irqchip/irq-bcm7120-l2: Set IRQ_LEVEL for level triggered interrupts
+Date: Fri, 10 Mar 2023 14:37:13 +0100
+Message-Id: <20230310133712.695529545@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,46 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Jungclaus <frank.jungclaus@esd.eu>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit 118469f88180438ef43dee93d71f77c00e7b425d ]
+[ Upstream commit 13a157b38ca5b4f9eed81442b8821db293755961 ]
 
-Move the supply for cf->data[3] (bit stream position of CAN error), in
-case of a bus- or protocol-error, outside of the "switch (ecc &
-SJA1000_ECC_MASK){}"-statement, because this bit stream position is
-independent of the error type.
+When support for the interrupt controller was added with a5042de2688d,
+we forgot to update the flags to be set to contain IRQ_LEVEL. While the
+flow handler is correct, the output from /proc/interrupts does not show
+such interrupts as being level triggered when they are, correct that.
 
-Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
-Signed-off-by: Frank Jungclaus <frank.jungclaus@esd.eu>
-Link: https://lore.kernel.org/all/20230216190450.3901254-2-frank.jungclaus@esd.eu
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: a5042de2688d ("irqchip: bcm7120-l2: Add Broadcom BCM7120-style Level 2 interrupt controller")
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20221216230934.2478345-3-f.fainelli@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/esd_usb2.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-bcm7120-l2.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/esd_usb2.c b/drivers/net/can/usb/esd_usb2.c
-index fbe1173b2651f..b15154a6c53eb 100644
---- a/drivers/net/can/usb/esd_usb2.c
-+++ b/drivers/net/can/usb/esd_usb2.c
-@@ -284,7 +284,6 @@ static void esd_usb2_rx_event(struct esd_usb2_net_priv *priv,
- 				cf->data[2] |= CAN_ERR_PROT_STUFF;
- 				break;
- 			default:
--				cf->data[3] = ecc & SJA1000_ECC_SEG;
- 				break;
- 			}
+diff --git a/drivers/irqchip/irq-bcm7120-l2.c b/drivers/irqchip/irq-bcm7120-l2.c
+index 983640eba418e..80c52854d41b5 100644
+--- a/drivers/irqchip/irq-bcm7120-l2.c
++++ b/drivers/irqchip/irq-bcm7120-l2.c
+@@ -271,7 +271,8 @@ static int __init bcm7120_l2_intc_probe(struct device_node *dn,
+ 		flags |= IRQ_GC_BE_IO;
  
-@@ -292,6 +291,9 @@ static void esd_usb2_rx_event(struct esd_usb2_net_priv *priv,
- 			if (!(ecc & SJA1000_ECC_DIR))
- 				cf->data[2] |= CAN_ERR_PROT_TX;
- 
-+			/* Bit stream position in CAN frame as the error was detected */
-+			cf->data[3] = ecc & SJA1000_ECC_SEG;
-+
- 			if (priv->can.state == CAN_STATE_ERROR_WARNING ||
- 			    priv->can.state == CAN_STATE_ERROR_PASSIVE) {
- 				cf->data[1] = (txerr > rxerr) ?
+ 	ret = irq_alloc_domain_generic_chips(data->domain, IRQS_PER_WORD, 1,
+-				dn->full_name, handle_level_irq, clr, 0, flags);
++				dn->full_name, handle_level_irq, clr,
++				IRQ_LEVEL, flags);
+ 	if (ret) {
+ 		pr_err("failed to allocate generic irq chip\n");
+ 		goto out_free_domain;
 -- 
 2.39.2
 
