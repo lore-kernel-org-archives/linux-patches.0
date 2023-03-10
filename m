@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2873E8489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:18:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23D4C433D2;
-	Fri, 10 Mar 2023 14:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2811A8489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:19:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DE0C433EF;
+	Fri, 10 Mar 2023 14:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457937;
-	bh=yFSt00cOasyncrNWMXaIqAWy5VOMoQbD1xTXk5g2rK8=;
+	s=korg; t=1678457940;
+	bh=AANr+CicqCDAyexJIEqlp81ptDhtxcYr3C1NK6Dntkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qMTsZWopjrRlBj4fhnIgEOYX8U4w0655AVDte1Msqcip+H2lHYCS4a7lerSG4h3BQ
-	 OSqLu0l/Lj801NAiDiX6L9Hvl+4CxclKoUg84ebzsjQDWwaqZUwb6VbQYmoL70YqEW
-	 dNvQzRCIkf6Es+ciOlg2fM1L69U4Ju9U4X+qKEhI=
+	b=HtooiAfri5xpQC58rFxe3tdG/IaO6YJRroN2NSJU+o5TOYTECWqFmAGJolV1LaAD/
+	 sRCAIfbePW51zncNHn5G0fuK56d3Du6vfmp/xCu94+zTLamFE63K1VfKmjC+NLPdKI
+	 /ZeM+Ts7m+gHjTWG5dBseOX3HxrKBfK6fOq6yNvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 108/252] media: platform: ti: Add missing check for devm_regulator_get
-Date: Fri, 10 Mar 2023 14:37:58 +0100
-Message-Id: <20230310133722.071813445@linuxfoundation.org>
+Subject: [PATCH 4.19 109/252] powerpc: Remove linker flag from KBUILD_AFLAGS
+Date: Fri, 10 Mar 2023 14:37:59 +0100
+Message-Id: <20230310133722.100556136@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -36,43 +39,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit da8e05f84a11c3cc3b0ba0a3c62d20e358002d99 ]
+[ Upstream commit 31f48f16264bc70962fb3e7ec62da64d0a2ba04a ]
 
-Add check for the return value of devm_regulator_get since it may return
-error pointer.
+When clang's -Qunused-arguments is dropped from KBUILD_CPPFLAGS, it
+points out that KBUILD_AFLAGS contains a linker flag, which will be
+unused:
 
-Fixes: 448de7e7850b ("[media] omap3isp: OMAP3 ISP core")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+  clang: error: -Wl,-a32: 'linker' input unused [-Werror,-Wunused-command-line-argument]
+
+This was likely supposed to be '-Wa,-a$(BITS)'. However, this change is
+unnecessary, as all supported versions of clang and gcc will pass '-a64'
+or '-a32' to GNU as based on the value of '-m'; the behavior of the
+latest stable release of the oldest supported major version of each
+compiler is shown below and each compiler's latest release exhibits the
+same behavior (GCC 12.2.0 and Clang 15.0.6).
+
+  $ powerpc64-linux-gcc --version | head -1
+  powerpc64-linux-gcc (GCC) 5.5.0
+
+  $ powerpc64-linux-gcc -m64 -### -x assembler-with-cpp -c -o /dev/null /dev/null &| grep 'as '
+  .../as -a64 -mppc64 -many -mbig -o /dev/null /tmp/cctwuBzZ.s
+
+  $ powerpc64-linux-gcc -m32 -### -x assembler-with-cpp -c -o /dev/null /dev/null &| grep 'as '
+  .../as -a32 -mppc -many -mbig -o /dev/null /tmp/ccaZP4mF.sg
+
+  $ clang --version | head -1
+  Ubuntu clang version 11.1.0-++20211011094159+1fdec59bffc1-1~exp1~20211011214622.5
+
+  $ clang --target=powerpc64-linux-gnu -fno-integrated-as -m64 -### \
+    -x assembler-with-cpp -c -o /dev/null /dev/null &| grep gnu-as
+   "/usr/bin/powerpc64-linux-gnu-as" "-a64" "-mppc64" "-many" "-o" "/dev/null" "/tmp/null-80267c.s"
+
+  $ clang --target=powerpc64-linux-gnu -fno-integrated-as -m64 -### \
+    -x assembler-with-cpp -c -o /dev/null /dev/null &| grep gnu-as
+   "/usr/bin/powerpc64-linux-gnu-as" "-a32" "-mppc" "-many" "-o" "/dev/null" "/tmp/null-ab8f8d.s"
+
+Remove this flag altogether to avoid future issues.
+
+Fixes: 1421dc6d4829 ("powerpc/kbuild: Use flags variables rather than overriding LD/CC/AS")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Anders Roxell <anders.roxell@linaro.org>
+Acked-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/omap3isp/isp.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/powerpc/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/omap3isp/isp.c b/drivers/media/platform/omap3isp/isp.c
-index 00e52f0b8251b..b559cc179d708 100644
---- a/drivers/media/platform/omap3isp/isp.c
-+++ b/drivers/media/platform/omap3isp/isp.c
-@@ -2247,7 +2247,16 @@ static int isp_probe(struct platform_device *pdev)
+diff --git a/arch/powerpc/Makefile b/arch/powerpc/Makefile
+index 5987ae0d8fbbb..9b33cd4e0e177 100644
+--- a/arch/powerpc/Makefile
++++ b/arch/powerpc/Makefile
+@@ -109,7 +109,7 @@ aflags-$(CONFIG_CPU_LITTLE_ENDIAN)	+= -mlittle-endian
  
- 	/* Regulators */
- 	isp->isp_csiphy1.vdd = devm_regulator_get(&pdev->dev, "vdd-csiphy1");
-+	if (IS_ERR(isp->isp_csiphy1.vdd)) {
-+		ret = PTR_ERR(isp->isp_csiphy1.vdd);
-+		goto error;
-+	}
-+
- 	isp->isp_csiphy2.vdd = devm_regulator_get(&pdev->dev, "vdd-csiphy2");
-+	if (IS_ERR(isp->isp_csiphy2.vdd)) {
-+		ret = PTR_ERR(isp->isp_csiphy2.vdd);
-+		goto error;
-+	}
- 
- 	/* Clocks
- 	 *
+ ifeq ($(HAS_BIARCH),y)
+ KBUILD_CFLAGS	+= -m$(BITS)
+-KBUILD_AFLAGS	+= -m$(BITS) -Wl,-a$(BITS)
++KBUILD_AFLAGS	+= -m$(BITS)
+ KBUILD_LDFLAGS	+= -m elf$(BITS)$(LDEMULATION)
+ KBUILD_ARFLAGS	+= --target=elf$(BITS)-$(GNUTARGET)
+ endif
 -- 
 2.39.2
 
