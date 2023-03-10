@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F458825
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:57:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5798BC4339B;
-	Fri, 10 Mar 2023 14:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255DD8825
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:57:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800BFC4339B;
+	Fri, 10 Mar 2023 14:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460222;
-	bh=zE28l149l0eMaKeqIvGHrD5NoiNdgdcG+MccGea7oHA=;
+	s=korg; t=1678460226;
+	bh=rmiRr8MDj34AUZ0QgkunSpHASxZDM1JzFkzYA/tAG7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VnG+SAbz9yns9zHzarH7FvsqKl0ZeiyUhXJNuwZbEXYpUOyEA/IfU15n9/pVHBtuz
-	 B52+plWu43JK4kO5psvg/5CMfZmc5SjQlRzSZ+siQHBqpqioEPn+S8NbW3nYDmuVft
-	 lxYHuA+/xMJLnMh88X4dz78vtfw4F7Y9fS+vcKLE=
+	b=1or3bw6KXMy2EwhRttWsW5iKm1pu/w8rbCE8CMPjwKz9q2xqvZzalwq6no7baM36p
+	 oTwD3YUb80ALQ4d3GU58x+W1cJUZJpuz6gGx2gUGP0RWjqFSVlFpBi0t7xvxJsHEve
+	 QQUHiJNP01FevbB3YpNMMEyA61JoPFQLXql/E//I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Amit Pundir <amit.pundir@linaro.org>
-Subject: [PATCH 5.10 264/529] remoteproc: qcom_q6v5_mss: Use a carveout to authenticate modem headers
-Date: Fri, 10 Mar 2023 14:36:47 +0100
-Message-Id: <20230310133817.195356755@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 247/529] clk: qcom: gpucc-sc7180: fix clk_dis_wait being programmed for CX GDSC
+Date: Fri, 10 Mar 2023 14:36:30 +0100
+Message-Id: <20230310133816.406936781@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -37,134 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sibi Sankar <quic_sibis@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 57f72170a2b2a362c35bb9407fc844eac5afdec1 ]
+[ Upstream commit 658c82caffa042b351f5a1b6325819297a951a04 ]
 
-Any access to the dynamically allocated metadata region by the application
-processor after assigning it to the remote Q6 will result in a XPU
-violation. Fix this by replacing the dynamically allocated memory region
-with a no-map carveout and unmap the modem metadata memory region before
-passing control to the remote Q6.
+The gdsc_init() function will rewrite the CLK_DIS_WAIT field while
+registering the GDSC (writing the value 0x2 by default). This will
+override the setting done in the driver's probe function.
 
-Reported-and-tested-by: Amit Pundir <amit.pundir@linaro.org>
-Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for mem ownership switch")
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Set cx_gdsc.clk_dis_wait_val to 8 to follow the intention of the probe
+function.
+
+Fixes: 745ff069a49c ("clk: qcom: Add graphics clock controller driver for SC7180")
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230117085840.32356-7-quic_sibis@quicinc.com
+Link: https://lore.kernel.org/r/20230201172305.993146-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_mss.c | 59 +++++++++++++++++++++++++++---
- 1 file changed, 53 insertions(+), 6 deletions(-)
+ drivers/clk/qcom/gpucc-sc7180.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index 1b3aa84e36e7a..3d975ecd93360 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -17,6 +17,7 @@
- #include <linux/module.h>
- #include <linux/of_address.h>
- #include <linux/of_device.h>
-+#include <linux/of_reserved_mem.h>
- #include <linux/platform_device.h>
- #include <linux/pm_domain.h>
- #include <linux/pm_runtime.h>
-@@ -190,6 +191,9 @@ struct q6v5 {
- 	size_t mba_size;
- 	size_t dp_size;
+diff --git a/drivers/clk/qcom/gpucc-sc7180.c b/drivers/clk/qcom/gpucc-sc7180.c
+index 88a739b6fec39..c51114e7e1e66 100644
+--- a/drivers/clk/qcom/gpucc-sc7180.c
++++ b/drivers/clk/qcom/gpucc-sc7180.c
+@@ -21,8 +21,6 @@
+ #define CX_GMU_CBCR_SLEEP_SHIFT		4
+ #define CX_GMU_CBCR_WAKE_MASK		0xF
+ #define CX_GMU_CBCR_WAKE_SHIFT		8
+-#define CLK_DIS_WAIT_SHIFT		12
+-#define CLK_DIS_WAIT_MASK		(0xf << CLK_DIS_WAIT_SHIFT)
  
-+	phys_addr_t mdata_phys;
-+	size_t mdata_size;
-+
- 	phys_addr_t mpss_phys;
- 	phys_addr_t mpss_reloc;
- 	size_t mpss_size;
-@@ -816,15 +820,35 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw)
- 	if (IS_ERR(metadata))
- 		return PTR_ERR(metadata);
+ enum {
+ 	P_BI_TCXO,
+@@ -163,6 +161,7 @@ static struct clk_branch gpu_cc_cxo_clk = {
+ static struct gdsc cx_gdsc = {
+ 	.gdscr = 0x106c,
+ 	.gds_hw_ctrl = 0x1540,
++	.clk_dis_wait_val = 8,
+ 	.pd = {
+ 		.name = "cx_gdsc",
+ 	},
+@@ -245,10 +244,6 @@ static int gpu_cc_sc7180_probe(struct platform_device *pdev)
+ 	value = 0xF << CX_GMU_CBCR_WAKE_SHIFT | 0xF << CX_GMU_CBCR_SLEEP_SHIFT;
+ 	regmap_update_bits(regmap, 0x1098, mask, value);
  
--	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
--	if (!ptr) {
--		kfree(metadata);
--		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
--		return -ENOMEM;
-+	if (qproc->mdata_phys) {
-+		if (size > qproc->mdata_size) {
-+			ret = -EINVAL;
-+			dev_err(qproc->dev, "metadata size outside memory range\n");
-+			goto free_metadata;
-+		}
-+
-+		phys = qproc->mdata_phys;
-+		ptr = memremap(qproc->mdata_phys, size, MEMREMAP_WC);
-+		if (!ptr) {
-+			ret = -EBUSY;
-+			dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
-+				&qproc->mdata_phys, size);
-+			goto free_metadata;
-+		}
-+	} else {
-+		ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
-+		if (!ptr) {
-+			ret = -ENOMEM;
-+			dev_err(qproc->dev, "failed to allocate mdt buffer\n");
-+			goto free_metadata;
-+		}
- 	}
- 
- 	memcpy(ptr, metadata, size);
- 
-+	if (qproc->mdata_phys)
-+		memunmap(ptr);
-+
- 	/* Hypervisor mapping to access metadata by modem */
- 	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
- 	ret = q6v5_xfer_mem_ownership(qproc, &mdata_perm, false, true,
-@@ -853,7 +877,9 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw)
- 			 "mdt buffer not reclaimed system may become unstable\n");
- 
- free_dma_attrs:
--	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
-+	if (!qproc->mdata_phys)
-+		dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
-+free_metadata:
- 	kfree(metadata);
- 
- 	return ret < 0 ? ret : 0;
-@@ -1585,6 +1611,7 @@ static int q6v5_init_reset(struct q6v5 *qproc)
- static int q6v5_alloc_memory_region(struct q6v5 *qproc)
- {
- 	struct device_node *child;
-+	struct reserved_mem *rmem;
- 	struct device_node *node;
- 	struct resource r;
- 	int ret;
-@@ -1637,6 +1664,26 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
- 	qproc->mpss_phys = qproc->mpss_reloc = r.start;
- 	qproc->mpss_size = resource_size(&r);
- 
-+	if (!child) {
-+		node = of_parse_phandle(qproc->dev->of_node, "memory-region", 2);
-+	} else {
-+		child = of_get_child_by_name(qproc->dev->of_node, "metadata");
-+		node = of_parse_phandle(child, "memory-region", 0);
-+		of_node_put(child);
-+	}
-+
-+	if (!node)
-+		return 0;
-+
-+	rmem = of_reserved_mem_lookup(node);
-+	if (!rmem) {
-+		dev_err(qproc->dev, "unable to resolve metadata region\n");
-+		return -EINVAL;
-+	}
-+
-+	qproc->mdata_phys = rmem->base;
-+	qproc->mdata_size = rmem->size;
-+
- 	return 0;
+-	/* Configure clk_dis_wait for gpu_cx_gdsc */
+-	regmap_update_bits(regmap, 0x106c, CLK_DIS_WAIT_MASK,
+-						8 << CLK_DIS_WAIT_SHIFT);
+-
+ 	return qcom_cc_really_probe(pdev, &gpu_cc_sc7180_desc, regmap);
  }
  
 -- 
