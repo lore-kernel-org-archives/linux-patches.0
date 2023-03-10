@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00296847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6307DC433D2;
-	Fri, 10 Mar 2023 13:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BFC847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628CAC433EF;
+	Fri, 10 Mar 2023 13:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456360;
-	bh=F5wTC/m7DzAN4G2q0Sn4B/M0KQAO2Bs3S/4QLZGdKvI=;
+	s=korg; t=1678456363;
+	bh=wPygZ0stChoHkYaN0o2T1JGxTm8kLDi/b7vH2HvlPLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PwZP6t1xXFD6wsSykWxu0KcxLX6/jraGA5Vi0m1II0b3a+Kx8t8ZEm/fhQz3GqV5Q
-	 c+penQQSKIhTCSGb5kbV7o5lVqZ265X5UbPCrGlRPVPovbCFy96vOYc7AIvryGxZgD
-	 2PM7CGjbQ/NYyRztAc4h7oGmEOUPuNXd0h3P+VPs=
+	b=h3rRQ+bmO9rOi6NzE28oKJejFgOesT93vej8fxqXqE3H3kjPqHj4Col1SW3nk5WvA
+	 Er9J9BY3YxbZUcvMuVJOyMSnYRSMDs0uFeTpa5BvvU5hU+8chNZcwrIV0vEtseSEcR
+	 5SBpS/RuZo4wAP/wpZHUfPFrwh/HpxVlA139FCQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 4.14 139/193] scsi: qla2xxx: Fix link failure in NPIV environment
-Date: Fri, 10 Mar 2023 14:38:41 +0100
-Message-Id: <20230310133715.847979455@linuxfoundation.org>
+Subject: [PATCH 4.14 140/193] scsi: qla2xxx: Fix erroneous link down
+Date: Fri, 10 Mar 2023 14:38:42 +0100
+Message-Id: <20230310133715.887404100@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -38,21 +38,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Quinn Tran <qutran@marvell.com>
 
-commit b1ae65c082f74536ec292b15766f2846f0238373 upstream.
+commit 3fbc74feb642deb688cc97f76d40b7287ddd4cb1 upstream.
 
-User experienced symptoms of adapter failure in NPIV environment. NPIV
-hosts were allowed to trigger chip reset back to back due to NPIV link
-state being slow to come online.
+If after an adapter reset the appearance of link is not recovered, the
+devices are not rediscovered.  This is result of a race condition between
+adapter reset (abort_isp) and the topology scan.  During adapter reset, the
+ABORT_ISP_ACTIVE flag is set.  Topology scan usually occurred after adapter
+reset.  In this case, the topology scan came earlier than usual where it
+ran into problem due to ABORT_ISP_ACTIVE flag was still set.
 
-Fix link failure in NPIV environment by removing NPIV host from directly
-being able to perform chip reset.
+kernel: qla2xxx [0000:13:00.0]-1005:1: Cmd 0x6a aborted with timeout since ISP Abort is pending
+kernel: qla2xxx [0000:13:00.0]-28a0:1: MBX_GET_PORT_NAME failed, No FL Port.
+kernel: qla2xxx [0000:13:00.0]-286b:1: qla2x00_configure_loop: exiting normally. local port wwpn 51402ec0123d9a80 id 012300)
+kernel: qla2xxx [0000:13:00.0]-8017:1: ADAPTER RESET SUCCEEDED nexus=1:0:15.
 
- kernel: qla2xxx [0000:04:00.1]-6009:261: Loop down - aborting ISP.
- kernel: qla2xxx [0000:04:00.1]-6009:262: Loop down - aborting ISP.
- kernel: qla2xxx [0000:04:00.1]-6009:281: Loop down - aborting ISP.
- kernel: qla2xxx [0000:04:00.1]-6009:285: Loop down - aborting ISP
+Allow adapter reset to complete before any scan can start.
 
-Fixes: 0d6e61bc6a4f ("[SCSI] qla2xxx: Correct various NPIV issues.")
 Cc: stable@vger.kernel.org
 Signed-off-by: Quinn Tran <qutran@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
@@ -60,19 +61,25 @@ Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_os.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 --- a/drivers/scsi/qla2xxx/qla_os.c
 +++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -6116,7 +6116,7 @@ qla2x00_timer(scsi_qla_host_t *vha)
- 
- 		/* if the loop has been down for 4 minutes, reinit adapter */
- 		if (atomic_dec_and_test(&vha->loop_down_timer) != 0) {
--			if (!(vha->device_flags & DFLG_NO_CABLE)) {
-+			if (!(vha->device_flags & DFLG_NO_CABLE) && !vha->vp_idx) {
- 				ql_log(ql_log_warn, vha, 0x6009,
- 				    "Loop down - aborting ISP.\n");
+@@ -5887,9 +5887,12 @@ qla2x00_do_dpc(void *data)
+ 			}
+ 		}
+ loop_resync_check:
+-		if (test_and_clear_bit(LOOP_RESYNC_NEEDED,
++		if (!qla2x00_reset_active(base_vha) &&
++		    test_and_clear_bit(LOOP_RESYNC_NEEDED,
+ 		    &base_vha->dpc_flags)) {
+-
++			/*
++			 * Allow abort_isp to complete before moving on to scanning.
++			 */
+ 			ql_dbg(ql_dbg_dpc, base_vha, 0x400f,
+ 			    "Loop resync scheduled.\n");
  
 
 
