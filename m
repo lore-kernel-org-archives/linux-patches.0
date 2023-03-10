@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AD9882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:05:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30EEFC4339B;
-	Fri, 10 Mar 2023 15:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9983C882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:05:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2063DC4339C;
+	Fri, 10 Mar 2023 15:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460749;
-	bh=QbIrpss5qE2Z+/U8AMOEQ3D0lXgfkkKb3SuKvfXCgCE=;
+	s=korg; t=1678460752;
+	bh=/Lf7aZ8QHDhnf4j+/UFvcvNCBkbmxqKB2IlHGN59YUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ntp+hE5Jatgbx9Jsd53TL5f9AOo9pLb1cU6VuueYbtLphW57UkFD3ygyH5BaRaNdn
-	 b+Ej8e04xuJ1ZEYpxMdML0IG/ryL+C+0C8wHHcQ1zCe+tV05PLOJyTXe1kbOH734E7
-	 wZxvPWDfZEKOrUYFqfp2F8DsKcPTWyDvZ6J9i/ek=
+	b=EfxP+xd0GpuF2uXmP9flwv9QFlGfvck9L98CBdHb1iCNMlmoL7kbAQzZ/9XFPlQX+
+	 NtvKVLqSUbJiQH1bSAzriGvCt0v8jVKrf7EH6DpQm8kiF+zUWrhjQufH0YDif6EZn6
+	 sK4a5i1pQ9kMUbf+nj0uFtoV/PzWlU7IAwX56ON4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arun Easi <aeasi@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 411/529] scsi: qla2xxx: Fix DMA-API call trace on NVMe LS requests
-Date: Fri, 10 Mar 2023 14:39:14 +0100
-Message-Id: <20230310133824.042299200@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Alexander Potapenko <glider@google.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 438/529] fs: f2fs: initialize fsdata in pagecache_write()
+Date: Fri, 10 Mar 2023 14:39:41 +0100
+Message-Id: <20230310133825.222320785@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,87 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arun Easi <aeasi@marvell.com>
+From: Alexander Potapenko <glider@google.com>
 
-commit c75e6aef5039830cce5d4cf764dd204522f89e6b upstream.
+[ Upstream commit b1b9896718bc1a212dc288ad66a5fa2fef11353d ]
 
-The following message and call trace was seen with debug kernels:
+When aops->write_begin() does not initialize fsdata, KMSAN may report
+an error passing the latter to aops->write_end().
 
-DMA-API: qla2xxx 0000:41:00.0: device driver failed to check map
-error [device address=0x00000002a3ff38d8] [size=1024 bytes] [mapped as
-single]
-WARNING: CPU: 0 PID: 2930 at kernel/dma/debug.c:1017
-	 check_unmap+0xf42/0x1990
+Fix this by unconditionally initializing fsdata.
 
-Call Trace:
-	debug_dma_unmap_page+0xc9/0x100
-	qla_nvme_ls_unmap+0x141/0x210 [qla2xxx]
-
-Remove DMA mapping from the driver altogether, as it is already done by FC
-layer. This prevents the warning.
-
-Fixes: c85ab7d9e27a ("scsi: qla2xxx: Fix missed DMA unmap for NVMe ls requests")
-Cc: stable@vger.kernel.org
-Signed-off-by: Arun Easi <aeasi@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Fixes: 95ae251fe828 ("f2fs: add fs-verity support")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c |   19 +------------------
- 1 file changed, 1 insertion(+), 18 deletions(-)
+ fs/f2fs/verity.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -165,18 +165,6 @@ out:
- 	qla2xxx_rel_qpair_sp(sp->qpair, sp);
- }
+diff --git a/fs/f2fs/verity.c b/fs/f2fs/verity.c
+index dafdb19ec0dba..cef40d92268f7 100644
+--- a/fs/f2fs/verity.c
++++ b/fs/f2fs/verity.c
+@@ -78,7 +78,7 @@ static int pagecache_write(struct inode *inode, const void *buf, size_t count,
+ 		size_t n = min_t(size_t, count,
+ 				 PAGE_SIZE - offset_in_page(pos));
+ 		struct page *page;
+-		void *fsdata;
++		void *fsdata = NULL;
+ 		int res;
  
--static void qla_nvme_ls_unmap(struct srb *sp, struct nvmefc_ls_req *fd)
--{
--	if (sp->flags & SRB_DMA_VALID) {
--		struct srb_iocb *nvme = &sp->u.iocb_cmd;
--		struct qla_hw_data *ha = sp->fcport->vha->hw;
--
--		dma_unmap_single(&ha->pdev->dev, nvme->u.nvme.cmd_dma,
--				 fd->rqstlen, DMA_TO_DEVICE);
--		sp->flags &= ~SRB_DMA_VALID;
--	}
--}
--
- static void qla_nvme_release_ls_cmd_kref(struct kref *kref)
- {
- 	struct srb *sp = container_of(kref, struct srb, cmd_kref);
-@@ -194,7 +182,6 @@ static void qla_nvme_release_ls_cmd_kref
- 
- 	fd = priv->fd;
- 
--	qla_nvme_ls_unmap(sp, fd);
- 	fd->done(fd, priv->comp_status);
- out:
- 	qla2x00_rel_sp(sp);
-@@ -336,13 +323,10 @@ static int qla_nvme_ls_req(struct nvme_f
- 	nvme->u.nvme.rsp_len = fd->rsplen;
- 	nvme->u.nvme.rsp_dma = fd->rspdma;
- 	nvme->u.nvme.timeout_sec = fd->timeout;
--	nvme->u.nvme.cmd_dma = dma_map_single(&ha->pdev->dev, fd->rqstaddr,
--	    fd->rqstlen, DMA_TO_DEVICE);
-+	nvme->u.nvme.cmd_dma = fd->rqstdma;
- 	dma_sync_single_for_device(&ha->pdev->dev, nvme->u.nvme.cmd_dma,
- 	    fd->rqstlen, DMA_TO_DEVICE);
- 
--	sp->flags |= SRB_DMA_VALID;
--
- 	rval = qla2x00_start_sp(sp);
- 	if (rval != QLA_SUCCESS) {
- 		ql_log(ql_log_warn, vha, 0x700e,
-@@ -350,7 +334,6 @@ static int qla_nvme_ls_req(struct nvme_f
- 		wake_up(&sp->nvme_ls_waitq);
- 		sp->priv = NULL;
- 		priv->sp = NULL;
--		qla_nvme_ls_unmap(sp, fd);
- 		qla2x00_rel_sp(sp);
- 		return rval;
- 	}
+ 		res = pagecache_write_begin(NULL, inode->i_mapping, pos, n, 0,
+-- 
+2.39.2
+
 
 
