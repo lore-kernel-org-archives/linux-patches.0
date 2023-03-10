@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457DC847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CA9C433EF;
-	Fri, 10 Mar 2023 13:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00507847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77515C433D2;
+	Fri, 10 Mar 2023 13:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456638;
-	bh=5RsrH0SoHdPRpxsqEvjNXkQpPKlHdLmZcp2Ggcc96dw=;
+	s=korg; t=1678456640;
+	bh=gLsH/uL6Z+svyRgcK+yjXGRB5bC9JgA2SJY6tUyB6Cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CBPFZCHi9CXxYyE+bE2ZtkE933PzM5fFW+x9OXgVMaZa3EDPasCwZoSKdI9FPlu5G
-	 22rSGl+6QhNCOcAqca54ntyrYgCWwhD7KJPOVIoPdytR3fMJS5b4DYoKxjMcr2Rtfc
-	 Ab2iZCBjSEN9CcAlfHwv/4Ll3UttLpC2fglrL1VQ=
+	b=CVdYXgbZC3+qOmuK+PXWT1YOSgJbleDtGjzwSiDQcbsBPtJix6e2N0AQ6dKQE86Wy
+	 VZo19zdcOkOdm0QUd4FX9g0lROxik6K1DipR3Z3RvUpXuoraC9I2RmvWvEEiGzdFTr
+	 ABAWcNwU+Xt8KufKONdFXdiMHwiTRU7jiRYnZLV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryce Kahle <bryce.kahle@datadoghq.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Yangtao Li <frank.li@vivo.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 071/211] netfilter: ctnetlink: make event listener tracking global
-Date: Fri, 10 Mar 2023 14:37:31 +0100
-Message-Id: <20230310133720.931217240@linuxfoundation.org>
+Subject: [PATCH 6.2 045/211] f2fs: fix to avoid potential memory corruption in __update_iostat_latency()
+Date: Fri, 10 Mar 2023 14:37:05 +0100
+Message-Id: <20230310133720.106601692@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,141 +38,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit fdf6491193e411087ae77bcbc6468e3e1cff99ed ]
+[ Upstream commit 0dbbf0fb38d5ec5d4138d1aeaeb43d9217b9a592 ]
 
-pernet tracking doesn't work correctly because other netns might have
-set NETLINK_LISTEN_ALL_NSID on its event socket.
+Add iotype sanity check to avoid potential memory corruption.
+This is to fix the compile error below:
 
-In this case its expected that events originating in other net
-namespaces are also received.
+fs/f2fs/iostat.c:231 __update_iostat_latency() error: buffer overflow
+'io_lat->peak_lat[type]' 3 <= 3
 
-Making pernet-tracking work while also honoring NETLINK_LISTEN_ALL_NSID
-requires much more intrusive changes both in netlink and nfnetlink,
-f.e. adding a 'setsockopt' callback that lets nfnetlink know that the
-event socket entered (or left) ALL_NSID mode.
+vim +228 fs/f2fs/iostat.c
 
-Move to global tracking instead: if there is an event socket anywhere
-on the system, all net namespaces which have conntrack enabled and
-use autobind mode will allocate the ecache extension.
+  211  static inline void __update_iostat_latency(struct bio_iostat_ctx
+	*iostat_ctx,
+  212					enum iostat_lat_type type)
+  213  {
+  214		unsigned long ts_diff;
+  215		unsigned int page_type = iostat_ctx->type;
+  216		struct f2fs_sb_info *sbi = iostat_ctx->sbi;
+  217		struct iostat_lat_info *io_lat = sbi->iostat_io_lat;
+  218		unsigned long flags;
+  219
+  220		if (!sbi->iostat_enable)
+  221			return;
+  222
+  223		ts_diff = jiffies - iostat_ctx->submit_ts;
+  224		if (page_type >= META_FLUSH)
+                                 ^^^^^^^^^^
 
-netlink_has_listeners() returns false only if the given group has no
-subscribers in any net namespace, the 'net' argument passed to
-nfnetlink_has_listeners is only used to derive the protocol (nfnetlink),
-it has no other effect.
+  225			page_type = META;
+  226
+  227		spin_lock_irqsave(&sbi->iostat_lat_lock, flags);
+ @228		io_lat->sum_lat[type][page_type] += ts_diff;
+                                      ^^^^^^^^^
+Mixup between META_FLUSH and NR_PAGE_TYPE leads to memory corruption.
 
-For proper NETLINK_LISTEN_ALL_NSID-aware pernet tracking of event
-listeners a new netlink_has_net_listeners() is also needed.
-
-Fixes: 90d1daa45849 ("netfilter: conntrack: add nf_conntrack_events autodetect mode")
-Reported-by: Bryce Kahle <bryce.kahle@datadoghq.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: a4b6817625e7 ("f2fs: introduce periodic iostat io latency traces")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Suggested-by: Chao Yu <chao@kernel.org>
+Suggested-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter.h           | 5 +++++
- include/net/netns/conntrack.h       | 1 -
- net/netfilter/core.c                | 3 +++
- net/netfilter/nf_conntrack_ecache.c | 2 +-
- net/netfilter/nfnetlink.c           | 9 +++++----
- 5 files changed, 14 insertions(+), 6 deletions(-)
+ fs/f2fs/iostat.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/netfilter.h b/include/linux/netfilter.h
-index d8817d381c14b..bef8db9d6c085 100644
---- a/include/linux/netfilter.h
-+++ b/include/linux/netfilter.h
-@@ -488,4 +488,9 @@ extern const struct nfnl_ct_hook __rcu *nfnl_ct_hook;
-  */
- DECLARE_PER_CPU(bool, nf_skb_duplicated);
+diff --git a/fs/f2fs/iostat.c b/fs/f2fs/iostat.c
+index 3166a8939ed4f..02393c95c9f86 100644
+--- a/fs/f2fs/iostat.c
++++ b/fs/f2fs/iostat.c
+@@ -227,8 +227,12 @@ static inline void __update_iostat_latency(struct bio_iostat_ctx *iostat_ctx,
+ 		return;
  
-+/**
-+ * Contains bitmask of ctnetlink event subscribers, if any.
-+ * Can't be pernet due to NETLINK_LISTEN_ALL_NSID setsockopt flag.
-+ */
-+extern u8 nf_ctnetlink_has_listener;
- #endif /*__LINUX_NETFILTER_H*/
-diff --git a/include/net/netns/conntrack.h b/include/net/netns/conntrack.h
-index e1290c159184a..1f463b3957c78 100644
---- a/include/net/netns/conntrack.h
-+++ b/include/net/netns/conntrack.h
-@@ -95,7 +95,6 @@ struct nf_ip_net {
+ 	ts_diff = jiffies - iostat_ctx->submit_ts;
+-	if (iotype >= META_FLUSH)
++	if (iotype == META_FLUSH) {
+ 		iotype = META;
++	} else if (iotype >= NR_PAGE_TYPE) {
++		f2fs_warn(sbi, "%s: %d over NR_PAGE_TYPE", __func__, iotype);
++		return;
++	}
  
- struct netns_ct {
- #ifdef CONFIG_NF_CONNTRACK_EVENTS
--	u8 ctnetlink_has_listener;
- 	bool ecache_dwork_pending;
- #endif
- 	u8			sysctl_log_invalid; /* Log invalid packets */
-diff --git a/net/netfilter/core.c b/net/netfilter/core.c
-index 5a6705a0e4ecf..6e80f0f6149ea 100644
---- a/net/netfilter/core.c
-+++ b/net/netfilter/core.c
-@@ -669,6 +669,9 @@ const struct nf_ct_hook __rcu *nf_ct_hook __read_mostly;
- EXPORT_SYMBOL_GPL(nf_ct_hook);
- 
- #if IS_ENABLED(CONFIG_NF_CONNTRACK)
-+u8 nf_ctnetlink_has_listener;
-+EXPORT_SYMBOL_GPL(nf_ctnetlink_has_listener);
-+
- const struct nf_nat_hook __rcu *nf_nat_hook __read_mostly;
- EXPORT_SYMBOL_GPL(nf_nat_hook);
- 
-diff --git a/net/netfilter/nf_conntrack_ecache.c b/net/netfilter/nf_conntrack_ecache.c
-index 8698b34246460..69948e1d6974e 100644
---- a/net/netfilter/nf_conntrack_ecache.c
-+++ b/net/netfilter/nf_conntrack_ecache.c
-@@ -309,7 +309,7 @@ bool nf_ct_ecache_ext_add(struct nf_conn *ct, u16 ctmask, u16 expmask, gfp_t gfp
- 			break;
- 		return true;
- 	case 2: /* autodetect: no event listener, don't allocate extension. */
--		if (!READ_ONCE(net->ct.ctnetlink_has_listener))
-+		if (!READ_ONCE(nf_ctnetlink_has_listener))
- 			return true;
- 		fallthrough;
- 	case 1:
-diff --git a/net/netfilter/nfnetlink.c b/net/netfilter/nfnetlink.c
-index 6d18fb3468683..81c7737c803a6 100644
---- a/net/netfilter/nfnetlink.c
-+++ b/net/netfilter/nfnetlink.c
-@@ -29,6 +29,7 @@
- 
- #include <net/netlink.h>
- #include <net/netns/generic.h>
-+#include <linux/netfilter.h>
- #include <linux/netfilter/nfnetlink.h>
- 
- MODULE_LICENSE("GPL");
-@@ -685,12 +686,12 @@ static void nfnetlink_bind_event(struct net *net, unsigned int group)
- 	group_bit = (1 << group);
- 
- 	spin_lock(&nfnl_grp_active_lock);
--	v = READ_ONCE(net->ct.ctnetlink_has_listener);
-+	v = READ_ONCE(nf_ctnetlink_has_listener);
- 	if ((v & group_bit) == 0) {
- 		v |= group_bit;
- 
- 		/* read concurrently without nfnl_grp_active_lock held. */
--		WRITE_ONCE(net->ct.ctnetlink_has_listener, v);
-+		WRITE_ONCE(nf_ctnetlink_has_listener, v);
- 	}
- 
- 	spin_unlock(&nfnl_grp_active_lock);
-@@ -744,12 +745,12 @@ static void nfnetlink_unbind(struct net *net, int group)
- 
- 	spin_lock(&nfnl_grp_active_lock);
- 	if (!nfnetlink_has_listeners(net, group)) {
--		u8 v = READ_ONCE(net->ct.ctnetlink_has_listener);
-+		u8 v = READ_ONCE(nf_ctnetlink_has_listener);
- 
- 		v &= ~group_bit;
- 
- 		/* read concurrently without nfnl_grp_active_lock held. */
--		WRITE_ONCE(net->ct.ctnetlink_has_listener, v);
-+		WRITE_ONCE(nf_ctnetlink_has_listener, v);
- 	}
- 	spin_unlock(&nfnl_grp_active_lock);
- #endif
+ 	if (rw == 0) {
+ 		idx = READ_IO;
 -- 
 2.39.2
 
