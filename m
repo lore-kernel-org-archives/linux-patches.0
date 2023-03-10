@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14AF881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305F5C4339E;
-	Fri, 10 Mar 2023 14:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82C1881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:40:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D83C4339C;
+	Fri, 10 Mar 2023 14:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459226;
-	bh=Z7rXs6G1Bw1wJR8vYBikkDf05k0gYJcZtBy8sJ1qV48=;
+	s=korg; t=1678459229;
+	bh=0WA3IHubj7aabl6dGo8czV/q1qGiMevt/BKsQnFKFwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kyN7CmVSHjk0AJtzqkngzhVzOKVac3Qw20NlTUGbknA1c0VHAkkmUMBJdcTVrS4Zg
-	 wVvc6jgi6nH9e8OUs4d3IkK3oc3ZMDRsHmrnuHTN8FDfll8gNQgrdG3pMSqgvhJO0F
-	 52kNTWEPvefyppVINiIS1q5ESl3BrkzL/bU2utWY=
+	b=nmMZsEp5Q/3aQRsbgWexYrkVnBvGj2YOj7XmeET3rKSB2JbKeGouiITOccSGRDg9P
+	 5MrZKmGdvdUT1vOl+gJ1NvYTMTzrh0IQVgVTvYqhBqIzu4jRxCqhZDjGH4wd0nb+0M
+	 ouX2EydQ9J5MRquozSmOfN3xOnyvR1F2hEfMTP6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.4 259/357] rbd: avoid use-after-free in do_rbd_add() when rbd_dev_create() fails
-Date: Fri, 10 Mar 2023 14:39:08 +0100
-Message-Id: <20230310133746.166475034@linuxfoundation.org>
+	syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Jun Nie <jun.nie@linaro.org>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.4 250/357] ext4: optimize ea_inode block expansion
+Date: Fri, 10 Mar 2023 14:38:59 +0100
+Message-Id: <20230310133745.792885515@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -33,94 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Jun Nie <jun.nie@linaro.org>
 
-commit f7c4d9b133c7a04ca619355574e96b6abf209fba upstream.
+commit 1e9d62d252812575ded7c620d8fc67c32ff06c16 upstream.
 
-If getting an ID or setting up a work queue in rbd_dev_create() fails,
-use-after-free on rbd_dev->rbd_client, rbd_dev->spec and rbd_dev->opts
-is triggered in do_rbd_add().  The root cause is that the ownership of
-these structures is transfered to rbd_dev prematurely and they all end
-up getting freed when rbd_dev_create() calls rbd_dev_free() prior to
-returning to do_rbd_add().
+Copy ea data from inode entry when expanding ea block if possible.
+Then remove the ea entry if expansion success. Thus memcpy to a
+temporary buffer may be avoided.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE, an
-incomplete patch submitted by Natalia Petrova <n.petrova@fintech.ru>.
+If the expansion fails, we do not need to recovery the removed ea
+entry neither in this way.
 
-Cc: stable@vger.kernel.org
-Fixes: 1643dfa4c2c8 ("rbd: introduce a per-device ordered workqueue")
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reported-by: syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=3613786cb88c93aa1c6a279b1df6a7b201347d08
+Link: https://lore.kernel.org/r/20230103014517.495275-2-jun.nie@linaro.org
+Cc: stable@kernel.org
+Signed-off-by: Jun Nie <jun.nie@linaro.org>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ fs/ext4/xattr.c |   28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -5529,8 +5529,7 @@ static void rbd_dev_release(struct devic
- 		module_put(THIS_MODULE);
- }
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -2579,9 +2579,8 @@ static int ext4_xattr_move_to_block(hand
  
--static struct rbd_device *__rbd_dev_create(struct rbd_client *rbdc,
--					   struct rbd_spec *spec)
-+static struct rbd_device *__rbd_dev_create(struct rbd_spec *spec)
- {
- 	struct rbd_device *rbd_dev;
+ 	is = kzalloc(sizeof(struct ext4_xattr_ibody_find), GFP_NOFS);
+ 	bs = kzalloc(sizeof(struct ext4_xattr_block_find), GFP_NOFS);
+-	buffer = kvmalloc(value_size, GFP_NOFS);
+ 	b_entry_name = kmalloc(entry->e_name_len + 1, GFP_NOFS);
+-	if (!is || !bs || !buffer || !b_entry_name) {
++	if (!is || !bs || !b_entry_name) {
+ 		error = -ENOMEM;
+ 		goto out;
+ 	}
+@@ -2593,12 +2592,18 @@ static int ext4_xattr_move_to_block(hand
  
-@@ -5575,9 +5574,6 @@ static struct rbd_device *__rbd_dev_crea
- 	rbd_dev->dev.parent = &rbd_root_dev;
- 	device_initialize(&rbd_dev->dev);
- 
--	rbd_dev->rbd_client = rbdc;
--	rbd_dev->spec = spec;
--
- 	return rbd_dev;
- }
- 
-@@ -5590,12 +5586,10 @@ static struct rbd_device *rbd_dev_create
- {
- 	struct rbd_device *rbd_dev;
- 
--	rbd_dev = __rbd_dev_create(rbdc, spec);
-+	rbd_dev = __rbd_dev_create(spec);
- 	if (!rbd_dev)
- 		return NULL;
- 
--	rbd_dev->opts = opts;
--
- 	/* get an id and fill in device name */
- 	rbd_dev->dev_id = ida_simple_get(&rbd_dev_id_ida, 0,
- 					 minor_to_rbd_dev_id(1 << MINORBITS),
-@@ -5612,6 +5606,10 @@ static struct rbd_device *rbd_dev_create
- 	/* we have a ref from do_rbd_add() */
- 	__module_get(THIS_MODULE);
- 
-+	rbd_dev->rbd_client = rbdc;
-+	rbd_dev->spec = spec;
-+	rbd_dev->opts = opts;
+ 	/* Save the entry name and the entry value */
+ 	if (entry->e_value_inum) {
++		buffer = kvmalloc(value_size, GFP_NOFS);
++		if (!buffer) {
++			error = -ENOMEM;
++			goto out;
++		}
 +
- 	dout("%s rbd_dev %p dev_id %d\n", __func__, rbd_dev, rbd_dev->dev_id);
- 	return rbd_dev;
- 
-@@ -6827,7 +6825,7 @@ static int rbd_dev_probe_parent(struct r
- 		goto out_err;
+ 		error = ext4_xattr_inode_get(inode, entry, buffer, value_size);
+ 		if (error)
+ 			goto out;
+ 	} else {
+ 		size_t value_offs = le16_to_cpu(entry->e_value_offs);
+-		memcpy(buffer, (void *)IFIRST(header) + value_offs, value_size);
++		buffer = (void *)IFIRST(header) + value_offs;
  	}
  
--	parent = __rbd_dev_create(rbd_dev->rbd_client, rbd_dev->parent_spec);
-+	parent = __rbd_dev_create(rbd_dev->parent_spec);
- 	if (!parent) {
- 		ret = -ENOMEM;
- 		goto out_err;
-@@ -6837,8 +6835,8 @@ static int rbd_dev_probe_parent(struct r
- 	 * Images related by parent/child relationships always share
- 	 * rbd_client and spec/parent_spec, so bump their refcounts.
- 	 */
--	__rbd_get_client(rbd_dev->rbd_client);
--	rbd_spec_get(rbd_dev->parent_spec);
-+	parent->rbd_client = __rbd_get_client(rbd_dev->rbd_client);
-+	parent->spec = rbd_spec_get(rbd_dev->parent_spec);
+ 	memcpy(b_entry_name, entry->e_name, entry->e_name_len);
+@@ -2613,25 +2618,26 @@ static int ext4_xattr_move_to_block(hand
+ 	if (error)
+ 		goto out;
  
- 	ret = rbd_dev_image_probe(parent, depth);
- 	if (ret < 0)
+-	/* Remove the chosen entry from the inode */
+-	error = ext4_xattr_ibody_set(handle, inode, &i, is);
+-	if (error)
+-		goto out;
+-
+ 	i.value = buffer;
+ 	i.value_len = value_size;
+ 	error = ext4_xattr_block_find(inode, &i, bs);
+ 	if (error)
+ 		goto out;
+ 
+-	/* Add entry which was removed from the inode into the block */
++	/* Move ea entry from the inode into the block */
+ 	error = ext4_xattr_block_set(handle, inode, &i, bs);
+ 	if (error)
+ 		goto out;
+-	error = 0;
++
++	/* Remove the chosen entry from the inode */
++	i.value = NULL;
++	i.value_len = 0;
++	error = ext4_xattr_ibody_set(handle, inode, &i, is);
++
+ out:
+ 	kfree(b_entry_name);
+-	kvfree(buffer);
++	if (entry->e_value_inum && buffer)
++		kvfree(buffer);
+ 	if (is)
+ 		brelse(is->iloc.bh);
+ 	if (bs)
 
 
