@@ -1,33 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC44848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:21:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83EAEC4339B;
-	Fri, 10 Mar 2023 14:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A49B848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:21:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FB6C433D2;
+	Fri, 10 Mar 2023 14:21:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458064;
-	bh=CHmQsQVxXqQdmBOa8Q7J5NMME4QZQiGIWIVD0eQOt9c=;
+	s=korg; t=1678458067;
+	bh=sCja9kFKxvazSSIFNujiaQJCWOT4abt5tKVj4rRGjiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XfVmkMxa4UpPx/mHdvHwu7M5JMy3Nb9jsegxTb5nOhOwb2g/HSYeAhLr7FtcxXz0S
-	 41BhQsO475sZyh0dfPbR+vEpr7PB/Ii60+u2XDhBE2cDO2MZGvgByaR9Gs/sS5jBaz
-	 QRVVsUF00ks/hVxlidZmE1H0PGfu5NWYmoM2A7P4=
+	b=F5oJYUTYm2wnlNsQCW5JP9d2XNUNBUliCZoekaiHwr86wmVVGSSywKG4PFgqA7vgO
+	 8zOntAuf74cz/y5obQsTKa6hzpgqXtNXly5f88IVY63AS6jW+N2WXpB1s2Bt9v5rTB
+	 MUYXZoxf7zTcv+MXozTuIaGAqThlgjrdl39I9to0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 150/252] ocfs2: fix non-auto defrag path not working issue
-Date: Fri, 10 Mar 2023 14:38:40 +0100
-Message-Id: <20230310133723.329728743@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 4.19 151/252] udf: Truncate added extents on failed expansion
+Date: Fri, 10 Mar 2023 14:38:41 +0100
+Message-Id: <20230310133723.364135053@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -41,91 +33,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heming Zhao via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
+From: Jan Kara <jack@suse.cz>
 
-commit 236b9254f8d1edc273ad88b420aa85fbd84f492d upstream.
+commit 70bfb3a8d661d4fdc742afc061b88a7f3fc9f500 upstream.
 
-This fixes three issues on move extents ioctl without auto defrag:
+When a file expansion failed because we didn't have enough space for
+indirect extents make sure we truncate extents created so far so that we
+don't leave extents beyond EOF.
 
-a) In ocfs2_find_victim_alloc_group(), we have to convert bits to block
-   first in case of global bitmap.
-
-b) In ocfs2_probe_alloc_group(), when finding enough bits in block
-   group bitmap, we have to back off move_len to start pos as well,
-   otherwise it may corrupt filesystem.
-
-c) In ocfs2_ioctl_move_extents(), set me_threshold both for non-auto
-   and auto defrag paths.  Otherwise it will set move_max_hop to 0 and
-   finally cause unexpectedly ENOSPC error.
-
-Currently there are no tools triggering the above issues since
-defragfs.ocfs2 enables auto defrag by default.  Tested with manually
-changing defragfs.ocfs2 to run non auto defrag path.
-
-Link: https://lkml.kernel.org/r/20230220050526.22020-1-heming.zhao@suse.com
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/move_extents.c |   24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ fs/udf/inode.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/fs/ocfs2/move_extents.c
-+++ b/fs/ocfs2/move_extents.c
-@@ -444,7 +444,7 @@ static int ocfs2_find_victim_alloc_group
- 			bg = (struct ocfs2_group_desc *)gd_bh->b_data;
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -521,8 +521,10 @@ static int udf_do_extend_file(struct ino
+ 	}
  
- 			if (vict_blkno < (le64_to_cpu(bg->bg_blkno) +
--						le16_to_cpu(bg->bg_bits))) {
-+						(le16_to_cpu(bg->bg_bits) << bits_per_unit))) {
+ 	if (fake) {
+-		udf_add_aext(inode, last_pos, &last_ext->extLocation,
+-			     last_ext->extLength, 1);
++		err = udf_add_aext(inode, last_pos, &last_ext->extLocation,
++				   last_ext->extLength, 1);
++		if (err < 0)
++			goto out_err;
+ 		count++;
+ 	} else {
+ 		struct kernel_lb_addr tmploc;
+@@ -556,7 +558,7 @@ static int udf_do_extend_file(struct ino
+ 		err = udf_add_aext(inode, last_pos, &last_ext->extLocation,
+ 				   last_ext->extLength, 1);
+ 		if (err)
+-			return err;
++			goto out_err;
+ 		count++;
+ 	}
+ 	if (new_block_bytes) {
+@@ -565,7 +567,7 @@ static int udf_do_extend_file(struct ino
+ 		err = udf_add_aext(inode, last_pos, &last_ext->extLocation,
+ 				   last_ext->extLength, 1);
+ 		if (err)
+-			return err;
++			goto out_err;
+ 		count++;
+ 	}
  
- 				*ret_bh = gd_bh;
- 				*vict_bit = (vict_blkno - blkno) >>
-@@ -559,6 +559,7 @@ static void ocfs2_probe_alloc_group(stru
- 			last_free_bits++;
+@@ -579,6 +581,11 @@ out:
+ 		return -EIO;
  
- 		if (last_free_bits == move_len) {
-+			i -= move_len;
- 			*goal_bit = i;
- 			*phys_cpos = base_cpos + i;
- 			break;
-@@ -1030,18 +1031,19 @@ int ocfs2_ioctl_move_extents(struct file
+ 	return count;
++out_err:
++	/* Remove extents we've created so far */
++	udf_clear_extent_cache(inode);
++	udf_truncate_extents(inode);
++	return err;
+ }
  
- 	context->range = &range;
- 
-+	/*
-+	 * ok, the default theshold for the defragmentation
-+	 * is 1M, since our maximum clustersize was 1M also.
-+	 * any thought?
-+	 */
-+	if (!range.me_threshold)
-+		range.me_threshold = 1024 * 1024;
-+
-+	if (range.me_threshold > i_size_read(inode))
-+		range.me_threshold = i_size_read(inode);
-+
- 	if (range.me_flags & OCFS2_MOVE_EXT_FL_AUTO_DEFRAG) {
- 		context->auto_defrag = 1;
--		/*
--		 * ok, the default theshold for the defragmentation
--		 * is 1M, since our maximum clustersize was 1M also.
--		 * any thought?
--		 */
--		if (!range.me_threshold)
--			range.me_threshold = 1024 * 1024;
--
--		if (range.me_threshold > i_size_read(inode))
--			range.me_threshold = i_size_read(inode);
- 
- 		if (range.me_flags & OCFS2_MOVE_EXT_FL_PART_DEFRAG)
- 			context->partial = 1;
+ /* Extend the final block of the file to final_block_len bytes */
 
 
