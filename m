@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546868820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:49:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5F7C4339B;
-	Fri, 10 Mar 2023 14:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6334C8820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:49:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD326C4339B;
+	Fri, 10 Mar 2023 14:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459760;
-	bh=FG13CUAL75KAN25BOQAHmETjCOd+JG96/UF35bdDbAo=;
+	s=korg; t=1678459763;
+	bh=hu6wYflfORzsfDDl+xy4c8mXojvkIQyinEv1c4cvGa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zRSrRN90UHuGcLhgqrfPdviFvrfqm1S6nb++NgSjg4pRgNDdd24dIJikBnww+KRqW
-	 86zBUZTm1dhBUQ0LCmi7/kxNYlQDHzsNszpPBROrdHFmiKUV9CyguQ48aBy+sNNkQV
-	 +QhZPTsZmfV9rCX0vDXIxYskEZ7/gGXbXphLvjR0=
+	b=wrvddOsGnehQSyGk6Z8zLdULJmmyP7xd6E7GeC/ey2YuVXY08Ts/S+rLaDwhm0qDz
+	 LtdnEODIPVUJjckQdWWOrTxcnhaBgrBMFshV2RaOYQ0IzUaU5gBN9Uut8+oOqRIBUM
+	 5Ly8o1jMg7PHQ6Vpv/sI3kUX1twBUyaE09V2h/EM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Qing <wangqing@vivo.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 110/529] net: ethernet: ti: add missing of_node_put before return
-Date: Fri, 10 Mar 2023 14:34:13 +0100
-Message-Id: <20230310133810.088199929@linuxfoundation.org>
+Subject: [PATCH 5.10 084/529] thermal/drivers/tsens: Sort out msm8976 vs msm8956 data
+Date: Fri, 10 Mar 2023 14:33:47 +0100
+Message-Id: <20230310133808.859514033@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,112 +37,154 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Qing <wangqing@vivo.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit be565ec71d1d59438bed0c7ed0a252a327e0b0ef ]
+[ Upstream commit a7d3006be5ca7b04e4b84b5ceaae55a700e511bd ]
 
-Fix following coccicheck warning:
-WARNING: Function "for_each_child_of_node"
-should have of_node_put() before return.
+Tsens driver mentions that msm8976 data should be used for both msm8976
+and msm8956 SoCs. This is not quite correct, as according to the
+vendor kernels, msm8976 should use standard slope values (3200), while
+msm8956 really uses the slope values found in the driver.
 
-Early exits from for_each_child_of_node should decrement the
-node reference counter.
+Add separate compatibility string for msm8956, move slope value
+overrides to the corresponding init function and use the standard
+compute_intercept_slope() function for both platforms.
 
-Signed-off-by: Wang Qing <wangqing@vivo.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 0e580290170d ("thermal: qcom: tsens-v1: Add support for MSM8956 and MSM8976")
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230101194034.831222-7-dmitry.baryshkov@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 29 ++++++++++++++++--------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ drivers/thermal/qcom/tsens-v1.c | 56 ++++++++++++++++++---------------
+ drivers/thermal/qcom/tsens.c    |  3 ++
+ drivers/thermal/qcom/tsens.h    |  2 +-
+ 3 files changed, 34 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 5300e1439e1e5..4074310abcff4 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -1724,13 +1724,14 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 		if (ret < 0) {
- 			dev_err(dev, "%pOF error reading port_id %d\n",
- 				port_np, ret);
--			return ret;
-+			goto of_node_put;
- 		}
+diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
+index 13624263f1dfe..faa4576fa028f 100644
+--- a/drivers/thermal/qcom/tsens-v1.c
++++ b/drivers/thermal/qcom/tsens-v1.c
+@@ -137,30 +137,6 @@
+ #define CAL_SEL_MASK	7
+ #define CAL_SEL_SHIFT	0
  
- 		if (!port_id || port_id > common->port_num) {
- 			dev_err(dev, "%pOF has invalid port_id %u %s\n",
- 				port_np, port_id, port_np->name);
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto of_node_put;
- 		}
+-static void compute_intercept_slope_8976(struct tsens_priv *priv,
+-			      u32 *p1, u32 *p2, u32 mode)
+-{
+-	int i;
+-
+-	priv->sensor[0].slope = 3313;
+-	priv->sensor[1].slope = 3275;
+-	priv->sensor[2].slope = 3320;
+-	priv->sensor[3].slope = 3246;
+-	priv->sensor[4].slope = 3279;
+-	priv->sensor[5].slope = 3257;
+-	priv->sensor[6].slope = 3234;
+-	priv->sensor[7].slope = 3269;
+-	priv->sensor[8].slope = 3255;
+-	priv->sensor[9].slope = 3239;
+-	priv->sensor[10].slope = 3286;
+-
+-	for (i = 0; i < priv->num_sensors; i++) {
+-		priv->sensor[i].offset = (p1[i] * SLOPE_FACTOR) -
+-				(CAL_DEGC_PT1 *
+-				priv->sensor[i].slope);
+-	}
+-}
+-
+ static int calibrate_v1(struct tsens_priv *priv)
+ {
+ 	u32 base0 = 0, base1 = 0;
+@@ -286,7 +262,7 @@ static int calibrate_8976(struct tsens_priv *priv)
+ 		break;
+ 	}
  
- 		port = am65_common_get_port(common, port_id);
-@@ -1746,8 +1747,10 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 				(AM65_CPSW_NU_FRAM_PORT_OFFSET * (port_id - 1));
- 
- 		port->slave.mac_sl = cpsw_sl_get("am65", dev, port->port_base);
--		if (IS_ERR(port->slave.mac_sl))
--			return PTR_ERR(port->slave.mac_sl);
-+		if (IS_ERR(port->slave.mac_sl)) {
-+			ret = PTR_ERR(port->slave.mac_sl);
-+			goto of_node_put;
-+		}
- 
- 		port->disabled = !of_device_is_available(port_np);
- 		if (port->disabled)
-@@ -1758,7 +1761,7 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 			ret = PTR_ERR(port->slave.ifphy);
- 			dev_err(dev, "%pOF error retrieving port phy: %d\n",
- 				port_np, ret);
--			return ret;
-+			goto of_node_put;
- 		}
- 
- 		port->slave.mac_only =
-@@ -1767,10 +1770,12 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 		/* get phy/link info */
- 		if (of_phy_is_fixed_link(port_np)) {
- 			ret = of_phy_register_fixed_link(port_np);
--			if (ret)
--				return dev_err_probe(dev, ret,
-+			if (ret) {
-+				ret = dev_err_probe(dev, ret,
- 						     "failed to register fixed-link phy %pOF\n",
- 						     port_np);
-+				goto of_node_put;
-+			}
- 			port->slave.phy_node = of_node_get(port_np);
- 		} else {
- 			port->slave.phy_node =
-@@ -1780,14 +1785,15 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 		if (!port->slave.phy_node) {
- 			dev_err(dev,
- 				"slave[%d] no phy found\n", port_id);
--			return -ENODEV;
-+			ret = -ENODEV;
-+			goto of_node_put;
- 		}
- 
- 		ret = of_get_phy_mode(port_np, &port->slave.phy_if);
- 		if (ret) {
- 			dev_err(dev, "%pOF read phy-mode err %d\n",
- 				port_np, ret);
--			return ret;
-+			goto of_node_put;
- 		}
- 
- 		mac_addr = of_get_mac_address(port_np);
-@@ -1804,6 +1810,11 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 	of_node_put(node);
+-	compute_intercept_slope_8976(priv, p1, p2, mode);
++	compute_intercept_slope(priv, p1, p2, mode);
+ 	kfree(qfprom_cdata);
  
  	return 0;
-+
-+of_node_put:
-+	of_node_put(port_np);
-+	of_node_put(node);
-+	return ret;
- }
+@@ -357,6 +333,22 @@ static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
+ 	[TRDY] = REG_FIELD(TM_TRDY_OFF, 0, 0),
+ };
  
- static void am65_cpsw_pcpu_stats_free(void *data)
++static int __init init_8956(struct tsens_priv *priv) {
++	priv->sensor[0].slope = 3313;
++	priv->sensor[1].slope = 3275;
++	priv->sensor[2].slope = 3320;
++	priv->sensor[3].slope = 3246;
++	priv->sensor[4].slope = 3279;
++	priv->sensor[5].slope = 3257;
++	priv->sensor[6].slope = 3234;
++	priv->sensor[7].slope = 3269;
++	priv->sensor[8].slope = 3255;
++	priv->sensor[9].slope = 3239;
++	priv->sensor[10].slope = 3286;
++
++	return init_common(priv);
++}
++
+ static const struct tsens_ops ops_generic_v1 = {
+ 	.init		= init_common,
+ 	.calibrate	= calibrate_v1,
+@@ -369,13 +361,25 @@ struct tsens_plat_data data_tsens_v1 = {
+ 	.fields	= tsens_v1_regfields,
+ };
+ 
++static const struct tsens_ops ops_8956 = {
++	.init		= init_8956,
++	.calibrate	= calibrate_8976,
++	.get_temp	= get_temp_tsens_valid,
++};
++
++struct tsens_plat_data data_8956 = {
++	.num_sensors	= 11,
++	.ops		= &ops_8956,
++	.feat		= &tsens_v1_feat,
++	.fields		= tsens_v1_regfields,
++};
++
+ static const struct tsens_ops ops_8976 = {
+ 	.init		= init_common,
+ 	.calibrate	= calibrate_8976,
+ 	.get_temp	= get_temp_tsens_valid,
+ };
+ 
+-/* Valid for both MSM8956 and MSM8976. */
+ struct tsens_plat_data data_8976 = {
+ 	.num_sensors	= 11,
+ 	.ops		= &ops_8976,
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index 9e4a60db6e23b..c73792ca727a1 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -902,6 +902,9 @@ static const struct of_device_id tsens_table[] = {
+ 	}, {
+ 		.compatible = "qcom,msm8939-tsens",
+ 		.data = &data_8939,
++	}, {
++		.compatible = "qcom,msm8956-tsens",
++		.data = &data_8956,
+ 	}, {
+ 		.compatible = "qcom,msm8960-tsens",
+ 		.data = &data_8960,
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index f40b625f897e8..bbb1e8332821c 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -588,7 +588,7 @@ extern struct tsens_plat_data data_8960;
+ extern struct tsens_plat_data data_8916, data_8939, data_8974;
+ 
+ /* TSENS v1 targets */
+-extern struct tsens_plat_data data_tsens_v1, data_8976;
++extern struct tsens_plat_data data_tsens_v1, data_8976, data_8956;
+ 
+ /* TSENS v2 targets */
+ extern struct tsens_plat_data data_8996, data_tsens_v2;
 -- 
 2.39.2
 
