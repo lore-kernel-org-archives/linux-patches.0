@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E7B847D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:45:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86EC0C433EF;
-	Fri, 10 Mar 2023 13:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D589D847D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:45:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40FC2C433EF;
+	Fri, 10 Mar 2023 13:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678455929;
-	bh=L9SuIvKN6Xv1/0RxEzVg0A7QdvASyLsIWFkQCEOmrEk=;
+	s=korg; t=1678455932;
+	bh=fR6RVNLicGRa0vtymaxQhSfu4++qhtm3FadxhPWD4yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h54+QeOPivMabk/J5rx79poy1d/oKDRTZIJ2Icd23zN3vMLwd6VQYQL+ehMkKzZZa
-	 uLLOL86j7RbCiALBB4e79C6FVAYlE918yqyxYwJfxrHyFhH172BCqKcH8KDSUSbYYp
-	 sW2TbApxNAUVcsYGYIidwcq6b7eqdZvo+Wujxzm8=
+	b=ZtW44qQxTLRaZC6y4EQwsHwrJ9FqQkxpcU9Rg9tryEVdRII2ql2nZsCxs5rVkoP6c
+	 cX97yDLqzKL4kQ3v5ephRoiep1+y7mWU7a/1MIOQyVdOWkJhaeDhAD6DevzpbuQY82
+	 FGNqBa3I+2sONCuGBNpmd2HR/piCiAmvX3Lx6Ei0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Saurav Kashyap <skashyap@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 023/193] arm64: dts: amlogic: meson-gxl: add missing unit address to eth-phy-mux node name
-Date: Fri, 10 Mar 2023 14:36:45 +0100
-Message-Id: <20230310133711.715151513@linuxfoundation.org>
+Subject: [PATCH 4.14 024/193] block: bio-integrity: Copy flags when bio_integrity_payload is cloned
+Date: Fri, 10 Mar 2023 14:36:46 +0100
+Message-Id: <20230310133711.755239365@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -34,33 +38,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Martin K. Petersen <martin.petersen@oracle.com>
 
-[ Upstream commit d19189f70ba596798ea49166d2d1ef36a8df5289 ]
+[ Upstream commit b6a4bdcda430e3ca43bbb9cb1d4d4d34ebe15c40 ]
 
-Fixes:
-bus@c8834000: eth-phy-mux: {...} should not be valid under {'type': 'object'}
+Make sure to copy the flags when a bio_integrity_payload is cloned.
+Otherwise per-I/O properties such as IP checksum flag will not be
+passed down to the HBA driver. Since the integrity buffer is owned by
+the original bio, the BIP_BLOCK_INTEGRITY flag needs to be masked off
+to avoid a double free in the completion path.
 
-Link: https://lore.kernel.org/r/20230124-b4-amlogic-bindings-fixups-v1-9-44351528957e@linaro.org
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: aae7df50190a ("block: Integrity checksum flag")
+Fixes: b1f01388574c ("block: Relocate bio integrity flags")
+Reported-by: Saurav Kashyap <skashyap@marvell.com>
+Tested-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://lore.kernel.org/r/20230215171801.21062-1-martin.petersen@oracle.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-gxl.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/bio-integrity.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
-index 3ee6c4bae08f6..853da285929c3 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
-@@ -609,7 +609,7 @@ mux {
- 		};
- 	};
+diff --git a/block/bio-integrity.c b/block/bio-integrity.c
+index 4cee9446ce588..d0cdfba3a4c4d 100644
+--- a/block/bio-integrity.c
++++ b/block/bio-integrity.c
+@@ -462,6 +462,7 @@ int bio_integrity_clone(struct bio *bio, struct bio *bio_src,
  
--	eth-phy-mux {
-+	eth-phy-mux@55c {
- 		compatible = "mdio-mux-mmioreg", "mdio-mux";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
+ 	bip->bip_vcnt = bip_src->bip_vcnt;
+ 	bip->bip_iter = bip_src->bip_iter;
++	bip->bip_flags = bip_src->bip_flags & ~BIP_BLOCK_INTEGRITY;
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
