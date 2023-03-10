@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2E6847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258E4C4339B;
-	Fri, 10 Mar 2023 14:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829D88485
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6A5C433EF;
+	Fri, 10 Mar 2023 14:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456831;
-	bh=F3Q4jKopnnXfzlnJ8qnU5EeFLtFycAZFH7iwqJimz+U=;
+	s=korg; t=1678456834;
+	bh=28+v0AZXtdLnjA1qVQTal/PjRTzRuO/Je+nT+ocQfY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VLoLTfztw2TTvf2/bofEzHChxQump/D1trsyWJXgi6AJUyLtrSqOoy7c+974qA2VS
-	 99G+ngFUkPVGU9B7I2DGxsqEdZ8hkDq/zZrOmjXg1c5MMEOfyHVdZ5R3CgXWqve2jT
-	 CTQmnjSLafth0TaivogBBT6BtbpDxsx/4HosR8ws=
+	b=UfzqxAHWLmTI4dH7THACFoPx03w0/9cv/+Ve9xuLBPHBjjA3Iw1tWi18jkskqm8ZN
+	 FlrXeUQTrA88UalG1gA+RfCN6+Xvxj3OPrFP5nR7sj1B1KWf9iuCT8U9yOYSmhkZ0+
+	 usXzblUB84P99u2NLVETjSNDD5A/DI4Tp5bkiVfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Jilin Yuan <yuanjilin@cdjrlc.com>,
+	Pierre Gondois <pierre.gondois@arm.com>,
+	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 138/211] USB: fix memory leak with using debugfs_lookup()
-Date: Fri, 10 Mar 2023 14:38:38 +0100
-Message-Id: <20230310133722.934253481@linuxfoundation.org>
+Subject: [PATCH 6.2 139/211] cacheinfo: Fix shared_cpu_map to handle shared caches at different levels
+Date: Fri, 10 Mar 2023 14:38:39 +0100
+Message-Id: <20230310133722.967289208@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,37 +36,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
-[ Upstream commit 30374434edab20e25776f8ecb4bc9d1e54309487 ]
+[ Upstream commit 198102c9103fc78d8478495971947af77edb05c1 ]
 
-When calling debugfs_lookup() the result must have dput() called on it,
-otherwise the memory will leak over time.  To make things simpler, just
-call debugfs_lookup_and_remove() instead which handles all of the logic at
-once.
+The cacheinfo sets up the shared_cpu_map by checking whether the caches
+with the same index are shared between CPUs. However, this will trigger
+slab-out-of-bounds access if the CPUs do not have the same cache hierarchy.
+Another problem is the mismatched shared_cpu_map when the shared cache does
+not have the same index between CPUs.
 
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Jilin Yuan <yuanjilin@cdjrlc.com>
-Link: https://lore.kernel.org/r/20230106152828.3790902-1-gregkh@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CPU0	I	D	L3
+index	0	1	2	x
+	^	^	^	^
+index	0	1	2	3
+CPU1	I	D	L2	L3
+
+This patch checks each cache is shared with all caches on other CPUs.
+
+Reviewed-by: Pierre Gondois <pierre.gondois@arm.com>
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Link: https://lore.kernel.org/r/20230117105133.4445-2-yongxuan.wang@sifive.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/usb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/cacheinfo.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/usb/core/usb.c b/drivers/usb/core/usb.c
-index 11b15d7b357ad..a415206cab043 100644
---- a/drivers/usb/core/usb.c
-+++ b/drivers/usb/core/usb.c
-@@ -998,7 +998,7 @@ static void usb_debugfs_init(void)
- 
- static void usb_debugfs_cleanup(void)
+diff --git a/drivers/base/cacheinfo.c b/drivers/base/cacheinfo.c
+index 950b22cdb5f7c..f05acf3c16c6b 100644
+--- a/drivers/base/cacheinfo.c
++++ b/drivers/base/cacheinfo.c
+@@ -256,7 +256,7 @@ static int cache_shared_cpu_map_setup(unsigned int cpu)
  {
--	debugfs_remove(debugfs_lookup("devices", usb_debug_root));
-+	debugfs_lookup_and_remove("devices", usb_debug_root);
- }
+ 	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
+ 	struct cacheinfo *this_leaf, *sib_leaf;
+-	unsigned int index;
++	unsigned int index, sib_index;
+ 	int ret = 0;
  
- /*
+ 	if (this_cpu_ci->cpu_map_populated)
+@@ -284,11 +284,13 @@ static int cache_shared_cpu_map_setup(unsigned int cpu)
+ 
+ 			if (i == cpu || !sib_cpu_ci->info_list)
+ 				continue;/* skip if itself or no cacheinfo */
+-
+-			sib_leaf = per_cpu_cacheinfo_idx(i, index);
+-			if (cache_leaves_are_shared(this_leaf, sib_leaf)) {
+-				cpumask_set_cpu(cpu, &sib_leaf->shared_cpu_map);
+-				cpumask_set_cpu(i, &this_leaf->shared_cpu_map);
++			for (sib_index = 0; sib_index < cache_leaves(i); sib_index++) {
++				sib_leaf = per_cpu_cacheinfo_idx(i, sib_index);
++				if (cache_leaves_are_shared(this_leaf, sib_leaf)) {
++					cpumask_set_cpu(cpu, &sib_leaf->shared_cpu_map);
++					cpumask_set_cpu(i, &this_leaf->shared_cpu_map);
++					break;
++				}
+ 			}
+ 		}
+ 		/* record the maximum cache line size */
+@@ -302,7 +304,7 @@ static int cache_shared_cpu_map_setup(unsigned int cpu)
+ static void cache_shared_cpu_map_remove(unsigned int cpu)
+ {
+ 	struct cacheinfo *this_leaf, *sib_leaf;
+-	unsigned int sibling, index;
++	unsigned int sibling, index, sib_index;
+ 
+ 	for (index = 0; index < cache_leaves(cpu); index++) {
+ 		this_leaf = per_cpu_cacheinfo_idx(cpu, index);
+@@ -313,9 +315,14 @@ static void cache_shared_cpu_map_remove(unsigned int cpu)
+ 			if (sibling == cpu || !sib_cpu_ci->info_list)
+ 				continue;/* skip if itself or no cacheinfo */
+ 
+-			sib_leaf = per_cpu_cacheinfo_idx(sibling, index);
+-			cpumask_clear_cpu(cpu, &sib_leaf->shared_cpu_map);
+-			cpumask_clear_cpu(sibling, &this_leaf->shared_cpu_map);
++			for (sib_index = 0; sib_index < cache_leaves(sibling); sib_index++) {
++				sib_leaf = per_cpu_cacheinfo_idx(sibling, sib_index);
++				if (cache_leaves_are_shared(this_leaf, sib_leaf)) {
++					cpumask_clear_cpu(cpu, &sib_leaf->shared_cpu_map);
++					cpumask_clear_cpu(sibling, &this_leaf->shared_cpu_map);
++					break;
++				}
++			}
+ 		}
+ 	}
+ }
 -- 
 2.39.2
 
