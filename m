@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B40E847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:55:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F904C433D2;
-	Fri, 10 Mar 2023 13:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB775847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:55:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4970AC433D2;
+	Fri, 10 Mar 2023 13:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456504;
-	bh=oMLcx12sWEjXpPr5YpO+2Fz1fSNsEvWR0NIPbwauhtI=;
+	s=korg; t=1678456507;
+	bh=m6I0DbXTTC/yHeEPTZG3myrJaut4dZ/WycagR6r/h28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lxi3NX/JuCi7Tst/Cl9NbpIJkU+DxSY4zZgGw/4PbK5WOfLXWfLKrLIjIpBGRotq3
-	 Y9RTLNFjVK/rrwHktPND9M2iKQkxwJjbwvxHUpEh92hoZR5qKz8kfmGS7KanSkD2Kq
-	 9PKK8wA5M7JVFVYdVGIO+pxCj0206QBp9moRxtTA=
+	b=xafaB15ILxm0HxqvoPxF+CE5ylMGUVXDMkc8WcpviR4UP0gWMuT5q3AdfKq6uU4kn
+	 5wBB5Swa9anh/mvaPfUBnMrx6zbPNOd64PtkLtm88YHbE1tgF89vmNCpMLUwjVYgxa
+	 9v1TvcFJr8O+k7NPtNKzccy5OmnUQdhFl1mTaUvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Hua <hucool.lihua@huawei.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
+	Liu Shixin <liushixin2@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 026/211] ubifs: Fix build errors as symbol undefined
-Date: Fri, 10 Mar 2023 14:36:46 +0100
-Message-Id: <20230310133719.519693483@linuxfoundation.org>
+Subject: [PATCH 6.2 027/211] ubifs: Fix memory leak in ubifs_sysfs_init()
+Date: Fri, 10 Mar 2023 14:36:47 +0100
+Message-Id: <20230310133719.553873494@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,47 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Hua <hucool.lihua@huawei.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit aa6d148e6d6270274e3d5a529b71c54cd329d17f ]
+[ Upstream commit 203a55f04f66eea1a1ca7e5a302a7f5c99c62327 ]
 
-With CONFIG_UBIFS_FS_AUTHENTICATION not set, the compiler can assume that
-ubifs_node_check_hash() is never true and drops the call to ubifs_bad_hash().
-Is CONFIG_CC_OPTIMIZE_FOR_SIZE enabled this optimization does not happen anymore.
+When insmod ubifs.ko, a kmemleak reported as below:
 
-So When CONFIG_UBIFS_FS and CONFIG_CC_OPTIMIZE_FOR_SIZE is enabled but
-CONFIG_UBIFS_FS_AUTHENTICATION is not set, the build errors is as followd:
-    ERROR: modpost: "ubifs_bad_hash" [fs/ubifs/ubifs.ko] undefined!
+ unreferenced object 0xffff88817fb1a780 (size 8):
+   comm "insmod", pid 25265, jiffies 4295239702 (age 100.130s)
+   hex dump (first 8 bytes):
+     75 62 69 66 73 00 ff ff                          ubifs...
+   backtrace:
+     [<ffffffff81b3fc4c>] slab_post_alloc_hook+0x9c/0x3c0
+     [<ffffffff81b44bf3>] __kmalloc_track_caller+0x183/0x410
+     [<ffffffff8198d3da>] kstrdup+0x3a/0x80
+     [<ffffffff8198d486>] kstrdup_const+0x66/0x80
+     [<ffffffff83989325>] kvasprintf_const+0x155/0x190
+     [<ffffffff83bf55bb>] kobject_set_name_vargs+0x5b/0x150
+     [<ffffffff83bf576b>] kobject_set_name+0xbb/0xf0
+     [<ffffffff8100204c>] do_one_initcall+0x14c/0x5a0
+     [<ffffffff8157e380>] do_init_module+0x1f0/0x660
+     [<ffffffff815857be>] load_module+0x6d7e/0x7590
+     [<ffffffff8158644f>] __do_sys_finit_module+0x19f/0x230
+     [<ffffffff815866b3>] __x64_sys_finit_module+0x73/0xb0
+     [<ffffffff88c98e85>] do_syscall_64+0x35/0x80
+     [<ffffffff88e00087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fix it by add no-op ubifs_bad_hash() for the CONFIG_UBIFS_FS_AUTHENTICATION=n case.
+When kset_register() failed, we should call kset_put to cleanup it.
 
-Fixes: 16a26b20d2af ("ubifs: authentication: Add hashes to index nodes")
-Signed-off-by: Li Hua <hucool.lihua@huawei.com>
-Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
+Fixes: 2e3cbf425804 ("ubifs: Export filesystem error counters")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/ubifs.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ubifs/sysfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ubifs/ubifs.h b/fs/ubifs/ubifs.h
-index 478bbbb5382f8..2f1f315810949 100644
---- a/fs/ubifs/ubifs.h
-+++ b/fs/ubifs/ubifs.h
-@@ -1623,8 +1623,13 @@ static inline int ubifs_check_hmac(const struct ubifs_info *c,
- 	return crypto_memneq(expected, got, c->hmac_desc_len);
+diff --git a/fs/ubifs/sysfs.c b/fs/ubifs/sysfs.c
+index 06ad8fa1fcfb0..54270ad36321e 100644
+--- a/fs/ubifs/sysfs.c
++++ b/fs/ubifs/sysfs.c
+@@ -144,6 +144,8 @@ int __init ubifs_sysfs_init(void)
+ 	kobject_set_name(&ubifs_kset.kobj, "ubifs");
+ 	ubifs_kset.kobj.parent = fs_kobj;
+ 	ret = kset_register(&ubifs_kset);
++	if (ret)
++		kset_put(&ubifs_kset);
+ 
+ 	return ret;
  }
- 
-+#ifdef CONFIG_UBIFS_FS_AUTHENTICATION
- void ubifs_bad_hash(const struct ubifs_info *c, const void *node,
- 		    const u8 *hash, int lnum, int offs);
-+#else
-+static inline void ubifs_bad_hash(const struct ubifs_info *c, const void *node,
-+				  const u8 *hash, int lnum, int offs) {};
-+#endif
- 
- int __ubifs_node_check_hash(const struct ubifs_info *c, const void *buf,
- 			  const u8 *expected);
 -- 
 2.39.2
 
