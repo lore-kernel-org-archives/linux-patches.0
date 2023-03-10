@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C0D8489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:19:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FD8C4339B;
-	Fri, 10 Mar 2023 14:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B558489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:19:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086CAC433D2;
+	Fri, 10 Mar 2023 14:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457988;
-	bh=OrtBWZj0AdB74AIEGYidCDvXlPw5b6un8AkOHz9WQSo=;
+	s=korg; t=1678457991;
+	bh=bRcSCAxmzb9qj2/cfT810DCSKeZ4PedjMydu3Sb1gNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q3F3mZOVLvWF2QS04slYp+aofD7hKzZC0jWkIJxrFI4QXyL3q6i6IRFHu9TF5Rhqz
-	 3tQ3jTMCokd1wIsJmuAAOH9upHa/wq8G3OXmdla+Wt2Mvl4jOETqa0RvOuRQEJuPIs
-	 bd2YWYRMOxkJ6jWmqjlkHUNb0CwZn6cgDeObMRgM=
+	b=wrUpHBeBw211+6QubN399Bc4102hKjMtiXKvdPQCAr3Xr2T66x7mtwGQSDrckXc8W
+	 A9zKUjIZUSmWya7g8ctgSyaPTnHDrAb6OUdwqo4ieqNwEE6UYMq8HqvTg1PlOjsbrF
+	 D2Hu1ve//XkY4pMiSks5tRvEIivaFqcva2xtbYLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Kirill Tkhai <tkhai@yandex.ru>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	William Zhang <william.zhang@broadcom.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 096/252] sparc: allow PM configs for sparc32 COMPILE_TEST
-Date: Fri, 10 Mar 2023 14:37:46 +0100
-Message-Id: <20230310133721.722403310@linuxfoundation.org>
+Subject: [PATCH 4.19 087/252] spi: bcm63xx-hsspi: Fix multi-bit mode setting
+Date: Fri, 10 Mar 2023 14:37:37 +0100
+Message-Id: <20230310133721.458176349@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -39,84 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: William Zhang <william.zhang@broadcom.com>
 
-[ Upstream commit 7be6a87c2473957090995b7eb541e31d57a2c801 ]
+[ Upstream commit 811ff802aaf878ebbbaeac0307a0164fa21e7d40 ]
 
-When doing randconfig builds for sparc32 with COMPILE_TEST, some
-(non-Sparc) drivers cause kconfig warnings with the Kconfig symbols PM,
-PM_GENERIC_DOMAINS, or PM_GENERIC_DOMAINS_OF.
+Currently the driver always sets the controller to dual data bit mode
+for both tx and rx data in the profile mode control register even for
+single data bit transfer. Luckily the opcode is set correctly according
+to SPI transfer data bit width so it does not actually cause issues.
 
-This is due to arch/sparc/Kconfig not using the PM Kconfig for
-Sparc32:
+This change fixes the problem by setting tx and rx data bit mode field
+correctly according to the actual SPI transfer tx and rx data bit width.
 
-  if SPARC64
-  source "kernel/power/Kconfig"
-  endif
-
-Arnd suggested adding "|| COMPILE_TEST" to the conditional,
-instead of trying to track down every driver that selects
-any of these PM symbols.
-
-Fixes the following kconfig warnings:
-
-WARNING: unmet direct dependencies detected for PM
-  Depends on [n]: SPARC64 [=n]
-  Selected by [y]:
-  - SUN20I_PPU [=y] && (ARCH_SUNXI || COMPILE_TEST [=y])
-
-WARNING: unmet direct dependencies detected for PM
-  Depends on [n]: SPARC64 [=n]
-  Selected by [y]:
-  - SUN20I_PPU [=y] && (ARCH_SUNXI || COMPILE_TEST [=y])
-
-WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS
-  Depends on [n]: SPARC64 [=n] && PM [=y]
-  Selected by [y]:
-  - QCOM_GDSC [=y] && COMMON_CLK [=y] && PM [=y]
-  - SUN20I_PPU [=y] && (ARCH_SUNXI || COMPILE_TEST [=y])
-  - MESON_GX_PM_DOMAINS [=y] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
-  - BCM2835_POWER [=y] && (ARCH_BCM2835 || COMPILE_TEST [=y] && OF [=y]) && PM [=y]
-  - BCM_PMB [=y] && (ARCH_BCMBCA || COMPILE_TEST [=y] && OF [=y]) && PM [=y]
-  - ROCKCHIP_PM_DOMAINS [=y] && (ARCH_ROCKCHIP || COMPILE_TEST [=y]) && PM [=y]
-  Selected by [m]:
-  - ARM_SCPI_POWER_DOMAIN [=m] && (ARM_SCPI_PROTOCOL [=m] || COMPILE_TEST [=y] && OF [=y]) && PM [=y]
-  - MESON_EE_PM_DOMAINS [=m] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
-  - QCOM_AOSS_QMP [=m] && (ARCH_QCOM || COMPILE_TEST [=y]) && MAILBOX [=y] && COMMON_CLK [=y] && PM [=y]
-
-WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS_OF
-  Depends on [n]: SPARC64 [=n] && PM_GENERIC_DOMAINS [=y] && OF [=y]
-  Selected by [y]:
-  - MESON_GX_PM_DOMAINS [=y] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
-  Selected by [m]:
-  - MESON_EE_PM_DOMAINS [=m] && (ARCH_MESON || COMPILE_TEST [=y]) && PM [=y] && OF [=y]
-
-Link: https://lkml.kernel.org/r/20230205004357.29459-1-rdunlap@infradead.org
-Fixes: bdde6b3c8ba4 ("sparc64: Hibernation support")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Sam Ravnborg <sam@ravnborg.org>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Kirill Tkhai <tkhai@yandex.ru>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 142168eba9dc ("spi: bcm63xx-hsspi: add bcm63xx HSSPI driver")
+Signed-off-by: William Zhang <william.zhang@broadcom.com>
+Link: https://lore.kernel.org/r/20230209200246.141520-11-william.zhang@broadcom.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-bcm63xx-hsspi.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/arch/sparc/Kconfig b/arch/sparc/Kconfig
-index 1f1a7583fa905..426accab2a88b 100644
---- a/arch/sparc/Kconfig
-+++ b/arch/sparc/Kconfig
-@@ -329,7 +329,7 @@ config FORCE_MAX_ZONEORDER
- 	  This config option is actually maximum order plus one. For example,
- 	  a value of 13 means that the largest free memory block is 2^12 pages.
+diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
+index f45df86cc95a0..6a7f5803e2e7f 100644
+--- a/drivers/spi/spi-bcm63xx-hsspi.c
++++ b/drivers/spi/spi-bcm63xx-hsspi.c
+@@ -163,6 +163,7 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
+ 	int step_size = HSSPI_BUFFER_LEN;
+ 	const u8 *tx = t->tx_buf;
+ 	u8 *rx = t->rx_buf;
++	u32 val = 0;
  
--if SPARC64
-+if SPARC64 || COMPILE_TEST
- source "kernel/power/Kconfig"
- endif
+ 	bcm63xx_hsspi_set_clk(bs, spi, t->speed_hz);
+ 	bcm63xx_hsspi_set_cs(bs, spi->chip_select, true);
+@@ -178,11 +179,16 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
+ 		step_size -= HSSPI_OPCODE_LEN;
  
+ 	if ((opcode == HSSPI_OP_READ && t->rx_nbits == SPI_NBITS_DUAL) ||
+-	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL))
++	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL)) {
+ 		opcode |= HSSPI_OP_MULTIBIT;
+ 
+-	__raw_writel(1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT |
+-		     1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT | 0xff,
++		if (t->rx_nbits == SPI_NBITS_DUAL)
++			val |= 1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT;
++		if (t->tx_nbits == SPI_NBITS_DUAL)
++			val |= 1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT;
++	}
++
++	__raw_writel(val | 0xff,
+ 		     bs->regs + HSSPI_PROFILE_MODE_CTRL_REG(chip_select));
+ 
+ 	while (pending > 0) {
 -- 
 2.39.2
 
