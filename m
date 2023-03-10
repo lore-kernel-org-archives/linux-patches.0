@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BA38489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:19:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3971C433EF;
-	Fri, 10 Mar 2023 14:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725A88489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:19:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4414C4339B;
+	Fri, 10 Mar 2023 14:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457970;
-	bh=5IMOn9v6wq2NhZdJfiIb19wEI8llyEQTfS9XDjFSoeo=;
+	s=korg; t=1678457973;
+	bh=/ZEPAqWSWrmyOv7ODG7U+jvTaRGVKBkNlip8bjX/8uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aIcUpwG08n6wdZo9B24uk3pcwiEnfdIF+dbCP3T2U1cpOxC/uW37HPImOnM+Yz0Sk
-	 m2CKeqBRq+nyYilYj4rVEyCiKcl5u9UtSSSePPIYirqUduoEdtRFhdSP2Dz79TfSNW
-	 mtu4CCFCmHZxIzZvZ0kAiNjTqRXVeW38jyHsNDhs=
+	b=tDEl3HVERVJQeJho9Yq08Kboh5QKqVsQEJBVZzwoQJyI5JGwzkIjcSVOWLaKLj9f6
+	 7SyuIX8L/VlNFTbL4GxglJSie8wVi5E3gtQ7Ekx3fPFxQWW+DA1uiGH1r1xsLGFHSz
+	 CE2IhwGcLbWsLo65378c6fH2Mrd5LcTXYi+ZWv2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	David Howells <dhowells@redhat.com>,
+	Tom Talpey <tom@talpey.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 118/252] rcu: Suppress smp_processor_id() complaint in synchronize_rcu_expedited_wait()
-Date: Fri, 10 Mar 2023 14:38:08 +0100
-Message-Id: <20230310133722.359470873@linuxfoundation.org>
+Subject: [PATCH 4.19 091/252] cifs: Fix lost destroy smbd connection when MR allocate failed
+Date: Fri, 10 Mar 2023 14:37:41 +0100
+Message-Id: <20230310133721.577840715@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -34,40 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 2d7f00b2f01301d6e41fd4a28030dab0442265be ]
+[ Upstream commit e9d3401d95d62a9531082cd2453ed42f2740e3fd ]
 
-The normal grace period's RCU CPU stall warnings are invoked from the
-scheduling-clock interrupt handler, and can thus invoke smp_processor_id()
-with impunity, which allows them to directly invoke dump_cpu_task().
-In contrast, the expedited grace period's RCU CPU stall warnings are
-invoked from process context, which causes the dump_cpu_task() function's
-calls to smp_processor_id() to complain bitterly in debug kernels.
+If the MR allocate failed, the smb direct connection info is NULL,
+then smbd_destroy() will directly return, then the connection info
+will be leaked.
 
-This commit therefore causes synchronize_rcu_expedited_wait() to disable
-preemption around its call to dump_cpu_task().
+Let's set the smb direct connection info to the server before call
+smbd_destroy().
 
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: c7398583340a ("CIFS: SMBD: Implement RDMA memory registration")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Acked-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Tom Talpey <tom@talpey.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree_exp.h | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/cifs/smbdirect.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/rcu/tree_exp.h b/kernel/rcu/tree_exp.h
-index 72770a551c24d..fa6ae9ed2e1df 100644
---- a/kernel/rcu/tree_exp.h
-+++ b/kernel/rcu/tree_exp.h
-@@ -577,7 +577,9 @@ static void synchronize_sched_expedited_wait(struct rcu_state *rsp)
- 				mask = leaf_node_cpu_bit(rnp, cpu);
- 				if (!(rnp->expmask & mask))
- 					continue;
-+				preempt_disable(); // For smp_processor_id() in dump_cpu_task().
- 				dump_cpu_task(cpu);
-+				preempt_enable();
- 			}
- 		}
- 		jiffies_stall = 3 * rcu_jiffies_till_stall_check() + 3;
+diff --git a/fs/cifs/smbdirect.c b/fs/cifs/smbdirect.c
+index 591cd5c704323..de11b52a04dee 100644
+--- a/fs/cifs/smbdirect.c
++++ b/fs/cifs/smbdirect.c
+@@ -1887,6 +1887,7 @@ static struct smbd_connection *_smbd_get_connection(
+ 
+ allocate_mr_failed:
+ 	/* At this point, need to a full transport shutdown */
++	server->smbd_conn = info;
+ 	smbd_destroy(server);
+ 	return NULL;
+ 
 -- 
 2.39.2
 
