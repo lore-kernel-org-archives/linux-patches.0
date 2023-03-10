@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F55847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A957AC4339B;
-	Fri, 10 Mar 2023 13:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3163C847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:52:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BF2C433D2;
+	Fri, 10 Mar 2023 13:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456349;
-	bh=9U2y3AmR7U56ZJOBpioLIFTzvCmSqb8Bnjc9hdqcSt4=;
+	s=korg; t=1678456352;
+	bh=iseMyT2E7iSinhofkiGfKjcHnh+3+c0sc9ZDkorg7a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zyND8PLFys8d0S1pIe4dDNw27vW1LYVteS/LQ8xnkxTtzYsu0l9gcrGDr2fPS3bJX
-	 ucKelap/lVhmlpC21PmqKld20hU5DzzZpAEyRlkm3gr9tmyKiFpF4HoFcO0+a5uEvQ
-	 xBE71BDtQxfTuLFeJHHAvuxzI5QHmUlv3WWgJULY=
+	b=QovK+uYsDx4xBfhJST5lQL6mUhtRZjUooZOerh1+6dLQuqDTwbf6FFohA6VS8TB4q
+	 BkCBnXgorexgI6+ZuDN/fPfaa72nFAxFsxYhTSQOfVulS/IbfKkPD1Zcdp2ns/QJ0M
+	 oC5vLZuiZz3R4XYryoT3BXxrz376I3WRzZsbQZQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ruanjinjie <ruanjinjie@huawei.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 165/193] watchdog: at91sam9_wdt: use devm_request_irq to avoid missing free_irq() in error path
-Date: Fri, 10 Mar 2023 14:39:07 +0100
-Message-Id: <20230310133716.640134643@linuxfoundation.org>
+	Richard Henderson <rth@twiddle.net>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 4.14 136/193] alpha: fix FEN fault handling
+Date: Fri, 10 Mar 2023 14:38:38 +0100
+Message-Id: <20230310133715.759867003@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -36,45 +34,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ruanjinjie <ruanjinjie@huawei.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 07bec0e09c1afbab4c5674fd2341f4f52d594f30 ]
+commit 977a3009547dad4a5bc95d91be4a58c9f7eedac0 upstream.
 
-free_irq() is missing in case of error in at91_wdt_init(), use
-devm_request_irq to fix that.
+Type 3 instruction fault (FPU insn with FPU disabled) is handled
+by quietly enabling FPU and returning.  Which is fine, except that
+we need to do that both for fault in userland and in the kernel;
+the latter *can* legitimately happen - all it takes is this:
 
-Fixes: 5161b31dc39a ("watchdog: at91sam9_wdt: better watchdog support")
-Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20221116094950.3141943-1-ruanjinjie@huawei.com
-[groeck: Adjust multi-line alignment]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+.global _start
+_start:
+        call_pal 0xae
+	lda $0, 0
+	ldq $0, 0($0)
+
+- call_pal CLRFEN to clear "FPU enabled" flag and arrange for
+a signal delivery (SIGSEGV in this case).
+
+Fixed by moving the handling of type 3 into the common part of
+do_entIF(), before we check for kernel vs. user mode.
+
+Incidentally, the check for kernel mode is unidiomatic; the normal
+way to do that is !user_mode(regs).  The difference is that
+the open-coded variant treats any of bits 63..3 of regs->ps being
+set as "it's user mode" while the normal approach is to check just
+the bit 3.  PS is a 4-bit register and regs->ps always will have
+bits 63..4 clear, so the open-coded variant here is actually equivalent
+to !user_mode(regs).  Harder to follow, though...
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Richard Henderson <rth@twiddle.net>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/at91sam9_wdt.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ arch/alpha/kernel/traps.c |   30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/watchdog/at91sam9_wdt.c b/drivers/watchdog/at91sam9_wdt.c
-index 7e6acaf3ece49..f3d8ae8df7f65 100644
---- a/drivers/watchdog/at91sam9_wdt.c
-+++ b/drivers/watchdog/at91sam9_wdt.c
-@@ -209,10 +209,9 @@ static int at91_wdt_init(struct platform_device *pdev, struct at91wdt *wdt)
- 			 "min heartbeat and max heartbeat might be too close for the system to handle it correctly\n");
+--- a/arch/alpha/kernel/traps.c
++++ b/arch/alpha/kernel/traps.c
+@@ -241,7 +241,21 @@ do_entIF(unsigned long type, struct pt_r
+ 	siginfo_t info;
+ 	int signo, code;
  
- 	if ((tmp & AT91_WDT_WDFIEN) && wdt->irq) {
--		err = request_irq(wdt->irq, wdt_interrupt,
--				  IRQF_SHARED | IRQF_IRQPOLL |
--				  IRQF_NO_SUSPEND,
--				  pdev->name, wdt);
-+		err = devm_request_irq(dev, wdt->irq, wdt_interrupt,
-+				       IRQF_SHARED | IRQF_IRQPOLL | IRQF_NO_SUSPEND,
-+				       pdev->name, wdt);
- 		if (err)
- 			return err;
- 	}
--- 
-2.39.2
-
+-	if ((regs->ps & ~IPL_MAX) == 0) {
++	if (type == 3) { /* FEN fault */
++		/* Irritating users can call PAL_clrfen to disable the
++		   FPU for the process.  The kernel will then trap in
++		   do_switch_stack and undo_switch_stack when we try
++		   to save and restore the FP registers.
++
++		   Given that GCC by default generates code that uses the
++		   FP registers, PAL_clrfen is not useful except for DoS
++		   attacks.  So turn the bleeding FPU back on and be done
++		   with it.  */
++		current_thread_info()->pcb.flags |= 1;
++		__reload_thread(&current_thread_info()->pcb);
++		return;
++	}
++	if (!user_mode(regs)) {
+ 		if (type == 1) {
+ 			const unsigned int *data
+ 			  = (const unsigned int *) regs->pc;
+@@ -390,20 +404,6 @@ do_entIF(unsigned long type, struct pt_r
+ 		}
+ 		break;
+ 
+-	      case 3: /* FEN fault */
+-		/* Irritating users can call PAL_clrfen to disable the
+-		   FPU for the process.  The kernel will then trap in
+-		   do_switch_stack and undo_switch_stack when we try
+-		   to save and restore the FP registers.
+-
+-		   Given that GCC by default generates code that uses the
+-		   FP registers, PAL_clrfen is not useful except for DoS
+-		   attacks.  So turn the bleeding FPU back on and be done
+-		   with it.  */
+-		current_thread_info()->pcb.flags |= 1;
+-		__reload_thread(&current_thread_info()->pcb);
+-		return;
+-
+ 	      case 5: /* illoc */
+ 	      default: /* unexpected instruction-fault type */
+ 		      ;
 
 
