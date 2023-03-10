@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A18847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:58:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B7AC433EF;
-	Fri, 10 Mar 2023 13:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B13847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:58:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40CBAC433EF;
+	Fri, 10 Mar 2023 13:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456715;
-	bh=zsEbvVZO3JKyBoZD9T9BqIWyJl4Kwj8Twq0ZK/1NT4M=;
+	s=korg; t=1678456718;
+	bh=IYuFzVPzl2wmWcrATTKcgSBgC49TObWqD/TLF9Z7rdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dbZ/j8nGr0Ur1HITnyvzA4Pv9BE1kTGklAW7OLmXpk9hgs97ODqJy0IEp3aFLKOKl
-	 NF9Obl//hIZFL+C01P03FTiSJ10OWygF8mZ72fCj2oGLv5StcKq8Qd8g1Goe8bDT96
-	 FvACShaaneKTgTf1lMVwwDxjOrKSfSyyza6KU3yM=
+	b=rQ47hqHcRvUmC9COaEdkecLemCLqhzsLmX7yANmtTyj9JpVU1j5RnEiu5k9mj+4B6
+	 OcdDCcvnIu7cDzbhlRBvG8REG1k8rOXczJxhC+2Wf6ABbXSYP2Jg0lLzzDPQSWLTLo
+	 JA5D9MGcUAXu69f0g9Kt2gJfUW/U0+icJolt8pIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <f.fainelli@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 098/211] net: dsa: seville: ignore mscc-miim read errors from Lynx PCS
-Date: Fri, 10 Mar 2023 14:37:58 +0100
-Message-Id: <20230310133721.753667887@linuxfoundation.org>
+Subject: [PATCH 6.2 099/211] net: dsa: felix: fix internal MDIO controller resource length
+Date: Fri, 10 Mar 2023 14:37:59 +0100
+Message-Id: <20230310133721.782176177@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -38,149 +38,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 0322ef49c1ac6f0e2ef37b146c0bf8440873072c ]
+[ Upstream commit 940af261321307cd1dd0fe8f9c34a6129f9d4bdc ]
 
-During the refactoring in the commit below, vsc9953_mdio_read() was
-replaced with mscc_miim_read(), which has one extra step: it checks for
-the MSCC_MIIM_DATA_ERROR bits before returning the result.
+The blamed commit did not properly convert the resource start/end format
+into the DEFINE_RES_MEM_NAMED() start/length format, resulting in a
+resource for vsc9959_imdio_res which is much longer than expected:
 
-On T1040RDB, there are 8 QSGMII PCSes belonging to the switch, and they
-are organized in 2 groups. First group responds to MDIO addresses 4-7
-because QSGMIIACR1[MDEV_PORT] is 1, and the second group responds to
-MDIO addresses 8-11 because QSGMIIBCR1[MDEV_PORT] is 2. I have double
-checked that these values are correctly set in the SERDES, as well as
-PCCR1[QSGMA_CFG] and PCCR1[QSGMB_CFG] are both 0b01.
+$ cat /proc/iomem
+1f8000000-1f815ffff : pcie@1f0000000
+  1f8140000-1f815ffff : 0000:00:00.5
+    1f8148030-1f815006f : imdio
 
-mscc_miim_read: phyad 8 reg 0x1 MIIM_DATA 0x2d
-mscc_miim_read: phyad 8 reg 0x5 MIIM_DATA 0x5801
-mscc_miim_read: phyad 8 reg 0x1 MIIM_DATA 0x2d
-mscc_miim_read: phyad 8 reg 0x5 MIIM_DATA 0x5801
-mscc_miim_read: phyad 9 reg 0x1 MIIM_DATA 0x2d
-mscc_miim_read: phyad 9 reg 0x5 MIIM_DATA 0x5801
-mscc_miim_read: phyad 9 reg 0x1 MIIM_DATA 0x2d
-mscc_miim_read: phyad 9 reg 0x5 MIIM_DATA 0x5801
-mscc_miim_read: phyad 10 reg 0x1 MIIM_DATA 0x2d
-mscc_miim_read: phyad 10 reg 0x5 MIIM_DATA 0x5801
-mscc_miim_read: phyad 10 reg 0x1 MIIM_DATA 0x2d
-mscc_miim_read: phyad 10 reg 0x5 MIIM_DATA 0x5801
-mscc_miim_read: phyad 11 reg 0x1 MIIM_DATA 0x2d
-mscc_miim_read: phyad 11 reg 0x5 MIIM_DATA 0x5801
-mscc_miim_read: phyad 11 reg 0x1 MIIM_DATA 0x2d
-mscc_miim_read: phyad 11 reg 0x5 MIIM_DATA 0x5801
-mscc_miim_read: phyad 4 reg 0x1 MIIM_DATA 0x3002d, ERROR
-mscc_miim_read: phyad 4 reg 0x5 MIIM_DATA 0x3da01, ERROR
-mscc_miim_read: phyad 5 reg 0x1 MIIM_DATA 0x3002d, ERROR
-mscc_miim_read: phyad 5 reg 0x5 MIIM_DATA 0x35801, ERROR
-mscc_miim_read: phyad 5 reg 0x1 MIIM_DATA 0x3002d, ERROR
-mscc_miim_read: phyad 5 reg 0x5 MIIM_DATA 0x35801, ERROR
-mscc_miim_read: phyad 6 reg 0x1 MIIM_DATA 0x3002d, ERROR
-mscc_miim_read: phyad 6 reg 0x5 MIIM_DATA 0x35801, ERROR
-mscc_miim_read: phyad 6 reg 0x1 MIIM_DATA 0x3002d, ERROR
-mscc_miim_read: phyad 6 reg 0x5 MIIM_DATA 0x35801, ERROR
-mscc_miim_read: phyad 7 reg 0x1 MIIM_DATA 0x3002d, ERROR
-mscc_miim_read: phyad 7 reg 0x5 MIIM_DATA 0x35801, ERROR
-mscc_miim_read: phyad 7 reg 0x1 MIIM_DATA 0x3002d, ERROR
-mscc_miim_read: phyad 7 reg 0x5 MIIM_DATA 0x35801, ERROR
+vs (correct)
 
-As can be seen, the data in MIIM_DATA is still valid despite having the
-MSCC_MIIM_DATA_ERROR bits set. The driver as introduced in commit
-84705fc16552 ("net: dsa: felix: introduce support for Seville VSC9953
-switch") was ignoring these bits, perhaps deliberately (although
-unbeknownst to me).
+$ cat /proc/iomem
+1f8000000-1f815ffff : pcie@1f0000000
+  1f8140000-1f815ffff : 0000:00:00.5
+    1f8148030-1f814803f : imdio
 
-This is an old IP and the hardware team cannot seem to be able to help
-me track down a plausible reason for these failures. I'll keep
-investigating, but in the meantime, this is a direct regression which
-must be restored to a working state.
+Luckily it's not big enough to exceed the size of the parent resource
+(pci_resource_end(pdev, VSC9959_IMDIO_PCI_BAR)), and it doesn't overlap
+with anything else that the Linux driver uses currently, so the larger
+than expected size isn't a practical problem that I can see. Although it
+is clearly wrong in the /proc/iomem output.
 
-The only thing I can do is keep ignoring the errors as before.
-
-Fixes: b99658452355 ("net: dsa: ocelot: felix: utilize shared mscc-miim driver for indirect MDIO access")
+Fixes: 044d447a801f ("net: dsa: felix: use DEFINE_RES_MEM_NAMED for resources")
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/ocelot/seville_vsc9953.c | 4 ++--
- drivers/net/mdio/mdio-mscc-miim.c        | 9 ++++++---
- include/linux/mdio/mdio-mscc-miim.h      | 2 +-
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ drivers/net/dsa/ocelot/felix_vsc9959.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/ocelot/seville_vsc9953.c b/drivers/net/dsa/ocelot/seville_vsc9953.c
-index 88ed3a2e487a4..fa03254adcefd 100644
---- a/drivers/net/dsa/ocelot/seville_vsc9953.c
-+++ b/drivers/net/dsa/ocelot/seville_vsc9953.c
-@@ -893,8 +893,8 @@ static int vsc9953_mdio_bus_alloc(struct ocelot *ocelot)
+diff --git a/drivers/net/dsa/ocelot/felix_vsc9959.c b/drivers/net/dsa/ocelot/felix_vsc9959.c
+index 01ac70fd7ddf1..4b6e4e5b47283 100644
+--- a/drivers/net/dsa/ocelot/felix_vsc9959.c
++++ b/drivers/net/dsa/ocelot/felix_vsc9959.c
+@@ -513,7 +513,7 @@ static const char * const vsc9959_resource_names[TARGET_MAX] = {
+  * SGMII/QSGMII MAC PCS can be found.
+  */
+ static const struct resource vsc9959_imdio_res =
+-	DEFINE_RES_MEM_NAMED(0x8030, 0x8040, "imdio");
++	DEFINE_RES_MEM_NAMED(0x8030, 0x10, "imdio");
  
- 	rc = mscc_miim_setup(dev, &bus, "VSC9953 internal MDIO bus",
- 			     ocelot->targets[GCB],
--			     ocelot->map[GCB][GCB_MIIM_MII_STATUS & REG_MASK]);
--
-+			     ocelot->map[GCB][GCB_MIIM_MII_STATUS & REG_MASK],
-+			     true);
- 	if (rc) {
- 		dev_err(dev, "failed to setup MDIO bus\n");
- 		return rc;
-diff --git a/drivers/net/mdio/mdio-mscc-miim.c b/drivers/net/mdio/mdio-mscc-miim.c
-index 51f68daac152f..34b87389788bb 100644
---- a/drivers/net/mdio/mdio-mscc-miim.c
-+++ b/drivers/net/mdio/mdio-mscc-miim.c
-@@ -52,6 +52,7 @@ struct mscc_miim_info {
- struct mscc_miim_dev {
- 	struct regmap *regs;
- 	int mii_status_offset;
-+	bool ignore_read_errors;
- 	struct regmap *phy_regs;
- 	const struct mscc_miim_info *info;
- 	struct clk *clk;
-@@ -138,7 +139,7 @@ static int mscc_miim_read(struct mii_bus *bus, int mii_id, int regnum)
- 		goto out;
- 	}
- 
--	if (val & MSCC_MIIM_DATA_ERROR) {
-+	if (!miim->ignore_read_errors && !!(val & MSCC_MIIM_DATA_ERROR)) {
- 		ret = -EIO;
- 		goto out;
- 	}
-@@ -218,7 +219,8 @@ static const struct regmap_config mscc_miim_phy_regmap_config = {
- };
- 
- int mscc_miim_setup(struct device *dev, struct mii_bus **pbus, const char *name,
--		    struct regmap *mii_regmap, int status_offset)
-+		    struct regmap *mii_regmap, int status_offset,
-+		    bool ignore_read_errors)
- {
- 	struct mscc_miim_dev *miim;
- 	struct mii_bus *bus;
-@@ -240,6 +242,7 @@ int mscc_miim_setup(struct device *dev, struct mii_bus **pbus, const char *name,
- 
- 	miim->regs = mii_regmap;
- 	miim->mii_status_offset = status_offset;
-+	miim->ignore_read_errors = ignore_read_errors;
- 
- 	*pbus = bus;
- 
-@@ -291,7 +294,7 @@ static int mscc_miim_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(phy_regmap),
- 				     "Unable to create phy register regmap\n");
- 
--	ret = mscc_miim_setup(dev, &bus, "mscc_miim", mii_regmap, 0);
-+	ret = mscc_miim_setup(dev, &bus, "mscc_miim", mii_regmap, 0, false);
- 	if (ret < 0) {
- 		dev_err(dev, "Unable to setup the MDIO bus\n");
- 		return ret;
-diff --git a/include/linux/mdio/mdio-mscc-miim.h b/include/linux/mdio/mdio-mscc-miim.h
-index 5b4ed2c3cbb9a..1ce699740af63 100644
---- a/include/linux/mdio/mdio-mscc-miim.h
-+++ b/include/linux/mdio/mdio-mscc-miim.h
-@@ -14,6 +14,6 @@
- 
- int mscc_miim_setup(struct device *device, struct mii_bus **bus,
- 		    const char *name, struct regmap *mii_regmap,
--		    int status_offset);
-+		    int status_offset, bool ignore_read_errors);
- 
- #endif
+ static const struct reg_field vsc9959_regfields[REGFIELD_MAX] = {
+ 	[ANA_ADVLEARN_VLAN_CHK] = REG_FIELD(ANA_ADVLEARN, 6, 6),
 -- 
 2.39.2
 
