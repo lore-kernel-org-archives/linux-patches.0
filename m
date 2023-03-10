@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B648481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:04:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C92C433D2;
-	Fri, 10 Mar 2023 14:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5892F8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:05:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA68C4339E;
+	Fri, 10 Mar 2023 14:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457098;
-	bh=s8HttMRlfxiQVjgYNpcGtmLGKklX1y1jNFUtoylxP2I=;
+	s=korg; t=1678457101;
+	bh=CTHlNB3qIZ35ZflIL19XJpoq2a/Zlii4ZXH3ayJ5LC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vy1iO4xWcwhXALSga23gWDVRcYSxbv0JBvRVrVfFgcbw2Ja1HiTClszSqyg4nOrK6
-	 r0gShSYjEBmtSc2/TrJ0+iOSVJIdxFmgiCjG3PO81g9eAj1kGXTAc6dGjt0EOuN8+v
-	 dTmSH1xskae4+lxQVm+R5aMvsXhmDbl3p51gdwew=
+	b=Svb2jWi//bWSNk0zMgEyxhHm44V4u78aDh8AR0ud1N8jqiZ6SHE9AM/bLs5eiXGXd
+	 BONracgkqU1Ghnbh0w2JhX8LoFeqE6ooYmkoFeHwVLDyHk0IMqFi/tbDE+Q+6hjsQv
+	 WBwkr1GwbuteLyJXNt//cRUYUHEpnB5wkjYQjTfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	kernel test robot <lkp@intel.com>,
-	Jianglei Nie <niejianglei2021@163.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Alexander Potapenko <glider@google.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 002/200] auxdisplay: hd44780: Fix potential memory leak in hd44780_remove()
-Date: Fri, 10 Mar 2023 14:36:49 +0100
-Message-Id: <20230310133717.132481820@linuxfoundation.org>
+Subject: [PATCH 6.1 020/200] fs: f2fs: initialize fsdata in pagecache_write()
+Date: Fri, 10 Mar 2023 14:37:07 +0100
+Message-Id: <20230310133717.669483474@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -37,43 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jianglei Nie <niejianglei2021@163.com>
+From: Alexander Potapenko <glider@google.com>
 
-[ Upstream commit ddf75a86aba2cfb7ec4497e8692b60c8c8fe0ee7 ]
+[ Upstream commit b1b9896718bc1a212dc288ad66a5fa2fef11353d ]
 
-hd44780_probe() allocates a memory chunk for hd with kzalloc() and
-makes "lcd->drvdata->hd44780" point to it. When we call hd44780_remove(),
-we should release all relevant memory and resource. But "lcd->drvdata
-->hd44780" is not released, which will lead to a memory leak.
+When aops->write_begin() does not initialize fsdata, KMSAN may report
+an error passing the latter to aops->write_end().
 
-We should release the "lcd->drvdata->hd44780" in hd44780_remove() to fix
-the memory leak bug.
+Fix this by unconditionally initializing fsdata.
 
-Fixes: 718e05ed92ec ("auxdisplay: Introduce hd44780_common.[ch]")
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Jianglei Nie <niejianglei2021@163.com>
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Fixes: 95ae251fe828 ("f2fs: add fs-verity support")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/auxdisplay/hd44780.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/f2fs/verity.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/auxdisplay/hd44780.c b/drivers/auxdisplay/hd44780.c
-index 8b2a0eb3f32a4..d56a5d508ccd7 100644
---- a/drivers/auxdisplay/hd44780.c
-+++ b/drivers/auxdisplay/hd44780.c
-@@ -322,8 +322,10 @@ static int hd44780_probe(struct platform_device *pdev)
- static int hd44780_remove(struct platform_device *pdev)
- {
- 	struct charlcd *lcd = platform_get_drvdata(pdev);
-+	struct hd44780_common *hdc = lcd->drvdata;
+diff --git a/fs/f2fs/verity.c b/fs/f2fs/verity.c
+index c352fff88a5e6..3f4f3295f1c66 100644
+--- a/fs/f2fs/verity.c
++++ b/fs/f2fs/verity.c
+@@ -81,7 +81,7 @@ static int pagecache_write(struct inode *inode, const void *buf, size_t count,
+ 		size_t n = min_t(size_t, count,
+ 				 PAGE_SIZE - offset_in_page(pos));
+ 		struct page *page;
+-		void *fsdata;
++		void *fsdata = NULL;
+ 		int res;
  
- 	charlcd_unregister(lcd);
-+	kfree(hdc->hd44780);
- 	kfree(lcd->drvdata);
- 
- 	kfree(lcd);
+ 		res = aops->write_begin(NULL, mapping, pos, n, &page, &fsdata);
 -- 
 2.39.2
 
