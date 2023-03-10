@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7BB8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:03:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED98C433EF;
-	Fri, 10 Mar 2023 14:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAF68481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:03:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00447C433D2;
+	Fri, 10 Mar 2023 14:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457016;
-	bh=U9LwCidUUgPKBYh/I/AUlqjiF+BElbC3N7KpNePoHkQ=;
+	s=korg; t=1678457019;
+	bh=ENlRig7qxIZqwpN/qXepTWkVpECOpKSodtH0h5/Rp70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UzEpQKK7cT19LD/twsQTCt4xoHvUQGO13HbyDYNd9KH0LNezaAghvogEmkPcfYxlm
-	 H/Cqc4IYA/qvm21Tan9EwM+DmXyXu0OFiFajrIknNjrpnbLQ9aQGgudnvCQjBix/+3
-	 dcLRHMy6MtpmXdqGRG79GRLO/R9y7x+ObWuPPSg4=
+	b=iIWcBt5Ss7Z0i0u29qCZaO5Dayep6JXtIPEyzTOfKDqgrPE8J1rTsYKmEc0kzPjhD
+	 +XcPYru5+VASZ57eRLoAWtUy6JWHgHsluKH+Pu1BEOCwNK9ZnqX4oYgNFW6lnW4VSi
+	 qeKn8n+YU+6FzzxicTRpQARn+h94oB4zR5lhK4GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Imre Deak <imre.deak@intel.com>
-Subject: [PATCH 6.2 203/211] drm/display/dp_mst: Fix down message handling after a packet reception error
-Date: Fri, 10 Mar 2023 14:39:43 +0100
-Message-Id: <20230310133725.093526230@linuxfoundation.org>
+	Nadav Amit <namit@vmware.com>,
+	VMware PV-Drivers Reviewers <pv-drivers@vmware.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 177/211] misc: vmw_balloon: fix memory leak with using debugfs_lookup()
+Date: Fri, 10 Mar 2023 14:39:17 +0100
+Message-Id: <20230310133724.199834434@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -34,38 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Imre Deak <imre.deak@intel.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 1241aedb6b5c7a5a8ad73e5eb3a41cfe18a3e00e upstream.
+[ Upstream commit 209cdbd07cfaa4b7385bad4eeb47e5ec1887d33d ]
 
-After an error during receiving a packet for a multi-packet DP MST
-sideband message, the state tracking which packets have been received
-already is not reset. This prevents the reception of subsequent down
-messages (due to the pending message not yet completed with an
-end-of-message-transfer packet).
+When calling debugfs_lookup() the result must have dput() called on it,
+otherwise the memory will leak over time.  To make things simpler, just
+call debugfs_lookup_and_remove() instead which handles all of the logic at
+once.
 
-Fix the above by resetting the reception state after a packet error.
-
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: <stable@vger.kernel.org> # v3.17+
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221214184258.2869417-2-imre.deak@intel.com
+Cc: Nadav Amit <namit@vmware.com>
+Cc: VMware PV-Drivers Reviewers <pv-drivers@vmware.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230202141100.2291188-1-gregkh@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_dp_mst_topology.c |    2 +-
+ drivers/misc/vmw_balloon.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -3859,7 +3859,7 @@ static int drm_dp_mst_handle_down_rep(st
- 	struct drm_dp_sideband_msg_rx *msg = &mgr->down_rep_recv;
- 
- 	if (!drm_dp_get_one_sb_msg(mgr, false, &mstb))
--		goto out;
-+		goto out_clear_reply;
- 
- 	/* Multi-packet message transmission, don't clear the reply */
- 	if (!msg->have_eomt)
+diff --git a/drivers/misc/vmw_balloon.c b/drivers/misc/vmw_balloon.c
+index 61a2be712bf7b..9ce9b9e0e9b63 100644
+--- a/drivers/misc/vmw_balloon.c
++++ b/drivers/misc/vmw_balloon.c
+@@ -1709,7 +1709,7 @@ static void __init vmballoon_debugfs_init(struct vmballoon *b)
+ static void __exit vmballoon_debugfs_exit(struct vmballoon *b)
+ {
+ 	static_key_disable(&balloon_stat_enabled.key);
+-	debugfs_remove(debugfs_lookup("vmmemctl", NULL));
++	debugfs_lookup_and_remove("vmmemctl", NULL);
+ 	kfree(b->stats);
+ 	b->stats = NULL;
+ }
+-- 
+2.39.2
+
 
 
