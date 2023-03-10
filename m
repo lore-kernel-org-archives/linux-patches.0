@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E47847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:50:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F4DC4339B;
-	Fri, 10 Mar 2023 13:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F00847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:50:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C429DC4339B;
+	Fri, 10 Mar 2023 13:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456246;
-	bh=AupI8DZLa6c/BV/RNHMnzl3sW9pXeR1CABduRzjM2Mw=;
+	s=korg; t=1678456249;
+	bh=dwjk4MqKV8Plta4pZ0qNQeyJcvbXYxKxLPSDtQlWrlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iAskiEJ5Wop1jKlP7Ef4OvH5umn3aT1CfodB3lBO+om9JR1E5UhE6EzrFpqXrTCx5
-	 hjMFIS/awDM18G6NPZVAZggV6E1sQKGBZjvpnM9XfKZm74QF3rtm0tNhuNXTBM9sFg
-	 q0/wtBURlF35+X38gm/uujQfa5oSVpLiASA4VLKY=
+	b=ffIoTz4t6BQWMCEeHhVAE25zyyueGNkH9jlwIhMR4+7L/UnKMpJEGeAyRZ2cBCLca
+	 wVMzVhU1kmnTgbI6KU8bl45K7FvKJKXv6lhEFfXbsNWRdRJkF128B6nSN8axMyGGSV
+	 AiE1Bzq9X0Nbd6Dshsu82zF4XK/QFBs8F5G1XZKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 4.14 129/193] wifi: rtl8xxxu: Use a longer retry limit of 48
-Date: Fri, 10 Mar 2023 14:38:31 +0100
-Message-Id: <20230310133715.531816549@linuxfoundation.org>
+	Alexander Wetzel <alexander@wetzel-home.de>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 4.14 130/193] wifi: cfg80211: Fix use after free for wext
+Date: Fri, 10 Mar 2023 14:38:32 +0100
+Message-Id: <20230310133715.567564053@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,59 +34,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Alexander Wetzel <alexander@wetzel-home.de>
 
-commit 2a86aa9a1892d60ef2e3f310f5b42b8b05546d65 upstream.
+commit 015b8cc5e7c4d7bb671f1984d7b7338c310b185b upstream.
 
-The Realtek rate control algorithm goes back and forth a lot between
-the highest and the lowest rate it's allowed to use. This is due to
-a lot of frames being dropped because the retry limits set by
-IEEE80211_CONF_CHANGE_RETRY_LIMITS are too low. (Experimentally, they
-are 4 for long frames and 7 for short frames.)
+Key information in wext.connect is not reset on (re)connect and can hold
+data from a previous connection.
 
-The vendor drivers hardcode the value 48 for both retry limits (for
-station mode), which makes dropped frames very rare and thus the rate
-control is more stable.
+Reset key data to avoid that drivers or mac80211 incorrectly detect a
+WEP connection request and access the freed or already reused memory.
 
-Because most Realtek chips handle the rate control in the firmware,
-which can't be modified, ignore the limits set by
-IEEE80211_CONF_CHANGE_RETRY_LIMITS and use the value 48 (set during
-chip initialisation), same as the vendor drivers.
+Additionally optimize cfg80211_sme_connect() and avoid an useless
+schedule of conn_work.
 
+Fixes: fffd0934b939 ("cfg80211: rework key operation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/477d745b-6bac-111d-403c-487fc19aa30d@gmail.com
+Link: https://lore.kernel.org/r/20230124141856.356646-1-alexander@wetzel-home.de
+Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c |    9 ---------
- 1 file changed, 9 deletions(-)
+ net/wireless/sme.c |   31 ++++++++++++++++++++++++++-----
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -5500,7 +5500,6 @@ static int rtl8xxxu_config(struct ieee80
+--- a/net/wireless/sme.c
++++ b/net/wireless/sme.c
+@@ -269,6 +269,15 @@ void cfg80211_conn_work(struct work_stru
+ 	rtnl_unlock();
+ }
+ 
++static void cfg80211_step_auth_next(struct cfg80211_conn *conn,
++				    struct cfg80211_bss *bss)
++{
++	memcpy(conn->bssid, bss->bssid, ETH_ALEN);
++	conn->params.bssid = conn->bssid;
++	conn->params.channel = bss->channel;
++	conn->state = CFG80211_CONN_AUTHENTICATE_NEXT;
++}
++
+ /* Returned bss is reference counted and must be cleaned up appropriately. */
+ static struct cfg80211_bss *cfg80211_get_conn_bss(struct wireless_dev *wdev)
  {
- 	struct rtl8xxxu_priv *priv = hw->priv;
- 	struct device *dev = &priv->udev->dev;
--	u16 val16;
- 	int ret = 0, channel;
- 	bool ht40;
+@@ -286,10 +295,7 @@ static struct cfg80211_bss *cfg80211_get
+ 	if (!bss)
+ 		return NULL;
  
-@@ -5510,14 +5509,6 @@ static int rtl8xxxu_config(struct ieee80
- 			 __func__, hw->conf.chandef.chan->hw_value,
- 			 changed, hw->conf.chandef.width);
+-	memcpy(wdev->conn->bssid, bss->bssid, ETH_ALEN);
+-	wdev->conn->params.bssid = wdev->conn->bssid;
+-	wdev->conn->params.channel = bss->channel;
+-	wdev->conn->state = CFG80211_CONN_AUTHENTICATE_NEXT;
++	cfg80211_step_auth_next(wdev->conn, bss);
+ 	schedule_work(&rdev->conn_work);
  
--	if (changed & IEEE80211_CONF_CHANGE_RETRY_LIMITS) {
--		val16 = ((hw->conf.long_frame_max_tx_count <<
--			  RETRY_LIMIT_LONG_SHIFT) & RETRY_LIMIT_LONG_MASK) |
--			((hw->conf.short_frame_max_tx_count <<
--			  RETRY_LIMIT_SHORT_SHIFT) & RETRY_LIMIT_SHORT_MASK);
--		rtl8xxxu_write16(priv, REG_RETRY_LIMIT, val16);
--	}
--
- 	if (changed & IEEE80211_CONF_CHANGE_CHANNEL) {
- 		switch (hw->conf.chandef.width) {
- 		case NL80211_CHAN_WIDTH_20_NOHT:
+ 	return bss;
+@@ -568,7 +574,12 @@ static int cfg80211_sme_connect(struct w
+ 	wdev->conn->params.ssid_len = wdev->ssid_len;
+ 
+ 	/* see if we have the bss already */
+-	bss = cfg80211_get_conn_bss(wdev);
++	bss = cfg80211_get_bss(wdev->wiphy, wdev->conn->params.channel,
++			       wdev->conn->params.bssid,
++			       wdev->conn->params.ssid,
++			       wdev->conn->params.ssid_len,
++			       wdev->conn_bss_type,
++			       IEEE80211_PRIVACY(wdev->conn->params.privacy));
+ 
+ 	if (prev_bssid) {
+ 		memcpy(wdev->conn->prev_bssid, prev_bssid, ETH_ALEN);
+@@ -579,6 +590,7 @@ static int cfg80211_sme_connect(struct w
+ 	if (bss) {
+ 		enum nl80211_timeout_reason treason;
+ 
++		cfg80211_step_auth_next(wdev->conn, bss);
+ 		err = cfg80211_conn_do_work(wdev, &treason);
+ 		cfg80211_put_bss(wdev->wiphy, bss);
+ 	} else {
+@@ -1128,6 +1140,15 @@ int cfg80211_connect(struct cfg80211_reg
+ 	} else {
+ 		if (WARN_ON(connkeys))
+ 			return -EINVAL;
++
++		/* connect can point to wdev->wext.connect which
++		 * can hold key data from a previous connection
++		 */
++		connect->key = NULL;
++		connect->key_len = 0;
++		connect->key_idx = 0;
++		connect->crypto.cipher_group = 0;
++		connect->crypto.n_ciphers_pairwise = 0;
+ 	}
+ 
+ 	wdev->connect_keys = connkeys;
 
 
