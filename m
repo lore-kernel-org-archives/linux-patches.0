@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4258821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:55:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABCCC433EF;
-	Fri, 10 Mar 2023 14:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFCE68821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:55:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2DA7C4339B;
+	Fri, 10 Mar 2023 14:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460129;
-	bh=Dg4Q1L/9BXhldLWdV8XmhegRnkQ24uayZNXKb/ckec4=;
+	s=korg; t=1678460132;
+	bh=T+w1QOHGidp5BE/eSpm4kugK7Y/Fdcvefr3RQwmXVg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WVkajlJ0kc+5jtVHV8iuVyGAh5lBHB2sbIRQCiKpseMrAVnrwCn7ZKHYByjm07vCx
-	 LniGhbnWRTl1S/JU8Nq81Wr/DzaZXsTULtd4RK68DyzzeeYsNJGA2vYlwGF60yAHX/
-	 3f5/x2Zk3qaLCCu6TV7smGF2Os81W3SAfpQ2W7l0=
+	b=sFZVApOsy3Ujg6snrxxzlH4CZEFj013+vQ2obnmh6NxUUQA57GY2ziltkJv3KxXYk
+	 CaAFn1YY6100toW+xgd/v+UQW17FTDU5PCTFo4yx8ZqdsrvG2bGKCNQvbyDoUTBbL2
+	 D6elDDTzk1YlQsw7nm4YpA7If2S0fwXKQ7DlEXr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Heiko Stuebner <heiko.stuebner@vrull.eu>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 232/529] clk: qcom: gcc-qcs404: fix names of the DSI clocks used as parents
-Date: Fri, 10 Mar 2023 14:36:15 +0100
-Message-Id: <20230310133815.750365722@linuxfoundation.org>
+Subject: [PATCH 5.10 233/529] RISC-V: fix funct4 definition for c.jalr in parse_asm.h
+Date: Fri, 10 Mar 2023 14:36:16 +0100
+Message-Id: <20230310133815.781418575@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -36,63 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Heiko Stuebner <heiko.stuebner@vrull.eu>
 
-[ Upstream commit 47d94d30cd3dcc743241b4208b1eec7247610c84 ]
+[ Upstream commit a3775634f6da23f5511d0282d7e792cf606e5f3b ]
 
-The QCS404 uses 28nm LPM DSI PHY, which registers dsi0pll and
-dsi0pllbyte clocks. Fix all DSI PHY clock names used as parents inside
-the GCC driver.
+The opcode definition for c.jalr is
+    c.jalr c_rs1_n0  1..0=2 15..13=4 12=1 6..2=0
 
-Fixes: 652f1813c113 ("clk: qcom: gcc: Add global clock controller driver for QCS404")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221226042154.2666748-7-dmitry.baryshkov@linaro.org
+This means funct4 consisting of bit [15:12] is 1001b, so the value is 0x9.
+
+Fixes: edde5584c7ab ("riscv: Add SW single-step support for KDB")
+Reported-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Heiko Stuebner <heiko.stuebner@vrull.eu>
+Link: https://lore.kernel.org/r/20221223221332.4127602-2-heiko@sntech.de
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-qcs404.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/riscv/include/asm/parse_asm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-qcs404.c b/drivers/clk/qcom/gcc-qcs404.c
-index 4299fe8f19274..a7a9884799cd3 100644
---- a/drivers/clk/qcom/gcc-qcs404.c
-+++ b/drivers/clk/qcom/gcc-qcs404.c
-@@ -112,7 +112,7 @@ static const struct parent_map gcc_parent_map_5[] = {
+diff --git a/arch/riscv/include/asm/parse_asm.h b/arch/riscv/include/asm/parse_asm.h
+index f36368de839f5..7fee806805c1b 100644
+--- a/arch/riscv/include/asm/parse_asm.h
++++ b/arch/riscv/include/asm/parse_asm.h
+@@ -125,7 +125,7 @@
+ #define FUNCT3_C_J		0xa000
+ #define FUNCT3_C_JAL		0x2000
+ #define FUNCT4_C_JR		0x8000
+-#define FUNCT4_C_JALR		0xf000
++#define FUNCT4_C_JALR		0x9000
  
- static const char * const gcc_parent_names_5[] = {
- 	"cxo",
--	"dsi0pll_byteclk_src",
-+	"dsi0pllbyte",
- 	"core_bi_pll_test_se",
- };
- 
-@@ -124,7 +124,7 @@ static const struct parent_map gcc_parent_map_6[] = {
- 
- static const char * const gcc_parent_names_6[] = {
- 	"cxo",
--	"dsi0_phy_pll_out_byteclk",
-+	"dsi0pllbyte",
- 	"core_bi_pll_test_se",
- };
- 
-@@ -167,7 +167,7 @@ static const struct parent_map gcc_parent_map_9[] = {
- static const char * const gcc_parent_names_9[] = {
- 	"cxo",
- 	"gpll0_out_main",
--	"dsi0_phy_pll_out_dsiclk",
-+	"dsi0pll",
- 	"gpll6_out_aux",
- 	"core_bi_pll_test_se",
- };
-@@ -204,7 +204,7 @@ static const struct parent_map gcc_parent_map_12[] = {
- 
- static const char * const gcc_parent_names_12[] = {
- 	"cxo",
--	"dsi0pll_pclk_src",
-+	"dsi0pll",
- 	"core_bi_pll_test_se",
- };
+ #define FUNCT12_SRET		0x10200000
  
 -- 
 2.39.2
