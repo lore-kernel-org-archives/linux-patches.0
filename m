@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FD52F36
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF00C433EF;
-	Fri, 10 Mar 2023 14:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8757846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:30:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19177C433D2;
+	Fri, 10 Mar 2023 14:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458606;
-	bh=+X0N3zqhQB0ZxY0kR9Px393TVm4xIQcPrL6KKHYAxFA=;
+	s=korg; t=1678458609;
+	bh=ypIDq0iQ70tueb0cdm8lg82AZoQf2hLq1XJqU3C7UQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q7eRskdAlUQG+KIErqAPo8XgvJu02fVVQeXO6LgwfR+OGp1BeGIyUElHjqi/8oh1e
-	 dJvEcJaf10zTiSgMrEkG6dMLP8ps2C64ka51FMKKXlwc16Sh/g7K85PmFcjHW4bDvh
-	 nQ0BSekFmfKTLcC6bYGvwMLVDGW5zotUz7bOGXm4=
+	b=kVVnKNPbr8Vtrr2dsSgfqhGbvr09eiE6B3dWMHy8C9BYDBGQNofzC74e8Iz1DjsXz
+	 0A0F3ElEZehdiJLiUPH7EHObidSSh8k5h8dy5DxETUHGH4euAP1LaF6nXRz7NR9ePZ
+	 n6LL0ZHsHBmtEyfVmvksDbRvaeXZy81AvY8/soSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel@sholland.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Anup Patel <apatel@ventanamicro.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 082/357] RISC-V: time: initialize hrtimer based broadcast clock event device
-Date: Fri, 10 Mar 2023 14:36:11 +0100
-Message-Id: <20230310133737.601206912@linuxfoundation.org>
+	"Elliott, Robert (Servers)" <elliott@hpe.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Josh Don <joshdon@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Elliott
+Subject: [PATCH 5.4 053/357] genirq: Fix the return type of kstat_cpu_irqs_sum()
+Date: Fri, 10 Mar 2023 14:35:42 +0100
+Message-Id: <20230310133736.306462968@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -38,60 +42,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit 8b3b8fbb4896984b5564789a42240e4b3caddb61 ]
+[ Upstream commit 47904aed898a08f028572b9b5a5cc101ddfb2d82 ]
 
-Similarly to commit 022eb8ae8b5e ("ARM: 8938/1: kernel: initialize
-broadcast hrtimer based clock event device"), RISC-V needs to initiate
-hrtimer based broadcast clock event device before C3STOP can be used.
-Otherwise, the introduction of C3STOP for the RISC-V arch timer in
-commit 232ccac1bd9b ("clocksource/drivers/riscv: Events are stopped
-during CPU suspend") leaves us without any broadcast timer registered.
-This prevents the kernel from entering oneshot mode, which breaks timer
-behaviour, for example clock_nanosleep().
+The type of member ->irqs_sum is unsigned long, but kstat_cpu_irqs_sum()
+returns int, which can result in truncation.  Therefore, change the
+kstat_cpu_irqs_sum() function's return value to unsigned long to avoid
+truncation.
 
-A test app that sleeps each cpu for 6, 5, 4, 3 ms respectively, HZ=250
-& C3STOP enabled, the sleep times are rounded up to the next jiffy:
-== CPU: 1 ==      == CPU: 2 ==      == CPU: 3 ==      == CPU: 4 ==
-Mean: 7.974992    Mean: 7.976534    Mean: 7.962591    Mean: 3.952179
-Std Dev: 0.154374 Std Dev: 0.156082 Std Dev: 0.171018 Std Dev: 0.076193
-Hi: 9.472000      Hi: 10.495000     Hi: 8.864000      Hi: 4.736000
-Lo: 6.087000      Lo: 6.380000      Lo: 4.872000      Lo: 3.403000
-Samples: 521      Samples: 521      Samples: 521      Samples: 521
-
-Link: https://lore.kernel.org/linux-riscv/YzYTNQRxLr7Q9JR0@spud/
-Fixes: 232ccac1bd9b ("clocksource/drivers/riscv: Events are stopped during CPU suspend")
-Suggested-by: Samuel Holland <samuel@sholland.org>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Reviewed-by: Samuel Holland <samuel@sholland.org>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Link: https://lore.kernel.org/r/20230103141102.772228-2-apatel@ventanamicro.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Fixes: f2c66cd8eedd ("/proc/stat: scalability of irq num per cpu")
+Reported-by: Elliott, Robert (Servers) <elliott@hpe.com>
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: "Peter Zijlstra (Intel)" <peterz@infradead.org>
+Cc: Josh Don <joshdon@google.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/time.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/kernel_stat.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/time.c b/arch/riscv/kernel/time.c
-index 8aa70b519e04f..726860a490f36 100644
---- a/arch/riscv/kernel/time.c
-+++ b/arch/riscv/kernel/time.c
-@@ -5,6 +5,7 @@
+diff --git a/include/linux/kernel_stat.h b/include/linux/kernel_stat.h
+index 7ee2bb43b251a..f7f20cf1bd3b1 100644
+--- a/include/linux/kernel_stat.h
++++ b/include/linux/kernel_stat.h
+@@ -73,7 +73,7 @@ extern unsigned int kstat_irqs_usr(unsigned int irq);
+ /*
+  * Number of interrupts per cpu, since bootup
   */
- 
- #include <linux/of_clk.h>
-+#include <linux/clockchips.h>
- #include <linux/clocksource.h>
- #include <linux/delay.h>
- #include <asm/sbi.h>
-@@ -28,4 +29,6 @@ void __init time_init(void)
- 
- 	of_clk_init(NULL);
- 	timer_probe();
-+
-+	tick_setup_hrtimer_broadcast();
+-static inline unsigned int kstat_cpu_irqs_sum(unsigned int cpu)
++static inline unsigned long kstat_cpu_irqs_sum(unsigned int cpu)
+ {
+ 	return kstat_cpu(cpu).irqs_sum;
  }
 -- 
 2.39.2
