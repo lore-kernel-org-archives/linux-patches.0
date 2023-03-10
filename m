@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A99E8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:12:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03819C4339C;
-	Fri, 10 Mar 2023 14:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259EF8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:12:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E68DC433D2;
+	Fri, 10 Mar 2023 14:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457563;
-	bh=DHr65bTl5V4jvmojYqvPfDkjqi8K3e/bRx2v6zMwmvs=;
+	s=korg; t=1678457566;
+	bh=UPqmlEwRSziVrqYgqVNYMyaxL2DbuOy2Dmlzgry/sIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1mVPCM0oJk+h4/lvhX69xJT2LPnFfGeXtYFJM4uyQ/yYieE28a7qi45VZG/WSAHCG
-	 dw/wimTO00iBnYGffhWiNSQjF0olEBZS0TXP4g3zlqN8JhD+q+yB4QwQ2c/Si1uLU/
-	 JFa0sUbSvlmOg9kysvTRNDjkjGtCigtQmsmWaEGM=
+	b=uKzWbCxsx7g6DlqCLOBU3ReAAzblTbCbLTI5Nj2JXa0iaOBNyUjp1AIOqstrKPxZ2
+	 6d7iepULoWRFqxcXRj95zQI0YJTnjTkdwTnTKh+eQAFALl5oY/AnVxmv0F1/rNb3cw
+	 ra6i5GPcs9cr5iTlJEVNaejCKrOW6YY3goUy5kvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 163/200] tty: pcn_uart: fix memory leak with using debugfs_lookup()
-Date: Fri, 10 Mar 2023 14:39:30 +0100
-Message-Id: <20230310133722.116939620@linuxfoundation.org>
+	Zhu Lingshan <lingshan.zhu@intel.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.1 181/200] vDPA/ifcvf: decouple vq IRQ releasers from the adapter
+Date: Fri, 10 Mar 2023 14:39:48 +0100
+Message-Id: <20230310133722.662720509@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -34,38 +34,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Zhu Lingshan <lingshan.zhu@intel.com>
 
-[ Upstream commit 04a189c720aa2b6091442113ce9b9bc93552dff8 ]
+commit 004cbcabab46d9346e2524c4eedd71ea57fe4f3c upstream.
 
-When calling debugfs_lookup() the result must have dput() called on it,
-otherwise the memory will leak over time.  To make things simpler, just
-call debugfs_lookup_and_remove() instead which handles all of the logic
-at once.
+This commit decouples the IRQ releasers from the
+adapter, so that these functions could be
+safely invoked once probe
 
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20230202141221.2293012-1-gregkh@linuxfoundation.org
+Signed-off-by: Zhu Lingshan <lingshan.zhu@intel.com>
+Cc: stable@vger.kernel.org
+Message-Id: <20221125145724.1129962-5-lingshan.zhu@intel.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/pch_uart.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vdpa/ifcvf/ifcvf_main.c |   21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/tty/serial/pch_uart.c b/drivers/tty/serial/pch_uart.c
-index 83f35b7b0897c..abff1c6470f6a 100644
---- a/drivers/tty/serial/pch_uart.c
-+++ b/drivers/tty/serial/pch_uart.c
-@@ -1779,7 +1779,7 @@ static void pch_uart_exit_port(struct eg20t_port *priv)
- 	char name[32];
- 
- 	snprintf(name, sizeof(name), "uart%d_regs", priv->port.line);
--	debugfs_remove(debugfs_lookup(name, NULL));
-+	debugfs_lookup_and_remove(name, NULL);
- 	uart_remove_one_port(&pch_uart_driver, &priv->port);
- 	free_page((unsigned long)priv->rxbuf.buf);
+--- a/drivers/vdpa/ifcvf/ifcvf_main.c
++++ b/drivers/vdpa/ifcvf/ifcvf_main.c
+@@ -69,10 +69,9 @@ static void ifcvf_free_irq_vectors(void
+ 	pci_free_irq_vectors(data);
  }
--- 
-2.39.2
-
+ 
+-static void ifcvf_free_per_vq_irq(struct ifcvf_adapter *adapter)
++static void ifcvf_free_per_vq_irq(struct ifcvf_hw *vf)
+ {
+-	struct pci_dev *pdev = adapter->pdev;
+-	struct ifcvf_hw *vf = &adapter->vf;
++	struct pci_dev *pdev = vf->pdev;
+ 	int i;
+ 
+ 	for (i = 0; i < vf->nr_vring; i++) {
+@@ -83,10 +82,9 @@ static void ifcvf_free_per_vq_irq(struct
+ 	}
+ }
+ 
+-static void ifcvf_free_vqs_reused_irq(struct ifcvf_adapter *adapter)
++static void ifcvf_free_vqs_reused_irq(struct ifcvf_hw *vf)
+ {
+-	struct pci_dev *pdev = adapter->pdev;
+-	struct ifcvf_hw *vf = &adapter->vf;
++	struct pci_dev *pdev = vf->pdev;
+ 
+ 	if (vf->vqs_reused_irq != -EINVAL) {
+ 		devm_free_irq(&pdev->dev, vf->vqs_reused_irq, vf);
+@@ -95,14 +93,12 @@ static void ifcvf_free_vqs_reused_irq(st
+ 
+ }
+ 
+-static void ifcvf_free_vq_irq(struct ifcvf_adapter *adapter)
++static void ifcvf_free_vq_irq(struct ifcvf_hw *vf)
+ {
+-	struct ifcvf_hw *vf = &adapter->vf;
+-
+ 	if (vf->msix_vector_status == MSIX_VECTOR_PER_VQ_AND_CONFIG)
+-		ifcvf_free_per_vq_irq(adapter);
++		ifcvf_free_per_vq_irq(vf);
+ 	else
+-		ifcvf_free_vqs_reused_irq(adapter);
++		ifcvf_free_vqs_reused_irq(vf);
+ }
+ 
+ static void ifcvf_free_config_irq(struct ifcvf_adapter *adapter)
+@@ -126,8 +122,9 @@ static void ifcvf_free_config_irq(struct
+ static void ifcvf_free_irq(struct ifcvf_adapter *adapter)
+ {
+ 	struct pci_dev *pdev = adapter->pdev;
++	struct ifcvf_hw *vf = &adapter->vf;
+ 
+-	ifcvf_free_vq_irq(adapter);
++	ifcvf_free_vq_irq(vf);
+ 	ifcvf_free_config_irq(adapter);
+ 	ifcvf_free_irq_vectors(pdev);
+ }
 
 
