@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1D5846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:33:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7135C433EF;
-	Fri, 10 Mar 2023 14:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49420846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:33:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8C7C433D2;
+	Fri, 10 Mar 2023 14:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458819;
-	bh=X9muFobbJ5iF3u727r51X5LG+R6ss726qfLGGiQtbZQ=;
+	s=korg; t=1678458823;
+	bh=U9dM13pzKEj8cPzhiKYKQQnq8KL5yE6Jay0p5x4edxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ETfzO2xe9PueNLkjuEL0abRotK5DT6+cU2Ognxs9opGaMDhcgUblQ6tg39TuJf0Qm
-	 MZr0hxaTbhtjWcJDkZOlyDoos34p6UNn0Wx6qh8bx0kb2+ROd8Gc0c1UVsUFwINssm
-	 MkNskjTJDNTuyJOCUYo+nUtK+mjmUegxe1tF12Mo=
+	b=O7DVsYRp86L91pCBNGzOoIVcRjQFt5siOk2UMUSAjGBhOSq9II9Sm2ZamkodCLoZC
+	 RQ0QmDuAAogiBjOZUVQoTyuN5G3sTVMY6kzVVQbCMX6W8+mnj6VBJ32Vy4F6OVT1H+
+	 Ybtxn2ScfM6JzTuPCr3e4Mx+Waz9Pcrg8OtmEPw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhang <william.zhang@broadcom.com>,
-	Mark Brown <broonie@kernel.org>,
+	Wambui Karuga <wambui.karugax@gmail.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 125/357] spi: bcm63xx-hsspi: Fix multi-bit mode setting
-Date: Fri, 10 Mar 2023 14:36:54 +0100
-Message-Id: <20230310133740.180722489@linuxfoundation.org>
+Subject: [PATCH 5.4 116/357] drm/mediatek: remove cast to pointers passed to kfree
+Date: Fri, 10 Mar 2023 14:36:45 +0100
+Message-Id: <20230310133739.785643986@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,59 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: William Zhang <william.zhang@broadcom.com>
+From: Wambui Karuga <wambui.karugax@gmail.com>
 
-[ Upstream commit 811ff802aaf878ebbbaeac0307a0164fa21e7d40 ]
+[ Upstream commit 2ec35bd21d3290c8f76020dc60503deacd18e24b ]
 
-Currently the driver always sets the controller to dual data bit mode
-for both tx and rx data in the profile mode control register even for
-single data bit transfer. Luckily the opcode is set correctly according
-to SPI transfer data bit width so it does not actually cause issues.
+Remove unnecessary casts to pointer types passed to kfree.
+Issue detected by coccinelle:
+@@
+type t1;
+expression *e;
+@@
 
-This change fixes the problem by setting tx and rx data bit mode field
-correctly according to the actual SPI transfer tx and rx data bit width.
+-kfree((t1 *)e);
++kfree(e);
 
-Fixes: 142168eba9dc ("spi: bcm63xx-hsspi: add bcm63xx HSSPI driver")
-Signed-off-by: William Zhang <william.zhang@broadcom.com>
-Link: https://lore.kernel.org/r/20230209200246.141520-11-william.zhang@broadcom.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Wambui Karuga <wambui.karugax@gmail.com>
+Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/20191023111107.9972-1-wambui.karugax@gmail.com
+Stable-dep-of: 4744cde06f57 ("drm/mediatek: Use NULL instead of 0 for NULL pointer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm63xx-hsspi.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_gem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
-index b2b6ae4749568..3fe41c7de99ba 100644
---- a/drivers/spi/spi-bcm63xx-hsspi.c
-+++ b/drivers/spi/spi-bcm63xx-hsspi.c
-@@ -163,6 +163,7 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
- 	int step_size = HSSPI_BUFFER_LEN;
- 	const u8 *tx = t->tx_buf;
- 	u8 *rx = t->rx_buf;
-+	u32 val = 0;
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+index ca672f1d140de..b04a3c2b111e0 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+@@ -271,7 +271,7 @@ void *mtk_drm_gem_prime_vmap(struct drm_gem_object *obj)
+ 			       pgprot_writecombine(PAGE_KERNEL));
  
- 	bcm63xx_hsspi_set_clk(bs, spi, t->speed_hz);
- 	bcm63xx_hsspi_set_cs(bs, spi->chip_select, true);
-@@ -178,11 +179,16 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct spi_transfer *t)
- 		step_size -= HSSPI_OPCODE_LEN;
+ out:
+-	kfree((void *)sgt);
++	kfree(sgt);
  
- 	if ((opcode == HSSPI_OP_READ && t->rx_nbits == SPI_NBITS_DUAL) ||
--	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL))
-+	    (opcode == HSSPI_OP_WRITE && t->tx_nbits == SPI_NBITS_DUAL)) {
- 		opcode |= HSSPI_OP_MULTIBIT;
+ 	return mtk_gem->kvaddr;
+ }
+@@ -285,5 +285,5 @@ void mtk_drm_gem_prime_vunmap(struct drm_gem_object *obj, void *vaddr)
  
--	__raw_writel(1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT |
--		     1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT | 0xff,
-+		if (t->rx_nbits == SPI_NBITS_DUAL)
-+			val |= 1 << MODE_CTRL_MULTIDATA_RD_SIZE_SHIFT;
-+		if (t->tx_nbits == SPI_NBITS_DUAL)
-+			val |= 1 << MODE_CTRL_MULTIDATA_WR_SIZE_SHIFT;
-+	}
-+
-+	__raw_writel(val | 0xff,
- 		     bs->regs + HSSPI_PROFILE_MODE_CTRL_REG(chip_select));
- 
- 	while (pending > 0) {
+ 	vunmap(vaddr);
+ 	mtk_gem->kvaddr = 0;
+-	kfree((void *)mtk_gem->pages);
++	kfree(mtk_gem->pages);
+ }
 -- 
 2.39.2
 
