@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F94846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D984C4339B;
-	Fri, 10 Mar 2023 14:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316BA846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAF0C433EF;
+	Fri, 10 Mar 2023 14:32:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458737;
-	bh=LZgzC/keyEq3KL93RHGZ2KyWodxrflgFnpxDEBIwpaU=;
+	s=korg; t=1678458740;
+	bh=FI+4ILnJi4OdEpqjWZQmWvque4LccXJCLE24wc0D2fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QJVQa47+gESFE3xKIuOHsbwghdEEJZnM+xfpNXT9EapbQIT6XoVZCN5G5ZchPXotB
-	 sBCQPsNOPMv1Y6NzTAT3ZLetinCAauCZw103BGjiaEUlquALriO0+n8op51P9bbAuY
-	 l/eGk8lCsQ0cuwsfSOmcPQrVTGW7L/+0vH2+JCec=
+	b=WYSl9BH6nNWZZe4DHmAU4kZUkzMGCSkgYvLWT+sFOYVDUZk6Jaga/VRleHxScb/qL
+	 RBnqVD00B6s6g5i+vtYM1xGfW1pVeTpMAoF0mSOkrzdOtkwYA1TKvwOB6ccss8M5EF
+	 IVLsku/Pt03bHwROXJHpw7gWfrexLfYSFonkd3V4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
+	Tzung-Bi Shih <tzungbi@google.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 128/357] spi: synquacer: Fix timeout handling in synquacer_spi_transfer_one()
-Date: Fri, 10 Mar 2023 14:36:57 +0100
-Message-Id: <20230310133740.318003694@linuxfoundation.org>
+Subject: [PATCH 5.4 129/357] ASoC: dapm: declare missing structure prototypes
+Date: Fri, 10 Mar 2023 14:36:58 +0100
+Message-Id: <20230310133740.367027115@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,45 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Tzung-Bi Shih <tzungbi@google.com>
 
-[ Upstream commit e6a0b671880207566e1ece983bf989dde60bc1d7 ]
+[ Upstream commit 3d62ef4280a377bb2ccaee4e8f6c5093f5b8f9d4 ]
 
-wait_for_completion_timeout() never returns a <0 value. It returns either
-on timeout or a positive value (at least 1, or number of jiffies left
-till timeout)
+To fix compilation warnings:
 
-So, fix the error handling path and return -ETIMEDOUT should a timeout
-occur.
+- struct 'snd_soc_pcm_runtime' declared inside parameter list will not
+  be visible outside of this definition or declaration
+- struct 'soc_enum' declared inside parameter list will not be visible
+  outside of this definition or declaration
 
-Fixes: b0823ee35cf9 ("spi: Add spi driver for Socionext SynQuacer platform")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Jassi Brar <jaswinder.singh@linaro.org>
-Link: https://lore.kernel.org/r/c2040bf3cfa201fd8890cfab14fa5a701ffeca14.1676466072.git.christophe.jaillet@wanadoo.fr
+Declares the missing structure prototypes.
+
+Signed-off-by: Tzung-Bi Shih <tzungbi@google.com>
+Link: https://lore.kernel.org/r/20200625153543.85039-3-tzungbi@google.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: fdff966bfde7 ("ASoC: soc-dapm.h: fixup warning struct snd_pcm_substream not declared")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-synquacer.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ include/sound/soc-dapm.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spi-synquacer.c b/drivers/spi/spi-synquacer.c
-index 1e10af6e10a90..5d6e4a59ce29b 100644
---- a/drivers/spi/spi-synquacer.c
-+++ b/drivers/spi/spi-synquacer.c
-@@ -472,10 +472,9 @@ static int synquacer_spi_transfer_one(struct spi_master *master,
- 		read_fifo(sspi);
- 	}
+diff --git a/include/sound/soc-dapm.h b/include/sound/soc-dapm.h
+index 6e8a312253838..8c8988bfef8f4 100644
+--- a/include/sound/soc-dapm.h
++++ b/include/sound/soc-dapm.h
+@@ -16,6 +16,8 @@
+ #include <sound/asoc.h>
  
--	if (status < 0) {
--		dev_err(sspi->dev, "failed to transfer. status: 0x%x\n",
--			status);
--		return status;
-+	if (status == 0) {
-+		dev_err(sspi->dev, "failed to transfer. Timeout.\n");
-+		return -ETIMEDOUT;
- 	}
+ struct device;
++struct snd_soc_pcm_runtime;
++struct soc_enum;
  
- 	return 0;
+ /* widget has no PM register bit */
+ #define SND_SOC_NOPM	-1
 -- 
 2.39.2
 
