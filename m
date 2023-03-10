@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5CE881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:42:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F74C4339C;
-	Fri, 10 Mar 2023 14:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A955F881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:42:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269A9C433EF;
+	Fri, 10 Mar 2023 14:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459332;
-	bh=7eZ/qFtiTRA60J2wqa5IJoBC97GMn6hVjlO3OYqaHx4=;
+	s=korg; t=1678459335;
+	bh=D/4oeywm5q55fB7T4McNKMiC7CfEvxEX1f3NZYKC098=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INJSGXZqX89G4TP9EaN6PaIMeGNg27nYUf97sMoK19ohXO9yU+3RCB9bGVchKan+J
-	 8TZ/M3WMPSlHdbQHHwPuMJjzN8ig5DyP6RJZ1Iv9JG+N/1KNdNfAeMwWtPn88be7Al
-	 NCpItIjwJRGX1zb3K/7msYjLLH4BMKCcYutGv8tA=
+	b=Uo6cTUVBXxwt5Eu2deCDuMYxS+LkhEdCrAP06OXzeVMjUa99DlSlZBunr/nouRN+Q
+	 9Kn0hB7CdlKZzyp+SqqtFgs5PMkWUunzIzOvgYkmMA+Q5uPju78a7K+7U6ZvdOVQKb
+	 u1SlrJfTin6GfQbqaisxW2lLPA3qmZTCWl2LGbqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 327/357] thermal: intel: quark_dts: fix error pointer dereference
-Date: Fri, 10 Mar 2023 14:40:16 +0100
-Message-Id: <20230310133749.082422393@linuxfoundation.org>
+Subject: [PATCH 5.4 328/357] thermal: intel: BXT_PMIC: select REGMAP instead of depending on it
+Date: Fri, 10 Mar 2023 14:40:17 +0100
+Message-Id: <20230310133749.124958777@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,50 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit f1b930e740811d416de4d2074da48b6633a672c8 ]
+[ Upstream commit 1467fb960349dfa5e300658f1a409dde2cfb0c51 ]
 
-If alloc_soc_dts() fails, then we can just return.  Trying to free
-"soc_dts" will lead to an Oops.
+REGMAP is a hidden (not user visible) symbol. Users cannot set it
+directly thru "make *config", so drivers should select it instead of
+depending on it if they need it.
 
-Fixes: 8c1876939663 ("thermal: intel Quark SoC X1000 DTS thermal driver")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
+
+Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+
+Fixes: b474303ffd57 ("thermal: add Intel BXT WhiskeyCove PMIC thermal driver")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/intel_quark_dts_thermal.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ drivers/thermal/intel/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/intel/intel_quark_dts_thermal.c b/drivers/thermal/intel/intel_quark_dts_thermal.c
-index 5d33b350da1c6..ad92d8f0add19 100644
---- a/drivers/thermal/intel/intel_quark_dts_thermal.c
-+++ b/drivers/thermal/intel/intel_quark_dts_thermal.c
-@@ -440,22 +440,14 @@ MODULE_DEVICE_TABLE(x86cpu, qrk_thermal_ids);
+diff --git a/drivers/thermal/intel/Kconfig b/drivers/thermal/intel/Kconfig
+index 8025b21f43fa5..b5427579fae59 100644
+--- a/drivers/thermal/intel/Kconfig
++++ b/drivers/thermal/intel/Kconfig
+@@ -60,7 +60,8 @@ endmenu
  
- static int __init intel_quark_thermal_init(void)
- {
--	int err = 0;
--
- 	if (!x86_match_cpu(qrk_thermal_ids) || !iosf_mbi_available())
- 		return -ENODEV;
- 
- 	soc_dts = alloc_soc_dts();
--	if (IS_ERR(soc_dts)) {
--		err = PTR_ERR(soc_dts);
--		goto err_free;
--	}
-+	if (IS_ERR(soc_dts))
-+		return PTR_ERR(soc_dts);
- 
- 	return 0;
--
--err_free:
--	free_soc_dts(soc_dts);
--	return err;
- }
- 
- static void __exit intel_quark_thermal_exit(void)
+ config INTEL_BXT_PMIC_THERMAL
+ 	tristate "Intel Broxton PMIC thermal driver"
+-	depends on X86 && INTEL_SOC_PMIC_BXTWC && REGMAP
++	depends on X86 && INTEL_SOC_PMIC_BXTWC
++	select REGMAP
+ 	help
+ 	  Select this driver for Intel Broxton PMIC with ADC channels monitoring
+ 	  system temperature measurements and alerts.
 -- 
 2.39.2
 
