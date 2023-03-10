@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F148489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:17:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D2FC433D2;
-	Fri, 10 Mar 2023 14:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFAB8489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:17:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B1AC433D2;
+	Fri, 10 Mar 2023 14:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457875;
-	bh=agRvrc553inuw8bLKRfOvr93QnBTsezd3/j6fB9nvHM=;
+	s=korg; t=1678457878;
+	bh=X7lizuYBO9Z2GuK3n7pbzKRnmZ56EwpPys5R+jlQsgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KopcQVj7aUrvbNTRhOWBM8Ll4qIh5a53vggROGtU30qeRzyrgxjixmuvsyRLzsStx
-	 TE1oc/TQ4m3nFIggfa1RJaSV3uCoB/GwUEZ4JQm0ucS+1+ehlDvWjQsQyQA5swgHRA
-	 FKHh4CpZiJOHeooOslSSFQ2+sGBi3W4gBLzResC8=
+	b=Cwm/mnwn9EZVcCoLn4+KM7ShnHn9qXU7LzK9mzcsfHpJjeL3f5oPGCQFN6lF4M8Ll
+	 A+sDCwbqzEtdctcJn0rlGGsYyTXEjrv6eczCOcB39aYJktiDVPMZBQdDTvE7lRuKJ+
+	 1eb57tM+mh/FS2jpFAyn4k+TJO7Tfp2EgmrJlM8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 086/252] spi: bcm63xx-hsspi: fix pm_runtime
-Date: Fri, 10 Mar 2023 14:37:36 +0100
-Message-Id: <20230310133721.429431000@linuxfoundation.org>
+Subject: [PATCH 4.19 057/252] wifi: iwl3945: Add missing check for create_singlethread_workqueue
+Date: Fri, 10 Mar 2023 14:37:07 +0100
+Message-Id: <20230310133720.541551843@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -35,55 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Álvaro Fernández Rojas <noltari@gmail.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 216e8e80057a9f0b6366327881acf88eaf9f1fd4 ]
+[ Upstream commit 1fdeb8b9f29dfd64805bb49475ac7566a3cb06cb ]
 
-The driver sets auto_runtime_pm to true, but it doesn't call
-pm_runtime_enable(), which results in "Failed to power device" when PM support
-is enabled.
+Add the check for the return value of the create_singlethread_workqueue
+in order to avoid NULL pointer dereference.
 
-Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
-Link: https://lore.kernel.org/r/20210223151851.4110-3-noltari@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 811ff802aaf8 ("spi: bcm63xx-hsspi: Fix multi-bit mode setting")
+Fixes: b481de9ca074 ("[IWLWIFI]: add iwlwifi wireless drivers")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230208063032.42763-2-jiasheng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm63xx-hsspi.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlegacy/3945-mac.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
-index 443a480767e09..f45df86cc95a0 100644
---- a/drivers/spi/spi-bcm63xx-hsspi.c
-+++ b/drivers/spi/spi-bcm63xx-hsspi.c
-@@ -20,6 +20,8 @@
- #include <linux/spi/spi.h>
- #include <linux/mutex.h>
- #include <linux/of.h>
-+#include <linux/reset.h>
-+#include <linux/pm_runtime.h>
+diff --git a/drivers/net/wireless/intel/iwlegacy/3945-mac.c b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
+index b536ec20eaccb..d51a23815e186 100644
+--- a/drivers/net/wireless/intel/iwlegacy/3945-mac.c
++++ b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
+@@ -3400,10 +3400,12 @@ static DEVICE_ATTR(dump_errors, 0200, NULL, il3945_dump_error_log);
+  *
+  *****************************************************************************/
  
- #define HSSPI_GLOBAL_CTRL_REG			0x0
- #define GLOBAL_CTRL_CS_POLARITY_SHIFT		0
-@@ -432,13 +434,17 @@ static int bcm63xx_hsspi_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto out_put_master;
+-static void
++static int
+ il3945_setup_deferred_work(struct il_priv *il)
+ {
+ 	il->workqueue = create_singlethread_workqueue(DRV_NAME);
++	if (!il->workqueue)
++		return -ENOMEM;
  
-+	pm_runtime_enable(&pdev->dev);
+ 	init_waitqueue_head(&il->wait_command_queue);
+ 
+@@ -3422,6 +3424,8 @@ il3945_setup_deferred_work(struct il_priv *il)
+ 	tasklet_init(&il->irq_tasklet,
+ 		     il3945_irq_tasklet,
+ 		     (unsigned long)il);
 +
- 	/* register and we are done */
- 	ret = devm_spi_register_master(dev, master);
- 	if (ret)
--		goto out_put_master;
-+		goto out_pm_disable;
++	return 0;
+ }
+ 
+ static void
+@@ -3743,7 +3747,10 @@ il3945_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	}
+ 
+ 	il_set_rxon_channel(il, &il->bands[NL80211_BAND_2GHZ].channels[5]);
+-	il3945_setup_deferred_work(il);
++	err = il3945_setup_deferred_work(il);
++	if (err)
++		goto out_remove_sysfs;
++
+ 	il3945_setup_handlers(il);
+ 	il_power_initialize(il);
+ 
+@@ -3755,7 +3762,7 @@ il3945_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 
+ 	err = il3945_setup_mac(il);
+ 	if (err)
+-		goto out_remove_sysfs;
++		goto out_destroy_workqueue;
+ 
+ 	err = il_dbgfs_register(il, DRV_NAME);
+ 	if (err)
+@@ -3767,9 +3774,10 @@ il3945_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
  
  	return 0;
  
-+out_pm_disable:
-+	pm_runtime_disable(&pdev->dev);
- out_put_master:
- 	spi_master_put(master);
- out_disable_pll_clk:
+-out_remove_sysfs:
++out_destroy_workqueue:
+ 	destroy_workqueue(il->workqueue);
+ 	il->workqueue = NULL;
++out_remove_sysfs:
+ 	sysfs_remove_group(&pdev->dev.kobj, &il3945_attribute_group);
+ out_release_irq:
+ 	free_irq(il->pci_dev->irq, il);
 -- 
 2.39.2
 
