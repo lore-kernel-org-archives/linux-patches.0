@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F9E8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:06:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96F2C4339E;
-	Fri, 10 Mar 2023 14:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D732E8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:06:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A34EC4339E;
+	Fri, 10 Mar 2023 14:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457209;
-	bh=55d+tflnAs4rFheYh8iV3b0Ax1Tcfcm8ljuQ2IFdQwQ=;
+	s=korg; t=1678457211;
+	bh=NP4P2s9LfI66JnA7bcRK68Z6EJWM1pEy3e3+6m3epxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ImN36fEe504B63ACXnaTMaIksBSYawh6CaJsynUbukjXBpRcghvmhDJ+z522s2mi3
-	 WPG+S4smFyQdXq4UVzNtIWRIVl+sP84HCZF6R8FGQrEBH3pMgv7XE8itjGtL1nuNKf
-	 Hp5xnJuabyqeQdoCgMq1seFNUGq63iANMPYMNq5w=
+	b=b6XzeOXH1cZ5D2/6DbcH2AO5mwN++xgE13CvZTgMYuXM5lFWhSj7fs9o9r2I9PVwZ
+	 hDhTeW9k1Bt0aW3SV8rVr1ryCBsbcqlwV8QtHImVydq9qjMWsmoOgntxKyoo5eCDQB
+	 DVf3Dgjlyt7ttOHHtesk4J363qKdhdEvQOjy7f04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Jun <chenjun102@huawei.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/200] watchdog: Fix kmemleak in watchdog_cdev_register
-Date: Fri, 10 Mar 2023 14:37:44 +0100
-Message-Id: <20230310133718.872372698@linuxfoundation.org>
+Subject: [PATCH 6.1 031/200] ubifs: Reserve one leb for each journal head while doing budget
+Date: Fri, 10 Mar 2023 14:37:18 +0100
+Message-Id: <20230310133718.003958953@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -36,89 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Jun <chenjun102@huawei.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 13721a2ac66b246f5802ba1b75ad8637e53eeecc ]
+[ Upstream commit e874dcde1cbf82c786c0e7f2899811c02630cc52 ]
 
-kmemleak reports memory leaks in watchdog_dev_register, as follows:
-unreferenced object 0xffff888116233000 (size 2048):
-  comm ""modprobe"", pid 28147, jiffies 4353426116 (age 61.741s)
-  hex dump (first 32 bytes):
-    80 fa b9 05 81 88 ff ff 08 30 23 16 81 88 ff ff  .........0#.....
-    08 30 23 16 81 88 ff ff 00 00 00 00 00 00 00 00  .0#.............
-  backtrace:
-    [<000000007f001ffd>] __kmem_cache_alloc_node+0x157/0x220
-    [<000000006a389304>] kmalloc_trace+0x21/0x110
-    [<000000008d640eea>] watchdog_dev_register+0x4e/0x780 [watchdog]
-    [<0000000053c9f248>] __watchdog_register_device+0x4f0/0x680 [watchdog]
-    [<00000000b2979824>] watchdog_register_device+0xd2/0x110 [watchdog]
-    [<000000001f730178>] 0xffffffffc10880ae
-    [<000000007a1a8bcc>] do_one_initcall+0xcb/0x4d0
-    [<00000000b98be325>] do_init_module+0x1ca/0x5f0
-    [<0000000046d08e7c>] load_module+0x6133/0x70f0
-    ...
+UBIFS calculates available space by c->main_bytes - c->lst.total_used
+(which means non-index lebs' free and dirty space is accounted into
+total available), then index lebs and four lebs (one for gc_lnum, one
+for deletions, two for journal heads) are deducted.
+In following situation, ubifs may get -ENOSPC from make_reservation():
+ LEB 84: DATAHD   free 122880 used 1920  dirty 2176  dark 6144
+ LEB 110:DELETION free 126976 used 0     dirty 0     dark 6144 (empty)
+ LEB 201:gc_lnum  free 126976 used 0     dirty 0     dark 6144
+ LEB 272:GCHD     free 77824  used 47672 dirty 1480  dark 6144
+ LEB 356:BASEHD   free 0      used 39776 dirty 87200 dark 6144
+ OTHERS: index lebs, zero-available non-index lebs
 
-unreferenced object 0xffff888105b9fa80 (size 16):
-  comm ""modprobe"", pid 28147, jiffies 4353426116 (age 61.741s)
-  hex dump (first 16 bytes):
-    77 61 74 63 68 64 6f 67 31 00 b9 05 81 88 ff ff  watchdog1.......
-  backtrace:
-    [<000000007f001ffd>] __kmem_cache_alloc_node+0x157/0x220
-    [<00000000486ab89b>] __kmalloc_node_track_caller+0x44/0x1b0
-    [<000000005a39aab0>] kvasprintf+0xb5/0x140
-    [<0000000024806f85>] kvasprintf_const+0x55/0x180
-    [<000000009276cb7f>] kobject_set_name_vargs+0x56/0x150
-    [<00000000a92e820b>] dev_set_name+0xab/0xe0
-    [<00000000cec812c6>] watchdog_dev_register+0x285/0x780 [watchdog]
-    [<0000000053c9f248>] __watchdog_register_device+0x4f0/0x680 [watchdog]
-    [<00000000b2979824>] watchdog_register_device+0xd2/0x110 [watchdog]
-    [<000000001f730178>] 0xffffffffc10880ae
-    [<000000007a1a8bcc>] do_one_initcall+0xcb/0x4d0
-    [<00000000b98be325>] do_init_module+0x1ca/0x5f0
-    [<0000000046d08e7c>] load_module+0x6133/0x70f0
-    ...
+UBIFS calculates the available bytes is 6888 (How to calculate it:
+126976 * 5[remain main bytes] - 1920[used] - 47672[used] - 39776[used] -
+126976 * 1[deletions] - 126976 * 1[gc_lnum] - 126976 * 2[journal heads]
+- 6144 * 5[dark] = 6888) after doing budget, however UBIFS cannot use
+BASEHD's dirty space(87200), because UBIFS cannot find next BASEHD to
+reclaim current BASEHD. (c->bi.min_idx_lebs equals to c->lst.idx_lebs,
+the empty leb won't be found by ubifs_find_free_space(), and dirty index
+lebs won't be picked as gced lebs. All non-index lebs has dirty space
+less then c->dead_wm, non-index lebs won't be picked as gced lebs
+either. So new free lebs won't be produced.). See more details in Link.
 
-The reason is that put_device is not be called if cdev_device_add fails
-and wdd->id != 0.
+To fix it, reserve one leb for each journal head while doing budget.
 
-watchdog_cdev_register
-  wd_data = kzalloc                             [1]
-  err = dev_set_name                            [2]
-  ..
-  err = cdev_device_add
-  if (err) {
-    if (wdd->id == 0) {  // wdd->id != 0
-      ..
-    }
-    return err;  // [1],[2] would be leaked
-
-To fix it, call put_device in all wdd->id cases.
-
-Fixes: 72139dfa2464 ("watchdog: Fix the race between the release of watchdog_core_data and cdev")
-Signed-off-by: Chen Jun <chenjun102@huawei.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20221116012714.102066-1-chenjun102@huawei.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216562
+Fixes: 1e51764a3c2ac0 ("UBIFS: add new flash file system")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/watchdog_dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ubifs/budget.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/watchdog/watchdog_dev.c b/drivers/watchdog/watchdog_dev.c
-index 55574ed425042..fdffa6859dde3 100644
---- a/drivers/watchdog/watchdog_dev.c
-+++ b/drivers/watchdog/watchdog_dev.c
-@@ -1061,8 +1061,8 @@ static int watchdog_cdev_register(struct watchdog_device *wdd)
- 		if (wdd->id == 0) {
- 			misc_deregister(&watchdog_miscdev);
- 			old_wd_data = NULL;
--			put_device(&wd_data->dev);
- 		}
-+		put_device(&wd_data->dev);
- 		return err;
- 	}
+diff --git a/fs/ubifs/budget.c b/fs/ubifs/budget.c
+index 986e6e4081c76..d76eb7b39f564 100644
+--- a/fs/ubifs/budget.c
++++ b/fs/ubifs/budget.c
+@@ -209,11 +209,10 @@ long long ubifs_calc_available(const struct ubifs_info *c, int min_idx_lebs)
+ 	subtract_lebs += 1;
  
+ 	/*
+-	 * The GC journal head LEB is not really accessible. And since
+-	 * different write types go to different heads, we may count only on
+-	 * one head's space.
++	 * Since different write types go to different heads, we should
++	 * reserve one leb for each head.
+ 	 */
+-	subtract_lebs += c->jhead_cnt - 1;
++	subtract_lebs += c->jhead_cnt;
+ 
+ 	/* We also reserve one LEB for deletions, which bypass budgeting */
+ 	subtract_lebs += 1;
 -- 
 2.39.2
 
