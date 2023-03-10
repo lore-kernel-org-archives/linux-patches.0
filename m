@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB7A8820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:54:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DD4C4339B;
-	Fri, 10 Mar 2023 14:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1990C8820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:54:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A18C4339C;
+	Fri, 10 Mar 2023 14:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460080;
-	bh=gtcxV1VqaIwp43qgBYMH905BaPFaY0Az1k/zmBJUjAU=;
+	s=korg; t=1678460083;
+	bh=DOpQC7Qu2e9pXMu/pJYXETCu6KinuyOYhy8yznwvwTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PVt0gbV8zSELABJHcTzxXtkPMkdVPNEkxJq895h0pfeaTboz6xeUt+Kr1l615ucBv
-	 JnZMkugjYfBCJH72GAwAazIzqr06z3L6NP5RqpsqrGpLxdqqHXI3gZwQ2CwMbFDsK1
-	 rJa/Qk9kCfbQqwbzzkn0Eiw0dyFwJ5NIObtMGw10=
+	b=wO+4hSl4CMWlajT2CQ0YIIkM+YC5ZOM76fQomwb7aZUlBuj983vOXGtHpucUt7UID
+	 9NseOKKnjjt/krMoLGIJrzOwrZll1g+bUtfza2NTx3SF3p9Hsfo1WAsFi3RiaszJmi
+	 v7nxrTaANF/XS338YTs9UYc0kJnejEXncPVtijXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
+	ruanjinjie <ruanjinjie@huawei.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 187/529] drm/mediatek: Drop unbalanced obj unref
-Date: Fri, 10 Mar 2023 14:35:30 +0100
-Message-Id: <20230310133813.638215866@linuxfoundation.org>
+Subject: [PATCH 5.10 188/529] drm/mediatek: mtk_drm_crtc: Add checks for devm_kcalloc
+Date: Fri, 10 Mar 2023 14:35:31 +0100
+Message-Id: <20230310133813.683866380@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,35 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: ruanjinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 4deef811828e87e26a978d5d6433b261d4713849 ]
+[ Upstream commit 5bf1e3bd7da625ccf9a22c8cb7d65271e6e47f4c ]
 
-In the error path, mtk_drm_gem_object_mmap() is dropping an obj
-reference that it doesn't own.
+As the devm_kcalloc may return NULL, the return value needs to be checked
+to avoid NULL poineter dereference.
 
-Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20230119231255.2883365-1-robdclark@gmail.com/
+Fixes: 31c5558dae05 ("drm/mediatek: Refactor plane init")
+Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20221205095115.2905090-1-ruanjinjie@huawei.com/
 Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_gem.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_crtc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-index 43c54dde2f3fc..29702dd8631d4 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-@@ -142,8 +142,6 @@ static int mtk_drm_gem_object_mmap(struct drm_gem_object *obj,
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
+index dfd5ed15a7f4a..e83b1c406b96a 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
+@@ -803,6 +803,8 @@ int mtk_drm_crtc_create(struct drm_device *drm_dev,
  
- 	ret = dma_mmap_attrs(priv->dma_dev, vma, mtk_gem->cookie,
- 			     mtk_gem->dma_addr, obj->size, mtk_gem->dma_attrs);
--	if (ret)
--		drm_gem_vm_close(vma);
+ 	mtk_crtc->planes = devm_kcalloc(dev, num_comp_planes,
+ 					sizeof(struct drm_plane), GFP_KERNEL);
++	if (!mtk_crtc->planes)
++		return -ENOMEM;
  
- 	return ret;
- }
+ 	for (i = 0; i < mtk_crtc->ddp_comp_nr; i++) {
+ 		ret = mtk_drm_crtc_init_comp_planes(drm_dev, mtk_crtc, i,
 -- 
 2.39.2
 
