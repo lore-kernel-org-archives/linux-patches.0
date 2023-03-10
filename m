@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8A38820
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:49:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB58C4339B;
-	Fri, 10 Mar 2023 14:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546868820
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:49:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5F7C4339B;
+	Fri, 10 Mar 2023 14:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459757;
-	bh=bn3mzWZV4gVUFUo0PiCcYs/RxKRHPaZFEyQ9H4WJQZ0=;
+	s=korg; t=1678459760;
+	bh=FG13CUAL75KAN25BOQAHmETjCOd+JG96/UF35bdDbAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ne8bELJFPlh3tLn0Bp+uX97NBD6rGdrJgT0W28UO9MvaeVf9cMkqYKP1bovhWVj1d
-	 QQlecXkVE3JmXtIRzk2YGr3RrUaXV11D4wWUnRpiNR2By2eY3tFHVJndpzF4AVNcXt
-	 Cb5/bnkS/a5xfoEAUtJzcr1wJJv/Mo3D49NP4uk4=
+	b=zRSrRN90UHuGcLhgqrfPdviFvrfqm1S6nb++NgSjg4pRgNDdd24dIJikBnww+KRqW
+	 86zBUZTm1dhBUQ0LCmi7/kxNYlQDHzsNszpPBROrdHFmiKUV9CyguQ48aBy+sNNkQV
+	 +QhZPTsZmfV9rCX0vDXIxYskEZ7/gGXbXphLvjR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grygorii Strashko <grygorii.strashko@ti.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wang Qing <wangqing@vivo.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 109/529] net: ethernet: ti: am65-cpsw: handle deferred probe with dev_err_probe()
-Date: Fri, 10 Mar 2023 14:34:12 +0100
-Message-Id: <20230310133810.037791501@linuxfoundation.org>
+Subject: [PATCH 5.10 110/529] net: ethernet: ti: add missing of_node_put before return
+Date: Fri, 10 Mar 2023 14:34:13 +0100
+Message-Id: <20230310133810.088199929@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,80 +35,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Grygorii Strashko <grygorii.strashko@ti.com>
+From: Wang Qing <wangqing@vivo.com>
 
-[ Upstream commit 8fbc2f9edce23d19fc09ef5bf8d4eb38be2db0f8 ]
+[ Upstream commit be565ec71d1d59438bed0c7ed0a252a327e0b0ef ]
 
-Use new dev_err_probe() API to handle deferred probe properly and simplify
-the code.
+Fix following coccicheck warning:
+WARNING: Function "for_each_child_of_node"
+should have of_node_put() before return.
 
-Signed-off-by: Grygorii Strashko <grygorii.strashko@ti.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Early exits from for_each_child_of_node should decrement the
+node reference counter.
+
+Signed-off-by: Wang Qing <wangqing@vivo.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 28 +++++++++---------------
- 1 file changed, 10 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 29 ++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 487c1570dd420..5300e1439e1e5 100644
+index 5300e1439e1e5..4074310abcff4 100644
 --- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
 +++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -1487,9 +1487,8 @@ static int am65_cpsw_nuss_init_tx_chns(struct am65_cpsw_common *common)
- 						    tx_chn->tx_chn_name,
- 						    &tx_cfg);
- 		if (IS_ERR(tx_chn->tx_chn)) {
--			ret = PTR_ERR(tx_chn->tx_chn);
--			dev_err(dev, "Failed to request tx dma channel %d\n",
--				ret);
-+			ret = dev_err_probe(dev, PTR_ERR(tx_chn->tx_chn),
-+					    "Failed to request tx dma channel\n");
- 			goto err;
+@@ -1724,13 +1724,14 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 		if (ret < 0) {
+ 			dev_err(dev, "%pOF error reading port_id %d\n",
+ 				port_np, ret);
+-			return ret;
++			goto of_node_put;
  		}
  
-@@ -1560,8 +1559,8 @@ static int am65_cpsw_nuss_init_rx_chns(struct am65_cpsw_common *common)
+ 		if (!port_id || port_id > common->port_num) {
+ 			dev_err(dev, "%pOF has invalid port_id %u %s\n",
+ 				port_np, port_id, port_np->name);
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto of_node_put;
+ 		}
  
- 	rx_chn->rx_chn = k3_udma_glue_request_rx_chn(dev, "rx", &rx_cfg);
- 	if (IS_ERR(rx_chn->rx_chn)) {
--		ret = PTR_ERR(rx_chn->rx_chn);
--		dev_err(dev, "Failed to request rx dma channel %d\n", ret);
-+		ret = dev_err_probe(dev, PTR_ERR(rx_chn->rx_chn),
-+				    "Failed to request rx dma channel\n");
- 		goto err;
- 	}
+ 		port = am65_common_get_port(common, port_id);
+@@ -1746,8 +1747,10 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 				(AM65_CPSW_NU_FRAM_PORT_OFFSET * (port_id - 1));
  
-@@ -1768,12 +1767,10 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 		port->slave.mac_sl = cpsw_sl_get("am65", dev, port->port_base);
+-		if (IS_ERR(port->slave.mac_sl))
+-			return PTR_ERR(port->slave.mac_sl);
++		if (IS_ERR(port->slave.mac_sl)) {
++			ret = PTR_ERR(port->slave.mac_sl);
++			goto of_node_put;
++		}
+ 
+ 		port->disabled = !of_device_is_available(port_np);
+ 		if (port->disabled)
+@@ -1758,7 +1761,7 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 			ret = PTR_ERR(port->slave.ifphy);
+ 			dev_err(dev, "%pOF error retrieving port phy: %d\n",
+ 				port_np, ret);
+-			return ret;
++			goto of_node_put;
+ 		}
+ 
+ 		port->slave.mac_only =
+@@ -1767,10 +1770,12 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
  		/* get phy/link info */
  		if (of_phy_is_fixed_link(port_np)) {
  			ret = of_phy_register_fixed_link(port_np);
--			if (ret) {
--				if (ret != -EPROBE_DEFER)
--					dev_err(dev, "%pOF failed to register fixed-link phy: %d\n",
--						port_np, ret);
--				return ret;
--			}
-+			if (ret)
-+				return dev_err_probe(dev, ret,
-+						     "failed to register fixed-link phy %pOF\n",
-+						     port_np);
+-			if (ret)
+-				return dev_err_probe(dev, ret,
++			if (ret) {
++				ret = dev_err_probe(dev, ret,
+ 						     "failed to register fixed-link phy %pOF\n",
+ 						     port_np);
++				goto of_node_put;
++			}
  			port->slave.phy_node = of_node_get(port_np);
  		} else {
  			port->slave.phy_node =
-@@ -2062,13 +2059,8 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+@@ -1780,14 +1785,15 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 		if (!port->slave.phy_node) {
+ 			dev_err(dev,
+ 				"slave[%d] no phy found\n", port_id);
+-			return -ENODEV;
++			ret = -ENODEV;
++			goto of_node_put;
+ 		}
  
- 	clk = devm_clk_get(dev, "fck");
--	if (IS_ERR(clk)) {
--		ret = PTR_ERR(clk);
--
--		if (ret != -EPROBE_DEFER)
--			dev_err(dev, "error getting fck clock %d\n", ret);
--		return ret;
--	}
-+	if (IS_ERR(clk))
-+		return dev_err_probe(dev, PTR_ERR(clk), "getting fck clock\n");
- 	common->bus_freq = clk_get_rate(clk);
+ 		ret = of_get_phy_mode(port_np, &port->slave.phy_if);
+ 		if (ret) {
+ 			dev_err(dev, "%pOF read phy-mode err %d\n",
+ 				port_np, ret);
+-			return ret;
++			goto of_node_put;
+ 		}
  
- 	pm_runtime_enable(dev);
+ 		mac_addr = of_get_mac_address(port_np);
+@@ -1804,6 +1810,11 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 	of_node_put(node);
+ 
+ 	return 0;
++
++of_node_put:
++	of_node_put(port_np);
++	of_node_put(node);
++	return ret;
+ }
+ 
+ static void am65_cpsw_pcpu_stats_free(void *data)
 -- 
 2.39.2
 
