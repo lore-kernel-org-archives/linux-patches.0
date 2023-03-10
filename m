@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37755847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:50:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C12C433EF;
-	Fri, 10 Mar 2023 13:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADC2847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:50:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0E0C433D2;
+	Fri, 10 Mar 2023 13:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456255;
-	bh=VJ2ZirifYWKLRPAK5Eg8bX/71eRgmE2ewqy+DZfkDY0=;
+	s=korg; t=1678456257;
+	bh=sS/J0QfHfYSCcas+e46117j1oKncpAgH6kr++MmvCvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SpbYkmQ8RZxOU5TFSMMWXcxhBYYkXq4+WV35ell5ymE1G5+vX/GXEI1vY8q6SZC7H
-	 E+KIm0pIi+FFsNV24o6ZzhDk9DZ+MwtjhSH2RRQq5dlrAizfzAp4UgYlOYMzO1bJgQ
-	 VGZlqSvL1cEIZ3kPt/fW1QEWF2WuuumMDr41eXZI=
+	b=vOa4uzknvMzPJtOeOItgEqsCh4lrF0pMHX8E4TsQKY+FDPAR1sYfPtDfu199hFwJG
+	 QMZpj7Z/Z65573K8CO5eQ/MTk4AJ/AEBCv0czHWOcQ0LK4FNUzAMh8Nvevws10WwhV
+	 QIE0XkMYl4svgjHIQYkvgWlBX/Pn2W8IjyEQ8ZiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 4.14 101/193] s390/kprobes: fix current_kprobe never cleared after kprobes reenter
-Date: Fri, 10 Mar 2023 14:38:03 +0100
-Message-Id: <20230310133714.632650723@linuxfoundation.org>
+	syzbot+5b04b49a7ec7226c7426@syzkaller.appspotmail.com,
+	Liu Shixin <liushixin2@huawei.com>,
+	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.14 102/193] hfs: fix missing hfs_bnode_get() in __hfs_bnode_create
+Date: Fri, 10 Mar 2023 14:38:04 +0100
+Message-Id: <20230310133714.662385929@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -34,54 +37,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-commit cd57953936f2213dfaccce10d20f396956222c7d upstream.
+commit a9dc087fd3c484fd1ed18c5efb290efaaf44ce03 upstream.
 
-Recent test_kprobe_missed kprobes kunit test uncovers the following
-problem. Once kprobe is triggered from another kprobe (kprobe reenter),
-all future kprobes on this cpu are considered as kprobe reenter, thus
-pre_handler and post_handler are not being called and kprobes are counted
-as "missed".
+Syzbot found a kernel BUG in hfs_bnode_put():
 
-Commit b9599798f953 ("[S390] kprobes: activation and deactivation")
-introduced a simpler scheme for kprobes (de)activation and status
-tracking by using push_kprobe/pop_kprobe, which supposed to work for
-both initial kprobe entry as well as kprobe reentry and helps to avoid
-handling those two cases differently. The problem is that a sequence of
-calls in case of kprobes reenter:
-push_kprobe() <- NULL (current_kprobe)
-push_kprobe() <- kprobe1 (current_kprobe)
-pop_kprobe() -> kprobe1 (current_kprobe)
-pop_kprobe() -> kprobe1 (current_kprobe)
-leaves "kprobe1" as "current_kprobe" on this cpu, instead of setting it
-to NULL. In fact push_kprobe/pop_kprobe can only store a single state
-(there is just one prev_kprobe in kprobe_ctlblk). Which is a hack but
-sufficient, there is no need to have another prev_kprobe just to store
-NULL. To make a simple and backportable fix simply reset "prev_kprobe"
-when kprobe is poped from this "stack". No need to worry about
-"kprobe_status" in this case, because its value is only checked when
-current_kprobe != NULL.
+ kernel BUG at fs/hfs/bnode.c:466!
+ invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+ CPU: 0 PID: 3634 Comm: kworker/u4:5 Not tainted 6.1.0-rc7-syzkaller-00190-g97ee9d1c1696 #0
+ Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+ Workqueue: writeback wb_workfn (flush-7:0)
+ RIP: 0010:hfs_bnode_put+0x46f/0x480 fs/hfs/bnode.c:466
+ Code: 8a 80 ff e9 73 fe ff ff 89 d9 80 e1 07 80 c1 03 38 c1 0f 8c a0 fe ff ff 48 89 df e8 db 8a 80 ff e9 93 fe ff ff e8 a1 68 2c ff <0f> 0b e8 9a 68 2c ff 0f 0b 0f 1f 84 00 00 00 00 00 55 41 57 41 56
+ RSP: 0018:ffffc90003b4f258 EFLAGS: 00010293
+ RAX: ffffffff825e318f RBX: 0000000000000000 RCX: ffff8880739dd7c0
+ RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+ RBP: ffffc90003b4f430 R08: ffffffff825e2d9b R09: ffffed10045157d1
+ R10: ffffed10045157d1 R11: 1ffff110045157d0 R12: ffff8880228abe80
+ R13: ffff88807016c000 R14: dffffc0000000000 R15: ffff8880228abe00
+ FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007fa6ebe88718 CR3: 000000001e93d000 CR4: 00000000003506f0
+ DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+ Call Trace:
+  <TASK>
+  hfs_write_inode+0x1bc/0xb40
+  write_inode fs/fs-writeback.c:1440 [inline]
+  __writeback_single_inode+0x4d6/0x670 fs/fs-writeback.c:1652
+  writeback_sb_inodes+0xb3b/0x18f0 fs/fs-writeback.c:1878
+  __writeback_inodes_wb+0x125/0x420 fs/fs-writeback.c:1949
+  wb_writeback+0x440/0x7b0 fs/fs-writeback.c:2054
+  wb_check_start_all fs/fs-writeback.c:2176 [inline]
+  wb_do_writeback fs/fs-writeback.c:2202 [inline]
+  wb_workfn+0x827/0xef0 fs/fs-writeback.c:2235
+  process_one_work+0x877/0xdb0 kernel/workqueue.c:2289
+  worker_thread+0xb14/0x1330 kernel/workqueue.c:2436
+  kthread+0x266/0x300 kernel/kthread.c:376
+  ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
+  </TASK>
 
-Cc: stable@vger.kernel.org
-Fixes: b9599798f953 ("[S390] kprobes: activation and deactivation")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+The BUG_ON() is triggered at here:
+
+/* Dispose of resources used by a node */
+void hfs_bnode_put(struct hfs_bnode *node)
+{
+	if (node) {
+ 		<skipped>
+ 		BUG_ON(!atomic_read(&node->refcnt)); <- we have issue here!!!!
+ 		<skipped>
+ 	}
+}
+
+By tracing the refcnt, I found the node is created by hfs_bmap_alloc()
+with refcnt 1.  Then the node is used by hfs_btree_write().  There is a
+missing of hfs_bnode_get() after find the node.  The issue happened in
+following path:
+
+<alloc>
+ hfs_bmap_alloc
+   hfs_bnode_find
+     __hfs_bnode_create   <- allocate a new node with refcnt 1.
+   hfs_bnode_put          <- decrease the refcnt
+
+<write>
+ hfs_btree_write
+   hfs_bnode_find
+     __hfs_bnode_create
+       hfs_bnode_findhash <- find the node without refcnt increased.
+   hfs_bnode_put	  <- trigger the BUG_ON() since refcnt is 0.
+
+Link: https://lkml.kernel.org/r/20221212021627.3766829-1-liushixin2@huawei.com
+Reported-by: syzbot+5b04b49a7ec7226c7426@syzkaller.appspotmail.com
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Cc: Fabio M. De Francesco <fmdefrancesco@gmail.com>
+Cc: Viacheslav Dubeyko <slava@dubeyko.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/kprobes.c |    1 +
+ fs/hfs/bnode.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/arch/s390/kernel/kprobes.c
-+++ b/arch/s390/kernel/kprobes.c
-@@ -272,6 +272,7 @@ static void pop_kprobe(struct kprobe_ctl
- {
- 	__this_cpu_write(current_kprobe, kcb->prev_kprobe.kp);
- 	kcb->kprobe_status = kcb->prev_kprobe.status;
-+	kcb->prev_kprobe.kp = NULL;
- }
- NOKPROBE_SYMBOL(pop_kprobe);
- 
+--- a/fs/hfs/bnode.c
++++ b/fs/hfs/bnode.c
+@@ -285,6 +285,7 @@ static struct hfs_bnode *__hfs_bnode_cre
+ 		tree->node_hash[hash] = node;
+ 		tree->node_hash_cnt++;
+ 	} else {
++		hfs_bnode_get(node2);
+ 		spin_unlock(&tree->hash_lock);
+ 		kfree(node);
+ 		wait_event(node2->lock_wq, !test_bit(HFS_BNODE_NEW, &node2->flags));
 
 
