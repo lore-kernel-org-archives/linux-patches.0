@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A68847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:58:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5077C433EF;
-	Fri, 10 Mar 2023 13:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079B5847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:58:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E99C4339B;
+	Fri, 10 Mar 2023 13:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456735;
-	bh=4lnI+5Kb8MywBCiDi5A3cBTfxTbIBDrqoA3KNl/THWo=;
+	s=korg; t=1678456737;
+	bh=ZyqQw6i9d7eSgJWLY6Sc4Sni22S1Vpps3/Gjhtmp+kY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDJSjL+1TrmCb1GRtoOdjRNyc1VP9Ivur0Kgj1+FcDwnvKHvjWwQuQgueOI3nIniO
-	 J/yJIf/2xsvlzEJyrfvHL8DdIlhl6oUA3LH+KxVAPYSBmoygN1LHuziYjPmYGci4RN
-	 0weXr3RKDnnm+ppxqtA7sBbJOBjo+DP2xBx7cFjk=
+	b=cHpzu5N5Xicyiu1QQf2kYkRG6pTAfySa79i8SeHYaa4d7Jd/VGkCZVAT5d+kZqp0U
+	 YObj47wubD1ZHSziPXeQtYI5XD/lfIreRJYMgtZdVOsB+iakmYzlP1Ug7csPPE2L7g
+	 WpQVa+iKFhpNpgrfHoJ9QyocZLUKVNrEpOL9P2Ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geetha sowjanya <gakula@marvell.com>,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
-	Sai Krishna <saikrishnag@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 078/211] octeontx2-pf: Recalculate UDP checksum for ptp 1-step sync packet
-Date: Fri, 10 Mar 2023 14:37:38 +0100
-Message-Id: <20230310133721.152024808@linuxfoundation.org>
+Subject: [PATCH 6.2 105/211] rtc: sun6i: Always export the internal oscillator
+Date: Fri, 10 Mar 2023 14:38:05 +0100
+Message-Id: <20230310133721.953569353@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -38,171 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geetha sowjanya <gakula@marvell.com>
+From: Samuel Holland <samuel@sholland.org>
 
-[ Upstream commit edea0c5a994b7829c9ada8f5bc762c4e32f4f797 ]
+[ Upstream commit 344f4030f6c50a9db2d03021884c4bf36191b53a ]
 
-When checksum offload is disabled in the driver via ethtool,
-the PTP 1-step sync packets contain incorrect checksum, since
-the stack calculates the checksum before driver updates
-PTP timestamp field in the packet. This results in PTP packets
-getting dropped at the other end. This patch fixes the issue by
-re-calculating the UDP checksum after updating PTP
-timestamp field in the driver.
+On all variants of the hardware, the internal oscillator is one possible
+parent for the AR100 clock. It needs to be exported so we can model that
+relationship correctly in the devicetree.
 
-Fixes: 2958d17a8984 ("octeontx2-pf: Add support for ptp 1-step mode on CN10K silicon")
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
-Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
-Link: https://lore.kernel.org/r/20230222113600.1965116-1-saikrishnag@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c56afc1844d6 ("rtc: sun6i: Expose internal oscillator through device tree")
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20221229215319.14145-1-samuel@sholland.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeontx2/nic/otx2_txrx.c         | 76 ++++++++++++++-----
- 1 file changed, 57 insertions(+), 19 deletions(-)
+ drivers/rtc/rtc-sun6i.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-index ef10aef3cda02..7045fedfd73a0 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-@@ -10,6 +10,7 @@
- #include <net/tso.h>
- #include <linux/bpf.h>
- #include <linux/bpf_trace.h>
-+#include <net/ip6_checksum.h>
+diff --git a/drivers/rtc/rtc-sun6i.c b/drivers/rtc/rtc-sun6i.c
+index ed5516089e9a0..7038f47d77ff4 100644
+--- a/drivers/rtc/rtc-sun6i.c
++++ b/drivers/rtc/rtc-sun6i.c
+@@ -136,7 +136,6 @@ struct sun6i_rtc_clk_data {
+ 	unsigned int fixed_prescaler : 16;
+ 	unsigned int has_prescaler : 1;
+ 	unsigned int has_out_clk : 1;
+-	unsigned int export_iosc : 1;
+ 	unsigned int has_losc_en : 1;
+ 	unsigned int has_auto_swt : 1;
+ };
+@@ -271,10 +270,8 @@ static void __init sun6i_rtc_clk_init(struct device_node *node,
+ 	/* Yes, I know, this is ugly. */
+ 	sun6i_rtc = rtc;
  
- #include "otx2_reg.h"
- #include "otx2_common.h"
-@@ -699,7 +700,7 @@ static void otx2_sqe_add_ext(struct otx2_nic *pfvf, struct otx2_snd_queue *sq,
+-	/* Only read IOSC name from device tree if it is exported */
+-	if (rtc->data->export_iosc)
+-		of_property_read_string_index(node, "clock-output-names", 2,
+-					      &iosc_name);
++	of_property_read_string_index(node, "clock-output-names", 2,
++				      &iosc_name);
  
- static void otx2_sqe_add_mem(struct otx2_snd_queue *sq, int *offset,
- 			     int alg, u64 iova, int ptp_offset,
--			     u64 base_ns, int udp_csum)
-+			     u64 base_ns, bool udp_csum_crt)
- {
- 	struct nix_sqe_mem_s *mem;
- 
-@@ -711,7 +712,7 @@ static void otx2_sqe_add_mem(struct otx2_snd_queue *sq, int *offset,
- 
- 	if (ptp_offset) {
- 		mem->start_offset = ptp_offset;
--		mem->udp_csum_crt = udp_csum;
-+		mem->udp_csum_crt = !!udp_csum_crt;
- 		mem->base_ns = base_ns;
- 		mem->step_type = 1;
- 	}
-@@ -986,10 +987,11 @@ static bool otx2_validate_network_transport(struct sk_buff *skb)
- 	return false;
- }
- 
--static bool otx2_ptp_is_sync(struct sk_buff *skb, int *offset, int *udp_csum)
-+static bool otx2_ptp_is_sync(struct sk_buff *skb, int *offset, bool *udp_csum_crt)
- {
- 	struct ethhdr *eth = (struct ethhdr *)(skb->data);
- 	u16 nix_offload_hlen = 0, inner_vhlen = 0;
-+	bool udp_hdr_present = false, is_sync;
- 	u8 *data = skb->data, *msgtype;
- 	__be16 proto = eth->h_proto;
- 	int network_depth = 0;
-@@ -1029,45 +1031,81 @@ static bool otx2_ptp_is_sync(struct sk_buff *skb, int *offset, int *udp_csum)
- 		if (!otx2_validate_network_transport(skb))
- 			return false;
- 
--		*udp_csum = 1;
- 		*offset = nix_offload_hlen + skb_transport_offset(skb) +
- 			  sizeof(struct udphdr);
-+		udp_hdr_present = true;
-+
+ 	rtc->int_osc = clk_hw_register_fixed_rate_with_accuracy(NULL,
+ 								iosc_name,
+@@ -315,13 +312,10 @@ static void __init sun6i_rtc_clk_init(struct device_node *node,
+ 		goto err_register;
  	}
  
- 	msgtype = data + *offset;
--
- 	/* Check PTP messageId is SYNC or not */
--	return (*msgtype & 0xf) == 0;
-+	is_sync = !(*msgtype & 0xf);
-+	if (is_sync)
-+		*udp_csum_crt = udp_hdr_present;
-+	else
-+		*offset = 0;
-+
-+	return is_sync;
- }
+-	clk_data->num = 2;
++	clk_data->num = 3;
+ 	clk_data->hws[0] = &rtc->hw;
+ 	clk_data->hws[1] = __clk_get_hw(rtc->ext_losc);
+-	if (rtc->data->export_iosc) {
+-		clk_data->hws[2] = rtc->int_osc;
+-		clk_data->num = 3;
+-	}
++	clk_data->hws[2] = rtc->int_osc;
+ 	of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
+ 	return;
  
- static void otx2_set_txtstamp(struct otx2_nic *pfvf, struct sk_buff *skb,
- 			      struct otx2_snd_queue *sq, int *offset)
- {
-+	struct ethhdr	*eth = (struct ethhdr *)(skb->data);
- 	struct ptpv2_tstamp *origin_tstamp;
--	int ptp_offset = 0, udp_csum = 0;
-+	bool udp_csum_crt = false;
-+	unsigned int udphoff;
- 	struct timespec64 ts;
-+	int ptp_offset = 0;
-+	__wsum skb_csum;
- 	u64 iova;
+@@ -361,7 +355,6 @@ static const struct sun6i_rtc_clk_data sun8i_h3_rtc_data = {
+ 	.fixed_prescaler = 32,
+ 	.has_prescaler = 1,
+ 	.has_out_clk = 1,
+-	.export_iosc = 1,
+ };
  
- 	if (unlikely(!skb_shinfo(skb)->gso_size &&
- 		     (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP))) {
--		if (unlikely(pfvf->flags & OTX2_FLAG_PTP_ONESTEP_SYNC)) {
--			if (otx2_ptp_is_sync(skb, &ptp_offset, &udp_csum)) {
--				origin_tstamp = (struct ptpv2_tstamp *)
--						((u8 *)skb->data + ptp_offset +
--						 PTP_SYNC_SEC_OFFSET);
--				ts = ns_to_timespec64(pfvf->ptp->tstamp);
--				origin_tstamp->seconds_msb = htons((ts.tv_sec >> 32) & 0xffff);
--				origin_tstamp->seconds_lsb = htonl(ts.tv_sec & 0xffffffff);
--				origin_tstamp->nanoseconds = htonl(ts.tv_nsec);
--				/* Point to correction field in PTP packet */
--				ptp_offset += 8;
-+		if (unlikely(pfvf->flags & OTX2_FLAG_PTP_ONESTEP_SYNC &&
-+			     otx2_ptp_is_sync(skb, &ptp_offset, &udp_csum_crt))) {
-+			origin_tstamp = (struct ptpv2_tstamp *)
-+					((u8 *)skb->data + ptp_offset +
-+					 PTP_SYNC_SEC_OFFSET);
-+			ts = ns_to_timespec64(pfvf->ptp->tstamp);
-+			origin_tstamp->seconds_msb = htons((ts.tv_sec >> 32) & 0xffff);
-+			origin_tstamp->seconds_lsb = htonl(ts.tv_sec & 0xffffffff);
-+			origin_tstamp->nanoseconds = htonl(ts.tv_nsec);
-+			/* Point to correction field in PTP packet */
-+			ptp_offset += 8;
-+
-+			/* When user disables hw checksum, stack calculates the csum,
-+			 * but it does not cover ptp timestamp which is added later.
-+			 * Recalculate the checksum manually considering the timestamp.
-+			 */
-+			if (udp_csum_crt) {
-+				struct udphdr *uh = udp_hdr(skb);
-+
-+				if (skb->ip_summed != CHECKSUM_PARTIAL && uh->check != 0) {
-+					udphoff = skb_transport_offset(skb);
-+					uh->check = 0;
-+					skb_csum = skb_checksum(skb, udphoff, skb->len - udphoff,
-+								0);
-+					if (ntohs(eth->h_proto) == ETH_P_IPV6)
-+						uh->check = csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
-+									    &ipv6_hdr(skb)->daddr,
-+									    skb->len - udphoff,
-+									    ipv6_hdr(skb)->nexthdr,
-+									    skb_csum);
-+					else
-+						uh->check = csum_tcpudp_magic(ip_hdr(skb)->saddr,
-+									      ip_hdr(skb)->daddr,
-+									      skb->len - udphoff,
-+									      IPPROTO_UDP,
-+									      skb_csum);
-+				}
- 			}
- 		} else {
- 			skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
- 		}
- 		iova = sq->timestamps->iova + (sq->head * sizeof(u64));
- 		otx2_sqe_add_mem(sq, offset, NIX_SENDMEMALG_E_SETTSTMP, iova,
--				 ptp_offset, pfvf->ptp->base_ns, udp_csum);
-+				 ptp_offset, pfvf->ptp->base_ns, udp_csum_crt);
- 	} else {
- 		skb_tx_timestamp(skb);
- 	}
+ static void __init sun8i_h3_rtc_clk_init(struct device_node *node)
+@@ -379,7 +372,6 @@ static const struct sun6i_rtc_clk_data sun50i_h6_rtc_data = {
+ 	.fixed_prescaler = 32,
+ 	.has_prescaler = 1,
+ 	.has_out_clk = 1,
+-	.export_iosc = 1,
+ 	.has_losc_en = 1,
+ 	.has_auto_swt = 1,
+ };
 -- 
 2.39.2
 
