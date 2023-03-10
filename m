@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779BA8489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:15:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6A3C4339E;
-	Fri, 10 Mar 2023 14:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B318489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:15:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FD1C433D2;
+	Fri, 10 Mar 2023 14:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457737;
-	bh=5AqFIXHo3XPoCCjNXubvIOZGKq2Wd7n5trrl0V2l9lY=;
+	s=korg; t=1678457740;
+	bh=Jt1/z6jTpPmPUy5JNtwJfcFWYr6kRp/vUNBouuelTM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EuWCapOHexCAIGq6tozLoRxQbwLeI8JPuLqOeFzCGOOzHHw88WFnH3S1Fpm4jLU3E
-	 aP0gv5b575xZGtjJB5oov9dxZRcm6Q4RLHqFYtVW/DsPXW7mvRXI0jhQADU41U4IC3
-	 A8XnqvaUjVQ9SA99r6Ic9Kj5cxHWTXD+xk4XtJmU=
+	b=aGTQ43sva8HjP2PBCy/KiinyJCtj+Z88GfdPT3Q4TmAoABn+su34JC4anxOEYLTIu
+	 MyAjPnVqYiSoxBXod/WwTKS2fmRJKaDJNNTdbD0moDxcBIUGt4j+Jkt8yt9KJ7OVUO
+	 oNadrFoPZN+ueTvfG54tQdbNpZISnQZna1qXleE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e008dccab31bd3647609@syzkaller.appspotmail.com,
-	syzbot+6692c72009680f7c4eb2@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Wan Jiabing <wanjiabing@vivo.com>,
 	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 040/252] wifi: ath9k: htc_hst: free skb in ath9k_htc_rx_msg() if there is no callback function
-Date: Fri, 10 Mar 2023 14:36:50 +0100
-Message-Id: <20230310133720.037424073@linuxfoundation.org>
+Subject: [PATCH 4.19 041/252] ath9k: hif_usb: simplify if-if to if-else
+Date: Fri, 10 Mar 2023 14:36:51 +0100
+Message-Id: <20230310133720.067348078@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -39,52 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Wan Jiabing <wanjiabing@vivo.com>
 
-[ Upstream commit 9b25e3985477ac3f02eca5fc1e0cc6850a3f7e69 ]
+[ Upstream commit 2950833f10cfa601813262e1d9c8473f9415681b ]
 
-It is stated that ath9k_htc_rx_msg() either frees the provided skb or
-passes its management to another callback function. However, the skb is
-not freed in case there is no another callback function, and Syzkaller was
-able to cause a memory leak. Also minor comment fix.
+Use if and else instead of if(A) and if (!A).
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Reported-by: syzbot+e008dccab31bd3647609@syzkaller.appspotmail.com
-Reported-by: syzbot+6692c72009680f7c4eb2@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Signed-off-by: Wan Jiabing <wanjiabing@vivo.com>
 Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230104123546.51427-1-pchelkin@ispras.ru
+Link: https://lore.kernel.org/r/20220424094441.104937-1-wanjiabing@vivo.com
+Stable-dep-of: 0af54343a762 ("wifi: ath9k: hif_usb: clean up skbs if ath9k_hif_usb_rx_stream() fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/htc_hst.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/hif_usb.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
-index 6d69cf69fd86e..6331c98088e03 100644
---- a/drivers/net/wireless/ath/ath9k/htc_hst.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
-@@ -394,7 +394,7 @@ static void ath9k_htc_fw_panic_report(struct htc_target *htc_handle,
-  * HTC Messages are handled directly here and the obtained SKB
-  * is freed.
-  *
-- * Service messages (Data, WMI) passed to the corresponding
-+ * Service messages (Data, WMI) are passed to the corresponding
-  * endpoint RX handlers, which have to free the SKB.
-  */
- void ath9k_htc_rx_msg(struct htc_target *htc_handle,
-@@ -481,6 +481,8 @@ void ath9k_htc_rx_msg(struct htc_target *htc_handle,
- 		if (endpoint->ep_callbacks.rx)
- 			endpoint->ep_callbacks.rx(endpoint->ep_callbacks.priv,
- 						  skb, epid);
-+		else
-+			goto invalid;
- 	}
- }
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
+index 8a18a33b5b59f..15c8b512a1d9f 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.c
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
+@@ -368,10 +368,9 @@ static int __hif_usb_tx(struct hif_device_usb *hif_dev)
+ 		__skb_queue_head_init(&tx_buf->skb_queue);
+ 		list_move_tail(&tx_buf->list, &hif_dev->tx.tx_buf);
+ 		hif_dev->tx.tx_buf_cnt++;
+-	}
+-
+-	if (!ret)
++	} else {
+ 		TX_STAT_INC(buf_queued);
++	}
  
+ 	return ret;
+ }
 -- 
 2.39.2
 
