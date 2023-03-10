@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6A88481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:14:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5935C433EF;
-	Fri, 10 Mar 2023 14:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278A58481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:14:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89086C433EF;
+	Fri, 10 Mar 2023 14:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457674;
-	bh=qb+KCG4feqfcL+4WEq3pRq76ehB7utZ3BMRoQoUz9R4=;
+	s=korg; t=1678457677;
+	bh=rVmzu436hL6wpCEbeJGCB8yDDzgA+Enkw6jZj/ZF+0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/lWKt7IecUd/LTA7M2vPOpbXhmlSkGv9wST0JNdifTBOL+4Oow5zrxRNIi0MAHdB
-	 CSBDuObwg+bFwvjLa1amZpV1hGG6/kgljiomei6W9GtD80uSACmmDJHzg9bnX0D3BO
-	 coiZdb6I0LDvYQH9D4mTjcnHkJL8tY00nqQ3UKfc=
+	b=J4948zf/60M/eNmWEVibOkG3VnLrSUcJoNT4vomHdoCeNexKc7fN3MWbUcu6h0WiG
+	 CvwYpwxpfPGOiOT/Dr6XqUbb9pvpQJauRohmHJQRz5NhhXPOZHrJadwpnRm25kVbBv
+	 BOZ8FTtPxcG0EJNE0C3EfEn77JpSIMY2rKOFNWK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 019/252] block: bio-integrity: Copy flags when bio_integrity_payload is cloned
-Date: Fri, 10 Mar 2023 14:36:29 +0100
-Message-Id: <20230310133719.407589198@linuxfoundation.org>
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Stefan Ghinea <stefan.ghinea@windriver.com>
+Subject: [PATCH 4.19 002/252] HID: asus: use spinlock to protect concurrent accesses
+Date: Fri, 10 Mar 2023 14:36:12 +0100
+Message-Id: <20230310133718.885032142@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -38,44 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin K. Petersen <martin.petersen@oracle.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit b6a4bdcda430e3ca43bbb9cb1d4d4d34ebe15c40 ]
+commit 315c537068a13f0b5681d33dd045a912f4bece6f upstream.
 
-Make sure to copy the flags when a bio_integrity_payload is cloned.
-Otherwise per-I/O properties such as IP checksum flag will not be
-passed down to the HBA driver. Since the integrity buffer is owned by
-the original bio, the BIP_BLOCK_INTEGRITY flag needs to be masked off
-to avoid a double free in the completion path.
+asus driver has a worker that may access data concurrently.
+Proct the accesses using a spinlock.
 
-Fixes: aae7df50190a ("block: Integrity checksum flag")
-Fixes: b1f01388574c ("block: Relocate bio integrity flags")
-Reported-by: Saurav Kashyap <skashyap@marvell.com>
-Tested-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://lore.kernel.org/r/20230215171801.21062-1-martin.petersen@oracle.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: af22a610bc38 ("HID: asus: support backlight on USB keyboards")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Link: https://lore.kernel.org/r/20230125-hid-unregister-leds-v4-4-7860c5763c38@diag.uniroma1.it
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bio-integrity.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-asus.c |   22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/block/bio-integrity.c b/block/bio-integrity.c
-index 2e22a3f7466a8..469e30a6d3cde 100644
---- a/block/bio-integrity.c
-+++ b/block/bio-integrity.c
-@@ -444,6 +444,7 @@ int bio_integrity_clone(struct bio *bio, struct bio *bio_src,
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -84,6 +84,7 @@ struct asus_kbd_leds {
+ 	struct hid_device *hdev;
+ 	struct work_struct work;
+ 	unsigned int brightness;
++	spinlock_t lock;
+ 	bool removed;
+ };
  
- 	bip->bip_vcnt = bip_src->bip_vcnt;
- 	bip->bip_iter = bip_src->bip_iter;
-+	bip->bip_flags = bip_src->bip_flags & ~BIP_BLOCK_INTEGRITY;
- 
- 	return 0;
+@@ -318,7 +319,12 @@ static void asus_kbd_backlight_set(struc
+ {
+ 	struct asus_kbd_leds *led = container_of(led_cdev, struct asus_kbd_leds,
+ 						 cdev);
++	unsigned long flags;
++
++	spin_lock_irqsave(&led->lock, flags);
+ 	led->brightness = brightness;
++	spin_unlock_irqrestore(&led->lock, flags);
++
+ 	schedule_work(&led->work);
  }
--- 
-2.39.2
-
+ 
+@@ -326,8 +332,14 @@ static enum led_brightness asus_kbd_back
+ {
+ 	struct asus_kbd_leds *led = container_of(led_cdev, struct asus_kbd_leds,
+ 						 cdev);
++	enum led_brightness brightness;
++	unsigned long flags;
+ 
+-	return led->brightness;
++	spin_lock_irqsave(&led->lock, flags);
++	brightness = led->brightness;
++	spin_unlock_irqrestore(&led->lock, flags);
++
++	return brightness;
+ }
+ 
+ static void asus_kbd_backlight_work(struct work_struct *work)
+@@ -335,11 +347,14 @@ static void asus_kbd_backlight_work(stru
+ 	struct asus_kbd_leds *led = container_of(work, struct asus_kbd_leds, work);
+ 	u8 buf[] = { FEATURE_KBD_REPORT_ID, 0xba, 0xc5, 0xc4, 0x00 };
+ 	int ret;
++	unsigned long flags;
+ 
+ 	if (led->removed)
+ 		return;
+ 
++	spin_lock_irqsave(&led->lock, flags);
+ 	buf[4] = led->brightness;
++	spin_unlock_irqrestore(&led->lock, flags);
+ 
+ 	ret = asus_kbd_set_report(led->hdev, buf, sizeof(buf));
+ 	if (ret < 0)
+@@ -380,6 +395,7 @@ static int asus_kbd_register_leds(struct
+ 	drvdata->kbd_backlight->cdev.brightness_set = asus_kbd_backlight_set;
+ 	drvdata->kbd_backlight->cdev.brightness_get = asus_kbd_backlight_get;
+ 	INIT_WORK(&drvdata->kbd_backlight->work, asus_kbd_backlight_work);
++	spin_lock_init(&drvdata->kbd_backlight->lock);
+ 
+ 	ret = devm_led_classdev_register(&hdev->dev, &drvdata->kbd_backlight->cdev);
+ 	if (ret < 0) {
+@@ -689,9 +705,13 @@ err_stop_hw:
+ static void asus_remove(struct hid_device *hdev)
+ {
+ 	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
++	unsigned long flags;
+ 
+ 	if (drvdata->kbd_backlight) {
++		spin_lock_irqsave(&drvdata->kbd_backlight->lock, flags);
+ 		drvdata->kbd_backlight->removed = true;
++		spin_unlock_irqrestore(&drvdata->kbd_backlight->lock, flags);
++
+ 		cancel_work_sync(&drvdata->kbd_backlight->work);
+ 	}
+ 
 
 
