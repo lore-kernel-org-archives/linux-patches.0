@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5EE847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C516C433EF;
-	Fri, 10 Mar 2023 13:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457DC847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:57:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CA9C433EF;
+	Fri, 10 Mar 2023 13:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456635;
-	bh=Sv95kdFySrsjl9+4w5/3YJcgN44/fRFjPuyWdpLD328=;
+	s=korg; t=1678456638;
+	bh=5RsrH0SoHdPRpxsqEvjNXkQpPKlHdLmZcp2Ggcc96dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUEmUQYmTqaO0Xj+lR1c7nH+BqDMer9nWOxQYmRbW23gslkFUlreGMI+8qUmLBD31
-	 rZXnZc/GuXnZuBvHaIp+VH5uy3wiDN8WllQ9hgalE9oQi2zJxpG/tp0wO6CJ15X3aP
-	 dw4ra5m4zX/s/BDMZgY9mZIaV/O2ceGqpaHcDdFc=
+	b=CBPFZCHi9CXxYyE+bE2ZtkE933PzM5fFW+x9OXgVMaZa3EDPasCwZoSKdI9FPlu5G
+	 22rSGl+6QhNCOcAqca54ntyrYgCWwhD7KJPOVIoPdytR3fMJS5b4DYoKxjMcr2Rtfc
+	 Ab2iZCBjSEN9CcAlfHwv/4Ll3UttLpC2fglrL1VQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
+	Bryce Kahle <bryce.kahle@datadoghq.com>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 070/211] netfilter: xt_length: use skb len to match in length_mt6
-Date: Fri, 10 Mar 2023 14:37:30 +0100
-Message-Id: <20230310133720.893429228@linuxfoundation.org>
+Subject: [PATCH 6.2 071/211] netfilter: ctnetlink: make event listener tracking global
+Date: Fri, 10 Mar 2023 14:37:31 +0100
+Message-Id: <20230310133720.931217240@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -35,51 +36,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 05c07c0c6cc8ec2278ace9871618c41f1365d1f5 ]
+[ Upstream commit fdf6491193e411087ae77bcbc6468e3e1cff99ed ]
 
-For IPv6 Jumbo packets, the ipv6_hdr(skb)->payload_len is always 0,
-and its real payload_len ( > 65535) is saved in hbh exthdr. With 0
-length for the jumbo packets, it may mismatch.
+pernet tracking doesn't work correctly because other netns might have
+set NETLINK_LISTEN_ALL_NSID on its event socket.
 
-To fix this, we can just use skb->len instead of parsing exthdrs, as
-the hbh exthdr parsing has been done before coming to length_mt6 in
-ip6_rcv_core() and br_validate_ipv6() and also the packet has been
-trimmed according to the correct IPv6 (ext)hdr length there, and skb
-len is trustable in length_mt6().
+In this case its expected that events originating in other net
+namespaces are also received.
 
-Note that this patch is especially needed after the IPv6 BIG TCP was
-supported in kernel, which is using IPv6 Jumbo packets. Besides, to
-match the packets greater than 65535 more properly, a v1 revision of
-xt_length may be needed to extend "min, max" to u32 in the future,
-and for now the IPv6 Jumbo packets can be matched by:
+Making pernet-tracking work while also honoring NETLINK_LISTEN_ALL_NSID
+requires much more intrusive changes both in netlink and nfnetlink,
+f.e. adding a 'setsockopt' callback that lets nfnetlink know that the
+event socket entered (or left) ALL_NSID mode.
 
-  # ip6tables -m length ! --length 0:65535
+Move to global tracking instead: if there is an event socket anywhere
+on the system, all net namespaces which have conntrack enabled and
+use autobind mode will allocate the ecache extension.
 
-Fixes: 7c4e983c4f3c ("net: allow gso_max_size to exceed 65536")
-Fixes: 0fe79f28bfaf ("net: allow gro_max_size to exceed 65536")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
+netlink_has_listeners() returns false only if the given group has no
+subscribers in any net namespace, the 'net' argument passed to
+nfnetlink_has_listeners is only used to derive the protocol (nfnetlink),
+it has no other effect.
+
+For proper NETLINK_LISTEN_ALL_NSID-aware pernet tracking of event
+listeners a new netlink_has_net_listeners() is also needed.
+
+Fixes: 90d1daa45849 ("netfilter: conntrack: add nf_conntrack_events autodetect mode")
+Reported-by: Bryce Kahle <bryce.kahle@datadoghq.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_length.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/linux/netfilter.h           | 5 +++++
+ include/net/netns/conntrack.h       | 1 -
+ net/netfilter/core.c                | 3 +++
+ net/netfilter/nf_conntrack_ecache.c | 2 +-
+ net/netfilter/nfnetlink.c           | 9 +++++----
+ 5 files changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/xt_length.c b/net/netfilter/xt_length.c
-index 1873da3a945ab..9fbfad13176f0 100644
---- a/net/netfilter/xt_length.c
-+++ b/net/netfilter/xt_length.c
-@@ -30,8 +30,7 @@ static bool
- length_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- {
- 	const struct xt_length_info *info = par->matchinfo;
--	const u_int16_t pktlen = ntohs(ipv6_hdr(skb)->payload_len) +
--				 sizeof(struct ipv6hdr);
-+	u32 pktlen = skb->len;
+diff --git a/include/linux/netfilter.h b/include/linux/netfilter.h
+index d8817d381c14b..bef8db9d6c085 100644
+--- a/include/linux/netfilter.h
++++ b/include/linux/netfilter.h
+@@ -488,4 +488,9 @@ extern const struct nfnl_ct_hook __rcu *nfnl_ct_hook;
+  */
+ DECLARE_PER_CPU(bool, nf_skb_duplicated);
  
- 	return (pktlen >= info->min && pktlen <= info->max) ^ info->invert;
- }
++/**
++ * Contains bitmask of ctnetlink event subscribers, if any.
++ * Can't be pernet due to NETLINK_LISTEN_ALL_NSID setsockopt flag.
++ */
++extern u8 nf_ctnetlink_has_listener;
+ #endif /*__LINUX_NETFILTER_H*/
+diff --git a/include/net/netns/conntrack.h b/include/net/netns/conntrack.h
+index e1290c159184a..1f463b3957c78 100644
+--- a/include/net/netns/conntrack.h
++++ b/include/net/netns/conntrack.h
+@@ -95,7 +95,6 @@ struct nf_ip_net {
+ 
+ struct netns_ct {
+ #ifdef CONFIG_NF_CONNTRACK_EVENTS
+-	u8 ctnetlink_has_listener;
+ 	bool ecache_dwork_pending;
+ #endif
+ 	u8			sysctl_log_invalid; /* Log invalid packets */
+diff --git a/net/netfilter/core.c b/net/netfilter/core.c
+index 5a6705a0e4ecf..6e80f0f6149ea 100644
+--- a/net/netfilter/core.c
++++ b/net/netfilter/core.c
+@@ -669,6 +669,9 @@ const struct nf_ct_hook __rcu *nf_ct_hook __read_mostly;
+ EXPORT_SYMBOL_GPL(nf_ct_hook);
+ 
+ #if IS_ENABLED(CONFIG_NF_CONNTRACK)
++u8 nf_ctnetlink_has_listener;
++EXPORT_SYMBOL_GPL(nf_ctnetlink_has_listener);
++
+ const struct nf_nat_hook __rcu *nf_nat_hook __read_mostly;
+ EXPORT_SYMBOL_GPL(nf_nat_hook);
+ 
+diff --git a/net/netfilter/nf_conntrack_ecache.c b/net/netfilter/nf_conntrack_ecache.c
+index 8698b34246460..69948e1d6974e 100644
+--- a/net/netfilter/nf_conntrack_ecache.c
++++ b/net/netfilter/nf_conntrack_ecache.c
+@@ -309,7 +309,7 @@ bool nf_ct_ecache_ext_add(struct nf_conn *ct, u16 ctmask, u16 expmask, gfp_t gfp
+ 			break;
+ 		return true;
+ 	case 2: /* autodetect: no event listener, don't allocate extension. */
+-		if (!READ_ONCE(net->ct.ctnetlink_has_listener))
++		if (!READ_ONCE(nf_ctnetlink_has_listener))
+ 			return true;
+ 		fallthrough;
+ 	case 1:
+diff --git a/net/netfilter/nfnetlink.c b/net/netfilter/nfnetlink.c
+index 6d18fb3468683..81c7737c803a6 100644
+--- a/net/netfilter/nfnetlink.c
++++ b/net/netfilter/nfnetlink.c
+@@ -29,6 +29,7 @@
+ 
+ #include <net/netlink.h>
+ #include <net/netns/generic.h>
++#include <linux/netfilter.h>
+ #include <linux/netfilter/nfnetlink.h>
+ 
+ MODULE_LICENSE("GPL");
+@@ -685,12 +686,12 @@ static void nfnetlink_bind_event(struct net *net, unsigned int group)
+ 	group_bit = (1 << group);
+ 
+ 	spin_lock(&nfnl_grp_active_lock);
+-	v = READ_ONCE(net->ct.ctnetlink_has_listener);
++	v = READ_ONCE(nf_ctnetlink_has_listener);
+ 	if ((v & group_bit) == 0) {
+ 		v |= group_bit;
+ 
+ 		/* read concurrently without nfnl_grp_active_lock held. */
+-		WRITE_ONCE(net->ct.ctnetlink_has_listener, v);
++		WRITE_ONCE(nf_ctnetlink_has_listener, v);
+ 	}
+ 
+ 	spin_unlock(&nfnl_grp_active_lock);
+@@ -744,12 +745,12 @@ static void nfnetlink_unbind(struct net *net, int group)
+ 
+ 	spin_lock(&nfnl_grp_active_lock);
+ 	if (!nfnetlink_has_listeners(net, group)) {
+-		u8 v = READ_ONCE(net->ct.ctnetlink_has_listener);
++		u8 v = READ_ONCE(nf_ctnetlink_has_listener);
+ 
+ 		v &= ~group_bit;
+ 
+ 		/* read concurrently without nfnl_grp_active_lock held. */
+-		WRITE_ONCE(net->ct.ctnetlink_has_listener, v);
++		WRITE_ONCE(nf_ctnetlink_has_listener, v);
+ 	}
+ 	spin_unlock(&nfnl_grp_active_lock);
+ #endif
 -- 
 2.39.2
 
