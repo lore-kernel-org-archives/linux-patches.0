@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92083848D
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:29:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1434C433EF;
-	Fri, 10 Mar 2023 14:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742B0848D
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:29:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFEEC433D2;
+	Fri, 10 Mar 2023 14:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458560;
-	bh=mzJ/Gxe0zHEIlrhaDFm7JoAcc+yqQyk25WhQ9qX1pbM=;
+	s=korg; t=1678458563;
+	bh=srnYXKVQGL4eQmTKQ2dZ85S1S3iTRp/WOpi5E4Ac76s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1vJ7rNKg4oI0VlUMv4hsCuSrU5sqO9nnivLWjIlva/yiFmPqjzZZQzbSMpWWG9MLX
-	 vcCNWVnHGrwtul+Px389PRhvjMXVvuG6WgvJBCV5pfGwAccaOATqXDgbz4yCAOzFV0
-	 Iml8gXoTofPQnzWD/zusNAD/RYA+h3gUHdVo2fjk=
+	b=Byjc12bRcJ7Nl+cB6ju0MX7TlpnREnzOJmd8IBiA87QeLovYUDG1v4WS0G+JN4tt/
+	 Z2br/FBEj8lS8F2leIqTt8nQk4Zflj3xVHefc9SzOTjFEuKpxSy/1md3e2AOsiwTUu
+	 +TWMK8Q9Vlv0bogbQeSfUWhfsJc2tSHtaCxXY8Nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eran Ben Elisha <eranbe@nvidia.com>,
-	Majd Dibbiny <majd@nvidia.com>,
-	Jack Morgenstein <jackm@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 068/357] net/mlx5: Enhance debug print in page allocation failure
-Date: Fri, 10 Mar 2023 14:35:57 +0100
-Message-Id: <20230310133736.967505394@linuxfoundation.org>
+Subject: [PATCH 5.4 051/357] crypto: x86/ghash - fix unaligned access in ghash_setkey()
+Date: Fri, 10 Mar 2023 14:35:40 +0100
+Message-Id: <20230310133736.220636840@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -37,36 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jack Morgenstein <jackm@nvidia.com>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 7eef93003e5d20e1a6a6e59e12d914b5431cbda2 ]
+[ Upstream commit 116db2704c193fff6d73ea6c2219625f0c9bdfc8 ]
 
-Provide more details to aid debugging.
+The key can be unaligned, so use the unaligned memory access helpers.
 
-Fixes: bf0bf77f6519 ("mlx5: Support communicating arbitrary host page size to firmware")
-Signed-off-by: Eran Ben Elisha <eranbe@nvidia.com>
-Signed-off-by: Majd Dibbiny <majd@nvidia.com>
-Signed-off-by: Jack Morgenstein <jackm@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 8ceee72808d1 ("crypto: ghash-clmulni-intel - use C implementation for setkey()")
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/crypto/ghash-clmulni-intel_glue.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-index db76c92b75e29..7f7693b709d72 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-@@ -167,7 +167,8 @@ static int alloc_4k(struct mlx5_core_dev *dev, u64 *addr)
- 	fp = list_entry(dev->priv.free_list.next, struct fw_page, list);
- 	n = find_first_bit(&fp->bitmask, 8 * sizeof(fp->bitmask));
- 	if (n >= MLX5_NUM_4K_IN_PAGE) {
--		mlx5_core_warn(dev, "alloc 4k bug\n");
-+		mlx5_core_warn(dev, "alloc 4k bug: fw page = 0x%llx, n = %u, bitmask: %lu, max num of 4K pages: %d\n",
-+			       fp->addr, n, fp->bitmask,  MLX5_NUM_4K_IN_PAGE);
- 		return -ENOENT;
+diff --git a/arch/x86/crypto/ghash-clmulni-intel_glue.c b/arch/x86/crypto/ghash-clmulni-intel_glue.c
+index 04d72a5a8ce98..c9864ac9c0149 100644
+--- a/arch/x86/crypto/ghash-clmulni-intel_glue.c
++++ b/arch/x86/crypto/ghash-clmulni-intel_glue.c
+@@ -19,6 +19,7 @@
+ #include <crypto/internal/simd.h>
+ #include <asm/cpu_device_id.h>
+ #include <asm/simd.h>
++#include <asm/unaligned.h>
+ 
+ #define GHASH_BLOCK_SIZE	16
+ #define GHASH_DIGEST_SIZE	16
+@@ -54,7 +55,6 @@ static int ghash_setkey(struct crypto_shash *tfm,
+ 			const u8 *key, unsigned int keylen)
+ {
+ 	struct ghash_ctx *ctx = crypto_shash_ctx(tfm);
+-	be128 *x = (be128 *)key;
+ 	u64 a, b;
+ 
+ 	if (keylen != GHASH_BLOCK_SIZE) {
+@@ -63,8 +63,8 @@ static int ghash_setkey(struct crypto_shash *tfm,
  	}
- 	clear_bit(n, &fp->bitmask);
+ 
+ 	/* perform multiplication by 'x' in GF(2^128) */
+-	a = be64_to_cpu(x->a);
+-	b = be64_to_cpu(x->b);
++	a = get_unaligned_be64(key);
++	b = get_unaligned_be64(key + 8);
+ 
+ 	ctx->shash.a = (b << 1) | (a >> 63);
+ 	ctx->shash.b = (a << 1) | (b >> 63);
 -- 
 2.39.2
 
