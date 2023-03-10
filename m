@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97427847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:53:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F769C433EF;
-	Fri, 10 Mar 2023 13:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A6B847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:53:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE77C433EF;
+	Fri, 10 Mar 2023 13:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456397;
-	bh=B7NTi1FdHIGrYvLYxcYK2kZHRMsFpemC0yukXnWPFno=;
+	s=korg; t=1678456400;
+	bh=bwC5HJgR07ZZG6q2HHF3Byask16j4MYZgOnEHyp4knA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQ9YL9TpS4CvDmPROYTFuGpb5SfDzf2eQwqJm1UIjJom7IRaAyxT0JjZNm7ZhdcTv
-	 YSo/zvBXyini4Kki1Ipio7uMLn3ZesKMBy6ymiPBCnOQbDyThfJnwmdEtJscfw7KQw
-	 D+BoOoMTKcVhPtF0TgBH/8txeohjM4pM9+9nQ4wo=
+	b=qj67VGn0pY+MB20i1CrpU6+Pk6fA/iIKvMlHL+Tu/eOtdOX0s4OxVUFwX+AXGfwmD
+	 TBL7/6PLXD4TCHNgO4jaaMMU52O83/64moBbeC1R9ZQdWr8qQdTwj6K+Xj/T44+QAu
+	 9oR06K9rEQjBX8wM35b3GSsdPxwIim4Cm0kGJhoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Mathias Nyman <mathias.nyman@intel.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 184/193] iio: accel: mma9551_core: Prevent uninitialized variable in mma9551_read_config_word()
-Date: Fri, 10 Mar 2023 14:39:26 +0100
-Message-Id: <20230310133717.201371922@linuxfoundation.org>
+Subject: [PATCH 4.14 185/193] usb: host: xhci: mvebu: Iterate over array indexes instead of using pointer math
+Date: Fri, 10 Mar 2023 14:39:27 +0100
+Message-Id: <20230310133717.230856748@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -35,46 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 64a68158738ec8f520347144352f7a09bdb9e169 ]
+[ Upstream commit 0fbd2cda92cdb00f72080665554a586f88bca821 ]
 
-Smatch Warns:
-drivers/iio/accel/mma9551_core.c:299
-	mma9551_read_config_word() error: uninitialized symbol 'v'.
+Walking the dram->cs array was seen as accesses beyond the first array
+item by the compiler. Instead, use the array index directly. This allows
+for run-time bounds checking under CONFIG_UBSAN_BOUNDS as well. Seen
+with GCC 13 with -fstrict-flex-arrays:
 
-When (offset >= 1 << 12) is true mma9551_transfer() will return -EINVAL
-without 'v' being initialized, so check for the error and return.
+In function 'xhci_mvebu_mbus_config',
+    inlined from 'xhci_mvebu_mbus_init_quirk' at ../drivers/usb/host/xhci-mvebu.c:66:2:
+../drivers/usb/host/xhci-mvebu.c:37:28: warning: array subscript 0 is outside array bounds of 'const struct mbus_dram_window[0]' [-Warray-bounds=]
+   37 |                 writel(((cs->size - 1) & 0xffff0000) | (cs->mbus_attr << 8) |
+      |                          ~~^~~~~~
 
-Note: No actual bug as caller checks the return value and does not
-use the parameter in the problem case.
-
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20230126153610.3586243-1-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Mathias Nyman <mathias.nyman@intel.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230204183651.never.663-kees@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/mma9551_core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci-mvebu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/accel/mma9551_core.c b/drivers/iio/accel/mma9551_core.c
-index b4bbc83be4310..19b4fbc682e63 100644
---- a/drivers/iio/accel/mma9551_core.c
-+++ b/drivers/iio/accel/mma9551_core.c
-@@ -304,9 +304,12 @@ int mma9551_read_config_word(struct i2c_client *client, u8 app_id,
+diff --git a/drivers/usb/host/xhci-mvebu.c b/drivers/usb/host/xhci-mvebu.c
+index 85908a3ecb8f6..285a5f75fe048 100644
+--- a/drivers/usb/host/xhci-mvebu.c
++++ b/drivers/usb/host/xhci-mvebu.c
+@@ -34,7 +34,7 @@ static void xhci_mvebu_mbus_config(void __iomem *base,
  
- 	ret = mma9551_transfer(client, app_id, MMA9551_CMD_READ_CONFIG,
- 			       reg, NULL, 0, (u8 *)&v, 2);
-+	if (ret < 0)
-+		return ret;
-+
- 	*val = be16_to_cpu(v);
+ 	/* Program each DRAM CS in a seperate window */
+ 	for (win = 0; win < dram->num_cs; win++) {
+-		const struct mbus_dram_window *cs = dram->cs + win;
++		const struct mbus_dram_window *cs = &dram->cs[win];
  
--	return ret;
-+	return 0;
- }
- EXPORT_SYMBOL(mma9551_read_config_word);
- 
+ 		writel(((cs->size - 1) & 0xffff0000) | (cs->mbus_attr << 8) |
+ 		       (dram->mbus_dram_target_id << 4) | 1,
 -- 
 2.39.2
 
