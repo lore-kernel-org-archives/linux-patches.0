@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12EA882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:09:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF44C433EF;
-	Fri, 10 Mar 2023 15:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175E9882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:09:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D49C433D2;
+	Fri, 10 Mar 2023 15:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460970;
-	bh=D/4oeywm5q55fB7T4McNKMiC7CfEvxEX1f3NZYKC098=;
+	s=korg; t=1678460973;
+	bh=FlEM1SLL5dNpDBFSQttKIKrPyUrugb5bX4HdUbRIS7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RCHrXTJBnhpe1ZqjLNEOjr27oeC7MCBTpERGDEjS3RM0yr3sFtTIjCIknPnI9SYdd
-	 pDqe71OfUROLANWbnjYuEQ0Mz9e6ej4zLSe15YG1JfoKlDynsLRthWqfubCAGp5H+7
-	 2H1FR7ZSR8EahtEei0/v1eTcYeu/WqjCt5XMmyIM=
+	b=Dx1R0IuofS2HzXfMTJrkEDQaqRdYc455plt1cOaX0t0qNsQonGIhKwfyX2WarhwIC
+	 JH9rZmKppGhgq8lMa6Uh4K4SYGCdQ/0qT9amH0hjwdBaMAtZOqf3VxnxHVOVcWopa3
+	 tRODUDnQX+JNUDGdK2PNoDDTEXyXYgOAoZkTPP1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Frederick Lawler <fred@cloudflare.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 482/529] thermal: intel: BXT_PMIC: select REGMAP instead of depending on it
-Date: Fri, 10 Mar 2023 14:40:25 +0100
-Message-Id: <20230310133827.187138048@linuxfoundation.org>
+Subject: [PATCH 5.10 473/529] tcp: tcp_check_req() can be called from process context
+Date: Fri, 10 Mar 2023 14:40:16 +0100
+Message-Id: <20230310133826.762024004@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,41 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1467fb960349dfa5e300658f1a409dde2cfb0c51 ]
+[ Upstream commit 580f98cc33a260bb8c6a39ae2921b29586b84fdf ]
 
-REGMAP is a hidden (not user visible) symbol. Users cannot set it
-directly thru "make *config", so drivers should select it instead of
-depending on it if they need it.
+This is a follow up of commit 0a375c822497 ("tcp: tcp_rtx_synack()
+can be called from process context").
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
+Frederick Lawler reported another "__this_cpu_add() in preemptible"
+warning caused by the same reason.
 
-Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+In my former patch I took care of tcp_rtx_synack()
+but forgot that tcp_check_req() also contained some SNMP updates.
 
-Fixes: b474303ffd57 ("thermal: add Intel BXT WhiskeyCove PMIC thermal driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Note that some parts of tcp_check_req() always run in BH context,
+I added a comment to clarify this.
+
+Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
+Link: https://lore.kernel.org/netdev/8cd33923-a21d-397c-e46b-2a068c287b03@cloudflare.com/T/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: Frederick Lawler <fred@cloudflare.com>
+Tested-by: Frederick Lawler <fred@cloudflare.com>
+Link: https://lore.kernel.org/r/20230227083336.4153089-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_minisocks.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/intel/Kconfig b/drivers/thermal/intel/Kconfig
-index 8025b21f43fa5..b5427579fae59 100644
---- a/drivers/thermal/intel/Kconfig
-+++ b/drivers/thermal/intel/Kconfig
-@@ -60,7 +60,8 @@ endmenu
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index e42312321191b..8d854feebdb00 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -565,6 +565,9 @@ EXPORT_SYMBOL(tcp_create_openreq_child);
+  * validation and inside tcp_v4_reqsk_send_ack(). Can we do better?
+  *
+  * We don't need to initialize tmp_opt.sack_ok as we don't use the results
++ *
++ * Note: If @fastopen is true, this can be called from process context.
++ *       Otherwise, this is from BH context.
+  */
  
- config INTEL_BXT_PMIC_THERMAL
- 	tristate "Intel Broxton PMIC thermal driver"
--	depends on X86 && INTEL_SOC_PMIC_BXTWC && REGMAP
-+	depends on X86 && INTEL_SOC_PMIC_BXTWC
-+	select REGMAP
- 	help
- 	  Select this driver for Intel Broxton PMIC with ADC channels monitoring
- 	  system temperature measurements and alerts.
+ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+@@ -717,7 +720,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 					  &tcp_rsk(req)->last_oow_ack_time))
+ 			req->rsk_ops->send_ack(sk, skb, req);
+ 		if (paws_reject)
+-			__NET_INC_STATS(sock_net(sk), LINUX_MIB_PAWSESTABREJECTED);
++			NET_INC_STATS(sock_net(sk), LINUX_MIB_PAWSESTABREJECTED);
+ 		return NULL;
+ 	}
+ 
+@@ -736,7 +739,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 	 *	   "fourth, check the SYN bit"
+ 	 */
+ 	if (flg & (TCP_FLAG_RST|TCP_FLAG_SYN)) {
+-		__TCP_INC_STATS(sock_net(sk), TCP_MIB_ATTEMPTFAILS);
++		TCP_INC_STATS(sock_net(sk), TCP_MIB_ATTEMPTFAILS);
+ 		goto embryonic_reset;
+ 	}
+ 
 -- 
 2.39.2
 
