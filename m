@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB62E846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:34:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BFEC433EF;
-	Fri, 10 Mar 2023 14:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6388F846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:34:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE60C433EF;
+	Fri, 10 Mar 2023 14:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458891;
-	bh=QMLdAr//vmuKN2aIGblD0qz8Nk1v9k0bI7QeuRIYGjM=;
+	s=korg; t=1678458894;
+	bh=yGPjqMG810Z6jKaOYLpDFbzat1RHhVbl/gGt7L+NLOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bEn/BWoQdyqg/LpY43b5zP3Pd0Zx75R35hvj6xlBoS+20kehmXqCKmZcrNmAg4/P/
-	 /pcmS9aggLGOctw4xSP1AidmP40SAj2/zqJF5cUXgWF7utRcOV9EaGNGRXwscIkpKP
-	 ZSLjemSsRzGxGLmm8UuEoP72tI/zmgy5G68Q/W9E=
+	b=qPFgaO+uJHMpKT9QEWvelcGl6UibtqZJ53fB3FDS2I0sK5JNSLwHtQvDvTX4I47OM
+	 13U926MRv+bv3B10Lvd+axfYQyKBa7YKYWP5Kze55KMP/7doPf0/B6HdAxV4GmnljV
+	 l1JJKpg6fBihoJey8Nb4bI9MP0l/Yt5bszjoult8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 178/357] blk-iocost: fix divide by 0 error in calc_lcoefs()
-Date: Fri, 10 Mar 2023 14:37:47 +0100
-Message-Id: <20230310133742.599836152@linuxfoundation.org>
+Subject: [PATCH 5.4 152/357] clk: renesas: cpg-mssr: Use enum clk_reg_layout instead of a boolean flag
+Date: Fri, 10 Mar 2023 14:37:21 +0100
+Message-Id: <20230310133741.421217454@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -37,68 +35,211 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 984af1e66b4126cf145153661cc24c213e2ec231 ]
+[ Upstream commit ffbf9cf3f9460e320c3f1a90a51145da86c16781 ]
 
-echo max of u64 to cost.model can cause divide by 0 error.
+Geert suggested defining multiple register layout variants using an enum
+[1] to support further devices like R-Car V3U.  So, use enum
+clk_reg_layout instead of a boolean .stbyctrl flag.  No behavioral
+change.
 
-  # echo 8:0 rbps=18446744073709551615 > /sys/fs/cgroup/io.cost.model
+[1] https://lore.kernel.org/linux-renesas-soc/CAMuHMdVAgN69p9FFnQdO4iHk2CHkeNaVui2Q-FOY6_BFVjQ-Nw@mail.gmail.com/
 
-  divide error: 0000 [#1] PREEMPT SMP
-  RIP: 0010:calc_lcoefs+0x4c/0xc0
-  Call Trace:
-   <TASK>
-   ioc_refresh_params+0x2b3/0x4f0
-   ioc_cost_model_write+0x3cb/0x4c0
-   ? _copy_from_iter+0x6d/0x6c0
-   ? kernfs_fop_write_iter+0xfc/0x270
-   cgroup_file_write+0xa0/0x200
-   kernfs_fop_write_iter+0x17d/0x270
-   vfs_write+0x414/0x620
-   ksys_write+0x73/0x160
-   __x64_sys_write+0x1e/0x30
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-calc_lcoefs() uses the input value of cost.model in DIV_ROUND_UP_ULL,
-overflow would happen if bps plus IOC_PAGE_SIZE is greater than
-ULLONG_MAX, it can cause divide by 0 error.
-
-Fix the problem by setting basecost
-
-Signed-off-by: Li Nan <linan122@huawei.com>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230117070806.3857142-5-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://lore.kernel.org/r/1599810232-29035-2-git-send-email-yoshihiro.shimoda.uh@renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Stable-dep-of: 1c052043c79a ("clk: renesas: cpg-mssr: Remove superfluous check in resume code")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/clk/renesas/r7s9210-cpg-mssr.c |  2 +-
+ drivers/clk/renesas/renesas-cpg-mssr.c | 27 +++++++++++++-------------
+ drivers/clk/renesas/renesas-cpg-mssr.h | 12 +++++++-----
+ 3 files changed, 22 insertions(+), 19 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index ef287c33d6d97..4fdc8858a69a9 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -785,9 +785,14 @@ static void calc_lcoefs(u64 bps, u64 seqiops, u64 randiops,
+diff --git a/drivers/clk/renesas/r7s9210-cpg-mssr.c b/drivers/clk/renesas/r7s9210-cpg-mssr.c
+index cf65d4e0e1166..2772eb0b8ba76 100644
+--- a/drivers/clk/renesas/r7s9210-cpg-mssr.c
++++ b/drivers/clk/renesas/r7s9210-cpg-mssr.c
+@@ -213,7 +213,7 @@ const struct cpg_mssr_info r7s9210_cpg_mssr_info __initconst = {
+ 	.cpg_clk_register = rza2_cpg_clk_register,
  
- 	*page = *seqio = *randio = 0;
+ 	/* RZ/A2 has Standby Control Registers */
+-	.stbyctrl = true,
++	.reg_layout = CLK_REG_LAYOUT_RZ_A,
+ };
  
--	if (bps)
--		*page = DIV64_U64_ROUND_UP(VTIME_PER_SEC,
--					   DIV_ROUND_UP_ULL(bps, IOC_PAGE_SIZE));
-+	if (bps) {
-+		u64 bps_pages = DIV_ROUND_UP_ULL(bps, IOC_PAGE_SIZE);
+ static void __init r7s9210_cpg_mssr_early_init(struct device_node *np)
+diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
+index 9ffd1bf80b6a3..fd9ca86cc60f6 100644
+--- a/drivers/clk/renesas/renesas-cpg-mssr.c
++++ b/drivers/clk/renesas/renesas-cpg-mssr.c
+@@ -111,12 +111,12 @@ static const u16 srcr[] = {
+  * @rcdev: Optional reset controller entity
+  * @dev: CPG/MSSR device
+  * @base: CPG/MSSR register block base address
++ * @reg_layout: CPG/MSSR register layout
+  * @rmw_lock: protects RMW register accesses
+  * @np: Device node in DT for this CPG/MSSR module
+  * @num_core_clks: Number of Core Clocks in clks[]
+  * @num_mod_clks: Number of Module Clocks in clks[]
+  * @last_dt_core_clk: ID of the last Core Clock exported to DT
+- * @stbyctrl: This device has Standby Control Registers
+  * @notifiers: Notifier chain to save/restore clock state for system resume
+  * @smstpcr_saved[].mask: Mask of SMSTPCR[] bits under our control
+  * @smstpcr_saved[].val: Saved values of SMSTPCR[]
+@@ -128,13 +128,13 @@ struct cpg_mssr_priv {
+ #endif
+ 	struct device *dev;
+ 	void __iomem *base;
++	enum clk_reg_layout reg_layout;
+ 	spinlock_t rmw_lock;
+ 	struct device_node *np;
+ 
+ 	unsigned int num_core_clks;
+ 	unsigned int num_mod_clks;
+ 	unsigned int last_dt_core_clk;
+-	bool stbyctrl;
+ 
+ 	struct raw_notifier_head notifiers;
+ 	struct {
+@@ -177,7 +177,7 @@ static int cpg_mstp_clock_endisable(struct clk_hw *hw, bool enable)
+ 		enable ? "ON" : "OFF");
+ 	spin_lock_irqsave(&priv->rmw_lock, flags);
+ 
+-	if (priv->stbyctrl) {
++	if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A) {
+ 		value = readb(priv->base + STBCR(reg));
+ 		if (enable)
+ 			value &= ~bitmask;
+@@ -199,7 +199,7 @@ static int cpg_mstp_clock_endisable(struct clk_hw *hw, bool enable)
+ 
+ 	spin_unlock_irqrestore(&priv->rmw_lock, flags);
+ 
+-	if (!enable || priv->stbyctrl)
++	if (!enable || priv->reg_layout == CLK_REG_LAYOUT_RZ_A)
+ 		return 0;
+ 
+ 	for (i = 1000; i > 0; --i) {
+@@ -233,7 +233,7 @@ static int cpg_mstp_clock_is_enabled(struct clk_hw *hw)
+ 	struct cpg_mssr_priv *priv = clock->priv;
+ 	u32 value;
+ 
+-	if (priv->stbyctrl)
++	if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A)
+ 		value = readb(priv->base + STBCR(clock->index / 32));
+ 	else
+ 		value = readl(priv->base + MSTPSR(clock->index / 32));
+@@ -272,7 +272,7 @@ struct clk *cpg_mssr_clk_src_twocell_get(struct of_phandle_args *clkspec,
+ 
+ 	case CPG_MOD:
+ 		type = "module";
+-		if (priv->stbyctrl) {
++		if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A) {
+ 			idx = MOD_CLK_PACK_10(clkidx);
+ 			range_check = 7 - (clkidx % 10);
+ 		} else {
+@@ -800,7 +800,8 @@ static int cpg_mssr_suspend_noirq(struct device *dev)
+ 	/* Save module registers with bits under our control */
+ 	for (reg = 0; reg < ARRAY_SIZE(priv->smstpcr_saved); reg++) {
+ 		if (priv->smstpcr_saved[reg].mask)
+-			priv->smstpcr_saved[reg].val = priv->stbyctrl ?
++			priv->smstpcr_saved[reg].val =
++				priv->reg_layout == CLK_REG_LAYOUT_RZ_A ?
+ 				readb(priv->base + STBCR(reg)) :
+ 				readl(priv->base + SMSTPCR(reg));
+ 	}
+@@ -830,7 +831,7 @@ static int cpg_mssr_resume_noirq(struct device *dev)
+ 		if (!mask)
+ 			continue;
+ 
+-		if (priv->stbyctrl)
++		if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A)
+ 			oldval = readb(priv->base + STBCR(reg));
+ 		else
+ 			oldval = readl(priv->base + SMSTPCR(reg));
+@@ -839,7 +840,7 @@ static int cpg_mssr_resume_noirq(struct device *dev)
+ 		if (newval == oldval)
+ 			continue;
+ 
+-		if (priv->stbyctrl) {
++		if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A) {
+ 			writeb(newval, priv->base + STBCR(reg));
+ 			/* dummy read to ensure write has completed */
+ 			readb(priv->base + STBCR(reg));
+@@ -862,8 +863,8 @@ static int cpg_mssr_resume_noirq(struct device *dev)
+ 
+ 		if (!i)
+ 			dev_warn(dev, "Failed to enable %s%u[0x%x]\n",
+-				 priv->stbyctrl ? "STB" : "SMSTP", reg,
+-				 oldval & mask);
++				 priv->reg_layout == CLK_REG_LAYOUT_RZ_A ?
++				 "STB" : "SMSTP", reg, oldval & mask);
+ 	}
+ 
+ 	return 0;
+@@ -911,7 +912,7 @@ static int __init cpg_mssr_common_init(struct device *dev,
+ 	priv->num_mod_clks = info->num_hw_mod_clks;
+ 	priv->last_dt_core_clk = info->last_dt_core_clk;
+ 	RAW_INIT_NOTIFIER_HEAD(&priv->notifiers);
+-	priv->stbyctrl = info->stbyctrl;
++	priv->reg_layout = info->reg_layout;
+ 
+ 	for (i = 0; i < nclks; i++)
+ 		priv->clks[i] = ERR_PTR(-ENOENT);
+@@ -991,7 +992,7 @@ static int __init cpg_mssr_probe(struct platform_device *pdev)
+ 		return error;
+ 
+ 	/* Reset Controller not supported for Standby Control SoCs */
+-	if (info->stbyctrl)
++	if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A)
+ 		return 0;
+ 
+ 	error = cpg_mssr_reset_controller_register(priv);
+diff --git a/drivers/clk/renesas/renesas-cpg-mssr.h b/drivers/clk/renesas/renesas-cpg-mssr.h
+index 4ddcdf3bfb95f..f05521b5fa6e2 100644
+--- a/drivers/clk/renesas/renesas-cpg-mssr.h
++++ b/drivers/clk/renesas/renesas-cpg-mssr.h
+@@ -85,6 +85,11 @@ struct mssr_mod_clk {
+ 
+ struct device_node;
+ 
++enum clk_reg_layout {
++	CLK_REG_LAYOUT_RCAR_GEN2_AND_GEN3 = 0,
++	CLK_REG_LAYOUT_RZ_A,
++};
 +
-+		if (bps_pages)
-+			*page = DIV64_U64_ROUND_UP(VTIME_PER_SEC, bps_pages);
-+		else
-+			*page = 1;
-+	}
+     /**
+      * SoC-specific CPG/MSSR Description
+      *
+@@ -105,6 +110,7 @@ struct device_node;
+      * @crit_mod_clks: Array with Module Clock IDs of critical clocks that
+      *                 should not be disabled without a knowledgeable driver
+      * @num_crit_mod_clks: Number of entries in crit_mod_clks[]
++     * @reg_layout: CPG/MSSR register layout from enum clk_reg_layout
+      *
+      * @core_pm_clks: Array with IDs of Core Clocks that are suitable for Power
+      *                Management, in addition to Module Clocks
+@@ -112,10 +118,6 @@ struct device_node;
+      *
+      * @init: Optional callback to perform SoC-specific initialization
+      * @cpg_clk_register: Optional callback to handle special Core Clock types
+-     *
+-     * @stbyctrl: This device has Standby Control Registers which are 8-bits
+-     *            wide, no status registers (MSTPSR) and have different address
+-     *            offsets.
+      */
  
- 	if (seqiops) {
- 		v = DIV64_U64_ROUND_UP(VTIME_PER_SEC, seqiops);
+ struct cpg_mssr_info {
+@@ -130,7 +132,7 @@ struct cpg_mssr_info {
+ 	unsigned int num_core_clks;
+ 	unsigned int last_dt_core_clk;
+ 	unsigned int num_total_core_clks;
+-	bool stbyctrl;
++	enum clk_reg_layout reg_layout;
+ 
+ 	/* Module Clocks */
+ 	const struct mssr_mod_clk *mod_clks;
 -- 
 2.39.2
 
