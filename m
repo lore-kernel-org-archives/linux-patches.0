@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECC7848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:22:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F64C433EF;
-	Fri, 10 Mar 2023 14:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89451848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:22:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038A0C433EF;
+	Fri, 10 Mar 2023 14:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458167;
-	bh=Z8CCZJKsfJXjdufdMFeqQK8Nw2XVfN2qz8CweEbXhT8=;
+	s=korg; t=1678458170;
+	bh=3ESICwBBXTPzePQ57qR1TG39JF5H3fr/JWZ32Y25Y3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLRLJwz7mq25U0wapP/Fy7+h+37cMNy+2ijQ84zTHxHSZOOI3nMan0I0cMF02UPCD
-	 bR4cMvf/6ziVAlyBilK+XYh3f+yE5a/sCvanNQo4XHDDMoo6rtU4NH8b1K7gWJMW4m
-	 3ZCJET4NU/kejnscjiSeyzenga+VXIkGhqJU4DFA=
+	b=JHEFvZxwUFe698aKJJrCj89vgvxQfnrckVpPDk7maKgoaOy3Ws7g6JQwgdFgpGxr8
+	 mqYXdjzZpb2WRt/1PfQEZNJNUs76xfh9hNwEXf6Q38z82Ys9/YT70Dkz/guwNmkkCP
+	 YuMJoyE2qbTzY1xv3kgzrFu6UYW4X567hvefUTQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 4.19 185/252] ktest.pl: Add RUN_TIMEOUT option with default unlimited
-Date: Fri, 10 Mar 2023 14:39:15 +0100
-Message-Id: <20230310133724.510329520@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 4.19 157/252] x86/reboot: Disable virtualization in an emergency if SVM is supported
+Date: Fri, 10 Mar 2023 14:38:47 +0100
+Message-Id: <20230310133723.579614157@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -33,108 +34,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 4e7d2a8f0b52abf23b1dc13b3d88bc0923383cd5 upstream.
+commit d81f952aa657b76cea381384bef1fea35c5fd266 upstream.
 
-There is a disconnect between the run_command function and the
-wait_for_input. The wait_for_input has a default timeout of 2 minutes. But
-if that happens, the run_command loop will exit out to the waitpid() of
-the executing command. This fails in that it no longer monitors the
-command, and also, the ssh to the test box can hang when its finished, as
-it's waiting for the pipe it's writing to to flush, but the loop that
-reads that pipe has already exited, leaving the command stuck, and the
-test hangs.
-
-Instead, make the default "wait_for_input" of the run_command infinite,
-and allow the user to override it if they want with a default timeout
-option "RUN_TIMEOUT".
-
-But this fixes the hang that happens when the pipe is full and the ssh
-session never exits.
+Disable SVM on all CPUs via NMI shootdown during an emergency reboot.
+Like VMX, SVM can block INIT, e.g. if the emergency reboot is triggered
+between CLGI and STGI, and thus can prevent bringing up other CPUs via
+INIT-SIPI-SIPI.
 
 Cc: stable@vger.kernel.org
-Fixes: 6e98d1b4415fe ("ktest: Add timeout to ssh command")
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20221130233650.1404148-4-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/ktest/ktest.pl    |   20 ++++++++++++++++----
- tools/testing/ktest/sample.conf |    5 +++++
- 2 files changed, 21 insertions(+), 4 deletions(-)
+ arch/x86/kernel/reboot.c |   23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -172,6 +172,7 @@ my $store_failures;
- my $store_successes;
- my $test_name;
- my $timeout;
-+my $run_timeout;
- my $connect_timeout;
- my $config_bisect_exec;
- my $booted_timeout;
-@@ -330,6 +331,7 @@ my %option_map = (
-     "STORE_SUCCESSES"		=> \$store_successes,
-     "TEST_NAME"			=> \$test_name,
-     "TIMEOUT"			=> \$timeout,
-+    "RUN_TIMEOUT"		=> \$run_timeout,
-     "CONNECT_TIMEOUT"		=> \$connect_timeout,
-     "CONFIG_BISECT_EXEC"	=> \$config_bisect_exec,
-     "BOOTED_TIMEOUT"		=> \$booted_timeout,
-@@ -1750,6 +1752,14 @@ sub run_command {
-     $command =~ s/\$SSH_USER/$ssh_user/g;
-     $command =~ s/\$MACHINE/$machine/g;
+--- a/arch/x86/kernel/reboot.c
++++ b/arch/x86/kernel/reboot.c
+@@ -538,27 +538,26 @@ static inline void kb_wait(void)
  
-+    if (!defined($timeout)) {
-+	$timeout = $run_timeout;
-+    }
-+
-+    if (!defined($timeout)) {
-+	$timeout = -1; # tell wait_for_input to wait indefinitely
-+    }
-+
-     doprint("$command ... ");
-     $start_time = time;
+ static inline void nmi_shootdown_cpus_on_restart(void);
  
-@@ -1778,13 +1788,10 @@ sub run_command {
+-/* Use NMIs as IPIs to tell all CPUs to disable virtualization */
+-static void emergency_vmx_disable_all(void)
++static void emergency_reboot_disable_virtualization(void)
+ {
+ 	/* Just make sure we won't change CPUs while doing this */
+ 	local_irq_disable();
  
-     while (1) {
- 	my $fp = \*CMD;
--	if (defined($timeout)) {
--	    doprint "timeout = $timeout\n";
--	}
- 	my $line = wait_for_input($fp, $timeout);
- 	if (!defined($line)) {
- 	    my $now = time;
--	    if (defined($timeout) && (($now - $start_time) >= $timeout)) {
-+	    if ($timeout >= 0 && (($now - $start_time) >= $timeout)) {
- 		doprint "Hit timeout of $timeout, killing process\n";
- 		$hit_timeout = 1;
- 		kill 9, $pid;
-@@ -1989,6 +1996,11 @@ sub wait_for_input
- 	$time = $timeout;
-     }
+ 	/*
+-	 * Disable VMX on all CPUs before rebooting, otherwise we risk hanging
+-	 * the machine, because the CPU blocks INIT when it's in VMX root.
++	 * Disable virtualization on all CPUs before rebooting to avoid hanging
++	 * the system, as VMX and SVM block INIT when running in the host.
+ 	 *
+ 	 * We can't take any locks and we may be on an inconsistent state, so
+-	 * use NMIs as IPIs to tell the other CPUs to exit VMX root and halt.
++	 * use NMIs as IPIs to tell the other CPUs to disable VMX/SVM and halt.
+ 	 *
+-	 * Do the NMI shootdown even if VMX if off on _this_ CPU, as that
+-	 * doesn't prevent a different CPU from being in VMX root operation.
++	 * Do the NMI shootdown even if virtualization is off on _this_ CPU, as
++	 * other CPUs may have virtualization enabled.
+ 	 */
+-	if (cpu_has_vmx()) {
+-		/* Safely force _this_ CPU out of VMX root operation. */
+-		__cpu_emergency_vmxoff();
++	if (cpu_has_vmx() || cpu_has_svm(NULL)) {
++		/* Safely force _this_ CPU out of VMX/SVM operation. */
++		cpu_emergency_disable_virtualization();
  
-+    if ($time < 0) {
-+	# Negative number means wait indefinitely
-+	undef $time;
-+    }
-+
-     $rin = '';
-     vec($rin, fileno($fp), 1) = 1;
-     vec($rin, fileno(\*STDIN), 1) = 1;
---- a/tools/testing/ktest/sample.conf
-+++ b/tools/testing/ktest/sample.conf
-@@ -775,6 +775,11 @@
- # is issued instead of a reboot.
- # CONNECT_TIMEOUT = 25
+-		/* Halt and exit VMX root operation on the other CPUs. */
++		/* Disable VMX/SVM and halt on other CPUs. */
+ 		nmi_shootdown_cpus_on_restart();
  
-+# The timeout in seconds for how long to wait for any running command
-+# to timeout. If not defined, it will let it go indefinitely.
-+# (default undefined)
-+#RUN_TIMEOUT = 600
-+
- # In between tests, a reboot of the box may occur, and this
- # is the time to wait for the console after it stops producing
- # output. Some machines may not produce a large lag on reboot
+ 	}
+@@ -596,7 +595,7 @@ static void native_machine_emergency_res
+ 	unsigned short mode;
+ 
+ 	if (reboot_emergency)
+-		emergency_vmx_disable_all();
++		emergency_reboot_disable_virtualization();
+ 
+ 	tboot_shutdown(TB_SHUTDOWN_REBOOT);
+ 
 
 
