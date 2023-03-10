@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A672C8489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:17:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0BBC433D2;
-	Fri, 10 Mar 2023 14:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859F78489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:17:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054C5C433EF;
+	Fri, 10 Mar 2023 14:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457851;
-	bh=PEYtR3k5ihRlOcnc7O2fQZPh+FS5KW/orCTC35TWCIk=;
+	s=korg; t=1678457854;
+	bh=NcwJ6vA85FbkYaWlA0Fly12yASk8zbKCCk3RyGr+RBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y2VMzydr35ygO96/2CDx/NFhkttn9xr8DDFlq6+YpcThRyh+UXapkcvlzUGB0QO4f
-	 gSp07JrcQzBBN/4BqjDs9LDQ7/L3K3CUNQOQRlSKtQhusP8oz2UueL8E6FJuEVC8b1
-	 uT1VOVHDYX0SxKRacmblieQQXTEbCqyjhd/8AaXM=
+	b=vJ2rbzijcXnqatI2UeXrn3he/QwhxAjqxzaxMlMh8eDSTbiE4kJK5yJ5z8lkqoZu2
+	 rwuQtGtUwhG67KSlgvlyyJ6wLiquuZfREGqDxU3PoqnYQLixJ4ub+cVs0896uSgkYk
+	 eYefVdY7qWW7hD7vVyKAad2pfNGcUYtmbtXTwYm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 079/252] gpu: host1x: Dont skip assigning syncpoints to channels
-Date: Fri, 10 Mar 2023 14:37:29 +0100
-Message-Id: <20230310133721.217199527@linuxfoundation.org>
+Subject: [PATCH 4.19 080/252] drm/mediatek: Drop unbalanced obj unref
+Date: Fri, 10 Mar 2023 14:37:30 +0100
+Message-Id: <20230310133721.245797489@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -35,38 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit eb258cc1fd458e584082be987dbc6ec42668c05e ]
+[ Upstream commit 4deef811828e87e26a978d5d6433b261d4713849 ]
 
-The code to write the syncpoint channel assignment register
-incorrectly skips the write if hypervisor registers are not available.
+In the error path, mtk_drm_gem_object_mmap() is dropping an obj
+reference that it doesn't own.
 
-The register, however, is within the guest aperture so remove the
-check and assign syncpoints properly even on virtualized systems.
-
-Fixes: c3f52220f276 ("gpu: host1x: Enable Tegra186 syncpoint protection")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20230119231255.2883365-1-robdclark@gmail.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/hw/syncpt_hw.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_gem.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/host1x/hw/syncpt_hw.c b/drivers/gpu/host1x/hw/syncpt_hw.c
-index a23bb3352d029..b40a537884dde 100644
---- a/drivers/gpu/host1x/hw/syncpt_hw.c
-+++ b/drivers/gpu/host1x/hw/syncpt_hw.c
-@@ -113,9 +113,6 @@ static void syncpt_assign_to_channel(struct host1x_syncpt *sp,
- #if HOST1X_HW >= 6
- 	struct host1x *host = sp->host;
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+index 259b7b0de1d22..b09a37a38e0ae 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+@@ -148,8 +148,6 @@ static int mtk_drm_gem_object_mmap(struct drm_gem_object *obj,
  
--	if (!host->hv_regs)
--		return;
--
- 	host1x_sync_writel(host,
- 			   HOST1X_SYNC_SYNCPT_CH_APP_CH(ch ? ch->id : 0xff),
- 			   HOST1X_SYNC_SYNCPT_CH_APP(sp->id));
+ 	ret = dma_mmap_attrs(priv->dma_dev, vma, mtk_gem->cookie,
+ 			     mtk_gem->dma_addr, obj->size, mtk_gem->dma_attrs);
+-	if (ret)
+-		drm_gem_vm_close(vma);
+ 
+ 	return ret;
+ }
 -- 
 2.39.2
 
