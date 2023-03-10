@@ -1,29 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9857848C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:21:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5851DC433D2;
-	Fri, 10 Mar 2023 14:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C6C848C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:21:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444FAC433D2;
+	Fri, 10 Mar 2023 14:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458090;
-	bh=7yEFZm96GzdErzjYgZL8rM4N+rw6a/mIYxF5LzHZ8tA=;
+	s=korg; t=1678458093;
+	bh=d1dp6JNQeJPY+H9hZ+j2WuSZvF7qtPaj64eo0JtTz+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QesMDtpn7PhPcCePctVDDTK0oLwukwBDGRnIMSUaZCJooxwWRW4ZkFPL2FYbsXaGe
-	 F0YKM5p2ddOzmQ8KBjRSko4dIACSk55SPNvh6UG4rl6SR9GOARgOu+Tm8V1Fzrjx9/
-	 5yRO8LGMyN4MaNpZzBJMUIBEn1CnbnCqvZrPVAbA=
+	b=fkfD+gFk3Fgud1v1nbe6DUYUuB/1YUJHwDPa953g/B8YpuT7fqSrwMNu1wISN3Kbu
+	 bd+48RdO6TyIVdWozA1CHDF1HFVVf/W9U2DtwZqRVZESS9KuTaGNHCiptZSkN5bjwF
+	 qFihudfuvbEZWe8EqM13V7LGJUFpqmHu00aUvOp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abaci Robot <abaci@linux.alibaba.com>,
-	Yang Li <yang.lee@linux.alibaba.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 119/252] thermal: intel: Fix unsigned comparison with less than zero
-Date: Fri, 10 Mar 2023 14:38:09 +0100
-Message-Id: <20230310133722.395985472@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 4.19 154/252] udf: Fix file corruption when appending just after end of preallocated extent
+Date: Fri, 10 Mar 2023 14:38:44 +0100
+Message-Id: <20230310133723.480430215@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -37,42 +33,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Li <yang.lee@linux.alibaba.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit e7fcfe67f9f410736b758969477b17ea285e8e6c ]
+commit 36ec52ea038b18a53e198116ef7d7e70c87db046 upstream.
 
-The return value from the call to intel_tcc_get_tjmax() is int, which can
-be a negative error code. However, the return value is being assigned to
-an u32 variable 'tj_max', so making 'tj_max' an int.
+When we append new block just after the end of preallocated extent, the
+code in inode_getblk() wrongly determined we're going to use the
+preallocated extent which resulted in adding block into a wrong logical
+offset in the file. Sequence like this manifests it:
 
-Eliminate the following warning:
-./drivers/thermal/intel/intel_soc_dts_iosf.c:394:5-11: WARNING: Unsigned expression compared with zero: tj_max < 0
+xfs_io -f -c "pwrite 0x2cacf 0xd122" -c "truncate 0x2dd6f" \
+  -c "pwrite 0x27fd9 0x69a9" -c "pwrite 0x32981 0x7244" <file>
 
-Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3637
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
-Acked-by: Zhang Rui <rui.zhang@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The code that determined the use of preallocated extent is actually
+stale because udf_do_extend_file() does not create preallocation anymore
+so after calling that function we are sure there's no usable
+preallocation. Just remove the faulty condition.
+
+CC: stable@vger.kernel.org
+Fixes: 16d055656814 ("udf: Discard preallocation before extending file with a hole")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/intel_soc_dts_iosf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/inode.c |   24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/thermal/intel_soc_dts_iosf.c b/drivers/thermal/intel_soc_dts_iosf.c
-index e0813dfaa2783..435a093998000 100644
---- a/drivers/thermal/intel_soc_dts_iosf.c
-+++ b/drivers/thermal/intel_soc_dts_iosf.c
-@@ -405,7 +405,7 @@ struct intel_soc_dts_sensors *intel_soc_dts_iosf_init(
- {
- 	struct intel_soc_dts_sensors *sensors;
- 	bool notification;
--	u32 tj_max;
-+	int tj_max;
- 	int ret;
- 	int i;
- 
--- 
-2.39.2
-
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -800,19 +800,17 @@ static sector_t inode_getblk(struct inod
+ 		c = 0;
+ 		offset = 0;
+ 		count += ret;
+-		/* We are not covered by a preallocated extent? */
+-		if ((laarr[0].extLength & UDF_EXTENT_FLAG_MASK) !=
+-						EXT_NOT_RECORDED_ALLOCATED) {
+-			/* Is there any real extent? - otherwise we overwrite
+-			 * the fake one... */
+-			if (count)
+-				c = !c;
+-			laarr[c].extLength = EXT_NOT_RECORDED_NOT_ALLOCATED |
+-				inode->i_sb->s_blocksize;
+-			memset(&laarr[c].extLocation, 0x00,
+-				sizeof(struct kernel_lb_addr));
+-			count++;
+-		}
++		/*
++		 * Is there any real extent? - otherwise we overwrite the fake
++		 * one...
++		 */
++		if (count)
++			c = !c;
++		laarr[c].extLength = EXT_NOT_RECORDED_NOT_ALLOCATED |
++			inode->i_sb->s_blocksize;
++		memset(&laarr[c].extLocation, 0x00,
++			sizeof(struct kernel_lb_addr));
++		count++;
+ 		endnum = c + 1;
+ 		lastblock = 1;
+ 	} else {
 
 
