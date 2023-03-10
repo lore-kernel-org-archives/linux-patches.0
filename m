@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D09F847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E9EC4339C;
-	Fri, 10 Mar 2023 14:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1251847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:00:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F2DC4339C;
+	Fri, 10 Mar 2023 14:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456826;
-	bh=27YCleqUjTg3cu6L16iWgrj9g+J8Xmv6fZe8VvJvwjM=;
+	s=korg; t=1678456828;
+	bh=hcByI9mFwHsH45SjqbYtjaeavj496MDu6pUdBBiR7N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WMgcFjhOTrKFRkU7uyW32rzaPHwnQzcRJEfEQAl/YyulAe6RD8W/0nDp/Fiu9ZJ9F
-	 J9+OTpqLVpmvUeJll1fwC5qtUOd4zStf//0IGuvu4FNLTzUdZPYsgKXvHTFFZmRwHj
-	 h9WU84QxaVRw8Y1KH7p6ABCoh5vlAJ88PA3BTfSA=
+	b=z096UqGc0g9SDC2sVHnxGtpJRhxurDfe0FchGcWajSmta+RKgPVlT4qhnjo1oMI50
+	 NK6wlLvkKhM7Uf6Y0qhDWb5IN1895kjWVGH43a0wv6+oLA3ndWU8ju3DtC62eXzlED
+	 1TH3MokPu1vjnasVM9ZQyESM2D5rvzAT3uhIjYuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ionut_n2001@yahoo.com,
-	Kees Cook <keescook@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Wojciech Lukowicz <wlukowicz01@gmail.com>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 137/211] media: uvcvideo: Silence memcpy() run-time false positive warnings
-Date: Fri, 10 Mar 2023 14:38:37 +0100
-Message-Id: <20230310133722.905130332@linuxfoundation.org>
+Subject: [PATCH 6.2 111/211] io_uring: fix size calculation when registering buf ring
+Date: Fri, 10 Mar 2023 14:38:11 +0100
+Message-Id: <20230310133722.127326326@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -36,58 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Wojciech Lukowicz <wlukowicz01@gmail.com>
 
-[ Upstream commit b839212988575c701aab4d3d9ca15e44c87e383c ]
+[ Upstream commit 48ba08374e779421ca34bd14b4834aae19fc3e6a ]
 
-The memcpy() in uvc_video_decode_meta() intentionally copies across the
-length and flags members and into the trailing buf flexible array.
-Split the copy so that the compiler can better reason about (the lack
-of) buffer overflows here. Avoid the run-time false positive warning:
+Using struct_size() to calculate the size of io_uring_buf_ring will sum
+the size of the struct and of the bufs array. However, the struct's fields
+are overlaid with the array making the calculated size larger than it
+should be.
 
-  memcpy: detected field-spanning write (size 12) of single field "&meta->length" at drivers/media/usb/uvc/uvc_video.c:1355 (size 1)
+When registering a ring with N * PAGE_SIZE / sizeof(struct io_uring_buf)
+entries, i.e. with fully filled pages, the calculated size will span one
+more page than it should and io_uring will try to pin the following page.
+Depending on how the application allocated the ring, it might succeed
+using an unrelated page or fail returning EFAULT.
 
-Additionally fix a typo in the documentation for struct uvc_meta_buf.
+The size of the ring should be the product of ring_entries and the size
+of io_uring_buf, i.e. the size of the bufs array only.
 
-Reported-by: ionut_n2001@yahoo.com
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216810
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: c7fb19428d67 ("io_uring: add support for ring mapped supplied buffers")
+Signed-off-by: Wojciech Lukowicz <wlukowicz01@gmail.com>
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Link: https://lore.kernel.org/r/20230218184141.70891-1-wlukowicz01@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_video.c | 4 +++-
- include/uapi/linux/uvcvideo.h     | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ io_uring/kbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index 53ea225972478..0d3a3b697b2d8 100644
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -1352,7 +1352,9 @@ static void uvc_video_decode_meta(struct uvc_streaming *stream,
- 	if (has_scr)
- 		memcpy(stream->clock.last_scr, scr, 6);
+diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
+index 4a6401080c1f8..3002dc8271959 100644
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -505,7 +505,7 @@ int io_register_pbuf_ring(struct io_ring_ctx *ctx, void __user *arg)
+ 	}
  
--	memcpy(&meta->length, mem, length);
-+	meta->length = mem[0];
-+	meta->flags  = mem[1];
-+	memcpy(meta->buf, &mem[2], length - 2);
- 	meta_buf->bytesused += length + sizeof(meta->ns) + sizeof(meta->sof);
- 
- 	uvc_dbg(stream->dev, FRAME,
-diff --git a/include/uapi/linux/uvcvideo.h b/include/uapi/linux/uvcvideo.h
-index 8288137387c0d..a9d0a64007ba5 100644
---- a/include/uapi/linux/uvcvideo.h
-+++ b/include/uapi/linux/uvcvideo.h
-@@ -86,7 +86,7 @@ struct uvc_xu_control_query {
-  * struct. The first two fields are added by the driver, they can be used for
-  * clock synchronisation. The rest is an exact copy of a UVC payload header.
-  * Only complete objects with complete buffers are included. Therefore it's
-- * always sizeof(meta->ts) + sizeof(meta->sof) + meta->length bytes large.
-+ * always sizeof(meta->ns) + sizeof(meta->sof) + meta->length bytes large.
-  */
- struct uvc_meta_buf {
- 	__u64 ns;
+ 	pages = io_pin_pages(reg.ring_addr,
+-			     struct_size(br, bufs, reg.ring_entries),
++			     flex_array_size(br, bufs, reg.ring_entries),
+ 			     &nr_pages);
+ 	if (IS_ERR(pages)) {
+ 		kfree(free_bl);
 -- 
 2.39.2
 
