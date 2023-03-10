@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F943881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:45:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AECC8C4339B;
-	Fri, 10 Mar 2023 14:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20680881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:45:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B88C4339E;
+	Fri, 10 Mar 2023 14:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459535;
-	bh=BBdswELO1+jBSebGBQ9QOp1E2AsN4i/wJRJc3OycqVU=;
+	s=korg; t=1678459538;
+	bh=7oZSva1FA8vGWD1d9KPqPQNdfebha4lMmOuTYN6uq6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tmsBXp9iUJS3GhEcdTXwc5bw4cyNqJz7cwW+qpiwYjJGggE3KgwHF1TUwUVRimvs5
-	 MBxj7fI8XH1MFWEbGUd9swUDgMaHI1Si/r15mhzQh45rTUd2FQdlEaBLHUKDd/nP8h
-	 uCnKJ6Z4cvtYy7DuW9eDkxwxXRDJE9TiUoLmtGNI=
+	b=EBEn7HoYJeHEDmGLdk3vLIpxvxK8iq24RlA+CGPjEP0QhRfOhbW7VZc6ioxHjWtCf
+	 JM9sTymaFxJ4rUOL4abzQ5cAKkgBjXcbbwXHy8fBwEWSzOQEfSGJVMZ8Cs4I5JBzTl
+	 HOb0TJf0fbtla8G2758LG/HuXIsw9kREn88OhdQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robimarko@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Adam Ford <aford173@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 018/529] arm64: dts: qcom: ipq8074: correct Gen2 PCIe ranges
-Date: Fri, 10 Mar 2023 14:32:41 +0100
-Message-Id: <20230310133805.851780936@linuxfoundation.org>
+Subject: [PATCH 5.10 036/529] arm64: dts: renesas: beacon-renesom: Fix gpio expander reference
+Date: Fri, 10 Mar 2023 14:32:59 +0100
+Message-Id: <20230310133806.661685442@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -35,39 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Marko <robimarko@gmail.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 2055cb7dccea16bafa3adf9c5e3216949512c34a ]
+[ Upstream commit d7f9492dfc03153ac56ab59066a196558748f575 ]
 
-Current ranges property set in Gen2 PCIe node is incorrect, replace it
-with the downstream 5.4 QCA kernel value.
+The board used to originally introduce the Beacon Embedded RZ/G2[M/N/H]
+boards had a GPIO expander with address 20, but this was changed when
+the final board went to production.
 
-Fixes: 33057e1672fe ("ARM: dts: ipq8074: Add pcie nodes")
-Signed-off-by: Robert Marko <robimarko@gmail.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230113164449.906002-3-robimarko@gmail.com
+The production boards changed both the part itself and the address.
+With the incorrect address, the LCD cannot come up.  If the LCD fails,
+the rcar-du driver fails to come up, and that also breaks HDMI.
+
+Pre-release board were not shipped to the general public, so it should
+be safe to push this as a fix.  Anyone with a production board would
+have video fail due to this GPIO expander change.
+
+Fixes: a1d8a344f1ca ("arm64: dts: renesas: Introduce r8a774a1-beacon-rzg2m-kit")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230114225647.227972-1-aford173@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../dts/renesas/beacon-renesom-baseboard.dtsi | 24 ++++++++-----------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 98f0001fc7092..1dbae9c73c590 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -610,9 +610,9 @@ pcie1: pci@10000000 {
- 			phy-names = "pciephy";
+diff --git a/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi b/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
+index 53e1d43cbecf8..663adf79471bc 100644
+--- a/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
++++ b/arch/arm64/boot/dts/renesas/beacon-renesom-baseboard.dtsi
+@@ -399,20 +399,6 @@ wm8962_endpoint: endpoint {
+ 		};
+ 	};
  
- 			ranges = <0x81000000 0 0x10200000 0x10200000
--				  0 0x100000   /* downstream I/O */
--				  0x82000000 0 0x10300000 0x10300000
--				  0 0xd00000>; /* non-prefetchable memory */
-+				  0 0x10000>,   /* downstream I/O */
-+				 <0x82000000 0 0x10220000 0x10220000
-+				  0 0xfde0000>; /* non-prefetchable memory */
+-	/* 0 - lcd_reset */
+-	/* 1 - lcd_pwr */
+-	/* 2 - lcd_select */
+-	/* 3 - backlight-enable */
+-	/* 4 - Touch_shdwn */
+-	/* 5 - LCD_H_pol */
+-	/* 6 - lcd_V_pol */
+-	gpio_exp1: gpio@20 {
+-		compatible = "onnn,pca9654";
+-		reg = <0x20>;
+-		gpio-controller;
+-		#gpio-cells = <2>;
+-	};
+-
+ 	touchscreen@26 {
+ 		compatible = "ilitek,ili2117";
+ 		reg = <0x26>;
+@@ -445,6 +431,16 @@ hd3ss3220_ep: endpoint {
+ 			};
+ 		};
+ 	};
++
++	gpio_exp1: gpio@70 {
++		compatible = "nxp,pca9538";
++		reg = <0x70>;
++		gpio-controller;
++		#gpio-cells = <2>;
++		gpio-line-names = "lcd_reset", "lcd_pwr", "lcd_select",
++				  "backlight-enable", "Touch_shdwn",
++				  "LCD_H_pol", "lcd_V_pol";
++	};
+ };
  
- 			interrupts = <GIC_SPI 85 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "msi";
+ &lvds0 {
 -- 
 2.39.2
 
