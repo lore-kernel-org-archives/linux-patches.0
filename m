@@ -1,37 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2922847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05249C433EF;
-	Fri, 10 Mar 2023 13:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3698847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:49:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C295C433D2;
+	Fri, 10 Mar 2023 13:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456161;
-	bh=pv8blzxQ/MeEGjtsb1NAa7l3avihZdu1oc42qxEyTAU=;
+	s=korg; t=1678456164;
+	bh=1Mrovm59CHvxjNZcL6Lv1FWkC0D9hwQ5iMHsFbK4MWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7TeDbrBj1ibL9fLHcM1IuVtG7WiEZeRA/zYWdcq5/UdYWaP1GfqMD+vft45pNuEL
-	 YnAlqUrzhyheoZo8ZkYCv13HVjCUK1SyNy0aQhZMPj/L/Pl3Vy3Ytz8VltFAHlkdiY
-	 O4pHLkeRWjoSkcdpSTTonESX7Ei0cWX38mLc8PJ0=
+	b=G5D8SEXTttHcXK7JXvtFS69mwgoaMge1gCZzah1OOBRNXwH2Cyni5ZriXs0xqzdRA
+	 ZNSdhFxrGoht0r0d7PzSkwlKomuTvSi1/Eg0KXWm7R/b34Ct2ZrwWCHw92ZqGdH0P1
+	 iHkXrbHYoKUpvhGMFG/dE4GT4Wea1/3qJJ2I3zhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
-	Dengcheng Zhu <dzhu@wavecomp.com>,
-	John Crispin <john@phrozen.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	"Steven J. Hill" <Steven.Hill@imgtec.com>,
-	Qais Yousef <Qais.Yousef@imgtec.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Hauke Mehrtens <hauke@hauke-m.de>,
-	James Hogan <jhogan@kernel.org>,
-	linux-mips@vger.kernel.org,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 071/193] MIPS: vpe-mt: drop physical_memsize
-Date: Fri, 10 Mar 2023 14:37:33 +0100
-Message-Id: <20230310133713.399921999@linuxfoundation.org>
+Subject: [PATCH 4.14 072/193] media: platform: ti: Add missing check for devm_regulator_get
+Date: Fri, 10 Mar 2023 14:37:34 +0100
+Message-Id: <20230310133713.428707209@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -45,94 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 91dc288f4edf0d768e46c2c6d33e0ab703403459 ]
+[ Upstream commit da8e05f84a11c3cc3b0ba0a3c62d20e358002d99 ]
 
-When neither LANTIQ nor MIPS_MALTA is set, 'physical_memsize' is not
-declared. This causes the build to fail with:
+Add check for the return value of devm_regulator_get since it may return
+error pointer.
 
-mips-linux-ld: arch/mips/kernel/vpe-mt.o: in function `vpe_run':
-arch/mips/kernel/vpe-mt.c:(.text.vpe_run+0x280): undefined reference to `physical_memsize'
-
-LANTIQ is not using 'physical_memsize' and MIPS_MALTA's use of it is
-self-contained in mti-malta/malta-dtshim.c.
-Use of physical_memsize in vpe-mt.c appears to be unused, so eliminate
-this loader mode completely and require VPE programs to be compiled with
-DFLT_STACK_SIZE and DFLT_HEAP_SIZE defined.
-
-Fixes: 9050d50e2244 ("MIPS: lantiq: Set physical_memsize")
-Fixes: 1a2a6d7e8816 ("MIPS: APRP: Split VPE loader into separate files.")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/all/202302030625.2g3E98sY-lkp@intel.com/
-Cc: Dengcheng Zhu <dzhu@wavecomp.com>
-Cc: John Crispin <john@phrozen.org>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: "Steven J. Hill" <Steven.Hill@imgtec.com>
-Cc: Qais Yousef <Qais.Yousef@imgtec.com>
-Cc: Yang Yingliang <yangyingliang@huawei.com>
-Cc: Hauke Mehrtens <hauke@hauke-m.de>
-Cc: James Hogan <jhogan@kernel.org>
-Cc: linux-mips@vger.kernel.org
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 448de7e7850b ("[media] omap3isp: OMAP3 ISP core")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/vpe.h | 1 -
- arch/mips/kernel/vpe-mt.c   | 7 +++----
- arch/mips/lantiq/prom.c     | 6 ------
- 3 files changed, 3 insertions(+), 11 deletions(-)
+ drivers/media/platform/omap3isp/isp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/mips/include/asm/vpe.h b/arch/mips/include/asm/vpe.h
-index 80e70dbd1f641..012731546cf60 100644
---- a/arch/mips/include/asm/vpe.h
-+++ b/arch/mips/include/asm/vpe.h
-@@ -104,7 +104,6 @@ struct vpe_control {
- 	struct list_head tc_list;       /* Thread contexts */
- };
+diff --git a/drivers/media/platform/omap3isp/isp.c b/drivers/media/platform/omap3isp/isp.c
+index c46402f3e88c1..0df930c80916a 100644
+--- a/drivers/media/platform/omap3isp/isp.c
++++ b/drivers/media/platform/omap3isp/isp.c
+@@ -2286,7 +2286,16 @@ static int isp_probe(struct platform_device *pdev)
  
--extern unsigned long physical_memsize;
- extern struct vpe_control vpecontrol;
- extern const struct file_operations vpe_fops;
+ 	/* Regulators */
+ 	isp->isp_csiphy1.vdd = devm_regulator_get(&pdev->dev, "vdd-csiphy1");
++	if (IS_ERR(isp->isp_csiphy1.vdd)) {
++		ret = PTR_ERR(isp->isp_csiphy1.vdd);
++		goto error;
++	}
++
+ 	isp->isp_csiphy2.vdd = devm_regulator_get(&pdev->dev, "vdd-csiphy2");
++	if (IS_ERR(isp->isp_csiphy2.vdd)) {
++		ret = PTR_ERR(isp->isp_csiphy2.vdd);
++		goto error;
++	}
  
-diff --git a/arch/mips/kernel/vpe-mt.c b/arch/mips/kernel/vpe-mt.c
-index 9fd7cd48ea1d2..496ed8f362f62 100644
---- a/arch/mips/kernel/vpe-mt.c
-+++ b/arch/mips/kernel/vpe-mt.c
-@@ -92,12 +92,11 @@ int vpe_run(struct vpe *v)
- 	write_tc_c0_tchalt(read_tc_c0_tchalt() & ~TCHALT_H);
- 
- 	/*
--	 * The sde-kit passes 'memsize' to __start in $a3, so set something
--	 * here...  Or set $a3 to zero and define DFLT_STACK_SIZE and
--	 * DFLT_HEAP_SIZE when you compile your program
-+	 * We don't pass the memsize here, so VPE programs need to be
-+	 * compiled with DFLT_STACK_SIZE and DFLT_HEAP_SIZE defined.
- 	 */
-+	mttgpr(7, 0);
- 	mttgpr(6, v->ntcs);
--	mttgpr(7, physical_memsize);
- 
- 	/* set up VPE1 */
- 	/*
-diff --git a/arch/mips/lantiq/prom.c b/arch/mips/lantiq/prom.c
-index a26322ff57e01..8cf1868540312 100644
---- a/arch/mips/lantiq/prom.c
-+++ b/arch/mips/lantiq/prom.c
-@@ -25,12 +25,6 @@
- DEFINE_SPINLOCK(ebu_lock);
- EXPORT_SYMBOL_GPL(ebu_lock);
- 
--/*
-- * This is needed by the VPE loader code, just set it to 0 and assume
-- * that the firmware hardcodes this value to something useful.
-- */
--unsigned long physical_memsize = 0L;
--
- /*
-  * this struct is filled by the soc specific detection code and holds
-  * information about the specific soc type, revision and name
+ 	/* Clocks
+ 	 *
 -- 
 2.39.2
 
