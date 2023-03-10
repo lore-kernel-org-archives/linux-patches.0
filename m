@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD12882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:07:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D52C433EF;
-	Fri, 10 Mar 2023 15:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93871882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:07:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132D3C433EF;
+	Fri, 10 Mar 2023 15:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460839;
-	bh=4HR0cXZhAsP+JZ0XpJhjHhuIvmfAZan72tq67SgEY5E=;
+	s=korg; t=1678460842;
+	bh=JHShmRp3tRLXch88m4N/oZrTogVoNcn63idwjNH2u4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xA8fkOmzfILe68o0Y/suYmrJ2rI3g6TOJArL+XcE1X6EOIR2U7o4z7QfXTzTdWdCZ
-	 IIkA/O5thBauLEqkDsSayGVq0SKzd0AqEutS7WVnTCrhBh+3ORyNVhTGp1RtwOQv8q
-	 +3LmbrgW9Mkidip8C+j149JACyqe3CMh2jURcACQ=
+	b=pp0ggKA8NSho8onNj80QqrxCWGdf/S4NHeVohI3hp3PwpK1wAXUhONGwYWfRlO6GX
+	 EhCh9jiO/d4bRbPBM2fWt+MeIquttUy7ydgCHcVPKS4bUkCk/MZyRW9LDAetAHOfm4
+	 5lbyi8rM/USN/VD//X82DDY1ViWMi6YzICvzgxIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	Maor Dickman <maord@nvidia.com>,
+	Raed Salem <raeds@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 468/529] 9p/rdma: unmap receive dma buffer in rdma_request()/post_recv()
-Date: Fri, 10 Mar 2023 14:40:11 +0100
-Message-Id: <20230310133826.534310290@linuxfoundation.org>
+Subject: [PATCH 5.10 469/529] net/mlx5: Geneve, Fix handling of Geneve object id as error code
+Date: Fri, 10 Mar 2023 14:40:12 +0100
+Message-Id: <20230310133826.573574236@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -37,77 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Maor Dickman <maord@nvidia.com>
 
-[ Upstream commit 74a25e6e916cb57dab4267a96fbe8864ed21abdb ]
+[ Upstream commit d28a06d7dbedc598a06bd1e53a28125f87ca5d0c ]
 
-When down_interruptible() or ib_post_send() failed in rdma_request(),
-receive dma buffer is not unmapped. Add unmap action to error path.
-Also if ib_post_recv() failed in post_recv(), dma buffer is not unmapped.
-Add unmap action to error path.
+On success, mlx5_geneve_tlv_option_create returns non negative
+Geneve object id. In case the object id is positive value the
+caller functions will handle it as an error (non zero) and
+will fail to offload the Geneve rule.
 
-Link: https://lkml.kernel.org/r/20230104020424.611926-1-shaozhengchao@huawei.com
-Fixes: fc79d4b104f0 ("9p: rdma: RDMA Transport Support for 9P")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Fix this by changing caller function ,mlx5_geneve_tlv_option_add,
+to return 0 in case valid non negative object id was provided.
+
+Fixes: 0ccc171ea6a2 ("net/mlx5: Geneve, Manage Geneve TLV options")
+Signed-off-by: Maor Dickman <maord@nvidia.com>
+Reviewed-by: Raed Salem <raeds@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_rdma.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/9p/trans_rdma.c b/net/9p/trans_rdma.c
-index 2885ff9c76f07..7217bd9886e36 100644
---- a/net/9p/trans_rdma.c
-+++ b/net/9p/trans_rdma.c
-@@ -386,6 +386,7 @@ post_recv(struct p9_client *client, struct p9_rdma_context *c)
- 	struct p9_trans_rdma *rdma = client->trans;
- 	struct ib_recv_wr wr;
- 	struct ib_sge sge;
-+	int ret;
- 
- 	c->busa = ib_dma_map_single(rdma->cm_id->device,
- 				    c->rc.sdata, client->msize,
-@@ -403,7 +404,12 @@ post_recv(struct p9_client *client, struct p9_rdma_context *c)
- 	wr.wr_cqe = &c->cqe;
- 	wr.sg_list = &sge;
- 	wr.num_sge = 1;
--	return ib_post_recv(rdma->qp, &wr, NULL);
-+
-+	ret = ib_post_recv(rdma->qp, &wr, NULL);
-+	if (ret)
-+		ib_dma_unmap_single(rdma->cm_id->device, c->busa,
-+				    client->msize, DMA_FROM_DEVICE);
-+	return ret;
- 
-  error:
- 	p9_debug(P9_DEBUG_ERROR, "EIO\n");
-@@ -500,7 +506,7 @@ static int rdma_request(struct p9_client *client, struct p9_req_t *req)
- 
- 	if (down_interruptible(&rdma->sq_sem)) {
- 		err = -EINTR;
--		goto send_error;
-+		goto dma_unmap;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c
+index 23361a9ae4fa0..6dc83e871cd76 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c
+@@ -105,6 +105,7 @@ int mlx5_geneve_tlv_option_add(struct mlx5_geneve *geneve, struct geneve_opt *op
+ 		geneve->opt_type = opt->type;
+ 		geneve->obj_id = res;
+ 		geneve->refcount++;
++		res = 0;
  	}
  
- 	/* Mark request as `sent' *before* we actually send it,
-@@ -510,11 +516,14 @@ static int rdma_request(struct p9_client *client, struct p9_req_t *req)
- 	req->status = REQ_STATUS_SENT;
- 	err = ib_post_send(rdma->qp, &wr, NULL);
- 	if (err)
--		goto send_error;
-+		goto dma_unmap;
- 
- 	/* Success */
- 	return 0;
- 
-+dma_unmap:
-+	ib_dma_unmap_single(rdma->cm_id->device, c->busa,
-+			    c->req->tc.size, DMA_TO_DEVICE);
-  /* Handle errors that happened during or while preparing the send: */
-  send_error:
- 	req->status = REQ_STATUS_ERROR;
+ unlock:
 -- 
 2.39.2
 
