@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EE0882B
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:14:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA78EC433EF;
-	Fri, 10 Mar 2023 15:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB5D882B
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:14:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3031C433D2;
+	Fri, 10 Mar 2023 15:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678461291;
-	bh=cLmJF7CPOGWQHYROjzZqrG6jJUlLGunFxYHwR1IDVnk=;
+	s=korg; t=1678461294;
+	bh=On8oB+fQZKHmgucBg7uQ1++v7dwDwEHMPyHGR/TMvPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n3OGZmiCfb/l2WENmjrOu9KUiIRDzZw3pR46agcws+VTyv0+/GfbHfNfPzWqQtgiC
-	 gAJjHb9frlbWnPuOdFoXVg/NRsxfJ4zK78xN4m/xbMfeicrUohHnRSf1HEeleQhyrb
-	 D8gV7XVoXNJ1MiGLEPT/ajwlWZmou+Kk45Y3/OsY=
+	b=ps5m5zONVp2c8nRKAuSSSAmf1CJzd8ReSR7VCS28Jc4O+yEaAk8G4jhl+XtqDdOYc
+	 TNpt/+l8JkLDuAg+BsZYTHl5brPZfkANFNrlO7YFmgF+JYLirz94TlWuPuxxW3D9Z5
+	 QEFbvbbqrSVNkgIbDB/fsknvozIxVxBrFrUSwfiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
+	Sherry Sun <sherry.sun@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 087/136] tty: fix out-of-bounds access in tty_driver_lookup_tty()
-Date: Fri, 10 Mar 2023 14:43:29 +0100
-Message-Id: <20230310133709.796057823@linuxfoundation.org>
+Subject: [PATCH 5.15 088/136] tty: serial: fsl_lpuart: disable the CTS when send break signal
+Date: Fri, 10 Mar 2023 14:43:30 +0100
+Message-Id: <20230310133709.824662204@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133706.811226272@linuxfoundation.org>
 References: <20230310133706.811226272@linuxfoundation.org>
@@ -35,73 +34,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit db4df8e9d79e7d37732c1a1b560958e8dadfefa1 ]
+[ Upstream commit c4c81db5cf8bc53d6160c3abf26d382c841aa434 ]
 
-When specifying an invalid console= device like console=tty3270,
-tty_driver_lookup_tty() returns the tty struct without checking
-whether index is a valid number.
+LPUART IP has a bug that it treats the CTS as higher priority than the
+break signal, which cause the break signal sending through UARTCTRL_SBK
+may impacted by the CTS input if the HW flow control is enabled.
 
-To reproduce:
+Add this workaround patch to fix the IP bug, we can disable CTS before
+asserting SBK to avoid any interference from CTS, and re-enable it when
+break off.
 
-qemu-system-x86_64 -enable-kvm -nographic -serial mon:stdio \
--kernel ../linux-build-x86/arch/x86/boot/bzImage \
--append "console=ttyS0 console=tty3270"
+Such as for the bluetooth chip power save feature, host can let the BT
+chip get into sleep state by sending a UART break signal, and wake it up
+by turning off the UART break. If the BT chip enters the sleep mode
+successfully, it will pull up the CTS line, if the BT chip is woken up,
+it will pull down the CTS line. If without this workaround patch, the
+UART TX pin cannot send the break signal successfully as it affected by
+the BT CTS pin. After adding this patch, the BT power save feature can
+work well.
 
-This crashes with:
-
-[    0.770599] BUG: kernel NULL pointer dereference, address: 00000000000000ef
-[    0.771265] #PF: supervisor read access in kernel mode
-[    0.771773] #PF: error_code(0x0000) - not-present page
-[    0.772609] Oops: 0000 [#1] PREEMPT SMP PTI
-[    0.774878] RIP: 0010:tty_open+0x268/0x6f0
-[    0.784013]  chrdev_open+0xbd/0x230
-[    0.784444]  ? cdev_device_add+0x80/0x80
-[    0.784920]  do_dentry_open+0x1e0/0x410
-[    0.785389]  path_openat+0xca9/0x1050
-[    0.785813]  do_filp_open+0xaa/0x150
-[    0.786240]  file_open_name+0x133/0x1b0
-[    0.786746]  filp_open+0x27/0x50
-[    0.787244]  console_on_rootfs+0x14/0x4d
-[    0.787800]  kernel_init_freeable+0x1e4/0x20d
-[    0.788383]  ? rest_init+0xc0/0xc0
-[    0.788881]  kernel_init+0x11/0x120
-[    0.789356]  ret_from_fork+0x22/0x30
-
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20221209112737.3222509-2-svens@linux.ibm.com
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://lore.kernel.org/r/20221214031137.28815-2-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_io.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/tty/serial/fsl_lpuart.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
-index 6616d4a0d41de..64dd6439d1797 100644
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -1244,14 +1244,16 @@ static struct tty_struct *tty_driver_lookup_tty(struct tty_driver *driver,
- {
- 	struct tty_struct *tty;
+diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
+index f4d9dc4648da4..8a1d5c5d4c09f 100644
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -1484,12 +1484,32 @@ static void lpuart_break_ctl(struct uart_port *port, int break_state)
  
--	if (driver->ops->lookup)
-+	if (driver->ops->lookup) {
- 		if (!file)
- 			tty = ERR_PTR(-EIO);
- 		else
- 			tty = driver->ops->lookup(driver, file, idx);
--	else
-+	} else {
-+		if (idx >= driver->num)
-+			return ERR_PTR(-EINVAL);
- 		tty = driver->ttys[idx];
--
+ static void lpuart32_break_ctl(struct uart_port *port, int break_state)
+ {
+-	unsigned long temp;
++	unsigned long temp, modem;
++	struct tty_struct *tty;
++	unsigned int cflag = 0;
++
++	tty = tty_port_tty_get(&port->state->port);
++	if (tty) {
++		cflag = tty->termios.c_cflag;
++		tty_kref_put(tty);
 +	}
- 	if (!IS_ERR(tty))
- 		tty_kref_get(tty);
- 	return tty;
+ 
+ 	temp = lpuart32_read(port, UARTCTRL) & ~UARTCTRL_SBK;
++	modem = lpuart32_read(port, UARTMODIR);
+ 
+-	if (break_state != 0)
++	if (break_state != 0) {
+ 		temp |= UARTCTRL_SBK;
++		/*
++		 * LPUART CTS has higher priority than SBK, need to disable CTS before
++		 * asserting SBK to avoid any interference if flow control is enabled.
++		 */
++		if (cflag & CRTSCTS && modem & UARTMODIR_TXCTSE)
++			lpuart32_write(port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
++	} else {
++		/* Re-enable the CTS when break off. */
++		if (cflag & CRTSCTS && !(modem & UARTMODIR_TXCTSE))
++			lpuart32_write(port, modem | UARTMODIR_TXCTSE, UARTMODIR);
++	}
+ 
+ 	lpuart32_write(port, temp, UARTCTRL);
+ }
 -- 
 2.39.2
 
