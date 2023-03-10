@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7ED8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:04:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE28C433D2;
-	Fri, 10 Mar 2023 14:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FCE38481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:04:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0690AC433EF;
+	Fri, 10 Mar 2023 14:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457092;
-	bh=BtpRRmAwmp+wle9T2F+1zMPKEBYiOKFCztRZkmdwxY8=;
+	s=korg; t=1678457095;
+	bh=+0x302HVA94pD7u0OKvIqfzTRP+nx4DiV6FamS1tsgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UpEtaUIDpI6Tm9Jl3Fs5kLksJNO0Lt8Gw5qm9nrqvMsq5hZp9KjEAf9m79u9cvdji
-	 7xzMMeBg2sz39me3ljhCwB7lyMSNytDLGaHPwGXIiqF4ngNESdl8N+XDVoS7Hglxrh
-	 VQtZcRiGd1JZ+G+gSN9t045gRV9flMCrjWnQIw0M=
+	b=rQ8FomFhLHh89JSbnbtKY/5ednsMiZcQFbtH9LwK6p8Bv8ng4TJm2jBIbEaPwkv1F
+	 iQ+/lctuRhlzsxUPemNI8+EasWd+euSEMawGPFOR1BsenUyoZauWpzBhx+zL/ibFnm
+	 3hiHBo+drn3aOVNA3MQjujVkmrTVdlTilX/LZ6zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
 	Roger Lu <roger.lu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/200] soc: mediatek: mtk-svs: reset svs when svs_resume() fail
-Date: Fri, 10 Mar 2023 14:37:05 +0100
-Message-Id: <20230310133717.600518803@linuxfoundation.org>
+Subject: [PATCH 6.1 019/200] soc: mediatek: mtk-svs: Use pm_runtime_resume_and_get() in svs_init01()
+Date: Fri, 10 Mar 2023 14:37:06 +0100
+Message-Id: <20230310133717.629894530@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -35,43 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roger Lu <roger.lu@mediatek.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit f4f8ad204a15d57c1a3e8ea7eca62157b44cbf59 ]
+[ Upstream commit 37fa2aff8fe490771f2229b0f2fcd15796b1bfca ]
 
-Add svs reset when svs_resume() fail.
+svs_init01() calls pm_runtime_get_sync() and added fail path as
+svs_init01_finish to put usage_counter. However, pm_runtime_get_sync()
+will increment usage_counter even it failed. Fix it by replacing it with
+pm_runtime_resume_and_get() to keep usage counter balanced.
 
-Fixes: a825d72f74a3 ("soc: mediatek: fix missing clk_disable_unprepare() on err in svs_resume()")
+Fixes: 681a02e95000 ("soc: mediatek: SVS: introduce MTK SVS engine")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
 Signed-off-by: Roger Lu <roger.lu@mediatek.com>
-Link: https://lore.kernel.org/r/20230111074528.29354-3-roger.lu@mediatek.com
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230111074528.29354-5-roger.lu@mediatek.com
 Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/mediatek/mtk-svs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/soc/mediatek/mtk-svs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/soc/mediatek/mtk-svs.c b/drivers/soc/mediatek/mtk-svs.c
-index 9859e6cf6b8f9..e0b8aa75c84b6 100644
+index e0b8aa75c84b6..00526fd37d7b8 100644
 --- a/drivers/soc/mediatek/mtk-svs.c
 +++ b/drivers/soc/mediatek/mtk-svs.c
-@@ -1614,12 +1614,16 @@ static int svs_resume(struct device *dev)
+@@ -1324,7 +1324,7 @@ static int svs_init01(struct svs_platform *svsp)
+ 				svsb->pm_runtime_enabled_count++;
+ 			}
  
- 	ret = svs_init02(svsp);
- 	if (ret)
--		goto out_of_resume;
-+		goto svs_resume_reset_assert;
- 
- 	svs_mon_mode(svsp);
- 
- 	return 0;
- 
-+svs_resume_reset_assert:
-+	dev_err(svsp->dev, "assert reset: %d\n",
-+		reset_control_assert(svsp->rst));
-+
- out_of_resume:
- 	clk_disable_unprepare(svsp->main_clk);
- 	return ret;
+-			ret = pm_runtime_get_sync(svsb->opp_dev);
++			ret = pm_runtime_resume_and_get(svsb->opp_dev);
+ 			if (ret < 0) {
+ 				dev_err(svsb->dev, "mtcmos on fail: %d\n", ret);
+ 				goto svs_init01_resume_cpuidle;
 -- 
 2.39.2
 
