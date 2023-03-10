@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17738847F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:58:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F907C433EF;
-	Fri, 10 Mar 2023 13:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A18847F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:58:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B7AC433EF;
+	Fri, 10 Mar 2023 13:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456712;
-	bh=ZnNLstyvJRgpkBsGvsWqZFTK44193dpsBoMSVfjj4aA=;
+	s=korg; t=1678456715;
+	bh=zsEbvVZO3JKyBoZD9T9BqIWyJl4Kwj8Twq0ZK/1NT4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rfv1S7O3sMjeRmVJctwBfZBOfu0YyP8p6tcGrq/gVpqTqRHgM3we7iyPxyO6c8KBW
-	 zqVLjzsdTT8YBF4gEByDtYMZvUf8A0oq4vCrh8A+xA0ibfq1H14EsBRRlWOzAB43no
-	 /STnIwZIAke6fIB2u6OuQ4dtbunXnC0/J0k8vmP0=
+	b=dbZ/j8nGr0Ur1HITnyvzA4Pv9BE1kTGklAW7OLmXpk9hgs97ODqJy0IEp3aFLKOKl
+	 NF9Obl//hIZFL+C01P03FTiSJ10OWygF8mZ72fCj2oGLv5StcKq8Qd8g1Goe8bDT96
+	 FvACShaaneKTgTf1lMVwwDxjOrKSfSyyza6KU3yM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 097/211] net/sched: act_sample: fix action bind logic
-Date: Fri, 10 Mar 2023 14:37:57 +0100
-Message-Id: <20230310133721.725108466@linuxfoundation.org>
+Subject: [PATCH 6.2 098/211] net: dsa: seville: ignore mscc-miim read errors from Lynx PCS
+Date: Fri, 10 Mar 2023 14:37:58 +0100
+Message-Id: <20230310133721.753667887@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.689332661@linuxfoundation.org>
 References: <20230310133718.689332661@linuxfoundation.org>
@@ -37,90 +36,151 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 4a20056a49a1854966562241922f68197f950539 ]
+[ Upstream commit 0322ef49c1ac6f0e2ef37b146c0bf8440873072c ]
 
-The TC architecture allows filters and actions to be created independently.
-In filters the user can reference action objects using:
-tc action add action sample ... index 1
-tc filter add ... action pedit index 1
+During the refactoring in the commit below, vsc9953_mdio_read() was
+replaced with mscc_miim_read(), which has one extra step: it checks for
+the MSCC_MIIM_DATA_ERROR bits before returning the result.
 
-In the current code for act_sample this is broken as it checks netlink
-attributes for create/update before actually checking if we are binding to an
-existing action.
+On T1040RDB, there are 8 QSGMII PCSes belonging to the switch, and they
+are organized in 2 groups. First group responds to MDIO addresses 4-7
+because QSGMIIACR1[MDEV_PORT] is 1, and the second group responds to
+MDIO addresses 8-11 because QSGMIIBCR1[MDEV_PORT] is 2. I have double
+checked that these values are correctly set in the SERDES, as well as
+PCCR1[QSGMA_CFG] and PCCR1[QSGMB_CFG] are both 0b01.
 
-tdc results:
-1..29
-ok 1 9784 - Add valid sample action with mandatory arguments
-ok 2 5c91 - Add valid sample action with mandatory arguments and continue control action
-ok 3 334b - Add valid sample action with mandatory arguments and drop control action
-ok 4 da69 - Add valid sample action with mandatory arguments and reclassify control action
-ok 5 13ce - Add valid sample action with mandatory arguments and pipe control action
-ok 6 1886 - Add valid sample action with mandatory arguments and jump control action
-ok 7 7571 - Add sample action with invalid rate
-ok 8 b6d4 - Add sample action with mandatory arguments and invalid control action
-ok 9 a874 - Add invalid sample action without mandatory arguments
-ok 10 ac01 - Add invalid sample action without mandatory argument rate
-ok 11 4203 - Add invalid sample action without mandatory argument group
-ok 12 14a7 - Add invalid sample action without mandatory argument group
-ok 13 8f2e - Add valid sample action with trunc argument
-ok 14 45f8 - Add sample action with maximum rate argument
-ok 15 ad0c - Add sample action with maximum trunc argument
-ok 16 83a9 - Add sample action with maximum group argument
-ok 17 ed27 - Add sample action with invalid rate argument
-ok 18 2eae - Add sample action with invalid group argument
-ok 19 6ff3 - Add sample action with invalid trunc size
-ok 20 2b2a - Add sample action with invalid index
-ok 21 dee2 - Add sample action with maximum allowed index
-ok 22 560e - Add sample action with cookie
-ok 23 704a - Replace existing sample action with new rate argument
-ok 24 60eb - Replace existing sample action with new group argument
-ok 25 2cce - Replace existing sample action with new trunc argument
-ok 26 59d1 - Replace existing sample action with new control argument
-ok 27 0a6e - Replace sample action with invalid goto chain control
-ok 28 3872 - Delete sample action with valid index
-ok 29 a394 - Delete sample action with invalid index
+mscc_miim_read: phyad 8 reg 0x1 MIIM_DATA 0x2d
+mscc_miim_read: phyad 8 reg 0x5 MIIM_DATA 0x5801
+mscc_miim_read: phyad 8 reg 0x1 MIIM_DATA 0x2d
+mscc_miim_read: phyad 8 reg 0x5 MIIM_DATA 0x5801
+mscc_miim_read: phyad 9 reg 0x1 MIIM_DATA 0x2d
+mscc_miim_read: phyad 9 reg 0x5 MIIM_DATA 0x5801
+mscc_miim_read: phyad 9 reg 0x1 MIIM_DATA 0x2d
+mscc_miim_read: phyad 9 reg 0x5 MIIM_DATA 0x5801
+mscc_miim_read: phyad 10 reg 0x1 MIIM_DATA 0x2d
+mscc_miim_read: phyad 10 reg 0x5 MIIM_DATA 0x5801
+mscc_miim_read: phyad 10 reg 0x1 MIIM_DATA 0x2d
+mscc_miim_read: phyad 10 reg 0x5 MIIM_DATA 0x5801
+mscc_miim_read: phyad 11 reg 0x1 MIIM_DATA 0x2d
+mscc_miim_read: phyad 11 reg 0x5 MIIM_DATA 0x5801
+mscc_miim_read: phyad 11 reg 0x1 MIIM_DATA 0x2d
+mscc_miim_read: phyad 11 reg 0x5 MIIM_DATA 0x5801
+mscc_miim_read: phyad 4 reg 0x1 MIIM_DATA 0x3002d, ERROR
+mscc_miim_read: phyad 4 reg 0x5 MIIM_DATA 0x3da01, ERROR
+mscc_miim_read: phyad 5 reg 0x1 MIIM_DATA 0x3002d, ERROR
+mscc_miim_read: phyad 5 reg 0x5 MIIM_DATA 0x35801, ERROR
+mscc_miim_read: phyad 5 reg 0x1 MIIM_DATA 0x3002d, ERROR
+mscc_miim_read: phyad 5 reg 0x5 MIIM_DATA 0x35801, ERROR
+mscc_miim_read: phyad 6 reg 0x1 MIIM_DATA 0x3002d, ERROR
+mscc_miim_read: phyad 6 reg 0x5 MIIM_DATA 0x35801, ERROR
+mscc_miim_read: phyad 6 reg 0x1 MIIM_DATA 0x3002d, ERROR
+mscc_miim_read: phyad 6 reg 0x5 MIIM_DATA 0x35801, ERROR
+mscc_miim_read: phyad 7 reg 0x1 MIIM_DATA 0x3002d, ERROR
+mscc_miim_read: phyad 7 reg 0x5 MIIM_DATA 0x35801, ERROR
+mscc_miim_read: phyad 7 reg 0x1 MIIM_DATA 0x3002d, ERROR
+mscc_miim_read: phyad 7 reg 0x5 MIIM_DATA 0x35801, ERROR
 
-Fixes: 5c5670fae430 ("net/sched: Introduce sample tc action")
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+As can be seen, the data in MIIM_DATA is still valid despite having the
+MSCC_MIIM_DATA_ERROR bits set. The driver as introduced in commit
+84705fc16552 ("net: dsa: felix: introduce support for Seville VSC9953
+switch") was ignoring these bits, perhaps deliberately (although
+unbeknownst to me).
+
+This is an old IP and the hardware team cannot seem to be able to help
+me track down a plausible reason for these failures. I'll keep
+investigating, but in the meantime, this is a direct regression which
+must be restored to a working state.
+
+The only thing I can do is keep ignoring the errors as before.
+
+Fixes: b99658452355 ("net: dsa: ocelot: felix: utilize shared mscc-miim driver for indirect MDIO access")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_sample.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/dsa/ocelot/seville_vsc9953.c | 4 ++--
+ drivers/net/mdio/mdio-mscc-miim.c        | 9 ++++++---
+ include/linux/mdio/mdio-mscc-miim.h      | 2 +-
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/act_sample.c b/net/sched/act_sample.c
-index f7416b5598e04..4c670e7568dc6 100644
---- a/net/sched/act_sample.c
-+++ b/net/sched/act_sample.c
-@@ -55,8 +55,8 @@ static int tcf_sample_init(struct net *net, struct nlattr *nla,
- 					  sample_policy, NULL);
- 	if (ret < 0)
- 		return ret;
--	if (!tb[TCA_SAMPLE_PARMS] || !tb[TCA_SAMPLE_RATE] ||
--	    !tb[TCA_SAMPLE_PSAMPLE_GROUP])
-+
-+	if (!tb[TCA_SAMPLE_PARMS])
- 		return -EINVAL;
+diff --git a/drivers/net/dsa/ocelot/seville_vsc9953.c b/drivers/net/dsa/ocelot/seville_vsc9953.c
+index 88ed3a2e487a4..fa03254adcefd 100644
+--- a/drivers/net/dsa/ocelot/seville_vsc9953.c
++++ b/drivers/net/dsa/ocelot/seville_vsc9953.c
+@@ -893,8 +893,8 @@ static int vsc9953_mdio_bus_alloc(struct ocelot *ocelot)
  
- 	parm = nla_data(tb[TCA_SAMPLE_PARMS]);
-@@ -80,6 +80,13 @@ static int tcf_sample_init(struct net *net, struct nlattr *nla,
- 		tcf_idr_release(*a, bind);
- 		return -EEXIST;
+ 	rc = mscc_miim_setup(dev, &bus, "VSC9953 internal MDIO bus",
+ 			     ocelot->targets[GCB],
+-			     ocelot->map[GCB][GCB_MIIM_MII_STATUS & REG_MASK]);
+-
++			     ocelot->map[GCB][GCB_MIIM_MII_STATUS & REG_MASK],
++			     true);
+ 	if (rc) {
+ 		dev_err(dev, "failed to setup MDIO bus\n");
+ 		return rc;
+diff --git a/drivers/net/mdio/mdio-mscc-miim.c b/drivers/net/mdio/mdio-mscc-miim.c
+index 51f68daac152f..34b87389788bb 100644
+--- a/drivers/net/mdio/mdio-mscc-miim.c
++++ b/drivers/net/mdio/mdio-mscc-miim.c
+@@ -52,6 +52,7 @@ struct mscc_miim_info {
+ struct mscc_miim_dev {
+ 	struct regmap *regs;
+ 	int mii_status_offset;
++	bool ignore_read_errors;
+ 	struct regmap *phy_regs;
+ 	const struct mscc_miim_info *info;
+ 	struct clk *clk;
+@@ -138,7 +139,7 @@ static int mscc_miim_read(struct mii_bus *bus, int mii_id, int regnum)
+ 		goto out;
  	}
-+
-+	if (!tb[TCA_SAMPLE_RATE] || !tb[TCA_SAMPLE_PSAMPLE_GROUP]) {
-+		NL_SET_ERR_MSG(extack, "sample rate and group are required");
-+		err = -EINVAL;
-+		goto release_idr;
-+	}
-+
- 	err = tcf_action_check_ctrlact(parm->action, tp, &goto_ch, extack);
- 	if (err < 0)
- 		goto release_idr;
+ 
+-	if (val & MSCC_MIIM_DATA_ERROR) {
++	if (!miim->ignore_read_errors && !!(val & MSCC_MIIM_DATA_ERROR)) {
+ 		ret = -EIO;
+ 		goto out;
+ 	}
+@@ -218,7 +219,8 @@ static const struct regmap_config mscc_miim_phy_regmap_config = {
+ };
+ 
+ int mscc_miim_setup(struct device *dev, struct mii_bus **pbus, const char *name,
+-		    struct regmap *mii_regmap, int status_offset)
++		    struct regmap *mii_regmap, int status_offset,
++		    bool ignore_read_errors)
+ {
+ 	struct mscc_miim_dev *miim;
+ 	struct mii_bus *bus;
+@@ -240,6 +242,7 @@ int mscc_miim_setup(struct device *dev, struct mii_bus **pbus, const char *name,
+ 
+ 	miim->regs = mii_regmap;
+ 	miim->mii_status_offset = status_offset;
++	miim->ignore_read_errors = ignore_read_errors;
+ 
+ 	*pbus = bus;
+ 
+@@ -291,7 +294,7 @@ static int mscc_miim_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, PTR_ERR(phy_regmap),
+ 				     "Unable to create phy register regmap\n");
+ 
+-	ret = mscc_miim_setup(dev, &bus, "mscc_miim", mii_regmap, 0);
++	ret = mscc_miim_setup(dev, &bus, "mscc_miim", mii_regmap, 0, false);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Unable to setup the MDIO bus\n");
+ 		return ret;
+diff --git a/include/linux/mdio/mdio-mscc-miim.h b/include/linux/mdio/mdio-mscc-miim.h
+index 5b4ed2c3cbb9a..1ce699740af63 100644
+--- a/include/linux/mdio/mdio-mscc-miim.h
++++ b/include/linux/mdio/mdio-mscc-miim.h
+@@ -14,6 +14,6 @@
+ 
+ int mscc_miim_setup(struct device *device, struct mii_bus **bus,
+ 		    const char *name, struct regmap *mii_regmap,
+-		    int status_offset);
++		    int status_offset, bool ignore_read_errors);
+ 
+ #endif
 -- 
 2.39.2
 
