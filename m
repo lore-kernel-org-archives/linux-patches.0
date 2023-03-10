@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C488821
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:01:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C634C433A0;
-	Fri, 10 Mar 2023 15:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D998821
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 15:01:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E312C433EF;
+	Fri, 10 Mar 2023 15:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678460494;
-	bh=MKk7juCt+0M4ouX7TnDNTx5y8hTrCFf5DbKG6DZHWzo=;
+	s=korg; t=1678460497;
+	bh=5tOyoThyiReEj+OvDIwDSrxuy/zV0K3yYNcaQ3CW1qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kz+Bv8i+9U8G2N3yYhBC0pVbishH1BP2hbfl3X8EItRtQRRJ9jBQODIaEL51c5/j7
-	 FCETBhwPXO+LSWJbg1gIcNt6eSITh3KyMSiXiSAbG0kpKmI7B+yONecHeHrMVe6AL1
-	 B1C0116owv6TMfk6XPXmWeCxQXmW84sN1IVnoTj8=
+	b=S+GayAsRDg1u02ihgFWQjcxwZ+IQQAOuyQvFEh/IfFTfv9ClzQRI10MmVHqdtO677
+	 hNqY8K4rD7IZbhGqIH2kP9Y3R5jD787W4o7GBpUZuOcNDerbj8EEsM+UsX6EFqfbTY
+	 C0Ttwh3RcUIigeNzNpC2FDhax7ns664dhk0LseDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E6=9F=B3=E8=8F=81=E5=B3=B0?= <liujingfeng@qianxin.com>,
-	Michal Luczaj <mhal@rbox.co>,
+	Marc Orr <marcorr@google.com>,
+	Ben Gardon <bgardon@google.com>,
+	Venkatesh Srinivas <venkateshs@chromium.org>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.10 354/529] KVM: Destroy target device if coalesced MMIO unregistration fails
-Date: Fri, 10 Mar 2023 14:38:17 +0100
-Message-Id: <20230310133821.412317658@linuxfoundation.org>
+Subject: [PATCH 5.10 355/529] KVM: x86: Inject #GP if WRMSR sets reserved bits in APIC Self-IPI
+Date: Fri, 10 Mar 2023 14:38:18 +0100
+Message-Id: <20230310133821.459676782@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133804.978589368@linuxfoundation.org>
 References: <20230310133804.978589368@linuxfoundation.org>
@@ -37,69 +39,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit b1cb1fac22abf102ffeb29dd3eeca208a3869d54 upstream.
+commit ba5838abb05334e4abfdff1490585c7f365e0424 upstream.
 
-Destroy and free the target coalesced MMIO device if unregistering said
-device fails.  As clearly noted in the code, kvm_io_bus_unregister_dev()
-does not destroy the target device.
+Inject a #GP if the guest attempts to set reserved bits in the x2APIC-only
+Self-IPI register.  Bits 7:0 hold the vector, all other bits are reserved.
 
-  BUG: memory leak
-  unreferenced object 0xffff888112a54880 (size 64):
-    comm "syz-executor.2", pid 5258, jiffies 4297861402 (age 14.129s)
-    hex dump (first 32 bytes):
-      38 c7 67 15 00 c9 ff ff 38 c7 67 15 00 c9 ff ff  8.g.....8.g.....
-      e0 c7 e1 83 ff ff ff ff 00 30 67 15 00 c9 ff ff  .........0g.....
-    backtrace:
-      [<0000000006995a8a>] kmalloc include/linux/slab.h:556 [inline]
-      [<0000000006995a8a>] kzalloc include/linux/slab.h:690 [inline]
-      [<0000000006995a8a>] kvm_vm_ioctl_register_coalesced_mmio+0x8e/0x3d0 arch/x86/kvm/../../../virt/kvm/coalesced_mmio.c:150
-      [<00000000022550c2>] kvm_vm_ioctl+0x47d/0x1600 arch/x86/kvm/../../../virt/kvm/kvm_main.c:3323
-      [<000000008a75102f>] vfs_ioctl fs/ioctl.c:46 [inline]
-      [<000000008a75102f>] file_ioctl fs/ioctl.c:509 [inline]
-      [<000000008a75102f>] do_vfs_ioctl+0xbab/0x1160 fs/ioctl.c:696
-      [<0000000080e3f669>] ksys_ioctl+0x76/0xa0 fs/ioctl.c:713
-      [<0000000059ef4888>] __do_sys_ioctl fs/ioctl.c:720 [inline]
-      [<0000000059ef4888>] __se_sys_ioctl fs/ioctl.c:718 [inline]
-      [<0000000059ef4888>] __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:718
-      [<000000006444fa05>] do_syscall_64+0x9f/0x4e0 arch/x86/entry/common.c:290
-      [<000000009a4ed50b>] entry_SYSCALL_64_after_hwframe+0x49/0xbe
-
-  BUG: leak checking failed
-
-Fixes: 5d3c4c79384a ("KVM: Stop looking for coalesced MMIO zones if the bus is destroyed")
+Reported-by: Marc Orr <marcorr@google.com>
+Cc: Ben Gardon <bgardon@google.com>
+Cc: Venkatesh Srinivas <venkateshs@chromium.org>
 Cc: stable@vger.kernel.org
-Reported-by: 柳菁峰 <liujingfeng@qianxin.com>
-Reported-by: Michal Luczaj <mhal@rbox.co>
-Link: https://lore.kernel.org/r/20221219171924.67989-1-seanjc@google.com
-Link: https://lore.kernel.org/all/20230118220003.1239032-1-mhal@rbox.co
+Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+Link: https://lore.kernel.org/r/20230107011025.565472-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/coalesced_mmio.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/x86/kvm/lapic.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/virt/kvm/coalesced_mmio.c
-+++ b/virt/kvm/coalesced_mmio.c
-@@ -187,15 +187,17 @@ int kvm_vm_ioctl_unregister_coalesced_mm
- 			r = kvm_io_bus_unregister_dev(kvm,
- 				zone->pio ? KVM_PIO_BUS : KVM_MMIO_BUS, &dev->dev);
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -2115,10 +2115,14 @@ int kvm_lapic_reg_write(struct kvm_lapic
+ 		break;
  
-+			kvm_iodevice_destructor(&dev->dev);
-+
- 			/*
- 			 * On failure, unregister destroys all devices on the
- 			 * bus _except_ the target device, i.e. coalesced_zones
--			 * has been modified.  No need to restart the walk as
--			 * there aren't any zones left.
-+			 * has been modified.  Bail after destroying the target
-+			 * device, there's no need to restart the walk as there
-+			 * aren't any zones left.
- 			 */
- 			if (r)
- 				break;
--			kvm_iodevice_destructor(&dev->dev);
- 		}
- 	}
- 
+ 	case APIC_SELF_IPI:
+-		if (apic_x2apic_mode(apic))
+-			kvm_apic_send_ipi(apic, APIC_DEST_SELF | (val & APIC_VECTOR_MASK), 0);
+-		else
++		/*
++		 * Self-IPI exists only when x2APIC is enabled.  Bits 7:0 hold
++		 * the vector, everything else is reserved.
++		 */
++		if (!apic_x2apic_mode(apic) || (val & ~APIC_VECTOR_MASK))
+ 			ret = 1;
++		else
++			kvm_apic_send_ipi(apic, APIC_DEST_SELF | val, 0);
+ 		break;
+ 	default:
+ 		ret = 1;
 
 
