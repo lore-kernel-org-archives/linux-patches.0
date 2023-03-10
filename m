@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0784D881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:41:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46744C433D2;
-	Fri, 10 Mar 2023 14:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B63881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:41:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA98C4339C;
+	Fri, 10 Mar 2023 14:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459311;
-	bh=8E18eDaXP2YlRI1Uu/mmTr15LUGEm2IV5/DEGOX4k34=;
+	s=korg; t=1678459314;
+	bh=MixvVkryo7N9jIJa3+uKxF0gQJFGw8RJ/CfUnMnkH20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d2cM1qT0nrnFxbP9eQc5qzL2WVA78QlYiLyb4JAtQH6HkQCmEVs/5YlCHShVo29xW
-	 2hQYa7dR1dzOm36hdlqkSh3Q9+4PBgI15AbphohsZizkWfeILza6ueETVr8G83/2C/
-	 6UI80yFi3a56IjzBXPnUx/Vur4acf3vb/mHggV7g=
+	b=XfYL9Ud8IeH4PDpG8bM12xQHI0j6yvUwrvz7scDs/iLnoBxZtM98Zj0h1p5ZSlYIl
+	 LQwmkLBwjFgcet9KSarrfpf+7FbWyIK8YQRBJZLCNSP4FQYPO8M5uj6VRaK096xKLk
+	 BmOERBc9osabQ+p/1zP85+pf+YVBBp+/p1FxKUAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Xiang Yang <xiangyang3@huawei.com>,
+	Anton Ivanov <anton.ivanov@kot-begemot.co.uk>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 289/357] fs: f2fs: initialize fsdata in pagecache_write()
-Date: Fri, 10 Mar 2023 14:39:38 +0100
-Message-Id: <20230310133747.506954825@linuxfoundation.org>
+Subject: [PATCH 5.4 290/357] um: vector: Fix memory leak in vector_config
+Date: Fri, 10 Mar 2023 14:39:39 +0100
+Message-Id: <20230310133747.557576287@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -37,38 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Potapenko <glider@google.com>
+From: Xiang Yang <xiangyang3@huawei.com>
 
-[ Upstream commit b1b9896718bc1a212dc288ad66a5fa2fef11353d ]
+[ Upstream commit 8f88c73afe481f93d40801596927e8c0047b6d96 ]
 
-When aops->write_begin() does not initialize fsdata, KMSAN may report
-an error passing the latter to aops->write_end().
+If the return value of the uml_parse_vector_ifspec function is NULL,
+we should call kfree(params) to prevent memory leak.
 
-Fix this by unconditionally initializing fsdata.
-
-Suggested-by: Eric Biggers <ebiggers@kernel.org>
-Fixes: 95ae251fe828 ("f2fs: add fs-verity support")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 49da7e64f33e ("High Performance UML Vector Network Driver")
+Signed-off-by: Xiang Yang <xiangyang3@huawei.com>
+Acked-By: Anton Ivanov <anton.ivanov@kot-begemot.co.uk>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/verity.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/um/drivers/vector_kern.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/f2fs/verity.c b/fs/f2fs/verity.c
-index e5a47782a97ef..c4bd5a1542524 100644
---- a/fs/f2fs/verity.c
-+++ b/fs/f2fs/verity.c
-@@ -76,7 +76,7 @@ static int pagecache_write(struct inode *inode, const void *buf, size_t count,
- 		size_t n = min_t(size_t, count,
- 				 PAGE_SIZE - offset_in_page(pos));
- 		struct page *page;
--		void *fsdata;
-+		void *fsdata = NULL;
- 		int res;
+diff --git a/arch/um/drivers/vector_kern.c b/arch/um/drivers/vector_kern.c
+index 769ffbd9e9a61..eb9dba8dcf958 100644
+--- a/arch/um/drivers/vector_kern.c
++++ b/arch/um/drivers/vector_kern.c
+@@ -746,6 +746,7 @@ static int vector_config(char *str, char **error_out)
  
- 		res = pagecache_write_begin(NULL, inode->i_mapping, pos, n, 0,
+ 	if (parsed == NULL) {
+ 		*error_out = "vector_config failed to parse parameters";
++		kfree(params);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.39.2
 
