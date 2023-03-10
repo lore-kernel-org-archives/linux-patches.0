@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499CD8489
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:15:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8D9C433D2;
-	Fri, 10 Mar 2023 14:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F488489
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:15:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B200CC433D2;
+	Fri, 10 Mar 2023 14:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457755;
-	bh=Ow8oS7myItr+rGPZnrLY9dSkLx/rPUrh4hb7O61uRoo=;
+	s=korg; t=1678457758;
+	bh=VzcIijc6rEZQ9gxKZ5dm8CaHZZaslgrmF7NVHuj8YSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xC9iLgRV3/jJ4hiQ1zVP0dO4FroUGDyqACTbFxLdrVmPKB2IHPVy75jTmydIrq5tk
-	 sur6SqjTfY9LGqVRf4eSnte6nUtRJ9vpTSQcF93dY2jIwjTIAgwq+zVJYicR0Gi4Mm
-	 nZ2OJu87ME19cEB+YxDhOB9UiLMMM2kw39u1dSDM=
+	b=CKc3zI2A67qT1x9U1UhWnTXoGXT1qjXOAcvXLvjrWuYw+sS9lKa5zwXjPOVntOzbu
+	 ywH4hABjhvQ1gdDY8EFoJ/usrzTXtzxemPL5fO4Lxs35Fl67HUtsWak8/famX/Ox9Z
+	 CQnd2QgvQb7PCMgLhVwlM1D/Nt253m5w0T1ukyao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 046/252] crypto: seqiv - Handle EBUSY correctly
-Date: Fri, 10 Mar 2023 14:36:56 +0100
-Message-Id: <20230310133720.213713934@linuxfoundation.org>
+Subject: [PATCH 4.19 047/252] powercap: fix possible name leak in powercap_register_zone()
+Date: Fri, 10 Mar 2023 14:36:57 +0100
+Message-Id: <20230310133720.242329815@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133718.803482157@linuxfoundation.org>
 References: <20230310133718.803482157@linuxfoundation.org>
@@ -34,38 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 32e62025e5e52fbe4812ef044759de7010b15dbc ]
+[ Upstream commit 1b6599f741a4525ca761ecde46e5885ff1e6ba58 ]
 
-As it is seqiv only handles the special return value of EINPROGERSS,
-which means that in all other cases it will free data related to the
-request.
+In the error path after calling dev_set_name(), the device
+name is leaked. To fix this, calling dev_set_name() before
+device_register(), and call put_device() if it returns error.
 
-However, as the caller of seqiv may specify MAY_BACKLOG, we also need
-to expect EBUSY and treat it in the same way.  Otherwise backlogged
-requests will trigger a use-after-free.
+All the resources is released in powercap_release(), so it
+can return from powercap_register_zone() directly.
 
-Fixes: 0a270321dbf9 ("[CRYPTO] seqiv: Add Sequence Number IV Generator")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 75d2364ea0ca ("PowerCap: Add class driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/seqiv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/powercap/powercap_sys.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/crypto/seqiv.c b/crypto/seqiv.c
-index 39dbf2f7e5f5c..ca68608ab14e1 100644
---- a/crypto/seqiv.c
-+++ b/crypto/seqiv.c
-@@ -30,7 +30,7 @@ static void seqiv_aead_encrypt_complete2(struct aead_request *req, int err)
- 	struct aead_request *subreq = aead_request_ctx(req);
- 	struct crypto_aead *geniv;
+diff --git a/drivers/powercap/powercap_sys.c b/drivers/powercap/powercap_sys.c
+index 60c8375c3c816..0a63fac54fd93 100644
+--- a/drivers/powercap/powercap_sys.c
++++ b/drivers/powercap/powercap_sys.c
+@@ -542,9 +542,6 @@ struct powercap_zone *powercap_register_zone(
+ 	power_zone->name = kstrdup(name, GFP_KERNEL);
+ 	if (!power_zone->name)
+ 		goto err_name_alloc;
+-	dev_set_name(&power_zone->dev, "%s:%x",
+-					dev_name(power_zone->dev.parent),
+-					power_zone->id);
+ 	power_zone->constraints = kcalloc(nr_constraints,
+ 					  sizeof(*power_zone->constraints),
+ 					  GFP_KERNEL);
+@@ -567,9 +564,16 @@ struct powercap_zone *powercap_register_zone(
+ 	power_zone->dev_attr_groups[0] = &power_zone->dev_zone_attr_group;
+ 	power_zone->dev_attr_groups[1] = NULL;
+ 	power_zone->dev.groups = power_zone->dev_attr_groups;
++	dev_set_name(&power_zone->dev, "%s:%x",
++					dev_name(power_zone->dev.parent),
++					power_zone->id);
+ 	result = device_register(&power_zone->dev);
+-	if (result)
+-		goto err_dev_ret;
++	if (result) {
++		put_device(&power_zone->dev);
++		mutex_unlock(&control_type->lock);
++
++		return ERR_PTR(result);
++	}
  
--	if (err == -EINPROGRESS)
-+	if (err == -EINPROGRESS || err == -EBUSY)
- 		return;
- 
- 	if (err)
+ 	control_type->nr_zones++;
+ 	mutex_unlock(&control_type->lock);
 -- 
 2.39.2
 
