@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA48846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C82C433D2;
-	Fri, 10 Mar 2023 14:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A40F846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:32:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F754C4339E;
+	Fri, 10 Mar 2023 14:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458725;
-	bh=3PvgcoIZwab3V+vowqhc/ZAxBoE0Ae99JaLFrKE3m0Q=;
+	s=korg; t=1678458728;
+	bh=s8yHcZVaOQAgNvPpDAMqPZSYcjHwohxvjb96+RbeQL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocy6sVs8fc3S1ERWtTJ91sax4AqGjtJNbSqhccMXB1ZMXO78+q/ka8V4+nrkKgoA/
-	 1DgydWFXTKG/6/XOVUEJZaCBd3I8LqTZsuJ3DrH8K0rwsLj/2YpuD2ZQYeo7qvffAe
-	 Pp9y3xcuoBg7fl8ZiYcOFbsFDEqKX8A6nL30qI5c=
+	b=aGslZ2nR0GyGHpBHE8/d9NfwDpmiLF2ecSnwnmw3UdbSqvTutpWsrPaq5N+kZB8Bo
+	 6t2Z2bdKLcHSNIw4n9d5833lmVMRxKVwANp0GTg8EHaWF12MfqIs4dMrAxWSIiNBis
+	 LxoizxikfagTRsT2mya/i6dLtoXt5gCTcXYZmcXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Kees Cook <keescook@chromium.org>,
+	Miles Chen <miles.chen@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 083/357] usb: gadget: udc: Avoid tasklet passing a global
-Date: Fri, 10 Mar 2023 14:36:12 +0100
-Message-Id: <20230310133737.649030421@linuxfoundation.org>
+Subject: [PATCH 5.4 117/357] drm/mediatek: Use NULL instead of 0 for NULL pointer
+Date: Fri, 10 Mar 2023 14:36:46 +0100
+Message-Id: <20230310133739.837032905@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,47 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Miles Chen <miles.chen@mediatek.com>
 
-[ Upstream commit f9dc3713df1229aa8168169e9cf1010fbac68de5 ]
+[ Upstream commit 4744cde06f57dd6fbaac468663b1fe2f653eaa16 ]
 
-There's no reason for the tasklet callback to set an argument since it
-always uses a global. Instead, use the global directly, in preparation
-for converting the tasklet subsystem to modern callback conventions.
+Use NULL for NULL pointer to fix the following sparse warning:
+drivers/gpu/drm/mediatek/mtk_drm_gem.c:265:27: sparse: warning: Using plain integer as NULL pointer
 
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Stable-dep-of: 1fdeb8b9f29d ("wifi: iwl3945: Add missing check for create_singlethread_workqueue")
+Fixes: 3df64d7b0a4f ("drm/mediatek: Implement gem prime vmap/vunmap function")
+Signed-off-by: Miles Chen <miles.chen@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20230111024443.24559-1-miles.chen@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/snps_udc_core.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_gem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/snps_udc_core.c b/drivers/usb/gadget/udc/snps_udc_core.c
-index 3fcded31405a7..afdd28f332ced 100644
---- a/drivers/usb/gadget/udc/snps_udc_core.c
-+++ b/drivers/usb/gadget/udc/snps_udc_core.c
-@@ -96,9 +96,7 @@ static int stop_pollstall_timer;
- static DECLARE_COMPLETION(on_pollstall_exit);
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+index b04a3c2b111e0..7ff6de44a9fa8 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+@@ -284,6 +284,6 @@ void mtk_drm_gem_prime_vunmap(struct drm_gem_object *obj, void *vaddr)
+ 		return;
  
- /* tasklet for usb disconnect */
--static DECLARE_TASKLET(disconnect_tasklet, udc_tasklet_disconnect,
--		(unsigned long) &udc);
--
-+static DECLARE_TASKLET(disconnect_tasklet, udc_tasklet_disconnect, 0);
- 
- /* endpoint names used for print */
- static const char ep0_string[] = "ep0in";
-@@ -1661,7 +1659,7 @@ static void usb_disconnect(struct udc *dev)
- /* Tasklet for disconnect to be outside of interrupt context */
- static void udc_tasklet_disconnect(unsigned long par)
- {
--	struct udc *dev = (struct udc *)(*((struct udc **) par));
-+	struct udc *dev = udc;
- 	u32 tmp;
- 
- 	DBG(dev, "Tasklet disconnect\n");
+ 	vunmap(vaddr);
+-	mtk_gem->kvaddr = 0;
++	mtk_gem->kvaddr = NULL;
+ 	kfree(mtk_gem->pages);
+ }
 -- 
 2.39.2
 
