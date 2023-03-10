@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D521D881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:42:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E90C433EF;
-	Fri, 10 Mar 2023 14:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A05881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:42:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C54C433EF;
+	Fri, 10 Mar 2023 14:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459326;
-	bh=gqroH3tA5sDEgMCfGKeMPazNlRijwCEdoLxVVlCed20=;
+	s=korg; t=1678459329;
+	bh=JHShmRp3tRLXch88m4N/oZrTogVoNcn63idwjNH2u4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EUSJAiR0v9NCQ41IpM0G0UPTPzGS/tUQ0dQLm0QXAyj92fn7/8scW25ZN9E6QP686
-	 hu2f+sL1ezj+zupb7WhOjmskiXpW79xVBZYFO4Z7p17jsAfWGNg7HW0b0RmJuVVtib
-	 sT+72lU/S44xlzOgnY+0q4gsRTRPsQy8HwBmetPo=
+	b=PsnjR2fnBquAHgm4ublUf0iscxU9u0QHyiiw2U/cDW01jO0b+K/4VSAmJw6q/K3WV
+	 3dGaIw9ImYxYc1duYGdcGDJBb9jE0nB0bfpodKoqY6kcUq9/Td/OLmSy4+SM33Izts
+	 NhyjR5NATcI66lTW3Lt/OMwTnNXzlbRv4p5hIdkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0be96567042453c0c820@syzkaller.appspotmail.com,
-	Liu Shixin <liushixin2@huawei.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Maor Dickman <maord@nvidia.com>,
+	Raed Salem <raeds@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 284/357] fs/jfs: fix shift exponent db_agl2size negative
-Date: Fri, 10 Mar 2023 14:39:33 +0100
-Message-Id: <20230310133747.293452588@linuxfoundation.org>
+Subject: [PATCH 5.4 318/357] net/mlx5: Geneve, Fix handling of Geneve object id as error code
+Date: Fri, 10 Mar 2023 14:40:07 +0100
+Message-Id: <20230310133748.716209338@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,39 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin via Jfs-discussion <jfs-discussion@lists.sourceforge.net>
+From: Maor Dickman <maord@nvidia.com>
 
-[ Upstream commit fad376fce0af58deebc5075b8539dc05bf639af3 ]
+[ Upstream commit d28a06d7dbedc598a06bd1e53a28125f87ca5d0c ]
 
-As a shift exponent, db_agl2size can not be less than 0. Add the missing
-check to fix the shift-out-of-bounds bug reported by syzkaller:
+On success, mlx5_geneve_tlv_option_create returns non negative
+Geneve object id. In case the object id is positive value the
+caller functions will handle it as an error (non zero) and
+will fail to offload the Geneve rule.
 
- UBSAN: shift-out-of-bounds in fs/jfs/jfs_dmap.c:2227:15
- shift exponent -744642816 is negative
+Fix this by changing caller function ,mlx5_geneve_tlv_option_add,
+to return 0 in case valid non negative object id was provided.
 
-Reported-by: syzbot+0be96567042453c0c820@syzkaller.appspotmail.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Fixes: 0ccc171ea6a2 ("net/mlx5: Geneve, Manage Geneve TLV options")
+Signed-off-by: Maor Dickman <maord@nvidia.com>
+Reviewed-by: Raed Salem <raeds@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index aa4643854f947..cc1fed285b2d6 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -193,7 +193,8 @@ int dbMount(struct inode *ipbmap)
- 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
- 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
- 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
--	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) {
-+	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG ||
-+	    bmp->db_agl2size < 0) {
- 		err = -EINVAL;
- 		goto err_release_metapage;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c
+index 23361a9ae4fa0..6dc83e871cd76 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c
+@@ -105,6 +105,7 @@ int mlx5_geneve_tlv_option_add(struct mlx5_geneve *geneve, struct geneve_opt *op
+ 		geneve->opt_type = opt->type;
+ 		geneve->obj_id = res;
+ 		geneve->refcount++;
++		res = 0;
  	}
+ 
+ unlock:
 -- 
 2.39.2
 
