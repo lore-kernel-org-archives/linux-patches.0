@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABCF8481
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:10:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED190C433D2;
-	Fri, 10 Mar 2023 14:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A24A8481
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:10:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C7DC433D2;
+	Fri, 10 Mar 2023 14:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678457421;
-	bh=aPEfjUGtaJxBpK3yGvFT0lxxhbxkZp62JOMqdkptNSE=;
+	s=korg; t=1678457424;
+	bh=IXydKDOJqiD98Qbe5+iE9IlaED86BSTBSXGKIwltCXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYOFCxgowoi6w8yTzpU62tfMLhYBwNv5ljl4LqqQWbaGwutIkBeD1UDfHcGP5LyPx
-	 N9Q32EGaUyYocPLf2lf/02hl0lO6uQ/0L4Jd3UZ4q19o05k1A6kdJ8gFS70WHIAgac
-	 YzC2mU3hVGREpXkjoOx36o204IDx+2F/4auJBGi4=
+	b=JGR5l9JDEwbZbiJ8r5dCu8rBoDx95UJKJO9IJRAeJaqd4gJyrvHsX4v3zA3MW2Ft1
+	 3jvL0eXPpRG796K5NmiaBJxoedqmr4FGTNDQuYQKLqlSbkHqM5uzYp25KbaynUBi64
+	 jLbGIwmeupCZiKCZ5fcR+OTUrrk+iGbywjc7YNhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Wang <zhipeng.wang_1@nxp.com>,
-	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
-	Philippe Schenker <philippe.schenker@toradex.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Wojciech Lukowicz <wlukowicz01@gmail.com>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/200] rtc: allow rtc_read_alarm without read_alarm callback
-Date: Fri, 10 Mar 2023 14:38:28 +0100
-Message-Id: <20230310133720.208212332@linuxfoundation.org>
+Subject: [PATCH 6.1 102/200] io_uring: fix size calculation when registering buf ring
+Date: Fri, 10 Mar 2023 14:38:29 +0100
+Message-Id: <20230310133720.237012412@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133717.050159289@linuxfoundation.org>
 References: <20230310133717.050159289@linuxfoundation.org>
@@ -37,38 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+From: Wojciech Lukowicz <wlukowicz01@gmail.com>
 
-[ Upstream commit a783c962619271a8b905efad1d89adfec11ae0c8 ]
+[ Upstream commit 48ba08374e779421ca34bd14b4834aae19fc3e6a ]
 
-.read_alarm is not necessary to read the current alarm because it is
-recorded in the aie_timer and so rtc_read_alarm() will never call
-rtc_read_alarm_internal() which is the only function calling the callback.
+Using struct_size() to calculate the size of io_uring_buf_ring will sum
+the size of the struct and of the bufs array. However, the struct's fields
+are overlaid with the array making the calculated size larger than it
+should be.
 
-Reported-by: Zhipeng Wang <zhipeng.wang_1@nxp.com>
-Reported-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
-Fixes: 7ae41220ef58 ("rtc: introduce features bitfield")
-Tested-by: Philippe Schenker <philippe.schenker@toradex.com>
-Link: https://lore.kernel.org/r/20230214222754.582582-1-alexandre.belloni@bootlin.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+When registering a ring with N * PAGE_SIZE / sizeof(struct io_uring_buf)
+entries, i.e. with fully filled pages, the calculated size will span one
+more page than it should and io_uring will try to pin the following page.
+Depending on how the application allocated the ring, it might succeed
+using an unrelated page or fail returning EFAULT.
+
+The size of the ring should be the product of ring_entries and the size
+of io_uring_buf, i.e. the size of the bufs array only.
+
+Fixes: c7fb19428d67 ("io_uring: add support for ring mapped supplied buffers")
+Signed-off-by: Wojciech Lukowicz <wlukowicz01@gmail.com>
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Link: https://lore.kernel.org/r/20230218184141.70891-1-wlukowicz01@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/interface.c | 2 +-
+ io_uring/kbuf.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/interface.c b/drivers/rtc/interface.c
-index 9edd662c69ace..3d0fbc644f578 100644
---- a/drivers/rtc/interface.c
-+++ b/drivers/rtc/interface.c
-@@ -392,7 +392,7 @@ int rtc_read_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
- 		return err;
- 	if (!rtc->ops) {
- 		err = -ENODEV;
--	} else if (!test_bit(RTC_FEATURE_ALARM, rtc->features) || !rtc->ops->read_alarm) {
-+	} else if (!test_bit(RTC_FEATURE_ALARM, rtc->features)) {
- 		err = -EINVAL;
- 	} else {
- 		memset(alarm, 0, sizeof(struct rtc_wkalrm));
+diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
+index e2c46889d5fab..746b137b96e9b 100644
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -509,7 +509,7 @@ int io_register_pbuf_ring(struct io_ring_ctx *ctx, void __user *arg)
+ 	}
+ 
+ 	pages = io_pin_pages(reg.ring_addr,
+-			     struct_size(br, bufs, reg.ring_entries),
++			     flex_array_size(br, bufs, reg.ring_entries),
+ 			     &nr_pages);
+ 	if (IS_ERR(pages)) {
+ 		kfree(free_bl);
 -- 
 2.39.2
 
