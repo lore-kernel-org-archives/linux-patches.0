@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8089846C
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:31:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B157C433D2;
-	Fri, 10 Mar 2023 14:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669FC846C
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:31:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB75AC433D2;
+	Fri, 10 Mar 2023 14:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458664;
-	bh=NaZGWEGxjcE8IIypQld0fuptDvEUTuQFMMWz523dAMw=;
+	s=korg; t=1678458667;
+	bh=/YOATX8XtpUjmYc6XebEFqVJBW/YHKJ9gLrDO5g3S3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rmidgSjNBr06SbhIzrIeGFTVka8KMTmcwQcOZ8m/jeamcMQLr0RHUpMr0kxzRVXRK
-	 9n+hY2bXzjytMUg+fzchSVN77595kqaFdxezf2QXPFNKafYGGol/Gcaz6cY0qFwZTF
-	 +v/7B6HL7d/l5Rl/yJYeKOFkuFJYwFeKHscI9PrE=
+	b=1TP+097dGFB6CDSps2FODBKmGsOJbdNeEvNjc/MbGxZt75sXdw2KQqa2mXKo3Vbd1
+	 fSHUdCgkEvfEMag0Z+7XHD0S0nYudtBxaeuQX7tiXfBcEazYfcjHPorii+hoKg03XV
+	 RAAnRQ/4F2R3Flba9oIUqSKQ6uU+8SaX/rEgifYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Iuliana Prodan <iuliana.prodan@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 103/357] pinctrl: stm32: Fix refcount leak in stm32_pctrl_get_irq_domain
-Date: Fri, 10 Mar 2023 14:36:32 +0100
-Message-Id: <20230310133738.559171160@linuxfoundation.org>
+Subject: [PATCH 5.4 104/357] ASoC: fsl_sai: initialize is_dsp_mode flag
+Date: Fri, 10 Mar 2023 14:36:33 +0100
+Message-Id: <20230310133738.607459505@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,35 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit dcef18c8ac40aa85bb339f64c1dd31dd458b06fb ]
+[ Upstream commit a23924b7dd7b748fff8e305e1daf590fed2af21b ]
 
-of_irq_find_parent() returns a node pointer with refcount incremented,
-We should use of_node_put() on it when not needed anymore.
-Add missing of_node_put() to avoid refcount leak.
+Initialize is_dsp_mode flag in the beginning of function
+fsl_sai_set_dai_fmt_tr().
 
-Fixes: d86f4d71e42a ("pinctrl: stm32: check irq controller availability at probe")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20230102082503.3944927-1-linmq006@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+When the DAIFMT is DAIFMT_DSP_B the first time, is_dsp_mode is
+true, then the second time DAIFMT is DAIFMT_I2S, is_dsp_mode
+still true, which is a wrong state. So need to initialize
+is_dsp_mode flag every time.
+
+Fixes: a3f7dcc9cc03 ("ASoC: fsl-sai: Add SND_SOC_DAIFMT_DSP_A/B support.")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
+Link: https://lore.kernel.org/r/1673852874-32200-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 1 +
+ sound/soc/fsl/fsl_sai.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index e8149ff1d401c..10595b43360bd 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -1250,6 +1250,7 @@ static struct irq_domain *stm32_pctrl_get_irq_domain(struct device_node *np)
- 		return ERR_PTR(-ENXIO);
+diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
+index 027259695551c..f8445231ad782 100644
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -212,6 +212,7 @@ static int fsl_sai_set_dai_fmt_tr(struct snd_soc_dai *cpu_dai,
+ 	if (!sai->is_lsb_first)
+ 		val_cr4 |= FSL_SAI_CR4_MF;
  
- 	domain = irq_find_host(parent);
-+	of_node_put(parent);
- 	if (!domain)
- 		/* domain not registered yet */
- 		return ERR_PTR(-EPROBE_DEFER);
++	sai->is_dsp_mode = false;
+ 	/* DAI mode */
+ 	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
+ 	case SND_SOC_DAIFMT_I2S:
 -- 
 2.39.2
 
