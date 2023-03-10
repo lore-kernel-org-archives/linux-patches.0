@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5398494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:35:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6E8C433EF;
-	Fri, 10 Mar 2023 14:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9748494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:36:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C47C433A8;
+	Fri, 10 Mar 2023 14:35:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678458957;
-	bh=7Vqivv2NNq68gYaWBtIFdf0aST/QtLTFZOoh1fSAtwg=;
+	s=korg; t=1678458960;
+	bh=JXrBPWK6v7XL22BY75zHtPOkPrMbMF4KH72BNj9Zy1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m4Ac1oKqsYkY42LejcpwZ1MpisQH8eKoN3vaQ3nHc0nJrMuCu1wyiAy98rRe8udkS
-	 qAwU4sCll1XFzw8BHgIkpKOZUsaZgms6GeoUxgazKG+nHapHSrift8ylmKS/zjFguf
-	 wtorZS3vc7A20JVMgiath20CjpG6qMDFonzYYkJc=
+	b=PlLl1HQP2n7GGyOwkBSG5RmNsysBXVmok6F6o51UF6nRrlmHig3Xc/q5BJ26Rm/mJ
+	 3nDrhAYHOroA2BpwxwSq0GTKaiYYNUYf6r+oLqO3PNNxrqYtZQiXoyNSXLeBNKBw6f
+	 s9zkgp59W0VSB+KkTVaNRK6FrMz52U4ZYuf7OPuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Koschel <jkl820.git@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	alsa-devel@alsa-project.org,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 201/357] docs/scripts/gdb: add necessary make scripts_gdb step
-Date: Fri, 10 Mar 2023 14:38:10 +0100
-Message-Id: <20230310133743.601591402@linuxfoundation.org>
+Subject: [PATCH 5.4 202/357] ASoC: kirkwood: Iterate over array indexes instead of using pointer math
+Date: Fri, 10 Mar 2023 14:38:11 +0100
+Message-Id: <20230310133743.639722209@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -35,44 +39,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakob Koschel <jkl820.git@gmail.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 6b219431037bf98c9efd49716aea9b68440477a3 ]
+[ Upstream commit b3bcedc0402fcdc5c8624c433562d9d1882749d8 ]
 
-In order to debug the kernel successfully with gdb you need to run
-'make scripts_gdb' nowadays.
+Walking the dram->cs array was seen as accesses beyond the first array
+item by the compiler. Instead, use the array index directly. This allows
+for run-time bounds checking under CONFIG_UBSAN_BOUNDS as well. Seen
+with GCC 13 with -fstrict-flex-arrays:
 
-This was changed with the following commit:
+../sound/soc/kirkwood/kirkwood-dma.c: In function
+'kirkwood_dma_conf_mbus_windows.constprop':
+../sound/soc/kirkwood/kirkwood-dma.c:90:24: warning: array subscript 0 is outside array bounds of 'const struct mbus_dram_window[0]' [-Warray-bounds=]
+   90 |                 if ((cs->base & 0xffff0000) < (dma & 0xffff0000)) {
+      |                      ~~^~~~~~
 
-Commit 67274c083438340ad16c ("scripts/gdb: delay generation of gdb
-constants.py")
-
-In order to have a complete guide for beginners this remark
-should be added to the offial documentation.
-
-Signed-off-by: Jakob Koschel <jkl820.git@gmail.com>
-Link: https://lore.kernel.org/r/20230112-documentation-gdb-v2-1-292785c43dc9@gmail.com
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: alsa-devel@alsa-project.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230127224128.never.410-kees@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/dev-tools/gdb-kernel-debugging.rst | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/kirkwood/kirkwood-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/dev-tools/gdb-kernel-debugging.rst b/Documentation/dev-tools/gdb-kernel-debugging.rst
-index 19df79286f000..afe4bc206486c 100644
---- a/Documentation/dev-tools/gdb-kernel-debugging.rst
-+++ b/Documentation/dev-tools/gdb-kernel-debugging.rst
-@@ -39,6 +39,10 @@ Setup
-   this mode. In this case, you should build the kernel with
-   CONFIG_RANDOMIZE_BASE disabled if the architecture supports KASLR.
+diff --git a/sound/soc/kirkwood/kirkwood-dma.c b/sound/soc/kirkwood/kirkwood-dma.c
+index d2d5c25bf5502..0215d187bdff5 100644
+--- a/sound/soc/kirkwood/kirkwood-dma.c
++++ b/sound/soc/kirkwood/kirkwood-dma.c
+@@ -86,7 +86,7 @@ kirkwood_dma_conf_mbus_windows(void __iomem *base, int win,
  
-+- Build the gdb scripts (required on kernels v5.1 and above)::
-+
-+    make scripts_gdb
-+
- - Enable the gdb stub of QEMU/KVM, either
- 
-     - at VM startup time by appending "-s" to the QEMU command line
+ 	/* try to find matching cs for current dma address */
+ 	for (i = 0; i < dram->num_cs; i++) {
+-		const struct mbus_dram_window *cs = dram->cs + i;
++		const struct mbus_dram_window *cs = &dram->cs[i];
+ 		if ((cs->base & 0xffff0000) < (dma & 0xffff0000)) {
+ 			writel(cs->base & 0xffff0000,
+ 				base + KIRKWOOD_AUDIO_WIN_BASE_REG(win));
 -- 
 2.39.2
 
