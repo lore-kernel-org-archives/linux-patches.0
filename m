@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD76C8494
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:37:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2583FC4339B;
-	Fri, 10 Mar 2023 14:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00628494
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:37:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3620EC4339C;
+	Fri, 10 Mar 2023 14:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459028;
-	bh=+l7zOQ56DtVh0IMdm20/OB3CezTKlI53c4+VSHTH7Io=;
+	s=korg; t=1678459031;
+	bh=/icnbl99Xs46trCkoa5k/g+hdGUJKHc1Tncn333uBQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJUDts214uuxdSPhN1s+hQ/JWt4MMqYSQNpv9Tf3Fed4+uDQ3Td/t9CllFGZRKhBJ
-	 VtCClQbkSM9G0hT6NjQf8Aj5jqKMNg5ocmXDdfjZv+6MhzVt9Bc93TGbBt67rPn2yQ
-	 nAOttS16na6+YnfRTSm+2wszPiYCdRya3fdw9NbQ=
+	b=y7HKZT4bejDYzKnpMIntTPPYRKlQMOY7Y3Ly4FoMhGBdF06MWjqcqYBdkVT1zVvUs
+	 x0i3t+x2AFoWlokbqk96zQYXYrxjxQDiE1bgfwjtqxv9sOHE81vdQkIJ7omfXKxMeW
+	 7ipzkTSmqwtaX0v4v4tNsHsynt8bT67Gni3+5qQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 5.4 217/357] s390/kprobes: fix current_kprobe never cleared after kprobes reenter
-Date: Fri, 10 Mar 2023 14:38:26 +0100
-Message-Id: <20230310133744.284882174@linuxfoundation.org>
+	syzbot+60f291a24acecb3c2bd5@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.4 226/357] udf: Do not bother merging very long extents
+Date: Fri, 10 Mar 2023 14:38:35 +0100
+Message-Id: <20230310133744.736727841@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -34,54 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Jan Kara <jack@suse.cz>
 
-commit cd57953936f2213dfaccce10d20f396956222c7d upstream.
+commit 53cafe1d6d8ef9f93318e5bfccc0d24f27d41ced upstream.
 
-Recent test_kprobe_missed kprobes kunit test uncovers the following
-problem. Once kprobe is triggered from another kprobe (kprobe reenter),
-all future kprobes on this cpu are considered as kprobe reenter, thus
-pre_handler and post_handler are not being called and kprobes are counted
-as "missed".
+When merging very long extents we try to push as much length as possible
+to the first extent. However this is unnecessarily complicated and not
+really worth the trouble. Furthermore there was a bug in the logic
+resulting in corrupting extents in the file as syzbot reproducer shows.
+So just don't bother with the merging of extents that are too long
+together.
 
-Commit b9599798f953 ("[S390] kprobes: activation and deactivation")
-introduced a simpler scheme for kprobes (de)activation and status
-tracking by using push_kprobe/pop_kprobe, which supposed to work for
-both initial kprobe entry as well as kprobe reentry and helps to avoid
-handling those two cases differently. The problem is that a sequence of
-calls in case of kprobes reenter:
-push_kprobe() <- NULL (current_kprobe)
-push_kprobe() <- kprobe1 (current_kprobe)
-pop_kprobe() -> kprobe1 (current_kprobe)
-pop_kprobe() -> kprobe1 (current_kprobe)
-leaves "kprobe1" as "current_kprobe" on this cpu, instead of setting it
-to NULL. In fact push_kprobe/pop_kprobe can only store a single state
-(there is just one prev_kprobe in kprobe_ctlblk). Which is a hack but
-sufficient, there is no need to have another prev_kprobe just to store
-NULL. To make a simple and backportable fix simply reset "prev_kprobe"
-when kprobe is poped from this "stack". No need to worry about
-"kprobe_status" in this case, because its value is only checked when
-current_kprobe != NULL.
-
-Cc: stable@vger.kernel.org
-Fixes: b9599798f953 ("[S390] kprobes: activation and deactivation")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+CC: stable@vger.kernel.org
+Reported-by: syzbot+60f291a24acecb3c2bd5@syzkaller.appspotmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/kprobes.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/udf/inode.c |   19 ++-----------------
+ 1 file changed, 2 insertions(+), 17 deletions(-)
 
---- a/arch/s390/kernel/kprobes.c
-+++ b/arch/s390/kernel/kprobes.c
-@@ -255,6 +255,7 @@ static void pop_kprobe(struct kprobe_ctl
- {
- 	__this_cpu_write(current_kprobe, kcb->prev_kprobe.kp);
- 	kcb->kprobe_status = kcb->prev_kprobe.status;
-+	kcb->prev_kprobe.kp = NULL;
- }
- NOKPROBE_SYMBOL(pop_kprobe);
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -1096,23 +1096,8 @@ static void udf_merge_extents(struct ino
+ 			blocksize - 1) >> blocksize_bits)))) {
  
+ 			if (((li->extLength & UDF_EXTENT_LENGTH_MASK) +
+-				(lip1->extLength & UDF_EXTENT_LENGTH_MASK) +
+-				blocksize - 1) & ~UDF_EXTENT_LENGTH_MASK) {
+-				lip1->extLength = (lip1->extLength -
+-						  (li->extLength &
+-						   UDF_EXTENT_LENGTH_MASK) +
+-						   UDF_EXTENT_LENGTH_MASK) &
+-							~(blocksize - 1);
+-				li->extLength = (li->extLength &
+-						 UDF_EXTENT_FLAG_MASK) +
+-						(UDF_EXTENT_LENGTH_MASK + 1) -
+-						blocksize;
+-				lip1->extLocation.logicalBlockNum =
+-					li->extLocation.logicalBlockNum +
+-					((li->extLength &
+-						UDF_EXTENT_LENGTH_MASK) >>
+-						blocksize_bits);
+-			} else {
++			     (lip1->extLength & UDF_EXTENT_LENGTH_MASK) +
++			     blocksize - 1) <= UDF_EXTENT_LENGTH_MASK) {
+ 				li->extLength = lip1->extLength +
+ 					(((li->extLength &
+ 						UDF_EXTENT_LENGTH_MASK) +
 
 
