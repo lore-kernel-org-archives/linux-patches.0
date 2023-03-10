@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A05881F
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:42:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C54C433EF;
-	Fri, 10 Mar 2023 14:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5CE881F
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 14:42:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F74C4339C;
+	Fri, 10 Mar 2023 14:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678459329;
-	bh=JHShmRp3tRLXch88m4N/oZrTogVoNcn63idwjNH2u4g=;
+	s=korg; t=1678459332;
+	bh=7eZ/qFtiTRA60J2wqa5IJoBC97GMn6hVjlO3OYqaHx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PsnjR2fnBquAHgm4ublUf0iscxU9u0QHyiiw2U/cDW01jO0b+K/4VSAmJw6q/K3WV
-	 3dGaIw9ImYxYc1duYGdcGDJBb9jE0nB0bfpodKoqY6kcUq9/Td/OLmSy4+SM33Izts
-	 NhyjR5NATcI66lTW3Lt/OMwTnNXzlbRv4p5hIdkk=
+	b=INJSGXZqX89G4TP9EaN6PaIMeGNg27nYUf97sMoK19ohXO9yU+3RCB9bGVchKan+J
+	 8TZ/M3WMPSlHdbQHHwPuMJjzN8ig5DyP6RJZ1Iv9JG+N/1KNdNfAeMwWtPn88be7Al
+	 NCpItIjwJRGX1zb3K/7msYjLLH4BMKCcYutGv8tA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maor Dickman <maord@nvidia.com>,
-	Raed Salem <raeds@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Dan Carpenter <error27@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 318/357] net/mlx5: Geneve, Fix handling of Geneve object id as error code
-Date: Fri, 10 Mar 2023 14:40:07 +0100
-Message-Id: <20230310133748.716209338@linuxfoundation.org>
+Subject: [PATCH 5.4 327/357] thermal: intel: quark_dts: fix error pointer dereference
+Date: Fri, 10 Mar 2023 14:40:16 +0100
+Message-Id: <20230310133749.082422393@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
 References: <20230310133733.973883071@linuxfoundation.org>
@@ -36,39 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maor Dickman <maord@nvidia.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit d28a06d7dbedc598a06bd1e53a28125f87ca5d0c ]
+[ Upstream commit f1b930e740811d416de4d2074da48b6633a672c8 ]
 
-On success, mlx5_geneve_tlv_option_create returns non negative
-Geneve object id. In case the object id is positive value the
-caller functions will handle it as an error (non zero) and
-will fail to offload the Geneve rule.
+If alloc_soc_dts() fails, then we can just return.  Trying to free
+"soc_dts" will lead to an Oops.
 
-Fix this by changing caller function ,mlx5_geneve_tlv_option_add,
-to return 0 in case valid non negative object id was provided.
-
-Fixes: 0ccc171ea6a2 ("net/mlx5: Geneve, Manage Geneve TLV options")
-Signed-off-by: Maor Dickman <maord@nvidia.com>
-Reviewed-by: Raed Salem <raeds@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 8c1876939663 ("thermal: intel Quark SoC X1000 DTS thermal driver")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/thermal/intel/intel_quark_dts_thermal.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c
-index 23361a9ae4fa0..6dc83e871cd76 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/geneve.c
-@@ -105,6 +105,7 @@ int mlx5_geneve_tlv_option_add(struct mlx5_geneve *geneve, struct geneve_opt *op
- 		geneve->opt_type = opt->type;
- 		geneve->obj_id = res;
- 		geneve->refcount++;
-+		res = 0;
- 	}
+diff --git a/drivers/thermal/intel/intel_quark_dts_thermal.c b/drivers/thermal/intel/intel_quark_dts_thermal.c
+index 5d33b350da1c6..ad92d8f0add19 100644
+--- a/drivers/thermal/intel/intel_quark_dts_thermal.c
++++ b/drivers/thermal/intel/intel_quark_dts_thermal.c
+@@ -440,22 +440,14 @@ MODULE_DEVICE_TABLE(x86cpu, qrk_thermal_ids);
  
- unlock:
+ static int __init intel_quark_thermal_init(void)
+ {
+-	int err = 0;
+-
+ 	if (!x86_match_cpu(qrk_thermal_ids) || !iosf_mbi_available())
+ 		return -ENODEV;
+ 
+ 	soc_dts = alloc_soc_dts();
+-	if (IS_ERR(soc_dts)) {
+-		err = PTR_ERR(soc_dts);
+-		goto err_free;
+-	}
++	if (IS_ERR(soc_dts))
++		return PTR_ERR(soc_dts);
+ 
+ 	return 0;
+-
+-err_free:
+-	free_soc_dts(soc_dts);
+-	return err;
+ }
+ 
+ static void __exit intel_quark_thermal_exit(void)
 -- 
 2.39.2
 
