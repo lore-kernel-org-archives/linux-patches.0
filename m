@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E740C847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 383AEC433D2;
-	Fri, 10 Mar 2023 13:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A9A847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:54:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F1CC433EF;
+	Fri, 10 Mar 2023 13:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456446;
-	bh=bcLPaxuokOnaXrN3ygeCigG14iYLUkS//iXeTSdnWmc=;
+	s=korg; t=1678456449;
+	bh=RS+pyNIV/BFPdB0R8uhCXPkmtq7feD2COD86+6PgcDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tl2zhEDEWgaAe6OwK8nP0XRP+ScL7QalyMPxx9b87Vg/Re4+E3t/hTA7hccuSj9+s
-	 2t0pX0hi7x9PASnTlQd6eaciLGMVFH9AK+O2PW3LNmKnSHRqzVKdxXYyniBYahLC6+
-	 Vqux/0swDtjW1K21hjmgP+gZIubKCmKpTjw6IPIk=
+	b=aRF+4If/DxIF1MHufEe80Yp1qzex+JwCODxwrAciVz9WNPqx0M+joVpmX4nZ2PnPA
+	 RNKF5qzcyBEtNBe7GqN6REOSMWe7dSUuJaLoBY9sDkwo7JROdkf14Bt8wur1Ml7IOg
+	 owAJvnPzndVvBpvqOKbJt/EAf5agC1m9zZ7XA0yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Brian King <brking@linux.vnet.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chen Jun <chenjun102@huawei.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 175/193] scsi: ipr: Work around fortify-string warning
-Date: Fri, 10 Mar 2023 14:39:17 +0100
-Message-Id: <20230310133716.938236991@linuxfoundation.org>
+Subject: [PATCH 4.14 166/193] watchdog: Fix kmemleak in watchdog_cdev_register
+Date: Fri, 10 Mar 2023 14:39:08 +0100
+Message-Id: <20230310133716.669449540@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -38,112 +36,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Chen Jun <chenjun102@huawei.com>
 
-[ Upstream commit ee4e7dfe4ffc9ca50c6875757bd119abfe22b5c5 ]
+[ Upstream commit 13721a2ac66b246f5802ba1b75ad8637e53eeecc ]
 
-The ipr_log_vpd_compact() function triggers a fortified memcpy() warning
-about a potential string overflow with all versions of clang:
+kmemleak reports memory leaks in watchdog_dev_register, as follows:
+unreferenced object 0xffff888116233000 (size 2048):
+  comm ""modprobe"", pid 28147, jiffies 4353426116 (age 61.741s)
+  hex dump (first 32 bytes):
+    80 fa b9 05 81 88 ff ff 08 30 23 16 81 88 ff ff  .........0#.....
+    08 30 23 16 81 88 ff ff 00 00 00 00 00 00 00 00  .0#.............
+  backtrace:
+    [<000000007f001ffd>] __kmem_cache_alloc_node+0x157/0x220
+    [<000000006a389304>] kmalloc_trace+0x21/0x110
+    [<000000008d640eea>] watchdog_dev_register+0x4e/0x780 [watchdog]
+    [<0000000053c9f248>] __watchdog_register_device+0x4f0/0x680 [watchdog]
+    [<00000000b2979824>] watchdog_register_device+0xd2/0x110 [watchdog]
+    [<000000001f730178>] 0xffffffffc10880ae
+    [<000000007a1a8bcc>] do_one_initcall+0xcb/0x4d0
+    [<00000000b98be325>] do_init_module+0x1ca/0x5f0
+    [<0000000046d08e7c>] load_module+0x6133/0x70f0
+    ...
 
-In file included from drivers/scsi/ipr.c:43:
-In file included from include/linux/string.h:254:
-include/linux/fortify-string.h:520:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
-                        __write_overflow_field(p_size_field, size);
-                        ^
-include/linux/fortify-string.h:520:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
-2 errors generated.
+unreferenced object 0xffff888105b9fa80 (size 16):
+  comm ""modprobe"", pid 28147, jiffies 4353426116 (age 61.741s)
+  hex dump (first 16 bytes):
+    77 61 74 63 68 64 6f 67 31 00 b9 05 81 88 ff ff  watchdog1.......
+  backtrace:
+    [<000000007f001ffd>] __kmem_cache_alloc_node+0x157/0x220
+    [<00000000486ab89b>] __kmalloc_node_track_caller+0x44/0x1b0
+    [<000000005a39aab0>] kvasprintf+0xb5/0x140
+    [<0000000024806f85>] kvasprintf_const+0x55/0x180
+    [<000000009276cb7f>] kobject_set_name_vargs+0x56/0x150
+    [<00000000a92e820b>] dev_set_name+0xab/0xe0
+    [<00000000cec812c6>] watchdog_dev_register+0x285/0x780 [watchdog]
+    [<0000000053c9f248>] __watchdog_register_device+0x4f0/0x680 [watchdog]
+    [<00000000b2979824>] watchdog_register_device+0xd2/0x110 [watchdog]
+    [<000000001f730178>] 0xffffffffc10880ae
+    [<000000007a1a8bcc>] do_one_initcall+0xcb/0x4d0
+    [<00000000b98be325>] do_init_module+0x1ca/0x5f0
+    [<0000000046d08e7c>] load_module+0x6133/0x70f0
+    ...
 
-I don't see anything actually wrong with the function, but this is the only
-instance I can reproduce of the fortification going wrong in the kernel at
-the moment, so the easiest solution may be to rewrite the function into
-something that does not trigger the warning.
+The reason is that put_device is not be called if cdev_device_add fails
+and wdd->id != 0.
 
-Instead of having a combined buffer for vendor/device/serial strings, use
-three separate local variables and just truncate the whitespace
-individually.
+watchdog_cdev_register
+  wd_data = kzalloc                             [1]
+  err = dev_set_name                            [2]
+  ..
+  err = cdev_device_add
+  if (err) {
+    if (wdd->id == 0) {  // wdd->id != 0
+      ..
+    }
+    return err;  // [1],[2] would be leaked
 
-Link: https://lore.kernel.org/r/20230214132831.2118392-1-arnd@kernel.org
-Cc: Kees Cook <keescook@chromium.org>
-Fixes: 8cf093e275d0 ("[SCSI] ipr: Improved dual adapter errors")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Acked-by: Brian King <brking@linux.vnet.ibm.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+To fix it, call put_device in all wdd->id cases.
+
+Fixes: 72139dfa2464 ("watchdog: Fix the race between the release of watchdog_core_data and cdev")
+Signed-off-by: Chen Jun <chenjun102@huawei.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20221116012714.102066-1-chenjun102@huawei.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ipr.c | 41 +++++++++++++++++++++--------------------
- 1 file changed, 21 insertions(+), 20 deletions(-)
+ drivers/watchdog/watchdog_dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/ipr.c b/drivers/scsi/ipr.c
-index 86e2d3033a2db..030d26f7d50c8 100644
---- a/drivers/scsi/ipr.c
-+++ b/drivers/scsi/ipr.c
-@@ -1531,23 +1531,22 @@ static void ipr_process_ccn(struct ipr_cmnd *ipr_cmd)
- }
+diff --git a/drivers/watchdog/watchdog_dev.c b/drivers/watchdog/watchdog_dev.c
+index 21c3ffdc8a09d..337ca3690d622 100644
+--- a/drivers/watchdog/watchdog_dev.c
++++ b/drivers/watchdog/watchdog_dev.c
+@@ -965,8 +965,8 @@ static int watchdog_cdev_register(struct watchdog_device *wdd)
+ 		if (wdd->id == 0) {
+ 			misc_deregister(&watchdog_miscdev);
+ 			old_wd_data = NULL;
+-			put_device(&wd_data->dev);
+ 		}
++		put_device(&wd_data->dev);
+ 		return err;
+ 	}
  
- /**
-- * strip_and_pad_whitespace - Strip and pad trailing whitespace.
-- * @i:		index into buffer
-- * @buf:		string to modify
-+ * strip_whitespace - Strip and pad trailing whitespace.
-+ * @i:		size of buffer
-+ * @buf:	string to modify
-  *
-- * This function will strip all trailing whitespace, pad the end
-- * of the string with a single space, and NULL terminate the string.
-+ * This function will strip all trailing whitespace and
-+ * NUL terminate the string.
-  *
-- * Return value:
-- * 	new length of string
-  **/
--static int strip_and_pad_whitespace(int i, char *buf)
-+static void strip_whitespace(int i, char *buf)
- {
-+	if (i < 1)
-+		return;
-+	i--;
- 	while (i && buf[i] == ' ')
- 		i--;
--	buf[i+1] = ' ';
--	buf[i+2] = '\0';
--	return i + 2;
-+	buf[i+1] = '\0';
- }
- 
- /**
-@@ -1562,19 +1561,21 @@ static int strip_and_pad_whitespace(int i, char *buf)
- static void ipr_log_vpd_compact(char *prefix, struct ipr_hostrcb *hostrcb,
- 				struct ipr_vpd *vpd)
- {
--	char buffer[IPR_VENDOR_ID_LEN + IPR_PROD_ID_LEN + IPR_SERIAL_NUM_LEN + 3];
--	int i = 0;
-+	char vendor_id[IPR_VENDOR_ID_LEN + 1];
-+	char product_id[IPR_PROD_ID_LEN + 1];
-+	char sn[IPR_SERIAL_NUM_LEN + 1];
- 
--	memcpy(buffer, vpd->vpids.vendor_id, IPR_VENDOR_ID_LEN);
--	i = strip_and_pad_whitespace(IPR_VENDOR_ID_LEN - 1, buffer);
-+	memcpy(vendor_id, vpd->vpids.vendor_id, IPR_VENDOR_ID_LEN);
-+	strip_whitespace(IPR_VENDOR_ID_LEN, vendor_id);
- 
--	memcpy(&buffer[i], vpd->vpids.product_id, IPR_PROD_ID_LEN);
--	i = strip_and_pad_whitespace(i + IPR_PROD_ID_LEN - 1, buffer);
-+	memcpy(product_id, vpd->vpids.product_id, IPR_PROD_ID_LEN);
-+	strip_whitespace(IPR_PROD_ID_LEN, product_id);
- 
--	memcpy(&buffer[i], vpd->sn, IPR_SERIAL_NUM_LEN);
--	buffer[IPR_SERIAL_NUM_LEN + i] = '\0';
-+	memcpy(sn, vpd->sn, IPR_SERIAL_NUM_LEN);
-+	strip_whitespace(IPR_SERIAL_NUM_LEN, sn);
- 
--	ipr_hcam_err(hostrcb, "%s VPID/SN: %s\n", prefix, buffer);
-+	ipr_hcam_err(hostrcb, "%s VPID/SN: %s %s %s\n", prefix,
-+		     vendor_id, product_id, sn);
- }
- 
- /**
 -- 
 2.39.2
 
