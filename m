@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28A9847E
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:47:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC475C4339E;
-	Fri, 10 Mar 2023 13:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFDA847E
+	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 13:47:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D693C433D2;
+	Fri, 10 Mar 2023 13:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678456059;
-	bh=5AqFIXHo3XPoCCjNXubvIOZGKq2Wd7n5trrl0V2l9lY=;
+	s=korg; t=1678456062;
+	bh=QlMMytY0IFdi34GO+x2Ao2VqScghxDXdCrFZoVa8gyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=12j9nDu2khT2N3k7fLjVtGuJLufDGmj/Rp3Wk0fYGnICUalyuRPQJpQAWcmv+4id8
-	 +7NP9deZYc4/yGEOotFOXsibd+oHGHgYC1/5KV1/qwGFXP0+ouwNPl3PvMl5KIqCdm
-	 XI4LMHlZb0PAAxoq+DtfIPWxucEHmAJDUh6M3/AI=
+	b=oBY+e/4dunJiUEgUeecPhCyqWCErmN404fJa/o6B9vUtOE+/zLT1gfWasrxWFUIh5
+	 42PYyX7LP4Yk2JB/klg9EUlOhw+P1dA8R1SVEQIK3u+AALCUgIxdu00b385g4Mfvur
+	 lk0XCJR4nmlfMBwFUoBF/ZpCcF1RWnZPVLu2SdOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e008dccab31bd3647609@syzkaller.appspotmail.com,
-	syzbot+6692c72009680f7c4eb2@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
 	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 037/193] wifi: ath9k: htc_hst: free skb in ath9k_htc_rx_msg() if there is no callback function
-Date: Fri, 10 Mar 2023 14:36:59 +0100
-Message-Id: <20230310133712.195210343@linuxfoundation.org>
+Subject: [PATCH 4.14 038/193] wifi: ath9k: Fix potential stack-out-of-bounds write in ath9k_wmi_rsp_callback()
+Date: Fri, 10 Mar 2023 14:37:00 +0100
+Message-Id: <20230310133712.232259060@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
 References: <20230310133710.926811681@linuxfoundation.org>
@@ -39,52 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
 
-[ Upstream commit 9b25e3985477ac3f02eca5fc1e0cc6850a3f7e69 ]
+[ Upstream commit 8a2f35b9830692f7a616f2f627f943bc748af13a ]
 
-It is stated that ath9k_htc_rx_msg() either frees the provided skb or
-passes its management to another callback function. However, the skb is
-not freed in case there is no another callback function, and Syzkaller was
-able to cause a memory leak. Also minor comment fix.
+Fix a stack-out-of-bounds write that occurs in a WMI response callback
+function that is called after a timeout occurs in ath9k_wmi_cmd().
+The callback writes to wmi->cmd_rsp_buf, a stack-allocated buffer that
+could no longer be valid when a timeout occurs. Set wmi->last_seq_id to
+0 when a timeout occurred.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+Found by a modified version of syzkaller.
+
+BUG: KASAN: stack-out-of-bounds in ath9k_wmi_ctrl_rx
+Write of size 4
+Call Trace:
+ memcpy
+ ath9k_wmi_ctrl_rx
+ ath9k_htc_rx_msg
+ ath9k_hif_usb_reg_in_cb
+ __usb_hcd_giveback_urb
+ usb_hcd_giveback_urb
+ dummy_timer
+ call_timer_fn
+ run_timer_softirq
+ __do_softirq
+ irq_exit_rcu
+ sysvec_apic_timer_interrupt
 
 Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Reported-by: syzbot+e008dccab31bd3647609@syzkaller.appspotmail.com
-Reported-by: syzbot+6692c72009680f7c4eb2@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
 Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230104123546.51427-1-pchelkin@ispras.ru
+Link: https://lore.kernel.org/r/20230104124130.10996-1-linuxlovemin@yonsei.ac.kr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/htc_hst.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/wmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
-index 6d69cf69fd86e..6331c98088e03 100644
---- a/drivers/net/wireless/ath/ath9k/htc_hst.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
-@@ -394,7 +394,7 @@ static void ath9k_htc_fw_panic_report(struct htc_target *htc_handle,
-  * HTC Messages are handled directly here and the obtained SKB
-  * is freed.
-  *
-- * Service messages (Data, WMI) passed to the corresponding
-+ * Service messages (Data, WMI) are passed to the corresponding
-  * endpoint RX handlers, which have to free the SKB.
-  */
- void ath9k_htc_rx_msg(struct htc_target *htc_handle,
-@@ -481,6 +481,8 @@ void ath9k_htc_rx_msg(struct htc_target *htc_handle,
- 		if (endpoint->ep_callbacks.rx)
- 			endpoint->ep_callbacks.rx(endpoint->ep_callbacks.priv,
- 						  skb, epid);
-+		else
-+			goto invalid;
- 	}
- }
- 
+diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
+index 4b68804f3742e..9a17f7a07b1e8 100644
+--- a/drivers/net/wireless/ath/ath9k/wmi.c
++++ b/drivers/net/wireless/ath/ath9k/wmi.c
+@@ -337,6 +337,7 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
+ 	if (!time_left) {
+ 		ath_dbg(common, WMI, "Timeout waiting for WMI command: %s\n",
+ 			wmi_cmd_to_name(cmd_id));
++		wmi->last_seq_id = 0;
+ 		mutex_unlock(&wmi->op_mutex);
+ 		kfree_skb(skb);
+ 		return -ETIMEDOUT;
 -- 
 2.39.2
 
