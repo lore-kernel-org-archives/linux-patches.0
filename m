@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0193C6FC9
-	for <patches@lists.linux.dev>; Sat, 11 Mar 2023 23:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AA76FCB
+	for <patches@lists.linux.dev>; Sat, 11 Mar 2023 23:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=JMrOLqBblBfuXk+q4S5+9mk7xuUL4OAY5iCRONC3a9s=; b=0/v+R9IPFNWntmPcpjlL15fvu0
-	M9xKiq+QbXN/d482W6msoOVilIoSDxS6zD+KWQYLwFqAyJFglZ3gUZtDiwfFfduWCLFPaw6VjUeNk
-	9f1Kyh2tlwgXefYF7pp9X8Cs4VTBlf9KKyPIGPzNB5o/kLgICWnys1NQ3A+DKX7YPEwxE/Sk7LZEV
-	pPtNaqNjM7Req9EYo+ZQz16QrY8zJTGdFaQEwWqWcOe0PBfnZwqyE5ExmRqRJlQOoPoqtA+CibPWs
-	BbCxQIELVWbqhsDH2sBlR4rffpOdSv9NltJzxoiZXnDAoM5u19nczIzz72xBuVPWgk83tqM9wc5AR
-	jAYCzgIg==;
+	bh=XIoPX8KdCwgXnvpcDRNW0+6992U8KOWdKG/zQLzC1bo=; b=z2gOK6/fIHzYJOcJNmvW9P5Vo5
+	Sl0r0yNvHZV+0NjO2Ay2Rdi6F6hheGZeWQEyVkVrZgX4AZRz4+OLyemhQ9ojpLWXG43bGQ204kzHs
+	o04johUa0/2+/8zDgr5sHIk9lT+lGLrBt5gl/UksppXX7+kQJFNBat+zX/PyIT+G9OUVgwwrlKoD1
+	i1/ojpKurWdY1ls7VjqpatSZyjXgScXP7iH2El69cdjKIrag4fuDQtZ0XHwK42H3m5/3XqhQSg0+0
+	EcV08tqiNHib9QcrcKyHioAZwMZ0GdlOlr+5JxTTm8RRTiceHQKDca1Bdaif/cF1l74hWCJIYaSUs
+	t6FbPHaQ==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pb8oT-001UJm-1w; Sat, 11 Mar 2023 23:39:45 +0000
+	id 1pb8oS-001UJi-VT; Sat, 11 Mar 2023 23:39:44 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: chuck.lever@oracle.com,
 	jlayton@kernel.org,
@@ -34,9 +34,9 @@ Cc: ebiederm@xmission.com,
 	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH v3 3/5] sunrpc: simplify one-level sysctl registration for xs_tunables_table
-Date: Sat, 11 Mar 2023 15:39:42 -0800
-Message-Id: <20230311233944.354858-4-mcgrof@kernel.org>
+Subject: [PATCH v3 1/5] sunrpc: simplify two-level sysctl registration for tsvcrdma_parm_table
+Date: Sat, 11 Mar 2023 15:39:40 -0800
+Message-Id: <20230311233944.354858-2-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20230311233944.354858-1-mcgrof@kernel.org>
 References: <20230311233944.354858-1-mcgrof@kernel.org>
@@ -49,54 +49,55 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-There is no need to declare an extra tables to just create directory,
+There is no need to declare two tables to just create directories,
 this can be easily be done with a prefix path with register_sysctl().
 
 Simplify this registration.
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma.c | 21 ++-------------------
+ 1 file changed, 2 insertions(+), 19 deletions(-)
 
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index aaa5b2741b79..46bbd6230650 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -77,7 +77,7 @@ static unsigned int xs_tcp_fin_timeout __read_mostly = XS_TCP_LINGER_TO;
- 
- /*
-  * We can register our own files under /proc/sys/sunrpc by
-- * calling register_sysctl_table() again.  The files in that
-+ * calling register_sysctl() again.  The files in that
-  * directory become the union of all files registered there.
-  *
-  * We simply need to make sure that we don't collide with
-@@ -157,15 +157,6 @@ static struct ctl_table xs_tunables_table[] = {
+diff --git a/net/sunrpc/xprtrdma/svc_rdma.c b/net/sunrpc/xprtrdma/svc_rdma.c
+index 5bc20e9d09cd..f0d5eeed4c88 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma.c
++++ b/net/sunrpc/xprtrdma/svc_rdma.c
+@@ -212,24 +212,6 @@ static struct ctl_table svcrdma_parm_table[] = {
  	{ },
  };
  
--static struct ctl_table sunrpc_table[] = {
+-static struct ctl_table svcrdma_table[] = {
 -	{
--		.procname	= "sunrpc",
+-		.procname	= "svc_rdma",
 -		.mode		= 0555,
--		.child		= xs_tunables_table
+-		.child		= svcrdma_parm_table
 -	},
 -	{ },
 -};
 -
- /*
-  * Wait duration for a reply from the RPC portmapper.
-  */
-@@ -3174,7 +3165,7 @@ static struct xprt_class	xs_bc_tcp_transport = {
- int init_socket_xprt(void)
+-static struct ctl_table svcrdma_root_table[] = {
+-	{
+-		.procname	= "sunrpc",
+-		.mode		= 0555,
+-		.child		= svcrdma_table
+-	},
+-	{ },
+-};
+-
+ static void svc_rdma_proc_cleanup(void)
  {
- 	if (!sunrpc_table_header)
--		sunrpc_table_header = register_sysctl_table(sunrpc_table);
-+		sunrpc_table_header = register_sysctl("sunrpc", xs_tunables_table);
+ 	if (!svcrdma_table_header)
+@@ -263,7 +245,8 @@ static int svc_rdma_proc_init(void)
+ 	if (rc)
+ 		goto out_err;
  
- 	xprt_register_transport(&xs_local_transport);
- 	xprt_register_transport(&xs_udp_transport);
+-	svcrdma_table_header = register_sysctl_table(svcrdma_root_table);
++	svcrdma_table_header = register_sysctl("sunrpc/svc_rdma",
++					       svcrdma_parm_table);
+ 	return 0;
+ 
+ out_err:
 -- 
 2.39.1
 
