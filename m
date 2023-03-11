@@ -1,95 +1,54 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3572F32
-	for <patches@lists.linux.dev>; Fri, 10 Mar 2023 23:45:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=lv6AIW6lF2JPB7SbfoQQs9rQTnaHfUU5yFYPqYrcs0g=; b=HB5MVsriEhP2gANf9CHGU8lepI
-	Ejew55wdz3HG+p9zeFY3/L/5GdnF3y29cQ2x/7NmQlylhHIDANxC6ny1Z/mIL8KXWlnAxARzO+JBm
-	/CtTwB6SHmff1+imOWBr9qU+iQnDUCRniRMTq+qkWSB0pyZdlmxDa3mxr3pu7fchPnz4SEMW/kfEp
-	HyfTfBZIzIYaRsNGfHHJ1VrGCVVHLaLTBzy45KmdTXE1n2zDGZUfLQoB6BlLu+nuysyqQK4qh+0W6
-	9suAmYmlW8gAdwXtOuEKSTx8XKWDmQRbMOJ8P6k+XvFu6ejnNJaPqgdO3fnn3ms4z2UkxpKxTsP29
-	dRZDqnkQ==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pamQR-00Gj2p-VE; Fri, 10 Mar 2023 23:45:27 +0000
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: hca@linux.ibm.com,
-	agordeev@linux.ibm.com,
-	borntraeger@linux.ibm.com,
-	svens@linux.ibm.com,
-	linux-s390@vger.kernel.org,
-	sudipm.mukherjee@gmail.com
-Cc: ebiederm@xmission.com,
-	keescook@chromium.org,
-	yzaikin@google.com,
-	j.granados@samsung.com,
-	patches@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 0/6] s390: simplify sysctl registration
-Date: Fri, 10 Mar 2023 15:45:19 -0800
-Message-Id: <20230310234525.3986352-1-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.37.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D62B7E2
+	for <patches@lists.linux.dev>; Sat, 11 Mar 2023 01:00:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDE8C433EF;
+	Sat, 11 Mar 2023 01:00:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1678496442;
+	bh=23FUW9NwvA7PihXPj1s/kb+tMA+fP4vkf5bAWtJBV6o=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=nl917fFocImUb30MM51jZn0HMuQ0Gsmr+dzoZ+GgH668/FGNAzV7zKqBBudu0Ux1V
+	 QOBrckpvstG9/30O0lM0JZj9+dmtT7Y8uai7QnwUp0o3yyaGhsdKEkxw6ilBf1mwT+
+	 296wQporPyHwipICRxl66tc3TjPEzKsbyaDeVKVzAGAOCSgDq4nkEEJWAF/e59KTp8
+	 hNIfsuQ4j4LKSaGdCYm5m4Y716QOeVTS+1paSpmOi22+oKn1+fDKDNvmusx1tYT8+3
+	 ZTHgkUd/N56L7AVjxbktascW+RTtnhnwXE2Cvsu9Ng7MsbOsJbdGF50pQpc1aKCO7v
+	 4NKs63Mankj/Q==
+Date: Fri, 10 Mar 2023 17:00:40 -0800
+From: Jakub Kicinski <kuba@kernel.org>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
+ Joonsoo Kim <iamjoonsoo.kim@lge.com>, Pekka Enberg <penberg@kernel.org>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>, Roman Gushchin
+ <roman.gushchin@linux.dev>, Andrew Morton <akpm@linux-foundation.org>,
+ linux-mm@kvack.org, rcu@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ netdev@vger.kernel.org, linux-doc@vger.kernel.org, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Frederic
+ Weisbecker <frederic@kernel.org>, Joel Fernandes <joel@joelfernandes.org>,
+ Jonathan Corbet <corbet@lwn.net>, Josh Triplett <josh@joshtriplett.org>,
+ Lai Jiangshan <jiangshanlai@gmail.com>, Mathieu Desnoyers
+ <mathieu.desnoyers@efficios.com>, Mike Rapoport <rppt@kernel.org>, Neeraj
+ Upadhyay <quic_neeraju@quicinc.com>, Paolo Abeni <pabeni@redhat.com>, "Paul
+ E. McKenney" <paulmck@kernel.org>, Steven Rostedt <rostedt@goodmis.org>
+Subject: Re: [PATCH 0/7] remove SLOB and allow kfree() with
+ kmem_cache_alloc()
+Message-ID: <20230310170040.3ee6bf36@kernel.org>
+In-Reply-To: <20230310103210.22372-1-vbabka@suse.cz>
+References: <20230310103210.22372-1-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-s390 is the last architecture and one of the last users of
-register_sysctl_table(). It was last becuase it had one use case
-with dynamic memory allocation and it just required a bit more
-thought.
+On Fri, 10 Mar 2023 11:32:02 +0100 Vlastimil Babka wrote:
+> Otherwise it's straightforward. Patch 2 is a cleanup in net area, that I
+> can either handle in slab tree or submit in net after SLOB is removed.
 
-This is all being done to help reduce code and avoid usage of API
-calls for sysctl registration that can incur recusion. The recursion
-only happens when you have subdirectories with entries and s390 does
-not have any of that so either way recursion is avoided. Long term
-though we can do away with just removing register_sysctl_table()
-and then using ARRAY_SIZE() and save us tons of memory all over the
-place by not having to add an extra empty entry all over.
-
-Hopefully that commit log suffices for the dynamic allocation
-conversion, but I would really like someone to test it as I haven't
-tested a single patch, I'm super guiltly to accept I've just waited for
-patches to finish compile testing and that's not over yet.
-
-Anyway the changes other than the dynamic allocation one are pretty
-trivial. That one could use some good review.
-
-With all this out of the way we have just one stupid last user of
-register_sysctl_table(): drivers/parport/procfs.c
-
-That one is also dynamic. Hopefully the maintainer will be motivated
-to do that conversion with all the examples out there now and this
-having a complex one.
-
-For more information refer to the new docs:
-
-https://lore.kernel.org/all/20230310223947.3917711-1-mcgrof@kernel.org/T/#u     
- 
-Luis Chamberlain (6):
-  s390: simplify one-level sysctl registration for topology_ctl_table
-  s390: simplify one-level syctl registration for s390dbf_table
-  s390: simplify one-level sysctl registration for appldata_table
-  s390: simplify one level sysctl registration for cmm_table
-  s390: simplify one-level sysctl registration for page_table_sysctl
-  s390: simplify dynamic sysctl registration for appldata_register_ops
-
- arch/s390/appldata/appldata_base.c | 30 ++++++++----------------------
- arch/s390/kernel/debug.c           | 12 +-----------
- arch/s390/kernel/topology.c        | 12 +-----------
- arch/s390/mm/cmm.c                 | 12 +-----------
- arch/s390/mm/pgalloc.c             | 12 +-----------
- 5 files changed, 12 insertions(+), 66 deletions(-)
-
--- 
-2.39.1
-
+Letter would be better, if you don't mind. skbuff.c is relatively hot,
+there's a good chance we'll create a conflict.
