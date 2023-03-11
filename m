@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5277E4C7E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548C44C80
 	for <patches@lists.linux.dev>; Sat, 11 Mar 2023 20:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=NH4tVoLA/Ab9gFvMSSGVxXB8I+Y2VZfuJjnFdVe1WZI=; b=MBOHa5bX+EABvDhkdB/7qv7vSl
-	GVUSDgKxgX7yefTJIVBJBdmNe1Ts3Tkl/3O2a3Jd+vRuUJixDZ35Hj11Xdg5ekyjrSJRsEmFMZtcb
-	3ZbuZ74QnM8A+ubsMl9KSBJDvfb+XXrHCa/6b3mSEzG+vhBQgn/bSpoYQkL+4INVlyjzjpxhq8xTd
-	xOTsAfp0PA1UzHpg1bhRa6X5URlkg7TUmFl8AMZlKgrJH4aNvMpm2K94wq/NxeWqV6WdwIUFX0uo7
-	u+yXxcHlVMNKxWlxj7rvqCflb/ElYQtU16FzhZG3oEIuB9kT49OjfLZK5hEJU9z9PNKmb3zvyi3Dc
-	8X1e0YSQ==;
+	bh=8qaxjUIDzCVtggcE5OBgXoP+RAqWhUksXRNkmAxrrvc=; b=RJpECNtNMygd1mX/HW48Hp2Sc8
+	96MkInTnHGiS7wHGe+kg6aViDijV9GH4e6tyj7gpJcNHi5z8KBWYfaB1QfARuF+cgyUIsDZvPnRVC
+	kYayuq20aBM3SCpqCOfUYHBLegcGQ8cQX0ufRpxbJAVXO76kWkp9dy2caL005KKTHxsZQB6CF87RS
+	qgMowMVFIbJbIYwCuRTO+2Q0H2pxbCdL0DbCyOw/8D6y6BMNYVGZ9ai0ynCq4TdHuZJUG9jM0x3Dw
+	Mu0JYogYvy3kBr8dQCsyVoa7LEraz5UJG8FuBFSy8PUBkcaF/y7CNBlH8qtHqDJbH87BjYWFGfIMy
+	3EafRBgg==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pb6Bz-001EKC-S4; Sat, 11 Mar 2023 20:51:51 +0000
+	id 1pb6Bz-001EKI-WB; Sat, 11 Mar 2023 20:51:52 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: chuck.lever@oracle.com,
 	jlayton@kernel.org,
@@ -34,9 +34,9 @@ Cc: ebiederm@xmission.com,
 	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH v2 2/5] sunrpc: simplify one-level sysctl registration for xr_tunables_table
-Date: Sat, 11 Mar 2023 12:51:45 -0800
-Message-Id: <20230311205148.293375-3-mcgrof@kernel.org>
+Subject: [PATCH v2 5/5] sunrpc: simplify one-level sysctl registration for debug_table
+Date: Sat, 11 Mar 2023 12:51:48 -0800
+Message-Id: <20230311205148.293375-6-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20230311205148.293375-1-mcgrof@kernel.org>
 References: <20230311205148.293375-1-mcgrof@kernel.org>
@@ -56,38 +56,36 @@ Simplify this registration.
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- net/sunrpc/xprtrdma/transport.c | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ net/sunrpc/sysctl.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/transport.c b/net/sunrpc/xprtrdma/transport.c
-index 10bb2b929c6d..29b0562d62e7 100644
---- a/net/sunrpc/xprtrdma/transport.c
-+++ b/net/sunrpc/xprtrdma/transport.c
-@@ -140,15 +140,6 @@ static struct ctl_table xr_tunables_table[] = {
- 	{ },
+diff --git a/net/sunrpc/sysctl.c b/net/sunrpc/sysctl.c
+index a54438d68d1b..d51e6d9a2467 100644
+--- a/net/sunrpc/sysctl.c
++++ b/net/sunrpc/sysctl.c
+@@ -164,21 +164,11 @@ static struct ctl_table debug_table[] = {
+ 	{ }
  };
  
 -static struct ctl_table sunrpc_table[] = {
 -	{
 -		.procname	= "sunrpc",
 -		.mode		= 0555,
--		.child		= xr_tunables_table
+-		.child		= debug_table
 -	},
--	{ },
+-	{ }
 -};
 -
- #endif
- 
- static const struct rpc_xprt_ops xprt_rdma_procs;
-@@ -799,7 +790,7 @@ int xprt_rdma_init(void)
- 
- #if IS_ENABLED(CONFIG_SUNRPC_DEBUG)
+-
+ void
+ rpc_register_sysctl(void)
+ {
  	if (!sunrpc_table_header)
 -		sunrpc_table_header = register_sysctl_table(sunrpc_table);
-+		sunrpc_table_header = register_sysctl("sunrpc", xr_tunables_table);
- #endif
- 	return 0;
++		sunrpc_table_header = register_sysctl("sunrpc", debug_table);
  }
+ 
+ void
 -- 
 2.39.1
 
