@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4857B
-	for <patches@lists.linux.dev>; Sat, 11 Mar 2023 07:57:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95641C433EF;
-	Sat, 11 Mar 2023 07:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020187B
+	for <patches@lists.linux.dev>; Sat, 11 Mar 2023 09:18:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20334C433EF;
+	Sat, 11 Mar 2023 09:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678521437;
-	bh=Gg16DCykJnE2Bhw2ejexmfCb52yIzdYHCxDa3JlpAbE=;
+	s=korg; t=1678526317;
+	bh=tb4uSs6vec++ASwhKnSWiL5L83Xx0LcatZP9k0KMhag=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gzGhctNUhn4NXUQyyAwllTMN+IEjkkXebZzYti5laFRdavjcYflS/A7tZnaiI8yU1
-	 I885XBkAlyECh1czT2rDSTVhF8HLOXbrFeBeeHVPUAXHkJzEwFiZtJYWLKSpJSR1Ac
-	 JOptKAO5qt/aguAxHHQ21+PinmZFwIvJ5kjKvkd8=
-Date: Sat, 11 Mar 2023 08:57:14 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: pvorel@suse.cz, akpm@linux-foundation.org, keescook@chromium.org,
-	Jason@zx2c4.com, ebiederm@xmission.com, yzaikin@google.com,
-	j.granados@samsung.com, patches@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] utsname: simplify one-level sysctl registration for
- uts_kern_table
-Message-ID: <ZAw0WoMnaBdMEDwa@kroah.com>
-References: <20230310231656.3955051-1-mcgrof@kernel.org>
+	b=BK0A50jGWeXZLX/enTQu1QWxs+1iAxMu1PWiJcmtlkgmT9443/97uAc/d69b9ldve
+	 rnGMHy7XjggR3mZ+yvgmwzZyqbRIx0SOyYbGXPO0sGTst+QX+Dc8nE1JW7JPqoSSCS
+	 Sv5wb3F6J6MeDxZtQUFYxwxX2Eoi6QLHe69eR1pY=
+Date: Sat, 11 Mar 2023 10:18:29 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 000/529] 5.10.173-rc1 review
+Message-ID: <ZAxHZcKEXCqCFnFq@kroah.com>
+References: <20230310133804.978589368@linuxfoundation.org>
+ <7c6de5b8-dbc2-41b3-9e1f-5edb2876337b@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -31,28 +33,29 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230310231656.3955051-1-mcgrof@kernel.org>
+In-Reply-To: <7c6de5b8-dbc2-41b3-9e1f-5edb2876337b@roeck-us.net>
 
-On Fri, Mar 10, 2023 at 03:16:56PM -0800, Luis Chamberlain wrote:
-> There is no need to declare an extra tables to just create directory,
-> this can be easily be done with a prefix path with register_sysctl().
+On Fri, Mar 10, 2023 at 01:02:35PM -0800, Guenter Roeck wrote:
+> On Fri, Mar 10, 2023 at 02:32:23PM +0100, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.10.173 release.
+> > There are 529 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Sun, 12 Mar 2023 13:36:38 +0000.
+> > Anything received after that time might be too late.
+> > 
 > 
-> Simplify this registration.
+> s390:
 > 
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> drivers/s390/block/dasd_diag.c:656:23: error: initialization of 'int (*)(struct dasd_device *, __u8)' {aka 'int (*)(struct dasd_device *, unsigned char)'} from incompatible pointer type 'int (*)(struct dasd_device *, __u8,  __u8)' {aka 'int (*)(struct dasd_device *, unsigned char,  unsigned char)'} [-Werror=incompatible-pointer-types]
+>   656 |         .pe_handler = dasd_diag_pe_handler,
+> 
+> This problem affects the v5.4.y and v5.10.y release candidates.
 
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Ick, ok, that's my fault, I'll drop the patch I half-backported for
+5.4.y and 5.10.y and push out -rc2 versions with the fix.
 
-> ---
-> 
-> This is part of the effort to phase out calls that can recurse from
-> sysctl registration [0]. If you have a tree to take this in feel free
-> to take it, or I can take it too through sysclt-next. Let me know!
-> 
-> This file has no explicit maintainer, so I assume there is no tree.
-> 
-> If I so no one taking it I can take in as part of sysctl-next later.
-
-I recommend taking it in your tree like this, thanks.
+thanks,
 
 greg k-h
