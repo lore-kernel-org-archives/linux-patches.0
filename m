@@ -1,91 +1,103 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B1B7B
-	for <patches@lists.linux.dev>; Sat, 11 Mar 2023 19:04:37 +0000 (UTC)
-Received: by mail-qt1-f169.google.com with SMTP id y10so9387706qtj.2
-        for <patches@lists.linux.dev>; Sat, 11 Mar 2023 11:04:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678561476;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fnvGap3bZNSv+sB+kLpIELEU6ix0YkzCIcb65Gg4LUc=;
-        b=CyNQ3xGcn2or2jno/8rbuV8XXVK8RbZAnnUdTtSR7FjCl3V5szrjhI377Pz4Wtew4K
-         4S0Ij+MX45gWCiJvErBSLZ/X/+W4VWm2x+pSBfwsE1K2fnRp/6xdHzJitGpMtgkw1Rk0
-         N35zZ/sADLGn1/9PBLVxA66Sij5zKidQvBvXpKHciJqA7VPC8rgoQMk9BwXEpxNSRmXm
-         dsNZgum/2DdMQRAVS3SBF+Toi5MFDY21KBi+dFzkGlWcRtHrs2yOZONNk7d9mTka3JsD
-         QfhWWGzUOjsVY8hzQ++7nSc+uShJ9onbCaLRIk8pd/npscPZEZcQ0FY24KgnfacRBh3T
-         ao6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678561476;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fnvGap3bZNSv+sB+kLpIELEU6ix0YkzCIcb65Gg4LUc=;
-        b=nIfokq3ef0dJ2JjG+LcHiBbqB3/egWVabs4LlAkkiRI5/q+Z0Y1TMHeGiPiz2ajaxL
-         M5Lgoci+5Rrg5M7p0Cj0ImXZbJSWn1VaFbQmToYenS9iaMjlSr/+2Up0FdaKmVmHBZPT
-         ZtU/sHwP4Y7krjm5/TrhRkqTuwrV70acdulV8HYoQV1nY4x1q2FQSUjphhlKt5Pwee7e
-         8rWE2FtUb3dZasUSdpjUPfid+RiZXV1/aYGsrT7HucQCRvoh2EqB1nNeKUHXu+qbTEu2
-         FF6Z6WTAWhrcMq9NWbRGyZ2hoF7IcrB1hddIvwpS5jYx8Lc70NpK04UXjj7PSPzWb0dD
-         +pVg==
-X-Gm-Message-State: AO0yUKUFNHGBiO4Q7PrhbFbypP2PFaeHt5EXqOBUmCn362jmY3NON6Ov
-	oIp3uqauJm8/8w+U9L+SG10=
-X-Google-Smtp-Source: AK7set8my+8yHmODiFJavWlaRUMaP4V/y7Lvl5C5GdCXGtsBwwK8FifsiEJyI3bfRd8vps8E8+zVsA==
-X-Received: by 2002:a05:622a:281:b0:3b9:bc8c:c215 with SMTP id z1-20020a05622a028100b003b9bc8cc215mr9101123qtw.32.1678561476017;
-        Sat, 11 Mar 2023 11:04:36 -0800 (PST)
-Received: from [192.168.1.105] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
-        by smtp.gmail.com with ESMTPSA id e21-20020ac85995000000b003bfc2d5ddb7sm2340297qte.73.2023.03.11.11.04.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 Mar 2023 11:04:35 -0800 (PST)
-Message-ID: <fc5a38a8-60b3-62d5-95cd-6b1500f3f122@gmail.com>
-Date: Sat, 11 Mar 2023 11:04:32 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5070E4C7D
+	for <patches@lists.linux.dev>; Sat, 11 Mar 2023 20:52:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
+	Reply-To:Content-Type:Content-ID:Content-Description;
+	bh=XIoPX8KdCwgXnvpcDRNW0+6992U8KOWdKG/zQLzC1bo=; b=NWdEVYNyVND64gD2By+ArxWn9i
+	GvIMY2HatnEvgFY4p2eqCVZJUQlsVpbQdbGdOj1J5Dcbgj8ZFTg/Gw/9fM4sY/PrT6GVx/BNCMr5a
+	ITVp7nxGYvJSYj/okyh/Zw0r5jUxu7iOtwKkWBAu0v1HKQDUcqNK8MF1e/2zkzD3Q7ImqZgXXij67
+	x10IZd+p2vuDOiIII9LFdwA+77fZOMfpmU5yE1QE8yFC0xwNMmofXvYQx2COX7eQVH0rS3HS6/oPa
+	1f+Jq/it/8POhExEYsnJq1BLbxVr3TSew4CTACPEO4hsSK5u8cBKs1sZ1DZOldqoPrzhzfZbvr5y/
+	oqFvrMLg==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1pb6Bz-001EKA-Qm; Sat, 11 Mar 2023 20:51:51 +0000
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: chuck.lever@oracle.com,
+	jlayton@kernel.org,
+	trond.myklebust@hammerspace.com,
+	anna@kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	kuba@kernel.org,
+	linux-nfs@vger.kernel.org
+Cc: ebiederm@xmission.com,
+	keescook@chromium.org,
+	yzaikin@google.com,
+	j.granados@samsung.com,
+	patches@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH v2 1/5] sunrpc: simplify two-level sysctl registration for tsvcrdma_parm_table
+Date: Sat, 11 Mar 2023 12:51:44 -0800
+Message-Id: <20230311205148.293375-2-mcgrof@kernel.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20230311205148.293375-1-mcgrof@kernel.org>
+References: <20230311205148.293375-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 5.10 000/528] 5.10.173-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230311091908.975813595@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230311091908.975813595@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
+There is no need to declare two tables to just create directories,
+this can be easily be done with a prefix path with register_sysctl().
 
+Simplify this registration.
 
-On 3/11/2023 1:20 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.173 release.
-> There are 528 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Mon, 13 Mar 2023 09:17:40 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.173-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ net/sunrpc/xprtrdma/svc_rdma.c | 21 ++-------------------
+ 1 file changed, 2 insertions(+), 19 deletions(-)
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+diff --git a/net/sunrpc/xprtrdma/svc_rdma.c b/net/sunrpc/xprtrdma/svc_rdma.c
+index 5bc20e9d09cd..f0d5eeed4c88 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma.c
++++ b/net/sunrpc/xprtrdma/svc_rdma.c
+@@ -212,24 +212,6 @@ static struct ctl_table svcrdma_parm_table[] = {
+ 	{ },
+ };
+ 
+-static struct ctl_table svcrdma_table[] = {
+-	{
+-		.procname	= "svc_rdma",
+-		.mode		= 0555,
+-		.child		= svcrdma_parm_table
+-	},
+-	{ },
+-};
+-
+-static struct ctl_table svcrdma_root_table[] = {
+-	{
+-		.procname	= "sunrpc",
+-		.mode		= 0555,
+-		.child		= svcrdma_table
+-	},
+-	{ },
+-};
+-
+ static void svc_rdma_proc_cleanup(void)
+ {
+ 	if (!svcrdma_table_header)
+@@ -263,7 +245,8 @@ static int svc_rdma_proc_init(void)
+ 	if (rc)
+ 		goto out_err;
+ 
+-	svcrdma_table_header = register_sysctl_table(svcrdma_root_table);
++	svcrdma_table_header = register_sysctl("sunrpc/svc_rdma",
++					       svcrdma_parm_table);
+ 	return 0;
+ 
+ out_err:
+-- 
+2.39.1
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
---
-Florian
