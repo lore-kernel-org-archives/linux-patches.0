@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AA76FCB
-	for <patches@lists.linux.dev>; Sat, 11 Mar 2023 23:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1941E6FCC
+	for <patches@lists.linux.dev>; Sat, 11 Mar 2023 23:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=XIoPX8KdCwgXnvpcDRNW0+6992U8KOWdKG/zQLzC1bo=; b=z2gOK6/fIHzYJOcJNmvW9P5Vo5
-	Sl0r0yNvHZV+0NjO2Ay2Rdi6F6hheGZeWQEyVkVrZgX4AZRz4+OLyemhQ9ojpLWXG43bGQ204kzHs
-	o04johUa0/2+/8zDgr5sHIk9lT+lGLrBt5gl/UksppXX7+kQJFNBat+zX/PyIT+G9OUVgwwrlKoD1
-	i1/ojpKurWdY1ls7VjqpatSZyjXgScXP7iH2El69cdjKIrag4fuDQtZ0XHwK42H3m5/3XqhQSg0+0
-	EcV08tqiNHib9QcrcKyHioAZwMZ0GdlOlr+5JxTTm8RRTiceHQKDca1Bdaif/cF1l74hWCJIYaSUs
-	t6FbPHaQ==;
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=WbqYZjJpU+1PcZrTGrNzziUjjV/M7hAxp2OwdHagJ+Q=; b=EpH1Web2oo+7BVAyfP4XAd0oWb
+	JpuUNAZJaewTVAaWl00eZw3cklOLr3Wz3KAh3RAoU1Vr/6v4rjYGZTEAIZgV3hYgiLZhvQZ5Q43Mz
+	4FFXgZeda5nzjUk5vC2FJ6tQ0dAtoAzI5tCflzArz+g8zdVqvZtPsirnfynC+xBiG+S8zER2t7oXq
+	62dZDgQ2vuhDcJNjqcKd/MqmdCZjswH6mdznvnjZmKrPCDpRGqL6g/vl5Q7ThXKFgAPPQGVl0Jlf3
+	xdBR7AFHArHtGGNCRIWf7dYUnfe1F0hdSQJSRW9xwJP9HrFbkM9z1V77Yan2HVsR6p87jFD7H+AMZ
+	RVHE2tbw==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pb8oS-001UJi-VT; Sat, 11 Mar 2023 23:39:44 +0000
+	id 1pb8oS-001UJg-U2; Sat, 11 Mar 2023 23:39:44 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: chuck.lever@oracle.com,
 	jlayton@kernel.org,
@@ -34,12 +34,10 @@ Cc: ebiederm@xmission.com,
 	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH v3 1/5] sunrpc: simplify two-level sysctl registration for tsvcrdma_parm_table
-Date: Sat, 11 Mar 2023 15:39:40 -0800
-Message-Id: <20230311233944.354858-2-mcgrof@kernel.org>
+Subject: [PATCH v3 0/5] sunrpc: simplfy sysctl registrations
+Date: Sat, 11 Mar 2023 15:39:39 -0800
+Message-Id: <20230311233944.354858-1-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20230311233944.354858-1-mcgrof@kernel.org>
-References: <20230311233944.354858-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,55 +47,43 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-There is no need to declare two tables to just create directories,
-this can be easily be done with a prefix path with register_sysctl().
+This is my v3 series to simplify sysctl registration for sunrpc. The
+first series was posted just yesterday [0] but 0-day found an issue with
+CONFIG_SUNRPC_DEBUG. After this fix I poasted a fix for v2 [1] but alas
+0-day then found an issue when CONFIG_SUNRPC_DEBUG is disabled. This
+fixes both cases... hopefully that's it.
+                                                                                                                                                                                              
+Changes on v3:
 
-Simplify this registration.
+   o Fix compilation when CONFIG_SUNRPC_DEBUG is disabled.. forgot to
+     keep all the sysctl stuff under the #ifdef.
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- net/sunrpc/xprtrdma/svc_rdma.c | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
+Changes on v2:
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma.c b/net/sunrpc/xprtrdma/svc_rdma.c
-index 5bc20e9d09cd..f0d5eeed4c88 100644
---- a/net/sunrpc/xprtrdma/svc_rdma.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma.c
-@@ -212,24 +212,6 @@ static struct ctl_table svcrdma_parm_table[] = {
- 	{ },
- };
- 
--static struct ctl_table svcrdma_table[] = {
--	{
--		.procname	= "svc_rdma",
--		.mode		= 0555,
--		.child		= svcrdma_parm_table
--	},
--	{ },
--};
--
--static struct ctl_table svcrdma_root_table[] = {
--	{
--		.procname	= "sunrpc",
--		.mode		= 0555,
--		.child		= svcrdma_table
--	},
--	{ },
--};
--
- static void svc_rdma_proc_cleanup(void)
- {
- 	if (!svcrdma_table_header)
-@@ -263,7 +245,8 @@ static int svc_rdma_proc_init(void)
- 	if (rc)
- 		goto out_err;
- 
--	svcrdma_table_header = register_sysctl_table(svcrdma_root_table);
-+	svcrdma_table_header = register_sysctl("sunrpc/svc_rdma",
-+					       svcrdma_parm_table);
- 	return 0;
- 
- out_err:
+   o Fix compilation when CONFIG_SUNRPC_DEBUG is enabled, I forgot to move the
+     proc routines above, and so the 4th patch now does that too.
+                                                                                                                                                                                              
+Feel free to take these patches or let me know and I'm happy to also
+take these in through sysctl-next. Typically I use sysctl-next for
+core sysctl changes or for kernel/sysctl.c cleanup to avoid conflicts.
+All these syctls however are well contained to sunrpc so they can also
+go in separately. Let me know how you'd like to go about these patches.
+                                                                                                                                                                                              
+[0] https://lkml.kernel.org/r/20230310225236.3939443-1-mcgrof@kernel.org
+
+Luis Chamberlain (5):
+  sunrpc: simplify two-level sysctl registration for tsvcrdma_parm_table
+  sunrpc: simplify one-level sysctl registration for xr_tunables_table
+  sunrpc: simplify one-level sysctl registration for xs_tunables_table
+  sunrpc: move sunrpc_table and proc routines above
+  sunrpc: simplify one-level sysctl registration for debug_table
+
+ net/sunrpc/sysctl.c             | 42 ++++++++++++---------------------
+ net/sunrpc/xprtrdma/svc_rdma.c  | 21 ++---------------
+ net/sunrpc/xprtrdma/transport.c | 11 +--------
+ net/sunrpc/xprtsock.c           | 13 ++--------
+ 4 files changed, 20 insertions(+), 67 deletions(-)
+
 -- 
 2.39.1
 
