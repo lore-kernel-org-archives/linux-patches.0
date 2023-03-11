@@ -1,168 +1,229 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F032D7B
-	for <patches@lists.linux.dev>; Sat, 11 Mar 2023 06:42:37 +0000 (UTC)
-Received: by mail-wm1-f51.google.com with SMTP id bg16-20020a05600c3c9000b003eb34e21bdfso7577091wmb.0
-        for <patches@lists.linux.dev>; Fri, 10 Mar 2023 22:42:37 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9A17B
+	for <patches@lists.linux.dev>; Sat, 11 Mar 2023 06:57:33 +0000 (UTC)
+Received: by mail-vs1-f48.google.com with SMTP id o32so6650478vsv.12
+        for <patches@lists.linux.dev>; Fri, 10 Mar 2023 22:57:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1678516956;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rLCDgBE2CpEpsYEH2GzNb2mRA3Ov/LpZ5EV9ph3pyrE=;
-        b=GJw9guvyr0s5eebXuJrA9NOkpl95WPNpiig/eTGB5Oom88V/Zp6f+dhqK5P/TXiP9I
-         +lME1MquTJSG6dt2pPa57FLIAwj/biU0Qf962U4moIZrFm+oWItD8o5l+Y34iS4LOMOj
-         Dljq872LDn+dRGWMQtNJuQE+g+5Is0J8POfj2Gl0v+5e1j5IJ4rbjOzgMWHRGEgZhsNE
-         3RL/kxG3uz2rxtrTqxJwBzbtg4LSrZ/ZL9Mg/las7shVi1Poyt9Yz6xxm/+04xdFR1jG
-         IrkPMxmJ5nttDheyrDkTehYfgNS+FJF4Ruv0PMXdmNsYgh1gpy9TOUQ9fl6wHqu01k3y
-         HK0g==
+        d=linaro.org; s=google; t=1678517852;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vgdPDpd/UGNlIjqFRewIYZuipZ5SZ6ADoBVeG2r1SyU=;
+        b=naFt/MGAuhhivbgt/8cEyDQhBUvwpy2sl0pfhuIMCb27ptJIIm8RadFZokbMSe+pa2
+         vyPtQ0zBcgyuqVQUCK4BVIAb57Pxc7HBHlwHBbLkv6P/yV6aQHdCYJLpodxdgocfX6/3
+         biDsoEkAd0j9QjtVOFq17VQJM9uJ0Q4uXV5ci3b2vsYZVsy71LNLvSyQVZo0ZX1cvNL0
+         RnOgldtF+e64EyF5hk3SPjbWPAdqIhWo/O5nDql4U48ewqxp3L0+qmYSWupb7hpAemsC
+         2aNtqjlojZOuSeALo4YBBxhbhNsRqgwug1G4e9jAQqBePx0/FiChMYRFYJMG0W8M3wR+
+         r1MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678516956;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rLCDgBE2CpEpsYEH2GzNb2mRA3Ov/LpZ5EV9ph3pyrE=;
-        b=7ywiMVGoMDyy1qb+fSMUqhBF5kZskNFB/SEJzbI4Y7jULUMUMvTNXaUVbvLa+f1TNZ
-         3KqWjpBrtnzrSgFxxmc/dFU+jwGcBY9X/INfXEfQ50ByOUqUIIGWTRjHTz3W8IoGGCJa
-         lo9y5f30FBTD7L3C2oQZvkPDj+YIF3LMYAAyCaFVNhZBaxIN1VQlbYJ5/zXzSLZIJmuS
-         wkOxR/kDb51qR/IVzmc85qzorjKuxRhEfOYLvhse8ANc6ZTc94ueeD5LHt+xofoN81Ed
-         yuYnK1qRpeIWp2BgWN34fGLVajHKa9xQZT2yX4My/SplKQmgAHhU9XVMMz1SKnd3pOYG
-         LA2Q==
-X-Gm-Message-State: AO0yUKWwFOgkFLXaKEZuM9bpAEgiUH3+gn6yEEpSyc5reix9pDD/peO7
-	/I7xowjPsfx5rTv7zUNQwdKp6sscUkH243vpPkQBlX9K7o6TPmNYCa79bJQNaMg=
-X-Google-Smtp-Source: AK7set9wYQn7im6e0NM13fx/mhFULhLhun1pudfxqWhKunmEGg+fxkJOhN9RKEAuwsiPqa/qDohJi4l7xBDedI9OZmU=
-X-Received: by 2002:a05:600c:a382:b0:3eb:2e68:5c76 with SMTP id
- hn2-20020a05600ca38200b003eb2e685c76mr1461577wmb.3.1678516956022; Fri, 10 Mar
- 2023 22:42:36 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678517852;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vgdPDpd/UGNlIjqFRewIYZuipZ5SZ6ADoBVeG2r1SyU=;
+        b=KjkD/wQ+jFwg+0gx9BiUWYIYebTL8DYUN5tkUl4HcGSYUtbaopTWu3827GPLJgfNRB
+         F6c/t7v4ITdRcsMBERMER6EOpW4wxJpmym4+LxQ2PsT2zqFy7xwBgsRPe8ajgRJa26j6
+         EUXIYWq8S7VdU/HYVncODzsNw/KxldZbXaLgsssxsZMhBIim3HFFlSWSEd1agQ3021Bk
+         i6Xdd76Evje32/qaweHnOI3KEGe17ojfJRdPEPufz+tV/XG2uJlsqB3e1kKXXxSdOkTr
+         UyNkZFOQze6DvKVKVNjagwgsbutEzmOhOXP14MCLTxqxBOQa8aEr0YdpxQt+fQDN07f3
+         dkxg==
+X-Gm-Message-State: AO0yUKUGuaK4gAH4fR46GduUqwnyTMYtoUE+iHcgB0uRiO61YkA7qIg2
+	Je2GbZSAlFaQQ52PMVphGABOU7hc6ShhgCdhnNCE1w==
+X-Google-Smtp-Source: AK7set9l7pGapuGhKY2Ko1dHU8JGwrP82s/R7szPdich/FsdTXWES4QS8A2KIuEQsQi7Pyvw/iFJ8zl3kudK0LV9aVc=
+X-Received: by 2002:a67:cfc6:0:b0:402:999f:51dd with SMTP id
+ h6-20020a67cfc6000000b00402999f51ddmr18753346vsm.3.1678517851950; Fri, 10 Mar
+ 2023 22:57:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230302013822.1808711-1-sboyd@kernel.org> <20230302013822.1808711-3-sboyd@kernel.org>
- <CABVgOSkomwwgKZ9N0_0YMDL--QaZiTV7ONgSRABU2Ph1Z0CG-g@mail.gmail.com>
- <a97c9bb3a5addfb34af8ccabaa513026.sboyd@kernel.org> <CABVgOSkJ4mw_DtFzn5EwcsuYixWY_j13YotxEYqWhO+ZCL1KPg@mail.gmail.com>
- <d64a086ddcb7c5ca5abecab0ca654259.sboyd@kernel.org>
-In-Reply-To: <d64a086ddcb7c5ca5abecab0ca654259.sboyd@kernel.org>
-From: David Gow <davidgow@google.com>
-Date: Sat, 11 Mar 2023 14:42:24 +0800
-Message-ID: <CABVgOSk9gqRe_5yQZweBA2Qg2aGx8rUJtOHywGeT4x7TEyBH0A@mail.gmail.com>
-Subject: Re: [PATCH 2/8] of: Enable DTB loading on UML for KUnit tests
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	Brendan Higgins <brendan.higgins@linux.dev>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	"Rafael J . Wysocki" <rafael@kernel.org>, Richard Weinberger <richard@nod.at>, 
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>, Johannes Berg <johannes@sipsolutions.net>, 
-	Vincent Whitchurch <vincent.whitchurch@axis.com>, Rob Herring <robh+dt@kernel.org>, 
-	Frank Rowand <frowand.list@gmail.com>, Christian Marangi <ansuelsmth@gmail.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, 
-	linux-um@lists.infradead.org, linux-kselftest@vger.kernel.org, 
-	kunit-dev@googlegroups.com
+References: <20230310133733.973883071@linuxfoundation.org>
+In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Sat, 11 Mar 2023 12:27:21 +0530
+Message-ID: <CA+G9fYsn6W73x+Mox3XcG9bp-eZ4URbuJ7MdwxzJyM2132VD9Q@mail.gmail.com>
+Subject: Re: [PATCH 5.4 000/357] 5.4.235-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, 11 Mar 2023 at 07:34, Stephen Boyd <sboyd@kernel.org> wrote:
+On Fri, 10 Mar 2023 at 19:57, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> Quoting David Gow (2023-03-10 00:09:48)
-> > On Fri, 10 Mar 2023 at 07:19, Stephen Boyd <sboyd@kernel.org> wrote:
-> > >
-> > >
-> > > Hmm. I think you're suggesting that the unit test data be loaded
-> > > whenever CONFIG_OF=y and CONFIG_KUNIT=y. Then tests can check for
-> > > CONFIG_OF and skip if it isn't enabled?
-> > >
-> >
-> > More of the opposite: that we should have some way of supporting tests
-> > which might want to use a DTB other than the built-in one. Mostly for
-> > non-UML situations where an actual devicetree is needed to even boot
-> > far enough to get test output (so we wouldn't be able to override it
-> > with a compiled-in test one).
+> This is the start of the stable review cycle for the 5.4.235 release.
+> There are 357 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> Ok, got it.
+> Responses should be made by Sun, 12 Mar 2023 13:36:38 +0000.
+> Anything received after that time might be too late.
 >
-> >
-> > I think moving to overlays probably will render this idea obsolete:
-> > but the thought was to give test code a way to check for the required
-> > devicetree nodes at runtime, and skip the test if they weren't found.
-> > That way, the failure mode for trying to boot this on something which
-> > required another device tree for, e.g., serial, would be "these tests
-> > are skipped because the wrong device tree is loaded", not "I get no
-> > output because serial isn't working".
-> >
-> > Again, though, it's only really needed for non-UML, and just loading
-> > overlays as needed should be much more sensible anyway.
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.4.235-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.4.y
+> and the diffstat can be found below.
 >
-> I still have one niggle here. Loading overlays requires
-> CONFIG_OF_OVERLAY, and the overlay loading API returns -ENOTSUPP when
-> CONFIG_OF_OVERLAY=n. For now I'm checking for the config being enabled
-> in each test, but I'm thinking it may be better to simply call
-> kunit_skip() from the overlay loading function if the config is
-> disabled. This way tests can simply call the overlay loading function
-> and we'll halt the test immediately if the config isn't enabled.
+> thanks,
 >
+> greg k-h
 
-That sounds sensible, though there is a potential pitfall. If
-kunit_skip() is called directly from overlay code, might introduce a
-dependency on kunit.ko from the DT overlay, which we might not want.
-The solution there is either to have a kunit wrapper function (so the
-call is already in kunit.ko), or to have a hook to skip the current
-test (which probably makes sense to do anyway, but I think the wrapper
-is the better option).
+Results from Linaro=E2=80=99s test farm.
 
+As others reported, s390 build regressions are noticed.
 
-> >
-> > > >
-> > > > That being said, I do think that there's probably some sense in
-> > > > supporting the compiled-in DTB as well (it's definitely simpler than
-> > > > patching kunit.py to always pass the extra command-line option in, for
-> > > > example).
-> > > > But maybe it'd be nice to have the command-line option override the
-> > > > built-in one if present.
-> > >
-> > > Got it. I need to test loading another DTB on the commandline still, but
-> > > I think this won't be a problem. We'll load the unittest-data DTB even
-> > > with KUnit on UML, so assuming that works on UML right now it should be
-> > > unchanged by this series once I resend.
-> >
-> > Again, moving to overlays should render this mostly obsolete, no? Or
-> > am I misunderstanding how the overlay stuff will work?
->
-> Right, overlays make it largely a moot issue. The way the OF unit tests
-> work today is by grafting a DTB onto the live tree. I'm reusing that
-> logic to graft a container node target for kunit tests to add their
-> overlays too. It will be clearer once I post v2.
->
-> >
-> > One possible future advantage of being able to test with custom DTs at
-> > boot time would be for fuzzing (provide random DT properties, see what
-> > happens in the test). We've got some vague plans to support a way of
-> > passing custom data to tests to support this kind of case (though, if
-> > we're using overlays, maybe the test could just patch those if we
-> > wanted to do that).
->
-> Ah ok. I can see someone making a fuzzer that modifies devicetree
-> properties randomly, e.g. using different strings for clock-names.
->
-> This reminds me of another issue I ran into. I wanted to test adding the
-> same platform device to the platform bus twice to confirm that the
-> second device can't be added. That prints a warning, which makes
-> kunit.py think that the test has failed because it printed a warning. Is
-> there some way to avoid that? I want something like
->
->         KUNIT_EXPECT_WARNING(test, <call some function>)
->
-> so I can test error cases.
+* s390, build failures
+  - gcc-12-defconfig
+  - gcc-8-defconfig-fe40093d
 
-Hmm... I'd've thought that shouldn't be a problem: kunit.py should
-ignore most messages during a test, unless it can't find a valid
-result line. What does the raw KTAP output look like? (You can get it
-from kunit.py by passing the --raw_output option).
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-That being said, a KUNIT_EXPECT_LOG_MESSAGE() or similar is something
-we've wanted for a while. I think that the KASAN folks have been
-working on something similar using console tracepoints:
-https://lore.kernel.org/all/ebf96ea600050f00ed567e80505ae8f242633640.1666113393.git.andreyknvl@google.com/
+## Build
+* kernel: 5.4.234-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.4.y
+* git commit: 71be0366b84f5ed2ce06bcc6feddf31053a41c73
+* git describe: v5.4.233-14-g71be0366b84f
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.2=
+33-14-g71be0366b84f
 
-Cheers,
--- David
+## Test Regressions (compared to v5.4.233)
+
+## Metric Regressions (compared to v5.4.233)
+
+## Test Fixes (compared to v5.4.233)
+
+## Metric Fixes (compared to v5.4.233)
+
+## Test result summary
+total: 124659, pass: 103137, fail: 3281, skip: 17853, xfail: 388
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 144 total, 143 passed, 1 failed
+* arm64: 44 total, 40 passed, 4 failed
+* i386: 26 total, 20 passed, 6 failed
+* mips: 27 total, 27 passed, 0 failed
+* parisc: 6 total, 6 passed, 0 failed
+* powerpc: 30 total, 30 passed, 0 failed
+* riscv: 12 total, 10 passed, 2 failed
+* s390: 6 total, 6 passed, 0 failed
+* sh: 12 total, 12 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 37 total, 35 passed, 2 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* packetdrill
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
