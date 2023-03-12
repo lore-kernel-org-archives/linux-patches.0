@@ -1,86 +1,61 @@
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E481FC5
-	for <patches@lists.linux.dev>; Sun, 12 Mar 2023 13:57:57 +0000 (UTC)
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	id 1pbMCw-00037O-LH; Sun, 12 Mar 2023 14:57:54 +0100
-Message-ID: <1fb2d6bb-914e-275e-91cd-9c1096355eb9@leemhuis.info>
-Date: Sun, 12 Mar 2023 14:57:53 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E80538A
+	for <patches@lists.linux.dev>; Sun, 12 Mar 2023 17:59:19 +0000 (UTC)
+Received: by mail-lj1-f176.google.com with SMTP id by8so10381293ljb.7
+        for <patches@lists.linux.dev>; Sun, 12 Mar 2023 10:59:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678643957;
+        h=to:subject:message-id:date:from:sender:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IjxCsWjpVR9S+80StEn7s0e01LeLFs8YAtijTqjnySY=;
+        b=p4nO04zJTpFzQmqBUB3mgS7Cv3TqxJy0zj5CUNFyavFFKjRr5srdMr/gktHUo1yqJJ
+         sTrkwa7DkoSFtScaGCPuZ/KIwMsR1WvV20xwopC2QheoC+V8S6vKqWBbvrSoc03my80N
+         T6HXB+kWX3zfXoLzsmlF/551y14UC/EGQkWm17bsrCtbIAZwJpYrlGxAwRraLCBJhyax
+         u5CyAPcCKTzjm3IfNJZhP5AiyOKYZygCOohsUMatVtrTBHEbDBwAZf3ySQ+NghFeSliT
+         NqSPPdwmKPe69gzlzwD9Qu0Zi+5HNJdqjAv86DOE3DD0nP8A40Y0drMEwrO7WqPA9Wi0
+         Y94w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678643957;
+        h=to:subject:message-id:date:from:sender:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IjxCsWjpVR9S+80StEn7s0e01LeLFs8YAtijTqjnySY=;
+        b=h/ETDUB9kTreVLZ70AgwGRP9vjsTgVrZNDmIZGYqdJM3OLh5KR3/4PBRHvU9IQr1bE
+         f50DiCNeXc5Cqu73l1dsWtUiBNA0Rsq/MCr0xBI3Kztwli/6iCK3oZ6iv4j4SWYvxLOA
+         4HvEtyGevU6IRO38B20i6vVoNhfIUaY0ZgGPO+oKLltyXM7ia8sqNr33Jp1kUm+cIED3
+         NVcRAlg8+YblD8YgG3Ib/qjWJ4BozgxC+f6plGrb3WOE2bEDE2wiZlNn1WlhSLiKeYgL
+         qPxgjtxorUfW5qF6H+kQM00fEAoUqn8+FVYvNNt+H4f2ngJXMtGyPfX51mroUjrt1crO
+         E+Bw==
+X-Gm-Message-State: AO0yUKW4Bb3w43PjbC0Au4YtvAcCXrhwd417VVEQ4Og83aDZm2eQXvih
+	UjpDLO4pp353p+KARIjGi64gv/p+TVSC0Oe0Hd8=
+X-Google-Smtp-Source: AK7set9DraWp9OvTdzSK7k2c0Klz8C/1UCdISBVLw4aOVl5hVEZ0AG2SdLJpK7ue9sg4bX7sm+bctUEedw/vySIMM5k=
+X-Received: by 2002:a2e:b522:0:b0:298:72a8:c6c4 with SMTP id
+ z2-20020a2eb522000000b0029872a8c6c4mr3992502ljm.9.1678643957165; Sun, 12 Mar
+ 2023 10:59:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
-Subject: Re: [PATCH 5.15 000/567] 5.15.99-rc1 review
-Content-Language: en-US, de-DE
-To: =?UTF-8?Q?Daniel_D=c3=adaz?= <daniel.diaz@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, peterz@infradead.org, jpoimboe@redhat.com, ray@n5lax.com
-References: <20230307165905.838066027@linuxfoundation.org>
- <4ce8fe57-53eb-4a83-a468-ebfc98fed496@linaro.org>
-From: "Linux regression tracking (Thorsten Leemhuis)"
- <regressions@leemhuis.info>
-In-Reply-To: <4ce8fe57-53eb-4a83-a468-ebfc98fed496@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1678629477;45fa5e81;
-X-HE-SMSGID: 1pbMCw-00037O-LH
+Sender: qianghcastro@gmail.com
+Received: by 2002:a2e:9bd2:0:0:0:0:0 with HTTP; Sun, 12 Mar 2023 10:59:16
+ -0700 (PDT)
+From: "Mrs. Clementina Toussain" <mrsclementinetoussaint65@gmail.com>
+Date: Sun, 12 Mar 2023 18:59:16 +0100
+X-Google-Sender-Auth: rFstIaq1vuFf2wZQT7K4PJIsqLg
+Message-ID: <CAADLgx9udf8BeAy4LQOCXaeh544o3-s9L9UNct1MpNMUeLiMCA@mail.gmail.com>
+Subject: Greetings!
+To: undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 
-On 08.03.23 07:24, Daniel Díaz wrote:
-> 
-> On 07/03/23 10:55, Greg Kroah-Hartman wrote:
->> This is the start of the stable review cycle for the 5.15.99 release.
->> There are 567 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Thu, 09 Mar 2023 16:57:34 +0000.
->> Anything received after that time might be too late.
->>
->> The whole patch series can be found in one patch at:
->>     https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.99-rc1.gz
->> or in the git tree and branch at:
->>     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
->> and the diffstat can be found below.
-> 
-> A new warning has been introduced on x86_64; we've seen it with GCC 8,
-> 11, 12, and Clang 16.
-> 
->   arch/x86/kernel/smp.o: warning: objtool: sysvec_reboot()+0x54:
-> unreachable instruction
-> 
-> Bisection pointed towards "x86: Mark stop_this_cpu() __noreturn"
-> (upstream commit f9cdf7ca57cada055f61ef6d0eb4db21c3f200db). Reverting
-> this commit did remove the warning.
-> 
-> Reproducer:
-> 
->   tuxmake \
->     --runtime podman \
->     --target-arch x86_64 \
->     --toolchain gcc-11 \
->     --kconfig
-> https://storage.tuxsuite.com/public/linaro/lkft/builds/2MhGKYH63pYIllJIDAxH3FsvakK/config
+Hello, Dearest Friend,
 
-FWIW, thee is another report about it here:
-https://bugzilla.kernel.org/show_bug.cgi?id=217175
-CCing the reporter
+I Am Mrs.Clementina Toussaint, I have something important discussion
+for you, please reply
+urgently for more details give you further information. And I hereby
+advice to contact me by this email address  mrsclementinetoussaint65@gmail.com
 
-This is definitely not my area of expertise, so you might better want to
-ignore the the following: I did some quick searching and now wonder if
-backporting be0075951fde ("x86: Annotate call_on_stack()") might fix the
-warning; it already was backported to 5.15 afaics:
-https://lore.kernel.org/all/20220412062945.857488242@linuxfoundation.org/
-
-Ciao, Thorsten
+REDARDS
+Mrs.Clementina Toussaint
