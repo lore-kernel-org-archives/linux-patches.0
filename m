@@ -1,62 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C14C23C5
-	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 10:49:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F278FC433EF;
-	Mon, 13 Mar 2023 10:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501F023C5
+	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 11:20:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F0BC433D2;
+	Mon, 13 Mar 2023 11:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678704591;
-	bh=9U/kjd7zTlI0yizAc0Bt8URDZmzyKq6pw8WWfsEWtG0=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-	b=fsq1h7AdwwyBfjr+IR9/PTZvY3GiBKh6u/mFNrzOHiYoVtB9ivND1hJK+ao8S0btK
-	 +CZkIyh0Xq2OxWCz35BDpkpDg98F4YIj7vKJBelt5nYyQMwnhlsZnZjtL6af9mFD7v
-	 6V+MyYHo1Ps9S/l2TsRLy2Sy6SSIdegaGaU9twGaUu5MOmhczA8dceCdqzOmc92Mg1
-	 sPbCczrT/ZCw0BsilSgzEhUAtPJR2068xRsq7U3cZHQIqUv60lFvAZlN0UqcGpK3X0
-	 8oO8fjS0gENgXa+9/OMJFKcwpmHg8tN4z3kYdQvnnC+8mCihdJoEk9mFIrXDUqyUKC
-	 E+nxW28qFYNdg==
-Message-ID: <a8eddd8bd56e4ff07ece72fe736e155b3e34cbae.camel@kernel.org>
-Subject: Re: nfs/lockd: simplify sysctl registration
-From: Jeff Layton <jlayton@kernel.org>
-To: Luis Chamberlain <mcgrof@kernel.org>, chuck.lever@oracle.com, 
-	trond.myklebust@hammerspace.com, anna@kernel.org, linux-nfs@vger.kernel.org
-Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com, 
- j.granados@samsung.com, patches@lists.linux.dev,
- linux-fsdevel@vger.kernel.org,  linux-kernel@vger.kernel.org
-Date: Mon, 13 Mar 2023 06:49:48 -0400
-In-Reply-To: <20230310225842.3946871-1-mcgrof@kernel.org>
-References: <20230310225842.3946871-1-mcgrof@kernel.org>
-Content-Type: text/plain; charset="ISO-8859-15"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4 (3.46.4-1.fc37) 
+	s=k20201202; t=1678706413;
+	bh=ISe5UVZfG0kk7GI8PLSL2i+qiFvy8AcPIus/O+t/3OM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qTozJycmwfU0NrgRVFw0XTG2UAdZmPJAlAeLL4lMCMnKEIWRByxCrUzxKKMMLc2Yl
+	 lcG5YOzkBKX0lOxW1Egdlnw3euXEyV2cSZBteox5J9JGwd6lCITjRt0UhXYUc4wDLP
+	 otkj8R+uA7zKywNGTTsu5jnAG3PEwwHFoO1wWIjKTiBc1+BBSXm61mUwXczCZascUJ
+	 oKTs17bd9xLqqFldyOYVsvg9uvfVpktxsEAyqN2IyTddIE0hn1/Ya1qIKQANSAeVff
+	 V4DCQ8CEiuihLvqnYk4W87POoap/ADfBT4zhyz4Jgkb2rs1yqzr6jcwEHXE+vu98BL
+	 0dg/iHwI4uIcg==
+Date: Mon, 13 Mar 2023 12:20:06 +0100
+From: Christian Brauner <brauner@kernel.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: pvorel@suse.cz, akpm@linux-foundation.org, gregkh@linuxfoundation.org,
+	keescook@chromium.org, Jason@zx2c4.com, ebiederm@xmission.com,
+	yzaikin@google.com, j.granados@samsung.com, patches@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] utsname: simplify one-level sysctl registration for
+ uts_kern_table
+Message-ID: <20230313112006.m5vmtzbepo6lcoj5@wittgenstein>
+References: <20230310231656.3955051-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230310231656.3955051-1-mcgrof@kernel.org>
 
-On Fri, 2023-03-10 at 14:58 -0800, Luis Chamberlain wrote:
-> This is just following the work of the same sysctl registration [0] I
-> just emailed you patches for sunprc but for nfs and lockd.
->=20
-> Feel free to pick up or let me know if you want me to take them through
-> my tree. I haven't even finished compile testing all these yet, but they
-> are pretty trivial.
->=20
-> I'm just dropping netdev on this series as its purely nfs/lockd stuff.
->=20
-> [0] https://lkml.kernel.org/r/20230310225236.3939443-1-mcgrof@kernel.org
->=20
-> Luis Chamberlain (3):
->   lockd: simplify two-level sysctl registration for nlm_sysctls
->   nfs: simplify two-level sysctl registration for nfs4_cb_sysctls
->   nfs: simplify two-level sysctl registration for nfs_cb_sysctls
->=20
->  fs/lockd/svc.c      | 20 +-------------------
->  fs/nfs/nfs4sysctl.c | 21 ++-------------------
->  fs/nfs/sysctl.c     | 20 +-------------------
->  3 files changed, 4 insertions(+), 57 deletions(-)
->=20
+On Fri, Mar 10, 2023 at 03:16:56PM -0800, Luis Chamberlain wrote:
+> There is no need to declare an extra tables to just create directory,
+> this can be easily be done with a prefix path with register_sysctl().
+> 
+> Simplify this registration.
+> 
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> ---
 
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Looks good,
+Reviewed-by: Christian Brauner <brauner@kernel.org>
