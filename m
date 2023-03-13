@@ -1,236 +1,189 @@
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044FD8C17
-	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 21:34:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678743298; x=1710279298;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=QzjhgoKE+iNeSbLAD9w3iK8ahuBW9ImODbNMekkVIak=;
-  b=ktHcuRQdsG9MiZgEUGZDq6sVL7DE92ZOE5ji5NFHkpoC4OsXb2VJOekU
-   kZekPX3SXbtHjerj9d4ddZg2+BlfLFgdWXbuLtGArsM3FCSRIjy3f0VeP
-   46LgsNC79huWN9FYnvAMfhiMGtaOb9l2enhekYbrsw7Y3MSZ8532uDy+l
-   AGybQiYzwQhSW4Bp6E3UMem9AsomXJGLEoTvsv8NhhdwYzfoQo3YVeDgP
-   PYZwKPfJfWOc2SYVBUzipPkCWSMPR2FCIgjWf8HK2MiX7VQTBmtWzG7kE
-   5E09bXOghV5vTbW5GldM+HKDCuUHrIAH+ZgddiTpU0PWZkXWgPHsRJnqh
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="316907866"
-X-IronPort-AV: E=Sophos;i="5.98,258,1673942400"; 
-   d="scan'208";a="316907866"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2023 14:34:56 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="852928010"
-X-IronPort-AV: E=Sophos;i="5.98,258,1673942400"; 
-   d="scan'208";a="852928010"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
-  by orsmga005.jf.intel.com with ESMTP; 13 Mar 2023 14:34:54 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Mon, 13 Mar 2023 14:34:54 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21 via Frontend Transport; Mon, 13 Mar 2023 14:34:53 -0700
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.105)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.21; Mon, 13 Mar 2023 14:34:53 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=TC/zjSkg/AB01gKJNedlHcZ/+WTg1N2Je5oFPNl2JP44dTln7fe2uULEWiTnxtO5JMVkyWmpM8smiVdh1yOzE9+ycYNJj6hSIAUNUDUcg66A1eRVA2hxc7WDgGN0L+Da9nlNTBDGXRrqSLjdHAWU4HXZpnfCLaCZfVAQMwO4p7yBRxTdVos5sTi2FDzCT9/qCFyy3MZ8XiyKAW8DP67mEtgR90kwxEqKFhGSNxZeWcnHKkfrtppD5gNT21Fx9//gsR9w/Jrthb5pLm3beIBRioUnFFAKyhD455PsdZGgEotr9QdmEBI2vifZPtZrReCgJ784rg+IYNeP/rMgltzPAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=81jCAR83ARdFeKnbgQlSBUy4w7DPd4h4AK6o1+v904I=;
- b=iEPnvWa1POqydECAhmOseHxZ0m6L49yM7ivuLVEdUUxAm3nNPM8ISwFGtR9ZLNQCI4P67noI7j2tSl+wbbuwO+q7pcuA40adwArmZRKq4X8UutznVu6Bk8XywY1s5UXCd/HUsi0rBR3uHDHHXQHH2jX2DyhFEKgiQqQtXEZDuiboKDaaDCKFF/yVJCWneKUJR+5x8RNEsQzbBT/AAnS9+KYYVRQgO8AZg+mn6uDa8a+Rbz9anngXUAxtxgQLAGMsGSxEolqQh9ttSvw2oZWQxJLViBqg3XAF219vSw49LhMggK0E8sOIoyqw6g8bfcfoH3d+Gq6cyVRcbMVQUyFHCw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from BYAPR11MB3768.namprd11.prod.outlook.com (2603:10b6:a03:fa::20)
- by SJ0PR11MB5165.namprd11.prod.outlook.com (2603:10b6:a03:2ad::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.25; Mon, 13 Mar
- 2023 21:34:51 +0000
-Received: from BYAPR11MB3768.namprd11.prod.outlook.com
- ([fe80::9a08:f53b:3a33:1211]) by BYAPR11MB3768.namprd11.prod.outlook.com
- ([fe80::9a08:f53b:3a33:1211%3]) with mapi id 15.20.6178.024; Mon, 13 Mar 2023
- 21:34:51 +0000
-Message-ID: <2ae25756-7403-ad5f-548a-50e633040bf9@intel.com>
-Date: Mon, 13 Mar 2023 14:34:47 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3 1/8] platform/x86/intel/ifs: Reorganize driver data
-Content-Language: en-US
-To: Hans de Goede <hdegoede@redhat.com>, <markgross@kernel.org>
-CC: <tglx@linutronix.de>, <mingo@redhat.com>, <bp@alien8.de>,
-	<dave.hansen@linux.intel.com>, <x86@kernel.org>, <hpa@zytor.com>,
-	<gregkh@linuxfoundation.org>, <rostedt@goodmis.org>, <ashok.raj@intel.com>,
-	<tony.luck@intel.com>, <linux-kernel@vger.kernel.org>,
-	<platform-driver-x86@vger.kernel.org>, <patches@lists.linux.dev>,
-	<ravi.v.shankar@intel.com>, <thiago.macieira@intel.com>,
-	<athenas.jimenez.gonzalez@intel.com>, <sohil.mehta@intel.com>
-References: <20230214234426.344960-1-jithu.joseph@intel.com>
- <20230301015942.462799-1-jithu.joseph@intel.com>
- <20230301015942.462799-2-jithu.joseph@intel.com>
- <a6ae936e-effd-3794-e6fb-11b33a4d6eb1@redhat.com>
-From: "Joseph, Jithu" <jithu.joseph@intel.com>
-In-Reply-To: <a6ae936e-effd-3794-e6fb-11b33a4d6eb1@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0072.namprd03.prod.outlook.com
- (2603:10b6:303:b6::17) To BYAPR11MB3768.namprd11.prod.outlook.com
- (2603:10b6:a03:fa::20)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6A08F4E;
+	Mon, 13 Mar 2023 23:00:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0B3C433EF;
+	Mon, 13 Mar 2023 23:00:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1678748448;
+	bh=JCeQvBY6bMqovbU34cXbJ4Zgnocr52q58fWGR8Okslg=;
+	h=From:Date:Subject:To:Cc:From;
+	b=db8ONJnU3rzg0GkiT8U7ITxd6f/Pcpenykg1Q3Gh7uOGiQUfuKf+uowPWc92kRciM
+	 XClRrybnkrciyd9wLhE/RVuTmdPSSpoo7sk4Uu7cFGrpVokmkJWJOy7Hrynp5WTs1A
+	 tKssWkWDmsSGhK3ZFN2v3EDos4Sx/zcxpYCOHTvciNdA1uUZhLXT8xgvToT2/9EtRR
+	 eyHRXwwGypRwKKEKNAucW0swKGz8yjRYkcN5tV3YiY7srhFlfRiL7r9aGbsW3iv4AB
+	 bOT+ASwBhst36EDe6ab+VBcGUZgESIgn8UzP1gnHdQMCaarY5lvCF/UM1LOA2QscI7
+	 IAT03dPN/YTGw==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 13 Mar 2023 16:00:23 -0700
+Subject: [PATCH] riscv: Handle zicsr/zifencei issues between clang and
+ binutils
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BYAPR11MB3768:EE_|SJ0PR11MB5165:EE_
-X-MS-Office365-Filtering-Correlation-Id: 602bdd33-bf8d-45f3-df98-08db240ac717
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: KjGoZRwZdB+IZXNGGPzmBX3c0JglRyS7smzBUfu77RZzEpAorzCptxULgpvbn9I1dLmZb36tpwtVQLugMgl9+n+MkXDF8kRlWjDBhKDNZHv+xkPEbL3nKEvAqSM7E2tK5C1OzWEaugSctfwMKCn8ml6Dwyw3y9MgAR/MbZhcs0nRqDuy1AHZEEtZkC60WOtRstoglLC1l9aCgWBFlc4xMrLdV2oRXWYps8z7atkImdbS+4OXJogBKK+qeTZ4a/S1PU2itwSVs6VUHBIneOyuzaXFcCWgyXAKNhNL+UMnxajE/YmyyuM9tJN+Q0A53unrdMyVr01yh9RI57pxrSIVXjT1TFIGihM9axG6wAQ642i3qIO9f04/nWu/f97Dfp+2phAofCU8te6v56b/tEy/1uKv2pTSojoRUS+cudS0no0GpTMSv7DzjxBhukZbdfUhKSv0pWPtzvlevk6ycSF+V6WrJTH9XMHH2d1Uocx/0HUAOGRQvYWy4Z1WfkKA8w5v32nSb5aIz05CZ7W6OJvCH+jXHUrNUUgEyRDJzaEb903j5SphQYV3oE2g+dGhEq9p7wjrlmtWWBfL5KcOgD4NYLBoTE0L7IsyF3Cqj17xAjUjlxeB/0P93dZSKpY2m7RakWy04PvRefUzetyf9VDiIErPK7TyUwt/InTIqOVStbsB+oD1O017xv+zuDUSRJfeBJAxMDXjXn8X0vs4qwarknk1C1deaR5x/jxNX3eKA3o=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3768.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(396003)(376002)(346002)(39860400002)(136003)(366004)(451199018)(36756003)(86362001)(31696002)(41300700001)(26005)(6512007)(6506007)(186003)(53546011)(5660300002)(7416002)(4326008)(2616005)(8936002)(316002)(478600001)(8676002)(66556008)(66476007)(66946007)(6486002)(82960400001)(6666004)(38100700002)(2906002)(83380400001)(31686004)(45980500001)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WE8vYUxaakhBQjZkK3JMVXhEbmd1N1lJaHVIYnZKUlVtV2Fhb25HK2RGVHZn?=
- =?utf-8?B?bHNKdDNHK24xU01nRE0rek5xV29Pc0ZQbTdzZ2ZDenVWRnB6M0F5R2dicEF5?=
- =?utf-8?B?SW5tQ3NzU2txZ04vTkd4QTFQQll1VFk0ZDlqYWt5d2o2K2t1SFFzeXVIa2lC?=
- =?utf-8?B?UUlDQ2ZoUUpwc1pIQTE0V3JwNXoyUnZDUytyVWIvK21UV0lVZURsc2tsaGN3?=
- =?utf-8?B?TWlLdmphQk56SlBxc1FmaTcwdUtRVHlwZWg4V1VGNzE3N0l1a0xDTitKcXJo?=
- =?utf-8?B?blE3N3dIZVFUSXpnWWxFZ2dySlhVcm5nSzdrWUhwMGl0WDJjSHJKN1pMNWRt?=
- =?utf-8?B?d1VVYzQ1cy9POUJ5aUVlSzBxNk1sbVhweGw5R3FBd01lemZYK0QzcWwzcEZi?=
- =?utf-8?B?VUZFdU8wY29HRWIxdEIrZ1hEQzk3NG8zVFkwM0FWaUNtLytkR2krdW0ycnlT?=
- =?utf-8?B?eFVscklwVlVSdjRDbHB5aC8xc1gyR0ZLSDNTN2FNTXNPaXExQlN1NGF4ME9O?=
- =?utf-8?B?V1ppQUpVSUpmajN4WW11L0xnUkdFNndSdzlQakMyY2ZJLy9ydFdMcUtTUUVm?=
- =?utf-8?B?Qm5NMktIZGRkd0tleDN0dm0ycUFhMGU0RGk2cngydlN1b2FiMGt0UkZocVp2?=
- =?utf-8?B?K1oyVjJSb2RXOFNhUHRVR2tiQmY5QWgwaFFnZUpTSERwZFBSUThoN2hLT2pJ?=
- =?utf-8?B?c3NITzdPOEVxZ0pOditNazZjMEppbUo0ZGJDVFYxZEh1dy9KVzVBMkhFejVQ?=
- =?utf-8?B?dTJEOXduRDhPNTB1NmV3NDY2dVQwKysrdlZVRU5ncHFnMENtbU8xdzFLTEZR?=
- =?utf-8?B?ZjZpWmVXRWdqN1dOaXY1U1FjQXdVZG5xbkx5dld2UldxbHR2T2JaOVJnRXB2?=
- =?utf-8?B?QkExYW5ITktBb3dqWXNDTHd6UExPc3JmWU5TWXc1VzhYYmN1UUVVamZ5eEw5?=
- =?utf-8?B?YnEvOEZlK0tyODRwRDVYTjNxa0FjWFk5NFZIeVVEbnlaemtFbnBLemxWUVZQ?=
- =?utf-8?B?V0UrMVlQM0JCYldaNkFFcXN5NEZvbTNTdG9zLzhYYkZhOXNhY0tTWlo1S1Fq?=
- =?utf-8?B?eGRqMWcvRldKdFhJaWlYdlgzL2J0bDU2QmdxT1hCUVVwVjJ4dG1RTjdENnZt?=
- =?utf-8?B?YjlURDBpYUZFaVF3QTRRVkQrSEdJQ1hSWU5QbGVNcUgvVkpycFY5MFZRdzlE?=
- =?utf-8?B?WlB2blNvbENVbzVGTG0xWThUdkwvYWRUeFBWSVVsNHVDL25oNnN2RXppcDlp?=
- =?utf-8?B?OHBibWpGYU5mYnFhY3E1d1VjRmlWNkZOa1AwWGowMEpMWmpHZGNZV0xtc2Vu?=
- =?utf-8?B?ZXRJWVRRTlpTbkZyRmhwcnZtdmxBeCt5Y3IrSWlIRkl4c0dHZENGcU9aK3lO?=
- =?utf-8?B?cCtBSFgxaitua3ZtQ3VXVEg1eDAwRTU0d1lCY0Flc0Rkb3NudTlVajd6SllT?=
- =?utf-8?B?bzdMZnlpcUxxcGxzM0hvZW5GWE1KbG9VMUFlQmhrcFdHeGtOOW5hVkF1N3Na?=
- =?utf-8?B?d3VDRmtjNUFCeWhzT05TMkgvRm9iNUU3WkNvbUZHTTVyZzVPY01ncmVYK3ds?=
- =?utf-8?B?L3BsWmRXLzRNVWZScnJGY2g3dGxNTk1UOGRXYXZxaHlmOGhEUmNjRXg1c3li?=
- =?utf-8?B?R0Z5QW1kdkN0TFk5RnE0b3BRbnMwc1RtbmllUzU3SHN4THRtNWx1SjJscUlW?=
- =?utf-8?B?MlM3cVRLdjgvUEhTV2R3OUVoeHlpcVlZUUozc283cFdSNnpkV0c5Q3ZMNzlO?=
- =?utf-8?B?ZDFjN041NGZ5eWZpT0tvdjZsRmRzTXdYU3ZzVmxkZkt5VVJNc1JNL0FIaGds?=
- =?utf-8?B?aXRnU1RvUXpYSlhrN0FQV21CMStNT01lbjJ1eXRsektLN0NvaERJaHFOQTFI?=
- =?utf-8?B?blE0U3o3bnhFRC9BcUxEZG1FLzBQVHV0K2gyTWlNclZPbHNTUkVLSm92d1hu?=
- =?utf-8?B?cmJheEhHdHM0ODhqeXk5bWNqOE5PTmt2VUJMUFJXcDR6TGhVZXowbVpZeFNU?=
- =?utf-8?B?Q01yak9uM0RPMW9EYkNkeEhkZStWcUhGenkrT1Q2SzF3b3lzU2xlRlp1TnFw?=
- =?utf-8?B?RDZlR29aMkhOYXd6RFozd0tFMlFnUVNnaDVlZ0NWRUdIQ29KR1ZqYVFwS3Ey?=
- =?utf-8?B?SDBGb1ZMVjRyTkpiL3J3ZTM3ck03U1NpeDZ2NWVvOEEwUjdaemNCcFJyKzdp?=
- =?utf-8?B?S3c9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 602bdd33-bf8d-45f3-df98-08db240ac717
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3768.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Mar 2023 21:34:51.3591
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dc3wlQmDZz1LoK9Jp2esffrw7/GlVvg6mXSOaFaTLRy61wOhAwDwwmmCRDTcKZpvpzlJ1/2l58Wswyr3k1GwGA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5165
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230313-riscv-zicsr-zifencei-fiasco-v1-1-dd1b7840a551@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAarD2QC/x2NQQrDMAwEvxJ0riC2A6X9SulBVuRGhzpFKiE05
+ O91clkYFmY2cDEVh3u3gcmirnNtEC4d8ET1JahjY4h9TH0KCU2dF/wpu7UtUlkUi5LzjPE2BCb
+ Jch0ZmiGTC2ajytPheJN/xY7jY1J0PbOP577/AX8nSeKGAAAA
+To: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+ conor.dooley@microchip.com
+Cc: nathan@kernel.org, ndesaulniers@google.com, trix@redhat.com, 
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6797; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=JCeQvBY6bMqovbU34cXbJ4Zgnocr52q58fWGR8Okslg=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCn8q+W/p6yaqjirarFIdECezW+de4YNOQ0aynImBz++m
+ sKzSO9uRykLgxgHg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZhI53xGhu3M74vyHI/Vdh0N
+ Fnbm+HaSU2tO389nYWqvr3sy9NQrrWFkaFCeGvwou9z2E8P1nR6KSVdWnPwXds6/6nW4bNjJte0
+ XWQE=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
+There are two related issues that appear in certain combinations with
+clang and GNU binutils.
 
+The first occurs when a version of clang that supports zicsr or zifencei
+via '-march=' [1] (i.e, >= 17.x) is used in combination with a version
+of GNU binutils that do not recognize zicsr and zifencei in the
+'-march=' value (i.e., < 2.36):
 
-On 3/13/2023 7:46 AM, Hans de Goede wrote:
-> Hi Jithu,
-> 
-> On 3/1/23 02:59, Jithu Joseph wrote:
+  riscv64-linux-gnu-ld: -march=rv64i2p0_m2p0_a2p0_c2p0_zicsr2p0_zifencei2p0: Invalid or unknown z ISA extension: 'zifencei'
+  riscv64-linux-gnu-ld: failed to merge target specific data of file fs/efivarfs/file.o
+  riscv64-linux-gnu-ld: -march=rv64i2p0_m2p0_a2p0_c2p0_zicsr2p0_zifencei2p0: Invalid or unknown z ISA extension: 'zifencei'
+  riscv64-linux-gnu-ld: failed to merge target specific data of file fs/efivarfs/super.o
 
->>  
->> +struct ifs_const_data {
->> +	int	integrity_cap_bit;
->> +	int	test_num;
->> +};
->> +
-> 
-> This is a description of the specific capabilties / bits of
-> the IFS on e.g. Saphire Rapids, so please name this appropriately
-> for example:
-> 
-> struct ifs_hw_caps  {
-> 	int	integrity_cap_bit;
-> 	int	test_num;
-> };
+The second occurs when a version of clang that does not support zicsr or
+zifencei via '-march=' (i.e., <= 16.x) is used in combination with a
+version of GNU as that defaults to a newer ISA base spec, which requires
+specifying zicsr and zifencei in the '-march=' value explicitly (i.e, >=
+2.38):
 
-This can be renamed to ifs_test_caps as it holds test specific fields.
+  ../arch/riscv/kernel/kexec_relocate.S: Assembler messages:
+  ../arch/riscv/kernel/kexec_relocate.S:147: Error: unrecognized opcode `fence.i', extension `zifencei' required
+  clang-12: error: assembler command failed with exit code 1 (use -v to see invocation)
 
-...
+This is the same issue addressed by commit 6df2a016c0c8 ("riscv: fix
+build with binutils 2.38") (see [2] for additional information) but
+older versions of clang miss out on it because the cc-option check
+fails:
 
-> 
-> You got this exactly the wrong way around, there should be a single
-> 
-> static const struct ifs_hw_caps saphire_rapids_caps = {
-> 	.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
-> 	.test_num = 0,
-> };
-> 
-> And then struct ifs_device { } should have a "const struct ifs_hw_caps *hw_caps"
-> which gets initialized to point to &saphire_rapids_caps. So that your const
-> data is actually const.
-> 
-> Where as since the r/w data's lifetime is couple to the misc-device lifetime
-> there is no need to dynamically allocate it just keep that embedded, so that
-> together you get:
+  clang-12: error: invalid arch name 'rv64imac_zicsr_zifencei', unsupported standard user-level extension 'zicsr'
+  clang-12: error: invalid arch name 'rv64imac_zicsr_zifencei', unsupported standard user-level extension 'zicsr'
 
-Noted 
+To resolve the first issue, only attempt to add zicsr and zifencei to
+the march string when using the GNU assembler 2.38 or newer, which is
+when the default ISA spec was updated, requiring these extensions to be
+specified explicitly. LLVM implements an older version of the base
+specification for all currently released versions, so these instructions
+are available as part of the 'i' extension. If LLVM's implementation is
+updated in the future, a CONFIG_AS_IS_LLVM condition can be added to
+CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI.
 
-> 
-> struct ifs_device {
-> 	const struct ifs_hw_caps *hw_caps;
-> 	struct ifs_data data;
-> 	struct miscdevice misc;
-> };
-> 
+To resolve the second issue, use version 2.2 of the base ISA spec when
+using an older version of clang that does not support zicsr or zifencei
+via '-march=', as that is the spec version most compatible with the one
+clang/LLVM implements and avoids the need to specify zicsr and zifencei
+explicitly due to still being a part of 'i'.
 
-The initialization portion, taking into account your suggestion above, translates to:
+[1]: https://github.com/llvm/llvm-project/commit/22e199e6afb1263c943c0c0d4498694e15bf8a16
+[2]: https://lore.kernel.org/ZAxT7T9Xy1Fo3d5W@aurel32.net/
 
-static const struct ifs_test_caps scan_test = {
-	.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
-	.test_num = IFS_TYPE_SAF,
-};
+Cc: stable@vger.kernel.org
+Link: https://github.com/ClangBuiltLinux/linux/issues/1808
+Co-developed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+This is essentially a v3 of Conor's v1 and v2 but since I am sending the
+patch after finding a separate but related issue, I left it at v1:
 
-static const struct ifs_test_caps array_test = {
-	.integrity_cap_bit = MSR_INTEGRITY_CAPS_ARRAY_BIST_BIT,
-	.test_num = IFS_TYPE_ARRAY_BIST,
-};
+- v1: https://lore.kernel.org/20230223220546.52879-1-conor@kernel.org/
+- v2: https://lore.kernel.org/20230308220842.1231003-1-conor@kernel.org/
 
-static struct ifs_device ifs_devices[] = {
-	[IFS_TYPE_SAF] = {
-		.test_caps = &scan_test,
-		.misc = {
-			.name = "intel_ifs_0",
-			.minor = MISC_DYNAMIC_MINOR,
-			.groups = plat_ifs_groups,
-		},
-	},
-	[IFS_TYPE_ARRAY_BIST] = {
-		.test_caps = &array_test,
-		.misc = {
-			.name = "intel_ifs_1",
-			.minor = MISC_DYNAMIC_MINOR,
-			.groups = plat_ifs_array_groups,
-		},
-	},
-};
+I have built allmodconfig with the following toolchain combinations to
+confirm this problem is resolved:
 
-Jithu
+- clang 12/17 + GNU as and ld 2.35/2.39
+- clang 12/17 with the integrated assembler + GNU ld 2.35/2.39
+- clang 12/17 with the integrated assembler + ld.lld
+
+There are a couple of other incompatibilities between clang-17 and GNU
+binutils that I had to patch to get allmodconfig to build successfully
+but those are less likely to be hit in practice because the full LLVM
+stack can be used with LLVM versions 13.x and newer. I will follow up
+with separate issues and patches.
+---
+ arch/riscv/Kconfig  | 22 ++++++++++++++++++++++
+ arch/riscv/Makefile | 10 ++++++----
+ 2 files changed, 28 insertions(+), 4 deletions(-)
+
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index c5e42cc37604..5b182d1c196c 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -464,6 +464,28 @@ config TOOLCHAIN_HAS_ZIHINTPAUSE
+ 	depends on !32BIT || $(cc-option,-mabi=ilp32 -march=rv32ima_zihintpause)
+ 	depends on LLD_VERSION >= 150000 || LD_VERSION >= 23600
+ 
++config TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI
++	def_bool y
++	# https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=aed44286efa8ae8717a77d94b51ac3614e2ca6dc
++	depends on AS_IS_GNU && AS_VERSION >= 23800
++	help
++	  Newer binutils versions default to ISA spec version 20191213 which
++	  moves some instructions from the I extension to the Zicsr and Zifencei
++	  extensions.
++
++config TOOLCHAIN_NEEDS_OLD_ISA_SPEC
++	def_bool y
++	depends on TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI
++	# https://github.com/llvm/llvm-project/commit/22e199e6afb1263c943c0c0d4498694e15bf8a16
++	depends on CC_IS_CLANG && CLANG_VERSION < 170000
++	help
++	  Certain versions of clang do not support zicsr and zifencei via -march
++	  but newer versions of binutils require it for the reasons noted in the
++	  help text of CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI. This
++	  option causes an older ISA spec compatible with these older versions
++	  of clang to be passed to GAS, which has the same result as passing zicsr
++	  and zifencei to -march.
++
+ config FPU
+ 	bool "FPU support"
+ 	default y
+diff --git a/arch/riscv/Makefile b/arch/riscv/Makefile
+index 4de83b9b1772..b05e833a022d 100644
+--- a/arch/riscv/Makefile
++++ b/arch/riscv/Makefile
+@@ -57,10 +57,12 @@ riscv-march-$(CONFIG_ARCH_RV64I)	:= rv64ima
+ riscv-march-$(CONFIG_FPU)		:= $(riscv-march-y)fd
+ riscv-march-$(CONFIG_RISCV_ISA_C)	:= $(riscv-march-y)c
+ 
+-# Newer binutils versions default to ISA spec version 20191213 which moves some
+-# instructions from the I extension to the Zicsr and Zifencei extensions.
+-toolchain-need-zicsr-zifencei := $(call cc-option-yn, -march=$(riscv-march-y)_zicsr_zifencei)
+-riscv-march-$(toolchain-need-zicsr-zifencei) := $(riscv-march-y)_zicsr_zifencei
++ifdef CONFIG_TOOLCHAIN_NEEDS_OLD_ISA_SPEC
++KBUILD_CFLAGS += -Wa,-misa-spec=2.2
++KBUILD_AFLAGS += -Wa,-misa-spec=2.2
++else
++riscv-march-$(CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI) := $(riscv-march-y)_zicsr_zifencei
++endif
+ 
+ # Check if the toolchain supports Zihintpause extension
+ riscv-march-$(CONFIG_TOOLCHAIN_HAS_ZIHINTPAUSE) := $(riscv-march-y)_zihintpause
+
+---
+base-commit: eeac8ede17557680855031c6f305ece2378af326
+change-id: 20230313-riscv-zicsr-zifencei-fiasco-2941caebe7dc
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
