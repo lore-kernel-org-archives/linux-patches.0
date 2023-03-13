@@ -1,86 +1,104 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC14EC3
-	for <patches@lists.linux.dev>; Sun, 12 Mar 2023 23:31:10 +0000 (UTC)
-Received: by mail-pj1-f42.google.com with SMTP id nn1-20020a17090b38c100b0023d059f427cso1030504pjb.2
-        for <patches@lists.linux.dev>; Sun, 12 Mar 2023 16:31:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fromorbit-com.20210112.gappssmtp.com; s=20210112; t=1678663870;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xGsRfyWirO1vSkNZurgVxrSIuOQUCszDrkoyMT09sQs=;
-        b=NboYJvQ0YuDQbYw2M1vU9JVEzDJsjSLEbY9WsRGsLeDGylvi9+jWzHvjyQsXInv/vh
-         5dUJGO59oE44kzMCqDvvyK9i0mAI49aWsGk/ZzRr4oHwPjQEyOFnMSvHgALiQGhLiXTr
-         JMikS88mniyswWrjBAkLMdqzfLSR8DccSOsu/MwTwTCb7kPiUlrs4CTmAffKJiqXcxuq
-         gwVJ9E1bcqrT8qMzrAWeleGhPrt7/Zdr9E4DiOXQgyCY6+E+CZMhIIJcw+DDvxKI9NQF
-         2wxmm4cljnXAien+Q36htyf30E7LxnGeEvszsGg5zaVw4uLiKB4Xr5qJiFuqmHC1KEBY
-         H9dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678663870;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xGsRfyWirO1vSkNZurgVxrSIuOQUCszDrkoyMT09sQs=;
-        b=QAUFQtSSBwjk4VGndXZAyG4HU1+e+bLaOEI/fi7fKlY7AJyLGttYfvKMoZYVaSSWsn
-         Shwse/7SYIHC0PN/DrZTQYv+uaLJ0gTYRAJbkvUCRviapzWZAydQfAx4mxyHYfpLJ/cV
-         HuaC9uUuwhX9AJUqHL9IEXT9y5FPrGQTCVAfIKyHCYi2tZ8eAxjTzKO83hw985wwKAgy
-         iK8jEdyIz7KA6qvEPPKnFs/kXnjNnJc1AVRtZhSLce5tA7KQuyatwZCBm+nytZ6jlDtd
-         0J40IgUHWNfqrskqWSde9AMPXsNWqa91LhiAGGAzIn6q0UDNmzGGdQZKYjPHW+zZ/wPw
-         fWJQ==
-X-Gm-Message-State: AO0yUKWPyjlqPBcskFqOvZfEK9t2zG6fs2w0Has2Bwy6nRkMhswNzh/4
-	YPcVaTso9uqrb98maNrayFwETQ==
-X-Google-Smtp-Source: AK7set8Fgsjo4bRIW0pN3fgU3x2K1goOzHfUWcYXBk2t7zY/FyA9xynwVPuBAWLpp35yhUEYeP8MOw==
-X-Received: by 2002:a17:903:120b:b0:19e:82aa:dc8a with SMTP id l11-20020a170903120b00b0019e82aadc8amr37238346plh.22.1678663870328;
-        Sun, 12 Mar 2023 16:31:10 -0700 (PDT)
-Received: from dread.disaster.area (pa49-186-4-237.pa.vic.optusnet.com.au. [49.186.4.237])
-        by smtp.gmail.com with ESMTPSA id bb12-20020a170902bc8c00b001933b4b1a49sm3311784plb.183.2023.03.12.16.31.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Mar 2023 16:31:09 -0700 (PDT)
-Received: from dave by dread.disaster.area with local (Exim 4.92.3)
-	(envelope-from <david@fromorbit.com>)
-	id 1pbV9e-0083Cw-KQ; Mon, 13 Mar 2023 10:31:06 +1100
-Date: Mon, 13 Mar 2023 10:31:06 +1100
-From: Dave Chinner <david@fromorbit.com>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: djwong@kernel.org, linux-xfs@vger.kernel.org, keescook@chromium.org,
-	yzaikin@google.com, j.granados@samsung.com, patches@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org, netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] xfs: simplify two-level sysctl registration for xfs_table
-Message-ID: <20230312233106.GP360264@dread.disaster.area>
-References: <20230310230219.3948819-1-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780ED15A6
+	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 01:23:06 +0000 (UTC)
+Date: Mon, 13 Mar 2023 01:22:29 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1678670567; x=1678929767;
+	bh=8JDf4Eklx3nC7W1bhw1n1uLJ99rwzcE6YOLk5j3je2E=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=Dn0A4kYODpwMSO1GM/pni6FLrtz15KvEgoxkR3Z84SjclMB8wYhHJlAFwLrF4q6jd
+	 rVrab21R05z5qN4EJsbbxg2wAebxfGfCDvHL9RNPWPDMhzEpzeJ2xeYFQ7S2mV6rx8
+	 CP3qnUzMbCoTQl+MiEch7LiCDjKLDxBvULERZsa7HFcSsgu6YCbfoT7AQA12LciSNO
+	 d5iAne3Wf+lRt+/GLv6iBEFtuGJuH8OO/KCVOkEND2KIHG2wDFZLoYnu0FghNZ/BNz
+	 oPKg9Al4dA3j1NITMoHZMzv5viJD5kVz4DrirL6o+u4GFuhETh0TapO4OT8RNgz0Lc
+	 vnfNAQ32WBOWw==
+To: "ojeda@kernel.org" <ojeda@kernel.org>, "alex.gaynor@gmail.com" <alex.gaynor@gmail.com>, "wedsonaf@gmail.com" <wedsonaf@gmail.com>, "boqun.feng@gmail.com" <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, "bjorn3_gh@protonmail.com" <bjorn3_gh@protonmail.com>
+From: y86-dev <y86-dev@protonmail.com>
+Cc: "rust-for-linux@vger.kernel.org" <rust-for-linux@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: [PATCH v1 0/3] Rust pin-init API for pinned initialization of structs
+Message-ID: <Bk4Yd1TBtgoLg2g_c37V3c_Wt30FMS89z7LrjnfadhDquwG_0dUGz1c_9BlMDmymg0tCACBpmCw-wZxlg4Jl4W2gkorh5P78ePgSnJVR5cU=@protonmail.com>
+Feedback-ID: 40624463:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230310230219.3948819-1-mcgrof@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 10, 2023 at 03:02:19PM -0800, Luis Chamberlain wrote:
-> There is no need to declare two tables to just create directories,
-> this can be easily be done with a prefix path with register_sysctl().
-> 
-> Simplify this registration.
-> 
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-> ---
-> 
-> This is not clear to some so I've updated the docs for the sysctl
-> registration here:
-> 
-> https://lore.kernel.org/all/20230310223947.3917711-1-mcgrof@kernel.org/T/#u     
-> 
->  fs/xfs/xfs_sysctl.c | 20 +-------------------
->  1 file changed, 1 insertion(+), 19 deletions(-)
+This series adds the pin-init API for initializing pinned structs in-place.
+It reduces the need for `unsafe` and streamlines initialization of structs.
 
-Looks fine.
+The first patch adds a utility macro `quote!` for proc-macros. This macro
+converts the typed characters directly into Rust tokens that are the output
+of proc-macros. It is used by the pin-init API.
 
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
+The second patch introduces the pin-init API. The commit message details
+the problem it solves and lays out the overall architecture. The
+implementation details are fairly complex; however, this is required to
+provide a safe API for users -- reducing the amount of `unsafe` code is a
+key goal of the Rust support in the kernel. An example of the before/after
+difference from the point of view of users is provided in the commit
+message. Ultimately, it is a goal is to at some point have this as a
+language feature of Rust. A first step in this direction is the Field
+Projection RFC [1].
 
--- 
-Dave Chinner
-david@fromorbit.com
+The third patch improves the function `UniqueArc::try_new_uninit` by using
+the pin-init API. The old version first allocated uninitialized memory on
+the stack and then moved it into the location in the heap. The new version
+directly allocates this on the heap.
+
+These patches provide an important foundation for ergonomic and safe
+synchronization primitives and their users. It also enables in-place
+initialization of structs, so structs with a bigger size than the stack
+size can be created.
+
+These patches are also a long way coming, since I held a presentation on
+safe pinned initialization at Kangrejos [2]. And my discovery of this
+problem was almost a year ago [3].
+
+The repository at [4] contains these patches applied. The Rust-doc
+documentation of the pin-init API can be found at [5].
+
+Link: https://github.com/rust-lang/rfcs/pull/3318 [1]
+Link: https://kangrejos.com [2]
+Link: https://github.com/Rust-for-Linux/linux/issues/772 [3]
+Link: https://github.com/y86-dev/linux.git patch/pinned-init-v1 [4]
+Link: https://rust-for-linux.github.io/docs/pinned-init/kernel/init [5]
+
+Benno Lossin (2):
+  rust: add pin-init API
+  rust: sync: reduce stack usage of `UniqueArc::try_new_uninit`
+
+Gary Guo (1):
+  rust: macros: add `quote!` macro
+
+ rust/kernel/init.rs        | 1396 ++++++++++++++++++++++++++++++++++++
+ rust/kernel/init/common.rs |   42 ++
+ rust/kernel/init/macros.rs |  449 ++++++++++++
+ rust/kernel/lib.rs         |    6 +
+ rust/kernel/prelude.rs     |    6 +-
+ rust/kernel/sync/arc.rs    |   48 +-
+ rust/kernel/types.rs       |    8 +
+ rust/macros/lib.rs         |   80 +++
+ rust/macros/pin_data.rs    |   79 ++
+ rust/macros/pinned_drop.rs |   49 ++
+ rust/macros/quote.rs       |  125 ++++
+ scripts/Makefile.build     |    2 +-
+ 12 files changed, 2286 insertions(+), 4 deletions(-)
+ create mode 100644 rust/kernel/init.rs
+ create mode 100644 rust/kernel/init/common.rs
+ create mode 100644 rust/kernel/init/macros.rs
+ create mode 100644 rust/macros/pin_data.rs
+ create mode 100644 rust/macros/pinned_drop.rs
+ create mode 100644 rust/macros/quote.rs
+
+
+base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
+--=20
+2.39.2
+
