@@ -1,51 +1,51 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BFB28F2
-	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 14:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCD828F2
+	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 15:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1678718777;
+	s=mimecast20190719; t=1678719754;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=q8FnhFWhsWcQReYEr7jTipBhtAk4faTQb7wPHi4ycFw=;
-	b=HOsvMqFmkefnpSsJ0aw1SNnaLU0F291OmH3w93i3CFT2NxECgTtLcuIfRHnH2Pl4fseaJ+
-	v8HImeQNWvynjzxcJkWOOjeWECLnbFxM7x7yqfYjBx8T2PTwTUC+QJqNOOXppNyzhldmei
-	g9PN7jf7Wn3BXwyzC2xjHt0B8oyF/cA=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=ytv42m9QWKbJ/ZLfHwR9HdA9Autu6K0kWVrGy/ImdIQ=;
+	b=iOaVQVo8/GKJ2zszQETYHce6aj7YJrLCLs7oRzkWzagyHUFAtHvZU7vEKvByxbq8ox5ED4
+	TDCDXFOKBeHmjVjnPsXJpLhYo/mxNuDI3SJxW/CgpgeO/o0X7shCWiugyRCpm0yvEKY3Hp
+	evs3Fv+w34SxYHQU1b22D743+zvbQ3w=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-160-HheqMVdiNgGj9svbnSJ_2g-1; Mon, 13 Mar 2023 10:46:16 -0400
-X-MC-Unique: HheqMVdiNgGj9svbnSJ_2g-1
-Received: by mail-ed1-f70.google.com with SMTP id r9-20020a05640251c900b004d4257341c2so17285625edd.19
-        for <patches@lists.linux.dev>; Mon, 13 Mar 2023 07:46:15 -0700 (PDT)
+ us-mta-114-VTXlKOjEP86MyHyiiaoObQ-1; Mon, 13 Mar 2023 11:02:33 -0400
+X-MC-Unique: VTXlKOjEP86MyHyiiaoObQ-1
+Received: by mail-ed1-f72.google.com with SMTP id k12-20020a50c8cc000000b004accf30f6d3so17435487edh.14
+        for <patches@lists.linux.dev>; Mon, 13 Mar 2023 08:02:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678718775;
+        d=1e100.net; s=20210112; t=1678719752;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q8FnhFWhsWcQReYEr7jTipBhtAk4faTQb7wPHi4ycFw=;
-        b=7CD+yH25tw8MQaitxRNFDd2D+Z79EGnydi9v1L5AcKOPWpsmm/pzSEEFPaX28w8EoG
-         s9SAwqTwfaCK403EJoA6Rwoar1eBfIBBqZH12tA4wyvOvwZ5yFKGrT6Y8ZNhNdOnzs43
-         2F9GZr5nvBODIHpyLSjczQ75cgObzNHU9irudt2IyWo9bU2XylW4f/poeJTVRR7AdC0Q
-         2Kdrk4diw7OPvs6IfvHttZsowEOWB3h75tSa3ZswJeWg4NHGt4CVezFPsrx3gk4EGRZn
-         nsaWPAa2Hc/Su9aIz1AQNq8EoLqyVQOTYfMf1tLJ+dXCpsdFS29j2dvf+fu6QufhmOFk
-         vGGw==
-X-Gm-Message-State: AO0yUKVVLf14sLZ2vzlX7w0etVw9+XzIGg/bIK1PzdbNpZ6aPIVQZLRn
-	CYIoSI2twmtT56NZTjJDw6EcjipuMLsaprli5hhwugspc4KTICoiQagiLQZ5Yu+mmQtLZ5e4pan
-	0T3Sb79tP9kruJgLGWA==
-X-Received: by 2002:a17:907:2beb:b0:921:5cce:6599 with SMTP id gv43-20020a1709072beb00b009215cce6599mr6627228ejc.41.1678718774933;
-        Mon, 13 Mar 2023 07:46:14 -0700 (PDT)
-X-Google-Smtp-Source: AK7set9mWKhtvFCDOfwoqyOCMDtxZp3GkDaz+ur2PErEi3oBFcgfP69Um9N3lOdwHyLX8448a9pzCA==
-X-Received: by 2002:a17:907:2beb:b0:921:5cce:6599 with SMTP id gv43-20020a1709072beb00b009215cce6599mr6627192ejc.41.1678718774607;
-        Mon, 13 Mar 2023 07:46:14 -0700 (PDT)
+        bh=ytv42m9QWKbJ/ZLfHwR9HdA9Autu6K0kWVrGy/ImdIQ=;
+        b=jFvLUhBTAmqf7f2JegbCcE4qD4VQToipWNnLPdfPGdaJPmTYJVxoo8Nsgus6agJCNs
+         vGlKMoYzxBB9eY9i2S0ondhXQtDP1WW9tpsWFEsCTU+ZSiXxh1CF/le6HZp4treKnbvf
+         AwPph2tMgoXnAVqSEkDEaOqRZEXAZ59gJOyePhpzmQQau9AFvKmTZRLAPxhPLvmiNaB6
+         vbXNePIxl+yV972r6iD9lHgQtQYanqNqnNNWkfymlzMjXegH2RgUCRB+XdmphUxC2Ek3
+         gGSE5Oi5DWaOegH0xOb295aOEF8QTJMFY4Y9txe2yJjRSexJFF8LTdYh/2ofsxD71p7b
+         tyBw==
+X-Gm-Message-State: AO0yUKVxgsAZCcC7ryeAfa9S94YXN9Yutz2UiFdP4zxhDdgH2Rf8q/Li
+	K2gkVXGXegznfHSF1PZdXaUD2vVcwAu5ixA/NNsTpHrsTp34OrmXTZxWiJv2MojIGnzGgbR2NC7
+	zT9Ulk0RxvF+3recPLw==
+X-Received: by 2002:a17:907:7f0b:b0:888:7ac8:c0f4 with SMTP id qf11-20020a1709077f0b00b008887ac8c0f4mr37301369ejc.25.1678719752529;
+        Mon, 13 Mar 2023 08:02:32 -0700 (PDT)
+X-Google-Smtp-Source: AK7set8An3aVV4WnNT9hxgiKWhAdv46b5RvfOThjOYw5to5Y8bLq/2UctAu/n1pVa89F4tB0bReroA==
+X-Received: by 2002:a17:907:7f0b:b0:888:7ac8:c0f4 with SMTP id qf11-20020a1709077f0b00b008887ac8c0f4mr37301343ejc.25.1678719752251;
+        Mon, 13 Mar 2023 08:02:32 -0700 (PDT)
 Received: from [10.40.98.142] ([78.108.130.194])
-        by smtp.gmail.com with ESMTPSA id gx3-20020a1709068a4300b009200601ea12sm3298802ejc.208.2023.03.13.07.46.13
+        by smtp.gmail.com with ESMTPSA id xb12-20020a170907070c00b00924916f9c21sm2345305ejb.87.2023.03.13.08.02.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Mar 2023 07:46:13 -0700 (PDT)
-Message-ID: <a6ae936e-effd-3794-e6fb-11b33a4d6eb1@redhat.com>
-Date: Mon, 13 Mar 2023 15:46:13 +0100
+        Mon, 13 Mar 2023 08:02:31 -0700 (PDT)
+Message-ID: <e4cbc603-ca16-41db-d08d-b5d5250d62b4@redhat.com>
+Date: Mon, 13 Mar 2023 16:02:29 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,7 +54,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v3 1/8] platform/x86/intel/ifs: Reorganize driver data
+Subject: Re: [PATCH v3 2/8] platform/x86/intel/ifs: IFS cleanup
 To: Jithu Joseph <jithu.joseph@intel.com>, markgross@kernel.org
 Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
  dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
@@ -65,259 +65,113 @@ Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
  athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
 References: <20230214234426.344960-1-jithu.joseph@intel.com>
  <20230301015942.462799-1-jithu.joseph@intel.com>
- <20230301015942.462799-2-jithu.joseph@intel.com>
+ <20230301015942.462799-3-jithu.joseph@intel.com>
 From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <20230301015942.462799-2-jithu.joseph@intel.com>
+In-Reply-To: <20230301015942.462799-3-jithu.joseph@intel.com>
 X-Mimecast-Spam-Score: 0
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hi Jithu,
+Hi,
 
 On 3/1/23 02:59, Jithu Joseph wrote:
-> The struct holding device driver data contained both read only(ro)
-> and read write(rw) fields.
+> Cleanup incorporating misc review comments
 > 
-> Separating ro fields from rw fields was recommended as
-> a preferable design pattern during review[1].
+>  - Remove the subdirectory intel_ifs/0 for devicenode [1]
+>  - Make plat_ifs_groups non static and use it directly without using a
+>     function [2]
 > 
-> Group the rw fields into a separate struct whose memory is allocated
-> during driver_init(). Associate it to the miscdevice being registered
-> by keeping it in the same container struct as the miscdevice.
-> 
-> Also in prepration to supporting additional tests, move ifs_pkg_auth
-> to a global as it is only applicable for the first test type.
-
-If you are writing "Also ..." into a commit message and the
-changes for the "Also ..." are more then a single line change,
-then that change really should be split out into a separate patch.
-
-Please split the "move ifs_pkg_auth to a global" changes into their
-own separate patch.
-
-> 
-> Link: https://lore.kernel.org/lkml/Y+9H9otxLYPqMkUh@kroah.com/ [1]
+> Link: https://lore.kernel.org/lkml/Y+4kQOtrHt5pdsSO@kroah.com/ [1]
+> Link: https://lore.kernel.org/lkml/Y9nyxNesVHCUXAcH@kroah.com/  [2]
 > 
 > Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 > Reviewed-by: Tony Luck <tony.luck@intel.com>
-> ---
->  drivers/platform/x86/intel/ifs/ifs.h  | 19 +++++++++-------
->  drivers/platform/x86/intel/ifs/core.c | 31 ++++++++++++++++++---------
->  drivers/platform/x86/intel/ifs/load.c |  8 +++----
->  3 files changed, 36 insertions(+), 22 deletions(-)
-> 
-> diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-> index 046e39304fd5..e07463c794d4 100644
-> --- a/drivers/platform/x86/intel/ifs/ifs.h
-> +++ b/drivers/platform/x86/intel/ifs/ifs.h
-> @@ -197,22 +197,23 @@ union ifs_status {
->  #define IFS_SW_TIMEOUT				0xFD
->  #define IFS_SW_PARTIAL_COMPLETION		0xFE
->  
-> +struct ifs_const_data {
-> +	int	integrity_cap_bit;
-> +	int	test_num;
-> +};
-> +
 
-This is a description of the specific capabilties / bits of
-the IFS on e.g. Saphire Rapids, so please name this appropriately
-for example:
+Thanks, patch looks good to me:
 
-struct ifs_hw_caps  {
-	int	integrity_cap_bit;
-	int	test_num;
-};
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 
-
->  /**
->   * struct ifs_data - attributes related to intel IFS driver
-> - * @integrity_cap_bit: MSR_INTEGRITY_CAPS bit enumerating this test
->   * @loaded_version: stores the currently loaded ifs image version.
-> - * @pkg_auth: array of bool storing per package auth status
->   * @loaded: If a valid test binary has been loaded into the memory
->   * @loading_error: Error occurred on another CPU while loading image
->   * @valid_chunks: number of chunks which could be validated.
->   * @status: it holds simple status pass/fail/untested
->   * @scan_details: opaque scan status code from h/w
->   * @cur_batch: number indicating the currently loaded test file
-> - * @test_num: number indicating the test type
-> + * @ro_info: ptr to struct holding fixed details
->   */
->  struct ifs_data {
-> -	int	integrity_cap_bit;
-> -	bool	*pkg_auth;
->  	int	loaded_version;
->  	bool	loaded;
->  	bool	loading_error;
-> @@ -220,7 +221,7 @@ struct ifs_data {
->  	int	status;
->  	u64	scan_details;
->  	u32	cur_batch;
-> -	int	test_num;
-> +	struct ifs_const_data *ro_info;
->  };
->  
->  struct ifs_work {
-> @@ -229,7 +230,8 @@ struct ifs_work {
->  };
->  
->  struct ifs_device {
-> -	struct ifs_data data;
-> +	struct ifs_const_data ro_data;
-> +	struct ifs_data *rw_data;
->  	struct miscdevice misc;
->  };
->  
-
-You got this exactly the wrong way around, there should be a single
-
-static const struct ifs_hw_caps saphire_rapids_caps = {
-	.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
-	.test_num = 0,
-};
-
-And then struct ifs_device { } should have a "const struct ifs_hw_caps *hw_caps"
-which gets initialized to point to &saphire_rapids_caps. So that your const
-data is actually const.
-
-Where as since the r/w data's lifetime is couple to the misc-device lifetime
-there is no need to dynamically allocate it just keep that embedded, so that
-together you get:
-
-struct ifs_device {
-	const struct ifs_hw_caps *hw_caps;
-	struct ifs_data data;
-	struct miscdevice misc;
-};
+Please add my Reviewed-by to this patch for the next version of
+the series, so that I know which patches I have already reviewed.
 
 Regards,
 
 Hans
 
-
-> @@ -238,9 +240,10 @@ static inline struct ifs_data *ifs_get_data(struct device *dev)
->  	struct miscdevice *m = dev_get_drvdata(dev);
->  	struct ifs_device *d = container_of(m, struct ifs_device, misc);
->  
-> -	return &d->data;
-> +	return d->rw_data;
->  }
->  
-> +extern bool *ifs_pkg_auth;
+> ---
+>  drivers/platform/x86/intel/ifs/ifs.h   | 2 +-
+>  drivers/platform/x86/intel/ifs/core.c  | 6 +++---
+>  drivers/platform/x86/intel/ifs/sysfs.c | 9 +--------
+>  3 files changed, 5 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+> index e07463c794d4..ab168ddf28f1 100644
+> --- a/drivers/platform/x86/intel/ifs/ifs.h
+> +++ b/drivers/platform/x86/intel/ifs/ifs.h
+> @@ -246,6 +246,6 @@ static inline struct ifs_data *ifs_get_data(struct device *dev)
+>  extern bool *ifs_pkg_auth;
 >  int ifs_load_firmware(struct device *dev);
 >  int do_core_test(int cpu, struct device *dev);
->  const struct attribute_group **ifs_get_groups(void);
+> -const struct attribute_group **ifs_get_groups(void);
+> +extern struct attribute *plat_ifs_attrs[];
+>  
+>  #endif
 > diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
-> index 206a617c2e02..b518b661daf0 100644
+> index b518b661daf0..62c44dbae757 100644
 > --- a/drivers/platform/x86/intel/ifs/core.c
 > +++ b/drivers/platform/x86/intel/ifs/core.c
-> @@ -20,8 +20,10 @@ static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
+> @@ -20,6 +20,8 @@ static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
 >  };
 >  MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
 >  
-> +bool *ifs_pkg_auth;
+> +ATTRIBUTE_GROUPS(plat_ifs);
 > +
+>  bool *ifs_pkg_auth;
+>  
 >  static struct ifs_device ifs_device = {
-> -	.data = {
-> +	.ro_data = {
->  		.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
->  		.test_num = 0,
+> @@ -29,8 +31,8 @@ static struct ifs_device ifs_device = {
 >  	},
-> @@ -35,8 +37,8 @@ static struct ifs_device ifs_device = {
->  static int __init ifs_init(void)
->  {
->  	const struct x86_cpu_id *m;
-> +	struct ifs_data *ifsd;
->  	u64 msrval;
-> -	int ret;
+>  	.misc = {
+>  		.name = "intel_ifs_0",
+> -		.nodename = "intel_ifs/0",
+>  		.minor = MISC_DYNAMIC_MINOR,
+> +		.groups = plat_ifs_groups,
+>  	},
+>  };
 >  
->  	m = x86_match_cpu(ifs_cpu_ids);
->  	if (!m)
-> @@ -53,26 +55,35 @@ static int __init ifs_init(void)
->  
->  	ifs_device.misc.groups = ifs_get_groups();
->  
-> -	if (!(msrval & BIT(ifs_device.data.integrity_cap_bit)))
-> +	if (!(msrval & BIT(ifs_device.ro_data.integrity_cap_bit)))
+> @@ -53,8 +55,6 @@ static int __init ifs_init(void)
+>  	if (rdmsrl_safe(MSR_INTEGRITY_CAPS, &msrval))
 >  		return -ENODEV;
 >  
-> -	ifs_device.data.pkg_auth = kmalloc_array(topology_max_packages(), sizeof(bool), GFP_KERNEL);
-> -	if (!ifs_device.data.pkg_auth)
-> +	ifs_pkg_auth = kmalloc_array(topology_max_packages(), sizeof(bool), GFP_KERNEL);
-> +	if (!ifs_pkg_auth)
-> +		return -ENOMEM;
-> +
-> +	ifsd = kzalloc(sizeof(*ifsd), GFP_KERNEL);
-> +	if (!ifsd)
->  		return -ENOMEM;
+> -	ifs_device.misc.groups = ifs_get_groups();
+> -
+>  	if (!(msrval & BIT(ifs_device.ro_data.integrity_cap_bit)))
+>  		return -ENODEV;
 >  
-> -	ret = misc_register(&ifs_device.misc);
-> -	if (ret) {
-> -		kfree(ifs_device.data.pkg_auth);
-> -		return ret;
-> +	ifsd->ro_info = &ifs_device.ro_data;
-> +	ifs_device.rw_data = ifsd;
-> +
-> +	if (misc_register(&ifs_device.misc)) {
-> +		kfree(ifsd);
-> +		kfree(ifs_pkg_auth);
-> +		return -ENODEV;
->  	}
+> diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
+> index ee636a76b083..2007d8054f04 100644
+> --- a/drivers/platform/x86/intel/ifs/sysfs.c
+> +++ b/drivers/platform/x86/intel/ifs/sysfs.c
+> @@ -141,7 +141,7 @@ static ssize_t image_version_show(struct device *dev,
+>  static DEVICE_ATTR_RO(image_version);
 >  
->  	return 0;
-> +
->  }
->  
->  static void __exit ifs_exit(void)
->  {
->  	misc_deregister(&ifs_device.misc);
-> -	kfree(ifs_device.data.pkg_auth);
-> +	kfree(ifs_device.rw_data);
-> +	kfree(ifs_pkg_auth);
->  }
->  
->  module_init(ifs_init);
-> diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-> index c5c24e6fdc43..cdec3316c08d 100644
-> --- a/drivers/platform/x86/intel/ifs/load.c
-> +++ b/drivers/platform/x86/intel/ifs/load.c
-> @@ -192,7 +192,7 @@ static int scan_chunks_sanity_check(struct device *dev)
->  	struct ifs_work local_work;
->  	int curr_pkg, cpu, ret;
->  
-> -	memset(ifsd->pkg_auth, 0, (topology_max_packages() * sizeof(bool)));
-> +	memset(ifs_pkg_auth, 0, (topology_max_packages() * sizeof(bool)));
->  	ret = validate_ifs_metadata(dev);
->  	if (ret)
->  		return ret;
-> @@ -204,7 +204,7 @@ static int scan_chunks_sanity_check(struct device *dev)
->  	cpus_read_lock();
->  	for_each_online_cpu(cpu) {
->  		curr_pkg = topology_physical_package_id(cpu);
-> -		if (ifsd->pkg_auth[curr_pkg])
-> +		if (ifs_pkg_auth[curr_pkg])
->  			continue;
->  		reinit_completion(&ifs_done);
->  		local_work.dev = dev;
-> @@ -215,7 +215,7 @@ static int scan_chunks_sanity_check(struct device *dev)
->  			ret = -EIO;
->  			goto out;
->  		}
-> -		ifsd->pkg_auth[curr_pkg] = 1;
-> +		ifs_pkg_auth[curr_pkg] = 1;
->  	}
->  	ret = 0;
->  out:
-> @@ -263,7 +263,7 @@ int ifs_load_firmware(struct device *dev)
->  	int ret = -EINVAL;
->  
->  	snprintf(scan_path, sizeof(scan_path), "intel/ifs_%d/%02x-%02x-%02x-%02x.scan",
-> -		 ifsd->test_num, boot_cpu_data.x86, boot_cpu_data.x86_model,
-> +		 ifsd->ro_info->test_num, boot_cpu_data.x86, boot_cpu_data.x86_model,
->  		 boot_cpu_data.x86_stepping, ifsd->cur_batch);
->  
->  	ret = request_firmware_direct(&fw, scan_path, dev);
+>  /* global scan sysfs attributes */
+> -static struct attribute *plat_ifs_attrs[] = {
+> +struct attribute *plat_ifs_attrs[] = {
+>  	&dev_attr_details.attr,
+>  	&dev_attr_status.attr,
+>  	&dev_attr_run_test.attr,
+> @@ -149,10 +149,3 @@ static struct attribute *plat_ifs_attrs[] = {
+>  	&dev_attr_image_version.attr,
+>  	NULL
+>  };
+> -
+> -ATTRIBUTE_GROUPS(plat_ifs);
+> -
+> -const struct attribute_group **ifs_get_groups(void)
+> -{
+> -	return plat_ifs_groups;
+> -}
 
