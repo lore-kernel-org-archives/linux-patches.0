@@ -1,52 +1,52 @@
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2851FAE
-	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 07:05:52 +0000 (UTC)
-Received: by mail-vs1-f47.google.com with SMTP id x25so2002487vsj.2
-        for <patches@lists.linux.dev>; Mon, 13 Mar 2023 00:05:52 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A864423A7
+	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 09:12:10 +0000 (UTC)
+Received: by mail-vs1-f41.google.com with SMTP id s1so10358488vsk.5
+        for <patches@lists.linux.dev>; Mon, 13 Mar 2023 02:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678691152;
+        d=linaro.org; s=google; t=1678698729;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OHE01/3tgA1nAt03cXd+lN8IWHSdq0jQSdwx4eqGdpw=;
-        b=abP2bBAwNBSfgd0V6SSIh0qDHUOwiK3VKrkFpakyjDGyKhqJag+TxCiZjCWCJdHryj
-         7rbBXjoYT39kKxL/UkAvc4uZ4aKKuTdrLCojKCCn+MKukHeK8Hh4s70tLkXK9tmq+gel
-         imWMOT25OgG9yDDl+T+0iRnLV2Ex/i+dUUveMte9UFVVQLGEqV+47rfhhfwjTC1srl7d
-         3PFR5AZkghgcHivrkyF4Ngg+cARJ0UIMWgmyzcHzV6ya3VIKPK6X9VoiE44sUWlwyD2R
-         Vxp+DZULOX+R5nnTqvbTD0UJ54CUt+iufXbG/h24ddL5RtKd+5VXbNihhp41alCCn7kH
-         2Egg==
+        bh=KU+1KB/mSCK1kUVuZr3vnBGvCkC3xPMK1fQL4PyjNtw=;
+        b=Mf7zvro85B2JVV2GNTga96Hd6rDAoQBS9ocSiV9VVOW1/OX52K1uCFY+hhzNVeZyqj
+         iosrkqHsweFJKURbN34Ye5p72cvBlcwlb4LZS1H/GKQkEmdNIS5IQpnO6KHLM7vltVYx
+         zLgDX8JrGl1NVDEYdaZHlOvNyNXz1kwkI8OkuPhqJat4VBCVUGqsIh2TRMH5eY60+phM
+         dCtlfjsFSW2phvN8LVM4VMKLwoS9gAkaP8FHlsPeSMC+8+wgJFn1t8GTlNoLaq3gnkCE
+         9DWtmmVwc+YdkNyHtaTScUmL9ofFe+s8WMO99gw0/Mpj7ecCrlxDPU/eWbLr6UF7rsFy
+         ZYuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678691152;
+        d=1e100.net; s=20210112; t=1678698729;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OHE01/3tgA1nAt03cXd+lN8IWHSdq0jQSdwx4eqGdpw=;
-        b=Ng1OGFNiOkBX8GnhGCl9EmAcNVaCASRyDINJFl49abO4j7BBeBdoeBTblI+wvq5szr
-         Kr57Oye6I0uAZHhl/LnEcmtF5zMA7tmg3ZB9Jk0fkD3vaDB/myn/4ygH3dKn3MwW11Xj
-         hFd3V56X1oTn5F0j6solV86A5p7zkCgErBu+nd7IQYRprUIrXDsKwLvGkV0MdglUwFQi
-         yZxFe9f+XibSGw0t2ioeRqN4c3gX0PgEZIOplrwwl9YqicBCDcFIhR/JqP/WF9U4QNuv
-         sCVEktZvX0hvfciSrP0uct+CzP7NnhQAr6VXwy93FA1ZbxzUDyhAvXyT1hQsV9bKQ528
-         p7ag==
-X-Gm-Message-State: AO0yUKWqXwCrfg2B4LylNJohPE6jPndj4KGFgqDD5/SCDqCCN69f3jVF
-	kn2hY79dPCECTxlbnXALFOPo+ES3Dvk1KrsPSqP2SQ==
-X-Google-Smtp-Source: AK7set9x4Emhcs/V+eedyuFq7xYtTaQ1TWUeAYtMC8cCh6ilFqFMqZBzhk4F9tiNlZ0iHCI9LrIjfoxg0IqPeOLLsak=
-X-Received: by 2002:a05:6102:3210:b0:425:87ab:c386 with SMTP id
- r16-20020a056102321000b0042587abc386mr1232533vsf.3.1678691151710; Mon, 13 Mar
- 2023 00:05:51 -0700 (PDT)
+        bh=KU+1KB/mSCK1kUVuZr3vnBGvCkC3xPMK1fQL4PyjNtw=;
+        b=QJnISbDjp0xAwRu9vW1gWaGtroCFafYs0wAkYkZkxHqeow12UO+lIR+h2rZcWztbz4
+         ex2BqmYuBcaf3C3CKtxNYXmqy8dLEfp9oMgr8ygnQmUeW/DcFRe/c5tdPiL8C7q8New3
+         T1bvgHM3rqdA7PYOqCZGtOoc1DXkYVICHyCgak9bgihEapzJk81cfxtkkI2/BBZ9Wgk5
+         ekljFlsa2BwvkiqHmVLF+uuijIKDjTSO1iCWYIu15pL8CVesAO1Hwds5DPXPv0euE0qC
+         M+Ip1ckLA6Ktdvv6hlJwL3ZbuvHDgesJ4fX6qVgf/sR+27kHOMxhXQkHbgF2osHUtvBy
+         vVXg==
+X-Gm-Message-State: AO0yUKVVKSlQHMlVVaTOOmsK0ADkOKO/41uX/xnKb0ltXnsaXMXeWG2N
+	a0cTIWxUAtzopBZtc6p/+z2P/euilrvXnWH50LCggg==
+X-Google-Smtp-Source: AK7set9sRLVwl/2GQMYpXa42kVrD6n3JiglTX4kX9rxJegaEdvikrn6bASplGJ6qr0dIN05z6gkwJ4ZnhLqRm6RMvwE=
+X-Received: by 2002:a05:6102:3679:b0:425:8923:d34a with SMTP id
+ bg25-20020a056102367900b004258923d34amr1379060vsb.3.1678698729336; Mon, 13
+ Mar 2023 02:12:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230311091806.500513126@linuxfoundation.org>
-In-Reply-To: <20230311091806.500513126@linuxfoundation.org>
+References: <20230311092102.206109890@linuxfoundation.org>
+In-Reply-To: <20230311092102.206109890@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Mon, 13 Mar 2023 12:35:40 +0530
-Message-ID: <CA+G9fYvEQTVfqvCD=umPFC4KTdEjafC5bN=MO9Fm5X76kmNOPw@mail.gmail.com>
-Subject: Re: [PATCH 5.4 000/356] 5.4.235-rc2 review
+Date: Mon, 13 Mar 2023 14:41:58 +0530
+Message-ID: <CA+G9fYsxuiRQbZRVWexx+WboeHs7OAgiNz62d18_36-r9F-cPg@mail.gmail.com>
+Subject: Re: [PATCH 4.14 000/192] 4.14.308-rc2 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -57,23 +57,23 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, 11 Mar 2023 at 14:50, Greg Kroah-Hartman
+On Sat, 11 Mar 2023 at 15:10, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 5.4.235 release.
-> There are 356 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 4.14.308 release.
+> There are 192 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
-> Responses should be made by Mon, 13 Mar 2023 09:17:07 +0000.
+> Responses should be made by Mon, 13 Mar 2023 09:20:28 +0000.
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.4.235-rc2.gz
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
+4.14.308-rc2.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.4.y
+-rc.git linux-4.14.y
 > and the diffstat can be found below.
 >
 > thanks,
@@ -86,39 +86,38 @@ No regressions on arm64, arm, x86_64, and i386.
 Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
 ## Build
-* kernel: 5.4.235-rc2
+* kernel: 4.14.308-rc2
 * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.4.y
-* git commit: ca95bdb3ada07ed988b0bcf95a489479b6a3e800
-* git describe: v5.4.234-357-gca95bdb3ada0
+* git branch: linux-4.14.y
+* git commit: 2326e906147b0f87bfaf7f0655b2a8282b93314d
+* git describe: v4.14.307-193-g2326e906147b
 * test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.2=
-34-357-gca95bdb3ada0
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.14.y/build/v4.14=
+.307-193-g2326e906147b
 
-## Test Regressions (compared to v5.4.235)
+## Test Regressions (compared to v4.14.307)
 
-## Metric Regressions (compared to v5.4.235)
+## Metric Regressions (compared to v4.14.307)
 
-## Test Fixes (compared to v5.4.235)
+## Test Fixes (compared to v4.14.307)
 
-## Metric Fixes (compared to v5.4.235)
+## Metric Fixes (compared to v4.14.307)
 
 ## Test result summary
-total: 124626, pass: 101269, fail: 3329, skip: 19651, xfail: 377
+total: 84985, pass: 71620, fail: 3674, skip: 9328, xfail: 363
 
 ## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 146 total, 145 passed, 1 failed
-* arm64: 46 total, 42 passed, 4 failed
-* i386: 28 total, 22 passed, 6 failed
-* mips: 30 total, 29 passed, 1 failed
-* parisc: 8 total, 8 passed, 0 failed
-* powerpc: 33 total, 32 passed, 1 failed
-* riscv: 15 total, 12 passed, 3 failed
-* s390: 8 total, 8 passed, 0 failed
-* sh: 14 total, 12 passed, 2 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 39 total, 37 passed, 2 failed
+* arc: 10 total, 10 passed, 0 failed
+* arm: 199 total, 197 passed, 2 failed
+* arm64: 37 total, 35 passed, 2 failed
+* i386: 29 total, 28 passed, 1 failed
+* mips: 41 total, 41 passed, 0 failed
+* parisc: 12 total, 12 passed, 0 failed
+* powerpc: 20 total, 19 passed, 1 failed
+* s390: 15 total, 11 passed, 4 failed
+* sh: 24 total, 24 passed, 0 failed
+* sparc: 12 total, 12 passed, 0 failed
+* x86_64: 34 total, 33 passed, 1 failed
 
 ## Test suites summary
 * boot
@@ -126,7 +125,6 @@ total: 124626, pass: 101269, fail: 3329, skip: 19651, xfail: 377
 * igt-gpu-tools
 * kselftest-android
 * kselftest-arm64
-* kselftest-bre[
 * kselftest-breakpoints
 * kselftest-capabilities
 * kselftest-cgroup
@@ -152,13 +150,9 @@ total: 124626, pass: 101269, fail: 3329, skip: 19651, xfail: 377
 * kselftest-lib
 * kselftest-livepatch
 * kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
 * kselftest-net
 * kselftest-net-forwarding
+* kselftest-net-mptcp
 * kselftest-netfilter
 * kselftest-nsfs
 * kselftest-openat2
@@ -167,9 +161,13 @@ total: 124626, pass: 101269, fail: 3329, skip: 19651, xfail: 377
 * kselftest-proc
 * kselftest-pstore
 * kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
 * kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
 * kselftest-tc-testing
 * kselftest-timens
 * kselftest-timers
@@ -181,7 +179,6 @@ total: 124626, pass: 101269, fail: 3329, skip: 19651, xfail: 377
 * kselftest-zram
 * kunit
 * kvm-unit-tests
-* libgpiod
 * libhugetlbfs
 * log-parser-boot
 * log-parser-test
@@ -214,7 +211,6 @@ total: 124626, pass: 101269, fail: 3329, skip: 19651, xfail: 377
 * ltp-tracing
 * network-basic-tests
 * packetdrill
-* perf
 * rcutorture
 * v4l2-compliance
 * vdso
