@@ -1,433 +1,90 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004FA23C5
-	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 10:37:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=ysjw2zASi2TN/sEh3AgZLlcqDNtBqR4JUmN2mmSl7tQ=; b=HAvudky9j4TSTsClvuImR7P2k7
-	A/lZZbwJGo0VKLL3hAtlxVyb1Uc3SGhVWF6VwjlndJPbdYYBsYkx76x8ConLISCR3PRmGH1fdaDzN
-	lM9Qa//ivj4ryY7R5zY4B68uiVEDSs4vGv051dlcBGhfm1/SiKWbZHmtJ2fIBGYWu/uFP89KU3307
-	qhmhHuF+vkvy5oM+aM8X4JuNJ8UHTAxxc7H/lCxaR+GccVqlmDOjKerDa8oUHgTseMntK3x0xME/0
-	cINmLJT+XASddwh6YFhdo+DP5NbvFjLi4ljzU/VfPDy1lRqOcdZI3vpQt9usDCbttu4OSmQ7sJt6K
-	XCWS30/g==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pbfVt-005BYJ-Tc; Mon, 13 Mar 2023 10:34:46 +0000
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: colin.i.king@gmail.com,
-	patches@lists.linux.dev,
-	linux-modules@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	pmladek@suse.com,
-	david@redhat.com,
-	petr.pavlu@suse.com,
-	prarit@redhat.com
-Cc: christophe.leroy@csgroup.eu,
-	song@kernel.org,
-	mcgrof@kernel.org
-Subject: [PATCH] stress-module: stress finit_module() and delete_module()
-Date: Mon, 13 Mar 2023 03:34:38 -0700
-Message-Id: <20230313103439.1235909-1-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.37.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E15523C5
+	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 10:48:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6570C433D2;
+	Mon, 13 Mar 2023 10:48:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1678704486;
+	bh=Bp5TXoOJ/Wv93fmFssCfDV9bpII5nb3PWXt4PA5WmWg=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+	b=HjDXgua77k09CEmzK0n53WvrXHZumhoHS4CpKeTCOGA4U+PeH/L2csFcjeXIpN+qm
+	 +AXXBqVGre6TRH3WrSl4bSPL8zRzWeGq/cwm94VH1/wPm3+BtwUb7fKHQxALeE0Xu6
+	 kH6v+50Rscr2skkXey3OgYv0oms+UifnOArvb41D7sHkURgsyMZTRUG+9qhsQ44zfy
+	 FHgIEro4OXB+r5LVHhxmxn30bNmCBUvVVy9N8fDbk2aIAa/M0WiTqueU84eIRdtJYQ
+	 7ez5ZP8KL1Kx0r6vCS4sMRWA4nTvZQ+tFarfQoYpVTcxKP/gPTTRX+zPFwDp6y/05C
+	 g4XXz6Grsy2wA==
+Message-ID: <b719944dbe8b8790524a10c1032dfb09a2182cb8.camel@kernel.org>
+Subject: Re: [PATCH v3 0/5] sunrpc: simplfy sysctl registrations
+From: Jeff Layton <jlayton@kernel.org>
+To: Luis Chamberlain <mcgrof@kernel.org>, chuck.lever@oracle.com, 
+ trond.myklebust@hammerspace.com, anna@kernel.org, davem@davemloft.net, 
+ edumazet@google.com, pabeni@redhat.com, kuba@kernel.org,
+ linux-nfs@vger.kernel.org
+Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com, 
+ j.granados@samsung.com, patches@lists.linux.dev,
+ linux-fsdevel@vger.kernel.org,  netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Date: Mon, 13 Mar 2023 06:48:03 -0400
+In-Reply-To: <20230311233944.354858-1-mcgrof@kernel.org>
+References: <20230311233944.354858-1-mcgrof@kernel.org>
+Content-Type: text/plain; charset="ISO-8859-15"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4 (3.46.4-1.fc37) 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-There are different ways to test loading modules:
+On Sat, 2023-03-11 at 15:39 -0800, Luis Chamberlain wrote:
+> This is my v3 series to simplify sysctl registration for sunrpc. The
+> first series was posted just yesterday [0] but 0-day found an issue with
+> CONFIG_SUNRPC_DEBUG. After this fix I poasted a fix for v2 [1] but alas
+> 0-day then found an issue when CONFIG_SUNRPC_DEBUG is disabled. This
+> fixes both cases... hopefully that's it.
+>                                                                          =
+                                                                           =
+                                         =20
+> Changes on v3:
+>=20
+>    o Fix compilation when CONFIG_SUNRPC_DEBUG is disabled.. forgot to
+>      keep all the sysctl stuff under the #ifdef.
+>=20
+> Changes on v2:
+>=20
+>    o Fix compilation when CONFIG_SUNRPC_DEBUG is enabled, I forgot to mov=
+e the
+>      proc routines above, and so the 4th patch now does that too.
+>                                                                          =
+                                                                           =
+                                         =20
+> Feel free to take these patches or let me know and I'm happy to also
+> take these in through sysctl-next. Typically I use sysctl-next for
+> core sysctl changes or for kernel/sysctl.c cleanup to avoid conflicts.
+> All these syctls however are well contained to sunrpc so they can also
+> go in separately. Let me know how you'd like to go about these patches.
+>                                                                          =
+                                                                           =
+                                         =20
+> [0] https://lkml.kernel.org/r/20230310225236.3939443-1-mcgrof@kernel.org
+>=20
+> Luis Chamberlain (5):
+>   sunrpc: simplify two-level sysctl registration for tsvcrdma_parm_table
+>   sunrpc: simplify one-level sysctl registration for xr_tunables_table
+>   sunrpc: simplify one-level sysctl registration for xs_tunables_table
+>   sunrpc: move sunrpc_table and proc routines above
+>   sunrpc: simplify one-level sysctl registration for debug_table
+>=20
+>  net/sunrpc/sysctl.c             | 42 ++++++++++++---------------------
+>  net/sunrpc/xprtrdma/svc_rdma.c  | 21 ++---------------
+>  net/sunrpc/xprtrdma/transport.c | 11 +--------
+>  net/sunrpc/xprtsock.c           | 13 ++--------
+>  4 files changed, 20 insertions(+), 67 deletions(-)
+>=20
 
-  * modprobe calls
-  * kernel module autoloader
+Nice little cleanup.
 
-To stress tests modprobe we can simply run modprobe in a loop. To stress
-test the kernel module autoloader we can stress tests using the upstream
-kernel tools/testing/selftests/kmod/kmod.sh. This ends up calling
-modprobe in the end, and it has its own caps built-in to self protect
-the kernel from too many requests at the same time.
-
-The userspace modprobe call will also prevent calls if the same module
-exists already.
-
-This stress-ng modules stressor is designed to help stress test the
-finit_module() system call even if the module is already loaded, letting
-us tests things which are hard to reproduce.
-
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
-
-This is a patch for stress-ng to help stress module races with
-finit_module() and system memory pressure when userspace is being
-raced to see if a module is present and it fails to see the module
-already loaded, so stresses the system memory.
-
-We can later add support to make the default module be saught after
-using uname and the /lib/modules/$(uname -r)/kernel/lib/$hello.ko.
-
-But this should be enough to get us playing ball.
-
- Makefile         |   1 +
- core-shim.c      |  35 ++++++++++
- core-stressors.h |   1 +
- stress-module.c  | 168 +++++++++++++++++++++++++++++++++++++++++++++++
- stress-ng.1      |  27 ++++++++
- stress-ng.c      |   6 ++
- stress-ng.h      |   9 +++
- syscalls.txt     |   2 +-
- 8 files changed, 248 insertions(+), 1 deletion(-)
- create mode 100644 stress-module.c
-
-diff --git a/Makefile b/Makefile
-index be46f656..f4ac7b63 100644
---- a/Makefile
-+++ b/Makefile
-@@ -316,6 +316,7 @@ STRESS_SRC = \
- 	stress-mmapfork.c \
- 	stress-mmaphuge.c \
- 	stress-mmapmany.c \
-+	stress-module.c \
- 	stress-mprotect.c \
- 	stress-mq.c \
- 	stress-mremap.c \
-diff --git a/core-shim.c b/core-shim.c
-index 4ef97a1e..262883e8 100644
---- a/core-shim.c
-+++ b/core-shim.c
-@@ -95,6 +95,41 @@ UNEXPECTED
- #define shim_rusage_who_t	int
- #endif
- 
-+#ifdef HAVE_LINUX_MODULE_H
-+#include <linux/module.h>
-+#endif
-+
-+#ifndef HAVE_FINIT_MODULE
-+#include <errno.h>
-+#endif
-+
-+#ifndef __NR_finit_module
-+# define __NR_finit_module -1
-+#endif
-+
-+int shim_finit_module(int fd, const char *uargs, int flags)
-+{
-+#ifdef HAVE_FINIT_MODULE
-+	return finit_module(fd, uargs, flags);
-+#else
-+	if (__NR_finit_module == -1) {
-+		errno = ENOSYS;
-+		return -1;
-+	}
-+
-+	return syscall(__NR_finit_module, fd, uargs, flags);
-+#endif
-+}
-+
-+int shim_delete_module(const char *name, unsigned int flags)
-+{
-+#ifdef HAVE_DELETE_MODULE
-+	return delete_module(name, flags);
-+#else
-+	return syscall(__NR_delete_module, name, flags);
-+#endif
-+}
-+
- #if defined(__sun__)
- #if defined(HAVE_GETDOMAINNAME)
- extern int getdomainname(char *name, size_t len);
-diff --git a/core-stressors.h b/core-stressors.h
-index fe5ac70a..d22ef7f2 100644
---- a/core-stressors.h
-+++ b/core-stressors.h
-@@ -166,6 +166,7 @@
- 	MACRO(mmapfork)		\
- 	MACRO(mmaphuge)		\
- 	MACRO(mmapmany)		\
-+	MACRO(module)		\
- 	MACRO(mprotect)		\
- 	MACRO(mq)		\
- 	MACRO(mremap)		\
-diff --git a/stress-module.c b/stress-module.c
-new file mode 100644
-index 00000000..f9cab300
---- /dev/null
-+++ b/stress-module.c
-@@ -0,0 +1,168 @@
-+/*
-+ * Copyright (C) 2023 Luis Chamberlain <mcgrof@kernel.org>
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License
-+ * as published by the Free Software Foundation; either version 2
-+ * of the License, or (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, write to the Free Software
-+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-+ *
-+ */
-+#include "stress-ng.h"
-+
-+#if defined(HAVE_LINUX_MODULE_H)
-+#include <linux/module.h>
-+#else
-+UNEXPECTED
-+#endif
-+
-+#if defined(HAVE_LIBGEN_H)
-+#include <libgen.h>
-+#endif
-+
-+#ifndef MODULE_INIT_IGNORE_MODVERSIONS
-+# define MODULE_INIT_IGNORE_MODVERSIONS 1
-+#endif
-+
-+#ifndef MODULE_INIT_IGNORE_VERMAGIC
-+# define MODULE_INIT_IGNORE_VERMAGIC 2
-+#endif
-+
-+static const stress_help_t help[] = {
-+	{ NULL,	"module N",	    "start N workers performing module requests" },
-+	{ NULL,	"module-path F",    "use the specified module name F to load." },
-+	{ NULL,	"module-unload",    "unload the module after module load" },
-+	{ NULL,	"module-nomodver",  "ignore symbol version hashes" },
-+	{ NULL,	"module-novermag",  "ignore kernel version magic" },
-+	{ NULL,	"module-ops N",     "stop after N module bogo operations" },
-+	{ NULL,	NULL,		NULL }
-+};
-+
-+static int stress_set_module_unload(const char *opt)
-+{
-+	return stress_set_setting_true("module-unload", opt);
-+}
-+
-+static int stress_set_module_nomodver(const char *opt)
-+{
-+	return stress_set_setting_true("module-nomodver", opt);
-+}
-+
-+static int stress_set_module_novermag(const char *opt)
-+{
-+	return stress_set_setting_true("module-novermag", opt);
-+}
-+
-+static int stress_set_module_path(const char *name)
-+{
-+	return stress_set_setting("module-path", TYPE_ID_STR, name);
-+}
-+
-+/*
-+ *  stress_module
-+ *	stress by heavy module ops
-+ */
-+static int stress_module(const stress_args_t *args)
-+{
-+	int fd;
-+	bool module_unload = false;
-+	bool ignore_vermagic = false;
-+	bool ignore_modversions = false;
-+	char *module_path = NULL;
-+	char *module_name;
-+	char *default_module = "hello";
-+	const char *finit_args1 = "";
-+	unsigned int kernel_flags = 0;
-+	const pid_t mypid = getpid();
-+	struct stat statbuf;
-+
-+	(void)stress_get_setting("module-path", &module_path);
-+	(void)stress_get_setting("module-novermag", &ignore_vermagic);
-+	(void)stress_get_setting("module-nomodver", &ignore_modversions);
-+	(void)stress_get_setting("module-unload", &module_unload);
-+
-+	if (ignore_vermagic)
-+		kernel_flags |= MODULE_INIT_IGNORE_VERMAGIC;
-+	if (ignore_modversions)
-+		kernel_flags |= MODULE_INIT_IGNORE_MODVERSIONS;
-+
-+	if (!module_path)
-+		module_path = default_module;
-+
-+	if (stat(module_path, &statbuf) < 0)
-+		return EXIT_FAILURE;
-+	if (!S_ISREG(statbuf.st_mode))
-+		return EXIT_FAILURE;
-+
-+	module_name = basename(module_path);
-+
-+	stress_set_proc_state(args->name, STRESS_STATE_RUN);
-+
-+	do {
-+		int ret;
-+
-+		if (!keep_stressing(args)) {
-+			if (mypid > 1)
-+				(void)kill(mypid, SIGKILL);
-+			goto out;
-+		}
-+
-+		fd = open(module_path, O_RDONLY|O_CLOEXEC);
-+
-+		if (fd < 0) {
-+			/* Check if we hit the open file limit */
-+			if ((errno == EMFILE) || (errno == ENFILE)) {
-+				if (mypid > 1)
-+					(void)kill(mypid, SIGKILL);
-+				goto out;
-+			}
-+			/* Ignore other errors */
-+			continue;
-+		}
-+
-+		if (module_unload)
-+			shim_delete_module(module_name, 0);
-+		ret = shim_finit_module(fd, finit_args1, kernel_flags);
-+		if (ret == 0) {
-+			if (module_unload)
-+				shim_delete_module(module_name, 0);
-+		}
-+		(void)close(fd);
-+
-+out:
-+	} while (keep_stressing(args));
-+
-+	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
-+
-+	if (mypid > 1) {
-+		int status;
-+
-+		(void)kill(mypid, SIGKILL);
-+		(void)waitpid(mypid, &status, 0);
-+	}
-+
-+	return EXIT_SUCCESS;
-+}
-+
-+static const stress_opt_set_func_t opt_set_funcs[] = {
-+	{ OPT_module_path,	stress_set_module_path },
-+	{ OPT_module_nomodver,	stress_set_module_nomodver },
-+	{ OPT_module_novermag,	stress_set_module_novermag },
-+	{ OPT_module_unload,	stress_set_module_unload },
-+	{ 0,					NULL }
-+};
-+
-+stressor_info_t stress_module_info = {
-+	.stressor = stress_module,
-+	.class = CLASS_OS | CLASS_FILESYSTEM | CLASS_MEMORY,
-+	.opt_set_funcs = opt_set_funcs,
-+	.help = help
-+};
-diff --git a/stress-ng.1 b/stress-ng.1
-index 959649a8..24dc5783 100644
---- a/stress-ng.1
-+++ b/stress-ng.1
-@@ -3402,6 +3402,33 @@ the maximum allowed mappings or a maximum of 262144 mappings are made.
- .B \-\-mmapmany\-ops N
- stop after N mmapmany bogo operations
- .TP
-+.B \-\-module N
-+start N workers that will use finit_module() to load the module specified
-+or the hello test module, if you've compiled that. There are different ways
-+to test loading modules. Using modprobe calls in a loop, using the kernel
-+kernel module autoloader, and this stress-ng module stressor. To stress tests
-+modprobe we can simply run the userspace modprobe program in a loop. To stress
-+test the kernel module autoloader we can stress tests using the upstream
-+kernel tools/testing/selftests/kmod/kmod.sh. This ends up calling modprobe
-+in the end, and it has its own caps built-in to self protect the kernel from
-+too many requests at the same time. The userspace modprobe call will also
-+prevent calls if the same module exists already. The stress-ng modules
-+stressor is designed to help stress test the finit_module() system call
-+even if the module is already loaded, letting us tests races which are
-+otherwise hard to reproduce.
-+.TP
-+.B \-\-module\-path PATH
-+PATH of the module to use. You must use a full path.
-+.TP
-+.B \-\-module\-ignore\-modversions
-+Ignore module modversions when using finit_module().
-+.TP
-+.B \-\-module\-ignore\-vermagic
-+Ignore module versions when using finit_module().
-+.TP
-+.B \-\-module\-unload
-+Unload the module right after loading it with finit_module().
-+.TP
- .B \-\-mprotect N
- start N workers that exercise changing page protection settings and access
- memory after each change. 8 processes per worker contend with each other
-diff --git a/stress-ng.c b/stress-ng.c
-index 034d7440..1fe65011 100644
---- a/stress-ng.c
-+++ b/stress-ng.c
-@@ -686,6 +686,12 @@ static const struct option long_options[] = {
- 	{ "mmaphuge-ops",	1,	0,	OPT_mmaphuge_ops },
- 	{ "mmapmany",		1,	0,	OPT_mmapmany },
- 	{ "mmapmany-ops",	1,	0,	OPT_mmapmany_ops },
-+	{ "module",		1,	0,	OPT_module},
-+	{ "module-ops",		1,	0,	OPT_module_ops },
-+	{ "module-path",	1,	0,	OPT_module_path},
-+	{ "module-nomodver",	1,	0,	OPT_module_nomodver},
-+	{ "module-novermag",	1,	0,	OPT_module_novermag,},
-+	{ "module-unload",	0,	0,	OPT_module_unload},
- 	{ "mprotect",		1,	0,	OPT_mprotect },
- 	{ "mprotect-ops",	1,	0,	OPT_mprotect_ops },
- 	{ "mq",			1,	0,	OPT_mq },
-diff --git a/stress-ng.h b/stress-ng.h
-index c93654ac..be89cdba 100644
---- a/stress-ng.h
-+++ b/stress-ng.h
-@@ -1614,6 +1614,13 @@ typedef enum {
- 	OPT_mmapmany,
- 	OPT_mmapmany_ops,
- 
-+	OPT_module,
-+	OPT_module_path,
-+	OPT_module_nomodver,
-+	OPT_module_novermag,
-+	OPT_module_unload,
-+	OPT_module_ops,
-+
- 	OPT_mprotect,
- 	OPT_mprotect_ops,
- 
-@@ -2914,6 +2921,7 @@ extern int shim_clone3(struct shim_clone_args *cl_args, size_t size);
- extern int shim_close_range(unsigned int fd, unsigned int max_fd, unsigned int flags);
- extern ssize_t shim_copy_file_range(int fd_in, shim_loff_t *off_in,
- 	int fd_out, shim_loff_t *off_out, size_t len, unsigned int flags);
-+extern int shim_delete_module(const char *name, unsigned int flags);
- extern int shim_dup3(int oldfd, int newfd, int flags);
- extern int shim_execveat(int dir_fd, const char *pathname, char *const argv[],
- 	char *const envp[], int flags);
-@@ -2921,6 +2929,7 @@ extern void shim_exit_group(int status);
- extern int shim_fallocate(int fd, int mode, off_t offset, off_t len);
- extern int shim_fdatasync(int fd);
- extern ssize_t shim_fgetxattr(int fd, const char *name, void *value, size_t size);
-+extern int shim_finit_module(int fd, const char *uargs, int flags);
- extern ssize_t shim_flistxattr(int fd, char *list, size_t size);
- extern int shim_fsconfig(int fd, unsigned int cmd, const char *key,
- 	const void *value, int aux);
-diff --git a/syscalls.txt b/syscalls.txt
-index 2952a46c..69471a9f 100644
---- a/syscalls.txt
-+++ b/syscalls.txt
-@@ -82,7 +82,7 @@ fchownat			close
- fcntl				open, lockf, fcntl
- fdatasync			hdd
- fgetxattr			xattr
--finit_module
-+finit_module			module
- flistxattr			xattr
- flock				flock
- fork				fork
--- 
-2.39.2
-
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
