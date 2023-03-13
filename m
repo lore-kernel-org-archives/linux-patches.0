@@ -1,110 +1,234 @@
-Received: from mail-4325.protonmail.ch (mail-4325.protonmail.ch [185.70.43.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797DE15A6
-	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 01:24:43 +0000 (UTC)
-Date: Mon, 13 Mar 2023 01:24:27 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1678670676; x=1678929876;
-	bh=cuPbajrG04DWKCw3k4p3kDYIB2rguZndGg7ZIQkRsVg=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=bgkauahIibdtHbqnw5u75ZP+3pa8tnBflxvHg0QDi+LaQ4hS5neh7oZPKGxxF8YMX
-	 uiFMBdnsvkybeMOngMrw5QQBU8O93YuyGNKnhIclhiE99yvkUPeB493/O2LHmIPdtC
-	 td7WAurrA1L9hA4RA7Ylv90LdtVgeHkIJIZ3ZujOGEcCAZBPwrJP/miBJ073UuMT0+
-	 5rZRh/N7nTEZAsX6c/bOncyEsIKOKeTGbruRtiHKGP6MyRTGZjsGx31iuV4Pj3EEYA
-	 8QOqfgyNMFsyCSx7lRyv+P87iGZ1DO79SG3Kx5YYASMkqYWe3yjA7wJmbzIFycP7kI
-	 7FT3k9SJgOjMA==
-To: "ojeda@kernel.org" <ojeda@kernel.org>, "alex.gaynor@gmail.com" <alex.gaynor@gmail.com>, "wedsonaf@gmail.com" <wedsonaf@gmail.com>, "boqun.feng@gmail.com" <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, "bjorn3_gh@protonmail.com" <bjorn3_gh@protonmail.com>
-From: y86-dev <y86-dev@protonmail.com>
-Cc: "rust-for-linux@vger.kernel.org" <rust-for-linux@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: [PATCH v1 3/3] rust: sync: reduce stack usage of `UniqueArc::try_new_uninit`
-Message-ID: <Rip04cG4jD8kWRp4EAJ_UjB6HDenuUkC6m3lOTvzG8e7QLFEmrX4q3jgqZEzjmpd4MIplGcEjzWJ2Yj3nlDEqgfqxsnLq3_gPxW4Oo-8PN8=@protonmail.com>
-Feedback-ID: 40624463:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B4A184F
+	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 06:13:53 +0000 (UTC)
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-176261d7f45so12648289fac.11
+        for <patches@lists.linux.dev>; Sun, 12 Mar 2023 23:13:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678688032;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sFwFZRZYKw2DA2WpiOF9s0EPlDORWW1/wSadX5SWkOg=;
+        b=EKIllb8+E7Qmsu5WbtRfmy52Ir7ImanQP6EIuBRXtQ1Xz7YguDZZeN2FH8tSdBcgHu
+         xTQfw8bYHNayWn9ks+VONjGupukS+KULMygYf1MHH7yDtwJZdObcGO408cOIBqGuQTrq
+         3VBhOtn415ebnqjykAs61ibbYOtMA2D2aJVlGbPL7zNMvlFSVTM5rqg1Lz1MVqMdkZ4T
+         veCXODjEvDCWhNRrJLcyobco9ikGQadvIvAouC8gP5PRZaN6wp3XUp9trEhyo6zCPhYK
+         ln7URbS6kHApxkNhoG7VS5mL9lfq+bIuEKS7sfNYLVLGXdvM5Gv/lUPtg/0/MVNNPmPn
+         536A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678688032;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sFwFZRZYKw2DA2WpiOF9s0EPlDORWW1/wSadX5SWkOg=;
+        b=mmqlRg99S/od0K5LIDixwN2f3XB0s77mcsP0nivrLa2DRE+OqVjvrrGfiDZQ3jyFN6
+         4FpJrfWmBFaTgWkWSu60GksA2WROV1pTKeU7T+9bT0411bC5JlGlOamX9cMp8SkGvxao
+         JMY7mHFuGcNpg8wKRCVCcRRRsw9JJYP3u654yaaySQPPZPuNE4k6I4vKoSjj/rEdM5O3
+         wHnYgDWFu2HTHQ6EkbYXWxTkiAq/u2QdKTu16+zuwLIZ1YpVf+YBpI5lWyHKZaoAsima
+         j+4+s30UlRfx06V/xe3fcA56N+DoAO26JtzDqypBr7MFur0LKiE4DZ4Z04d/6srwhguO
+         YISA==
+X-Gm-Message-State: AO0yUKXkcLvkfI+e3f/e8vYKsRFJQrUIVdEf8EIQkK70IAQ+ggktjAvs
+	Jza08FfzcBCJAoNh4Hji7a8hJQ==
+X-Google-Smtp-Source: AK7set9YRC56/G09PuwqH204/SkCS1mEmaSo3TAXT/AuwwL9QBrPNx/HiSxphwu3Ij66/FCiVtt0OQ==
+X-Received: by 2002:a05:6870:f150:b0:176:2585:e6ac with SMTP id l16-20020a056870f15000b001762585e6acmr19830680oac.23.1678688032018;
+        Sun, 12 Mar 2023 23:13:52 -0700 (PDT)
+Received: from [192.168.17.16] ([189.219.75.19])
+        by smtp.gmail.com with ESMTPSA id et3-20020a056808280300b00383e0bec93bsm2768695oib.49.2023.03.12.23.13.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 12 Mar 2023 23:13:51 -0700 (PDT)
+Message-ID: <a552adfc-9c16-5c97-c566-806041cfa7a6@linaro.org>
+Date: Mon, 13 Mar 2023 00:13:50 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 5.10 000/528] 5.10.173-rc2 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230311091908.975813595@linuxfoundation.org>
+From: =?UTF-8?Q?Daniel_D=c3=adaz?= <daniel.diaz@linaro.org>
+In-Reply-To: <20230311091908.975813595@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-`UniqueArc::try_new_uninit` calls `Arc::try_new(MaybeUninit::uninit())`.
-This results in the uninitialized memory being placed on the stack,
-which may be arbitrarily large due to the generic `T` and thus could
-cause a stack overflow for large types.
+Hello!
 
-Change the implementation to use the pin-init API which enables in-place
-initialization. In particular it avoids having to first construct and
-then move the uninitialized memory from the stack into the final location.
+On 11/03/23 03:20, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.173 release.
+> There are 528 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Mon, 13 Mar 2023 09:17:40 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.173-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Signed-off-by: Benno Lossin <y86-dev@protonmail.com>
----
- rust/kernel/lib.rs      |  1 -
- rust/kernel/sync/arc.rs | 12 +++++++++++-
- 2 files changed, 11 insertions(+), 2 deletions(-)
+## Build
+* kernel: 5.10.173-rc2
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.10.y
+* git commit: 79ef18039d4902c95b2a84af18b5612d9e9f222a
+* git describe: v5.10.172-529-g79ef18039d49
+* test details: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.172-529-g79ef18039d49
 
-diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-index 3e2777d26ff5..d9df77132fa2 100644
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -27,7 +27,6 @@
- #[cfg(not(CONFIG_RUST))]
- compile_error!("Missing kernel configuration for conditional compilation")=
-;
-=20
--#[allow(unused_extern_crates)]
- // Allow proc-macros to refer to `::kernel` inside the `kernel` crate (thi=
-s crate).
- extern crate self as kernel;
-=20
-diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
-index 5b4f64dd3ac8..6782d66039e1 100644
---- a/rust/kernel/sync/arc.rs
-+++ b/rust/kernel/sync/arc.rs
-@@ -18,6 +18,7 @@
- use crate::{
-     bindings,
-     error::{Error, Result},
-+    init,
-     init::{InPlaceInit, Init, PinInit},
-     types::{ForeignOwnable, Opaque},
- };
-@@ -29,6 +30,7 @@ use core::{
-     pin::Pin,
-     ptr::NonNull,
- };
-+use macros::pin_data;
-=20
- /// A reference-counted pointer to an instance of `T`.
- ///
-@@ -121,6 +123,7 @@ pub struct Arc<T: ?Sized> {
-     _p: PhantomData<ArcInner<T>>,
- }
-=20
-+#[pin_data]
- #[repr(C)]
- struct ArcInner<T: ?Sized> {
-     refcount: Opaque<bindings::refcount_t>,
-@@ -501,9 +504,16 @@ impl<T> UniqueArc<T> {
-=20
-     /// Tries to allocate a new [`UniqueArc`] instance whose contents are =
-not initialised yet.
-     pub fn try_new_uninit() -> Result<UniqueArc<MaybeUninit<T>>> {
-+        // INVARIANT: The refcount is initialised to a non-zero value.
-+        let inner =3D Box::init(init!(ArcInner<MaybeUninit<T>> {
-+            // SAFETY: There are no safety requirements for this FFI call.
-+            refcount: Opaque::new(unsafe { bindings::REFCOUNT_INIT(1) }),
-+            data <- init::uninit(),
-+        }))?;
-         Ok(UniqueArc::<MaybeUninit<T>> {
-             // INVARIANT: The newly-created object has a ref-count of 1.
--            inner: Arc::try_new(MaybeUninit::uninit())?,
-+            // SAFETY: The pointer from the `Box` is valid.
-+            inner: unsafe { Arc::from_inner(Box::leak(inner).into()) },
-         })
-     }
- }
---=20
-2.39.2
+## Test Regressions (compared to v5.10.172)
+No test regressions found.
+
+## Metric Regressions (compared to v5.10.172)
+No metric regressions found.
+
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+
+## Test Fixes (compared to v5.10.172)
+No test fixes found.
+
+## Metric Fixes (compared to v5.10.172)
+No metric fixes found.
+
+## Test result summary
+total: 138158, pass: 113527, fail: 3907, skip: 20437, xfail: 287
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 115 total, 114 passed, 1 failed
+* arm64: 42 total, 39 passed, 3 failed
+* i386: 33 total, 31 passed, 2 failed
+* mips: 27 total, 26 passed, 1 failed
+* parisc: 8 total, 8 passed, 0 failed
+* powerpc: 26 total, 20 passed, 6 failed
+* riscv: 12 total, 11 passed, 1 failed
+* s390: 12 total, 12 passed, 0 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 36 total, 34 passed, 2 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* packetdrill
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+
+Greetings!
+
+Daniel Díaz
+daniel.diaz@linaro.org
+
+-- 
+Linaro LKFT
+https://lkft.linaro.org
