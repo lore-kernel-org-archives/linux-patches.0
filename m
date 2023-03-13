@@ -1,314 +1,101 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B97C29AD
-	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 16:29:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1678724997;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=HOm3guk3Pbgw64RxprbmHoVswDtw90OzL9pI+grILUI=;
-	b=WuMOll3tYdtx+cUY+oR3lMrexuil7qS6b7+kyvipbr2msYH02dr5CkAewSh97mMXfvlBIm
-	AGLqIOvrIkuZWZNJVyfv6ie4BpID9/YgYykNrutwI8Vb0A5ckXFI49VlVVBPe2htSyJrXW
-	qQzdoe3c8swwHqsOEvEs6s8z26+5WB8=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-212-4KKgHGS1NWevaM_Rm7ARwg-1; Mon, 13 Mar 2023 12:29:56 -0400
-X-MC-Unique: 4KKgHGS1NWevaM_Rm7ARwg-1
-Received: by mail-ed1-f71.google.com with SMTP id h15-20020a056402280f00b004bf9e193c23so17920300ede.11
-        for <patches@lists.linux.dev>; Mon, 13 Mar 2023 09:29:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678724995;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HOm3guk3Pbgw64RxprbmHoVswDtw90OzL9pI+grILUI=;
-        b=hhSrF/1BBE8lRs1rFahGWz1aquBe2CrD5Jk5tzssXA+9c8bA1LU6VTZnQdUdWj6bmy
-         amY+0AxwArxi6o4N7k9QZjcFYYfsT2A5iRC/VesV2+D15onDjQFn68Sy4Z5yxgVCKUkK
-         pFdqAnivK0DoVeLfORhGRfrDeSjjGqDrQ2RZ2n7o2+xo31gYFliBwD8uLPckoB+Ci3XV
-         xBcR8kKD4QG7XzM+Vsx9pkNa9yyLMkScIvGEqvijJzBDAwd39uHBprys8kIITA0WugHd
-         71Pf1qEcr6Nb1dV6ccqP9veWFnJ/pTgAHO9LnLpjdVnS5BpFt004/d9gRhFnTZmuj14v
-         WD/w==
-X-Gm-Message-State: AO0yUKVTtyRw6VSgrDXQvzrbWGFGaZpPLUmPqXJeP6hC4pjL5nBSOY5q
-	o6Pv8QHGaNBJKbY3jM+uDIeZROK8tceV07myirUC72Opj39GTGyV+lUYhtfMAjWzB7Ml5Hp3VEY
-	Kb1ft02FZ8sXDkAs8OA==
-X-Received: by 2002:a17:907:c084:b0:92b:dff5:42b1 with SMTP id st4-20020a170907c08400b0092bdff542b1mr1516923ejc.66.1678724995147;
-        Mon, 13 Mar 2023 09:29:55 -0700 (PDT)
-X-Google-Smtp-Source: AK7set+VS+Y85uZk6qp9b2gAOcQLH+Dtwf4zqrCKuPrFVBSiIGCAFRUYpJLEk1mf1rOhsezT1N2Biw==
-X-Received: by 2002:a17:907:c084:b0:92b:dff5:42b1 with SMTP id st4-20020a170907c08400b0092bdff542b1mr1516882ejc.66.1678724994855;
-        Mon, 13 Mar 2023 09:29:54 -0700 (PDT)
-Received: from [10.40.98.142] ([78.108.130.194])
-        by smtp.gmail.com with ESMTPSA id re2-20020a170906d8c200b00926d614b890sm1941649ejb.204.2023.03.13.09.29.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Mar 2023 09:29:54 -0700 (PDT)
-Message-ID: <275d2f04-782f-2c9d-187a-7a510bf34f41@redhat.com>
-Date: Mon, 13 Mar 2023 17:29:53 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E7B10F2
+	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 16:31:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F364C433EF;
+	Mon, 13 Mar 2023 16:31:48 +0000 (UTC)
+Date: Mon, 13 Mar 2023 12:31:47 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Mike Rapoport <mike.rapoport@gmail.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>, Christoph Lameter <cl@linux.com>,
+ David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+ Pekka Enberg <penberg@kernel.org>, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Roman Gushchin <roman.gushchin@linux.dev>, Andrew Morton
+ <akpm@linux-foundation.org>, linux-mm@kvack.org, rcu@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev, netdev@vger.kernel.org, linux-doc@vger.kernel.org,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Frederic Weisbecker <frederic@kernel.org>, Jakub
+ Kicinski <kuba@kernel.org>, Joel Fernandes <joel@joelfernandes.org>,
+ Jonathan Corbet <corbet@lwn.net>, Josh Triplett <josh@joshtriplett.org>,
+ Lai Jiangshan <jiangshanlai@gmail.com>, Mathieu Desnoyers
+ <mathieu.desnoyers@efficios.com>, Mike Rapoport <rppt@kernel.org>, Neeraj
+ Upadhyay <quic_neeraju@quicinc.com>, Paolo Abeni <pabeni@redhat.com>, "Paul
+ E. McKenney" <paulmck@kernel.org>
+Subject: Re: [PATCH 0/7] remove SLOB and allow kfree() with
+ kmem_cache_alloc()
+Message-ID: <20230313123147.6d28c47e@gandalf.local.home>
+In-Reply-To: <ZA2gofYkXRcJ8cLA@kernel.org>
+References: <20230310103210.22372-1-vbabka@suse.cz>
+	<ZA2gofYkXRcJ8cLA@kernel.org>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v3 4/8] platform/x86/intel/ifs: Introduce Array Scan test
- to IFS
-From: Hans de Goede <hdegoede@redhat.com>
-To: Jithu Joseph <jithu.joseph@intel.com>, markgross@kernel.org
-Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
- dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
- gregkh@linuxfoundation.org, rostedt@goodmis.org, ashok.raj@intel.com,
- tony.luck@intel.com, linux-kernel@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
- ravi.v.shankar@intel.com, thiago.macieira@intel.com,
- athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
-References: <20230214234426.344960-1-jithu.joseph@intel.com>
- <20230301015942.462799-1-jithu.joseph@intel.com>
- <20230301015942.462799-5-jithu.joseph@intel.com>
- <7f82f241-39ee-15e0-1ae7-e98e50730c95@redhat.com>
-In-Reply-To: <7f82f241-39ee-15e0-1ae7-e98e50730c95@redhat.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-Hi,
+On Sun, 12 Mar 2023 11:51:29 +0200
+Mike Rapoport <mike.rapoport@gmail.com> wrote:
 
-On 3/13/23 17:10, Hans de Goede wrote:
-> Hi,
+> git grep -in slob still gives a couple of matches. I've dropped the
+> irrelevant ones it it left me with these:
 > 
-> On 3/1/23 02:59, Jithu Joseph wrote:
->> Array BIST is a new type of core test introduced under the Intel Infield
->> Scan (IFS) suite of tests.
->>
->> Emerald Rapids (EMR) is the first CPU to support Array BIST.
->> Array BIST performs tests on some portions of the core logic such as
->> caches and register files. These are different portions of the silicon
->> compared to the parts tested by the first test type
->> i.e Scan at Field (SAF).
->>
->> Make changes in the device driver init flow to register this new test
->> type with the device driver framework. Each test will have its own
->> sysfs directory (intel_ifs_0 , intel_ifs_1) under misc hierarchy to
->> accommodate for the differences in test type and how they are initiated.
->>
->> Upcoming patches will add actual support.
->>
->> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
->> Reviewed-by: Tony Luck <tony.luck@intel.com>
->> ---
->>  drivers/platform/x86/intel/ifs/ifs.h  |  3 +
->>  drivers/platform/x86/intel/ifs/core.c | 85 +++++++++++++++++++--------
->>  2 files changed, 62 insertions(+), 26 deletions(-)
->>
->> diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
->> index ab168ddf28f1..b8b956e29653 100644
->> --- a/drivers/platform/x86/intel/ifs/ifs.h
->> +++ b/drivers/platform/x86/intel/ifs/ifs.h
->> @@ -137,6 +137,9 @@
->>  #define SCAN_TEST_PASS				1
->>  #define SCAN_TEST_FAIL				2
->>  
->> +#define IFS_TYPE_SAF			0
->> +#define IFS_TYPE_ARRAY_BIST		1
->> +
->>  /* MSR_SCAN_HASHES_STATUS bit fields */
->>  union ifs_scan_hashes_status {
->>  	u64	data;
->> diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
->> index 62c44dbae757..2237aaba7078 100644
->> --- a/drivers/platform/x86/intel/ifs/core.c
->> +++ b/drivers/platform/x86/intel/ifs/core.c
->> @@ -16,6 +16,7 @@
->>  
->>  static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
->>  	X86_MATCH(SAPPHIRERAPIDS_X),
->> +	X86_MATCH(EMERALDRAPIDS_X),
->>  	{}
->>  };
->>  MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
+> CREDITS:14:D: SLOB slab allocator
+> kernel/trace/ring_buffer.c:358: * Also stolen from mm/slob.c. Thanks to Mathieu Desnoyers for pointing
+> mm/Kconfig:251:    SLOB allocator and is not recommended for systems with more than
+> mm/Makefile:25:KCOV_INSTRUMENT_slob.o := n
+>  
+> Except the comment in kernel/trace/ring_buffer.c all are trivial.
 > 
-> Note you can add driver_data to a match table like this. What you should
-> do here is use the driver data to point to the const ifs_hw_caps discussed
-> before, so what you get here is:
+> As for the comment in ring_buffer.c, it looks completely irrelevant at this
+> point.
 > 
-> #define X86_MATCH(model, data)                          \
->         X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6,    \
->                 INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, (unsigned long)(data))
-> 
-> static const struct ifs_hw_caps saphire_rapids_caps = {
-> 	.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
-> 	.test_num = 0,
-> };
-> 
-> static const struct ifs_hw_caps emerald_rapids_caps = {
-> 	.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
-> 	.test_num = 0,
-> };
-> 
-> static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
-> 	X86_MATCH(SAPPHIRERAPIDS_X, &saphire_rapids_caps),
-> 	X86_MATCH(EMERALDRAPIDS_X, &emerald_rapids_caps),
-> 	{}
-> };
-> MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
-> 
-> and then drop all the code related to having an array of ifs_device structs
-> (of which only 1 will ever get used) and instead at the beginning of
-> ifs_init(void), after:
-> 
->         m = x86_match_cpu(ifs_cpu_ids);
->         if (!m)
->                 return -ENODEV;
-> 
-> add:
-> 
-> 	ifs_device.hwcaps = (const struct ifs_hw_caps *)m->driver_data;
-> 
-> And then you can pretty much drop all the rest of this patch and we
-> end up with much nicer code for differentiating between the models :)
+> @Steve?
 
-Upon reading the rest of the series, I think the above might be based
-on me misunderstanding this bit.
+You want me to remember something I wrote almost 15 years ago? I think I
+understand that comment as much as you do. Yeah, that was when I was still
+learning to write comments for my older self to understand, and I failed
+miserably!
 
-If I understand things correctly then what is new with emerald_rapids
-is support for a second set/type of tests called " Array Scan test"
-and the old test method / test-type is also still supported.
+But git history comes to the rescue. The commit that added that comment was:
 
-And you have chosen to register 2 misc-devices , one per supported
-test type ?
+ed56829cb3195 ("ring_buffer: reset buffer page when freeing")
 
-Have I understood that correcty?
+This was at a time when it was suggested to me to use the struct page
+directly in the ring buffer and where we could do fun "tricks" for
+"performance". (I was never really for this, but I wasn't going to argue).
 
-May I ask why use 1 misc device per test-type. Why not just add
-a single new sysfs_attr to the existing misc device to trigger
-the new test-type ?
+And the code in question then had:
 
-Regards,
-
-Hans
+/*
+ * Also stolen from mm/slob.c. Thanks to Mathieu Desnoyers for pointing
+ * this issue out.
+ */
+static inline void free_buffer_page(struct buffer_page *bpage)
+{
+        reset_page_mapcount(&bpage->page);
+        bpage->page.mapping = NULL;
+        __free_page(&bpage->page);
+}
 
 
->> @@ -24,23 +25,51 @@ ATTRIBUTE_GROUPS(plat_ifs);
->>  
->>  bool *ifs_pkg_auth;
->>  
->> -static struct ifs_device ifs_device = {
->> -	.ro_data = {
->> -		.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
->> -		.test_num = 0,
->> +static struct ifs_device ifs_devices[] = {
->> +	[IFS_TYPE_SAF] = {
->> +		.ro_data = {
->> +			.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
->> +			.test_num = IFS_TYPE_SAF,
->> +		},
->> +		.misc = {
->> +			.name = "intel_ifs_0",
->> +			.minor = MISC_DYNAMIC_MINOR,
->> +			.groups = plat_ifs_groups,
->> +		},
->>  	},
->> -	.misc = {
->> -		.name = "intel_ifs_0",
->> -		.minor = MISC_DYNAMIC_MINOR,
->> -		.groups = plat_ifs_groups,
->> +	[IFS_TYPE_ARRAY_BIST] = {
->> +		.ro_data = {
->> +			.integrity_cap_bit = MSR_INTEGRITY_CAPS_ARRAY_BIST_BIT,
->> +			.test_num = IFS_TYPE_ARRAY_BIST,
->> +		},
->> +		.misc = {
->> +			.name = "intel_ifs_1",
->> +			.minor = MISC_DYNAMIC_MINOR,
->> +		},
->>  	},
->>  };
->>  
->> +#define IFS_NUMTESTS ARRAY_SIZE(ifs_devices)
->> +
->> +static void ifs_cleanup(void)
->> +{
->> +	int i;
->> +
->> +	for (i = 0; i < IFS_NUMTESTS; i++) {
->> +		if (ifs_devices[i].misc.this_device) {
->> +			misc_deregister(&ifs_devices[i].misc);
->> +			kfree(ifs_devices[i].rw_data);
->> +		}
->> +	}
->> +	kfree(ifs_pkg_auth);
->> +}
->> +
->>  static int __init ifs_init(void)
->>  {
->>  	const struct x86_cpu_id *m;
->>  	struct ifs_data *ifsd;
->>  	u64 msrval;
->> +	int i, ret;
->>  
->>  	m = x86_match_cpu(ifs_cpu_ids);
->>  	if (!m)
->> @@ -55,35 +84,39 @@ static int __init ifs_init(void)
->>  	if (rdmsrl_safe(MSR_INTEGRITY_CAPS, &msrval))
->>  		return -ENODEV;
->>  
->> -	if (!(msrval & BIT(ifs_device.ro_data.integrity_cap_bit)))
->> -		return -ENODEV;
->> -
->>  	ifs_pkg_auth = kmalloc_array(topology_max_packages(), sizeof(bool), GFP_KERNEL);
->>  	if (!ifs_pkg_auth)
->>  		return -ENOMEM;
->>  
->> -	ifsd = kzalloc(sizeof(*ifsd), GFP_KERNEL);
->> -	if (!ifsd)
->> -		return -ENOMEM;
->> -
->> -	ifsd->ro_info = &ifs_device.ro_data;
->> -	ifs_device.rw_data = ifsd;
->> -
->> -	if (misc_register(&ifs_device.misc)) {
->> -		kfree(ifsd);
->> -		kfree(ifs_pkg_auth);
->> -		return -ENODEV;
->> +	for (i = 0; i < IFS_NUMTESTS; i++) {
->> +		ifsd = NULL;
->> +		if (!(msrval & BIT(ifs_devices[i].ro_data.integrity_cap_bit)))
->> +			continue;
->> +
->> +		ifsd = kzalloc(sizeof(*ifsd), GFP_KERNEL);
->> +		if (!ifsd) {
->> +			ret = -ENOMEM;
->> +			goto err_exit;
->> +		}
->> +		ifsd->ro_info = &ifs_devices[i].ro_data;
->> +		ifs_devices[i].rw_data = ifsd;
->> +
->> +		if (misc_register(&ifs_devices[i].misc)) {
->> +			ret = -ENODEV;
->> +			kfree(ifsd);
->> +			goto err_exit;
->> +		}
->>  	}
->> -
->>  	return 0;
->>  
->> +err_exit:
->> +	ifs_cleanup();
->> +	return ret;
->>  }
->>  
->>  static void __exit ifs_exit(void)
->>  {
->> -	misc_deregister(&ifs_device.misc);
->> -	kfree(ifs_device.rw_data);
->> -	kfree(ifs_pkg_auth);
->> +	ifs_cleanup();
->>  }
->>  
->>  module_init(ifs_init);
+But looking at commit: e4c2ce82ca27 ("ring_buffer: allocate buffer page
+pointer")
 
+It was finally decided that method was not safe, and we should not be using
+struct page but just allocate an actual page (much safer!).
+
+I never got rid of the comment, which was more about that
+"reset_page_mapcount()", and should have been deleted back then.
+
+Just remove that comment. And you could even add:
+
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: e4c2ce82ca27 ("ring_buffer: allocate buffer page pointer")
+
+-- Steve
