@@ -1,134 +1,323 @@
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2066.outbound.protection.outlook.com [40.107.220.66])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158152569
-	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 13:38:06 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Ye9OiXMRNNJKXEPufdXRZ3nLxerodOs5vj2g4VYHnKVekADT7q5dJ/7Rr97VccIlNL+A334kCXBp3MbiiN+CSaTQ6SA4KSeSLpc2/x2icEMoLWes/IR3V+cgOICvkaBODEWHjrmzE7CKwBDAPq+j0MVsXkgi8BzmEwDORM0HIGXLCjoOibdDYN7BQO2SLSEtSOwzH8fBIYaul9kWXk9ofkcvali3llWfI5SzuGBQU/2psBsp28GDh6pBjuman1M5U3fDNwnwfvz3uJn5BHAgZ+/4xq/ceouqe1CWb9EC4pptJCK+hgmckKv2/C+sCCVsywNRuXFJrhHuHEYzSI4A9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fIb7Jszuv6bw3LKTu1u2ysRnF5fbOYFAb2Byb8TE+zM=;
- b=bPKGNYslNJIE3c9XL9Ug45TKDFiIhVx61nnP2SR4Onmc2yP9VL61Id1j3ySgH0HJkrfOY4mUx0L9Re8veYb7wKE5vGKaAGoyINuQHt0R0ewCXKMdmXQfDoLW1PpHjO2Oe0om4D4BP2cq73GzhKjq7f1uTyhrjxcF+7cfcEsR7uQ1YGu8xYIS3ThKAlO3iLfJiqMYdaZunJwMPjcCMx7/qIGKESnNriP2dMJzXC0gIWXblIEGS96ElbuiaCDKkEBsZCeStnKhpsdOts3K5IRhRcXpnZ8D3LGxKUwJjjwSdAlWyEDj4Mi2o7jIynRbIIJ9xKXkkzLKYEQeBHsRGOzweg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fIb7Jszuv6bw3LKTu1u2ysRnF5fbOYFAb2Byb8TE+zM=;
- b=OX2KZDsI3lKwAOQY90TEMc2tzDPyfr8IkRUl+j7iN/ArEySbr7xxoE/hYKkeYS5qXKys9zz2ZKM2fE8tb41a4KPfvgyjKc1E27XZu2MqOWTyo/M8mx+thMPFkG7T4PjPSZ35LF833Rw+QPJSDraxNa6YHbYH6gKNootK5+nAqX8M4RePlFn5vkoDT7tn1uc9kjj0FksTvP+x1CUdZ+Fra4eunzuqJ+4uRXfQqoiahnPLNgN+vqL1XVq8NYGijntUr103FMQUdHV5ZsFWGj7pBN+0LMBzNXFF5fJ79BO85s4T/jFdS6usFecSGxfZZGCAavM3VNdy6Kc+wUnnDJvC2Q==
-Received: from BN9PR03CA0436.namprd03.prod.outlook.com (2603:10b6:408:113::21)
- by DS7PR12MB5864.namprd12.prod.outlook.com (2603:10b6:8:7b::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.24; Mon, 13 Mar
- 2023 13:38:04 +0000
-Received: from BN8NAM11FT066.eop-nam11.prod.protection.outlook.com
- (2603:10b6:408:113:cafe::ca) by BN9PR03CA0436.outlook.office365.com
- (2603:10b6:408:113::21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.25 via Frontend
- Transport; Mon, 13 Mar 2023 13:38:03 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BN8NAM11FT066.mail.protection.outlook.com (10.13.177.138) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6178.24 via Frontend Transport; Mon, 13 Mar 2023 13:38:03 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Mon, 13 Mar 2023
- 06:37:51 -0700
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37; Mon, 13 Mar
- 2023 06:37:51 -0700
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5 via Frontend
- Transport; Mon, 13 Mar 2023 06:37:51 -0700
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 5.4 000/356] 5.4.235-rc2 review
-In-Reply-To: <20230311091806.500513126@linuxfoundation.org>
-References: <20230311091806.500513126@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BFB28F2
+	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 14:46:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1678718777;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=q8FnhFWhsWcQReYEr7jTipBhtAk4faTQb7wPHi4ycFw=;
+	b=HOsvMqFmkefnpSsJ0aw1SNnaLU0F291OmH3w93i3CFT2NxECgTtLcuIfRHnH2Pl4fseaJ+
+	v8HImeQNWvynjzxcJkWOOjeWECLnbFxM7x7yqfYjBx8T2PTwTUC+QJqNOOXppNyzhldmei
+	g9PN7jf7Wn3BXwyzC2xjHt0B8oyF/cA=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-160-HheqMVdiNgGj9svbnSJ_2g-1; Mon, 13 Mar 2023 10:46:16 -0400
+X-MC-Unique: HheqMVdiNgGj9svbnSJ_2g-1
+Received: by mail-ed1-f70.google.com with SMTP id r9-20020a05640251c900b004d4257341c2so17285625edd.19
+        for <patches@lists.linux.dev>; Mon, 13 Mar 2023 07:46:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678718775;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=q8FnhFWhsWcQReYEr7jTipBhtAk4faTQb7wPHi4ycFw=;
+        b=7CD+yH25tw8MQaitxRNFDd2D+Z79EGnydi9v1L5AcKOPWpsmm/pzSEEFPaX28w8EoG
+         s9SAwqTwfaCK403EJoA6Rwoar1eBfIBBqZH12tA4wyvOvwZ5yFKGrT6Y8ZNhNdOnzs43
+         2F9GZr5nvBODIHpyLSjczQ75cgObzNHU9irudt2IyWo9bU2XylW4f/poeJTVRR7AdC0Q
+         2Kdrk4diw7OPvs6IfvHttZsowEOWB3h75tSa3ZswJeWg4NHGt4CVezFPsrx3gk4EGRZn
+         nsaWPAa2Hc/Su9aIz1AQNq8EoLqyVQOTYfMf1tLJ+dXCpsdFS29j2dvf+fu6QufhmOFk
+         vGGw==
+X-Gm-Message-State: AO0yUKVVLf14sLZ2vzlX7w0etVw9+XzIGg/bIK1PzdbNpZ6aPIVQZLRn
+	CYIoSI2twmtT56NZTjJDw6EcjipuMLsaprli5hhwugspc4KTICoiQagiLQZ5Yu+mmQtLZ5e4pan
+	0T3Sb79tP9kruJgLGWA==
+X-Received: by 2002:a17:907:2beb:b0:921:5cce:6599 with SMTP id gv43-20020a1709072beb00b009215cce6599mr6627228ejc.41.1678718774933;
+        Mon, 13 Mar 2023 07:46:14 -0700 (PDT)
+X-Google-Smtp-Source: AK7set9mWKhtvFCDOfwoqyOCMDtxZp3GkDaz+ur2PErEi3oBFcgfP69Um9N3lOdwHyLX8448a9pzCA==
+X-Received: by 2002:a17:907:2beb:b0:921:5cce:6599 with SMTP id gv43-20020a1709072beb00b009215cce6599mr6627192ejc.41.1678718774607;
+        Mon, 13 Mar 2023 07:46:14 -0700 (PDT)
+Received: from [10.40.98.142] ([78.108.130.194])
+        by smtp.gmail.com with ESMTPSA id gx3-20020a1709068a4300b009200601ea12sm3298802ejc.208.2023.03.13.07.46.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Mar 2023 07:46:13 -0700 (PDT)
+Message-ID: <a6ae936e-effd-3794-e6fb-11b33a4d6eb1@redhat.com>
+Date: Mon, 13 Mar 2023 15:46:13 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <0d8649fe-0c30-430c-8104-97dd1ccc0e20@rnnvmail203.nvidia.com>
-Date: Mon, 13 Mar 2023 06:37:51 -0700
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN8NAM11FT066:EE_|DS7PR12MB5864:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1a825568-0995-4a82-bdb9-08db23c82bdf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	qDNz0nYbTlXguhZr82sqGUGsx1MNh06UjS2QMi/691dFsMWLgP7uF51C+G22AEEo6JXdTp7SUwOyowvSWMfrWiI0d6lWptVMlPVcHFmgkJ7GixODeefz9aTQfq+VV1Z41XeI+no4T/Rdvhff2R3IEILmJHDFD8pautSrQG5lrvGq5M6H5jMBLvPcsEIbQsqi4v8P29x7hPMUn3FXtDZOUhrhIQY/cDwpqD54YXvlVY2DR+5qDso9uE6DKLcm33EM/r39vF9sP7DBJ0YCY+TiQvrnon98zORW4lfqgGhyRicesmLPmcsI4vfkLZiVZltE+kURvY8cr0Da9W5B7lb0HRbeDZRQlqCUcj64nUic+QVXmvPUP4DENGsGLU7y5GW+LkrBsddVK+RkSAH67rBnIqN7Nvwc1fHHOpuFEOqdwOFh2zy+xdWg19JoDlvQezD7F/HpH4Pum7hVILFdJbkVTduYvARmLsF++qAax83jMSDMzEIL97ijsmq36VLfFjjjo1DqcrbvU4CYEH5CBteuT1d4bqqqBVzXECU54zCJ+pf6eHjImGPGIeOJQzwfd5gb/RFGski0/s75OAPMXq8av2PDSX0PXk2a7hWG6fWCZPwUczkx+bH/whKOwJOUZG0vSjRZJOuiJ1XF1Hy/3wBIlPsNnFpnGc5RnI3BezogVJnOyUWqB7UTKV5DSvvwgF44pGGYGeXrNi4QfKI3FF2lbWx3QH1FEUN8TURT6lMos79CwleQS6498APVS2eEL/G+2T2TdxbRhWZ812o0TCgP/bZtAPZsP9rfmsib2ndslh8=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230025)(4636009)(396003)(376002)(136003)(39860400002)(346002)(451199018)(36840700001)(40470700004)(46966006)(2906002)(7636003)(82740400003)(31686004)(41300700001)(40460700003)(7416002)(5660300002)(8676002)(70586007)(8936002)(356005)(4326008)(6916009)(70206006)(316002)(40480700001)(36860700001)(54906003)(86362001)(31696002)(82310400005)(478600001)(426003)(47076005)(186003)(336012)(26005)(966005);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Mar 2023 13:38:03.7540
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1a825568-0995-4a82-bdb9-08db23c82bdf
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN8NAM11FT066.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5864
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v3 1/8] platform/x86/intel/ifs: Reorganize driver data
+To: Jithu Joseph <jithu.joseph@intel.com>, markgross@kernel.org
+Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+ dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+ gregkh@linuxfoundation.org, rostedt@goodmis.org, ashok.raj@intel.com,
+ tony.luck@intel.com, linux-kernel@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+ ravi.v.shankar@intel.com, thiago.macieira@intel.com,
+ athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
+References: <20230214234426.344960-1-jithu.joseph@intel.com>
+ <20230301015942.462799-1-jithu.joseph@intel.com>
+ <20230301015942.462799-2-jithu.joseph@intel.com>
+From: Hans de Goede <hdegoede@redhat.com>
+In-Reply-To: <20230301015942.462799-2-jithu.joseph@intel.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sat, 11 Mar 2023 10:20:37 +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.235 release.
-> There are 356 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi Jithu,
+
+On 3/1/23 02:59, Jithu Joseph wrote:
+> The struct holding device driver data contained both read only(ro)
+> and read write(rw) fields.
 > 
-> Responses should be made by Mon, 13 Mar 2023 09:17:07 +0000.
-> Anything received after that time might be too late.
+> Separating ro fields from rw fields was recommended as
+> a preferable design pattern during review[1].
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.235-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
+> Group the rw fields into a separate struct whose memory is allocated
+> during driver_init(). Associate it to the miscdevice being registered
+> by keeping it in the same container struct as the miscdevice.
 > 
-> thanks,
+> Also in prepration to supporting additional tests, move ifs_pkg_auth
+> to a global as it is only applicable for the first test type.
+
+If you are writing "Also ..." into a commit message and the
+changes for the "Also ..." are more then a single line change,
+then that change really should be split out into a separate patch.
+
+Please split the "move ifs_pkg_auth to a global" changes into their
+own separate patch.
+
 > 
-> greg k-h
+> Link: https://lore.kernel.org/lkml/Y+9H9otxLYPqMkUh@kroah.com/ [1]
+> 
+> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+> Reviewed-by: Tony Luck <tony.luck@intel.com>
+> ---
+>  drivers/platform/x86/intel/ifs/ifs.h  | 19 +++++++++-------
+>  drivers/platform/x86/intel/ifs/core.c | 31 ++++++++++++++++++---------
+>  drivers/platform/x86/intel/ifs/load.c |  8 +++----
+>  3 files changed, 36 insertions(+), 22 deletions(-)
+> 
+> diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+> index 046e39304fd5..e07463c794d4 100644
+> --- a/drivers/platform/x86/intel/ifs/ifs.h
+> +++ b/drivers/platform/x86/intel/ifs/ifs.h
+> @@ -197,22 +197,23 @@ union ifs_status {
+>  #define IFS_SW_TIMEOUT				0xFD
+>  #define IFS_SW_PARTIAL_COMPLETION		0xFE
+>  
+> +struct ifs_const_data {
+> +	int	integrity_cap_bit;
+> +	int	test_num;
+> +};
+> +
 
-All tests passing for Tegra ...
+This is a description of the specific capabilties / bits of
+the IFS on e.g. Saphire Rapids, so please name this appropriately
+for example:
 
-Test results for stable-v5.4:
-    10 builds:	10 pass, 0 fail
-    26 boots:	26 pass, 0 fail
-    59 tests:	59 pass, 0 fail
+struct ifs_hw_caps  {
+	int	integrity_cap_bit;
+	int	test_num;
+};
 
-Linux version:	5.4.235-rc2-gca95bdb3ada0
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra20-ventana,
-                tegra210-p2371-2180, tegra210-p3450-0000,
-                tegra30-cardhu-a04
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
+>  /**
+>   * struct ifs_data - attributes related to intel IFS driver
+> - * @integrity_cap_bit: MSR_INTEGRITY_CAPS bit enumerating this test
+>   * @loaded_version: stores the currently loaded ifs image version.
+> - * @pkg_auth: array of bool storing per package auth status
+>   * @loaded: If a valid test binary has been loaded into the memory
+>   * @loading_error: Error occurred on another CPU while loading image
+>   * @valid_chunks: number of chunks which could be validated.
+>   * @status: it holds simple status pass/fail/untested
+>   * @scan_details: opaque scan status code from h/w
+>   * @cur_batch: number indicating the currently loaded test file
+> - * @test_num: number indicating the test type
+> + * @ro_info: ptr to struct holding fixed details
+>   */
+>  struct ifs_data {
+> -	int	integrity_cap_bit;
+> -	bool	*pkg_auth;
+>  	int	loaded_version;
+>  	bool	loaded;
+>  	bool	loading_error;
+> @@ -220,7 +221,7 @@ struct ifs_data {
+>  	int	status;
+>  	u64	scan_details;
+>  	u32	cur_batch;
+> -	int	test_num;
+> +	struct ifs_const_data *ro_info;
+>  };
+>  
+>  struct ifs_work {
+> @@ -229,7 +230,8 @@ struct ifs_work {
+>  };
+>  
+>  struct ifs_device {
+> -	struct ifs_data data;
+> +	struct ifs_const_data ro_data;
+> +	struct ifs_data *rw_data;
+>  	struct miscdevice misc;
+>  };
+>  
 
-Jon
+You got this exactly the wrong way around, there should be a single
+
+static const struct ifs_hw_caps saphire_rapids_caps = {
+	.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
+	.test_num = 0,
+};
+
+And then struct ifs_device { } should have a "const struct ifs_hw_caps *hw_caps"
+which gets initialized to point to &saphire_rapids_caps. So that your const
+data is actually const.
+
+Where as since the r/w data's lifetime is couple to the misc-device lifetime
+there is no need to dynamically allocate it just keep that embedded, so that
+together you get:
+
+struct ifs_device {
+	const struct ifs_hw_caps *hw_caps;
+	struct ifs_data data;
+	struct miscdevice misc;
+};
+
+Regards,
+
+Hans
+
+
+> @@ -238,9 +240,10 @@ static inline struct ifs_data *ifs_get_data(struct device *dev)
+>  	struct miscdevice *m = dev_get_drvdata(dev);
+>  	struct ifs_device *d = container_of(m, struct ifs_device, misc);
+>  
+> -	return &d->data;
+> +	return d->rw_data;
+>  }
+>  
+> +extern bool *ifs_pkg_auth;
+>  int ifs_load_firmware(struct device *dev);
+>  int do_core_test(int cpu, struct device *dev);
+>  const struct attribute_group **ifs_get_groups(void);
+> diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+> index 206a617c2e02..b518b661daf0 100644
+> --- a/drivers/platform/x86/intel/ifs/core.c
+> +++ b/drivers/platform/x86/intel/ifs/core.c
+> @@ -20,8 +20,10 @@ static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
+>  };
+>  MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
+>  
+> +bool *ifs_pkg_auth;
+> +
+>  static struct ifs_device ifs_device = {
+> -	.data = {
+> +	.ro_data = {
+>  		.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
+>  		.test_num = 0,
+>  	},
+> @@ -35,8 +37,8 @@ static struct ifs_device ifs_device = {
+>  static int __init ifs_init(void)
+>  {
+>  	const struct x86_cpu_id *m;
+> +	struct ifs_data *ifsd;
+>  	u64 msrval;
+> -	int ret;
+>  
+>  	m = x86_match_cpu(ifs_cpu_ids);
+>  	if (!m)
+> @@ -53,26 +55,35 @@ static int __init ifs_init(void)
+>  
+>  	ifs_device.misc.groups = ifs_get_groups();
+>  
+> -	if (!(msrval & BIT(ifs_device.data.integrity_cap_bit)))
+> +	if (!(msrval & BIT(ifs_device.ro_data.integrity_cap_bit)))
+>  		return -ENODEV;
+>  
+> -	ifs_device.data.pkg_auth = kmalloc_array(topology_max_packages(), sizeof(bool), GFP_KERNEL);
+> -	if (!ifs_device.data.pkg_auth)
+> +	ifs_pkg_auth = kmalloc_array(topology_max_packages(), sizeof(bool), GFP_KERNEL);
+> +	if (!ifs_pkg_auth)
+> +		return -ENOMEM;
+> +
+> +	ifsd = kzalloc(sizeof(*ifsd), GFP_KERNEL);
+> +	if (!ifsd)
+>  		return -ENOMEM;
+>  
+> -	ret = misc_register(&ifs_device.misc);
+> -	if (ret) {
+> -		kfree(ifs_device.data.pkg_auth);
+> -		return ret;
+> +	ifsd->ro_info = &ifs_device.ro_data;
+> +	ifs_device.rw_data = ifsd;
+> +
+> +	if (misc_register(&ifs_device.misc)) {
+> +		kfree(ifsd);
+> +		kfree(ifs_pkg_auth);
+> +		return -ENODEV;
+>  	}
+>  
+>  	return 0;
+> +
+>  }
+>  
+>  static void __exit ifs_exit(void)
+>  {
+>  	misc_deregister(&ifs_device.misc);
+> -	kfree(ifs_device.data.pkg_auth);
+> +	kfree(ifs_device.rw_data);
+> +	kfree(ifs_pkg_auth);
+>  }
+>  
+>  module_init(ifs_init);
+> diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
+> index c5c24e6fdc43..cdec3316c08d 100644
+> --- a/drivers/platform/x86/intel/ifs/load.c
+> +++ b/drivers/platform/x86/intel/ifs/load.c
+> @@ -192,7 +192,7 @@ static int scan_chunks_sanity_check(struct device *dev)
+>  	struct ifs_work local_work;
+>  	int curr_pkg, cpu, ret;
+>  
+> -	memset(ifsd->pkg_auth, 0, (topology_max_packages() * sizeof(bool)));
+> +	memset(ifs_pkg_auth, 0, (topology_max_packages() * sizeof(bool)));
+>  	ret = validate_ifs_metadata(dev);
+>  	if (ret)
+>  		return ret;
+> @@ -204,7 +204,7 @@ static int scan_chunks_sanity_check(struct device *dev)
+>  	cpus_read_lock();
+>  	for_each_online_cpu(cpu) {
+>  		curr_pkg = topology_physical_package_id(cpu);
+> -		if (ifsd->pkg_auth[curr_pkg])
+> +		if (ifs_pkg_auth[curr_pkg])
+>  			continue;
+>  		reinit_completion(&ifs_done);
+>  		local_work.dev = dev;
+> @@ -215,7 +215,7 @@ static int scan_chunks_sanity_check(struct device *dev)
+>  			ret = -EIO;
+>  			goto out;
+>  		}
+> -		ifsd->pkg_auth[curr_pkg] = 1;
+> +		ifs_pkg_auth[curr_pkg] = 1;
+>  	}
+>  	ret = 0;
+>  out:
+> @@ -263,7 +263,7 @@ int ifs_load_firmware(struct device *dev)
+>  	int ret = -EINVAL;
+>  
+>  	snprintf(scan_path, sizeof(scan_path), "intel/ifs_%d/%02x-%02x-%02x-%02x.scan",
+> -		 ifsd->test_num, boot_cpu_data.x86, boot_cpu_data.x86_model,
+> +		 ifsd->ro_info->test_num, boot_cpu_data.x86, boot_cpu_data.x86_model,
+>  		 boot_cpu_data.x86_stepping, ifsd->cur_batch);
+>  
+>  	ret = request_firmware_direct(&fw, scan_path, dev);
+
