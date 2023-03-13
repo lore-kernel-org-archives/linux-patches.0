@@ -1,111 +1,94 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C1228F2
-	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 15:03:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1678719794;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pZ49mGv28iBaz7X24970hd41Ch6EkiVMx/J+Ek7710U=;
-	b=EDe2jfdIG3Jt3QZA/UM7HRJ7sf1IN74RSnEuGR7/KwJyf2fpMj3MrBjr3SL8NvK1Wi/XzA
-	6JIGRw7esRVGgmuKnWsnTIBcHZAWI0VCZK/oqqzufUbDjR6RfbemgLo/TzRFc+cWfm7TJz
-	/UPKIrlPUVaCjN22cy3aZFlQkSa+SNQ=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-385-s6CFiiZ_P-6lmFaKB6BMdw-1; Mon, 13 Mar 2023 11:03:10 -0400
-X-MC-Unique: s6CFiiZ_P-6lmFaKB6BMdw-1
-Received: by mail-ed1-f70.google.com with SMTP id v11-20020a056402348b00b004ce34232666so17264709edc.3
-        for <patches@lists.linux.dev>; Mon, 13 Mar 2023 08:03:10 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2645028F2
+	for <patches@lists.linux.dev>; Mon, 13 Mar 2023 15:27:57 +0000 (UTC)
+Received: by mail-wm1-f44.google.com with SMTP id r19-20020a05600c459300b003eb3e2a5e7bso8176665wmo.0
+        for <patches@lists.linux.dev>; Mon, 13 Mar 2023 08:27:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678721275;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5MlqLtviOtYp6HxaLoBe4+wSDth/BbTrrWvwIZUKlwg=;
+        b=QEd2dp9v6mDiG0ZlfB3umTfHAdQYxZJ8eDaGw13dPuLSU+j0UUHFP1jGTN4cya+qFF
+         HU9xsqw8O3aXkj/2oXHoESKbPdNtKwSL8RQoWN3vp0BU4Q3xWY428VC2Wqo0QzdDkDK4
+         CTfv2YRQf3tdFH+s7MOpjDxLCq9jE/ksXO7iKpO6C9xLmQ0yfjZA70yrgo/3dprNUqL+
+         D7NmJZ9ZUCYOUxGja37dv72QXXKRYNOVrqn9y023rxeMOL9JWVjxALNJwNs6vHoYdoHQ
+         7WoJijSrIpKhzczozcX1ewaHoAq9zgjffVjM8I2xkrdO9Xz1GiA9PZeSQ2dQOQWi63m0
+         7qbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678719789;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pZ49mGv28iBaz7X24970hd41Ch6EkiVMx/J+Ek7710U=;
-        b=3fphC0KJDC2SmRib6H/t71NHwjsCH0uXXxpHzWYF0zO8OwqquJyt+5ABDMKt8vJ5J5
-         VaUpT4lW/yvwIAaFev16doxZsYiE9njOKzuccJePrpbumukdFsFqFAFZMLAiuXfffRyG
-         S/G9nDJ2y7vDUVwLXS6Z3rD6DmIKWatyOcl/dDgpNB+9gIx9sJpBITB4P24eSMoRuNbx
-         xT2pisMl13tnU8GnWQbvIHzYGPA4RcUheW80YlNvS+VLw8Eei4n9JWhbCWCtXo+AKCI1
-         URM0zvUYpZcP6vdkEFCgIo5MLiWgHZBLErGkYYpWOLkMawwBB4bbLAYLwoSkoT6cR2Ur
-         epLg==
-X-Gm-Message-State: AO0yUKWyE+1jDVUrxxBdB2w9S2C0LBTVHrb/J4mRLXWvMmz1QYA2BWMe
-	2wCR4esjLxvZl16oyMIZrUk3aYkQlVnPWUskc1FSCFFCxaTjYYl7s7H5uWgR7xwdM23D7b688SZ
-	FvMP5Wlez6SSXHG59iA==
-X-Received: by 2002:a17:907:e8d:b0:8af:5752:691f with SMTP id ho13-20020a1709070e8d00b008af5752691fmr42132557ejc.76.1678719789481;
-        Mon, 13 Mar 2023 08:03:09 -0700 (PDT)
-X-Google-Smtp-Source: AK7set9DZQ94D+TsWkTFR06KObrdN3jzxn91sJ+YsKqm39NbPokTmU4hc+TAPRkNZv5Irs3O4mIJsg==
-X-Received: by 2002:a17:907:e8d:b0:8af:5752:691f with SMTP id ho13-20020a1709070e8d00b008af5752691fmr42132536ejc.76.1678719789224;
-        Mon, 13 Mar 2023 08:03:09 -0700 (PDT)
-Received: from [10.40.98.142] ([78.108.130.194])
-        by smtp.gmail.com with ESMTPSA id b21-20020a17090630d500b008cafeec917dsm3524898ejb.101.2023.03.13.08.03.08
+        d=1e100.net; s=20210112; t=1678721275;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=5MlqLtviOtYp6HxaLoBe4+wSDth/BbTrrWvwIZUKlwg=;
+        b=kQnE6m+S1r5/bQcchVPL6Wli6Q/es8GujCOV3bgt6W1Xr/xU1zkHUOTNfjGo8W2HIP
+         +V9Ub88Utz+C7c2MlRLwluRDChHga3NcWYyMh+Gq56jzL/XA1OSg6T+6Dxw25YVnUyHt
+         hAyl/N48dfhUIwWNzo0SNq04vGQ0TxY4vxkN18Sgl3BdkxC0sa0YLgkggikg5pdQ3W5t
+         n7IhXM+gD6P39f+G4E38zQtPdL3IEQekayRiarBh7mVHb9LdaevZrwBs2LxVd0xjcxpR
+         SlDoK19VjHTHcDvuGlgfgLOuwfqPhTDmA+1r2PqE4dabhlv+EzhZDGeV/tocyYDXtxKy
+         XMEw==
+X-Gm-Message-State: AO0yUKXngkjRm0XR+zDfe982J15D0qZDTdyGfpfOL2ec8ppRH5vxDslj
+	Cckk3+WJMW/+CfDg2UC+2UY=
+X-Google-Smtp-Source: AK7set9jSPgWPA4c0CSnP9h04Z4BjORE+KGXik6RLZzLIdxKfYDEybMVgA05SmzFddLLAPLg5G6mvA==
+X-Received: by 2002:a05:600c:c10:b0:3eb:248f:a13e with SMTP id fm16-20020a05600c0c1000b003eb248fa13emr11542947wmb.22.1678721275178;
+        Mon, 13 Mar 2023 08:27:55 -0700 (PDT)
+Received: from localhost ([2001:b07:5d37:537d:5e25:9ef5:7977:d60c])
+        by smtp.gmail.com with ESMTPSA id f26-20020a7bc8da000000b003e2096da239sm92233wml.7.2023.03.13.08.27.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Mar 2023 08:03:08 -0700 (PDT)
-Message-ID: <3a91a794-b56e-eb21-58da-5abc8edbbc37@redhat.com>
-Date: Mon, 13 Mar 2023 16:03:08 +0100
+        Mon, 13 Mar 2023 08:27:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v3 3/8] x86/include/asm/msr-index.h: Add IFS Array test
- bits
-To: Jithu Joseph <jithu.joseph@intel.com>, markgross@kernel.org
-Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
- dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
- gregkh@linuxfoundation.org, rostedt@goodmis.org, ashok.raj@intel.com,
- tony.luck@intel.com, linux-kernel@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
- ravi.v.shankar@intel.com, thiago.macieira@intel.com,
- athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
-References: <20230214234426.344960-1-jithu.joseph@intel.com>
- <20230301015942.462799-1-jithu.joseph@intel.com>
- <20230301015942.462799-4-jithu.joseph@intel.com>
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <20230301015942.462799-4-jithu.joseph@intel.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Mon, 13 Mar 2023 16:27:53 +0100
+Message-Id: <CR5D0YM6E93X.S0PN49LMWT0U@vincent-arch>
+Cc: <christophe.leroy@csgroup.eu>, <song@kernel.org>
+Subject: Re: [PATCH] stress-module: stress finit_module() and
+ delete_module()
+From: "Vincenzo Palazzo" <vincenzopalazzodev@gmail.com>
+To: "Luis Chamberlain" <mcgrof@kernel.org>, <colin.i.king@gmail.com>,
+ <patches@lists.linux.dev>, <linux-modules@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <pmladek@suse.com>, <david@redhat.com>,
+ <petr.pavlu@suse.com>, <prarit@redhat.com>
+X-Mailer: aerc 0.14.0
+References: <20230313103439.1235909-1-mcgrof@kernel.org>
+In-Reply-To: <20230313103439.1235909-1-mcgrof@kernel.org>
 
-Hi,
+Just some comments on the code that feel a little bit odd to me,=20
+while I was reading the code.
 
-On 3/1/23 02:59, Jithu Joseph wrote:
-> Define MSR bitfields for enumerating support for Array BIST test.
-> 
-> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
-> Reviewed-by: Tony Luck <tony.luck@intel.com>
-> ---
->  arch/x86/include/asm/msr-index.h | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
-> index d3fe82c5d6b6..ad8997773ad3 100644
-> --- a/arch/x86/include/asm/msr-index.h
-> +++ b/arch/x86/include/asm/msr-index.h
-> @@ -197,6 +197,8 @@
->  
->  /* Abbreviated from Intel SDM name IA32_INTEGRITY_CAPABILITIES */
->  #define MSR_INTEGRITY_CAPS			0x000002d9
-> +#define MSR_INTEGRITY_CAPS_ARRAY_BIST_BIT      2
-> +#define MSR_INTEGRITY_CAPS_ARRAY_BIST          BIT(MSR_INTEGRITY_CAPS_ARRAY_BIST_BIT)
->  #define MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT	4
->  #define MSR_INTEGRITY_CAPS_PERIODIC_BIST	BIT(MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT)
->  
+> +#if defined(HAVE_LINUX_MODULE_H)
+> +#include <linux/module.h>
+> +#else
+> +UNEXPECTED
+> +#endif
+> +
+> +#if defined(HAVE_LIBGEN_H)
+> +#include <libgen.h>
+> +#endif
+> +
+> +#ifndef MODULE_INIT_IGNORE_MODVERSIONS
+> +# define MODULE_INIT_IGNORE_MODVERSIONS 1
+> +#endif
+> +
+> +#ifndef MODULE_INIT_IGNORE_VERMAGIC
+> +# define MODULE_INIT_IGNORE_VERMAGIC 2
+> +#endif
+looks like that the #define has an exstra space and this differ from the ot=
+hers=20
+.[c,h] files?
 
+=E2=9E=9C  stress-ng git:(master) =E2=9C=97 git grep "#define" | wc -l
+2830
+=E2=9E=9C  stress-ng git:(master) =E2=9C=97 git grep "# define" | wc -l
+1
 
-Thanks, patch looks good to me:
+Cheers!
 
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-
-Regards,
-
-Hans
-
+Vincent.
