@@ -1,132 +1,74 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30762565
-	for <patches@lists.linux.dev>; Tue, 14 Mar 2023 07:26:02 +0000 (UTC)
-Received: by mail-pj1-f53.google.com with SMTP id y2so14494010pjg.3
-        for <patches@lists.linux.dev>; Tue, 14 Mar 2023 00:26:02 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061E52565;
+	Tue, 14 Mar 2023 08:07:01 +0000 (UTC)
+Received: by mail-lj1-f177.google.com with SMTP id h3so15076358lja.12;
+        Tue, 14 Mar 2023 01:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678778762;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=P4btLFxdwo7HqZYxM4e3XDdeo+DTrgbyuCAt7JOXufA=;
-        b=lczv1+oCjA44tNBOXDuZb6ygf8VSugMU6SI4f3m4RkNiRBcKFtF/kAxXclBRAPKP8B
-         M/0j99Xagn3nWRglvofL8CNl2IX2uyNzs3OsDdxT8GkAT/ILtxTcLB+Vjamhuf0yc58z
-         hpd1OAyI2vqMtBI+oVFj2hKq7nkNYFHdmVEnU79S0Gjcorj7a6d34QqlN5bis3OyKhmk
-         kp3XzQXtVR9Ddc6fqEhJjD6nRuiePRIsAX5U8mnaXz/nnpq0CGR/c9RZvb1Ik5DfOOA0
-         S2TV3diroWan8IfHdVDY6rRKIpMvad79Rdt8/Icjq6QYxvmGhsfAtQiXQ3RHVi51gz9D
-         dF+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678778762;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1678781220;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=P4btLFxdwo7HqZYxM4e3XDdeo+DTrgbyuCAt7JOXufA=;
-        b=WNsx7GJtWApCpCkNgnj5Fjm9j4Ta9NmGWR8MttlFFYD9kgd1ATtk37IyxW1hQQtvWt
-         J1ChWjcxm42SexHUepVyVrGWadavJIsbVp0aWI9BcQxRTGxPJ8GQxx5+q+HSgyR5aU/N
-         PGR9FZfTB3pC8o5RbgNZdnIabexh5Lj4RpnXApeT6Iy0g1MPc+BK6UlT0K96icEdppqz
-         P78YUpJwZleTUEZhTj4iEY4DdtiW/y09s0EVquJG52pscsweuOYsnzSZ0K+HN8WrIkGH
-         cMy7Yr26k/QLas/fi1FutIx4/Y1n2N1Et8Gm2ymVuNELnE1n8BAtUDPMhCRd0GGQ2Rkl
-         o+rw==
-X-Gm-Message-State: AO0yUKWi0MDlzwJbK92+DG+OaWQlkoDdDqSfdRblJNytZ8bO8Gjm2gZ6
-	nRPY2zy9LRXZ3kyzxmVrrLU=
-X-Google-Smtp-Source: AK7set/kZq/B2QShY0y1HE88ddus1pElLywW15Ta+0oYzLvi6YuddzUADJuwEfCk9yGr65u+O8CuGQ==
-X-Received: by 2002:a05:6a21:6da6:b0:cb:e8c6:26a0 with SMTP id wl38-20020a056a216da600b000cbe8c626a0mr49148859pzb.11.1678778762183;
-        Tue, 14 Mar 2023 00:26:02 -0700 (PDT)
-Received: from localhost ([2400:8902::f03c:93ff:fe27:642a])
-        by smtp.gmail.com with ESMTPSA id l190-20020a6388c7000000b00502ea97cbc0sm888625pgd.40.2023.03.14.00.25.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 00:26:01 -0700 (PDT)
-Date: Tue, 14 Mar 2023 07:25:54 +0000
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
-	rcu@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	netdev@vger.kernel.org, linux-doc@vger.kernel.org
-Subject: Re: [PATCH 3/7] mm, page_flags: remove PG_slob_free
-Message-ID: <ZBAhgpY1KSE3FwAv@localhost>
-References: <20230310103210.22372-1-vbabka@suse.cz>
- <20230310103210.22372-4-vbabka@suse.cz>
+        bh=iwDokkDCp3gvd4WNjn3p9IwIzF1O1UFas2ZgKmXkVJI=;
+        b=BnpTt+CwtlFY0mm8gOhspRyImXLr2eyZ/8mVMFuQBCPLXA7cgKRp5FDKgWxU2om0Cn
+         DaVCITLeQBWUgPNQLBOyXgmsXeXm3RuzC22bj+DeBxUw0kqNJKaa18QbhPaTSXPMFRzF
+         4m9N3/ffmAPfMfcXLqwetrZWe3qW80RyPPp3dh3N/AjblVvsR66tle0XyX6BvPJqs9W0
+         muyM5KEcEezxwN45H3z43xdKGb3gK06bkCnoS9Tawhi3hGBdNO1i6kqC3hfufzQsToEY
+         fNFjW6asyErZQdSYv0FOLw9CKDYlOk/2lCD9iS77cHUm0AMfOOGtKU4WKdFuvyxomDVE
+         Oq2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678781220;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iwDokkDCp3gvd4WNjn3p9IwIzF1O1UFas2ZgKmXkVJI=;
+        b=MqzECkzu7aBDa5/LLDcEJDEtG4O6WeGMndu3jLmxcOjNhpEhQN1KxOo9l6ZoNqFI9D
+         JJsBSwAxPTlX6UP2fcepn8TQrwS2PxsMQrjbQYUSAFVr5/e4Zy64yUw033m7iLF6vcSJ
+         Fq7DoBSt9Bkc99gOx5PMieTS5aktJr+5z4Qqw8KrDp3g1l90rmdYu80ShBy9VAGXoNSv
+         kIm60whCKCioi6h9UJ05/yNcHZbOcGOL8J9Jw5X4OXITca7sxbtU6XILW3jPeW7wHTOx
+         ZyQVGRDorGeBte8MPkJvNuIsUUVxSnJyVnsZle1n4P7GS4/N8H5QUCv83gU4zWH+31hc
+         cOaA==
+X-Gm-Message-State: AO0yUKWbUOxj1ujIyLVn1qnnDXA3rEL21yPWEOzEpN63TIs255TwhY96
+	GT4nrDftGGww/M/bgwjIeiJrE97WT6mEtDVas/0=
+X-Google-Smtp-Source: AK7set8ikbfZwHpd0zd3uhb8WhF1wXT9RDCk4Kevrrp3L4QFWYrViPVbZZ4pvMSKv6L1Ml/llbqKy/R0trZedVRhsW8=
+X-Received: by 2002:a2e:7011:0:b0:295:ba28:a43 with SMTP id
+ l17-20020a2e7011000000b00295ba280a43mr5249701ljc.4.1678781219868; Tue, 14 Mar
+ 2023 01:06:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230310103210.22372-4-vbabka@suse.cz>
+References: <20230308131934.380395-1-gregkh@linuxfoundation.org>
+ <660ef0b7-fb09-5a72-57b1-3b57ddee924e@gmail.com> <ZAxZCJn7AN/yWSRh@equinox> <ZAxx1kYjVKFRE3kz@kroah.com>
+In-Reply-To: <ZAxx1kYjVKFRE3kz@kroah.com>
+From: Richard Weinberger <richard.weinberger@gmail.com>
+Date: Tue, 14 Mar 2023 09:06:46 +0100
+Message-ID: <CAFLxGvwKaXviF=5OTtm+pPHwdtXTX6A2e_aRTUraOsxKOL3-4A@mail.gmail.com>
+Subject: Re: [PATCH] staging: r8188eu: delete driver
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Phillip Potter <phil@philpotter.co.uk>, linux-staging@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Hans de Goede <hdegoede@redhat.com>, Martin Kaiser <martin@kaiser.cx>, 
+	Larry Finger <Larry.Finger@lwfinger.net>, linux-wireless@vger.kernel.org, 
+	Jes.Sorensen@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 10, 2023 at 11:32:05AM +0100, Vlastimil Babka wrote:
-> With SLOB removed we no longer need the PG_slob_free alias for
-> PG_private. Also update tools/mm/page-types.
-> 
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> ---
->  include/linux/page-flags.h | 4 ----
->  tools/mm/page-types.c      | 6 +-----
->  2 files changed, 1 insertion(+), 9 deletions(-)
-> 
-> diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
-> index a7e3a3405520..2bdc41cb0594 100644
-> --- a/include/linux/page-flags.h
-> +++ b/include/linux/page-flags.h
-> @@ -174,9 +174,6 @@ enum pageflags {
->  	/* Remapped by swiotlb-xen. */
->  	PG_xen_remapped = PG_owner_priv_1,
->  
-> -	/* SLOB */
-> -	PG_slob_free = PG_private,
-> -
->  #ifdef CONFIG_MEMORY_FAILURE
->  	/*
->  	 * Compound pages. Stored in first tail page's flags.
-> @@ -483,7 +480,6 @@ PAGEFLAG(Active, active, PF_HEAD) __CLEARPAGEFLAG(Active, active, PF_HEAD)
->  PAGEFLAG(Workingset, workingset, PF_HEAD)
->  	TESTCLEARFLAG(Workingset, workingset, PF_HEAD)
->  __PAGEFLAG(Slab, slab, PF_NO_TAIL)
-> -__PAGEFLAG(SlobFree, slob_free, PF_NO_TAIL)
->  PAGEFLAG(Checked, checked, PF_NO_COMPOUND)	   /* Used by some filesystems */
->  
->  /* Xen */
-> diff --git a/tools/mm/page-types.c b/tools/mm/page-types.c
-> index 381dcc00cb62..8d5595b6c59f 100644
-> --- a/tools/mm/page-types.c
-> +++ b/tools/mm/page-types.c
-> @@ -85,7 +85,6 @@
->   */
->  #define KPF_ANON_EXCLUSIVE	47
->  #define KPF_READAHEAD		48
-> -#define KPF_SLOB_FREE		49
->  #define KPF_SLUB_FROZEN		50
->  #define KPF_SLUB_DEBUG		51
->  #define KPF_FILE		61
-> @@ -141,7 +140,6 @@ static const char * const page_flag_names[] = {
->  
->  	[KPF_ANON_EXCLUSIVE]	= "d:anon_exclusive",
->  	[KPF_READAHEAD]		= "I:readahead",
-> -	[KPF_SLOB_FREE]		= "P:slob_free",
->  	[KPF_SLUB_FROZEN]	= "A:slub_frozen",
->  	[KPF_SLUB_DEBUG]	= "E:slub_debug",
->  
-> @@ -478,10 +476,8 @@ static uint64_t expand_overloaded_flags(uint64_t flags, uint64_t pme)
->  	if ((flags & BIT(ANON)) && (flags & BIT(MAPPEDTODISK)))
->  		flags ^= BIT(MAPPEDTODISK) | BIT(ANON_EXCLUSIVE);
->  
-> -	/* SLOB/SLUB overload several page flags */
-> +	/* SLUB overloads several page flags */
->  	if (flags & BIT(SLAB)) {
-> -		if (flags & BIT(PRIVATE))
-> -			flags ^= BIT(PRIVATE) | BIT(SLOB_FREE);
->  		if (flags & BIT(ACTIVE))
->  			flags ^= BIT(ACTIVE) | BIT(SLUB_FROZEN);
->  		if (flags & BIT(ERROR))
-> -- 
-> 2.39.2
+On Sat, Mar 11, 2023 at 1:25=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+> > > > Also the rtl8xxxu driver supports way more devices, and is a fracti=
+on of
+> > > > the overall size, making this a much better overall solution.
+> > > >
+> > > > Thanks to the r8188eu developers and maintainers and reviewers over=
+ the
+> > > > years, your work allowed Linux users to use their hardware before t=
+he
+> > > > real driver was implemented properly.
 
-Acked-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Both r8188eu and rtl8188eu had support for access point mode but
+rtl8xxxu has none AFAICT.
+Is there something in the pipes to have AP mode supported?
