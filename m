@@ -1,103 +1,159 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EC98F69;
-	Tue, 14 Mar 2023 15:38:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D9BDC433D2;
-	Tue, 14 Mar 2023 15:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC453C30;
+	Tue, 14 Mar 2023 17:08:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88004C433D2;
+	Tue, 14 Mar 2023 17:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678808302;
-	bh=DLDxlhOLPnktraFE2/3JBXLe7fPvmLFetbLKdPk5yhE=;
-	h=From:Date:Subject:To:Cc:From;
-	b=VUmWcjQSkfaeLGd3H1VApOX/EjhlCYgjLY9cL3zf5/JdQYF6Wig7gcUAAaoZjqojZ
-	 cl2VWyWdk9SwdXaBarb6c1BhpfKHMBsjWT/IEUQNl+7bcXleFYeDhxIFOGem60newc
-	 7SHUya1Tu215vyBzQf6FNGT9hxq84PgO9IskiyZIhWRGcaLiMrQtqUXUZrGzoMmGZb
-	 MSPbblxu7s96n7kO0duZdubwSZgDwZl3RsaKdDD/wwWsIw1KSM6htD9NDcaBXzn4DF
-	 ZszZmBHzoTmkfbICCjc5FQ01+U4uGbQ6boEWMHhHhcAbeuP7ki9ck0YZE4GNe+EDSG
-	 iqvYTeTInJy4A==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 14 Mar 2023 08:38:08 -0700
-Subject: [PATCH] drm/vmwgfx: Fix uninitialized use of dst_pitch in
- vmw_stdu_bo_cpu_commit()
+	s=k20201202; t=1678813694;
+	bh=ucM21cLRUuIM1P+fjJ7tyXVrvw8aDslNNA8co2hjLB0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=CQwA8hQi6papIwLzlFCwnT8ZgfxGYB2LsuTVCVtFvYeeMxK4u4qRxhb/NYejRj78g
+	 N+xHIw0JZfELVtT+p65MmB7c5tmgUhvmAEVq2ZRlzn8d2Ep76OavoWeOf10Monumx9
+	 KVSgQrxRkAPML1uZicpPU0RrnQjrGmVV4zE475+3hq3kpTScUqY2iviptRobfIg0f9
+	 wjdPGTCMNO5WeKwjE0rfZn2lFuAE6XDbzul3kV1qwjmAfrj0rvnlPO9IhRDalJzLso
+	 6MIzkKrpqlQdEkUuOJcyKSyHwsyzTjQNye0xdVmUGQTdDWD2O4rlsxv/CuP3eUnByC
+	 IdykfYulsxTgA==
+Date: Tue, 14 Mar 2023 17:08:09 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+	conor.dooley@microchip.com, ndesaulniers@google.com,
+	trix@redhat.com, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH] riscv: Handle zicsr/zifencei issues between clang and
+ binutils
+Message-ID: <75037eb4-7be4-4182-a377-18343491c7da@spud>
+References: <20230313-riscv-zicsr-zifencei-fiasco-v1-1-dd1b7840a551@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230314-vmware-wuninitialized-v1-1-1bb4b0989758@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAN+UEGQC/x2NQQqDQAwAvyI5N6CrXUq/UnrIaqyBmpbEalH8e
- 9ceh2GYDZxN2OFabGA8i8tLM1SnAtqB9MEoXWYIZajLumpwHhcyxuWjojIJPWXlDsMlxtinM8W
- QILeJnDEZaTsc9Ug+sR3ibdzL9z+83ff9B6yIDneAAAAA
-To: zackr@vmware.com
-Cc: linux-graphics-maintainer@vmware.com, ndesaulniers@google.com, 
- trix@redhat.com, krastevm@vmware.com, mombasawalam@vmware.com, 
- tzimmermann@suse.de, dri-devel@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2281; i=nathan@kernel.org;
- h=from:subject:message-id; bh=DLDxlhOLPnktraFE2/3JBXLe7fPvmLFetbLKdPk5yhE=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCkCU94aRb7dWmlQWy319OrGLGHeHW1r7yj+ez/9N2dUQ
- du5Os6qjlIWBjEOBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjARJWuG/+mT/jLIH9lZ8nVt
- cPCFkoOnCzfbpWwPf85lIDt929ef3zgZGeZnXdRUWT9n44H6PMP52uYh69b5l3Gy8H+W0LDr/PX
- TiR8A
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="1CEuDSeV8bwTFyS+"
+Content-Disposition: inline
+In-Reply-To: <20230313-riscv-zicsr-zifencei-fiasco-v1-1-dd1b7840a551@kernel.org>
 
-Clang warns (or errors with CONFIG_WERROR):
 
-  drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c:509:29: error: variable 'dst_pitch' is uninitialized when used here [-Werror,-Wuninitialized]
-          src_offset = ddirty->top * dst_pitch + ddirty->left * stdu->cpp;
-                                     ^~~~~~~~~
-  drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c:492:26: note: initialize the variable 'dst_pitch' to silence this warning
-          s32 src_pitch, dst_pitch;
-                                  ^
-                                   = 0
-  1 error generated.
+--1CEuDSeV8bwTFyS+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The assignments were switched around in such a way that dst_pitch was
-used before it was assigned. Swap the pitch assignments to fix the issue
-and make it clear which section they are used in.
+Hey Nathan,
 
-Fixes: 39985eea5a6d ("drm/vmwgfx: Abstract placement selection")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1811
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-I am not sure if this is the right fix, as it was not entirely clear to
-me that src_pitch and dst_pitch were being used in the right assignments
-but this is the obvious fix otherwise. Consider this a bug report if
-not :)
----
- drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+On Mon, Mar 13, 2023 at 04:00:23PM -0700, Nathan Chancellor wrote:
+> There are two related issues that appear in certain combinations with
+> clang and GNU binutils.
+>=20
+> The first occurs when a version of clang that supports zicsr or zifencei
+> via '-march=3D' [1] (i.e, >=3D 17.x) is used in combination with a version
+> of GNU binutils that do not recognize zicsr and zifencei in the
+> '-march=3D' value (i.e., < 2.36):
+>=20
+>   riscv64-linux-gnu-ld: -march=3Drv64i2p0_m2p0_a2p0_c2p0_zicsr2p0_zifence=
+i2p0: Invalid or unknown z ISA extension: 'zifencei'
+>   riscv64-linux-gnu-ld: failed to merge target specific data of file fs/e=
+fivarfs/file.o
+>   riscv64-linux-gnu-ld: -march=3Drv64i2p0_m2p0_a2p0_c2p0_zicsr2p0_zifence=
+i2p0: Invalid or unknown z ISA extension: 'zifencei'
+>   riscv64-linux-gnu-ld: failed to merge target specific data of file fs/e=
+fivarfs/super.o
+>=20
+> The second occurs when a version of clang that does not support zicsr or
+> zifencei via '-march=3D' (i.e., <=3D 16.x) is used in combination with a
+> version of GNU as that defaults to a newer ISA base spec, which requires
+> specifying zicsr and zifencei in the '-march=3D' value explicitly (i.e, >=
+=3D
+> 2.38):
+>=20
+>   ../arch/riscv/kernel/kexec_relocate.S: Assembler messages:
+>   ../arch/riscv/kernel/kexec_relocate.S:147: Error: unrecognized opcode `=
+fence.i', extension `zifencei' required
+>   clang-12: error: assembler command failed with exit code 1 (use -v to s=
+ee invocation)
+>=20
+> This is the same issue addressed by commit 6df2a016c0c8 ("riscv: fix
+> build with binutils 2.38") (see [2] for additional information) but
+> older versions of clang miss out on it because the cc-option check
+> fails:
+>=20
+>   clang-12: error: invalid arch name 'rv64imac_zicsr_zifencei', unsupport=
+ed standard user-level extension 'zicsr'
+>   clang-12: error: invalid arch name 'rv64imac_zicsr_zifencei', unsupport=
+ed standard user-level extension 'zicsr'
+>=20
+> To resolve the first issue, only attempt to add zicsr and zifencei to
+> the march string when using the GNU assembler 2.38 or newer, which is
+> when the default ISA spec was updated, requiring these extensions to be
+> specified explicitly. LLVM implements an older version of the base
+> specification for all currently released versions, so these instructions
+> are available as part of the 'i' extension. If LLVM's implementation is
+> updated in the future, a CONFIG_AS_IS_LLVM condition can be added to
+> CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI.
+>=20
+> To resolve the second issue, use version 2.2 of the base ISA spec when
+> using an older version of clang that does not support zicsr or zifencei
+> via '-march=3D', as that is the spec version most compatible with the one
+> clang/LLVM implements and avoids the need to specify zicsr and zifencei
+> explicitly due to still being a part of 'i'.
+>=20
+> [1]: https://github.com/llvm/llvm-project/commit/22e199e6afb1263c943c0c0d=
+4498694e15bf8a16
+> [2]: https://lore.kernel.org/ZAxT7T9Xy1Fo3d5W@aurel32.net/
+>=20
+> Cc: stable@vger.kernel.org
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1808
+> Co-developed-by: Conor Dooley <conor.dooley@microchip.com>
+> Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c b/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
-index d79a6eccfaa4..030e977c68e2 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
-@@ -504,11 +504,11 @@ static void vmw_stdu_bo_cpu_commit(struct vmw_kms_dirty *dirty)
- 		return;
- 
- 	/* Assume we are blitting from Guest (bo) to Host (display_srf) */
--	src_pitch = stdu->display_srf->metadata.base_size.width * stdu->cpp;
-+	dst_pitch = ddirty->pitch;
- 	src_bo = &stdu->display_srf->res.guest_memory_bo->tbo;
- 	src_offset = ddirty->top * dst_pitch + ddirty->left * stdu->cpp;
- 
--	dst_pitch = ddirty->pitch;
-+	src_pitch = stdu->display_srf->metadata.base_size.width * stdu->cpp;
- 	dst_bo = &ddirty->buf->tbo;
- 	dst_offset = ddirty->fb_top * src_pitch + ddirty->fb_left * stdu->cpp;
- 
+TBH, barely identifiable as having much to do with my V1 anymore, so
+could easily have dropped those.
+Either way, thanks for sorting this out while I've been sick :)
 
----
-base-commit: c87e859cdeb5d106cb861326e3135c606d61f88d
-change-id: 20230314-vmware-wuninitialized-28666fb5a62b
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> This is essentially a v3 of Conor's v1 and v2 but since I am sending the
+> patch after finding a separate but related issue, I left it at v1:
+>=20
+> - v1: https://lore.kernel.org/20230223220546.52879-1-conor@kernel.org/
+> - v2: https://lore.kernel.org/20230308220842.1231003-1-conor@kernel.org/
+>=20
+> I have built allmodconfig with the following toolchain combinations to
+> confirm this problem is resolved:
+>=20
+> - clang 12/17 + GNU as and ld 2.35/2.39
+> - clang 12/17 with the integrated assembler + GNU ld 2.35/2.39
+> - clang 12/17 with the integrated assembler + ld.lld
+>=20
+> There are a couple of other incompatibilities between clang-17 and GNU
+> binutils that I had to patch to get allmodconfig to build successfully
+> but those are less likely to be hit in practice because the full LLVM
+> stack can be used with LLVM versions 13.x and newer.
 
+> I will follow up
+> with separate issues and patches.
+
+Cool, I'll "look forward" to those...
+
+Thanks,
+Conor.
+
+--1CEuDSeV8bwTFyS+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZBCp+AAKCRB4tDGHoIJi
+0roxAQCXsosSBtzf9Ovi8xT5U07z0OBYx29ltaw6MCTxk1St1AD/R4eRfRoNh6BC
+vrfhzHF5bwseLnWtO2Yc8FoBMRGegQc=
+=UId/
+-----END PGP SIGNATURE-----
+
+--1CEuDSeV8bwTFyS+--
