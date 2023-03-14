@@ -1,84 +1,103 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A4228EF
-	for <patches@lists.linux.dev>; Tue, 14 Mar 2023 09:34:10 +0000 (UTC)
-Received: by mail-pj1-f47.google.com with SMTP id gp15-20020a17090adf0f00b0023d1bbd9f9eso4302419pjb.0
-        for <patches@lists.linux.dev>; Tue, 14 Mar 2023 02:34:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678786450;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ysZcgPIZpy+HhVhzVSSUWzsAzGKPFN8FhmKQ7lvViXM=;
-        b=fBK7Q7ynMAXgbK2sdnxHmrLOizlbck5xtQ5OIR4fjkahD8USoUHUK45d9H92Cp1Ddk
-         zNR9LP+kUS/qLbV+9TgTcIW6Ohi1myNLcekkSVoYaGCsWlUC30z2wF6zvoQ4u6xBJk/u
-         sREzqnwt0ALn06h4jy3zdFtb1nHQzn7yumamBoM+fmiqt2IF1nj92uM+JjWBuVaYbS54
-         PkzMt0+4/ulBzkVSdMATyjrkVc+nrnyX5XPsRzv9oHOVMdRWLOJbH6LqfEjLh3xXYiaX
-         a3l7zQRXgh1Yegw2Z+RBXyWxblOGhbCfzqJyjCpY6VvFmV4/9p5MESY42xt6SzfIg2sO
-         M21w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678786450;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ysZcgPIZpy+HhVhzVSSUWzsAzGKPFN8FhmKQ7lvViXM=;
-        b=h9TKKopJAGTBWWqN9YNf8mL71rPENC9EwCB8qfIFC/MMdEeo4o0Rp5z/buyvcHo/dJ
-         c7nuvbes4ramEedkDCEmGpOlBD17uUxzECRsQP+pp88h+ImF+thzzmie5YpNlb4BY9F9
-         OhPwGhoS3VfCWX4NREt3uERu+QKeSJ8XCqvlLUN+ovqOhxJVCFhG+l8Dxww2tOlaTIKZ
-         MSKCMpKJ93isP7uB1P1y01la0y2VrtggbZvnGSifCBn4+PIbmUug6VMX1EW3hed2GpGt
-         JQwHZKoDD8IA4YlNhqNu8hJS/7sUjgHgiUBqajkZRnfZxON8ryb18kJAc8MbnZald/18
-         A4zg==
-X-Gm-Message-State: AO0yUKXNSJ1FDNzSkFl7kboL8beVqU5NGYUjcBDwI/Qe53AkfA7deXFX
-	meFdDWnh/O5K2l1f6iFOYwI=
-X-Google-Smtp-Source: AK7set+l1it0mNZFvuEDI3VT1K7wkdRl7g9zbpaOT2luN/TmcsFqz/Zv0OWl6OJWRd52+XBEAjiN+g==
-X-Received: by 2002:a05:6a20:748b:b0:bf:65dd:94fd with SMTP id p11-20020a056a20748b00b000bf65dd94fdmr35793146pzd.59.1678786450235;
-        Tue, 14 Mar 2023 02:34:10 -0700 (PDT)
-Received: from localhost ([2400:8902::f03c:93ff:fe27:642a])
-        by smtp.gmail.com with ESMTPSA id c4-20020aa781c4000000b006254377ce44sm1166268pfn.43.2023.03.14.02.34.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 02:34:09 -0700 (PDT)
-Date: Tue, 14 Mar 2023 09:34:03 +0000
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
-	rcu@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 6/7] mm/slob: remove slob.c
-Message-ID: <ZBA/iw9//3o62oRO@localhost>
-References: <20230310103210.22372-1-vbabka@suse.cz>
- <20230310103210.22372-7-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EC98F69;
+	Tue, 14 Mar 2023 15:38:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D9BDC433D2;
+	Tue, 14 Mar 2023 15:38:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1678808302;
+	bh=DLDxlhOLPnktraFE2/3JBXLe7fPvmLFetbLKdPk5yhE=;
+	h=From:Date:Subject:To:Cc:From;
+	b=VUmWcjQSkfaeLGd3H1VApOX/EjhlCYgjLY9cL3zf5/JdQYF6Wig7gcUAAaoZjqojZ
+	 cl2VWyWdk9SwdXaBarb6c1BhpfKHMBsjWT/IEUQNl+7bcXleFYeDhxIFOGem60newc
+	 7SHUya1Tu215vyBzQf6FNGT9hxq84PgO9IskiyZIhWRGcaLiMrQtqUXUZrGzoMmGZb
+	 MSPbblxu7s96n7kO0duZdubwSZgDwZl3RsaKdDD/wwWsIw1KSM6htD9NDcaBXzn4DF
+	 ZszZmBHzoTmkfbICCjc5FQ01+U4uGbQ6boEWMHhHhcAbeuP7ki9ck0YZE4GNe+EDSG
+	 iqvYTeTInJy4A==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 14 Mar 2023 08:38:08 -0700
+Subject: [PATCH] drm/vmwgfx: Fix uninitialized use of dst_pitch in
+ vmw_stdu_bo_cpu_commit()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230310103210.22372-7-vbabka@suse.cz>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230314-vmware-wuninitialized-v1-1-1bb4b0989758@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAN+UEGQC/x2NQQqDQAwAvyI5N6CrXUq/UnrIaqyBmpbEalH8e
+ 9ceh2GYDZxN2OFabGA8i8tLM1SnAtqB9MEoXWYIZajLumpwHhcyxuWjojIJPWXlDsMlxtinM8W
+ QILeJnDEZaTsc9Ug+sR3ibdzL9z+83ff9B6yIDneAAAAA
+To: zackr@vmware.com
+Cc: linux-graphics-maintainer@vmware.com, ndesaulniers@google.com, 
+ trix@redhat.com, krastevm@vmware.com, mombasawalam@vmware.com, 
+ tzimmermann@suse.de, dri-devel@lists.freedesktop.org, 
+ linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2281; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=DLDxlhOLPnktraFE2/3JBXLe7fPvmLFetbLKdPk5yhE=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCkCU94aRb7dWmlQWy319OrGLGHeHW1r7yj+ez/9N2dUQ
+ du5Os6qjlIWBjEOBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjARJWuG/+mT/jLIH9lZ8nVt
+ cPCFkoOnCzfbpWwPf85lIDt929ef3zgZGeZnXdRUWT9n44H6PMP52uYh69b5l3Gy8H+W0LDr/PX
+ TiR8A
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Fri, Mar 10, 2023 at 11:32:08AM +0100, Vlastimil Babka wrote:
-> Remove the SLOB implementation.
-> 
-> RIP SLOB allocator (2006 - 2023)
-> 
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Clang warns (or errors with CONFIG_WERROR):
 
-Goodbye to SLOB.
+  drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c:509:29: error: variable 'dst_pitch' is uninitialized when used here [-Werror,-Wuninitialized]
+          src_offset = ddirty->top * dst_pitch + ddirty->left * stdu->cpp;
+                                     ^~~~~~~~~
+  drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c:492:26: note: initialize the variable 'dst_pitch' to silence this warning
+          s32 src_pitch, dst_pitch;
+                                  ^
+                                   = 0
+  1 error generated.
 
-Acked-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+The assignments were switched around in such a way that dst_pitch was
+used before it was assigned. Swap the pitch assignments to fix the issue
+and make it clear which section they are used in.
 
-> ---
->  mm/slob.c | 757 ------------------------------------------------------
->  1 file changed, 757 deletions(-)
->  delete mode 100644 mm/slob.c
-> 
-> diff --git a/mm/slob.c b/mm/slob.c
-> deleted file mode 100644
-> index fe567fcfa3a3..000000000000
-> --- a/mm/slob.c
-> +++ /dev/null
+Fixes: 39985eea5a6d ("drm/vmwgfx: Abstract placement selection")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1811
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+I am not sure if this is the right fix, as it was not entirely clear to
+me that src_pitch and dst_pitch were being used in the right assignments
+but this is the obvious fix otherwise. Consider this a bug report if
+not :)
+---
+ drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c b/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
+index d79a6eccfaa4..030e977c68e2 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
+@@ -504,11 +504,11 @@ static void vmw_stdu_bo_cpu_commit(struct vmw_kms_dirty *dirty)
+ 		return;
+ 
+ 	/* Assume we are blitting from Guest (bo) to Host (display_srf) */
+-	src_pitch = stdu->display_srf->metadata.base_size.width * stdu->cpp;
++	dst_pitch = ddirty->pitch;
+ 	src_bo = &stdu->display_srf->res.guest_memory_bo->tbo;
+ 	src_offset = ddirty->top * dst_pitch + ddirty->left * stdu->cpp;
+ 
+-	dst_pitch = ddirty->pitch;
++	src_pitch = stdu->display_srf->metadata.base_size.width * stdu->cpp;
+ 	dst_bo = &ddirty->buf->tbo;
+ 	dst_offset = ddirty->fb_top * src_pitch + ddirty->fb_left * stdu->cpp;
+ 
+
+---
+base-commit: c87e859cdeb5d106cb861326e3135c606d61f88d
+change-id: 20230314-vmware-wuninitialized-28666fb5a62b
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
