@@ -1,43 +1,43 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58AB2565
-	for <patches@lists.linux.dev>; Tue, 14 Mar 2023 07:18:18 +0000 (UTC)
-Received: by mail-pj1-f50.google.com with SMTP id y2so14478627pjg.3
-        for <patches@lists.linux.dev>; Tue, 14 Mar 2023 00:18:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30762565
+	for <patches@lists.linux.dev>; Tue, 14 Mar 2023 07:26:02 +0000 (UTC)
+Received: by mail-pj1-f53.google.com with SMTP id y2so14494010pjg.3
+        for <patches@lists.linux.dev>; Tue, 14 Mar 2023 00:26:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678778298;
+        d=gmail.com; s=20210112; t=1678778762;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=c46t0neyKWHP+SDAFWH/g72V/Nn1AVWpZoacRj8VyLk=;
-        b=S9AG5DWg2XZsDj6Es8WNOGYTopXFo3VAhRsa+mVSSY7aikyWk81a2OqBGTAoyPFgyu
-         uVSkd8JwegJs5MqHNfKT/d8TdpPjlx6OQRMEIjo+QZlppEnGZRJDX91OuPtVkMVO99CF
-         yco0uZPL8mCTz9RAB5pnm/nIB5XrBaA3wo03zf5MOaSGbdpH5uYOOMjO3PjDvP/fmDl/
-         xMwBnJR9CuNXV5cjhCqwFicz866yGKILl3iLTL0g5K3QFtJK2DHZqnyz6TJve3ZnUq9g
-         TOUd/K54HU/ebv9PY82fNIom9wPQQn7eW9PTBohspDeTgn+yFJ3cyS9mC7O3rX4DGBpL
-         q4vQ==
+        bh=P4btLFxdwo7HqZYxM4e3XDdeo+DTrgbyuCAt7JOXufA=;
+        b=lczv1+oCjA44tNBOXDuZb6ygf8VSugMU6SI4f3m4RkNiRBcKFtF/kAxXclBRAPKP8B
+         M/0j99Xagn3nWRglvofL8CNl2IX2uyNzs3OsDdxT8GkAT/ILtxTcLB+Vjamhuf0yc58z
+         hpd1OAyI2vqMtBI+oVFj2hKq7nkNYFHdmVEnU79S0Gjcorj7a6d34QqlN5bis3OyKhmk
+         kp3XzQXtVR9Ddc6fqEhJjD6nRuiePRIsAX5U8mnaXz/nnpq0CGR/c9RZvb1Ik5DfOOA0
+         S2TV3diroWan8IfHdVDY6rRKIpMvad79Rdt8/Icjq6QYxvmGhsfAtQiXQ3RHVi51gz9D
+         dF+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678778298;
+        d=1e100.net; s=20210112; t=1678778762;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=c46t0neyKWHP+SDAFWH/g72V/Nn1AVWpZoacRj8VyLk=;
-        b=FyOPAXFwpROZsHDywe/iU4Zeo952B5pBrsl4bNsrvmMyMqm8UbR3y9ixuwudzRJvW+
-         7e6InXpHIIf5xvOuo2BFZrxG5FfiEFMRbNPVSJFBOpa8yd4MwkPn96SbQ+vXQhgJ2LdZ
-         6PRf4KPDAYWO41BKwlNzvZvzvUdzbsjeZoA44A5q15tf2HoyDW/ntM9wsA8MgDaYZIp3
-         ZA3m6S5Cg7v8cX9Ufwi7G5Q3liwwnWhWz4ruX7dGYwAOGfyc7bL7Dh89MomYkdxBNCEw
-         JXMWbLpTwqe7x3QUNwRalQvmwLtPeDK3XRpWTGjZbiLgB613cnnf3qHye8Cbcubi8Rsj
-         Sg6Q==
-X-Gm-Message-State: AO0yUKXulG6hxoI5iDhIY76ONFcN+YQqh2o+ywLA9TLFFtm+z3xo4oBr
-	XbW4jGEQZCdV+WZ5DB3QzkE=
-X-Google-Smtp-Source: AK7set/TwZv/+gdR3vizxWDK5px/eSNGwwzlyNPxX57Ktb8udmkDrlYHgYRuoNUS4MHfjXuXzOFuGQ==
-X-Received: by 2002:a05:6a20:a88f:b0:d4:abe8:697d with SMTP id ca15-20020a056a20a88f00b000d4abe8697dmr4420286pzb.30.1678778298179;
-        Tue, 14 Mar 2023 00:18:18 -0700 (PDT)
+        bh=P4btLFxdwo7HqZYxM4e3XDdeo+DTrgbyuCAt7JOXufA=;
+        b=WNsx7GJtWApCpCkNgnj5Fjm9j4Ta9NmGWR8MttlFFYD9kgd1ATtk37IyxW1hQQtvWt
+         J1ChWjcxm42SexHUepVyVrGWadavJIsbVp0aWI9BcQxRTGxPJ8GQxx5+q+HSgyR5aU/N
+         PGR9FZfTB3pC8o5RbgNZdnIabexh5Lj4RpnXApeT6Iy0g1MPc+BK6UlT0K96icEdppqz
+         P78YUpJwZleTUEZhTj4iEY4DdtiW/y09s0EVquJG52pscsweuOYsnzSZ0K+HN8WrIkGH
+         cMy7Yr26k/QLas/fi1FutIx4/Y1n2N1Et8Gm2ymVuNELnE1n8BAtUDPMhCRd0GGQ2Rkl
+         o+rw==
+X-Gm-Message-State: AO0yUKWi0MDlzwJbK92+DG+OaWQlkoDdDqSfdRblJNytZ8bO8Gjm2gZ6
+	nRPY2zy9LRXZ3kyzxmVrrLU=
+X-Google-Smtp-Source: AK7set/kZq/B2QShY0y1HE88ddus1pElLywW15Ta+0oYzLvi6YuddzUADJuwEfCk9yGr65u+O8CuGQ==
+X-Received: by 2002:a05:6a21:6da6:b0:cb:e8c6:26a0 with SMTP id wl38-20020a056a216da600b000cbe8c626a0mr49148859pzb.11.1678778762183;
+        Tue, 14 Mar 2023 00:26:02 -0700 (PDT)
 Received: from localhost ([2400:8902::f03c:93ff:fe27:642a])
-        by smtp.gmail.com with ESMTPSA id c12-20020aa781cc000000b005dc70330d9bsm875550pfn.26.2023.03.14.00.18.14
+        by smtp.gmail.com with ESMTPSA id l190-20020a6388c7000000b00502ea97cbc0sm888625pgd.40.2023.03.14.00.25.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 00:18:17 -0700 (PDT)
-Date: Tue, 14 Mar 2023 07:18:11 +0000
+        Tue, 14 Mar 2023 00:26:01 -0700 (PDT)
+Date: Tue, 14 Mar 2023 07:25:54 +0000
 From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 To: Vlastimil Babka <vbabka@suse.cz>
 Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
@@ -48,10 +48,10 @@ Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
 	rcu@vger.kernel.org, linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
 	netdev@vger.kernel.org, linux-doc@vger.kernel.org
-Subject: Re: [PATCH 1/7] mm/slob: remove CONFIG_SLOB
-Message-ID: <ZBAfsx30uLNj4TJB@localhost>
+Subject: Re: [PATCH 3/7] mm, page_flags: remove PG_slob_free
+Message-ID: <ZBAhgpY1KSE3FwAv@localhost>
 References: <20230310103210.22372-1-vbabka@suse.cz>
- <20230310103210.22372-2-vbabka@suse.cz>
+ <20230310103210.22372-4-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -60,97 +60,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230310103210.22372-2-vbabka@suse.cz>
+In-Reply-To: <20230310103210.22372-4-vbabka@suse.cz>
 
-On Fri, Mar 10, 2023 at 11:32:03AM +0100, Vlastimil Babka wrote:
-> Remove SLOB from Kconfig and Makefile. Everything under #ifdef
-> CONFIG_SLOB, and mm/slob.c is now dead code.
+On Fri, Mar 10, 2023 at 11:32:05AM +0100, Vlastimil Babka wrote:
+> With SLOB removed we no longer need the PG_slob_free alias for
+> PG_private. Also update tools/mm/page-types.
 > 
 > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 > ---
->  init/Kconfig               |  2 +-
->  kernel/configs/tiny.config |  1 -
->  mm/Kconfig                 | 22 ----------------------
->  mm/Makefile                |  1 -
->  4 files changed, 1 insertion(+), 25 deletions(-)
+>  include/linux/page-flags.h | 4 ----
+>  tools/mm/page-types.c      | 6 +-----
+>  2 files changed, 1 insertion(+), 9 deletions(-)
 > 
-> diff --git a/init/Kconfig b/init/Kconfig
-> index 1fb5f313d18f..72ac3f66bc27 100644
-> --- a/init/Kconfig
-> +++ b/init/Kconfig
-> @@ -973,7 +973,7 @@ config MEMCG
+> diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
+> index a7e3a3405520..2bdc41cb0594 100644
+> --- a/include/linux/page-flags.h
+> +++ b/include/linux/page-flags.h
+> @@ -174,9 +174,6 @@ enum pageflags {
+>  	/* Remapped by swiotlb-xen. */
+>  	PG_xen_remapped = PG_owner_priv_1,
 >  
->  config MEMCG_KMEM
->  	bool
-> -	depends on MEMCG && !SLOB
-> +	depends on MEMCG
->  	default y
+> -	/* SLOB */
+> -	PG_slob_free = PG_private,
+> -
+>  #ifdef CONFIG_MEMORY_FAILURE
+>  	/*
+>  	 * Compound pages. Stored in first tail page's flags.
+> @@ -483,7 +480,6 @@ PAGEFLAG(Active, active, PF_HEAD) __CLEARPAGEFLAG(Active, active, PF_HEAD)
+>  PAGEFLAG(Workingset, workingset, PF_HEAD)
+>  	TESTCLEARFLAG(Workingset, workingset, PF_HEAD)
+>  __PAGEFLAG(Slab, slab, PF_NO_TAIL)
+> -__PAGEFLAG(SlobFree, slob_free, PF_NO_TAIL)
+>  PAGEFLAG(Checked, checked, PF_NO_COMPOUND)	   /* Used by some filesystems */
 >  
->  config BLK_CGROUP
-> diff --git a/kernel/configs/tiny.config b/kernel/configs/tiny.config
-> index c2f9c912df1c..144b2bd86b14 100644
-> --- a/kernel/configs/tiny.config
-> +++ b/kernel/configs/tiny.config
-> @@ -7,6 +7,5 @@ CONFIG_KERNEL_XZ=y
->  # CONFIG_KERNEL_LZO is not set
->  # CONFIG_KERNEL_LZ4 is not set
->  # CONFIG_SLAB is not set
-> -# CONFIG_SLOB_DEPRECATED is not set
->  CONFIG_SLUB=y
->  CONFIG_SLUB_TINY=y
-> diff --git a/mm/Kconfig b/mm/Kconfig
-> index 4751031f3f05..669399ab693c 100644
-> --- a/mm/Kconfig
-> +++ b/mm/Kconfig
-> @@ -238,30 +238,8 @@ config SLUB
->  	   and has enhanced diagnostics. SLUB is the default choice for
->  	   a slab allocator.
+>  /* Xen */
+> diff --git a/tools/mm/page-types.c b/tools/mm/page-types.c
+> index 381dcc00cb62..8d5595b6c59f 100644
+> --- a/tools/mm/page-types.c
+> +++ b/tools/mm/page-types.c
+> @@ -85,7 +85,6 @@
+>   */
+>  #define KPF_ANON_EXCLUSIVE	47
+>  #define KPF_READAHEAD		48
+> -#define KPF_SLOB_FREE		49
+>  #define KPF_SLUB_FROZEN		50
+>  #define KPF_SLUB_DEBUG		51
+>  #define KPF_FILE		61
+> @@ -141,7 +140,6 @@ static const char * const page_flag_names[] = {
 >  
-> -config SLOB_DEPRECATED
-> -	depends on EXPERT
-> -	bool "SLOB (Simple Allocator - DEPRECATED)"
-> -	depends on !PREEMPT_RT
-> -	help
-> -	   Deprecated and scheduled for removal in a few cycles. SLUB
-> -	   recommended as replacement. CONFIG_SLUB_TINY can be considered
-> -	   on systems with 16MB or less RAM.
-> -
-> -	   If you need SLOB to stay, please contact linux-mm@kvack.org and
-> -	   people listed in the SLAB ALLOCATOR section of MAINTAINERS file,
-> -	   with your use case.
-> -
-> -	   SLOB replaces the stock allocator with a drastically simpler
-> -	   allocator. SLOB is generally more space efficient but
-> -	   does not perform as well on large systems.
-> -
->  endchoice
+>  	[KPF_ANON_EXCLUSIVE]	= "d:anon_exclusive",
+>  	[KPF_READAHEAD]		= "I:readahead",
+> -	[KPF_SLOB_FREE]		= "P:slob_free",
+>  	[KPF_SLUB_FROZEN]	= "A:slub_frozen",
+>  	[KPF_SLUB_DEBUG]	= "E:slub_debug",
 >  
-> -config SLOB
-> -	bool
-> -	default y
-> -	depends on SLOB_DEPRECATED
-> -
->  config SLUB_TINY
->  	bool "Configure SLUB for minimal memory footprint"
->  	depends on SLUB && EXPERT
-> diff --git a/mm/Makefile b/mm/Makefile
-> index 8e105e5b3e29..2d9c1e7f6085 100644
-> --- a/mm/Makefile
-> +++ b/mm/Makefile
-> @@ -81,7 +81,6 @@ obj-$(CONFIG_HUGETLB_PAGE_OPTIMIZE_VMEMMAP)	+= hugetlb_vmemmap.o
->  obj-$(CONFIG_NUMA) 	+= mempolicy.o
->  obj-$(CONFIG_SPARSEMEM)	+= sparse.o
->  obj-$(CONFIG_SPARSEMEM_VMEMMAP) += sparse-vmemmap.o
-> -obj-$(CONFIG_SLOB) += slob.o
->  obj-$(CONFIG_MMU_NOTIFIER) += mmu_notifier.o
->  obj-$(CONFIG_KSM) += ksm.o
->  obj-$(CONFIG_PAGE_POISONING) += page_poison.o
-
-With what Mike pointed:
-(removing 'mm/Makefile:KCOV_INSTRUMENT_slob.o := n')
-
-Acked-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-
+> @@ -478,10 +476,8 @@ static uint64_t expand_overloaded_flags(uint64_t flags, uint64_t pme)
+>  	if ((flags & BIT(ANON)) && (flags & BIT(MAPPEDTODISK)))
+>  		flags ^= BIT(MAPPEDTODISK) | BIT(ANON_EXCLUSIVE);
+>  
+> -	/* SLOB/SLUB overload several page flags */
+> +	/* SLUB overloads several page flags */
+>  	if (flags & BIT(SLAB)) {
+> -		if (flags & BIT(PRIVATE))
+> -			flags ^= BIT(PRIVATE) | BIT(SLOB_FREE);
+>  		if (flags & BIT(ACTIVE))
+>  			flags ^= BIT(ACTIVE) | BIT(SLUB_FROZEN);
+>  		if (flags & BIT(ERROR))
 > -- 
 > 2.39.2
-> 
+
+Acked-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
