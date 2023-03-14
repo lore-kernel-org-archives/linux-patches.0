@@ -1,221 +1,225 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from crocodile.elm.relay.mailchannels.net (crocodile.elm.relay.mailchannels.net [23.83.212.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A201FA8
-	for <patches@lists.linux.dev>; Tue, 14 Mar 2023 04:28:37 +0000 (UTC)
-Received: by mail-qv1-f47.google.com with SMTP id nf5so9614414qvb.5
-        for <patches@lists.linux.dev>; Mon, 13 Mar 2023 21:28:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678768116;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=y750kud8mHtJic9GXfaEeGkhfjSIqfKCGoLOtAydFgI=;
-        b=jhKsGFUZuOjlPI/ybjOHKr286JRg/tr9p/GCLssUKypycNpqFBf2O1BMckaPQmUFQ1
-         SXz2/t5C/uYRI9rmCUJbbT6bEF95iQ6HMMOpiaGiAFZrNKKz3J+He3fJzCZ6T4PqsDz5
-         4m+6XviiyUXvipnzxuzLou73qsvCxkI4swtSYQsbWoB90x7YBEEVnqCQbeHOwwWTOGOu
-         nRa8mcVfeBqjZ/S+phnlQcuJjFFfnFKifYvq2SnUUb3YGaWx7/AYTJNv0zeaHmb1ULBS
-         UTiROfwsrTc5NxP/59sAjFHH68VQ0lSi6OVbDVTbonYPKGc0GHGit/yKyYvjiXmfjHSt
-         vdfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678768116;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=y750kud8mHtJic9GXfaEeGkhfjSIqfKCGoLOtAydFgI=;
-        b=KkDdwCuA4UeJCpg/3A6ZuDYUagd4icI9p9PVMYtIdAeJEtXmCnL14+J28by0n50v4k
-         49pDVG1W+tBKHPuMQcjUNCxdUKY3Dqln4ZRTtxxz5Wmp5krWjrlofELHJRHhJhcOz7LG
-         ieDmBIfy6x+uPbzuZWW/Z3osH35UaMDf2US0MM/b7befKSsCXEJdmRQlh+wHg+3YghaV
-         /Nt8rKJ6r/HfxTUOcW7i6rBu3hQEy8lAdCJ7TOpjMSSGUnazkws6H72ZrImDONkMAZa2
-         5K+wDa4CuNg7ZbSgtdCvfrCr1mIW/hmXlRbQRK+GMvik2/4wGs/wqcOibQXxeZX8F/aJ
-         GPZA==
-X-Gm-Message-State: AO0yUKXhzVuHVJs3Ij2hx41qGcRIZCMWLPcFW21EdgtL/4NZenZpHtNW
-	QkOi+VQ3siGGoKAz4a6p0Fo=
-X-Google-Smtp-Source: AK7set+xkuA4DXyGLm8pCAYjUaEcNydWGbEn4eLnuh/IMmnxDNH9bYBSvQ1VgXD/rEWWwYRYDv7rIw==
-X-Received: by 2002:ad4:5caa:0:b0:5aa:17d5:bbfe with SMTP id q10-20020ad45caa000000b005aa17d5bbfemr6330378qvh.10.1678768116555;
-        Mon, 13 Mar 2023 21:28:36 -0700 (PDT)
-Received: from ?IPV6:2600:1700:2442:6db0:4071:d635:4b20:d09e? ([2600:1700:2442:6db0:4071:d635:4b20:d09e])
-        by smtp.gmail.com with ESMTPSA id s124-20020ae9de82000000b007429ee9482dsm979941qkf.134.2023.03.13.21.28.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Mar 2023 21:28:36 -0700 (PDT)
-Message-ID: <e1889f7f-2804-718b-6651-f333aed48e99@gmail.com>
-Date: Mon, 13 Mar 2023 23:28:35 -0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3281A23A0
+	for <patches@lists.linux.dev>; Tue, 14 Mar 2023 06:24:09 +0000 (UTC)
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id DF9FE9210B7;
+	Tue, 14 Mar 2023 01:50:54 +0000 (UTC)
+Received: from pdx1-sub0-mail-a209.dreamhost.com (unknown [127.0.0.6])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 212A8920D95;
+	Tue, 14 Mar 2023 01:50:54 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1678758654; a=rsa-sha256;
+	cv=none;
+	b=8Umcoy/eo5+arqVc3uP0nZwdkwBgS1hIQ+GJT4m6C7WWSLKB3fTB3YmcGiFN2Ee8hD1KP8
+	4ESnavRUjghjafWHc5IgXG+mfqy5DMSyNW/v1ozpIl/XKL+NbRRosBkWYj5ehDdRMmHNm4
+	KQ5Bwy7hmFa3UaHVY7eUdskCPelh8MiZLcRPl0Y0xXRbdlKw1synoql3lG2x8d87d/tBhi
+	qBRBNcGACoASZXKWXR/y3w9rWJOc047jMj13zKdpPzBg2VBlphagPrsy6TsXOxiLXIa03+
+	9n8Q13j7e2v1+bDd7X/au5YDYMWNyBzAl+7i1SZp21vLCJkuS/SX6NwaJPo6xA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1678758654;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=CeVq90zpoQPpRIIwvxHQSv+0qiRjCSPI+wnNP15M1+k=;
+	b=QgNw5DBchnlvfkc8ZlzadIfG7seuBBAnGKrIzLBXAmOHE62a9TTHtwUmFhdANHLCIf8RqZ
+	0gXeY1IbDN66klVrHsoLbz2BSmGhJR3E345PPVWre4wAlKXE6xioz9a1Gb7cCRN1zs0Eeo
+	x7QO3u8FGBd0tfquvJF3jtfFxCyyoTi4NnOk7r7XcMaWlYiMobMwq1tEDT4mML0SA7Gd0a
+	XjhaHd5GywqYcRnWdxizJfMMKtAkgB8vg6Jw3aLvHiKvDLUeAL4V6PsJ7E1uCtTWY2aF6D
+	WO0TWMMV4n0woOFQ4SpZLpPRVYBzu+3JNAgQhDxLGR0ZYOoQBLZI6p/r+iA3sA==
+ARC-Authentication-Results: i=1;
+	rspamd-7b575b84b5-scwl7;
+	auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
+X-MailChannels-Auth-Id: dreamhost
+X-Absorbed-Print: 27b296e03cb36e20_1678758654506_3032418653
+X-MC-Loop-Signature: 1678758654506:3492920659
+X-MC-Ingress-Time: 1678758654506
+Received: from pdx1-sub0-mail-a209.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.102.66.52 (trex/6.7.2);
+	Tue, 14 Mar 2023 01:50:54 +0000
+Received: from offworld (unknown [104.36.30.209])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dave@stgolabs.net)
+	by pdx1-sub0-mail-a209.dreamhost.com (Postfix) with ESMTPSA id 4PbGhF11ynz1w;
+	Mon, 13 Mar 2023 18:50:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
+	s=dreamhost; t=1678758653;
+	bh=CeVq90zpoQPpRIIwvxHQSv+0qiRjCSPI+wnNP15M1+k=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=NWd4+fd9Ah4hDRUxmKoySKU/RhNnaTRT4RDNBDtsRBOJlBPZlx1eDwBcchDuiuNd/
+	 sKO7OsMzYTw79czSIBRko+AzXXBmSElDyuql7E/AVm0QkVIbDSIdttvjQvBdqRdR1o
+	 QvGIqQES+PVfwGcXT6MJuUBnk2sc7QiDCc4ZYv6OXeTttfcS8VvLBIb6JCg6JI0AzS
+	 Wpa8MkTVxY/Lo9TK7c3iBQ/r+FuTAjL/RyQjhXSQ8MQMKa+l+YPFC8NvTy0IwwAnGE
+	 6yF82jryLFnUstgZgimMAMEuOsETvxxx5b9AkTpk5l0044CC/UkHDfgH6gx1179Do5
+	 3+/K010UKZYTg==
+Date: Mon, 13 Mar 2023 18:21:30 -0700
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: hughd@google.com, akpm@linux-foundation.org, willy@infradead.org,
+	brauner@kernel.org, linux-mm@kvack.org, p.raghav@samsung.com,
+	da.gomez@samsung.com, a.manzanares@samsung.com,
+	yosryahmed@google.com, keescook@chromium.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/6] tmpfs: add the option to disable swap
+Message-ID: <20230314012130.3peeuifjjemynklk@offworld>
+Mail-Followup-To: Luis Chamberlain <mcgrof@kernel.org>, hughd@google.com,
+	akpm@linux-foundation.org, willy@infradead.org, brauner@kernel.org,
+	linux-mm@kvack.org, p.raghav@samsung.com, da.gomez@samsung.com,
+	a.manzanares@samsung.com, yosryahmed@google.com,
+	keescook@chromium.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+References: <20230309230545.2930737-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 2/8] of: Enable DTB loading on UML for KUnit tests
-Content-Language: en-US
-From: Frank Rowand <frowand.list@gmail.com>
-To: David Gow <davidgow@google.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
- patches@lists.linux.dev, Brendan Higgins <brendan.higgins@linux.dev>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- "Rafael J . Wysocki" <rafael@kernel.org>, Richard Weinberger
- <richard@nod.at>, Anton Ivanov <anton.ivanov@cambridgegreys.com>,
- Johannes Berg <johannes@sipsolutions.net>,
- Vincent Whitchurch <vincent.whitchurch@axis.com>,
- Rob Herring <robh+dt@kernel.org>, Christian Marangi <ansuelsmth@gmail.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- devicetree@vger.kernel.org, linux-um@lists.infradead.org,
- linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com
-References: <20230302013822.1808711-1-sboyd@kernel.org>
- <20230302013822.1808711-3-sboyd@kernel.org>
- <CABVgOSkomwwgKZ9N0_0YMDL--QaZiTV7ONgSRABU2Ph1Z0CG-g@mail.gmail.com>
- <a97c9bb3a5addfb34af8ccabaa513026.sboyd@kernel.org>
- <CABVgOSkJ4mw_DtFzn5EwcsuYixWY_j13YotxEYqWhO+ZCL1KPg@mail.gmail.com>
- <d64a086ddcb7c5ca5abecab0ca654259.sboyd@kernel.org>
- <CABVgOSk9gqRe_5yQZweBA2Qg2aGx8rUJtOHywGeT4x7TEyBH0A@mail.gmail.com>
- <40299ee6-c518-5505-0dc5-874deef03d19@gmail.com>
-In-Reply-To: <40299ee6-c518-5505-0dc5-874deef03d19@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20230309230545.2930737-1-mcgrof@kernel.org>
+User-Agent: NeoMutt/20220429
 
-On 3/13/23 11:02, Frank Rowand wrote:
-> On 3/11/23 00:42, David Gow wrote:
->> On Sat, 11 Mar 2023 at 07:34, Stephen Boyd <sboyd@kernel.org> wrote:
->>>
->>> Quoting David Gow (2023-03-10 00:09:48)
->>>> On Fri, 10 Mar 2023 at 07:19, Stephen Boyd <sboyd@kernel.org> wrote:
->>>>>
->>>>>
->>>>> Hmm. I think you're suggesting that the unit test data be loaded
->>>>> whenever CONFIG_OF=y and CONFIG_KUNIT=y. Then tests can check for
->>>>> CONFIG_OF and skip if it isn't enabled?
->>>>>
->>>>
->>>> More of the opposite: that we should have some way of supporting tests
->>>> which might want to use a DTB other than the built-in one. Mostly for
->>>> non-UML situations where an actual devicetree is needed to even boot
->>>> far enough to get test output (so we wouldn't be able to override it
->>>> with a compiled-in test one).
->>>
->>> Ok, got it.
->>>
->>>>
->>>> I think moving to overlays probably will render this idea obsolete:
->>>> but the thought was to give test code a way to check for the required
->>>> devicetree nodes at runtime, and skip the test if they weren't found.
->>>> That way, the failure mode for trying to boot this on something which
->>>> required another device tree for, e.g., serial, would be "these tests
->>>> are skipped because the wrong device tree is loaded", not "I get no
->>>> output because serial isn't working".
->>>>
->>>> Again, though, it's only really needed for non-UML, and just loading
->>>> overlays as needed should be much more sensible anyway.
->>>
->>> I still have one niggle here. Loading overlays requires
->>> CONFIG_OF_OVERLAY, and the overlay loading API returns -ENOTSUPP when
->>> CONFIG_OF_OVERLAY=n. For now I'm checking for the config being enabled
->>> in each test, but I'm thinking it may be better to simply call
->>> kunit_skip() from the overlay loading function if the config is
->>> disabled. This way tests can simply call the overlay loading function
->>> and we'll halt the test immediately if the config isn't enabled.
->>>
->>
->> That sounds sensible, though there is a potential pitfall. If
->> kunit_skip() is called directly from overlay code, might introduce a
->> dependency on kunit.ko from the DT overlay, which we might not want.
->> The solution there is either to have a kunit wrapper function (so the
->> call is already in kunit.ko), or to have a hook to skip the current
->> test (which probably makes sense to do anyway, but I think the wrapper
->> is the better option).
->>
->>
->>>>
->>>>>>
->>>>>> That being said, I do think that there's probably some sense in
->>>>>> supporting the compiled-in DTB as well (it's definitely simpler than
->>>>>> patching kunit.py to always pass the extra command-line option in, for
->>>>>> example).
->>>>>> But maybe it'd be nice to have the command-line option override the
->>>>>> built-in one if present.
->>>>>
->>>>> Got it. I need to test loading another DTB on the commandline still, but
->>>>> I think this won't be a problem. We'll load the unittest-data DTB even
->>>>> with KUnit on UML, so assuming that works on UML right now it should be
->>>>> unchanged by this series once I resend.
->>>>
->>>> Again, moving to overlays should render this mostly obsolete, no? Or
->>>> am I misunderstanding how the overlay stuff will work?
->>>
->>> Right, overlays make it largely a moot issue. The way the OF unit tests
->>> work today is by grafting a DTB onto the live tree. I'm reusing that
->>> logic to graft a container node target for kunit tests to add their
->>> overlays too. It will be clearer once I post v2.
->>>
->>>>
->>>> One possible future advantage of being able to test with custom DTs at
->>>> boot time would be for fuzzing (provide random DT properties, see what
->>>> happens in the test). We've got some vague plans to support a way of
->>>> passing custom data to tests to support this kind of case (though, if
->>>> we're using overlays, maybe the test could just patch those if we
->>>> wanted to do that).
->>>
->>> Ah ok. I can see someone making a fuzzer that modifies devicetree
->>> properties randomly, e.g. using different strings for clock-names.
->>>
->>> This reminds me of another issue I ran into. I wanted to test adding the
->>> same platform device to the platform bus twice to confirm that the
->>> second device can't be added. That prints a warning, which makes
->>> kunit.py think that the test has failed because it printed a warning. Is
->>> there some way to avoid that? I want something like
->>>
->>>         KUNIT_EXPECT_WARNING(test, <call some function>)
->>>
->>> so I can test error cases.
-> 
-> DT unittests already have a similar concept.  A test can report that a
-> kernel warning (or any other specific text) either (1) must occur for the
-> test to pass or (2) must _not_ occur for the test to pass.  The check
-> for the kernel warning is done by the test output parsing program
-> scripts/dtc/of_unittest_expect.
-> 
-> The reporting by a test of an expected error in drivers/of/unittest.c
-> is done by EXPECT_BEGIN() and EXPECT_END().  These have been in
-> unittest for a long time.
-> 
-> The reporting by a test of a not expected to occur error is done
-> by EXPECT_NOT_BEGIN() and EXPECT_NOT_END().  These are added to
-> unittest in linux 6.3-rc1.
-> 
-> I discussed this concept in one of the early TAP / KTAP discussion
+On Thu, 09 Mar 2023, Luis Chamberlain wrote:
 
-The link to the early KTAP discussion on this concept is:
+>Changes on this v2 PATCH series:
+>
+>  o Added all respective tags for Reviewed-by, Acked-by's
+>  o David Hildenbrand suggested on the update-docs patch to mention THP.
+>    It turns out tmpfs.rst makes absolutely no mention to THP at all
+>    so I added all the relevant options to the docs including the
+>    system wide sysfs file. All that should hopefully demistify that
+>    and make it clearer.
+>  o Yosry Ahmed spell checked my patch "shmem: add support to ignore swap"
+>
+>Changes since RFCv2 to the first real PATCH series:
+>
+>  o Added Christian Brauner'd Acked-by for the noswap patch (the only
+>    change in that patch is just the new shmem_show_options() change I
+>    describe below).
+>  o Embraced Yosry Ahmed's recommendation to use mapping_set_unevictable()
+>    to at ensure the folios at least appear in the unevictable LRU.
+>    Since that is the goal, this accomplishes what we want and the VM
+>    takes care of things for us. The shem writepage() still uses a stop-gap
+>    to ensure we don't get called for swap when its shmem uses
+>    mapping_set_unevictable().
+>  o I had evaluated using shmem_lock() instead of calling mapping_set_unevictable()
+>    but upon my review this doesn't make much sense, as shmem_lock() was
+>    designed to make use of the RLIMIT_MEMLOCK and this was designed for
+>    files / IPC / unprivileged perf limits. If we were to use
+>    shmem_lock() we'd bump the count on each new inode. Using
+>    shmem_lock() would also complicate inode allocation on shmem as
+>    we'd to unwind on failure from the user_shm_lock(). It would also
+>    beg the question of when to capture a ucount for an inode, should we
+>    just share one for the superblock at shmem_fill_super() or do we
+>    really need to capture it at every single inode creation? In theory
+>    we could end up with different limits. The simple solution is to
+>    juse use mapping_set_unevictable() upon inode creation and be done
+>    with it, as it cannot fail.
+>  o Update the documentation for tmpfs before / after my patch to
+>    reflect use cases a bit more clearly between ramfs, tmpfs and brd
+>    ramdisks.
+>  o I updated the shmem_show_options() to also reveal the noswap option
+>    when its used.
+>  o Address checkpatch style complaint with spaces before tabs on
+>    shmem_fs.h.
+>
+>Chances since first RFC:
+>
+>  o Matthew suggested BUG_ON(!folio_test_locked(folio)) is not needed
+>    on writepage() callback for shmem so just remove that.
+>  o Based on Matthew's feedback the inode is set up early as it is not
+>    reset in case we split the folio. So now we move all the variables
+>    we can set up really early.
+>  o shmem writepage() should only be issued on reclaim, so just move
+>    the WARN_ON_ONCE(!wbc->for_reclaim) early so that the code and
+>    expectations are easier to read. This also avoid the folio splitting
+>    in case of that odd case.
+>  o There are a few cases where the shmem writepage() could possibly
+>    hit, but in the total_swap_pages we just bail out. We shouldn't be
+>    splitting the folio then. Likewise for VM_LOCKED case. But for
+>    a writepage() on a VM_LOCKED case is not expected so we want to
+>    learn about it so add a WARN_ON_ONCE() on that condition.
+>  o Based on Yosry Ahmed's feedback the patch which allows tmpfs to
+>    disable swap now just uses mapping_set_unevictable() on inode
+>    creation. In that case writepage() should not be called so we
+>    augment the WARN_ON_ONCE() for writepage() for that case to ensure
+>    that never happens.
+>
+>To test I've used kdevops [0] 8 vpcu 4 GiB libvirt guest on linux-next.
+>
+>I'm doing this work as part of future experimentation with tmpfs and the
+>page cache, but given a common complaint found about tmpfs is the
+>innability to work without the page cache I figured this might be useful
+>to others. It turns out it is -- at least Christian Brauner indicates
+>systemd uses ramfs for a few use-cases because they don't want to use
+>swap and so having this option would let them move over to using tmpfs
+>for those small use cases, see systemd-creds(1).
+>
+>To see if you hit swap:
+>
+>mkswap /dev/nvme2n1
+>swapon /dev/nvme2n1
+>free -h
+>
+>With swap - what we see today
+>=============================
+>mount -t tmpfs            -o size=5G           tmpfs /data-tmpfs/
+>dd if=/dev/urandom of=/data-tmpfs/5g-rand2 bs=1G count=5
+>free -h
+>               total        used        free      shared  buff/cache   available
+>Mem:           3.7Gi       2.6Gi       1.2Gi       2.2Gi       2.2Gi       1.2Gi
+>Swap:           99Gi       2.8Gi        97Gi
+>
+>
+>Without swap
+>=============
+>
+>free -h
+>               total        used        free      shared  buff/cache   available
+>Mem:           3.7Gi       387Mi       3.4Gi       2.1Mi        57Mi       3.3Gi
+>Swap:           99Gi          0B        99Gi
+>mount -t tmpfs            -o size=5G -o noswap tmpfs /data-tmpfs/
+>dd if=/dev/urandom of=/data-tmpfs/5g-rand2 bs=1G count=5
+>free -h
+>               total        used        free      shared  buff/cache   available
+>Mem:           3.7Gi       2.6Gi       1.2Gi       2.3Gi       2.3Gi       1.1Gi
+>Swap:           99Gi        21Mi        99Gi
+>
+>The mix and match remount testing
+>=================================
+>
+># Cannot disable swap after it was first enabled:
+>mount -t tmpfs            -o size=5G           tmpfs /data-tmpfs/
+>mount -t tmpfs -o remount -o size=5G -o noswap tmpfs /data-tmpfs/
+>mount: /data-tmpfs: mount point not mounted or bad option.
+>       dmesg(1) may have more information after failed mount system call.
+>dmesg -c
+>tmpfs: Cannot disable swap on remount
+>
+># Remount with the same noswap option is OK:
+>mount -t tmpfs            -o size=5G -o noswap tmpfs /data-tmpfs/
+>mount -t tmpfs -o remount -o size=5G -o noswap tmpfs /data-tmpfs/
+>dmesg -c
+>
+># Trying to enable swap with a remount after it first disabled:
+>mount -t tmpfs            -o size=5G -o noswap tmpfs /data-tmpfs/
+>mount -t tmpfs -o remount -o size=5G           tmpfs /data-tmpfs/
+>mount: /data-tmpfs: mount point not mounted or bad option.
+>       dmesg(1) may have more information after failed mount system call.
+>dmesg -c
+>tmpfs: Cannot enable swap on remount if it was disabled on first mount
 
-   https://lore.kernel.org/all/d38bf9f9-8a39-87a6-8ce7-d37e4a641675@gmail.com/T/#u
+Nice! For the whole series:
 
-
-> threads and expect to start a discussion thread on this specific
-> topic in the KTAP Specification V2 context.  I expect the discussion
-> to result in a different implementation than what DT unittests are
-> using (bike shedding likely to ensue) but whatever is agreed to
-> should be easy for DT to switch to.
-
-The link to the KTAP Specification Version 2 process and progress is:
-
-   https://elinux.org/Test_Results_Format_Notes#KTAP_version_2
-
--Frank
-
-> 
->>
->> Hmm... I'd've thought that shouldn't be a problem: kunit.py should
->> ignore most messages during a test, unless it can't find a valid
->> result line. What does the raw KTAP output look like? (You can get it
->> from kunit.py by passing the --raw_output option).
->>
->> That being said, a KUNIT_EXPECT_LOG_MESSAGE() or similar is something
->> we've wanted for a while. I think that the KASAN folks have been
->> working on something similar using console tracepoints:
->> https://lore.kernel.org/all/ebf96ea600050f00ed567e80505ae8f242633640.1666113393.git.andreyknvl@google.com/
->>
->> Cheers,
->> -- David
-> 
-
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
