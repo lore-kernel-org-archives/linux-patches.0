@@ -1,159 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC453C30;
-	Tue, 14 Mar 2023 17:08:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88004C433D2;
-	Tue, 14 Mar 2023 17:08:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678813694;
-	bh=ucM21cLRUuIM1P+fjJ7tyXVrvw8aDslNNA8co2hjLB0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CQwA8hQi6papIwLzlFCwnT8ZgfxGYB2LsuTVCVtFvYeeMxK4u4qRxhb/NYejRj78g
-	 N+xHIw0JZfELVtT+p65MmB7c5tmgUhvmAEVq2ZRlzn8d2Ep76OavoWeOf10Monumx9
-	 KVSgQrxRkAPML1uZicpPU0RrnQjrGmVV4zE475+3hq3kpTScUqY2iviptRobfIg0f9
-	 wjdPGTCMNO5WeKwjE0rfZn2lFuAE6XDbzul3kV1qwjmAfrj0rvnlPO9IhRDalJzLso
-	 6MIzkKrpqlQdEkUuOJcyKSyHwsyzTjQNye0xdVmUGQTdDWD2O4rlsxv/CuP3eUnByC
-	 IdykfYulsxTgA==
-Date: Tue, 14 Mar 2023 17:08:09 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	conor.dooley@microchip.com, ndesaulniers@google.com,
-	trix@redhat.com, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev, stable@vger.kernel.org
-Subject: Re: [PATCH] riscv: Handle zicsr/zifencei issues between clang and
- binutils
-Message-ID: <75037eb4-7be4-4182-a377-18343491c7da@spud>
-References: <20230313-riscv-zicsr-zifencei-fiasco-v1-1-dd1b7840a551@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C246A939
+	for <patches@lists.linux.dev>; Tue, 14 Mar 2023 20:23:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678825425; x=1710361425;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=EZgemfODZdzJL//ckW8Ahf4paB+FAWm34Ie+LQVzxoU=;
+  b=Dkk/k3G8o+coc4cRQcctGLM71c3eGtUNpzFVVF1eYIqNnVc6qvpBwPTZ
+   KRDOfGpnl0OY6D8TCd2l7+OV1kYDgjiACFLfcC3Gf8i/OzUzUXjU7mGb/
+   SDPFVjfQ3UGIAEo5JZMrYA5XicAbUVuXVnXK/yIsTC/GuLZos3v4MNAKs
+   IqNY1TZmdzdo/RIemXginBz7Y1OUBbBYaoqLB9xnsapKX3KJk0q1b8VGc
+   PRT41uqlYqjEtv9HZP3d3h9mbuYkZser3WJBkFeoG3rWp+AjI9gczkp/1
+   NK4uBECZ5rEcyFqcrOOsCViMNRCaA92eabaM2TjWvcjDpOF4c2bYjT1yB
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10649"; a="317931145"
+X-IronPort-AV: E=Sophos;i="5.98,260,1673942400"; 
+   d="scan'208";a="317931145"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2023 13:23:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10649"; a="748143935"
+X-IronPort-AV: E=Sophos;i="5.98,260,1673942400"; 
+   d="scan'208";a="748143935"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2023 13:23:44 -0700
+Date: Tue, 14 Mar 2023 13:23:43 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: "Moger, Babu" <babu.moger@amd.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>, x86@kernel.org,
+	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH 7/7] x86/resctrl: Determine if Sub-NUMA Cluster is
+ enabled and initialize.
+Message-ID: <ZBDXzz+f1nSP1Ml0@agluck-desk3.sc.intel.com>
+References: <20230126184157.27626-1-tony.luck@intel.com>
+ <20230126184157.27626-8-tony.luck@intel.com>
+ <38ce210b-50f7-188b-63a9-c7b3870fa99c@amd.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="1CEuDSeV8bwTFyS+"
-Content-Disposition: inline
-In-Reply-To: <20230313-riscv-zicsr-zifencei-fiasco-v1-1-dd1b7840a551@kernel.org>
-
-
---1CEuDSeV8bwTFyS+
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <38ce210b-50f7-188b-63a9-c7b3870fa99c@amd.com>
 
-Hey Nathan,
+On Tue, Feb 28, 2023 at 01:51:32PM -0600, Moger, Babu wrote:
+> I am thinking loud here.
+> When a new monitor group is created, new RMID is assigned. This is done by
+> alloc_rmid. It does not know about the rmid_offset details. This will
+> allocate the one of the free RMIDs.
+> 
+> When CPUs are assigned to the group, then per cpu  pqr_state is updated.
+> At that point, this RMID becomes default_rmid for that cpu.
+> 
+> But CPUs can be assigned from two different Sub-NUMA nodes.
+> 
+> Considering same example you mentioned.
+> 
+> E.g. in 2-way Sub-NUMA cluster with 200 RMID counters there are only
+> 100 available counters to the resctrl code. When running on the first
+> SNC node RMID values 0..99 are used as before. But when running on the
+> second node, a task that is assigned resctrl rmid=10 must load 10+100
+> into IA32_PQR_ASSOC to use RMID counter 110.
+> 
+> #mount -t resctrl resctrl /sys/fs/resctrl/
+> #cd /sys/fs/resctrl/
+> #mkdir test  (Lets say RMID 1 is allocated)
+> #cd test
+> #echo 1 > cpus_list
+> #echo 101 > cpus_list
+> 
+> In this case, the following code may run on two different RMIDs even
+> though it was intended to run on same RMID.
+> 
+> wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid + this_cpu_read(rmid_offset));
+> 
+> Have you thought of this problem?
 
-On Mon, Mar 13, 2023 at 04:00:23PM -0700, Nathan Chancellor wrote:
-> There are two related issues that appear in certain combinations with
-> clang and GNU binutils.
->=20
-> The first occurs when a version of clang that supports zicsr or zifencei
-> via '-march=3D' [1] (i.e, >=3D 17.x) is used in combination with a version
-> of GNU binutils that do not recognize zicsr and zifencei in the
-> '-march=3D' value (i.e., < 2.36):
->=20
->   riscv64-linux-gnu-ld: -march=3Drv64i2p0_m2p0_a2p0_c2p0_zicsr2p0_zifence=
-i2p0: Invalid or unknown z ISA extension: 'zifencei'
->   riscv64-linux-gnu-ld: failed to merge target specific data of file fs/e=
-fivarfs/file.o
->   riscv64-linux-gnu-ld: -march=3Drv64i2p0_m2p0_a2p0_c2p0_zicsr2p0_zifence=
-i2p0: Invalid or unknown z ISA extension: 'zifencei'
->   riscv64-linux-gnu-ld: failed to merge target specific data of file fs/e=
-fivarfs/super.o
->=20
-> The second occurs when a version of clang that does not support zicsr or
-> zifencei via '-march=3D' (i.e., <=3D 16.x) is used in combination with a
-> version of GNU as that defaults to a newer ISA base spec, which requires
-> specifying zicsr and zifencei in the '-march=3D' value explicitly (i.e, >=
-=3D
-> 2.38):
->=20
->   ../arch/riscv/kernel/kexec_relocate.S: Assembler messages:
->   ../arch/riscv/kernel/kexec_relocate.S:147: Error: unrecognized opcode `=
-fence.i', extension `zifencei' required
->   clang-12: error: assembler command failed with exit code 1 (use -v to s=
-ee invocation)
->=20
-> This is the same issue addressed by commit 6df2a016c0c8 ("riscv: fix
-> build with binutils 2.38") (see [2] for additional information) but
-> older versions of clang miss out on it because the cc-option check
-> fails:
->=20
->   clang-12: error: invalid arch name 'rv64imac_zicsr_zifencei', unsupport=
-ed standard user-level extension 'zicsr'
->   clang-12: error: invalid arch name 'rv64imac_zicsr_zifencei', unsupport=
-ed standard user-level extension 'zicsr'
->=20
-> To resolve the first issue, only attempt to add zicsr and zifencei to
-> the march string when using the GNU assembler 2.38 or newer, which is
-> when the default ISA spec was updated, requiring these extensions to be
-> specified explicitly. LLVM implements an older version of the base
-> specification for all currently released versions, so these instructions
-> are available as part of the 'i' extension. If LLVM's implementation is
-> updated in the future, a CONFIG_AS_IS_LLVM condition can be added to
-> CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI.
->=20
-> To resolve the second issue, use version 2.2 of the base ISA spec when
-> using an older version of clang that does not support zicsr or zifencei
-> via '-march=3D', as that is the spec version most compatible with the one
-> clang/LLVM implements and avoids the need to specify zicsr and zifencei
-> explicitly due to still being a part of 'i'.
->=20
-> [1]: https://github.com/llvm/llvm-project/commit/22e199e6afb1263c943c0c0d=
-4498694e15bf8a16
-> [2]: https://lore.kernel.org/ZAxT7T9Xy1Fo3d5W@aurel32.net/
->=20
-> Cc: stable@vger.kernel.org
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1808
-> Co-developed-by: Conor Dooley <conor.dooley@microchip.com>
-> Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Now I've thought about this. I don't think it is a problem.
 
-TBH, barely identifiable as having much to do with my V1 anymore, so
-could easily have dropped those.
-Either way, thanks for sorting this out while I've been sick :)
+With SNC enabled for two nodes per socket the available RMIDs
+are divided between the SNC nodes, but are for some purposes
+numbered [0 .. N/2) but in some cases must be viewed as two
+separate sets [0 .. N/2) on the first node and [N/2 .. N) on
+the second.
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+In your example RMID 1 is assigned to the group and you have
+one CPU from each node in the group. Processes on CPU1 will
+load IA32_PQR_ASSOC.RMID = 1, while processes on CPU101 will
+set IA32_PQR_ASSOC.RMID = 101. So counts of memory bandwidth
+and cache occupancy will be in two different physical RMID
+counters.
 
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
-> This is essentially a v3 of Conor's v1 and v2 but since I am sending the
-> patch after finding a separate but related issue, I left it at v1:
->=20
-> - v1: https://lore.kernel.org/20230223220546.52879-1-conor@kernel.org/
-> - v2: https://lore.kernel.org/20230308220842.1231003-1-conor@kernel.org/
->=20
-> I have built allmodconfig with the following toolchain combinations to
-> confirm this problem is resolved:
->=20
-> - clang 12/17 + GNU as and ld 2.35/2.39
-> - clang 12/17 with the integrated assembler + GNU ld 2.35/2.39
-> - clang 12/17 with the integrated assembler + ld.lld
->=20
-> There are a couple of other incompatibilities between clang-17 and GNU
-> binutils that I had to patch to get allmodconfig to build successfully
-> but those are less likely to be hit in practice because the full LLVM
-> stack can be used with LLVM versions 13.x and newer.
+To read these back the user needs to lookup which $node each CPU
+belongs to and then read from the appropriate
+mon_data/mon_L3_$node/{llc_occupancy,mbm_local_bytes,mbm_total_bytes}
+file.
 
-> I will follow up
-> with separate issues and patches.
+$ cat mon_data/mon_L3_00/llc_occupancy # reads RMID=1
+$ cat mon_data/mon_L3_01/llc_occupancy # reads RMID=101
 
-Cool, I'll "look forward" to those...
-
-Thanks,
-Conor.
-
---1CEuDSeV8bwTFyS+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZBCp+AAKCRB4tDGHoIJi
-0roxAQCXsosSBtzf9Ovi8xT5U07z0OBYx29ltaw6MCTxk1St1AD/R4eRfRoNh6BC
-vrfhzHF5bwseLnWtO2Yc8FoBMRGegQc=
-=UId/
------END PGP SIGNATURE-----
-
---1CEuDSeV8bwTFyS+--
+-Tony
+ 
