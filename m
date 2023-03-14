@@ -1,43 +1,43 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0EA2CA6
-	for <patches@lists.linux.dev>; Tue, 14 Mar 2023 22:12:48 +0000 (UTC)
-Received: by mail-wr1-f46.google.com with SMTP id l12so7420345wrm.10
-        for <patches@lists.linux.dev>; Tue, 14 Mar 2023 15:12:48 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79626D2E8
+	for <patches@lists.linux.dev>; Tue, 14 Mar 2023 22:16:30 +0000 (UTC)
+Received: by mail-wm1-f51.google.com with SMTP id j19-20020a05600c191300b003eb3e1eb0caso14177437wmq.1
+        for <patches@lists.linux.dev>; Tue, 14 Mar 2023 15:16:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678831966;
+        d=gmail.com; s=20210112; t=1678832188;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qrgGQA2tyR+reLrtZ5whteGjP4sWvnWfOZPTVunlkec=;
-        b=dootni8CEgUsi8N+v99TYqgtssTXuvVp/SJIRgJDBFOVvoKGidWBw5oOLU/rK6wUYZ
-         cBx4OYl7vRuuganKp+xfQJnhf9PvhzTSn8oqx+UwcFdyCrztDVJrGJ0BoRA61QY8n9dB
-         bXtvntpsQFVfiKpejt/sGKe1X6no2rXrbdem1rvGl/XHFUtjsWOwrpmvjDfAgkESqqOP
-         vPVGUCUMFdm8SPYFo+vC36K2c8rg80rhwuO7T0kmx3c3sTAYmhbzwD7QW75zmHiYXKda
-         J2kdWKdWYyMBKkKuiGaS2WSjV4fjOtcq3NuLxGVaGGfoL4cZqZVpDYgM2dKFjLbFo5l9
-         xkMA==
+        bh=0cgXw1zWR3UzIeNQHSkd/Pe/JYZucLUkg0+siqDji1Q=;
+        b=WiWabfdsc40Hw03sHacABR/DpeHPE1ytk52ltiIHJyYU96rC0iS1lraEKpFNPMr7fC
+         t88zt7gAQUBBIRqrgzPkQWQDI8IBIwbBSQ44S9GXEjINbumyhcaty1H8Wl8mk8TP7vah
+         R+sSYxV3pSFKpraUvvKNT26Tl4bm9IX1cxQTO0YuTtRAf1JyKECbjwfkxjSm3C79t2zu
+         WimroFz4zBdQaqQbKrHUb+k9u1UDe/t+bGf+sTOFdiO/SY1n3N2Yrx3e1ZAduqS48kT2
+         rVHJ3JqaH5emYPmU4Xh0N/DVVXcX1nJMZW+nmKAVSR8mX825oNgoQNZkzjKn0xyWZeQC
+         H2Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678831966;
+        d=1e100.net; s=20210112; t=1678832188;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qrgGQA2tyR+reLrtZ5whteGjP4sWvnWfOZPTVunlkec=;
-        b=beYMBJAxuyuXySI9C5c6F3hTwdfBWf9kqTu/51N7am5OePdOPfVyHgpF8BXhnPiDW3
-         OzG7gGTitX0Equ4HGxk4l5WhqvbN725tbNJrINpXFanZxEa1vb1tQs4Zqbhg0OwIy00r
-         8dL/KKRFqx8R0IFCKQwN8f2So8fUfeT161cEG92qJRMBM5mFhEiLxUnj70epp4c0nVA1
-         7AGFjEFQ9QTSVnA7GVWAM0IO31dirVRObsfeVP3tg+BWglOh+5DJbN933ekYZ0AJO7iT
-         Sa2oSW9w0IP2MCP+mzFTRSU+a6nocwFK16+YBa6KK9KuATPSq02KdnDNpOd11NJLRBVA
-         jG1g==
-X-Gm-Message-State: AO0yUKWKdETHNJ9kH0AgimkHb9FdT93t0gFNR6dq38s+a0uOd/3fnzRh
-	v+wp7SZ3BrF8QSYP0POIVwk=
-X-Google-Smtp-Source: AK7set/Oe1mK8ERAeym3Py4UdCVU7k6qkgj+mP/p9KCj/wwe0GCzObLYhzO768PXTzSuipVfAJ9mgw==
-X-Received: by 2002:a5d:4002:0:b0:2ce:a0c2:d9ed with SMTP id n2-20020a5d4002000000b002cea0c2d9edmr363419wrp.32.1678831966299;
-        Tue, 14 Mar 2023 15:12:46 -0700 (PDT)
+        bh=0cgXw1zWR3UzIeNQHSkd/Pe/JYZucLUkg0+siqDji1Q=;
+        b=DlQRPKIz1nKetF4OVKTeqgR8kjHWINqDQB1liJsXnaJOGKE/PsqRKsFkHKr7hQiWXa
+         s69ivgcLfivIEeoa54NYFzb41fZh7M9vV12VKFOxPHIqacEiIEIdgNQh05nNlkVeKJaY
+         z3ndvy9Kp4OQVG6tHcoMlMPUpNjgr6Oh7j6KOmedbn6W96At0Ukx4TlbuXI6DurK4Ou1
+         DGcgfrnI9ikLDUHtOy5/RLsR+WTbzTVB40Djp1HuhBbT/dFNcwKCtezijbs5nPbKqpA1
+         EOPaCjyNZrurz/zfFo/gwsNmI4hBO/6Q9+cwAu981n50n6oYQS9bnGWESAH2c+4xnsFz
+         kmrA==
+X-Gm-Message-State: AO0yUKUXeyAxPZk1dN/Sesdolx+TZHHjwkip3IRlaG+KgjkYmWHYgTao
+	/hTzW8C7kDtIdSjoiAePfOqRmU/Vjlo=
+X-Google-Smtp-Source: AK7set/LqyA4KOXjYW3gB61Tg1NOLoBdeKaWngQqOyAVUSHmnZgHB0VC+IljqkqXyulD+UybQrzJww==
+X-Received: by 2002:a05:600c:1546:b0:3ed:22f2:554c with SMTP id f6-20020a05600c154600b003ed22f2554cmr8549449wmg.29.1678832188560;
+        Tue, 14 Mar 2023 15:16:28 -0700 (PDT)
 Received: from localhost (host86-146-209-214.range86-146.btcentralplus.com. [86.146.209.214])
-        by smtp.gmail.com with ESMTPSA id u7-20020a5d4687000000b002c5544b3a69sm3010241wrq.89.2023.03.14.15.12.45
+        by smtp.gmail.com with ESMTPSA id 4-20020a05600c22c400b003e00c453447sm3977442wmg.48.2023.03.14.15.16.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 15:12:45 -0700 (PDT)
-Date: Tue, 14 Mar 2023 22:12:44 +0000
+        Tue, 14 Mar 2023 15:16:27 -0700 (PDT)
+Date: Tue, 14 Mar 2023 22:16:26 +0000
 From: Lorenzo Stoakes <lstoakes@gmail.com>
 To: Vlastimil Babka <vbabka@suse.cz>
 Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
@@ -49,10 +49,11 @@ Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
 	rcu@vger.kernel.org, linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
 	netdev@vger.kernel.org, linux-doc@vger.kernel.org
-Subject: Re: [PATCH 3/7] mm, page_flags: remove PG_slob_free
-Message-ID: <eae5fe2b-aa09-47be-a039-6f518bc4d678@lucifer.local>
+Subject: Re: [PATCH 4/7] mm, pagemap: remove SLOB and SLQB from comments and
+ documentation
+Message-ID: <a901f00e-99df-4fed-8117-e3735ec7df59@lucifer.local>
 References: <20230310103210.22372-1-vbabka@suse.cz>
- <20230310103210.22372-4-vbabka@suse.cz>
+ <20230310103210.22372-5-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,76 +62,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230310103210.22372-4-vbabka@suse.cz>
+In-Reply-To: <20230310103210.22372-5-vbabka@suse.cz>
 
-On Fri, Mar 10, 2023 at 11:32:05AM +0100, Vlastimil Babka wrote:
-> With SLOB removed we no longer need the PG_slob_free alias for
-> PG_private. Also update tools/mm/page-types.
+On Fri, Mar 10, 2023 at 11:32:06AM +0100, Vlastimil Babka wrote:
+> SLOB has been removed and SLQB never merged, so remove their mentions
+> from comments and documentation of pagemap.
 >
 > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 > ---
->  include/linux/page-flags.h | 4 ----
->  tools/mm/page-types.c      | 6 +-----
->  2 files changed, 1 insertion(+), 9 deletions(-)
+>  Documentation/admin-guide/mm/pagemap.rst | 6 +++---
+>  fs/proc/page.c                           | 5 ++---
+>  2 files changed, 5 insertions(+), 6 deletions(-)
 >
-> diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
-> index a7e3a3405520..2bdc41cb0594 100644
-> --- a/include/linux/page-flags.h
-> +++ b/include/linux/page-flags.h
-> @@ -174,9 +174,6 @@ enum pageflags {
->  	/* Remapped by swiotlb-xen. */
->  	PG_xen_remapped = PG_owner_priv_1,
->
-> -	/* SLOB */
-> -	PG_slob_free = PG_private,
-> -
->  #ifdef CONFIG_MEMORY_FAILURE
+> diff --git a/Documentation/admin-guide/mm/pagemap.rst b/Documentation/admin-guide/mm/pagemap.rst
+> index b5f970dc91e7..bb4aa897a773 100644
+> --- a/Documentation/admin-guide/mm/pagemap.rst
+> +++ b/Documentation/admin-guide/mm/pagemap.rst
+> @@ -91,9 +91,9 @@ Short descriptions to the page flags
+>     The page is being locked for exclusive access, e.g. by undergoing read/write
+>     IO.
+>  7 - SLAB
+> -   The page is managed by the SLAB/SLOB/SLUB/SLQB kernel memory allocator.
+> -   When compound page is used, SLUB/SLQB will only set this flag on the head
+> -   page; SLOB will not flag it at all.
+> +   The page is managed by the SLAB/SLUB kernel memory allocator.
+> +   When compound page is used, either will only set this flag on the head
+> +   page..
+
+I mean, perhaps the nittiest of nits but probably that '..' is unintended.
+
+>  10 - BUDDY
+>      A free memory block managed by the buddy system allocator.
+>      The buddy system organizes free memory in blocks of various orders.
+> diff --git a/fs/proc/page.c b/fs/proc/page.c
+> index 6249c347809a..1356aeffd8dc 100644
+> --- a/fs/proc/page.c
+> +++ b/fs/proc/page.c
+> @@ -125,7 +125,7 @@ u64 stable_page_flags(struct page *page)
 >  	/*
->  	 * Compound pages. Stored in first tail page's flags.
-> @@ -483,7 +480,6 @@ PAGEFLAG(Active, active, PF_HEAD) __CLEARPAGEFLAG(Active, active, PF_HEAD)
->  PAGEFLAG(Workingset, workingset, PF_HEAD)
->  	TESTCLEARFLAG(Workingset, workingset, PF_HEAD)
->  __PAGEFLAG(Slab, slab, PF_NO_TAIL)
-> -__PAGEFLAG(SlobFree, slob_free, PF_NO_TAIL)
->  PAGEFLAG(Checked, checked, PF_NO_COMPOUND)	   /* Used by some filesystems */
+>  	 * pseudo flags for the well known (anonymous) memory mapped pages
+>  	 *
+> -	 * Note that page->_mapcount is overloaded in SLOB/SLUB/SLQB, so the
+> +	 * Note that page->_mapcount is overloaded in SLAB/SLUB, so the
+>  	 * simple test in page_mapped() is not enough.
+>  	 */
+>  	if (!PageSlab(page) && page_mapped(page))
+> @@ -166,8 +166,7 @@ u64 stable_page_flags(struct page *page)
 >
->  /* Xen */
-> diff --git a/tools/mm/page-types.c b/tools/mm/page-types.c
-> index 381dcc00cb62..8d5595b6c59f 100644
-> --- a/tools/mm/page-types.c
-> +++ b/tools/mm/page-types.c
-> @@ -85,7 +85,6 @@
->   */
->  #define KPF_ANON_EXCLUSIVE	47
->  #define KPF_READAHEAD		48
-> -#define KPF_SLOB_FREE		49
->  #define KPF_SLUB_FROZEN		50
->  #define KPF_SLUB_DEBUG		51
->  #define KPF_FILE		61
-> @@ -141,7 +140,6 @@ static const char * const page_flag_names[] = {
->
->  	[KPF_ANON_EXCLUSIVE]	= "d:anon_exclusive",
->  	[KPF_READAHEAD]		= "I:readahead",
-> -	[KPF_SLOB_FREE]		= "P:slob_free",
->  	[KPF_SLUB_FROZEN]	= "A:slub_frozen",
->  	[KPF_SLUB_DEBUG]	= "E:slub_debug",
->
-> @@ -478,10 +476,8 @@ static uint64_t expand_overloaded_flags(uint64_t flags, uint64_t pme)
->  	if ((flags & BIT(ANON)) && (flags & BIT(MAPPEDTODISK)))
->  		flags ^= BIT(MAPPEDTODISK) | BIT(ANON_EXCLUSIVE);
->
-> -	/* SLOB/SLUB overload several page flags */
-> +	/* SLUB overloads several page flags */
->  	if (flags & BIT(SLAB)) {
-> -		if (flags & BIT(PRIVATE))
-> -			flags ^= BIT(PRIVATE) | BIT(SLOB_FREE);
->  		if (flags & BIT(ACTIVE))
->  			flags ^= BIT(ACTIVE) | BIT(SLUB_FROZEN);
->  		if (flags & BIT(ERROR))
+>  	/*
+>  	 * Caveats on high order pages: page->_refcount will only be set
+> -	 * -1 on the head page; SLUB/SLQB do the same for PG_slab;
+> -	 * SLOB won't set PG_slab at all on compound pages.
+> +	 * -1 on the head page; SLAB/SLUB do the same for PG_slab;
+
+Nice catch on the redundant reference to the mysterous SLQB (+ above) :)
+
+>  	 */
+>  	if (PageBuddy(page))
+>  		u |= 1 << KPF_BUDDY;
 > --
 > 2.39.2
 >
 
-Looks good to me too,
+Otherwise looks good to me,
 
 Acked-by: Lorenzo Stoakes <lstoakes@gmail.com>
