@@ -1,149 +1,354 @@
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2080.outbound.protection.outlook.com [40.107.102.80])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94EB9440
-	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 11:57:44 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QJvLEyYEOpDwezVMS8ZTGWZsjgB8dSBD7o5yIxh14aw+S/HbjnwJSZQ7x5fgVrLS65Hdrq8VjqkIPse6bg2q6ZfLzeR3Crw18qOjGeYgF/evzOY7nzx1PW3NCysAMbifHVHm0YDhYguZNEYKdWaJZgyMzLrKRMQaP2kLtXwd7xCmZ/r6yfFkCsyF61DGQJZI2KnPZotDJ7Zua9R/PtmaYX8T2fbXeZ4R03zqu0ONXwlyrq+4rx1Jw3jWbkMTSDftcbKGW0zZcPNju7FUjcuhpiUHVBjX9RQFa4qvXftxgmgmgYtTZMnN9IriWZ7oGFF5dtzJ8kEvmpC7gkkbQ82uLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lF1vJrVRIe/fJDBDyJYKD4/RGRDxQ7rXhwUC8HeUG/s=;
- b=AI27crf6boJH2An5ySMA0sL61nMh7T2v4QZqwBOUc72RfcJ8QvYBSGD9/w5zizgUnfoUO+POL8nD+PfhMUScCeyrNITm+syL5+e+izrq5gtrSbq0IVByWrP9M+iIFKYmrLUMBNKHRNwLI/n6OvIvI9O1yPM99rg5gZaCMoI+Rf7GRBvbp99gB+f4xfWYCEmVdEneQ2oFrCtcTAe9qtQ4+7pMFis1QjGI5EoVHcuV+YftVYIEDhtHXX+W09QIsfN4hYj6jCcYq5QAy+ylSUX072QMe59GV0r91q8g+GVjj7I8Bty9hpGqjNNGWI1A5rH8+0hCb8t2rIcI0wcp8Vd1SQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lF1vJrVRIe/fJDBDyJYKD4/RGRDxQ7rXhwUC8HeUG/s=;
- b=jKQuLDhCfCTXgmq7bSCGqiHiwuGVMdLxapf40yFIbynnBCGzCAmw7XuuDJElX6zRb4u9GLldYBuB74egombT7S4CAG3EeaIldnw40uxzKxju1MUG9pnRMUbueXtomA4dI4l28JnU9OYFt5W8irYp4NHMro81KudRVeWPUljuPeREnWy+x5Yb18eIK9P2LqcpstBPaUqtPPNQyxtpxrch2jrQukUqX/wUbddBS96W+sJmreAHarEuUgFrH0gSBBYowIJjPYjPyA8eRMXwrR1ZzOVZ1MBncd/rafWVy7wpW6y7recxiVzJyZPmMw30dFpAbsNe+v8D3SouDzAfyUZe5Q==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CO6PR12MB5444.namprd12.prod.outlook.com (2603:10b6:5:35e::8) by
- DS7PR12MB8273.namprd12.prod.outlook.com (2603:10b6:8:da::14) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6178.37; Tue, 21 Mar 2023 11:57:42 +0000
-Received: from CO6PR12MB5444.namprd12.prod.outlook.com
- ([fe80::5464:997b:389:4b07]) by CO6PR12MB5444.namprd12.prod.outlook.com
- ([fe80::5464:997b:389:4b07%9]) with mapi id 15.20.6178.037; Tue, 21 Mar 2023
- 11:57:42 +0000
-Message-ID: <b779d70b-1b73-5c8c-f01d-d482f7a8103e@nvidia.com>
-Date: Tue, 21 Mar 2023 11:57:27 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 6.2 000/211] 6.2.8-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-References: <20230320145513.305686421@linuxfoundation.org>
-From: Jon Hunter <jonathanh@nvidia.com>
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO0P265CA0009.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:355::20) To CO6PR12MB5444.namprd12.prod.outlook.com
- (2603:10b6:5:35e::8)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07829440
+	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 12:20:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06324C4339B
+	for <patches@lists.linux.dev>; Tue, 21 Mar 2023 12:20:00 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b="Pz/Mz81B"
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Tue, 21 Mar 2023 12:19:57 +0000
+Resent-Message-ID: <ZBmg7S5N6H5bH5YC@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Wed, 15 Mar 2023 15:47:53 +0000
+Received: from dfw.source.kernel.org ([139.178.84.217])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=Q5NZ=7H=opensource.cirrus.com=prvs=843822f42b=vkarpovi@kernel.org>)
+	id 1pcTLz-007KPK-3i
+	for broonie@sirena.co.uk; Wed, 15 Mar 2023 15:47:53 +0000
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 28B4161DD1
+	for <broonie@sirena.co.uk>; Wed, 15 Mar 2023 15:47:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id A54E9C4339C; Wed, 15 Mar 2023 15:47:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D54C3C4339B;
+	Wed, 15 Mar 2023 15:47:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org D54C3C4339B
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=opensource.cirrus.com
+Received: from pps.filterd (m0077474.ppops.net [127.0.0.1])
+	by mx0b-001ae601.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32FFMGZV019344;
+	Wed, 15 Mar 2023 10:47:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=PODMain02222019;
+ bh=KTinV/G6Tp7WAearLAGbxpXybqXOTsNpKB60xaJUjoY=;
+ b=Pz/Mz81BKqWuQTqy10Sk3BzO4EqS2TjFCRefOHdrt0gSElM5B2t8OTVjXsSZXc3SMjiy
+ Dlh6qf64eEWduhjALY8QZBM9k7GcLAw4bqjnxuS3QDFXarkWiITK12zlvYprXNcchJox
+ j4ciyMWCkIv+QGN2saKl29zMO2qdlsqZz2W1/6Re6ln3Bt7l/BqcNonGJhSej5hz3FR5
+ Hm9kn8RPtmsvqzqof4qMX+bUVHiq9u4+iub4AB0eF1znZSoWVNAjy+GWVaTEX0OEKKgz
+ 3wbitVqiiRNelAkqMmag5Qu8lZ7vVSn7+wNS8cfac0JIEDRdDiHkRmUOoLHBFK5zzBa6 bw== 
+Received: from ediex01.ad.cirrus.com ([84.19.233.68])
+	by mx0b-001ae601.pphosted.com (PPS) with ESMTPS id 3pb7utgrq0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 Mar 2023 10:47:37 -0500
+Received: from ediex01.ad.cirrus.com (198.61.84.80) by ediex01.ad.cirrus.com
+ (198.61.84.80) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.25; Wed, 15 Mar
+ 2023 10:47:36 -0500
+Received: from ediswmail.ad.cirrus.com (198.61.86.93) by ediex01.ad.cirrus.com
+ (198.61.84.80) with Microsoft SMTP Server id 15.2.1118.25 via Frontend
+ Transport; Wed, 15 Mar 2023 10:47:36 -0500
+Received: from vkarpovich-ThinkStation-P620.crystal.cirrus.com (vkarpovich-ThinkStation-P620.ad.cirrus.com [141.131.206.93])
+	by ediswmail.ad.cirrus.com (Postfix) with ESMTP id 224EA2A1;
+	Wed, 15 Mar 2023 15:47:34 +0000 (UTC)
+From: Vlad Karpovich <vkarpovi@opensource.cirrus.com>
+To: James Schulman <james.schulman@cirrus.com>,
+        David Rhodes
+	<david.rhodes@cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+        Rob Herring
+	<robh+dt@kernel.org>
+CC: <alsa-devel@alsa-project.org>, <patches@opensource.cirrus.com>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Vlad.Karpovich
+	<vkarpovi@opensource.cirrus.com>
+Date: Wed, 15 Mar 2023 10:47:18 -0500
+Message-ID: <20230315154722.3911463-1-vkarpovi@opensource.cirrus.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO6PR12MB5444:EE_|DS7PR12MB8273:EE_
-X-MS-Office365-Filtering-Correlation-Id: 50e5636e-95ff-4c32-9897-08db2a037a01
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	3JDQ7YTf6qS/WBR+xRBvAod3V2ocNTMnd8fesV5j4UtQ5QgGfe/Yv88mG5SnRMyGaJgYqNJ/BkV6yZCP8aN59dt8AIztj/TOpu886Z45Qu7r+xDmfnWvYWLcTy05cSJ7h5AUBb5YjHIYH2K/LdeYLPWtM20MDSzVdZsmz1229dmmHmz2UqZacqYDo3pGks4k61TObhF0DjCZdtGe/mwvZnU3P8dXVRRwv5gracXg9EnXba5xrRYbSsh9stCw+YshGbgSVo+tcyUur+g4dgamxzRICw/lo8xEq9M5H0g00ZpY07vtk/atTcybyULIyQc/5uloMiLPtjWjWS6GjAk8XJx2rMEtv8FRmz4Eo53iUZg89NtATAzp6T9P1I8x4BwBrNS5jX7fvvCraBlZbv4kY/OayWftbEthx2jbwbgoPIOy8ePbGzgt34CZbUT/Ly8vHPsSQ00AH0qPSVmLq/e1af2kxv3ifresMDd1/azmMpeGuAZRMZhptTNin3I6ChxsfnJHXJ5OkdT/8fCVXrpQDWJ7GKs9Ua3E78LzThG5e8JNL0N1eeZwA9+X2PLX13eJjHss5iqET7JC74V3RIcbq+De2F2HVvoRUEERdPiDEbbFK7KicM8KOUbCy4JdVu91o14k11w4F00nhsvCbuLpvZ6wz7Jb/G4dwUhIfTjkeqsJzofh4G0oaaa2JJ6r/7LPILKxoR2wStyx9nfSMA7gkkPVLB8yfBck3sku2YUUynhOkCzuzdsJT4WRLbWEWhoe1el87I7uVurTLUyr7O7O7A==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5444.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(136003)(376002)(366004)(346002)(39860400002)(396003)(451199018)(31686004)(2616005)(966005)(316002)(6512007)(6666004)(55236004)(53546011)(6486002)(478600001)(26005)(6506007)(186003)(7416002)(31696002)(38100700002)(86362001)(4744005)(66946007)(5660300002)(41300700001)(4326008)(2906002)(8936002)(36756003)(66476007)(66556008)(8676002)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?U3VVbExPeVVQZWFSOTFzekJEOFZPcWprRG5FbWhGREltd0JxbE8yYm94cDY5?=
- =?utf-8?B?MnNVTG44YkZleW0wYXhZRHZmVnRJc081OWE5MkMrSDBIWGNha3FxVlNmZ3V5?=
- =?utf-8?B?Q0Q4T1c1b01zNjA2L3Q0ZGFhRENZSDVyOTVlS3V5SEQrOCs2TUpKaXNaSDVD?=
- =?utf-8?B?UDZZN2k3K2txVmRRd2VmNVkyZTRMUDlaMFVyNVZuTEI0c1ZZZVFURmxNRU03?=
- =?utf-8?B?d0VIRHpBWG0zSkdxM2JmeXd4RFM5eXZnUjlIa0p1RTd5K2xEV2xVTStpdVBj?=
- =?utf-8?B?eFhJdzZDMFMrc0NrYUg5cUJIMldaVDVEc2pQMFowZzkxZFphWDZZRzRHR0Jj?=
- =?utf-8?B?NVYyK0JsZnc4TEJCZGNjUkxtOGpLZjFOdURaWm9pMEJQcGdvdTFXZGJ2cDhF?=
- =?utf-8?B?ZkNMQ1hJb3dzbDh4K29jZGZiUDBDdmhLV2xVRERxZ1l2Qis4SUl4K1Q0eHdB?=
- =?utf-8?B?ek1hRVdVYklvOFliTnk1TmpJMmpqKzBvMDZmVVdGSGVuRDlvcXRaZ0VFaXZR?=
- =?utf-8?B?K2JIMUpnOFF1eTdyRWw1QldwMm15bE9BdTI1Ly9Fc0NhUkNQRGN3QzFMbG1p?=
- =?utf-8?B?MjN1QW5EV0RPRkRyWkJBV3VOVTV2dkdqOGx4dGFBT1pDUXk4Vm1HemE0eGtT?=
- =?utf-8?B?cVdqaWl1VVVYTUd5SHVYaGVRTlRhNjRyYTdUdS9vL0gvVkRBMEVGVVhOcmN2?=
- =?utf-8?B?VjdXN1R4UXUvdUVWekRpYjZtQktJZzk2SnorZkhkY2JvdFUyc09kVmJqdWxj?=
- =?utf-8?B?RW9VVm02VHBwREorZjB5UEplMVhMWFhBSjJRYVhNMzFFSTU2bzVsNldYelVy?=
- =?utf-8?B?bXZIUFBhUUQ1Z2s4aytGQTFIL0pDakxWaURMM2xSUEhEY2FUS3ZiMTJUakdi?=
- =?utf-8?B?U3NqMGpmU0tCbXIvSEIrb0lXM05jem9XVVBORE5oMjQ0Sis1OHZLOEViK2VD?=
- =?utf-8?B?WGFaa2FLM0xUOUpDV2ZISGdkV09STjBPNEtPSVB2T24vRjdWNWE5Qm01Zkhh?=
- =?utf-8?B?NnZTZ2JqZk4wcUJ1Z1haZDJRcXR1bCtKK1IwWjNoeDJwMlZWTW5TVEhqRWdX?=
- =?utf-8?B?QWxKYkQ4bm84RDI2WDBKSjRvVm1vTFo1d3BLQVcwTVlwWlBESGNENDFmRGlz?=
- =?utf-8?B?OENLbFh3dTlkTlh2d1pSMFdzTTY1SGtDa1BGVk9tSDV3aHJXN2pSODdNaWlT?=
- =?utf-8?B?cTZ2YkZhWUZkZldoNHBNTzNFVzIxVi9DMnBkNm1JeUQyVThqYWV4Z1hzWWE2?=
- =?utf-8?B?YzdCbzdacmNnN29MSHovV09yOG54NlB3Zk9yNFpTaWw0aFVsSm1OSUlMOEhv?=
- =?utf-8?B?eDUza0JLVy9zYkpXelRKNzNncDdrTG9IMkxSVERQSHpKM1dyMGhld2UxcENr?=
- =?utf-8?B?cVFHcmlZUFJFdWxPKzJubm1Vd2pFVk1ZbTRZWnBMZmZnOVBaV0ZNZ2FhQXlT?=
- =?utf-8?B?eXV1ellvWEtIRFYzRjFuTElpZTBXNnN6bEx0NjVVbTZ2dnFsR3NoZkZMUy9O?=
- =?utf-8?B?eE9BY2VnNWYxQjdET0kvNk1oRkpJWGdwYXNQS01VSisyTnlvZWZLUkNMY0k2?=
- =?utf-8?B?UDFER05OWVo2UDNobHZnVVcyZlRLOThvOFYrNWVhUmc4S0J6eUs4aFA0b0Ez?=
- =?utf-8?B?dHd6bEh0Mlp5Mms5aFR2SW4yRk5yWXFZVVNCL0VhU1BBRzEvQ2tsSkdFbGFk?=
- =?utf-8?B?V0haajJzbTUrdy9McGIwbi9XdmhNbkRzR0xyci9SRWZFZGxocFVVUUUrLzdz?=
- =?utf-8?B?c3lUNm1ZVDJUV2JxVlo3dHVvdXhjR0FwKzJwZzB0L3pvZERDdzhIRS9EMG0r?=
- =?utf-8?B?aUFoUWxMYXFueFdtajRaY05qYWxDc3VING0wdStrdy9VYllMSnpjMXd5QTZo?=
- =?utf-8?B?WlhjY1NLWmlROC9ZVnZxTXFuQ29LZmp2RXlqWEpUZ2FVZmdiVXZ0N1hqU245?=
- =?utf-8?B?cmZ4RUZ1MEZKd3B2UGdON2RJc2NDdk42UzltWVljTlJyRlRPc1puS01LemM1?=
- =?utf-8?B?eW5SS1FuUE1OMFRwVWE0NEkyMlN2ZVZoc05QRU0wVjdOK3Q0TlJ4KzFSUDlh?=
- =?utf-8?B?MFJkY2tHQTZDRk16VWhjck5HdlBDcEpqd0kvUkZydlJhZHlTYlBObm1DTVVy?=
- =?utf-8?B?cU9SRFpOMFdXeHhOY3grbmlocktHZjI4L0hWMlZWQnVpVkhERU1oTkwvbFVH?=
- =?utf-8?B?dGc9PQ==?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 50e5636e-95ff-4c32-9897-08db2a037a01
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5444.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Mar 2023 11:57:42.6687
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: JsBOiI88dM4fKZHJfk/VWubPNbuOn8u0J7mubclU2Sa83LlxVYfHEERpP7T4tco0CFU3qZw93kPIUXl3qeeOAQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8273
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Proofpoint-ORIG-GUID: 3efuO790aYSYltowk08IWxaGkUHQaPV5
+X-Proofpoint-GUID: 3efuO790aYSYltowk08IWxaGkUHQaPV5
+X-Proofpoint-Spam-Reason: safe
+X-SA-Exim-Connect-IP: 139.178.84.217
+X-SA-Exim-Mail-From: SRS0=Q5NZ=7H=opensource.cirrus.com=prvs=843822f42b=vkarpovi@kernel.org
+Subject: [PATCH v3 1/5] ASoC: cs35l45: Support for GPIO pins configuration.
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: CmtVHbSMZt3T
 
+From: "Vlad.Karpovich" <vkarpovi@opensource.cirrus.com>
 
-On 20/03/2023 14:52, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.8 release.
-> There are 211 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 22 Mar 2023 14:54:32 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.8-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Adds device tree configuration for cs35l45 GPIOs
 
-All tests passing for Tegra.
+Signed-off-by: Vlad Karpovich <vkarpovi@opensource.cirrus.com>
+---
+ include/dt-bindings/sound/cs35l45.h | 57 +++++++++++++++++++++++++++++
+ sound/soc/codecs/cs35l45-tables.c   | 14 +++++++
+ sound/soc/codecs/cs35l45.c          | 56 ++++++++++++++++++++++++++++
+ sound/soc/codecs/cs35l45.h          | 27 +++++++++++++-
+ 4 files changed, 152 insertions(+), 2 deletions(-)
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-
-Due to infrastructure issues, no test report available, but all tests 
-are passing.
-
-Jon
-
+diff --git a/include/dt-bindings/sound/cs35l45.h b/include/dt-bindings/sound/cs35l45.h
+index 076da4b2c28d..25386af18445 100644
+--- a/include/dt-bindings/sound/cs35l45.h
++++ b/include/dt-bindings/sound/cs35l45.h
+@@ -17,4 +17,61 @@
+ #define CS35L45_ASP_TX_HIZ_UNUSED	0x1
+ #define CS35L45_ASP_TX_HIZ_DISABLED	0x2
+ 
++/*
++ * Optional GPIOX Sub-nodes:
++ *  The cs35l45 node can have up to three "cirrus,gpio-ctrlX" ('X' = [1,2,3])
++ *  sub-nodes for configuring the GPIO pins.
++ *
++ * - gpio-dir : GPIO pin direction. Valid only when 'gpio-ctrl'
++ *   is 1.
++ *    0 = Output
++ *    1 = Input (Default)
++ *
++ * - gpio-lvl : GPIO level. Valid only when 'gpio-ctrl' is 1 and 'gpio-dir' is 0.
++ *
++ *    0 = Low (Default)
++ *    1 = High
++ *
++ * - gpio-op-cfg : GPIO output configuration. Valid only when 'gpio-ctrl' is 1
++ *   and 'gpio-dir' is 0.
++ *
++ *    0 = CMOS (Default)
++ *    1 = Open Drain
++ *
++ * - gpio-pol : GPIO output polarity select. Valid only when 'gpio-ctrl' is 1
++ *   and 'gpio-dir' is 0.
++ *
++ *    0 = Non-inverted, Active High (Default)
++ *    1 = Inverted, Active Low
++ *
++ * - gpio-invert : Defines the polarity of the GPIO pin if configured
++ *   as input.
++ *
++ *    0 = Not inverted (Default)
++ *    1 = Inverted
++ *
++ * - gpio-ctrl : Defines the function of the GPIO pin.
++ *
++ * GPIO1:
++ *   0 = High impedance input (Default)
++ *   1 = Pin acts as a GPIO, direction controlled by 'gpio-dir'
++ *   2 = Pin acts as MDSYNC, direction controlled by MDSYNC
++ *   3-7 = Reserved
++ *
++ * GPIO2:
++ *   0 = High impedance input (Default)
++ *   1 = Pin acts as a GPIO, direction controlled by 'gpio-dir'
++ *   2 = Pin acts as open drain INT
++ *   3 = Reserved
++ *   4 = Pin acts as push-pull output INT. Active low.
++ *   5 = Pin acts as push-pull output INT. Active high.
++ *   6,7 = Reserved
++ *
++ * GPIO3:
++ *   0 = High impedance input (Default)
++ *   1 = Pin acts as a GPIO, direction controlled by 'gpio-dir'
++ *   2-7 = Reserved
++ */
++#define CS35L45_NUM_GPIOS	0x3
++
+ #endif /* DT_CS35L45_H */
+diff --git a/sound/soc/codecs/cs35l45-tables.c b/sound/soc/codecs/cs35l45-tables.c
+index 5a2c2e684ef9..bca7e830821f 100644
+--- a/sound/soc/codecs/cs35l45-tables.c
++++ b/sound/soc/codecs/cs35l45-tables.c
+@@ -43,6 +43,9 @@ EXPORT_SYMBOL_NS_GPL(cs35l45_apply_patch, SND_SOC_CS35L45_TABLES);
+ static const struct reg_default cs35l45_defaults[] = {
+ 	{ CS35L45_BLOCK_ENABLES,		0x00003323 },
+ 	{ CS35L45_BLOCK_ENABLES2,		0x00000010 },
++	{ CS35L45_SYNC_GPIO1,			0x00000007 },
++	{ CS35L45_INTB_GPIO2_MCLK_REF,		0x00000005 },
++	{ CS35L45_GPIO3,			0x00000005 },
+ 	{ CS35L45_REFCLK_INPUT,			0x00000510 },
+ 	{ CS35L45_GLOBAL_SAMPLE_RATE,		0x00000003 },
+ 	{ CS35L45_ASP_ENABLES1,			0x00000000 },
+@@ -61,6 +64,9 @@ static const struct reg_default cs35l45_defaults[] = {
+ 	{ CS35L45_ASPTX4_INPUT,			0x00000028 },
+ 	{ CS35L45_ASPTX5_INPUT,			0x00000048 },
+ 	{ CS35L45_AMP_PCM_CONTROL,		0x00100000 },
++	{ CS35L45_GPIO1_CTRL1,			0x81000001 },
++	{ CS35L45_GPIO2_CTRL1,			0x81000001 },
++	{ CS35L45_GPIO3_CTRL1,			0x81000001 },
+ };
+ 
+ static bool cs35l45_readable_reg(struct device *dev, unsigned int reg)
+@@ -72,6 +78,9 @@ static bool cs35l45_readable_reg(struct device *dev, unsigned int reg)
+ 	case CS35L45_BLOCK_ENABLES:
+ 	case CS35L45_BLOCK_ENABLES2:
+ 	case CS35L45_ERROR_RELEASE:
++	case CS35L45_SYNC_GPIO1:
++	case CS35L45_INTB_GPIO2_MCLK_REF:
++	case CS35L45_GPIO3:
+ 	case CS35L45_REFCLK_INPUT:
+ 	case CS35L45_GLOBAL_SAMPLE_RATE:
+ 	case CS35L45_ASP_ENABLES1:
+@@ -92,6 +101,10 @@ static bool cs35l45_readable_reg(struct device *dev, unsigned int reg)
+ 	case CS35L45_AMP_PCM_CONTROL:
+ 	case CS35L45_AMP_PCM_HPF_TST:
+ 	case CS35L45_IRQ1_EINT_4:
++	case CS35L45_GPIO_STATUS1:
++	case CS35L45_GPIO1_CTRL1:
++	case CS35L45_GPIO2_CTRL1:
++	case CS35L45_GPIO3_CTRL1:
+ 		return true;
+ 	default:
+ 		return false;
+@@ -107,6 +120,7 @@ static bool cs35l45_volatile_reg(struct device *dev, unsigned int reg)
+ 	case CS35L45_ERROR_RELEASE:
+ 	case CS35L45_AMP_PCM_HPF_TST:	/* not cachable */
+ 	case CS35L45_IRQ1_EINT_4:
++	case CS35L45_GPIO_STATUS1:
+ 		return true;
+ 	default:
+ 		return false;
+diff --git a/sound/soc/codecs/cs35l45.c b/sound/soc/codecs/cs35l45.c
+index d15b3b77c7eb..901f3647fbda 100644
+--- a/sound/soc/codecs/cs35l45.c
++++ b/sound/soc/codecs/cs35l45.c
+@@ -536,7 +536,63 @@ static int __maybe_unused cs35l45_runtime_resume(struct device *dev)
+ 
+ static int cs35l45_apply_property_config(struct cs35l45_private *cs35l45)
+ {
++	struct device_node *node = cs35l45->dev->of_node;
++	unsigned int gpio_regs[] = {CS35L45_GPIO1_CTRL1, CS35L45_GPIO2_CTRL1,
++				    CS35L45_GPIO3_CTRL1};
++	unsigned int pad_regs[] = {CS35L45_SYNC_GPIO1,
++				   CS35L45_INTB_GPIO2_MCLK_REF, CS35L45_GPIO3};
++	struct device_node *child;
+ 	unsigned int val;
++	char of_name[32];
++	int ret, i;
++
++	if (!node)
++		return 0;
++
++	for (i = 0; i < CS35L45_NUM_GPIOS; i++) {
++		sprintf(of_name, "cirrus,gpio-ctrl%d", i + 1);
++		child = of_get_child_by_name(node, of_name);
++		if (!child)
++			continue;
++
++		ret = of_property_read_u32(child, "gpio-dir", &val);
++		if (!ret)
++			regmap_update_bits(cs35l45->regmap, gpio_regs[i],
++					   CS35L45_GPIO_DIR_MASK,
++					   val << CS35L45_GPIO_DIR_SHIFT);
++
++		ret = of_property_read_u32(child, "gpio-lvl", &val);
++		if (!ret)
++			regmap_update_bits(cs35l45->regmap, gpio_regs[i],
++					   CS35L45_GPIO_LVL_MASK,
++					   val << CS35L45_GPIO_LVL_SHIFT);
++
++		ret = of_property_read_u32(child, "gpio-op-cfg", &val);
++		if (!ret)
++			regmap_update_bits(cs35l45->regmap, gpio_regs[i],
++					   CS35L45_GPIO_OP_CFG_MASK,
++					   val << CS35L45_GPIO_OP_CFG_SHIFT);
++
++		ret = of_property_read_u32(child, "gpio-pol", &val);
++		if (!ret)
++			regmap_update_bits(cs35l45->regmap, gpio_regs[i],
++					   CS35L45_GPIO_POL_MASK,
++					   val << CS35L45_GPIO_POL_SHIFT);
++
++		ret = of_property_read_u32(child, "gpio-ctrl", &val);
++		if (!ret)
++			regmap_update_bits(cs35l45->regmap, pad_regs[i],
++					   CS35L45_GPIO_CTRL_MASK,
++					   val << CS35L45_GPIO_CTRL_SHIFT);
++
++		ret = of_property_read_u32(child, "gpio-invert", &val);
++		if (!ret)
++			regmap_update_bits(cs35l45->regmap, pad_regs[i],
++					   CS35L45_GPIO_INVERT_MASK,
++					   val << CS35L45_GPIO_INVERT_SHIFT);
++
++		of_node_put(child);
++	}
+ 
+ 	if (device_property_read_u32(cs35l45->dev,
+ 				     "cirrus,asp-sdout-hiz-ctrl", &val) == 0) {
+diff --git a/sound/soc/codecs/cs35l45.h b/sound/soc/codecs/cs35l45.h
+index 53fe9d2b7b15..f3a54fc57d53 100644
+--- a/sound/soc/codecs/cs35l45.h
++++ b/sound/soc/codecs/cs35l45.h
+@@ -14,6 +14,7 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
+ #include <linux/regulator/consumer.h>
++#include <dt-bindings/sound/cs35l45.h>
+ 
+ #define CS35L45_DEVID				0x00000000
+ #define CS35L45_REVID				0x00000004
+@@ -24,6 +25,9 @@
+ #define CS35L45_BLOCK_ENABLES			0x00002018
+ #define CS35L45_BLOCK_ENABLES2			0x0000201C
+ #define CS35L45_ERROR_RELEASE			0x00002034
++#define CS35L45_SYNC_GPIO1			0x00002430
++#define CS35L45_INTB_GPIO2_MCLK_REF		0x00002434
++#define CS35L45_GPIO3				0x00002438
+ #define CS35L45_REFCLK_INPUT			0x00002C04
+ #define CS35L45_GLOBAL_SAMPLE_RATE		0x00002C0C
+ #define CS35L45_BOOST_CCM_CFG			0x00003808
+@@ -48,8 +52,11 @@
+ #define CS35L45_AMP_PCM_CONTROL			0x00007000
+ #define CS35L45_AMP_PCM_HPF_TST			0x00007004
+ #define CS35L45_IRQ1_EINT_4			0x0000E01C
+-#define CS35L45_LASTREG				0x0000E01C
+-
++#define CS35L45_GPIO_STATUS1			0x0000F000
++#define CS35L45_GPIO1_CTRL1			0x0000F008
++#define CS35L45_GPIO2_CTRL1			0x0000F00C
++#define CS35L45_GPIO3_CTRL1			0x0000F010
++#define CS35L45_LASTREG			0x0000F010
+ /* SFT_RESET */
+ #define CS35L45_SOFT_RESET_TRIGGER		0x5A000000
+ 
+@@ -165,6 +172,22 @@
+ #define CS35L45_OTP_BOOT_DONE_STS_MASK		BIT(1)
+ #define CS35L45_OTP_BUSY_MASK			BIT(0)
+ 
++/* GPIOX_CTRL1 */
++#define CS35L45_GPIO_DIR_SHIFT			31
++#define CS35L45_GPIO_DIR_MASK			BIT(31)
++#define CS35L45_GPIO_LVL_SHIFT			15
++#define CS35L45_GPIO_LVL_MASK			BIT(15)
++#define CS35L45_GPIO_OP_CFG_SHIFT		14
++#define CS35L45_GPIO_OP_CFG_MASK		BIT(14)
++#define CS35L45_GPIO_POL_SHIFT			12
++#define CS35L45_GPIO_POL_MASK			BIT(12)
++
++/* SYNC_GPIO1, INTB_GPIO2_MCLK_REF, GPIO3 */
++#define CS35L45_GPIO_CTRL_SHIFT		20
++#define CS35L45_GPIO_CTRL_MASK			GENMASK(22, 20)
++#define CS35L45_GPIO_INVERT_SHIFT		19
++#define CS35L45_GPIO_INVERT_MASK		BIT(19)
++
+ /* Mixer sources */
+ #define CS35L45_PCM_SRC_MASK			0x7F
+ #define CS35L45_PCM_SRC_ZERO			0x00
 -- 
-nvpublic
+2.25.1
+
