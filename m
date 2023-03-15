@@ -1,34 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC2C4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:15:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB46C433EF;
-	Wed, 15 Mar 2023 12:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8856F4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:15:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE00C433D2;
+	Wed, 15 Mar 2023 12:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882511;
-	bh=PbfRYudwVpSW6WpsOwdpJyKx4Dg0gn+cJDNN4yH+RKY=;
+	s=korg; t=1678882514;
+	bh=IFhJB+sf7MKOEKbEeQFfRuQfBD0CB5SBohMJj+mx0Zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oyYcayvqJ/iSQvyAHksWsVAtFTE5UhfGJeVmrxLUyZPfoMWLWVSyPpEZuAHEyM6Cd
-	 jPq6OQ5Agf9MEPVbE7C3HSM6/KyyYynVaTp2A+APirWo+1SjDA2WP5FK1PSO/xvVzj
-	 wPRSE94xk5D9ZjvVKpTIWSR/cHFUjrhD7iOUWZlk=
+	b=xOnMnjSfw1fkBTraMWbEVOYzHRgCqXyKFAI+HWUsusBv9JNWOL4rHayvm6/dAPRaJ
+	 YI/FESt9443vVCJym018O3kjLq3c0iZ68MeMvTSNekfMJhEw/GiLNxyt4bxycV+dIN
+	 a1kNgLo1xemYrC1h5RAxcdFhI8aHo0SPWAcYhAjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	tglx@linutronix.de
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	intel-gfx@lists.freedesktop.org,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 4.14 20/21] drm/i915: Dont use BAR mappings for ring buffers with LLC
-Date: Wed, 15 Mar 2023 13:12:43 +0100
-Message-Id: <20230315115719.592804330@linuxfoundation.org>
+	Rhythm Mahajan <rhythm.m.mahajan@oracle.com>
+Subject: [PATCH 4.14 21/21] x86/cpu: Fix LFENCE serialization check in init_amd()
+Date: Wed, 15 Mar 2023 13:12:44 +0100
+Message-Id: <20230315115719.623088937@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115718.796692048@linuxfoundation.org>
 References: <20230315115718.796692048@linuxfoundation.org>
@@ -42,54 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Rhythm Mahajan <rhythm.m.mahajan@oracle.com>
 
-commit 85636167e3206c3fbd52254fc432991cc4e90194 upstream.
+The commit: 3f235279828c ("x86/cpu: Restore AMD's DE_CFG MSR after resume")
+which was backported from the upstream commit: 2632daebafd0 renamed the
+MSR_F10H_DECFG_LFENCE_SERIALIZE macro to MSR_AMD64_DE_CFG_LFENCE_SERIALIZE.
+The fix for 4.14 and 4.9 changed MSR_F10H_DECFG_LFENCE_SERIALIZE to
+MSR_AMD64_DE_CFG_LFENCE_SERIALIZE_BIT in the init_amd() function, but should
+have used MSR_AMD64_DE_CFG_LFENCE_SERIALIZE.  This causes a discrepency in the
+LFENCE serialization check in the init_amd() function.
 
-Direction from hardware is that ring buffers should never be mapped
-via the BAR on systems with LLC. There are too many caching pitfalls
-due to the way BAR accesses are routed. So it is safest to just not
-use it.
+This causes a ~16% sysbench memory regression, when running:
+    sysbench --test=memory run
 
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Fixes: 9d80841ea4c9 ("drm/i915: Allow ringbuffers to be bound anywhere")
-Cc: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: intel-gfx@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v4.9+
-Tested-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230216011101.1909009-3-John.C.Harrison@Intel.com
-(cherry picked from commit 65c08339db1ada87afd6cfe7db8e60bb4851d919)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Fixes: 3f235279828c ("x86/cpu: Restore AMD's DE_CFG MSR after resume")
+Signed-off-by: Rhythm Mahajan <rhythm.m.mahajan@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/intel_ringbuffer.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/amd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/intel_ringbuffer.c
-+++ b/drivers/gpu/drm/i915/intel_ringbuffer.c
-@@ -1314,7 +1314,7 @@ int intel_ring_pin(struct intel_ring *ri
- 	if (unlikely(ret))
- 		return ret;
- 
--	if (i915_vma_is_map_and_fenceable(vma))
-+	if (i915_vma_is_map_and_fenceable(vma) && !HAS_LLC(vma->vm->i915))
- 		addr = (void __force *)i915_vma_pin_iomap(vma);
- 	else
- 		addr = i915_gem_object_pin_map(vma->obj, map);
-@@ -1346,7 +1346,7 @@ void intel_ring_unpin(struct intel_ring
- 	/* Discard any unused bytes beyond that submitted to hw. */
- 	intel_ring_reset(ring, ring->tail);
- 
--	if (i915_vma_is_map_and_fenceable(ring->vma))
-+	if (i915_vma_is_map_and_fenceable(ring->vma) && !HAS_LLC(ring->vma->vm->i915))
- 		i915_vma_unpin_iomap(ring->vma);
- 	else
- 		i915_gem_object_unpin_map(ring->vma->obj);
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -950,7 +950,7 @@ static void init_amd(struct cpuinfo_x86
+ 		 * serializing.
+ 		 */
+ 		ret = rdmsrl_safe(MSR_AMD64_DE_CFG, &val);
+-		if (!ret && (val & MSR_AMD64_DE_CFG_LFENCE_SERIALIZE_BIT)) {
++		if (!ret && (val & MSR_AMD64_DE_CFG_LFENCE_SERIALIZE)) {
+ 			/* A serializing LFENCE stops RDTSC speculation */
+ 			set_cpu_cap(c, X86_FEATURE_LFENCE_RDTSC);
+ 		} else {
 
 
