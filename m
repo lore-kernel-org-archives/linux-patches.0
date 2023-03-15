@@ -1,28 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407534431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9E8C433EF;
-	Wed, 15 Mar 2023 12:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB78F4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE58C433D2;
+	Wed, 15 Mar 2023 12:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882628;
-	bh=buYeAIRY2wqFGhQxe98AfKK0TDFRnr1z58DCbchKvsY=;
+	s=korg; t=1678882630;
+	bh=gg7CyZ2D7X39u6zpFvL2Ah8BqXunxCFsIzNbg692VnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AkILneenejgkUV3Q6bS70Pj9MrlCm88scXTTTsdza4dL1lG3icvdDWU0f7v7PuP3L
-	 2IaToI3U1XRP32ZI3bcZvQLzj31lKnIVT4WjhTP7TGpmw7iu6yclFLKCZuqXFXbXWC
-	 2mAjgJoFkoLrbTh7ki27Cwffc17P9N/D3Svi39kc=
+	b=ZOQskjxo/8RJVkH7tdpsHCeHk5qygV9WbPD4FtsyTm6igHiy9/GsyLnUWVJdRPgp9
+	 di36mVktzwAfS5CpeYzpoMwdmSzO2oXuEFgYDZ87/YUQCfWLyO9ErTEiXASj7aCxH5
+	 m6T9gVxCQtYCyBOl3G4IdGo+dndp9uBfSf++TeBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tavis Ormandy <taviso@gmail.com>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 5.4 02/68] x86/CPU/AMD: Disable XSAVES on AMD family 0x17
-Date: Wed, 15 Mar 2023 13:11:56 +0100
-Message-Id: <20230315115726.197012029@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Pekka Paalanen <ppaalanen@gmail.com>,
+	Sebastian Wick <sebastian.wick@redhat.com>,
+	Vitaly.Prosyak@amd.com,
+	Uma Shankar <uma.shankar@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Joshua Ashton <joshua@froggi.es>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	dri-devel@lists.freedesktop.org,
+	amd-gfx@lists.freedesktop.org,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.4 03/68] drm/connector: print max_requested_bpc in state debugfs
+Date: Wed, 15 Mar 2023 13:11:57 +0100
+Message-Id: <20230315115726.237855960@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -36,50 +43,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit b0563468eeac88ebc70559d52a0b66efc37e4e9d upstream.
+commit 7d386975f6a495902e679a3a250a7456d7e54765 upstream.
 
-AMD Erratum 1386 is summarised as:
+This is useful to understand the bpc defaults and
+support of a driver.
 
-  XSAVES Instruction May Fail to Save XMM Registers to the Provided
-  State Save Area
-
-This piece of accidental chronomancy causes the %xmm registers to
-occasionally reset back to an older value.
-
-Ignore the XSAVES feature on all AMD Zen1/2 hardware.  The XSAVEC
-instruction (which works fine) is equivalent on affected parts.
-
-  [ bp: Typos, move it into the F17h-specific function. ]
-
-Reported-by: Tavis Ormandy <taviso@gmail.com>
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230307174643.1240184-1-andrew.cooper3@citrix.com
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Cc: Pekka Paalanen <ppaalanen@gmail.com>
+Cc: Sebastian Wick <sebastian.wick@redhat.com>
+Cc: Vitaly.Prosyak@amd.com
+Cc: Uma Shankar <uma.shankar@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Joshua Ashton <joshua@froggi.es>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: amd-gfx@lists.freedesktop.org
+Reviewed-By: Joshua Ashton <joshua@froggi.es>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230113162428.33874-3-harry.wentland@amd.com
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/amd.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/drm_atomic.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -205,6 +205,15 @@ static void init_amd_k6(struct cpuinfo_x
- 		return;
- 	}
- #endif
-+	/*
-+	 * Work around Erratum 1386.  The XSAVES instruction malfunctions in
-+	 * certain circumstances on Zen1/2 uarch, and not all parts have had
-+	 * updated microcode at the time of writing (March 2023).
-+	 *
-+	 * Affected parts all have no supervisor XSAVE states, meaning that
-+	 * the XSAVEC instruction (which works fine) is equivalent.
-+	 */
-+	clear_cpu_cap(c, X86_FEATURE_XSAVES);
- }
+--- a/drivers/gpu/drm/drm_atomic.c
++++ b/drivers/gpu/drm/drm_atomic.c
+@@ -1006,6 +1006,7 @@ static void drm_atomic_connector_print_s
+ 	drm_printf(p, "connector[%u]: %s\n", connector->base.id, connector->name);
+ 	drm_printf(p, "\tcrtc=%s\n", state->crtc ? state->crtc->name : "(null)");
+ 	drm_printf(p, "\tself_refresh_aware=%d\n", state->self_refresh_aware);
++	drm_printf(p, "\tmax_requested_bpc=%d\n", state->max_requested_bpc);
  
- static void init_amd_k7(struct cpuinfo_x86 *c)
+ 	if (connector->connector_type == DRM_MODE_CONNECTOR_WRITEBACK)
+ 		if (state->writeback_job && state->writeback_job->fb)
 
 
