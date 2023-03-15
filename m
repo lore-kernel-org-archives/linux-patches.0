@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018144431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D941C433EF;
-	Wed, 15 Mar 2023 12:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0DE4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27678C433D2;
+	Wed, 15 Mar 2023 12:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883055;
-	bh=scIBUCibkZ6ezqacbiLi2xkfwIP7lbG0QjO+CwNdsuI=;
+	s=korg; t=1678883058;
+	bh=jEmms8lj+xvfHMm71fwgcxBsB3dGtCttV7/9Zc+FvDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S640zHK2cAXOTiAmmOV+ito29WKNLJJ9GtyRibE953vS1fPHTxOy3Sf07WdZVIr+x
-	 GTnr7vz7KN+xdcghDMMhaBUJWEa+I3VHtDviozOjKmHsHvLte1+Ryh5ONhAx+vErX4
-	 UFyp6gmLSwvVjXYxpURwjVx9U0wzvlXLN/Od35aQ=
+	b=FBGgv7kAFWawBtNiwbFZVhSAxfFQonEfjCOslZM7jy8IwAJ50ESeU4Ni4y6FtwZni
+	 wq1WBHRlFm/SRnD530yCrSWS0A9Wh2Kv0SWHSdQ6p/OHO+nytiUekJidrZWB80ZqUh
+	 Gui9PXGHeSqC26Femb4RRHIiPuHmMd88OgRk2OPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nicolas Schier <nicolas@fjasle.eu>,
+	Paul Elder <paul.elder@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 074/104] scripts: handle BrokenPipeError for python scripts
-Date: Wed, 15 Mar 2023 13:12:45 +0100
-Message-Id: <20230315115735.039952713@linuxfoundation.org>
+Subject: [PATCH 5.10 075/104] media: ov5640: Fix analogue gain control
+Date: Wed, 15 Mar 2023 13:12:46 +0100
+Message-Id: <20230315115735.077904470@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -36,191 +39,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Paul Elder <paul.elder@ideasonboard.com>
 
-[ Upstream commit 87c7ee67deb7fce9951a5f9d80641138694aad17 ]
+[ Upstream commit afa4805799c1d332980ad23339fdb07b5e0cf7e0 ]
 
-In the follow-up of commit fb3041d61f68 ("kbuild: fix SIGPIPE error
-message for AR=gcc-ar and AR=llvm-ar"), Kees Cook pointed out that
-tools should _not_ catch their own SIGPIPEs [1] [2].
+Gain control is badly documented in publicly available (including
+leaked) documentation.
 
-Based on his feedback, LLVM was fixed [3].
+There is an AGC pre-gain in register 0x3a13, expressed as a 6-bit value
+(plus an enable bit in bit 6). The driver hardcodes it to 0x43, which
+one application note states is equal to x1.047. The documentation also
+states that 0x40 is equel to x1.000. The pre-gain thus seems to be
+expressed as in 1/64 increments, and thus ranges from x1.00 to x1.984.
+What the pre-gain does is however unspecified.
 
-However, Python's default behavior is to show noisy bracktrace when
-SIGPIPE is sent. So, scripts written in Python are basically in the
-same situation as the buggy llvm tools.
+There is then an AGC gain limit, in registers 0x3a18 and 0x3a19,
+expressed as a 10-bit "real gain format" value. One application note
+sets it to 0x00f8 and states it is equal to x15.5, so it appears to be
+expressed in 1/16 increments, up to x63.9375.
 
-Example:
+The manual gain is stored in registers 0x350a and 0x350b, also as a
+10-bit "real gain format" value. It is documented in the application
+note as a Q6.4 values, up to x63.9375.
 
-  $ make -s allnoconfig
-  $ make -s allmodconfig
-  $ scripts/diffconfig .config.old .config | head -n1
-  -ALIX n
-  Traceback (most recent call last):
-    File "/home/masahiro/linux/scripts/diffconfig", line 132, in <module>
-      main()
-    File "/home/masahiro/linux/scripts/diffconfig", line 130, in main
-      print_config("+", config, None, b[config])
-    File "/home/masahiro/linux/scripts/diffconfig", line 64, in print_config
-      print("+%s %s" % (config, new_value))
-  BrokenPipeError: [Errno 32] Broken pipe
+One version of the datasheet indicates that the sensor supports a
+digital gain:
 
-Python documentation [4] notes how to make scripts die immediately and
-silently:
+  The OV5640 supports 1/2/4 digital gain. Normally, the gain is
+  controlled automatically by the automatic gain control (AGC) block.
 
-  """
-  Piping output of your program to tools like head(1) will cause a
-  SIGPIPE signal to be sent to your process when the receiver of its
-  standard output closes early. This results in an exception like
-  BrokenPipeError: [Errno 32] Broken pipe. To handle this case,
-  wrap your entry point to catch this exception as follows:
+It isn't clear how that would be controlled manually.
 
-    import os
-    import sys
+There appears to be no indication regarding whether the gain controlled
+through registers 0x350a and 0x350b is an analogue gain only or also
+includes digital gain. The words "real gain" don't necessarily mean
+"combined analogue and digital gains". Some OmniVision sensors (such as
+the OV8858) are documented as supoprting different formats for the gain
+values, selectable through a register bit, and they are called "real
+gain format" and "sensor gain format". For that sensor, we have (one of)
+the gain registers documented as
 
-    def main():
-        try:
-            # simulate large output (your code replaces this loop)
-            for x in range(10000):
-                print("y")
-            # flush output here to force SIGPIPE to be triggered
-            # while inside this try block.
-            sys.stdout.flush()
-        except BrokenPipeError:
-            # Python flushes standard streams on exit; redirect remaining output
-            # to devnull to avoid another BrokenPipeError at shutdown
-            devnull = os.open(os.devnull, os.O_WRONLY)
-            os.dup2(devnull, sys.stdout.fileno())
-            sys.exit(1)  # Python exits with error code 1 on EPIPE
+  0x3503[2]=0, gain[7:0] is real gain format, where low 4 bits are
+  fraction bits, for example, 0x10 is 1x gain, 0x28 is 2.5x gain
 
-    if __name__ == '__main__':
-        main()
+  If 0x3503[2]=1, gain[7:0] is sensor gain format, gain[7:4] is coarse
+  gain, 00000: 1x, 00001: 2x, 00011: 4x, 00111: 8x, gain[7] is 1,
+  gain[3:0] is fine gain. For example, 0x10 is 1x gain, 0x30 is 2x gain,
+  0x70 is 4x gain
 
-  Do not set SIGPIPE’s disposition to SIG_DFL in order to avoid
-  BrokenPipeError. Doing that would cause your program to exit
-  unexpectedly whenever any socket connection is interrupted while
-  your program is still writing to it.
-  """
+(The second part of the text makes little sense)
 
-Currently, tools/perf/scripts/python/intel-pt-events.py seems to be the
-only script that fixes the issue that way.
+"Real gain" may thus refer to the combination of the coarse and fine
+analogue gains as a single value.
 
-tools/perf/scripts/python/compaction-times.py uses another approach
-signal.signal(signal.SIGPIPE, signal.SIG_DFL) but the Python
-documentation clearly says "Don't do it".
+The OV5640 0x350a and 0x350b registers thus appear to control analogue
+gain. The driver incorrectly uses V4L2_CID_GAIN as V4L2 has a specific
+control for analogue gain, V4L2_CID_ANALOGUE_GAIN. Use it.
 
-I cannot fix all Python scripts since there are so many.
-I fixed some in the scripts/ directory.
+If registers 0x350a and 0x350b are later found to control digital gain
+as well, the driver could then restrict the range of the analogue gain
+control value to lower than x64 and add a separate digital gain control.
 
-[1]: https://lore.kernel.org/all/202211161056.1B9611A@keescook/
-[2]: https://github.com/llvm/llvm-project/issues/59037
-[3]: https://github.com/llvm/llvm-project/commit/4787efa38066adb51e2c049499d25b3610c0877b
-[4]: https://docs.python.org/3/library/signal.html#note-on-sigpipe
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+Signed-off-by: Paul Elder <paul.elder@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Reviewed-by: Jai Luthra <j-luthra@ti.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/checkkconfigsymbols.py         | 13 ++++++++++++-
- scripts/clang-tools/run-clang-tools.py | 21 ++++++++++++++-------
- scripts/diffconfig                     | 16 ++++++++++++++--
- 3 files changed, 40 insertions(+), 10 deletions(-)
+ drivers/media/i2c/ov5640.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/checkkconfigsymbols.py b/scripts/checkkconfigsymbols.py
-index 1548f9ce46827..697972432bbe7 100755
---- a/scripts/checkkconfigsymbols.py
-+++ b/scripts/checkkconfigsymbols.py
-@@ -113,7 +113,7 @@ def parse_options():
-     return args
+diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
+index 8f0812e859012..92a5f9aff9b53 100644
+--- a/drivers/media/i2c/ov5640.c
++++ b/drivers/media/i2c/ov5640.c
+@@ -2748,7 +2748,7 @@ static int ov5640_init_controls(struct ov5640_dev *sensor)
+ 	/* Auto/manual gain */
+ 	ctrls->auto_gain = v4l2_ctrl_new_std(hdl, ops, V4L2_CID_AUTOGAIN,
+ 					     0, 1, 1, 1);
+-	ctrls->gain = v4l2_ctrl_new_std(hdl, ops, V4L2_CID_GAIN,
++	ctrls->gain = v4l2_ctrl_new_std(hdl, ops, V4L2_CID_ANALOGUE_GAIN,
+ 					0, 1023, 1, 0);
  
- 
--def main():
-+def print_undefined_symbols():
-     """Main function of this module."""
-     args = parse_options()
- 
-@@ -472,5 +472,16 @@ def parse_kconfig_file(kfile):
-     return defined, references
- 
- 
-+def main():
-+    try:
-+        print_undefined_symbols()
-+    except BrokenPipeError:
-+        # Python flushes standard streams on exit; redirect remaining output
-+        # to devnull to avoid another BrokenPipeError at shutdown
-+        devnull = os.open(os.devnull, os.O_WRONLY)
-+        os.dup2(devnull, sys.stdout.fileno())
-+        sys.exit(1)  # Python exits with error code 1 on EPIPE
-+
-+
- if __name__ == "__main__":
-     main()
-diff --git a/scripts/clang-tools/run-clang-tools.py b/scripts/clang-tools/run-clang-tools.py
-index f754415af398b..f42699134f1c0 100755
---- a/scripts/clang-tools/run-clang-tools.py
-+++ b/scripts/clang-tools/run-clang-tools.py
-@@ -60,14 +60,21 @@ def run_analysis(entry):
- 
- 
- def main():
--    args = parse_arguments()
-+    try:
-+        args = parse_arguments()
- 
--    lock = multiprocessing.Lock()
--    pool = multiprocessing.Pool(initializer=init, initargs=(lock, args))
--    # Read JSON data into the datastore variable
--    with open(args.path, "r") as f:
--        datastore = json.load(f)
--        pool.map(run_analysis, datastore)
-+        lock = multiprocessing.Lock()
-+        pool = multiprocessing.Pool(initializer=init, initargs=(lock, args))
-+        # Read JSON data into the datastore variable
-+        with open(args.path, "r") as f:
-+            datastore = json.load(f)
-+            pool.map(run_analysis, datastore)
-+    except BrokenPipeError:
-+        # Python flushes standard streams on exit; redirect remaining output
-+        # to devnull to avoid another BrokenPipeError at shutdown
-+        devnull = os.open(os.devnull, os.O_WRONLY)
-+        os.dup2(devnull, sys.stdout.fileno())
-+        sys.exit(1)  # Python exits with error code 1 on EPIPE
- 
- 
- if __name__ == "__main__":
-diff --git a/scripts/diffconfig b/scripts/diffconfig
-index d5da5fa05d1d3..43f0f3d273ae7 100755
---- a/scripts/diffconfig
-+++ b/scripts/diffconfig
-@@ -65,7 +65,7 @@ def print_config(op, config, value, new_value):
-         else:
-             print(" %s %s -> %s" % (config, value, new_value))
- 
--def main():
-+def show_diff():
-     global merge_style
- 
-     # parse command line args
-@@ -129,4 +129,16 @@ def main():
-     for config in new:
-         print_config("+", config, None, b[config])
- 
--main()
-+def main():
-+    try:
-+        show_diff()
-+    except BrokenPipeError:
-+        # Python flushes standard streams on exit; redirect remaining output
-+        # to devnull to avoid another BrokenPipeError at shutdown
-+        devnull = os.open(os.devnull, os.O_WRONLY)
-+        os.dup2(devnull, sys.stdout.fileno())
-+        sys.exit(1)  # Python exits with error code 1 on EPIPE
-+
-+
-+if __name__ == '__main__':
-+    main()
+ 	ctrls->saturation = v4l2_ctrl_new_std(hdl, ops, V4L2_CID_SATURATION,
 -- 
 2.39.2
 
