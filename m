@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9500A4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:30:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA98C433EF;
-	Wed, 15 Mar 2023 12:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302794431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:30:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E38C433D2;
+	Wed, 15 Mar 2023 12:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883426;
-	bh=sVH2vsIk/sno9MnNFLS6rc3jeKS1wSCfh1TDNxfxzF0=;
+	s=korg; t=1678883429;
+	bh=bxTptbUVa63UoQCRWI3jLiKQBHLWc7zNuIcPhaE4q9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u21dTzGzIUzAbNAZjzjphus0ELzahMOqiqMkhXecRKfncgvvbXth3XFzCUZJsbml2
-	 kPZ4FZqrSwWnX+qc8oSyePoIOmJAB9Zso6qZRWgn08n8QOfniTuE45yORJDxgulYfS
-	 Z7P1wwF9pChIscAd+z3cLOJr9wxAiCmwxbk1wYqM=
+	b=Je/Kev0X3qcTzd9drfEwihSFz59G0zMk+34Wc+9h4W2BnakHssZPEcCmk88/nxMeX
+	 AF4LnFF6szGmZQLjHAV9710OSoKeNEh3fvLWMtgUH44cvoIA10gE24Log5ZzNerNG6
+	 v6U2yjU7wffrDTQRNW8wF8lZSH49iPGlhvo6oxFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan McLure <rmclure@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Edward Humes <aurxenon@lunos.org>,
+	Matt Turner <mattst88@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 109/145] powerpc/kcsan: Exclude udelay to prevent recursive instrumentation
-Date: Wed, 15 Mar 2023 13:12:55 +0100
-Message-Id: <20230315115742.567863378@linuxfoundation.org>
+Subject: [PATCH 5.15 110/145] alpha: fix R_ALPHA_LITERAL reloc for large modules
+Date: Wed, 15 Mar 2023 13:12:56 +0100
+Message-Id: <20230315115742.596348193@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -35,47 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rohan McLure <rmclure@linux.ibm.com>
+From: Edward Humes <aurxenon@lunos.org>
 
-[ Upstream commit 2a7ce82dc46c591c9244057d89a6591c9639b9b9 ]
+[ Upstream commit b6b17a8b3ecd878d98d5472a9023ede9e669ca72 ]
 
-In order for KCSAN to increase its likelihood of observing a data race,
-it sets a watchpoint on memory accesses and stalls, allowing for
-detection of conflicting accesses by other kernel threads or interrupts.
+Previously, R_ALPHA_LITERAL relocations would overflow for large kernel
+modules.
 
-Stalls are implemented by injecting a call to udelay in instrumented code.
-To prevent recursive instrumentation, exclude udelay from being instrumented.
+This was because the Alpha's apply_relocate_add was relying on the kernel's
+module loader to have sorted the GOT towards the very end of the module as it
+was mapped into memory in order to correctly assign the global pointer. While
+this behavior would mostly work fine for small kernel modules, this approach
+would overflow on kernel modules with large GOT's since the global pointer
+would be very far away from the GOT, and thus, certain entries would be out of
+range.
 
-Signed-off-by: Rohan McLure <rmclure@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230206021801.105268-3-rmclure@linux.ibm.com
+This patch fixes this by instead using the Tru64 behavior of assigning the
+global pointer to be 32KB away from the start of the GOT. The change made
+in this patch won't work for multi-GOT kernel modules as it makes the
+assumption the module only has one GOT located at the beginning of .got,
+although for the vast majority kernel modules, this should be fine. Of the
+kernel modules that would previously result in a relocation error, none of
+them, even modules like nouveau, have even come close to filling up a single
+GOT, and they've all worked fine under this patch.
+
+Signed-off-by: Edward Humes <aurxenon@lunos.org>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/time.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/alpha/kernel/module.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/kernel/time.c b/arch/powerpc/kernel/time.c
-index 934d8ae66cc63..4406d7a89558b 100644
---- a/arch/powerpc/kernel/time.c
-+++ b/arch/powerpc/kernel/time.c
-@@ -450,7 +450,7 @@ void vtime_flush(struct task_struct *tsk)
- #define calc_cputime_factors()
- #endif
+diff --git a/arch/alpha/kernel/module.c b/arch/alpha/kernel/module.c
+index 5b60c248de9ea..cbefa5a773846 100644
+--- a/arch/alpha/kernel/module.c
++++ b/arch/alpha/kernel/module.c
+@@ -146,10 +146,8 @@ apply_relocate_add(Elf64_Shdr *sechdrs, const char *strtab,
+ 	base = (void *)sechdrs[sechdrs[relsec].sh_info].sh_addr;
+ 	symtab = (Elf64_Sym *)sechdrs[symindex].sh_addr;
  
--void __delay(unsigned long loops)
-+void __no_kcsan __delay(unsigned long loops)
- {
- 	unsigned long start;
+-	/* The small sections were sorted to the end of the segment.
+-	   The following should definitely cover them.  */
+-	gp = (u64)me->core_layout.base + me->core_layout.size - 0x8000;
+ 	got = sechdrs[me->arch.gotsecindex].sh_addr;
++	gp = got + 0x8000;
  
-@@ -471,7 +471,7 @@ void __delay(unsigned long loops)
- }
- EXPORT_SYMBOL(__delay);
- 
--void udelay(unsigned long usecs)
-+void __no_kcsan udelay(unsigned long usecs)
- {
- 	__delay(tb_ticks_per_usec * usecs);
- }
+ 	for (i = 0; i < n; i++) {
+ 		unsigned long r_sym = ELF64_R_SYM (rela[i].r_info);
 -- 
 2.39.2
 
