@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF6F4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AB8C433D2;
-	Wed, 15 Mar 2023 12:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48824431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DEB5C4339B;
+	Wed, 15 Mar 2023 12:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883006;
-	bh=DoLAf9SXuAvTh9NuPLe3W5g6Kot22tjwUY9zOn6e6eM=;
+	s=korg; t=1678883008;
+	bh=kB/D25bGYwKhW84w/X5zvV49/OvtdA3ljgXXzcbaUDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvkcgv4ie93DmQpSF8jT+wLZRrhzB0IqbFIFpQ4y0ib56CHvkUBozyivZSTbndLWk
-	 rxFNrnMQdsLwl/50tC/ABdpnJkOB3TGA9EV+0o4IHUD42Inek0gIKQjAOFQfFzEDhO
-	 JeLiARzQ67rXZDvWBbMy8ChOAeepkPyntmIIZvHk=
+	b=HsupTDYZLmrxs+zM3i+CLszCf3AvKlzSMeUHoZroBFfXyigkSreT8T/CR4Pv+3BMc
+	 Qbo9CmEP6XYYOl/vmutDccrOo7Gxjp6DVVaJfZtofEkY8x0JIQfyPhhG3rbRFIQZXE
+	 ScoETyb+vjRjKNLBC7jmOaf6hkGzCFrLFC4kgq50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Qais Yousef <qais.yousef@arm.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	"Qais Yousef (Google)" <qyousef@layalina.io>
-Subject: [PATCH 5.10 085/104] sched/uclamp: Make cpu_overutilized() use util_fits_cpu()
-Date: Wed, 15 Mar 2023 13:12:56 +0100
-Message-Id: <20230315115735.483886583@linuxfoundation.org>
+Subject: [PATCH 5.10 086/104] sched/uclamp: Cater for uclamp in find_energy_efficient_cpu()s early exit condition
+Date: Wed, 15 Mar 2023 13:12:57 +0100
+Message-Id: <20230315115735.527375167@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -37,53 +37,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Qais Yousef <qais.yousef@arm.com>
 
-commit c56ab1b3506ba0e7a872509964b100912bde165d upstream.
+commit d81304bc6193554014d4372a01debdf65e1e9a4d upstream.
 
-So that it is now uclamp aware.
+If the utilization of the woken up task is 0, we skip the energy
+calculation because it has no impact.
 
-This fixes a major problem of busy tasks capped with UCLAMP_MAX keeping
-the system in overutilized state which disables EAS and leads to wasting
-energy in the long run.
+But if the task is boosted (uclamp_min != 0) will have an impact on task
+placement and frequency selection. Only skip if the util is truly
+0 after applying uclamp values.
 
-Without this patch running a busy background activity like JIT
-compilation on Pixel 6 causes the system to be in overutilized state
-74.5% of the time.
+Change uclamp_task_cpu() signature to avoid unnecessary additional calls
+to uclamp_eff_get(). feec() is the only user now.
 
-With this patch this goes down to  9.79%.
-
-It also fixes another problem when long running tasks that have their
-UCLAMP_MIN changed while running such that they need to upmigrate to
-honour the new UCLAMP_MIN value. The upmigration doesn't get triggered
-because overutilized state never gets set in this state, hence misfit
-migration never happens at tick in this case until the task wakes up
-again.
-
-Fixes: af24bde8df202 ("sched/uclamp: Add uclamp support to energy_compute()")
+Fixes: 732cd75b8c920 ("sched/fair: Select an energy-efficient CPU on task wake-up")
 Signed-off-by: Qais Yousef <qais.yousef@arm.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220804143609.515789-7-qais.yousef@arm.com
-(cherry picked from commit c56ab1b3506ba0e7a872509964b100912bde165d)
-[Conflict in kernel/sched/fair.c: use cpu_util() instead of
-cpu_util_cfs()]
+Link: https://lore.kernel.org/r/20220804143609.515789-8-qais.yousef@arm.com
+(cherry picked from commit d81304bc6193554014d4372a01debdf65e1e9a4d)
 Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/fair.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/sched/fair.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -5610,7 +5610,10 @@ static inline unsigned long cpu_util(int
- 
- static inline bool cpu_overutilized(int cpu)
- {
--	return !fits_capacity(cpu_util(cpu), capacity_of(cpu));
-+	unsigned long rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
-+	unsigned long rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
-+
-+	return !util_fits_cpu(cpu_util(cpu), rq_util_min, rq_util_max, cpu);
+@@ -3928,14 +3928,16 @@ static inline unsigned long task_util_es
  }
  
- static inline void update_overutilized_status(struct rq *rq)
+ #ifdef CONFIG_UCLAMP_TASK
+-static inline unsigned long uclamp_task_util(struct task_struct *p)
++static inline unsigned long uclamp_task_util(struct task_struct *p,
++					     unsigned long uclamp_min,
++					     unsigned long uclamp_max)
+ {
+-	return clamp(task_util_est(p),
+-		     uclamp_eff_value(p, UCLAMP_MIN),
+-		     uclamp_eff_value(p, UCLAMP_MAX));
++	return clamp(task_util_est(p), uclamp_min, uclamp_max);
+ }
+ #else
+-static inline unsigned long uclamp_task_util(struct task_struct *p)
++static inline unsigned long uclamp_task_util(struct task_struct *p,
++					     unsigned long uclamp_min,
++					     unsigned long uclamp_max)
+ {
+ 	return task_util_est(p);
+ }
+@@ -6789,7 +6791,7 @@ static int find_energy_efficient_cpu(str
+ 		goto fail;
+ 
+ 	sync_entity_load_avg(&p->se);
+-	if (!task_util_est(p))
++	if (!uclamp_task_util(p, p_util_min, p_util_max))
+ 		goto unlock;
+ 
+ 	for (; pd; pd = pd->next) {
 
 
