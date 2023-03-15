@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4014431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7069C433D2;
-	Wed, 15 Mar 2023 12:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E008F4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690B8C433D2;
+	Wed, 15 Mar 2023 12:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883745;
-	bh=BHUuBjkMYYw14rcSJs6e+Ug+e9lRBaisVFneinvOT1Q=;
+	s=korg; t=1678883747;
+	bh=bmCvWM5EVpx7FteXmHjEP5hgqEpiIvki5zAkvaaBY2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bqX4uJh76j8cbWkwUeEfxzmSd7k8eBwfSQYpdJ3M+yJpopzhsy5kLVZsCk9bPWmKK
-	 7JTBvtGVg5BHYL4tFv4YivH95x8eAlP7Qei0sKVoM7hemF9U5WHXhn0LkmhRgYxQPf
-	 Wrdo6pZ0MbYDoAn7KsW9UeVQlXZwmPke8nsYG7ZA=
+	b=k4MLIZn457Rid/abohxXbvETw9jC7dkkzJJA67sfCdW9ygCbc3E4BdtxI2wEW1+vQ
+	 94hGE1vsQ0zuFTWdZfTTh2EZO20dVOrW+MdnXegNAqiAff7M6L90s9P3THas8ppZtX
+	 dbB9iej9R8W4vW0PACCYDDQiqxDnnYuuSVxEnu7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 086/143] net: phylib: get rid of unnecessary locking
-Date: Wed, 15 Mar 2023 13:12:52 +0100
-Message-Id: <20230315115743.144037814@linuxfoundation.org>
+Subject: [PATCH 6.1 087/143] bnxt_en: Avoid order-5 memory allocation for TPA data
+Date: Wed, 15 Mar 2023 13:12:53 +0100
+Message-Id: <20230315115743.173438123@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -37,172 +38,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit f4b47a2e9463950df3e7c8b70e017877c1d4eb11 ]
+[ Upstream commit accd7e23693aaaa9aa0d3e9eca0ae77d1be80ab3 ]
 
-The locking in phy_probe() and phy_remove() does very little to prevent
-any races with e.g. phy_attach_direct(), but instead causes lockdep ABBA
-warnings. Remove it.
+The driver needs to keep track of all the possible concurrent TPA (GRO/LRO)
+completions on the aggregation ring.  On P5 chips, the maximum number
+of concurrent TPA is 256 and the amount of memory we allocate is order-5
+on systems using 4K pages.  Memory allocation failure has been reported:
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.2.0-dirty #1108 Tainted: G        W   E
-------------------------------------------------------
-ip/415 is trying to acquire lock:
-ffff5c268f81ef50 (&dev->lock){+.+.}-{3:3}, at: phy_attach_direct+0x17c/0x3a0 [libphy]
+NetworkManager: page allocation failure: order:5, mode:0x40dc0(GFP_KERNEL|__GFP_COMP|__GFP_ZERO), nodemask=(null),cpuset=/,mems_allowed=0-1
+CPU: 15 PID: 2995 Comm: NetworkManager Kdump: loaded Not tainted 5.10.156 #1
+Hardware name: Dell Inc. PowerEdge R660/0M1CC5, BIOS 0.2.25 08/12/2022
+Call Trace:
+ dump_stack+0x57/0x6e
+ warn_alloc.cold.120+0x7b/0xdd
+ ? _cond_resched+0x15/0x30
+ ? __alloc_pages_direct_compact+0x15f/0x170
+ __alloc_pages_slowpath.constprop.108+0xc58/0xc70
+ __alloc_pages_nodemask+0x2d0/0x300
+ kmalloc_order+0x24/0xe0
+ kmalloc_order_trace+0x19/0x80
+ bnxt_alloc_mem+0x1150/0x15c0 [bnxt_en]
+ ? bnxt_get_func_stat_ctxs+0x13/0x60 [bnxt_en]
+ __bnxt_open_nic+0x12e/0x780 [bnxt_en]
+ bnxt_open+0x10b/0x240 [bnxt_en]
+ __dev_open+0xe9/0x180
+ __dev_change_flags+0x1af/0x220
+ dev_change_flags+0x21/0x60
+ do_setlink+0x35c/0x1100
 
-but task is already holding lock:
-ffffaef6496cb518 (rtnl_mutex){+.+.}-{3:3}, at: rtnetlink_rcv_msg+0x154/0x560
+Instead of allocating this big chunk of memory and dividing it up for the
+concurrent TPA instances, allocate each small chunk separately for each
+TPA instance.  This will reduce it to order-0 allocations.
 
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #1 (rtnl_mutex){+.+.}-{3:3}:
-       __lock_acquire+0x35c/0x6c0
-       lock_acquire.part.0+0xcc/0x220
-       lock_acquire+0x68/0x84
-       __mutex_lock+0x8c/0x414
-       mutex_lock_nested+0x34/0x40
-       rtnl_lock+0x24/0x30
-       sfp_bus_add_upstream+0x34/0x150
-       phy_sfp_probe+0x4c/0x94 [libphy]
-       mv3310_probe+0x148/0x184 [marvell10g]
-       phy_probe+0x8c/0x200 [libphy]
-       call_driver_probe+0xbc/0x15c
-       really_probe+0xc0/0x320
-       __driver_probe_device+0x84/0x120
-       driver_probe_device+0x44/0x120
-       __device_attach_driver+0xc4/0x160
-       bus_for_each_drv+0x80/0xe0
-       __device_attach+0xb0/0x1f0
-       device_initial_probe+0x1c/0x2c
-       bus_probe_device+0xa4/0xb0
-       device_add+0x360/0x53c
-       phy_device_register+0x60/0xa4 [libphy]
-       fwnode_mdiobus_phy_device_register+0xc0/0x190 [fwnode_mdio]
-       fwnode_mdiobus_register_phy+0x160/0xd80 [fwnode_mdio]
-       of_mdiobus_register+0x140/0x340 [of_mdio]
-       orion_mdio_probe+0x298/0x3c0 [mvmdio]
-       platform_probe+0x70/0xe0
-       call_driver_probe+0x34/0x15c
-       really_probe+0xc0/0x320
-       __driver_probe_device+0x84/0x120
-       driver_probe_device+0x44/0x120
-       __driver_attach+0x104/0x210
-       bus_for_each_dev+0x78/0xdc
-       driver_attach+0x2c/0x3c
-       bus_add_driver+0x184/0x240
-       driver_register+0x80/0x13c
-       __platform_driver_register+0x30/0x3c
-       xt_compat_calc_jump+0x28/0xa4 [x_tables]
-       do_one_initcall+0x50/0x1b0
-       do_init_module+0x50/0x1fc
-       load_module+0x684/0x744
-       __do_sys_finit_module+0xc4/0x140
-       __arm64_sys_finit_module+0x28/0x34
-       invoke_syscall+0x50/0x120
-       el0_svc_common.constprop.0+0x6c/0x1b0
-       do_el0_svc+0x34/0x44
-       el0_svc+0x48/0xf0
-       el0t_64_sync_handler+0xb8/0xc0
-       el0t_64_sync+0x1a0/0x1a4
-
--> #0 (&dev->lock){+.+.}-{3:3}:
-       check_prev_add+0xb4/0xc80
-       validate_chain+0x414/0x47c
-       __lock_acquire+0x35c/0x6c0
-       lock_acquire.part.0+0xcc/0x220
-       lock_acquire+0x68/0x84
-       __mutex_lock+0x8c/0x414
-       mutex_lock_nested+0x34/0x40
-       phy_attach_direct+0x17c/0x3a0 [libphy]
-       phylink_fwnode_phy_connect.part.0+0x70/0xe4 [phylink]
-       phylink_fwnode_phy_connect+0x48/0x60 [phylink]
-       mvpp2_open+0xec/0x2e0 [mvpp2]
-       __dev_open+0x104/0x214
-       __dev_change_flags+0x1d4/0x254
-       dev_change_flags+0x2c/0x7c
-       do_setlink+0x254/0xa50
-       __rtnl_newlink+0x430/0x514
-       rtnl_newlink+0x58/0x8c
-       rtnetlink_rcv_msg+0x17c/0x560
-       netlink_rcv_skb+0x64/0x150
-       rtnetlink_rcv+0x20/0x30
-       netlink_unicast+0x1d4/0x2b4
-       netlink_sendmsg+0x1a4/0x400
-       ____sys_sendmsg+0x228/0x290
-       ___sys_sendmsg+0x88/0xec
-       __sys_sendmsg+0x70/0xd0
-       __arm64_sys_sendmsg+0x2c/0x40
-       invoke_syscall+0x50/0x120
-       el0_svc_common.constprop.0+0x6c/0x1b0
-       do_el0_svc+0x34/0x44
-       el0_svc+0x48/0xf0
-       el0t_64_sync_handler+0xb8/0xc0
-       el0t_64_sync+0x1a0/0x1a4
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(rtnl_mutex);
-                               lock(&dev->lock);
-                               lock(rtnl_mutex);
-  lock(&dev->lock);
-
- *** DEADLOCK ***
-
-Fixes: 298e54fa810e ("net: phy: add core phylib sfp support")
-Reported-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Fixes: 79632e9ba386 ("bnxt_en: Expand bnxt_tpa_info struct to support 57500 chips.")
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy_device.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 8cff61dbc4b57..7fbb0904b3c0f 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -3041,8 +3041,6 @@ static int phy_probe(struct device *dev)
- 	if (phydrv->flags & PHY_IS_INTERNAL)
- 		phydev->is_internal = true;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index cecda545372f9..251b102d2792b 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -3143,7 +3143,7 @@ static int bnxt_alloc_ring(struct bnxt *bp, struct bnxt_ring_mem_info *rmem)
  
--	mutex_lock(&phydev->lock);
--
- 	/* Deassert the reset signal */
- 	phy_device_reset(phydev, 0);
+ static void bnxt_free_tpa_info(struct bnxt *bp)
+ {
+-	int i;
++	int i, j;
  
-@@ -3110,12 +3108,10 @@ static int phy_probe(struct device *dev)
- 	phydev->state = PHY_READY;
+ 	for (i = 0; i < bp->rx_nr_rings; i++) {
+ 		struct bnxt_rx_ring_info *rxr = &bp->rx_ring[i];
+@@ -3151,8 +3151,10 @@ static void bnxt_free_tpa_info(struct bnxt *bp)
+ 		kfree(rxr->rx_tpa_idx_map);
+ 		rxr->rx_tpa_idx_map = NULL;
+ 		if (rxr->rx_tpa) {
+-			kfree(rxr->rx_tpa[0].agg_arr);
+-			rxr->rx_tpa[0].agg_arr = NULL;
++			for (j = 0; j < bp->max_tpa; j++) {
++				kfree(rxr->rx_tpa[j].agg_arr);
++				rxr->rx_tpa[j].agg_arr = NULL;
++			}
+ 		}
+ 		kfree(rxr->rx_tpa);
+ 		rxr->rx_tpa = NULL;
+@@ -3161,14 +3163,13 @@ static void bnxt_free_tpa_info(struct bnxt *bp)
  
- out:
--	/* Assert the reset signal */
-+	/* Re-assert the reset signal on error */
- 	if (err)
- 		phy_device_reset(phydev, 1);
+ static int bnxt_alloc_tpa_info(struct bnxt *bp)
+ {
+-	int i, j, total_aggs = 0;
++	int i, j;
  
--	mutex_unlock(&phydev->lock);
--
- 	return err;
- }
+ 	bp->max_tpa = MAX_TPA;
+ 	if (bp->flags & BNXT_FLAG_CHIP_P5) {
+ 		if (!bp->max_tpa_v2)
+ 			return 0;
+ 		bp->max_tpa = max_t(u16, bp->max_tpa_v2, MAX_TPA_P5);
+-		total_aggs = bp->max_tpa * MAX_SKB_FRAGS;
+ 	}
  
-@@ -3125,9 +3121,7 @@ static int phy_remove(struct device *dev)
+ 	for (i = 0; i < bp->rx_nr_rings; i++) {
+@@ -3182,12 +3183,12 @@ static int bnxt_alloc_tpa_info(struct bnxt *bp)
  
- 	cancel_delayed_work_sync(&phydev->state_queue);
- 
--	mutex_lock(&phydev->lock);
- 	phydev->state = PHY_DOWN;
--	mutex_unlock(&phydev->lock);
- 
- 	sfp_bus_del_upstream(phydev->sfp_bus);
- 	phydev->sfp_bus = NULL;
+ 		if (!(bp->flags & BNXT_FLAG_CHIP_P5))
+ 			continue;
+-		agg = kcalloc(total_aggs, sizeof(*agg), GFP_KERNEL);
+-		rxr->rx_tpa[0].agg_arr = agg;
+-		if (!agg)
+-			return -ENOMEM;
+-		for (j = 1; j < bp->max_tpa; j++)
+-			rxr->rx_tpa[j].agg_arr = agg + j * MAX_SKB_FRAGS;
++		for (j = 0; j < bp->max_tpa; j++) {
++			agg = kcalloc(MAX_SKB_FRAGS, sizeof(*agg), GFP_KERNEL);
++			if (!agg)
++				return -ENOMEM;
++			rxr->rx_tpa[j].agg_arr = agg;
++		}
+ 		rxr->rx_tpa_idx_map = kzalloc(sizeof(*rxr->rx_tpa_idx_map),
+ 					      GFP_KERNEL);
+ 		if (!rxr->rx_tpa_idx_map)
 -- 
 2.39.2
 
