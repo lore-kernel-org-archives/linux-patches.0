@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07174431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367D9C433EF;
-	Wed, 15 Mar 2023 12:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426384431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD80C4339B;
+	Wed, 15 Mar 2023 12:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883923;
-	bh=5Per/CmKfDbemKQ044Qji0QnCNT6Ypgj+BiiN1p9vZo=;
+	s=korg; t=1678883926;
+	bh=1yo2KcCxfaEyofz354vcdGSJanherrkelxMUZOFqUiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XT2HjgMCcKUEgDbE9wW8uTzElLnT3mXqXrJ6J2NLAqu/0Oq67/KIY9YvR4LJqqtl0
-	 HvQeCGUmPsb+QMy0Gu4HpoKOItm67YYgirfWzw41Shjjq5JRUzioZW9UvrRq2Ip442
-	 yFaT40HDsZJ0surhdbbIJNXSFCmxFTmjStJ4NzVo=
+	b=Kp8Df6ywoLgtQESZoggCO+JU9AGEZ7VEmGt0Cg4ZgVC0493+pi9iBVIJknWkuEDpO
+	 +3P6xD+XI1+iCZRbDkeMenj/dtleOnmsGnY8TOHQpeYkb7sLQU/g5aP9DsL+TpkRnN
+	 UIIY/adWjhfnPgkn4R/x++XHrTcu08Gj08OcJ1G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Jan Kara <jack@suse.cz>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 032/141] KVM: VMX: Do _all_ initialization before exposing /dev/kvm to userspace
-Date: Wed, 15 Mar 2023 13:12:15 +0100
-Message-Id: <20230315115740.949969487@linuxfoundation.org>
+Subject: [PATCH 6.2 041/141] block: fix scan partition for exclusively open device again
+Date: Wed, 15 Mar 2023 13:12:24 +0100
+Message-Id: <20230315115741.214538630@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -35,114 +37,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit e32b120071ea114efc0b4ddd439547750b85f618 ]
+[ Upstream commit e5cfefa97bccf956ea0bb6464c1f6c84fd7a8d9f ]
 
-Call kvm_init() only after _all_ setup is complete, as kvm_init() exposes
-/dev/kvm to userspace and thus allows userspace to create VMs (and call
-other ioctls).  E.g. KVM will encounter a NULL pointer when attempting to
-add a vCPU to the per-CPU loaded_vmcss_on_cpu list if userspace is able to
-create a VM before vmx_init() configures said list.
+As explained in commit 36369f46e917 ("block: Do not reread partition table
+on exclusively open device"), reread partition on the device that is
+exclusively opened by someone else is problematic.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000008
- #PF: supervisor write access in kernel mode
- #PF: error_code(0x0002) - not-present page
- PGD 0 P4D 0
- Oops: 0002 [#1] SMP
- CPU: 6 PID: 1143 Comm: stable Not tainted 6.0.0-rc7+ #988
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
- RIP: 0010:vmx_vcpu_load_vmcs+0x68/0x230 [kvm_intel]
-  <TASK>
-  vmx_vcpu_load+0x16/0x60 [kvm_intel]
-  kvm_arch_vcpu_load+0x32/0x1f0 [kvm]
-  vcpu_load+0x2f/0x40 [kvm]
-  kvm_arch_vcpu_create+0x231/0x310 [kvm]
-  kvm_vm_ioctl+0x79f/0xe10 [kvm]
-  ? handle_mm_fault+0xb1/0x220
-  __x64_sys_ioctl+0x80/0xb0
-  do_syscall_64+0x2b/0x50
-  entry_SYSCALL_64_after_hwframe+0x46/0xb0
- RIP: 0033:0x7f5a6b05743b
-  </TASK>
- Modules linked in: vhost_net vhost vhost_iotlb tap kvm_intel(+) kvm irqbypass
+This patch will make sure partition scan will only be proceed if current
+thread open the device exclusively, or the device is not opened
+exclusively, and in the later case, other scanners and exclusive openers
+will be blocked temporarily until partition scan is done.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20221130230934.1014142-15-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: 10c70d95c0f2 ("block: remove the bd_openers checks in blk_drop_partitions")
+Cc: <stable@vger.kernel.org>
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230217022200.3092987-3-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/vmx.c | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ block/genhd.c | 30 ++++++++++++++++++++++++++----
+ block/ioctl.c |  2 +-
+ 2 files changed, 27 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index 74be8b9030a3b..cb547a0833812 100644
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -8521,19 +8521,23 @@ static void vmx_cleanup_l1d_flush(void)
- 	l1tf_vmx_mitigation = VMENTER_L1D_FLUSH_AUTO;
- }
- 
--static void vmx_exit(void)
-+static void __vmx_exit(void)
+diff --git a/block/genhd.c b/block/genhd.c
+index fe47071f79e88..6cdaeb7169004 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -359,6 +359,7 @@ EXPORT_SYMBOL_GPL(disk_uevent);
+ int disk_scan_partitions(struct gendisk *disk, fmode_t mode)
  {
-+	allow_smaller_maxphyaddr = false;
-+
- #ifdef CONFIG_KEXEC_CORE
- 	RCU_INIT_POINTER(crash_vmclear_loaded_vmcss, NULL);
- 	synchronize_rcu();
- #endif
-+	vmx_cleanup_l1d_flush();
-+}
+ 	struct block_device *bdev;
++	int ret = 0;
  
-+static void vmx_exit(void)
-+{
- 	kvm_exit();
- 	kvm_x86_vendor_exit();
+ 	if (disk->flags & (GENHD_FL_NO_PART | GENHD_FL_HIDDEN))
+ 		return -EINVAL;
+@@ -368,11 +369,27 @@ int disk_scan_partitions(struct gendisk *disk, fmode_t mode)
+ 		return -EBUSY;
  
--	vmx_cleanup_l1d_flush();
--
--	allow_smaller_maxphyaddr = false;
-+	__vmx_exit();
- }
- module_exit(vmx_exit);
- 
-@@ -8578,11 +8582,6 @@ static int __init vmx_init(void)
- 	if (r)
- 		return r;
- 
--	r = kvm_init(&vmx_init_ops, sizeof(struct vcpu_vmx),
--		     __alignof__(struct vcpu_vmx), THIS_MODULE);
--	if (r)
--		goto err_kvm_init;
--
- 	/*
- 	 * Must be called after common x86 init so enable_ept is properly set
- 	 * up. Hand the parameter mitigation value in which was stored in
-@@ -8616,11 +8615,20 @@ static int __init vmx_init(void)
- 	if (!enable_ept)
- 		allow_smaller_maxphyaddr = true;
- 
+ 	set_bit(GD_NEED_PART_SCAN, &disk->state);
+-	bdev = blkdev_get_by_dev(disk_devt(disk), mode, NULL);
 +	/*
-+	 * Common KVM initialization _must_ come last, after this, /dev/kvm is
-+	 * exposed to userspace!
++	 * If the device is opened exclusively by current thread already, it's
++	 * safe to scan partitons, otherwise, use bd_prepare_to_claim() to
++	 * synchronize with other exclusive openers and other partition
++	 * scanners.
 +	 */
-+	r = kvm_init(&vmx_init_ops, sizeof(struct vcpu_vmx),
-+		     __alignof__(struct vcpu_vmx), THIS_MODULE);
-+	if (r)
-+		goto err_kvm_init;
++	if (!(mode & FMODE_EXCL)) {
++		ret = bd_prepare_to_claim(disk->part0, disk_scan_partitions);
++		if (ret)
++			return ret;
++	}
 +
- 	return 0;
- 
--err_l1d_flush:
--	vmx_exit();
- err_kvm_init:
-+	__vmx_exit();
-+err_l1d_flush:
- 	kvm_x86_vendor_exit();
- 	return r;
++	bdev = blkdev_get_by_dev(disk_devt(disk), mode & ~FMODE_EXCL, NULL);
+ 	if (IS_ERR(bdev))
+-		return PTR_ERR(bdev);
+-	blkdev_put(bdev, mode);
+-	return 0;
++		ret =  PTR_ERR(bdev);
++	else
++		blkdev_put(bdev, mode);
++
++	if (!(mode & FMODE_EXCL))
++		bd_abort_claiming(disk->part0, disk_scan_partitions);
++	return ret;
  }
+ 
+ /**
+@@ -494,6 +511,11 @@ int __must_check device_add_disk(struct device *parent, struct gendisk *disk,
+ 		if (ret)
+ 			goto out_unregister_bdi;
+ 
++		/* Make sure the first partition scan will be proceed */
++		if (get_capacity(disk) && !(disk->flags & GENHD_FL_NO_PART) &&
++		    !test_bit(GD_SUPPRESS_PART_SCAN, &disk->state))
++			set_bit(GD_NEED_PART_SCAN, &disk->state);
++
+ 		bdev_add(disk->part0, ddev->devt);
+ 		if (get_capacity(disk))
+ 			disk_scan_partitions(disk, FMODE_READ);
+diff --git a/block/ioctl.c b/block/ioctl.c
+index 6dd49d877584a..9c5f637ff153f 100644
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -528,7 +528,7 @@ static int blkdev_common_ioctl(struct block_device *bdev, fmode_t mode,
+ 			return -EACCES;
+ 		if (bdev_is_partition(bdev))
+ 			return -EINVAL;
+-		return disk_scan_partitions(bdev->bd_disk, mode & ~FMODE_EXCL);
++		return disk_scan_partitions(bdev->bd_disk, mode);
+ 	case BLKTRACESTART:
+ 	case BLKTRACESTOP:
+ 	case BLKTRACETEARDOWN:
 -- 
 2.39.2
 
