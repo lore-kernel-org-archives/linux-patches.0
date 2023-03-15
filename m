@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C461A4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:15:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46C39C4339B;
-	Wed, 15 Mar 2023 12:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583D44431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:15:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D329CC433EF;
+	Wed, 15 Mar 2023 12:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882527;
-	bh=OBOMO2qUl2W8+YoGzK/ZYn68/vWNFk3RtyyWAiEZwt0=;
+	s=korg; t=1678882530;
+	bh=74lLmyFO+apqg8p9pAMYXM6bur1XN6Zv4gATIq2JuYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wOMESQPn8QfWWGIuPmFcmKRAImM7P7T/+YgUj2ZkqYnmet5Yip/d+xb8mAR0Anbiz
-	 6fqsCiBJvVMrOsn/h7Fp6AA5EexTzWIGyti9SDV1p2/yc1cQ2xOZRpeMd6qSnzGml+
-	 ZZqo/m7PwD12jrvqgMqb45rjl37OaNCjivArgLr0=
+	b=twsgqfb/rMWjNR7ztyFKT2wrYaaDyqwm1NlQAoT8rWNV6bBYKj93MEBMhh7cVMrvO
+	 9ryVVlFY0fAad1JGODFRtj0FpJ5kh/1D+ajW8rrwfxg+EFTYNC7cL/ZFimCQ4MWjHy
+	 ZCfJmAHJ7YYbEzAoWJgUXQVZhb9kA8yjOkfCxyrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+38695a20b8addcbc1084@syzkaller.appspotmail.com,
 	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 12/39] udf: Preserve link count of system files
-Date: Wed, 15 Mar 2023 13:12:26 +0100
-Message-Id: <20230315115721.708335790@linuxfoundation.org>
+Subject: [PATCH 4.19 13/39] udf: Detect system inodes linked into directory hierarchy
+Date: Wed, 15 Mar 2023 13:12:27 +0100
+Message-Id: <20230315115721.739996578@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115721.234756306@linuxfoundation.org>
 References: <20230315115721.234756306@linuxfoundation.org>
@@ -36,74 +37,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit fc8033a34a3ca7d23353e645e6dde5d364ac5f12 ]
+[ Upstream commit 85a37983ec69cc9fcd188bc37c4de15ee326355a ]
 
-System files in UDF filesystem have link count 0. To not confuse VFS we
-fudge the link count to be 1 when reading such inodes however we forget
-to restore the link count of 0 when writing such inodes. Fix that.
+When UDF filesystem is corrupted, hidden system inodes can be linked
+into directory hierarchy which is an avenue for further serious
+corruption of the filesystem and kernel confusion as noticed by syzbot
+fuzzed images. Refuse to access system inodes linked into directory
+hierarchy and vice versa.
 
 CC: stable@vger.kernel.org
+Reported-by: syzbot+38695a20b8addcbc1084@syzkaller.appspotmail.com
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/inode.c | 9 +++++++--
- fs/udf/super.c | 1 +
- fs/udf/udf_i.h | 3 ++-
- 3 files changed, 10 insertions(+), 3 deletions(-)
+ fs/udf/inode.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/fs/udf/inode.c b/fs/udf/inode.c
-index 415f1186d250f..7436337914b19 100644
+index 7436337914b19..77421e65623a1 100644
 --- a/fs/udf/inode.c
 +++ b/fs/udf/inode.c
-@@ -1375,6 +1375,7 @@ static int udf_read_inode(struct inode *inode, bool hidden_inode)
- 		ret = -EIO;
- 		goto out;
- 	}
-+	iinfo->i_hidden = hidden_inode;
- 	iinfo->i_unique = 0;
- 	iinfo->i_lenEAttr = 0;
- 	iinfo->i_lenExtents = 0;
-@@ -1694,8 +1695,12 @@ static int udf_update_inode(struct inode *inode, int do_sync)
+@@ -1871,8 +1871,13 @@ struct inode *__udf_iget(struct super_block *sb, struct kernel_lb_addr *ino,
+ 	if (!inode)
+ 		return ERR_PTR(-ENOMEM);
  
- 	if (S_ISDIR(inode->i_mode) && inode->i_nlink > 0)
- 		fe->fileLinkCount = cpu_to_le16(inode->i_nlink - 1);
--	else
--		fe->fileLinkCount = cpu_to_le16(inode->i_nlink);
-+	else {
-+		if (iinfo->i_hidden)
-+			fe->fileLinkCount = cpu_to_le16(0);
-+		else
-+			fe->fileLinkCount = cpu_to_le16(inode->i_nlink);
+-	if (!(inode->i_state & I_NEW))
++	if (!(inode->i_state & I_NEW)) {
++		if (UDF_I(inode)->i_hidden != hidden_inode) {
++			iput(inode);
++			return ERR_PTR(-EFSCORRUPTED);
++		}
+ 		return inode;
 +	}
  
- 	fe->informationLength = cpu_to_le64(inode->i_size);
- 
-diff --git a/fs/udf/super.c b/fs/udf/super.c
-index cdaef406f3899..bce48a07790cb 100644
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -151,6 +151,7 @@ static struct inode *udf_alloc_inode(struct super_block *sb)
- 	ei->i_next_alloc_goal = 0;
- 	ei->i_strat4096 = 0;
- 	ei->i_streamdir = 0;
-+	ei->i_hidden = 0;
- 	init_rwsem(&ei->i_data_sem);
- 	ei->cached_extent.lstart = -1;
- 	spin_lock_init(&ei->i_extent_cache_lock);
-diff --git a/fs/udf/udf_i.h b/fs/udf/udf_i.h
-index 2a4731314d51f..b77bf713a1b68 100644
---- a/fs/udf/udf_i.h
-+++ b/fs/udf/udf_i.h
-@@ -43,7 +43,8 @@ struct udf_inode_info {
- 	unsigned		i_use : 1;	/* unallocSpaceEntry */
- 	unsigned		i_strat4096 : 1;
- 	unsigned		i_streamdir : 1;
--	unsigned		reserved : 25;
-+	unsigned		i_hidden : 1;	/* hidden system inode */
-+	unsigned		reserved : 24;
- 	__u8			*i_data;
- 	struct kernel_lb_addr	i_locStreamdir;
- 	__u64			i_lenStreams;
+ 	memcpy(&UDF_I(inode)->i_location, ino, sizeof(struct kernel_lb_addr));
+ 	err = udf_read_inode(inode, hidden_inode);
 -- 
 2.39.2
 
