@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A7A4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:16:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2EACC433D2;
-	Wed, 15 Mar 2023 12:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD374431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:16:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8673AC433EF;
+	Wed, 15 Mar 2023 12:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882601;
-	bh=oh7bUmYU8BvxO0wWyyaYbmFA3o0shhnjHA/vDXs+hfY=;
+	s=korg; t=1678882603;
+	bh=8GtTQQEOEd7vDsT0Q6yzwt3NSNi7Vch7oGPawkArPSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kKfVHaoLOVQIlRodUgymqSrPzCho1h5idJpMOE95BCUmnU5YzpVDDqnlAeWIF5mme
-	 RAdg52Ayh2bg6onvexomaJkO6hDpy3dbYJvAo3WTSCJcFO3MAGywDGzlX34+eERElN
-	 8H4GU9zouYk9y2KQcrRv538th/TjYrfOCiSHAHBg=
+	b=Xmi8StnFl+Zgp3P5Z4B+GM1XHIoSgXKXFJpH69lIuK/4U2Y7up8p/TbUFTM+HFm6v
+	 hZHkTwOy3ebIAuViOIXcQv8wX3oDfG2NbrX2LdW6IDYz5JJxJdSQ4sUfvQE6ZYWEk0
+	 PdBZI/KkSGm8uhcL6s8N2879Zd+b/8EeD+CBeIHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+29d3a3b4d86c8136ad9e@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Tejun Heo <tj@kernel.org>,
-	Cai Xinchen <caixinchen1@huawei.com>
-Subject: [PATCH 4.19 39/39] cgroup: Add missing cpus_read_lock() to cgroup_attach_task_all()
-Date: Wed, 15 Mar 2023 13:12:53 +0100
-Message-Id: <20230315115722.693891532@linuxfoundation.org>
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 19/39] ARM: dts: exynos: Override thermal by label in Exynos5250
+Date: Wed, 15 Mar 2023 13:12:33 +0100
+Message-Id: <20230315115721.932102351@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115721.234756306@linuxfoundation.org>
 References: <20230315115721.234756306@linuxfoundation.org>
@@ -36,52 +34,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 
-commit 43626dade36fa74d3329046f4ae2d7fdefe401c6 upstream.
+[ Upstream commit 7e86ef5cc89609cbad8b9dd2f476789c638dbb92 ]
 
-syzbot is hitting percpu_rwsem_assert_held(&cpu_hotplug_lock) warning at
-cpuset_attach() [1], for commit 4f7e7236435ca0ab ("cgroup: Fix
-threadgroup_rwsem <-> cpus_read_lock() deadlock") missed that
-cpuset_attach() is also called from cgroup_attach_task_all().
-Add cpus_read_lock() like what cgroup_procs_write_start() does.
+Using full paths to extend or override a device tree node is error prone
+since if there was a typo error, a new node will be created instead of
+extending the node as it was desired.  This will lead to run-time errors
+that could be hard to detect.
 
-Link: https://syzkaller.appspot.com/bug?extid=29d3a3b4d86c8136ad9e [1]
-Reported-by: syzbot <syzbot+29d3a3b4d86c8136ad9e@syzkaller.appspotmail.com>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Fixes: 4f7e7236435ca0ab ("cgroup: Fix threadgroup_rwsem <-> cpus_read_lock() deadlock")
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+A mistyped label on the other hand, will cause a dtc compile error
+(during build time).
+
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/r/20200901075417.22481-8-krzk@kernel.org
+Stable-dep-of: 33e2c595e2e4 ("ARM: dts: exynos: correct TMU phandle in Exynos5250")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup-v1.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm/boot/dts/exynos5250.dtsi | 38 +++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 20 deletions(-)
 
---- a/kernel/cgroup/cgroup-v1.c
-+++ b/kernel/cgroup/cgroup-v1.c
-@@ -13,6 +13,7 @@
- #include <linux/delayacct.h>
- #include <linux/pid_namespace.h>
- #include <linux/cgroupstats.h>
-+#include <linux/cpu.h>
+diff --git a/arch/arm/boot/dts/exynos5250.dtsi b/arch/arm/boot/dts/exynos5250.dtsi
+index 59e5f0016b862..1883b8c2cd7b9 100644
+--- a/arch/arm/boot/dts/exynos5250.dtsi
++++ b/arch/arm/boot/dts/exynos5250.dtsi
+@@ -1043,26 +1043,6 @@
+ 		};
+ 	};
  
- #include <trace/events/cgroup.h>
+-	thermal-zones {
+-		cpu_thermal: cpu-thermal {
+-			polling-delay-passive = <0>;
+-			polling-delay = <0>;
+-			thermal-sensors = <&tmu 0>;
+-
+-			cooling-maps {
+-				map0 {
+-				     /* Corresponds to 800MHz at freq_table */
+-				     cooling-device = <&cpu0 9 9>, <&cpu1 9 9>;
+-				};
+-				map1 {
+-				     /* Corresponds to 200MHz at freq_table */
+-				     cooling-device = <&cpu0 15 15>,
+-						      <&cpu1 15 15>;
+-			       };
+-		       };
+-		};
+-	};
+-
+ 	timer {
+ 		compatible = "arm,armv7-timer";
+ 		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+@@ -1078,6 +1058,24 @@
+ 	};
+ };
  
-@@ -55,6 +56,7 @@ int cgroup_attach_task_all(struct task_s
- 	int retval = 0;
- 
- 	mutex_lock(&cgroup_mutex);
-+	get_online_cpus();
- 	percpu_down_write(&cgroup_threadgroup_rwsem);
- 	for_each_root(root) {
- 		struct cgroup *from_cgrp;
-@@ -71,6 +73,7 @@ int cgroup_attach_task_all(struct task_s
- 			break;
- 	}
- 	percpu_up_write(&cgroup_threadgroup_rwsem);
-+	put_online_cpus();
- 	mutex_unlock(&cgroup_mutex);
- 
- 	return retval;
++&cpu_thermal {
++	polling-delay-passive = <0>;
++	polling-delay = <0>;
++	thermal-sensors = <&tmu 0>;
++
++	cooling-maps {
++		map0 {
++			/* Corresponds to 800MHz at freq_table */
++			cooling-device = <&cpu0 9 9>, <&cpu1 9 9>;
++		};
++		map1 {
++			/* Corresponds to 200MHz at freq_table */
++			cooling-device = <&cpu0 15 15>,
++					 <&cpu1 15 15>;
++		};
++	};
++};
++
+ &dp {
+ 	power-domains = <&pd_disp1>;
+ 	clocks = <&clock CLK_DP>;
+-- 
+2.39.2
+
 
 
