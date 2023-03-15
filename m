@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747DD4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:25:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED538C4339B;
-	Wed, 15 Mar 2023 12:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147654431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:25:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B748C433D2;
+	Wed, 15 Mar 2023 12:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883140;
-	bh=fEDAOo6OghdDmVNwxhmpS08GClCyl2fFUSX8NmkVpJY=;
+	s=korg; t=1678883142;
+	bh=vvddJEh04kVMc2x2KyAIinfgVkhWpdnoZyzJgJIAQIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2R34CyaW+YzwvPIOQZmiLWA2PJqweQShzspNOVtxks4gV/nm3bSqnQlKvc2uKdo9G
-	 Tkwqoa9q+Ncz6BJbPWcGzB9O5A9WObIQNvKfDjAmlcmTbTKMLSj4X9YpJDR3AVGYcL
-	 tZQCp87X72vYVifoFWMXXsDA88pffFo3KnC6RDVA=
+	b=ZLexglcuUTgo9ZwYuh3wZZth5kgaQ4L09IPu/XV2zPhuoUcu8QLJrEedSk+/plxb3
+	 hjUXWKNLlhLkLxDUd5lLc2ZpHbpn8kVdSTgRM0u3DX8warR+ULqsFKtmxtZEDGRakj
+	 SMUZrdsxoRsEa/pioTGVT53iCah8NE16D/g16Cfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Sukumar Ghorai <sukumar.ghorai@intel.com>,
+	Ashok Raj <ashok.raj@intel.com>,
+	Jacob Pan <jacob.jun.pan@linux.intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 030/145] irqdomain: Refactor __irq_domain_alloc_irqs()
-Date: Wed, 15 Mar 2023 13:11:36 +0100
-Message-Id: <20230315115740.034800799@linuxfoundation.org>
+Subject: [PATCH 5.15 031/145] iommu/vt-d: Fix PASID directory pointer coherency
+Date: Wed, 15 Mar 2023 13:11:37 +0100
+Message-Id: <20230315115740.073421012@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -37,150 +39,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jacob Pan <jacob.jun.pan@linux.intel.com>
 
-[ Upstream commit d55f7f4c58c07beb5050a834bf57ae2ede599c7e ]
+[ Upstream commit 194b3348bdbb7db65375c72f3f774aee4cc6614e ]
 
-Refactor __irq_domain_alloc_irqs() so that it can be called internally
-while holding the irq_domain_mutex.
+On platforms that do not support IOMMU Extended capability bit 0
+Page-walk Coherency, CPU caches are not snooped when IOMMU is accessing
+any translation structures. IOMMU access goes only directly to
+memory. Intel IOMMU code was missing a flush for the PASID table
+directory that resulted in the unrecoverable fault as shown below.
 
-This will be used to fix a shared-interrupt mapping race, hence the
-Fixes tag.
+This patch adds clflush calls whenever allocating and updating
+a PASID table directory to ensure cache coherency.
 
-Fixes: b62b2cf5759b ("irqdomain: Fix handling of type settings for existing mappings")
-Cc: stable@vger.kernel.org      # 4.8
-Tested-by: Hsin-Yi Wang <hsinyi@chromium.org>
-Tested-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230213104302.17307-6-johan+linaro@kernel.org
+On the reverse direction, there's no need to clflush the PASID directory
+pointer when we deactivate a context entry in that IOMMU hardware will
+not see the old PASID directory pointer after we clear the context entry.
+PASID directory entries are also never freed once allocated.
+
+ DMAR: DRHD: handling fault status reg 3
+ DMAR: [DMA Read NO_PASID] Request device [00:0d.2] fault addr 0x1026a4000
+       [fault reason 0x51] SM: Present bit in Directory Entry is clear
+ DMAR: Dump dmar1 table entries for IOVA 0x1026a4000
+ DMAR: scalable mode root entry: hi 0x0000000102448001, low 0x0000000101b3e001
+ DMAR: context entry: hi 0x0000000000000000, low 0x0000000101b4d401
+ DMAR: pasid dir entry: 0x0000000101b4e001
+ DMAR: pasid table entry[0]: 0x0000000000000109
+ DMAR: pasid table entry[1]: 0x0000000000000001
+ DMAR: pasid table entry[2]: 0x0000000000000000
+ DMAR: pasid table entry[3]: 0x0000000000000000
+ DMAR: pasid table entry[4]: 0x0000000000000000
+ DMAR: pasid table entry[5]: 0x0000000000000000
+ DMAR: pasid table entry[6]: 0x0000000000000000
+ DMAR: pasid table entry[7]: 0x0000000000000000
+ DMAR: PTE not present at level 4
+
+Cc: <stable@vger.kernel.org>
+Fixes: 0bbeb01a4faf ("iommu/vt-d: Manage scalalble mode PASID tables")
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reported-by: Sukumar Ghorai <sukumar.ghorai@intel.com>
+Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
+Link: https://lore.kernel.org/r/20230209212843.1788125-1-jacob.jun.pan@linux.intel.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/irqdomain.c |   88 ++++++++++++++++++++++++++-----------------------
- 1 file changed, 48 insertions(+), 40 deletions(-)
+ drivers/iommu/intel/pasid.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/kernel/irq/irqdomain.c
-+++ b/kernel/irq/irqdomain.c
-@@ -1464,40 +1464,12 @@ int irq_domain_alloc_irqs_hierarchy(stru
- 	return domain->ops->alloc(domain, irq_base, nr_irqs, arg);
+diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
+index 9a3dd55aaa1c2..6dbc43b414ca3 100644
+--- a/drivers/iommu/intel/pasid.c
++++ b/drivers/iommu/intel/pasid.c
+@@ -186,6 +186,9 @@ int intel_pasid_alloc_table(struct device *dev)
+ attach_out:
+ 	device_attach_pasid_table(info, pasid_table);
+ 
++	if (!ecap_coherent(info->iommu->ecap))
++		clflush_cache_range(pasid_table->table, size);
++
+ 	return 0;
  }
  
--/**
-- * __irq_domain_alloc_irqs - Allocate IRQs from domain
-- * @domain:	domain to allocate from
-- * @irq_base:	allocate specified IRQ number if irq_base >= 0
-- * @nr_irqs:	number of IRQs to allocate
-- * @node:	NUMA node id for memory allocation
-- * @arg:	domain specific argument
-- * @realloc:	IRQ descriptors have already been allocated if true
-- * @affinity:	Optional irq affinity mask for multiqueue devices
-- *
-- * Allocate IRQ numbers and initialized all data structures to support
-- * hierarchy IRQ domains.
-- * Parameter @realloc is mainly to support legacy IRQs.
-- * Returns error code or allocated IRQ number
-- *
-- * The whole process to setup an IRQ has been split into two steps.
-- * The first step, __irq_domain_alloc_irqs(), is to allocate IRQ
-- * descriptor and required hardware resources. The second step,
-- * irq_domain_activate_irq(), is to program the hardware with preallocated
-- * resources. In this way, it's easier to rollback when failing to
-- * allocate resources.
-- */
--int __irq_domain_alloc_irqs(struct irq_domain *domain, int irq_base,
--			    unsigned int nr_irqs, int node, void *arg,
--			    bool realloc, const struct irq_affinity_desc *affinity)
-+static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
-+					unsigned int nr_irqs, int node, void *arg,
-+					bool realloc, const struct irq_affinity_desc *affinity)
- {
- 	int i, ret, virq;
- 
--	if (domain == NULL) {
--		domain = irq_default_domain;
--		if (WARN(!domain, "domain is NULL; cannot allocate IRQ\n"))
--			return -EINVAL;
--	}
--
- 	if (realloc && irq_base >= 0) {
- 		virq = irq_base;
- 	} else {
-@@ -1516,24 +1488,18 @@ int __irq_domain_alloc_irqs(struct irq_d
- 		goto out_free_desc;
+@@ -276,6 +279,10 @@ static struct pasid_entry *intel_pasid_get_entry(struct device *dev, u32 pasid)
+ 			free_pgtable_page(entries);
+ 			goto retry;
+ 		}
++		if (!ecap_coherent(info->iommu->ecap)) {
++			clflush_cache_range(entries, VTD_PAGE_SIZE);
++			clflush_cache_range(&dir[dir_index].val, sizeof(*dir));
++		}
  	}
  
--	mutex_lock(&irq_domain_mutex);
- 	ret = irq_domain_alloc_irqs_hierarchy(domain, virq, nr_irqs, arg);
--	if (ret < 0) {
--		mutex_unlock(&irq_domain_mutex);
-+	if (ret < 0)
- 		goto out_free_irq_data;
--	}
- 
- 	for (i = 0; i < nr_irqs; i++) {
- 		ret = irq_domain_trim_hierarchy(virq + i);
--		if (ret) {
--			mutex_unlock(&irq_domain_mutex);
-+		if (ret)
- 			goto out_free_irq_data;
--		}
- 	}
--	
-+
- 	for (i = 0; i < nr_irqs; i++)
- 		irq_domain_insert_irq(virq + i);
--	mutex_unlock(&irq_domain_mutex);
- 
- 	return virq;
- 
-@@ -1544,6 +1510,48 @@ out_free_desc:
- 	return ret;
- }
- 
-+/**
-+ * __irq_domain_alloc_irqs - Allocate IRQs from domain
-+ * @domain:	domain to allocate from
-+ * @irq_base:	allocate specified IRQ number if irq_base >= 0
-+ * @nr_irqs:	number of IRQs to allocate
-+ * @node:	NUMA node id for memory allocation
-+ * @arg:	domain specific argument
-+ * @realloc:	IRQ descriptors have already been allocated if true
-+ * @affinity:	Optional irq affinity mask for multiqueue devices
-+ *
-+ * Allocate IRQ numbers and initialized all data structures to support
-+ * hierarchy IRQ domains.
-+ * Parameter @realloc is mainly to support legacy IRQs.
-+ * Returns error code or allocated IRQ number
-+ *
-+ * The whole process to setup an IRQ has been split into two steps.
-+ * The first step, __irq_domain_alloc_irqs(), is to allocate IRQ
-+ * descriptor and required hardware resources. The second step,
-+ * irq_domain_activate_irq(), is to program the hardware with preallocated
-+ * resources. In this way, it's easier to rollback when failing to
-+ * allocate resources.
-+ */
-+int __irq_domain_alloc_irqs(struct irq_domain *domain, int irq_base,
-+			    unsigned int nr_irqs, int node, void *arg,
-+			    bool realloc, const struct irq_affinity_desc *affinity)
-+{
-+	int ret;
-+
-+	if (domain == NULL) {
-+		domain = irq_default_domain;
-+		if (WARN(!domain, "domain is NULL; cannot allocate IRQ\n"))
-+			return -EINVAL;
-+	}
-+
-+	mutex_lock(&irq_domain_mutex);
-+	ret = irq_domain_alloc_irqs_locked(domain, irq_base, nr_irqs, node, arg,
-+					   realloc, affinity);
-+	mutex_unlock(&irq_domain_mutex);
-+
-+	return ret;
-+}
-+
- /* The irq_data was moved, fix the revmap to refer to the new location */
- static void irq_domain_fix_revmap(struct irq_data *d)
- {
+ 	return &entries[index];
+-- 
+2.39.2
+
 
 
