@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FC34431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:27:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD33FC433D2;
-	Wed, 15 Mar 2023 12:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1024431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:27:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C307C433D2;
+	Wed, 15 Mar 2023 12:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883274;
-	bh=a8MgM0fMPx7jmxyJgESNRpiBuYX3smxiGbxlv3S/QGk=;
+	s=korg; t=1678883276;
+	bh=FxWcvUh84XeroUHix8kJsIzWbclXDSaEb1pxAljTmio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C1r3IfaRXJBZlV9WiKbF9g5sTD0wQg/7wFl/N7syEIp2c60qF06w9cP05YuuDTc+0
-	 kez+ChXJAXDUkQpvOcg3PIOvIrnMty9SsIMWp4lAT2aqXeKqoPGULFQ3X4JuRkREKQ
-	 +dnlKnkBWoDbn32/4ZMgMEqGkoAFQqmq2Dw0ozqo=
+	b=VlcwHzo8A0YdmRxnXCtkl4GkKPEPPFd4jry7bswLoI0mrdbsLQXClH1B4b+4Ocnvw
+	 37SCNvXCtJqrQOyeQ4OOUlddfieeNx0HOk4Eb4Hj3f6gBRb0zKSOQWNIElr7DF3l5K
+	 pqCDJwgUG3JRVhCfk0K7ob0tVhVdoPN5ReU5G9aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9d16c39efb5fade84574@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Dmitry Torokhov <dtor@chromium.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 082/145] ext4: Fix deadlock during directory rename
-Date: Wed, 15 Mar 2023 13:12:28 +0100
-Message-Id: <20230315115741.695533464@linuxfoundation.org>
+Subject: [PATCH 5.15 083/145] irqdomain: Fix mapping-creation race
+Date: Wed, 15 Mar 2023 13:12:29 +0100
+Message-Id: <20230315115741.724040988@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -36,84 +39,182 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 3c92792da8506a295afb6d032b4476e46f979725 ]
+[ Upstream commit 601363cc08da25747feb87c55573dd54de91d66a ]
 
-As lockdep properly warns, we should not be locking i_rwsem while having
-transactions started as the proper lock ordering used by all directory
-handling operations is i_rwsem -> transaction start. Fix the lock
-ordering by moving the locking of the directory earlier in
-ext4_rename().
+Parallel probing of devices that share interrupts (e.g. when a driver
+uses asynchronous probing) can currently result in two mappings for the
+same hardware interrupt to be created due to missing serialisation.
 
-Reported-by: syzbot+9d16c39efb5fade84574@syzkaller.appspotmail.com
-Fixes: 0813299c586b ("ext4: Fix possible corruption when moving a directory")
-Link: https://syzkaller.appspot.com/bug?extid=9d16c39efb5fade84574
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230301141004.15087-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Make sure to hold the irq_domain_mutex when creating mappings so that
+looking for an existing mapping before creating a new one is done
+atomically.
+
+Fixes: 765230b5f084 ("driver-core: add asynchronous probing support for drivers")
+Fixes: b62b2cf5759b ("irqdomain: Fix handling of type settings for existing mappings")
+Link: https://lore.kernel.org/r/YuJXMHoT4ijUxnRb@hovoldconsulting.com
+Cc: stable@vger.kernel.org      # 4.8
+Cc: Dmitry Torokhov <dtor@chromium.org>
+Cc: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Tested-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230213104302.17307-7-johan+linaro@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/namei.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ kernel/irq/irqdomain.c | 64 ++++++++++++++++++++++++++++++------------
+ 1 file changed, 46 insertions(+), 18 deletions(-)
 
-diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
-index aa689adeeafdf..c79c61002a620 100644
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -3827,10 +3827,20 @@ static int ext4_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
- 			return retval;
+diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
+index f95196063884a..e0b67784ac1e0 100644
+--- a/kernel/irq/irqdomain.c
++++ b/kernel/irq/irqdomain.c
+@@ -25,6 +25,9 @@ static DEFINE_MUTEX(irq_domain_mutex);
+ 
+ static struct irq_domain *irq_default_domain;
+ 
++static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
++					unsigned int nr_irqs, int node, void *arg,
++					bool realloc, const struct irq_affinity_desc *affinity);
+ static void irq_domain_check_hierarchy(struct irq_domain *domain);
+ 
+ struct irqchip_fwid {
+@@ -703,9 +706,9 @@ unsigned int irq_create_direct_mapping(struct irq_domain *domain)
+ EXPORT_SYMBOL_GPL(irq_create_direct_mapping);
+ #endif
+ 
+-static unsigned int __irq_create_mapping_affinity(struct irq_domain *domain,
+-						  irq_hw_number_t hwirq,
+-						  const struct irq_affinity_desc *affinity)
++static unsigned int irq_create_mapping_affinity_locked(struct irq_domain *domain,
++						       irq_hw_number_t hwirq,
++						       const struct irq_affinity_desc *affinity)
+ {
+ 	struct device_node *of_node = irq_domain_get_of_node(domain);
+ 	int virq;
+@@ -720,7 +723,7 @@ static unsigned int __irq_create_mapping_affinity(struct irq_domain *domain,
+ 		return 0;
  	}
  
-+	/*
-+	 * We need to protect against old.inode directory getting converted
-+	 * from inline directory format into a normal one.
-+	 */
-+	if (S_ISDIR(old.inode->i_mode))
-+		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
+-	if (irq_domain_associate(domain, virq, hwirq)) {
++	if (irq_domain_associate_locked(domain, virq, hwirq)) {
+ 		irq_free_desc(virq);
+ 		return 0;
+ 	}
+@@ -756,14 +759,20 @@ unsigned int irq_create_mapping_affinity(struct irq_domain *domain,
+ 		return 0;
+ 	}
+ 
++	mutex_lock(&irq_domain_mutex);
 +
- 	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de,
- 				 &old.inlined);
--	if (IS_ERR(old.bh))
--		return PTR_ERR(old.bh);
-+	if (IS_ERR(old.bh)) {
-+		retval = PTR_ERR(old.bh);
-+		goto unlock_moved_dir;
-+	}
+ 	/* Check if mapping already exists */
+ 	virq = irq_find_mapping(domain, hwirq);
+ 	if (virq) {
+ 		pr_debug("existing mapping on virq %d\n", virq);
+-		return virq;
++		goto out;
+ 	}
+ 
+-	return __irq_create_mapping_affinity(domain, hwirq, affinity);
++	virq = irq_create_mapping_affinity_locked(domain, hwirq, affinity);
++out:
++	mutex_unlock(&irq_domain_mutex);
++
++	return virq;
+ }
+ EXPORT_SYMBOL_GPL(irq_create_mapping_affinity);
+ 
+@@ -830,6 +839,8 @@ unsigned int irq_create_fwspec_mapping(struct irq_fwspec *fwspec)
+ 	if (WARN_ON(type & ~IRQ_TYPE_SENSE_MASK))
+ 		type &= IRQ_TYPE_SENSE_MASK;
+ 
++	mutex_lock(&irq_domain_mutex);
 +
  	/*
- 	 *  Check for inode number is _not_ due to possible IO errors.
- 	 *  We might rmdir the source, keep it as pwd of some process
-@@ -3887,11 +3897,6 @@ static int ext4_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
- 			if (new.dir != old.dir && EXT4_DIR_LINK_MAX(new.dir))
- 				goto end_rename;
+ 	 * If we've already configured this interrupt,
+ 	 * don't do it again, or hell will break loose.
+@@ -842,7 +853,7 @@ unsigned int irq_create_fwspec_mapping(struct irq_fwspec *fwspec)
+ 		 * interrupt number.
+ 		 */
+ 		if (type == IRQ_TYPE_NONE || type == irq_get_trigger_type(virq))
+-			return virq;
++			goto out;
+ 
+ 		/*
+ 		 * If the trigger type has not been set yet, then set
+@@ -850,35 +861,45 @@ unsigned int irq_create_fwspec_mapping(struct irq_fwspec *fwspec)
+ 		 */
+ 		if (irq_get_trigger_type(virq) == IRQ_TYPE_NONE) {
+ 			irq_data = irq_get_irq_data(virq);
+-			if (!irq_data)
+-				return 0;
++			if (!irq_data) {
++				virq = 0;
++				goto out;
++			}
+ 
+ 			irqd_set_trigger_type(irq_data, type);
+-			return virq;
++			goto out;
  		}
--		/*
--		 * We need to protect against old.inode directory getting
--		 * converted from inline directory format into a normal one.
--		 */
--		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
- 		retval = ext4_rename_dir_prepare(handle, &old);
- 		if (retval) {
- 			inode_unlock(old.inode);
-@@ -4021,12 +4026,15 @@ static int ext4_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
- 	} else {
- 		ext4_journal_stop(handle);
+ 
+ 		pr_warn("type mismatch, failed to map hwirq-%lu for %s!\n",
+ 			hwirq, of_node_full_name(to_of_node(fwspec->fwnode)));
+-		return 0;
++		virq = 0;
++		goto out;
  	}
--	if (old.dir_bh)
--		inode_unlock(old.inode);
- release_bh:
- 	brelse(old.dir_bh);
- 	brelse(old.bh);
- 	brelse(new.bh);
-+
-+unlock_moved_dir:
-+	if (S_ISDIR(old.inode->i_mode))
-+		inode_unlock(old.inode);
-+
- 	return retval;
+ 
+ 	if (irq_domain_is_hierarchy(domain)) {
+-		virq = irq_domain_alloc_irqs(domain, 1, NUMA_NO_NODE, fwspec);
+-		if (virq <= 0)
+-			return 0;
++		virq = irq_domain_alloc_irqs_locked(domain, -1, 1, NUMA_NO_NODE,
++						    fwspec, false, NULL);
++		if (virq <= 0) {
++			virq = 0;
++			goto out;
++		}
+ 	} else {
+ 		/* Create mapping */
+-		virq = __irq_create_mapping_affinity(domain, hwirq, NULL);
++		virq = irq_create_mapping_affinity_locked(domain, hwirq, NULL);
+ 		if (!virq)
+-			return virq;
++			goto out;
+ 	}
+ 
+ 	irq_data = irq_get_irq_data(virq);
+-	if (WARN_ON(!irq_data))
+-		return 0;
++	if (WARN_ON(!irq_data)) {
++		virq = 0;
++		goto out;
++	}
+ 
+ 	/* Store trigger type */
+ 	irqd_set_trigger_type(irq_data, type);
++out:
++	mutex_unlock(&irq_domain_mutex);
+ 
+ 	return virq;
+ }
+@@ -1910,6 +1931,13 @@ void irq_domain_set_info(struct irq_domain *domain, unsigned int virq,
+ 	irq_set_handler_data(virq, handler_data);
  }
  
++static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
++					unsigned int nr_irqs, int node, void *arg,
++					bool realloc, const struct irq_affinity_desc *affinity)
++{
++	return -EINVAL;
++}
++
+ static void irq_domain_check_hierarchy(struct irq_domain *domain)
+ {
+ }
 -- 
 2.39.2
 
