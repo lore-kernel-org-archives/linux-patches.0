@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407BA4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC507C4339C;
-	Wed, 15 Mar 2023 12:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59F74431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5CBC433A0;
+	Wed, 15 Mar 2023 12:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883562;
-	bh=B63P0pRqD6TtSoVKi2T8I0DYDEQT3ZDjPfqa8+1ghhw=;
+	s=korg; t=1678883564;
+	bh=Nfe5cQVGtVXe/Ymy+jYJi0HwVB0WFvQ7+/fjpCov2/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TC/eYTpdmJIJ8TFKajp2tWhrynJpeq2/j9uxdDmfzxsTCc5zUXVMKKxmszJT+FLb9
-	 DK9I01CLpFXH8AIK0kz7sZO3D5tbTjsGLB8Qhi7p7zGItKPtIPsDhsu40od3ZpjteT
-	 dIbs8246l9mDk+CQc7Or1IrGhfW1vuRLZOCxMoho=
+	b=MXV7DdABEEDPskEsWTIA7YshBITFqm0RcvhdF3oPzdyNmp/jeU2VPIVpiP/Siq3Wm
+	 BCXBBaJURtB+IWAJh7NTiAp+iVn9hsbEPYnum1jByHPsIEdVf/mw0VSbLbdVe/ggv2
+	 8IGm8KvWRFYJZds//q1pYu/fReQmrefRI4Lg2bvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 015/143] staging: rtl8723bs: Fix key-store index handling
-Date: Wed, 15 Mar 2023 13:11:41 +0100
-Message-Id: <20230315115740.940529395@linuxfoundation.org>
+Subject: [PATCH 6.1 016/143] staging: rtl8723bs: Pass correct parameters to cfg80211_get_bss()
+Date: Wed, 15 Mar 2023 13:11:42 +0100
+Message-Id: <20230315115740.977854315@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -35,171 +35,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-commit 05cbcc415c9b8c8bc4f9a09f8e03610a89042f03 upstream.
+commit d17789edd6a8270c38459e592ee536a84c6202db upstream.
 
-There are 2 issues with the key-store index handling
+To last 2 parameters to cfg80211_get_bss() should be of
+the enum ieee80211_bss_type resp. enum ieee80211_privacy types,
+which WLAN_CAPABILITY_ESS very much is not.
 
-1. The non WEP key stores can store keys with indexes 0 - BIP_MAX_KEYID,
-   this means that they should be an array with BIP_MAX_KEYID + 1
-   entries. But some of the arrays where just BIP_MAX_KEYID entries
-   big. While one other array was hardcoded to a size of 6 entries,
-   instead of using the BIP_MAX_KEYID define.
+Fix both cfg80211_get_bss() calls in ioctl_cfg80211.c to pass
+the right parameters.
 
-2. The rtw_cfg80211_set_encryption() and wpa_set_encryption() functions
-   index check where checking that the passed in key-index would fit
-   inside both the WEP key store (which only has 4 entries) as well as
-   in the non WEP key stores. This breaks any attempts to set non WEP
-   keys with index 4 or 5.
-
-Issue 2. specifically breaks wifi connection with some access points
-which advertise PMF support. Without this fix connecting to these
-access points fails with the following wpa_supplicant messages:
-
- nl80211: kernel reports: key addition failed
- wlan0: WPA: Failed to configure IGTK to the driver
- wlan0: RSN: Failed to configure IGTK
- wlan0: CTRL-EVENT-DISCONNECTED bssid=... reason=1 locally_generated=1
-
-Fix 1. by using the right size for the key-stores. After this 2. can
-safely be fixed by checking the right max-index value depending on the
-used algorithm, fixing wifi not working with some PMF capable APs.
+Note that the second call was already somewhat fixed by commenting
+out WLAN_CAPABILITY_ESS and passing in 0 instead. This was still
+not entirely correct though since that would limit returned
+BSS-es to ESS type BSS-es with privacy on.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230306153512.162104-1-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20230306153512.162104-2-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/include/rtw_security.h  |    8 ++---
- drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |   26 ++++++++++-------
- drivers/staging/rtl8723bs/os_dep/ioctl_linux.c    |   33 +++++++++++-----------
- 3 files changed, 36 insertions(+), 31 deletions(-)
+ drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/staging/rtl8723bs/include/rtw_security.h
-+++ b/drivers/staging/rtl8723bs/include/rtw_security.h
-@@ -107,13 +107,13 @@ struct security_priv {
- 
- 	u32 dot118021XGrpPrivacy;	/*  This specify the privacy algthm. used for Grp key */
- 	u32 dot118021XGrpKeyid;		/*  key id used for Grp Key (tx key index) */
--	union Keytype	dot118021XGrpKey[BIP_MAX_KEYID];	/*  802.1x Group Key, for inx0 and inx1 */
--	union Keytype	dot118021XGrptxmickey[BIP_MAX_KEYID];
--	union Keytype	dot118021XGrprxmickey[BIP_MAX_KEYID];
-+	union Keytype	dot118021XGrpKey[BIP_MAX_KEYID + 1];	/*  802.1x Group Key, for inx0 and inx1 */
-+	union Keytype	dot118021XGrptxmickey[BIP_MAX_KEYID + 1];
-+	union Keytype	dot118021XGrprxmickey[BIP_MAX_KEYID + 1];
- 	union pn48		dot11Grptxpn;			/*  PN48 used for Grp Key xmit. */
- 	union pn48		dot11Grprxpn;			/*  PN48 used for Grp Key recv. */
- 	u32 dot11wBIPKeyid;						/*  key id used for BIP Key (tx key index) */
--	union Keytype	dot11wBIPKey[6];		/*  BIP Key, for index4 and index5 */
-+	union Keytype	dot11wBIPKey[BIP_MAX_KEYID + 1];	/*  BIP Key, for index4 and index5 */
- 	union pn48		dot11wBIPtxpn;			/*  PN48 used for Grp Key xmit. */
- 	union pn48		dot11wBIPrxpn;			/*  PN48 used for Grp Key recv. */
- 
+diff --git a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
+index 3aba4e6eec8a..84a9f4dd8f95 100644
 --- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
 +++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-@@ -711,6 +711,7 @@ exit:
- static int rtw_cfg80211_set_encryption(struct net_device *dev, struct ieee_param *param, u32 param_len)
- {
- 	int ret = 0;
-+	u8 max_idx;
- 	u32 wep_key_idx, wep_key_len;
- 	struct adapter *padapter = rtw_netdev_priv(dev);
- 	struct mlme_priv *pmlmepriv = &padapter->mlmepriv;
-@@ -724,26 +725,29 @@ static int rtw_cfg80211_set_encryption(s
- 		goto exit;
- 	}
+@@ -350,7 +350,7 @@ int rtw_cfg80211_check_bss(struct adapter *padapter)
+ 	bss = cfg80211_get_bss(padapter->rtw_wdev->wiphy, notify_channel,
+ 			pnetwork->mac_address, pnetwork->ssid.ssid,
+ 			pnetwork->ssid.ssid_length,
+-			WLAN_CAPABILITY_ESS, WLAN_CAPABILITY_ESS);
++			IEEE80211_BSS_TYPE_ANY, IEEE80211_PRIVACY_ANY);
  
--	if (param->sta_addr[0] == 0xff && param->sta_addr[1] == 0xff &&
--	    param->sta_addr[2] == 0xff && param->sta_addr[3] == 0xff &&
--	    param->sta_addr[4] == 0xff && param->sta_addr[5] == 0xff) {
--		if (param->u.crypt.idx >= WEP_KEYS
--			|| param->u.crypt.idx >= BIP_MAX_KEYID) {
--			ret = -EINVAL;
--			goto exit;
--		}
--	} else {
--		{
-+	if (param->sta_addr[0] != 0xff || param->sta_addr[1] != 0xff ||
-+	    param->sta_addr[2] != 0xff || param->sta_addr[3] != 0xff ||
-+	    param->sta_addr[4] != 0xff || param->sta_addr[5] != 0xff) {
- 		ret = -EINVAL;
- 		goto exit;
- 	}
-+
-+	if (strcmp(param->u.crypt.alg, "WEP") == 0)
-+		max_idx = WEP_KEYS - 1;
-+	else
-+		max_idx = BIP_MAX_KEYID;
-+
-+	if (param->u.crypt.idx > max_idx) {
-+		netdev_err(dev, "Error crypt.idx %d > %d\n", param->u.crypt.idx, max_idx);
-+		ret = -EINVAL;
-+		goto exit;
- 	}
+ 	cfg80211_put_bss(padapter->rtw_wdev->wiphy, bss);
  
- 	if (strcmp(param->u.crypt.alg, "WEP") == 0) {
- 		wep_key_idx = param->u.crypt.idx;
- 		wep_key_len = param->u.crypt.key_len;
+@@ -1139,8 +1139,8 @@ void rtw_cfg80211_unlink_bss(struct adapter *padapter, struct wlan_network *pnet
  
--		if ((wep_key_idx >= WEP_KEYS) || (wep_key_len <= 0)) {
-+		if (wep_key_len <= 0) {
- 			ret = -EINVAL;
- 			goto exit;
- 		}
---- a/drivers/staging/rtl8723bs/os_dep/ioctl_linux.c
-+++ b/drivers/staging/rtl8723bs/os_dep/ioctl_linux.c
-@@ -46,6 +46,7 @@ static int wpa_set_auth_algs(struct net_
- static int wpa_set_encryption(struct net_device *dev, struct ieee_param *param, u32 param_len)
- {
- 	int ret = 0;
-+	u8 max_idx;
- 	u32 wep_key_idx, wep_key_len, wep_total_len;
- 	struct ndis_802_11_wep	 *pwep = NULL;
- 	struct adapter *padapter = rtw_netdev_priv(dev);
-@@ -60,19 +61,22 @@ static int wpa_set_encryption(struct net
- 		goto exit;
- 	}
+ 	bss = cfg80211_get_bss(wiphy, NULL/*notify_channel*/,
+ 		select_network->mac_address, select_network->ssid.ssid,
+-		select_network->ssid.ssid_length, 0/*WLAN_CAPABILITY_ESS*/,
+-		0/*WLAN_CAPABILITY_ESS*/);
++		select_network->ssid.ssid_length, IEEE80211_BSS_TYPE_ANY,
++		IEEE80211_PRIVACY_ANY);
  
--	if (param->sta_addr[0] == 0xff && param->sta_addr[1] == 0xff &&
--	    param->sta_addr[2] == 0xff && param->sta_addr[3] == 0xff &&
--	    param->sta_addr[4] == 0xff && param->sta_addr[5] == 0xff) {
--		if (param->u.crypt.idx >= WEP_KEYS ||
--		    param->u.crypt.idx >= BIP_MAX_KEYID) {
--			ret = -EINVAL;
--			goto exit;
--		}
--	} else {
--		{
--			ret = -EINVAL;
--			goto exit;
--		}
-+	if (param->sta_addr[0] != 0xff || param->sta_addr[1] != 0xff ||
-+	    param->sta_addr[2] != 0xff || param->sta_addr[3] != 0xff ||
-+	    param->sta_addr[4] != 0xff || param->sta_addr[5] != 0xff) {
-+		ret = -EINVAL;
-+		goto exit;
-+	}
-+
-+	if (strcmp(param->u.crypt.alg, "WEP") == 0)
-+		max_idx = WEP_KEYS - 1;
-+	else
-+		max_idx = BIP_MAX_KEYID;
-+
-+	if (param->u.crypt.idx > max_idx) {
-+		netdev_err(dev, "Error crypt.idx %d > %d\n", param->u.crypt.idx, max_idx);
-+		ret = -EINVAL;
-+		goto exit;
- 	}
- 
- 	if (strcmp(param->u.crypt.alg, "WEP") == 0) {
-@@ -84,9 +88,6 @@ static int wpa_set_encryption(struct net
- 		wep_key_idx = param->u.crypt.idx;
- 		wep_key_len = param->u.crypt.key_len;
- 
--		if (wep_key_idx > WEP_KEYS)
--			return -EINVAL;
--
- 		if (wep_key_len > 0) {
- 			wep_key_len = wep_key_len <= 5 ? 5 : 13;
- 			wep_total_len = wep_key_len + FIELD_OFFSET(struct ndis_802_11_wep, key_material);
+ 	if (bss) {
+ 		cfg80211_unlink_bss(wiphy, bss);
+-- 
+2.39.2
+
 
 
