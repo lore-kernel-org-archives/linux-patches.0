@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8114431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:25:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842E5C4339B;
-	Wed, 15 Mar 2023 12:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A9D4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:26:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C651C433EF;
+	Wed, 15 Mar 2023 12:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883158;
-	bh=ohxR/8BFicHkR1B0YNIV14jcyfLWhqIe70Va+fc6FWk=;
+	s=korg; t=1678883161;
+	bh=73VDkdhvp8DptUWQKx6X9gGhgq9auJRAd/La6CdxzTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1haBADjM3D6okx9Nr2ndPTslbFIzuQ9UwIb7abIlT4TSwvOQuuwAaiR1YdbfuFxP1
-	 7mQNl6RzBSq1MQpAHhfC8Mdp02hqkgJ9EyKwTEhSytULj88TxGCwy9ie3z73Ts+A//
-	 njODRFvc+1HUM6cxcTDZFJDQM2WzxSwmwuScUpEY=
+	b=xeZLlR22BVF/cQp1tdfkgXjLfK6O/kpk+blojYyU5jK++EgD2DzYHp4q9ArcjQRYy
+	 /0D2aDTwY+zvxrLIXx9rbOObM+UoAEQGfOGVk8aI7k5Vv3CvUSpSEXCoSFv84Vo/+7
+	 rnYFR0ZJPV3s4k6nV7QJvFmXNr0R3o5Bb6TmwHkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mattias Nissler <mnissler@rivosinc.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Liao Chang <liaochang1@huawei.com>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/145] riscv: Avoid enabling interrupts in die()
-Date: Wed, 15 Mar 2023 13:11:42 +0100
-Message-Id: <20230315115740.266443795@linuxfoundation.org>
+Subject: [PATCH 5.15 037/145] riscv: Add header include guards to insn.h
+Date: Wed, 15 Mar 2023 13:11:43 +0100
+Message-Id: <20230315115740.295035840@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -36,55 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mattias Nissler <mnissler@rivosinc.com>
+From: Liao Chang <liaochang1@huawei.com>
 
-[ Upstream commit 130aee3fd9981297ff9354e5d5609cd59aafbbea ]
+[ Upstream commit 8ac6e619d9d51b3eb5bae817db8aa94e780a0db4 ]
 
-While working on something else, I noticed that the kernel would start
-accepting interrupts again after crashing in an interrupt handler. Since
-the kernel is already in inconsistent state, enabling interrupts is
-dangerous and opens up risk of kernel state deteriorating further.
-Interrupts do get enabled via what looks like an unintended side effect of
-spin_unlock_irq, so switch to the more cautious
-spin_lock_irqsave/spin_unlock_irqrestore instead.
+Add header include guards to insn.h to prevent repeating declaration of
+any identifiers in insn.h.
 
-Fixes: 76d2a0493a17 ("RISC-V: Init and Halt Code")
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Link: https://lore.kernel.org/r/20230215144828.3370316-1-mnissler@rivosinc.com
+Fixes: edde5584c7ab ("riscv: Add SW single-step support for KDB")
+Signed-off-by: Liao Chang <liaochang1@huawei.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Fixes: c9c1af3f186a ("RISC-V: rename parse_asm.h to insn.h")
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230129094242.282620-1-liaochang1@huawei.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/riscv/include/asm/parse_asm.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
-index 502cba5029ca4..4f38b3c47e6d5 100644
---- a/arch/riscv/kernel/traps.c
-+++ b/arch/riscv/kernel/traps.c
-@@ -34,10 +34,11 @@ void die(struct pt_regs *regs, const char *str)
- 	static int die_counter;
- 	int ret;
- 	long cause;
-+	unsigned long flags;
+diff --git a/arch/riscv/include/asm/parse_asm.h b/arch/riscv/include/asm/parse_asm.h
+index f36368de839f5..3cd00332d70f5 100644
+--- a/arch/riscv/include/asm/parse_asm.h
++++ b/arch/riscv/include/asm/parse_asm.h
+@@ -3,6 +3,9 @@
+  * Copyright (C) 2020 SiFive
+  */
  
- 	oops_enter();
++#ifndef _ASM_RISCV_INSN_H
++#define _ASM_RISCV_INSN_H
++
+ #include <linux/bits.h>
  
--	spin_lock_irq(&die_lock);
-+	spin_lock_irqsave(&die_lock, flags);
- 	console_verbose();
- 	bust_spinlocks(1);
- 
-@@ -54,7 +55,7 @@ void die(struct pt_regs *regs, const char *str)
- 
- 	bust_spinlocks(0);
- 	add_taint(TAINT_DIE, LOCKDEP_NOW_UNRELIABLE);
--	spin_unlock_irq(&die_lock);
-+	spin_unlock_irqrestore(&die_lock, flags);
- 	oops_exit();
- 
- 	if (in_interrupt())
+ /* The bit field of immediate value in I-type instruction */
+@@ -217,3 +220,5 @@ static inline bool is_ ## INSN_NAME ## _insn(long insn) \
+ 	(RVC_X(x_, RVC_B_IMM_5_OPOFF, RVC_B_IMM_5_MASK) << RVC_B_IMM_5_OFF) | \
+ 	(RVC_X(x_, RVC_B_IMM_7_6_OPOFF, RVC_B_IMM_7_6_MASK) << RVC_B_IMM_7_6_OFF) | \
+ 	(RVC_IMM_SIGN(x_) << RVC_B_IMM_SIGN_OFF); })
++
++#endif /* _ASM_RISCV_INSN_H */
 -- 
 2.39.2
 
