@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152B74431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE1FC433D2;
-	Wed, 15 Mar 2023 12:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7E44431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A36BC433D2;
+	Wed, 15 Mar 2023 12:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882890;
-	bh=3uyas5oUjJu+7K2I8WZwPBM0ZqMBpJTXiHJ/t0yH7LA=;
+	s=korg; t=1678882893;
+	bh=pY5oKRL/60m1hFyGM31zA6AIXDpuAGgqf/QG1Ny+1ZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FT/Y5LthQPd1K45Y2io0S1H3kKNItG1fUBkIN2lqNJITxJ7yv7cLNvKUFBdHr8Yoc
-	 wvJhzThgRGVbJ/xkLtwXg/JOl5hY6Voz+MzIWrt3XoxhhsgHXL227P1wLA8Uq5sKb2
-	 U680T9PONgZuXg3QEWwvsntgU9TMK1fPCvmJOHXs=
+	b=cOsdAwVEFQDw5W+zTIn1OAAuSGu79p1hN96cl6PkuHH0i2VvbZ0skYbz3bYG6GoOz
+	 L7fFDPIjXjjCux147PFA/mHvJOm64VKqxkK+NtzsOmyvH5Tqsz9njvIyRIIGvttiX9
+	 FZFibDFwhlsdWgmnqlo+J6x8or/cGXMN4HwV3xRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 011/104] ext4: zero i_disksize when initializing the bootloader inode
-Date: Wed, 15 Mar 2023 13:11:42 +0100
-Message-Id: <20230315115732.497161841@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 012/104] nfc: change order inside nfc_se_io error path
+Date: Wed, 15 Mar 2023 13:11:43 +0100
+Message-Id: <20230315115732.546329112@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -35,61 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit f5361da1e60d54ec81346aee8e3d8baf1be0b762 upstream.
+commit 7d834b4d1ab66c48e8c0810fdeadaabb80fa2c81 upstream.
 
-If the boot loader inode has never been used before, the
-EXT4_IOC_SWAP_BOOT inode will initialize it, including setting the
-i_size to 0.  However, if the "never before used" boot loader has a
-non-zero i_size, then i_disksize will be non-zero, and the
-inconsistency between i_size and i_disksize can trigger a kernel
-warning:
+cb_context should be freed on the error path in nfc_se_io as stated by
+commit 25ff6f8a5a3b ("nfc: fix memory leak of se_io context in
+nfc_genl_se_io").
 
- WARNING: CPU: 0 PID: 2580 at fs/ext4/file.c:319
- CPU: 0 PID: 2580 Comm: bb Not tainted 6.3.0-rc1-00004-g703695902cfa
- RIP: 0010:ext4_file_write_iter+0xbc7/0xd10
- Call Trace:
-  vfs_write+0x3b1/0x5c0
-  ksys_write+0x77/0x160
-  __x64_sys_write+0x22/0x30
-  do_syscall_64+0x39/0x80
+Make the error path in nfc_se_io unwind everything in reverse order, i.e.
+free the cb_context after unlocking the device.
 
-Reproducer:
- 1. create corrupted image and mount it:
-       mke2fs -t ext4 /tmp/foo.img 200
-       debugfs -wR "sif <5> size 25700" /tmp/foo.img
-       mount -t ext4 /tmp/foo.img /mnt
-       cd /mnt
-       echo 123 > file
- 2. Run the reproducer program:
-       posix_memalign(&buf, 1024, 1024)
-       fd = open("file", O_RDWR | O_DIRECT);
-       ioctl(fd, EXT4_IOC_SWAP_BOOT);
-       write(fd, buf, 1024);
-
-Fix this by setting i_disksize as well as i_size to zero when
-initiaizing the boot loader inode.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217159
-Cc: stable@kernel.org
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Link: https://lore.kernel.org/r/20230308032643.641113-1-chengzhihao1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230306212650.230322-1-pchelkin@ispras.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ioctl.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/nfc/netlink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -180,6 +180,7 @@ static long swap_inode_boot_loader(struc
- 		ei_bl->i_flags = 0;
- 		inode_set_iversion(inode_bl, 1);
- 		i_size_write(inode_bl, 0);
-+		EXT4_I(inode_bl)->i_disksize = inode_bl->i_size;
- 		inode_bl->i_mode = S_IFREG;
- 		if (ext4_has_feature_extents(sb)) {
- 			ext4_set_inode_flag(inode_bl, EXT4_INODE_EXTENTS);
+--- a/net/nfc/netlink.c
++++ b/net/nfc/netlink.c
+@@ -1446,8 +1446,8 @@ static int nfc_se_io(struct nfc_dev *dev
+ 	return rc;
+ 
+ error:
+-	kfree(cb_context);
+ 	device_unlock(&dev->dev);
++	kfree(cb_context);
+ 	return rc;
+ }
+ 
 
 
