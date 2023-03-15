@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBC44431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:29:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3880C433EF;
-	Wed, 15 Mar 2023 12:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0565A4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:29:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC06C4339B;
+	Wed, 15 Mar 2023 12:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883340;
-	bh=keza9poLL2WoPTd2jPQ4ezFkla6eVXOcBgQY0l9bui8=;
+	s=korg; t=1678883342;
+	bh=vt3ByGGSCYlj0xr5Xz7hltlJxUUVLkLnmYrJGLFFpnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHXZyVBTMlpi9MnRnUQ/xI72fyS1aeH7Ti/MO6ZtvbIn5MIAw/cDr6id5PJ1SuX4T
-	 425TvUoWKPBryP5h/9YiMbNTkmNMPLbK89IFd8oPC+4IpWG90XP5bsJMw6ZWrmHwgI
-	 SPzGpFyTgdKu9YbPYycdLr1CQUxS62tYaefYVc+Y=
+	b=bNgT1Q3WuQZ7BQQZY252uHOo83nqdldXlwQOzh1zFwjyuKCkSG37x4t5IsYwhTMfl
+	 CO0yCHhlTT815TikiZFjEP/AkbAAx7hbzbdMt+NK83HLgjwt5f2dkY37o4vICuuFL8
+	 iSUW34Y0W3s1AkAmHxBGabHHm9wagcSvxJZ2SDgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.co.jp>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 076/145] net: dsa: mt7530: permit port 5 to work without port 6 on MT7621 SoC
-Date: Wed, 15 Mar 2023 13:12:22 +0100
-Message-Id: <20230315115741.514420246@linuxfoundation.org>
+Subject: [PATCH 5.15 077/145] af_unix: Remove unnecessary brackets around CONFIG_AF_UNIX_OOB.
+Date: Wed, 15 Mar 2023 13:12:23 +0100
+Message-Id: <20230315115741.547777892@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -37,146 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.co.jp>
 
-[ Upstream commit c8b8a3c601f2cfad25ab5ce5b04df700048aef6e ]
+[ Upstream commit 4edf21aa94ee33c75f819f2b6eb6dd52ef8a1628 ]
 
-The MT7530 switch from the MT7621 SoC has 2 ports which can be set up as
-internal: port 5 and 6. Arınç reports that the GMAC1 attached to port 5
-receives corrupted frames, unless port 6 (attached to GMAC0) has been
-brought up by the driver. This is true regardless of whether port 5 is
-used as a user port or as a CPU port (carrying DSA tags).
+Let's remove unnecessary brackets around CONFIG_AF_UNIX_OOB.
 
-Offline debugging (blind for me) which began in the linked thread showed
-experimentally that the configuration done by the driver for port 6
-contains a step which is needed by port 5 as well - the write to
-CORE_GSWPLL_GRP2 (note that I've no idea as to what it does, apart from
-the comment "Set core clock into 500Mhz"). Prints put by Arınç show that
-the reset value of CORE_GSWPLL_GRP2 is RG_GSWPLL_POSDIV_500M(1) |
-RG_GSWPLL_FBKDIV_500M(40) (0x128), both on the MCM MT7530 from the
-MT7621 SoC, as well as on the standalone MT7530 from MT7623NI Bananapi
-BPI-R2. Apparently, port 5 on the standalone MT7530 can work under both
-values of the register, while on the MT7621 SoC it cannot.
-
-The call path that triggers the register write is:
-
-mt753x_phylink_mac_config() for port 6
--> mt753x_pad_setup()
-   -> mt7530_pad_clk_setup()
-
-so this fully explains the behavior noticed by Arınç, that bringing port
-6 up is necessary.
-
-The simplest fix for the problem is to extract the register writes which
-are needed for both port 5 and 6 into a common mt7530_pll_setup()
-function, which is called at mt7530_setup() time, immediately after
-switch reset. We can argue that this mirrors the code layout introduced
-in mt7531_setup() by commit 42bc4fafe359 ("net: mt7531: only do PLL once
-after the reset"), in that the PLL setup has the exact same positioning,
-and further work to consolidate the separate setup() functions is not
-hindered.
-
-Testing confirms that:
-
-- the slight reordering of writes to MT7530_P6ECR and to
-  CORE_GSWPLL_GRP1 / CORE_GSWPLL_GRP2 introduced by this change does not
-  appear to cause problems for the operation of port 6 on MT7621 and on
-  MT7623 (where port 5 also always worked)
-
-- packets sent through port 5 are not corrupted anymore, regardless of
-  whether port 6 is enabled by phylink or not (or even present in the
-  device tree)
-
-My algorithm for determining the Fixes: tag is as follows. Testing shows
-that some logic from mt7530_pad_clk_setup() is needed even for port 5.
-Prior to commit ca366d6c889b ("net: dsa: mt7530: Convert to PHYLINK
-API"), a call did exist for all phy_is_pseudo_fixed_link() ports - so
-port 5 included. That commit replaced it with a temporary "Port 5 is not
-supported!" comment, and the following commit 38f790a80560 ("net: dsa:
-mt7530: Add support for port 5") replaced that comment with a
-configuration procedure in mt7530_setup_port5() which was insufficient
-for port 5 to work. I'm laying the blame on the patch that claimed
-support for port 5, although one would have also needed the change from
-commit c3b8e07909db ("net: dsa: mt7530: setup core clock even in TRGMII
-mode") for the write to be performed completely independently from port
-6's configuration.
-
-Thanks go to Arınç for describing the problem, for debugging and for
-testing.
-
-Reported-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Link: https://lore.kernel.org/netdev/f297c2c4-6e7c-57ac-2394-f6025d309b9d@arinc9.com/
-Fixes: 38f790a80560 ("net: dsa: mt7530: Add support for port 5")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Tested-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230307155411.868573-1-vladimir.oltean@nxp.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.co.jp>
+Link: https://lore.kernel.org/r/20220317032308.65372-1-kuniyu@amazon.co.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 2aab4b969002 ("af_unix: fix struct pid leaks in OOB support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 35 ++++++++++++++++++++---------------
- 1 file changed, 20 insertions(+), 15 deletions(-)
+ net/unix/af_unix.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index c1505de23957f..7bcfa3be95e29 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -388,6 +388,24 @@ mt7530_fdb_write(struct mt7530_priv *priv, u16 vid,
- 		mt7530_write(priv, MT7530_ATA1 + (i * 4), reg[i]);
- }
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 0a59a00cb5815..32ddf8fe32c69 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1969,7 +1969,7 @@ static int unix_dgram_sendmsg(struct socket *sock, struct msghdr *msg,
+  */
+ #define UNIX_SKB_FRAGS_SZ (PAGE_SIZE << get_order(32768))
  
-+/* Set up switch core clock for MT7530 */
-+static void mt7530_pll_setup(struct mt7530_priv *priv)
-+{
-+	/* Disable PLL */
-+	core_write(priv, CORE_GSWPLL_GRP1, 0);
-+
-+	/* Set core clock into 500Mhz */
-+	core_write(priv, CORE_GSWPLL_GRP2,
-+		   RG_GSWPLL_POSDIV_500M(1) |
-+		   RG_GSWPLL_FBKDIV_500M(25));
-+
-+	/* Enable PLL */
-+	core_write(priv, CORE_GSWPLL_GRP1,
-+		   RG_GSWPLL_EN_PRE |
-+		   RG_GSWPLL_POSDIV_200M(2) |
-+		   RG_GSWPLL_FBKDIV_200M(32));
-+}
-+
- /* Setup TX circuit including relevant PAD and driving */
- static int
- mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
-@@ -448,21 +466,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
- 	core_clear(priv, CORE_TRGMII_GSW_CLK_CG,
- 		   REG_GSWCK_EN | REG_TRGMIICK_EN);
+-#if (IS_ENABLED(CONFIG_AF_UNIX_OOB))
++#if IS_ENABLED(CONFIG_AF_UNIX_OOB)
+ static int queue_oob(struct socket *sock, struct msghdr *msg, struct sock *other)
+ {
+ 	struct unix_sock *ousk = unix_sk(other);
+@@ -2035,7 +2035,7 @@ static int unix_stream_sendmsg(struct socket *sock, struct msghdr *msg,
  
--	/* Setup core clock for MT7530 */
--	/* Disable PLL */
--	core_write(priv, CORE_GSWPLL_GRP1, 0);
--
--	/* Set core clock into 500Mhz */
--	core_write(priv, CORE_GSWPLL_GRP2,
--		   RG_GSWPLL_POSDIV_500M(1) |
--		   RG_GSWPLL_FBKDIV_500M(25));
--
--	/* Enable PLL */
--	core_write(priv, CORE_GSWPLL_GRP1,
--		   RG_GSWPLL_EN_PRE |
--		   RG_GSWPLL_POSDIV_200M(2) |
--		   RG_GSWPLL_FBKDIV_200M(32));
--
- 	/* Setup the MT7530 TRGMII Tx Clock */
- 	core_write(priv, CORE_PLL_GROUP5, RG_LCDDS_PCW_NCPO1(ncpo1));
- 	core_write(priv, CORE_PLL_GROUP6, RG_LCDDS_PCW_NCPO0(0));
-@@ -2163,6 +2166,8 @@ mt7530_setup(struct dsa_switch *ds)
- 		     SYS_CTRL_PHY_RST | SYS_CTRL_SW_RST |
- 		     SYS_CTRL_REG_RST);
+ 	err = -EOPNOTSUPP;
+ 	if (msg->msg_flags & MSG_OOB) {
+-#if (IS_ENABLED(CONFIG_AF_UNIX_OOB))
++#if IS_ENABLED(CONFIG_AF_UNIX_OOB)
+ 		if (len)
+ 			len--;
+ 		else
+@@ -2106,7 +2106,7 @@ static int unix_stream_sendmsg(struct socket *sock, struct msghdr *msg,
+ 		sent += size;
+ 	}
  
-+	mt7530_pll_setup(priv);
-+
- 	/* Enable Port 6 only; P5 as GMAC5 which currently is not supported */
- 	val = mt7530_read(priv, MT7530_MHWTRAP);
- 	val &= ~MHWTRAP_P6_DIS & ~MHWTRAP_PHY_ACCESS;
+-#if (IS_ENABLED(CONFIG_AF_UNIX_OOB))
++#if IS_ENABLED(CONFIG_AF_UNIX_OOB)
+ 	if (msg->msg_flags & MSG_OOB) {
+ 		err = queue_oob(sock, msg, other);
+ 		if (err)
 -- 
 2.39.2
 
