@@ -1,86 +1,141 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42385681
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 18:00:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74968C433D2;
-	Wed, 15 Mar 2023 18:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16C22C9E
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 18:37:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD527C433EF;
+	Wed, 15 Mar 2023 18:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678903236;
-	bh=eeIgKjIrne1XGkPGwXznoaDAfu4V7cmqsmC58TcUsXI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mN/kPYqsleAOmHF5TGzbOAf4WdVgTy/wZzYMF/bf6CfqMOPcikufeb5udER6QdIrc
-	 wGl6R0522tsaEyYkvPa2Ihsl6C+r1ba2mVOiwEY70OejVZKdN67MB5dqcloaaS4Fkr
-	 AlcT0NzP341IXls421wFRlLDtY0W806dUDPv5tjE52OQoIhLDTxPXJpXQHNTEIJDNw
-	 HOUyIWNNPCzh6i7T09keSwY2glJqDtt+tQwhKUQjfbIvsh1Nohd3nyuFukhFD0IZFH
-	 7TRpBbyEelrIJ0FR42SIfg6NasdDjdLHe/woxO8lti7i951x21itpxtlcv6j7URWhK
-	 zvxFj0I7ylOYQ==
-Date: Wed, 15 Mar 2023 14:00:35 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: Conor Dooley <conor@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Andrew Jones <ajones@ventanamicro.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: Re: [PATCH 6.2 112/141] RISC-V: clarify ISA string ordering rules in
- cpu.c
-Message-ID: <ZBIHwzn12WZeoNwu@sashalap>
-References: <20230315115739.932786806@linuxfoundation.org>
- <20230315115743.408666245@linuxfoundation.org>
- <4576eb25-2c86-49d3-a290-398d583f479a@spud>
+	s=k20201202; t=1678905450;
+	bh=AaKpurosJ1j97dxYAc0JwEaFhzjTwEBlY/xn7R5ple0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ZRfAotrkR/tcowvtJczP0tt4ZyNvI9Q7qPl22XQVlrb0T0eO4vGZYe284aIicnyMo
+	 5ePPKPmzHEFsm+AxThe7+NPa1fJp5lB2yRgUjYmRbK65Y4BBvydY59q7p40lIcraAN
+	 26fX3poxwZ3gOpzcGv9EETJ4+oReIJtE31QVtJrAhGAEdjt2nbzu61BQKn8STLlb60
+	 G3mtJuDo/6/Uhig0ZT907tygl+F7VNr3Vs0Qp+a5dOkQ1ibauHm+SnN6lgQM0pTmlX
+	 3CAM5IeeBzt06fBt4wVh1yqnAK58hESUHztnQl8XnMTc67oufVlnoBYeUeAzaLMedS
+	 C7f30Q7teiC6Q==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	devicetree@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	kunit-dev@googlegroups.com,
+	Maxime Ripard <maxime@cerno.tech>
+Subject: [PATCH v2 00/11] clk: Add kunit tests for fixed rate and parent data
+Date: Wed, 15 Mar 2023 11:37:17 -0700
+Message-Id: <20230315183729.2376178-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.40.0.rc1.284.g88254d51c5-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <4576eb25-2c86-49d3-a290-398d583f479a@spud>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Mar 15, 2023 at 01:18:17PM +0000, Conor Dooley wrote:
->Hey Greg,
->
->On Wed, Mar 15, 2023 at 01:13:35PM +0100, Greg Kroah-Hartman wrote:
->> From: Conor Dooley <conor.dooley@microchip.com>
->>
->> [ Upstream commit 99e2266f2460e5778560f81982b6301dd2a16502 ]
->>
->> While the current list of rules may have been accurate when created
->> it now lacks some clarity in the face of isa-manual updates. Instead of
->> trying to continuously align this rule-set with the one in the
->> specifications, change the role of this comment.
->>
->> This particular comment is important, as the array it "decorates"
->> defines the order in which the ISA string appears to userspace in
->> /proc/cpuinfo.
->>
->> Re-jig and strengthen the wording to provide contributors with a set
->> order in which to add entries & note why this particular struct needs
->> more attention than others.
->>
->> While in the area, add some whitespace and tweak some wording for
->> readability's sake.
->>
->> Suggested-by: Andrew Jones <ajones@ventanamicro.com>
->> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
->> Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
->> Link: https://lore.kernel.org/r/20221205144525.2148448-2-conor.dooley@microchip.com
->> Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
->> Stable-dep-of: 1eac28201ac0 ("RISC-V: fix ordering of Zbb extension")
->
->I've been sick for the last week, and am not 100% sure what I did and
->did not reply to stable selection emails for, but I'm pretty sure that I
->did say that the ZBB stuff was a 6.3 feature and the order fix should
->not be backported.
->
->I'm not sure that I understand how this comment rework is a stable
->dependency of that backport either, but this should be dropped.
->Apologies if I missed a selection email for this one while I've been
->sick, but I was sick after all...
+This patch series adds unit tests for the clk fixed rate basic type and
+the clk registration functions that use struct clk_parent_data. To get
+there, we add support for loading device tree overlays onto the live DTB
+along with probing platform drivers to bind to device nodes in the
+overlays. With this series, we're able to exercise some of the code in
+the common clk framework that uses devicetree lookups to find parents
+and the fixed rate clk code that scans device tree directly and creates
+clks. Please review.
 
-My bad, this one shouldn't have been left here, now dropped. Thanks!
+I Cced everyone to all the patches so they get the full context. I'm
+hoping I can take the whole pile through the clk tree as they almost all
+depend on each other.
 
+Changes from v1 (https://lore.kernel.org/r/20230302013822.1808711-1-sboyd@kernel.org):
+ * Don't depend on UML, use unittest data approach to attach nodes
+ * Introduce overlay loading API for KUnit
+ * Move platform_device KUnit code to drivers/base/test
+ * Use #define macros for constants shared between unit tests and
+   overlays
+ * Settle on "test" as a vendor prefix
+ * Make KUnit wrappers have "_kunit" postfix
+
+Stephen Boyd (11):
+  of: Load KUnit DTB from of_core_init()
+  of: Add test managed wrappers for of_overlay_apply()/of_node_put()
+  dt-bindings: vendor-prefixes: Add "test" vendor for KUnit and friends
+  dt-bindings: test: Add KUnit empty node binding
+  of: Add a KUnit test for overlays and test managed APIs
+  platform: Add test managed platform_device/driver APIs
+  dt-bindings: kunit: Add fixed rate clk consumer test
+  clk: Add test managed clk provider/consumer APIs
+  clk: Add KUnit tests for clk fixed rate basic type
+  dt-bindings: clk: Add KUnit clk_parent_data test
+  clk: Add KUnit tests for clks registered with struct clk_parent_data
+
+ .../clock/test,clk-kunit-parent-data.yaml     |  47 ++
+ .../kunit/test,clk-kunit-fixed-rate.yaml      |  35 ++
+ .../bindings/test/test,kunit-empty.yaml       |  30 ++
+ .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+ drivers/base/test/Makefile                    |   3 +
+ drivers/base/test/platform_kunit-test.c       | 108 +++++
+ drivers/base/test/platform_kunit.c            | 186 +++++++
+ drivers/clk/.kunitconfig                      |   3 +
+ drivers/clk/Kconfig                           |   7 +
+ drivers/clk/Makefile                          |   9 +-
+ drivers/clk/clk-fixed-rate_test.c             | 299 ++++++++++++
+ drivers/clk/clk-fixed-rate_test.h             |   8 +
+ drivers/clk/clk_kunit.c                       | 219 +++++++++
+ drivers/clk/clk_parent_data_test.h            |  10 +
+ drivers/clk/clk_test.c                        | 459 +++++++++++++++++-
+ drivers/clk/kunit_clk_fixed_rate_test.dtso    |  19 +
+ drivers/clk/kunit_clk_parent_data_test.dtso   |  28 ++
+ drivers/of/.kunitconfig                       |   5 +
+ drivers/of/Kconfig                            |  23 +
+ drivers/of/Makefile                           |   7 +
+ drivers/of/base.c                             | 182 +++++++
+ drivers/of/kunit.dtso                         |  10 +
+ drivers/of/kunit_overlay_test.dtso            |   9 +
+ drivers/of/of_kunit.c                         | 123 +++++
+ drivers/of/of_private.h                       |   6 +
+ drivers/of/of_test.c                          |  43 ++
+ drivers/of/overlay_test.c                     | 107 ++++
+ drivers/of/unittest.c                         | 101 +---
+ include/kunit/clk.h                           |  28 ++
+ include/kunit/of.h                            |  90 ++++
+ include/kunit/platform_device.h               |  15 +
+ 31 files changed, 2119 insertions(+), 102 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/test,clk-kunit-parent-data.yaml
+ create mode 100644 Documentation/devicetree/bindings/kunit/test,clk-kunit-fixed-rate.yaml
+ create mode 100644 Documentation/devicetree/bindings/test/test,kunit-empty.yaml
+ create mode 100644 drivers/base/test/platform_kunit-test.c
+ create mode 100644 drivers/base/test/platform_kunit.c
+ create mode 100644 drivers/clk/clk-fixed-rate_test.c
+ create mode 100644 drivers/clk/clk-fixed-rate_test.h
+ create mode 100644 drivers/clk/clk_kunit.c
+ create mode 100644 drivers/clk/clk_parent_data_test.h
+ create mode 100644 drivers/clk/kunit_clk_fixed_rate_test.dtso
+ create mode 100644 drivers/clk/kunit_clk_parent_data_test.dtso
+ create mode 100644 drivers/of/.kunitconfig
+ create mode 100644 drivers/of/kunit.dtso
+ create mode 100644 drivers/of/kunit_overlay_test.dtso
+ create mode 100644 drivers/of/of_kunit.c
+ create mode 100644 drivers/of/of_test.c
+ create mode 100644 drivers/of/overlay_test.c
+ create mode 100644 include/kunit/clk.h
+ create mode 100644 include/kunit/of.h
+ create mode 100644 include/kunit/platform_device.h
+
+
+base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
 -- 
-Thanks,
-Sasha
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+
