@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59F74431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5CBC433A0;
-	Wed, 15 Mar 2023 12:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F33A4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AA2C433D2;
+	Wed, 15 Mar 2023 12:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883564;
-	bh=Nfe5cQVGtVXe/Ymy+jYJi0HwVB0WFvQ7+/fjpCov2/U=;
+	s=korg; t=1678883567;
+	bh=9vTZjSWySIUpr2d28Zvvwu0PAoHaXJNYBxpfiUBp2X0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXV7DdABEEDPskEsWTIA7YshBITFqm0RcvhdF3oPzdyNmp/jeU2VPIVpiP/Siq3Wm
-	 BCXBBaJURtB+IWAJh7NTiAp+iVn9hsbEPYnum1jByHPsIEdVf/mw0VSbLbdVe/ggv2
-	 8IGm8KvWRFYJZds//q1pYu/fReQmrefRI4Lg2bvQ=
+	b=XZJZ+yAxQN9REeX3pM0vCoY8hhYAvfMP7MyWMSqvN1X/OBKWLQ/4uyx4L4Bq/c+Bp
+	 JAYYTXhfOQoylXeizWNn1sAjnX8G5pPbx20PstXauDk5K5yHuqTKJbqod4Ci17NlFh
+	 BSmCqg+nUWqB9dXfUXh+RM0tWOLmJvmNprUmeM2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 016/143] staging: rtl8723bs: Pass correct parameters to cfg80211_get_bss()
-Date: Wed, 15 Mar 2023 13:11:42 +0100
-Message-Id: <20230315115740.977854315@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Tejun Heo <tj@kernel.org>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 017/143] ext4: fix cgroup writeback accounting with fs-layer encryption
+Date: Wed, 15 Mar 2023 13:11:43 +0100
+Message-Id: <20230315115741.010958222@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -33,56 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit d17789edd6a8270c38459e592ee536a84c6202db upstream.
+commit ffec85d53d0f39ee4680a2cf0795255e000e1feb upstream.
 
-To last 2 parameters to cfg80211_get_bss() should be of
-the enum ieee80211_bss_type resp. enum ieee80211_privacy types,
-which WLAN_CAPABILITY_ESS very much is not.
+When writing a page from an encrypted file that is using
+filesystem-layer encryption (not inline encryption), ext4 encrypts the
+pagecache page into a bounce page, then writes the bounce page.
 
-Fix both cfg80211_get_bss() calls in ioctl_cfg80211.c to pass
-the right parameters.
+It also passes the bounce page to wbc_account_cgroup_owner().  That's
+incorrect, because the bounce page is a newly allocated temporary page
+that doesn't have the memory cgroup of the original pagecache page.
+This makes wbc_account_cgroup_owner() not account the I/O to the owner
+of the pagecache page as it should.
 
-Note that the second call was already somewhat fixed by commenting
-out WLAN_CAPABILITY_ESS and passing in 0 instead. This was still
-not entirely correct though since that would limit returned
-BSS-es to ESS type BSS-es with privacy on.
+Fix this by always passing the pagecache page to
+wbc_account_cgroup_owner().
 
+Fixes: 001e4a8775f6 ("ext4: implement cgroup writeback support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230306153512.162104-2-hdegoede@redhat.com
+Reported-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230203005503.141557-1-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ext4/page-io.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-index 3aba4e6eec8a..84a9f4dd8f95 100644
---- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-+++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-@@ -350,7 +350,7 @@ int rtw_cfg80211_check_bss(struct adapter *padapter)
- 	bss = cfg80211_get_bss(padapter->rtw_wdev->wiphy, notify_channel,
- 			pnetwork->mac_address, pnetwork->ssid.ssid,
- 			pnetwork->ssid.ssid_length,
--			WLAN_CAPABILITY_ESS, WLAN_CAPABILITY_ESS);
-+			IEEE80211_BSS_TYPE_ANY, IEEE80211_PRIVACY_ANY);
+--- a/fs/ext4/page-io.c
++++ b/fs/ext4/page-io.c
+@@ -409,7 +409,8 @@ static void io_submit_init_bio(struct ex
  
- 	cfg80211_put_bss(padapter->rtw_wdev->wiphy, bss);
+ static void io_submit_add_bh(struct ext4_io_submit *io,
+ 			     struct inode *inode,
+-			     struct page *page,
++			     struct page *pagecache_page,
++			     struct page *bounce_page,
+ 			     struct buffer_head *bh)
+ {
+ 	int ret;
+@@ -421,10 +422,11 @@ submit_and_retry:
+ 	}
+ 	if (io->io_bio == NULL)
+ 		io_submit_init_bio(io, bh);
+-	ret = bio_add_page(io->io_bio, page, bh->b_size, bh_offset(bh));
++	ret = bio_add_page(io->io_bio, bounce_page ?: pagecache_page,
++			   bh->b_size, bh_offset(bh));
+ 	if (ret != bh->b_size)
+ 		goto submit_and_retry;
+-	wbc_account_cgroup_owner(io->io_wbc, page, bh->b_size);
++	wbc_account_cgroup_owner(io->io_wbc, pagecache_page, bh->b_size);
+ 	io->io_next_block++;
+ }
  
-@@ -1139,8 +1139,8 @@ void rtw_cfg80211_unlink_bss(struct adapter *padapter, struct wlan_network *pnet
- 
- 	bss = cfg80211_get_bss(wiphy, NULL/*notify_channel*/,
- 		select_network->mac_address, select_network->ssid.ssid,
--		select_network->ssid.ssid_length, 0/*WLAN_CAPABILITY_ESS*/,
--		0/*WLAN_CAPABILITY_ESS*/);
-+		select_network->ssid.ssid_length, IEEE80211_BSS_TYPE_ANY,
-+		IEEE80211_PRIVACY_ANY);
- 
- 	if (bss) {
- 		cfg80211_unlink_bss(wiphy, bss);
--- 
-2.39.2
-
+@@ -543,8 +545,7 @@ int ext4_bio_write_page(struct ext4_io_s
+ 	do {
+ 		if (!buffer_async_write(bh))
+ 			continue;
+-		io_submit_add_bh(io, inode,
+-				 bounce_page ? bounce_page : page, bh);
++		io_submit_add_bh(io, inode, page, bounce_page, bh);
+ 		nr_submitted++;
+ 		clear_buffer_dirty(bh);
+ 	} while ((bh = bh->b_this_page) != head);
 
 
