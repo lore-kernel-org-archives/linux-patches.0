@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21F14431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D63C4339B;
-	Wed, 15 Mar 2023 12:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4001C4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9490C433D2;
+	Wed, 15 Mar 2023 12:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882819;
-	bh=dN1Ejiyh8Q4bmtoYx3dODQLYe/u93IdHdfmpScb9Oo0=;
+	s=korg; t=1678882822;
+	bh=Z988REYkg8SerAdj278z5rsfPVWrHg/WSV0fDC2WsyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QzQNSMHoPI0MvbtIHnGm8QhQ0sx6DwemhzIgxyXaxjgfC4ZlETgXhyZnJWgXhqfxj
-	 sHTqAdn9q2J6xeDTon310peOSQACYihpcctN/ZM1Npyn8G4L4Pl2DsSddpIkurVqbE
-	 zX2OsDXNdZ6d2wKM/RV2u9PMW034V6CAESO/cOHo=
+	b=XxcqmxMlu2YvVkwTa9g+kPRXxHehXMYA8QtXT5s6qCdXyViyMArbOfNgdfgTBVixD
+	 tKBWc9Hs2gZ84iAkcE2d3b9SpLrhhHPqA4MhSNP0arlTglCyzBQyT2gcBbkenmsZpm
+	 LopoLP5gDTGrMlC9/VXpNH3VKowOYPqG4D/T/PZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Eric Biggers <ebiggers@google.com>,
-	Tejun Heo <tj@kernel.org>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 006/104] ext4: fix cgroup writeback accounting with fs-layer encryption
-Date: Wed, 15 Mar 2023 13:11:37 +0100
-Message-Id: <20230315115732.251239755@linuxfoundation.org>
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 015/104] irqdomain: Look for existing mapping only once
+Date: Wed, 15 Mar 2023 13:11:46 +0100
+Message-Id: <20230315115732.683738321@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -36,70 +37,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit ffec85d53d0f39ee4680a2cf0795255e000e1feb upstream.
+[ Upstream commit 6e6f75c9c98d2d246d90411ff2b6f0cd271f4cba ]
 
-When writing a page from an encrypted file that is using
-filesystem-layer encryption (not inline encryption), ext4 encrypts the
-pagecache page into a bounce page, then writes the bounce page.
+Avoid looking for an existing mapping twice when creating a new mapping
+using irq_create_fwspec_mapping() by factoring out the actual allocation
+which is shared with irq_create_mapping_affinity().
 
-It also passes the bounce page to wbc_account_cgroup_owner().  That's
-incorrect, because the bounce page is a newly allocated temporary page
-that doesn't have the memory cgroup of the original pagecache page.
-This makes wbc_account_cgroup_owner() not account the I/O to the owner
-of the pagecache page as it should.
+The new helper function will also be used to fix a shared-interrupt
+mapping race, hence the Fixes tag.
 
-Fix this by always passing the pagecache page to
-wbc_account_cgroup_owner().
-
-Fixes: 001e4a8775f6 ("ext4: implement cgroup writeback support")
-Cc: stable@vger.kernel.org
-Reported-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230203005503.141557-1-ebiggers@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b62b2cf5759b ("irqdomain: Fix handling of type settings for existing mappings")
+Cc: stable@vger.kernel.org      # 4.8
+Tested-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Tested-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230213104302.17307-5-johan+linaro@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/page-io.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ kernel/irq/irqdomain.c | 60 +++++++++++++++++++++++-------------------
+ 1 file changed, 33 insertions(+), 27 deletions(-)
 
---- a/fs/ext4/page-io.c
-+++ b/fs/ext4/page-io.c
-@@ -416,7 +416,8 @@ static void io_submit_init_bio(struct ex
- 
- static void io_submit_add_bh(struct ext4_io_submit *io,
- 			     struct inode *inode,
--			     struct page *page,
-+			     struct page *pagecache_page,
-+			     struct page *bounce_page,
- 			     struct buffer_head *bh)
- {
- 	int ret;
-@@ -430,10 +431,11 @@ submit_and_retry:
- 		io_submit_init_bio(io, bh);
- 		io->io_bio->bi_write_hint = inode->i_write_hint;
- 	}
--	ret = bio_add_page(io->io_bio, page, bh->b_size, bh_offset(bh));
-+	ret = bio_add_page(io->io_bio, bounce_page ?: pagecache_page,
-+			   bh->b_size, bh_offset(bh));
- 	if (ret != bh->b_size)
- 		goto submit_and_retry;
--	wbc_account_cgroup_owner(io->io_wbc, page, bh->b_size);
-+	wbc_account_cgroup_owner(io->io_wbc, pagecache_page, bh->b_size);
- 	io->io_next_block++;
+diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
+index fe07888a7d96a..d18c25a41673f 100644
+--- a/kernel/irq/irqdomain.c
++++ b/kernel/irq/irqdomain.c
+@@ -637,6 +637,34 @@ unsigned int irq_create_direct_mapping(struct irq_domain *domain)
  }
+ EXPORT_SYMBOL_GPL(irq_create_direct_mapping);
  
-@@ -551,8 +553,7 @@ int ext4_bio_write_page(struct ext4_io_s
- 	do {
- 		if (!buffer_async_write(bh))
- 			continue;
--		io_submit_add_bh(io, inode,
--				 bounce_page ? bounce_page : page, bh);
-+		io_submit_add_bh(io, inode, page, bounce_page, bh);
- 		nr_submitted++;
- 		clear_buffer_dirty(bh);
- 	} while ((bh = bh->b_this_page) != head);
++static unsigned int __irq_create_mapping_affinity(struct irq_domain *domain,
++						  irq_hw_number_t hwirq,
++						  const struct irq_affinity_desc *affinity)
++{
++	struct device_node *of_node = irq_domain_get_of_node(domain);
++	int virq;
++
++	pr_debug("irq_create_mapping(0x%p, 0x%lx)\n", domain, hwirq);
++
++	/* Allocate a virtual interrupt number */
++	virq = irq_domain_alloc_descs(-1, 1, hwirq, of_node_to_nid(of_node),
++				      affinity);
++	if (virq <= 0) {
++		pr_debug("-> virq allocation failed\n");
++		return 0;
++	}
++
++	if (irq_domain_associate(domain, virq, hwirq)) {
++		irq_free_desc(virq);
++		return 0;
++	}
++
++	pr_debug("irq %lu on domain %s mapped to virtual irq %u\n",
++		hwirq, of_node_full_name(of_node), virq);
++
++	return virq;
++}
++
+ /**
+  * irq_create_mapping_affinity() - Map a hardware interrupt into linux irq space
+  * @domain: domain owning this hardware interrupt or NULL for default domain
+@@ -649,14 +677,11 @@ EXPORT_SYMBOL_GPL(irq_create_direct_mapping);
+  * on the number returned from that call.
+  */
+ unsigned int irq_create_mapping_affinity(struct irq_domain *domain,
+-				       irq_hw_number_t hwirq,
+-				       const struct irq_affinity_desc *affinity)
++					 irq_hw_number_t hwirq,
++					 const struct irq_affinity_desc *affinity)
+ {
+-	struct device_node *of_node;
+ 	int virq;
+ 
+-	pr_debug("irq_create_mapping(0x%p, 0x%lx)\n", domain, hwirq);
+-
+ 	/* Look for default domain if necessary */
+ 	if (domain == NULL)
+ 		domain = irq_default_domain;
+@@ -664,34 +689,15 @@ unsigned int irq_create_mapping_affinity(struct irq_domain *domain,
+ 		WARN(1, "%s(, %lx) called with NULL domain\n", __func__, hwirq);
+ 		return 0;
+ 	}
+-	pr_debug("-> using domain @%p\n", domain);
+-
+-	of_node = irq_domain_get_of_node(domain);
+ 
+ 	/* Check if mapping already exists */
+ 	virq = irq_find_mapping(domain, hwirq);
+ 	if (virq) {
+-		pr_debug("-> existing mapping on virq %d\n", virq);
++		pr_debug("existing mapping on virq %d\n", virq);
+ 		return virq;
+ 	}
+ 
+-	/* Allocate a virtual interrupt number */
+-	virq = irq_domain_alloc_descs(-1, 1, hwirq, of_node_to_nid(of_node),
+-				      affinity);
+-	if (virq <= 0) {
+-		pr_debug("-> virq allocation failed\n");
+-		return 0;
+-	}
+-
+-	if (irq_domain_associate(domain, virq, hwirq)) {
+-		irq_free_desc(virq);
+-		return 0;
+-	}
+-
+-	pr_debug("irq %lu on domain %s mapped to virtual irq %u\n",
+-		hwirq, of_node_full_name(of_node), virq);
+-
+-	return virq;
++	return __irq_create_mapping_affinity(domain, hwirq, affinity);
+ }
+ EXPORT_SYMBOL_GPL(irq_create_mapping_affinity);
+ 
+@@ -831,7 +837,7 @@ unsigned int irq_create_fwspec_mapping(struct irq_fwspec *fwspec)
+ 			return 0;
+ 	} else {
+ 		/* Create mapping */
+-		virq = irq_create_mapping(domain, hwirq);
++		virq = __irq_create_mapping_affinity(domain, hwirq, NULL);
+ 		if (!virq)
+ 			return virq;
+ 	}
+-- 
+2.39.2
+
 
 
