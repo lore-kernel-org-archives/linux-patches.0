@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C257C4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4722FC4339B;
-	Wed, 15 Mar 2023 12:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC1A4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60EDC433EF;
+	Wed, 15 Mar 2023 12:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882877;
-	bh=44xnEcKZxJO1pIukPrACJUgtC7Y5W7FfpqYKoj7tT1A=;
+	s=korg; t=1678882880;
+	bh=lVsp9WOcvH5dUUPC8jhCw7fqqgy3WTWLL4BUSkB9M0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fAfqX8g4SocEGEriY3XVBHdCzxF9JOEllp8APp6oaF0PbsvOi9DR6rjcDoEI7PFVG
-	 oukaq4RN/hlidew8HUHjHReBKT7TTRKKsNL7aqUe7Hjgwr9uA9L1PenRCMnuancJ55
-	 mUI3kKS1C3AtoGoyaoMd3UtpTiaAwwBt/s7Pwc2A=
+	b=wdnr3PiDn2Uf4hlnNNCgn+8mSSZy3uO0D5xCZPBuNFrpUYvgXzvQL2ABlc4QEQbP4
+	 gpPgAoTkxhTxYTl9ArW1otB4N8uwufPWF8klvUQBbIMmrz8cqmJLh2EMUYS9fJ2dTR
+	 g+9abGbjDJNa/ZjcCSv5VTNyE0I/iVra22rMs7/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6be2b977c89f79b6b153@syzkaller.appspotmail.com,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 008/104] ext4: fix another off-by-one fsmap error on 1k block filesystems
-Date: Wed, 15 Mar 2023 13:11:39 +0100
-Message-Id: <20230315115732.350854176@linuxfoundation.org>
+	Jon Mason <jdmason@kudzu.us>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 035/104] bgmac: fix *initial* chip reset to support BCM5358
+Date: Wed, 15 Mar 2023 13:12:06 +0100
+Message-Id: <20230315115733.475293789@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -35,121 +38,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-commit c993799baf9c5861f8df91beb80e1611b12efcbd upstream.
+[ Upstream commit f99e6d7c4ed3be2531bd576425a5bd07fb133bd7 ]
 
-Apparently syzbot figured out that issuing this FSMAP call:
+While bringing hardware up we should perform a full reset including the
+switch bit (BGMAC_BCMA_IOCTL_SW_RESET aka SICF_SWRST). It's what
+specification says and what reference driver does.
 
-struct fsmap_head cmd = {
-	.fmh_count	= ...;
-	.fmh_keys	= {
-		{ .fmr_device = /* ext4 dev */, .fmr_physical = 0, },
-		{ .fmr_device = /* ext4 dev */, .fmr_physical = 0, },
-	},
-...
-};
-ret = ioctl(fd, FS_IOC_GETFSMAP, &cmd);
+This seems to be critical for the BCM5358. Without this hardware doesn't
+get initialized properly and doesn't seem to transmit or receive any
+packets.
 
-Produces this crash if the underlying filesystem is a 1k-block ext4
-filesystem:
+Originally bgmac was calling bgmac_chip_reset() before setting
+"has_robosw" property which resulted in expected behaviour. That has
+changed as a side effect of adding platform device support which
+regressed BCM5358 support.
 
-kernel BUG at fs/ext4/ext4.h:3331!
-invalid opcode: 0000 [#1] PREEMPT SMP
-CPU: 3 PID: 3227965 Comm: xfs_io Tainted: G        W  O       6.2.0-rc8-achx
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:ext4_mb_load_buddy_gfp+0x47c/0x570 [ext4]
-RSP: 0018:ffffc90007c03998 EFLAGS: 00010246
-RAX: ffff888004978000 RBX: ffffc90007c03a20 RCX: ffff888041618000
-RDX: 0000000000000000 RSI: 00000000000005a4 RDI: ffffffffa0c99b11
-RBP: ffff888012330000 R08: ffffffffa0c2b7d0 R09: 0000000000000400
-R10: ffffc90007c03950 R11: 0000000000000000 R12: 0000000000000001
-R13: 00000000ffffffff R14: 0000000000000c40 R15: ffff88802678c398
-FS:  00007fdf2020c880(0000) GS:ffff88807e100000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffd318a5fe8 CR3: 000000007f80f001 CR4: 00000000001706e0
-Call Trace:
- <TASK>
- ext4_mballoc_query_range+0x4b/0x210 [ext4 dfa189daddffe8fecd3cdfd00564e0f265a8ab80]
- ext4_getfsmap_datadev+0x713/0x890 [ext4 dfa189daddffe8fecd3cdfd00564e0f265a8ab80]
- ext4_getfsmap+0x2b7/0x330 [ext4 dfa189daddffe8fecd3cdfd00564e0f265a8ab80]
- ext4_ioc_getfsmap+0x153/0x2b0 [ext4 dfa189daddffe8fecd3cdfd00564e0f265a8ab80]
- __ext4_ioctl+0x2a7/0x17e0 [ext4 dfa189daddffe8fecd3cdfd00564e0f265a8ab80]
- __x64_sys_ioctl+0x82/0xa0
- do_syscall_64+0x2b/0x80
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-RIP: 0033:0x7fdf20558aff
-RSP: 002b:00007ffd318a9e30 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00000000000200c0 RCX: 00007fdf20558aff
-RDX: 00007fdf1feb2010 RSI: 00000000c0c0583b RDI: 0000000000000003
-RBP: 00005625c0634be0 R08: 00005625c0634c40 R09: 0000000000000001
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007fdf1feb2010
-R13: 00005625be70d994 R14: 0000000000000800 R15: 0000000000000000
-
-For GETFSMAP calls, the caller selects a physical block device by
-writing its block number into fsmap_head.fmh_keys[01].fmr_device.
-To query mappings for a subrange of the device, the starting byte of the
-range is written to fsmap_head.fmh_keys[0].fmr_physical and the last
-byte of the range goes in fsmap_head.fmh_keys[1].fmr_physical.
-
-IOWs, to query what mappings overlap with bytes 3-14 of /dev/sda, you'd
-set the inputs as follows:
-
-	fmh_keys[0] = { .fmr_device = major(8, 0), .fmr_physical = 3},
-	fmh_keys[1] = { .fmr_device = major(8, 0), .fmr_physical = 14},
-
-Which would return you whatever is mapped in the 12 bytes starting at
-physical offset 3.
-
-The crash is due to insufficient range validation of keys[1] in
-ext4_getfsmap_datadev.  On 1k-block filesystems, block 0 is not part of
-the filesystem, which means that s_first_data_block is nonzero.
-ext4_get_group_no_and_offset subtracts this quantity from the blocknr
-argument before cracking it into a group number and a block number
-within a group.  IOWs, block group 0 spans blocks 1-8192 (1-based)
-instead of 0-8191 (0-based) like what happens with larger blocksizes.
-
-The net result of this encoding is that blocknr < s_first_data_block is
-not a valid input to this function.  The end_fsb variable is set from
-the keys that are copied from userspace, which means that in the above
-example, its value is zero.  That leads to an underflow here:
-
-	blocknr = blocknr - le32_to_cpu(es->s_first_data_block);
-
-The division then operates on -1:
-
-	offset = do_div(blocknr, EXT4_BLOCKS_PER_GROUP(sb)) >>
-		EXT4_SB(sb)->s_cluster_bits;
-
-Leaving an impossibly large group number (2^32-1) in blocknr.
-ext4_getfsmap_check_keys checked that keys[0].fmr_physical and
-keys[1].fmr_physical are in increasing order, but
-ext4_getfsmap_datadev adjusts keys[0].fmr_physical to be at least
-s_first_data_block.  This implies that we have to check it again after
-the adjustment, which is the piece that I forgot.
-
-Reported-by: syzbot+6be2b977c89f79b6b153@syzkaller.appspotmail.com
-Fixes: 4a4956249dac ("ext4: fix off-by-one fsmap error on 1k block filesystems")
-Link: https://syzkaller.appspot.com/bug?id=79d5768e9bfe362911ac1a5057a36fc6b5c30002
-Cc: stable@vger.kernel.org
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Link: https://lore.kernel.org/r/Y+58NPTH7VNGgzdd@magnolia
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f6a95a24957a ("net: ethernet: bgmac: Add platform device support")
+Cc: Jon Mason <jdmason@kudzu.us>
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20230227091156.19509-1-zajec5@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/fsmap.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/broadcom/bgmac.c | 8 ++++++--
+ drivers/net/ethernet/broadcom/bgmac.h | 2 ++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/fsmap.c
-+++ b/fs/ext4/fsmap.c
-@@ -486,6 +486,8 @@ static int ext4_getfsmap_datadev(struct
- 		keys[0].fmr_physical = bofs;
- 	if (keys[1].fmr_physical >= eofs)
- 		keys[1].fmr_physical = eofs - 1;
-+	if (keys[1].fmr_physical < keys[0].fmr_physical)
-+		return 0;
- 	start_fsb = keys[0].fmr_physical;
- 	end_fsb = keys[1].fmr_physical;
+diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
+index 9960127f612ea..bb999e67d7736 100644
+--- a/drivers/net/ethernet/broadcom/bgmac.c
++++ b/drivers/net/ethernet/broadcom/bgmac.c
+@@ -890,13 +890,13 @@ static void bgmac_chip_reset_idm_config(struct bgmac *bgmac)
  
+ 		if (iost & BGMAC_BCMA_IOST_ATTACHED) {
+ 			flags = BGMAC_BCMA_IOCTL_SW_CLKEN;
+-			if (!bgmac->has_robosw)
++			if (bgmac->in_init || !bgmac->has_robosw)
+ 				flags |= BGMAC_BCMA_IOCTL_SW_RESET;
+ 		}
+ 		bgmac_clk_enable(bgmac, flags);
+ 	}
+ 
+-	if (iost & BGMAC_BCMA_IOST_ATTACHED && !bgmac->has_robosw)
++	if (iost & BGMAC_BCMA_IOST_ATTACHED && (bgmac->in_init || !bgmac->has_robosw))
+ 		bgmac_idm_write(bgmac, BCMA_IOCTL,
+ 				bgmac_idm_read(bgmac, BCMA_IOCTL) &
+ 				~BGMAC_BCMA_IOCTL_SW_RESET);
+@@ -1490,6 +1490,8 @@ int bgmac_enet_probe(struct bgmac *bgmac)
+ 	struct net_device *net_dev = bgmac->net_dev;
+ 	int err;
+ 
++	bgmac->in_init = true;
++
+ 	bgmac_chip_intrs_off(bgmac);
+ 
+ 	net_dev->irq = bgmac->irq;
+@@ -1542,6 +1544,8 @@ int bgmac_enet_probe(struct bgmac *bgmac)
+ 	/* Omit FCS from max MTU size */
+ 	net_dev->max_mtu = BGMAC_RX_MAX_FRAME_SIZE - ETH_FCS_LEN;
+ 
++	bgmac->in_init = false;
++
+ 	err = register_netdev(bgmac->net_dev);
+ 	if (err) {
+ 		dev_err(bgmac->dev, "Cannot register net device\n");
+diff --git a/drivers/net/ethernet/broadcom/bgmac.h b/drivers/net/ethernet/broadcom/bgmac.h
+index 351c598a3ec6d..d1200b27af1ed 100644
+--- a/drivers/net/ethernet/broadcom/bgmac.h
++++ b/drivers/net/ethernet/broadcom/bgmac.h
+@@ -512,6 +512,8 @@ struct bgmac {
+ 	int irq;
+ 	u32 int_mask;
+ 
++	bool in_init;
++
+ 	/* Current MAC state */
+ 	int mac_speed;
+ 	int mac_duplex;
+-- 
+2.39.2
+
 
 
