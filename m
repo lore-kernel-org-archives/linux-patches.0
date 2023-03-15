@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86174431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED8FC433D2;
-	Wed, 15 Mar 2023 12:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAD24431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0147C4339B;
+	Wed, 15 Mar 2023 12:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883852;
-	bh=YRY0BOJIitJ/1cMD07jDmirv6Amd6iW1b7S0WpJeFGM=;
+	s=korg; t=1678883855;
+	bh=vsP5zue/IExoFhZ69eEvRir84B0LNiO1AYO1Gr4lC48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DcYzi5CYDG9196gXP8Xb827KIRD836ZKryCBi6BBWB9c/1eKNAeK09HP7Un6L6JBR
-	 uu29GFHIq17EQbH3OBBkpzpwIR6L9doiDTxW6zcReqZgOStFhFJ4GR9ybrV3JO27bK
-	 Kk/wujq6s4TgqoQ90Zzt2TP7ccxoxPzYVQb5baWM=
+	b=Euj7SdT9QAB46kxkv5AssFmqN6OOwSgYfIgaGqzXepfmPGmb9+RONavuK/WQe7PRx
+	 spLJZBfh2oYEl75KJaTYIp7ymLYIfsh21zcAID+hD/xL8kzMVyUpd2LK+Ldc4yexuO
+	 2XX0G2ATjL6g5toBwzboWzSjKNJrY5kfHHNVTd5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 013/141] drm/amdgpu: fix error checking in amdgpu_read_mm_registers for soc21
-Date: Wed, 15 Mar 2023 13:11:56 +0100
-Message-Id: <20230315115740.384317022@linuxfoundation.org>
+Subject: [PATCH 6.2 014/141] drm/amdgpu: fix error checking in amdgpu_read_mm_registers for nv
+Date: Wed, 15 Mar 2023 13:11:57 +0100
+Message-Id: <20230315115740.414139698@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -36,7 +36,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 2915e43a033a778816fa4bc621f033576796521e upstream.
+commit b42fee5e0b44344cfe4c38e61341ee250362c83f upstream.
 
 Properly skip non-existent registers as well.
 
@@ -46,15 +46,15 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc21.c |    7 ++++---
+ drivers/gpu/drm/amd/amdgpu/nv.c |    7 ++++---
  1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/soc21.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
-@@ -255,9 +255,10 @@ static int soc21_read_register(struct am
+--- a/drivers/gpu/drm/amd/amdgpu/nv.c
++++ b/drivers/gpu/drm/amd/amdgpu/nv.c
+@@ -393,9 +393,10 @@ static int nv_read_register(struct amdgp
  	*value = 0;
- 	for (i = 0; i < ARRAY_SIZE(soc21_allowed_read_registers); i++) {
- 		en = &soc21_allowed_read_registers[i];
+ 	for (i = 0; i < ARRAY_SIZE(nv_allowed_read_registers); i++) {
+ 		en = &nv_allowed_read_registers[i];
 -		if (adev->reg_offset[en->hwip][en->inst] &&
 -		    reg_offset != (adev->reg_offset[en->hwip][en->inst][en->seg]
 -				   + en->reg_offset))
@@ -64,6 +64,6 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +					+ en->reg_offset))
  			continue;
  
- 		*value = soc21_get_register_value(adev,
+ 		*value = nv_get_register_value(adev,
 
 
