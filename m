@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AAD84431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:14:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34D8C433D2;
-	Wed, 15 Mar 2023 12:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2554431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:14:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B19C433D2;
+	Wed, 15 Mar 2023 12:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882472;
-	bh=OzBV5aBqKSqmojYY0HRKAqEqSDU504pp8GTe0Af+pj0=;
+	s=korg; t=1678882474;
+	bh=mnn5RPSXMS1FgIfdFe4OFtnjWbWjKO6WKfdlV5IqC2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VWqzaRsYI37TLmeh4P6JfvOpAhwdnCYQeP8a8R5U7huWpijqh3/OMVrI8cx0w6O8h
-	 3nv4FS2/8cAu6GrPDSsJrMl91XT9X/pEAiaGbegxnZSON53mPI+FyoLwi+fP9WI+yZ
-	 e4q9EuQWESAm2JNvPePgoSLYzuMNmbhvcKloBRoU=
+	b=SbLKE8fpLRzKCDONro5b0n0Yga+8jxTKugnNqgTF6gKLjeKI0njza7lz1dC1QIH+i
+	 +2YUSLmf7Qggi5Q8N8MkGMEE1FNW0USGDcHQ+hiRjWwreORIb1o3LPH3lIEbxMN5pO
+	 vZq055llBRHx+sahYKJbKcvfSr4hglxNxrjA5vaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xurui <xurui@kylinos.cn>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Edward Humes <aurxenon@lunos.org>,
+	Matt Turner <mattst88@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 13/21] MIPS: Fix a compilation issue
-Date: Wed, 15 Mar 2023 13:12:36 +0100
-Message-Id: <20230315115719.301804176@linuxfoundation.org>
+Subject: [PATCH 4.14 14/21] alpha: fix R_ALPHA_LITERAL reloc for large modules
+Date: Wed, 15 Mar 2023 13:12:37 +0100
+Message-Id: <20230315115719.342047431@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115718.796692048@linuxfoundation.org>
 References: <20230315115718.796692048@linuxfoundation.org>
@@ -35,36 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: xurui <xurui@kylinos.cn>
+From: Edward Humes <aurxenon@lunos.org>
 
-[ Upstream commit 109d587a4b4d7ccca2200ab1f808f43ae23e2585 ]
+[ Upstream commit b6b17a8b3ecd878d98d5472a9023ede9e669ca72 ]
 
-arch/mips/include/asm/mach-rc32434/pci.h:377:
-cc1: error: result of ‘-117440512 << 16’ requires 44 bits to represent, but ‘int’ only has 32 bits [-Werror=shift-overflow=]
+Previously, R_ALPHA_LITERAL relocations would overflow for large kernel
+modules.
 
-All bits in KORINA_STAT are already at the correct position, so there is
-no addtional shift needed.
+This was because the Alpha's apply_relocate_add was relying on the kernel's
+module loader to have sorted the GOT towards the very end of the module as it
+was mapped into memory in order to correctly assign the global pointer. While
+this behavior would mostly work fine for small kernel modules, this approach
+would overflow on kernel modules with large GOT's since the global pointer
+would be very far away from the GOT, and thus, certain entries would be out of
+range.
 
-Signed-off-by: xurui <xurui@kylinos.cn>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+This patch fixes this by instead using the Tru64 behavior of assigning the
+global pointer to be 32KB away from the start of the GOT. The change made
+in this patch won't work for multi-GOT kernel modules as it makes the
+assumption the module only has one GOT located at the beginning of .got,
+although for the vast majority kernel modules, this should be fine. Of the
+kernel modules that would previously result in a relocation error, none of
+them, even modules like nouveau, have even come close to filling up a single
+GOT, and they've all worked fine under this patch.
+
+Signed-off-by: Edward Humes <aurxenon@lunos.org>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/mach-rc32434/pci.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/alpha/kernel/module.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/mips/include/asm/mach-rc32434/pci.h b/arch/mips/include/asm/mach-rc32434/pci.h
-index 6f40d1515580b..1ff8a987025c8 100644
---- a/arch/mips/include/asm/mach-rc32434/pci.h
-+++ b/arch/mips/include/asm/mach-rc32434/pci.h
-@@ -377,7 +377,7 @@ struct pci_msu {
- 				 PCI_CFG04_STAT_SSE | \
- 				 PCI_CFG04_STAT_PE)
+diff --git a/arch/alpha/kernel/module.c b/arch/alpha/kernel/module.c
+index 47632fa8c24e0..b169dc9a9ac17 100644
+--- a/arch/alpha/kernel/module.c
++++ b/arch/alpha/kernel/module.c
+@@ -158,10 +158,8 @@ apply_relocate_add(Elf64_Shdr *sechdrs, const char *strtab,
+ 	base = (void *)sechdrs[sechdrs[relsec].sh_info].sh_addr;
+ 	symtab = (Elf64_Sym *)sechdrs[symindex].sh_addr;
  
--#define KORINA_CNFG1		((KORINA_STAT<<16)|KORINA_CMD)
-+#define KORINA_CNFG1		(KORINA_STAT | KORINA_CMD)
+-	/* The small sections were sorted to the end of the segment.
+-	   The following should definitely cover them.  */
+-	gp = (u64)me->core_layout.base + me->core_layout.size - 0x8000;
+ 	got = sechdrs[me->arch.gotsecindex].sh_addr;
++	gp = got + 0x8000;
  
- #define KORINA_REVID		0
- #define KORINA_CLASS_CODE	0
+ 	for (i = 0; i < n; i++) {
+ 		unsigned long r_sym = ELF64_R_SYM (rela[i].r_info);
 -- 
 2.39.2
 
