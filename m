@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62314431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A0B0C4339C;
-	Wed, 15 Mar 2023 12:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537CA4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE01EC4339E;
+	Wed, 15 Mar 2023 12:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882751;
-	bh=lCKDASUtGE1lwVMwOB/R2i9NQDU7sIYKiTJYeBvFxsk=;
+	s=korg; t=1678882754;
+	bh=UNqsdVMuA2k1tXuQreZiMBgpJvqQNmQocmfGl698lms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eAAUx9MzA7EPj5KO5LCNFvkEOaC10ljF6wNNC3K8uGd6KP3adT7BBIQHJtLT/2c7+
-	 +1PPYgOFxPQTqqaQr1dwvZ9BaJ5LqsObvgLlUr37dpcSCRxT39hSjqK4q2abZIqcqQ
-	 i800J0oVhfC+9qlAYSk/9eXV56oDshScQI58HucI=
+	b=Dv10O/CN6esfOTRJ8lnWmKappwCISLf8ztDmhzelrgvFii1WPw1MRtcvvCfI0mDq3
+	 4VkQohQpOXQ7R4+X77hZiKt7JeQVD0THf4UcfLokEDGcOlM3FRCfNfY+ZwE+aKMKFc
+	 liVF+MqZYxs1cee3ZAG0CoVnSdutXhy/HnW0kEaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Elder <paul.elder@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Jai Luthra <j-luthra@ti.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 57/68] media: ov5640: Fix analogue gain control
-Date: Wed, 15 Mar 2023 13:12:51 +0100
-Message-Id: <20230315115728.329328003@linuxfoundation.org>
+	Yejune Deng <yejune.deng@gmail.com>,
+	Corey Minyard <cminyard@mvista.com>
+Subject: [PATCH 5.4 58/68] ipmi/watchdog: replace atomic_add() and atomic_sub()
+Date: Wed, 15 Mar 2023 13:12:52 +0100
+Message-Id: <20230315115728.377553139@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -39,93 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Elder <paul.elder@ideasonboard.com>
+From: Yejune Deng <yejune.deng@gmail.com>
 
-[ Upstream commit afa4805799c1d332980ad23339fdb07b5e0cf7e0 ]
+commit a01a89b1db1066a6af23ae08b9a0c345b7966f0b upstream.
 
-Gain control is badly documented in publicly available (including
-leaked) documentation.
+atomic_inc() and atomic_dec() looks better
 
-There is an AGC pre-gain in register 0x3a13, expressed as a 6-bit value
-(plus an enable bit in bit 6). The driver hardcodes it to 0x43, which
-one application note states is equal to x1.047. The documentation also
-states that 0x40 is equel to x1.000. The pre-gain thus seems to be
-expressed as in 1/64 increments, and thus ranges from x1.00 to x1.984.
-What the pre-gain does is however unspecified.
-
-There is then an AGC gain limit, in registers 0x3a18 and 0x3a19,
-expressed as a 10-bit "real gain format" value. One application note
-sets it to 0x00f8 and states it is equal to x15.5, so it appears to be
-expressed in 1/16 increments, up to x63.9375.
-
-The manual gain is stored in registers 0x350a and 0x350b, also as a
-10-bit "real gain format" value. It is documented in the application
-note as a Q6.4 values, up to x63.9375.
-
-One version of the datasheet indicates that the sensor supports a
-digital gain:
-
-  The OV5640 supports 1/2/4 digital gain. Normally, the gain is
-  controlled automatically by the automatic gain control (AGC) block.
-
-It isn't clear how that would be controlled manually.
-
-There appears to be no indication regarding whether the gain controlled
-through registers 0x350a and 0x350b is an analogue gain only or also
-includes digital gain. The words "real gain" don't necessarily mean
-"combined analogue and digital gains". Some OmniVision sensors (such as
-the OV8858) are documented as supoprting different formats for the gain
-values, selectable through a register bit, and they are called "real
-gain format" and "sensor gain format". For that sensor, we have (one of)
-the gain registers documented as
-
-  0x3503[2]=0, gain[7:0] is real gain format, where low 4 bits are
-  fraction bits, for example, 0x10 is 1x gain, 0x28 is 2.5x gain
-
-  If 0x3503[2]=1, gain[7:0] is sensor gain format, gain[7:4] is coarse
-  gain, 00000: 1x, 00001: 2x, 00011: 4x, 00111: 8x, gain[7] is 1,
-  gain[3:0] is fine gain. For example, 0x10 is 1x gain, 0x30 is 2x gain,
-  0x70 is 4x gain
-
-(The second part of the text makes little sense)
-
-"Real gain" may thus refer to the combination of the coarse and fine
-analogue gains as a single value.
-
-The OV5640 0x350a and 0x350b registers thus appear to control analogue
-gain. The driver incorrectly uses V4L2_CID_GAIN as V4L2 has a specific
-control for analogue gain, V4L2_CID_ANALOGUE_GAIN. Use it.
-
-If registers 0x350a and 0x350b are later found to control digital gain
-as well, the driver could then restrict the range of the analogue gain
-control value to lower than x64 and add a separate digital gain control.
-
-Signed-off-by: Paul Elder <paul.elder@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Reviewed-by: Jai Luthra <j-luthra@ti.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Yejune Deng <yejune.deng@gmail.com>
+Message-Id: <1605511807-7135-1-git-send-email-yejune.deng@gmail.com>
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov5640.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_watchdog.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
-index be6c882dd1d54..087fb464ffc12 100644
---- a/drivers/media/i2c/ov5640.c
-+++ b/drivers/media/i2c/ov5640.c
-@@ -2704,7 +2704,7 @@ static int ov5640_init_controls(struct ov5640_dev *sensor)
- 	/* Auto/manual gain */
- 	ctrls->auto_gain = v4l2_ctrl_new_std(hdl, ops, V4L2_CID_AUTOGAIN,
- 					     0, 1, 1, 1);
--	ctrls->gain = v4l2_ctrl_new_std(hdl, ops, V4L2_CID_GAIN,
-+	ctrls->gain = v4l2_ctrl_new_std(hdl, ops, V4L2_CID_ANALOGUE_GAIN,
- 					0, 1023, 1, 0);
+--- a/drivers/char/ipmi/ipmi_watchdog.c
++++ b/drivers/char/ipmi/ipmi_watchdog.c
+@@ -498,7 +498,7 @@ static void panic_halt_ipmi_heartbeat(vo
+ 	msg.cmd = IPMI_WDOG_RESET_TIMER;
+ 	msg.data = NULL;
+ 	msg.data_len = 0;
+-	atomic_add(1, &panic_done_count);
++	atomic_inc(&panic_done_count);
+ 	rv = ipmi_request_supply_msgs(watchdog_user,
+ 				      (struct ipmi_addr *) &addr,
+ 				      0,
+@@ -508,7 +508,7 @@ static void panic_halt_ipmi_heartbeat(vo
+ 				      &panic_halt_heartbeat_recv_msg,
+ 				      1);
+ 	if (rv)
+-		atomic_sub(1, &panic_done_count);
++		atomic_dec(&panic_done_count);
+ }
  
- 	ctrls->saturation = v4l2_ctrl_new_std(hdl, ops, V4L2_CID_SATURATION,
--- 
-2.39.2
-
+ static struct ipmi_smi_msg panic_halt_smi_msg = {
+@@ -532,12 +532,12 @@ static void panic_halt_ipmi_set_timeout(
+ 	/* Wait for the messages to be free. */
+ 	while (atomic_read(&panic_done_count) != 0)
+ 		ipmi_poll_interface(watchdog_user);
+-	atomic_add(1, &panic_done_count);
++	atomic_inc(&panic_done_count);
+ 	rv = __ipmi_set_timeout(&panic_halt_smi_msg,
+ 				&panic_halt_recv_msg,
+ 				&send_heartbeat_now);
+ 	if (rv) {
+-		atomic_sub(1, &panic_done_count);
++		atomic_dec(&panic_done_count);
+ 		pr_warn("Unable to extend the watchdog timeout\n");
+ 	} else {
+ 		if (send_heartbeat_now)
 
 
