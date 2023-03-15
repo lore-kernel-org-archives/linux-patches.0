@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C834431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B0DEC433D2;
-	Wed, 15 Mar 2023 12:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF6F4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1022AC433EF;
+	Wed, 15 Mar 2023 12:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883684;
-	bh=ErmkSfnRUXSuhQYFKWHMYzP3g964wNUbcT8Fi8gv+Hw=;
+	s=korg; t=1678883687;
+	bh=iTu6i0ivTDFW4n53srIoidGvDoKyRZbECsO5tKEL0AI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r7EVCdLWCT8SOGNta0PuGn7gBnTfGpFGN6/Th8s0TmUp715L4d5TNUq/JozEQ8Pwm
-	 Q7tEyxiodBVWPpV8klJrl4Itze0iz1HZXLaWs3DLG0m3etaKjk6VZpKwnxWwG7zSoD
-	 pXBt9T1Uwqm8m4w/vNJgQnVHflBOs/Zq/D6IroFs=
+	b=fDm16HZG8F7d1lfOP5Fz1yV3C0UHUXNUk7Me1gA24bceEECl3ibmgeHJcxuVTkipY
+	 qMg/H7vx4Z99/VwFlmep1/raFJ7xd8YfRDDz+/SiVogU83M4z+FSxRIpZatHGLSZq6
+	 4Z9Zm6tFdNCdbcx3/SC5x/K2zT094fKASFI1jfcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenz Bauer <lmb@isovalent.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/143] btf: fix resolving BTF_KIND_VAR after ARRAY, STRUCT, UNION, PTR
-Date: Wed, 15 Mar 2023 13:12:59 +0100
-Message-Id: <20230315115743.345894021@linuxfoundation.org>
+Subject: [PATCH 6.1 094/143] net: phy: smsc: fix link up detection in forced irq mode
+Date: Wed, 15 Mar 2023 13:13:00 +0100
+Message-Id: <20230315115743.374150728@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -35,96 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenz Bauer <lorenz.bauer@isovalent.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 9b459804ff9973e173fabafba2a1319f771e85fa ]
+[ Upstream commit 58aac3a2ef414fea6d7fdf823ea177744a087d13 ]
 
-btf_datasec_resolve contains a bug that causes the following BTF
-to fail loading:
+Currently link up can't be detected in forced mode if polling
+isn't used. Only link up interrupt source we have is aneg
+complete which isn't applicable in forced mode. Therefore we
+have to use energy-on as link up indicator.
 
-    [1] DATASEC a size=2 vlen=2
-        type_id=4 offset=0 size=1
-        type_id=7 offset=1 size=1
-    [2] INT (anon) size=1 bits_offset=0 nr_bits=8 encoding=(none)
-    [3] PTR (anon) type_id=2
-    [4] VAR a type_id=3 linkage=0
-    [5] INT (anon) size=1 bits_offset=0 nr_bits=8 encoding=(none)
-    [6] TYPEDEF td type_id=5
-    [7] VAR b type_id=6 linkage=0
-
-This error message is printed during btf_check_all_types:
-
-    [1] DATASEC a size=2 vlen=2
-        type_id=7 offset=1 size=1 Invalid type
-
-By tracing btf_*_resolve we can pinpoint the problem:
-
-    btf_datasec_resolve(depth: 1, type_id: 1, mode: RESOLVE_TBD) = 0
-        btf_var_resolve(depth: 2, type_id: 4, mode: RESOLVE_TBD) = 0
-            btf_ptr_resolve(depth: 3, type_id: 3, mode: RESOLVE_PTR) = 0
-        btf_var_resolve(depth: 2, type_id: 4, mode: RESOLVE_PTR) = 0
-    btf_datasec_resolve(depth: 1, type_id: 1, mode: RESOLVE_PTR) = -22
-
-The last invocation of btf_datasec_resolve should invoke btf_var_resolve
-by means of env_stack_push, instead it returns EINVAL. The reason is that
-env_stack_push is never executed for the second VAR.
-
-    if (!env_type_is_resolve_sink(env, var_type) &&
-        !env_type_is_resolved(env, var_type_id)) {
-        env_stack_set_next_member(env, i + 1);
-        return env_stack_push(env, var_type, var_type_id);
-    }
-
-env_type_is_resolve_sink() changes its behaviour based on resolve_mode.
-For RESOLVE_PTR, we can simplify the if condition to the following:
-
-    (btf_type_is_modifier() || btf_type_is_ptr) && !env_type_is_resolved()
-
-Since we're dealing with a VAR the clause evaluates to false. This is
-not sufficient to trigger the bug however. The log output and EINVAL
-are only generated if btf_type_id_size() fails.
-
-    if (!btf_type_id_size(btf, &type_id, &type_size)) {
-        btf_verifier_log_vsi(env, v->t, vsi, "Invalid type");
-        return -EINVAL;
-    }
-
-Most types are sized, so for example a VAR referring to an INT is not a
-problem. The bug is only triggered if a VAR points at a modifier. Since
-we skipped btf_var_resolve that modifier was also never resolved, which
-means that btf_resolved_type_id returns 0 aka VOID for the modifier.
-This in turn causes btf_type_id_size to return NULL, triggering EINVAL.
-
-To summarise, the following conditions are necessary:
-
-- VAR pointing at PTR, STRUCT, UNION or ARRAY
-- Followed by a VAR pointing at TYPEDEF, VOLATILE, CONST, RESTRICT or
-  TYPE_TAG
-
-The fix is to reset resolve_mode to RESOLVE_TBD before attempting to
-resolve a VAR from a DATASEC.
-
-Fixes: 1dc92851849c ("bpf: kernel side support for BTF Var and DataSec")
-Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
-Link: https://lore.kernel.org/r/20230306112138.155352-2-lmb@isovalent.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 7365494550f6 ("net: phy: smsc: skip ENERGYON interrupt if disabled")
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/phy/smsc.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 7fcbe5d002070..b73169737a01e 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -4163,6 +4163,7 @@ static int btf_datasec_resolve(struct btf_verifier_env *env,
- 	struct btf *btf = env->btf;
- 	u16 i;
+diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
+index ac7481ce2fc16..00d9eff91dcfa 100644
+--- a/drivers/net/phy/smsc.c
++++ b/drivers/net/phy/smsc.c
+@@ -44,7 +44,6 @@ static struct smsc_hw_stat smsc_hw_stats[] = {
+ };
  
-+	env->resolve_mode = RESOLVE_TBD;
- 	for_each_vsi_from(i, v->next_member, v->t, vsi) {
- 		u32 var_type_id = vsi->type, type_id, type_size = 0;
- 		const struct btf_type *var_type = btf_type_by_id(env->btf,
+ struct smsc_phy_priv {
+-	u16 intmask;
+ 	bool energy_enable;
+ };
+ 
+@@ -57,7 +56,6 @@ static int smsc_phy_ack_interrupt(struct phy_device *phydev)
+ 
+ static int smsc_phy_config_intr(struct phy_device *phydev)
+ {
+-	struct smsc_phy_priv *priv = phydev->priv;
+ 	int rc;
+ 
+ 	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
+@@ -65,14 +63,9 @@ static int smsc_phy_config_intr(struct phy_device *phydev)
+ 		if (rc)
+ 			return rc;
+ 
+-		priv->intmask = MII_LAN83C185_ISF_INT4 | MII_LAN83C185_ISF_INT6;
+-		if (priv->energy_enable)
+-			priv->intmask |= MII_LAN83C185_ISF_INT7;
+-
+-		rc = phy_write(phydev, MII_LAN83C185_IM, priv->intmask);
++		rc = phy_write(phydev, MII_LAN83C185_IM,
++			       MII_LAN83C185_ISF_INT_PHYLIB_EVENTS);
+ 	} else {
+-		priv->intmask = 0;
+-
+ 		rc = phy_write(phydev, MII_LAN83C185_IM, 0);
+ 		if (rc)
+ 			return rc;
+@@ -85,7 +78,6 @@ static int smsc_phy_config_intr(struct phy_device *phydev)
+ 
+ static irqreturn_t smsc_phy_handle_interrupt(struct phy_device *phydev)
+ {
+-	struct smsc_phy_priv *priv = phydev->priv;
+ 	int irq_status;
+ 
+ 	irq_status = phy_read(phydev, MII_LAN83C185_ISF);
+@@ -96,7 +88,7 @@ static irqreturn_t smsc_phy_handle_interrupt(struct phy_device *phydev)
+ 		return IRQ_NONE;
+ 	}
+ 
+-	if (!(irq_status & priv->intmask))
++	if (!(irq_status & MII_LAN83C185_ISF_INT_PHYLIB_EVENTS))
+ 		return IRQ_NONE;
+ 
+ 	phy_trigger_machine(phydev);
 -- 
 2.39.2
 
