@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD28C4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:26:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466CAC433EF;
-	Wed, 15 Mar 2023 12:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675E74431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:26:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBD5C433D2;
+	Wed, 15 Mar 2023 12:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883208;
-	bh=/TDAOyJhZKj1uIenEYQhaN9JceBpcOEw2uaip9XC77s=;
+	s=korg; t=1678883211;
+	bh=bSd5bfD4yYw/KciTPHFZ3Dfkdl9E6TZxHNUb7ggdWhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sG2q+OyoB1pkx6ijUzcAIAUz/nWsexGpsV5/PUD+feTNJ73qwdivxSRvdooidLg5r
-	 Rq1hmedMvWvGN8qLJ7AXR602Jk88uYeEN9huLMW7QUQiGEMvE7/HCkL7+YTj1C6JHz
-	 ZhmPE9OOr0nnHbigMqqu2pP/QFucs0QaHV71SaiA=
+	b=lP64fTpinYwFqDsf4oG7vAMfxIsk3cLTOje2atBDEOaBnE6MoVbesMBJRIkpAJB/O
+	 95Sqdhgspm8kKp9y94h64dtXxM7n0B4g7PZL9yX5QDuuMtsoEhtW2j0A/kboERLtAe
+	 AIGslUtPDe4hxV7aK86ZW2mYeVLg6QwDXjinoGsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"sjur.brandeland@stericsson.com" <sjur.brandeland@stericsson.com>,
-	syzbot+b563d33852b893653a9e@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Christian=20Kohlsch=C3=BCtter?= <christian@kohlschutter.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 057/145] net: caif: Fix use-after-free in cfusbl_device_notify()
-Date: Wed, 15 Mar 2023 13:12:03 +0100
-Message-Id: <20230315115740.921156134@linuxfoundation.org>
+Subject: [PATCH 5.15 040/145] regulator: core: Fix off-on-delay-us for always-on/boot-on regulators
+Date: Wed, 15 Mar 2023 13:11:46 +0100
+Message-Id: <20230315115740.398331976@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -37,84 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Christian Kohlschütter <christian@kohlschutter.com>
 
-[ Upstream commit 9781e98a97110f5e76999058368b4be76a788484 ]
+[ Upstream commit 218320fec29430438016f88dd4fbebfa1b95ad8d ]
 
-syzbot reported use-after-free in cfusbl_device_notify() [1].  This
-causes a stack trace like below:
+Regulators marked with "regulator-always-on" or "regulator-boot-on"
+as well as an "off-on-delay-us", may run into cycling issues that are
+hard to detect.
 
-BUG: KASAN: use-after-free in cfusbl_device_notify+0x7c9/0x870 net/caif/caif_usb.c:138
-Read of size 8 at addr ffff88807ac4e6f0 by task kworker/u4:6/1214
+This is caused by the "last_off" state not being initialized in this
+case.
 
-CPU: 0 PID: 1214 Comm: kworker/u4:6 Not tainted 5.19.0-rc3-syzkaller-00146-g92f20ff72066 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: netns cleanup_net
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
- print_address_description.constprop.0.cold+0xeb/0x467 mm/kasan/report.c:313
- print_report mm/kasan/report.c:429 [inline]
- kasan_report.cold+0xf4/0x1c6 mm/kasan/report.c:491
- cfusbl_device_notify+0x7c9/0x870 net/caif/caif_usb.c:138
- notifier_call_chain+0xb5/0x200 kernel/notifier.c:87
- call_netdevice_notifiers_info+0xb5/0x130 net/core/dev.c:1945
- call_netdevice_notifiers_extack net/core/dev.c:1983 [inline]
- call_netdevice_notifiers net/core/dev.c:1997 [inline]
- netdev_wait_allrefs_any net/core/dev.c:10227 [inline]
- netdev_run_todo+0xbc0/0x10f0 net/core/dev.c:10341
- default_device_exit_batch+0x44e/0x590 net/core/dev.c:11334
- ops_exit_list+0x125/0x170 net/core/net_namespace.c:167
- cleanup_net+0x4ea/0xb00 net/core/net_namespace.c:594
- process_one_work+0x996/0x1610 kernel/workqueue.c:2289
- worker_thread+0x665/0x1080 kernel/workqueue.c:2436
- kthread+0x2e9/0x3a0 kernel/kthread.c:376
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:302
- </TASK>
+Fix the "last_off" initialization by setting it to the current kernel
+time upon initialization, regardless of always_on/boot_on state.
 
-When unregistering a net device, unregister_netdevice_many_notify()
-sets the device's reg_state to NETREG_UNREGISTERING, calls notifiers
-with NETDEV_UNREGISTER, and adds the device to the todo list.
-
-Later on, devices in the todo list are processed by netdev_run_todo().
-netdev_run_todo() waits devices' reference count become 1 while
-rebdoadcasting NETDEV_UNREGISTER notification.
-
-When cfusbl_device_notify() is called with NETDEV_UNREGISTER multiple
-times, the parent device might be freed.  This could cause UAF.
-Processing NETDEV_UNREGISTER multiple times also causes inbalance of
-reference count for the module.
-
-This patch fixes the issue by accepting only first NETDEV_UNREGISTER
-notification.
-
-Fixes: 7ad65bf68d70 ("caif: Add support for CAIF over CDC NCM USB interface")
-CC: sjur.brandeland@stericsson.com <sjur.brandeland@stericsson.com>
-Reported-by: syzbot+b563d33852b893653a9e@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=c3bfd8e2450adab3bffe4d80821fbbced600407f [1]
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Link: https://lore.kernel.org/r/20230301163913.391304-1-syoshida@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Christian Kohlschütter <christian@kohlschutter.com>
+Link: https://lore.kernel.org/r/FAFD5B39-E9C4-47C7-ACF1-2A04CD59758D@kohlschutter.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 80d2c29e09e6 ("regulator: core: Use ktime_get_boottime() to determine how long a regulator was off")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/caif/caif_usb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/regulator/core.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/caif/caif_usb.c b/net/caif/caif_usb.c
-index b02e1292f7f19..24488a4e2d26e 100644
---- a/net/caif/caif_usb.c
-+++ b/net/caif/caif_usb.c
-@@ -134,6 +134,9 @@ static int cfusbl_device_notify(struct notifier_block *me, unsigned long what,
- 	struct usb_device *usbdev;
- 	int res;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 450aa0756dd8c..c7b1e15bf7bb5 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1539,6 +1539,9 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 			rdev->constraints->always_on = true;
+ 	}
  
-+	if (what == NETDEV_UNREGISTER && dev->reg_state >= NETREG_UNREGISTERED)
-+		return 0;
++	if (rdev->desc->off_on_delay)
++		rdev->last_off = ktime_get();
 +
- 	/* Check whether we have a NCM device, and find its VID/PID. */
- 	if (!(dev->dev.parent && dev->dev.parent->driver &&
- 	      strcmp(dev->dev.parent->driver->name, "cdc_ncm") == 0))
+ 	/* If the constraints say the regulator should be on at this point
+ 	 * and we have control then make sure it is enabled.
+ 	 */
+@@ -1572,8 +1575,6 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 
+ 		if (rdev->constraints->always_on)
+ 			rdev->use_count++;
+-	} else if (rdev->desc->off_on_delay) {
+-		rdev->last_off = ktime_get();
+ 	}
+ 
+ 	print_constraints(rdev);
 -- 
 2.39.2
 
