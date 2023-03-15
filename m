@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BFC4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4B7C433EF;
-	Wed, 15 Mar 2023 12:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2651E4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC17C433D2;
+	Wed, 15 Mar 2023 12:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883989;
-	bh=kFgOJ7D371dxryx5DwiU2D9Yt091mq2CLyzln4RljJI=;
+	s=korg; t=1678883992;
+	bh=qN3fJUsoNzYjLflSLNLstEh1VbdCveVv5vBVl9NrLnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zNKNVKuoVkvLFOW2Ej79ay/RYXSZ84jXTkBNgJIjWfasVh/Ec93aeVdfXIlWvyvQX
-	 mzErYbAe7TLHk7A04yoc10ClC145Pk/tAoc1zxfqGcI74hu5ulJsUXrWYqzTo10L9k
-	 Ybi8w/Lza0SI86BnxoQVWhWBjELqYtFT8LYrlKb8=
+	b=pTA/VnnVqcCo4kbjnXDHpd5ger/+/D8vJqUSO+Qo+Y1GRUHxDZNA3iWgHw7wAY1DS
+	 43WD10IeMBLJG3Dxwh/aXyXEGcC5Ts+jW4PEYgWjlaVrNXR9fnKpyj/s0nztlMtOvt
+	 RXnxItwdMWtg3SFn3XV2qZ3KMVz8e4cIOyKPRnLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Brian Vazquez <brianvv@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 063/141] net: use indirect calls helpers for sk_exit_memory_pressure()
-Date: Wed, 15 Mar 2023 13:12:46 +0100
-Message-Id: <20230315115741.875759445@linuxfoundation.org>
+Subject: [PATCH 6.2 035/141] bus: mhi: ep: Change state_lock to mutex
+Date: Wed, 15 Mar 2023 13:12:18 +0100
+Message-Id: <20230315115741.034795765@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -37,68 +36,208 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Vazquez <brianvv@google.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 5c1ebbfabcd61142a4551bfc0e51840f9bdae7af ]
+[ Upstream commit 1ddc7618294084fff8d673217a9479550990ee84 ]
 
-Florian reported a regression and sent a patch with the following
-changelog:
+state_lock, the spinlock type is meant to protect race against concurrent
+MHI state transitions. In mhi_ep_set_m0_state(), while the state_lock is
+being held, the channels are resumed in mhi_ep_resume_channels() if the
+previous state was M3. This causes sleeping in atomic bug, since
+mhi_ep_resume_channels() use mutex internally.
 
-<quote>
- There is a noticeable tcp performance regression (loopback or cross-netns),
- seen with iperf3 -Z (sendfile mode) when generic retpolines are needed.
+Since the state_lock is supposed to be held throughout the state change,
+it is not ideal to drop the lock before calling mhi_ep_resume_channels().
+So to fix this issue, let's change the type of state_lock to mutex. This
+would also allow holding the lock throughout all state transitions thereby
+avoiding any potential race.
 
- With SK_RECLAIM_THRESHOLD checks gone number of calls to enter/leave
- memory pressure happen much more often. For TCP indirect calls are
- used.
-
- We can't remove the if-set-return short-circuit check in
- tcp_enter_memory_pressure because there are callers other than
- sk_enter_memory_pressure.  Doing a check in the sk wrapper too
- reduces the indirect calls enough to recover some performance.
-
- Before,
- 0.00-60.00  sec   322 GBytes  46.1 Gbits/sec                  receiver
-
- After:
- 0.00-60.04  sec   359 GBytes  51.4 Gbits/sec                  receiver
-
- "iperf3 -c $peer -t 60 -Z -f g", connected via veth in another netns.
-</quote>
-
-It seems we forgot to upstream this indirect call mitigation we
-had for years, lets do this instead.
-
-[edumazet] - It seems we forgot to upstream this indirect call
-             mitigation we had for years, let's do this instead.
-           - Changed to INDIRECT_CALL_INET_1() to avoid bots reports.
-
-Fixes: 4890b686f408 ("net: keep sk->sk_forward_alloc as small as possible")
-Reported-by: Florian Westphal <fw@strlen.de>
-Link: https://lore.kernel.org/netdev/20230227152741.4a53634b@kernel.org/T/
-Signed-off-by: Brian Vazquez <brianvv@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230301133247.2346111-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: <stable@vger.kernel.org> # 5.19
+Fixes: e4b7b5f0f30a ("bus: mhi: ep: Add support for suspending and resuming channels")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/bus/mhi/ep/main.c |  8 +++++---
+ drivers/bus/mhi/ep/sm.c   | 42 ++++++++++++++++++++++-----------------
+ include/linux/mhi_ep.h    |  4 ++--
+ 3 files changed, 31 insertions(+), 23 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 63680f999bf6d..9796a5fa6ceaa 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2827,7 +2827,8 @@ static void sk_enter_memory_pressure(struct sock *sk)
- static void sk_leave_memory_pressure(struct sock *sk)
- {
- 	if (sk->sk_prot->leave_memory_pressure) {
--		sk->sk_prot->leave_memory_pressure(sk);
-+		INDIRECT_CALL_INET_1(sk->sk_prot->leave_memory_pressure,
-+				     tcp_leave_memory_pressure, sk);
- 	} else {
- 		unsigned long *memory_pressure = sk->sk_prot->memory_pressure;
+diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+index b06548005985c..edd153dda40c0 100644
+--- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -994,11 +994,11 @@ static void mhi_ep_reset_worker(struct work_struct *work)
  
+ 	mhi_ep_power_down(mhi_cntrl);
+ 
+-	spin_lock_bh(&mhi_cntrl->state_lock);
++	mutex_lock(&mhi_cntrl->state_lock);
++
+ 	/* Reset MMIO to signal host that the MHI_RESET is completed in endpoint */
+ 	mhi_ep_mmio_reset(mhi_cntrl);
+ 	cur_state = mhi_cntrl->mhi_state;
+-	spin_unlock_bh(&mhi_cntrl->state_lock);
+ 
+ 	/*
+ 	 * Only proceed further if the reset is due to SYS_ERR. The host will
+@@ -1007,6 +1007,8 @@ static void mhi_ep_reset_worker(struct work_struct *work)
+ 	 */
+ 	if (cur_state == MHI_STATE_SYS_ERR)
+ 		mhi_ep_power_up(mhi_cntrl);
++
++	mutex_unlock(&mhi_cntrl->state_lock);
+ }
+ 
+ /*
+@@ -1379,8 +1381,8 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+ 
+ 	INIT_LIST_HEAD(&mhi_cntrl->st_transition_list);
+ 	INIT_LIST_HEAD(&mhi_cntrl->ch_db_list);
+-	spin_lock_init(&mhi_cntrl->state_lock);
+ 	spin_lock_init(&mhi_cntrl->list_lock);
++	mutex_init(&mhi_cntrl->state_lock);
+ 	mutex_init(&mhi_cntrl->event_lock);
+ 
+ 	/* Set MHI version and AMSS EE before enumeration */
+diff --git a/drivers/bus/mhi/ep/sm.c b/drivers/bus/mhi/ep/sm.c
+index 3655c19e23c7b..fd200b2ac0bb2 100644
+--- a/drivers/bus/mhi/ep/sm.c
++++ b/drivers/bus/mhi/ep/sm.c
+@@ -63,24 +63,23 @@ int mhi_ep_set_m0_state(struct mhi_ep_cntrl *mhi_cntrl)
+ 	int ret;
+ 
+ 	/* If MHI is in M3, resume suspended channels */
+-	spin_lock_bh(&mhi_cntrl->state_lock);
++	mutex_lock(&mhi_cntrl->state_lock);
++
+ 	old_state = mhi_cntrl->mhi_state;
+ 	if (old_state == MHI_STATE_M3)
+ 		mhi_ep_resume_channels(mhi_cntrl);
+ 
+ 	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M0);
+-	spin_unlock_bh(&mhi_cntrl->state_lock);
+-
+ 	if (ret) {
+ 		mhi_ep_handle_syserr(mhi_cntrl);
+-		return ret;
++		goto err_unlock;
+ 	}
+ 
+ 	/* Signal host that the device moved to M0 */
+ 	ret = mhi_ep_send_state_change_event(mhi_cntrl, MHI_STATE_M0);
+ 	if (ret) {
+ 		dev_err(dev, "Failed sending M0 state change event\n");
+-		return ret;
++		goto err_unlock;
+ 	}
+ 
+ 	if (old_state == MHI_STATE_READY) {
+@@ -88,11 +87,14 @@ int mhi_ep_set_m0_state(struct mhi_ep_cntrl *mhi_cntrl)
+ 		ret = mhi_ep_send_ee_event(mhi_cntrl, MHI_EE_AMSS);
+ 		if (ret) {
+ 			dev_err(dev, "Failed sending AMSS EE event\n");
+-			return ret;
++			goto err_unlock;
+ 		}
+ 	}
+ 
+-	return 0;
++err_unlock:
++	mutex_unlock(&mhi_cntrl->state_lock);
++
++	return ret;
+ }
+ 
+ int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl)
+@@ -100,13 +102,12 @@ int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl)
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 	int ret;
+ 
+-	spin_lock_bh(&mhi_cntrl->state_lock);
+-	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M3);
+-	spin_unlock_bh(&mhi_cntrl->state_lock);
++	mutex_lock(&mhi_cntrl->state_lock);
+ 
++	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M3);
+ 	if (ret) {
+ 		mhi_ep_handle_syserr(mhi_cntrl);
+-		return ret;
++		goto err_unlock;
+ 	}
+ 
+ 	mhi_ep_suspend_channels(mhi_cntrl);
+@@ -115,10 +116,13 @@ int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl)
+ 	ret = mhi_ep_send_state_change_event(mhi_cntrl, MHI_STATE_M3);
+ 	if (ret) {
+ 		dev_err(dev, "Failed sending M3 state change event\n");
+-		return ret;
++		goto err_unlock;
+ 	}
+ 
+-	return 0;
++err_unlock:
++	mutex_unlock(&mhi_cntrl->state_lock);
++
++	return ret;
+ }
+ 
+ int mhi_ep_set_ready_state(struct mhi_ep_cntrl *mhi_cntrl)
+@@ -127,22 +131,24 @@ int mhi_ep_set_ready_state(struct mhi_ep_cntrl *mhi_cntrl)
+ 	enum mhi_state mhi_state;
+ 	int ret, is_ready;
+ 
+-	spin_lock_bh(&mhi_cntrl->state_lock);
++	mutex_lock(&mhi_cntrl->state_lock);
++
+ 	/* Ensure that the MHISTATUS is set to RESET by host */
+ 	mhi_state = mhi_ep_mmio_masked_read(mhi_cntrl, EP_MHISTATUS, MHISTATUS_MHISTATE_MASK);
+ 	is_ready = mhi_ep_mmio_masked_read(mhi_cntrl, EP_MHISTATUS, MHISTATUS_READY_MASK);
+ 
+ 	if (mhi_state != MHI_STATE_RESET || is_ready) {
+ 		dev_err(dev, "READY state transition failed. MHI host not in RESET state\n");
+-		spin_unlock_bh(&mhi_cntrl->state_lock);
+-		return -EIO;
++		ret = -EIO;
++		goto err_unlock;
+ 	}
+ 
+ 	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_READY);
+-	spin_unlock_bh(&mhi_cntrl->state_lock);
+-
+ 	if (ret)
+ 		mhi_ep_handle_syserr(mhi_cntrl);
+ 
++err_unlock:
++	mutex_unlock(&mhi_cntrl->state_lock);
++
+ 	return ret;
+ }
+diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
+index 478aece170462..f198a8ac7ee72 100644
+--- a/include/linux/mhi_ep.h
++++ b/include/linux/mhi_ep.h
+@@ -70,8 +70,8 @@ struct mhi_ep_db_info {
+  * @cmd_ctx_cache_phys: Physical address of the host command context cache
+  * @chdb: Array of channel doorbell interrupt info
+  * @event_lock: Lock for protecting event rings
+- * @list_lock: Lock for protecting state transition and channel doorbell lists
+  * @state_lock: Lock for protecting state transitions
++ * @list_lock: Lock for protecting state transition and channel doorbell lists
+  * @st_transition_list: List of state transitions
+  * @ch_db_list: List of queued channel doorbells
+  * @wq: Dedicated workqueue for handling rings and state changes
+@@ -117,8 +117,8 @@ struct mhi_ep_cntrl {
+ 
+ 	struct mhi_ep_db_info chdb[4];
+ 	struct mutex event_lock;
++	struct mutex state_lock;
+ 	spinlock_t list_lock;
+-	spinlock_t state_lock;
+ 
+ 	struct list_head st_transition_list;
+ 	struct list_head ch_db_list;
 -- 
 2.39.2
 
