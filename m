@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D3D4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E02C433D2;
-	Wed, 15 Mar 2023 12:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3384431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E0FC433D2;
+	Wed, 15 Mar 2023 12:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883019;
-	bh=S8POfWpTMGqgZNVN6cqtn6k3LcjJgKzPDpgYFoPhBv4=;
+	s=korg; t=1678883021;
+	bh=EefuSqRtmZpxdmB1RNwWLIkujAZAwJAmKY8ZOc4W6Jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fa49I8dTCnYXRX3uI1qd9SJEqZwwFgdJkuIymf+6licxYLDc07lnUzzPeSCJ0KaPL
-	 sCoNvjVHWLDxodkj8a52OsC6QmK9KfB43/EbrTBcLhQMQ5Kihsd/9maxeH8FlNcc+a
-	 6nYnbmP69wkhnKbgOsMUeP5Ib6nOhrJxPzAE7gsQ=
+	b=A+7V4/4fo49ttDQSSLffTZUTqzJ7+q26aWTCEvtxAwG//Xz/e7juiwQ9UDXrNBU3e
+	 Dz+JXeEDnVuRlwlrxXyBplWfFL3A9ZszMGIXnAjEv7gp2iCfA29xPOYZDQb5+41Vdx
+	 29zyedV+bWdChM4mjl8z3LvsQDRKQcE81pU8XzFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvaro Karsz <alvaro.karsz@solid-run.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 072/104] PCI: Add SolidRun vendor ID
-Date: Wed, 15 Mar 2023 13:12:43 +0100
-Message-Id: <20230315115734.943466354@linuxfoundation.org>
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	"Qais Yousef (Google)" <qyousef@layalina.io>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>
+Subject: [PATCH 5.10 090/104] sched/fair: Fixes for capacity inversion detection
+Date: Wed, 15 Mar 2023 13:13:01 +0100
+Message-Id: <20230315115735.708360308@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -36,39 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alvaro Karsz <alvaro.karsz@solid-run.com>
+From: Qais Yousef <qyousef@layalina.io>
 
-[ Upstream commit db6c4dee4c104f50ed163af71c53bfdb878a8318 ]
+commit da07d2f9c153e457e845d4dcfdd13568d71d18a4 upstream.
 
-Add SolidRun vendor ID to pci_ids.h
+Traversing the Perf Domains requires rcu_read_lock() to be held and is
+conditional on sched_energy_enabled(). Ensure right protections applied.
 
-The vendor ID is used in 2 different source files, the SNET vDPA driver
-and PCI quirks.
+Also skip capacity inversion detection for our own pd; which was an
+error.
 
-Signed-off-by: Alvaro Karsz <alvaro.karsz@solid-run.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Message-Id: <20230110165638.123745-2-alvaro.karsz@solid-run.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 44c7b80bffc3 ("sched/fair: Detect capacity inversion")
+Reported-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20230112122708.330667-3-qyousef@layalina.io
+(cherry picked from commit da07d2f9c153e457e845d4dcfdd13568d71d18a4)
+Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/pci_ids.h | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/sched/fair.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
-index 2e1935917c241..4b34a5c125999 100644
---- a/include/linux/pci_ids.h
-+++ b/include/linux/pci_ids.h
-@@ -3115,6 +3115,8 @@
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -8363,16 +8363,23 @@ static void update_cpu_capacity(struct s
+ 	 *   * Thermal pressure will impact all cpus in this perf domain
+ 	 *     equally.
+ 	 */
+-	if (static_branch_unlikely(&sched_asym_cpucapacity)) {
++	if (sched_energy_enabled()) {
+ 		unsigned long inv_cap = capacity_orig - thermal_load_avg(rq);
+-		struct perf_domain *pd = rcu_dereference(rq->rd->pd);
++		struct perf_domain *pd;
  
- #define PCI_VENDOR_ID_3COM_2		0xa727
- 
-+#define PCI_VENDOR_ID_SOLIDRUN		0xd063
++		rcu_read_lock();
 +
- #define PCI_VENDOR_ID_DIGIUM		0xd161
- #define PCI_DEVICE_ID_DIGIUM_HFC4S	0xb410
++		pd = rcu_dereference(rq->rd->pd);
+ 		rq->cpu_capacity_inverted = 0;
  
--- 
-2.39.2
-
+ 		for (; pd; pd = pd->next) {
+ 			struct cpumask *pd_span = perf_domain_span(pd);
+ 			unsigned long pd_cap_orig, pd_cap;
+ 
++			/* We can't be inverted against our own pd */
++			if (cpumask_test_cpu(cpu_of(rq), pd_span))
++				continue;
++
+ 			cpu = cpumask_any(pd_span);
+ 			pd_cap_orig = arch_scale_cpu_capacity(cpu);
+ 
+@@ -8397,6 +8404,8 @@ static void update_cpu_capacity(struct s
+ 				break;
+ 			}
+ 		}
++
++		rcu_read_unlock();
+ 	}
+ 
+ 	trace_sched_cpu_capacity_tp(rq);
 
 
