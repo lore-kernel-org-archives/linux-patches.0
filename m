@@ -1,36 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0965B4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A89EC4339E;
-	Wed, 15 Mar 2023 12:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EED4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E7AC433EF;
+	Wed, 15 Mar 2023 12:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883522;
-	bh=fioF359d8FJ067o9MJKO9N/YlzuEa6BbcD88fm+/4P4=;
+	s=korg; t=1678883525;
+	bh=OBxoBTC7l7uFCA/gWjDOJIjVjWmPpgZHAt4JH1lPxeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vc6a9lABlMYfQLvHmNUsQyBnM7qICFOBXAxBLxXnKXaaBn9ikLaseZp0E9nRHYNIQ
-	 eepYgXZVy7vTky5EnvnSLQORggr+FWyOHn+eZ+PwSDQRSZJh5vC1Fj22Qvqlu2zCNa
-	 +LUKDFuz0HLYt3qWNfd9R+uhwUrBOEqEoJnJasB0=
+	b=rsa6bwR+lAbuAW6AEMmtdirFO55gJpdqFIPyX9i69V9+My0xfNy4CSAPo69pjY+mN
+	 6aHVFSgkr3HDAkkOZAobDzWOkV+mJWOT08UbuGCVaAm3ABsstA03r4QzBu2X9WQ229
+	 IjiUuSxlRWx7Q+OpAYVII7G4Ej/W4REZaAYNW41k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Pekka Paalanen <ppaalanen@gmail.com>,
-	Sebastian Wick <sebastian.wick@redhat.com>,
-	Vitaly.Prosyak@amd.com,
-	Uma Shankar <uma.shankar@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Joshua Ashton <joshua@froggi.es>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	dri-devel@lists.freedesktop.org,
-	amd-gfx@lists.freedesktop.org,
-	Pekka Paalanen <pekka.paalanen@collabora.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 013/143] drm/display: Dont block HDR_OUTPUT_METADATA on unknown EOTF
-Date: Wed, 15 Mar 2023 13:11:39 +0100
-Message-Id: <20230315115740.863071000@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 031/143] fs: dlm: add midcomms init/start functions
+Date: Wed, 15 Mar 2023 13:11:57 +0100
+Message-Id: <20230315115741.451724683@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -44,75 +35,202 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-commit e5eef23e267c72521d81f23f7f82d1f523d4a253 upstream.
+[ Upstream commit 8b0188b0d60b6f6183b48380bac49fe080c5ded9 ]
 
-The EDID of an HDR display defines EOTFs that are supported
-by the display and can be set in the HDR metadata infoframe.
-Userspace is expected to read the EDID and set an appropriate
-HDR_OUTPUT_METADATA.
+This patch introduces leftovers of init, start, stop and exit
+functionality. The dlm application layer should always call the midcomms
+layer which getting aware of such event and redirect it to the lowcomms
+layer. Some functionality which is currently handled inside the start
+functionality of midcomms and lowcomms should be handled in the init
+functionality as it only need to be initialized once when dlm is loaded.
 
-In drm_parse_hdr_metadata_block the kernel reads the supported
-EOTFs from the EDID and stores them in the
-drm_connector->hdr_sink_metadata. While doing so it also
-filters the EOTFs to the EOTFs the kernel knows about.
-When an HDR_OUTPUT_METADATA is set it then checks to
-make sure the EOTF is a supported EOTF. In cases where
-the kernel doesn't know about a new EOTF this check will
-fail, even if the EDID advertises support.
-
-Since it is expected that userspace reads the EDID to understand
-what the display supports it doesn't make sense for DRM to block
-an HDR_OUTPUT_METADATA if it contains an EOTF the kernel doesn't
-understand.
-
-This comes with the added benefit of future-proofing metadata
-support. If the spec defines a new EOTF there is no need to
-update DRM and an compositor can immediately make use of it.
-
-Bug: https://gitlab.freedesktop.org/wayland/weston/-/issues/609
-
-v2: Distinguish EOTFs defind in kernel and ones defined
-    in EDID in the commit description (Pekka)
-
-v3: Rebase; drm_hdmi_infoframe_set_hdr_metadata moved
-    to drm_hdmi_helper.c
-
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Cc: Pekka Paalanen <ppaalanen@gmail.com>
-Cc: Sebastian Wick <sebastian.wick@redhat.com>
-Cc: Vitaly.Prosyak@amd.com
-Cc: Uma Shankar <uma.shankar@intel.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Joshua Ashton <joshua@froggi.es>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: amd-gfx@lists.freedesktop.org
-Acked-by: Pekka Paalanen <pekka.paalanen@collabora.com>
-Reviewed-By: Joshua Ashton <joshua@froggi.es>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230113162428.33874-2-harry.wentland@amd.com
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
+Stable-dep-of: aad633dc0cf9 ("fs: dlm: start midcomms before scand")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_hdmi_helper.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/dlm/lockspace.c |  5 ++---
+ fs/dlm/lowcomms.c  | 16 ++++++++++------
+ fs/dlm/lowcomms.h  |  1 +
+ fs/dlm/main.c      |  7 +++++--
+ fs/dlm/midcomms.c  | 17 ++++++++++++++++-
+ fs/dlm/midcomms.h  |  3 +++
+ 6 files changed, 37 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/display/drm_hdmi_helper.c
-+++ b/drivers/gpu/drm/display/drm_hdmi_helper.c
-@@ -44,10 +44,8 @@ int drm_hdmi_infoframe_set_hdr_metadata(
+diff --git a/fs/dlm/lockspace.c b/fs/dlm/lockspace.c
+index 04e1b4fe366dc..c3cf2e7996f6c 100644
+--- a/fs/dlm/lockspace.c
++++ b/fs/dlm/lockspace.c
+@@ -17,7 +17,6 @@
+ #include "recoverd.h"
+ #include "dir.h"
+ #include "midcomms.h"
+-#include "lowcomms.h"
+ #include "config.h"
+ #include "memory.h"
+ #include "lock.h"
+@@ -726,7 +725,7 @@ static int __dlm_new_lockspace(const char *name, const char *cluster,
+ 	if (!ls_count) {
+ 		dlm_scand_stop();
+ 		dlm_midcomms_shutdown();
+-		dlm_lowcomms_stop();
++		dlm_midcomms_stop();
+ 	}
+  out:
+ 	mutex_unlock(&ls_lock);
+@@ -929,7 +928,7 @@ int dlm_release_lockspace(void *lockspace, int force)
+ 	if (!error)
+ 		ls_count--;
+ 	if (!ls_count)
+-		dlm_lowcomms_stop();
++		dlm_midcomms_stop();
+ 	mutex_unlock(&ls_lock);
  
- 	/* Sink EOTF is Bit map while infoframe is absolute values */
- 	if (!is_eotf_supported(hdr_metadata->hdmi_metadata_type1.eotf,
--	    connector->hdr_sink_metadata.hdmi_type1.eotf)) {
--		DRM_DEBUG_KMS("EOTF Not Supported\n");
--		return -EINVAL;
--	}
-+	    connector->hdr_sink_metadata.hdmi_type1.eotf))
-+		DRM_DEBUG_KMS("Unknown EOTF %d\n", hdr_metadata->hdmi_metadata_type1.eotf);
+ 	return error;
+diff --git a/fs/dlm/lowcomms.c b/fs/dlm/lowcomms.c
+index 871d4e9f49fb6..6ed09edabea0c 100644
+--- a/fs/dlm/lowcomms.c
++++ b/fs/dlm/lowcomms.c
+@@ -1982,10 +1982,6 @@ static const struct dlm_proto_ops dlm_sctp_ops = {
+ int dlm_lowcomms_start(void)
+ {
+ 	int error = -EINVAL;
+-	int i;
+-
+-	for (i = 0; i < CONN_HASH_SIZE; i++)
+-		INIT_HLIST_HEAD(&connection_hash[i]);
  
- 	err = hdmi_drm_infoframe_init(frame);
- 	if (err < 0)
+ 	init_local();
+ 	if (!dlm_local_count) {
+@@ -1994,8 +1990,6 @@ int dlm_lowcomms_start(void)
+ 		goto fail;
+ 	}
+ 
+-	INIT_WORK(&listen_con.rwork, process_listen_recv_socket);
+-
+ 	error = work_start();
+ 	if (error)
+ 		goto fail_local;
+@@ -2034,6 +2028,16 @@ int dlm_lowcomms_start(void)
+ 	return error;
+ }
+ 
++void dlm_lowcomms_init(void)
++{
++	int i;
++
++	for (i = 0; i < CONN_HASH_SIZE; i++)
++		INIT_HLIST_HEAD(&connection_hash[i]);
++
++	INIT_WORK(&listen_con.rwork, process_listen_recv_socket);
++}
++
+ void dlm_lowcomms_exit(void)
+ {
+ 	struct dlm_node_addr *na, *safe;
+diff --git a/fs/dlm/lowcomms.h b/fs/dlm/lowcomms.h
+index 29369feea9916..bbce7a18416dc 100644
+--- a/fs/dlm/lowcomms.h
++++ b/fs/dlm/lowcomms.h
+@@ -35,6 +35,7 @@ extern int dlm_allow_conn;
+ int dlm_lowcomms_start(void);
+ void dlm_lowcomms_shutdown(void);
+ void dlm_lowcomms_stop(void);
++void dlm_lowcomms_init(void);
+ void dlm_lowcomms_exit(void);
+ int dlm_lowcomms_close(int nodeid);
+ struct dlm_msg *dlm_lowcomms_new_msg(int nodeid, int len, gfp_t allocation,
+diff --git a/fs/dlm/main.c b/fs/dlm/main.c
+index 1c5be4b70ac1b..a77338be32371 100644
+--- a/fs/dlm/main.c
++++ b/fs/dlm/main.c
+@@ -17,7 +17,7 @@
+ #include "user.h"
+ #include "memory.h"
+ #include "config.h"
+-#include "lowcomms.h"
++#include "midcomms.h"
+ 
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/dlm.h>
+@@ -30,6 +30,8 @@ static int __init init_dlm(void)
+ 	if (error)
+ 		goto out;
+ 
++	dlm_midcomms_init();
++
+ 	error = dlm_lockspace_init();
+ 	if (error)
+ 		goto out_mem;
+@@ -66,6 +68,7 @@ static int __init init_dlm(void)
+  out_lockspace:
+ 	dlm_lockspace_exit();
+  out_mem:
++	dlm_midcomms_exit();
+ 	dlm_memory_exit();
+  out:
+ 	return error;
+@@ -79,7 +82,7 @@ static void __exit exit_dlm(void)
+ 	dlm_config_exit();
+ 	dlm_memory_exit();
+ 	dlm_lockspace_exit();
+-	dlm_lowcomms_exit();
++	dlm_midcomms_exit();
+ 	dlm_unregister_debugfs();
+ }
+ 
+diff --git a/fs/dlm/midcomms.c b/fs/dlm/midcomms.c
+index 546c52c46b1c9..095f2005fb621 100644
+--- a/fs/dlm/midcomms.c
++++ b/fs/dlm/midcomms.c
+@@ -1160,13 +1160,28 @@ void dlm_midcomms_commit_mhandle(struct dlm_mhandle *mh)
+ #endif
+ 
+ int dlm_midcomms_start(void)
++{
++	return dlm_lowcomms_start();
++}
++
++void dlm_midcomms_stop(void)
++{
++	dlm_lowcomms_stop();
++}
++
++void dlm_midcomms_init(void)
+ {
+ 	int i;
+ 
+ 	for (i = 0; i < CONN_HASH_SIZE; i++)
+ 		INIT_HLIST_HEAD(&node_hash[i]);
+ 
+-	return dlm_lowcomms_start();
++	dlm_lowcomms_init();
++}
++
++void dlm_midcomms_exit(void)
++{
++	dlm_lowcomms_exit();
+ }
+ 
+ static void dlm_act_fin_ack_rcv(struct midcomms_node *node)
+diff --git a/fs/dlm/midcomms.h b/fs/dlm/midcomms.h
+index 82bcd96619228..f61fce622e93d 100644
+--- a/fs/dlm/midcomms.h
++++ b/fs/dlm/midcomms.h
+@@ -20,6 +20,9 @@ struct dlm_mhandle *dlm_midcomms_get_mhandle(int nodeid, int len,
+ void dlm_midcomms_commit_mhandle(struct dlm_mhandle *mh);
+ int dlm_midcomms_close(int nodeid);
+ int dlm_midcomms_start(void);
++void dlm_midcomms_stop(void);
++void dlm_midcomms_init(void);
++void dlm_midcomms_exit(void);
+ void dlm_midcomms_shutdown(void);
+ void dlm_midcomms_add_member(int nodeid);
+ void dlm_midcomms_remove_member(int nodeid);
+-- 
+2.39.2
+
 
 
