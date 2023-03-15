@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE01C4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E671C433EF;
-	Wed, 15 Mar 2023 12:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582CB4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D283EC433D2;
+	Wed, 15 Mar 2023 12:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882667;
-	bh=++22oCWeDRdzUHtuudFYIer7nwcHAUafStg7/A7lnIM=;
+	s=korg; t=1678882670;
+	bh=iKkfzPzXLqxtA+ZsPbtVi+paktrRi7MNyv+w8G1pz4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KQnJ5Sq121RJFIt3JyR1pQ+iO9zGc8ixtR8+rdFKVdzgbiRLvIyJd+XgAigbFD2nL
-	 YvnBpBA61vKhyKEbvP/oO7f+qxjFBBeQiQ+aLzSqEE82LREHgV/9FfxtY4a37TuaGF
-	 wPaffrPWJWRutXkLC2CBVggf5Uv/mgpmCBUS2TaU=
+	b=C6RBCaBFrHDBKReUiQEODe99XLKQ+ilKbZQ+Pu16YvODKXH7KfibBkJYQfUKmk/MZ
+	 Mj5IF/CRsigPkI5bsEtVkFE3ZtzvrMcj/oHnBGzLn/rT1RuJTLJ7Sy8v/h4i2XBslH
+	 qV1Bx78FVHs1LGTlY1l0yo6nLvQYHGoHJYtMeAIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 25/68] ARM: dts: exynos: Override thermal by label in Exynos4210
-Date: Wed, 15 Mar 2023 13:12:19 +0100
-Message-Id: <20230315115727.078793866@linuxfoundation.org>
+Subject: [PATCH 5.4 26/68] ARM: dts: exynos: correct TMU phandle in Exynos4210
+Date: Wed, 15 Mar 2023 13:12:20 +0100
+Message-Id: <20230315115727.118399445@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -34,71 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzk@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 1708f56081e239a29ed8646aa7fde6853235d93f ]
+[ Upstream commit 408ab6786dbf6dd696488054c9559681112ef994 ]
 
-Using full paths to extend or override a device tree node is error prone
-since if there was a typo error, a new node will be created instead of
-extending the node as it was desired.  This will lead to run-time errors
-that could be hard to detect.
+TMU node uses 0 as thermal-sensor-cells, thus thermal zone referencing
+it must not have an argument to phandle.  Since thermal-sensors property is
+already defined in included exynos4-cpu-thermal.dtsi, drop it from
+exynos4210.dtsi to fix the error and remoev redundancy.
 
-A mistyped label on the other hand, will cause a dtc compile error
-(during build time).
-
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-Link: https://lore.kernel.org/r/20200830135200.24304-16-krzk@kernel.org
-Stable-dep-of: 408ab6786dbf ("ARM: dts: exynos: correct TMU phandle in Exynos4210")
+Fixes: 9843a2236003 ("ARM: dts: Provide dt bindings identical for Exynos TMU")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230209105841.779596-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/exynos4210.dtsi | 36 +++++++++++++++----------------
- 1 file changed, 17 insertions(+), 19 deletions(-)
+ arch/arm/boot/dts/exynos4210.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/arch/arm/boot/dts/exynos4210.dtsi b/arch/arm/boot/dts/exynos4210.dtsi
-index f220716239dbf..d341dcad8da6d 100644
+index d341dcad8da6d..505b49118d2cf 100644
 --- a/arch/arm/boot/dts/exynos4210.dtsi
 +++ b/arch/arm/boot/dts/exynos4210.dtsi
-@@ -372,26 +372,24 @@
- 			};
- 		};
- 	};
-+};
- 
--	thermal-zones {
--		cpu_thermal: cpu-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
--			thermal-sensors = <&tmu 0>;
--
--			trips {
--				cpu_alert0: cpu-alert-0 {
--					temperature = <85000>; /* millicelsius */
--				};
--				cpu_alert1: cpu-alert-1 {
--					temperature = <100000>; /* millicelsius */
--				};
--				cpu_alert2: cpu-alert-2 {
--					temperature = <110000>; /* millicelsius */
--				};
--			};
--		};
--	};
-+&cpu_alert0 {
-+	temperature = <85000>; /* millicelsius */
-+};
-+
-+&cpu_alert1 {
-+	temperature = <100000>; /* millicelsius */
-+};
-+
-+&cpu_alert2 {
-+	temperature = <110000>; /* millicelsius */
-+};
-+
-+&cpu_thermal {
-+	polling-delay-passive = <0>;
-+	polling-delay = <0>;
-+	thermal-sensors = <&tmu 0>;
+@@ -389,7 +389,6 @@
+ &cpu_thermal {
+ 	polling-delay-passive = <0>;
+ 	polling-delay = <0>;
+-	thermal-sensors = <&tmu 0>;
  };
  
  &gic {
