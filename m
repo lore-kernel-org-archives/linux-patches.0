@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F184431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6ADC4339B;
-	Wed, 15 Mar 2023 12:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C834431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC058C433D2;
+	Wed, 15 Mar 2023 12:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882646;
-	bh=2+1XVPTwUsBuvgi3xyK63RMGcqbgFx5/B5npAGAu4vs=;
+	s=korg; t=1678882649;
+	bh=yyofiCsIBWvTe6TugVvwGF+8HcVhwLr8N1pWzQxrB9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tai57Y24B/7NrOgWtCCdDACKQT5nbteQ/Jl1KJ+2yOhh5vS5X/dIDxAUOoQXPVwJg
-	 jR6RlpFiPzbIRYawBmYRHL/grW1gb5QrwihesQqEnUKyP3cqTm7RJyzSn0wmPpTgJM
-	 gEb8QJncdzy2IUsdLKAK4e1Zk52v7AlIFLU7cU0g=
+	b=cK5eqet7hjqN/4GXYmbblE4NDWpnm+Pu/wMB/77GHwevL+4VAB4mW3wLDJnbNC8K2
+	 ycXdKuN9KilGH/ZC6MM74CzusjbeCA6FphO4dytwZ0NOYRqSO5z9aneDUA/zD4xEGs
+	 rdH0xnTp8JoA/rDSXzQO+fogGCmnvss3kSe8CHLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 09/68] nfc: change order inside nfc_se_io error path
-Date: Wed, 15 Mar 2023 13:12:03 +0100
-Message-Id: <20230315115726.470045306@linuxfoundation.org>
+	Corey Minyard <cminyard@mvista.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 18/68] ipmi:ssif: resend_msg() cannot fail
+Date: Wed, 15 Mar 2023 13:12:12 +0100
+Message-Id: <20230315115726.811691254@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -35,38 +34,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Corey Minyard <cminyard@mvista.com>
 
-commit 7d834b4d1ab66c48e8c0810fdeadaabb80fa2c81 upstream.
+[ Upstream commit 95767ed78a181d5404202627499f9cde56053b96 ]
 
-cb_context should be freed on the error path in nfc_se_io as stated by
-commit 25ff6f8a5a3b ("nfc: fix memory leak of se_io context in
-nfc_genl_se_io").
+The resend_msg() function cannot fail, but there was error handling
+around using it.  Rework the handling of the error, and fix the out of
+retries debug reporting that was wrong around this, too.
 
-Make the error path in nfc_se_io unwind everything in reverse order, i.e.
-free the cb_context after unlocking the device.
-
-Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230306212650.230322-1-pchelkin@ispras.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/netlink.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_ssif.c | 28 +++++++---------------------
+ 1 file changed, 7 insertions(+), 21 deletions(-)
 
---- a/net/nfc/netlink.c
-+++ b/net/nfc/netlink.c
-@@ -1454,8 +1454,8 @@ static int nfc_se_io(struct nfc_dev *dev
- 	return rc;
- 
- error:
--	kfree(cb_context);
- 	device_unlock(&dev->dev);
-+	kfree(cb_context);
- 	return rc;
+diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
+index 5ead5e7f0ce16..ff93009583ab1 100644
+--- a/drivers/char/ipmi/ipmi_ssif.c
++++ b/drivers/char/ipmi/ipmi_ssif.c
+@@ -607,7 +607,7 @@ static void ssif_alert(struct i2c_client *client, enum i2c_alert_protocol type,
+ 		start_get(ssif_info);
  }
  
+-static int start_resend(struct ssif_info *ssif_info);
++static void start_resend(struct ssif_info *ssif_info);
+ 
+ static void msg_done_handler(struct ssif_info *ssif_info, int result,
+ 			     unsigned char *data, unsigned int len)
+@@ -914,31 +914,17 @@ static void msg_written_handler(struct ssif_info *ssif_info, int result,
+ 	if (result < 0) {
+ 		ssif_info->retries_left--;
+ 		if (ssif_info->retries_left > 0) {
+-			if (!start_resend(ssif_info)) {
+-				ssif_inc_stat(ssif_info, send_retries);
+-				return;
+-			}
+-			/* request failed, just return the error. */
+-			ssif_inc_stat(ssif_info, send_errors);
+-
+-			if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
+-				dev_dbg(&ssif_info->client->dev,
+-					"%s: Out of retries\n", __func__);
+-			msg_done_handler(ssif_info, -EIO, NULL, 0);
++			start_resend(ssif_info);
+ 			return;
+ 		}
+ 
+ 		ssif_inc_stat(ssif_info, send_errors);
+ 
+-		/*
+-		 * Got an error on transmit, let the done routine
+-		 * handle it.
+-		 */
+ 		if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
+ 			dev_dbg(&ssif_info->client->dev,
+-				"%s: Error  %d\n", __func__, result);
++				"%s: Out of retries\n", __func__);
+ 
+-		msg_done_handler(ssif_info, result, NULL, 0);
++		msg_done_handler(ssif_info, -EIO, NULL, 0);
+ 		return;
+ 	}
+ 
+@@ -1001,7 +987,7 @@ static void msg_written_handler(struct ssif_info *ssif_info, int result,
+ 	}
+ }
+ 
+-static int start_resend(struct ssif_info *ssif_info)
++static void start_resend(struct ssif_info *ssif_info)
+ {
+ 	int command;
+ 
+@@ -1026,7 +1012,6 @@ static int start_resend(struct ssif_info *ssif_info)
+ 
+ 	ssif_i2c_send(ssif_info, msg_written_handler, I2C_SMBUS_WRITE,
+ 		   command, ssif_info->data, I2C_SMBUS_BLOCK_DATA);
+-	return 0;
+ }
+ 
+ static int start_send(struct ssif_info *ssif_info,
+@@ -1041,7 +1026,8 @@ static int start_send(struct ssif_info *ssif_info,
+ 	ssif_info->retries_left = SSIF_SEND_RETRIES;
+ 	memcpy(ssif_info->data + 1, data, len);
+ 	ssif_info->data_len = len;
+-	return start_resend(ssif_info);
++	start_resend(ssif_info);
++	return 0;
+ }
+ 
+ /* Must be called with the message lock held. */
+-- 
+2.39.2
+
 
 
