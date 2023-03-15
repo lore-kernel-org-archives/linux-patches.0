@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A57B4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:29:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7B1C433D2;
-	Wed, 15 Mar 2023 12:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85FF4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:29:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712D0C433D2;
+	Wed, 15 Mar 2023 12:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883348;
-	bh=VDa2iA3x3gNL9r38PYyLXv+PQ/lB4NBYySWQrxKgyFs=;
+	s=korg; t=1678883350;
+	bh=fnWKLIfO0bGuYOsKFlRWkyrt4+UMiNZ/xDiTBmnb34A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UXfhW4Emml5Y5JZT2paO/kp36Jxoi+KhMXS7Yw/nSvlwR+2jd/fUlPnkj83JUxfTN
-	 ptM6K7FVgwWM89VlR7+JQdhPV/zO1Eg4zJ9JlaxGNBswrwn0C8nXJojYyTWxPkcmCb
-	 sEGXiZP8NLjj2D0Fb5vvEbkPj+I2wTp2zUgTUSkk=
+	b=dCFVruYnpMG7LtzpWVHQk9hvYi+TbMW1pdLz4fN8Nb04IBXx3FoV39qCmSSrdQJQO
+	 0AraonmZPJXzgcI9IjY6wvdpmGSxQSi2EZoP3fg84mseItMdTGSuGGeLPGEwo1mykr
+	 9t9eLb1DX5agh2FoC6zAhpivqba6hemE2cWx0FoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chathura Rajapaksha <chathura.abeyrathne.lk@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/145] riscv: Use READ_ONCE_NOCHECK in imprecise unwinding stack mode
-Date: Wed, 15 Mar 2023 13:12:25 +0100
-Message-Id: <20230315115741.610150978@linuxfoundation.org>
+Subject: [PATCH 5.15 080/145] s390/ftrace: remove dead code
+Date: Wed, 15 Mar 2023 13:12:26 +0100
+Message-Id: <20230315115741.638617453@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -37,97 +36,168 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 76950340cf03b149412fe0d5f0810e52ac1df8cb ]
+[ Upstream commit b860b9346e2d5667fbae2cefc571bdb6ce665b53 ]
 
-When CONFIG_FRAME_POINTER is unset, the stack unwinding function
-walk_stackframe randomly reads the stack and then, when KASAN is enabled,
-it can lead to the following backtrace:
+ftrace_shared_hotpatch_trampoline() never returns NULL,
+therefore quite a bit of code can be removed.
 
-[    0.000000] ==================================================================
-[    0.000000] BUG: KASAN: stack-out-of-bounds in walk_stackframe+0xa6/0x11a
-[    0.000000] Read of size 8 at addr ffffffff81807c40 by task swapper/0
-[    0.000000]
-[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 6.2.0-12919-g24203e6db61f #43
-[    0.000000] Hardware name: riscv-virtio,qemu (DT)
-[    0.000000] Call Trace:
-[    0.000000] [<ffffffff80007ba8>] walk_stackframe+0x0/0x11a
-[    0.000000] [<ffffffff80099ecc>] init_param_lock+0x26/0x2a
-[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
-[    0.000000] [<ffffffff80c49c80>] dump_stack_lvl+0x22/0x36
-[    0.000000] [<ffffffff80c3783e>] print_report+0x198/0x4a8
-[    0.000000] [<ffffffff80099ecc>] init_param_lock+0x26/0x2a
-[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
-[    0.000000] [<ffffffff8015f68a>] kasan_report+0x9a/0xc8
-[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
-[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
-[    0.000000] [<ffffffff8006e99c>] desc_make_final+0x80/0x84
-[    0.000000] [<ffffffff8009a04e>] stack_trace_save+0x88/0xa6
-[    0.000000] [<ffffffff80099fc2>] filter_irq_stacks+0x72/0x76
-[    0.000000] [<ffffffff8006b95e>] devkmsg_read+0x32a/0x32e
-[    0.000000] [<ffffffff8015ec16>] kasan_save_stack+0x28/0x52
-[    0.000000] [<ffffffff8006e998>] desc_make_final+0x7c/0x84
-[    0.000000] [<ffffffff8009a04a>] stack_trace_save+0x84/0xa6
-[    0.000000] [<ffffffff8015ec52>] kasan_set_track+0x12/0x20
-[    0.000000] [<ffffffff8015f22e>] __kasan_slab_alloc+0x58/0x5e
-[    0.000000] [<ffffffff8015e7ea>] __kmem_cache_create+0x21e/0x39a
-[    0.000000] [<ffffffff80e133ac>] create_boot_cache+0x70/0x9c
-[    0.000000] [<ffffffff80e17ab2>] kmem_cache_init+0x6c/0x11e
-[    0.000000] [<ffffffff80e00fd6>] mm_init+0xd8/0xfe
-[    0.000000] [<ffffffff80e011d8>] start_kernel+0x190/0x3ca
-[    0.000000]
-[    0.000000] The buggy address belongs to stack of task swapper/0
-[    0.000000]  and is located at offset 0 in frame:
-[    0.000000]  stack_trace_save+0x0/0xa6
-[    0.000000]
-[    0.000000] This frame has 1 object:
-[    0.000000]  [32, 56) 'c'
-[    0.000000]
-[    0.000000] The buggy address belongs to the physical page:
-[    0.000000] page:(____ptrval____) refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x81a07
-[    0.000000] flags: 0x1000(reserved|zone=0)
-[    0.000000] raw: 0000000000001000 ff600003f1e3d150 ff600003f1e3d150 0000000000000000
-[    0.000000] raw: 0000000000000000 0000000000000000 00000001ffffffff
-[    0.000000] page dumped because: kasan: bad access detected
-[    0.000000]
-[    0.000000] Memory state around the buggy address:
-[    0.000000]  ffffffff81807b00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[    0.000000]  ffffffff81807b80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[    0.000000] >ffffffff81807c00: 00 00 00 00 00 00 00 00 f1 f1 f1 f1 00 00 00 f3
-[    0.000000]                                            ^
-[    0.000000]  ffffffff81807c80: f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
-[    0.000000]  ffffffff81807d00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[    0.000000] ==================================================================
-
-Fix that by using READ_ONCE_NOCHECK when reading the stack in imprecise
-mode.
-
-Fixes: 5d8544e2d007 ("RISC-V: Generic library routines and assembly")
-Reported-by: Chathura Rajapaksha <chathura.abeyrathne.lk@gmail.com>
-Link: https://lore.kernel.org/all/CAD7mqryDQCYyJ1gAmtMm8SASMWAQ4i103ptTb0f6Oda=tPY2=A@mail.gmail.com/
-Suggested-by: Dmitry Vyukov <dvyukov@google.com>
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20230308091639.602024-1-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Stable-dep-of: 2a8db5ec4a28 ("RISC-V: Don't check text_mutex during stop_machine")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/stacktrace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kernel/ftrace.c | 86 +++------------------------------------
+ 1 file changed, 6 insertions(+), 80 deletions(-)
 
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index ee8ef91c8aaf4..894ae66421a76 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -94,7 +94,7 @@ void notrace walk_stackframe(struct task_struct *task,
- 	while (!kstack_end(ksp)) {
- 		if (__kernel_text_address(pc) && unlikely(!fn(arg, pc)))
- 			break;
--		pc = (*ksp++) - 0x4;
-+		pc = READ_ONCE_NOCHECK(*ksp++) - 0x4;
- 	}
+diff --git a/arch/s390/kernel/ftrace.c b/arch/s390/kernel/ftrace.c
+index 1d94ffdf347bb..5d0c45c13b5fa 100644
+--- a/arch/s390/kernel/ftrace.c
++++ b/arch/s390/kernel/ftrace.c
+@@ -80,17 +80,6 @@ asm(
+ 
+ #ifdef CONFIG_MODULES
+ static char *ftrace_plt;
+-
+-asm(
+-	"	.data\n"
+-	"ftrace_plt_template:\n"
+-	"	basr	%r1,%r0\n"
+-	"	lg	%r1,0f-.(%r1)\n"
+-	"	br	%r1\n"
+-	"0:	.quad	ftrace_caller\n"
+-	"ftrace_plt_template_end:\n"
+-	"	.previous\n"
+-);
+ #endif /* CONFIG_MODULES */
+ 
+ static const char *ftrace_shared_hotpatch_trampoline(const char **end)
+@@ -116,7 +105,7 @@ static const char *ftrace_shared_hotpatch_trampoline(const char **end)
+ 
+ bool ftrace_need_init_nop(void)
+ {
+-	return ftrace_shared_hotpatch_trampoline(NULL);
++	return true;
  }
  
+ int ftrace_init_nop(struct module *mod, struct dyn_ftrace *rec)
+@@ -175,28 +164,6 @@ int ftrace_modify_call(struct dyn_ftrace *rec, unsigned long old_addr,
+ 	return 0;
+ }
+ 
+-static void ftrace_generate_nop_insn(struct ftrace_insn *insn)
+-{
+-	/* brcl 0,0 */
+-	insn->opc = 0xc004;
+-	insn->disp = 0;
+-}
+-
+-static void ftrace_generate_call_insn(struct ftrace_insn *insn,
+-				      unsigned long ip)
+-{
+-	unsigned long target;
+-
+-	/* brasl r0,ftrace_caller */
+-	target = FTRACE_ADDR;
+-#ifdef CONFIG_MODULES
+-	if (is_module_addr((void *)ip))
+-		target = (unsigned long)ftrace_plt;
+-#endif /* CONFIG_MODULES */
+-	insn->opc = 0xc005;
+-	insn->disp = (target - ip) / 2;
+-}
+-
+ static void brcl_disable(void *brcl)
+ {
+ 	u8 op = 0x04; /* set mask field to zero */
+@@ -207,23 +174,7 @@ static void brcl_disable(void *brcl)
+ int ftrace_make_nop(struct module *mod, struct dyn_ftrace *rec,
+ 		    unsigned long addr)
+ {
+-	struct ftrace_insn orig, new, old;
+-
+-	if (ftrace_shared_hotpatch_trampoline(NULL)) {
+-		brcl_disable((void *)rec->ip);
+-		return 0;
+-	}
+-
+-	if (copy_from_kernel_nofault(&old, (void *) rec->ip, sizeof(old)))
+-		return -EFAULT;
+-	/* Replace ftrace call with a nop. */
+-	ftrace_generate_call_insn(&orig, rec->ip);
+-	ftrace_generate_nop_insn(&new);
+-
+-	/* Verify that the to be replaced code matches what we expect. */
+-	if (memcmp(&orig, &old, sizeof(old)))
+-		return -EINVAL;
+-	s390_kernel_write((void *) rec->ip, &new, sizeof(new));
++	brcl_disable((void *)rec->ip);
+ 	return 0;
+ }
+ 
+@@ -236,23 +187,7 @@ static void brcl_enable(void *brcl)
+ 
+ int ftrace_make_call(struct dyn_ftrace *rec, unsigned long addr)
+ {
+-	struct ftrace_insn orig, new, old;
+-
+-	if (ftrace_shared_hotpatch_trampoline(NULL)) {
+-		brcl_enable((void *)rec->ip);
+-		return 0;
+-	}
+-
+-	if (copy_from_kernel_nofault(&old, (void *) rec->ip, sizeof(old)))
+-		return -EFAULT;
+-	/* Replace nop with an ftrace call. */
+-	ftrace_generate_nop_insn(&orig);
+-	ftrace_generate_call_insn(&new, rec->ip);
+-
+-	/* Verify that the to be replaced code matches what we expect. */
+-	if (memcmp(&orig, &old, sizeof(old)))
+-		return -EINVAL;
+-	s390_kernel_write((void *) rec->ip, &new, sizeof(new));
++	brcl_enable((void *)rec->ip);
+ 	return 0;
+ }
+ 
+@@ -269,10 +204,7 @@ int __init ftrace_dyn_arch_init(void)
+ 
+ void arch_ftrace_update_code(int command)
+ {
+-	if (ftrace_shared_hotpatch_trampoline(NULL))
+-		ftrace_modify_all_code(command);
+-	else
+-		ftrace_run_stop_machine(command);
++	ftrace_modify_all_code(command);
+ }
+ 
+ static void __ftrace_sync(void *dummy)
+@@ -281,10 +213,8 @@ static void __ftrace_sync(void *dummy)
+ 
+ int ftrace_arch_code_modify_post_process(void)
+ {
+-	if (ftrace_shared_hotpatch_trampoline(NULL)) {
+-		/* Send SIGP to the other CPUs, so they see the new code. */
+-		smp_call_function(__ftrace_sync, NULL, 1);
+-	}
++	/* Send SIGP to the other CPUs, so they see the new code. */
++	smp_call_function(__ftrace_sync, NULL, 1);
+ 	return 0;
+ }
+ 
+@@ -299,10 +229,6 @@ static int __init ftrace_plt_init(void)
+ 		panic("cannot allocate ftrace plt\n");
+ 
+ 	start = ftrace_shared_hotpatch_trampoline(&end);
+-	if (!start) {
+-		start = ftrace_plt_template;
+-		end = ftrace_plt_template_end;
+-	}
+ 	memcpy(ftrace_plt, start, end - start);
+ 	set_memory_ro((unsigned long)ftrace_plt, 1);
+ 	return 0;
 -- 
 2.39.2
 
