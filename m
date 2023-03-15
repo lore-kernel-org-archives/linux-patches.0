@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0048D4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782AFC433A1;
-	Wed, 15 Mar 2023 12:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE744431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FCB4C433EF;
+	Wed, 15 Mar 2023 12:21:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882911;
-	bh=90QlV4b7PGLUMreR+1r340ANnX7nlY4hp0ter0rsICE=;
+	s=korg; t=1678882914;
+	bh=apRZ1oJQBrRP+YONhSgwE091CKNpT6FyomujhMqqA0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VdFfobEysnYfFYibu3Q3+uOnFx0xCX1VXaZL40cKHuIjdmIluRTwmoM3z+rqPCov6
-	 TByCqu2yO/n9ZiCZroRz8z0UVSeVsnga7Tz5xE/YugMKAIMSy8dht76IrWxpRxEINA
-	 V6rsWi4vAHJQ7NVKlws4FS1EffWYrGkF6iQhhihM=
+	b=vsxu4QZuTnUZujK8wl/hne8bPjwXxQz+eIBF00KVt87haU3pg/UKjQGXBXYqGxbxg
+	 DIY72p5p18cwOz52tIRMi7Pemw1V1XH3YnWLwXZmu2GFq9ayJ6xxeEoXpNK4hIuKYQ
+	 eMOEZN/YwrEw6wZQS6ofhDoR9uPNQaft2Xdjpl6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	Sumit Saxena <sumit.saxena@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 049/104] net: ethernet: mtk_eth_soc: fix RX data corruption issue
-Date: Wed, 15 Mar 2023 13:12:20 +0100
-Message-Id: <20230315115734.049355066@linuxfoundation.org>
+Subject: [PATCH 5.10 050/104] scsi: megaraid_sas: Update max supported LD IDs to 240
+Date: Wed, 15 Mar 2023 13:12:21 +0100
+Message-Id: <20230315115734.088165130@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -38,66 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit 193250ace270fecd586dd2d0dfbd9cbd2ade977f ]
+[ Upstream commit bfa659177dcba48cf13f2bd88c1972f12a60bf1c ]
 
-Fix data corruption issue with SerDes connected PHYs operating at 1.25
-Gbps speed where we could previously observe about 30% packet loss while
-the bad packet counter was increasing.
+The firmware only supports Logical Disk IDs up to 240 and LD ID 255 (0xFF)
+is reserved for deleted LDs. However, in some cases, firmware was assigning
+LD ID 254 (0xFE) to deleted LDs and this was causing the driver to mark the
+wrong disk as deleted. This in turn caused the wrong disk device to be
+taken offline by the SCSI midlayer.
 
-As almost all boards with MediaTek MT7622 or MT7986 use either the MT7531
-switch IC operating at 3.125Gbps SerDes rate or single-port PHYs using
-rate-adaptation to 2500Base-X mode, this issue only got exposed now when
-we started trying to use SFP modules operating with 1.25 Gbps with the
-BananaPi R3 board.
+To address this issue, limit the LD ID range from 255 to 240. This ensures
+the deleted LD ID is properly identified and removed by the driver without
+accidently deleting any valid LDs.
 
-The fix is to set bit 12 which disables the RX FIFO clear function when
-setting up MAC MCR, MediaTek SDK did the same change stating:
-"If without this patch, kernel might receive invalid packets that are
-corrupted by GMAC."[1]
-
-[1]: https://git01.mediatek.com/plugins/gitiles/openwrt/feeds/mtk-openwrt-feeds/+/d8a2975939a12686c4a95c40db21efdc3f821f63
-
-Fixes: 42c03844e93d ("net-next: mediatek: add support for MediaTek MT7622 SoC")
-Tested-by: Bjørn Mork <bjorn@mork.no>
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/138da2735f92c8b6f8578ec2e5a794ee515b665f.1677937317.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ae6874ba4b43 ("scsi: megaraid_sas: Early detection of VD deletion through RaidMap update")
+Reported-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Signed-off-by: Sumit Saxena <sumit.saxena@broadcom.com>
+Link: https://lore.kernel.org/r/20230302105342.34933-2-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 3 ++-
- drivers/net/ethernet/mediatek/mtk_eth_soc.h | 1 +
+ drivers/scsi/megaraid/megaraid_sas.h    | 2 ++
+ drivers/scsi/megaraid/megaraid_sas_fp.c | 2 +-
  2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 217dc67c48fa2..a8319295f1ab2 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -354,7 +354,8 @@ static void mtk_mac_config(struct phylink_config *config, unsigned int mode,
- 	mcr_cur = mtk_r32(mac->hw, MTK_MAC_MCR(mac->id));
- 	mcr_new = mcr_cur;
- 	mcr_new |= MAC_MCR_MAX_RX_1536 | MAC_MCR_IPG_CFG | MAC_MCR_FORCE_MODE |
--		   MAC_MCR_BACKOFF_EN | MAC_MCR_BACKPR_EN | MAC_MCR_FORCE_LINK;
-+		   MAC_MCR_BACKOFF_EN | MAC_MCR_BACKPR_EN | MAC_MCR_FORCE_LINK |
-+		   MAC_MCR_RX_FIFO_CLR_DIS;
+diff --git a/drivers/scsi/megaraid/megaraid_sas.h b/drivers/scsi/megaraid/megaraid_sas.h
+index c088a848776ef..2d5b1d5978664 100644
+--- a/drivers/scsi/megaraid/megaraid_sas.h
++++ b/drivers/scsi/megaraid/megaraid_sas.h
+@@ -1517,6 +1517,8 @@ struct megasas_ctrl_info {
+ #define MEGASAS_MAX_LD_IDS			(MEGASAS_MAX_LD_CHANNELS * \
+ 						MEGASAS_MAX_DEV_PER_CHANNEL)
  
- 	/* Only update control register when needed! */
- 	if (mcr_new != mcr_cur)
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-index 54a7cd93cc0fe..0ca3223ad5457 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-@@ -339,6 +339,7 @@
- #define MAC_MCR_FORCE_MODE	BIT(15)
- #define MAC_MCR_TX_EN		BIT(14)
- #define MAC_MCR_RX_EN		BIT(13)
-+#define MAC_MCR_RX_FIFO_CLR_DIS	BIT(12)
- #define MAC_MCR_BACKOFF_EN	BIT(9)
- #define MAC_MCR_BACKPR_EN	BIT(8)
- #define MAC_MCR_FORCE_RX_FC	BIT(5)
++#define MEGASAS_MAX_SUPPORTED_LD_IDS		240
++
+ #define MEGASAS_MAX_SECTORS                    (2*1024)
+ #define MEGASAS_MAX_SECTORS_IEEE		(2*128)
+ #define MEGASAS_DBG_LVL				1
+diff --git a/drivers/scsi/megaraid/megaraid_sas_fp.c b/drivers/scsi/megaraid/megaraid_sas_fp.c
+index 83f69c33b01a9..ec10d35b4685a 100644
+--- a/drivers/scsi/megaraid/megaraid_sas_fp.c
++++ b/drivers/scsi/megaraid/megaraid_sas_fp.c
+@@ -358,7 +358,7 @@ u8 MR_ValidateMapInfo(struct megasas_instance *instance, u64 map_id)
+ 		ld = MR_TargetIdToLdGet(i, drv_map);
+ 
+ 		/* For non existing VDs, iterate to next VD*/
+-		if (ld >= (MAX_LOGICAL_DRIVES_EXT - 1))
++		if (ld >= MEGASAS_MAX_SUPPORTED_LD_IDS)
+ 			continue;
+ 
+ 		raid = MR_LdRaidGet(ld, drv_map);
 -- 
 2.39.2
 
