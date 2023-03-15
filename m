@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BF74431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC1AC433D2;
-	Wed, 15 Mar 2023 12:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0B24431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F92DC433EF;
+	Wed, 15 Mar 2023 12:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883528;
-	bh=Bl0Ro1CJv2vayoYptzDa9ygkzLsiUJZwU4ULC1tBIF0=;
+	s=korg; t=1678883530;
+	bh=rdwxLvOfmcogiHk7y2Ql11OSRBzlXNwvHkL5uL0EAA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UqeaeG7o8PLk9DFRf6fiDTLX7whDrQk4T4EKv1fxP/JbH6/dBrun1+li92Mn3iM7v
-	 mPgGGaDkoWxwPl94iiYyvZGOhTVf1DI4WvGfQNnxN+fOmhRq3xeJUrSZbCRMCKBVpq
-	 9Lq+aGAsfhLrfWBGOz/4rZvwj31yyR2DH1PLO2Nc=
+	b=j8xzaiWJou9u1sUAJnAdsTIP7s0SiFSAPQ49RiPdAibJqdosleUGKRdtvLswmICFb
+	 6OQsY8Lu1JYXJwxRahrKI6DPGqZ472Ra4ivuYZsPRhYLXPrfQcp5Da2tAMIO2trn6l
+	 rZ50ZHRm/DKjsStfHwC4hPSKF+v2fbY97PTljT6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Aring <aahringo@redhat.com>,
 	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/143] fs: dlm: start midcomms before scand
-Date: Wed, 15 Mar 2023 13:11:58 +0100
-Message-Id: <20230315115741.484113423@linuxfoundation.org>
+Subject: [PATCH 6.1 033/143] fs: dlm: remove send repeat remove handling
+Date: Wed, 15 Mar 2023 13:11:59 +0100
+Message-Id: <20230315115741.512638188@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -37,58 +37,124 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit aad633dc0cf90093998b1ae0ba9f19b5f1dab644 ]
+[ Upstream commit 57a5724ef0b332eb6e78250157910a006b01bf6e ]
 
-The scand kthread can send dlm messages out, especially dlm remove
-messages to free memory for unused rsb on other nodes. To send out dlm
-messages, midcomms must be initialized. This patch moves the midcomms
-start before scand is started.
+This patch removes the send repeat remove handling. This handling is
+there to repeatingly DLM_MSG_REMOVE messages in cases the dlm stack
+thinks it was not received at the first time. In cases of message drops
+this functionality is necessary, but since the DLM midcomms layer
+guarantees there are no messages drops between cluster nodes this
+feature became not strict necessary anymore. Due message
+delays/processing it could be that two send_repeat_remove() are sent out
+while the other should be still on it's way. We remove the repeat remove
+handling because we are sure that the message cannot be dropped due
+communication errors.
 
-Cc: stable@vger.kernel.org
-Fixes: e7fd41792fc0 ("[DLM] The core of the DLM for GFS2/CLVM")
 Signed-off-by: Alexander Aring <aahringo@redhat.com>
 Signed-off-by: David Teigland <teigland@redhat.com>
+Stable-dep-of: 724b6bab0d75 ("fs: dlm: fix use after free in midcomms commit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/lockspace.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ fs/dlm/lock.c | 74 ---------------------------------------------------
+ 1 file changed, 74 deletions(-)
 
-diff --git a/fs/dlm/lockspace.c b/fs/dlm/lockspace.c
-index c3cf2e7996f6c..7b29ea7bfb416 100644
---- a/fs/dlm/lockspace.c
-+++ b/fs/dlm/lockspace.c
-@@ -381,23 +381,23 @@ static int threads_start(void)
- {
- 	int error;
- 
--	error = dlm_scand_start();
-+	/* Thread for sending/receiving messages for all lockspace's */
-+	error = dlm_midcomms_start();
- 	if (error) {
--		log_print("cannot start dlm_scand thread %d", error);
-+		log_print("cannot start dlm midcomms %d", error);
- 		goto fail;
- 	}
- 
--	/* Thread for sending/receiving messages for all lockspace's */
--	error = dlm_midcomms_start();
-+	error = dlm_scand_start();
- 	if (error) {
--		log_print("cannot start dlm midcomms %d", error);
--		goto scand_fail;
-+		log_print("cannot start dlm_scand thread %d", error);
-+		goto midcomms_fail;
- 	}
- 
- 	return 0;
- 
-- scand_fail:
--	dlm_scand_stop();
-+ midcomms_fail:
-+	dlm_midcomms_stop();
-  fail:
+diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
+index 94a72ede57646..b246d71b5e17a 100644
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -4044,66 +4044,6 @@ static int validate_message(struct dlm_lkb *lkb, struct dlm_message *ms)
  	return error;
  }
+ 
+-static void send_repeat_remove(struct dlm_ls *ls, char *ms_name, int len)
+-{
+-	char name[DLM_RESNAME_MAXLEN + 1];
+-	struct dlm_message *ms;
+-	struct dlm_mhandle *mh;
+-	struct dlm_rsb *r;
+-	uint32_t hash, b;
+-	int rv, dir_nodeid;
+-
+-	memset(name, 0, sizeof(name));
+-	memcpy(name, ms_name, len);
+-
+-	hash = jhash(name, len, 0);
+-	b = hash & (ls->ls_rsbtbl_size - 1);
+-
+-	dir_nodeid = dlm_hash2nodeid(ls, hash);
+-
+-	log_error(ls, "send_repeat_remove dir %d %s", dir_nodeid, name);
+-
+-	spin_lock(&ls->ls_rsbtbl[b].lock);
+-	rv = dlm_search_rsb_tree(&ls->ls_rsbtbl[b].keep, name, len, &r);
+-	if (!rv) {
+-		spin_unlock(&ls->ls_rsbtbl[b].lock);
+-		log_error(ls, "repeat_remove on keep %s", name);
+-		return;
+-	}
+-
+-	rv = dlm_search_rsb_tree(&ls->ls_rsbtbl[b].toss, name, len, &r);
+-	if (!rv) {
+-		spin_unlock(&ls->ls_rsbtbl[b].lock);
+-		log_error(ls, "repeat_remove on toss %s", name);
+-		return;
+-	}
+-
+-	/* use ls->remove_name2 to avoid conflict with shrink? */
+-
+-	spin_lock(&ls->ls_remove_spin);
+-	ls->ls_remove_len = len;
+-	memcpy(ls->ls_remove_name, name, DLM_RESNAME_MAXLEN);
+-	spin_unlock(&ls->ls_remove_spin);
+-	spin_unlock(&ls->ls_rsbtbl[b].lock);
+-
+-	rv = _create_message(ls, sizeof(struct dlm_message) + len,
+-			     dir_nodeid, DLM_MSG_REMOVE, &ms, &mh);
+-	if (rv)
+-		goto out;
+-
+-	memcpy(ms->m_extra, name, len);
+-	ms->m_hash = cpu_to_le32(hash);
+-
+-	send_message(mh, ms);
+-
+-out:
+-	spin_lock(&ls->ls_remove_spin);
+-	ls->ls_remove_len = 0;
+-	memset(ls->ls_remove_name, 0, DLM_RESNAME_MAXLEN);
+-	spin_unlock(&ls->ls_remove_spin);
+-	wake_up(&ls->ls_remove_wait);
+-}
+-
+ static int receive_request(struct dlm_ls *ls, struct dlm_message *ms)
+ {
+ 	struct dlm_lkb *lkb;
+@@ -4173,25 +4113,11 @@ static int receive_request(struct dlm_ls *ls, struct dlm_message *ms)
+ 	   ENOTBLK request failures when the lookup reply designating us
+ 	   as master is delayed. */
+ 
+-	/* We could repeatedly return -EBADR here if our send_remove() is
+-	   delayed in being sent/arriving/being processed on the dir node.
+-	   Another node would repeatedly lookup up the master, and the dir
+-	   node would continue returning our nodeid until our send_remove
+-	   took effect.
+-
+-	   We send another remove message in case our previous send_remove
+-	   was lost/ignored/missed somehow. */
+-
+ 	if (error != -ENOTBLK) {
+ 		log_limit(ls, "receive_request %x from %d %d",
+ 			  le32_to_cpu(ms->m_lkid), from_nodeid, error);
+ 	}
+ 
+-	if (namelen && error == -EBADR) {
+-		send_repeat_remove(ls, ms->m_extra, namelen);
+-		msleep(1000);
+-	}
+-
+ 	setup_stub_lkb(ls, ms);
+ 	send_request_reply(&ls->ls_stub_rsb, &ls->ls_stub_lkb, error);
+ 	return error;
 -- 
 2.39.2
 
