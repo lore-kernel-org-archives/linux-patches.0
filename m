@@ -1,28 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3F74431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:33:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9437FC433D2;
-	Wed, 15 Mar 2023 12:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAB74431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:33:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39AE9C433EF;
+	Wed, 15 Mar 2023 12:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883591;
-	bh=yuXkJMgjyI+jyHzc45+GmXRrOzWQdH0uAAsTMM4IL0E=;
+	s=korg; t=1678883593;
+	bh=etYCdQjmQ3MfcfmwcIxY4173EwgJTDNwtqJOInfO2s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ciFAlwOmQ+hWlhnuX+YLLmAXTd67ZJ3gLM/J0NtxS7yUj3Jbn+UBcgCxWWPnost/t
-	 EuiNdUp+rtkJ3egZSlpLPENx+L2HMNPUIziZEZ02Vd9n36MbhLh6RDhaZmhtiV+09F
-	 h/4+yamp0NfXqjhlkGjT1xVUHyBlCY6bsBcg5pAc=
+	b=g5Sz8vMJwXKxnKGNkyvaVA67/SqBCKrlusF3mxzFwZFOKKZM9z7s9caaM7UTC2S6n
+	 eA9Z43SS/xxgYR97ONgbEqSnu0Q/0a3MeGl+u0lEd80YPJpR8ZXZ/93poiUM8+cpNs
+	 fZaj0bCJbgjZ/mkWoeYdq1n7mqRr3jlcc9rJs8ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Ronnie Sahlberg <lsahlber@redhat.com>,
-	Steve French <stfrench@microsoft.com>,
+	Martin Liska <mliska@suse.cz>,
+	Ben Skeggs <bskeggs@redhat.com>,
+	Karol Herbst <kherbst@redhat.com>,
+	Lyude Paul <lyude@redhat.com>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	dri-devel@lists.freedesktop.org,
+	nouveau@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/143] cifs: improve checking of DFS links over STATUS_OBJECT_NAME_INVALID
-Date: Wed, 15 Mar 2023 13:12:23 +0100
-Message-Id: <20230315115742.254813494@linuxfoundation.org>
+Subject: [PATCH 6.1 058/143] drm/nouveau/kms/nv50: fix nv50_wndw_new_ prototype
+Date: Wed, 15 Mar 2023 13:12:24 +0100
+Message-Id: <20230315115742.284910999@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -36,241 +43,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit b9ee2e307c6b06384b6f9e393a9b8e048e8fc277 ]
+[ Upstream commit 3638a820c5c3b52f327cebb174fd4274bee08aa7 ]
 
-Do not map STATUS_OBJECT_NAME_INVALID to -EREMOTE under non-DFS
-shares, or 'nodfs' mounts or CONFIG_CIFS_DFS_UPCALL=n builds.
-Otherwise, in the slow path, get a referral to figure out whether it
-is an actual DFS link.
+gcc-13 warns about mismatching types for enums. That revealed switched
+arguments of nv50_wndw_new_():
+  drivers/gpu/drm/nouveau/dispnv50/wndw.c:696:1: error: conflicting types for 'nv50_wndw_new_' due to enum/integer mismatch; have 'int(const struct nv50_wndw_func *, struct drm_device *, enum drm_plane_type,  const char *, int,  const u32 *, u32,  enum nv50_disp_interlock_type,  u32,  struct nv50_wndw **)'
+  drivers/gpu/drm/nouveau/dispnv50/wndw.h:36:5: note: previous declaration of 'nv50_wndw_new_' with type 'int(const struct nv50_wndw_func *, struct drm_device *, enum drm_plane_type,  const char *, int,  const u32 *, enum nv50_disp_interlock_type,  u32,  u32,  struct nv50_wndw **)'
 
-This could be simply reproduced under a non-DFS share by running the
-following
+It can be barely visible, but the declaration says about the parameters
+in the middle:
+  enum nv50_disp_interlock_type,
+  u32 interlock_data,
+  u32 heads,
 
-  $ mount.cifs //srv/share /mnt -o ...
-  $ cat /mnt/$(printf '\U110000')
-  cat: '/mnt/'$'\364\220\200\200': Object is remote
+While the definition states differently:
+  u32 heads,
+  enum nv50_disp_interlock_type interlock_type,
+  u32 interlock_data,
 
-Fixes: c877ce47e137 ("cifs: reduce roundtrips on create/qinfo requests")
-CC: stable@vger.kernel.org # 6.2
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Reviewed-by: Ronnie Sahlberg <lsahlber@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Unify/fix the declaration to match the definition.
+
+Fixes: 53e0a3e70de6 ("drm/nouveau/kms/nv50-: simplify tracking of channel interlocks")
+Cc: Martin Liska <mliska@suse.cz>
+Cc: Ben Skeggs <bskeggs@redhat.com>
+Cc: Karol Herbst <kherbst@redhat.com>
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org
+Cc: nouveau@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Signed-off-by: Karol Herbst <kherbst@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221031114229.10289-1-jirislaby@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsproto.h | 20 ++++++++++----
- fs/cifs/misc.c      | 67 +++++++++++++++++++++++++++++++++++++++++++++
- fs/cifs/smb2inode.c | 21 +++++++-------
- fs/cifs/smb2ops.c   | 23 +++++++++-------
- 4 files changed, 106 insertions(+), 25 deletions(-)
+ drivers/gpu/drm/nouveau/dispnv50/wndw.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/cifs/cifsproto.h b/fs/cifs/cifsproto.h
-index eb1a0de9dd553..bc4475f6c0827 100644
---- a/fs/cifs/cifsproto.h
-+++ b/fs/cifs/cifsproto.h
-@@ -664,11 +664,21 @@ static inline int get_dfs_path(const unsigned int xid, struct cifs_ses *ses,
- int match_target_ip(struct TCP_Server_Info *server,
- 		    const char *share, size_t share_len,
- 		    bool *result);
--
--int cifs_dfs_query_info_nonascii_quirk(const unsigned int xid,
--				       struct cifs_tcon *tcon,
--				       struct cifs_sb_info *cifs_sb,
--				       const char *dfs_link_path);
-+int cifs_inval_name_dfs_link_error(const unsigned int xid,
-+				   struct cifs_tcon *tcon,
-+				   struct cifs_sb_info *cifs_sb,
-+				   const char *full_path,
-+				   bool *islink);
-+#else
-+static inline int cifs_inval_name_dfs_link_error(const unsigned int xid,
-+				   struct cifs_tcon *tcon,
-+				   struct cifs_sb_info *cifs_sb,
-+				   const char *full_path,
-+				   bool *islink)
-+{
-+	*islink = false;
-+	return 0;
-+}
- #endif
+diff --git a/drivers/gpu/drm/nouveau/dispnv50/wndw.h b/drivers/gpu/drm/nouveau/dispnv50/wndw.h
+index 591c852f326b9..76a6ae5d56526 100644
+--- a/drivers/gpu/drm/nouveau/dispnv50/wndw.h
++++ b/drivers/gpu/drm/nouveau/dispnv50/wndw.h
+@@ -35,8 +35,9 @@ struct nv50_wndw {
  
- static inline int cifs_create_options(struct cifs_sb_info *cifs_sb, int options)
-diff --git a/fs/cifs/misc.c b/fs/cifs/misc.c
-index 062175994e879..4e54736a06996 100644
---- a/fs/cifs/misc.c
-+++ b/fs/cifs/misc.c
-@@ -21,6 +21,7 @@
- #include "cifsfs.h"
- #ifdef CONFIG_CIFS_DFS_UPCALL
- #include "dns_resolve.h"
-+#include "dfs_cache.h"
- #endif
- #include "fs_context.h"
- #include "cached_dir.h"
-@@ -1314,4 +1315,70 @@ int cifs_update_super_prepath(struct cifs_sb_info *cifs_sb, char *prefix)
- 	cifs_sb->mnt_cifs_flags |= CIFS_MOUNT_USE_PREFIX_PATH;
- 	return 0;
- }
-+
-+/*
-+ * Handle weird Windows SMB server behaviour. It responds with
-+ * STATUS_OBJECT_NAME_INVALID code to SMB2 QUERY_INFO request for
-+ * "\<server>\<dfsname>\<linkpath>" DFS reference, where <dfsname> contains
-+ * non-ASCII unicode symbols.
-+ */
-+int cifs_inval_name_dfs_link_error(const unsigned int xid,
-+				   struct cifs_tcon *tcon,
-+				   struct cifs_sb_info *cifs_sb,
-+				   const char *full_path,
-+				   bool *islink)
-+{
-+	struct cifs_ses *ses = tcon->ses;
-+	size_t len;
-+	char *path;
-+	char *ref_path;
-+
-+	*islink = false;
-+
-+	/*
-+	 * Fast path - skip check when @full_path doesn't have a prefix path to
-+	 * look up or tcon is not DFS.
-+	 */
-+	if (strlen(full_path) < 2 || !cifs_sb ||
-+	    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NO_DFS) ||
-+	    !is_tcon_dfs(tcon) || !ses->server->origin_fullpath)
-+		return 0;
-+
-+	/*
-+	 * Slow path - tcon is DFS and @full_path has prefix path, so attempt
-+	 * to get a referral to figure out whether it is an DFS link.
-+	 */
-+	len = strnlen(tcon->tree_name, MAX_TREE_SIZE + 1) + strlen(full_path) + 1;
-+	path = kmalloc(len, GFP_KERNEL);
-+	if (!path)
-+		return -ENOMEM;
-+
-+	scnprintf(path, len, "%s%s", tcon->tree_name, full_path);
-+	ref_path = dfs_cache_canonical_path(path + 1, cifs_sb->local_nls,
-+					    cifs_remap(cifs_sb));
-+	kfree(path);
-+
-+	if (IS_ERR(ref_path)) {
-+		if (PTR_ERR(ref_path) != -EINVAL)
-+			return PTR_ERR(ref_path);
-+	} else {
-+		struct dfs_info3_param *refs = NULL;
-+		int num_refs = 0;
-+
-+		/*
-+		 * XXX: we are not using dfs_cache_find() here because we might
-+		 * end filling all the DFS cache and thus potentially
-+		 * removing cached DFS targets that the client would eventually
-+		 * need during failover.
-+		 */
-+		if (ses->server->ops->get_dfs_refer &&
-+		    !ses->server->ops->get_dfs_refer(xid, ses, ref_path, &refs,
-+						     &num_refs, cifs_sb->local_nls,
-+						     cifs_remap(cifs_sb)))
-+			*islink = refs[0].server_type == DFS_TYPE_LINK;
-+		free_dfs_info_array(refs, num_refs);
-+		kfree(ref_path);
-+	}
-+	return 0;
-+}
- #endif
-diff --git a/fs/cifs/smb2inode.c b/fs/cifs/smb2inode.c
-index e1491440e8f1f..442718cf61b86 100644
---- a/fs/cifs/smb2inode.c
-+++ b/fs/cifs/smb2inode.c
-@@ -511,12 +511,13 @@ int smb2_query_path_info(const unsigned int xid, struct cifs_tcon *tcon,
- 			 struct cifs_sb_info *cifs_sb, const char *full_path,
- 			 struct cifs_open_info_data *data, bool *adjust_tz, bool *reparse)
- {
--	int rc;
- 	__u32 create_options = 0;
- 	struct cifsFileInfo *cfile;
- 	struct cached_fid *cfid = NULL;
- 	struct kvec err_iov[3] = {};
- 	int err_buftype[3] = {};
-+	bool islink;
-+	int rc, rc2;
- 
- 	*adjust_tz = false;
- 	*reparse = false;
-@@ -563,15 +564,15 @@ int smb2_query_path_info(const unsigned int xid, struct cifs_tcon *tcon,
- 					      create_options, ACL_NO_MODE, data,
- 					      SMB2_OP_QUERY_INFO, cfile, NULL, NULL);
- 			goto out;
--		} else if (rc != -EREMOTE && IS_ENABLED(CONFIG_CIFS_DFS_UPCALL) &&
--			   hdr->Status == STATUS_OBJECT_NAME_INVALID) {
--			/*
--			 * Handle weird Windows SMB server behaviour. It responds with
--			 * STATUS_OBJECT_NAME_INVALID code to SMB2 QUERY_INFO request
--			 * for "\<server>\<dfsname>\<linkpath>" DFS reference,
--			 * where <dfsname> contains non-ASCII unicode symbols.
--			 */
--			rc = -EREMOTE;
-+		} else if (rc != -EREMOTE && hdr->Status == STATUS_OBJECT_NAME_INVALID) {
-+			rc2 = cifs_inval_name_dfs_link_error(xid, tcon, cifs_sb,
-+							     full_path, &islink);
-+			if (rc2) {
-+				rc = rc2;
-+				goto out;
-+			}
-+			if (islink)
-+				rc = -EREMOTE;
- 		}
- 		if (rc == -EREMOTE && IS_ENABLED(CONFIG_CIFS_DFS_UPCALL) && cifs_sb &&
- 		    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NO_DFS))
-diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index 6da495f593e17..0424876d22e5a 100644
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -796,7 +796,6 @@ static int
- smb2_is_path_accessible(const unsigned int xid, struct cifs_tcon *tcon,
- 			struct cifs_sb_info *cifs_sb, const char *full_path)
- {
--	int rc;
- 	__le16 *utf16_path;
- 	__u8 oplock = SMB2_OPLOCK_LEVEL_NONE;
- 	int err_buftype = CIFS_NO_BUFFER;
-@@ -804,6 +803,8 @@ smb2_is_path_accessible(const unsigned int xid, struct cifs_tcon *tcon,
- 	struct kvec err_iov = {};
- 	struct cifs_fid fid;
- 	struct cached_fid *cfid;
-+	bool islink;
-+	int rc, rc2;
- 
- 	rc = open_cached_dir(xid, tcon, full_path, cifs_sb, true, &cfid);
- 	if (!rc) {
-@@ -833,15 +834,17 @@ smb2_is_path_accessible(const unsigned int xid, struct cifs_tcon *tcon,
- 
- 		if (unlikely(!hdr || err_buftype == CIFS_NO_BUFFER))
- 			goto out;
--		/*
--		 * Handle weird Windows SMB server behaviour. It responds with
--		 * STATUS_OBJECT_NAME_INVALID code to SMB2 QUERY_INFO request
--		 * for "\<server>\<dfsname>\<linkpath>" DFS reference,
--		 * where <dfsname> contains non-ASCII unicode symbols.
--		 */
--		if (rc != -EREMOTE && IS_ENABLED(CONFIG_CIFS_DFS_UPCALL) &&
--		    hdr->Status == STATUS_OBJECT_NAME_INVALID)
--			rc = -EREMOTE;
-+
-+		if (rc != -EREMOTE && hdr->Status == STATUS_OBJECT_NAME_INVALID) {
-+			rc2 = cifs_inval_name_dfs_link_error(xid, tcon, cifs_sb,
-+							     full_path, &islink);
-+			if (rc2) {
-+				rc = rc2;
-+				goto out;
-+			}
-+			if (islink)
-+				rc = -EREMOTE;
-+		}
- 		if (rc == -EREMOTE && IS_ENABLED(CONFIG_CIFS_DFS_UPCALL) && cifs_sb &&
- 		    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NO_DFS))
- 			rc = -EOPNOTSUPP;
+ int nv50_wndw_new_(const struct nv50_wndw_func *, struct drm_device *,
+ 		   enum drm_plane_type, const char *name, int index,
+-		   const u32 *format, enum nv50_disp_interlock_type,
+-		   u32 interlock_data, u32 heads, struct nv50_wndw **);
++		   const u32 *format, u32 heads,
++		   enum nv50_disp_interlock_type, u32 interlock_data,
++		   struct nv50_wndw **);
+ void nv50_wndw_flush_set(struct nv50_wndw *, u32 *interlock,
+ 			 struct nv50_wndw_atom *);
+ void nv50_wndw_flush_clr(struct nv50_wndw *, u32 *interlock, bool flush,
 -- 
 2.39.2
 
