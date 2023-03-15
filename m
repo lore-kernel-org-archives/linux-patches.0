@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB914431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:33:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFEDC433D2;
-	Wed, 15 Mar 2023 12:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EE34431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:33:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC86C433EF;
+	Wed, 15 Mar 2023 12:33:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883606;
-	bh=QN8I2JvJ4gtzOVUQJ0cpI/91XsA4DHuXMq3Kv6D7jrM=;
+	s=korg; t=1678883609;
+	bh=6toz8iGJB4QhTtd8exzFSyV0SltQCIthXgryPfoVZIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iy700OnVLyJ3hCtai+49vPB1n5Y60hTCKBZZUDJeyIWz97b0QgDJ6g+oeP02kC36/
-	 3CIRY0GLkfSvw++AEZ3uIB5et+YKkvVRj8ST1HdlnEHfuuLpXwmtNUtWa8CuFJcvoE
-	 XZXX5t9wsj/1ftZU+LshTq4HTFl3gYk1qBiQnxcc=
+	b=hsMzF2gG76Sl0r8mzoVGJTACpc/FT3aFJ9JQEbks2F/P8uvMRGWipz7/YLrlOeFcu
+	 udq3tEoxlajFdzLEWzK3WP9rB606zM0EA/FBEGvpjOZHN8v5VpO/3jM7FJ/b7PLnid
+	 KkLE8x20L1v9+7hz1gKYyl9mdKIIgBomg8uCG/kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Rob Clark <robdclark@chromium.org>,
+	Corey Minyard <cminyard@mvista.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/143] drm/msm/a5xx: fix context faults during ring switch
-Date: Wed, 15 Mar 2023 13:12:29 +0100
-Message-Id: <20230315115742.443009726@linuxfoundation.org>
+Subject: [PATCH 6.1 046/143] ipmi:ssif: Increase the message retry time
+Date: Wed, 15 Mar 2023 13:12:12 +0100
+Message-Id: <20230315115741.925755728@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -36,47 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Corey Minyard <cminyard@mvista.com>
 
-[ Upstream commit 32e7083429d46f29080626fe387ff90c086b1fbe ]
+[ Upstream commit 39721d62bbc16ebc9bb2bdc2c163658f33da3b0b ]
 
-The rptr_addr is set in the preempt_init_ring(), which is called from
-a5xx_gpu_init(). It uses shadowptr() to set the address, however the
-shadow_iova is not yet initialized at that time. Move the rptr_addr
-setting to the a5xx_preempt_hw_init() which is called after setting the
-shadow_iova, getting the correct value for the address.
+The spec states that the minimum message retry time is 60ms, but it was
+set to 20ms.  Correct it.
 
-Fixes: 8907afb476ac ("drm/msm: Allow a5xx to mark the RPTR shadow as privileged")
-Suggested-by: Rob Clark <robdclark@gmail.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/522640/
-Link: https://lore.kernel.org/r/20230214020956.164473-5-dmitry.baryshkov@linaro.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reported by: Tony Camuso <tcamuso@redhat.com>
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Stable-dep-of: 00bb7e763ec9 ("ipmi:ssif: Add a timer between request retries")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 2 +-
+ drivers/char/ipmi/ipmi_ssif.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-index 6e326d851ba53..e0eef47dae632 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-@@ -208,6 +208,7 @@ void a5xx_preempt_hw_init(struct msm_gpu *gpu)
- 		a5xx_gpu->preempt[i]->wptr = 0;
- 		a5xx_gpu->preempt[i]->rptr = 0;
- 		a5xx_gpu->preempt[i]->rbase = gpu->rb[i]->iova;
-+		a5xx_gpu->preempt[i]->rptr_addr = shadowptr(a5xx_gpu, gpu->rb[i]);
- 	}
+diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
+index cbd56886f1d2a..c25c4b1a03ae0 100644
+--- a/drivers/char/ipmi/ipmi_ssif.c
++++ b/drivers/char/ipmi/ipmi_ssif.c
+@@ -74,7 +74,7 @@
+ /*
+  * Timer values
+  */
+-#define SSIF_MSG_USEC		20000	/* 20ms between message tries. */
++#define SSIF_MSG_USEC		60000	/* 60ms between message tries. */
+ #define SSIF_MSG_PART_USEC	5000	/* 5ms for a message part */
  
- 	/* Write a 0 to signal that we aren't switching pagetables */
-@@ -259,7 +260,6 @@ static int preempt_init_ring(struct a5xx_gpu *a5xx_gpu,
- 	ptr->data = 0;
- 	ptr->cntl = MSM_GPU_RB_CNTL_DEFAULT | AXXX_CP_RB_CNTL_NO_UPDATE;
- 
--	ptr->rptr_addr = shadowptr(a5xx_gpu, ring);
- 	ptr->counter = counters_iova;
- 
- 	return 0;
+ /* How many times to we retry sending/receiving the message. */
 -- 
 2.39.2
 
