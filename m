@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246D34431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:30:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E837C433EF;
-	Wed, 15 Mar 2023 12:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD664431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:30:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49907C433EF;
+	Wed, 15 Mar 2023 12:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883455;
-	bh=8sqsLCMpq3uPdTsdnkCMLX3RmGe0OSwfT+WahweiIuA=;
+	s=korg; t=1678883457;
+	bh=+gb94zirnLeRru+m2kcFuVshusE/nNfUYKVlObs1hSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDsQGBlpek4uX2AmCLEKRmIAsBeAKaSHsTB6CyyWgsiYz+q2ElmUl1QfT0RZlb5Z+
-	 RONikEUEwCuCKz9OJDy731yu9k1GpcLBmqKbPvDtvzGrfj8FPaNJkM6q1uZwpRIPZq
-	 w/TgeQLNaTlw0ZKSI4/+9ag+6zwc0vUTqTL8A2fM=
+	b=p5yKS4r18s3jJRSFxNdt1V+UH702+Slx/lfGiF8+q6mekfmejaR0DOE7sXCQ1bCIk
+	 ipuFjAK86Vb/4eszQ+NSN5OTuPruHdyUhs3i4lXV93UzPJDbJTcbXiJr/jwkrMv7Fq
+	 cuCMlyeYMicouhIuDt2GoUkLbxL8d47syDMsG774=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Alexandru Matei <alexandru.matei@uipath.com>
-Subject: [PATCH 5.15 143/145] KVM: nVMX: Dont use Enlightened MSR Bitmap for L3
-Date: Wed, 15 Mar 2023 13:13:29 +0100
-Message-Id: <20230315115743.623834371@linuxfoundation.org>
+Subject: [PATCH 5.15 144/145] KVM: VMX: Introduce vmx_msr_bitmap_l01_changed() helper
+Date: Wed, 15 Mar 2023 13:13:30 +0100
+Message-Id: <20230315115743.651848299@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -37,75 +39,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Vitaly Kuznetsov <vkuznets@redhat.com>
 
-commit 250552b925ce400c17d166422fde9bb215958481 upstream.
+commit b84155c38076b36d625043a06a2f1c90bde62903 upstream.
 
-When KVM runs as a nested hypervisor on top of Hyper-V it uses Enlightened
-VMCS and enables Enlightened MSR Bitmap feature for its L1s and L2s (which
-are actually L2s and L3s from Hyper-V's perspective). When MSR bitmap is
-updated, KVM has to reset HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP from
-clean fields to make Hyper-V aware of the change. For KVM's L1s, this is
-done in vmx_disable_intercept_for_msr()/vmx_enable_intercept_for_msr().
-MSR bitmap for L2 is build in nested_vmx_prepare_msr_bitmap() by blending
-MSR bitmap for L1 and L1's idea of MSR bitmap for L2. KVM, however, doesn't
-check if the resulting bitmap is different and never cleans
-HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP in eVMCS02. This is incorrect and
-may result in Hyper-V missing the update.
+In preparation to enabling 'Enlightened MSR Bitmap' feature for Hyper-V
+guests move MSR bitmap update tracking to a dedicated helper.
 
-The issue could've been solved by calling evmcs_touch_msr_bitmap() for
-eVMCS02 from nested_vmx_prepare_msr_bitmap() unconditionally but doing so
-would not give any performance benefits (compared to not using Enlightened
-MSR Bitmap at all). 3-level nesting is also not a very common setup
-nowadays.
+Note: vmx_msr_bitmap_l01_changed() is called when MSR bitmap might be
+updated. KVM doesn't check if the bit we're trying to set is already set
+(or the bit it's trying to clear is already cleared). Such situations
+should not be common and a few false positives should not be a problem.
 
-Don't enable 'Enlightened MSR Bitmap' feature for KVM's L2s (real L3s) for
-now.
+No functional change intended.
 
 Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Message-Id: <20211129094704.326635-2-vkuznets@redhat.com>
+Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20211129094704.326635-3-vkuznets@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Alexandru Matei <alexandru.matei@uipath.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/vmx.c |   22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ arch/x86/kvm/vmx/vmx.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
 --- a/arch/x86/kvm/vmx/vmx.c
 +++ b/arch/x86/kvm/vmx/vmx.c
-@@ -2739,15 +2739,6 @@ int alloc_loaded_vmcs(struct loaded_vmcs
- 		if (!loaded_vmcs->msr_bitmap)
- 			goto out_vmcs;
- 		memset(loaded_vmcs->msr_bitmap, 0xff, PAGE_SIZE);
--
--		if (IS_ENABLED(CONFIG_HYPERV) &&
--		    static_branch_unlikely(&enable_evmcs) &&
--		    (ms_hyperv.nested_features & HV_X64_NESTED_MSR_BITMAP)) {
--			struct hv_enlightened_vmcs *evmcs =
--				(struct hv_enlightened_vmcs *)loaded_vmcs->vmcs;
--
--			evmcs->hv_enlightenments_control.msr_bitmap = 1;
--		}
- 	}
+@@ -3772,6 +3772,17 @@ void free_vpid(int vpid)
+ 	spin_unlock(&vmx_vpid_lock);
+ }
  
- 	memset(&loaded_vmcs->host_state, 0, sizeof(struct vmcs_host_state));
-@@ -6969,6 +6960,19 @@ static int vmx_create_vcpu(struct kvm_vc
- 	if (err < 0)
- 		goto free_pml;
- 
++static void vmx_msr_bitmap_l01_changed(struct vcpu_vmx *vmx)
++{
 +	/*
-+	 * Use Hyper-V 'Enlightened MSR Bitmap' feature when KVM runs as a
-+	 * nested (L1) hypervisor and Hyper-V in L0 supports it. Enable the
-+	 * feature only for vmcs01, KVM currently isn't equipped to realize any
-+	 * performance benefits from enabling it for vmcs02.
++	 * When KVM is a nested hypervisor on top of Hyper-V and uses
++	 * 'Enlightened MSR Bitmap' feature L0 needs to know that MSR
++	 * bitmap has changed.
 +	 */
-+	if (IS_ENABLED(CONFIG_HYPERV) && static_branch_unlikely(&enable_evmcs) &&
-+	    (ms_hyperv.nested_features & HV_X64_NESTED_MSR_BITMAP)) {
-+		struct hv_enlightened_vmcs *evmcs = (void *)vmx->vmcs01.vmcs;
++	if (static_branch_unlikely(&enable_evmcs))
++		evmcs_touch_msr_bitmap();
++}
 +
-+		evmcs->hv_enlightenments_control.msr_bitmap = 1;
-+	}
-+
- 	/* The MSR bitmap starts with all ones */
- 	bitmap_fill(vmx->shadow_msr_intercept.read, MAX_POSSIBLE_PASSTHROUGH_MSRS);
- 	bitmap_fill(vmx->shadow_msr_intercept.write, MAX_POSSIBLE_PASSTHROUGH_MSRS);
+ void vmx_disable_intercept_for_msr(struct kvm_vcpu *vcpu, u32 msr, int type)
+ {
+ 	struct vcpu_vmx *vmx = to_vmx(vcpu);
+@@ -3780,8 +3791,7 @@ void vmx_disable_intercept_for_msr(struc
+ 	if (!cpu_has_vmx_msr_bitmap())
+ 		return;
+ 
+-	if (static_branch_unlikely(&enable_evmcs))
+-		evmcs_touch_msr_bitmap();
++	vmx_msr_bitmap_l01_changed(vmx);
+ 
+ 	/*
+ 	 * Mark the desired intercept state in shadow bitmap, this is needed
+@@ -3825,8 +3835,7 @@ void vmx_enable_intercept_for_msr(struct
+ 	if (!cpu_has_vmx_msr_bitmap())
+ 		return;
+ 
+-	if (static_branch_unlikely(&enable_evmcs))
+-		evmcs_touch_msr_bitmap();
++	vmx_msr_bitmap_l01_changed(vmx);
+ 
+ 	/*
+ 	 * Mark the desired intercept state in shadow bitmap, this is needed
 
 
