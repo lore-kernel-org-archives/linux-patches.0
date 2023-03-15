@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3E14431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA743C433EF;
-	Wed, 15 Mar 2023 12:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3232D4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA24EC433D2;
+	Wed, 15 Mar 2023 12:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883889;
-	bh=ce9CHtg3M/RaWr7G3yLDOOz/kBfNVARFASuA9T2J9ZQ=;
+	s=korg; t=1678883892;
+	bh=XuyHaZuG0ru7yipTj0ogoYWBoD0KKQgXfqhXjejDRiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=riyOXZuMYVu3j+xzMzPugcmExfUX2tCgqjsm4JtpBuIVAQ6hgY6BioUJeT+ppUFDz
-	 qu8PyfBlpxGrNKvDGjk5gsufYxiHFSzuoflW/tVC3EJm1R6eKw9mrp6ZHY4Khuhfps
-	 FGHgswEh1uwHamRpjJFVlGTtu3PSiK3LZpEJPNMA=
+	b=nsKeGKkVR+x+M5kEpyr+UA2qrYG9eqm4j1irZe73GAA3gj1B1UaoIbJ7ct3Q5+NqV
+	 LdrDqlYRpttBwIN0kVpvEY3+au0ZGS8B5wj1/jHkasyRjhkfo215IoChtWEo/H6mXm
+	 V47ZbtuBNGs4kORpL2sNzQPYCDrxjxQrGhX6b7xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lee Jones <lee@kernel.org>,
 	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 6.2 026/141] HID: core: Provide new max_buffer_size attribute to over-ride the default
-Date: Wed, 15 Mar 2023 13:12:09 +0100
-Message-Id: <20230315115740.777814084@linuxfoundation.org>
+Subject: [PATCH 6.2 027/141] HID: uhid: Over-ride the default maximum data buffer value with our own
+Date: Wed, 15 Mar 2023 13:12:10 +0100
+Message-Id: <20230315115740.806122561@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -36,131 +36,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Lee Jones <lee@kernel.org>
 
-commit b1a37ed00d7908a991c1d0f18a8cba3c2aa99bdc upstream.
+commit 1c5d4221240a233df2440fe75c881465cdf8da07 upstream.
 
-Presently, when a report is processed, its proposed size, provided by
-the user of the API (as Report Size * Report Count) is compared against
-the subsystem default HID_MAX_BUFFER_SIZE (16k).  However, some
-low-level HID drivers allocate a reduced amount of memory to their
-buffers (e.g. UHID only allocates UHID_DATA_MAX (4k) buffers), rending
-this check inadequate in some cases.
-
-In these circumstances, if the received report ends up being smaller
-than the proposed report size, the remainder of the buffer is zeroed.
-That is, the space between sizeof(csize) (size of the current report)
-and the rsize (size proposed i.e. Report Size * Report Count), which can
-be handled up to HID_MAX_BUFFER_SIZE (16k).  Meaning that memset()
-shoots straight past the end of the buffer boundary and starts zeroing
-out in-use values, often resulting in calamity.
-
-This patch introduces a new variable into 'struct hid_ll_driver' where
-individual low-level drivers can over-ride the default maximum value of
-HID_MAX_BUFFER_SIZE (16k) with something more sympathetic to the
-interface.
+The default maximum data buffer size for this interface is UHID_DATA_MAX
+(4k).  When data buffers are being processed, ensure this value is used
+when ensuring the sanity, rather than a value between the user provided
+value and HID_MAX_BUFFER_SIZE (16k).
 
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-core.c |   32 +++++++++++++++++++++++++-------
- include/linux/hid.h    |    3 +++
- 2 files changed, 28 insertions(+), 7 deletions(-)
+ drivers/hid/uhid.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -261,6 +261,7 @@ static int hid_add_field(struct hid_pars
- {
- 	struct hid_report *report;
- 	struct hid_field *field;
-+	unsigned int max_buffer_size = HID_MAX_BUFFER_SIZE;
- 	unsigned int usages;
- 	unsigned int offset;
- 	unsigned int i;
-@@ -291,8 +292,11 @@ static int hid_add_field(struct hid_pars
- 	offset = report->size;
- 	report->size += parser->global.report_size * parser->global.report_count;
- 
-+	if (parser->device->ll_driver->max_buffer_size)
-+		max_buffer_size = parser->device->ll_driver->max_buffer_size;
-+
- 	/* Total size check: Allow for possible report index byte */
--	if (report->size > (HID_MAX_BUFFER_SIZE - 1) << 3) {
-+	if (report->size > (max_buffer_size - 1) << 3) {
- 		hid_err(parser->device, "report is too long\n");
- 		return -1;
- 	}
-@@ -1966,6 +1970,7 @@ int hid_report_raw_event(struct hid_devi
- 	struct hid_report_enum *report_enum = hid->report_enum + type;
- 	struct hid_report *report;
- 	struct hid_driver *hdrv;
-+	int max_buffer_size = HID_MAX_BUFFER_SIZE;
- 	u32 rsize, csize = size;
- 	u8 *cdata = data;
- 	int ret = 0;
-@@ -1981,10 +1986,13 @@ int hid_report_raw_event(struct hid_devi
- 
- 	rsize = hid_compute_report_size(report);
- 
--	if (report_enum->numbered && rsize >= HID_MAX_BUFFER_SIZE)
--		rsize = HID_MAX_BUFFER_SIZE - 1;
--	else if (rsize > HID_MAX_BUFFER_SIZE)
--		rsize = HID_MAX_BUFFER_SIZE;
-+	if (hid->ll_driver->max_buffer_size)
-+		max_buffer_size = hid->ll_driver->max_buffer_size;
-+
-+	if (report_enum->numbered && rsize >= max_buffer_size)
-+		rsize = max_buffer_size - 1;
-+	else if (rsize > max_buffer_size)
-+		rsize = max_buffer_size;
- 
- 	if (csize < rsize) {
- 		dbg_hid("report %d is too short, (%d < %d)\n", report->id,
-@@ -2387,7 +2395,12 @@ int hid_hw_raw_request(struct hid_device
- 		       unsigned char reportnum, __u8 *buf,
- 		       size_t len, enum hid_report_type rtype, enum hid_class_request reqtype)
- {
--	if (len < 1 || len > HID_MAX_BUFFER_SIZE || !buf)
-+	unsigned int max_buffer_size = HID_MAX_BUFFER_SIZE;
-+
-+	if (hdev->ll_driver->max_buffer_size)
-+		max_buffer_size = hdev->ll_driver->max_buffer_size;
-+
-+	if (len < 1 || len > max_buffer_size || !buf)
- 		return -EINVAL;
- 
- 	return hdev->ll_driver->raw_request(hdev, reportnum, buf, len,
-@@ -2406,7 +2419,12 @@ EXPORT_SYMBOL_GPL(hid_hw_raw_request);
-  */
- int hid_hw_output_report(struct hid_device *hdev, __u8 *buf, size_t len)
- {
--	if (len < 1 || len > HID_MAX_BUFFER_SIZE || !buf)
-+	unsigned int max_buffer_size = HID_MAX_BUFFER_SIZE;
-+
-+	if (hdev->ll_driver->max_buffer_size)
-+		max_buffer_size = hdev->ll_driver->max_buffer_size;
-+
-+	if (len < 1 || len > max_buffer_size || !buf)
- 		return -EINVAL;
- 
- 	if (hdev->ll_driver->output_report)
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -827,6 +827,7 @@ struct hid_driver {
-  * @output_report: send output report to device
-  * @idle: send idle request to device
-  * @may_wakeup: return if device may act as a wakeup source during system-suspend
-+ * @max_buffer_size: over-ride maximum data buffer size (default: HID_MAX_BUFFER_SIZE)
-  */
- struct hid_ll_driver {
- 	int (*start)(struct hid_device *hdev);
-@@ -852,6 +853,8 @@ struct hid_ll_driver {
- 
- 	int (*idle)(struct hid_device *hdev, int report, int idle, int reqtype);
- 	bool (*may_wakeup)(struct hid_device *hdev);
-+
-+	unsigned int max_buffer_size;
+--- a/drivers/hid/uhid.c
++++ b/drivers/hid/uhid.c
+@@ -395,6 +395,7 @@ struct hid_ll_driver uhid_hid_driver = {
+ 	.parse = uhid_hid_parse,
+ 	.raw_request = uhid_hid_raw_request,
+ 	.output_report = uhid_hid_output_report,
++	.max_buffer_size = UHID_DATA_MAX,
  };
+ EXPORT_SYMBOL_GPL(uhid_hid_driver);
  
- extern struct hid_ll_driver i2c_hid_ll_driver;
 
 
