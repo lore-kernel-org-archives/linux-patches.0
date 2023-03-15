@@ -1,32 +1,32 @@
-Received: from JPN01-TYC-obe.outbound.protection.outlook.com (mail-tycjpn01on2102.outbound.protection.outlook.com [40.107.114.102])
+Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2138.outbound.protection.outlook.com [40.107.113.138])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DA0538D
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 13:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1253E538D
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 14:12:49 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=epPa8aS1bmGjgsD/KCnpVn43MKhtTDRYj4FAeTjeabWMN/tuXVwtIU14+qxuBZqR4bsIgald88+KFasJsRobwOUErgCrMgjhHUb+PRLoYktH4V9kir4YM7J2yDGzA3jfyzGQDXN/Vnjr8ue6jMs+n58mS0FDs6ZYwGxtHf+LBBX89iu3/FOZnbXIU+f6kiYqIFygjAJZVmgm/48chPMLInzB73f9/uPKQSSfKF8sFHYpP6YJDa+II5fewTsofeOfCN3lJs5bPjEGLLVqqn4R6FFr/l+2Zhk67yEuSz0sDHGHkqQHIMyiCRt3WkTPlFzI5vOri9/w5EARuk4XM/FjAw==
+ b=CbwK7GEZy/icCYpCxajHhO/wECYvvGe7hN8s7mHRP7Raf8xqRkTjC6t9VUXLAu7LPNsuJu2jVH7qqMuqRxWDhjcN7jHXWvDDRV8CgeaQ7yEJB/6RWsZVF2PtPryH+B+yax/ozSnhl8wdYPM+mC2MvpL/2FxyJr91G6L7PO3lhzRKPBinrVJWr5sM4D1gb85P5KQaRld2k2C9Cu8g6mBtVxR1Kthw5QqZewND9CrClirzFDZkTLokU4brBIQoY0i+SpvTURuZN623SA5dGAmDDNNIanHhjS9FTIyGxKtoNYYxF7Kr4viVIfxcnS2BBp+nFspCdbbqUyV0MBeyFtL6MQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lUzMCa/NaflgkDps2qNyMJLFHd0hlal6rQrSiaPCcdY=;
- b=GWt19d4GCB6lcekkxvCh9EX6pc/m3ifjlYx95Er13bYvoZE5X9GliuLZxq5DfqV747YXWjN3crVqgQeHDcbO1uxpuR2z5bd5NrH0lgeh/e8FBaWCfCqOLeMw5aXK0+FOGo4ChqTsNyLOAkT5vkvR7/sK6LgOwl99laFLo+2+8igu1oy2/rpA6nzGfzLLnqEZku1czwzRS81nUAvGYaGP1qjisntEKdTTQvdMBB/l+5K5TPIVtYD3v25yCknsepyaZlPRzwb0m6175Vuvnr4aHyTGYYuomYzVG/t3HKwy2w3yMXy22o/sg1kbZshYKCzPAAyOz/gLVVv/t/E0eHYpRQ==
+ bh=0uoFxrilnqalAoPThWd2aVPAo408gdNvMZOhaRi51L4=;
+ b=TQbdi8xXQ7bMWx9u8wrv2g9ZLyI33nEDPvElNc4HLh7WCJKPNhP2cGv7XSpBdGTSArbpp4gf05A6XZtwrfKrAcGqpD7LXg+FL0/hyBF6PdI/XEAricLY/4oLm7+bWOu7bBcE+7ozp18HbOQV20uu/N/QX8gFTBL5bS8B1TbuPDeKR4fGdMdPZc3iz24qoKoBekg9SA/vE/mzqJ1E+Dah4SjfWMPux88yb9XHKjIMZ/Ds3lmW7K/ILL15ag5/9v5jBevcd0cqRIEnDPMJjOh1jhenEhZSVb/iTRveRohyxmOF74R7BqUQ7idoprKKgIppGTEUgoB5CKOYaCFknRV3ng==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
  dkim=pass header.d=renesas.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lUzMCa/NaflgkDps2qNyMJLFHd0hlal6rQrSiaPCcdY=;
- b=VK8hdj8uIXmF8OVYcck1VauF1KheCEC69tRS9yZW6vahBKyUq0oiTNsh2E/aIohZcvhVg5Cu5nVR1nJJW3/9KndqNlk32NQB0Q/kBBJEYhMuCAnawzq/YYMQkAXKL68XHbLNtSAa1OqUHvB6pIfgB+1kdYirNgkhRD3Ha2Wp99M=
+ bh=0uoFxrilnqalAoPThWd2aVPAo408gdNvMZOhaRi51L4=;
+ b=FgZEvFpPGq0/SKXYELHrpdDPnGNo5P2tUxPrkLD9r2eGGG8L+KQCMmOM6dH18MZUXshkXniiFQ4m0Yr2S2iI+7gPmUXfL9cc8iUaPY2NFQva3qtMNvaxT9Qo1ZUkBJLBV8RuEx5qzIswiYrx+WN9Sef3JFOpAlDoB7wYpYT9YI0=
 Received: from TYCPR01MB10588.jpnprd01.prod.outlook.com (2603:1096:400:309::8)
- by OS3PR01MB9977.jpnprd01.prod.outlook.com (2603:1096:604:1de::12) with
+ by OS3PR01MB9707.jpnprd01.prod.outlook.com (2603:1096:604:1e9::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.30; Wed, 15 Mar
- 2023 13:58:11 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.26; Wed, 15 Mar
+ 2023 14:12:46 +0000
 Received: from TYCPR01MB10588.jpnprd01.prod.outlook.com
  ([fe80::dc49:e307:b424:4a53]) by TYCPR01MB10588.jpnprd01.prod.outlook.com
  ([fe80::dc49:e307:b424:4a53%5]) with mapi id 15.20.6178.026; Wed, 15 Mar 2023
- 13:58:10 +0000
+ 14:12:46 +0000
 From: Chris Paterson <Chris.Paterson2@renesas.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
 	<stable@vger.kernel.org>
@@ -41,14 +41,14 @@ CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
 	<f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
 	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
 	"rwarsow@gmx.de" <rwarsow@gmx.de>
-Subject: RE: [PATCH 6.1 000/143] 6.1.20-rc1 review
-Thread-Topic: [PATCH 6.1 000/143] 6.1.20-rc1 review
-Thread-Index: AQHZVzo+UOwT1J1T1kyNNdVffKXEr6773ZEQ
-Date: Wed, 15 Mar 2023 13:58:10 +0000
+Subject: RE: [PATCH 4.19 00/39] 4.19.278-rc1 review
+Thread-Topic: [PATCH 4.19 00/39] 4.19.278-rc1 review
+Thread-Index: AQHZVzfuhR3skiOhnUWjVQ9NMNaQlK773mWQ
+Date: Wed, 15 Mar 2023 14:12:46 +0000
 Message-ID:
- <TYCPR01MB105881B3B783FFB4D0E98E056B7BF9@TYCPR01MB10588.jpnprd01.prod.outlook.com>
-References: <20230315115740.429574234@linuxfoundation.org>
-In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
+ <TYCPR01MB105881FA616DC8A6623140062B7BF9@TYCPR01MB10588.jpnprd01.prod.outlook.com>
+References: <20230315115721.234756306@linuxfoundation.org>
+In-Reply-To: <20230315115721.234756306@linuxfoundation.org>
 Accept-Language: en-GB, en-US
 Content-Language: en-US
 X-MS-Has-Attach:
@@ -56,47 +56,48 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=renesas.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYCPR01MB10588:EE_|OS3PR01MB9977:EE_
-x-ms-office365-filtering-correlation-id: 335804a6-5455-460a-da7b-08db255d5024
+x-ms-traffictypediagnostic: TYCPR01MB10588:EE_|OS3PR01MB9707:EE_
+x-ms-office365-filtering-correlation-id: c554a381-f43c-4cb6-fb8a-08db255f59ef
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
 x-microsoft-antispam-message-info:
- gIp18Im2j0X0/lp87D5uJOVTHKUNUaSEnOii9EYheShbrhGAFa58+YFRMCr0V46tmD4n/hps72o4NKPXHat74ISwulB++s7B4+YPmEWFlZW4V+524WajjxlHpcX14R5VaZhx2v4/52csZmyvZGhBlDGy/ScXjRQTBhIcgkGR69KOQMn2iIJP/dTtMct2mw/SunHnjWRox8vB2feJbm5uLh5kfyWoYs5kJKVyeznc5ULQZAqOH29/KiTIBgDEL6IQXmytlc+yLeeOe0sN7pvMLdfxeMVKmXcmSRT2kM3qz45rjSYcSLLxajINmCQCyzd00nK63gGhjAnlzf0SSe2FxbHxN5DaP2jSQjJHuHwg5RntdKCXTA/DDUh7Bw8hhp0dQDWn95wa1fVmS0Pziumsu2s8yjHJdydK95VN1Qs+Jj2MO4avZC2NSgotMR+K/k56b31wijmyC05rBU4u4SBgvR+LOOpzSfvRlRLGKvE8IxPYmFsuOjdDBrgiF5XLh6GWcugsetqNtwWQHIO/MmKdSpOPDm7rgkkC54+zSpRcrl6HRhqb3Ytl6UBYdGWX84jl8tsYnap3gtNSHrTans2zX2mWFPaiel9y/26FHUY60wdRLPfSj70GqNGBNrvkD85gMBLV0uTaZAAqKelQ8LholiV1IUNDVLkoGohs7OVuE3lSwEPLhc2aqgqKBx/gKtcEsLh1n2uB9/l3nfRIV4QuOwBJLjyiSWs+RTrPHvzQ+T4=
+ qMWueu+NWEaA70JIOEHK8iJBNdQfnHr94Kczm1EJJyOj1MmnVdIkv2S5ZOeXtHCZYoDme4D7pVXBsGOtPykoQJUYg1E6Si3zik2CDC1PKD9pnzUb7r28wCZZLbtChxnD+h82t8dYTjUOioHCUog24hlcgIsqQDAQKRfBjJ8jPozebRbw5YuqNGqrkVCxHP4ZjmSe07+UMFBUvsIBHQd+JtNzCqta5iThWkC90dzVefVq7rK/Dp1PtNJYKEJVeOaMlPefuq6cgibMZQyRqQNuk2d3PHpjc50mX/3ASb3rBhSjZrPpu1s67us6NvBxnF9UIkpcCU8y3uZJ9M6xLKtwsa3VU5mnRBcI720jwfB5BdN5AO+0HvIFmlL/KC31Xe35nFzk40RiEMmNEnS+TYW1g1HJ84O7i30IhSFh+uDAldR/S9iIY+N1MBXFDFboleyEHvv5b3x8i53P6kGkb9SyRsvEnx40ngaDfZZ0v0z2xFFN/bQY1JlJumeuTEXkfXzJcX0Ve5lpyR1y51iFNTYcpRlzwy1xUZr18PqrG2GuHN4j02dvGfYTRUFyxfJmh5jOTVJkWIzUPloIUxAkM/cSMd/eC+UuVNTqalc4IrAa56PGO+XEmF4/i3L+V8/JuYkupJXUIamiHzNz22NfuD0KnOoA5EucWgOTxIFa2wJtSqvqeeCrX7Ywd40Bri65WgY7nyRcV0CmRe0FvrmSUwBjHG6FgNrWkGvkhMlb6nTaMZ8=
 x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYCPR01MB10588.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(136003)(346002)(376002)(366004)(396003)(39860400002)(451199018)(33656002)(86362001)(38070700005)(38100700002)(122000001)(2906002)(41300700001)(52536014)(7416002)(4744005)(5660300002)(8936002)(55016003)(4326008)(186003)(9686003)(26005)(6506007)(54906003)(316002)(110136005)(76116006)(66946007)(66476007)(66446008)(64756008)(8676002)(66556008)(966005)(71200400001)(7696005)(478600001);DIR:OUT;SFP:1102;
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYCPR01MB10588.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(346002)(39860400002)(376002)(366004)(136003)(396003)(451199018)(7416002)(52536014)(5660300002)(2906002)(41300700001)(86362001)(33656002)(38100700002)(38070700005)(8936002)(122000001)(71200400001)(478600001)(66476007)(64756008)(66446008)(66556008)(966005)(8676002)(110136005)(66946007)(76116006)(4326008)(55016003)(54906003)(316002)(26005)(7696005)(83380400001)(6506007)(186003)(9686003);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-2?Q?ZeUsuwqzivN4zClIOTGLBRb3GobS/QHiEsCirJiZxioVtrpGrFjqiwcDT6?=
- =?iso-8859-2?Q?L3MmFHdD74GaoJRBQNgk3eatoZY3g0CHKoB68VkR4Lvl8MX6eUQS7gPWvW?=
- =?iso-8859-2?Q?IP+mlBe8sw3nqAs5axWeRAolHNkn1E5oZHz/V08d5jPxQnSKBErpZVXTDK?=
- =?iso-8859-2?Q?yHI69jZ+VSaQhB4PYVtZ+DGsph1C3lIpWZx6NMFo6+3Xi5vDObymMArjwa?=
- =?iso-8859-2?Q?qAVEdH8Pz3lyN8mhaKvmfwxxiTdEdI6B2DBlJx8VGgZMS/QiLcx4MjNsRm?=
- =?iso-8859-2?Q?PefJcCLmDo1IlL+E+Xdl6OgFZ+2HaESDYSpA+eqsIDukgMwFGEgDlhYzZP?=
- =?iso-8859-2?Q?LclrYGNcngYu++VHgrCiCFyv2uuqyp8LCGJsGR5h+recsvX328UO9MCaHF?=
- =?iso-8859-2?Q?PR1GmJnCzTcsvJuff/idnQb7yNEq3Tb+6Z1wQjbe5ApHyqrgEmlIfhpGQe?=
- =?iso-8859-2?Q?IyucQY6LmAIluYd9MvDYv9d7qULO9U0gvQHXV2fLzH7I19WglPW86uSZOi?=
- =?iso-8859-2?Q?1g7SzRtUhVZ32jJomLvXW2faLx9HZQDEUKRk2OVNX1djPVyv61VzAyDMZz?=
- =?iso-8859-2?Q?nwpjYFOZYG2Y6PXFDEHiuGOTcHUlhv3SVrXJYJuaOYQRZl3gwLoKlmz19e?=
- =?iso-8859-2?Q?dp9JomHfHkcOqb6G123sybmNC0ogYpNfdtfBCfLhB5ZmjlpQUamfcbTpln?=
- =?iso-8859-2?Q?8z2bjmM3FwhBYc2kYnW+4R7jVk2t1wbBzW6tpt/r9YPv99iOefw3TL/oKZ?=
- =?iso-8859-2?Q?5+B4swxiP9siXa2qoqI8dEa7gVQ4v4/anONu9pkn3iOrj4vqd/lgwizZOt?=
- =?iso-8859-2?Q?+6Q0RIPygbKzG1K2pJJ3xnnQuy7gApIU8CoAVMWcVtbGP64yIScPfjjrEP?=
- =?iso-8859-2?Q?w0m44ato0QyMDRZW6Z2FJMoxWbDj0nMz1RJ9PbOjOVh/PBupnn2Fp7oahR?=
- =?iso-8859-2?Q?d37Cl3aK+pyGcR7W9aJjOqmD0nA3MkGMeUnXfZbNf3oQ6zepWcvOxTS5bc?=
- =?iso-8859-2?Q?NiLMoUL8EsF4VZmbXSRVUhmiWjCmP37pqQw3JQV61uT7A8rI5Vyu9Dm5bi?=
- =?iso-8859-2?Q?NVJHI1MydppBouA3PtkeuFn/zDttYuU0E9Efa+qG7P3mBcm1kxAJnGWty4?=
- =?iso-8859-2?Q?HCNTaz5v6UZgw7xjQZ6Do4iABJWaiyfUCT7K5EHL0AMEbq3dkHj+BYS4mr?=
- =?iso-8859-2?Q?qOGX2Kw3ZTFrY/ygBXMhcZb29WDVvAKvtOZB+b9ljHL1MPmCZVBR73YtfG?=
- =?iso-8859-2?Q?uNO7to1j6jIgMRsHmKtMMmxT2CMf+BgU6iSTcz98JwFvbspbOERiwq2wW6?=
- =?iso-8859-2?Q?2X+BGU0J0LahNUnrUmZqM3XB+RcZEtx0HAZV7pYyGfiI1wem9vd2+hpQ3O?=
- =?iso-8859-2?Q?xcSG1Y02SYmIJrG6kpY8DvgXUPhtjEP2Ku0+m+PG/8WugFnRksZbYI4DQN?=
- =?iso-8859-2?Q?MNpI1ELcfArBU3N/z2PGoeXw2gQroTTFbl6QBNvRwB4Lr1HxWjtPCfFUK9?=
- =?iso-8859-2?Q?i/ebytY3c9s//LIo6yzrIvITCC891acKoLkGJ8I+UuMrwj/oKuBeqHOeqZ?=
- =?iso-8859-2?Q?UoW5E4MgVH/C/G7Ot5R3j6f6EDdQRzZzJ4vgQA4F6O372OmN1/aTeTb8j0?=
- =?iso-8859-2?Q?cyrJmIw8fy3+B3V/wmcgo6CYUEW07mZe+1aCu87wUud3Pyk3kyzzSKyg?=
- =?iso-8859-2?Q?=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-2"
+ =?Windows-1252?Q?LLeuVswBMhEjS4JPwuRasQ8ei5hvlq0dIvFQSwOBcRoWpFeOH1w2aRCH?=
+ =?Windows-1252?Q?4Yc6nj1Il7vOcdkbxaJyyxGIWKZw2jcGfLSrTBjAExAC2WWDVj44JCLP?=
+ =?Windows-1252?Q?UCZ72478+KaZtJWFln2tyPhvwUNc6XsNtWjWuaV09pcXjZJgyobpg4b9?=
+ =?Windows-1252?Q?VTfPsBMhziVmPyVaRouXKejMAD24orEH0hBYM9Lk9eoe9sL0Dxeako/m?=
+ =?Windows-1252?Q?YvoMamKhUIzlkCQmiqsa+rU13j2tB2z3tEDkWXXDM7gFRYPk48QpVgVj?=
+ =?Windows-1252?Q?34i35Cy+y5lprdJdVx/zUj7Zfd7rPVm/YFe7MjXnZDfZUENRHN3zNUwx?=
+ =?Windows-1252?Q?9vJOvoQq1OpjLOoBHjeHSPLO4N3Z6ZVdWjqb+EdxNkar32nN7TtW0e/1?=
+ =?Windows-1252?Q?lMaQMflOT9TpRFe5IsDPnvUrZQrJGnrb+6qGoyissRlZLVSK8CiwK6WN?=
+ =?Windows-1252?Q?ElVvR1XmoZn9PSwJIlDOVsQr6nopdI8L5lMA9ApNl4Df17cK4GjP0b3X?=
+ =?Windows-1252?Q?HtqxPe4+94BcGO1tEkScq/rnZFxpS28EPMqgadh+rE1JYVJ5sGm3zzyl?=
+ =?Windows-1252?Q?d5J/FsK3sIsFRkAKSO64igmu278Mcs8ETnNDpYC6vHpzbN2Tg5jq/m+I?=
+ =?Windows-1252?Q?awI4qH9JuMLxNoTvkNseNcnZoDxUw0AfyNto9gxCHqf8axXmaBuPkn5+?=
+ =?Windows-1252?Q?/dIXWkYdYfxchLukaSeOwZS6egtfuMzdakQLtItAr2QW6VEAmy5cKdGJ?=
+ =?Windows-1252?Q?3G6UT1s/FQ27R/EipUAwsexb29nQPggJjSOv4I5UopgAi5r/T47PCQfH?=
+ =?Windows-1252?Q?NpnTZBRW6AVPA78RgFMlNPWTp4b0s5jBe8lkeGWukbjrLe51Ww9ovTp2?=
+ =?Windows-1252?Q?ibmb1QrVC/PPG/uHqkeb28em2X2/OkFU0Xh6gtCvl0GlVYslRI/JudF5?=
+ =?Windows-1252?Q?FVVQ+4NPdlKZ7UikFmtGXS4cTxSGy2Nv4qXlFSm0qlx/SwXpLIK04J1C?=
+ =?Windows-1252?Q?RK7lBfpBsWu5ZLLCisckTVbz9sCytwHignQ7oInIsAWxKq9+ilggdB3h?=
+ =?Windows-1252?Q?VsIBKN0Y9i3uG9lKjsGmyyLkadZAlAS9tklzpMVgCJWU30u2Dv223cOb?=
+ =?Windows-1252?Q?Z0R0IkS8WxH/FRl8ML/flW2x5Bc7K2gdEhtzlM+cVdnq3UvB52Jiy6bq?=
+ =?Windows-1252?Q?91k0TyD/H/D48zvIbiD1vIoVqbA+9Pue7I4ixDKeURbNRm1coZsWZZfI?=
+ =?Windows-1252?Q?6ptCz2PGYJvxId1ko4yWLE9AS0UmkNtKvrcy8cZMWMxQcjV9kyVxcj9E?=
+ =?Windows-1252?Q?sycUZr/5uLE9RvwA/7Vn3OMPXfJwpW/LcU6P8z2aYKfQeDLG7iWRp2jg?=
+ =?Windows-1252?Q?/OcdAcFyLdkyhDqMymgJCk9vYwRh5T9P3gDLP9UwASDB2YhB4DxRDy/x?=
+ =?Windows-1252?Q?XGxikrq+LXdOkLQhTEoCQRGRPXSG4TB8QTQVIAMwIoeK/lwQ1pW1jKdv?=
+ =?Windows-1252?Q?avflZeWNmKdQU/8zn5vX1vyk35SIpSRDoo3zhD4OIvbFSkm8GacMkxMB?=
+ =?Windows-1252?Q?WYL5o0MLxOfGcPBfxTMdzd3+aDP1OyVIX4BRMd0ex8bsfVHTY0EZJTgw?=
+ =?Windows-1252?Q?P+oOS317TiqHKcaohpi+OHqmhnvxktpotQzFIxT00kuBKsbMl1Nyokck?=
+ =?Windows-1252?Q?hLLXBDB7ads99hQF43p0KUVuNIwz0hJuCnKfyQAoNVU0Mnfe47GEyQ?=
+ =?Windows-1252?Q?=3D=3D?=
+Content-Type: text/plain; charset="Windows-1252"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -107,34 +108,109 @@ MIME-Version: 1.0
 X-OriginatorOrg: renesas.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYCPR01MB10588.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 335804a6-5455-460a-da7b-08db255d5024
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Mar 2023 13:58:10.9679
+X-MS-Exchange-CrossTenant-Network-Message-Id: c554a381-f43c-4cb6-fb8a-08db255f59ef
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Mar 2023 14:12:46.3609
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: WH8rV+Zda7NNFJGX6jjxpSTuGPV5P1d4EGHCCZtdRGWxCPth1LrDRnGwkjmolwETTl+zxECEc757p87qTjqy6RBcTvwg64fN+pzXQ145NlY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS3PR01MB9977
+X-MS-Exchange-CrossTenant-userprincipalname: B3JK4iAiV4fDkfR9bD96xDL0mJS4P4lgPC9l2yN0P3Ur+6HMc6pMKJmmLUDWYIBBo9lhVMdCGywnQX6gyPCvK4BWy8wwLC2S7DDQTD4D6sM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS3PR01MB9707
 
 Hello Greg,
 
 > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Sent: 15 March 2023 12:11
+> Sent: 15 March 2023 12:12
 >=20
-> This is the start of the stable review cycle for the 6.1.20 release.
-> There are 143 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 4.19.278 release.
+> There are 39 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >=20
 > Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
 > Anything received after that time might be too late.
 
-CIP configurations built and booted with Linux 6.1.20-rc1 (4b77c9dc7cd4):
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/8=
-07195824
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/lin=
-ux-6.1.y
-
 Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
+CI Pipeline: https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/=
+-/pipelines/807195668
+
+We (CIP) are seeing some build issues with Linux 4.19.278-rc1 (7cfb8ee7c98e=
+).
+
+
+1)
+In various arm, arm64 and x86 configurations we see:
+kernel/cgroup/cgroup.c: In function 'cgroup_attach_lock':
+kernel/cgroup/cgroup.c:2237:2: error: implicit declaration of function 'get=
+_online_cpus'; did you mean 'get_online_mems'? [-Werror=3Dimplicit-function=
+-declaration]
+  get_online_cpus();
+  ^~~~~~~~~~~~~~~
+  get_online_mems
+kernel/cgroup/cgroup.c: In function 'cgroup_attach_unlock':
+kernel/cgroup/cgroup.c:2248:2: error: implicit declaration of function 'put=
+_online_cpus'; did you mean 'num_online_cpus'? [-Werror=3Dimplicit-function=
+-declaration]
+  put_online_cpus();
+  ^~~~~~~~~~~~~~~
+  num_online_cpus
+
+For example: https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/=
+-/jobs/3938632173#L1274
+
+Presumably this issue is caused by "cgroup: Fix threadgroup_rwsem <-> cpus_=
+read_lock() deadlock", but I haven't had a chance to revert and re-test.
+
+
+2)
+For arm_multiconfig_v7 builds we're seeing a some errors when building the =
+exynos5422 device trees:
+arch/arm/boot/dts/exynos5422-odroidhc1.dtb: ERROR (phandle_references): /th=
+ermal-zones/gpu-thermal/cooling-maps/map0: Reference to non-existent node o=
+r label "gpu"
+arch/arm/boot/dts/exynos5422-odroidhc1.dtb: ERROR (phandle_references): /th=
+ermal-zones/gpu-thermal/cooling-maps/map1: Reference to non-existent node o=
+r label "gpu"
+ERROR: Input tree has errors, aborting (use -f to force output)
+make[1]: *** [scripts/Makefile.lib:294: arch/arm/boot/dts/exynos5422-odroid=
+hc1.dtb] Error 2
+make[1]: *** Waiting for unfinished jobs....
+  DTC     arch/arm/boot/dts/hi3519-demb.dtb
+  DTC     arch/arm/boot/dts/hisi-x5hd2-dkb.dtb
+arch/arm/boot/dts/exynos5422-odroidxu3.dtb: ERROR (phandle_references): /th=
+ermal-zones/gpu-thermal/cooling-maps/map3: Reference to non-existent node o=
+r label "gpu"
+arch/arm/boot/dts/exynos5422-odroidxu3.dtb: ERROR (phandle_references): /th=
+ermal-zones/gpu-thermal/cooling-maps/map4: Reference to non-existent node o=
+r label "gpu"
+ERROR: Input tree has errors, aborting (use -f to force output)
+make[1]: *** [scripts/Makefile.lib:294: arch/arm/boot/dts/exynos5422-odroid=
+xu3.dtb] Error 2
+arch/arm/boot/dts/exynos5422-odroidxu3-lite.dtb: ERROR (phandle_references)=
+: /thermal-zones/gpu-thermal/cooling-maps/map3: Reference to non-existent n=
+ode or label "gpu"
+arch/arm/boot/dts/exynos5422-odroidxu3-lite.dtb: ERROR (phandle_references)=
+: /thermal-zones/gpu-thermal/cooling-maps/map4: Reference to non-existent n=
+ode or label "gpu"
+ERROR: Input tree has errors, aborting (use -f to force output)
+make[1]: *** [scripts/Makefile.lib:294: arch/arm/boot/dts/exynos5422-odroid=
+xu3-lite.dtb] Error 2
+arch/arm/boot/dts/exynos5422-odroidxu4.dtb: ERROR (phandle_references): /th=
+ermal-zones/gpu-thermal/cooling-maps/map3: Reference to non-existent node o=
+r label "gpu"
+arch/arm/boot/dts/exynos5422-odroidxu4.dtb: ERROR (phandle_references): /th=
+ermal-zones/gpu-thermal/cooling-maps/map4: Reference to non-existent node o=
+r label "gpu"
+ERROR: Input tree has errors, aborting (use -f to force output)
+make[1]: *** [scripts/Makefile.lib:294: arch/arm/boot/dts/exynos5422-odroid=
+xu4.dtb] Error 2
+make: *** [arch/arm/Makefile:348: dtbs] Error 2
+
+Log: https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/3=
+938632189#L8634
+
+Presumably caused by "ARM: dts: exynos: Add GPU thermal zone cooling maps f=
+or Odroid XU3/XU4/HC1", but I haven't had a chance to revert and re-test.
+
 
 Kind regards, Chris
