@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEAE44431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:33:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4105FC433EF;
-	Wed, 15 Mar 2023 12:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B1F4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:33:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA784C433D2;
+	Wed, 15 Mar 2023 12:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883601;
-	bh=fuxfY8BldNgYHJGYH97MjHxU+GKUwlRu0vKm5XhsZOg=;
+	s=korg; t=1678883604;
+	bh=87VjF5XzdH+/LkAgNY8ZsKPIgWtTFEPd3GPJfUM5CSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o8zZz0FYMReplOV5ZSCe2GYiql2BFA0+bYWuVvDA23JonxnKIy/jMRm13J+iOsg5i
-	 7sH47cSywecFX+DNOlFTu7jynUaD3fRtNlsO6Rg1s7iUTLSplSgWSjt7Nrpzc7kCB8
-	 KWppAV3Hh+UzlV2MQoMdY1x4P9VrfRTR1ICMXR1o=
+	b=igD11LMTEjpM4qW1AcBlphjjxX8o+SWVBZEY9DSfUMpkwcsnIGFWNdjdatKt2Dj/y
+	 7fzzS3ArplloupiritkIZWPnl2nOhF90ph4SMTvwfSnhmdeiGSgvy0p2MGJVs8te+W
+	 5BCTAuiXiIsUjKcOyyYdsVaY8i71vj7k6QC5xz+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yassine Oudjana <y.oudjana@protonmail.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/143] drm/msm/a5xx: fix highest bank bit for a530
-Date: Wed, 15 Mar 2023 13:12:27 +0100
-Message-Id: <20230315115742.381438755@linuxfoundation.org>
+Subject: [PATCH 6.1 062/143] drm/msm/a5xx: fix the emptyness check in the preempt code
+Date: Wed, 15 Mar 2023 13:12:28 +0100
+Message-Id: <20230315115742.409549592@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -37,34 +38,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 141f66ebbfa17cc7e2075f06c50107da978c965b ]
+[ Upstream commit b4fb748f0b734ce1d2e7834998cc599fcbd25d67 ]
 
-A530 has highest bank bit equal to 15 (like A540). Fix values written to
-REG_A5XX_RB_MODE_CNTL and REG_A5XX_TPL1_MODE_CNTL registers.
+Quoting Yassine: ring->memptrs->rptr is never updated and stays 0, so
+the comparison always evaluates to false and get_next_ring always
+returns ring 0 thinking it isn't empty.
 
-Fixes: 1d832ab30ce6 ("drm/msm/a5xx: Add support for Adreno 508, 509, 512 GPUs")
+Fix this by calling get_rptr() instead of reading rptr directly.
+
+Reported-by: Yassine Oudjana <y.oudjana@protonmail.com>
+Fixes: b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/522639/
-Link: https://lore.kernel.org/r/20230214020956.164473-3-dmitry.baryshkov@linaro.org
+Patchwork: https://patchwork.freedesktop.org/patch/522642/
+Link: https://lore.kernel.org/r/20230214020956.164473-4-dmitry.baryshkov@linaro.org
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 2 +-
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index f8634fbeffda0..4f0dbeebb79fb 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -808,7 +808,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 	gpu_write(gpu, REG_A5XX_RBBM_AHB_CNTL2, 0x0000003F);
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+index 8abc9a2b114a2..6e326d851ba53 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+@@ -63,7 +63,7 @@ static struct msm_ringbuffer *get_next_ring(struct msm_gpu *gpu)
+ 		struct msm_ringbuffer *ring = gpu->rb[i];
  
- 	/* Set the highest bank bit */
--	if (adreno_is_a540(adreno_gpu))
-+	if (adreno_is_a540(adreno_gpu) || adreno_is_a530(adreno_gpu))
- 		regbit = 2;
- 	else
- 		regbit = 1;
+ 		spin_lock_irqsave(&ring->preempt_lock, flags);
+-		empty = (get_wptr(ring) == ring->memptrs->rptr);
++		empty = (get_wptr(ring) == gpu->funcs->get_rptr(gpu, ring));
+ 		spin_unlock_irqrestore(&ring->preempt_lock, flags);
+ 
+ 		if (!empty)
 -- 
 2.39.2
 
