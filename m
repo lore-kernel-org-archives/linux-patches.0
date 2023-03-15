@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA534432
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243ECC433EF;
-	Wed, 15 Mar 2023 12:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D804431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBCEC433EF;
+	Wed, 15 Mar 2023 12:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882806;
-	bh=Q3n/ZFFDuIcs9z7/3ezBTKHA7uNoygEha8qv/bRgPpU=;
+	s=korg; t=1678882809;
+	bh=upgRRdoeO01p2M73mEvo6AbTLa9oPzmi8pqsZLe6/ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vktWSK5Xwyy+c6lNijFpet85dLjVy72p6gknEaU0pT8flf7VOw24aiRVgDkMZPXeV
-	 EcxJihZS7s5g5H5J1f0On2by5KvcsJoeMbMRLQe+1Oy0z/KM1aiTC7Hex2+FkuOScY
-	 ZKEr8bIsO6uPUnHTW0cBct9TVJSGalLw9scKxjQc=
+	b=RnnQ1aIKruHs4ifNedSI+xIM0XdkmqjMjqIsB0Wa6ceCXPFbf8wjPonDUTscu/ghQ
+	 tKUaB/2Dh76IGuHJN0OWWfkagPm52PXRIG8rrD1HngmQzqTeziJn/92r+X1eamOcfW
+	 A0qhnxlt0B2cDhOZ+hedZLwTx7XU+iUjPqEi4SC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Theodore Tso <tytso@mit.edu>,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 5.10 001/104] fs: prevent out-of-bounds array speculation when closing a file descriptor
-Date: Wed, 15 Mar 2023 13:11:32 +0100
-Message-Id: <20230315115732.002220998@linuxfoundation.org>
+	Andrey Vagin <avagin@openvz.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Tobias Klauser <tklauser@distanz.ch>
+Subject: [PATCH 5.10 002/104] fork: allow CLONE_NEWTIME in clone3 flags
+Date: Wed, 15 Mar 2023 13:11:33 +0100
+Message-Id: <20230315115732.054171880@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,27 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Tobias Klauser <tklauser@distanz.ch>
 
-commit 609d54441493c99f21c1823dfd66fa7f4c512ff4 upstream.
+commit a402f1e35313fc7ce2ca60f543c4402c2c7c3544 upstream.
 
-Google-Bug-Id: 114199369
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Currently, calling clone3() with CLONE_NEWTIME in clone_args->flags
+fails with -EINVAL. This is because CLONE_NEWTIME intersects with
+CSIGNAL. However, CSIGNAL was deprecated when clone3 was introduced in
+commit 7f192e3cd316 ("fork: add clone3"), allowing re-use of that part
+of clone flags.
+
+Fix this by explicitly allowing CLONE_NEWTIME in clone3_args_valid. This
+is also in line with the respective check in check_unshare_flags which
+allow CLONE_NEWTIME for unshare().
+
+Fixes: 769071ac9f20 ("ns: Introduce Time Namespace")
+Cc: Andrey Vagin <avagin@openvz.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/file.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/fork.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -677,6 +677,7 @@ static struct file *pick_file(struct fil
- 	fdt = files_fdtable(files);
- 	if (fd >= fdt->max_fds)
- 		goto out_unlock;
-+	fd = array_index_nospec(fd, fdt->max_fds);
- 	file = fdt->fd[fd];
- 	if (!file)
- 		goto out_unlock;
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -2726,7 +2726,7 @@ static bool clone3_args_valid(struct ker
+ 	 * - make the CLONE_DETACHED bit reuseable for clone3
+ 	 * - make the CSIGNAL bits reuseable for clone3
+ 	 */
+-	if (kargs->flags & (CLONE_DETACHED | CSIGNAL))
++	if (kargs->flags & (CLONE_DETACHED | (CSIGNAL & (~CLONE_NEWTIME))))
+ 		return false;
+ 
+ 	if ((kargs->flags & (CLONE_SIGHAND | CLONE_CLEAR_SIGHAND)) ==
 
 
