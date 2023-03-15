@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844464431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC592C433EF;
-	Wed, 15 Mar 2023 12:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085FA4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791BDC433D2;
+	Wed, 15 Mar 2023 12:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883711;
-	bh=Hj+XlBTIjGwPR8kKUgh8MRzNjjR262C/o9btYzaCeT0=;
+	s=korg; t=1678883713;
+	bh=PP2vOhwYJFy/p40fVDOl/oAx4CphyQWstD6rS+UDdB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LtGZ8vWKxYOXeBeVD9DUK/NE7CecX4T9AAcStGcGdP6Oe71PIaT1TFXW9PyeKNL8O
-	 +tK/nEB7JA0uUmD9zkG2q9ScuFRzc3T9240ojeWHZZAY7CqyDye3mGTSkHSYef8Rmx
-	 1lGajgEoLpcsNuK2bQ9OvmHd1i2UMGJaHsjYFQ2U=
+	b=DK5yRW9kz4zqSHNhtMJzsXwTPR/8cFjGpTFdQA3Z3rxuUyIS3LLRCd0p7BiayDmtc
+	 DxQKGNDuANaOBq1F0OZRrhfh38ysgAPwcFZ/lMQlqNfcue9P0k/I6qcyEylxeuAsvO
+	 dvMr5Caq3jLKe58M2D853m4G0GmNdr0fMCV7TNto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2bcc0d79e548c4f62a59@syzkaller.appspotmail.com,
-	Julian Ruess <julianr@linux.ibm.com>,
-	Yu Kuai <yukuai3@huawei.com>,
+	flole@flole.de,
 	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/143] block: fix wrong mode for blkdev_put() from disk_scan_partitions()
-Date: Wed, 15 Mar 2023 13:13:08 +0100
-Message-Id: <20230315115743.603682735@linuxfoundation.org>
+Subject: [PATCH 6.1 103/143] NFSD: Protect against filesystem freezing
+Date: Wed, 15 Mar 2023 13:13:09 +0100
+Message-Id: <20230315115743.635882067@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -38,42 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 428913bce1e67ccb4dae317fd0332545bf8c9233 ]
+[ Upstream commit fd9a2e1d513823e840960cb3bc26d8b7749d4ac2 ]
 
-If disk_scan_partitions() is called with 'FMODE_EXCL',
-blkdev_get_by_dev() will be called without 'FMODE_EXCL', however, follow
-blkdev_put() is still called with 'FMODE_EXCL', which will cause
-'bd_holders' counter to leak.
+Flole observes this WARNING on occasion:
 
-Fix the problem by using the right mode for blkdev_put().
+[1210423.486503] WARNING: CPU: 8 PID: 1524732 at fs/ext4/ext4_jbd2.c:75 ext4_journal_check_start+0x68/0xb0
 
-Reported-by: syzbot+2bcc0d79e548c4f62a59@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/lkml/f9649d501bc8c3444769418f6c26263555d9d3be.camel@linux.ibm.com/T/
-Tested-by: Julian Ruess <julianr@linux.ibm.com>
-Fixes: e5cfefa97bcc ("block: fix scan partition for exclusively open device again")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reported-by: <flole@flole.de>
+Suggested-by: Jan Kara <jack@suse.cz>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217123
+Fixes: 73da852e3831 ("nfsd: use vfs_iter_read/write")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/vfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 85ae755913e9e..0b6928e948f31 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -385,7 +385,7 @@ int disk_scan_partitions(struct gendisk *disk, fmode_t mode)
- 	if (IS_ERR(bdev))
- 		ret =  PTR_ERR(bdev);
- 	else
--		blkdev_put(bdev, mode);
-+		blkdev_put(bdev, mode & ~FMODE_EXCL);
- 
- 	if (!(mode & FMODE_EXCL))
- 		bd_abort_claiming(disk->part0, disk_scan_partitions);
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 0d49c6bb22eb1..59f9a8cee012a 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1037,7 +1037,9 @@ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
+ 	since = READ_ONCE(file->f_wb_err);
+ 	if (verf)
+ 		nfsd_copy_write_verifier(verf, nn);
++	file_start_write(file);
+ 	host_err = vfs_iter_write(file, &iter, &pos, flags);
++	file_end_write(file);
+ 	if (host_err < 0) {
+ 		nfsd_reset_write_verifier(nn);
+ 		trace_nfsd_writeverf_reset(nn, rqstp, host_err);
 -- 
 2.39.2
 
