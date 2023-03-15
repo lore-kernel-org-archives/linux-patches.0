@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C58E4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:29:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C23C433D2;
-	Wed, 15 Mar 2023 12:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29264431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:29:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4737BC433D2;
+	Wed, 15 Mar 2023 12:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883356;
-	bh=Dla1IsGrNz19OS51ODt78sdv7tOeDKYhkB0skY089ck=;
+	s=korg; t=1678883358;
+	bh=F7PSvEsj8583WT74j11i/ggrg+iKXSefTVUucPnnePM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OCNTOyP8bYMWEFTggZ/xUB7O8PwSqjv1ngKLumZcG1oRazd5B1AtoU4onK7Du0/7+
-	 bJ/kTl3gCiMQDZP1ycSmUg9JUglbDN0IVNEIeNe4MXQ0xO2FrMKsqAkuJOWs9+Ax+1
-	 mEVI6b+OvCCvVY6EAyOp8Khrjc3MF2OeIxPXOEqU=
+	b=A/QWUoNd9aZziLsd4qfMBTaBmEurxwuvYWE3iiCZYTzRHCUBPAdjN6/XXhsp1r6+G
+	 C7s/HYVDZKMPBsbkonpA+g3K11KDoHm0K6vAis+i3GozeVXmgxPEdINBZg3R2pQMuf
+	 nSihcA+erOORJRHyq13uV9oZH8thn6mwlwijX8KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <sboyd@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nicolas Schier <nicolas@fjasle.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 105/145] clk: qcom: mmcc-apq8084: remove spdm clocks
-Date: Wed, 15 Mar 2023 13:12:51 +0100
-Message-Id: <20230315115742.438912142@linuxfoundation.org>
+Subject: [PATCH 5.15 114/145] scripts: handle BrokenPipeError for python scripts
+Date: Wed, 15 Mar 2023 13:13:00 +0100
+Message-Id: <20230315115742.724802983@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -38,313 +36,191 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 7b347f4b677b6d84687e67d82b6b17c6f55ea2b4 ]
+[ Upstream commit 87c7ee67deb7fce9951a5f9d80641138694aad17 ]
 
-SPDM is used for debug/profiling and does not have any other
-functionality. These clocks can safely be removed.
+In the follow-up of commit fb3041d61f68 ("kbuild: fix SIGPIPE error
+message for AR=gcc-ar and AR=llvm-ar"), Kees Cook pointed out that
+tools should _not_ catch their own SIGPIPEs [1] [2].
 
-Suggested-by: Stephen Boyd <sboyd@kernel.org>
-Suggested-by: Georgi Djakov <djakov@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230111060402.1168726-11-dmitry.baryshkov@linaro.org
+Based on his feedback, LLVM was fixed [3].
+
+However, Python's default behavior is to show noisy bracktrace when
+SIGPIPE is sent. So, scripts written in Python are basically in the
+same situation as the buggy llvm tools.
+
+Example:
+
+  $ make -s allnoconfig
+  $ make -s allmodconfig
+  $ scripts/diffconfig .config.old .config | head -n1
+  -ALIX n
+  Traceback (most recent call last):
+    File "/home/masahiro/linux/scripts/diffconfig", line 132, in <module>
+      main()
+    File "/home/masahiro/linux/scripts/diffconfig", line 130, in main
+      print_config("+", config, None, b[config])
+    File "/home/masahiro/linux/scripts/diffconfig", line 64, in print_config
+      print("+%s %s" % (config, new_value))
+  BrokenPipeError: [Errno 32] Broken pipe
+
+Python documentation [4] notes how to make scripts die immediately and
+silently:
+
+  """
+  Piping output of your program to tools like head(1) will cause a
+  SIGPIPE signal to be sent to your process when the receiver of its
+  standard output closes early. This results in an exception like
+  BrokenPipeError: [Errno 32] Broken pipe. To handle this case,
+  wrap your entry point to catch this exception as follows:
+
+    import os
+    import sys
+
+    def main():
+        try:
+            # simulate large output (your code replaces this loop)
+            for x in range(10000):
+                print("y")
+            # flush output here to force SIGPIPE to be triggered
+            # while inside this try block.
+            sys.stdout.flush()
+        except BrokenPipeError:
+            # Python flushes standard streams on exit; redirect remaining output
+            # to devnull to avoid another BrokenPipeError at shutdown
+            devnull = os.open(os.devnull, os.O_WRONLY)
+            os.dup2(devnull, sys.stdout.fileno())
+            sys.exit(1)  # Python exits with error code 1 on EPIPE
+
+    if __name__ == '__main__':
+        main()
+
+  Do not set SIGPIPE’s disposition to SIG_DFL in order to avoid
+  BrokenPipeError. Doing that would cause your program to exit
+  unexpectedly whenever any socket connection is interrupted while
+  your program is still writing to it.
+  """
+
+Currently, tools/perf/scripts/python/intel-pt-events.py seems to be the
+only script that fixes the issue that way.
+
+tools/perf/scripts/python/compaction-times.py uses another approach
+signal.signal(signal.SIGPIPE, signal.SIG_DFL) but the Python
+documentation clearly says "Don't do it".
+
+I cannot fix all Python scripts since there are so many.
+I fixed some in the scripts/ directory.
+
+[1]: https://lore.kernel.org/all/202211161056.1B9611A@keescook/
+[2]: https://github.com/llvm/llvm-project/issues/59037
+[3]: https://github.com/llvm/llvm-project/commit/4787efa38066adb51e2c049499d25b3610c0877b
+[4]: https://docs.python.org/3/library/signal.html#note-on-sigpipe
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-apq8084.c | 271 --------------------------------
- 1 file changed, 271 deletions(-)
+ scripts/checkkconfigsymbols.py         | 13 ++++++++++++-
+ scripts/clang-tools/run-clang-tools.py | 21 ++++++++++++++-------
+ scripts/diffconfig                     | 16 ++++++++++++++--
+ 3 files changed, 40 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/clk/qcom/mmcc-apq8084.c b/drivers/clk/qcom/mmcc-apq8084.c
-index fbfcf00067394..893e5536f64c7 100644
---- a/drivers/clk/qcom/mmcc-apq8084.c
-+++ b/drivers/clk/qcom/mmcc-apq8084.c
-@@ -2363,262 +2363,6 @@ static struct clk_branch mmss_rbcpr_clk = {
- 	},
- };
+diff --git a/scripts/checkkconfigsymbols.py b/scripts/checkkconfigsymbols.py
+index 217d21abc86e8..36c920e713137 100755
+--- a/scripts/checkkconfigsymbols.py
++++ b/scripts/checkkconfigsymbols.py
+@@ -115,7 +115,7 @@ def parse_options():
+     return args
  
--static struct clk_branch mmss_spdm_ahb_clk = {
--	.halt_reg = 0x0230,
--	.clkr = {
--		.enable_reg = 0x0230,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_ahb_clk",
--			.parent_names = (const char *[]){
--				"mmss_spdm_ahb_div_clk",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_axi_clk = {
--	.halt_reg = 0x0210,
--	.clkr = {
--		.enable_reg = 0x0210,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_axi_clk",
--			.parent_names = (const char *[]){
--				"mmss_spdm_axi_div_clk",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_csi0_clk = {
--	.halt_reg = 0x023c,
--	.clkr = {
--		.enable_reg = 0x023c,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_csi0_clk",
--			.parent_names = (const char *[]){
--				"mmss_spdm_csi0_div_clk",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_gfx3d_clk = {
--	.halt_reg = 0x022c,
--	.clkr = {
--		.enable_reg = 0x022c,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_gfx3d_clk",
--			.parent_names = (const char *[]){
--				"mmss_spdm_gfx3d_div_clk",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_jpeg0_clk = {
--	.halt_reg = 0x0204,
--	.clkr = {
--		.enable_reg = 0x0204,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_jpeg0_clk",
--			.parent_names = (const char *[]){
--				"mmss_spdm_jpeg0_div_clk",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_jpeg1_clk = {
--	.halt_reg = 0x0208,
--	.clkr = {
--		.enable_reg = 0x0208,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_jpeg1_clk",
--			.parent_names = (const char *[]){
--				"mmss_spdm_jpeg1_div_clk",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_jpeg2_clk = {
--	.halt_reg = 0x0224,
--	.clkr = {
--		.enable_reg = 0x0224,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_jpeg2_clk",
--			.parent_names = (const char *[]){
--				"mmss_spdm_jpeg2_div_clk",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_mdp_clk = {
--	.halt_reg = 0x020c,
--	.clkr = {
--		.enable_reg = 0x020c,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_mdp_clk",
--			.parent_names = (const char *[]){
--				"mmss_spdm_mdp_div_clk",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_pclk0_clk = {
--	.halt_reg = 0x0234,
--	.clkr = {
--		.enable_reg = 0x0234,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_pclk0_clk",
--			.parent_names = (const char *[]){
--				"mmss_spdm_pclk0_div_clk",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_pclk1_clk = {
--	.halt_reg = 0x0228,
--	.clkr = {
--		.enable_reg = 0x0228,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_pclk1_clk",
--			.parent_names = (const char *[]){
--				"mmss_spdm_pclk1_div_clk",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_vcodec0_clk = {
--	.halt_reg = 0x0214,
--	.clkr = {
--		.enable_reg = 0x0214,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_vcodec0_clk",
--			.parent_names = (const char *[]){
--				"mmss_spdm_vcodec0_div_clk",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_vfe0_clk = {
--	.halt_reg = 0x0218,
--	.clkr = {
--		.enable_reg = 0x0218,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_vfe0_clk",
--			.parent_names = (const char *[]){
--				"mmss_spdm_vfe0_div_clk",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_vfe1_clk = {
--	.halt_reg = 0x021c,
--	.clkr = {
--		.enable_reg = 0x021c,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_vfe1_clk",
--			.parent_names = (const char *[]){
--				"mmss_spdm_vfe1_div_clk",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_rm_axi_clk = {
--	.halt_reg = 0x0304,
--	.clkr = {
--		.enable_reg = 0x0304,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_rm_axi_clk",
--			.parent_names = (const char *[]){
--				"mmss_axi_clk_src",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch mmss_spdm_rm_ocmemnoc_clk = {
--	.halt_reg = 0x0308,
--	.clkr = {
--		.enable_reg = 0x0308,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "mmss_spdm_rm_ocmemnoc_clk",
--			.parent_names = (const char *[]){
--				"ocmemnoc_clk_src",
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--
- static struct clk_branch mmss_misc_ahb_clk = {
- 	.halt_reg = 0x502c,
- 	.clkr = {
-@@ -3251,21 +2995,6 @@ static struct clk_regmap *mmcc_apq8084_clocks[] = {
- 	[MDSS_VSYNC_CLK] = &mdss_vsync_clk.clkr,
- 	[MMSS_RBCPR_AHB_CLK] = &mmss_rbcpr_ahb_clk.clkr,
- 	[MMSS_RBCPR_CLK] = &mmss_rbcpr_clk.clkr,
--	[MMSS_SPDM_AHB_CLK] = &mmss_spdm_ahb_clk.clkr,
--	[MMSS_SPDM_AXI_CLK] = &mmss_spdm_axi_clk.clkr,
--	[MMSS_SPDM_CSI0_CLK] = &mmss_spdm_csi0_clk.clkr,
--	[MMSS_SPDM_GFX3D_CLK] = &mmss_spdm_gfx3d_clk.clkr,
--	[MMSS_SPDM_JPEG0_CLK] = &mmss_spdm_jpeg0_clk.clkr,
--	[MMSS_SPDM_JPEG1_CLK] = &mmss_spdm_jpeg1_clk.clkr,
--	[MMSS_SPDM_JPEG2_CLK] = &mmss_spdm_jpeg2_clk.clkr,
--	[MMSS_SPDM_MDP_CLK] = &mmss_spdm_mdp_clk.clkr,
--	[MMSS_SPDM_PCLK0_CLK] = &mmss_spdm_pclk0_clk.clkr,
--	[MMSS_SPDM_PCLK1_CLK] = &mmss_spdm_pclk1_clk.clkr,
--	[MMSS_SPDM_VCODEC0_CLK] = &mmss_spdm_vcodec0_clk.clkr,
--	[MMSS_SPDM_VFE0_CLK] = &mmss_spdm_vfe0_clk.clkr,
--	[MMSS_SPDM_VFE1_CLK] = &mmss_spdm_vfe1_clk.clkr,
--	[MMSS_SPDM_RM_AXI_CLK] = &mmss_spdm_rm_axi_clk.clkr,
--	[MMSS_SPDM_RM_OCMEMNOC_CLK] = &mmss_spdm_rm_ocmemnoc_clk.clkr,
- 	[MMSS_MISC_AHB_CLK] = &mmss_misc_ahb_clk.clkr,
- 	[MMSS_MMSSNOC_AHB_CLK] = &mmss_mmssnoc_ahb_clk.clkr,
- 	[MMSS_MMSSNOC_BTO_AHB_CLK] = &mmss_mmssnoc_bto_ahb_clk.clkr,
+ 
+-def main():
++def print_undefined_symbols():
+     """Main function of this module."""
+     args = parse_options()
+ 
+@@ -467,5 +467,16 @@ def parse_kconfig_file(kfile):
+     return defined, references
+ 
+ 
++def main():
++    try:
++        print_undefined_symbols()
++    except BrokenPipeError:
++        # Python flushes standard streams on exit; redirect remaining output
++        # to devnull to avoid another BrokenPipeError at shutdown
++        devnull = os.open(os.devnull, os.O_WRONLY)
++        os.dup2(devnull, sys.stdout.fileno())
++        sys.exit(1)  # Python exits with error code 1 on EPIPE
++
++
+ if __name__ == "__main__":
+     main()
+diff --git a/scripts/clang-tools/run-clang-tools.py b/scripts/clang-tools/run-clang-tools.py
+index f754415af398b..f42699134f1c0 100755
+--- a/scripts/clang-tools/run-clang-tools.py
++++ b/scripts/clang-tools/run-clang-tools.py
+@@ -60,14 +60,21 @@ def run_analysis(entry):
+ 
+ 
+ def main():
+-    args = parse_arguments()
++    try:
++        args = parse_arguments()
+ 
+-    lock = multiprocessing.Lock()
+-    pool = multiprocessing.Pool(initializer=init, initargs=(lock, args))
+-    # Read JSON data into the datastore variable
+-    with open(args.path, "r") as f:
+-        datastore = json.load(f)
+-        pool.map(run_analysis, datastore)
++        lock = multiprocessing.Lock()
++        pool = multiprocessing.Pool(initializer=init, initargs=(lock, args))
++        # Read JSON data into the datastore variable
++        with open(args.path, "r") as f:
++            datastore = json.load(f)
++            pool.map(run_analysis, datastore)
++    except BrokenPipeError:
++        # Python flushes standard streams on exit; redirect remaining output
++        # to devnull to avoid another BrokenPipeError at shutdown
++        devnull = os.open(os.devnull, os.O_WRONLY)
++        os.dup2(devnull, sys.stdout.fileno())
++        sys.exit(1)  # Python exits with error code 1 on EPIPE
+ 
+ 
+ if __name__ == "__main__":
+diff --git a/scripts/diffconfig b/scripts/diffconfig
+index d5da5fa05d1d3..43f0f3d273ae7 100755
+--- a/scripts/diffconfig
++++ b/scripts/diffconfig
+@@ -65,7 +65,7 @@ def print_config(op, config, value, new_value):
+         else:
+             print(" %s %s -> %s" % (config, value, new_value))
+ 
+-def main():
++def show_diff():
+     global merge_style
+ 
+     # parse command line args
+@@ -129,4 +129,16 @@ def main():
+     for config in new:
+         print_config("+", config, None, b[config])
+ 
+-main()
++def main():
++    try:
++        show_diff()
++    except BrokenPipeError:
++        # Python flushes standard streams on exit; redirect remaining output
++        # to devnull to avoid another BrokenPipeError at shutdown
++        devnull = os.open(os.devnull, os.O_WRONLY)
++        os.dup2(devnull, sys.stdout.fileno())
++        sys.exit(1)  # Python exits with error code 1 on EPIPE
++
++
++if __name__ == '__main__':
++    main()
 -- 
 2.39.2
 
