@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AF44431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E79C433EF;
-	Wed, 15 Mar 2023 12:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFCB4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECADAC433D2;
+	Wed, 15 Mar 2023 12:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884023;
-	bh=zOkZ0Qt3ypqKG3Ynxn0s+Eno8eY4IY2xUM6CsyMOplk=;
+	s=korg; t=1678884026;
+	bh=SLkU9kJ3cl74dbiJwTx8eXstKbQMChXe7Liq8iWEk5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sexf4Ycp83BWicIWpb0I5aKVKNgyQQ1V0e2OKloZEI7mvsvc/7krfvMnKCtIzsPTs
-	 /NKWwNNkMXP0HCDk8SqSSfzikpjF0CWsI7+eNxLwamv+HZiPgXRBrf733m2oD9DHTD
-	 LOGfMVgI+xUeJcObBq1uu8B4Dy0u/v7RVF3nxSsQ=
+	b=m9nBNLoUpTDgcd7uWMHh4O1NoAwQ5oj9eKnBRE2YjV5gAk4gegY+T3lwyn60sIEbi
+	 pzCgxlkTe9fDtJFQIuCLCt1JZUKbBtkiTfcTrx62nkE8oqN8QRnp2E1H+HcjRD2+vk
+	 0iV6bTPh2Ss/EC/cNXwE3TBpEfBIrbprhG570daM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalyan Thota <quic_kalyant@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Rongguang Wei <weirongguang@kylinos.cn>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 078/141] drm/msm/dpu: clear DSPP reservations in rm release
-Date: Wed, 15 Mar 2023 13:13:01 +0100
-Message-Id: <20230315115742.345525887@linuxfoundation.org>
+Subject: [PATCH 6.2 079/141] net: stmmac: add to set device wake up flag when stmmac init phy
+Date: Wed, 15 Mar 2023 13:13:02 +0100
+Message-Id: <20230315115742.374362449@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -37,38 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kalyan Thota <quic_kalyant@quicinc.com>
+From: Rongguang Wei <weirongguang@kylinos.cn>
 
-[ Upstream commit 5ec498ba86550909f2611b07087d57a71a78c336 ]
+[ Upstream commit a9334b702a03b693f54ebd3b98f67bf722b74870 ]
 
-Clear DSPP reservations from the global state during
-rm release
+When MAC is not support PMT, driver will check PHY's WoL capability
+and set device wakeup capability in stmmac_init_phy(). We can enable
+the WoL through ethtool, the driver would enable the device wake up
+flag. Now the device_may_wakeup() return true.
 
-Fixes: e47616df008b ("drm/msm/dpu: add support for color processing blocks in dpu driver")
-Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Patchwork: https://patchwork.freedesktop.org/patch/522443/
-Link: https://lore.kernel.org/r/1676286704-818-2-git-send-email-quic_kalyant@quicinc.com
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+But if there is a way which enable the PHY's WoL capability derectly,
+like in BIOS. The driver would not know the enable thing and would not
+set the device wake up flag. The phy_suspend may failed like this:
+
+[   32.409063] PM: dpm_run_callback(): mdio_bus_phy_suspend+0x0/0x50 returns -16
+[   32.409065] PM: Device stmmac-1:00 failed to suspend: error -16
+[   32.409067] PM: Some devices failed to suspend, or early wake event detected
+
+Add to set the device wakeup enable flag according to the get_wol
+function result in PHY can fix the error in this scene.
+
+v2: add a Fixes tag.
+
+Fixes: 1d8e5b0f3f2c ("net: stmmac: Support WOL with phy")
+Signed-off-by: Rongguang Wei <weirongguang@kylinos.cn>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-index 7ada957adbbb8..58abf5fe97e20 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -572,6 +572,8 @@ void dpu_rm_release(struct dpu_global_state *global_state,
- 		ARRAY_SIZE(global_state->ctl_to_enc_id), enc->base.id);
- 	_dpu_rm_clear_mapping(global_state->dsc_to_enc_id,
- 		ARRAY_SIZE(global_state->dsc_to_enc_id), enc->base.id);
-+	_dpu_rm_clear_mapping(global_state->dspp_to_enc_id,
-+		ARRAY_SIZE(global_state->dspp_to_enc_id), enc->base.id);
- }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 1a5b8dab5e9b6..01f7e19a2ca8b 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1170,6 +1170,7 @@ static int stmmac_init_phy(struct net_device *dev)
  
- int dpu_rm_reserve(
+ 		phylink_ethtool_get_wol(priv->phylink, &wol);
+ 		device_set_wakeup_capable(priv->device, !!wol.supported);
++		device_set_wakeup_enable(priv->device, !!wol.wolopts);
+ 	}
+ 
+ 	return ret;
 -- 
 2.39.2
 
