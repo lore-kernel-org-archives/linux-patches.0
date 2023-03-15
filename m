@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37804431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6847FC4339C;
-	Wed, 15 Mar 2023 12:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8228F4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04477C433EF;
+	Wed, 15 Mar 2023 12:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882769;
-	bh=4dwhFZz16r7X1+Ikg3XVZO8ZGQ2N2OA5ObxChjdT/SU=;
+	s=korg; t=1678882772;
+	bh=mncP/scCGSmTKVgip+fV/3+CkCXNe67X/fbzaei1sPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e0PjkR2pCGKMxgU6IsZiDeah+ZATv+EUus6mnEDm/643ifbU4+T4o2w/4/PK077+A
-	 XL3cLRaYa++KR1xAThOyXwK3EjFu74vW/c1T2cPKMGGcMnee1N8dG5/UVuBbxmaSbq
-	 qx65jMVa5FvP+t4Ksz/O2X1HqTOb85GDrtMptTQQ=
+	b=lIzOOepmSOufwHzRcxpxgFqbXPCOYPFTmKJZWbDifaWZZ6YhJv3aYWCd9ZUJERItn
+	 tjRLMflPdkjmX+2GVS7kfB1ImDCqMd9MQbWHsumsQiAkdEWEb5XARAINouVTGegAUq
+	 Qq9tezUzcJOmOahfgbX1Zvby+IucXebtNPJhAUKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Tom Saeger <tom.saeger@oracle.com>
-Subject: [PATCH 5.4 63/68] powerpc/vmlinux.lds: Define RUNTIME_DISCARD_EXIT
-Date: Wed, 15 Mar 2023 13:12:57 +0100
-Message-Id: <20230315115728.584813165@linuxfoundation.org>
+Subject: [PATCH 5.4 64/68] powerpc/vmlinux.lds: Dont discard .rela* for relocatable builds
+Date: Wed, 15 Mar 2023 13:12:58 +0100
+Message-Id: <20230315115728.619400253@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -36,53 +36,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 4b9880dbf3bdba3a7c56445137c3d0e30aaa0a40 upstream.
+commit 07b050f9290ee012a407a0f64151db902a1520f5 upstream.
 
-The powerpc linker script explicitly includes .exit.text, because
-otherwise the link fails due to references from __bug_table and
-__ex_table. The code is freed (discarded) at runtime along with
-.init.text and data.
+Relocatable kernels must not discard relocations, they need to be
+processed at runtime. As such they are included for CONFIG_RELOCATABLE
+builds in the powerpc linker script (line 340).
 
-That has worked in the past despite powerpc not defining
-RUNTIME_DISCARD_EXIT because DISCARDS appears late in the powerpc linker
-script (line 410), and the explicit inclusion of .exit.text
-earlier (line 280) supersedes the discard.
+However they are also unconditionally discarded later in the
+script (line 414). Previously that worked because the earlier inclusion
+superseded the discard.
 
 However commit 99cb0d917ffa ("arch: fix broken BuildID for arm64 and
 riscv") introduced an earlier use of DISCARD as part of the RO_DATA
-macro (line 136). With binutils < 2.36 that causes the DISCARD
-directives later in the script to be applied earlier [1], causing
-.exit.text to actually be discarded at link time, leading to build
-errors:
+macro (line 137). With binutils < 2.36 that causes the DISCARD
+directives later in the script to be applied earlier, causing .rela* to
+actually be discarded at link time, leading to build warnings and a
+kernel that doesn't boot:
 
-  '.exit.text' referenced in section '__bug_table' of crypto/algboss.o: defined in
-  discarded section '.exit.text' of crypto/algboss.o
-  '.exit.text' referenced in section '__ex_table' of drivers/nvdimm/core.o: defined in
-  discarded section '.exit.text' of drivers/nvdimm/core.o
+  ld: warning: discarding dynamic section .rela.init.rodata
 
-Fix it by defining RUNTIME_DISCARD_EXIT, which causes the generic
-DISCARDS macro to not include .exit.text at all.
-
-1: https://lore.kernel.org/lkml/87fscp2v7k.fsf@igel.home/
+Fix it by conditionally discarding .rela* only when CONFIG_RELOCATABLE
+is disabled.
 
 Fixes: 99cb0d917ffa ("arch: fix broken BuildID for arm64 and riscv")
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230105132349.384666-1-mpe@ellerman.id.au
+
+Link: https://lore.kernel.org/r/20230105132349.384666-2-mpe@ellerman.id.au
 Signed-off-by: Tom Saeger <tom.saeger@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/vmlinux.lds.S |    1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/kernel/vmlinux.lds.S |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/arch/powerpc/kernel/vmlinux.lds.S
 +++ b/arch/powerpc/kernel/vmlinux.lds.S
-@@ -6,6 +6,7 @@
- #endif
- 
- #define BSS_FIRST_SECTIONS *(.bss.prominit)
-+#define RUNTIME_DISCARD_EXIT
- 
- #include <asm/page.h>
- #include <asm-generic/vmlinux.lds.h>
+@@ -395,9 +395,12 @@ SECTIONS
+ 	DISCARDS
+ 	/DISCARD/ : {
+ 		*(*.EMB.apuinfo)
+-		*(.glink .iplt .plt .rela* .comment)
++		*(.glink .iplt .plt .comment)
+ 		*(.gnu.version*)
+ 		*(.gnu.attributes)
+ 		*(.eh_frame)
++#ifndef CONFIG_RELOCATABLE
++		*(.rela*)
++#endif
+ 	}
+ }
 
 
