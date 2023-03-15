@@ -1,126 +1,90 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C486111
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 19:04:17 +0000 (UTC)
-Received: by mail-wr1-f51.google.com with SMTP id q16so18258356wrw.2
-        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:04:16 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93DDC6111
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 19:07:39 +0000 (UTC)
+Received: by mail-qt1-f173.google.com with SMTP id t9so1230839qtx.8
+        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678907055;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y3ItpPSFI5C02+SOhKmoKROxDDoqOzc2Jscl1oh6KLE=;
-        b=B168okNksncib2FAyRFUbb0otPkudA/iQibHKXhRZuLYhTL7qtMP8IIKpa+X3BgwXp
-         dVeSzyfYfTXUsBUuouNzgaMdBAFLFDuQBSoBH1t/8WITy2VP1CMmeNryYhNLGlvnsGkh
-         jx5deHb8wZ1oTD3TaWYK4XRHMblq/TuJwnjZZOM3eaUbHqcJwM8HDAXiUs5BQzj6kb3X
-         ZwaALbPklR8HZuR5yJvPG/gHZdjnZ9mVNgdFGhjKXHi48CgDFpN7Ym5L1X5KOzMWZPDE
-         TfaDhr1h6CjV5cPkd9hG2PXBIzkSTSu9I7l5sKyi3yGJi46QoEqBYG9v+GmZMm1SDSnC
-         oqpA==
+        d=gmail.com; s=20210112; t=1678907258;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wZ0/zvOMdFiNo5uPOMOj+D7ZIX4bpE2IJFKlYivIZk0=;
+        b=Ct7Q0t12NaUwy+6LgJEcxRSgnz0UJT51Vbym5LRMAXXrj0ByrUwbZPBpGQitY4Lmmr
+         noLg/gXxspqX42LQM39zoZh9R/lzLps2cKcu8gK055aQe7vGo3fDC+q1BOdw3xHcTtj/
+         d+5kLqqqTpVopV9Alv62scMm3WjUdw9XLG/Sv8M1ZNufyHtvUM+xHi6DDp/g7GibddPg
+         ZbJMRl2Jnl6zZKcaKerZdD0TywJjIhWeZod+/M962ycZnB3fhNTdV4CgEHO7FyrZzRHj
+         xtH8VHv1ZVLzTpJzksqWhUdy/n3Jz8bPe58qz2TvzaegzG0J83aZ2/fEN7YDpZ3DTdoT
+         SsQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678907055;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Y3ItpPSFI5C02+SOhKmoKROxDDoqOzc2Jscl1oh6KLE=;
-        b=PoPSeb6JYksbzG4Rp7K9OS19b178idmBTBVa2aD0MQXQ7A2ntADys9Iv++xY6sLrhJ
-         a8T/GB/UEvsO/rB7GILJ+oBH9obO0XqEdubkcUEjO/k89wPnUt8UwgJGAp4AjV/gOIGg
-         YaKNyBVEYcqYhZHxfnnW0z2fFgmSCUZ8P1+4vxyyObMlUPnJAQQx07ZPVO8JJHPbNz9q
-         9YLJDVnrs9DfKh8YqgLbxmGd3l2g9k4p4p9Ri8+m1gMHu1CUhbNokqInbF79LCPeqPS1
-         o+B+Dwkphb3aER4s6/g22kKdHf2xz2bOwksFhg+JC2POvYYQKm/ItyCfGyKHBTEtsa0w
-         SgDw==
-X-Gm-Message-State: AO0yUKX1c9s4EMiRHeAhDLEqDPl7XavEDQqcw/LPSoo/lPuNaIEmktHO
-	fF07iIfPdAWakcAU1tqC+jU=
-X-Google-Smtp-Source: AK7set8PBYRJXD6Xc0UnY7Syh9epJEtqi+H+nuqJliUsbbWuAVfb6HC/a3hK5ICHPQoBg8S1TXgpPA==
-X-Received: by 2002:adf:cd0e:0:b0:2ce:a0c1:bcaa with SMTP id w14-20020adfcd0e000000b002cea0c1bcaamr3015494wrm.9.1678907055164;
-        Wed, 15 Mar 2023 12:04:15 -0700 (PDT)
-Received: from localhost (host86-146-209-214.range86-146.btcentralplus.com. [86.146.209.214])
-        by smtp.gmail.com with ESMTPSA id e18-20020a056000121200b002cf1c435afcsm5297568wrx.11.2023.03.15.12.04.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 12:04:13 -0700 (PDT)
-Date: Wed, 15 Mar 2023 19:04:13 +0000
-From: Lorenzo Stoakes <lstoakes@gmail.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Matthew Wilcox <willy@infradead.org>, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	maple-tree@lists.infradead.org
-Subject: Re: [PATCH 02/10] mm/mmap/vma_merge: use the proper vma pointer in
- case 3
-Message-ID: <f60110e2-2b91-4233-8f00-65682fc7907b@lucifer.local>
-References: <20230309111258.24079-1-vbabka@suse.cz>
- <20230309111258.24079-3-vbabka@suse.cz>
+        d=1e100.net; s=20210112; t=1678907258;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wZ0/zvOMdFiNo5uPOMOj+D7ZIX4bpE2IJFKlYivIZk0=;
+        b=NOPG4ajE3I3NAZ/YImYOd6bC4cjJk0gr1d7MfCSAZpYOj0ZJs5wu/aVn2t0i8mlIqt
+         lX3axvfaHWcAcEwSCwrOh0AfbnZpozds0Hqu+obyoozHMcVJfw+8ONTueOdxpdFjzF8F
+         +sq/spgNlGZFSovVRboSq8aWwhi9RPY4/LpEf1Z6fLRs6heVWq5n7uMWTdUcT9vO/7Qe
+         urf96Hw6+z+dLZJKmxN6mApnIqspLxuayCjVhCJcGe6qK5oyghRmbkaDqM0PaOa6/hC5
+         r433VWC/5Sg3ayy4i8hOd3GeAmXUT4G1s3t2PN67byhbCkVaomhlvapS6gRH0b+on+Bj
+         X50g==
+X-Gm-Message-State: AO0yUKUwyZUnYPBAJ1XEJuP0Ehe+qrCSM5L3XA9JTUND20kgOikEskts
+	IZrsYTipRUOrK3MGJjCRniU=
+X-Google-Smtp-Source: AK7set8QJkutBm83311/qDFwLT9le+gtecQs+6Z/VnXQHJ6QunJlnDoWxtDKDLfrXOb1ByrbcI4+IQ==
+X-Received: by 2002:a05:622a:1:b0:3b9:bf7f:66ff with SMTP id x1-20020a05622a000100b003b9bf7f66ffmr1223839qtw.67.1678907258344;
+        Wed, 15 Mar 2023 12:07:38 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id cp4-20020a05622a420400b003bfb0ea8094sm4103899qtb.83.2023.03.15.12.07.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 12:07:37 -0700 (PDT)
+Message-ID: <2ff0d13e-ed75-6b89-1aad-6e45f7a6a00c@gmail.com>
+Date: Wed, 15 Mar 2023 12:07:30 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230309111258.24079-3-vbabka@suse.cz>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 5.4 00/68] 5.4.237-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230315115726.103942885@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 09, 2023 at 12:12:50PM +0100, Vlastimil Babka wrote:
-> In case 3 we we use 'next' for everything but vma_pgoff. So use 'next'
-> for that as well, instead of 'mid', for consistency. Then in case 8 we
-> have to use 'mid' explicitly, which should also make the intent more
-> obvious.
->
-> Adjust the diagram for cases 1-3 in the comment to match the code - we
-> are using 'next' for case 3 so mark the range with XXXX instead of NNNN.
-> For case 2 that's a no-op as the code doesn't touch 'next' or 'mid'. For
-> case 1 it's now wrong but that will be fixed next.
->
-> No functional change.
->
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> ---
->  mm/mmap.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->
-> diff --git a/mm/mmap.c b/mm/mmap.c
-> index 0a8b052e3022..1af4c9bc2c87 100644
-> --- a/mm/mmap.c
-> +++ b/mm/mmap.c
-> @@ -857,11 +857,11 @@ can_vma_merge_after(struct vm_area_struct *vma, unsigned long vm_flags,
->   *    mmap, brk or    case 4 below       case 5 below
->   *    mremap move:
->   *                        AAAA               AAAA
-> - *                    PPPP    NNNN       PPPPNNNNXXXX
-> + *                    PPPP    XXXX       PPPPNNNNXXXX
->   *                    might become       might become
->   *                    PPPPPPPPPPPP 1 or  PPPPPPPPPPPP 6 or
-> - *                    PPPPPPPPNNNN 2 or  PPPPPPPPXXXX 7 or
-> - *                    PPPPNNNNNNNN 3     PPPPXXXXXXXX 8
-> + *                    PPPPPPPPXXXX 2 or  PPPPPPPPXXXX 7 or
-> + *                    PPPPXXXXXXXX 3     PPPPXXXXXXXX 8
->   *
+On 3/15/23 05:11, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.237 release.
+> There are 68 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.237-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-I'm glad you're making things more consistent and what you're addressing here is
-a real clanger, but these diagrams while great to have do definitely feel
-quite confusing even now.  But that's something for a future patch!
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
->   * It is important for case 8 that the vma NNNN overlapping the
->   * region AAAA is never going to extended over XXXX. Instead XXXX must
-> @@ -978,9 +978,10 @@ struct vm_area_struct *vma_merge(struct vma_iterator *vmi, struct mm_struct *mm,
->  			vma = next;			/* case 3 */
->  			vma_start = addr;
->  			vma_end = next->vm_end;
-> -			vma_pgoff = mid->vm_pgoff;
-> +			vma_pgoff = next->vm_pgoff;
->  			err = 0;
->  			if (mid != next) {		/* case 8 */
-> +				vma_pgoff = mid->vm_pgoff;
->  				remove = mid;
->  				err = dup_anon_vma(next, mid);
->  			}
-> --
-> 2.39.2
->
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
 
-This does fix a big incongruity in that previously everything but vm_pgoff was
-relative to next, while in the non-8 case mid is equal to next anyway.
-
-Good, clarifying improvement!
-
-Reviewed-by: Lorenzo Stoakes <lstoakes@gmail.com>
