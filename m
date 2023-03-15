@@ -1,140 +1,119 @@
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86B4538D
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 14:59:44 +0000 (UTC)
-Received: by mail-oo1-f49.google.com with SMTP id q79-20020a4a3352000000b0052fe885deddso615376ooq.0
-        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 07:59:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678892384;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qUZnXJdG7q37tNhRaQudoPaYbrD3S3nHX6FVLwwb8gI=;
-        b=gfYiF84RPRllFKjiC/l0H3B3RuhvsHoTK1a/xdhJU3kG/B8chrpLgJa4Ikv40YRisJ
-         PJGPivKtVO5qWpEw5P8QYFzvqBTjZeD8fkurL3ShXWW0jlajr2vEWG4bslDZu0IBir6l
-         H9gBYm6V9ko9sC3AhrAf2rm2o1JXeWMivZ4g8qOVwfpRl2i5DewY8Bkh5hWHbk+jCUYM
-         +4tnfp/N10fUMQbfLjQ1kiUo/6qn+iPP1U9Z0AtgIbiRzme7wZd1ssHgh11NrQoncoAq
-         xGMe4u9opXUd9pW1Y2FXD7VMJgKGQSKqtajS0KrVcIGjUJ+7GvWWNyUgjWObv4VWOKYk
-         GGtA==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C4C53AB
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 15:11:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1678893112;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=DK3e3VadmbNCfN+0npCh9b/W73NPmz18eg1ti6Jir7U=;
+	b=dzaiwPK0+SAJeyH0uWfX810iUCQPnLJ0Q2OkGcXNVX7NcDpKTht/3vbb9dYMfvL4KmDzK+
+	npi0Y7kJu9D2p7EQCIJLDt6r6W1NdBb7NUxRcsu9t7V+UkmMZQMgaOuwigLV9/EQKlU/Em
+	57iQwsFxm5lXj2DJf4wqMtvi9xOrOxE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-655-IgBDPMh5MJSgzTTFdOTMLg-1; Wed, 15 Mar 2023 11:11:50 -0400
+X-MC-Unique: IgBDPMh5MJSgzTTFdOTMLg-1
+Received: by mail-wm1-f71.google.com with SMTP id l18-20020a05600c4f1200b003ed35ab903aso713052wmq.6
+        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 08:11:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678892384;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qUZnXJdG7q37tNhRaQudoPaYbrD3S3nHX6FVLwwb8gI=;
-        b=RRToKyAUoCE5b101Gpx1ihr7v4nYAojS8Mleee2CL1G3gawwQsLY3Y5kkYxwSHwYHR
-         ZRGMNroxYbuGTfcBuhBneYU+MLQr2mtXWqbzAbgRVTFwZ7qX8iPnZkNmtx9BaNq7lgj7
-         CWvDCpve6MjJEj5arsBLyHtoxiE4YkFHAvst/IDjKR1PTESnC5Rocbp8aQYPdsuba7u+
-         mL3oTb0SUSbmSqpLPrD0Zk+1B6rUQPgwpfj670j4KVPMdD5mFJjpB6MAlqltx9goyCm1
-         CHa56cprL87H3B9hKMyJ8rg1e5W4BZxqrTg9kfPyelSQBjJCSO0UhK/oB1JbVLMDCpQt
-         vAqQ==
-X-Gm-Message-State: AO0yUKXBx/llGKucACx60YsF7030yTg0syPzSSDps4T++sArWp3G4A5K
-	dm/Cjbm4zyXHhvcKF+xU29/wpw==
-X-Google-Smtp-Source: AK7set99FRnSdN/rBC8wUKYnTash4tD/QtoCdIeAxYjOE6xnjtrbvyNNQ/VFkGqwJIXa1XXp4+wVIQ==
-X-Received: by 2002:a4a:d498:0:b0:51a:48f4:75de with SMTP id o24-20020a4ad498000000b0051a48f475demr9979407oos.0.1678892383945;
-        Wed, 15 Mar 2023 07:59:43 -0700 (PDT)
-Received: from [192.168.17.16] ([189.219.75.19])
-        by smtp.gmail.com with ESMTPSA id t10-20020a4ae40a000000b005253a5cc3cfsm2311834oov.29.2023.03.15.07.59.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Mar 2023 07:59:43 -0700 (PDT)
-Message-ID: <dce37bda-d5d9-72d8-2b22-2c69b6498870@linaro.org>
-Date: Wed, 15 Mar 2023 08:59:42 -0600
+        d=1e100.net; s=20210112; t=1678893108;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DK3e3VadmbNCfN+0npCh9b/W73NPmz18eg1ti6Jir7U=;
+        b=iet2CLJGu57iacCRJxyrFsqPxNfshAxNi54uUtNpN4Apo4AVeMXGS1ZecE0V5HIQj8
+         eCf/n5aV2u+1otmFxccRKiXxu7Y8EGDeDmAs7Jeb38y/Z8+G2ilkAI5pZachgo8U7iPo
+         LLiraj2FZHrwkWF6c4jSiTa1WYJz7OuIExjxax3lpJQEFsto0yY4b9untlAkdk5+dF11
+         jEfW+ncjEuuuky2Pphlml+qH0+P1fPgsqVN7kN+yGPfLRyEqG2C7V0K6b4KhQimmBAIb
+         kYjgobywYjepI+5z7OsJ4wkqZS2IxfVHATpuTfIvi2m0diMsctYxSg+wZWTj1J6rk8Vy
+         uV2g==
+X-Gm-Message-State: AO0yUKW1lkTcs1e2LTx393vMa7eQaedD9GZLcJaTlXrdZ2GUPNaomZYl
+	zvRiIwBW9eYWQ4mE2RNNwT4ZPOXM5YJZwLjPSB4x5pF3V9t7NzW0OxbF0If+MxUhphR0FokVZ0O
+	D0aNgCT/H5qR/O3ypUQ==
+X-Received: by 2002:a05:600c:470b:b0:3ed:38e7:af59 with SMTP id v11-20020a05600c470b00b003ed38e7af59mr1340336wmo.39.1678893108598;
+        Wed, 15 Mar 2023 08:11:48 -0700 (PDT)
+X-Google-Smtp-Source: AK7set9ieiqa3g1hPZthzvW//9SdDnRzr0SjYKDwS0RWfuLGTPvzEI2FBmYmKYSobu9hCwEijTOYDA==
+X-Received: by 2002:a05:600c:470b:b0:3ed:38e7:af59 with SMTP id v11-20020a05600c470b00b003ed38e7af59mr1340314wmo.39.1678893108284;
+        Wed, 15 Mar 2023 08:11:48 -0700 (PDT)
+Received: from redhat.com ([2.52.155.131])
+        by smtp.gmail.com with ESMTPSA id l4-20020a7bc444000000b003eafc47eb09sm2157086wmi.43.2023.03.15.08.11.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Mar 2023 08:11:47 -0700 (PDT)
+Date: Wed, 15 Mar 2023 11:11:44 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Alvaro Karsz <alvaro.karsz@solid-run.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.2 132/141] PCI: Avoid FLR for SolidRun SNET DPU rev 1
+Message-ID: <20230315111104-mutt-send-email-mst@kernel.org>
+References: <20230315115739.932786806@linuxfoundation.org>
+ <20230315115743.996651796@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 5.4 00/68] 5.4.237-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230315115726.103942885@linuxfoundation.org>
-From: =?UTF-8?Q?Daniel_D=c3=adaz?= <daniel.diaz@linaro.org>
-In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230315115743.996651796@linuxfoundation.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Hello!
-
-On 15/03/23 06:11, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.237 release.
-> There are 68 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Mar 15, 2023 at 01:13:55PM +0100, Greg Kroah-Hartman wrote:
+> From: Alvaro Karsz <alvaro.karsz@solid-run.com>
 > 
-> Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
-> Anything received after that time might be too late.
+> [ Upstream commit d089d69cc1f824936eeaa4fa172f8fa1a0949eaa ]
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.237-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
+> This patch fixes a FLR bug on the SNET DPU rev 1 by setting the
+> PCI_DEV_FLAGS_NO_FLR_RESET flag.
 > 
-> thanks,
+> As there is a quirk to avoid FLR (quirk_no_flr), I added a new quirk
+> to check the rev ID before calling to quirk_no_flr.
 > 
-> greg k-h
+> Without this patch, a SNET DPU rev 1 may hang when FLR is applied.
+> 
+> Signed-off-by: Alvaro Karsz <alvaro.karsz@solid-run.com>
+> Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+> Message-Id: <20230110165638.123745-3-alvaro.karsz@solid-run.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-Lots of build failures: arm, arm64 (Clang-16, Clang-nightly):
-
------8<-----
-/builds/linux/drivers/gpu/drm/drm_edid.c:5119:21: error: passing 'const struct drm_connector *' to parameter of type 'struct drm_connector *' discards qualifiers [-Werror,-Wincompatible-pointer-types-discards-qualifiers]
-         if (!is_hdmi2_sink(connector) && vic > 64)
-                            ^~~~~~~~~
-/builds/linux/drivers/gpu/drm/drm_edid.c:4994:49: note: passing argument to parameter 'connector' here
-static bool is_hdmi2_sink(struct drm_connector *connector)
-                                                 ^
-1 error generated.
-make[4]: *** [/builds/linux/scripts/Makefile.build:262: drivers/gpu/drm/drm_edid.o] Error 1
------>8-----
+This is ony needed if the SNET driver is included but
+isn't it all just for 6.3?
 
 
-On PowerPC (GCC-8, GCC-12, Clang-16, Clang-nightly):
-
------8-----
-In file included from /builds/linux/drivers/usb/host/ohci-hcd.c:1255:
-/builds/linux/drivers/usb/host/ohci-ppc-of.c:126:13: error: use of undeclared identifier 'NO_IRQ'; did you mean 'do_IRQ'?
-         if (irq == NO_IRQ) {
-                    ^~~~~~
-                    do_IRQ
-/builds/linux/arch/powerpc/include/asm/irq.h:58:13: note: 'do_IRQ' declared here
-extern void do_IRQ(struct pt_regs *regs);
-             ^
-1 error generated.
-make[4]: *** [/builds/linux/scripts/Makefile.build:262: drivers/usb/host/ohci-hcd.o] Error 1
------>8-----
-
-
-Many Arm configs:
-
------8<-----
-/builds/linux/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi:409.10-412.7: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map3: Reference to
-  non-existent node or label "gpu"
-
-/builds/linux/arch/arm/boot/dts/exynos5422-odroidhc1.dts:238.10-241.7: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map0: Reference to non-exi
-stent node or label "gpu"
-
-/builds/linux/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi:413.10-416.7: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map4: Reference to
-  non-existent node or label "gpu"
-
-/builds/linux/arch/arm/boot/dts/exynos5422-odroidhc1.dts:242.10-245.7: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map1: Reference to non-exi
-stent node or label "gpu"
-
-ERROR: Input tree has errors, aborting (use -f to force output)
------>8-----
-
-
-Greetings!
-
-Daniel Díaz
-daniel.diaz@linaro.org
+> ---
+>  drivers/pci/quirks.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+> index 494fa46f57671..44cab813bf951 100644
+> --- a/drivers/pci/quirks.c
+> +++ b/drivers/pci/quirks.c
+> @@ -5366,6 +5366,14 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x7901, quirk_no_flr);
+>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1502, quirk_no_flr);
+>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1503, quirk_no_flr);
+>  
+> +/* FLR may cause the SolidRun SNET DPU (rev 0x1) to hang */
+> +static void quirk_no_flr_snet(struct pci_dev *dev)
+> +{
+> +	if (dev->revision == 0x1)
+> +		quirk_no_flr(dev);
+> +}
+> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SOLIDRUN, 0x1000, quirk_no_flr_snet);
+> +
+>  static void quirk_no_ext_tags(struct pci_dev *pdev)
+>  {
+>  	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
+> -- 
+> 2.39.2
+> 
+> 
 
