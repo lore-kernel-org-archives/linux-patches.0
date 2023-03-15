@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56F34431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09052C433EF;
-	Wed, 15 Mar 2023 12:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C634431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D410C433EF;
+	Wed, 15 Mar 2023 12:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884123;
-	bh=RYRK5pU0obzR6PafdUd1j1wq+w9QAsWtn+eSgmN5Ur4=;
+	s=korg; t=1678884126;
+	bh=OwmAelD3Bzx9E6LLl2bJBRLrC9hCFn1O4DDqAOBXG9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mh5wcNV145hbMWbSC9VSTnS0mVCSLP8grQLt9WVdwMom2RcYWzzXDj5hE/2Trt6ae
-	 X/7poAL3O/KfcDs7SgC+vs+CpbZeDwjayKop3/IR4PW35f5pTAyNA+m9Ql6QJftUtC
-	 9/i+VjjdPiz6qy7NHZJiQOoc9jEQdSxtkB/q9s4g=
+	b=vtXUj0XUp1THov7pI1z8SbSpAKtkKhL7GXvwohaKPVZFo8kTfrPG0ClJqEKBIKHbe
+	 8WIFhyXjvdIbh/VdoPMyvX8SlCVti+7fX7FBAmi623CWbeVHityn8f/bHp2M/PQb+a
+	 FSs26OREX5EiYt5Fpip9IQpX+rB5G9J7zKx0U3AY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2bcc0d79e548c4f62a59@syzkaller.appspotmail.com,
-	Julian Ruess <julianr@linux.ibm.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
+	David Disseldorp <ddiss@suse.de>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 098/141] block: fix wrong mode for blkdev_put() from disk_scan_partitions()
-Date: Wed, 15 Mar 2023 13:13:21 +0100
-Message-Id: <20230315115742.988754010@linuxfoundation.org>
+Subject: [PATCH 6.2 116/141] watch_queue: fix IOC_WATCH_QUEUE_SET_SIZE alloc error paths
+Date: Wed, 15 Mar 2023 13:13:39 +0100
+Message-Id: <20230315115743.529229293@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -38,42 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: David Disseldorp <ddiss@suse.de>
 
-[ Upstream commit 428913bce1e67ccb4dae317fd0332545bf8c9233 ]
+[ Upstream commit 03e1d60e177eedbd302b77af4ea5e21b5a7ade31 ]
 
-If disk_scan_partitions() is called with 'FMODE_EXCL',
-blkdev_get_by_dev() will be called without 'FMODE_EXCL', however, follow
-blkdev_put() is still called with 'FMODE_EXCL', which will cause
-'bd_holders' counter to leak.
+The watch_queue_set_size() allocation error paths return the ret value
+set via the prior pipe_resize_ring() call, which will always be zero.
 
-Fix the problem by using the right mode for blkdev_put().
+As a result, IOC_WATCH_QUEUE_SET_SIZE callers such as "keyctl watch"
+fail to detect kernel wqueue->notes allocation failures and proceed to
+KEYCTL_WATCH_KEY, with any notifications subsequently lost.
 
-Reported-by: syzbot+2bcc0d79e548c4f62a59@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/lkml/f9649d501bc8c3444769418f6c26263555d9d3be.camel@linux.ibm.com/T/
-Tested-by: Julian Ruess <julianr@linux.ibm.com>
-Fixes: e5cfefa97bcc ("block: fix scan partition for exclusively open device again")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: c73be61cede58 ("pipe: Add general notification queue support")
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/watch_queue.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 6cdaeb7169004..9c4c9aa559ab8 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -385,7 +385,7 @@ int disk_scan_partitions(struct gendisk *disk, fmode_t mode)
- 	if (IS_ERR(bdev))
- 		ret =  PTR_ERR(bdev);
- 	else
--		blkdev_put(bdev, mode);
-+		blkdev_put(bdev, mode & ~FMODE_EXCL);
+diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
+index a6f9bdd956c39..f10f403104e7d 100644
+--- a/kernel/watch_queue.c
++++ b/kernel/watch_queue.c
+@@ -273,6 +273,7 @@ long watch_queue_set_size(struct pipe_inode_info *pipe, unsigned int nr_notes)
+ 	if (ret < 0)
+ 		goto error;
  
- 	if (!(mode & FMODE_EXCL))
- 		bd_abort_claiming(disk->part0, disk_scan_partitions);
++	ret = -ENOMEM;
+ 	pages = kcalloc(sizeof(struct page *), nr_pages, GFP_KERNEL);
+ 	if (!pages)
+ 		goto error;
 -- 
 2.39.2
 
