@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC4F4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:31:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54192C433D2;
-	Wed, 15 Mar 2023 12:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A1C4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C49C433EF;
+	Wed, 15 Mar 2023 12:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883517;
-	bh=zMJcQZY4dDA3lZHLSJyw1spa8aO4z8+bLFmPEKMNJG8=;
+	s=korg; t=1678883520;
+	bh=QhYMsPxVN7sLTahaZdmEOE43AfATqhV27/TwAaBnIg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zVFIXAgR+1c4CXOpNbzHtIDiL76x0RE0FnUg9yqsBrSCLugdMfW1og2wEc2z92Jmk
-	 JE66MXGJI7svKLWpu05Mb5uKsf5wgbkihdy78VFBJnEPM9uxqczyzIfMGve+PyMcAL
-	 6t1SNbMUPVMR6bNYhnkyaKyl0MpkwN9jJIwQtUE4=
+	b=Qe5E3d41H/4ajUlR7H+q3izAmgEu2deb73HBhayaMaHqZhmM4l6wdwHx+vV+HAMcf
+	 lUEeIoONb6R1jX0fZtQVKHGtsq5vLxXXdYtre+iuIcvImX1EHj97OxnHhV/7QwJxtk
+	 pfEtgWUw8KyFjzyHcbqfkA22driU6Fkb2/tP+yRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/143] KVM: VMX: Do _all_ initialization before exposing /dev/kvm to userspace
-Date: Wed, 15 Mar 2023 13:11:55 +0100
-Message-Id: <20230315115741.394876122@linuxfoundation.org>
+Subject: [PATCH 6.1 030/143] fs: dlm: fix log of lowcomms vs midcomms
+Date: Wed, 15 Mar 2023 13:11:56 +0100
+Message-Id: <20230315115741.423246507@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -35,114 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit e32b120071ea114efc0b4ddd439547750b85f618 ]
+[ Upstream commit 3e54c9e80e68b765d8877023d93f1eea1b9d1c54 ]
 
-Call kvm_init() only after _all_ setup is complete, as kvm_init() exposes
-/dev/kvm to userspace and thus allows userspace to create VMs (and call
-other ioctls).  E.g. KVM will encounter a NULL pointer when attempting to
-add a vCPU to the per-CPU loaded_vmcss_on_cpu list if userspace is able to
-create a VM before vmx_init() configures said list.
+This patch will fix a small issue when printing out that
+dlm_midcomms_start() failed to start and it was printing out that the
+dlm subcomponent lowcomms was failed but lowcomms is behind the midcomms
+layer.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000008
- #PF: supervisor write access in kernel mode
- #PF: error_code(0x0002) - not-present page
- PGD 0 P4D 0
- Oops: 0002 [#1] SMP
- CPU: 6 PID: 1143 Comm: stable Not tainted 6.0.0-rc7+ #988
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
- RIP: 0010:vmx_vcpu_load_vmcs+0x68/0x230 [kvm_intel]
-  <TASK>
-  vmx_vcpu_load+0x16/0x60 [kvm_intel]
-  kvm_arch_vcpu_load+0x32/0x1f0 [kvm]
-  vcpu_load+0x2f/0x40 [kvm]
-  kvm_arch_vcpu_create+0x231/0x310 [kvm]
-  kvm_vm_ioctl+0x79f/0xe10 [kvm]
-  ? handle_mm_fault+0xb1/0x220
-  __x64_sys_ioctl+0x80/0xb0
-  do_syscall_64+0x2b/0x50
-  entry_SYSCALL_64_after_hwframe+0x46/0xb0
- RIP: 0033:0x7f5a6b05743b
-  </TASK>
- Modules linked in: vhost_net vhost vhost_iotlb tap kvm_intel(+) kvm irqbypass
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20221130230934.1014142-15-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
+Stable-dep-of: aad633dc0cf9 ("fs: dlm: start midcomms before scand")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/vmx.c | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ fs/dlm/lockspace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index 81a23ae4f872b..bc868958e91fe 100644
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -8456,19 +8456,23 @@ static void vmx_cleanup_l1d_flush(void)
- 	l1tf_vmx_mitigation = VMENTER_L1D_FLUSH_AUTO;
- }
+diff --git a/fs/dlm/lockspace.c b/fs/dlm/lockspace.c
+index bae050df7abff..04e1b4fe366dc 100644
+--- a/fs/dlm/lockspace.c
++++ b/fs/dlm/lockspace.c
+@@ -391,7 +391,7 @@ static int threads_start(void)
+ 	/* Thread for sending/receiving messages for all lockspace's */
+ 	error = dlm_midcomms_start();
+ 	if (error) {
+-		log_print("cannot start dlm lowcomms %d", error);
++		log_print("cannot start dlm midcomms %d", error);
+ 		goto scand_fail;
+ 	}
  
--static void vmx_exit(void)
-+static void __vmx_exit(void)
- {
-+	allow_smaller_maxphyaddr = false;
-+
- #ifdef CONFIG_KEXEC_CORE
- 	RCU_INIT_POINTER(crash_vmclear_loaded_vmcss, NULL);
- 	synchronize_rcu();
- #endif
-+	vmx_cleanup_l1d_flush();
-+}
- 
-+static void vmx_exit(void)
-+{
- 	kvm_exit();
- 	kvm_x86_vendor_exit();
- 
--	vmx_cleanup_l1d_flush();
--
--	allow_smaller_maxphyaddr = false;
-+	__vmx_exit();
- }
- module_exit(vmx_exit);
- 
-@@ -8513,11 +8517,6 @@ static int __init vmx_init(void)
- 	if (r)
- 		return r;
- 
--	r = kvm_init(&vmx_init_ops, sizeof(struct vcpu_vmx),
--		     __alignof__(struct vcpu_vmx), THIS_MODULE);
--	if (r)
--		goto err_kvm_init;
--
- 	/*
- 	 * Must be called after common x86 init so enable_ept is properly set
- 	 * up. Hand the parameter mitigation value in which was stored in
-@@ -8551,11 +8550,20 @@ static int __init vmx_init(void)
- 	if (!enable_ept)
- 		allow_smaller_maxphyaddr = true;
- 
-+	/*
-+	 * Common KVM initialization _must_ come last, after this, /dev/kvm is
-+	 * exposed to userspace!
-+	 */
-+	r = kvm_init(&vmx_init_ops, sizeof(struct vcpu_vmx),
-+		     __alignof__(struct vcpu_vmx), THIS_MODULE);
-+	if (r)
-+		goto err_kvm_init;
-+
- 	return 0;
- 
--err_l1d_flush:
--	vmx_exit();
- err_kvm_init:
-+	__vmx_exit();
-+err_l1d_flush:
- 	kvm_x86_vendor_exit();
- 	return r;
- }
 -- 
 2.39.2
 
