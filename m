@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164474431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91826C433EF;
-	Wed, 15 Mar 2023 12:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A848D4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E624C433D2;
+	Wed, 15 Mar 2023 12:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883726;
-	bh=pdQdeDz0toLuvF8rbBREGEyOZC9uSuOto5GEK2ahxAs=;
+	s=korg; t=1678883729;
+	bh=D6Iwx/I3L/qpXbBs9lZmGTsC5T4t5wWN6hzqYI5dp7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=slkEexorkD5SA8X3KY1U8tSEM82k8WhqA3ax5VhHJkYHh2KK2rTIPYnrtd5gJUPex
-	 bisCJqb31+vEvdnEPKxArjpreR3pnpHMw0g9sAGH/b3y5ECuhtz//q4wV7t15f0hZa
-	 pQFbnMa2RZgcunIqd5yO4wKap6xZrnn0w/C3bZKQ=
+	b=tr95/YE+bBdMXqlcfNda02tLjt0ODdoSadSrupX1q25LJzmojs8lMi8+r6vNgo67W
+	 KJAcCgN0y5DcdeDeTXcPrMYkTnil0VwEVQKOteGF4jUa5nVTcz2z1jU3scqijaTsoL
+	 qtvtQQXHLsV2hoic+EzdiVkgZW23kKDsUe53F/tE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 081/143] drm/msm/dpu: fix len of sc7180 ctl blocks
-Date: Wed, 15 Mar 2023 13:12:47 +0100
-Message-Id: <20230315115742.997326117@linuxfoundation.org>
+Subject: [PATCH 6.1 108/143] SUNRPC: Fix a server shutdown leak
+Date: Wed, 15 Mar 2023 13:13:14 +0100
+Message-Id: <20230315115743.776854549@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -35,50 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit ce6bd00abc220e9edf10986234fadba6462b4abf ]
+[ Upstream commit 9ca6705d9d609441d34f8b853e1e4a6369b3b171 ]
 
-Change sc7180's ctl block len to 0x1dc.
+Fix a race where kthread_stop() may prevent the threadfn from ever getting
+called.  If that happens the svc_rqst will not be cleaned up.
 
-Fixes: 7bdc0c4b8126 ("msm:disp:dpu1: add support for display for SC7180 target")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/522210/
-Link: https://lore.kernel.org/r/20230211231259.1308718-5-dmitry.baryshkov@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: ed6473ddc704 ("NFSv4: Fix callback server shutdown")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/sunrpc/svc.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index e3f1661b84609..48fedd3f182e6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -607,19 +607,19 @@ static const struct dpu_ctl_cfg sdm845_ctl[] = {
- static const struct dpu_ctl_cfg sc7180_ctl[] = {
- 	{
- 	.name = "ctl_0", .id = CTL_0,
--	.base = 0x1000, .len = 0xE4,
-+	.base = 0x1000, .len = 0x1dc,
- 	.features = BIT(DPU_CTL_ACTIVE_CFG),
- 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
- 	},
- 	{
- 	.name = "ctl_1", .id = CTL_1,
--	.base = 0x1200, .len = 0xE4,
-+	.base = 0x1200, .len = 0x1dc,
- 	.features = BIT(DPU_CTL_ACTIVE_CFG),
- 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 10),
- 	},
- 	{
- 	.name = "ctl_2", .id = CTL_2,
--	.base = 0x1400, .len = 0xE4,
-+	.base = 0x1400, .len = 0x1dc,
- 	.features = BIT(DPU_CTL_ACTIVE_CFG),
- 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 11),
- 	},
+diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
+index 24577d1b99079..9ee32e06f877e 100644
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -787,6 +787,7 @@ svc_start_kthreads(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
+ static int
+ svc_stop_kthreads(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
+ {
++	struct svc_rqst	*rqstp;
+ 	struct task_struct *task;
+ 	unsigned int state = serv->sv_nrthreads-1;
+ 
+@@ -795,7 +796,10 @@ svc_stop_kthreads(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
+ 		task = choose_victim(serv, pool, &state);
+ 		if (task == NULL)
+ 			break;
+-		kthread_stop(task);
++		rqstp = kthread_data(task);
++		/* Did we lose a race to svo_function threadfn? */
++		if (kthread_stop(task) == -EINTR)
++			svc_exit_thread(rqstp);
+ 		nrservs++;
+ 	} while (nrservs < 0);
+ 	return 0;
 -- 
 2.39.2
 
