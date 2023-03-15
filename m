@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF284431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73333C433EF;
-	Wed, 15 Mar 2023 12:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BFC4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4B7C433EF;
+	Wed, 15 Mar 2023 12:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883986;
-	bh=05b9O+id9fdWxUMUqvGYbjFpl4C6EGrQ82+VpQIesVI=;
+	s=korg; t=1678883989;
+	bh=kFgOJ7D371dxryx5DwiU2D9Yt091mq2CLyzln4RljJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ctPvHbFd8Ukkx/PD2UVwaVomU8NNkDWH060rV/BCjl2ZRifYtwwwAMolsWoPq9ZVR
-	 vtSOiafWl4GachJV5SvPYJlB3w7om+xNcjdfIEIJhyfo9w3w4ZKoEPn6//TbUj755p
-	 RlxaYLbyD58S1Z5d3a0qYzEeH1acvRS0cKWUpfc0=
+	b=zNKNVKuoVkvLFOW2Ej79ay/RYXSZ84jXTkBNgJIjWfasVh/Ec93aeVdfXIlWvyvQX
+	 mzErYbAe7TLHk7A04yoc10ClC145Pk/tAoc1zxfqGcI74hu5ulJsUXrWYqzTo10L9k
+	 Ybi8w/Lza0SI86BnxoQVWhWBjELqYtFT8LYrlKb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Brian Vazquez <brianvv@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 062/141] net: tls: fix possible race condition between do_tls_getsockopt_conf() and do_tls_setsockopt_conf()
-Date: Wed, 15 Mar 2023 13:12:45 +0100
-Message-Id: <20230315115741.847130531@linuxfoundation.org>
+Subject: [PATCH 6.2 063/141] net: use indirect calls helpers for sk_exit_memory_pressure()
+Date: Wed, 15 Mar 2023 13:12:46 +0100
+Message-Id: <20230315115741.875759445@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -35,172 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Brian Vazquez <brianvv@google.com>
 
-[ Upstream commit 49c47cc21b5b7a3d8deb18fc57b0aa2ab1286962 ]
+[ Upstream commit 5c1ebbfabcd61142a4551bfc0e51840f9bdae7af ]
 
-ctx->crypto_send.info is not protected by lock_sock in
-do_tls_getsockopt_conf(). A race condition between do_tls_getsockopt_conf()
-and error paths of do_tls_setsockopt_conf() may lead to a use-after-free
-or null-deref.
+Florian reported a regression and sent a patch with the following
+changelog:
 
-More discussion:  https://lore.kernel.org/all/Y/ht6gQL+u6fj3dG@hog/
+<quote>
+ There is a noticeable tcp performance regression (loopback or cross-netns),
+ seen with iperf3 -Z (sendfile mode) when generic retpolines are needed.
 
-Fixes: 3c4d7559159b ("tls: kernel TLS support")
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Link: https://lore.kernel.org/r/20230228023344.9623-1-hbh25y@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+ With SK_RECLAIM_THRESHOLD checks gone number of calls to enter/leave
+ memory pressure happen much more often. For TCP indirect calls are
+ used.
+
+ We can't remove the if-set-return short-circuit check in
+ tcp_enter_memory_pressure because there are callers other than
+ sk_enter_memory_pressure.  Doing a check in the sk wrapper too
+ reduces the indirect calls enough to recover some performance.
+
+ Before,
+ 0.00-60.00  sec   322 GBytes  46.1 Gbits/sec                  receiver
+
+ After:
+ 0.00-60.04  sec   359 GBytes  51.4 Gbits/sec                  receiver
+
+ "iperf3 -c $peer -t 60 -Z -f g", connected via veth in another netns.
+</quote>
+
+It seems we forgot to upstream this indirect call mitigation we
+had for years, lets do this instead.
+
+[edumazet] - It seems we forgot to upstream this indirect call
+             mitigation we had for years, let's do this instead.
+           - Changed to INDIRECT_CALL_INET_1() to avoid bots reports.
+
+Fixes: 4890b686f408 ("net: keep sk->sk_forward_alloc as small as possible")
+Reported-by: Florian Westphal <fw@strlen.de>
+Link: https://lore.kernel.org/netdev/20230227152741.4a53634b@kernel.org/T/
+Signed-off-by: Brian Vazquez <brianvv@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230301133247.2346111-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_main.c | 23 +++++------------------
- 1 file changed, 5 insertions(+), 18 deletions(-)
+ net/core/sock.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index 3735cb00905df..b32c112984dd9 100644
---- a/net/tls/tls_main.c
-+++ b/net/tls/tls_main.c
-@@ -405,13 +405,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
- 			rc = -EINVAL;
- 			goto out;
- 		}
--		lock_sock(sk);
- 		memcpy(crypto_info_aes_gcm_128->iv,
- 		       cctx->iv + TLS_CIPHER_AES_GCM_128_SALT_SIZE,
- 		       TLS_CIPHER_AES_GCM_128_IV_SIZE);
- 		memcpy(crypto_info_aes_gcm_128->rec_seq, cctx->rec_seq,
- 		       TLS_CIPHER_AES_GCM_128_REC_SEQ_SIZE);
--		release_sock(sk);
- 		if (copy_to_user(optval,
- 				 crypto_info_aes_gcm_128,
- 				 sizeof(*crypto_info_aes_gcm_128)))
-@@ -429,13 +427,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
- 			rc = -EINVAL;
- 			goto out;
- 		}
--		lock_sock(sk);
- 		memcpy(crypto_info_aes_gcm_256->iv,
- 		       cctx->iv + TLS_CIPHER_AES_GCM_256_SALT_SIZE,
- 		       TLS_CIPHER_AES_GCM_256_IV_SIZE);
- 		memcpy(crypto_info_aes_gcm_256->rec_seq, cctx->rec_seq,
- 		       TLS_CIPHER_AES_GCM_256_REC_SEQ_SIZE);
--		release_sock(sk);
- 		if (copy_to_user(optval,
- 				 crypto_info_aes_gcm_256,
- 				 sizeof(*crypto_info_aes_gcm_256)))
-@@ -451,13 +447,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
- 			rc = -EINVAL;
- 			goto out;
- 		}
--		lock_sock(sk);
- 		memcpy(aes_ccm_128->iv,
- 		       cctx->iv + TLS_CIPHER_AES_CCM_128_SALT_SIZE,
- 		       TLS_CIPHER_AES_CCM_128_IV_SIZE);
- 		memcpy(aes_ccm_128->rec_seq, cctx->rec_seq,
- 		       TLS_CIPHER_AES_CCM_128_REC_SEQ_SIZE);
--		release_sock(sk);
- 		if (copy_to_user(optval, aes_ccm_128, sizeof(*aes_ccm_128)))
- 			rc = -EFAULT;
- 		break;
-@@ -472,13 +466,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
- 			rc = -EINVAL;
- 			goto out;
- 		}
--		lock_sock(sk);
- 		memcpy(chacha20_poly1305->iv,
- 		       cctx->iv + TLS_CIPHER_CHACHA20_POLY1305_SALT_SIZE,
- 		       TLS_CIPHER_CHACHA20_POLY1305_IV_SIZE);
- 		memcpy(chacha20_poly1305->rec_seq, cctx->rec_seq,
- 		       TLS_CIPHER_CHACHA20_POLY1305_REC_SEQ_SIZE);
--		release_sock(sk);
- 		if (copy_to_user(optval, chacha20_poly1305,
- 				sizeof(*chacha20_poly1305)))
- 			rc = -EFAULT;
-@@ -493,13 +485,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
- 			rc = -EINVAL;
- 			goto out;
- 		}
--		lock_sock(sk);
- 		memcpy(sm4_gcm_info->iv,
- 		       cctx->iv + TLS_CIPHER_SM4_GCM_SALT_SIZE,
- 		       TLS_CIPHER_SM4_GCM_IV_SIZE);
- 		memcpy(sm4_gcm_info->rec_seq, cctx->rec_seq,
- 		       TLS_CIPHER_SM4_GCM_REC_SEQ_SIZE);
--		release_sock(sk);
- 		if (copy_to_user(optval, sm4_gcm_info, sizeof(*sm4_gcm_info)))
- 			rc = -EFAULT;
- 		break;
-@@ -513,13 +503,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
- 			rc = -EINVAL;
- 			goto out;
- 		}
--		lock_sock(sk);
- 		memcpy(sm4_ccm_info->iv,
- 		       cctx->iv + TLS_CIPHER_SM4_CCM_SALT_SIZE,
- 		       TLS_CIPHER_SM4_CCM_IV_SIZE);
- 		memcpy(sm4_ccm_info->rec_seq, cctx->rec_seq,
- 		       TLS_CIPHER_SM4_CCM_REC_SEQ_SIZE);
--		release_sock(sk);
- 		if (copy_to_user(optval, sm4_ccm_info, sizeof(*sm4_ccm_info)))
- 			rc = -EFAULT;
- 		break;
-@@ -535,13 +523,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
- 			rc = -EINVAL;
- 			goto out;
- 		}
--		lock_sock(sk);
- 		memcpy(crypto_info_aria_gcm_128->iv,
- 		       cctx->iv + TLS_CIPHER_ARIA_GCM_128_SALT_SIZE,
- 		       TLS_CIPHER_ARIA_GCM_128_IV_SIZE);
- 		memcpy(crypto_info_aria_gcm_128->rec_seq, cctx->rec_seq,
- 		       TLS_CIPHER_ARIA_GCM_128_REC_SEQ_SIZE);
--		release_sock(sk);
- 		if (copy_to_user(optval,
- 				 crypto_info_aria_gcm_128,
- 				 sizeof(*crypto_info_aria_gcm_128)))
-@@ -559,13 +545,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
- 			rc = -EINVAL;
- 			goto out;
- 		}
--		lock_sock(sk);
- 		memcpy(crypto_info_aria_gcm_256->iv,
- 		       cctx->iv + TLS_CIPHER_ARIA_GCM_256_SALT_SIZE,
- 		       TLS_CIPHER_ARIA_GCM_256_IV_SIZE);
- 		memcpy(crypto_info_aria_gcm_256->rec_seq, cctx->rec_seq,
- 		       TLS_CIPHER_ARIA_GCM_256_REC_SEQ_SIZE);
--		release_sock(sk);
- 		if (copy_to_user(optval,
- 				 crypto_info_aria_gcm_256,
- 				 sizeof(*crypto_info_aria_gcm_256)))
-@@ -614,11 +598,9 @@ static int do_tls_getsockopt_no_pad(struct sock *sk, char __user *optval,
- 	if (len < sizeof(value))
- 		return -EINVAL;
- 
--	lock_sock(sk);
- 	value = -EINVAL;
- 	if (ctx->rx_conf == TLS_SW || ctx->rx_conf == TLS_HW)
- 		value = ctx->rx_no_pad;
--	release_sock(sk);
- 	if (value < 0)
- 		return value;
- 
-@@ -635,6 +617,8 @@ static int do_tls_getsockopt(struct sock *sk, int optname,
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 63680f999bf6d..9796a5fa6ceaa 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2827,7 +2827,8 @@ static void sk_enter_memory_pressure(struct sock *sk)
+ static void sk_leave_memory_pressure(struct sock *sk)
  {
- 	int rc = 0;
- 
-+	lock_sock(sk);
-+
- 	switch (optname) {
- 	case TLS_TX:
- 	case TLS_RX:
-@@ -651,6 +635,9 @@ static int do_tls_getsockopt(struct sock *sk, int optname,
- 		rc = -ENOPROTOOPT;
- 		break;
- 	}
-+
-+	release_sock(sk);
-+
- 	return rc;
- }
+ 	if (sk->sk_prot->leave_memory_pressure) {
+-		sk->sk_prot->leave_memory_pressure(sk);
++		INDIRECT_CALL_INET_1(sk->sk_prot->leave_memory_pressure,
++				     tcp_leave_memory_pressure, sk);
+ 	} else {
+ 		unsigned long *memory_pressure = sk->sk_prot->memory_pressure;
  
 -- 
 2.39.2
