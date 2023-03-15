@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07F34431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA25C433EF;
-	Wed, 15 Mar 2023 12:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D554431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0625BC4339C;
+	Wed, 15 Mar 2023 12:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883645;
-	bh=h6F3AO+gw8CEDw0Tz81sVuLvs2pUX9S03eJ7rnoNDWw=;
+	s=korg; t=1678883648;
+	bh=/4wXdushswwyYsHmuPXAyOOGaKB8u8himgerJvXeBgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AP7JchqMAu/fBzKxRKUoz/f4jVCmKez/mlI1aaDCeEpf2qrMOUm3FFHRy0zInKjI1
-	 lFOCXvndhz9Psqd2mAkvgdAfKE34L8Jm83GfgC8D3O+CovuSgSQU6im/MMAU/cJIHx
-	 fKh3VSmFupR9NV9zSNZX30Zd7VzeSFC28kfAybPE=
+	b=rXbOv6/bwS1Cy7DRl3QYo/TsyyXW08Xxg3fLAZmYt5RGLHLuqtyZT+yWzSbLt+yN8
+	 kk9w5i9umRTTpVUEHOGxnjQeXbQQGDjqkpkS1jjj0qjM/30rJ20bGNpbvcoJ7PKVOR
+	 7uX+Da2DtM3Lb+6wfAseP3/CPRK+r3kK4SDkBlAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changbin Du <changbin.du@huawei.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Hui Wang <hw.huiwang@huawei.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Yuiko Oshino <yuiko.oshino@microchip.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 076/143] perf stat: Fix counting when initial delay configured
-Date: Wed, 15 Mar 2023 13:12:42 +0100
-Message-Id: <20230315115742.854128278@linuxfoundation.org>
+Subject: [PATCH 6.1 077/143] net: lan78xx: fix accessing the LAN7800s internal phy specific registers from the MAC driver
+Date: Wed, 15 Mar 2023 13:12:43 +0100
+Message-Id: <20230315115742.883055860@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -42,176 +36,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Changbin Du <changbin.du@huawei.com>
+From: Yuiko Oshino <yuiko.oshino@microchip.com>
 
-[ Upstream commit 25f69c69bc3ca8c781a94473f28d443d745768e3 ]
+[ Upstream commit e57cf3639c323eeed05d3725fd82f91b349adca8 ]
 
-When creating counters with initial delay configured, the enable_on_exec
-field is not set. So we need to enable the counters later. The problem
-is, when a workload is specified the target__none() is true. So we also
-need to check stat_config.initial_delay.
+Move the LAN7800 internal phy (phy ID  0x0007c132) specific register
+accesses to the phy driver (microchip.c).
 
-In this change, we add a new field 'initial_delay' for struct target
-which could be shared by other subcommands. And define
-target__enable_on_exec() which returns whether enable_on_exec should be
-set on normal cases.
+Fix the error reported by Enguerrand de Ribaucourt in December 2022,
+"Some operations during the cable switch workaround modify the register
+LAN88XX_INT_MASK of the PHY. However, this register is specific to the
+LAN8835 PHY. For instance, if a DP8322I PHY is connected to the LAN7801,
+that register (0x19), corresponds to the LED and MAC address
+configuration, resulting in unapropriate behavior."
 
-Before this fix the event is not counted:
+I did not test with the DP8322I PHY, but I tested with an EVB-LAN7800
+with the internal PHY.
 
-  $ ./perf stat -e instructions -D 100 sleep 2
-  Events disabled
-  Events enabled
-
-   Performance counter stats for 'sleep 2':
-
-       <not counted>      instructions
-
-         1.901661124 seconds time elapsed
-
-         0.001602000 seconds user
-         0.000000000 seconds sys
-
-After fix it works:
-
-  $ ./perf stat -e instructions -D 100 sleep 2
-  Events disabled
-  Events enabled
-
-   Performance counter stats for 'sleep 2':
-
-             404,214      instructions
-
-         1.901743475 seconds time elapsed
-
-         0.001617000 seconds user
-         0.000000000 seconds sys
-
-Fixes: c587e77e100fa40e ("perf stat: Do not delay the workload with --delay")
-Signed-off-by: Changbin Du <changbin.du@huawei.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Hui Wang <hw.huiwang@huawei.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230302031146.2801588-2-changbin.du@huawei.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 14437e3fa284 ("lan78xx: workaround of forced 100 Full/Half duplex mode error")
+Signed-off-by: Yuiko Oshino <yuiko.oshino@microchip.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230301154307.30438-1-yuiko.oshino@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-stat.c | 15 +++++----------
- tools/perf/util/stat.c    |  6 +-----
- tools/perf/util/stat.h    |  1 -
- tools/perf/util/target.h  | 12 ++++++++++++
- 4 files changed, 18 insertions(+), 16 deletions(-)
+ drivers/net/phy/microchip.c | 32 ++++++++++++++++++++++++++++++++
+ drivers/net/usb/lan78xx.c   | 27 +--------------------------
+ 2 files changed, 33 insertions(+), 26 deletions(-)
 
-diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-index 978fdc60b4e84..f6427e3a47421 100644
---- a/tools/perf/builtin-stat.c
-+++ b/tools/perf/builtin-stat.c
-@@ -528,12 +528,7 @@ static int enable_counters(void)
- 			return err;
- 	}
- 
--	/*
--	 * We need to enable counters only if:
--	 * - we don't have tracee (attaching to task or cpu)
--	 * - we have initial delay configured
--	 */
--	if (!target__none(&target)) {
-+	if (!target__enable_on_exec(&target)) {
- 		if (!all_counters_use_bpf)
- 			evlist__enable(evsel_list);
- 	}
-@@ -906,7 +901,7 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
- 			return err;
- 	}
- 
--	if (stat_config.initial_delay) {
-+	if (target.initial_delay) {
- 		pr_info(EVLIST_DISABLED_MSG);
- 	} else {
- 		err = enable_counters();
-@@ -918,8 +913,8 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
- 	if (forks)
- 		evlist__start_workload(evsel_list);
- 
--	if (stat_config.initial_delay > 0) {
--		usleep(stat_config.initial_delay * USEC_PER_MSEC);
-+	if (target.initial_delay > 0) {
-+		usleep(target.initial_delay * USEC_PER_MSEC);
- 		err = enable_counters();
- 		if (err)
- 			return -1;
-@@ -1243,7 +1238,7 @@ static struct option stat_options[] = {
- 		     "aggregate counts per thread", AGGR_THREAD),
- 	OPT_SET_UINT(0, "per-node", &stat_config.aggr_mode,
- 		     "aggregate counts per numa node", AGGR_NODE),
--	OPT_INTEGER('D', "delay", &stat_config.initial_delay,
-+	OPT_INTEGER('D', "delay", &target.initial_delay,
- 		    "ms to wait before starting measurement after program start (-1: start with events disabled)"),
- 	OPT_CALLBACK_NOOPT(0, "metric-only", &stat_config.metric_only, NULL,
- 			"Only print computed metrics. No raw values", enable_metric_only),
-diff --git a/tools/perf/util/stat.c b/tools/perf/util/stat.c
-index 8ec8bb4a99129..b63b3a3129919 100644
---- a/tools/perf/util/stat.c
-+++ b/tools/perf/util/stat.c
-@@ -583,11 +583,7 @@ int create_perf_stat_counter(struct evsel *evsel,
- 	if (evsel__is_group_leader(evsel)) {
- 		attr->disabled = 1;
- 
--		/*
--		 * In case of initial_delay we enable tracee
--		 * events manually.
--		 */
--		if (target__none(target) && !config->initial_delay)
-+		if (target__enable_on_exec(target))
- 			attr->enable_on_exec = 1;
- 	}
- 
-diff --git a/tools/perf/util/stat.h b/tools/perf/util/stat.h
-index 35c940d7f29cd..05c5125d7f419 100644
---- a/tools/perf/util/stat.h
-+++ b/tools/perf/util/stat.h
-@@ -145,7 +145,6 @@ struct perf_stat_config {
- 	FILE			*output;
- 	unsigned int		 interval;
- 	unsigned int		 timeout;
--	int			 initial_delay;
- 	unsigned int		 unit_width;
- 	unsigned int		 metric_only_len;
- 	int			 times;
-diff --git a/tools/perf/util/target.h b/tools/perf/util/target.h
-index daec6cba500d4..880f1af7f6ad6 100644
---- a/tools/perf/util/target.h
-+++ b/tools/perf/util/target.h
-@@ -18,6 +18,7 @@ struct target {
- 	bool	     per_thread;
- 	bool	     use_bpf;
- 	bool	     hybrid;
-+	int	     initial_delay;
- 	const char   *attr_map;
- };
- 
-@@ -72,6 +73,17 @@ static inline bool target__none(struct target *target)
- 	return !target__has_task(target) && !target__has_cpu(target);
+diff --git a/drivers/net/phy/microchip.c b/drivers/net/phy/microchip.c
+index ccecee2524ce6..0b88635f4fbca 100644
+--- a/drivers/net/phy/microchip.c
++++ b/drivers/net/phy/microchip.c
+@@ -342,6 +342,37 @@ static int lan88xx_config_aneg(struct phy_device *phydev)
+ 	return genphy_config_aneg(phydev);
  }
  
-+static inline bool target__enable_on_exec(struct target *target)
++static void lan88xx_link_change_notify(struct phy_device *phydev)
 +{
-+	/*
-+	 * Normally enable_on_exec should be set if:
-+	 *  1) The tracee process is forked (not attaching to existed task or cpu).
-+	 *  2) And initial_delay is not configured.
-+	 * Otherwise, we enable tracee events manually.
++	int temp;
++
++	/* At forced 100 F/H mode, chip may fail to set mode correctly
++	 * when cable is switched between long(~50+m) and short one.
++	 * As workaround, set to 10 before setting to 100
++	 * at forced 100 F/H mode.
 +	 */
-+	return target__none(target) && !target->initial_delay;
++	if (!phydev->autoneg && phydev->speed == 100) {
++		/* disable phy interrupt */
++		temp = phy_read(phydev, LAN88XX_INT_MASK);
++		temp &= ~LAN88XX_INT_MASK_MDINTPIN_EN_;
++		phy_write(phydev, LAN88XX_INT_MASK, temp);
++
++		temp = phy_read(phydev, MII_BMCR);
++		temp &= ~(BMCR_SPEED100 | BMCR_SPEED1000);
++		phy_write(phydev, MII_BMCR, temp); /* set to 10 first */
++		temp |= BMCR_SPEED100;
++		phy_write(phydev, MII_BMCR, temp); /* set to 100 later */
++
++		/* clear pending interrupt generated while workaround */
++		temp = phy_read(phydev, LAN88XX_INT_STS);
++
++		/* enable phy interrupt back */
++		temp = phy_read(phydev, LAN88XX_INT_MASK);
++		temp |= LAN88XX_INT_MASK_MDINTPIN_EN_;
++		phy_write(phydev, LAN88XX_INT_MASK, temp);
++	}
 +}
 +
- static inline bool target__has_per_thread(struct target *target)
+ static struct phy_driver microchip_phy_driver[] = {
  {
- 	return target->system_wide && target->per_thread;
+ 	.phy_id		= 0x0007c132,
+@@ -359,6 +390,7 @@ static struct phy_driver microchip_phy_driver[] = {
+ 
+ 	.config_init	= lan88xx_config_init,
+ 	.config_aneg	= lan88xx_config_aneg,
++	.link_change_notify = lan88xx_link_change_notify,
+ 
+ 	.config_intr	= lan88xx_phy_config_intr,
+ 	.handle_interrupt = lan88xx_handle_interrupt,
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index f18ab8e220db7..068488890d57b 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -2115,33 +2115,8 @@ static void lan78xx_remove_mdio(struct lan78xx_net *dev)
+ static void lan78xx_link_status_change(struct net_device *net)
+ {
+ 	struct phy_device *phydev = net->phydev;
+-	int temp;
+-
+-	/* At forced 100 F/H mode, chip may fail to set mode correctly
+-	 * when cable is switched between long(~50+m) and short one.
+-	 * As workaround, set to 10 before setting to 100
+-	 * at forced 100 F/H mode.
+-	 */
+-	if (!phydev->autoneg && (phydev->speed == 100)) {
+-		/* disable phy interrupt */
+-		temp = phy_read(phydev, LAN88XX_INT_MASK);
+-		temp &= ~LAN88XX_INT_MASK_MDINTPIN_EN_;
+-		phy_write(phydev, LAN88XX_INT_MASK, temp);
+ 
+-		temp = phy_read(phydev, MII_BMCR);
+-		temp &= ~(BMCR_SPEED100 | BMCR_SPEED1000);
+-		phy_write(phydev, MII_BMCR, temp); /* set to 10 first */
+-		temp |= BMCR_SPEED100;
+-		phy_write(phydev, MII_BMCR, temp); /* set to 100 later */
+-
+-		/* clear pending interrupt generated while workaround */
+-		temp = phy_read(phydev, LAN88XX_INT_STS);
+-
+-		/* enable phy interrupt back */
+-		temp = phy_read(phydev, LAN88XX_INT_MASK);
+-		temp |= LAN88XX_INT_MASK_MDINTPIN_EN_;
+-		phy_write(phydev, LAN88XX_INT_MASK, temp);
+-	}
++	phy_print_status(phydev);
+ }
+ 
+ static int irq_map(struct irq_domain *d, unsigned int irq,
 -- 
 2.39.2
 
