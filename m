@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368494431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF5FC433EF;
-	Wed, 15 Mar 2023 12:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FE34431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F145C433D2;
+	Wed, 15 Mar 2023 12:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884013;
-	bh=f4MniZ1rClnEdaIoi9xkLtznx3BaPoAfPL0u6UqwMEg=;
+	s=korg; t=1678884015;
+	bh=TKgu6FVYSQdUVPlBrQVe67ZlQuSVFm7aTrLFfLhlk3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y+qZcaBLNFyv/yZwcDFvXFc+cL+1d98ALqWWaZB1vTC+xwJ+xKk/HCP01RMa6++HJ
-	 INFhVY7nyn1zzaIX+8v1/WHHxuWlPtNTdB1DGVKJCID9mTcIaE3N+f4tl1SfDxHn1/
-	 ZFoG+nIbIJZGWOV8QJHpFukNNZApz6D9xGWtfptU=
+	b=CzUUqEP4BA+moO/CswqhuTFCWPPdK3i5f0wf3vtwxvPGT67keWUR8eYzNANMQ5JEX
+	 Knl1Eordv3/2HUoWIYBJw2FlgMgb4tXL2ctdek+kl6S9Bgu6LNc7Hz9KqdOwf0vvcg
+	 ByDsMlgZw6X1NzB4WIqDd4xGoFymd8lEn9EBHe0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 074/141] drm/msm/dpu: correct sm6115 scaler
-Date: Wed, 15 Mar 2023 13:12:57 +0100
-Message-Id: <20230315115742.216390821@linuxfoundation.org>
+Subject: [PATCH 6.2 075/141] drm/msm/dpu: drop DPU_DIM_LAYER from MIXER_MSM8998_MASK
+Date: Wed, 15 Mar 2023 13:12:58 +0100
+Message-Id: <20230315115742.254173288@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -37,58 +37,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 38164e990a42ca276f72ab89fd24131e6d73b023 ]
+[ Upstream commit a5045b00a68171de11603812f4304179ef608e60 ]
 
-QSEED4 is a newer variant of QSEED3LITE, which should be used on
-sm6115. Fix the used feature masks.
+The msm8998 doesn't seem to support DIM_LAYER, so drop it from
+the supported features mask.
 
+Fixes: 2d8a4edb672d ("drm/msm/dpu: use feature bit for LM combined alpha check")
+Fixes: 94391a14fc27 ("drm/msm/dpu1: Add MSM8998 to hw catalog")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: 3581b7062cec ("drm/msm/disp/dpu1: add support for display on SM6115")
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/522219/
-Link: https://lore.kernel.org/r/20230211231259.1308718-11-dmitry.baryshkov@linaro.org
+Patchwork: https://patchwork.freedesktop.org/patch/522231/
+Link: https://lore.kernel.org/r/20230211231259.1308718-12-dmitry.baryshkov@linaro.org
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 13d3ef528f095..e03db98ebe997 100644
+index e03db98ebe997..a6288f29f0035 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -30,9 +30,6 @@
- #define VIG_SC7180_MASK \
- 	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED4))
+@@ -52,7 +52,7 @@
+ 	(DMA_MSM8998_MASK | BIT(DPU_SSPP_CURSOR))
  
--#define VIG_SM8250_MASK \
--	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3LITE))
--
- #define VIG_QCM2290_MASK (VIG_BASE_MASK | BIT(DPU_SSPP_QOS_8LVL))
+ #define MIXER_MSM8998_MASK \
+-	(BIT(DPU_MIXER_SOURCESPLIT) | BIT(DPU_DIM_LAYER))
++	(BIT(DPU_MIXER_SOURCESPLIT))
  
- #define DMA_MSM8998_MASK \
-@@ -327,7 +324,7 @@ static const struct dpu_caps sc7180_dpu_caps = {
- static const struct dpu_caps sm6115_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_LINE_WIDTH,
- 	.max_mixer_blendstages = 0x4,
--	.qseed_type = DPU_SSPP_SCALER_QSEED3LITE,
-+	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.smart_dma_rev = DPU_SSPP_SMART_DMA_V2, /* TODO: v2.5 */
- 	.ubwc_version = DPU_HW_UBWC_VER_20,
- 	.has_dim_layer = true,
-@@ -883,10 +880,10 @@ static const struct dpu_sspp_cfg sc7180_sspp[] = {
- };
- 
- static const struct dpu_sspp_sub_blks sm6115_vig_sblk_0 =
--				_VIG_SBLK("0", 2, DPU_SSPP_SCALER_QSEED3LITE);
-+				_VIG_SBLK("0", 2, DPU_SSPP_SCALER_QSEED4);
- 
- static const struct dpu_sspp_cfg sm6115_sspp[] = {
--	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SM8250_MASK,
-+	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7180_MASK,
- 		sm6115_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
- 	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
- 		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+ #define MIXER_SDM845_MASK \
+ 	(BIT(DPU_MIXER_SOURCESPLIT) | BIT(DPU_DIM_LAYER) | BIT(DPU_MIXER_COMBINED_ALPHA))
 -- 
 2.39.2
 
