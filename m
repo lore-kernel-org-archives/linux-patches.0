@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3384431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E0FC433D2;
-	Wed, 15 Mar 2023 12:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D480F4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25918C433EF;
+	Wed, 15 Mar 2023 12:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883021;
-	bh=EefuSqRtmZpxdmB1RNwWLIkujAZAwJAmKY8ZOc4W6Jo=;
+	s=korg; t=1678883024;
+	bh=iE1hu8LYo5Kxa1XI9bQUal7zeq1gv1DZRuk4uhSrB18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A+7V4/4fo49ttDQSSLffTZUTqzJ7+q26aWTCEvtxAwG//Xz/e7juiwQ9UDXrNBU3e
-	 Dz+JXeEDnVuRlwlrxXyBplWfFL3A9ZszMGIXnAjEv7gp2iCfA29xPOYZDQb5+41Vdx
-	 29zyedV+bWdChM4mjl8z3LvsQDRKQcE81pU8XzFs=
+	b=yUdidSAqpkIQqaDG97XGCIGJ9DcIv6Gxx9+u2w5H92D/c/HfDZa8VWKENzOXWB3Va
+	 hPSLx9ME7o/L/EKEyDw8cIZgzqFdXTwnSotbog6yX13JF3HA8IEIQauejnxaEdbmWI
+	 xqsz93zW5hQclPbrpWmfH2rmyn4a2CtGXBVy5Z5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	"Qais Yousef (Google)" <qyousef@layalina.io>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>
-Subject: [PATCH 5.10 090/104] sched/fair: Fixes for capacity inversion detection
-Date: Wed, 15 Mar 2023 13:13:01 +0100
-Message-Id: <20230315115735.708360308@linuxfoundation.org>
+	Ritesh Harjani <riteshh@linux.ibm.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>
+Subject: [PATCH 5.10 091/104] ext4: refactor ext4_free_blocks() to pull out ext4_mb_clear_bb()
+Date: Wed, 15 Mar 2023 13:13:02 +0100
+Message-Id: <20230315115735.748183404@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -36,65 +36,235 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qyousef@layalina.io>
+From: Ritesh Harjani <riteshh@linux.ibm.com>
 
-commit da07d2f9c153e457e845d4dcfdd13568d71d18a4 upstream.
+commit 8ac3939db99f99667b8eb670cf4baf292896e72d upstream.
 
-Traversing the Perf Domains requires rcu_read_lock() to be held and is
-conditional on sched_energy_enabled(). Ensure right protections applied.
+ext4_free_blocks() function became too long and confusing, this patch
+just pulls out the ext4_mb_clear_bb() function logic from it
+which clears the block bitmap and frees it.
 
-Also skip capacity inversion detection for our own pd; which was an
-error.
+No functionality change in this patch
 
-Fixes: 44c7b80bffc3 ("sched/fair: Detect capacity inversion")
-Reported-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20230112122708.330667-3-qyousef@layalina.io
-(cherry picked from commit da07d2f9c153e457e845d4dcfdd13568d71d18a4)
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
+Signed-off-by: Ritesh Harjani <riteshh@linux.ibm.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/22c30fbb26ba409cf8aa5f0c7912970272c459e8.1644992610.git.riteshh@linux.ibm.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/fair.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/ext4/mballoc.c |  180 ++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 102 insertions(+), 78 deletions(-)
 
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -8363,16 +8363,23 @@ static void update_cpu_capacity(struct s
- 	 *   * Thermal pressure will impact all cpus in this perf domain
- 	 *     equally.
- 	 */
--	if (static_branch_unlikely(&sched_asym_cpucapacity)) {
-+	if (sched_energy_enabled()) {
- 		unsigned long inv_cap = capacity_orig - thermal_load_avg(rq);
--		struct perf_domain *pd = rcu_dereference(rq->rd->pd);
-+		struct perf_domain *pd;
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -5303,7 +5303,8 @@ static void ext4_free_blocks_simple(stru
+ }
  
-+		rcu_read_lock();
+ /**
+- * ext4_free_blocks() -- Free given blocks and update quota
++ * ext4_mb_clear_bb() -- helper function for freeing blocks.
++ *			Used by ext4_free_blocks()
+  * @handle:		handle for this transaction
+  * @inode:		inode
+  * @bh:			optional buffer of the block to be freed
+@@ -5311,9 +5312,9 @@ static void ext4_free_blocks_simple(stru
+  * @count:		number of blocks to be freed
+  * @flags:		flags used by ext4_free_blocks
+  */
+-void ext4_free_blocks(handle_t *handle, struct inode *inode,
+-		      struct buffer_head *bh, ext4_fsblk_t block,
+-		      unsigned long count, int flags)
++static void ext4_mb_clear_bb(handle_t *handle, struct inode *inode,
++			       ext4_fsblk_t block, unsigned long count,
++			       int flags)
+ {
+ 	struct buffer_head *bitmap_bh = NULL;
+ 	struct super_block *sb = inode->i_sb;
+@@ -5330,80 +5331,6 @@ void ext4_free_blocks(handle_t *handle,
+ 
+ 	sbi = EXT4_SB(sb);
+ 
+-	if (sbi->s_mount_state & EXT4_FC_REPLAY) {
+-		ext4_free_blocks_simple(inode, block, count);
+-		return;
+-	}
+-
+-	might_sleep();
+-	if (bh) {
+-		if (block)
+-			BUG_ON(block != bh->b_blocknr);
+-		else
+-			block = bh->b_blocknr;
+-	}
+-
+-	if (!(flags & EXT4_FREE_BLOCKS_VALIDATED) &&
+-	    !ext4_inode_block_valid(inode, block, count)) {
+-		ext4_error(sb, "Freeing blocks not in datazone - "
+-			   "block = %llu, count = %lu", block, count);
+-		goto error_return;
+-	}
+-
+-	ext4_debug("freeing block %llu\n", block);
+-	trace_ext4_free_blocks(inode, block, count, flags);
+-
+-	if (bh && (flags & EXT4_FREE_BLOCKS_FORGET)) {
+-		BUG_ON(count > 1);
+-
+-		ext4_forget(handle, flags & EXT4_FREE_BLOCKS_METADATA,
+-			    inode, bh, block);
+-	}
+-
+-	/*
+-	 * If the extent to be freed does not begin on a cluster
+-	 * boundary, we need to deal with partial clusters at the
+-	 * beginning and end of the extent.  Normally we will free
+-	 * blocks at the beginning or the end unless we are explicitly
+-	 * requested to avoid doing so.
+-	 */
+-	overflow = EXT4_PBLK_COFF(sbi, block);
+-	if (overflow) {
+-		if (flags & EXT4_FREE_BLOCKS_NOFREE_FIRST_CLUSTER) {
+-			overflow = sbi->s_cluster_ratio - overflow;
+-			block += overflow;
+-			if (count > overflow)
+-				count -= overflow;
+-			else
+-				return;
+-		} else {
+-			block -= overflow;
+-			count += overflow;
+-		}
+-	}
+-	overflow = EXT4_LBLK_COFF(sbi, count);
+-	if (overflow) {
+-		if (flags & EXT4_FREE_BLOCKS_NOFREE_LAST_CLUSTER) {
+-			if (count > overflow)
+-				count -= overflow;
+-			else
+-				return;
+-		} else
+-			count += sbi->s_cluster_ratio - overflow;
+-	}
+-
+-	if (!bh && (flags & EXT4_FREE_BLOCKS_FORGET)) {
+-		int i;
+-		int is_metadata = flags & EXT4_FREE_BLOCKS_METADATA;
+-
+-		for (i = 0; i < count; i++) {
+-			cond_resched();
+-			if (is_metadata)
+-				bh = sb_find_get_block(inode->i_sb, block + i);
+-			ext4_forget(handle, is_metadata, inode, bh, block + i);
+-		}
+-	}
+-
+ do_more:
+ 	overflow = 0;
+ 	ext4_get_group_no_and_offset(sb, block, &block_group, &bit);
+@@ -5570,6 +5497,103 @@ error_return:
+ 	return;
+ }
+ 
++/**
++ * ext4_free_blocks() -- Free given blocks and update quota
++ * @handle:		handle for this transaction
++ * @inode:		inode
++ * @bh:			optional buffer of the block to be freed
++ * @block:		starting physical block to be freed
++ * @count:		number of blocks to be freed
++ * @flags:		flags used by ext4_free_blocks
++ */
++void ext4_free_blocks(handle_t *handle, struct inode *inode,
++		      struct buffer_head *bh, ext4_fsblk_t block,
++		      unsigned long count, int flags)
++{
++	struct super_block *sb = inode->i_sb;
++	unsigned int overflow;
++	struct ext4_sb_info *sbi;
 +
-+		pd = rcu_dereference(rq->rd->pd);
- 		rq->cpu_capacity_inverted = 0;
- 
- 		for (; pd; pd = pd->next) {
- 			struct cpumask *pd_span = perf_domain_span(pd);
- 			unsigned long pd_cap_orig, pd_cap;
- 
-+			/* We can't be inverted against our own pd */
-+			if (cpumask_test_cpu(cpu_of(rq), pd_span))
-+				continue;
++	sbi = EXT4_SB(sb);
 +
- 			cpu = cpumask_any(pd_span);
- 			pd_cap_orig = arch_scale_cpu_capacity(cpu);
- 
-@@ -8397,6 +8404,8 @@ static void update_cpu_capacity(struct s
- 				break;
- 			}
- 		}
++	if (sbi->s_mount_state & EXT4_FC_REPLAY) {
++		ext4_free_blocks_simple(inode, block, count);
++		return;
++	}
 +
-+		rcu_read_unlock();
- 	}
- 
- 	trace_sched_cpu_capacity_tp(rq);
++	might_sleep();
++	if (bh) {
++		if (block)
++			BUG_ON(block != bh->b_blocknr);
++		else
++			block = bh->b_blocknr;
++	}
++
++	if (!(flags & EXT4_FREE_BLOCKS_VALIDATED) &&
++	    !ext4_inode_block_valid(inode, block, count)) {
++		ext4_error(sb, "Freeing blocks not in datazone - "
++			   "block = %llu, count = %lu", block, count);
++		return;
++	}
++
++	ext4_debug("freeing block %llu\n", block);
++	trace_ext4_free_blocks(inode, block, count, flags);
++
++	if (bh && (flags & EXT4_FREE_BLOCKS_FORGET)) {
++		BUG_ON(count > 1);
++
++		ext4_forget(handle, flags & EXT4_FREE_BLOCKS_METADATA,
++			    inode, bh, block);
++	}
++
++	/*
++	 * If the extent to be freed does not begin on a cluster
++	 * boundary, we need to deal with partial clusters at the
++	 * beginning and end of the extent.  Normally we will free
++	 * blocks at the beginning or the end unless we are explicitly
++	 * requested to avoid doing so.
++	 */
++	overflow = EXT4_PBLK_COFF(sbi, block);
++	if (overflow) {
++		if (flags & EXT4_FREE_BLOCKS_NOFREE_FIRST_CLUSTER) {
++			overflow = sbi->s_cluster_ratio - overflow;
++			block += overflow;
++			if (count > overflow)
++				count -= overflow;
++			else
++				return;
++		} else {
++			block -= overflow;
++			count += overflow;
++		}
++	}
++	overflow = EXT4_LBLK_COFF(sbi, count);
++	if (overflow) {
++		if (flags & EXT4_FREE_BLOCKS_NOFREE_LAST_CLUSTER) {
++			if (count > overflow)
++				count -= overflow;
++			else
++				return;
++		} else
++			count += sbi->s_cluster_ratio - overflow;
++	}
++
++	if (!bh && (flags & EXT4_FREE_BLOCKS_FORGET)) {
++		int i;
++		int is_metadata = flags & EXT4_FREE_BLOCKS_METADATA;
++
++		for (i = 0; i < count; i++) {
++			cond_resched();
++			if (is_metadata)
++				bh = sb_find_get_block(inode->i_sb, block + i);
++			ext4_forget(handle, is_metadata, inode, bh, block + i);
++		}
++	}
++
++	ext4_mb_clear_bb(handle, inode, block, count, flags);
++	return;
++}
++
+ /**
+  * ext4_group_add_blocks() -- Add given blocks to an existing group
+  * @handle:			handle to this transaction
 
 
