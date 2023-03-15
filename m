@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426384431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD80C4339B;
-	Wed, 15 Mar 2023 12:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5A74431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6477AC433EF;
+	Wed, 15 Mar 2023 12:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883926;
-	bh=1yo2KcCxfaEyofz354vcdGSJanherrkelxMUZOFqUiw=;
+	s=korg; t=1678883928;
+	bh=73VDkdhvp8DptUWQKx6X9gGhgq9auJRAd/La6CdxzTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kp8Df6ywoLgtQESZoggCO+JU9AGEZ7VEmGt0Cg4ZgVC0493+pi9iBVIJknWkuEDpO
-	 +3P6xD+XI1+iCZRbDkeMenj/dtleOnmsGnY8TOHQpeYkb7sLQU/g5aP9DsL+TpkRnN
-	 UIIY/adWjhfnPgkn4R/x++XHrTcu08Gj08OcJ1G4=
+	b=dijeFQw0VS1hWQwWOl6Dg9s3sFS5NkG16NK040pz6Tyg6o94v+2X1oyK4kBG4PH4L
+	 yBnrvokjhYv7/dYE6xMc+PlJNVkrUh7JweYVL/bCr0rgPhSCoiiKrjkrZaROFn7NYi
+	 4mIt3uytXGqShcAc0syW1UwUwC9y6KsJTanRwbSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Liao Chang <liaochang1@huawei.com>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 041/141] block: fix scan partition for exclusively open device again
-Date: Wed, 15 Mar 2023 13:12:24 +0100
-Message-Id: <20230315115741.214538630@linuxfoundation.org>
+Subject: [PATCH 6.2 042/141] riscv: Add header include guards to insn.h
+Date: Wed, 15 Mar 2023 13:12:25 +0100
+Message-Id: <20230315115741.242680528@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -37,101 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Liao Chang <liaochang1@huawei.com>
 
-[ Upstream commit e5cfefa97bccf956ea0bb6464c1f6c84fd7a8d9f ]
+[ Upstream commit 8ac6e619d9d51b3eb5bae817db8aa94e780a0db4 ]
 
-As explained in commit 36369f46e917 ("block: Do not reread partition table
-on exclusively open device"), reread partition on the device that is
-exclusively opened by someone else is problematic.
+Add header include guards to insn.h to prevent repeating declaration of
+any identifiers in insn.h.
 
-This patch will make sure partition scan will only be proceed if current
-thread open the device exclusively, or the device is not opened
-exclusively, and in the later case, other scanners and exclusive openers
-will be blocked temporarily until partition scan is done.
-
-Fixes: 10c70d95c0f2 ("block: remove the bd_openers checks in blk_drop_partitions")
-Cc: <stable@vger.kernel.org>
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230217022200.3092987-3-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: edde5584c7ab ("riscv: Add SW single-step support for KDB")
+Signed-off-by: Liao Chang <liaochang1@huawei.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Fixes: c9c1af3f186a ("RISC-V: rename parse_asm.h to insn.h")
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230129094242.282620-1-liaochang1@huawei.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c | 30 ++++++++++++++++++++++++++----
- block/ioctl.c |  2 +-
- 2 files changed, 27 insertions(+), 5 deletions(-)
+ arch/riscv/include/asm/parse_asm.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index fe47071f79e88..6cdaeb7169004 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -359,6 +359,7 @@ EXPORT_SYMBOL_GPL(disk_uevent);
- int disk_scan_partitions(struct gendisk *disk, fmode_t mode)
- {
- 	struct block_device *bdev;
-+	int ret = 0;
+diff --git a/arch/riscv/include/asm/parse_asm.h b/arch/riscv/include/asm/parse_asm.h
+index f36368de839f5..3cd00332d70f5 100644
+--- a/arch/riscv/include/asm/parse_asm.h
++++ b/arch/riscv/include/asm/parse_asm.h
+@@ -3,6 +3,9 @@
+  * Copyright (C) 2020 SiFive
+  */
  
- 	if (disk->flags & (GENHD_FL_NO_PART | GENHD_FL_HIDDEN))
- 		return -EINVAL;
-@@ -368,11 +369,27 @@ int disk_scan_partitions(struct gendisk *disk, fmode_t mode)
- 		return -EBUSY;
- 
- 	set_bit(GD_NEED_PART_SCAN, &disk->state);
--	bdev = blkdev_get_by_dev(disk_devt(disk), mode, NULL);
-+	/*
-+	 * If the device is opened exclusively by current thread already, it's
-+	 * safe to scan partitons, otherwise, use bd_prepare_to_claim() to
-+	 * synchronize with other exclusive openers and other partition
-+	 * scanners.
-+	 */
-+	if (!(mode & FMODE_EXCL)) {
-+		ret = bd_prepare_to_claim(disk->part0, disk_scan_partitions);
-+		if (ret)
-+			return ret;
-+	}
++#ifndef _ASM_RISCV_INSN_H
++#define _ASM_RISCV_INSN_H
 +
-+	bdev = blkdev_get_by_dev(disk_devt(disk), mode & ~FMODE_EXCL, NULL);
- 	if (IS_ERR(bdev))
--		return PTR_ERR(bdev);
--	blkdev_put(bdev, mode);
--	return 0;
-+		ret =  PTR_ERR(bdev);
-+	else
-+		blkdev_put(bdev, mode);
-+
-+	if (!(mode & FMODE_EXCL))
-+		bd_abort_claiming(disk->part0, disk_scan_partitions);
-+	return ret;
- }
+ #include <linux/bits.h>
  
- /**
-@@ -494,6 +511,11 @@ int __must_check device_add_disk(struct device *parent, struct gendisk *disk,
- 		if (ret)
- 			goto out_unregister_bdi;
- 
-+		/* Make sure the first partition scan will be proceed */
-+		if (get_capacity(disk) && !(disk->flags & GENHD_FL_NO_PART) &&
-+		    !test_bit(GD_SUPPRESS_PART_SCAN, &disk->state))
-+			set_bit(GD_NEED_PART_SCAN, &disk->state);
+ /* The bit field of immediate value in I-type instruction */
+@@ -217,3 +220,5 @@ static inline bool is_ ## INSN_NAME ## _insn(long insn) \
+ 	(RVC_X(x_, RVC_B_IMM_5_OPOFF, RVC_B_IMM_5_MASK) << RVC_B_IMM_5_OFF) | \
+ 	(RVC_X(x_, RVC_B_IMM_7_6_OPOFF, RVC_B_IMM_7_6_MASK) << RVC_B_IMM_7_6_OFF) | \
+ 	(RVC_IMM_SIGN(x_) << RVC_B_IMM_SIGN_OFF); })
 +
- 		bdev_add(disk->part0, ddev->devt);
- 		if (get_capacity(disk))
- 			disk_scan_partitions(disk, FMODE_READ);
-diff --git a/block/ioctl.c b/block/ioctl.c
-index 6dd49d877584a..9c5f637ff153f 100644
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -528,7 +528,7 @@ static int blkdev_common_ioctl(struct block_device *bdev, fmode_t mode,
- 			return -EACCES;
- 		if (bdev_is_partition(bdev))
- 			return -EINVAL;
--		return disk_scan_partitions(bdev->bd_disk, mode & ~FMODE_EXCL);
-+		return disk_scan_partitions(bdev->bd_disk, mode);
- 	case BLKTRACESTART:
- 	case BLKTRACESTOP:
- 	case BLKTRACETEARDOWN:
++#endif /* _ASM_RISCV_INSN_H */
 -- 
 2.39.2
 
