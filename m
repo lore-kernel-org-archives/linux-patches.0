@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621EE4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D975BC433EF;
-	Wed, 15 Mar 2023 12:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28674431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DA3C433EF;
+	Wed, 15 Mar 2023 12:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883976;
-	bh=5fpAfLrEEXHcZU7KMHkBgmY48ywrvOIvcSiPj1Ma9JU=;
+	s=korg; t=1678883978;
+	bh=N8GvDc8kXEwY0TJiZARrEWIq4/JtWXZVfuGvJkLHK+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mWz9D3dcSo3quRwvA2L9SueCLHI6x6jGCyuVzD4KuMsyVk7O16SrkIJP0+4nxfMro
-	 VV6dUP1wYP3dRqUGuQKsAnaKgfarMD4ueiDLmTWadcRnDS7A3aZX3xbw8HeYzZ+2a3
-	 UsY43vda0qbzN9FM80G7II8Tnxv1ybDsCh5Kgbdw=
+	b=P5kIaPABSJP/J/UDz72R4qDIYTMJghwqz5wTEm5/Uh3d1NQvH5IsEHIJCLBJNjlqO
+	 niTGm+ll8Cj2n/Nj9Y27P0HjRLUvbiOo9dTIAlUxC+K5LpeL4fC65DXoZamZcu3Kif
+	 dDhts0Y2XFWdz7FQMPhfV0Yz4gzHyK2H80q/8C7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 059/141] selftests: nft_nat: ensuring the listening side is up before starting the client
-Date: Wed, 15 Mar 2023 13:12:42 +0100
-Message-Id: <20230315115741.761641247@linuxfoundation.org>
+Subject: [PATCH 6.2 060/141] netfilter: nft_last: copy content when cloning expression
+Date: Wed, 15 Mar 2023 13:12:43 +0100
+Message-Id: <20230315115741.790202941@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -35,55 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 2067e7a00aa604b94de31d64f29b8893b1696f26 ]
+[ Upstream commit 860e874290fb3be08e966c9c8ffc510c5b0f2bd8 ]
 
-The test_local_dnat_portonly() function initiates the client-side as
-soon as it sets the listening side to the background. This could lead to
-a race condition where the server may not be ready to listen. To ensure
-that the server-side is up and running before initiating the
-client-side, a delay is introduced to the test_local_dnat_portonly()
-function.
+If the ruleset contains last timestamps, restore them accordingly.
+Otherwise, listing after restoration shows never used items.
 
-Before the fix:
-  # ./nft_nat.sh
-  PASS: netns routing/connectivity: ns0-rthlYrBU can reach ns1-rthlYrBU and ns2-rthlYrBU
-  PASS: ping to ns1-rthlYrBU was ip NATted to ns2-rthlYrBU
-  PASS: ping to ns1-rthlYrBU OK after ip nat output chain flush
-  PASS: ipv6 ping to ns1-rthlYrBU was ip6 NATted to ns2-rthlYrBU
-  2023/02/27 04:11:03 socat[6055] E connect(5, AF=2 10.0.1.99:2000, 16): Connection refused
-  ERROR: inet port rewrite
-
-After the fix:
-  # ./nft_nat.sh
-  PASS: netns routing/connectivity: ns0-9sPJV6JJ can reach ns1-9sPJV6JJ and ns2-9sPJV6JJ
-  PASS: ping to ns1-9sPJV6JJ was ip NATted to ns2-9sPJV6JJ
-  PASS: ping to ns1-9sPJV6JJ OK after ip nat output chain flush
-  PASS: ipv6 ping to ns1-9sPJV6JJ was ip6 NATted to ns2-9sPJV6JJ
-  PASS: inet port rewrite without l3 address
-
-Fixes: 282e5f8fe907 ("netfilter: nat: really support inet nat without l3 address")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Fixes: 33a24de37e81 ("netfilter: nft_last: move stateful fields out of expression data")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/netfilter/nft_nat.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nft_last.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/netfilter/nft_nat.sh b/tools/testing/selftests/netfilter/nft_nat.sh
-index 924ecb3f1f737..dd40d9f6f2599 100755
---- a/tools/testing/selftests/netfilter/nft_nat.sh
-+++ b/tools/testing/selftests/netfilter/nft_nat.sh
-@@ -404,6 +404,8 @@ EOF
- 	echo SERVER-$family | ip netns exec "$ns1" timeout 5 socat -u STDIN TCP-LISTEN:2000 &
- 	sc_s=$!
+diff --git a/net/netfilter/nft_last.c b/net/netfilter/nft_last.c
+index 7f2bda6641bd8..8e6d7eaf9dc8b 100644
+--- a/net/netfilter/nft_last.c
++++ b/net/netfilter/nft_last.c
+@@ -105,11 +105,15 @@ static void nft_last_destroy(const struct nft_ctx *ctx,
+ static int nft_last_clone(struct nft_expr *dst, const struct nft_expr *src)
+ {
+ 	struct nft_last_priv *priv_dst = nft_expr_priv(dst);
++	struct nft_last_priv *priv_src = nft_expr_priv(src);
  
-+	sleep 1
+ 	priv_dst->last = kzalloc(sizeof(*priv_dst->last), GFP_ATOMIC);
+ 	if (!priv_dst->last)
+ 		return -ENOMEM;
+ 
++	priv_dst->last->set = priv_src->last->set;
++	priv_dst->last->jiffies = priv_src->last->jiffies;
 +
- 	result=$(ip netns exec "$ns0" timeout 1 socat TCP:$daddr:2000 STDOUT)
+ 	return 0;
+ }
  
- 	if [ "$result" = "SERVER-inet" ];then
 -- 
 2.39.2
 
