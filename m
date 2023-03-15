@@ -1,35 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CD94431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1DAC433D2;
-	Wed, 15 Mar 2023 12:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906D64431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DE3C433D2;
+	Wed, 15 Mar 2023 12:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882861;
-	bh=otWQfkOjRcKYmh1VqrfmvrHW/ax92X+qCi+inqN6B9o=;
+	s=korg; t=1678882864;
+	bh=jVEiBh1cumllNMhx16BB4Cbs4L0KoBrTLkdI4yOcI0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U34i/BjhfE+Yzktf/id0d0RSafzTXU9cEQrpjFtUg+3o0hAgze+Z696Qpn5tavaBB
-	 r7/eyK7Ag8W8OABQykPvy+g1EQ6zDXxBtZSLt8PqR4JZlBzCIPFUnOxZzQoKgeBwvB
-	 PBHPagxZiK+ThHy/MlTokrAjcPis+rwo46cIKxB0=
+	b=uLltyhcr5f5FOQ4nxRw0ck8xVPQxbdC98vhHHOzz4A3KIIUGELtQHBE1m68EdntKU
+	 xh+lnG1fvxtPFx6IyjZ44ye5nFUH+6KsjSq0wjafFcSOdASVAW7P1wLdjFJYObQD3N
+	 XXek/irwT48DZAos/27uNbaQ1YuVckOAc5IndoNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Liska <mliska@suse.cz>,
-	Ben Skeggs <bskeggs@redhat.com>,
-	Karol Herbst <kherbst@redhat.com>,
-	Lyude Paul <lyude@redhat.com>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	dri-devel@lists.freedesktop.org,
-	nouveau@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/104] drm/nouveau/kms/nv50: fix nv50_wndw_new_ prototype
-Date: Wed, 15 Mar 2023 13:12:00 +0100
-Message-Id: <20230315115733.261181999@linuxfoundation.org>
+Subject: [PATCH 5.10 030/104] drm/msm: Fix potential invalid ptr free
+Date: Wed, 15 Mar 2023 13:12:01 +0100
+Message-Id: <20230315115733.292831926@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -43,62 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 3638a820c5c3b52f327cebb174fd4274bee08aa7 ]
+[ Upstream commit 8a86f213f4426f19511a16d886871805b35c3acf ]
 
-gcc-13 warns about mismatching types for enums. That revealed switched
-arguments of nv50_wndw_new_():
-  drivers/gpu/drm/nouveau/dispnv50/wndw.c:696:1: error: conflicting types for 'nv50_wndw_new_' due to enum/integer mismatch; have 'int(const struct nv50_wndw_func *, struct drm_device *, enum drm_plane_type,  const char *, int,  const u32 *, u32,  enum nv50_disp_interlock_type,  u32,  struct nv50_wndw **)'
-  drivers/gpu/drm/nouveau/dispnv50/wndw.h:36:5: note: previous declaration of 'nv50_wndw_new_' with type 'int(const struct nv50_wndw_func *, struct drm_device *, enum drm_plane_type,  const char *, int,  const u32 *, enum nv50_disp_interlock_type,  u32,  u32,  struct nv50_wndw **)'
+The error path cleanup expects that chain and syncobj are either NULL or
+valid pointers.  But post_deps was not allocated with __GFP_ZERO.
 
-It can be barely visible, but the declaration says about the parameters
-in the middle:
-  enum nv50_disp_interlock_type,
-  u32 interlock_data,
-  u32 heads,
-
-While the definition states differently:
-  u32 heads,
-  enum nv50_disp_interlock_type interlock_type,
-  u32 interlock_data,
-
-Unify/fix the declaration to match the definition.
-
-Fixes: 53e0a3e70de6 ("drm/nouveau/kms/nv50-: simplify tracking of channel interlocks")
-Cc: Martin Liska <mliska@suse.cz>
-Cc: Ben Skeggs <bskeggs@redhat.com>
-Cc: Karol Herbst <kherbst@redhat.com>
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org
-Cc: nouveau@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221031114229.10289-1-jirislaby@kernel.org
+Fixes: ab723b7a992a ("drm/msm: Add syncobj support.")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Patchwork: https://patchwork.freedesktop.org/patch/523051/
+Link: https://lore.kernel.org/r/20230215235048.1166484-1-robdclark@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/dispnv50/wndw.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_gem_submit.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/dispnv50/wndw.h b/drivers/gpu/drm/nouveau/dispnv50/wndw.h
-index 8bed195ae098a..77bf124319fbd 100644
---- a/drivers/gpu/drm/nouveau/dispnv50/wndw.h
-+++ b/drivers/gpu/drm/nouveau/dispnv50/wndw.h
-@@ -38,8 +38,9 @@ struct nv50_wndw {
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index aa5c60a7132d8..c4e5037512b9d 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -494,8 +494,8 @@ static struct msm_submit_post_dep *msm_parse_post_deps(struct drm_device *dev,
+ 	int ret = 0;
+ 	uint32_t i, j;
  
- int nv50_wndw_new_(const struct nv50_wndw_func *, struct drm_device *,
- 		   enum drm_plane_type, const char *name, int index,
--		   const u32 *format, enum nv50_disp_interlock_type,
--		   u32 interlock_data, u32 heads, struct nv50_wndw **);
-+		   const u32 *format, u32 heads,
-+		   enum nv50_disp_interlock_type, u32 interlock_data,
-+		   struct nv50_wndw **);
- void nv50_wndw_flush_set(struct nv50_wndw *, u32 *interlock,
- 			 struct nv50_wndw_atom *);
- void nv50_wndw_flush_clr(struct nv50_wndw *, u32 *interlock, bool flush,
+-	post_deps = kmalloc_array(nr_syncobjs, sizeof(*post_deps),
+-	                          GFP_KERNEL | __GFP_NOWARN | __GFP_NORETRY);
++	post_deps = kcalloc(nr_syncobjs, sizeof(*post_deps),
++			    GFP_KERNEL | __GFP_NOWARN | __GFP_NORETRY);
+ 	if (!post_deps)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -510,7 +510,6 @@ static struct msm_submit_post_dep *msm_parse_post_deps(struct drm_device *dev,
+ 		}
+ 
+ 		post_deps[i].point = syncobj_desc.point;
+-		post_deps[i].chain = NULL;
+ 
+ 		if (syncobj_desc.flags) {
+ 			ret = -EINVAL;
 -- 
 2.39.2
 
