@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D554431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0625BC4339C;
-	Wed, 15 Mar 2023 12:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE164431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A85C433EF;
+	Wed, 15 Mar 2023 12:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883648;
-	bh=/4wXdushswwyYsHmuPXAyOOGaKB8u8himgerJvXeBgo=;
+	s=korg; t=1678883651;
+	bh=B5f9pzFk1lgO1q76ZOhNXhYImMXbJUNjwv+Qc6KYeKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rXbOv6/bwS1Cy7DRl3QYo/TsyyXW08Xxg3fLAZmYt5RGLHLuqtyZT+yWzSbLt+yN8
-	 kk9w5i9umRTTpVUEHOGxnjQeXbQQGDjqkpkS1jjj0qjM/30rJ20bGNpbvcoJ7PKVOR
-	 7uX+Da2DtM3Lb+6wfAseP3/CPRK+r3kK4SDkBlAQ=
+	b=QsXA/PGGF4M9wNwzpRMjLVLu8NoiXDccTTmEfHcq5R1HoIvhYeJV4dpK3tLA4dwg7
+	 FYfTHVAh8hNJvx05RMNeWYFNIULFgCB0hDGeyk0VOXREX2y1CjiVZg3DTauOiUXR7g
+	 SujbOB4SaKhj6Qv8Ia63Ha9OMlqCoLIHzb+xXIFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuiko Oshino <yuiko.oshino@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marcin Witkowski <marcin.witkowski@intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/143] net: lan78xx: fix accessing the LAN7800s internal phy specific registers from the MAC driver
-Date: Wed, 15 Mar 2023 13:12:43 +0100
-Message-Id: <20230315115742.883055860@linuxfoundation.org>
+Subject: [PATCH 6.1 048/143] spi: intel: Check number of chip selects after reading the descriptor
+Date: Wed, 15 Mar 2023 13:12:14 +0100
+Message-Id: <20230315115741.981607434@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -36,123 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuiko Oshino <yuiko.oshino@microchip.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit e57cf3639c323eeed05d3725fd82f91b349adca8 ]
+[ Upstream commit 574fbb95cd9d88bdc9c9c4c64223a38a61d7de9a ]
 
-Move the LAN7800 internal phy (phy ID  0x0007c132) specific register
-accesses to the phy driver (microchip.c).
+The flash decriptor contains the number of flash components that we use
+to figure out how many flash chips there are connected. Therefore we
+need to read it first before deciding how many chip selects the
+controller has.
 
-Fix the error reported by Enguerrand de Ribaucourt in December 2022,
-"Some operations during the cable switch workaround modify the register
-LAN88XX_INT_MASK of the PHY. However, this register is specific to the
-LAN8835 PHY. For instance, if a DP8322I PHY is connected to the LAN7801,
-that register (0x19), corresponds to the LED and MAC address
-configuration, resulting in unapropriate behavior."
-
-I did not test with the DP8322I PHY, but I tested with an EVB-LAN7800
-with the internal PHY.
-
-Fixes: 14437e3fa284 ("lan78xx: workaround of forced 100 Full/Half duplex mode error")
-Signed-off-by: Yuiko Oshino <yuiko.oshino@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230301154307.30438-1-yuiko.oshino@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Marcin Witkowski <marcin.witkowski@intel.com>
+Fixes: 3f03c618bebb ("spi: intel: Add support for second flash chip")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://lore.kernel.org/r/20230215110040.42186-1-mika.westerberg@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/microchip.c | 32 ++++++++++++++++++++++++++++++++
- drivers/net/usb/lan78xx.c   | 27 +--------------------------
- 2 files changed, 33 insertions(+), 26 deletions(-)
+ drivers/spi/spi-intel.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/phy/microchip.c b/drivers/net/phy/microchip.c
-index ccecee2524ce6..0b88635f4fbca 100644
---- a/drivers/net/phy/microchip.c
-+++ b/drivers/net/phy/microchip.c
-@@ -342,6 +342,37 @@ static int lan88xx_config_aneg(struct phy_device *phydev)
- 	return genphy_config_aneg(phydev);
- }
+diff --git a/drivers/spi/spi-intel.c b/drivers/spi/spi-intel.c
+index 3ac73691fbb54..54fc226e1cdf6 100644
+--- a/drivers/spi/spi-intel.c
++++ b/drivers/spi/spi-intel.c
+@@ -1366,14 +1366,14 @@ static int intel_spi_populate_chip(struct intel_spi *ispi)
+ 	if (!spi_new_device(ispi->master, &chip))
+ 		return -ENODEV;
  
-+static void lan88xx_link_change_notify(struct phy_device *phydev)
-+{
-+	int temp;
-+
-+	/* At forced 100 F/H mode, chip may fail to set mode correctly
-+	 * when cable is switched between long(~50+m) and short one.
-+	 * As workaround, set to 10 before setting to 100
-+	 * at forced 100 F/H mode.
-+	 */
-+	if (!phydev->autoneg && phydev->speed == 100) {
-+		/* disable phy interrupt */
-+		temp = phy_read(phydev, LAN88XX_INT_MASK);
-+		temp &= ~LAN88XX_INT_MASK_MDINTPIN_EN_;
-+		phy_write(phydev, LAN88XX_INT_MASK, temp);
-+
-+		temp = phy_read(phydev, MII_BMCR);
-+		temp &= ~(BMCR_SPEED100 | BMCR_SPEED1000);
-+		phy_write(phydev, MII_BMCR, temp); /* set to 10 first */
-+		temp |= BMCR_SPEED100;
-+		phy_write(phydev, MII_BMCR, temp); /* set to 100 later */
-+
-+		/* clear pending interrupt generated while workaround */
-+		temp = phy_read(phydev, LAN88XX_INT_STS);
-+
-+		/* enable phy interrupt back */
-+		temp = phy_read(phydev, LAN88XX_INT_MASK);
-+		temp |= LAN88XX_INT_MASK_MDINTPIN_EN_;
-+		phy_write(phydev, LAN88XX_INT_MASK, temp);
-+	}
-+}
-+
- static struct phy_driver microchip_phy_driver[] = {
- {
- 	.phy_id		= 0x0007c132,
-@@ -359,6 +390,7 @@ static struct phy_driver microchip_phy_driver[] = {
- 
- 	.config_init	= lan88xx_config_init,
- 	.config_aneg	= lan88xx_config_aneg,
-+	.link_change_notify = lan88xx_link_change_notify,
- 
- 	.config_intr	= lan88xx_phy_config_intr,
- 	.handle_interrupt = lan88xx_handle_interrupt,
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index f18ab8e220db7..068488890d57b 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -2115,33 +2115,8 @@ static void lan78xx_remove_mdio(struct lan78xx_net *dev)
- static void lan78xx_link_status_change(struct net_device *net)
- {
- 	struct phy_device *phydev = net->phydev;
--	int temp;
+-	/* Add the second chip if present */
+-	if (ispi->master->num_chipselect < 2)
+-		return 0;
 -
--	/* At forced 100 F/H mode, chip may fail to set mode correctly
--	 * when cable is switched between long(~50+m) and short one.
--	 * As workaround, set to 10 before setting to 100
--	 * at forced 100 F/H mode.
--	 */
--	if (!phydev->autoneg && (phydev->speed == 100)) {
--		/* disable phy interrupt */
--		temp = phy_read(phydev, LAN88XX_INT_MASK);
--		temp &= ~LAN88XX_INT_MASK_MDINTPIN_EN_;
--		phy_write(phydev, LAN88XX_INT_MASK, temp);
+ 	ret = intel_spi_read_desc(ispi);
+ 	if (ret)
+ 		return ret;
  
--		temp = phy_read(phydev, MII_BMCR);
--		temp &= ~(BMCR_SPEED100 | BMCR_SPEED1000);
--		phy_write(phydev, MII_BMCR, temp); /* set to 10 first */
--		temp |= BMCR_SPEED100;
--		phy_write(phydev, MII_BMCR, temp); /* set to 100 later */
--
--		/* clear pending interrupt generated while workaround */
--		temp = phy_read(phydev, LAN88XX_INT_STS);
--
--		/* enable phy interrupt back */
--		temp = phy_read(phydev, LAN88XX_INT_MASK);
--		temp |= LAN88XX_INT_MASK_MDINTPIN_EN_;
--		phy_write(phydev, LAN88XX_INT_MASK, temp);
--	}
-+	phy_print_status(phydev);
- }
++	/* Add the second chip if present */
++	if (ispi->master->num_chipselect < 2)
++		return 0;
++
+ 	chip.platform_data = NULL;
+ 	chip.chip_select = 1;
  
- static int irq_map(struct irq_domain *d, unsigned int irq,
 -- 
 2.39.2
 
