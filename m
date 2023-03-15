@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594844431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF723C433EF;
-	Wed, 15 Mar 2023 12:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5224431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74132C4339B;
+	Wed, 15 Mar 2023 12:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882662;
-	bh=t+Fer+gp/7xRdpsGbObZHt8+dGZ4jl1LLVoM7K52w/I=;
+	s=korg; t=1678882664;
+	bh=LrHvDUEyQ4Y6Mmnru21kjjexq3B4FWirhy5VAWsbcAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=khuzf3s9qwhA01sugwQInrRHue8W37B3p9dOYYz+OhrircOtuTn6R7TW3YvBh94kU
-	 upDNElCRIPLWKnIlWkKlZQrayZgB3voqDOH7PMTACZbO+EEgJXHR2KlzYjBjJ/wF9p
-	 VwTM0j5CHiuN87cH3K8np02yFE5kzsei0bOD62II=
+	b=MN/g2evUk7VhBwUgeXybXIpQQw07Jo3bKmi7YvRsNk4fOVRjq5XzTZj79Spyp4Odt
+	 EGfVnuABeGrHTyA5HKJ61CDxCUdL+kF9Op2JR67reTPXx8I9VEJRVzTa4wQcItDhZu
+	 ySffi1smCfLEKNt80W0jmRsdUSg7Jgle23c2M1V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Sukumar Ghorai <sukumar.ghorai@intel.com>,
+	Ashok Raj <ashok.raj@intel.com>,
+	Jacob Pan <jacob.jun.pan@linux.intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 23/68] irqdomain: Fix domain registration race
-Date: Wed, 15 Mar 2023 13:12:17 +0100
-Message-Id: <20230315115727.003327727@linuxfoundation.org>
+Subject: [PATCH 5.4 24/68] iommu/vt-d: Fix PASID directory pointer coherency
+Date: Wed, 15 Mar 2023 13:12:18 +0100
+Message-Id: <20230315115727.039525836@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -35,132 +39,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Jacob Pan <jacob.jun.pan@linux.intel.com>
 
-[ Upstream commit 8932c32c3053accd50702b36e944ac2016cd103c ]
+[ Upstream commit 194b3348bdbb7db65375c72f3f774aee4cc6614e ]
 
-Hierarchical domains created using irq_domain_create_hierarchy() are
-currently added to the domain list before having been fully initialised.
+On platforms that do not support IOMMU Extended capability bit 0
+Page-walk Coherency, CPU caches are not snooped when IOMMU is accessing
+any translation structures. IOMMU access goes only directly to
+memory. Intel IOMMU code was missing a flush for the PASID table
+directory that resulted in the unrecoverable fault as shown below.
 
-This specifically means that a racing allocation request might fail to
-allocate irq data for the inner domains of a hierarchy in case the
-parent domain pointer has not yet been set up.
+This patch adds clflush calls whenever allocating and updating
+a PASID table directory to ensure cache coherency.
 
-Note that this is not really any issue for irqchip drivers that are
-registered early (e.g. via IRQCHIP_DECLARE() or IRQCHIP_ACPI_DECLARE())
-but could potentially cause trouble with drivers that are registered
-later (e.g. modular drivers using IRQCHIP_PLATFORM_DRIVER_BEGIN(),
-gpiochip drivers, etc.).
+On the reverse direction, there's no need to clflush the PASID directory
+pointer when we deactivate a context entry in that IOMMU hardware will
+not see the old PASID directory pointer after we clear the context entry.
+PASID directory entries are also never freed once allocated.
 
-Fixes: afb7da83b9f4 ("irqdomain: Introduce helper function irq_domain_add_hierarchy()")
-Cc: stable@vger.kernel.org      # 3.19
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ johan: add commit message ]
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230213104302.17307-8-johan+linaro@kernel.org
+ DMAR: DRHD: handling fault status reg 3
+ DMAR: [DMA Read NO_PASID] Request device [00:0d.2] fault addr 0x1026a4000
+       [fault reason 0x51] SM: Present bit in Directory Entry is clear
+ DMAR: Dump dmar1 table entries for IOVA 0x1026a4000
+ DMAR: scalable mode root entry: hi 0x0000000102448001, low 0x0000000101b3e001
+ DMAR: context entry: hi 0x0000000000000000, low 0x0000000101b4d401
+ DMAR: pasid dir entry: 0x0000000101b4e001
+ DMAR: pasid table entry[0]: 0x0000000000000109
+ DMAR: pasid table entry[1]: 0x0000000000000001
+ DMAR: pasid table entry[2]: 0x0000000000000000
+ DMAR: pasid table entry[3]: 0x0000000000000000
+ DMAR: pasid table entry[4]: 0x0000000000000000
+ DMAR: pasid table entry[5]: 0x0000000000000000
+ DMAR: pasid table entry[6]: 0x0000000000000000
+ DMAR: pasid table entry[7]: 0x0000000000000000
+ DMAR: PTE not present at level 4
+
+Cc: <stable@vger.kernel.org>
+Fixes: 0bbeb01a4faf ("iommu/vt-d: Manage scalalble mode PASID tables")
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reported-by: Sukumar Ghorai <sukumar.ghorai@intel.com>
+Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
+Link: https://lore.kernel.org/r/20230209212843.1788125-1-jacob.jun.pan@linux.intel.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/irqdomain.c | 62 +++++++++++++++++++++++++++++-------------
- 1 file changed, 43 insertions(+), 19 deletions(-)
+ drivers/iommu/intel-pasid.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-index cfb5a96f023f7..d40ae18fe6617 100644
---- a/kernel/irq/irqdomain.c
-+++ b/kernel/irq/irqdomain.c
-@@ -114,23 +114,12 @@ void irq_domain_free_fwnode(struct fwnode_handle *fwnode)
+diff --git a/drivers/iommu/intel-pasid.c b/drivers/iommu/intel-pasid.c
+index e7cb0b8a73327..58f060006ba31 100644
+--- a/drivers/iommu/intel-pasid.c
++++ b/drivers/iommu/intel-pasid.c
+@@ -166,6 +166,9 @@ int intel_pasid_alloc_table(struct device *dev)
+ attach_out:
+ 	device_attach_pasid_table(info, pasid_table);
+ 
++	if (!ecap_coherent(info->iommu->ecap))
++		clflush_cache_range(pasid_table->table, size);
++
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(irq_domain_free_fwnode);
  
--/**
-- * __irq_domain_add() - Allocate a new irq_domain data structure
-- * @fwnode: firmware node for the interrupt controller
-- * @size: Size of linear map; 0 for radix mapping only
-- * @hwirq_max: Maximum number of interrupts supported by controller
-- * @direct_max: Maximum value of direct maps; Use ~0 for no limit; 0 for no
-- *              direct mapping
-- * @ops: domain callbacks
-- * @host_data: Controller private data pointer
-- *
-- * Allocates and initializes an irq_domain structure.
-- * Returns pointer to IRQ domain, or NULL on failure.
-- */
--struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int size,
--				    irq_hw_number_t hwirq_max, int direct_max,
--				    const struct irq_domain_ops *ops,
--				    void *host_data)
-+static struct irq_domain *__irq_domain_create(struct fwnode_handle *fwnode,
-+					      unsigned int size,
-+					      irq_hw_number_t hwirq_max,
-+					      int direct_max,
-+					      const struct irq_domain_ops *ops,
-+					      void *host_data)
- {
- 	struct device_node *of_node = to_of_node(fwnode);
- 	struct irqchip_fwid *fwid;
-@@ -222,12 +211,44 @@ struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int s
- 	domain->revmap_direct_max_irq = direct_max;
- 	irq_domain_check_hierarchy(domain);
+@@ -250,6 +253,10 @@ struct pasid_entry *intel_pasid_get_entry(struct device *dev, int pasid)
  
-+	return domain;
-+}
-+
-+static void __irq_domain_publish(struct irq_domain *domain)
-+{
- 	mutex_lock(&irq_domain_mutex);
- 	debugfs_add_domain_dir(domain);
- 	list_add(&domain->link, &irq_domain_list);
- 	mutex_unlock(&irq_domain_mutex);
- 
- 	pr_debug("Added domain %s\n", domain->name);
-+}
-+
-+/**
-+ * __irq_domain_add() - Allocate a new irq_domain data structure
-+ * @fwnode: firmware node for the interrupt controller
-+ * @size: Size of linear map; 0 for radix mapping only
-+ * @hwirq_max: Maximum number of interrupts supported by controller
-+ * @direct_max: Maximum value of direct maps; Use ~0 for no limit; 0 for no
-+ *              direct mapping
-+ * @ops: domain callbacks
-+ * @host_data: Controller private data pointer
-+ *
-+ * Allocates and initializes an irq_domain structure.
-+ * Returns pointer to IRQ domain, or NULL on failure.
-+ */
-+struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int size,
-+				    irq_hw_number_t hwirq_max, int direct_max,
-+				    const struct irq_domain_ops *ops,
-+				    void *host_data)
-+{
-+	struct irq_domain *domain;
-+
-+	domain = __irq_domain_create(fwnode, size, hwirq_max, direct_max,
-+				     ops, host_data);
-+	if (domain)
-+		__irq_domain_publish(domain);
-+
- 	return domain;
- }
- EXPORT_SYMBOL_GPL(__irq_domain_add);
-@@ -1068,12 +1089,15 @@ struct irq_domain *irq_domain_create_hierarchy(struct irq_domain *parent,
- 	struct irq_domain *domain;
- 
- 	if (size)
--		domain = irq_domain_create_linear(fwnode, size, ops, host_data);
-+		domain = __irq_domain_create(fwnode, size, size, 0, ops, host_data);
- 	else
--		domain = irq_domain_create_tree(fwnode, ops, host_data);
-+		domain = __irq_domain_create(fwnode, 0, ~0, 0, ops, host_data);
-+
- 	if (domain) {
- 		domain->parent = parent;
- 		domain->flags |= flags;
-+
-+		__irq_domain_publish(domain);
+ 		WRITE_ONCE(dir[dir_index].val,
+ 			   (u64)virt_to_phys(entries) | PASID_PTE_PRESENT);
++		if (!ecap_coherent(info->iommu->ecap)) {
++			clflush_cache_range(entries, VTD_PAGE_SIZE);
++			clflush_cache_range(&dir[dir_index].val, sizeof(*dir));
++		}
  	}
+ 	spin_unlock(&pasid_lock);
  
- 	return domain;
 -- 
 2.39.2
 
