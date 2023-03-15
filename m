@@ -1,254 +1,641 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0014431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:15:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F9DC433D2;
-	Wed, 15 Mar 2023 12:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C502B4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:16:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A68AC433EF;
+	Wed, 15 Mar 2023 12:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882559;
-	bh=isJiHw7P+624z2y7JAVlWit9O/egsbTFuB99+7S24Ek=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Mq2P+yo13g42fAPxqnyeBZVoXqQi3WCvfB/hh00Vh9O/HpJ9FwipRgASE6oXtPdug
-	 gxySPetjHaYXmjjSQMtssKjAvddtRhCJIMxBQelby5vuDDFlLFVLnas+/8DAZugRO5
-	 B5lJITFbc43fi0dpPcpgWoFN5EsCJ+NWeQEp15Vg=
+	s=korg; t=1678882561;
+	bh=7mRHmHpzPHD1OYvkj1rJg+t5RzmzG9DqzHDzBVx4mxg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=RcVX+QCWFYYiE17UoTXVcivPmsheId3RiwxmUNcUbsVFvRs/3TTlMJr3HyFeHe5LN
+	 9k/4s4PaMpIrpjKktfi6HiaZhGtmraknIKuwMfc14RValTKycIsbZCc9sr8OcjxgJq
+	 LLEoPdqcohi1qrxRln47NbybQ7KYFp7elwrd4xV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 4.19 00/39] 4.19.278-rc1 review
-Date: Wed, 15 Mar 2023 13:12:14 +0100
-Message-Id: <20230315115721.234756306@linuxfoundation.org>
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 17/39] ARM: dts: exynos: Add all CPUs in cooling maps
+Date: Wed, 15 Mar 2023 13:12:31 +0100
+Message-Id: <20230315115721.866116592@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230315115721.234756306@linuxfoundation.org>
+References: <20230315115721.234756306@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.278-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.19.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.19.278-rc1
-X-KernelTest-Deadline: 2023-03-17T11:57+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 4.19.278 release.
-There are 39 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
-Anything received after that time might be too late.
+[ Upstream commit 670734f5581023a2e695e82ea662e4d603fd3e8a ]
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.278-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-and the diffstat can be found below.
+Each CPU can (and does) participate in cooling down the system but the
+DT only captures a handful of them, normally CPU0, in the cooling maps.
+Things work by chance currently as under normal circumstances its the
+first CPU of each cluster which is used by the operating systems to
+probe the cooling devices. But as soon as this CPU ordering changes and
+any other CPU is used to bring up the cooling device, we will start
+seeing failures.
 
-thanks,
+Also the DT is rather incomplete when we list only one CPU in the
+cooling maps, as the hardware doesn't have any such limitations.
 
-greg k-h
+Update cooling maps to include all devices affected by individual trip
+points.
 
--------------
-Pseudo-Shortlog of commits:
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Stable-dep-of: 33e2c595e2e4 ("ARM: dts: exynos: correct TMU phandle in Exynos5250")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm/boot/dts/exynos3250-artik5.dtsi      |   6 +-
+ arch/arm/boot/dts/exynos3250-monk.dts         |   6 +-
+ arch/arm/boot/dts/exynos3250-rinato.dts       |   6 +-
+ arch/arm/boot/dts/exynos4210-trats.dts        |   4 +-
+ arch/arm/boot/dts/exynos4210.dtsi             |   2 +-
+ .../boot/dts/exynos4412-itop-scp-core.dtsi    |   8 +-
+ arch/arm/boot/dts/exynos4412-midas.dtsi       |   8 +-
+ .../boot/dts/exynos4412-odroid-common.dtsi    |   8 +-
+ arch/arm/boot/dts/exynos4412-odroidu3.dts     |  18 ++-
+ arch/arm/boot/dts/exynos4412.dtsi             |   6 +-
+ arch/arm/boot/dts/exynos5250.dtsi             |   7 +-
+ arch/arm/boot/dts/exynos5422-odroidhc1.dts    | 106 +++++++++++-------
+ .../boot/dts/exynos5422-odroidxu3-common.dtsi | 106 +++++++++++-------
+ 13 files changed, 178 insertions(+), 113 deletions(-)
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.19.278-rc1
+diff --git a/arch/arm/boot/dts/exynos3250-artik5.dtsi b/arch/arm/boot/dts/exynos3250-artik5.dtsi
+index 6e30db644c83a..86aa0956b2d3b 100644
+--- a/arch/arm/boot/dts/exynos3250-artik5.dtsi
++++ b/arch/arm/boot/dts/exynos3250-artik5.dtsi
+@@ -36,11 +36,13 @@
+ 			cooling-maps {
+ 				map0 {
+ 					/* Corresponds to 500MHz */
+-					cooling-device = <&cpu0 5 5>;
++					cooling-device = <&cpu0 5 5>,
++							 <&cpu1 5 5>;
+ 				};
+ 				map1 {
+ 					/* Corresponds to 200MHz */
+-					cooling-device = <&cpu0 8 8>;
++					cooling-device = <&cpu0 8 8>,
++							 <&cpu1 8 8>;
+ 				};
+ 			};
+ 		};
+diff --git a/arch/arm/boot/dts/exynos3250-monk.dts b/arch/arm/boot/dts/exynos3250-monk.dts
+index d343dc13ceecd..c9b6fb65d6861 100644
+--- a/arch/arm/boot/dts/exynos3250-monk.dts
++++ b/arch/arm/boot/dts/exynos3250-monk.dts
+@@ -121,11 +121,13 @@
+ 			cooling-maps {
+ 				map0 {
+ 					/* Correspond to 500MHz at freq_table */
+-					cooling-device = <&cpu0 5 5>;
++					cooling-device = <&cpu0 5 5>,
++							 <&cpu1 5 5>;
+ 				};
+ 				map1 {
+ 					/* Correspond to 200MHz at freq_table */
+-					cooling-device = <&cpu0 8 8>;
++					cooling-device = <&cpu0 8 8>,
++							 <&cpu1 8 8>;
+ 				};
+ 			};
+ 		};
+diff --git a/arch/arm/boot/dts/exynos3250-rinato.dts b/arch/arm/boot/dts/exynos3250-rinato.dts
+index e398604b2ce0f..4eb5f79b1c3b2 100644
+--- a/arch/arm/boot/dts/exynos3250-rinato.dts
++++ b/arch/arm/boot/dts/exynos3250-rinato.dts
+@@ -116,11 +116,13 @@
+ 			cooling-maps {
+ 				map0 {
+ 					/* Corresponds to 500MHz */
+-					cooling-device = <&cpu0 5 5>;
++					cooling-device = <&cpu0 5 5>,
++							 <&cpu1 5 5>;
+ 				};
+ 				map1 {
+ 					/* Corresponds to 200MHz */
+-					cooling-device = <&cpu0 8 8>;
++					cooling-device = <&cpu0 8 8>,
++							 <&cpu1 8 8>;
+ 				};
+ 			};
+ 		};
+diff --git a/arch/arm/boot/dts/exynos4210-trats.dts b/arch/arm/boot/dts/exynos4210-trats.dts
+index 6f1d76cb79515..230969556e1ce 100644
+--- a/arch/arm/boot/dts/exynos4210-trats.dts
++++ b/arch/arm/boot/dts/exynos4210-trats.dts
+@@ -138,11 +138,11 @@
+ 			cooling-maps {
+ 				map0 {
+ 				     /* Corresponds to 800MHz at freq_table */
+-				     cooling-device = <&cpu0 2 2>;
++				     cooling-device = <&cpu0 2 2>, <&cpu1 2 2>;
+ 				};
+ 				map1 {
+ 				     /* Corresponds to 200MHz at freq_table */
+-				     cooling-device = <&cpu0 4 4>;
++				     cooling-device = <&cpu0 4 4>, <&cpu1 4 4>;
+ 			       };
+ 		       };
+ 		};
+diff --git a/arch/arm/boot/dts/exynos4210.dtsi b/arch/arm/boot/dts/exynos4210.dtsi
+index 24bea84034af2..b7b6edbc0499e 100644
+--- a/arch/arm/boot/dts/exynos4210.dtsi
++++ b/arch/arm/boot/dts/exynos4210.dtsi
+@@ -51,7 +51,7 @@
+ 			#cooling-cells = <2>; /* min followed by max */
+ 		};
+ 
+-		cpu@901 {
++		cpu1: cpu@901 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a9";
+ 			reg = <0x901>;
+diff --git a/arch/arm/boot/dts/exynos4412-itop-scp-core.dtsi b/arch/arm/boot/dts/exynos4412-itop-scp-core.dtsi
+index ab7affab7f1c0..4ca05599ee2ac 100644
+--- a/arch/arm/boot/dts/exynos4412-itop-scp-core.dtsi
++++ b/arch/arm/boot/dts/exynos4412-itop-scp-core.dtsi
+@@ -45,11 +45,15 @@
+ 			cooling-maps {
+ 				map0 {
+ 				     /* Corresponds to 800MHz at freq_table */
+-				     cooling-device = <&cpu0 7 7>;
++				     cooling-device = <&cpu0 7 7>, <&cpu1 7 7>,
++						      <&cpu2 7 7>, <&cpu3 7 7>;
+ 				};
+ 				map1 {
+ 				     /* Corresponds to 200MHz at freq_table */
+-				     cooling-device = <&cpu0 13 13>;
++				     cooling-device = <&cpu0 13 13>,
++						      <&cpu1 13 13>,
++						      <&cpu2 13 13>,
++						      <&cpu3 13 13>;
+ 			       };
+ 		       };
+ 		};
+diff --git a/arch/arm/boot/dts/exynos4412-midas.dtsi b/arch/arm/boot/dts/exynos4412-midas.dtsi
+index 93c8918e599bd..047240a32097a 100644
+--- a/arch/arm/boot/dts/exynos4412-midas.dtsi
++++ b/arch/arm/boot/dts/exynos4412-midas.dtsi
+@@ -267,11 +267,15 @@
+ 			cooling-maps {
+ 				map0 {
+ 				     /* Corresponds to 800MHz at freq_table */
+-				     cooling-device = <&cpu0 7 7>;
++				     cooling-device = <&cpu0 7 7>, <&cpu1 7 7>,
++						      <&cpu2 7 7>, <&cpu3 7 7>;
+ 				};
+ 				map1 {
+ 				     /* Corresponds to 200MHz at freq_table */
+-				     cooling-device = <&cpu0 13 13>;
++				     cooling-device = <&cpu0 13 13>,
++						      <&cpu1 13 13>,
++						      <&cpu2 13 13>,
++						      <&cpu3 13 13>;
+ 			       };
+ 		       };
+ 		};
+diff --git a/arch/arm/boot/dts/exynos4412-odroid-common.dtsi b/arch/arm/boot/dts/exynos4412-odroid-common.dtsi
+index dbca8eeefae13..e269818668bb1 100644
+--- a/arch/arm/boot/dts/exynos4412-odroid-common.dtsi
++++ b/arch/arm/boot/dts/exynos4412-odroid-common.dtsi
+@@ -72,11 +72,15 @@
+ 			cooling-maps {
+ 				cooling_map0: map0 {
+ 				     /* Corresponds to 800MHz at freq_table */
+-				     cooling-device = <&cpu0 7 7>;
++				     cooling-device = <&cpu0 7 7>, <&cpu1 7 7>,
++						      <&cpu2 7 7>, <&cpu3 7 7>;
+ 				};
+ 				cooling_map1: map1 {
+ 				     /* Corresponds to 200MHz at freq_table */
+-				     cooling-device = <&cpu0 13 13>;
++				     cooling-device = <&cpu0 13 13>,
++						      <&cpu1 13 13>,
++						      <&cpu2 13 13>,
++						      <&cpu3 13 13>;
+ 			       };
+ 		       };
+ 		};
+diff --git a/arch/arm/boot/dts/exynos4412-odroidu3.dts b/arch/arm/boot/dts/exynos4412-odroidu3.dts
+index 459919b65df81..2bdf899df4366 100644
+--- a/arch/arm/boot/dts/exynos4412-odroidu3.dts
++++ b/arch/arm/boot/dts/exynos4412-odroidu3.dts
+@@ -45,24 +45,22 @@
+ 			cooling-maps {
+ 				map0 {
+ 				     trip = <&cpu_alert1>;
+-				     cooling-device = <&cpu0 9 9>;
++				     cooling-device = <&cpu0 9 9>, <&cpu1 9 9>,
++						      <&cpu2 9 9>, <&cpu3 9 9>,
++						      <&fan0 1 2>;
+ 				};
+ 				map1 {
+ 				     trip = <&cpu_alert2>;
+-				     cooling-device = <&cpu0 15 15>;
++				     cooling-device = <&cpu0 15 15>,
++						      <&cpu1 15 15>,
++						      <&cpu2 15 15>,
++						      <&cpu3 15 15>,
++						      <&fan0 2 3>;
+ 				};
+ 				map2 {
+ 				     trip = <&cpu_alert0>;
+ 				     cooling-device = <&fan0 0 1>;
+ 				};
+-				map3 {
+-				     trip = <&cpu_alert1>;
+-				     cooling-device = <&fan0 1 2>;
+-				};
+-				map4 {
+-				     trip = <&cpu_alert2>;
+-				     cooling-device = <&fan0 2 3>;
+-				};
+ 			};
+ 		};
+ 	};
+diff --git a/arch/arm/boot/dts/exynos4412.dtsi b/arch/arm/boot/dts/exynos4412.dtsi
+index 51f72f0327e52..cd04bb4aea5f8 100644
+--- a/arch/arm/boot/dts/exynos4412.dtsi
++++ b/arch/arm/boot/dts/exynos4412.dtsi
+@@ -45,7 +45,7 @@
+ 			#cooling-cells = <2>; /* min followed by max */
+ 		};
+ 
+-		cpu@a01 {
++		cpu1: cpu@a01 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a9";
+ 			reg = <0xA01>;
+@@ -55,7 +55,7 @@
+ 			#cooling-cells = <2>; /* min followed by max */
+ 		};
+ 
+-		cpu@a02 {
++		cpu2: cpu@a02 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a9";
+ 			reg = <0xA02>;
+@@ -65,7 +65,7 @@
+ 			#cooling-cells = <2>; /* min followed by max */
+ 		};
+ 
+-		cpu@a03 {
++		cpu3: cpu@a03 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a9";
+ 			reg = <0xA03>;
+diff --git a/arch/arm/boot/dts/exynos5250.dtsi b/arch/arm/boot/dts/exynos5250.dtsi
+index b85527faa6ea4..e6b1a8a9b832c 100644
+--- a/arch/arm/boot/dts/exynos5250.dtsi
++++ b/arch/arm/boot/dts/exynos5250.dtsi
+@@ -59,7 +59,7 @@
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			#cooling-cells = <2>; /* min followed by max */
+ 		};
+-		cpu@1 {
++		cpu1: cpu@1 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a15";
+ 			reg = <1>;
+@@ -1066,11 +1066,12 @@
+ 			cooling-maps {
+ 				map0 {
+ 				     /* Corresponds to 800MHz at freq_table */
+-				     cooling-device = <&cpu0 9 9>;
++				     cooling-device = <&cpu0 9 9>, <&cpu1 9 9>;
+ 				};
+ 				map1 {
+ 				     /* Corresponds to 200MHz at freq_table */
+-				     cooling-device = <&cpu0 15 15>;
++				     cooling-device = <&cpu0 15 15>,
++						      <&cpu1 15 15>;
+ 			       };
+ 		       };
+ 		};
+diff --git a/arch/arm/boot/dts/exynos5422-odroidhc1.dts b/arch/arm/boot/dts/exynos5422-odroidhc1.dts
+index abc6fb7d27259..fce5a4579693e 100644
+--- a/arch/arm/boot/dts/exynos5422-odroidhc1.dts
++++ b/arch/arm/boot/dts/exynos5422-odroidhc1.dts
+@@ -56,24 +56,30 @@
+ 				 */
+ 				map0 {
+ 					trip = <&cpu0_alert0>;
+-					cooling-device = <&cpu0 0 2>;
+-				};
+-				map1 {
+-					trip = <&cpu0_alert0>;
+-					cooling-device = <&cpu4 0 2>;
++					cooling-device = <&cpu0 0 2>,
++							 <&cpu1 0 2>,
++							 <&cpu2 0 2>,
++							 <&cpu3 0 2>,
++							 <&cpu4 0 2>,
++							 <&cpu5 0 2>,
++							 <&cpu6 0 2>,
++							 <&cpu7 0 2>;
+ 				};
+ 				/*
+ 				 * When reaching cpu0_alert1, reduce CPU
+ 				 * further, down to 600 MHz (12 steps for big,
+ 				 * 7 steps for LITTLE).
+ 				 */
+-				map2 {
+-					trip = <&cpu0_alert1>;
+-					cooling-device = <&cpu0 3 7>;
+-				};
+-				map3 {
++				map1 {
+ 					trip = <&cpu0_alert1>;
+-					cooling-device = <&cpu4 3 12>;
++					cooling-device = <&cpu0 3 7>,
++							 <&cpu1 3 7>,
++							 <&cpu2 3 7>,
++							 <&cpu3 3 7>,
++							 <&cpu4 3 12>,
++							 <&cpu5 3 12>,
++							 <&cpu6 3 12>,
++							 <&cpu7 3 12>;
+ 				};
+ 			};
+ 		};
+@@ -99,19 +105,25 @@
+ 			cooling-maps {
+ 				map0 {
+ 					trip = <&cpu1_alert0>;
+-					cooling-device = <&cpu0 0 2>;
++					cooling-device = <&cpu0 0 2>,
++							 <&cpu1 0 2>,
++							 <&cpu2 0 2>,
++							 <&cpu3 0 2>,
++							 <&cpu4 0 2>,
++							 <&cpu5 0 2>,
++							 <&cpu6 0 2>,
++							 <&cpu7 0 2>;
+ 				};
+ 				map1 {
+-					trip = <&cpu1_alert0>;
+-					cooling-device = <&cpu4 0 2>;
+-				};
+-				map2 {
+-					trip = <&cpu1_alert1>;
+-					cooling-device = <&cpu0 3 7>;
+-				};
+-				map3 {
+ 					trip = <&cpu1_alert1>;
+-					cooling-device = <&cpu4 3 12>;
++					cooling-device = <&cpu0 3 7>,
++							 <&cpu1 3 7>,
++							 <&cpu2 3 7>,
++							 <&cpu3 3 7>,
++							 <&cpu4 3 12>,
++							 <&cpu5 3 12>,
++							 <&cpu6 3 12>,
++							 <&cpu7 3 12>;
+ 				};
+ 			};
+ 		};
+@@ -137,19 +149,25 @@
+ 			cooling-maps {
+ 				map0 {
+ 					trip = <&cpu2_alert0>;
+-					cooling-device = <&cpu0 0 2>;
++					cooling-device = <&cpu0 0 2>,
++							 <&cpu1 0 2>,
++							 <&cpu2 0 2>,
++							 <&cpu3 0 2>,
++							 <&cpu4 0 2>,
++							 <&cpu5 0 2>,
++							 <&cpu6 0 2>,
++							 <&cpu7 0 2>;
+ 				};
+ 				map1 {
+-					trip = <&cpu2_alert0>;
+-					cooling-device = <&cpu4 0 2>;
+-				};
+-				map2 {
+-					trip = <&cpu2_alert1>;
+-					cooling-device = <&cpu0 3 7>;
+-				};
+-				map3 {
+ 					trip = <&cpu2_alert1>;
+-					cooling-device = <&cpu4 3 12>;
++					cooling-device = <&cpu0 3 7>,
++							 <&cpu1 3 7>,
++							 <&cpu2 3 7>,
++							 <&cpu3 3 7>,
++							 <&cpu4 3 12>,
++							 <&cpu5 3 12>,
++							 <&cpu6 3 12>,
++							 <&cpu7 3 12>;
+ 				};
+ 			};
+ 		};
+@@ -175,19 +193,25 @@
+ 			cooling-maps {
+ 				map0 {
+ 					trip = <&cpu3_alert0>;
+-					cooling-device = <&cpu0 0 2>;
++					cooling-device = <&cpu0 0 2>,
++							 <&cpu1 0 2>,
++							 <&cpu2 0 2>,
++							 <&cpu3 0 2>,
++							 <&cpu4 0 2>,
++							 <&cpu5 0 2>,
++							 <&cpu6 0 2>,
++							 <&cpu7 0 2>;
+ 				};
+ 				map1 {
+-					trip = <&cpu3_alert0>;
+-					cooling-device = <&cpu4 0 2>;
+-				};
+-				map2 {
+-					trip = <&cpu3_alert1>;
+-					cooling-device = <&cpu0 3 7>;
+-				};
+-				map3 {
+ 					trip = <&cpu3_alert1>;
+-					cooling-device = <&cpu4 3 12>;
++					cooling-device = <&cpu0 3 7>,
++							 <&cpu1 3 7>,
++							 <&cpu2 3 7>,
++							 <&cpu3 3 7>,
++							 <&cpu4 3 12>,
++							 <&cpu5 3 12>,
++							 <&cpu6 3 12>,
++							 <&cpu7 3 12>;
+ 				};
+ 			};
+ 		};
+diff --git a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
+index 96e281c0a118a..264651141d688 100644
+--- a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
++++ b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
+@@ -113,24 +113,30 @@
+ 				 */
+ 				map3 {
+ 					trip = <&cpu0_alert3>;
+-					cooling-device = <&cpu0 0 2>;
+-				};
+-				map4 {
+-					trip = <&cpu0_alert3>;
+-					cooling-device = <&cpu4 0 2>;
++					cooling-device = <&cpu0 0 2>,
++							 <&cpu1 0 2>,
++							 <&cpu2 0 2>,
++							 <&cpu3 0 2>,
++							 <&cpu4 0 2>,
++							 <&cpu5 0 2>,
++							 <&cpu6 0 2>,
++							 <&cpu7 0 2>;
+ 				};
+ 				/*
+ 				 * When reaching cpu0_alert4, reduce CPU
+ 				 * further, down to 600 MHz (12 steps for big,
+ 				 * 7 steps for LITTLE).
+ 				 */
+-				map5 {
+-					trip = <&cpu0_alert4>;
+-					cooling-device = <&cpu0 3 7>;
+-				};
+-				map6 {
++				map4 {
+ 					trip = <&cpu0_alert4>;
+-					cooling-device = <&cpu4 3 12>;
++					cooling-device = <&cpu0 3 7>,
++							 <&cpu1 3 7>,
++							 <&cpu2 3 7>,
++							 <&cpu3 3 7>,
++							 <&cpu4 3 12>,
++							 <&cpu5 3 12>,
++							 <&cpu6 3 12>,
++							 <&cpu7 3 12>;
+ 				};
+ 			};
+ 		};
+@@ -185,19 +191,25 @@
+ 				};
+ 				map3 {
+ 					trip = <&cpu1_alert3>;
+-					cooling-device = <&cpu0 0 2>;
++					cooling-device = <&cpu0 0 2>,
++							 <&cpu1 0 2>,
++							 <&cpu2 0 2>,
++							 <&cpu3 0 2>,
++							 <&cpu4 0 2>,
++							 <&cpu5 0 2>,
++							 <&cpu6 0 2>,
++							 <&cpu7 0 2>;
+ 				};
+ 				map4 {
+-					trip = <&cpu1_alert3>;
+-					cooling-device = <&cpu4 0 2>;
+-				};
+-				map5 {
+-					trip = <&cpu1_alert4>;
+-					cooling-device = <&cpu0 3 7>;
+-				};
+-				map6 {
+ 					trip = <&cpu1_alert4>;
+-					cooling-device = <&cpu4 3 12>;
++					cooling-device = <&cpu0 3 7>,
++							 <&cpu1 3 7>,
++							 <&cpu2 3 7>,
++							 <&cpu3 3 7>,
++							 <&cpu4 3 12>,
++							 <&cpu5 3 12>,
++							 <&cpu6 3 12>,
++							 <&cpu7 3 12>;
+ 				};
+ 			};
+ 		};
+@@ -252,19 +264,25 @@
+ 				};
+ 				map3 {
+ 					trip = <&cpu2_alert3>;
+-					cooling-device = <&cpu0 0 2>;
++					cooling-device = <&cpu0 0 2>,
++							 <&cpu1 0 2>,
++							 <&cpu2 0 2>,
++							 <&cpu3 0 2>,
++							 <&cpu4 0 2>,
++							 <&cpu5 0 2>,
++							 <&cpu6 0 2>,
++							 <&cpu7 0 2>;
+ 				};
+ 				map4 {
+-					trip = <&cpu2_alert3>;
+-					cooling-device = <&cpu4 0 2>;
+-				};
+-				map5 {
+-					trip = <&cpu2_alert4>;
+-					cooling-device = <&cpu0 3 7>;
+-				};
+-				map6 {
+ 					trip = <&cpu2_alert4>;
+-					cooling-device = <&cpu4 3 12>;
++					cooling-device = <&cpu0 3 7>,
++							 <&cpu1 3 7>,
++							 <&cpu2 3 7>,
++							 <&cpu3 3 7>,
++							 <&cpu4 3 12>,
++							 <&cpu5 3 12>,
++							 <&cpu6 3 12>,
++							 <&cpu7 3 12>;
+ 				};
+ 			};
+ 		};
+@@ -319,19 +337,25 @@
+ 				};
+ 				map3 {
+ 					trip = <&cpu3_alert3>;
+-					cooling-device = <&cpu0 0 2>;
++					cooling-device = <&cpu0 0 2>,
++							 <&cpu1 0 2>,
++							 <&cpu2 0 2>,
++							 <&cpu3 0 2>,
++							 <&cpu4 0 2>,
++							 <&cpu5 0 2>,
++							 <&cpu6 0 2>,
++							 <&cpu7 0 2>;
+ 				};
+ 				map4 {
+-					trip = <&cpu3_alert3>;
+-					cooling-device = <&cpu4 0 2>;
+-				};
+-				map5 {
+-					trip = <&cpu3_alert4>;
+-					cooling-device = <&cpu0 3 7>;
+-				};
+-				map6 {
+ 					trip = <&cpu3_alert4>;
+-					cooling-device = <&cpu4 3 12>;
++					cooling-device = <&cpu0 3 7>,
++							 <&cpu1 3 7>,
++							 <&cpu2 3 7>,
++							 <&cpu3 3 7>,
++							 <&cpu4 3 12>,
++							 <&cpu5 3 12>,
++							 <&cpu6 3 12>,
++							 <&cpu7 3 12>;
+ 				};
+ 			};
+ 		};
+-- 
+2.39.2
 
-Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-    cgroup: Add missing cpus_read_lock() to cgroup_attach_task_all()
-
-Tejun Heo <tj@kernel.org>
-    cgroup: Fix threadgroup_rwsem <-> cpus_read_lock() deadlock
-
-Juri Lelli <juri.lelli@redhat.com>
-    cgroup/cpuset: Change cpuset_rwsem and hotplug lock order
-
-John Harrison <John.C.Harrison@Intel.com>
-    drm/i915: Don't use BAR mappings for ring buffers with LLC
-
-Tung Nguyen <tung.q.nguyen@dektech.com.au>
-    tipc: improve function tipc_wait_for_cond()
-
-Paul Elder <paul.elder@ideasonboard.com>
-    media: ov5640: Fix analogue gain control
-
-Alvaro Karsz <alvaro.karsz@solid-run.com>
-    PCI: Avoid FLR for SolidRun SNET DPU rev 1
-
-Alvaro Karsz <alvaro.karsz@solid-run.com>
-    PCI: Add SolidRun vendor ID
-
-Nathan Chancellor <nathan@kernel.org>
-    macintosh: windfarm: Use unsigned type for 1-bit bitfields
-
-Edward Humes <aurxenon@lunos.org>
-    alpha: fix R_ALPHA_LITERAL reloc for large modules
-
-xurui <xurui@kylinos.cn>
-    MIPS: Fix a compilation issue
-
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-    clk: qcom: mmcc-apq8084: remove spdm clocks
-
-Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
-    Revert "spi: mt7621: Fix an error message in mt7621_spi_probe()"
-
-Bart Van Assche <bvanassche@acm.org>
-    scsi: core: Remove the /proc/scsi/${proc_name} directory earlier
-
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-    ARM: dts: exynos: correct TMU phandle in Odroid XU3 family
-
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-    ARM: dts: exynos: correct TMU phandle in Odroid HC1
-
-Marek Szyprowski <m.szyprowski@samsung.com>
-    ARM: dts: exynos: Add GPU thermal zone cooling maps for Odroid XU3/XU4/HC1
-
-Masahiro Yamada <yamada.masahiro@socionext.com>
-    kbuild: generate modules.order only in directories visited by obj-y/m
-
-Masahiro Yamada <yamada.masahiro@socionext.com>
-    kbuild: fix false-positive need-builtin calculation
-
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-    ARM: dts: exynos: correct TMU phandle in Exynos5250
-
-Krzysztof Kozlowski <krzk@kernel.org>
-    ARM: dts: exynos: Override thermal by label in Exynos5250
-
-Krzysztof Kozlowski <krzk@kernel.org>
-    ARM: dts: exynos: Move pmu and timer nodes out of soc
-
-Viresh Kumar <viresh.kumar@linaro.org>
-    ARM: dts: exynos: Add all CPUs in cooling maps
-
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-    ARM: dts: exynos: correct TMU phandle in Exynos4210
-
-Krzysztof Kozlowski <krzk@kernel.org>
-    ARM: dts: exynos: Override thermal by label in Exynos4210
-
-Krzysztof Kozlowski <krzk@kernel.org>
-    ARM: dts: exynos: Fix language typo and indentation
-
-Jan Kara <jack@suse.cz>
-    udf: Detect system inodes linked into directory hierarchy
-
-Jan Kara <jack@suse.cz>
-    udf: Preserve link count of system files
-
-Jan Kara <jack@suse.cz>
-    udf: Remove pointless union in udf_inode_info
-
-Steven J. Magnani <steve.magnani@digidescorp.com>
-    udf: reduce leakage of blocks related to named streams
-
-Jan Kara <jack@suse.cz>
-    udf: Explain handling of load_nls() failure
-
-Fedor Pchelkin <pchelkin@ispras.ru>
-    nfc: change order inside nfc_se_io error path
-
-Zhihao Cheng <chengzhihao1@huawei.com>
-    ext4: zero i_disksize when initializing the bootloader inode
-
-Ye Bin <yebin10@huawei.com>
-    ext4: fix WARNING in ext4_update_inline_data
-
-Ye Bin <yebin10@huawei.com>
-    ext4: move where set the MAY_INLINE_DATA flag is set
-
-Darrick J. Wong <djwong@kernel.org>
-    ext4: fix another off-by-one fsmap error on 1k block filesystems
-
-Eric Whitney <enwlinux@gmail.com>
-    ext4: fix RENAME_WHITEOUT handling for inline directories
-
-Andrew Cooper <andrew.cooper3@citrix.com>
-    x86/CPU/AMD: Disable XSAVES on AMD family 0x17
-
-Theodore Ts'o <tytso@mit.edu>
-    fs: prevent out-of-bounds array speculation when closing a file descriptor
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |   4 +-
- arch/alpha/kernel/module.c                         |   4 +-
- arch/arm/boot/dts/exynos3250-artik5.dtsi           |   6 +-
- arch/arm/boot/dts/exynos3250-monk.dts              |   6 +-
- arch/arm/boot/dts/exynos3250-rinato.dts            |   6 +-
- arch/arm/boot/dts/exynos3250.dtsi                  |  12 +-
- arch/arm/boot/dts/exynos4.dtsi                     |  12 +-
- arch/arm/boot/dts/exynos4210-trats.dts             |   4 +-
- arch/arm/boot/dts/exynos4210.dtsi                  |  39 ++-
- arch/arm/boot/dts/exynos4412-itop-scp-core.dtsi    |   8 +-
- arch/arm/boot/dts/exynos4412-midas.dtsi            |   8 +-
- arch/arm/boot/dts/exynos4412-odroid-common.dtsi    |   8 +-
- arch/arm/boot/dts/exynos4412-odroidu3.dts          |  18 +-
- arch/arm/boot/dts/exynos4412.dtsi                  |   6 +-
- arch/arm/boot/dts/exynos5250.dtsi                  |  73 +++---
- arch/arm/boot/dts/exynos5422-odroidhc1.dts         | 142 +++++++----
- arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi | 171 +++++++++----
- arch/arm/boot/dts/exynos54xx.dtsi                  |  38 +--
- arch/mips/include/asm/mach-rc32434/pci.h           |   2 +-
- arch/x86/kernel/cpu/amd.c                          |   9 +
- drivers/clk/qcom/mmcc-apq8084.c                    | 271 ---------------------
- drivers/gpu/drm/i915/intel_ringbuffer.c            |   4 +-
- drivers/macintosh/windfarm_lm75_sensor.c           |   4 +-
- drivers/macintosh/windfarm_smu_sensors.c           |   4 +-
- drivers/media/i2c/ov5640.c                         |   2 +-
- drivers/pci/quirks.c                               |   8 +
- drivers/scsi/hosts.c                               |   2 +
- drivers/staging/mt7621-spi/spi-mt7621.c            |   8 +-
- fs/ext4/fsmap.c                                    |   2 +
- fs/ext4/inline.c                                   |   1 -
- fs/ext4/inode.c                                    |   7 +-
- fs/ext4/ioctl.c                                    |   1 +
- fs/ext4/namei.c                                    |  13 +-
- fs/ext4/xattr.c                                    |   3 +
- fs/file.c                                          |   1 +
- fs/udf/directory.c                                 |   2 +-
- fs/udf/file.c                                      |   7 +-
- fs/udf/ialloc.c                                    |  14 +-
- fs/udf/inode.c                                     |  76 ++++--
- fs/udf/misc.c                                      |   6 +-
- fs/udf/namei.c                                     |   7 +-
- fs/udf/partition.c                                 |   2 +-
- fs/udf/super.c                                     |  12 +-
- fs/udf/symlink.c                                   |   2 +-
- fs/udf/udf_i.h                                     |  12 +-
- include/linux/cpuset.h                             |   8 +-
- include/linux/pci_ids.h                            |   2 +
- kernel/cgroup/cgroup-v1.c                          |   3 +
- kernel/cgroup/cgroup.c                             |  49 +++-
- kernel/cgroup/cpuset.c                             |  25 +-
- net/nfc/netlink.c                                  |   2 +-
- net/tipc/socket.c                                  |   2 +-
- scripts/Makefile.build                             |   4 +-
- 53 files changed, 569 insertions(+), 573 deletions(-)
 
 
