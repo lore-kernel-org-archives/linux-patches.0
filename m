@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135124431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7052BC433D2;
-	Wed, 15 Mar 2023 12:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93AB34431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15781C433EF;
+	Wed, 15 Mar 2023 12:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882782;
-	bh=SJLzFzrVOrtYS4xGB/WTDW00RB5T+mOjo1I/cIMgCiw=;
+	s=korg; t=1678882785;
+	bh=7H2fDWFLq7oTkhdwFhaOFYHwYK7ANczf6ioIzfc3GrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JbzcWx1Gvdg4+MHy1nHZDDP695EKmcZUEa8k0+rqdi7NVQI0UvoakHgB7JftD+qIl
-	 +yUfeIXccvq5DAxMp8tl9/jT6dhHGF6eL/keKqVxDEov52zTr08WSWpcK4Ww9uMlgZ
-	 Cp8SiB8PPXWfQom/jlD7JuO1ztU9vyUdFkoegRI8=
+	b=BbNs7dalz3AWq0JoafD90CJlKoG74jp2+vF5fPw7w9GwoLRS6N/EUkbjZflChu4KM
+	 PP1Tw73kIiRY9TFCqxJznXVfArKggGXQNdDpj0ALS/a1ZxBQTvU9OwuwWliWmkXXyV
+	 e6v+bjJoeWTuVDr/iv1XMo1meUxGq//RLtCg9kr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Cornelia Huck <cohuck@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.4 68/68] s390/dasd: add missing discipline function
-Date: Wed, 15 Mar 2023 13:13:02 +0100
-Message-Id: <20230315115728.763521815@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>,
+	=?UTF-8?q?Major=20D=C3=A1vid?= <major.david@balasys.hu>
+Subject: [PATCH 5.4 44/68] netfilter: tproxy: fix deadlock due to missing BH disable
+Date: Wed, 15 Mar 2023 13:12:38 +0100
+Message-Id: <20230315115727.844456760@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -36,84 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit c0c8a8397fa8a74d04915f4d3d28cb4a5d401427 upstream.
+[ Upstream commit 4a02426787bf024dafdb79b362285ee325de3f5e ]
 
-Fix crash with illegal operation exception in dasd_device_tasklet.
-Commit b72949328869 ("s390/dasd: Prepare for additional path event handling")
-renamed the verify_path function for ECKD but not for FBA and DIAG.
-This leads to a panic when the path verification function is called for a
-FBA or DIAG device.
+The xtables packet traverser performs an unconditional local_bh_disable(),
+but the nf_tables evaluation loop does not.
 
-Fix by defining a wrapper function for dasd_generic_verify_path().
+Functions that are called from either xtables or nftables must assume
+that they can be called in process context.
 
-Fixes: b72949328869 ("s390/dasd: Prepare for additional path event handling")
-Cc: <stable@vger.kernel.org> #5.11
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Link: https://lore.kernel.org/r/20210525125006.157531-2-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+inet_twsk_deschedule_put() assumes that no softirq interrupt can occur.
+If tproxy is used from nf_tables its possible that we'll deadlock
+trying to aquire a lock already held in process context.
+
+Add a small helper that takes care of this and use it.
+
+Link: https://lore.kernel.org/netfilter-devel/401bd6ed-314a-a196-1cdc-e13c720cc8f2@balasys.hu/
+Fixes: 4ed8eb6570a4 ("netfilter: nf_tables: Add native tproxy support")
+Reported-and-tested-by: Major Dávid <major.david@balasys.hu>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/dasd_diag.c |    7 ++++++-
- drivers/s390/block/dasd_fba.c  |    7 ++++++-
- drivers/s390/block/dasd_int.h  |    1 -
- 3 files changed, 12 insertions(+), 3 deletions(-)
+ include/net/netfilter/nf_tproxy.h   | 7 +++++++
+ net/ipv4/netfilter/nf_tproxy_ipv4.c | 2 +-
+ net/ipv6/netfilter/nf_tproxy_ipv6.c | 2 +-
+ 3 files changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/block/dasd_diag.c
-+++ b/drivers/s390/block/dasd_diag.c
-@@ -644,12 +644,17 @@ static void dasd_diag_setup_blk_queue(st
- 	blk_queue_segment_boundary(q, PAGE_SIZE - 1);
+diff --git a/include/net/netfilter/nf_tproxy.h b/include/net/netfilter/nf_tproxy.h
+index 82d0e41b76f22..faa108b1ba675 100644
+--- a/include/net/netfilter/nf_tproxy.h
++++ b/include/net/netfilter/nf_tproxy.h
+@@ -17,6 +17,13 @@ static inline bool nf_tproxy_sk_is_transparent(struct sock *sk)
+ 	return false;
  }
  
-+static int dasd_diag_pe_handler(struct dasd_device *device, __u8 tbvpm)
++static inline void nf_tproxy_twsk_deschedule_put(struct inet_timewait_sock *tw)
 +{
-+	return dasd_generic_verify_path(device, tbvpm);
++	local_bh_disable();
++	inet_twsk_deschedule_put(tw);
++	local_bh_enable();
 +}
 +
- static struct dasd_discipline dasd_diag_discipline = {
- 	.owner = THIS_MODULE,
- 	.name = "DIAG",
- 	.ebcname = "DIAG",
- 	.check_device = dasd_diag_check_device,
--	.verify_path = dasd_generic_verify_path,
-+	.pe_handler = dasd_diag_pe_handler,
- 	.fill_geometry = dasd_diag_fill_geometry,
- 	.setup_blk_queue = dasd_diag_setup_blk_queue,
- 	.start_IO = dasd_start_diag,
---- a/drivers/s390/block/dasd_fba.c
-+++ b/drivers/s390/block/dasd_fba.c
-@@ -803,13 +803,18 @@ static void dasd_fba_setup_blk_queue(str
- 	blk_queue_flag_set(QUEUE_FLAG_DISCARD, q);
- }
- 
-+static int dasd_fba_pe_handler(struct dasd_device *device, __u8 tbvpm)
-+{
-+	return dasd_generic_verify_path(device, tbvpm);
-+}
-+
- static struct dasd_discipline dasd_fba_discipline = {
- 	.owner = THIS_MODULE,
- 	.name = "FBA ",
- 	.ebcname = "FBA ",
- 	.check_device = dasd_fba_check_characteristics,
- 	.do_analysis = dasd_fba_do_analysis,
--	.verify_path = dasd_generic_verify_path,
-+	.pe_handler = dasd_fba_pe_handler,
- 	.setup_blk_queue = dasd_fba_setup_blk_queue,
- 	.fill_geometry = dasd_fba_fill_geometry,
- 	.start_IO = dasd_start_IO,
---- a/drivers/s390/block/dasd_int.h
-+++ b/drivers/s390/block/dasd_int.h
-@@ -298,7 +298,6 @@ struct dasd_discipline {
- 	 * e.g. verify that new path is compatible with the current
- 	 * configuration.
- 	 */
--	int (*verify_path)(struct dasd_device *, __u8);
- 	int (*pe_handler)(struct dasd_device *, __u8);
- 
- 	/*
+ /* assign a socket to the skb -- consumes sk */
+ static inline void nf_tproxy_assign_sock(struct sk_buff *skb, struct sock *sk)
+ {
+diff --git a/net/ipv4/netfilter/nf_tproxy_ipv4.c b/net/ipv4/netfilter/nf_tproxy_ipv4.c
+index b2bae0b0e42a1..61cb2341f50fe 100644
+--- a/net/ipv4/netfilter/nf_tproxy_ipv4.c
++++ b/net/ipv4/netfilter/nf_tproxy_ipv4.c
+@@ -38,7 +38,7 @@ nf_tproxy_handle_time_wait4(struct net *net, struct sk_buff *skb,
+ 					    hp->source, lport ? lport : hp->dest,
+ 					    skb->dev, NF_TPROXY_LOOKUP_LISTENER);
+ 		if (sk2) {
+-			inet_twsk_deschedule_put(inet_twsk(sk));
++			nf_tproxy_twsk_deschedule_put(inet_twsk(sk));
+ 			sk = sk2;
+ 		}
+ 	}
+diff --git a/net/ipv6/netfilter/nf_tproxy_ipv6.c b/net/ipv6/netfilter/nf_tproxy_ipv6.c
+index 34d51cd426b0c..00761924f2766 100644
+--- a/net/ipv6/netfilter/nf_tproxy_ipv6.c
++++ b/net/ipv6/netfilter/nf_tproxy_ipv6.c
+@@ -63,7 +63,7 @@ nf_tproxy_handle_time_wait6(struct sk_buff *skb, int tproto, int thoff,
+ 					    lport ? lport : hp->dest,
+ 					    skb->dev, NF_TPROXY_LOOKUP_LISTENER);
+ 		if (sk2) {
+-			inet_twsk_deschedule_put(inet_twsk(sk));
++			nf_tproxy_twsk_deschedule_put(inet_twsk(sk));
+ 			sk = sk2;
+ 		}
+ 	}
+-- 
+2.39.2
+
 
 
