@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414094431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB222C4339B;
-	Wed, 15 Mar 2023 12:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A764431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C393C433D2;
+	Wed, 15 Mar 2023 12:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883541;
-	bh=UNDYHpeGlfFNYwkXamtfmtyBaa6ciPT80EzGn7U4vNw=;
+	s=korg; t=1678883543;
+	bh=TaF1KHDUjsWtGvQLL8vjzm97oh8qj2p4XYNNXrqoO50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sm/WYhEXKP49GPbOazC73jBvVp3CGMuKWf2bHfyUJnvD5iJekqy0uTm3HACkCmv87
-	 RodWJ1r3iMglwBtsNt2G+ORzHXlr3JIf6kv1COQmaHqIvvBIR7eb2VK3rQ+rpQaEto
-	 Hm5AaCyxdV/lTIfK0THJeR1bWkh9Gj/b3YtH2FFc=
+	b=yhePuWY/hJYK5XJ6AvnpoNLe5VBCvpWbfqW2nrj9YcL4dlhHqoH35nySz3x7jg3nC
+	 TYbHeydSc8uiuzNVM6wz+AadpLG5LNLcuhhEfRoQw4amLyAXUbmOqREdjDldjVwRLD
+	 A8CX5vdXMtcIJsecJ4qPYh+Zvt220eX5yNBtvffo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Aring <aahringo@redhat.com>,
 	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/143] fs: dlm: use WARN_ON_ONCE() instead of WARN_ON()
-Date: Wed, 15 Mar 2023 13:12:03 +0100
-Message-Id: <20230315115741.638396465@linuxfoundation.org>
+Subject: [PATCH 6.1 038/143] fs: dlm: be sure to call dlm_send_queue_flush()
+Date: Wed, 15 Mar 2023 13:12:04 +0100
+Message-Id: <20230315115741.670936435@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -37,100 +37,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit 775af207464bd28a2086f8399c0b2a3f1f40c7ae ]
+[ Upstream commit 7354fa4ef697191effedc2ae9a8293427708bbf5 ]
 
-To not get the console spammed about WARN_ON() of invalid states in the
-dlm midcomms hot path handling we switch to WARN_ON_ONCE() to get it
-only once that there might be an issue with the midcomms state handling.
+If we release a midcomms node structure, there should be nothing left
+inside the dlm midcomms send queue. However, sometimes this is not true
+because I believe some DLM_FIN message was not acked... if we run
+into a shutdown timeout, then we should be sure there is no pending send
+dlm message inside this queue when releasing midcomms node structure.
 
+Cc: stable@vger.kernel.org
+Fixes: 489d8e559c65 ("fs: dlm: add reliable connection if reconnect")
 Signed-off-by: Alexander Aring <aahringo@redhat.com>
 Signed-off-by: David Teigland <teigland@redhat.com>
-Stable-dep-of: 7354fa4ef697 ("fs: dlm: be sure to call dlm_send_queue_flush()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/midcomms.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ fs/dlm/midcomms.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/fs/dlm/midcomms.c b/fs/dlm/midcomms.c
-index 0477493706edb..b53d7a281be93 100644
+index b53d7a281be93..d976c2009b185 100644
 --- a/fs/dlm/midcomms.c
 +++ b/fs/dlm/midcomms.c
-@@ -469,7 +469,7 @@ static void dlm_pas_fin_ack_rcv(struct midcomms_node *node)
- 		spin_unlock(&node->state_lock);
- 		log_print("%s: unexpected state: %d\n",
- 			  __func__, node->state);
--		WARN_ON(1);
-+		WARN_ON_ONCE(1);
- 		return;
- 	}
- 	spin_unlock(&node->state_lock);
-@@ -542,13 +542,13 @@ static void dlm_midcomms_receive_buffer(union dlm_packet *p,
- 				spin_unlock(&node->state_lock);
- 				log_print("%s: unexpected state: %d\n",
- 					  __func__, node->state);
--				WARN_ON(1);
-+				WARN_ON_ONCE(1);
- 				return;
- 			}
- 			spin_unlock(&node->state_lock);
- 			break;
- 		default:
--			WARN_ON(test_bit(DLM_NODE_FLAG_STOP_RX, &node->flags));
-+			WARN_ON_ONCE(test_bit(DLM_NODE_FLAG_STOP_RX, &node->flags));
- 			dlm_receive_buffer_3_2_trace(seq, p);
- 			dlm_receive_buffer(p, node->nodeid);
- 			set_bit(DLM_NODE_ULP_DELIVERED, &node->flags);
-@@ -764,7 +764,7 @@ static void dlm_midcomms_receive_buffer_3_2(union dlm_packet *p, int nodeid)
- 			goto out;
- 		}
- 
--		WARN_ON(test_bit(DLM_NODE_FLAG_STOP_RX, &node->flags));
-+		WARN_ON_ONCE(test_bit(DLM_NODE_FLAG_STOP_RX, &node->flags));
- 		dlm_receive_buffer(p, nodeid);
- 		break;
- 	case DLM_OPTS:
-@@ -1089,7 +1089,7 @@ struct dlm_mhandle *dlm_midcomms_get_mhandle(int nodeid, int len,
- 	}
- 
- 	/* this is a bug, however we going on and hope it will be resolved */
--	WARN_ON(test_bit(DLM_NODE_FLAG_STOP_TX, &node->flags));
-+	WARN_ON_ONCE(test_bit(DLM_NODE_FLAG_STOP_TX, &node->flags));
- 
- 	mh = dlm_allocate_mhandle();
- 	if (!mh)
-@@ -1121,7 +1121,7 @@ struct dlm_mhandle *dlm_midcomms_get_mhandle(int nodeid, int len,
- 		break;
- 	default:
- 		dlm_free_mhandle(mh);
--		WARN_ON(1);
-+		WARN_ON_ONCE(1);
- 		goto err;
- 	}
- 
-@@ -1197,7 +1197,7 @@ void dlm_midcomms_commit_mhandle(struct dlm_mhandle *mh,
- 		break;
- 	default:
- 		srcu_read_unlock(&nodes_srcu, mh->idx);
--		WARN_ON(1);
-+		WARN_ON_ONCE(1);
- 		break;
- 	}
- }
-@@ -1254,7 +1254,7 @@ static void dlm_act_fin_ack_rcv(struct midcomms_node *node)
- 		spin_unlock(&node->state_lock);
- 		log_print("%s: unexpected state: %d\n",
- 			  __func__, node->state);
--		WARN_ON(1);
-+		WARN_ON_ONCE(1);
- 		return;
- 	}
- 	spin_unlock(&node->state_lock);
-@@ -1366,7 +1366,7 @@ static void midcomms_node_release(struct rcu_head *rcu)
- {
+@@ -1367,6 +1367,7 @@ static void midcomms_node_release(struct rcu_head *rcu)
  	struct midcomms_node *node = container_of(rcu, struct midcomms_node, rcu);
  
--	WARN_ON(atomic_read(&node->send_queue_cnt));
-+	WARN_ON_ONCE(atomic_read(&node->send_queue_cnt));
+ 	WARN_ON_ONCE(atomic_read(&node->send_queue_cnt));
++	dlm_send_queue_flush(node);
  	kfree(node);
  }
  
