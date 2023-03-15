@@ -1,26 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAF64431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:25:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98359C433EF;
-	Wed, 15 Mar 2023 12:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E334431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:25:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136E9C433D2;
+	Wed, 15 Mar 2023 12:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883122;
-	bh=IyhMf7AffPOfSQ3jx3jQk604PzoiGSL9QvWyJmhAZAw=;
+	s=korg; t=1678883124;
+	bh=KiXl2hRFUutpZmLcHGX8IfKBYY8a2+Ncm0xZJHfwQKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AmtKuxxtLKJw5tbl/WazMplmo5FO8eA7Nrhkn4ANWXbEy0iTD9epcHAEshD1OJykv
-	 RW7ZbmEAEFgtqPBpwNxS8q0iKaYyqaIGc1Lrbvigmzkck7IaqU9JlVgQszwtth5JyB
-	 7fUNxGApOCA1mIlbKHeFu2ibANHbMi0jsxQJQPAY=
+	b=1YeIhCC+CG+idU1IqrmB8TELfQSm5WYUlY39A4h71DaF7Q4ytGf5fjRkBLTXqj6pp
+	 VyPkJNCw3Mk0Gygq2PYahjWMR5EWYoZViNP/JP1F4B9KFbQzti4g1lhn9r8vBOn7oq
+	 AkgNDOercQQdg33EsxgBREwFFszuZrWYLIKxOsj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/145] udf: Fix off-by-one error when discarding preallocation
-Date: Wed, 15 Mar 2023 13:11:30 +0100
-Message-Id: <20230315115739.838873153@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Pekka Paalanen <ppaalanen@gmail.com>,
+	Sebastian Wick <sebastian.wick@redhat.com>,
+	Vitaly.Prosyak@amd.com,
+	Uma Shankar <uma.shankar@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Joshua Ashton <joshua@froggi.es>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	dri-devel@lists.freedesktop.org,
+	amd-gfx@lists.freedesktop.org,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 007/145] drm/connector: print max_requested_bpc in state debugfs
+Date: Wed, 15 Mar 2023 13:11:13 +0100
+Message-Id: <20230315115739.225726207@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -34,38 +43,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Harry Wentland <harry.wentland@amd.com>
 
-[ Upstream commit f54aa97fb7e5329a373f9df4e5e213ced4fc8759 ]
+commit 7d386975f6a495902e679a3a250a7456d7e54765 upstream.
 
-The condition determining whether the preallocation can be used had
-an off-by-one error so we didn't discard preallocation when new
-allocation was just following it. This can then confuse code in
-inode_getblk().
+This is useful to understand the bpc defaults and
+support of a driver.
 
-CC: stable@vger.kernel.org
-Fixes: 16d055656814 ("udf: Discard preallocation before extending file with a hole")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Cc: Pekka Paalanen <ppaalanen@gmail.com>
+Cc: Sebastian Wick <sebastian.wick@redhat.com>
+Cc: Vitaly.Prosyak@amd.com
+Cc: Uma Shankar <uma.shankar@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Joshua Ashton <joshua@froggi.es>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: amd-gfx@lists.freedesktop.org
+Reviewed-By: Joshua Ashton <joshua@froggi.es>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230113162428.33874-3-harry.wentland@amd.com
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_atomic.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/udf/inode.c b/fs/udf/inode.c
-index a151e04856afe..594d224588819 100644
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -442,7 +442,7 @@ static int udf_get_block(struct inode *inode, sector_t block,
- 	 * Block beyond EOF and prealloc extents? Just discard preallocation
- 	 * as it is not useful and complicates things.
- 	 */
--	if (((loff_t)block) << inode->i_blkbits > iinfo->i_lenExtents)
-+	if (((loff_t)block) << inode->i_blkbits >= iinfo->i_lenExtents)
- 		udf_discard_prealloc(inode);
- 	udf_clear_extent_cache(inode);
- 	phys = inode_getblk(inode, block, &err, &new);
--- 
-2.39.2
-
+--- a/drivers/gpu/drm/drm_atomic.c
++++ b/drivers/gpu/drm/drm_atomic.c
+@@ -1052,6 +1052,7 @@ static void drm_atomic_connector_print_s
+ 	drm_printf(p, "connector[%u]: %s\n", connector->base.id, connector->name);
+ 	drm_printf(p, "\tcrtc=%s\n", state->crtc ? state->crtc->name : "(null)");
+ 	drm_printf(p, "\tself_refresh_aware=%d\n", state->self_refresh_aware);
++	drm_printf(p, "\tmax_requested_bpc=%d\n", state->max_requested_bpc);
+ 
+ 	if (connector->connector_type == DRM_MODE_CONNECTOR_WRITEBACK)
+ 		if (state->writeback_job && state->writeback_job->fb)
 
 
