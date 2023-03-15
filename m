@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748C44431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A42C433EF;
-	Wed, 15 Mar 2023 12:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE1B4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E195C433EF;
+	Wed, 15 Mar 2023 12:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883868;
-	bh=Nfe5cQVGtVXe/Ymy+jYJi0HwVB0WFvQ7+/fjpCov2/U=;
+	s=korg; t=1678883871;
+	bh=IU1kPwWpubYhRLRXfM1GZgnurJ4fpM1vzG8jfCV8CB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlOAioiJPha37QjRVFR3kQJl+K1GYrnuQq3/9ONAvCCyJy9XxwFqnY1YLNUEBH97E
-	 gbapx3c1lkZe2HXs/d+iPICenFs6ewUQa+wrtLoyNmG9sbyS9fxlcE3RPICmJopyhO
-	 S3T5X/vYBxbFmvrywdWeLiyrJWnjT0DYIqYbMVx8=
+	b=KBWXq69ZtGZ0Chyt3S7ZbrFcKSan//IBkiD59Oojmmsd238xfecMEI7LhiuzaKT5X
+	 35t063H4sUdGfgldL7W74Lar1uijWonFeMR4X/KpnK/91ordvHDynFfLGLudV5QdOm
+	 AwoHV2vxbJ+9Zv4R2LR89B/8AlQLv7b8FTZU2yzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.2 019/141] staging: rtl8723bs: Pass correct parameters to cfg80211_get_bss()
-Date: Wed, 15 Mar 2023 13:12:02 +0100
-Message-Id: <20230315115740.573821647@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.2 002/141] btrfs: fix unnecessary increment of read error stat on write error
+Date: Wed, 15 Mar 2023 13:11:45 +0100
+Message-Id: <20230315115740.029147685@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -33,56 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-commit d17789edd6a8270c38459e592ee536a84c6202db upstream.
+commit 98e8d36a26c2ed22f78316df7d4bf33e554b9f9f upstream.
 
-To last 2 parameters to cfg80211_get_bss() should be of
-the enum ieee80211_bss_type resp. enum ieee80211_privacy types,
-which WLAN_CAPABILITY_ESS very much is not.
+Current btrfs_log_dev_io_error() increases the read error count even if the
+erroneous IO is a WRITE request. This is because it forget to use "else
+if", and all the error WRITE requests counts as READ error as there is (of
+course) no REQ_RAHEAD bit set.
 
-Fix both cfg80211_get_bss() calls in ioctl_cfg80211.c to pass
-the right parameters.
-
-Note that the second call was already somewhat fixed by commenting
-out WLAN_CAPABILITY_ESS and passing in 0 instead. This was still
-not entirely correct though since that would limit returned
-BSS-es to ESS type BSS-es with privacy on.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230306153512.162104-2-hdegoede@redhat.com
+Fixes: c3a62baf21ad ("btrfs: use chained bios when cloning")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/btrfs/bio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-index 3aba4e6eec8a..84a9f4dd8f95 100644
---- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-+++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-@@ -350,7 +350,7 @@ int rtw_cfg80211_check_bss(struct adapter *padapter)
- 	bss = cfg80211_get_bss(padapter->rtw_wdev->wiphy, notify_channel,
- 			pnetwork->mac_address, pnetwork->ssid.ssid,
- 			pnetwork->ssid.ssid_length,
--			WLAN_CAPABILITY_ESS, WLAN_CAPABILITY_ESS);
-+			IEEE80211_BSS_TYPE_ANY, IEEE80211_PRIVACY_ANY);
+--- a/fs/btrfs/bio.c
++++ b/fs/btrfs/bio.c
+@@ -72,7 +72,7 @@ static void btrfs_log_dev_io_error(struc
  
- 	cfg80211_put_bss(padapter->rtw_wdev->wiphy, bss);
- 
-@@ -1139,8 +1139,8 @@ void rtw_cfg80211_unlink_bss(struct adapter *padapter, struct wlan_network *pnet
- 
- 	bss = cfg80211_get_bss(wiphy, NULL/*notify_channel*/,
- 		select_network->mac_address, select_network->ssid.ssid,
--		select_network->ssid.ssid_length, 0/*WLAN_CAPABILITY_ESS*/,
--		0/*WLAN_CAPABILITY_ESS*/);
-+		select_network->ssid.ssid_length, IEEE80211_BSS_TYPE_ANY,
-+		IEEE80211_PRIVACY_ANY);
- 
- 	if (bss) {
- 		cfg80211_unlink_bss(wiphy, bss);
--- 
-2.39.2
-
+ 	if (btrfs_op(bio) == BTRFS_MAP_WRITE)
+ 		btrfs_dev_stat_inc_and_print(dev, BTRFS_DEV_STAT_WRITE_ERRS);
+-	if (!(bio->bi_opf & REQ_RAHEAD))
++	else if (!(bio->bi_opf & REQ_RAHEAD))
+ 		btrfs_dev_stat_inc_and_print(dev, BTRFS_DEV_STAT_READ_ERRS);
+ 	if (bio->bi_opf & REQ_PREFLUSH)
+ 		btrfs_dev_stat_inc_and_print(dev, BTRFS_DEV_STAT_FLUSH_ERRS);
 
 
