@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2719A4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F97C433EF;
-	Wed, 15 Mar 2023 12:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4554431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4298DC4339B;
+	Wed, 15 Mar 2023 12:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884176;
-	bh=if5yWvrLs7s3hjiF6DzbVuIrkn5oiXCRR1mNGRrXXRI=;
+	s=korg; t=1678884178;
+	bh=bxTptbUVa63UoQCRWI3jLiKQBHLWc7zNuIcPhaE4q9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NJ+vQ16pXjgVXtdkSjzn/oDJbjx4Dc/EHfNpee+7fsTybApB/xTTlYhOsLv0UrXaf
-	 2isiY/jAdd6I2HoxUxUDqbebQiHs9mesEycJIAkke9780rm8P8o7h8a7kVcFCaDfvV
-	 8QxzOqiX1Qi4+mqei29hYIKmcYFUY5n+wF7iFq94=
+	b=1TZT/9pZ4cKVRx5og18QBKTCbklZ+jl45DesoryUbz9B7Jj5i3U3folamN6LNwRgB
+	 C/m8l8FhOH68jDyGcHHYLjY3QcrgaXahwYwcH87IICaFggUGzNg/xRNVNm8wlbH2cB
+	 ih0UFC0k1RiMRaMoVvUg1RaYDUVyQ6I5ot5gwZEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Darren Hart <dvhart@infradead.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Michael Shych <michaelsh@nvidia.com>,
-	Mark Gross <markgross@kernel.org>,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	platform-driver-x86@vger.kernel.org,
+	Edward Humes <aurxenon@lunos.org>,
+	Matt Turner <mattst88@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 096/141] platform: mellanox: select REGMAP instead of depending on it
-Date: Wed, 15 Mar 2023 13:13:19 +0100
-Message-Id: <20230315115742.930964565@linuxfoundation.org>
+Subject: [PATCH 6.2 129/141] alpha: fix R_ALPHA_LITERAL reloc for large modules
+Date: Wed, 15 Mar 2023 13:13:52 +0100
+Message-Id: <20230315115743.910742995@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -40,87 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Edward Humes <aurxenon@lunos.org>
 
-[ Upstream commit 03f5eb300ad1241f854269a3e521b119189a4493 ]
+[ Upstream commit b6b17a8b3ecd878d98d5472a9023ede9e669ca72 ]
 
-REGMAP is a hidden (not user visible) symbol. Users cannot set it
-directly thru "make *config", so drivers should select it instead of
-depending on it if they need it.
+Previously, R_ALPHA_LITERAL relocations would overflow for large kernel
+modules.
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
+This was because the Alpha's apply_relocate_add was relying on the kernel's
+module loader to have sorted the GOT towards the very end of the module as it
+was mapped into memory in order to correctly assign the global pointer. While
+this behavior would mostly work fine for small kernel modules, this approach
+would overflow on kernel modules with large GOT's since the global pointer
+would be very far away from the GOT, and thus, certain entries would be out of
+range.
 
-Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+This patch fixes this by instead using the Tru64 behavior of assigning the
+global pointer to be 32KB away from the start of the GOT. The change made
+in this patch won't work for multi-GOT kernel modules as it makes the
+assumption the module only has one GOT located at the beginning of .got,
+although for the vast majority kernel modules, this should be fine. Of the
+kernel modules that would previously result in a relocation error, none of
+them, even modules like nouveau, have even come close to filling up a single
+GOT, and they've all worked fine under this patch.
 
-For NVSW_SN2201, select REGMAP_I2C instead of depending on it.
-
-Fixes: c6acad68eb2d ("platform/mellanox: mlxreg-hotplug: Modify to use a regmap interface")
-Fixes: 5ec4a8ace06c ("platform/mellanox: Introduce support for Mellanox register access driver")
-Fixes: 62f9529b8d5c ("platform/mellanox: mlxreg-lc: Add initial support for Nvidia line card devices")
-Fixes: 662f24826f95 ("platform/mellanox: Add support for new SN2201 system")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Darren Hart <dvhart@infradead.org>
-Cc: Hans de Goede <hdegoede@redhat.com>
-Cc: Michael Shych <michaelsh@nvidia.com>
-Cc: Mark Gross <markgross@kernel.org>
-Cc: Vadim Pasternak <vadimp@nvidia.com>
-Cc: platform-driver-x86@vger.kernel.org
-Link: https://lore.kernel.org/r/20230226053953.4681-6-rdunlap@infradead.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Edward Humes <aurxenon@lunos.org>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/Kconfig | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ arch/alpha/kernel/module.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/platform/mellanox/Kconfig b/drivers/platform/mellanox/Kconfig
-index 09c7829e95c4b..382793e73a60a 100644
---- a/drivers/platform/mellanox/Kconfig
-+++ b/drivers/platform/mellanox/Kconfig
-@@ -16,17 +16,17 @@ if MELLANOX_PLATFORM
+diff --git a/arch/alpha/kernel/module.c b/arch/alpha/kernel/module.c
+index 5b60c248de9ea..cbefa5a773846 100644
+--- a/arch/alpha/kernel/module.c
++++ b/arch/alpha/kernel/module.c
+@@ -146,10 +146,8 @@ apply_relocate_add(Elf64_Shdr *sechdrs, const char *strtab,
+ 	base = (void *)sechdrs[sechdrs[relsec].sh_info].sh_addr;
+ 	symtab = (Elf64_Sym *)sechdrs[symindex].sh_addr;
  
- config MLXREG_HOTPLUG
- 	tristate "Mellanox platform hotplug driver support"
--	depends on REGMAP
- 	depends on HWMON
- 	depends on I2C
-+	select REGMAP
- 	help
- 	  This driver handles hot-plug events for the power suppliers, power
- 	  cables and fans on the wide range Mellanox IB and Ethernet systems.
+-	/* The small sections were sorted to the end of the segment.
+-	   The following should definitely cover them.  */
+-	gp = (u64)me->core_layout.base + me->core_layout.size - 0x8000;
+ 	got = sechdrs[me->arch.gotsecindex].sh_addr;
++	gp = got + 0x8000;
  
- config MLXREG_IO
- 	tristate "Mellanox platform register access driver support"
--	depends on REGMAP
- 	depends on HWMON
-+	select REGMAP
- 	help
- 	  This driver allows access to Mellanox programmable device register
- 	  space through sysfs interface. The sets of registers for sysfs access
-@@ -36,9 +36,9 @@ config MLXREG_IO
- 
- config MLXREG_LC
- 	tristate "Mellanox line card platform driver support"
--	depends on REGMAP
- 	depends on HWMON
- 	depends on I2C
-+	select REGMAP
- 	help
- 	  This driver provides support for the Mellanox MSN4800-XX line cards,
- 	  which are the part of MSN4800 Ethernet modular switch systems
-@@ -80,10 +80,9 @@ config MLXBF_PMC
- 
- config NVSW_SN2201
- 	tristate "Nvidia SN2201 platform driver support"
--	depends on REGMAP
- 	depends on HWMON
- 	depends on I2C
--	depends on REGMAP_I2C
-+	select REGMAP_I2C
- 	help
- 	  This driver provides support for the Nvidia SN2201 platform.
- 	  The SN2201 is a highly integrated for one rack unit system with
+ 	for (i = 0; i < n; i++) {
+ 		unsigned long r_sym = ELF64_R_SYM (rela[i].r_info);
 -- 
 2.39.2
 
