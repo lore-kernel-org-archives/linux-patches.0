@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A9D4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:26:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C651C433EF;
-	Wed, 15 Mar 2023 12:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FEDB4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:26:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA02AC433D2;
+	Wed, 15 Mar 2023 12:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883161;
-	bh=73VDkdhvp8DptUWQKx6X9gGhgq9auJRAd/La6CdxzTU=;
+	s=korg; t=1678883164;
+	bh=UdnJP/AvLg+f8hrMIFyZU1ZpLAF7sbaH52Dj9vlsc14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xeZLlR22BVF/cQp1tdfkgXjLfK6O/kpk+blojYyU5jK++EgD2DzYHp4q9ArcjQRYy
-	 /0D2aDTwY+zvxrLIXx9rbOObM+UoAEQGfOGVk8aI7k5Vv3CvUSpSEXCoSFv84Vo/+7
-	 rnYFR0ZJPV3s4k6nV7QJvFmXNr0R3o5Bb6TmwHkg=
+	b=KJNcSsYIk9kDNANvVzcPWb1U8udMyWK8jc/1u53q3hBVjJJ8B8mzKl8STW1X9C7Br
+	 DpfKUxRZPI7cZA1aTNJ3fGmAv5OqiME90fpN+uu30frxCx0DnKhc6SXVMuVJyTbz91
+	 g/BEHWW3zBbnohzbpCNotolYWuyWXSezY5WzRmpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chang <liaochang1@huawei.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 037/145] riscv: Add header include guards to insn.h
-Date: Wed, 15 Mar 2023 13:11:43 +0100
-Message-Id: <20230315115740.295035840@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Tejun Heo <tj@kernel.org>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 009/145] ext4: fix cgroup writeback accounting with fs-layer encryption
+Date: Wed, 15 Mar 2023 13:11:15 +0100
+Message-Id: <20230315115739.295746677@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -37,48 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liao Chang <liaochang1@huawei.com>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 8ac6e619d9d51b3eb5bae817db8aa94e780a0db4 ]
+commit ffec85d53d0f39ee4680a2cf0795255e000e1feb upstream.
 
-Add header include guards to insn.h to prevent repeating declaration of
-any identifiers in insn.h.
+When writing a page from an encrypted file that is using
+filesystem-layer encryption (not inline encryption), ext4 encrypts the
+pagecache page into a bounce page, then writes the bounce page.
 
-Fixes: edde5584c7ab ("riscv: Add SW single-step support for KDB")
-Signed-off-by: Liao Chang <liaochang1@huawei.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Fixes: c9c1af3f186a ("RISC-V: rename parse_asm.h to insn.h")
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20230129094242.282620-1-liaochang1@huawei.com
+It also passes the bounce page to wbc_account_cgroup_owner().  That's
+incorrect, because the bounce page is a newly allocated temporary page
+that doesn't have the memory cgroup of the original pagecache page.
+This makes wbc_account_cgroup_owner() not account the I/O to the owner
+of the pagecache page as it should.
+
+Fix this by always passing the pagecache page to
+wbc_account_cgroup_owner().
+
+Fixes: 001e4a8775f6 ("ext4: implement cgroup writeback support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230203005503.141557-1-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/parse_asm.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ext4/page-io.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/arch/riscv/include/asm/parse_asm.h b/arch/riscv/include/asm/parse_asm.h
-index f36368de839f5..3cd00332d70f5 100644
---- a/arch/riscv/include/asm/parse_asm.h
-+++ b/arch/riscv/include/asm/parse_asm.h
-@@ -3,6 +3,9 @@
-  * Copyright (C) 2020 SiFive
-  */
+--- a/fs/ext4/page-io.c
++++ b/fs/ext4/page-io.c
+@@ -413,7 +413,8 @@ static void io_submit_init_bio(struct ex
  
-+#ifndef _ASM_RISCV_INSN_H
-+#define _ASM_RISCV_INSN_H
-+
- #include <linux/bits.h>
+ static void io_submit_add_bh(struct ext4_io_submit *io,
+ 			     struct inode *inode,
+-			     struct page *page,
++			     struct page *pagecache_page,
++			     struct page *bounce_page,
+ 			     struct buffer_head *bh)
+ {
+ 	int ret;
+@@ -427,10 +428,11 @@ submit_and_retry:
+ 		io_submit_init_bio(io, bh);
+ 		io->io_bio->bi_write_hint = inode->i_write_hint;
+ 	}
+-	ret = bio_add_page(io->io_bio, page, bh->b_size, bh_offset(bh));
++	ret = bio_add_page(io->io_bio, bounce_page ?: pagecache_page,
++			   bh->b_size, bh_offset(bh));
+ 	if (ret != bh->b_size)
+ 		goto submit_and_retry;
+-	wbc_account_cgroup_owner(io->io_wbc, page, bh->b_size);
++	wbc_account_cgroup_owner(io->io_wbc, pagecache_page, bh->b_size);
+ 	io->io_next_block++;
+ }
  
- /* The bit field of immediate value in I-type instruction */
-@@ -217,3 +220,5 @@ static inline bool is_ ## INSN_NAME ## _insn(long insn) \
- 	(RVC_X(x_, RVC_B_IMM_5_OPOFF, RVC_B_IMM_5_MASK) << RVC_B_IMM_5_OFF) | \
- 	(RVC_X(x_, RVC_B_IMM_7_6_OPOFF, RVC_B_IMM_7_6_MASK) << RVC_B_IMM_7_6_OFF) | \
- 	(RVC_IMM_SIGN(x_) << RVC_B_IMM_SIGN_OFF); })
-+
-+#endif /* _ASM_RISCV_INSN_H */
--- 
-2.39.2
-
+@@ -548,8 +550,7 @@ int ext4_bio_write_page(struct ext4_io_s
+ 	do {
+ 		if (!buffer_async_write(bh))
+ 			continue;
+-		io_submit_add_bh(io, inode,
+-				 bounce_page ? bounce_page : page, bh);
++		io_submit_add_bh(io, inode, page, bounce_page, bh);
+ 		nr_submitted++;
+ 		clear_buffer_dirty(bh);
+ 	} while ((bh = bh->b_this_page) != head);
 
 
