@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC574431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:25:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E62C433EF;
-	Wed, 15 Mar 2023 12:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424554431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:25:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC239C433D2;
+	Wed, 15 Mar 2023 12:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883132;
-	bh=ZsowzgbMxLxIFkdvBINhxiT3rHrj9ISiycPqOuoFcoA=;
+	s=korg; t=1678883135;
+	bh=EaOTyIVLzC/qsRMkAu1Rjc6VL6Ws/BbRAg4Twaajnrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oBsKxpB5c/ch9CfM5waz0Mg27eRU65eTr/yZ4zpGVY3KHJHI2q0Ft/OCEZe2S1K9T
-	 tHMKoL4kVh0G7Mvu99F8XghlzMtsl/fBfsbWzu7ZTgdZxV5M+uIfLdTVRrKw6KlBJX
-	 2yV3MORutRY86VKLA3wX4GT0FNYFvoiS3ZXmY+JA=
+	b=QG4MHUmRvYMJHz6W/4bo8Xo+l68ITgjSUO6Nppxa8pmRXyx8lac3XfBlyQ7+xvGUZ
+	 LXTpKiT+AKHwMqple3IYoNmBB4Nbc4NbiF2ImfuN691tv8DYq/gf1vf/g6xhBHnllR
+	 pYHk6NZQ+QK+j5crJQbvD1D/Dzf2/i1fWcS3wkOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randall Huang <huangrandall@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Corey Minyard <cminyard@mvista.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/145] f2fs: retry to update the inode page given data corruption
-Date: Wed, 15 Mar 2023 13:11:33 +0100
-Message-Id: <20230315115739.932295669@linuxfoundation.org>
+Subject: [PATCH 5.15 028/145] ipmi:ssif: Increase the message retry time
+Date: Wed, 15 Mar 2023 13:11:34 +0100
+Message-Id: <20230315115739.961712828@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -36,55 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Corey Minyard <cminyard@mvista.com>
 
-[ Upstream commit 3aa51c61cb4a4dcb40df51ac61171e9ac5a35321 ]
+[ Upstream commit 39721d62bbc16ebc9bb2bdc2c163658f33da3b0b ]
 
-If the storage gives a corrupted node block due to short power failure and
-reset, f2fs stops the entire operations by setting the checkpoint failure flag.
+The spec states that the minimum message retry time is 60ms, but it was
+set to 20ms.  Correct it.
 
-Let's give more chances to live by re-issuing IOs for a while in such critical
-path.
-
-Cc: stable@vger.kernel.org
-Suggested-by: Randall Huang <huangrandall@google.com>
-Suggested-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Reported by: Tony Camuso <tcamuso@redhat.com>
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Stable-dep-of: 00bb7e763ec9 ("ipmi:ssif: Add a timer between request retries")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/inode.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/char/ipmi/ipmi_ssif.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index 2fa0fcffe0c6d..94e21136d5790 100644
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -681,17 +681,19 @@ void f2fs_update_inode_page(struct inode *inode)
- {
- 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
- 	struct page *node_page;
-+	int count = 0;
- retry:
- 	node_page = f2fs_get_node_page(sbi, inode->i_ino);
- 	if (IS_ERR(node_page)) {
- 		int err = PTR_ERR(node_page);
+diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
+index 427bf618c4470..cae21632cf079 100644
+--- a/drivers/char/ipmi/ipmi_ssif.c
++++ b/drivers/char/ipmi/ipmi_ssif.c
+@@ -74,7 +74,7 @@
+ /*
+  * Timer values
+  */
+-#define SSIF_MSG_USEC		20000	/* 20ms between message tries. */
++#define SSIF_MSG_USEC		60000	/* 60ms between message tries. */
+ #define SSIF_MSG_PART_USEC	5000	/* 5ms for a message part */
  
--		if (err == -ENOMEM) {
--			cond_resched();
-+		/* The node block was truncated. */
-+		if (err == -ENOENT)
-+			return;
-+
-+		if (err == -ENOMEM || ++count <= DEFAULT_RETRY_IO_COUNT)
- 			goto retry;
--		} else if (err != -ENOENT) {
--			f2fs_stop_checkpoint(sbi, false);
--		}
-+		f2fs_stop_checkpoint(sbi, false);
- 		return;
- 	}
- 	f2fs_update_inode(inode, node_page);
+ /* How many times to we retry sending/receiving the message. */
 -- 
 2.39.2
 
