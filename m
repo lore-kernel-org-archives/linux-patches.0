@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43554431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:36:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2C2C433EF;
-	Wed, 15 Mar 2023 12:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823774431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:36:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0766BC433EF;
+	Wed, 15 Mar 2023 12:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883810;
-	bh=7/gkUGHCW596SjNKfzp4ZFeqoZP/cvptV8o7p4P1Wlg=;
+	s=korg; t=1678883813;
+	bh=YMkGfqhtVVRntZQtIZW6/iXzudIUL/DIYNm30z+KvM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2MuKOIsozZiRA1IAkJMq6FgEzIpokySYMJql1tUzg8lERaMKMjer7zBJNmSuHXVif
-	 J9NpYuTOLnJrxI3JCz1zNuYtbjvU/v18Rw7YNIbT8aBTo6OL5tLFePeNP4570+Ym0M
-	 k5aWxJUa2FjtFR/4FPs/MI6NxDjDr41aP9ItqGfE=
+	b=V4D+T7MIVWcuKAm/z6WN08/FsPKBE9q8IuRAuX8uOsZWfV6iZiH1LKxpkFuKA6sUS
+	 AEky9ytKvULX7Y3GRhfPmTz4ZJf/5rCzDXszYS/0LTA9R0kvsHHHnQgSUr5+sIpEOS
+	 UKRcF5Gx12/Ok83dfPxICDjNqOaCdkQDV5Xo+4jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Changbin Du <changbin.du@gmail.com>,
-	Palmer Dabbelt <palmerdabbelt@google.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/143] RISC-V: Dont check text_mutex during stop_machine
-Date: Wed, 15 Mar 2023 13:13:19 +0100
-Message-Id: <20230315115743.932272562@linuxfoundation.org>
+	Nevenko Stupar <Nevenko.Stupar@amd.com>,
+	Alan Liu <HaoPing.Liu@amd.com>,
+	Samson Tam <Samson.Tam@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 140/143] drm/amd/display: adjust MALL size available for DCN32 and DCN321
+Date: Wed, 15 Mar 2023 13:13:46 +0100
+Message-Id: <20230315115744.882048253@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -38,161 +37,179 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Samson Tam <Samson.Tam@amd.com>
 
-[ Upstream commit 2a8db5ec4a28a0fce822d10224db9471a44b6925 ]
+commit 235fef6c7fd341026eee90cc546e6e8ff8b2c315 upstream.
 
-We're currently using stop_machine() to update ftrace & kprobes, which
-means that the thread that takes text_mutex during may not be the same
-as the thread that eventually patches the code.  This isn't actually a
-race because the lock is still held (preventing any other concurrent
-accesses) and there is only one thread running during stop_machine(),
-but it does trigger a lockdep failure.
+[Why]
+MALL size available can vary for different SKUs.
+Use num_chans read from VBIOS to determine the available MALL size we can use
 
-This patch just elides the lockdep check during stop_machine.
+[How]
+Define max_chans for DCN32 and DCN321.
+If num_chans is max_chans, then return max_chans as we can access the
+ entire MALL space.
+Otherwise, define avail_chans as the number of available channels we are
+ allowed instead.
+Return corresponding number of channels back and use this to calculate
+ available MALL size.
 
-Fixes: c15ac4fd60d5 ("riscv/ftrace: Add dynamic function tracer support")
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Reported-by: Changbin Du <changbin.du@gmail.com>
-Signed-off-by: Palmer Dabbelt <palmerdabbelt@google.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20230303143754.4005217-1-conor.dooley@microchip.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Nevenko Stupar <Nevenko.Stupar@amd.com>
+Acked-by: Alan Liu <HaoPing.Liu@amd.com>
+Signed-off-by: Samson Tam <Samson.Tam@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/ftrace.h |  2 +-
- arch/riscv/include/asm/patch.h  |  2 ++
- arch/riscv/kernel/ftrace.c      | 13 +++++++++++--
- arch/riscv/kernel/patch.c       | 28 +++++++++++++++++++++++++---
- 4 files changed, 39 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c   |   62 +++++++++++++++-
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.h   |    2 
+ drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c |    9 ++
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c    |    5 +
+ drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c  |    5 +
+ 5 files changed, 78 insertions(+), 5 deletions(-)
 
-diff --git a/arch/riscv/include/asm/ftrace.h b/arch/riscv/include/asm/ftrace.h
-index 9e73922e1e2e5..d47d87c2d7e3d 100644
---- a/arch/riscv/include/asm/ftrace.h
-+++ b/arch/riscv/include/asm/ftrace.h
-@@ -109,6 +109,6 @@ int ftrace_init_nop(struct module *mod, struct dyn_ftrace *rec);
- #define ftrace_init_nop ftrace_init_nop
- #endif
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+@@ -2109,13 +2109,19 @@ static bool dcn32_resource_construct(
+ 	dc->caps.max_cursor_size = 64;
+ 	dc->caps.min_horizontal_blanking_period = 80;
+ 	dc->caps.dmdata_alloc_size = 2048;
+-	dc->caps.mall_size_per_mem_channel = 0;
++	dc->caps.mall_size_per_mem_channel = 4;
+ 	dc->caps.mall_size_total = 0;
+ 	dc->caps.cursor_cache_size = dc->caps.max_cursor_size * dc->caps.max_cursor_size * 8;
  
--#endif
-+#endif /* CONFIG_DYNAMIC_FTRACE */
- 
- #endif /* _ASM_RISCV_FTRACE_H */
-diff --git a/arch/riscv/include/asm/patch.h b/arch/riscv/include/asm/patch.h
-index 9a7d7346001ee..98d9de07cba17 100644
---- a/arch/riscv/include/asm/patch.h
-+++ b/arch/riscv/include/asm/patch.h
-@@ -9,4 +9,6 @@
- int patch_text_nosync(void *addr, const void *insns, size_t len);
- int patch_text(void *addr, u32 insn);
- 
-+extern int riscv_patch_in_stop_machine;
+ 	dc->caps.cache_line_size = 64;
+ 	dc->caps.cache_num_ways = 16;
+-	dc->caps.max_cab_allocation_bytes = 67108864; // 64MB = 1024 * 1024 * 64
 +
- #endif /* _ASM_RISCV_PATCH_H */
-diff --git a/arch/riscv/kernel/ftrace.c b/arch/riscv/kernel/ftrace.c
-index 5bff37af4770b..03a6434a8cdd0 100644
---- a/arch/riscv/kernel/ftrace.c
-+++ b/arch/riscv/kernel/ftrace.c
-@@ -15,10 +15,19 @@
- void ftrace_arch_code_modify_prepare(void) __acquires(&text_mutex)
- {
- 	mutex_lock(&text_mutex);
++	/* Calculate the available MALL space */
++	dc->caps.max_cab_allocation_bytes = dcn32_calc_num_avail_chans_for_mall(
++		dc, dc->ctx->dc_bios->vram_info.num_chans) *
++		dc->caps.mall_size_per_mem_channel * 1024 * 1024;
++	dc->caps.mall_size_total = dc->caps.max_cab_allocation_bytes;
 +
+ 	dc->caps.subvp_fw_processing_delay_us = 15;
+ 	dc->caps.subvp_prefetch_end_to_mall_start_us = 15;
+ 	dc->caps.subvp_swath_height_margin_lines = 16;
+@@ -2545,3 +2551,55 @@ struct pipe_ctx *dcn32_acquire_idle_pipe
+ 
+ 	return idle_pipe;
+ }
++
++unsigned int dcn32_calc_num_avail_chans_for_mall(struct dc *dc, int num_chans)
++{
 +	/*
-+	 * The code sequences we use for ftrace can't be patched while the
-+	 * kernel is running, so we need to use stop_machine() to modify them
-+	 * for now.  This doesn't play nice with text_mutex, we use this flag
-+	 * to elide the check.
-+	 */
-+	riscv_patch_in_stop_machine = true;
- }
- 
- void ftrace_arch_code_modify_post_process(void) __releases(&text_mutex)
- {
-+	riscv_patch_in_stop_machine = false;
- 	mutex_unlock(&text_mutex);
- }
- 
-@@ -107,9 +116,9 @@ int ftrace_init_nop(struct module *mod, struct dyn_ftrace *rec)
- {
- 	int out;
- 
--	ftrace_arch_code_modify_prepare();
-+	mutex_lock(&text_mutex);
- 	out = ftrace_make_nop(mod, rec, MCOUNT_ADDR);
--	ftrace_arch_code_modify_post_process();
-+	mutex_unlock(&text_mutex);
- 
- 	return out;
- }
-diff --git a/arch/riscv/kernel/patch.c b/arch/riscv/kernel/patch.c
-index 765004b605132..e099961453cca 100644
---- a/arch/riscv/kernel/patch.c
-+++ b/arch/riscv/kernel/patch.c
-@@ -11,6 +11,7 @@
- #include <asm/kprobes.h>
- #include <asm/cacheflush.h>
- #include <asm/fixmap.h>
-+#include <asm/ftrace.h>
- #include <asm/patch.h>
- 
- struct patch_insn {
-@@ -19,6 +20,8 @@ struct patch_insn {
- 	atomic_t cpu_count;
- };
- 
-+int riscv_patch_in_stop_machine = false;
-+
- #ifdef CONFIG_MMU
- /*
-  * The fix_to_virt(, idx) needs a const value (not a dynamic variable of
-@@ -59,8 +62,15 @@ static int patch_insn_write(void *addr, const void *insn, size_t len)
- 	 * Before reaching here, it was expected to lock the text_mutex
- 	 * already, so we don't need to give another lock here and could
- 	 * ensure that it was safe between each cores.
++	 * DCN32 and DCN321 SKUs may have different sizes for MALL
++	 *  but we may not be able to access all the MALL space.
++	 *  If the num_chans is power of 2, then we can access all
++	 *  of the available MALL space.  Otherwise, we can only
++	 *  access:
 +	 *
-+	 * We're currently using stop_machine() for ftrace & kprobes, and while
-+	 * that ensures text_mutex is held before installing the mappings it
-+	 * does not ensure text_mutex is held by the calling thread.  That's
-+	 * safe but triggers a lockdep failure, so just elide it for that
-+	 * specific case.
- 	 */
--	lockdep_assert_held(&text_mutex);
-+	if (!riscv_patch_in_stop_machine)
-+		lockdep_assert_held(&text_mutex);
- 
- 	if (across_pages)
- 		patch_map(addr + len, FIX_TEXT_POKE1);
-@@ -121,13 +131,25 @@ NOKPROBE_SYMBOL(patch_text_cb);
- 
- int patch_text(void *addr, u32 insn)
- {
-+	int ret;
- 	struct patch_insn patch = {
- 		.addr = addr,
- 		.insn = insn,
- 		.cpu_count = ATOMIC_INIT(0),
- 	};
- 
--	return stop_machine_cpuslocked(patch_text_cb,
--				       &patch, cpu_online_mask);
-+	/*
-+	 * kprobes takes text_mutex, before calling patch_text(), but as we call
-+	 * calls stop_machine(), the lockdep assertion in patch_insn_write()
-+	 * gets confused by the context in which the lock is taken.
-+	 * Instead, ensure the lock is held before calling stop_machine(), and
-+	 * set riscv_patch_in_stop_machine to skip the check in
-+	 * patch_insn_write().
++	 *  max_cab_size_in_bytes = total_cache_size_in_bytes *
++	 *    ((2^floor(log2(num_chans)))/num_chans)
++	 *
++	 * Calculating the MALL sizes for all available SKUs, we
++	 *  have come up with the follow simplified check.
++	 * - we have max_chans which provides the max MALL size.
++	 *  Each chans supports 4MB of MALL so:
++	 *
++	 *  total_cache_size_in_bytes = max_chans * 4 MB
++	 *
++	 * - we have avail_chans which shows the number of channels
++	 *  we can use if we can't access the entire MALL space.
++	 *  It is generally half of max_chans
++	 * - so we use the following checks:
++	 *
++	 *   if (num_chans == max_chans), return max_chans
++	 *   if (num_chans < max_chans), return avail_chans
++	 *
++	 * - exception is GC_11_0_0 where we can't access max_chans,
++	 *  so we define max_avail_chans as the maximum available
++	 *  MALL space
++	 *
 +	 */
-+	lockdep_assert_held(&text_mutex);
-+	riscv_patch_in_stop_machine = true;
-+	ret = stop_machine_cpuslocked(patch_text_cb, &patch, cpu_online_mask);
-+	riscv_patch_in_stop_machine = false;
-+	return ret;
- }
- NOKPROBE_SYMBOL(patch_text);
--- 
-2.39.2
-
++	int gc_11_0_0_max_chans = 48;
++	int gc_11_0_0_max_avail_chans = 32;
++	int gc_11_0_0_avail_chans = 16;
++	int gc_11_0_3_max_chans = 16;
++	int gc_11_0_3_avail_chans = 8;
++	int gc_11_0_2_max_chans = 8;
++	int gc_11_0_2_avail_chans = 4;
++
++	if (ASICREV_IS_GC_11_0_0(dc->ctx->asic_id.hw_internal_rev)) {
++		return (num_chans == gc_11_0_0_max_chans) ?
++			gc_11_0_0_max_avail_chans : gc_11_0_0_avail_chans;
++	} else if (ASICREV_IS_GC_11_0_2(dc->ctx->asic_id.hw_internal_rev)) {
++		return (num_chans == gc_11_0_2_max_chans) ?
++			gc_11_0_2_max_chans : gc_11_0_2_avail_chans;
++	} else { // if (ASICREV_IS_GC_11_0_3(dc->ctx->asic_id.hw_internal_rev)) {
++		return (num_chans == gc_11_0_3_max_chans) ?
++			gc_11_0_3_max_chans : gc_11_0_3_avail_chans;
++	}
++}
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.h
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.h
+@@ -144,6 +144,8 @@ void dcn32_restore_mall_state(struct dc
+ 
+ bool dcn32_allow_subvp_with_active_margin(struct pipe_ctx *pipe);
+ 
++unsigned int dcn32_calc_num_avail_chans_for_mall(struct dc *dc, int num_chans);
++
+ /* definitions for run time init of reg offsets */
+ 
+ /* CLK SRC */
+--- a/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
+@@ -1697,11 +1697,18 @@ static bool dcn321_resource_construct(
+ 	dc->caps.max_cursor_size = 64;
+ 	dc->caps.min_horizontal_blanking_period = 80;
+ 	dc->caps.dmdata_alloc_size = 2048;
+-	dc->caps.mall_size_per_mem_channel = 0;
++	dc->caps.mall_size_per_mem_channel = 4;
+ 	dc->caps.mall_size_total = 0;
+ 	dc->caps.cursor_cache_size = dc->caps.max_cursor_size * dc->caps.max_cursor_size * 8;
+ 	dc->caps.cache_line_size = 64;
+ 	dc->caps.cache_num_ways = 16;
++
++	/* Calculate the available MALL space */
++	dc->caps.max_cab_allocation_bytes = dcn32_calc_num_avail_chans_for_mall(
++		dc, dc->ctx->dc_bios->vram_info.num_chans) *
++		dc->caps.mall_size_per_mem_channel * 1024 * 1024;
++	dc->caps.mall_size_total = dc->caps.max_cab_allocation_bytes;
++
+ 	dc->caps.max_cab_allocation_bytes = 33554432; // 32MB = 1024 * 1024 * 32
+ 	dc->caps.subvp_fw_processing_delay_us = 15;
+ 	dc->caps.subvp_prefetch_end_to_mall_start_us = 15;
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -2381,8 +2381,11 @@ void dcn32_update_bw_bounding_box_fpu(st
+ 		}
+ 
+ 		/* Override from VBIOS for num_chan */
+-		if (dc->ctx->dc_bios->vram_info.num_chans)
++		if (dc->ctx->dc_bios->vram_info.num_chans) {
+ 			dcn3_2_soc.num_chans = dc->ctx->dc_bios->vram_info.num_chans;
++			dcn3_2_soc.mall_allocated_for_dcn_mbytes = (double)(dcn32_calc_num_avail_chans_for_mall(dc,
++				dc->ctx->dc_bios->vram_info.num_chans) * dc->caps.mall_size_per_mem_channel);
++		}
+ 
+ 		if (dc->ctx->dc_bios->vram_info.dram_channel_width_bytes)
+ 			dcn3_2_soc.dram_channel_width_bytes = dc->ctx->dc_bios->vram_info.dram_channel_width_bytes;
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
+@@ -534,8 +534,11 @@ void dcn321_update_bw_bounding_box_fpu(s
+ 		}
+ 
+ 		/* Override from VBIOS for num_chan */
+-		if (dc->ctx->dc_bios->vram_info.num_chans)
++		if (dc->ctx->dc_bios->vram_info.num_chans) {
+ 			dcn3_21_soc.num_chans = dc->ctx->dc_bios->vram_info.num_chans;
++			dcn3_21_soc.mall_allocated_for_dcn_mbytes = (double)(dcn32_calc_num_avail_chans_for_mall(dc,
++				dc->ctx->dc_bios->vram_info.num_chans) * dc->caps.mall_size_per_mem_channel);
++		}
+ 
+ 		if (dc->ctx->dc_bios->vram_info.dram_channel_width_bytes)
+ 			dcn3_21_soc.dram_channel_width_bytes = dc->ctx->dc_bios->vram_info.dram_channel_width_bytes;
 
 
