@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9854431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:15:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F210C4339B;
-	Wed, 15 Mar 2023 12:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552724431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:15:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C86C4339B;
+	Wed, 15 Mar 2023 12:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882506;
-	bh=MU5EXANTWSsAxrH9VDoE9T6jLGfx/q/yU3e3ldMitrc=;
+	s=korg; t=1678882509;
+	bh=QP5IPoiSN21efxzQJiAEOxYEhmg9Fgidb+lXclVjcfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EhEx5Jxm2oNOuz5QaeV0MTq6w9e6yapWdR0rfzmzv9oOeDkqCGv8kaS/FG4QIRep3
-	 DcgQEM0ExtbA4muL72kV5QU32arbCHSjgZtkdNkLUkQijXWVdJVBAfc43jYl2OxGHt
-	 N5w2sbvcVIOa+glkMOY2aBrdyBakcmXXlihR3GHI=
+	b=BiK8xjGbIpxtwoSX0wSXdA59tGrRAJtWpvUgnHTmQhPfPBH3cYNhTaNujqY+75Hwn
+	 ggdzMJM2OFnQwiBSmFBXiUwTnVHsqqcbZq5t+tDbd9X+DBW2+mSBS4HevVjmgzKBIU
+	 wXXAfu85jmMDXFfHvwkkDFq0ToPxYKLCKSFoHlfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Elder <paul.elder@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Jai Luthra <j-luthra@ti.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 18/21] media: ov5640: Fix analogue gain control
-Date: Wed, 15 Mar 2023 13:12:41 +0100
-Message-Id: <20230315115719.517137420@linuxfoundation.org>
+	Ying Xue <ying.xue@windriver.com>,
+	Jon Maloy <jon.maloy@ericsson.com>,
+	Tung Nguyen <tung.q.nguyen@dektech.com.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 4.14 19/21] tipc: improve function tipc_wait_for_cond()
+Date: Wed, 15 Mar 2023 13:12:42 +0100
+Message-Id: <20230315115719.550974154@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115718.796692048@linuxfoundation.org>
 References: <20230315115718.796692048@linuxfoundation.org>
@@ -39,93 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Elder <paul.elder@ideasonboard.com>
+From: Tung Nguyen <tung.q.nguyen@dektech.com.au>
 
-[ Upstream commit afa4805799c1d332980ad23339fdb07b5e0cf7e0 ]
+commit 223b7329ec6a0dae1b7f7db7b770e93f4a069ef9 upstream.
 
-Gain control is badly documented in publicly available (including
-leaked) documentation.
+Commit 844cf763fba6 ("tipc: make macro tipc_wait_for_cond() smp safe")
+replaced finish_wait() with remove_wait_queue() but still used
+prepare_to_wait(). This causes unnecessary conditional
+checking  before adding to wait queue in prepare_to_wait().
 
-There is an AGC pre-gain in register 0x3a13, expressed as a 6-bit value
-(plus an enable bit in bit 6). The driver hardcodes it to 0x43, which
-one application note states is equal to x1.047. The documentation also
-states that 0x40 is equel to x1.000. The pre-gain thus seems to be
-expressed as in 1/64 increments, and thus ranges from x1.00 to x1.984.
-What the pre-gain does is however unspecified.
+This commit replaces prepare_to_wait() with add_wait_queue()
+as the pair function with remove_wait_queue().
 
-There is then an AGC gain limit, in registers 0x3a18 and 0x3a19,
-expressed as a 10-bit "real gain format" value. One application note
-sets it to 0x00f8 and states it is equal to x15.5, so it appears to be
-expressed in 1/16 increments, up to x63.9375.
-
-The manual gain is stored in registers 0x350a and 0x350b, also as a
-10-bit "real gain format" value. It is documented in the application
-note as a Q6.4 values, up to x63.9375.
-
-One version of the datasheet indicates that the sensor supports a
-digital gain:
-
-  The OV5640 supports 1/2/4 digital gain. Normally, the gain is
-  controlled automatically by the automatic gain control (AGC) block.
-
-It isn't clear how that would be controlled manually.
-
-There appears to be no indication regarding whether the gain controlled
-through registers 0x350a and 0x350b is an analogue gain only or also
-includes digital gain. The words "real gain" don't necessarily mean
-"combined analogue and digital gains". Some OmniVision sensors (such as
-the OV8858) are documented as supoprting different formats for the gain
-values, selectable through a register bit, and they are called "real
-gain format" and "sensor gain format". For that sensor, we have (one of)
-the gain registers documented as
-
-  0x3503[2]=0, gain[7:0] is real gain format, where low 4 bits are
-  fraction bits, for example, 0x10 is 1x gain, 0x28 is 2.5x gain
-
-  If 0x3503[2]=1, gain[7:0] is sensor gain format, gain[7:4] is coarse
-  gain, 00000: 1x, 00001: 2x, 00011: 4x, 00111: 8x, gain[7] is 1,
-  gain[3:0] is fine gain. For example, 0x10 is 1x gain, 0x30 is 2x gain,
-  0x70 is 4x gain
-
-(The second part of the text makes little sense)
-
-"Real gain" may thus refer to the combination of the coarse and fine
-analogue gains as a single value.
-
-The OV5640 0x350a and 0x350b registers thus appear to control analogue
-gain. The driver incorrectly uses V4L2_CID_GAIN as V4L2 has a specific
-control for analogue gain, V4L2_CID_ANALOGUE_GAIN. Use it.
-
-If registers 0x350a and 0x350b are later found to control digital gain
-as well, the driver could then restrict the range of the analogue gain
-control value to lower than x64 and add a separate digital gain control.
-
-Signed-off-by: Paul Elder <paul.elder@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Reviewed-by: Jai Luthra <j-luthra@ti.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Acked-by: Ying Xue <ying.xue@windriver.com>
+Acked-by: Jon Maloy <jon.maloy@ericsson.com>
+Signed-off-by: Tung Nguyen <tung.q.nguyen@dektech.com.au>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov5640.c | 2 +-
+ net/tipc/socket.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
-index eb0331b8a5833..b78e35425d14f 100644
---- a/drivers/media/i2c/ov5640.c
-+++ b/drivers/media/i2c/ov5640.c
-@@ -2002,7 +2002,7 @@ static int ov5640_init_controls(struct ov5640_dev *sensor)
- 	/* Auto/manual gain */
- 	ctrls->auto_gain = v4l2_ctrl_new_std(hdl, ops, V4L2_CID_AUTOGAIN,
- 					     0, 1, 1, 1);
--	ctrls->gain = v4l2_ctrl_new_std(hdl, ops, V4L2_CID_GAIN,
-+	ctrls->gain = v4l2_ctrl_new_std(hdl, ops, V4L2_CID_ANALOGUE_GAIN,
- 					0, 1023, 1, 0);
- 
- 	ctrls->saturation = v4l2_ctrl_new_std(hdl, ops, V4L2_CID_SATURATION,
--- 
-2.39.2
-
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -373,7 +373,7 @@ static int tipc_sk_sock_err(struct socke
+ 		rc_ = tipc_sk_sock_err((sock_), timeo_);		       \
+ 		if (rc_)						       \
+ 			break;						       \
+-		prepare_to_wait(sk_sleep(sk_), &wait_, TASK_INTERRUPTIBLE);    \
++		add_wait_queue(sk_sleep(sk_), &wait_);                         \
+ 		release_sock(sk_);					       \
+ 		*(timeo_) = wait_woken(&wait_, TASK_INTERRUPTIBLE, *(timeo_)); \
+ 		sched_annotate_sleep();				               \
 
 
