@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401824431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:30:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8224AC433EF;
-	Wed, 15 Mar 2023 12:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11CD4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:30:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6E5C433EF;
+	Wed, 15 Mar 2023 12:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883416;
-	bh=Qg+PFJ0nwM/TuAdSfd5lfARRtcdUVf6B93PGm3/dEjY=;
+	s=korg; t=1678883418;
+	bh=+effdjfC/iKhxl10KEpAkVUiTRlr463FYn8RFiE1CPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fgozbtRdewhlt1/KazZzHyaqhKp8Ho1jyebQbd26ldUxZcy9QRkWgbrHlZdTQv5bR
-	 oYY5FUVVP+Z1VgFqCJw5LP4Q1E9cWU2/5x26t9bg+nDOweTEA56q1PXcBJMjEic9zX
-	 UMK109oAwYmEcwPpHoUV3XBZC1foG6mI1UYAsWsk=
+	b=S23Xfel9JNVijBsRa/blR1eXDS4Pkv0MUQ9k5O+8tbdIqOI2medDnN98ernHI5rpZ
+	 KadMGDk2LrGDd4mCp2hmTAqz793eUw2d7wNxFDawXrSG6Sp4v+fQz88qJfj67yPSLs
+	 jeg4jUZE8hd7ddF+RUbnPoQtg7IB+PBKrmOLG9ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andres Freund <andres@anarazel.de>,
+	Ben Hutchings <benh@debian.org>,
 	Quentin Monnet <quentin@isovalent.com>,
 	Alexei Starovoitov <ast@kernel.org>,
-	Ben Hutchings <benh@debian.org>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Sedat Dilek <sedat.dilek@gmail.com>,
 	bpf@vger.kernel.org,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Hauke Mehrtens <hauke@hauke-m.de>
-Subject: [PATCH 5.15 134/145] tools build: Add feature test for init_disassemble_info API changes
-Date: Wed, 15 Mar 2023 13:13:20 +0100
-Message-Id: <20230315115743.352986008@linuxfoundation.org>
+Subject: [PATCH 5.15 135/145] tools include: add dis-asm-compat.h to handle version differences
+Date: Wed, 15 Mar 2023 13:13:21 +0100
+Message-Id: <20230315115743.381654201@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -43,7 +43,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Andres Freund <andres@anarazel.de>
 
-commit cfd59ca91467056bb2c36907b2fa67b8e1af9952 upstream.
+commit a45b3d6926231c3d024ea0de4f7bd967f83709ee upstream.
 
 binutils changed the signature of init_disassemble_info(), which now causes
 compilation failures for tools/{perf,bpf}, e.g. on debian unstable.
@@ -52,10 +52,15 @@ Relevant binutils commit:
 
   https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=60a3da00bd5407f07
 
-This commit adds a feature test to detect the new signature.  Subsequent
+This commit introduces a wrapper for init_disassemble_info(), to avoid
+spreading #ifdef DISASM_INIT_STYLED to a bunch of places. Subsequent
 commits will use it to fix the build failures.
 
+It likely is worth adding a wrapper for disassember(), to avoid the already
+existing DISASM_FOUR_ARGS_SIGNATURE ifdefery.
+
 Signed-off-by: Andres Freund <andres@anarazel.de>
+Signed-off-by: Ben Hutchings <benh@debian.org>
 Acked-by: Quentin Monnet <quentin@isovalent.com>
 Cc: Alexei Starovoitov <ast@kernel.org>
 Cc: Ben Hutchings <benh@debian.org>
@@ -64,76 +69,72 @@ Cc: Quentin Monnet <quentin@isovalent.com>
 Cc: Sedat Dilek <sedat.dilek@gmail.com>
 Cc: bpf@vger.kernel.org
 Link: http://lore.kernel.org/lkml/20220622181918.ykrs5rsnmx3og4sv@alap3.anarazel.de
-Link: https://lore.kernel.org/r/20220801013834.156015-2-andres@anarazel.de
+Link: https://lore.kernel.org/r/20220801013834.156015-4-andres@anarazel.de
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Cc: Hauke Mehrtens <hauke@hauke-m.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/build/Makefile.feature                        |    1 +
- tools/build/feature/Makefile                        |    4 ++++
- tools/build/feature/test-all.c                      |    4 ++++
- tools/build/feature/test-disassembler-init-styled.c |   13 +++++++++++++
- 4 files changed, 22 insertions(+)
- create mode 100644 tools/build/feature/test-disassembler-init-styled.c
+ tools/include/tools/dis-asm-compat.h |   55 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
+ create mode 100644 tools/include/tools/dis-asm-compat.h
 
---- a/tools/build/Makefile.feature
-+++ b/tools/build/Makefile.feature
-@@ -69,6 +69,7 @@ FEATURE_TESTS_BASIC :=
-         libaio				\
-         libzstd				\
-         disassembler-four-args		\
-+        disassembler-init-styled	\
-         file-handle
- 
- # FEATURE_TESTS_BASIC + FEATURE_TESTS_EXTRA is the complete list
---- a/tools/build/feature/Makefile
-+++ b/tools/build/feature/Makefile
-@@ -18,6 +18,7 @@ FILES=
-          test-libbfd.bin                        \
-          test-libbfd-buildid.bin		\
-          test-disassembler-four-args.bin        \
-+         test-disassembler-init-styled.bin	\
-          test-reallocarray.bin			\
-          test-libbfd-liberty.bin                \
-          test-libbfd-liberty-z.bin              \
-@@ -239,6 +240,9 @@ $(OUTPUT)test-libbfd-buildid.bin:
- $(OUTPUT)test-disassembler-four-args.bin:
- 	$(BUILD) -DPACKAGE='"perf"' -lbfd -lopcodes
- 
-+$(OUTPUT)test-disassembler-init-styled.bin:
-+	$(BUILD) -DPACKAGE='"perf"' -lbfd -lopcodes
-+
- $(OUTPUT)test-reallocarray.bin:
- 	$(BUILD)
- 
---- a/tools/build/feature/test-all.c
-+++ b/tools/build/feature/test-all.c
-@@ -166,6 +166,10 @@
- # include "test-disassembler-four-args.c"
- #undef main
- 
-+#define main main_test_disassembler_init_styled
-+# include "test-disassembler-init-styled.c"
-+#undef main
-+
- #define main main_test_libzstd
- # include "test-libzstd.c"
- #undef main
 --- /dev/null
-+++ b/tools/build/feature/test-disassembler-init-styled.c
-@@ -0,0 +1,13 @@
-+// SPDX-License-Identifier: GPL-2.0
++++ b/tools/include/tools/dis-asm-compat.h
+@@ -0,0 +1,55 @@
++/* SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause */
++#ifndef _TOOLS_DIS_ASM_COMPAT_H
++#define _TOOLS_DIS_ASM_COMPAT_H
++
 +#include <stdio.h>
 +#include <dis-asm.h>
 +
-+int main(void)
++/* define types for older binutils version, to centralize ifdef'ery a bit */
++#ifndef DISASM_INIT_STYLED
++enum disassembler_style {DISASSEMBLER_STYLE_NOT_EMPTY};
++typedef int (*fprintf_styled_ftype) (void *, enum disassembler_style, const char*, ...);
++#endif
++
++/*
++ * Trivial fprintf wrapper to be used as the fprintf_styled_func argument to
++ * init_disassemble_info_compat() when normal fprintf suffices.
++ */
++static inline int fprintf_styled(void *out,
++				 enum disassembler_style style,
++				 const char *fmt, ...)
 +{
-+	struct disassemble_info info;
++	va_list args;
++	int r;
 +
-+	init_disassemble_info(&info, stdout,
-+			      NULL, NULL);
++	(void)style;
 +
-+	return 0;
++	va_start(args, fmt);
++	r = vfprintf(out, fmt, args);
++	va_end(args);
++
++	return r;
 +}
++
++/*
++ * Wrapper for init_disassemble_info() that hides version
++ * differences. Depending on binutils version and architecture either
++ * fprintf_func or fprintf_styled_func will be called.
++ */
++static inline void init_disassemble_info_compat(struct disassemble_info *info,
++						void *stream,
++						fprintf_ftype unstyled_func,
++						fprintf_styled_ftype styled_func)
++{
++#ifdef DISASM_INIT_STYLED
++	init_disassemble_info(info, stream,
++			      unstyled_func,
++			      styled_func);
++#else
++	(void)styled_func;
++	init_disassemble_info(info, stream,
++			      unstyled_func);
++#endif
++}
++
++#endif /* _TOOLS_DIS_ASM_COMPAT_H */
 
 
