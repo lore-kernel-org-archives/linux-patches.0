@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FE34431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F145C433D2;
-	Wed, 15 Mar 2023 12:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9055A4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15428C433EF;
+	Wed, 15 Mar 2023 12:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884015;
-	bh=TKgu6FVYSQdUVPlBrQVe67ZlQuSVFm7aTrLFfLhlk3c=;
+	s=korg; t=1678884018;
+	bh=cftPmR09EZ9EgGVAbjOlLRAjGqm1McqHv46B+kkKJA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CzUUqEP4BA+moO/CswqhuTFCWPPdK3i5f0wf3vtwxvPGT67keWUR8eYzNANMQ5JEX
-	 Knl1Eordv3/2HUoWIYBJw2FlgMgb4tXL2ctdek+kl6S9Bgu6LNc7Hz9KqdOwf0vvcg
-	 ByDsMlgZw6X1NzB4WIqDd4xGoFymd8lEn9EBHe0U=
+	b=hF2RoL/KFglMC2zJdLfm6BVXZWHMcfxNBbu9wnaFogLRj0v1LX2So+iWDmosbXb/s
+	 ad3T12arqZUWeLucmAe+l8tuc+sjmBUYSeKdAfJkWizdkaSslmHurmgZ2pDrDkg+F0
+	 lAmpI3RvVuOKXemRqqYSAc9ccrqcS54VjHJlQPEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+	Jami Kettunen <jami.kettunen@somainline.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 075/141] drm/msm/dpu: drop DPU_DIM_LAYER from MIXER_MSM8998_MASK
-Date: Wed, 15 Mar 2023 13:12:58 +0100
-Message-Id: <20230315115742.254173288@linuxfoundation.org>
+Subject: [PATCH 6.2 076/141] drm/msm/dpu: fix clocks settings for msm8998 SSPP blocks
+Date: Wed, 15 Mar 2023 13:12:59 +0100
+Message-Id: <20230315115742.283627477@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -37,36 +40,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit a5045b00a68171de11603812f4304179ef608e60 ]
+[ Upstream commit 0abb6a24aabc1252eae75fe23b0ccd3217c6ee07 ]
 
-The msm8998 doesn't seem to support DIM_LAYER, so drop it from
-the supported features mask.
+DMA2 and DMA3 planes on msm8998 should use corresponding DMA2 and DMA3
+clocks rather than CURSOR0/1 clocks (which are used for the CURSOR
+planes). Correct corresponding SSPP declarations.
 
-Fixes: 2d8a4edb672d ("drm/msm/dpu: use feature bit for LM combined alpha check")
 Fixes: 94391a14fc27 ("drm/msm/dpu1: Add MSM8998 to hw catalog")
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Cc: Jami Kettunen <jami.kettunen@somainline.org>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/522231/
-Link: https://lore.kernel.org/r/20230211231259.1308718-12-dmitry.baryshkov@linaro.org
+Patchwork: https://patchwork.freedesktop.org/patch/522230/
+Link: https://lore.kernel.org/r/20230211231259.1308718-13-dmitry.baryshkov@linaro.org
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index e03db98ebe997..a6288f29f0035 100644
+index a6288f29f0035..a5268207ab1fe 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -52,7 +52,7 @@
- 	(DMA_MSM8998_MASK | BIT(DPU_SSPP_CURSOR))
+@@ -838,9 +838,9 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
+ 	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_MSM8998_MASK,
+ 		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+ 	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_MSM8998_MASK,
+-		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
++		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+ 	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_MSM8998_MASK,
+-		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
++		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
+ };
  
- #define MIXER_MSM8998_MASK \
--	(BIT(DPU_MIXER_SOURCESPLIT) | BIT(DPU_DIM_LAYER))
-+	(BIT(DPU_MIXER_SOURCESPLIT))
- 
- #define MIXER_SDM845_MASK \
- 	(BIT(DPU_MIXER_SOURCESPLIT) | BIT(DPU_DIM_LAYER) | BIT(DPU_MIXER_COMBINED_ALPHA))
+ static const struct dpu_sspp_cfg sdm845_sspp[] = {
 -- 
 2.39.2
 
