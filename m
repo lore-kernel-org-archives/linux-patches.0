@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61DA4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 440D5C433D2;
-	Wed, 15 Mar 2023 12:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D3D4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E02C433D2;
+	Wed, 15 Mar 2023 12:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883016;
-	bh=gs2EdYSFyUq5kIMG7E5WZr43xWdWWAFHC/b9kH+L1vM=;
+	s=korg; t=1678883019;
+	bh=S8POfWpTMGqgZNVN6cqtn6k3LcjJgKzPDpgYFoPhBv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A6Q6hm7FYhjvbrgqZYO6TNAs9ySmAaVpBAk+LDQOo+3JJtwTyQmEDmWzUQnL1Uy5T
-	 80QPRc/v1+rW1Pb44b4YimZXI3qZDPvBhIAMrL22tzdj24uu/ev5pYfoEhOwTWXlWu
-	 wOMMCjs/WV9amyX/sYubajEp9ly89xs5qtxlWhH4=
+	b=fa49I8dTCnYXRX3uI1qd9SJEqZwwFgdJkuIymf+6licxYLDc07lnUzzPeSCJ0KaPL
+	 sCoNvjVHWLDxodkj8a52OsC6QmK9KfB43/EbrTBcLhQMQ5Kihsd/9maxeH8FlNcc+a
+	 6nYnbmP69wkhnKbgOsMUeP5Ib6nOhrJxPzAE7gsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	"Qais Yousef (Google)" <qyousef@layalina.io>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>
-Subject: [PATCH 5.10 089/104] sched/uclamp: Fix a uninitialized variable warnings
-Date: Wed, 15 Mar 2023 13:13:00 +0100
-Message-Id: <20230315115735.654254040@linuxfoundation.org>
+	Alvaro Karsz <alvaro.karsz@solid-run.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 072/104] PCI: Add SolidRun vendor ID
+Date: Wed, 15 Mar 2023 13:12:43 +0100
+Message-Id: <20230315115734.943466354@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -37,94 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qyousef@layalina.io>
+From: Alvaro Karsz <alvaro.karsz@solid-run.com>
 
-commit e26fd28db82899be71b4b949527373d0a6be1e65 upstream.
+[ Upstream commit db6c4dee4c104f50ed163af71c53bfdb878a8318 ]
 
-Addresses the following warnings:
+Add SolidRun vendor ID to pci_ids.h
 
-> config: riscv-randconfig-m031-20221111
-> compiler: riscv64-linux-gcc (GCC) 12.1.0
->
-> smatch warnings:
-> kernel/sched/fair.c:7263 find_energy_efficient_cpu() error: uninitialized symbol 'util_min'.
-> kernel/sched/fair.c:7263 find_energy_efficient_cpu() error: uninitialized symbol 'util_max'.
+The vendor ID is used in 2 different source files, the SNET vDPA driver
+and PCI quirks.
 
-Fixes: 244226035a1f ("sched/uclamp: Fix fits_capacity() check in feec()")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20230112122708.330667-2-qyousef@layalina.io
-(cherry picked from commit e26fd28db82899be71b4b949527373d0a6be1e65)
-[Conflict in kernel/sched/fair.c due to new automatic variable in
-master vs 5.10 and new code around for loop]
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alvaro Karsz <alvaro.karsz@solid-run.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Message-Id: <20230110165638.123745-2-alvaro.karsz@solid-run.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c |   35 ++++++++++++++++-------------------
- 1 file changed, 16 insertions(+), 19 deletions(-)
+ include/linux/pci_ids.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -6799,9 +6799,9 @@ static int find_energy_efficient_cpu(str
- 		goto unlock;
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index 2e1935917c241..4b34a5c125999 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -3115,6 +3115,8 @@
  
- 	for (; pd; pd = pd->next) {
-+		unsigned long util_min = p_util_min, util_max = p_util_max;
- 		unsigned long cur_delta, spare_cap, max_spare_cap = 0;
- 		unsigned long rq_util_min, rq_util_max;
--		unsigned long util_min, util_max;
- 		unsigned long base_energy_pd;
- 		int max_spare_cap_cpu = -1;
+ #define PCI_VENDOR_ID_3COM_2		0xa727
  
-@@ -6810,6 +6810,8 @@ static int find_energy_efficient_cpu(str
- 		base_energy += base_energy_pd;
- 
- 		for_each_cpu_and(cpu, perf_domain_span(pd), sched_domain_span(sd)) {
-+			struct rq *rq = cpu_rq(cpu);
++#define PCI_VENDOR_ID_SOLIDRUN		0xd063
 +
- 			if (!cpumask_test_cpu(cpu, p->cpus_ptr))
- 				continue;
+ #define PCI_VENDOR_ID_DIGIUM		0xd161
+ #define PCI_DEVICE_ID_DIGIUM_HFC4S	0xb410
  
-@@ -6825,24 +6827,19 @@ static int find_energy_efficient_cpu(str
- 			 * much capacity we can get out of the CPU; this is
- 			 * aligned with schedutil_cpu_util().
- 			 */
--			if (uclamp_is_used()) {
--				if (uclamp_rq_is_idle(cpu_rq(cpu))) {
--					util_min = p_util_min;
--					util_max = p_util_max;
--				} else {
--					/*
--					 * Open code uclamp_rq_util_with() except for
--					 * the clamp() part. Ie: apply max aggregation
--					 * only. util_fits_cpu() logic requires to
--					 * operate on non clamped util but must use the
--					 * max-aggregated uclamp_{min, max}.
--					 */
--					rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
--					rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
--
--					util_min = max(rq_util_min, p_util_min);
--					util_max = max(rq_util_max, p_util_max);
--				}
-+			if (uclamp_is_used() && !uclamp_rq_is_idle(rq)) {
-+				/*
-+				 * Open code uclamp_rq_util_with() except for
-+				 * the clamp() part. Ie: apply max aggregation
-+				 * only. util_fits_cpu() logic requires to
-+				 * operate on non clamped util but must use the
-+				 * max-aggregated uclamp_{min, max}.
-+				 */
-+				rq_util_min = uclamp_rq_get(rq, UCLAMP_MIN);
-+				rq_util_max = uclamp_rq_get(rq, UCLAMP_MAX);
-+
-+				util_min = max(rq_util_min, p_util_min);
-+				util_max = max(rq_util_max, p_util_max);
- 			}
- 			if (!util_fits_cpu(util, util_min, util_max, cpu))
- 				continue;
+-- 
+2.39.2
+
 
 
