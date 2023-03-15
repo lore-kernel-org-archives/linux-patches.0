@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BE54431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684ACC433EF;
-	Wed, 15 Mar 2023 12:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797464431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC17C433EF;
+	Wed, 15 Mar 2023 12:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882756;
-	bh=Zb+qb2mnwGVTQt0Nyrh6RdVl0Ee/4pmjRMBFtg3Xb+g=;
+	s=korg; t=1678882759;
+	bh=iPXiyCrAkpj3jmOYfdi5wQvQTQ+rXPBX1iIHnMOYdw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RUSk0ZFvf46pWMWnG8VIBtAABXtLj4TEKfmqzj9bkfN3FZXAj76eUUKvBH/WJTS4r
-	 nLJjV0Yq5BAMvwEm0ZupCW8HJoHZNauXoWvN55Kt4P2wThWuyNGU5uPN+/dgXG1qJ7
-	 zR5tzyyQAsSmPL2f5ybrBr9lweejDyNoL+3/j4oY=
+	b=0SlCfZnkKM+4gVtI9tZQno/eKA0H/iqe+wyw7LchPCaVSJSJuS5xEkLqg9Mpt6vQp
+	 fPJZmLtzccWrmVCSGTRigv28JuYaKfNV9cLVd0qFFoxXqAvYr4BgivJER4lKSH0Hez
+	 x+PAoMYJBpGJY40VSFqqhPCTVX+rv7L0D0bn//Ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Lundin <glance@acc.umu.se>,
-	Corey Minyard <cminyard@mvista.com>,
-	Stable@vger.kernel.org
-Subject: [PATCH 5.4 59/68] ipmi:watchdog: Set panic count to proper value on a panic
-Date: Wed, 15 Mar 2023 13:12:53 +0100
-Message-Id: <20230315115728.421508081@linuxfoundation.org>
+	John Harrison <John.C.Harrison@Intel.com>,
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	intel-gfx@lists.freedesktop.org,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 5.4 60/68] drm/i915: Dont use BAR mappings for ring buffers with LLC
+Date: Wed, 15 Mar 2023 13:12:54 +0100
+Message-Id: <20230315115728.456218699@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -35,58 +42,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corey Minyard <cminyard@mvista.com>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-commit db05ddf7f321634c5659a0cf7ea56594e22365f7 upstream.
+commit 85636167e3206c3fbd52254fc432991cc4e90194 upstream.
 
-You will get two decrements when the messages on a panic are sent, not
-one, since commit 2033f6858970 ("ipmi: Free receive messages when in an
-oops") was added, but the watchdog code had a bug where it didn't set
-the value properly.
+Direction from hardware is that ring buffers should never be mapped
+via the BAR on systems with LLC. There are too many caching pitfalls
+due to the way BAR accesses are routed. So it is safest to just not
+use it.
 
-Reported-by: Anton Lundin <glance@acc.umu.se>
-Cc: <Stable@vger.kernel.org> # v5.4+
-Fixes: 2033f6858970 ("ipmi: Free receive messages when in an oops")
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Fixes: 9d80841ea4c9 ("drm/i915: Allow ringbuffers to be bound anywhere")
+Cc: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc: intel-gfx@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v4.9+
+Tested-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230216011101.1909009-3-John.C.Harrison@Intel.com
+(cherry picked from commit 65c08339db1ada87afd6cfe7db8e60bb4851d919)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_watchdog.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_ringbuffer.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/char/ipmi/ipmi_watchdog.c
-+++ b/drivers/char/ipmi/ipmi_watchdog.c
-@@ -498,7 +498,7 @@ static void panic_halt_ipmi_heartbeat(vo
- 	msg.cmd = IPMI_WDOG_RESET_TIMER;
- 	msg.data = NULL;
- 	msg.data_len = 0;
--	atomic_inc(&panic_done_count);
-+	atomic_add(2, &panic_done_count);
- 	rv = ipmi_request_supply_msgs(watchdog_user,
- 				      (struct ipmi_addr *) &addr,
- 				      0,
-@@ -508,7 +508,7 @@ static void panic_halt_ipmi_heartbeat(vo
- 				      &panic_halt_heartbeat_recv_msg,
- 				      1);
- 	if (rv)
--		atomic_dec(&panic_done_count);
-+		atomic_sub(2, &panic_done_count);
- }
+--- a/drivers/gpu/drm/i915/gt/intel_ringbuffer.c
++++ b/drivers/gpu/drm/i915/gt/intel_ringbuffer.c
+@@ -1208,7 +1208,7 @@ int intel_ring_pin(struct intel_ring *ri
+ 	if (unlikely(ret))
+ 		goto err_unpin;
  
- static struct ipmi_smi_msg panic_halt_smi_msg = {
-@@ -532,12 +532,12 @@ static void panic_halt_ipmi_set_timeout(
- 	/* Wait for the messages to be free. */
- 	while (atomic_read(&panic_done_count) != 0)
- 		ipmi_poll_interface(watchdog_user);
--	atomic_inc(&panic_done_count);
-+	atomic_add(2, &panic_done_count);
- 	rv = __ipmi_set_timeout(&panic_halt_smi_msg,
- 				&panic_halt_recv_msg,
- 				&send_heartbeat_now);
- 	if (rv) {
--		atomic_dec(&panic_done_count);
-+		atomic_sub(2, &panic_done_count);
- 		pr_warn("Unable to extend the watchdog timeout\n");
- 	} else {
- 		if (send_heartbeat_now)
+-	if (i915_vma_is_map_and_fenceable(vma))
++	if (i915_vma_is_map_and_fenceable(vma) && !HAS_LLC(vma->vm->i915))
+ 		addr = (void __force *)i915_vma_pin_iomap(vma);
+ 	else
+ 		addr = i915_gem_object_pin_map(vma->obj,
+@@ -1252,7 +1252,7 @@ void intel_ring_unpin(struct intel_ring
+ 	intel_ring_reset(ring, ring->emit);
+ 
+ 	i915_vma_unset_ggtt_write(vma);
+-	if (i915_vma_is_map_and_fenceable(vma))
++	if (i915_vma_is_map_and_fenceable(vma) && !HAS_LLC(vma->vm->i915))
+ 		i915_vma_unpin_iomap(vma);
+ 	else
+ 		i915_gem_object_unpin_map(vma->obj);
 
 
