@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3D74431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:31:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36E7C433D2;
-	Wed, 15 Mar 2023 12:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E39F4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:31:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F2BC433D2;
+	Wed, 15 Mar 2023 12:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883507;
-	bh=pY5oKRL/60m1hFyGM31zA6AIXDpuAGgqf/QG1Ny+1ZM=;
+	s=korg; t=1678883509;
+	bh=oAj3a8zBdQPL1iksqqE1IHK07xHEVszduSq/Z6/7/Ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rqe4azQsMtNbfkz5kxYShO0XRnsD6aU5HTXfBC5hkRU92VGrZXUeurtvyPcR/nkP5
-	 M4DY1VJLnYAhT5SmFy/Stm6SeygBsb5OK4dgr2R8V172uNb0fFbFta57n2f9MVX/n/
-	 2T6OXNrjzIJ5JGpYN1qxKsZND7s54tIsdndKcRoU=
+	b=2BdzndavkEY0Dl+UNUDXnCl/Ap30TpFgydNYBjReV3IjtBUt1sTs6PG4Q+CIQJfjD
+	 BJiXPT9//UGjH1wFCF7XuX/7QXrJGRwMJF9hdZY9Am6SgGQ85VTLVd14OyrUSlaswm
+	 CJ5woF7SM5GG7Ngh9rYcMD+XJUlkfuqHLbqcJ7xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 025/143] nfc: change order inside nfc_se_io error path
-Date: Wed, 15 Mar 2023 13:11:51 +0100
-Message-Id: <20230315115741.268204990@linuxfoundation.org>
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 026/143] KVM: VMX: Reset eVMCS controls in VP assist page during hardware disabling
+Date: Wed, 15 Mar 2023 13:11:52 +0100
+Message-Id: <20230315115741.296683455@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -35,38 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 7d834b4d1ab66c48e8c0810fdeadaabb80fa2c81 upstream.
+[ Upstream commit 2916b70fc342719f570640de07251b7f91feebdb ]
 
-cb_context should be freed on the error path in nfc_se_io as stated by
-commit 25ff6f8a5a3b ("nfc: fix memory leak of se_io context in
-nfc_genl_se_io").
+Reset the eVMCS controls in the per-CPU VP assist page during hardware
+disabling instead of waiting until kvm-intel's module exit.  The controls
+are activated if and only if KVM creates a VM, i.e. don't need to be
+reset if hardware is never enabled.
 
-Make the error path in nfc_se_io unwind everything in reverse order, i.e.
-free the cb_context after unlocking the device.
+Doing the reset during hardware disabling will naturally fix a potential
+NULL pointer deref bug once KVM disables CPU hotplug while enabling and
+disabling hardware (which is necessary to fix a variety of bugs).  If the
+kernel is running as the root partition, the VP assist page is unmapped
+during CPU hot unplug, and so KVM's clearing of the eVMCS controls needs
+to occur with CPU hot(un)plug disabled, otherwise KVM could attempt to
+write to a CPU's VP assist page after it's unmapped.
 
-Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230306212650.230322-1-pchelkin@ispras.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Message-Id: <20221130230934.1014142-11-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: e32b120071ea ("KVM: VMX: Do _all_ initialization before exposing /dev/kvm to userspace")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/netlink.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/vmx/vmx.c | 50 +++++++++++++++++++++++++-----------------
+ 1 file changed, 30 insertions(+), 20 deletions(-)
 
---- a/net/nfc/netlink.c
-+++ b/net/nfc/netlink.c
-@@ -1446,8 +1446,8 @@ static int nfc_se_io(struct nfc_dev *dev
- 	return rc;
- 
- error:
--	kfree(cb_context);
- 	device_unlock(&dev->dev);
-+	kfree(cb_context);
- 	return rc;
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index f5c1cb7cec8a7..87874b22ba4bf 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -551,6 +551,33 @@ static int hv_enable_direct_tlbflush(struct kvm_vcpu *vcpu)
+ 	return 0;
  }
  
++static void hv_reset_evmcs(void)
++{
++	struct hv_vp_assist_page *vp_ap;
++
++	if (!static_branch_unlikely(&enable_evmcs))
++		return;
++
++	/*
++	 * KVM should enable eVMCS if and only if all CPUs have a VP assist
++	 * page, and should reject CPU onlining if eVMCS is enabled the CPU
++	 * doesn't have a VP assist page allocated.
++	 */
++	vp_ap = hv_get_vp_assist_page(smp_processor_id());
++	if (WARN_ON_ONCE(!vp_ap))
++		return;
++
++	/*
++	 * Reset everything to support using non-enlightened VMCS access later
++	 * (e.g. when we reload the module with enlightened_vmcs=0)
++	 */
++	vp_ap->nested_control.features.directhypercall = 0;
++	vp_ap->current_nested_vmcs = 0;
++	vp_ap->enlighten_vmentry = 0;
++}
++
++#else /* IS_ENABLED(CONFIG_HYPERV) */
++static void hv_reset_evmcs(void) {}
+ #endif /* IS_ENABLED(CONFIG_HYPERV) */
+ 
+ /*
+@@ -2501,6 +2528,8 @@ static void vmx_hardware_disable(void)
+ 	if (cpu_vmxoff())
+ 		kvm_spurious_fault();
+ 
++	hv_reset_evmcs();
++
+ 	intel_pt_handle_vmx(0);
+ }
+ 
+@@ -8437,27 +8466,8 @@ static void vmx_exit(void)
+ 	kvm_exit();
+ 
+ #if IS_ENABLED(CONFIG_HYPERV)
+-	if (static_branch_unlikely(&enable_evmcs)) {
+-		int cpu;
+-		struct hv_vp_assist_page *vp_ap;
+-		/*
+-		 * Reset everything to support using non-enlightened VMCS
+-		 * access later (e.g. when we reload the module with
+-		 * enlightened_vmcs=0)
+-		 */
+-		for_each_online_cpu(cpu) {
+-			vp_ap =	hv_get_vp_assist_page(cpu);
+-
+-			if (!vp_ap)
+-				continue;
+-
+-			vp_ap->nested_control.features.directhypercall = 0;
+-			vp_ap->current_nested_vmcs = 0;
+-			vp_ap->enlighten_vmentry = 0;
+-		}
+-
++	if (static_branch_unlikely(&enable_evmcs))
+ 		static_branch_disable(&enable_evmcs);
+-	}
+ #endif
+ 	vmx_cleanup_l1d_flush();
+ 
+-- 
+2.39.2
+
 
 
