@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEAE4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:28:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641A0C4339B;
-	Wed, 15 Mar 2023 12:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795EF4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:28:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C88C4339B;
+	Wed, 15 Mar 2023 12:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883305;
-	bh=g8LqNWo8ULGajspdQobRw2/BlnNPtxYZEW31rZA9jqc=;
+	s=korg; t=1678883308;
+	bh=qx0MY83mQC+jeSsJHwSIXz3zc/4twZaR9UaVDbhxRmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m4WPIhFTodn9tDIW8rv6ODCwjZsqXHtR+7/wZR6kD8NOgGQ414/vWKQrabru6AaIa
-	 ENnN/doVSTiWc3ZlTo5AhukiPI+6ttP2F7O2scq1ygbCNnGznxf7POPfs8i54dzzXN
-	 IFQFBSxQqwokREJTl/3AuvjG6G+wCAPc9N9RnVU0=
+	b=jGUjqnWeWDrJ/NusRICY6E5I6MBnsD8ld2wFIMZRKpzjABUUYhIEQAu5HkiX4AXCQ
+	 aY8RhKcxImQh8sJr49IS5KiFjps+7LqhNhC6aSSMfEaNMLnGWPXPxOEfDFanwv/A77
+	 10j44PRkD2FWi+F7iZEHcRJCNanybTEOcDhXbV1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erkki Eilonen <erkki@bearmetal.eu>,
-	Morten Linderud <morten@linderud.pw>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <dchinner@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <brauner@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Leah Rumancik <leah.rumancik@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 093/145] tpm/eventlog: Dont abort tpm_read_log on faulty ACPI address
-Date: Wed, 15 Mar 2023 13:12:39 +0100
-Message-Id: <20230315115742.034490580@linuxfoundation.org>
+Subject: [PATCH 5.15 094/145] xfs: use setattr_copy to set vfs inode attributes
+Date: Wed, 15 Mar 2023 13:12:40 +0100
+Message-Id: <20230315115742.072177117@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -36,71 +39,159 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Morten Linderud <morten@linderud.pw>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 80a6c216b16d7f5c584d2148c2e4345ea4eb06ce ]
+commit e014f37db1a2d109afa750042ac4d69cf3e3d88e upsream.
 
-tpm_read_log_acpi() should return -ENODEV when no eventlog from the ACPI
-table is found. If the firmware vendor includes an invalid log address
-we are unable to map from the ACPI memory and tpm_read_log() returns -EIO
-which would abort discovery of the eventlog.
+Filipe Manana pointed out that XFS' behavior w.r.t. setuid/setgid
+revocation isn't consistent with btrfs[1] or ext4.  Those two
+filesystems use the VFS function setattr_copy to convey certain
+attributes from struct iattr into the VFS inode structure.
 
-Change the return value from -EIO to -ENODEV when acpi_os_map_iomem()
-fails to map the event log.
+Andrey Zhadchenko reported[2] that XFS uses the wrong user namespace to
+decide if it should clear setgid and setuid on a file attribute update.
+This is a second symptom of the problem that Filipe noticed.
 
-The following hardware was used to test this issue:
-    Framework Laptop (Pre-production)
-    BIOS: INSYDE Corp, Revision: 3.2
-    TPM Device: NTC, Firmware Revision: 7.2
+XFS, on the other hand, open-codes setattr_copy in xfs_setattr_mode,
+xfs_setattr_nonsize, and xfs_setattr_time.  Regrettably, setattr_copy is
+/not/ a simple copy function; it contains additional logic to clear the
+setgid bit when setting the mode, and XFS' version no longer matches.
 
-Dump of the faulty ACPI TPM2 table:
-    [000h 0000   4]                    Signature : "TPM2"    [Trusted Platform Module hardware interface Table]
-    [004h 0004   4]                 Table Length : 0000004C
-    [008h 0008   1]                     Revision : 04
-    [009h 0009   1]                     Checksum : 2B
-    [00Ah 0010   6]                       Oem ID : "INSYDE"
-    [010h 0016   8]                 Oem Table ID : "TGL-ULT"
-    [018h 0024   4]                 Oem Revision : 00000002
-    [01Ch 0028   4]              Asl Compiler ID : "ACPI"
-    [020h 0032   4]        Asl Compiler Revision : 00040000
+The VFS implements its own setuid/setgid stripping logic, which
+establishes consistent behavior.  It's a tad unfortunate that it's
+scattered across notify_change, should_remove_suid, and setattr_copy but
+XFS should really follow the Linux VFS.  Adapt XFS to use the VFS
+functions and get rid of the old functions.
 
-    [024h 0036   2]               Platform Class : 0000
-    [026h 0038   2]                     Reserved : 0000
-    [028h 0040   8]              Control Address : 0000000000000000
-    [030h 0048   4]                 Start Method : 06 [Memory Mapped I/O]
+[1] https://lore.kernel.org/fstests/CAL3q7H47iNQ=Wmk83WcGB-KBJVOEtR9+qGczzCeXJ9Y2KCV25Q@mail.gmail.com/
+[2] https://lore.kernel.org/linux-xfs/20220221182218.748084-1-andrey.zhadchenko@virtuozzo.com/
 
-    [034h 0052  12]            Method Parameters : 00 00 00 00 00 00 00 00 00 00 00 00
-    [040h 0064   4]           Minimum Log Length : 00010000
-    [044h 0068   8]                  Log Address : 000000004053D000
-
-Fixes: 0cf577a03f21 ("tpm: Fix handling of missing event log")
-Tested-by: Erkki Eilonen <erkki@bearmetal.eu>
-Signed-off-by: Morten Linderud <morten@linderud.pw>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: 7fa294c8991c ("userns: Allow chown and setgid preservation")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Tested-by: Leah Rumancik <leah.rumancik@gmail.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/eventlog/acpi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_iops.c | 56 +++--------------------------------------------
+ fs/xfs/xfs_pnfs.c |  3 ++-
+ 2 files changed, 5 insertions(+), 54 deletions(-)
 
-diff --git a/drivers/char/tpm/eventlog/acpi.c b/drivers/char/tpm/eventlog/acpi.c
-index 0913d3eb8d518..cd266021d0103 100644
---- a/drivers/char/tpm/eventlog/acpi.c
-+++ b/drivers/char/tpm/eventlog/acpi.c
-@@ -143,8 +143,12 @@ int tpm_read_log_acpi(struct tpm_chip *chip)
+diff --git a/fs/xfs/xfs_iops.c b/fs/xfs/xfs_iops.c
+index a607d6aca5c4d..1eb71275e5b09 100644
+--- a/fs/xfs/xfs_iops.c
++++ b/fs/xfs/xfs_iops.c
+@@ -634,37 +634,6 @@ xfs_vn_getattr(
+ 	return 0;
+ }
  
- 	ret = -EIO;
- 	virt = acpi_os_map_iomem(start, len);
--	if (!virt)
-+	if (!virt) {
-+		dev_warn(&chip->dev, "%s: Failed to map ACPI memory\n", __func__);
-+		/* try EFI log next */
-+		ret = -ENODEV;
- 		goto err;
-+	}
+-static void
+-xfs_setattr_mode(
+-	struct xfs_inode	*ip,
+-	struct iattr		*iattr)
+-{
+-	struct inode		*inode = VFS_I(ip);
+-	umode_t			mode = iattr->ia_mode;
+-
+-	ASSERT(xfs_isilocked(ip, XFS_ILOCK_EXCL));
+-
+-	inode->i_mode &= S_IFMT;
+-	inode->i_mode |= mode & ~S_IFMT;
+-}
+-
+-void
+-xfs_setattr_time(
+-	struct xfs_inode	*ip,
+-	struct iattr		*iattr)
+-{
+-	struct inode		*inode = VFS_I(ip);
+-
+-	ASSERT(xfs_isilocked(ip, XFS_ILOCK_EXCL));
+-
+-	if (iattr->ia_valid & ATTR_ATIME)
+-		inode->i_atime = iattr->ia_atime;
+-	if (iattr->ia_valid & ATTR_CTIME)
+-		inode->i_ctime = iattr->ia_ctime;
+-	if (iattr->ia_valid & ATTR_MTIME)
+-		inode->i_mtime = iattr->ia_mtime;
+-}
+-
+ static int
+ xfs_vn_change_ok(
+ 	struct user_namespace	*mnt_userns,
+@@ -763,16 +732,6 @@ xfs_setattr_nonsize(
+ 		gid = (mask & ATTR_GID) ? iattr->ia_gid : igid;
+ 		uid = (mask & ATTR_UID) ? iattr->ia_uid : iuid;
  
- 	memcpy_fromio(log->bios_event_log, virt, len);
+-		/*
+-		 * CAP_FSETID overrides the following restrictions:
+-		 *
+-		 * The set-user-ID and set-group-ID bits of a file will be
+-		 * cleared upon successful return from chown()
+-		 */
+-		if ((inode->i_mode & (S_ISUID|S_ISGID)) &&
+-		    !capable(CAP_FSETID))
+-			inode->i_mode &= ~(S_ISUID|S_ISGID);
+-
+ 		/*
+ 		 * Change the ownerships and register quota modifications
+ 		 * in the transaction.
+@@ -784,7 +743,6 @@ xfs_setattr_nonsize(
+ 				olddquot1 = xfs_qm_vop_chown(tp, ip,
+ 							&ip->i_udquot, udqp);
+ 			}
+-			inode->i_uid = uid;
+ 		}
+ 		if (!gid_eq(igid, gid)) {
+ 			if (XFS_IS_GQUOTA_ON(mp)) {
+@@ -795,15 +753,10 @@ xfs_setattr_nonsize(
+ 				olddquot2 = xfs_qm_vop_chown(tp, ip,
+ 							&ip->i_gdquot, gdqp);
+ 			}
+-			inode->i_gid = gid;
+ 		}
+ 	}
  
+-	if (mask & ATTR_MODE)
+-		xfs_setattr_mode(ip, iattr);
+-	if (mask & (ATTR_ATIME|ATTR_CTIME|ATTR_MTIME))
+-		xfs_setattr_time(ip, iattr);
+-
++	setattr_copy(mnt_userns, inode, iattr);
+ 	xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
+ 
+ 	XFS_STATS_INC(mp, xs_ig_attrchg);
+@@ -1028,11 +981,8 @@ xfs_setattr_size(
+ 		xfs_inode_clear_eofblocks_tag(ip);
+ 	}
+ 
+-	if (iattr->ia_valid & ATTR_MODE)
+-		xfs_setattr_mode(ip, iattr);
+-	if (iattr->ia_valid & (ATTR_ATIME|ATTR_CTIME|ATTR_MTIME))
+-		xfs_setattr_time(ip, iattr);
+-
++	ASSERT(!(iattr->ia_valid & (ATTR_UID | ATTR_GID)));
++	setattr_copy(mnt_userns, inode, iattr);
+ 	xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
+ 
+ 	XFS_STATS_INC(mp, xs_ig_attrchg);
+diff --git a/fs/xfs/xfs_pnfs.c b/fs/xfs/xfs_pnfs.c
+index 5e1d29d8b2e73..8865f7d4404ae 100644
+--- a/fs/xfs/xfs_pnfs.c
++++ b/fs/xfs/xfs_pnfs.c
+@@ -283,7 +283,8 @@ xfs_fs_commit_blocks(
+ 	xfs_trans_ijoin(tp, ip, XFS_ILOCK_EXCL);
+ 	xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
+ 
+-	xfs_setattr_time(ip, iattr);
++	ASSERT(!(iattr->ia_valid & (ATTR_UID | ATTR_GID)));
++	setattr_copy(&init_user_ns, inode, iattr);
+ 	if (update_isize) {
+ 		i_size_write(inode, iattr->ia_size);
+ 		ip->i_disk_size = iattr->ia_size;
 -- 
 2.39.2
 
