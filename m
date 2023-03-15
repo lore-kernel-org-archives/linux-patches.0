@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205894431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A068C433EF;
-	Wed, 15 Mar 2023 12:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98A24431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3368FC433EF;
+	Wed, 15 Mar 2023 12:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882657;
-	bh=FPwpbt9+saZrDjvvbgAAPpretrXXaozEjQm08Rw7qb4=;
+	s=korg; t=1678882659;
+	bh=W8BVLgEICDfHoY2CX1QBhe6Uk4YndKzjM8kULqyWtXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZtQbyv2BclM4Wqitkzd4x44M7zsjHsK/ZQKXaCQjwCfXsORR4QA6hPxe+ttUNOtLB
-	 /DqTaEjefLcYPOb/7ZrJ9JDLjxl0LOWIJits55muTC4pwSUZ0C3BVEvpbTSKGMlpgJ
-	 L0AmeBeuKR5w9MGHX/8b/lvpY8eH2SiCVpbovgdI=
+	b=caMy1Ce3Eq66oBkPHsPfRq1JxtCegujT8xb2EMLsr0+bPW9laPTZqbd/pAXYU58/t
+	 +LnOuW4egTcrkbt7ZcJkwzixYDl5E3CE80hfR8UKFqYK2exJGSCxcHhkbFfNsoXx5n
+	 qwCBbcl/Ev31WiPuvQ/qoprMZ78OTTROkLRL1L6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <cminyard@mvista.com>,
+	Bixuan Cui <cuibixuan@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 21/68] ipmi:ssif: Add a timer between request retries
-Date: Wed, 15 Mar 2023 13:12:15 +0100
-Message-Id: <20230315115726.921114588@linuxfoundation.org>
+Subject: [PATCH 5.4 22/68] irqdomain: Change the type of size in __irq_domain_add() to be consistent
+Date: Wed, 15 Mar 2023 13:12:16 +0100
+Message-Id: <20230315115726.956429673@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -34,133 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corey Minyard <cminyard@mvista.com>
+From: Bixuan Cui <cuibixuan@huawei.com>
 
-[ Upstream commit 00bb7e763ec9f384cb382455cb6ba5588b5375cf ]
+[ Upstream commit 20c36ce2164f1774b487d443ece99b754bc6ad43 ]
 
-The IPMI spec has a time (T6) specified between request retries.  Add
-the handling for that.
+The 'size' is used in struct_size(domain, revmap, size) and its input
+parameter type is 'size_t'(unsigned int).
+Changing the size to 'unsigned int' to make the type consistent.
 
-Reported by: Tony Camuso <tcamuso@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Signed-off-by: Bixuan Cui <cuibixuan@huawei.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20210916025203.44841-1-cuibixuan@huawei.com
+Stable-dep-of: 8932c32c3053 ("irqdomain: Fix domain registration race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c | 34 +++++++++++++++++++++++++++-------
- 1 file changed, 27 insertions(+), 7 deletions(-)
+ include/linux/irqdomain.h | 2 +-
+ kernel/irq/irqdomain.c    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
-index 02ca0d9a0d8cb..d5f068a10a5a0 100644
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -79,7 +79,8 @@
- /*
-  * Timer values
+diff --git a/include/linux/irqdomain.h b/include/linux/irqdomain.h
+index 824d7a19dd66e..2552f66a7a891 100644
+--- a/include/linux/irqdomain.h
++++ b/include/linux/irqdomain.h
+@@ -254,7 +254,7 @@ static inline struct fwnode_handle *irq_domain_alloc_fwnode(phys_addr_t *pa)
+ }
+ 
+ void irq_domain_free_fwnode(struct fwnode_handle *fwnode);
+-struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, int size,
++struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int size,
+ 				    irq_hw_number_t hwirq_max, int direct_max,
+ 				    const struct irq_domain_ops *ops,
+ 				    void *host_data);
+diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
+index 3d1b570a1dadd..cfb5a96f023f7 100644
+--- a/kernel/irq/irqdomain.c
++++ b/kernel/irq/irqdomain.c
+@@ -127,7 +127,7 @@ EXPORT_SYMBOL_GPL(irq_domain_free_fwnode);
+  * Allocates and initializes an irq_domain structure.
+  * Returns pointer to IRQ domain, or NULL on failure.
   */
--#define SSIF_MSG_USEC		60000	/* 60ms between message tries. */
-+#define SSIF_MSG_USEC		60000	/* 60ms between message tries (T3). */
-+#define SSIF_REQ_RETRY_USEC	60000	/* 60ms between send retries (T6). */
- #define SSIF_MSG_PART_USEC	5000	/* 5ms for a message part */
- 
- /* How many times to we retry sending/receiving the message. */
-@@ -87,7 +88,9 @@
- #define	SSIF_RECV_RETRIES	250
- 
- #define SSIF_MSG_MSEC		(SSIF_MSG_USEC / 1000)
-+#define SSIF_REQ_RETRY_MSEC	(SSIF_REQ_RETRY_USEC / 1000)
- #define SSIF_MSG_JIFFIES	((SSIF_MSG_USEC * 1000) / TICK_NSEC)
-+#define SSIF_REQ_RETRY_JIFFIES	((SSIF_REQ_RETRY_USEC * 1000) / TICK_NSEC)
- #define SSIF_MSG_PART_JIFFIES	((SSIF_MSG_PART_USEC * 1000) / TICK_NSEC)
- 
- /*
-@@ -236,6 +239,9 @@ struct ssif_info {
- 	bool		    got_alert;
- 	bool		    waiting_alert;
- 
-+	/* Used to inform the timeout that it should do a resend. */
-+	bool		    do_resend;
-+
- 	/*
- 	 * If set to true, this will request events the next time the
- 	 * state machine is idle.
-@@ -536,22 +542,28 @@ static void start_get(struct ssif_info *ssif_info)
- 		  ssif_info->recv, I2C_SMBUS_BLOCK_DATA);
- }
- 
-+static void start_resend(struct ssif_info *ssif_info);
-+
- static void retry_timeout(struct timer_list *t)
- {
- 	struct ssif_info *ssif_info = from_timer(ssif_info, t, retry_timer);
- 	unsigned long oflags, *flags;
--	bool waiting;
-+	bool waiting, resend;
- 
- 	if (ssif_info->stopping)
- 		return;
- 
- 	flags = ipmi_ssif_lock_cond(ssif_info, &oflags);
-+	resend = ssif_info->do_resend;
-+	ssif_info->do_resend = false;
- 	waiting = ssif_info->waiting_alert;
- 	ssif_info->waiting_alert = false;
- 	ipmi_ssif_unlock_cond(ssif_info, flags);
- 
- 	if (waiting)
- 		start_get(ssif_info);
-+	if (resend)
-+		start_resend(ssif_info);
- }
- 
- static void watch_timeout(struct timer_list *t)
-@@ -600,8 +612,6 @@ static void ssif_alert(struct i2c_client *client, enum i2c_alert_protocol type,
- 		start_get(ssif_info);
- }
- 
--static void start_resend(struct ssif_info *ssif_info);
--
- static void msg_done_handler(struct ssif_info *ssif_info, int result,
- 			     unsigned char *data, unsigned int len)
- {
-@@ -906,7 +916,13 @@ static void msg_written_handler(struct ssif_info *ssif_info, int result,
- 	if (result < 0) {
- 		ssif_info->retries_left--;
- 		if (ssif_info->retries_left > 0) {
--			start_resend(ssif_info);
-+			/*
-+			 * Wait the retry timeout time per the spec,
-+			 * then redo the send.
-+			 */
-+			ssif_info->do_resend = true;
-+			mod_timer(&ssif_info->retry_timer,
-+				  jiffies + SSIF_REQ_RETRY_JIFFIES);
- 			return;
- 		}
- 
-@@ -1318,8 +1334,10 @@ static int do_cmd(struct i2c_client *client, int len, unsigned char *msg,
- 	ret = i2c_smbus_write_block_data(client, SSIF_IPMI_REQUEST, len, msg);
- 	if (ret) {
- 		retry_cnt--;
--		if (retry_cnt > 0)
-+		if (retry_cnt > 0) {
-+			msleep(SSIF_REQ_RETRY_MSEC);
- 			goto retry1;
-+		}
- 		return -ENODEV;
- 	}
- 
-@@ -1459,8 +1477,10 @@ static int start_multipart_test(struct i2c_client *client,
- 					 32, msg);
- 	if (ret) {
- 		retry_cnt--;
--		if (retry_cnt > 0)
-+		if (retry_cnt > 0) {
-+			msleep(SSIF_REQ_RETRY_MSEC);
- 			goto retry_write;
-+		}
- 		dev_err(&client->dev, "Could not write multi-part start, though the BMC said it could handle it.  Just limit sends to one part.\n");
- 		return ret;
- 	}
+-struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, int size,
++struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int size,
+ 				    irq_hw_number_t hwirq_max, int direct_max,
+ 				    const struct irq_domain_ops *ops,
+ 				    void *host_data)
 -- 
 2.39.2
 
