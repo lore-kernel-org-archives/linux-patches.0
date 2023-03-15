@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF124431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94295C433EF;
-	Wed, 15 Mar 2023 12:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B684431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE81C433D2;
+	Wed, 15 Mar 2023 12:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882903;
-	bh=hB/5EUj0iTww9sDBBTdjFB80M1DxbE1yIRDYrdKA2gg=;
+	s=korg; t=1678882906;
+	bh=yX16k0Nh2KcYRzjmDNVj+RByDoVhwVbko8q98jgCSMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zUyC4F3YJJ/3pzxE6NTL3ghshO8+mJy+fb7itPSxi8bkxaxypig+OsoWsXf/dbHhh
-	 Q/9lqfznZnoSv6v00yycj3naIOq2E4eIHtDPokfG6vIWPSrcZXaENgO/MkDShlwlj4
-	 DLweX2uPiSUKrTvlJ3lahwZeB+Hwhy6sElrsZMk4=
+	b=raiHiMkdXQqnxiwzVd1QZBylwrwMmZkxF+L7Kokgt/PsofOrCshRvPxRgW7QCUf8G
+	 AQXK6KhpEsOWxvEzBQc3ed35pqDVLR18RnbtRHxhYmoAZNCaQtZpwnRF8mdG+5XUuB
+	 iNUcdZoCUsaa2bPvN9qSgW0Cu3jKQCyni5W+amOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 038/104] ila: do not generate empty messages in ila_xlat_nl_cmd_get_mapping()
-Date: Wed, 15 Mar 2023 13:12:09 +0100
-Message-Id: <20230315115733.594088933@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>,
+	=?UTF-8?q?Major=20D=C3=A1vid?= <major.david@balasys.hu>
+Subject: [PATCH 5.10 047/104] netfilter: tproxy: fix deadlock due to missing BH disable
+Date: Wed, 15 Mar 2023 13:12:18 +0100
+Message-Id: <20230315115733.961454055@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -36,111 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 693aa2c0d9b6d5b1f2745d31b6e70d09dbbaf06e ]
+[ Upstream commit 4a02426787bf024dafdb79b362285ee325de3f5e ]
 
-ila_xlat_nl_cmd_get_mapping() generates an empty skb,
-triggerring a recent sanity check [1].
+The xtables packet traverser performs an unconditional local_bh_disable(),
+but the nf_tables evaluation loop does not.
 
-Instead, return an error code, so that user space
-can get it.
+Functions that are called from either xtables or nftables must assume
+that they can be called in process context.
 
-[1]
-skb_assert_len
-WARNING: CPU: 0 PID: 5923 at include/linux/skbuff.h:2527 skb_assert_len include/linux/skbuff.h:2527 [inline]
-WARNING: CPU: 0 PID: 5923 at include/linux/skbuff.h:2527 __dev_queue_xmit+0x1bc0/0x3488 net/core/dev.c:4156
-Modules linked in:
-CPU: 0 PID: 5923 Comm: syz-executor269 Not tainted 6.2.0-syzkaller-18300-g2ebd1fbb946d #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/21/2023
-pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : skb_assert_len include/linux/skbuff.h:2527 [inline]
-pc : __dev_queue_xmit+0x1bc0/0x3488 net/core/dev.c:4156
-lr : skb_assert_len include/linux/skbuff.h:2527 [inline]
-lr : __dev_queue_xmit+0x1bc0/0x3488 net/core/dev.c:4156
-sp : ffff80001e0d6c40
-x29: ffff80001e0d6e60 x28: dfff800000000000 x27: ffff0000c86328c0
-x26: dfff800000000000 x25: ffff0000c8632990 x24: ffff0000c8632a00
-x23: 0000000000000000 x22: 1fffe000190c6542 x21: ffff0000c8632a10
-x20: ffff0000c8632a00 x19: ffff80001856e000 x18: ffff80001e0d5fc0
-x17: 0000000000000000 x16: ffff80001235d16c x15: 0000000000000000
-x14: 0000000000000000 x13: 0000000000000001 x12: 0000000000000001
-x11: ff80800008353a30 x10: 0000000000000000 x9 : 21567eaf25bfb600
-x8 : 21567eaf25bfb600 x7 : 0000000000000001 x6 : 0000000000000001
-x5 : ffff80001e0d6558 x4 : ffff800015c74760 x3 : ffff800008596744
-x2 : 0000000000000001 x1 : 0000000100000000 x0 : 000000000000000e
-Call trace:
-skb_assert_len include/linux/skbuff.h:2527 [inline]
-__dev_queue_xmit+0x1bc0/0x3488 net/core/dev.c:4156
-dev_queue_xmit include/linux/netdevice.h:3033 [inline]
-__netlink_deliver_tap_skb net/netlink/af_netlink.c:307 [inline]
-__netlink_deliver_tap+0x45c/0x6f8 net/netlink/af_netlink.c:325
-netlink_deliver_tap+0xf4/0x174 net/netlink/af_netlink.c:338
-__netlink_sendskb net/netlink/af_netlink.c:1283 [inline]
-netlink_sendskb+0x6c/0x154 net/netlink/af_netlink.c:1292
-netlink_unicast+0x334/0x8d4 net/netlink/af_netlink.c:1380
-nlmsg_unicast include/net/netlink.h:1099 [inline]
-genlmsg_unicast include/net/genetlink.h:433 [inline]
-genlmsg_reply include/net/genetlink.h:443 [inline]
-ila_xlat_nl_cmd_get_mapping+0x620/0x7d0 net/ipv6/ila/ila_xlat.c:493
-genl_family_rcv_msg_doit net/netlink/genetlink.c:968 [inline]
-genl_family_rcv_msg net/netlink/genetlink.c:1048 [inline]
-genl_rcv_msg+0x938/0xc1c net/netlink/genetlink.c:1065
-netlink_rcv_skb+0x214/0x3c4 net/netlink/af_netlink.c:2574
-genl_rcv+0x38/0x50 net/netlink/genetlink.c:1076
-netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
-netlink_unicast+0x660/0x8d4 net/netlink/af_netlink.c:1365
-netlink_sendmsg+0x800/0xae0 net/netlink/af_netlink.c:1942
-sock_sendmsg_nosec net/socket.c:714 [inline]
-sock_sendmsg net/socket.c:734 [inline]
-____sys_sendmsg+0x558/0x844 net/socket.c:2479
-___sys_sendmsg net/socket.c:2533 [inline]
-__sys_sendmsg+0x26c/0x33c net/socket.c:2562
-__do_sys_sendmsg net/socket.c:2571 [inline]
-__se_sys_sendmsg net/socket.c:2569 [inline]
-__arm64_sys_sendmsg+0x80/0x94 net/socket.c:2569
-__invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
-invoke_syscall+0x98/0x2c0 arch/arm64/kernel/syscall.c:52
-el0_svc_common+0x138/0x258 arch/arm64/kernel/syscall.c:142
-do_el0_svc+0x64/0x198 arch/arm64/kernel/syscall.c:193
-el0_svc+0x58/0x168 arch/arm64/kernel/entry-common.c:637
-el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:655
-el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:591
-irq event stamp: 136484
-hardirqs last enabled at (136483): [<ffff800008350244>] __up_console_sem+0x60/0xb4 kernel/printk/printk.c:345
-hardirqs last disabled at (136484): [<ffff800012358d60>] el1_dbg+0x24/0x80 arch/arm64/kernel/entry-common.c:405
-softirqs last enabled at (136418): [<ffff800008020ea8>] softirq_handle_end kernel/softirq.c:414 [inline]
-softirqs last enabled at (136418): [<ffff800008020ea8>] __do_softirq+0xd4c/0xfa4 kernel/softirq.c:600
-softirqs last disabled at (136371): [<ffff80000802b4a4>] ____do_softirq+0x14/0x20 arch/arm64/kernel/irq.c:80
----[ end trace 0000000000000000 ]---
-skb len=0 headroom=0 headlen=0 tailroom=192
-mac=(0,0) net=(0,-1) trans=-1
-shinfo(txflags=0 nr_frags=0 gso(size=0 type=0 segs=0))
-csum(0x0 ip_summed=0 complete_sw=0 valid=0 level=0)
-hash(0x0 sw=0 l4=0) proto=0x0010 pkttype=6 iif=0
-dev name=nlmon0 feat=0x0000000000005861
+inet_twsk_deschedule_put() assumes that no softirq interrupt can occur.
+If tproxy is used from nf_tables its possible that we'll deadlock
+trying to aquire a lock already held in process context.
 
-Fixes: 7f00feaf1076 ("ila: Add generic ILA translation facility")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Add a small helper that takes care of this and use it.
+
+Link: https://lore.kernel.org/netfilter-devel/401bd6ed-314a-a196-1cdc-e13c720cc8f2@balasys.hu/
+Fixes: 4ed8eb6570a4 ("netfilter: nf_tables: Add native tproxy support")
+Reported-and-tested-by: Major Dávid <major.david@balasys.hu>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ila/ila_xlat.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/netfilter/nf_tproxy.h   | 7 +++++++
+ net/ipv4/netfilter/nf_tproxy_ipv4.c | 2 +-
+ net/ipv6/netfilter/nf_tproxy_ipv6.c | 2 +-
+ 3 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/ila/ila_xlat.c b/net/ipv6/ila/ila_xlat.c
-index a1ac0e3d8c60c..163668531a57f 100644
---- a/net/ipv6/ila/ila_xlat.c
-+++ b/net/ipv6/ila/ila_xlat.c
-@@ -477,6 +477,7 @@ int ila_xlat_nl_cmd_get_mapping(struct sk_buff *skb, struct genl_info *info)
+diff --git a/include/net/netfilter/nf_tproxy.h b/include/net/netfilter/nf_tproxy.h
+index 82d0e41b76f22..faa108b1ba675 100644
+--- a/include/net/netfilter/nf_tproxy.h
++++ b/include/net/netfilter/nf_tproxy.h
+@@ -17,6 +17,13 @@ static inline bool nf_tproxy_sk_is_transparent(struct sock *sk)
+ 	return false;
+ }
  
- 	rcu_read_lock();
- 
-+	ret = -ESRCH;
- 	ila = ila_lookup_by_params(&xp, ilan);
- 	if (ila) {
- 		ret = ila_dump_info(ila,
++static inline void nf_tproxy_twsk_deschedule_put(struct inet_timewait_sock *tw)
++{
++	local_bh_disable();
++	inet_twsk_deschedule_put(tw);
++	local_bh_enable();
++}
++
+ /* assign a socket to the skb -- consumes sk */
+ static inline void nf_tproxy_assign_sock(struct sk_buff *skb, struct sock *sk)
+ {
+diff --git a/net/ipv4/netfilter/nf_tproxy_ipv4.c b/net/ipv4/netfilter/nf_tproxy_ipv4.c
+index b2bae0b0e42a1..61cb2341f50fe 100644
+--- a/net/ipv4/netfilter/nf_tproxy_ipv4.c
++++ b/net/ipv4/netfilter/nf_tproxy_ipv4.c
+@@ -38,7 +38,7 @@ nf_tproxy_handle_time_wait4(struct net *net, struct sk_buff *skb,
+ 					    hp->source, lport ? lport : hp->dest,
+ 					    skb->dev, NF_TPROXY_LOOKUP_LISTENER);
+ 		if (sk2) {
+-			inet_twsk_deschedule_put(inet_twsk(sk));
++			nf_tproxy_twsk_deschedule_put(inet_twsk(sk));
+ 			sk = sk2;
+ 		}
+ 	}
+diff --git a/net/ipv6/netfilter/nf_tproxy_ipv6.c b/net/ipv6/netfilter/nf_tproxy_ipv6.c
+index 6bac68fb27a39..3fe4f15e01dc8 100644
+--- a/net/ipv6/netfilter/nf_tproxy_ipv6.c
++++ b/net/ipv6/netfilter/nf_tproxy_ipv6.c
+@@ -63,7 +63,7 @@ nf_tproxy_handle_time_wait6(struct sk_buff *skb, int tproto, int thoff,
+ 					    lport ? lport : hp->dest,
+ 					    skb->dev, NF_TPROXY_LOOKUP_LISTENER);
+ 		if (sk2) {
+-			inet_twsk_deschedule_put(inet_twsk(sk));
++			nf_tproxy_twsk_deschedule_put(inet_twsk(sk));
+ 			sk = sk2;
+ 		}
+ 	}
 -- 
 2.39.2
 
