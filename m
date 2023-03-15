@@ -1,160 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E29538D
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 14:50:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04E0C433D2;
-	Wed, 15 Mar 2023 14:50:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678891853;
-	bh=wu9HXojxuH3AtIIT++MDX+kORwbWO7Y7OZ2upGm0F4g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ni/Hy4a5bJJNljjXzq8+c+485351OSOzfK6nHpUHJ4HBGlkidr8j4Ww1Q2RuUYgEe
-	 lM5RbzfsBlmTzMjurrLTYOKIicKITAeEXSadq2NXDNsMcKwXsyPhg3vCx7v0CyTaak
-	 Z1qShw49YNGDF0tf6+ts62FOZRD9PlrCnILgFgnC35g53MgiBu90OrC3zTB/FcmJEK
-	 PKsfzxa0MxPOdZDiIZPNF+SDQExt+L394j+lmThmbsIPDvHm+0Tf3KZO/wl52yIt2d
-	 qMM0Wh8SIAXaTwmSBaHY3xxbfGMEQcmci4HTUz6ClZ9Ais/uNviMgqBYxzb83kZopJ
-	 6jQsgqvSec0DQ==
-Date: Wed, 15 Mar 2023 16:50:34 +0200
-From: Mike Rapoport <rppt@kernel.org>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Mike Rapoport <mike.rapoport@gmail.com>,
-	Christoph Lameter <cl@linux.com>,
-	David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
-	rcu@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	netdev@vger.kernel.org, linux-doc@vger.kernel.org,
-	Jonathan Corbet <corbet@lwn.net>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Joel Fernandes <joel@joelfernandes.org>
-Subject: Re: [PATCH 7/7] mm/slab: document kfree() as allowed for
- kmem_cache_alloc() objects
-Message-ID: <ZBHbOrk3P3TXSkK8@kernel.org>
-References: <20230310103210.22372-1-vbabka@suse.cz>
- <20230310103210.22372-8-vbabka@suse.cz>
- <ZA2ic9JYXGVzps1+@kernel.org>
- <14043bee-af7d-38f3-5a46-f63940e56c1e@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86B4538D
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 14:59:44 +0000 (UTC)
+Received: by mail-oo1-f49.google.com with SMTP id q79-20020a4a3352000000b0052fe885deddso615376ooq.0
+        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 07:59:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678892384;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qUZnXJdG7q37tNhRaQudoPaYbrD3S3nHX6FVLwwb8gI=;
+        b=gfYiF84RPRllFKjiC/l0H3B3RuhvsHoTK1a/xdhJU3kG/B8chrpLgJa4Ikv40YRisJ
+         PJGPivKtVO5qWpEw5P8QYFzvqBTjZeD8fkurL3ShXWW0jlajr2vEWG4bslDZu0IBir6l
+         H9gBYm6V9ko9sC3AhrAf2rm2o1JXeWMivZ4g8qOVwfpRl2i5DewY8Bkh5hWHbk+jCUYM
+         +4tnfp/N10fUMQbfLjQ1kiUo/6qn+iPP1U9Z0AtgIbiRzme7wZd1ssHgh11NrQoncoAq
+         xGMe4u9opXUd9pW1Y2FXD7VMJgKGQSKqtajS0KrVcIGjUJ+7GvWWNyUgjWObv4VWOKYk
+         GGtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678892384;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qUZnXJdG7q37tNhRaQudoPaYbrD3S3nHX6FVLwwb8gI=;
+        b=RRToKyAUoCE5b101Gpx1ihr7v4nYAojS8Mleee2CL1G3gawwQsLY3Y5kkYxwSHwYHR
+         ZRGMNroxYbuGTfcBuhBneYU+MLQr2mtXWqbzAbgRVTFwZ7qX8iPnZkNmtx9BaNq7lgj7
+         CWvDCpve6MjJEj5arsBLyHtoxiE4YkFHAvst/IDjKR1PTESnC5Rocbp8aQYPdsuba7u+
+         mL3oTb0SUSbmSqpLPrD0Zk+1B6rUQPgwpfj670j4KVPMdD5mFJjpB6MAlqltx9goyCm1
+         CHa56cprL87H3B9hKMyJ8rg1e5W4BZxqrTg9kfPyelSQBjJCSO0UhK/oB1JbVLMDCpQt
+         vAqQ==
+X-Gm-Message-State: AO0yUKXBx/llGKucACx60YsF7030yTg0syPzSSDps4T++sArWp3G4A5K
+	dm/Cjbm4zyXHhvcKF+xU29/wpw==
+X-Google-Smtp-Source: AK7set99FRnSdN/rBC8wUKYnTash4tD/QtoCdIeAxYjOE6xnjtrbvyNNQ/VFkGqwJIXa1XXp4+wVIQ==
+X-Received: by 2002:a4a:d498:0:b0:51a:48f4:75de with SMTP id o24-20020a4ad498000000b0051a48f475demr9979407oos.0.1678892383945;
+        Wed, 15 Mar 2023 07:59:43 -0700 (PDT)
+Received: from [192.168.17.16] ([189.219.75.19])
+        by smtp.gmail.com with ESMTPSA id t10-20020a4ae40a000000b005253a5cc3cfsm2311834oov.29.2023.03.15.07.59.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 07:59:43 -0700 (PDT)
+Message-ID: <dce37bda-d5d9-72d8-2b22-2c69b6498870@linaro.org>
+Date: Wed, 15 Mar 2023 08:59:42 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <14043bee-af7d-38f3-5a46-f63940e56c1e@suse.cz>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 5.4 00/68] 5.4.237-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230315115726.103942885@linuxfoundation.org>
+From: =?UTF-8?Q?Daniel_D=c3=adaz?= <daniel.diaz@linaro.org>
+In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Mar 15, 2023 at 02:38:47PM +0100, Vlastimil Babka wrote:
-> On 3/12/23 10:59, Mike Rapoport wrote:
-> > On Fri, Mar 10, 2023 at 11:32:09AM +0100, Vlastimil Babka wrote:
-> >> This will make it easier to free objects in situations when they can
-> >> come from either kmalloc() or kmem_cache_alloc(), and also allow
-> >> kfree_rcu() for freeing objects from kmem_cache_alloc().
-> >> 
-> >> For the SLAB and SLUB allocators this was always possible so with SLOB
-> >> gone, we can document it as supported.
-> >> 
-> >> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> >> Cc: Mike Rapoport <rppt@kernel.org>
-> >> Cc: Jonathan Corbet <corbet@lwn.net>
-> >> Cc: "Paul E. McKenney" <paulmck@kernel.org>
-> >> Cc: Frederic Weisbecker <frederic@kernel.org>
-> >> Cc: Neeraj Upadhyay <quic_neeraju@quicinc.com>
-> >> Cc: Josh Triplett <josh@joshtriplett.org>
-> >> Cc: Steven Rostedt <rostedt@goodmis.org>
-> >> Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-> >> Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-> >> Cc: Joel Fernandes <joel@joelfernandes.org>
-> >> ---
-> >>  Documentation/core-api/memory-allocation.rst | 15 +++++++++++----
-> >>  include/linux/rcupdate.h                     |  6 ++++--
-> >>  mm/slab_common.c                             |  5 +----
-> >>  3 files changed, 16 insertions(+), 10 deletions(-)
-> >> 
-> >> diff --git a/Documentation/core-api/memory-allocation.rst b/Documentation/core-api/memory-allocation.rst
-> >> index 5954ddf6ee13..f9e8d352ed67 100644
-> >> --- a/Documentation/core-api/memory-allocation.rst
-> >> +++ b/Documentation/core-api/memory-allocation.rst
-> >> @@ -170,7 +170,14 @@ should be used if a part of the cache might be copied to the userspace.
-> >>  After the cache is created kmem_cache_alloc() and its convenience
-> >>  wrappers can allocate memory from that cache.
-> >>  
-> >> -When the allocated memory is no longer needed it must be freed. You can
-> >> -use kvfree() for the memory allocated with `kmalloc`, `vmalloc` and
-> >> -`kvmalloc`. The slab caches should be freed with kmem_cache_free(). And
-> >> -don't forget to destroy the cache with kmem_cache_destroy().
-> >> +When the allocated memory is no longer needed it must be freed. Objects
-> > 
-> > I'd add a line break before Objects                               ^
-> > 
-> >> +allocated by `kmalloc` can be freed by `kfree` or `kvfree`.
-> >> +Objects allocated by `kmem_cache_alloc` can be freed with `kmem_cache_free`
-> >> +or also by `kfree` or `kvfree`, which can be more convenient as it does
-> > 
-> > Maybe replace 'or also by' with a coma:
-> > 
-> > Objects allocated by `kmem_cache_alloc` can be freed with `kmem_cache_free`,
-> > `kfree` or `kvfree`, which can be more convenient as it does
+Hello!
+
+On 15/03/23 06:11, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.237 release.
+> There are 68 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> But then I need to clarify what the "which" applies to?
-
-Yeah, I kinda missed that...
-
-> > 
-> >> +not require the kmem_cache pointed.
-> > 
-> >                              ^ pointer.
-> > 
-> >> +The rules for _bulk and _rcu flavors of freeing functions are analogical.
-> > 
-> > Maybe 
-> > 
-> > The same rules apply to _bulk and _rcu flavors of freeing functions.
+> Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
+> Anything received after that time might be too late.
 > 
-> So like this incremental diff?
- 
-> diff --git a/Documentation/core-api/memory-allocation.rst b/Documentation/core-api/memory-allocation.rst
-> index f9e8d352ed67..1c58d883b273 100644
-> --- a/Documentation/core-api/memory-allocation.rst
-> +++ b/Documentation/core-api/memory-allocation.rst
-> @@ -170,12 +170,14 @@ should be used if a part of the cache might be copied to the userspace.
->  After the cache is created kmem_cache_alloc() and its convenience
->  wrappers can allocate memory from that cache.
->  
-> -When the allocated memory is no longer needed it must be freed. Objects
-> -allocated by `kmalloc` can be freed by `kfree` or `kvfree`.
-> -Objects allocated by `kmem_cache_alloc` can be freed with `kmem_cache_free`
-> -or also by `kfree` or `kvfree`, which can be more convenient as it does
-> -not require the kmem_cache pointed.
-> -The rules for _bulk and _rcu flavors of freeing functions are analogical.
-> +When the allocated memory is no longer needed it must be freed.
-> +
-> +Objects allocated by `kmalloc` can be freed by `kfree` or `kvfree`. Objects
-> +allocated by `kmem_cache_alloc` can be freed with `kmem_cache_free`, `kfree`
-> +or `kvfree`, where the latter two might be more convenient thanks to not
-> +needing the kmem_cache pointer.
-
-... but this way it's more explicit that kfree and kvfree don't need
-kmem_cache pointer.
-
-> +
-> +The same rules apply to _bulk and _rcu flavors of freeing functions.
->  
->  Memory allocated by `vmalloc` can be freed with `vfree` or `kvfree`.
->  Memory allocated by `kvmalloc` can be freed with `kvfree`.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.237-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
 > 
+> thanks,
+> 
+> greg k-h
 
--- 
-Sincerely yours,
-Mike.
+Lots of build failures: arm, arm64 (Clang-16, Clang-nightly):
+
+-----8<-----
+/builds/linux/drivers/gpu/drm/drm_edid.c:5119:21: error: passing 'const struct drm_connector *' to parameter of type 'struct drm_connector *' discards qualifiers [-Werror,-Wincompatible-pointer-types-discards-qualifiers]
+         if (!is_hdmi2_sink(connector) && vic > 64)
+                            ^~~~~~~~~
+/builds/linux/drivers/gpu/drm/drm_edid.c:4994:49: note: passing argument to parameter 'connector' here
+static bool is_hdmi2_sink(struct drm_connector *connector)
+                                                 ^
+1 error generated.
+make[4]: *** [/builds/linux/scripts/Makefile.build:262: drivers/gpu/drm/drm_edid.o] Error 1
+----->8-----
+
+
+On PowerPC (GCC-8, GCC-12, Clang-16, Clang-nightly):
+
+-----8-----
+In file included from /builds/linux/drivers/usb/host/ohci-hcd.c:1255:
+/builds/linux/drivers/usb/host/ohci-ppc-of.c:126:13: error: use of undeclared identifier 'NO_IRQ'; did you mean 'do_IRQ'?
+         if (irq == NO_IRQ) {
+                    ^~~~~~
+                    do_IRQ
+/builds/linux/arch/powerpc/include/asm/irq.h:58:13: note: 'do_IRQ' declared here
+extern void do_IRQ(struct pt_regs *regs);
+             ^
+1 error generated.
+make[4]: *** [/builds/linux/scripts/Makefile.build:262: drivers/usb/host/ohci-hcd.o] Error 1
+----->8-----
+
+
+Many Arm configs:
+
+-----8<-----
+/builds/linux/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi:409.10-412.7: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map3: Reference to
+  non-existent node or label "gpu"
+
+/builds/linux/arch/arm/boot/dts/exynos5422-odroidhc1.dts:238.10-241.7: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map0: Reference to non-exi
+stent node or label "gpu"
+
+/builds/linux/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi:413.10-416.7: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map4: Reference to
+  non-existent node or label "gpu"
+
+/builds/linux/arch/arm/boot/dts/exynos5422-odroidhc1.dts:242.10-245.7: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map1: Reference to non-exi
+stent node or label "gpu"
+
+ERROR: Input tree has errors, aborting (use -f to force output)
+----->8-----
+
+
+Greetings!
+
+Daniel Díaz
+daniel.diaz@linaro.org
+
