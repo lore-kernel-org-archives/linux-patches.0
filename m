@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E3F4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA86BC433D2;
-	Wed, 15 Mar 2023 12:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AF44431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E79C433EF;
+	Wed, 15 Mar 2023 12:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884021;
-	bh=nqhR3mpv+AU20TvA87+nnSSgc1mh4H+MzIHnAgVfiAs=;
+	s=korg; t=1678884023;
+	bh=zOkZ0Qt3ypqKG3Ynxn0s+Eno8eY4IY2xUM6CsyMOplk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b0iLBboNoMXWxZIuJrVlRmmVpbNT6ztTzSuLE6g3ChT4R91Fsf5OYkIOgrke8UVl8
-	 ZdE1bZVWegd/sIxkRwQwdWv9lY+494MkxfwFtzbE/xQMkuaA+ixVTQwYs83ya11nxe
-	 9xZvqhIjRDsA672YHFVOPW+Qf8c8cgmgyyuTE0yU=
+	b=Sexf4Ycp83BWicIWpb0I5aKVKNgyQQ1V0e2OKloZEI7mvsvc/7krfvMnKCtIzsPTs
+	 /NKWwNNkMXP0HCDk8SqSSfzikpjF0CWsI7+eNxLwamv+HZiPgXRBrf733m2oD9DHTD
+	 LOGfMVgI+xUeJcObBq1uu8B4Dy0u/v7RVF3nxSsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Kalyan Thota <quic_kalyant@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 077/141] drm/msm/disp/dpu: fix sc7280_pp base offset
-Date: Wed, 15 Mar 2023 13:13:00 +0100
-Message-Id: <20230315115742.312168682@linuxfoundation.org>
+Subject: [PATCH 6.2 078/141] drm/msm/dpu: clear DSPP reservations in rm release
+Date: Wed, 15 Mar 2023 13:13:01 +0100
+Message-Id: <20230315115742.345525887@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -36,44 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+From: Kalyan Thota <quic_kalyant@quicinc.com>
 
-[ Upstream commit ce68153edb5b36ddf87a19ed5a85131498690bbf ]
+[ Upstream commit 5ec498ba86550909f2611b07087d57a71a78c336 ]
 
-At sc7280, pingpong block is used to management the dither effects
-to reduce distortion at panel. Currently pingpong-0 base offset is
-wrongly set at 0x59000. This mistake will not cause system to crash.
-However it will make dither not work. This patch correct sc7280 ping
-pong-0 block base offset.
+Clear DSPP reservations from the global state during
+rm release
 
-Changes in v2:
--- add more details info n regrading of pingpong block at commit text
-
-Fixes: 591e34a091d1 ("drm/msm/disp/dpu1: add support for display for SC7280 target")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: e47616df008b ("drm/msm/dpu: add support for color processing blocks in dpu driver")
+Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/524332/
-Link: https://lore.kernel.org/r/1677533800-3125-1-git-send-email-quic_khsieh@quicinc.com
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/522443/
+Link: https://lore.kernel.org/r/1676286704-818-2-git-send-email-quic_kalyant@quicinc.com
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index a5268207ab1fe..e8a217d242ca7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -1216,7 +1216,7 @@ static const struct dpu_pingpong_cfg sm8150_pp[] = {
- };
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+index 7ada957adbbb8..58abf5fe97e20 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+@@ -572,6 +572,8 @@ void dpu_rm_release(struct dpu_global_state *global_state,
+ 		ARRAY_SIZE(global_state->ctl_to_enc_id), enc->base.id);
+ 	_dpu_rm_clear_mapping(global_state->dsc_to_enc_id,
+ 		ARRAY_SIZE(global_state->dsc_to_enc_id), enc->base.id);
++	_dpu_rm_clear_mapping(global_state->dspp_to_enc_id,
++		ARRAY_SIZE(global_state->dspp_to_enc_id), enc->base.id);
+ }
  
- static const struct dpu_pingpong_cfg sc7280_pp[] = {
--	PP_BLK("pingpong_0", PINGPONG_0, 0x59000, 0, sc7280_pp_sblk, -1, -1),
-+	PP_BLK("pingpong_0", PINGPONG_0, 0x69000, 0, sc7280_pp_sblk, -1, -1),
- 	PP_BLK("pingpong_1", PINGPONG_1, 0x6a000, 0, sc7280_pp_sblk, -1, -1),
- 	PP_BLK("pingpong_2", PINGPONG_2, 0x6b000, 0, sc7280_pp_sblk, -1, -1),
- 	PP_BLK("pingpong_3", PINGPONG_3, 0x6c000, 0, sc7280_pp_sblk, -1, -1),
+ int dpu_rm_reserve(
 -- 
 2.39.2
 
