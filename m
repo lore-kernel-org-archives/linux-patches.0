@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1563F4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:33:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949A8C433D2;
-	Wed, 15 Mar 2023 12:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E5C4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D940C433EF;
+	Wed, 15 Mar 2023 12:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883637;
-	bh=0l4XOViNGuNm5IyC+fCjy0pP8FuioqRfD/k5ZmIux9o=;
+	s=korg; t=1678883640;
+	bh=05b9O+id9fdWxUMUqvGYbjFpl4C6EGrQ82+VpQIesVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oLegL6PQcPAOl0Qm1tT+HZpN+TqaUt4kEBTqPNY9TTiZozeOwIowhoaNdiQ9g96xl
-	 qc46hY2Qr/ZyEksFkM1qDrCEUX03LX+z63KImTKZhkJ6pgfzcDSv9r75NTCcXLYt4h
-	 yXjiDateLSceyqzqUIpHaqdTNPc+fN7d0ezr1YvY=
+	b=o1hrOsfWpcJ9tYFa3hAMW1WJf8W1YbhhqcXWbNXkhNVwgTH3nyXjbskQ/pKoIbf0/
+	 yhBA4oom4gUYeKJQ9LbpmJXkIdgxo8pfc1tP5KV+mBAqUdc2VSxmFUMbBj2xWVK0pb
+	 h+Yp11mJJbw5I3PoLAzKsHDXKbjJ71U7Yu22Bx9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <cminyard@mvista.com>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/143] ipmi:ssif: Add a timer between request retries
-Date: Wed, 15 Mar 2023 13:12:13 +0100
-Message-Id: <20230315115741.953361529@linuxfoundation.org>
+Subject: [PATCH 6.1 074/143] net: tls: fix possible race condition between do_tls_getsockopt_conf() and do_tls_setsockopt_conf()
+Date: Wed, 15 Mar 2023 13:12:40 +0100
+Message-Id: <20230315115742.798553090@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -34,133 +35,173 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corey Minyard <cminyard@mvista.com>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-[ Upstream commit 00bb7e763ec9f384cb382455cb6ba5588b5375cf ]
+[ Upstream commit 49c47cc21b5b7a3d8deb18fc57b0aa2ab1286962 ]
 
-The IPMI spec has a time (T6) specified between request retries.  Add
-the handling for that.
+ctx->crypto_send.info is not protected by lock_sock in
+do_tls_getsockopt_conf(). A race condition between do_tls_getsockopt_conf()
+and error paths of do_tls_setsockopt_conf() may lead to a use-after-free
+or null-deref.
 
-Reported by: Tony Camuso <tcamuso@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+More discussion:  https://lore.kernel.org/all/Y/ht6gQL+u6fj3dG@hog/
+
+Fixes: 3c4d7559159b ("tls: kernel TLS support")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Link: https://lore.kernel.org/r/20230228023344.9623-1-hbh25y@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c | 34 +++++++++++++++++++++++++++-------
- 1 file changed, 27 insertions(+), 7 deletions(-)
+ net/tls/tls_main.c | 23 +++++------------------
+ 1 file changed, 5 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
-index c25c4b1a03ae0..a5ddebb1edea4 100644
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -74,7 +74,8 @@
- /*
-  * Timer values
-  */
--#define SSIF_MSG_USEC		60000	/* 60ms between message tries. */
-+#define SSIF_MSG_USEC		60000	/* 60ms between message tries (T3). */
-+#define SSIF_REQ_RETRY_USEC	60000	/* 60ms between send retries (T6). */
- #define SSIF_MSG_PART_USEC	5000	/* 5ms for a message part */
- 
- /* How many times to we retry sending/receiving the message. */
-@@ -82,7 +83,9 @@
- #define	SSIF_RECV_RETRIES	250
- 
- #define SSIF_MSG_MSEC		(SSIF_MSG_USEC / 1000)
-+#define SSIF_REQ_RETRY_MSEC	(SSIF_REQ_RETRY_USEC / 1000)
- #define SSIF_MSG_JIFFIES	((SSIF_MSG_USEC * 1000) / TICK_NSEC)
-+#define SSIF_REQ_RETRY_JIFFIES	((SSIF_REQ_RETRY_USEC * 1000) / TICK_NSEC)
- #define SSIF_MSG_PART_JIFFIES	((SSIF_MSG_PART_USEC * 1000) / TICK_NSEC)
- 
- /*
-@@ -229,6 +232,9 @@ struct ssif_info {
- 	bool		    got_alert;
- 	bool		    waiting_alert;
- 
-+	/* Used to inform the timeout that it should do a resend. */
-+	bool		    do_resend;
-+
- 	/*
- 	 * If set to true, this will request events the next time the
- 	 * state machine is idle.
-@@ -531,22 +537,28 @@ static void start_get(struct ssif_info *ssif_info)
- 		  ssif_info->recv, I2C_SMBUS_BLOCK_DATA);
- }
- 
-+static void start_resend(struct ssif_info *ssif_info);
-+
- static void retry_timeout(struct timer_list *t)
- {
- 	struct ssif_info *ssif_info = from_timer(ssif_info, t, retry_timer);
- 	unsigned long oflags, *flags;
--	bool waiting;
-+	bool waiting, resend;
- 
- 	if (ssif_info->stopping)
- 		return;
- 
- 	flags = ipmi_ssif_lock_cond(ssif_info, &oflags);
-+	resend = ssif_info->do_resend;
-+	ssif_info->do_resend = false;
- 	waiting = ssif_info->waiting_alert;
- 	ssif_info->waiting_alert = false;
- 	ipmi_ssif_unlock_cond(ssif_info, flags);
- 
- 	if (waiting)
- 		start_get(ssif_info);
-+	if (resend)
-+		start_resend(ssif_info);
- }
- 
- static void watch_timeout(struct timer_list *t)
-@@ -595,8 +607,6 @@ static void ssif_alert(struct i2c_client *client, enum i2c_alert_protocol type,
- 		start_get(ssif_info);
- }
- 
--static void start_resend(struct ssif_info *ssif_info);
--
- static void msg_done_handler(struct ssif_info *ssif_info, int result,
- 			     unsigned char *data, unsigned int len)
- {
-@@ -901,7 +911,13 @@ static void msg_written_handler(struct ssif_info *ssif_info, int result,
- 	if (result < 0) {
- 		ssif_info->retries_left--;
- 		if (ssif_info->retries_left > 0) {
--			start_resend(ssif_info);
-+			/*
-+			 * Wait the retry timeout time per the spec,
-+			 * then redo the send.
-+			 */
-+			ssif_info->do_resend = true;
-+			mod_timer(&ssif_info->retry_timer,
-+				  jiffies + SSIF_REQ_RETRY_JIFFIES);
- 			return;
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index 3735cb00905df..b32c112984dd9 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -405,13 +405,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
  		}
+-		lock_sock(sk);
+ 		memcpy(crypto_info_aes_gcm_128->iv,
+ 		       cctx->iv + TLS_CIPHER_AES_GCM_128_SALT_SIZE,
+ 		       TLS_CIPHER_AES_GCM_128_IV_SIZE);
+ 		memcpy(crypto_info_aes_gcm_128->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_AES_GCM_128_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval,
+ 				 crypto_info_aes_gcm_128,
+ 				 sizeof(*crypto_info_aes_gcm_128)))
+@@ -429,13 +427,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(crypto_info_aes_gcm_256->iv,
+ 		       cctx->iv + TLS_CIPHER_AES_GCM_256_SALT_SIZE,
+ 		       TLS_CIPHER_AES_GCM_256_IV_SIZE);
+ 		memcpy(crypto_info_aes_gcm_256->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_AES_GCM_256_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval,
+ 				 crypto_info_aes_gcm_256,
+ 				 sizeof(*crypto_info_aes_gcm_256)))
+@@ -451,13 +447,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(aes_ccm_128->iv,
+ 		       cctx->iv + TLS_CIPHER_AES_CCM_128_SALT_SIZE,
+ 		       TLS_CIPHER_AES_CCM_128_IV_SIZE);
+ 		memcpy(aes_ccm_128->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_AES_CCM_128_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval, aes_ccm_128, sizeof(*aes_ccm_128)))
+ 			rc = -EFAULT;
+ 		break;
+@@ -472,13 +466,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(chacha20_poly1305->iv,
+ 		       cctx->iv + TLS_CIPHER_CHACHA20_POLY1305_SALT_SIZE,
+ 		       TLS_CIPHER_CHACHA20_POLY1305_IV_SIZE);
+ 		memcpy(chacha20_poly1305->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_CHACHA20_POLY1305_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval, chacha20_poly1305,
+ 				sizeof(*chacha20_poly1305)))
+ 			rc = -EFAULT;
+@@ -493,13 +485,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(sm4_gcm_info->iv,
+ 		       cctx->iv + TLS_CIPHER_SM4_GCM_SALT_SIZE,
+ 		       TLS_CIPHER_SM4_GCM_IV_SIZE);
+ 		memcpy(sm4_gcm_info->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_SM4_GCM_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval, sm4_gcm_info, sizeof(*sm4_gcm_info)))
+ 			rc = -EFAULT;
+ 		break;
+@@ -513,13 +503,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(sm4_ccm_info->iv,
+ 		       cctx->iv + TLS_CIPHER_SM4_CCM_SALT_SIZE,
+ 		       TLS_CIPHER_SM4_CCM_IV_SIZE);
+ 		memcpy(sm4_ccm_info->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_SM4_CCM_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval, sm4_ccm_info, sizeof(*sm4_ccm_info)))
+ 			rc = -EFAULT;
+ 		break;
+@@ -535,13 +523,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(crypto_info_aria_gcm_128->iv,
+ 		       cctx->iv + TLS_CIPHER_ARIA_GCM_128_SALT_SIZE,
+ 		       TLS_CIPHER_ARIA_GCM_128_IV_SIZE);
+ 		memcpy(crypto_info_aria_gcm_128->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_ARIA_GCM_128_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval,
+ 				 crypto_info_aria_gcm_128,
+ 				 sizeof(*crypto_info_aria_gcm_128)))
+@@ -559,13 +545,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(crypto_info_aria_gcm_256->iv,
+ 		       cctx->iv + TLS_CIPHER_ARIA_GCM_256_SALT_SIZE,
+ 		       TLS_CIPHER_ARIA_GCM_256_IV_SIZE);
+ 		memcpy(crypto_info_aria_gcm_256->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_ARIA_GCM_256_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval,
+ 				 crypto_info_aria_gcm_256,
+ 				 sizeof(*crypto_info_aria_gcm_256)))
+@@ -614,11 +598,9 @@ static int do_tls_getsockopt_no_pad(struct sock *sk, char __user *optval,
+ 	if (len < sizeof(value))
+ 		return -EINVAL;
  
-@@ -1311,8 +1327,10 @@ static int do_cmd(struct i2c_client *client, int len, unsigned char *msg,
- 	ret = i2c_smbus_write_block_data(client, SSIF_IPMI_REQUEST, len, msg);
- 	if (ret) {
- 		retry_cnt--;
--		if (retry_cnt > 0)
-+		if (retry_cnt > 0) {
-+			msleep(SSIF_REQ_RETRY_MSEC);
- 			goto retry1;
-+		}
- 		return -ENODEV;
- 	}
+-	lock_sock(sk);
+ 	value = -EINVAL;
+ 	if (ctx->rx_conf == TLS_SW || ctx->rx_conf == TLS_HW)
+ 		value = ctx->rx_no_pad;
+-	release_sock(sk);
+ 	if (value < 0)
+ 		return value;
  
-@@ -1453,8 +1471,10 @@ static int start_multipart_test(struct i2c_client *client,
- 					 32, msg);
- 	if (ret) {
- 		retry_cnt--;
--		if (retry_cnt > 0)
-+		if (retry_cnt > 0) {
-+			msleep(SSIF_REQ_RETRY_MSEC);
- 			goto retry_write;
-+		}
- 		dev_err(&client->dev, "Could not write multi-part start, though the BMC said it could handle it.  Just limit sends to one part.\n");
- 		return ret;
+@@ -635,6 +617,8 @@ static int do_tls_getsockopt(struct sock *sk, int optname,
+ {
+ 	int rc = 0;
+ 
++	lock_sock(sk);
++
+ 	switch (optname) {
+ 	case TLS_TX:
+ 	case TLS_RX:
+@@ -651,6 +635,9 @@ static int do_tls_getsockopt(struct sock *sk, int optname,
+ 		rc = -ENOPROTOOPT;
+ 		break;
  	}
++
++	release_sock(sk);
++
+ 	return rc;
+ }
+ 
 -- 
 2.39.2
 
