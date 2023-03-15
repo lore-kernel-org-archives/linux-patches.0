@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD1C4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53127C433EF;
-	Wed, 15 Mar 2023 12:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844464431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC592C433EF;
+	Wed, 15 Mar 2023 12:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883708;
-	bh=0ZTy/K+sQEEKWVa5LE+BZI7IWuHHjn6btf/32a0R+mM=;
+	s=korg; t=1678883711;
+	bh=Hj+XlBTIjGwPR8kKUgh8MRzNjjR262C/o9btYzaCeT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0E8bPNTf7Ep08l+nCedBU2l2HBX0oYBM03Zqq65MFQ/omybMBi0ipuF8yuYBLja6o
-	 hUIeSdHGn3TDV2x7PBcRtapmKQk9ApuV4CuZuSMBuGVPAivdcNS++wnJmkeKgQWtQ7
-	 onikNydTgVjJB+KE/ycI2LcuoWx2YoqD0Pt6SlAY=
+	b=LtGZ8vWKxYOXeBeVD9DUK/NE7CecX4T9AAcStGcGdP6Oe71PIaT1TFXW9PyeKNL8O
+	 +tK/nEB7JA0uUmD9zkG2q9ScuFRzc3T9240ojeWHZZAY7CqyDye3mGTSkHSYef8Rmx
+	 1lGajgEoLpcsNuK2bQ9OvmHd1i2UMGJaHsjYFQ2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Vadim Pasternak <vadimp@mellanox.com>,
-	Darren Hart <dvhart@infradead.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Gross <markgross@kernel.org>,
-	platform-driver-x86@vger.kernel.org,
+	syzbot+2bcc0d79e548c4f62a59@syzkaller.appspotmail.com,
+	Julian Ruess <julianr@linux.ibm.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/143] platform: x86: MLX_PLATFORM: select REGMAP instead of depending on it
-Date: Wed, 15 Mar 2023 13:13:07 +0100
-Message-Id: <20230315115743.575533678@linuxfoundation.org>
+Subject: [PATCH 6.1 102/143] block: fix wrong mode for blkdev_put() from disk_scan_partitions()
+Date: Wed, 15 Mar 2023 13:13:08 +0100
+Message-Id: <20230315115743.603682735@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -39,48 +38,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 7e7e1541c91615e9950d0b96bcd1806d297e970e ]
+[ Upstream commit 428913bce1e67ccb4dae317fd0332545bf8c9233 ]
 
-REGMAP is a hidden (not user visible) symbol. Users cannot set it
-directly thru "make *config", so drivers should select it instead of
-depending on it if they need it.
+If disk_scan_partitions() is called with 'FMODE_EXCL',
+blkdev_get_by_dev() will be called without 'FMODE_EXCL', however, follow
+blkdev_put() is still called with 'FMODE_EXCL', which will cause
+'bd_holders' counter to leak.
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
+Fix the problem by using the right mode for blkdev_put().
 
-Therefore, change the use of "depends on REGMAP" to "select REGMAP".
-
-Fixes: ef0f62264b2a ("platform/x86: mlx-platform: Add physical bus number auto detection")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Vadim Pasternak <vadimp@mellanox.com>
-Cc: Darren Hart <dvhart@infradead.org>
-Cc: Hans de Goede <hdegoede@redhat.com>
-Cc: Mark Gross <markgross@kernel.org>
-Cc: platform-driver-x86@vger.kernel.org
-Link: https://lore.kernel.org/r/20230226053953.4681-7-rdunlap@infradead.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reported-by: syzbot+2bcc0d79e548c4f62a59@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/lkml/f9649d501bc8c3444769418f6c26263555d9d3be.camel@linux.ibm.com/T/
+Tested-by: Julian Ruess <julianr@linux.ibm.com>
+Fixes: e5cfefa97bcc ("block: fix scan partition for exclusively open device again")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ block/genhd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/Kconfig b/drivers/platform/x86/Kconfig
-index f5312f51de19f..b02a8125bc7d5 100644
---- a/drivers/platform/x86/Kconfig
-+++ b/drivers/platform/x86/Kconfig
-@@ -997,7 +997,8 @@ config SERIAL_MULTI_INSTANTIATE
+diff --git a/block/genhd.c b/block/genhd.c
+index 85ae755913e9e..0b6928e948f31 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -385,7 +385,7 @@ int disk_scan_partitions(struct gendisk *disk, fmode_t mode)
+ 	if (IS_ERR(bdev))
+ 		ret =  PTR_ERR(bdev);
+ 	else
+-		blkdev_put(bdev, mode);
++		blkdev_put(bdev, mode & ~FMODE_EXCL);
  
- config MLX_PLATFORM
- 	tristate "Mellanox Technologies platform support"
--	depends on I2C && REGMAP
-+	depends on I2C
-+	select REGMAP
- 	help
- 	  This option enables system support for the Mellanox Technologies
- 	  platform. The Mellanox systems provide data center networking
+ 	if (!(mode & FMODE_EXCL))
+ 		bd_abort_claiming(disk->part0, disk_scan_partitions);
 -- 
 2.39.2
 
