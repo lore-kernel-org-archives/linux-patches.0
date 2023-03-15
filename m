@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D804431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBCEC433EF;
-	Wed, 15 Mar 2023 12:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF534431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5205FC433A4;
+	Wed, 15 Mar 2023 12:20:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882809;
-	bh=upgRRdoeO01p2M73mEvo6AbTLa9oPzmi8pqsZLe6/ng=;
+	s=korg; t=1678882811;
+	bh=uZJJ94w28hnxDDdGG2axhgXThJmm9k9SF80oSc1F8DA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RnnQ1aIKruHs4ifNedSI+xIM0XdkmqjMjqIsB0Wa6ceCXPFbf8wjPonDUTscu/ghQ
-	 tKUaB/2Dh76IGuHJN0OWWfkagPm52PXRIG8rrD1HngmQzqTeziJn/92r+X1eamOcfW
-	 A0qhnxlt0B2cDhOZ+hedZLwTx7XU+iUjPqEi4SC0=
+	b=pWNZTmUD3D1g35TYDbduYJI3U7jHxHcwLXfyL+L/e3KNa9isQyCaAkx2yJ6KXrpNI
+	 u63zlspb1JF3AgOGA72enspvSAV1q8rj/98LG22DA15Tbm3TbB1V62eM6oEm3JCE8g
+	 44NScWAV1xwUg2SwmHbEC1aJioSFWBwyszLpZJAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Vagin <avagin@openvz.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Tobias Klauser <tklauser@distanz.ch>
-Subject: [PATCH 5.10 002/104] fork: allow CLONE_NEWTIME in clone3 flags
-Date: Wed, 15 Mar 2023 13:11:33 +0100
-Message-Id: <20230315115732.054171880@linuxfoundation.org>
+	Tavis Ormandy <taviso@gmail.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 5.10 003/104] x86/CPU/AMD: Disable XSAVES on AMD family 0x17
+Date: Wed, 15 Mar 2023 13:11:34 +0100
+Message-Id: <20230315115732.105663915@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -35,42 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tobias Klauser <tklauser@distanz.ch>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-commit a402f1e35313fc7ce2ca60f543c4402c2c7c3544 upstream.
+commit b0563468eeac88ebc70559d52a0b66efc37e4e9d upstream.
 
-Currently, calling clone3() with CLONE_NEWTIME in clone_args->flags
-fails with -EINVAL. This is because CLONE_NEWTIME intersects with
-CSIGNAL. However, CSIGNAL was deprecated when clone3 was introduced in
-commit 7f192e3cd316 ("fork: add clone3"), allowing re-use of that part
-of clone flags.
+AMD Erratum 1386 is summarised as:
 
-Fix this by explicitly allowing CLONE_NEWTIME in clone3_args_valid. This
-is also in line with the respective check in check_unshare_flags which
-allow CLONE_NEWTIME for unshare().
+  XSAVES Instruction May Fail to Save XMM Registers to the Provided
+  State Save Area
 
-Fixes: 769071ac9f20 ("ns: Introduce Time Namespace")
-Cc: Andrey Vagin <avagin@openvz.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+This piece of accidental chronomancy causes the %xmm registers to
+occasionally reset back to an older value.
+
+Ignore the XSAVES feature on all AMD Zen1/2 hardware.  The XSAVEC
+instruction (which works fine) is equivalent on affected parts.
+
+  [ bp: Typos, move it into the F17h-specific function. ]
+
+Reported-by: Tavis Ormandy <taviso@gmail.com>
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230307174643.1240184-1-andrew.cooper3@citrix.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/fork.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/amd.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -2726,7 +2726,7 @@ static bool clone3_args_valid(struct ker
- 	 * - make the CLONE_DETACHED bit reuseable for clone3
- 	 * - make the CSIGNAL bits reuseable for clone3
- 	 */
--	if (kargs->flags & (CLONE_DETACHED | CSIGNAL))
-+	if (kargs->flags & (CLONE_DETACHED | (CSIGNAL & (~CLONE_NEWTIME))))
- 		return false;
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -932,6 +932,15 @@ void init_spectral_chicken(struct cpuinf
+ 		}
+ 	}
+ #endif
++	/*
++	 * Work around Erratum 1386.  The XSAVES instruction malfunctions in
++	 * certain circumstances on Zen1/2 uarch, and not all parts have had
++	 * updated microcode at the time of writing (March 2023).
++	 *
++	 * Affected parts all have no supervisor XSAVE states, meaning that
++	 * the XSAVEC instruction (which works fine) is equivalent.
++	 */
++	clear_cpu_cap(c, X86_FEATURE_XSAVES);
+ }
  
- 	if ((kargs->flags & (CLONE_SIGHAND | CLONE_CLEAR_SIGHAND)) ==
+ static void init_amd_zn(struct cpuinfo_x86 *c)
 
 
