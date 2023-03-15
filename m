@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24AE24431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA10C433D2;
-	Wed, 15 Mar 2023 12:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10F74431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373FDC433D2;
+	Wed, 15 Mar 2023 12:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883753;
-	bh=vlJ3dYD+ivronfbeYM1l4A6a2Wd6KAtZExml1XQv+yk=;
+	s=korg; t=1678883755;
+	bh=OwmAelD3Bzx9E6LLl2bJBRLrC9hCFn1O4DDqAOBXG9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YJhijh+RHtjbtf03ySvHPJumkCHwwwrX4OcFMid4IqBiC3M5sUvNGvtbISneA+1es
-	 HYL6ndC8WOWZxglV2WumXrYhXZFdKFcvQafydR0PS3ctYxW6IJIB2fGh25h7QWYDW2
-	 b9DtO3PfxmL+jQmJV5qIP40tLGKOL7jszgCOJwVE=
+	b=aFVyFRPR67ORhZFZntmGrh7+Ui6nEJ3J2n1DT/bUsEetCIokfSmdk4H2ZEijfXwBP
+	 ZlNn3ZFswfBNtIWfroLGRyFchW7FNUN+go1wtxoE+LXgGe86jZYW05BAYiVIPK4/O9
+	 1olJbkXkRx29MMjpphLskCoIZ2Fu9cR4fczZinaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	David Disseldorp <ddiss@suse.de>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/143] erofs: Revert "erofs: fix kvcalloc() misuse with __GFP_NOFAIL"
-Date: Wed, 15 Mar 2023 13:13:17 +0100
-Message-Id: <20230315115743.866772115@linuxfoundation.org>
+Subject: [PATCH 6.1 120/143] watch_queue: fix IOC_WATCH_QUEUE_SET_SIZE alloc error paths
+Date: Wed, 15 Mar 2023 13:13:26 +0100
+Message-Id: <20230315115744.162492724@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -35,69 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: David Disseldorp <ddiss@suse.de>
 
-[ Upstream commit 647dd2c3f0e16b71a1a77897d038164d48eea154 ]
+[ Upstream commit 03e1d60e177eedbd302b77af4ea5e21b5a7ade31 ]
 
-Let's revert commit 12724ba38992 ("erofs: fix kvcalloc() misuse with
-__GFP_NOFAIL") since kvmalloc() already supports __GFP_NOFAIL in commit
-a421ef303008 ("mm: allow !GFP_KERNEL allocations for kvmalloc").  So
-the original fix was wrong.
+The watch_queue_set_size() allocation error paths return the ret value
+set via the prior pipe_resize_ring() call, which will always be zero.
 
-Actually there was some issue as [1] discussed, so before that mm fix
-is landed, the warn could still happen but applying this commit first
-will cause less.
+As a result, IOC_WATCH_QUEUE_SET_SIZE callers such as "keyctl watch"
+fail to detect kernel wqueue->notes allocation failures and proceed to
+KEYCTL_WATCH_KEY, with any notifications subsequently lost.
 
-[1] https://lore.kernel.org/r/20230305053035.1911-1-hsiangkao@linux.alibaba.com
-
-Fixes: 12724ba38992 ("erofs: fix kvcalloc() misuse with __GFP_NOFAIL")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/20230309053148.9223-1-hsiangkao@linux.alibaba.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: c73be61cede58 ("pipe: Add general notification queue support")
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/watch_queue.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index ee7c88c9b5afa..cf4871834ebb2 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1047,12 +1047,12 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
+diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
+index a6f9bdd956c39..f10f403104e7d 100644
+--- a/kernel/watch_queue.c
++++ b/kernel/watch_queue.c
+@@ -273,6 +273,7 @@ long watch_queue_set_size(struct pipe_inode_info *pipe, unsigned int nr_notes)
+ 	if (ret < 0)
+ 		goto error;
  
- 	if (!be->decompressed_pages)
- 		be->decompressed_pages =
--			kcalloc(be->nr_pages, sizeof(struct page *),
--				GFP_KERNEL | __GFP_NOFAIL);
-+			kvcalloc(be->nr_pages, sizeof(struct page *),
-+				 GFP_KERNEL | __GFP_NOFAIL);
- 	if (!be->compressed_pages)
- 		be->compressed_pages =
--			kcalloc(pclusterpages, sizeof(struct page *),
--				GFP_KERNEL | __GFP_NOFAIL);
-+			kvcalloc(pclusterpages, sizeof(struct page *),
-+				 GFP_KERNEL | __GFP_NOFAIL);
- 
- 	z_erofs_parse_out_bvecs(be);
- 	err2 = z_erofs_parse_in_bvecs(be, &overlapped);
-@@ -1100,7 +1100,7 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
- 	}
- 	if (be->compressed_pages < be->onstack_pages ||
- 	    be->compressed_pages >= be->onstack_pages + Z_EROFS_ONSTACK_PAGES)
--		kfree(be->compressed_pages);
-+		kvfree(be->compressed_pages);
- 	z_erofs_fill_other_copies(be, err);
- 
- 	for (i = 0; i < be->nr_pages; ++i) {
-@@ -1119,7 +1119,7 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
- 	}
- 
- 	if (be->decompressed_pages != be->onstack_pages)
--		kfree(be->decompressed_pages);
-+		kvfree(be->decompressed_pages);
- 
- 	pcl->length = 0;
- 	pcl->partial = true;
++	ret = -ENOMEM;
+ 	pages = kcalloc(sizeof(struct page *), nr_pages, GFP_KERNEL);
+ 	if (!pages)
+ 		goto error;
 -- 
 2.39.2
 
