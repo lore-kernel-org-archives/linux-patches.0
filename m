@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6884432
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:27:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD487C433A1;
-	Wed, 15 Mar 2023 12:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B694431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:27:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250E6C433EF;
+	Wed, 15 Mar 2023 12:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883240;
-	bh=H+I7i9XyA716jcMukxZSzJn95vXblwM3o3qrJIJtZso=;
+	s=korg; t=1678883237;
+	bh=Xf5Cg1gXPVY1iv+BGNb5LoOnu9hrfA8faKaGqG94wUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xsWn3pX4BGt+FfGj0jR4hva5YG9Z5XZDn16OOapbl0U1MIHoldI0aG3LS4DLagqtp
-	 yVa9dzS4mBAeLDDVqkqcXuegi3qsxDlzIHE181stHgLeHpplr55lmczUsPf96oCYdI
-	 NaP615a9Ij+k+5fGDeJMuilTF3X7J+35ppkNobVg=
+	b=gkSbvbWVMOBC4he+09IFSsdDMwWtb+v+dP6ja7UbBfrVRqVqKKe4eI8u3zNkGBzAI
+	 3WSazLk8rwLutCxBRCXoQs3RJAMNVhx29ftiS/Drf6kVO8n+2G1fUx/M2FOHwy4TgW
+	 pdrLvHHal20fdJHonlwAUnCv1rW1cM9ydGQUtWPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 041/145] regulator: core: Use ktime_get_boottime() to determine how long a regulator was off
-Date: Wed, 15 Mar 2023 13:11:47 +0100
-Message-Id: <20230315115740.431945870@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Ferry Toth <fntoth@gmail.com>
+Subject: [PATCH 5.15 067/145] net: phy: smsc: Cache interrupt mask
+Date: Wed, 15 Mar 2023 13:12:13 +0100
+Message-Id: <20230315115741.248020394@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -36,62 +38,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthias Kaehlcke <mka@chromium.org>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 80d2c29e09e663761c2778167a625b25ffe01b6f ]
+[ Upstream commit 7e8b617eb93f9fcaedac02cd19edcad31c767386 ]
 
-For regulators with 'off-on-delay-us' the regulator framework currently
-uses ktime_get() to determine how long the regulator has been off
-before re-enabling it (after a delay if needed). A problem with using
-ktime_get() is that it doesn't account for the time the system is
-suspended. As a result a regulator with a longer 'off-on-delay' (e.g.
-500ms) that was switched off during suspend might still incurr in a
-delay on resume before it is re-enabled, even though the regulator
-might have been off for hours. ktime_get_boottime() accounts for
-suspend time, use it instead of ktime_get().
+Cache the interrupt mask to avoid re-reading it from the PHY upon every
+interrupt.
 
-Fixes: a8ce7bd89689 ("regulator: core: Fix off_on_delay handling")
-Cc: stable@vger.kernel.org    # 5.13+
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/20230223003301.v2.1.I9719661b8eb0a73b8c416f9c26cf5bd8c0563f99@changeid
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This will simplify a subsequent commit which detects hot-removal in the
+interrupt handler and bails out.
+
+Analyzing and debugging PHY transactions also becomes simpler if such
+redundant reads are avoided.
+
+Last not least, interrupt overhead and latency is slightly improved.
+
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de> # LAN9514/9512/9500
+Tested-by: Ferry Toth <fntoth@gmail.com> # LAN9514
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 58aac3a2ef41 ("net: phy: smsc: fix link up detection in forced irq mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/phy/smsc.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index c7b1e15bf7bb5..cd10880378a6d 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1540,7 +1540,7 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
+index 636b0907a5987..63dca3bb56110 100644
+--- a/drivers/net/phy/smsc.c
++++ b/drivers/net/phy/smsc.c
+@@ -44,6 +44,7 @@ static struct smsc_hw_stat smsc_hw_stats[] = {
+ };
+ 
+ struct smsc_phy_priv {
++	u16 intmask;
+ 	bool energy_enable;
+ 	struct clk *refclk;
+ };
+@@ -58,7 +59,6 @@ static int smsc_phy_ack_interrupt(struct phy_device *phydev)
+ static int smsc_phy_config_intr(struct phy_device *phydev)
+ {
+ 	struct smsc_phy_priv *priv = phydev->priv;
+-	u16 intmask = 0;
+ 	int rc;
+ 
+ 	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
+@@ -66,12 +66,15 @@ static int smsc_phy_config_intr(struct phy_device *phydev)
+ 		if (rc)
+ 			return rc;
+ 
+-		intmask = MII_LAN83C185_ISF_INT4 | MII_LAN83C185_ISF_INT6;
++		priv->intmask = MII_LAN83C185_ISF_INT4 | MII_LAN83C185_ISF_INT6;
+ 		if (priv->energy_enable)
+-			intmask |= MII_LAN83C185_ISF_INT7;
+-		rc = phy_write(phydev, MII_LAN83C185_IM, intmask);
++			priv->intmask |= MII_LAN83C185_ISF_INT7;
++
++		rc = phy_write(phydev, MII_LAN83C185_IM, priv->intmask);
+ 	} else {
+-		rc = phy_write(phydev, MII_LAN83C185_IM, intmask);
++		priv->intmask = 0;
++
++		rc = phy_write(phydev, MII_LAN83C185_IM, 0);
+ 		if (rc)
+ 			return rc;
+ 
+@@ -83,13 +86,8 @@ static int smsc_phy_config_intr(struct phy_device *phydev)
+ 
+ static irqreturn_t smsc_phy_handle_interrupt(struct phy_device *phydev)
+ {
+-	int irq_status, irq_enabled;
+-
+-	irq_enabled = phy_read(phydev, MII_LAN83C185_IM);
+-	if (irq_enabled < 0) {
+-		phy_error(phydev);
+-		return IRQ_NONE;
+-	}
++	struct smsc_phy_priv *priv = phydev->priv;
++	int irq_status;
+ 
+ 	irq_status = phy_read(phydev, MII_LAN83C185_ISF);
+ 	if (irq_status < 0) {
+@@ -97,7 +95,7 @@ static irqreturn_t smsc_phy_handle_interrupt(struct phy_device *phydev)
+ 		return IRQ_NONE;
  	}
  
- 	if (rdev->desc->off_on_delay)
--		rdev->last_off = ktime_get();
-+		rdev->last_off = ktime_get_boottime();
+-	if (!(irq_status & irq_enabled))
++	if (!(irq_status & priv->intmask))
+ 		return IRQ_NONE;
  
- 	/* If the constraints say the regulator should be on at this point
- 	 * and we have control then make sure it is enabled.
-@@ -2629,7 +2629,7 @@ static int _regulator_do_enable(struct regulator_dev *rdev)
- 		 * this regulator was disabled.
- 		 */
- 		ktime_t end = ktime_add_us(rdev->last_off, rdev->desc->off_on_delay);
--		s64 remaining = ktime_us_delta(end, ktime_get());
-+		s64 remaining = ktime_us_delta(end, ktime_get_boottime());
- 
- 		if (remaining > 0)
- 			_regulator_enable_delay(remaining);
-@@ -2868,7 +2868,7 @@ static int _regulator_do_disable(struct regulator_dev *rdev)
- 	}
- 
- 	if (rdev->desc->off_on_delay)
--		rdev->last_off = ktime_get();
-+		rdev->last_off = ktime_get_boottime();
- 
- 	trace_regulator_disable_complete(rdev_get_name(rdev));
- 
+ 	phy_trigger_machine(phydev);
 -- 
 2.39.2
 
