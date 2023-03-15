@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4041A4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:31:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79C1C433EF;
-	Wed, 15 Mar 2023 12:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC4F4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:31:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54192C433D2;
+	Wed, 15 Mar 2023 12:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883515;
-	bh=goVi107AB7mZT3G8J1oAu9AwC5WbUiC9E2F87cAJ2h4=;
+	s=korg; t=1678883517;
+	bh=zMJcQZY4dDA3lZHLSJyw1spa8aO4z8+bLFmPEKMNJG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B9CsySlIgmqNfrx75WFSa4Lk0x5oeQdk9oA9nIkHdJvZ/4DSr05BEJSdIAcUyKW+c
-	 KgU7+PjteQcJn9xhJqJmqoESjVOXwo1cJ6+QYyLKYlvIQQJ8LF2cK6wAmqopkbAaL0
-	 U0mpMoqoLk7Wgc/fO6GtKrlDZdjtMCe6JdPy0JWU=
+	b=zVFIXAgR+1c4CXOpNbzHtIDiL76x0RE0FnUg9yqsBrSCLugdMfW1og2wEc2z92Jmk
+	 JE66MXGJI7svKLWpu05Mb5uKsf5wgbkihdy78VFBJnEPM9uxqczyzIfMGve+PyMcAL
+	 6t1SNbMUPVMR6bNYhnkyaKyl0MpkwN9jJIwQtUE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/143] KVM: x86: Move guts of kvm_arch_init() to standalone helper
-Date: Wed, 15 Mar 2023 13:11:54 +0100
-Message-Id: <20230315115741.363026957@linuxfoundation.org>
+Subject: [PATCH 6.1 029/143] KVM: VMX: Do _all_ initialization before exposing /dev/kvm to userspace
+Date: Wed, 15 Mar 2023 13:11:55 +0100
+Message-Id: <20230315115741.394876122@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -37,179 +37,112 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 4f8396b96a9fc672964842fe7adbe8ddca8a3adf ]
+[ Upstream commit e32b120071ea114efc0b4ddd439547750b85f618 ]
 
-Move the guts of kvm_arch_init() to a new helper, kvm_x86_vendor_init(),
-so that VMX can do _all_ arch and vendor initialization before calling
-kvm_init().  Calling kvm_init() must be the _very_ last step during init,
-as kvm_init() exposes /dev/kvm to userspace, i.e. allows creating VMs.
+Call kvm_init() only after _all_ setup is complete, as kvm_init() exposes
+/dev/kvm to userspace and thus allows userspace to create VMs (and call
+other ioctls).  E.g. KVM will encounter a NULL pointer when attempting to
+add a vCPU to the per-CPU loaded_vmcss_on_cpu list if userspace is able to
+create a VM before vmx_init() configures said list.
 
-No functional change intended.
+ BUG: kernel NULL pointer dereference, address: 0000000000000008
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 0 P4D 0
+ Oops: 0002 [#1] SMP
+ CPU: 6 PID: 1143 Comm: stable Not tainted 6.0.0-rc7+ #988
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+ RIP: 0010:vmx_vcpu_load_vmcs+0x68/0x230 [kvm_intel]
+  <TASK>
+  vmx_vcpu_load+0x16/0x60 [kvm_intel]
+  kvm_arch_vcpu_load+0x32/0x1f0 [kvm]
+  vcpu_load+0x2f/0x40 [kvm]
+  kvm_arch_vcpu_create+0x231/0x310 [kvm]
+  kvm_vm_ioctl+0x79f/0xe10 [kvm]
+  ? handle_mm_fault+0xb1/0x220
+  __x64_sys_ioctl+0x80/0xb0
+  do_syscall_64+0x2b/0x50
+  entry_SYSCALL_64_after_hwframe+0x46/0xb0
+ RIP: 0033:0x7f5a6b05743b
+  </TASK>
+ Modules linked in: vhost_net vhost vhost_iotlb tap kvm_intel(+) kvm irqbypass
 
+Cc: stable@vger.kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20221130230934.1014142-14-seanjc@google.com>
+Message-Id: <20221130230934.1014142-15-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: e32b120071ea ("KVM: VMX: Do _all_ initialization before exposing /dev/kvm to userspace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/kvm_host.h |  3 +++
- arch/x86/kvm/svm/svm.c          | 23 +++++++++++++++++++++--
- arch/x86/kvm/vmx/vmx.c          | 21 +++++++++++++++------
- arch/x86/kvm/x86.c              | 15 +++++++++++++--
- 4 files changed, 52 insertions(+), 10 deletions(-)
+ arch/x86/kvm/vmx/vmx.c | 30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-index f05ebaa26f0ff..ef8cabfbe8540 100644
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -1695,6 +1695,9 @@ extern struct kvm_x86_ops kvm_x86_ops;
- #define KVM_X86_OP_OPTIONAL_RET0 KVM_X86_OP
- #include <asm/kvm-x86-ops.h>
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index 81a23ae4f872b..bc868958e91fe 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -8456,19 +8456,23 @@ static void vmx_cleanup_l1d_flush(void)
+ 	l1tf_vmx_mitigation = VMENTER_L1D_FLUSH_AUTO;
+ }
  
-+int kvm_x86_vendor_init(struct kvm_x86_init_ops *ops);
-+void kvm_x86_vendor_exit(void);
-+
- #define __KVM_HAVE_ARCH_VM_ALLOC
- static inline struct kvm *kvm_arch_alloc_vm(void)
+-static void vmx_exit(void)
++static void __vmx_exit(void)
  {
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index bfe93a1c4f92e..3629dd979667c 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -5080,15 +5080,34 @@ static struct kvm_x86_init_ops svm_init_ops __initdata = {
- 
- static int __init svm_init(void)
- {
-+	int r;
++	allow_smaller_maxphyaddr = false;
 +
- 	__unused_size_checks();
+ #ifdef CONFIG_KEXEC_CORE
+ 	RCU_INIT_POINTER(crash_vmclear_loaded_vmcss, NULL);
+ 	synchronize_rcu();
+ #endif
++	vmx_cleanup_l1d_flush();
++}
  
--	return kvm_init(&svm_init_ops, sizeof(struct vcpu_svm),
--			__alignof__(struct vcpu_svm), THIS_MODULE);
-+	r = kvm_x86_vendor_init(&svm_init_ops);
-+	if (r)
-+		return r;
-+
++static void vmx_exit(void)
++{
+ 	kvm_exit();
+ 	kvm_x86_vendor_exit();
+ 
+-	vmx_cleanup_l1d_flush();
+-
+-	allow_smaller_maxphyaddr = false;
++	__vmx_exit();
+ }
+ module_exit(vmx_exit);
+ 
+@@ -8513,11 +8517,6 @@ static int __init vmx_init(void)
+ 	if (r)
+ 		return r;
+ 
+-	r = kvm_init(&vmx_init_ops, sizeof(struct vcpu_vmx),
+-		     __alignof__(struct vcpu_vmx), THIS_MODULE);
+-	if (r)
+-		goto err_kvm_init;
+-
+ 	/*
+ 	 * Must be called after common x86 init so enable_ept is properly set
+ 	 * up. Hand the parameter mitigation value in which was stored in
+@@ -8551,11 +8550,20 @@ static int __init vmx_init(void)
+ 	if (!enable_ept)
+ 		allow_smaller_maxphyaddr = true;
+ 
 +	/*
 +	 * Common KVM initialization _must_ come last, after this, /dev/kvm is
 +	 * exposed to userspace!
 +	 */
-+	r = kvm_init(&svm_init_ops, sizeof(struct vcpu_svm),
-+		     __alignof__(struct vcpu_svm), THIS_MODULE);
++	r = kvm_init(&vmx_init_ops, sizeof(struct vcpu_vmx),
++		     __alignof__(struct vcpu_vmx), THIS_MODULE);
 +	if (r)
 +		goto err_kvm_init;
 +
-+	return 0;
-+
-+err_kvm_init:
-+	kvm_x86_vendor_exit();
-+	return r;
- }
- 
- static void __exit svm_exit(void)
- {
- 	kvm_exit();
-+	kvm_x86_vendor_exit();
- }
- 
- module_init(svm_init)
-diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index d3d84563a7f9c..81a23ae4f872b 100644
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -8464,6 +8464,7 @@ static void vmx_exit(void)
- #endif
- 
- 	kvm_exit();
-+	kvm_x86_vendor_exit();
- 
- 	vmx_cleanup_l1d_flush();
- 
-@@ -8508,23 +8509,25 @@ static int __init vmx_init(void)
- 	}
- #endif
- 
-+	r = kvm_x86_vendor_init(&vmx_init_ops);
-+	if (r)
-+		return r;
-+
- 	r = kvm_init(&vmx_init_ops, sizeof(struct vcpu_vmx),
- 		     __alignof__(struct vcpu_vmx), THIS_MODULE);
- 	if (r)
--		return r;
-+		goto err_kvm_init;
- 
- 	/*
--	 * Must be called after kvm_init() so enable_ept is properly set
-+	 * Must be called after common x86 init so enable_ept is properly set
- 	 * up. Hand the parameter mitigation value in which was stored in
- 	 * the pre module init parser. If no parameter was given, it will
- 	 * contain 'auto' which will be turned into the default 'cond'
- 	 * mitigation mode.
- 	 */
- 	r = vmx_setup_l1d_flush(vmentry_l1d_flush_param);
--	if (r) {
--		vmx_exit();
--		return r;
--	}
-+	if (r)
-+		goto err_l1d_flush;
- 
- 	vmx_setup_fb_clear_ctrl();
- 
-@@ -8549,5 +8552,11 @@ static int __init vmx_init(void)
- 		allow_smaller_maxphyaddr = true;
- 
  	return 0;
-+
+ 
+-err_l1d_flush:
+-	vmx_exit();
+ err_kvm_init:
++	__vmx_exit();
 +err_l1d_flush:
-+	vmx_exit();
-+err_kvm_init:
-+	kvm_x86_vendor_exit();
-+	return r;
- }
- module_init(vmx_init);
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 68827b8dc37a5..ab09d292bdede 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -9351,7 +9351,16 @@ static struct notifier_block pvclock_gtod_notifier = {
- 
- int kvm_arch_init(void *opaque)
- {
--	struct kvm_x86_init_ops *ops = opaque;
-+	return 0;
-+}
-+
-+void kvm_arch_exit(void)
-+{
-+
-+}
-+
-+int kvm_x86_vendor_init(struct kvm_x86_init_ops *ops)
-+{
- 	u64 host_pat;
- 	int r;
- 
-@@ -9441,8 +9450,9 @@ int kvm_arch_init(void *opaque)
- 	kmem_cache_destroy(x86_emulator_cache);
+ 	kvm_x86_vendor_exit();
  	return r;
  }
-+EXPORT_SYMBOL_GPL(kvm_x86_vendor_init);
- 
--void kvm_arch_exit(void)
-+void kvm_x86_vendor_exit(void)
- {
- #ifdef CONFIG_X86_64
- 	if (hypervisor_is_type(X86_HYPER_MS_HYPERV))
-@@ -9468,6 +9478,7 @@ void kvm_arch_exit(void)
- 	WARN_ON(static_branch_unlikely(&kvm_xen_enabled.key));
- #endif
- }
-+EXPORT_SYMBOL_GPL(kvm_x86_vendor_exit);
- 
- static int __kvm_emulate_halt(struct kvm_vcpu *vcpu, int state, int reason)
- {
 -- 
 2.39.2
 
