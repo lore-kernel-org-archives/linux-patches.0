@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FA14431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE262C433D2;
-	Wed, 15 Mar 2023 12:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF284431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73333C433EF;
+	Wed, 15 Mar 2023 12:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883984;
-	bh=V2KqiZ8S4llN8SpcxEofoWWm3mOxyYTJoqhTbgaLRBM=;
+	s=korg; t=1678883986;
+	bh=05b9O+id9fdWxUMUqvGYbjFpl4C6EGrQ82+VpQIesVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dcbrvMTkyQ8J8RVBWaqNQZmlRe9//2ufD0SAy9vO5ABOgGRnTj6csk4g+oRMB/h5S
-	 f/mUaqSvDzoyw6jPoAfmwZLMu41CZ8asXghYVbB8pY7ZzSExrkuuoS/O0Wv0fKeil9
-	 AU2DNI0P/Kd5+iuoa5fKo27D9KXFTsDBUqLtDbGI=
+	b=ctPvHbFd8Ukkx/PD2UVwaVomU8NNkDWH060rV/BCjl2ZRifYtwwwAMolsWoPq9ZVR
+	 vtSOiafWl4GachJV5SvPYJlB3w7om+xNcjdfIEIJhyfo9w3w4ZKoEPn6//TbUj755p
+	 RlxaYLbyD58S1Z5d3a0qYzEeH1acvRS0cKWUpfc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 061/141] netfilter: nft_quota: copy content when cloning expression
-Date: Wed, 15 Mar 2023 13:12:44 +0100
-Message-Id: <20230315115741.818492198@linuxfoundation.org>
+Subject: [PATCH 6.2 062/141] net: tls: fix possible race condition between do_tls_getsockopt_conf() and do_tls_setsockopt_conf()
+Date: Wed, 15 Mar 2023 13:12:45 +0100
+Message-Id: <20230315115741.847130531@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -34,44 +35,173 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-[ Upstream commit aabef97a35160461e9c576848ded737558d89055 ]
+[ Upstream commit 49c47cc21b5b7a3d8deb18fc57b0aa2ab1286962 ]
 
-If the ruleset contains consumed quota, restore them accordingly.
-Otherwise, listing after restoration shows never used items.
+ctx->crypto_send.info is not protected by lock_sock in
+do_tls_getsockopt_conf(). A race condition between do_tls_getsockopt_conf()
+and error paths of do_tls_setsockopt_conf() may lead to a use-after-free
+or null-deref.
 
-Restore the user-defined quota and flags too.
+More discussion:  https://lore.kernel.org/all/Y/ht6gQL+u6fj3dG@hog/
 
-Fixes: ed0a0c60f0e5 ("netfilter: nft_quota: move stateful fields out of expression data")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 3c4d7559159b ("tls: kernel TLS support")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Link: https://lore.kernel.org/r/20230228023344.9623-1-hbh25y@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_quota.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/tls/tls_main.c | 23 +++++------------------
+ 1 file changed, 5 insertions(+), 18 deletions(-)
 
-diff --git a/net/netfilter/nft_quota.c b/net/netfilter/nft_quota.c
-index 123578e289179..3ba12a7471b0f 100644
---- a/net/netfilter/nft_quota.c
-+++ b/net/netfilter/nft_quota.c
-@@ -236,12 +236,16 @@ static void nft_quota_destroy(const struct nft_ctx *ctx,
- static int nft_quota_clone(struct nft_expr *dst, const struct nft_expr *src)
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index 3735cb00905df..b32c112984dd9 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -405,13 +405,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(crypto_info_aes_gcm_128->iv,
+ 		       cctx->iv + TLS_CIPHER_AES_GCM_128_SALT_SIZE,
+ 		       TLS_CIPHER_AES_GCM_128_IV_SIZE);
+ 		memcpy(crypto_info_aes_gcm_128->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_AES_GCM_128_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval,
+ 				 crypto_info_aes_gcm_128,
+ 				 sizeof(*crypto_info_aes_gcm_128)))
+@@ -429,13 +427,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(crypto_info_aes_gcm_256->iv,
+ 		       cctx->iv + TLS_CIPHER_AES_GCM_256_SALT_SIZE,
+ 		       TLS_CIPHER_AES_GCM_256_IV_SIZE);
+ 		memcpy(crypto_info_aes_gcm_256->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_AES_GCM_256_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval,
+ 				 crypto_info_aes_gcm_256,
+ 				 sizeof(*crypto_info_aes_gcm_256)))
+@@ -451,13 +447,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(aes_ccm_128->iv,
+ 		       cctx->iv + TLS_CIPHER_AES_CCM_128_SALT_SIZE,
+ 		       TLS_CIPHER_AES_CCM_128_IV_SIZE);
+ 		memcpy(aes_ccm_128->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_AES_CCM_128_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval, aes_ccm_128, sizeof(*aes_ccm_128)))
+ 			rc = -EFAULT;
+ 		break;
+@@ -472,13 +466,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(chacha20_poly1305->iv,
+ 		       cctx->iv + TLS_CIPHER_CHACHA20_POLY1305_SALT_SIZE,
+ 		       TLS_CIPHER_CHACHA20_POLY1305_IV_SIZE);
+ 		memcpy(chacha20_poly1305->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_CHACHA20_POLY1305_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval, chacha20_poly1305,
+ 				sizeof(*chacha20_poly1305)))
+ 			rc = -EFAULT;
+@@ -493,13 +485,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(sm4_gcm_info->iv,
+ 		       cctx->iv + TLS_CIPHER_SM4_GCM_SALT_SIZE,
+ 		       TLS_CIPHER_SM4_GCM_IV_SIZE);
+ 		memcpy(sm4_gcm_info->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_SM4_GCM_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval, sm4_gcm_info, sizeof(*sm4_gcm_info)))
+ 			rc = -EFAULT;
+ 		break;
+@@ -513,13 +503,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(sm4_ccm_info->iv,
+ 		       cctx->iv + TLS_CIPHER_SM4_CCM_SALT_SIZE,
+ 		       TLS_CIPHER_SM4_CCM_IV_SIZE);
+ 		memcpy(sm4_ccm_info->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_SM4_CCM_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval, sm4_ccm_info, sizeof(*sm4_ccm_info)))
+ 			rc = -EFAULT;
+ 		break;
+@@ -535,13 +523,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(crypto_info_aria_gcm_128->iv,
+ 		       cctx->iv + TLS_CIPHER_ARIA_GCM_128_SALT_SIZE,
+ 		       TLS_CIPHER_ARIA_GCM_128_IV_SIZE);
+ 		memcpy(crypto_info_aria_gcm_128->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_ARIA_GCM_128_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval,
+ 				 crypto_info_aria_gcm_128,
+ 				 sizeof(*crypto_info_aria_gcm_128)))
+@@ -559,13 +545,11 @@ static int do_tls_getsockopt_conf(struct sock *sk, char __user *optval,
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		lock_sock(sk);
+ 		memcpy(crypto_info_aria_gcm_256->iv,
+ 		       cctx->iv + TLS_CIPHER_ARIA_GCM_256_SALT_SIZE,
+ 		       TLS_CIPHER_ARIA_GCM_256_IV_SIZE);
+ 		memcpy(crypto_info_aria_gcm_256->rec_seq, cctx->rec_seq,
+ 		       TLS_CIPHER_ARIA_GCM_256_REC_SEQ_SIZE);
+-		release_sock(sk);
+ 		if (copy_to_user(optval,
+ 				 crypto_info_aria_gcm_256,
+ 				 sizeof(*crypto_info_aria_gcm_256)))
+@@ -614,11 +598,9 @@ static int do_tls_getsockopt_no_pad(struct sock *sk, char __user *optval,
+ 	if (len < sizeof(value))
+ 		return -EINVAL;
+ 
+-	lock_sock(sk);
+ 	value = -EINVAL;
+ 	if (ctx->rx_conf == TLS_SW || ctx->rx_conf == TLS_HW)
+ 		value = ctx->rx_no_pad;
+-	release_sock(sk);
+ 	if (value < 0)
+ 		return value;
+ 
+@@ -635,6 +617,8 @@ static int do_tls_getsockopt(struct sock *sk, int optname,
  {
- 	struct nft_quota *priv_dst = nft_expr_priv(dst);
-+	struct nft_quota *priv_src = nft_expr_priv(src);
+ 	int rc = 0;
+ 
++	lock_sock(sk);
 +
-+	priv_dst->quota = priv_src->quota;
-+	priv_dst->flags = priv_src->flags;
- 
- 	priv_dst->consumed = kmalloc(sizeof(*priv_dst->consumed), GFP_ATOMIC);
- 	if (!priv_dst->consumed)
- 		return -ENOMEM;
- 
--	atomic64_set(priv_dst->consumed, 0);
-+	*priv_dst->consumed = *priv_src->consumed;
- 
- 	return 0;
+ 	switch (optname) {
+ 	case TLS_TX:
+ 	case TLS_RX:
+@@ -651,6 +635,9 @@ static int do_tls_getsockopt(struct sock *sk, int optname,
+ 		rc = -ENOPROTOOPT;
+ 		break;
+ 	}
++
++	release_sock(sk);
++
+ 	return rc;
  }
+ 
 -- 
 2.39.2
 
