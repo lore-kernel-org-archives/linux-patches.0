@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C634431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D410C433EF;
-	Wed, 15 Mar 2023 12:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF0D4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40916C433D2;
+	Wed, 15 Mar 2023 12:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884126;
-	bh=OwmAelD3Bzx9E6LLl2bJBRLrC9hCFn1O4DDqAOBXG9c=;
+	s=korg; t=1678884128;
+	bh=g8LqNWo8ULGajspdQobRw2/BlnNPtxYZEW31rZA9jqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vtXUj0XUp1THov7pI1z8SbSpAKtkKhL7GXvwohaKPVZFo8kTfrPG0ClJqEKBIKHbe
-	 8WIFhyXjvdIbh/VdoPMyvX8SlCVti+7fX7FBAmi623CWbeVHityn8f/bHp2M/PQb+a
-	 FSs26OREX5EiYt5Fpip9IQpX+rB5G9J7zKx0U3AY=
+	b=MJeIA+N2vjD/SrXp04xB8uiPR/XRaCLZNjD9T0LkooS92Umnl332XNpLP8UIkQU+c
+	 yHPAJjnKsxC99W+zsC+7AwBlMxLpUZlAZklYD0tMJLbeGa8AQ/sFnRwsr+NfiMl66U
+	 X3PGxnkdbL/mu0Pl+d3Uikx64brXoxiS0P6m/JNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Disseldorp <ddiss@suse.de>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Erkki Eilonen <erkki@bearmetal.eu>,
+	Morten Linderud <morten@linderud.pw>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 116/141] watch_queue: fix IOC_WATCH_QUEUE_SET_SIZE alloc error paths
-Date: Wed, 15 Mar 2023 13:13:39 +0100
-Message-Id: <20230315115743.529229293@linuxfoundation.org>
+Subject: [PATCH 6.2 117/141] tpm/eventlog: Dont abort tpm_read_log on faulty ACPI address
+Date: Wed, 15 Mar 2023 13:13:40 +0100
+Message-Id: <20230315115743.557708788@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -35,37 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Disseldorp <ddiss@suse.de>
+From: Morten Linderud <morten@linderud.pw>
 
-[ Upstream commit 03e1d60e177eedbd302b77af4ea5e21b5a7ade31 ]
+[ Upstream commit 80a6c216b16d7f5c584d2148c2e4345ea4eb06ce ]
 
-The watch_queue_set_size() allocation error paths return the ret value
-set via the prior pipe_resize_ring() call, which will always be zero.
+tpm_read_log_acpi() should return -ENODEV when no eventlog from the ACPI
+table is found. If the firmware vendor includes an invalid log address
+we are unable to map from the ACPI memory and tpm_read_log() returns -EIO
+which would abort discovery of the eventlog.
 
-As a result, IOC_WATCH_QUEUE_SET_SIZE callers such as "keyctl watch"
-fail to detect kernel wqueue->notes allocation failures and proceed to
-KEYCTL_WATCH_KEY, with any notifications subsequently lost.
+Change the return value from -EIO to -ENODEV when acpi_os_map_iomem()
+fails to map the event log.
 
-Fixes: c73be61cede58 ("pipe: Add general notification queue support")
-Signed-off-by: David Disseldorp <ddiss@suse.de>
-Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+The following hardware was used to test this issue:
+    Framework Laptop (Pre-production)
+    BIOS: INSYDE Corp, Revision: 3.2
+    TPM Device: NTC, Firmware Revision: 7.2
+
+Dump of the faulty ACPI TPM2 table:
+    [000h 0000   4]                    Signature : "TPM2"    [Trusted Platform Module hardware interface Table]
+    [004h 0004   4]                 Table Length : 0000004C
+    [008h 0008   1]                     Revision : 04
+    [009h 0009   1]                     Checksum : 2B
+    [00Ah 0010   6]                       Oem ID : "INSYDE"
+    [010h 0016   8]                 Oem Table ID : "TGL-ULT"
+    [018h 0024   4]                 Oem Revision : 00000002
+    [01Ch 0028   4]              Asl Compiler ID : "ACPI"
+    [020h 0032   4]        Asl Compiler Revision : 00040000
+
+    [024h 0036   2]               Platform Class : 0000
+    [026h 0038   2]                     Reserved : 0000
+    [028h 0040   8]              Control Address : 0000000000000000
+    [030h 0048   4]                 Start Method : 06 [Memory Mapped I/O]
+
+    [034h 0052  12]            Method Parameters : 00 00 00 00 00 00 00 00 00 00 00 00
+    [040h 0064   4]           Minimum Log Length : 00010000
+    [044h 0068   8]                  Log Address : 000000004053D000
+
+Fixes: 0cf577a03f21 ("tpm: Fix handling of missing event log")
+Tested-by: Erkki Eilonen <erkki@bearmetal.eu>
+Signed-off-by: Morten Linderud <morten@linderud.pw>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/watch_queue.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/char/tpm/eventlog/acpi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
-index a6f9bdd956c39..f10f403104e7d 100644
---- a/kernel/watch_queue.c
-+++ b/kernel/watch_queue.c
-@@ -273,6 +273,7 @@ long watch_queue_set_size(struct pipe_inode_info *pipe, unsigned int nr_notes)
- 	if (ret < 0)
- 		goto error;
+diff --git a/drivers/char/tpm/eventlog/acpi.c b/drivers/char/tpm/eventlog/acpi.c
+index 0913d3eb8d518..cd266021d0103 100644
+--- a/drivers/char/tpm/eventlog/acpi.c
++++ b/drivers/char/tpm/eventlog/acpi.c
+@@ -143,8 +143,12 @@ int tpm_read_log_acpi(struct tpm_chip *chip)
  
-+	ret = -ENOMEM;
- 	pages = kcalloc(sizeof(struct page *), nr_pages, GFP_KERNEL);
- 	if (!pages)
- 		goto error;
+ 	ret = -EIO;
+ 	virt = acpi_os_map_iomem(start, len);
+-	if (!virt)
++	if (!virt) {
++		dev_warn(&chip->dev, "%s: Failed to map ACPI memory\n", __func__);
++		/* try EFI log next */
++		ret = -ENODEV;
+ 		goto err;
++	}
+ 
+ 	memcpy_fromio(log->bios_event_log, virt, len);
+ 
 -- 
 2.39.2
 
