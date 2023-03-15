@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDEB4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:22:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03CDBC433EF;
-	Wed, 15 Mar 2023 12:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251854431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:22:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965CFC433EF;
+	Wed, 15 Mar 2023 12:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882930;
-	bh=IjKDmlwL/9JvXm2JvnEC+xEDCkhuc99zzFIJpGcwaoc=;
+	s=korg; t=1678882932;
+	bh=2lIyccPcnd1ycR/X3I7gs8AVjAP1LgfQrJRyVUm7Nvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gCIAtC3aHsntR/b0yUOk+gMdnCF2/88wL4UxOpZRA8cTlBQiaWQbuw2eQHfN/b08v
-	 677PT+BFjGvbn2w0qZOeTNwqOYO7Pf/Cd8CGRyhSGBaAJn919eYPjwAbqXDw3MKRh6
-	 nTFFZmdnh0/u+0G1dJd6EInXNO1Ktdqsb2153eAU=
+	b=YSLqWKRTFkhruX/UXrs2N1aG2BWiMnGejc679Eo8mFb+aDEtQhfPkLAy1JuKMXUTD
+	 hrW5PUS9vKYDHZzbGMddKddmhhK79EoxXK1u6i8ZeErvsI1nm7goooHf42h5j8E6ZR
+	 lrYZwfxde2b1BYr6wol8AEOr30UdEIIj8I71gDjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9d16c39efb5fade84574@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 056/104] ext4: Fix deadlock during directory rename
-Date: Wed, 15 Mar 2023 13:12:27 +0100
-Message-Id: <20230315115734.324670722@linuxfoundation.org>
+Subject: [PATCH 5.10 039/104] selftests: nft_nat: ensuring the listening side is up before starting the client
+Date: Wed, 15 Mar 2023 13:12:10 +0100
+Message-Id: <20230315115733.643084823@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -36,84 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 3c92792da8506a295afb6d032b4476e46f979725 ]
+[ Upstream commit 2067e7a00aa604b94de31d64f29b8893b1696f26 ]
 
-As lockdep properly warns, we should not be locking i_rwsem while having
-transactions started as the proper lock ordering used by all directory
-handling operations is i_rwsem -> transaction start. Fix the lock
-ordering by moving the locking of the directory earlier in
-ext4_rename().
+The test_local_dnat_portonly() function initiates the client-side as
+soon as it sets the listening side to the background. This could lead to
+a race condition where the server may not be ready to listen. To ensure
+that the server-side is up and running before initiating the
+client-side, a delay is introduced to the test_local_dnat_portonly()
+function.
 
-Reported-by: syzbot+9d16c39efb5fade84574@syzkaller.appspotmail.com
-Fixes: 0813299c586b ("ext4: Fix possible corruption when moving a directory")
-Link: https://syzkaller.appspot.com/bug?extid=9d16c39efb5fade84574
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230301141004.15087-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Before the fix:
+  # ./nft_nat.sh
+  PASS: netns routing/connectivity: ns0-rthlYrBU can reach ns1-rthlYrBU and ns2-rthlYrBU
+  PASS: ping to ns1-rthlYrBU was ip NATted to ns2-rthlYrBU
+  PASS: ping to ns1-rthlYrBU OK after ip nat output chain flush
+  PASS: ipv6 ping to ns1-rthlYrBU was ip6 NATted to ns2-rthlYrBU
+  2023/02/27 04:11:03 socat[6055] E connect(5, AF=2 10.0.1.99:2000, 16): Connection refused
+  ERROR: inet port rewrite
+
+After the fix:
+  # ./nft_nat.sh
+  PASS: netns routing/connectivity: ns0-9sPJV6JJ can reach ns1-9sPJV6JJ and ns2-9sPJV6JJ
+  PASS: ping to ns1-9sPJV6JJ was ip NATted to ns2-9sPJV6JJ
+  PASS: ping to ns1-9sPJV6JJ OK after ip nat output chain flush
+  PASS: ipv6 ping to ns1-9sPJV6JJ was ip6 NATted to ns2-9sPJV6JJ
+  PASS: inet port rewrite without l3 address
+
+Fixes: 282e5f8fe907 ("netfilter: nat: really support inet nat without l3 address")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/namei.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ tools/testing/selftests/netfilter/nft_nat.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
-index 17590bb769147..1f47aeca71422 100644
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -3863,10 +3863,20 @@ static int ext4_rename(struct inode *old_dir, struct dentry *old_dentry,
- 			return retval;
- 	}
+diff --git a/tools/testing/selftests/netfilter/nft_nat.sh b/tools/testing/selftests/netfilter/nft_nat.sh
+index 4e15e81673104..67697d8ea59a5 100755
+--- a/tools/testing/selftests/netfilter/nft_nat.sh
++++ b/tools/testing/selftests/netfilter/nft_nat.sh
+@@ -404,6 +404,8 @@ EOF
+ 	echo SERVER-$family | ip netns exec "$ns1" timeout 5 socat -u STDIN TCP-LISTEN:2000 &
+ 	sc_s=$!
  
-+	/*
-+	 * We need to protect against old.inode directory getting converted
-+	 * from inline directory format into a normal one.
-+	 */
-+	if (S_ISDIR(old.inode->i_mode))
-+		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
++	sleep 1
 +
- 	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de,
- 				 &old.inlined);
--	if (IS_ERR(old.bh))
--		return PTR_ERR(old.bh);
-+	if (IS_ERR(old.bh)) {
-+		retval = PTR_ERR(old.bh);
-+		goto unlock_moved_dir;
-+	}
-+
- 	/*
- 	 *  Check for inode number is _not_ due to possible IO errors.
- 	 *  We might rmdir the source, keep it as pwd of some process
-@@ -3923,11 +3933,6 @@ static int ext4_rename(struct inode *old_dir, struct dentry *old_dentry,
- 			if (new.dir != old.dir && EXT4_DIR_LINK_MAX(new.dir))
- 				goto end_rename;
- 		}
--		/*
--		 * We need to protect against old.inode directory getting
--		 * converted from inline directory format into a normal one.
--		 */
--		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
- 		retval = ext4_rename_dir_prepare(handle, &old);
- 		if (retval) {
- 			inode_unlock(old.inode);
-@@ -4057,12 +4062,15 @@ static int ext4_rename(struct inode *old_dir, struct dentry *old_dentry,
- 	} else {
- 		ext4_journal_stop(handle);
- 	}
--	if (old.dir_bh)
--		inode_unlock(old.inode);
- release_bh:
- 	brelse(old.dir_bh);
- 	brelse(old.bh);
- 	brelse(new.bh);
-+
-+unlock_moved_dir:
-+	if (S_ISDIR(old.inode->i_mode))
-+		inode_unlock(old.inode);
-+
- 	return retval;
- }
+ 	result=$(ip netns exec "$ns0" timeout 1 socat TCP:$daddr:2000 STDOUT)
  
+ 	if [ "$result" = "SERVER-inet" ];then
 -- 
 2.39.2
 
