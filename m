@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0204431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:30:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72235C433EF;
-	Wed, 15 Mar 2023 12:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9500A4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:30:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA98C433EF;
+	Wed, 15 Mar 2023 12:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883423;
-	bh=RUtrwhkGxrU/WjppTacDxsQStzEre83Pl93QLDKDXBo=;
+	s=korg; t=1678883426;
+	bh=sVH2vsIk/sno9MnNFLS6rc3jeKS1wSCfh1TDNxfxzF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qeW2df+dutV2sNIcxebTRzGBirBVcyFAR0Auc/Etg1ifo9Ls8013fsO736qbnlCUR
-	 Fc+O7czdtST3cpM9FEADSROYmB08eixOnjY9o/S7oPoLtOaliPgHO6FiqW0NBk40Ph
-	 zxU0LB3pK1aU8lp+vSKloYDmfz7RVAZ6CiYPuBdM=
+	b=u21dTzGzIUzAbNAZjzjphus0ELzahMOqiqMkhXecRKfncgvvbXth3XFzCUZJsbml2
+	 kPZ4FZqrSwWnX+qc8oSyePoIOmJAB9Zso6qZRWgn08n8QOfniTuE45yORJDxgulYfS
+	 Z7P1wwF9pChIscAd+z3cLOJr9wxAiCmwxbk1wYqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Rohan McLure <rmclure@linux.ibm.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 108/145] powerpc/iommu: fix memory leak with using debugfs_lookup()
-Date: Wed, 15 Mar 2023 13:12:54 +0100
-Message-Id: <20230315115742.539337464@linuxfoundation.org>
+Subject: [PATCH 5.15 109/145] powerpc/kcsan: Exclude udelay to prevent recursive instrumentation
+Date: Wed, 15 Mar 2023 13:12:55 +0100
+Message-Id: <20230315115742.567863378@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -34,40 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Rohan McLure <rmclure@linux.ibm.com>
 
-[ Upstream commit b505063910c134778202dfad9332dfcecb76bab3 ]
+[ Upstream commit 2a7ce82dc46c591c9244057d89a6591c9639b9b9 ]
 
-When calling debugfs_lookup() the result must have dput() called on it,
-otherwise the memory will leak over time.  To make things simpler, just
-call debugfs_lookup_and_remove() instead which handles all of the logic
-at once.
+In order for KCSAN to increase its likelihood of observing a data race,
+it sets a watchpoint on memory accesses and stalls, allowing for
+detection of conflicting accesses by other kernel threads or interrupts.
 
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stalls are implemented by injecting a call to udelay in instrumented code.
+To prevent recursive instrumentation, exclude udelay from being instrumented.
+
+Signed-off-by: Rohan McLure <rmclure@linux.ibm.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230202141919.2298821-1-gregkh@linuxfoundation.org
+Link: https://lore.kernel.org/r/20230206021801.105268-3-rmclure@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/iommu.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/powerpc/kernel/time.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
-index a67fd54ccc573..8bea336fa5b70 100644
---- a/arch/powerpc/kernel/iommu.c
-+++ b/arch/powerpc/kernel/iommu.c
-@@ -68,11 +68,9 @@ static void iommu_debugfs_add(struct iommu_table *tbl)
- static void iommu_debugfs_del(struct iommu_table *tbl)
- {
- 	char name[10];
--	struct dentry *liobn_entry;
+diff --git a/arch/powerpc/kernel/time.c b/arch/powerpc/kernel/time.c
+index 934d8ae66cc63..4406d7a89558b 100644
+--- a/arch/powerpc/kernel/time.c
++++ b/arch/powerpc/kernel/time.c
+@@ -450,7 +450,7 @@ void vtime_flush(struct task_struct *tsk)
+ #define calc_cputime_factors()
+ #endif
  
- 	sprintf(name, "%08lx", tbl->it_index);
--	liobn_entry = debugfs_lookup(name, iommu_debugfs_dir);
--	debugfs_remove(liobn_entry);
-+	debugfs_lookup_and_remove(name, iommu_debugfs_dir);
+-void __delay(unsigned long loops)
++void __no_kcsan __delay(unsigned long loops)
+ {
+ 	unsigned long start;
+ 
+@@ -471,7 +471,7 @@ void __delay(unsigned long loops)
  }
- #else
- static void iommu_debugfs_add(struct iommu_table *tbl){}
+ EXPORT_SYMBOL(__delay);
+ 
+-void udelay(unsigned long usecs)
++void __no_kcsan udelay(unsigned long usecs)
+ {
+ 	__delay(tb_ticks_per_usec * usecs);
+ }
 -- 
 2.39.2
 
