@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE744431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FCB4C433EF;
-	Wed, 15 Mar 2023 12:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B25D4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A721AC433EF;
+	Wed, 15 Mar 2023 12:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882914;
-	bh=apRZ1oJQBrRP+YONhSgwE091CKNpT6FyomujhMqqA0A=;
+	s=korg; t=1678882917;
+	bh=R961WI0cBKFxQ+sPtf1/Pl/Nes5ZlXE2dUwoGvajWt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vsxu4QZuTnUZujK8wl/hne8bPjwXxQz+eIBF00KVt87haU3pg/UKjQGXBXYqGxbxg
-	 DIY72p5p18cwOz52tIRMi7Pemw1V1XH3YnWLwXZmu2GFq9ayJ6xxeEoXpNK4hIuKYQ
-	 eMOEZN/YwrEw6wZQS6ofhDoR9uPNQaft2Xdjpl6U=
+	b=ACJD1JCma4sTCO9wpRusZTt6m4i2NZk34iU2vJ2a4rklpsUoQJWAxPJMnPHbJ3b2v
+	 2zlIYszytcII34iBSfPPvaPgy9dPEsz2Q15dvFtXnjYl2nba82Ikq5q6+6VgmjnYNc
+	 bN04yvfWyxezG2RqVhDWhrhTZRyYTCVPpB51eAl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	Sumit Saxena <sumit.saxena@broadcom.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Vadim Pasternak <vadimp@mellanox.com>,
+	Darren Hart <dvhart@infradead.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Gross <markgross@kernel.org>,
+	platform-driver-x86@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 050/104] scsi: megaraid_sas: Update max supported LD IDs to 240
-Date: Wed, 15 Mar 2023 13:12:21 +0100
-Message-Id: <20230315115734.088165130@linuxfoundation.org>
+Subject: [PATCH 5.10 051/104] platform: x86: MLX_PLATFORM: select REGMAP instead of depending on it
+Date: Wed, 15 Mar 2023 13:12:22 +0100
+Message-Id: <20230315115734.126776633@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -36,58 +39,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit bfa659177dcba48cf13f2bd88c1972f12a60bf1c ]
+[ Upstream commit 7e7e1541c91615e9950d0b96bcd1806d297e970e ]
 
-The firmware only supports Logical Disk IDs up to 240 and LD ID 255 (0xFF)
-is reserved for deleted LDs. However, in some cases, firmware was assigning
-LD ID 254 (0xFE) to deleted LDs and this was causing the driver to mark the
-wrong disk as deleted. This in turn caused the wrong disk device to be
-taken offline by the SCSI midlayer.
+REGMAP is a hidden (not user visible) symbol. Users cannot set it
+directly thru "make *config", so drivers should select it instead of
+depending on it if they need it.
 
-To address this issue, limit the LD ID range from 255 to 240. This ensures
-the deleted LD ID is properly identified and removed by the driver without
-accidently deleting any valid LDs.
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
 
-Fixes: ae6874ba4b43 ("scsi: megaraid_sas: Early detection of VD deletion through RaidMap update")
-Reported-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Signed-off-by: Sumit Saxena <sumit.saxena@broadcom.com>
-Link: https://lore.kernel.org/r/20230302105342.34933-2-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+
+Fixes: ef0f62264b2a ("platform/x86: mlx-platform: Add physical bus number auto detection")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Vadim Pasternak <vadimp@mellanox.com>
+Cc: Darren Hart <dvhart@infradead.org>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Mark Gross <markgross@kernel.org>
+Cc: platform-driver-x86@vger.kernel.org
+Link: https://lore.kernel.org/r/20230226053953.4681-7-rdunlap@infradead.org
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/megaraid/megaraid_sas.h    | 2 ++
- drivers/scsi/megaraid/megaraid_sas_fp.c | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/x86/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/megaraid/megaraid_sas.h b/drivers/scsi/megaraid/megaraid_sas.h
-index c088a848776ef..2d5b1d5978664 100644
---- a/drivers/scsi/megaraid/megaraid_sas.h
-+++ b/drivers/scsi/megaraid/megaraid_sas.h
-@@ -1517,6 +1517,8 @@ struct megasas_ctrl_info {
- #define MEGASAS_MAX_LD_IDS			(MEGASAS_MAX_LD_CHANNELS * \
- 						MEGASAS_MAX_DEV_PER_CHANNEL)
+diff --git a/drivers/platform/x86/Kconfig b/drivers/platform/x86/Kconfig
+index a1858689d6e10..84c5b922f245e 100644
+--- a/drivers/platform/x86/Kconfig
++++ b/drivers/platform/x86/Kconfig
+@@ -1195,7 +1195,8 @@ config I2C_MULTI_INSTANTIATE
  
-+#define MEGASAS_MAX_SUPPORTED_LD_IDS		240
-+
- #define MEGASAS_MAX_SECTORS                    (2*1024)
- #define MEGASAS_MAX_SECTORS_IEEE		(2*128)
- #define MEGASAS_DBG_LVL				1
-diff --git a/drivers/scsi/megaraid/megaraid_sas_fp.c b/drivers/scsi/megaraid/megaraid_sas_fp.c
-index 83f69c33b01a9..ec10d35b4685a 100644
---- a/drivers/scsi/megaraid/megaraid_sas_fp.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_fp.c
-@@ -358,7 +358,7 @@ u8 MR_ValidateMapInfo(struct megasas_instance *instance, u64 map_id)
- 		ld = MR_TargetIdToLdGet(i, drv_map);
- 
- 		/* For non existing VDs, iterate to next VD*/
--		if (ld >= (MAX_LOGICAL_DRIVES_EXT - 1))
-+		if (ld >= MEGASAS_MAX_SUPPORTED_LD_IDS)
- 			continue;
- 
- 		raid = MR_LdRaidGet(ld, drv_map);
+ config MLX_PLATFORM
+ 	tristate "Mellanox Technologies platform support"
+-	depends on I2C && REGMAP
++	depends on I2C
++	select REGMAP
+ 	help
+ 	  This option enables system support for the Mellanox Technologies
+ 	  platform. The Mellanox systems provide data center networking
 -- 
 2.39.2
 
