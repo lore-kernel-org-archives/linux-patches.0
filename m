@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725024431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDCDC433D2;
-	Wed, 15 Mar 2023 12:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1E54431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B22C433EF;
+	Wed, 15 Mar 2023 12:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882827;
-	bh=dpRmM7qAj8lylGPg8hJW/9j+ui37wVLZX8xrjkmjCnQ=;
+	s=korg; t=1678882829;
+	bh=3bNM15ShRroBVTId57mEs4cY/R+KvaU72qKC+Nc8+H0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oQpl10j8ZtzgzBLvKPfKOhBveG9eOmAoeJ0davQdXKZj9508AvDU1ujLVYd7A1hQ5
-	 RcTa4Jl1UA6DZi9bEYUQFOudGI+qO5TaL3dV1Ipn4UGurQOpBjXLPJT424IV4V7Zgh
-	 ZkSB2McIyQC6uNZWahze6lsv+O+kZ32VdJddILJw=
+	b=JBkIZidglDkSTy8xudDlC3f0jk7F+gX3K2h/mv3pQ7NNN6yHYwTRsfR/HOLhbFFOE
+	 EYubly8nnycHXKt4Km766SsfeQXe5/KHxyYGXxAS24NZbgjl/lrcHWmqxFOd15qii4
+	 v16c43yy/S0SmzglNhsv+u+UlVymsGPDHdbOq2hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dtor@chromium.org>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
+	Bixuan Cui <cuibixuan@huawei.com>,
 	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 017/104] irqdomain: Fix mapping-creation race
-Date: Wed, 15 Mar 2023 13:11:48 +0100
-Message-Id: <20230315115732.783486021@linuxfoundation.org>
+Subject: [PATCH 5.10 018/104] irqdomain: Change the type of size in __irq_domain_add() to be consistent
+Date: Wed, 15 Mar 2023 13:11:49 +0100
+Message-Id: <20230315115732.825280066@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -39,182 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Bixuan Cui <cuibixuan@huawei.com>
 
-[ Upstream commit 601363cc08da25747feb87c55573dd54de91d66a ]
+[ Upstream commit 20c36ce2164f1774b487d443ece99b754bc6ad43 ]
 
-Parallel probing of devices that share interrupts (e.g. when a driver
-uses asynchronous probing) can currently result in two mappings for the
-same hardware interrupt to be created due to missing serialisation.
+The 'size' is used in struct_size(domain, revmap, size) and its input
+parameter type is 'size_t'(unsigned int).
+Changing the size to 'unsigned int' to make the type consistent.
 
-Make sure to hold the irq_domain_mutex when creating mappings so that
-looking for an existing mapping before creating a new one is done
-atomically.
-
-Fixes: 765230b5f084 ("driver-core: add asynchronous probing support for drivers")
-Fixes: b62b2cf5759b ("irqdomain: Fix handling of type settings for existing mappings")
-Link: https://lore.kernel.org/r/YuJXMHoT4ijUxnRb@hovoldconsulting.com
-Cc: stable@vger.kernel.org      # 4.8
-Cc: Dmitry Torokhov <dtor@chromium.org>
-Cc: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Hsin-Yi Wang <hsinyi@chromium.org>
-Tested-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Bixuan Cui <cuibixuan@huawei.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230213104302.17307-7-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20210916025203.44841-1-cuibixuan@huawei.com
+Stable-dep-of: 8932c32c3053 ("irqdomain: Fix domain registration race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/irqdomain.c | 64 ++++++++++++++++++++++++++++++------------
- 1 file changed, 46 insertions(+), 18 deletions(-)
+ include/linux/irqdomain.h | 2 +-
+ kernel/irq/irqdomain.c    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/include/linux/irqdomain.h b/include/linux/irqdomain.h
+index ea5a337e0f8b8..9b9743f7538c4 100644
+--- a/include/linux/irqdomain.h
++++ b/include/linux/irqdomain.h
+@@ -256,7 +256,7 @@ static inline struct fwnode_handle *irq_domain_alloc_fwnode(phys_addr_t *pa)
+ }
+ 
+ void irq_domain_free_fwnode(struct fwnode_handle *fwnode);
+-struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, int size,
++struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int size,
+ 				    irq_hw_number_t hwirq_max, int direct_max,
+ 				    const struct irq_domain_ops *ops,
+ 				    void *host_data);
 diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-index a1e1433a07754..245e317c72908 100644
+index 245e317c72908..426242c8903d4 100644
 --- a/kernel/irq/irqdomain.c
 +++ b/kernel/irq/irqdomain.c
-@@ -25,6 +25,9 @@ static DEFINE_MUTEX(irq_domain_mutex);
- 
- static struct irq_domain *irq_default_domain;
- 
-+static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
-+					unsigned int nr_irqs, int node, void *arg,
-+					bool realloc, const struct irq_affinity_desc *affinity);
- static void irq_domain_check_hierarchy(struct irq_domain *domain);
- 
- struct irqchip_fwid {
-@@ -637,9 +640,9 @@ unsigned int irq_create_direct_mapping(struct irq_domain *domain)
- }
- EXPORT_SYMBOL_GPL(irq_create_direct_mapping);
- 
--static unsigned int __irq_create_mapping_affinity(struct irq_domain *domain,
--						  irq_hw_number_t hwirq,
--						  const struct irq_affinity_desc *affinity)
-+static unsigned int irq_create_mapping_affinity_locked(struct irq_domain *domain,
-+						       irq_hw_number_t hwirq,
-+						       const struct irq_affinity_desc *affinity)
- {
- 	struct device_node *of_node = irq_domain_get_of_node(domain);
- 	int virq;
-@@ -654,7 +657,7 @@ static unsigned int __irq_create_mapping_affinity(struct irq_domain *domain,
- 		return 0;
- 	}
- 
--	if (irq_domain_associate(domain, virq, hwirq)) {
-+	if (irq_domain_associate_locked(domain, virq, hwirq)) {
- 		irq_free_desc(virq);
- 		return 0;
- 	}
-@@ -690,14 +693,20 @@ unsigned int irq_create_mapping_affinity(struct irq_domain *domain,
- 		return 0;
- 	}
- 
-+	mutex_lock(&irq_domain_mutex);
-+
- 	/* Check if mapping already exists */
- 	virq = irq_find_mapping(domain, hwirq);
- 	if (virq) {
- 		pr_debug("existing mapping on virq %d\n", virq);
--		return virq;
-+		goto out;
- 	}
- 
--	return __irq_create_mapping_affinity(domain, hwirq, affinity);
-+	virq = irq_create_mapping_affinity_locked(domain, hwirq, affinity);
-+out:
-+	mutex_unlock(&irq_domain_mutex);
-+
-+	return virq;
- }
- EXPORT_SYMBOL_GPL(irq_create_mapping_affinity);
- 
-@@ -799,6 +808,8 @@ unsigned int irq_create_fwspec_mapping(struct irq_fwspec *fwspec)
- 	if (WARN_ON(type & ~IRQ_TYPE_SENSE_MASK))
- 		type &= IRQ_TYPE_SENSE_MASK;
- 
-+	mutex_lock(&irq_domain_mutex);
-+
- 	/*
- 	 * If we've already configured this interrupt,
- 	 * don't do it again, or hell will break loose.
-@@ -811,7 +822,7 @@ unsigned int irq_create_fwspec_mapping(struct irq_fwspec *fwspec)
- 		 * interrupt number.
- 		 */
- 		if (type == IRQ_TYPE_NONE || type == irq_get_trigger_type(virq))
--			return virq;
-+			goto out;
- 
- 		/*
- 		 * If the trigger type has not been set yet, then set
-@@ -819,35 +830,45 @@ unsigned int irq_create_fwspec_mapping(struct irq_fwspec *fwspec)
- 		 */
- 		if (irq_get_trigger_type(virq) == IRQ_TYPE_NONE) {
- 			irq_data = irq_get_irq_data(virq);
--			if (!irq_data)
--				return 0;
-+			if (!irq_data) {
-+				virq = 0;
-+				goto out;
-+			}
- 
- 			irqd_set_trigger_type(irq_data, type);
--			return virq;
-+			goto out;
- 		}
- 
- 		pr_warn("type mismatch, failed to map hwirq-%lu for %s!\n",
- 			hwirq, of_node_full_name(to_of_node(fwspec->fwnode)));
--		return 0;
-+		virq = 0;
-+		goto out;
- 	}
- 
- 	if (irq_domain_is_hierarchy(domain)) {
--		virq = irq_domain_alloc_irqs(domain, 1, NUMA_NO_NODE, fwspec);
--		if (virq <= 0)
--			return 0;
-+		virq = irq_domain_alloc_irqs_locked(domain, -1, 1, NUMA_NO_NODE,
-+						    fwspec, false, NULL);
-+		if (virq <= 0) {
-+			virq = 0;
-+			goto out;
-+		}
- 	} else {
- 		/* Create mapping */
--		virq = __irq_create_mapping_affinity(domain, hwirq, NULL);
-+		virq = irq_create_mapping_affinity_locked(domain, hwirq, NULL);
- 		if (!virq)
--			return virq;
-+			goto out;
- 	}
- 
- 	irq_data = irq_get_irq_data(virq);
--	if (WARN_ON(!irq_data))
--		return 0;
-+	if (WARN_ON(!irq_data)) {
-+		virq = 0;
-+		goto out;
-+	}
- 
- 	/* Store trigger type */
- 	irqd_set_trigger_type(irq_data, type);
-+out:
-+	mutex_unlock(&irq_domain_mutex);
- 
- 	return virq;
- }
-@@ -1856,6 +1877,13 @@ void irq_domain_set_info(struct irq_domain *domain, unsigned int virq,
- 	irq_set_handler_data(virq, handler_data);
- }
- 
-+static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
-+					unsigned int nr_irqs, int node, void *arg,
-+					bool realloc, const struct irq_affinity_desc *affinity)
-+{
-+	return -EINVAL;
-+}
-+
- static void irq_domain_check_hierarchy(struct irq_domain *domain)
- {
- }
+@@ -130,7 +130,7 @@ EXPORT_SYMBOL_GPL(irq_domain_free_fwnode);
+  * Allocates and initializes an irq_domain structure.
+  * Returns pointer to IRQ domain, or NULL on failure.
+  */
+-struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, int size,
++struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int size,
+ 				    irq_hw_number_t hwirq_max, int direct_max,
+ 				    const struct irq_domain_ops *ops,
+ 				    void *host_data)
 -- 
 2.39.2
 
