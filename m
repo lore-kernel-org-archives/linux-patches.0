@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036EA4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:25:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB09C433EF;
-	Wed, 15 Mar 2023 12:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3554432
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:25:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DD6C433EF;
+	Wed, 15 Mar 2023 12:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883150;
-	bh=DplOEY++6edKm/qVARx31dm8053/4Mef/iloluR1UJs=;
+	s=korg; t=1678883156;
+	bh=oxZq7lq2Z5LRxuZx6TyZO40tToDw9pNkvhhU5kEbxZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RgG/CbY4mU0jLCbsm8kVVLly26C0qS5AVE69gPtkIgM3n6el5S75l2N+d0JtK81DG
-	 71BMA+iNbFZsqbJsSjbC6ZeY1RA+gbNyBLT1ouYOsaPG4/Bc5Aw2vFjnk8JXQ+dzfa
-	 LYPXc/OZmvTGYbnobB+nmzVVexz/RB64wH8I4P1I=
+	b=OUEGY8AGViUFCpERFgMQPvaPo0xqPq0G/VvM8XAslOJnQmXZTNI6T2T8woeTfLisn
+	 7Mw6dHyLFZQtodPLQCEEzRkz5hi8Y0GlN73meD3eMIZGLmwbkgtmuHM+2zfyh1L/kg
+	 XIuhCPesb0RznqtJMOL38mkz1DL8CVvNVd/KwrjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/145] arm64: efi: Make efi_rt_lock a raw_spinlock
-Date: Wed, 15 Mar 2023 13:11:40 +0100
-Message-Id: <20230315115740.191039809@linuxfoundation.org>
+Subject: [PATCH 5.15 035/145] RISC-V: Avoid dereferening NULL regs in die()
+Date: Wed, 15 Mar 2023 13:11:41 +0100
+Message-Id: <20230315115740.231245322@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -35,102 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre Gondois <pierre.gondois@arm.com>
+From: Palmer Dabbelt <palmer@rivosinc.com>
 
-[ Upstream commit 0e68b5517d3767562889f1d83fdb828c26adb24f ]
+[ Upstream commit f2913d006fcdb61719635e093d1b5dd0dafecac7 ]
 
-Running a rt-kernel base on 6.2.0-rc3-rt1 on an Ampere Altra outputs
-the following:
-  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:46
-  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 9, name: kworker/u320:0
-  preempt_count: 2, expected: 0
-  RCU nest depth: 0, expected: 0
-  3 locks held by kworker/u320:0/9:
-  #0: ffff3fff8c27d128 ((wq_completion)efi_rts_wq){+.+.}-{0:0}, at: process_one_work (./include/linux/atomic/atomic-long.h:41)
-  #1: ffff80000861bdd0 ((work_completion)(&efi_rts_work.work)){+.+.}-{0:0}, at: process_one_work (./include/linux/atomic/atomic-long.h:41)
-  #2: ffffdf7e1ed3e460 (efi_rt_lock){+.+.}-{3:3}, at: efi_call_rts (drivers/firmware/efi/runtime-wrappers.c:101)
-  Preemption disabled at:
-  efi_virtmap_load (./arch/arm64/include/asm/mmu_context.h:248)
-  CPU: 0 PID: 9 Comm: kworker/u320:0 Tainted: G        W          6.2.0-rc3-rt1
-  Hardware name: WIWYNN Mt.Jade Server System B81.03001.0005/Mt.Jade Motherboard, BIOS 1.08.20220218 (SCP: 1.08.20220218) 2022/02/18
-  Workqueue: efi_rts_wq efi_call_rts
-  Call trace:
-  dump_backtrace (arch/arm64/kernel/stacktrace.c:158)
-  show_stack (arch/arm64/kernel/stacktrace.c:165)
-  dump_stack_lvl (lib/dump_stack.c:107 (discriminator 4))
-  dump_stack (lib/dump_stack.c:114)
-  __might_resched (kernel/sched/core.c:10134)
-  rt_spin_lock (kernel/locking/rtmutex.c:1769 (discriminator 4))
-  efi_call_rts (drivers/firmware/efi/runtime-wrappers.c:101)
-  [...]
+I don't think we can actually die() without a regs pointer, but the
+compiler was warning about a NULL check after a dereference.  It seems
+prudent to just avoid the possibly-NULL dereference, given that when
+die()ing the system is already toast so who knows how we got there.
 
-This seems to come from commit ff7a167961d1 ("arm64: efi: Execute
-runtime services from a dedicated stack") which adds a spinlock. This
-spinlock is taken through:
-efi_call_rts()
-\-efi_call_virt()
-  \-efi_call_virt_pointer()
-    \-arch_efi_call_virt_setup()
-
-Make 'efi_rt_lock' a raw_spinlock to avoid being preempted.
-
-[ardb: The EFI runtime services are called with a different set of
-       translation tables, and are permitted to use the SIMD registers.
-       The context switch code preserves/restores neither, and so EFI
-       calls must be made with preemption disabled, rather than only
-       disabling migration.]
-
-Fixes: ff7a167961d1 ("arm64: efi: Execute runtime services from a dedicated stack")
-Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
-Cc: <stable@vger.kernel.org> # v6.1+
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20220920200037.6727-1-palmer@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Stable-dep-of: 130aee3fd998 ("riscv: Avoid enabling interrupts in die()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/efi.h | 6 +++---
- arch/arm64/kernel/efi.c      | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ arch/riscv/kernel/traps.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/include/asm/efi.h b/arch/arm64/include/asm/efi.h
-index c5d4551a1be71..53cbbb96f7ebf 100644
---- a/arch/arm64/include/asm/efi.h
-+++ b/arch/arm64/include/asm/efi.h
-@@ -25,7 +25,7 @@ int efi_set_mapping_permissions(struct mm_struct *mm, efi_memory_desc_t *md);
- ({									\
- 	efi_virtmap_load();						\
- 	__efi_fpsimd_begin();						\
--	spin_lock(&efi_rt_lock);					\
-+	raw_spin_lock(&efi_rt_lock);					\
- })
+diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
+index 6084bd93d2f58..502cba5029ca4 100644
+--- a/arch/riscv/kernel/traps.c
++++ b/arch/riscv/kernel/traps.c
+@@ -33,6 +33,7 @@ void die(struct pt_regs *regs, const char *str)
+ {
+ 	static int die_counter;
+ 	int ret;
++	long cause;
  
- #define arch_efi_call_virt(p, f, args...)				\
-@@ -37,12 +37,12 @@ int efi_set_mapping_permissions(struct mm_struct *mm, efi_memory_desc_t *md);
+ 	oops_enter();
  
- #define arch_efi_call_virt_teardown()					\
- ({									\
--	spin_unlock(&efi_rt_lock);					\
-+	raw_spin_unlock(&efi_rt_lock);					\
- 	__efi_fpsimd_end();						\
- 	efi_virtmap_unload();						\
- })
+@@ -42,11 +43,13 @@ void die(struct pt_regs *regs, const char *str)
  
--extern spinlock_t efi_rt_lock;
-+extern raw_spinlock_t efi_rt_lock;
- efi_status_t __efi_rt_asm_wrapper(void *, const char *, ...);
+ 	pr_emerg("%s [#%d]\n", str, ++die_counter);
+ 	print_modules();
+-	show_regs(regs);
++	if (regs)
++		show_regs(regs);
  
- #define ARCH_EFI_IRQ_FLAGS_MASK (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT)
-diff --git a/arch/arm64/kernel/efi.c b/arch/arm64/kernel/efi.c
-index 386bd81ca12bb..9669f3fa2aefe 100644
---- a/arch/arm64/kernel/efi.c
-+++ b/arch/arm64/kernel/efi.c
-@@ -145,7 +145,7 @@ asmlinkage efi_status_t efi_handle_corrupted_x18(efi_status_t s, const char *f)
- 	return s;
- }
+-	ret = notify_die(DIE_OOPS, str, regs, 0, regs->cause, SIGSEGV);
++	cause = regs ? regs->cause : -1;
++	ret = notify_die(DIE_OOPS, str, regs, 0, cause, SIGSEGV);
  
--DEFINE_SPINLOCK(efi_rt_lock);
-+DEFINE_RAW_SPINLOCK(efi_rt_lock);
+-	if (regs && kexec_should_crash(current))
++	if (kexec_should_crash(current))
+ 		crash_kexec(regs);
  
- asmlinkage u64 *efi_rt_stack_top __ro_after_init;
- 
+ 	bust_spinlocks(0);
 -- 
 2.39.2
 
