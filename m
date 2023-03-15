@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5629C4434
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:22:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDFEDC433EF;
-	Wed, 15 Mar 2023 12:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3264431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:22:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7212BC433D2;
+	Wed, 15 Mar 2023 12:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882938;
-	bh=NCntH6LXIMwjKURQYZds+5+7mmadtr57G3tQYD/TDTw=;
+	s=korg; t=1678882940;
+	bh=7cjK2XK8piKtY+uotQRrRyPsAUczhsmZQ+9mLSPEEMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=POWavEDpfUSnwym+MIZcE0V928xWFx9f2oZf6j3weqeC2dp/6efbO7RDWJ+xBStwq
-	 qFh76EQyaHwd8/lHAnjdu6AItcU6DNsZOgGPQAw9OBI4rd6maAvySx+uktBhuYNiTc
-	 zmNxEzkXOVcAYKudzi4eIv62+U4TP0VryRbE9ygM=
+	b=iPiaaIoSB4rVCzVrDCQV7wkUi5I6pGQCzkkNIJPXW4IaBqaaz0KuYsRnQvcCbFr1Z
+	 MB+txEUc2fqtixm5w23RZ0eyDuPUS1jz6HTVBXa6fCApOHOD80s0opvPkL/u1sk0ZL
+	 jgpsCy8HTEL9eFYdYcTzJXAUpK4NA2GT1BGwf3aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	David Disseldorp <ddiss@suse.de>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 058/104] PCI/PM: Define pci_restore_standard_config() only for CONFIG_PM_SLEEP
-Date: Wed, 15 Mar 2023 13:12:29 +0100
-Message-Id: <20230315115734.414134864@linuxfoundation.org>
+Subject: [PATCH 5.10 059/104] watch_queue: fix IOC_WATCH_QUEUE_SET_SIZE alloc error paths
+Date: Wed, 15 Mar 2023 13:12:30 +0100
+Message-Id: <20230315115734.453496633@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -35,79 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: David Disseldorp <ddiss@suse.de>
 
-[ Upstream commit 18a94192e20de31e7e495d7c805c8930c42e99ef ]
+[ Upstream commit 03e1d60e177eedbd302b77af4ea5e21b5a7ade31 ]
 
-pci_restore_standard_config() was defined under CONFIG_PM but called only
-by pci_pm_resume() (defined under CONFIG_SUSPEND) and pci_pm_restore()
-(defined under CONFIG_HIBERNATE_CALLBACKS).  A configuration with only
-CONFIG_PM leads to a warning:
+The watch_queue_set_size() allocation error paths return the ret value
+set via the prior pipe_resize_ring() call, which will always be zero.
 
-  drivers/pci/pci-driver.c:533:12: error: ‘pci_restore_standard_config’ defined but not used [-Werror=unused-function]
+As a result, IOC_WATCH_QUEUE_SET_SIZE callers such as "keyctl watch"
+fail to detect kernel wqueue->notes allocation failures and proceed to
+KEYCTL_WATCH_KEY, with any notifications subsequently lost.
 
-CONFIG_PM_SLEEP depends on CONFIG_SUSPEND and CONFIG_HIBERNATE_CALLBACKS,
-so define pci_restore_standard_config() under that instead.
-
-Link: https://lore.kernel.org/r/20220420141135.444820-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Stable-dep-of: ac91e6980563 ("PCI: Unify delay handling for reset and resume")
+Fixes: c73be61cede58 ("pipe: Add general notification queue support")
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-driver.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ kernel/watch_queue.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index 8b587fc97f7bc..bbaecc2340371 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -499,9 +499,9 @@ static void pci_device_shutdown(struct device *dev)
- 		pci_clear_master(pci_dev);
- }
+diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
+index d29731a30b8e1..73717917d8164 100644
+--- a/kernel/watch_queue.c
++++ b/kernel/watch_queue.c
+@@ -274,6 +274,7 @@ long watch_queue_set_size(struct pipe_inode_info *pipe, unsigned int nr_notes)
+ 	if (ret < 0)
+ 		goto error;
  
--#ifdef CONFIG_PM
-+#ifdef CONFIG_PM_SLEEP
- 
--/* Auxiliary functions used for system resume and run-time resume. */
-+/* Auxiliary functions used for system resume */
- 
- /**
-  * pci_restore_standard_config - restore standard config registers of PCI device
-@@ -521,6 +521,11 @@ static int pci_restore_standard_config(struct pci_dev *pci_dev)
- 	pci_pme_restore(pci_dev);
- 	return 0;
- }
-+#endif /* CONFIG_PM_SLEEP */
-+
-+#ifdef CONFIG_PM
-+
-+/* Auxiliary functions used for system resume and run-time resume */
- 
- static void pci_pm_default_resume(struct pci_dev *pci_dev)
- {
-@@ -528,10 +533,6 @@ static void pci_pm_default_resume(struct pci_dev *pci_dev)
- 	pci_enable_wake(pci_dev, PCI_D0, false);
- }
- 
--#endif
--
--#ifdef CONFIG_PM_SLEEP
--
- static void pci_pm_default_resume_early(struct pci_dev *pci_dev)
- {
- 	pci_power_up(pci_dev);
-@@ -540,6 +541,10 @@ static void pci_pm_default_resume_early(struct pci_dev *pci_dev)
- 	pci_pme_restore(pci_dev);
- }
- 
-+#endif /* CONFIG_PM */
-+
-+#ifdef CONFIG_PM_SLEEP
-+
- /*
-  * Default "suspend" method for devices that have no driver provided suspend,
-  * or not even a driver at all (second part).
++	ret = -ENOMEM;
+ 	pages = kcalloc(sizeof(struct page *), nr_pages, GFP_KERNEL);
+ 	if (!pages)
+ 		goto error;
 -- 
 2.39.2
 
