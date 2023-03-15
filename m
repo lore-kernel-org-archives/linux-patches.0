@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F7B4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC92AC433EF;
-	Wed, 15 Mar 2023 12:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77294431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E506C433D2;
+	Wed, 15 Mar 2023 12:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884147;
-	bh=d7+kc+gWXq5ZyIrrqwOoh9kM+3TAzAMMcA49QzJ/0RI=;
+	s=korg; t=1678884149;
+	bh=W1QfcQHVZVFp9rQvEhfqJH+RvdNqkFLq8fN0NrQTBe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=huDYAUmocw2w0JxMHEaqWN/Z5LMFxlPufY2/cr6bAoEv8zaZTPWULPzgwVjZ9B1uW
-	 Mv6//7/bz12/DDvKvW1Z5lL/r7ErHn7AcEV8PxXuvKxgiTSFP+H3mLTc+c22CexoZh
-	 bSYLiko7UoeZw72aLQ5TeFqjWqgl+JoJi79MKCsw=
+	b=sGThEjWXj/WNb0yeO5J3jz1Yj9xcZ4VaSSZkj9hlT59rOmK+HbGzErXbU3gxiX8lW
+	 uGnxzIllTkAC/YlUZCWPtvvX2TOt/rQ7Mw1y7ly9/1ZcnheoTCGg0qF0Xbj63w83Q5
+	 YilKQll2MofBbYdRyvUEacw4CJjg0c73OZy8T4Mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 124/141] powerpc: Remove __kernel_text_address() in show_instructions()
-Date: Wed, 15 Mar 2023 13:13:47 +0100
-Message-Id: <20230315115743.770086211@linuxfoundation.org>
+Subject: [PATCH 6.2 125/141] powerpc/bpf/32: Only set a stack frame when necessary
+Date: Wed, 15 Mar 2023 13:13:48 +0100
+Message-Id: <20230315115743.797732280@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -37,47 +37,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit d9ab6da64fd15608c9feb20d769d8df1a32fe212 ]
+[ Upstream commit d084dcf256bc4565b4b1af9b00297ac7b51c7049 ]
 
-That test was introducted in 2006 by
-commit 00ae36de49cc ("[POWERPC] Better check in show_instructions").
-At that time, there was no BPF progs.
+Until now a stack frame was set at all time due to the need
+to keep tail call counter in the stack.
 
-As seen in message of commit 89d21e259a94 ("powerpc/bpf/32: Fix Oops
-on tail call tests"), when a page fault occurs in test_bpf.ko for
-instance, the code is dumped as XXXXXXXXs. Allthough
-__kernel_text_address() checks is_bpf_text_address(), it seems it is
-not enough.
+But since commit 89d21e259a94 ("powerpc/bpf/32: Fix Oops on tail call
+tests") the tail call counter is passed via register r4. It is therefore
+not necessary anymore to have a stack frame for that.
 
-Today, show_instructions() uses get_kernel_nofault() to read the code,
-so there is no real need for additional verifications.
+Just like PPC64, implement bpf_has_stack_frame() and only sets the frame
+when needed.
 
-ARM64 and x86 don't do any additional check before dumping
-instructions. Do the same and remove __kernel_text_address()
-in show_instructions().
+The difference with PPC64 is that PPC32 doesn't have a redzone, so
+the stack is required as soon as non volatile registers are used or
+when tail call count is set up.
 
 Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+[mpe: Fix commit reference in change log]
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/4fd69ef7945518c3e27f96b95046a5c1468d35bf.1675245773.git.christophe.leroy@csgroup.eu
+Link: https://lore.kernel.org/r/62d7b654a3cfe73d998697cb29bbc5ffd89bfdb1.1675245773.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/process.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/powerpc/net/bpf_jit_comp32.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/kernel/process.c b/arch/powerpc/kernel/process.c
-index c22cc234672f9..effe9697905dc 100644
---- a/arch/powerpc/kernel/process.c
-+++ b/arch/powerpc/kernel/process.c
-@@ -1405,8 +1405,7 @@ static void show_instructions(struct pt_regs *regs)
- 	for (i = 0; i < NR_INSN_TO_PRINT; i++) {
- 		int instr;
+diff --git a/arch/powerpc/net/bpf_jit_comp32.c b/arch/powerpc/net/bpf_jit_comp32.c
+index a379b0ce19ffa..8643b2c8b76ef 100644
+--- a/arch/powerpc/net/bpf_jit_comp32.c
++++ b/arch/powerpc/net/bpf_jit_comp32.c
+@@ -79,6 +79,20 @@ static int bpf_jit_stack_offsetof(struct codegen_context *ctx, int reg)
+ #define SEEN_NVREG_FULL_MASK	0x0003ffff /* Non volatile registers r14-r31 */
+ #define SEEN_NVREG_TEMP_MASK	0x00001e01 /* BPF_REG_5, BPF_REG_AX, TMP_REG */
  
--		if (!__kernel_text_address(pc) ||
--		    get_kernel_nofault(instr, (const void *)pc)) {
-+		if (get_kernel_nofault(instr, (const void *)pc)) {
- 			pr_cont("XXXXXXXX ");
- 		} else {
- 			if (nip == pc)
++static inline bool bpf_has_stack_frame(struct codegen_context *ctx)
++{
++	/*
++	 * We only need a stack frame if:
++	 * - we call other functions (kernel helpers), or
++	 * - we use non volatile registers, or
++	 * - we use tail call counter
++	 * - the bpf program uses its stack area
++	 * The latter condition is deduced from the usage of BPF_REG_FP
++	 */
++	return ctx->seen & (SEEN_FUNC | SEEN_TAILCALL | SEEN_NVREG_FULL_MASK) ||
++	       bpf_is_seen_register(ctx, bpf_to_ppc(BPF_REG_FP));
++}
++
+ void bpf_jit_realloc_regs(struct codegen_context *ctx)
+ {
+ 	unsigned int nvreg_mask;
+@@ -118,7 +132,8 @@ void bpf_jit_build_prologue(u32 *image, struct codegen_context *ctx)
+ 
+ #define BPF_TAILCALL_PROLOGUE_SIZE	4
+ 
+-	EMIT(PPC_RAW_STWU(_R1, _R1, -BPF_PPC_STACKFRAME(ctx)));
++	if (bpf_has_stack_frame(ctx))
++		EMIT(PPC_RAW_STWU(_R1, _R1, -BPF_PPC_STACKFRAME(ctx)));
+ 
+ 	if (ctx->seen & SEEN_TAILCALL)
+ 		EMIT(PPC_RAW_STW(_R4, _R1, bpf_jit_stack_offsetof(ctx, BPF_PPC_TC)));
+@@ -171,7 +186,8 @@ static void bpf_jit_emit_common_epilogue(u32 *image, struct codegen_context *ctx
+ 		EMIT(PPC_RAW_LWZ(_R0, _R1, BPF_PPC_STACKFRAME(ctx) + PPC_LR_STKOFF));
+ 
+ 	/* Tear down our stack frame */
+-	EMIT(PPC_RAW_ADDI(_R1, _R1, BPF_PPC_STACKFRAME(ctx)));
++	if (bpf_has_stack_frame(ctx))
++		EMIT(PPC_RAW_ADDI(_R1, _R1, BPF_PPC_STACKFRAME(ctx)));
+ 
+ 	if (ctx->seen & SEEN_FUNC)
+ 		EMIT(PPC_RAW_MTLR(_R0));
 -- 
 2.39.2
 
