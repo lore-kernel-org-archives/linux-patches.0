@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53DD4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:33:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A78DC433D2;
-	Wed, 15 Mar 2023 12:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C474431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:33:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2491C4339B;
+	Wed, 15 Mar 2023 12:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883632;
-	bh=x7i46WTKycTTQNdw04EN2Pdg5Yo3C+7GBFnpLwkvoDM=;
+	s=korg; t=1678883635;
+	bh=DGYEc5X/QGc79/Mm7N81PbNywMsRC9SvTajrgrCd5v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQcDJ4Idf/9xII1Zp9e4nWydzza+wbR7I1MOwxJr1Lz1tgvhcQdYiw1SlxobgeG2t
-	 i2Y4V0wyXppCKzW9awLIN2jO77Ym6Ba/uwxr2YIt/VvNxnF+Rg6UOa7U+XhT+8Whkr
-	 8Qj46Noc2PZfrFmrIv4TGl61s/6vvDeTnKXoEw34=
+	b=V9vnEmXJYDAIAtyr1zbUigUXgrwTt4FSyVyfM458D6RsLcOMSGvZ7aZDsF0iMlo0R
+	 PITHbB6UGc0KPFvga2WlQed7KJKE3aWGUw8To3kdBMTbcGMpiiEvN0n5Hn7azJ1Bc7
+	 SwkwTMB7YAaSEnjcbZgM8jHofGbBiScgfyhoqXuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/143] netfilter: nft_last: copy content when cloning expression
-Date: Wed, 15 Mar 2023 13:12:38 +0100
-Message-Id: <20230315115742.737227387@linuxfoundation.org>
+Subject: [PATCH 6.1 073/143] netfilter: nft_quota: copy content when cloning expression
+Date: Wed, 15 Mar 2023 13:12:39 +0100
+Message-Id: <20230315115742.766252159@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -36,38 +36,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 860e874290fb3be08e966c9c8ffc510c5b0f2bd8 ]
+[ Upstream commit aabef97a35160461e9c576848ded737558d89055 ]
 
-If the ruleset contains last timestamps, restore them accordingly.
+If the ruleset contains consumed quota, restore them accordingly.
 Otherwise, listing after restoration shows never used items.
 
-Fixes: 33a24de37e81 ("netfilter: nft_last: move stateful fields out of expression data")
+Restore the user-defined quota and flags too.
+
+Fixes: ed0a0c60f0e5 ("netfilter: nft_quota: move stateful fields out of expression data")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_last.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/nft_quota.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_last.c b/net/netfilter/nft_last.c
-index bb15a55dad5c0..eaa54964cf23c 100644
---- a/net/netfilter/nft_last.c
-+++ b/net/netfilter/nft_last.c
-@@ -104,11 +104,15 @@ static void nft_last_destroy(const struct nft_ctx *ctx,
- static int nft_last_clone(struct nft_expr *dst, const struct nft_expr *src)
+diff --git a/net/netfilter/nft_quota.c b/net/netfilter/nft_quota.c
+index e6b0df68feeaf..410a5fcf88309 100644
+--- a/net/netfilter/nft_quota.c
++++ b/net/netfilter/nft_quota.c
+@@ -235,12 +235,16 @@ static void nft_quota_destroy(const struct nft_ctx *ctx,
+ static int nft_quota_clone(struct nft_expr *dst, const struct nft_expr *src)
  {
- 	struct nft_last_priv *priv_dst = nft_expr_priv(dst);
-+	struct nft_last_priv *priv_src = nft_expr_priv(src);
+ 	struct nft_quota *priv_dst = nft_expr_priv(dst);
++	struct nft_quota *priv_src = nft_expr_priv(src);
++
++	priv_dst->quota = priv_src->quota;
++	priv_dst->flags = priv_src->flags;
  
- 	priv_dst->last = kzalloc(sizeof(*priv_dst->last), GFP_ATOMIC);
- 	if (!priv_dst->last)
+ 	priv_dst->consumed = kmalloc(sizeof(*priv_dst->consumed), GFP_ATOMIC);
+ 	if (!priv_dst->consumed)
  		return -ENOMEM;
  
-+	priv_dst->last->set = priv_src->last->set;
-+	priv_dst->last->jiffies = priv_src->last->jiffies;
-+
+-	atomic64_set(priv_dst->consumed, 0);
++	*priv_dst->consumed = *priv_src->consumed;
+ 
  	return 0;
  }
- 
 -- 
 2.39.2
 
