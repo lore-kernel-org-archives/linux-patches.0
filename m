@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CEF4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348C0C433EF;
-	Wed, 15 Mar 2023 12:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4724431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6208C433D2;
+	Wed, 15 Mar 2023 12:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882743;
-	bh=MnCXLDMbFPBJ+LFdICtYzTOFAIkvEJYeUNnVVW7X8Qg=;
+	s=korg; t=1678882746;
+	bh=YeJprYBDUT+gZPBUFosifEW6+RYM19NGssR6oZrUJBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YglAb0p36KI/5JbvLbJXWBLdco6GwkSs6jcbBLWh1iOwD0SS54DB1Zxam8/OOjDCz
-	 oQuvtekisWtL6maKFJhXwda38ZS436fI9S0magkbRuC2Vgne1VcnEzjiZgAFWYqiJY
-	 MbuIxhFZYovh20nrzOuWnEMLcdzUjVUXtFPoV61I=
+	b=SDUBvQAcygGmLhEsjUNdqfMyyYxxl/T2MBbau5hx1urzatzeKGMqb+r6E+ekBZ7FM
+	 eQ1QkXUWMAxnh9irUL8lCLQ9XU1QoUwMjTg+U+2DmLm36IEIiJUhTkKejn2kCbC+V2
+	 4kA3FJ9MOK9pymOji0Pt1e7snXIWoichB2I5BNP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Alvaro Karsz <alvaro.karsz@solid-run.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 54/68] macintosh: windfarm: Use unsigned type for 1-bit bitfields
-Date: Wed, 15 Mar 2023 13:12:48 +0100
-Message-Id: <20230315115728.217024988@linuxfoundation.org>
+Subject: [PATCH 5.4 55/68] PCI: Add SolidRun vendor ID
+Date: Wed, 15 Mar 2023 13:12:49 +0100
+Message-Id: <20230315115728.251720606@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -35,66 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Alvaro Karsz <alvaro.karsz@solid-run.com>
 
-[ Upstream commit 748ea32d2dbd813d3bd958117bde5191182f909a ]
+[ Upstream commit db6c4dee4c104f50ed163af71c53bfdb878a8318 ]
 
-Clang warns:
+Add SolidRun vendor ID to pci_ids.h
 
-  drivers/macintosh/windfarm_lm75_sensor.c:63:14: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
-                  lm->inited = 1;
-                             ^ ~
+The vendor ID is used in 2 different source files, the SNET vDPA driver
+and PCI quirks.
 
-  drivers/macintosh/windfarm_smu_sensors.c:356:19: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
-                  pow->fake_volts = 1;
-                                  ^ ~
-  drivers/macintosh/windfarm_smu_sensors.c:368:18: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
-                  pow->quadratic = 1;
-                                 ^ ~
-
-There is no bug here since no code checks the actual value of these
-fields, just whether or not they are zero (boolean context), but this
-can be easily fixed by switching to an unsigned type.
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230215-windfarm-wsingle-bit-bitfield-constant-conversion-v1-1-26415072e855@kernel.org
+Signed-off-by: Alvaro Karsz <alvaro.karsz@solid-run.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Message-Id: <20230110165638.123745-2-alvaro.karsz@solid-run.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/macintosh/windfarm_lm75_sensor.c | 4 ++--
- drivers/macintosh/windfarm_smu_sensors.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ include/linux/pci_ids.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/macintosh/windfarm_lm75_sensor.c b/drivers/macintosh/windfarm_lm75_sensor.c
-index 1e5fa09845e77..8713e80201c07 100644
---- a/drivers/macintosh/windfarm_lm75_sensor.c
-+++ b/drivers/macintosh/windfarm_lm75_sensor.c
-@@ -34,8 +34,8 @@
- #endif
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index a31aa3ac4219f..d35000669db5a 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -3106,6 +3106,8 @@
  
- struct wf_lm75_sensor {
--	int			ds1775 : 1;
--	int			inited : 1;
-+	unsigned int		ds1775 : 1;
-+	unsigned int		inited : 1;
- 	struct i2c_client	*i2c;
- 	struct wf_sensor	sens;
- };
-diff --git a/drivers/macintosh/windfarm_smu_sensors.c b/drivers/macintosh/windfarm_smu_sensors.c
-index 3e6059eaa1380..90823b4280259 100644
---- a/drivers/macintosh/windfarm_smu_sensors.c
-+++ b/drivers/macintosh/windfarm_smu_sensors.c
-@@ -273,8 +273,8 @@ struct smu_cpu_power_sensor {
- 	struct list_head	link;
- 	struct wf_sensor	*volts;
- 	struct wf_sensor	*amps;
--	int			fake_volts : 1;
--	int			quadratic : 1;
-+	unsigned int		fake_volts : 1;
-+	unsigned int		quadratic : 1;
- 	struct wf_sensor	sens;
- };
- #define to_smu_cpu_power(c) container_of(c, struct smu_cpu_power_sensor, sens)
+ #define PCI_VENDOR_ID_3COM_2		0xa727
+ 
++#define PCI_VENDOR_ID_SOLIDRUN		0xd063
++
+ #define PCI_VENDOR_ID_DIGIUM		0xd161
+ #define PCI_DEVICE_ID_DIGIUM_HFC4S	0xb410
+ 
 -- 
 2.39.2
 
