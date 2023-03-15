@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3EDC4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A526C433D2;
-	Wed, 15 Mar 2023 12:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E8A4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE30C433EF;
+	Wed, 15 Mar 2023 12:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882651;
-	bh=m16nKKONlBrN+Xu9YyH4FcIDOK1t0bjQJODJG7N3YDk=;
+	s=korg; t=1678882654;
+	bh=YUxyZHl5bRB0BwmAop66aFY1XoWuGvc+sje5RqZZRng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PIoRXqeh0bn6Xoe0cbZa83t8gdMi7Lrb8RRw5HpDlvM52JKpRfGc+LNcc4P92p7Jl
-	 uTvlA/6m5oBt7LK2PxKuRW/Lgss1NPArXKwxxFkFObkQ1kc+B6QVewKFuRTcYdfm5P
-	 HZJK6dBun41K4fvI7xLbU3UwlkTKZSk6ZAhyvmVI=
+	b=lXVA8D1eQ1NKJ1OXJde+2EvUuSy85CS/UlMDrCzHhfdDHI2LDmkFcK26BQRI/sDiO
+	 xPz394LKZ7Qz05xbr+u0ICD04hZgXSA8OtH4Jz9KRu1GMrYdT439pgS49B4VpZyjhX
+	 oGQrr9cIkU5o2TOg+Fw0puYB7VoB2/9J/oAguJsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Corey Minyard <cminyard@mvista.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 19/68] ipmi:ssif: Remove rtc_us_timer
-Date: Wed, 15 Mar 2023 13:12:13 +0100
-Message-Id: <20230315115726.843131232@linuxfoundation.org>
+Subject: [PATCH 5.4 20/68] ipmi:ssif: Increase the message retry time
+Date: Wed, 15 Mar 2023 13:12:14 +0100
+Message-Id: <20230315115726.892015865@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -36,58 +36,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Corey Minyard <cminyard@mvista.com>
 
-[ Upstream commit 9e8b89926fb87e5625bdde6fd5de2c31fb1d83bf ]
+[ Upstream commit 39721d62bbc16ebc9bb2bdc2c163658f33da3b0b ]
 
-It was cruft left over from older handling of run to completion.
+The spec states that the minimum message retry time is 60ms, but it was
+set to 20ms.  Correct it.
 
-Cc: stable@vger.kernel.org
+Reported by: Tony Camuso <tcamuso@redhat.com>
 Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Stable-dep-of: 00bb7e763ec9 ("ipmi:ssif: Add a timer between request retries")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c | 9 ---------
- 1 file changed, 9 deletions(-)
+ drivers/char/ipmi/ipmi_ssif.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
-index ff93009583ab1..9f1fb8a30a823 100644
+index 9f1fb8a30a823..02ca0d9a0d8cb 100644
 --- a/drivers/char/ipmi/ipmi_ssif.c
 +++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -248,12 +248,6 @@ struct ssif_info {
- 	 */
- 	bool                req_flags;
+@@ -79,7 +79,7 @@
+ /*
+  * Timer values
+  */
+-#define SSIF_MSG_USEC		20000	/* 20ms between message tries. */
++#define SSIF_MSG_USEC		60000	/* 60ms between message tries. */
+ #define SSIF_MSG_PART_USEC	5000	/* 5ms for a message part */
  
--	/*
--	 * Used to perform timer operations when run-to-completion
--	 * mode is on.  This is a countdown timer.
--	 */
--	int                 rtc_us_timer;
--
- 	/* Used for sending/receiving data.  +1 for the length. */
- 	unsigned char data[IPMI_MAX_MSG_LENGTH + 1];
- 	unsigned int  data_len;
-@@ -535,7 +529,6 @@ static void msg_done_handler(struct ssif_info *ssif_info, int result,
- 
- static void start_get(struct ssif_info *ssif_info)
- {
--	ssif_info->rtc_us_timer = 0;
- 	ssif_info->multi_pos = 0;
- 
- 	ssif_i2c_send(ssif_info, msg_done_handler, I2C_SMBUS_READ,
-@@ -627,7 +620,6 @@ static void msg_done_handler(struct ssif_info *ssif_info, int result,
- 
- 			flags = ipmi_ssif_lock_cond(ssif_info, &oflags);
- 			ssif_info->waiting_alert = true;
--			ssif_info->rtc_us_timer = SSIF_MSG_USEC;
- 			if (!ssif_info->stopping)
- 				mod_timer(&ssif_info->retry_timer,
- 					  jiffies + SSIF_MSG_JIFFIES);
-@@ -978,7 +970,6 @@ static void msg_written_handler(struct ssif_info *ssif_info, int result,
- 			/* Wait a jiffie then request the next message */
- 			ssif_info->waiting_alert = true;
- 			ssif_info->retries_left = SSIF_RECV_RETRIES;
--			ssif_info->rtc_us_timer = SSIF_MSG_PART_USEC;
- 			if (!ssif_info->stopping)
- 				mod_timer(&ssif_info->retry_timer,
- 					  jiffies + SSIF_MSG_PART_JIFFIES);
+ /* How many times to we retry sending/receiving the message. */
 -- 
 2.39.2
 
