@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D97C4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67CCC433D2;
-	Wed, 15 Mar 2023 12:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CA54431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9BEC433D2;
+	Wed, 15 Mar 2023 12:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883077;
-	bh=xho1xBUPoXiSkVhyC7WSjd0JDT7z+1HfEAI16HJFI/0=;
+	s=korg; t=1678883079;
+	bh=u2kdvF1e9c1Mw+957vlYf55NsPZMCE3oinJbjYRp8NY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=upTrv+wrYVsnTwg82TSmetMtWdJrqRgwqLTeYpgvsdnUe2hteG2pdFm1RePknzHzV
-	 ltBXC5KhU40kLg+k9oUFJDLebA/sEwHx3iwXVfLCSsOjCX+FvHN/ibfNZTzxrtmL1+
-	 ZIX7KjcOX7WLXWjNO6XiD9xGg6KiV1EsaIQEDv7Q=
+	b=KPPMaWXv5XWXT2r+4aaj+rvgLVCwuZYj3wFW1FKGIteqB+8B/eRDP/Il+YjPp7Swb
+	 2/eVPmTxClNR9j6g5ywH+qD2ZC891zXDAH+ch1KPp4VzVVVuAcPGdll8by9VGaWrfW
+	 CfSqNt87vZ4EEccUEtWUUl0pq2yScYDDAVuyyxCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Cornelia Huck <cohuck@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 104/104] s390/dasd: add missing discipline function
-Date: Wed, 15 Mar 2023 13:13:15 +0100
-Message-Id: <20230315115736.398454190@linuxfoundation.org>
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.10 102/104] KVM: VMX: Introduce vmx_msr_bitmap_l01_changed() helper
+Date: Wed, 15 Mar 2023 13:13:13 +0100
+Message-Id: <20230315115736.327283746@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -36,84 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Vitaly Kuznetsov <vkuznets@redhat.com>
 
-commit c0c8a8397fa8a74d04915f4d3d28cb4a5d401427 upstream.
+commit b84155c38076b36d625043a06a2f1c90bde62903 upstream.
 
-Fix crash with illegal operation exception in dasd_device_tasklet.
-Commit b72949328869 ("s390/dasd: Prepare for additional path event handling")
-renamed the verify_path function for ECKD but not for FBA and DIAG.
-This leads to a panic when the path verification function is called for a
-FBA or DIAG device.
+In preparation to enabling 'Enlightened MSR Bitmap' feature for Hyper-V
+guests move MSR bitmap update tracking to a dedicated helper.
 
-Fix by defining a wrapper function for dasd_generic_verify_path().
+Note: vmx_msr_bitmap_l01_changed() is called when MSR bitmap might be
+updated. KVM doesn't check if the bit we're trying to set is already set
+(or the bit it's trying to clear is already cleared). Such situations
+should not be common and a few false positives should not be a problem.
 
-Fixes: b72949328869 ("s390/dasd: Prepare for additional path event handling")
-Cc: <stable@vger.kernel.org> #5.11
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Link: https://lore.kernel.org/r/20210525125006.157531-2-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+No functional change intended.
+
+Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20211129094704.326635-3-vkuznets@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_diag.c |    7 ++++++-
- drivers/s390/block/dasd_fba.c  |    7 ++++++-
- drivers/s390/block/dasd_int.h  |    1 -
- 3 files changed, 12 insertions(+), 3 deletions(-)
+ arch/x86/kvm/vmx/vmx.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/s390/block/dasd_diag.c
-+++ b/drivers/s390/block/dasd_diag.c
-@@ -642,12 +642,17 @@ static void dasd_diag_setup_blk_queue(st
- 	blk_queue_segment_boundary(q, PAGE_SIZE - 1);
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -3785,6 +3785,17 @@ static void vmx_set_msr_bitmap_write(ulo
+ 		__set_bit(msr & 0x1fff, msr_bitmap + 0xc00 / f);
  }
  
-+static int dasd_diag_pe_handler(struct dasd_device *device, __u8 tbvpm)
++static void vmx_msr_bitmap_l01_changed(struct vcpu_vmx *vmx)
 +{
-+	return dasd_generic_verify_path(device, tbvpm);
++	/*
++	 * When KVM is a nested hypervisor on top of Hyper-V and uses
++	 * 'Enlightened MSR Bitmap' feature L0 needs to know that MSR
++	 * bitmap has changed.
++	 */
++	if (static_branch_unlikely(&enable_evmcs))
++		evmcs_touch_msr_bitmap();
 +}
 +
- static struct dasd_discipline dasd_diag_discipline = {
- 	.owner = THIS_MODULE,
- 	.name = "DIAG",
- 	.ebcname = "DIAG",
- 	.check_device = dasd_diag_check_device,
--	.verify_path = dasd_generic_verify_path,
-+	.pe_handler = dasd_diag_pe_handler,
- 	.fill_geometry = dasd_diag_fill_geometry,
- 	.setup_blk_queue = dasd_diag_setup_blk_queue,
- 	.start_IO = dasd_start_diag,
---- a/drivers/s390/block/dasd_fba.c
-+++ b/drivers/s390/block/dasd_fba.c
-@@ -803,13 +803,18 @@ static void dasd_fba_setup_blk_queue(str
- 	blk_queue_flag_set(QUEUE_FLAG_DISCARD, q);
- }
+ static __always_inline void vmx_disable_intercept_for_msr(struct kvm_vcpu *vcpu,
+ 							  u32 msr, int type)
+ {
+@@ -3794,8 +3805,7 @@ static __always_inline void vmx_disable_
+ 	if (!cpu_has_vmx_msr_bitmap())
+ 		return;
  
-+static int dasd_fba_pe_handler(struct dasd_device *device, __u8 tbvpm)
-+{
-+	return dasd_generic_verify_path(device, tbvpm);
-+}
-+
- static struct dasd_discipline dasd_fba_discipline = {
- 	.owner = THIS_MODULE,
- 	.name = "FBA ",
- 	.ebcname = "FBA ",
- 	.check_device = dasd_fba_check_characteristics,
- 	.do_analysis = dasd_fba_do_analysis,
--	.verify_path = dasd_generic_verify_path,
-+	.pe_handler = dasd_fba_pe_handler,
- 	.setup_blk_queue = dasd_fba_setup_blk_queue,
- 	.fill_geometry = dasd_fba_fill_geometry,
- 	.start_IO = dasd_start_IO,
---- a/drivers/s390/block/dasd_int.h
-+++ b/drivers/s390/block/dasd_int.h
-@@ -298,7 +298,6 @@ struct dasd_discipline {
- 	 * e.g. verify that new path is compatible with the current
- 	 * configuration.
- 	 */
--	int (*verify_path)(struct dasd_device *, __u8);
- 	int (*pe_handler)(struct dasd_device *, __u8);
+-	if (static_branch_unlikely(&enable_evmcs))
+-		evmcs_touch_msr_bitmap();
++	vmx_msr_bitmap_l01_changed(vmx);
  
  	/*
+ 	 * Mark the desired intercept state in shadow bitmap, this is needed
+@@ -3840,8 +3850,7 @@ static __always_inline void vmx_enable_i
+ 	if (!cpu_has_vmx_msr_bitmap())
+ 		return;
+ 
+-	if (static_branch_unlikely(&enable_evmcs))
+-		evmcs_touch_msr_bitmap();
++	vmx_msr_bitmap_l01_changed(vmx);
+ 
+ 	/*
+ 	 * Mark the desired intercept state in shadow bitmap, this is needed
 
 
