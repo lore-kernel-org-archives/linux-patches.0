@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C134431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:36:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A241FC433EF;
-	Wed, 15 Mar 2023 12:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7294431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:36:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4154EC433EF;
+	Wed, 15 Mar 2023 12:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883782;
-	bh=bNk5jM1xPmX7zXfyB0br4UprH6EM40hl2DT06TRyt5c=;
+	s=korg; t=1678883784;
+	bh=DdAZ/iExR7RNVjQ92CeMwcr/sDbWUiYJLpAruXSENDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oQc1w41TQDidKW1uitxU0xNx/L5/EzgsDHqSBBy3QfNAnKaKYibrWshB4/YoU1bGE
-	 k4rL5DvXIIXC0F46QO37rABWvW0fy3c6X8+s+Lqa+misnz8vg20XNI2ccmY9RL4EZl
-	 aTS+Yo7wRT9pwNdEsoTCR2apZRGOwa3MPtr+J/Y8=
+	b=NoE3GX/RgRbeOaqCGZG9qHRldQclHWAeOPq7Y7woGVY/p9nLJW/qSnShECgrx3vnO
+	 tQarT7zge+wUlBEhlP1v2IFk2RnFv0YTqJXZI1v6WPBuowcs5O1SveyoIKot05WlQg
+	 hXrO6RijyjBoEEDanr5Ac4VzeyNWx7Kuq74c9EXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chathura Rajapaksha <chathura.abeyrathne.lk@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 112/143] riscv: Use READ_ONCE_NOCHECK in imprecise unwinding stack mode
-Date: Wed, 15 Mar 2023 13:13:18 +0100
-Message-Id: <20230315115743.894825843@linuxfoundation.org>
+Subject: [PATCH 6.1 130/143] powerpc/64: Move paca allocation to early_setup()
+Date: Wed, 15 Mar 2023 13:13:36 +0100
+Message-Id: <20230315115744.503772403@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -37,97 +35,158 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-[ Upstream commit 76950340cf03b149412fe0d5f0810e52ac1df8cb ]
+[ Upstream commit dc222fa7737212fe0da513e5b8937c156d02225d ]
 
-When CONFIG_FRAME_POINTER is unset, the stack unwinding function
-walk_stackframe randomly reads the stack and then, when KASAN is enabled,
-it can lead to the following backtrace:
+The early paca and boot cpuid dance is complicated and currently does
+not quite work as expected for boot cpuid != 0 cases.
 
-[    0.000000] ==================================================================
-[    0.000000] BUG: KASAN: stack-out-of-bounds in walk_stackframe+0xa6/0x11a
-[    0.000000] Read of size 8 at addr ffffffff81807c40 by task swapper/0
-[    0.000000]
-[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 6.2.0-12919-g24203e6db61f #43
-[    0.000000] Hardware name: riscv-virtio,qemu (DT)
-[    0.000000] Call Trace:
-[    0.000000] [<ffffffff80007ba8>] walk_stackframe+0x0/0x11a
-[    0.000000] [<ffffffff80099ecc>] init_param_lock+0x26/0x2a
-[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
-[    0.000000] [<ffffffff80c49c80>] dump_stack_lvl+0x22/0x36
-[    0.000000] [<ffffffff80c3783e>] print_report+0x198/0x4a8
-[    0.000000] [<ffffffff80099ecc>] init_param_lock+0x26/0x2a
-[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
-[    0.000000] [<ffffffff8015f68a>] kasan_report+0x9a/0xc8
-[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
-[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
-[    0.000000] [<ffffffff8006e99c>] desc_make_final+0x80/0x84
-[    0.000000] [<ffffffff8009a04e>] stack_trace_save+0x88/0xa6
-[    0.000000] [<ffffffff80099fc2>] filter_irq_stacks+0x72/0x76
-[    0.000000] [<ffffffff8006b95e>] devkmsg_read+0x32a/0x32e
-[    0.000000] [<ffffffff8015ec16>] kasan_save_stack+0x28/0x52
-[    0.000000] [<ffffffff8006e998>] desc_make_final+0x7c/0x84
-[    0.000000] [<ffffffff8009a04a>] stack_trace_save+0x84/0xa6
-[    0.000000] [<ffffffff8015ec52>] kasan_set_track+0x12/0x20
-[    0.000000] [<ffffffff8015f22e>] __kasan_slab_alloc+0x58/0x5e
-[    0.000000] [<ffffffff8015e7ea>] __kmem_cache_create+0x21e/0x39a
-[    0.000000] [<ffffffff80e133ac>] create_boot_cache+0x70/0x9c
-[    0.000000] [<ffffffff80e17ab2>] kmem_cache_init+0x6c/0x11e
-[    0.000000] [<ffffffff80e00fd6>] mm_init+0xd8/0xfe
-[    0.000000] [<ffffffff80e011d8>] start_kernel+0x190/0x3ca
-[    0.000000]
-[    0.000000] The buggy address belongs to stack of task swapper/0
-[    0.000000]  and is located at offset 0 in frame:
-[    0.000000]  stack_trace_save+0x0/0xa6
-[    0.000000]
-[    0.000000] This frame has 1 object:
-[    0.000000]  [32, 56) 'c'
-[    0.000000]
-[    0.000000] The buggy address belongs to the physical page:
-[    0.000000] page:(____ptrval____) refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x81a07
-[    0.000000] flags: 0x1000(reserved|zone=0)
-[    0.000000] raw: 0000000000001000 ff600003f1e3d150 ff600003f1e3d150 0000000000000000
-[    0.000000] raw: 0000000000000000 0000000000000000 00000001ffffffff
-[    0.000000] page dumped because: kasan: bad access detected
-[    0.000000]
-[    0.000000] Memory state around the buggy address:
-[    0.000000]  ffffffff81807b00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[    0.000000]  ffffffff81807b80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[    0.000000] >ffffffff81807c00: 00 00 00 00 00 00 00 00 f1 f1 f1 f1 00 00 00 f3
-[    0.000000]                                            ^
-[    0.000000]  ffffffff81807c80: f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
-[    0.000000]  ffffffff81807d00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[    0.000000] ==================================================================
+early_init_devtree() currently allocates the paca_ptrs and boot cpuid
+paca, but until that returns and early_setup() calls setup_paca(), this
+thread is currently still executing with smp_processor_id() == 0.
 
-Fix that by using READ_ONCE_NOCHECK when reading the stack in imprecise
-mode.
+One problem this causes is the paca_ptrs[smp_processor_id()] pointer is
+poisoned, so valid_emergency_stack() (any backtrace) and any similar
+users will crash.
 
-Fixes: 5d8544e2d007 ("RISC-V: Generic library routines and assembly")
-Reported-by: Chathura Rajapaksha <chathura.abeyrathne.lk@gmail.com>
-Link: https://lore.kernel.org/all/CAD7mqryDQCYyJ1gAmtMm8SASMWAQ4i103ptTb0f6Oda=tPY2=A@mail.gmail.com/
-Suggested-by: Dmitry Vyukov <dvyukov@google.com>
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20230308091639.602024-1-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Another is that the hardware id which is set here will not be returned
+by get_hard_smp_processor_id(smp_processor_id()), but it would work
+correctly for boot_cpuid == 0, which could lead to difficult to
+reproduce or find bugs. The hard id does not seem to be used by the rest
+of early_init_devtree(), it just looks like all this code might have
+been put here to allocate somewhere to store boot CPU hardware id while
+scanning the devtree.
+
+Rearrange things so the hwid is put in a global variable like
+boot_cpuid, and do all the paca allocation and boot paca setup in the
+64-bit early_setup() after we have everything ready to go.
+
+The paca_ptrs[0] re-poisoning code in early_setup does not seem to have
+ever worked, because paca_ptrs[0] was never not-poisoned when boot_cpuid
+is not 0.
+
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+[mpe: Fix build error on 32-bit]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20221216115930.2667772-4-npiggin@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/stacktrace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/include/asm/paca.h    |  1 -
+ arch/powerpc/include/asm/smp.h     |  1 +
+ arch/powerpc/kernel/prom.c         | 12 +++---------
+ arch/powerpc/kernel/setup-common.c |  4 ++++
+ arch/powerpc/kernel/setup_64.c     | 11 +++++------
+ 5 files changed, 13 insertions(+), 16 deletions(-)
 
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index 85cd5442d2f81..17d7383f201a5 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -92,7 +92,7 @@ void notrace walk_stackframe(struct task_struct *task,
- 	while (!kstack_end(ksp)) {
- 		if (__kernel_text_address(pc) && unlikely(!fn(arg, pc)))
- 			break;
--		pc = (*ksp++) - 0x4;
-+		pc = READ_ONCE_NOCHECK(*ksp++) - 0x4;
- 	}
- }
+diff --git a/arch/powerpc/include/asm/paca.h b/arch/powerpc/include/asm/paca.h
+index 09f1790d0ae16..0ab3511a47d77 100644
+--- a/arch/powerpc/include/asm/paca.h
++++ b/arch/powerpc/include/asm/paca.h
+@@ -295,7 +295,6 @@ extern void free_unused_pacas(void);
  
+ #else /* CONFIG_PPC64 */
+ 
+-static inline void allocate_paca_ptrs(void) { }
+ static inline void allocate_paca(int cpu) { }
+ static inline void free_unused_pacas(void) { }
+ 
+diff --git a/arch/powerpc/include/asm/smp.h b/arch/powerpc/include/asm/smp.h
+index f63505d74932b..6c6cb53d70458 100644
+--- a/arch/powerpc/include/asm/smp.h
++++ b/arch/powerpc/include/asm/smp.h
+@@ -26,6 +26,7 @@
+ #include <asm/percpu.h>
+ 
+ extern int boot_cpuid;
++extern int boot_cpu_hwid; /* PPC64 only */
+ extern int spinning_secondaries;
+ extern u32 *cpu_to_phys_id;
+ extern bool coregroup_enabled;
+diff --git a/arch/powerpc/kernel/prom.c b/arch/powerpc/kernel/prom.c
+index 1eed87d954ba8..8537c354c560b 100644
+--- a/arch/powerpc/kernel/prom.c
++++ b/arch/powerpc/kernel/prom.c
+@@ -366,8 +366,8 @@ static int __init early_init_dt_scan_cpus(unsigned long node,
+ 	    be32_to_cpu(intserv[found_thread]));
+ 	boot_cpuid = found;
+ 
+-	// Pass the boot CPU's hard CPU id back to our caller
+-	*((u32 *)data) = be32_to_cpu(intserv[found_thread]);
++	if (IS_ENABLED(CONFIG_PPC64))
++		boot_cpu_hwid = be32_to_cpu(intserv[found_thread]);
+ 
+ 	/*
+ 	 * PAPR defines "logical" PVR values for cpus that
+@@ -751,7 +751,6 @@ static inline void save_fscr_to_task(void) {}
+ 
+ void __init early_init_devtree(void *params)
+ {
+-	u32 boot_cpu_hwid;
+ 	phys_addr_t limit;
+ 
+ 	DBG(" -> early_init_devtree(%px)\n", params);
+@@ -847,7 +846,7 @@ void __init early_init_devtree(void *params)
+ 	/* Retrieve CPU related informations from the flat tree
+ 	 * (altivec support, boot CPU ID, ...)
+ 	 */
+-	of_scan_flat_dt(early_init_dt_scan_cpus, &boot_cpu_hwid);
++	of_scan_flat_dt(early_init_dt_scan_cpus, NULL);
+ 	if (boot_cpuid < 0) {
+ 		printk("Failed to identify boot CPU !\n");
+ 		BUG();
+@@ -864,11 +863,6 @@ void __init early_init_devtree(void *params)
+ 
+ 	mmu_early_init_devtree();
+ 
+-	// NB. paca is not installed until later in early_setup()
+-	allocate_paca_ptrs();
+-	allocate_paca(boot_cpuid);
+-	set_hard_smp_processor_id(boot_cpuid, boot_cpu_hwid);
+-
+ #ifdef CONFIG_PPC_POWERNV
+ 	/* Scan and build the list of machine check recoverable ranges */
+ 	of_scan_flat_dt(early_init_dt_scan_recoverable_ranges, NULL);
+diff --git a/arch/powerpc/kernel/setup-common.c b/arch/powerpc/kernel/setup-common.c
+index 6d041993a45dc..efb301a4987ca 100644
+--- a/arch/powerpc/kernel/setup-common.c
++++ b/arch/powerpc/kernel/setup-common.c
+@@ -86,6 +86,10 @@ EXPORT_SYMBOL(machine_id);
+ int boot_cpuid = -1;
+ EXPORT_SYMBOL_GPL(boot_cpuid);
+ 
++#ifdef CONFIG_PPC64
++int boot_cpu_hwid = -1;
++#endif
++
+ /*
+  * These are used in binfmt_elf.c to put aux entries on the stack
+  * for each elf executable being started.
+diff --git a/arch/powerpc/kernel/setup_64.c b/arch/powerpc/kernel/setup_64.c
+index a43865e0fb4bf..b2e0d3ce4261c 100644
+--- a/arch/powerpc/kernel/setup_64.c
++++ b/arch/powerpc/kernel/setup_64.c
+@@ -385,15 +385,14 @@ void __init early_setup(unsigned long dt_ptr)
+ 	/*
+ 	 * Do early initialization using the flattened device
+ 	 * tree, such as retrieving the physical memory map or
+-	 * calculating/retrieving the hash table size.
++	 * calculating/retrieving the hash table size, discover
++	 * boot_cpuid and boot_cpu_hwid.
+ 	 */
+ 	early_init_devtree(__va(dt_ptr));
+ 
+-	/* Now we know the logical id of our boot cpu, setup the paca. */
+-	if (boot_cpuid != 0) {
+-		/* Poison paca_ptrs[0] again if it's not the boot cpu */
+-		memset(&paca_ptrs[0], 0x88, sizeof(paca_ptrs[0]));
+-	}
++	allocate_paca_ptrs();
++	allocate_paca(boot_cpuid);
++	set_hard_smp_processor_id(boot_cpuid, boot_cpu_hwid);
+ 	fixup_boot_paca(paca_ptrs[boot_cpuid]);
+ 	setup_paca(paca_ptrs[boot_cpuid]); /* install the paca into registers */
+ 	// smp_processor_id() now reports boot_cpuid
 -- 
 2.39.2
 
