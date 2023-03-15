@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C6B4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B09DC433EF;
-	Wed, 15 Mar 2023 12:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A359E4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14789C433D2;
+	Wed, 15 Mar 2023 12:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883965;
-	bh=M+jEZo/G0TdDBpQSFA7NpqpK31M80bqJFkKMAZKjnno=;
+	s=korg; t=1678883968;
+	bh=Aa4ZP2AHjIUZpZfLv26qdbkeUYnxlEZRhbBOHpzRNfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=krYD+kRdQlJTQG3hrkbL+N7eZw8Hpj8+vbSUUXhCoIpVWa+nyMuYLqX6m8MQW4r9h
-	 WPK738a847g4em0vkx/oMT0vIijeBP4NLd+Qo+vZaOiCKRTkYZX82agGBIn3PWSctp
-	 U4ht8EMUdimMQZ9dETzOrBxBJwb42OAI1Tvhcs1o=
+	b=LuFlAyZ5w6o1Qo6X7MO/37f6YZ4chos7pRCi+0PZcq3CwXZ5fdbG6HiKjq8V/HXmh
+	 Wp4UELo+ycp+20OUdJUOTPpob8Jw00ouM8zh7A/jaVX88/KfGdhRfgqvSgy8Nfailr
+	 ZSf38D93msp1gm9GdV6df2xREM+DlYrMfhbcrYhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Jain <gaurav.jain@nxp.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Loic Poulain <loic.poulain@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 055/141] tls: rx: fix return value for async crypto
-Date: Wed, 15 Mar 2023 13:12:38 +0100
-Message-Id: <20230315115741.642925537@linuxfoundation.org>
+Subject: [PATCH 6.2 056/141] drm/msm/dpu: disable features unsupported by QCM2290
+Date: Wed, 15 Mar 2023 13:12:39 +0100
+Message-Id: <20230315115741.675819914@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -36,44 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 4d42cd6bc2ac1b9be50ade13771daec90c9d18b1 ]
+[ Upstream commit a2a448b4d9bcb5bff0e0f687b7932a7be9ca898a ]
 
-Gaurav reports that TLS Rx is broken with async crypto
-accelerators. The commit under fixes missed updating
-the retval byte counting logic when updating how records
-are stored. Even tho both before and after the change
-'decrypted' was updated inside the main loop, it was
-completely overwritten when processing the async
-completions. Now that the rx_list only holds
-non-zero-copy records we need to add, not overwrite.
+QCM2290 doesn't seem to support reg-dma, UBWC and CSC. Drop
+corresponding features being incorrectly enabled for qcm2290.
 
-Reported-and-bisected-by: Gaurav Jain <gaurav.jain@nxp.com>
-Fixes: cbbdee9918a2 ("tls: rx: async: don't put async zc on the list")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217064
-Tested-by: Gaurav Jain <gaurav.jain@nxp.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230227181201.1793772-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Loic Poulain <loic.poulain@linaro.org>
+Fixes: 5334087ee743 ("drm/msm: add support for QCM2290 MDSS")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/522209/
+Link: https://lore.kernel.org/r/20230211231259.1308718-3-dmitry.baryshkov@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 38dcd9b401027..992092aeebad9 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2114,7 +2114,7 @@ int tls_sw_recvmsg(struct sock *sk,
- 		else
- 			err = process_rx_list(ctx, msg, &control, 0,
- 					      async_copy_bytes, is_peek);
--		decrypted = max(err, 0);
-+		decrypted += max(err, 0);
- 	}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 83f1dd2c22bd7..ffcd90ba3e81e 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -12,11 +12,15 @@
+ #include "dpu_hw_catalog.h"
+ #include "dpu_kms.h"
  
- 	copied += decrypted;
+-#define VIG_MASK \
++#define VIG_BASE_MASK \
+ 	(BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_QOS) |\
+-	BIT(DPU_SSPP_CSC_10BIT) | BIT(DPU_SSPP_CDP) |\
++	BIT(DPU_SSPP_CDP) |\
+ 	BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_EXCL_RECT))
+ 
++#define VIG_MASK \
++	(VIG_BASE_MASK | \
++	BIT(DPU_SSPP_CSC_10BIT))
++
+ #define VIG_MSM8998_MASK \
+ 	(VIG_MASK | BIT(DPU_SSPP_SCALER_QSEED3))
+ 
+@@ -29,7 +33,7 @@
+ #define VIG_SM8250_MASK \
+ 	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3LITE))
+ 
+-#define VIG_QCM2290_MASK (VIG_MASK | BIT(DPU_SSPP_QOS_8LVL))
++#define VIG_QCM2290_MASK (VIG_BASE_MASK | BIT(DPU_SSPP_QOS_8LVL))
+ 
+ #define DMA_MSM8998_MASK \
+ 	(BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_QOS) |\
+@@ -286,7 +290,6 @@ static const struct dpu_caps qcm2290_dpu_caps = {
+ 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
+ 	.max_mixer_blendstages = 0x4,
+ 	.smart_dma_rev = DPU_SSPP_SMART_DMA_V2,
+-	.ubwc_version = DPU_HW_UBWC_VER_20,
+ 	.has_dim_layer = true,
+ 	.has_idle_pc = true,
+ 	.max_linewidth = 2160,
+@@ -2007,8 +2010,6 @@ static const struct dpu_mdss_cfg qcm2290_dpu_cfg = {
+ 	.intf = qcm2290_intf,
+ 	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+ 	.vbif = sdm845_vbif,
+-	.reg_dma_count = 1,
+-	.dma_cfg = &sdm845_regdma,
+ 	.perf = &qcm2290_perf_data,
+ 	.mdss_irqs = IRQ_SC7180_MASK,
+ };
 -- 
 2.39.2
 
