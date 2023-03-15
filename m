@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BCC4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:14:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E355C4339B;
-	Wed, 15 Mar 2023 12:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC39C4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:14:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D2CC4339B;
+	Wed, 15 Mar 2023 12:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882477;
-	bh=k8j4Ag2hIvpd9IxO0K9Z0kAnKODQR72IX9Co3I4sKnw=;
+	s=korg; t=1678882480;
+	bh=k5V1E41tAhQIfjaN6+/00GIDDZKYhkKuK0Ekla0k6Bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpBwSa0JdzKyIVbWCRWsUxRTPCZ+PkwT8ZfSqf8HtGgWmAATj1oezxHRbbA8vaVTU
-	 MG0y6oBJQXtdY7dCxILLB4aj3YhB1RScfzXbRzi0yYzIPhIQAIsUJBSfXESJAKCv+/
-	 SK9pd0VNiqwsSzM7oqHkww4QswQLAAi+cyjNvgps=
+	b=TRju+XjXmb748oGe4BRa2vsuAFSVJh7QNIdDWXSisNCKtuLHwfkMBFnHdBLwhg7/s
+	 4ylGYmnAPJhHaNINP+6sb31u9yACEKAACeXByY6Ky5vv09k53B7/PICCnh6FjH8eIW
+	 ikAsRU1ENq/RhkJ685QeVMZKOXEhs4aFL/R9J9Jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 15/21] macintosh: windfarm: Use unsigned type for 1-bit bitfields
-Date: Wed, 15 Mar 2023 13:12:38 +0100
-Message-Id: <20230315115719.390590317@linuxfoundation.org>
+	Tavis Ormandy <taviso@gmail.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 4.14 02/21] x86/CPU/AMD: Disable XSAVES on AMD family 0x17
+Date: Wed, 15 Mar 2023 13:12:25 +0100
+Message-Id: <20230315115718.902410428@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115718.796692048@linuxfoundation.org>
 References: <20230315115718.796692048@linuxfoundation.org>
@@ -35,68 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-[ Upstream commit 748ea32d2dbd813d3bd958117bde5191182f909a ]
+commit b0563468eeac88ebc70559d52a0b66efc37e4e9d upstream.
 
-Clang warns:
+AMD Erratum 1386 is summarised as:
 
-  drivers/macintosh/windfarm_lm75_sensor.c:63:14: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
-                  lm->inited = 1;
-                             ^ ~
+  XSAVES Instruction May Fail to Save XMM Registers to the Provided
+  State Save Area
 
-  drivers/macintosh/windfarm_smu_sensors.c:356:19: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
-                  pow->fake_volts = 1;
-                                  ^ ~
-  drivers/macintosh/windfarm_smu_sensors.c:368:18: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
-                  pow->quadratic = 1;
-                                 ^ ~
+This piece of accidental chronomancy causes the %xmm registers to
+occasionally reset back to an older value.
 
-There is no bug here since no code checks the actual value of these
-fields, just whether or not they are zero (boolean context), but this
-can be easily fixed by switching to an unsigned type.
+Ignore the XSAVES feature on all AMD Zen1/2 hardware.  The XSAVEC
+instruction (which works fine) is equivalent on affected parts.
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230215-windfarm-wsingle-bit-bitfield-constant-conversion-v1-1-26415072e855@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  [ bp: Typos, move it into the F17h-specific function. ]
+
+Reported-by: Tavis Ormandy <taviso@gmail.com>
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230307174643.1240184-1-andrew.cooper3@citrix.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/macintosh/windfarm_lm75_sensor.c | 4 ++--
- drivers/macintosh/windfarm_smu_sensors.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/amd.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/macintosh/windfarm_lm75_sensor.c b/drivers/macintosh/windfarm_lm75_sensor.c
-index 6cdfe714901d5..1332fc789056a 100644
---- a/drivers/macintosh/windfarm_lm75_sensor.c
-+++ b/drivers/macintosh/windfarm_lm75_sensor.c
-@@ -34,8 +34,8 @@
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -197,6 +197,15 @@ static void init_amd_k6(struct cpuinfo_x
+ 		return;
+ 	}
  #endif
++	/*
++	 * Work around Erratum 1386.  The XSAVES instruction malfunctions in
++	 * certain circumstances on Zen1/2 uarch, and not all parts have had
++	 * updated microcode at the time of writing (March 2023).
++	 *
++	 * Affected parts all have no supervisor XSAVE states, meaning that
++	 * the XSAVEC instruction (which works fine) is equivalent.
++	 */
++	clear_cpu_cap(c, X86_FEATURE_XSAVES);
+ }
  
- struct wf_lm75_sensor {
--	int			ds1775 : 1;
--	int			inited : 1;
-+	unsigned int		ds1775 : 1;
-+	unsigned int		inited : 1;
- 	struct i2c_client	*i2c;
- 	struct wf_sensor	sens;
- };
-diff --git a/drivers/macintosh/windfarm_smu_sensors.c b/drivers/macintosh/windfarm_smu_sensors.c
-index 172fd267dcf60..0f4017a8189e5 100644
---- a/drivers/macintosh/windfarm_smu_sensors.c
-+++ b/drivers/macintosh/windfarm_smu_sensors.c
-@@ -275,8 +275,8 @@ struct smu_cpu_power_sensor {
- 	struct list_head	link;
- 	struct wf_sensor	*volts;
- 	struct wf_sensor	*amps;
--	int			fake_volts : 1;
--	int			quadratic : 1;
-+	unsigned int		fake_volts : 1;
-+	unsigned int		quadratic : 1;
- 	struct wf_sensor	sens;
- };
- #define to_smu_cpu_power(c) container_of(c, struct smu_cpu_power_sensor, sens)
--- 
-2.39.2
-
+ static void init_amd_k7(struct cpuinfo_x86 *c)
 
 
