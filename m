@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EED4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E7AC433EF;
-	Wed, 15 Mar 2023 12:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BF74431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC1AC433D2;
+	Wed, 15 Mar 2023 12:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883525;
-	bh=OBxoBTC7l7uFCA/gWjDOJIjVjWmPpgZHAt4JH1lPxeY=;
+	s=korg; t=1678883528;
+	bh=Bl0Ro1CJv2vayoYptzDa9ygkzLsiUJZwU4ULC1tBIF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rsa6bwR+lAbuAW6AEMmtdirFO55gJpdqFIPyX9i69V9+My0xfNy4CSAPo69pjY+mN
-	 6aHVFSgkr3HDAkkOZAobDzWOkV+mJWOT08UbuGCVaAm3ABsstA03r4QzBu2X9WQ229
-	 IjiUuSxlRWx7Q+OpAYVII7G4Ej/W4REZaAYNW41k=
+	b=UqeaeG7o8PLk9DFRf6fiDTLX7whDrQk4T4EKv1fxP/JbH6/dBrun1+li92Mn3iM7v
+	 mPgGGaDkoWxwPl94iiYyvZGOhTVf1DI4WvGfQNnxN+fOmhRq3xeJUrSZbCRMCKBVpq
+	 9Lq+aGAsfhLrfWBGOz/4rZvwj31yyR2DH1PLO2Nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Aring <aahringo@redhat.com>,
 	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/143] fs: dlm: add midcomms init/start functions
-Date: Wed, 15 Mar 2023 13:11:57 +0100
-Message-Id: <20230315115741.451724683@linuxfoundation.org>
+Subject: [PATCH 6.1 032/143] fs: dlm: start midcomms before scand
+Date: Wed, 15 Mar 2023 13:11:58 +0100
+Message-Id: <20230315115741.484113423@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -37,198 +37,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit 8b0188b0d60b6f6183b48380bac49fe080c5ded9 ]
+[ Upstream commit aad633dc0cf90093998b1ae0ba9f19b5f1dab644 ]
 
-This patch introduces leftovers of init, start, stop and exit
-functionality. The dlm application layer should always call the midcomms
-layer which getting aware of such event and redirect it to the lowcomms
-layer. Some functionality which is currently handled inside the start
-functionality of midcomms and lowcomms should be handled in the init
-functionality as it only need to be initialized once when dlm is loaded.
+The scand kthread can send dlm messages out, especially dlm remove
+messages to free memory for unused rsb on other nodes. To send out dlm
+messages, midcomms must be initialized. This patch moves the midcomms
+start before scand is started.
 
+Cc: stable@vger.kernel.org
+Fixes: e7fd41792fc0 ("[DLM] The core of the DLM for GFS2/CLVM")
 Signed-off-by: Alexander Aring <aahringo@redhat.com>
 Signed-off-by: David Teigland <teigland@redhat.com>
-Stable-dep-of: aad633dc0cf9 ("fs: dlm: start midcomms before scand")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/lockspace.c |  5 ++---
- fs/dlm/lowcomms.c  | 16 ++++++++++------
- fs/dlm/lowcomms.h  |  1 +
- fs/dlm/main.c      |  7 +++++--
- fs/dlm/midcomms.c  | 17 ++++++++++++++++-
- fs/dlm/midcomms.h  |  3 +++
- 6 files changed, 37 insertions(+), 12 deletions(-)
+ fs/dlm/lockspace.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/fs/dlm/lockspace.c b/fs/dlm/lockspace.c
-index 04e1b4fe366dc..c3cf2e7996f6c 100644
+index c3cf2e7996f6c..7b29ea7bfb416 100644
 --- a/fs/dlm/lockspace.c
 +++ b/fs/dlm/lockspace.c
-@@ -17,7 +17,6 @@
- #include "recoverd.h"
- #include "dir.h"
- #include "midcomms.h"
--#include "lowcomms.h"
- #include "config.h"
- #include "memory.h"
- #include "lock.h"
-@@ -726,7 +725,7 @@ static int __dlm_new_lockspace(const char *name, const char *cluster,
- 	if (!ls_count) {
- 		dlm_scand_stop();
- 		dlm_midcomms_shutdown();
--		dlm_lowcomms_stop();
-+		dlm_midcomms_stop();
- 	}
-  out:
- 	mutex_unlock(&ls_lock);
-@@ -929,7 +928,7 @@ int dlm_release_lockspace(void *lockspace, int force)
- 	if (!error)
- 		ls_count--;
- 	if (!ls_count)
--		dlm_lowcomms_stop();
-+		dlm_midcomms_stop();
- 	mutex_unlock(&ls_lock);
- 
- 	return error;
-diff --git a/fs/dlm/lowcomms.c b/fs/dlm/lowcomms.c
-index 871d4e9f49fb6..6ed09edabea0c 100644
---- a/fs/dlm/lowcomms.c
-+++ b/fs/dlm/lowcomms.c
-@@ -1982,10 +1982,6 @@ static const struct dlm_proto_ops dlm_sctp_ops = {
- int dlm_lowcomms_start(void)
+@@ -381,23 +381,23 @@ static int threads_start(void)
  {
- 	int error = -EINVAL;
--	int i;
--
--	for (i = 0; i < CONN_HASH_SIZE; i++)
--		INIT_HLIST_HEAD(&connection_hash[i]);
+ 	int error;
  
- 	init_local();
- 	if (!dlm_local_count) {
-@@ -1994,8 +1990,6 @@ int dlm_lowcomms_start(void)
+-	error = dlm_scand_start();
++	/* Thread for sending/receiving messages for all lockspace's */
++	error = dlm_midcomms_start();
+ 	if (error) {
+-		log_print("cannot start dlm_scand thread %d", error);
++		log_print("cannot start dlm midcomms %d", error);
  		goto fail;
  	}
  
--	INIT_WORK(&listen_con.rwork, process_listen_recv_socket);
--
- 	error = work_start();
- 	if (error)
- 		goto fail_local;
-@@ -2034,6 +2028,16 @@ int dlm_lowcomms_start(void)
+-	/* Thread for sending/receiving messages for all lockspace's */
+-	error = dlm_midcomms_start();
++	error = dlm_scand_start();
+ 	if (error) {
+-		log_print("cannot start dlm midcomms %d", error);
+-		goto scand_fail;
++		log_print("cannot start dlm_scand thread %d", error);
++		goto midcomms_fail;
+ 	}
+ 
+ 	return 0;
+ 
+- scand_fail:
+-	dlm_scand_stop();
++ midcomms_fail:
++	dlm_midcomms_stop();
+  fail:
  	return error;
  }
- 
-+void dlm_lowcomms_init(void)
-+{
-+	int i;
-+
-+	for (i = 0; i < CONN_HASH_SIZE; i++)
-+		INIT_HLIST_HEAD(&connection_hash[i]);
-+
-+	INIT_WORK(&listen_con.rwork, process_listen_recv_socket);
-+}
-+
- void dlm_lowcomms_exit(void)
- {
- 	struct dlm_node_addr *na, *safe;
-diff --git a/fs/dlm/lowcomms.h b/fs/dlm/lowcomms.h
-index 29369feea9916..bbce7a18416dc 100644
---- a/fs/dlm/lowcomms.h
-+++ b/fs/dlm/lowcomms.h
-@@ -35,6 +35,7 @@ extern int dlm_allow_conn;
- int dlm_lowcomms_start(void);
- void dlm_lowcomms_shutdown(void);
- void dlm_lowcomms_stop(void);
-+void dlm_lowcomms_init(void);
- void dlm_lowcomms_exit(void);
- int dlm_lowcomms_close(int nodeid);
- struct dlm_msg *dlm_lowcomms_new_msg(int nodeid, int len, gfp_t allocation,
-diff --git a/fs/dlm/main.c b/fs/dlm/main.c
-index 1c5be4b70ac1b..a77338be32371 100644
---- a/fs/dlm/main.c
-+++ b/fs/dlm/main.c
-@@ -17,7 +17,7 @@
- #include "user.h"
- #include "memory.h"
- #include "config.h"
--#include "lowcomms.h"
-+#include "midcomms.h"
- 
- #define CREATE_TRACE_POINTS
- #include <trace/events/dlm.h>
-@@ -30,6 +30,8 @@ static int __init init_dlm(void)
- 	if (error)
- 		goto out;
- 
-+	dlm_midcomms_init();
-+
- 	error = dlm_lockspace_init();
- 	if (error)
- 		goto out_mem;
-@@ -66,6 +68,7 @@ static int __init init_dlm(void)
-  out_lockspace:
- 	dlm_lockspace_exit();
-  out_mem:
-+	dlm_midcomms_exit();
- 	dlm_memory_exit();
-  out:
- 	return error;
-@@ -79,7 +82,7 @@ static void __exit exit_dlm(void)
- 	dlm_config_exit();
- 	dlm_memory_exit();
- 	dlm_lockspace_exit();
--	dlm_lowcomms_exit();
-+	dlm_midcomms_exit();
- 	dlm_unregister_debugfs();
- }
- 
-diff --git a/fs/dlm/midcomms.c b/fs/dlm/midcomms.c
-index 546c52c46b1c9..095f2005fb621 100644
---- a/fs/dlm/midcomms.c
-+++ b/fs/dlm/midcomms.c
-@@ -1160,13 +1160,28 @@ void dlm_midcomms_commit_mhandle(struct dlm_mhandle *mh)
- #endif
- 
- int dlm_midcomms_start(void)
-+{
-+	return dlm_lowcomms_start();
-+}
-+
-+void dlm_midcomms_stop(void)
-+{
-+	dlm_lowcomms_stop();
-+}
-+
-+void dlm_midcomms_init(void)
- {
- 	int i;
- 
- 	for (i = 0; i < CONN_HASH_SIZE; i++)
- 		INIT_HLIST_HEAD(&node_hash[i]);
- 
--	return dlm_lowcomms_start();
-+	dlm_lowcomms_init();
-+}
-+
-+void dlm_midcomms_exit(void)
-+{
-+	dlm_lowcomms_exit();
- }
- 
- static void dlm_act_fin_ack_rcv(struct midcomms_node *node)
-diff --git a/fs/dlm/midcomms.h b/fs/dlm/midcomms.h
-index 82bcd96619228..f61fce622e93d 100644
---- a/fs/dlm/midcomms.h
-+++ b/fs/dlm/midcomms.h
-@@ -20,6 +20,9 @@ struct dlm_mhandle *dlm_midcomms_get_mhandle(int nodeid, int len,
- void dlm_midcomms_commit_mhandle(struct dlm_mhandle *mh);
- int dlm_midcomms_close(int nodeid);
- int dlm_midcomms_start(void);
-+void dlm_midcomms_stop(void);
-+void dlm_midcomms_init(void);
-+void dlm_midcomms_exit(void);
- void dlm_midcomms_shutdown(void);
- void dlm_midcomms_add_member(int nodeid);
- void dlm_midcomms_remove_member(int nodeid);
 -- 
 2.39.2
 
