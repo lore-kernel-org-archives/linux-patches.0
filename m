@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197C54431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940E2C433EF;
-	Wed, 15 Mar 2023 12:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92D64431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36928C433D2;
+	Wed, 15 Mar 2023 12:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884162;
-	bh=i/GQqkaqJFY9+eL4BMK2VIgVtBHKVkixGUrfJS9Qycg=;
+	s=korg; t=1678884165;
+	bh=4hA0UNGutR386XUrVPRimDEMLtXi6x/I/v+1rtJavXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJcNj+s01+BGXcVOC0rfb9ll+m8FqzwZLb4ArDnRcPrSDMxYrYsoUUosXanzB/B3Q
-	 q2W2qM+X6/baYEPA1r//eA93mfrnhy63RXWcDxSreBqGjroQv9LfA52nf/RCshqSKJ
-	 v8K1ZzootE9gO0M/vB1+FzS3XbLjairGqFS4xEE8=
+	b=dxZwlbM7jciU5ho3WJ5kWs7QYUILQgDa3iZuMZiACJVOlUCmqTd+Nt5TrYNrUcoRd
+	 9cECfi7o8XpL+7VZlV/djcaJ1RthvL3Ey8/pwXfynZ7wlTmx8ijZNWjYoV0Y1xyAC0
+	 rl0kH9r0WX9+FvgpOuNH0aMY41G27y1ITSSGBlZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Lobakin <alexandr.lobakin@intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 101/141] ethernet: ice: avoid gcc-9 integer overflow warning
-Date: Wed, 15 Mar 2023 13:13:24 +0100
-Message-Id: <20230315115743.074984339@linuxfoundation.org>
+Subject: [PATCH 6.2 102/141] net/smc: fix fallback failed while sendmsg with fastopen
+Date: Wed, 15 Mar 2023 13:13:25 +0100
+Message-Id: <20230315115743.102987646@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -37,71 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit 8f5c5a790e3025d6eca96bf7ee5e3873dc92373f ]
+[ Upstream commit ce7ca794712f186da99719e8b4e97bd5ddbb04c3 ]
 
-With older compilers like gcc-9, the calculation of the vlan
-priority field causes a false-positive warning from the byteswap:
+Before determining whether the msg has unsupported options, it has been
+prematurely terminated by the wrong status check.
 
-In file included from drivers/net/ethernet/intel/ice/ice_tc_lib.c:4:
-drivers/net/ethernet/intel/ice/ice_tc_lib.c: In function 'ice_parse_cls_flower':
-include/uapi/linux/swab.h:15:15: error: integer overflow in expression '(int)(short unsigned int)((int)match.key-><U67c8>.<U6698>.vlan_priority << 13) & 57344 & 255' of type 'int' results in '0' [-Werror=overflow]
-   15 |  (((__u16)(x) & (__u16)0x00ffU) << 8) |   \
-      |   ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
-include/uapi/linux/swab.h:106:2: note: in expansion of macro '___constant_swab16'
-  106 |  ___constant_swab16(x) :   \
-      |  ^~~~~~~~~~~~~~~~~~
-include/uapi/linux/byteorder/little_endian.h:42:43: note: in expansion of macro '__swab16'
-   42 | #define __cpu_to_be16(x) ((__force __be16)__swab16((x)))
-      |                                           ^~~~~~~~
-include/linux/byteorder/generic.h:96:21: note: in expansion of macro '__cpu_to_be16'
-   96 | #define cpu_to_be16 __cpu_to_be16
-      |                     ^~~~~~~~~~~~~
-drivers/net/ethernet/intel/ice/ice_tc_lib.c:1458:5: note: in expansion of macro 'cpu_to_be16'
- 1458 |     cpu_to_be16((match.key->vlan_priority <<
-      |     ^~~~~~~~~~~
+For the application, the general usages of MSG_FASTOPEN likes
 
-After a change to be16_encode_bits(), the code becomes more
-readable to both people and compilers, which avoids the warning.
+fd = socket(...)
+/* rather than connect */
+sendto(fd, data, len, MSG_FASTOPEN)
 
-Fixes: 34800178b302 ("ice: Add support for VLAN priority filters in switchdev")
-Suggested-by: Alexander Lobakin <alexandr.lobakin@intel.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Alexander Lobakin <alexandr.lobakin@intel.com>
-Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Hence, We need to check the flag before state check, because the sock
+state here is always SMC_INIT when applications tries MSG_FASTOPEN.
+Once we found unsupported options, fallback it to TCP.
+
+Fixes: ee9dfbef02d1 ("net/smc: handle sockopts forcing fallback")
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Signed-off-by: Simon Horman <simon.horman@corigine.com>
+
+v2 -> v1: Optimize code style
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_tc_lib.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/smc/af_smc.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_tc_lib.c b/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-index 95f392ab96708..ce72d512eddf9 100644
---- a/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-@@ -1448,8 +1448,8 @@ ice_parse_cls_flower(struct net_device *filter_dev, struct ice_vsi *vsi,
- 		if (match.mask->vlan_priority) {
- 			fltr->flags |= ICE_TC_FLWR_FIELD_VLAN_PRIO;
- 			headers->vlan_hdr.vlan_prio =
--				cpu_to_be16((match.key->vlan_priority <<
--					     VLAN_PRIO_SHIFT) & VLAN_PRIO_MASK);
-+				be16_encode_bits(match.key->vlan_priority,
-+						 VLAN_PRIO_MASK);
- 		}
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index d9413d43b1045..e8018b0fb7676 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -2644,16 +2644,14 @@ static int smc_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct smc_sock *smc;
+-	int rc = -EPIPE;
++	int rc;
  
- 		if (match.mask->vlan_tpid)
-@@ -1482,8 +1482,8 @@ ice_parse_cls_flower(struct net_device *filter_dev, struct ice_vsi *vsi,
- 		if (match.mask->vlan_priority) {
- 			fltr->flags |= ICE_TC_FLWR_FIELD_CVLAN_PRIO;
- 			headers->cvlan_hdr.vlan_prio =
--				cpu_to_be16((match.key->vlan_priority <<
--					     VLAN_PRIO_SHIFT) & VLAN_PRIO_MASK);
-+				be16_encode_bits(match.key->vlan_priority,
-+						 VLAN_PRIO_MASK);
+ 	smc = smc_sk(sk);
+ 	lock_sock(sk);
+-	if ((sk->sk_state != SMC_ACTIVE) &&
+-	    (sk->sk_state != SMC_APPCLOSEWAIT1) &&
+-	    (sk->sk_state != SMC_INIT))
+-		goto out;
+ 
++	/* SMC does not support connect with fastopen */
+ 	if (msg->msg_flags & MSG_FASTOPEN) {
++		/* not connected yet, fallback */
+ 		if (sk->sk_state == SMC_INIT && !smc->connect_nonblock) {
+ 			rc = smc_switch_to_fallback(smc, SMC_CLC_DECL_OPTUNSUPP);
+ 			if (rc)
+@@ -2662,6 +2660,11 @@ static int smc_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ 			rc = -EINVAL;
+ 			goto out;
  		}
++	} else if ((sk->sk_state != SMC_ACTIVE) &&
++		   (sk->sk_state != SMC_APPCLOSEWAIT1) &&
++		   (sk->sk_state != SMC_INIT)) {
++		rc = -EPIPE;
++		goto out;
  	}
  
+ 	if (smc->use_fallback) {
 -- 
 2.39.2
 
