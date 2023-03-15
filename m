@@ -1,29 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618F24431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:16:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEAEC4339B;
-	Wed, 15 Mar 2023 12:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0FE4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:16:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F49C433D2;
+	Wed, 15 Mar 2023 12:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882564;
-	bh=3BLZXnNxGAqsWf72UFDoEHfcTW1lEor3LRvXRS0aNxM=;
+	s=korg; t=1678882566;
+	bh=9jBS7MIpL6+m9brClPSSCvHFrvezPWT/iN0VihTnzSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nhm7cKaD/aURtZHPMsT96VDEO4x8yIRdifUJFMHeRf2BaAvEG7QcYX+fHKDVUBMLG
-	 XaZsYQX1OPh25OOsTArVcIhOEnU8OFhDnMDNKm8ukHKfFiWDreb6TxB9jkfqzTW4WJ
-	 g7E7TsTkiSLF0EmBsqw55KTyuDnyqfK80yVhq6wE=
+	b=QcF3HaD88PcoHDqKnMluRs1tLzUUmC3TNcL+vyHcNX/jawV0oqSbl+gFGQdXjgKhq
+	 EahQNpNMqiarWqy7/EuJCbtHarfN9XDyPne6bkNHAS/6kxtm8Qhrfgoal1iWbaYPqs
+	 N+9wjYv9k5tPXh0UrjGDvZR7LxU80FeYwVXLNPx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 26/39] scsi: core: Remove the /proc/scsi/${proc_name} directory earlier
-Date: Wed, 15 Mar 2023 13:12:40 +0100
-Message-Id: <20230315115722.206642574@linuxfoundation.org>
+	"Nobuhiro Iwamatsu (CIP)" <nobuhiro1.iwamatsu@toshiba.co.jp>
+Subject: [PATCH 4.19 27/39] Revert "spi: mt7621: Fix an error message in mt7621_spi_probe()"
+Date: Wed, 15 Mar 2023 13:12:41 +0100
+Message-Id: <20230315115722.239035576@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115721.234756306@linuxfoundation.org>
 References: <20230315115721.234756306@linuxfoundation.org>
@@ -37,79 +33,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
 
-[ Upstream commit fc663711b94468f4e1427ebe289c9f05669699c9 ]
+This reverts commit 269f650a0b26067092873308117e0bf0c6ec8289 which is
+commit 2b2bf6b7faa9010fae10dc7de76627a3fdb525b3 upstream.
 
-Remove the /proc/scsi/${proc_name} directory earlier to fix a race
-condition between unloading and reloading kernel modules. This fixes a bug
-introduced in 2009 by commit 77c019768f06 ("[SCSI] fix /proc memory leak in
-the SCSI core").
+dev_err_probe() does not suppot in 4.19.y. So this driver will fail to
+build.
 
-Fix the following kernel warning:
+```
+  CC      drivers/staging/mt7621-spi/spi-mt7621.o
+drivers/staging/mt7621-spi/spi-mt7621.c: In function 'mt7621_spi_probe':
+drivers/staging/mt7621-spi/spi-mt7621.c:446:24: error: implicit declaration of function 'dev_err_probe'; did you mean 'device_reprobe'? [-Werror=implicit-function-declaration]
+  446 |                 return dev_err_probe(&pdev->dev, PTR_ERR(clk),
+      |                        ^~~~~~~~~~~~~
+      |                        device_reprobe
+```
 
-proc_dir_entry 'scsi/scsi_debug' already registered
-WARNING: CPU: 19 PID: 27986 at fs/proc/generic.c:376 proc_register+0x27d/0x2e0
-Call Trace:
- proc_mkdir+0xb5/0xe0
- scsi_proc_hostdir_add+0xb5/0x170
- scsi_host_alloc+0x683/0x6c0
- sdebug_driver_probe+0x6b/0x2d0 [scsi_debug]
- really_probe+0x159/0x540
- __driver_probe_device+0xdc/0x230
- driver_probe_device+0x4f/0x120
- __device_attach_driver+0xef/0x180
- bus_for_each_drv+0xe5/0x130
- __device_attach+0x127/0x290
- device_initial_probe+0x17/0x20
- bus_probe_device+0x110/0x130
- device_add+0x673/0xc80
- device_register+0x1e/0x30
- sdebug_add_host_helper+0x1a7/0x3b0 [scsi_debug]
- scsi_debug_init+0x64f/0x1000 [scsi_debug]
- do_one_initcall+0xd7/0x470
- do_init_module+0xe7/0x330
- load_module+0x122a/0x12c0
- __do_sys_finit_module+0x124/0x1a0
- __x64_sys_finit_module+0x46/0x50
- do_syscall_64+0x38/0x80
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Link: https://lore.kernel.org/r/20230210205200.36973-3-bvanassche@acm.org
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Yi Zhang <yi.zhang@redhat.com>
-Cc: stable@vger.kernel.org
-Fixes: 77c019768f06 ("[SCSI] fix /proc memory leak in the SCSI core")
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro1.iwamatsu@toshiba.co.jp>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/hosts.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/staging/mt7621-spi/spi-mt7621.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
-index b3d6ea92b4f7c..2ffc2e15d822b 100644
---- a/drivers/scsi/hosts.c
-+++ b/drivers/scsi/hosts.c
-@@ -178,6 +178,7 @@ void scsi_remove_host(struct Scsi_Host *shost)
- 	scsi_forget_host(shost);
- 	mutex_unlock(&shost->scan_mutex);
- 	scsi_proc_host_rm(shost);
-+	scsi_proc_hostdir_rm(shost->hostt);
+--- a/drivers/staging/mt7621-spi/spi-mt7621.c
++++ b/drivers/staging/mt7621-spi/spi-mt7621.c
+@@ -442,9 +442,11 @@ static int mt7621_spi_probe(struct platf
+ 		return PTR_ERR(base);
  
- 	spin_lock_irqsave(shost->host_lock, flags);
- 	if (scsi_host_set_state(shost, SHOST_DEL))
-@@ -329,6 +330,7 @@ static void scsi_host_dev_release(struct device *dev)
- 	struct Scsi_Host *shost = dev_to_shost(dev);
- 	struct device *parent = dev->parent;
+ 	clk = devm_clk_get(&pdev->dev, NULL);
+-	if (IS_ERR(clk))
+-		return dev_err_probe(&pdev->dev, PTR_ERR(clk),
+-				     "unable to get SYS clock\n");
++	if (IS_ERR(clk)) {
++		dev_err(&pdev->dev, "unable to get SYS clock, err=%d\n",
++			status);
++		return PTR_ERR(clk);
++	}
  
-+	/* In case scsi_remove_host() has not been called. */
- 	scsi_proc_hostdir_rm(shost->hostt);
- 
- 	/* Wait for functions invoked through call_rcu(&shost->rcu, ...) */
--- 
-2.39.2
-
+ 	status = clk_prepare_enable(clk);
+ 	if (status)
 
 
