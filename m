@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B1F4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:33:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA784C433D2;
-	Wed, 15 Mar 2023 12:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB914431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:33:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFEDC433D2;
+	Wed, 15 Mar 2023 12:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883604;
-	bh=87VjF5XzdH+/LkAgNY8ZsKPIgWtTFEPd3GPJfUM5CSQ=;
+	s=korg; t=1678883606;
+	bh=QN8I2JvJ4gtzOVUQJ0cpI/91XsA4DHuXMq3Kv6D7jrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=igD11LMTEjpM4qW1AcBlphjjxX8o+SWVBZEY9DSfUMpkwcsnIGFWNdjdatKt2Dj/y
-	 7fzzS3ArplloupiritkIZWPnl2nOhF90ph4SMTvwfSnhmdeiGSgvy0p2MGJVs8te+W
-	 5BCTAuiXiIsUjKcOyyYdsVaY8i71vj7k6QC5xz+g=
+	b=Iy700OnVLyJ3hCtai+49vPB1n5Y60hTCKBZZUDJeyIWz97b0QgDJ6g+oeP02kC36/
+	 3CIRY0GLkfSvw++AEZ3uIB5et+YKkvVRj8ST1HdlnEHfuuLpXwmtNUtWa8CuFJcvoE
+	 XZXX5t9wsj/1ftZU+LshTq4HTFl3gYk1qBiQnxcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yassine Oudjana <y.oudjana@protonmail.com>,
+	Rob Clark <robdclark@gmail.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/143] drm/msm/a5xx: fix the emptyness check in the preempt code
-Date: Wed, 15 Mar 2023 13:12:28 +0100
-Message-Id: <20230315115742.409549592@linuxfoundation.org>
+Subject: [PATCH 6.1 063/143] drm/msm/a5xx: fix context faults during ring switch
+Date: Wed, 15 Mar 2023 13:12:29 +0100
+Message-Id: <20230315115742.443009726@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -38,19 +38,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit b4fb748f0b734ce1d2e7834998cc599fcbd25d67 ]
+[ Upstream commit 32e7083429d46f29080626fe387ff90c086b1fbe ]
 
-Quoting Yassine: ring->memptrs->rptr is never updated and stays 0, so
-the comparison always evaluates to false and get_next_ring always
-returns ring 0 thinking it isn't empty.
+The rptr_addr is set in the preempt_init_ring(), which is called from
+a5xx_gpu_init(). It uses shadowptr() to set the address, however the
+shadow_iova is not yet initialized at that time. Move the rptr_addr
+setting to the a5xx_preempt_hw_init() which is called after setting the
+shadow_iova, getting the correct value for the address.
 
-Fix this by calling get_rptr() instead of reading rptr directly.
-
-Reported-by: Yassine Oudjana <y.oudjana@protonmail.com>
-Fixes: b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
+Fixes: 8907afb476ac ("drm/msm: Allow a5xx to mark the RPTR shadow as privileged")
+Suggested-by: Rob Clark <robdclark@gmail.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/522642/
-Link: https://lore.kernel.org/r/20230214020956.164473-4-dmitry.baryshkov@linaro.org
+Patchwork: https://patchwork.freedesktop.org/patch/522640/
+Link: https://lore.kernel.org/r/20230214020956.164473-5-dmitry.baryshkov@linaro.org
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -58,18 +58,25 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-index 8abc9a2b114a2..6e326d851ba53 100644
+index 6e326d851ba53..e0eef47dae632 100644
 --- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
 +++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-@@ -63,7 +63,7 @@ static struct msm_ringbuffer *get_next_ring(struct msm_gpu *gpu)
- 		struct msm_ringbuffer *ring = gpu->rb[i];
+@@ -208,6 +208,7 @@ void a5xx_preempt_hw_init(struct msm_gpu *gpu)
+ 		a5xx_gpu->preempt[i]->wptr = 0;
+ 		a5xx_gpu->preempt[i]->rptr = 0;
+ 		a5xx_gpu->preempt[i]->rbase = gpu->rb[i]->iova;
++		a5xx_gpu->preempt[i]->rptr_addr = shadowptr(a5xx_gpu, gpu->rb[i]);
+ 	}
  
- 		spin_lock_irqsave(&ring->preempt_lock, flags);
--		empty = (get_wptr(ring) == ring->memptrs->rptr);
-+		empty = (get_wptr(ring) == gpu->funcs->get_rptr(gpu, ring));
- 		spin_unlock_irqrestore(&ring->preempt_lock, flags);
+ 	/* Write a 0 to signal that we aren't switching pagetables */
+@@ -259,7 +260,6 @@ static int preempt_init_ring(struct a5xx_gpu *a5xx_gpu,
+ 	ptr->data = 0;
+ 	ptr->cntl = MSM_GPU_RB_CNTL_DEFAULT | AXXX_CP_RB_CNTL_NO_UPDATE;
  
- 		if (!empty)
+-	ptr->rptr_addr = shadowptr(a5xx_gpu, ring);
+ 	ptr->counter = counters_iova;
+ 
+ 	return 0;
 -- 
 2.39.2
 
