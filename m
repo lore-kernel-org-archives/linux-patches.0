@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054674431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF1DC433D2;
-	Wed, 15 Mar 2023 12:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98AD94431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D040C433D2;
+	Wed, 15 Mar 2023 12:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883823;
-	bh=q/Q4UasE/jzjq1EBtPH0SDQzjoKqcTP82h6ApCpZXTQ=;
+	s=korg; t=1678883826;
+	bh=lm4xLsnfSuP+LF0wMZJL7bhEZ7urhR31TpLcljNvGI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HD5WTWA6bd/+DmnBuvi/itxwgIiOk8DNhkh+FOGIxobGkS3k2nugxxj0SK8RSLLSa
-	 IFIG8/pw8PLyc8VLgxx5B2QMutgnH4Wgs6BvX33pOVGZQ4W2d8sG1uMvqO4hDThi45
-	 93H+oQs6yMvVx4DDZkWpMKkhxYx3pHKmutahVtF8=
+	b=AOmxeglFxIE5+ME4ApDsIoJhgxmDQ6F2RVnYNe8JqRgjSQY9ma3BBr1PxvA+RZ0i+
+	 hWx5yquw1OiZq5/RqJs1HN9S/QwyRo/Qq/e2f4H0R4l8cobeuRaF7Rm/YZor8R0YPj
+	 QuC6uPIVp3GngU2K2yEZ0ySztyerb640pDDbb21g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9d16c39efb5fade84574@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/143] ext4: Fix deadlock during directory rename
-Date: Wed, 15 Mar 2023 13:13:21 +0100
-Message-Id: <20230315115743.990429114@linuxfoundation.org>
+Subject: [PATCH 6.1 116/143] drm/amdgpu/soc21: dont expose AV1 if VCN0 is harvested
+Date: Wed, 15 Mar 2023 13:13:22 +0100
+Message-Id: <20230315115744.020399580@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -36,84 +35,116 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 3c92792da8506a295afb6d032b4476e46f979725 ]
+[ Upstream commit a6de636eb04f146d23644dbbb7173e142452a9b7 ]
 
-As lockdep properly warns, we should not be locking i_rwsem while having
-transactions started as the proper lock ordering used by all directory
-handling operations is i_rwsem -> transaction start. Fix the lock
-ordering by moving the locking of the directory earlier in
-ext4_rename().
+Only VCN0 supports AV1.
 
-Reported-by: syzbot+9d16c39efb5fade84574@syzkaller.appspotmail.com
-Fixes: 0813299c586b ("ext4: Fix possible corruption when moving a directory")
-Link: https://syzkaller.appspot.com/bug?extid=9d16c39efb5fade84574
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230301141004.15087-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 6ce2ea07c5ff ("drm/amdgpu/soc21: Add video cap query support for VCN_4_0_4")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/namei.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/soc21.c | 61 +++++++++++++++++++++++-------
+ 1 file changed, 48 insertions(+), 13 deletions(-)
 
-diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
-index dc8f8a435a7ea..800d631c920b4 100644
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -3813,10 +3813,20 @@ static int ext4_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
- 			return retval;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/soc21.c b/drivers/gpu/drm/amd/amdgpu/soc21.c
+index 00df439ed493d..61ee41aa8abb7 100644
+--- a/drivers/gpu/drm/amd/amdgpu/soc21.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
+@@ -47,19 +47,31 @@
+ static const struct amd_ip_funcs soc21_common_ip_funcs;
  
-+	/*
-+	 * We need to protect against old.inode directory getting converted
-+	 * from inline directory format into a normal one.
-+	 */
-+	if (S_ISDIR(old.inode->i_mode))
-+		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
-+
- 	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de,
- 				 &old.inlined);
--	if (IS_ERR(old.bh))
--		return PTR_ERR(old.bh);
-+	if (IS_ERR(old.bh)) {
-+		retval = PTR_ERR(old.bh);
-+		goto unlock_moved_dir;
-+	}
-+
- 	/*
- 	 *  Check for inode number is _not_ due to possible IO errors.
- 	 *  We might rmdir the source, keep it as pwd of some process
-@@ -3873,11 +3883,6 @@ static int ext4_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
- 			if (new.dir != old.dir && EXT4_DIR_LINK_MAX(new.dir))
- 				goto end_rename;
- 		}
--		/*
--		 * We need to protect against old.inode directory getting
--		 * converted from inline directory format into a normal one.
--		 */
--		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
- 		retval = ext4_rename_dir_prepare(handle, &old);
- 		if (retval) {
- 			inode_unlock(old.inode);
-@@ -4014,12 +4019,15 @@ static int ext4_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
- 	} else {
- 		ext4_journal_stop(handle);
- 	}
--	if (old.dir_bh)
--		inode_unlock(old.inode);
- release_bh:
- 	brelse(old.dir_bh);
- 	brelse(old.bh);
- 	brelse(new.bh);
-+
-+unlock_moved_dir:
-+	if (S_ISDIR(old.inode->i_mode))
-+		inode_unlock(old.inode);
-+
- 	return retval;
- }
+ /* SOC21 */
+-static const struct amdgpu_video_codec_info vcn_4_0_0_video_codecs_encode_array[] =
++static const struct amdgpu_video_codec_info vcn_4_0_0_video_codecs_encode_array_vcn0[] =
+ {
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 2304, 0)},
+ };
  
+-static const struct amdgpu_video_codecs vcn_4_0_0_video_codecs_encode =
++static const struct amdgpu_video_codec_info vcn_4_0_0_video_codecs_encode_array_vcn1[] =
+ {
+-	.codec_count = ARRAY_SIZE(vcn_4_0_0_video_codecs_encode_array),
+-	.codec_array = vcn_4_0_0_video_codecs_encode_array,
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 2304, 0)},
++};
++
++static const struct amdgpu_video_codecs vcn_4_0_0_video_codecs_encode_vcn0 =
++{
++	.codec_count = ARRAY_SIZE(vcn_4_0_0_video_codecs_encode_array_vcn0),
++	.codec_array = vcn_4_0_0_video_codecs_encode_array_vcn0,
++};
++
++static const struct amdgpu_video_codecs vcn_4_0_0_video_codecs_encode_vcn1 =
++{
++	.codec_count = ARRAY_SIZE(vcn_4_0_0_video_codecs_encode_array_vcn1),
++	.codec_array = vcn_4_0_0_video_codecs_encode_array_vcn1,
+ };
+ 
+-static const struct amdgpu_video_codec_info vcn_4_0_0_video_codecs_decode_array[] =
++static const struct amdgpu_video_codec_info vcn_4_0_0_video_codecs_decode_array_vcn0[] =
+ {
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 52)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 186)},
+@@ -68,23 +80,46 @@ static const struct amdgpu_video_codec_info vcn_4_0_0_video_codecs_decode_array[
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_AV1, 8192, 4352, 0)},
+ };
+ 
+-static const struct amdgpu_video_codecs vcn_4_0_0_video_codecs_decode =
++static const struct amdgpu_video_codec_info vcn_4_0_0_video_codecs_decode_array_vcn1[] =
+ {
+-	.codec_count = ARRAY_SIZE(vcn_4_0_0_video_codecs_decode_array),
+-	.codec_array = vcn_4_0_0_video_codecs_decode_array,
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 52)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 186)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VP9, 8192, 4352, 0)},
++};
++
++static const struct amdgpu_video_codecs vcn_4_0_0_video_codecs_decode_vcn0 =
++{
++	.codec_count = ARRAY_SIZE(vcn_4_0_0_video_codecs_decode_array_vcn0),
++	.codec_array = vcn_4_0_0_video_codecs_decode_array_vcn0,
++};
++
++static const struct amdgpu_video_codecs vcn_4_0_0_video_codecs_decode_vcn1 =
++{
++	.codec_count = ARRAY_SIZE(vcn_4_0_0_video_codecs_decode_array_vcn1),
++	.codec_array = vcn_4_0_0_video_codecs_decode_array_vcn1,
+ };
+ 
+ static int soc21_query_video_codecs(struct amdgpu_device *adev, bool encode,
+ 				 const struct amdgpu_video_codecs **codecs)
+ {
+-	switch (adev->ip_versions[UVD_HWIP][0]) {
++	if (adev->vcn.num_vcn_inst == hweight8(adev->vcn.harvest_config))
++		return -EINVAL;
+ 
++	switch (adev->ip_versions[UVD_HWIP][0]) {
+ 	case IP_VERSION(4, 0, 0):
+ 	case IP_VERSION(4, 0, 2):
+-		if (encode)
+-			*codecs = &vcn_4_0_0_video_codecs_encode;
+-		else
+-			*codecs = &vcn_4_0_0_video_codecs_decode;
++		if (adev->vcn.harvest_config & AMDGPU_VCN_HARVEST_VCN0) {
++			if (encode)
++				*codecs = &vcn_4_0_0_video_codecs_encode_vcn1;
++			else
++				*codecs = &vcn_4_0_0_video_codecs_decode_vcn1;
++		} else {
++			if (encode)
++				*codecs = &vcn_4_0_0_video_codecs_encode_vcn0;
++			else
++				*codecs = &vcn_4_0_0_video_codecs_decode_vcn0;
++		}
+ 		return 0;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.39.2
 
