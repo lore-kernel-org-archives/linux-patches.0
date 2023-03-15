@@ -1,26 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9194431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:31:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC51C4339B;
-	Wed, 15 Mar 2023 12:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1006B4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:31:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B585C433D2;
+	Wed, 15 Mar 2023 12:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883460;
-	bh=UFax8ChcHz89KEeLFaoHTzZWrkyBpqimqMVr5v6hN3c=;
+	s=korg; t=1678883462;
+	bh=O9G3Ukd/8dqvyDo7r2q/sW72hVNnJsrFDdx48qvwsmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YXt6FPF6Q09wD/ULFWJtxuCx1vUZ7pL31Ti0Ip8ht2uex6IeNGGz+J52kwjw/d4V4
-	 uV6J2bCUH5BXVwho/toGOxCel+olpoxoCaDUpegw0PyGf/vq9agPrj6PMtYhcjHxrh
-	 S00hN+MLUJt/DodKBHiY2y/W5Nk95vzKqXxD1LUk=
+	b=GEscC2Mh87NwTojGMokSkq5RcD0KR0hlPLOZpuemv0ZS4xJk0EzUSHvZt6yun2BPR
+	 wbcS5lcGF6B1gvyqObfMAHHZL0BX/oIxUFCDDfr7iYf2OdtQbrk8VkA+a6pk1CBw2g
+	 HgSSTk5ulGOU8IDUCUyL3UBVWp4BbU58snRtkQNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Alexandru Matei <alexandru.matei@uipath.com>
-Subject: [PATCH 5.15 145/145] KVM: VMX: Fix crash due to uninitialized current_vmcs
-Date: Wed, 15 Mar 2023 13:13:31 +0100
-Message-Id: <20230315115743.681328887@linuxfoundation.org>
+	Andres Freund <andres@anarazel.de>,
+	Quentin Monnet <quentin@isovalent.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Ben Hutchings <benh@debian.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Sedat Dilek <sedat.dilek@gmail.com>,
+	bpf@vger.kernel.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Hauke Mehrtens <hauke@hauke-m.de>
+Subject: [PATCH 5.15 137/145] tools bpf_jit_disasm: Fix compilation error with new binutils
+Date: Wed, 15 Mar 2023 13:13:23 +0100
+Message-Id: <20230315115743.439488716@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -34,102 +42,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandru Matei <alexandru.matei@uipath.com>
+From: Andres Freund <andres@anarazel.de>
 
-commit 93827a0a36396f2fd6368a54a020f420c8916e9b upstream.
+commit 96ed066054abf11c7d3e106e3011a51f3f1227a3 upstream.
 
-KVM enables 'Enlightened VMCS' and 'Enlightened MSR Bitmap' when running as
-a nested hypervisor on top of Hyper-V. When MSR bitmap is updated,
-evmcs_touch_msr_bitmap function uses current_vmcs per-cpu variable to mark
-that the msr bitmap was changed.
+binutils changed the signature of init_disassemble_info(), which now causes
+compilation to fail for tools/bpf/bpf_jit_disasm.c, e.g. on debian
+unstable.
 
-vmx_vcpu_create() modifies the msr bitmap via vmx_disable_intercept_for_msr
--> vmx_msr_bitmap_l01_changed which in the end calls this function. The
-function checks for current_vmcs if it is null but the check is
-insufficient because current_vmcs is not initialized. Because of this, the
-code might incorrectly write to the structure pointed by current_vmcs value
-left by another task. Preemption is not disabled, the current task can be
-preempted and moved to another CPU while current_vmcs is accessed multiple
-times from evmcs_touch_msr_bitmap() which leads to crash.
+Relevant binutils commit:
 
-The manipulation of MSR bitmaps by callers happens only for vmcs01 so the
-solution is to use vmx->vmcs01.vmcs instead of current_vmcs.
+  https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=60a3da00bd5407f07
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000338
-  PGD 4e1775067 P4D 0
-  Oops: 0002 [#1] PREEMPT SMP NOPTI
-  ...
-  RIP: 0010:vmx_msr_bitmap_l01_changed+0x39/0x50 [kvm_intel]
-  ...
-  Call Trace:
-   vmx_disable_intercept_for_msr+0x36/0x260 [kvm_intel]
-   vmx_vcpu_create+0xe6/0x540 [kvm_intel]
-   kvm_arch_vcpu_create+0x1d1/0x2e0 [kvm]
-   kvm_vm_ioctl_create_vcpu+0x178/0x430 [kvm]
-   kvm_vm_ioctl+0x53f/0x790 [kvm]
-   __x64_sys_ioctl+0x8a/0xc0
-   do_syscall_64+0x5c/0x90
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Wire up the feature test and switch to init_disassemble_info_compat(),
+which were introduced in prior commits, fixing the compilation failure.
 
-Fixes: ceef7d10dfb6 ("KVM: x86: VMX: hyper-v: Enlightened MSR-Bitmap support")
-Cc: stable@vger.kernel.org
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Alexandru Matei <alexandru.matei@uipath.com>
-Link: https://lore.kernel.org/r/20230123221208.4964-1-alexandru.matei@uipath.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[manual backport: evmcs.h got renamed to hyperv.h in a later
-version, modified in evmcs.h instead]
-Signed-off-by: Alexandru Matei <alexandru.matei@uipath.com>
+I verified that bpf_jit_disasm can still disassemble bpf programs, both
+with the old and new dis-asm.h API. With old binutils there's no change in
+output before/after this patch. When comparing the output from old
+binutils (2.35) to new bintuils with the patch (upstream snapshot) there
+are a few output differences, but they are unrelated to this patch. An
+example hunk is:
+
+     f4:	mov    %r14,%rsi
+     f7:	mov    %r15,%rdx
+     fa:	mov    $0x2a,%ecx
+  -  ff:	callq  0xffffffffea8c4988
+  +  ff:	call   0xffffffffea8c4988
+    104:	test   %rax,%rax
+    107:	jge    0x0000000000000110
+    109:	xor    %eax,%eax
+  - 10b:	jmpq   0x0000000000000073
+  + 10b:	jmp    0x0000000000000073
+    110:	cmp    $0x16,%rax
+
+However, I had to use an older kernel to generate the bpf_jit_enabled =
+2 output, as that has been broken since 5.18 / 1022a5498f6f745c ("bpf,
+x86_64: Use bpf_jit_binary_pack_alloc").
+
+  https://lore.kernel.org/20220703030210.pmjft7qc2eajzi6c@alap3.anarazel.de
+
+Signed-off-by: Andres Freund <andres@anarazel.de>
+Acked-by: Quentin Monnet <quentin@isovalent.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Ben Hutchings <benh@debian.org>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Quentin Monnet <quentin@isovalent.com>
+Cc: Sedat Dilek <sedat.dilek@gmail.com>
+Cc: bpf@vger.kernel.org
+Link: http://lore.kernel.org/lkml/20220622181918.ykrs5rsnmx3og4sv@alap3.anarazel.de
+Link: https://lore.kernel.org/r/20220801013834.156015-6-andres@anarazel.de
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Hauke Mehrtens <hauke@hauke-m.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/evmcs.h |   11 -----------
- arch/x86/kvm/vmx/vmx.c   |    9 +++++++--
- 2 files changed, 7 insertions(+), 13 deletions(-)
+ tools/bpf/Makefile         |    5 ++++-
+ tools/bpf/bpf_jit_disasm.c |    5 ++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/vmx/evmcs.h
-+++ b/arch/x86/kvm/vmx/evmcs.h
-@@ -162,16 +162,6 @@ static inline u16 evmcs_read16(unsigned
- 	return *(u16 *)((char *)current_evmcs + offset);
- }
+--- a/tools/bpf/Makefile
++++ b/tools/bpf/Makefile
+@@ -34,7 +34,7 @@ else
+ endif
  
--static inline void evmcs_touch_msr_bitmap(void)
--{
--	if (unlikely(!current_evmcs))
--		return;
--
--	if (current_evmcs->hv_enlightenments_control.msr_bitmap)
--		current_evmcs->hv_clean_fields &=
--			~HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP;
--}
--
- static inline void evmcs_load(u64 phys_addr)
- {
- 	struct hv_vp_assist_page *vp_ap =
-@@ -192,7 +182,6 @@ static inline u64 evmcs_read64(unsigned
- static inline u32 evmcs_read32(unsigned long field) { return 0; }
- static inline u16 evmcs_read16(unsigned long field) { return 0; }
- static inline void evmcs_load(u64 phys_addr) {}
--static inline void evmcs_touch_msr_bitmap(void) {}
- #endif /* IS_ENABLED(CONFIG_HYPERV) */
+ FEATURE_USER = .bpf
+-FEATURE_TESTS = libbfd disassembler-four-args
++FEATURE_TESTS = libbfd disassembler-four-args disassembler-init-styled
+ FEATURE_DISPLAY = libbfd disassembler-four-args
  
- #define EVMPTR_INVALID (-1ULL)
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -3779,8 +3779,13 @@ static void vmx_msr_bitmap_l01_changed(s
- 	 * 'Enlightened MSR Bitmap' feature L0 needs to know that MSR
- 	 * bitmap has changed.
- 	 */
--	if (static_branch_unlikely(&enable_evmcs))
--		evmcs_touch_msr_bitmap();
-+	if (IS_ENABLED(CONFIG_HYPERV) && static_branch_unlikely(&enable_evmcs)) {
-+		struct hv_enlightened_vmcs *evmcs = (void *)vmx->vmcs01.vmcs;
-+
-+		if (evmcs->hv_enlightenments_control.msr_bitmap)
-+			evmcs->hv_clean_fields &=
-+				~HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP;
-+	}
- }
+ check_feat := 1
+@@ -56,6 +56,9 @@ endif
+ ifeq ($(feature-disassembler-four-args), 1)
+ CFLAGS += -DDISASM_FOUR_ARGS_SIGNATURE
+ endif
++ifeq ($(feature-disassembler-init-styled), 1)
++CFLAGS += -DDISASM_INIT_STYLED
++endif
  
- void vmx_disable_intercept_for_msr(struct kvm_vcpu *vcpu, u32 msr, int type)
+ $(OUTPUT)%.yacc.c: $(srctree)/tools/bpf/%.y
+ 	$(QUIET_BISON)$(YACC) -o $@ -d $<
+--- a/tools/bpf/bpf_jit_disasm.c
++++ b/tools/bpf/bpf_jit_disasm.c
+@@ -28,6 +28,7 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <limits.h>
++#include <tools/dis-asm-compat.h>
+ 
+ #define CMD_ACTION_SIZE_BUFFER		10
+ #define CMD_ACTION_READ_ALL		3
+@@ -64,7 +65,9 @@ static void get_asm_insns(uint8_t *image
+ 	assert(bfdf);
+ 	assert(bfd_check_format(bfdf, bfd_object));
+ 
+-	init_disassemble_info(&info, stdout, (fprintf_ftype) fprintf);
++	init_disassemble_info_compat(&info, stdout,
++				     (fprintf_ftype) fprintf,
++				     fprintf_styled);
+ 	info.arch = bfd_get_arch(bfdf);
+ 	info.mach = bfd_get_mach(bfdf);
+ 	info.buffer = image;
 
 
