@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834D04431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062D9C433D2;
-	Wed, 15 Mar 2023 12:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2081F4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2DEC433EF;
+	Wed, 15 Mar 2023 12:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883910;
-	bh=cJyn5if9UHzNMhCT6qOO4Ca+N/e7eaTdLc59LvGpKzg=;
+	s=korg; t=1678883913;
+	bh=MvlwO+kpLZ3PLjCXt/aB6elSh1+UHr037w3YIsIEYhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ksZHOGy01WZAOQt3Ia2/g5hpMc6DSYdLktCuzPaxc13XiOKhtWEiEK72qFlBYjk2m
-	 hI2wCS6N56UMB/cLDeV+hUEgh8XWu+6AQ3E/AFUcJbn/9KFjceNSX6xnjn5cOWn2CQ
-	 9c0C+/F6HLT/+is1nu/sj3AK94uHXPstZ0YiEQSA=
+	b=HnlTobPTbcdChe501hZwUYStv+qNL+YhVPkdk3bh3FnmvrwCRIIu7C3tK2ExZ4PT9
+	 PWmJ8MuWd8GhzqPHnmSiwKHgPu5xN1glXWv5aNA4Xez6E1hTlh46F7lUwtuRfKbrWV
+	 Ss2y4bpbgInXvUzNgolJitgaXmbIUUAsvhZezds4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Hu <huyue2@coolpad.com>,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.2 006/141] erofs: fix wrong kunmap when using LZMA on HIGHMEM platforms
-Date: Wed, 15 Mar 2023 13:11:49 +0100
-Message-Id: <20230315115740.152502046@linuxfoundation.org>
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 6.2 007/141] perf inject: Fix --buildid-all not to eat up MMAP2
+Date: Wed, 15 Mar 2023 13:11:50 +0100
+Message-Id: <20230315115740.182871410@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -35,52 +39,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-commit 8f121dfb15f7b4ab345992ce96003eb63fd608f4 upstream.
+commit ce9f1c05d2edfa6cdf2c1a510495d333e11810a8 upstream.
 
-As the call trace shown, the root cause is kunmap incorrect pages:
+When MMAP2 has the PERF_RECORD_MISC_MMAP_BUILD_ID flag, it means the
+record already has the build-id info.  So it marks the DSO as hit, to
+skip if the same DSO is not processed if it happens to miss the build-id
+later.
 
- BUG: kernel NULL pointer dereference, address: 00000000
- CPU: 1 PID: 40 Comm: kworker/u5:0 Not tainted 6.2.0-rc5 #4
- Workqueue: erofs_worker z_erofs_decompressqueue_work
- EIP: z_erofs_lzma_decompress+0x34b/0x8ac
-  z_erofs_decompress+0x12/0x14
-  z_erofs_decompress_queue+0x7e7/0xb1c
-  z_erofs_decompressqueue_work+0x32/0x60
-  process_one_work+0x24b/0x4d8
-  ? process_one_work+0x1a4/0x4d8
-  worker_thread+0x14c/0x3fc
-  kthread+0xe6/0x10c
-  ? rescuer_thread+0x358/0x358
-  ? kthread_complete_and_exit+0x18/0x18
-  ret_from_fork+0x1c/0x28
- ---[ end trace 0000000000000000 ]---
+But it missed to copy the MMAP2 record itself so it'd fail to symbolize
+samples for those regions.
 
-The bug is trivial and should be fixed now.  It has no impact on
-!HIGHMEM platforms.
+For example, the following generates 249 MMAP2 events.
 
-Fixes: 622ceaddb764 ("erofs: lzma compression support")
-Cc: <stable@vger.kernel.org> # 5.16+
-Reviewed-by: Yue Hu <huyue2@coolpad.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230305134455.88236-1-hsiangkao@linux.alibaba.com
+  $ perf record --buildid-mmap -o- true | perf report --stat -i- | grep MMAP2
+           MMAP2 events:        249  (86.8%)
+
+Adding perf inject should not change the number of events like this
+
+  $ perf record --buildid-mmap -o- true | perf inject -b | \
+  > perf report --stat -i- | grep MMAP2
+           MMAP2 events:        249  (86.5%)
+
+But when --buildid-all is used, it eats most of the MMAP2 events.
+
+  $ perf record --buildid-mmap -o- true | perf inject -b --buildid-all | \
+  > perf report --stat -i- | grep MMAP2
+           MMAP2 events:          1  ( 2.5%)
+
+With this patch, it shows the original number now.
+
+  $ perf record --buildid-mmap -o- true | perf inject -b --buildid-all | \
+  > perf report --stat -i- | grep MMAP2
+           MMAP2 events:        249  (86.5%)
+
+Committer testing:
+
+Before:
+
+  $ perf record --buildid-mmap -o- perf stat --null sleep 1 2> /dev/null | perf inject -b | perf report --stat -i- | grep MMAP2
+           MMAP2 events:         58  (36.2%)
+  $ perf record --buildid-mmap -o- perf stat --null sleep 1 2> /dev/null | perf report --stat -i- | grep MMAP2
+           MMAP2 events:         58  (36.2%)
+  $ perf record --buildid-mmap -o- perf stat --null sleep 1 2> /dev/null | perf inject -b --buildid-all | perf report --stat -i- | grep MMAP2
+           MMAP2 events:          2  ( 1.9%)
+  $
+
+After:
+
+  $ perf record --buildid-mmap -o- perf stat --null sleep 1 2> /dev/null | perf inject -b | perf report --stat -i- | grep MMAP2
+           MMAP2 events:         58  (29.3%)
+  $ perf record --buildid-mmap -o- perf stat --null sleep 1 2> /dev/null | perf report --stat -i- | grep MMAP2
+           MMAP2 events:         58  (34.3%)
+  $ perf record --buildid-mmap -o- perf stat --null sleep 1 2> /dev/null | perf inject -b --buildid-all | perf report --stat -i- | grep MMAP2
+           MMAP2 events:         58  (38.4%)
+  $
+
+Fixes: f7fc0d1c915a74ff ("perf inject: Do not inject BUILD_ID record if MMAP2 has it")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230223070155.54251-1-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/decompressor_lzma.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/builtin-inject.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/erofs/decompressor_lzma.c
-+++ b/fs/erofs/decompressor_lzma.c
-@@ -278,7 +278,7 @@ again:
+--- a/tools/perf/builtin-inject.c
++++ b/tools/perf/builtin-inject.c
+@@ -538,6 +538,7 @@ static int perf_event__repipe_buildid_mm
+ 			dso->hit = 1;
  		}
+ 		dso__put(dso);
++		perf_event__repipe(tool, event, sample, machine);
+ 		return 0;
  	}
- 	if (no < nrpages_out && strm->buf.out)
--		kunmap(rq->in[no]);
-+		kunmap(rq->out[no]);
- 	if (ni < nrpages_in)
- 		kunmap(rq->in[ni]);
- 	/* 4. push back LZMA stream context to the global list */
+ 
 
 
