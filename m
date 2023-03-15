@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C8A4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F1B6C433D2;
-	Wed, 15 Mar 2023 12:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4014431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7069C433D2;
+	Wed, 15 Mar 2023 12:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883742;
-	bh=pQklDcOpLt+p0Nb+ZBaDaCWYy/8v2Ff0jqMLgPhDK4w=;
+	s=korg; t=1678883745;
+	bh=BHUuBjkMYYw14rcSJs6e+Ug+e9lRBaisVFneinvOT1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nP5OcYBmPLzjH7XS53Ebcl14mLoPTuNGOzx0Gdcj6Q5Do2z2Kud1TsiDSdz/n5ITQ
-	 gEY00Vsc1ICfzgsAhI48ntwI3yfA1zXwmf9BSdqm/cZkIpEFKDVd0mc2RNXhPZ/B//
-	 G18y93Fd1GckizfRqANkhq0iD94rqxiSl9qW23mc=
+	b=bqX4uJh76j8cbWkwUeEfxzmSd7k8eBwfSQYpdJ3M+yJpopzhsy5kLVZsCk9bPWmKK
+	 7JTBvtGVg5BHYL4tFv4YivH95x8eAlP7Qei0sKVoM7hemF9U5WHXhn0LkmhRgYxQPf
+	 Wrdo6pZ0MbYDoAn7KsW9UeVQlXZwmPke8nsYG7ZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rongguang Wei <weirongguang@kylinos.cn>,
+	Marc Zyngier <maz@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Andrew Lunn <andrew@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/143] net: stmmac: add to set device wake up flag when stmmac init phy
-Date: Wed, 15 Mar 2023 13:12:51 +0100
-Message-Id: <20230315115743.116161536@linuxfoundation.org>
+Subject: [PATCH 6.1 086/143] net: phylib: get rid of unnecessary locking
+Date: Wed, 15 Mar 2023 13:12:52 +0100
+Message-Id: <20230315115743.144037814@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -35,48 +37,172 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rongguang Wei <weirongguang@kylinos.cn>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit a9334b702a03b693f54ebd3b98f67bf722b74870 ]
+[ Upstream commit f4b47a2e9463950df3e7c8b70e017877c1d4eb11 ]
 
-When MAC is not support PMT, driver will check PHY's WoL capability
-and set device wakeup capability in stmmac_init_phy(). We can enable
-the WoL through ethtool, the driver would enable the device wake up
-flag. Now the device_may_wakeup() return true.
+The locking in phy_probe() and phy_remove() does very little to prevent
+any races with e.g. phy_attach_direct(), but instead causes lockdep ABBA
+warnings. Remove it.
 
-But if there is a way which enable the PHY's WoL capability derectly,
-like in BIOS. The driver would not know the enable thing and would not
-set the device wake up flag. The phy_suspend may failed like this:
+======================================================
+WARNING: possible circular locking dependency detected
+6.2.0-dirty #1108 Tainted: G        W   E
+------------------------------------------------------
+ip/415 is trying to acquire lock:
+ffff5c268f81ef50 (&dev->lock){+.+.}-{3:3}, at: phy_attach_direct+0x17c/0x3a0 [libphy]
 
-[   32.409063] PM: dpm_run_callback(): mdio_bus_phy_suspend+0x0/0x50 returns -16
-[   32.409065] PM: Device stmmac-1:00 failed to suspend: error -16
-[   32.409067] PM: Some devices failed to suspend, or early wake event detected
+but task is already holding lock:
+ffffaef6496cb518 (rtnl_mutex){+.+.}-{3:3}, at: rtnetlink_rcv_msg+0x154/0x560
 
-Add to set the device wakeup enable flag according to the get_wol
-function result in PHY can fix the error in this scene.
+which lock already depends on the new lock.
 
-v2: add a Fixes tag.
+the existing dependency chain (in reverse order) is:
 
-Fixes: 1d8e5b0f3f2c ("net: stmmac: Support WOL with phy")
-Signed-off-by: Rongguang Wei <weirongguang@kylinos.cn>
+-> #1 (rtnl_mutex){+.+.}-{3:3}:
+       __lock_acquire+0x35c/0x6c0
+       lock_acquire.part.0+0xcc/0x220
+       lock_acquire+0x68/0x84
+       __mutex_lock+0x8c/0x414
+       mutex_lock_nested+0x34/0x40
+       rtnl_lock+0x24/0x30
+       sfp_bus_add_upstream+0x34/0x150
+       phy_sfp_probe+0x4c/0x94 [libphy]
+       mv3310_probe+0x148/0x184 [marvell10g]
+       phy_probe+0x8c/0x200 [libphy]
+       call_driver_probe+0xbc/0x15c
+       really_probe+0xc0/0x320
+       __driver_probe_device+0x84/0x120
+       driver_probe_device+0x44/0x120
+       __device_attach_driver+0xc4/0x160
+       bus_for_each_drv+0x80/0xe0
+       __device_attach+0xb0/0x1f0
+       device_initial_probe+0x1c/0x2c
+       bus_probe_device+0xa4/0xb0
+       device_add+0x360/0x53c
+       phy_device_register+0x60/0xa4 [libphy]
+       fwnode_mdiobus_phy_device_register+0xc0/0x190 [fwnode_mdio]
+       fwnode_mdiobus_register_phy+0x160/0xd80 [fwnode_mdio]
+       of_mdiobus_register+0x140/0x340 [of_mdio]
+       orion_mdio_probe+0x298/0x3c0 [mvmdio]
+       platform_probe+0x70/0xe0
+       call_driver_probe+0x34/0x15c
+       really_probe+0xc0/0x320
+       __driver_probe_device+0x84/0x120
+       driver_probe_device+0x44/0x120
+       __driver_attach+0x104/0x210
+       bus_for_each_dev+0x78/0xdc
+       driver_attach+0x2c/0x3c
+       bus_add_driver+0x184/0x240
+       driver_register+0x80/0x13c
+       __platform_driver_register+0x30/0x3c
+       xt_compat_calc_jump+0x28/0xa4 [x_tables]
+       do_one_initcall+0x50/0x1b0
+       do_init_module+0x50/0x1fc
+       load_module+0x684/0x744
+       __do_sys_finit_module+0xc4/0x140
+       __arm64_sys_finit_module+0x28/0x34
+       invoke_syscall+0x50/0x120
+       el0_svc_common.constprop.0+0x6c/0x1b0
+       do_el0_svc+0x34/0x44
+       el0_svc+0x48/0xf0
+       el0t_64_sync_handler+0xb8/0xc0
+       el0t_64_sync+0x1a0/0x1a4
+
+-> #0 (&dev->lock){+.+.}-{3:3}:
+       check_prev_add+0xb4/0xc80
+       validate_chain+0x414/0x47c
+       __lock_acquire+0x35c/0x6c0
+       lock_acquire.part.0+0xcc/0x220
+       lock_acquire+0x68/0x84
+       __mutex_lock+0x8c/0x414
+       mutex_lock_nested+0x34/0x40
+       phy_attach_direct+0x17c/0x3a0 [libphy]
+       phylink_fwnode_phy_connect.part.0+0x70/0xe4 [phylink]
+       phylink_fwnode_phy_connect+0x48/0x60 [phylink]
+       mvpp2_open+0xec/0x2e0 [mvpp2]
+       __dev_open+0x104/0x214
+       __dev_change_flags+0x1d4/0x254
+       dev_change_flags+0x2c/0x7c
+       do_setlink+0x254/0xa50
+       __rtnl_newlink+0x430/0x514
+       rtnl_newlink+0x58/0x8c
+       rtnetlink_rcv_msg+0x17c/0x560
+       netlink_rcv_skb+0x64/0x150
+       rtnetlink_rcv+0x20/0x30
+       netlink_unicast+0x1d4/0x2b4
+       netlink_sendmsg+0x1a4/0x400
+       ____sys_sendmsg+0x228/0x290
+       ___sys_sendmsg+0x88/0xec
+       __sys_sendmsg+0x70/0xd0
+       __arm64_sys_sendmsg+0x2c/0x40
+       invoke_syscall+0x50/0x120
+       el0_svc_common.constprop.0+0x6c/0x1b0
+       do_el0_svc+0x34/0x44
+       el0_svc+0x48/0xf0
+       el0t_64_sync_handler+0xb8/0xc0
+       el0t_64_sync+0x1a0/0x1a4
+
+other info that might help us debug this:
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(rtnl_mutex);
+                               lock(&dev->lock);
+                               lock(rtnl_mutex);
+  lock(&dev->lock);
+
+ *** DEADLOCK ***
+
+Fixes: 298e54fa810e ("net: phy: add core phylib sfp support")
+Reported-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/phy/phy_device.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 84e1740b12f1b..3c1d4b27668fe 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1168,6 +1168,7 @@ static int stmmac_init_phy(struct net_device *dev)
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index 8cff61dbc4b57..7fbb0904b3c0f 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -3041,8 +3041,6 @@ static int phy_probe(struct device *dev)
+ 	if (phydrv->flags & PHY_IS_INTERNAL)
+ 		phydev->is_internal = true;
  
- 		phylink_ethtool_get_wol(priv->phylink, &wol);
- 		device_set_wakeup_capable(priv->device, !!wol.supported);
-+		device_set_wakeup_enable(priv->device, !!wol.wolopts);
- 	}
+-	mutex_lock(&phydev->lock);
+-
+ 	/* Deassert the reset signal */
+ 	phy_device_reset(phydev, 0);
  
- 	return ret;
+@@ -3110,12 +3108,10 @@ static int phy_probe(struct device *dev)
+ 	phydev->state = PHY_READY;
+ 
+ out:
+-	/* Assert the reset signal */
++	/* Re-assert the reset signal on error */
+ 	if (err)
+ 		phy_device_reset(phydev, 1);
+ 
+-	mutex_unlock(&phydev->lock);
+-
+ 	return err;
+ }
+ 
+@@ -3125,9 +3121,7 @@ static int phy_remove(struct device *dev)
+ 
+ 	cancel_delayed_work_sync(&phydev->state_queue);
+ 
+-	mutex_lock(&phydev->lock);
+ 	phydev->state = PHY_DOWN;
+-	mutex_unlock(&phydev->lock);
+ 
+ 	sfp_bus_del_upstream(phydev->sfp_bus);
+ 	phydev->sfp_bus = NULL;
 -- 
 2.39.2
 
