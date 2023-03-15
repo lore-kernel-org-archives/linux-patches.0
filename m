@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145CE4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:26:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D8A3C433EF;
-	Wed, 15 Mar 2023 12:26:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D8F4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:26:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287C0C433EF;
+	Wed, 15 Mar 2023 12:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883213;
-	bh=6tUjH8bWN0jkW+H2oNmGniF5MDJP2jgc/3922VpjwpM=;
+	s=korg; t=1678883216;
+	bh=C7Swx3QKnzr2XYbi0Hg7ZgMMjRzj45Y5penNN59BpuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pDnb6maL7jEXA0cn+X9zk71nuGd9abGCYXnTl6Rq64ie2e1abOTNdP7XD8gWehAzO
-	 vdMnA1NXRkvGVyE1Nol8LLN25ZT5bf1GfcTbwtFpRDJ/rd8fWpw9q8mzVHbEkU5Cvf
-	 cZpQr5k9gC/vm/D4zhjixOBAxnWrYK6qdBURfZZ4=
+	b=XwDk6qWhWFvqHagHnGXiBdDhUTYZl3V0ZJ/kNjrK8JWruwhSPZYw+YPXJNKuG+QdA
+	 KrtZ5barz1c9mU0c/oSrK+BSmR5npb/bfUGr4sRp8TJXOjmVgmtZrWD2Ms8eaRQf14
+	 rBjXvGdC+BmHPclBE78OWslgTS7CPUZHAkJGXG8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Liu Jian <liujian56@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/145] ice: copy last block omitted in ice_get_module_eeprom()
-Date: Wed, 15 Mar 2023 13:12:04 +0100
-Message-Id: <20230315115740.948873173@linuxfoundation.org>
+Subject: [PATCH 5.15 059/145] bpf, sockmap: Fix an infinite loop error when len is 0 in tcp_bpf_recvmsg_parser()
+Date: Wed, 15 Mar 2023 13:12:05 +0100
+Message-Id: <20230315115740.977878675@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -36,113 +37,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Petr Oros <poros@redhat.com>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit 84cba1840e68430325ac133a11be06bfb2f7acd8 ]
+[ Upstream commit d900f3d20cc3169ce42ec72acc850e662a4d4db2 ]
 
-ice_get_module_eeprom() is broken since commit e9c9692c8a81 ("ice:
-Reimplement module reads used by ethtool") In this refactor,
-ice_get_module_eeprom() reads the eeprom in blocks of size 8.
-But the condition that should protect the buffer overflow
-ignores the last block. The last block always contains zeros.
+When the buffer length of the recvmsg system call is 0, we got the
+flollowing soft lockup problem:
 
-Bug uncovered by ethtool upstream commit 9538f384b535
-("netlink: eeprom: Defer page requests to individual parsers")
-After this commit, ethtool reads a block with length = 1;
-to read the SFF-8024 identifier value.
+watchdog: BUG: soft lockup - CPU#3 stuck for 27s! [a.out:6149]
+CPU: 3 PID: 6149 Comm: a.out Kdump: loaded Not tainted 6.2.0+ #30
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:remove_wait_queue+0xb/0xc0
+Code: 5e 41 5f c3 cc cc cc cc 0f 1f 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 0f 1f 44 00 00 41 57 <41> 56 41 55 41 54 55 48 89 fd 53 48 89 f3 4c 8d 6b 18 4c 8d 73 20
+RSP: 0018:ffff88811b5978b8 EFLAGS: 00000246
+RAX: 0000000000000000 RBX: ffff88811a7d3780 RCX: ffffffffb7a4d768
+RDX: dffffc0000000000 RSI: ffff88811b597908 RDI: ffff888115408040
+RBP: 1ffff110236b2f1b R08: 0000000000000000 R09: ffff88811a7d37e7
+R10: ffffed10234fa6fc R11: 0000000000000001 R12: ffff88811179b800
+R13: 0000000000000001 R14: ffff88811a7d38a8 R15: ffff88811a7d37e0
+FS:  00007f6fb5398740(0000) GS:ffff888237180000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020000000 CR3: 000000010b6ba002 CR4: 0000000000370ee0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ tcp_msg_wait_data+0x279/0x2f0
+ tcp_bpf_recvmsg_parser+0x3c6/0x490
+ inet_recvmsg+0x280/0x290
+ sock_recvmsg+0xfc/0x120
+ ____sys_recvmsg+0x160/0x3d0
+ ___sys_recvmsg+0xf0/0x180
+ __sys_recvmsg+0xea/0x1a0
+ do_syscall_64+0x3f/0x90
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-unpatched driver:
-$ ethtool -m enp65s0f0np0 offset 0x90 length 8
-Offset          Values
-------          ------
-0x0090:         00 00 00 00 00 00 00 00
-$ ethtool -m enp65s0f0np0 offset 0x90 length 12
-Offset          Values
-------          ------
-0x0090:         00 00 01 a0 4d 65 6c 6c 00 00 00 00
-$
+The logic in tcp_bpf_recvmsg_parser is as follows:
 
-$ ethtool -m enp65s0f0np0
-Offset          Values
-------          ------
-0x0000:         11 06 06 00 00 00 00 00 00 00 00 00 00 00 00 00
-0x0010:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-0x0020:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-0x0030:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-0x0040:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-0x0050:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-0x0060:         00 00 00 00 00 00 00 00 00 00 00 00 00 01 08 00
-0x0070:         00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+msg_bytes_ready:
+	copied = sk_msg_recvmsg(sk, psock, msg, len, flags);
+	if (!copied) {
+		wait data;
+		goto msg_bytes_ready;
+	}
 
-patched driver:
-$ ethtool -m enp65s0f0np0 offset 0x90 length 8
-Offset          Values
-------          ------
-0x0090:         00 00 01 a0 4d 65 6c 6c
-$ ethtool -m enp65s0f0np0 offset 0x90 length 12
-Offset          Values
-------          ------
-0x0090:         00 00 01 a0 4d 65 6c 6c 61 6e 6f 78
-$ ethtool -m enp65s0f0np0
-    Identifier                                : 0x11 (QSFP28)
-    Extended identifier                       : 0x00
-    Extended identifier description           : 1.5W max. Power consumption
-    Extended identifier description           : No CDR in TX, No CDR in RX
-    Extended identifier description           : High Power Class (> 3.5 W) not enabled
-    Connector                                 : 0x23 (No separable connector)
-    Transceiver codes                         : 0x88 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-    Transceiver type                          : 40G Ethernet: 40G Base-CR4
-    Transceiver type                          : 25G Ethernet: 25G Base-CR CA-N
-    Encoding                                  : 0x05 (64B/66B)
-    BR, Nominal                               : 25500Mbps
-    Rate identifier                           : 0x00
-    Length (SMF,km)                           : 0km
-    Length (OM3 50um)                         : 0m
-    Length (OM2 50um)                         : 0m
-    Length (OM1 62.5um)                       : 0m
-    Length (Copper or Active cable)           : 1m
-    Transmitter technology                    : 0xa0 (Copper cable unequalized)
-    Attenuation at 2.5GHz                     : 4db
-    Attenuation at 5.0GHz                     : 5db
-    Attenuation at 7.0GHz                     : 7db
-    Attenuation at 12.9GHz                    : 10db
-    ........
-    ....
+In this case, "copied" always is 0, the infinite loop occurs.
 
-Fixes: e9c9692c8a81 ("ice: Reimplement module reads used by ethtool")
-Signed-off-by: Petr Oros <poros@redhat.com>
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Tested-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+According to the Linux system call man page, 0 should be returned in this
+case. Therefore, in tcp_bpf_recvmsg_parser(), if the length is 0, directly
+return. Also modify several other functions with the same problem.
+
+Fixes: 1f5be6b3b063 ("udp: Implement udp_bpf_recvmsg() for sockmap")
+Fixes: 9825d866ce0d ("af_unix: Implement unix_dgram_bpf_recvmsg()")
+Fixes: c5d2177a72a1 ("bpf, sockmap: Fix race in ingress receive verdict with redirect to self")
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Cc: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/20230303080946.1146638-1-liujian56@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_bpf.c  | 6 ++++++
+ net/ipv4/udp_bpf.c  | 3 +++
+ net/unix/unix_bpf.c | 3 +++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index 24001035910e0..60f73e775beeb 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -3998,6 +3998,8 @@ ice_get_module_eeprom(struct net_device *netdev,
- 		 * SFP modules only ever use page 0.
- 		 */
- 		if (page == 0 || !(data[0x2] & 0x4)) {
-+			u32 copy_len;
-+
- 			/* If i2c bus is busy due to slow page change or
- 			 * link management access, call can fail. This is normal.
- 			 * So we retry this a few times.
-@@ -4021,8 +4023,8 @@ ice_get_module_eeprom(struct net_device *netdev,
- 			}
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 7f34c455651db..20ad554af3693 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -187,6 +187,9 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 	if (unlikely(flags & MSG_ERRQUEUE))
+ 		return inet_recv_error(sk, msg, len, addr_len);
  
- 			/* Make sure we have enough room for the new block */
--			if ((i + SFF_READ_BLOCK_SIZE) < ee->len)
--				memcpy(data + i, value, SFF_READ_BLOCK_SIZE);
-+			copy_len = min_t(u32, SFF_READ_BLOCK_SIZE, ee->len - i);
-+			memcpy(data + i, value, copy_len);
- 		}
- 	}
- 	return 0;
++	if (!len)
++		return 0;
++
+ 	psock = sk_psock_get(sk);
+ 	if (unlikely(!psock))
+ 		return tcp_recvmsg(sk, msg, len, nonblock, flags, addr_len);
+@@ -245,6 +248,9 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 	if (unlikely(flags & MSG_ERRQUEUE))
+ 		return inet_recv_error(sk, msg, len, addr_len);
+ 
++	if (!len)
++		return 0;
++
+ 	psock = sk_psock_get(sk);
+ 	if (unlikely(!psock))
+ 		return tcp_recvmsg(sk, msg, len, nonblock, flags, addr_len);
+diff --git a/net/ipv4/udp_bpf.c b/net/ipv4/udp_bpf.c
+index bbe6569c9ad34..56e1047632f6b 100644
+--- a/net/ipv4/udp_bpf.c
++++ b/net/ipv4/udp_bpf.c
+@@ -69,6 +69,9 @@ static int udp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 	if (unlikely(flags & MSG_ERRQUEUE))
+ 		return inet_recv_error(sk, msg, len, addr_len);
+ 
++	if (!len)
++		return 0;
++
+ 	psock = sk_psock_get(sk);
+ 	if (unlikely(!psock))
+ 		return sk_udp_recvmsg(sk, msg, len, nonblock, flags, addr_len);
+diff --git a/net/unix/unix_bpf.c b/net/unix/unix_bpf.c
+index 452376c6f4194..5919d61d9874a 100644
+--- a/net/unix/unix_bpf.c
++++ b/net/unix/unix_bpf.c
+@@ -55,6 +55,9 @@ static int unix_bpf_recvmsg(struct sock *sk, struct msghdr *msg,
+ 	struct sk_psock *psock;
+ 	int copied;
+ 
++	if (!len)
++		return 0;
++
+ 	psock = sk_psock_get(sk);
+ 	if (unlikely(!psock))
+ 		return __unix_recvmsg(sk, msg, len, flags);
 -- 
 2.39.2
 
