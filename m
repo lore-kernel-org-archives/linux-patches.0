@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0274431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52B2C433EF;
-	Wed, 15 Mar 2023 12:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9F94431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E31C433EF;
+	Wed, 15 Mar 2023 12:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884039;
-	bh=LecQzSkV+mGvdYHTfKv6o3/y4DCMz5YQtiOrm8tcrDQ=;
+	s=korg; t=1678884041;
+	bh=q5ZOKpxiyQ4ociMUOi0GN0rLZknI2D2yj73EJ1+ckZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e3syZa23nm0HcdQHPtBCDDpiS+Ihhd5G3TtqnrnxDDDWvDweb6xllczQNdJCd7OJi
-	 0Fpv5/his1hh+CJ3c5llGkt2qZjJWReePbFpb6I28Ild0QR8+0XWzALOIC0qZ2LGFj
-	 kfniZN48+wr//Xgb6wQjkymL2lu3pJowORZcsc7E=
+	b=AUDM3ik2T7Sk/tjTUSPKh5mWMl9XG0hk/4RyH37KpkDLBbcXXwL5lflzWZzC8bzEi
+	 /YCkkwY2xHrSljFFcMyrSES/ps/l6CAKYVeBSLAyP7FFLrmhgYTCVvqCP5YIodViRC
+	 zJ/4IJk0XmsSjV3PXNKlubZenQILjSRxTNxtuYI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"sjur.brandeland@stericsson.com" <sjur.brandeland@stericsson.com>,
-	syzbot+b563d33852b893653a9e@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Stephen Walsh <vk3heg@vk3heg.net>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Finn Thain <fthain@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 066/141] net: caif: Fix use-after-free in cfusbl_device_notify()
-Date: Wed, 15 Mar 2023 13:12:49 +0100
-Message-Id: <20230315115741.960709234@linuxfoundation.org>
+Subject: [PATCH 6.2 084/141] m68k: mm: Move initrd phys_to_virt handling after paging_init()
+Date: Wed, 15 Mar 2023 13:13:07 +0100
+Message-Id: <20230315115742.534772042@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -37,84 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-[ Upstream commit 9781e98a97110f5e76999058368b4be76a788484 ]
+[ Upstream commit d4b97925e87eb133e400fe4a482d750c74ce392f ]
 
-syzbot reported use-after-free in cfusbl_device_notify() [1].  This
-causes a stack trace like below:
+When booting with an initial ramdisk on platforms where physical memory
+does not start at address zero (e.g. on Amiga):
 
-BUG: KASAN: use-after-free in cfusbl_device_notify+0x7c9/0x870 net/caif/caif_usb.c:138
-Read of size 8 at addr ffff88807ac4e6f0 by task kworker/u4:6/1214
+    initrd: 0ef0602c - 0f800000
+    Zone ranges:
+      DMA      [mem 0x0000000008000000-0x000000f7ffffffff]
+      Normal   empty
+    Movable zone start for each node
+    Early memory node ranges
+      node   0: [mem 0x0000000008000000-0x000000000f7fffff]
+    Initmem setup node 0 [mem 0x0000000008000000-0x000000000f7fffff]
+    Unable to handle kernel access at virtual address (ptrval)
+    Oops: 00000000
+    Modules linked in:
+    PC: [<00201d3c>] memcmp+0x28/0x56
 
-CPU: 0 PID: 1214 Comm: kworker/u4:6 Not tainted 5.19.0-rc3-syzkaller-00146-g92f20ff72066 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: netns cleanup_net
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
- print_address_description.constprop.0.cold+0xeb/0x467 mm/kasan/report.c:313
- print_report mm/kasan/report.c:429 [inline]
- kasan_report.cold+0xf4/0x1c6 mm/kasan/report.c:491
- cfusbl_device_notify+0x7c9/0x870 net/caif/caif_usb.c:138
- notifier_call_chain+0xb5/0x200 kernel/notifier.c:87
- call_netdevice_notifiers_info+0xb5/0x130 net/core/dev.c:1945
- call_netdevice_notifiers_extack net/core/dev.c:1983 [inline]
- call_netdevice_notifiers net/core/dev.c:1997 [inline]
- netdev_wait_allrefs_any net/core/dev.c:10227 [inline]
- netdev_run_todo+0xbc0/0x10f0 net/core/dev.c:10341
- default_device_exit_batch+0x44e/0x590 net/core/dev.c:11334
- ops_exit_list+0x125/0x170 net/core/net_namespace.c:167
- cleanup_net+0x4ea/0xb00 net/core/net_namespace.c:594
- process_one_work+0x996/0x1610 kernel/workqueue.c:2289
- worker_thread+0x665/0x1080 kernel/workqueue.c:2436
- kthread+0x2e9/0x3a0 kernel/kthread.c:376
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:302
- </TASK>
+As phys_to_virt() relies on m68k_memoffset and module_fixup(), it must
+not be called before paging_init().  Hence postpone the phys_to_virt
+handling for the initial ramdisk until after calling paging_init().
 
-When unregistering a net device, unregister_netdevice_many_notify()
-sets the device's reg_state to NETREG_UNREGISTERING, calls notifiers
-with NETDEV_UNREGISTER, and adds the device to the todo list.
+While at it, reduce #ifdef clutter by using IS_ENABLED() instead.
 
-Later on, devices in the todo list are processed by netdev_run_todo().
-netdev_run_todo() waits devices' reference count become 1 while
-rebdoadcasting NETDEV_UNREGISTER notification.
-
-When cfusbl_device_notify() is called with NETDEV_UNREGISTER multiple
-times, the parent device might be freed.  This could cause UAF.
-Processing NETDEV_UNREGISTER multiple times also causes inbalance of
-reference count for the module.
-
-This patch fixes the issue by accepting only first NETDEV_UNREGISTER
-notification.
-
-Fixes: 7ad65bf68d70 ("caif: Add support for CAIF over CDC NCM USB interface")
-CC: sjur.brandeland@stericsson.com <sjur.brandeland@stericsson.com>
-Reported-by: syzbot+b563d33852b893653a9e@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=c3bfd8e2450adab3bffe4d80821fbbced600407f [1]
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Link: https://lore.kernel.org/r/20230301163913.391304-1-syoshida@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 376e3fdecb0dcae2 ("m68k: Enable memtest functionality")
+Reported-by: Stephen Walsh <vk3heg@vk3heg.net>
+Link: https://lists.debian.org/debian-68k/2022/09/msg00007.html
+Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/4f45f05f377bf3f5baf88dbd5c3c8aeac59d94f0.camel@physik.fu-berlin.de
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Acked-by: Finn Thain <fthain@linux-m68k.org>
+Link: https://lore.kernel.org/r/dff216da09ab7a60217c3fc2147e671ae07d636f.1677528627.git.geert@linux-m68k.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/caif/caif_usb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/m68k/kernel/setup_mm.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/caif/caif_usb.c b/net/caif/caif_usb.c
-index ebc202ffdd8d8..bf61ea4b8132d 100644
---- a/net/caif/caif_usb.c
-+++ b/net/caif/caif_usb.c
-@@ -134,6 +134,9 @@ static int cfusbl_device_notify(struct notifier_block *me, unsigned long what,
- 	struct usb_device *usbdev;
- 	int res;
+diff --git a/arch/m68k/kernel/setup_mm.c b/arch/m68k/kernel/setup_mm.c
+index 3a2bb2e8fdad4..fbff1cea62caa 100644
+--- a/arch/m68k/kernel/setup_mm.c
++++ b/arch/m68k/kernel/setup_mm.c
+@@ -326,16 +326,16 @@ void __init setup_arch(char **cmdline_p)
+ 		panic("No configuration setup");
+ 	}
  
-+	if (what == NETDEV_UNREGISTER && dev->reg_state >= NETREG_UNREGISTERED)
-+		return 0;
+-#ifdef CONFIG_BLK_DEV_INITRD
+-	if (m68k_ramdisk.size) {
++	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && m68k_ramdisk.size)
+ 		memblock_reserve(m68k_ramdisk.addr, m68k_ramdisk.size);
 +
- 	/* Check whether we have a NCM device, and find its VID/PID. */
- 	if (!(dev->dev.parent && dev->dev.parent->driver &&
- 	      strcmp(dev->dev.parent->driver->name, "cdc_ncm") == 0))
++	paging_init();
++
++	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && m68k_ramdisk.size) {
+ 		initrd_start = (unsigned long)phys_to_virt(m68k_ramdisk.addr);
+ 		initrd_end = initrd_start + m68k_ramdisk.size;
+ 		pr_info("initrd: %08lx - %08lx\n", initrd_start, initrd_end);
+ 	}
+-#endif
+-
+-	paging_init();
+ 
+ #ifdef CONFIG_NATFEAT
+ 	nf_init();
 -- 
 2.39.2
 
