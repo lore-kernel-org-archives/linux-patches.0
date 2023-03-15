@@ -1,47 +1,44 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83547538D
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 14:32:20 +0000 (UTC)
-Received: by mail-il1-f172.google.com with SMTP id y12so6230259ilq.4
-        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 07:32:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678890739;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=+sa882HWJ4UleFPTHPmttlCN7M6tCbr8bt+aCQ/0MVE=;
-        b=Xy+ZeuOcdxzn1KvLO5FU8ZXKFUpQ2kieKEO5CQiZqguVWdo6eju6697yhHtMB14xjN
-         iIGuqm0oRUvag+ZqaF07MbjJh8SEFIwAp8DSfStWJ6KNcUzDt7NDLBmVIlTM47Y6zHnv
-         sW1fPZrv6Qub9xQPVgx2qtlF5Lkpu0AIeIherdwRfHBLOplxj6Rfcl8tq32aDx4IUtNE
-         6n/JY+4zPlamkh7hGo+pcarPOWrnqw1/gHH4+5NNSe2QvkA2kA/KEEzqaDp0qDe7rNGd
-         PK90PM0sb1U7YTtQ8zkYaYiRubY7fEg+Q8dUzoFiyWVOD00GUev7NmDcZvWZRCpbogFC
-         amFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678890739;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+sa882HWJ4UleFPTHPmttlCN7M6tCbr8bt+aCQ/0MVE=;
-        b=8H+az8m/E/3+DSOAY0NL/6UfrlUfmrAuzsUuVBbHvJ2awMgSjvedoAyqbsBoeeS4Ko
-         Z4F0FRLpMiqhE/exV7QOK1TW7RLXMjH3alsPCZXL4QXrnGceoX5fAkHIugVXBD5cYQnF
-         0+fWlEcnHjz0bhqNEQ2+x4lsqBD0quMrtSLQ1xOd55MF6sd8rKget8z6QkeiQbTp1KU3
-         rq0/uMNJxMlKrpO6PPmnLLapvTBS9UMXZkyRn1UkLLnIXbwuxUZCs+DqpwPo/2pALsI0
-         aTX89vmAqgSQQ/YtMxi5/x/Vk/oMt/EaAfBTiseUg+PGbc+yIA5Xkld8tzM5el9uQXr5
-         +edg==
-X-Gm-Message-State: AO0yUKW3hzCHz43osXtmRhQt70B5ub9D9kkwMmGBb9u0To9KxYORuT3Z
-	7LhZTQEEFJrMd69KTmeE7cY=
-X-Google-Smtp-Source: AK7set9/WSLL7bvG5rGW/c3DlwOa0kidp25js0YUNkQWc0Xt2Uxfp4+N4cxtgiYyWk4g15BlI8/08Q==
-X-Received: by 2002:a05:6e02:1c47:b0:315:4a48:aaf with SMTP id d7-20020a056e021c4700b003154a480aafmr5058655ilg.14.1678890739490;
-        Wed, 15 Mar 2023 07:32:19 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id o16-20020a02b810000000b003eb3be5601csm1682421jam.174.2023.03.15.07.32.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Mar 2023 07:32:19 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <9dad73af-ce00-9c83-24ed-ffecaf9cae28@roeck-us.net>
-Date: Wed, 15 Mar 2023 07:32:16 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01D2538D
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 14:32:54 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 2A4DF211DE;
+	Wed, 15 Mar 2023 14:22:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1678890176; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ZXN3JSv2JuNO7QXPyMNGLcsuvXz4zccB7xCl9QvCXx0=;
+	b=a4OkV7YgDfYyvZJGSY0wfj0zvUGu55EzMc8yK/Q0mwAoFuHUyv9EOKd588uX0SEm1bAUKI
+	XLddUf1uTdVQIWPBvq6FImBmERKh4de/0fu8o3rgjewOTfF0kdlKQYo/WtiGahloJk1YCo
+	bWkbRNXnMnMj9kQMCPG92CmBPWloghc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1678890176;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ZXN3JSv2JuNO7QXPyMNGLcsuvXz4zccB7xCl9QvCXx0=;
+	b=VEP1QR+K19ft2s5XsGNEZFSU2UdJgackjuPRKjrUHdAl9BAKPpvldY3LmIUYjU1wkjcQRh
+	Qr45ZukAmKT7UiCw==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B492813A2F;
+	Wed, 15 Mar 2023 14:22:55 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id rxJnK7/UEWTFRgAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 15 Mar 2023 14:22:55 +0000
+Message-ID: <17007eb9-b831-aabb-78dc-95f4f4aada55@suse.cz>
+Date: Wed, 15 Mar 2023 15:22:55 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,47 +46,58 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 4.19 00/39] 4.19.278-rc1 review
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 0/7] remove SLOB and allow kfree() with kmem_cache_alloc()
 Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230315115721.234756306@linuxfoundation.org>
-From: Guenter Roeck <linux@roeck-us.net>
-In-Reply-To: <20230315115721.234756306@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: Mike Rapoport <mike.rapoport@gmail.com>, Christoph Lameter
+ <cl@linux.com>, David Rientjes <rientjes@google.com>,
+ Joonsoo Kim <iamjoonsoo.kim@lge.com>, Pekka Enberg <penberg@kernel.org>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+ rcu@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ netdev@vger.kernel.org, linux-doc@vger.kernel.org,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Frederic Weisbecker <frederic@kernel.org>, Jakub Kicinski <kuba@kernel.org>,
+ Joel Fernandes <joel@joelfernandes.org>, Jonathan Corbet <corbet@lwn.net>,
+ Josh Triplett <josh@joshtriplett.org>, Lai Jiangshan
+ <jiangshanlai@gmail.com>, Mathieu Desnoyers
+ <mathieu.desnoyers@efficios.com>, Mike Rapoport <rppt@kernel.org>,
+ Neeraj Upadhyay <quic_neeraju@quicinc.com>, Paolo Abeni <pabeni@redhat.com>,
+ "Paul E. McKenney" <paulmck@kernel.org>
+References: <20230310103210.22372-1-vbabka@suse.cz>
+ <ZA2gofYkXRcJ8cLA@kernel.org> <20230313123147.6d28c47e@gandalf.local.home>
+ <3018fb77-68d0-fb67-2595-7c58c6cf7a76@suse.cz>
+ <20230315102031.29585157@gandalf.local.home>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <20230315102031.29585157@gandalf.local.home>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 3/15/23 05:12, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.278 release.
-> There are 39 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 3/15/23 15:20, Steven Rostedt wrote:
+> On Wed, 15 Mar 2023 14:53:14 +0100
+> Vlastimil Babka <vbabka@suse.cz> wrote:
 > 
-> Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
-> Anything received after that time might be too late.
+>> On 3/13/23 17:31, Steven Rostedt wrote:
+>> > Just remove that comment. And you could even add:
+>> > 
+>> > Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+>> > Fixes: e4c2ce82ca27 ("ring_buffer: allocate buffer page pointer")  
+>> 
+>> Thanks for the analysis. Want to take the following patch to your tree or
+>> should I make it part of the series?
 > 
+> I can take it if you send it as a proper patch and Cc
+> linux-trace-kernel@vger.kernel.org.
 
-Building arm64:defconfig ... failed
---------------
-Error log:
-kernel/cgroup/cgroup.c: In function 'cgroup_attach_lock':
-kernel/cgroup/cgroup.c:2237:9: error: implicit declaration of function 'get_online_cpus'; did you mean 'get_online_mems'? [-Werror=implicit-function-declaration]
-  2237 |         get_online_cpus();
-       |         ^~~~~~~~~~~~~~~
-       |         get_online_mems
-kernel/cgroup/cgroup.c: In function 'cgroup_attach_unlock':
-kernel/cgroup/cgroup.c:2248:9: error: implicit declaration of function 'put_online_cpus'; did you mean 'num_online_cpus'? [-Werror=implicit-function-declaration]
-  2248 |         put_online_cpus();
-       |         ^~~~~~~~~~~~~~~
-       |         num_online_cpus
+OK, will do.
 
-This affects other architectures as well. Builds are not complete
-so I don't see the full impact yet.
+> I'm guessing it's not required for stable.
 
-Guenter
+No, but maybe AUTOSEL will pick it anyway as it has Fixes: but that's their
+problem ;)
+
+> -- Steve
 
