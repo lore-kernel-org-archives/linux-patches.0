@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C84A4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E821EC4339C;
-	Wed, 15 Mar 2023 12:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018144431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D941C433EF;
+	Wed, 15 Mar 2023 12:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883053;
-	bh=/FPtLfzfoRc/NvT4kuMLvLt47hT6DUMDV0R/4baSISE=;
+	s=korg; t=1678883055;
+	bh=scIBUCibkZ6ezqacbiLi2xkfwIP7lbG0QjO+CwNdsuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NZ/IPi7gTiU/hC12zxMFAvO2YXo5khqMpBsvu/WH8RaxXMmlYKTsvtZZxX0kNaVDN
-	 0pJI6d8zR2lQ6riUoQsNFAggm14cFGNFlqbYz1SYwaD/1s9EW3hSf2Mpy9ws47ZngF
-	 Dq6I3lNGr1Yf/w6/bCpG5rhtR1DP9rWDhB/RH8eM=
+	b=S640zHK2cAXOTiAmmOV+ito29WKNLJJ9GtyRibE953vS1fPHTxOy3Sf07WdZVIr+x
+	 GTnr7vz7KN+xdcghDMMhaBUJWEa+I3VHtDviozOjKmHsHvLte1+Ryh5ONhAx+vErX4
+	 UFyp6gmLSwvVjXYxpURwjVx9U0wzvlXLN/Od35aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Alexandru Matei <alexandru.matei@uipath.com>
-Subject: [PATCH 5.10 101/104] KVM: nVMX: Dont use Enlightened MSR Bitmap for L3
-Date: Wed, 15 Mar 2023 13:13:12 +0100
-Message-Id: <20230315115736.287969497@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 074/104] scripts: handle BrokenPipeError for python scripts
+Date: Wed, 15 Mar 2023 13:12:45 +0100
+Message-Id: <20230315115735.039952713@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -35,77 +36,193 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit 250552b925ce400c17d166422fde9bb215958481 upstream.
+[ Upstream commit 87c7ee67deb7fce9951a5f9d80641138694aad17 ]
 
-When KVM runs as a nested hypervisor on top of Hyper-V it uses Enlightened
-VMCS and enables Enlightened MSR Bitmap feature for its L1s and L2s (which
-are actually L2s and L3s from Hyper-V's perspective). When MSR bitmap is
-updated, KVM has to reset HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP from
-clean fields to make Hyper-V aware of the change. For KVM's L1s, this is
-done in vmx_disable_intercept_for_msr()/vmx_enable_intercept_for_msr().
-MSR bitmap for L2 is build in nested_vmx_prepare_msr_bitmap() by blending
-MSR bitmap for L1 and L1's idea of MSR bitmap for L2. KVM, however, doesn't
-check if the resulting bitmap is different and never cleans
-HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP in eVMCS02. This is incorrect and
-may result in Hyper-V missing the update.
+In the follow-up of commit fb3041d61f68 ("kbuild: fix SIGPIPE error
+message for AR=gcc-ar and AR=llvm-ar"), Kees Cook pointed out that
+tools should _not_ catch their own SIGPIPEs [1] [2].
 
-The issue could've been solved by calling evmcs_touch_msr_bitmap() for
-eVMCS02 from nested_vmx_prepare_msr_bitmap() unconditionally but doing so
-would not give any performance benefits (compared to not using Enlightened
-MSR Bitmap at all). 3-level nesting is also not a very common setup
-nowadays.
+Based on his feedback, LLVM was fixed [3].
 
-Don't enable 'Enlightened MSR Bitmap' feature for KVM's L2s (real L3s) for
-now.
+However, Python's default behavior is to show noisy bracktrace when
+SIGPIPE is sent. So, scripts written in Python are basically in the
+same situation as the buggy llvm tools.
 
-Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Message-Id: <20211129094704.326635-2-vkuznets@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Alexandru Matei <alexandru.matei@uipath.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Example:
+
+  $ make -s allnoconfig
+  $ make -s allmodconfig
+  $ scripts/diffconfig .config.old .config | head -n1
+  -ALIX n
+  Traceback (most recent call last):
+    File "/home/masahiro/linux/scripts/diffconfig", line 132, in <module>
+      main()
+    File "/home/masahiro/linux/scripts/diffconfig", line 130, in main
+      print_config("+", config, None, b[config])
+    File "/home/masahiro/linux/scripts/diffconfig", line 64, in print_config
+      print("+%s %s" % (config, new_value))
+  BrokenPipeError: [Errno 32] Broken pipe
+
+Python documentation [4] notes how to make scripts die immediately and
+silently:
+
+  """
+  Piping output of your program to tools like head(1) will cause a
+  SIGPIPE signal to be sent to your process when the receiver of its
+  standard output closes early. This results in an exception like
+  BrokenPipeError: [Errno 32] Broken pipe. To handle this case,
+  wrap your entry point to catch this exception as follows:
+
+    import os
+    import sys
+
+    def main():
+        try:
+            # simulate large output (your code replaces this loop)
+            for x in range(10000):
+                print("y")
+            # flush output here to force SIGPIPE to be triggered
+            # while inside this try block.
+            sys.stdout.flush()
+        except BrokenPipeError:
+            # Python flushes standard streams on exit; redirect remaining output
+            # to devnull to avoid another BrokenPipeError at shutdown
+            devnull = os.open(os.devnull, os.O_WRONLY)
+            os.dup2(devnull, sys.stdout.fileno())
+            sys.exit(1)  # Python exits with error code 1 on EPIPE
+
+    if __name__ == '__main__':
+        main()
+
+  Do not set SIGPIPE’s disposition to SIG_DFL in order to avoid
+  BrokenPipeError. Doing that would cause your program to exit
+  unexpectedly whenever any socket connection is interrupted while
+  your program is still writing to it.
+  """
+
+Currently, tools/perf/scripts/python/intel-pt-events.py seems to be the
+only script that fixes the issue that way.
+
+tools/perf/scripts/python/compaction-times.py uses another approach
+signal.signal(signal.SIGPIPE, signal.SIG_DFL) but the Python
+documentation clearly says "Don't do it".
+
+I cannot fix all Python scripts since there are so many.
+I fixed some in the scripts/ directory.
+
+[1]: https://lore.kernel.org/all/202211161056.1B9611A@keescook/
+[2]: https://github.com/llvm/llvm-project/issues/59037
+[3]: https://github.com/llvm/llvm-project/commit/4787efa38066adb51e2c049499d25b3610c0877b
+[4]: https://docs.python.org/3/library/signal.html#note-on-sigpipe
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/vmx.c |   22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ scripts/checkkconfigsymbols.py         | 13 ++++++++++++-
+ scripts/clang-tools/run-clang-tools.py | 21 ++++++++++++++-------
+ scripts/diffconfig                     | 16 ++++++++++++++--
+ 3 files changed, 40 insertions(+), 10 deletions(-)
 
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -2725,15 +2725,6 @@ int alloc_loaded_vmcs(struct loaded_vmcs
- 		if (!loaded_vmcs->msr_bitmap)
- 			goto out_vmcs;
- 		memset(loaded_vmcs->msr_bitmap, 0xff, PAGE_SIZE);
--
--		if (IS_ENABLED(CONFIG_HYPERV) &&
--		    static_branch_unlikely(&enable_evmcs) &&
--		    (ms_hyperv.nested_features & HV_X64_NESTED_MSR_BITMAP)) {
--			struct hv_enlightened_vmcs *evmcs =
--				(struct hv_enlightened_vmcs *)loaded_vmcs->vmcs;
--
--			evmcs->hv_enlightenments_control.msr_bitmap = 1;
--		}
- 	}
+diff --git a/scripts/checkkconfigsymbols.py b/scripts/checkkconfigsymbols.py
+index 1548f9ce46827..697972432bbe7 100755
+--- a/scripts/checkkconfigsymbols.py
++++ b/scripts/checkkconfigsymbols.py
+@@ -113,7 +113,7 @@ def parse_options():
+     return args
  
- 	memset(&loaded_vmcs->host_state, 0, sizeof(struct vmcs_host_state));
-@@ -7029,6 +7020,19 @@ static int vmx_create_vcpu(struct kvm_vc
- 	if (err < 0)
- 		goto free_pml;
  
-+	/*
-+	 * Use Hyper-V 'Enlightened MSR Bitmap' feature when KVM runs as a
-+	 * nested (L1) hypervisor and Hyper-V in L0 supports it. Enable the
-+	 * feature only for vmcs01, KVM currently isn't equipped to realize any
-+	 * performance benefits from enabling it for vmcs02.
-+	 */
-+	if (IS_ENABLED(CONFIG_HYPERV) && static_branch_unlikely(&enable_evmcs) &&
-+	    (ms_hyperv.nested_features & HV_X64_NESTED_MSR_BITMAP)) {
-+		struct hv_enlightened_vmcs *evmcs = (void *)vmx->vmcs01.vmcs;
+-def main():
++def print_undefined_symbols():
+     """Main function of this module."""
+     args = parse_options()
+ 
+@@ -472,5 +472,16 @@ def parse_kconfig_file(kfile):
+     return defined, references
+ 
+ 
++def main():
++    try:
++        print_undefined_symbols()
++    except BrokenPipeError:
++        # Python flushes standard streams on exit; redirect remaining output
++        # to devnull to avoid another BrokenPipeError at shutdown
++        devnull = os.open(os.devnull, os.O_WRONLY)
++        os.dup2(devnull, sys.stdout.fileno())
++        sys.exit(1)  # Python exits with error code 1 on EPIPE
 +
-+		evmcs->hv_enlightenments_control.msr_bitmap = 1;
-+	}
 +
- 	/* The MSR bitmap starts with all ones */
- 	bitmap_fill(vmx->shadow_msr_intercept.read, MAX_POSSIBLE_PASSTHROUGH_MSRS);
- 	bitmap_fill(vmx->shadow_msr_intercept.write, MAX_POSSIBLE_PASSTHROUGH_MSRS);
+ if __name__ == "__main__":
+     main()
+diff --git a/scripts/clang-tools/run-clang-tools.py b/scripts/clang-tools/run-clang-tools.py
+index f754415af398b..f42699134f1c0 100755
+--- a/scripts/clang-tools/run-clang-tools.py
++++ b/scripts/clang-tools/run-clang-tools.py
+@@ -60,14 +60,21 @@ def run_analysis(entry):
+ 
+ 
+ def main():
+-    args = parse_arguments()
++    try:
++        args = parse_arguments()
+ 
+-    lock = multiprocessing.Lock()
+-    pool = multiprocessing.Pool(initializer=init, initargs=(lock, args))
+-    # Read JSON data into the datastore variable
+-    with open(args.path, "r") as f:
+-        datastore = json.load(f)
+-        pool.map(run_analysis, datastore)
++        lock = multiprocessing.Lock()
++        pool = multiprocessing.Pool(initializer=init, initargs=(lock, args))
++        # Read JSON data into the datastore variable
++        with open(args.path, "r") as f:
++            datastore = json.load(f)
++            pool.map(run_analysis, datastore)
++    except BrokenPipeError:
++        # Python flushes standard streams on exit; redirect remaining output
++        # to devnull to avoid another BrokenPipeError at shutdown
++        devnull = os.open(os.devnull, os.O_WRONLY)
++        os.dup2(devnull, sys.stdout.fileno())
++        sys.exit(1)  # Python exits with error code 1 on EPIPE
+ 
+ 
+ if __name__ == "__main__":
+diff --git a/scripts/diffconfig b/scripts/diffconfig
+index d5da5fa05d1d3..43f0f3d273ae7 100755
+--- a/scripts/diffconfig
++++ b/scripts/diffconfig
+@@ -65,7 +65,7 @@ def print_config(op, config, value, new_value):
+         else:
+             print(" %s %s -> %s" % (config, value, new_value))
+ 
+-def main():
++def show_diff():
+     global merge_style
+ 
+     # parse command line args
+@@ -129,4 +129,16 @@ def main():
+     for config in new:
+         print_config("+", config, None, b[config])
+ 
+-main()
++def main():
++    try:
++        show_diff()
++    except BrokenPipeError:
++        # Python flushes standard streams on exit; redirect remaining output
++        # to devnull to avoid another BrokenPipeError at shutdown
++        devnull = os.open(os.devnull, os.O_WRONLY)
++        os.dup2(devnull, sys.stdout.fileno())
++        sys.exit(1)  # Python exits with error code 1 on EPIPE
++
++
++if __name__ == '__main__':
++    main()
+-- 
+2.39.2
+
 
 
