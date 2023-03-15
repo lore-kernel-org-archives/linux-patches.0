@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38454431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498DEC433D2;
-	Wed, 15 Mar 2023 12:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6687C4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCCE1C433EF;
+	Wed, 15 Mar 2023 12:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883066;
-	bh=fofk8WbNwivuE0yeM3/KGpRswEl75MIfJGBz0O1B1Q8=;
+	s=korg; t=1678883069;
+	bh=iuRFml4UmC9VyPY1zZPEdnGL17vD/zV0wuLQTAV2M/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BsFhCeolE1DpGhh8pGylmG0e34A5AyuIpAuVWeQxP5K99y3tOAglECztFzIZLnCYx
-	 51n9+6hMKAU7sChsYPOhQSyjl9x+jUgQ5SrIYEqhR2S16CPMY2mVunF+ZWMabcIDBv
-	 WeOC6qTi8AnJjERj76WHaE6QySFx+B3f7PlEK6OA=
+	b=c/f8/Ych+RksfkbJVZXODsriqlDewrOw/y1m4HkObETVoCv0vqrY8+UlnD0tY9ItA
+	 QO7Yi50+yMjcn0rzL9fl75+GVICWKL5Zv0W6yhoJDRXFlmsd8WnLhLVItsbkpuyphG
+	 Sn9elifY0/d/r8ok6xTuDYDxibOKr0+nAebLuhCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Lundin <glance@acc.umu.se>,
-	Corey Minyard <cminyard@mvista.com>,
-	Stable@vger.kernel.org
-Subject: [PATCH 5.10 078/104] ipmi:watchdog: Set panic count to proper value on a panic
-Date: Wed, 15 Mar 2023 13:12:49 +0100
-Message-Id: <20230315115735.181500106@linuxfoundation.org>
+	Tao Liu <taoliu828@163.com>
+Subject: [PATCH 5.10 079/104] skbuff: Fix nfct leak on napi stolen
+Date: Wed, 15 Mar 2023 13:12:50 +0100
+Message-Id: <20230315115735.217679084@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -35,58 +33,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corey Minyard <cminyard@mvista.com>
+From: Tao Liu <taoliu828@163.com>
 
-commit db05ddf7f321634c5659a0cf7ea56594e22365f7 upstream.
+Upstream commit [0] had fixed this issue, and backported to kernel 5.10.54.
+However, nf_reset_ct() added in skb_release_head_state() instead of
+napi_skb_free_stolen_head(), which lead to leakage still exist in 5.10.
 
-You will get two decrements when the messages on a panic are sent, not
-one, since commit 2033f6858970 ("ipmi: Free receive messages when in an
-oops") was added, but the watchdog code had a bug where it didn't set
-the value properly.
+[0] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8550ff8d8c75416e984d9c4b082845e57e560984
 
-Reported-by: Anton Lundin <glance@acc.umu.se>
-Cc: <Stable@vger.kernel.org> # v5.4+
-Fixes: 2033f6858970 ("ipmi: Free receive messages when in an oops")
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Fixes: 570341f10ecc ("skbuff: Release nfct refcount on napi stolen or re-used skbs"))
+Signed-off-by: Tao Liu <taoliu828@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_watchdog.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/core/dev.c    |    1 +
+ net/core/skbuff.c |    1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/ipmi/ipmi_watchdog.c
-+++ b/drivers/char/ipmi/ipmi_watchdog.c
-@@ -503,7 +503,7 @@ static void panic_halt_ipmi_heartbeat(vo
- 	msg.cmd = IPMI_WDOG_RESET_TIMER;
- 	msg.data = NULL;
- 	msg.data_len = 0;
--	atomic_inc(&panic_done_count);
-+	atomic_add(2, &panic_done_count);
- 	rv = ipmi_request_supply_msgs(watchdog_user,
- 				      (struct ipmi_addr *) &addr,
- 				      0,
-@@ -513,7 +513,7 @@ static void panic_halt_ipmi_heartbeat(vo
- 				      &panic_halt_heartbeat_recv_msg,
- 				      1);
- 	if (rv)
--		atomic_dec(&panic_done_count);
-+		atomic_sub(2, &panic_done_count);
- }
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -6111,6 +6111,7 @@ EXPORT_SYMBOL(gro_find_complete_by_type)
  
- static struct ipmi_smi_msg panic_halt_smi_msg = {
-@@ -537,12 +537,12 @@ static void panic_halt_ipmi_set_timeout(
- 	/* Wait for the messages to be free. */
- 	while (atomic_read(&panic_done_count) != 0)
- 		ipmi_poll_interface(watchdog_user);
--	atomic_inc(&panic_done_count);
-+	atomic_add(2, &panic_done_count);
- 	rv = __ipmi_set_timeout(&panic_halt_smi_msg,
- 				&panic_halt_recv_msg,
- 				&send_heartbeat_now);
- 	if (rv) {
--		atomic_dec(&panic_done_count);
-+		atomic_sub(2, &panic_done_count);
- 		pr_warn("Unable to extend the watchdog timeout\n");
- 	} else {
- 		if (send_heartbeat_now)
+ static void napi_skb_free_stolen_head(struct sk_buff *skb)
+ {
++	nf_reset_ct(skb);
+ 	skb_dst_drop(skb);
+ 	skb_ext_put(skb);
+ 	kmem_cache_free(skbuff_head_cache, skb);
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -659,7 +659,6 @@ fastpath:
+ 
+ void skb_release_head_state(struct sk_buff *skb)
+ {
+-	nf_reset_ct(skb);
+ 	skb_dst_drop(skb);
+ 	if (skb->destructor) {
+ 		WARN_ON(in_irq());
 
 
