@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3439F4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:29:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE57C433EF;
-	Wed, 15 Mar 2023 12:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFFE4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:29:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523C1C4339B;
+	Wed, 15 Mar 2023 12:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883382;
-	bh=Nq5dWkuqGlWJhotvCSzZVdPLPEE/ketAmVeqMD91PD8=;
+	s=korg; t=1678883384;
+	bh=Hzk9IvwA7y6VQfWSvbFOzDfMXY+1sArz+O0UOp50ojY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWP7zV8KcxP4uOumM8SFL8xQOGd0JFN7nTe7kWs7Q7dIigFeNMbRCYBb1/6B4r25O
-	 NZ9cTRzD5wXT9nqZ4UnraiqThwj9zp1oKrBy4jdc3jEAZjbRJju+1eDyDB39Zo+jhG
-	 ydtQfa3Zexm/r7amFvgtSNqGIF5Rwm19O/cGt03o=
+	b=c/1xWdng1mxhj09+cRSENPjTG+8myHYuE7dKRmJlllzIU4/TQ0C3M6sWIOO0c1wCx
+	 yyJdtR7ekJlVpSdQoob6//pVG3Fne7TC1kGlfDIgNbYjgwoy3nkyTzsehcXDeeFCP+
+	 TwtOI/ohnx+PapXbJE+vnF4W91nBjBiY6OTP3lEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	"Qais Yousef (Google)" <qyousef@layalina.io>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>
-Subject: [PATCH 5.15 123/145] sched/uclamp: Fix a uninitialized variable warnings
-Date: Wed, 15 Mar 2023 13:13:09 +0100
-Message-Id: <20230315115743.024623259@linuxfoundation.org>
+	xurui <xurui@kylinos.cn>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 106/145] MIPS: Fix a compilation issue
+Date: Wed, 15 Mar 2023 13:12:52 +0100
+Message-Id: <20230315115742.477534114@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -37,92 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qyousef@layalina.io>
+From: xurui <xurui@kylinos.cn>
 
-commit e26fd28db82899be71b4b949527373d0a6be1e65 upstream.
+[ Upstream commit 109d587a4b4d7ccca2200ab1f808f43ae23e2585 ]
 
-Addresses the following warnings:
+arch/mips/include/asm/mach-rc32434/pci.h:377:
+cc1: error: result of ‘-117440512 << 16’ requires 44 bits to represent, but ‘int’ only has 32 bits [-Werror=shift-overflow=]
 
-> config: riscv-randconfig-m031-20221111
-> compiler: riscv64-linux-gcc (GCC) 12.1.0
->
-> smatch warnings:
-> kernel/sched/fair.c:7263 find_energy_efficient_cpu() error: uninitialized symbol 'util_min'.
-> kernel/sched/fair.c:7263 find_energy_efficient_cpu() error: uninitialized symbol 'util_max'.
+All bits in KORINA_STAT are already at the correct position, so there is
+no addtional shift needed.
 
-Fixes: 244226035a1f ("sched/uclamp: Fix fits_capacity() check in feec()")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20230112122708.330667-2-qyousef@layalina.io
-(cherry picked from commit e26fd28db82899be71b4b949527373d0a6be1e65)
-[Conflict in kernel/sched/fair.c due to new automatic variables being
-added on master vs 5.15]
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: xurui <xurui@kylinos.cn>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c |   35 ++++++++++++++++-------------------
- 1 file changed, 16 insertions(+), 19 deletions(-)
+ arch/mips/include/asm/mach-rc32434/pci.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -6977,14 +6977,16 @@ static int find_energy_efficient_cpu(str
- 		goto unlock;
+diff --git a/arch/mips/include/asm/mach-rc32434/pci.h b/arch/mips/include/asm/mach-rc32434/pci.h
+index 9a6eefd127571..3eb767c8a4eec 100644
+--- a/arch/mips/include/asm/mach-rc32434/pci.h
++++ b/arch/mips/include/asm/mach-rc32434/pci.h
+@@ -374,7 +374,7 @@ struct pci_msu {
+ 				 PCI_CFG04_STAT_SSE | \
+ 				 PCI_CFG04_STAT_PE)
  
- 	for (; pd; pd = pd->next) {
-+		unsigned long util_min = p_util_min, util_max = p_util_max;
- 		unsigned long cur_delta, spare_cap, max_spare_cap = 0;
- 		unsigned long rq_util_min, rq_util_max;
--		unsigned long util_min, util_max;
- 		bool compute_prev_delta = false;
- 		unsigned long base_energy_pd;
- 		int max_spare_cap_cpu = -1;
+-#define KORINA_CNFG1		((KORINA_STAT<<16)|KORINA_CMD)
++#define KORINA_CNFG1		(KORINA_STAT | KORINA_CMD)
  
- 		for_each_cpu_and(cpu, perf_domain_span(pd), sched_domain_span(sd)) {
-+			struct rq *rq = cpu_rq(cpu);
-+
- 			if (!cpumask_test_cpu(cpu, p->cpus_ptr))
- 				continue;
- 
-@@ -7000,24 +7002,19 @@ static int find_energy_efficient_cpu(str
- 			 * much capacity we can get out of the CPU; this is
- 			 * aligned with sched_cpu_util().
- 			 */
--			if (uclamp_is_used()) {
--				if (uclamp_rq_is_idle(cpu_rq(cpu))) {
--					util_min = p_util_min;
--					util_max = p_util_max;
--				} else {
--					/*
--					 * Open code uclamp_rq_util_with() except for
--					 * the clamp() part. Ie: apply max aggregation
--					 * only. util_fits_cpu() logic requires to
--					 * operate on non clamped util but must use the
--					 * max-aggregated uclamp_{min, max}.
--					 */
--					rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
--					rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
--
--					util_min = max(rq_util_min, p_util_min);
--					util_max = max(rq_util_max, p_util_max);
--				}
-+			if (uclamp_is_used() && !uclamp_rq_is_idle(rq)) {
-+				/*
-+				 * Open code uclamp_rq_util_with() except for
-+				 * the clamp() part. Ie: apply max aggregation
-+				 * only. util_fits_cpu() logic requires to
-+				 * operate on non clamped util but must use the
-+				 * max-aggregated uclamp_{min, max}.
-+				 */
-+				rq_util_min = uclamp_rq_get(rq, UCLAMP_MIN);
-+				rq_util_max = uclamp_rq_get(rq, UCLAMP_MAX);
-+
-+				util_min = max(rq_util_min, p_util_min);
-+				util_max = max(rq_util_max, p_util_max);
- 			}
- 			if (!util_fits_cpu(util, util_min, util_max, cpu))
- 				continue;
+ #define KORINA_REVID		0
+ #define KORINA_CLASS_CODE	0
+-- 
+2.39.2
+
 
 
