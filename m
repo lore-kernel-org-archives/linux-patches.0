@@ -1,117 +1,90 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0316F747A
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 22:20:49 +0000 (UTC)
-Received: by mail-wm1-f47.google.com with SMTP id j19-20020a05600c191300b003eb3e1eb0caso1973111wmq.1
-        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 15:20:49 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EC3193
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 22:43:00 +0000 (UTC)
+Received: by mail-pj1-f49.google.com with SMTP id cn6so7907663pjb.2
+        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 15:43:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678918848;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Uy2xay+QSUr4LgGqR0bhvHEFtaFjUeaP9/Kp4kYC9Bo=;
-        b=VK2E0LRRwXPvr2BrU58q54QsjK/IXgxcnzSYcW3VRPEBLaf54GioNZ05oSTd/ucR2t
-         rQhg7TEAd4eFqrVoliQ2odDOKXJi1lBxfmMMwvPtX1ozJ9ia28d0RIO2piNfpssTm6wi
-         6sUn4xQ3vqT4WXgqDY/eeT4HvB1UYtDs+k1Y4N53aF58yks2SeZxQnykVS91L3W0zdXS
-         S1e/rt4z4fTHdgS3UPw8wFKgcdGGITR33ubTe/OGm87rcfUk+RAhJRTQU6Qds6yHc+RT
-         9NknRhvy2ou9cEh8IkYTNmtVqrtaEsgIvbBoTexX/Q5jhSsuRmvE1tpRndSC5HLo/4cz
-         wbkA==
+        d=gmail.com; s=20210112; t=1678920180;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eEp3d+FJRKvRxifPcXNAFdp5+kmGjxvebEQxyNRqGVA=;
+        b=M3yCC97Geq9KE07fU9rp4QJKMGfWQcU8AM6+2xT/72tlldyXs/r4blB8gVCxXP6kCQ
+         rO227if2lgIbA495wol0zjzwcWJXdGDxHOHJv2jUBXJtFYJGuvWYmEhTnEIIsT6Ok6IO
+         40gMJ+/JgGDZyfaaLF3xXQGQ0pl05oZuOktuWAB0Fw2jbW+Ueh/hHcTHG0gLKsP2fBZt
+         +AfoE2uXoMP2b5wFFhNrnl4MQr8JVShfR/WzR2z/61cOH+yNuV7qm2LGAokhxATGPMp5
+         uIPs0d4CUTbbZU89uvKD21uGa84EURPmrZumBiEgFkht8n6Nnmg0Su4+sjK2bZssHSO+
+         0j2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678918848;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Uy2xay+QSUr4LgGqR0bhvHEFtaFjUeaP9/Kp4kYC9Bo=;
-        b=pNrpt0MTF/oGPgiRnVG08s7OgAWlYJqm+utLknGasUV/T+ZamiDjUK6l3a97g0zlq3
-         0IqnQagxdZcSF8ADC1Y6urCsy4fXWiMQh+FXnazaRDqzXEeHSVswj/MSdixPGeTuhS/Z
-         8m0s22nhnqREnuRP+V4FknYMcw5gTcz6H5bPdnGwQyeMasXK3K0H7gEVR0SKN0epvp2T
-         rbX38byCsWRyDxKsx99rT3LTsfippZNpxhL+twYVZ+HZ4TslDGl+/TYzHADXZQMebfdZ
-         1HvQDKti4HFf10l0q0Wq75uqG+kpigovQGSZ3LyvobZhpXxw6xJZWKjuEDXwYQ4/qd7s
-         R7hA==
-X-Gm-Message-State: AO0yUKWzKZbR/Ktij41sMru/HxmD2ViqnexPmLbJV8/Q34nDAQLrGATx
-	z5VEKko4/Fgl4JB+EQbfbQJXCuVdRto=
-X-Google-Smtp-Source: AK7set+NT9e2NIMUlIy8tS9ZTx0pBweJ9iVltZKFNL5/Duj3rL8QABA5ZO6mvjxWUXtFQ/KfR9truw==
-X-Received: by 2002:a05:600c:354f:b0:3eb:395b:19dc with SMTP id i15-20020a05600c354f00b003eb395b19dcmr19390422wmq.9.1678918848183;
-        Wed, 15 Mar 2023 15:20:48 -0700 (PDT)
-Received: from localhost (host86-146-209-214.range86-146.btcentralplus.com. [86.146.209.214])
-        by smtp.gmail.com with ESMTPSA id t8-20020a1c7708000000b003ed2276cd0dsm3057428wmi.38.2023.03.15.15.20.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 15:20:47 -0700 (PDT)
-Date: Wed, 15 Mar 2023 22:20:46 +0000
-From: Lorenzo Stoakes <lstoakes@gmail.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Matthew Wilcox <willy@infradead.org>, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	maple-tree@lists.infradead.org
-Subject: Re: [PATCH 10/10] mm/mremap: simplify vma expansion again
-Message-ID: <7a9ca4a6-9713-4e31-9c0f-11ec31817c7a@lucifer.local>
-References: <20230309111258.24079-1-vbabka@suse.cz>
- <20230309111258.24079-11-vbabka@suse.cz>
+        d=1e100.net; s=20210112; t=1678920180;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eEp3d+FJRKvRxifPcXNAFdp5+kmGjxvebEQxyNRqGVA=;
+        b=W/NGUDRkgwgxPH43aKBFnfwpNsnQh7/pmY2g63Na6eghz/6jnkGXU3A/+EoJABTQ8C
+         Pnw9ONW3APgRsSpOTwzQA5GpbRPkr65Igk0ZFUtoFLTZZANSCjXvMV8HSRAZEfxx0gon
+         Ykl5GRhHBcJuS/jAxfwFWNe3GnGLQ/UGYldeIGHO/+uYixRJ4OCxGeKOIcdsYNESOKQV
+         9WsBdtcWIp1cGRsC99lMzbJprcRQKkrmYGCNQ8XSCGv/I1u1K3YLkqP3McXhNkJt8giC
+         wnMU9Qhgmfkwsyv0xxwLzCXnOXxP2oqbrk9oEmYWufdS12jBwkpZwfNEmVAhXJtg7WNf
+         09iw==
+X-Gm-Message-State: AO0yUKWwAcTcKNk4Tm+QtHo8THcShF78qBqUrBNGG/OPTKTGX1e2qsOH
+	myaKWtQSYopzVKGsKscbXQg=
+X-Google-Smtp-Source: AK7set/gEmMAoI2d2RY7inGv65qx0qY2mC+u7Ow/Fl8KS4cd1P8vvS3G17KHSjRJaqONW96MuV5zrA==
+X-Received: by 2002:a17:90b:1d87:b0:234:e5c2:b92c with SMTP id pf7-20020a17090b1d8700b00234e5c2b92cmr1518112pjb.15.1678920180153;
+        Wed, 15 Mar 2023 15:43:00 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id a13-20020a65640d000000b005026c125d47sm3864410pgv.21.2023.03.15.15.42.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 15:42:59 -0700 (PDT)
+Message-ID: <13bc86c9-fffb-1d5d-9214-1b03de131bc4@gmail.com>
+Date: Wed, 15 Mar 2023 15:42:51 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230309111258.24079-11-vbabka@suse.cz>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 6.2 000/141] 6.2.7-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230315115739.932786806@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 09, 2023 at 12:12:58PM +0100, Vlastimil Babka wrote:
-> This effectively reverts d014cd7c1c35 ("mm, mremap: fix mremap()
-> expanding for vma's with vm_ops->close()"). After the recent changes,
-> vma_merge() is able to handle the expansion properly even when the vma
-> being expanded has a vm_ops->close operation, so we don't need to
-> special case it anymore.
->
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> ---
->  mm/mremap.c | 20 ++++----------------
->  1 file changed, 4 insertions(+), 16 deletions(-)
->
-> diff --git a/mm/mremap.c b/mm/mremap.c
-> index 411a85682b58..65f5b545601e 100644
-> --- a/mm/mremap.c
-> +++ b/mm/mremap.c
-> @@ -1040,23 +1040,11 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
->  			 * vma (expand operation itself) and possibly also with
->  			 * the next vma if it becomes adjacent to the expanded
->  			 * vma and  otherwise compatible.
-> -			 *
-> -			 * However, vma_merge() can currently fail due to
-> -			 * is_mergeable_vma() check for vm_ops->close (see the
-> -			 * comment there). Yet this should not prevent vma
-> -			 * expanding, so perform a simple expand for such vma.
-> -			 * Ideally the check for close op should be only done
-> -			 * when a vma would be actually removed due to a merge.
->  			 */
-> -			if (!vma->vm_ops || !vma->vm_ops->close) {
-> -				vma = vma_merge(&vmi, mm, vma, extension_start,
-> -					extension_end, vma->vm_flags, vma->anon_vma,
-> -					vma->vm_file, extension_pgoff, vma_policy(vma),
-> -					vma->vm_userfaultfd_ctx, anon_vma_name(vma));
-> -			} else if (vma_expand(&vmi, vma, vma->vm_start,
-> -					addr + new_len, vma->vm_pgoff, NULL)) {
-> -				vma = NULL;
-> -			}
-> +			vma = vma_merge(&vmi, mm, vma, extension_start,
-> +				extension_end, vma->vm_flags, vma->anon_vma,
-> +				vma->vm_file, extension_pgoff, vma_policy(vma),
-> +				vma->vm_userfaultfd_ctx, anon_vma_name(vma));
->  			if (!vma) {
->  				vm_unacct_memory(pages);
->  				ret = -ENOMEM;
-> --
-> 2.39.2
->
+On 3/15/23 05:11, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.2.7 release.
+> There are 141 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.7-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Good to eliminate this edge case! Do we have a self-test for this case to assert
-that the issue is fixed by this? I guess a little tricky due to the need for the
-the owning VMA to have ->close() specified.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-In any case, the changes you have made in the previous patch should ensure the
-edge case is no longer required, hence:-
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
 
-Reviewed-by: Lorenzo Stoakes <lstoakes@gmail.com>
