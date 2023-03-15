@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F544431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78B7C433EF;
-	Wed, 15 Mar 2023 12:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99514431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F373C433D2;
+	Wed, 15 Mar 2023 12:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884168;
-	bh=oZ2QkYdD4plJnzpRhFNeLGDaQMsBZCAcKzf+W5McMZE=;
+	s=korg; t=1678884170;
+	bh=h+TTDdXicdLQPLFUfeqHsebXp13Ht6AUyEGzwYGY0T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wt1B5ilc0lrQl2eFypsNGumuU8f6zfs8fO4xEOmMkwAROlJVaeOVHNoVncCU9VU3I
-	 RTDUSL3ZryVqNqslEtg7WJAcCsYq7TDcN/ls8dU5PWMyIODp45hMlAUV0H44D+qJra
-	 OfdGVV6SWVflIbzjk+/zr0ZyZl4N/E7LsIql/XDk=
+	b=JA7BsKkyEjwMK86lmgwYCcYvCCI7C5W3CyGzOWe5/Zlzub2XfSHNRrkSjoFxMI2At
+	 2BWsXlw2jB3XmWnZziMRqDHQWmmhReydKdxDg4LjN06VHWEndU+QfDB0wKHLWN9vMS
+	 o8ZHNnCW8cW2NqqQt18kHFT3MoOuyzD2P2GfV2xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
-	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
-	Sai Krishna <saikrishnag@marvell.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 103/141] octeontx2-af: Unlock contexts in the queue context cache in case of fault detection
-Date: Wed, 15 Mar 2023 13:13:26 +0100
-Message-Id: <20230315115743.131654610@linuxfoundation.org>
+Subject: [PATCH 6.2 104/141] SUNRPC: Fix a server shutdown leak
+Date: Wed, 15 Mar 2023 13:13:27 +0100
+Message-Id: <20230315115743.160432913@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -38,226 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Suman Ghosh <sumang@marvell.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit ea9dd2e5c6d12c8b65ce7514c8359a70eeaa0e70 ]
+[ Upstream commit 9ca6705d9d609441d34f8b853e1e4a6369b3b171 ]
 
-NDC caches contexts of frequently used queue's (Rx and Tx queues)
-contexts. Due to a HW errata when NDC detects fault/poision while
-accessing contexts it could go into an illegal state where a cache
-line could get locked forever. To makesure all cache lines in NDC
-are available for optimum performance upon fault/lockerror/posion
-errors scan through all cache lines in NDC and clear the lock bit.
+Fix a race where kthread_stop() may prevent the threadfn from ever getting
+called.  If that happens the svc_rqst will not be cleaned up.
 
-Fixes: 4a3581cd5995 ("octeontx2-af: NPA AQ instruction enqueue support")
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
-Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
-Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: ed6473ddc704 ("NFSv4: Fix callback server shutdown")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/rvu.h   |  5 ++
- .../marvell/octeontx2/af/rvu_debugfs.c        |  7 +--
- .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 16 ++++-
- .../ethernet/marvell/octeontx2/af/rvu_npa.c   | 58 ++++++++++++++++++-
- .../ethernet/marvell/octeontx2/af/rvu_reg.h   |  3 +
- 5 files changed, 82 insertions(+), 7 deletions(-)
+ net/sunrpc/svc.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-index 7f0a64731c675..f6c45cf27caf4 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-@@ -866,6 +866,9 @@ int rvu_cpt_lf_teardown(struct rvu *rvu, u16 pcifunc, int blkaddr, int lf,
- 			int slot);
- int rvu_cpt_ctx_flush(struct rvu *rvu, u16 pcifunc);
+diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
+index f06622814a958..7f9807374b0fb 100644
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -786,6 +786,7 @@ svc_start_kthreads(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
+ static int
+ svc_stop_kthreads(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
+ {
++	struct svc_rqst	*rqstp;
+ 	struct task_struct *task;
+ 	unsigned int state = serv->sv_nrthreads-1;
  
-+#define NDC_AF_BANK_MASK       GENMASK_ULL(7, 0)
-+#define NDC_AF_BANK_LINE_MASK  GENMASK_ULL(31, 16)
-+
- /* CN10K RVU */
- int rvu_set_channels_base(struct rvu *rvu);
- void rvu_program_channels(struct rvu *rvu);
-@@ -881,6 +884,8 @@ static inline void rvu_dbg_init(struct rvu *rvu) {}
- static inline void rvu_dbg_exit(struct rvu *rvu) {}
- #endif
- 
-+int rvu_ndc_fix_locked_cacheline(struct rvu *rvu, int blkaddr);
-+
- /* RVU Switch */
- void rvu_switch_enable(struct rvu *rvu);
- void rvu_switch_disable(struct rvu *rvu);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-index fa280ebd3052b..26cfa501f1a11 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-@@ -198,9 +198,6 @@ enum cpt_eng_type {
- 	CPT_IE_TYPE = 3,
- };
- 
--#define NDC_MAX_BANK(rvu, blk_addr) (rvu_read64(rvu, \
--						blk_addr, NDC_AF_CONST) & 0xFF)
--
- #define rvu_dbg_NULL NULL
- #define rvu_dbg_open_NULL NULL
- 
-@@ -1448,6 +1445,7 @@ static int ndc_blk_hits_miss_stats(struct seq_file *s, int idx, int blk_addr)
- 	struct nix_hw *nix_hw;
- 	struct rvu *rvu;
- 	int bank, max_bank;
-+	u64 ndc_af_const;
- 
- 	if (blk_addr == BLKADDR_NDC_NPA0) {
- 		rvu = s->private;
-@@ -1456,7 +1454,8 @@ static int ndc_blk_hits_miss_stats(struct seq_file *s, int idx, int blk_addr)
- 		rvu = nix_hw->rvu;
- 	}
- 
--	max_bank = NDC_MAX_BANK(rvu, blk_addr);
-+	ndc_af_const = rvu_read64(rvu, blk_addr, NDC_AF_CONST);
-+	max_bank = FIELD_GET(NDC_AF_BANK_MASK, ndc_af_const);
- 	for (bank = 0; bank < max_bank; bank++) {
- 		seq_printf(s, "BANK:%d\n", bank);
- 		seq_printf(s, "\tHits:\t%lld\n",
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 6b8747ebc08c6..bcce42cd1c240 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -790,6 +790,7 @@ static int nix_aq_enqueue_wait(struct rvu *rvu, struct rvu_block *block,
- 	struct nix_aq_res_s *result;
- 	int timeout = 1000;
- 	u64 reg, head;
-+	int ret;
- 
- 	result = (struct nix_aq_res_s *)aq->res->base;
- 
-@@ -813,9 +814,22 @@ static int nix_aq_enqueue_wait(struct rvu *rvu, struct rvu_block *block,
- 			return -EBUSY;
- 	}
- 
--	if (result->compcode != NIX_AQ_COMP_GOOD)
-+	if (result->compcode != NIX_AQ_COMP_GOOD) {
- 		/* TODO: Replace this with some error code */
-+		if (result->compcode == NIX_AQ_COMP_CTX_FAULT ||
-+		    result->compcode == NIX_AQ_COMP_LOCKERR ||
-+		    result->compcode == NIX_AQ_COMP_CTX_POISON) {
-+			ret = rvu_ndc_fix_locked_cacheline(rvu, BLKADDR_NDC_NIX0_RX);
-+			ret |= rvu_ndc_fix_locked_cacheline(rvu, BLKADDR_NDC_NIX0_TX);
-+			ret |= rvu_ndc_fix_locked_cacheline(rvu, BLKADDR_NDC_NIX1_RX);
-+			ret |= rvu_ndc_fix_locked_cacheline(rvu, BLKADDR_NDC_NIX1_TX);
-+			if (ret)
-+				dev_err(rvu->dev,
-+					"%s: Not able to unlock cachelines\n", __func__);
-+		}
-+
- 		return -EBUSY;
-+	}
- 
+@@ -794,7 +795,10 @@ svc_stop_kthreads(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
+ 		task = choose_victim(serv, pool, &state);
+ 		if (task == NULL)
+ 			break;
+-		kthread_stop(task);
++		rqstp = kthread_data(task);
++		/* Did we lose a race to svo_function threadfn? */
++		if (kthread_stop(task) == -EINTR)
++			svc_exit_thread(rqstp);
+ 		nrservs++;
+ 	} while (nrservs < 0);
  	return 0;
- }
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npa.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npa.c
-index 70bd036ed76e4..4f5ca5ab13a40 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npa.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npa.c
-@@ -4,7 +4,7 @@
-  * Copyright (C) 2018 Marvell.
-  *
-  */
--
-+#include <linux/bitfield.h>
- #include <linux/module.h>
- #include <linux/pci.h>
- 
-@@ -42,9 +42,18 @@ static int npa_aq_enqueue_wait(struct rvu *rvu, struct rvu_block *block,
- 			return -EBUSY;
- 	}
- 
--	if (result->compcode != NPA_AQ_COMP_GOOD)
-+	if (result->compcode != NPA_AQ_COMP_GOOD) {
- 		/* TODO: Replace this with some error code */
-+		if (result->compcode == NPA_AQ_COMP_CTX_FAULT ||
-+		    result->compcode == NPA_AQ_COMP_LOCKERR ||
-+		    result->compcode == NPA_AQ_COMP_CTX_POISON) {
-+			if (rvu_ndc_fix_locked_cacheline(rvu, BLKADDR_NDC_NPA0))
-+				dev_err(rvu->dev,
-+					"%s: Not able to unlock cachelines\n", __func__);
-+		}
-+
- 		return -EBUSY;
-+	}
- 
- 	return 0;
- }
-@@ -545,3 +554,48 @@ void rvu_npa_lf_teardown(struct rvu *rvu, u16 pcifunc, int npalf)
- 
- 	npa_ctx_free(rvu, pfvf);
- }
-+
-+/* Due to an Hardware errata, in some corner cases, AQ context lock
-+ * operations can result in a NDC way getting into an illegal state
-+ * of not valid but locked.
-+ *
-+ * This API solves the problem by clearing the lock bit of the NDC block.
-+ * The operation needs to be done for each line of all the NDC banks.
-+ */
-+int rvu_ndc_fix_locked_cacheline(struct rvu *rvu, int blkaddr)
-+{
-+	int bank, max_bank, line, max_line, err;
-+	u64 reg, ndc_af_const;
-+
-+	/* Set the ENABLE bit(63) to '0' */
-+	reg = rvu_read64(rvu, blkaddr, NDC_AF_CAMS_RD_INTERVAL);
-+	rvu_write64(rvu, blkaddr, NDC_AF_CAMS_RD_INTERVAL, reg & GENMASK_ULL(62, 0));
-+
-+	/* Poll until the BUSY bits(47:32) are set to '0' */
-+	err = rvu_poll_reg(rvu, blkaddr, NDC_AF_CAMS_RD_INTERVAL, GENMASK_ULL(47, 32), true);
-+	if (err) {
-+		dev_err(rvu->dev, "Timed out while polling for NDC CAM busy bits.\n");
-+		return err;
-+	}
-+
-+	ndc_af_const = rvu_read64(rvu, blkaddr, NDC_AF_CONST);
-+	max_bank = FIELD_GET(NDC_AF_BANK_MASK, ndc_af_const);
-+	max_line = FIELD_GET(NDC_AF_BANK_LINE_MASK, ndc_af_const);
-+	for (bank = 0; bank < max_bank; bank++) {
-+		for (line = 0; line < max_line; line++) {
-+			/* Check if 'cache line valid bit(63)' is not set
-+			 * but 'cache line lock bit(60)' is set and on
-+			 * success, reset the lock bit(60).
-+			 */
-+			reg = rvu_read64(rvu, blkaddr,
-+					 NDC_AF_BANKX_LINEX_METADATA(bank, line));
-+			if (!(reg & BIT_ULL(63)) && (reg & BIT_ULL(60))) {
-+				rvu_write64(rvu, blkaddr,
-+					    NDC_AF_BANKX_LINEX_METADATA(bank, line),
-+					    reg & ~BIT_ULL(60));
-+			}
-+		}
-+	}
-+
-+	return 0;
-+}
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.h
-index 0e0d536645ac7..39f7a7cb27558 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.h
-@@ -690,6 +690,7 @@
- #define NDC_AF_INTR_ENA_W1S		(0x00068)
- #define NDC_AF_INTR_ENA_W1C		(0x00070)
- #define NDC_AF_ACTIVE_PC		(0x00078)
-+#define NDC_AF_CAMS_RD_INTERVAL		(0x00080)
- #define NDC_AF_BP_TEST_ENABLE		(0x001F8)
- #define NDC_AF_BP_TEST(a)		(0x00200 | (a) << 3)
- #define NDC_AF_BLK_RST			(0x002F0)
-@@ -705,6 +706,8 @@
- 		(0x00F00 | (a) << 5 | (b) << 4)
- #define NDC_AF_BANKX_HIT_PC(a)		(0x01000 | (a) << 3)
- #define NDC_AF_BANKX_MISS_PC(a)		(0x01100 | (a) << 3)
-+#define NDC_AF_BANKX_LINEX_METADATA(a, b) \
-+		(0x10000 | (a) << 12 | (b) << 3)
- 
- /* LBK */
- #define LBK_CONST			(0x10ull)
 -- 
 2.39.2
 
