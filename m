@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559C14431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D5FC433EF;
-	Wed, 15 Mar 2023 12:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37804431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6847FC4339C;
+	Wed, 15 Mar 2023 12:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882767;
-	bh=aChLj06Q155iaDvCg5lxpo3hL0+sdboKA4LkhOimxLs=;
+	s=korg; t=1678882769;
+	bh=4dwhFZz16r7X1+Ikg3XVZO8ZGQ2N2OA5ObxChjdT/SU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yHy9jsuRA8SRh85x32V6VavdIHCeH1asT9kInKhB++mOaHPoE4PQ5SGIuGWmphbCQ
-	 AAh0ZasDAfjhIp+1hWaitnPtmvMjIcfTizjq5HHkVkuxOmUaimhhsT0zmfw+VJ3Ap3
-	 sSxCO99se8ix+84U1rvfWV3/QfR5sWLXtmr87kiU=
+	b=e0PjkR2pCGKMxgU6IsZiDeah+ZATv+EUus6mnEDm/643ifbU4+T4o2w/4/PK077+A
+	 XL3cLRaYa++KR1xAThOyXwK3EjFu74vW/c1T2cPKMGGcMnee1N8dG5/UVuBbxmaSbq
+	 qx65jMVa5FvP+t4Ksz/O2X1HqTOb85GDrtMptTQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Gilmore <dennis@ausil.us>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Tom Saeger <tom.saeger@oracle.com>
-Subject: [PATCH 5.4 62/68] arch: fix broken BuildID for arm64 and riscv
-Date: Wed, 15 Mar 2023 13:12:56 +0100
-Message-Id: <20230315115728.544543930@linuxfoundation.org>
+Subject: [PATCH 5.4 63/68] powerpc/vmlinux.lds: Define RUNTIME_DISCARD_EXIT
+Date: Wed, 15 Mar 2023 13:12:57 +0100
+Message-Id: <20230315115728.584813165@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -37,86 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 99cb0d917ffa1ab628bb67364ca9b162c07699b1 upstream.
+commit 4b9880dbf3bdba3a7c56445137c3d0e30aaa0a40 upstream.
 
-Dennis Gilmore reports that the BuildID is missing in the arm64 vmlinux
-since commit 994b7ac1697b ("arm64: remove special treatment for the
-link order of head.o").
+The powerpc linker script explicitly includes .exit.text, because
+otherwise the link fails due to references from __bug_table and
+__ex_table. The code is freed (discarded) at runtime along with
+.init.text and data.
 
-The issue is that the type of .notes section, which contains the BuildID,
-changed from NOTES to PROGBITS.
+That has worked in the past despite powerpc not defining
+RUNTIME_DISCARD_EXIT because DISCARDS appears late in the powerpc linker
+script (line 410), and the explicit inclusion of .exit.text
+earlier (line 280) supersedes the discard.
 
-Ard Biesheuvel figured out that whichever object gets linked first gets
-to decide the type of a section. The PROGBITS type is the result of the
-compiler emitting .note.GNU-stack as PROGBITS rather than NOTE.
+However commit 99cb0d917ffa ("arch: fix broken BuildID for arm64 and
+riscv") introduced an earlier use of DISCARD as part of the RO_DATA
+macro (line 136). With binutils < 2.36 that causes the DISCARD
+directives later in the script to be applied earlier [1], causing
+.exit.text to actually be discarded at link time, leading to build
+errors:
 
-While Ard provided a fix for arm64, I want to fix this globally because
-the same issue is happening on riscv since commit 2348e6bf4421 ("riscv:
-remove special treatment for the link order of head.o"). This problem
-will happen in general for other architectures if they start to drop
-unneeded entries from scripts/head-object-list.txt.
+  '.exit.text' referenced in section '__bug_table' of crypto/algboss.o: defined in
+  discarded section '.exit.text' of crypto/algboss.o
+  '.exit.text' referenced in section '__ex_table' of drivers/nvdimm/core.o: defined in
+  discarded section '.exit.text' of drivers/nvdimm/core.o
 
-Discard .note.GNU-stack in include/asm-generic/vmlinux.lds.h.
+Fix it by defining RUNTIME_DISCARD_EXIT, which causes the generic
+DISCARDS macro to not include .exit.text at all.
 
-Link: https://lore.kernel.org/lkml/CAABkxwuQoz1CTbyb57n0ZX65eSYiTonFCU8-LCQc=74D=xE=rA@mail.gmail.com/
-Fixes: 994b7ac1697b ("arm64: remove special treatment for the link order of head.o")
-Fixes: 2348e6bf4421 ("riscv: remove special treatment for the link order of head.o")
-Reported-by: Dennis Gilmore <dennis@ausil.us>
-Suggested-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-[Tom: stable backport 5.15.y, 5.10.y, 5.4.y]
+1: https://lore.kernel.org/lkml/87fscp2v7k.fsf@igel.home/
 
-Though the above "Fixes:" commits are not in this kernel, the conditions
-which lead to a missing Build ID in arm64 vmlinux are similar.
-
-Evidence points to these conditions:
-1. ld version > 2.36 (exact binutils commit documented in a494398bde27)
-2. first object which gets linked (head.o) has a PROGBITS .note.GNU-stack segment
-
-These conditions can be observed when:
-- 5.15.60+ OR 5.10.136+ OR 5.4.210+
-- AND ld version > 2.36
-- AND arch=arm64
-- AND CONFIG_MODVERSIONS=y
-
-There are notable differences in the vmlinux elf files produced
-before(bad) and after(good) applying this series.
-
-Good: p_type:PT_NOTE segment exists.
- Bad: p_type:PT_NOTE segment is missing.
-
-Good: sh_name_str:.notes section has sh_type:SHT_NOTE
- Bad: sh_name_str:.notes section has sh_type:SHT_PROGBITS
-
-`readelf -n` (as of v2.40) searches for Build Id
-by processing only the very first note in sh_type:SHT_NOTE sections.
-
-This was previously bisected to the stable backport of 0d362be5b142.
-Follow-up experiments were discussed here: https://lore.kernel.org/all/20221221235413.xaisboqmr7dkqwn6@oracle.com/
-which strongly hints at condition 2.
+Fixes: 99cb0d917ffa ("arch: fix broken BuildID for arm64 and riscv")
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20230105132349.384666-1-mpe@ellerman.id.au
 Signed-off-by: Tom Saeger <tom.saeger@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/asm-generic/vmlinux.lds.h |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/powerpc/kernel/vmlinux.lds.S |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -825,7 +825,12 @@
- #define TRACEDATA
+--- a/arch/powerpc/kernel/vmlinux.lds.S
++++ b/arch/powerpc/kernel/vmlinux.lds.S
+@@ -6,6 +6,7 @@
  #endif
  
-+/*
-+ * Discard .note.GNU-stack, which is emitted as PROGBITS by the compiler.
-+ * Otherwise, the type of .notes section would become PROGBITS instead of NOTES.
-+ */
- #define NOTES								\
-+	/DISCARD/ : { *(.note.GNU-stack) }				\
- 	.notes : AT(ADDR(.notes) - LOAD_OFFSET) {			\
- 		__start_notes = .;					\
- 		KEEP(*(.note.*))					\
+ #define BSS_FIRST_SECTIONS *(.bss.prominit)
++#define RUNTIME_DISCARD_EXIT
+ 
+ #include <asm/page.h>
+ #include <asm-generic/vmlinux.lds.h>
 
 
