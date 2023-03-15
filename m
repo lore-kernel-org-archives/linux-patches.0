@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C624431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:27:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48484C4339C;
-	Wed, 15 Mar 2023 12:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCCB4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:27:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8EA9C433EF;
+	Wed, 15 Mar 2023 12:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883242;
-	bh=wxyEEABmaI3kuX8WVh0aQlFVZCJuXh0H+h0rntSbn4o=;
+	s=korg; t=1678883245;
+	bh=yoj1PPoGwiOpikq1ci/D3NL7xlboRexGXljhJjowS68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gH+OGt2/N1/mGeJMUt/6SFUt5ug7EeyVhBkJulJy7+UnZf4ZRIgIDal9mK1iu4cRJ
-	 k1gnXUu2neM/USsi+011ojw5ppcR2iWYHi/INwRNUGTCTaHc8Hm0nWnqaaL67ONk9s
-	 aNpr6mdic1pr/MCsrlTEkeoZK/YEdKFB4vXn3tdM=
+	b=rasBAl+L0jStUVLYRoyiVgJyISrHnKI77Yww9IDj118uYj2jr4c/5+k3r/g/OioTe
+	 3mRI0I1GFDUfn1BMA1wpUom6yrC1gA4DTwKxaug/6Yq5PEKlNd12MXiUAwIuCvel9y
+	 sluFH2ImQ0ra8tIMNNV4GJKA6d0tHw3vcudTjYPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 068/145] net: phy: smsc: fix link up detection in forced irq mode
-Date: Wed, 15 Mar 2023 13:12:14 +0100
-Message-Id: <20230315115741.279516501@linuxfoundation.org>
+Subject: [PATCH 5.15 069/145] net: ethernet: mtk_eth_soc: fix RX data corruption issue
+Date: Wed, 15 Mar 2023 13:12:15 +0100
+Message-Id: <20230315115741.306391455@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -35,77 +38,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 58aac3a2ef414fea6d7fdf823ea177744a087d13 ]
+[ Upstream commit 193250ace270fecd586dd2d0dfbd9cbd2ade977f ]
 
-Currently link up can't be detected in forced mode if polling
-isn't used. Only link up interrupt source we have is aneg
-complete which isn't applicable in forced mode. Therefore we
-have to use energy-on as link up indicator.
+Fix data corruption issue with SerDes connected PHYs operating at 1.25
+Gbps speed where we could previously observe about 30% packet loss while
+the bad packet counter was increasing.
 
-Fixes: 7365494550f6 ("net: phy: smsc: skip ENERGYON interrupt if disabled")
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+As almost all boards with MediaTek MT7622 or MT7986 use either the MT7531
+switch IC operating at 3.125Gbps SerDes rate or single-port PHYs using
+rate-adaptation to 2500Base-X mode, this issue only got exposed now when
+we started trying to use SFP modules operating with 1.25 Gbps with the
+BananaPi R3 board.
+
+The fix is to set bit 12 which disables the RX FIFO clear function when
+setting up MAC MCR, MediaTek SDK did the same change stating:
+"If without this patch, kernel might receive invalid packets that are
+corrupted by GMAC."[1]
+
+[1]: https://git01.mediatek.com/plugins/gitiles/openwrt/feeds/mtk-openwrt-feeds/+/d8a2975939a12686c4a95c40db21efdc3f821f63
+
+Fixes: 42c03844e93d ("net-next: mediatek: add support for MediaTek MT7622 SoC")
+Tested-by: Bjørn Mork <bjorn@mork.no>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/138da2735f92c8b6f8578ec2e5a794ee515b665f.1677937317.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/smsc.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 3 ++-
+ drivers/net/ethernet/mediatek/mtk_eth_soc.h | 1 +
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
-index 63dca3bb56110..04e628788f1b5 100644
---- a/drivers/net/phy/smsc.c
-+++ b/drivers/net/phy/smsc.c
-@@ -44,7 +44,6 @@ static struct smsc_hw_stat smsc_hw_stats[] = {
- };
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index cc6a5b2f24e3e..bb1acdb0c62b3 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -363,7 +363,8 @@ static void mtk_mac_config(struct phylink_config *config, unsigned int mode,
+ 	mcr_cur = mtk_r32(mac->hw, MTK_MAC_MCR(mac->id));
+ 	mcr_new = mcr_cur;
+ 	mcr_new |= MAC_MCR_IPG_CFG | MAC_MCR_FORCE_MODE |
+-		   MAC_MCR_BACKOFF_EN | MAC_MCR_BACKPR_EN | MAC_MCR_FORCE_LINK;
++		   MAC_MCR_BACKOFF_EN | MAC_MCR_BACKPR_EN | MAC_MCR_FORCE_LINK |
++		   MAC_MCR_RX_FIFO_CLR_DIS;
  
- struct smsc_phy_priv {
--	u16 intmask;
- 	bool energy_enable;
- 	struct clk *refclk;
- };
-@@ -58,7 +57,6 @@ static int smsc_phy_ack_interrupt(struct phy_device *phydev)
- 
- static int smsc_phy_config_intr(struct phy_device *phydev)
- {
--	struct smsc_phy_priv *priv = phydev->priv;
- 	int rc;
- 
- 	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
-@@ -66,14 +64,9 @@ static int smsc_phy_config_intr(struct phy_device *phydev)
- 		if (rc)
- 			return rc;
- 
--		priv->intmask = MII_LAN83C185_ISF_INT4 | MII_LAN83C185_ISF_INT6;
--		if (priv->energy_enable)
--			priv->intmask |= MII_LAN83C185_ISF_INT7;
--
--		rc = phy_write(phydev, MII_LAN83C185_IM, priv->intmask);
-+		rc = phy_write(phydev, MII_LAN83C185_IM,
-+			       MII_LAN83C185_ISF_INT_PHYLIB_EVENTS);
- 	} else {
--		priv->intmask = 0;
--
- 		rc = phy_write(phydev, MII_LAN83C185_IM, 0);
- 		if (rc)
- 			return rc;
-@@ -86,7 +79,6 @@ static int smsc_phy_config_intr(struct phy_device *phydev)
- 
- static irqreturn_t smsc_phy_handle_interrupt(struct phy_device *phydev)
- {
--	struct smsc_phy_priv *priv = phydev->priv;
- 	int irq_status;
- 
- 	irq_status = phy_read(phydev, MII_LAN83C185_ISF);
-@@ -95,7 +87,7 @@ static irqreturn_t smsc_phy_handle_interrupt(struct phy_device *phydev)
- 		return IRQ_NONE;
- 	}
- 
--	if (!(irq_status & priv->intmask))
-+	if (!(irq_status & MII_LAN83C185_ISF_INT_PHYLIB_EVENTS))
- 		return IRQ_NONE;
- 
- 	phy_trigger_machine(phydev);
+ 	/* Only update control register when needed! */
+ 	if (mcr_new != mcr_cur)
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+index f2d90639d7ed1..d60260e00a3fc 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+@@ -369,6 +369,7 @@
+ #define MAC_MCR_FORCE_MODE	BIT(15)
+ #define MAC_MCR_TX_EN		BIT(14)
+ #define MAC_MCR_RX_EN		BIT(13)
++#define MAC_MCR_RX_FIFO_CLR_DIS	BIT(12)
+ #define MAC_MCR_BACKOFF_EN	BIT(9)
+ #define MAC_MCR_BACKPR_EN	BIT(8)
+ #define MAC_MCR_FORCE_RX_FC	BIT(5)
 -- 
 2.39.2
 
