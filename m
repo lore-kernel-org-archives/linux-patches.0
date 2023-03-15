@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B731E4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6F8C433EF;
-	Wed, 15 Mar 2023 12:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3E14431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA743C433EF;
+	Wed, 15 Mar 2023 12:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883886;
-	bh=ERpzxbU+SOozA21adsbkNltdn7p8b1ULPUYkfYvRTjI=;
+	s=korg; t=1678883889;
+	bh=ce9CHtg3M/RaWr7G3yLDOOz/kBfNVARFASuA9T2J9ZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lboEXl1bGJX/l14fi0eqdOUtItnFNQKubMhCxWGfegCfNehw/WE0ialdxVdSDwtqM
-	 hS9IviKuFKsYutwGLiR5BW6YYV/CpK7KC2j12+UPHVfChJegdhX/xsJzApeehXCHGO
-	 7jmgLsMvkE0re3iZFPUqnLXGOtBxZz40XL0eWcJ4=
+	b=riyOXZuMYVu3j+xzMzPugcmExfUX2tCgqjsm4JtpBuIVAQ6hgY6BioUJeT+ppUFDz
+	 qu8PyfBlpxGrNKvDGjk5gsufYxiHFSzuoflW/tVC3EJm1R6eKw9mrp6ZHY4Khuhfps
+	 FGHgswEh1uwHamRpjJFVlGTtu3PSiK3LZpEJPNMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.2 025/141] ext4: zero i_disksize when initializing the bootloader inode
-Date: Wed, 15 Mar 2023 13:12:08 +0100
-Message-Id: <20230315115740.749598908@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 6.2 026/141] HID: core: Provide new max_buffer_size attribute to over-ride the default
+Date: Wed, 15 Mar 2023 13:12:09 +0100
+Message-Id: <20230315115740.777814084@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -35,61 +34,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Lee Jones <lee@kernel.org>
 
-commit f5361da1e60d54ec81346aee8e3d8baf1be0b762 upstream.
+commit b1a37ed00d7908a991c1d0f18a8cba3c2aa99bdc upstream.
 
-If the boot loader inode has never been used before, the
-EXT4_IOC_SWAP_BOOT inode will initialize it, including setting the
-i_size to 0.  However, if the "never before used" boot loader has a
-non-zero i_size, then i_disksize will be non-zero, and the
-inconsistency between i_size and i_disksize can trigger a kernel
-warning:
+Presently, when a report is processed, its proposed size, provided by
+the user of the API (as Report Size * Report Count) is compared against
+the subsystem default HID_MAX_BUFFER_SIZE (16k).  However, some
+low-level HID drivers allocate a reduced amount of memory to their
+buffers (e.g. UHID only allocates UHID_DATA_MAX (4k) buffers), rending
+this check inadequate in some cases.
 
- WARNING: CPU: 0 PID: 2580 at fs/ext4/file.c:319
- CPU: 0 PID: 2580 Comm: bb Not tainted 6.3.0-rc1-00004-g703695902cfa
- RIP: 0010:ext4_file_write_iter+0xbc7/0xd10
- Call Trace:
-  vfs_write+0x3b1/0x5c0
-  ksys_write+0x77/0x160
-  __x64_sys_write+0x22/0x30
-  do_syscall_64+0x39/0x80
+In these circumstances, if the received report ends up being smaller
+than the proposed report size, the remainder of the buffer is zeroed.
+That is, the space between sizeof(csize) (size of the current report)
+and the rsize (size proposed i.e. Report Size * Report Count), which can
+be handled up to HID_MAX_BUFFER_SIZE (16k).  Meaning that memset()
+shoots straight past the end of the buffer boundary and starts zeroing
+out in-use values, often resulting in calamity.
 
-Reproducer:
- 1. create corrupted image and mount it:
-       mke2fs -t ext4 /tmp/foo.img 200
-       debugfs -wR "sif <5> size 25700" /tmp/foo.img
-       mount -t ext4 /tmp/foo.img /mnt
-       cd /mnt
-       echo 123 > file
- 2. Run the reproducer program:
-       posix_memalign(&buf, 1024, 1024)
-       fd = open("file", O_RDWR | O_DIRECT);
-       ioctl(fd, EXT4_IOC_SWAP_BOOT);
-       write(fd, buf, 1024);
+This patch introduces a new variable into 'struct hid_ll_driver' where
+individual low-level drivers can over-ride the default maximum value of
+HID_MAX_BUFFER_SIZE (16k) with something more sympathetic to the
+interface.
 
-Fix this by setting i_disksize as well as i_size to zero when
-initiaizing the boot loader inode.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217159
-Cc: stable@kernel.org
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Link: https://lore.kernel.org/r/20230308032643.641113-1-chengzhihao1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ioctl.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-core.c |   32 +++++++++++++++++++++++++-------
+ include/linux/hid.h    |    3 +++
+ 2 files changed, 28 insertions(+), 7 deletions(-)
 
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -434,6 +434,7 @@ static long swap_inode_boot_loader(struc
- 		ei_bl->i_flags = 0;
- 		inode_set_iversion(inode_bl, 1);
- 		i_size_write(inode_bl, 0);
-+		EXT4_I(inode_bl)->i_disksize = inode_bl->i_size;
- 		inode_bl->i_mode = S_IFREG;
- 		if (ext4_has_feature_extents(sb)) {
- 			ext4_set_inode_flag(inode_bl, EXT4_INODE_EXTENTS);
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -261,6 +261,7 @@ static int hid_add_field(struct hid_pars
+ {
+ 	struct hid_report *report;
+ 	struct hid_field *field;
++	unsigned int max_buffer_size = HID_MAX_BUFFER_SIZE;
+ 	unsigned int usages;
+ 	unsigned int offset;
+ 	unsigned int i;
+@@ -291,8 +292,11 @@ static int hid_add_field(struct hid_pars
+ 	offset = report->size;
+ 	report->size += parser->global.report_size * parser->global.report_count;
+ 
++	if (parser->device->ll_driver->max_buffer_size)
++		max_buffer_size = parser->device->ll_driver->max_buffer_size;
++
+ 	/* Total size check: Allow for possible report index byte */
+-	if (report->size > (HID_MAX_BUFFER_SIZE - 1) << 3) {
++	if (report->size > (max_buffer_size - 1) << 3) {
+ 		hid_err(parser->device, "report is too long\n");
+ 		return -1;
+ 	}
+@@ -1966,6 +1970,7 @@ int hid_report_raw_event(struct hid_devi
+ 	struct hid_report_enum *report_enum = hid->report_enum + type;
+ 	struct hid_report *report;
+ 	struct hid_driver *hdrv;
++	int max_buffer_size = HID_MAX_BUFFER_SIZE;
+ 	u32 rsize, csize = size;
+ 	u8 *cdata = data;
+ 	int ret = 0;
+@@ -1981,10 +1986,13 @@ int hid_report_raw_event(struct hid_devi
+ 
+ 	rsize = hid_compute_report_size(report);
+ 
+-	if (report_enum->numbered && rsize >= HID_MAX_BUFFER_SIZE)
+-		rsize = HID_MAX_BUFFER_SIZE - 1;
+-	else if (rsize > HID_MAX_BUFFER_SIZE)
+-		rsize = HID_MAX_BUFFER_SIZE;
++	if (hid->ll_driver->max_buffer_size)
++		max_buffer_size = hid->ll_driver->max_buffer_size;
++
++	if (report_enum->numbered && rsize >= max_buffer_size)
++		rsize = max_buffer_size - 1;
++	else if (rsize > max_buffer_size)
++		rsize = max_buffer_size;
+ 
+ 	if (csize < rsize) {
+ 		dbg_hid("report %d is too short, (%d < %d)\n", report->id,
+@@ -2387,7 +2395,12 @@ int hid_hw_raw_request(struct hid_device
+ 		       unsigned char reportnum, __u8 *buf,
+ 		       size_t len, enum hid_report_type rtype, enum hid_class_request reqtype)
+ {
+-	if (len < 1 || len > HID_MAX_BUFFER_SIZE || !buf)
++	unsigned int max_buffer_size = HID_MAX_BUFFER_SIZE;
++
++	if (hdev->ll_driver->max_buffer_size)
++		max_buffer_size = hdev->ll_driver->max_buffer_size;
++
++	if (len < 1 || len > max_buffer_size || !buf)
+ 		return -EINVAL;
+ 
+ 	return hdev->ll_driver->raw_request(hdev, reportnum, buf, len,
+@@ -2406,7 +2419,12 @@ EXPORT_SYMBOL_GPL(hid_hw_raw_request);
+  */
+ int hid_hw_output_report(struct hid_device *hdev, __u8 *buf, size_t len)
+ {
+-	if (len < 1 || len > HID_MAX_BUFFER_SIZE || !buf)
++	unsigned int max_buffer_size = HID_MAX_BUFFER_SIZE;
++
++	if (hdev->ll_driver->max_buffer_size)
++		max_buffer_size = hdev->ll_driver->max_buffer_size;
++
++	if (len < 1 || len > max_buffer_size || !buf)
+ 		return -EINVAL;
+ 
+ 	if (hdev->ll_driver->output_report)
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -827,6 +827,7 @@ struct hid_driver {
+  * @output_report: send output report to device
+  * @idle: send idle request to device
+  * @may_wakeup: return if device may act as a wakeup source during system-suspend
++ * @max_buffer_size: over-ride maximum data buffer size (default: HID_MAX_BUFFER_SIZE)
+  */
+ struct hid_ll_driver {
+ 	int (*start)(struct hid_device *hdev);
+@@ -852,6 +853,8 @@ struct hid_ll_driver {
+ 
+ 	int (*idle)(struct hid_device *hdev, int report, int idle, int reqtype);
+ 	bool (*may_wakeup)(struct hid_device *hdev);
++
++	unsigned int max_buffer_size;
+ };
+ 
+ extern struct hid_ll_driver i2c_hid_ll_driver;
 
 
