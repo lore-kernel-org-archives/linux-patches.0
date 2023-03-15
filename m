@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85064431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B571C433D2;
-	Wed, 15 Mar 2023 12:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8224431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8570C433D2;
+	Wed, 15 Mar 2023 12:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883873;
-	bh=O4nOY5xFcoyX7dOOrJS9q6nTol6/jYUknf93IFSLIaw=;
+	s=korg; t=1678883876;
+	bh=cxfNO5jL8rwzFPT19kSnl/uSJTcgxDcdqu4VNqcNuaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XY4nP/CcaU0290DW1MCr6nQFzonRksHkpwoStE1hAyYQ9mB9ufzySitp7VpVICLSh
-	 dds1v9RZUnpl3FGtEkUUMW9fOJX2JAf2xce1EK8PWgNxy96dGkxXon/B+ILtcaLK/D
-	 Z7TDc65Ogem69Uld/Gj5hraC5HwEx9NmTKjc+vew=
+	b=ky6Z0iZMM6i7iP8lkhiK3p01RjOiw6ml74OR7mnGTPs2PDDcNas8qJuQ188jFtO6C
+	 pPVbjo6cXkGjK53hjSuzU4LTi17TJLmQzP7wTpUzxqKQfNRGrqJ5WVC9uNSON6lTkM
+	 2Ao8AcrPK7fBytl2na2NrUZpH5cl6axtVkHJ8qyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Eric Biggers <ebiggers@google.com>,
-	Tejun Heo <tj@kernel.org>,
+	stable@kernel.org,
+	Eric Whitney <enwlinux@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.2 020/141] ext4: fix cgroup writeback accounting with fs-layer encryption
-Date: Wed, 15 Mar 2023 13:12:03 +0100
-Message-Id: <20230315115740.602227163@linuxfoundation.org>
+Subject: [PATCH 6.2 021/141] ext4: fix RENAME_WHITEOUT handling for inline directories
+Date: Wed, 15 Mar 2023 13:12:04 +0100
+Message-Id: <20230315115740.630544749@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -36,70 +36,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Eric Whitney <enwlinux@gmail.com>
 
-commit ffec85d53d0f39ee4680a2cf0795255e000e1feb upstream.
+commit c9f62c8b2dbf7240536c0cc9a4529397bb8bf38e upstream.
 
-When writing a page from an encrypted file that is using
-filesystem-layer encryption (not inline encryption), ext4 encrypts the
-pagecache page into a bounce page, then writes the bounce page.
+A significant number of xfstests can cause ext4 to log one or more
+warning messages when they are run on a test file system where the
+inline_data feature has been enabled.  An example:
 
-It also passes the bounce page to wbc_account_cgroup_owner().  That's
-incorrect, because the bounce page is a newly allocated temporary page
-that doesn't have the memory cgroup of the original pagecache page.
-This makes wbc_account_cgroup_owner() not account the I/O to the owner
-of the pagecache page as it should.
+"EXT4-fs warning (device vdc): ext4_dirblock_csum_set:425: inode
+ #16385: comm fsstress: No space for directory leaf checksum. Please
+run e2fsck -D."
 
-Fix this by always passing the pagecache page to
-wbc_account_cgroup_owner().
+The xfstests include: ext4/057, 058, and 307; generic/013, 051, 068,
+070, 076, 078, 083, 232, 269, 270, 390, 461, 475, 476, 482, 579, 585,
+589, 626, 631, and 650.
 
-Fixes: 001e4a8775f6 ("ext4: implement cgroup writeback support")
-Cc: stable@vger.kernel.org
-Reported-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230203005503.141557-1-ebiggers@kernel.org
+In this situation, the warning message indicates a bug in the code that
+performs the RENAME_WHITEOUT operation on a directory entry that has
+been stored inline.  It doesn't detect that the directory is stored
+inline, and incorrectly attempts to compute a dirent block checksum on
+the whiteout inode when creating it.  This attempt fails as a result
+of the integrity checking in get_dirent_tail (usually due to a failure
+to match the EXT4_FT_DIR_CSUM magic cookie), and the warning message
+is then emitted.
+
+Fix this by simply collecting the inlined data state at the time the
+search for the source directory entry is performed.  Existing code
+handles the rest, and this is sufficient to eliminate all spurious
+warning messages produced by the tests above.  Go one step further
+and do the same in the code that resets the source directory entry in
+the event of failure.  The inlined state should be present in the
+"old" struct, but given the possibility of a race there's no harm
+in taking a conservative approach and getting that information again
+since the directory entry is being reread anyway.
+
+Fixes: b7ff91fd030d ("ext4: find old entry again if failed to rename whiteout")
+Cc: stable@kernel.org
+Signed-off-by: Eric Whitney <enwlinux@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230210173244.679890-1-enwlinux@gmail.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/page-io.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/ext4/namei.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/fs/ext4/page-io.c
-+++ b/fs/ext4/page-io.c
-@@ -409,7 +409,8 @@ static void io_submit_init_bio(struct ex
- 
- static void io_submit_add_bh(struct ext4_io_submit *io,
- 			     struct inode *inode,
--			     struct page *page,
-+			     struct page *pagecache_page,
-+			     struct page *bounce_page,
- 			     struct buffer_head *bh)
- {
- 	int ret;
-@@ -421,10 +422,11 @@ submit_and_retry:
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -1595,11 +1595,10 @@ static struct buffer_head *__ext4_find_e
+ 		int has_inline_data = 1;
+ 		ret = ext4_find_inline_entry(dir, fname, res_dir,
+ 					     &has_inline_data);
+-		if (has_inline_data) {
+-			if (inlined)
+-				*inlined = 1;
++		if (inlined)
++			*inlined = has_inline_data;
++		if (has_inline_data)
+ 			goto cleanup_and_exit;
+-		}
  	}
- 	if (io->io_bio == NULL)
- 		io_submit_init_bio(io, bh);
--	ret = bio_add_page(io->io_bio, page, bh->b_size, bh_offset(bh));
-+	ret = bio_add_page(io->io_bio, bounce_page ?: pagecache_page,
-+			   bh->b_size, bh_offset(bh));
- 	if (ret != bh->b_size)
- 		goto submit_and_retry;
--	wbc_account_cgroup_owner(io->io_wbc, page, bh->b_size);
-+	wbc_account_cgroup_owner(io->io_wbc, pagecache_page, bh->b_size);
- 	io->io_next_block++;
- }
  
-@@ -561,8 +563,7 @@ int ext4_bio_write_page(struct ext4_io_s
- 	do {
- 		if (!buffer_async_write(bh))
- 			continue;
--		io_submit_add_bh(io, inode,
--				 bounce_page ? bounce_page : page, bh);
-+		io_submit_add_bh(io, inode, page, bounce_page, bh);
- 	} while ((bh = bh->b_this_page) != head);
- unlock:
- 	unlock_page(page);
+ 	if ((namelen <= 2) && (name[0] == '.') &&
+@@ -3646,7 +3645,8 @@ static void ext4_resetent(handle_t *hand
+ 	 * so the old->de may no longer valid and need to find it again
+ 	 * before reset old inode info.
+ 	 */
+-	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de, NULL);
++	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de,
++				 &old.inlined);
+ 	if (IS_ERR(old.bh))
+ 		retval = PTR_ERR(old.bh);
+ 	if (!old.bh)
+@@ -3813,7 +3813,8 @@ static int ext4_rename(struct user_names
+ 			return retval;
+ 	}
+ 
+-	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de, NULL);
++	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de,
++				 &old.inlined);
+ 	if (IS_ERR(old.bh))
+ 		return PTR_ERR(old.bh);
+ 	/*
 
 
