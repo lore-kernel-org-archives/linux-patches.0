@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF474431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:15:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7A38C433EF;
-	Wed, 15 Mar 2023 12:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B844431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:15:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49415C433EF;
+	Wed, 15 Mar 2023 12:15:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882538;
-	bh=fR0EYdQCzK7Y1H45+mzqlcr/kpgTUvWC1LVmvfM9ayQ=;
+	s=korg; t=1678882540;
+	bh=Yu185cZOyxNQWz7whzSmIM7buAISPTDpgoSlQOvHq1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gRLrORDLQfto1kL67LUzO/p3Q2RXqwOfvcv21yHX57B4LqbL3FTdvzeeQ+0E+a6Yz
-	 tXLI4tJUlr5ad+PrqJ7fsWGt4KMMdjlzvoeje4vdyzFP9kA9r8U0EMsmIEV+2P7IIu
-	 coZVzK7VNSb1awm0vA197N5ds9/fG/Kpx+CctNd4=
+	b=V7l1oaAa1LLFnL2V4gH3yAvZe7F5REbPcENIABsy8U0xzg0n3FjyZ6VOxWOg56dAR
+	 rpcEPyN7cDIkHdlgzGRqFcK1Z5vZkFB6sR4ZVmjW9MdQ4edvu7GfVkUp9p6FyGW/1l
+	 Bg/6AxZAj5gZ+dyNi5o/cLKvydT3aDXMxeR5IOLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tavis Ormandy <taviso@gmail.com>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 4.19 02/39] x86/CPU/AMD: Disable XSAVES on AMD family 0x17
-Date: Wed, 15 Mar 2023 13:12:16 +0100
-Message-Id: <20230315115721.329362992@linuxfoundation.org>
+	stable@kernel.org,
+	Eric Whitney <enwlinux@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.19 03/39] ext4: fix RENAME_WHITEOUT handling for inline directories
+Date: Wed, 15 Mar 2023 13:12:17 +0100
+Message-Id: <20230315115721.367887867@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115721.234756306@linuxfoundation.org>
 References: <20230315115721.234756306@linuxfoundation.org>
@@ -36,50 +36,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Eric Whitney <enwlinux@gmail.com>
 
-commit b0563468eeac88ebc70559d52a0b66efc37e4e9d upstream.
+commit c9f62c8b2dbf7240536c0cc9a4529397bb8bf38e upstream.
 
-AMD Erratum 1386 is summarised as:
+A significant number of xfstests can cause ext4 to log one or more
+warning messages when they are run on a test file system where the
+inline_data feature has been enabled.  An example:
 
-  XSAVES Instruction May Fail to Save XMM Registers to the Provided
-  State Save Area
+"EXT4-fs warning (device vdc): ext4_dirblock_csum_set:425: inode
+ #16385: comm fsstress: No space for directory leaf checksum. Please
+run e2fsck -D."
 
-This piece of accidental chronomancy causes the %xmm registers to
-occasionally reset back to an older value.
+The xfstests include: ext4/057, 058, and 307; generic/013, 051, 068,
+070, 076, 078, 083, 232, 269, 270, 390, 461, 475, 476, 482, 579, 585,
+589, 626, 631, and 650.
 
-Ignore the XSAVES feature on all AMD Zen1/2 hardware.  The XSAVEC
-instruction (which works fine) is equivalent on affected parts.
+In this situation, the warning message indicates a bug in the code that
+performs the RENAME_WHITEOUT operation on a directory entry that has
+been stored inline.  It doesn't detect that the directory is stored
+inline, and incorrectly attempts to compute a dirent block checksum on
+the whiteout inode when creating it.  This attempt fails as a result
+of the integrity checking in get_dirent_tail (usually due to a failure
+to match the EXT4_FT_DIR_CSUM magic cookie), and the warning message
+is then emitted.
 
-  [ bp: Typos, move it into the F17h-specific function. ]
+Fix this by simply collecting the inlined data state at the time the
+search for the source directory entry is performed.  Existing code
+handles the rest, and this is sufficient to eliminate all spurious
+warning messages produced by the tests above.  Go one step further
+and do the same in the code that resets the source directory entry in
+the event of failure.  The inlined state should be present in the
+"old" struct, but given the possibility of a race there's no harm
+in taking a conservative approach and getting that information again
+since the directory entry is being reread anyway.
 
-Reported-by: Tavis Ormandy <taviso@gmail.com>
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230307174643.1240184-1-andrew.cooper3@citrix.com
+Fixes: b7ff91fd030d ("ext4: find old entry again if failed to rename whiteout")
+Cc: stable@kernel.org
+Signed-off-by: Eric Whitney <enwlinux@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230210173244.679890-1-enwlinux@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/amd.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ext4/namei.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -199,6 +199,15 @@ static void init_amd_k6(struct cpuinfo_x
- 		return;
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -1419,11 +1419,10 @@ static struct buffer_head *__ext4_find_e
+ 		int has_inline_data = 1;
+ 		ret = ext4_find_inline_entry(dir, fname, res_dir,
+ 					     &has_inline_data);
+-		if (has_inline_data) {
+-			if (inlined)
+-				*inlined = 1;
++		if (inlined)
++			*inlined = has_inline_data;
++		if (has_inline_data)
+ 			goto cleanup_and_exit;
+-		}
  	}
- #endif
-+	/*
-+	 * Work around Erratum 1386.  The XSAVES instruction malfunctions in
-+	 * certain circumstances on Zen1/2 uarch, and not all parts have had
-+	 * updated microcode at the time of writing (March 2023).
-+	 *
-+	 * Affected parts all have no supervisor XSAVE states, meaning that
-+	 * the XSAVEC instruction (which works fine) is equivalent.
-+	 */
-+	clear_cpu_cap(c, X86_FEATURE_XSAVES);
- }
  
- static void init_amd_k7(struct cpuinfo_x86 *c)
+ 	if ((namelen <= 2) && (name[0] == '.') &&
+@@ -3515,7 +3514,8 @@ static void ext4_resetent(handle_t *hand
+ 	 * so the old->de may no longer valid and need to find it again
+ 	 * before reset old inode info.
+ 	 */
+-	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de, NULL);
++	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de,
++				 &old.inlined);
+ 	if (IS_ERR(old.bh))
+ 		retval = PTR_ERR(old.bh);
+ 	if (!old.bh)
+@@ -3677,7 +3677,8 @@ static int ext4_rename(struct inode *old
+ 			return retval;
+ 	}
+ 
+-	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de, NULL);
++	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de,
++				 &old.inlined);
+ 	if (IS_ERR(old.bh))
+ 		return PTR_ERR(old.bh);
+ 	/*
 
 
