@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EF74431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:15:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A7AFC433EF;
-	Wed, 15 Mar 2023 12:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E974431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:15:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1183DC433D2;
+	Wed, 15 Mar 2023 12:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882553;
-	bh=xgKXWrpx8XgCkizyvWhgNVh3IRrahgFs4ZLvLwV3gSk=;
+	s=korg; t=1678882556;
+	bh=othGfl9WeYZBaUSTdRDj1qsQ3+nTqmOWnOWtidNc+vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qw/V3I/2RAJ7uNNTzQZa2W5+A8/25c3cGjLjspPPZiwmfl6+577HzNhyq/+0IFJo2
-	 e/iEu7Tj8bS/ktjoWysfS6R5arQnHsGekFRiIp24zfrApuj4KvtsTMPqobRbe5P9a5
-	 M0lkKi9gLBo160o0Bhkc4ACNudQEdaLVGha2FRzg=
+	b=e7UVl3rZlL4C4jfdCQ1w1+nw1Xpe+nFMo3WVFvcrkGznlVHuIROwqjfHb/9z2FknB
+	 X1pbAgyLJ0EL9ZghXSRvSyJdsTn2hqQXS29lynDqFxa9VHiWx3dC4m15gMmC/QOkn3
+	 IMVCYzPtZ4IxRLsZgq8+noxvulitq2YWHKICN2SM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 08/39] nfc: change order inside nfc_se_io error path
-Date: Wed, 15 Mar 2023 13:12:22 +0100
-Message-Id: <20230315115721.564508844@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 09/39] udf: Explain handling of load_nls() failure
+Date: Wed, 15 Mar 2023 13:12:23 +0100
+Message-Id: <20230315115721.595124167@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115721.234756306@linuxfoundation.org>
 References: <20230315115721.234756306@linuxfoundation.org>
@@ -35,38 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Jan Kara <jack@suse.cz>
 
-commit 7d834b4d1ab66c48e8c0810fdeadaabb80fa2c81 upstream.
+[ Upstream commit a768a9abc625d554f7b6428517089c193fcb5962 ]
 
-cb_context should be freed on the error path in nfc_se_io as stated by
-commit 25ff6f8a5a3b ("nfc: fix memory leak of se_io context in
-nfc_genl_se_io").
+Add comment explaining that load_nls() failure gets handled back in
+udf_fill_super() to avoid false impression that it is unhandled.
 
-Make the error path in nfc_se_io unwind everything in reverse order, i.e.
-free the cb_context after unlocking the device.
-
-Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230306212650.230322-1-pchelkin@ispras.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Stable-dep-of: fc8033a34a3c ("udf: Preserve link count of system files")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/netlink.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/super.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/nfc/netlink.c
-+++ b/net/nfc/netlink.c
-@@ -1464,8 +1464,8 @@ static int nfc_se_io(struct nfc_dev *dev
- 	return rc;
- 
- error:
--	kfree(cb_context);
- 	device_unlock(&dev->dev);
-+	kfree(cb_context);
- 	return rc;
- }
- 
+diff --git a/fs/udf/super.c b/fs/udf/super.c
+index b7fb7cd35d89a..5d179616578cf 100644
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -572,6 +572,11 @@ static int udf_parse_options(char *options, struct udf_options *uopt,
+ 			if (!remount) {
+ 				if (uopt->nls_map)
+ 					unload_nls(uopt->nls_map);
++				/*
++				 * load_nls() failure is handled later in
++				 * udf_fill_super() after all options are
++				 * parsed.
++				 */
+ 				uopt->nls_map = load_nls(args[0].from);
+ 				uopt->flags |= (1 << UDF_FLAG_NLS_MAP);
+ 			}
+-- 
+2.39.2
+
 
 
