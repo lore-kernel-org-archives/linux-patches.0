@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DA74431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:22:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E878C433D2;
-	Wed, 15 Mar 2023 12:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88064431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:22:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C927C433EF;
+	Wed, 15 Mar 2023 12:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882924;
-	bh=xocjUkj3cJxmRZxulBV55DcXYIyH3e656wDo5Iu48S8=;
+	s=korg; t=1678882927;
+	bh=QJSOPGkwVF0wW/Y1ZzPHP2XsMg3TTkuq4bsBm5nEq2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yljWsoImt7cAs429VLdUS6/O5jHGcZXq3HovU12qwW6tEhyv8kwQoZd1gO5ceAqfR
-	 8sWhJXZNWN8R1warJW7y5Jdnte5nzJSE1xifEo5ZEwVoJ6aimQbV81IRbwMv3MMcUG
-	 V/libKoojIuDRbBtse792PkFtWEGIs2zW5Yts+Yw=
+	b=hBu4mIE6Co3WyUAxFQJgJ9xYO4aghfJT/QX9F9HNpjJLtDUofFEPI96Dvy1A32W7y
+	 l7aNNlP37bfVSoTcBkMPJJIuTMYcgNL2Jqo7xQa8Puk0U9/aRlcRn+CqMpjZ7+le/C
+	 ZbAy7C9Yk0AJi5IaLYjACX6+bOncM9ZmEO9iUXz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chathura Rajapaksha <chathura.abeyrathne.lk@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Changbin Du <changbin.du@gmail.com>,
+	Palmer Dabbelt <palmerdabbelt@google.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 054/104] riscv: Use READ_ONCE_NOCHECK in imprecise unwinding stack mode
-Date: Wed, 15 Mar 2023 13:12:25 +0100
-Message-Id: <20230315115734.244885770@linuxfoundation.org>
+Subject: [PATCH 5.10 055/104] RISC-V: Dont check text_mutex during stop_machine
+Date: Wed, 15 Mar 2023 13:12:26 +0100
+Message-Id: <20230315115734.284840356@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -37,99 +38,152 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 76950340cf03b149412fe0d5f0810e52ac1df8cb ]
+[ Upstream commit 2a8db5ec4a28a0fce822d10224db9471a44b6925 ]
 
-When CONFIG_FRAME_POINTER is unset, the stack unwinding function
-walk_stackframe randomly reads the stack and then, when KASAN is enabled,
-it can lead to the following backtrace:
+We're currently using stop_machine() to update ftrace & kprobes, which
+means that the thread that takes text_mutex during may not be the same
+as the thread that eventually patches the code.  This isn't actually a
+race because the lock is still held (preventing any other concurrent
+accesses) and there is only one thread running during stop_machine(),
+but it does trigger a lockdep failure.
 
-[    0.000000] ==================================================================
-[    0.000000] BUG: KASAN: stack-out-of-bounds in walk_stackframe+0xa6/0x11a
-[    0.000000] Read of size 8 at addr ffffffff81807c40 by task swapper/0
-[    0.000000]
-[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 6.2.0-12919-g24203e6db61f #43
-[    0.000000] Hardware name: riscv-virtio,qemu (DT)
-[    0.000000] Call Trace:
-[    0.000000] [<ffffffff80007ba8>] walk_stackframe+0x0/0x11a
-[    0.000000] [<ffffffff80099ecc>] init_param_lock+0x26/0x2a
-[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
-[    0.000000] [<ffffffff80c49c80>] dump_stack_lvl+0x22/0x36
-[    0.000000] [<ffffffff80c3783e>] print_report+0x198/0x4a8
-[    0.000000] [<ffffffff80099ecc>] init_param_lock+0x26/0x2a
-[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
-[    0.000000] [<ffffffff8015f68a>] kasan_report+0x9a/0xc8
-[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
-[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
-[    0.000000] [<ffffffff8006e99c>] desc_make_final+0x80/0x84
-[    0.000000] [<ffffffff8009a04e>] stack_trace_save+0x88/0xa6
-[    0.000000] [<ffffffff80099fc2>] filter_irq_stacks+0x72/0x76
-[    0.000000] [<ffffffff8006b95e>] devkmsg_read+0x32a/0x32e
-[    0.000000] [<ffffffff8015ec16>] kasan_save_stack+0x28/0x52
-[    0.000000] [<ffffffff8006e998>] desc_make_final+0x7c/0x84
-[    0.000000] [<ffffffff8009a04a>] stack_trace_save+0x84/0xa6
-[    0.000000] [<ffffffff8015ec52>] kasan_set_track+0x12/0x20
-[    0.000000] [<ffffffff8015f22e>] __kasan_slab_alloc+0x58/0x5e
-[    0.000000] [<ffffffff8015e7ea>] __kmem_cache_create+0x21e/0x39a
-[    0.000000] [<ffffffff80e133ac>] create_boot_cache+0x70/0x9c
-[    0.000000] [<ffffffff80e17ab2>] kmem_cache_init+0x6c/0x11e
-[    0.000000] [<ffffffff80e00fd6>] mm_init+0xd8/0xfe
-[    0.000000] [<ffffffff80e011d8>] start_kernel+0x190/0x3ca
-[    0.000000]
-[    0.000000] The buggy address belongs to stack of task swapper/0
-[    0.000000]  and is located at offset 0 in frame:
-[    0.000000]  stack_trace_save+0x0/0xa6
-[    0.000000]
-[    0.000000] This frame has 1 object:
-[    0.000000]  [32, 56) 'c'
-[    0.000000]
-[    0.000000] The buggy address belongs to the physical page:
-[    0.000000] page:(____ptrval____) refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x81a07
-[    0.000000] flags: 0x1000(reserved|zone=0)
-[    0.000000] raw: 0000000000001000 ff600003f1e3d150 ff600003f1e3d150 0000000000000000
-[    0.000000] raw: 0000000000000000 0000000000000000 00000001ffffffff
-[    0.000000] page dumped because: kasan: bad access detected
-[    0.000000]
-[    0.000000] Memory state around the buggy address:
-[    0.000000]  ffffffff81807b00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[    0.000000]  ffffffff81807b80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[    0.000000] >ffffffff81807c00: 00 00 00 00 00 00 00 00 f1 f1 f1 f1 00 00 00 f3
-[    0.000000]                                            ^
-[    0.000000]  ffffffff81807c80: f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
-[    0.000000]  ffffffff81807d00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[    0.000000] ==================================================================
+This patch just elides the lockdep check during stop_machine.
 
-Fix that by using READ_ONCE_NOCHECK when reading the stack in imprecise
-mode.
-
-Fixes: 5d8544e2d007 ("RISC-V: Generic library routines and assembly")
-Reported-by: Chathura Rajapaksha <chathura.abeyrathne.lk@gmail.com>
-Link: https://lore.kernel.org/all/CAD7mqryDQCYyJ1gAmtMm8SASMWAQ4i103ptTb0f6Oda=tPY2=A@mail.gmail.com/
-Suggested-by: Dmitry Vyukov <dvyukov@google.com>
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20230308091639.602024-1-alexghiti@rivosinc.com
+Fixes: c15ac4fd60d5 ("riscv/ftrace: Add dynamic function tracer support")
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Reported-by: Changbin Du <changbin.du@gmail.com>
+Signed-off-by: Palmer Dabbelt <palmerdabbelt@google.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230303143754.4005217-1-conor.dooley@microchip.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/stacktrace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/include/asm/ftrace.h |    2 +-
+ arch/riscv/include/asm/patch.h  |    2 ++
+ arch/riscv/kernel/ftrace.c      |   14 ++++++++++++--
+ arch/riscv/kernel/patch.c       |   28 +++++++++++++++++++++++++---
+ 4 files changed, 40 insertions(+), 6 deletions(-)
 
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index 1e53fbe5eb783..9c34735c1e771 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -96,7 +96,7 @@ void notrace walk_stackframe(struct task_struct *task,
- 	while (!kstack_end(ksp)) {
- 		if (__kernel_text_address(pc) && unlikely(fn(pc, arg)))
- 			break;
--		pc = (*ksp++) - 0x4;
-+		pc = READ_ONCE_NOCHECK(*ksp++) - 0x4;
- 	}
+--- a/arch/riscv/include/asm/ftrace.h
++++ b/arch/riscv/include/asm/ftrace.h
+@@ -83,6 +83,6 @@ int ftrace_init_nop(struct module *mod,
+ #define ftrace_init_nop ftrace_init_nop
+ #endif
+ 
+-#endif
++#endif /* CONFIG_DYNAMIC_FTRACE */
+ 
+ #endif /* _ASM_RISCV_FTRACE_H */
+--- a/arch/riscv/include/asm/patch.h
++++ b/arch/riscv/include/asm/patch.h
+@@ -9,4 +9,6 @@
+ int patch_text_nosync(void *addr, const void *insns, size_t len);
+ int patch_text(void *addr, u32 insn);
+ 
++extern int riscv_patch_in_stop_machine;
++
+ #endif /* _ASM_RISCV_PATCH_H */
+--- a/arch/riscv/kernel/ftrace.c
++++ b/arch/riscv/kernel/ftrace.c
+@@ -15,11 +15,21 @@
+ int ftrace_arch_code_modify_prepare(void) __acquires(&text_mutex)
+ {
+ 	mutex_lock(&text_mutex);
++
++	/*
++	 * The code sequences we use for ftrace can't be patched while the
++	 * kernel is running, so we need to use stop_machine() to modify them
++	 * for now.  This doesn't play nice with text_mutex, we use this flag
++	 * to elide the check.
++	 */
++	riscv_patch_in_stop_machine = true;
++
+ 	return 0;
  }
  
--- 
-2.39.2
-
+ int ftrace_arch_code_modify_post_process(void) __releases(&text_mutex)
+ {
++	riscv_patch_in_stop_machine = false;
+ 	mutex_unlock(&text_mutex);
+ 	return 0;
+ }
+@@ -109,9 +119,9 @@ int ftrace_init_nop(struct module *mod,
+ {
+ 	int out;
+ 
+-	ftrace_arch_code_modify_prepare();
++	mutex_lock(&text_mutex);
+ 	out = ftrace_make_nop(mod, rec, MCOUNT_ADDR);
+-	ftrace_arch_code_modify_post_process();
++	mutex_unlock(&text_mutex);
+ 
+ 	return out;
+ }
+--- a/arch/riscv/kernel/patch.c
++++ b/arch/riscv/kernel/patch.c
+@@ -11,6 +11,7 @@
+ #include <asm/kprobes.h>
+ #include <asm/cacheflush.h>
+ #include <asm/fixmap.h>
++#include <asm/ftrace.h>
+ #include <asm/patch.h>
+ 
+ struct patch_insn {
+@@ -19,6 +20,8 @@ struct patch_insn {
+ 	atomic_t cpu_count;
+ };
+ 
++int riscv_patch_in_stop_machine = false;
++
+ #ifdef CONFIG_MMU
+ static void *patch_map(void *addr, int fixmap)
+ {
+@@ -55,8 +58,15 @@ static int patch_insn_write(void *addr,
+ 	 * Before reaching here, it was expected to lock the text_mutex
+ 	 * already, so we don't need to give another lock here and could
+ 	 * ensure that it was safe between each cores.
++	 *
++	 * We're currently using stop_machine() for ftrace & kprobes, and while
++	 * that ensures text_mutex is held before installing the mappings it
++	 * does not ensure text_mutex is held by the calling thread.  That's
++	 * safe but triggers a lockdep failure, so just elide it for that
++	 * specific case.
+ 	 */
+-	lockdep_assert_held(&text_mutex);
++	if (!riscv_patch_in_stop_machine)
++		lockdep_assert_held(&text_mutex);
+ 
+ 	if (across_pages)
+ 		patch_map(addr + len, FIX_TEXT_POKE1);
+@@ -117,13 +127,25 @@ NOKPROBE_SYMBOL(patch_text_cb);
+ 
+ int patch_text(void *addr, u32 insn)
+ {
++	int ret;
+ 	struct patch_insn patch = {
+ 		.addr = addr,
+ 		.insn = insn,
+ 		.cpu_count = ATOMIC_INIT(0),
+ 	};
+ 
+-	return stop_machine_cpuslocked(patch_text_cb,
+-				       &patch, cpu_online_mask);
++	/*
++	 * kprobes takes text_mutex, before calling patch_text(), but as we call
++	 * calls stop_machine(), the lockdep assertion in patch_insn_write()
++	 * gets confused by the context in which the lock is taken.
++	 * Instead, ensure the lock is held before calling stop_machine(), and
++	 * set riscv_patch_in_stop_machine to skip the check in
++	 * patch_insn_write().
++	 */
++	lockdep_assert_held(&text_mutex);
++	riscv_patch_in_stop_machine = true;
++	ret = stop_machine_cpuslocked(patch_text_cb, &patch, cpu_online_mask);
++	riscv_patch_in_stop_machine = false;
++	return ret;
+ }
+ NOKPROBE_SYMBOL(patch_text);
 
 
