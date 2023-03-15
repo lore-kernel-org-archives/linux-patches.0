@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457BB4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15DDC433EF;
-	Wed, 15 Mar 2023 12:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FB44431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9FFC433EF;
+	Wed, 15 Mar 2023 12:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882988;
-	bh=u66U3m65PJqVDS28/79g2IDAVlH3OBmhN84cHiMjyqk=;
+	s=korg; t=1678882990;
+	bh=AHZxvroEmYIa6houU/IrOk4YXJYcirNChFLpMSlmgfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y7Wi7j68kdkHYEHniSPKu3TSr0etlBUJFgJlj5Kbgsun0F9nus9U6YASRE3tXHWUf
-	 MkUOOKuvpXHIfx3p6NMmzR50UeGCEQnVNErSrWnH9ukohAs9pWwRZri15sb/ncyVPK
-	 kUFtaA+w5ORd/sHHcd3ZicfFdHSPcVfpq+mbRRCU=
+	b=GjEZ3RLf+chdfYBNfMjUiJjhq9librYnM8QtldVpGo5Ieyqx8edjpzmGiqPwmFDb9
+	 vY5Y7ZEiSQBrx7JUSQIbkCf7ztkn/EzRqrmv5j+qqQA4M8G5e0rJg39JtyZRyQ98I3
+	 9WEUSUH4OVVmcZ9bilmxINV4lyu1DXvx/a0fUu6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 037/104] powerpc: dts: t1040rdb: fix compatible string for Rev A boards
-Date: Wed, 15 Mar 2023 13:12:08 +0100
-Message-Id: <20230315115733.562370556@linuxfoundation.org>
+Subject: [PATCH 5.10 071/104] macintosh: windfarm: Use unsigned type for 1-bit bitfields
+Date: Wed, 15 Mar 2023 13:12:42 +0100
+Message-Id: <20230315115734.908387088@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -35,34 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit ae44f1c9d1fc54aeceb335fedb1e73b2c3ee4561 ]
+[ Upstream commit 748ea32d2dbd813d3bd958117bde5191182f909a ]
 
-It looks like U-Boot fails to start the kernel properly when the
-compatible string of the board isn't fsl,T1040RDB, so stop overriding it
-from the rev-a.dts.
+Clang warns:
 
-Fixes: 5ebb74749202 ("powerpc: dts: t1040rdb: fix ports names for Seville Ethernet switch")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  drivers/macintosh/windfarm_lm75_sensor.c:63:14: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
+                  lm->inited = 1;
+                             ^ ~
+
+  drivers/macintosh/windfarm_smu_sensors.c:356:19: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
+                  pow->fake_volts = 1;
+                                  ^ ~
+  drivers/macintosh/windfarm_smu_sensors.c:368:18: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
+                  pow->quadratic = 1;
+                                 ^ ~
+
+There is no bug here since no code checks the actual value of these
+fields, just whether or not they are zero (boolean context), but this
+can be easily fixed by switching to an unsigned type.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20230215-windfarm-wsingle-bit-bitfield-constant-conversion-v1-1-26415072e855@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/dts/fsl/t1040rdb-rev-a.dts | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/macintosh/windfarm_lm75_sensor.c | 4 ++--
+ drivers/macintosh/windfarm_smu_sensors.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/boot/dts/fsl/t1040rdb-rev-a.dts b/arch/powerpc/boot/dts/fsl/t1040rdb-rev-a.dts
-index 73f8c998c64df..d4f5f159d6f23 100644
---- a/arch/powerpc/boot/dts/fsl/t1040rdb-rev-a.dts
-+++ b/arch/powerpc/boot/dts/fsl/t1040rdb-rev-a.dts
-@@ -10,7 +10,6 @@
+diff --git a/drivers/macintosh/windfarm_lm75_sensor.c b/drivers/macintosh/windfarm_lm75_sensor.c
+index 29f48c2028b6d..e90ad1b78e936 100644
+--- a/drivers/macintosh/windfarm_lm75_sensor.c
++++ b/drivers/macintosh/windfarm_lm75_sensor.c
+@@ -34,8 +34,8 @@
+ #endif
  
- / {
- 	model = "fsl,T1040RDB-REV-A";
--	compatible = "fsl,T1040RDB-REV-A";
+ struct wf_lm75_sensor {
+-	int			ds1775 : 1;
+-	int			inited : 1;
++	unsigned int		ds1775 : 1;
++	unsigned int		inited : 1;
+ 	struct i2c_client	*i2c;
+ 	struct wf_sensor	sens;
  };
- 
- &seville_port0 {
+diff --git a/drivers/macintosh/windfarm_smu_sensors.c b/drivers/macintosh/windfarm_smu_sensors.c
+index c8706cfb83fd8..714c1e14074ed 100644
+--- a/drivers/macintosh/windfarm_smu_sensors.c
++++ b/drivers/macintosh/windfarm_smu_sensors.c
+@@ -273,8 +273,8 @@ struct smu_cpu_power_sensor {
+ 	struct list_head	link;
+ 	struct wf_sensor	*volts;
+ 	struct wf_sensor	*amps;
+-	int			fake_volts : 1;
+-	int			quadratic : 1;
++	unsigned int		fake_volts : 1;
++	unsigned int		quadratic : 1;
+ 	struct wf_sensor	sens;
+ };
+ #define to_smu_cpu_power(c) container_of(c, struct smu_cpu_power_sensor, sens)
 -- 
 2.39.2
 
