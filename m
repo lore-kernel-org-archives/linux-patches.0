@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77294431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E506C433D2;
-	Wed, 15 Mar 2023 12:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E21C4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:42:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BB3C433A0;
+	Wed, 15 Mar 2023 12:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884149;
-	bh=W1QfcQHVZVFp9rQvEhfqJH+RvdNqkFLq8fN0NrQTBe0=;
+	s=korg; t=1678884152;
+	bh=DPZpLSLmivjXqHgqKrWf6GAVvKyC6A0BvTqqTbumI7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGThEjWXj/WNb0yeO5J3jz1Yj9xcZ4VaSSZkj9hlT59rOmK+HbGzErXbU3gxiX8lW
-	 uGnxzIllTkAC/YlUZCWPtvvX2TOt/rQ7Mw1y7ly9/1ZcnheoTCGg0qF0Xbj63w83Q5
-	 YilKQll2MofBbYdRyvUEacw4CJjg0c73OZy8T4Mw=
+	b=y08ks6SVyj6PRoPJYI7ppj1qeiMzG3i02AvZHhUnLP1jKKAz6bqsRybM5+Ey2vwFP
+	 e254CGfKNkTe3htrAt0RvG3/ysghF2ujYM2X5Vgv9jlyfEjcA4GmGSo6CBcdgo7FsZ
+	 2mLYmpqz4z2cOVaxPcknJEvnvcMphFHqlKayhiHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	flole@flole.de,
+	Jan Kara <jack@suse.cz>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 125/141] powerpc/bpf/32: Only set a stack frame when necessary
-Date: Wed, 15 Mar 2023 13:13:48 +0100
-Message-Id: <20230315115743.797732280@linuxfoundation.org>
+Subject: [PATCH 6.2 099/141] NFSD: Protect against filesystem freezing
+Date: Wed, 15 Mar 2023 13:13:22 +0100
+Message-Id: <20230315115743.016974086@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -35,78 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit d084dcf256bc4565b4b1af9b00297ac7b51c7049 ]
+[ Upstream commit fd9a2e1d513823e840960cb3bc26d8b7749d4ac2 ]
 
-Until now a stack frame was set at all time due to the need
-to keep tail call counter in the stack.
+Flole observes this WARNING on occasion:
 
-But since commit 89d21e259a94 ("powerpc/bpf/32: Fix Oops on tail call
-tests") the tail call counter is passed via register r4. It is therefore
-not necessary anymore to have a stack frame for that.
+[1210423.486503] WARNING: CPU: 8 PID: 1524732 at fs/ext4/ext4_jbd2.c:75 ext4_journal_check_start+0x68/0xb0
 
-Just like PPC64, implement bpf_has_stack_frame() and only sets the frame
-when needed.
-
-The difference with PPC64 is that PPC32 doesn't have a redzone, so
-the stack is required as soon as non volatile registers are used or
-when tail call count is set up.
-
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-[mpe: Fix commit reference in change log]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/62d7b654a3cfe73d998697cb29bbc5ffd89bfdb1.1675245773.git.christophe.leroy@csgroup.eu
+Reported-by: <flole@flole.de>
+Suggested-by: Jan Kara <jack@suse.cz>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217123
+Fixes: 73da852e3831 ("nfsd: use vfs_iter_read/write")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/net/bpf_jit_comp32.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ fs/nfsd/vfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/net/bpf_jit_comp32.c b/arch/powerpc/net/bpf_jit_comp32.c
-index a379b0ce19ffa..8643b2c8b76ef 100644
---- a/arch/powerpc/net/bpf_jit_comp32.c
-+++ b/arch/powerpc/net/bpf_jit_comp32.c
-@@ -79,6 +79,20 @@ static int bpf_jit_stack_offsetof(struct codegen_context *ctx, int reg)
- #define SEEN_NVREG_FULL_MASK	0x0003ffff /* Non volatile registers r14-r31 */
- #define SEEN_NVREG_TEMP_MASK	0x00001e01 /* BPF_REG_5, BPF_REG_AX, TMP_REG */
- 
-+static inline bool bpf_has_stack_frame(struct codegen_context *ctx)
-+{
-+	/*
-+	 * We only need a stack frame if:
-+	 * - we call other functions (kernel helpers), or
-+	 * - we use non volatile registers, or
-+	 * - we use tail call counter
-+	 * - the bpf program uses its stack area
-+	 * The latter condition is deduced from the usage of BPF_REG_FP
-+	 */
-+	return ctx->seen & (SEEN_FUNC | SEEN_TAILCALL | SEEN_NVREG_FULL_MASK) ||
-+	       bpf_is_seen_register(ctx, bpf_to_ppc(BPF_REG_FP));
-+}
-+
- void bpf_jit_realloc_regs(struct codegen_context *ctx)
- {
- 	unsigned int nvreg_mask;
-@@ -118,7 +132,8 @@ void bpf_jit_build_prologue(u32 *image, struct codegen_context *ctx)
- 
- #define BPF_TAILCALL_PROLOGUE_SIZE	4
- 
--	EMIT(PPC_RAW_STWU(_R1, _R1, -BPF_PPC_STACKFRAME(ctx)));
-+	if (bpf_has_stack_frame(ctx))
-+		EMIT(PPC_RAW_STWU(_R1, _R1, -BPF_PPC_STACKFRAME(ctx)));
- 
- 	if (ctx->seen & SEEN_TAILCALL)
- 		EMIT(PPC_RAW_STW(_R4, _R1, bpf_jit_stack_offsetof(ctx, BPF_PPC_TC)));
-@@ -171,7 +186,8 @@ static void bpf_jit_emit_common_epilogue(u32 *image, struct codegen_context *ctx
- 		EMIT(PPC_RAW_LWZ(_R0, _R1, BPF_PPC_STACKFRAME(ctx) + PPC_LR_STKOFF));
- 
- 	/* Tear down our stack frame */
--	EMIT(PPC_RAW_ADDI(_R1, _R1, BPF_PPC_STACKFRAME(ctx)));
-+	if (bpf_has_stack_frame(ctx))
-+		EMIT(PPC_RAW_ADDI(_R1, _R1, BPF_PPC_STACKFRAME(ctx)));
- 
- 	if (ctx->seen & SEEN_FUNC)
- 		EMIT(PPC_RAW_MTLR(_R0));
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 4c3a0d84043c9..bb1e85586dfdd 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1100,7 +1100,9 @@ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
+ 	since = READ_ONCE(file->f_wb_err);
+ 	if (verf)
+ 		nfsd_copy_write_verifier(verf, nn);
++	file_start_write(file);
+ 	host_err = vfs_iter_write(file, &iter, &pos, flags);
++	file_end_write(file);
+ 	if (host_err < 0) {
+ 		nfsd_reset_write_verifier(nn);
+ 		trace_nfsd_writeverf_reset(nn, rqstp, host_err);
 -- 
 2.39.2
 
