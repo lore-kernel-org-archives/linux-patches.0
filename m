@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CB84431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6DCC433D2;
-	Wed, 15 Mar 2023 12:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9694431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9761DC4339C;
+	Wed, 15 Mar 2023 12:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883040;
-	bh=R4MN49f155TioWtNHt/MnyrxvGq4lKdgbq4h84Uv6B4=;
+	s=korg; t=1678883043;
+	bh=ehg2JKlyr2zKGKqflwewDpcpt2yXfdD+/RXqAVPewWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vUQvpdeAQmpmX0n6R1bvu1SDZOhxcBwHvkZZDsDls85OmH3eK/+SaMBsTh8u2kyZf
-	 pAERDc+8DLfV0khqvfc3uvr5MobSnQ1vKfolvbexTzM1DackxdNkMFEE7ZlQuMiHRL
-	 yFo7L0N9KwJhUIFpyIBMdeJP98c/lfRlZR44ijTQ=
+	b=ll9hk5/zX2i6ZURbbV5I4q7RZhKAu9XIhKXKsU4CmYeo7qGriT+RENAJvfs1cThUS
+	 kWuUXTlOOBpt/4Xs/IuorSFfbldRU0fL7mkV89QvTioqsD//Wp2BcBWIJLLTKJszXe
+	 TucvRVNleKoACxXh9sIgT/3hy/pBl82Pxi2sAfeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Tom Saeger <tom.saeger@oracle.com>
-Subject: [PATCH 5.10 097/104] powerpc/vmlinux.lds: Dont discard .rela* for relocatable builds
-Date: Wed, 15 Mar 2023 13:13:08 +0100
-Message-Id: <20230315115736.115786272@linuxfoundation.org>
+Subject: [PATCH 5.10 098/104] s390: define RUNTIME_DISCARD_EXIT to fix link error with GNU ld < 2.36
+Date: Wed, 15 Mar 2023 13:13:09 +0100
+Message-Id: <20230315115736.155825737@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -34,55 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit 07b050f9290ee012a407a0f64151db902a1520f5 upstream.
+commit a494398bde273143c2352dd373cad8211f7d94b2 upstream.
 
-Relocatable kernels must not discard relocations, they need to be
-processed at runtime. As such they are included for CONFIG_RELOCATABLE
-builds in the powerpc linker script (line 340).
+Nathan Chancellor reports that the s390 vmlinux fails to link with
+GNU ld < 2.36 since commit 99cb0d917ffa ("arch: fix broken BuildID
+for arm64 and riscv").
 
-However they are also unconditionally discarded later in the
-script (line 414). Previously that worked because the earlier inclusion
-superseded the discard.
+It happens for defconfig, or more specifically for CONFIG_EXPOLINE=y.
 
-However commit 99cb0d917ffa ("arch: fix broken BuildID for arm64 and
-riscv") introduced an earlier use of DISCARD as part of the RO_DATA
-macro (line 137). With binutils < 2.36 that causes the DISCARD
-directives later in the script to be applied earlier, causing .rela* to
-actually be discarded at link time, leading to build warnings and a
-kernel that doesn't boot:
+  $ s390x-linux-gnu-ld --version | head -n1
+  GNU ld (GNU Binutils for Debian) 2.35.2
+  $ make -s ARCH=s390 CROSS_COMPILE=s390x-linux-gnu- allnoconfig
+  $ ./scripts/config -e CONFIG_EXPOLINE
+  $ make -s ARCH=s390 CROSS_COMPILE=s390x-linux-gnu- olddefconfig
+  $ make -s ARCH=s390 CROSS_COMPILE=s390x-linux-gnu-
+  `.exit.text' referenced in section `.s390_return_reg' of drivers/base/dd.o: defined in discarded section `.exit.text' of drivers/base/dd.o
+  make[1]: *** [scripts/Makefile.vmlinux:34: vmlinux] Error 1
+  make: *** [Makefile:1252: vmlinux] Error 2
 
-  ld: warning: discarding dynamic section .rela.init.rodata
+arch/s390/kernel/vmlinux.lds.S wants to keep EXIT_TEXT:
 
-Fix it by conditionally discarding .rela* only when CONFIG_RELOCATABLE
-is disabled.
+        .exit.text : {
+                EXIT_TEXT
+        }
+
+But, at the same time, EXIT_TEXT is thrown away by DISCARD because
+s390 does not define RUNTIME_DISCARD_EXIT.
+
+I still do not understand why the latter wins after 99cb0d917ffa,
+but defining RUNTIME_DISCARD_EXIT seems correct because the comment
+line in arch/s390/kernel/vmlinux.lds.S says:
+
+        /*
+         * .exit.text is discarded at runtime, not link time,
+         * to deal with references from __bug_table
+         */
+
+Nathan also found that binutils commit 21401fc7bf67 ("Duplicate output
+sections in scripts") cured this issue, so we cannot reproduce it with
+binutils 2.36+, but it is better to not rely on it.
 
 Fixes: 99cb0d917ffa ("arch: fix broken BuildID for arm64 and riscv")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-
-Link: https://lore.kernel.org/r/20230105132349.384666-2-mpe@ellerman.id.au
+Link: https://lore.kernel.org/all/Y7Jal56f6UBh1abE@dev-arch.thelio-3990X/
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://lore.kernel.org/r/20230105031306.1455409-1-masahiroy@kernel.org
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Tom Saeger <tom.saeger@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/vmlinux.lds.S |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/s390/kernel/vmlinux.lds.S |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/powerpc/kernel/vmlinux.lds.S
-+++ b/arch/powerpc/kernel/vmlinux.lds.S
-@@ -379,9 +379,12 @@ SECTIONS
- 	DISCARDS
- 	/DISCARD/ : {
- 		*(*.EMB.apuinfo)
--		*(.glink .iplt .plt .rela* .comment)
-+		*(.glink .iplt .plt .comment)
- 		*(.gnu.version*)
- 		*(.gnu.attributes)
- 		*(.eh_frame)
-+#ifndef CONFIG_RELOCATABLE
-+		*(.rela*)
-+#endif
- 	}
- }
+--- a/arch/s390/kernel/vmlinux.lds.S
++++ b/arch/s390/kernel/vmlinux.lds.S
+@@ -15,6 +15,8 @@
+ /* Handle ro_after_init data on our own. */
+ #define RO_AFTER_INIT_DATA
+ 
++#define RUNTIME_DISCARD_EXIT
++
+ #define EMITS_PT_NOTE
+ 
+ #include <asm-generic/vmlinux.lds.h>
 
 
