@@ -1,84 +1,170 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF844431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:14:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C6AC433D2;
-	Wed, 15 Mar 2023 12:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7494431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:15:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D181DC433EF;
+	Wed, 15 Mar 2023 12:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882498;
-	bh=YLUX+0MKoiUcBJMXMHPYY5KgnAF/EKTOrSR6KxpEeYc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nwMLqEv2GXaSkUQii9VaNxnCUzrin5tjGzBuntPYXZ34UxG+QiXN8pXzmOuEoEUps
-	 ntaffLt3BsDFCfFiy/GgK74Q3AHBpgUeVUVtMTUlMMtxMkc7jndZ1EhFYqOA/tl537
-	 g4zl/5Nw/CDgK266x5LA9BjIC54nYDdBSfITufBY=
+	s=korg; t=1678882501;
+	bh=pxhJVqWJBbgiL+m3yUqsKzYrPva8CDb+w279R5bYCGc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=avXvPJ2nVv8wPArxfcWqtsvglrJlh3foHGUBm0bOG0ElARampqc794OrXzyzYc5z/
+	 sOy31nw8yGBYGnCyqkp0iSmt+/I0PeTBrnK+Nf9evnPqraR9ZhZgK2T/tA+a8RIAK0
+	 +LbCRFBIBeg9jYT0xn6zOV8M3I8mm+7YNgSqRXIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Chen <void0red@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 09/21] nfc: fdp: add null check of devm_kmalloc_array in fdp_nci_i2c_read_device_properties
-Date: Wed, 15 Mar 2023 13:12:32 +0100
-Message-Id: <20230315115719.177773008@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 4.14 00/21] 4.14.310-rc1 review
+Date: Wed, 15 Mar 2023 13:12:23 +0100
+Message-Id: <20230315115718.796692048@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230315115718.796692048@linuxfoundation.org>
-References: <20230315115718.796692048@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.310-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.14.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.14.310-rc1
+X-KernelTest-Deadline: 2023-03-17T11:57+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Kang Chen <void0red@gmail.com>
+This is the start of the stable review cycle for the 4.14.310 release.
+There are 21 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-[ Upstream commit 11f180a5d62a51b484e9648f9b310e1bd50b1a57 ]
+Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
+Anything received after that time might be too late.
 
-devm_kmalloc_array may fails, *fw_vsc_cfg might be null and cause
-out-of-bounds write in device_property_read_u8_array later.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.310-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+and the diffstat can be found below.
 
-Fixes: a06347c04c13 ("NFC: Add Intel Fields Peak NFC solution driver")
-Signed-off-by: Kang Chen <void0red@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230227093037.907654-1-void0red@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/nfc/fdp/i2c.c | 4 ++++
- 1 file changed, 4 insertions(+)
+thanks,
 
-diff --git a/drivers/nfc/fdp/i2c.c b/drivers/nfc/fdp/i2c.c
-index 4020c11a9415b..3c543981ea180 100644
---- a/drivers/nfc/fdp/i2c.c
-+++ b/drivers/nfc/fdp/i2c.c
-@@ -263,6 +263,9 @@ static void fdp_nci_i2c_read_device_properties(struct device *dev,
- 					   len * sizeof(**fw_vsc_cfg),
- 					   GFP_KERNEL);
- 
-+		if (!*fw_vsc_cfg)
-+			goto alloc_err;
-+
- 		r = device_property_read_u8_array(dev, FDP_DP_FW_VSC_CFG_NAME,
- 						  *fw_vsc_cfg, len);
- 
-@@ -276,6 +279,7 @@ static void fdp_nci_i2c_read_device_properties(struct device *dev,
- 		*fw_vsc_cfg = NULL;
- 	}
- 
-+alloc_err:
- 	dev_dbg(dev, "Clock type: %d, clock frequency: %d, VSC: %s",
- 		*clock_type, *clock_freq, *fw_vsc_cfg != NULL ? "yes" : "no");
- }
--- 
-2.39.2
+greg k-h
 
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.14.310-rc1
+
+Rhythm Mahajan <rhythm.m.mahajan@oracle.com>
+    x86/cpu: Fix LFENCE serialization check in init_amd()
+
+John Harrison <John.C.Harrison@Intel.com>
+    drm/i915: Don't use BAR mappings for ring buffers with LLC
+
+Tung Nguyen <tung.q.nguyen@dektech.com.au>
+    tipc: improve function tipc_wait_for_cond()
+
+Paul Elder <paul.elder@ideasonboard.com>
+    media: ov5640: Fix analogue gain control
+
+Alvaro Karsz <alvaro.karsz@solid-run.com>
+    PCI: Avoid FLR for SolidRun SNET DPU rev 1
+
+Alvaro Karsz <alvaro.karsz@solid-run.com>
+    PCI: Add SolidRun vendor ID
+
+Nathan Chancellor <nathan@kernel.org>
+    macintosh: windfarm: Use unsigned type for 1-bit bitfields
+
+Edward Humes <aurxenon@lunos.org>
+    alpha: fix R_ALPHA_LITERAL reloc for large modules
+
+xurui <xurui@kylinos.cn>
+    MIPS: Fix a compilation issue
+
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+    clk: qcom: mmcc-apq8084: remove spdm clocks
+
+Shigeru Yoshida <syoshida@redhat.com>
+    net: caif: Fix use-after-free in cfusbl_device_notify()
+
+Eric Dumazet <edumazet@google.com>
+    ila: do not generate empty messages in ila_xlat_nl_cmd_get_mapping()
+
+Kang Chen <void0red@gmail.com>
+    nfc: fdp: add null check of devm_kmalloc_array in fdp_nci_i2c_read_device_properties
+
+Fedor Pchelkin <pchelkin@ispras.ru>
+    nfc: change order inside nfc_se_io error path
+
+Zhihao Cheng <chengzhihao1@huawei.com>
+    ext4: zero i_disksize when initializing the bootloader inode
+
+Ye Bin <yebin10@huawei.com>
+    ext4: fix WARNING in ext4_update_inline_data
+
+Ye Bin <yebin10@huawei.com>
+    ext4: move where set the MAY_INLINE_DATA flag is set
+
+Darrick J. Wong <djwong@kernel.org>
+    ext4: fix another off-by-one fsmap error on 1k block filesystems
+
+Eric Whitney <enwlinux@gmail.com>
+    ext4: fix RENAME_WHITEOUT handling for inline directories
+
+Andrew Cooper <andrew.cooper3@citrix.com>
+    x86/CPU/AMD: Disable XSAVES on AMD family 0x17
+
+Theodore Ts'o <tytso@mit.edu>
+    fs: prevent out-of-bounds array speculation when closing a file descriptor
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                 |   4 +-
+ arch/alpha/kernel/module.c               |   4 +-
+ arch/mips/include/asm/mach-rc32434/pci.h |   2 +-
+ arch/x86/kernel/cpu/amd.c                |  11 +-
+ drivers/clk/qcom/mmcc-apq8084.c          | 271 -------------------------------
+ drivers/gpu/drm/i915/intel_ringbuffer.c  |   4 +-
+ drivers/macintosh/windfarm_lm75_sensor.c |   4 +-
+ drivers/macintosh/windfarm_smu_sensors.c |   4 +-
+ drivers/media/i2c/ov5640.c               |   2 +-
+ drivers/nfc/fdp/i2c.c                    |   4 +
+ drivers/pci/quirks.c                     |   8 +
+ fs/ext4/fsmap.c                          |   2 +
+ fs/ext4/inline.c                         |   1 -
+ fs/ext4/inode.c                          |   7 +-
+ fs/ext4/ioctl.c                          |   1 +
+ fs/ext4/namei.c                          |  13 +-
+ fs/ext4/xattr.c                          |   3 +
+ fs/file.c                                |   1 +
+ include/linux/pci_ids.h                  |   2 +
+ net/caif/caif_usb.c                      |   3 +
+ net/ipv6/ila/ila_xlat.c                  |   1 +
+ net/nfc/netlink.c                        |   2 +-
+ net/tipc/socket.c                        |   2 +-
+ 23 files changed, 61 insertions(+), 295 deletions(-)
 
 
