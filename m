@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88064431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:22:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C927C433EF;
-	Wed, 15 Mar 2023 12:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDEB4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:22:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03CDBC433EF;
+	Wed, 15 Mar 2023 12:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882927;
-	bh=QJSOPGkwVF0wW/Y1ZzPHP2XsMg3TTkuq4bsBm5nEq2M=;
+	s=korg; t=1678882930;
+	bh=IjKDmlwL/9JvXm2JvnEC+xEDCkhuc99zzFIJpGcwaoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hBu4mIE6Co3WyUAxFQJgJ9xYO4aghfJT/QX9F9HNpjJLtDUofFEPI96Dvy1A32W7y
-	 l7aNNlP37bfVSoTcBkMPJJIuTMYcgNL2Jqo7xQa8Puk0U9/aRlcRn+CqMpjZ7+le/C
-	 ZbAy7C9Yk0AJi5IaLYjACX6+bOncM9ZmEO9iUXz8=
+	b=gCIAtC3aHsntR/b0yUOk+gMdnCF2/88wL4UxOpZRA8cTlBQiaWQbuw2eQHfN/b08v
+	 677PT+BFjGvbn2w0qZOeTNwqOYO7Pf/Cd8CGRyhSGBaAJn919eYPjwAbqXDw3MKRh6
+	 nTFFZmdnh0/u+0G1dJd6EInXNO1Ktdqsb2153eAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Changbin Du <changbin.du@gmail.com>,
-	Palmer Dabbelt <palmerdabbelt@google.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	syzbot+9d16c39efb5fade84574@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 055/104] RISC-V: Dont check text_mutex during stop_machine
-Date: Wed, 15 Mar 2023 13:12:26 +0100
-Message-Id: <20230315115734.284840356@linuxfoundation.org>
+Subject: [PATCH 5.10 056/104] ext4: Fix deadlock during directory rename
+Date: Wed, 15 Mar 2023 13:12:27 +0100
+Message-Id: <20230315115734.324670722@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -38,152 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 2a8db5ec4a28a0fce822d10224db9471a44b6925 ]
+[ Upstream commit 3c92792da8506a295afb6d032b4476e46f979725 ]
 
-We're currently using stop_machine() to update ftrace & kprobes, which
-means that the thread that takes text_mutex during may not be the same
-as the thread that eventually patches the code.  This isn't actually a
-race because the lock is still held (preventing any other concurrent
-accesses) and there is only one thread running during stop_machine(),
-but it does trigger a lockdep failure.
+As lockdep properly warns, we should not be locking i_rwsem while having
+transactions started as the proper lock ordering used by all directory
+handling operations is i_rwsem -> transaction start. Fix the lock
+ordering by moving the locking of the directory earlier in
+ext4_rename().
 
-This patch just elides the lockdep check during stop_machine.
-
-Fixes: c15ac4fd60d5 ("riscv/ftrace: Add dynamic function tracer support")
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Reported-by: Changbin Du <changbin.du@gmail.com>
-Signed-off-by: Palmer Dabbelt <palmerdabbelt@google.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20230303143754.4005217-1-conor.dooley@microchip.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Reported-by: syzbot+9d16c39efb5fade84574@syzkaller.appspotmail.com
+Fixes: 0813299c586b ("ext4: Fix possible corruption when moving a directory")
+Link: https://syzkaller.appspot.com/bug?extid=9d16c39efb5fade84574
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230301141004.15087-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/ftrace.h |    2 +-
- arch/riscv/include/asm/patch.h  |    2 ++
- arch/riscv/kernel/ftrace.c      |   14 ++++++++++++--
- arch/riscv/kernel/patch.c       |   28 +++++++++++++++++++++++++---
- 4 files changed, 40 insertions(+), 6 deletions(-)
+ fs/ext4/namei.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
---- a/arch/riscv/include/asm/ftrace.h
-+++ b/arch/riscv/include/asm/ftrace.h
-@@ -83,6 +83,6 @@ int ftrace_init_nop(struct module *mod,
- #define ftrace_init_nop ftrace_init_nop
- #endif
+diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
+index 17590bb769147..1f47aeca71422 100644
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -3863,10 +3863,20 @@ static int ext4_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 			return retval;
+ 	}
  
--#endif
-+#endif /* CONFIG_DYNAMIC_FTRACE */
- 
- #endif /* _ASM_RISCV_FTRACE_H */
---- a/arch/riscv/include/asm/patch.h
-+++ b/arch/riscv/include/asm/patch.h
-@@ -9,4 +9,6 @@
- int patch_text_nosync(void *addr, const void *insns, size_t len);
- int patch_text(void *addr, u32 insn);
- 
-+extern int riscv_patch_in_stop_machine;
-+
- #endif /* _ASM_RISCV_PATCH_H */
---- a/arch/riscv/kernel/ftrace.c
-+++ b/arch/riscv/kernel/ftrace.c
-@@ -15,11 +15,21 @@
- int ftrace_arch_code_modify_prepare(void) __acquires(&text_mutex)
- {
- 	mutex_lock(&text_mutex);
-+
 +	/*
-+	 * The code sequences we use for ftrace can't be patched while the
-+	 * kernel is running, so we need to use stop_machine() to modify them
-+	 * for now.  This doesn't play nice with text_mutex, we use this flag
-+	 * to elide the check.
++	 * We need to protect against old.inode directory getting converted
++	 * from inline directory format into a normal one.
 +	 */
-+	riscv_patch_in_stop_machine = true;
++	if (S_ISDIR(old.inode->i_mode))
++		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
 +
- 	return 0;
- }
- 
- int ftrace_arch_code_modify_post_process(void) __releases(&text_mutex)
- {
-+	riscv_patch_in_stop_machine = false;
- 	mutex_unlock(&text_mutex);
- 	return 0;
- }
-@@ -109,9 +119,9 @@ int ftrace_init_nop(struct module *mod,
- {
- 	int out;
- 
--	ftrace_arch_code_modify_prepare();
-+	mutex_lock(&text_mutex);
- 	out = ftrace_make_nop(mod, rec, MCOUNT_ADDR);
--	ftrace_arch_code_modify_post_process();
-+	mutex_unlock(&text_mutex);
- 
- 	return out;
- }
---- a/arch/riscv/kernel/patch.c
-+++ b/arch/riscv/kernel/patch.c
-@@ -11,6 +11,7 @@
- #include <asm/kprobes.h>
- #include <asm/cacheflush.h>
- #include <asm/fixmap.h>
-+#include <asm/ftrace.h>
- #include <asm/patch.h>
- 
- struct patch_insn {
-@@ -19,6 +20,8 @@ struct patch_insn {
- 	atomic_t cpu_count;
- };
- 
-+int riscv_patch_in_stop_machine = false;
+ 	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de,
+ 				 &old.inlined);
+-	if (IS_ERR(old.bh))
+-		return PTR_ERR(old.bh);
++	if (IS_ERR(old.bh)) {
++		retval = PTR_ERR(old.bh);
++		goto unlock_moved_dir;
++	}
 +
- #ifdef CONFIG_MMU
- static void *patch_map(void *addr, int fixmap)
- {
-@@ -55,8 +58,15 @@ static int patch_insn_write(void *addr,
- 	 * Before reaching here, it was expected to lock the text_mutex
- 	 * already, so we don't need to give another lock here and could
- 	 * ensure that it was safe between each cores.
-+	 *
-+	 * We're currently using stop_machine() for ftrace & kprobes, and while
-+	 * that ensures text_mutex is held before installing the mappings it
-+	 * does not ensure text_mutex is held by the calling thread.  That's
-+	 * safe but triggers a lockdep failure, so just elide it for that
-+	 * specific case.
- 	 */
--	lockdep_assert_held(&text_mutex);
-+	if (!riscv_patch_in_stop_machine)
-+		lockdep_assert_held(&text_mutex);
- 
- 	if (across_pages)
- 		patch_map(addr + len, FIX_TEXT_POKE1);
-@@ -117,13 +127,25 @@ NOKPROBE_SYMBOL(patch_text_cb);
- 
- int patch_text(void *addr, u32 insn)
- {
-+	int ret;
- 	struct patch_insn patch = {
- 		.addr = addr,
- 		.insn = insn,
- 		.cpu_count = ATOMIC_INIT(0),
- 	};
- 
--	return stop_machine_cpuslocked(patch_text_cb,
--				       &patch, cpu_online_mask);
-+	/*
-+	 * kprobes takes text_mutex, before calling patch_text(), but as we call
-+	 * calls stop_machine(), the lockdep assertion in patch_insn_write()
-+	 * gets confused by the context in which the lock is taken.
-+	 * Instead, ensure the lock is held before calling stop_machine(), and
-+	 * set riscv_patch_in_stop_machine to skip the check in
-+	 * patch_insn_write().
-+	 */
-+	lockdep_assert_held(&text_mutex);
-+	riscv_patch_in_stop_machine = true;
-+	ret = stop_machine_cpuslocked(patch_text_cb, &patch, cpu_online_mask);
-+	riscv_patch_in_stop_machine = false;
-+	return ret;
+ 	/*
+ 	 *  Check for inode number is _not_ due to possible IO errors.
+ 	 *  We might rmdir the source, keep it as pwd of some process
+@@ -3923,11 +3933,6 @@ static int ext4_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 			if (new.dir != old.dir && EXT4_DIR_LINK_MAX(new.dir))
+ 				goto end_rename;
+ 		}
+-		/*
+-		 * We need to protect against old.inode directory getting
+-		 * converted from inline directory format into a normal one.
+-		 */
+-		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
+ 		retval = ext4_rename_dir_prepare(handle, &old);
+ 		if (retval) {
+ 			inode_unlock(old.inode);
+@@ -4057,12 +4062,15 @@ static int ext4_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 	} else {
+ 		ext4_journal_stop(handle);
+ 	}
+-	if (old.dir_bh)
+-		inode_unlock(old.inode);
+ release_bh:
+ 	brelse(old.dir_bh);
+ 	brelse(old.bh);
+ 	brelse(new.bh);
++
++unlock_moved_dir:
++	if (S_ISDIR(old.inode->i_mode))
++		inode_unlock(old.inode);
++
+ 	return retval;
  }
- NOKPROBE_SYMBOL(patch_text);
+ 
+-- 
+2.39.2
+
 
 
