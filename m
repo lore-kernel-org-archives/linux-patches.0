@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADAB4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51AE9C4339B;
-	Wed, 15 Mar 2023 12:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6956C4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A1FC433D2;
+	Wed, 15 Mar 2023 12:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883831;
-	bh=sEBZsUUTh+fwbJ4dbRH653Ap5d0bADfCoSj/ADKDHj8=;
+	s=korg; t=1678883834;
+	bh=472eO7hMRZYeAIBmNoAbzfIu+41jxoIM6eyjzAmbC7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IH3ONMgGd0Z6KvznB/vx0EainTIVxRuvDSEFh3zN2Us/R0UodEWiLo4FrcH2NKfGm
-	 qa7OYg4lHacWCkIEm5oZZKkqGh01hVEnh+w/UxyoTn875F2bcI8Jsi4uCTVopHBtov
-	 LXtimqmCkeq0tLwsw0kT7ozXbBTEmSkBeq8I6xKY=
+	b=rLh3hl2S9vxb6Ikev+HTZworgVpCHn7ezPPBMxUNo0gg4Nthp3e8i4X5GxR1Ih5/r
+	 Nxjlh5kBVymFZ6ufYnBmHhEO3qTR+PZkUu0FONnSyLBVlYZhNHItfXFGETJ9gNNCj1
+	 Slwvkx8sZouKPDRIxEvUKDS/gXsRb/fWFUOO6rak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Rob Clark <robdclark@chromium.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Ross Zwisler <zwisler@kernel.org>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Rob Clark <robdclark@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 118/143] adreno: Shutdown the GPU properly
-Date: Wed, 15 Mar 2023 13:13:24 +0100
-Message-Id: <20230315115744.091880130@linuxfoundation.org>
+Subject: [PATCH 6.1 119/143] drm/msm/adreno: fix runtime PM imbalance at unbind
+Date: Wed, 15 Mar 2023 13:13:25 +0100
+Message-Id: <20230315115744.125890110@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -39,102 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joel Fernandes (Google) <joel@joelfernandes.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit e752e5454e6417da3f40ec1306a041ea96c56423 ]
+[ Upstream commit 6153c44392b04ff2da1e9aa82ba87da9ab9a0fc1 ]
 
-During kexec on ARM device, we notice that device_shutdown() only calls
-pm_runtime_force_suspend() while shutting down the GPU. This means the GPU
-kthread is still running and further, there maybe active submits.
+A recent commit moved enabling of runtime PM from adreno_gpu_init() to
+adreno_load_gpu() (called on first open()), which means that unbind()
+may now be called with runtime PM disabled in case the device was never
+opened in between.
 
-This causes all kinds of issues during a kexec reboot:
+Make sure to only forcibly suspend and disable runtime PM at unbind() in
+case runtime PM has been enabled to prevent a disable count imbalance.
 
-Warning from shutdown path:
+This specifically avoids leaving runtime PM disabled when the device
+is later opened after a successful bind:
 
-[  292.509662] WARNING: CPU: 0 PID: 6304 at [...] adreno_runtime_suspend+0x3c/0x44
-[  292.509863] Hardware name: Google Lazor (rev3 - 8) with LTE (DT)
-[  292.509872] pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  292.509881] pc : adreno_runtime_suspend+0x3c/0x44
-[  292.509891] lr : pm_generic_runtime_suspend+0x30/0x44
-[  292.509905] sp : ffffffc014473bf0
-[...]
-[  292.510043] Call trace:
-[  292.510051]  adreno_runtime_suspend+0x3c/0x44
-[  292.510061]  pm_generic_runtime_suspend+0x30/0x44
-[  292.510071]  pm_runtime_force_suspend+0x54/0xc8
-[  292.510081]  adreno_shutdown+0x1c/0x28
-[  292.510090]  platform_shutdown+0x2c/0x38
-[  292.510104]  device_shutdown+0x158/0x210
-[  292.510119]  kernel_restart_prepare+0x40/0x4c
+	msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* Couldn't power up the GPU: -13
 
-And here from GPU kthread, an SError OOPs:
-
-[  192.648789]  el1h_64_error+0x7c/0x80
-[  192.648812]  el1_interrupt+0x20/0x58
-[  192.648833]  el1h_64_irq_handler+0x18/0x24
-[  192.648854]  el1h_64_irq+0x7c/0x80
-[  192.648873]  local_daif_inherit+0x10/0x18
-[  192.648900]  el1h_64_sync_handler+0x48/0xb4
-[  192.648921]  el1h_64_sync+0x7c/0x80
-[  192.648941]  a6xx_gmu_set_oob+0xbc/0x1fc
-[  192.648968]  a6xx_hw_init+0x44/0xe38
-[  192.648991]  msm_gpu_hw_init+0x48/0x80
-[  192.649013]  msm_gpu_submit+0x5c/0x1a8
-[  192.649034]  msm_job_run+0xb0/0x11c
-[  192.649058]  drm_sched_main+0x170/0x434
-[  192.649086]  kthread+0x134/0x300
-[  192.649114]  ret_from_fork+0x10/0x20
-
-Fix by calling adreno_system_suspend() in the device_shutdown() path.
-
-[ Applied Rob Clark feedback on fixing adreno_unbind() similarly, also
-  tested as above. ]
-
-Cc: Rob Clark <robdclark@chromium.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Ricardo Ribalda <ribalda@chromium.org>
-Cc: Ross Zwisler <zwisler@kernel.org>
-Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Rob Clark <robdclark@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/517633/
-Link: https://lore.kernel.org/r/20230109222547.1368644-1-joel@joelfernandes.org
+Fixes: 4b18299b3365 ("drm/msm/adreno: Defer enabling runpm until hw_init()")
+Reported-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Link: https://lore.kernel.org/lkml/20230203181245.3523937-1-quic_bjorande@quicinc.com
+Cc: stable@vger.kernel.org	# 6.0
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Patchwork: https://patchwork.freedesktop.org/patch/523549/
+Link: https://lore.kernel.org/r/20230221101430.14546-2-johan+linaro@kernel.org
 Signed-off-by: Rob Clark <robdclark@chromium.org>
-Stable-dep-of: 6153c44392b0 ("drm/msm/adreno: fix runtime PM imbalance at unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 628806423f7d2..36f062c7582f9 100644
+index 36f062c7582f9..c5c4c93b3689c 100644
 --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
 +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -551,13 +551,14 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
- 	return 0;
- }
- 
-+static int adreno_system_suspend(struct device *dev);
- static void adreno_unbind(struct device *dev, struct device *master,
- 		void *data)
- {
+@@ -558,7 +558,8 @@ static void adreno_unbind(struct device *dev, struct device *master,
  	struct msm_drm_private *priv = dev_get_drvdata(master);
  	struct msm_gpu *gpu = dev_to_gpu(dev);
  
--	pm_runtime_force_suspend(dev);
-+	WARN_ON_ONCE(adreno_system_suspend(dev));
+-	WARN_ON_ONCE(adreno_system_suspend(dev));
++	if (pm_runtime_enabled(dev))
++		WARN_ON_ONCE(adreno_system_suspend(dev));
  	gpu->funcs->destroy(gpu);
  
  	priv->gpu_pdev = NULL;
-@@ -609,7 +610,7 @@ static int adreno_remove(struct platform_device *pdev)
- 
- static void adreno_shutdown(struct platform_device *pdev)
- {
--	pm_runtime_force_suspend(&pdev->dev);
-+	WARN_ON_ONCE(adreno_system_suspend(&pdev->dev));
- }
- 
- static const struct of_device_id dt_match[] = {
 -- 
 2.39.2
 
