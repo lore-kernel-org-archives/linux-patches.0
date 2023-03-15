@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B054431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:41:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B757C4339B;
-	Wed, 15 Mar 2023 12:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585BE4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:41:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA45EC433EF;
+	Wed, 15 Mar 2023 12:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884065;
-	bh=EEaSLg5I0mxMPHW2OzHjCNFAD5jE5zPg2goGsXWRWbk=;
+	s=korg; t=1678884068;
+	bh=33pd0KRJlrLYoDXcw041jL3LWxEhNNixn/bwu3atCXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HDpy1rb87PXCUIQLQyvfy8MTUDOnM7sweJudSEMqVa/np+SKht4JrBxSV9pNbdMYM
-	 DVraIUes8Hc275ltSjdUST1W5u6Nh9P9kjhGR+Yyuj6mFCxGQz1cgjPBvvhxZUjLyE
-	 3RVBMwaw2v9x/wlBaoT60B0hkfMCedzOsH3uObhc=
+	b=hSaEv2NZ7RHm9O34OLumeWhoVWeiHz4rhnk8zsi8dElLkLuKGmHjRt0SkJNbwqebs
+	 JX9mSwiSKHSER6Y7fxK+L5pAARPOA0i4aPlIunorSmSih1r8lgqA9rIC9APfWoUGRG
+	 DVSidVBzlx3IkeqYaWddlwbMEXUabkYpnZMf9yHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Petr Oros <poros@redhat.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 093/141] netfilter: conntrack: adopt safer max chain length
-Date: Wed, 15 Mar 2023 13:13:16 +0100
-Message-Id: <20230315115742.824111283@linuxfoundation.org>
+Subject: [PATCH 6.2 067/141] ice: copy last block omitted in ice_get_module_eeprom()
+Date: Wed, 15 Mar 2023 13:12:50 +0100
+Message-Id: <20230315115741.989802704@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -35,51 +36,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit c77737b736ceb50fdf150434347dbd81ec76dbb1 ]
+[ Upstream commit 84cba1840e68430325ac133a11be06bfb2f7acd8 ]
 
-Customers using GKE 1.25 and 1.26 are facing conntrack issues
-root caused to commit c9c3b6811f74 ("netfilter: conntrack: make
-max chain length random").
+ice_get_module_eeprom() is broken since commit e9c9692c8a81 ("ice:
+Reimplement module reads used by ethtool") In this refactor,
+ice_get_module_eeprom() reads the eeprom in blocks of size 8.
+But the condition that should protect the buffer overflow
+ignores the last block. The last block always contains zeros.
 
-Even if we assume Uniform Hashing, a bucket often reachs 8 chained
-items while the load factor of the hash table is smaller than 0.5
+Bug uncovered by ethtool upstream commit 9538f384b535
+("netlink: eeprom: Defer page requests to individual parsers")
+After this commit, ethtool reads a block with length = 1;
+to read the SFF-8024 identifier value.
 
-With a limit of 16, we reach load factors of 3.
-With a limit of 32, we reach load factors of 11.
-With a limit of 40, we reach load factors of 15.
-With a limit of 50, we reach load factors of 24.
+unpatched driver:
+$ ethtool -m enp65s0f0np0 offset 0x90 length 8
+Offset          Values
+------          ------
+0x0090:         00 00 00 00 00 00 00 00
+$ ethtool -m enp65s0f0np0 offset 0x90 length 12
+Offset          Values
+------          ------
+0x0090:         00 00 01 a0 4d 65 6c 6c 00 00 00 00
+$
 
-This patch changes MIN_CHAINLEN to 50, to minimize risks.
+$ ethtool -m enp65s0f0np0
+Offset          Values
+------          ------
+0x0000:         11 06 06 00 00 00 00 00 00 00 00 00 00 00 00 00
+0x0010:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+0x0020:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+0x0030:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+0x0040:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+0x0050:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+0x0060:         00 00 00 00 00 00 00 00 00 00 00 00 00 01 08 00
+0x0070:         00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 
-Ideally, we could in the future add a cushion based on expected
-load factor (2 * nf_conntrack_max / nf_conntrack_buckets),
-because some setups might expect unusual values.
+patched driver:
+$ ethtool -m enp65s0f0np0 offset 0x90 length 8
+Offset          Values
+------          ------
+0x0090:         00 00 01 a0 4d 65 6c 6c
+$ ethtool -m enp65s0f0np0 offset 0x90 length 12
+Offset          Values
+------          ------
+0x0090:         00 00 01 a0 4d 65 6c 6c 61 6e 6f 78
+$ ethtool -m enp65s0f0np0
+    Identifier                                : 0x11 (QSFP28)
+    Extended identifier                       : 0x00
+    Extended identifier description           : 1.5W max. Power consumption
+    Extended identifier description           : No CDR in TX, No CDR in RX
+    Extended identifier description           : High Power Class (> 3.5 W) not enabled
+    Connector                                 : 0x23 (No separable connector)
+    Transceiver codes                         : 0x88 0x00 0x00 0x00 0x00 0x00 0x00 0x00
+    Transceiver type                          : 40G Ethernet: 40G Base-CR4
+    Transceiver type                          : 25G Ethernet: 25G Base-CR CA-N
+    Encoding                                  : 0x05 (64B/66B)
+    BR, Nominal                               : 25500Mbps
+    Rate identifier                           : 0x00
+    Length (SMF,km)                           : 0km
+    Length (OM3 50um)                         : 0m
+    Length (OM2 50um)                         : 0m
+    Length (OM1 62.5um)                       : 0m
+    Length (Copper or Active cable)           : 1m
+    Transmitter technology                    : 0xa0 (Copper cable unequalized)
+    Attenuation at 2.5GHz                     : 4db
+    Attenuation at 5.0GHz                     : 5db
+    Attenuation at 7.0GHz                     : 7db
+    Attenuation at 12.9GHz                    : 10db
+    ........
+    ....
 
-Fixes: c9c3b6811f74 ("netfilter: conntrack: make max chain length random")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: e9c9692c8a81 ("ice: Reimplement module reads used by ethtool")
+Signed-off-by: Petr Oros <poros@redhat.com>
+Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Tested-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ethtool.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index ead11a9c261f3..19e3afb23fdaf 100644
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -96,8 +96,8 @@ static DEFINE_MUTEX(nf_conntrack_mutex);
- #define GC_SCAN_MAX_DURATION	msecs_to_jiffies(10)
- #define GC_SCAN_EXPIRED_MAX	(64000u / HZ)
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+index a359f1610fc19..8ca61610cec23 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -4314,6 +4314,8 @@ ice_get_module_eeprom(struct net_device *netdev,
+ 		 * SFP modules only ever use page 0.
+ 		 */
+ 		if (page == 0 || !(data[0x2] & 0x4)) {
++			u32 copy_len;
++
+ 			/* If i2c bus is busy due to slow page change or
+ 			 * link management access, call can fail. This is normal.
+ 			 * So we retry this a few times.
+@@ -4337,8 +4339,8 @@ ice_get_module_eeprom(struct net_device *netdev,
+ 			}
  
--#define MIN_CHAINLEN	8u
--#define MAX_CHAINLEN	(32u - MIN_CHAINLEN)
-+#define MIN_CHAINLEN	50u
-+#define MAX_CHAINLEN	(80u - MIN_CHAINLEN)
- 
- static struct conntrack_gc_work conntrack_gc_work;
- 
+ 			/* Make sure we have enough room for the new block */
+-			if ((i + SFF_READ_BLOCK_SIZE) < ee->len)
+-				memcpy(data + i, value, SFF_READ_BLOCK_SIZE);
++			copy_len = min_t(u32, SFF_READ_BLOCK_SIZE, ee->len - i);
++			memcpy(data + i, value, copy_len);
+ 		}
+ 	}
+ 	return 0;
 -- 
 2.39.2
 
