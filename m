@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D51D4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:22:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1534AC433EF;
-	Wed, 15 Mar 2023 12:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E184431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:22:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC36FC433D2;
+	Wed, 15 Mar 2023 12:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882943;
-	bh=g8LqNWo8ULGajspdQobRw2/BlnNPtxYZEW31rZA9jqc=;
+	s=korg; t=1678882946;
+	bh=1CxkcA4KxtzKe0vsTX1h8sBkP+I70lWHDOeifbXu0xQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wgiv2WxUvMRcQV7A2MmmKZTTDfq6XLPqsNyLbPhA4kghQDGwgTYPR97nsaJAAQ2da
-	 Vb3vZJ1ztvts4JGVc/QjAkWacdpOtY5aWxxv5Qb2DH4lTFGrc7UsTlOa0n+PSslUfM
-	 te1obrOruixAJDWSBtHcN9suZWaQpYrBPza+zTww=
+	b=iO8HrI4sZTQZnvJi4fv33tWV5PVKKpPLZvvlUdAM45KQUSel+Q5YLW6YdykmUyaAH
+	 Ezc1Nw2CKJ1uqhrZZy3DhHMep5I7PETGlq3L3k9VShYSNVV+ojUvgSAjScwx8Kxg5N
+	 8ohS8Ciud3p1JpmVNBQF8h9i/yGfTdDPM+MO/DNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erkki Eilonen <erkki@bearmetal.eu>,
-	Morten Linderud <morten@linderud.pw>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 060/104] tpm/eventlog: Dont abort tpm_read_log on faulty ACPI address
-Date: Wed, 15 Mar 2023 13:12:31 +0100
-Message-Id: <20230315115734.483969486@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>,
+	Khazhismel Kumykov <khazhy@google.com>
+Subject: [PATCH 5.10 061/104] block, bfq: fix possible uaf for bfqq->bic
+Date: Wed, 15 Mar 2023 13:12:32 +0100
+Message-Id: <20230315115734.513436006@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -36,71 +37,122 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Morten Linderud <morten@linderud.pw>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 80a6c216b16d7f5c584d2148c2e4345ea4eb06ce ]
+[ Upstream commit 64dc8c732f5c2b406cc752e6aaa1bd5471159cab ]
 
-tpm_read_log_acpi() should return -ENODEV when no eventlog from the ACPI
-table is found. If the firmware vendor includes an invalid log address
-we are unable to map from the ACPI memory and tpm_read_log() returns -EIO
-which would abort discovery of the eventlog.
+Our test report a uaf for 'bfqq->bic' in 5.10:
 
-Change the return value from -EIO to -ENODEV when acpi_os_map_iomem()
-fails to map the event log.
+==================================================================
+BUG: KASAN: use-after-free in bfq_select_queue+0x378/0xa30
 
-The following hardware was used to test this issue:
-    Framework Laptop (Pre-production)
-    BIOS: INSYDE Corp, Revision: 3.2
-    TPM Device: NTC, Firmware Revision: 7.2
+CPU: 6 PID: 2318352 Comm: fsstress Kdump: loaded Not tainted 5.10.0-60.18.0.50.h602.kasan.eulerosv2r11.x86_64 #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58-20220320_160524-szxrtosci10000 04/01/2014
+Call Trace:
+ bfq_select_queue+0x378/0xa30
+ bfq_dispatch_request+0xe8/0x130
+ blk_mq_do_dispatch_sched+0x62/0xb0
+ __blk_mq_sched_dispatch_requests+0x215/0x2a0
+ blk_mq_sched_dispatch_requests+0x8f/0xd0
+ __blk_mq_run_hw_queue+0x98/0x180
+ __blk_mq_delay_run_hw_queue+0x22b/0x240
+ blk_mq_run_hw_queue+0xe3/0x190
+ blk_mq_sched_insert_requests+0x107/0x200
+ blk_mq_flush_plug_list+0x26e/0x3c0
+ blk_finish_plug+0x63/0x90
+ __iomap_dio_rw+0x7b5/0x910
+ iomap_dio_rw+0x36/0x80
+ ext4_dio_read_iter+0x146/0x190 [ext4]
+ ext4_file_read_iter+0x1e2/0x230 [ext4]
+ new_sync_read+0x29f/0x400
+ vfs_read+0x24e/0x2d0
+ ksys_read+0xd5/0x1b0
+ do_syscall_64+0x33/0x40
+ entry_SYSCALL_64_after_hwframe+0x61/0xc6
 
-Dump of the faulty ACPI TPM2 table:
-    [000h 0000   4]                    Signature : "TPM2"    [Trusted Platform Module hardware interface Table]
-    [004h 0004   4]                 Table Length : 0000004C
-    [008h 0008   1]                     Revision : 04
-    [009h 0009   1]                     Checksum : 2B
-    [00Ah 0010   6]                       Oem ID : "INSYDE"
-    [010h 0016   8]                 Oem Table ID : "TGL-ULT"
-    [018h 0024   4]                 Oem Revision : 00000002
-    [01Ch 0028   4]              Asl Compiler ID : "ACPI"
-    [020h 0032   4]        Asl Compiler Revision : 00040000
+Commit 3bc5e683c67d ("bfq: Split shared queues on move between cgroups")
+changes that move process to a new cgroup will allocate a new bfqq to
+use, however, the old bfqq and new bfqq can point to the same bic:
 
-    [024h 0036   2]               Platform Class : 0000
-    [026h 0038   2]                     Reserved : 0000
-    [028h 0040   8]              Control Address : 0000000000000000
-    [030h 0048   4]                 Start Method : 06 [Memory Mapped I/O]
+1) Initial state, two process with io in the same cgroup.
 
-    [034h 0052  12]            Method Parameters : 00 00 00 00 00 00 00 00 00 00 00 00
-    [040h 0064   4]           Minimum Log Length : 00010000
-    [044h 0068   8]                  Log Address : 000000004053D000
+Process 1       Process 2
+ (BIC1)          (BIC2)
+  |  Λ            |  Λ
+  |  |            |  |
+  V  |            V  |
+  bfqq1           bfqq2
 
-Fixes: 0cf577a03f21 ("tpm: Fix handling of missing event log")
-Tested-by: Erkki Eilonen <erkki@bearmetal.eu>
-Signed-off-by: Morten Linderud <morten@linderud.pw>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+2) bfqq1 is merged to bfqq2.
+
+Process 1       Process 2
+ (BIC1)          (BIC2)
+  |               |
+   \-------------\|
+                  V
+  bfqq1           bfqq2(coop)
+
+3) Process 1 exit, then issue new io(denoce IOA) from Process 2.
+
+ (BIC2)
+  |  Λ
+  |  |
+  V  |
+  bfqq2(coop)
+
+4) Before IOA is completed, move Process 2 to another cgroup and issue io.
+
+Process 2
+ (BIC2)
+   Λ
+   |\--------------\
+   |                V
+  bfqq2           bfqq3
+
+Now that BIC2 points to bfqq3, while bfqq2 and bfqq3 both point to BIC2.
+If all the requests are completed, and Process 2 exit, BIC2 will be
+freed while there is no guarantee that bfqq2 will be freed before BIC2.
+
+Fix the problem by clearing bfqq->bic while bfqq is detached from bic.
+
+Fixes: 3bc5e683c67d ("bfq: Split shared queues on move between cgroups")
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221214030430.3304151-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Khazhismel Kumykov <khazhy@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/eventlog/acpi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ block/bfq-iosched.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/tpm/eventlog/acpi.c b/drivers/char/tpm/eventlog/acpi.c
-index 0913d3eb8d518..cd266021d0103 100644
---- a/drivers/char/tpm/eventlog/acpi.c
-+++ b/drivers/char/tpm/eventlog/acpi.c
-@@ -143,8 +143,12 @@ int tpm_read_log_acpi(struct tpm_chip *chip)
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 7c4b8d0635ebd..afaededb3c49c 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -373,6 +373,12 @@ struct bfq_queue *bic_to_bfqq(struct bfq_io_cq *bic, bool is_sync)
  
- 	ret = -EIO;
- 	virt = acpi_os_map_iomem(start, len);
--	if (!virt)
-+	if (!virt) {
-+		dev_warn(&chip->dev, "%s: Failed to map ACPI memory\n", __func__);
-+		/* try EFI log next */
-+		ret = -ENODEV;
- 		goto err;
-+	}
+ void bic_set_bfqq(struct bfq_io_cq *bic, struct bfq_queue *bfqq, bool is_sync)
+ {
++	struct bfq_queue *old_bfqq = bic->bfqq[is_sync];
++
++	/* Clear bic pointer if bfqq is detached from this bic */
++	if (old_bfqq && old_bfqq->bic == bic)
++		old_bfqq->bic = NULL;
++
+ 	bic->bfqq[is_sync] = bfqq;
+ }
  
- 	memcpy_fromio(log->bios_event_log, virt, len);
+@@ -4977,7 +4983,6 @@ static void bfq_exit_icq_bfqq(struct bfq_io_cq *bic, bool is_sync)
+ 		unsigned long flags;
  
+ 		spin_lock_irqsave(&bfqd->lock, flags);
+-		bfqq->bic = NULL;
+ 		bfq_exit_bfqq(bfqd, bfqq);
+ 		bic_set_bfqq(bic, NULL, is_sync);
+ 		spin_unlock_irqrestore(&bfqd->lock, flags);
 -- 
 2.39.2
 
