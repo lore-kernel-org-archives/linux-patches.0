@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B584431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:28:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A92AC433EF;
-	Wed, 15 Mar 2023 12:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560D04431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:28:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D248FC433EF;
+	Wed, 15 Mar 2023 12:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883313;
-	bh=amlhXbZ46SzZLbjCWOOP1mGroEXnotOQHb+K+XnBvzw=;
+	s=korg; t=1678883316;
+	bh=vrGgUOnpAqLLz5kca6TgBOPcfH+fu/CQKFcxxJ7unWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EZRUfVAjDOcvRRjPyWQAhzFca0ZwyPiXPx54f8liSpdow1B4nC01+J3IqxxAFmXwX
-	 eFV7BJa+K53925jzctRRDeNa0gXP2jCHW4uWgSherQ4uZDjtOyyJMYloFVTh2jaRgz
-	 0C+pM/uW48YZlHINtd9CZ6+M3vCdePy1TdBNUh+I=
+	b=13H4QuJFgvbwNUm70kqnfksGeUX3WKtIgmYtPm3uAiBJnAif4S1HhBAdQMblX/D8+
+	 x2YOP+1NMpSeFKRvTw+el7K70K/Tnz6yVxjOJqxup+NUcD1fqIzDDGCNyuBq022Z8n
+	 ONGM05febsu/3Wwh6F3RGu6/pjNPT1wfEa9nGU/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Amir Goldstein <amir73il@gmail.com>,
 	Leah Rumancik <leah.rumancik@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 096/145] xfs: fallocate() should call file_modified()
-Date: Wed, 15 Mar 2023 13:12:42 +0100
-Message-Id: <20230315115742.146293471@linuxfoundation.org>
+Subject: [PATCH 5.15 097/145] xfs: set prealloc flag in xfs_alloc_file_space()
+Date: Wed, 15 Mar 2023 13:12:43 +0100
+Message-Id: <20230315115742.180463331@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -39,23 +39,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Chinner <dchinner@redhat.com>
 
-commit fbe7e520036583a783b13ff9744e35c2a329d9a4 upsream.
+commit 0b02c8c0d75a738c98c35f02efb36217c170d78c upsream.
 
-In XFS, we always update the inode change and modification time when
-any fallocate() operation succeeds.  Furthermore, as various
-fallocate modes can change the file contents (extending EOF,
-punching holes, zeroing things, shifting extents), we should drop
-file privileges like suid just like we do for a regular write().
-There's already a VFS helper that figures all this out for us, so
-use that.
+Now that we only call xfs_update_prealloc_flags() from
+xfs_file_fallocate() in the case where we need to set the
+preallocation flag, do this in xfs_alloc_file_space() where we
+already have the inode joined into a transaction and get
+rid of the call to xfs_update_prealloc_flags() from the fallocate
+code.
 
-The net effect of this is that we no longer drop suid/sgid if the
-caller is root, but we also now drop file capabilities.
-
-We also move the xfs_update_prealloc_flags() function so that it now
-is only called by the scope that needs to set the the prealloc flag.
-
-Based on a patch from Darrick Wong.
+This also means that we now correctly avoid setting the
+XFS_DIFLAG_PREALLOC flag when xfs_is_always_cow_inode() is true, as
+these inodes will never have preallocated extents.
 
 Signed-off-by: Dave Chinner <dchinner@redhat.com>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
@@ -65,41 +60,70 @@ Tested-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_file.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/xfs/xfs_bmap_util.c | 9 +++------
+ fs/xfs/xfs_file.c      | 8 --------
+ 2 files changed, 3 insertions(+), 14 deletions(-)
 
+diff --git a/fs/xfs/xfs_bmap_util.c b/fs/xfs/xfs_bmap_util.c
+index 73a36b7be3bd1..fd2ad6a3019ca 100644
+--- a/fs/xfs/xfs_bmap_util.c
++++ b/fs/xfs/xfs_bmap_util.c
+@@ -851,9 +851,6 @@ xfs_alloc_file_space(
+ 			rblocks = 0;
+ 		}
+ 
+-		/*
+-		 * Allocate and setup the transaction.
+-		 */
+ 		error = xfs_trans_alloc_inode(ip, &M_RES(mp)->tr_write,
+ 				dblocks, rblocks, false, &tp);
+ 		if (error)
+@@ -870,9 +867,9 @@ xfs_alloc_file_space(
+ 		if (error)
+ 			goto error;
+ 
+-		/*
+-		 * Complete the transaction
+-		 */
++		ip->i_diflags |= XFS_DIFLAG_PREALLOC;
++		xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
++
+ 		error = xfs_trans_commit(tp);
+ 		xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 		if (error)
 diff --git a/fs/xfs/xfs_file.c b/fs/xfs/xfs_file.c
-index 752b676c92e3f..020e0a412287a 100644
+index 020e0a412287a..8cd0c3df253f9 100644
 --- a/fs/xfs/xfs_file.c
 +++ b/fs/xfs/xfs_file.c
-@@ -954,6 +954,10 @@ xfs_file_fallocate(
- 			goto out_unlock;
- 	}
- 
-+	error = file_modified(file);
-+	if (error)
-+		goto out_unlock;
-+
- 	if (mode & FALLOC_FL_PUNCH_HOLE) {
- 		error = xfs_free_file_space(ip, offset, len);
- 		if (error)
-@@ -1055,11 +1059,12 @@ xfs_file_fallocate(
+@@ -909,7 +909,6 @@ xfs_file_fallocate(
+ 	struct inode		*inode = file_inode(file);
+ 	struct xfs_inode	*ip = XFS_I(inode);
+ 	long			error;
+-	enum xfs_prealloc_flags	flags = 0;
+ 	uint			iolock = XFS_IOLOCK_EXCL | XFS_MMAPLOCK_EXCL;
+ 	loff_t			new_size = 0;
+ 	bool			do_file_insert = false;
+@@ -1007,8 +1006,6 @@ xfs_file_fallocate(
+ 		}
+ 		do_file_insert = true;
+ 	} else {
+-		flags |= XFS_PREALLOC_SET;
+-
+ 		if (!(mode & FALLOC_FL_KEEP_SIZE) &&
+ 		    offset + len > i_size_read(inode)) {
+ 			new_size = offset + len;
+@@ -1059,11 +1056,6 @@ xfs_file_fallocate(
  			if (error)
  				goto out_unlock;
  		}
--	}
- 
--	error = xfs_update_prealloc_flags(ip, flags);
--	if (error)
--		goto out_unlock;
-+		error = xfs_update_prealloc_flags(ip, XFS_PREALLOC_SET);
-+		if (error)
-+			goto out_unlock;
-+
-+	}
+-
+-		error = xfs_update_prealloc_flags(ip, XFS_PREALLOC_SET);
+-		if (error)
+-			goto out_unlock;
+-
+ 	}
  
  	/* Change file size if needed */
- 	if (new_size) {
 -- 
 2.39.2
 
