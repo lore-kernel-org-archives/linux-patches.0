@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AE14431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9470AC4339B;
-	Wed, 15 Mar 2023 12:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3064431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B5EC4339B;
+	Wed, 15 Mar 2023 12:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883863;
-	bh=IohtKqLRilYWkcYcudSd0DdnkxCkv7AVf3kq+n9sKxQ=;
+	s=korg; t=1678883865;
+	bh=B63P0pRqD6TtSoVKi2T8I0DYDEQT3ZDjPfqa8+1ghhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yqJdCexBCxU+MkxEEPcmhyk5HrJjlkSodhYxdsMWWUhOAwRbcp0yK6yLiFtI9JqVY
-	 Qdek9/dIwTxyE/hp/c39xrZKWBR+3wPa7MA/VqjHueVhtq0X9zm9CcMotUsu6S99oG
-	 LWuEVBSFY8+xRELP3kVmaW3ZcDhsMXmPwvlnTQ+c=
+	b=SmhBhiJ5hjTbQsMf1k1zAIQYgNKrNHZ+3BxVkqTRBUqdvsRZUparyIwpxps865BCc
+	 qgu4ZZNy2pvx9du7K6hCMOOLGXrYQdWudO44PskDVAOV9hMRAMS17RWlBqK/cHYyYQ
+	 +a8DEZty8baVoj2xGaIf5UpFTU9k7QR+oLt2h0Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Rob Clark <robdclark@chromium.org>
-Subject: [PATCH 6.2 017/141] drm/msm/adreno: fix runtime PM imbalance at unbind
-Date: Wed, 15 Mar 2023 13:12:00 +0100
-Message-Id: <20230315115740.516209221@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.2 018/141] staging: rtl8723bs: Fix key-store index handling
+Date: Wed, 15 Mar 2023 13:12:01 +0100
+Message-Id: <20230315115740.545672441@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -35,47 +33,173 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 6153c44392b04ff2da1e9aa82ba87da9ab9a0fc1 upstream.
+commit 05cbcc415c9b8c8bc4f9a09f8e03610a89042f03 upstream.
 
-A recent commit moved enabling of runtime PM from adreno_gpu_init() to
-adreno_load_gpu() (called on first open()), which means that unbind()
-may now be called with runtime PM disabled in case the device was never
-opened in between.
+There are 2 issues with the key-store index handling
 
-Make sure to only forcibly suspend and disable runtime PM at unbind() in
-case runtime PM has been enabled to prevent a disable count imbalance.
+1. The non WEP key stores can store keys with indexes 0 - BIP_MAX_KEYID,
+   this means that they should be an array with BIP_MAX_KEYID + 1
+   entries. But some of the arrays where just BIP_MAX_KEYID entries
+   big. While one other array was hardcoded to a size of 6 entries,
+   instead of using the BIP_MAX_KEYID define.
 
-This specifically avoids leaving runtime PM disabled when the device
-is later opened after a successful bind:
+2. The rtw_cfg80211_set_encryption() and wpa_set_encryption() functions
+   index check where checking that the passed in key-index would fit
+   inside both the WEP key store (which only has 4 entries) as well as
+   in the non WEP key stores. This breaks any attempts to set non WEP
+   keys with index 4 or 5.
 
-	msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* Couldn't power up the GPU: -13
+Issue 2. specifically breaks wifi connection with some access points
+which advertise PMF support. Without this fix connecting to these
+access points fails with the following wpa_supplicant messages:
 
-Fixes: 4b18299b3365 ("drm/msm/adreno: Defer enabling runpm until hw_init()")
-Reported-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Link: https://lore.kernel.org/lkml/20230203181245.3523937-1-quic_bjorande@quicinc.com
-Cc: stable@vger.kernel.org	# 6.0
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Patchwork: https://patchwork.freedesktop.org/patch/523549/
-Link: https://lore.kernel.org/r/20230221101430.14546-2-johan+linaro@kernel.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+ nl80211: kernel reports: key addition failed
+ wlan0: WPA: Failed to configure IGTK to the driver
+ wlan0: RSN: Failed to configure IGTK
+ wlan0: CTRL-EVENT-DISCONNECTED bssid=... reason=1 locally_generated=1
+
+Fix 1. by using the right size for the key-stores. After this 2. can
+safely be fixed by checking the right max-index value depending on the
+used algorithm, fixing wifi not working with some PMF capable APs.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230306153512.162104-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/include/rtw_security.h  |    8 ++---
+ drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |   26 ++++++++++-------
+ drivers/staging/rtl8723bs/os_dep/ioctl_linux.c    |   33 +++++++++++-----------
+ 3 files changed, 36 insertions(+), 31 deletions(-)
 
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -558,7 +558,8 @@ static void adreno_unbind(struct device
- 	struct msm_drm_private *priv = dev_get_drvdata(master);
- 	struct msm_gpu *gpu = dev_to_gpu(dev);
+--- a/drivers/staging/rtl8723bs/include/rtw_security.h
++++ b/drivers/staging/rtl8723bs/include/rtw_security.h
+@@ -107,13 +107,13 @@ struct security_priv {
  
--	WARN_ON_ONCE(adreno_system_suspend(dev));
-+	if (pm_runtime_enabled(dev))
-+		WARN_ON_ONCE(adreno_system_suspend(dev));
- 	gpu->funcs->destroy(gpu);
+ 	u32 dot118021XGrpPrivacy;	/*  This specify the privacy algthm. used for Grp key */
+ 	u32 dot118021XGrpKeyid;		/*  key id used for Grp Key (tx key index) */
+-	union Keytype	dot118021XGrpKey[BIP_MAX_KEYID];	/*  802.1x Group Key, for inx0 and inx1 */
+-	union Keytype	dot118021XGrptxmickey[BIP_MAX_KEYID];
+-	union Keytype	dot118021XGrprxmickey[BIP_MAX_KEYID];
++	union Keytype	dot118021XGrpKey[BIP_MAX_KEYID + 1];	/*  802.1x Group Key, for inx0 and inx1 */
++	union Keytype	dot118021XGrptxmickey[BIP_MAX_KEYID + 1];
++	union Keytype	dot118021XGrprxmickey[BIP_MAX_KEYID + 1];
+ 	union pn48		dot11Grptxpn;			/*  PN48 used for Grp Key xmit. */
+ 	union pn48		dot11Grprxpn;			/*  PN48 used for Grp Key recv. */
+ 	u32 dot11wBIPKeyid;						/*  key id used for BIP Key (tx key index) */
+-	union Keytype	dot11wBIPKey[6];		/*  BIP Key, for index4 and index5 */
++	union Keytype	dot11wBIPKey[BIP_MAX_KEYID + 1];	/*  BIP Key, for index4 and index5 */
+ 	union pn48		dot11wBIPtxpn;			/*  PN48 used for Grp Key xmit. */
+ 	union pn48		dot11wBIPrxpn;			/*  PN48 used for Grp Key recv. */
  
- 	priv->gpu_pdev = NULL;
+--- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
++++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
+@@ -711,6 +711,7 @@ exit:
+ static int rtw_cfg80211_set_encryption(struct net_device *dev, struct ieee_param *param, u32 param_len)
+ {
+ 	int ret = 0;
++	u8 max_idx;
+ 	u32 wep_key_idx, wep_key_len;
+ 	struct adapter *padapter = rtw_netdev_priv(dev);
+ 	struct mlme_priv *pmlmepriv = &padapter->mlmepriv;
+@@ -724,26 +725,29 @@ static int rtw_cfg80211_set_encryption(s
+ 		goto exit;
+ 	}
+ 
+-	if (param->sta_addr[0] == 0xff && param->sta_addr[1] == 0xff &&
+-	    param->sta_addr[2] == 0xff && param->sta_addr[3] == 0xff &&
+-	    param->sta_addr[4] == 0xff && param->sta_addr[5] == 0xff) {
+-		if (param->u.crypt.idx >= WEP_KEYS
+-			|| param->u.crypt.idx >= BIP_MAX_KEYID) {
+-			ret = -EINVAL;
+-			goto exit;
+-		}
+-	} else {
+-		{
++	if (param->sta_addr[0] != 0xff || param->sta_addr[1] != 0xff ||
++	    param->sta_addr[2] != 0xff || param->sta_addr[3] != 0xff ||
++	    param->sta_addr[4] != 0xff || param->sta_addr[5] != 0xff) {
+ 		ret = -EINVAL;
+ 		goto exit;
+ 	}
++
++	if (strcmp(param->u.crypt.alg, "WEP") == 0)
++		max_idx = WEP_KEYS - 1;
++	else
++		max_idx = BIP_MAX_KEYID;
++
++	if (param->u.crypt.idx > max_idx) {
++		netdev_err(dev, "Error crypt.idx %d > %d\n", param->u.crypt.idx, max_idx);
++		ret = -EINVAL;
++		goto exit;
+ 	}
+ 
+ 	if (strcmp(param->u.crypt.alg, "WEP") == 0) {
+ 		wep_key_idx = param->u.crypt.idx;
+ 		wep_key_len = param->u.crypt.key_len;
+ 
+-		if ((wep_key_idx >= WEP_KEYS) || (wep_key_len <= 0)) {
++		if (wep_key_len <= 0) {
+ 			ret = -EINVAL;
+ 			goto exit;
+ 		}
+--- a/drivers/staging/rtl8723bs/os_dep/ioctl_linux.c
++++ b/drivers/staging/rtl8723bs/os_dep/ioctl_linux.c
+@@ -46,6 +46,7 @@ static int wpa_set_auth_algs(struct net_
+ static int wpa_set_encryption(struct net_device *dev, struct ieee_param *param, u32 param_len)
+ {
+ 	int ret = 0;
++	u8 max_idx;
+ 	u32 wep_key_idx, wep_key_len, wep_total_len;
+ 	struct ndis_802_11_wep	 *pwep = NULL;
+ 	struct adapter *padapter = rtw_netdev_priv(dev);
+@@ -60,19 +61,22 @@ static int wpa_set_encryption(struct net
+ 		goto exit;
+ 	}
+ 
+-	if (param->sta_addr[0] == 0xff && param->sta_addr[1] == 0xff &&
+-	    param->sta_addr[2] == 0xff && param->sta_addr[3] == 0xff &&
+-	    param->sta_addr[4] == 0xff && param->sta_addr[5] == 0xff) {
+-		if (param->u.crypt.idx >= WEP_KEYS ||
+-		    param->u.crypt.idx >= BIP_MAX_KEYID) {
+-			ret = -EINVAL;
+-			goto exit;
+-		}
+-	} else {
+-		{
+-			ret = -EINVAL;
+-			goto exit;
+-		}
++	if (param->sta_addr[0] != 0xff || param->sta_addr[1] != 0xff ||
++	    param->sta_addr[2] != 0xff || param->sta_addr[3] != 0xff ||
++	    param->sta_addr[4] != 0xff || param->sta_addr[5] != 0xff) {
++		ret = -EINVAL;
++		goto exit;
++	}
++
++	if (strcmp(param->u.crypt.alg, "WEP") == 0)
++		max_idx = WEP_KEYS - 1;
++	else
++		max_idx = BIP_MAX_KEYID;
++
++	if (param->u.crypt.idx > max_idx) {
++		netdev_err(dev, "Error crypt.idx %d > %d\n", param->u.crypt.idx, max_idx);
++		ret = -EINVAL;
++		goto exit;
+ 	}
+ 
+ 	if (strcmp(param->u.crypt.alg, "WEP") == 0) {
+@@ -84,9 +88,6 @@ static int wpa_set_encryption(struct net
+ 		wep_key_idx = param->u.crypt.idx;
+ 		wep_key_len = param->u.crypt.key_len;
+ 
+-		if (wep_key_idx > WEP_KEYS)
+-			return -EINVAL;
+-
+ 		if (wep_key_len > 0) {
+ 			wep_key_len = wep_key_len <= 5 ? 5 : 13;
+ 			wep_total_len = wep_key_len + FIELD_OFFSET(struct ndis_802_11_wep, key_material);
 
 
