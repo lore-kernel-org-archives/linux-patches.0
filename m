@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5FF4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:41:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38A6C433EF;
-	Wed, 15 Mar 2023 12:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9ECB4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:41:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43022C433EF;
+	Wed, 15 Mar 2023 12:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884076;
-	bh=TwIcYf7MZJ4YVx6S517a7KQ3JgmyO62xRTD5Xa97Tro=;
+	s=korg; t=1678884078;
+	bh=feaYzCQmnolwAAkCECIkZtYjMX1x4GiBId7TUk3zZN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZ13yIEtARBcaq4VKPq26daYy+SzZjZoi90wZhVuXThfN3YVmFYqNuhepiFvZJRAX
-	 67l0Xqtx2+SqUyYKhDh3asdruwOCpthhvj5BKMLuVjvDGNbqpd17fYLXQBxjVLZAIX
-	 kbzJlqsDoNFzkB3CcyAS09vgAX7d7W9+jWsMXRII=
+	b=Tj2is6Ocsy6N6Rh43BsFBfPixJCfmkvyNn7pdVtw0Mc8RmBZfRRNIjpmUdUNtmMbm
+	 /+ijtwVul0rBIuwIseVcneMktIeM8Med0NxWvAPj7gvVCLB83xwujzOESBPaf+0/J1
+	 ZmmqNMM1Qh9Z/t61O4b42nUXhtmzLwm8uZi5TJyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Huanhuan Wang <huanhuan.wang@corigine.com>,
-	Louis Peens <louis.peens@corigine.com>,
 	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 068/141] nfp: fix incorrectly set csum flag for nfd3 path
-Date: Wed, 15 Mar 2023 13:12:51 +0100
-Message-Id: <20230315115742.027580932@linuxfoundation.org>
+Subject: [PATCH 6.2 069/141] nfp: fix esp-tx-csum-offload doesnt take effect
+Date: Wed, 15 Mar 2023 13:12:52 +0100
+Message-Id: <20230315115742.060828108@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -39,89 +38,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Huanhuan Wang <huanhuan.wang@corigine.com>
 
-[ Upstream commit 3e04419cbe2d0bc10ffc20c006c6513ffa4b1ca3 ]
+[ Upstream commit 1cf78d4c4144ffdbc2c9d505db482cb204bb480b ]
 
-The csum flag of IPsec packet are set repeatedly. Therefore, the csum
-flag set of IPsec and non-IPsec packet need to be distinguished.
-
-As the ipv6 header does not have a csum field, so l3-csum flag is not
-required to be set for ipv6 case.
-
-L4-csum flag include the tcp csum flag and udp csum flag, we shouldn't
-set the udp and tcp csum flag at the same time for one packet, should
-set l4-csum flag according to the transport layer is tcp or udp.
+When esp-tx-csum-offload is set to on, the protocol stack shouldn't
+calculate the IPsec offload packet's csum, but it does. Because the
+callback `.ndo_features_check` incorrectly masked NETIF_F_CSUM_MASK bit.
 
 Fixes: 57f273adbcd4 ("nfp: add framework to support ipsec offloading")
 Signed-off-by: Huanhuan Wang <huanhuan.wang@corigine.com>
-Reviewed-by: Louis Peens <louis.peens@corigine.com>
 Signed-off-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/netronome/nfp/nfd3/dp.c  |  7 +++---
- .../net/ethernet/netronome/nfp/nfd3/ipsec.c   | 25 +++++++++++++++++--
- 2 files changed, 27 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/netronome/nfp/nfp_net_common.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/netronome/nfp/nfd3/dp.c b/drivers/net/ethernet/netronome/nfp/nfd3/dp.c
-index 861082c5dbffb..ee2e442809c69 100644
---- a/drivers/net/ethernet/netronome/nfp/nfd3/dp.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfd3/dp.c
-@@ -327,14 +327,15 @@ netdev_tx_t nfp_nfd3_tx(struct sk_buff *skb, struct net_device *netdev)
+diff --git a/drivers/net/ethernet/netronome/nfp/nfp_net_common.c b/drivers/net/ethernet/netronome/nfp/nfp_net_common.c
+index 70d7484c82af4..1182fa48a3b54 100644
+--- a/drivers/net/ethernet/netronome/nfp/nfp_net_common.c
++++ b/drivers/net/ethernet/netronome/nfp/nfp_net_common.c
+@@ -38,6 +38,7 @@
+ #include <net/tls.h>
+ #include <net/vxlan.h>
+ #include <net/xdp_sock_drv.h>
++#include <net/xfrm.h>
  
- 	/* Do not reorder - tso may adjust pkt cnt, vlan may override fields */
- 	nfp_nfd3_tx_tso(r_vec, txbuf, txd, skb, md_bytes);
--	nfp_nfd3_tx_csum(dp, r_vec, txbuf, txd, skb);
-+	if (ipsec)
-+		nfp_nfd3_ipsec_tx(txd, skb);
-+	else
-+		nfp_nfd3_tx_csum(dp, r_vec, txbuf, txd, skb);
- 	if (skb_vlan_tag_present(skb) && dp->ctrl & NFP_NET_CFG_CTRL_TXVLAN) {
- 		txd->flags |= NFD3_DESC_TX_VLAN;
- 		txd->vlan = cpu_to_le16(skb_vlan_tag_get(skb));
+ #include "nfpcore/nfp_dev.h"
+ #include "nfpcore/nfp_nsp.h"
+@@ -1897,6 +1898,9 @@ nfp_net_features_check(struct sk_buff *skb, struct net_device *dev,
+ 			features &= ~NETIF_F_GSO_MASK;
  	}
  
--	if (ipsec)
--		nfp_nfd3_ipsec_tx(txd, skb);
- 	/* Gather DMA */
- 	if (nr_frags > 0) {
- 		__le64 second_half;
-diff --git a/drivers/net/ethernet/netronome/nfp/nfd3/ipsec.c b/drivers/net/ethernet/netronome/nfp/nfd3/ipsec.c
-index e90f8c975903b..51087693072c2 100644
---- a/drivers/net/ethernet/netronome/nfp/nfd3/ipsec.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfd3/ipsec.c
-@@ -10,9 +10,30 @@
- void nfp_nfd3_ipsec_tx(struct nfp_nfd3_tx_desc *txd, struct sk_buff *skb)
- {
- 	struct xfrm_state *x = xfrm_input_state(skb);
-+	struct xfrm_offload *xo = xfrm_offload(skb);
-+	struct iphdr *iph = ip_hdr(skb);
-+	int l4_proto;
- 
- 	if (x->xso.dev && (x->xso.dev->features & NETIF_F_HW_ESP_TX_CSUM)) {
--		txd->flags |= NFD3_DESC_TX_CSUM | NFD3_DESC_TX_IP4_CSUM |
--			      NFD3_DESC_TX_TCP_CSUM | NFD3_DESC_TX_UDP_CSUM;
-+		txd->flags |= NFD3_DESC_TX_CSUM;
++	if (xfrm_offload(skb))
++		return features;
 +
-+		if (iph->version == 4)
-+			txd->flags |= NFD3_DESC_TX_IP4_CSUM;
-+
-+		if (x->props.mode == XFRM_MODE_TRANSPORT)
-+			l4_proto = xo->proto;
-+		else if (x->props.mode == XFRM_MODE_TUNNEL)
-+			l4_proto = xo->inner_ipproto;
-+		else
-+			return;
-+
-+		switch (l4_proto) {
-+		case IPPROTO_UDP:
-+			txd->flags |= NFD3_DESC_TX_UDP_CSUM;
-+			return;
-+		case IPPROTO_TCP:
-+			txd->flags |= NFD3_DESC_TX_TCP_CSUM;
-+			return;
-+		}
- 	}
- }
+ 	/* VXLAN/GRE check */
+ 	switch (vlan_get_protocol(skb)) {
+ 	case htons(ETH_P_IP):
 -- 
 2.39.2
 
