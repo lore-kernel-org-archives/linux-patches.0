@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906D64431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DE3C433D2;
-	Wed, 15 Mar 2023 12:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334804431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB14AC433D2;
+	Wed, 15 Mar 2023 12:21:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882864;
-	bh=jVEiBh1cumllNMhx16BB4Cbs4L0KoBrTLkdI4yOcI0U=;
+	s=korg; t=1678882867;
+	bh=8MRGkX5lpWvfupJ8vOXLTv2gBGDGvcIXBq4SbleweRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uLltyhcr5f5FOQ4nxRw0ck8xVPQxbdC98vhHHOzz4A3KIIUGELtQHBE1m68EdntKU
-	 xh+lnG1fvxtPFx6IyjZ44ye5nFUH+6KsjSq0wjafFcSOdASVAW7P1wLdjFJYObQD3N
-	 XXek/irwT48DZAos/27uNbaQ1YuVckOAc5IndoNQ=
+	b=szVtHR2zQ64lqfrUigh3T6K32CNHUg5zsDoVLBnVgEn1WJM0C5hjJWJ9wo1uPcgU6
+	 sFnKnUqMUwY9+QVcHSSPDO+1US7jAWM5qL80v5/XKDAtWno8uyz3F06l/kNrP40zSg
+	 moOyMFQYD7cMG3CepMC11Lsv28Tb+lKDJQhpaheg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/104] drm/msm: Fix potential invalid ptr free
-Date: Wed, 15 Mar 2023 13:12:01 +0100
-Message-Id: <20230315115733.292831926@linuxfoundation.org>
+Subject: [PATCH 5.10 031/104] drm/msm/a5xx: fix setting of the CP_PREEMPT_ENABLE_LOCAL register
+Date: Wed, 15 Mar 2023 13:12:02 +0100
+Message-Id: <20230315115733.324468192@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -36,47 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 8a86f213f4426f19511a16d886871805b35c3acf ]
+[ Upstream commit a7a4c19c36de1e4b99b06e4060ccc8ab837725bc ]
 
-The error path cleanup expects that chain and syncobj are either NULL or
-valid pointers.  But post_deps was not allocated with __GFP_ZERO.
+Rather than writing CP_PREEMPT_ENABLE_GLOBAL twice, follow the vendor
+kernel and set CP_PREEMPT_ENABLE_LOCAL register instead. a5xx_submit()
+will override it during submission, but let's get the sequence correct.
 
-Fixes: ab723b7a992a ("drm/msm: Add syncobj support.")
+Fixes: b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/522638/
+Link: https://lore.kernel.org/r/20230214020956.164473-2-dmitry.baryshkov@linaro.org
 Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Patchwork: https://patchwork.freedesktop.org/patch/523051/
-Link: https://lore.kernel.org/r/20230215235048.1166484-1-robdclark@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem_submit.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index aa5c60a7132d8..c4e5037512b9d 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -494,8 +494,8 @@ static struct msm_submit_post_dep *msm_parse_post_deps(struct drm_device *dev,
- 	int ret = 0;
- 	uint32_t i, j;
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index 0ca7e53db112a..64da65ae6d67e 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -144,8 +144,8 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+ 	OUT_RING(ring, 1);
  
--	post_deps = kmalloc_array(nr_syncobjs, sizeof(*post_deps),
--	                          GFP_KERNEL | __GFP_NOWARN | __GFP_NORETRY);
-+	post_deps = kcalloc(nr_syncobjs, sizeof(*post_deps),
-+			    GFP_KERNEL | __GFP_NOWARN | __GFP_NORETRY);
- 	if (!post_deps)
- 		return ERR_PTR(-ENOMEM);
+ 	/* Enable local preemption for finegrain preemption */
+-	OUT_PKT7(ring, CP_PREEMPT_ENABLE_GLOBAL, 1);
+-	OUT_RING(ring, 0x02);
++	OUT_PKT7(ring, CP_PREEMPT_ENABLE_LOCAL, 1);
++	OUT_RING(ring, 0x1);
  
-@@ -510,7 +510,6 @@ static struct msm_submit_post_dep *msm_parse_post_deps(struct drm_device *dev,
- 		}
- 
- 		post_deps[i].point = syncobj_desc.point;
--		post_deps[i].chain = NULL;
- 
- 		if (syncobj_desc.flags) {
- 			ret = -EINVAL;
+ 	/* Allow CP_CONTEXT_SWITCH_YIELD packets in the IB2 */
+ 	OUT_PKT7(ring, CP_YIELD_ENABLE, 1);
 -- 
 2.39.2
 
