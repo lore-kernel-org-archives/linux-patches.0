@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFA74431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D696BC433A1;
-	Wed, 15 Mar 2023 12:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FDB4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77483C433D2;
+	Wed, 15 Mar 2023 12:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882793;
-	bh=MEWy9jYQtJUgVgdRBkx/fEha9fIERmdhTAgWins58QM=;
+	s=korg; t=1678882795;
+	bh=Rmn24IeoEUUG0BAMTmV4N8SxZIDPet96uodV+FIL+kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbeg1zozJjio5toJhuoKkXKDtfTb0qIfNu4GkaJl1FiFvg8JtKfOAeFUvHWGXQBIP
-	 DeEyF+cjD2OHKyOluoaat+D6sACr+soqYzqV619iyyY2AuZdlaYFdfiPm9L2izG65/
-	 59mZXjvtQO8zM2YyOeuxo3ADyBU/5KDN4JN1ifKw=
+	b=D5urp6mhZfg76XM2AYRIDVHzUK9Ei4jdMjaYqjDyDq0eXnD5YTlrUl5eq0agUCtV5
+	 5R8d1LOM3HonSq581rIVXehBKDtM3HRZQ/Jgt0Qw/5SpWvDVdvzb0sAQf+1n1N4Smr
+	 vyohIyVcIoiYaqjok5c0gb0NdAvovpQSbh62OwhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chathura Rajapaksha <chathura.abeyrathne.lk@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 47/68] net/smc: fix fallback failed while sendmsg with fastopen
-Date: Wed, 15 Mar 2023 13:12:41 +0100
-Message-Id: <20230315115727.968416414@linuxfoundation.org>
+Subject: [PATCH 5.4 48/68] riscv: Use READ_ONCE_NOCHECK in imprecise unwinding stack mode
+Date: Wed, 15 Mar 2023 13:12:42 +0100
+Message-Id: <20230315115728.003298392@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -37,72 +37,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit ce7ca794712f186da99719e8b4e97bd5ddbb04c3 ]
+[ Upstream commit 76950340cf03b149412fe0d5f0810e52ac1df8cb ]
 
-Before determining whether the msg has unsupported options, it has been
-prematurely terminated by the wrong status check.
+When CONFIG_FRAME_POINTER is unset, the stack unwinding function
+walk_stackframe randomly reads the stack and then, when KASAN is enabled,
+it can lead to the following backtrace:
 
-For the application, the general usages of MSG_FASTOPEN likes
+[    0.000000] ==================================================================
+[    0.000000] BUG: KASAN: stack-out-of-bounds in walk_stackframe+0xa6/0x11a
+[    0.000000] Read of size 8 at addr ffffffff81807c40 by task swapper/0
+[    0.000000]
+[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 6.2.0-12919-g24203e6db61f #43
+[    0.000000] Hardware name: riscv-virtio,qemu (DT)
+[    0.000000] Call Trace:
+[    0.000000] [<ffffffff80007ba8>] walk_stackframe+0x0/0x11a
+[    0.000000] [<ffffffff80099ecc>] init_param_lock+0x26/0x2a
+[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
+[    0.000000] [<ffffffff80c49c80>] dump_stack_lvl+0x22/0x36
+[    0.000000] [<ffffffff80c3783e>] print_report+0x198/0x4a8
+[    0.000000] [<ffffffff80099ecc>] init_param_lock+0x26/0x2a
+[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
+[    0.000000] [<ffffffff8015f68a>] kasan_report+0x9a/0xc8
+[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
+[    0.000000] [<ffffffff80007c4a>] walk_stackframe+0xa2/0x11a
+[    0.000000] [<ffffffff8006e99c>] desc_make_final+0x80/0x84
+[    0.000000] [<ffffffff8009a04e>] stack_trace_save+0x88/0xa6
+[    0.000000] [<ffffffff80099fc2>] filter_irq_stacks+0x72/0x76
+[    0.000000] [<ffffffff8006b95e>] devkmsg_read+0x32a/0x32e
+[    0.000000] [<ffffffff8015ec16>] kasan_save_stack+0x28/0x52
+[    0.000000] [<ffffffff8006e998>] desc_make_final+0x7c/0x84
+[    0.000000] [<ffffffff8009a04a>] stack_trace_save+0x84/0xa6
+[    0.000000] [<ffffffff8015ec52>] kasan_set_track+0x12/0x20
+[    0.000000] [<ffffffff8015f22e>] __kasan_slab_alloc+0x58/0x5e
+[    0.000000] [<ffffffff8015e7ea>] __kmem_cache_create+0x21e/0x39a
+[    0.000000] [<ffffffff80e133ac>] create_boot_cache+0x70/0x9c
+[    0.000000] [<ffffffff80e17ab2>] kmem_cache_init+0x6c/0x11e
+[    0.000000] [<ffffffff80e00fd6>] mm_init+0xd8/0xfe
+[    0.000000] [<ffffffff80e011d8>] start_kernel+0x190/0x3ca
+[    0.000000]
+[    0.000000] The buggy address belongs to stack of task swapper/0
+[    0.000000]  and is located at offset 0 in frame:
+[    0.000000]  stack_trace_save+0x0/0xa6
+[    0.000000]
+[    0.000000] This frame has 1 object:
+[    0.000000]  [32, 56) 'c'
+[    0.000000]
+[    0.000000] The buggy address belongs to the physical page:
+[    0.000000] page:(____ptrval____) refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x81a07
+[    0.000000] flags: 0x1000(reserved|zone=0)
+[    0.000000] raw: 0000000000001000 ff600003f1e3d150 ff600003f1e3d150 0000000000000000
+[    0.000000] raw: 0000000000000000 0000000000000000 00000001ffffffff
+[    0.000000] page dumped because: kasan: bad access detected
+[    0.000000]
+[    0.000000] Memory state around the buggy address:
+[    0.000000]  ffffffff81807b00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[    0.000000]  ffffffff81807b80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[    0.000000] >ffffffff81807c00: 00 00 00 00 00 00 00 00 f1 f1 f1 f1 00 00 00 f3
+[    0.000000]                                            ^
+[    0.000000]  ffffffff81807c80: f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
+[    0.000000]  ffffffff81807d00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[    0.000000] ==================================================================
 
-fd = socket(...)
-/* rather than connect */
-sendto(fd, data, len, MSG_FASTOPEN)
+Fix that by using READ_ONCE_NOCHECK when reading the stack in imprecise
+mode.
 
-Hence, We need to check the flag before state check, because the sock
-state here is always SMC_INIT when applications tries MSG_FASTOPEN.
-Once we found unsupported options, fallback it to TCP.
-
-Fixes: ee9dfbef02d1 ("net/smc: handle sockopts forcing fallback")
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Signed-off-by: Simon Horman <simon.horman@corigine.com>
-
-v2 -> v1: Optimize code style
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 5d8544e2d007 ("RISC-V: Generic library routines and assembly")
+Reported-by: Chathura Rajapaksha <chathura.abeyrathne.lk@gmail.com>
+Link: https://lore.kernel.org/all/CAD7mqryDQCYyJ1gAmtMm8SASMWAQ4i103ptTb0f6Oda=tPY2=A@mail.gmail.com/
+Suggested-by: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20230308091639.602024-1-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ arch/riscv/kernel/stacktrace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 5d696b7fb47e1..b398d72a7bc39 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -1542,16 +1542,14 @@ static int smc_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- {
- 	struct sock *sk = sock->sk;
- 	struct smc_sock *smc;
--	int rc = -EPIPE;
-+	int rc;
- 
- 	smc = smc_sk(sk);
- 	lock_sock(sk);
--	if ((sk->sk_state != SMC_ACTIVE) &&
--	    (sk->sk_state != SMC_APPCLOSEWAIT1) &&
--	    (sk->sk_state != SMC_INIT))
--		goto out;
- 
-+	/* SMC does not support connect with fastopen */
- 	if (msg->msg_flags & MSG_FASTOPEN) {
-+		/* not connected yet, fallback */
- 		if (sk->sk_state == SMC_INIT && !smc->connect_nonblock) {
- 			smc_switch_to_fallback(smc);
- 			smc->fallback_rsn = SMC_CLC_DECL_OPTUNSUPP;
-@@ -1559,6 +1557,11 @@ static int smc_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 			rc = -EINVAL;
- 			goto out;
- 		}
-+	} else if ((sk->sk_state != SMC_ACTIVE) &&
-+		   (sk->sk_state != SMC_APPCLOSEWAIT1) &&
-+		   (sk->sk_state != SMC_INIT)) {
-+		rc = -EPIPE;
-+		goto out;
+diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
+index 19e46f4160cc3..5ba4d23971fdb 100644
+--- a/arch/riscv/kernel/stacktrace.c
++++ b/arch/riscv/kernel/stacktrace.c
+@@ -89,7 +89,7 @@ void notrace walk_stackframe(struct task_struct *task,
+ 	while (!kstack_end(ksp)) {
+ 		if (__kernel_text_address(pc) && unlikely(fn(pc, arg)))
+ 			break;
+-		pc = (*ksp++) - 0x4;
++		pc = READ_ONCE_NOCHECK(*ksp++) - 0x4;
  	}
+ }
  
- 	if (smc->use_fallback)
 -- 
 2.39.2
 
