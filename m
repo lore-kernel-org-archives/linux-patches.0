@@ -1,25 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0FE4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:16:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F49C433D2;
-	Wed, 15 Mar 2023 12:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CF24431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:16:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B132C433D2;
+	Wed, 15 Mar 2023 12:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882566;
-	bh=9jBS7MIpL6+m9brClPSSCvHFrvezPWT/iN0VihTnzSc=;
+	s=korg; t=1678882569;
+	bh=qPKF+csanAKRQXaCauE/SFkeCjpZB1FHlKLO9kVg09k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QcF3HaD88PcoHDqKnMluRs1tLzUUmC3TNcL+vyHcNX/jawV0oqSbl+gFGQdXjgKhq
-	 EahQNpNMqiarWqy7/EuJCbtHarfN9XDyPne6bkNHAS/6kxtm8Qhrfgoal1iWbaYPqs
-	 N+9wjYv9k5tPXh0UrjGDvZR7LxU80FeYwVXLNPx0=
+	b=WOUi+zjb1yeKmTadp4V4CAOOeV5v7PzoT5JPK8IjVfgxdlwWSDT6HlxQ5EBmtAgC2
+	 pCzyK8vKW3fyK4LB1n3zBsePr12nolN9kQVWGlcmGngw+3TZ6Wkp+qP8F70vaIN4YZ
+	 5d3wDcY3eAbSqeQW5b9myYJCbLRLh58FFTKIGbG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nobuhiro Iwamatsu (CIP)" <nobuhiro1.iwamatsu@toshiba.co.jp>
-Subject: [PATCH 4.19 27/39] Revert "spi: mt7621: Fix an error message in mt7621_spi_probe()"
-Date: Wed, 15 Mar 2023 13:12:41 +0100
-Message-Id: <20230315115722.239035576@linuxfoundation.org>
+	Stephen Boyd <sboyd@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 28/39] clk: qcom: mmcc-apq8084: remove spdm clocks
+Date: Wed, 15 Mar 2023 13:12:42 +0100
+Message-Id: <20230315115722.275894203@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115721.234756306@linuxfoundation.org>
 References: <20230315115721.234756306@linuxfoundation.org>
@@ -33,45 +38,315 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-This reverts commit 269f650a0b26067092873308117e0bf0c6ec8289 which is
-commit 2b2bf6b7faa9010fae10dc7de76627a3fdb525b3 upstream.
+[ Upstream commit 7b347f4b677b6d84687e67d82b6b17c6f55ea2b4 ]
 
-dev_err_probe() does not suppot in 4.19.y. So this driver will fail to
-build.
+SPDM is used for debug/profiling and does not have any other
+functionality. These clocks can safely be removed.
 
-```
-  CC      drivers/staging/mt7621-spi/spi-mt7621.o
-drivers/staging/mt7621-spi/spi-mt7621.c: In function 'mt7621_spi_probe':
-drivers/staging/mt7621-spi/spi-mt7621.c:446:24: error: implicit declaration of function 'dev_err_probe'; did you mean 'device_reprobe'? [-Werror=implicit-function-declaration]
-  446 |                 return dev_err_probe(&pdev->dev, PTR_ERR(clk),
-      |                        ^~~~~~~~~~~~~
-      |                        device_reprobe
-```
-
-Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro1.iwamatsu@toshiba.co.jp>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Stephen Boyd <sboyd@kernel.org>
+Suggested-by: Georgi Djakov <djakov@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230111060402.1168726-11-dmitry.baryshkov@linaro.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/mt7621-spi/spi-mt7621.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/mmcc-apq8084.c | 271 --------------------------------
+ 1 file changed, 271 deletions(-)
 
---- a/drivers/staging/mt7621-spi/spi-mt7621.c
-+++ b/drivers/staging/mt7621-spi/spi-mt7621.c
-@@ -442,9 +442,11 @@ static int mt7621_spi_probe(struct platf
- 		return PTR_ERR(base);
+diff --git a/drivers/clk/qcom/mmcc-apq8084.c b/drivers/clk/qcom/mmcc-apq8084.c
+index 4ce1d7c88377f..e0fd37cb3eb50 100644
+--- a/drivers/clk/qcom/mmcc-apq8084.c
++++ b/drivers/clk/qcom/mmcc-apq8084.c
+@@ -2371,262 +2371,6 @@ static struct clk_branch mmss_rbcpr_clk = {
+ 	},
+ };
  
- 	clk = devm_clk_get(&pdev->dev, NULL);
--	if (IS_ERR(clk))
--		return dev_err_probe(&pdev->dev, PTR_ERR(clk),
--				     "unable to get SYS clock\n");
-+	if (IS_ERR(clk)) {
-+		dev_err(&pdev->dev, "unable to get SYS clock, err=%d\n",
-+			status);
-+		return PTR_ERR(clk);
-+	}
- 
- 	status = clk_prepare_enable(clk);
- 	if (status)
+-static struct clk_branch mmss_spdm_ahb_clk = {
+-	.halt_reg = 0x0230,
+-	.clkr = {
+-		.enable_reg = 0x0230,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_ahb_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_ahb_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_axi_clk = {
+-	.halt_reg = 0x0210,
+-	.clkr = {
+-		.enable_reg = 0x0210,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_axi_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_axi_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_csi0_clk = {
+-	.halt_reg = 0x023c,
+-	.clkr = {
+-		.enable_reg = 0x023c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_csi0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_csi0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_gfx3d_clk = {
+-	.halt_reg = 0x022c,
+-	.clkr = {
+-		.enable_reg = 0x022c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_gfx3d_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_gfx3d_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_jpeg0_clk = {
+-	.halt_reg = 0x0204,
+-	.clkr = {
+-		.enable_reg = 0x0204,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_jpeg0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_jpeg0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_jpeg1_clk = {
+-	.halt_reg = 0x0208,
+-	.clkr = {
+-		.enable_reg = 0x0208,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_jpeg1_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_jpeg1_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_jpeg2_clk = {
+-	.halt_reg = 0x0224,
+-	.clkr = {
+-		.enable_reg = 0x0224,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_jpeg2_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_jpeg2_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_mdp_clk = {
+-	.halt_reg = 0x020c,
+-	.clkr = {
+-		.enable_reg = 0x020c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_mdp_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_mdp_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_pclk0_clk = {
+-	.halt_reg = 0x0234,
+-	.clkr = {
+-		.enable_reg = 0x0234,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_pclk0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_pclk0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_pclk1_clk = {
+-	.halt_reg = 0x0228,
+-	.clkr = {
+-		.enable_reg = 0x0228,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_pclk1_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_pclk1_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_vcodec0_clk = {
+-	.halt_reg = 0x0214,
+-	.clkr = {
+-		.enable_reg = 0x0214,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_vcodec0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_vcodec0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_vfe0_clk = {
+-	.halt_reg = 0x0218,
+-	.clkr = {
+-		.enable_reg = 0x0218,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_vfe0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_vfe0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_vfe1_clk = {
+-	.halt_reg = 0x021c,
+-	.clkr = {
+-		.enable_reg = 0x021c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_vfe1_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_vfe1_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_rm_axi_clk = {
+-	.halt_reg = 0x0304,
+-	.clkr = {
+-		.enable_reg = 0x0304,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_rm_axi_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_axi_clk_src",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_rm_ocmemnoc_clk = {
+-	.halt_reg = 0x0308,
+-	.clkr = {
+-		.enable_reg = 0x0308,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_rm_ocmemnoc_clk",
+-			.parent_names = (const char *[]){
+-				"ocmemnoc_clk_src",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-
+ static struct clk_branch mmss_misc_ahb_clk = {
+ 	.halt_reg = 0x502c,
+ 	.clkr = {
+@@ -3259,21 +3003,6 @@ static struct clk_regmap *mmcc_apq8084_clocks[] = {
+ 	[MDSS_VSYNC_CLK] = &mdss_vsync_clk.clkr,
+ 	[MMSS_RBCPR_AHB_CLK] = &mmss_rbcpr_ahb_clk.clkr,
+ 	[MMSS_RBCPR_CLK] = &mmss_rbcpr_clk.clkr,
+-	[MMSS_SPDM_AHB_CLK] = &mmss_spdm_ahb_clk.clkr,
+-	[MMSS_SPDM_AXI_CLK] = &mmss_spdm_axi_clk.clkr,
+-	[MMSS_SPDM_CSI0_CLK] = &mmss_spdm_csi0_clk.clkr,
+-	[MMSS_SPDM_GFX3D_CLK] = &mmss_spdm_gfx3d_clk.clkr,
+-	[MMSS_SPDM_JPEG0_CLK] = &mmss_spdm_jpeg0_clk.clkr,
+-	[MMSS_SPDM_JPEG1_CLK] = &mmss_spdm_jpeg1_clk.clkr,
+-	[MMSS_SPDM_JPEG2_CLK] = &mmss_spdm_jpeg2_clk.clkr,
+-	[MMSS_SPDM_MDP_CLK] = &mmss_spdm_mdp_clk.clkr,
+-	[MMSS_SPDM_PCLK0_CLK] = &mmss_spdm_pclk0_clk.clkr,
+-	[MMSS_SPDM_PCLK1_CLK] = &mmss_spdm_pclk1_clk.clkr,
+-	[MMSS_SPDM_VCODEC0_CLK] = &mmss_spdm_vcodec0_clk.clkr,
+-	[MMSS_SPDM_VFE0_CLK] = &mmss_spdm_vfe0_clk.clkr,
+-	[MMSS_SPDM_VFE1_CLK] = &mmss_spdm_vfe1_clk.clkr,
+-	[MMSS_SPDM_RM_AXI_CLK] = &mmss_spdm_rm_axi_clk.clkr,
+-	[MMSS_SPDM_RM_OCMEMNOC_CLK] = &mmss_spdm_rm_ocmemnoc_clk.clkr,
+ 	[MMSS_MISC_AHB_CLK] = &mmss_misc_ahb_clk.clkr,
+ 	[MMSS_MMSSNOC_AHB_CLK] = &mmss_mmssnoc_ahb_clk.clkr,
+ 	[MMSS_MMSSNOC_BTO_AHB_CLK] = &mmss_mmssnoc_bto_ahb_clk.clkr,
+-- 
+2.39.2
+
 
 
