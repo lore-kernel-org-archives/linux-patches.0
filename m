@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0DC4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:43:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56DCC433EF;
-	Wed, 15 Mar 2023 12:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C478A4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:43:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D920C433EF;
+	Wed, 15 Mar 2023 12:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884189;
-	bh=rhxdufBm4e5kulz1JA4K+9qV2V4DEANXj5Xbx4cjepw=;
+	s=korg; t=1678884191;
+	bh=rNnKoxtrwII7gaLBt/qbpPHMj5ZrIIp7yTY30wXIaeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eZ1C0PRAQVnt/aSPoppJuXgPWR++Syxosh9wRwRTmicwf307lsSziIH/HEg7ZIANA
-	 duiWfSfedebGir+swZJ2EbLHkZOQYkg5CRYNTz1c1tnAlACt5nzPmaQ2egEx+/F/aA
-	 LrCVtafIGOZQJLUe98JC0vY95SzPLYIwSE1Af9PA=
+	b=V8JsmEV7G/S/5MWl1eWW8ecxp3QNzI+mkS8pzmIK9CTDvdZHeWqXwrN4JOeXLR2zA
+	 BF5fLF24N24/UcJikZ816VohIRtOU9A4j+hSFMYROmDbQtxJWWEebzsqS7UmtGl3yf
+	 Cnj2wiza1AKjHSjK1+0FEXqv4vHJdC5CwKY9K+EU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 6.2 141/141] UML: define RUNTIME_DISCARD_EXIT
-Date: Wed, 15 Mar 2023 13:14:04 +0100
-Message-Id: <20230315115744.287944722@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 130/141] macintosh: windfarm: Use unsigned type for 1-bit bitfields
+Date: Wed, 15 Mar 2023 13:13:53 +0100
+Message-Id: <20230315115743.939734386@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -35,40 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit b99ddbe8336ee680257c8ab479f75051eaa49dcf upstream.
+[ Upstream commit 748ea32d2dbd813d3bd958117bde5191182f909a ]
 
-With CONFIG_VIRTIO_UML=y, GNU ld < 2.36 fails to link UML vmlinux
-(w/wo CONFIG_LD_SCRIPT_STATIC).
+Clang warns:
 
-  `.exit.text' referenced in section `.uml.exitcall.exit' of arch/um/drivers/virtio_uml.o: defined in discarded section `.exit.text' of arch/um/drivers/virtio_uml.o
-  collect2: error: ld returned 1 exit status
+  drivers/macintosh/windfarm_lm75_sensor.c:63:14: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
+                  lm->inited = 1;
+                             ^ ~
 
-This fix is similar to the following commits:
+  drivers/macintosh/windfarm_smu_sensors.c:356:19: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
+                  pow->fake_volts = 1;
+                                  ^ ~
+  drivers/macintosh/windfarm_smu_sensors.c:368:18: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
+                  pow->quadratic = 1;
+                                 ^ ~
 
-- 4b9880dbf3bd ("powerpc/vmlinux.lds: Define RUNTIME_DISCARD_EXIT")
-- a494398bde27 ("s390: define RUNTIME_DISCARD_EXIT to fix link error
-  with GNU ld < 2.36")
-- c1c551bebf92 ("sh: define RUNTIME_DISCARD_EXIT")
+There is no bug here since no code checks the actual value of these
+fields, just whether or not they are zero (boolean context), but this
+can be easily fixed by switching to an unsigned type.
 
-Fixes: 99cb0d917ffa ("arch: fix broken BuildID for arm64 and riscv")
-Reported-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Tested-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20230215-windfarm-wsingle-bit-bitfield-constant-conversion-v1-1-26415072e855@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/kernel/vmlinux.lds.S |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/macintosh/windfarm_lm75_sensor.c | 4 ++--
+ drivers/macintosh/windfarm_smu_sensors.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/um/kernel/vmlinux.lds.S
-+++ b/arch/um/kernel/vmlinux.lds.S
-@@ -1,4 +1,4 @@
--
-+#define RUNTIME_DISCARD_EXIT
- KERNEL_STACK_SIZE = 4096 * (1 << CONFIG_KERNEL_STACK_ORDER);
+diff --git a/drivers/macintosh/windfarm_lm75_sensor.c b/drivers/macintosh/windfarm_lm75_sensor.c
+index 24f0a444d3122..9c6febce2376b 100644
+--- a/drivers/macintosh/windfarm_lm75_sensor.c
++++ b/drivers/macintosh/windfarm_lm75_sensor.c
+@@ -33,8 +33,8 @@
+ #endif
  
- #ifdef CONFIG_LD_SCRIPT_STATIC
+ struct wf_lm75_sensor {
+-	int			ds1775 : 1;
+-	int			inited : 1;
++	unsigned int		ds1775 : 1;
++	unsigned int		inited : 1;
+ 	struct i2c_client	*i2c;
+ 	struct wf_sensor	sens;
+ };
+diff --git a/drivers/macintosh/windfarm_smu_sensors.c b/drivers/macintosh/windfarm_smu_sensors.c
+index 00c6fe25fcba0..2bdb73b34d291 100644
+--- a/drivers/macintosh/windfarm_smu_sensors.c
++++ b/drivers/macintosh/windfarm_smu_sensors.c
+@@ -274,8 +274,8 @@ struct smu_cpu_power_sensor {
+ 	struct list_head	link;
+ 	struct wf_sensor	*volts;
+ 	struct wf_sensor	*amps;
+-	int			fake_volts : 1;
+-	int			quadratic : 1;
++	unsigned int		fake_volts : 1;
++	unsigned int		quadratic : 1;
+ 	struct wf_sensor	sens;
+ };
+ #define to_smu_cpu_power(c) container_of(c, struct smu_cpu_power_sensor, sens)
+-- 
+2.39.2
+
 
 
