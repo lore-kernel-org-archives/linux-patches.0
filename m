@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D026D4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:25:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C641C433EF;
-	Wed, 15 Mar 2023 12:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6487A4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:25:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BE1C433EF;
+	Wed, 15 Mar 2023 12:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883145;
-	bh=YCaXQSHiK/uRjonLu3ZR09pYSWFIdjlAbzfrWJxkeY8=;
+	s=korg; t=1678883148;
+	bh=5xBQB/Lp4TNL6xNwavqKDOHU6MK+ON48BlW4BdDgzEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sPphHsjkHpflKuEZ2XqWKL6yxzPvKvoo7f0dZyDnGmXeL/4om9otYuq/6yEr7rNqn
-	 9QO18N1FsfbcE9Fsrndd6n8ypCu9Wm1aHNJ6nTbjRbX/MIojY41XCxyThnjQ6i7DMn
-	 LEnqnxrRSanwPUlSqrcQmZky2IpEgzIhpCDambTM=
+	b=OSfFvFeUHCVDO/T05AoKMl/8HzogJjVof36TW8imU8/3Q0hhImbZY6Q6q1vQ9wPvA
+	 v0LwfNM6Y9AGXSnOyjF17cLHQL4/GcDFoQKzgzQKbGNYNmSIqPeKxai/3Txspa6UeX
+	 jyIXYwIwX4oyZtYXeoiRiLcl+CtMC5G8HBjlI3V4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Chamberlain <mcgrof@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/145] block/brd: add error handling support for add_disk()
-Date: Wed, 15 Mar 2023 13:11:38 +0100
-Message-Id: <20230315115740.106826747@linuxfoundation.org>
+Subject: [PATCH 5.15 033/145] brd: mark as nowait compatible
+Date: Wed, 15 Mar 2023 13:11:39 +0100
+Message-Id: <20230315115740.150187791@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -35,58 +34,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luis Chamberlain <mcgrof@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit e1528830bd4ebf435d91c154e309e6e028336210 ]
+[ Upstream commit 67205f80be9910207481406c47f7d85e703fb2e9 ]
 
-We never checked for errors on add_disk() as this function
-returned void. Now that this is fixed, use the shiny new
-error handling.
+By default, non-mq drivers do not support nowait. This causes io_uring
+to use a slower path as the driver cannot be trust not to block. brd
+can safely set the nowait flag, as worst case all it does is a NOIO
+allocation.
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Link: https://lore.kernel.org/r/20211015235219.2191207-2-mcgrof@kernel.org
+For io_uring, this makes a substantial difference. Before:
+
+submitter=0, tid=453, file=/dev/ram0, node=-1
+polled=0, fixedbufs=1/0, register_files=1, buffered=0, QD=128
+Engine=io_uring, sq_ring=128, cq_ring=128
+IOPS=440.03K, BW=1718MiB/s, IOS/call=32/31
+IOPS=428.96K, BW=1675MiB/s, IOS/call=32/32
+IOPS=442.59K, BW=1728MiB/s, IOS/call=32/31
+IOPS=419.65K, BW=1639MiB/s, IOS/call=32/32
+IOPS=426.82K, BW=1667MiB/s, IOS/call=32/31
+
+and after:
+
+submitter=0, tid=354, file=/dev/ram0, node=-1
+polled=0, fixedbufs=1/0, register_files=1, buffered=0, QD=128
+Engine=io_uring, sq_ring=128, cq_ring=128
+IOPS=3.37M, BW=13.15GiB/s, IOS/call=32/31
+IOPS=3.45M, BW=13.46GiB/s, IOS/call=32/31
+IOPS=3.43M, BW=13.42GiB/s, IOS/call=32/32
+IOPS=3.43M, BW=13.39GiB/s, IOS/call=32/31
+IOPS=3.43M, BW=13.38GiB/s, IOS/call=32/31
+
+or about an 8x in difference. Now that brd is prepared to deal with
+REQ_NOWAIT reads/writes, mark it as supporting that.
+
+Cc: stable@vger.kernel.org # 5.10+
+Link: https://lore.kernel.org/linux-block/20230203103005.31290-1-p.raghav@samsung.com/
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 67205f80be99 ("brd: mark as nowait compatible")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/brd.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/block/brd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/block/brd.c b/drivers/block/brd.c
-index 2427b2261e516..63ac5cd523408 100644
+index 63ac5cd523408..76ce6f766d55e 100644
 --- a/drivers/block/brd.c
 +++ b/drivers/block/brd.c
-@@ -370,6 +370,7 @@ static int brd_alloc(int i)
- 	struct brd_device *brd;
- 	struct gendisk *disk;
- 	char buf[DISK_NAME_LEN];
-+	int err = -ENOMEM;
- 
- 	mutex_lock(&brd_devices_mutex);
- 	list_for_each_entry(brd, &brd_devices, brd_list) {
-@@ -420,16 +421,20 @@ static int brd_alloc(int i)
+@@ -421,6 +421,7 @@ static int brd_alloc(int i)
  	/* Tell the block layer that this is not a rotational device */
  	blk_queue_flag_set(QUEUE_FLAG_NONROT, disk->queue);
  	blk_queue_flag_clear(QUEUE_FLAG_ADD_RANDOM, disk->queue);
--	add_disk(disk);
-+	err = add_disk(disk);
-+	if (err)
-+		goto out_cleanup_disk;
- 
- 	return 0;
- 
-+out_cleanup_disk:
-+	blk_cleanup_disk(disk);
- out_free_dev:
- 	mutex_lock(&brd_devices_mutex);
- 	list_del(&brd->brd_list);
- 	mutex_unlock(&brd_devices_mutex);
- 	kfree(brd);
--	return -ENOMEM;
-+	return err;
- }
- 
- static void brd_probe(dev_t dev)
++	blk_queue_flag_set(QUEUE_FLAG_NOWAIT, disk->queue);
+ 	err = add_disk(disk);
+ 	if (err)
+ 		goto out_cleanup_disk;
 -- 
 2.39.2
 
