@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4724431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6208C433D2;
-	Wed, 15 Mar 2023 12:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA49F4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E22AC433D2;
+	Wed, 15 Mar 2023 12:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882746;
-	bh=YeJprYBDUT+gZPBUFosifEW6+RYM19NGssR6oZrUJBY=;
+	s=korg; t=1678882748;
+	bh=7ajsKtrWjH2qJrPvWKUP9t/YTguNSU7PeY+s1JahyQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SDUBvQAcygGmLhEsjUNdqfMyyYxxl/T2MBbau5hx1urzatzeKGMqb+r6E+ekBZ7FM
-	 eQ1QkXUWMAxnh9irUL8lCLQ9XU1QoUwMjTg+U+2DmLm36IEIiJUhTkKejn2kCbC+V2
-	 4kA3FJ9MOK9pymOji0Pt1e7snXIWoichB2I5BNP8=
+	b=Inf9l0mt06cCG76T1Sy6P3QLrRxyYCiEFaDTI9kzng5hm8MRaBuY123v7sYnLa65J
+	 yLmp1duoY0liDsVJ0aSu1D3ejyoi/nfEt3MiRDcexCws/4JZmKul9ErbOQK4wsnqM1
+	 887VRwrbJmZFptf/ztCMjdma+rfAL5jSn2yZinB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 55/68] PCI: Add SolidRun vendor ID
-Date: Wed, 15 Mar 2023 13:12:49 +0100
-Message-Id: <20230315115728.251720606@linuxfoundation.org>
+Subject: [PATCH 5.4 56/68] PCI: Avoid FLR for SolidRun SNET DPU rev 1
+Date: Wed, 15 Mar 2023 13:12:50 +0100
+Message-Id: <20230315115728.288504452@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -38,35 +38,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Alvaro Karsz <alvaro.karsz@solid-run.com>
 
-[ Upstream commit db6c4dee4c104f50ed163af71c53bfdb878a8318 ]
+[ Upstream commit d089d69cc1f824936eeaa4fa172f8fa1a0949eaa ]
 
-Add SolidRun vendor ID to pci_ids.h
+This patch fixes a FLR bug on the SNET DPU rev 1 by setting the
+PCI_DEV_FLAGS_NO_FLR_RESET flag.
 
-The vendor ID is used in 2 different source files, the SNET vDPA driver
-and PCI quirks.
+As there is a quirk to avoid FLR (quirk_no_flr), I added a new quirk
+to check the rev ID before calling to quirk_no_flr.
+
+Without this patch, a SNET DPU rev 1 may hang when FLR is applied.
 
 Signed-off-by: Alvaro Karsz <alvaro.karsz@solid-run.com>
 Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Message-Id: <20230110165638.123745-2-alvaro.karsz@solid-run.com>
+Message-Id: <20230110165638.123745-3-alvaro.karsz@solid-run.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pci_ids.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/quirks.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
-index a31aa3ac4219f..d35000669db5a 100644
---- a/include/linux/pci_ids.h
-+++ b/include/linux/pci_ids.h
-@@ -3106,6 +3106,8 @@
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 449d4ed611a68..12bf7348abc6c 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5364,6 +5364,14 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x7901, quirk_no_flr);
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1502, quirk_no_flr);
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1503, quirk_no_flr);
  
- #define PCI_VENDOR_ID_3COM_2		0xa727
- 
-+#define PCI_VENDOR_ID_SOLIDRUN		0xd063
++/* FLR may cause the SolidRun SNET DPU (rev 0x1) to hang */
++static void quirk_no_flr_snet(struct pci_dev *dev)
++{
++	if (dev->revision == 0x1)
++		quirk_no_flr(dev);
++}
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SOLIDRUN, 0x1000, quirk_no_flr_snet);
 +
- #define PCI_VENDOR_ID_DIGIUM		0xd161
- #define PCI_DEVICE_ID_DIGIUM_HFC4S	0xb410
- 
+ static void quirk_no_ext_tags(struct pci_dev *pdev)
+ {
+ 	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
 -- 
 2.39.2
 
