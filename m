@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C2F4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:31:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB04C433EF;
-	Wed, 15 Mar 2023 12:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98C04431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:31:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718E1C4339B;
+	Wed, 15 Mar 2023 12:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883486;
-	bh=DG4gGiF9iw4Azd2VaHJiZVHwxM706SN54ONQ5b+x+X4=;
+	s=korg; t=1678883488;
+	bh=MRXB5KkJhbsz/3IRWM5s8dMc9Gsh4abBWVqMC9b/fvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pNgRsnMTvpz3Bh/qA82YvMFUsyuEXpsKz3lxQrdhYb7up9CNJX7KlIH9Rx0z20NrT
-	 P1vkRD6tUbrGPKyVlRtJVePJiWWDV4C+cSAGWvwelLSjFzuNfLnoJX0sHnlxUQXmko
-	 aFl9RB5B3ONMQIIhhRAx1aHLrfKM+q41i73KSfvI=
+	b=KzURRLA09VXLWspptMbUs9665sK4CKG0Rsls3zZViz6a8SjLfVFJtazVzyeRNOHug
+	 hH5eqS4qRYwO99ExpPhK04fIOF4sTxWe48PRxKu4osSdXqJxe09cetOUciRbX+BVHd
+	 VT5zNFw2Tm2TzPHdXWXdBvVYdRzPeH701ep0nWX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 008/143] RISC-V: Stop emitting attributes
-Date: Wed, 15 Mar 2023 13:11:34 +0100
-Message-Id: <20230315115740.710341569@linuxfoundation.org>
+	Tavis Ormandy <taviso@gmail.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.1 009/143] x86/CPU/AMD: Disable XSAVES on AMD family 0x17
+Date: Wed, 15 Mar 2023 13:11:35 +0100
+Message-Id: <20230315115740.738576365@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -34,52 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Palmer Dabbelt <palmer@rivosinc.com>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-commit e18048da9bc3f87acef4eb67a11b4fc55fe15424 upstream.
+commit b0563468eeac88ebc70559d52a0b66efc37e4e9d upstream.
 
-The RISC-V ELF attributes don't contain any useful information.  New
-toolchains ignore them, but they frequently trip up various older/mixed
-toolchains.  So just turn them off.
+AMD Erratum 1386 is summarised as:
 
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20230223224605.6995-1-palmer@rivosinc.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+  XSAVES Instruction May Fail to Save XMM Registers to the Provided
+  State Save Area
+
+This piece of accidental chronomancy causes the %xmm registers to
+occasionally reset back to an older value.
+
+Ignore the XSAVES feature on all AMD Zen1/2 hardware.  The XSAVEC
+instruction (which works fine) is equivalent on affected parts.
+
+  [ bp: Typos, move it into the F17h-specific function. ]
+
+Reported-by: Tavis Ormandy <taviso@gmail.com>
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230307174643.1240184-1-andrew.cooper3@citrix.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/Makefile                    |    7 +++++++
- arch/riscv/kernel/compat_vdso/Makefile |    4 ++++
- 2 files changed, 11 insertions(+)
+ arch/x86/kernel/cpu/amd.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/riscv/Makefile
-+++ b/arch/riscv/Makefile
-@@ -87,6 +87,13 @@ endif
- # Avoid generating .eh_frame sections.
- KBUILD_CFLAGS += -fno-asynchronous-unwind-tables -fno-unwind-tables
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -880,6 +880,15 @@ void init_spectral_chicken(struct cpuinf
+ 		}
+ 	}
+ #endif
++	/*
++	 * Work around Erratum 1386.  The XSAVES instruction malfunctions in
++	 * certain circumstances on Zen1/2 uarch, and not all parts have had
++	 * updated microcode at the time of writing (March 2023).
++	 *
++	 * Affected parts all have no supervisor XSAVE states, meaning that
++	 * the XSAVEC instruction (which works fine) is equivalent.
++	 */
++	clear_cpu_cap(c, X86_FEATURE_XSAVES);
+ }
  
-+# The RISC-V attributes frequently cause compatibility issues and provide no
-+# information, so just turn them off.
-+KBUILD_CFLAGS += $(call cc-option,-mno-riscv-attribute)
-+KBUILD_AFLAGS += $(call cc-option,-mno-riscv-attribute)
-+KBUILD_CFLAGS += $(call as-option,-Wa$(comma)-mno-arch-attr)
-+KBUILD_AFLAGS += $(call as-option,-Wa$(comma)-mno-arch-attr)
-+
- KBUILD_CFLAGS_MODULE += $(call cc-option,-mno-relax)
- KBUILD_AFLAGS_MODULE += $(call as-option,-Wa$(comma)-mno-relax)
- 
---- a/arch/riscv/kernel/compat_vdso/Makefile
-+++ b/arch/riscv/kernel/compat_vdso/Makefile
-@@ -14,6 +14,10 @@ COMPAT_LD := $(LD)
- COMPAT_CC_FLAGS := -march=rv32g -mabi=ilp32
- COMPAT_LD_FLAGS := -melf32lriscv
- 
-+# Disable attributes, as they're useless and break the build.
-+COMPAT_CC_FLAGS += $(call cc-option,-mno-riscv-attribute)
-+COMPAT_CC_FLAGS += $(call as-option,-Wa$(comma)-mno-arch-attr)
-+
- # Files to link into the compat_vdso
- obj-compat_vdso = $(patsubst %, %.o, $(compat_vdso-syms)) note.o
- 
+ static void init_amd_zn(struct cpuinfo_x86 *c)
 
 
