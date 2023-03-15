@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28674431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DA3C433EF;
-	Wed, 15 Mar 2023 12:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F834431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23FA7C433EF;
+	Wed, 15 Mar 2023 12:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883978;
-	bh=N8GvDc8kXEwY0TJiZARrEWIq4/JtWXZVfuGvJkLHK+E=;
+	s=korg; t=1678883981;
+	bh=ngTowlM9jlYp9PLUJeQT6choA3mxMsJBVfEMigU0bR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P5kIaPABSJP/J/UDz72R4qDIYTMJghwqz5wTEm5/Uh3d1NQvH5IsEHIJCLBJNjlqO
-	 niTGm+ll8Cj2n/Nj9Y27P0HjRLUvbiOo9dTIAlUxC+K5LpeL4fC65DXoZamZcu3Kif
-	 dDhts0Y2XFWdz7FQMPhfV0Yz4gzHyK2H80q/8C7c=
+	b=fwEUqDVzj6aWymNFRC+JlikhyZ3I/N1Dvfy1t5u34Pd+VUTmS3k87fL/dMooihK75
+	 62EeZ/1sNF+jvWmwgQUKK4rqX7A/BnXPstXTvtf0uPk5ixqb5IKnmpCPQxVQhdIces
+	 ausbuAj0caAIPODA4QGTOWT4Tgr7acCNbswBdfvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 060/141] netfilter: nft_last: copy content when cloning expression
-Date: Wed, 15 Mar 2023 13:12:43 +0100
-Message-Id: <20230315115741.790202941@linuxfoundation.org>
+Subject: [PATCH 6.2 034/141] bus: mhi: ep: Power up/down MHI stack during MHI RESET
+Date: Wed, 15 Mar 2023 13:12:17 +0100
+Message-Id: <20230315115741.006103522@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -34,39 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 860e874290fb3be08e966c9c8ffc510c5b0f2bd8 ]
+[ Upstream commit 47a1dcaea07367c84238e71c08244ae3ed48c1cc ]
 
-If the ruleset contains last timestamps, restore them accordingly.
-Otherwise, listing after restoration shows never used items.
+During graceful shutdown scenario, host will issue MHI RESET to the
+endpoint device before initiating shutdown. In that case, it makes sense
+to completely power down the MHI stack as sooner or later the access to
+MMIO registers will be prohibited. Also, the stack needs to be powered
+up in the case of SYS_ERR to recover the device.
 
-Fixes: 33a24de37e81 ("netfilter: nft_last: move stateful fields out of expression data")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Link: https://lore.kernel.org/r/20221228161704.255268-2-manivannan.sadhasivam@linaro.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Stable-dep-of: 1ddc76182940 ("bus: mhi: ep: Change state_lock to mutex")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_last.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bus/mhi/ep/main.c | 35 +++++++----------------------------
+ 1 file changed, 7 insertions(+), 28 deletions(-)
 
-diff --git a/net/netfilter/nft_last.c b/net/netfilter/nft_last.c
-index 7f2bda6641bd8..8e6d7eaf9dc8b 100644
---- a/net/netfilter/nft_last.c
-+++ b/net/netfilter/nft_last.c
-@@ -105,11 +105,15 @@ static void nft_last_destroy(const struct nft_ctx *ctx,
- static int nft_last_clone(struct nft_expr *dst, const struct nft_expr *src)
+diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+index 357c61c12ce5b..b06548005985c 100644
+--- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -990,11 +990,9 @@ static void mhi_ep_abort_transfer(struct mhi_ep_cntrl *mhi_cntrl)
+ static void mhi_ep_reset_worker(struct work_struct *work)
  {
- 	struct nft_last_priv *priv_dst = nft_expr_priv(dst);
-+	struct nft_last_priv *priv_src = nft_expr_priv(src);
+ 	struct mhi_ep_cntrl *mhi_cntrl = container_of(work, struct mhi_ep_cntrl, reset_work);
+-	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 	enum mhi_state cur_state;
+-	int ret;
  
- 	priv_dst->last = kzalloc(sizeof(*priv_dst->last), GFP_ATOMIC);
- 	if (!priv_dst->last)
- 		return -ENOMEM;
+-	mhi_ep_abort_transfer(mhi_cntrl);
++	mhi_ep_power_down(mhi_cntrl);
  
-+	priv_dst->last->set = priv_src->last->set;
-+	priv_dst->last->jiffies = priv_src->last->jiffies;
-+
- 	return 0;
+ 	spin_lock_bh(&mhi_cntrl->state_lock);
+ 	/* Reset MMIO to signal host that the MHI_RESET is completed in endpoint */
+@@ -1007,27 +1005,8 @@ static void mhi_ep_reset_worker(struct work_struct *work)
+ 	 * issue reset during shutdown also and we don't need to do re-init in
+ 	 * that case.
+ 	 */
+-	if (cur_state == MHI_STATE_SYS_ERR) {
+-		mhi_ep_mmio_init(mhi_cntrl);
+-
+-		/* Set AMSS EE before signaling ready state */
+-		mhi_ep_mmio_set_env(mhi_cntrl, MHI_EE_AMSS);
+-
+-		/* All set, notify the host that we are ready */
+-		ret = mhi_ep_set_ready_state(mhi_cntrl);
+-		if (ret)
+-			return;
+-
+-		dev_dbg(dev, "READY state notification sent to the host\n");
+-
+-		ret = mhi_ep_enable(mhi_cntrl);
+-		if (ret) {
+-			dev_err(dev, "Failed to enable MHI endpoint: %d\n", ret);
+-			return;
+-		}
+-
+-		enable_irq(mhi_cntrl->irq);
+-	}
++	if (cur_state == MHI_STATE_SYS_ERR)
++		mhi_ep_power_up(mhi_cntrl);
  }
+ 
+ /*
+@@ -1106,11 +1085,11 @@ EXPORT_SYMBOL_GPL(mhi_ep_power_up);
+ 
+ void mhi_ep_power_down(struct mhi_ep_cntrl *mhi_cntrl)
+ {
+-	if (mhi_cntrl->enabled)
++	if (mhi_cntrl->enabled) {
+ 		mhi_ep_abort_transfer(mhi_cntrl);
+-
+-	kfree(mhi_cntrl->mhi_event);
+-	disable_irq(mhi_cntrl->irq);
++		kfree(mhi_cntrl->mhi_event);
++		disable_irq(mhi_cntrl->irq);
++	}
+ }
+ EXPORT_SYMBOL_GPL(mhi_ep_power_down);
  
 -- 
 2.39.2
