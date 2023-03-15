@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58944432
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB49C4339B;
-	Wed, 15 Mar 2023 12:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0274431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52B2C433EF;
+	Wed, 15 Mar 2023 12:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884036;
-	bh=4StMg3S0PTqV4b498C4qBcMyH2q0EHJpLyR63zJgfJk=;
+	s=korg; t=1678884039;
+	bh=LecQzSkV+mGvdYHTfKv6o3/y4DCMz5YQtiOrm8tcrDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d2ybj/vBQV+KWxOYrEDT/0bgJSLQmouPqNvDGRSibaOZ+G8M/66Ie1PhxhLCQLGMk
-	 bmFgVpEbsVwfLspPTdAUSO+ZGes7esISL9rO7MQWzjZpVmEeobuRymuwvumhY3cVUy
-	 55Wscr3cRTclaT9lawvebxG64vyu6y+lb+7FOfUY=
+	b=e3syZa23nm0HcdQHPtBCDDpiS+Ihhd5G3TtqnrnxDDDWvDweb6xllczQNdJCd7OJi
+	 0Fpv5/his1hh+CJ3c5llGkt2qZjJWReePbFpb6I28Ild0QR8+0XWzALOIC0qZ2LGFj
+	 kfniZN48+wr//Xgb6wQjkymL2lu3pJowORZcsc7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>,
-	=?UTF-8?q?Major=20D=C3=A1vid?= <major.david@balasys.hu>
-Subject: [PATCH 6.2 083/141] netfilter: tproxy: fix deadlock due to missing BH disable
-Date: Wed, 15 Mar 2023 13:13:06 +0100
-Message-Id: <20230315115742.506135328@linuxfoundation.org>
+	"sjur.brandeland@stericsson.com" <sjur.brandeland@stericsson.com>,
+	syzbot+b563d33852b893653a9e@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 066/141] net: caif: Fix use-after-free in cfusbl_device_notify()
+Date: Wed, 15 Mar 2023 13:12:49 +0100
+Message-Id: <20230315115741.960709234@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -36,78 +37,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 4a02426787bf024dafdb79b362285ee325de3f5e ]
+[ Upstream commit 9781e98a97110f5e76999058368b4be76a788484 ]
 
-The xtables packet traverser performs an unconditional local_bh_disable(),
-but the nf_tables evaluation loop does not.
+syzbot reported use-after-free in cfusbl_device_notify() [1].  This
+causes a stack trace like below:
 
-Functions that are called from either xtables or nftables must assume
-that they can be called in process context.
+BUG: KASAN: use-after-free in cfusbl_device_notify+0x7c9/0x870 net/caif/caif_usb.c:138
+Read of size 8 at addr ffff88807ac4e6f0 by task kworker/u4:6/1214
 
-inet_twsk_deschedule_put() assumes that no softirq interrupt can occur.
-If tproxy is used from nf_tables its possible that we'll deadlock
-trying to aquire a lock already held in process context.
+CPU: 0 PID: 1214 Comm: kworker/u4:6 Not tainted 5.19.0-rc3-syzkaller-00146-g92f20ff72066 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Workqueue: netns cleanup_net
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
+ print_address_description.constprop.0.cold+0xeb/0x467 mm/kasan/report.c:313
+ print_report mm/kasan/report.c:429 [inline]
+ kasan_report.cold+0xf4/0x1c6 mm/kasan/report.c:491
+ cfusbl_device_notify+0x7c9/0x870 net/caif/caif_usb.c:138
+ notifier_call_chain+0xb5/0x200 kernel/notifier.c:87
+ call_netdevice_notifiers_info+0xb5/0x130 net/core/dev.c:1945
+ call_netdevice_notifiers_extack net/core/dev.c:1983 [inline]
+ call_netdevice_notifiers net/core/dev.c:1997 [inline]
+ netdev_wait_allrefs_any net/core/dev.c:10227 [inline]
+ netdev_run_todo+0xbc0/0x10f0 net/core/dev.c:10341
+ default_device_exit_batch+0x44e/0x590 net/core/dev.c:11334
+ ops_exit_list+0x125/0x170 net/core/net_namespace.c:167
+ cleanup_net+0x4ea/0xb00 net/core/net_namespace.c:594
+ process_one_work+0x996/0x1610 kernel/workqueue.c:2289
+ worker_thread+0x665/0x1080 kernel/workqueue.c:2436
+ kthread+0x2e9/0x3a0 kernel/kthread.c:376
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:302
+ </TASK>
 
-Add a small helper that takes care of this and use it.
+When unregistering a net device, unregister_netdevice_many_notify()
+sets the device's reg_state to NETREG_UNREGISTERING, calls notifiers
+with NETDEV_UNREGISTER, and adds the device to the todo list.
 
-Link: https://lore.kernel.org/netfilter-devel/401bd6ed-314a-a196-1cdc-e13c720cc8f2@balasys.hu/
-Fixes: 4ed8eb6570a4 ("netfilter: nf_tables: Add native tproxy support")
-Reported-and-tested-by: Major Dávid <major.david@balasys.hu>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Later on, devices in the todo list are processed by netdev_run_todo().
+netdev_run_todo() waits devices' reference count become 1 while
+rebdoadcasting NETDEV_UNREGISTER notification.
+
+When cfusbl_device_notify() is called with NETDEV_UNREGISTER multiple
+times, the parent device might be freed.  This could cause UAF.
+Processing NETDEV_UNREGISTER multiple times also causes inbalance of
+reference count for the module.
+
+This patch fixes the issue by accepting only first NETDEV_UNREGISTER
+notification.
+
+Fixes: 7ad65bf68d70 ("caif: Add support for CAIF over CDC NCM USB interface")
+CC: sjur.brandeland@stericsson.com <sjur.brandeland@stericsson.com>
+Reported-by: syzbot+b563d33852b893653a9e@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=c3bfd8e2450adab3bffe4d80821fbbced600407f [1]
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Link: https://lore.kernel.org/r/20230301163913.391304-1-syoshida@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tproxy.h   | 7 +++++++
- net/ipv4/netfilter/nf_tproxy_ipv4.c | 2 +-
- net/ipv6/netfilter/nf_tproxy_ipv6.c | 2 +-
- 3 files changed, 9 insertions(+), 2 deletions(-)
+ net/caif/caif_usb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/net/netfilter/nf_tproxy.h b/include/net/netfilter/nf_tproxy.h
-index 82d0e41b76f22..faa108b1ba675 100644
---- a/include/net/netfilter/nf_tproxy.h
-+++ b/include/net/netfilter/nf_tproxy.h
-@@ -17,6 +17,13 @@ static inline bool nf_tproxy_sk_is_transparent(struct sock *sk)
- 	return false;
- }
+diff --git a/net/caif/caif_usb.c b/net/caif/caif_usb.c
+index ebc202ffdd8d8..bf61ea4b8132d 100644
+--- a/net/caif/caif_usb.c
++++ b/net/caif/caif_usb.c
+@@ -134,6 +134,9 @@ static int cfusbl_device_notify(struct notifier_block *me, unsigned long what,
+ 	struct usb_device *usbdev;
+ 	int res;
  
-+static inline void nf_tproxy_twsk_deschedule_put(struct inet_timewait_sock *tw)
-+{
-+	local_bh_disable();
-+	inet_twsk_deschedule_put(tw);
-+	local_bh_enable();
-+}
++	if (what == NETDEV_UNREGISTER && dev->reg_state >= NETREG_UNREGISTERED)
++		return 0;
 +
- /* assign a socket to the skb -- consumes sk */
- static inline void nf_tproxy_assign_sock(struct sk_buff *skb, struct sock *sk)
- {
-diff --git a/net/ipv4/netfilter/nf_tproxy_ipv4.c b/net/ipv4/netfilter/nf_tproxy_ipv4.c
-index b22b2c745c76c..69e3317996043 100644
---- a/net/ipv4/netfilter/nf_tproxy_ipv4.c
-+++ b/net/ipv4/netfilter/nf_tproxy_ipv4.c
-@@ -38,7 +38,7 @@ nf_tproxy_handle_time_wait4(struct net *net, struct sk_buff *skb,
- 					    hp->source, lport ? lport : hp->dest,
- 					    skb->dev, NF_TPROXY_LOOKUP_LISTENER);
- 		if (sk2) {
--			inet_twsk_deschedule_put(inet_twsk(sk));
-+			nf_tproxy_twsk_deschedule_put(inet_twsk(sk));
- 			sk = sk2;
- 		}
- 	}
-diff --git a/net/ipv6/netfilter/nf_tproxy_ipv6.c b/net/ipv6/netfilter/nf_tproxy_ipv6.c
-index 929502e51203b..52f828bb5a83d 100644
---- a/net/ipv6/netfilter/nf_tproxy_ipv6.c
-+++ b/net/ipv6/netfilter/nf_tproxy_ipv6.c
-@@ -63,7 +63,7 @@ nf_tproxy_handle_time_wait6(struct sk_buff *skb, int tproto, int thoff,
- 					    lport ? lport : hp->dest,
- 					    skb->dev, NF_TPROXY_LOOKUP_LISTENER);
- 		if (sk2) {
--			inet_twsk_deschedule_put(inet_twsk(sk));
-+			nf_tproxy_twsk_deschedule_put(inet_twsk(sk));
- 			sk = sk2;
- 		}
- 	}
+ 	/* Check whether we have a NCM device, and find its VID/PID. */
+ 	if (!(dev->dev.parent && dev->dev.parent->driver &&
+ 	      strcmp(dev->dev.parent->driver->name, "cdc_ncm") == 0))
 -- 
 2.39.2
 
