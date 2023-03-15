@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6294431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A699DC433D2;
-	Wed, 15 Mar 2023 12:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B884E4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DABDC433EF;
+	Wed, 15 Mar 2023 12:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883690;
-	bh=antuB6L9KrJcuWe21ZYhS/b3KfcIv5vb6TNMo7U+SHo=;
+	s=korg; t=1678883692;
+	bh=LfnVXaZHJarVpu2QSBKIG9RKXVGF8e3mBnm3yQ86NWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+h5cELocNmJF2zy7xCAyvfReFbzMIZqY9TV3QJ4xy0JONmR8MN/ezBnJVRliOzbL
-	 j6ozJ5t3W7Dv+OP1u+hERVKNs6xts7KQIeL4Vhs0ozjroK5mIsLiNRKcXRDYw1P4wI
-	 fooD4lXrFXn7sOTufjz6BFtP3fS8y0C40o6lRs0c=
+	b=UflZlxQsHhdKGRVG1Qd/QJ44dSSY7qzaIsSIxcZgFoFazQSWq19brlbIQpiHLjeuK
+	 5gxqMBstFubjdfGXGPT0nOJbJnhzPVcLKePr8HoYtFPrl4VyLi5H9z8juB1zsznnuS
+	 F7nC9pURujHa79nv+zQQKBWWMVBYKTeYcJvLdgXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	Adrien Moulin <amoulin@corp.free.fr>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Maxim Mikityanskiy <maxtram95@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/143] net: ethernet: mtk_eth_soc: fix RX data corruption issue
-Date: Wed, 15 Mar 2023 13:13:01 +0100
-Message-Id: <20230315115743.402445063@linuxfoundation.org>
+Subject: [PATCH 6.1 096/143] net: tls: fix device-offloaded sendpage straddling records
+Date: Wed, 15 Mar 2023 13:13:02 +0100
+Message-Id: <20230315115743.431324096@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -38,66 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 193250ace270fecd586dd2d0dfbd9cbd2ade977f ]
+[ Upstream commit e539a105f947b9db470fec39fe91d85fe737a432 ]
 
-Fix data corruption issue with SerDes connected PHYs operating at 1.25
-Gbps speed where we could previously observe about 30% packet loss while
-the bad packet counter was increasing.
+Adrien reports that incorrect data is transmitted when a single
+page straddles multiple records. We would transmit the same
+data in all iterations of the loop.
 
-As almost all boards with MediaTek MT7622 or MT7986 use either the MT7531
-switch IC operating at 3.125Gbps SerDes rate or single-port PHYs using
-rate-adaptation to 2500Base-X mode, this issue only got exposed now when
-we started trying to use SFP modules operating with 1.25 Gbps with the
-BananaPi R3 board.
-
-The fix is to set bit 12 which disables the RX FIFO clear function when
-setting up MAC MCR, MediaTek SDK did the same change stating:
-"If without this patch, kernel might receive invalid packets that are
-corrupted by GMAC."[1]
-
-[1]: https://git01.mediatek.com/plugins/gitiles/openwrt/feeds/mtk-openwrt-feeds/+/d8a2975939a12686c4a95c40db21efdc3f821f63
-
-Fixes: 42c03844e93d ("net-next: mediatek: add support for MediaTek MT7622 SoC")
-Tested-by: Bjørn Mork <bjorn@mork.no>
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/138da2735f92c8b6f8578ec2e5a794ee515b665f.1677937317.git.daniel@makrotopia.org
+Reported-by: Adrien Moulin <amoulin@corp.free.fr>
+Link: https://lore.kernel.org/all/61481278.42813558.1677845235112.JavaMail.zimbra@corp.free.fr
+Fixes: c1318b39c7d3 ("tls: Add opt-in zerocopy mode of sendfile()")
+Tested-by: Adrien Moulin <amoulin@corp.free.fr>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Acked-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Link: https://lore.kernel.org/r/20230304192610.3818098-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 3 ++-
- drivers/net/ethernet/mediatek/mtk_eth_soc.h | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ net/tls/tls_device.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 53ee9dea66388..49975924e2426 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -561,7 +561,8 @@ static int mtk_mac_finish(struct phylink_config *config, unsigned int mode,
- 	mcr_cur = mtk_r32(mac->hw, MTK_MAC_MCR(mac->id));
- 	mcr_new = mcr_cur;
- 	mcr_new |= MAC_MCR_IPG_CFG | MAC_MCR_FORCE_MODE |
--		   MAC_MCR_BACKOFF_EN | MAC_MCR_BACKPR_EN | MAC_MCR_FORCE_LINK;
-+		   MAC_MCR_BACKOFF_EN | MAC_MCR_BACKPR_EN | MAC_MCR_FORCE_LINK |
-+		   MAC_MCR_RX_FIFO_CLR_DIS;
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index 6c593788dc250..a7cc4f9faac28 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -508,6 +508,8 @@ static int tls_push_data(struct sock *sk,
+ 			zc_pfrag.offset = iter_offset.offset;
+ 			zc_pfrag.size = copy;
+ 			tls_append_frag(record, &zc_pfrag, copy);
++
++			iter_offset.offset += copy;
+ 		} else if (copy) {
+ 			copy = min_t(size_t, copy, pfrag->size - pfrag->offset);
  
- 	/* Only update control register when needed! */
- 	if (mcr_new != mcr_cur)
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-index 306fdc2c608a4..dafa9a0baa58c 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-@@ -357,6 +357,7 @@
- #define MAC_MCR_FORCE_MODE	BIT(15)
- #define MAC_MCR_TX_EN		BIT(14)
- #define MAC_MCR_RX_EN		BIT(13)
-+#define MAC_MCR_RX_FIFO_CLR_DIS	BIT(12)
- #define MAC_MCR_BACKOFF_EN	BIT(9)
- #define MAC_MCR_BACKPR_EN	BIT(8)
- #define MAC_MCR_FORCE_RX_FC	BIT(5)
 -- 
 2.39.2
 
