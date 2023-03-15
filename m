@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2924431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01856C433AA;
-	Wed, 15 Mar 2023 12:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407BA4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:32:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC507C4339C;
+	Wed, 15 Mar 2023 12:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883559;
-	bh=CoJGKh0FOnk5vX8Pwg3Lc1XM2guT1Iwm90uOmQLz6BM=;
+	s=korg; t=1678883562;
+	bh=B63P0pRqD6TtSoVKi2T8I0DYDEQT3ZDjPfqa8+1ghhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VeCeqyv9WjH/Y2T5wyX/j8av/CAzS/D+L/IM91/LTWIQranWYZk8C3l1oJpN6fr9v
-	 qCU0NL4zK/WhDeU13UG3mDZUgTcIQnY/VKu3EuET+pU2xYwXVjmM7B0SIcQdc1sKX8
-	 euEqRJutAsP1qW4tHoEajW42iv/PCKquCfkA5KOo=
+	b=TC/eYTpdmJIJ8TFKajp2tWhrynJpeq2/j9uxdDmfzxsTCc5zUXVMKKxmszJT+FLb9
+	 DK9I01CLpFXH8AIK0kz7sZO3D5tbTjsGLB8Qhi7p7zGItKPtIPsDhsu40od3ZpjteT
+	 dIbs8246l9mDk+CQc7Or1IrGhfW1vuRLZOCxMoho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/143] powerpc/boot: Dont always pass -mcpu=powerpc when building 32-bit uImage
-Date: Wed, 15 Mar 2023 13:12:09 +0100
-Message-Id: <20230315115741.820080128@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.1 015/143] staging: rtl8723bs: Fix key-store index handling
+Date: Wed, 15 Mar 2023 13:11:41 +0100
+Message-Id: <20230315115740.940529395@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -36,64 +33,173 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit ff7c76f66d8bad4e694c264c789249e1d3a8205d ]
+commit 05cbcc415c9b8c8bc4f9a09f8e03610a89042f03 upstream.
 
-When CONFIG_TARGET_CPU is specified then pass its value to the compiler
--mcpu option. This fixes following build error when building kernel with
-powerpc e500 SPE capable cross compilers:
+There are 2 issues with the key-store index handling
 
-    BOOTAS  arch/powerpc/boot/crt0.o
-  powerpc-linux-gnuspe-gcc: error: unrecognized argument in option ‘-mcpu=powerpc’
-  powerpc-linux-gnuspe-gcc: note: valid arguments to ‘-mcpu=’ are: 8540 8548 native
-  make[1]: *** [arch/powerpc/boot/Makefile:231: arch/powerpc/boot/crt0.o] Error 1
+1. The non WEP key stores can store keys with indexes 0 - BIP_MAX_KEYID,
+   this means that they should be an array with BIP_MAX_KEYID + 1
+   entries. But some of the arrays where just BIP_MAX_KEYID entries
+   big. While one other array was hardcoded to a size of 6 entries,
+   instead of using the BIP_MAX_KEYID define.
 
-Similar change was already introduced for the main powerpc Makefile in
-commit 446cda1b21d9 ("powerpc/32: Don't always pass -mcpu=powerpc to the
-compiler").
+2. The rtw_cfg80211_set_encryption() and wpa_set_encryption() functions
+   index check where checking that the passed in key-index would fit
+   inside both the WEP key store (which only has 4 entries) as well as
+   in the non WEP key stores. This breaks any attempts to set non WEP
+   keys with index 4 or 5.
 
-Fixes: 40a75584e526 ("powerpc/boot: Build wrapper for an appropriate CPU")
-Cc: stable@vger.kernel.org # v5.19+
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/2ae3ae5887babfdacc34435bff0944b3f336100a.1674632329.git.christophe.leroy@csgroup.eu
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Issue 2. specifically breaks wifi connection with some access points
+which advertise PMF support. Without this fix connecting to these
+access points fails with the following wpa_supplicant messages:
+
+ nl80211: kernel reports: key addition failed
+ wlan0: WPA: Failed to configure IGTK to the driver
+ wlan0: RSN: Failed to configure IGTK
+ wlan0: CTRL-EVENT-DISCONNECTED bssid=... reason=1 locally_generated=1
+
+Fix 1. by using the right size for the key-stores. After this 2. can
+safely be fixed by checking the right max-index value depending on the
+used algorithm, fixing wifi not working with some PMF capable APs.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230306153512.162104-1-hdegoede@redhat.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/boot/Makefile | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/staging/rtl8723bs/include/rtw_security.h  |    8 ++---
+ drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |   26 ++++++++++-------
+ drivers/staging/rtl8723bs/os_dep/ioctl_linux.c    |   33 +++++++++++-----------
+ 3 files changed, 36 insertions(+), 31 deletions(-)
 
-diff --git a/arch/powerpc/boot/Makefile b/arch/powerpc/boot/Makefile
-index d32d95aea5d6f..295f76df13b55 100644
---- a/arch/powerpc/boot/Makefile
-+++ b/arch/powerpc/boot/Makefile
-@@ -39,13 +39,19 @@ BOOTCFLAGS    := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
- 		 $(LINUXINCLUDE)
+--- a/drivers/staging/rtl8723bs/include/rtw_security.h
++++ b/drivers/staging/rtl8723bs/include/rtw_security.h
+@@ -107,13 +107,13 @@ struct security_priv {
  
- ifdef CONFIG_PPC64_BOOT_WRAPPER
--ifdef CONFIG_CPU_LITTLE_ENDIAN
--BOOTCFLAGS	+= -m64 -mcpu=powerpc64le
-+BOOTCFLAGS	+= -m64
- else
--BOOTCFLAGS	+= -m64 -mcpu=powerpc64
-+BOOTCFLAGS	+= -m32
- endif
+ 	u32 dot118021XGrpPrivacy;	/*  This specify the privacy algthm. used for Grp key */
+ 	u32 dot118021XGrpKeyid;		/*  key id used for Grp Key (tx key index) */
+-	union Keytype	dot118021XGrpKey[BIP_MAX_KEYID];	/*  802.1x Group Key, for inx0 and inx1 */
+-	union Keytype	dot118021XGrptxmickey[BIP_MAX_KEYID];
+-	union Keytype	dot118021XGrprxmickey[BIP_MAX_KEYID];
++	union Keytype	dot118021XGrpKey[BIP_MAX_KEYID + 1];	/*  802.1x Group Key, for inx0 and inx1 */
++	union Keytype	dot118021XGrptxmickey[BIP_MAX_KEYID + 1];
++	union Keytype	dot118021XGrprxmickey[BIP_MAX_KEYID + 1];
+ 	union pn48		dot11Grptxpn;			/*  PN48 used for Grp Key xmit. */
+ 	union pn48		dot11Grprxpn;			/*  PN48 used for Grp Key recv. */
+ 	u32 dot11wBIPKeyid;						/*  key id used for BIP Key (tx key index) */
+-	union Keytype	dot11wBIPKey[6];		/*  BIP Key, for index4 and index5 */
++	union Keytype	dot11wBIPKey[BIP_MAX_KEYID + 1];	/*  BIP Key, for index4 and index5 */
+ 	union pn48		dot11wBIPtxpn;			/*  PN48 used for Grp Key xmit. */
+ 	union pn48		dot11wBIPrxpn;			/*  PN48 used for Grp Key recv. */
+ 
+--- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
++++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
+@@ -711,6 +711,7 @@ exit:
+ static int rtw_cfg80211_set_encryption(struct net_device *dev, struct ieee_param *param, u32 param_len)
+ {
+ 	int ret = 0;
++	u8 max_idx;
+ 	u32 wep_key_idx, wep_key_len;
+ 	struct adapter *padapter = rtw_netdev_priv(dev);
+ 	struct mlme_priv *pmlmepriv = &padapter->mlmepriv;
+@@ -724,26 +725,29 @@ static int rtw_cfg80211_set_encryption(s
+ 		goto exit;
+ 	}
+ 
+-	if (param->sta_addr[0] == 0xff && param->sta_addr[1] == 0xff &&
+-	    param->sta_addr[2] == 0xff && param->sta_addr[3] == 0xff &&
+-	    param->sta_addr[4] == 0xff && param->sta_addr[5] == 0xff) {
+-		if (param->u.crypt.idx >= WEP_KEYS
+-			|| param->u.crypt.idx >= BIP_MAX_KEYID) {
+-			ret = -EINVAL;
+-			goto exit;
+-		}
+-	} else {
+-		{
++	if (param->sta_addr[0] != 0xff || param->sta_addr[1] != 0xff ||
++	    param->sta_addr[2] != 0xff || param->sta_addr[3] != 0xff ||
++	    param->sta_addr[4] != 0xff || param->sta_addr[5] != 0xff) {
+ 		ret = -EINVAL;
+ 		goto exit;
+ 	}
 +
-+ifdef CONFIG_TARGET_CPU_BOOL
-+BOOTCFLAGS	+= -mcpu=$(CONFIG_TARGET_CPU)
-+else ifdef CONFIG_PPC64_BOOT_WRAPPER
-+ifdef CONFIG_CPU_LITTLE_ENDIAN
-+BOOTCFLAGS	+= -mcpu=powerpc64le
- else
--BOOTCFLAGS	+= -m32 -mcpu=powerpc
-+BOOTCFLAGS	+= -mcpu=powerpc64
-+endif
- endif
++	if (strcmp(param->u.crypt.alg, "WEP") == 0)
++		max_idx = WEP_KEYS - 1;
++	else
++		max_idx = BIP_MAX_KEYID;
++
++	if (param->u.crypt.idx > max_idx) {
++		netdev_err(dev, "Error crypt.idx %d > %d\n", param->u.crypt.idx, max_idx);
++		ret = -EINVAL;
++		goto exit;
+ 	}
  
- BOOTCFLAGS	+= -isystem $(shell $(BOOTCC) -print-file-name=include)
--- 
-2.39.2
-
+ 	if (strcmp(param->u.crypt.alg, "WEP") == 0) {
+ 		wep_key_idx = param->u.crypt.idx;
+ 		wep_key_len = param->u.crypt.key_len;
+ 
+-		if ((wep_key_idx >= WEP_KEYS) || (wep_key_len <= 0)) {
++		if (wep_key_len <= 0) {
+ 			ret = -EINVAL;
+ 			goto exit;
+ 		}
+--- a/drivers/staging/rtl8723bs/os_dep/ioctl_linux.c
++++ b/drivers/staging/rtl8723bs/os_dep/ioctl_linux.c
+@@ -46,6 +46,7 @@ static int wpa_set_auth_algs(struct net_
+ static int wpa_set_encryption(struct net_device *dev, struct ieee_param *param, u32 param_len)
+ {
+ 	int ret = 0;
++	u8 max_idx;
+ 	u32 wep_key_idx, wep_key_len, wep_total_len;
+ 	struct ndis_802_11_wep	 *pwep = NULL;
+ 	struct adapter *padapter = rtw_netdev_priv(dev);
+@@ -60,19 +61,22 @@ static int wpa_set_encryption(struct net
+ 		goto exit;
+ 	}
+ 
+-	if (param->sta_addr[0] == 0xff && param->sta_addr[1] == 0xff &&
+-	    param->sta_addr[2] == 0xff && param->sta_addr[3] == 0xff &&
+-	    param->sta_addr[4] == 0xff && param->sta_addr[5] == 0xff) {
+-		if (param->u.crypt.idx >= WEP_KEYS ||
+-		    param->u.crypt.idx >= BIP_MAX_KEYID) {
+-			ret = -EINVAL;
+-			goto exit;
+-		}
+-	} else {
+-		{
+-			ret = -EINVAL;
+-			goto exit;
+-		}
++	if (param->sta_addr[0] != 0xff || param->sta_addr[1] != 0xff ||
++	    param->sta_addr[2] != 0xff || param->sta_addr[3] != 0xff ||
++	    param->sta_addr[4] != 0xff || param->sta_addr[5] != 0xff) {
++		ret = -EINVAL;
++		goto exit;
++	}
++
++	if (strcmp(param->u.crypt.alg, "WEP") == 0)
++		max_idx = WEP_KEYS - 1;
++	else
++		max_idx = BIP_MAX_KEYID;
++
++	if (param->u.crypt.idx > max_idx) {
++		netdev_err(dev, "Error crypt.idx %d > %d\n", param->u.crypt.idx, max_idx);
++		ret = -EINVAL;
++		goto exit;
+ 	}
+ 
+ 	if (strcmp(param->u.crypt.alg, "WEP") == 0) {
+@@ -84,9 +88,6 @@ static int wpa_set_encryption(struct net
+ 		wep_key_idx = param->u.crypt.idx;
+ 		wep_key_len = param->u.crypt.key_len;
+ 
+-		if (wep_key_idx > WEP_KEYS)
+-			return -EINVAL;
+-
+ 		if (wep_key_len > 0) {
+ 			wep_key_len = wep_key_len <= 5 ? 5 : 13;
+ 			wep_total_len = wep_key_len + FIELD_OFFSET(struct ndis_802_11_wep, key_material);
 
 
