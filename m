@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BD44431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC688C433D2;
-	Wed, 15 Mar 2023 12:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE2D4432
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A49C433EF;
+	Wed, 15 Mar 2023 12:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882843;
-	bh=l45c4nK5/ry0KgHmjch29Qlyix22CtVL+26IoPLvFrE=;
+	s=korg; t=1678882846;
+	bh=lU/T2C/MqTRg996k34ZalOliCYSKSXMm4SqZaSbzQOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=evoCdoJ4VBdyP5fbMCHrUowSUrppeuts8thzXlKtKj7lTapphVT1uWlwkkivpq92u
-	 S5J13raZQwLa3v2rqL0d/5beXiJ00+JOFl92lx2TrlChHFBwWMu1hmTTdz/+ImwhcB
-	 HKnabv3TfUl2ctbofeC/nlr1NpwqOAvxhPCewjcI=
+	b=VSI2msYdyLx1whCgoj9YaCOaUOUzLuEUmAfT1HELJBSiKRW22v1ipmsLlJNsovSXk
+	 gu7LUrXpQeMg20i7UyOPiP8JBrlv5jpTuHM1aR16/XQLp11CqUqPG4aVp/YUm4z2DK
+	 K9QylPqZYEkQE6DGOmFAXqYhx+kA/4yQbIjmpLDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Mattias Nissler <mnissler@rivosinc.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 023/104] RISC-V: Avoid dereferening NULL regs in die()
-Date: Wed, 15 Mar 2023 13:11:54 +0100
-Message-Id: <20230315115733.027278290@linuxfoundation.org>
+Subject: [PATCH 5.10 024/104] riscv: Avoid enabling interrupts in die()
+Date: Wed, 15 Mar 2023 13:11:55 +0100
+Message-Id: <20230315115733.065852664@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -37,55 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Palmer Dabbelt <palmer@rivosinc.com>
+From: Mattias Nissler <mnissler@rivosinc.com>
 
-[ Upstream commit f2913d006fcdb61719635e093d1b5dd0dafecac7 ]
+[ Upstream commit 130aee3fd9981297ff9354e5d5609cd59aafbbea ]
 
-I don't think we can actually die() without a regs pointer, but the
-compiler was warning about a NULL check after a dereference.  It seems
-prudent to just avoid the possibly-NULL dereference, given that when
-die()ing the system is already toast so who knows how we got there.
+While working on something else, I noticed that the kernel would start
+accepting interrupts again after crashing in an interrupt handler. Since
+the kernel is already in inconsistent state, enabling interrupts is
+dangerous and opens up risk of kernel state deteriorating further.
+Interrupts do get enabled via what looks like an unintended side effect of
+spin_unlock_irq, so switch to the more cautious
+spin_lock_irqsave/spin_unlock_irqrestore instead.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20220920200037.6727-1-palmer@rivosinc.com
+Fixes: 76d2a0493a17 ("RISC-V: Init and Halt Code")
+Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Link: https://lore.kernel.org/r/20230215144828.3370316-1-mnissler@rivosinc.com
+Cc: stable@vger.kernel.org
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Stable-dep-of: 130aee3fd998 ("riscv: Avoid enabling interrupts in die()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/riscv/kernel/traps.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
-index 23fe03ca7ec7b..bc6b30f3add83 100644
+index bc6b30f3add83..227253fde33c4 100644
 --- a/arch/riscv/kernel/traps.c
 +++ b/arch/riscv/kernel/traps.c
-@@ -31,6 +31,7 @@ void die(struct pt_regs *regs, const char *str)
- {
+@@ -32,10 +32,11 @@ void die(struct pt_regs *regs, const char *str)
  	static int die_counter;
  	int ret;
-+	long cause;
+ 	long cause;
++	unsigned long flags;
  
  	oops_enter();
  
-@@ -40,11 +41,13 @@ void die(struct pt_regs *regs, const char *str)
+-	spin_lock_irq(&die_lock);
++	spin_lock_irqsave(&die_lock, flags);
+ 	console_verbose();
+ 	bust_spinlocks(1);
  
- 	pr_emerg("%s [#%d]\n", str, ++die_counter);
- 	print_modules();
--	show_regs(regs);
-+	if (regs)
-+		show_regs(regs);
- 
--	ret = notify_die(DIE_OOPS, str, regs, 0, regs->cause, SIGSEGV);
-+	cause = regs ? regs->cause : -1;
-+	ret = notify_die(DIE_OOPS, str, regs, 0, cause, SIGSEGV);
- 
--	if (regs && kexec_should_crash(current))
-+	if (kexec_should_crash(current))
- 		crash_kexec(regs);
+@@ -52,7 +53,7 @@ void die(struct pt_regs *regs, const char *str)
  
  	bust_spinlocks(0);
+ 	add_taint(TAINT_DIE, LOCKDEP_NOW_UNRELIABLE);
+-	spin_unlock_irq(&die_lock);
++	spin_unlock_irqrestore(&die_lock, flags);
+ 	oops_exit();
+ 
+ 	if (in_interrupt())
 -- 
 2.39.2
 
