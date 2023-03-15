@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B064431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2457EC433D2;
-	Wed, 15 Mar 2023 12:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D97C4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67CCC433D2;
+	Wed, 15 Mar 2023 12:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883074;
-	bh=PQgrzDtwrlbTgZVQHjfnFwIa0Ld+2xxHQYRV5MYeYVU=;
+	s=korg; t=1678883077;
+	bh=xho1xBUPoXiSkVhyC7WSjd0JDT7z+1HfEAI16HJFI/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gv76xLhghWUllqEC+rtrXws7DhTWEu/K0ZwoOf3fnAtSvy3kLtANvfNWOSLHo03Zb
-	 id2YycmC06WFGsbB+KlOL3wIGZp0pOFhWyJ2PQxAkkdGKE7Lxnksqlh/JSVQnnn1dV
-	 C0DaKKQ0U/WWHr9KEB8iBz7ZOAp3CJ7VQN5ZVBBQ=
+	b=upTrv+wrYVsnTwg82TSmetMtWdJrqRgwqLTeYpgvsdnUe2hteG2pdFm1RePknzHzV
+	 ltBXC5KhU40kLg+k9oUFJDLebA/sEwHx3iwXVfLCSsOjCX+FvHN/ibfNZTzxrtmL1+
+	 ZIX7KjcOX7WLXWjNO6XiD9xGg6KiV1EsaIQEDv7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Alexandru Matei <alexandru.matei@uipath.com>
-Subject: [PATCH 5.10 103/104] KVM: VMX: Fix crash due to uninitialized current_vmcs
-Date: Wed, 15 Mar 2023 13:13:14 +0100
-Message-Id: <20230315115736.368731242@linuxfoundation.org>
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Cornelia Huck <cohuck@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 104/104] s390/dasd: add missing discipline function
+Date: Wed, 15 Mar 2023 13:13:15 +0100
+Message-Id: <20230315115736.398454190@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -34,102 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandru Matei <alexandru.matei@uipath.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 93827a0a36396f2fd6368a54a020f420c8916e9b upstream.
+commit c0c8a8397fa8a74d04915f4d3d28cb4a5d401427 upstream.
 
-KVM enables 'Enlightened VMCS' and 'Enlightened MSR Bitmap' when running as
-a nested hypervisor on top of Hyper-V. When MSR bitmap is updated,
-evmcs_touch_msr_bitmap function uses current_vmcs per-cpu variable to mark
-that the msr bitmap was changed.
+Fix crash with illegal operation exception in dasd_device_tasklet.
+Commit b72949328869 ("s390/dasd: Prepare for additional path event handling")
+renamed the verify_path function for ECKD but not for FBA and DIAG.
+This leads to a panic when the path verification function is called for a
+FBA or DIAG device.
 
-vmx_vcpu_create() modifies the msr bitmap via vmx_disable_intercept_for_msr
--> vmx_msr_bitmap_l01_changed which in the end calls this function. The
-function checks for current_vmcs if it is null but the check is
-insufficient because current_vmcs is not initialized. Because of this, the
-code might incorrectly write to the structure pointed by current_vmcs value
-left by another task. Preemption is not disabled, the current task can be
-preempted and moved to another CPU while current_vmcs is accessed multiple
-times from evmcs_touch_msr_bitmap() which leads to crash.
+Fix by defining a wrapper function for dasd_generic_verify_path().
 
-The manipulation of MSR bitmaps by callers happens only for vmcs01 so the
-solution is to use vmx->vmcs01.vmcs instead of current_vmcs.
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000338
-  PGD 4e1775067 P4D 0
-  Oops: 0002 [#1] PREEMPT SMP NOPTI
-  ...
-  RIP: 0010:vmx_msr_bitmap_l01_changed+0x39/0x50 [kvm_intel]
-  ...
-  Call Trace:
-   vmx_disable_intercept_for_msr+0x36/0x260 [kvm_intel]
-   vmx_vcpu_create+0xe6/0x540 [kvm_intel]
-   kvm_arch_vcpu_create+0x1d1/0x2e0 [kvm]
-   kvm_vm_ioctl_create_vcpu+0x178/0x430 [kvm]
-   kvm_vm_ioctl+0x53f/0x790 [kvm]
-   __x64_sys_ioctl+0x8a/0xc0
-   do_syscall_64+0x5c/0x90
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: ceef7d10dfb6 ("KVM: x86: VMX: hyper-v: Enlightened MSR-Bitmap support")
-Cc: stable@vger.kernel.org
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Alexandru Matei <alexandru.matei@uipath.com>
-Link: https://lore.kernel.org/r/20230123221208.4964-1-alexandru.matei@uipath.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[manual backport: evmcs.h got renamed to hyperv.h in a later
-version, modified in evmcs.h instead]
-Signed-off-by: Alexandru Matei <alexandru.matei@uipath.com>
+Fixes: b72949328869 ("s390/dasd: Prepare for additional path event handling")
+Cc: <stable@vger.kernel.org> #5.11
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Link: https://lore.kernel.org/r/20210525125006.157531-2-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/evmcs.h |   11 -----------
- arch/x86/kvm/vmx/vmx.c   |    9 +++++++--
- 2 files changed, 7 insertions(+), 13 deletions(-)
+ drivers/s390/block/dasd_diag.c |    7 ++++++-
+ drivers/s390/block/dasd_fba.c  |    7 ++++++-
+ drivers/s390/block/dasd_int.h  |    1 -
+ 3 files changed, 12 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/vmx/evmcs.h
-+++ b/arch/x86/kvm/vmx/evmcs.h
-@@ -166,16 +166,6 @@ static inline u16 evmcs_read16(unsigned
- 	return *(u16 *)((char *)current_evmcs + offset);
+--- a/drivers/s390/block/dasd_diag.c
++++ b/drivers/s390/block/dasd_diag.c
+@@ -642,12 +642,17 @@ static void dasd_diag_setup_blk_queue(st
+ 	blk_queue_segment_boundary(q, PAGE_SIZE - 1);
  }
  
--static inline void evmcs_touch_msr_bitmap(void)
--{
--	if (unlikely(!current_evmcs))
--		return;
--
--	if (current_evmcs->hv_enlightenments_control.msr_bitmap)
--		current_evmcs->hv_clean_fields &=
--			~HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP;
--}
--
- static inline void evmcs_load(u64 phys_addr)
- {
- 	struct hv_vp_assist_page *vp_ap =
-@@ -196,7 +186,6 @@ static inline u64 evmcs_read64(unsigned
- static inline u32 evmcs_read32(unsigned long field) { return 0; }
- static inline u16 evmcs_read16(unsigned long field) { return 0; }
- static inline void evmcs_load(u64 phys_addr) {}
--static inline void evmcs_touch_msr_bitmap(void) {}
- #endif /* IS_ENABLED(CONFIG_HYPERV) */
- 
- enum nested_evmptrld_status {
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -3792,8 +3792,13 @@ static void vmx_msr_bitmap_l01_changed(s
- 	 * 'Enlightened MSR Bitmap' feature L0 needs to know that MSR
- 	 * bitmap has changed.
- 	 */
--	if (static_branch_unlikely(&enable_evmcs))
--		evmcs_touch_msr_bitmap();
-+	if (IS_ENABLED(CONFIG_HYPERV) && static_branch_unlikely(&enable_evmcs)) {
-+		struct hv_enlightened_vmcs *evmcs = (void *)vmx->vmcs01.vmcs;
++static int dasd_diag_pe_handler(struct dasd_device *device, __u8 tbvpm)
++{
++	return dasd_generic_verify_path(device, tbvpm);
++}
 +
-+		if (evmcs->hv_enlightenments_control.msr_bitmap)
-+			evmcs->hv_clean_fields &=
-+				~HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP;
-+	}
+ static struct dasd_discipline dasd_diag_discipline = {
+ 	.owner = THIS_MODULE,
+ 	.name = "DIAG",
+ 	.ebcname = "DIAG",
+ 	.check_device = dasd_diag_check_device,
+-	.verify_path = dasd_generic_verify_path,
++	.pe_handler = dasd_diag_pe_handler,
+ 	.fill_geometry = dasd_diag_fill_geometry,
+ 	.setup_blk_queue = dasd_diag_setup_blk_queue,
+ 	.start_IO = dasd_start_diag,
+--- a/drivers/s390/block/dasd_fba.c
++++ b/drivers/s390/block/dasd_fba.c
+@@ -803,13 +803,18 @@ static void dasd_fba_setup_blk_queue(str
+ 	blk_queue_flag_set(QUEUE_FLAG_DISCARD, q);
  }
  
- static __always_inline void vmx_disable_intercept_for_msr(struct kvm_vcpu *vcpu,
++static int dasd_fba_pe_handler(struct dasd_device *device, __u8 tbvpm)
++{
++	return dasd_generic_verify_path(device, tbvpm);
++}
++
+ static struct dasd_discipline dasd_fba_discipline = {
+ 	.owner = THIS_MODULE,
+ 	.name = "FBA ",
+ 	.ebcname = "FBA ",
+ 	.check_device = dasd_fba_check_characteristics,
+ 	.do_analysis = dasd_fba_do_analysis,
+-	.verify_path = dasd_generic_verify_path,
++	.pe_handler = dasd_fba_pe_handler,
+ 	.setup_blk_queue = dasd_fba_setup_blk_queue,
+ 	.fill_geometry = dasd_fba_fill_geometry,
+ 	.start_IO = dasd_start_IO,
+--- a/drivers/s390/block/dasd_int.h
++++ b/drivers/s390/block/dasd_int.h
+@@ -298,7 +298,6 @@ struct dasd_discipline {
+ 	 * e.g. verify that new path is compatible with the current
+ 	 * configuration.
+ 	 */
+-	int (*verify_path)(struct dasd_device *, __u8);
+ 	int (*pe_handler)(struct dasd_device *, __u8);
+ 
+ 	/*
 
 
