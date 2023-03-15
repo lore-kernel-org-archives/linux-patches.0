@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50F74431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE12C433D2;
-	Wed, 15 Mar 2023 12:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C324431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3713C4339B;
+	Wed, 15 Mar 2023 12:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883679;
-	bh=5Az9MQT7h2KkgqAunpXfQvzj1OVRTEVwGFsJtPZTkz4=;
+	s=korg; t=1678883682;
+	bh=+HQgTXAv+0FnncRSRwL9uPg3x2JuRpYrrAg5SZPoZJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XnyOY3uLBsxydZPAeZLNTD7o+nOV9/ckhcn7E48PDs6D1jN6Hoc3Q1nf7Ohs3WtMm
-	 QxIg7WU8mOFvNxR2GBU351uDjN0+LD+y0EXwFPE4Otwh6VJEaL1VdiKIfGwbXhuB08
-	 tgNJlAsVxsXeIJnoJi6uDp/7tnTG8GjRBaIS8lm8=
+	b=KIPuJM/1QXjgIIjMO80nZiCdVlSeeyXRFlfupbwhFlH2Q4jD+ynXnCSD4arJ9Lgd3
+	 KOERXXw8+8Q8TZg7bp5A//n0AEBT4ZNQcDgMabA8uyuXRatFIVWQ9VfV6prQwCfxKn
+	 VAAkDHFbs1sTs8wHqqCqnbk+A0XvzBFbIaJJls+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/143] btrfs: fix extent map logging bit not cleared for split maps after dropping range
-Date: Wed, 15 Mar 2023 13:12:57 +0100
-Message-Id: <20230315115743.287504971@linuxfoundation.org>
+Subject: [PATCH 6.1 092/143] bpf, test_run: fix &xdp_frame misplacement for LIVE_FRAMES
+Date: Wed, 15 Mar 2023 13:12:58 +0100
+Message-Id: <20230315115743.316091555@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -36,59 +36,149 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Alexander Lobakin <aleksander.lobakin@intel.com>
 
-[ Upstream commit e4cc1483f35940c9288c332dd275f6fad485f8d2 ]
+[ Upstream commit 6c20822fada1b8adb77fa450d03a0d449686a4a9 ]
 
-At btrfs_drop_extent_map_range() we are clearing the EXTENT_FLAG_LOGGING
-bit on a 'flags' variable that was not initialized. This makes static
-checkers complain about it, so initialize the 'flags' variable before
-clearing the bit.
+&xdp_buff and &xdp_frame are bound in a way that
 
-In practice this has no consequences, because EXTENT_FLAG_LOGGING should
-not be set when btrfs_drop_extent_map_range() is called, as an fsync locks
-the inode in exclusive mode, locks the inode's mmap semaphore in exclusive
-mode too and it always flushes all delalloc.
+xdp_buff->data_hard_start == xdp_frame
 
-Also add a comment about why we clear EXTENT_FLAG_LOGGING on a copy of the
-flags of the split extent map.
+It's always the case and e.g. xdp_convert_buff_to_frame() relies on
+this.
+IOW, the following:
 
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/Y%2FyipSVozUDEZKow@kili/
-Fixes: db21370bffbc ("btrfs: drop extent map range more efficiently")
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+	for (u32 i = 0; i < 0xdead; i++) {
+		xdpf = xdp_convert_buff_to_frame(&xdp);
+		xdp_convert_frame_to_buff(xdpf, &xdp);
+	}
+
+shouldn't ever modify @xdpf's contents or the pointer itself.
+However, "live packet" code wrongly treats &xdp_frame as part of its
+context placed *before* the data_hard_start. With such flow,
+data_hard_start is sizeof(*xdpf) off to the right and no longer points
+to the XDP frame.
+
+Instead of replacing `sizeof(ctx)` with `offsetof(ctx, xdpf)` in several
+places and praying that there are no more miscalcs left somewhere in the
+code, unionize ::frm with ::data in a flex array, so that both starts
+pointing to the actual data_hard_start and the XDP frame actually starts
+being a part of it, i.e. a part of the headroom, not the context.
+A nice side effect is that the maximum frame size for this mode gets
+increased by 40 bytes, as xdp_buff::frame_sz includes everything from
+data_hard_start (-> includes xdpf already) to the end of XDP/skb shared
+info.
+Also update %MAX_PKT_SIZE accordingly in the selftests code. Leave it
+hardcoded for 64 bit && 4k pages, it can be made more flexible later on.
+
+Minor: align `&head->data` with how `head->frm` is assigned for
+consistency.
+Minor #2: rename 'frm' to 'frame' in &xdp_page_head while at it for
+clarity.
+
+(was found while testing XDP traffic generator on ice, which calls
+ xdp_convert_frame_to_buff() for each XDP frame)
+
+Fixes: b530e9e1063e ("bpf: Add "live packet" mode for XDP in BPF_PROG_RUN")
+Acked-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://lore.kernel.org/r/20230215185440.4126672-1-aleksander.lobakin@intel.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_map.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/bpf/test_run.c                            | 29 +++++++++++++++----
+ .../bpf/prog_tests/xdp_do_redirect.c          |  7 +++--
+ 2 files changed, 27 insertions(+), 9 deletions(-)
 
-diff --git a/fs/btrfs/extent_map.c b/fs/btrfs/extent_map.c
-index 6092a4eedc923..b8ae02aa632e3 100644
---- a/fs/btrfs/extent_map.c
-+++ b/fs/btrfs/extent_map.c
-@@ -760,7 +760,13 @@ void btrfs_drop_extent_map_range(struct btrfs_inode *inode, u64 start, u64 end,
- 			goto next;
- 		}
+diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
+index 6094ef7cffcd2..cd3d713251a26 100644
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -97,8 +97,11 @@ static bool bpf_test_timer_continue(struct bpf_test_timer *t, int iterations,
+ struct xdp_page_head {
+ 	struct xdp_buff orig_ctx;
+ 	struct xdp_buff ctx;
+-	struct xdp_frame frm;
+-	u8 data[];
++	union {
++		/* ::data_hard_start starts here */
++		DECLARE_FLEX_ARRAY(struct xdp_frame, frame);
++		DECLARE_FLEX_ARRAY(u8, data);
++	};
+ };
  
-+		flags = em->flags;
- 		clear_bit(EXTENT_FLAG_PINNED, &em->flags);
-+		/*
-+		 * In case we split the extent map, we want to preserve the
-+		 * EXTENT_FLAG_LOGGING flag on our extent map, but we don't want
-+		 * it on the new extent maps.
-+		 */
- 		clear_bit(EXTENT_FLAG_LOGGING, &flags);
- 		modified = !list_empty(&em->list);
+ struct xdp_test_data {
+@@ -116,6 +119,20 @@ struct xdp_test_data {
+ #define TEST_XDP_FRAME_SIZE (PAGE_SIZE - sizeof(struct xdp_page_head))
+ #define TEST_XDP_MAX_BATCH 256
  
-@@ -771,7 +777,6 @@ void btrfs_drop_extent_map_range(struct btrfs_inode *inode, u64 start, u64 end,
- 		if (em->start >= start && em_end <= end)
- 			goto remove_em;
++#if BITS_PER_LONG == 64 && PAGE_SIZE == SZ_4K
++/* tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c:%MAX_PKT_SIZE
++ * must be updated accordingly when any of these changes, otherwise BPF
++ * selftests will fail.
++ */
++#ifdef __s390x__
++#define TEST_MAX_PKT_SIZE 3216
++#else
++#define TEST_MAX_PKT_SIZE 3408
++#endif
++static_assert(SKB_WITH_OVERHEAD(TEST_XDP_FRAME_SIZE - XDP_PACKET_HEADROOM) ==
++	      TEST_MAX_PKT_SIZE);
++#endif
++
+ static void xdp_test_run_init_page(struct page *page, void *arg)
+ {
+ 	struct xdp_page_head *head = phys_to_virt(page_to_phys(page));
+@@ -132,8 +149,8 @@ static void xdp_test_run_init_page(struct page *page, void *arg)
+ 	headroom -= meta_len;
  
--		flags = em->flags;
- 		gen = em->generation;
- 		compressed = test_bit(EXTENT_FLAG_COMPRESSED, &em->flags);
+ 	new_ctx = &head->ctx;
+-	frm = &head->frm;
+-	data = &head->data;
++	frm = head->frame;
++	data = head->data;
+ 	memcpy(data + headroom, orig_ctx->data_meta, frm_len);
  
+ 	xdp_init_buff(new_ctx, TEST_XDP_FRAME_SIZE, &xdp->rxq);
+@@ -223,7 +240,7 @@ static void reset_ctx(struct xdp_page_head *head)
+ 	head->ctx.data = head->orig_ctx.data;
+ 	head->ctx.data_meta = head->orig_ctx.data_meta;
+ 	head->ctx.data_end = head->orig_ctx.data_end;
+-	xdp_update_frame_from_buff(&head->ctx, &head->frm);
++	xdp_update_frame_from_buff(&head->ctx, head->frame);
+ }
+ 
+ static int xdp_recv_frames(struct xdp_frame **frames, int nframes,
+@@ -285,7 +302,7 @@ static int xdp_test_run_batch(struct xdp_test_data *xdp, struct bpf_prog *prog,
+ 		head = phys_to_virt(page_to_phys(page));
+ 		reset_ctx(head);
+ 		ctx = &head->ctx;
+-		frm = &head->frm;
++		frm = head->frame;
+ 		xdp->frame_cnt++;
+ 
+ 		act = bpf_prog_run_xdp(prog, ctx);
+diff --git a/tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c b/tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c
+index 15ad336691613..33ae63c01461a 100644
+--- a/tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c
++++ b/tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c
+@@ -63,12 +63,13 @@ static int attach_tc_prog(struct bpf_tc_hook *hook, int fd)
+ }
+ 
+ /* The maximum permissible size is: PAGE_SIZE - sizeof(struct xdp_page_head) -
+- * sizeof(struct skb_shared_info) - XDP_PACKET_HEADROOM = 3368 bytes
++ * SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) - XDP_PACKET_HEADROOM =
++ * 3408 bytes for 64-byte cacheline and 3216 for 256-byte one.
+  */
+ #if defined(__s390x__)
+-#define MAX_PKT_SIZE 3176
++#define MAX_PKT_SIZE 3216
+ #else
+-#define MAX_PKT_SIZE 3368
++#define MAX_PKT_SIZE 3408
+ #endif
+ static void test_max_pkt_size(int fd)
+ {
 -- 
 2.39.2
 
