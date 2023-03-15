@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B694431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:27:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250E6C433EF;
-	Wed, 15 Mar 2023 12:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C624431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:27:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48484C4339C;
+	Wed, 15 Mar 2023 12:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883237;
-	bh=Xf5Cg1gXPVY1iv+BGNb5LoOnu9hrfA8faKaGqG94wUc=;
+	s=korg; t=1678883242;
+	bh=wxyEEABmaI3kuX8WVh0aQlFVZCJuXh0H+h0rntSbn4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gkSbvbWVMOBC4he+09IFSsdDMwWtb+v+dP6ja7UbBfrVRqVqKKe4eI8u3zNkGBzAI
-	 3WSazLk8rwLutCxBRCXoQs3RJAMNVhx29ftiS/Drf6kVO8n+2G1fUx/M2FOHwy4TgW
-	 pdrLvHHal20fdJHonlwAUnCv1rW1cM9ydGQUtWPA=
+	b=gH+OGt2/N1/mGeJMUt/6SFUt5ug7EeyVhBkJulJy7+UnZf4ZRIgIDal9mK1iu4cRJ
+	 k1gnXUu2neM/USsi+011ojw5ppcR2iWYHi/INwRNUGTCTaHc8Hm0nWnqaaL67ONk9s
+	 aNpr6mdic1pr/MCsrlTEkeoZK/YEdKFB4vXn3tdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Ferry Toth <fntoth@gmail.com>
-Subject: [PATCH 5.15 067/145] net: phy: smsc: Cache interrupt mask
-Date: Wed, 15 Mar 2023 13:12:13 +0100
-Message-Id: <20230315115741.248020394@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 068/145] net: phy: smsc: fix link up detection in forced irq mode
+Date: Wed, 15 Mar 2023 13:12:14 +0100
+Message-Id: <20230315115741.279516501@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -38,94 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 7e8b617eb93f9fcaedac02cd19edcad31c767386 ]
+[ Upstream commit 58aac3a2ef414fea6d7fdf823ea177744a087d13 ]
 
-Cache the interrupt mask to avoid re-reading it from the PHY upon every
-interrupt.
+Currently link up can't be detected in forced mode if polling
+isn't used. Only link up interrupt source we have is aneg
+complete which isn't applicable in forced mode. Therefore we
+have to use energy-on as link up indicator.
 
-This will simplify a subsequent commit which detects hot-removal in the
-interrupt handler and bails out.
-
-Analyzing and debugging PHY transactions also becomes simpler if such
-redundant reads are avoided.
-
-Last not least, interrupt overhead and latency is slightly improved.
-
-Tested-by: Oleksij Rempel <o.rempel@pengutronix.de> # LAN9514/9512/9500
-Tested-by: Ferry Toth <fntoth@gmail.com> # LAN9514
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Fixes: 7365494550f6 ("net: phy: smsc: skip ENERGYON interrupt if disabled")
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 58aac3a2ef41 ("net: phy: smsc: fix link up detection in forced irq mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/smsc.c | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ drivers/net/phy/smsc.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
-index 636b0907a5987..63dca3bb56110 100644
+index 63dca3bb56110..04e628788f1b5 100644
 --- a/drivers/net/phy/smsc.c
 +++ b/drivers/net/phy/smsc.c
-@@ -44,6 +44,7 @@ static struct smsc_hw_stat smsc_hw_stats[] = {
+@@ -44,7 +44,6 @@ static struct smsc_hw_stat smsc_hw_stats[] = {
  };
  
  struct smsc_phy_priv {
-+	u16 intmask;
+-	u16 intmask;
  	bool energy_enable;
  	struct clk *refclk;
  };
-@@ -58,7 +59,6 @@ static int smsc_phy_ack_interrupt(struct phy_device *phydev)
+@@ -58,7 +57,6 @@ static int smsc_phy_ack_interrupt(struct phy_device *phydev)
+ 
  static int smsc_phy_config_intr(struct phy_device *phydev)
  {
- 	struct smsc_phy_priv *priv = phydev->priv;
--	u16 intmask = 0;
+-	struct smsc_phy_priv *priv = phydev->priv;
  	int rc;
  
  	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
-@@ -66,12 +66,15 @@ static int smsc_phy_config_intr(struct phy_device *phydev)
+@@ -66,14 +64,9 @@ static int smsc_phy_config_intr(struct phy_device *phydev)
  		if (rc)
  			return rc;
  
--		intmask = MII_LAN83C185_ISF_INT4 | MII_LAN83C185_ISF_INT6;
-+		priv->intmask = MII_LAN83C185_ISF_INT4 | MII_LAN83C185_ISF_INT6;
- 		if (priv->energy_enable)
--			intmask |= MII_LAN83C185_ISF_INT7;
--		rc = phy_write(phydev, MII_LAN83C185_IM, intmask);
-+			priv->intmask |= MII_LAN83C185_ISF_INT7;
-+
-+		rc = phy_write(phydev, MII_LAN83C185_IM, priv->intmask);
+-		priv->intmask = MII_LAN83C185_ISF_INT4 | MII_LAN83C185_ISF_INT6;
+-		if (priv->energy_enable)
+-			priv->intmask |= MII_LAN83C185_ISF_INT7;
+-
+-		rc = phy_write(phydev, MII_LAN83C185_IM, priv->intmask);
++		rc = phy_write(phydev, MII_LAN83C185_IM,
++			       MII_LAN83C185_ISF_INT_PHYLIB_EVENTS);
  	} else {
--		rc = phy_write(phydev, MII_LAN83C185_IM, intmask);
-+		priv->intmask = 0;
-+
-+		rc = phy_write(phydev, MII_LAN83C185_IM, 0);
+-		priv->intmask = 0;
+-
+ 		rc = phy_write(phydev, MII_LAN83C185_IM, 0);
  		if (rc)
  			return rc;
- 
-@@ -83,13 +86,8 @@ static int smsc_phy_config_intr(struct phy_device *phydev)
+@@ -86,7 +79,6 @@ static int smsc_phy_config_intr(struct phy_device *phydev)
  
  static irqreturn_t smsc_phy_handle_interrupt(struct phy_device *phydev)
  {
--	int irq_status, irq_enabled;
--
--	irq_enabled = phy_read(phydev, MII_LAN83C185_IM);
--	if (irq_enabled < 0) {
--		phy_error(phydev);
--		return IRQ_NONE;
--	}
-+	struct smsc_phy_priv *priv = phydev->priv;
-+	int irq_status;
+-	struct smsc_phy_priv *priv = phydev->priv;
+ 	int irq_status;
  
  	irq_status = phy_read(phydev, MII_LAN83C185_ISF);
- 	if (irq_status < 0) {
-@@ -97,7 +95,7 @@ static irqreturn_t smsc_phy_handle_interrupt(struct phy_device *phydev)
+@@ -95,7 +87,7 @@ static irqreturn_t smsc_phy_handle_interrupt(struct phy_device *phydev)
  		return IRQ_NONE;
  	}
  
--	if (!(irq_status & irq_enabled))
-+	if (!(irq_status & priv->intmask))
+-	if (!(irq_status & priv->intmask))
++	if (!(irq_status & MII_LAN83C185_ISF_INT_PHYLIB_EVENTS))
  		return IRQ_NONE;
  
  	phy_trigger_machine(phydev);
