@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D704431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4456CC433D2;
-	Wed, 15 Mar 2023 12:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4AD4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:22:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3400C433EF;
+	Wed, 15 Mar 2023 12:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882919;
-	bh=ZSAeDi9jv4/dJ1fKpjMwPNiK+6ZKz8auX2dYLS72S5Y=;
+	s=korg; t=1678882922;
+	bh=iOsGcY0bD7kpgKsxFZBAxtwYErOt6OZcbC/NHHT5ZQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WomttnMZhYwP1zoU82k3QzU7wMd44I7VdFsrhu/2Ki/EuR2K8jXZPuRYv9j7pktgw
-	 aB1odyt9T9TFmxBCOSzlP1l5OR46kOvV9GVn+CDmIj4yQg+l969pdcvIT1N20bPRHT
-	 oxkzo27QEbryRZgmyL8IG28q0Wio9I010/F4601k=
+	b=2UEM+29jwD7O1y8XmPMQ9Gy+gh2ybayd9YjOckvgWKcbg4aGCcc30daRvtFXX3PVh
+	 e8vNTlCTL6KI8es+/2R6gk1FuNcT6qg6cS4G9lfM16QLizTm+2A5EWSAsVcD7aDxVQ
+	 zYB3e9reElB3ATBn67yXLWw73JLxfXdZyjxSy31A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 052/104] net/smc: fix fallback failed while sendmsg with fastopen
-Date: Wed, 15 Mar 2023 13:12:23 +0100
-Message-Id: <20230315115734.165474456@linuxfoundation.org>
+Subject: [PATCH 5.10 053/104] SUNRPC: Fix a server shutdown leak
+Date: Wed, 15 Mar 2023 13:12:24 +0100
+Message-Id: <20230315115734.204564277@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -37,72 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit ce7ca794712f186da99719e8b4e97bd5ddbb04c3 ]
+[ Upstream commit 9ca6705d9d609441d34f8b853e1e4a6369b3b171 ]
 
-Before determining whether the msg has unsupported options, it has been
-prematurely terminated by the wrong status check.
+Fix a race where kthread_stop() may prevent the threadfn from ever getting
+called.  If that happens the svc_rqst will not be cleaned up.
 
-For the application, the general usages of MSG_FASTOPEN likes
-
-fd = socket(...)
-/* rather than connect */
-sendto(fd, data, len, MSG_FASTOPEN)
-
-Hence, We need to check the flag before state check, because the sock
-state here is always SMC_INIT when applications tries MSG_FASTOPEN.
-Once we found unsupported options, fallback it to TCP.
-
-Fixes: ee9dfbef02d1 ("net/smc: handle sockopts forcing fallback")
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Signed-off-by: Simon Horman <simon.horman@corigine.com>
-
-v2 -> v1: Optimize code style
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: ed6473ddc704 ("NFSv4: Fix callback server shutdown")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ net/sunrpc/svc.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 41cbc7c89c9d2..8ab84926816f6 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -1988,16 +1988,14 @@ static int smc_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
+index d38788cd9433a..af657a482ad2d 100644
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -800,6 +800,7 @@ EXPORT_SYMBOL_GPL(svc_set_num_threads);
+ static int
+ svc_stop_kthreads(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
  {
- 	struct sock *sk = sock->sk;
- 	struct smc_sock *smc;
--	int rc = -EPIPE;
-+	int rc;
++	struct svc_rqst	*rqstp;
+ 	struct task_struct *task;
+ 	unsigned int state = serv->sv_nrthreads-1;
  
- 	smc = smc_sk(sk);
- 	lock_sock(sk);
--	if ((sk->sk_state != SMC_ACTIVE) &&
--	    (sk->sk_state != SMC_APPCLOSEWAIT1) &&
--	    (sk->sk_state != SMC_INIT))
--		goto out;
- 
-+	/* SMC does not support connect with fastopen */
- 	if (msg->msg_flags & MSG_FASTOPEN) {
-+		/* not connected yet, fallback */
- 		if (sk->sk_state == SMC_INIT && !smc->connect_nonblock) {
- 			smc_switch_to_fallback(smc);
- 			smc->fallback_rsn = SMC_CLC_DECL_OPTUNSUPP;
-@@ -2005,6 +2003,11 @@ static int smc_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 			rc = -EINVAL;
- 			goto out;
- 		}
-+	} else if ((sk->sk_state != SMC_ACTIVE) &&
-+		   (sk->sk_state != SMC_APPCLOSEWAIT1) &&
-+		   (sk->sk_state != SMC_INIT)) {
-+		rc = -EPIPE;
-+		goto out;
- 	}
- 
- 	if (smc->use_fallback)
+@@ -808,7 +809,10 @@ svc_stop_kthreads(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
+ 		task = choose_victim(serv, pool, &state);
+ 		if (task == NULL)
+ 			break;
+-		kthread_stop(task);
++		rqstp = kthread_data(task);
++		/* Did we lose a race to svo_function threadfn? */
++		if (kthread_stop(task) == -EINTR)
++			svc_exit_thread(rqstp);
+ 		nrservs++;
+ 	} while (nrservs < 0);
+ 	return 0;
 -- 
 2.39.2
 
