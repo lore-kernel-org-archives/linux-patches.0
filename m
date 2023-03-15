@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469884431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:41:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EDBC433D2;
-	Wed, 15 Mar 2023 12:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9074431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:41:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61533C4339B;
+	Wed, 15 Mar 2023 12:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884110;
-	bh=V3E38VUATFYY6TRZV+ClJrtJ2pL47y7zoxcTI/+V4gA=;
+	s=korg; t=1678884112;
+	bh=Ubo8VewWqb5XqMmoHV4dkh3Gkaxpa52A/bvVuDjKWRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zl1CRLOYh8trakWKxp/xzOJeYGaxtB1+jmidDH2eUtw1obs9tfs85+d4NaBBDGn3Z
-	 FFi7ryDlBPT6ENVWGP69gCszEhAdrpd5ed1uZfyvoycyOYlqXf2R/amk3qIBPMWaHj
-	 Ow6FNQOWKsb1xEp0N3Q7/62BVE0nKd+KzbX1mqi0=
+	b=R/IpyHmbmuEvub2JaalLXR+KPcRvTclNEdo/oOzNh+Cyzh97yKhVlU0ee2PbGvPh3
+	 u2WPkBd6DB0eOkd2PnC/KPBc8Wj3wOF5theHIgqn5Kn0VFVfGUn+bF1mvW73sDMu0P
+	 8VCoeQpGcr+G9vEZSrekJJLsEaDoYbGe/GFJk5gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9d16c39efb5fade84574@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 111/141] ext4: Fix deadlock during directory rename
-Date: Wed, 15 Mar 2023 13:13:34 +0100
-Message-Id: <20230315115743.379590614@linuxfoundation.org>
+Subject: [PATCH 6.2 112/141] RISC-V: clarify ISA string ordering rules in cpu.c
+Date: Wed, 15 Mar 2023 13:13:35 +0100
+Message-Id: <20230315115743.408666245@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -36,84 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 3c92792da8506a295afb6d032b4476e46f979725 ]
+[ Upstream commit 99e2266f2460e5778560f81982b6301dd2a16502 ]
 
-As lockdep properly warns, we should not be locking i_rwsem while having
-transactions started as the proper lock ordering used by all directory
-handling operations is i_rwsem -> transaction start. Fix the lock
-ordering by moving the locking of the directory earlier in
-ext4_rename().
+While the current list of rules may have been accurate when created
+it now lacks some clarity in the face of isa-manual updates. Instead of
+trying to continuously align this rule-set with the one in the
+specifications, change the role of this comment.
 
-Reported-by: syzbot+9d16c39efb5fade84574@syzkaller.appspotmail.com
-Fixes: 0813299c586b ("ext4: Fix possible corruption when moving a directory")
-Link: https://syzkaller.appspot.com/bug?extid=9d16c39efb5fade84574
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230301141004.15087-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+This particular comment is important, as the array it "decorates"
+defines the order in which the ISA string appears to userspace in
+/proc/cpuinfo.
+
+Re-jig and strengthen the wording to provide contributors with a set
+order in which to add entries & note why this particular struct needs
+more attention than others.
+
+While in the area, add some whitespace and tweak some wording for
+readability's sake.
+
+Suggested-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20221205144525.2148448-2-conor.dooley@microchip.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Stable-dep-of: 1eac28201ac0 ("RISC-V: fix ordering of Zbb extension")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/namei.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ arch/riscv/kernel/cpu.c | 49 ++++++++++++++++++++++++++++++-----------
+ 1 file changed, 36 insertions(+), 13 deletions(-)
 
-diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
-index e8f429330f3c3..7cc3918e2f189 100644
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -3813,10 +3813,20 @@ static int ext4_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
- 			return retval;
+diff --git a/arch/riscv/kernel/cpu.c b/arch/riscv/kernel/cpu.c
+index 1b9a5a66e55ab..db8b16ad9342b 100644
+--- a/arch/riscv/kernel/cpu.c
++++ b/arch/riscv/kernel/cpu.c
+@@ -144,22 +144,45 @@ arch_initcall(riscv_cpuinfo_init);
+ 		.uprop = #UPROP,				\
+ 		.isa_ext_id = EXTID,				\
  	}
- 
-+	/*
-+	 * We need to protect against old.inode directory getting converted
-+	 * from inline directory format into a normal one.
-+	 */
-+	if (S_ISDIR(old.inode->i_mode))
-+		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
 +
- 	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de,
- 				 &old.inlined);
--	if (IS_ERR(old.bh))
--		return PTR_ERR(old.bh);
-+	if (IS_ERR(old.bh)) {
-+		retval = PTR_ERR(old.bh);
-+		goto unlock_moved_dir;
-+	}
+ /*
+- * Here are the ordering rules of extension naming defined by RISC-V
+- * specification :
+- * 1. All extensions should be separated from other multi-letter extensions
+- *    by an underscore.
+- * 2. The first letter following the 'Z' conventionally indicates the most
++ * The canonical order of ISA extension names in the ISA string is defined in
++ * chapter 27 of the unprivileged specification.
++ *
++ * Ordinarily, for in-kernel data structures, this order is unimportant but
++ * isa_ext_arr defines the order of the ISA string in /proc/cpuinfo.
++ *
++ * The specification uses vague wording, such as should, when it comes to
++ * ordering, so for our purposes the following rules apply:
++ *
++ * 1. All multi-letter extensions must be separated from other extensions by an
++ *    underscore.
++ *
++ * 2. Additional standard extensions (starting with 'Z') must be sorted after
++ *    single-letter extensions and before any higher-privileged extensions.
 +
- 	/*
- 	 *  Check for inode number is _not_ due to possible IO errors.
- 	 *  We might rmdir the source, keep it as pwd of some process
-@@ -3873,11 +3883,6 @@ static int ext4_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
- 			if (new.dir != old.dir && EXT4_DIR_LINK_MAX(new.dir))
- 				goto end_rename;
- 		}
--		/*
--		 * We need to protect against old.inode directory getting
--		 * converted from inline directory format into a normal one.
--		 */
--		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
- 		retval = ext4_rename_dir_prepare(handle, &old);
- 		if (retval) {
- 			inode_unlock(old.inode);
-@@ -4014,12 +4019,15 @@ static int ext4_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
- 	} else {
- 		ext4_journal_stop(handle);
- 	}
--	if (old.dir_bh)
--		inode_unlock(old.inode);
- release_bh:
- 	brelse(old.dir_bh);
- 	brelse(old.bh);
- 	brelse(new.bh);
-+
-+unlock_moved_dir:
-+	if (S_ISDIR(old.inode->i_mode))
-+		inode_unlock(old.inode);
-+
- 	return retval;
- }
- 
++ * 3. The first letter following the 'Z' conventionally indicates the most
+  *    closely related alphabetical extension category, IMAFDQLCBKJTPVH.
+- *    If multiple 'Z' extensions are named, they should be ordered first
+- *    by category, then alphabetically within a category.
+- * 3. Standard supervisor-level extensions (starts with 'S') should be
+- *    listed after standard unprivileged extensions.  If multiple
+- *    supervisor-level extensions are listed, they should be ordered
++ *    If multiple 'Z' extensions are named, they must be ordered first by
++ *    category, then alphabetically within a category.
++ *
++ * 3. Standard supervisor-level extensions (starting with 'S') must be listed
++ *    after standard unprivileged extensions.  If multiple supervisor-level
++ *    extensions are listed, they must be ordered alphabetically.
++ *
++ * 4. Standard machine-level extensions (starting with 'Zxm') must be listed
++ *    after any lower-privileged, standard extensions.  If multiple
++ *    machine-level extensions are listed, they must be ordered
+  *    alphabetically.
+- * 4. Non-standard extensions (starts with 'X') must be listed after all
+- *    standard extensions. They must be separated from other multi-letter
+- *    extensions by an underscore.
++ *
++ * 5. Non-standard extensions (starting with 'X') must be listed after all
++ *    standard extensions. If multiple non-standard extensions are listed, they
++ *    must be ordered alphabetically.
++ *
++ * An example string following the order is:
++ *    rv64imadc_zifoo_zigoo_zafoo_sbar_scar_zxmbaz_xqux_xrux
++ *
++ * New entries to this struct should follow the ordering rules described above.
+  */
+ static struct riscv_isa_ext_data isa_ext_arr[] = {
+ 	__RISCV_ISA_EXT_DATA(sscofpmf, RISCV_ISA_EXT_SSCOFPMF),
 -- 
 2.39.2
 
