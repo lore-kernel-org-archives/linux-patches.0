@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1024431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:27:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C307C433D2;
-	Wed, 15 Mar 2023 12:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E8A4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:27:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F983C433EF;
+	Wed, 15 Mar 2023 12:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883276;
-	bh=FxWcvUh84XeroUHix8kJsIzWbclXDSaEb1pxAljTmio=;
+	s=korg; t=1678883279;
+	bh=Lf7ISlneS8N4jfqBCpQNsnYrmzmgCjixd5SrJowqgxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VlcwHzo8A0YdmRxnXCtkl4GkKPEPPFd4jry7bswLoI0mrdbsLQXClH1B4b+4Ocnvw
-	 37SCNvXCtJqrQOyeQ4OOUlddfieeNx0HOk4Eb4Hj3f6gBRb0zKSOQWNIElr7DF3l5K
-	 pqCDJwgUG3JRVhCfk0K7ob0tVhVdoPN5ReU5G9aw=
+	b=q5is4As+YVohdoZ0szFJ2YJqPtv8m81Ced9PlXK30aOpwwRimaYjgr40gaifZvwsD
+	 4Ki8amGUKaxLEvXufZvTzbZRw/oM1T0tiPCjsx5rbwee+3s4Tx3W1V7jEFEi/6cgUE
+	 Zg3p3hu6xDMO87A/NviBFGbNB8zPxI2bqnWdtT4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dtor@chromium.org>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jan Kara <jack@suse.cz>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 083/145] irqdomain: Fix mapping-creation race
-Date: Wed, 15 Mar 2023 13:12:29 +0100
-Message-Id: <20230315115741.724040988@linuxfoundation.org>
+Subject: [PATCH 5.15 084/145] nbd: use the correct block_device in nbd_bdev_reset
+Date: Wed, 15 Mar 2023 13:12:30 +0100
+Message-Id: <20230315115741.753741936@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -39,182 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 601363cc08da25747feb87c55573dd54de91d66a ]
+[ Upstream commit 2a852a693f8839bb877fc731ffbc9ece3a9c16d7 ]
 
-Parallel probing of devices that share interrupts (e.g. when a driver
-uses asynchronous probing) can currently result in two mappings for the
-same hardware interrupt to be created due to missing serialisation.
+The bdev parameter to ->ioctl contains the block device that the ioctl
+is called on, which can be the partition.  But the openers check in
+nbd_bdev_reset really needs to check use the whole device, so switch to
+using that.
 
-Make sure to hold the irq_domain_mutex when creating mappings so that
-looking for an existing mapping before creating a new one is done
-atomically.
-
-Fixes: 765230b5f084 ("driver-core: add asynchronous probing support for drivers")
-Fixes: b62b2cf5759b ("irqdomain: Fix handling of type settings for existing mappings")
-Link: https://lore.kernel.org/r/YuJXMHoT4ijUxnRb@hovoldconsulting.com
-Cc: stable@vger.kernel.org      # 4.8
-Cc: Dmitry Torokhov <dtor@chromium.org>
-Cc: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Hsin-Yi Wang <hsinyi@chromium.org>
-Tested-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230213104302.17307-7-johan+linaro@kernel.org
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20220330052917.2566582-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: e5cfefa97bcc ("block: fix scan partition for exclusively open device again")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/irqdomain.c | 64 ++++++++++++++++++++++++++++++------------
- 1 file changed, 46 insertions(+), 18 deletions(-)
+ drivers/block/nbd.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-index f95196063884a..e0b67784ac1e0 100644
---- a/kernel/irq/irqdomain.c
-+++ b/kernel/irq/irqdomain.c
-@@ -25,6 +25,9 @@ static DEFINE_MUTEX(irq_domain_mutex);
- 
- static struct irq_domain *irq_default_domain;
- 
-+static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
-+					unsigned int nr_irqs, int node, void *arg,
-+					bool realloc, const struct irq_affinity_desc *affinity);
- static void irq_domain_check_hierarchy(struct irq_domain *domain);
- 
- struct irqchip_fwid {
-@@ -703,9 +706,9 @@ unsigned int irq_create_direct_mapping(struct irq_domain *domain)
- EXPORT_SYMBOL_GPL(irq_create_direct_mapping);
- #endif
- 
--static unsigned int __irq_create_mapping_affinity(struct irq_domain *domain,
--						  irq_hw_number_t hwirq,
--						  const struct irq_affinity_desc *affinity)
-+static unsigned int irq_create_mapping_affinity_locked(struct irq_domain *domain,
-+						       irq_hw_number_t hwirq,
-+						       const struct irq_affinity_desc *affinity)
- {
- 	struct device_node *of_node = irq_domain_get_of_node(domain);
- 	int virq;
-@@ -720,7 +723,7 @@ static unsigned int __irq_create_mapping_affinity(struct irq_domain *domain,
- 		return 0;
- 	}
- 
--	if (irq_domain_associate(domain, virq, hwirq)) {
-+	if (irq_domain_associate_locked(domain, virq, hwirq)) {
- 		irq_free_desc(virq);
- 		return 0;
- 	}
-@@ -756,14 +759,20 @@ unsigned int irq_create_mapping_affinity(struct irq_domain *domain,
- 		return 0;
- 	}
- 
-+	mutex_lock(&irq_domain_mutex);
-+
- 	/* Check if mapping already exists */
- 	virq = irq_find_mapping(domain, hwirq);
- 	if (virq) {
- 		pr_debug("existing mapping on virq %d\n", virq);
--		return virq;
-+		goto out;
- 	}
- 
--	return __irq_create_mapping_affinity(domain, hwirq, affinity);
-+	virq = irq_create_mapping_affinity_locked(domain, hwirq, affinity);
-+out:
-+	mutex_unlock(&irq_domain_mutex);
-+
-+	return virq;
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index c1ef1df42eb66..ade8b839e4458 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -1167,11 +1167,11 @@ static int nbd_reconnect_socket(struct nbd_device *nbd, unsigned long arg)
+ 	return -ENOSPC;
  }
- EXPORT_SYMBOL_GPL(irq_create_mapping_affinity);
  
-@@ -830,6 +839,8 @@ unsigned int irq_create_fwspec_mapping(struct irq_fwspec *fwspec)
- 	if (WARN_ON(type & ~IRQ_TYPE_SENSE_MASK))
- 		type &= IRQ_TYPE_SENSE_MASK;
+-static void nbd_bdev_reset(struct block_device *bdev)
++static void nbd_bdev_reset(struct nbd_device *nbd)
+ {
+-	if (bdev->bd_openers > 1)
++	if (nbd->disk->part0->bd_openers > 1)
+ 		return;
+-	set_capacity(bdev->bd_disk, 0);
++	set_capacity(nbd->disk, 0);
+ }
  
-+	mutex_lock(&irq_domain_mutex);
-+
- 	/*
- 	 * If we've already configured this interrupt,
- 	 * don't do it again, or hell will break loose.
-@@ -842,7 +853,7 @@ unsigned int irq_create_fwspec_mapping(struct irq_fwspec *fwspec)
- 		 * interrupt number.
- 		 */
- 		if (type == IRQ_TYPE_NONE || type == irq_get_trigger_type(virq))
--			return virq;
-+			goto out;
+ static void nbd_parse_flags(struct nbd_device *nbd)
+@@ -1337,7 +1337,7 @@ static int nbd_start_device(struct nbd_device *nbd)
+ 	return nbd_set_size(nbd, config->bytesize, nbd_blksize(config));
+ }
  
+-static int nbd_start_device_ioctl(struct nbd_device *nbd, struct block_device *bdev)
++static int nbd_start_device_ioctl(struct nbd_device *nbd)
+ {
+ 	struct nbd_config *config = nbd->config;
+ 	int ret;
+@@ -1358,7 +1358,7 @@ static int nbd_start_device_ioctl(struct nbd_device *nbd, struct block_device *b
+ 
+ 	flush_workqueue(nbd->recv_workq);
+ 	mutex_lock(&nbd->config_lock);
+-	nbd_bdev_reset(bdev);
++	nbd_bdev_reset(nbd);
+ 	/* user requested, ignore socket errors */
+ 	if (test_bit(NBD_RT_DISCONNECT_REQUESTED, &config->runtime_flags))
+ 		ret = 0;
+@@ -1372,7 +1372,7 @@ static void nbd_clear_sock_ioctl(struct nbd_device *nbd,
+ {
+ 	nbd_clear_sock(nbd);
+ 	__invalidate_device(bdev, true);
+-	nbd_bdev_reset(bdev);
++	nbd_bdev_reset(nbd);
+ 	if (test_and_clear_bit(NBD_RT_HAS_CONFIG_REF,
+ 			       &nbd->config->runtime_flags))
+ 		nbd_config_put(nbd);
+@@ -1418,7 +1418,7 @@ static int __nbd_ioctl(struct block_device *bdev, struct nbd_device *nbd,
+ 		config->flags = arg;
+ 		return 0;
+ 	case NBD_DO_IT:
+-		return nbd_start_device_ioctl(nbd, bdev);
++		return nbd_start_device_ioctl(nbd);
+ 	case NBD_CLEAR_QUE:
  		/*
- 		 * If the trigger type has not been set yet, then set
-@@ -850,35 +861,45 @@ unsigned int irq_create_fwspec_mapping(struct irq_fwspec *fwspec)
- 		 */
- 		if (irq_get_trigger_type(virq) == IRQ_TYPE_NONE) {
- 			irq_data = irq_get_irq_data(virq);
--			if (!irq_data)
--				return 0;
-+			if (!irq_data) {
-+				virq = 0;
-+				goto out;
-+			}
- 
- 			irqd_set_trigger_type(irq_data, type);
--			return virq;
-+			goto out;
- 		}
- 
- 		pr_warn("type mismatch, failed to map hwirq-%lu for %s!\n",
- 			hwirq, of_node_full_name(to_of_node(fwspec->fwnode)));
--		return 0;
-+		virq = 0;
-+		goto out;
- 	}
- 
- 	if (irq_domain_is_hierarchy(domain)) {
--		virq = irq_domain_alloc_irqs(domain, 1, NUMA_NO_NODE, fwspec);
--		if (virq <= 0)
--			return 0;
-+		virq = irq_domain_alloc_irqs_locked(domain, -1, 1, NUMA_NO_NODE,
-+						    fwspec, false, NULL);
-+		if (virq <= 0) {
-+			virq = 0;
-+			goto out;
-+		}
- 	} else {
- 		/* Create mapping */
--		virq = __irq_create_mapping_affinity(domain, hwirq, NULL);
-+		virq = irq_create_mapping_affinity_locked(domain, hwirq, NULL);
- 		if (!virq)
--			return virq;
-+			goto out;
- 	}
- 
- 	irq_data = irq_get_irq_data(virq);
--	if (WARN_ON(!irq_data))
--		return 0;
-+	if (WARN_ON(!irq_data)) {
-+		virq = 0;
-+		goto out;
-+	}
- 
- 	/* Store trigger type */
- 	irqd_set_trigger_type(irq_data, type);
-+out:
-+	mutex_unlock(&irq_domain_mutex);
- 
- 	return virq;
- }
-@@ -1910,6 +1931,13 @@ void irq_domain_set_info(struct irq_domain *domain, unsigned int virq,
- 	irq_set_handler_data(virq, handler_data);
- }
- 
-+static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
-+					unsigned int nr_irqs, int node, void *arg,
-+					bool realloc, const struct irq_affinity_desc *affinity)
-+{
-+	return -EINVAL;
-+}
-+
- static void irq_domain_check_hierarchy(struct irq_domain *domain)
- {
- }
+ 		 * This is for compatibility only.  The queue is always cleared
 -- 
 2.39.2
 
