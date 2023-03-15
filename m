@@ -1,137 +1,118 @@
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F269453AB
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 15:45:01 +0000 (UTC)
-Received: by mail-oi1-f175.google.com with SMTP id c11so14483411oiw.2
-        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 08:45:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678895101;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=E6sAgqQ4tUM3/2nNIAr1J1jXcot8viEl3eXcZAX7ehI=;
-        b=n85Fo1qMrqx41Xp8nt8ry4U3yrXUumJ9e3tZ+BEFRjL83JtVYjqzacklbP3ObwzvKj
-         mp1qGdrzBMHfLUZU4emgg6rlTZ1/h7scIgShP+kUfsxrsdI1O1r8CR2lbfjnd1ukJkoC
-         07CWieSwn+x0gXDIUliJiYn71oFeq2Q6QlI/Ym6hmUSRO6XWLGdL8o3ac30HVbO499nD
-         gigcMcfM1RI5AYNHDq1oI34YVazsOaN7eOzrymrY50PvU9LIFIQKv9GLRoH8N6iYL5Ti
-         g/d4ETZONGyk18SehktZYlnmwFAoVXkziT+ZeGmkhlC4X3v0ZQIm1J+7VATAkLnthXF5
-         Mr1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678895101;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E6sAgqQ4tUM3/2nNIAr1J1jXcot8viEl3eXcZAX7ehI=;
-        b=Ek3mLfxPYXkY1LFktp4RjGq3mfdm7oTVoBCS9Odl266TejItVmJOaZIoa9lKdfl8+m
-         pTiaJfZ4gtn+jtb18SrgaRCA9rzu5ZrmCmIX1Egyel4uXYZYrlkzNAQRcozlKwTNCZs7
-         npqdVxdrdB/6/b1fr6auNM6cPjyQHF2gibLmDMKjc11Tl4qFruDgmDOefhSUcT2TJS0O
-         C07hC8KD3YXuAN7mOFgULp7RLBdjsSbMGPDienhYrT7HFLXopicwmJaIGsepRlvgamhL
-         nCu6RvKAUXoH2dsOaiAvuPWjPAePKFLw0fY5mNlwWoKPXns08+02Zx/PUrqWF5mc3Tm2
-         3TDA==
-X-Gm-Message-State: AO0yUKWD2yTMZ1aHh6yObdYqKo+pKs+MAVhHo3pOhSik3Kw1cBHb60F2
-	3Xik/hvRYL4cWn5k698nFjbhiu8sj6hOps6VVxenFQ==
-X-Google-Smtp-Source: AK7set+3Fm8PLpXAgtycnefk9Q9haiAZeDCnBXcFHhOyJbtzZ7VUwtmV4DJAofUAskcOiLt5atHjMA==
-X-Received: by 2002:a05:6808:486:b0:383:ce80:6c28 with SMTP id z6-20020a056808048600b00383ce806c28mr1384800oid.51.1678895100595;
-        Wed, 15 Mar 2023 08:45:00 -0700 (PDT)
-Received: from [192.168.17.16] ([189.219.75.19])
-        by smtp.gmail.com with ESMTPSA id q15-20020a05683031af00b00690e6d56670sm2471107ots.25.2023.03.15.08.44.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Mar 2023 08:45:00 -0700 (PDT)
-Message-ID: <7e46d536-cc68-4b7c-e56e-cf1b94a925cb@linaro.org>
-Date: Wed, 15 Mar 2023 09:44:59 -0600
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6851C53AB
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 15:54:05 +0000 (UTC)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32FAMX5E030774;
+	Wed, 15 Mar 2023 15:53:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=xb5P8YPq/H03NLXOC5oLXz7TjpMuUTiQFudiRNbQavI=;
+ b=eQM1yFz78AdasNBt9QQFKjzjKXR7SUqCfx8dbSQA6vVTCvIxm+lr2OE99VYbHmwU86Dv
+ JeROSJPxkWY4q9V1FSFj9zlc7ZtuGrQeLfm6+2qTE3amLw6TuTYN2ChVFqHQuOKOxorp
+ /kwJOMIwbZ7DE0ig00M7rd3BVDNTTzJFpgqaOT3YRL02dormknWgVD2wn8Lp/wN579j8
+ BMD/l+PCGjPBBVfoYwVS9vjZAH+HcR1ds3O19pdev/6u3w3ESFqAMCo2tN9v17//cxKF
+ pnzit3PRfR3K/tmWmpItEceatKjQtRobdU+6oBsBH2h1dLL+ANFG4LkgpuLo2KSYsRYr dQ== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pb2ck2558-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 Mar 2023 15:53:59 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32FFrwha029836
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 Mar 2023 15:53:58 GMT
+Received: from [10.216.36.238] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 15 Mar
+ 2023 08:53:55 -0700
+Message-ID: <1cb12058-f59e-1433-6ba6-f500be250996@quicinc.com>
+Date: Wed, 15 Mar 2023 21:23:51 +0530
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 4.19 00/39] 4.19.278-rc1 review
+Subject: Re: [PATCH] ring-buffer: remove obsolete comment for
+ free_buffer_page()
 Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230315115721.234756306@linuxfoundation.org>
-From: =?UTF-8?Q?Daniel_D=c3=adaz?= <daniel.diaz@linaro.org>
-In-Reply-To: <20230315115721.234756306@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+To: Vlastimil Babka <vbabka@suse.cz>, Steven Rostedt <rostedt@goodmis.org>,
+        Masami Hiramatsu <mhiramat@kernel.org>, Ingo Molnar <mingo@elte.hu>
+CC: <linux-trace-kernel@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <patches@lists.linux.dev>, Mike Rapoport <mike.rapoport@gmail.com>
+References: <20230315142446.27040-1-vbabka@suse.cz>
+ <72de48c7-014d-80ac-51e9-ba22450f1d5b@quicinc.com>
+In-Reply-To: <72de48c7-014d-80ac-51e9-ba22450f1d5b@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: tWTUwyx-G1ue8ABDjRD_AFNaeBsZipo_
+X-Proofpoint-GUID: tWTUwyx-G1ue8ABDjRD_AFNaeBsZipo_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-15_08,2023-03-15_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ mlxlogscore=999 clxscore=1015 mlxscore=0 priorityscore=1501 malwarescore=0
+ spamscore=0 suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2302240000
+ definitions=main-2303150133
 
-Hello!
 
-On 15/03/23 06:12, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.278 release.
-> There are 39 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+
+On 3/15/2023 9:21 PM, Mukesh Ojha wrote:
 > 
-> Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
-> Anything received after that time might be too late.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.278-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-> and the diffstat can be found below.
+> On 3/15/2023 7:54 PM, Vlastimil Babka wrote:
+>> The comment refers to mm/slob.o which is being removed. It comes from
+
+nit: mm/slob.c
+
+-- Mukesh
+
 > 
-> thanks,
 > 
-> greg k-h
-
-Lots and lots of failures, mostly Arm.
-
-For Arm, Arm64, MIPS, with GCC-8, GCC-9, GCC-10, GCC-11, GCC-12, Clang-16, for some combinations with:
-* axm55xx_defconfig
-* davinci_all_defconfig
-* defconfig
-* defconfig-40bc7ee5
-* lkftconfig-kasan
-* multi_v5_defconfig
-* s5pv210_defconfig
-* sama5_defconfig
-
------8<-----
-/builds/linux/kernel/cgroup/cgroup.c:2237:2: error: implicit declaration of function 'get_online_cpus' [-Werror,-Wimplicit-function-declaration]
-         get_online_cpus();
-         ^
-/builds/linux/kernel/cgroup/cgroup.c:2237:2: note: did you mean 'get_online_mems'?
-/builds/linux/include/linux/memory_hotplug.h:258:20: note: 'get_online_mems' declared here
-static inline void get_online_mems(void) {}
-                    ^
-/builds/linux/kernel/cgroup/cgroup.c:2248:2: error: implicit declaration of function 'put_online_cpus' [-Werror,-Wimplicit-function-declaration]
-         put_online_cpus();
-         ^
-/builds/linux/kernel/cgroup/cgroup.c:2248:2: note: did you mean 'put_online_mems'?
-/builds/linux/include/linux/memory_hotplug.h:259:20: note: 'put_online_mems' declared here
-static inline void put_online_mems(void) {}
-                    ^
-2 errors generated.
-make[3]: *** [/builds/linux/scripts/Makefile.build:303: kernel/cgroup/cgroup.o] Error 1
------>8-----
-
-
-For Arm64, i386 x86, with GCC-11, Perf has a new error:
-
------8<-----
-In function 'ready',
-     inlined from 'sender' at bench/sched-messaging.c:90:2:
-bench/sched-messaging.c:76:13: error: 'dummy' is used uninitialized [-Werror=uninitialized]
-    76 |         if (write(ready_out, &dummy, 1) != 1)
-       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-In file included from bench/../perf-sys.h:5,
-                  from bench/../perf.h:18,
-                  from bench/sched-messaging.c:13:
------>8-----
-
-
-Greetings!
-
-Daniel Díaz
-daniel.diaz@linaro.org
-
+>> commit ed56829cb319 ("ring_buffer: reset buffer page when freeing") and
+>> according to Steven the borrowed code was a page mapcount and mapping
+>> reset, which was later removed by commit e4c2ce82ca27 ("ring_buffer:
+>> allocate buffer page pointer"). Thus the comment is not accurate anyway,
+>> remove it.
+>>
+>> Reported-by: Mike Rapoport <mike.rapoport@gmail.com>
+>> Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+>> Fixes: e4c2ce82ca27 ("ring_buffer: allocate buffer page pointer")
+>> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+>> ---
+>>   kernel/trace/ring_buffer.c | 4 ----
+>>   1 file changed, 4 deletions(-)
+>>
+>> diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+>> index af50d931b020..c6f47b6cfd5f 100644
+>> --- a/kernel/trace/ring_buffer.c
+>> +++ b/kernel/trace/ring_buffer.c
+>> @@ -354,10 +354,6 @@ static void rb_init_page(struct buffer_data_page 
+>> *bpage)
+>>       local_set(&bpage->commit, 0);
+>>   }
+>> -/*
+>> - * Also stolen from mm/slob.c. Thanks to Mathieu Desnoyers for pointing
+>> - * this issue out.
+>> - */
+> 
+> Thanks for the clean up.
+> 
+> Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> 
+> -- Mukesh
+> 
+>>   static void free_buffer_page(struct buffer_page *bpage)
+>>   {
+>>       free_page((unsigned long)bpage->page);
