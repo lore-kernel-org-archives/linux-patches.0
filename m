@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFFE4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:29:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523C1C4339B;
-	Wed, 15 Mar 2023 12:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3794431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:29:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C3EC433D2;
+	Wed, 15 Mar 2023 12:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883384;
-	bh=Hzk9IvwA7y6VQfWSvbFOzDfMXY+1sArz+O0UOp50ojY=;
+	s=korg; t=1678883387;
+	bh=tYrpwRVSFQGB4hx/fIKwV3Yn6VpDvkmRrRwPxQiYFWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/1xWdng1mxhj09+cRSENPjTG+8myHYuE7dKRmJlllzIU4/TQ0C3M6sWIOO0c1wCx
-	 yyJdtR7ekJlVpSdQoob6//pVG3Fne7TC1kGlfDIgNbYjgwoy3nkyTzsehcXDeeFCP+
-	 TwtOI/ohnx+PapXbJE+vnF4W91nBjBiY6OTP3lEY=
+	b=inYTtw5OYTU15WCZ2CeypPto1S9KCaH5m6knMHSkYSIuKy1vjnHdaasJVvt7SIzc2
+	 x3x4YT3pffdqmQKkECH+O3s/7pZHCO+1Gj+5mAmbIpoA0fzawiYJ2PMFGX6iLWEeSp
+	 J63ysUn9leZqCOl4iqDalmK4i4ySxa71rtXq1LM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xurui <xurui@kylinos.cn>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 106/145] MIPS: Fix a compilation issue
-Date: Wed, 15 Mar 2023 13:12:52 +0100
-Message-Id: <20230315115742.477534114@linuxfoundation.org>
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	"Qais Yousef (Google)" <qyousef@layalina.io>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>
+Subject: [PATCH 5.15 124/145] sched/fair: Fixes for capacity inversion detection
+Date: Wed, 15 Mar 2023 13:13:10 +0100
+Message-Id: <20230315115743.053944198@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -35,38 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: xurui <xurui@kylinos.cn>
+From: Qais Yousef <qyousef@layalina.io>
 
-[ Upstream commit 109d587a4b4d7ccca2200ab1f808f43ae23e2585 ]
+commit da07d2f9c153e457e845d4dcfdd13568d71d18a4 upstream.
 
-arch/mips/include/asm/mach-rc32434/pci.h:377:
-cc1: error: result of ‘-117440512 << 16’ requires 44 bits to represent, but ‘int’ only has 32 bits [-Werror=shift-overflow=]
+Traversing the Perf Domains requires rcu_read_lock() to be held and is
+conditional on sched_energy_enabled(). Ensure right protections applied.
 
-All bits in KORINA_STAT are already at the correct position, so there is
-no addtional shift needed.
+Also skip capacity inversion detection for our own pd; which was an
+error.
 
-Signed-off-by: xurui <xurui@kylinos.cn>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 44c7b80bffc3 ("sched/fair: Detect capacity inversion")
+Reported-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20230112122708.330667-3-qyousef@layalina.io
+(cherry picked from commit da07d2f9c153e457e845d4dcfdd13568d71d18a4)
+Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/include/asm/mach-rc32434/pci.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/fair.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/arch/mips/include/asm/mach-rc32434/pci.h b/arch/mips/include/asm/mach-rc32434/pci.h
-index 9a6eefd127571..3eb767c8a4eec 100644
---- a/arch/mips/include/asm/mach-rc32434/pci.h
-+++ b/arch/mips/include/asm/mach-rc32434/pci.h
-@@ -374,7 +374,7 @@ struct pci_msu {
- 				 PCI_CFG04_STAT_SSE | \
- 				 PCI_CFG04_STAT_PE)
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -8605,16 +8605,23 @@ static void update_cpu_capacity(struct s
+ 	 *   * Thermal pressure will impact all cpus in this perf domain
+ 	 *     equally.
+ 	 */
+-	if (static_branch_unlikely(&sched_asym_cpucapacity)) {
++	if (sched_energy_enabled()) {
+ 		unsigned long inv_cap = capacity_orig - thermal_load_avg(rq);
+-		struct perf_domain *pd = rcu_dereference(rq->rd->pd);
++		struct perf_domain *pd;
  
--#define KORINA_CNFG1		((KORINA_STAT<<16)|KORINA_CMD)
-+#define KORINA_CNFG1		(KORINA_STAT | KORINA_CMD)
++		rcu_read_lock();
++
++		pd = rcu_dereference(rq->rd->pd);
+ 		rq->cpu_capacity_inverted = 0;
  
- #define KORINA_REVID		0
- #define KORINA_CLASS_CODE	0
--- 
-2.39.2
-
+ 		for (; pd; pd = pd->next) {
+ 			struct cpumask *pd_span = perf_domain_span(pd);
+ 			unsigned long pd_cap_orig, pd_cap;
+ 
++			/* We can't be inverted against our own pd */
++			if (cpumask_test_cpu(cpu_of(rq), pd_span))
++				continue;
++
+ 			cpu = cpumask_any(pd_span);
+ 			pd_cap_orig = arch_scale_cpu_capacity(cpu);
+ 
+@@ -8639,6 +8646,8 @@ static void update_cpu_capacity(struct s
+ 				break;
+ 			}
+ 		}
++
++		rcu_read_unlock();
+ 	}
+ 
+ 	trace_sched_cpu_capacity_tp(rq);
 
 
