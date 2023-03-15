@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B2E4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63866C433EF;
-	Wed, 15 Mar 2023 12:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3C04431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083F8C4339B;
+	Wed, 15 Mar 2023 12:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882837;
-	bh=5iTdxmkfutspsQiXKljeqJDEZBUvac2V66HVCnasYNw=;
+	s=korg; t=1678882840;
+	bh=GnT3f4R+dZtwNGqzZyHvBBAgfIVXDsk5TJ6pV9fieTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2mvdneirXkHlKTyEAVIkHjuaId9wnHWpyCIl2xuj04iFtDjc19NEnUWb7tS+ITM8u
-	 dFJq5AKofbynlGEWcVDKLOi5BCkBOYCNXVMmIGR73gE2BYo/Ml8rmk38q3DDmmowkW
-	 tgfqiPMPqpsqfg7Df0Emz7Z4h4k09pI+f9oc9Oro=
+	b=amvFO3J9kXyCXbE7Nnm3l6Rkd7t6/eGIuZWjK1FTi1L+WqvqovHJ6bBkH/sKhkmZC
+	 IWjAKUq50amAc6MSTBHjPvtKVirObz0wj/pZ2w8qdr/ACxsJ4oxw91HgxY6GfxaD0G
+	 rvDpEUVh9SSvFxI77AkD+IalMx4m/jcaMV9uTegQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Sukumar Ghorai <sukumar.ghorai@intel.com>,
-	Ashok Raj <ashok.raj@intel.com>,
-	Jacob Pan <jacob.jun.pan@linux.intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Pierre Gondois <pierre.gondois@arm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/104] iommu/vt-d: Fix PASID directory pointer coherency
-Date: Wed, 15 Mar 2023 13:11:52 +0100
-Message-Id: <20230315115732.954106988@linuxfoundation.org>
+Subject: [PATCH 5.10 022/104] arm64: efi: Make efi_rt_lock a raw_spinlock
+Date: Wed, 15 Mar 2023 13:11:53 +0100
+Message-Id: <20230315115732.996062712@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -39,80 +35,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jacob Pan <jacob.jun.pan@linux.intel.com>
+From: Pierre Gondois <pierre.gondois@arm.com>
 
-[ Upstream commit 194b3348bdbb7db65375c72f3f774aee4cc6614e ]
+[ Upstream commit 0e68b5517d3767562889f1d83fdb828c26adb24f ]
 
-On platforms that do not support IOMMU Extended capability bit 0
-Page-walk Coherency, CPU caches are not snooped when IOMMU is accessing
-any translation structures. IOMMU access goes only directly to
-memory. Intel IOMMU code was missing a flush for the PASID table
-directory that resulted in the unrecoverable fault as shown below.
+Running a rt-kernel base on 6.2.0-rc3-rt1 on an Ampere Altra outputs
+the following:
+  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:46
+  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 9, name: kworker/u320:0
+  preempt_count: 2, expected: 0
+  RCU nest depth: 0, expected: 0
+  3 locks held by kworker/u320:0/9:
+  #0: ffff3fff8c27d128 ((wq_completion)efi_rts_wq){+.+.}-{0:0}, at: process_one_work (./include/linux/atomic/atomic-long.h:41)
+  #1: ffff80000861bdd0 ((work_completion)(&efi_rts_work.work)){+.+.}-{0:0}, at: process_one_work (./include/linux/atomic/atomic-long.h:41)
+  #2: ffffdf7e1ed3e460 (efi_rt_lock){+.+.}-{3:3}, at: efi_call_rts (drivers/firmware/efi/runtime-wrappers.c:101)
+  Preemption disabled at:
+  efi_virtmap_load (./arch/arm64/include/asm/mmu_context.h:248)
+  CPU: 0 PID: 9 Comm: kworker/u320:0 Tainted: G        W          6.2.0-rc3-rt1
+  Hardware name: WIWYNN Mt.Jade Server System B81.03001.0005/Mt.Jade Motherboard, BIOS 1.08.20220218 (SCP: 1.08.20220218) 2022/02/18
+  Workqueue: efi_rts_wq efi_call_rts
+  Call trace:
+  dump_backtrace (arch/arm64/kernel/stacktrace.c:158)
+  show_stack (arch/arm64/kernel/stacktrace.c:165)
+  dump_stack_lvl (lib/dump_stack.c:107 (discriminator 4))
+  dump_stack (lib/dump_stack.c:114)
+  __might_resched (kernel/sched/core.c:10134)
+  rt_spin_lock (kernel/locking/rtmutex.c:1769 (discriminator 4))
+  efi_call_rts (drivers/firmware/efi/runtime-wrappers.c:101)
+  [...]
 
-This patch adds clflush calls whenever allocating and updating
-a PASID table directory to ensure cache coherency.
+This seems to come from commit ff7a167961d1 ("arm64: efi: Execute
+runtime services from a dedicated stack") which adds a spinlock. This
+spinlock is taken through:
+efi_call_rts()
+\-efi_call_virt()
+  \-efi_call_virt_pointer()
+    \-arch_efi_call_virt_setup()
 
-On the reverse direction, there's no need to clflush the PASID directory
-pointer when we deactivate a context entry in that IOMMU hardware will
-not see the old PASID directory pointer after we clear the context entry.
-PASID directory entries are also never freed once allocated.
+Make 'efi_rt_lock' a raw_spinlock to avoid being preempted.
 
- DMAR: DRHD: handling fault status reg 3
- DMAR: [DMA Read NO_PASID] Request device [00:0d.2] fault addr 0x1026a4000
-       [fault reason 0x51] SM: Present bit in Directory Entry is clear
- DMAR: Dump dmar1 table entries for IOVA 0x1026a4000
- DMAR: scalable mode root entry: hi 0x0000000102448001, low 0x0000000101b3e001
- DMAR: context entry: hi 0x0000000000000000, low 0x0000000101b4d401
- DMAR: pasid dir entry: 0x0000000101b4e001
- DMAR: pasid table entry[0]: 0x0000000000000109
- DMAR: pasid table entry[1]: 0x0000000000000001
- DMAR: pasid table entry[2]: 0x0000000000000000
- DMAR: pasid table entry[3]: 0x0000000000000000
- DMAR: pasid table entry[4]: 0x0000000000000000
- DMAR: pasid table entry[5]: 0x0000000000000000
- DMAR: pasid table entry[6]: 0x0000000000000000
- DMAR: pasid table entry[7]: 0x0000000000000000
- DMAR: PTE not present at level 4
+[ardb: The EFI runtime services are called with a different set of
+       translation tables, and are permitted to use the SIMD registers.
+       The context switch code preserves/restores neither, and so EFI
+       calls must be made with preemption disabled, rather than only
+       disabling migration.]
 
-Cc: <stable@vger.kernel.org>
-Fixes: 0bbeb01a4faf ("iommu/vt-d: Manage scalalble mode PASID tables")
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reported-by: Sukumar Ghorai <sukumar.ghorai@intel.com>
-Signed-off-by: Ashok Raj <ashok.raj@intel.com>
-Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
-Link: https://lore.kernel.org/r/20230209212843.1788125-1-jacob.jun.pan@linux.intel.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: ff7a167961d1 ("arm64: efi: Execute runtime services from a dedicated stack")
+Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
+Cc: <stable@vger.kernel.org> # v6.1+
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/pasid.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/include/asm/efi.h | 6 +++---
+ arch/arm64/kernel/efi.c      | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index f821153390e53..80d6412e2c546 100644
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -186,6 +186,9 @@ int intel_pasid_alloc_table(struct device *dev)
- attach_out:
- 	device_attach_pasid_table(info, pasid_table);
+diff --git a/arch/arm64/include/asm/efi.h b/arch/arm64/include/asm/efi.h
+index 16892f0d05ad6..538b6a1b198b9 100644
+--- a/arch/arm64/include/asm/efi.h
++++ b/arch/arm64/include/asm/efi.h
+@@ -25,7 +25,7 @@ int efi_set_mapping_permissions(struct mm_struct *mm, efi_memory_desc_t *md);
+ ({									\
+ 	efi_virtmap_load();						\
+ 	__efi_fpsimd_begin();						\
+-	spin_lock(&efi_rt_lock);					\
++	raw_spin_lock(&efi_rt_lock);					\
+ })
  
-+	if (!ecap_coherent(info->iommu->ecap))
-+		clflush_cache_range(pasid_table->table, size);
-+
- 	return 0;
+ #define arch_efi_call_virt(p, f, args...)				\
+@@ -37,12 +37,12 @@ int efi_set_mapping_permissions(struct mm_struct *mm, efi_memory_desc_t *md);
+ 
+ #define arch_efi_call_virt_teardown()					\
+ ({									\
+-	spin_unlock(&efi_rt_lock);					\
++	raw_spin_unlock(&efi_rt_lock);					\
+ 	__efi_fpsimd_end();						\
+ 	efi_virtmap_unload();						\
+ })
+ 
+-extern spinlock_t efi_rt_lock;
++extern raw_spinlock_t efi_rt_lock;
+ efi_status_t __efi_rt_asm_wrapper(void *, const char *, ...);
+ 
+ #define ARCH_EFI_IRQ_FLAGS_MASK (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT)
+diff --git a/arch/arm64/kernel/efi.c b/arch/arm64/kernel/efi.c
+index 72f432d23ec5c..3ee3b3daca47b 100644
+--- a/arch/arm64/kernel/efi.c
++++ b/arch/arm64/kernel/efi.c
+@@ -144,7 +144,7 @@ asmlinkage efi_status_t efi_handle_corrupted_x18(efi_status_t s, const char *f)
+ 	return s;
  }
  
-@@ -276,6 +279,10 @@ struct pasid_entry *intel_pasid_get_entry(struct device *dev, u32 pasid)
- 			free_pgtable_page(entries);
- 			goto retry;
- 		}
-+		if (!ecap_coherent(info->iommu->ecap)) {
-+			clflush_cache_range(entries, VTD_PAGE_SIZE);
-+			clflush_cache_range(&dir[dir_index].val, sizeof(*dir));
-+		}
- 	}
+-DEFINE_SPINLOCK(efi_rt_lock);
++DEFINE_RAW_SPINLOCK(efi_rt_lock);
  
- 	return &entries[index];
+ asmlinkage u64 *efi_rt_stack_top __ro_after_init;
+ 
 -- 
 2.39.2
 
