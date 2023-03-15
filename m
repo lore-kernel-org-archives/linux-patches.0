@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43B54431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4BDC433EF;
-	Wed, 15 Mar 2023 12:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834D04431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062D9C433D2;
+	Wed, 15 Mar 2023 12:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883907;
-	bh=ihCHgicI0ipRToJDLyDkyFn+wsKjm8rDO1QA56RcJiE=;
+	s=korg; t=1678883910;
+	bh=cJyn5if9UHzNMhCT6qOO4Ca+N/e7eaTdLc59LvGpKzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OLiaKWGPmEM0ogHTVChVLGRKEgOKsk0ZEwqZbg7NahIFhD/rNMgF4Zq4Hi8c8n3vr
-	 ej6np9ASV+8C2en7w9pug0Uiv++d7+3BiAULLUMamZz3fMxLgDZzc1heP9ZqaOOEUU
-	 OjZ1YmAuzfnjraTcpc1MuE7M6fT86OrXOp0irfPg=
+	b=ksZHOGy01WZAOQt3Ia2/g5hpMc6DSYdLktCuzPaxc13XiOKhtWEiEK72qFlBYjk2m
+	 hI2wCS6N56UMB/cLDeV+hUEgh8XWu+6AQ3E/AFUcJbn/9KFjceNSX6xnjn5cOWn2CQ
+	 9c0C+/F6HLT/+is1nu/sj3AK94uHXPstZ0YiEQSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.2 005/141] io_uring/uring_cmd: ensure that device supports IOPOLL
-Date: Wed, 15 Mar 2023 13:11:48 +0100
-Message-Id: <20230315115740.124815256@linuxfoundation.org>
+	Yue Hu <huyue2@coolpad.com>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 6.2 006/141] erofs: fix wrong kunmap when using LZMA on HIGHMEM platforms
+Date: Wed, 15 Mar 2023 13:11:49 +0100
+Message-Id: <20230315115740.152502046@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -34,43 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit 03b3d6be73e81ddb7c2930d942cdd17f4cfd5ba5 upstream.
+commit 8f121dfb15f7b4ab345992ce96003eb63fd608f4 upstream.
 
-It's possible for a file type to support uring commands, but not
-pollable ones. Hence before issuing one of those, we should check
-that it is supported and error out upfront if it isn't.
+As the call trace shown, the root cause is kunmap incorrect pages:
 
-Cc: stable@vger.kernel.org
-Fixes: 5756a3a7e713 ("io_uring: add iopoll infrastructure for io_uring_cmd")
-Link: https://github.com/axboe/liburing/issues/816
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+ BUG: kernel NULL pointer dereference, address: 00000000
+ CPU: 1 PID: 40 Comm: kworker/u5:0 Not tainted 6.2.0-rc5 #4
+ Workqueue: erofs_worker z_erofs_decompressqueue_work
+ EIP: z_erofs_lzma_decompress+0x34b/0x8ac
+  z_erofs_decompress+0x12/0x14
+  z_erofs_decompress_queue+0x7e7/0xb1c
+  z_erofs_decompressqueue_work+0x32/0x60
+  process_one_work+0x24b/0x4d8
+  ? process_one_work+0x1a4/0x4d8
+  worker_thread+0x14c/0x3fc
+  kthread+0xe6/0x10c
+  ? rescuer_thread+0x358/0x358
+  ? kthread_complete_and_exit+0x18/0x18
+  ret_from_fork+0x1c/0x28
+ ---[ end trace 0000000000000000 ]---
+
+The bug is trivial and should be fixed now.  It has no impact on
+!HIGHMEM platforms.
+
+Fixes: 622ceaddb764 ("erofs: lzma compression support")
+Cc: <stable@vger.kernel.org> # 5.16+
+Reviewed-by: Yue Hu <huyue2@coolpad.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20230305134455.88236-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/uring_cmd.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/erofs/decompressor_lzma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/uring_cmd.c
-+++ b/io_uring/uring_cmd.c
-@@ -108,7 +108,7 @@ int io_uring_cmd(struct io_kiocb *req, u
- 	struct file *file = req->file;
- 	int ret;
- 
--	if (!req->file->f_op->uring_cmd)
-+	if (!file->f_op->uring_cmd)
- 		return -EOPNOTSUPP;
- 
- 	ret = security_uring_cmd(ioucmd);
-@@ -120,6 +120,8 @@ int io_uring_cmd(struct io_kiocb *req, u
- 	if (ctx->flags & IORING_SETUP_CQE32)
- 		issue_flags |= IO_URING_F_CQE32;
- 	if (ctx->flags & IORING_SETUP_IOPOLL) {
-+		if (!file->f_op->uring_cmd_iopoll)
-+			return -EOPNOTSUPP;
- 		issue_flags |= IO_URING_F_IOPOLL;
- 		req->iopoll_completed = 0;
- 		WRITE_ONCE(ioucmd->cookie, NULL);
+--- a/fs/erofs/decompressor_lzma.c
++++ b/fs/erofs/decompressor_lzma.c
+@@ -278,7 +278,7 @@ again:
+ 		}
+ 	}
+ 	if (no < nrpages_out && strm->buf.out)
+-		kunmap(rq->in[no]);
++		kunmap(rq->out[no]);
+ 	if (ni < nrpages_in)
+ 		kunmap(rq->in[ni]);
+ 	/* 4. push back LZMA stream context to the global list */
 
 
