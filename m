@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272454431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:26:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D308C433D2;
-	Wed, 15 Mar 2023 12:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD28C4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:26:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466CAC433EF;
+	Wed, 15 Mar 2023 12:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883206;
-	bh=QLtvCmjHbF4eJWUPEkTlyzFhsNYXe+mt78loXuSAUFQ=;
+	s=korg; t=1678883208;
+	bh=/TDAOyJhZKj1uIenEYQhaN9JceBpcOEw2uaip9XC77s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tuLlGqtvqBdl1KPV5U9kvCLu3KR0W3ED2A9QlXzUK+MVlBQ0FHWkLSa/MtuE13Nm0
-	 HLZTdT5ja5g8c32rC15TN3QSZHsVpaDNfv9or8aPliVMfc4o+7/koepVrQn5sjcOCW
-	 jZtpdU4+NOB6DGk99UCZtwtjsg162FMZoMP7IAiA=
+	b=sG2q+OyoB1pkx6ijUzcAIAUz/nWsexGpsV5/PUD+feTNJ73qwdivxSRvdooidLg5r
+	 Rq1hmedMvWvGN8qLJ7AXR602Jk88uYeEN9huLMW7QUQiGEMvE7/HCkL7+YTj1C6JHz
+	 ZhmPE9OOr0nnHbigMqqu2pP/QFucs0QaHV71SaiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuiko Oshino <yuiko.oshino@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	"sjur.brandeland@stericsson.com" <sjur.brandeland@stericsson.com>,
+	syzbot+b563d33852b893653a9e@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/145] net: lan78xx: fix accessing the LAN7800s internal phy specific registers from the MAC driver
-Date: Wed, 15 Mar 2023 13:12:02 +0100
-Message-Id: <20230315115740.891993373@linuxfoundation.org>
+Subject: [PATCH 5.15 057/145] net: caif: Fix use-after-free in cfusbl_device_notify()
+Date: Wed, 15 Mar 2023 13:12:03 +0100
+Message-Id: <20230315115740.921156134@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -36,123 +37,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuiko Oshino <yuiko.oshino@microchip.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit e57cf3639c323eeed05d3725fd82f91b349adca8 ]
+[ Upstream commit 9781e98a97110f5e76999058368b4be76a788484 ]
 
-Move the LAN7800 internal phy (phy ID  0x0007c132) specific register
-accesses to the phy driver (microchip.c).
+syzbot reported use-after-free in cfusbl_device_notify() [1].  This
+causes a stack trace like below:
 
-Fix the error reported by Enguerrand de Ribaucourt in December 2022,
-"Some operations during the cable switch workaround modify the register
-LAN88XX_INT_MASK of the PHY. However, this register is specific to the
-LAN8835 PHY. For instance, if a DP8322I PHY is connected to the LAN7801,
-that register (0x19), corresponds to the LED and MAC address
-configuration, resulting in unapropriate behavior."
+BUG: KASAN: use-after-free in cfusbl_device_notify+0x7c9/0x870 net/caif/caif_usb.c:138
+Read of size 8 at addr ffff88807ac4e6f0 by task kworker/u4:6/1214
 
-I did not test with the DP8322I PHY, but I tested with an EVB-LAN7800
-with the internal PHY.
+CPU: 0 PID: 1214 Comm: kworker/u4:6 Not tainted 5.19.0-rc3-syzkaller-00146-g92f20ff72066 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Workqueue: netns cleanup_net
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
+ print_address_description.constprop.0.cold+0xeb/0x467 mm/kasan/report.c:313
+ print_report mm/kasan/report.c:429 [inline]
+ kasan_report.cold+0xf4/0x1c6 mm/kasan/report.c:491
+ cfusbl_device_notify+0x7c9/0x870 net/caif/caif_usb.c:138
+ notifier_call_chain+0xb5/0x200 kernel/notifier.c:87
+ call_netdevice_notifiers_info+0xb5/0x130 net/core/dev.c:1945
+ call_netdevice_notifiers_extack net/core/dev.c:1983 [inline]
+ call_netdevice_notifiers net/core/dev.c:1997 [inline]
+ netdev_wait_allrefs_any net/core/dev.c:10227 [inline]
+ netdev_run_todo+0xbc0/0x10f0 net/core/dev.c:10341
+ default_device_exit_batch+0x44e/0x590 net/core/dev.c:11334
+ ops_exit_list+0x125/0x170 net/core/net_namespace.c:167
+ cleanup_net+0x4ea/0xb00 net/core/net_namespace.c:594
+ process_one_work+0x996/0x1610 kernel/workqueue.c:2289
+ worker_thread+0x665/0x1080 kernel/workqueue.c:2436
+ kthread+0x2e9/0x3a0 kernel/kthread.c:376
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:302
+ </TASK>
 
-Fixes: 14437e3fa284 ("lan78xx: workaround of forced 100 Full/Half duplex mode error")
-Signed-off-by: Yuiko Oshino <yuiko.oshino@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230301154307.30438-1-yuiko.oshino@microchip.com
+When unregistering a net device, unregister_netdevice_many_notify()
+sets the device's reg_state to NETREG_UNREGISTERING, calls notifiers
+with NETDEV_UNREGISTER, and adds the device to the todo list.
+
+Later on, devices in the todo list are processed by netdev_run_todo().
+netdev_run_todo() waits devices' reference count become 1 while
+rebdoadcasting NETDEV_UNREGISTER notification.
+
+When cfusbl_device_notify() is called with NETDEV_UNREGISTER multiple
+times, the parent device might be freed.  This could cause UAF.
+Processing NETDEV_UNREGISTER multiple times also causes inbalance of
+reference count for the module.
+
+This patch fixes the issue by accepting only first NETDEV_UNREGISTER
+notification.
+
+Fixes: 7ad65bf68d70 ("caif: Add support for CAIF over CDC NCM USB interface")
+CC: sjur.brandeland@stericsson.com <sjur.brandeland@stericsson.com>
+Reported-by: syzbot+b563d33852b893653a9e@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=c3bfd8e2450adab3bffe4d80821fbbced600407f [1]
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Link: https://lore.kernel.org/r/20230301163913.391304-1-syoshida@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/microchip.c | 32 ++++++++++++++++++++++++++++++++
- drivers/net/usb/lan78xx.c   | 27 +--------------------------
- 2 files changed, 33 insertions(+), 26 deletions(-)
+ net/caif/caif_usb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/phy/microchip.c b/drivers/net/phy/microchip.c
-index 9f1f2b6c97d4f..230f2fcf9c46a 100644
---- a/drivers/net/phy/microchip.c
-+++ b/drivers/net/phy/microchip.c
-@@ -342,6 +342,37 @@ static int lan88xx_config_aneg(struct phy_device *phydev)
- 	return genphy_config_aneg(phydev);
- }
+diff --git a/net/caif/caif_usb.c b/net/caif/caif_usb.c
+index b02e1292f7f19..24488a4e2d26e 100644
+--- a/net/caif/caif_usb.c
++++ b/net/caif/caif_usb.c
+@@ -134,6 +134,9 @@ static int cfusbl_device_notify(struct notifier_block *me, unsigned long what,
+ 	struct usb_device *usbdev;
+ 	int res;
  
-+static void lan88xx_link_change_notify(struct phy_device *phydev)
-+{
-+	int temp;
++	if (what == NETDEV_UNREGISTER && dev->reg_state >= NETREG_UNREGISTERED)
++		return 0;
 +
-+	/* At forced 100 F/H mode, chip may fail to set mode correctly
-+	 * when cable is switched between long(~50+m) and short one.
-+	 * As workaround, set to 10 before setting to 100
-+	 * at forced 100 F/H mode.
-+	 */
-+	if (!phydev->autoneg && phydev->speed == 100) {
-+		/* disable phy interrupt */
-+		temp = phy_read(phydev, LAN88XX_INT_MASK);
-+		temp &= ~LAN88XX_INT_MASK_MDINTPIN_EN_;
-+		phy_write(phydev, LAN88XX_INT_MASK, temp);
-+
-+		temp = phy_read(phydev, MII_BMCR);
-+		temp &= ~(BMCR_SPEED100 | BMCR_SPEED1000);
-+		phy_write(phydev, MII_BMCR, temp); /* set to 10 first */
-+		temp |= BMCR_SPEED100;
-+		phy_write(phydev, MII_BMCR, temp); /* set to 100 later */
-+
-+		/* clear pending interrupt generated while workaround */
-+		temp = phy_read(phydev, LAN88XX_INT_STS);
-+
-+		/* enable phy interrupt back */
-+		temp = phy_read(phydev, LAN88XX_INT_MASK);
-+		temp |= LAN88XX_INT_MASK_MDINTPIN_EN_;
-+		phy_write(phydev, LAN88XX_INT_MASK, temp);
-+	}
-+}
-+
- static struct phy_driver microchip_phy_driver[] = {
- {
- 	.phy_id		= 0x0007c130,
-@@ -355,6 +386,7 @@ static struct phy_driver microchip_phy_driver[] = {
- 
- 	.config_init	= lan88xx_config_init,
- 	.config_aneg	= lan88xx_config_aneg,
-+	.link_change_notify = lan88xx_link_change_notify,
- 
- 	.config_intr	= lan88xx_phy_config_intr,
- 	.handle_interrupt = lan88xx_handle_interrupt,
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index 3e1a83a22fdd6..5700c9d20a3e2 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -1950,33 +1950,8 @@ static void lan78xx_remove_mdio(struct lan78xx_net *dev)
- static void lan78xx_link_status_change(struct net_device *net)
- {
- 	struct phy_device *phydev = net->phydev;
--	int temp;
--
--	/* At forced 100 F/H mode, chip may fail to set mode correctly
--	 * when cable is switched between long(~50+m) and short one.
--	 * As workaround, set to 10 before setting to 100
--	 * at forced 100 F/H mode.
--	 */
--	if (!phydev->autoneg && (phydev->speed == 100)) {
--		/* disable phy interrupt */
--		temp = phy_read(phydev, LAN88XX_INT_MASK);
--		temp &= ~LAN88XX_INT_MASK_MDINTPIN_EN_;
--		phy_write(phydev, LAN88XX_INT_MASK, temp);
- 
--		temp = phy_read(phydev, MII_BMCR);
--		temp &= ~(BMCR_SPEED100 | BMCR_SPEED1000);
--		phy_write(phydev, MII_BMCR, temp); /* set to 10 first */
--		temp |= BMCR_SPEED100;
--		phy_write(phydev, MII_BMCR, temp); /* set to 100 later */
--
--		/* clear pending interrupt generated while workaround */
--		temp = phy_read(phydev, LAN88XX_INT_STS);
--
--		/* enable phy interrupt back */
--		temp = phy_read(phydev, LAN88XX_INT_MASK);
--		temp |= LAN88XX_INT_MASK_MDINTPIN_EN_;
--		phy_write(phydev, LAN88XX_INT_MASK, temp);
--	}
-+	phy_print_status(phydev);
- }
- 
- static int irq_map(struct irq_domain *d, unsigned int irq,
+ 	/* Check whether we have a NCM device, and find its VID/PID. */
+ 	if (!(dev->dev.parent && dev->dev.parent->driver &&
+ 	      strcmp(dev->dev.parent->driver->name, "cdc_ncm") == 0))
 -- 
 2.39.2
 
