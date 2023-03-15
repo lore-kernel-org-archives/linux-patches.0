@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380104431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:41:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB6AC4339B;
-	Wed, 15 Mar 2023 12:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E394431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:41:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6BDC433EF;
+	Wed, 15 Mar 2023 12:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884097;
-	bh=R63HPpZq8h7gdUMFQmD6fmDT7vOIDou4F1fXXxV7wgE=;
+	s=korg; t=1678884099;
+	bh=YCiaxZq2SVJH5A/l+iyK6Xqo5Ui+qe+X9yrP4Y/FeXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AB6X/uoIDAjLljPJK+ZXkhtjXSwm8xARRXwBLxSKyA55bTBhW3PDu4dKpbS5AsNGe
-	 mQJWGVkDtBXs5QSHToNPVOW6XT43nLNBpiHUKD5rFUcRifVksGN1pKz2kQ8vR2JFIu
-	 08kSPUowSXmocLO+ewEQJJOKtWCU22SJd+kKao08=
+	b=hOW06CypuCNblW+A4TuvnUHIDyi3apQo8rFvdilOwmdhGDLXToP3YQnL5x5pR/thP
+	 kvH0tgdl4xDXAVBFS3CcNnKDGJomOnSmDCUu+HxSX/9v5QmdMDiIgY+Y5+Xgsq5+++
+	 Bi6IsP2WBwbAWYa1cbeF3UTttj/i46XQDvb70F8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7699d9e5635c10253a27@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Rao Shoaib <rao.shoaib@oracle.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 106/141] af_unix: fix struct pid leaks in OOB support
-Date: Wed, 15 Mar 2023 13:13:29 +0100
-Message-Id: <20230315115743.230043595@linuxfoundation.org>
+Subject: [PATCH 6.2 107/141] erofs: Revert "erofs: fix kvcalloc() misuse with __GFP_NOFAIL"
+Date: Wed, 15 Mar 2023 13:13:30 +0100
+Message-Id: <20230315115743.259078846@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -38,86 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 2aab4b96900272885bc157f8b236abf1cdc02e08 ]
+[ Upstream commit 647dd2c3f0e16b71a1a77897d038164d48eea154 ]
 
-syzbot reported struct pid leak [1].
+Let's revert commit 12724ba38992 ("erofs: fix kvcalloc() misuse with
+__GFP_NOFAIL") since kvmalloc() already supports __GFP_NOFAIL in commit
+a421ef303008 ("mm: allow !GFP_KERNEL allocations for kvmalloc").  So
+the original fix was wrong.
 
-Issue is that queue_oob() calls maybe_add_creds() which potentially
-holds a reference on a pid.
+Actually there was some issue as [1] discussed, so before that mm fix
+is landed, the warn could still happen but applying this commit first
+will cause less.
 
-But skb->destructor is not set (either directly or by calling
-unix_scm_to_skb())
+[1] https://lore.kernel.org/r/20230305053035.1911-1-hsiangkao@linux.alibaba.com
 
-This means that subsequent kfree_skb() or consume_skb() would leak
-this reference.
-
-In this fix, I chose to fully support scm even for the OOB message.
-
-[1]
-BUG: memory leak
-unreferenced object 0xffff8881053e7f80 (size 128):
-comm "syz-executor242", pid 5066, jiffies 4294946079 (age 13.220s)
-hex dump (first 32 bytes):
-01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
-backtrace:
-[<ffffffff812ae26a>] alloc_pid+0x6a/0x560 kernel/pid.c:180
-[<ffffffff812718df>] copy_process+0x169f/0x26c0 kernel/fork.c:2285
-[<ffffffff81272b37>] kernel_clone+0xf7/0x610 kernel/fork.c:2684
-[<ffffffff812730cc>] __do_sys_clone+0x7c/0xb0 kernel/fork.c:2825
-[<ffffffff849ad699>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-[<ffffffff849ad699>] do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
-[<ffffffff84a0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: 314001f0bf92 ("af_unix: Add OOB support")
-Reported-by: syzbot+7699d9e5635c10253a27@syzkaller.appspotmail.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Rao Shoaib <rao.shoaib@oracle.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230307164530.771896-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 12724ba38992 ("erofs: fix kvcalloc() misuse with __GFP_NOFAIL")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20230309053148.9223-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/erofs/zdata.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index f0c2293f1d3b8..7d17601ceee79 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2104,7 +2104,8 @@ static int unix_dgram_sendmsg(struct socket *sock, struct msghdr *msg,
- #define UNIX_SKB_FRAGS_SZ (PAGE_SIZE << get_order(32768))
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 5200bb86e2643..ccf7c55d477fe 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -1032,12 +1032,12 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
  
- #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
--static int queue_oob(struct socket *sock, struct msghdr *msg, struct sock *other)
-+static int queue_oob(struct socket *sock, struct msghdr *msg, struct sock *other,
-+		     struct scm_cookie *scm, bool fds_sent)
- {
- 	struct unix_sock *ousk = unix_sk(other);
- 	struct sk_buff *skb;
-@@ -2115,6 +2116,11 @@ static int queue_oob(struct socket *sock, struct msghdr *msg, struct sock *other
- 	if (!skb)
- 		return err;
+ 	if (!be->decompressed_pages)
+ 		be->decompressed_pages =
+-			kcalloc(be->nr_pages, sizeof(struct page *),
+-				GFP_KERNEL | __GFP_NOFAIL);
++			kvcalloc(be->nr_pages, sizeof(struct page *),
++				 GFP_KERNEL | __GFP_NOFAIL);
+ 	if (!be->compressed_pages)
+ 		be->compressed_pages =
+-			kcalloc(pclusterpages, sizeof(struct page *),
+-				GFP_KERNEL | __GFP_NOFAIL);
++			kvcalloc(pclusterpages, sizeof(struct page *),
++				 GFP_KERNEL | __GFP_NOFAIL);
  
-+	err = unix_scm_to_skb(scm, skb, !fds_sent);
-+	if (err < 0) {
-+		kfree_skb(skb);
-+		return err;
-+	}
- 	skb_put(skb, 1);
- 	err = skb_copy_datagram_from_iter(skb, 0, &msg->msg_iter, 1);
+ 	z_erofs_parse_out_bvecs(be);
+ 	err2 = z_erofs_parse_in_bvecs(be, &overlapped);
+@@ -1085,7 +1085,7 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
+ 	}
+ 	if (be->compressed_pages < be->onstack_pages ||
+ 	    be->compressed_pages >= be->onstack_pages + Z_EROFS_ONSTACK_PAGES)
+-		kfree(be->compressed_pages);
++		kvfree(be->compressed_pages);
+ 	z_erofs_fill_other_copies(be, err);
  
-@@ -2242,7 +2248,7 @@ static int unix_stream_sendmsg(struct socket *sock, struct msghdr *msg,
+ 	for (i = 0; i < be->nr_pages; ++i) {
+@@ -1104,7 +1104,7 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
+ 	}
  
- #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
- 	if (msg->msg_flags & MSG_OOB) {
--		err = queue_oob(sock, msg, other);
-+		err = queue_oob(sock, msg, other, &scm, fds_sent);
- 		if (err)
- 			goto out_err;
- 		sent++;
+ 	if (be->decompressed_pages != be->onstack_pages)
+-		kfree(be->decompressed_pages);
++		kvfree(be->decompressed_pages);
+ 
+ 	pcl->length = 0;
+ 	pcl->partial = true;
 -- 
 2.39.2
 
