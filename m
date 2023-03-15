@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B324431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6231C433EF;
-	Wed, 15 Mar 2023 12:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135124431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7052BC433D2;
+	Wed, 15 Mar 2023 12:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882780;
-	bh=rhxdufBm4e5kulz1JA4K+9qV2V4DEANXj5Xbx4cjepw=;
+	s=korg; t=1678882782;
+	bh=SJLzFzrVOrtYS4xGB/WTDW00RB5T+mOjo1I/cIMgCiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UotgbFyTS5+tT1dYpTP0Q7vjC+O7v4Dxy94KXL7d0MtvU5A7KHjxsSx/s1CXvahB+
-	 LlpO/Jx7SJt8CeFxJ1Lqytm3FIrpv+XY03wIMTL7Zy8bqtONgQ1kmJ89fYaTzYKFl2
-	 jISBSp6wNgToNPEitESQsULdRIdd2VNY5ZvWvr/o=
+	b=JbzcWx1Gvdg4+MHy1nHZDDP695EKmcZUEa8k0+rqdi7NVQI0UvoakHgB7JftD+qIl
+	 +yUfeIXccvq5DAxMp8tl9/jT6dhHGF6eL/keKqVxDEov52zTr08WSWpcK4Ww9uMlgZ
+	 Cp8SiB8PPXWfQom/jlD7JuO1ztU9vyUdFkoegRI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 5.4 67/68] UML: define RUNTIME_DISCARD_EXIT
-Date: Wed, 15 Mar 2023 13:13:01 +0100
-Message-Id: <20230315115728.732890091@linuxfoundation.org>
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Cornelia Huck <cohuck@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.4 68/68] s390/dasd: add missing discipline function
+Date: Wed, 15 Mar 2023 13:13:02 +0100
+Message-Id: <20230315115728.763521815@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -35,40 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit b99ddbe8336ee680257c8ab479f75051eaa49dcf upstream.
+commit c0c8a8397fa8a74d04915f4d3d28cb4a5d401427 upstream.
 
-With CONFIG_VIRTIO_UML=y, GNU ld < 2.36 fails to link UML vmlinux
-(w/wo CONFIG_LD_SCRIPT_STATIC).
+Fix crash with illegal operation exception in dasd_device_tasklet.
+Commit b72949328869 ("s390/dasd: Prepare for additional path event handling")
+renamed the verify_path function for ECKD but not for FBA and DIAG.
+This leads to a panic when the path verification function is called for a
+FBA or DIAG device.
 
-  `.exit.text' referenced in section `.uml.exitcall.exit' of arch/um/drivers/virtio_uml.o: defined in discarded section `.exit.text' of arch/um/drivers/virtio_uml.o
-  collect2: error: ld returned 1 exit status
+Fix by defining a wrapper function for dasd_generic_verify_path().
 
-This fix is similar to the following commits:
-
-- 4b9880dbf3bd ("powerpc/vmlinux.lds: Define RUNTIME_DISCARD_EXIT")
-- a494398bde27 ("s390: define RUNTIME_DISCARD_EXIT to fix link error
-  with GNU ld < 2.36")
-- c1c551bebf92 ("sh: define RUNTIME_DISCARD_EXIT")
-
-Fixes: 99cb0d917ffa ("arch: fix broken BuildID for arm64 and riscv")
-Reported-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Tested-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: b72949328869 ("s390/dasd: Prepare for additional path event handling")
+Cc: <stable@vger.kernel.org> #5.11
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Link: https://lore.kernel.org/r/20210525125006.157531-2-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/kernel/vmlinux.lds.S |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/block/dasd_diag.c |    7 ++++++-
+ drivers/s390/block/dasd_fba.c  |    7 ++++++-
+ drivers/s390/block/dasd_int.h  |    1 -
+ 3 files changed, 12 insertions(+), 3 deletions(-)
 
---- a/arch/um/kernel/vmlinux.lds.S
-+++ b/arch/um/kernel/vmlinux.lds.S
-@@ -1,4 +1,4 @@
--
-+#define RUNTIME_DISCARD_EXIT
- KERNEL_STACK_SIZE = 4096 * (1 << CONFIG_KERNEL_STACK_ORDER);
+--- a/drivers/s390/block/dasd_diag.c
++++ b/drivers/s390/block/dasd_diag.c
+@@ -644,12 +644,17 @@ static void dasd_diag_setup_blk_queue(st
+ 	blk_queue_segment_boundary(q, PAGE_SIZE - 1);
+ }
  
- #ifdef CONFIG_LD_SCRIPT_STATIC
++static int dasd_diag_pe_handler(struct dasd_device *device, __u8 tbvpm)
++{
++	return dasd_generic_verify_path(device, tbvpm);
++}
++
+ static struct dasd_discipline dasd_diag_discipline = {
+ 	.owner = THIS_MODULE,
+ 	.name = "DIAG",
+ 	.ebcname = "DIAG",
+ 	.check_device = dasd_diag_check_device,
+-	.verify_path = dasd_generic_verify_path,
++	.pe_handler = dasd_diag_pe_handler,
+ 	.fill_geometry = dasd_diag_fill_geometry,
+ 	.setup_blk_queue = dasd_diag_setup_blk_queue,
+ 	.start_IO = dasd_start_diag,
+--- a/drivers/s390/block/dasd_fba.c
++++ b/drivers/s390/block/dasd_fba.c
+@@ -803,13 +803,18 @@ static void dasd_fba_setup_blk_queue(str
+ 	blk_queue_flag_set(QUEUE_FLAG_DISCARD, q);
+ }
+ 
++static int dasd_fba_pe_handler(struct dasd_device *device, __u8 tbvpm)
++{
++	return dasd_generic_verify_path(device, tbvpm);
++}
++
+ static struct dasd_discipline dasd_fba_discipline = {
+ 	.owner = THIS_MODULE,
+ 	.name = "FBA ",
+ 	.ebcname = "FBA ",
+ 	.check_device = dasd_fba_check_characteristics,
+ 	.do_analysis = dasd_fba_do_analysis,
+-	.verify_path = dasd_generic_verify_path,
++	.pe_handler = dasd_fba_pe_handler,
+ 	.setup_blk_queue = dasd_fba_setup_blk_queue,
+ 	.fill_geometry = dasd_fba_fill_geometry,
+ 	.start_IO = dasd_start_IO,
+--- a/drivers/s390/block/dasd_int.h
++++ b/drivers/s390/block/dasd_int.h
+@@ -298,7 +298,6 @@ struct dasd_discipline {
+ 	 * e.g. verify that new path is compatible with the current
+ 	 * configuration.
+ 	 */
+-	int (*verify_path)(struct dasd_device *, __u8);
+ 	int (*pe_handler)(struct dasd_device *, __u8);
+ 
+ 	/*
 
 
