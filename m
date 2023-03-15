@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7724431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:18:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A87C433D2;
-	Wed, 15 Mar 2023 12:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BA54431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:18:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D745C433D2;
+	Wed, 15 Mar 2023 12:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882717;
-	bh=xo4/8iwFxjaoFHVurbxZyRa9EWRHfS/CkAbZWLGjUwg=;
+	s=korg; t=1678882719;
+	bh=6n1ron2csv+IWM5dkB46gWTSG30kMj2y3y6tdYL2sXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=te6O7JcRhwVkrSU1C+eq69JlXTUbZd9kb0zbARwywaefGQikOGFn9abnkJo64TZzv
-	 KDoF08lLQ71t8Q14rKhUu7to2KTZ2p9awEyFFMArnGsFmYs/I/Ub+uZbO+6lEcgrtP
-	 +hm2h43W1nAYJyhs9ehif4wwwO9bqx8T8EEHEvPE=
+	b=HEGb1TaMVFMt5YDqOHSa6bwkDLYYxSYfbHo2KiF0UoDB7GAhRk98vgZo6Q3352Y/r
+	 bVCuMqr7YPvEAcNrJR8tSRKZb7jwDkQfdMBGPZpGVY/CG23MCn15BV5pv+oUw+JYzO
+	 zz4f9CrTIKJ32G5lkZ46ygO0u1tayAXuZmeon7sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Tseng <william.tseng@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 13/68] drm/edid: fix AVI infoframe aspect ratio handling
-Date: Wed, 15 Mar 2023 13:12:07 +0100
-Message-Id: <20230315115726.625101321@linuxfoundation.org>
+Subject: [PATCH 5.4 14/68] iommu/amd: Add PCI segment support for ivrs_[ioapic/hpet/acpihid] commands
+Date: Wed, 15 Mar 2023 13:12:08 +0100
+Message-Id: <20230315115726.655303407@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -36,82 +36,190 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
 
-[ Upstream commit 1cbc1f0d324ba6c4d1b10ac6362b5e0b029f63d5 ]
+[ Upstream commit bbe3a106580c21bc883fb0c9fa3da01534392fe8 ]
 
-We try to avoid sending VICs defined in the later specs in AVI
-infoframes to sinks that conform to the earlier specs, to not upset
-them, and use 0 for the VIC instead. However, we do this detection and
-conversion to 0 too early, as we'll need the actual VIC to figure out
-the aspect ratio.
+By default, PCI segment is zero and can be omitted. To support system
+with non-zero PCI segment ID, modify the parsing functions to allow
+PCI segment ID.
 
-In particular, for a mode with 64:27 aspect ratio, 0 for VIC fails the
-AVI infoframe generation altogether with -EINVAL.
-
-Separate the VIC lookup from the "filtering", and postpone the
-filtering, to use the proper VIC for aspect ratio handling, and the 0
-VIC for the infoframe video code as needed.
-
-Reported-by: William Tseng <william.tseng@intel.com>
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/6153
-Cc: <stable@vger.kernel.org>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/c3e78cc6d01ed237f71ad0038826b08d83d75eef.1672826282.git.jani.nikula@intel.com
+Co-developed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Link: https://lore.kernel.org/r/20220706113825.25582-33-vasant.hegde@amd.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: b6b26d86c61c ("iommu/amd: Add a length limitation for the ivrs_acpihid command-line parameter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_edid.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ .../admin-guide/kernel-parameters.txt         | 34 ++++++++++----
+ drivers/iommu/amd_iommu_init.c                | 44 ++++++++++++-------
+ 2 files changed, 52 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-index f9735861741c1..2e73042e5d070 100644
---- a/drivers/gpu/drm/drm_edid.c
-+++ b/drivers/gpu/drm/drm_edid.c
-@@ -5095,8 +5095,6 @@ static u8 drm_mode_hdmi_vic(struct drm_connector *connector,
- static u8 drm_mode_cea_vic(struct drm_connector *connector,
- 			   const struct drm_display_mode *mode)
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 8f71a17ad5442..9164263839216 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -1944,23 +1944,39 @@
+ 
+ 	ivrs_ioapic	[HW,X86_64]
+ 			Provide an override to the IOAPIC-ID<->DEVICE-ID
+-			mapping provided in the IVRS ACPI table. For
+-			example, to map IOAPIC-ID decimal 10 to
+-			PCI device 00:14.0 write the parameter as:
++			mapping provided in the IVRS ACPI table.
++			By default, PCI segment is 0, and can be omitted.
++			For example:
++			* To map IOAPIC-ID decimal 10 to PCI device 00:14.0
++			  write the parameter as:
+ 				ivrs_ioapic[10]=00:14.0
++			* To map IOAPIC-ID decimal 10 to PCI segment 0x1 and
++			  PCI device 00:14.0 write the parameter as:
++				ivrs_ioapic[10]=0001:00:14.0
+ 
+ 	ivrs_hpet	[HW,X86_64]
+ 			Provide an override to the HPET-ID<->DEVICE-ID
+-			mapping provided in the IVRS ACPI table. For
+-			example, to map HPET-ID decimal 0 to
+-			PCI device 00:14.0 write the parameter as:
++			mapping provided in the IVRS ACPI table.
++			By default, PCI segment is 0, and can be omitted.
++			For example:
++			* To map HPET-ID decimal 0 to PCI device 00:14.0
++			  write the parameter as:
+ 				ivrs_hpet[0]=00:14.0
++			* To map HPET-ID decimal 10 to PCI segment 0x1 and
++			  PCI device 00:14.0 write the parameter as:
++				ivrs_ioapic[10]=0001:00:14.0
+ 
+ 	ivrs_acpihid	[HW,X86_64]
+ 			Provide an override to the ACPI-HID:UID<->DEVICE-ID
+-			mapping provided in the IVRS ACPI table. For
+-			example, to map UART-HID:UID AMD0020:0 to
+-			PCI device 00:14.5 write the parameter as:
++			mapping provided in the IVRS ACPI table.
++
++			For example, to map UART-HID:UID AMD0020:0 to
++			PCI segment 0x1 and PCI device ID 00:14.5,
++			write the parameter as:
++				ivrs_acpihid[0001:00:14.5]=AMD0020:0
++
++			By default, PCI segment is 0, and can be omitted.
++			For example, PCI device 00:14.5 write the parameter as:
+ 				ivrs_acpihid[00:14.5]=AMD0020:0
+ 
+ 	js=		[HW,JOY] Analog joystick
+diff --git a/drivers/iommu/amd_iommu_init.c b/drivers/iommu/amd_iommu_init.c
+index 533b920ed7df2..f4e6173e749a4 100644
+--- a/drivers/iommu/amd_iommu_init.c
++++ b/drivers/iommu/amd_iommu_init.c
+@@ -84,6 +84,10 @@
+ #define ACPI_DEVFLAG_ATSDIS             0x10000000
+ 
+ #define LOOP_TIMEOUT	2000000
++
++#define IVRS_GET_SBDF_ID(seg, bus, dev, fd)	(((seg & 0xffff) << 16) | ((bus & 0xff) << 8) \
++						 | ((dev & 0x1f) << 3) | (fn & 0x7))
++
+ /*
+  * ACPI table definitions
+  *
+@@ -2971,15 +2975,17 @@ static int __init parse_amd_iommu_options(char *str)
+ 
+ static int __init parse_ivrs_ioapic(char *str)
  {
--	u8 vic;
+-	unsigned int bus, dev, fn;
++	u32 seg = 0, bus, dev, fn;
+ 	int ret, id, i;
+-	u16 devid;
++	u32 devid;
+ 
+ 	ret = sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn);
 -
- 	/*
- 	 * HDMI spec says if a mode is found in HDMI 1.4b 4K modes
- 	 * we should send its VIC in vendor infoframes, else send the
-@@ -5106,13 +5104,18 @@ static u8 drm_mode_cea_vic(struct drm_connector *connector,
- 	if (drm_mode_hdmi_vic(connector, mode))
- 		return 0;
- 
--	vic = drm_match_cea_mode(mode);
-+	return drm_match_cea_mode(mode);
-+}
- 
--	/*
--	 * HDMI 1.4 VIC range: 1 <= VIC <= 64 (CEA-861-D) but
--	 * HDMI 2.0 VIC range: 1 <= VIC <= 107 (CEA-861-F). So we
--	 * have to make sure we dont break HDMI 1.4 sinks.
--	 */
-+/*
-+ * Avoid sending VICs defined in HDMI 2.0 in AVI infoframes to sinks that
-+ * conform to HDMI 1.4.
-+ *
-+ * HDMI 1.4 (CTA-861-D) VIC range: [1..64]
-+ * HDMI 2.0 (CTA-861-F) VIC range: [1..107]
-+ */
-+static u8 vic_for_avi_infoframe(const struct drm_connector *connector, u8 vic)
-+{
- 	if (!is_hdmi2_sink(connector) && vic > 64)
- 		return 0;
- 
-@@ -5191,7 +5194,7 @@ drm_hdmi_avi_infoframe_from_display_mode(struct hdmi_avi_infoframe *frame,
- 		picture_aspect = HDMI_PICTURE_ASPECT_NONE;
+ 	if (ret != 4) {
+-		pr_err("Invalid command line: ivrs_ioapic%s\n", str);
+-		return 1;
++		ret = sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn);
++		if (ret != 5) {
++			pr_err("Invalid command line: ivrs_ioapic%s\n", str);
++			return 1;
++		}
  	}
  
--	frame->video_code = vic;
-+	frame->video_code = vic_for_avi_infoframe(connector, vic);
- 	frame->picture_aspect = picture_aspect;
- 	frame->active_aspect = HDMI_ACTIVE_ASPECT_PICTURE;
- 	frame->scan_mode = HDMI_SCAN_MODE_UNDERSCAN;
+ 	if (early_ioapic_map_size == EARLY_MAP_SIZE) {
+@@ -2988,7 +2994,7 @@ static int __init parse_ivrs_ioapic(char *str)
+ 		return 1;
+ 	}
+ 
+-	devid = ((bus & 0xff) << 8) | ((dev & 0x1f) << 3) | (fn & 0x7);
++	devid = IVRS_GET_SBDF_ID(seg, bus, dev, fn);
+ 
+ 	cmdline_maps			= true;
+ 	i				= early_ioapic_map_size++;
+@@ -3001,15 +3007,17 @@ static int __init parse_ivrs_ioapic(char *str)
+ 
+ static int __init parse_ivrs_hpet(char *str)
+ {
+-	unsigned int bus, dev, fn;
++	u32 seg = 0, bus, dev, fn;
+ 	int ret, id, i;
+-	u16 devid;
++	u32 devid;
+ 
+ 	ret = sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn);
+-
+ 	if (ret != 4) {
+-		pr_err("Invalid command line: ivrs_hpet%s\n", str);
+-		return 1;
++		ret = sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn);
++		if (ret != 5) {
++			pr_err("Invalid command line: ivrs_hpet%s\n", str);
++			return 1;
++		}
+ 	}
+ 
+ 	if (early_hpet_map_size == EARLY_MAP_SIZE) {
+@@ -3018,7 +3026,7 @@ static int __init parse_ivrs_hpet(char *str)
+ 		return 1;
+ 	}
+ 
+-	devid = ((bus & 0xff) << 8) | ((dev & 0x1f) << 3) | (fn & 0x7);
++	devid = IVRS_GET_SBDF_ID(seg, bus, dev, fn);
+ 
+ 	cmdline_maps			= true;
+ 	i				= early_hpet_map_size++;
+@@ -3031,15 +3039,18 @@ static int __init parse_ivrs_hpet(char *str)
+ 
+ static int __init parse_ivrs_acpihid(char *str)
+ {
+-	u32 bus, dev, fn;
++	u32 seg = 0, bus, dev, fn;
+ 	char *hid, *uid, *p;
+ 	char acpiid[ACPIHID_UID_LEN + ACPIHID_HID_LEN] = {0};
+ 	int ret, i;
+ 
+ 	ret = sscanf(str, "[%x:%x.%x]=%s", &bus, &dev, &fn, acpiid);
+ 	if (ret != 4) {
+-		pr_err("Invalid command line: ivrs_acpihid(%s)\n", str);
+-		return 1;
++		ret = sscanf(str, "[%x:%x:%x.%x]=%s", &seg, &bus, &dev, &fn, acpiid);
++		if (ret != 5) {
++			pr_err("Invalid command line: ivrs_acpihid(%s)\n", str);
++			return 1;
++		}
+ 	}
+ 
+ 	p = acpiid;
+@@ -3061,8 +3072,7 @@ static int __init parse_ivrs_acpihid(char *str)
+ 	i = early_acpihid_map_size++;
+ 	memcpy(early_acpihid_map[i].hid, hid, strlen(hid));
+ 	memcpy(early_acpihid_map[i].uid, uid, strlen(uid));
+-	early_acpihid_map[i].devid =
+-		((bus & 0xff) << 8) | ((dev & 0x1f) << 3) | (fn & 0x7);
++	early_acpihid_map[i].devid = IVRS_GET_SBDF_ID(seg, bus, dev, fn);
+ 	early_acpihid_map[i].cmd_line	= true;
+ 
+ 	return 1;
 -- 
 2.39.2
 
