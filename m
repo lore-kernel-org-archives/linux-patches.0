@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585BE4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:41:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA45EC433EF;
-	Wed, 15 Mar 2023 12:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F314431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:41:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66502C433D2;
+	Wed, 15 Mar 2023 12:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884068;
-	bh=33pd0KRJlrLYoDXcw041jL3LWxEhNNixn/bwu3atCXU=;
+	s=korg; t=1678884070;
+	bh=VQBdy/b9AsaFWTPJJFTQN1CCxBXFZCaBKSUQfhykkl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hSaEv2NZ7RHm9O34OLumeWhoVWeiHz4rhnk8zsi8dElLkLuKGmHjRt0SkJNbwqebs
-	 JX9mSwiSKHSER6Y7fxK+L5pAARPOA0i4aPlIunorSmSih1r8lgqA9rIC9APfWoUGRG
-	 DVSidVBzlx3IkeqYaWddlwbMEXUabkYpnZMf9yHU=
+	b=s5fUbLJRDql8AmIxrab/Ng2ymWoaePlL8hSzYn+hrXRM9eZP2k8yH+RTcsiEOc2Oc
+	 +s/VTfsdFlmHOf9O5sBjnuNXzf+xuUCfeRWCajfCG0pd2Tdpajow+VINdjU6SUeHAk
+	 UaWQqYYdOcIP7mncBafNUdT/WgvvHuCQMmPxR4iY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 067/141] ice: copy last block omitted in ice_get_module_eeprom()
-Date: Wed, 15 Mar 2023 13:12:50 +0100
-Message-Id: <20230315115741.989802704@linuxfoundation.org>
+Subject: [PATCH 6.2 094/141] platform/x86: dell-ddv: Return error if buffer is empty
+Date: Wed, 15 Mar 2023 13:13:17 +0100
+Message-Id: <20230315115742.860584598@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -36,113 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Petr Oros <poros@redhat.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 84cba1840e68430325ac133a11be06bfb2f7acd8 ]
+[ Upstream commit 36d44825faf42903a0b92dd49a9620e2cbdcbe18 ]
 
-ice_get_module_eeprom() is broken since commit e9c9692c8a81 ("ice:
-Reimplement module reads used by ethtool") In this refactor,
-ice_get_module_eeprom() reads the eeprom in blocks of size 8.
-But the condition that should protect the buffer overflow
-ignores the last block. The last block always contains zeros.
+In several cases, the DDV WMI interface can return buffers
+with a length of zero. Return -ENODATA in such a case for
+proper error handling. Also replace some -EIO errors with
+more specialized ones.
 
-Bug uncovered by ethtool upstream commit 9538f384b535
-("netlink: eeprom: Defer page requests to individual parsers")
-After this commit, ethtool reads a block with length = 1;
-to read the SFF-8024 identifier value.
-
-unpatched driver:
-$ ethtool -m enp65s0f0np0 offset 0x90 length 8
-Offset          Values
-------          ------
-0x0090:         00 00 00 00 00 00 00 00
-$ ethtool -m enp65s0f0np0 offset 0x90 length 12
-Offset          Values
-------          ------
-0x0090:         00 00 01 a0 4d 65 6c 6c 00 00 00 00
-$
-
-$ ethtool -m enp65s0f0np0
-Offset          Values
-------          ------
-0x0000:         11 06 06 00 00 00 00 00 00 00 00 00 00 00 00 00
-0x0010:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-0x0020:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-0x0030:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-0x0040:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-0x0050:         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-0x0060:         00 00 00 00 00 00 00 00 00 00 00 00 00 01 08 00
-0x0070:         00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-
-patched driver:
-$ ethtool -m enp65s0f0np0 offset 0x90 length 8
-Offset          Values
-------          ------
-0x0090:         00 00 01 a0 4d 65 6c 6c
-$ ethtool -m enp65s0f0np0 offset 0x90 length 12
-Offset          Values
-------          ------
-0x0090:         00 00 01 a0 4d 65 6c 6c 61 6e 6f 78
-$ ethtool -m enp65s0f0np0
-    Identifier                                : 0x11 (QSFP28)
-    Extended identifier                       : 0x00
-    Extended identifier description           : 1.5W max. Power consumption
-    Extended identifier description           : No CDR in TX, No CDR in RX
-    Extended identifier description           : High Power Class (> 3.5 W) not enabled
-    Connector                                 : 0x23 (No separable connector)
-    Transceiver codes                         : 0x88 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-    Transceiver type                          : 40G Ethernet: 40G Base-CR4
-    Transceiver type                          : 25G Ethernet: 25G Base-CR CA-N
-    Encoding                                  : 0x05 (64B/66B)
-    BR, Nominal                               : 25500Mbps
-    Rate identifier                           : 0x00
-    Length (SMF,km)                           : 0km
-    Length (OM3 50um)                         : 0m
-    Length (OM2 50um)                         : 0m
-    Length (OM1 62.5um)                       : 0m
-    Length (Copper or Active cable)           : 1m
-    Transmitter technology                    : 0xa0 (Copper cable unequalized)
-    Attenuation at 2.5GHz                     : 4db
-    Attenuation at 5.0GHz                     : 5db
-    Attenuation at 7.0GHz                     : 7db
-    Attenuation at 12.9GHz                    : 10db
-    ........
-    ....
-
-Fixes: e9c9692c8a81 ("ice: Reimplement module reads used by ethtool")
-Signed-off-by: Petr Oros <poros@redhat.com>
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Tested-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20230126194021.381092-3-W_Armin@gmx.de
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Stable-dep-of: 0331b1b0ba65 ("platform/x86: dell-ddv: Fix temperature scaling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/platform/x86/dell/dell-wmi-ddv.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index a359f1610fc19..8ca61610cec23 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -4314,6 +4314,8 @@ ice_get_module_eeprom(struct net_device *netdev,
- 		 * SFP modules only ever use page 0.
- 		 */
- 		if (page == 0 || !(data[0x2] & 0x4)) {
-+			u32 copy_len;
-+
- 			/* If i2c bus is busy due to slow page change or
- 			 * link management access, call can fail. This is normal.
- 			 * So we retry this a few times.
-@@ -4337,8 +4339,8 @@ ice_get_module_eeprom(struct net_device *netdev,
- 			}
+diff --git a/drivers/platform/x86/dell/dell-wmi-ddv.c b/drivers/platform/x86/dell/dell-wmi-ddv.c
+index 9cb6ae42dbdc8..f99c4cb686fdc 100644
+--- a/drivers/platform/x86/dell/dell-wmi-ddv.c
++++ b/drivers/platform/x86/dell/dell-wmi-ddv.c
+@@ -11,6 +11,7 @@
+ #include <linux/debugfs.h>
+ #include <linux/device.h>
+ #include <linux/dev_printk.h>
++#include <linux/errno.h>
+ #include <linux/kernel.h>
+ #include <linux/kstrtox.h>
+ #include <linux/math.h>
+@@ -125,21 +126,27 @@ static int dell_wmi_ddv_query_buffer(struct wmi_device *wdev, enum dell_ddv_meth
+ 	if (ret < 0)
+ 		return ret;
  
- 			/* Make sure we have enough room for the new block */
--			if ((i + SFF_READ_BLOCK_SIZE) < ee->len)
--				memcpy(data + i, value, SFF_READ_BLOCK_SIZE);
-+			copy_len = min_t(u32, SFF_READ_BLOCK_SIZE, ee->len - i);
-+			memcpy(data + i, value, copy_len);
- 		}
+-	if (obj->package.count != 2)
+-		goto err_free;
++	if (obj->package.count != 2 ||
++	    obj->package.elements[0].type != ACPI_TYPE_INTEGER ||
++	    obj->package.elements[1].type != ACPI_TYPE_BUFFER) {
++		ret = -ENOMSG;
+ 
+-	if (obj->package.elements[0].type != ACPI_TYPE_INTEGER)
+ 		goto err_free;
++	}
+ 
+ 	buffer_size = obj->package.elements[0].integer.value;
+ 
+-	if (obj->package.elements[1].type != ACPI_TYPE_BUFFER)
++	if (!buffer_size) {
++		ret = -ENODATA;
++
+ 		goto err_free;
++	}
+ 
+ 	if (buffer_size > obj->package.elements[1].buffer.length) {
+ 		dev_warn(&wdev->dev,
+ 			 FW_WARN "WMI buffer size (%llu) exceeds ACPI buffer size (%d)\n",
+ 			 buffer_size, obj->package.elements[1].buffer.length);
++		ret = -EMSGSIZE;
+ 
+ 		goto err_free;
  	}
- 	return 0;
+@@ -151,7 +158,7 @@ static int dell_wmi_ddv_query_buffer(struct wmi_device *wdev, enum dell_ddv_meth
+ err_free:
+ 	kfree(obj);
+ 
+-	return -EIO;
++	return ret;
+ }
+ 
+ static int dell_wmi_ddv_query_string(struct wmi_device *wdev, enum dell_ddv_method method,
 -- 
 2.39.2
 
