@@ -1,45 +1,45 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117B553AB
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 15:21:55 +0000 (UTC)
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-17aa62d0a4aso6473258fac.4
-        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 08:21:55 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F269453AB
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 15:45:01 +0000 (UTC)
+Received: by mail-oi1-f175.google.com with SMTP id c11so14483411oiw.2
+        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 08:45:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678893715;
+        d=linaro.org; s=google; t=1678895101;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gzYV/7XeWGA5a2Jcg195Nwebw3aHdye3PaYXj1dHESE=;
-        b=umPdG7TKKpYKVTy71PPX37zak1MBhfpa8hlhiMWKXvz8vnQAz9fPkLjtMGMnpIfFSZ
-         v0jhdlcA0JU6dywjKfBWh7dpTorCUGlYip8w2GOX2Dvo8BDsknGAe09BgxOF7JmHCGHg
-         Qv5UArHReujDJrrCCj/dNNBvRegDExV375e8kkrWziGOsCBvW5aO0hV/J0b9hFcGnlO6
-         b/FboecwWyBzdcz520hiHX4JVRy73S9vIJTRUcSD+7WOSFmYzdeWtgdCwzsT7kk06LBY
-         +4nGQmeCmWTrLEOmCpDfbl1vkQ1//ur99CgcpEi93QrFJ/TqxAzqLTFtvUSRR5HgtyRf
-         ygwA==
+        bh=E6sAgqQ4tUM3/2nNIAr1J1jXcot8viEl3eXcZAX7ehI=;
+        b=n85Fo1qMrqx41Xp8nt8ry4U3yrXUumJ9e3tZ+BEFRjL83JtVYjqzacklbP3ObwzvKj
+         mp1qGdrzBMHfLUZU4emgg6rlTZ1/h7scIgShP+kUfsxrsdI1O1r8CR2lbfjnd1ukJkoC
+         07CWieSwn+x0gXDIUliJiYn71oFeq2Q6QlI/Ym6hmUSRO6XWLGdL8o3ac30HVbO499nD
+         gigcMcfM1RI5AYNHDq1oI34YVazsOaN7eOzrymrY50PvU9LIFIQKv9GLRoH8N6iYL5Ti
+         g/d4ETZONGyk18SehktZYlnmwFAoVXkziT+ZeGmkhlC4X3v0ZQIm1J+7VATAkLnthXF5
+         Mr1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678893715;
+        d=1e100.net; s=20210112; t=1678895101;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gzYV/7XeWGA5a2Jcg195Nwebw3aHdye3PaYXj1dHESE=;
-        b=BP7PH2JFVnn4s4xpSKzN6PVb0vo6Q7YXG64protkSui7GV+8Ahpd26OmhxEKOW0WtU
-         xCSoMKfyJEp4VnG8sfZT8NXSam9cxebI0wejYr3UvDBBWhYG/2A/Nw++sj70nQ7m3lsx
-         /3hiN8MKWL4xnbzazutP0wOjpFa2V+8haWXeG5W1gYplcI/k/ZWEYsl96FTlp5OR4V09
-         CZGTsKKeXYuCC1On5Y1T1tsmPoG1K90K9coMHBrQFDF6wg0n65YOWZdKDn7NJPVpRS/5
-         R1KZw1+wg8NavFN7zvz/RxITGKBkgfRgeh2gka6PLF6/1L7e8KnMnkep75x7hu1QvIFN
-         YXdg==
-X-Gm-Message-State: AO0yUKWzWcIo0p3ZKC3ntacw3oDCgjWZkyP0GC+wdbH3fBHZBeTRYkYB
-	zVRN2T5168lImP4KmM3de52xVg==
-X-Google-Smtp-Source: AK7set/khWLrD0uM5c2BK68glSdWzCW7UfCoaN1mGRH+UB4Zb9Opn6kqLfmrRWmWoCWHMxLh5q9hRA==
-X-Received: by 2002:a05:6870:2404:b0:177:90dc:1529 with SMTP id n4-20020a056870240400b0017790dc1529mr8684347oap.40.1678893715056;
-        Wed, 15 Mar 2023 08:21:55 -0700 (PDT)
+        bh=E6sAgqQ4tUM3/2nNIAr1J1jXcot8viEl3eXcZAX7ehI=;
+        b=Ek3mLfxPYXkY1LFktp4RjGq3mfdm7oTVoBCS9Odl266TejItVmJOaZIoa9lKdfl8+m
+         pTiaJfZ4gtn+jtb18SrgaRCA9rzu5ZrmCmIX1Egyel4uXYZYrlkzNAQRcozlKwTNCZs7
+         npqdVxdrdB/6/b1fr6auNM6cPjyQHF2gibLmDMKjc11Tl4qFruDgmDOefhSUcT2TJS0O
+         C07hC8KD3YXuAN7mOFgULp7RLBdjsSbMGPDienhYrT7HFLXopicwmJaIGsepRlvgamhL
+         nCu6RvKAUXoH2dsOaiAvuPWjPAePKFLw0fY5mNlwWoKPXns08+02Zx/PUrqWF5mc3Tm2
+         3TDA==
+X-Gm-Message-State: AO0yUKWD2yTMZ1aHh6yObdYqKo+pKs+MAVhHo3pOhSik3Kw1cBHb60F2
+	3Xik/hvRYL4cWn5k698nFjbhiu8sj6hOps6VVxenFQ==
+X-Google-Smtp-Source: AK7set+3Fm8PLpXAgtycnefk9Q9haiAZeDCnBXcFHhOyJbtzZ7VUwtmV4DJAofUAskcOiLt5atHjMA==
+X-Received: by 2002:a05:6808:486:b0:383:ce80:6c28 with SMTP id z6-20020a056808048600b00383ce806c28mr1384800oid.51.1678895100595;
+        Wed, 15 Mar 2023 08:45:00 -0700 (PDT)
 Received: from [192.168.17.16] ([189.219.75.19])
-        by smtp.gmail.com with ESMTPSA id an36-20020a056871b1a400b00177c314a358sm2335207oac.22.2023.03.15.08.21.54
+        by smtp.gmail.com with ESMTPSA id q15-20020a05683031af00b00690e6d56670sm2471107ots.25.2023.03.15.08.44.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Mar 2023 08:21:54 -0700 (PDT)
-Message-ID: <b97c4328-54fd-0461-5fa9-323a0d2ba1f4@linaro.org>
-Date: Wed, 15 Mar 2023 09:21:53 -0600
+        Wed, 15 Mar 2023 08:45:00 -0700 (PDT)
+Message-ID: <7e46d536-cc68-4b7c-e56e-cf1b94a925cb@linaro.org>
+Date: Wed, 15 Mar 2023 09:44:59 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,7 +48,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 6.1 000/143] 6.1.20-rc1 review
+Subject: Re: [PATCH 4.19 00/39] 4.19.278-rc1 review
 Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
@@ -57,17 +57,17 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
  rwarsow@gmx.de
-References: <20230315115740.429574234@linuxfoundation.org>
+References: <20230315115721.234756306@linuxfoundation.org>
 From: =?UTF-8?Q?Daniel_D=c3=adaz?= <daniel.diaz@linaro.org>
-In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
+In-Reply-To: <20230315115721.234756306@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 Hello!
 
-On 15/03/23 06:11, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.20 release.
-> There are 143 patches in this series, all will be posted as a response
+On 15/03/23 06:12, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.19.278 release.
+> There are 39 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -75,83 +75,58 @@ On 15/03/23 06:11, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.20-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.278-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
-> 
-> -------------
 
-Build failures on PowerPC (GCC-8, GCC-12, Clang-16, Clang-nightly) on:
-* cell_defconfig
-* mpc83xx_defconfig
+Lots and lots of failures, mostly Arm.
+
+For Arm, Arm64, MIPS, with GCC-8, GCC-9, GCC-10, GCC-11, GCC-12, Clang-16, for some combinations with:
+* axm55xx_defconfig
+* davinci_all_defconfig
+* defconfig
+* defconfig-40bc7ee5
+* lkftconfig-kasan
+* multi_v5_defconfig
+* s5pv210_defconfig
+* sama5_defconfig
 
 -----8<-----
-In file included from /builds/linux/drivers/usb/host/ohci-hcd.c:1253:
-/builds/linux/drivers/usb/host/ohci-ppc-of.c: In function 'ohci_hcd_ppc_of_probe':
-/builds/linux/drivers/usb/host/ohci-ppc-of.c:123:13: error: 'NO_IRQ' undeclared (first use in this function); did you mean 'NR_IRQS'?
-   if (irq == NO_IRQ) {
-              ^~~~~~
-              NR_IRQS
+/builds/linux/kernel/cgroup/cgroup.c:2237:2: error: implicit declaration of function 'get_online_cpus' [-Werror,-Wimplicit-function-declaration]
+         get_online_cpus();
+         ^
+/builds/linux/kernel/cgroup/cgroup.c:2237:2: note: did you mean 'get_online_mems'?
+/builds/linux/include/linux/memory_hotplug.h:258:20: note: 'get_online_mems' declared here
+static inline void get_online_mems(void) {}
+                    ^
+/builds/linux/kernel/cgroup/cgroup.c:2248:2: error: implicit declaration of function 'put_online_cpus' [-Werror,-Wimplicit-function-declaration]
+         put_online_cpus();
+         ^
+/builds/linux/kernel/cgroup/cgroup.c:2248:2: note: did you mean 'put_online_mems'?
+/builds/linux/include/linux/memory_hotplug.h:259:20: note: 'put_online_mems' declared here
+static inline void put_online_mems(void) {}
+                    ^
+2 errors generated.
+make[3]: *** [/builds/linux/scripts/Makefile.build:303: kernel/cgroup/cgroup.o] Error 1
 ----->8-----
 
 
-PowerPC with GCC-8 and GCC-12, for ppc6xx_defconfig:
+For Arm64, i386 x86, with GCC-11, Perf has a new error:
 
 -----8<-----
-/builds/linux/drivers/ata/pata_mpc52xx.c: In function 'mpc52xx_ata_probe':
-/builds/linux/drivers/ata/pata_mpc52xx.c:734:17: error: 'NO_IRQ' undeclared (first use in this function); did you mean 'NR_IRQS'?
-   if (ata_irq == NO_IRQ) {
-                  ^~~~~~
-                  NR_IRQS
-/builds/linux/drivers/ata/pata_mpc52xx.c:734:17: note: each undeclared identifier is reported only once for each function it appears in
-make[4]: *** [/builds/linux/scripts/Makefile.build:250: drivers/ata/pata_mpc52xx.o] Error 1
-make[4]: Target 'drivers/ata/' not remade because of errors.
-make[3]: *** [/builds/linux/scripts/Makefile.build:500: drivers/ata] Error 2
-In file included from /builds/linux/drivers/usb/host/ehci-hcd.c:1321:
-/builds/linux/drivers/usb/host/ehci-ppc-of.c: In function 'ehci_hcd_ppc_of_probe':
-/builds/linux/drivers/usb/host/ehci-ppc-of.c:122:13: error: 'NO_IRQ' undeclared (first use in this function); did you mean 'NR_IRQS'?
-   if (irq == NO_IRQ) {
-              ^~~~~~
-              NR_IRQS
-/builds/linux/drivers/usb/host/ehci-ppc-of.c:122:13: note: each undeclared identifier is reported only once for each function it appears in
-make[5]: *** [/builds/linux/scripts/Makefile.build:250: drivers/usb/host/ehci-hcd.o] Error 1
-In file included from /builds/linux/drivers/usb/host/ohci-hcd.c:1253:
-/builds/linux/drivers/usb/host/ohci-ppc-of.c: In function 'ohci_hcd_ppc_of_probe':
-/builds/linux/drivers/usb/host/ohci-ppc-of.c:123:13: error: 'NO_IRQ' undeclared (first use in this function); did you mean 'NR_IRQS'?
-   if (irq == NO_IRQ) {
-              ^~~~~~
-              NR_IRQS
-/builds/linux/drivers/usb/host/ohci-ppc-of.c:123:13: note: each undeclared identifier is reported only once for each function it appears in
------>8-----
-
-
-PowerPC with GCC-8 and GCC-12, for ppc64e_defconfig:
-
------8<-----
-powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
-powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
-make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:237: arch/powerpc/boot/crt0.o] Error 1
-make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:237: arch/powerpc/boot/crtsavres.o] Error 1
-powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
-make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:235: arch/powerpc/boot/cuboot.o] Error 1
-powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
-powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
-make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:238: arch/powerpc/boot/div64.o] Error 1
-make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:234: arch/powerpc/boot/devtree.o] Error 1
-[...]
-make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:235: arch/powerpc/boot/fdt_sw.o] Error 1
-powerpc64le-linux-gnu-gcc: error: missing argument to '-mcpu='
-make[2]: *** [/builds/linux/arch/powerpc/boot/Makefile:235: arch/powerpc/boot/fdt_wip.o] Error 1
-make[2]: Target 'arch/powerpc/boot/zImage' not remade because of errors.
-make[1]: *** [/builds/linux/arch/powerpc/Makefile:247: zImage] Error 2
-make[1]: Target '__all' not remade because of errors.
-make: *** [Makefile:238: __sub-make] Error 2
-make: Target '__all' not remade because of errors.
+In function 'ready',
+     inlined from 'sender' at bench/sched-messaging.c:90:2:
+bench/sched-messaging.c:76:13: error: 'dummy' is used uninitialized [-Werror=uninitialized]
+    76 |         if (write(ready_out, &dummy, 1) != 1)
+       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from bench/../perf-sys.h:5,
+                  from bench/../perf.h:18,
+                  from bench/sched-messaging.c:13:
 ----->8-----
 
 
