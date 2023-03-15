@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147654431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:25:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B748C433D2;
-	Wed, 15 Mar 2023 12:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D026D4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:25:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C641C433EF;
+	Wed, 15 Mar 2023 12:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883142;
-	bh=vvddJEh04kVMc2x2KyAIinfgVkhWpdnoZyzJgJIAQIY=;
+	s=korg; t=1678883145;
+	bh=YCaXQSHiK/uRjonLu3ZR09pYSWFIdjlAbzfrWJxkeY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLexglcuUTgo9ZwYuh3wZZth5kgaQ4L09IPu/XV2zPhuoUcu8QLJrEedSk+/plxb3
-	 hjUXWKNLlhLkLxDUd5lLc2ZpHbpn8kVdSTgRM0u3DX8warR+ULqsFKtmxtZEDGRakj
-	 SMUZrdsxoRsEa/pioTGVT53iCah8NE16D/g16Cfs=
+	b=sPphHsjkHpflKuEZ2XqWKL6yxzPvKvoo7f0dZyDnGmXeL/4om9otYuq/6yEr7rNqn
+	 9QO18N1FsfbcE9Fsrndd6n8ypCu9Wm1aHNJ6nTbjRbX/MIojY41XCxyThnjQ6i7DMn
+	 LEnqnxrRSanwPUlSqrcQmZky2IpEgzIhpCDambTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Sukumar Ghorai <sukumar.ghorai@intel.com>,
-	Ashok Raj <ashok.raj@intel.com>,
-	Jacob Pan <jacob.jun.pan@linux.intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 031/145] iommu/vt-d: Fix PASID directory pointer coherency
-Date: Wed, 15 Mar 2023 13:11:37 +0100
-Message-Id: <20230315115740.073421012@linuxfoundation.org>
+Subject: [PATCH 5.15 032/145] block/brd: add error handling support for add_disk()
+Date: Wed, 15 Mar 2023 13:11:38 +0100
+Message-Id: <20230315115740.106826747@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -39,80 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jacob Pan <jacob.jun.pan@linux.intel.com>
+From: Luis Chamberlain <mcgrof@kernel.org>
 
-[ Upstream commit 194b3348bdbb7db65375c72f3f774aee4cc6614e ]
+[ Upstream commit e1528830bd4ebf435d91c154e309e6e028336210 ]
 
-On platforms that do not support IOMMU Extended capability bit 0
-Page-walk Coherency, CPU caches are not snooped when IOMMU is accessing
-any translation structures. IOMMU access goes only directly to
-memory. Intel IOMMU code was missing a flush for the PASID table
-directory that resulted in the unrecoverable fault as shown below.
+We never checked for errors on add_disk() as this function
+returned void. Now that this is fixed, use the shiny new
+error handling.
 
-This patch adds clflush calls whenever allocating and updating
-a PASID table directory to ensure cache coherency.
-
-On the reverse direction, there's no need to clflush the PASID directory
-pointer when we deactivate a context entry in that IOMMU hardware will
-not see the old PASID directory pointer after we clear the context entry.
-PASID directory entries are also never freed once allocated.
-
- DMAR: DRHD: handling fault status reg 3
- DMAR: [DMA Read NO_PASID] Request device [00:0d.2] fault addr 0x1026a4000
-       [fault reason 0x51] SM: Present bit in Directory Entry is clear
- DMAR: Dump dmar1 table entries for IOVA 0x1026a4000
- DMAR: scalable mode root entry: hi 0x0000000102448001, low 0x0000000101b3e001
- DMAR: context entry: hi 0x0000000000000000, low 0x0000000101b4d401
- DMAR: pasid dir entry: 0x0000000101b4e001
- DMAR: pasid table entry[0]: 0x0000000000000109
- DMAR: pasid table entry[1]: 0x0000000000000001
- DMAR: pasid table entry[2]: 0x0000000000000000
- DMAR: pasid table entry[3]: 0x0000000000000000
- DMAR: pasid table entry[4]: 0x0000000000000000
- DMAR: pasid table entry[5]: 0x0000000000000000
- DMAR: pasid table entry[6]: 0x0000000000000000
- DMAR: pasid table entry[7]: 0x0000000000000000
- DMAR: PTE not present at level 4
-
-Cc: <stable@vger.kernel.org>
-Fixes: 0bbeb01a4faf ("iommu/vt-d: Manage scalalble mode PASID tables")
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reported-by: Sukumar Ghorai <sukumar.ghorai@intel.com>
-Signed-off-by: Ashok Raj <ashok.raj@intel.com>
-Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
-Link: https://lore.kernel.org/r/20230209212843.1788125-1-jacob.jun.pan@linux.intel.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/20211015235219.2191207-2-mcgrof@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 67205f80be99 ("brd: mark as nowait compatible")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/pasid.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/block/brd.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index 9a3dd55aaa1c2..6dbc43b414ca3 100644
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -186,6 +186,9 @@ int intel_pasid_alloc_table(struct device *dev)
- attach_out:
- 	device_attach_pasid_table(info, pasid_table);
+diff --git a/drivers/block/brd.c b/drivers/block/brd.c
+index 2427b2261e516..63ac5cd523408 100644
+--- a/drivers/block/brd.c
++++ b/drivers/block/brd.c
+@@ -370,6 +370,7 @@ static int brd_alloc(int i)
+ 	struct brd_device *brd;
+ 	struct gendisk *disk;
+ 	char buf[DISK_NAME_LEN];
++	int err = -ENOMEM;
  
-+	if (!ecap_coherent(info->iommu->ecap))
-+		clflush_cache_range(pasid_table->table, size);
-+
+ 	mutex_lock(&brd_devices_mutex);
+ 	list_for_each_entry(brd, &brd_devices, brd_list) {
+@@ -420,16 +421,20 @@ static int brd_alloc(int i)
+ 	/* Tell the block layer that this is not a rotational device */
+ 	blk_queue_flag_set(QUEUE_FLAG_NONROT, disk->queue);
+ 	blk_queue_flag_clear(QUEUE_FLAG_ADD_RANDOM, disk->queue);
+-	add_disk(disk);
++	err = add_disk(disk);
++	if (err)
++		goto out_cleanup_disk;
+ 
  	return 0;
+ 
++out_cleanup_disk:
++	blk_cleanup_disk(disk);
+ out_free_dev:
+ 	mutex_lock(&brd_devices_mutex);
+ 	list_del(&brd->brd_list);
+ 	mutex_unlock(&brd_devices_mutex);
+ 	kfree(brd);
+-	return -ENOMEM;
++	return err;
  }
  
-@@ -276,6 +279,10 @@ static struct pasid_entry *intel_pasid_get_entry(struct device *dev, u32 pasid)
- 			free_pgtable_page(entries);
- 			goto retry;
- 		}
-+		if (!ecap_coherent(info->iommu->ecap)) {
-+			clflush_cache_range(entries, VTD_PAGE_SIZE);
-+			clflush_cache_range(&dir[dir_index].val, sizeof(*dir));
-+		}
- 	}
- 
- 	return &entries[index];
+ static void brd_probe(dev_t dev)
 -- 
 2.39.2
 
