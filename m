@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5AA4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0944BC4339B;
-	Wed, 15 Mar 2023 12:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F924431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940A8C433D2;
+	Wed, 15 Mar 2023 12:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883847;
-	bh=MRXB5KkJhbsz/3IRWM5s8dMc9Gsh4abBWVqMC9b/fvA=;
+	s=korg; t=1678883849;
+	bh=u43F4xL5o6RvI8DWP3xUqSOGEUgFrGIGlZP+lYqUWag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rxzaYLu8KSX5FWfr36dcshqKysgkXtbdX9Rp4uyyJFFaOXJACxgBngCDw8YHXOJLh
-	 rcxzgsmQDRNAtl0rXSqpRNuqvAEuJCNzs/Z1UklUZgrTJUOo5ynrwqUvvSsZPsN60N
-	 8dk/+q3gLq/I41HxiP4E5/zk/hCx31FZxqomh/tQ=
+	b=Bd3VEQdAs90mIDgfhvRR1DJbzWiR6naq9sRgtOxWuQd9HdMuCkOw70idsClVRM37b
+	 MwPjStecRxNrTnoYwYhDZdgHTYrSAxPazAMyay3ppT8hBwKVarOGOFpzlgEIFlg1m+
+	 oNSnLatY1dlq1UKPzVnlbCt7D4X9NSVxkDaKfDDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tavis Ormandy <taviso@gmail.com>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.2 011/141] x86/CPU/AMD: Disable XSAVES on AMD family 0x17
-Date: Wed, 15 Mar 2023 13:11:54 +0100
-Message-Id: <20230315115740.317544872@linuxfoundation.org>
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Evan Quan <evan.quan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.2 012/141] drm/amdgpu: fix error checking in amdgpu_read_mm_registers for soc15
+Date: Wed, 15 Mar 2023 13:11:55 +0100
+Message-Id: <20230315115740.355542059@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -36,50 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit b0563468eeac88ebc70559d52a0b66efc37e4e9d upstream.
+commit 0dcdf8498eae2727bb33cef3576991dc841d4343 upstream.
 
-AMD Erratum 1386 is summarised as:
+Properly skip non-existent registers as well.
 
-  XSAVES Instruction May Fail to Save XMM Registers to the Provided
-  State Save Area
-
-This piece of accidental chronomancy causes the %xmm registers to
-occasionally reset back to an older value.
-
-Ignore the XSAVES feature on all AMD Zen1/2 hardware.  The XSAVEC
-instruction (which works fine) is equivalent on affected parts.
-
-  [ bp: Typos, move it into the F17h-specific function. ]
-
-Reported-by: Tavis Ormandy <taviso@gmail.com>
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230307174643.1240184-1-andrew.cooper3@citrix.com
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2442
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Evan Quan <evan.quan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/amd.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/soc15.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -880,6 +880,15 @@ void init_spectral_chicken(struct cpuinf
- 		}
- 	}
- #endif
-+	/*
-+	 * Work around Erratum 1386.  The XSAVES instruction malfunctions in
-+	 * certain circumstances on Zen1/2 uarch, and not all parts have had
-+	 * updated microcode at the time of writing (March 2023).
-+	 *
-+	 * Affected parts all have no supervisor XSAVE states, meaning that
-+	 * the XSAVEC instruction (which works fine) is equivalent.
-+	 */
-+	clear_cpu_cap(c, X86_FEATURE_XSAVES);
- }
+--- a/drivers/gpu/drm/amd/amdgpu/soc15.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
+@@ -439,8 +439,9 @@ static int soc15_read_register(struct am
+ 	*value = 0;
+ 	for (i = 0; i < ARRAY_SIZE(soc15_allowed_read_registers); i++) {
+ 		en = &soc15_allowed_read_registers[i];
+-		if (adev->reg_offset[en->hwip][en->inst] &&
+-			reg_offset != (adev->reg_offset[en->hwip][en->inst][en->seg]
++		if (!adev->reg_offset[en->hwip][en->inst])
++			continue;
++		else if (reg_offset != (adev->reg_offset[en->hwip][en->inst][en->seg]
+ 					+ en->reg_offset))
+ 			continue;
  
- static void init_amd_zn(struct cpuinfo_x86 *c)
 
 
