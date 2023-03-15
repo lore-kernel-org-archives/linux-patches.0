@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E32F4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:18:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E5AC4339B;
-	Wed, 15 Mar 2023 12:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B144431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:18:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2923FC433EF;
+	Wed, 15 Mar 2023 12:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882727;
-	bh=UTsB+p0ZAP2mjs3MojGbUFfO7QkpKVd8tXdhuiqADbI=;
+	s=korg; t=1678882730;
+	bh=4fWTWuO4f2ruh9prlLWaLCFTHcl3BECXU1oqqaDOyKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iGiNmAj8pybDSbYBKpcU0rnbNNFThOivPhu1OcQOpGw+KYBL7BnQHx9tfFA3Z/Xyg
-	 saGPvYbQfHt78Ug7Wtth8ep5RqweQEORmj/pV+kKuteOWYseI933FfNhnghA0oJLgt
-	 wDW+cYeNfvHm10PBb6P48ECAI7Kqq7MfO4Nhabo8=
+	b=KU8+Xdvpj3I60vwDeJAKmquEj9eU8SNvyPE1wWjV+t1pf9YpHtz/7AdOiLQJebQfv
+	 IF7p7Tzpi1MrLHuBx81c8abMoYDPb2F2eosV9tnHGu0xiZP33Ga8V3QStAohtGV16c
+	 1NDcPhWRQaBEMMMkzRf1Lf9JJETYOOW+m+OBUqnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liguang Zhang <zhangliguang@linux.alibaba.com>,
-	Corey Minyard <cminyard@mvista.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 17/68] ipmi:ssif: make ssif_i2c_send() void
-Date: Wed, 15 Mar 2023 13:12:11 +0100
-Message-Id: <20230315115726.763764566@linuxfoundation.org>
+	stable@kernel.org,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.4 08/68] ext4: zero i_disksize when initializing the bootloader inode
+Date: Wed, 15 Mar 2023 13:12:02 +0100
+Message-Id: <20230315115726.435965253@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -35,182 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liguang Zhang <zhangliguang@linux.alibaba.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit dcd10526ac5a0d6cc94ce60b9acfca458163277b ]
+commit f5361da1e60d54ec81346aee8e3d8baf1be0b762 upstream.
 
-This function actually needs no return value. So remove the unneeded
-check and make it void.
+If the boot loader inode has never been used before, the
+EXT4_IOC_SWAP_BOOT inode will initialize it, including setting the
+i_size to 0.  However, if the "never before used" boot loader has a
+non-zero i_size, then i_disksize will be non-zero, and the
+inconsistency between i_size and i_disksize can trigger a kernel
+warning:
 
-Signed-off-by: Liguang Zhang <zhangliguang@linux.alibaba.com>
-Message-Id: <20210301140515.18951-1-zhangliguang@linux.alibaba.com>
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
-Stable-dep-of: 95767ed78a18 ("ipmi:ssif: resend_msg() cannot fail")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ WARNING: CPU: 0 PID: 2580 at fs/ext4/file.c:319
+ CPU: 0 PID: 2580 Comm: bb Not tainted 6.3.0-rc1-00004-g703695902cfa
+ RIP: 0010:ext4_file_write_iter+0xbc7/0xd10
+ Call Trace:
+  vfs_write+0x3b1/0x5c0
+  ksys_write+0x77/0x160
+  __x64_sys_write+0x22/0x30
+  do_syscall_64+0x39/0x80
+
+Reproducer:
+ 1. create corrupted image and mount it:
+       mke2fs -t ext4 /tmp/foo.img 200
+       debugfs -wR "sif <5> size 25700" /tmp/foo.img
+       mount -t ext4 /tmp/foo.img /mnt
+       cd /mnt
+       echo 123 > file
+ 2. Run the reproducer program:
+       posix_memalign(&buf, 1024, 1024)
+       fd = open("file", O_RDWR | O_DIRECT);
+       ioctl(fd, EXT4_IOC_SWAP_BOOT);
+       write(fd, buf, 1024);
+
+Fix this by setting i_disksize as well as i_size to zero when
+initiaizing the boot loader inode.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217159
+Cc: stable@kernel.org
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Link: https://lore.kernel.org/r/20230308032643.641113-1-chengzhihao1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c | 81 +++++++++--------------------------
- 1 file changed, 20 insertions(+), 61 deletions(-)
+ fs/ext4/ioctl.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
-index d6b69e19f78a7..5ead5e7f0ce16 100644
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -515,7 +515,7 @@ static int ipmi_ssif_thread(void *data)
- 	return 0;
- }
- 
--static int ssif_i2c_send(struct ssif_info *ssif_info,
-+static void ssif_i2c_send(struct ssif_info *ssif_info,
- 			ssif_i2c_done handler,
- 			int read_write, int command,
- 			unsigned char *data, unsigned int size)
-@@ -527,7 +527,6 @@ static int ssif_i2c_send(struct ssif_info *ssif_info,
- 	ssif_info->i2c_data = data;
- 	ssif_info->i2c_size = size;
- 	complete(&ssif_info->wake_thread);
--	return 0;
- }
- 
- 
-@@ -536,22 +535,12 @@ static void msg_done_handler(struct ssif_info *ssif_info, int result,
- 
- static void start_get(struct ssif_info *ssif_info)
- {
--	int rv;
--
- 	ssif_info->rtc_us_timer = 0;
- 	ssif_info->multi_pos = 0;
- 
--	rv = ssif_i2c_send(ssif_info, msg_done_handler, I2C_SMBUS_READ,
--			  SSIF_IPMI_RESPONSE,
--			  ssif_info->recv, I2C_SMBUS_BLOCK_DATA);
--	if (rv < 0) {
--		/* request failed, just return the error. */
--		if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
--			dev_dbg(&ssif_info->client->dev,
--				"Error from i2c_non_blocking_op(5)\n");
--
--		msg_done_handler(ssif_info, -EIO, NULL, 0);
--	}
-+	ssif_i2c_send(ssif_info, msg_done_handler, I2C_SMBUS_READ,
-+		  SSIF_IPMI_RESPONSE,
-+		  ssif_info->recv, I2C_SMBUS_BLOCK_DATA);
- }
- 
- static void retry_timeout(struct timer_list *t)
-@@ -625,7 +614,6 @@ static void msg_done_handler(struct ssif_info *ssif_info, int result,
- {
- 	struct ipmi_smi_msg *msg;
- 	unsigned long oflags, *flags;
--	int rv;
- 
- 	/*
- 	 * We are single-threaded here, so no need for a lock until we
-@@ -671,17 +659,10 @@ static void msg_done_handler(struct ssif_info *ssif_info, int result,
- 		ssif_info->multi_len = len;
- 		ssif_info->multi_pos = 1;
- 
--		rv = ssif_i2c_send(ssif_info, msg_done_handler, I2C_SMBUS_READ,
--				  SSIF_IPMI_MULTI_PART_RESPONSE_MIDDLE,
--				  ssif_info->recv, I2C_SMBUS_BLOCK_DATA);
--		if (rv < 0) {
--			if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
--				dev_dbg(&ssif_info->client->dev,
--					"Error from i2c_non_blocking_op(1)\n");
--
--			result = -EIO;
--		} else
--			return;
-+		ssif_i2c_send(ssif_info, msg_done_handler, I2C_SMBUS_READ,
-+			 SSIF_IPMI_MULTI_PART_RESPONSE_MIDDLE,
-+			 ssif_info->recv, I2C_SMBUS_BLOCK_DATA);
-+		return;
- 	} else if (ssif_info->multi_pos) {
- 		/* Middle of multi-part read.  Start the next transaction. */
- 		int i;
-@@ -743,19 +724,12 @@ static void msg_done_handler(struct ssif_info *ssif_info, int result,
- 
- 			ssif_info->multi_pos++;
- 
--			rv = ssif_i2c_send(ssif_info, msg_done_handler,
--					   I2C_SMBUS_READ,
--					   SSIF_IPMI_MULTI_PART_RESPONSE_MIDDLE,
--					   ssif_info->recv,
--					   I2C_SMBUS_BLOCK_DATA);
--			if (rv < 0) {
--				if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
--					dev_dbg(&ssif_info->client->dev,
--						"Error from ssif_i2c_send\n");
--
--				result = -EIO;
--			} else
--				return;
-+			ssif_i2c_send(ssif_info, msg_done_handler,
-+				  I2C_SMBUS_READ,
-+				  SSIF_IPMI_MULTI_PART_RESPONSE_MIDDLE,
-+				  ssif_info->recv,
-+				  I2C_SMBUS_BLOCK_DATA);
-+			return;
- 		}
- 	}
- 
-@@ -936,8 +910,6 @@ static void msg_done_handler(struct ssif_info *ssif_info, int result,
- static void msg_written_handler(struct ssif_info *ssif_info, int result,
- 				unsigned char *data, unsigned int len)
- {
--	int rv;
--
- 	/* We are single-threaded here, so no need for a lock. */
- 	if (result < 0) {
- 		ssif_info->retries_left--;
-@@ -1000,18 +972,9 @@ static void msg_written_handler(struct ssif_info *ssif_info, int result,
- 			ssif_info->multi_data = NULL;
- 		}
- 
--		rv = ssif_i2c_send(ssif_info, msg_written_handler,
--				   I2C_SMBUS_WRITE, cmd,
--				   data_to_send, I2C_SMBUS_BLOCK_DATA);
--		if (rv < 0) {
--			/* request failed, just return the error. */
--			ssif_inc_stat(ssif_info, send_errors);
--
--			if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
--				dev_dbg(&ssif_info->client->dev,
--					"Error from i2c_non_blocking_op(3)\n");
--			msg_done_handler(ssif_info, -EIO, NULL, 0);
--		}
-+		ssif_i2c_send(ssif_info, msg_written_handler,
-+			  I2C_SMBUS_WRITE, cmd,
-+			  data_to_send, I2C_SMBUS_BLOCK_DATA);
- 	} else {
- 		/* Ready to request the result. */
- 		unsigned long oflags, *flags;
-@@ -1040,7 +1003,6 @@ static void msg_written_handler(struct ssif_info *ssif_info, int result,
- 
- static int start_resend(struct ssif_info *ssif_info)
- {
--	int rv;
- 	int command;
- 
- 	ssif_info->got_alert = false;
-@@ -1062,12 +1024,9 @@ static int start_resend(struct ssif_info *ssif_info)
- 		ssif_info->data[0] = ssif_info->data_len;
- 	}
- 
--	rv = ssif_i2c_send(ssif_info, msg_written_handler, I2C_SMBUS_WRITE,
--			  command, ssif_info->data, I2C_SMBUS_BLOCK_DATA);
--	if (rv && (ssif_info->ssif_debug & SSIF_DEBUG_MSG))
--		dev_dbg(&ssif_info->client->dev,
--			"Error from i2c_non_blocking_op(4)\n");
--	return rv;
-+	ssif_i2c_send(ssif_info, msg_written_handler, I2C_SMBUS_WRITE,
-+		   command, ssif_info->data, I2C_SMBUS_BLOCK_DATA);
-+	return 0;
- }
- 
- static int start_send(struct ssif_info *ssif_info,
--- 
-2.39.2
-
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -179,6 +179,7 @@ static long swap_inode_boot_loader(struc
+ 		ei_bl->i_flags = 0;
+ 		inode_set_iversion(inode_bl, 1);
+ 		i_size_write(inode_bl, 0);
++		EXT4_I(inode_bl)->i_disksize = inode_bl->i_size;
+ 		inode_bl->i_mode = S_IFREG;
+ 		if (ext4_has_feature_extents(sb)) {
+ 			ext4_set_inode_flag(inode_bl, EXT4_INODE_EXTENTS);
 
 
