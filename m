@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824624431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:30:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0769DC433D2;
-	Wed, 15 Mar 2023 12:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5424431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:30:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A01C433D2;
+	Wed, 15 Mar 2023 12:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883439;
-	bh=uBL8rUJC0JIhKydsyI1Kb2yjMx3zAvoatGk1q0OiNmQ=;
+	s=korg; t=1678883442;
+	bh=JTwlGXXkFOq5K2G1uJ2aGUWLFwpwAb9ftSSVR6mgz2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EacawJgcDUa1t4dgXEvLNRPTDSTxYPTqN0P9SwSQSPwBZa3AgThVCa6sY8j/cYJnE
-	 3ta3GwcFX2IoaKZdFwNCbIW3KSewYF0BNDjpHqRN2n5qyJS1WEBRLszb+IkHUh8Wn4
-	 86kgSz7hkBiP789PIPUwDvGEut+nVOmARIkiYg94=
+	b=FOt2+3duUApAFjcoUUkZootC4n+s1pD2mRTwGkCtRf4LASLSq8L0wHVOgfvHq5Byr
+	 VDTQe9EmltzUNBJQUo4FLMwCmxS2GwWO0q0GNaCYC5t2Bsht619RX3nmK+sCAXt1Yy
+	 7T07ajK7dlrCL72Mn3wfBCk3DApexGAeiq98Lvoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/145] fs: use consistent setgid checks in is_sxid()
-Date: Wed, 15 Mar 2023 13:12:50 +0100
-Message-Id: <20230315115742.405360658@linuxfoundation.org>
+	Andres Freund <andres@anarazel.de>,
+	Quentin Monnet <quentin@isovalent.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Ben Hutchings <benh@debian.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Sedat Dilek <sedat.dilek@gmail.com>,
+	bpf@vger.kernel.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Hauke Mehrtens <hauke@hauke-m.de>
+Subject: [PATCH 5.15 138/145] tools bpftool: Fix compilation error with new binutils
+Date: Wed, 15 Mar 2023 13:13:24 +0100
+Message-Id: <20230315115743.468829685@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -38,46 +41,151 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Brauner <brauner@kernel.org>
+From: Andres Freund <andres@anarazel.de>
 
-commit 8d84e39d76bd83474b26cb44f4b338635676e7e8 upstream.
+commit 600b7b26c07a070d0153daa76b3806c1e52c9e00 upstream.
 
-Now that we made the VFS setgid checking consistent an inode can't be
-marked security irrelevant even if the setgid bit is still set. Make
-this function consistent with all other helpers.
+binutils changed the signature of init_disassemble_info(), which now causes
+compilation to fail for tools/bpf/bpftool/jit_disasm.c, e.g. on debian
+unstable.
 
-Note that enforcing consistent setgid stripping checks for file
-modification and mode- and ownership changes will cause the setgid bit
-to be lost in more cases than useed to be the case. If an unprivileged
-user wrote to a non-executable setgid file that they don't have
-privilege over the setgid bit will be dropped. This will lead to
-temporary failures in some xfstests until they have been updated.
+Relevant binutils commit:
 
-Reported-by: Miklos Szeredi <miklos@szeredi.hu>
-Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Tested-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=60a3da00bd5407f07
+
+Wire up the feature test and switch to init_disassemble_info_compat(),
+which were introduced in prior commits, fixing the compilation failure.
+
+I verified that bpftool can still disassemble bpf programs, both with an
+old and new dis-asm.h API. There are no output changes for plain and json
+formats. When comparing the output from old binutils (2.35)
+to new bintuils with the patch (upstream snapshot) there are a few output
+differences, but they are unrelated to this patch. An example hunk is:
+
+     2f:	pop    %r14
+     31:	pop    %r13
+     33:	pop    %rbx
+  -  34:	leaveq
+  -  35:	retq
+  +  34:	leave
+  +  35:	ret
+
+Signed-off-by: Andres Freund <andres@anarazel.de>
+Acked-by: Quentin Monnet <quentin@isovalent.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Ben Hutchings <benh@debian.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Quentin Monnet <quentin@isovalent.com>
+Cc: Sedat Dilek <sedat.dilek@gmail.com>
+Cc: bpf@vger.kernel.org
+Link: http://lore.kernel.org/lkml/20220622181918.ykrs5rsnmx3og4sv@alap3.anarazel.de
+Link: https://lore.kernel.org/r/20220801013834.156015-8-andres@anarazel.de
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Hauke Mehrtens <hauke@hauke-m.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/bpf/bpftool/Makefile     |    5 +++-
+ tools/bpf/bpftool/jit_disasm.c |   42 +++++++++++++++++++++++++++++++++--------
+ 2 files changed, 38 insertions(+), 9 deletions(-)
 
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 9601c2d774c88..23ecfecdc4504 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3571,7 +3571,7 @@ int __init list_bdev_fs_names(char *buf, size_t size);
+--- a/tools/bpf/bpftool/Makefile
++++ b/tools/bpf/bpftool/Makefile
+@@ -76,7 +76,7 @@ INSTALL ?= install
+ RM ?= rm -f
  
- static inline bool is_sxid(umode_t mode)
- {
--	return (mode & S_ISUID) || ((mode & S_ISGID) && (mode & S_IXGRP));
-+	return mode & (S_ISUID | S_ISGID);
+ FEATURE_USER = .bpftool
+-FEATURE_TESTS = libbfd disassembler-four-args reallocarray zlib libcap \
++FEATURE_TESTS = libbfd disassembler-four-args disassembler-init-styled reallocarray zlib libcap \
+ 	clang-bpf-co-re
+ FEATURE_DISPLAY = libbfd disassembler-four-args zlib libcap \
+ 	clang-bpf-co-re
+@@ -111,6 +111,9 @@ ifeq ($(feature-libcap), 1)
+ CFLAGS += -DUSE_LIBCAP
+ LIBS += -lcap
+ endif
++ifeq ($(feature-disassembler-init-styled), 1)
++    CFLAGS += -DDISASM_INIT_STYLED
++endif
+ 
+ include $(wildcard $(OUTPUT)*.d)
+ 
+--- a/tools/bpf/bpftool/jit_disasm.c
++++ b/tools/bpf/bpftool/jit_disasm.c
+@@ -24,6 +24,7 @@
+ #include <sys/stat.h>
+ #include <limits.h>
+ #include <bpf/libbpf.h>
++#include <tools/dis-asm-compat.h>
+ 
+ #include "json_writer.h"
+ #include "main.h"
+@@ -39,15 +40,12 @@ static void get_exec_path(char *tpath, s
  }
  
- static inline int check_sticky(struct user_namespace *mnt_userns,
--- 
-2.39.2
-
+ static int oper_count;
+-static int fprintf_json(void *out, const char *fmt, ...)
++static int printf_json(void *out, const char *fmt, va_list ap)
+ {
+-	va_list ap;
+ 	char *s;
+ 	int err;
+ 
+-	va_start(ap, fmt);
+ 	err = vasprintf(&s, fmt, ap);
+-	va_end(ap);
+ 	if (err < 0)
+ 		return -1;
+ 
+@@ -73,6 +71,32 @@ static int fprintf_json(void *out, const
+ 	return 0;
+ }
+ 
++static int fprintf_json(void *out, const char *fmt, ...)
++{
++	va_list ap;
++	int r;
++
++	va_start(ap, fmt);
++	r = printf_json(out, fmt, ap);
++	va_end(ap);
++
++	return r;
++}
++
++static int fprintf_json_styled(void *out,
++			       enum disassembler_style style __maybe_unused,
++			       const char *fmt, ...)
++{
++	va_list ap;
++	int r;
++
++	va_start(ap, fmt);
++	r = printf_json(out, fmt, ap);
++	va_end(ap);
++
++	return r;
++}
++
+ void disasm_print_insn(unsigned char *image, ssize_t len, int opcodes,
+ 		       const char *arch, const char *disassembler_options,
+ 		       const struct btf *btf,
+@@ -99,11 +123,13 @@ void disasm_print_insn(unsigned char *im
+ 	assert(bfd_check_format(bfdf, bfd_object));
+ 
+ 	if (json_output)
+-		init_disassemble_info(&info, stdout,
+-				      (fprintf_ftype) fprintf_json);
++		init_disassemble_info_compat(&info, stdout,
++					     (fprintf_ftype) fprintf_json,
++					     fprintf_json_styled);
+ 	else
+-		init_disassemble_info(&info, stdout,
+-				      (fprintf_ftype) fprintf);
++		init_disassemble_info_compat(&info, stdout,
++					     (fprintf_ftype) fprintf,
++					     fprintf_styled);
+ 
+ 	/* Update architecture info for offload. */
+ 	if (arch) {
 
 
