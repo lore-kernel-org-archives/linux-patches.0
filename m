@@ -1,34 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AD74431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:16:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE5DC433EF;
-	Wed, 15 Mar 2023 12:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC064431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:16:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D95AC433EF;
+	Wed, 15 Mar 2023 12:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882593;
-	bh=oGfP/TGRqajg7DGuCoXIX3vu2u9JvvpSXZJMeoi7bm4=;
+	s=korg; t=1678882595;
+	bh=+gsPRaUG5fLRSqH8kjXvr1Gx47yxxrc8GYNVfeqrJ54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DmSExJFs89SII8DUBmRfnFP+ZGBSoWwkpDI5pNJ3b56K56PU786caVcZofk6ULY4V
-	 TYK+03LjvHMNr2XwutWNNHhu6COPQ3JQNXkTelkuvp4grDaQIaS0L0mrwjmaTZ57mX
-	 org3wxJ729N+kjQX3Umo2CJEWnxFMyM6otMU33oU=
+	b=jGdE1ko3+xcHzfQueDPb4m5t6kHfMkovSTXynSX/mJo0+WHgUw3I6Mj10wb/Qo2aQ
+	 nZD52hJLOWf0LnishxI0E097wEQN9g2MwgkivNfMGBvai6DDxAhPXfSfQ87MR3291/
+	 vnDmf8lek4K1rtY20YnOFIjJXfLq0ygFfCCMns4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	intel-gfx@lists.freedesktop.org,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 4.19 36/39] drm/i915: Dont use BAR mappings for ring buffers with LLC
-Date: Wed, 15 Mar 2023 13:12:50 +0100
-Message-Id: <20230315115722.581384565@linuxfoundation.org>
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	bristot@redhat.com,
+	claudio@evidence.eu.com,
+	lizefan@huawei.com,
+	longman@redhat.com,
+	luca.abeni@santannapisa.it,
+	mathieu.poirier@linaro.org,
+	rostedt@goodmis.org,
+	tj@kernel.org,
+	tommaso.cucinotta@santannapisa.it,
+	Ingo Molnar <mingo@kernel.org>,
+	Cai Xinchen <caixinchen1@huawei.com>
+Subject: [PATCH 4.19 37/39] cgroup/cpuset: Change cpuset_rwsem and hotplug lock order
+Date: Wed, 15 Mar 2023 13:12:51 +0100
+Message-Id: <20230315115722.612166269@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115721.234756306@linuxfoundation.org>
 References: <20230315115721.234756306@linuxfoundation.org>
@@ -42,54 +48,184 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Juri Lelli <juri.lelli@redhat.com>
 
-commit 85636167e3206c3fbd52254fc432991cc4e90194 upstream.
+commit d74b27d63a8bebe2fe634944e4ebdc7b10db7a39 upstream.
 
-Direction from hardware is that ring buffers should never be mapped
-via the BAR on systems with LLC. There are too many caching pitfalls
-due to the way BAR accesses are routed. So it is safest to just not
-use it.
+cpuset_rwsem is going to be acquired from sched_setscheduler() with a
+following patch. There are however paths (e.g., spawn_ksoftirqd) in
+which sched_scheduler() is eventually called while holding hotplug lock;
+this creates a dependecy between hotplug lock (to be always acquired
+first) and cpuset_rwsem (to be always acquired after hotplug lock).
 
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Fixes: 9d80841ea4c9 ("drm/i915: Allow ringbuffers to be bound anywhere")
-Cc: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: intel-gfx@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v4.9+
-Tested-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230216011101.1909009-3-John.C.Harrison@Intel.com
-(cherry picked from commit 65c08339db1ada87afd6cfe7db8e60bb4851d919)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Fix paths which currently take the two locks in the wrong order (after
+a following patch is applied).
+
+Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: bristot@redhat.com
+Cc: claudio@evidence.eu.com
+Cc: lizefan@huawei.com
+Cc: longman@redhat.com
+Cc: luca.abeni@santannapisa.it
+Cc: mathieu.poirier@linaro.org
+Cc: rostedt@goodmis.org
+Cc: tj@kernel.org
+Cc: tommaso.cucinotta@santannapisa.it
+Link: https://lkml.kernel.org/r/20190719140000.31694-7-juri.lelli@redhat.com
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/intel_ringbuffer.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/cpuset.h |    8 ++++----
+ kernel/cgroup/cpuset.c |   18 ++++++++++++++----
+ 2 files changed, 18 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/i915/intel_ringbuffer.c
-+++ b/drivers/gpu/drm/i915/intel_ringbuffer.c
-@@ -1083,7 +1083,7 @@ int intel_ring_pin(struct intel_ring *ri
- 	if (unlikely(ret))
- 		return ret;
+--- a/include/linux/cpuset.h
++++ b/include/linux/cpuset.h
+@@ -40,14 +40,14 @@ static inline bool cpusets_enabled(void)
  
--	if (i915_vma_is_map_and_fenceable(vma))
-+	if (i915_vma_is_map_and_fenceable(vma) && !HAS_LLC(vma->vm->i915))
- 		addr = (void __force *)i915_vma_pin_iomap(vma);
- 	else
- 		addr = i915_gem_object_pin_map(vma->obj, map);
-@@ -1118,7 +1118,7 @@ void intel_ring_unpin(struct intel_ring
- 	/* Discard any unused bytes beyond that submitted to hw. */
- 	intel_ring_reset(ring, ring->tail);
+ static inline void cpuset_inc(void)
+ {
+-	static_branch_inc(&cpusets_pre_enable_key);
+-	static_branch_inc(&cpusets_enabled_key);
++	static_branch_inc_cpuslocked(&cpusets_pre_enable_key);
++	static_branch_inc_cpuslocked(&cpusets_enabled_key);
+ }
  
--	if (i915_vma_is_map_and_fenceable(ring->vma))
-+	if (i915_vma_is_map_and_fenceable(ring->vma) && !HAS_LLC(ring->vma->vm->i915))
- 		i915_vma_unpin_iomap(ring->vma);
- 	else
- 		i915_gem_object_unpin_map(ring->vma->obj);
+ static inline void cpuset_dec(void)
+ {
+-	static_branch_dec(&cpusets_enabled_key);
+-	static_branch_dec(&cpusets_pre_enable_key);
++	static_branch_dec_cpuslocked(&cpusets_enabled_key);
++	static_branch_dec_cpuslocked(&cpusets_pre_enable_key);
+ }
+ 
+ extern int cpuset_init(void);
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -830,8 +830,8 @@ static void rebuild_sched_domains_locked
+ 	cpumask_var_t *doms;
+ 	int ndoms;
+ 
++	lockdep_assert_cpus_held();
+ 	lockdep_assert_held(&cpuset_mutex);
+-	get_online_cpus();
+ 
+ 	/*
+ 	 * We have raced with CPU hotplug. Don't do anything to avoid
+@@ -839,15 +839,13 @@ static void rebuild_sched_domains_locked
+ 	 * Anyways, hotplug work item will rebuild sched domains.
+ 	 */
+ 	if (!cpumask_equal(top_cpuset.effective_cpus, cpu_active_mask))
+-		goto out;
++		return;
+ 
+ 	/* Generate domain masks and attrs */
+ 	ndoms = generate_sched_domains(&doms, &attr);
+ 
+ 	/* Have scheduler rebuild the domains */
+ 	partition_sched_domains(ndoms, doms, attr);
+-out:
+-	put_online_cpus();
+ }
+ #else /* !CONFIG_SMP */
+ static void rebuild_sched_domains_locked(void)
+@@ -857,9 +855,11 @@ static void rebuild_sched_domains_locked
+ 
+ void rebuild_sched_domains(void)
+ {
++	get_online_cpus();
+ 	mutex_lock(&cpuset_mutex);
+ 	rebuild_sched_domains_locked();
+ 	mutex_unlock(&cpuset_mutex);
++	put_online_cpus();
+ }
+ 
+ /**
+@@ -1617,6 +1617,7 @@ static int cpuset_write_u64(struct cgrou
+ 	cpuset_filetype_t type = cft->private;
+ 	int retval = 0;
+ 
++	get_online_cpus();
+ 	mutex_lock(&cpuset_mutex);
+ 	if (!is_cpuset_online(cs)) {
+ 		retval = -ENODEV;
+@@ -1654,6 +1655,7 @@ static int cpuset_write_u64(struct cgrou
+ 	}
+ out_unlock:
+ 	mutex_unlock(&cpuset_mutex);
++	put_online_cpus();
+ 	return retval;
+ }
+ 
+@@ -1664,6 +1666,7 @@ static int cpuset_write_s64(struct cgrou
+ 	cpuset_filetype_t type = cft->private;
+ 	int retval = -ENODEV;
+ 
++	get_online_cpus();
+ 	mutex_lock(&cpuset_mutex);
+ 	if (!is_cpuset_online(cs))
+ 		goto out_unlock;
+@@ -1678,6 +1681,7 @@ static int cpuset_write_s64(struct cgrou
+ 	}
+ out_unlock:
+ 	mutex_unlock(&cpuset_mutex);
++	put_online_cpus();
+ 	return retval;
+ }
+ 
+@@ -1716,6 +1720,7 @@ static ssize_t cpuset_write_resmask(stru
+ 	kernfs_break_active_protection(of->kn);
+ 	flush_work(&cpuset_hotplug_work);
+ 
++	get_online_cpus();
+ 	mutex_lock(&cpuset_mutex);
+ 	if (!is_cpuset_online(cs))
+ 		goto out_unlock;
+@@ -1741,6 +1746,7 @@ static ssize_t cpuset_write_resmask(stru
+ 	free_trial_cpuset(trialcs);
+ out_unlock:
+ 	mutex_unlock(&cpuset_mutex);
++	put_online_cpus();
+ 	kernfs_unbreak_active_protection(of->kn);
+ 	css_put(&cs->css);
+ 	flush_workqueue(cpuset_migrate_mm_wq);
+@@ -1985,6 +1991,7 @@ static int cpuset_css_online(struct cgro
+ 	if (!parent)
+ 		return 0;
+ 
++	get_online_cpus();
+ 	mutex_lock(&cpuset_mutex);
+ 
+ 	set_bit(CS_ONLINE, &cs->flags);
+@@ -2035,6 +2042,7 @@ static int cpuset_css_online(struct cgro
+ 	spin_unlock_irq(&callback_lock);
+ out_unlock:
+ 	mutex_unlock(&cpuset_mutex);
++	put_online_cpus();
+ 	return 0;
+ }
+ 
+@@ -2048,6 +2056,7 @@ static void cpuset_css_offline(struct cg
+ {
+ 	struct cpuset *cs = css_cs(css);
+ 
++	get_online_cpus();
+ 	mutex_lock(&cpuset_mutex);
+ 
+ 	if (is_sched_load_balance(cs))
+@@ -2057,6 +2066,7 @@ static void cpuset_css_offline(struct cg
+ 	clear_bit(CS_ONLINE, &cs->flags);
+ 
+ 	mutex_unlock(&cpuset_mutex);
++	put_online_cpus();
+ }
+ 
+ static void cpuset_css_free(struct cgroup_subsys_state *css)
 
 
