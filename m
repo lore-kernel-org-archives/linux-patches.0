@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991AD4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB75C433D2;
-	Wed, 15 Mar 2023 12:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376624431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07D8C433D2;
+	Wed, 15 Mar 2023 12:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882798;
-	bh=OOd06p52d3HEOy/TxocowIHnU7OBHr8J/RbFDC5PD6g=;
+	s=korg; t=1678882801;
+	bh=Dla1IsGrNz19OS51ODt78sdv7tOeDKYhkB0skY089ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yCw/JWFLbVmVL3kJ8K84TFgdRd5BqKIHmKlRUBL0Y878U2mntZQZpipsbqyqZTMuH
-	 Xavm/YUym3yJ+m2ZAswi+yaLDZjH0mZ+0eCKCamYiEO80thZj2JcqBS0AhGzZhavkv
-	 y5wU7219DmJ3YRhj+d5q+Iqq9WJecsTOzZCRAwcc=
+	b=D6zj1gAwuCRqH/ndDQJKJDRO3E+cKFglcSvA0J5kqK9AV4iU0VQGEEE4w3+XsZer/
+	 Zzl8+9A4w9s1svcQ0SLzglU6FIAL8VJnUoIcqlDBWBlmCvK562yat3HzilUvgBWB5w
+	 C3W20mFjfTd65PyX+Y3+K5w7YkJt1BA6kxTzct9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9d16c39efb5fade84574@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 49/68] ext4: Fix deadlock during directory rename
-Date: Wed, 15 Mar 2023 13:12:43 +0100
-Message-Id: <20230315115728.041904746@linuxfoundation.org>
+Subject: [PATCH 5.4 50/68] clk: qcom: mmcc-apq8084: remove spdm clocks
+Date: Wed, 15 Mar 2023 13:12:44 +0100
+Message-Id: <20230315115728.071976673@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -36,84 +38,313 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 3c92792da8506a295afb6d032b4476e46f979725 ]
+[ Upstream commit 7b347f4b677b6d84687e67d82b6b17c6f55ea2b4 ]
 
-As lockdep properly warns, we should not be locking i_rwsem while having
-transactions started as the proper lock ordering used by all directory
-handling operations is i_rwsem -> transaction start. Fix the lock
-ordering by moving the locking of the directory earlier in
-ext4_rename().
+SPDM is used for debug/profiling and does not have any other
+functionality. These clocks can safely be removed.
 
-Reported-by: syzbot+9d16c39efb5fade84574@syzkaller.appspotmail.com
-Fixes: 0813299c586b ("ext4: Fix possible corruption when moving a directory")
-Link: https://syzkaller.appspot.com/bug?extid=9d16c39efb5fade84574
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230301141004.15087-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Suggested-by: Stephen Boyd <sboyd@kernel.org>
+Suggested-by: Georgi Djakov <djakov@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230111060402.1168726-11-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/namei.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/clk/qcom/mmcc-apq8084.c | 271 --------------------------------
+ 1 file changed, 271 deletions(-)
 
-diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
-index f9d11f59df7d2..b708b437b3e36 100644
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -3795,10 +3795,20 @@ static int ext4_rename(struct inode *old_dir, struct dentry *old_dentry,
- 			return retval;
- 	}
+diff --git a/drivers/clk/qcom/mmcc-apq8084.c b/drivers/clk/qcom/mmcc-apq8084.c
+index fbfcf00067394..893e5536f64c7 100644
+--- a/drivers/clk/qcom/mmcc-apq8084.c
++++ b/drivers/clk/qcom/mmcc-apq8084.c
+@@ -2363,262 +2363,6 @@ static struct clk_branch mmss_rbcpr_clk = {
+ 	},
+ };
  
-+	/*
-+	 * We need to protect against old.inode directory getting converted
-+	 * from inline directory format into a normal one.
-+	 */
-+	if (S_ISDIR(old.inode->i_mode))
-+		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
-+
- 	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de,
- 				 &old.inlined);
--	if (IS_ERR(old.bh))
--		return PTR_ERR(old.bh);
-+	if (IS_ERR(old.bh)) {
-+		retval = PTR_ERR(old.bh);
-+		goto unlock_moved_dir;
-+	}
-+
- 	/*
- 	 *  Check for inode number is _not_ due to possible IO errors.
- 	 *  We might rmdir the source, keep it as pwd of some process
-@@ -3855,11 +3865,6 @@ static int ext4_rename(struct inode *old_dir, struct dentry *old_dentry,
- 			if (new.dir != old.dir && EXT4_DIR_LINK_MAX(new.dir))
- 				goto end_rename;
- 		}
--		/*
--		 * We need to protect against old.inode directory getting
--		 * converted from inline directory format into a normal one.
--		 */
--		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
- 		retval = ext4_rename_dir_prepare(handle, &old);
- 		if (retval) {
- 			inode_unlock(old.inode);
-@@ -3960,12 +3965,15 @@ static int ext4_rename(struct inode *old_dir, struct dentry *old_dentry,
- 	} else {
- 		ext4_journal_stop(handle);
- 	}
--	if (old.dir_bh)
--		inode_unlock(old.inode);
- release_bh:
- 	brelse(old.dir_bh);
- 	brelse(old.bh);
- 	brelse(new.bh);
-+
-+unlock_moved_dir:
-+	if (S_ISDIR(old.inode->i_mode))
-+		inode_unlock(old.inode);
-+
- 	return retval;
- }
- 
+-static struct clk_branch mmss_spdm_ahb_clk = {
+-	.halt_reg = 0x0230,
+-	.clkr = {
+-		.enable_reg = 0x0230,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_ahb_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_ahb_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_axi_clk = {
+-	.halt_reg = 0x0210,
+-	.clkr = {
+-		.enable_reg = 0x0210,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_axi_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_axi_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_csi0_clk = {
+-	.halt_reg = 0x023c,
+-	.clkr = {
+-		.enable_reg = 0x023c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_csi0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_csi0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_gfx3d_clk = {
+-	.halt_reg = 0x022c,
+-	.clkr = {
+-		.enable_reg = 0x022c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_gfx3d_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_gfx3d_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_jpeg0_clk = {
+-	.halt_reg = 0x0204,
+-	.clkr = {
+-		.enable_reg = 0x0204,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_jpeg0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_jpeg0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_jpeg1_clk = {
+-	.halt_reg = 0x0208,
+-	.clkr = {
+-		.enable_reg = 0x0208,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_jpeg1_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_jpeg1_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_jpeg2_clk = {
+-	.halt_reg = 0x0224,
+-	.clkr = {
+-		.enable_reg = 0x0224,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_jpeg2_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_jpeg2_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_mdp_clk = {
+-	.halt_reg = 0x020c,
+-	.clkr = {
+-		.enable_reg = 0x020c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_mdp_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_mdp_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_pclk0_clk = {
+-	.halt_reg = 0x0234,
+-	.clkr = {
+-		.enable_reg = 0x0234,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_pclk0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_pclk0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_pclk1_clk = {
+-	.halt_reg = 0x0228,
+-	.clkr = {
+-		.enable_reg = 0x0228,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_pclk1_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_pclk1_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_vcodec0_clk = {
+-	.halt_reg = 0x0214,
+-	.clkr = {
+-		.enable_reg = 0x0214,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_vcodec0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_vcodec0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_vfe0_clk = {
+-	.halt_reg = 0x0218,
+-	.clkr = {
+-		.enable_reg = 0x0218,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_vfe0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_vfe0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_vfe1_clk = {
+-	.halt_reg = 0x021c,
+-	.clkr = {
+-		.enable_reg = 0x021c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_vfe1_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_vfe1_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_rm_axi_clk = {
+-	.halt_reg = 0x0304,
+-	.clkr = {
+-		.enable_reg = 0x0304,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_rm_axi_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_axi_clk_src",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_rm_ocmemnoc_clk = {
+-	.halt_reg = 0x0308,
+-	.clkr = {
+-		.enable_reg = 0x0308,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_rm_ocmemnoc_clk",
+-			.parent_names = (const char *[]){
+-				"ocmemnoc_clk_src",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-
+ static struct clk_branch mmss_misc_ahb_clk = {
+ 	.halt_reg = 0x502c,
+ 	.clkr = {
+@@ -3251,21 +2995,6 @@ static struct clk_regmap *mmcc_apq8084_clocks[] = {
+ 	[MDSS_VSYNC_CLK] = &mdss_vsync_clk.clkr,
+ 	[MMSS_RBCPR_AHB_CLK] = &mmss_rbcpr_ahb_clk.clkr,
+ 	[MMSS_RBCPR_CLK] = &mmss_rbcpr_clk.clkr,
+-	[MMSS_SPDM_AHB_CLK] = &mmss_spdm_ahb_clk.clkr,
+-	[MMSS_SPDM_AXI_CLK] = &mmss_spdm_axi_clk.clkr,
+-	[MMSS_SPDM_CSI0_CLK] = &mmss_spdm_csi0_clk.clkr,
+-	[MMSS_SPDM_GFX3D_CLK] = &mmss_spdm_gfx3d_clk.clkr,
+-	[MMSS_SPDM_JPEG0_CLK] = &mmss_spdm_jpeg0_clk.clkr,
+-	[MMSS_SPDM_JPEG1_CLK] = &mmss_spdm_jpeg1_clk.clkr,
+-	[MMSS_SPDM_JPEG2_CLK] = &mmss_spdm_jpeg2_clk.clkr,
+-	[MMSS_SPDM_MDP_CLK] = &mmss_spdm_mdp_clk.clkr,
+-	[MMSS_SPDM_PCLK0_CLK] = &mmss_spdm_pclk0_clk.clkr,
+-	[MMSS_SPDM_PCLK1_CLK] = &mmss_spdm_pclk1_clk.clkr,
+-	[MMSS_SPDM_VCODEC0_CLK] = &mmss_spdm_vcodec0_clk.clkr,
+-	[MMSS_SPDM_VFE0_CLK] = &mmss_spdm_vfe0_clk.clkr,
+-	[MMSS_SPDM_VFE1_CLK] = &mmss_spdm_vfe1_clk.clkr,
+-	[MMSS_SPDM_RM_AXI_CLK] = &mmss_spdm_rm_axi_clk.clkr,
+-	[MMSS_SPDM_RM_OCMEMNOC_CLK] = &mmss_spdm_rm_ocmemnoc_clk.clkr,
+ 	[MMSS_MISC_AHB_CLK] = &mmss_misc_ahb_clk.clkr,
+ 	[MMSS_MMSSNOC_AHB_CLK] = &mmss_mmssnoc_ahb_clk.clkr,
+ 	[MMSS_MMSSNOC_BTO_AHB_CLK] = &mmss_mmssnoc_bto_ahb_clk.clkr,
 -- 
 2.39.2
 
