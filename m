@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC4A4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:18:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA632C433D2;
-	Wed, 15 Mar 2023 12:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9D84431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:18:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B27C433EF;
+	Wed, 15 Mar 2023 12:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882683;
-	bh=0CW0/Pz/J8YG4UqIXPIpQsu442CpNiJxLiXmqB5hiTk=;
+	s=korg; t=1678882685;
+	bh=cjiVV0CeSCdzuMs3QQvEn+Umv04zh6+0Oa+TvXDe0lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jC7SpuwxTLUVF96X4t/jFa8YfzVQvgzzo7O0xLLM+vt+5Oc782sOosg45JUiAfpdi
-	 8iEqgHBX/omzC9V+R12HW7uvaw5+TJUJmTclwSSOomDr6EzaL/RSRi6g3Dqr0yuOaw
-	 LZOliFuEoQ8Ha9bMYhUOm2DDPYHyvJVXsMfkkaL4=
+	b=XYxlYEjFYC26nfFdGUhIltqkMuFW0qXG3eE3N+kpxzQo0SAPs81kbzUAu8JSkXzQH
+	 dZDVgcFhte5y75rNPGlninoEtM5FlzyACt/sR2P22uUbm0n9joi/KnYPziykha7W57
+	 x9nHhPVoQGn/t3QRnMZ15cinLN/Q/WM89QPXWc/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 30/68] ARM: dts: exynos: correct TMU phandle in Odroid HC1
-Date: Wed, 15 Mar 2023 13:12:24 +0100
-Message-Id: <20230315115727.264436515@linuxfoundation.org>
+Subject: [PATCH 5.4 31/68] ARM: dts: exynos: correct TMU phandle in Odroid XU3 family
+Date: Wed, 15 Mar 2023 13:12:25 +0100
+Message-Id: <20230315115727.303285338@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -36,7 +36,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 2e3d0e20d8456f876607a8af61fdb83dfbf98cb6 ]
+[ Upstream commit a3583e92d188ec6c58c7f603ac5e72dd8a11c21a ]
 
 TMU node uses 0 as thermal-sensor-cells, thus thermal zone referencing
 it must not have an argument to phandle.  This was not critical before,
@@ -50,64 +50,64 @@ than first one:
   exynos-tmu 10064000.tmu: Failed to register sensor: -2
   exynos-tmu: probe of 10064000.tmu failed with error -2
 
-Fixes: 1ac49427b566 ("ARM: dts: exynos: Add support for Hardkernel's Odroid HC1 board")
+Fixes: f1722d7dd8b8 ("ARM: dts: Define default thermal-zones for exynos5422")
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230209105841.779596-5-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230209105841.779596-6-krzysztof.kozlowski@linaro.org
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/exynos5422-odroidhc1.dts | 10 +++++-----
+ arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi | 10 +++++-----
  1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/boot/dts/exynos5422-odroidhc1.dts b/arch/arm/boot/dts/exynos5422-odroidhc1.dts
-index 3235d7a27e042..b423cea4c0e99 100644
---- a/arch/arm/boot/dts/exynos5422-odroidhc1.dts
-+++ b/arch/arm/boot/dts/exynos5422-odroidhc1.dts
-@@ -29,7 +29,7 @@
+diff --git a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
+index 5cf48af9884c9..56a0e1eba36fc 100644
+--- a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
++++ b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
+@@ -50,7 +50,7 @@
  
  	thermal-zones {
  		cpu0_thermal: cpu0-thermal {
 -			thermal-sensors = <&tmu_cpu0 0>;
 +			thermal-sensors = <&tmu_cpu0>;
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
  			trips {
- 				cpu0_alert0: cpu-alert-0 {
- 					temperature = <70000>; /* millicelsius */
-@@ -84,7 +84,7 @@
+@@ -139,7 +139,7 @@
  			};
  		};
  		cpu1_thermal: cpu1-thermal {
 -			thermal-sensors = <&tmu_cpu1 0>;
 +			thermal-sensors = <&tmu_cpu1>;
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
  			trips {
- 				cpu1_alert0: cpu-alert-0 {
- 					temperature = <70000>;
-@@ -128,7 +128,7 @@
+@@ -212,7 +212,7 @@
  			};
  		};
  		cpu2_thermal: cpu2-thermal {
 -			thermal-sensors = <&tmu_cpu2 0>;
 +			thermal-sensors = <&tmu_cpu2>;
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
  			trips {
- 				cpu2_alert0: cpu-alert-0 {
- 					temperature = <70000>;
-@@ -172,7 +172,7 @@
+@@ -285,7 +285,7 @@
  			};
  		};
  		cpu3_thermal: cpu3-thermal {
 -			thermal-sensors = <&tmu_cpu3 0>;
 +			thermal-sensors = <&tmu_cpu3>;
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
  			trips {
- 				cpu3_alert0: cpu-alert-0 {
- 					temperature = <70000>;
-@@ -216,7 +216,7 @@
+@@ -358,7 +358,7 @@
  			};
  		};
  		gpu_thermal: gpu-thermal {
 -			thermal-sensors = <&tmu_gpu 0>;
 +			thermal-sensors = <&tmu_gpu>;
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
  			trips {
- 				gpu_alert0: gpu-alert-0 {
- 					temperature = <70000>;
 -- 
 2.39.2
 
