@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF3F4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E71C433EF;
-	Wed, 15 Mar 2023 12:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4C84431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:20:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDE0C433EF;
+	Wed, 15 Mar 2023 12:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882851;
-	bh=w5o682cpPY+xl+Cyxd9yvHew6++fZ2yPQm4pN/S+Xxw=;
+	s=korg; t=1678882853;
+	bh=yvWRRHSx9WpXWWrg+D9QTNgkdZ9QRjF4pM8xBX5Fgbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jiZGJ9JJDjBSS7wBosm2eH/HM6FXR8DprCvslzLOcbhhskRm600fhkWsqAq9JIdIH
-	 8ZXEpQGyINRYPYBH4Ztvmqso9SYuGaZADyAAqttBi8kXON0//CnC/Yrg3Sc1fYvpB5
-	 1qwfgh6nPsCkCOqPuurrRmaYWs1UQ/dCziJLYsVA=
+	b=IfZAbAVVfCekCmJlV4k5lbRMqbkT7/umF71yNa2rkodfkfeEr7wTOnqzCy1LD+3H8
+	 1pLXYtS8+owKh2eSejnGZalPjLQkO0X1W6YuGIyXZcZgPFp6EgnIqtDkM2aYFnFksB
+	 yBf9OIk2LeLHfLZXZqQ9DM55WxnveeFskIgASBIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chang <liaochang1@huawei.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 025/104] riscv: Add header include guards to insn.h
-Date: Wed, 15 Mar 2023 13:11:56 +0100
-Message-Id: <20230315115733.097015974@linuxfoundation.org>
+Subject: [PATCH 5.10 026/104] scsi: core: Remove the /proc/scsi/${proc_name} directory earlier
+Date: Wed, 15 Mar 2023 13:11:57 +0100
+Message-Id: <20230315115733.143959206@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -37,46 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liao Chang <liaochang1@huawei.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 8ac6e619d9d51b3eb5bae817db8aa94e780a0db4 ]
+[ Upstream commit fc663711b94468f4e1427ebe289c9f05669699c9 ]
 
-Add header include guards to insn.h to prevent repeating declaration of
-any identifiers in insn.h.
+Remove the /proc/scsi/${proc_name} directory earlier to fix a race
+condition between unloading and reloading kernel modules. This fixes a bug
+introduced in 2009 by commit 77c019768f06 ("[SCSI] fix /proc memory leak in
+the SCSI core").
 
-Fixes: edde5584c7ab ("riscv: Add SW single-step support for KDB")
-Signed-off-by: Liao Chang <liaochang1@huawei.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Fixes: c9c1af3f186a ("RISC-V: rename parse_asm.h to insn.h")
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20230129094242.282620-1-liaochang1@huawei.com
+Fix the following kernel warning:
+
+proc_dir_entry 'scsi/scsi_debug' already registered
+WARNING: CPU: 19 PID: 27986 at fs/proc/generic.c:376 proc_register+0x27d/0x2e0
+Call Trace:
+ proc_mkdir+0xb5/0xe0
+ scsi_proc_hostdir_add+0xb5/0x170
+ scsi_host_alloc+0x683/0x6c0
+ sdebug_driver_probe+0x6b/0x2d0 [scsi_debug]
+ really_probe+0x159/0x540
+ __driver_probe_device+0xdc/0x230
+ driver_probe_device+0x4f/0x120
+ __device_attach_driver+0xef/0x180
+ bus_for_each_drv+0xe5/0x130
+ __device_attach+0x127/0x290
+ device_initial_probe+0x17/0x20
+ bus_probe_device+0x110/0x130
+ device_add+0x673/0xc80
+ device_register+0x1e/0x30
+ sdebug_add_host_helper+0x1a7/0x3b0 [scsi_debug]
+ scsi_debug_init+0x64f/0x1000 [scsi_debug]
+ do_one_initcall+0xd7/0x470
+ do_init_module+0xe7/0x330
+ load_module+0x122a/0x12c0
+ __do_sys_finit_module+0x124/0x1a0
+ __x64_sys_finit_module+0x46/0x50
+ do_syscall_64+0x38/0x80
+ entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+Link: https://lore.kernel.org/r/20230210205200.36973-3-bvanassche@acm.org
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: Yi Zhang <yi.zhang@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 77c019768f06 ("[SCSI] fix /proc memory leak in the SCSI core")
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/parse_asm.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/scsi/hosts.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/riscv/include/asm/parse_asm.h b/arch/riscv/include/asm/parse_asm.h
-index 7fee806805c1b..ad254da85e615 100644
---- a/arch/riscv/include/asm/parse_asm.h
-+++ b/arch/riscv/include/asm/parse_asm.h
-@@ -3,6 +3,9 @@
-  * Copyright (C) 2020 SiFive
-  */
+diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
+index d664c4650b2dd..fae0323242103 100644
+--- a/drivers/scsi/hosts.c
++++ b/drivers/scsi/hosts.c
+@@ -180,6 +180,7 @@ void scsi_remove_host(struct Scsi_Host *shost)
+ 	scsi_forget_host(shost);
+ 	mutex_unlock(&shost->scan_mutex);
+ 	scsi_proc_host_rm(shost);
++	scsi_proc_hostdir_rm(shost->hostt);
  
-+#ifndef _ASM_RISCV_INSN_H
-+#define _ASM_RISCV_INSN_H
-+
- #include <linux/bits.h>
+ 	spin_lock_irqsave(shost->host_lock, flags);
+ 	if (scsi_host_set_state(shost, SHOST_DEL))
+@@ -321,6 +322,7 @@ static void scsi_host_dev_release(struct device *dev)
+ 	struct Scsi_Host *shost = dev_to_shost(dev);
+ 	struct device *parent = dev->parent;
  
- /* The bit field of immediate value in I-type instruction */
-@@ -217,3 +220,5 @@ static inline bool is_ ## INSN_NAME ## _insn(long insn) \
- 	(RVC_X(x_, RVC_B_IMM_5_OPOFF, RVC_B_IMM_5_MASK) << RVC_B_IMM_5_OFF) | \
- 	(RVC_X(x_, RVC_B_IMM_7_6_OPOFF, RVC_B_IMM_7_6_MASK) << RVC_B_IMM_7_6_OFF) | \
- 	(RVC_IMM_SIGN(x_) << RVC_B_IMM_SIGN_OFF); })
-+
-+#endif /* _ASM_RISCV_INSN_H */
++	/* In case scsi_remove_host() has not been called. */
+ 	scsi_proc_hostdir_rm(shost->hostt);
+ 
+ 	/* Wait for functions invoked through call_rcu(&shost->rcu, ...) */
 -- 
 2.39.2
 
