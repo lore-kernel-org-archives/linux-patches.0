@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC15F4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4241CC433D2;
-	Wed, 15 Mar 2023 12:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621EE4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D975BC433EF;
+	Wed, 15 Mar 2023 12:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883973;
-	bh=MGjV63gqIyWrUmynAnkUNc4Qe3ruXoWMQEHnYSSezO8=;
+	s=korg; t=1678883976;
+	bh=5fpAfLrEEXHcZU7KMHkBgmY48ywrvOIvcSiPj1Ma9JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R96hWNYt1RDoLe9lh2BHLRSQc8CQ4vPmG+2ldzSRkF3FajnFsYNRAnj0SDdlhsXEB
-	 vW1zFa9CeMzatbwOW06Dr4y1i2EHoASwfwqKXkX4oh7Z7RS4SbXpgpm/vhgOgF9KTG
-	 BG4HPb1b/0xwTagYLaANvDmr6jBSNoGC1Rmpy1HQ=
+	b=mWz9D3dcSo3quRwvA2L9SueCLHI6x6jGCyuVzD4KuMsyVk7O16SrkIJP0+4nxfMro
+	 VV6dUP1wYP3dRqUGuQKsAnaKgfarMD4ueiDLmTWadcRnDS7A3aZX3xbw8HeYzZ+2a3
+	 UsY43vda0qbzN9FM80G7II8Tnxv1ybDsCh5Kgbdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 058/141] net: lan966x: Fix port police support using tc-matchall
-Date: Wed, 15 Mar 2023 13:12:41 +0100
-Message-Id: <20230315115741.733409510@linuxfoundation.org>
+Subject: [PATCH 6.2 059/141] selftests: nft_nat: ensuring the listening side is up before starting the client
+Date: Wed, 15 Mar 2023 13:12:42 +0100
+Message-Id: <20230315115741.761641247@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -37,43 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 81563d8548b0478075c720666be348d4199b8591 ]
+[ Upstream commit 2067e7a00aa604b94de31d64f29b8893b1696f26 ]
 
-When the police was removed from the port, then it was trying to
-remove the police from the police id and not from the actual
-police index.
-The police id represents the id of the police and police index
-represents the position in HW where the police is situated.
-The port police id can be any number while the port police index
-is a number based on the port chip port.
-Fix this by deleting the police from HW that is situated at the
-police index and not police id.
+The test_local_dnat_portonly() function initiates the client-side as
+soon as it sets the listening side to the background. This could lead to
+a race condition where the server may not be ready to listen. To ensure
+that the server-side is up and running before initiating the
+client-side, a delay is introduced to the test_local_dnat_portonly()
+function.
 
-Fixes: 5390334b59a3 ("net: lan966x: Add port police support using tc-matchall")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Before the fix:
+  # ./nft_nat.sh
+  PASS: netns routing/connectivity: ns0-rthlYrBU can reach ns1-rthlYrBU and ns2-rthlYrBU
+  PASS: ping to ns1-rthlYrBU was ip NATted to ns2-rthlYrBU
+  PASS: ping to ns1-rthlYrBU OK after ip nat output chain flush
+  PASS: ipv6 ping to ns1-rthlYrBU was ip6 NATted to ns2-rthlYrBU
+  2023/02/27 04:11:03 socat[6055] E connect(5, AF=2 10.0.1.99:2000, 16): Connection refused
+  ERROR: inet port rewrite
+
+After the fix:
+  # ./nft_nat.sh
+  PASS: netns routing/connectivity: ns0-9sPJV6JJ can reach ns1-9sPJV6JJ and ns2-9sPJV6JJ
+  PASS: ping to ns1-9sPJV6JJ was ip NATted to ns2-9sPJV6JJ
+  PASS: ping to ns1-9sPJV6JJ OK after ip nat output chain flush
+  PASS: ipv6 ping to ns1-9sPJV6JJ was ip6 NATted to ns2-9sPJV6JJ
+  PASS: inet port rewrite without l3 address
+
+Fixes: 282e5f8fe907 ("netfilter: nat: really support inet nat without l3 address")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_police.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/netfilter/nft_nat.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_police.c b/drivers/net/ethernet/microchip/lan966x/lan966x_police.c
-index a9aec900d608d..7d66fe75cd3bf 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_police.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_police.c
-@@ -194,7 +194,7 @@ int lan966x_police_port_del(struct lan966x_port *port,
- 		return -EINVAL;
- 	}
+diff --git a/tools/testing/selftests/netfilter/nft_nat.sh b/tools/testing/selftests/netfilter/nft_nat.sh
+index 924ecb3f1f737..dd40d9f6f2599 100755
+--- a/tools/testing/selftests/netfilter/nft_nat.sh
++++ b/tools/testing/selftests/netfilter/nft_nat.sh
+@@ -404,6 +404,8 @@ EOF
+ 	echo SERVER-$family | ip netns exec "$ns1" timeout 5 socat -u STDIN TCP-LISTEN:2000 &
+ 	sc_s=$!
  
--	err = lan966x_police_del(port, port->tc.police_id);
-+	err = lan966x_police_del(port, POL_IDX_PORT + port->chip_port);
- 	if (err) {
- 		NL_SET_ERR_MSG_MOD(extack,
- 				   "Failed to add policer to port");
++	sleep 1
++
+ 	result=$(ip netns exec "$ns0" timeout 1 socat TCP:$daddr:2000 STDOUT)
+ 
+ 	if [ "$result" = "SERVER-inet" ];then
 -- 
 2.39.2
 
