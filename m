@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6714431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36637C433D2;
-	Wed, 15 Mar 2023 12:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA5A4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E7CC433D2;
+	Wed, 15 Mar 2023 12:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883994;
-	bh=CoJGKh0FOnk5vX8Pwg3Lc1XM2guT1Iwm90uOmQLz6BM=;
+	s=korg; t=1678883997;
+	bh=HGhNJjTvsfcnLUFfjnwqETk5OPsLYrOYHUsK9mynZmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZZyliDExkGagZ4y/NQmXW7kjh+5DVrHLdg7Q2DKPem3cDUiMTkR9Pw6YIhp7wEm23
-	 am8CrwnuncEloRoslj6RRlLiFJ8sLnQXudA7HE2YtHHgwn44M8qC5FYZknpGND9Znc
-	 CIHLsZ9nkgD8mvtPpcOZWq2WePMJ5Am9xrurnWgc=
+	b=A6wkGTa401cv/SCVE+1YxFGr+q+qKrf8ouM2AEoHBnv8r461Pp5E42NvFQV96A6sq
+	 S0VTDWzrNFcECDqqDqHPF5YjKwaj38y0FwoiF1700YXG1FaybxlIZxUdkTNqWmCvAY
+	 oXNsyiOYuzOjsYb7u2uuRxRBYH14yKzq/Y7qMTi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Animesh Manna <animesh.manna@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 036/141] powerpc/boot: Dont always pass -mcpu=powerpc when building 32-bit uImage
-Date: Wed, 15 Mar 2023 13:12:19 +0100
-Message-Id: <20230315115741.064257884@linuxfoundation.org>
+Subject: [PATCH 6.2 037/141] drm/i915: Introduce intel_panel_init_alloc()
+Date: Wed, 15 Mar 2023 13:12:20 +0100
+Message-Id: <20230315115741.093778043@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -36,62 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit ff7c76f66d8bad4e694c264c789249e1d3a8205d ]
+[ Upstream commit f70f8153e3642337b444fbc0c64d546a46bbcd62 ]
 
-When CONFIG_TARGET_CPU is specified then pass its value to the compiler
--mcpu option. This fixes following build error when building kernel with
-powerpc e500 SPE capable cross compilers:
+Introduce a place where we can initialize connector->panel
+after it's been allocated. We already have a intel_panel_init()
+so had to get creative with the name and came up with
+intel_panel_init_alloc().
 
-    BOOTAS  arch/powerpc/boot/crt0.o
-  powerpc-linux-gnuspe-gcc: error: unrecognized argument in option ‘-mcpu=powerpc’
-  powerpc-linux-gnuspe-gcc: note: valid arguments to ‘-mcpu=’ are: 8540 8548 native
-  make[1]: *** [arch/powerpc/boot/Makefile:231: arch/powerpc/boot/crt0.o] Error 1
-
-Similar change was already introduced for the main powerpc Makefile in
-commit 446cda1b21d9 ("powerpc/32: Don't always pass -mcpu=powerpc to the
-compiler").
-
-Fixes: 40a75584e526 ("powerpc/boot: Build wrapper for an appropriate CPU")
-Cc: stable@vger.kernel.org # v5.19+
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/2ae3ae5887babfdacc34435bff0944b3f336100a.1674632329.git.christophe.leroy@csgroup.eu
+Cc: Animesh Manna <animesh.manna@intel.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221125173156.31689-2-ville.syrjala@linux.intel.com
+Stable-dep-of: 14e591a1930c ("drm/i915: Populate encoder->devdata for DSI on icl+")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/Makefile | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/display/intel_connector.c | 2 +-
+ drivers/gpu/drm/i915/display/intel_panel.c     | 7 +++++++
+ drivers/gpu/drm/i915/display/intel_panel.h     | 1 +
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/boot/Makefile b/arch/powerpc/boot/Makefile
-index d32d95aea5d6f..295f76df13b55 100644
---- a/arch/powerpc/boot/Makefile
-+++ b/arch/powerpc/boot/Makefile
-@@ -39,13 +39,19 @@ BOOTCFLAGS    := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
- 		 $(LINUXINCLUDE)
+diff --git a/drivers/gpu/drm/i915/display/intel_connector.c b/drivers/gpu/drm/i915/display/intel_connector.c
+index 6205ddd3ded03..562da3b741e2d 100644
+--- a/drivers/gpu/drm/i915/display/intel_connector.c
++++ b/drivers/gpu/drm/i915/display/intel_connector.c
+@@ -54,7 +54,7 @@ int intel_connector_init(struct intel_connector *connector)
+ 	__drm_atomic_helper_connector_reset(&connector->base,
+ 					    &conn_state->base);
  
- ifdef CONFIG_PPC64_BOOT_WRAPPER
--ifdef CONFIG_CPU_LITTLE_ENDIAN
--BOOTCFLAGS	+= -m64 -mcpu=powerpc64le
-+BOOTCFLAGS	+= -m64
- else
--BOOTCFLAGS	+= -m64 -mcpu=powerpc64
-+BOOTCFLAGS	+= -m32
- endif
+-	INIT_LIST_HEAD(&connector->panel.fixed_modes);
++	intel_panel_init_alloc(connector);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/i915/display/intel_panel.c b/drivers/gpu/drm/i915/display/intel_panel.c
+index 1640726bfbf6a..b49228eb79e75 100644
+--- a/drivers/gpu/drm/i915/display/intel_panel.c
++++ b/drivers/gpu/drm/i915/display/intel_panel.c
+@@ -661,6 +661,13 @@ intel_panel_mode_valid(struct intel_connector *connector,
+ 	return MODE_OK;
+ }
+ 
++void intel_panel_init_alloc(struct intel_connector *connector)
++{
++	struct intel_panel *panel = &connector->panel;
 +
-+ifdef CONFIG_TARGET_CPU_BOOL
-+BOOTCFLAGS	+= -mcpu=$(CONFIG_TARGET_CPU)
-+else ifdef CONFIG_PPC64_BOOT_WRAPPER
-+ifdef CONFIG_CPU_LITTLE_ENDIAN
-+BOOTCFLAGS	+= -mcpu=powerpc64le
- else
--BOOTCFLAGS	+= -m32 -mcpu=powerpc
-+BOOTCFLAGS	+= -mcpu=powerpc64
-+endif
- endif
++	INIT_LIST_HEAD(&panel->fixed_modes);
++}
++
+ int intel_panel_init(struct intel_connector *connector)
+ {
+ 	struct intel_panel *panel = &connector->panel;
+diff --git a/drivers/gpu/drm/i915/display/intel_panel.h b/drivers/gpu/drm/i915/display/intel_panel.h
+index 5c5b5b7f95b6c..4b51e1c51da62 100644
+--- a/drivers/gpu/drm/i915/display/intel_panel.h
++++ b/drivers/gpu/drm/i915/display/intel_panel.h
+@@ -18,6 +18,7 @@ struct intel_connector;
+ struct intel_crtc_state;
+ struct intel_encoder;
  
- BOOTCFLAGS	+= -isystem $(shell $(BOOTCC) -print-file-name=include)
++void intel_panel_init_alloc(struct intel_connector *connector);
+ int intel_panel_init(struct intel_connector *connector);
+ void intel_panel_fini(struct intel_connector *connector);
+ enum drm_connector_status
 -- 
 2.39.2
 
