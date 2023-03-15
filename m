@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70E34431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409A1C433EF;
-	Wed, 15 Mar 2023 12:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A404431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:35:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AE2C433EF;
+	Wed, 15 Mar 2023 12:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883700;
-	bh=mb0HX/SGQsDLsYMLVC2aqEhKx/fK9KlG6dFHMVQcFxY=;
+	s=korg; t=1678883703;
+	bh=c5s+Gl/fuVYFV03tnRpO6m41VLFOdh8IZ6tlFhOhAQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jO0WJ3t0cKyIRnIkhYFE/H/O3ndfIc/8wgp6Wi8PQAqrQomTMgWRk6qXC2/QwcddI
-	 zwZy22m+OA6Ntva8q7GiM8j/kcZj25GhYvqL3m6/lVd9USUhkALTzMcrFy8+OI9jMp
-	 VxbVY0NODbC5hufGwQjDxAeJEz/DoYGqbA+l0WL0=
+	b=B9V+lBYxRwoI/zBSwWgHy01QWcvYaHcNXwPGyDKgaUcI1T7tk+m9avWDB4RmH4s70
+	 +zQ7rvb/J4OeWMplyZyKVD/4HQjqQsss5QqYDUoaH8nDsqRywgjt9qQj9hFBrkNR2P
+	 l0XPxojKKxd8OsojRtLTU5XMXFDNXWP/CddFxMUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/143] scsi: sd: Fix wrong zone_write_granularity value during revalidate
-Date: Wed, 15 Mar 2023 13:13:04 +0100
-Message-Id: <20230315115743.488312335@linuxfoundation.org>
+Subject: [PATCH 6.1 099/143] netfilter: conntrack: adopt safer max chain length
+Date: Wed, 15 Mar 2023 13:13:05 +0100
+Message-Id: <20230315115743.517389686@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -38,74 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 288b3271d920c9ba949c3bab0f749f4cecc70e09 ]
+[ Upstream commit c77737b736ceb50fdf150434347dbd81ec76dbb1 ]
 
-When the sd driver revalidates host-managed SMR disks, it calls
-disk_set_zoned() which changes the zone_write_granularity attribute value
-to the logical block size regardless of the device type. After that, the sd
-driver overwrites the value in sd_zbc_read_zone() with the physical block
-size, since ZBC/ZAC requires this for host-managed disks. Between the calls
-to disk_set_zoned() and sd_zbc_read_zone(), there exists a window where the
-attribute shows the logical block size as the zone_write_granularity value,
-which is wrong for host-managed disks. The duration of the window is from
-20ms to 200ms, depending on report zone command execution time.
+Customers using GKE 1.25 and 1.26 are facing conntrack issues
+root caused to commit c9c3b6811f74 ("netfilter: conntrack: make
+max chain length random").
 
-To avoid the wrong zone_write_granularity value between disk_set_zoned()
-and sd_zbc_read_zone(), modify the value not in sd_zbc_read_zone() but
-just after disk_set_zoned() call.
+Even if we assume Uniform Hashing, a bucket often reachs 8 chained
+items while the load factor of the hash table is smaller than 0.5
 
-Fixes: a805a4fa4fa3 ("block: introduce zone_write_granularity limit")
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Link: https://lore.kernel.org/r/20230306063024.3376959-1-shinichiro.kawasaki@wdc.com
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+With a limit of 16, we reach load factors of 3.
+With a limit of 32, we reach load factors of 11.
+With a limit of 40, we reach load factors of 15.
+With a limit of 50, we reach load factors of 24.
+
+This patch changes MIN_CHAINLEN to 50, to minimize risks.
+
+Ideally, we could in the future add a cushion based on expected
+load factor (2 * nf_conntrack_max / nf_conntrack_buckets),
+because some setups might expect unusual values.
+
+Fixes: c9c3b6811f74 ("netfilter: conntrack: make max chain length random")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sd.c     | 7 ++++++-
- drivers/scsi/sd_zbc.c | 8 --------
- 2 files changed, 6 insertions(+), 9 deletions(-)
+ net/netfilter/nf_conntrack_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index eb76ba0550216..e934779bf05c8 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -2933,8 +2933,13 @@ static void sd_read_block_characteristics(struct scsi_disk *sdkp)
- 	}
+diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+index 7f0f3bcaae031..30ed45b1b57df 100644
+--- a/net/netfilter/nf_conntrack_core.c
++++ b/net/netfilter/nf_conntrack_core.c
+@@ -96,8 +96,8 @@ static DEFINE_MUTEX(nf_conntrack_mutex);
+ #define GC_SCAN_MAX_DURATION	msecs_to_jiffies(10)
+ #define GC_SCAN_EXPIRED_MAX	(64000u / HZ)
  
- 	if (sdkp->device->type == TYPE_ZBC) {
--		/* Host-managed */
-+		/*
-+		 * Host-managed: Per ZBC and ZAC specifications, writes in
-+		 * sequential write required zones of host-managed devices must
-+		 * be aligned to the device physical block size.
-+		 */
- 		disk_set_zoned(sdkp->disk, BLK_ZONED_HM);
-+		blk_queue_zone_write_granularity(q, sdkp->physical_block_size);
- 	} else {
- 		sdkp->zoned = zoned;
- 		if (sdkp->zoned == 1) {
-diff --git a/drivers/scsi/sd_zbc.c b/drivers/scsi/sd_zbc.c
-index bd15624c63228..4c35b4a916355 100644
---- a/drivers/scsi/sd_zbc.c
-+++ b/drivers/scsi/sd_zbc.c
-@@ -956,14 +956,6 @@ int sd_zbc_read_zones(struct scsi_disk *sdkp, u8 buf[SD_BUF_SIZE])
- 	disk_set_max_active_zones(disk, 0);
- 	nr_zones = round_up(sdkp->capacity, zone_blocks) >> ilog2(zone_blocks);
+-#define MIN_CHAINLEN	8u
+-#define MAX_CHAINLEN	(32u - MIN_CHAINLEN)
++#define MIN_CHAINLEN	50u
++#define MAX_CHAINLEN	(80u - MIN_CHAINLEN)
  
--	/*
--	 * Per ZBC and ZAC specifications, writes in sequential write required
--	 * zones of host-managed devices must be aligned to the device physical
--	 * block size.
--	 */
--	if (blk_queue_zoned_model(q) == BLK_ZONED_HM)
--		blk_queue_zone_write_granularity(q, sdkp->physical_block_size);
--
- 	sdkp->early_zone_info.nr_zones = nr_zones;
- 	sdkp->early_zone_info.zone_blocks = zone_blocks;
+ static struct conntrack_gc_work conntrack_gc_work;
  
 -- 
 2.39.2
