@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A85C4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC59C433EF;
-	Wed, 15 Mar 2023 12:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D84C4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:37:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE577C433D2;
+	Wed, 15 Mar 2023 12:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883839;
-	bh=rhxdufBm4e5kulz1JA4K+9qV2V4DEANXj5Xbx4cjepw=;
+	s=korg; t=1678883842;
+	bh=nrg8pWrR1jyw/2cG4nAiN4f762OvN7Mxbh9oWcnMej0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VjEvis635WMCCVWvVMefUKWOV1wxexLVmP716lMEjdz3cZAYypKyZt1rumdm/AJmH
-	 YYUiJxy3k9gr8tY92x2XxO+orsEU+SPVokFgvHuS7slVuutVdAPRv0oVyYIg9zQEC/
-	 P62vZYML7voItvDp6u6elmRkYnmI1thbbW7jbzqE=
+	b=yC6Q3EARdF5tRzT0lsUYByg5Hnq3Oi4NuAgA5iizpZv4/5nRFeDkHA07Hz7Fykrb+
+	 LW0i5KBto1RcHeIkunwTvtzNC07byHkT9OcYvIhjsItIcEcyaFOJsNyZMD9J5seMqo
+	 tfgaos2eRYVN/q1ckx4DRNmrgZWW//MMD6xOGzPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 6.1 143/143] UML: define RUNTIME_DISCARD_EXIT
-Date: Wed, 15 Mar 2023 13:13:49 +0100
-Message-Id: <20230315115745.018889460@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 6.2 001/141] fs: prevent out-of-bounds array speculation when closing a file descriptor
+Date: Wed, 15 Mar 2023 13:11:44 +0100
+Message-Id: <20230315115739.999740715@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
-References: <20230315115740.429574234@linuxfoundation.org>
+In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
+References: <20230315115739.932786806@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,40 +36,27 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit b99ddbe8336ee680257c8ab479f75051eaa49dcf upstream.
+commit 609d54441493c99f21c1823dfd66fa7f4c512ff4 upstream.
 
-With CONFIG_VIRTIO_UML=y, GNU ld < 2.36 fails to link UML vmlinux
-(w/wo CONFIG_LD_SCRIPT_STATIC).
-
-  `.exit.text' referenced in section `.uml.exitcall.exit' of arch/um/drivers/virtio_uml.o: defined in discarded section `.exit.text' of arch/um/drivers/virtio_uml.o
-  collect2: error: ld returned 1 exit status
-
-This fix is similar to the following commits:
-
-- 4b9880dbf3bd ("powerpc/vmlinux.lds: Define RUNTIME_DISCARD_EXIT")
-- a494398bde27 ("s390: define RUNTIME_DISCARD_EXIT to fix link error
-  with GNU ld < 2.36")
-- c1c551bebf92 ("sh: define RUNTIME_DISCARD_EXIT")
-
-Fixes: 99cb0d917ffa ("arch: fix broken BuildID for arm64 and riscv")
-Reported-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Tested-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Google-Bug-Id: 114199369
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/kernel/vmlinux.lds.S |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/file.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/um/kernel/vmlinux.lds.S
-+++ b/arch/um/kernel/vmlinux.lds.S
-@@ -1,4 +1,4 @@
--
-+#define RUNTIME_DISCARD_EXIT
- KERNEL_STACK_SIZE = 4096 * (1 << CONFIG_KERNEL_STACK_ORDER);
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -642,6 +642,7 @@ static struct file *pick_file(struct fil
+ 	if (fd >= fdt->max_fds)
+ 		return NULL;
  
- #ifdef CONFIG_LD_SCRIPT_STATIC
++	fd = array_index_nospec(fd, fdt->max_fds);
+ 	file = fdt->fd[fd];
+ 	if (file) {
+ 		rcu_assign_pointer(fdt->fd[fd], NULL);
 
 
