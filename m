@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADC24431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E233C433AE;
-	Wed, 15 Mar 2023 12:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368494431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF5FC433EF;
+	Wed, 15 Mar 2023 12:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884010;
-	bh=/4wXdushswwyYsHmuPXAyOOGaKB8u8himgerJvXeBgo=;
+	s=korg; t=1678884013;
+	bh=f4MniZ1rClnEdaIoi9xkLtznx3BaPoAfPL0u6UqwMEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e8DkFKRpUyhC+Wg54LJzMUniJ0b7Nd2PEE2NI523OwVI1Z55v/fDrKzqpVJk0mwVn
-	 ltlMHsN1H9WpffRTGPIbjO6ucR1YEaemJ66u0EBLdwnhKFkbbJNno6dpjqcNmKJK3A
-	 lA1x5+aUlbZR4tzOzORgqD6exKATlf0FMuB/mCfw=
+	b=y+qZcaBLNFyv/yZwcDFvXFc+cL+1d98ALqWWaZB1vTC+xwJ+xKk/HCP01RMa6++HJ
+	 INFhVY7nyn1zzaIX+8v1/WHHxuWlPtNTdB1DGVKJCID9mTcIaE3N+f4tl1SfDxHn1/
+	 ZFoG+nIbIJZGWOV8QJHpFukNNZApz6D9xGWtfptU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuiko Oshino <yuiko.oshino@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 065/141] net: lan78xx: fix accessing the LAN7800s internal phy specific registers from the MAC driver
-Date: Wed, 15 Mar 2023 13:12:48 +0100
-Message-Id: <20230315115741.932853374@linuxfoundation.org>
+Subject: [PATCH 6.2 074/141] drm/msm/dpu: correct sm6115 scaler
+Date: Wed, 15 Mar 2023 13:12:57 +0100
+Message-Id: <20230315115742.216390821@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -36,123 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuiko Oshino <yuiko.oshino@microchip.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit e57cf3639c323eeed05d3725fd82f91b349adca8 ]
+[ Upstream commit 38164e990a42ca276f72ab89fd24131e6d73b023 ]
 
-Move the LAN7800 internal phy (phy ID  0x0007c132) specific register
-accesses to the phy driver (microchip.c).
+QSEED4 is a newer variant of QSEED3LITE, which should be used on
+sm6115. Fix the used feature masks.
 
-Fix the error reported by Enguerrand de Ribaucourt in December 2022,
-"Some operations during the cable switch workaround modify the register
-LAN88XX_INT_MASK of the PHY. However, this register is specific to the
-LAN8835 PHY. For instance, if a DP8322I PHY is connected to the LAN7801,
-that register (0x19), corresponds to the LED and MAC address
-configuration, resulting in unapropriate behavior."
-
-I did not test with the DP8322I PHY, but I tested with an EVB-LAN7800
-with the internal PHY.
-
-Fixes: 14437e3fa284 ("lan78xx: workaround of forced 100 Full/Half duplex mode error")
-Signed-off-by: Yuiko Oshino <yuiko.oshino@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230301154307.30438-1-yuiko.oshino@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 3581b7062cec ("drm/msm/disp/dpu1: add support for display on SM6115")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/522219/
+Link: https://lore.kernel.org/r/20230211231259.1308718-11-dmitry.baryshkov@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/microchip.c | 32 ++++++++++++++++++++++++++++++++
- drivers/net/usb/lan78xx.c   | 27 +--------------------------
- 2 files changed, 33 insertions(+), 26 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/phy/microchip.c b/drivers/net/phy/microchip.c
-index ccecee2524ce6..0b88635f4fbca 100644
---- a/drivers/net/phy/microchip.c
-+++ b/drivers/net/phy/microchip.c
-@@ -342,6 +342,37 @@ static int lan88xx_config_aneg(struct phy_device *phydev)
- 	return genphy_config_aneg(phydev);
- }
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 13d3ef528f095..e03db98ebe997 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -30,9 +30,6 @@
+ #define VIG_SC7180_MASK \
+ 	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED4))
  
-+static void lan88xx_link_change_notify(struct phy_device *phydev)
-+{
-+	int temp;
-+
-+	/* At forced 100 F/H mode, chip may fail to set mode correctly
-+	 * when cable is switched between long(~50+m) and short one.
-+	 * As workaround, set to 10 before setting to 100
-+	 * at forced 100 F/H mode.
-+	 */
-+	if (!phydev->autoneg && phydev->speed == 100) {
-+		/* disable phy interrupt */
-+		temp = phy_read(phydev, LAN88XX_INT_MASK);
-+		temp &= ~LAN88XX_INT_MASK_MDINTPIN_EN_;
-+		phy_write(phydev, LAN88XX_INT_MASK, temp);
-+
-+		temp = phy_read(phydev, MII_BMCR);
-+		temp &= ~(BMCR_SPEED100 | BMCR_SPEED1000);
-+		phy_write(phydev, MII_BMCR, temp); /* set to 10 first */
-+		temp |= BMCR_SPEED100;
-+		phy_write(phydev, MII_BMCR, temp); /* set to 100 later */
-+
-+		/* clear pending interrupt generated while workaround */
-+		temp = phy_read(phydev, LAN88XX_INT_STS);
-+
-+		/* enable phy interrupt back */
-+		temp = phy_read(phydev, LAN88XX_INT_MASK);
-+		temp |= LAN88XX_INT_MASK_MDINTPIN_EN_;
-+		phy_write(phydev, LAN88XX_INT_MASK, temp);
-+	}
-+}
-+
- static struct phy_driver microchip_phy_driver[] = {
- {
- 	.phy_id		= 0x0007c132,
-@@ -359,6 +390,7 @@ static struct phy_driver microchip_phy_driver[] = {
- 
- 	.config_init	= lan88xx_config_init,
- 	.config_aneg	= lan88xx_config_aneg,
-+	.link_change_notify = lan88xx_link_change_notify,
- 
- 	.config_intr	= lan88xx_phy_config_intr,
- 	.handle_interrupt = lan88xx_handle_interrupt,
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index f18ab8e220db7..068488890d57b 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -2115,33 +2115,8 @@ static void lan78xx_remove_mdio(struct lan78xx_net *dev)
- static void lan78xx_link_status_change(struct net_device *net)
- {
- 	struct phy_device *phydev = net->phydev;
--	int temp;
+-#define VIG_SM8250_MASK \
+-	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3LITE))
 -
--	/* At forced 100 F/H mode, chip may fail to set mode correctly
--	 * when cable is switched between long(~50+m) and short one.
--	 * As workaround, set to 10 before setting to 100
--	 * at forced 100 F/H mode.
--	 */
--	if (!phydev->autoneg && (phydev->speed == 100)) {
--		/* disable phy interrupt */
--		temp = phy_read(phydev, LAN88XX_INT_MASK);
--		temp &= ~LAN88XX_INT_MASK_MDINTPIN_EN_;
--		phy_write(phydev, LAN88XX_INT_MASK, temp);
+ #define VIG_QCM2290_MASK (VIG_BASE_MASK | BIT(DPU_SSPP_QOS_8LVL))
  
--		temp = phy_read(phydev, MII_BMCR);
--		temp &= ~(BMCR_SPEED100 | BMCR_SPEED1000);
--		phy_write(phydev, MII_BMCR, temp); /* set to 10 first */
--		temp |= BMCR_SPEED100;
--		phy_write(phydev, MII_BMCR, temp); /* set to 100 later */
--
--		/* clear pending interrupt generated while workaround */
--		temp = phy_read(phydev, LAN88XX_INT_STS);
--
--		/* enable phy interrupt back */
--		temp = phy_read(phydev, LAN88XX_INT_MASK);
--		temp |= LAN88XX_INT_MASK_MDINTPIN_EN_;
--		phy_write(phydev, LAN88XX_INT_MASK, temp);
--	}
-+	phy_print_status(phydev);
- }
+ #define DMA_MSM8998_MASK \
+@@ -327,7 +324,7 @@ static const struct dpu_caps sc7180_dpu_caps = {
+ static const struct dpu_caps sm6115_dpu_caps = {
+ 	.max_mixer_width = DEFAULT_DPU_LINE_WIDTH,
+ 	.max_mixer_blendstages = 0x4,
+-	.qseed_type = DPU_SSPP_SCALER_QSEED3LITE,
++	.qseed_type = DPU_SSPP_SCALER_QSEED4,
+ 	.smart_dma_rev = DPU_SSPP_SMART_DMA_V2, /* TODO: v2.5 */
+ 	.ubwc_version = DPU_HW_UBWC_VER_20,
+ 	.has_dim_layer = true,
+@@ -883,10 +880,10 @@ static const struct dpu_sspp_cfg sc7180_sspp[] = {
+ };
  
- static int irq_map(struct irq_domain *d, unsigned int irq,
+ static const struct dpu_sspp_sub_blks sm6115_vig_sblk_0 =
+-				_VIG_SBLK("0", 2, DPU_SSPP_SCALER_QSEED3LITE);
++				_VIG_SBLK("0", 2, DPU_SSPP_SCALER_QSEED4);
+ 
+ static const struct dpu_sspp_cfg sm6115_sspp[] = {
+-	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SM8250_MASK,
++	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7180_MASK,
+ 		sm6115_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+ 	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
+ 		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
 -- 
 2.39.2
 
