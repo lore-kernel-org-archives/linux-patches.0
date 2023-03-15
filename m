@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBB74431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:30:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14591C433EF;
-	Wed, 15 Mar 2023 12:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246D34431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:30:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E837C433EF;
+	Wed, 15 Mar 2023 12:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883452;
-	bh=C6PME5ZEYwwvmyaJxyfORMvu3RAVgCFo6s6wziQGxe0=;
+	s=korg; t=1678883455;
+	bh=8sqsLCMpq3uPdTsdnkCMLX3RmGe0OSwfT+WahweiIuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vtUvRTQ9QRVJ/6PJ34D0Si53H0NFpw3IOG72o3/k9NORJC8pwgSi80XYPcEB6dbw7
-	 SavPavTXr7vJqXMyQ9fW/KScSfhdkLKWUNCT1oJt/9XEGuTWT94qOgIu8UaUkIu8Nt
-	 0l1rZ20FfkVBoSzyX+yj6j4uiiYzVdnEEJsdIamQ=
+	b=TDsQGBlpek4uX2AmCLEKRmIAsBeAKaSHsTB6CyyWgsiYz+q2ElmUl1QfT0RZlb5Z+
+	 RONikEUEwCuCKz9OJDy731yu9k1GpcLBmqKbPvDtvzGrfj8FPaNJkM6q1uZwpRIPZq
+	 w/TgeQLNaTlw0ZKSI4/+9ag+6zwc0vUTqTL8A2fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seth Forshee <seth.forshee@digitalocean.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	linux-fsdevel@vger.kernel.org,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>
-Subject: [PATCH 5.15 142/145] fs: hold writers when changing mounts idmapping
-Date: Wed, 15 Mar 2023 13:13:28 +0100
-Message-Id: <20230315115743.595251147@linuxfoundation.org>
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Alexandru Matei <alexandru.matei@uipath.com>
+Subject: [PATCH 5.15 143/145] KVM: nVMX: Dont use Enlightened MSR Bitmap for L3
+Date: Wed, 15 Mar 2023 13:13:29 +0100
+Message-Id: <20230315115743.623834371@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -37,100 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Brauner <christian.brauner@ubuntu.com>
+From: Vitaly Kuznetsov <vkuznets@redhat.com>
 
-commit e1bbcd277a53e08d619ffeec56c5c9287f2bf42f upstream.
+commit 250552b925ce400c17d166422fde9bb215958481 upstream.
 
-Hold writers when changing a mount's idmapping to make it more robust.
+When KVM runs as a nested hypervisor on top of Hyper-V it uses Enlightened
+VMCS and enables Enlightened MSR Bitmap feature for its L1s and L2s (which
+are actually L2s and L3s from Hyper-V's perspective). When MSR bitmap is
+updated, KVM has to reset HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP from
+clean fields to make Hyper-V aware of the change. For KVM's L1s, this is
+done in vmx_disable_intercept_for_msr()/vmx_enable_intercept_for_msr().
+MSR bitmap for L2 is build in nested_vmx_prepare_msr_bitmap() by blending
+MSR bitmap for L1 and L1's idea of MSR bitmap for L2. KVM, however, doesn't
+check if the resulting bitmap is different and never cleans
+HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP in eVMCS02. This is incorrect and
+may result in Hyper-V missing the update.
 
-The vfs layer takes care to retrieve the idmapping of a mount once
-ensuring that the idmapping used for vfs permission checking is
-identical to the idmapping passed down to the filesystem.
+The issue could've been solved by calling evmcs_touch_msr_bitmap() for
+eVMCS02 from nested_vmx_prepare_msr_bitmap() unconditionally but doing so
+would not give any performance benefits (compared to not using Enlightened
+MSR Bitmap at all). 3-level nesting is also not a very common setup
+nowadays.
 
-For ioctl codepaths the filesystem itself is responsible for taking the
-idmapping into account if they need to. While all filesystems with
-FS_ALLOW_IDMAP raised take the same precautions as the vfs we should
-enforce it explicitly by making sure there are no active writers on the
-relevant mount while changing the idmapping.
+Don't enable 'Enlightened MSR Bitmap' feature for KVM's L2s (real L3s) for
+now.
 
-This is similar to turning a mount ro with the difference that in
-contrast to turning a mount ro changing the idmapping can only ever be
-done once while a mount can transition between ro and rw as much as it
-wants.
-
-This is a minor user-visible change. But it is extremely unlikely to
-matter. The caller must've created a detached mount via OPEN_TREE_CLONE
-and then handed that O_PATH fd to another process or thread which then
-must've gotten a writable fd for that mount and started creating files
-in there while the caller is still changing mount properties. While not
-impossible it will be an extremely rare corner-case and should in
-general be considered a bug in the application. Consider making a mount
-MOUNT_ATTR_NOEXEC or MOUNT_ATTR_NODEV while allowing someone else to
-perform lookups or exec'ing in parallel by handing them a copy of the
-OPEN_TREE_CLONE fd or another fd beneath that mount.
-
-Link: https://lore.kernel.org/r/20220510095840.152264-1-brauner@kernel.org
-Cc: Seth Forshee <seth.forshee@digitalocean.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Message-Id: <20211129094704.326635-2-vkuznets@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Alexandru Matei <alexandru.matei@uipath.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |   29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ arch/x86/kvm/vmx/vmx.c |   22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -3968,6 +3968,23 @@ static int can_idmap_mount(const struct
- 	return 0;
- }
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -2739,15 +2739,6 @@ int alloc_loaded_vmcs(struct loaded_vmcs
+ 		if (!loaded_vmcs->msr_bitmap)
+ 			goto out_vmcs;
+ 		memset(loaded_vmcs->msr_bitmap, 0xff, PAGE_SIZE);
+-
+-		if (IS_ENABLED(CONFIG_HYPERV) &&
+-		    static_branch_unlikely(&enable_evmcs) &&
+-		    (ms_hyperv.nested_features & HV_X64_NESTED_MSR_BITMAP)) {
+-			struct hv_enlightened_vmcs *evmcs =
+-				(struct hv_enlightened_vmcs *)loaded_vmcs->vmcs;
+-
+-			evmcs->hv_enlightenments_control.msr_bitmap = 1;
+-		}
+ 	}
  
-+/**
-+ * mnt_allow_writers() - check whether the attribute change allows writers
-+ * @kattr: the new mount attributes
-+ * @mnt: the mount to which @kattr will be applied
-+ *
-+ * Check whether thew new mount attributes in @kattr allow concurrent writers.
-+ *
-+ * Return: true if writers need to be held, false if not
-+ */
-+static inline bool mnt_allow_writers(const struct mount_kattr *kattr,
-+				     const struct mount *mnt)
-+{
-+	return (!(kattr->attr_set & MNT_READONLY) ||
-+		(mnt->mnt.mnt_flags & MNT_READONLY)) &&
-+	       !kattr->mnt_userns;
-+}
+ 	memset(&loaded_vmcs->host_state, 0, sizeof(struct vmcs_host_state));
+@@ -6969,6 +6960,19 @@ static int vmx_create_vcpu(struct kvm_vc
+ 	if (err < 0)
+ 		goto free_pml;
+ 
++	/*
++	 * Use Hyper-V 'Enlightened MSR Bitmap' feature when KVM runs as a
++	 * nested (L1) hypervisor and Hyper-V in L0 supports it. Enable the
++	 * feature only for vmcs01, KVM currently isn't equipped to realize any
++	 * performance benefits from enabling it for vmcs02.
++	 */
++	if (IS_ENABLED(CONFIG_HYPERV) && static_branch_unlikely(&enable_evmcs) &&
++	    (ms_hyperv.nested_features & HV_X64_NESTED_MSR_BITMAP)) {
++		struct hv_enlightened_vmcs *evmcs = (void *)vmx->vmcs01.vmcs;
 +
- static struct mount *mount_setattr_prepare(struct mount_kattr *kattr,
- 					   struct mount *mnt, int *err)
- {
-@@ -3998,8 +4015,7 @@ static struct mount *mount_setattr_prepa
- 
- 		last = m;
- 
--		if ((kattr->attr_set & MNT_READONLY) &&
--		    !(m->mnt.mnt_flags & MNT_READONLY)) {
-+		if (!mnt_allow_writers(kattr, m)) {
- 			*err = mnt_hold_writers(m);
- 			if (*err)
- 				goto out;
-@@ -4050,13 +4066,8 @@ static void mount_setattr_commit(struct
- 			WRITE_ONCE(m->mnt.mnt_flags, flags);
- 		}
- 
--		/*
--		 * We either set MNT_READONLY above so make it visible
--		 * before ~MNT_WRITE_HOLD or we failed to recursively
--		 * apply mount options.
--		 */
--		if ((kattr->attr_set & MNT_READONLY) &&
--		    (m->mnt.mnt_flags & MNT_WRITE_HOLD))
-+		/* If we had to hold writers unblock them. */
-+		if (m->mnt.mnt_flags & MNT_WRITE_HOLD)
- 			mnt_unhold_writers(m);
- 
- 		if (!err && kattr->propagation)
++		evmcs->hv_enlightenments_control.msr_bitmap = 1;
++	}
++
+ 	/* The MSR bitmap starts with all ones */
+ 	bitmap_fill(vmx->shadow_msr_intercept.read, MAX_POSSIBLE_PASSTHROUGH_MSRS);
+ 	bitmap_fill(vmx->shadow_msr_intercept.write, MAX_POSSIBLE_PASSTHROUGH_MSRS);
 
 
