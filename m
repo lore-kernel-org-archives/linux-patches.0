@@ -1,103 +1,160 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01D2538D
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 14:32:54 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 2A4DF211DE;
-	Wed, 15 Mar 2023 14:22:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1678890176; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZXN3JSv2JuNO7QXPyMNGLcsuvXz4zccB7xCl9QvCXx0=;
-	b=a4OkV7YgDfYyvZJGSY0wfj0zvUGu55EzMc8yK/Q0mwAoFuHUyv9EOKd588uX0SEm1bAUKI
-	XLddUf1uTdVQIWPBvq6FImBmERKh4de/0fu8o3rgjewOTfF0kdlKQYo/WtiGahloJk1YCo
-	bWkbRNXnMnMj9kQMCPG92CmBPWloghc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1678890176;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZXN3JSv2JuNO7QXPyMNGLcsuvXz4zccB7xCl9QvCXx0=;
-	b=VEP1QR+K19ft2s5XsGNEZFSU2UdJgackjuPRKjrUHdAl9BAKPpvldY3LmIUYjU1wkjcQRh
-	Qr45ZukAmKT7UiCw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B492813A2F;
-	Wed, 15 Mar 2023 14:22:55 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id rxJnK7/UEWTFRgAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Wed, 15 Mar 2023 14:22:55 +0000
-Message-ID: <17007eb9-b831-aabb-78dc-95f4f4aada55@suse.cz>
-Date: Wed, 15 Mar 2023 15:22:55 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E29538D
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 14:50:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04E0C433D2;
+	Wed, 15 Mar 2023 14:50:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1678891853;
+	bh=wu9HXojxuH3AtIIT++MDX+kORwbWO7Y7OZ2upGm0F4g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ni/Hy4a5bJJNljjXzq8+c+485351OSOzfK6nHpUHJ4HBGlkidr8j4Ww1Q2RuUYgEe
+	 lM5RbzfsBlmTzMjurrLTYOKIicKITAeEXSadq2NXDNsMcKwXsyPhg3vCx7v0CyTaak
+	 Z1qShw49YNGDF0tf6+ts62FOZRD9PlrCnILgFgnC35g53MgiBu90OrC3zTB/FcmJEK
+	 PKsfzxa0MxPOdZDiIZPNF+SDQExt+L394j+lmThmbsIPDvHm+0Tf3KZO/wl52yIt2d
+	 qMM0Wh8SIAXaTwmSBaHY3xxbfGMEQcmci4HTUz6ClZ9Ais/uNviMgqBYxzb83kZopJ
+	 6jQsgqvSec0DQ==
+Date: Wed, 15 Mar 2023 16:50:34 +0200
+From: Mike Rapoport <rppt@kernel.org>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Mike Rapoport <mike.rapoport@gmail.com>,
+	Christoph Lameter <cl@linux.com>,
+	David Rientjes <rientjes@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+	rcu@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	netdev@vger.kernel.org, linux-doc@vger.kernel.org,
+	Jonathan Corbet <corbet@lwn.net>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Joel Fernandes <joel@joelfernandes.org>
+Subject: Re: [PATCH 7/7] mm/slab: document kfree() as allowed for
+ kmem_cache_alloc() objects
+Message-ID: <ZBHbOrk3P3TXSkK8@kernel.org>
+References: <20230310103210.22372-1-vbabka@suse.cz>
+ <20230310103210.22372-8-vbabka@suse.cz>
+ <ZA2ic9JYXGVzps1+@kernel.org>
+ <14043bee-af7d-38f3-5a46-f63940e56c1e@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 0/7] remove SLOB and allow kfree() with kmem_cache_alloc()
-Content-Language: en-US
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: Mike Rapoport <mike.rapoport@gmail.com>, Christoph Lameter
- <cl@linux.com>, David Rientjes <rientjes@google.com>,
- Joonsoo Kim <iamjoonsoo.kim@lge.com>, Pekka Enberg <penberg@kernel.org>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
- rcu@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- netdev@vger.kernel.org, linux-doc@vger.kernel.org,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Frederic Weisbecker <frederic@kernel.org>, Jakub Kicinski <kuba@kernel.org>,
- Joel Fernandes <joel@joelfernandes.org>, Jonathan Corbet <corbet@lwn.net>,
- Josh Triplett <josh@joshtriplett.org>, Lai Jiangshan
- <jiangshanlai@gmail.com>, Mathieu Desnoyers
- <mathieu.desnoyers@efficios.com>, Mike Rapoport <rppt@kernel.org>,
- Neeraj Upadhyay <quic_neeraju@quicinc.com>, Paolo Abeni <pabeni@redhat.com>,
- "Paul E. McKenney" <paulmck@kernel.org>
-References: <20230310103210.22372-1-vbabka@suse.cz>
- <ZA2gofYkXRcJ8cLA@kernel.org> <20230313123147.6d28c47e@gandalf.local.home>
- <3018fb77-68d0-fb67-2595-7c58c6cf7a76@suse.cz>
- <20230315102031.29585157@gandalf.local.home>
-From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <20230315102031.29585157@gandalf.local.home>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <14043bee-af7d-38f3-5a46-f63940e56c1e@suse.cz>
 
-On 3/15/23 15:20, Steven Rostedt wrote:
-> On Wed, 15 Mar 2023 14:53:14 +0100
-> Vlastimil Babka <vbabka@suse.cz> wrote:
+On Wed, Mar 15, 2023 at 02:38:47PM +0100, Vlastimil Babka wrote:
+> On 3/12/23 10:59, Mike Rapoport wrote:
+> > On Fri, Mar 10, 2023 at 11:32:09AM +0100, Vlastimil Babka wrote:
+> >> This will make it easier to free objects in situations when they can
+> >> come from either kmalloc() or kmem_cache_alloc(), and also allow
+> >> kfree_rcu() for freeing objects from kmem_cache_alloc().
+> >> 
+> >> For the SLAB and SLUB allocators this was always possible so with SLOB
+> >> gone, we can document it as supported.
+> >> 
+> >> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> >> Cc: Mike Rapoport <rppt@kernel.org>
+> >> Cc: Jonathan Corbet <corbet@lwn.net>
+> >> Cc: "Paul E. McKenney" <paulmck@kernel.org>
+> >> Cc: Frederic Weisbecker <frederic@kernel.org>
+> >> Cc: Neeraj Upadhyay <quic_neeraju@quicinc.com>
+> >> Cc: Josh Triplett <josh@joshtriplett.org>
+> >> Cc: Steven Rostedt <rostedt@goodmis.org>
+> >> Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+> >> Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+> >> Cc: Joel Fernandes <joel@joelfernandes.org>
+> >> ---
+> >>  Documentation/core-api/memory-allocation.rst | 15 +++++++++++----
+> >>  include/linux/rcupdate.h                     |  6 ++++--
+> >>  mm/slab_common.c                             |  5 +----
+> >>  3 files changed, 16 insertions(+), 10 deletions(-)
+> >> 
+> >> diff --git a/Documentation/core-api/memory-allocation.rst b/Documentation/core-api/memory-allocation.rst
+> >> index 5954ddf6ee13..f9e8d352ed67 100644
+> >> --- a/Documentation/core-api/memory-allocation.rst
+> >> +++ b/Documentation/core-api/memory-allocation.rst
+> >> @@ -170,7 +170,14 @@ should be used if a part of the cache might be copied to the userspace.
+> >>  After the cache is created kmem_cache_alloc() and its convenience
+> >>  wrappers can allocate memory from that cache.
+> >>  
+> >> -When the allocated memory is no longer needed it must be freed. You can
+> >> -use kvfree() for the memory allocated with `kmalloc`, `vmalloc` and
+> >> -`kvmalloc`. The slab caches should be freed with kmem_cache_free(). And
+> >> -don't forget to destroy the cache with kmem_cache_destroy().
+> >> +When the allocated memory is no longer needed it must be freed. Objects
+> > 
+> > I'd add a line break before Objects                               ^
+> > 
+> >> +allocated by `kmalloc` can be freed by `kfree` or `kvfree`.
+> >> +Objects allocated by `kmem_cache_alloc` can be freed with `kmem_cache_free`
+> >> +or also by `kfree` or `kvfree`, which can be more convenient as it does
+> > 
+> > Maybe replace 'or also by' with a coma:
+> > 
+> > Objects allocated by `kmem_cache_alloc` can be freed with `kmem_cache_free`,
+> > `kfree` or `kvfree`, which can be more convenient as it does
 > 
->> On 3/13/23 17:31, Steven Rostedt wrote:
->> > Just remove that comment. And you could even add:
->> > 
->> > Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
->> > Fixes: e4c2ce82ca27 ("ring_buffer: allocate buffer page pointer")  
->> 
->> Thanks for the analysis. Want to take the following patch to your tree or
->> should I make it part of the series?
+> But then I need to clarify what the "which" applies to?
+
+Yeah, I kinda missed that...
+
+> > 
+> >> +not require the kmem_cache pointed.
+> > 
+> >                              ^ pointer.
+> > 
+> >> +The rules for _bulk and _rcu flavors of freeing functions are analogical.
+> > 
+> > Maybe 
+> > 
+> > The same rules apply to _bulk and _rcu flavors of freeing functions.
 > 
-> I can take it if you send it as a proper patch and Cc
-> linux-trace-kernel@vger.kernel.org.
+> So like this incremental diff?
+ 
+> diff --git a/Documentation/core-api/memory-allocation.rst b/Documentation/core-api/memory-allocation.rst
+> index f9e8d352ed67..1c58d883b273 100644
+> --- a/Documentation/core-api/memory-allocation.rst
+> +++ b/Documentation/core-api/memory-allocation.rst
+> @@ -170,12 +170,14 @@ should be used if a part of the cache might be copied to the userspace.
+>  After the cache is created kmem_cache_alloc() and its convenience
+>  wrappers can allocate memory from that cache.
+>  
+> -When the allocated memory is no longer needed it must be freed. Objects
+> -allocated by `kmalloc` can be freed by `kfree` or `kvfree`.
+> -Objects allocated by `kmem_cache_alloc` can be freed with `kmem_cache_free`
+> -or also by `kfree` or `kvfree`, which can be more convenient as it does
+> -not require the kmem_cache pointed.
+> -The rules for _bulk and _rcu flavors of freeing functions are analogical.
+> +When the allocated memory is no longer needed it must be freed.
+> +
+> +Objects allocated by `kmalloc` can be freed by `kfree` or `kvfree`. Objects
+> +allocated by `kmem_cache_alloc` can be freed with `kmem_cache_free`, `kfree`
+> +or `kvfree`, where the latter two might be more convenient thanks to not
+> +needing the kmem_cache pointer.
 
-OK, will do.
+... but this way it's more explicit that kfree and kvfree don't need
+kmem_cache pointer.
 
-> I'm guessing it's not required for stable.
+> +
+> +The same rules apply to _bulk and _rcu flavors of freeing functions.
+>  
+>  Memory allocated by `vmalloc` can be freed with `vfree` or `kvfree`.
+>  Memory allocated by `kvmalloc` can be freed with `kvfree`.
+> 
 
-No, but maybe AUTOSEL will pick it anyway as it has Fixes: but that's their
-problem ;)
-
-> -- Steve
-
+-- 
+Sincerely yours,
+Mike.
