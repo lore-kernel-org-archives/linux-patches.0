@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D3F4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F82C4339B;
-	Wed, 15 Mar 2023 12:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E2D4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:17:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A89FC4331D;
+	Wed, 15 Mar 2023 12:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882672;
-	bh=kYRd3AsbLZ5yPoxtxPd0uC12BpURQAhBsivRbZkVaPI=;
+	s=korg; t=1678882675;
+	bh=4kTsIwueTSgRPB/AFJahT6yK3JEXtmH6kz+px2rXK5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jlWDBvCqua2Ze6kFmubQ+8hMu8XO+ZhRqq3XK7QcWTXkmHol0VmgW7QAW3EqShXex
-	 FAlq6jX+tPvvLwbvOmQNRopjsmoeiIUpJ9Bzs2z+sOeTExVnseGQRbctfxutWYAyPd
-	 OvGcmsSQfIUvRKibhCwt1S7bcr359rnsld4k3L5Q=
+	b=I3bjGIxtqFXPOmDnd+Wln3xuudGio201Pnoge4+cRYE1AGWY99q6G2uXADTH8FWJR
+	 fjx+RndnZO30CLgWKdiLZKQb3iWuVRImuw1suu453D6rSTbDWq3GCh1OXHEW/ujHbN
+	 4JHf2feqnmvJ8dkEtG/+W6UfTBYjn+NYkc1v7BkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Wayne Lin <waynelin@amd.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 27/68] ARM: dts: exynos: Override thermal by label in Exynos5250
-Date: Wed, 15 Mar 2023 13:12:21 +0100
-Message-Id: <20230315115727.147904176@linuxfoundation.org>
+Subject: [PATCH 5.4 10/68] drm/edid: Extract drm_mode_cea_vic()
+Date: Wed, 15 Mar 2023 13:12:04 +0100
+Message-Id: <20230315115726.498119715@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -34,82 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzk@kernel.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 7e86ef5cc89609cbad8b9dd2f476789c638dbb92 ]
+[ Upstream commit cfd6f8c3a94a96c003a8929b66d6d54181b9420d ]
 
-Using full paths to extend or override a device tree node is error prone
-since if there was a typo error, a new node will be created instead of
-extending the node as it was desired.  This will lead to run-time errors
-that could be hard to detect.
+Extract the logic to compute the final CEA VIC to a small helper.
+We'll reorder it a bit to make future modifications more
+straightforward. No function changes.
 
-A mistyped label on the other hand, will cause a dtc compile error
-(during build time).
-
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-Link: https://lore.kernel.org/r/20200901075417.22481-8-krzk@kernel.org
-Stable-dep-of: 33e2c595e2e4 ("ARM: dts: exynos: correct TMU phandle in Exynos5250")
+Cc: Wayne Lin <waynelin@amd.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20191004141914.20600-2-ville.syrjala@linux.intel.com
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Stable-dep-of: 1cbc1f0d324b ("drm/edid: fix AVI infoframe aspect ratio handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/exynos5250.dtsi | 38 +++++++++++++++----------------
- 1 file changed, 18 insertions(+), 20 deletions(-)
+ drivers/gpu/drm/drm_edid.c | 53 +++++++++++++++++++++-----------------
+ 1 file changed, 30 insertions(+), 23 deletions(-)
 
-diff --git a/arch/arm/boot/dts/exynos5250.dtsi b/arch/arm/boot/dts/exynos5250.dtsi
-index fc966c10cf498..624fa234e7175 100644
---- a/arch/arm/boot/dts/exynos5250.dtsi
-+++ b/arch/arm/boot/dts/exynos5250.dtsi
-@@ -1104,26 +1104,6 @@
- 		};
- 	};
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index 2dc6dd6230d76..10eb78b9347e1 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -5065,6 +5065,35 @@ drm_hdmi_infoframe_set_hdr_metadata(struct hdmi_drm_infoframe *frame,
+ }
+ EXPORT_SYMBOL(drm_hdmi_infoframe_set_hdr_metadata);
  
--	thermal-zones {
--		cpu_thermal: cpu-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
--			thermal-sensors = <&tmu 0>;
--
--			cooling-maps {
--				map0 {
--				     /* Corresponds to 800MHz at freq_table */
--				     cooling-device = <&cpu0 9 9>, <&cpu1 9 9>;
--				};
--				map1 {
--				     /* Corresponds to 200MHz at freq_table */
--				     cooling-device = <&cpu0 15 15>,
--						      <&cpu1 15 15>;
--			       };
--		       };
--		};
--	};
--
- 	timer {
- 		compatible = "arm,armv7-timer";
- 		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
-@@ -1139,6 +1119,24 @@
- 	};
- };
++static u8 drm_mode_cea_vic(struct drm_connector *connector,
++			   const struct drm_display_mode *mode)
++{
++	u8 vendor_if_vic = drm_match_hdmi_mode(mode);
++	bool is_s3d = mode->flags & DRM_MODE_FLAG_3D_MASK;
++	u8 vic;
++
++	/*
++	 * HDMI spec says if a mode is found in HDMI 1.4b 4K modes
++	 * we should send its VIC in vendor infoframes, else send the
++	 * VIC in AVI infoframes. Lets check if this mode is present in
++	 * HDMI 1.4b 4K modes
++	 */
++	if (drm_valid_hdmi_vic(vendor_if_vic) && !is_s3d)
++		return 0;
++
++	vic = drm_match_cea_mode(mode);
++
++	/*
++	 * HDMI 1.4 VIC range: 1 <= VIC <= 64 (CEA-861-D) but
++	 * HDMI 2.0 VIC range: 1 <= VIC <= 107 (CEA-861-F). So we
++	 * have to make sure we dont break HDMI 1.4 sinks.
++	 */
++	if (!is_hdmi2_sink(connector) && vic > 64)
++		return 0;
++
++	return vic;
++}
++
+ /**
+  * drm_hdmi_avi_infoframe_from_display_mode() - fill an HDMI AVI infoframe with
+  *                                              data from a DRM display mode
+@@ -5092,29 +5121,7 @@ drm_hdmi_avi_infoframe_from_display_mode(struct hdmi_avi_infoframe *frame,
+ 	if (mode->flags & DRM_MODE_FLAG_DBLCLK)
+ 		frame->pixel_repeat = 1;
  
-+&cpu_thermal {
-+	polling-delay-passive = <0>;
-+	polling-delay = <0>;
-+	thermal-sensors = <&tmu 0>;
-+
-+	cooling-maps {
-+		map0 {
-+			/* Corresponds to 800MHz at freq_table */
-+			cooling-device = <&cpu0 9 9>, <&cpu1 9 9>;
-+		};
-+		map1 {
-+			/* Corresponds to 200MHz at freq_table */
-+			cooling-device = <&cpu0 15 15>,
-+					 <&cpu1 15 15>;
-+		};
-+	};
-+};
-+
- &dp {
- 	power-domains = <&pd_disp1>;
- 	clocks = <&clock CLK_DP>;
+-	frame->video_code = drm_match_cea_mode(mode);
+-
+-	/*
+-	 * HDMI 1.4 VIC range: 1 <= VIC <= 64 (CEA-861-D) but
+-	 * HDMI 2.0 VIC range: 1 <= VIC <= 107 (CEA-861-F). So we
+-	 * have to make sure we dont break HDMI 1.4 sinks.
+-	 */
+-	if (!is_hdmi2_sink(connector) && frame->video_code > 64)
+-		frame->video_code = 0;
+-
+-	/*
+-	 * HDMI spec says if a mode is found in HDMI 1.4b 4K modes
+-	 * we should send its VIC in vendor infoframes, else send the
+-	 * VIC in AVI infoframes. Lets check if this mode is present in
+-	 * HDMI 1.4b 4K modes
+-	 */
+-	if (frame->video_code) {
+-		u8 vendor_if_vic = drm_match_hdmi_mode(mode);
+-		bool is_s3d = mode->flags & DRM_MODE_FLAG_3D_MASK;
+-
+-		if (drm_valid_hdmi_vic(vendor_if_vic) && !is_s3d)
+-			frame->video_code = 0;
+-	}
++	frame->video_code = drm_mode_cea_vic(connector, mode);
+ 
+ 	frame->picture_aspect = HDMI_PICTURE_ASPECT_NONE;
+ 
 -- 
 2.39.2
 
