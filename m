@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCB44431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4DCC433D2;
-	Wed, 15 Mar 2023 12:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C5A4432
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:39:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BCEC433EF;
+	Wed, 15 Mar 2023 12:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883952;
-	bh=QrgYTFN6a0sK1aeL38UN5CE8ytyWkS+uh7xojTl7gjU=;
+	s=korg; t=1678883957;
+	bh=fH9geY99T4+v1UiodIWGzlwR35ZXTwQZMz4ie8NFuoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zR7SiJ8qsjoNfPgqUdqoMEFLRhp35FNepJPwc0mCwcnGoI4jbHmW+5F2nmSWxoklb
-	 iibQJ0HWLNkaWCPxrBUq1rOWSWcnjce5l/c2C0JBgYsM5gZL21rIm5RYWeR9c16sKT
-	 5ApCrenwoJhnviE713/o1YCZQ1LOapvOrhUYaaT0=
+	b=Sxym9bodqepMSXFIUY3vUArYZEIogiEGUWhGStFru1PkYrSPkZB0kkwvfsP/hAVSE
+	 OZQoMgv0O7pM5IgC8ZmnQcqdvbRmGPch+Z8Mtsl4u11Jti1+GoOP5TZPfLmTwKWHAh
+	 IJsVvAamy2ZNlWzQAp8gkCWO13wYD5v6i7IMgWKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	Jon Mason <jdmason@kudzu.us>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 033/141] udf: Fix off-by-one error when discarding preallocation
-Date: Wed, 15 Mar 2023 13:12:16 +0100
-Message-Id: <20230315115740.978486731@linuxfoundation.org>
+Subject: [PATCH 6.2 052/141] bgmac: fix *initial* chip reset to support BCM5358
+Date: Wed, 15 Mar 2023 13:12:35 +0100
+Message-Id: <20230315115741.551944916@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -34,36 +38,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit f54aa97fb7e5329a373f9df4e5e213ced4fc8759 ]
+[ Upstream commit f99e6d7c4ed3be2531bd576425a5bd07fb133bd7 ]
 
-The condition determining whether the preallocation can be used had
-an off-by-one error so we didn't discard preallocation when new
-allocation was just following it. This can then confuse code in
-inode_getblk().
+While bringing hardware up we should perform a full reset including the
+switch bit (BGMAC_BCMA_IOCTL_SW_RESET aka SICF_SWRST). It's what
+specification says and what reference driver does.
 
-CC: stable@vger.kernel.org
-Fixes: 16d055656814 ("udf: Discard preallocation before extending file with a hole")
-Signed-off-by: Jan Kara <jack@suse.cz>
+This seems to be critical for the BCM5358. Without this hardware doesn't
+get initialized properly and doesn't seem to transmit or receive any
+packets.
+
+Originally bgmac was calling bgmac_chip_reset() before setting
+"has_robosw" property which resulted in expected behaviour. That has
+changed as a side effect of adding platform device support which
+regressed BCM5358 support.
+
+Fixes: f6a95a24957a ("net: ethernet: bgmac: Add platform device support")
+Cc: Jon Mason <jdmason@kudzu.us>
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20230227091156.19509-1-zajec5@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bgmac.c | 8 ++++++--
+ drivers/net/ethernet/broadcom/bgmac.h | 2 ++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/udf/inode.c b/fs/udf/inode.c
-index a1af2c2e1c295..7faa0a5af0260 100644
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -438,7 +438,7 @@ static int udf_get_block(struct inode *inode, sector_t block,
- 	 * Block beyond EOF and prealloc extents? Just discard preallocation
- 	 * as it is not useful and complicates things.
- 	 */
--	if (((loff_t)block) << inode->i_blkbits > iinfo->i_lenExtents)
-+	if (((loff_t)block) << inode->i_blkbits >= iinfo->i_lenExtents)
- 		udf_discard_prealloc(inode);
- 	udf_clear_extent_cache(inode);
- 	phys = inode_getblk(inode, block, &err, &new);
+diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
+index 3038386a5afd8..1761df8fb7f96 100644
+--- a/drivers/net/ethernet/broadcom/bgmac.c
++++ b/drivers/net/ethernet/broadcom/bgmac.c
+@@ -890,13 +890,13 @@ static void bgmac_chip_reset_idm_config(struct bgmac *bgmac)
+ 
+ 		if (iost & BGMAC_BCMA_IOST_ATTACHED) {
+ 			flags = BGMAC_BCMA_IOCTL_SW_CLKEN;
+-			if (!bgmac->has_robosw)
++			if (bgmac->in_init || !bgmac->has_robosw)
+ 				flags |= BGMAC_BCMA_IOCTL_SW_RESET;
+ 		}
+ 		bgmac_clk_enable(bgmac, flags);
+ 	}
+ 
+-	if (iost & BGMAC_BCMA_IOST_ATTACHED && !bgmac->has_robosw)
++	if (iost & BGMAC_BCMA_IOST_ATTACHED && (bgmac->in_init || !bgmac->has_robosw))
+ 		bgmac_idm_write(bgmac, BCMA_IOCTL,
+ 				bgmac_idm_read(bgmac, BCMA_IOCTL) &
+ 				~BGMAC_BCMA_IOCTL_SW_RESET);
+@@ -1490,6 +1490,8 @@ int bgmac_enet_probe(struct bgmac *bgmac)
+ 	struct net_device *net_dev = bgmac->net_dev;
+ 	int err;
+ 
++	bgmac->in_init = true;
++
+ 	bgmac_chip_intrs_off(bgmac);
+ 
+ 	net_dev->irq = bgmac->irq;
+@@ -1542,6 +1544,8 @@ int bgmac_enet_probe(struct bgmac *bgmac)
+ 	/* Omit FCS from max MTU size */
+ 	net_dev->max_mtu = BGMAC_RX_MAX_FRAME_SIZE - ETH_FCS_LEN;
+ 
++	bgmac->in_init = false;
++
+ 	err = register_netdev(bgmac->net_dev);
+ 	if (err) {
+ 		dev_err(bgmac->dev, "Cannot register net device\n");
+diff --git a/drivers/net/ethernet/broadcom/bgmac.h b/drivers/net/ethernet/broadcom/bgmac.h
+index e05ac92c06504..d73ef262991d6 100644
+--- a/drivers/net/ethernet/broadcom/bgmac.h
++++ b/drivers/net/ethernet/broadcom/bgmac.h
+@@ -472,6 +472,8 @@ struct bgmac {
+ 	int irq;
+ 	u32 int_mask;
+ 
++	bool in_init;
++
+ 	/* Current MAC state */
+ 	int mac_speed;
+ 	int mac_duplex;
 -- 
 2.39.2
 
