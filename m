@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93AB34431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15781C433EF;
-	Wed, 15 Mar 2023 12:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4904431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C64C433EF;
+	Wed, 15 Mar 2023 12:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882785;
-	bh=7H2fDWFLq7oTkhdwFhaOFYHwYK7ANczf6ioIzfc3GrY=;
+	s=korg; t=1678882788;
+	bh=/pWz3fA6NWGd5rYX1FzEwVJEeo7Lc7NIRiVzgCxsWYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BbNs7dalz3AWq0JoafD90CJlKoG74jp2+vF5fPw7w9GwoLRS6N/EUkbjZflChu4KM
-	 PP1Tw73kIiRY9TFCqxJznXVfArKggGXQNdDpj0ALS/a1ZxBQTvU9OwuwWliWmkXXyV
-	 e6v+bjJoeWTuVDr/iv1XMo1meUxGq//RLtCg9kr4=
+	b=iQakMYzTRlDcNittMn37dmJPULh17Lg6EMvTflVtO5JSZjfeyrCZxvRillk8G56XP
+	 rbiAJkE1BfJyJMWQzmk/fEZXCvm3msGzFK0vgJSgbCryC6R7qL1c4FGBQ5oGn+pioq
+	 rV54HesFfAYA8t0btNr81NByY9EpKjrlY5tmh1AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>,
-	=?UTF-8?q?Major=20D=C3=A1vid?= <major.david@balasys.hu>
-Subject: [PATCH 5.4 44/68] netfilter: tproxy: fix deadlock due to missing BH disable
-Date: Wed, 15 Mar 2023 13:12:38 +0100
-Message-Id: <20230315115727.844456760@linuxfoundation.org>
+	Lorenz Bauer <lmb@isovalent.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 45/68] btf: fix resolving BTF_KIND_VAR after ARRAY, STRUCT, UNION, PTR
+Date: Wed, 15 Mar 2023 13:12:39 +0100
+Message-Id: <20230315115727.888661691@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -36,78 +35,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Lorenz Bauer <lorenz.bauer@isovalent.com>
 
-[ Upstream commit 4a02426787bf024dafdb79b362285ee325de3f5e ]
+[ Upstream commit 9b459804ff9973e173fabafba2a1319f771e85fa ]
 
-The xtables packet traverser performs an unconditional local_bh_disable(),
-but the nf_tables evaluation loop does not.
+btf_datasec_resolve contains a bug that causes the following BTF
+to fail loading:
 
-Functions that are called from either xtables or nftables must assume
-that they can be called in process context.
+    [1] DATASEC a size=2 vlen=2
+        type_id=4 offset=0 size=1
+        type_id=7 offset=1 size=1
+    [2] INT (anon) size=1 bits_offset=0 nr_bits=8 encoding=(none)
+    [3] PTR (anon) type_id=2
+    [4] VAR a type_id=3 linkage=0
+    [5] INT (anon) size=1 bits_offset=0 nr_bits=8 encoding=(none)
+    [6] TYPEDEF td type_id=5
+    [7] VAR b type_id=6 linkage=0
 
-inet_twsk_deschedule_put() assumes that no softirq interrupt can occur.
-If tproxy is used from nf_tables its possible that we'll deadlock
-trying to aquire a lock already held in process context.
+This error message is printed during btf_check_all_types:
 
-Add a small helper that takes care of this and use it.
+    [1] DATASEC a size=2 vlen=2
+        type_id=7 offset=1 size=1 Invalid type
 
-Link: https://lore.kernel.org/netfilter-devel/401bd6ed-314a-a196-1cdc-e13c720cc8f2@balasys.hu/
-Fixes: 4ed8eb6570a4 ("netfilter: nf_tables: Add native tproxy support")
-Reported-and-tested-by: Major Dávid <major.david@balasys.hu>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+By tracing btf_*_resolve we can pinpoint the problem:
+
+    btf_datasec_resolve(depth: 1, type_id: 1, mode: RESOLVE_TBD) = 0
+        btf_var_resolve(depth: 2, type_id: 4, mode: RESOLVE_TBD) = 0
+            btf_ptr_resolve(depth: 3, type_id: 3, mode: RESOLVE_PTR) = 0
+        btf_var_resolve(depth: 2, type_id: 4, mode: RESOLVE_PTR) = 0
+    btf_datasec_resolve(depth: 1, type_id: 1, mode: RESOLVE_PTR) = -22
+
+The last invocation of btf_datasec_resolve should invoke btf_var_resolve
+by means of env_stack_push, instead it returns EINVAL. The reason is that
+env_stack_push is never executed for the second VAR.
+
+    if (!env_type_is_resolve_sink(env, var_type) &&
+        !env_type_is_resolved(env, var_type_id)) {
+        env_stack_set_next_member(env, i + 1);
+        return env_stack_push(env, var_type, var_type_id);
+    }
+
+env_type_is_resolve_sink() changes its behaviour based on resolve_mode.
+For RESOLVE_PTR, we can simplify the if condition to the following:
+
+    (btf_type_is_modifier() || btf_type_is_ptr) && !env_type_is_resolved()
+
+Since we're dealing with a VAR the clause evaluates to false. This is
+not sufficient to trigger the bug however. The log output and EINVAL
+are only generated if btf_type_id_size() fails.
+
+    if (!btf_type_id_size(btf, &type_id, &type_size)) {
+        btf_verifier_log_vsi(env, v->t, vsi, "Invalid type");
+        return -EINVAL;
+    }
+
+Most types are sized, so for example a VAR referring to an INT is not a
+problem. The bug is only triggered if a VAR points at a modifier. Since
+we skipped btf_var_resolve that modifier was also never resolved, which
+means that btf_resolved_type_id returns 0 aka VOID for the modifier.
+This in turn causes btf_type_id_size to return NULL, triggering EINVAL.
+
+To summarise, the following conditions are necessary:
+
+- VAR pointing at PTR, STRUCT, UNION or ARRAY
+- Followed by a VAR pointing at TYPEDEF, VOLATILE, CONST, RESTRICT or
+  TYPE_TAG
+
+The fix is to reset resolve_mode to RESOLVE_TBD before attempting to
+resolve a VAR from a DATASEC.
+
+Fixes: 1dc92851849c ("bpf: kernel side support for BTF Var and DataSec")
+Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
+Link: https://lore.kernel.org/r/20230306112138.155352-2-lmb@isovalent.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tproxy.h   | 7 +++++++
- net/ipv4/netfilter/nf_tproxy_ipv4.c | 2 +-
- net/ipv6/netfilter/nf_tproxy_ipv6.c | 2 +-
- 3 files changed, 9 insertions(+), 2 deletions(-)
+ kernel/bpf/btf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/net/netfilter/nf_tproxy.h b/include/net/netfilter/nf_tproxy.h
-index 82d0e41b76f22..faa108b1ba675 100644
---- a/include/net/netfilter/nf_tproxy.h
-+++ b/include/net/netfilter/nf_tproxy.h
-@@ -17,6 +17,13 @@ static inline bool nf_tproxy_sk_is_transparent(struct sock *sk)
- 	return false;
- }
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 8fd65a0eb7f3e..5189bc5ebd895 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -2719,6 +2719,7 @@ static int btf_datasec_resolve(struct btf_verifier_env *env,
+ 	struct btf *btf = env->btf;
+ 	u16 i;
  
-+static inline void nf_tproxy_twsk_deschedule_put(struct inet_timewait_sock *tw)
-+{
-+	local_bh_disable();
-+	inet_twsk_deschedule_put(tw);
-+	local_bh_enable();
-+}
-+
- /* assign a socket to the skb -- consumes sk */
- static inline void nf_tproxy_assign_sock(struct sk_buff *skb, struct sock *sk)
- {
-diff --git a/net/ipv4/netfilter/nf_tproxy_ipv4.c b/net/ipv4/netfilter/nf_tproxy_ipv4.c
-index b2bae0b0e42a1..61cb2341f50fe 100644
---- a/net/ipv4/netfilter/nf_tproxy_ipv4.c
-+++ b/net/ipv4/netfilter/nf_tproxy_ipv4.c
-@@ -38,7 +38,7 @@ nf_tproxy_handle_time_wait4(struct net *net, struct sk_buff *skb,
- 					    hp->source, lport ? lport : hp->dest,
- 					    skb->dev, NF_TPROXY_LOOKUP_LISTENER);
- 		if (sk2) {
--			inet_twsk_deschedule_put(inet_twsk(sk));
-+			nf_tproxy_twsk_deschedule_put(inet_twsk(sk));
- 			sk = sk2;
- 		}
- 	}
-diff --git a/net/ipv6/netfilter/nf_tproxy_ipv6.c b/net/ipv6/netfilter/nf_tproxy_ipv6.c
-index 34d51cd426b0c..00761924f2766 100644
---- a/net/ipv6/netfilter/nf_tproxy_ipv6.c
-+++ b/net/ipv6/netfilter/nf_tproxy_ipv6.c
-@@ -63,7 +63,7 @@ nf_tproxy_handle_time_wait6(struct sk_buff *skb, int tproto, int thoff,
- 					    lport ? lport : hp->dest,
- 					    skb->dev, NF_TPROXY_LOOKUP_LISTENER);
- 		if (sk2) {
--			inet_twsk_deschedule_put(inet_twsk(sk));
-+			nf_tproxy_twsk_deschedule_put(inet_twsk(sk));
- 			sk = sk2;
- 		}
- 	}
++	env->resolve_mode = RESOLVE_TBD;
+ 	for_each_vsi_from(i, v->next_member, v->t, vsi) {
+ 		u32 var_type_id = vsi->type, type_id, type_size = 0;
+ 		const struct btf_type *var_type = btf_type_by_id(env->btf,
 -- 
 2.39.2
 
