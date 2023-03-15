@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B761F4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B948C433EF;
-	Wed, 15 Mar 2023 12:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFA74431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:19:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D696BC433A1;
+	Wed, 15 Mar 2023 12:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882790;
-	bh=AleEvc/ZZVB1bBO3rGEueez43tKhIpwprdOFv0+M6ag=;
+	s=korg; t=1678882793;
+	bh=MEWy9jYQtJUgVgdRBkx/fEha9fIERmdhTAgWins58QM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2QhyrHjQTClL1zHbNpRoJqzb00fAQbxX1Kl+WX5qSbg+qLizx+ZOsLAls3I3l4xxm
-	 6gMpYoPJ5xJpXHuGCkeBkjZX6+lt8u9uBRe8xpsB1gh1DoLZPRKj0VqIcvUX+F291R
-	 FsBWyE7kS/mqFqX+3xu41lkPv/a/MKs1R6U4pskA=
+	b=xbeg1zozJjio5toJhuoKkXKDtfTb0qIfNu4GkaJl1FiFvg8JtKfOAeFUvHWGXQBIP
+	 DeEyF+cjD2OHKyOluoaat+D6sACr+soqYzqV619iyyY2AuZdlaYFdfiPm9L2izG65/
+	 59mZXjvtQO8zM2YyOeuxo3ADyBU/5KDN4JN1ifKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	Sumit Saxena <sumit.saxena@broadcom.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 46/68] scsi: megaraid_sas: Update max supported LD IDs to 240
-Date: Wed, 15 Mar 2023 13:12:40 +0100
-Message-Id: <20230315115727.927581183@linuxfoundation.org>
+Subject: [PATCH 5.4 47/68] net/smc: fix fallback failed while sendmsg with fastopen
+Date: Wed, 15 Mar 2023 13:12:41 +0100
+Message-Id: <20230315115727.968416414@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -36,58 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit bfa659177dcba48cf13f2bd88c1972f12a60bf1c ]
+[ Upstream commit ce7ca794712f186da99719e8b4e97bd5ddbb04c3 ]
 
-The firmware only supports Logical Disk IDs up to 240 and LD ID 255 (0xFF)
-is reserved for deleted LDs. However, in some cases, firmware was assigning
-LD ID 254 (0xFE) to deleted LDs and this was causing the driver to mark the
-wrong disk as deleted. This in turn caused the wrong disk device to be
-taken offline by the SCSI midlayer.
+Before determining whether the msg has unsupported options, it has been
+prematurely terminated by the wrong status check.
 
-To address this issue, limit the LD ID range from 255 to 240. This ensures
-the deleted LD ID is properly identified and removed by the driver without
-accidently deleting any valid LDs.
+For the application, the general usages of MSG_FASTOPEN likes
 
-Fixes: ae6874ba4b43 ("scsi: megaraid_sas: Early detection of VD deletion through RaidMap update")
-Reported-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Signed-off-by: Sumit Saxena <sumit.saxena@broadcom.com>
-Link: https://lore.kernel.org/r/20230302105342.34933-2-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+fd = socket(...)
+/* rather than connect */
+sendto(fd, data, len, MSG_FASTOPEN)
+
+Hence, We need to check the flag before state check, because the sock
+state here is always SMC_INIT when applications tries MSG_FASTOPEN.
+Once we found unsupported options, fallback it to TCP.
+
+Fixes: ee9dfbef02d1 ("net/smc: handle sockopts forcing fallback")
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Signed-off-by: Simon Horman <simon.horman@corigine.com>
+
+v2 -> v1: Optimize code style
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/megaraid/megaraid_sas.h    | 2 ++
- drivers/scsi/megaraid/megaraid_sas_fp.c | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ net/smc/af_smc.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/megaraid/megaraid_sas.h b/drivers/scsi/megaraid/megaraid_sas.h
-index aa62cc8ffd0af..ce0c36fa26bf7 100644
---- a/drivers/scsi/megaraid/megaraid_sas.h
-+++ b/drivers/scsi/megaraid/megaraid_sas.h
-@@ -1515,6 +1515,8 @@ struct megasas_ctrl_info {
- #define MEGASAS_MAX_LD_IDS			(MEGASAS_MAX_LD_CHANNELS * \
- 						MEGASAS_MAX_DEV_PER_CHANNEL)
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 5d696b7fb47e1..b398d72a7bc39 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -1542,16 +1542,14 @@ static int smc_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct smc_sock *smc;
+-	int rc = -EPIPE;
++	int rc;
  
-+#define MEGASAS_MAX_SUPPORTED_LD_IDS		240
-+
- #define MEGASAS_MAX_SECTORS                    (2*1024)
- #define MEGASAS_MAX_SECTORS_IEEE		(2*128)
- #define MEGASAS_DBG_LVL				1
-diff --git a/drivers/scsi/megaraid/megaraid_sas_fp.c b/drivers/scsi/megaraid/megaraid_sas_fp.c
-index 8bfb46dbbed3a..ff20f47090810 100644
---- a/drivers/scsi/megaraid/megaraid_sas_fp.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_fp.c
-@@ -359,7 +359,7 @@ u8 MR_ValidateMapInfo(struct megasas_instance *instance, u64 map_id)
- 		ld = MR_TargetIdToLdGet(i, drv_map);
+ 	smc = smc_sk(sk);
+ 	lock_sock(sk);
+-	if ((sk->sk_state != SMC_ACTIVE) &&
+-	    (sk->sk_state != SMC_APPCLOSEWAIT1) &&
+-	    (sk->sk_state != SMC_INIT))
+-		goto out;
  
- 		/* For non existing VDs, iterate to next VD*/
--		if (ld >= (MAX_LOGICAL_DRIVES_EXT - 1))
-+		if (ld >= MEGASAS_MAX_SUPPORTED_LD_IDS)
- 			continue;
++	/* SMC does not support connect with fastopen */
+ 	if (msg->msg_flags & MSG_FASTOPEN) {
++		/* not connected yet, fallback */
+ 		if (sk->sk_state == SMC_INIT && !smc->connect_nonblock) {
+ 			smc_switch_to_fallback(smc);
+ 			smc->fallback_rsn = SMC_CLC_DECL_OPTUNSUPP;
+@@ -1559,6 +1557,11 @@ static int smc_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
++	} else if ((sk->sk_state != SMC_ACTIVE) &&
++		   (sk->sk_state != SMC_APPCLOSEWAIT1) &&
++		   (sk->sk_state != SMC_INIT)) {
++		rc = -EPIPE;
++		goto out;
+ 	}
  
- 		raid = MR_LdRaidGet(ld, drv_map);
+ 	if (smc->use_fallback)
 -- 
 2.39.2
 
