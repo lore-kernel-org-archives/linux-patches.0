@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FB44431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9FFC433EF;
-	Wed, 15 Mar 2023 12:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEF64431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83E8C4339C;
+	Wed, 15 Mar 2023 12:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882990;
-	bh=AHZxvroEmYIa6houU/IrOk4YXJYcirNChFLpMSlmgfM=;
+	s=korg; t=1678882993;
+	bh=LeDfhv3dIOY5Ep3qwvO4rn9GSOS0rv5X429rZamhs2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GjEZ3RLf+chdfYBNfMjUiJjhq9librYnM8QtldVpGo5Ieyqx8edjpzmGiqPwmFDb9
-	 vY5Y7ZEiSQBrx7JUSQIbkCf7ztkn/EzRqrmv5j+qqQA4M8G5e0rJg39JtyZRyQ98I3
-	 9WEUSUH4OVVmcZ9bilmxINV4lyu1DXvx/a0fUu6M=
+	b=oM7RIpfASYlTIsssE2fx1SdZrRgZToVz8cns6R5eYQ9gQG1FwY7NbGw/G2g+M9QOk
+	 9+AvPXsfZ3hCVi2fIvF9k/Voxcc2zWjShpYCzEAq35Kc8GMkKF1cxtg4m25ItIGlPO
+	 +MnirwsftHGSBl94nApNssEezQ2qnMbP+7u7rcXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 071/104] macintosh: windfarm: Use unsigned type for 1-bit bitfields
-Date: Wed, 15 Mar 2023 13:12:42 +0100
-Message-Id: <20230315115734.908387088@linuxfoundation.org>
+	John Harrison <John.C.Harrison@Intel.com>,
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	intel-gfx@lists.freedesktop.org,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 5.10 080/104] drm/i915: Dont use BAR mappings for ring buffers with LLC
+Date: Wed, 15 Mar 2023 13:12:51 +0100
+Message-Id: <20230315115735.257059643@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -35,68 +42,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-[ Upstream commit 748ea32d2dbd813d3bd958117bde5191182f909a ]
+commit 85636167e3206c3fbd52254fc432991cc4e90194 upstream.
 
-Clang warns:
+Direction from hardware is that ring buffers should never be mapped
+via the BAR on systems with LLC. There are too many caching pitfalls
+due to the way BAR accesses are routed. So it is safest to just not
+use it.
 
-  drivers/macintosh/windfarm_lm75_sensor.c:63:14: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
-                  lm->inited = 1;
-                             ^ ~
-
-  drivers/macintosh/windfarm_smu_sensors.c:356:19: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
-                  pow->fake_volts = 1;
-                                  ^ ~
-  drivers/macintosh/windfarm_smu_sensors.c:368:18: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
-                  pow->quadratic = 1;
-                                 ^ ~
-
-There is no bug here since no code checks the actual value of these
-fields, just whether or not they are zero (boolean context), but this
-can be easily fixed by switching to an unsigned type.
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230215-windfarm-wsingle-bit-bitfield-constant-conversion-v1-1-26415072e855@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Fixes: 9d80841ea4c9 ("drm/i915: Allow ringbuffers to be bound anywhere")
+Cc: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc: intel-gfx@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v4.9+
+Tested-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230216011101.1909009-3-John.C.Harrison@Intel.com
+(cherry picked from commit 65c08339db1ada87afd6cfe7db8e60bb4851d919)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/macintosh/windfarm_lm75_sensor.c | 4 ++--
- drivers/macintosh/windfarm_smu_sensors.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_ring.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/macintosh/windfarm_lm75_sensor.c b/drivers/macintosh/windfarm_lm75_sensor.c
-index 29f48c2028b6d..e90ad1b78e936 100644
---- a/drivers/macintosh/windfarm_lm75_sensor.c
-+++ b/drivers/macintosh/windfarm_lm75_sensor.c
-@@ -34,8 +34,8 @@
- #endif
+--- a/drivers/gpu/drm/i915/gt/intel_ring.c
++++ b/drivers/gpu/drm/i915/gt/intel_ring.c
+@@ -49,7 +49,7 @@ int intel_ring_pin(struct intel_ring *ri
+ 	if (unlikely(ret))
+ 		goto err_unpin;
  
- struct wf_lm75_sensor {
--	int			ds1775 : 1;
--	int			inited : 1;
-+	unsigned int		ds1775 : 1;
-+	unsigned int		inited : 1;
- 	struct i2c_client	*i2c;
- 	struct wf_sensor	sens;
- };
-diff --git a/drivers/macintosh/windfarm_smu_sensors.c b/drivers/macintosh/windfarm_smu_sensors.c
-index c8706cfb83fd8..714c1e14074ed 100644
---- a/drivers/macintosh/windfarm_smu_sensors.c
-+++ b/drivers/macintosh/windfarm_smu_sensors.c
-@@ -273,8 +273,8 @@ struct smu_cpu_power_sensor {
- 	struct list_head	link;
- 	struct wf_sensor	*volts;
- 	struct wf_sensor	*amps;
--	int			fake_volts : 1;
--	int			quadratic : 1;
-+	unsigned int		fake_volts : 1;
-+	unsigned int		quadratic : 1;
- 	struct wf_sensor	sens;
- };
- #define to_smu_cpu_power(c) container_of(c, struct smu_cpu_power_sensor, sens)
--- 
-2.39.2
-
+-	if (i915_vma_is_map_and_fenceable(vma))
++	if (i915_vma_is_map_and_fenceable(vma) && !HAS_LLC(vma->vm->i915))
+ 		addr = (void __force *)i915_vma_pin_iomap(vma);
+ 	else
+ 		addr = i915_gem_object_pin_map(vma->obj,
+@@ -91,7 +91,7 @@ void intel_ring_unpin(struct intel_ring
+ 		return;
+ 
+ 	i915_vma_unset_ggtt_write(vma);
+-	if (i915_vma_is_map_and_fenceable(vma))
++	if (i915_vma_is_map_and_fenceable(vma) && !HAS_LLC(vma->vm->i915))
+ 		i915_vma_unpin_iomap(vma);
+ 	else
+ 		i915_gem_object_unpin_map(vma->obj);
 
 
