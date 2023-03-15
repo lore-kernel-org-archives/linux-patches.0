@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C974431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC8EC433D2;
-	Wed, 15 Mar 2023 12:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178F44431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:38:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F832C433EF;
+	Wed, 15 Mar 2023 12:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883931;
-	bh=2LnKGwMv9mEmH9JYsImizVRLaeLSiAddVi4TQ/dBnDU=;
+	s=korg; t=1678883933;
+	bh=O3Ll1vNAi2Rano9e48x/SRitoSsMqCGrnd5YEOvfnHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TR2YkhShaqQV4lJIOrkJaKQqaqJax4+MbDwGIsvfjfByFHQDTc7BdtLP1vJSRwHRs
-	 EmNiNBskGZhzttk9GtHjkmgF9Ccret+CFxDTEMXMmeIxbmG8G5PEcdYMk7UCe/omWg
-	 gpt0W9Qrveb8oUnOAYVtsh96CouuXr4mxfoNHv9w=
+	b=I3ttBpuPnadvjs6q/OkgxckIByvZez/NBEBgDZicE4H7/j5yj8v79DkrZc9F0NfPE
+	 ++yhANmj2WNi9iJpp2pVGhvGpyOgociaEkLa6krftfMyQWqqy9D4Tl7sTnv8omYQZO
+	 9VdleJ23oKOzfsJLe3s1Z258VK3sqX/VpwWJMPAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 043/141] scsi: core: Remove the /proc/scsi/${proc_name} directory earlier
-Date: Wed, 15 Mar 2023 13:12:26 +0100
-Message-Id: <20230315115741.276785758@linuxfoundation.org>
+Subject: [PATCH 6.2 044/141] ext4: Fix possible corruption when moving a directory
+Date: Wed, 15 Mar 2023 13:12:27 +0100
+Message-Id: <20230315115741.310516660@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -37,77 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit fc663711b94468f4e1427ebe289c9f05669699c9 ]
+[ Upstream commit 0813299c586b175d7edb25f56412c54b812d0379 ]
 
-Remove the /proc/scsi/${proc_name} directory earlier to fix a race
-condition between unloading and reloading kernel modules. This fixes a bug
-introduced in 2009 by commit 77c019768f06 ("[SCSI] fix /proc memory leak in
-the SCSI core").
+When we are renaming a directory to a different directory, we need to
+update '..' entry in the moved directory. However nothing prevents moved
+directory from being modified and even converted from the inline format
+to the normal format. When such race happens the rename code gets
+confused and we crash. Fix the problem by locking the moved directory.
 
-Fix the following kernel warning:
-
-proc_dir_entry 'scsi/scsi_debug' already registered
-WARNING: CPU: 19 PID: 27986 at fs/proc/generic.c:376 proc_register+0x27d/0x2e0
-Call Trace:
- proc_mkdir+0xb5/0xe0
- scsi_proc_hostdir_add+0xb5/0x170
- scsi_host_alloc+0x683/0x6c0
- sdebug_driver_probe+0x6b/0x2d0 [scsi_debug]
- really_probe+0x159/0x540
- __driver_probe_device+0xdc/0x230
- driver_probe_device+0x4f/0x120
- __device_attach_driver+0xef/0x180
- bus_for_each_drv+0xe5/0x130
- __device_attach+0x127/0x290
- device_initial_probe+0x17/0x20
- bus_probe_device+0x110/0x130
- device_add+0x673/0xc80
- device_register+0x1e/0x30
- sdebug_add_host_helper+0x1a7/0x3b0 [scsi_debug]
- scsi_debug_init+0x64f/0x1000 [scsi_debug]
- do_one_initcall+0xd7/0x470
- do_init_module+0xe7/0x330
- load_module+0x122a/0x12c0
- __do_sys_finit_module+0x124/0x1a0
- __x64_sys_finit_module+0x46/0x50
- do_syscall_64+0x38/0x80
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Link: https://lore.kernel.org/r/20230210205200.36973-3-bvanassche@acm.org
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Yi Zhang <yi.zhang@redhat.com>
-Cc: stable@vger.kernel.org
-Fixes: 77c019768f06 ("[SCSI] fix /proc memory leak in the SCSI core")
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+CC: stable@vger.kernel.org
+Fixes: 32f7f22c0b52 ("ext4: let ext4_rename handle inline dir")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230126112221.11866-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hosts.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/namei.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
-index 12346e2297fdb..8e34bbf44d1f5 100644
---- a/drivers/scsi/hosts.c
-+++ b/drivers/scsi/hosts.c
-@@ -181,6 +181,7 @@ void scsi_remove_host(struct Scsi_Host *shost)
- 	scsi_forget_host(shost);
- 	mutex_unlock(&shost->scan_mutex);
- 	scsi_proc_host_rm(shost);
-+	scsi_proc_hostdir_rm(shost->hostt);
- 
+diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
+index 924e16b239e07..e8f429330f3c3 100644
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -3873,9 +3873,16 @@ static int ext4_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
+ 			if (new.dir != old.dir && EXT4_DIR_LINK_MAX(new.dir))
+ 				goto end_rename;
+ 		}
++		/*
++		 * We need to protect against old.inode directory getting
++		 * converted from inline directory format into a normal one.
++		 */
++		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
+ 		retval = ext4_rename_dir_prepare(handle, &old);
+-		if (retval)
++		if (retval) {
++			inode_unlock(old.inode);
+ 			goto end_rename;
++		}
+ 	}
  	/*
- 	 * New SCSI devices cannot be attached anymore because of the SCSI host
-@@ -340,6 +341,7 @@ static void scsi_host_dev_release(struct device *dev)
- 	struct Scsi_Host *shost = dev_to_shost(dev);
- 	struct device *parent = dev->parent;
- 
-+	/* In case scsi_remove_host() has not been called. */
- 	scsi_proc_hostdir_rm(shost->hostt);
- 
- 	/* Wait for functions invoked through call_rcu(&scmd->rcu, ...) */
+ 	 * If we're renaming a file within an inline_data dir and adding or
+@@ -4007,6 +4014,8 @@ static int ext4_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
+ 	} else {
+ 		ext4_journal_stop(handle);
+ 	}
++	if (old.dir_bh)
++		inode_unlock(old.inode);
+ release_bh:
+ 	brelse(old.dir_bh);
+ 	brelse(old.bh);
 -- 
 2.39.2
 
