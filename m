@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60EBC4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C089EC433D2;
-	Wed, 15 Mar 2023 12:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AE64431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59BB1C433EF;
+	Wed, 15 Mar 2023 12:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883048;
-	bh=6ajQAG6zOe5PSMh7Bd7i1bSIkkFq6iBtPXRZmq97eq8=;
+	s=korg; t=1678883050;
+	bh=rhxdufBm4e5kulz1JA4K+9qV2V4DEANXj5Xbx4cjepw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n9VQeO5Mi34Of7o3hjrCvBhvRJPTNvg8w5dmfIZRvlbtmqcToRuAC4SYAZWjKB6FT
-	 cZJJD1nQbdVvGkuJOY3D9Snjofm3eh9+PcqILfwgBN2iIdJRd4ctQaIsS2r0uDjU/w
-	 x5YNqL9A5JNf5z/PG4lN737MlTzCzLPo7IMbBagQ=
+	b=2TGiev0oyYHDXMu2fdRg8Pw7SVpfsijkV816PjHiB8oplVAanqBfMUuNAlx8qqrVG
+	 Rd2TaTzQ4tyblHuA8Cn9VPUxs5kGD+X3+JzBxOT7xNXOqbar2wgZTk6bhz0dPj/wyr
+	 GXhiz3HGref4WpwVX9S4PAyGvahNgRHHY+rbEbXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvaro Karsz <alvaro.karsz@solid-run.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 073/104] PCI: Avoid FLR for SolidRun SNET DPU rev 1
-Date: Wed, 15 Mar 2023 13:12:44 +0100
-Message-Id: <20230315115734.991071632@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 5.10 100/104] UML: define RUNTIME_DISCARD_EXIT
+Date: Wed, 15 Mar 2023 13:13:11 +0100
+Message-Id: <20230315115736.242436945@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -36,48 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alvaro Karsz <alvaro.karsz@solid-run.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit d089d69cc1f824936eeaa4fa172f8fa1a0949eaa ]
+commit b99ddbe8336ee680257c8ab479f75051eaa49dcf upstream.
 
-This patch fixes a FLR bug on the SNET DPU rev 1 by setting the
-PCI_DEV_FLAGS_NO_FLR_RESET flag.
+With CONFIG_VIRTIO_UML=y, GNU ld < 2.36 fails to link UML vmlinux
+(w/wo CONFIG_LD_SCRIPT_STATIC).
 
-As there is a quirk to avoid FLR (quirk_no_flr), I added a new quirk
-to check the rev ID before calling to quirk_no_flr.
+  `.exit.text' referenced in section `.uml.exitcall.exit' of arch/um/drivers/virtio_uml.o: defined in discarded section `.exit.text' of arch/um/drivers/virtio_uml.o
+  collect2: error: ld returned 1 exit status
 
-Without this patch, a SNET DPU rev 1 may hang when FLR is applied.
+This fix is similar to the following commits:
 
-Signed-off-by: Alvaro Karsz <alvaro.karsz@solid-run.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Message-Id: <20230110165638.123745-3-alvaro.karsz@solid-run.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+- 4b9880dbf3bd ("powerpc/vmlinux.lds: Define RUNTIME_DISCARD_EXIT")
+- a494398bde27 ("s390: define RUNTIME_DISCARD_EXIT to fix link error
+  with GNU ld < 2.36")
+- c1c551bebf92 ("sh: define RUNTIME_DISCARD_EXIT")
+
+Fixes: 99cb0d917ffa ("arch: fix broken BuildID for arm64 and riscv")
+Reported-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Tested-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/um/kernel/vmlinux.lds.S |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index c1ebd5e12b06e..3c7d7f094718f 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5328,6 +5328,14 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x7901, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1502, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1503, quirk_no_flr);
+--- a/arch/um/kernel/vmlinux.lds.S
++++ b/arch/um/kernel/vmlinux.lds.S
+@@ -1,4 +1,4 @@
+-
++#define RUNTIME_DISCARD_EXIT
+ KERNEL_STACK_SIZE = 4096 * (1 << CONFIG_KERNEL_STACK_ORDER);
  
-+/* FLR may cause the SolidRun SNET DPU (rev 0x1) to hang */
-+static void quirk_no_flr_snet(struct pci_dev *dev)
-+{
-+	if (dev->revision == 0x1)
-+		quirk_no_flr(dev);
-+}
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SOLIDRUN, 0x1000, quirk_no_flr_snet);
-+
- static void quirk_no_ext_tags(struct pci_dev *pdev)
- {
- 	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
--- 
-2.39.2
-
+ #ifdef CONFIG_LD_SCRIPT_STATIC
 
 
