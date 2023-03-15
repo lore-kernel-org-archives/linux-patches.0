@@ -1,147 +1,182 @@
-Received: from wnew1-smtp.messagingengine.com (wnew1-smtp.messagingengine.com [64.147.123.26])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A096D28E2
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 08:28:05 +0000 (UTC)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailnew.west.internal (Postfix) with ESMTP id 9E7482B05BCC;
-	Wed, 15 Mar 2023 04:28:01 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Wed, 15 Mar 2023 04:28:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1678868881; x=1678876081; bh=sm
-	BXPA4tzaw5CWmCbZopn1Nv/tcbeL+d7+B00EOaE7Q=; b=n2jAfdmkzr4/x+CsBm
-	W3h1fdrXzPUm2M6yIwhfuUk5NhMWT/Re0vBrmd65xKAFLeiEY/BPKjvG849fGvop
-	r6lZ+pB/zktfi8PfRRRsZZxxY+cJG9Y8XIUnSYR9FzjNY1hbRY7wB2Ioqdk4Xy3J
-	+zrsJ8pM3pJUgMLZjLnB8owsf1EKqCBVtyimEGpJnrWHHZ3GZnmthFkeDTmiy15O
-	wCZ248asyrS8sfn/G2SctX82+c9wYjoqkwx6H14GvynjhkvaV69ZxuBKI07kZWqS
-	2BAIxwRWGRkc/xYuv+WUF6S3KnnkiwzWwTt5cjAY1pXxu+1AGKpNS0+LHt0g4mQo
-	YeYQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1678868881; x=1678876081; bh=smBXPA4tzaw5C
-	WmCbZopn1Nv/tcbeL+d7+B00EOaE7Q=; b=F9iSSzvNOuBHmzJ/Fjk/0R6964S6p
-	odwOiiFpi55tKtu3VaUMm/rZY8Hu73NPU/2nn66mTZdMKLH8z/G73bZUoVgOWQFM
-	lEWHDM0Q2GsVNtwgXiIvtw2V6JnAQICZbxMDCGFQDJZ/8O21qcOEE8PnqOSr5G9A
-	3wQswbd0yMxi8kTTJn0befLjm5ZI/PjqJc8f8Uxh70MlAUPiQgVdyUXZGbE9DRPc
-	Bn+XLdW5kusQNFnzzSJbTu7HS1CQJggtArNUcghVl+C6huIpTLQmhFd8CeMpgu4n
-	2H/PoTPP4AVPhupCfieoBLln5iLfbSLiVx/apAN0+A5evGjnGtX8rK5yg==
-X-ME-Sender: <xms:j4ERZN7n63PUVZA5NQrmfriOeymxN4S23oD5CkVe-P3ocMm_vkMwlQ>
-    <xme:j4ERZK5JYdqTXwxHgRekqf6m27BGyMd_lx9Ec8m9TYMiyd5PZcUPhlqfa71AtXer5
-    wk4VwFJLw8gv0WXAO0>
-X-ME-Received: <xmr:j4ERZEcLZytM7Ewc974LmNDKPijeBjzfR8JPNjQs-XBCokHRLLKVOWLF7SN8FXMBglnYsw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvddvjedguddujecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeforgig
-    ihhmvgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrf
-    grthhtvghrnheptdelkeejiedufedvhfeiffetlefhiedvleeigfeiuefghfdvleeiffej
-    ieegteejnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiii
-    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmrgigihhmvgestggvrhhnohdrthgv
-    tghh
-X-ME-Proxy: <xmx:kIERZGIDWUucWnPXTT6Llkt_3om4aQKgR9mx6sRYPcZI6RP9JmCYlw>
-    <xmx:kIERZBJBjGTvnhJuADp3ZCN0-GwhVdn4XlaIdYwb_uE-SevZEmx0jA>
-    <xmx:kIERZPx8rOuY_jmxv_1O3qoQ0Sr341i5gKbvpdvQiYLdBZegosqI7Q>
-    <xmx:kYERZJcsvqLRjqXppPj219cma-IgLDluKHxkQFfUdPILE_e9JwFd8mgOnf8>
-Feedback-ID: i8771445c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Mar 2023 04:27:59 -0400 (EDT)
-Date: Wed, 15 Mar 2023 09:27:56 +0100
-From: Maxime Ripard <maxime@cerno.tech>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: David Gow <davidgow@google.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J . Wysocki" <rafael@kernel.org>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Vincent Whitchurch <vincent.whitchurch@axis.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	devicetree@vger.kernel.org, linux-um@lists.infradead.org,
-	linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com
-Subject: Re: [PATCH 3/8] kunit: Add test managed platform_device/driver APIs
-Message-ID: <20230315082756.ynq3dpbv7udrcbds@houat>
-References: <20230302013822.1808711-1-sboyd@kernel.org>
- <20230302013822.1808711-4-sboyd@kernel.org>
- <CABVgOSmR0_u8Tw0E8C1mRFxSiGKwdKG5ka_+X_36Hj4VNLdg2g@mail.gmail.com>
- <20230303143528.2dovipmqlms74vp2@houat>
- <dea61f59ea83c772b693b18db43c3eb7.sboyd@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDCF33F6
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 11:05:58 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 91D571FD70;
+	Wed, 15 Mar 2023 11:05:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1678878356; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=byKaSG6OJ59VBwcTUhTpiXq5zlFsljvYFPU9Y2HdwDQ=;
+	b=jYOBq5HuHp7Vn6xEt7/uP53ht3G85ZjFx5k7H4PVchE7eI8P7UDkW5miVps4PDJG0ThKHI
+	ugEKyZ2/zA5BvmR9lpYlR89AHysqP0/7KudJYXjf4NGcwhkQTJa7kLLeU4FhVV5285n0uk
+	kY1N9DsZoEXYFa0UNT158hhHQUJe/oE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1678878356;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=byKaSG6OJ59VBwcTUhTpiXq5zlFsljvYFPU9Y2HdwDQ=;
+	b=FZT8gQvYv9slINxxTxXBKSTnDHXDGB0JdcRCp9THbNUcqdt/nwSuEkFh9fuUJH4P7lHSES
+	zLbml6AjoVOyTsAA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 4CABB13A00;
+	Wed, 15 Mar 2023 11:05:56 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id LiNjEZSmEWTzXAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 15 Mar 2023 11:05:56 +0000
+Message-ID: <bfacefe6-5852-3101-a016-3ee288a4e447@suse.cz>
+Date: Wed, 15 Mar 2023 12:05:55 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mrd2rsrmiq2ziig6"
-Content-Disposition: inline
-In-Reply-To: <dea61f59ea83c772b693b18db43c3eb7.sboyd@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 4/7] mm, pagemap: remove SLOB and SLQB from comments and
+ documentation
+Content-Language: en-US
+To: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
+ Joonsoo Kim <iamjoonsoo.kim@lge.com>, Pekka Enberg <penberg@kernel.org>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+ rcu@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ netdev@vger.kernel.org, linux-doc@vger.kernel.org,
+ Lorenzo Stoakes <lstoakes@gmail.com>
+References: <20230310103210.22372-1-vbabka@suse.cz>
+ <20230310103210.22372-5-vbabka@suse.cz> <ZBAuBj0hgLK7Iqgy@localhost>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <ZBAuBj0hgLK7Iqgy@localhost>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+On 3/14/23 09:19, Hyeonggon Yoo wrote:
+> On Fri, Mar 10, 2023 at 11:32:06AM +0100, Vlastimil Babka wrote:
+>> SLOB has been removed and SLQB never merged, so remove their mentions
+>> from comments and documentation of pagemap.
+>> 
+>> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+>> ---
+>>  Documentation/admin-guide/mm/pagemap.rst | 6 +++---
+>>  fs/proc/page.c                           | 5 ++---
+>>  2 files changed, 5 insertions(+), 6 deletions(-)
+>> 
+>> diff --git a/Documentation/admin-guide/mm/pagemap.rst b/Documentation/admin-guide/mm/pagemap.rst
+>> index b5f970dc91e7..bb4aa897a773 100644
+>> --- a/Documentation/admin-guide/mm/pagemap.rst
+>> +++ b/Documentation/admin-guide/mm/pagemap.rst
+>> @@ -91,9 +91,9 @@ Short descriptions to the page flags
+>>     The page is being locked for exclusive access, e.g. by undergoing read/write
+>>     IO.
+>>  7 - SLAB
+>> -   The page is managed by the SLAB/SLOB/SLUB/SLQB kernel memory allocator.
+>> -   When compound page is used, SLUB/SLQB will only set this flag on the head
+>> -   page; SLOB will not flag it at all.
+>> +   The page is managed by the SLAB/SLUB kernel memory allocator.
+>> +   When compound page is used, either will only set this flag on the head
+>> +   page..
+>>  10 - BUDDY
+>>      A free memory block managed by the buddy system allocator.
+>>      The buddy system organizes free memory in blocks of various orders.
+>> diff --git a/fs/proc/page.c b/fs/proc/page.c
+>> index 6249c347809a..1356aeffd8dc 100644
+>> --- a/fs/proc/page.c
+>> +++ b/fs/proc/page.c
+>> @@ -125,7 +125,7 @@ u64 stable_page_flags(struct page *page)
+>>  	/*
+>>  	 * pseudo flags for the well known (anonymous) memory mapped pages
+>>  	 *
+>> -	 * Note that page->_mapcount is overloaded in SLOB/SLUB/SLQB, so the
+>> +	 * Note that page->_mapcount is overloaded in SLAB/SLUB, so the
+> 
+> SLUB does not overload _mapcount.
+
+True, I overlooked that, thanks.
+
+>>  	 * simple test in page_mapped() is not enough.
+>>  	 */
+>>  	if (!PageSlab(page) && page_mapped(page))
+>> @@ -166,8 +166,7 @@ u64 stable_page_flags(struct page *page)
+>>  
+>>  	/*
+>>  	 * Caveats on high order pages: page->_refcount will only be set
+>> -	 * -1 on the head page; SLUB/SLQB do the same for PG_slab;
+>> -	 * SLOB won't set PG_slab at all on compound pages.
+>> +	 * -1 on the head page; SLAB/SLUB do the same for PG_slab;
+> 
+> I think this comment could be just saying that PG_buddy is only set on
+> head page, not saying
+> 
+> _refcount is set to -1 on head page (is it even correct?)
+
+It's not, that scheme is outdated. So I'll have it mention PG_buddy as you
+suggest, but PG_slab also needs special care as it's not set on tail pages.
+But I noticed the compound_head() is unnecessary as that's covered by
+PageSlab() which is defined as PF_NO_TAIL. So the sum of modifications to
+this patch:
+
+diff --git a/Documentation/admin-guide/mm/pagemap.rst b/Documentation/admin-guide/mm/pagemap.rst
+index bb4aa897a773..c8f380271cad 100644
+--- a/Documentation/admin-guide/mm/pagemap.rst
++++ b/Documentation/admin-guide/mm/pagemap.rst
+@@ -93,7 +93,7 @@ Short descriptions to the page flags
+ 7 - SLAB
+    The page is managed by the SLAB/SLUB kernel memory allocator.
+    When compound page is used, either will only set this flag on the head
+-   page..
++   page.
+ 10 - BUDDY
+     A free memory block managed by the buddy system allocator.
+     The buddy system organizes free memory in blocks of various orders.
+diff --git a/fs/proc/page.c b/fs/proc/page.c
+index 1356aeffd8dc..195b077c0fac 100644
+--- a/fs/proc/page.c
++++ b/fs/proc/page.c
+@@ -125,7 +125,7 @@ u64 stable_page_flags(struct page *page)
+ 	/*
+ 	 * pseudo flags for the well known (anonymous) memory mapped pages
+ 	 *
+-	 * Note that page->_mapcount is overloaded in SLAB/SLUB, so the
++	 * Note that page->_mapcount is overloaded in SLAB, so the
+ 	 * simple test in page_mapped() is not enough.
+ 	 */
+ 	if (!PageSlab(page) && page_mapped(page))
+@@ -165,8 +165,8 @@ u64 stable_page_flags(struct page *page)
+ 
+ 
+ 	/*
+-	 * Caveats on high order pages: page->_refcount will only be set
+-	 * -1 on the head page; SLAB/SLUB do the same for PG_slab;
++	 * Caveats on high order pages: PG_buddy and PG_slab will only be set
++	 * on the head page.
+ 	 */
+ 	if (PageBuddy(page))
+ 		u |= 1 << KPF_BUDDY;
+@@ -184,7 +184,7 @@ u64 stable_page_flags(struct page *page)
+ 	u |= kpf_copy_bit(k, KPF_LOCKED,	PG_locked);
+ 
+ 	u |= kpf_copy_bit(k, KPF_SLAB,		PG_slab);
+-	if (PageTail(page) && PageSlab(compound_head(page)))
++	if (PageTail(page) && PageSlab(page))
+ 		u |= 1 << KPF_SLAB;
+ 
+ 	u |= kpf_copy_bit(k, KPF_ERROR,		PG_error);
 
 
---mrd2rsrmiq2ziig6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hi Stephen,
-
-On Thu, Mar 09, 2023 at 03:31:15PM -0800, Stephen Boyd wrote:
-> Quoting Maxime Ripard (2023-03-03 06:35:28)
-> > On Fri, Mar 03, 2023 at 03:15:31PM +0800, David Gow wrote:
-> > >=20
-> > > DRM has a similar thing already (albeit with a root_device, which is
-> > > more common with KUnit tests generally):
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tr=
-ee/include/drm/drm_kunit_helpers.h
-> > >=20
-> > > But that's reasonably drm-specific, so it makes sense that it lives
-> > > with DRM stuff. platform_device is a bit more generic.
-> >=20
-> > I'd be very happy to get something from the core to address the same
-> > thing.
-> >=20
-> > I think the main thing we needed that isn't covered by this patch is we
-> > wanted the device to be bound to its driver, so with probe being called
-> > before calling the test (see 57a84a97bbda).
->
-> Can you clarify? This patch makes a poor attempt at waiting for the
-> platform driver to bind, but in reality it may not be bound by the time
-> the driver register function returns.
-
-The issue was that devm will only clean up the resources if the device
-was bound to a driver so we were exhausting resources when running
-dozens of test in a sequence.
-
-The way I solved it for vc4 was to create a dumb platform driver with a
-waitqueue, and wait for probe to be called.
-
-I think we could make it more generic by allowing a pointer to a probe
-function and calling it into our own probe implementation. What do you
-think?
-
-Maxime
-
---mrd2rsrmiq2ziig6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZBGBhwAKCRDj7w1vZxhR
-xQfJAP9d8Mk6W6LsnZWjdC2ZVCNtlVeMbIMPi7JwuKzAFKJrnwD+P0T5lH1uMYyg
-Q4LeS+MNoLW1jvZenhi+zkdv6wRJswU=
-=1NPj
------END PGP SIGNATURE-----
-
---mrd2rsrmiq2ziig6--
