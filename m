@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB614431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:28:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CCBC433EF;
-	Wed, 15 Mar 2023 12:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971904431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:28:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00055C433EF;
+	Wed, 15 Mar 2023 12:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883329;
-	bh=0iM/cmRrXNdsjVn5KVYCdgr1QbuYLKPyPpLAslED/Lg=;
+	s=korg; t=1678883332;
+	bh=0qL1Nqd8CyYvzBPMPyRNZWQF6wsCec1a1G03OobWWRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2cm0C8o/Ii41vCvxd5N6v6H227f5BoyHBnh+kFiwmGBZPx8fdEuyx6/vuZaQ0QDBA
-	 coJXcwW5ijCdKOOLdlJKoFcbReNnw4QJsEb5qprOY9l8wNQcNZyNo8hTz7bolwadgo
-	 +3K0W2QdEIWwvuRVhZszJSFuFrsUkKSW6t9y58Gc=
+	b=HYFoRuxVwfEsvWLFoiB4cCZqQfkoHLlQMq7Ygol8ByJDanEm/OhJVyiCzPFwj2IGx
+	 nYs0FrlR2CUUENpUBn6kxQVJrlOtdtSs3zVRNMI9ZE24RlIQN+ZkLkKpFzGrFVAKUt
+	 7o/pJ7eJNH1R8qcj2MKZkumAxuhsZGuBrJC1m6AY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Leah Rumancik <leah.rumancik@gmail.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 101/145] fs: move should_remove_suid()
-Date: Wed, 15 Mar 2023 13:12:47 +0100
-Message-Id: <20230315115742.305645082@linuxfoundation.org>
+Subject: [PATCH 5.15 102/145] attr: add setattr_should_drop_sgid()
+Date: Wed, 15 Mar 2023 13:12:48 +0100
+Message-Id: <20230315115742.334949541@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -39,12 +39,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit e243e3f94c804ecca9a8241b5babe28f35258ef4 upstream.
+commit 72ae017c5451860443a16fb2a8c243bff3e396b8 upstream.
 
-Move the helper from inode.c to attr.c. This keeps the the core of the
-set{g,u}id stripping logic in one place when we add follow-up changes.
-It is the better place anyway, since should_remove_suid() returns
-ATTR_KILL_S{G,U}ID flags.
+[backport to 5.15.y, prior to vfsgid_t]
+
+The current setgid stripping logic during write and ownership change
+operations is inconsistent and strewn over multiple places. In order to
+consolidate it and make more consistent we'll add a new helper
+setattr_should_drop_sgid(). The function retains the old behavior where
+we remove the S_ISGID bit unconditionally when S_IXGRP is set but also
+when it isn't set and the caller is neither in the group of the inode
+nor privileged over the inode.
+
+We will use this helper both in write operation permission removal such
+as file_remove_privs() as well as in ownership change operations.
 
 Reviewed-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
@@ -53,90 +61,63 @@ Tested-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/attr.c  | 29 +++++++++++++++++++++++++++++
- fs/inode.c | 29 -----------------------------
- 2 files changed, 29 insertions(+), 29 deletions(-)
+ fs/attr.c     | 28 ++++++++++++++++++++++++++++
+ fs/internal.h |  6 ++++++
+ 2 files changed, 34 insertions(+)
 
 diff --git a/fs/attr.c b/fs/attr.c
-index 686840aa91c8b..f045431bab1ad 100644
+index f045431bab1ad..965be68ed8fa0 100644
 --- a/fs/attr.c
 +++ b/fs/attr.c
-@@ -20,6 +20,35 @@
+@@ -20,6 +20,34 @@
  
  #include "internal.h"
  
-+/*
-+ * The logic we want is
++/**
++ * setattr_should_drop_sgid - determine whether the setgid bit needs to be
++ *                            removed
++ * @mnt_userns:	user namespace of the mount @inode was found from
++ * @inode:	inode to check
 + *
-+ *	if suid or (sgid and xgrp)
-+ *		remove privs
++ * This function determines whether the setgid bit needs to be removed.
++ * We retain backwards compatibility and require setgid bit to be removed
++ * unconditionally if S_IXGRP is set. Otherwise we have the exact same
++ * requirements as setattr_prepare() and setattr_copy().
++ *
++ * Return: ATTR_KILL_SGID if setgid bit needs to be removed, 0 otherwise.
 + */
-+int should_remove_suid(struct dentry *dentry)
++int setattr_should_drop_sgid(struct user_namespace *mnt_userns,
++			     const struct inode *inode)
 +{
-+	umode_t mode = d_inode(dentry)->i_mode;
-+	int kill = 0;
++	umode_t mode = inode->i_mode;
 +
-+	/* suid always must be killed */
-+	if (unlikely(mode & S_ISUID))
-+		kill = ATTR_KILL_SUID;
-+
-+	/*
-+	 * sgid without any exec bits is just a mandatory locking mark; leave
-+	 * it alone.  If some exec bits are set, it's a real sgid; kill it.
-+	 */
-+	if (unlikely((mode & S_ISGID) && (mode & S_IXGRP)))
-+		kill |= ATTR_KILL_SGID;
-+
-+	if (unlikely(kill && !capable(CAP_FSETID) && S_ISREG(mode)))
-+		return kill;
-+
++	if (!(mode & S_ISGID))
++		return 0;
++	if (mode & S_IXGRP)
++		return ATTR_KILL_SGID;
++	if (!in_group_or_capable(mnt_userns, inode,
++				 i_gid_into_mnt(mnt_userns, inode)))
++		return ATTR_KILL_SGID;
 +	return 0;
 +}
-+EXPORT_SYMBOL(should_remove_suid);
 +
- /**
-  * chown_ok - verify permissions to chown inode
-  * @mnt_userns:	user namespace of the mount @inode was found from
-diff --git a/fs/inode.c b/fs/inode.c
-index a71fb82279bb1..3811269259e11 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -1864,35 +1864,6 @@ void touch_atime(const struct path *path)
- }
- EXPORT_SYMBOL(touch_atime);
- 
--/*
-- * The logic we want is
-- *
-- *	if suid or (sgid and xgrp)
-- *		remove privs
-- */
--int should_remove_suid(struct dentry *dentry)
--{
--	umode_t mode = d_inode(dentry)->i_mode;
--	int kill = 0;
--
--	/* suid always must be killed */
--	if (unlikely(mode & S_ISUID))
--		kill = ATTR_KILL_SUID;
--
--	/*
--	 * sgid without any exec bits is just a mandatory locking mark; leave
--	 * it alone.  If some exec bits are set, it's a real sgid; kill it.
--	 */
--	if (unlikely((mode & S_ISGID) && (mode & S_IXGRP)))
--		kill |= ATTR_KILL_SGID;
--
--	if (unlikely(kill && !capable(CAP_FSETID) && S_ISREG(mode)))
--		return kill;
--
--	return 0;
--}
--EXPORT_SYMBOL(should_remove_suid);
--
  /*
-  * Return mask of changes for notify_change() that need to be done as a
-  * response to write or truncate. Return 0 if nothing has to be changed.
+  * The logic we want is
+  *
+diff --git a/fs/internal.h b/fs/internal.h
+index c898147272817..45cf31d7380b8 100644
+--- a/fs/internal.h
++++ b/fs/internal.h
+@@ -231,3 +231,9 @@ struct xattr_ctx {
+ int setxattr_copy(const char __user *name, struct xattr_ctx *ctx);
+ int do_setxattr(struct user_namespace *mnt_userns, struct dentry *dentry,
+ 		struct xattr_ctx *ctx);
++
++/*
++ * fs/attr.c
++ */
++int setattr_should_drop_sgid(struct user_namespace *mnt_userns,
++			     const struct inode *inode);
 -- 
 2.39.2
 
