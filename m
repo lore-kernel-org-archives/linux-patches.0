@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC1A4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60EDC433EF;
-	Wed, 15 Mar 2023 12:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF75D4432
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:21:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E26DC4339B;
+	Wed, 15 Mar 2023 12:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882880;
-	bh=lVsp9WOcvH5dUUPC8jhCw7fqqgy3WTWLL4BUSkB9M0k=;
+	s=korg; t=1678882885;
+	bh=cLc0rVW5+b2WucWKlZqf1eyRlcd6eqV0xVoAIlyarmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wdnr3PiDn2Uf4hlnNNCgn+8mSSZy3uO0D5xCZPBuNFrpUYvgXzvQL2ABlc4QEQbP4
-	 gpPgAoTkxhTxYTl9ArW1otB4N8uwufPWF8klvUQBbIMmrz8cqmJLh2EMUYS9fJ2dTR
-	 g+9abGbjDJNa/ZjcCSv5VTNyE0I/iVra22rMs7/g=
+	b=exfR0L7mbbFGkaJz/+AJvithiuXEn+ePNpAzBQNnnmJnUlDR3vOtXtq5F7hCSxAbC
+	 3vZCa/TnV5BE3wyfC689TurrCB/JQT/v8B5sFdT76zTtrKwGjRVeD6sAfSVt1DnGZ0
+	 cC3/S+eXVnZmt95oSVFMqzU4QFRstRYyXKA9nklE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Mason <jdmason@kudzu.us>,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 035/104] bgmac: fix *initial* chip reset to support BCM5358
-Date: Wed, 15 Mar 2023 13:12:06 +0100
-Message-Id: <20230315115733.475293789@linuxfoundation.org>
+	Ye Bin <yebin10@huawei.com>,
+	stable@kernel.org,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 009/104] ext4: move where set the MAY_INLINE_DATA flag is set
+Date: Wed, 15 Mar 2023 13:11:40 +0100
+Message-Id: <20230315115732.398540415@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -38,89 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit f99e6d7c4ed3be2531bd576425a5bd07fb133bd7 ]
+commit 1dcdce5919115a471bf4921a57f20050c545a236 upstream.
 
-While bringing hardware up we should perform a full reset including the
-switch bit (BGMAC_BCMA_IOCTL_SW_RESET aka SICF_SWRST). It's what
-specification says and what reference driver does.
+The only caller of ext4_find_inline_data_nolock() that needs setting of
+EXT4_STATE_MAY_INLINE_DATA flag is ext4_iget_extra_inode().  In
+ext4_write_inline_data_end() we just need to update inode->i_inline_off.
+Since we are going to add one more caller that does not need to set
+EXT4_STATE_MAY_INLINE_DATA, just move setting of EXT4_STATE_MAY_INLINE_DATA
+out to ext4_iget_extra_inode().
 
-This seems to be critical for the BCM5358. Without this hardware doesn't
-get initialized properly and doesn't seem to transmit or receive any
-packets.
-
-Originally bgmac was calling bgmac_chip_reset() before setting
-"has_robosw" property which resulted in expected behaviour. That has
-changed as a side effect of adding platform device support which
-regressed BCM5358 support.
-
-Fixes: f6a95a24957a ("net: ethernet: bgmac: Add platform device support")
-Cc: Jon Mason <jdmason@kudzu.us>
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230227091156.19509-1-zajec5@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Cc: stable@kernel.org
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230307015253.2232062-2-yebin@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bgmac.c | 8 ++++++--
- drivers/net/ethernet/broadcom/bgmac.h | 2 ++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ fs/ext4/inline.c |    1 -
+ fs/ext4/inode.c  |    7 ++++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
-index 9960127f612ea..bb999e67d7736 100644
---- a/drivers/net/ethernet/broadcom/bgmac.c
-+++ b/drivers/net/ethernet/broadcom/bgmac.c
-@@ -890,13 +890,13 @@ static void bgmac_chip_reset_idm_config(struct bgmac *bgmac)
- 
- 		if (iost & BGMAC_BCMA_IOST_ATTACHED) {
- 			flags = BGMAC_BCMA_IOCTL_SW_CLKEN;
--			if (!bgmac->has_robosw)
-+			if (bgmac->in_init || !bgmac->has_robosw)
- 				flags |= BGMAC_BCMA_IOCTL_SW_RESET;
- 		}
- 		bgmac_clk_enable(bgmac, flags);
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -157,7 +157,6 @@ int ext4_find_inline_data_nolock(struct
+ 					(void *)ext4_raw_inode(&is.iloc));
+ 		EXT4_I(inode)->i_inline_size = EXT4_MIN_INLINE_DATA_SIZE +
+ 				le32_to_cpu(is.s.here->e_value_size);
+-		ext4_set_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
  	}
+ out:
+ 	brelse(is.iloc.bh);
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4639,8 +4639,13 @@ static inline int ext4_iget_extra_inode(
  
--	if (iost & BGMAC_BCMA_IOST_ATTACHED && !bgmac->has_robosw)
-+	if (iost & BGMAC_BCMA_IOST_ATTACHED && (bgmac->in_init || !bgmac->has_robosw))
- 		bgmac_idm_write(bgmac, BCMA_IOCTL,
- 				bgmac_idm_read(bgmac, BCMA_IOCTL) &
- 				~BGMAC_BCMA_IOCTL_SW_RESET);
-@@ -1490,6 +1490,8 @@ int bgmac_enet_probe(struct bgmac *bgmac)
- 	struct net_device *net_dev = bgmac->net_dev;
- 	int err;
- 
-+	bgmac->in_init = true;
+ 	if (EXT4_INODE_HAS_XATTR_SPACE(inode)  &&
+ 	    *magic == cpu_to_le32(EXT4_XATTR_MAGIC)) {
++		int err;
 +
- 	bgmac_chip_intrs_off(bgmac);
- 
- 	net_dev->irq = bgmac->irq;
-@@ -1542,6 +1544,8 @@ int bgmac_enet_probe(struct bgmac *bgmac)
- 	/* Omit FCS from max MTU size */
- 	net_dev->max_mtu = BGMAC_RX_MAX_FRAME_SIZE - ETH_FCS_LEN;
- 
-+	bgmac->in_init = false;
-+
- 	err = register_netdev(bgmac->net_dev);
- 	if (err) {
- 		dev_err(bgmac->dev, "Cannot register net device\n");
-diff --git a/drivers/net/ethernet/broadcom/bgmac.h b/drivers/net/ethernet/broadcom/bgmac.h
-index 351c598a3ec6d..d1200b27af1ed 100644
---- a/drivers/net/ethernet/broadcom/bgmac.h
-+++ b/drivers/net/ethernet/broadcom/bgmac.h
-@@ -512,6 +512,8 @@ struct bgmac {
- 	int irq;
- 	u32 int_mask;
- 
-+	bool in_init;
-+
- 	/* Current MAC state */
- 	int mac_speed;
- 	int mac_duplex;
--- 
-2.39.2
-
+ 		ext4_set_inode_state(inode, EXT4_STATE_XATTR);
+-		return ext4_find_inline_data_nolock(inode);
++		err = ext4_find_inline_data_nolock(inode);
++		if (!err && ext4_has_inline_data(inode))
++			ext4_set_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
++		return err;
+ 	} else
+ 		EXT4_I(inode)->i_inline_off = 0;
+ 	return 0;
 
 
