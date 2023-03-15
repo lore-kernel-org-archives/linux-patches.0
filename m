@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7894431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:27:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F89C433EF;
-	Wed, 15 Mar 2023 12:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6884432
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:27:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD487C433A1;
+	Wed, 15 Mar 2023 12:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883234;
-	bh=LgurqpPeM1/217z94IIEPNtkBtwiuWZFNyThcamG2TU=;
+	s=korg; t=1678883240;
+	bh=H+I7i9XyA716jcMukxZSzJn95vXblwM3o3qrJIJtZso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VUWYcgQs3jzp004SPychQFaTruhR8BsNJs/61wyN09R0suXBeH/Xw5EkeX16bx/wz
-	 8LF4jLoh9X2Ys5jpqWJfT1Jf+c3J3ODHP8zKpD99vCb1d1oHCltvHTQD7Yu/gHbn2u
-	 EMSgrsxdpxEudsE3pV0CWxwmZ8XoTKGgcHQb394c=
+	b=xsWn3pX4BGt+FfGj0jR4hva5YG9Z5XZDn16OOapbl0U1MIHoldI0aG3LS4DLagqtp
+	 yVa9dzS4mBAeLDDVqkqcXuegi3qsxDlzIHE181stHgLeHpplr55lmczUsPf96oCYdI
+	 NaP615a9Ij+k+5fGDeJMuilTF3X7J+35ppkNobVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenz Bauer <lmb@isovalent.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Matthias Kaehlcke <mka@chromium.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/145] btf: fix resolving BTF_KIND_VAR after ARRAY, STRUCT, UNION, PTR
-Date: Wed, 15 Mar 2023 13:12:12 +0100
-Message-Id: <20230315115741.220042767@linuxfoundation.org>
+Subject: [PATCH 5.15 041/145] regulator: core: Use ktime_get_boottime() to determine how long a regulator was off
+Date: Wed, 15 Mar 2023 13:11:47 +0100
+Message-Id: <20230315115740.431945870@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -35,96 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenz Bauer <lorenz.bauer@isovalent.com>
+From: Matthias Kaehlcke <mka@chromium.org>
 
-[ Upstream commit 9b459804ff9973e173fabafba2a1319f771e85fa ]
+[ Upstream commit 80d2c29e09e663761c2778167a625b25ffe01b6f ]
 
-btf_datasec_resolve contains a bug that causes the following BTF
-to fail loading:
+For regulators with 'off-on-delay-us' the regulator framework currently
+uses ktime_get() to determine how long the regulator has been off
+before re-enabling it (after a delay if needed). A problem with using
+ktime_get() is that it doesn't account for the time the system is
+suspended. As a result a regulator with a longer 'off-on-delay' (e.g.
+500ms) that was switched off during suspend might still incurr in a
+delay on resume before it is re-enabled, even though the regulator
+might have been off for hours. ktime_get_boottime() accounts for
+suspend time, use it instead of ktime_get().
 
-    [1] DATASEC a size=2 vlen=2
-        type_id=4 offset=0 size=1
-        type_id=7 offset=1 size=1
-    [2] INT (anon) size=1 bits_offset=0 nr_bits=8 encoding=(none)
-    [3] PTR (anon) type_id=2
-    [4] VAR a type_id=3 linkage=0
-    [5] INT (anon) size=1 bits_offset=0 nr_bits=8 encoding=(none)
-    [6] TYPEDEF td type_id=5
-    [7] VAR b type_id=6 linkage=0
-
-This error message is printed during btf_check_all_types:
-
-    [1] DATASEC a size=2 vlen=2
-        type_id=7 offset=1 size=1 Invalid type
-
-By tracing btf_*_resolve we can pinpoint the problem:
-
-    btf_datasec_resolve(depth: 1, type_id: 1, mode: RESOLVE_TBD) = 0
-        btf_var_resolve(depth: 2, type_id: 4, mode: RESOLVE_TBD) = 0
-            btf_ptr_resolve(depth: 3, type_id: 3, mode: RESOLVE_PTR) = 0
-        btf_var_resolve(depth: 2, type_id: 4, mode: RESOLVE_PTR) = 0
-    btf_datasec_resolve(depth: 1, type_id: 1, mode: RESOLVE_PTR) = -22
-
-The last invocation of btf_datasec_resolve should invoke btf_var_resolve
-by means of env_stack_push, instead it returns EINVAL. The reason is that
-env_stack_push is never executed for the second VAR.
-
-    if (!env_type_is_resolve_sink(env, var_type) &&
-        !env_type_is_resolved(env, var_type_id)) {
-        env_stack_set_next_member(env, i + 1);
-        return env_stack_push(env, var_type, var_type_id);
-    }
-
-env_type_is_resolve_sink() changes its behaviour based on resolve_mode.
-For RESOLVE_PTR, we can simplify the if condition to the following:
-
-    (btf_type_is_modifier() || btf_type_is_ptr) && !env_type_is_resolved()
-
-Since we're dealing with a VAR the clause evaluates to false. This is
-not sufficient to trigger the bug however. The log output and EINVAL
-are only generated if btf_type_id_size() fails.
-
-    if (!btf_type_id_size(btf, &type_id, &type_size)) {
-        btf_verifier_log_vsi(env, v->t, vsi, "Invalid type");
-        return -EINVAL;
-    }
-
-Most types are sized, so for example a VAR referring to an INT is not a
-problem. The bug is only triggered if a VAR points at a modifier. Since
-we skipped btf_var_resolve that modifier was also never resolved, which
-means that btf_resolved_type_id returns 0 aka VOID for the modifier.
-This in turn causes btf_type_id_size to return NULL, triggering EINVAL.
-
-To summarise, the following conditions are necessary:
-
-- VAR pointing at PTR, STRUCT, UNION or ARRAY
-- Followed by a VAR pointing at TYPEDEF, VOLATILE, CONST, RESTRICT or
-  TYPE_TAG
-
-The fix is to reset resolve_mode to RESOLVE_TBD before attempting to
-resolve a VAR from a DATASEC.
-
-Fixes: 1dc92851849c ("bpf: kernel side support for BTF Var and DataSec")
-Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
-Link: https://lore.kernel.org/r/20230306112138.155352-2-lmb@isovalent.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: a8ce7bd89689 ("regulator: core: Fix off_on_delay handling")
+Cc: stable@vger.kernel.org    # 5.13+
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/20230223003301.v2.1.I9719661b8eb0a73b8c416f9c26cf5bd8c0563f99@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/regulator/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 1f9369b677fe2..6c7126de5c17f 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -3655,6 +3655,7 @@ static int btf_datasec_resolve(struct btf_verifier_env *env,
- 	struct btf *btf = env->btf;
- 	u16 i;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index c7b1e15bf7bb5..cd10880378a6d 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1540,7 +1540,7 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 	}
  
-+	env->resolve_mode = RESOLVE_TBD;
- 	for_each_vsi_from(i, v->next_member, v->t, vsi) {
- 		u32 var_type_id = vsi->type, type_id, type_size = 0;
- 		const struct btf_type *var_type = btf_type_by_id(env->btf,
+ 	if (rdev->desc->off_on_delay)
+-		rdev->last_off = ktime_get();
++		rdev->last_off = ktime_get_boottime();
+ 
+ 	/* If the constraints say the regulator should be on at this point
+ 	 * and we have control then make sure it is enabled.
+@@ -2629,7 +2629,7 @@ static int _regulator_do_enable(struct regulator_dev *rdev)
+ 		 * this regulator was disabled.
+ 		 */
+ 		ktime_t end = ktime_add_us(rdev->last_off, rdev->desc->off_on_delay);
+-		s64 remaining = ktime_us_delta(end, ktime_get());
++		s64 remaining = ktime_us_delta(end, ktime_get_boottime());
+ 
+ 		if (remaining > 0)
+ 			_regulator_enable_delay(remaining);
+@@ -2868,7 +2868,7 @@ static int _regulator_do_disable(struct regulator_dev *rdev)
+ 	}
+ 
+ 	if (rdev->desc->off_on_delay)
+-		rdev->last_off = ktime_get();
++		rdev->last_off = ktime_get_boottime();
+ 
+ 	trace_regulator_disable_complete(rdev_get_name(rdev));
+ 
 -- 
 2.39.2
 
