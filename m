@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560D04431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:28:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D248FC433EF;
-	Wed, 15 Mar 2023 12:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131784431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:28:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0B5C433EF;
+	Wed, 15 Mar 2023 12:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883316;
-	bh=vrGgUOnpAqLLz5kca6TgBOPcfH+fu/CQKFcxxJ7unWk=;
+	s=korg; t=1678883318;
+	bh=Dh/qI2QJLDX/Q30gslNHpsglXEBVKKJrZ7k2TnGYmbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13H4QuJFgvbwNUm70kqnfksGeUX3WKtIgmYtPm3uAiBJnAif4S1HhBAdQMblX/D8+
-	 x2YOP+1NMpSeFKRvTw+el7K70K/Tnz6yVxjOJqxup+NUcD1fqIzDDGCNyuBq022Z8n
-	 ONGM05febsu/3Wwh6F3RGu6/pjNPT1wfEa9nGU/c=
+	b=1cGNZyQgSlR2n3H19yrWU3CfZauiSS9xy1nVJaTPj2GL1SIUI+FzZRbJi5cQltQiw
+	 fgr1/DK9OfGH0Jd866q8V5Jceh3mK6dvNKxVrfiAuRDvvV9LtJlVVaPm+eUsJOKg4K
+	 ugFrJ7cbYPn/Bv0ZdP7czVREKkSaUYAZIM9cfmUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Yang Xu <xuyang2018.jy@fujitsu.com>,
 	Amir Goldstein <amir73il@gmail.com>,
 	Leah Rumancik <leah.rumancik@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/145] xfs: set prealloc flag in xfs_alloc_file_space()
-Date: Wed, 15 Mar 2023 13:12:43 +0100
-Message-Id: <20230315115742.180463331@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>
+Subject: [PATCH 5.15 098/145] fs: add mode_strip_sgid() helper
+Date: Wed, 15 Mar 2023 13:12:44 +0100
+Message-Id: <20230315115742.209240395@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -37,93 +39,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Yang Xu <xuyang2018.jy@fujitsu.com>
 
-commit 0b02c8c0d75a738c98c35f02efb36217c170d78c upsream.
+commit 2b3416ceff5e6bd4922f6d1c61fb68113dd82302 upsream.
 
-Now that we only call xfs_update_prealloc_flags() from
-xfs_file_fallocate() in the case where we need to set the
-preallocation flag, do this in xfs_alloc_file_space() where we
-already have the inode joined into a transaction and get
-rid of the call to xfs_update_prealloc_flags() from the fallocate
-code.
+Add a dedicated helper to handle the setgid bit when creating a new file
+in a setgid directory. This is a preparatory patch for moving setgid
+stripping into the vfs. The patch contains no functional changes.
 
-This also means that we now correctly avoid setting the
-XFS_DIFLAG_PREALLOC flag when xfs_is_always_cow_inode() is true, as
-these inodes will never have preallocated extents.
+Currently the setgid stripping logic is open-coded directly in
+inode_init_owner() and the individual filesystems are responsible for
+handling setgid inheritance. Since this has proven to be brittle as
+evidenced by old issues we uncovered over the last months (see [1] to
+[3] below) we will try to move this logic into the vfs.
 
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Link: e014f37db1a2 ("xfs: use setattr_copy to set vfs inode attributes") [1]
+Link: 01ea173e103e ("xfs: fix up non-directory creation in SGID directories") [2]
+Link: fd84bfdddd16 ("ceph: fix up non-directory creation in SGID directories") [3]
+Link: https://lore.kernel.org/r/1657779088-2242-1-git-send-email-xuyang2018.jy@fujitsu.com
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Reviewed-and-Tested-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Yang Xu <xuyang2018.jy@fujitsu.com>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Tested-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_bmap_util.c | 9 +++------
- fs/xfs/xfs_file.c      | 8 --------
- 2 files changed, 3 insertions(+), 14 deletions(-)
+ fs/inode.c         | 36 ++++++++++++++++++++++++++++++++----
+ include/linux/fs.h |  2 ++
+ 2 files changed, 34 insertions(+), 4 deletions(-)
 
-diff --git a/fs/xfs/xfs_bmap_util.c b/fs/xfs/xfs_bmap_util.c
-index 73a36b7be3bd1..fd2ad6a3019ca 100644
---- a/fs/xfs/xfs_bmap_util.c
-+++ b/fs/xfs/xfs_bmap_util.c
-@@ -851,9 +851,6 @@ xfs_alloc_file_space(
- 			rblocks = 0;
- 		}
- 
--		/*
--		 * Allocate and setup the transaction.
--		 */
- 		error = xfs_trans_alloc_inode(ip, &M_RES(mp)->tr_write,
- 				dblocks, rblocks, false, &tp);
- 		if (error)
-@@ -870,9 +867,9 @@ xfs_alloc_file_space(
- 		if (error)
- 			goto error;
- 
--		/*
--		 * Complete the transaction
--		 */
-+		ip->i_diflags |= XFS_DIFLAG_PREALLOC;
-+		xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
+diff --git a/fs/inode.c b/fs/inode.c
+index 8279c700a2b7f..3740102c9bd5e 100644
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -2165,10 +2165,8 @@ void inode_init_owner(struct user_namespace *mnt_userns, struct inode *inode,
+ 		/* Directories are special, and always inherit S_ISGID */
+ 		if (S_ISDIR(mode))
+ 			mode |= S_ISGID;
+-		else if ((mode & (S_ISGID | S_IXGRP)) == (S_ISGID | S_IXGRP) &&
+-			 !in_group_p(i_gid_into_mnt(mnt_userns, dir)) &&
+-			 !capable_wrt_inode_uidgid(mnt_userns, dir, CAP_FSETID))
+-			mode &= ~S_ISGID;
++		else
++			mode = mode_strip_sgid(mnt_userns, dir, mode);
+ 	} else
+ 		inode_fsgid_set(inode, mnt_userns);
+ 	inode->i_mode = mode;
+@@ -2324,3 +2322,33 @@ struct timespec64 current_time(struct inode *inode)
+ 	return timestamp_truncate(now, inode);
+ }
+ EXPORT_SYMBOL(current_time);
 +
- 		error = xfs_trans_commit(tp);
- 		xfs_iunlock(ip, XFS_ILOCK_EXCL);
- 		if (error)
-diff --git a/fs/xfs/xfs_file.c b/fs/xfs/xfs_file.c
-index 020e0a412287a..8cd0c3df253f9 100644
---- a/fs/xfs/xfs_file.c
-+++ b/fs/xfs/xfs_file.c
-@@ -909,7 +909,6 @@ xfs_file_fallocate(
- 	struct inode		*inode = file_inode(file);
- 	struct xfs_inode	*ip = XFS_I(inode);
- 	long			error;
--	enum xfs_prealloc_flags	flags = 0;
- 	uint			iolock = XFS_IOLOCK_EXCL | XFS_MMAPLOCK_EXCL;
- 	loff_t			new_size = 0;
- 	bool			do_file_insert = false;
-@@ -1007,8 +1006,6 @@ xfs_file_fallocate(
- 		}
- 		do_file_insert = true;
- 	} else {
--		flags |= XFS_PREALLOC_SET;
--
- 		if (!(mode & FALLOC_FL_KEEP_SIZE) &&
- 		    offset + len > i_size_read(inode)) {
- 			new_size = offset + len;
-@@ -1059,11 +1056,6 @@ xfs_file_fallocate(
- 			if (error)
- 				goto out_unlock;
- 		}
--
--		error = xfs_update_prealloc_flags(ip, XFS_PREALLOC_SET);
--		if (error)
--			goto out_unlock;
--
- 	}
++/**
++ * mode_strip_sgid - handle the sgid bit for non-directories
++ * @mnt_userns: User namespace of the mount the inode was created from
++ * @dir: parent directory inode
++ * @mode: mode of the file to be created in @dir
++ *
++ * If the @mode of the new file has both the S_ISGID and S_IXGRP bit
++ * raised and @dir has the S_ISGID bit raised ensure that the caller is
++ * either in the group of the parent directory or they have CAP_FSETID
++ * in their user namespace and are privileged over the parent directory.
++ * In all other cases, strip the S_ISGID bit from @mode.
++ *
++ * Return: the new mode to use for the file
++ */
++umode_t mode_strip_sgid(struct user_namespace *mnt_userns,
++			const struct inode *dir, umode_t mode)
++{
++	if ((mode & (S_ISGID | S_IXGRP)) != (S_ISGID | S_IXGRP))
++		return mode;
++	if (S_ISDIR(mode) || !dir || !(dir->i_mode & S_ISGID))
++		return mode;
++	if (in_group_p(i_gid_into_mnt(mnt_userns, dir)))
++		return mode;
++	if (capable_wrt_inode_uidgid(mnt_userns, dir, CAP_FSETID))
++		return mode;
++
++	return mode & ~S_ISGID;
++}
++EXPORT_SYMBOL(mode_strip_sgid);
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index 1e1ac116dd136..be9be4a7216c7 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1941,6 +1941,8 @@ extern long compat_ptr_ioctl(struct file *file, unsigned int cmd,
+ void inode_init_owner(struct user_namespace *mnt_userns, struct inode *inode,
+ 		      const struct inode *dir, umode_t mode);
+ extern bool may_open_dev(const struct path *path);
++umode_t mode_strip_sgid(struct user_namespace *mnt_userns,
++			const struct inode *dir, umode_t mode);
  
- 	/* Change file size if needed */
+ /*
+  * This is the "filldir" function type, used by readdir() to let
 -- 
 2.39.2
 
