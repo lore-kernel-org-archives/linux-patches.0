@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE164431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A85C433EF;
-	Wed, 15 Mar 2023 12:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01FE4431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4620EC433D2;
+	Wed, 15 Mar 2023 12:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883651;
-	bh=B5f9pzFk1lgO1q76ZOhNXhYImMXbJUNjwv+Qc6KYeKo=;
+	s=korg; t=1678883653;
+	bh=jw+jXFWLCteO0ajxlewBx8owfsVx0ByGf2WRTKrDtgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QsXA/PGGF4M9wNwzpRMjLVLu8NoiXDccTTmEfHcq5R1HoIvhYeJV4dpK3tLA4dwg7
-	 FYfTHVAh8hNJvx05RMNeWYFNIULFgCB0hDGeyk0VOXREX2y1CjiVZg3DTauOiUXR7g
-	 SujbOB4SaKhj6Qv8Ia63Ha9OMlqCoLIHzb+xXIFs=
+	b=wmbX23u8CkMGt+jNwsCxr5TldRjmBOG6szaxIrTz5glvlPwXfvM19jBvubM7MnGlM
+	 ua8cQ/pA+y8xWwoUfIOlCyejb44HN6bDSKIq0VnRYSGFTYcDn9ITH0MSu60EIvJxg0
+	 yevsoROxXrmXdEUHZ4yUWykIl7Bs9pEYl18GJOOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcin Witkowski <marcin.witkowski@intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Animesh Manna <animesh.manna@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 048/143] spi: intel: Check number of chip selects after reading the descriptor
-Date: Wed, 15 Mar 2023 13:12:14 +0100
-Message-Id: <20230315115741.981607434@linuxfoundation.org>
+Subject: [PATCH 6.1 049/143] drm/i915: Introduce intel_panel_init_alloc()
+Date: Wed, 15 Mar 2023 13:12:15 +0100
+Message-Id: <20230315115742.009958721@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -36,49 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 574fbb95cd9d88bdc9c9c4c64223a38a61d7de9a ]
+[ Upstream commit f70f8153e3642337b444fbc0c64d546a46bbcd62 ]
 
-The flash decriptor contains the number of flash components that we use
-to figure out how many flash chips there are connected. Therefore we
-need to read it first before deciding how many chip selects the
-controller has.
+Introduce a place where we can initialize connector->panel
+after it's been allocated. We already have a intel_panel_init()
+so had to get creative with the name and came up with
+intel_panel_init_alloc().
 
-Reported-by: Marcin Witkowski <marcin.witkowski@intel.com>
-Fixes: 3f03c618bebb ("spi: intel: Add support for second flash chip")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/r/20230215110040.42186-1-mika.westerberg@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Animesh Manna <animesh.manna@intel.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221125173156.31689-2-ville.syrjala@linux.intel.com
+Stable-dep-of: 14e591a1930c ("drm/i915: Populate encoder->devdata for DSI on icl+")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-intel.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/display/intel_connector.c | 2 +-
+ drivers/gpu/drm/i915/display/intel_panel.c     | 7 +++++++
+ drivers/gpu/drm/i915/display/intel_panel.h     | 1 +
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-intel.c b/drivers/spi/spi-intel.c
-index 3ac73691fbb54..54fc226e1cdf6 100644
---- a/drivers/spi/spi-intel.c
-+++ b/drivers/spi/spi-intel.c
-@@ -1366,14 +1366,14 @@ static int intel_spi_populate_chip(struct intel_spi *ispi)
- 	if (!spi_new_device(ispi->master, &chip))
- 		return -ENODEV;
+diff --git a/drivers/gpu/drm/i915/display/intel_connector.c b/drivers/gpu/drm/i915/display/intel_connector.c
+index 6d5cbeb8df4da..8bb296f3d6252 100644
+--- a/drivers/gpu/drm/i915/display/intel_connector.c
++++ b/drivers/gpu/drm/i915/display/intel_connector.c
+@@ -54,7 +54,7 @@ int intel_connector_init(struct intel_connector *connector)
+ 	__drm_atomic_helper_connector_reset(&connector->base,
+ 					    &conn_state->base);
  
--	/* Add the second chip if present */
--	if (ispi->master->num_chipselect < 2)
--		return 0;
--
- 	ret = intel_spi_read_desc(ispi);
- 	if (ret)
- 		return ret;
+-	INIT_LIST_HEAD(&connector->panel.fixed_modes);
++	intel_panel_init_alloc(connector);
  
-+	/* Add the second chip if present */
-+	if (ispi->master->num_chipselect < 2)
-+		return 0;
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/i915/display/intel_panel.c b/drivers/gpu/drm/i915/display/intel_panel.c
+index f72f4646c0d70..8bd7af99cd2b9 100644
+--- a/drivers/gpu/drm/i915/display/intel_panel.c
++++ b/drivers/gpu/drm/i915/display/intel_panel.c
+@@ -648,6 +648,13 @@ intel_panel_mode_valid(struct intel_connector *connector,
+ 	return MODE_OK;
+ }
+ 
++void intel_panel_init_alloc(struct intel_connector *connector)
++{
++	struct intel_panel *panel = &connector->panel;
 +
- 	chip.platform_data = NULL;
- 	chip.chip_select = 1;
++	INIT_LIST_HEAD(&panel->fixed_modes);
++}
++
+ int intel_panel_init(struct intel_connector *connector)
+ {
+ 	struct intel_panel *panel = &connector->panel;
+diff --git a/drivers/gpu/drm/i915/display/intel_panel.h b/drivers/gpu/drm/i915/display/intel_panel.h
+index 5c5b5b7f95b6c..4b51e1c51da62 100644
+--- a/drivers/gpu/drm/i915/display/intel_panel.h
++++ b/drivers/gpu/drm/i915/display/intel_panel.h
+@@ -18,6 +18,7 @@ struct intel_connector;
+ struct intel_crtc_state;
+ struct intel_encoder;
  
++void intel_panel_init_alloc(struct intel_connector *connector);
+ int intel_panel_init(struct intel_connector *connector);
+ void intel_panel_fini(struct intel_connector *connector);
+ enum drm_connector_status
 -- 
 2.39.2
 
