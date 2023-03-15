@@ -1,191 +1,168 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC06F525D
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 13:18:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD856C433EF;
-	Wed, 15 Mar 2023 13:18:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678886301;
-	bh=aqZVmk7t5WxMGPlPcRU9bGxPIcdBIhLbUYmgb//gCgw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fgfZWzCNqmUglOtvCMi0CeNNSq6mv7sWE4PjaocvodL7EhkLLIl4bafKxtzi+BWMQ
-	 X3jZRaEhH4Aaw170LlS4tI2CsUESkVXsL5YmrowLwbFuCqHt44Xz1h3+pmApeJLCTC
-	 YdPChklKBgTPzSMuivwwZrCX4v/eQS0tVf5QTffdiaZtlU8q4+hdmB13R0KzdyZ8bN
-	 +GkNqw9r3PFtAsEZkx5gPHrK3xnwNOfIXoi4i+Ym7SGcsf8Tky5/bDn+pFkTSisOq0
-	 h/KDskny5wG6C7Rb7ZVtqTMpXBZbcl9WWzIxJ56oo7uvPDN1FM3Oz6tosC+neH3mxq
-	 sCmruBz4gpdDQ==
-Date: Wed, 15 Mar 2023 13:18:17 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.2 112/141] RISC-V: clarify ISA string ordering rules in
- cpu.c
-Message-ID: <4576eb25-2c86-49d3-a290-398d583f479a@spud>
-References: <20230315115739.932786806@linuxfoundation.org>
- <20230315115743.408666245@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719AB525D
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 13:38:55 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 5D8B31FD76;
+	Wed, 15 Mar 2023 13:38:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1678887528; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=wQFuKBaF6WvGk6vzttY4i4tA7syyP5hs6IrhdtonffA=;
+	b=cqxP2twoRj+fcrs/+8lehtiDgnL4jr0LNZ6a5rdur0lBr0tEWrBncWCbZJ6/bK8EyWpU4x
+	gZ0F+4c+4+XXRkr56WDNiSySqXnP6VfvK3ui99h+DhlZDvTySsKKDiEo77yQOun5YA6Xyt
+	sgYbKyd2dOq4T+lsVt4cYW7F2JRPFGk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1678887528;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=wQFuKBaF6WvGk6vzttY4i4tA7syyP5hs6IrhdtonffA=;
+	b=w6coZ/Uw88fhU8aHcGl6eDCI1gHVg0UOGUkVaXsHulRwjbstUIgG9UCupGjq6fQNmDKLo6
+	x/lC0q/mxOCeVZCg==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0211513A2F;
+	Wed, 15 Mar 2023 13:38:47 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id e+dPO2fKEWQSLwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 15 Mar 2023 13:38:47 +0000
+Message-ID: <14043bee-af7d-38f3-5a46-f63940e56c1e@suse.cz>
+Date: Wed, 15 Mar 2023 14:38:47 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="tXGpNp6fssXWhX88"
-Content-Disposition: inline
-In-Reply-To: <20230315115743.408666245@linuxfoundation.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 7/7] mm/slab: document kfree() as allowed for
+ kmem_cache_alloc() objects
+Content-Language: en-US
+To: Mike Rapoport <mike.rapoport@gmail.com>
+Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
+ Joonsoo Kim <iamjoonsoo.kim@lge.com>, Pekka Enberg <penberg@kernel.org>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+ rcu@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ netdev@vger.kernel.org, linux-doc@vger.kernel.org,
+ Mike Rapoport <rppt@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+ "Paul E. McKenney" <paulmck@kernel.org>,
+ Frederic Weisbecker <frederic@kernel.org>,
+ Neeraj Upadhyay <quic_neeraju@quicinc.com>,
+ Josh Triplett <josh@joshtriplett.org>, Steven Rostedt <rostedt@goodmis.org>,
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ Lai Jiangshan <jiangshanlai@gmail.com>,
+ Joel Fernandes <joel@joelfernandes.org>
+References: <20230310103210.22372-1-vbabka@suse.cz>
+ <20230310103210.22372-8-vbabka@suse.cz> <ZA2ic9JYXGVzps1+@kernel.org>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <ZA2ic9JYXGVzps1+@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 3/12/23 10:59, Mike Rapoport wrote:
+> On Fri, Mar 10, 2023 at 11:32:09AM +0100, Vlastimil Babka wrote:
+>> This will make it easier to free objects in situations when they can
+>> come from either kmalloc() or kmem_cache_alloc(), and also allow
+>> kfree_rcu() for freeing objects from kmem_cache_alloc().
+>> 
+>> For the SLAB and SLUB allocators this was always possible so with SLOB
+>> gone, we can document it as supported.
+>> 
+>> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+>> Cc: Mike Rapoport <rppt@kernel.org>
+>> Cc: Jonathan Corbet <corbet@lwn.net>
+>> Cc: "Paul E. McKenney" <paulmck@kernel.org>
+>> Cc: Frederic Weisbecker <frederic@kernel.org>
+>> Cc: Neeraj Upadhyay <quic_neeraju@quicinc.com>
+>> Cc: Josh Triplett <josh@joshtriplett.org>
+>> Cc: Steven Rostedt <rostedt@goodmis.org>
+>> Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+>> Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+>> Cc: Joel Fernandes <joel@joelfernandes.org>
+>> ---
+>>  Documentation/core-api/memory-allocation.rst | 15 +++++++++++----
+>>  include/linux/rcupdate.h                     |  6 ++++--
+>>  mm/slab_common.c                             |  5 +----
+>>  3 files changed, 16 insertions(+), 10 deletions(-)
+>> 
+>> diff --git a/Documentation/core-api/memory-allocation.rst b/Documentation/core-api/memory-allocation.rst
+>> index 5954ddf6ee13..f9e8d352ed67 100644
+>> --- a/Documentation/core-api/memory-allocation.rst
+>> +++ b/Documentation/core-api/memory-allocation.rst
+>> @@ -170,7 +170,14 @@ should be used if a part of the cache might be copied to the userspace.
+>>  After the cache is created kmem_cache_alloc() and its convenience
+>>  wrappers can allocate memory from that cache.
+>>  
+>> -When the allocated memory is no longer needed it must be freed. You can
+>> -use kvfree() for the memory allocated with `kmalloc`, `vmalloc` and
+>> -`kvmalloc`. The slab caches should be freed with kmem_cache_free(). And
+>> -don't forget to destroy the cache with kmem_cache_destroy().
+>> +When the allocated memory is no longer needed it must be freed. Objects
+> 
+> I'd add a line break before Objects                               ^
+> 
+>> +allocated by `kmalloc` can be freed by `kfree` or `kvfree`.
+>> +Objects allocated by `kmem_cache_alloc` can be freed with `kmem_cache_free`
+>> +or also by `kfree` or `kvfree`, which can be more convenient as it does
+> 
+> Maybe replace 'or also by' with a coma:
+> 
+> Objects allocated by `kmem_cache_alloc` can be freed with `kmem_cache_free`,
+> `kfree` or `kvfree`, which can be more convenient as it does
 
---tXGpNp6fssXWhX88
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+But then I need to clarify what the "which" applies to?
 
-Hey Greg,
+> 
+>> +not require the kmem_cache pointed.
+> 
+>                              ^ pointer.
+> 
+>> +The rules for _bulk and _rcu flavors of freeing functions are analogical.
+> 
+> Maybe 
+> 
+> The same rules apply to _bulk and _rcu flavors of freeing functions.
 
-On Wed, Mar 15, 2023 at 01:13:35PM +0100, Greg Kroah-Hartman wrote:
-> From: Conor Dooley <conor.dooley@microchip.com>
->=20
-> [ Upstream commit 99e2266f2460e5778560f81982b6301dd2a16502 ]
->=20
-> While the current list of rules may have been accurate when created
-> it now lacks some clarity in the face of isa-manual updates. Instead of
-> trying to continuously align this rule-set with the one in the
-> specifications, change the role of this comment.
->=20
-> This particular comment is important, as the array it "decorates"
-> defines the order in which the ISA string appears to userspace in
-> /proc/cpuinfo.
->=20
-> Re-jig and strengthen the wording to provide contributors with a set
-> order in which to add entries & note why this particular struct needs
-> more attention than others.
->=20
-> While in the area, add some whitespace and tweak some wording for
-> readability's sake.
->=20
-> Suggested-by: Andrew Jones <ajones@ventanamicro.com>
-> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-> Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-> Link: https://lore.kernel.org/r/20221205144525.2148448-2-conor.dooley@mic=
-rochip.com
-> Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-> Stable-dep-of: 1eac28201ac0 ("RISC-V: fix ordering of Zbb extension")
+So like this incremental diff?
 
-I've been sick for the last week, and am not 100% sure what I did and
-did not reply to stable selection emails for, but I'm pretty sure that I
-did say that the ZBB stuff was a 6.3 feature and the order fix should
-not be backported.
+diff --git a/Documentation/core-api/memory-allocation.rst b/Documentation/core-api/memory-allocation.rst
+index f9e8d352ed67..1c58d883b273 100644
+--- a/Documentation/core-api/memory-allocation.rst
++++ b/Documentation/core-api/memory-allocation.rst
+@@ -170,12 +170,14 @@ should be used if a part of the cache might be copied to the userspace.
+ After the cache is created kmem_cache_alloc() and its convenience
+ wrappers can allocate memory from that cache.
+ 
+-When the allocated memory is no longer needed it must be freed. Objects
+-allocated by `kmalloc` can be freed by `kfree` or `kvfree`.
+-Objects allocated by `kmem_cache_alloc` can be freed with `kmem_cache_free`
+-or also by `kfree` or `kvfree`, which can be more convenient as it does
+-not require the kmem_cache pointed.
+-The rules for _bulk and _rcu flavors of freeing functions are analogical.
++When the allocated memory is no longer needed it must be freed.
++
++Objects allocated by `kmalloc` can be freed by `kfree` or `kvfree`. Objects
++allocated by `kmem_cache_alloc` can be freed with `kmem_cache_free`, `kfree`
++or `kvfree`, where the latter two might be more convenient thanks to not
++needing the kmem_cache pointer.
++
++The same rules apply to _bulk and _rcu flavors of freeing functions.
+ 
+ Memory allocated by `vmalloc` can be freed with `vfree` or `kvfree`.
+ Memory allocated by `kvmalloc` can be freed with `kvfree`.
 
-I'm not sure that I understand how this comment rework is a stable
-dependency of that backport either, but this should be dropped.
-Apologies if I missed a selection email for this one while I've been
-sick, but I was sick after all...
-
-Cheers,
-Conor.
-
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  arch/riscv/kernel/cpu.c | 49 ++++++++++++++++++++++++++++++-----------
->  1 file changed, 36 insertions(+), 13 deletions(-)
->=20
-> diff --git a/arch/riscv/kernel/cpu.c b/arch/riscv/kernel/cpu.c
-> index 1b9a5a66e55ab..db8b16ad9342b 100644
-> --- a/arch/riscv/kernel/cpu.c
-> +++ b/arch/riscv/kernel/cpu.c
-> @@ -144,22 +144,45 @@ arch_initcall(riscv_cpuinfo_init);
->  		.uprop =3D #UPROP,				\
->  		.isa_ext_id =3D EXTID,				\
->  	}
-> +
->  /*
-> - * Here are the ordering rules of extension naming defined by RISC-V
-> - * specification :
-> - * 1. All extensions should be separated from other multi-letter extensi=
-ons
-> - *    by an underscore.
-> - * 2. The first letter following the 'Z' conventionally indicates the mo=
-st
-> + * The canonical order of ISA extension names in the ISA string is defin=
-ed in
-> + * chapter 27 of the unprivileged specification.
-> + *
-> + * Ordinarily, for in-kernel data structures, this order is unimportant =
-but
-> + * isa_ext_arr defines the order of the ISA string in /proc/cpuinfo.
-> + *
-> + * The specification uses vague wording, such as should, when it comes to
-> + * ordering, so for our purposes the following rules apply:
-> + *
-> + * 1. All multi-letter extensions must be separated from other extension=
-s by an
-> + *    underscore.
-> + *
-> + * 2. Additional standard extensions (starting with 'Z') must be sorted =
-after
-> + *    single-letter extensions and before any higher-privileged extensio=
-ns.
-> +
-> + * 3. The first letter following the 'Z' conventionally indicates the mo=
-st
->   *    closely related alphabetical extension category, IMAFDQLCBKJTPVH.
-> - *    If multiple 'Z' extensions are named, they should be ordered first
-> - *    by category, then alphabetically within a category.
-> - * 3. Standard supervisor-level extensions (starts with 'S') should be
-> - *    listed after standard unprivileged extensions.  If multiple
-> - *    supervisor-level extensions are listed, they should be ordered
-> + *    If multiple 'Z' extensions are named, they must be ordered first by
-> + *    category, then alphabetically within a category.
-> + *
-> + * 3. Standard supervisor-level extensions (starting with 'S') must be l=
-isted
-> + *    after standard unprivileged extensions.  If multiple supervisor-le=
-vel
-> + *    extensions are listed, they must be ordered alphabetically.
-> + *
-> + * 4. Standard machine-level extensions (starting with 'Zxm') must be li=
-sted
-> + *    after any lower-privileged, standard extensions.  If multiple
-> + *    machine-level extensions are listed, they must be ordered
->   *    alphabetically.
-> - * 4. Non-standard extensions (starts with 'X') must be listed after all
-> - *    standard extensions. They must be separated from other multi-letter
-> - *    extensions by an underscore.
-> + *
-> + * 5. Non-standard extensions (starting with 'X') must be listed after a=
-ll
-> + *    standard extensions. If multiple non-standard extensions are liste=
-d, they
-> + *    must be ordered alphabetically.
-> + *
-> + * An example string following the order is:
-> + *    rv64imadc_zifoo_zigoo_zafoo_sbar_scar_zxmbaz_xqux_xrux
-> + *
-> + * New entries to this struct should follow the ordering rules described=
- above.
->   */
->  static struct riscv_isa_ext_data isa_ext_arr[] =3D {
->  	__RISCV_ISA_EXT_DATA(sscofpmf, RISCV_ISA_EXT_SSCOFPMF),
-> --=20
-> 2.39.2
->=20
->=20
->=20
-
---tXGpNp6fssXWhX88
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZBHFmQAKCRB4tDGHoIJi
-0qpAAP4wgXwfuXGPQCEq+2geQM8YeG5ocMVON/7/uc77bvJ2IgD+IJ2qE6tGAlFa
-s/x8y7G/ijaoCPaluu+TIOH3qtauhw8=
-=0U1H
------END PGP SIGNATURE-----
-
---tXGpNp6fssXWhX88--
