@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82F54431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:18:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E273C4339B;
-	Wed, 15 Mar 2023 12:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631F84431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:18:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6BCC433EF;
+	Wed, 15 Mar 2023 12:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678882735;
-	bh=OzBV5aBqKSqmojYY0HRKAqEqSDU504pp8GTe0Af+pj0=;
+	s=korg; t=1678882738;
+	bh=7xD3X6MpnJbx2RsII0tEO8wHfCTuyt13z+tHDer6SfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tArMYbIXWbI9JmB9l+n9aWtwtB2C1UnFe/PlLXNDSXIOBsjVSMPMI39UFqKR2sxPx
-	 cMs3mnurtxiOtjN51vxJzkCxDsP/4MaeMWr36ZGD+yGka33QMcIfO5Q+ZQnTA0zHaT
-	 jtVFNYmT8pZWYM0MVv/AMQOtCvSqSgLCBuduWxG0=
+	b=L1E3H1fcA0alpdQB4QHW3VC4EKLxBDEkwWtnHFPuLk1pOamBueOSq7YoF4Hs2gRB2
+	 Y24Dn6bzEoYlk3eHIaQGduv/ORGvECWypz4tYIPAGPId0KQG4GzeGWqDSDV3HHAUzc
+	 IcMcvtnDGTPQ9Iv0FINWMJhpsdq16n4CVaF36mjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xurui <xurui@kylinos.cn>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 51/68] MIPS: Fix a compilation issue
-Date: Wed, 15 Mar 2023 13:12:45 +0100
-Message-Id: <20230315115728.110704076@linuxfoundation.org>
+Subject: [PATCH 5.4 52/68] powerpc: Check !irq instead of irq == NO_IRQ and remove NO_IRQ
+Date: Wed, 15 Mar 2023 13:12:46 +0100
+Message-Id: <20230315115728.140743203@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115726.103942885@linuxfoundation.org>
 References: <20230315115726.103942885@linuxfoundation.org>
@@ -35,36 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: xurui <xurui@kylinos.cn>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 109d587a4b4d7ccca2200ab1f808f43ae23e2585 ]
+[ Upstream commit bab537805a10bdbf55b31324ba4a9599e0651e5e ]
 
-arch/mips/include/asm/mach-rc32434/pci.h:377:
-cc1: error: result of ‘-117440512 << 16’ requires 44 bits to represent, but ‘int’ only has 32 bits [-Werror=shift-overflow=]
+NO_IRQ is a relic from the old days. It is not used anymore in core
+functions. By the way, function irq_of_parse_and_map() returns value 0
+on error.
 
-All bits in KORINA_STAT are already at the correct position, so there is
-no addtional shift needed.
+In some drivers, NO_IRQ is erroneously used to check the return of
+irq_of_parse_and_map().
 
-Signed-off-by: xurui <xurui@kylinos.cn>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+It is not a real bug today because the only architectures using the
+drivers being fixed by this patch define NO_IRQ as 0, but there are
+architectures which define NO_IRQ as -1. If one day those
+architectures start using the non fixed drivers, there will be a
+problem.
+
+Long time ago Linus advocated for not using NO_IRQ, see
+https://lore.kernel.org/all/Pine.LNX.4.64.0511211150040.13959@g5.osdl.org
+
+He re-iterated the same view recently in
+https://lore.kernel.org/all/CAHk-=wg2Pkb9kbfbstbB91AJA2SF6cySbsgHG-iQMq56j3VTcA@mail.gmail.com
+
+So test !irq instead of tesing irq == NO_IRQ.
+
+All other usage of NO_IRQ for powerpc were removed in previous cycles so
+the time has come to remove NO_IRQ completely for powerpc.
+
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/4b8d4f96140af01dec3a3330924dda8b2451c316.1674476798.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/mach-rc32434/pci.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/include/asm/irq.h    | 3 ---
+ arch/powerpc/platforms/44x/fsp2.c | 2 +-
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/arch/mips/include/asm/mach-rc32434/pci.h b/arch/mips/include/asm/mach-rc32434/pci.h
-index 6f40d1515580b..1ff8a987025c8 100644
---- a/arch/mips/include/asm/mach-rc32434/pci.h
-+++ b/arch/mips/include/asm/mach-rc32434/pci.h
-@@ -377,7 +377,7 @@ struct pci_msu {
- 				 PCI_CFG04_STAT_SSE | \
- 				 PCI_CFG04_STAT_PE)
+diff --git a/arch/powerpc/include/asm/irq.h b/arch/powerpc/include/asm/irq.h
+index 814dfab7e392e..f2f952ca87c37 100644
+--- a/arch/powerpc/include/asm/irq.h
++++ b/arch/powerpc/include/asm/irq.h
+@@ -17,9 +17,6 @@
  
--#define KORINA_CNFG1		((KORINA_STAT<<16)|KORINA_CMD)
-+#define KORINA_CNFG1		(KORINA_STAT | KORINA_CMD)
+ extern atomic_t ppc_n_lost_interrupts;
  
- #define KORINA_REVID		0
- #define KORINA_CLASS_CODE	0
+-/* This number is used when no interrupt has been assigned */
+-#define NO_IRQ			(0)
+-
+ /* Total number of virq in the platform */
+ #define NR_IRQS		CONFIG_NR_IRQS
+ 
+diff --git a/arch/powerpc/platforms/44x/fsp2.c b/arch/powerpc/platforms/44x/fsp2.c
+index 823397c802def..f8bbe05d9ef29 100644
+--- a/arch/powerpc/platforms/44x/fsp2.c
++++ b/arch/powerpc/platforms/44x/fsp2.c
+@@ -205,7 +205,7 @@ static void node_irq_request(const char *compat, irq_handler_t errirq_handler)
+ 
+ 	for_each_compatible_node(np, NULL, compat) {
+ 		irq = irq_of_parse_and_map(np, 0);
+-		if (irq == NO_IRQ) {
++		if (!irq) {
+ 			pr_err("device tree node %pOFn is missing a interrupt",
+ 			      np);
+ 			of_node_put(np);
 -- 
 2.39.2
 
