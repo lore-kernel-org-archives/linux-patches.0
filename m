@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B75E4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F05C433D2;
-	Wed, 15 Mar 2023 12:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B064431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:24:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2457EC433D2;
+	Wed, 15 Mar 2023 12:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883071;
-	bh=bxTptbUVa63UoQCRWI3jLiKQBHLWc7zNuIcPhaE4q9U=;
+	s=korg; t=1678883074;
+	bh=PQgrzDtwrlbTgZVQHjfnFwIa0Ld+2xxHQYRV5MYeYVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JhyFeV34c00pq8LuZz1RbSzXoQI4mQQN0DxucWUUgjMPsF/dk6HoTdmlBY1mU7sQE
-	 lJf4kuvGj3AkH6xqGv594sYu5JMcVoL1KardnQYEkIDUfJ3G5+8B7qNhY3I/BlBqcr
-	 crpkgv13hbiLEzR3YDNAlLbKdSJpfjZG/k4KWHek=
+	b=gv76xLhghWUllqEC+rtrXws7DhTWEu/K0ZwoOf3fnAtSvy3kLtANvfNWOSLHo03Zb
+	 id2YycmC06WFGsbB+KlOL3wIGZp0pOFhWyJ2PQxAkkdGKE7Lxnksqlh/JSVQnnn1dV
+	 C0DaKKQ0U/WWHr9KEB8iBz7ZOAp3CJ7VQN5ZVBBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Humes <aurxenon@lunos.org>,
-	Matt Turner <mattst88@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 070/104] alpha: fix R_ALPHA_LITERAL reloc for large modules
-Date: Wed, 15 Mar 2023 13:12:41 +0100
-Message-Id: <20230315115734.868299904@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Alexandru Matei <alexandru.matei@uipath.com>
+Subject: [PATCH 5.10 103/104] KVM: VMX: Fix crash due to uninitialized current_vmcs
+Date: Wed, 15 Mar 2023 13:13:14 +0100
+Message-Id: <20230315115736.368731242@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -35,55 +34,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edward Humes <aurxenon@lunos.org>
+From: Alexandru Matei <alexandru.matei@uipath.com>
 
-[ Upstream commit b6b17a8b3ecd878d98d5472a9023ede9e669ca72 ]
+commit 93827a0a36396f2fd6368a54a020f420c8916e9b upstream.
 
-Previously, R_ALPHA_LITERAL relocations would overflow for large kernel
-modules.
+KVM enables 'Enlightened VMCS' and 'Enlightened MSR Bitmap' when running as
+a nested hypervisor on top of Hyper-V. When MSR bitmap is updated,
+evmcs_touch_msr_bitmap function uses current_vmcs per-cpu variable to mark
+that the msr bitmap was changed.
 
-This was because the Alpha's apply_relocate_add was relying on the kernel's
-module loader to have sorted the GOT towards the very end of the module as it
-was mapped into memory in order to correctly assign the global pointer. While
-this behavior would mostly work fine for small kernel modules, this approach
-would overflow on kernel modules with large GOT's since the global pointer
-would be very far away from the GOT, and thus, certain entries would be out of
-range.
+vmx_vcpu_create() modifies the msr bitmap via vmx_disable_intercept_for_msr
+-> vmx_msr_bitmap_l01_changed which in the end calls this function. The
+function checks for current_vmcs if it is null but the check is
+insufficient because current_vmcs is not initialized. Because of this, the
+code might incorrectly write to the structure pointed by current_vmcs value
+left by another task. Preemption is not disabled, the current task can be
+preempted and moved to another CPU while current_vmcs is accessed multiple
+times from evmcs_touch_msr_bitmap() which leads to crash.
 
-This patch fixes this by instead using the Tru64 behavior of assigning the
-global pointer to be 32KB away from the start of the GOT. The change made
-in this patch won't work for multi-GOT kernel modules as it makes the
-assumption the module only has one GOT located at the beginning of .got,
-although for the vast majority kernel modules, this should be fine. Of the
-kernel modules that would previously result in a relocation error, none of
-them, even modules like nouveau, have even come close to filling up a single
-GOT, and they've all worked fine under this patch.
+The manipulation of MSR bitmaps by callers happens only for vmcs01 so the
+solution is to use vmx->vmcs01.vmcs instead of current_vmcs.
 
-Signed-off-by: Edward Humes <aurxenon@lunos.org>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  BUG: kernel NULL pointer dereference, address: 0000000000000338
+  PGD 4e1775067 P4D 0
+  Oops: 0002 [#1] PREEMPT SMP NOPTI
+  ...
+  RIP: 0010:vmx_msr_bitmap_l01_changed+0x39/0x50 [kvm_intel]
+  ...
+  Call Trace:
+   vmx_disable_intercept_for_msr+0x36/0x260 [kvm_intel]
+   vmx_vcpu_create+0xe6/0x540 [kvm_intel]
+   kvm_arch_vcpu_create+0x1d1/0x2e0 [kvm]
+   kvm_vm_ioctl_create_vcpu+0x178/0x430 [kvm]
+   kvm_vm_ioctl+0x53f/0x790 [kvm]
+   __x64_sys_ioctl+0x8a/0xc0
+   do_syscall_64+0x5c/0x90
+   entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fixes: ceef7d10dfb6 ("KVM: x86: VMX: hyper-v: Enlightened MSR-Bitmap support")
+Cc: stable@vger.kernel.org
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Alexandru Matei <alexandru.matei@uipath.com>
+Link: https://lore.kernel.org/r/20230123221208.4964-1-alexandru.matei@uipath.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[manual backport: evmcs.h got renamed to hyperv.h in a later
+version, modified in evmcs.h instead]
+Signed-off-by: Alexandru Matei <alexandru.matei@uipath.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/kernel/module.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/x86/kvm/vmx/evmcs.h |   11 -----------
+ arch/x86/kvm/vmx/vmx.c   |    9 +++++++--
+ 2 files changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/arch/alpha/kernel/module.c b/arch/alpha/kernel/module.c
-index 5b60c248de9ea..cbefa5a773846 100644
---- a/arch/alpha/kernel/module.c
-+++ b/arch/alpha/kernel/module.c
-@@ -146,10 +146,8 @@ apply_relocate_add(Elf64_Shdr *sechdrs, const char *strtab,
- 	base = (void *)sechdrs[sechdrs[relsec].sh_info].sh_addr;
- 	symtab = (Elf64_Sym *)sechdrs[symindex].sh_addr;
+--- a/arch/x86/kvm/vmx/evmcs.h
++++ b/arch/x86/kvm/vmx/evmcs.h
+@@ -166,16 +166,6 @@ static inline u16 evmcs_read16(unsigned
+ 	return *(u16 *)((char *)current_evmcs + offset);
+ }
  
--	/* The small sections were sorted to the end of the segment.
--	   The following should definitely cover them.  */
--	gp = (u64)me->core_layout.base + me->core_layout.size - 0x8000;
- 	got = sechdrs[me->arch.gotsecindex].sh_addr;
-+	gp = got + 0x8000;
+-static inline void evmcs_touch_msr_bitmap(void)
+-{
+-	if (unlikely(!current_evmcs))
+-		return;
+-
+-	if (current_evmcs->hv_enlightenments_control.msr_bitmap)
+-		current_evmcs->hv_clean_fields &=
+-			~HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP;
+-}
+-
+ static inline void evmcs_load(u64 phys_addr)
+ {
+ 	struct hv_vp_assist_page *vp_ap =
+@@ -196,7 +186,6 @@ static inline u64 evmcs_read64(unsigned
+ static inline u32 evmcs_read32(unsigned long field) { return 0; }
+ static inline u16 evmcs_read16(unsigned long field) { return 0; }
+ static inline void evmcs_load(u64 phys_addr) {}
+-static inline void evmcs_touch_msr_bitmap(void) {}
+ #endif /* IS_ENABLED(CONFIG_HYPERV) */
  
- 	for (i = 0; i < n; i++) {
- 		unsigned long r_sym = ELF64_R_SYM (rela[i].r_info);
--- 
-2.39.2
-
+ enum nested_evmptrld_status {
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -3792,8 +3792,13 @@ static void vmx_msr_bitmap_l01_changed(s
+ 	 * 'Enlightened MSR Bitmap' feature L0 needs to know that MSR
+ 	 * bitmap has changed.
+ 	 */
+-	if (static_branch_unlikely(&enable_evmcs))
+-		evmcs_touch_msr_bitmap();
++	if (IS_ENABLED(CONFIG_HYPERV) && static_branch_unlikely(&enable_evmcs)) {
++		struct hv_enlightened_vmcs *evmcs = (void *)vmx->vmcs01.vmcs;
++
++		if (evmcs->hv_enlightenments_control.msr_bitmap)
++			evmcs->hv_clean_fields &=
++				~HV_VMX_ENLIGHTENED_CLEAN_FIELD_MSR_BITMAP;
++	}
+ }
+ 
+ static __always_inline void vmx_disable_intercept_for_msr(struct kvm_vcpu *vcpu,
 
 
