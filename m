@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441CF4431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:26:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BECE7C433EF;
-	Wed, 15 Mar 2023 12:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60A84431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:27:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C47AC4339E;
+	Wed, 15 Mar 2023 12:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883219;
-	bh=l5zjmgwRiC3zeOlO3jSoFeTUlDsuG0eo7pvjvltabgo=;
+	s=korg; t=1678883221;
+	bh=vAANrNmZuSE++09HkgzhILixUjU4md+cKgIWW9wHNbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M0j0G/1q1RvE32Ug+8JLJ5gsF8rqng1/b287LewVVfGeS2gwcKAjufd4mzbjIp5Da
-	 JVH2qYFpCzpFzjx+/UbXcFBbIjggMrvLlyAb+lWK4HiifKsZwQGp0RK8WnaWSaEMkx
-	 rb0qsAvx2rgLQfFIm6sli9kCBrmOJoJMEeh0C2pA=
+	b=w2KBj5CxfvPdvf+15J33YtfkceIwHILOga9TeW0SaTxzRMK/aT7Velc6Rm2VuS5Ru
+	 XvUlV06ykJOJD4bO5SQ24diZ0sKgalHKCPjauWZPeTHWd5lNfzZrJBHovFh51R+qXT
+	 dtvHnVGJsg8Uya36CXbv2cBDQ+fcExhdQKfQVujo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Rongguang Wei <weirongguang@kylinos.cn>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/145] drm/msm/dpu: fix len of sc7180 ctl blocks
-Date: Wed, 15 Mar 2023 13:12:06 +0100
-Message-Id: <20230315115741.013933493@linuxfoundation.org>
+Subject: [PATCH 5.15 061/145] net: stmmac: add to set device wake up flag when stmmac init phy
+Date: Wed, 15 Mar 2023 13:12:07 +0100
+Message-Id: <20230315115741.047695836@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115738.951067403@linuxfoundation.org>
 References: <20230315115738.951067403@linuxfoundation.org>
@@ -35,50 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Rongguang Wei <weirongguang@kylinos.cn>
 
-[ Upstream commit ce6bd00abc220e9edf10986234fadba6462b4abf ]
+[ Upstream commit a9334b702a03b693f54ebd3b98f67bf722b74870 ]
 
-Change sc7180's ctl block len to 0x1dc.
+When MAC is not support PMT, driver will check PHY's WoL capability
+and set device wakeup capability in stmmac_init_phy(). We can enable
+the WoL through ethtool, the driver would enable the device wake up
+flag. Now the device_may_wakeup() return true.
 
-Fixes: 7bdc0c4b8126 ("msm:disp:dpu1: add support for display for SC7180 target")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/522210/
-Link: https://lore.kernel.org/r/20230211231259.1308718-5-dmitry.baryshkov@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+But if there is a way which enable the PHY's WoL capability derectly,
+like in BIOS. The driver would not know the enable thing and would not
+set the device wake up flag. The phy_suspend may failed like this:
+
+[   32.409063] PM: dpm_run_callback(): mdio_bus_phy_suspend+0x0/0x50 returns -16
+[   32.409065] PM: Device stmmac-1:00 failed to suspend: error -16
+[   32.409067] PM: Some devices failed to suspend, or early wake event detected
+
+Add to set the device wakeup enable flag according to the get_wol
+function result in PHY can fix the error in this scene.
+
+v2: add a Fixes tag.
+
+Fixes: 1d8e5b0f3f2c ("net: stmmac: Support WOL with phy")
+Signed-off-by: Rongguang Wei <weirongguang@kylinos.cn>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 700d65e39feb0..4c65259eecb9d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -375,19 +375,19 @@ static const struct dpu_ctl_cfg sdm845_ctl[] = {
- static const struct dpu_ctl_cfg sc7180_ctl[] = {
- 	{
- 	.name = "ctl_0", .id = CTL_0,
--	.base = 0x1000, .len = 0xE4,
-+	.base = 0x1000, .len = 0x1dc,
- 	.features = BIT(DPU_CTL_ACTIVE_CFG),
- 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
- 	},
- 	{
- 	.name = "ctl_1", .id = CTL_1,
--	.base = 0x1200, .len = 0xE4,
-+	.base = 0x1200, .len = 0x1dc,
- 	.features = BIT(DPU_CTL_ACTIVE_CFG),
- 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 10),
- 	},
- 	{
- 	.name = "ctl_2", .id = CTL_2,
--	.base = 0x1400, .len = 0xE4,
-+	.base = 0x1400, .len = 0x1dc,
- 	.features = BIT(DPU_CTL_ACTIVE_CFG),
- 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 11),
- 	},
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index d56f65338ea66..728e68971c397 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1262,6 +1262,7 @@ static int stmmac_init_phy(struct net_device *dev)
+ 
+ 		phylink_ethtool_get_wol(priv->phylink, &wol);
+ 		device_set_wakeup_capable(priv->device, !!wol.supported);
++		device_set_wakeup_enable(priv->device, !!wol.wolopts);
+ 	}
+ 
+ 	return ret;
 -- 
 2.39.2
 
