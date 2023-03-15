@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330B54431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB3EEC433D2;
-	Wed, 15 Mar 2023 12:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50F74431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:34:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE12C433D2;
+	Wed, 15 Mar 2023 12:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883677;
-	bh=q5ZOKpxiyQ4ociMUOi0GN0rLZknI2D2yj73EJ1+ckZc=;
+	s=korg; t=1678883679;
+	bh=5Az9MQT7h2KkgqAunpXfQvzj1OVRTEVwGFsJtPZTkz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XNs6Jjer+CXyA2AXRHqhFN5hff4Js6pIIte/XOUzBQ2lAlwXQmFvCFeCOd823dz8S
-	 aGjdSDDfA/Bsn2QggPzbBguMzYm8bXPRlM5aNAshwoR0fSPiWxI3JEvdgqKZZLlR41
-	 EUDOLkh+4+oQWivnk/ERq+rglo9LJ6DhuuTPryKc=
+	b=XnyOY3uLBsxydZPAeZLNTD7o+nOV9/ckhcn7E48PDs6D1jN6Hoc3Q1nf7Ohs3WtMm
+	 QxIg7WU8mOFvNxR2GBU351uDjN0+LD+y0EXwFPE4Otwh6VJEaL1VdiKIfGwbXhuB08
+	 tgNJlAsVxsXeIJnoJi6uDp/7tnTG8GjRBaIS8lm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Walsh <vk3heg@vk3heg.net>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Finn Thain <fthain@linux-m68k.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/143] m68k: mm: Move initrd phys_to_virt handling after paging_init()
-Date: Wed, 15 Mar 2023 13:12:56 +0100
-Message-Id: <20230315115743.258612699@linuxfoundation.org>
+Subject: [PATCH 6.1 091/143] btrfs: fix extent map logging bit not cleared for split maps after dropping range
+Date: Wed, 15 Mar 2023 13:12:57 +0100
+Message-Id: <20230315115743.287504971@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 References: <20230315115740.429574234@linuxfoundation.org>
@@ -37,71 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert@linux-m68k.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit d4b97925e87eb133e400fe4a482d750c74ce392f ]
+[ Upstream commit e4cc1483f35940c9288c332dd275f6fad485f8d2 ]
 
-When booting with an initial ramdisk on platforms where physical memory
-does not start at address zero (e.g. on Amiga):
+At btrfs_drop_extent_map_range() we are clearing the EXTENT_FLAG_LOGGING
+bit on a 'flags' variable that was not initialized. This makes static
+checkers complain about it, so initialize the 'flags' variable before
+clearing the bit.
 
-    initrd: 0ef0602c - 0f800000
-    Zone ranges:
-      DMA      [mem 0x0000000008000000-0x000000f7ffffffff]
-      Normal   empty
-    Movable zone start for each node
-    Early memory node ranges
-      node   0: [mem 0x0000000008000000-0x000000000f7fffff]
-    Initmem setup node 0 [mem 0x0000000008000000-0x000000000f7fffff]
-    Unable to handle kernel access at virtual address (ptrval)
-    Oops: 00000000
-    Modules linked in:
-    PC: [<00201d3c>] memcmp+0x28/0x56
+In practice this has no consequences, because EXTENT_FLAG_LOGGING should
+not be set when btrfs_drop_extent_map_range() is called, as an fsync locks
+the inode in exclusive mode, locks the inode's mmap semaphore in exclusive
+mode too and it always flushes all delalloc.
 
-As phys_to_virt() relies on m68k_memoffset and module_fixup(), it must
-not be called before paging_init().  Hence postpone the phys_to_virt
-handling for the initial ramdisk until after calling paging_init().
+Also add a comment about why we clear EXTENT_FLAG_LOGGING on a copy of the
+flags of the split extent map.
 
-While at it, reduce #ifdef clutter by using IS_ENABLED() instead.
-
-Fixes: 376e3fdecb0dcae2 ("m68k: Enable memtest functionality")
-Reported-by: Stephen Walsh <vk3heg@vk3heg.net>
-Link: https://lists.debian.org/debian-68k/2022/09/msg00007.html
-Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/4f45f05f377bf3f5baf88dbd5c3c8aeac59d94f0.camel@physik.fu-berlin.de
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Acked-by: Finn Thain <fthain@linux-m68k.org>
-Link: https://lore.kernel.org/r/dff216da09ab7a60217c3fc2147e671ae07d636f.1677528627.git.geert@linux-m68k.org
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/Y%2FyipSVozUDEZKow@kili/
+Fixes: db21370bffbc ("btrfs: drop extent map range more efficiently")
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/kernel/setup_mm.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/btrfs/extent_map.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/m68k/kernel/setup_mm.c b/arch/m68k/kernel/setup_mm.c
-index 3a2bb2e8fdad4..fbff1cea62caa 100644
---- a/arch/m68k/kernel/setup_mm.c
-+++ b/arch/m68k/kernel/setup_mm.c
-@@ -326,16 +326,16 @@ void __init setup_arch(char **cmdline_p)
- 		panic("No configuration setup");
- 	}
+diff --git a/fs/btrfs/extent_map.c b/fs/btrfs/extent_map.c
+index 6092a4eedc923..b8ae02aa632e3 100644
+--- a/fs/btrfs/extent_map.c
++++ b/fs/btrfs/extent_map.c
+@@ -760,7 +760,13 @@ void btrfs_drop_extent_map_range(struct btrfs_inode *inode, u64 start, u64 end,
+ 			goto next;
+ 		}
  
--#ifdef CONFIG_BLK_DEV_INITRD
--	if (m68k_ramdisk.size) {
-+	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && m68k_ramdisk.size)
- 		memblock_reserve(m68k_ramdisk.addr, m68k_ramdisk.size);
-+
-+	paging_init();
-+
-+	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && m68k_ramdisk.size) {
- 		initrd_start = (unsigned long)phys_to_virt(m68k_ramdisk.addr);
- 		initrd_end = initrd_start + m68k_ramdisk.size;
- 		pr_info("initrd: %08lx - %08lx\n", initrd_start, initrd_end);
- 	}
--#endif
--
--	paging_init();
++		flags = em->flags;
+ 		clear_bit(EXTENT_FLAG_PINNED, &em->flags);
++		/*
++		 * In case we split the extent map, we want to preserve the
++		 * EXTENT_FLAG_LOGGING flag on our extent map, but we don't want
++		 * it on the new extent maps.
++		 */
+ 		clear_bit(EXTENT_FLAG_LOGGING, &flags);
+ 		modified = !list_empty(&em->list);
  
- #ifdef CONFIG_NATFEAT
- 	nf_init();
+@@ -771,7 +777,6 @@ void btrfs_drop_extent_map_range(struct btrfs_inode *inode, u64 start, u64 end,
+ 		if (em->start >= start && em_end <= end)
+ 			goto remove_em;
+ 
+-		flags = em->flags;
+ 		gen = em->generation;
+ 		compressed = test_bit(EXTENT_FLAG_COMPRESSED, &em->flags);
+ 
 -- 
 2.39.2
 
