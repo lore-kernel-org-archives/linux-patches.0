@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537664431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE11BC4339C;
-	Wed, 15 Mar 2023 12:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39E94431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:40:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 792E5C4331E;
+	Wed, 15 Mar 2023 12:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678884047;
-	bh=NdxuVkQyGoTB2Km6sCRRjAePWobc0U5Xx8+hyXxwHgU=;
+	s=korg; t=1678884049;
+	bh=YWGWcVKQ/csnn6nJ7FBkwWiXX8SnQ0mJIWQoKVg6NTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BUSxm/JPLhOISY7KH0sTzQJngKEsTqPj0Iq0EsouZAhjOaTJ2Y5tLR4El1vpAsl8Q
-	 uxkkZFyx+RfurnOiEHo0H+LTPswkK+tEpBXR1veJAMVjJk1dGCeBJeqUlCNVYppyiG
-	 S2Zn+jqjYTXhVDvkjPchnaClZo/YomTw0zYIWxzg=
+	b=XYAd7MtkCfiBKYG8Eh3I8T4fC5c5AjbT3ivDcNilXfg+AbcRHeP8S/dkjIn4MjRqs
+	 Dr7lc6V3qPTieaBU6SYnmAc/JXxIKTF3Ffxj950DwYvOPs+6MF/mc3XLawmL0fHSS7
+	 RltO4zRHd83HNL9Cp6pzMGM/HYOq6wzJ1w8Lfwd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Lorenz Bauer <lmb@isovalent.com>,
 	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 086/141] bpf, test_run: fix &xdp_frame misplacement for LIVE_FRAMES
-Date: Wed, 15 Mar 2023 13:13:09 +0100
-Message-Id: <20230315115742.598212942@linuxfoundation.org>
+Subject: [PATCH 6.2 087/141] btf: fix resolving BTF_KIND_VAR after ARRAY, STRUCT, UNION, PTR
+Date: Wed, 15 Mar 2023 13:13:10 +0100
+Message-Id: <20230315115742.630428024@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 References: <20230315115739.932786806@linuxfoundation.org>
@@ -36,149 +35,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Lobakin <aleksander.lobakin@intel.com>
+From: Lorenz Bauer <lorenz.bauer@isovalent.com>
 
-[ Upstream commit 6c20822fada1b8adb77fa450d03a0d449686a4a9 ]
+[ Upstream commit 9b459804ff9973e173fabafba2a1319f771e85fa ]
 
-&xdp_buff and &xdp_frame are bound in a way that
+btf_datasec_resolve contains a bug that causes the following BTF
+to fail loading:
 
-xdp_buff->data_hard_start == xdp_frame
+    [1] DATASEC a size=2 vlen=2
+        type_id=4 offset=0 size=1
+        type_id=7 offset=1 size=1
+    [2] INT (anon) size=1 bits_offset=0 nr_bits=8 encoding=(none)
+    [3] PTR (anon) type_id=2
+    [4] VAR a type_id=3 linkage=0
+    [5] INT (anon) size=1 bits_offset=0 nr_bits=8 encoding=(none)
+    [6] TYPEDEF td type_id=5
+    [7] VAR b type_id=6 linkage=0
 
-It's always the case and e.g. xdp_convert_buff_to_frame() relies on
-this.
-IOW, the following:
+This error message is printed during btf_check_all_types:
 
-	for (u32 i = 0; i < 0xdead; i++) {
-		xdpf = xdp_convert_buff_to_frame(&xdp);
-		xdp_convert_frame_to_buff(xdpf, &xdp);
-	}
+    [1] DATASEC a size=2 vlen=2
+        type_id=7 offset=1 size=1 Invalid type
 
-shouldn't ever modify @xdpf's contents or the pointer itself.
-However, "live packet" code wrongly treats &xdp_frame as part of its
-context placed *before* the data_hard_start. With such flow,
-data_hard_start is sizeof(*xdpf) off to the right and no longer points
-to the XDP frame.
+By tracing btf_*_resolve we can pinpoint the problem:
 
-Instead of replacing `sizeof(ctx)` with `offsetof(ctx, xdpf)` in several
-places and praying that there are no more miscalcs left somewhere in the
-code, unionize ::frm with ::data in a flex array, so that both starts
-pointing to the actual data_hard_start and the XDP frame actually starts
-being a part of it, i.e. a part of the headroom, not the context.
-A nice side effect is that the maximum frame size for this mode gets
-increased by 40 bytes, as xdp_buff::frame_sz includes everything from
-data_hard_start (-> includes xdpf already) to the end of XDP/skb shared
-info.
-Also update %MAX_PKT_SIZE accordingly in the selftests code. Leave it
-hardcoded for 64 bit && 4k pages, it can be made more flexible later on.
+    btf_datasec_resolve(depth: 1, type_id: 1, mode: RESOLVE_TBD) = 0
+        btf_var_resolve(depth: 2, type_id: 4, mode: RESOLVE_TBD) = 0
+            btf_ptr_resolve(depth: 3, type_id: 3, mode: RESOLVE_PTR) = 0
+        btf_var_resolve(depth: 2, type_id: 4, mode: RESOLVE_PTR) = 0
+    btf_datasec_resolve(depth: 1, type_id: 1, mode: RESOLVE_PTR) = -22
 
-Minor: align `&head->data` with how `head->frm` is assigned for
-consistency.
-Minor #2: rename 'frm' to 'frame' in &xdp_page_head while at it for
-clarity.
+The last invocation of btf_datasec_resolve should invoke btf_var_resolve
+by means of env_stack_push, instead it returns EINVAL. The reason is that
+env_stack_push is never executed for the second VAR.
 
-(was found while testing XDP traffic generator on ice, which calls
- xdp_convert_frame_to_buff() for each XDP frame)
+    if (!env_type_is_resolve_sink(env, var_type) &&
+        !env_type_is_resolved(env, var_type_id)) {
+        env_stack_set_next_member(env, i + 1);
+        return env_stack_push(env, var_type, var_type_id);
+    }
 
-Fixes: b530e9e1063e ("bpf: Add "live packet" mode for XDP in BPF_PROG_RUN")
-Acked-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Link: https://lore.kernel.org/r/20230215185440.4126672-1-aleksander.lobakin@intel.com
+env_type_is_resolve_sink() changes its behaviour based on resolve_mode.
+For RESOLVE_PTR, we can simplify the if condition to the following:
+
+    (btf_type_is_modifier() || btf_type_is_ptr) && !env_type_is_resolved()
+
+Since we're dealing with a VAR the clause evaluates to false. This is
+not sufficient to trigger the bug however. The log output and EINVAL
+are only generated if btf_type_id_size() fails.
+
+    if (!btf_type_id_size(btf, &type_id, &type_size)) {
+        btf_verifier_log_vsi(env, v->t, vsi, "Invalid type");
+        return -EINVAL;
+    }
+
+Most types are sized, so for example a VAR referring to an INT is not a
+problem. The bug is only triggered if a VAR points at a modifier. Since
+we skipped btf_var_resolve that modifier was also never resolved, which
+means that btf_resolved_type_id returns 0 aka VOID for the modifier.
+This in turn causes btf_type_id_size to return NULL, triggering EINVAL.
+
+To summarise, the following conditions are necessary:
+
+- VAR pointing at PTR, STRUCT, UNION or ARRAY
+- Followed by a VAR pointing at TYPEDEF, VOLATILE, CONST, RESTRICT or
+  TYPE_TAG
+
+The fix is to reset resolve_mode to RESOLVE_TBD before attempting to
+resolve a VAR from a DATASEC.
+
+Fixes: 1dc92851849c ("bpf: kernel side support for BTF Var and DataSec")
+Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
+Link: https://lore.kernel.org/r/20230306112138.155352-2-lmb@isovalent.com
 Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c                            | 29 +++++++++++++++----
- .../bpf/prog_tests/xdp_do_redirect.c          |  7 +++--
- 2 files changed, 27 insertions(+), 9 deletions(-)
+ kernel/bpf/btf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index 2723623429ac9..570ec242d9002 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -97,8 +97,11 @@ static bool bpf_test_timer_continue(struct bpf_test_timer *t, int iterations,
- struct xdp_page_head {
- 	struct xdp_buff orig_ctx;
- 	struct xdp_buff ctx;
--	struct xdp_frame frm;
--	u8 data[];
-+	union {
-+		/* ::data_hard_start starts here */
-+		DECLARE_FLEX_ARRAY(struct xdp_frame, frame);
-+		DECLARE_FLEX_ARRAY(u8, data);
-+	};
- };
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 530e200fbc477..9880faa7e6760 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -4476,6 +4476,7 @@ static int btf_datasec_resolve(struct btf_verifier_env *env,
+ 	struct btf *btf = env->btf;
+ 	u16 i;
  
- struct xdp_test_data {
-@@ -116,6 +119,20 @@ struct xdp_test_data {
- #define TEST_XDP_FRAME_SIZE (PAGE_SIZE - sizeof(struct xdp_page_head))
- #define TEST_XDP_MAX_BATCH 256
- 
-+#if BITS_PER_LONG == 64 && PAGE_SIZE == SZ_4K
-+/* tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c:%MAX_PKT_SIZE
-+ * must be updated accordingly when any of these changes, otherwise BPF
-+ * selftests will fail.
-+ */
-+#ifdef __s390x__
-+#define TEST_MAX_PKT_SIZE 3216
-+#else
-+#define TEST_MAX_PKT_SIZE 3408
-+#endif
-+static_assert(SKB_WITH_OVERHEAD(TEST_XDP_FRAME_SIZE - XDP_PACKET_HEADROOM) ==
-+	      TEST_MAX_PKT_SIZE);
-+#endif
-+
- static void xdp_test_run_init_page(struct page *page, void *arg)
- {
- 	struct xdp_page_head *head = phys_to_virt(page_to_phys(page));
-@@ -132,8 +149,8 @@ static void xdp_test_run_init_page(struct page *page, void *arg)
- 	headroom -= meta_len;
- 
- 	new_ctx = &head->ctx;
--	frm = &head->frm;
--	data = &head->data;
-+	frm = head->frame;
-+	data = head->data;
- 	memcpy(data + headroom, orig_ctx->data_meta, frm_len);
- 
- 	xdp_init_buff(new_ctx, TEST_XDP_FRAME_SIZE, &xdp->rxq);
-@@ -223,7 +240,7 @@ static void reset_ctx(struct xdp_page_head *head)
- 	head->ctx.data = head->orig_ctx.data;
- 	head->ctx.data_meta = head->orig_ctx.data_meta;
- 	head->ctx.data_end = head->orig_ctx.data_end;
--	xdp_update_frame_from_buff(&head->ctx, &head->frm);
-+	xdp_update_frame_from_buff(&head->ctx, head->frame);
- }
- 
- static int xdp_recv_frames(struct xdp_frame **frames, int nframes,
-@@ -285,7 +302,7 @@ static int xdp_test_run_batch(struct xdp_test_data *xdp, struct bpf_prog *prog,
- 		head = phys_to_virt(page_to_phys(page));
- 		reset_ctx(head);
- 		ctx = &head->ctx;
--		frm = &head->frm;
-+		frm = head->frame;
- 		xdp->frame_cnt++;
- 
- 		act = bpf_prog_run_xdp(prog, ctx);
-diff --git a/tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c b/tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c
-index ac70e871d62f8..9ce734a708b20 100644
---- a/tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c
-+++ b/tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c
-@@ -63,12 +63,13 @@ static int attach_tc_prog(struct bpf_tc_hook *hook, int fd)
- }
- 
- /* The maximum permissible size is: PAGE_SIZE - sizeof(struct xdp_page_head) -
-- * sizeof(struct skb_shared_info) - XDP_PACKET_HEADROOM = 3368 bytes
-+ * SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) - XDP_PACKET_HEADROOM =
-+ * 3408 bytes for 64-byte cacheline and 3216 for 256-byte one.
-  */
- #if defined(__s390x__)
--#define MAX_PKT_SIZE 3176
-+#define MAX_PKT_SIZE 3216
- #else
--#define MAX_PKT_SIZE 3368
-+#define MAX_PKT_SIZE 3408
- #endif
- static void test_max_pkt_size(int fd)
- {
++	env->resolve_mode = RESOLVE_TBD;
+ 	for_each_vsi_from(i, v->next_member, v->t, vsi) {
+ 		u32 var_type_id = vsi->type, type_id, type_size = 0;
+ 		const struct btf_type *var_type = btf_type_by_id(env->btf,
 -- 
 2.39.2
 
