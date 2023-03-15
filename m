@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BB74431
-	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F1CC433D2;
-	Wed, 15 Mar 2023 12:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5314431
+	for <patches@lists.linux.dev>; Wed, 15 Mar 2023 12:23:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96319C433EF;
+	Wed, 15 Mar 2023 12:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678883027;
-	bh=2YXZZdMxsHNClM8fs9zRnaBV5Q5BOqD7OCb5PE/x4gU=;
+	s=korg; t=1678883030;
+	bh=dhmhDyv+smABR20keH2v9w1xKzkSe13V2l6HNNeGjd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VdFYR5Lp5X4GhpI3WCwphZsFPAlNi5t8zQ7ZAJgKu6sBRb+0BeSc3U6qpJvYBomz3
-	 ead/SbL1Pk5yEC4ysrBAHsAcM4wrg220Q6YTOTqywsBPN7gmGxbmpslr6zjaQYS6Ua
-	 izXfyzAwyhGcPKXmsvOnaX7u1AQ1D7H4tVWHlF4w=
+	b=sy96Vri6rvBu8gN295Cygy019hUZOxYQdqOehJvUcDmjeipZI1x0eUCFAwCJusaTl
+	 8iTalXBvB+Y7OBREs2pVBvcrilI5jlENEjYG5zgqe9WPhn9fRR8laaYKV+bXVSk9qC
+	 J3kSGiPXgNedutro0Xu28PyiZGQ6jP5cj22lQy+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ritesh Harjani <riteshh@linux.ibm.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Tudor Ambarus <tudor.ambarus@linaro.org>
-Subject: [PATCH 5.10 092/104] ext4: add ext4_sb_block_valid() refactored out of ext4_inode_block_valid()
-Date: Wed, 15 Mar 2023 13:13:03 +0100
-Message-Id: <20230315115735.790817663@linuxfoundation.org>
+Subject: [PATCH 5.10 093/104] ext4: add strict range checks while freeing blocks
+Date: Wed, 15 Mar 2023 13:13:04 +0100
+Message-Id: <20230315115735.830618560@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230315115731.942692602@linuxfoundation.org>
 References: <20230315115731.942692602@linuxfoundation.org>
@@ -38,83 +38,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Ritesh Harjani <riteshh@linux.ibm.com>
 
-commit 6bc6c2bdf1baca6522b8d9ba976257d722423085 upstream.
+commit a00b482b82fb098956a5bed22bd7873e56f152f1 upstream.
 
-This API will be needed at places where we don't have an inode
-for e.g. while freeing blocks in ext4_group_add_blocks()
+Currently ext4_mb_clear_bb() & ext4_group_add_blocks() only checks
+whether the given block ranges (which is to be freed) belongs to any FS
+metadata blocks or not, of the block's respective block group.
+But to detect any FS error early, it is better to add more strict
+checkings in those functions which checks whether the given blocks
+belongs to any critical FS metadata or not within system-zone.
 
 Suggested-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Ritesh Harjani <riteshh@linux.ibm.com>
-Link: https://lore.kernel.org/r/dd34a236543ad5ae7123eeebe0cb69e6bdd44f34.1644992610.git.riteshh@linux.ibm.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/ddd9143d064774e32d6364a99667817c6e8bfdc0.1644992610.git.riteshh@linux.ibm.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/block_validity.c |   26 +++++++++++++++++---------
- fs/ext4/ext4.h           |    3 +++
- 2 files changed, 20 insertions(+), 9 deletions(-)
+ fs/ext4/mballoc.c |   16 +++-------------
+ 1 file changed, 3 insertions(+), 13 deletions(-)
 
---- a/fs/ext4/block_validity.c
-+++ b/fs/ext4/block_validity.c
-@@ -294,15 +294,10 @@ void ext4_release_system_zone(struct sup
- 		call_rcu(&system_blks->rcu, ext4_destroy_system_zone);
- }
- 
--/*
-- * Returns 1 if the passed-in block region (start_blk,
-- * start_blk+count) is valid; 0 if some part of the block region
-- * overlaps with some other filesystem metadata blocks.
-- */
--int ext4_inode_block_valid(struct inode *inode, ext4_fsblk_t start_blk,
--			  unsigned int count)
-+int ext4_sb_block_valid(struct super_block *sb, struct inode *inode,
-+				ext4_fsblk_t start_blk, unsigned int count)
- {
--	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
-+	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	struct ext4_system_blocks *system_blks;
- 	struct ext4_system_zone *entry;
- 	struct rb_node *n;
-@@ -331,7 +326,9 @@ int ext4_inode_block_valid(struct inode
- 		else if (start_blk >= (entry->start_blk + entry->count))
- 			n = n->rb_right;
- 		else {
--			ret = (entry->ino == inode->i_ino);
-+			ret = 0;
-+			if (inode)
-+				ret = (entry->ino == inode->i_ino);
- 			break;
- 		}
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -5361,13 +5361,7 @@ do_more:
+ 		goto error_return;
  	}
-@@ -340,6 +337,17 @@ out_rcu:
- 	return ret;
- }
  
-+/*
-+ * Returns 1 if the passed-in block region (start_blk,
-+ * start_blk+count) is valid; 0 if some part of the block region
-+ * overlaps with some other filesystem metadata blocks.
-+ */
-+int ext4_inode_block_valid(struct inode *inode, ext4_fsblk_t start_blk,
-+			  unsigned int count)
-+{
-+	return ext4_sb_block_valid(inode->i_sb, inode, start_blk, count);
-+}
-+
- int ext4_check_blockref(const char *function, unsigned int line,
- 			struct inode *inode, __le32 *p, unsigned int max)
- {
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -3536,6 +3536,9 @@ extern int ext4_inode_block_valid(struct
- 				  unsigned int count);
- extern int ext4_check_blockref(const char *, unsigned int,
- 			       struct inode *, __le32 *, unsigned int);
-+extern int ext4_sb_block_valid(struct super_block *sb, struct inode *inode,
-+				ext4_fsblk_t start_blk, unsigned int count);
-+
+-	if (in_range(ext4_block_bitmap(sb, gdp), block, count) ||
+-	    in_range(ext4_inode_bitmap(sb, gdp), block, count) ||
+-	    in_range(block, ext4_inode_table(sb, gdp),
+-		     sbi->s_itb_per_group) ||
+-	    in_range(block + count - 1, ext4_inode_table(sb, gdp),
+-		     sbi->s_itb_per_group)) {
+-
++	if (!ext4_inode_block_valid(inode, block, count)) {
+ 		ext4_error(sb, "Freeing blocks in system zone - "
+ 			   "Block = %llu, count = %lu", block, count);
+ 		/* err = 0. ext4_std_error should be a no op */
+@@ -5437,7 +5431,7 @@ do_more:
+ 						 NULL);
+ 			if (err && err != -EOPNOTSUPP)
+ 				ext4_msg(sb, KERN_WARNING, "discard request in"
+-					 " group:%d block:%d count:%lu failed"
++					 " group:%u block:%d count:%lu failed"
+ 					 " with %d", block_group, bit, count,
+ 					 err);
+ 		} else
+@@ -5650,11 +5644,7 @@ int ext4_group_add_blocks(handle_t *hand
+ 		goto error_return;
+ 	}
  
- /* extents.c */
- struct ext4_ext_path;
+-	if (in_range(ext4_block_bitmap(sb, desc), block, count) ||
+-	    in_range(ext4_inode_bitmap(sb, desc), block, count) ||
+-	    in_range(block, ext4_inode_table(sb, desc), sbi->s_itb_per_group) ||
+-	    in_range(block + count - 1, ext4_inode_table(sb, desc),
+-		     sbi->s_itb_per_group)) {
++	if (!ext4_sb_block_valid(sb, NULL, block, count)) {
+ 		ext4_error(sb, "Adding blocks in system zones - "
+ 			   "Block = %llu, count = %lu",
+ 			   block, count);
 
 
