@@ -1,63 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ACA820EE
-	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 07:28:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64002C433D2;
-	Thu, 16 Mar 2023 07:28:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678951691;
-	bh=G7OT7fCMtljDalZeZojsg64W7lG2Vni4b4UvuGC2MdM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CGgdX/7FoTF0LEre2lNGfE15xv5QHBeS5wBvxkqTyPX0bimgNW5yNzD3SRFJsz/kG
-	 gI1LMm3BfZLUVt48A9btviKOtoLkBQ/truzuA019fzwq6RsEqsy/HWmtXtNEIqQh/Q
-	 qG31l8nmvRTZlSao3UB2ukUPIICdDm+51vEvk+lI=
-Date: Thu, 16 Mar 2023 08:28:09 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Alvaro Karsz <alvaro.karsz@solid-run.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.2 132/141] PCI: Avoid FLR for SolidRun SNET DPU rev 1
-Message-ID: <ZBLFCUqQ8yUv6ZC8@kroah.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2113220EE
+	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 07:32:51 +0000 (UTC)
+Received: by mail-pj1-f47.google.com with SMTP id gp15-20020a17090adf0f00b0023d1bbd9f9eso4464048pjb.0
+        for <patches@lists.linux.dev>; Thu, 16 Mar 2023 00:32:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678951970;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=mcPnUDp2uPpFN6qrWcVm3iA+36dQ0Mwojauq/GYuGW4=;
+        b=ZaZ3pYmrfSmhTMW5BBDjL1MqZX7hSqr6gXshR3sAa4llWu6OeqbDC/ByJgP93L7nS1
+         uw9j2oJjD6Z4J/DtUEUZEuZ3w2Z8RvAU8qFlhP6ACpNNa/YuSs5B/TMXKhuMY4lnl3HL
+         wo+q6GQLL24y6XPzI/qNTHGz17K3C+MSKhmGpRntuSpAygK53xocuOkiqgiP/G/gFg2W
+         ObWbAKfWFlgkv9MBHruJ/6z7hWZ4iGbk7rldpk0HgXPiKIkBr0ySD/9IUJtBjwu0+/f9
+         vbDbz17GvYhUScSyjyR6kgJp4qfiaw5PIQ6lBldCprmlb7F0q5ofdJbDkMnnuZChYjhx
+         O/bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678951970;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mcPnUDp2uPpFN6qrWcVm3iA+36dQ0Mwojauq/GYuGW4=;
+        b=0lMzRF82y6T9CYXKwGY9XmfB9gx/bUfkGfSIxp+jtlit35ug5n0Lh2/v0E+tE+EraU
+         CyH9KJCYDi3zMC/kHVIq1IEesvL3ciEtuhmk/U91LQ70e2/anlJhpAV6s0e0HEuSZGMm
+         w15jyl9fGAcXpDO9mQNKE/az1UlktkVhA4LF5XDcxFfgakVRG3gJPeuRe6wbl605i/UB
+         trW9ZnwER8DF6I6MA1kP43tTm9BnwH4IyHw0wzmJUaDK6Pvuw34/2I/CdGYwhNjsZIoi
+         74kaB8K/koOCyI/VO3meFW5+CwPVezlm/Wz90vTiSPLT7EnZW/Zf1QzjX9Q3Mky5Eef6
+         wy6Q==
+X-Gm-Message-State: AO0yUKV2JJA/webfdaBG5Fca+Ler/uiy0/OmYuAAidC+l7a/QQ+uk816
+	WYeiZtR27OSxqsE/zqnBD+A=
+X-Google-Smtp-Source: AK7set865NCA1infzuQT4Lgx3KiWiQEfKzG0o8erq89WRRWzoiYAbpJp60OseRunjgh6Xp05mWY4jg==
+X-Received: by 2002:a05:6a20:144a:b0:d0:15c9:4e68 with SMTP id a10-20020a056a20144a00b000d015c94e68mr3272692pzi.62.1678951970418;
+        Thu, 16 Mar 2023 00:32:50 -0700 (PDT)
+Received: from debian.me (subs02-180-214-232-12.three.co.id. [180.214.232.12])
+        by smtp.gmail.com with ESMTPSA id x48-20020a056a000bf000b005a8a4665d3bsm4737711pfu.116.2023.03.16.00.32.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Mar 2023 00:32:49 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+	id 70D4B106628; Thu, 16 Mar 2023 14:32:45 +0700 (WIB)
+Date: Thu, 16 Mar 2023 14:32:45 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.2 000/141] 6.2.7-rc1 review
+Message-ID: <ZBLGHXo4qyKSbwRh@debian.me>
 References: <20230315115739.932786806@linuxfoundation.org>
- <20230315115743.996651796@linuxfoundation.org>
- <20230315111104-mutt-send-email-mst@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="4u63Dz9MIHxlaJJw"
 Content-Disposition: inline
-In-Reply-To: <20230315111104-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
 
-On Wed, Mar 15, 2023 at 11:11:44AM -0400, Michael S. Tsirkin wrote:
-> On Wed, Mar 15, 2023 at 01:13:55PM +0100, Greg Kroah-Hartman wrote:
-> > From: Alvaro Karsz <alvaro.karsz@solid-run.com>
-> > 
-> > [ Upstream commit d089d69cc1f824936eeaa4fa172f8fa1a0949eaa ]
-> > 
-> > This patch fixes a FLR bug on the SNET DPU rev 1 by setting the
-> > PCI_DEV_FLAGS_NO_FLR_RESET flag.
-> > 
-> > As there is a quirk to avoid FLR (quirk_no_flr), I added a new quirk
-> > to check the rev ID before calling to quirk_no_flr.
-> > 
-> > Without this patch, a SNET DPU rev 1 may hang when FLR is applied.
-> > 
-> > Signed-off-by: Alvaro Karsz <alvaro.karsz@solid-run.com>
-> > Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-> > Message-Id: <20230110165638.123745-3-alvaro.karsz@solid-run.com>
-> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> 
-> This is ony needed if the SNET driver is included but
-> isn't it all just for 6.3?
 
-Good point, that wasn't very obvious and this looked like "just another
-quirk to add" patch.  I'll go drop this from all queues now, thanks.
+--4u63Dz9MIHxlaJJw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-greg k-h
+On Wed, Mar 15, 2023 at 01:11:43PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.2.7 release.
+> There are 141 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
+
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--4u63Dz9MIHxlaJJw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZBLGGQAKCRD2uYlJVVFO
+o8IAAPwKodi86HHP/TskrBp/C81NuVFDWI/xo8jE01KzRIsHwQD/TQx7O0h028VJ
+oLgvOjKwksu4N03a8yN8IRLMDWZjWQg=
+=fgnM
+-----END PGP SIGNATURE-----
+
+--4u63Dz9MIHxlaJJw--
