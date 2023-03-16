@@ -1,45 +1,34 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8104DAD28
-	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 20:18:00 +0000 (UTC)
-Received: by mail-qv1-f42.google.com with SMTP id 97so2063327qvb.6
-        for <patches@lists.linux.dev>; Thu, 16 Mar 2023 13:18:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678997879;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3hSQqmOPjN3PoBEQpVeufKdChsynQgIj6cJH3e5uFEI=;
-        b=UTdvpLFs42Cwb3ydTv3z+AT96WfIYlpo7rWEOhYhRyOAYzJkExAHsunw40mo0AcoEZ
-         EBzOBGpgePHFlGELL2r6u5ruhr6QetM2/uzCzPoe+bf115dYK+QT1NGA2MP7G9zMU5P1
-         5Lp+Gzr89M//HmJC9xiiNjEEv0RefsAdcvML44kNrYaKKCcNlUxmxPi+7gvMMLe8iCw/
-         LdP6U3jcl6F5ASdy5LZ0dZegaI+Fh+wUZFclnLbFF58ld8pU/daIF2gvRi1Ibsgr9KYv
-         gbldenQTT26fkCqiDtc6mJ75dcvf3osQIr7krbFSFg2xYTjoSwZqntBTyN3xv3gFRfuj
-         C+rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678997879;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3hSQqmOPjN3PoBEQpVeufKdChsynQgIj6cJH3e5uFEI=;
-        b=EfbOa4ZzR4jXHaSGnah4kJBHwQ2dGNn0Gk1m+X1qQWCpI1oSRjQFOdtebFTzoQcumF
-         dR4IIPy7kP3YLeu3NRa02PIU0dXhsbvxhzdkW4pjvdZd4p7lCSp7iTFX8JvzGvW/XIAx
-         FGOY/ppfq9AfZhBdb0cYOU1tFEFDf1GOkCfj47Xsg87teci/txDAKnHft5A6D/sQQM4N
-         MPsY0jr0OAq+K8mwKMwllFP1gAfyUBQb3EwHtJgBvQd2H5t7JkRLI5Wy2wnlYe26hJQH
-         /pXtYnrAISYrDu0v6JsvXtu904u0FRFFbsZIdIUtBndhIQYR8J3tfXEY69O6dUAQynMJ
-         WCUg==
-X-Gm-Message-State: AO0yUKW897RhAaDbEAKVLZvfO8bzQzaVN5lEgMqFLpNdtJ9jdV2BMv+7
-	gdV4l1CIfoapUsJGNyhhpX0=
-X-Google-Smtp-Source: AK7set+hpP78ijCJqK4lIgvUx76VikcSG1ESncgtMNADZ9uOHoXBbCkjOUd4zy9xUJKN6QTZMlz6DA==
-X-Received: by 2002:a05:6214:1c4e:b0:5b9:2e5d:76ea with SMTP id if14-20020a0562141c4e00b005b92e5d76eamr4380121qvb.6.1678997879372;
-        Thu, 16 Mar 2023 13:17:59 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id o10-20020a05620a228a00b00745b3e62006sm242069qkh.23.2023.03.16.13.17.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Mar 2023 13:17:58 -0700 (PDT)
-Message-ID: <58bcb53a-1a6a-63c0-bf69-627c3abf483b@gmail.com>
-Date: Thu, 16 Mar 2023 13:17:51 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710C8AD28
+	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 20:26:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678998382; x=1710534382;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=N/UV/JGFwalfx0oPNUccNM6ZJrQ5XofHq51SxDHotNo=;
+  b=VJV/8KRCs3wxroAv60gZcbBm6NbPNxoq3keHuo+MySnELWPuyDa4WOx6
+   5KlSGAVp2HJxiJiWN6zip0fS+PD/hEfav/8aHj7WvTDlXSTXWLQelMKCM
+   teJcqNPWpYi5eADDt2a9fmJEm5guA5pX0YlhpI2KBmEctDaVR9aYRvKU/
+   AcrH0KzcdWb3bP+xdXCuonaU9QvxdNGVPKktxzflGwcpbkymH+fcPQIxF
+   +lQAWM+nHQVFfrmayZlmh3XF446VI/WZugoM3uS2KVbtqp5aj5o64iJ8X
+   g2i+BD2XQjLRAZ5F4Z54uIvJPxBlqDlvSV3w/4C65q9aPWrWMSMOWIfyb
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10651"; a="424376016"
+X-IronPort-AV: E=Sophos;i="5.98,265,1673942400"; 
+   d="scan'208";a="424376016"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2023 13:26:21 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10651"; a="803874716"
+X-IronPort-AV: E=Sophos;i="5.98,265,1673942400"; 
+   d="scan'208";a="803874716"
+Received: from djiang5-mobl3.amr.corp.intel.com (HELO [10.213.182.83]) ([10.213.182.83])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2023 13:26:20 -0700
+Message-ID: <b7a0b5c0-61a0-9843-09a6-3c4c606221be@intel.com>
+Date: Thu, 16 Mar 2023 13:26:20 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,44 +36,54 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 6.2 000/137] 6.2.7-rc2 review
+ Firefox/102.0 Thunderbird/102.6.0
+Subject: Re: [PATCH] ACPI: APEI: EINJ: Add CXL error types
 Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230316083443.733397152@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230316083443.733397152@linuxfoundation.org>
+To: Tony Luck <tony.luck@intel.com>,
+ "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Cc: Borislav Petkov <bp@alien8.de>, x86@kernel.org,
+ linux-acpi@vger.kernel.org, linux-cxl@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20230314004611.48583-1-tony.luck@intel.com>
+From: Dave Jiang <dave.jiang@intel.com>
+In-Reply-To: <20230314004611.48583-1-tony.luck@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 3/16/23 01:50, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.7 release.
-> There are 137 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 18 Mar 2023 08:33:04 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.7-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+On 3/13/23 5:46 PM, Tony Luck wrote:
+> ACPI 6.5 added six new error types for CXL. See chapter 18
+> table 18.30.
+> 
+> Add strings for the new types so that Linux will list them in the
+> /sys/kernel/debug/apei/einj/available_error_types file.
+> 
+> It seems no other changes are needed. Linux already accepts
+> the CXL codes (on a BIOS that advertises them).
+> 
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
 
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+
+> ---
+>   drivers/acpi/apei/einj.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/acpi/apei/einj.c b/drivers/acpi/apei/einj.c
+> index b4373e575660..39bee5a067cc 100644
+> --- a/drivers/acpi/apei/einj.c
+> +++ b/drivers/acpi/apei/einj.c
+> @@ -584,6 +584,12 @@ static const char * const einj_error_type_string[] = {
+>   	"0x00000200\tPlatform Correctable\n",
+>   	"0x00000400\tPlatform Uncorrectable non-fatal\n",
+>   	"0x00000800\tPlatform Uncorrectable fatal\n",
+> +	"0x00001000\tCXL.cache Protocol Correctable\n",
+> +	"0x00002000\tCXL.cache Protocol Uncorrectable non-fatal\n",
+> +	"0x00004000\tCXL.cache Protocol Uncorrectable fatal\n",
+> +	"0x00008000\tCXL.mem Protocol Correctable\n",
+> +	"0x00010000\tCXL.mem Protocol Uncorrectable non-fatal\n",
+> +	"0x00020000\tCXL.mem Protocol Uncorrectable fatal\n",
+>   };
+>   
+>   static int available_error_type_show(struct seq_file *m, void *v)
