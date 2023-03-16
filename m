@@ -1,88 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170C237C;
-	Thu, 16 Mar 2023 03:28:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F79C433EF;
-	Thu, 16 Mar 2023 03:28:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678937322;
-	bh=oPPbw/PBxWk4Q1egWNZu46IiHqVVJx0VcMlY4jCe0r0=;
-	h=From:Date:Subject:To:Cc:From;
-	b=dK5puxNuRC2Gzse9fmdtPqVr8NzvsDuYp6512mAIgwsKgwKmeOxp7CJB2R9+9Ou9G
-	 uDEds2QwFKgzfWUV+9kK5cPn2wVl2uFcB1kjc3V4Q2/qI5JSqh/kNSN8clftqpKSMu
-	 eTnrKC33xE+p45afNDUgrWvi57bhk02jzPq3DIsCps2AIN3yzT7MQjbQvCb1b2i48O
-	 BSKXIRGO8L3iiE2L82s4bMKiN0VGGMC89mp0vN6vefzjHwE5zspvVSe0vCVAaqMLoX
-	 n2zeCs3phymkgJR/NQtTT1Q3TPjCdPOar7oEiAnd5YuKZJB8m1XhbcVF2JFhPmLOIO
-	 QVvcqHXfGOAww==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 15 Mar 2023 20:28:29 -0700
-Subject: [PATCH next] wifi: iwlwifi: Avoid disabling GCC specific flag with
- clang
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA6837C
+	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 03:30:57 +0000 (UTC)
+Received: by mail-pj1-f48.google.com with SMTP id cn6so392991pjb.2
+        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 20:30:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678937457;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YEj5OBECUBzAdwIoI2YKk6Ne6SPKlmrZMcAm1nJzScg=;
+        b=fmwUmHqO00Lbpi0eRp2PUAJm70IGVAwXU+H6lxOhMGtU00LVZjuJjiVzMeLBIuoXJP
+         2oeh7a+DnYfmWpUwnaRY7hEsAxYenVTSJkAw80njt5Aq3DmcZRkrzmrTrgQtEIBnp9kt
+         QjK0w1Zt7652hnFyZNDqqKoUU0E3vzNv7YZX94DHRrwwVGz827cdr68NmLcxCpfSSB/W
+         If+JOCgfIDQEWDOGagYg+kkGSRG90rj4xChuj4ufqa/3qfii9zR/8yX3gQatB/rEKXPM
+         gfCzeGCj7ykTAaFE/twfk3nLgrOH7VFN1N5fyOLaL3BMqYU/xfl2braNNdYQvgjuTWWt
+         UKPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678937457;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YEj5OBECUBzAdwIoI2YKk6Ne6SPKlmrZMcAm1nJzScg=;
+        b=FWC2KcutHteJnfLBLD8J+6UOPPJPivmha7jj06dJxNK2NACZORQaJuHGrUrAA2VZ5a
+         4URSl2Je8xB86NtwKYw9bm7R4YH+mPuaLUb8vxwILiy4YEQLY30BEULTZ0mqiAFskj2t
+         Q83SA84ouZXt86cdW6Yf5W8xtaFWcXtex/rt8Q3YB0XEkEAgvBJCj+msejc4it1St2K1
+         UY/TKQn3nQZjmc4WLPVfa2DogZNZD3GM0KKaF7hHQc5JfG3gCA2YMfPDuZKu+dx6xAgB
+         Bc1yrGbZam8gBnS4uO/GMs3xFTyc9u2V1c9L0HYXy9NBdWq3E0peSojaUmD57fAfqGvZ
+         69Dw==
+X-Gm-Message-State: AO0yUKX0/3Fo5J+Znjmy+cEqf84ePokc01Zhsm79nyHuAjwKbbCnZGIh
+	GnDnW4v3vjBitK/31CFcczI+UBwbRIE=
+X-Google-Smtp-Source: AK7set+HAbU6lA9U/X2srZ5Xk4qpX5aEt2KI1YecH4Wupgn0JhzGtuCC8dVFOpYr7Zjn5c22QQvlsA==
+X-Received: by 2002:a17:90b:38c5:b0:23d:35d9:d03e with SMTP id nn5-20020a17090b38c500b0023d35d9d03emr1888838pjb.48.1678937457414;
+        Wed, 15 Mar 2023 20:30:57 -0700 (PDT)
+Received: from debian.me (subs28-116-206-12-41.three.co.id. [116.206.12.41])
+        by smtp.gmail.com with ESMTPSA id q30-20020a17090a17a100b002349608e80csm2030395pja.47.2023.03.15.20.30.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Mar 2023 20:30:56 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+	id EE4C6106569; Thu, 16 Mar 2023 10:30:52 +0700 (WIB)
+Date: Thu, 16 Mar 2023 10:30:52 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/143] 6.1.20-rc1 review
+Message-ID: <ZBKNbLP8X05cvm+y@debian.me>
+References: <20230315115740.429574234@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230315-iwlwifi-fix-pragma-v1-1-ad23f92c4739@kernel.org>
-X-B4-Tracking: v=1; b=H4sIANyMEmQC/x3N0QqDMAyF4VeRXC/Q2jmKrzJ2kbqoAe0kkSmI7
- 766y5/DxznAWIUN2uoA5a+YfHIJf6ugGykPjPIuDbWrgwu+QdmmTXrBXnZclIaZMKX7I7jGR44
- RCkxkjEkpd+NFZ7KV9RoW5cL+b0/IvK/wOs8f9BH5yoMAAAA=
-To: johannes.berg@intel.com, gregory.greenman@intel.com
-Cc: kvalo@kernel.org, nathan@kernel.org, ndesaulniers@google.com, 
- trix@redhat.com, linux-wireless@vger.kernel.org, netdev@vger.kernel.org, 
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1454; i=nathan@kernel.org;
- h=from:subject:message-id; bh=oPPbw/PBxWk4Q1egWNZu46IiHqVVJx0VcMlY4jCe0r0=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDClCPS9PBIRVTCzMT7V6Mm3FHN+FF6zv37l7/IPU+Z4uA
- etNSxhSO0pZGMQ4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBE5r5iZDg5LzOr07ladcb9
- mv9Lr/qGtUinP1rvWV/ktijzIaenaQIjw36LA09lr220P9kmfLDULGrDya/MM9ia7k55fSzX+1a
- 4LgsA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="DmG69jtXaUvq1CLH"
+Content-Disposition: inline
+In-Reply-To: <20230315115740.429574234@linuxfoundation.org>
 
-Clang errors:
 
-  drivers/net/wireless/intel/iwlwifi/iwl-devtrace.c:15:32: error: unknown warning group '-Wsuggest-attribute=format', ignored [-Werror,-Wunknown-warning-option]
-  #pragma GCC diagnostic ignored "-Wsuggest-attribute=format"
-                                 ^
-  1 error generated.
+--DmG69jtXaUvq1CLH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The warning being disabled by this pragma is GCC specific. Guard its use
-with CONFIG_CC_IS_GCC so that it is not used with clang to clear up the
-error.
+On Wed, Mar 15, 2023 at 01:11:26PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.20 release.
+> There are 143 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
 
-Fixes: 4eca8cbf7ba8 ("wifi: iwlwifi: suppress printf warnings in tracing")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1818
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/net/wireless/intel/iwlwifi/iwl-devtrace.c | 2 ++
- 1 file changed, 2 insertions(+)
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-devtrace.c b/drivers/net/wireless/intel/iwlwifi/iwl-devtrace.c
-index c190ec5effa1..e46639b097f4 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-devtrace.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-devtrace.c
-@@ -12,7 +12,9 @@
- #include "iwl-trans.h"
- 
- #define CREATE_TRACE_POINTS
-+#ifdef CONFIG_CC_IS_GCC
- #pragma GCC diagnostic ignored "-Wsuggest-attribute=format"
-+#endif
- #include "iwl-devtrace.h"
- 
- EXPORT_TRACEPOINT_SYMBOL(iwlwifi_dev_ucode_event);
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
----
-base-commit: 4eca8cbf7ba83c3291b5841905ce64584036b1ff
-change-id: 20230315-iwlwifi-fix-pragma-bb4630518e88
+--=20
+An old man doll... just what I always wanted! - Clara
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+--DmG69jtXaUvq1CLH
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZBKNZwAKCRD2uYlJVVFO
+owPRAQCfREexag1qiZ0BXF0Jn8/mVjc+Uip9feQfZAHWEqThdAEAwTcEvq9eWgdq
+0uz12pCm/DgbLfTRyUAqC/1eXbw/IAo=
+=9tHI
+-----END PGP SIGNATURE-----
+
+--DmG69jtXaUvq1CLH--
