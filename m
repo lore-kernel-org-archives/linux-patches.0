@@ -1,141 +1,141 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2102.outbound.protection.outlook.com [40.107.113.102])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F81A29A5
-	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 10:57:05 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 788DB1FE03;
-	Thu, 16 Mar 2023 10:57:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1678964221; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wcsL45yTzWpEz7M4IrwnonxWMd6jbVko6lid+dw5guM=;
-	b=P5p+TY3lxhR5szMnytu15w1Plmw+h4QDg+4fbC0PcGG4tq/ejscaFVCMJoViHnYxykV6FO
-	AOPgPjIeGIt7hRjU19tLtHNcIpg7qcDMLpEgGYW1ah8bPAEJ6jCN/PCmP8lUVTCVYgK1GR
-	rHHZkvnHRMgU2ygQQLiwKmbzKEQq+xo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1678964221;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wcsL45yTzWpEz7M4IrwnonxWMd6jbVko6lid+dw5guM=;
-	b=oxVk2TXL8V1Imw9QyW504uh26cv2Uv07hyxIb9GMOX4x/6uhaPgqxmmnz5DbOAWhicvLyO
-	MA5SKuC3w7biI+Cg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 52C4813A2F;
-	Thu, 16 Mar 2023 10:57:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id HrZ2E/31EmTPcgAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Thu, 16 Mar 2023 10:57:01 +0000
-Message-ID: <74f2ea6c-f1a9-6dd7-260c-25e660f42379@suse.cz>
-Date: Thu, 16 Mar 2023 11:57:01 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20050291F
+	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 11:05:44 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=LyfCFLOe12ja20pXSJUXRUsm1shesaf9zxtzxQJjGnPsCRx6Tqx/c8q6JCRzHnwBS5abpY2USRPGzHrNCuSJ9r6IfMamOO437UBULMXTe/O6pH/F0mJnoPxCkJ56/DAbhExuyq934j1j+BpMMDB1Z7lZeBDt1VUWH7F2y985fx9HgPTxj1yvJOAAocCW6dABZr1j/l3P6FXZQzQ2bko4L4cgo1EIvVF2RtC827I9YC57GD0BnaLJvbfresQB7UqMeOdlLxj5RqaZcuvnXowWl0n7ErY64li5JGNCvwoOvOD5DSft5kMYPHvMgdppt49uIWOdUZ5cqk2EDMgjmxKzng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Mx6yXbZ2yNL6GRd+nCOo++V1PctaMM7Rzb94TYRUUE8=;
+ b=WI3BMRokVlqJvsmxgxoVq+UCQYXVw8n6JizBcWx+V2AgE0aLyT1E3Z5NRMSGjo3Z0x70lEpUbibZnuH6kJxposq8WZPnBydUnIK1YNwZAJQI7E9QWuBk58TvMNZqdYNZQhGImQlJ9kfN3xRN8agmFj1yJ37yGivzgBGqHFPlUg+HPsDcVfYo0ZAa5LNG4XgJ3yni5dPRaUBNJWrdaRiyYBhOJdmtk4NAKfLlkRXut+jSTWZyr0tcft7Z1CWkRTVfSBawZzzahucnDXQCcKXzgMEK+ml1O3d8UOCZVUZPvZmN3pYtCmVC3je2xRZdQHnxeY1x1smB8R0yiyl+mQPvrw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
+ dkim=pass header.d=renesas.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Mx6yXbZ2yNL6GRd+nCOo++V1PctaMM7Rzb94TYRUUE8=;
+ b=gJQn8up2LW0EIrww6x9Ej0KYbe2JkIq7jO8YpPE9s90uFjDmtB/t7OVfAOaJU/lZpOaFtz0Au+gei4rFllPvdwcgl9veoeZf7SCmTd9DjSIiv5g+aNBjZ6y/yU+UVJe62dn2JAJLt2zzejoBTahWx5+3k9pWQjbUkzyWOoGETJE=
+Received: from TYCPR01MB10588.jpnprd01.prod.outlook.com (2603:1096:400:309::8)
+ by TYWPR01MB8805.jpnprd01.prod.outlook.com (2603:1096:400:16b::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.30; Thu, 16 Mar
+ 2023 11:05:42 +0000
+Received: from TYCPR01MB10588.jpnprd01.prod.outlook.com
+ ([fe80::dc49:e307:b424:4a53]) by TYCPR01MB10588.jpnprd01.prod.outlook.com
+ ([fe80::dc49:e307:b424:4a53%4]) with mapi id 15.20.6178.030; Thu, 16 Mar 2023
+ 11:05:42 +0000
+From: Chris Paterson <Chris.Paterson2@renesas.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
+	<stable@vger.kernel.org>
+CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
+	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "linux@roeck-us.net"
+	<linux@roeck-us.net>, "shuah@kernel.org" <shuah@kernel.org>,
+	"patches@kernelci.org" <patches@kernelci.org>, "lkft-triage@lists.linaro.org"
+	<lkft-triage@lists.linaro.org>, "pavel@denx.de" <pavel@denx.de>,
+	"jonathanh@nvidia.com" <jonathanh@nvidia.com>, "f.fainelli@gmail.com"
+	<f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
+	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
+	"rwarsow@gmx.de" <rwarsow@gmx.de>
+Subject: RE: [PATCH 4.19 00/27] 4.19.278-rc3 review
+Thread-Topic: [PATCH 4.19 00/27] 4.19.278-rc3 review
+Thread-Index: AQHZV+ufgF0U++m0H0e3GF+0SboyRq79PjnA
+Date: Thu, 16 Mar 2023 11:05:41 +0000
+Message-ID:
+ <TYCPR01MB105881E013AFC3DF4341CF89DB7BC9@TYCPR01MB10588.jpnprd01.prod.outlook.com>
+References: <20230316094129.846802350@linuxfoundation.org>
+In-Reply-To: <20230316094129.846802350@linuxfoundation.org>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=renesas.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYCPR01MB10588:EE_|TYWPR01MB8805:EE_
+x-ms-office365-filtering-correlation-id: 8663e8b4-31e3-49fc-ca4b-08db260e621a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ +adJZ9Cax1BcIAA9sUW12b+3XK2sVavuccX17BHIrk/SHd84i9ZSEwPbRMmSUWP2r4dOVuep1eIXbMd8KPnq4YX6c8R0HDYZEznJ5d+0wYtAQK/0tAU59tvUSw/DZOb4OW8ktxafOIOjJ/ZyMMMioOBnIxiJH9pE1OIv8KCetFHSqU5wnNHG28RjssPZeqEH+A8uoBrQEoyYBx9SHs1ZF/q8P8hOKYdegiXnH7/KrGcdBTJ6TTZBVkJuXKt5JcCub83ly5e7O6ucintF19JtRH80MSHBcLX/MDYBFf9sy/iAhJSlDLn+ARPcZdOwYmSarsVh4V8JGzzdt9rF/fKhgDxRJGShuVtTdc+sbu2wT9JeXIXlboB4p2w3gfnbwAxrEUxg95vS8zyMbRtl82mGeUEfZyuBYGtd3IqCZbWySKCgS1VOfUWmLA6ZPjR8Qe/0bOPJveGk2fouDJa7ccGXVWfVOzDJMiNspoGXeQksjpPAp63nVZOt0zsAwGz01/PJfVVDdb0WaQfOEvLgi91Xz0wssfa7ra2yrI7Z5gI9T2HzeRtu23z5fn8Xa74o414eOtRbuijNnRqBBJpTfLEDYxCOK6AtIcrFCBVJKixq32bV+t6RB1uNXAMVYD/3VSQPxu3gkA/kHq4DeR7jT6s0XNyFNNPcK35oqQk7a+k5Zqu8YfkYEM5atw1M3szXK1nrRM9KxCmeT3Du5eTC/iVIw6aoGUsyy8wCZstlaKVzHGo=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYCPR01MB10588.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(376002)(366004)(39860400002)(396003)(346002)(136003)(451199018)(33656002)(86362001)(38070700005)(38100700002)(122000001)(8936002)(2906002)(52536014)(4744005)(41300700001)(5660300002)(7416002)(4326008)(55016003)(66946007)(9686003)(186003)(54906003)(316002)(26005)(110136005)(6506007)(66556008)(966005)(76116006)(66476007)(71200400001)(66446008)(64756008)(7696005)(478600001)(8676002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?hdTVkw/+4K/jyaHkTV97VkR+h4kiRO4d33BeCaoAzxQjlVOkYhytC4Hy?=
+ =?Windows-1252?Q?3Ka5KCGmlFhjmgVgu8MbuHJS+r032GfTTMuQSSCaEY0udITcDThD/XlN?=
+ =?Windows-1252?Q?Me7hLHfgIoG4dEtyoXCJHO8patjgCoZ7yM54e8AHmQr+MryQMVkDh6HP?=
+ =?Windows-1252?Q?OD6i1q6aZ8CUnsf7+Kui9uUceYtuE9veK39ck89cXmm9L2sgy9VHm8ej?=
+ =?Windows-1252?Q?K9PIOUmGUxjSTesn1sdFiVVDeOfKu5JX67eLY5yd3toJG2Eu2kLUl2Cg?=
+ =?Windows-1252?Q?8lznU0lE6JwCfEs0wOms/MAPTsnCD1+n19lF9wI1KkEAo4S8vKn9IML6?=
+ =?Windows-1252?Q?h4mrR5QJh8ocL6M+CNt1Os/cjBOWJUSyCabymbmT87+b42x641ALiYRP?=
+ =?Windows-1252?Q?ElHo3HzZhrbGOmMmWy2LR+eOhumczNwVeL5S3vd3/G8vOM8FfQtT+bun?=
+ =?Windows-1252?Q?d7xgrmn9j8BDOrTMakRcI/cK2ZbT19nbtTdf7W+o9uq25mS2uesOzk4m?=
+ =?Windows-1252?Q?qF5vDaCj00ykf/wO/1k6w+wjQ+DQufxCXed1rijFFzBUDXkwXYYazknZ?=
+ =?Windows-1252?Q?9dczDCEi7Z6KcbK2yMO3Kw9sW+mLpRmiVrbV3tmdOYgs354YBwVRvQ8h?=
+ =?Windows-1252?Q?eq6NXN6yRble8u3UC5VgmUYwFWflSXgi2aEZpKKouH6Iq+K31Wpph2Fy?=
+ =?Windows-1252?Q?OGswRRpiL3o6MVPafCLfI6JQb+KjXt0Ra3D3RTm0OrJhmXqj0i9wf1ay?=
+ =?Windows-1252?Q?h+kA3y96L0aF2wFAP4fBXsDhERLb3S14ftGr3rw61wgVzkzrX+EiYm5g?=
+ =?Windows-1252?Q?dqdtDKaQhxJM48q0grW5WT10HSC0bhg/pu+CI4ZdlCHrqZcFcNHGDl6B?=
+ =?Windows-1252?Q?Y7rwLaaXLuj2pCOeZrdlxTskE8lyTUMKFSZ+lJgUpXXqUhvlr2D68+2k?=
+ =?Windows-1252?Q?Jxu/kFWDLMZwBzNKG1zbyqbxSft8fxAmqsvRh8Ry6c540xyiazArFVqi?=
+ =?Windows-1252?Q?2+IoFJSiBR5B9XLPsUyXBJ+lQO9VyBlalGXRFcnFP+tcdTNi9Jf7g/dL?=
+ =?Windows-1252?Q?KY3U61jZhWCq8Qdp9lZQnm5EX9VGZd8FQc0eLUUEnpV9vycc3jYFalzE?=
+ =?Windows-1252?Q?jSafOp7VWTtAqYIxRYUU7oTFvSmGjR+YQeP5qM8frs6KGDOqmtszjNJ6?=
+ =?Windows-1252?Q?KkqMfQ7PLmgoerd65AdlFswDVbOTUx4uOxgO5KMED44k4eWqnefxSyKB?=
+ =?Windows-1252?Q?JNg7mxDypUIm2wmVYs2PflaYNqGajZWDwPhuWKnCEPiYfqdIMIOFpx/r?=
+ =?Windows-1252?Q?kk7lkNnOrg0TxfxOYN5xEVBD7mc5EpEf5mVIlJvOFg9FDm7Aan/mzD9T?=
+ =?Windows-1252?Q?1s2Si7Ao8U3lldeL6u4alVpJw/xQaWOKQsIgl46hTm6eJNlgSLGXHUbJ?=
+ =?Windows-1252?Q?gMMrh9CIMMc+pYrWfYSIJRyjPzI5CaHCceI3qiksPoXVx7NVtFjG/7oW?=
+ =?Windows-1252?Q?NmzmixFrRkpCnefw7Cg54ngl8wEcfm7Fd1Ghleo1KD6An4zwlf9PRwv2?=
+ =?Windows-1252?Q?WPr+Ha0D5A9dEn25rbYZVvEd2gUQBgpw3Q99FsajZNf4bRzGpeHNZ+7B?=
+ =?Windows-1252?Q?TVrJ3jLGRc/75xBPDEwLyaTffhmISgY0s39ja8W7s4MsQe6dg+Csp9QA?=
+ =?Windows-1252?Q?h5IoRjymh+B4wNkgwzP487jb1OvNpXLzcrlAk4khYBPykwZ6F4rPTQ?=
+ =?Windows-1252?Q?=3D=3D?=
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 09/10] mm/mmap: start distinguishing if vma can be removed
- in mergeability test
-Content-Language: en-US
-To: Lorenzo Stoakes <lstoakes@gmail.com>,
- Andrew Morton <akpm@linux-foundation.org>
-Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
- Matthew Wilcox <willy@infradead.org>, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- maple-tree@lists.infradead.org
-References: <20230309111258.24079-1-vbabka@suse.cz>
- <20230309111258.24079-10-vbabka@suse.cz>
- <7e0e33a7-4e9b-4714-8d4b-9487c8d1f799@lucifer.local>
-From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <7e0e33a7-4e9b-4714-8d4b-9487c8d1f799@lucifer.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: renesas.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYCPR01MB10588.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8663e8b4-31e3-49fc-ca4b-08db260e621a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Mar 2023 11:05:41.9909
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: hAoQ70oHheMEmUbegXqi5Oz+xGHYyDB6miz/inD6gZgl8ub7olf23C95VfNw+5IVpBLc6617wvEBfXJ748Z8zfZRSNFj0PPCSIOjIq5aGRk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWPR01MB8805
 
+Hello Greg,
 
-On 3/15/23 23:05, Lorenzo Stoakes wrote:
-> On Thu, Mar 09, 2023 at 12:12:57PM +0100, Vlastimil Babka wrote:
->> --- a/mm/mmap.c
->> +++ b/mm/mmap.c
->> @@ -742,12 +742,13 @@ int vma_shrink(struct vma_iterator *vmi, struct vm_area_struct *vma,
->>
->>  /*
->>   * If the vma has a ->close operation then the driver probably needs to release
->> - * per-vma resources, so we don't attempt to merge those.
->> + * per-vma resources, so we don't attempt to merge those in case the caller
->> + * indicates the current vma may be removed as part of the merge.
-> 
-> Nit: 'in case the caller indicates' -> 'if the caller indicates'
+> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Sent: 16 March 2023 09:42
+>=20
+> This is the start of the stable review cycle for the 4.19.278 release.
+> There are 27 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+> Responses should be made by Sat, 18 Mar 2023 09:41:20 +0000.
+> Anything received after that time might be too late.
 
-Ok, -fix patch below.
- 
-...
+CIP configurations built and booted with Linux 4.19.278-rc3 (0233a363477c):
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/8=
+08414819
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/lin=
+ux-4.19.y
 
->> -	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name) &&
->> +	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name, false) &&
->>  	    is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma)) {
->>  		pgoff_t vm_pglen;
->>  		vm_pglen = vma_pages(vma);
->> --
->> 2.39.2
->>
-> 
-> I wonder whether this might be moved later into the actual vma_merge() logic so
-> we only abort a merge at the point a VMA with ->close() would otherwise be
-> removed? But obviously that would probably need some further clean up to make it
-> not add yet more complexity to an already very complicated bit of logic.
+Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
 
-Yeah, can try that later to cover the remaining cases where
-->close prevents merging unnecessarily.
-
-> Otherwise, very nice, clear + conservative so,
-> 
-> Reviewed-By: Lorenzo Stoakes <lstoakes@gmail.com>
-
-Thanks!
-
-----8<----
-From b8072720288491bdc887ebebbb099babcfb108a5 Mon Sep 17 00:00:00 2001
-From: Vlastimil Babka <vbabka@suse.cz>
-Date: Thu, 16 Mar 2023 11:54:27 +0100
-Subject: [PATCH] mm/mmap: start distinguishing if vma can be removed in
- mergeability test-fix
-
-Adjust comment as suggested by Lorenzo.
-
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
----
- mm/mmap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/mm/mmap.c b/mm/mmap.c
-index 4259095a2982..b255e6352710 100644
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -742,8 +742,8 @@ int vma_shrink(struct vma_iterator *vmi, struct vm_area_struct *vma,
- 
- /*
-  * If the vma has a ->close operation then the driver probably needs to release
-- * per-vma resources, so we don't attempt to merge those in case the caller
-- * indicates the current vma may be removed as part of the merge.
-+ * per-vma resources, so we don't attempt to merge those if the caller indicates
-+ * the current vma may be removed as part of the merge.
-  */
- static inline bool is_mergeable_vma(struct vm_area_struct *vma,
- 		struct file *file, unsigned long vm_flags,
--- 
-2.39.2
-
-
+Kind regards, Chris
