@@ -1,97 +1,111 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2113220EE
-	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 07:32:51 +0000 (UTC)
-Received: by mail-pj1-f47.google.com with SMTP id gp15-20020a17090adf0f00b0023d1bbd9f9eso4464048pjb.0
-        for <patches@lists.linux.dev>; Thu, 16 Mar 2023 00:32:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678951970;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mcPnUDp2uPpFN6qrWcVm3iA+36dQ0Mwojauq/GYuGW4=;
-        b=ZaZ3pYmrfSmhTMW5BBDjL1MqZX7hSqr6gXshR3sAa4llWu6OeqbDC/ByJgP93L7nS1
-         uw9j2oJjD6Z4J/DtUEUZEuZ3w2Z8RvAU8qFlhP6ACpNNa/YuSs5B/TMXKhuMY4lnl3HL
-         wo+q6GQLL24y6XPzI/qNTHGz17K3C+MSKhmGpRntuSpAygK53xocuOkiqgiP/G/gFg2W
-         ObWbAKfWFlgkv9MBHruJ/6z7hWZ4iGbk7rldpk0HgXPiKIkBr0ySD/9IUJtBjwu0+/f9
-         vbDbz17GvYhUScSyjyR6kgJp4qfiaw5PIQ6lBldCprmlb7F0q5ofdJbDkMnnuZChYjhx
-         O/bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678951970;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mcPnUDp2uPpFN6qrWcVm3iA+36dQ0Mwojauq/GYuGW4=;
-        b=0lMzRF82y6T9CYXKwGY9XmfB9gx/bUfkGfSIxp+jtlit35ug5n0Lh2/v0E+tE+EraU
-         CyH9KJCYDi3zMC/kHVIq1IEesvL3ciEtuhmk/U91LQ70e2/anlJhpAV6s0e0HEuSZGMm
-         w15jyl9fGAcXpDO9mQNKE/az1UlktkVhA4LF5XDcxFfgakVRG3gJPeuRe6wbl605i/UB
-         trW9ZnwER8DF6I6MA1kP43tTm9BnwH4IyHw0wzmJUaDK6Pvuw34/2I/CdGYwhNjsZIoi
-         74kaB8K/koOCyI/VO3meFW5+CwPVezlm/Wz90vTiSPLT7EnZW/Zf1QzjX9Q3Mky5Eef6
-         wy6Q==
-X-Gm-Message-State: AO0yUKV2JJA/webfdaBG5Fca+Ler/uiy0/OmYuAAidC+l7a/QQ+uk816
-	WYeiZtR27OSxqsE/zqnBD+A=
-X-Google-Smtp-Source: AK7set865NCA1infzuQT4Lgx3KiWiQEfKzG0o8erq89WRRWzoiYAbpJp60OseRunjgh6Xp05mWY4jg==
-X-Received: by 2002:a05:6a20:144a:b0:d0:15c9:4e68 with SMTP id a10-20020a056a20144a00b000d015c94e68mr3272692pzi.62.1678951970418;
-        Thu, 16 Mar 2023 00:32:50 -0700 (PDT)
-Received: from debian.me (subs02-180-214-232-12.three.co.id. [180.214.232.12])
-        by smtp.gmail.com with ESMTPSA id x48-20020a056a000bf000b005a8a4665d3bsm4737711pfu.116.2023.03.16.00.32.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 00:32:49 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-	id 70D4B106628; Thu, 16 Mar 2023 14:32:45 +0700 (WIB)
-Date: Thu, 16 Mar 2023 14:32:45 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.2 000/141] 6.2.7-rc1 review
-Message-ID: <ZBLGHXo4qyKSbwRh@debian.me>
-References: <20230315115739.932786806@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC6120EE
+	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 07:47:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A782BC433D2;
+	Thu, 16 Mar 2023 07:47:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1678952860;
+	bh=Jmx8A4cV89EL/rYdZ69YDOlNR4J4Gh1u59G1cRQSYRk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=chlIsEXVMEJgLRyVE/jUDtJ87Zz81vCtKYI16JZEXXviSZRBsmFPs9rG5oZP/asZ4
+	 AnQ86L6/b+wONAV9SVQ/WySnBj64NUJQKzWwuTurhi8AyaE3y0kwdQJ6ay7tym7R6X
+	 ZPqDaxj7/tFO59A9V/CnyVmf/CO1DsqZ4nCnTF2Q=
+Date: Thu, 16 Mar 2023 08:47:37 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 4.19 00/39] 4.19.278-rc1 review
+Message-ID: <ZBLJmakn42oYUSdd@kroah.com>
+References: <20230315115721.234756306@linuxfoundation.org>
+ <7e46d536-cc68-4b7c-e56e-cf1b94a925cb@linaro.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4u63Dz9MIHxlaJJw"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20230315115739.932786806@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7e46d536-cc68-4b7c-e56e-cf1b94a925cb@linaro.org>
 
+On Wed, Mar 15, 2023 at 09:44:59AM -0600, Daniel Díaz wrote:
+> Hello!
+> 
+> On 15/03/23 06:12, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 4.19.278 release.
+> > There are 39 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.278-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> > and the diffstat can be found below.
+> > 
+> > thanks,
+> > 
+> > greg k-h
+> 
+> Lots and lots of failures, mostly Arm.
+> 
+> For Arm, Arm64, MIPS, with GCC-8, GCC-9, GCC-10, GCC-11, GCC-12, Clang-16, for some combinations with:
+> * axm55xx_defconfig
+> * davinci_all_defconfig
+> * defconfig
+> * defconfig-40bc7ee5
+> * lkftconfig-kasan
+> * multi_v5_defconfig
+> * s5pv210_defconfig
+> * sama5_defconfig
+> 
+> -----8<-----
+> /builds/linux/kernel/cgroup/cgroup.c:2237:2: error: implicit declaration of function 'get_online_cpus' [-Werror,-Wimplicit-function-declaration]
+>         get_online_cpus();
+>         ^
+> /builds/linux/kernel/cgroup/cgroup.c:2237:2: note: did you mean 'get_online_mems'?
+> /builds/linux/include/linux/memory_hotplug.h:258:20: note: 'get_online_mems' declared here
+> static inline void get_online_mems(void) {}
+>                    ^
+> /builds/linux/kernel/cgroup/cgroup.c:2248:2: error: implicit declaration of function 'put_online_cpus' [-Werror,-Wimplicit-function-declaration]
+>         put_online_cpus();
+>         ^
+> /builds/linux/kernel/cgroup/cgroup.c:2248:2: note: did you mean 'put_online_mems'?
+> /builds/linux/include/linux/memory_hotplug.h:259:20: note: 'put_online_mems' declared here
+> static inline void put_online_mems(void) {}
+>                    ^
+> 2 errors generated.
+> make[3]: *** [/builds/linux/scripts/Makefile.build:303: kernel/cgroup/cgroup.o] Error 1
+> ----->8-----
 
---4u63Dz9MIHxlaJJw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This should now be resolved, I'll do a -rc2 with the fixes.
 
-On Wed, Mar 15, 2023 at 01:11:43PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.7 release.
-> There are 141 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
+> For Arm64, i386 x86, with GCC-11, Perf has a new error:
+> 
+> -----8<-----
+> In function 'ready',
+>     inlined from 'sender' at bench/sched-messaging.c:90:2:
+> bench/sched-messaging.c:76:13: error: 'dummy' is used uninitialized [-Werror=uninitialized]
+>    76 |         if (write(ready_out, &dummy, 1) != 1)
+>       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+> In file included from bench/../perf-sys.h:5,
+>                  from bench/../perf.h:18,
+>                  from bench/sched-messaging.c:13:
+> ----->8-----
 
-Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
-powerpc (ps3_defconfig, GCC 12.2.0).
+That's odd as I don't see any perf patches for 4.19.
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+thanks,
 
---=20
-An old man doll... just what I always wanted! - Clara
-
---4u63Dz9MIHxlaJJw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZBLGGQAKCRD2uYlJVVFO
-o8IAAPwKodi86HHP/TskrBp/C81NuVFDWI/xo8jE01KzRIsHwQD/TQx7O0h028VJ
-oLgvOjKwksu4N03a8yN8IRLMDWZjWQg=
-=fgnM
------END PGP SIGNATURE-----
-
---4u63Dz9MIHxlaJJw--
+greg k-h
