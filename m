@@ -1,89 +1,124 @@
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+Received: from beige.elm.relay.mailchannels.net (beige.elm.relay.mailchannels.net [23.83.212.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710C8AD28
-	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 20:26:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678998382; x=1710534382;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=N/UV/JGFwalfx0oPNUccNM6ZJrQ5XofHq51SxDHotNo=;
-  b=VJV/8KRCs3wxroAv60gZcbBm6NbPNxoq3keHuo+MySnELWPuyDa4WOx6
-   5KlSGAVp2HJxiJiWN6zip0fS+PD/hEfav/8aHj7WvTDlXSTXWLQelMKCM
-   teJcqNPWpYi5eADDt2a9fmJEm5guA5pX0YlhpI2KBmEctDaVR9aYRvKU/
-   AcrH0KzcdWb3bP+xdXCuonaU9QvxdNGVPKktxzflGwcpbkymH+fcPQIxF
-   +lQAWM+nHQVFfrmayZlmh3XF446VI/WZugoM3uS2KVbtqp5aj5o64iJ8X
-   g2i+BD2XQjLRAZ5F4Z54uIvJPxBlqDlvSV3w/4C65q9aPWrWMSMOWIfyb
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10651"; a="424376016"
-X-IronPort-AV: E=Sophos;i="5.98,265,1673942400"; 
-   d="scan'208";a="424376016"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2023 13:26:21 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10651"; a="803874716"
-X-IronPort-AV: E=Sophos;i="5.98,265,1673942400"; 
-   d="scan'208";a="803874716"
-Received: from djiang5-mobl3.amr.corp.intel.com (HELO [10.213.182.83]) ([10.213.182.83])
-  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2023 13:26:20 -0700
-Message-ID: <b7a0b5c0-61a0-9843-09a6-3c4c606221be@intel.com>
-Date: Thu, 16 Mar 2023 13:26:20 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7A08F42
+	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 20:31:48 +0000 (UTC)
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id D76675018FF;
+	Thu, 16 Mar 2023 20:23:58 +0000 (UTC)
+Received: from pdx1-sub0-mail-a290.dreamhost.com (unknown [127.0.0.6])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 5734350182C;
+	Thu, 16 Mar 2023 20:23:58 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1678998238; a=rsa-sha256;
+	cv=none;
+	b=bQKVpHHOuPOR2QMouvhzR4jlckVrG7UYNYmHgdjpAQk534RDX5EjkTACfUn7G72zyfSBe+
+	WwfBtfQVZBX6m6shd58J7iHz1CCHhLwi+OaP/c0jFyC/U8EmOSGwzGXsTBtOmGLOvA878u
+	H0I2LIYXSFfZS7rivdiHfdIRmYUhTQwdu4yJi+gTK6EjyAOnlns/eEra+YNGgY2j3zWNiK
+	yH/TsFUXbwv8TMfmhPH1VtytaoV9A5EXWVB/suluOZ2T7+ZN+NusKUIX+swqDU/zTLAfs2
+	fX9lgSff0dA4EveG1I/0zzD0x2ev6Z3j1yL7ud+inqJIFKMWwmKjqmsZj6waWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1678998238;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=zzZZTZnF4mgkGlPMN+EAoe0gpBwte5d92YbdLcYCzn0=;
+	b=j95Agn9HTQzQConAUf/37EsGDrhUiYyg4G2YTg1ZThqvoLHPm+ZBSemuXXDo5l+VPQu3eZ
+	5P7OycDbQ+JUoJ2xRCn4a4ZRfpZoG0RTQHNkEeMFwMKO9koZcgOkYkKAaGo1SweqyFwFh3
+	UYlJNg4LZG8h9oCCqP/jmwOU9S6dW6lU/Ainc80L8bG0mSHyBxINgisiwrRKsGo3hLXpVe
+	kwsV64Bq0wIkimVJZImtGAPXNs8445vVnqRlwKy2yp5q+Oa+0PF9Od1LbP7WevdIZG2fSW
+	nac8cEmJzYcqOfnhxopZESr1pB2r41IJpmRKgCWSA5Eq0dPpVUF1zh6oQCXQbw==
+ARC-Authentication-Results: i=1;
+	rspamd-766d96cb5b-6njkk;
+	auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
+X-MailChannels-Auth-Id: dreamhost
+X-Cooing-Average: 16c87f12391b59a7_1678998238685_4263010003
+X-MC-Loop-Signature: 1678998238685:2361967255
+X-MC-Ingress-Time: 1678998238684
+Received: from pdx1-sub0-mail-a290.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.117.156.21 (trex/6.7.2);
+	Thu, 16 Mar 2023 20:23:58 +0000
+Received: from offworld (ip72-199-50-187.sd.sd.cox.net [72.199.50.187])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dave@stgolabs.net)
+	by pdx1-sub0-mail-a290.dreamhost.com (Postfix) with ESMTPSA id 4PczHd4ST8zHB;
+	Thu, 16 Mar 2023 13:23:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
+	s=dreamhost; t=1678998238;
+	bh=zzZZTZnF4mgkGlPMN+EAoe0gpBwte5d92YbdLcYCzn0=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=M3WEc1QTfiP3WR9EvHG8kCXLeJLw3P0yRrLLxG1JwRF8/K67ksBa8WFiq5PF+25WV
+	 OM1MFHdFccjD4nzRWm14nOzfsB5SwZWUyjF6eu0UpdvPpKfv1SI047jopf8Sf3DIrM
+	 Y4Bn8s/GLau24WREKreR5YoFEOpXmaGc4G6KcoRdnX8Sy5JXROzOPhWM00L/hQCAx7
+	 d5a5mNt1n9DSYNH2RCG6IYkSHxW9BHI4LQ2IhZqKotM9hdcSutTIOc/ABpod4GYLBg
+	 mzPuc3ERirE82G7FMRCxogcJv5d5ZlVpPDf1mzrjV13WdLkcPOrJ9ee6T6Xl+OVIqc
+	 690KD1j3mvPmw==
+Date: Thu, 16 Mar 2023 12:54:26 -0700
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: Tony Luck <tony.luck@intel.com>
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Borislav Petkov <bp@alien8.de>, x86@kernel.org,
+	linux-acpi@vger.kernel.org, linux-cxl@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] ACPI: APEI: EINJ: Add CXL error types
+Message-ID: <20230316195426.x7wmzzf32sucfk7l@offworld>
+References: <20230314004611.48583-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.6.0
-Subject: Re: [PATCH] ACPI: APEI: EINJ: Add CXL error types
-Content-Language: en-US
-To: Tony Luck <tony.luck@intel.com>,
- "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Cc: Borislav Petkov <bp@alien8.de>, x86@kernel.org,
- linux-acpi@vger.kernel.org, linux-cxl@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20230314004611.48583-1-tony.luck@intel.com>
-From: Dave Jiang <dave.jiang@intel.com>
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
 In-Reply-To: <20230314004611.48583-1-tony.luck@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: NeoMutt/20220429
 
+On Mon, 13 Mar 2023, Tony Luck wrote:
 
+>ACPI 6.5 added six new error types for CXL. See chapter 18
+>table 18.30.
+>
+>Add strings for the new types so that Linux will list them in the
+>/sys/kernel/debug/apei/einj/available_error_types file.
+>
+>It seems no other changes are needed. Linux already accepts
+>the CXL codes (on a BIOS that advertises them).
+>
+>Signed-off-by: Tony Luck <tony.luck@intel.com>
 
-On 3/13/23 5:46 PM, Tony Luck wrote:
-> ACPI 6.5 added six new error types for CXL. See chapter 18
-> table 18.30.
-> 
-> Add strings for the new types so that Linux will list them in the
-> /sys/kernel/debug/apei/einj/available_error_types file.
-> 
-> It seems no other changes are needed. Linux already accepts
-> the CXL codes (on a BIOS that advertises them).
-> 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
 
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-
-> ---
->   drivers/acpi/apei/einj.c | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/drivers/acpi/apei/einj.c b/drivers/acpi/apei/einj.c
-> index b4373e575660..39bee5a067cc 100644
-> --- a/drivers/acpi/apei/einj.c
-> +++ b/drivers/acpi/apei/einj.c
-> @@ -584,6 +584,12 @@ static const char * const einj_error_type_string[] = {
->   	"0x00000200\tPlatform Correctable\n",
->   	"0x00000400\tPlatform Uncorrectable non-fatal\n",
->   	"0x00000800\tPlatform Uncorrectable fatal\n",
-> +	"0x00001000\tCXL.cache Protocol Correctable\n",
-> +	"0x00002000\tCXL.cache Protocol Uncorrectable non-fatal\n",
-> +	"0x00004000\tCXL.cache Protocol Uncorrectable fatal\n",
-> +	"0x00008000\tCXL.mem Protocol Correctable\n",
-> +	"0x00010000\tCXL.mem Protocol Uncorrectable non-fatal\n",
-> +	"0x00020000\tCXL.mem Protocol Uncorrectable fatal\n",
->   };
->   
->   static int available_error_type_show(struct seq_file *m, void *v)
+>---
+> drivers/acpi/apei/einj.c | 6 ++++++
+> 1 file changed, 6 insertions(+)
+>
+>diff --git a/drivers/acpi/apei/einj.c b/drivers/acpi/apei/einj.c
+>index b4373e575660..39bee5a067cc 100644
+>--- a/drivers/acpi/apei/einj.c
+>+++ b/drivers/acpi/apei/einj.c
+>@@ -584,6 +584,12 @@ static const char * const einj_error_type_string[] = {
+>	"0x00000200\tPlatform Correctable\n",
+>	"0x00000400\tPlatform Uncorrectable non-fatal\n",
+>	"0x00000800\tPlatform Uncorrectable fatal\n",
+>+	"0x00001000\tCXL.cache Protocol Correctable\n",
+>+	"0x00002000\tCXL.cache Protocol Uncorrectable non-fatal\n",
+>+	"0x00004000\tCXL.cache Protocol Uncorrectable fatal\n",
+>+	"0x00008000\tCXL.mem Protocol Correctable\n",
+>+	"0x00010000\tCXL.mem Protocol Uncorrectable non-fatal\n",
+>+	"0x00020000\tCXL.mem Protocol Uncorrectable fatal\n",
+> };
+>
+> static int available_error_type_show(struct seq_file *m, void *v)
+>--
+>2.39.2
+>
