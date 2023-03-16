@@ -1,42 +1,45 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784337F
-	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 00:04:48 +0000 (UTC)
-Received: by mail-il1-f172.google.com with SMTP id r4so104872ilt.8
-        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 17:04:48 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6231718F
+	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 00:45:14 +0000 (UTC)
+Received: by mail-qt1-f176.google.com with SMTP id n2so215380qtp.0
+        for <patches@lists.linux.dev>; Wed, 15 Mar 2023 17:45:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1678925087; x=1681517087;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=gmail.com; s=20210112; t=1678927513;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NcyC6TmL6Ixm3qQl5SnDBlbDITCyRh/BIzkGTxVX6dE=;
-        b=JqeYTktBIO3BrZBbEHR652A3Z5I6XNVvEVx3JGn6aYhtp1iaMy+6FOlSJYUqb8DASW
-         hrsnGnzkC54Gg6YAh5+XJUKqr9jVC9AZ0g+c8efHoa1zFxhix5FkuUVmGJGhL7uDmcvi
-         xMl9aO8UnvfFG+OIgxXIwMOsO2oFpCH7V+Ka8=
+        bh=rEtmAFbiYGn4gzl91UasYN0iW6U3CYntm4xrWCgFnZs=;
+        b=newxf42ynqnD/6EHue7azXh0ygnj3gSaXETUlswqyKxs6ltsq/ef9jrpmuAc2v7oFY
+         XkH4Px0oRnUgjUmYrsNpRmP4++6T648SR7QtugfRdXHvL5REb4bONNPBr2ZY0dWjQfK0
+         gzLv++XC/fq1TYKZcTg1D99/Gl9wBOIEPmWMX57zn8dTJhEV+WOoi9THpt2F1xQgnDps
+         M9iGaDfVB0FooREzW3FJjcInF1rxY0ZzF9vDQ1n4VOVFEp7UfIq0CLf0b90S2Eib7G7D
+         bsCsFHvmDszc8Hb53x3iCFW/fl+yPuajPX/FlAoxBk2DkAkRDbPuC1G/XU3aZN2gNu5X
+         fxoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678925087; x=1681517087;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20210112; t=1678927513;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NcyC6TmL6Ixm3qQl5SnDBlbDITCyRh/BIzkGTxVX6dE=;
-        b=epAp7TfAgqGSSbeNCuKKOMvl/uDx3i/BH+9aPoaxoorS/E2XwwBdy+uLgaqSKgkzDG
-         ARjV+EFsld4Nx925dsZHwwadJACp0pi0etgUjpKwFEhl5ewr9r7W0HXVbDFerr+um+nC
-         wRiPPwfejuUFAZ8/O+7yiPLVMyj9ldMqszKQJ4rYhcgyQXVQGTPa1gmHJvWD1pwoxy9b
-         fxB7apBRDbYq/un3WaCRM6OKFbQMj3vs/F0jHZh1xsgMf5F3BlreSJKaXQMa7z+4lhCB
-         KpAxJKuNV3JV4M8YMcr0bxX8PsaMNCXrDrNQUp3r9TgbmLebzg/jUEPgu2uKw0W3uFKq
-         OB7A==
-X-Gm-Message-State: AO0yUKWHRhvJ4UG+wyfvOgfueOapiiqbwoyX6nTDUAVP6Qn219F3+VfP
-	rB2l8kVrq7x4RM5DeB2jz5jARw==
-X-Google-Smtp-Source: AK7set//bjb9cEUAND1W9Tfd25P/NvhxXp9+AP7JRWZJcv8hCtN98oFPKouBJxqH5FL6VYjOUsGV3Q==
-X-Received: by 2002:a92:d64f:0:b0:323:10c5:899e with SMTP id x15-20020a92d64f000000b0032310c5899emr2966919ilp.1.1678925087525;
-        Wed, 15 Mar 2023 17:04:47 -0700 (PDT)
-Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id k15-20020a02cccf000000b003fe66427492sm2091514jaq.42.2023.03.15.17.04.46
+        bh=rEtmAFbiYGn4gzl91UasYN0iW6U3CYntm4xrWCgFnZs=;
+        b=Nm2uE6VIsjNpyF+GddUCUeOITx01+JNhMSYjPWJXmOQuxFbdHzFfgnSh+WQNxBP4R/
+         D06oArS9bZ0+QJGLatIzI4hhieC8peKob+j+9UhTLmuEAySSgy1FUoV/epNZc0Ns52zo
+         vwtTZmLDKqRdJbUkFbuYtV64ZKDbW900DbCJa2yrceI8usOKvEV1w+uB7wbelpfO0djQ
+         EqsCL+rxCpnN1LQqkF8BEP62iChm1qX9pFeKu5bDjJ1RyYGKQdi4IaWxGdjTu0GAecxO
+         IIG7dhBCSDMwmTdxs7nWu4mriKsfvYymbViFJ6dM8VSZxiMjSpiQK+YeKxv2aGZDn7V6
+         RVNw==
+X-Gm-Message-State: AO0yUKVqsksEMkewJXRCYURucr71+1Gw59QudLCzWhKoZNt1f/8AawJd
+	egcGvm1DmZ08C/rbNp9vd6U=
+X-Google-Smtp-Source: AK7set+GreWyujOPw9UAjKyKrD4OfwI5ZzGhSuwfPlWr6HNHc3luYXEjbMMIiDYHrC+08OcVe2gb7g==
+X-Received: by 2002:ac8:7dd5:0:b0:3d2:90b1:d161 with SMTP id c21-20020ac87dd5000000b003d290b1d161mr3311559qte.48.1678927513120;
+        Wed, 15 Mar 2023 17:45:13 -0700 (PDT)
+Received: from ?IPV6:2600:1700:2442:6db0:1157:1a08:54ae:71f7? ([2600:1700:2442:6db0:1157:1a08:54ae:71f7])
+        by smtp.gmail.com with ESMTPSA id q22-20020a37f716000000b007461e8efacbsm899756qkj.69.2023.03.15.17.45.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Mar 2023 17:04:47 -0700 (PDT)
-Message-ID: <dee1c998-cf70-8300-8360-0cc85bd0887f@linuxfoundation.org>
-Date: Wed, 15 Mar 2023 18:04:46 -0600
+        Wed, 15 Mar 2023 17:45:12 -0700 (PDT)
+Message-ID: <b05b5e50-413f-0aa8-1842-aef6f846c38d@gmail.com>
+Date: Wed, 15 Mar 2023 19:45:11 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,46 +47,293 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 4.19 00/39] 4.19.278-rc1 review
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 2/8] of: Enable DTB loading on UML for KUnit tests
 Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
-References: <20230315115721.234756306@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20230315115721.234756306@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Frank Rowand <frowand.list@gmail.com>
+To: David Gow <davidgow@google.com>
+Cc: Stephen Boyd <sboyd@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org,
+ linux-clk@vger.kernel.org, patches@lists.linux.dev,
+ Brendan Higgins <brendan.higgins@linux.dev>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ "Rafael J . Wysocki" <rafael@kernel.org>, Richard Weinberger
+ <richard@nod.at>, Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+ Johannes Berg <johannes@sipsolutions.net>,
+ Vincent Whitchurch <vincent.whitchurch@axis.com>,
+ Rob Herring <robh+dt@kernel.org>, Christian Marangi <ansuelsmth@gmail.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ devicetree@vger.kernel.org, linux-um@lists.infradead.org,
+ linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com
+References: <20230302013822.1808711-1-sboyd@kernel.org>
+ <20230302013822.1808711-3-sboyd@kernel.org>
+ <CABVgOSkomwwgKZ9N0_0YMDL--QaZiTV7ONgSRABU2Ph1Z0CG-g@mail.gmail.com>
+ <a97c9bb3a5addfb34af8ccabaa513026.sboyd@kernel.org>
+ <CABVgOSkJ4mw_DtFzn5EwcsuYixWY_j13YotxEYqWhO+ZCL1KPg@mail.gmail.com>
+ <d64a086ddcb7c5ca5abecab0ca654259.sboyd@kernel.org>
+ <CABVgOSk9gqRe_5yQZweBA2Qg2aGx8rUJtOHywGeT4x7TEyBH0A@mail.gmail.com>
+ <40299ee6-c518-5505-0dc5-874deef03d19@gmail.com>
+ <e1889f7f-2804-718b-6651-f333aed48e99@gmail.com>
+ <CABVgOS=B51mzjVLy35aMp5PSAB=qhzMQVNzvxDVMezYwsOv1zw@mail.gmail.com>
+ <b217e613-575e-9e33-3469-6de5e0fb813a@gmail.com>
+In-Reply-To: <b217e613-575e-9e33-3469-6de5e0fb813a@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 3/15/23 06:12, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.278 release.
-> There are 39 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 3/15/23 16:35, Frank Rowand wrote:
+> On 3/15/23 02:04, David Gow wrote:
+>> On Tue, 14 Mar 2023 at 12:28, Frank Rowand <frowand.list@gmail.com> wrote:
+>>>
+>>> On 3/13/23 11:02, Frank Rowand wrote:
+>>>> On 3/11/23 00:42, David Gow wrote:
+>>>>> On Sat, 11 Mar 2023 at 07:34, Stephen Boyd <sboyd@kernel.org> wrote:
+>>>>>>
+>>>>>> Quoting David Gow (2023-03-10 00:09:48)
+>>>>>>> On Fri, 10 Mar 2023 at 07:19, Stephen Boyd <sboyd@kernel.org> wrote:
+>>>>>>>>
+>>>>>>>>
+>>>>>>>> Hmm. I think you're suggesting that the unit test data be loaded
+>>>>>>>> whenever CONFIG_OF=y and CONFIG_KUNIT=y. Then tests can check for
+>>>>>>>> CONFIG_OF and skip if it isn't enabled?
+>>>>>>>>
+>>>>>>>
+>>>>>>> More of the opposite: that we should have some way of supporting tests
+>>>>>>> which might want to use a DTB other than the built-in one. Mostly for
+>>>>>>> non-UML situations where an actual devicetree is needed to even boot
+>>>>>>> far enough to get test output (so we wouldn't be able to override it
+>>>>>>> with a compiled-in test one).
+>>>>>>
+>>>>>> Ok, got it.
+>>>>>>
+>>>>>>>
+>>>>>>> I think moving to overlays probably will render this idea obsolete:
+>>>>>>> but the thought was to give test code a way to check for the required
+>>>>>>> devicetree nodes at runtime, and skip the test if they weren't found.
+>>>>>>> That way, the failure mode for trying to boot this on something which
+>>>>>>> required another device tree for, e.g., serial, would be "these tests
+>>>>>>> are skipped because the wrong device tree is loaded", not "I get no
+>>>>>>> output because serial isn't working".
+>>>>>>>
+>>>>>>> Again, though, it's only really needed for non-UML, and just loading
+>>>>>>> overlays as needed should be much more sensible anyway.
+>>>>>>
+>>>>>> I still have one niggle here. Loading overlays requires
+>>>>>> CONFIG_OF_OVERLAY, and the overlay loading API returns -ENOTSUPP when
+>>>>>> CONFIG_OF_OVERLAY=n. For now I'm checking for the config being enabled
+>>>>>> in each test, but I'm thinking it may be better to simply call
+>>>>>> kunit_skip() from the overlay loading function if the config is
+>>>>>> disabled. This way tests can simply call the overlay loading function
+>>>>>> and we'll halt the test immediately if the config isn't enabled.
+>>>>>>
+>>>>>
+>>>>> That sounds sensible, though there is a potential pitfall. If
+>>>>> kunit_skip() is called directly from overlay code, might introduce a
+>>>>> dependency on kunit.ko from the DT overlay, which we might not want.
+>>>>> The solution there is either to have a kunit wrapper function (so the
+>>>>> call is already in kunit.ko), or to have a hook to skip the current
+>>>>> test (which probably makes sense to do anyway, but I think the wrapper
+>>>>> is the better option).
+>>>>>
+>>>>>
+>>>>>>>
+>>>>>>>>>
+>>>>>>>>> That being said, I do think that there's probably some sense in
+>>>>>>>>> supporting the compiled-in DTB as well (it's definitely simpler than
+>>>>>>>>> patching kunit.py to always pass the extra command-line option in, for
+>>>>>>>>> example).
+>>>>>>>>> But maybe it'd be nice to have the command-line option override the
+>>>>>>>>> built-in one if present.
+>>>>>>>>
+>>>>>>>> Got it. I need to test loading another DTB on the commandline still, but
+>>>>>>>> I think this won't be a problem. We'll load the unittest-data DTB even
+>>>>>>>> with KUnit on UML, so assuming that works on UML right now it should be
+>>>>>>>> unchanged by this series once I resend.
+>>>>>>>
+>>>>>>> Again, moving to overlays should render this mostly obsolete, no? Or
+>>>>>>> am I misunderstanding how the overlay stuff will work?
+>>>>>>
+>>>>>> Right, overlays make it largely a moot issue. The way the OF unit tests
+>>>>>> work today is by grafting a DTB onto the live tree. I'm reusing that
+>>>>>> logic to graft a container node target for kunit tests to add their
+>>>>>> overlays too. It will be clearer once I post v2.
+>>>>>>
+>>>>>>>
+>>>>>>> One possible future advantage of being able to test with custom DTs at
+>>>>>>> boot time would be for fuzzing (provide random DT properties, see what
+>>>>>>> happens in the test). We've got some vague plans to support a way of
+>>>>>>> passing custom data to tests to support this kind of case (though, if
+>>>>>>> we're using overlays, maybe the test could just patch those if we
+>>>>>>> wanted to do that).
+>>>>>>
+>>>>>> Ah ok. I can see someone making a fuzzer that modifies devicetree
+>>>>>> properties randomly, e.g. using different strings for clock-names.
+>>>>>>
+>>>>>> This reminds me of another issue I ran into. I wanted to test adding the
+>>>>>> same platform device to the platform bus twice to confirm that the
+>>>>>> second device can't be added. That prints a warning, which makes
+>>>>>> kunit.py think that the test has failed because it printed a warning. Is
+>>>>>> there some way to avoid that? I want something like
+>>>>>>
+>>>>>>         KUNIT_EXPECT_WARNING(test, <call some function>)
+>>>>>>
+>>>>>> so I can test error cases.
+>>>>
+>>>> DT unittests already have a similar concept.  A test can report that a
+>>>> kernel warning (or any other specific text) either (1) must occur for the
+>>>> test to pass or (2) must _not_ occur for the test to pass.  The check
+>>>> for the kernel warning is done by the test output parsing program
+>>>> scripts/dtc/of_unittest_expect.
+>>>>
+>>>> The reporting by a test of an expected error in drivers/of/unittest.c
+>>>> is done by EXPECT_BEGIN() and EXPECT_END().  These have been in
+>>>> unittest for a long time.
+>>>>
+>>>> The reporting by a test of a not expected to occur error is done
+>>>> by EXPECT_NOT_BEGIN() and EXPECT_NOT_END().  These are added to
+>>>> unittest in linux 6.3-rc1.
+>>>>
+>>>> I discussed this concept in one of the early TAP / KTAP discussion
+>>>
+>>> The link to the early KTAP discussion on this concept is:
+>>>
+>>>    https://lore.kernel.org/all/d38bf9f9-8a39-87a6-8ce7-d37e4a641675@gmail.com/T/#u
+>>>
+>>>
+>>
+>> Thanks -- I'd totally forgotten about that!
+>>
 > 
-> Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
-> Anything received after that time might be too late.
+>> I still personally would prefer a way of checking this from within the
+>> kernel, as if we're just printing out "EXPECT: " lines, then it's not
+>> possible to know if a test passes just from the raw results (and
+>> things like statistics can't be updated without a separate tool like
+>> kunit.py parsing the KTAP.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.278-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-> and the diffstat can be found below.
+> Yes, I totally agree with that.  If there is a reasonable way to
+> implement.  But in the DT unittest world, I have not found a
+> reasonable way.  Adding hooks is suggested below, but for DT
+> unittest _I_ (opinion) do not find that reasonable.  I voice no
+> vote for kunit - that decision is up to the kunit crowd.
 > 
-> thanks,
+>>
+>> Indeed, my personal preference is that this log-based way of doing
+>> expectations is probably best kept as a last resort. i.e.,
+>> 1. Try to add a hook to the code which prints the message, which can
+>> then fail the test (or set a flag for the test to check later). This
+>> probably needs some better KUnit-side helpers to be truly ergonomic,
+>> but at least avoids too strict a dependency on the exact formatting of
+>> the log messages.
 > 
-> greg k-h
+> I'm not a fan of hooks.  I see them as a maintenance burden, dependent
+> upon the source version of the object being tested, yet another
+> thing that can go wrong, and adds complexity to creating a test
+> environment and running the test.  Again, this just a personal
+> opinion, and I'm not voting for or against this for kunit.
 > 
+>> 2. If that doesn't work, use console tracepoints or similar to
+>> implement an EXPECT_BEGIN() / EXPECT_END() or similar API entirely
+>> within the kernel.
+> 
+> Isn't this just another hook?  So same opinion.
+> 
+>> 3. Only if we can't come up with a working way of doing the former
+>> options, resort to adding "EXPECT:" lines and having a parser pick up
+>> on this.
 
-Compiled and booted on my test system. No dmesg regressions.
+Adding one more thought here so I don't forget it before the topic picks
+up again in the KTAP version 2 world...
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+The test parser could generate an artificial subtest test case status line
+or normal test case status line to report the result of the EXPECT.  This
+also is ugly because it is creating a new requirement on the parser vs the
+expectations in the KTAP plan line (the plan line could include the EXPECT
+in the number of tests count, but then the raw KTAP test output would be
+missing the artificial EXPECT test result).  No need to hash out details
+here, just a thought...
 
-thanks,
--- Shuah
+-Frank
+
+> 
+> Again, don't let my opinion affect the voting between 1, 2, 3, or other
+> for kunit.
+> 
+>>
+>> One of the downsides of doing "EXPECT" lines in KTAP is that it'll
+>> suddenly be much more dependent on the exact layout of the tests, as
+>> we'd need to be able to override a test result if an expectation fails
+>> (at least, to maintain the KUnit structure). And overriding a result
+>> which is already in the output seems really, really ugly.
+> 
+> I don't understand "dependent on the exact layout of the tests".
+> If you are saying that the test result parser has to figure out
+> which test result to override, that has not been an issue in
+> the cases that I use EXPECTs in DT unittest.  The EXPECT begin and
+> EXPECT end have always immediately surrounded a single test, so
+> when the parser processes the EXPECT end, only the most recent
+> test result could be overridden.  This has worked because the
+> kernel warning and error messages have been from kernel action
+> that happens synchronously with the test.  If the test prods the
+> kernel in a way that results in the kernel performing an
+> asynchronous activity (eg in another thread), then it becomes
+> more complex to structure the EXPECT end -- I would imagine that the
+> test would have to block on the asynchronous activity just before
+> reporting the normal KTAP status result for the test (and the
+> EXPECT end would normally be just after reporting the KTAP
+> status result for the test).
+> 
+> I agree with overriding being ugly.  For the DT unittest results
+> parser, the EXPECT summary results are reported separately from
+> the individual test summary results.  The parser also flags the
+> EXPECT failure in line with the normal individual test result
+> lines.
+> 
+> I see both parsing results as valid, and as a policy choice for
+> each test parser.
+> 
+>>
+>> There's a patch to the KASAN tests to move from doing option 1 to
+>> option 2 above (in order to better support RCU, which didn't work with
+>> the hook):
+>> https://lore.kernel.org/all/ebf96ea600050f00ed567e80505ae8f242633640.1666113393.git.andreyknvl@google.com/
+>>
+>>
+>>>> threads and expect to start a discussion thread on this specific
+>>>> topic in the KTAP Specification V2 context.  I expect the discussion
+>>>> to result in a different implementation than what DT unittests are
+>>>> using (bike shedding likely to ensue) but whatever is agreed to
+>>>> should be easy for DT to switch to.
+>>>
+>>> The link to the KTAP Specification Version 2 process and progress is:
+>>>
+>>>    https://elinux.org/Test_Results_Format_Notes#KTAP_version_2
+>>>
+>>
+>> Thanks! We've got a few more KTAP ideas to air, so will hopefully send
+>> those out soon!
+> 
+> Glad to hear, I'm hoping that process starts progressing a bit.
+> 
+> -Frank
+> 
+>>
+>> Cheers,
+>> -- David
+>>
+>>>>
+>>>>>
+>>>>> Hmm... I'd've thought that shouldn't be a problem: kunit.py should
+>>>>> ignore most messages during a test, unless it can't find a valid
+>>>>> result line. What does the raw KTAP output look like? (You can get it
+>>>>> from kunit.py by passing the --raw_output option).
+>>>>>
+>>>>> That being said, a KUNIT_EXPECT_LOG_MESSAGE() or similar is something
+>>>>> we've wanted for a while. I think that the KASAN folks have been
+>>>>> working on something similar using console tracepoints:
+>>>>> https://lore.kernel.org/all/ebf96ea600050f00ed567e80505ae8f242633640.1666113393.git.andreyknvl@google.com/
+>>>>>
+>>>>> Cheers,
+>>>>> -- David
+>>>>
+>>>
+> 
 
