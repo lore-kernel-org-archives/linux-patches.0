@@ -1,56 +1,92 @@
-Received: from GBR01-CWL-obe.outbound.protection.outlook.com (mail-cwlgbr01on2103.outbound.protection.outlook.com [40.107.11.103])
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAE6612F
-	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 17:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE02612F
+	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 17:40:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678988433; x=1710524433;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=pIcocqssnHpj5YTg4Gz4Xr7HpH9jT8ExeZYPGEm6IPw=;
+  b=EshXDOioPo3jeBHbgfI77ltAcp2cj4xAM/sFx7QdOPn9+AEAt+Wwotlv
+   ZfVEkjYjXJfLyvdIhNj6s5RuXv9BVEDvEujnCftqNPxa/S/LzrKBx0N4K
+   ypad+5BbphW5bgK3V9YycvArPFAxHLiIT29qeSFpuSj8N/y11T0MrTgQd
+   ZJolKWC7Wk0J7ky0jN/ZHiHRlSoatI/QhwD6slbVQRQ0TLD9O0BpJPRy7
+   eUmvIuqte9XMOqlKajNaPIN5yeaDWkeZYGcDvpu3iSMs0vJ2SaX8l59+P
+   au3+SbyJpyEFsag0O5GYB5Kyb9h1mqbhYCL9XFwxQlBfSr468jblOvwvj
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10651"; a="321920272"
+X-IronPort-AV: E=Sophos;i="5.98,265,1673942400"; 
+   d="scan'208";a="321920272"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2023 10:40:32 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10651"; a="748977377"
+X-IronPort-AV: E=Sophos;i="5.98,265,1673942400"; 
+   d="scan'208";a="748977377"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+  by fmsmga004.fm.intel.com with ESMTP; 16 Mar 2023 10:40:32 -0700
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Thu, 16 Mar 2023 10:40:31 -0700
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21 via Frontend Transport; Thu, 16 Mar 2023 10:40:31 -0700
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.172)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.21; Thu, 16 Mar 2023 10:40:30 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IE/IOYVC6S8ME266H7hYzi6F/2r7KpJz5yvyiADR8fYb+cusUvMPiLPHzgEi0RuMMGrEmP2n6aWv4hZ8fT8aUN44GtqmLtGzaX+KlglOa5IWZFxg8Jt/wzOQvs56g6sDh+nD+X1u8uEWM7fx1AJzCfpybUtkD+uJXR6qQDoW2VweKDSFGUSx+81LhPT0QOswjO4HVOJdFkcOCm1Pev6l3CTODQOrcNcrdZ/ponWTbr2y4p+5CGamPvlCIdEqpSvmwTdyQCkYMVdiGQ5UmpP0BHHMMPE9SFWMq6y7BJBeCBaZypIoiZdeVyKpgIkCUd/ENSU1lzxyOlmHWCgdwHIt6A==
+ b=YbVuKZ4DDwb3ChK1cRuC5C/C1ts3KZWuNKySGVUDjP/kBXVcSSXzIqWCTBf7wmGKNwFRB87/KTHUYw+sYuj9xBW4SYQ2mgZnliqkBia2x80snO2PtRHczRtm9ebxnb0YWZY3uS7Lglai1K3XjmLk3IqLgsl9eYbGQUQ9kLPCbwyvcN3IfCEm8YCxAhzdqL7T26VyswbTmZCLuaz/hy0wuVW7bs8/Wi+3IMbwX6Zvxxb643FFbS2W2FHsOcglrnGFczZON3J5GThh1CQfgIgwcqdiQSMqA2jzvSTATggywPdzuik16j9LRku4nyExzl8p4Q2XDh4ftJooSt0QUfNz8w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IS97sT05ZBg2aMy8byrSb6hopK9iFccuHMFDBlgJBi8=;
- b=LD4/HlWFFMndbR62ZIW5Ks09vluv7jU7ON+Tu/XQm5+MEQu6tZxT2A/Y8Msbejm4qYRVotFIHvg+Kb8uloaQyThLUbHFWTD1fuWd4fzbYMC3Z9deJWDMeLVu+UAXCs3VnPRBXSmc+MRU4kkd+IAkCc/Yf1yMWpEtXTW+sL8+5hzvtFbkKxG+oOhCZYayZ3ZQDN9QCjMgBZrXcQJmJhJ4V1z5qHI95kHBVOYb9msR/BjxDEXgmG8NMuLwogIl0jzeq21LpKmXL5F28SWzbUUXxf0dx6ZI1+dzcsZ58W2fxnreaHj79ry+c45qSUdvsz4LRdpcvebKf5vYcR7/jbuW1w==
+ bh=8B2NTgg8ML39fIWhKT94jcq0zvRZxBLZWGByAZ/j9JE=;
+ b=QafJVcX5X0Hdv2w1/YTu4Zsl1V3podZKV9wJgux/yydAjZC4tfEd9CVc6d/ANPeRNA7n2gWzDwZ12de10N96Vf5aaHl77ON9QpxOif04oURht3s2IgyGm1fEzKgiQnjcCYGNQImlN1MpSq9lkTRTdUobyTjRujtcT/3RfD2sxoNm+3RtSwuya8ZI/SUcZinuOQbfAXPDgtbx0da3A94Jr4VnzeRogPyWk9P96sfqaGNS44gGhriJiY9WrE4SlJH3Pq+wQv4kCj1iW4n80J9QbEPcxXk+BKY+HwCPP+EMSuhICJ/5Nx0vnGqGCdKxcV7mNM1IrAhF85VDsbDqzN0wbg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
- dkim=pass header.d=garyguo.net; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IS97sT05ZBg2aMy8byrSb6hopK9iFccuHMFDBlgJBi8=;
- b=emPhyQx79BLJ066bWEGShxzExUOH/ETZ50AwJXNV+Aoy26qa2qOaokTL4sZH1z/AuE6BCmZH8nH3N5SqoYi2zoCp17BFkW02HpJuTNtIONTyUXht4iERYFlEY+ryd7b9J/UXa4AnunULwjZ986cFPsGy+/pb2UeW6py5Z4k5HCs=
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=garyguo.net;
-Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
- by LO0P265MB5731.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:264::11) with
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from BYAPR11MB3768.namprd11.prod.outlook.com (2603:10b6:a03:fa::20)
+ by PH7PR11MB7551.namprd11.prod.outlook.com (2603:10b6:510:27c::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.31; Thu, 16 Mar
- 2023 17:38:50 +0000
-Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
- ([fe80::2f2a:55d4:ea1d:dece]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
- ([fe80::2f2a:55d4:ea1d:dece%3]) with mapi id 15.20.6178.031; Thu, 16 Mar 2023
- 17:38:49 +0000
-Date: Thu, 16 Mar 2023 17:38:48 +0000
-From: Gary Guo <gary@garyguo.net>
-To: y86-dev <y86-dev@protonmail.com>
-Cc: "ojeda@kernel.org" <ojeda@kernel.org>, "alex.gaynor@gmail.com"
- <alex.gaynor@gmail.com>, "wedsonaf@gmail.com" <wedsonaf@gmail.com>,
- "boqun.feng@gmail.com" <boqun.feng@gmail.com>, "bjorn3_gh@protonmail.com"
- <bjorn3_gh@protonmail.com>, "rust-for-linux@vger.kernel.org"
- <rust-for-linux@vger.kernel.org>, "linux-kernel@vger.kernel.org"
- <linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
- <patches@lists.linux.dev>
-Subject: Re: [PATCH v1 2/3] rust: add pin-init API
-Message-ID: <20230316173848.18b45232.gary@garyguo.net>
-In-Reply-To: <ct76zcR4JhAXHG90VDfewAmzPJmEHhMvvOf-MejsM_uZsdcsBs9qVLJNYvNvTHOBLlOedgQ4Dm16M2DSDRBIF-olZfq2zp4XboRsCxsm3CA=@protonmail.com>
-References: <D0mWM1KEcWLeFa7IIqPygHlXRTD6gRFHvJKaegYzQXo9zTx7YbSpVLeYLFfq53s2S30Wx7v0khkPMOy6Ng5HiNZ5x7TXtOyLB58vUHtq6ro=@protonmail.com>
-	<20230315200722.57487341.gary@garyguo.net>
-	<ct76zcR4JhAXHG90VDfewAmzPJmEHhMvvOf-MejsM_uZsdcsBs9qVLJNYvNvTHOBLlOedgQ4Dm16M2DSDRBIF-olZfq2zp4XboRsCxsm3CA=@protonmail.com>
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
-Content-Type: text/plain; charset=US-ASCII
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.24; Thu, 16 Mar
+ 2023 17:40:29 +0000
+Received: from BYAPR11MB3768.namprd11.prod.outlook.com
+ ([fe80::9a08:f53b:3a33:1211]) by BYAPR11MB3768.namprd11.prod.outlook.com
+ ([fe80::9a08:f53b:3a33:1211%3]) with mapi id 15.20.6178.031; Thu, 16 Mar 2023
+ 17:40:29 +0000
+Message-ID: <e70030cb-e0b5-41ba-4913-361a2038e58a@intel.com>
+Date: Thu, 16 Mar 2023 10:40:26 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3 6/8] platform/x86/intel/ifs: Implement Array BIST test
+Content-Language: en-US
+To: Hans de Goede <hdegoede@redhat.com>, <markgross@kernel.org>
+CC: <tglx@linutronix.de>, <mingo@redhat.com>, <bp@alien8.de>,
+	<dave.hansen@linux.intel.com>, <x86@kernel.org>, <hpa@zytor.com>,
+	<gregkh@linuxfoundation.org>, <rostedt@goodmis.org>, <ashok.raj@intel.com>,
+	<tony.luck@intel.com>, <linux-kernel@vger.kernel.org>,
+	<platform-driver-x86@vger.kernel.org>, <patches@lists.linux.dev>,
+	<ravi.v.shankar@intel.com>, <thiago.macieira@intel.com>,
+	<athenas.jimenez.gonzalez@intel.com>, <sohil.mehta@intel.com>
+References: <20230214234426.344960-1-jithu.joseph@intel.com>
+ <20230301015942.462799-1-jithu.joseph@intel.com>
+ <20230301015942.462799-7-jithu.joseph@intel.com>
+ <628e092c-793e-96ce-71f5-80392ad69569@redhat.com>
+ <9dde72aa-a28d-2b0e-7b90-6b1996dbf202@intel.com>
+ <f45c26ae-865b-b7b6-0f2a-5906d9c0a349@redhat.com>
+From: "Joseph, Jithu" <jithu.joseph@intel.com>
+In-Reply-To: <f45c26ae-865b-b7b6-0f2a-5906d9c0a349@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P265CA0024.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2ae::19) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:253::10)
+X-ClientProxiedBy: SJ0PR13CA0083.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c4::28) To BYAPR11MB3768.namprd11.prod.outlook.com
+ (2603:10b6:a03:fa::20)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -58,189 +94,92 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LO0P265MB5731:EE_
-X-MS-Office365-Filtering-Correlation-Id: d1c1d3fc-b35d-4e4b-fb35-08db26454d82
+X-MS-TrafficTypeDiagnostic: BYAPR11MB3768:EE_|PH7PR11MB7551:EE_
+X-MS-Office365-Filtering-Correlation-Id: eba71a7a-039e-4930-831f-08db2645886d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	t+1svFOJJ1g/89z32YHUxd+GAePSNpXr+kPQgvCzvs404vwdsSgh1a+DVhy3E2R/8Fu4AKLPSmgae9785RUUklm8DqT25DJ7DTYibw9NLFBKXVodciv/O0PsQ2VcT0d9FrA4G53nMcX5vjKDkBfpj1H6EeQeuemtIbQrnERbL935iEsM6sNZaJ2bvl9JJepbpfg6HfHHloJQleXxDAM80B+bncYrxjcnIukGfocSeER/KqZKMZ/8mJCXra76NK9jZdszwkMnVPZQKybWDWyTm7EgtmaTXlbRmKBqiZkBo5GugGw96WMIMyFPhtNWztfv/t3ikWGhymtFqB9nKDMqVZHZPqVYDXK5zvQIs8mPCXp0EPLiXPyUfnzM2LkY3+prQZyf2Xqprb4a1ZPSrHoDSrz9pGUbQD+mqvGDVtwdRsjdLajUObjDpldAsXwKZKYD8TsdqXl9X0Pcdeuqaq80PBWmBwhUdBkpiw+IV2jwZzHXIQEpgNhAe/29dR0anyJfB1a4vWt2Jg7JBc7P5jse8smeenkiAu1rpCr+x7IXVL2VzpBCG29CYJ/wP1prOCq/KquVtjQsYvJ1aZn6vr7cir12KsMOwl3GffwIPsrE+Qimto2JfFOxPa+FelSUA1mUxL0uUKyDITNpHY6Vcb/Iag==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230025)(39830400003)(136003)(376002)(396003)(366004)(346002)(451199018)(36756003)(86362001)(2906002)(38100700002)(5660300002)(41300700001)(8936002)(26005)(1076003)(2616005)(6512007)(186003)(6506007)(4326008)(316002)(54906003)(83380400001)(66476007)(6486002)(6916009)(66556008)(66946007)(8676002)(478600001);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: FYjWsZO/ay4/6bHXrUnf4KDl8tcLREBGDT19COUuOLwZ26Xz21ZrednMaNX9X3tMc+gXCTg43H8kNHDXotN4Iteb0jTzg9ml0dh2mlWGopEmJu94aBLplNEuxiyHvIShiHHqML9io9uR0fpQIaolOfBXdXYZON0JFUHtBYgDaakvcEaUCNfKCae+UdoBXpSGrkziWxgEE6xRqxVBhyDVwhxMAre/Oe16c4zs3kCi8T0PpiT0jCTeJwoM4IKlg1IWtysiMJm8USi+3U/DnsrJo41EfPTsNzLmVM/hLAXvFZGA5KZM6nQnr+L6MXJdESyWAY6TeqpuXbW6ld4oZboySuW32zEMNrj3vjhPUbM3Ilh35G+/gRW8S45m/98KChab2854X77Tt8tN8unPMi2M1eP60uUAjP+WH/sluGJo9YIIZ05amFlhEtJHzy1hw+eJYKgF6EAjfcSTuAhLaDJDt05wBwlT5sYwakfHzSneY5reb3AV++155KBq1s0l3Iq0Xt1Zwpjz6+zwm+o5QKoVMXXQGkTDFt33xtOB1x0pl/BfR1fgceXr+dngk2UUmFFR0iwBLOHbeVlJ05TQttTwIi0kvaoNIDPSPZAMgLHko9jxFeTgcUbZuzrVOFrcBEowj3B1m6RZFyMDpiNfVgEVQvfSHC9l+pKDaG9FTSzJXHXQ/Z2Pws9yI4ptCbQ4XbQPF6qCoDomdzPlAfSL+x5GFIuDD8HpuVpDm5d+K66UuWU=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3768.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(366004)(376002)(39860400002)(346002)(396003)(136003)(451199018)(4744005)(7416002)(36756003)(82960400001)(5660300002)(83380400001)(6512007)(478600001)(186003)(6666004)(6506007)(2616005)(6486002)(26005)(53546011)(66556008)(31696002)(38100700002)(316002)(4326008)(66476007)(41300700001)(66946007)(8676002)(8936002)(86362001)(31686004)(2906002)(45980500001)(43740500002);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?6jyGMqTTZ9+XPMkaIrRO6Bf+24fr7IjeE5lvxjqhhNmn9ujxzVuvgmvxOF86?=
- =?us-ascii?Q?JL+VoQkivhZ4COW2p7AOAtOZVZQx/UoMZJiR1sWENF4YZjNq4Ram625CDnEW?=
- =?us-ascii?Q?P2sdIDtiFh19gGIzyvUAdESfWZKx8D7a/zbpQYLPXqSr1ZIlcF9CswNkypLx?=
- =?us-ascii?Q?ZfNmb5Dg/dKIvFLnPkxmyhNiActxgwTDXhvNTcZsg8em+O1pUKOz1CQt1Gqi?=
- =?us-ascii?Q?TnUPdEbrkP16llSz1iSaV71x5rBDOfEc+a8261+SLjrjzPFgLBQ7euucIA8e?=
- =?us-ascii?Q?Wx0R+Yp2+V00i1Cq65soaYnSxn1QoFP3yDg+fJfyfqKdMAuzDnDH71P/ebs1?=
- =?us-ascii?Q?ABtXiBHBGvMJmtd3CKkAUPfPsFJeo1rMCibR1CASXS87snQ7RY7zb18H+Tbk?=
- =?us-ascii?Q?x83Wtxy9ov172yeW6vVVlxEYoshQPDzXzT3dwXP7qnyhd8RNCBoF2gBYgIlQ?=
- =?us-ascii?Q?y3st0HE4HcBBdIIDLHGJv4sseG7L06MDP6o5eKYvJwvLeIHuYRT/CUrFicK7?=
- =?us-ascii?Q?AhklNBNnVStOH0Br3YDMeNrGPySFbmbor2cWut6PI2Z3+lrmpY00yq/2OXSO?=
- =?us-ascii?Q?wU4yj85Wn32SDRzuF+jgHBWXTa2ksYDCe/jKL0rfeyA9lBofbaUZvvnJ0hEv?=
- =?us-ascii?Q?jBqjpmIb7DaPSGeb/Mu7dD3NqTZJIOzyKILN5RLSDn4mZu5RJlDypnuQlYTs?=
- =?us-ascii?Q?ZnnyEmWlCDEk4HJoM8e4o+u/4XikiV5WhO5E+EEL4q8wq8OKlwICbF5vfE4a?=
- =?us-ascii?Q?6DJPD8Z7SbPgv85vftNyz/VPANzQKS14TBQ/DcvjrsD5fqwzuFkFwq36PSgX?=
- =?us-ascii?Q?CRJ9Y1jmmjhkzGfn/oCd4GsetcR1hlPsRMJpgIigyEUrE0/cBKEraJCiVrnA?=
- =?us-ascii?Q?55HEoQJGEaSoNvrF9JRKYBK8ZxMC2hFDRqP9rDDLVP9IfE1VrEF3zlseGrE+?=
- =?us-ascii?Q?Nh1r2GF9GIxEMda/g534lyplMIpgdOmzc6KOWKhGfgSGcjDb4O6OYrm3tSKW?=
- =?us-ascii?Q?2KNlt2DR/JgUNTrhRFTpTjzjc2AaJetTrx0URS2xrW4wJyPoLE+ZhOHS/leG?=
- =?us-ascii?Q?Pac8ITO0XFd1c+MfM7mVoCOpKA6l3NwCyQwpZ6Z/J48BkxUT5m4GJK3Kptyx?=
- =?us-ascii?Q?07jOM1jw+CtaTxQi8DUmVmtIQRGZ4igcHzdYC6AhKij+67uN2DqR5xZITSHe?=
- =?us-ascii?Q?jt50EVcauLZNfhzTNhOD4kjyUeA5r6UDp2PkaOFD7NvDUxYkljDs30jea2em?=
- =?us-ascii?Q?gDVP/vM3J1qsrwqoBi9xkn0GSvE7iwDm6SHcg2h74r7FEQPgkJlq+3jQqcWC?=
- =?us-ascii?Q?NZkzPWLfn9KY1Sbw2rqRDa+CU3WBEkL/4dIBcAQD/LcCsKhlJun3N3nrb+xb?=
- =?us-ascii?Q?Yym72n0aVMpCIcptOLehUJmPt2PLZet8slRisAWh18fbK1hT2HqbueF6lbhP?=
- =?us-ascii?Q?d/+uCly4G1rUkydStOD2C5OnSmG0l7J4tj5cw57Y3uu9kICZDwHV/hVzDgX6?=
- =?us-ascii?Q?opqePcaIBqdgP51xRJkDXyMTWV/bXkIWgNam+qUAohU5tS/IKyACdubjvc6H?=
- =?us-ascii?Q?Xy5/2GC7eQb/FZRa7JF87pRP5CysSu+i1tcDIssz?=
-X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: d1c1d3fc-b35d-4e4b-fb35-08db26454d82
-X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a3EzQUJOamtmcUlsRmFQVjhZME1mU1ZTMmJhbUxtcUxkNzBSVE8rdWlmRzg1?=
+ =?utf-8?B?Y3VZcFl6eDlxUXdBQ2FCb3llSnlZTU1tcGNnQWRDSWJtbTk0WEtCY2VqVkRi?=
+ =?utf-8?B?Unc3RnhCbzY3Mi84T2YzeHFZZ0FqN1Znc0VyMk1DdG1LOGF3aTU1NW8wWWhs?=
+ =?utf-8?B?b2VHd0s3VGlSOFVmMjFscUJRUnpjekJ0NjJWT1d6MlZnVWtmdmVpL0dyNXIw?=
+ =?utf-8?B?SnBkZEdKaGRJdW51ZEZ6NU1KR0tSTXdSU1ErSzJzcGh2b2lZR3oyT2lEbnhH?=
+ =?utf-8?B?ZVhlVE82dXhzVEViQ3NBZEVmWENTU3NlZlZKWlhMV0tkRDNmRDBJSUoxMS9J?=
+ =?utf-8?B?YU93VVdqU1pwMEFHdHRRMVdCRXJrbE1PM05pckZWSVEraDRwRWJUTVJUSTZq?=
+ =?utf-8?B?OWVqWjBOUXF5NkVRc21xWURhWlYzYm1qM1VoWWxkUlNxdDc0bFVkaFpneGhX?=
+ =?utf-8?B?RXdSWDNNN1M4Wnp6VGV6emJYU29wcUFGbThrZXdqSERlekQ5cWlxOThVelF1?=
+ =?utf-8?B?eGZRd0IvTGxTZjI5M2NUMzJCdlhnSFluOWJTZlE1cWp4OEprOXh5cTl1bWVi?=
+ =?utf-8?B?VFc2aExhN0cxazk3bFlGVzlHOEZoL0o3OHJCUFRoZUd6Z1puaEhTUzk5djJS?=
+ =?utf-8?B?WWxkKzRHNXNQNzgzK2lrMWdpcnltVWN1cEhvTlQrcWY3TzJPRWlydVRVWXp6?=
+ =?utf-8?B?dkdBNWxDSmE1a2VhZGZPSnRlSzFxeXhMSWVjalJFL3REbm5NSGRiakxhOXRv?=
+ =?utf-8?B?YndBbWVWYW9nZUM0UzVxVFpaSGU0MDlIZzlYVnhjK0JCRzh0Z2xtdjVQUjZr?=
+ =?utf-8?B?dmRIMWRsQlR6VmU5Z1hrRkJEUzluM1VCZHBKSzByS3JScDUwRVZycVY4cW1i?=
+ =?utf-8?B?Ulo4c0FJM2FSZStQcTd0WVhzM3BSVDdpNU1oS1JuTG9vaEMxWUNPQnpGWWNB?=
+ =?utf-8?B?cTR1RHdiMkNFY0xaaEpZL1dzYkQ1a0tGWG5xVW92QXd2MEU3RDNHc2FQOU8v?=
+ =?utf-8?B?c3FEUGRqWlJXK0FiVC9YM2w3VGRDb0lXQnEyN015WE4wSU9zWnNrTytuOS9T?=
+ =?utf-8?B?akh2Wm9DSVV1eTlmWHV4NVhFOURTemNrWDZxQjZYeXlKTHhkeTd5ckRUUGJa?=
+ =?utf-8?B?M0ZwOVJUcFZ6TUpDVlRIdDFZVUtzRVRCR2tBZUFwYytDVElMRzdqeHB5bGw3?=
+ =?utf-8?B?RzlJNnRQK0lpb1BDMWp2MUZXNS96ZTFpdEMrMlNhMFFjbEtOV1F2TzlwREtp?=
+ =?utf-8?B?dWhWQU9yMFlMN3AySm9SMG85eklYRm1pMmQra2llUTV3TzRCZzA0YStsS3A1?=
+ =?utf-8?B?bTlMcHhRUGhDVEpaS203WVA4SUxncHZoNHpoY3NObjJMZ1NrQUlGSUpsVWpz?=
+ =?utf-8?B?dUNBUVR1RzQ1TWJNZytLRk9ZL2RnWVZiakE1UUhNODdPRFRQQ2JweEVhdTFt?=
+ =?utf-8?B?c1lzZVQyME1SS0VFUlhGalk3QktmMU5VQmdjZzJzcHFLUVFLQWF3VTdoTTh6?=
+ =?utf-8?B?cHZBU2cramQzaFNSZFRRdDlXNzdDMFlVYWdaV2NuMUdjSVBIQWZ2SVZHSVpp?=
+ =?utf-8?B?QzNhcm9JUjM1blBPbWRDclJzaGdDbHBqdGN5aVV2ZGxqWGpsRzVVamVMTTc0?=
+ =?utf-8?B?QXAzZW95d0t3MkdsQlBtQUFuZlNGV0UyMDNPU2VRNlhkWVVOdlUzTWtqSE5R?=
+ =?utf-8?B?L2tKZVNEZjBUUFR1WUZDZjVGTUsxbiszRFp5bFI5UG93Sm14a01PNDFaNWdV?=
+ =?utf-8?B?L0pnNnBmZ3luY01MYld3RVFQQnovQUNmelJ4T21TR0N5cS9ubVgzTVZYeUl4?=
+ =?utf-8?B?MVRZSHB3bWV6bGdvTi9uR0w3T082bjlmR3QvdXFJcmxKTG41RGl0QmIyMjBS?=
+ =?utf-8?B?QllxY253QmhRUUhPU1JUN3hCSkpvQTh3VGR4S2l1WHl1RDZmRGlwdWJTZlY3?=
+ =?utf-8?B?VGl5Z0d2UW5hMFFvbFVSSTFQL0NRL25qVlpkUnNZRFAzRWNMR3MyYmpsWXV1?=
+ =?utf-8?B?UVY5WER5WTVjYW9DSjF4Z1FTb2NoVWZKZk53SGRXNWkzcjBPUllGcE5udklk?=
+ =?utf-8?B?bHhJZ0ZYOThYN0FaQlNZbzNHRUwzL1YwYUNldmJqOXNkZUpMeTkvUk5RenJQ?=
+ =?utf-8?B?UUVtL094RlMweFpXWjhid1VtbU84dXhleU5aL0VmQjVYTmdoVFNnYWhoRHEv?=
+ =?utf-8?B?eXc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: eba71a7a-039e-4930-831f-08db2645886d
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3768.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Mar 2023 17:38:49.9491
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Mar 2023 17:40:29.0127
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2FCanFeJW39p95H0vEsceP/R5/PEFuzM9o3kUZB/I0v0YfPrIwI6HfAe3zXmZKrVWhGJiMmKl3B8Uf26gShYcw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO0P265MB5731
+X-MS-Exchange-CrossTenant-UserPrincipalName: jWZmJBnH1VXuxnYoY6dHzLwEWB3T6MPZakK2Y31piX0lg1WM0QLa570AvSWHOcailkfHF4bEqc7Jog8FYqBkkg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB7551
+X-OriginatorOrg: intel.com
 
-On Thu, 16 Mar 2023 09:38:16 +0000
-y86-dev <y86-dev@protonmail.com> wrote:
 
-> > > +
-> > > +/// Trait facilitating pinned destruction.
-> > > +///
-> > > +/// Use [`pinned_drop`] to implement this trait safely:
-> > > +///
-> > > +/// ```rust
-> > > +/// # use kernel::sync::Mutex;
-> > > +/// use kernel::macros::pinned_drop;
-> > > +/// use core::pin::Pin;
-> > > +/// #[pin_data(PinnedDrop)]
-> > > +/// struct Foo {
-> > > +///     #[pin]
-> > > +///     mtx: Mutex<usize>,
-> > > +/// }
-> > > +///
-> > > +/// #[pinned_drop]
-> > > +/// impl PinnedDrop for Foo {
-> > > +///     fn drop(self: Pin<&mut Self>) {
-> > > +///         pr_info!("Foo is being dropped!");
-> > > +///     }
-> > > +/// }
-> > > +/// ```
-> > > +///
-> > > +/// # Safety
-> > > +///
-> > > +/// This trait must be implemented with [`pinned_drop`].
-> > > +///
-> > > +/// [`pinned_drop`]: kernel::macros::pinned_drop
-> > > +pub unsafe trait PinnedDrop: __PinData {
-> > > +    /// Executes the pinned destructor of this type.
-> > > +    ///
-> > > +    /// # Safety
-> > > +    ///
-> > > +    /// Only call this from `<Self as Drop>::drop`.
-> > > +    unsafe fn drop(self: Pin<&mut Self>);
-> > > +
-> > > +    // Used by the `pinned_drop` proc-macro to ensure that only safe operations are used in `drop`.
-> > > +    // the function should not be called.
-> > > +    #[doc(hidden)]
-> > > +    fn __ensure_no_unsafe_op_in_drop(self: Pin<&mut Self>);  
-> >
-> > One idea to avoid this extra function is to have an unsafe token to the
-> > drop function.
-> >
-> > fn drop(self: Pin<&mut Self>, token: TokenThatCanOnlyBeCreatedUnsafely);  
+
+On 3/16/2023 2:59 AM, Hans de Goede wrote:
+
+>>
+>> Only one IFS test is allowed at a time. This is done using "ifs_sem" defined in sysfs.c
 > 
-> What is wrong with having this extra function? If the problem is that this
-> function might be called, then we could add a parameter with an
-> unconstructable type.
+> Ah I see.
 > 
-> I think that `drop` should be `unsafe`, since it really does have
-> the requirement of only being called in the normal drop impl.
-
-The point to avoid having two functions with the same body. This would
-require double the amount of checks needed by the compiler (and make
-error message worth if anything's wrong in the body of `drop`).
-
-This current approach is really just a hack to avoid code from doing
-unsafe stuff without using `unsafe` block -- and the best solution is
-just to avoid make `drop` function unsafe. However we don't want drop
-function to be actually called from safe code, and that's the point of
-a token that can only be created unsafely is force `drop` to *not* be
-called by safe code. The token is a proof that `unsafe` is being used.
-
-This way the `__ensure_no_unsafe_op_in_drop` function would not be
-needed.
-
+> After taking a closer look I do see one unrelated issue with this patch
+> sysfs.c: run_test_store() does:
 > 
-> > > +}
-> > > +
-> > > +/// Smart pointer that can initialize memory in-place.
-> > > +pub trait InPlaceInit<T>: Sized {
-> > > +    /// Use the given initializer to in-place initialize a `T`.
-> > > +    ///
-> > > +    /// If `T: !Unpin` it will not be able to move afterwards.
-> > > +    fn pin_init<E>(init: impl PinInit<T, E>) -> error::Result<Pin<Self>>
-> > > +    where
-> > > +        Error: From<E>;
-> > > +
-> > > +    /// Use the given initializer to in-place initialize a `T`.
-> > > +    fn init<E>(init: impl Init<T, E>) -> error::Result<Self>
-> > > +    where
-> > > +        Error: From<E>;
-> > > +}  
-> >
-> > Is this trait used? Or the methods could be inherent methods?  
+>         if (!ifsd->loaded)
+>                 rc = -EPERM;
+>         else
+>                 rc = do_core_test(cpu, dev);
 > 
-> I need an extension trait for `Box`, since it is inside of the `alloc`
-> crate and so I figured that I might as well use it for other types. I do
-> not think we can avoid the extension trait for `Box`, but I could make the
-> functions for `UniqueArc` inherent. What do you think?
+> But AFAICT the loaded check really only applies to the first (intel_ifs_0 device) test type and the 
+> Array BIST test should work fine when loaded is false.
 
-Good point, I forget about `Box`.
+This is true, the load check only applies to first test. And the patch (5/8) in this series adds the
+check you are suggesting to allow the second test to proceed (as given below)
 
-> 
-> > > +/// An initializer that leaves the memory uninitialized.
-> > > +///
-> > > +/// The initializer is a no-op. The `slot` memory is not changed.
-> > > +#[inline]
-> > > +pub fn uninit<T>() -> impl Init<MaybeUninit<T>> {
-> > > +    // SAFETY: The memory is allowed to be uninitialized.
-> > > +    unsafe { init_from_closure(|_| Ok(())) }
-> > > +}  
-> >
-> > Do you think there's a value to have a `Uninitable` which is
-> > implemented for both `MaybeUninit` and `Opaque`?  
-> 
-> If we really need it for `Opaque`, then it probably should be an inherent
-> function. I do not really see additional use for an `Uninitable` trait.
+	if (ifsd->ro_info->test_num != IFS_TYPE_ARRAY_BIST && !ifsd->loaded)
+		rc = -EPERM;
+	else
+		rc = do_core_test(cpu, dev);
 
-Fair.
+It is possible that the snippet you pasted above was from an earlier state.
 
-> > > +// This trait is only implemented via the `#[pin_data]` proc-macro. It is used to facilitate
-> > > +// the pin projections within the initializers.
-> > > +#[doc(hidden)]
-> > > +pub unsafe trait __PinData {
-> > > +    type __PinData;
-> > > +}
-> > > +
-> > > +/// Stack initializer helper type. Use [`stack_pin_init`] instead of this primitive.  
-> >
-> > `#[doc(hidden)]`?  
-> 
-> This trait is implementation detail of the `#[pin_data]` macro. Why should
-> it be visible in the rust-docs?
 
-I am commenting about `stack_pin_init` (note the doc comment above my
-comment). `StackInit` is an implementation detail of `stack_pin_init`
-and shouldn't be exposed, IMO. Or do you think manual use of
-`StackInit` is needed?
-
-Best,
-Gary
+Jithu
