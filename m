@@ -1,76 +1,65 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418B920EE
-	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 07:54:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67697C433D2;
-	Thu, 16 Mar 2023 07:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D6520EE
+	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 07:57:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FD40C433EF;
+	Thu, 16 Mar 2023 07:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678953273;
-	bh=xjSjqmrbWiXMTOAoJwX7RL6AxTGhMt5b0kzQkTF5WQs=;
+	s=korg; t=1678953420;
+	bh=U90ZMSPQK2MYhhnAxVsMkqjkud9BNXEmnkyodFogRV0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ChWHPE8s7UI9k95B9S1uAzokfkFm3YXf+eqC6juBttaHuKIV2QX/Oq0o3LcybDIBt
-	 Ouzz0o5PR/QzHozslqqezmcpZNjMixFhOjhy2CEFBN0RIsFraFkfWuVL91OncVScKL
-	 ZKxXYNKfqxaq2sNt0xHZbzGI49QbRfGH9n6BOcD8=
-Date: Thu, 16 Mar 2023 08:54:31 +0100
+	b=e8L/5opVflJbJfQ7hrnF2RfLPcEH2LFifd3MtUHLerNnioEBM5B4IRzH2DKQ676sF
+	 GOY1J7erp0v5ZERQsWAGFVq0QaMQivEA+yo8n9X2BtzAAF6si09e0GToQcRJDEqkT4
+	 IhelLOPzT+8a1C9OrgnNFXRG/A9YWEnDfndLc7r0=
+Date: Thu, 16 Mar 2023 08:56:58 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
+To: Guenter Roeck <linux@roeck-us.net>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.4 00/68] 5.4.237-rc1 review
-Message-ID: <ZBLLN5G0XosxLD9A@kroah.com>
-References: <20230315115726.103942885@linuxfoundation.org>
- <dce37bda-d5d9-72d8-2b22-2c69b6498870@linaro.org>
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 000/104] 5.10.175-rc1 review
+Message-ID: <ZBLLyoYelPSiYI0W@kroah.com>
+References: <20230315115731.942692602@linuxfoundation.org>
+ <4584471d-d216-3edd-058c-e362e048462f@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <dce37bda-d5d9-72d8-2b22-2c69b6498870@linaro.org>
+In-Reply-To: <4584471d-d216-3edd-058c-e362e048462f@roeck-us.net>
 
-On Wed, Mar 15, 2023 at 08:59:42AM -0600, Daniel Díaz wrote:
-> Hello!
-> 
-> On 15/03/23 06:11, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.4.237 release.
-> > There are 68 patches in this series, all will be posted as a response
+On Wed, Mar 15, 2023 at 07:26:05AM -0700, Guenter Roeck wrote:
+> On 3/15/23 05:11, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.10.175 release.
+> > There are 104 patches in this series, all will be posted as a response
 > > to this one.  If anyone has any issues with these being applied, please
 > > let me know.
 > > 
 > > Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
 > > Anything received after that time might be too late.
 > > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.237-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
 > 
-> Lots of build failures: arm, arm64 (Clang-16, Clang-nightly):
+> Another build failure, almost drowning in the noise.
 > 
-> -----8<-----
-> /builds/linux/drivers/gpu/drm/drm_edid.c:5119:21: error: passing 'const struct drm_connector *' to parameter of type 'struct drm_connector *' discards qualifiers [-Werror,-Wincompatible-pointer-types-discards-qualifiers]
->         if (!is_hdmi2_sink(connector) && vic > 64)
->                            ^~~~~~~~~
-> /builds/linux/drivers/gpu/drm/drm_edid.c:4994:49: note: passing argument to parameter 'connector' here
-> static bool is_hdmi2_sink(struct drm_connector *connector)
->                                                 ^
-> 1 error generated.
-> make[4]: *** [/builds/linux/scripts/Makefile.build:262: drivers/gpu/drm/drm_edid.o] Error 1
-> ----->8-----
+> Building riscv32:allmodconfig ... failed
+> --------------
+> Error log:
+> drivers/pci/pci-driver.c: In function 'pci_pm_runtime_resume':
+> drivers/pci/pci-driver.c:1297:9: error: implicit declaration of function 'pci_restore_standard_config' [-Werror=implicit-function-declaration]
+>  1297 |         pci_restore_standard_config(pci_dev);
+>       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+> At top level:
+> drivers/pci/pci-driver.c:536:13: warning: 'pci_pm_default_resume_early' defined but not used [-Wunused-function]
+>   536 | static void pci_pm_default_resume_early(struct pci_dev *pci_dev)
+>       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Odd this didn't show up on my builds.  Anyway, now dropped, thanks!
+Ah, nice catch, I've now fixed this up and it should be good in -rc2
 
 greg k-h
