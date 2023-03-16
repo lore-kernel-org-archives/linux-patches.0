@@ -1,139 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A4320EE
-	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 07:48:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7C5C433D2;
-	Thu, 16 Mar 2023 07:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6D320EE
+	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 07:48:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE21C433D2;
+	Thu, 16 Mar 2023 07:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678952894;
-	bh=fLaU07I4+Dr+CjI8srUoR/4EE9CrXJQmJo1hE3fZPOY=;
+	s=korg; t=1678952930;
+	bh=JEFMADeuG1V7EMneRFqDNSU+blM7hztH3hwVKntKQ9U=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=1kARIgAdv9SDQZsdQIg/nEsHEn29mkOrOElRF4I3G6vKFv3/3U6qRZgtoK71dMOqO
-	 9USdwRyMofz+OEwJd06ntwbi1RnT67nxrkmFP4iC96Cv1iGy+/bpSxUv7gvTrHJV2P
-	 7vWM+rQTnVJNZ79MNOX2gndrwauTcaO0taOc3cj8=
-Date: Thu, 16 Mar 2023 08:48:12 +0100
+	b=wsaEETrRw0LarIQEKJMxHQ7ZS2nzUH2kOtB8J1ue0B0dV0FyhHIU23tLVGroThKdF
+	 T/jQb4AByctuf6B9oSIIt2wwrWWjzDeerSQT6jBBDxpg3qIYUUckiuJLJviU/39zJ/
+	 h2TT+SRfUZi9ucZT1SxnrDbFWNUlu4LorHH1cNwM=
+Date: Thu, 16 Mar 2023 08:48:47 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+To: Chris Paterson <Chris.Paterson2@renesas.com>
+Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
+	"akpm@linux-foundation.org" <akpm@linux-foundation.org>,
+	"linux@roeck-us.net" <linux@roeck-us.net>,
+	"shuah@kernel.org" <shuah@kernel.org>,
+	"patches@kernelci.org" <patches@kernelci.org>,
+	"lkft-triage@lists.linaro.org" <lkft-triage@lists.linaro.org>,
+	"pavel@denx.de" <pavel@denx.de>,
+	"jonathanh@nvidia.com" <jonathanh@nvidia.com>,
+	"f.fainelli@gmail.com" <f.fainelli@gmail.com>,
+	"sudipm.mukherjee@gmail.com" <sudipm.mukherjee@gmail.com>,
+	"srw@sladewatkins.net" <srw@sladewatkins.net>,
+	"rwarsow@gmx.de" <rwarsow@gmx.de>
 Subject: Re: [PATCH 4.19 00/39] 4.19.278-rc1 review
-Message-ID: <ZBLJvEUfuwvg24Yy@kroah.com>
+Message-ID: <ZBLJ3/qc2EfvF6vc@kroah.com>
 References: <20230315115721.234756306@linuxfoundation.org>
- <7e46d536-cc68-4b7c-e56e-cf1b94a925cb@linaro.org>
- <c3b1918b-be90-0a85-6f91-83b2c2805f67@linaro.org>
+ <TYCPR01MB105881FA616DC8A6623140062B7BF9@TYCPR01MB10588.jpnprd01.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c3b1918b-be90-0a85-6f91-83b2c2805f67@linaro.org>
+In-Reply-To: <TYCPR01MB105881FA616DC8A6623140062B7BF9@TYCPR01MB10588.jpnprd01.prod.outlook.com>
 
-On Wed, Mar 15, 2023 at 10:28:15AM -0600, Daniel Díaz wrote:
-> Hello!
+On Wed, Mar 15, 2023 at 02:12:46PM +0000, Chris Paterson wrote:
+> Hello Greg,
 > 
-> On 15/03/23 09:44, Daniel Díaz wrote:
-> > Hello!
+> > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > Sent: 15 March 2023 12:12
 > > 
-> > On 15/03/23 06:12, Greg Kroah-Hartman wrote:
-> > > This is the start of the stable review cycle for the 4.19.278 release.
-> > > There are 39 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > > 
-> > > Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
-> > > Anything received after that time might be too late.
-> > > 
-> > > The whole patch series can be found in one patch at:
-> > >     https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.278-rc1.gz
-> > > or in the git tree and branch at:
-> > >     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-> > > and the diffstat can be found below.
-> > > 
-> > > thanks,
-> > > 
-> > > greg k-h
+> > This is the start of the stable review cycle for the 4.19.278 release.
+> > There are 39 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > Lots and lots of failures, mostly Arm.
-> > 
-> > For Arm, Arm64, MIPS, with GCC-8, GCC-9, GCC-10, GCC-11, GCC-12, Clang-16, for some combinations with:
-> > * axm55xx_defconfig
-> > * davinci_all_defconfig
-> > * defconfig
-> > * defconfig-40bc7ee5
-> > * lkftconfig-kasan
-> > * multi_v5_defconfig
-> > * s5pv210_defconfig
-> > * sama5_defconfig
-> > 
-> > -----8<-----
-> > /builds/linux/kernel/cgroup/cgroup.c:2237:2: error: implicit declaration of function 'get_online_cpus' [-Werror,-Wimplicit-function-declaration]
-> >          get_online_cpus();
-> >          ^
-> > /builds/linux/kernel/cgroup/cgroup.c:2237:2: note: did you mean 'get_online_mems'?
-> > /builds/linux/include/linux/memory_hotplug.h:258:20: note: 'get_online_mems' declared here
-> > static inline void get_online_mems(void) {}
-> >                     ^
-> > /builds/linux/kernel/cgroup/cgroup.c:2248:2: error: implicit declaration of function 'put_online_cpus' [-Werror,-Wimplicit-function-declaration]
-> >          put_online_cpus();
-> >          ^
-> > /builds/linux/kernel/cgroup/cgroup.c:2248:2: note: did you mean 'put_online_mems'?
-> > /builds/linux/include/linux/memory_hotplug.h:259:20: note: 'put_online_mems' declared here
-> > static inline void put_online_mems(void) {}
-> >                     ^
-> > 2 errors generated.
-> > make[3]: *** [/builds/linux/scripts/Makefile.build:303: kernel/cgroup/cgroup.o] Error 1
-> > ----->8-----
-> > 
-> > 
-> > For Arm64, i386 x86, with GCC-11, Perf has a new error:
-> > 
-> > -----8<-----
-> > In function 'ready',
-> >      inlined from 'sender' at bench/sched-messaging.c:90:2:
-> > bench/sched-messaging.c:76:13: error: 'dummy' is used uninitialized [-Werror=uninitialized]
-> >     76 |         if (write(ready_out, &dummy, 1) != 1)
-> >        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > In file included from bench/../perf-sys.h:5,
-> >                   from bench/../perf.h:18,
-> >                   from bench/sched-messaging.c:13:
-> > ----->8-----
+> > Responses should be made by Fri, 17 Mar 2023 11:57:10 +0000.
+> > Anything received after that time might be too late.
 > 
-> Additionally, there's this on Arm with GCC-10, GCC-12, Clang-16 for:
-> * defconfig
-> * exynos_defconfig
-> * lkftconfig
-> * lkftconfig-debug
-> * lkftconfig-debug-kmemleak
-> * lkftconfig-kasan
-> * lkftconfig-kselftest-kernel
-> * lkftconfig-kunit
-> * lkftconfig-libgpiod
-> * lkftconfig-perf
-> * lkftconfig-rcutorture
+> Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
+> CI Pipeline: https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/807195668
 > 
-> -----8<-----
+> We (CIP) are seeing some build issues with Linux 4.19.278-rc1 (7cfb8ee7c98e).
+> 
+> 
+> 1)
+> In various arm, arm64 and x86 configurations we see:
+> kernel/cgroup/cgroup.c: In function 'cgroup_attach_lock':
+> kernel/cgroup/cgroup.c:2237:2: error: implicit declaration of function 'get_online_cpus'; did you mean 'get_online_mems'? [-Werror=implicit-function-declaration]
+>   get_online_cpus();
+>   ^~~~~~~~~~~~~~~
+>   get_online_mems
+> kernel/cgroup/cgroup.c: In function 'cgroup_attach_unlock':
+> kernel/cgroup/cgroup.c:2248:2: error: implicit declaration of function 'put_online_cpus'; did you mean 'num_online_cpus'? [-Werror=implicit-function-declaration]
+>   put_online_cpus();
+>   ^~~~~~~~~~~~~~~
+>   num_online_cpus
+> 
+> For example: https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/3938632173#L1274
+> 
+> Presumably this issue is caused by "cgroup: Fix threadgroup_rwsem <-> cpus_read_lock() deadlock", but I haven't had a chance to revert and re-test.
+> 
+> 
+> 2)
+> For arm_multiconfig_v7 builds we're seeing a some errors when building the exynos5422 device trees:
 > arch/arm/boot/dts/exynos5422-odroidhc1.dtb: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map0: Reference to non-existent node or label "gpu"
-> 
 > arch/arm/boot/dts/exynos5422-odroidhc1.dtb: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map1: Reference to non-existent node or label "gpu"
-> 
 > ERROR: Input tree has errors, aborting (use -f to force output)
-> make[2]: *** [scripts/Makefile.lib:294: arch/arm/boot/dts/exynos5422-odroidhc1.dtb] Error 2
+> make[1]: *** [scripts/Makefile.lib:294: arch/arm/boot/dts/exynos5422-odroidhc1.dtb] Error 2
+> make[1]: *** Waiting for unfinished jobs....
+>   DTC     arch/arm/boot/dts/hi3519-demb.dtb
+>   DTC     arch/arm/boot/dts/hisi-x5hd2-dkb.dtb
 > arch/arm/boot/dts/exynos5422-odroidxu3.dtb: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map3: Reference to non-existent node or label "gpu"
+> arch/arm/boot/dts/exynos5422-odroidxu3.dtb: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map4: Reference to non-existent node or label "gpu"
+> ERROR: Input tree has errors, aborting (use -f to force output)
+> make[1]: *** [scripts/Makefile.lib:294: arch/arm/boot/dts/exynos5422-odroidxu3.dtb] Error 2
+> arch/arm/boot/dts/exynos5422-odroidxu3-lite.dtb: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map3: Reference to non-existent node or label "gpu"
+> arch/arm/boot/dts/exynos5422-odroidxu3-lite.dtb: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map4: Reference to non-existent node or label "gpu"
+> ERROR: Input tree has errors, aborting (use -f to force output)
+> make[1]: *** [scripts/Makefile.lib:294: arch/arm/boot/dts/exynos5422-odroidxu3-lite.dtb] Error 2
+> arch/arm/boot/dts/exynos5422-odroidxu4.dtb: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map3: Reference to non-existent node or label "gpu"
+> arch/arm/boot/dts/exynos5422-odroidxu4.dtb: ERROR (phandle_references): /thermal-zones/gpu-thermal/cooling-maps/map4: Reference to non-existent node or label "gpu"
+> ERROR: Input tree has errors, aborting (use -f to force output)
+> make[1]: *** [scripts/Makefile.lib:294: arch/arm/boot/dts/exynos5422-odroidxu4.dtb] Error 2
+> make: *** [arch/arm/Makefile:348: dtbs] Error 2
+> 
+> Log: https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/3938632189#L8634
+> 
+> Presumably caused by "ARM: dts: exynos: Add GPU thermal zone cooling maps for Odroid XU3/XU4/HC1", but I haven't had a chance to revert and re-test.
+> 
 > 
 
-<snip>
-
-Thanks, Sasha dropped the offending commit from the queue, and I've
-dropped a few more as well, so this should be fixed up when -rc2 comes
-out.
+Thanks, these should all be fixed in the next -rc2.
 
 greg k-h
