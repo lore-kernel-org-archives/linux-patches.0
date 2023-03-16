@@ -1,124 +1,312 @@
-Received: from beige.elm.relay.mailchannels.net (beige.elm.relay.mailchannels.net [23.83.212.16])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7A08F42
-	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 20:31:48 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id D76675018FF;
-	Thu, 16 Mar 2023 20:23:58 +0000 (UTC)
-Received: from pdx1-sub0-mail-a290.dreamhost.com (unknown [127.0.0.6])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 5734350182C;
-	Thu, 16 Mar 2023 20:23:58 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1678998238; a=rsa-sha256;
-	cv=none;
-	b=bQKVpHHOuPOR2QMouvhzR4jlckVrG7UYNYmHgdjpAQk534RDX5EjkTACfUn7G72zyfSBe+
-	WwfBtfQVZBX6m6shd58J7iHz1CCHhLwi+OaP/c0jFyC/U8EmOSGwzGXsTBtOmGLOvA878u
-	H0I2LIYXSFfZS7rivdiHfdIRmYUhTQwdu4yJi+gTK6EjyAOnlns/eEra+YNGgY2j3zWNiK
-	yH/TsFUXbwv8TMfmhPH1VtytaoV9A5EXWVB/suluOZ2T7+ZN+NusKUIX+swqDU/zTLAfs2
-	fX9lgSff0dA4EveG1I/0zzD0x2ev6Z3j1yL7ud+inqJIFKMWwmKjqmsZj6waWg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1678998238;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=zzZZTZnF4mgkGlPMN+EAoe0gpBwte5d92YbdLcYCzn0=;
-	b=j95Agn9HTQzQConAUf/37EsGDrhUiYyg4G2YTg1ZThqvoLHPm+ZBSemuXXDo5l+VPQu3eZ
-	5P7OycDbQ+JUoJ2xRCn4a4ZRfpZoG0RTQHNkEeMFwMKO9koZcgOkYkKAaGo1SweqyFwFh3
-	UYlJNg4LZG8h9oCCqP/jmwOU9S6dW6lU/Ainc80L8bG0mSHyBxINgisiwrRKsGo3hLXpVe
-	kwsV64Bq0wIkimVJZImtGAPXNs8445vVnqRlwKy2yp5q+Oa+0PF9Od1LbP7WevdIZG2fSW
-	nac8cEmJzYcqOfnhxopZESr1pB2r41IJpmRKgCWSA5Eq0dPpVUF1zh6oQCXQbw==
-ARC-Authentication-Results: i=1;
-	rspamd-766d96cb5b-6njkk;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Cooing-Average: 16c87f12391b59a7_1678998238685_4263010003
-X-MC-Loop-Signature: 1678998238685:2361967255
-X-MC-Ingress-Time: 1678998238684
-Received: from pdx1-sub0-mail-a290.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.117.156.21 (trex/6.7.2);
-	Thu, 16 Mar 2023 20:23:58 +0000
-Received: from offworld (ip72-199-50-187.sd.sd.cox.net [72.199.50.187])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dave@stgolabs.net)
-	by pdx1-sub0-mail-a290.dreamhost.com (Postfix) with ESMTPSA id 4PczHd4ST8zHB;
-	Thu, 16 Mar 2023 13:23:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
-	s=dreamhost; t=1678998238;
-	bh=zzZZTZnF4mgkGlPMN+EAoe0gpBwte5d92YbdLcYCzn0=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=M3WEc1QTfiP3WR9EvHG8kCXLeJLw3P0yRrLLxG1JwRF8/K67ksBa8WFiq5PF+25WV
-	 OM1MFHdFccjD4nzRWm14nOzfsB5SwZWUyjF6eu0UpdvPpKfv1SI047jopf8Sf3DIrM
-	 Y4Bn8s/GLau24WREKreR5YoFEOpXmaGc4G6KcoRdnX8Sy5JXROzOPhWM00L/hQCAx7
-	 d5a5mNt1n9DSYNH2RCG6IYkSHxW9BHI4LQ2IhZqKotM9hdcSutTIOc/ABpod4GYLBg
-	 mzPuc3ERirE82G7FMRCxogcJv5d5ZlVpPDf1mzrjV13WdLkcPOrJ9ee6T6Xl+OVIqc
-	 690KD1j3mvPmw==
-Date: Thu, 16 Mar 2023 12:54:26 -0700
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: Tony Luck <tony.luck@intel.com>
-Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Borislav Petkov <bp@alien8.de>, x86@kernel.org,
-	linux-acpi@vger.kernel.org, linux-cxl@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] ACPI: APEI: EINJ: Add CXL error types
-Message-ID: <20230316195426.x7wmzzf32sucfk7l@offworld>
-References: <20230314004611.48583-1-tony.luck@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B22AD32
+	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 21:50:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=MLDKgStUn6F5m9R7LuyIkeoD28uTYFHFpAKEMOimO40=; b=IWXp4MwneyPcK8Ew/eAKnjeaHt
+	ofYH0eCV+PHyH8uIduQBs+DJrSGF/RXvf8qUUMsqcjtlsVeZ7rN3iJRKk+vOD07dRkUKe82eH1U7r
+	ABoJ1o0DUY+XqmBgTeDvrv1N45OZX7jbSNDFn5YaWcek5n3ces31jTsWZ9nz1AKD8IiXThOk9bAaV
+	bPK3YtVzPYZVDoF4Z1Yqh5ul8TtwM0ZYEwjRTce4crIutUyYRm0iKFE9U4GRkRH8hxp3y5l+w2Dh8
+	JdsoB0mtswx0M5Wbru8hSdmJ2bbMmBGpXBfuLLUo9hm+kBga5SZUM5i65B81J5oUdKKvaWVPcP1Jw
+	JQpp3Lhg==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1pcvUt-0006rf-1f;
+	Thu, 16 Mar 2023 21:50:55 +0000
+Date: Thu, 16 Mar 2023 14:50:55 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Petr Mladek <pmladek@suse.com>, Song Liu <song@kernel.org>
+Cc: patches@lists.linux.dev, linux-modules@vger.kernel.org,
+	live-patching@vger.kernel.org, mcgrof@kernel.org
+Subject: Re: mod->klp set on copy ok ?
+Message-ID: <ZBOPP4YWWhJRk2yn@bombadil.infradead.org>
+References: <CAB=NE6Vo4AXVrn1GPEoZWVF3NkXRoPwWOuUEJqJ35S9VMGTM2Q@mail.gmail.com>
+ <ZA8NBuXbVP+PRPp0@alley>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230314004611.48583-1-tony.luck@intel.com>
-User-Agent: NeoMutt/20220429
+In-Reply-To: <ZA8NBuXbVP+PRPp0@alley>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Mon, 13 Mar 2023, Tony Luck wrote:
+I had a hiccup evaluating if we copy or not over the mod->klp over from
+live patching to the new copy of the module we process, and so I cross
+checked with Petr on this.
 
->ACPI 6.5 added six new error types for CXL. See chapter 18
->table 18.30.
->
->Add strings for the new types so that Linux will list them in the
->/sys/kernel/debug/apei/einj/available_error_types file.
->
->It seems no other changes are needed. Linux already accepts
->the CXL codes (on a BIOS that advertises them).
->
->Signed-off-by: Tony Luck <tony.luck@intel.com>
+I had jumped the gun on my analysis leading me to believe we could very
+well not be copying it over once we discard the copy of the module. I
+did a simple test and I see the mod->klp set to true propagated but
+understanding *why* is a pit perplexing and I frankly don't think I see it
+yet.  Eearlier  today I though I had clarity on this but as I review
+things more with patience, the more puzzling this seems.
 
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Given the lack of documentation on how this works I figured I'd cc
+linux-modules and live-patching to ensure others can review / so we
+can enhance this documentation and code to be made clearer. It's not
+clear to me yet where the copy of the data is coming from yet, I see
+where it should be, but the logic seems fragile and perhaps error prone
+so I'd love some more eyeballs on this now.
 
->---
-> drivers/acpi/apei/einj.c | 6 ++++++
-> 1 file changed, 6 insertions(+)
->
->diff --git a/drivers/acpi/apei/einj.c b/drivers/acpi/apei/einj.c
->index b4373e575660..39bee5a067cc 100644
->--- a/drivers/acpi/apei/einj.c
->+++ b/drivers/acpi/apei/einj.c
->@@ -584,6 +584,12 @@ static const char * const einj_error_type_string[] = {
->	"0x00000200\tPlatform Correctable\n",
->	"0x00000400\tPlatform Uncorrectable non-fatal\n",
->	"0x00000800\tPlatform Uncorrectable fatal\n",
->+	"0x00001000\tCXL.cache Protocol Correctable\n",
->+	"0x00002000\tCXL.cache Protocol Uncorrectable non-fatal\n",
->+	"0x00004000\tCXL.cache Protocol Uncorrectable fatal\n",
->+	"0x00008000\tCXL.mem Protocol Correctable\n",
->+	"0x00010000\tCXL.mem Protocol Uncorrectable non-fatal\n",
->+	"0x00020000\tCXL.mem Protocol Uncorrectable fatal\n",
-> };
->
-> static int available_error_type_show(struct seq_file *m, void *v)
->--
->2.39.2
->
+Song is working on some of these areas as well, if we can also clean
+things up in a better way as we go along it's a good time to review
+that now too.
+
+Below code analysis as of linux-next today.
+
+On Mon, Mar 13, 2023 at 12:46:14PM +0100, Petr Mladek wrote:
+> On Sat 2023-03-11 18:16:35, Luis Chamberlain wrote:
+> > Hey Petr, while working on my V2 to reduce unnecessary memory pressure
+> > (with my fixes from V1 I'm seeing considerable savings) I came to realize
+> > that the place I put mod aliases was wrong as it works on the copy of the
+> > module, not the final thing.
+> 
+> I see.
+> 
+> > So I'm fixing that now so I allocate the aliases after
+> > layout_and_allocate(). However since mod->klp is set to true
+> > on the copy on check_mod_info() I started wondering if it's not propagated
+> > later. Code wise I think that true.
+> 
+> It seems to be propagated, see below. Well, I do not see it in the code.
+
+I didn't see where this could be propagated either at first glance. Now
+I  have some idea but it's still a bit obfuscated and I'm not quite sure
+of it to be frank. It seems that it should all happen because move_module()
+actually copies all the data we fudged on the copy into its final
+section header location. But the copy is constrained by the ELF section
+data it sees and length, and I don't see why we are getting more
+information than what modpost generates on the mod.c files for modules
+and it is minimal.
+
+Since its obscure let me elaborate on my explanation. If folks find
+issues please let me know.
+
+We have two ways to shove modules into the kernel, the old system call
+init_module() and then the new finit_module(). Both end up having a
+temporary buffer allocated with a copy of userspace module information
+in it, and set the struct load_info structure, passed to load_module().
+The non-decompression finit_module() has the simplest userspace copy
+example:
+
+SYSCALL_DEFINE3(finit_module, int, fd, const char __user *, uargs, int, flags)
+{
+	int len;
+	struct load_info info = { };
+	...
+	len = kernel_read_file_from_fd(fd, 0, &buf, INT_MAX, NULL, READING_MODULE);  
+	...
+	if (not_compression) {
+		info.len = len;
+		info.hdr = buf;
+	}
+	return load_module(&info, uargs, flags);
+}
+
+The call load_module() eventually will have to vfree(info->hdr), it
+eventually does this right before load_module() calls do_init_module(mod)
+at the very end.
+
+static int load_module(struct load_info *info, const char __user *uargs,
+                       int flags)
+{
+	...
+	/* Get rid of temporary copy. */
+	free_copy(info, flags); 
+
+	/* Done! */                                                             
+	trace_module_load(mod);                                                 
+
+	return do_init_module(mod);
+	...
+}
+
+So we have proof we get rid of it. How about the copy? First let's
+define the copy of the module as being on info->mod. This gets first
+initialized through setup_load_info() early on load_module().
+
+static int setup_load_info(struct load_info *info, int flags)
+{
+	...
+        /* This is temporary: point mod into copy of data. */                   
+	info->mod = (void *)info->hdr + info->sechdrs[info->index.mod].sh_offset;
+	...
+}
+
+Understanding this is key, as well as where and how the non-copy
+of mod pointer is set and what it points to.
+
+We know info->hdr is initialized to the copy of the user buffer (info.hdr = buf).
+So we just need now to look at info->sechdrs[info->index.mod].sh_offset.
+This is all set up on early on setup_load_info(). But first we must look
+for when the hell info->sechdrs is initialized. Sadly this is obfuscated
+in elf_validity_check() which is called right before setup_load_info():
+
+static int elf_validity_check(struct load_info *info)                           
+{
+	...
+	info->sechdrs = (void *)info->hdr + info->hdr->e_shoff;
+	...
+}
+
+So back to info->mod pointer. So now we know where info->sechdrs points to.
+It's just info->hdr + info->hdr->e_shoff. And the info->index.mod is set
+in setup_load_info:
+
+static int setup_load_info(struct load_info *info, int flags)
+{
+	...
+	info->index.mod = find_sec(info, ".gnu.linkonce.this_module");          
+	if (!info->index.mod) {
+		pr_warn("%s: No module found in object\n",                      
+			info->name ? : "(missing .modinfo section or name field)");
+		return -ENOEXEC;                                                
+	}
+	...
+}
+
+The nice thing is we can rest assured all modules have this section set.
+So mod just just points to the ELF section for ".gnu.linkonce.this_module"
+from the copy in userspace at first.
+
+That is generated for the module on the mod.c file by modpost, my fs/xfs/xfs.mod.c
+for example has:
+
+__visible struct module __this_module
+__section(".gnu.linkonce.this_module") = {
+	.name = KBUILD_MODNAME,
+	.init = init_module,
+#ifdef CONFIG_MODULE_UNLOAD
+	.exit = cleanup_module,
+#endif
+	.arch = MODULE_ARCH_INIT,
+};
+
+This is a nasty way to just define statically a struct module,
+using the variable name __this_module. But its just the same as:
+
+struct module __this_module = {
+	.name = KBUILD_MODNAME,
+	.init = init_module,
+	.exit = cleanup_module,
+	.arch = MODULE_ARCH_INIT,
+};
+
+But what I'm seeing is that if we grow the struct module in include/linux/module.h
+the section for .gnu.linkonce.this_module for my ELF modules does not grow.
+
+But let's look at how we copy this to the final mod that is used...
+
+Note that layout_and_allocate() sets the final mod as:
+
+static struct module *layout_and_allocate(struct load_info *info, int flags)
+{
+	...
+	/* Allocate and move to the final place */                              
+	err = move_module(info->mod, info);                                     
+	if (err)
+		goto err_out;
+
+	/* Module has been copied to its final place now: return it. */         
+	mod = (void *)info->sechdrs[info->index.mod].sh_addr;
+	...
+}
+
+We have to look at what move_module() does then. The
+layout_sections() stuff sets up the corresponding mod->mem stuff to
+correspond with the copy. Then move_module() allocates the the same
+mod->mem stuff and copies the data from the old module copy. The only
+difference is that now sections allocated with module_memory_alloc().
+The relevant parts:
+
+static int move_module(struct module *mod, struct load_info *info)              
+{
+	int i;
+	void *ptr; 
+	...
+	for_each_mod_mem_type(type) {
+		ptr = module_memory_alloc(mod->mem[type].size, type);
+		...
+		memset(ptr, 0, mod->mem[type].size);
+		mod->mem[type].base = ptr;
+	}
+	for (i = 0; i < info->hdr->e_shnum; i++) {
+		void *dest;
+		Elf_Shdr *shdr = &info->sechdrs[i];
+		...
+		dest = mod->mem[type].base + (shdr->sh_entsize & SH_ENTSIZE_OFFSET_MASK);
+		if (shdr->sh_type != SHT_NOBITS)
+			memcpy(dest, (void *)shdr->sh_addr, shdr->sh_size);
+		/* Update sh_addr to point to copy in image. */
+		shdr->sh_addr = (unsigned long)dest;
+		...
+	}
+	...
+}
+
+The comment for "Update sh_addr to point to copy in image." seems pretty
+misleading to me, what we are doing there is actually ensuring that we update
+the copy's ELF section address to point to our newly allocated memory.
+Do folks agree?
+
+And how about the size on the memcpy()? That's a shd->sh_size. No matter
+how much I increase my struct module in include/linux/module.h I see
+thes same sh_size. Do folks see same?
+
+nm --print-size --size-sort fs/xfs/xfs.ko | grep __this_module
+0000000000000000 0000000000000500 D __this_module
+
+This is what is supposed to make the final part of layout_and_allocate() work:
+
+	mod = (void *)info->sechdrs[info->index.mod].sh_addr;
+
+This works off of the copy of the module. Let's recall that
+setup_load_info() sets the copy mod to:
+
+	info->mod = (void *)info->hdr + info->sechdrs[info->index.mod].sh_offset;
+
+The memcpy() in move_module() is what *should* be copying over the entire
+mod stuff properly over, that includes the mod->klp for live patching
+but also any new data we muck with in-kernel as the new mod->mem stuff
+in layout_sections(). In short, anything in struct module should be
+shoved into an ELF section. But I'm not quite sure this is all right.
+
+My biggest fear is that as we work on the copy of the module we are
+actually overwriting data that the user provided.
+
+> > But we don't seem to need mod->klp to be true post settings up the
+> > module from my quick glance. We check for it on layout_symtab().
+> > So it seem just by chance and context that is_livepatch_module() works.
+> 
+> Hmm, is_livepatch_module() is called also from klp_enable_patch().
+> 
+> And klp_enable_patch() is called from the mod->init() callbacks,
+> for example, see samples/livepatch/livepatch-sample.c.
+> IMHO, it is done when the module is already on the final location.
+> 
+> It would be great if mod->klp is set correctly in the final struct
+> module. Otherwise, is_livepatch_module() would be error prone
+> and should not be in the global include/linux/module.h.
+
+Yeah, that's what I was thinking, but indeed we do need it for both
+layout_and_allocate() where we work with what userspace provided
+and after layout_and_allocate() where we are supposed to be just working
+with the new copy.
+
+> > I just wanted you to confirm before I continue my cleanup. I'll add a pre
+> > check and post check. All the taints for instance are wrong as they are
+> > used and called before we even know if we have memory to load the module.
+> > The taints are global though but still it's not accurate to call before we
+> > load the actual module successfully.
+> 
+> Thanks a lot for keeping livepatching in mind.
+
+Help me unravel the above special historic spaghetti code :)
+
+  Luis
