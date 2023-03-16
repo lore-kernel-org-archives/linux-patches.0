@@ -1,68 +1,199 @@
-Received: from mail-41104.protonmail.ch (mail-41104.protonmail.ch [185.70.41.104])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEED2574
-	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 09:41:29 +0000 (UTC)
-Date: Thu, 16 Mar 2023 09:33:59 +0000
-Authentication-Results: mail-41104.protonmail.ch;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="f/Jy8j02"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1678959248; x=1679218448;
-	bh=ySIfXFt6Xi6R7YaroHVL2o7033EHtToARDDqQVRsMyQ=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=f/Jy8j02JZSc3nrQHu0gMVGP50bKj7qWX4p9h0keACRF+b/nzKFFG5Xc02OaZK4sa
-	 ZQ/5cX7hBWB48YyrEZJjIvIOIRkqGexRDzdRwRdtZ2UDRcCvQpso11yFX815A8Fs80
-	 eJGc3bKGZm+XwIErvHOg+3ieANnU1hVnJCUYPwvbb6lIzGF+Nqwgf8meG49fydhSO/
-	 CWGCYxYy9DVS3z+VT0wxhm4sP3YEqA81hbtKiFSp6b6J+agibtsGMcvPavtCWBSdo5
-	 otNY4QQK9OayXfLaeQv2MJ7aOF0BwPh1pYqzJfIQjnixvyRzPQ1RhVTNrkAfmh+VKZ
-	 ROUsjF4hLS8ZA==
-To: Boqun Feng <boqun.feng@gmail.com>
-From: y86-dev <y86-dev@protonmail.com>
-Cc: "ojeda@kernel.org" <ojeda@kernel.org>, "alex.gaynor@gmail.com" <alex.gaynor@gmail.com>, "wedsonaf@gmail.com" <wedsonaf@gmail.com>, Gary Guo <gary@garyguo.net>, "bjorn3_gh@protonmail.com" <bjorn3_gh@protonmail.com>, "rust-for-linux@vger.kernel.org" <rust-for-linux@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v1 1/3] rust: macros: add `quote!` macro
-Message-ID: <rwLWkKoa4chEtf0rqg_7vYX5cTjKz4etynZ-i5wG_JCvF_O-6vf2I2cc205cZHFId2DJswFm_5FjpN5-8SYuF-FEdkCxMTPh_R9UCEB5fJA=@protonmail.com>
-In-Reply-To: <ZA9BfSEjAQ9xnZD7@Boquns-Mac-mini.local>
-References: <u9FrnEbtGtyUPp-CmzAQIv--8hmKwHdIIPiq-3IHJPcHdaJi_VXuDdVR2Js2GzvtWgCNrBLp4PhQs3tTlWNVDBZfIStCHiS9SoMtsDgc4oM=@protonmail.com> <ZA9BfSEjAQ9xnZD7@Boquns-Mac-mini.local>
-Feedback-ID: 40624463:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BF62574
+	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 09:42:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA42DC433EF;
+	Thu, 16 Mar 2023 09:42:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1678959737;
+	bh=vpSSBSzQt8XaSR/S3XysOU+czKUFDnj6+ZE+jNzO3NU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=w3dQPkjeDFrCo6mfG9itGdY6u8xIY27o90c5GwdwwqxY6YBosIgbIdOvA68gYrTbB
+	 B1g+hkH+1CBIt2SHwCfusT3YMh2S0VeZKXHJWiJBR2D9n8b3yGbjA6aMLSeXHHNxEk
+	 qJoeKFe8uAxNljCkNPM7CPnCqHH6iBOZO3P0z94Q=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 4.19 00/27] 4.19.278-rc3 review
+Date: Thu, 16 Mar 2023 10:42:14 +0100
+Message-Id: <20230316094129.846802350@linuxfoundation.org>
+X-Mailer: git-send-email 2.40.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.278-rc3.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.19.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.19.278-rc3
+X-KernelTest-Deadline: 2023-03-18T09:41+00:00
+Content-Transfer-Encoding: 8bit
 
-On Monday, March 13th, 2023 at 16:30, Boqun Feng <boqun.feng@gmail.com> wro=
-te:
-> On Mon, Mar 13, 2023 at 01:23:18AM +0000, y86-dev wrote:
->
-> > From: Gary Guo gary@garyguo.net
-> >
-> > Add the `quote!` macro for creating `TokenStream`s directly via the
-> > given Rust tokens. It also supports repetitions using iterators.
-> >
-> > It will be used by the pin-init API proc-macros to generate code.
-> >
-> > Signed-off-by: Gary Guo gary@garyguo.net
-> > Signed-off-by: Benno Lossin y86-dev@protonmail.com
->
->
-> Not sure whether I missed any sutble details, but the macros look
-> straight-forward. One thing could be improved is having a doc describing
-> what `quote!` does, a link to the quote crate will do the trick.
->
-> Anyway, the code looks good to me.
->
-> Acked-by: Boqun Feng boqun.feng@gmail.com
->
->
-> Regards,
-> Boqun
+This is the start of the stable review cycle for the 4.19.278 release.
+There are 27 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-Sure, will put it in v2!
+Responses should be made by Sat, 18 Mar 2023 09:41:20 +0000.
+Anything received after that time might be too late.
 
-Regards,
-Benno
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.278-rc3.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+and the diffstat can be found below.
+
+thanks,
+
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.19.278-rc3
+
+Eric Dumazet <edumazet@google.com>
+    ila: do not generate empty messages in ila_xlat_nl_cmd_get_mapping()
+
+Kang Chen <void0red@gmail.com>
+    nfc: fdp: add null check of devm_kmalloc_array in fdp_nci_i2c_read_device_properties
+
+Shigeru Yoshida <syoshida@redhat.com>
+    net: caif: Fix use-after-free in cfusbl_device_notify()
+
+John Harrison <John.C.Harrison@Intel.com>
+    drm/i915: Don't use BAR mappings for ring buffers with LLC
+
+Tung Nguyen <tung.q.nguyen@dektech.com.au>
+    tipc: improve function tipc_wait_for_cond()
+
+Paul Elder <paul.elder@ideasonboard.com>
+    media: ov5640: Fix analogue gain control
+
+Alvaro Karsz <alvaro.karsz@solid-run.com>
+    PCI: Add SolidRun vendor ID
+
+Nathan Chancellor <nathan@kernel.org>
+    macintosh: windfarm: Use unsigned type for 1-bit bitfields
+
+Edward Humes <aurxenon@lunos.org>
+    alpha: fix R_ALPHA_LITERAL reloc for large modules
+
+xurui <xurui@kylinos.cn>
+    MIPS: Fix a compilation issue
+
+Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+    Revert "spi: mt7621: Fix an error message in mt7621_spi_probe()"
+
+Bart Van Assche <bvanassche@acm.org>
+    scsi: core: Remove the /proc/scsi/${proc_name} directory earlier
+
+Masahiro Yamada <yamada.masahiro@socionext.com>
+    kbuild: generate modules.order only in directories visited by obj-y/m
+
+Masahiro Yamada <yamada.masahiro@socionext.com>
+    kbuild: fix false-positive need-builtin calculation
+
+Jan Kara <jack@suse.cz>
+    udf: Detect system inodes linked into directory hierarchy
+
+Jan Kara <jack@suse.cz>
+    udf: Preserve link count of system files
+
+Jan Kara <jack@suse.cz>
+    udf: Remove pointless union in udf_inode_info
+
+Steven J. Magnani <steve.magnani@digidescorp.com>
+    udf: reduce leakage of blocks related to named streams
+
+Jan Kara <jack@suse.cz>
+    udf: Explain handling of load_nls() failure
+
+Fedor Pchelkin <pchelkin@ispras.ru>
+    nfc: change order inside nfc_se_io error path
+
+Zhihao Cheng <chengzhihao1@huawei.com>
+    ext4: zero i_disksize when initializing the bootloader inode
+
+Ye Bin <yebin10@huawei.com>
+    ext4: fix WARNING in ext4_update_inline_data
+
+Ye Bin <yebin10@huawei.com>
+    ext4: move where set the MAY_INLINE_DATA flag is set
+
+Darrick J. Wong <djwong@kernel.org>
+    ext4: fix another off-by-one fsmap error on 1k block filesystems
+
+Eric Whitney <enwlinux@gmail.com>
+    ext4: fix RENAME_WHITEOUT handling for inline directories
+
+Andrew Cooper <andrew.cooper3@citrix.com>
+    x86/CPU/AMD: Disable XSAVES on AMD family 0x17
+
+Theodore Ts'o <tytso@mit.edu>
+    fs: prevent out-of-bounds array speculation when closing a file descriptor
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                 |  4 +-
+ arch/alpha/kernel/module.c               |  4 +-
+ arch/mips/include/asm/mach-rc32434/pci.h |  2 +-
+ arch/x86/kernel/cpu/amd.c                |  9 ++++
+ drivers/gpu/drm/i915/intel_ringbuffer.c  |  4 +-
+ drivers/macintosh/windfarm_lm75_sensor.c |  4 +-
+ drivers/macintosh/windfarm_smu_sensors.c |  4 +-
+ drivers/media/i2c/ov5640.c               |  2 +-
+ drivers/nfc/fdp/i2c.c                    |  4 ++
+ drivers/scsi/hosts.c                     |  2 +
+ drivers/staging/mt7621-spi/spi-mt7621.c  |  8 ++--
+ fs/ext4/fsmap.c                          |  2 +
+ fs/ext4/inline.c                         |  1 -
+ fs/ext4/inode.c                          |  7 ++-
+ fs/ext4/ioctl.c                          |  1 +
+ fs/ext4/namei.c                          | 13 +++---
+ fs/ext4/xattr.c                          |  3 ++
+ fs/file.c                                |  1 +
+ fs/udf/directory.c                       |  2 +-
+ fs/udf/file.c                            |  7 ++-
+ fs/udf/ialloc.c                          | 14 +++---
+ fs/udf/inode.c                           | 76 ++++++++++++++++++++++----------
+ fs/udf/misc.c                            |  6 +--
+ fs/udf/namei.c                           |  7 ++-
+ fs/udf/partition.c                       |  2 +-
+ fs/udf/super.c                           | 12 ++++-
+ fs/udf/symlink.c                         |  2 +-
+ fs/udf/udf_i.h                           | 12 ++---
+ include/linux/pci_ids.h                  |  2 +
+ net/caif/caif_usb.c                      |  3 ++
+ net/ipv6/ila/ila_xlat.c                  |  1 +
+ net/nfc/netlink.c                        |  2 +-
+ net/tipc/socket.c                        |  2 +-
+ scripts/Makefile.build                   |  4 +-
+ 34 files changed, 150 insertions(+), 79 deletions(-)
+
+
