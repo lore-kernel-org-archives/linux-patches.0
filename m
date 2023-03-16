@@ -1,312 +1,197 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B22AD32
-	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 21:50:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=MLDKgStUn6F5m9R7LuyIkeoD28uTYFHFpAKEMOimO40=; b=IWXp4MwneyPcK8Ew/eAKnjeaHt
-	ofYH0eCV+PHyH8uIduQBs+DJrSGF/RXvf8qUUMsqcjtlsVeZ7rN3iJRKk+vOD07dRkUKe82eH1U7r
-	ABoJ1o0DUY+XqmBgTeDvrv1N45OZX7jbSNDFn5YaWcek5n3ces31jTsWZ9nz1AKD8IiXThOk9bAaV
-	bPK3YtVzPYZVDoF4Z1Yqh5ul8TtwM0ZYEwjRTce4crIutUyYRm0iKFE9U4GRkRH8hxp3y5l+w2Dh8
-	JdsoB0mtswx0M5Wbru8hSdmJ2bbMmBGpXBfuLLUo9hm+kBga5SZUM5i65B81J5oUdKKvaWVPcP1Jw
-	JQpp3Lhg==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1pcvUt-0006rf-1f;
-	Thu, 16 Mar 2023 21:50:55 +0000
-Date: Thu, 16 Mar 2023 14:50:55 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Petr Mladek <pmladek@suse.com>, Song Liu <song@kernel.org>
-Cc: patches@lists.linux.dev, linux-modules@vger.kernel.org,
-	live-patching@vger.kernel.org, mcgrof@kernel.org
-Subject: Re: mod->klp set on copy ok ?
-Message-ID: <ZBOPP4YWWhJRk2yn@bombadil.infradead.org>
-References: <CAB=NE6Vo4AXVrn1GPEoZWVF3NkXRoPwWOuUEJqJ35S9VMGTM2Q@mail.gmail.com>
- <ZA8NBuXbVP+PRPp0@alley>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC73AD32
+	for <patches@lists.linux.dev>; Thu, 16 Mar 2023 22:00:12 +0000 (UTC)
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32GJmQcW015284;
+	Thu, 16 Mar 2023 22:00:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=corp-2022-7-12;
+ bh=Ck5qclHUVqaMGKvFgwQRtimxlqwhn8XpQzR5tcnt4sM=;
+ b=OldgoMHP0qJ/6fT2v4CV4nARjQoiT7oRh67l8OFE6MPaIzqgwDsC+yhkF9+Cc/TTBY6+
+ AihE4xdPs0pRAIP/nGcuZr8Eb9TR+0nKHHRqmxe4RcEsgbAj9TrJFNWFrsl0F1E4z5ta
+ njRiQzK4UaBD0Y7LCzz5d7DnF1sKddkyOqvzLUQ0b92ugV13KeALozxE9Lk7bb6PH3J3
+ cKyKvM5RpY/E8ID7rwLuofPEaOgNK5M7G7Mg1mnHnWnsRzmRIFQQkIPKMo0uSkeZ3CQR
+ 25+O4jvSGeAhXlchCjTBoHhkNoFHZN0UEZ3M6DeyiT1iU9Br/u+OQFG3y+DNJqS7uAgF sA== 
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3pbs29jcys-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 16 Mar 2023 22:00:01 +0000
+Received: from pps.filterd (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.5/8.17.1.5) with ESMTP id 32GJqtoZ036908;
+	Thu, 16 Mar 2023 22:00:00 GMT
+Received: from nam02-dm3-obe.outbound.protection.outlook.com (mail-dm3nam02lp2043.outbound.protection.outlook.com [104.47.56.43])
+	by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 3pbq9j6a1v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 16 Mar 2023 22:00:00 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=XVH5kCzC8cLMhkLVioWCaPJuGVsHdOe/5dU/ulhHy24R1Tv7gwDY9GKD7by0N37DmZVE4ktgFX2vy1ACF0d4kWELyipFkNx0imtNQ93kD2IUoGEf925o8/tLDmvm6AMivF+2V6fQIlMPhSCNm1syCdh9ztE5q2YU2gYq4o3gFqvEnSwFnnWNlNdihjdf7J9IX1mux5mDqGaf6Hm1aKsgZxZ+NtvL4zD8liM3h0a5RPSXGuTyVBouUePbxI3USdtZ9gIgAmTvEx/6trTG8V9+ZXt+rxFAlFGYhBTaM19kh4bcDsKvANA228SfbTIj0IZQjTdhgsFr4r0oHGj0mFUlyQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Ck5qclHUVqaMGKvFgwQRtimxlqwhn8XpQzR5tcnt4sM=;
+ b=Pm9wcaOP+yl4F5jyM3lsYVYPvKUOoyZ7JP4T+E/rcL6rzal0qh+EyZq2/HGryapUuwlPBuB8MZDpUUUdO1CkVvBtO1JNZT3VpFA82Ooe7BLNkwgQSpVfR6smO14uAuOfAsTs+mjburiTZ6BfHprnr5JlYz3CprvdyhOCVDYRtQScG/Q21RglVs+c+MnGs3ldAxzkEBt13/6QykahoTv8oCjmLFwdCRQd6kI1CLnQyfWd60ZAA74C3fSv34FQnb963KkG7Se0Yvqok2kyile234f5U6+55aRtWXgPdF5BbXYxu9fd3nJmbUcLkxmf1Tc7TkBB1Vt3ieUVzBDG6qKB0g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ck5qclHUVqaMGKvFgwQRtimxlqwhn8XpQzR5tcnt4sM=;
+ b=r5xAygujK0mo7p51vv+RT2noHbU3M6hZFKWIOerYuqR9grg3mnviS9rYI4zyRiX7CRQNuKK+MVnzHQRV7q7Ihxu09OhNF87yLLRFg0eTX6cMVapx78hfclnPftQgpD84fe4XYPhQ4KTtK+dhmphPi02eplmO5UNTraXRP13RZgI=
+Received: from BY5PR10MB3794.namprd10.prod.outlook.com (2603:10b6:a03:1b2::30)
+ by DM4PR10MB7391.namprd10.prod.outlook.com (2603:10b6:8:10d::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.24; Thu, 16 Mar
+ 2023 21:59:58 +0000
+Received: from BY5PR10MB3794.namprd10.prod.outlook.com
+ ([fe80::df97:c045:6f0c:974f]) by BY5PR10MB3794.namprd10.prod.outlook.com
+ ([fe80::df97:c045:6f0c:974f%3]) with mapi id 15.20.6178.026; Thu, 16 Mar 2023
+ 21:59:57 +0000
+Date: Thu, 16 Mar 2023 15:59:51 -0600
+From: Tom Saeger <tom.saeger@oracle.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+        linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+        akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+        patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+        jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+        srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.4 00/55] 5.4.237-rc2 review
+Message-ID: <20230316215951.2wgzudp7sptmc5zq@oracle.com>
+References: <20230316083403.224993044@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230316083403.224993044@linuxfoundation.org>
+X-ClientProxiedBy: SN7PR04CA0232.namprd04.prod.outlook.com
+ (2603:10b6:806:127::27) To BY5PR10MB3794.namprd10.prod.outlook.com
+ (2603:10b6:a03:1b2::30)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZA8NBuXbVP+PRPp0@alley>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY5PR10MB3794:EE_|DM4PR10MB7391:EE_
+X-MS-Office365-Filtering-Correlation-Id: dabf5fb7-87c3-4232-cc49-08db2669c80c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	Z2kZbmVw2f5FgIGILX2SwAQQwRO4pmWkvxNmRhHJLYn1YoaDq6Hr9f6iDLf69EISJNq3greaR4pKL6MxfQoSd6IET30ooSOM9Cm6xEt2TjKUi7OtgadhVyJxOcJZZuw57jASI6tkRO2+f0A0+g1J4miZzrwJ7I4gdG57VDRP1GsqLJcTvBT5Pr2M/RwPKcGbNYshi3pVJzCkhPmQYE3ahe1mdy83h4JH+aEhIzPVytMmzgTi1WPj7nnVFi0OuRzitr6t4OH2twfsx3Y9cFDuOD4apHkBi/S48/lrLRFXqC43Umw1AzOHDWx/8w/3/1Bgr+79pu0wdJVABUebLcvcyHtVnrC7ExE/qVI7O64b4ZWjg5b17yOOgXcR/YHYKaaFuXFOIddrWbAbQDYnhqVD1HhzaXCkD0HzE7t89QjWkFwWqILsE19iFDjtXDMzkf06zKlnbl4AcX60rO9mszaB6uBgv80OsIAK66fYSfLechHYEJVaJBoCg+sSHzIn48DzR4EACwhPx2Sdob/MdIZP2snBw2iU+eqfhsA+11YpCGIN/yCqkBh3A5GR/XXJUirCBcP/nVRjvU+Dx4ByPhubnaXK0eUx4QiCZIgdEzOBc0nbFCJfCLSNGmYcLZvnDYJg
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR10MB3794.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(136003)(376002)(346002)(396003)(39860400002)(366004)(451199018)(5660300002)(4326008)(8936002)(86362001)(7416002)(2616005)(26005)(6512007)(6506007)(41300700001)(1076003)(36756003)(6916009)(186003)(8676002)(2906002)(66946007)(44832011)(6666004)(6486002)(66556008)(4744005)(478600001)(316002)(66476007)(966005)(38100700002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?utf-8?B?UDJwY0ZKVkl3cS9MNmhHWENpTzdnYVBNckZWUTVndjlqc3pxU2F3VzczL3pO?=
+ =?utf-8?B?V1F1RTV1TkpnY0FhamJzZjZCQVZYZzkxTmVMeHMyT3cvZGxPQmEveDVEZEIx?=
+ =?utf-8?B?eHMrYUl4S2VKMU5PNG50TkV6UTREN2xFU3BIRVNiMFp1Y05rQVprdXgzdkJM?=
+ =?utf-8?B?NDNvREw5ZVE5blVRSStQV1hZTmxodk1kb2tkL00wYlF1VUF2QVBvdWNEME9K?=
+ =?utf-8?B?N1BheUErN0pPMkI4YWFiOXVab2RVZFZyKzFuRXRPRUhYVDRzLzYzNUJ6U2l4?=
+ =?utf-8?B?cmtrOVgza1kxY0pScXJ4SFY4bkRMd0ZYTVVPVk1GSVBMYXE5dUY3RkRHY2h2?=
+ =?utf-8?B?YmVZeWtWOTgvam1yT0swWFVKTjQxaHJpQ1FSUlBnSGVRWWhSRXFyeFNKU29s?=
+ =?utf-8?B?Q0c3RUdkUWFLUWlpNUo3T2tVSnpyWFd5eFIrODhUYmVUUlVHUnY1bVlEVnMw?=
+ =?utf-8?B?WHpOeDJGQlZGSklEeEFsZXRDanNQZUo2NmJOL09tTXlwZFcwMFZRWE5yc3gz?=
+ =?utf-8?B?TDAyekVMcldkVExjQlc5Zm0wOS9BU2x0cjZzK1o4L2taNExEWUdzUFJNNldR?=
+ =?utf-8?B?UVVpZ0hQS3NjK1grSGN3dHc5UW1McVFNQXpZOXdCZE9JYU1vRUd2WGRuL0Rm?=
+ =?utf-8?B?UzFYUEkrOElVM2VwSndSRHIxeUswVFkySVYzSlJKTHlGOFA2S1A4YVJ0bDhE?=
+ =?utf-8?B?cVlHTWNETzJaaVlQYW9MWkxJRnIxWERkRnRxVmJrS2w4dy9SSEpOQThqSW1X?=
+ =?utf-8?B?UFRPb2Fvd1F2MHJlQnlIeGsyVHpZaFMxTFhMOEVpVzlNREJ3dkF2VHJaYmMw?=
+ =?utf-8?B?S3ZueVI1RVF0ay83RmIwVFdFaHdhc1E3WlZuVng5Mnd3NVZCb0RoN2lsQVdC?=
+ =?utf-8?B?bzN3Ny90VUhlNjVGSWtuYXJSNmZFaTVvekhjbTR2cnZnQVRVcmN2a1FxQU4y?=
+ =?utf-8?B?TS9KaW1SejlTWEMrMU12UkU5V3RBR1FGQmtSTzAwOWkrOHd0dFRrVjFGZ1lJ?=
+ =?utf-8?B?TmkzNTZ1U2lZazl0K1dqUWR4dEZKbE03MkIxVmlSaTA3dDAzbkt3OVp2b1NV?=
+ =?utf-8?B?RUd6bHl4NGhOaEVFbmIveHFTUkRoK215K1UybDFGd1lNTzB3U0RXS0JjWEFy?=
+ =?utf-8?B?aU40ZmdOYmhFRVFKOFNOVExRemgyK1dPY1dtOE1yL1FZb2YrdFJJMzJySS9L?=
+ =?utf-8?B?OStKN09jaXRXbkk5SFAyWGFQVmczcHdVWDR6MXJFL0NJb3FQbmFpYnI1WGs4?=
+ =?utf-8?B?bW0xWk9JTldlWTRkUGo3eXZYaTU1QmhicUpVQkt0SVFNbzNUQ3ZRZHJaVlRE?=
+ =?utf-8?B?N1NQelhrc2tLeDluT0crcHlQRTlGektxK2tBa2tQTkFWNVRDYWc5NEs3Mm93?=
+ =?utf-8?B?L3BxTHBSTEl2elh6VnN6MGdocTNVYUUzWDMyWGN1TWRka3MwWEVHWjBrcWRy?=
+ =?utf-8?B?M1pUMWJleVgyeFBncTJ4Ui96dWUwcXN3VXdBMys1eXRlTnFsOHI0YzFMczlp?=
+ =?utf-8?B?c1RWUytENTM3UXAvemJxUjJKVzRRQmZrdC81SU1wU3FYaDJlWVRUOVJXdDhl?=
+ =?utf-8?B?enpwRUcwMGlOaHB1R1Y0aXNRQVNlS0JTZmdCQUE5ajNUeGZ6enFSbGxuR0FS?=
+ =?utf-8?B?WW5DanVlQzU0SzArOVltMTh5VEhyTU9qZnFuU1NRblFZWTNiVjA5L3d1bWsw?=
+ =?utf-8?B?dXdDcmVRNHhJK3l0T1QxTUNOOElQbk0xdUNSZEdlU0xUM1A3b1FGTDZsKzQr?=
+ =?utf-8?B?Wm1ybGdHYnZ0NzVsUGxCbERnb0lXVW03WkZza3ZsTUNlZVY1WmhXMStYK29m?=
+ =?utf-8?B?bmdEVUVpRWlQWFd2QzdlZ0ZtcHA2NmFRVStHUkh2QTBmSzVSemNwZ0Mvc0cz?=
+ =?utf-8?B?WGRkN0dxYUdSSTBydVVsRWVNQyttUC9EclFjQnVabS9NTkR3WDBEZkVuSmh5?=
+ =?utf-8?B?UFpqc2VPS0dHSjlmN0JXZEtYa291QXZCNC9Sb0tpMzhCaXNKRDFVeXNTa0pv?=
+ =?utf-8?B?OFFwQUNDRnc0TUhBUHl6NVpMOEVFVHhCSnVvVjJ1bHgxK0FZMTRibWtVbjJB?=
+ =?utf-8?B?czczOEFVenk1Mk1UNldqbXU5aHM4VER2RXFzMEZlYjNEUXpjUGpyakJha2Vn?=
+ =?utf-8?Q?qnMlOBkejIfI+gfsTRSh40//I?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	=?utf-8?B?S1dtSmFHRWRBNjRBU09kcmdtNFZ6TEFnWUt3eDdlSml0RkxzUDI2SVcwVUZo?=
+ =?utf-8?B?cklQT200ZS9BTmEzUTVUNE90TStZdGFjNnpReHhpNERRR3hNczhGZUNMeS9u?=
+ =?utf-8?B?YmIzdkxXM1hqOVV1ZlZEZ28xaElEK09JWTc1RWxCUmJBbjNDK0dmUFNScTBU?=
+ =?utf-8?B?ckhDZ2FqMzVxRjM1MHgyWk9nWlI4eDA2ZHZuSzQxcHEvZkhzTTZVbzhSajhU?=
+ =?utf-8?B?WnFtTXVPVGFlZWJ6dHVZcVc3d3RMZ052dDErZDExYzNyUlBrSUpzVnlvblVF?=
+ =?utf-8?B?SGV0YUlIbFJHYkRoZXMrNktvbkF3ZGdwekswS2NSdnlLZHpzUEs3Y0trTzJa?=
+ =?utf-8?B?TlJ4a2IvYkttOXRBM0xaNXZsVlZESXNSdG05TjZxY3FVNzg5S1J0c244N21M?=
+ =?utf-8?B?WGhIQmhtcmNhdmxSMFRsc01Sc2ovZWVWZnE4blVGeFRqZlMxajhGQmhFMTRy?=
+ =?utf-8?B?bkxWV210azZKRmQ4ODNVUmtnNE9YdjhXQXQ4aWFHTnpyaXpjdEJiT21CNU00?=
+ =?utf-8?B?bVlteUV4SVU4MS9lQXJlL0JyUDFYU29sVEJNMWVtZlJBWU1icm1GZ1pBNjJj?=
+ =?utf-8?B?a0xsbTFnVmtGamFZdGdydm9XZEZLcVNsazZ5b2pnQndqa20rUHVYbnRQbUF5?=
+ =?utf-8?B?UXMwZWF1QUsxK3VsMk9wWmJjTkhmN3JFNENncXdMV0VQSU9CcWZ4WHIwbEJO?=
+ =?utf-8?B?MWxZNEY1YW8xRnQveXBGMHdWOXZCMXdCT1dMTTRPeHhnVjExeDJhN3V1MTRp?=
+ =?utf-8?B?d3NYTDFYaVVua3dQS2k4cFM3OGMxUFJmUFhJU2lNQVRWSGwwVzlpYkJCMWNz?=
+ =?utf-8?B?V201VW1lbFhabjJycVV4TFByYU9RdjBCRENrcHA1Q2NTdHd5SXZYUFJtTkZi?=
+ =?utf-8?B?TVVqNHp2TzFzTk40YXplN0dpMDhvOEVmYkJYU2R2QmpNYk8xVUhGZVp3L2Ni?=
+ =?utf-8?B?b1ZDb3U4YnowUUVYbGJIODRGVzJBSTRDUEtqKzhZL1Erb1ZKcUxGVGVTdlRt?=
+ =?utf-8?B?d0FjaXQwQVNqSUZmdVBPekRwSFlnQU9PUzVxc3l4Rk1nR0RTeloxNkJhdXhk?=
+ =?utf-8?B?M1lHWjNiR2tSKzBrNG8wVzd1enNEZXVmd3BwdG5hUEc0bmQ4OE55a045MXhD?=
+ =?utf-8?B?QmRsRnVqVTQvUTZ5bnFNVWxQWkIxbm54UWJxWDJtaGVtSFlXTkxrOXdNTENa?=
+ =?utf-8?B?WTJrbmxtUVZVNW9SNEt4TzJ2ZDZtZ0ZKTzRGTkFZM0hkaGV1M29pTEpsYlBE?=
+ =?utf-8?B?WVIyVzVOZk9ndGMxczJZdE14b3ZHTlNMYlU5Rm1KZnYxVHY0bnpwekJleTQ0?=
+ =?utf-8?B?eGxUd1VqV0xCSmVFblIwNGVtSW9TbzFRaXo3S2JFTXVYSUhDcVNTbTJ6bjV1?=
+ =?utf-8?B?dVRTdldFckQ3OWtoNjkwM1k2OFZZak1qWDVwZHdiOGJjL0FOYUQra2kwRnZt?=
+ =?utf-8?B?c2RYRUJqemszY2RxSUlaMWxER0NXeXR2ckZ3V0oxYkhIS2h4NjVUdUNLZE84?=
+ =?utf-8?B?dmoyYXZGMXZMVEU5WC9jbEZveHErNW9VVGM1M3d6aDdzSmlGWkdjVGdFRW5n?=
+ =?utf-8?Q?W7HGFiioZer2muLrVdUjvfMpHTNNTsVTv7KgWWYcTOsryD?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: dabf5fb7-87c3-4232-cc49-08db2669c80c
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR10MB3794.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Mar 2023 21:59:57.6510
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: u24Qx57jY4tV9Uo9oHRoRU4klyWGjErfH+PHhY5XjTpbtdLlpLOJg8lZ1WrPRnR84paslFfm7D9DkzriyV8c8w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR10MB7391
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-16_14,2023-03-16_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 phishscore=0
+ mlxlogscore=961 malwarescore=0 mlxscore=0 adultscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303150002 definitions=main-2303160164
+X-Proofpoint-ORIG-GUID: ThxAgt09a98h_yITfAuXmnY12k-Ub4wb
+X-Proofpoint-GUID: ThxAgt09a98h_yITfAuXmnY12k-Ub4wb
 
-I had a hiccup evaluating if we copy or not over the mod->klp over from
-live patching to the new copy of the module we process, and so I cross
-checked with Petr on this.
-
-I had jumped the gun on my analysis leading me to believe we could very
-well not be copying it over once we discard the copy of the module. I
-did a simple test and I see the mod->klp set to true propagated but
-understanding *why* is a pit perplexing and I frankly don't think I see it
-yet.  Eearlier  today I though I had clarity on this but as I review
-things more with patience, the more puzzling this seems.
-
-Given the lack of documentation on how this works I figured I'd cc
-linux-modules and live-patching to ensure others can review / so we
-can enhance this documentation and code to be made clearer. It's not
-clear to me yet where the copy of the data is coming from yet, I see
-where it should be, but the logic seems fragile and perhaps error prone
-so I'd love some more eyeballs on this now.
-
-Song is working on some of these areas as well, if we can also clean
-things up in a better way as we go along it's a good time to review
-that now too.
-
-Below code analysis as of linux-next today.
-
-On Mon, Mar 13, 2023 at 12:46:14PM +0100, Petr Mladek wrote:
-> On Sat 2023-03-11 18:16:35, Luis Chamberlain wrote:
-> > Hey Petr, while working on my V2 to reduce unnecessary memory pressure
-> > (with my fixes from V1 I'm seeing considerable savings) I came to realize
-> > that the place I put mod aliases was wrong as it works on the copy of the
-> > module, not the final thing.
+On Thu, Mar 16, 2023 at 09:49:55AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.237 release.
+> There are 55 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> I see.
+> Responses should be made by Sat, 18 Mar 2023 08:33:04 +0000.
+> Anything received after that time might be too late.
 > 
-> > So I'm fixing that now so I allocate the aliases after
-> > layout_and_allocate(). However since mod->klp is set to true
-> > on the copy on check_mod_info() I started wondering if it's not propagated
-> > later. Code wise I think that true.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.237-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
 > 
-> It seems to be propagated, see below. Well, I do not see it in the code.
-
-I didn't see where this could be propagated either at first glance. Now
-I  have some idea but it's still a bit obfuscated and I'm not quite sure
-of it to be frank. It seems that it should all happen because move_module()
-actually copies all the data we fudged on the copy into its final
-section header location. But the copy is constrained by the ELF section
-data it sees and length, and I don't see why we are getting more
-information than what modpost generates on the mod.c files for modules
-and it is minimal.
-
-Since its obscure let me elaborate on my explanation. If folks find
-issues please let me know.
-
-We have two ways to shove modules into the kernel, the old system call
-init_module() and then the new finit_module(). Both end up having a
-temporary buffer allocated with a copy of userspace module information
-in it, and set the struct load_info structure, passed to load_module().
-The non-decompression finit_module() has the simplest userspace copy
-example:
-
-SYSCALL_DEFINE3(finit_module, int, fd, const char __user *, uargs, int, flags)
-{
-	int len;
-	struct load_info info = { };
-	...
-	len = kernel_read_file_from_fd(fd, 0, &buf, INT_MAX, NULL, READING_MODULE);  
-	...
-	if (not_compression) {
-		info.len = len;
-		info.hdr = buf;
-	}
-	return load_module(&info, uargs, flags);
-}
-
-The call load_module() eventually will have to vfree(info->hdr), it
-eventually does this right before load_module() calls do_init_module(mod)
-at the very end.
-
-static int load_module(struct load_info *info, const char __user *uargs,
-                       int flags)
-{
-	...
-	/* Get rid of temporary copy. */
-	free_copy(info, flags); 
-
-	/* Done! */                                                             
-	trace_module_load(mod);                                                 
-
-	return do_init_module(mod);
-	...
-}
-
-So we have proof we get rid of it. How about the copy? First let's
-define the copy of the module as being on info->mod. This gets first
-initialized through setup_load_info() early on load_module().
-
-static int setup_load_info(struct load_info *info, int flags)
-{
-	...
-        /* This is temporary: point mod into copy of data. */                   
-	info->mod = (void *)info->hdr + info->sechdrs[info->index.mod].sh_offset;
-	...
-}
-
-Understanding this is key, as well as where and how the non-copy
-of mod pointer is set and what it points to.
-
-We know info->hdr is initialized to the copy of the user buffer (info.hdr = buf).
-So we just need now to look at info->sechdrs[info->index.mod].sh_offset.
-This is all set up on early on setup_load_info(). But first we must look
-for when the hell info->sechdrs is initialized. Sadly this is obfuscated
-in elf_validity_check() which is called right before setup_load_info():
-
-static int elf_validity_check(struct load_info *info)                           
-{
-	...
-	info->sechdrs = (void *)info->hdr + info->hdr->e_shoff;
-	...
-}
-
-So back to info->mod pointer. So now we know where info->sechdrs points to.
-It's just info->hdr + info->hdr->e_shoff. And the info->index.mod is set
-in setup_load_info:
-
-static int setup_load_info(struct load_info *info, int flags)
-{
-	...
-	info->index.mod = find_sec(info, ".gnu.linkonce.this_module");          
-	if (!info->index.mod) {
-		pr_warn("%s: No module found in object\n",                      
-			info->name ? : "(missing .modinfo section or name field)");
-		return -ENOEXEC;                                                
-	}
-	...
-}
-
-The nice thing is we can rest assured all modules have this section set.
-So mod just just points to the ELF section for ".gnu.linkonce.this_module"
-from the copy in userspace at first.
-
-That is generated for the module on the mod.c file by modpost, my fs/xfs/xfs.mod.c
-for example has:
-
-__visible struct module __this_module
-__section(".gnu.linkonce.this_module") = {
-	.name = KBUILD_MODNAME,
-	.init = init_module,
-#ifdef CONFIG_MODULE_UNLOAD
-	.exit = cleanup_module,
-#endif
-	.arch = MODULE_ARCH_INIT,
-};
-
-This is a nasty way to just define statically a struct module,
-using the variable name __this_module. But its just the same as:
-
-struct module __this_module = {
-	.name = KBUILD_MODNAME,
-	.init = init_module,
-	.exit = cleanup_module,
-	.arch = MODULE_ARCH_INIT,
-};
-
-But what I'm seeing is that if we grow the struct module in include/linux/module.h
-the section for .gnu.linkonce.this_module for my ELF modules does not grow.
-
-But let's look at how we copy this to the final mod that is used...
-
-Note that layout_and_allocate() sets the final mod as:
-
-static struct module *layout_and_allocate(struct load_info *info, int flags)
-{
-	...
-	/* Allocate and move to the final place */                              
-	err = move_module(info->mod, info);                                     
-	if (err)
-		goto err_out;
-
-	/* Module has been copied to its final place now: return it. */         
-	mod = (void *)info->sechdrs[info->index.mod].sh_addr;
-	...
-}
-
-We have to look at what move_module() does then. The
-layout_sections() stuff sets up the corresponding mod->mem stuff to
-correspond with the copy. Then move_module() allocates the the same
-mod->mem stuff and copies the data from the old module copy. The only
-difference is that now sections allocated with module_memory_alloc().
-The relevant parts:
-
-static int move_module(struct module *mod, struct load_info *info)              
-{
-	int i;
-	void *ptr; 
-	...
-	for_each_mod_mem_type(type) {
-		ptr = module_memory_alloc(mod->mem[type].size, type);
-		...
-		memset(ptr, 0, mod->mem[type].size);
-		mod->mem[type].base = ptr;
-	}
-	for (i = 0; i < info->hdr->e_shnum; i++) {
-		void *dest;
-		Elf_Shdr *shdr = &info->sechdrs[i];
-		...
-		dest = mod->mem[type].base + (shdr->sh_entsize & SH_ENTSIZE_OFFSET_MASK);
-		if (shdr->sh_type != SHT_NOBITS)
-			memcpy(dest, (void *)shdr->sh_addr, shdr->sh_size);
-		/* Update sh_addr to point to copy in image. */
-		shdr->sh_addr = (unsigned long)dest;
-		...
-	}
-	...
-}
-
-The comment for "Update sh_addr to point to copy in image." seems pretty
-misleading to me, what we are doing there is actually ensuring that we update
-the copy's ELF section address to point to our newly allocated memory.
-Do folks agree?
-
-And how about the size on the memcpy()? That's a shd->sh_size. No matter
-how much I increase my struct module in include/linux/module.h I see
-thes same sh_size. Do folks see same?
-
-nm --print-size --size-sort fs/xfs/xfs.ko | grep __this_module
-0000000000000000 0000000000000500 D __this_module
-
-This is what is supposed to make the final part of layout_and_allocate() work:
-
-	mod = (void *)info->sechdrs[info->index.mod].sh_addr;
-
-This works off of the copy of the module. Let's recall that
-setup_load_info() sets the copy mod to:
-
-	info->mod = (void *)info->hdr + info->sechdrs[info->index.mod].sh_offset;
-
-The memcpy() in move_module() is what *should* be copying over the entire
-mod stuff properly over, that includes the mod->klp for live patching
-but also any new data we muck with in-kernel as the new mod->mem stuff
-in layout_sections(). In short, anything in struct module should be
-shoved into an ELF section. But I'm not quite sure this is all right.
-
-My biggest fear is that as we work on the copy of the module we are
-actually overwriting data that the user provided.
-
-> > But we don't seem to need mod->klp to be true post settings up the
-> > module from my quick glance. We check for it on layout_symtab().
-> > So it seem just by chance and context that is_livepatch_module() works.
+> thanks,
 > 
-> Hmm, is_livepatch_module() is called also from klp_enable_patch().
+> greg k-h
 > 
-> And klp_enable_patch() is called from the mod->init() callbacks,
-> for example, see samples/livepatch/livepatch-sample.c.
-> IMHO, it is done when the module is already on the final location.
-> 
-> It would be great if mod->klp is set correctly in the final struct
-> module. Otherwise, is_livepatch_module() would be error prone
-> and should not be in the global include/linux/module.h.
+Build ID for arm64 is back with CONFIG_MODVERSIONS=y
+Hooray!
 
-Yeah, that's what I was thinking, but indeed we do need it for both
-layout_and_allocate() where we work with what userspace provided
-and after layout_and_allocate() where we are supposed to be just working
-with the new copy.
-
-> > I just wanted you to confirm before I continue my cleanup. I'll add a pre
-> > check and post check. All the taints for instance are wrong as they are
-> > used and called before we even know if we have memory to load the module.
-> > The taints are global though but still it's not accurate to call before we
-> > load the actual module successfully.
-> 
-> Thanks a lot for keeping livepatching in mind.
-
-Help me unravel the above special historic spaghetti code :)
-
-  Luis
+Tested-by: Tom Saeger <tom.saeger@oracle.com>
