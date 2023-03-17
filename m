@@ -1,66 +1,256 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A265641
-	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 04:46:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869B4C433EF;
-	Fri, 17 Mar 2023 04:46:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679028381;
-	bh=5yNWvQgLeD+W3TatQwurqoEHcZNBbmWYCS4gwWkQqRQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ctHhz266/vA9IBD/uqQDLslLpdKys6D4Y6BGhe6S3UjAa2tEsn5V5rsMx/YIZ6PI3
-	 ZGY7Vx9RI9qJwmwf+efl3lZHanEerNwtRcswPG6rvtmVyzs7qMlg9NzH7a3xrDipOD
-	 WkBO6QWnWIJbVnRnvvF59UI3tgjJV3GRzCXoi5IE=
-Date: Fri, 17 Mar 2023 05:46:18 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Tom Saeger <tom.saeger@oracle.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.15 000/137] 5.15.103-rc2 review
-Message-ID: <ZBPwmsMpxISpRw+G@kroah.com>
-References: <20230316083443.411936182@linuxfoundation.org>
- <20230316193711.s4cwpbcayg24zv5l@oracle.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EC27F1
+	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 08:22:43 +0000 (UTC)
+Received: by mail-vs1-f49.google.com with SMTP id y3so3794780vsl.11
+        for <patches@lists.linux.dev>; Fri, 17 Mar 2023 01:22:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112; t=1679041362;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+ePMxuxd5Lx5D7G5E5KN7bmMMPDMCckYsusM9J/WDho=;
+        b=DiBVItBhiybwcCYgaQqOHMqEwlT3O3exdSHOfiintjbJTYVWA0FIEC7F3VN4rffctg
+         DWCXUnVTduE7lRQpJIsG2CG/6/y4WrKi5ZKfpRhmm+1znIkz2mBB1A5GReylMHGN/+i9
+         7oVq9MlR3lG6dc1itTmjYaWtKzgKRCZsm1RI+/bJloBW68K69jfAGWXBZhD1NeKyGbW9
+         u/8rfv11SIE0yMxNdInDuXTAE9Ee5Sde10pKlslJJlB/TxblrT89hlT0Y9irQzQWAkjA
+         BsP39SRkTO72rJdkar4tMz50POGnNYYF4xjVj6RZ4ByXzHHRjwpGgMnV4gxuATe3JW8M
+         +GOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679041362;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+ePMxuxd5Lx5D7G5E5KN7bmMMPDMCckYsusM9J/WDho=;
+        b=0FEnTAloRJJG+c+Ncq0xoPr4JIJgKp8B9iy/Bx8J2daTPLGryrG90yJvraGnS3nHSP
+         lMAx19d/LKdCZatW9BWZcR8nlnKrBLaKTLNLDCmAKp1RkrUqRHAUJAkHV6cVLAy6N92o
+         bAaAMsjfIt1vMEtLRBzk7hagqyKVTvDgOMFNumr+MG6SbRX9cM/70UxdYV5h6OR++uC0
+         v7Apw+Nss/j0jDS2s+P1aIe+c2yCtKkzwXKi2zVR3i4rkhBqhWNzGezJ3aESpqcF9Xe6
+         toieT4zs5amyKnH4+MmrB6sLpVXJWqdOPk5Lizg3OxebcNFoCiR0+rpiCJgQu7dhJS/n
+         mClA==
+X-Gm-Message-State: AO0yUKXOHJrDqs/0o7wSES0VUgfBrzHrpKxJy5DogyWUAr+atmI9Ep+J
+	+NV1NKbXQsYEsQ/nLeNiAlcnYZamXijRo6IkvVSjmA==
+X-Google-Smtp-Source: AK7set/9AE4RSZxJdKcBAH5kvuNKB5KDURWDDse3moefUQ7EjosATFwsHMtyRxtgDtAo+kXYHGpu6UK8/i7ekNNEf3g=
+X-Received: by 2002:a67:dc81:0:b0:422:194a:8566 with SMTP id
+ g1-20020a67dc81000000b00422194a8566mr20213687vsk.5.1679041362233; Fri, 17 Mar
+ 2023 01:22:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230316193711.s4cwpbcayg24zv5l@oracle.com>
+References: <20230315183729.2376178-1-sboyd@kernel.org>
+In-Reply-To: <20230315183729.2376178-1-sboyd@kernel.org>
+From: David Gow <davidgow@google.com>
+Date: Fri, 17 Mar 2023 16:22:30 +0800
+Message-ID: <CABVgOS=g6yvNg6xscZqa5fQdyWMEGJ0K9_86R3K7_Fa0wCM_VQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/11] clk: Add kunit tests for fixed rate and parent data
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
+	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
+	Brendan Higgins <brendan.higgins@linux.dev>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	"Rafael J . Wysocki" <rafael@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Frank Rowand <frowand.list@gmail.com>, Christian Marangi <ansuelsmth@gmail.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, 
+	linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, 
+	Maxime Ripard <maxime@cerno.tech>
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="000000000000fb733705f7144704"
 
-On Thu, Mar 16, 2023 at 01:37:11PM -0600, Tom Saeger wrote:
-> On Thu, Mar 16, 2023 at 09:50:12AM +0100, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.15.103 release.
-> > There are 137 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Sat, 18 Mar 2023 08:33:04 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.103-rc2.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> 
-> Build ID for arm64 is back with CONFIG_MODVERSIONS=y
-> Hooray!
-> 
-> Tested-by: Tom Saeger <tom.saeger@oracle.com>
+--000000000000fb733705f7144704
+Content-Type: text/plain; charset="UTF-8"
 
-Yeah!  Thanks for sticking with that, sorry it took so long to get
-merged.
+On Thu, 16 Mar 2023 at 02:37, Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> This patch series adds unit tests for the clk fixed rate basic type and
+> the clk registration functions that use struct clk_parent_data. To get
+> there, we add support for loading device tree overlays onto the live DTB
+> along with probing platform drivers to bind to device nodes in the
+> overlays. With this series, we're able to exercise some of the code in
+> the common clk framework that uses devicetree lookups to find parents
+> and the fixed rate clk code that scans device tree directly and creates
+> clks. Please review.
+>
+> I Cced everyone to all the patches so they get the full context. I'm
+> hoping I can take the whole pile through the clk tree as they almost all
+> depend on each other.
+>
+> Changes from v1 (https://lore.kernel.org/r/20230302013822.1808711-1-sboyd@kernel.org):
+>  * Don't depend on UML, use unittest data approach to attach nodes
+>  * Introduce overlay loading API for KUnit
+>  * Move platform_device KUnit code to drivers/base/test
+>  * Use #define macros for constants shared between unit tests and
+>    overlays
+>  * Settle on "test" as a vendor prefix
+>  * Make KUnit wrappers have "_kunit" postfix
+>
 
-greg k-h
+
+Thanks! I like this much better, and it is working fine here under UML
+and x86_64.
+
+There are some issues with other architectures (mostly endianness
+problems, but I got a refcount underflow in kunit_remove_resource
+after platform_device_alloc_kunit_test on sparc64 as well), but
+otherwise it's working on most of the things I've tried.
+
+I'll play around with it some more next week and dig into the code in
+more detail, but I've not seen anything I dislike about the overall
+design so far.
+
+Thanks!
+-- David
+
+
+> Stephen Boyd (11):
+>   of: Load KUnit DTB from of_core_init()
+>   of: Add test managed wrappers for of_overlay_apply()/of_node_put()
+>   dt-bindings: vendor-prefixes: Add "test" vendor for KUnit and friends
+>   dt-bindings: test: Add KUnit empty node binding
+>   of: Add a KUnit test for overlays and test managed APIs
+>   platform: Add test managed platform_device/driver APIs
+>   dt-bindings: kunit: Add fixed rate clk consumer test
+>   clk: Add test managed clk provider/consumer APIs
+>   clk: Add KUnit tests for clk fixed rate basic type
+>   dt-bindings: clk: Add KUnit clk_parent_data test
+>   clk: Add KUnit tests for clks registered with struct clk_parent_data
+>
+>  .../clock/test,clk-kunit-parent-data.yaml     |  47 ++
+>  .../kunit/test,clk-kunit-fixed-rate.yaml      |  35 ++
+>  .../bindings/test/test,kunit-empty.yaml       |  30 ++
+>  .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+>  drivers/base/test/Makefile                    |   3 +
+>  drivers/base/test/platform_kunit-test.c       | 108 +++++
+>  drivers/base/test/platform_kunit.c            | 186 +++++++
+>  drivers/clk/.kunitconfig                      |   3 +
+>  drivers/clk/Kconfig                           |   7 +
+>  drivers/clk/Makefile                          |   9 +-
+>  drivers/clk/clk-fixed-rate_test.c             | 299 ++++++++++++
+>  drivers/clk/clk-fixed-rate_test.h             |   8 +
+>  drivers/clk/clk_kunit.c                       | 219 +++++++++
+>  drivers/clk/clk_parent_data_test.h            |  10 +
+>  drivers/clk/clk_test.c                        | 459 +++++++++++++++++-
+>  drivers/clk/kunit_clk_fixed_rate_test.dtso    |  19 +
+>  drivers/clk/kunit_clk_parent_data_test.dtso   |  28 ++
+>  drivers/of/.kunitconfig                       |   5 +
+>  drivers/of/Kconfig                            |  23 +
+>  drivers/of/Makefile                           |   7 +
+>  drivers/of/base.c                             | 182 +++++++
+>  drivers/of/kunit.dtso                         |  10 +
+>  drivers/of/kunit_overlay_test.dtso            |   9 +
+>  drivers/of/of_kunit.c                         | 123 +++++
+>  drivers/of/of_private.h                       |   6 +
+>  drivers/of/of_test.c                          |  43 ++
+>  drivers/of/overlay_test.c                     | 107 ++++
+>  drivers/of/unittest.c                         | 101 +---
+>  include/kunit/clk.h                           |  28 ++
+>  include/kunit/of.h                            |  90 ++++
+>  include/kunit/platform_device.h               |  15 +
+>  31 files changed, 2119 insertions(+), 102 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/clock/test,clk-kunit-parent-data.yaml
+>  create mode 100644 Documentation/devicetree/bindings/kunit/test,clk-kunit-fixed-rate.yaml
+>  create mode 100644 Documentation/devicetree/bindings/test/test,kunit-empty.yaml
+>  create mode 100644 drivers/base/test/platform_kunit-test.c
+>  create mode 100644 drivers/base/test/platform_kunit.c
+>  create mode 100644 drivers/clk/clk-fixed-rate_test.c
+>  create mode 100644 drivers/clk/clk-fixed-rate_test.h
+>  create mode 100644 drivers/clk/clk_kunit.c
+>  create mode 100644 drivers/clk/clk_parent_data_test.h
+>  create mode 100644 drivers/clk/kunit_clk_fixed_rate_test.dtso
+>  create mode 100644 drivers/clk/kunit_clk_parent_data_test.dtso
+>  create mode 100644 drivers/of/.kunitconfig
+>  create mode 100644 drivers/of/kunit.dtso
+>  create mode 100644 drivers/of/kunit_overlay_test.dtso
+>  create mode 100644 drivers/of/of_kunit.c
+>  create mode 100644 drivers/of/of_test.c
+>  create mode 100644 drivers/of/overlay_test.c
+>  create mode 100644 include/kunit/clk.h
+>  create mode 100644 include/kunit/of.h
+>  create mode 100644 include/kunit/platform_device.h
+>
+>
+> base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
+> --
+> https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+> https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+>
+
+--000000000000fb733705f7144704
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+MIIPnwYJKoZIhvcNAQcCoIIPkDCCD4wCAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0BBwGg
+ggz5MIIEtjCCA56gAwIBAgIQeAMYYHb81ngUVR0WyMTzqzANBgkqhkiG9w0BAQsFADBMMSAwHgYD
+VQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBSMzETMBEGA1UEChMKR2xvYmFsU2lnbjETMBEGA1UE
+AxMKR2xvYmFsU2lnbjAeFw0yMDA3MjgwMDAwMDBaFw0yOTAzMTgwMDAwMDBaMFQxCzAJBgNVBAYT
+AkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSowKAYDVQQDEyFHbG9iYWxTaWduIEF0bGFz
+IFIzIFNNSU1FIENBIDIwMjAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCvLe9xPU9W
+dpiHLAvX7kFnaFZPuJLey7LYaMO8P/xSngB9IN73mVc7YiLov12Fekdtn5kL8PjmDBEvTYmWsuQS
+6VBo3vdlqqXZ0M9eMkjcKqijrmDRleudEoPDzTumwQ18VB/3I+vbN039HIaRQ5x+NHGiPHVfk6Rx
+c6KAbYceyeqqfuJEcq23vhTdium/Bf5hHqYUhuJwnBQ+dAUcFndUKMJrth6lHeoifkbw2bv81zxJ
+I9cvIy516+oUekqiSFGfzAqByv41OrgLV4fLGCDH3yRh1tj7EtV3l2TngqtrDLUs5R+sWIItPa/4
+AJXB1Q3nGNl2tNjVpcSn0uJ7aFPbAgMBAAGjggGKMIIBhjAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0l
+BBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMBIGA1UdEwEB/wQIMAYBAf8CAQAwHQYDVR0OBBYEFHzM
+CmjXouseLHIb0c1dlW+N+/JjMB8GA1UdIwQYMBaAFI/wS3+oLkUkrk1Q+mOai97i3Ru8MHsGCCsG
+AQUFBwEBBG8wbTAuBggrBgEFBQcwAYYiaHR0cDovL29jc3AyLmdsb2JhbHNpZ24uY29tL3Jvb3Ry
+MzA7BggrBgEFBQcwAoYvaHR0cDovL3NlY3VyZS5nbG9iYWxzaWduLmNvbS9jYWNlcnQvcm9vdC1y
+My5jcnQwNgYDVR0fBC8wLTAroCmgJ4YlaHR0cDovL2NybC5nbG9iYWxzaWduLmNvbS9yb290LXIz
+LmNybDBMBgNVHSAERTBDMEEGCSsGAQQBoDIBKDA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3dy5n
+bG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzANBgkqhkiG9w0BAQsFAAOCAQEANyYcO+9JZYyqQt41
+TMwvFWAw3vLoLOQIfIn48/yea/ekOcParTb0mbhsvVSZ6sGn+txYAZb33wIb1f4wK4xQ7+RUYBfI
+TuTPL7olF9hDpojC2F6Eu8nuEf1XD9qNI8zFd4kfjg4rb+AME0L81WaCL/WhP2kDCnRU4jm6TryB
+CHhZqtxkIvXGPGHjwJJazJBnX5NayIce4fGuUEJ7HkuCthVZ3Rws0UyHSAXesT/0tXATND4mNr1X
+El6adiSQy619ybVERnRi5aDe1PTwE+qNiotEEaeujz1a/+yYaaTY+k+qJcVxi7tbyQ0hi0UB3myM
+A/z2HmGEwO8hx7hDjKmKbDCCA18wggJHoAMCAQICCwQAAAAAASFYUwiiMA0GCSqGSIb3DQEBCwUA
+MEwxIDAeBgNVBAsTF0dsb2JhbFNpZ24gUm9vdCBDQSAtIFIzMRMwEQYDVQQKEwpHbG9iYWxTaWdu
+MRMwEQYDVQQDEwpHbG9iYWxTaWduMB4XDTA5MDMxODEwMDAwMFoXDTI5MDMxODEwMDAwMFowTDEg
+MB4GA1UECxMXR2xvYmFsU2lnbiBSb290IENBIC0gUjMxEzARBgNVBAoTCkdsb2JhbFNpZ24xEzAR
+BgNVBAMTCkdsb2JhbFNpZ24wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDMJXaQeQZ4
+Ihb1wIO2hMoonv0FdhHFrYhy/EYCQ8eyip0EXyTLLkvhYIJG4VKrDIFHcGzdZNHr9SyjD4I9DCuu
+l9e2FIYQebs7E4B3jAjhSdJqYi8fXvqWaN+JJ5U4nwbXPsnLJlkNc96wyOkmDoMVxu9bi9IEYMpJ
+pij2aTv2y8gokeWdimFXN6x0FNx04Druci8unPvQu7/1PQDhBjPogiuuU6Y6FnOM3UEOIDrAtKeh
+6bJPkC4yYOlXy7kEkmho5TgmYHWyn3f/kRTvriBJ/K1AFUjRAjFhGV64l++td7dkmnq/X8ET75ti
++w1s4FRpFqkD2m7pg5NxdsZphYIXAgMBAAGjQjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8E
+BTADAQH/MB0GA1UdDgQWBBSP8Et/qC5FJK5NUPpjmove4t0bvDANBgkqhkiG9w0BAQsFAAOCAQEA
+S0DbwFCq/sgM7/eWVEVJu5YACUGssxOGhigHM8pr5nS5ugAtrqQK0/Xx8Q+Kv3NnSoPHRHt44K9u
+bG8DKY4zOUXDjuS5V2yq/BKW7FPGLeQkbLmUY/vcU2hnVj6DuM81IcPJaP7O2sJTqsyQiunwXUaM
+ld16WCgaLx3ezQA3QY/tRG3XUyiXfvNnBB4V14qWtNPeTCekTBtzc3b0F5nCH3oO4y0IrQocLP88
+q1UOD5F+NuvDV0m+4S4tfGCLw0FREyOdzvcya5QBqJnnLDMfOjsl0oZAzjsshnjJYS8Uuu7bVW/f
+hO4FCU29KNhyztNiUGUe65KXgzHZs7XKR1g/XzCCBNgwggPAoAMCAQICEAHHLXCbS0CYcocWQtL1
+FY8wDQYJKoZIhvcNAQELBQAwVDELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYt
+c2ExKjAoBgNVBAMTIUdsb2JhbFNpZ24gQXRsYXMgUjMgU01JTUUgQ0EgMjAyMDAeFw0yMzAxMjkw
+NjQ2MThaFw0yMzA3MjgwNjQ2MThaMCQxIjAgBgkqhkiG9w0BCQEWE2RhdmlkZ293QGdvb2dsZS5j
+b20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC+31G8qfgjYj6KzASqulKfP5LGLw1o
+hZ6j8Uv9o+fA+zL+2wOPYHLNIb6jyAS16+FwevgTr7d9QynTPBiCGE9Wb/i2ob9aBcupQVtBjlJZ
+I6qUXdVBlo5zsORdNV7/XEqlpu+X5MK5gNHlWhe8gNpAhADSib2H4rjBvFF2yi9BHBAYZU95f0IN
+cSS0WDNSSCktPaXtAGsI3tslroyjFYUluwGklmQms/tV8f/52zc7A5lzX+hxnnJdsRgirJRI9Sb6
+Uypzk06KLxOO2Pg9SFn6MwbAO6LuInpokhxcULUz3g/CMQBmEMSEzPPnfDIAqwDI0Kqh0NAin+V4
+fQxJfDCZAgMBAAGjggHUMIIB0DAeBgNVHREEFzAVgRNkYXZpZGdvd0Bnb29nbGUuY29tMA4GA1Ud
+DwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIwHQYDVR0OBBYEFJyglaiY
+64VRg2IjDI2fJVE9RD6aMEwGA1UdIARFMEMwQQYJKwYBBAGgMgEoMDQwMgYIKwYBBQUHAgEWJmh0
+dHBzOi8vd3d3Lmdsb2JhbHNpZ24uY29tL3JlcG9zaXRvcnkvMAwGA1UdEwEB/wQCMAAwgZoGCCsG
+AQUFBwEBBIGNMIGKMD4GCCsGAQUFBzABhjJodHRwOi8vb2NzcC5nbG9iYWxzaWduLmNvbS9jYS9n
+c2F0bGFzcjNzbWltZWNhMjAyMDBIBggrBgEFBQcwAoY8aHR0cDovL3NlY3VyZS5nbG9iYWxzaWdu
+LmNvbS9jYWNlcnQvZ3NhdGxhc3Izc21pbWVjYTIwMjAuY3J0MB8GA1UdIwQYMBaAFHzMCmjXouse
+LHIb0c1dlW+N+/JjMEYGA1UdHwQ/MD0wO6A5oDeGNWh0dHA6Ly9jcmwuZ2xvYmFsc2lnbi5jb20v
+Y2EvZ3NhdGxhc3Izc21pbWVjYTIwMjAuY3JsMA0GCSqGSIb3DQEBCwUAA4IBAQA2lZLYRLu7foeR
+cHo1VeNA974FZBiCm08Kd44/aCMEzdTJvxAE9xbUJf7hS1i6eW49qxuSp3/YLn6U7uatwAcmZcwp
+Zma19ftf3LH+9Hvffk+X8fbPKe6uHkJhR2LktrhRzF159jj67NvXyGQv8J4n7UNeEVP0d5ByvRwv
+tF2bJwlOwRGLoxasKSyDHIyUpwTfWYPq7XvjoGqQ/tDS7Khcc5WncJl0/ZEj7EKjtoGbsDbLdXEF
+m/6vdcYKJzF9ghHewtV3YIU4RE3pEM4aCWWRtJwbExzeue6fI7RqURbNCAyQuSpWv0YQvzsX3ZX3
+c1otrs50n1N0Sf8/rfJxq7sWMYICajCCAmYCAQEwaDBUMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQ
+R2xvYmFsU2lnbiBudi1zYTEqMCgGA1UEAxMhR2xvYmFsU2lnbiBBdGxhcyBSMyBTTUlNRSBDQSAy
+MDIwAhABxy1wm0tAmHKHFkLS9RWPMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCAm
+LD0bzOo1mGqnjDNiyk612P/TmqI26xsS4FiA39NZDjAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcB
+MBwGCSqGSIb3DQEJBTEPFw0yMzAzMTcwODIyNDJaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUD
+BAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsG
+CSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAnMvBaiqgwWbHc+GYNLuy
+ZzWSji42DQggTYSuJTH6GX49osxY/MC/tgZ6U7aEB5uXnBi4AZKfKB9GMUOWjU1ZsayRtu8PjISE
+4WDI+xSidDZUTcQJVo6hho5nQeUmqk2UTSOr5XbFIOyhZlctvn6zYUrqF8/Rjx9RMpEVlKU4KdvD
+tPWs4+hzAPy9Ai7aeeWHkZ3IxD7KRyKCwT3cdX4ZWoOFRfZGU7YcJygqd2CWKOCPmhUW7nh8klWn
+olpHzCe2mfvwzuBydDC0YG6cYeL9mMDk6k1YS8wlaSU2op9+SDDxL1oighAZxPfDOm9IKqado/Ei
+e7nMMLdSLzoUedMCYg==
+--000000000000fb733705f7144704--
