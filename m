@@ -1,93 +1,351 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0A27466
-	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 16:16:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254F6C4339B;
-	Fri, 17 Mar 2023 16:16:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1679069801;
-	bh=73c1YHqM5bs0yeTOn+ydHweRhCIAl4DTHPV1qGN6k3E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eJO9APYzVwm1/pju51IShJ157Sq2967OU4rNmVQyxCKT88dwxYQpdLRouYUow2h2J
-	 Weil0XKQ1VexbEH15v4Djo0ZAix2D6H3SP44Cl/WIV8f05eo3VEhyPieNUva/KH7p3
-	 f9LG6hkvwwz0d3muk9wwdbElMhOEcZafhI1gWxWP1a5Vtn/ZYFglsP9vjm1utwoVQU
-	 jxu4tSIgbUGUVkW8kaOLvN+MhW9rXGWAo+Cdq6gTme0CNqQ7DPBvfRT05kaz5wkPrh
-	 NdHjRRI6r5ZYhLy87L0ApoYlG/rf4XrFp1P/QiKwueY3yXS7FMyFP9moQptY/npAtb
-	 CSRDST6a7oRiw==
-Date: Fri, 17 Mar 2023 09:16:39 -0700
-From: Josh Poimboeuf <jpoimboe@kernel.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Petr Mladek <pmladek@suse.com>, Song Liu <song@kernel.org>,
-	patches@lists.linux.dev, linux-modules@vger.kernel.org,
-	live-patching@vger.kernel.org
-Subject: Re: mod->klp set on copy ok ?
-Message-ID: <20230317161639.3de7yeek6ia4y7ul@treble>
-References: <CAB=NE6Vo4AXVrn1GPEoZWVF3NkXRoPwWOuUEJqJ35S9VMGTM2Q@mail.gmail.com>
- <ZA8NBuXbVP+PRPp0@alley>
- <ZBOPP4YWWhJRk2yn@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDA87475
+	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 17:20:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1679073651; x=1710609651;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=dwyQicXhlTutONXrSVUOqm/U5cvXNSdIJMWcfZZzWA0=;
+  b=hEm0vBQjA3PUJCE9VfBOYEjciTgQHBkYinJbkVz7RD/sIOd7TfFxVziJ
+   4p3KgryNYfC/cFYD/kV4ag5uw7MB2ESMFYZNcUe3iNqSlocMM941pAM3L
+   CKyxYJfWOH12q/PdUkX+RcKdboWACftOtgwd9+JRSBm7k+uFLe4YMFlXx
+   rv5mv36wmYUJX/zLxnK+BjXhhzFdQjT0bptZFEl5bwZXkQEBnbRJfpTH8
+   RkGax6xJ4zF7B/gAnyWpdoyo1Bhz5R+4uhVBGTAZsMNG0ZhAhlsfuvzsM
+   2cCbwo1WXpvqjK5nRjyc5JVfev893YJN8SiDZH/fBiiymPguBVdF2+uYD
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10652"; a="339858219"
+X-IronPort-AV: E=Sophos;i="5.98,268,1673942400"; 
+   d="scan'208";a="339858219"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Mar 2023 10:20:49 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10652"; a="804166600"
+X-IronPort-AV: E=Sophos;i="5.98,268,1673942400"; 
+   d="scan'208";a="804166600"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Mar 2023 10:20:48 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Yazen Ghannam <yazen.ghannam@amd.com>
+Cc: Borislav Petkov <bp@alien8.de>,
+	Smita.KoralahalliChannabasappa@amd.com,
+	dave.hansen@linux.intel.com,
+	hpa@zytor.com,
+	linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	x86@kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v3 1/5] x86/mce: Remove old CMCI storm mitigation code
+Date: Fri, 17 Mar 2023 10:20:38 -0700
+Message-Id: <20230317172042.117201-2-tony.luck@intel.com>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230317172042.117201-1-tony.luck@intel.com>
+References: <ZBR+GMH0olGoDMGs@yaz-fattaah>
+ <20230317172042.117201-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZBOPP4YWWhJRk2yn@bombadil.infradead.org>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Mar 16, 2023 at 02:50:55PM -0700, Luis Chamberlain wrote:
-> The comment for "Update sh_addr to point to copy in image." seems pretty
-> misleading to me, what we are doing there is actually ensuring that we update
-> the copy's ELF section address to point to our newly allocated memory.
-> Do folks agree?
-> 
-> And how about the size on the memcpy()? That's a shd->sh_size. No matter
-> how much I increase my struct module in include/linux/module.h I see
-> thes same sh_size. Do folks see same?
-> 
-> nm --print-size --size-sort fs/xfs/xfs.ko | grep __this_module
-> 0000000000000000 0000000000000500 D __this_module
-> 
-> This is what is supposed to make the final part of layout_and_allocate() work:
-> 
-> 	mod = (void *)info->sechdrs[info->index.mod].sh_addr;
-> 
-> This works off of the copy of the module. Let's recall that
-> setup_load_info() sets the copy mod to:
-> 
-> 	info->mod = (void *)info->hdr + info->sechdrs[info->index.mod].sh_offset;
-> 
-> The memcpy() in move_module() is what *should* be copying over the entire
-> mod stuff properly over, that includes the mod->klp for live patching
-> but also any new data we muck with in-kernel as the new mod->mem stuff
-> in layout_sections(). In short, anything in struct module should be
-> shoved into an ELF section. But I'm not quite sure this is all right.
+When a "storm" of CMCI is detected this code mitigates by
+disabling CMCI interrupt signalling from all of the banks
+owned by the CPU that saw the storm.
 
-I dug into that code years ago, and the above sounds right.
+There are problems with this approach:
 
-The .ko file has a .gnu.linkonce.this_module section whose data is just
-the original "struct module __this_module" which is created by the
-module build (from foo.mod.c).
+1) It is very coarse grained. In all likelihood only one of the
+banks was generating the interrupts, but CMCI is disabled for all.
+This means Linux may delay seeing and processing errors logged
+from other banks.
 
-At the beginning of the finit_module() syscall, the .ko file's ELF
-sections get copied (and optionally decompressed) into kernel memory.
-Then 'mod' just points to the copied __this_module struct.
+2) Although CMCI stands for Corrected Machine Check Interrupt, it
+is also used to signal when an uncorrected error is logged. This
+is a problem because these errors should be handled in a timely
+manner.
 
-Then mod->klp (and possibly mod->taint) get set.
+Delete all this code in preparation for a finer grained solution.
 
-Then in layout_and_allocate(), that 'mod' gets memcpy'd into the second
-(and final) in-kernel copy of 'struct module':
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ arch/x86/kernel/cpu/mce/internal.h |   6 --
+ arch/x86/kernel/cpu/mce/core.c     |  20 +---
+ arch/x86/kernel/cpu/mce/intel.c    | 145 -----------------------------
+ 3 files changed, 1 insertion(+), 170 deletions(-)
 
- 		if (shdr->sh_type != SHT_NOBITS)
- 			memcpy(dest, (void *)shdr->sh_addr, shdr->sh_size);
- 		/* Update sh_addr to point to copy in image. */
- 		shdr->sh_addr = (unsigned long)dest;
-
-I suspect you don't see the size changing when you add to 'struct
-module' because it's ____cacheline_aligned.
-
-It's all rather obtuse, but working as designed as far as I can tell.
-
+diff --git a/arch/x86/kernel/cpu/mce/internal.h b/arch/x86/kernel/cpu/mce/internal.h
+index 7e03f5b7f6bd..07fef4d74525 100644
+--- a/arch/x86/kernel/cpu/mce/internal.h
++++ b/arch/x86/kernel/cpu/mce/internal.h
+@@ -41,18 +41,12 @@ struct dentry *mce_get_debugfs_dir(void);
+ extern mce_banks_t mce_banks_ce_disabled;
+ 
+ #ifdef CONFIG_X86_MCE_INTEL
+-unsigned long cmci_intel_adjust_timer(unsigned long interval);
+-bool mce_intel_cmci_poll(void);
+-void mce_intel_hcpu_update(unsigned long cpu);
+ void cmci_disable_bank(int bank);
+ void intel_init_cmci(void);
+ void intel_init_lmce(void);
+ void intel_clear_lmce(void);
+ bool intel_filter_mce(struct mce *m);
+ #else
+-# define cmci_intel_adjust_timer mce_adjust_timer_default
+-static inline bool mce_intel_cmci_poll(void) { return false; }
+-static inline void mce_intel_hcpu_update(unsigned long cpu) { }
+ static inline void cmci_disable_bank(int bank) { }
+ static inline void intel_init_cmci(void) { }
+ static inline void intel_init_lmce(void) { }
+diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+index 2c8ec5c71712..92c2dee4bf43 100644
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -1598,13 +1598,6 @@ static unsigned long check_interval = INITIAL_CHECK_INTERVAL;
+ static DEFINE_PER_CPU(unsigned long, mce_next_interval); /* in jiffies */
+ static DEFINE_PER_CPU(struct timer_list, mce_timer);
+ 
+-static unsigned long mce_adjust_timer_default(unsigned long interval)
+-{
+-	return interval;
+-}
+-
+-static unsigned long (*mce_adjust_timer)(unsigned long interval) = mce_adjust_timer_default;
+-
+ static void __start_timer(struct timer_list *t, unsigned long interval)
+ {
+ 	unsigned long when = jiffies + interval;
+@@ -1627,15 +1620,9 @@ static void mce_timer_fn(struct timer_list *t)
+ 
+ 	iv = __this_cpu_read(mce_next_interval);
+ 
+-	if (mce_available(this_cpu_ptr(&cpu_info))) {
++	if (mce_available(this_cpu_ptr(&cpu_info)))
+ 		machine_check_poll(0, this_cpu_ptr(&mce_poll_banks));
+ 
+-		if (mce_intel_cmci_poll()) {
+-			iv = mce_adjust_timer(iv);
+-			goto done;
+-		}
+-	}
+-
+ 	/*
+ 	 * Alert userspace if needed. If we logged an MCE, reduce the polling
+ 	 * interval, otherwise increase the polling interval.
+@@ -1645,7 +1632,6 @@ static void mce_timer_fn(struct timer_list *t)
+ 	else
+ 		iv = min(iv * 2, round_jiffies_relative(check_interval * HZ));
+ 
+-done:
+ 	__this_cpu_write(mce_next_interval, iv);
+ 	__start_timer(t, iv);
+ }
+@@ -1982,7 +1968,6 @@ static void mce_zhaoxin_feature_init(struct cpuinfo_x86 *c)
+ 
+ 	intel_init_cmci();
+ 	intel_init_lmce();
+-	mce_adjust_timer = cmci_intel_adjust_timer;
+ }
+ 
+ static void mce_zhaoxin_feature_clear(struct cpuinfo_x86 *c)
+@@ -1995,7 +1980,6 @@ static void __mcheck_cpu_init_vendor(struct cpuinfo_x86 *c)
+ 	switch (c->x86_vendor) {
+ 	case X86_VENDOR_INTEL:
+ 		mce_intel_feature_init(c);
+-		mce_adjust_timer = cmci_intel_adjust_timer;
+ 		break;
+ 
+ 	case X86_VENDOR_AMD: {
+@@ -2651,8 +2635,6 @@ static void mce_reenable_cpu(void)
+ 
+ static int mce_cpu_dead(unsigned int cpu)
+ {
+-	mce_intel_hcpu_update(cpu);
+-
+ 	/* intentionally ignoring frozen here */
+ 	if (!cpuhp_tasks_frozen)
+ 		cmci_rediscover();
+diff --git a/arch/x86/kernel/cpu/mce/intel.c b/arch/x86/kernel/cpu/mce/intel.c
+index 95275a5e57e0..052bf2708391 100644
+--- a/arch/x86/kernel/cpu/mce/intel.c
++++ b/arch/x86/kernel/cpu/mce/intel.c
+@@ -41,15 +41,6 @@
+  */
+ static DEFINE_PER_CPU(mce_banks_t, mce_banks_owned);
+ 
+-/*
+- * CMCI storm detection backoff counter
+- *
+- * During storm, we reset this counter to INITIAL_CHECK_INTERVAL in case we've
+- * encountered an error. If not, we decrement it by one. We signal the end of
+- * the CMCI storm when it reaches 0.
+- */
+-static DEFINE_PER_CPU(int, cmci_backoff_cnt);
+-
+ /*
+  * cmci_discover_lock protects against parallel discovery attempts
+  * which could race against each other.
+@@ -57,21 +48,6 @@ static DEFINE_PER_CPU(int, cmci_backoff_cnt);
+ static DEFINE_RAW_SPINLOCK(cmci_discover_lock);
+ 
+ #define CMCI_THRESHOLD		1
+-#define CMCI_POLL_INTERVAL	(30 * HZ)
+-#define CMCI_STORM_INTERVAL	(HZ)
+-#define CMCI_STORM_THRESHOLD	15
+-
+-static DEFINE_PER_CPU(unsigned long, cmci_time_stamp);
+-static DEFINE_PER_CPU(unsigned int, cmci_storm_cnt);
+-static DEFINE_PER_CPU(unsigned int, cmci_storm_state);
+-
+-enum {
+-	CMCI_STORM_NONE,
+-	CMCI_STORM_ACTIVE,
+-	CMCI_STORM_SUBSIDED,
+-};
+-
+-static atomic_t cmci_storm_on_cpus;
+ 
+ static int cmci_supported(int *banks)
+ {
+@@ -127,124 +103,6 @@ static bool lmce_supported(void)
+ 	return tmp & FEAT_CTL_LMCE_ENABLED;
+ }
+ 
+-bool mce_intel_cmci_poll(void)
+-{
+-	if (__this_cpu_read(cmci_storm_state) == CMCI_STORM_NONE)
+-		return false;
+-
+-	/*
+-	 * Reset the counter if we've logged an error in the last poll
+-	 * during the storm.
+-	 */
+-	if (machine_check_poll(0, this_cpu_ptr(&mce_banks_owned)))
+-		this_cpu_write(cmci_backoff_cnt, INITIAL_CHECK_INTERVAL);
+-	else
+-		this_cpu_dec(cmci_backoff_cnt);
+-
+-	return true;
+-}
+-
+-void mce_intel_hcpu_update(unsigned long cpu)
+-{
+-	if (per_cpu(cmci_storm_state, cpu) == CMCI_STORM_ACTIVE)
+-		atomic_dec(&cmci_storm_on_cpus);
+-
+-	per_cpu(cmci_storm_state, cpu) = CMCI_STORM_NONE;
+-}
+-
+-static void cmci_toggle_interrupt_mode(bool on)
+-{
+-	unsigned long flags, *owned;
+-	int bank;
+-	u64 val;
+-
+-	raw_spin_lock_irqsave(&cmci_discover_lock, flags);
+-	owned = this_cpu_ptr(mce_banks_owned);
+-	for_each_set_bit(bank, owned, MAX_NR_BANKS) {
+-		rdmsrl(MSR_IA32_MCx_CTL2(bank), val);
+-
+-		if (on)
+-			val |= MCI_CTL2_CMCI_EN;
+-		else
+-			val &= ~MCI_CTL2_CMCI_EN;
+-
+-		wrmsrl(MSR_IA32_MCx_CTL2(bank), val);
+-	}
+-	raw_spin_unlock_irqrestore(&cmci_discover_lock, flags);
+-}
+-
+-unsigned long cmci_intel_adjust_timer(unsigned long interval)
+-{
+-	if ((this_cpu_read(cmci_backoff_cnt) > 0) &&
+-	    (__this_cpu_read(cmci_storm_state) == CMCI_STORM_ACTIVE)) {
+-		mce_notify_irq();
+-		return CMCI_STORM_INTERVAL;
+-	}
+-
+-	switch (__this_cpu_read(cmci_storm_state)) {
+-	case CMCI_STORM_ACTIVE:
+-
+-		/*
+-		 * We switch back to interrupt mode once the poll timer has
+-		 * silenced itself. That means no events recorded and the timer
+-		 * interval is back to our poll interval.
+-		 */
+-		__this_cpu_write(cmci_storm_state, CMCI_STORM_SUBSIDED);
+-		if (!atomic_sub_return(1, &cmci_storm_on_cpus))
+-			pr_notice("CMCI storm subsided: switching to interrupt mode\n");
+-
+-		fallthrough;
+-
+-	case CMCI_STORM_SUBSIDED:
+-		/*
+-		 * We wait for all CPUs to go back to SUBSIDED state. When that
+-		 * happens we switch back to interrupt mode.
+-		 */
+-		if (!atomic_read(&cmci_storm_on_cpus)) {
+-			__this_cpu_write(cmci_storm_state, CMCI_STORM_NONE);
+-			cmci_toggle_interrupt_mode(true);
+-			cmci_recheck();
+-		}
+-		return CMCI_POLL_INTERVAL;
+-	default:
+-
+-		/* We have shiny weather. Let the poll do whatever it thinks. */
+-		return interval;
+-	}
+-}
+-
+-static bool cmci_storm_detect(void)
+-{
+-	unsigned int cnt = __this_cpu_read(cmci_storm_cnt);
+-	unsigned long ts = __this_cpu_read(cmci_time_stamp);
+-	unsigned long now = jiffies;
+-	int r;
+-
+-	if (__this_cpu_read(cmci_storm_state) != CMCI_STORM_NONE)
+-		return true;
+-
+-	if (time_before_eq(now, ts + CMCI_STORM_INTERVAL)) {
+-		cnt++;
+-	} else {
+-		cnt = 1;
+-		__this_cpu_write(cmci_time_stamp, now);
+-	}
+-	__this_cpu_write(cmci_storm_cnt, cnt);
+-
+-	if (cnt <= CMCI_STORM_THRESHOLD)
+-		return false;
+-
+-	cmci_toggle_interrupt_mode(false);
+-	__this_cpu_write(cmci_storm_state, CMCI_STORM_ACTIVE);
+-	r = atomic_add_return(1, &cmci_storm_on_cpus);
+-	mce_timer_kick(CMCI_STORM_INTERVAL);
+-	this_cpu_write(cmci_backoff_cnt, INITIAL_CHECK_INTERVAL);
+-
+-	if (r == 1)
+-		pr_notice("CMCI storm detected: switching to poll mode\n");
+-	return true;
+-}
+-
+ /*
+  * The interrupt handler. This is called on every event.
+  * Just call the poller directly to log any events.
+@@ -253,9 +111,6 @@ static bool cmci_storm_detect(void)
+  */
+ static void intel_threshold_interrupt(void)
+ {
+-	if (cmci_storm_detect())
+-		return;
+-
+ 	machine_check_poll(MCP_TIMESTAMP, this_cpu_ptr(&mce_banks_owned));
+ }
+ 
 -- 
-Josh
+2.39.2
+
