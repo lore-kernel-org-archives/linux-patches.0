@@ -1,185 +1,73 @@
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050A4748A
-	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 17:20:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1679073657; x=1710609657;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=UAk6x7dXlpS53KN8GVwp8qaBKdkzhw/mGjhHXz+ApAs=;
-  b=IOFIWiWU3F/SO7oAZaKKA1EMAyy7CBMHLIzVK8RfdsT42ezfPbjnR/I4
-   /fT9zvaENlLvgIAIJGvZHUFk5ITwStXoMpVvQCCgdKsHzTokpuZyUzRL9
-   +0pU0gGDt7tzqxmMSoszDmajZhk0HHnycKSZg1kGeWn3S2wy/1qr75A5y
-   lJ9s6U97h0EOGQ4Kz2B+8wA6yAvY3LbWXWkE8VhFSoGQN+P8IgHqXlWjr
-   Aq+g4MFTpyHJlkKuLwB1hE4kLsyr0J9w4SyVyMEKrh+jQnnMxXx6bR7ob
-   uxX1+9dZE60KOQ1jUSc4KfmgQJmHsdcl/E7j/krW6qi7DxoI44e41FgxL
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10652"; a="339858255"
-X-IronPort-AV: E=Sophos;i="5.98,268,1673942400"; 
-   d="scan'208";a="339858255"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Mar 2023 10:20:50 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10652"; a="804166614"
-X-IronPort-AV: E=Sophos;i="5.98,268,1673942400"; 
-   d="scan'208";a="804166614"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Mar 2023 10:20:49 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Yazen Ghannam <yazen.ghannam@amd.com>
-Cc: Borislav Petkov <bp@alien8.de>,
-	Smita.KoralahalliChannabasappa@amd.com,
-	dave.hansen@linux.intel.com,
-	hpa@zytor.com,
-	linux-edac@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	x86@kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v3 5/5] x86/mce: Handle AMD threshold interrupt storms
-Date: Fri, 17 Mar 2023 10:20:42 -0700
-Message-Id: <20230317172042.117201-6-tony.luck@intel.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230317172042.117201-1-tony.luck@intel.com>
-References: <ZBR+GMH0olGoDMGs@yaz-fattaah>
- <20230317172042.117201-1-tony.luck@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E947494
+	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 18:13:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9641BC433D2;
+	Fri, 17 Mar 2023 18:13:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1679076785;
+	bh=pezB65uNoMFI+1yoWavs7bX/rlsFwVd9xoiaFcZ2Mug=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=f2Gqqto9cZAFA0aKT4pmi4EAwSPBpNzZO13fONlCOfWBXkxWaSsD+9i/5e7NhyCw8
+	 pU29xa5fiET3KhneSRS0J23/KzpsG9A/JxcmdYywx63MO6XCUTRYFMoqSSzwrfmi/x
+	 OGW/EzHMfQ/+LCDMGTxQxBQThNyNuvFw+qhTnHhyWG9orVo5HLM6N/ydxJp2u7kD/3
+	 Xs6Q+jvx4EJy2WH8QwfhK3BK4xMjkAgQyJU3cVbS73rAOQgwpWQkKq1iuGSBg2g6Tz
+	 pwFNIHuzq8fkfpMAzslttpTU9gw5dcvOk35OllHXiEbRf+vhC1NsJYEsSoc9lTb9FM
+	 qfmlPwuNLWZbQ==
+Message-ID: <6a4c0758f773c648282dd9ab39fdf59b.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230317083951.oaupqybf7llrpmeo@houat>
+References: <20230315183729.2376178-1-sboyd@kernel.org> <20230317083951.oaupqybf7llrpmeo@houat>
+Subject: Re: [PATCH v2 00/11] clk: Add kunit tests for fixed rate and parent data
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com
+To: Maxime Ripard <maxime@cerno.tech>
+Date: Fri, 17 Mar 2023 11:13:03 -0700
+User-Agent: alot/0.10
 
-From: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
+Quoting Maxime Ripard (2023-03-17 01:39:51)
+> Hi,
+>=20
+> On Wed, Mar 15, 2023 at 11:37:17AM -0700, Stephen Boyd wrote:
+> > This patch series adds unit tests for the clk fixed rate basic type and
+> > the clk registration functions that use struct clk_parent_data. To get
+> > there, we add support for loading device tree overlays onto the live DTB
+> > along with probing platform drivers to bind to device nodes in the
+> > overlays. With this series, we're able to exercise some of the code in
+> > the common clk framework that uses devicetree lookups to find parents
+> > and the fixed rate clk code that scans device tree directly and creates
+> > clks. Please review.
+> >=20
+> > I Cced everyone to all the patches so they get the full context. I'm
+> > hoping I can take the whole pile through the clk tree as they almost all
+> > depend on each other.
+> >=20
+> > Changes from v1 (https://lore.kernel.org/r/20230302013822.1808711-1-sbo=
+yd@kernel.org):
+> >  * Don't depend on UML, use unittest data approach to attach nodes
+> >  * Introduce overlay loading API for KUnit
+> >  * Move platform_device KUnit code to drivers/base/test
+> >  * Use #define macros for constants shared between unit tests and
+> >    overlays
+> >  * Settle on "test" as a vendor prefix
+> >  * Make KUnit wrappers have "_kunit" postfix
+>=20
+> Maybe I'm overthinking this, but wouldn't it make more sense to have a
+> kunit *prefix* to those functions? Any other function in the kernel
+> taking a kunit test pointer as a parameter starts with kunit (like
+> kunit_kzalloc), so it would make more sense to me that kunit-related clk
+> functions follow the same pattern.
+>=20
 
-Extend the logic of handling CMCI storms to AMD threshold interrupts.
+See this thread on v1
 
-Rely on the similar approach as of Intel's CMCI to mitigate storms per
-CPU and per bank. But, unlike CMCI, do not set thresholds and reduce
-interrupt rate on a storm. Rather, disable the interrupt on the
-corresponding CPU and bank. Re-enable back the interrupts if enough
-consecutive polls of the bank show no corrected errors (30, as
-programmed by Intel).
-
-Turning off the threshold interrupts would be a better solution on AMD
-systems as other error severities will still be handled even if the
-threshold interrupts are disabled.
-
-[Tony: Small tweak because mce_handle_storm() isn't a pointer now]
-
-Signed-off-by: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- arch/x86/kernel/cpu/mce/internal.h |  2 ++
- arch/x86/kernel/cpu/mce/amd.c      | 49 ++++++++++++++++++++++++++++++
- arch/x86/kernel/cpu/mce/core.c     |  3 ++
- 3 files changed, 54 insertions(+)
-
-diff --git a/arch/x86/kernel/cpu/mce/internal.h b/arch/x86/kernel/cpu/mce/internal.h
-index 9b2c54f30fb9..b580bd609fdc 100644
---- a/arch/x86/kernel/cpu/mce/internal.h
-+++ b/arch/x86/kernel/cpu/mce/internal.h
-@@ -206,7 +206,9 @@ extern bool filter_mce(struct mce *m);
- 
- #ifdef CONFIG_X86_MCE_AMD
- extern bool amd_filter_mce(struct mce *m);
-+void mce_amd_handle_storm(int bank, bool on);
- #else
-+static inline void mce_amd_handle_storm(int bank, bool on) {}
- static inline bool amd_filter_mce(struct mce *m) { return false; }
- #endif
- 
-diff --git a/arch/x86/kernel/cpu/mce/amd.c b/arch/x86/kernel/cpu/mce/amd.c
-index 1c87501e0fa3..b7f92af065e1 100644
---- a/arch/x86/kernel/cpu/mce/amd.c
-+++ b/arch/x86/kernel/cpu/mce/amd.c
-@@ -466,6 +466,47 @@ static void threshold_restart_bank(void *_tr)
- 	wrmsr(tr->b->address, lo, hi);
- }
- 
-+static void _reset_block(struct threshold_block *block)
-+{
-+	struct thresh_restart tr;
-+
-+	memset(&tr, 0, sizeof(tr));
-+	tr.b = block;
-+	threshold_restart_bank(&tr);
-+}
-+
-+static void toggle_interrupt_reset_block(struct threshold_block *block, bool on)
-+{
-+	if (!block)
-+		return;
-+
-+	block->interrupt_enable = !!on;
-+	_reset_block(block);
-+}
-+
-+void mce_amd_handle_storm(int bank, bool on)
-+{
-+	struct threshold_block *first_block = NULL, *block = NULL, *tmp = NULL;
-+	struct threshold_bank **bp = this_cpu_read(threshold_banks);
-+	unsigned long flags;
-+
-+	if (!bp)
-+		return;
-+
-+	local_irq_save(flags);
-+
-+	first_block = bp[bank]->blocks;
-+	if (!first_block)
-+		goto end;
-+
-+	toggle_interrupt_reset_block(first_block, on);
-+
-+	list_for_each_entry_safe(block, tmp, &first_block->miscj, miscj)
-+		toggle_interrupt_reset_block(block, on);
-+end:
-+	local_irq_restore(flags);
-+}
-+
- static void mce_threshold_block_init(struct threshold_block *b, int offset)
- {
- 	struct thresh_restart tr = {
-@@ -867,6 +908,7 @@ static void amd_threshold_interrupt(void)
- 	struct threshold_block *first_block = NULL, *block = NULL, *tmp = NULL;
- 	struct threshold_bank **bp = this_cpu_read(threshold_banks);
- 	unsigned int bank, cpu = smp_processor_id();
-+	u64 status;
- 
- 	/*
- 	 * Validate that the threshold bank has been initialized already. The
-@@ -880,6 +922,13 @@ static void amd_threshold_interrupt(void)
- 		if (!(per_cpu(bank_map, cpu) & (1 << bank)))
- 			continue;
- 
-+		rdmsrl(mca_msr_reg(bank, MCA_STATUS), status);
-+		track_cmci_storm(bank, status);
-+
-+		/* Return early on an interrupt storm */
-+		if (this_cpu_read(bank_storm[bank]))
-+			return;
-+
- 		first_block = bp[bank]->blocks;
- 		if (!first_block)
- 			continue;
-diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-index d27daa199523..6121f0afe45a 100644
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -2072,6 +2072,9 @@ void mce_handle_storm(int bank, bool on)
- 	case X86_VENDOR_INTEL:
- 		mce_intel_handle_storm(bank, on);
- 		break;
-+	case X86_VENDOR_AMD:
-+		mce_amd_handle_storm(bank, on);
-+		break;
- 	}
- }
- 
--- 
-2.39.2
-
+ https://lore.kernel.org/all/CABVgOSk4gEob3rokKF_p2Bcd_Sj3ikUN4R-HPHyTR0Eoo=
+=3D=3D85g@mail.gmail.com/
