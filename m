@@ -1,52 +1,52 @@
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C923377
-	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 01:38:13 +0000 (UTC)
-Received: by mail-vs1-f43.google.com with SMTP id y3so3211653vsl.11
-        for <patches@lists.linux.dev>; Thu, 16 Mar 2023 18:38:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D18F377
+	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 01:49:53 +0000 (UTC)
+Received: by mail-ua1-f44.google.com with SMTP id v48so2426610uad.6
+        for <patches@lists.linux.dev>; Thu, 16 Mar 2023 18:49:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679017092;
+        d=linaro.org; s=google; t=1679017792;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bBn6JQBx1SHJKZPB8zhAUv5Fuj/NGhkfmZs2i9hUcgA=;
-        b=FG1EYVYdASOEs5PEIu0lXb6o34qMOplqYGGprFQXDnyCxeLmik+TqdNAFKcbg87hTz
-         daK8DPDMhSS4Oi+3xE0uH3JIsQhaqoZL1TqjyfcgUK2sijfi5Lw+Wr5kDbLpijtd/1Wh
-         QTmnGVCczewvFTbfMIPTK3p1WgraxXq+VkCTrwZ6zdrtj7RbOuI73jIcYOexOFWSK8at
-         JVvxK6esPsN+14+2CHOQp0Y9utSBH7nd+HZwOFU3cdpSHxprv7fKWaEgdWLdadDoJQ7u
-         VpRNa+FM2/3mwCbefIQGgtKgL0jJMHvjEa2Bg8t6GoSLrd4mRSR/SlT1TFS6gnDVeAW7
-         xQcw==
+        bh=v0NbEojGA+vmVWgCQ8nPj2yRSUaYaD5X4ms1AH9cdNM=;
+        b=LC80W4bZUJI2oLW3+0+jUra8vA4kweV5de1BEYZUXuVi+a8uy/euvM5stt6a6D8pzR
+         r8CGOnkF+ecXvjuojYkpOu6dzJ6BLzwHzM2riT3lmZvFxkBegkszcXfpQnZI7+3uwR1l
+         fdbR1EXbRoNEdxhs5ytM+avDTg65pobuXhGMk/dQ7+uO5B2sZLN8z1XUyDGqKiadf/45
+         bTHFJq/2/j0hWmRjfdRNauubAaYLRWVsm0lhxkJTkvpX0C+tT8w5d5d/RIEnioGhzsxL
+         cn48/Cr4mcw7n1AFVyRJv3YXWuxFPzbaf7eHANceI06GhB25lmmQ5Jr6h2J1QcPPuF92
+         irgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679017092;
+        d=1e100.net; s=20210112; t=1679017792;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bBn6JQBx1SHJKZPB8zhAUv5Fuj/NGhkfmZs2i9hUcgA=;
-        b=2tDM8G47s7dHhEwh5VdKQut3waHsjCOXH+7u76hZc72rZ58SMHXvqBwsw7T/Lg6teZ
-         Kt2KBzucUitcMu2uAp9TPKQF7O9pYyGvep0qlv3gAb3ATkg7MeVc85O8ieLErfl9cETZ
-         uVAWiAc0Wj/qOhIBNNHoxCfgB8cqCXzLaASJ/sNOsclgS2G0kCyHOOa/n2hMGgPHZsqm
-         b/S4ranJXhkMHm83uwTIpGvnDe/i4SeJKw2lVt849A0JKNdPTyI6rCE5jjoo1ZbJsqPh
-         OAOarDL7yNNEoiG44BXMplmT9St1EJR7YvkqVDijXUpLXIpPHdkkjUz9bCIjnpcNF9/M
-         VygA==
-X-Gm-Message-State: AO0yUKXEiR+YlfpFfyI7FxIrwU7vP68ccv0OCq/0iN3LEMQQeoONqIKA
-	UAjC6GcyusePDi/7gI3nPrdKrhKMpaxdrlgrcmt04w==
-X-Google-Smtp-Source: AK7set8YSeusCd3ChZiDth1ZhkI6JI9Z0uq4CmeAATOagrzse4aeQHdjPRsmr+k9SuLvkMvvlZcIWBRnIAwrQievH/0=
-X-Received: by 2002:a67:f8c7:0:b0:412:4e02:ba9f with SMTP id
- c7-20020a67f8c7000000b004124e02ba9fmr30451280vsp.1.1679017091998; Thu, 16 Mar
- 2023 18:38:11 -0700 (PDT)
+        bh=v0NbEojGA+vmVWgCQ8nPj2yRSUaYaD5X4ms1AH9cdNM=;
+        b=EcATGagiNh9+IYQnNiDPUw8fr3CVu9ozbz0EMZeGPpqAk4Piayy5KB26Gs5scBvI8u
+         zsea3ETmh7wSF44IurngOdiK+oF7ttWZMaegYPo5KzRC1BzuEdjCfF3FesHvHB02zoMy
+         dtM55Ch0cCh61ZhgsJbbDl51r/82FD3sXWRL8SbbGJDK0lmEXULhb7sdBeoTTv5hqFBo
+         gukwp+ZRDNYE0dHRjfnITx4jN/x9NlM/pmTsnODu4ND/JbD7NYf3wkfqykftLuiu6O62
+         ncCMWVuHS2q4RrhaxOHMM8IFYtsW41o6CQwOQU7BPveAjpk9WcoOe97phv+I1HohU5EM
+         rJiQ==
+X-Gm-Message-State: AO0yUKUnVsh4lHV12kHhi6xgITiR6ZBwNCuGJzAz7gAaxXTblMSVnafY
+	QS2JPMrFJRStOGpHNNa1QHZwGxEb0PwXtRjoGWEwWg==
+X-Google-Smtp-Source: AK7set/qzFE+noVy2CFbGGqgTPsvWJHb7F1YUcPtah+pugW8UZ0tJz8vfd19RGkUu0Jea0g9jEidzCcAq9/5jZrSpfo=
+X-Received: by 2002:a9f:3104:0:b0:687:afc8:ffb9 with SMTP id
+ m4-20020a9f3104000000b00687afc8ffb9mr31309728uab.2.1679017791771; Thu, 16 Mar
+ 2023 18:49:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230316083443.733397152@linuxfoundation.org>
-In-Reply-To: <20230316083443.733397152@linuxfoundation.org>
+References: <20230316083444.336870717@linuxfoundation.org>
+In-Reply-To: <20230316083444.336870717@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Fri, 17 Mar 2023 07:08:00 +0530
-Message-ID: <CA+G9fYuErbJtY68zb32gkggNb96GRznoLS7OLfDSqBDD6-eJBw@mail.gmail.com>
-Subject: Re: [PATCH 6.2 000/137] 6.2.7-rc2 review
+Date: Fri, 17 Mar 2023 07:19:40 +0530
+Message-ID: <CA+G9fYu62rdAjiDpJjFsSTHk4qMpwx+gHrnDtKgevuh-xqHdhQ@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/140] 6.1.20-rc2 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -60,8 +60,8 @@ Content-Transfer-Encoding: quoted-printable
 On Thu, 16 Mar 2023 at 14:20, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.2.7 release.
-> There are 137 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.1.20 release.
+> There are 140 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -70,10 +70,10 @@ On Thu, 16 Mar 2023 at 14:20, Greg Kroah-Hartman
 >
 > The whole patch series can be found in one patch at:
 >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.2.7-rc2.gz
+6.1.20-rc2.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.2.y
+-rc.git linux-6.1.y
 > and the diffstat can be found below.
 >
 > thanks,
@@ -86,39 +86,39 @@ No regressions on arm64, arm, x86_64, and i386.
 Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
 ## Build
-* kernel: 6.2.7-rc2
+* kernel: 6.1.20-rc2
 * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.2.y
-* git commit: 2756d84ffc14891b590f8d8e516ee60adea3b3b8
-* git describe: v6.2.5-143-g2756d84ffc14
+* git branch: linux-6.1.y
+* git commit: 7887563347ee26d8ffb29c637246e923d4d71a0e
+* git describe: v6.1.18-146-g7887563347ee
 * test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.2.y/build/v6.2.5=
--143-g2756d84ffc14
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.1=
+8-146-g7887563347ee
 
-## Test Regressions (compared to v6.2.5)
+## Test Regressions (compared to v6.1.18)
 
-## Metric Regressions (compared to v6.2.5)
+## Metric Regressions (compared to v6.1.18)
 
-## Test Fixes (compared to v6.2.5)
+## Test Fixes (compared to v6.1.18)
 
-## Metric Fixes (compared to v6.2.5)
+## Metric Fixes (compared to v6.1.18)
 
 ## Test result summary
-total: 190311, pass: 163849, fail: 3908, skip: 22192, xfail: 362
+total: 167364, pass: 147749, fail: 4638, skip: 14593, xfail: 384
 
 ## Build Summary
 * arc: 5 total, 5 passed, 0 failed
-* arm: 145 total, 142 passed, 3 failed
-* arm64: 54 total, 53 passed, 1 failed
-* i386: 41 total, 38 passed, 3 failed
+* arm: 149 total, 148 passed, 1 failed
+* arm64: 51 total, 50 passed, 1 failed
+* i386: 39 total, 36 passed, 3 failed
 * mips: 30 total, 28 passed, 2 failed
 * parisc: 8 total, 8 passed, 0 failed
 * powerpc: 38 total, 36 passed, 2 failed
-* riscv: 26 total, 25 passed, 1 failed
+* riscv: 16 total, 15 passed, 1 failed
 * s390: 16 total, 16 passed, 0 failed
 * sh: 14 total, 12 passed, 2 failed
-* sparc: 8 total, 7 passed, 1 failed
-* x86_64: 46 total, 46 passed, 0 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 44 total, 44 passed, 0 failed
 
 ## Test suites summary
 * boot
@@ -135,7 +135,6 @@ total: 190311, pass: 163849, fail: 3908, skip: 22192, xfail: 362
 * kselftest-cpufreq
 * kselftest-drivers-dma-buf
 * kselftest-efivarfs
-* kselftest-exec
 * kselftest-filesystems
 * kselftest-filesystems-binderfs
 * kselftest-firmware
@@ -183,10 +182,7 @@ total: 190311, pass: 163849, fail: 3908, skip: 22192, xfail: 362
 * kselftest-tmpfs
 * kselftest-tpm2
 * kselftest-user
-* kselftest-user_events
-* kselftest-vDSO
 * kselftest-vm
-* kselftest-watchdog
 * kselftest-x86
 * kselftest-zram
 * kunit
@@ -222,12 +218,12 @@ total: 190311, pass: 163849, fail: 3908, skip: 22192, xfail: 362
 * ltp-smoke
 * ltp-syscalls
 * ltp-tracing
-* ltpa-6278247/0/tests/4_ltp-fsx
 * network-basic-tests
 * packetdrill
 * perf
 * rcutorture
 * v4l2-compliance
+* v4l2-complianciance
 * vdso
 
 --
