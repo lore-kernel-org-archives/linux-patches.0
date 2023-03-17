@@ -1,43 +1,43 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4769020F8
-	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 10:11:27 +0000 (UTC)
-Received: by mail-wr1-f44.google.com with SMTP id r29so3898628wra.13
-        for <patches@lists.linux.dev>; Fri, 17 Mar 2023 03:11:27 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F69620F8
+	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 10:12:47 +0000 (UTC)
+Received: by mail-wm1-f42.google.com with SMTP id bh21-20020a05600c3d1500b003ed1ff06fb0so2934369wmb.3
+        for <patches@lists.linux.dev>; Fri, 17 Mar 2023 03:12:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679047885;
+        d=gmail.com; s=20210112; t=1679047966;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ywd0zlvs+Ok8+NCtUrmMkjPrLX0hyvij+lHU7CL6uzw=;
-        b=PxKF0LKLaz7mpdWCzu7DSi1rKQ2iIRH4zjjR5EheliZ3I4AOf0r5uvbDl0iVjRAYnZ
-         w58gHBG8ZuqkG1PegJ27Fn2hJBs6xY8bIW++zH+BlutkQjIwpI8MZhJaQ7sYjWlU0Hmi
-         sdW/ox6tDQCiL1l2GPwzZQCl68+Y8ryiZdNnhYvwZsbzf1KTcKeIpM9/CRUJ0VOqE2ff
-         sxPvfDyLTa0mE9aZqejCYbrWhGfH1v0inQWD+4ekoEQMUuNd+7da2N7Z6Ku6ZAXysvHP
-         EQaUOIp4Wtd18MMoBwfAhxySzigegopwlj5KPMvs1oEM6gySBV1oNO8BkR/AcpUVF5r0
-         QPDw==
+        bh=DwS/vv31f4BuEfVrvdbvseaIFS29tE8KLLx+JthWfKo=;
+        b=kqYUbUCx7rarPzu1sjKivk4CQ1upiEdKzDr5T0rYLb87bdZ8TDWTTirWGwI6M/WVZE
+         T/ueZTlr/XJN+MhEGtYdA8+ZOSrZxkjlUAYtnX7h1edorVAFIkqNqY8A2VfbGHoJub84
+         VXmOTpw5y59SU7iWFMvd4ycCtOa93f8WF10alm5TJeroKb3upInUcfFqeZXAEJ034/R1
+         wu/hlSFEDBEz/haiMhZ3siTsqQ5G/Vkko4/iPNOQJs5miGzhzpiFdg3xaI1H+T9ujxWI
+         e0rNUf2PGJmbK6C02KGOkdjLUj1Rakm9KHxGZrcgHKkbC3Cymmv9pKAOamPRYXVh7F5H
+         hsCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679047885;
+        d=1e100.net; s=20210112; t=1679047966;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ywd0zlvs+Ok8+NCtUrmMkjPrLX0hyvij+lHU7CL6uzw=;
-        b=02jPU52c7+fJvX0oTBOUCV+6GrzCAYQpwwkb4ctrqSu6nVTcQdXK/rIzpqDY3jB9xW
-         RY9G2AzMtEGdh2bHlWtiFVOYhuPsh7WCMrPLYZx2Oq3fVh9JsT2iA4zGc5WpDSqRBr99
-         CP/+v9t6XO8f5eHuqgN8ifrcmKhL57gj5M3f0dlpjU1MVtSbQUCXcgq3kqA7LwxweutC
-         eUq03z0BGU3GFk0XCVKCqm2bm0VNRdz17cpvV5sw5KQAOjkxKYEyr+wjQ8VzZPUiuxt2
-         cpcA4qL9QzJN8vGqq207BQsgE73JGWR9LaWGej3hBZDurDk16xGlcA4xDUnp2gjM2c05
-         QABA==
-X-Gm-Message-State: AO0yUKU98EIjNBn6s6qFiBzJYXpQGDW6+FjBkk3+aPGuADW7UCTh5rbv
-	2pdE/Ur+YsHIts0tpLEcGxc=
-X-Google-Smtp-Source: AK7set/iFRs8ppYToM4Wd+e0OMERRL0dSQg3ICgKebjeYyFNLl6Kk+ipUdF/tDN8+Ay8lGhnFl59Mg==
-X-Received: by 2002:adf:e34e:0:b0:2ce:a251:6956 with SMTP id n14-20020adfe34e000000b002cea2516956mr6186771wrj.66.1679047885321;
-        Fri, 17 Mar 2023 03:11:25 -0700 (PDT)
+        bh=DwS/vv31f4BuEfVrvdbvseaIFS29tE8KLLx+JthWfKo=;
+        b=M8svf0lJWLIKDd9KKArZGD9tlltRIEe6c0r1X99RMOxBnQmzKGQFE+yu23GWk/b7fa
+         Q/LfbKuP9IG4Ak4/Wb21PL3uSXYv5WOEbx/lnj/ZIVlYBhWpMQAl46peaH3SuJKfZg4u
+         n/ZjYau2Ler10Imxt5oM8BFpzjbzLEs6WPshuPoAeuoaQGlB5PZGQYQNUWOIWnowHc9e
+         8VQ4BXRroOLblhzRgz2uKvaqX8UOkIQ8BeSBvoSa++7/16Ny1B38UOXKJa/3eDFnzPjs
+         qF5kMluqZBoaLRr4xZEr1qjm0ikuDCgJOxCs8xQnzaOCvJrwny5OwfScbt8NqRyNU7wl
+         Aqjw==
+X-Gm-Message-State: AO0yUKVPpoeCFHHb3wSey1lEZhTl0+/PZU7esSALP29nW60dtiUwLZxH
+	gXZbkN6alQ3xJis747Zw9Gs=
+X-Google-Smtp-Source: AK7set9t0nI25zcAALJYDS8Ya6hHA1lT5YjlB5SYqg/ZM0iK/wFqLj2Hwa4T8WrJ5MfdoTj9qk7Kiw==
+X-Received: by 2002:a05:600c:21c6:b0:3ed:775e:5257 with SMTP id x6-20020a05600c21c600b003ed775e5257mr1910770wmj.35.1679047965728;
+        Fri, 17 Mar 2023 03:12:45 -0700 (PDT)
 Received: from debian ([167.98.27.226])
-        by smtp.gmail.com with ESMTPSA id b7-20020a5d4b87000000b002cfe0ab1246sm1593401wrt.20.2023.03.17.03.11.24
+        by smtp.gmail.com with ESMTPSA id h20-20020a1ccc14000000b003dc522dd25esm1535687wmb.30.2023.03.17.03.12.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Mar 2023 03:11:25 -0700 (PDT)
-Date: Fri, 17 Mar 2023 10:11:22 +0000
+        Fri, 17 Mar 2023 03:12:45 -0700 (PDT)
+Date: Fri, 17 Mar 2023 10:12:43 +0000
 From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -46,9 +46,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
 	rwarsow@gmx.de
-Subject: Re: [PATCH 6.2 000/137] 6.2.7-rc2 review
-Message-ID: <ZBQ8yqfk3FgF06Fe@debian>
-References: <20230316083443.733397152@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 000/140] 6.1.20-rc2 review
+Message-ID: <ZBQ9Gzk4dGfeYUv6@debian>
+References: <20230316083444.336870717@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,13 +57,13 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230316083443.733397152@linuxfoundation.org>
+In-Reply-To: <20230316083444.336870717@linuxfoundation.org>
 
 Hi Greg,
 
-On Thu, Mar 16, 2023 at 09:50:31AM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.7 release.
-> There are 137 patches in this series, all will be posted as a response
+On Thu, Mar 16, 2023 at 09:50:22AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.20 release.
+> There are 140 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -85,12 +85,10 @@ xtensa allmodconfig -> no failure
 Boot test:
 x86_64: Booted on my test laptop. No regression.
 x86_64: Booted on qemu. No regression. [1]
-arm64: Booted on rpi4b (4GB model). No regression. [2]
-mips: Booted on ci20 board. No regression. [3]
+mips: Booted on ci20 board. No regression. [2]
 
-[1]. https://openqa.qa.codethink.co.uk/tests/3136
-[2]. https://openqa.qa.codethink.co.uk/tests/3147
-[3]. https://openqa.qa.codethink.co.uk/tests/3148
+[1]. https://openqa.qa.codethink.co.uk/tests/3134
+[2]. https://openqa.qa.codethink.co.uk/tests/3146
 
 Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
 
