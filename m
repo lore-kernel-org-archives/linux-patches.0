@@ -1,97 +1,66 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCDA373
-	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 04:42:00 +0000 (UTC)
-Received: by mail-pl1-f172.google.com with SMTP id i5so4082902pla.2
-        for <patches@lists.linux.dev>; Thu, 16 Mar 2023 21:42:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679028120;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3oQztqU78ZT+tQqAztj2/Sep9u0A1fhNGYG5/eDPvQQ=;
-        b=ogeZfnLsVIaIST03i51847uLuChbd4rUYQXHvcP8zkQUNHhXRasziBP8SiQS2aM0OQ
-         nO9bP5sigHc3SvMCU/Aa5GEhTptjfZg+3xGn4QHoH92pstpIclP8fXcdBwSEXNQ6yHKU
-         WqJBoInir0sFl+SUA/qxxMO9El7KlXMs/M/vNt8xs71xxxSViQIU31pMJezxlkWcrDS8
-         9HGYcDlv/Ep3QiyyYobCikR//rPTTrxvY70azXXZOketS4a1NuKgAbIXLd1sVdEeBF26
-         mKDVdDS5zkpy6u9Y9ncJ9ZMxw5IGM3DInNrrmuu8cyV0F5S/7oBOlFwPyxRmFnXAfrqo
-         SKAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679028120;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3oQztqU78ZT+tQqAztj2/Sep9u0A1fhNGYG5/eDPvQQ=;
-        b=EOIqrzSJnsLNzd883lisIiSFP4hy/ApUQHbXY36ySz4sCDCIJt4yfhiaUz1LomGb0c
-         MeylbUc6WUJA13+/0VKjwzgWTHkg+NO+gOaeGfAGCBje0GqWV0Lm2G1mUtq1GmkwqXEc
-         obEYt/pXk/bKvfXiEJsXkFA3h7oS3Zk0EpqgRwrkOIud4vwcxX/bTAK8D9gTsU9I74Pn
-         LSyK1APcOigFW/c9+pXjef2o1wPWJpvBtoOPCJ7rVAxbuqLJ6DjI0mgFvEtCibvfPSjg
-         x/RWHFAzg/VgsHBe1hdOFIcGbBUB11JbNyuZ05GIJW0xe7Hen4HttAaZ94HcIyZqClQK
-         wcWg==
-X-Gm-Message-State: AO0yUKX+ozVsTbhllsXhZmWSDl5cbrI5u5aLlQKd1uQ754aiSjovOBEu
-	uVv0FqjkPTMOVFOMb3TbroI=
-X-Google-Smtp-Source: AK7set86Aq4DKVfNN16hZY5NYjUMmeTEfvIfcpE3APKapY81xbPAVdTDh1PpgLqvClfg7SbsvPR3OA==
-X-Received: by 2002:a17:902:fa8b:b0:19d:14c:e590 with SMTP id lc11-20020a170902fa8b00b0019d014ce590mr4761933plb.9.1679028119966;
-        Thu, 16 Mar 2023 21:41:59 -0700 (PDT)
-Received: from debian.me (subs03-180-214-233-91.three.co.id. [180.214.233.91])
-        by smtp.gmail.com with ESMTPSA id d1-20020a170902728100b0019a7f427b79sm518231pll.119.2023.03.16.21.41.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 21:41:59 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-	id 0E7E0105FAD; Fri, 17 Mar 2023 11:41:55 +0700 (WIB)
-Date: Fri, 17 Mar 2023 11:41:55 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.2 000/137] 6.2.7-rc2 review
-Message-ID: <ZBPvk+qsO1SNWRZ6@debian.me>
-References: <20230316083443.733397152@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A265641
+	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 04:46:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869B4C433EF;
+	Fri, 17 Mar 2023 04:46:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1679028381;
+	bh=5yNWvQgLeD+W3TatQwurqoEHcZNBbmWYCS4gwWkQqRQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ctHhz266/vA9IBD/uqQDLslLpdKys6D4Y6BGhe6S3UjAa2tEsn5V5rsMx/YIZ6PI3
+	 ZGY7Vx9RI9qJwmwf+efl3lZHanEerNwtRcswPG6rvtmVyzs7qMlg9NzH7a3xrDipOD
+	 WkBO6QWnWIJbVnRnvvF59UI3tgjJV3GRzCXoi5IE=
+Date: Fri, 17 Mar 2023 05:46:18 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Tom Saeger <tom.saeger@oracle.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.15 000/137] 5.15.103-rc2 review
+Message-ID: <ZBPwmsMpxISpRw+G@kroah.com>
+References: <20230316083443.411936182@linuxfoundation.org>
+ <20230316193711.s4cwpbcayg24zv5l@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hI0+/BKgqinWJgLM"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230316083443.733397152@linuxfoundation.org>
+In-Reply-To: <20230316193711.s4cwpbcayg24zv5l@oracle.com>
 
+On Thu, Mar 16, 2023 at 01:37:11PM -0600, Tom Saeger wrote:
+> On Thu, Mar 16, 2023 at 09:50:12AM +0100, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.15.103 release.
+> > There are 137 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Sat, 18 Mar 2023 08:33:04 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.103-rc2.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > and the diffstat can be found below.
+> > 
+> > thanks,
+> > 
+> > greg k-h
+> 
+> Build ID for arm64 is back with CONFIG_MODVERSIONS=y
+> Hooray!
+> 
+> Tested-by: Tom Saeger <tom.saeger@oracle.com>
 
---hI0+/BKgqinWJgLM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yeah!  Thanks for sticking with that, sorry it took so long to get
+merged.
 
-On Thu, Mar 16, 2023 at 09:50:31AM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.7 release.
-> There are 137 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-
-Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
-powerpc (ps3_defconfig, GCC 12.2.0).
-
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---hI0+/BKgqinWJgLM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZBPvjgAKCRD2uYlJVVFO
-o0CvAQDJcWVbAMlyRpDPQpIY8SCVINyhjyV4HtUqAMlr0rQhDQD9GXqEjZp3Mvvg
-YoUbCKs8wCCgHMfjI1D461zvgZh4zAc=
-=7HGc
------END PGP SIGNATURE-----
-
---hI0+/BKgqinWJgLM--
+greg k-h
