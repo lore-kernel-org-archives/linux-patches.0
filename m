@@ -1,77 +1,54 @@
-Received: from wnew3-smtp.messagingengine.com (wnew3-smtp.messagingengine.com [64.147.123.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B67810
-	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 08:39:58 +0000 (UTC)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailnew.west.internal (Postfix) with ESMTP id 40E4A2B06754;
-	Fri, 17 Mar 2023 04:39:55 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Fri, 17 Mar 2023 04:39:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
-	1679042394; x=1679049594; bh=vd9YrYSnV4XdS8WGt7v2P7Vyy5NZXy01mXq
-	mDhxZrBk=; b=J5Flu0OFGnWhvnczWVSoPOJKDUehhmBYZx8M1v7obqIpWIJlYUH
-	PTGqbYbvMURhKg20tWtkTjMhVU1LLQYvtQYXrvKjT8PPF3gtmxkaGZaOxfv7pPOD
-	sp8WKeQG279mQ7PBEAv8nHP3pBze/hfCKQTQt8Ad+KWT0yR6NxSdhsg12OjHY8rZ
-	nqgJsXXSYojYL+QOoIJ/qh4rQ9Uiehgrmfn57ZcUalByr1EDyh/0erX9LFx0PRM7
-	MTWb5wTQ8ZO/42AyMIQL1X4ybU7liD7d1ApxE/WXqeLq6R1mNofBg3ukeJYn+9YU
-	tbiOpECuDKPBgPzexnLmrCUcGTPEDGVSsJA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1679042394; x=1679049594; bh=vd9YrYSnV4XdS8WGt7v2P7Vyy5NZXy01mXq
-	mDhxZrBk=; b=KqtwJZjwVnUe5XBlxTwzUKQNXyC3Rfsei1gmTYeUHmfumN9D6xG
-	09uK5EKqNS+BBcRqEe5TaalMgM1TqLZZssOtpMDrCuJTu5rA9H1JBAFNTk/1AuLe
-	sIE0ZzNC14+F1kvMpLuhD6yimW4RlLH8dtvEHYQL3wiHN/E0LTpCpAZjzWm39089
-	nQY+ydpKmPpU69PFkZGUruBLAUFvrROZT8Abkv/joe4n5TgVzExbwEHiNzmpTuQf
-	p+ScDFBOpLur5LwyhJPMsr0oE5KtukTw1bX5nsjTvvGOvS1chYho8w6vo3ptoTpm
-	cFbOdQ9AWm7hg4GgCsvc1FgRFNWNNPed0MQ==
-X-ME-Sender: <xms:WicUZHLilA8zXpe5Xb1fj3MjTT_oK8DCnUE9GCcRjRDnvbCzy72yzw>
-    <xme:WicUZLLy5EqEHolQ1oAGq-md_oHg6x8Xf1cgdYuR0QByrIHTaABMu5m15uAq0Z1fr
-    ZL4nQfj41mAGsNHkCE>
-X-ME-Received: <xmr:WicUZPuZ_6TZ6oGcbxdPMMxZzZkoDNHiCj8S5ax3eVW2TnOQHs5nbHJfsb4SFfn7bzXNCkDLHmQwTa_ZVhf_N-_T6kO8Q-4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdefuddguddvgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtugfgjgesthhqredttddtvdenucfhrhhomhepofgr
-    gihimhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtf
-    frrghtthgvrhhnpeeitdeuffevieeufedtuddvffffffegfffgkeeihfelleektdelhfev
-    hfduudfhgfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmhgrgihimhgvsegtvghrnhhordht
-    vggthh
-X-ME-Proxy: <xmx:WicUZAZ-c8e0fPKAOsp-qMCsIOlSrT-zVWG5n-P4NsktYNrXKJEPmw>
-    <xmx:WicUZObQMU2D5jvplwyUvdeuBpE28F4Zgi4VUi1Y21G_AssogWcU6A>
-    <xmx:WicUZEAy0yj0Eg9FZp8z1DN3HQkMUEb9imJ_jeUciBfXTU0CXo0epw>
-    <xmx:WicUZBldN-2lwA1IiSkG-EhWzd4we2dkvC2wdt2HqTupC5jE7QPPL-pnr1E>
-Feedback-ID: i8771445c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Mar 2023 04:39:53 -0400 (EDT)
-Date: Fri, 17 Mar 2023 09:39:51 +0100
-From: Maxime Ripard <maxime@cerno.tech>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J . Wysocki" <rafael@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	devicetree@vger.kernel.org, linux-kselftest@vger.kernel.org,
-	kunit-dev@googlegroups.com
-Subject: Re: [PATCH v2 00/11] clk: Add kunit tests for fixed rate and parent
- data
-Message-ID: <20230317083951.oaupqybf7llrpmeo@houat>
-References: <20230315183729.2376178-1-sboyd@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4769020F8
+	for <patches@lists.linux.dev>; Fri, 17 Mar 2023 10:11:27 +0000 (UTC)
+Received: by mail-wr1-f44.google.com with SMTP id r29so3898628wra.13
+        for <patches@lists.linux.dev>; Fri, 17 Mar 2023 03:11:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679047885;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ywd0zlvs+Ok8+NCtUrmMkjPrLX0hyvij+lHU7CL6uzw=;
+        b=PxKF0LKLaz7mpdWCzu7DSi1rKQ2iIRH4zjjR5EheliZ3I4AOf0r5uvbDl0iVjRAYnZ
+         w58gHBG8ZuqkG1PegJ27Fn2hJBs6xY8bIW++zH+BlutkQjIwpI8MZhJaQ7sYjWlU0Hmi
+         sdW/ox6tDQCiL1l2GPwzZQCl68+Y8ryiZdNnhYvwZsbzf1KTcKeIpM9/CRUJ0VOqE2ff
+         sxPvfDyLTa0mE9aZqejCYbrWhGfH1v0inQWD+4ekoEQMUuNd+7da2N7Z6Ku6ZAXysvHP
+         EQaUOIp4Wtd18MMoBwfAhxySzigegopwlj5KPMvs1oEM6gySBV1oNO8BkR/AcpUVF5r0
+         QPDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679047885;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ywd0zlvs+Ok8+NCtUrmMkjPrLX0hyvij+lHU7CL6uzw=;
+        b=02jPU52c7+fJvX0oTBOUCV+6GrzCAYQpwwkb4ctrqSu6nVTcQdXK/rIzpqDY3jB9xW
+         RY9G2AzMtEGdh2bHlWtiFVOYhuPsh7WCMrPLYZx2Oq3fVh9JsT2iA4zGc5WpDSqRBr99
+         CP/+v9t6XO8f5eHuqgN8ifrcmKhL57gj5M3f0dlpjU1MVtSbQUCXcgq3kqA7LwxweutC
+         eUq03z0BGU3GFk0XCVKCqm2bm0VNRdz17cpvV5sw5KQAOjkxKYEyr+wjQ8VzZPUiuxt2
+         cpcA4qL9QzJN8vGqq207BQsgE73JGWR9LaWGej3hBZDurDk16xGlcA4xDUnp2gjM2c05
+         QABA==
+X-Gm-Message-State: AO0yUKU98EIjNBn6s6qFiBzJYXpQGDW6+FjBkk3+aPGuADW7UCTh5rbv
+	2pdE/Ur+YsHIts0tpLEcGxc=
+X-Google-Smtp-Source: AK7set/iFRs8ppYToM4Wd+e0OMERRL0dSQg3ICgKebjeYyFNLl6Kk+ipUdF/tDN8+Ay8lGhnFl59Mg==
+X-Received: by 2002:adf:e34e:0:b0:2ce:a251:6956 with SMTP id n14-20020adfe34e000000b002cea2516956mr6186771wrj.66.1679047885321;
+        Fri, 17 Mar 2023 03:11:25 -0700 (PDT)
+Received: from debian ([167.98.27.226])
+        by smtp.gmail.com with ESMTPSA id b7-20020a5d4b87000000b002cfe0ab1246sm1593401wrt.20.2023.03.17.03.11.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Mar 2023 03:11:25 -0700 (PDT)
+Date: Fri, 17 Mar 2023 10:11:22 +0000
+From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: Re: [PATCH 6.2 000/137] 6.2.7-rc2 review
+Message-ID: <ZBQ8yqfk3FgF06Fe@debian>
+References: <20230316083443.733397152@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -80,39 +57,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230315183729.2376178-1-sboyd@kernel.org>
+In-Reply-To: <20230316083443.733397152@linuxfoundation.org>
 
-Hi,
+Hi Greg,
 
-On Wed, Mar 15, 2023 at 11:37:17AM -0700, Stephen Boyd wrote:
-> This patch series adds unit tests for the clk fixed rate basic type and
-> the clk registration functions that use struct clk_parent_data. To get
-> there, we add support for loading device tree overlays onto the live DTB
-> along with probing platform drivers to bind to device nodes in the
-> overlays. With this series, we're able to exercise some of the code in
-> the common clk framework that uses devicetree lookups to find parents
-> and the fixed rate clk code that scans device tree directly and creates
-> clks. Please review.
->=20
-> I Cced everyone to all the patches so they get the full context. I'm
-> hoping I can take the whole pile through the clk tree as they almost all
-> depend on each other.
->=20
-> Changes from v1 (https://lore.kernel.org/r/20230302013822.1808711-1-sboyd=
-@kernel.org):
->  * Don't depend on UML, use unittest data approach to attach nodes
->  * Introduce overlay loading API for KUnit
->  * Move platform_device KUnit code to drivers/base/test
->  * Use #define macros for constants shared between unit tests and
->    overlays
->  * Settle on "test" as a vendor prefix
->  * Make KUnit wrappers have "_kunit" postfix
+On Thu, Mar 16, 2023 at 09:50:31AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.2.7 release.
+> There are 137 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 18 Mar 2023 08:33:04 +0000.
+> Anything received after that time might be too late.
 
-Maybe I'm overthinking this, but wouldn't it make more sense to have a
-kunit *prefix* to those functions? Any other function in the kernel
-taking a kunit test pointer as a parameter starts with kunit (like
-kunit_kzalloc), so it would make more sense to me that kunit-related clk
-functions follow the same pattern.
+Build test (gcc version 12.2.1 20230311):
+mips: 52 configs -> no failure
+arm: 100 configs -> no failure
+arm64: 3 configs -> no failure
+x86_64: 4 configs -> no failure
+alpha allmodconfig -> no failure
+csky allmodconfig -> no failure
+powerpc allmodconfig -> no failure
+riscv allmodconfig -> no failure
+s390 allmodconfig -> no failure
+xtensa allmodconfig -> no failure
 
-Maxime
+Boot test:
+x86_64: Booted on my test laptop. No regression.
+x86_64: Booted on qemu. No regression. [1]
+arm64: Booted on rpi4b (4GB model). No regression. [2]
+mips: Booted on ci20 board. No regression. [3]
+
+[1]. https://openqa.qa.codethink.co.uk/tests/3136
+[2]. https://openqa.qa.codethink.co.uk/tests/3147
+[3]. https://openqa.qa.codethink.co.uk/tests/3148
+
+Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+
+-- 
+Regards
+Sudip
