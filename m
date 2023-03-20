@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B396E1C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A1EC433D2;
-	Mon, 20 Mar 2023 15:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F36D1C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35EFC4339C;
+	Mon, 20 Mar 2023 15:30:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326222;
-	bh=/zEccRYt2A+BNUbZOjVluv+Br7BUwWUZecqOTNs656M=;
+	s=korg; t=1679326225;
+	bh=QGsbkLhb89YvLy4hDjzoDeig+7yhipWhb45h0SBcCNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ro7k/OEkC/uN9Btpp8Feq5rqtYfudgA2qJYY95EDzTQe1nGz1umq8muGmliX3D0bc
-	 jz2sPDE/qlS+3esrgMgbVJKXcyjntj5inaJraMVt3f2RV4c8aKIGqYUmqCiN1iC68U
-	 DFvpbzpo4p6RptQ0AHdgKw1saxCSamTvcGdbh7j8=
+	b=Cd4OoI8dabuoSwTJ/XrmNobETqMOTglBq/lE68h3m2FfKwwBnncVaBhrlV8P4mi5K
+	 cnKKJK/vVFUXB+JLkSWpztNaBdOQaPvcyu23iauPdLzL3McziBwLHRk+NhlzUKcRZb
+	 5+/Ekwl9cf3XyIcRF0pJhZd9Q8nkU3HikOLzQ87U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paolo Abeni <pabeni@redhat.com>,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Christoph Paasch <cpaasch@apple.com>
-Subject: [PATCH 6.2 173/211] mptcp: fix possible deadlock in subflow_error_report
-Date: Mon, 20 Mar 2023 15:55:08 +0100
-Message-Id: <20230320145520.693855756@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.2 174/211] mptcp: refactor passive socket initialization
+Date: Mon, 20 Mar 2023 15:55:09 +0100
+Message-Id: <20230320145520.743734782@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -38,52 +38,139 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-commit b7a679ba7c652587b85294f4953f33ac0b756d40 upstream.
+commit 3a236aef280ed5122b2d47087eb514d0921ae033 upstream.
 
-Christoph reported a possible deadlock while the TCP stack
-destroys an unaccepted subflow due to an incoming reset: the
-MPTCP socket error path tries to acquire the msk-level socket
-lock while TCP still owns the listener socket accept queue
-spinlock, and the reverse dependency already exists in the
-TCP stack.
+After commit 30e51b923e43 ("mptcp: fix unreleased socket in accept queue")
+unaccepted msk sockets go throu complete shutdown, we don't need anymore
+to delay inserting the first subflow into the subflow lists.
 
-Note that the above is actually a lockdep false positive, as
-the chain involves two separate sockets. A different per-socket
-lockdep key will address the issue, but such a change will be
-quite invasive.
+The reference counting deserve some extra care, as __mptcp_close() is
+unaware of the request socket linkage to the first subflow.
 
-Instead, we can simply stop earlier the socket error handling
-for orphaned or unaccepted subflows, breaking the critical
-lockdep chain. Error handling in such a scenario is a no-op.
+Please note that this is more a refactoring than a fix but because this
+modification is needed to include other corrections, see the following
+commits. Then a Fixes tag has been added here to help the stable team.
 
-Reported-and-tested-by: Christoph Paasch <cpaasch@apple.com>
-Fixes: 15cc10453398 ("mptcp: deliver ssk errors to msk")
+Fixes: 30e51b923e43 ("mptcp: fix unreleased socket in accept queue")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/355
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Tested-by: Christoph Paasch <cpaasch@apple.com>
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/subflow.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/mptcp/protocol.c |   17 -----------------
+ net/mptcp/subflow.c  |   27 +++++++++++++++++++++------
+ 2 files changed, 21 insertions(+), 23 deletions(-)
 
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -825,7 +825,6 @@ static bool __mptcp_finish_join(struct m
+ 	if (sk->sk_socket && !ssk->sk_socket)
+ 		mptcp_sock_graft(ssk, sk->sk_socket);
+ 
+-	mptcp_propagate_sndbuf((struct sock *)msk, ssk);
+ 	mptcp_sockopt_sync_locked(msk, ssk);
+ 	return true;
+ }
+@@ -3699,22 +3698,6 @@ static int mptcp_stream_accept(struct so
+ 
+ 		lock_sock(newsk);
+ 
+-		/* PM/worker can now acquire the first subflow socket
+-		 * lock without racing with listener queue cleanup,
+-		 * we can notify it, if needed.
+-		 *
+-		 * Even if remote has reset the initial subflow by now
+-		 * the refcnt is still at least one.
+-		 */
+-		subflow = mptcp_subflow_ctx(msk->first);
+-		list_add(&subflow->node, &msk->conn_list);
+-		sock_hold(msk->first);
+-		if (mptcp_is_fully_established(newsk))
+-			mptcp_pm_fully_established(msk, msk->first, GFP_KERNEL);
+-
+-		mptcp_rcv_space_init(msk, msk->first);
+-		mptcp_propagate_sndbuf(newsk, msk->first);
+-
+ 		/* set ssk->sk_socket of accept()ed flows to mptcp socket.
+ 		 * This is needed so NOSPACE flag can be set from tcp stack.
+ 		 */
 --- a/net/mptcp/subflow.c
 +++ b/net/mptcp/subflow.c
-@@ -1431,6 +1431,13 @@ static void subflow_error_report(struct
- {
- 	struct sock *sk = mptcp_subflow_ctx(ssk)->conn;
+@@ -396,6 +396,12 @@ void mptcp_subflow_reset(struct sock *ss
+ 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
+ 	struct sock *sk = subflow->conn;
  
-+	/* bail early if this is a no-op, so that we avoid introducing a
-+	 * problematic lockdep dependency between TCP accept queue lock
-+	 * and msk socket spinlock
++	/* mptcp_mp_fail_no_response() can reach here on an already closed
++	 * socket
 +	 */
-+	if (!sk->sk_socket)
++	if (ssk->sk_state == TCP_CLOSE)
 +		return;
 +
- 	mptcp_data_lock(sk);
- 	if (!sock_owned_by_user(sk))
- 		__mptcp_error_report(sk);
+ 	/* must hold: tcp_done() could drop last reference on parent */
+ 	sock_hold(sk);
+ 
+@@ -749,6 +755,7 @@ static struct sock *subflow_syn_recv_soc
+ 	struct mptcp_options_received mp_opt;
+ 	bool fallback, fallback_is_fatal;
+ 	struct sock *new_msk = NULL;
++	struct mptcp_sock *owner;
+ 	struct sock *child;
+ 
+ 	pr_debug("listener=%p, req=%p, conn=%p", listener, req, listener->conn);
+@@ -823,6 +830,8 @@ create_child:
+ 		ctx->setsockopt_seq = listener->setsockopt_seq;
+ 
+ 		if (ctx->mp_capable) {
++			owner = mptcp_sk(new_msk);
++
+ 			/* this can't race with mptcp_close(), as the msk is
+ 			 * not yet exposted to user-space
+ 			 */
+@@ -831,14 +840,14 @@ create_child:
+ 			/* record the newly created socket as the first msk
+ 			 * subflow, but don't link it yet into conn_list
+ 			 */
+-			WRITE_ONCE(mptcp_sk(new_msk)->first, child);
++			WRITE_ONCE(owner->first, child);
+ 
+ 			/* new mpc subflow takes ownership of the newly
+ 			 * created mptcp socket
+ 			 */
+ 			mptcp_sk(new_msk)->setsockopt_seq = ctx->setsockopt_seq;
+-			mptcp_pm_new_connection(mptcp_sk(new_msk), child, 1);
+-			mptcp_token_accept(subflow_req, mptcp_sk(new_msk));
++			mptcp_pm_new_connection(owner, child, 1);
++			mptcp_token_accept(subflow_req, owner);
+ 			ctx->conn = new_msk;
+ 			new_msk = NULL;
+ 
+@@ -846,15 +855,21 @@ create_child:
+ 			 * uses the correct data
+ 			 */
+ 			mptcp_copy_inaddrs(ctx->conn, child);
++			mptcp_propagate_sndbuf(ctx->conn, child);
++
++			mptcp_rcv_space_init(owner, child);
++			list_add(&ctx->node, &owner->conn_list);
++			sock_hold(child);
+ 
+ 			/* with OoO packets we can reach here without ingress
+ 			 * mpc option
+ 			 */
+-			if (mp_opt.suboptions & OPTION_MPTCP_MPC_ACK)
++			if (mp_opt.suboptions & OPTION_MPTCP_MPC_ACK) {
+ 				mptcp_subflow_fully_established(ctx, &mp_opt);
++				mptcp_pm_fully_established(owner, child, GFP_ATOMIC);
++				ctx->pm_notified = 1;
++			}
+ 		} else if (ctx->mp_join) {
+-			struct mptcp_sock *owner;
+-
+ 			owner = subflow_req->msk;
+ 			if (!owner) {
+ 				subflow_add_reset_reason(skb, MPTCP_RST_EPROHIBIT);
 
 
