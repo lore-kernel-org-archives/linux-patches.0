@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95681C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364E0C433EF;
-	Mon, 20 Mar 2023 15:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEA91C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04DE5C433EF;
+	Mon, 20 Mar 2023 15:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325471;
-	bh=aHnvVvftlidUe7YbELa/tjO4vAvn7+JvlAjaZ+jlFQk=;
+	s=korg; t=1679325474;
+	bh=+lkgRQaE4nsE9iMGjMvVg25Rcgn49QxVrJToTJ1I3Y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OlE5uN6eQOeDKBqGJ4OfDqdaUOzZ5iCU/NLft4Im8cOAA2XgGxuKlZ7YdlF7pmkoq
-	 1FgL1mo6YjXcEbs/KuKju5M4CzoadZoNUpegQaVfFB2mymS4vBgrKSmkQ/7YtIH4Q6
-	 qpCD7bwwiEFEUExZfPUf+RG5WbLQnnxzPZlHcQHM=
+	b=YOyJGY1AgC2UYh3xSV+TohEQPrKYAJzuMP+2+M1/8PDxm6k+wG6sEWgQb++xmLHlS
+	 zRTCFR6ofvfWfQxB/8KrjOET2dNMfxmrt7xa9CVupC/dD5L7D8p7T+Y16AShIvMOPG
+	 kD25BcT7pbmpB4KyrHFoaPV+sMB8kV5eO2XNgNxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Hao <xhao@linux.alibaba.com>,
-	Shawn Wang <shawnwang@linux.alibaba.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 5.15 108/115] x86/resctrl: Clear staged_config[] before and after it is used
-Date: Mon, 20 Mar 2023 15:55:20 +0100
-Message-Id: <20230320145453.967947750@linuxfoundation.org>
+	Vadim Fedorenko <vadfed@meta.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 047/211] bnxt_en: reset PHC frequency in free-running mode
+Date: Mon, 20 Mar 2023 15:53:02 +0100
+Message-Id: <20230320145515.199436863@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,165 +36,169 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shawn Wang <shawnwang@linux.alibaba.com>
+From: Vadim Fedorenko <vadfed@meta.com>
 
-commit 0424a7dfe9129b93f29b277511a60e87f052ac6b upstream.
+[ Upstream commit 131db499162274858bdbd7b5323a639da4aab86c ]
 
-As a temporary storage, staged_config[] in rdt_domain should be cleared
-before and after it is used. The stale value in staged_config[] could
-cause an MSR access error.
+When using a PHC in shared between multiple hosts, the previous
+frequency value may not be reset and could lead to host being unable to
+compensate the offset with timecounter adjustments. To avoid such state
+reset the hardware frequency of PHC to zero on init. Some refactoring is
+needed to make code readable.
 
-Here is a reproducer on a system with 16 usable CLOSIDs for a 15-way L3
-Cache (MBA should be disabled if the number of CLOSIDs for MB is less than
-16.) :
-	mount -t resctrl resctrl -o cdp /sys/fs/resctrl
-	mkdir /sys/fs/resctrl/p{1..7}
-	umount /sys/fs/resctrl/
-	mount -t resctrl resctrl /sys/fs/resctrl
-	mkdir /sys/fs/resctrl/p{1..8}
-
-An error occurs when creating resource group named p8:
-    unchecked MSR access error: WRMSR to 0xca0 (tried to write 0x00000000000007ff) at rIP: 0xffffffff82249142 (cat_wrmsr+0x32/0x60)
-    Call Trace:
-     <IRQ>
-     __flush_smp_call_function_queue+0x11d/0x170
-     __sysvec_call_function+0x24/0xd0
-     sysvec_call_function+0x89/0xc0
-     </IRQ>
-     <TASK>
-     asm_sysvec_call_function+0x16/0x20
-
-When creating a new resource control group, hardware will be configured
-by the following process:
-    rdtgroup_mkdir()
-      rdtgroup_mkdir_ctrl_mon()
-        rdtgroup_init_alloc()
-          resctrl_arch_update_domains()
-
-resctrl_arch_update_domains() iterates and updates all resctrl_conf_type
-whose have_new_ctrl is true. Since staged_config[] holds the same values as
-when CDP was enabled, it will continue to update the CDP_CODE and CDP_DATA
-configurations. When group p8 is created, get_config_index() called in
-resctrl_arch_update_domains() will return 16 and 17 as the CLOSIDs for
-CDP_CODE and CDP_DATA, which will be translated to an invalid register -
-0xca0 in this scenario.
-
-Fix it by clearing staged_config[] before and after it is used.
-
-[reinette: re-order commit tags]
-
-Fixes: 75408e43509e ("x86/resctrl: Allow different CODE/DATA configurations to be staged")
-Suggested-by: Xin Hao <xhao@linux.alibaba.com>
-Signed-off-by: Shawn Wang <shawnwang@linux.alibaba.com>
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Tested-by: Reinette Chatre <reinette.chatre@intel.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/2fad13f49fbe89687fc40e9a5a61f23a28d1507a.1673988935.git.reinette.chatre%40intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 85036aee1938 ("bnxt_en: Add a non-real time mode to access NIC clock")
+Signed-off-by: Vadim Fedorenko <vadfed@meta.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://lore.kernel.org/r/20230310151356.678059-1-vadfed@meta.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/resctrl/ctrlmondata.c |    7 ++-----
- arch/x86/kernel/cpu/resctrl/internal.h    |    1 +
- arch/x86/kernel/cpu/resctrl/rdtgroup.c    |   25 +++++++++++++++++++++----
- 3 files changed, 24 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     |  6 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h     |  2 +
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 56 ++++++++++---------
+ 3 files changed, 35 insertions(+), 29 deletions(-)
 
---- a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-+++ b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-@@ -353,7 +353,6 @@ ssize_t rdtgroup_schemata_write(struct k
- {
- 	struct resctrl_schema *s;
- 	struct rdtgroup *rdtgrp;
--	struct rdt_domain *dom;
- 	struct rdt_resource *r;
- 	char *tok, *resname;
- 	int ret = 0;
-@@ -382,10 +381,7 @@ ssize_t rdtgroup_schemata_write(struct k
- 		goto out;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 25d1642c10c3b..b44b2ec5e61a2 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -6991,11 +6991,9 @@ static int bnxt_hwrm_func_qcfg(struct bnxt *bp)
+ 		if (flags & FUNC_QCFG_RESP_FLAGS_FW_DCBX_AGENT_ENABLED)
+ 			bp->fw_cap |= BNXT_FW_CAP_DCBX_AGENT;
  	}
- 
--	list_for_each_entry(s, &resctrl_schema_all, list) {
--		list_for_each_entry(dom, &s->res->domains, list)
--			memset(dom->staged_config, 0, sizeof(dom->staged_config));
+-	if (BNXT_PF(bp) && (flags & FUNC_QCFG_RESP_FLAGS_MULTI_HOST)) {
++	if (BNXT_PF(bp) && (flags & FUNC_QCFG_RESP_FLAGS_MULTI_HOST))
+ 		bp->flags |= BNXT_FLAG_MULTI_HOST;
+-		if (bp->fw_cap & BNXT_FW_CAP_PTP_RTC)
+-			bp->fw_cap &= ~BNXT_FW_CAP_PTP_RTC;
 -	}
-+	rdt_staged_configs_clear();
++
+ 	if (flags & FUNC_QCFG_RESP_FLAGS_RING_MONITOR_ENABLED)
+ 		bp->fw_cap |= BNXT_FW_CAP_RING_MONITOR;
  
- 	while ((tok = strsep(&buf, "\n")) != NULL) {
- 		resname = strim(strsep(&tok, ":"));
-@@ -422,6 +418,7 @@ ssize_t rdtgroup_schemata_write(struct k
- 	}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index 5163ef4a49ea3..56355e64815e2 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -1992,6 +1992,8 @@ struct bnxt {
+ 	u32			fw_dbg_cap;
  
- out:
-+	rdt_staged_configs_clear();
- 	rdtgroup_kn_unlock(of->kn);
- 	cpus_read_unlock();
- 	return ret ?: nbytes;
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -550,5 +550,6 @@ bool has_busy_rmid(struct rdt_resource *
- void __check_limbo(struct rdt_domain *d, bool force_free);
- void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
- void __init thread_throttle_mode_init(void);
-+void rdt_staged_configs_clear(void);
+ #define BNXT_NEW_RM(bp)		((bp)->fw_cap & BNXT_FW_CAP_NEW_RM)
++#define BNXT_PTP_USE_RTC(bp)	(!BNXT_MH(bp) && \
++				 ((bp)->fw_cap & BNXT_FW_CAP_PTP_RTC))
+ 	u32			hwrm_spec_code;
+ 	u16			hwrm_cmd_seq;
+ 	u16                     hwrm_cmd_kong_seq;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
+index 4ec8bba18cdd2..a3a3978a4d1c2 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
+@@ -63,7 +63,7 @@ static int bnxt_ptp_settime(struct ptp_clock_info *ptp_info,
+ 						ptp_info);
+ 	u64 ns = timespec64_to_ns(ts);
  
- #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -78,6 +78,19 @@ void rdt_last_cmd_printf(const char *fmt
- 	va_end(ap);
+-	if (ptp->bp->fw_cap & BNXT_FW_CAP_PTP_RTC)
++	if (BNXT_PTP_USE_RTC(ptp->bp))
+ 		return bnxt_ptp_cfg_settime(ptp->bp, ns);
+ 
+ 	spin_lock_bh(&ptp->ptp_lock);
+@@ -196,7 +196,7 @@ static int bnxt_ptp_adjtime(struct ptp_clock_info *ptp_info, s64 delta)
+ 	struct bnxt_ptp_cfg *ptp = container_of(ptp_info, struct bnxt_ptp_cfg,
+ 						ptp_info);
+ 
+-	if (ptp->bp->fw_cap & BNXT_FW_CAP_PTP_RTC)
++	if (BNXT_PTP_USE_RTC(ptp->bp))
+ 		return bnxt_ptp_adjphc(ptp, delta);
+ 
+ 	spin_lock_bh(&ptp->ptp_lock);
+@@ -205,34 +205,39 @@ static int bnxt_ptp_adjtime(struct ptp_clock_info *ptp_info, s64 delta)
+ 	return 0;
  }
  
-+void rdt_staged_configs_clear(void)
++static int bnxt_ptp_adjfine_rtc(struct bnxt *bp, long scaled_ppm)
 +{
-+	struct rdt_resource *r;
-+	struct rdt_domain *dom;
++	s32 ppb = scaled_ppm_to_ppb(scaled_ppm);
++	struct hwrm_port_mac_cfg_input *req;
++	int rc;
 +
-+	lockdep_assert_held(&rdtgroup_mutex);
++	rc = hwrm_req_init(bp, req, HWRM_PORT_MAC_CFG);
++	if (rc)
++		return rc;
 +
-+	for_each_alloc_capable_rdt_resource(r) {
-+		list_for_each_entry(dom, &r->domains, list)
-+			memset(dom->staged_config, 0, sizeof(dom->staged_config));
-+	}
++	req->ptp_freq_adj_ppb = cpu_to_le32(ppb);
++	req->enables = cpu_to_le32(PORT_MAC_CFG_REQ_ENABLES_PTP_FREQ_ADJ_PPB);
++	rc = hwrm_req_send(bp, req);
++	if (rc)
++		netdev_err(bp->dev,
++			   "ptp adjfine failed. rc = %d\n", rc);
++	return rc;
 +}
 +
- /*
-  * Trivial allocator for CLOSIDs. Since h/w only supports a small number,
-  * we can keep a bitmap of free CLOSIDs in a single integer.
-@@ -2813,7 +2826,9 @@ static int rdtgroup_init_alloc(struct rd
+ static int bnxt_ptp_adjfine(struct ptp_clock_info *ptp_info, long scaled_ppm)
  {
- 	struct resctrl_schema *s;
- 	struct rdt_resource *r;
--	int ret;
-+	int ret = 0;
-+
-+	rdt_staged_configs_clear();
+ 	struct bnxt_ptp_cfg *ptp = container_of(ptp_info, struct bnxt_ptp_cfg,
+ 						ptp_info);
+-	struct hwrm_port_mac_cfg_input *req;
+ 	struct bnxt *bp = ptp->bp;
+-	int rc = 0;
  
- 	list_for_each_entry(s, &resctrl_schema_all, list) {
- 		r = s->res;
-@@ -2822,20 +2837,22 @@ static int rdtgroup_init_alloc(struct rd
- 		} else {
- 			ret = rdtgroup_init_cat(s, rdtgrp->closid);
- 			if (ret < 0)
--				return ret;
-+				goto out;
- 		}
+-	if (!(ptp->bp->fw_cap & BNXT_FW_CAP_PTP_RTC)) {
+-		spin_lock_bh(&ptp->ptp_lock);
+-		timecounter_read(&ptp->tc);
+-		ptp->cc.mult = adjust_by_scaled_ppm(ptp->cmult, scaled_ppm);
+-		spin_unlock_bh(&ptp->ptp_lock);
+-	} else {
+-		s32 ppb = scaled_ppm_to_ppb(scaled_ppm);
+-
+-		rc = hwrm_req_init(bp, req, HWRM_PORT_MAC_CFG);
+-		if (rc)
+-			return rc;
++	if (BNXT_PTP_USE_RTC(bp))
++		return bnxt_ptp_adjfine_rtc(bp, scaled_ppm);
  
- 		ret = resctrl_arch_update_domains(r, rdtgrp->closid);
- 		if (ret < 0) {
- 			rdt_last_cmd_puts("Failed to initialize allocations\n");
--			return ret;
-+			goto out;
- 		}
- 
- 	}
- 
- 	rdtgrp->mode = RDT_MODE_SHAREABLE;
- 
--	return 0;
-+out:
-+	rdt_staged_configs_clear();
-+	return ret;
+-		req->ptp_freq_adj_ppb = cpu_to_le32(ppb);
+-		req->enables = cpu_to_le32(PORT_MAC_CFG_REQ_ENABLES_PTP_FREQ_ADJ_PPB);
+-		rc = hwrm_req_send(ptp->bp, req);
+-		if (rc)
+-			netdev_err(ptp->bp->dev,
+-				   "ptp adjfine failed. rc = %d\n", rc);
+-	}
+-	return rc;
++	spin_lock_bh(&ptp->ptp_lock);
++	timecounter_read(&ptp->tc);
++	ptp->cc.mult = adjust_by_scaled_ppm(ptp->cmult, scaled_ppm);
++	spin_unlock_bh(&ptp->ptp_lock);
++	return 0;
  }
  
- static int mkdir_rdt_prepare(struct kernfs_node *parent_kn,
+ void bnxt_ptp_pps_event(struct bnxt *bp, u32 data1, u32 data2)
+@@ -879,7 +884,7 @@ int bnxt_ptp_init_rtc(struct bnxt *bp, bool phc_cfg)
+ 	u64 ns;
+ 	int rc;
+ 
+-	if (!bp->ptp_cfg || !(bp->fw_cap & BNXT_FW_CAP_PTP_RTC))
++	if (!bp->ptp_cfg || !BNXT_PTP_USE_RTC(bp))
+ 		return -ENODEV;
+ 
+ 	if (!phc_cfg) {
+@@ -932,13 +937,14 @@ int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg)
+ 	atomic_set(&ptp->tx_avail, BNXT_MAX_TX_TS);
+ 	spin_lock_init(&ptp->ptp_lock);
+ 
+-	if (bp->fw_cap & BNXT_FW_CAP_PTP_RTC) {
++	if (BNXT_PTP_USE_RTC(bp)) {
+ 		bnxt_ptp_timecounter_init(bp, false);
+ 		rc = bnxt_ptp_init_rtc(bp, phc_cfg);
+ 		if (rc)
+ 			goto out;
+ 	} else {
+ 		bnxt_ptp_timecounter_init(bp, true);
++		bnxt_ptp_adjfine_rtc(bp, 0);
+ 	}
+ 
+ 	ptp->ptp_info = bnxt_ptp_caps;
+-- 
+2.39.2
+
 
 
