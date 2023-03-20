@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781AD1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9C4C433EF;
-	Mon, 20 Mar 2023 15:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407F81C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6397C433D2;
+	Mon, 20 Mar 2023 15:13:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325180;
-	bh=sFh+slsaerm0TBFtv1wg/yGEi4mxAKvEZDoV0mTpmvk=;
+	s=korg; t=1679325183;
+	bh=v3WmhsKYQj2brYwY24PrxhsCZptd76ru0komQ8l7e8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lCE8MNMzOCEA+YGW4NZtrBOWEDwOtQYf+YEV+MJ3frDUwvDMxayUgCEqIPjGeeryw
-	 QDIG0Y5J+BWNrkL+E5IhhAyilMeUO+Tqu6YFanaCOGSezNuIOk3AfnbzFDW59bWQDq
-	 wiUitCoD8LuPdT/dg1mvG6bEq49OzR4fZuyWcJ4Q=
+	b=oThIq8uvJYXzQtIfB+iBNho6M3IKcITZ3IKDqZee6U7klfdPyLDz+9G8sMSQy1Ax+
+	 dqIXCFvwz8LdpJppP0Oi+hypZ4H/Bu5MKXr8VmHcKyTnK1LuYKPyPG4i17MhvhIky7
+	 2PvCmE2jLI1LgeVLC2pLorvrUBVjvMV6g1tamBGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaska Uimonen <jaska.uimonen@linux.intel.com>,
-	Adrian Bonislawski <adrian.bonislawski@intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 014/211] ASoC: SOF: ipc4-topology: set dmic dai index from copier
-Date: Mon, 20 Mar 2023 15:52:29 +0100
-Message-Id: <20230320145513.890915524@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>
+Subject: [PATCH 5.15 075/115] serial: 8250_em: Fix UART port type
+Date: Mon, 20 Mar 2023 15:54:47 +0100
+Message-Id: <20230320145452.571561353@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,42 +33,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaska Uimonen <jaska.uimonen@linux.intel.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit c99e48f4ce9b986ab7992ec7283a06dae875f668 ]
+commit 32e293be736b853f168cd065d9cbc1b0c69f545d upstream.
 
-Dmic dai index was set incorrectly to bits 5-7, when it is actually using
-just the lowest 3. Fix the macro for setting the bits.
+As per HW manual for  EMEV2 "R19UH0040EJ0400 Rev.4.00", the UART
+IP found on EMMA mobile SoC is Register-compatible with the
+general-purpose 16750 UART chip. Fix UART port type as 16750 and
+enable 64-bytes fifo support.
 
-Fixes: aa84ffb72158 ("ASoC: SOF: ipc4-topology: Add support for SSP/DMIC DAI's")
-Signed-off-by: Jaska Uimonen <jaska.uimonen@linux.intel.com>
-Reviewed-by: Adrian Bonislawski <adrian.bonislawski@intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20230307110730.1995-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 22886ee96895 ("serial8250-em: Emma Mobile UART driver V2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20230227114152.22265-2-biju.das.jz@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc4-topology.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_em.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/sof/ipc4-topology.h b/sound/soc/sof/ipc4-topology.h
-index 0aa87a8add5d3..2363a7cc0b57d 100644
---- a/sound/soc/sof/ipc4-topology.h
-+++ b/sound/soc/sof/ipc4-topology.h
-@@ -46,7 +46,7 @@
- #define SOF_IPC4_NODE_INDEX_INTEL_SSP(x) (((x) & 0xf) << 4)
+--- a/drivers/tty/serial/8250/8250_em.c
++++ b/drivers/tty/serial/8250/8250_em.c
+@@ -106,8 +106,8 @@ static int serial8250_em_probe(struct pl
+ 	memset(&up, 0, sizeof(up));
+ 	up.port.mapbase = regs->start;
+ 	up.port.irq = irq;
+-	up.port.type = PORT_UNKNOWN;
+-	up.port.flags = UPF_BOOT_AUTOCONF | UPF_FIXED_PORT | UPF_IOREMAP;
++	up.port.type = PORT_16750;
++	up.port.flags = UPF_FIXED_PORT | UPF_IOREMAP | UPF_FIXED_TYPE;
+ 	up.port.dev = &pdev->dev;
+ 	up.port.private_data = priv;
  
- /* Node ID for DMIC type DAI copiers */
--#define SOF_IPC4_NODE_INDEX_INTEL_DMIC(x) (((x) & 0x7) << 5)
-+#define SOF_IPC4_NODE_INDEX_INTEL_DMIC(x) ((x) & 0x7)
- 
- #define SOF_IPC4_GAIN_ALL_CHANNELS_MASK 0xffffffff
- #define SOF_IPC4_VOL_ZERO_DB	0x7fffffff
--- 
-2.39.2
-
 
 
