@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3177D1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AADA8C4339C;
-	Mon, 20 Mar 2023 15:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23ED11C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70EB5C433EF;
+	Mon, 20 Mar 2023 15:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325956;
-	bh=hFcIikj1mDKjeQuTUK9pVgnuAW8pKQ8py83+y1206JM=;
+	s=korg; t=1679325958;
+	bh=dd5/yrhwsIMoVfvKzU7aoVMTKHaGgEjZFB+fVNJGZ5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fcJelWwLWAfaBCRs2UZ+w1ACXybSOP3bVN1RqEiyooHPaQiS+pgTjlNTU/V/qNeHw
-	 oO83WaMuHmr9Phuy8/s7HGSg5dx6PBhNfCJ2PCSRGGMDRO1Lo8kvLVjV1z1cjM9Ahc
-	 lawi+upc/NSYSSdJKWF0cZ8RF9AQ8r9XoYHHzLBM=
+	b=abPxlzmf1UNMhq2NcMMdiJgMnRYt1Tv6xzy4IrOQ4hphSq6+aEuirMy3c/bqvHouj
+	 DqySorcYa13rKUPmyAchN1srSKsgnlve1L1dOHHDpPj0BAxHw4B6u3bmqdxUJn5UD3
+	 CSfiTe24Ofdsp9cW5G3o7yO0QQ2zYA+yVS7lziuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.2 131/211] interconnect: fix provider registration API
-Date: Mon, 20 Mar 2023 15:54:26 +0100
-Message-Id: <20230320145518.909502554@linuxfoundation.org>
+	James Houghton <jthoughton@google.com>,
+	Peter Xu <peterx@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 174/198] mm: teach mincore_hugetlb about pte markers
+Date: Mon, 20 Mar 2023 15:55:12 +0100
+Message-Id: <20230320145514.819200587@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,149 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: James Houghton <jthoughton@google.com>
 
-commit eb59eca0d8ac15f8c1b7f1cd35999455a90292c0 upstream.
+commit 63cf584203f3367c8b073d417c8e5cbbfc450506 upstream.
 
-The current interconnect provider interface is inherently racy as
-providers are expected to be added before being fully initialised.
+By checking huge_pte_none(), we incorrectly classify PTE markers as
+"present".  Instead, check huge_pte_none_mostly(), classifying PTE markers
+the same as if the PTE were completely blank.
 
-Specifically, nodes are currently not added and the provider data is not
-initialised until after registering the provider which can cause racing
-DT lookups to fail.
+PTE markers, unlike other kinds of swap entries, don't reference any
+physical page and don't indicate that a physical page was mapped
+previously.  As such, treat them as non-present for the sake of mincore().
 
-Add a new provider API which will be used to fix up the interconnect
-drivers.
-
-The old API is reimplemented using the new interface and will be removed
-once all drivers have been fixed.
-
-Fixes: 11f1ceca7031 ("interconnect: Add generic on-chip interconnect API")
-Fixes: 87e3031b6fbd ("interconnect: Allow endpoints translation via DT")
-Cc: stable@vger.kernel.org      # 5.1
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # i.MX8MP MSC SM2-MB-EP1 Board
-Link: https://lore.kernel.org/r/20230306075651.2449-4-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Link: https://lkml.kernel.org/r/20230302222404.175303-1-jthoughton@google.com
+Fixes: 5c041f5d1f23 ("mm: teach core mm about pte markers")
+Signed-off-by: James Houghton <jthoughton@google.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/interconnect/core.c           |   52 ++++++++++++++++++++++++----------
- include/linux/interconnect-provider.h |   12 +++++++
- 2 files changed, 50 insertions(+), 14 deletions(-)
+ mm/mincore.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -1029,44 +1029,68 @@ int icc_nodes_remove(struct icc_provider
- EXPORT_SYMBOL_GPL(icc_nodes_remove);
- 
- /**
-- * icc_provider_add() - add a new interconnect provider
-- * @provider: the interconnect provider that will be added into topology
-+ * icc_provider_init() - initialize a new interconnect provider
-+ * @provider: the interconnect provider to initialize
-+ *
-+ * Must be called before adding nodes to the provider.
-+ */
-+void icc_provider_init(struct icc_provider *provider)
-+{
-+	WARN_ON(!provider->set);
-+
-+	INIT_LIST_HEAD(&provider->nodes);
-+}
-+EXPORT_SYMBOL_GPL(icc_provider_init);
-+
-+/**
-+ * icc_provider_register() - register a new interconnect provider
-+ * @provider: the interconnect provider to register
-  *
-  * Return: 0 on success, or an error code otherwise
-  */
--int icc_provider_add(struct icc_provider *provider)
-+int icc_provider_register(struct icc_provider *provider)
- {
--	if (WARN_ON(!provider->set))
--		return -EINVAL;
- 	if (WARN_ON(!provider->xlate && !provider->xlate_extended))
- 		return -EINVAL;
- 
- 	mutex_lock(&icc_lock);
--
--	INIT_LIST_HEAD(&provider->nodes);
- 	list_add_tail(&provider->provider_list, &icc_providers);
--
- 	mutex_unlock(&icc_lock);
- 
--	dev_dbg(provider->dev, "interconnect provider added to topology\n");
-+	dev_dbg(provider->dev, "interconnect provider registered\n");
- 
- 	return 0;
- }
--EXPORT_SYMBOL_GPL(icc_provider_add);
-+EXPORT_SYMBOL_GPL(icc_provider_register);
- 
- /**
-- * icc_provider_del() - delete previously added interconnect provider
-- * @provider: the interconnect provider that will be removed from topology
-+ * icc_provider_deregister() - deregister an interconnect provider
-+ * @provider: the interconnect provider to deregister
-  */
--void icc_provider_del(struct icc_provider *provider)
-+void icc_provider_deregister(struct icc_provider *provider)
- {
- 	mutex_lock(&icc_lock);
- 	WARN_ON(provider->users);
--	WARN_ON(!list_empty(&provider->nodes));
- 
- 	list_del(&provider->provider_list);
- 	mutex_unlock(&icc_lock);
- }
-+EXPORT_SYMBOL_GPL(icc_provider_deregister);
-+
-+int icc_provider_add(struct icc_provider *provider)
-+{
-+	icc_provider_init(provider);
-+
-+	return icc_provider_register(provider);
-+}
-+EXPORT_SYMBOL_GPL(icc_provider_add);
-+
-+void icc_provider_del(struct icc_provider *provider)
-+{
-+	WARN_ON(!list_empty(&provider->nodes));
-+
-+	icc_provider_deregister(provider);
-+}
- EXPORT_SYMBOL_GPL(icc_provider_del);
- 
- static int of_count_icc_providers(struct device_node *np)
---- a/include/linux/interconnect-provider.h
-+++ b/include/linux/interconnect-provider.h
-@@ -122,6 +122,9 @@ int icc_link_destroy(struct icc_node *sr
- void icc_node_add(struct icc_node *node, struct icc_provider *provider);
- void icc_node_del(struct icc_node *node);
- int icc_nodes_remove(struct icc_provider *provider);
-+void icc_provider_init(struct icc_provider *provider);
-+int icc_provider_register(struct icc_provider *provider);
-+void icc_provider_deregister(struct icc_provider *provider);
- int icc_provider_add(struct icc_provider *provider);
- void icc_provider_del(struct icc_provider *provider);
- struct icc_node_data *of_icc_get_from_provider(struct of_phandle_args *spec);
-@@ -167,6 +170,15 @@ static inline int icc_nodes_remove(struc
- 	return -ENOTSUPP;
- }
- 
-+static inline void icc_provider_init(struct icc_provider *provider) { }
-+
-+static inline int icc_provider_register(struct icc_provider *provider)
-+{
-+	return -ENOTSUPP;
-+}
-+
-+static inline void icc_provider_deregister(struct icc_provider *provider) { }
-+
- static inline int icc_provider_add(struct icc_provider *provider)
- {
- 	return -ENOTSUPP;
+diff --git a/mm/mincore.c b/mm/mincore.c
+index cd69b9db0081..d359650b0f75 100644
+--- a/mm/mincore.c
++++ b/mm/mincore.c
+@@ -33,7 +33,7 @@ static int mincore_hugetlb(pte_t *pte, unsigned long hmask, unsigned long addr,
+ 	 * Hugepages under user process are always in RAM and never
+ 	 * swapped out, but theoretically it needs to be checked.
+ 	 */
+-	present = pte && !huge_pte_none(huge_ptep_get(pte));
++	present = pte && !huge_pte_none_mostly(huge_ptep_get(pte));
+ 	for (; addr != end; vec++, addr += PAGE_SIZE)
+ 		*vec = present;
+ 	walk->private = vec;
+-- 
+2.40.0
+
 
 
