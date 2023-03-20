@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E96D1C08
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C01C433D2;
-	Mon, 20 Mar 2023 15:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1DBE4FE
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D30C4339C;
+	Mon, 20 Mar 2023 15:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324675;
-	bh=wtgYpMKxx8sUG0ay2BSeTjtrL9+HrWmm/S2tOkuz4f8=;
+	s=korg; t=1679324678;
+	bh=JsSUs3d/yDCt6EnGrrrVyV2AGFW09dmfpdOFyeuKY+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pE7F9SgBHEBACpfR5XOU+fKxoMrK305I4Ra/KVTb0CG5manVyzIssYdhVIwo1sRs4
-	 HwiH0VoQomF4ZPNvGcVA8IrXekQYLpUh+Xt14J2d/gC0QI07nysGW393IogxyOwrCm
-	 JnYMI6qibrQbmvLV+Ftt0sU1iOATntz2HlmQQYqw=
+	b=EKXJgSpjjr7cT0UI0vTbQoJCzdq9P5iuREJ4TKxWdzU4rWUROglbTaeNlLBNu0+Ol
+	 5SnrOjJlkTt2YFDG3wlnSUGiHYEjUqGG615TVNA8Jl5mzRYhBjEKvxHSRQRR8iKfEa
+	 TBXWG5Wl4tHXCrDQufop4phy9IKJ3cEee/hfk2Mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1e608ba4217c96d1952f@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Liang He <windhl@126.com>,
+	Piotr Raczynski <piotr.raczynski@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 015/115] nfc: pn533: initialize struct pn533_out_arg properly
-Date: Mon, 20 Mar 2023 15:53:47 +0100
-Message-Id: <20230320145450.034553847@linuxfoundation.org>
+Subject: [PATCH 5.10 39/99] ethernet: sun: add check for the mdesc_grab()
+Date: Mon, 20 Mar 2023 15:54:17 +0100
+Message-Id: <20230320145445.007414697@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,63 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit 484b7059796e3bc1cb527caa61dfc60da649b4f6 ]
+[ Upstream commit 90de546d9a0b3c771667af18bb3f80567eabb89b ]
 
-struct pn533_out_arg used as a temporary context for out_urb is not
-initialized properly. Its uninitialized 'phy' field can be dereferenced in
-error cases inside pn533_out_complete() callback function. It causes the
-following failure:
+In vnet_port_probe() and vsw_port_probe(), we should
+check the return value of mdesc_grab() as it may
+return NULL which can caused NPD bugs.
 
-general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.2.0-rc3-next-20230110-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-RIP: 0010:pn533_out_complete.cold+0x15/0x44 drivers/nfc/pn533/usb.c:441
-Call Trace:
- <IRQ>
- __usb_hcd_giveback_urb+0x2b6/0x5c0 drivers/usb/core/hcd.c:1671
- usb_hcd_giveback_urb+0x384/0x430 drivers/usb/core/hcd.c:1754
- dummy_timer+0x1203/0x32d0 drivers/usb/gadget/udc/dummy_hcd.c:1988
- call_timer_fn+0x1da/0x800 kernel/time/timer.c:1700
- expire_timers+0x234/0x330 kernel/time/timer.c:1751
- __run_timers kernel/time/timer.c:2022 [inline]
- __run_timers kernel/time/timer.c:1995 [inline]
- run_timer_softirq+0x326/0x910 kernel/time/timer.c:2035
- __do_softirq+0x1fb/0xaf6 kernel/softirq.c:571
- invoke_softirq kernel/softirq.c:445 [inline]
- __irq_exit_rcu+0x123/0x180 kernel/softirq.c:650
- irq_exit_rcu+0x9/0x20 kernel/softirq.c:662
- sysvec_apic_timer_interrupt+0x97/0xc0 arch/x86/kernel/apic/apic.c:1107
-
-Initialize the field with the pn533_usb_phy currently used.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 9dab880d675b ("nfc: pn533: Wait for out_urb's completion in pn533_usb_send_frame()")
-Reported-by: syzbot+1e608ba4217c96d1952f@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230309165050.207390-1-pchelkin@ispras.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5d01fa0c6bd8 ("ldmvsw: Add ldmvsw.c driver code")
+Fixes: 43fdf27470b2 ("[SPARC64]: Abstract out mdesc accesses for better MD update handling.")
+Signed-off-by: Liang He <windhl@126.com>
+Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/pn533/usb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/sun/ldmvsw.c  | 3 +++
+ drivers/net/ethernet/sun/sunvnet.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/nfc/pn533/usb.c b/drivers/nfc/pn533/usb.c
-index 62ad26e4299d1..47d423cc26081 100644
---- a/drivers/nfc/pn533/usb.c
-+++ b/drivers/nfc/pn533/usb.c
-@@ -175,6 +175,7 @@ static int pn533_usb_send_frame(struct pn533 *dev,
- 	print_hex_dump_debug("PN533 TX: ", DUMP_PREFIX_NONE, 16, 1,
- 			     out->data, out->len, false);
+diff --git a/drivers/net/ethernet/sun/ldmvsw.c b/drivers/net/ethernet/sun/ldmvsw.c
+index 01ea0d6f88193..934a4b54784b8 100644
+--- a/drivers/net/ethernet/sun/ldmvsw.c
++++ b/drivers/net/ethernet/sun/ldmvsw.c
+@@ -290,6 +290,9 @@ static int vsw_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
  
-+	arg.phy = phy;
- 	init_completion(&arg.done);
- 	cntx = phy->out_urb->context;
- 	phy->out_urb->context = &arg;
+ 	hp = mdesc_grab();
+ 
++	if (!hp)
++		return -ENODEV;
++
+ 	rmac = mdesc_get_property(hp, vdev->mp, remote_macaddr_prop, &len);
+ 	err = -ENODEV;
+ 	if (!rmac) {
+diff --git a/drivers/net/ethernet/sun/sunvnet.c b/drivers/net/ethernet/sun/sunvnet.c
+index 96b883f965f63..b6c03adf1e762 100644
+--- a/drivers/net/ethernet/sun/sunvnet.c
++++ b/drivers/net/ethernet/sun/sunvnet.c
+@@ -431,6 +431,9 @@ static int vnet_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+ 
+ 	hp = mdesc_grab();
+ 
++	if (!hp)
++		return -ENODEV;
++
+ 	vp = vnet_find_parent(hp, vdev->mp, vdev);
+ 	if (IS_ERR(vp)) {
+ 		pr_err("Cannot find port parent vnet\n");
 -- 
 2.39.2
 
