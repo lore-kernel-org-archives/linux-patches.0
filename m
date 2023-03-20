@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A6F1C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6750C433D2;
-	Mon, 20 Mar 2023 15:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043A91C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74153C433EF;
+	Mon, 20 Mar 2023 15:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326028;
-	bh=VhqOlS1QgdzmtzoP3EOSXq0Q8q2cekVuITVrREItB0U=;
+	s=korg; t=1679326030;
+	bh=rv+GyJiahLQZejHLFzkvnbHOD0LwUBvUB6ioqNnkT6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eHRxV6SrB1EPmKMeQBKqVyWt0snP+CPCIXSFJLSUTeZbLaamZ33VQk3XR7khuE0GW
-	 jSOIa7+YOPWAZgCZbvjHTVqfv73rZcUgcZJiceCStJ5uhXk+ZG6I3wEfZUEYCWxUbb
-	 lCjtHx9LYnnLhWRbjmgHF8KOeUiHjGRDUID/sYdc=
+	b=sl/jKAYKoy/cB0VeJApXKUN7Oai0t5u+oO7cW6vNoQbiZafPHYTf1ujvYsYApYi3L
+	 JHKiljvW92vuZgf/rttffeHRrsvNyFHCU2WzofLvA55ox8kZm9L3v2W2Cj8nlClW8N
+	 J8/IdpI+cW5wYVVRRRe5Yn96yNz/Wjt7HefXYTtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.2 146/211] tracing: Check field value in hist_field_name()
-Date: Mon, 20 Mar 2023 15:54:41 +0100
-Message-Id: <20230320145519.545772357@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	stable@kernel.org
+Subject: [PATCH 6.1 188/198] x86/mm: Fix use of uninitialized buffer in sme_enable()
+Date: Mon, 20 Mar 2023 15:55:26 +0100
+Message-Id: <20230320145515.348786212@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,43 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 9f116f76fa8c04c81aef33ad870dbf9a158e5b70 upstream.
+commit cbebd68f59f03633469f3ecf9bea99cd6cce3854 upstream.
 
-The function hist_field_name() cannot handle being passed a NULL field
-parameter. It should never be NULL, but due to a previous bug, NULL was
-passed to the function and the kernel crashed due to a NULL dereference.
-Mark Rutland reported this to me on IRC.
+cmdline_find_option() may fail before doing any initialization of
+the buffer array. This may lead to unpredictable results when the same
+buffer is used later in calls to strncmp() function.  Fix the issue by
+returning early if cmdline_find_option() returns an error.
 
-The bug was fixed, but to prevent future bugs from crashing the kernel,
-check the field and add a WARN_ON() if it is NULL.
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-Link: https://lkml.kernel.org/r/20230302020810.762384440@goodmis.org
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Mark Rutland <mark.rutland@arm.com>
-Fixes: c6afad49d127f ("tracing: Add hist trigger 'sym' and 'sym-offset' modifiers")
-Tested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: aca20d546214 ("x86/mm: Add support to make use of Secure Memory Encryption")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230306160656.14844-1-n.zhandarovich@fintech.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/mm/mem_encrypt_identity.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -1334,6 +1334,9 @@ static const char *hist_field_name(struc
- {
- 	const char *field_name = "";
+--- a/arch/x86/mm/mem_encrypt_identity.c
++++ b/arch/x86/mm/mem_encrypt_identity.c
+@@ -600,7 +600,8 @@ void __init sme_enable(struct boot_param
+ 	cmdline_ptr = (const char *)((u64)bp->hdr.cmd_line_ptr |
+ 				     ((u64)bp->ext_cmd_line_ptr << 32));
  
-+	if (WARN_ON_ONCE(!field))
-+		return field_name;
-+
- 	if (level > 1)
- 		return field_name;
+-	cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer));
++	if (cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer)) < 0)
++		return;
  
+ 	if (!strncmp(buffer, cmdline_on, sizeof(buffer)))
+ 		sme_me_mask = me_mask;
 
 
