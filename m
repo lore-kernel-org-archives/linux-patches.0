@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8B21C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395AAC433EF;
-	Mon, 20 Mar 2023 15:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB851C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E202DC433D2;
+	Mon, 20 Mar 2023 15:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324497;
-	bh=taXw3zqC5wrugL59ed80lWuJKQca38L9EcAOuo4REzw=;
+	s=korg; t=1679324500;
+	bh=Hno1DLqX4JwKi+VHSkCA1FMVyyBG6qsTWWn4gSb+15Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9pt37ZrMlTgWPJuKNsi/5bsEvFNMI2vOTMptLPSdn8B+gGyGBYHSomfhEaDzgIie
-	 WreHx/2uqDSu7NfnSRpO5cjswMek6Jst6OHFWQLyEa5jp3YW0YmmJnUoNgumzIeqCG
-	 nAZUtuHgzyv5NjuVE28fk5Dwu0aSRqO/+mSOKUQc=
+	b=obp39yxB4FKL5qfhAT+OQUa1WgB9EBUvhEubiXnMeTDmrpIOq+VIGZznritH879Pw
+	 rvrp9a1BMM5IvTJGtXIwIPmuwFm1/k7cty5+6n8Mc5mbTtP+VRDaVNJlllG80RBBrf
+	 5k3tw3lFAPFRxzkyvGCD9f2tg6TDDTF7bFayk0B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 13/60] ALSA: hda: Match only Intel devices with CONTROLLER_IN_GPU()
-Date: Mon, 20 Mar 2023 15:54:22 +0100
-Message-Id: <20230320145431.434095475@linuxfoundation.org>
+Subject: [PATCH 5.4 04/60] cifs: Move the in_send statistic to __smb_send_rqst()
+Date: Mon, 20 Mar 2023 15:54:13 +0100
+Message-Id: <20230320145431.056374081@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
 References: <20230320145430.861072439@linuxfoundation.org>
@@ -35,48 +35,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit ff447886e675979d66b2bc01810035d3baea1b3a ]
+[ Upstream commit d0dc41119905f740e8d5594adce277f7c0de8c92 ]
 
-CONTROLLER_IN_GPU() is clearly intended to match only Intel devices, but
-previously it checked only the PCI Device ID, not the Vendor ID, so it
-could match devices from other vendors that happened to use the same Device
-ID.
+When send SMB_COM_NT_CANCEL and RFC1002_SESSION_REQUEST, the
+in_send statistic was lost.
 
-Update CONTROLLER_IN_GPU() so it matches only Intel devices.
+Let's move the in_send statistic to the send function to avoid
+this scenario.
 
-Fixes: 535115b5ff51 ("ALSA: hda - Abort the probe without i915 binding for HSW/B")
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/r/20230307214054.886721-1-helgaas@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 7ee1af765dfa ("[CIFS]")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/cifs/transport.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 018005b29931f..9b7a345233cf6 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -363,14 +363,15 @@ enum {
- #define needs_eld_notify_link(chip)	false
- #endif
+diff --git a/fs/cifs/transport.c b/fs/cifs/transport.c
+index b98ae69edb8fe..60141a7468b00 100644
+--- a/fs/cifs/transport.c
++++ b/fs/cifs/transport.c
+@@ -312,7 +312,7 @@ static int
+ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
+ 		struct smb_rqst *rqst)
+ {
+-	int rc = 0;
++	int rc;
+ 	struct kvec *iov;
+ 	int n_vec;
+ 	unsigned int send_length = 0;
+@@ -324,6 +324,7 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
+ 	int val = 1;
+ 	__be32 rfc1002_marker;
  
--#define CONTROLLER_IN_GPU(pci) (((pci)->device == 0x0a0c) || \
-+#define CONTROLLER_IN_GPU(pci) (((pci)->vendor == 0x8086) &&         \
-+				       (((pci)->device == 0x0a0c) || \
- 					((pci)->device == 0x0c0c) || \
- 					((pci)->device == 0x0d0c) || \
- 					((pci)->device == 0x160c) || \
- 					((pci)->device == 0x490d) || \
- 					((pci)->device == 0x4f90) || \
- 					((pci)->device == 0x4f91) || \
--					((pci)->device == 0x4f92))
-+					((pci)->device == 0x4f92)))
++	cifs_in_send_inc(server);
+ 	if (cifs_rdma_enabled(server)) {
+ 		/* return -EAGAIN when connecting or reconnecting */
+ 		rc = -EAGAIN;
+@@ -332,14 +333,17 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
+ 		goto smbd_done;
+ 	}
  
- #define IS_BXT(pci) ((pci)->vendor == 0x8086 && (pci)->device == 0x5a98)
- #define IS_CFL(pci) ((pci)->vendor == 0x8086 && (pci)->device == 0xa348)
++	rc = -EAGAIN;
+ 	if (ssocket == NULL)
+-		return -EAGAIN;
++		goto out;
+ 
++	rc = -ERESTARTSYS;
+ 	if (fatal_signal_pending(current)) {
+ 		cifs_dbg(FYI, "signal pending before send request\n");
+-		return -ERESTARTSYS;
++		goto out;
+ 	}
+ 
++	rc = 0;
+ 	/* cork the socket */
+ 	kernel_setsockopt(ssocket, SOL_TCP, TCP_CORK,
+ 				(char *)&val, sizeof(val));
+@@ -453,7 +457,8 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
+ 			 rc);
+ 	else if (rc > 0)
+ 		rc = 0;
+-
++out:
++	cifs_in_send_dec(server);
+ 	return rc;
+ }
+ 
+@@ -830,9 +835,7 @@ cifs_call_async(struct TCP_Server_Info *server, struct smb_rqst *rqst,
+ 	 * I/O response may come back and free the mid entry on another thread.
+ 	 */
+ 	cifs_save_when_sent(mid);
+-	cifs_in_send_inc(server);
+ 	rc = smb_send_rqst(server, 1, rqst, flags);
+-	cifs_in_send_dec(server);
+ 
+ 	if (rc < 0) {
+ 		revert_current_mid(server, mid->credits);
+@@ -1095,9 +1098,7 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
+ 		else
+ 			midQ[i]->callback = cifs_compound_last_callback;
+ 	}
+-	cifs_in_send_inc(server);
+ 	rc = smb_send_rqst(server, num_rqst, rqst, flags);
+-	cifs_in_send_dec(server);
+ 
+ 	for (i = 0; i < num_rqst; i++)
+ 		cifs_save_when_sent(midQ[i]);
+@@ -1332,9 +1333,7 @@ SendReceive(const unsigned int xid, struct cifs_ses *ses,
+ 
+ 	midQ->mid_state = MID_REQUEST_SUBMITTED;
+ 
+-	cifs_in_send_inc(server);
+ 	rc = smb_send(server, in_buf, len);
+-	cifs_in_send_dec(server);
+ 	cifs_save_when_sent(midQ);
+ 
+ 	if (rc < 0)
+@@ -1471,9 +1470,7 @@ SendReceiveBlockingLock(const unsigned int xid, struct cifs_tcon *tcon,
+ 	}
+ 
+ 	midQ->mid_state = MID_REQUEST_SUBMITTED;
+-	cifs_in_send_inc(server);
+ 	rc = smb_send(server, in_buf, len);
+-	cifs_in_send_dec(server);
+ 	cifs_save_when_sent(midQ);
+ 
+ 	if (rc < 0)
 -- 
 2.39.2
 
