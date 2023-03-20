@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BEAF1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0065C4339B;
-	Mon, 20 Mar 2023 15:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3801E1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD1FC433EF;
+	Mon, 20 Mar 2023 15:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325526;
-	bh=ONqPuH44OgCHjBk+EfAFvn2Tubw/YHwpoD4E1LX9Xyc=;
+	s=korg; t=1679325529;
+	bh=TeaqC4z12YuH/P4sRvKFIB85Q3X/e7BUxVhZTw+uggY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RSud5cQSV//PrrIjAJb6I32EcHihxO69mWjSZTf53v+BY7D80i1MEMlcsl8zwi3rV
-	 7/rInCqkyeCf7FJ9kM/cgNE53c3YPQcVdizm3+drPr2X1cssvAl76ZDhg4Gmz7nDP4
-	 wsrjf+kZKEJQfkBBBjVeH43Ix1bwr0aMOIf7QLVQ=
+	b=bBoR84aHPEh+sp4lznSqwT5t9KMnCTl7+ZNuXKi/UIaIqpJOTv1s4u/rDG4Obgu0H
+	 xfstqKd3Bgjp/idV1CBQ1IFtOglTZUWsAt1jZXMoJK4MSQtGhEB6l/EM1x7OrBIuMb
+	 dJDPvxYv2YpJ0Fo4ar8vT73HoTOBIu5sLRsIIw0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	lee@kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 5.15 114/115] HID: core: Provide new max_buffer_size attribute to over-ride the default
-Date: Mon, 20 Mar 2023 15:55:26 +0100
-Message-Id: <20230320145454.243539548@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jan Kara <jack@suse.cz>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Dan Schatzberg <schatzberg.dan@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 053/211] loop: Fix use-after-free issues
+Date: Mon, 20 Mar 2023 15:53:08 +0100
+Message-Id: <20230320145515.466478672@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,107 +40,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee@kernel.org>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit b1a37ed00d7908a991c1d0f18a8cba3c2aa99bdc upstream.
+[ Upstream commit 9b0cb770f5d7b1ff40bea7ca385438ee94570eec ]
 
-Presently, when a report is processed, its proposed size, provided by
-the user of the API (as Report Size * Report Count) is compared against
-the subsystem default HID_MAX_BUFFER_SIZE (16k).  However, some
-low-level HID drivers allocate a reduced amount of memory to their
-buffers (e.g. UHID only allocates UHID_DATA_MAX (4k) buffers), rending
-this check inadequate in some cases.
+do_req_filebacked() calls blk_mq_complete_request() synchronously or
+asynchronously when using asynchronous I/O unless memory allocation fails.
+Hence, modify loop_handle_cmd() such that it does not dereference 'cmd' nor
+'rq' after do_req_filebacked() finished unless we are sure that the request
+has not yet been completed. This patch fixes the following kernel crash:
 
-In these circumstances, if the received report ends up being smaller
-than the proposed report size, the remainder of the buffer is zeroed.
-That is, the space between sizeof(csize) (size of the current report)
-and the rsize (size proposed i.e. Report Size * Report Count), which can
-be handled up to HID_MAX_BUFFER_SIZE (16k).  Meaning that memset()
-shoots straight past the end of the buffer boundary and starts zeroing
-out in-use values, often resulting in calamity.
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000054
+Call trace:
+ css_put.42938+0x1c/0x1ac
+ loop_process_work+0xc8c/0xfd4
+ loop_rootcg_workfn+0x24/0x34
+ process_one_work+0x244/0x558
+ worker_thread+0x400/0x8fc
+ kthread+0x16c/0x1e0
+ ret_from_fork+0x10/0x20
 
-This patch introduces a new variable into 'struct hid_ll_driver' where
-individual low-level drivers can over-ride the default maximum value of
-HID_MAX_BUFFER_SIZE (16k) with something more sympathetic to the
-interface.
-
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-[Lee: Backported to v5.15.y]
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Ming Lei <ming.lei@redhat.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Dan Schatzberg <schatzberg.dan@gmail.com>
+Fixes: c74d40e8b5e2 ("loop: charge i/o to mem and blk cg")
+Fixes: bc07c10a3603 ("block: loop: support DIO & AIO")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20230314182155.80625-1-bvanassche@acm.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c |   18 +++++++++++++-----
- include/linux/hid.h    |    3 +++
- 2 files changed, 16 insertions(+), 5 deletions(-)
+ drivers/block/loop.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -258,6 +258,7 @@ static int hid_add_field(struct hid_pars
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 1b35cbd029c7c..eabbc3bdec221 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -1853,35 +1853,44 @@ static blk_status_t loop_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 
+ static void loop_handle_cmd(struct loop_cmd *cmd)
  {
- 	struct hid_report *report;
- 	struct hid_field *field;
-+	unsigned int max_buffer_size = HID_MAX_BUFFER_SIZE;
- 	unsigned int usages;
- 	unsigned int offset;
- 	unsigned int i;
-@@ -288,8 +289,11 @@ static int hid_add_field(struct hid_pars
- 	offset = report->size;
- 	report->size += parser->global.report_size * parser->global.report_count;
++	struct cgroup_subsys_state *cmd_blkcg_css = cmd->blkcg_css;
++	struct cgroup_subsys_state *cmd_memcg_css = cmd->memcg_css;
+ 	struct request *rq = blk_mq_rq_from_pdu(cmd);
+ 	const bool write = op_is_write(req_op(rq));
+ 	struct loop_device *lo = rq->q->queuedata;
+ 	int ret = 0;
+ 	struct mem_cgroup *old_memcg = NULL;
++	const bool use_aio = cmd->use_aio;
  
-+	if (parser->device->ll_driver->max_buffer_size)
-+		max_buffer_size = parser->device->ll_driver->max_buffer_size;
-+
- 	/* Total size check: Allow for possible report index byte */
--	if (report->size > (HID_MAX_BUFFER_SIZE - 1) << 3) {
-+	if (report->size > (max_buffer_size - 1) << 3) {
- 		hid_err(parser->device, "report is too long\n");
- 		return -1;
+ 	if (write && (lo->lo_flags & LO_FLAGS_READ_ONLY)) {
+ 		ret = -EIO;
+ 		goto failed;
  	}
-@@ -1752,6 +1756,7 @@ int hid_report_raw_event(struct hid_devi
- 	struct hid_report_enum *report_enum = hid->report_enum + type;
- 	struct hid_report *report;
- 	struct hid_driver *hdrv;
-+	int max_buffer_size = HID_MAX_BUFFER_SIZE;
- 	unsigned int a;
- 	u32 rsize, csize = size;
- 	u8 *cdata = data;
-@@ -1768,10 +1773,13 @@ int hid_report_raw_event(struct hid_devi
  
- 	rsize = hid_compute_report_size(report);
+-	if (cmd->blkcg_css)
+-		kthread_associate_blkcg(cmd->blkcg_css);
+-	if (cmd->memcg_css)
++	if (cmd_blkcg_css)
++		kthread_associate_blkcg(cmd_blkcg_css);
++	if (cmd_memcg_css)
+ 		old_memcg = set_active_memcg(
+-			mem_cgroup_from_css(cmd->memcg_css));
++			mem_cgroup_from_css(cmd_memcg_css));
  
--	if (report_enum->numbered && rsize >= HID_MAX_BUFFER_SIZE)
--		rsize = HID_MAX_BUFFER_SIZE - 1;
--	else if (rsize > HID_MAX_BUFFER_SIZE)
--		rsize = HID_MAX_BUFFER_SIZE;
-+	if (hid->ll_driver->max_buffer_size)
-+		max_buffer_size = hid->ll_driver->max_buffer_size;
-+
-+	if (report_enum->numbered && rsize >= max_buffer_size)
-+		rsize = max_buffer_size - 1;
-+	else if (rsize > max_buffer_size)
-+		rsize = max_buffer_size;
++	/*
++	 * do_req_filebacked() may call blk_mq_complete_request() synchronously
++	 * or asynchronously if using aio. Hence, do not touch 'cmd' after
++	 * do_req_filebacked() has returned unless we are sure that 'cmd' has
++	 * not yet been completed.
++	 */
+ 	ret = do_req_filebacked(lo, rq);
  
- 	if (csize < rsize) {
- 		dbg_hid("report %d is too short, (%d < %d)\n", report->id,
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -805,6 +805,7 @@ struct hid_driver {
-  * @output_report: send output report to device
-  * @idle: send idle request to device
-  * @may_wakeup: return if device may act as a wakeup source during system-suspend
-+ * @max_buffer_size: over-ride maximum data buffer size (default: HID_MAX_BUFFER_SIZE)
-  */
- struct hid_ll_driver {
- 	int (*start)(struct hid_device *hdev);
-@@ -830,6 +831,8 @@ struct hid_ll_driver {
+-	if (cmd->blkcg_css)
++	if (cmd_blkcg_css)
+ 		kthread_associate_blkcg(NULL);
  
- 	int (*idle)(struct hid_device *hdev, int report, int idle, int reqtype);
- 	bool (*may_wakeup)(struct hid_device *hdev);
-+
-+	unsigned int max_buffer_size;
- };
- 
- extern struct hid_ll_driver i2c_hid_ll_driver;
+-	if (cmd->memcg_css) {
++	if (cmd_memcg_css) {
+ 		set_active_memcg(old_memcg);
+-		css_put(cmd->memcg_css);
++		css_put(cmd_memcg_css);
+ 	}
+  failed:
+ 	/* complete non-aio request */
+-	if (!cmd->use_aio || ret) {
++	if (!use_aio || ret) {
+ 		if (ret == -EOPNOTSUPP)
+ 			cmd->ret = ret;
+ 		else
+-- 
+2.39.2
+
 
 
