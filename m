@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257C01C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97131C433D2;
-	Mon, 20 Mar 2023 15:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1141C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523F7C433EF;
+	Mon, 20 Mar 2023 15:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325230;
-	bh=K5mT/tC3s5t1REc3OS5XLcWOKLHvHLvdJGS7ZCUliq8=;
+	s=korg; t=1679325232;
+	bh=jh2dfid1ONh5OaZ03G+ZERFLYYsNXqd9iPxgNYkofz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bIm/M2gsrnbRhP1EhCj+mx04dDI67c6sQ8W7J9L/Y6z82C0ApuwsrI40M8iIbeiOq
-	 z1k3anQNoV0zv9SFHw5V+fqZL0f/+TJZ0rIFqKNMMwnC8T1ejVTDWDvgTuSEWNdZ4P
-	 Nj9Ji1hcAgUrOvVxEviwQfPe3rQkZj90wtaKZIFg=
+	b=aRBjVQ9LLPKjaaJMa/5JmnfA61ZU5WaKAmpvToyEUbS2v6v3GpISEFaVsHvxIrRp4
+	 A1YUHJjYyPku3tJqX74+JbWdzeycl2NXpUVNe9FhQqNyi462tWg6Q7cNG1BZQ1G19+
+	 un0QfveV4DW3lOT7mkjkv4sQfYcbf0fkiyi+vzrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Maksym Yaremchuk <maksymy@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 019/211] scsi: mpi3mr: Fix mpi3mr_hba_port memory leak in mpi3mr_remove()
-Date: Mon, 20 Mar 2023 15:52:34 +0100
-Message-Id: <20230320145514.107614632@linuxfoundation.org>
+Subject: [PATCH 6.1 058/198] mlxsw: spectrum: Fix incorrect parsing depth after reload
+Date: Mon, 20 Mar 2023 15:53:16 +0100
+Message-Id: <20230320145509.959668473@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,51 +37,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit d0f3c3728da8af76dfe435f7f0cfa2b9d9e43ef0 ]
+[ Upstream commit 35c356924fe3669dfbb1185607ce3b37f70bfa80 ]
 
-Free mpi3mr_hba_port at .remove.
+Spectrum ASICs have a configurable limit on how deep into the packet
+they parse. By default, the limit is 96 bytes.
 
-Fixes: 42fc9fee116f ("scsi: mpi3mr: Add helper functions to manage device's port")
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://lore.kernel.org/r/20230302234336.25456-4-thenzl@redhat.com
-Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+There are several cases where this parsing depth is not enough and there
+is a need to increase it. For example, timestamping of PTP packets and a
+FIB multipath hash policy that requires hashing on inner fields. The
+driver therefore maintains a reference count that reflects the number of
+consumers that require an increased parsing depth.
+
+During reload_down() the parsing depth reference count does not
+necessarily drop to zero, but the parsing depth itself is restored to
+the default during reload_up() when the firmware is reset. It is
+therefore possible to end up in situations where the driver thinks that
+the parsing depth was increased (reference count is non-zero), when it
+is not.
+
+Fix by making sure that all the consumers that increase the parsing
+depth reference count also decrease it during reload_down().
+Specifically, make sure that when the routing code is de-initialized it
+drops the reference count if it was increased because of a FIB multipath
+hash policy that requires hashing on inner fields.
+
+Add a warning if the reference count is not zero after the driver was
+de-initialized and explicitly reset it to zero during initialization for
+good measures.
+
+Fixes: 2d91f0803b84 ("mlxsw: spectrum: Add infrastructure for parsing configuration")
+Reported-by: Maksym Yaremchuk <maksymy@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://lore.kernel.org/r/9c35e1b3e6c1d8f319a2449d14e2b86373f3b3ba.1678727526.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum.c     |  2 ++
+ .../net/ethernet/mellanox/mlxsw/spectrum_router.c  | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 6eaeba41072cb..5032b0b5186d4 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -5077,6 +5077,7 @@ static void mpi3mr_remove(struct pci_dev *pdev)
- 	struct workqueue_struct	*wq;
- 	unsigned long flags;
- 	struct mpi3mr_tgt_dev *tgtdev, *tgtdev_next;
-+	struct mpi3mr_hba_port *port, *hba_port_next;
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
+index 5bcf5bceff710..67ecdb9e708f9 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
+@@ -2931,6 +2931,7 @@ static int mlxsw_sp_netdevice_event(struct notifier_block *unused,
  
- 	if (!shost)
- 		return;
-@@ -5116,6 +5117,16 @@ static void mpi3mr_remove(struct pci_dev *pdev)
- 	mpi3mr_free_mem(mrioc);
- 	mpi3mr_cleanup_resources(mrioc);
+ static void mlxsw_sp_parsing_init(struct mlxsw_sp *mlxsw_sp)
+ {
++	refcount_set(&mlxsw_sp->parsing.parsing_depth_ref, 0);
+ 	mlxsw_sp->parsing.parsing_depth = MLXSW_SP_DEFAULT_PARSING_DEPTH;
+ 	mlxsw_sp->parsing.vxlan_udp_dport = MLXSW_SP_DEFAULT_VXLAN_UDP_DPORT;
+ 	mutex_init(&mlxsw_sp->parsing.lock);
+@@ -2939,6 +2940,7 @@ static void mlxsw_sp_parsing_init(struct mlxsw_sp *mlxsw_sp)
+ static void mlxsw_sp_parsing_fini(struct mlxsw_sp *mlxsw_sp)
+ {
+ 	mutex_destroy(&mlxsw_sp->parsing.lock);
++	WARN_ON_ONCE(refcount_read(&mlxsw_sp->parsing.parsing_depth_ref));
+ }
  
-+	spin_lock_irqsave(&mrioc->sas_node_lock, flags);
-+	list_for_each_entry_safe(port, hba_port_next, &mrioc->hba_port_table_list, list) {
-+		ioc_info(mrioc,
-+		    "removing hba_port entry: %p port: %d from hba_port list\n",
-+		    port, port->port_id);
-+		list_del(&port->list);
-+		kfree(port);
-+	}
-+	spin_unlock_irqrestore(&mrioc->sas_node_lock, flags);
+ struct mlxsw_sp_ipv6_addr_node {
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
+index 48f1fa62a4fd4..ab0aa1a61d4aa 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
+@@ -10313,11 +10313,23 @@ static int mlxsw_sp_mp_hash_init(struct mlxsw_sp *mlxsw_sp)
+ 					      old_inc_parsing_depth);
+ 	return err;
+ }
 +
- 	spin_lock(&mrioc_list_lock);
- 	list_del(&mrioc->list);
- 	spin_unlock(&mrioc_list_lock);
++static void mlxsw_sp_mp_hash_fini(struct mlxsw_sp *mlxsw_sp)
++{
++	bool old_inc_parsing_depth = mlxsw_sp->router->inc_parsing_depth;
++
++	mlxsw_sp_mp_hash_parsing_depth_adjust(mlxsw_sp, old_inc_parsing_depth,
++					      false);
++}
+ #else
+ static int mlxsw_sp_mp_hash_init(struct mlxsw_sp *mlxsw_sp)
+ {
+ 	return 0;
+ }
++
++static void mlxsw_sp_mp_hash_fini(struct mlxsw_sp *mlxsw_sp)
++{
++}
+ #endif
+ 
+ static int mlxsw_sp_dscp_init(struct mlxsw_sp *mlxsw_sp)
+@@ -10547,6 +10559,7 @@ int mlxsw_sp_router_init(struct mlxsw_sp *mlxsw_sp,
+ err_register_inetaddr_notifier:
+ 	mlxsw_core_flush_owq();
+ err_dscp_init:
++	mlxsw_sp_mp_hash_fini(mlxsw_sp);
+ err_mp_hash_init:
+ 	mlxsw_sp_neigh_fini(mlxsw_sp);
+ err_neigh_init:
+@@ -10587,6 +10600,7 @@ void mlxsw_sp_router_fini(struct mlxsw_sp *mlxsw_sp)
+ 	unregister_inet6addr_notifier(&mlxsw_sp->router->inet6addr_nb);
+ 	unregister_inetaddr_notifier(&mlxsw_sp->router->inetaddr_nb);
+ 	mlxsw_core_flush_owq();
++	mlxsw_sp_mp_hash_fini(mlxsw_sp);
+ 	mlxsw_sp_neigh_fini(mlxsw_sp);
+ 	mlxsw_sp_lb_rif_fini(mlxsw_sp);
+ 	mlxsw_sp_vrs_fini(mlxsw_sp);
 -- 
 2.39.2
 
