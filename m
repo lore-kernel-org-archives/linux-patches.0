@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2301C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE93C4339B;
-	Mon, 20 Mar 2023 15:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78F31C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A513C43443;
+	Mon, 20 Mar 2023 15:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324750;
-	bh=b1cBRilY8meb1jiuE+62OGNw2dHYBAVSdXbDVX1nFAU=;
+	s=korg; t=1679324752;
+	bh=508cYWXjh/raga37wwZ1mH8UfufdvxzkHEOl06lvTKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hmr/qouY/TGQBQPbY8JthpGipAGsjno0qPdsiUAL28zxjI1Wpu3tYFMYfu1WCO6lT
-	 Ty6Ca+vcNOdugVtp90dOcKOK5rM2eePr92t+t2YK+/oL9NP4nRCV++ITschcuDaYkZ
-	 2av5gl+PiEE6hlI648PuED10R58uQaMMvStl6w0c=
+	b=MEQjMAC0QzBq8H91zwfp5rNx5K5ZCg43ckWCJOqvL+TIXIp9QOzVd71bVBo6anED3
+	 28OD3jB/bWRZ3JdahbVBuUF8qkjMl+CgFYjSJw1ss0kRpHLePIoAGXU/McFacY9l4o
+	 RJWGKG823jo6OyrIhvD6SQQg74BWWALjrLLUf6B8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
-	Theodore Tso <tytso@mit.edu>,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 51/99] ext4: fail ext4_iget if special inode unallocated
-Date: Mon, 20 Mar 2023 15:54:29 +0100
-Message-Id: <20230320145445.527526287@linuxfoundation.org>
+Subject: [PATCH 5.15 028/115] net: dsa: mt7530: remove now incorrect comment regarding port 5
+Date: Mon, 20 Mar 2023 15:54:00 +0100
+Message-Id: <20230320145450.609203898@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,71 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit 5cd740287ae5e3f9d1c46f5bfe8778972fd6d3fe ]
+[ Upstream commit feb03fd11c5616f3a47e4714d2f9917d0f1a2edd ]
 
-In ext4_fill_super(), EXT4_ORPHAN_FS flag is cleared after
-ext4_orphan_cleanup() is executed. Therefore, when __ext4_iget() is
-called to get an inode whose i_nlink is 0 when the flag exists, no error
-is returned. If the inode is a special inode, a null pointer dereference
-may occur. If the value of i_nlink is 0 for any inodes (except boot loader
-inodes) got by using the EXT4_IGET_SPECIAL flag, the current file system
-is corrupted. Therefore, make the ext4_iget() function return an error if
-it gets such an abnormal special inode.
+Remove now incorrect comment regarding port 5 as GMAC5. This is supposed to
+be supported since commit 38f790a80560 ("net: dsa: mt7530: Add support for
+port 5") under mt7530_setup_port5().
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=199179
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216541
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216539
-Reported-by: Luís Henriques <lhenriques@suse.de>
-Suggested-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230107032126.4165860-2-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 38f790a80560 ("net: dsa: mt7530: Add support for port 5")
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Link: https://lore.kernel.org/r/20230310073338.5836-1-arinc.unal@arinc9.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ drivers/net/dsa/mt7530.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 1a654a1f3f46b..6ba185b46ba39 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4721,13 +4721,6 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
- 		goto bad_inode;
- 	raw_inode = ext4_raw_inode(&iloc);
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 7bcfa3be95e29..22a09a11d8749 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -2168,7 +2168,7 @@ mt7530_setup(struct dsa_switch *ds)
  
--	if ((ino == EXT4_ROOT_INO) && (raw_inode->i_links_count == 0)) {
--		ext4_error_inode(inode, function, line, 0,
--				 "iget: root inode unallocated");
--		ret = -EFSCORRUPTED;
--		goto bad_inode;
--	}
--
- 	if ((flags & EXT4_IGET_HANDLE) &&
- 	    (raw_inode->i_links_count == 0) && (raw_inode->i_mode == 0)) {
- 		ret = -ESTALE;
-@@ -4800,11 +4793,16 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
- 	 * NeilBrown 1999oct15
- 	 */
- 	if (inode->i_nlink == 0) {
--		if ((inode->i_mode == 0 ||
-+		if ((inode->i_mode == 0 || flags & EXT4_IGET_SPECIAL ||
- 		     !(EXT4_SB(inode->i_sb)->s_mount_state & EXT4_ORPHAN_FS)) &&
- 		    ino != EXT4_BOOT_LOADER_INO) {
--			/* this inode is deleted */
--			ret = -ESTALE;
-+			/* this inode is deleted or unallocated */
-+			if (flags & EXT4_IGET_SPECIAL) {
-+				ext4_error_inode(inode, function, line, 0,
-+						 "iget: special inode unallocated");
-+				ret = -EFSCORRUPTED;
-+			} else
-+				ret = -ESTALE;
- 			goto bad_inode;
- 		}
- 		/* The only unlinked inodes we let through here have
+ 	mt7530_pll_setup(priv);
+ 
+-	/* Enable Port 6 only; P5 as GMAC5 which currently is not supported */
++	/* Enable port 6 */
+ 	val = mt7530_read(priv, MT7530_MHWTRAP);
+ 	val &= ~MHWTRAP_P6_DIS & ~MHWTRAP_PHY_ACCESS;
+ 	val |= MHWTRAP_MANUAL;
 -- 
 2.39.2
 
