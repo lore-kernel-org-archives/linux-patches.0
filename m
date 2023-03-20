@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C761C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB8D4C433A1;
-	Mon, 20 Mar 2023 15:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E6A1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A5DC433EF;
+	Mon, 20 Mar 2023 15:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325855;
-	bh=r+kgplJXHjd4tajKtvfGZAuZW/s6s6j+ygIfj0Wv5w8=;
+	s=korg; t=1679325857;
+	bh=7NBaoj5epw2EWaCt3Ia8FlZOBg2J+aRdzIyMQe5D3gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YEnZHxTkmIyFl1SocbYwZj00rGSiEZqIiPD2JL5wdeyRAND37pxyLOTWm1WAyzPTb
-	 k0dtMGXyZykQ0pKJd5lwZYJwHWZ8dpxHZkxJLrU9MXizN9H93MOThZi2xXi0gql3Fh
-	 +Bk1s4pinPavXPQN4LOxW2LyIQi2KUtilaVJC1ks=
+	b=wptD1muYyVqxYpTtkQ6R6fQWEYC0xjjaa4pygaZrdQk/KPS/heIPTj0xzhyle/pcJ
+	 JYW7wg4k5+CBj1b9bqCPrJO8FxPj2GU9fr/XFhx2lIlsh1O0qd8a0soCpdY6TeDDhh
+	 4FCyplIFxGsfpv01p7wgn3K1XS3WtZTH8UAxoo2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Freysteinn Alfredsson <Freysteinn.Alfredsson@kau.se>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 087/211] net: atlantic: Fix crash when XDP is enabled but no program is loaded
-Date: Mon, 20 Mar 2023 15:53:42 +0100
-Message-Id: <20230320145516.955198486@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: [PATCH 6.1 129/198] interconnect: fix icc_provider_del() error handling
+Date: Mon, 20 Mar 2023 15:54:27 +0100
+Message-Id: <20230320145512.962147006@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,99 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 37d010399f7552add2b68e2b347901c83562dab8 ]
+commit e0e7089bf9a87bc5e3997422e4e24563424f9018 upstream.
 
-The aq_xdp_run_prog() function falls back to the XDP_ABORTED action
-handler (using a goto) if the operations for any of the other actions fail.
-The XDP_ABORTED handler in turn calls the bpf_warn_invalid_xdp_action()
-tracepoint. However, the function also jumps into the XDP_PASS helper if no
-XDP program is loaded on the device, which means the XDP_ABORTED handler
-can be run with a NULL program pointer. This results in a NULL pointer
-deref because the tracepoint dereferences the 'prog' pointer passed to it.
+The interconnect framework currently expects that providers are only
+removed when there are no users and after all nodes have been removed.
 
-This situation can happen in multiple ways:
-- If a packet arrives between the removal of the program from the interface
-  and the static_branch_dec() in aq_xdp_setup()
-- If there are multiple devices using the same driver in the system and
-  one of them has an XDP program loaded and the other does not.
+There is currently nothing that guarantees this to be the case and the
+framework does not do any reference counting, but refusing to remove the
+provider is never correct as that would leave a dangling pointer to a
+resource that is about to be released in the global provider list (e.g.
+accessible through debugfs).
 
-Fix this by refactoring the aq_xdp_run_prog() function to remove the 'goto
-pass' handling if there is no XDP program loaded. Instead, factor out the
-skb building in a separate small helper function.
+Replace the current sanity checks with WARN_ON() so that the provider is
+always removed.
 
-Fixes: 26efaef759a1 ("net: atlantic: Implement xdp data plane")
-Reported-by: Freysteinn Alfredsson <Freysteinn.Alfredsson@kau.se>
-Tested-by: Freysteinn Alfredsson <Freysteinn.Alfredsson@kau.se>
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/r/20230315125539.103319-1-toke@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 11f1ceca7031 ("interconnect: Add generic on-chip interconnect API")
+Cc: stable@vger.kernel.org      # 5.1: 680f8666baf6: interconnect: Make icc_provider_del() return void
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # i.MX8MP MSC SM2-MB-EP1 Board
+Link: https://lore.kernel.org/r/20230306075651.2449-3-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/aquantia/atlantic/aq_ring.c  | 28 ++++++++++++++-----
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ drivers/interconnect/core.c |   14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-index 1e8d902e1c8ea..7f933175cbdac 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-@@ -412,6 +412,25 @@ int aq_xdp_xmit(struct net_device *dev, int num_frames,
- 	return num_frames - drop;
- }
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -1061,18 +1061,8 @@ EXPORT_SYMBOL_GPL(icc_provider_add);
+ void icc_provider_del(struct icc_provider *provider)
+ {
+ 	mutex_lock(&icc_lock);
+-	if (provider->users) {
+-		pr_warn("interconnect provider still has %d users\n",
+-			provider->users);
+-		mutex_unlock(&icc_lock);
+-		return;
+-	}
+-
+-	if (!list_empty(&provider->nodes)) {
+-		pr_warn("interconnect provider still has nodes\n");
+-		mutex_unlock(&icc_lock);
+-		return;
+-	}
++	WARN_ON(provider->users);
++	WARN_ON(!list_empty(&provider->nodes));
  
-+static struct sk_buff *aq_xdp_build_skb(struct xdp_buff *xdp,
-+					struct net_device *dev,
-+					struct aq_ring_buff_s *buff)
-+{
-+	struct xdp_frame *xdpf;
-+	struct sk_buff *skb;
-+
-+	xdpf = xdp_convert_buff_to_frame(xdp);
-+	if (unlikely(!xdpf))
-+		return NULL;
-+
-+	skb = xdp_build_skb_from_frame(xdpf, dev);
-+	if (!skb)
-+		return NULL;
-+
-+	aq_get_rxpages_xdp(buff, xdp);
-+	return skb;
-+}
-+
- static struct sk_buff *aq_xdp_run_prog(struct aq_nic_s *aq_nic,
- 				       struct xdp_buff *xdp,
- 				       struct aq_ring_s *rx_ring,
-@@ -431,7 +450,7 @@ static struct sk_buff *aq_xdp_run_prog(struct aq_nic_s *aq_nic,
- 
- 	prog = READ_ONCE(rx_ring->xdp_prog);
- 	if (!prog)
--		goto pass;
-+		return aq_xdp_build_skb(xdp, aq_nic->ndev, buff);
- 
- 	prefetchw(xdp->data_hard_start); /* xdp_frame write */
- 
-@@ -442,17 +461,12 @@ static struct sk_buff *aq_xdp_run_prog(struct aq_nic_s *aq_nic,
- 	act = bpf_prog_run_xdp(prog, xdp);
- 	switch (act) {
- 	case XDP_PASS:
--pass:
--		xdpf = xdp_convert_buff_to_frame(xdp);
--		if (unlikely(!xdpf))
--			goto out_aborted;
--		skb = xdp_build_skb_from_frame(xdpf, aq_nic->ndev);
-+		skb = aq_xdp_build_skb(xdp, aq_nic->ndev, buff);
- 		if (!skb)
- 			goto out_aborted;
- 		u64_stats_update_begin(&rx_ring->stats.rx.syncp);
- 		++rx_ring->stats.rx.xdp_pass;
- 		u64_stats_update_end(&rx_ring->stats.rx.syncp);
--		aq_get_rxpages_xdp(buff, xdp);
- 		return skb;
- 	case XDP_TX:
- 		xdpf = xdp_convert_buff_to_frame(xdp);
--- 
-2.39.2
-
+ 	list_del(&provider->provider_list);
+ 	mutex_unlock(&icc_lock);
 
 
