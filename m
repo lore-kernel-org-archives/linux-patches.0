@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20E81C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37891C4339B;
-	Mon, 20 Mar 2023 15:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8931C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893D2C433D2;
+	Mon, 20 Mar 2023 15:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326008;
-	bh=0dAsUUsgUobG2WHT+WO/aLw5FxGTZnOUTozglYp1H50=;
+	s=korg; t=1679326005;
+	bh=Lp+Eg4VK8rObcKndcZEw48ieVuAJl9AgoRCjAquKAxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bpilyK3p9rxT1pD7gb1CYjysUHZaCrm5gtpBxPpi7QK3JXUGaXHygARa8thEfhGor
-	 J6nlsUzJ/I3ojyR3STvGyQg001ptGBgLBCmu7uT0E8agCwio8qF6PAUb2ldYx2YZvn
-	 vRcIUUGQDYTsHFqxrtgQBH9MFjymwnpj1P7XWqMI=
+	b=yE5lHblRORZaSCXky4pkcRfXczAGA7wDjfz7dlwv0KxBYNpWzvRTuBwKqxA2K9ofp
+	 87QBgzcldcRl/J7wZ1QPLi/21PYVtxbtP73D7rNKboeRLM5fqkqF00PLPOL1BUoCHr
+	 HtNJzjuLC2zIo2gB3HUuv/U4lx4cY6kf5Dp2fcBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Lei <Jun.Lei@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 115/211] drm/amd/display: fix shift-out-of-bounds in CalculateVMAndRowBytes
-Date: Mon, 20 Mar 2023 15:54:10 +0100
-Message-Id: <20230320145518.140674319@linuxfoundation.org>
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.1 157/198] drm/i915/active: Fix misuse of non-idle barriers as fence trackers
+Date: Mon, 20 Mar 2023 15:54:55 +0100
+Message-Id: <20230320145514.109343938@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,49 +36,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Hung <alex.hung@amd.com>
+From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 
-[ Upstream commit 031f196d1b1b6d5dfcb0533b431e3ab1750e6189 ]
+commit e0e6b416b25ee14716f3549e0cbec1011b193809 upstream.
 
-[WHY]
-When PTEBufferSizeInRequests is zero, UBSAN reports the following
-warning because dml_log2 returns an unexpected negative value:
+Users reported oopses on list corruptions when using i915 perf with a
+number of concurrently running graphics applications.  Root cause analysis
+pointed at an issue in barrier processing code -- a race among perf open /
+close replacing active barriers with perf requests on kernel context and
+concurrent barrier preallocate / acquire operations performed during user
+context first pin / last unpin.
 
-  shift exponent 4294966273 is too large for 32-bit type 'int'
+When adding a request to a composite tracker, we try to reuse an existing
+fence tracker, already allocated and registered with that composite.  The
+tracker we obtain may already track another fence, may be an idle barrier,
+or an active barrier.
 
-[HOW]
+If the tracker we get occurs a non-idle barrier then we try to delete that
+barrier from a list of barrier tasks it belongs to.  However, while doing
+that we don't respect return value from a function that performs the
+barrier deletion.  Should the deletion ever fail, we would end up reusing
+the tracker still registered as a barrier task.  Since the same structure
+field is reused with both fence callback lists and barrier tasks list,
+list corruptions would likely occur.
 
-In the case PTEBufferSizeInRequests is zero, skip the dml_log2() and
-assign the result directly.
+Barriers are now deleted from a barrier tasks list by temporarily removing
+the list content, traversing that content with skip over the node to be
+deleted, then populating the list back with the modified content.  Should
+that intentionally racy concurrent deletion attempts be not serialized,
+one or more of those may fail because of the list being temporary empty.
 
-Reviewed-by: Jun Lei <Jun.Lei@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Related code that ignores the results of barrier deletion was initially
+introduced in v5.4 by commit d8af05ff38ae ("drm/i915: Allow sharing the
+idle-barrier from other kernel requests").  However, all users of the
+barrier deletion routine were apparently serialized at that time, then the
+issue didn't exhibit itself.  Results of git bisect with help of a newly
+developed igt@gem_barrier_race@remote-request IGT test indicate that list
+corruptions might start to appear after commit 311770173fac ("drm/i915/gt:
+Schedule request retirement when timeline idles"), introduced in v5.5.
+
+Respect results of barrier deletion attempts -- mark the barrier as idle
+only if successfully deleted from the list.  Then, before proceeding with
+setting our fence as the one currently tracked, make sure that the tracker
+we've got is not a non-idle barrier.  If that check fails then don't use
+that tracker but go back and try to acquire a new, usable one.
+
+v3: use unlikely() to document what outcome we expect (Andi),
+  - fix bad grammar in commit description.
+v2: no code changes,
+  - blame commit 311770173fac ("drm/i915/gt: Schedule request retirement
+    when timeline idles"), v5.5, not commit d8af05ff38ae ("drm/i915: Allow
+    sharing the idle-barrier from other kernel requests"), v5.4,
+  - reword commit description.
+
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/6333
+Fixes: 311770173fac ("drm/i915/gt: Schedule request retirement when timeline idles")
+Cc: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: stable@vger.kernel.org # v5.5
+Cc: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230302120820.48740-1-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit 506006055769b10d1b2b4e22f636f3b45e0e9fc7)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c   | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/i915_active.c |   27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
-index 379729b028474..c3d75e56410cc 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
-@@ -1802,7 +1802,10 @@ static unsigned int CalculateVMAndRowBytes(
- 	}
+--- a/drivers/gpu/drm/i915/i915_active.c
++++ b/drivers/gpu/drm/i915/i915_active.c
+@@ -422,12 +422,12 @@ replace_barrier(struct i915_active *ref,
+ 	 * we can use it to substitute for the pending idle-barrer
+ 	 * request that we want to emit on the kernel_context.
+ 	 */
+-	__active_del_barrier(ref, node_from_active(active));
+-	return true;
++	return __active_del_barrier(ref, node_from_active(active));
+ }
  
- 	if (SurfaceTiling == dm_sw_linear) {
--		*dpte_row_height = dml_min(128, 1 << (unsigned int) dml_floor(dml_log2(PTEBufferSizeInRequests * *PixelPTEReqWidth / Pitch), 1));
-+		if (PTEBufferSizeInRequests == 0)
-+			*dpte_row_height = 1;
-+		else
-+			*dpte_row_height = dml_min(128, 1 << (unsigned int) dml_floor(dml_log2(PTEBufferSizeInRequests * *PixelPTEReqWidth / Pitch), 1));
- 		*dpte_row_width_ub = (dml_ceil(((double) SwathWidth - 1) / *PixelPTEReqWidth, 1) + 1) * *PixelPTEReqWidth;
- 		*PixelPTEBytesPerRow = *dpte_row_width_ub / *PixelPTEReqWidth * *PTERequestSize;
- 	} else if (ScanDirection != dm_vert) {
--- 
-2.39.2
-
+ int i915_active_add_request(struct i915_active *ref, struct i915_request *rq)
+ {
++	u64 idx = i915_request_timeline(rq)->fence_context;
+ 	struct dma_fence *fence = &rq->fence;
+ 	struct i915_active_fence *active;
+ 	int err;
+@@ -437,16 +437,19 @@ int i915_active_add_request(struct i915_
+ 	if (err)
+ 		return err;
+ 
+-	active = active_instance(ref, i915_request_timeline(rq)->fence_context);
+-	if (!active) {
+-		err = -ENOMEM;
+-		goto out;
+-	}
+-
+-	if (replace_barrier(ref, active)) {
+-		RCU_INIT_POINTER(active->fence, NULL);
+-		atomic_dec(&ref->count);
+-	}
++	do {
++		active = active_instance(ref, idx);
++		if (!active) {
++			err = -ENOMEM;
++			goto out;
++		}
++
++		if (replace_barrier(ref, active)) {
++			RCU_INIT_POINTER(active->fence, NULL);
++			atomic_dec(&ref->count);
++		}
++	} while (unlikely(is_barrier(active)));
++
+ 	if (!__i915_active_fence_set(active, fence))
+ 		__i915_active_acquire(ref);
+ 
 
 
