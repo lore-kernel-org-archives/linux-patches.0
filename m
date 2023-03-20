@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7161C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D0CDC433D2;
-	Mon, 20 Mar 2023 15:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865641C08
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:02:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079E3C4339B;
+	Mon, 20 Mar 2023 15:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324538;
-	bh=BwMa0FBHuNbfB0LJHH5h6fV8V+VzdSgBkCg2dzC4crY=;
+	s=korg; t=1679324541;
+	bh=St5Ji6FgxOU1wLkYWLknQwVHLTpACLHUrJhOa0TCgEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNfCdZl0A7y/AjmztUNJBLk6ybe3Q4GU5JOJ6a+A8vUpYSC9h/VpxfPCPiu10BW9V
-	 4JRyPmK0rZ2ruzm3ZMBW9CDi8wvsWv/6FR8DG/ZbRTRAE0dBbN6Naj8GK43yOx9EIz
-	 sWqvf9MwypphRbnyizH6d4TleF8OF3FjNN3u5+ik=
+	b=hTtX/HMAZpq/G8xIlvHDFaxoLoaj9mCduTdcUWlLDkwDnQ2WWNdp4EocYU6ZeljmX
+	 aoIJzDnG5beiMp8hVY7SQzKsdhaK0sPQVUe42HZMrvPMiXJ6+66S4TEaoz1RY7uC0k
+	 bjOpztIZWj18EeuE11YQ+1ONWjgPNRK7QbfjwZ+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.4 48/60] tracing: Make tracepoint lockdep check actually test something
-Date: Mon, 20 Mar 2023 15:54:57 +0100
-Message-Id: <20230320145432.917475596@linuxfoundation.org>
+	John Garry <john.g.garry@oracle.com>,
+	syzbot+645a4616b87a2f10e398@syzkaller.appspotmail.com,
+	Bart Van Assche <bvanassche@acm.org>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 14/99] scsi: core: Fix a procfs host directory removal regression
+Date: Mon, 20 Mar 2023 15:53:52 +0100
+Message-Id: <20230320145443.951985817@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
-References: <20230320145430.861072439@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,86 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit c2679254b9c9980d9045f0f722cf093a2b1f7590 upstream.
+[ Upstream commit be03df3d4bfe7e8866d4aa43d62e648ffe884f5f ]
 
-A while ago where the trace events had the following:
+scsi_proc_hostdir_rm() decreases a reference counter and hence must only be
+called once per host that is removed. This change does not require a
+scsi_add_host_with_dma() change since scsi_add_host_with_dma() will return
+0 (success) if scsi_proc_host_add() is called.
 
-   rcu_read_lock_sched_notrace();
-   rcu_dereference_sched(...);
-   rcu_read_unlock_sched_notrace();
-
-If the tracepoint is enabled, it could trigger RCU issues if called in
-the wrong place. And this warning was only triggered if lockdep was
-enabled. If the tracepoint was never enabled with lockdep, the bug would
-not be caught. To handle this, the above sequence was done when lockdep
-was enabled regardless if the tracepoint was enabled or not (although the
-always enabled code really didn't do anything, it would still trigger a
-warning).
-
-But a lot has changed since that lockdep code was added. One is, that
-sequence no longer triggers any warning. Another is, the tracepoint when
-enabled doesn't even do that sequence anymore.
-
-The main check we care about today is whether RCU is "watching" or not.
-So if lockdep is enabled, always check if rcu_is_watching() which will
-trigger a warning if it is not (tracepoints require RCU to be watching).
-
-Note, that old sequence did add a bit of overhead when lockdep was enabled,
-and with the latest kernel updates, would cause the system to slow down
-enough to trigger kernel "stalled" warnings.
-
-Link: http://lore.kernel.org/lkml/20140806181801.GA4605@redhat.com
-Link: http://lore.kernel.org/lkml/20140807175204.C257CAC5@viggo.jf.intel.com
-Link: https://lore.kernel.org/lkml/20230307184645.521db5c9@gandalf.local.home/
-Link: https://lore.kernel.org/linux-trace-kernel/20230310172856.77406446@gandalf.local.home
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Paul E. McKenney <paulmck@kernel.org>
-Fixes: e6753f23d961 ("tracepoint: Make rcuidle tracepoint callers use SRCU")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fc663711b944 ("scsi: core: Remove the /proc/scsi/${proc_name} directory earlier")
+Cc: John Garry <john.g.garry@oracle.com>
+Reported-by: John Garry <john.g.garry@oracle.com>
+Link: https://lore.kernel.org/all/ed6b8027-a9d9-1b45-be8e-df4e8c6c4605@oracle.com/
+Reported-by: syzbot+645a4616b87a2f10e398@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-scsi/000000000000890fab05f65342b6@google.com/
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230307214428.3703498-1-bvanassche@acm.org
+Tested-by: John Garry <john.g.garry@oracle.com>
+Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/tracepoint.h |   15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ drivers/scsi/hosts.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/include/linux/tracepoint.h
-+++ b/include/linux/tracepoint.h
-@@ -231,12 +231,11 @@ static inline struct tracepoint *tracepo
-  * not add unwanted padding between the beginning of the section and the
-  * structure. Force alignment to the same alignment as the section start.
-  *
-- * When lockdep is enabled, we make sure to always do the RCU portions of
-- * the tracepoint code, regardless of whether tracing is on. However,
-- * don't check if the condition is false, due to interaction with idle
-- * instrumentation. This lets us find RCU issues triggered with tracepoints
-- * even when this tracepoint is off. This code has no purpose other than
-- * poking RCU a bit.
-+ * When lockdep is enabled, we make sure to always test if RCU is
-+ * "watching" regardless if the tracepoint is enabled or not. Tracepoints
-+ * require RCU to be active, and it should always warn at the tracepoint
-+ * site if it is not watching, as it will need to be active when the
-+ * tracepoint is enabled.
-  */
- #define __DECLARE_TRACE(name, proto, args, cond, data_proto, data_args) \
- 	extern struct tracepoint __tracepoint_##name;			\
-@@ -248,9 +247,7 @@ static inline struct tracepoint *tracepo
- 				TP_ARGS(data_args),			\
- 				TP_CONDITION(cond), 0);			\
- 		if (IS_ENABLED(CONFIG_LOCKDEP) && (cond)) {		\
--			rcu_read_lock_sched_notrace();			\
--			rcu_dereference_sched(__tracepoint_##name.funcs);\
--			rcu_read_unlock_sched_notrace();		\
-+			WARN_ON_ONCE(!rcu_is_watching());		\
- 		}							\
- 	}								\
- 	__DECLARE_TRACE_RCU(name, PARAMS(proto), PARAMS(args),		\
+diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
+index 0fd2487203ff5..18321cf9db5d6 100644
+--- a/drivers/scsi/hosts.c
++++ b/drivers/scsi/hosts.c
+@@ -322,9 +322,6 @@ static void scsi_host_dev_release(struct device *dev)
+ 	struct Scsi_Host *shost = dev_to_shost(dev);
+ 	struct device *parent = dev->parent;
+ 
+-	/* In case scsi_remove_host() has not been called. */
+-	scsi_proc_hostdir_rm(shost->hostt);
+-
+ 	/* Wait for functions invoked through call_rcu(&scmd->rcu, ...) */
+ 	rcu_barrier();
+ 
+-- 
+2.39.2
+
 
 
