@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66B61C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6699CC433EF;
-	Mon, 20 Mar 2023 15:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A361C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB695C433D2;
+	Mon, 20 Mar 2023 15:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326090;
-	bh=XEIL89TGnfcFjyp706sAMEL4q4pULuaGN8w/nvuROlQ=;
+	s=korg; t=1679326096;
+	bh=TIQXJjlpa6+QktvqASVdGyu4c9KPKmpcQ1nIF2II6wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHewd3RF53WRe4+A7TOeFlrSs5DiG+q80xYxZmmrwTqaIip5vhrmgt+NNph27qe6m
-	 gngbmnPpL/WjLYWwkZUMPXQk8/u2CTpTnG4+6i62gGePHC8wi2rcXg8hdojNhY/oal
-	 60UoSapuBy+S0ceXJHYe5nv3jlOJQjKnM2SlLh2Q=
+	b=e4LYMoh5dA2Fn8vGPcUKImMt3w01d/QDFqfNnq77Z5IRx65XQroxTEgjexWjR3v38
+	 WCHd9v5yh0bDYa/IAz5Ue3YwHC7Bnl4aVocRYG0ryNtEbUE0w1rF2OmhT5MP7/lDf4
+	 VdqxNh+nsmkGJmSCSWcTPtJL/OyYqAVwF0PbPgJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 198/198] io_uring/msg_ring: let target know allocated index
-Date: Mon, 20 Mar 2023 15:55:36 +0100
-Message-Id: <20230320145515.762603682@linuxfoundation.org>
+	Jeremy Szu <jeremy.szu@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.2 158/211] ALSA: hda/realtek: fix speaker, mute/micmute LEDs not work on a HP platform
+Date: Mon, 20 Mar 2023 15:54:53 +0100
+Message-Id: <20230320145520.047867239@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,47 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Jeremy Szu <jeremy.szu@canonical.com>
 
-commit 5da28edd7bd5518f97175ecea77615bb729a7a28 upstream.
+commit 7bb62340951a9af20235a3bde8c98e2e292915df upstream.
 
-msg_ring requests transferring files support auto index selection via
-IORING_FILE_INDEX_ALLOC, however they don't return the selected index
-to the target ring and there is no other good way for the userspace to
-know where is the receieved file.
+There is a HP platform needs ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED quirk to
+make mic-mute/audio-mute/speaker working.
 
-Return the index for allocated slots and 0 otherwise, which is
-consistent with other fixed file installing requests.
-
-Cc: stable@vger.kernel.org # v6.0+
-Fixes: e6130eba8a848 ("io_uring: add support for passing fixed file descriptors")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://github.com/axboe/liburing/issues/809
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Jeremy Szu <jeremy.szu@canonical.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230307135317.37621-1-jeremy.szu@canonical.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/msg_ring.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/io_uring/msg_ring.c
-+++ b/io_uring/msg_ring.c
-@@ -84,6 +84,8 @@ static int io_msg_send_fd(struct io_kioc
- 	struct file *src_file;
- 	int ret;
- 
-+	if (msg->len)
-+		return -EINVAL;
- 	if (target_ctx == ctx)
- 		return -EINVAL;
- 	if (target_ctx->flags & IORING_SETUP_R_DISABLED)
-@@ -120,7 +122,7 @@ static int io_msg_send_fd(struct io_kioc
- 	 * completes with -EOVERFLOW, then the sender must ensure that a
- 	 * later IORING_OP_MSG_RING delivers the message.
- 	 */
--	if (!io_post_aux_cqe(target_ctx, msg->user_data, msg->len, 0, true))
-+	if (!io_post_aux_cqe(target_ctx, msg->user_data, ret, 0, true))
- 		ret = -EOVERFLOW;
- out_unlock:
- 	io_double_unlock_ctx(ctx, target_ctx, issue_flags);
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9446,6 +9446,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8b8a, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b8b, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b8d, "HP", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8b8f, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b92, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
 
 
