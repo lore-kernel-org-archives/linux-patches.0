@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE26F1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617B0C433D2;
-	Mon, 20 Mar 2023 15:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16561C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C08C433EF;
+	Mon, 20 Mar 2023 15:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325531;
-	bh=KTYWWFvzK9g9XVDLU4q5d6cycX96LXFxNauZDMOY11M=;
+	s=korg; t=1679325534;
+	bh=9rquQIIV8+GqmTmFonBBAhWkmGTUPetbziXMm31iBjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=THSRo7sO1jtgMXjl+UOD0HOk6RYodoqufItOkUy4qV9wST5mVHJcJ7Hlzo6LX1IIb
-	 44/r6INQWjbN1MkKZhjRVQjwGxFh/i8JBnq6LrOvbfrhLy7ZYE4vck9RHkJ0G4ZPOT
-	 flvHDmL6qjX0Y7XH2AzMqd243+Z04ZLficvbnuxo=
+	b=hHZF8HRBtfz8JbIz0ucYezGJOgyYM1SHS3CJ8zKsa1Cf617CFuo9IEYmRG4nBCCZP
+	 XWbdxTa/i9v2yJQiEDSwsotcctLAVA1w4TV3pcTTkHrerP34NXDqCh7ACVJkrhmDWK
+	 3P//RC2SV+5l54GbB3K4BKdZo+SlsTEtBaeJpo+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/198] hwmon: (xgene) Fix use after free bug in xgene_hwmon_remove due to race condition
-Date: Mon, 20 Mar 2023 15:53:53 +0100
-Message-Id: <20230320145511.537058812@linuxfoundation.org>
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 5.15 115/115] HID: uhid: Over-ride the default maximum data buffer value with our own
+Date: Mon, 20 Mar 2023 15:55:27 +0100
+Message-Id: <20230320145454.293764951@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,51 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit cb090e64cf25602b9adaf32d5dfc9c8bec493cd1 ]
+commit 1c5d4221240a233df2440fe75c881465cdf8da07 upstream.
 
-In xgene_hwmon_probe, &ctx->workq is bound with xgene_hwmon_evt_work.
-Then it will be started.
+The default maximum data buffer size for this interface is UHID_DATA_MAX
+(4k).  When data buffers are being processed, ensure this value is used
+when ensuring the sanity, rather than a value between the user provided
+value and HID_MAX_BUFFER_SIZE (16k).
 
-If we remove the driver which will call xgene_hwmon_remove to clean up,
-there may be unfinished work.
-
-The possible sequence is as follows:
-
-Fix it by finishing the work before cleanup in xgene_hwmon_remove.
-
-CPU0                  CPU1
-
-                    |xgene_hwmon_evt_work
-xgene_hwmon_remove   |
-kfifo_free(&ctx->async_msg_fifo);|
-                    |
-                    |kfifo_out_spinlocked
-                    |//use &ctx->async_msg_fifo
-Fixes: 2ca492e22cb7 ("hwmon: (xgene) Fix crash when alarm occurs before driver probe")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Link: https://lore.kernel.org/r/20230310084007.1403388-1-zyytlz.wz@163.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/xgene-hwmon.c | 1 +
+ drivers/hid/uhid.c |    1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/xgene-hwmon.c b/drivers/hwmon/xgene-hwmon.c
-index 5cde837bfd094..d1abea49f01be 100644
---- a/drivers/hwmon/xgene-hwmon.c
-+++ b/drivers/hwmon/xgene-hwmon.c
-@@ -761,6 +761,7 @@ static int xgene_hwmon_remove(struct platform_device *pdev)
- {
- 	struct xgene_hwmon_dev *ctx = platform_get_drvdata(pdev);
+--- a/drivers/hid/uhid.c
++++ b/drivers/hid/uhid.c
+@@ -395,6 +395,7 @@ struct hid_ll_driver uhid_hid_driver = {
+ 	.parse = uhid_hid_parse,
+ 	.raw_request = uhid_hid_raw_request,
+ 	.output_report = uhid_hid_output_report,
++	.max_buffer_size = UHID_DATA_MAX,
+ };
+ EXPORT_SYMBOL_GPL(uhid_hid_driver);
  
-+	cancel_work_sync(&ctx->workq);
- 	hwmon_device_unregister(ctx->hwmon_dev);
- 	kfifo_free(&ctx->async_msg_fifo);
- 	if (acpi_disabled)
--- 
-2.39.2
-
 
 
