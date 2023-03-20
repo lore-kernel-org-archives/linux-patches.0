@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEEEB1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F04C433EF;
-	Mon, 20 Mar 2023 15:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6461C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DDAAC433EF;
+	Mon, 20 Mar 2023 15:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325141;
-	bh=7P+Qk8UVbePONM+ocqLe5OYH4QQA7VaeuOo7lQH6DQU=;
+	s=korg; t=1679325144;
+	bh=cX5eeqBOOVYMtEO2rEpVDh9L9+qffzjCNVMPfUxddjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kvmk867j8QR4269Y0iWJjTJdGBbd85NivfkZgBGpDbH3bFP48jYhE7vxasSeoU7Hs
-	 Tnu9NnKQfO5NpnOyX/mD2y5HJATSmQc8c3mkMhgEwgFWqScIQxvxNkKJ4Ztu/CckXQ
-	 HkmQ+SB15c1b1m5HsTIkIvNjNjAnDIruKDgZP0N8=
+	b=KdxrnbVnu287ZIGm5b/hll6N8TpbNg/XF/fxng+9yy+8p1D8UmE8qn+gQdkv7ceaZ
+	 2wca5rADgiGiUa+R+jCYXGoA7kAwUQORoPOLypw3NOIH/aZln9QDlTw6PgKjTlZfPi
+	 vgesJDw5vK0hUYkXJlcQQra4LJdsAilkw07ZmP78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Andrea Righi <andrea.righi@canonical.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/198] drm/i915/sseu: fix max_subslices array-index-out-of-bounds access
-Date: Mon, 20 Mar 2023 15:53:03 +0100
-Message-Id: <20230320145509.352771021@linuxfoundation.org>
+Subject: [PATCH 6.2 010/211] ASoC: SOF: Intel: MTL: Fix the device description
+Date: Mon, 20 Mar 2023 15:52:25 +0100
+Message-Id: <20230320145513.729748469@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,71 +38,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrea Righi <andrea.righi@canonical.com>
+From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 
-[ Upstream commit 193c41926d152761764894f46e23b53c00186a82 ]
+[ Upstream commit a659e35ca0af2765f567bdfdccfa247eff0cdab8 ]
 
-It seems that commit bc3c5e0809ae ("drm/i915/sseu: Don't try to store EU
-mask internally in UAPI format") exposed a potential out-of-bounds
-access, reported by UBSAN as following on a laptop with a gen 11 i915
-card:
+Add the missing ops_free callback.
 
-  UBSAN: array-index-out-of-bounds in drivers/gpu/drm/i915/gt/intel_sseu.c:65:27
-  index 6 is out of range for type 'u16 [6]'
-  CPU: 2 PID: 165 Comm: systemd-udevd Not tainted 6.2.0-9-generic #9-Ubuntu
-  Hardware name: Dell Inc. XPS 13 9300/077Y9N, BIOS 1.11.0 03/22/2022
-  Call Trace:
-   <TASK>
-   show_stack+0x4e/0x61
-   dump_stack_lvl+0x4a/0x6f
-   dump_stack+0x10/0x18
-   ubsan_epilogue+0x9/0x3a
-   __ubsan_handle_out_of_bounds.cold+0x42/0x47
-   gen11_compute_sseu_info+0x121/0x130 [i915]
-   intel_sseu_info_init+0x15d/0x2b0 [i915]
-   intel_gt_init_mmio+0x23/0x40 [i915]
-   i915_driver_mmio_probe+0x129/0x400 [i915]
-   ? intel_gt_probe_all+0x91/0x2e0 [i915]
-   i915_driver_probe+0xe1/0x3f0 [i915]
-   ? drm_privacy_screen_get+0x16d/0x190 [drm]
-   ? acpi_dev_found+0x64/0x80
-   i915_pci_probe+0xac/0x1b0 [i915]
-   ...
+Fixes: 064520e8aeaa ("ASoC: SOF: Intel: Add support for MeteorLake (MTL)")
 
-According to the definition of sseu_dev_info, eu_mask->hsw is limited to
-a maximum of GEN_MAX_SS_PER_HSW_SLICE (6) sub-slices, but
-gen11_sseu_info_init() can potentially set 8 sub-slices, in the
-!IS_JSL_EHL(gt->i915) case.
-
-Fix this by reserving up to 8 slots for max_subslices in the eu_mask
-struct.
-
-Reported-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
-Signed-off-by: Andrea Righi <andrea.righi@canonical.com>
-Fixes: bc3c5e0809ae ("drm/i915/sseu: Don't try to store EU mask internally in UAPI format")
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230220171858.131416-1-andrea.righi@canonical.com
-(cherry picked from commit 3cba09a6ac86ea1d456909626eb2685596c07822)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20230307093914.25409-2-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_sseu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sof/intel/pci-mtl.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_sseu.h b/drivers/gpu/drm/i915/gt/intel_sseu.h
-index aa87d3832d60d..d7e8c374f153e 100644
---- a/drivers/gpu/drm/i915/gt/intel_sseu.h
-+++ b/drivers/gpu/drm/i915/gt/intel_sseu.h
-@@ -27,7 +27,7 @@ struct drm_printer;
-  * is only relevant to pre-Xe_HP platforms (Xe_HP and beyond use the
-  * I915_MAX_SS_FUSE_BITS value below).
-  */
--#define GEN_MAX_SS_PER_HSW_SLICE	6
-+#define GEN_MAX_SS_PER_HSW_SLICE	8
+diff --git a/sound/soc/sof/intel/pci-mtl.c b/sound/soc/sof/intel/pci-mtl.c
+index 6e4e6d4ef5a56..b183dc0014b4b 100644
+--- a/sound/soc/sof/intel/pci-mtl.c
++++ b/sound/soc/sof/intel/pci-mtl.c
+@@ -46,6 +46,7 @@ static const struct sof_dev_desc mtl_desc = {
+ 	.nocodec_tplg_filename = "sof-mtl-nocodec.tplg",
+ 	.ops = &sof_mtl_ops,
+ 	.ops_init = sof_mtl_ops_init,
++	.ops_free = hda_ops_free,
+ };
  
- /*
-  * Maximum number of 32-bit registers used by hardware to express the
+ /* PCI IDs */
 -- 
 2.39.2
 
