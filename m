@@ -1,52 +1,52 @@
-Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266BB4C6A
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 18:40:29 +0000 (UTC)
-Received: by mail-ua1-f46.google.com with SMTP id ay14so8588090uab.13
-        for <patches@lists.linux.dev>; Mon, 20 Mar 2023 11:40:29 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530BA4C6A
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 18:42:53 +0000 (UTC)
+Received: by mail-vs1-f44.google.com with SMTP id c10so4199234vsh.12
+        for <patches@lists.linux.dev>; Mon, 20 Mar 2023 11:42:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679337628;
+        d=linaro.org; s=google; t=1679337772;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yRXc2hz1Iyz4zZlb4PkpxwfxHP9/5AAbgn8o/1fstKc=;
-        b=fCPa7dxOdX75YB4iebz6/YsqHObho72FNPm85eKCUXK0SWtPjKAVN3owSn7COZUTZJ
-         mDhG7u3He3+ltZAkexETCJZdCDqys+1aRwVkPCLf3NYW13ZYgcu5qX+jWS2UpxU80c6n
-         vkjdIjV/yG+dTkQvNeiJZaCB/VGJXJXujqrXGvk/NiGR90sOVqgi+75WjF008Tl6lkVQ
-         RKiG5+kU0ll5XY5bUCEHGa+s55TTsf2iOH0IO1da3QYRs8JGquEBcNXe2En6RZ8r/qTx
-         gdLRv04dqN1l7Hq0X7CYdZfq/aAaK5dr3hkiqvcK5IWuWuOTUO4mD0E4KAB4jYui08e2
-         KZmQ==
+        bh=S6qDlxgrvXVQRNB9kUbn6eufRRtTHPLdDgSZt+65vJI=;
+        b=f4tYwGPHEiPX9T9NSQEefkwCMwavF0Hfvbj8MPt8OzL6EDMfSsCfBfOjHcWUPINIYO
+         9ZL/1zFGenH3AzWv9GV0KXiADSzo+VifNzGX+xdaveJasZVWPs86w8AHE3037eSicsTt
+         W43IW3n/QcpZBLnGR3WvNGApR8libNVl60RcIJrrrziM44R40p2A9CINpYv2KRzKMDoJ
+         OkCQRcPkeAYra3fLCg2RE27/RiocXxzaspEN4Ngo+hL/I7Vxzk0GJDyy86SyNuimXbYj
+         ++tKvusG3Ooqy+780AhinPAkinpjJ8vsgoBuqnLayzMZ7eLNDKSNOj4oabisOMENf/lU
+         p2nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679337628;
+        d=1e100.net; s=20210112; t=1679337772;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yRXc2hz1Iyz4zZlb4PkpxwfxHP9/5AAbgn8o/1fstKc=;
-        b=XImRZQUwPp344DJUjJ6wzf1km7uPcl7RWNoqnP39aVAIL+kvz6aFHiWSXaMzZcuqrh
-         soe1IIMv5TeyAVoaCdyijRewrk0MF69OOZUNDgUa4Pyppy9sDgUDXwwOY30WbeAvenwY
-         5G2D+9tQg7/5iFV8xbOtBj8v70wC3SvYy5g1mak/sCN3lQkrtvc5zVUhGoHPrLpsiyRb
-         oXAsz5ZhyndkpDetzCNXnL/W65GvLojZ+7X/Jti1ogpZSl16UKxrOtQIS1LqJx1Sxs1I
-         KDLf+b2DFldG4C68lp0BUqcoGyqYfQuZkN8A7xOt1U7BM5cDlEDcr0icFhFaEX/3DLdk
-         JiJQ==
-X-Gm-Message-State: AO0yUKVhUk/yPzntMuwJZNl4CeTPCCqnfQHajyHH4ZzdRuEcqVoUgIxA
-	yoWnBTgZUGR0+SXkjGLk6KwlzUcjQZZVodN2HnLx5Q==
-X-Google-Smtp-Source: AK7set8Y2G3DWP+1nUSxL7tzZouFSFwcwHrD9ont46UDJZYxB7UKIsVHOe3DTskCSaLQBHQxRrBiNRHPpMLNB9OUYgs=
-X-Received: by 2002:ab0:1006:0:b0:68e:2dce:3162 with SMTP id
- f6-20020ab01006000000b0068e2dce3162mr5199367uab.2.1679337627835; Mon, 20 Mar
- 2023 11:40:27 -0700 (PDT)
+        bh=S6qDlxgrvXVQRNB9kUbn6eufRRtTHPLdDgSZt+65vJI=;
+        b=zqQDgYlcSSnfUtASVHEi6REqRDibAkMK1H5rjeigWBRs8V0Z5Sui97TdFAkP5s2nHH
+         yJc85ZgsFxTDsNC4HUebqtu8MqCfJQZw8KicenfKt+6AGZCl8AFcWLGMluKIsK2bLVNO
+         iTzPTJkaV9jWAWQwUn+jh8Dua86epj6rQId5gvHhD5hd2RNFuN2R/5wZnPHZFKns2F6h
+         dOvh7MvrC4s7XRUgo3J7foLHOJgKNdXox5FnUt4J34gepx0hP58fuhOc0GzmkaIkt/jJ
+         Tz4j4Osus6chqloPnKmHZuiP2Hhjh32O+7KPNF0mtxnReIAviwcKK5RqrFzrHfaOryUU
+         yd5w==
+X-Gm-Message-State: AAQBX9cUgOJUvYfksgXgntqeELChB4yaRhO3CLXcrT+4AM/UIjFoyq4H
+	5neOuQvilmUpZrpwDNgPtiiaiM45fyG33ro45mQ5mA==
+X-Google-Smtp-Source: AK7set/vVlTyUh2BRkhjfN5Eql28JK/M5ok9ZONQir0aJp4DhxnNQlA6ExlGsyH5oMhXl2OBLvkb746J5x0qgMXmI+w=
+X-Received: by 2002:a67:c01c:0:b0:402:9b84:1be4 with SMTP id
+ v28-20020a67c01c000000b004029b841be4mr4451vsi.6.1679337771950; Mon, 20 Mar
+ 2023 11:42:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230320145513.305686421@linuxfoundation.org>
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 21 Mar 2023 00:10:16 +0530
-Message-ID: <CA+G9fYvNEThYX-c204_knup5G_1vA27j+HouS-n=HMUsdJpC_g@mail.gmail.com>
-Subject: Re: [PATCH 6.2 000/211] 6.2.8-rc1 review
+Date: Tue, 21 Mar 2023 00:12:40 +0530
+Message-ID: <CA+G9fYtCtfSqrje=1wkw1ODpnJorDMFkB1bSVexpyc4gi3X0ZQ@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/198] 6.1.21-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -62,20 +62,20 @@ Content-Transfer-Encoding: quoted-printable
 On Mon, 20 Mar 2023 at 20:26, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.2.8 release.
-> There are 211 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.1.21 release.
+> There are 198 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
-> Responses should be made by Wed, 22 Mar 2023 14:54:32 +0000.
+> Responses should be made by Wed, 22 Mar 2023 14:54:29 +0000.
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
 >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.2.8-rc1.gz
+6.1.21-rc1.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.2.y
+-rc.git linux-6.1.y
 > and the diffstat can be found below.
 >
 > thanks,
@@ -86,16 +86,15 @@ On Mon, 20 Mar 2023 at 20:26, Greg Kroah-Hartman
 Results from Linaro=E2=80=99s test farm.
 Regressions on PowerPC build failures.
 
-
 > Christophe Leroy <christophe.leroy@csgroup.eu>
 >     powerpc/64: Set default CPU in Kconfig
+>
 
 We see PowerPC build failures with Clang 16 and nightly on the
 following configurations:
 * cell_defconfig
 * ppc64e_defconfig
 * tqm8xx_defconfig
-
 
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
