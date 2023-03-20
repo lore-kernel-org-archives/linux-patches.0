@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489231C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC461C433D2;
-	Mon, 20 Mar 2023 15:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA9E1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:18:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73361C433D2;
+	Mon, 20 Mar 2023 15:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325488;
-	bh=Zuie0tmsXAEmIfPxsBU4FMo5Pj9dz7QI7sCXYZf9V7I=;
+	s=korg; t=1679325490;
+	bh=tFhlfcldWAYoq8Ujf69lfbDkSfZAGy9UkzTkNN4Oylk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHZku2uOm+wniuGrsy6TwLg0hsgWhq3ebfTWRVQTblCXK9KSjTewcXvbMWOuu0tHr
-	 rtXY01BcLW5+ek5O9bgVJeS8ZNjLhaGRtVm1UAcnDTnbpwQ5pcpYVjc9AoM+HHQ/Ye
-	 YJphQ2v2YF8GGvcftL4V8RyLBob34uDeuogNBXZw=
+	b=FrbgWkSJEJVos+5x/Gca03amjAmTw4mqc2rZVF9bFfguTsAZBOZI4nEk3f/N2h72c
+	 uKkaLcxaci+c9EurXpzyvFP6FHuROmrVXE1MuoQspRHwPM1nD7e/CK2olI4dJng1tp
+	 p+N7eZISMtJFle2WAJ0vAmjNzjwhn4oa5v1CpS8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 075/198] net/mlx5: Set BREAK_FW_WAIT flag first when removing driver
-Date: Mon, 20 Mar 2023 15:53:33 +0100
-Message-Id: <20230320145510.675516972@linuxfoundation.org>
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 5.15 110/115] drm/i915/active: Fix misuse of non-idle barriers as fence trackers
+Date: Mon, 20 Mar 2023 15:55:22 +0100
+Message-Id: <20230320145454.067268854@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +36,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 
-[ Upstream commit 031a163f2c476adcb2c01e27a7d323e66174ac11 ]
+commit e0e6b416b25ee14716f3549e0cbec1011b193809 upstream.
 
-Currently, BREAK_FW_WAIT flag is set after syncing with fw_reset.
-However, fw_reset can call mlx5_load_one() which is waiting for fw
-init bit and BREAK_FW_WAIT flag is intended to stop. e.g.: the driver
-might wait on a loop it should exit.
-Fix it by setting the flag before syncing with fw_reset.
+Users reported oopses on list corruptions when using i915 perf with a
+number of concurrently running graphics applications.  Root cause analysis
+pointed at an issue in barrier processing code -- a race among perf open /
+close replacing active barriers with perf requests on kernel context and
+concurrent barrier preallocate / acquire operations performed during user
+context first pin / last unpin.
 
-Fixes: 8324a02c342a ("net/mlx5: Add exit route when waiting for FW")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When adding a request to a composite tracker, we try to reuse an existing
+fence tracker, already allocated and registered with that composite.  The
+tracker we obtain may already track another fence, may be an idle barrier,
+or an active barrier.
+
+If the tracker we get occurs a non-idle barrier then we try to delete that
+barrier from a list of barrier tasks it belongs to.  However, while doing
+that we don't respect return value from a function that performs the
+barrier deletion.  Should the deletion ever fail, we would end up reusing
+the tracker still registered as a barrier task.  Since the same structure
+field is reused with both fence callback lists and barrier tasks list,
+list corruptions would likely occur.
+
+Barriers are now deleted from a barrier tasks list by temporarily removing
+the list content, traversing that content with skip over the node to be
+deleted, then populating the list back with the modified content.  Should
+that intentionally racy concurrent deletion attempts be not serialized,
+one or more of those may fail because of the list being temporary empty.
+
+Related code that ignores the results of barrier deletion was initially
+introduced in v5.4 by commit d8af05ff38ae ("drm/i915: Allow sharing the
+idle-barrier from other kernel requests").  However, all users of the
+barrier deletion routine were apparently serialized at that time, then the
+issue didn't exhibit itself.  Results of git bisect with help of a newly
+developed igt@gem_barrier_race@remote-request IGT test indicate that list
+corruptions might start to appear after commit 311770173fac ("drm/i915/gt:
+Schedule request retirement when timeline idles"), introduced in v5.5.
+
+Respect results of barrier deletion attempts -- mark the barrier as idle
+only if successfully deleted from the list.  Then, before proceeding with
+setting our fence as the one currently tracked, make sure that the tracker
+we've got is not a non-idle barrier.  If that check fails then don't use
+that tracker but go back and try to acquire a new, usable one.
+
+v3: use unlikely() to document what outcome we expect (Andi),
+  - fix bad grammar in commit description.
+v2: no code changes,
+  - blame commit 311770173fac ("drm/i915/gt: Schedule request retirement
+    when timeline idles"), v5.5, not commit d8af05ff38ae ("drm/i915: Allow
+    sharing the idle-barrier from other kernel requests"), v5.4,
+  - reword commit description.
+
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/6333
+Fixes: 311770173fac ("drm/i915/gt: Schedule request retirement when timeline idles")
+Cc: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: stable@vger.kernel.org # v5.5
+Cc: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230302120820.48740-1-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit 506006055769b10d1b2b4e22f636f3b45e0e9fc7)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/i915_active.c |   26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 51c3e86f71a94..59914f66857da 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -1752,11 +1752,11 @@ static void remove_one(struct pci_dev *pdev)
- 	struct mlx5_core_dev *dev  = pci_get_drvdata(pdev);
- 	struct devlink *devlink = priv_to_devlink(dev);
- 
-+	set_bit(MLX5_BREAK_FW_WAIT, &dev->intf_state);
- 	/* mlx5_drain_fw_reset() is using devlink APIs. Hence, we must drain
- 	 * fw_reset before unregistering the devlink.
+--- a/drivers/gpu/drm/i915/i915_active.c
++++ b/drivers/gpu/drm/i915/i915_active.c
+@@ -422,8 +422,7 @@ replace_barrier(struct i915_active *ref,
+ 	 * we can use it to substitute for the pending idle-barrer
+ 	 * request that we want to emit on the kernel_context.
  	 */
- 	mlx5_drain_fw_reset(dev);
--	set_bit(MLX5_BREAK_FW_WAIT, &dev->intf_state);
- 	devlink_unregister(devlink);
- 	mlx5_sriov_disable(pdev);
- 	mlx5_crdump_disable(dev);
--- 
-2.39.2
-
+-	__active_del_barrier(ref, node_from_active(active));
+-	return true;
++	return __active_del_barrier(ref, node_from_active(active));
+ }
+ 
+ int i915_active_ref(struct i915_active *ref, u64 idx, struct dma_fence *fence)
+@@ -436,16 +435,19 @@ int i915_active_ref(struct i915_active *
+ 	if (err)
+ 		return err;
+ 
+-	active = active_instance(ref, idx);
+-	if (!active) {
+-		err = -ENOMEM;
+-		goto out;
+-	}
+-
+-	if (replace_barrier(ref, active)) {
+-		RCU_INIT_POINTER(active->fence, NULL);
+-		atomic_dec(&ref->count);
+-	}
++	do {
++		active = active_instance(ref, idx);
++		if (!active) {
++			err = -ENOMEM;
++			goto out;
++		}
++
++		if (replace_barrier(ref, active)) {
++			RCU_INIT_POINTER(active->fence, NULL);
++			atomic_dec(&ref->count);
++		}
++	} while (unlikely(is_barrier(active)));
++
+ 	if (!__i915_active_fence_set(active, fence))
+ 		__i915_active_acquire(ref);
+ 
 
 
