@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868681C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BA0C433D2;
-	Mon, 20 Mar 2023 15:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DAB1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CEAC433EF;
+	Mon, 20 Mar 2023 15:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325800;
-	bh=lTz+5AFy/jELT6czLvUxdm6WsyIvvXg3gLGmy6nRE7o=;
+	s=korg; t=1679325803;
+	bh=ItwEZepMiMsvKIPT7E7ZzxgPotXPPqHnsHfZmPbNf5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yMshjJyr8g6+2SCXAGIZgOe+aBF3YUy2DVveYeiSVKhMlPIdfnKbKzyksB217+YxW
-	 Ec4fys1vS5taxPvP6Zh4dRyJ5fok7M7bJMi4YQnJxV9aJcPGg3eKXeMle2jWBohwaz
-	 XpiqvdeBaLBP6ubgmQiBUKeBBHt3FaeR8bIQvn+A=
+	b=G9q+2KIrclFJf4gRoeZW/+XvqSp/jYW65OCz2LMG3/9uWUiwwUWCaZzBxnHyYfZiE
+	 iisxUn+9JI3MPLRmtyQR09Q8gY9n9Bee8hYSYR1ymBBHrOraC4zGjWpZJVMmUVemcl
+	 aywtEefxgjppT84jSztupzqcWXrhpLmvOfr5plfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 103/211] hwmon: tmp512: drop of_match_ptr for ID table
-Date: Mon, 20 Mar 2023 15:53:58 +0100
-Message-Id: <20230320145517.604964542@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 145/198] tracing: Make tracepoint lockdep check actually test something
+Date: Mon, 20 Mar 2023 15:54:43 +0100
+Message-Id: <20230320145513.631340397@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,41 +39,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 00d85e81796b17a29a0e096c5a4735daa47adef8 ]
+commit c2679254b9c9980d9045f0f722cf093a2b1f7590 upstream.
 
-The driver will match mostly by DT table (even thought there is regular
-ID table) so there is little benefit in of_match_ptr (this also allows
-ACPI matching via PRP0001, even though it might not be relevant here).
-This also fixes !CONFIG_OF error:
+A while ago where the trace events had the following:
 
-  drivers/hwmon/tmp513.c:610:34: error: ‘tmp51x_of_match’ defined but not used [-Werror=unused-const-variable=]
+   rcu_read_lock_sched_notrace();
+   rcu_dereference_sched(...);
+   rcu_read_unlock_sched_notrace();
 
-Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230312193723.478032-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If the tracepoint is enabled, it could trigger RCU issues if called in
+the wrong place. And this warning was only triggered if lockdep was
+enabled. If the tracepoint was never enabled with lockdep, the bug would
+not be caught. To handle this, the above sequence was done when lockdep
+was enabled regardless if the tracepoint was enabled or not (although the
+always enabled code really didn't do anything, it would still trigger a
+warning).
+
+But a lot has changed since that lockdep code was added. One is, that
+sequence no longer triggers any warning. Another is, the tracepoint when
+enabled doesn't even do that sequence anymore.
+
+The main check we care about today is whether RCU is "watching" or not.
+So if lockdep is enabled, always check if rcu_is_watching() which will
+trigger a warning if it is not (tracepoints require RCU to be watching).
+
+Note, that old sequence did add a bit of overhead when lockdep was enabled,
+and with the latest kernel updates, would cause the system to slow down
+enough to trigger kernel "stalled" warnings.
+
+Link: http://lore.kernel.org/lkml/20140806181801.GA4605@redhat.com
+Link: http://lore.kernel.org/lkml/20140807175204.C257CAC5@viggo.jf.intel.com
+Link: https://lore.kernel.org/lkml/20230307184645.521db5c9@gandalf.local.home/
+Link: https://lore.kernel.org/linux-trace-kernel/20230310172856.77406446@gandalf.local.home
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Joel Fernandes <joel@joelfernandes.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: e6753f23d961 ("tracepoint: Make rcuidle tracepoint callers use SRCU")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/tmp513.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/tracepoint.h |   15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/hwmon/tmp513.c b/drivers/hwmon/tmp513.c
-index 47bbe47e062fd..7d5f7441aceb1 100644
---- a/drivers/hwmon/tmp513.c
-+++ b/drivers/hwmon/tmp513.c
-@@ -758,7 +758,7 @@ static int tmp51x_probe(struct i2c_client *client)
- static struct i2c_driver tmp51x_driver = {
- 	.driver = {
- 		.name	= "tmp51x",
--		.of_match_table = of_match_ptr(tmp51x_of_match),
-+		.of_match_table = tmp51x_of_match,
- 	},
- 	.probe_new	= tmp51x_probe,
- 	.id_table	= tmp51x_id,
--- 
-2.39.2
-
+--- a/include/linux/tracepoint.h
++++ b/include/linux/tracepoint.h
+@@ -231,12 +231,11 @@ static inline struct tracepoint *tracepo
+  * not add unwanted padding between the beginning of the section and the
+  * structure. Force alignment to the same alignment as the section start.
+  *
+- * When lockdep is enabled, we make sure to always do the RCU portions of
+- * the tracepoint code, regardless of whether tracing is on. However,
+- * don't check if the condition is false, due to interaction with idle
+- * instrumentation. This lets us find RCU issues triggered with tracepoints
+- * even when this tracepoint is off. This code has no purpose other than
+- * poking RCU a bit.
++ * When lockdep is enabled, we make sure to always test if RCU is
++ * "watching" regardless if the tracepoint is enabled or not. Tracepoints
++ * require RCU to be active, and it should always warn at the tracepoint
++ * site if it is not watching, as it will need to be active when the
++ * tracepoint is enabled.
+  */
+ #define __DECLARE_TRACE(name, proto, args, cond, data_proto)		\
+ 	extern int __traceiter_##name(data_proto);			\
+@@ -249,9 +248,7 @@ static inline struct tracepoint *tracepo
+ 				TP_ARGS(args),				\
+ 				TP_CONDITION(cond), 0);			\
+ 		if (IS_ENABLED(CONFIG_LOCKDEP) && (cond)) {		\
+-			rcu_read_lock_sched_notrace();			\
+-			rcu_dereference_sched(__tracepoint_##name.funcs);\
+-			rcu_read_unlock_sched_notrace();		\
++			WARN_ON_ONCE(!rcu_is_watching());		\
+ 		}							\
+ 	}								\
+ 	__DECLARE_TRACE_RCU(name, PARAMS(proto), PARAMS(args),		\
 
 
