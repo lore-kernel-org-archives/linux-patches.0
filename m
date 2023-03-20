@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1A91C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8248BC4339B;
-	Mon, 20 Mar 2023 15:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF911C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F024C433EF;
+	Mon, 20 Mar 2023 15:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324804;
-	bh=0YqCqh+Qg+2o7MkvMn8iGQ1yHulaS9ofUuDEMfWzGW0=;
+	s=korg; t=1679324807;
+	bh=UeW1CQAAoSJChSLO401v/ThGrxNP3MJwVrLenSBvI1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BppNx1/W0o6uRoGIatURqfAPiD7q1yNVOJY1TSqM896SEJ8VlB2/ChqWSuZjXmtc9
-	 2UMcnupPnRa1jr9/kb2oPyFpWdB4mQHRMIWXbvVPyIIQry2DAK3X73P7RopUIs5V/H
-	 7teUXKqWb+bWQ2d5/sosQqdrsLH7zPu1EWS9g2qs=
+	b=wSe0a56afta0j38V8Kx0QHTkqyo3RsXH5ni4fuIPKbTb90gVpv+gj5P1mW8mH6iFr
+	 lZhxQC8APHGGEZe8uplUfjtwdKRbChzF3vOyN0y6i1C+QK/e2SqPrErqyPKWmk7DUH
+	 MG58ZSSXfGvQExrhRRHBJ3YniAfNIj3DxIX33sPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 5.10 60/99] interconnect: fix mem leak when freeing nodes
-Date: Mon, 20 Mar 2023 15:54:38 +0100
-Message-Id: <20230320145445.892485497@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Riku Voipio <riku.voipio@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	linux-clk@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 008/198] clk: HI655X: select REGMAP instead of depending on it
+Date: Mon, 20 Mar 2023 15:52:26 +0100
+Message-Id: <20230320145507.814907681@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit a5904f415e1af72fa8fe6665aa4f554dc2099a95 upstream.
+[ Upstream commit 0ffad67784a097beccf34d297ddd1b0773b3b8a3 ]
 
-The node link array is allocated when adding links to a node but is not
-deallocated when nodes are destroyed.
+REGMAP is a hidden (not user visible) symbol. Users cannot set it
+directly thru "make *config", so drivers should select it instead of
+depending on it if they need it.
 
-Fixes: 11f1ceca7031 ("interconnect: Add generic on-chip interconnect API")
-Cc: stable@vger.kernel.org      # 5.1
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # i.MX8MP MSC SM2-MB-EP1 Board
-Link: https://lore.kernel.org/r/20230306075651.2449-2-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
+
+Therefore, change the use of "depends on REGMAP" to "select REGMAP".
+
+Fixes: 3a49afb84ca0 ("clk: enable hi655x common clk automatically")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Riku Voipio <riku.voipio@linaro.org>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>
+Cc: linux-clk@vger.kernel.org
+Link: https://lore.kernel.org/r/20230226053953.4681-3-rdunlap@infradead.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -850,6 +850,10 @@ void icc_node_destroy(int id)
- 
- 	mutex_unlock(&icc_lock);
- 
-+	if (!node)
-+		return;
-+
-+	kfree(node->links);
- 	kfree(node);
- }
- EXPORT_SYMBOL_GPL(icc_node_destroy);
+diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+index d79905f3e1744..5da82f2bdd211 100644
+--- a/drivers/clk/Kconfig
++++ b/drivers/clk/Kconfig
+@@ -92,7 +92,7 @@ config COMMON_CLK_RK808
+ config COMMON_CLK_HI655X
+ 	tristate "Clock driver for Hi655x" if EXPERT
+ 	depends on (MFD_HI655X_PMIC || COMPILE_TEST)
+-	depends on REGMAP
++	select REGMAP
+ 	default MFD_HI655X_PMIC
+ 	help
+ 	  This driver supports the hi655x PMIC clock. This
+-- 
+2.39.2
+
 
 
