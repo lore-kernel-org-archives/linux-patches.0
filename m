@@ -1,30 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3401C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42079C433EF;
-	Mon, 20 Mar 2023 15:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859A11C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083F6C4339C;
+	Mon, 20 Mar 2023 15:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325369;
-	bh=H96fpcwqJceqRaitYxcT5Jbq/71e4nWY0B1FohBm9rQ=;
+	s=korg; t=1679325372;
+	bh=W9fLHoHuLWUaINGzPkF6RNt5x4mzbUfgMbFQ41cEGic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JHBFhwQRALh0Iki9zS3dZ3btl4YnKdQ+2rinkxMgJF7Ouslspht7jiCxFHODZVE+7
-	 hALAlKqIyAhy2AK9ncW/8HUuIx2EJQh8r7pdG4Oq11Bn9owwzuxXzAS8J1M4HTaBto
-	 Oy9o73G3hvSJNDqTdXeP1EwjMCs+rPXhe18qaPoY=
+	b=uhro8WQVbo9VYv5uyp75DyI4r2eYMnNS5RCti6t3taHPgmU/fWx45nm7IjlWOD792
+	 6+92bPAEz5farZOQzEhRdNk1aRN1my6GzylSWDUtuHYFAM5lDD5uKMIXIkBKVgGep9
+	 ANWbNjHzsinvirWnxU3V8cJTA2wH/XSVoK/zcZik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 036/211] wifi: cfg80211: fix MLO connection ownership
-Date: Mon, 20 Mar 2023 15:52:51 +0100
-Message-Id: <20230320145514.756007627@linuxfoundation.org>
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	Chandan Kumar Rout <chandanx.rout@intel.com>
+Subject: [PATCH 6.1 077/198] ice: xsk: disable txq irq before flushing hw
+Date: Mon, 20 Mar 2023 15:53:35 +0100
+Message-Id: <20230320145510.752625263@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,95 +40,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit 96c069508377547f913e7265a80fffe9355de592 ]
+[ Upstream commit b830c9642386867863ac64295185f896ff2928ac ]
 
-When disconnecting from an MLO connection we need the AP
-MLD address, not an arbitrary BSSID. Fix the code to do
-that.
+ice_qp_dis() intends to stop a given queue pair that is a target of xsk
+pool attach/detach. One of the steps is to disable interrupts on these
+queues. It currently is broken in a way that txq irq is turned off
+*after* HW flush which in turn takes no effect.
 
-Fixes: 9ecff10e82a5 ("wifi: nl80211: refactor BSS lookup in nl80211_associate()")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230301115906.4c1b3b18980e.I008f070c7f3b8e8bde9278101ef9e40706a82902@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+ice_qp_dis():
+-> ice_qvec_dis_irq()
+--> disable rxq irq
+--> flush hw
+-> ice_vsi_stop_tx_ring()
+-->disable txq irq
+
+Below splat can be triggered by following steps:
+- start xdpsock WITHOUT loading xdp prog
+- run xdp_rxq_info with XDP_TX action on this interface
+- start traffic
+- terminate xdpsock
+
+[  256.312485] BUG: kernel NULL pointer dereference, address: 0000000000000018
+[  256.319560] #PF: supervisor read access in kernel mode
+[  256.324775] #PF: error_code(0x0000) - not-present page
+[  256.329994] PGD 0 P4D 0
+[  256.332574] Oops: 0000 [#1] PREEMPT SMP NOPTI
+[  256.337006] CPU: 3 PID: 32 Comm: ksoftirqd/3 Tainted: G           OE      6.2.0-rc5+ #51
+[  256.345218] Hardware name: Intel Corporation S2600WFT/S2600WFT, BIOS SE5C620.86B.02.01.0008.031920191559 03/19/2019
+[  256.355807] RIP: 0010:ice_clean_rx_irq_zc+0x9c/0x7d0 [ice]
+[  256.361423] Code: b7 8f 8a 00 00 00 66 39 ca 0f 84 f1 04 00 00 49 8b 47 40 4c 8b 24 d0 41 0f b7 45 04 66 25 ff 3f 66 89 04 24 0f 84 85 02 00 00 <49> 8b 44 24 18 0f b7 14 24 48 05 00 01 00 00 49 89 04 24 49 89 44
+[  256.380463] RSP: 0018:ffffc900088bfd20 EFLAGS: 00010206
+[  256.385765] RAX: 000000000000003c RBX: 0000000000000035 RCX: 000000000000067f
+[  256.393012] RDX: 0000000000000775 RSI: 0000000000000000 RDI: ffff8881deb3ac80
+[  256.400256] RBP: 000000000000003c R08: ffff889847982710 R09: 0000000000010000
+[  256.407500] R10: ffffffff82c060c0 R11: 0000000000000004 R12: 0000000000000000
+[  256.414746] R13: ffff88811165eea0 R14: ffffc9000d255000 R15: ffff888119b37600
+[  256.421990] FS:  0000000000000000(0000) GS:ffff8897e0cc0000(0000) knlGS:0000000000000000
+[  256.430207] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  256.436036] CR2: 0000000000000018 CR3: 0000000005c0a006 CR4: 00000000007706e0
+[  256.443283] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  256.450527] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  256.457770] PKRU: 55555554
+[  256.460529] Call Trace:
+[  256.463015]  <TASK>
+[  256.465157]  ? ice_xmit_zc+0x6e/0x150 [ice]
+[  256.469437]  ice_napi_poll+0x46d/0x680 [ice]
+[  256.473815]  ? _raw_spin_unlock_irqrestore+0x1b/0x40
+[  256.478863]  __napi_poll+0x29/0x160
+[  256.482409]  net_rx_action+0x136/0x260
+[  256.486222]  __do_softirq+0xe8/0x2e5
+[  256.489853]  ? smpboot_thread_fn+0x2c/0x270
+[  256.494108]  run_ksoftirqd+0x2a/0x50
+[  256.497747]  smpboot_thread_fn+0x1c1/0x270
+[  256.501907]  ? __pfx_smpboot_thread_fn+0x10/0x10
+[  256.506594]  kthread+0xea/0x120
+[  256.509785]  ? __pfx_kthread+0x10/0x10
+[  256.513597]  ret_from_fork+0x29/0x50
+[  256.517238]  </TASK>
+
+In fact, irqs were not disabled and napi managed to be scheduled and run
+while xsk_pool pointer was still valid, but SW ring of xdp_buff pointers
+was already freed.
+
+To fix this, call ice_qvec_dis_irq() after ice_vsi_stop_tx_ring(). Also
+while at it, remove redundant ice_clean_rx_ring() call - this is handled
+in ice_qp_clean_rings().
+
+Fixes: 2d4238f55697 ("ice: Add support for AF_XDP")
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_xsk.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 326c6e50e9db5..e34491e63133d 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -10700,8 +10700,7 @@ static int nl80211_crypto_settings(struct cfg80211_registered_device *rdev,
- 
- static struct cfg80211_bss *nl80211_assoc_bss(struct cfg80211_registered_device *rdev,
- 					      const u8 *ssid, int ssid_len,
--					      struct nlattr **attrs,
--					      const u8 **bssid_out)
-+					      struct nlattr **attrs)
- {
- 	struct ieee80211_channel *chan;
- 	struct cfg80211_bss *bss;
-@@ -10728,7 +10727,6 @@ static struct cfg80211_bss *nl80211_assoc_bss(struct cfg80211_registered_device
- 	if (!bss)
- 		return ERR_PTR(-ENOENT);
- 
--	*bssid_out = bssid;
- 	return bss;
- }
- 
-@@ -10738,7 +10736,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
- 	struct net_device *dev = info->user_ptr[1];
- 	struct cfg80211_assoc_request req = {};
- 	struct nlattr **attrs = NULL;
--	const u8 *bssid, *ssid;
-+	const u8 *ap_addr, *ssid;
- 	unsigned int link_id;
- 	int err, ssid_len;
- 
-@@ -10875,6 +10873,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
- 			return -EINVAL;
- 
- 		req.ap_mld_addr = nla_data(info->attrs[NL80211_ATTR_MLD_ADDR]);
-+		ap_addr = req.ap_mld_addr;
- 
- 		attrs = kzalloc(attrsize, GFP_KERNEL);
- 		if (!attrs)
-@@ -10900,8 +10899,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
- 				goto free;
- 			}
- 			req.links[link_id].bss =
--				nl80211_assoc_bss(rdev, ssid, ssid_len, attrs,
--						  &bssid);
-+				nl80211_assoc_bss(rdev, ssid, ssid_len, attrs);
- 			if (IS_ERR(req.links[link_id].bss)) {
- 				err = PTR_ERR(req.links[link_id].bss);
- 				req.links[link_id].bss = NULL;
-@@ -10952,10 +10950,10 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
- 		if (req.link_id >= 0)
- 			return -EINVAL;
- 
--		req.bss = nl80211_assoc_bss(rdev, ssid, ssid_len, info->attrs,
--					    &bssid);
-+		req.bss = nl80211_assoc_bss(rdev, ssid, ssid_len, info->attrs);
- 		if (IS_ERR(req.bss))
- 			return PTR_ERR(req.bss);
-+		ap_addr = req.bss->bssid;
+diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
+index 65468cdc25870..41ee081eb8875 100644
+--- a/drivers/net/ethernet/intel/ice/ice_xsk.c
++++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
+@@ -173,8 +173,6 @@ static int ice_qp_dis(struct ice_vsi *vsi, u16 q_idx)
  	}
+ 	netif_tx_stop_queue(netdev_get_tx_queue(vsi->netdev, q_idx));
  
- 	err = nl80211_crypto_settings(rdev, info, &req.crypto, 1);
-@@ -10968,7 +10966,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
- 			dev->ieee80211_ptr->conn_owner_nlportid =
- 				info->snd_portid;
- 			memcpy(dev->ieee80211_ptr->disconnect_bssid,
--			       bssid, ETH_ALEN);
-+			       ap_addr, ETH_ALEN);
- 		}
+-	ice_qvec_dis_irq(vsi, rx_ring, q_vector);
+-
+ 	ice_fill_txq_meta(vsi, tx_ring, &txq_meta);
+ 	err = ice_vsi_stop_tx_ring(vsi, ICE_NO_RESET, 0, tx_ring, &txq_meta);
+ 	if (err)
+@@ -189,10 +187,11 @@ static int ice_qp_dis(struct ice_vsi *vsi, u16 q_idx)
+ 		if (err)
+ 			return err;
+ 	}
++	ice_qvec_dis_irq(vsi, rx_ring, q_vector);
++
+ 	err = ice_vsi_ctrl_one_rx_ring(vsi, false, q_idx, true);
+ 	if (err)
+ 		return err;
+-	ice_clean_rx_ring(rx_ring);
  
- 		wdev_unlock(dev->ieee80211_ptr);
+ 	ice_qvec_toggle_napi(vsi, q_vector, false);
+ 	ice_qp_clean_rings(vsi, q_idx);
 -- 
 2.39.2
 
