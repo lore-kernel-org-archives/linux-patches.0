@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CED41C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CFEC433EF;
-	Mon, 20 Mar 2023 15:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19941C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:04:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42468C433EF;
+	Mon, 20 Mar 2023 15:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324642;
-	bh=GzgUCOqJrzHm0Pd6QBPAuVlYqElSWq5Bcd+gM8Zl5g4=;
+	s=korg; t=1679324645;
+	bh=pJHkMxkbcS/EwUEWHq2d0pwxMVfEWBl7/k9vY2s5nKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jsMDfDIhQSjmZUssFZPdj+Jq4bwNrsPQo09rV1nhUQN8AZE9+KphgzDb/1AI5gEdJ
-	 wAyaMdryafu6G2iOVYMtYL+LFslnC1fecxEtDCndjcgY3domBYtxztugSLGMBLd2G6
-	 hOERng19fj9sGJ5gyHGxK0SLhtk19juefq/gP8Nw=
+	b=Uf0lmqG48D/HJChds2Ln1kdH1XQF+ihDDO0bOxNzO8PJACvPzR7LhcBFfWx3+a1v5
+	 hftUyMzfxCJlOIL/qAN84DQTyWaRdVwYV+O2WNv2C5NxGNao09UDDdli370oTvgt2u
+	 8ozb3bDZ9WLKtcMxSLyAV3gFcMO15rkkYs84nJto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jeremy Sowden <jeremy@azazel.net>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 33/99] net: dsa: mv88e6xxx: fix max_mtu of 1492 on 6165, 6191, 6220, 6250, 6290
-Date: Mon, 20 Mar 2023 15:54:11 +0100
-Message-Id: <20230320145444.760072326@linuxfoundation.org>
+Subject: [PATCH 5.15 010/115] netfilter: nft_masq: correct length for loading protocol registers
+Date: Mon, 20 Mar 2023 15:53:42 +0100
+Message-Id: <20230320145449.797244197@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,107 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Jeremy Sowden <jeremy@azazel.net>
 
-[ Upstream commit 7e9517375a14f44ee830ca1c3278076dd65fcc8f ]
+[ Upstream commit ec2c5917eb858428b2083d1c74f445aabbe8316b ]
 
-There are 3 classes of switch families that the driver is aware of, as
-far as mv88e6xxx_change_mtu() is concerned:
+The values in the protocol registers are two bytes wide.  However, when
+parsing the register loads, the code currently uses the larger 16-byte
+size of a `union nf_inet_addr`.  Change it to use the (correct) size of
+a `union nf_conntrack_man_proto` instead.
 
-- MTU configuration is available per port. Here, the
-  chip->info->ops->port_set_jumbo_size() method will be present.
-
-- MTU configuration is global to the switch. Here, the
-  chip->info->ops->set_max_frame_size() method will be present.
-
-- We don't know how to change the MTU. Here, none of the above methods
-  will be present.
-
-Switch families MV88E6165, MV88E6191, MV88E6220, MV88E6250 and MV88E6290
-fall in category 3.
-
-The blamed commit has adjusted the MTU for all 3 categories by EDSA_HLEN
-(8 bytes), resulting in a new maximum MTU of 1492 being reported by the
-driver for these switches.
-
-I don't have the hardware to test, but I do have a MV88E6390 switch on
-which I can simulate this by commenting out its .port_set_jumbo_size
-definition from mv88e6390_ops. The result is this set of messages at
-probe time:
-
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 1
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 2
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 3
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 4
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 5
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 6
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 7
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 8
-
-It is highly implausible that there exist Ethernet switches which don't
-support the standard MTU of 1500 octets, and this is what the DSA
-framework says as well - the error comes from dsa_slave_create() ->
-dsa_slave_change_mtu(slave_dev, ETH_DATA_LEN).
-
-But the error messages are alarming, and it would be good to suppress
-them.
-
-As a consequence of this unlikeliness, we reimplement mv88e6xxx_get_max_mtu()
-and mv88e6xxx_change_mtu() on switches from the 3rd category as follows:
-the maximum supported MTU is 1500, and any request to set the MTU to a
-value larger than that fails in dev_validate_mtu().
-
-Fixes: b9c587fed61c ("dsa: mv88e6xxx: Include tagger overhead when setting MTU for DSA and CPU ports")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 8a6bf5da1aef ("netfilter: nft_masq: support port range")
+Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ net/netfilter/nft_masq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 371b345635e62..a253476a52b01 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -2734,7 +2734,7 @@ static int mv88e6xxx_get_max_mtu(struct dsa_switch *ds, int port)
- 		return 10240 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
- 	else if (chip->info->ops->set_max_frame_size)
- 		return 1632 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
--	return 1522 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
-+	return ETH_DATA_LEN;
- }
+diff --git a/net/netfilter/nft_masq.c b/net/netfilter/nft_masq.c
+index 9953e80537536..1818dbf089cad 100644
+--- a/net/netfilter/nft_masq.c
++++ b/net/netfilter/nft_masq.c
+@@ -43,7 +43,7 @@ static int nft_masq_init(const struct nft_ctx *ctx,
+ 			 const struct nft_expr *expr,
+ 			 const struct nlattr * const tb[])
+ {
+-	u32 plen = sizeof_field(struct nf_nat_range, min_addr.all);
++	u32 plen = sizeof_field(struct nf_nat_range, min_proto.all);
+ 	struct nft_masq *priv = nft_expr_priv(expr);
+ 	int err;
  
- static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
-@@ -2742,6 +2742,17 @@ static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
- 	struct mv88e6xxx_chip *chip = ds->priv;
- 	int ret = 0;
- 
-+	/* For families where we don't know how to alter the MTU,
-+	 * just accept any value up to ETH_DATA_LEN
-+	 */
-+	if (!chip->info->ops->port_set_jumbo_size &&
-+	    !chip->info->ops->set_max_frame_size) {
-+		if (new_mtu > ETH_DATA_LEN)
-+			return -EINVAL;
-+
-+		return 0;
-+	}
-+
- 	if (dsa_is_dsa_port(ds, port) || dsa_is_cpu_port(ds, port))
- 		new_mtu += EDSA_HLEN;
- 
-@@ -2750,9 +2761,6 @@ static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
- 		ret = chip->info->ops->port_set_jumbo_size(chip, port, new_mtu);
- 	else if (chip->info->ops->set_max_frame_size)
- 		ret = chip->info->ops->set_max_frame_size(chip, new_mtu);
--	else
--		if (new_mtu > 1522)
--			ret = -EINVAL;
- 	mv88e6xxx_reg_unlock(chip);
- 
- 	return ret;
 -- 
 2.39.2
 
