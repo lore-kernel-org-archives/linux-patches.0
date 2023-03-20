@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405481C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F7DC433EF;
-	Mon, 20 Mar 2023 15:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B301C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7606CC4339B;
+	Mon, 20 Mar 2023 15:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325844;
-	bh=TIQXJjlpa6+QktvqASVdGyu4c9KPKmpcQ1nIF2II6wg=;
+	s=korg; t=1679325846;
+	bh=VCoUk9Py4cE0Vx0q2TgkNuGt9UilbNTVdSBJTBikMuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QxR00bdZootVKVeakEDgunbqvQRRoJUe1nhjNerkaHYEtg5KkGv51mj6XhoaNuwxr
-	 qyuNp2+FmXWVkUS0E1BcCuc2d6ZoJw2xutzx4KiZVRNSPjZ09/rAtk60JLVFkQPmIS
-	 vnW72d3iIKochehRISwd/lJQL2nqsbheXQrwpkaw=
+	b=xCNAXw9mbburMbj3SZ0Mm0PuDYUWmnCBOKGOEqSl4NAVSNltY2weHjELvqYmOepoV
+	 Xe6j5NpqJrbj5CU3BJaXCFyq6k/B/HzIwS5VJQqY7HVGfHgEhL1fcHLlrfUJsn+hlc
+	 4mCGwM1sc8ZLxMwevtOM3JecSQjMf1OaesmOsELM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Szu <jeremy.szu@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 152/198] ALSA: hda/realtek: fix speaker, mute/micmute LEDs not work on a HP platform
-Date: Mon, 20 Mar 2023 15:54:50 +0100
-Message-Id: <20230320145513.910324802@linuxfoundation.org>
+	Eric Van Hensbergen <ericvh@kernel.org>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 111/211] net/9p: fix bug in client create for .L
+Date: Mon, 20 Mar 2023 15:54:06 +0100
+Message-Id: <20230320145517.951415715@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,31 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Szu <jeremy.szu@canonical.com>
+From: Eric Van Hensbergen <ericvh@kernel.org>
 
-commit 7bb62340951a9af20235a3bde8c98e2e292915df upstream.
+[ Upstream commit 3866584a1c56a2bbc8c0981deb4476d0b801969e ]
 
-There is a HP platform needs ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED quirk to
-make mic-mute/audio-mute/speaker working.
+We are supposed to set fid->mode to reflect the flags
+that were used to open the file.  We were actually setting
+it to the creation mode which is the default perms of the
+file not the flags the file was opened with.
 
-Signed-off-by: Jeremy Szu <jeremy.szu@canonical.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230307135317.37621-1-jeremy.szu@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Reviewed-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/9p/client.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9446,6 +9446,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8b8a, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b8b, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b8d, "HP", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8b8f, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b92, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+diff --git a/net/9p/client.c b/net/9p/client.c
+index 622ec6a586eea..00a6d1e348768 100644
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -1289,7 +1289,7 @@ int p9_client_create_dotl(struct p9_fid *ofid, const char *name, u32 flags,
+ 		 qid->type, qid->path, qid->version, iounit);
+ 
+ 	memmove(&ofid->qid, qid, sizeof(struct p9_qid));
+-	ofid->mode = mode;
++	ofid->mode = flags;
+ 	ofid->iounit = iounit;
+ 
+ free_and_error:
+-- 
+2.39.2
+
 
 
