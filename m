@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BDB1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1A8C433D2;
-	Mon, 20 Mar 2023 15:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257C01C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97131C433D2;
+	Mon, 20 Mar 2023 15:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325227;
-	bh=hRCGny6RTst0Quh3CPsdx1tjLZSo1tA48HZCKGXoM2k=;
+	s=korg; t=1679325230;
+	bh=K5mT/tC3s5t1REc3OS5XLcWOKLHvHLvdJGS7ZCUliq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UyQvn7JWWb89RBy3HTdK80wVYh3c+5T6Tk4/f5vdfQ0lOzXN9ps2MAkPrv8Atfv4i
-	 31TIWegHM0br9e/WhfqLCCfp8aE778nmyHfPZaBnLWZ4ZNNdFmGMTWnXS7CqtOj8ZS
-	 611ojGiaueW1CO2iYxazlI394fX8lXS9kG/VWq0c=
+	b=bIm/M2gsrnbRhP1EhCj+mx04dDI67c6sQ8W7J9L/Y6z82C0ApuwsrI40M8iIbeiOq
+	 z1k3anQNoV0zv9SFHw5V+fqZL0f/+TJZ0rIFqKNMMwnC8T1ejVTDWDvgTuSEWNdZ4P
+	 Nj9Ji1hcAgUrOvVxEviwQfPe3rQkZj90wtaKZIFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 5.15 080/115] interconnect: exynos: fix node leak in probe PM QoS error path
-Date: Mon, 20 Mar 2023 15:54:52 +0100
-Message-Id: <20230320145452.779257488@linuxfoundation.org>
+	Tomas Henzl <thenzl@redhat.com>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 019/211] scsi: mpi3mr: Fix mpi3mr_hba_port memory leak in mpi3mr_remove()
+Date: Mon, 20 Mar 2023 15:52:34 +0100
+Message-Id: <20230320145514.107614632@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Tomas Henzl <thenzl@redhat.com>
 
-commit 3aab264875bf3c915ea2517fae1eec213e0b4987 upstream.
+[ Upstream commit d0f3c3728da8af76dfe435f7f0cfa2b9d9e43ef0 ]
 
-Make sure to add the newly allocated interconnect node to the provider
-before adding the PM QoS request so that the node is freed on errors.
+Free mpi3mr_hba_port at .remove.
 
-Fixes: 2f95b9d5cf0b ("interconnect: Add generic interconnect driver for Exynos SoCs")
-Cc: stable@vger.kernel.org      # 5.11
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-15-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 42fc9fee116f ("scsi: mpi3mr: Add helper functions to manage device's port")
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Link: https://lore.kernel.org/r/20230302234336.25456-4-thenzl@redhat.com
+Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/samsung/exynos.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/interconnect/samsung/exynos.c
-+++ b/drivers/interconnect/samsung/exynos.c
-@@ -149,6 +149,9 @@ static int exynos_generic_icc_probe(stru
- 				 &priv->bus_clk_ratio))
- 		priv->bus_clk_ratio = EXYNOS_ICC_DEFAULT_BUS_CLK_RATIO;
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index 6eaeba41072cb..5032b0b5186d4 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -5077,6 +5077,7 @@ static void mpi3mr_remove(struct pci_dev *pdev)
+ 	struct workqueue_struct	*wq;
+ 	unsigned long flags;
+ 	struct mpi3mr_tgt_dev *tgtdev, *tgtdev_next;
++	struct mpi3mr_hba_port *port, *hba_port_next;
  
-+	icc_node->data = priv;
-+	icc_node_add(icc_node, provider);
+ 	if (!shost)
+ 		return;
+@@ -5116,6 +5117,16 @@ static void mpi3mr_remove(struct pci_dev *pdev)
+ 	mpi3mr_free_mem(mrioc);
+ 	mpi3mr_cleanup_resources(mrioc);
+ 
++	spin_lock_irqsave(&mrioc->sas_node_lock, flags);
++	list_for_each_entry_safe(port, hba_port_next, &mrioc->hba_port_table_list, list) {
++		ioc_info(mrioc,
++		    "removing hba_port entry: %p port: %d from hba_port list\n",
++		    port, port->port_id);
++		list_del(&port->list);
++		kfree(port);
++	}
++	spin_unlock_irqrestore(&mrioc->sas_node_lock, flags);
 +
- 	/*
- 	 * Register a PM QoS request for the parent (devfreq) device.
- 	 */
-@@ -157,9 +160,6 @@ static int exynos_generic_icc_probe(stru
- 	if (ret < 0)
- 		goto err_node_del;
- 
--	icc_node->data = priv;
--	icc_node_add(icc_node, provider);
--
- 	icc_parent_node = exynos_icc_get_parent(bus_dev->of_node);
- 	if (IS_ERR(icc_parent_node)) {
- 		ret = PTR_ERR(icc_parent_node);
+ 	spin_lock(&mrioc_list_lock);
+ 	list_del(&mrioc->list);
+ 	spin_unlock(&mrioc_list_lock);
+-- 
+2.39.2
+
 
 
