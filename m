@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6331C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4829C433EF;
-	Mon, 20 Mar 2023 15:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8CA1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03E7C433EF;
+	Mon, 20 Mar 2023 15:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325320;
-	bh=99/kRQyidI+3jcSjil8yheBmXrGm+xdRXKD0bkelDd4=;
+	s=korg; t=1679325323;
+	bh=sWTMJm0R4WO14S6UjAeluv9V4ay9gPwwX0MN8T/YVA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mA9WWi5yk9ByzU55UKBZAL6LAiCqmC+x0A7B0uQG+/3ahXII+2uFx9HJsKuWsYIXC
-	 Jh1bI9lDRj7TWP0rEto3hHGqgyOwnW7pIKTdSLUGItGfv7vYSTP6Rf7cjxDXjcUDPx
-	 4oopwE46m8IC86MsdEns3izT8AMt1SzhmQ/XqO0o=
+	b=2dVarIw1CW6WLzFcdXjV/xcjQBMoRHkAOlg4+kknUTm36JMKhsAG5NaRdvW7AEQ60
+	 rPBhq0M5G6iKHwn6JGiXT1/AVfmJN5iZOMqXeKmH6ORB+6mI8H23DCzCRR3U9F14PK
+	 1LOh/3EDO7sAXDvWA8v7Sa3qo7PMOyIiwUUgZrv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parav Pandit <parav@nvidia.com>,
-	Daniel Jurgens <danielj@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Jeremy Sowden <jeremy@azazel.net>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/198] net/mlx5e: Dont cache tunnel offloads capability
-Date: Mon, 20 Mar 2023 15:53:26 +0100
-Message-Id: <20230320145510.379689821@linuxfoundation.org>
+Subject: [PATCH 6.2 029/211] netfilter: nft_redir: correct value of inet type `.maxattrs`
+Date: Mon, 20 Mar 2023 15:52:44 +0100
+Message-Id: <20230320145514.485563444@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,89 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Parav Pandit <parav@nvidia.com>
+From: Jeremy Sowden <jeremy@azazel.net>
 
-[ Upstream commit 9a92fe1db9e57ea94388a1d768e8ee42af858377 ]
+[ Upstream commit 493924519b1fe3faab13ee621a43b0d0939abab1 ]
 
-When mlx5e attaches again after device health recovery, the device
-capabilities might have changed by the eswitch manager.
+`nft_redir_inet_type.maxattrs` was being set, presumably because of a
+cut-and-paste error, to `NFTA_MASQ_MAX`, instead of `NFTA_REDIR_MAX`.
 
-For example in one flow when ECPF changes the eswitch mode between
-legacy and switchdev, it updates the flow table tunnel capability.
-
-The cached value is only used in one place, so just check the capability
-there instead.
-
-Fixes: 5bef709d76a2 ("net/mlx5: Enable host PF HCA after eswitch is initialized")
-Signed-off-by: Parav Pandit <parav@nvidia.com>
-Signed-off-by: Daniel Jurgens <danielj@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 63ce3940f3ab ("netfilter: nft_redir: add inet support")
+Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en.h          | 1 -
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c     | 4 +---
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c      | 1 -
- drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c | 1 -
- 4 files changed, 1 insertion(+), 6 deletions(-)
+ net/netfilter/nft_redir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-index 26a23047f1f3b..bc76fe6b06230 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-@@ -313,7 +313,6 @@ struct mlx5e_params {
- 		} channel;
- 	} mqprio;
- 	bool rx_cqe_compress_def;
--	bool tunneled_offload_en;
- 	struct dim_cq_moder rx_cq_moderation;
- 	struct dim_cq_moder tx_cq_moderation;
- 	struct mlx5e_packet_merge_param packet_merge;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 142ed2d98cd5d..609a49c1e09e6 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -4911,8 +4911,6 @@ void mlx5e_build_nic_params(struct mlx5e_priv *priv, struct mlx5e_xsk *xsk, u16
- 	/* TX inline */
- 	mlx5_query_min_inline(mdev, &params->tx_min_inline_mode);
+diff --git a/net/netfilter/nft_redir.c b/net/netfilter/nft_redir.c
+index dbc642f5d32a3..67cec56bc84a3 100644
+--- a/net/netfilter/nft_redir.c
++++ b/net/netfilter/nft_redir.c
+@@ -236,7 +236,7 @@ static struct nft_expr_type nft_redir_inet_type __read_mostly = {
+ 	.name		= "redir",
+ 	.ops		= &nft_redir_inet_ops,
+ 	.policy		= nft_redir_policy,
+-	.maxattr	= NFTA_MASQ_MAX,
++	.maxattr	= NFTA_REDIR_MAX,
+ 	.owner		= THIS_MODULE,
+ };
  
--	params->tunneled_offload_en = mlx5_tunnel_inner_ft_supported(mdev);
--
- 	/* AF_XDP */
- 	params->xsk = xsk;
- 
-@@ -5216,7 +5214,7 @@ static int mlx5e_init_nic_rx(struct mlx5e_priv *priv)
- 	}
- 
- 	features = MLX5E_RX_RES_FEATURE_PTP;
--	if (priv->channels.params.tunneled_offload_en)
-+	if (mlx5_tunnel_inner_ft_supported(mdev))
- 		features |= MLX5E_RX_RES_FEATURE_INNER_FT;
- 	err = mlx5e_rx_res_init(priv->rx_res, priv->mdev, features,
- 				priv->max_nch, priv->drop_rq.rqn,
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 794cd8dfe9c91..0f744131c6869 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -707,7 +707,6 @@ static void mlx5e_build_rep_params(struct net_device *netdev)
- 	mlx5e_set_rx_cq_mode_params(params, cq_period_mode);
- 
- 	params->mqprio.num_tc       = 1;
--	params->tunneled_offload_en = false;
- 	if (rep->vport != MLX5_VPORT_UPLINK)
- 		params->vlan_strip_disable = true;
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
-index 038ae0fcf9d45..aed4e896179a3 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
-@@ -70,7 +70,6 @@ static void mlx5i_build_nic_params(struct mlx5_core_dev *mdev,
- 
- 	params->packet_merge.type = MLX5E_PACKET_MERGE_NONE;
- 	params->hard_mtu = MLX5_IB_GRH_BYTES + MLX5_IPOIB_HARD_LEN;
--	params->tunneled_offload_en = false;
- 
- 	/* CQE compression is not supported for IPoIB */
- 	params->rx_cqe_compress_def = false;
 -- 
 2.39.2
 
