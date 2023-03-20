@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84C11C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28176C4339B;
-	Mon, 20 Mar 2023 15:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BB01C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA3AC433EF;
+	Mon, 20 Mar 2023 15:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325273;
-	bh=DxuNAsAhsPi84EKZwwBa3O3NPyV17ENS3kdwmD4AvF0=;
+	s=korg; t=1679325270;
+	bh=63PtVO4aVd/7ZfOGEWRKpebX0W6pFFeZKrXfWkCLt9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SKL4UrZCMFWVaj6scWJMIAWCkd76WQ3i3oL0jfUOMy9yIEhCKiYb2e1Lwr0xgvGnT
-	 8TBUkoZd/Xo497bL6XYIgXrWVq9gSOgQefcH/F03uxLRbLNR6jFuoqpQ0HTu1YMWR9
-	 GYTi23+yLqlLU86ujGbndIbLvtzdodotpbyFfAXY=
+	b=h9Lx49BERAVc88G7pbJR1Zifus1p3ns9EOiVb5hupZj0OB7z1Vr/3E9qGnv6fIo/j
+	 Py38MUJOy6OpAtFVQ5jxLR+qBRT8PIvVy5v9LRddIJsrJYTXJ6OCKAr7Hemyio+d2s
+	 08XxaN5xCl0fzcRPtyGAjSLufVWY6jRUmZXEa24I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5.15 085/115] KVM: nVMX: add missing consistency checks for CR0 and CR4
-Date: Mon, 20 Mar 2023 15:54:57 +0100
-Message-Id: <20230320145452.988346384@linuxfoundation.org>
+	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
+	Benjamin Gray <bgray@linux.ibm.com>,
+	Russell Currey <ruscur@russell.cc>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 062/198] powerpc/mm: Fix false detection of read faults
+Date: Mon, 20 Mar 2023 15:53:20 +0100
+Message-Id: <20230320145510.150651932@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,57 +37,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Russell Currey <ruscur@russell.cc>
 
-commit 112e66017bff7f2837030f34c2bc19501e9212d5 upstream.
+[ Upstream commit f2c7e3562b4c4f1699acc1538ebf3e75f5cced35 ]
 
-The effective values of the guest CR0 and CR4 registers may differ from
-those included in the VMCS12.  In particular, disabling EPT forces
-CR4.PAE=1 and disabling unrestricted guest mode forces CR0.PG=CR0.PE=1.
+To support detection of read faults with Radix execute-only memory, the
+vma_is_accessible() check in access_error() (which checks for PROT_NONE)
+was replaced with a check to see if VM_READ was missing, and if so,
+returns true to assert the fault was caused by a bad read.
 
-Therefore, checks on these bits cannot be delegated to the processor
-and must be performed by KVM.
+This is incorrect, as it ignores that both VM_WRITE and VM_EXEC imply
+read on powerpc, as defined in protection_map[].  This causes mappings
+containing VM_WRITE or VM_EXEC without VM_READ to misreport the cause of
+page faults, since the MMU is still allowing reads.
 
-Reported-by: Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Correct this by restoring the original vma_is_accessible() check for
+PROT_NONE mappings, and adding a separate check for Radix PROT_EXEC-only
+mappings.
+
+Fixes: 395cac7752b9 ("powerpc/mm: Support execute-only memory on the Radix MMU")
+Reported-by: Michal Suchánek <msuchanek@suse.de>
+Link: https://lore.kernel.org/r/20230308152702.GR19419@kitsune.suse.cz
+Tested-by: Benjamin Gray <bgray@linux.ibm.com>
+Signed-off-by: Russell Currey <ruscur@russell.cc>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230310050834.63105-1-ruscur@russell.cc
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/nested.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/powerpc/mm/fault.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -2991,7 +2991,7 @@ static int nested_vmx_check_guest_state(
- 					struct vmcs12 *vmcs12,
- 					enum vm_entry_failure_code *entry_failure_code)
- {
--	bool ia32e;
-+	bool ia32e = !!(vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE);
+diff --git a/arch/powerpc/mm/fault.c b/arch/powerpc/mm/fault.c
+index 2bef19cc1b98c..af46aa88422bf 100644
+--- a/arch/powerpc/mm/fault.c
++++ b/arch/powerpc/mm/fault.c
+@@ -271,11 +271,16 @@ static bool access_error(bool is_write, bool is_exec, struct vm_area_struct *vma
+ 	}
  
- 	*entry_failure_code = ENTRY_FAIL_DEFAULT;
- 
-@@ -3017,6 +3017,13 @@ static int nested_vmx_check_guest_state(
- 					   vmcs12->guest_ia32_perf_global_ctrl)))
- 		return -EINVAL;
- 
-+	if (CC((vmcs12->guest_cr0 & (X86_CR0_PG | X86_CR0_PE)) == X86_CR0_PG))
-+		return -EINVAL;
+ 	/*
+-	 * Check for a read fault.  This could be caused by a read on an
+-	 * inaccessible page (i.e. PROT_NONE), or a Radix MMU execute-only page.
++	 * VM_READ, VM_WRITE and VM_EXEC all imply read permissions, as
++	 * defined in protection_map[].  Read faults can only be caused by
++	 * a PROT_NONE mapping, or with a PROT_EXEC-only mapping on Radix.
+ 	 */
+-	if (unlikely(!(vma->vm_flags & VM_READ)))
++	if (unlikely(!vma_is_accessible(vma)))
+ 		return true;
 +
-+	if (CC(ia32e && !(vmcs12->guest_cr4 & X86_CR4_PAE)) ||
-+	    CC(ia32e && !(vmcs12->guest_cr0 & X86_CR0_PG)))
-+		return -EINVAL;
++	if (unlikely(radix_enabled() && ((vma->vm_flags & VM_ACCESS_FLAGS) == VM_EXEC)))
++		return true;
 +
  	/*
- 	 * If the load IA32_EFER VM-entry control is 1, the following checks
- 	 * are performed on the field for the IA32_EFER MSR:
-@@ -3028,7 +3035,6 @@ static int nested_vmx_check_guest_state(
- 	 */
- 	if (to_vmx(vcpu)->nested.nested_run_pending &&
- 	    (vmcs12->vm_entry_controls & VM_ENTRY_LOAD_IA32_EFER)) {
--		ia32e = (vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE) != 0;
- 		if (CC(!kvm_valid_efer(vcpu, vmcs12->guest_ia32_efer)) ||
- 		    CC(ia32e != !!(vmcs12->guest_ia32_efer & EFER_LMA)) ||
- 		    CC(((vmcs12->guest_cr0 & X86_CR0_PG) &&
+ 	 * We should ideally do the vma pkey access check here. But in the
+ 	 * fault path, handle_mm_fault() also does the same check. To avoid
+-- 
+2.39.2
+
 
 
