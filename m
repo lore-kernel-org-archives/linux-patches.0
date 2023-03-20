@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE52E1C3B
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4C4C433EF;
-	Mon, 20 Mar 2023 15:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16B31C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FC8C433D2;
+	Mon, 20 Mar 2023 15:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326082;
-	bh=8wu5pezMcJdNfhOyKgih+pTNX3TTCPnpiUU1/pLZHII=;
+	s=korg; t=1679326085;
+	bh=SVDwlxeWMEPclTR6lDXapNjdWJA/MP8bT13JdjnxGDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wEc4R5bpWeSpdInzJaCKhMrnKnHbcGfNLHMdzhas9Dnpeh/w0g1ZeaOZKpYqVbjFe
-	 C2JztBzpEire4apDxFuaQR/QSqKIXu7gLr3bZKV7q+xnuGXN7Sx4irKX1TAmFBr0VJ
-	 6ah+tLhTe0K1I2X7xei0F8wtEt3xIgPXLm+6aPQk=
+	b=lBoE7NAF6GVBUm8AEor+B57OxPSkkY9cwXZ14cWe5iYySmghrdbDA6KZU4Qxq+dYK
+	 +evkXJYhHk2XSXrNXmRty+le6i9jbo6sFPF+HOD4h8UnEXX991sHzqGOo2zgm4tzXA
+	 kWk7uEEEMblPlrkZ4D3D3Dvbx4IjMnivTRJK5P+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.2 155/211] KVM: nVMX: add missing consistency checks for CR0 and CR4
-Date: Mon, 20 Mar 2023 15:54:50 +0100
-Message-Id: <20230320145519.928164725@linuxfoundation.org>
+	Dionna Glaze <dionnaglaze@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	stable@kernel.org
+Subject: [PATCH 6.1 197/198] virt/coco/sev-guest: Add throttling awareness
+Date: Mon, 20 Mar 2023 15:55:35 +0100
+Message-Id: <20230320145515.720561444@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,57 +36,138 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Dionna Glaze <dionnaglaze@google.com>
 
-commit 112e66017bff7f2837030f34c2bc19501e9212d5 upstream.
+commit 72f7754dcf31c87c92c0c353dcf747814cc5ce10 upstream.
 
-The effective values of the guest CR0 and CR4 registers may differ from
-those included in the VMCS12.  In particular, disabling EPT forces
-CR4.PAE=1 and disabling unrestricted guest mode forces CR0.PG=CR0.PE=1.
+A potentially malicious SEV guest can constantly hammer the hypervisor
+using this driver to send down requests and thus prevent or at least
+considerably hinder other guests from issuing requests to the secure
+processor which is a shared platform resource.
 
-Therefore, checks on these bits cannot be delegated to the processor
-and must be performed by KVM.
+Therefore, the host is permitted and encouraged to throttle such guest
+requests.
 
-Reported-by: Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Add the capability to handle the case when the hypervisor throttles
+excessive numbers of requests issued by the guest. Otherwise, the VM
+platform communication key will be disabled, preventing the guest from
+attesting itself.
+
+Realistically speaking, a well-behaved guest should not even care about
+throttling. During its lifetime, it would end up issuing a handful of
+requests which the hardware can easily handle.
+
+This is more to address the case of a malicious guest. Such guest should
+get throttled and if its VMPCK gets disabled, then that's its own
+wrongdoing and perhaps that guest even deserves it.
+
+To the implementation: the hypervisor signals with SNP_GUEST_REQ_ERR_BUSY
+that the guest requests should be throttled. That error code is returned
+in the upper 32-bit half of exitinfo2 and this is part of the GHCB spec
+v2.
+
+So the guest is given a throttling period of 1 minute in which it
+retries the request every 2 seconds. This is a good default but if it
+turns out to not pan out in practice, it can be tweaked later.
+
+For safety, since the encryption algorithm in GHCBv2 is AES_GCM, control
+must remain in the kernel to complete the request with the current
+sequence number. Returning without finishing the request allows the
+guest to make another request but with different message contents. This
+is IV reuse, and breaks cryptographic protections.
+
+  [ bp:
+    - Rewrite commit message and do a simplified version.
+    - The stable tags are supposed to denote that a cleanup should go
+      upfront before backporting this so that any future fixes to this
+      can preserve the sanity of the backporter(s). ]
+
+Fixes: d5af44dde546 ("x86/sev: Provide support for SNP guest request NAEs")
+Signed-off-by: Dionna Glaze <dionnaglaze@google.com>
+Co-developed-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: <stable@kernel.org> # d6fd48eff750 ("virt/coco/sev-guest: Check SEV_SNP attribute at probe time")
+Cc: <stable@kernel.org> # 970ab823743f (" virt/coco/sev-guest: Simplify extended guest request handling")
+Cc: <stable@kernel.org> # c5a338274bdb ("virt/coco/sev-guest: Remove the disable_vmpck label in handle_guest_request()")
+Cc: <stable@kernel.org> # 0fdb6cc7c89c ("virt/coco/sev-guest: Carve out the request issuing logic into a helper")
+Cc: <stable@kernel.org> # d25bae7dc7b0 ("virt/coco/sev-guest: Do some code style cleanups")
+Cc: <stable@kernel.org> # fa4ae42cc60a ("virt/coco/sev-guest: Convert the sw_exit_info_2 checking to a switch-case")
+Link: https://lore.kernel.org/r/20230214164638.1189804-2-dionnaglaze@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/sev-common.h       |    3 ++-
+ arch/x86/kernel/sev.c                   |    4 ++++
+ drivers/virt/coco/sev-guest/sev-guest.c |   19 ++++++++++++++++++-
+ 3 files changed, 24 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -3021,7 +3021,7 @@ static int nested_vmx_check_guest_state(
- 					struct vmcs12 *vmcs12,
- 					enum vm_entry_failure_code *entry_failure_code)
+--- a/arch/x86/include/asm/sev-common.h
++++ b/arch/x86/include/asm/sev-common.h
+@@ -128,8 +128,9 @@ struct snp_psc_desc {
+ 	struct psc_entry entries[VMGEXIT_PSC_MAX_ENTRY];
+ } __packed;
+ 
+-/* Guest message request error code */
++/* Guest message request error codes */
+ #define SNP_GUEST_REQ_INVALID_LEN	BIT_ULL(32)
++#define SNP_GUEST_REQ_ERR_BUSY		BIT_ULL(33)
+ 
+ #define GHCB_MSR_TERM_REQ		0x100
+ #define GHCB_MSR_TERM_REASON_SET_POS	12
+--- a/arch/x86/kernel/sev.c
++++ b/arch/x86/kernel/sev.c
+@@ -2214,6 +2214,10 @@ int snp_issue_guest_request(u64 exit_cod
+ 	case 0:
+ 		break;
+ 
++	case SNP_GUEST_REQ_ERR_BUSY:
++		ret = -EAGAIN;
++		break;
++
+ 	case SNP_GUEST_REQ_INVALID_LEN:
+ 		/* Number of expected pages are returned in RBX */
+ 		if (exit_code == SVM_VMGEXIT_EXT_GUEST_REQUEST) {
+--- a/drivers/virt/coco/sev-guest/sev-guest.c
++++ b/drivers/virt/coco/sev-guest/sev-guest.c
+@@ -31,6 +31,9 @@
+ #define AAD_LEN		48
+ #define MSG_HDR_VER	1
+ 
++#define SNP_REQ_MAX_RETRY_DURATION	(60*HZ)
++#define SNP_REQ_RETRY_DELAY		(2*HZ)
++
+ struct snp_guest_crypto {
+ 	struct crypto_aead *tfm;
+ 	u8 *iv, *authtag;
+@@ -322,7 +325,8 @@ static int enc_payload(struct snp_guest_
+ 
+ static int __handle_guest_request(struct snp_guest_dev *snp_dev, u64 exit_code, __u64 *fw_err)
  {
--	bool ia32e;
-+	bool ia32e = !!(vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE);
+-	unsigned long err, override_err = 0;
++	unsigned long err = 0xff, override_err = 0;
++	unsigned long req_start = jiffies;
+ 	unsigned int override_npages = 0;
+ 	int rc;
  
- 	*entry_failure_code = ENTRY_FAIL_DEFAULT;
- 
-@@ -3047,6 +3047,13 @@ static int nested_vmx_check_guest_state(
- 					   vmcs12->guest_ia32_perf_global_ctrl)))
- 		return -EINVAL;
- 
-+	if (CC((vmcs12->guest_cr0 & (X86_CR0_PG | X86_CR0_PE)) == X86_CR0_PG))
-+		return -EINVAL;
+@@ -362,6 +366,19 @@ retry_request:
+ 		 * user as an ioctl() return code.
+ 		 */
+ 		goto retry_request;
 +
-+	if (CC(ia32e && !(vmcs12->guest_cr4 & X86_CR4_PAE)) ||
-+	    CC(ia32e && !(vmcs12->guest_cr0 & X86_CR0_PG)))
-+		return -EINVAL;
-+
++	/*
++	 * The host may return SNP_GUEST_REQ_ERR_EBUSY if the request has been
++	 * throttled. Retry in the driver to avoid returning and reusing the
++	 * message sequence number on a different message.
++	 */
++	case -EAGAIN:
++		if (jiffies - req_start > SNP_REQ_MAX_RETRY_DURATION) {
++			rc = -ETIMEDOUT;
++			break;
++		}
++		schedule_timeout_killable(SNP_REQ_RETRY_DELAY);
++		goto retry_request;
+ 	}
+ 
  	/*
- 	 * If the load IA32_EFER VM-entry control is 1, the following checks
- 	 * are performed on the field for the IA32_EFER MSR:
-@@ -3058,7 +3065,6 @@ static int nested_vmx_check_guest_state(
- 	 */
- 	if (to_vmx(vcpu)->nested.nested_run_pending &&
- 	    (vmcs12->vm_entry_controls & VM_ENTRY_LOAD_IA32_EFER)) {
--		ia32e = (vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE) != 0;
- 		if (CC(!kvm_valid_efer(vcpu, vmcs12->guest_ia32_efer)) ||
- 		    CC(ia32e != !!(vmcs12->guest_ia32_efer & EFER_LMA)) ||
- 		    CC(((vmcs12->guest_cr0 & X86_CR0_PG) &&
 
 
