@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848AD1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC80C433EF;
-	Mon, 20 Mar 2023 15:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF741C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C5DC433D2;
+	Mon, 20 Mar 2023 15:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324887;
-	bh=mbUuHXlDvT/eSDrFOBVzEyS8WN6S+LZCX8NNWtU5ONA=;
+	s=korg; t=1679324890;
+	bh=QBTVzXkEmgZMK00TO/lAoTF1TCKogf4wzNTQyGugT6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iPNIY2Y3KD/1N3otq1LJvKADNJo7TElKlO2J51px+lK562+621v9FwWorF9CwzhWw
-	 fEzf6eZvfPwDrBrc4Qh2lI8xz0yFjbScik0jBbr6I+oKiUZAMTKWHvB7elm1DKafE7
-	 6knINb1JPKBTcavEs/xDSaW3Y311QW97EFBgyvyY=
+	b=p5czpAwfm1IVO3tjhzLBVn+YpTM6S9cAidFq3rhKtBlA3dmDFqw0KcTGeiOCH9M3I
+	 sixcoYqYVNdFUv5Bp4QkHYaUSvgjtf4zNEyclDbJaefchX0zFxQxz8HJEm8//MwAc4
+	 Es8ImYSqnsEIFdToK34KvNauuQoCeFEarqe6azTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 69/99] mptcp: avoid setting TCP_CLOSE state twice
-Date: Mon, 20 Mar 2023 15:54:47 +0100
-Message-Id: <20230320145446.285075938@linuxfoundation.org>
+	Tomas Henzl <thenzl@redhat.com>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 017/198] scsi: mpi3mr: Fix config page DMA memory leak
+Date: Mon, 20 Mar 2023 15:52:35 +0100
+Message-Id: <20230320145508.227640527@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Tomas Henzl <thenzl@redhat.com>
 
-commit 3ba14528684f528566fb7d956bfbfb958b591d86 upstream.
+[ Upstream commit 7d2b02172b6a2ae6aecd7ef6480b9c4bf3dc59f4 ]
 
-tcp_set_state() is called from tcp_done() already.
+A fix for:
 
-There is then no need to first set the state to TCP_CLOSE, then call
-tcp_done().
+DMA-API: pci 0000:83:00.0: device driver has pending DMA allocations while released from device [count=1]
 
-Fixes: d582484726c4 ("mptcp: fix fallback for MP_JOIN subflows")
-Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/362
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 32d457d5a2af ("scsi: mpi3mr: Add framework to issue config requests")
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Link: https://lore.kernel.org/r/20230302234336.25456-3-thenzl@redhat.com
+Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/subflow.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -275,7 +275,6 @@ void mptcp_subflow_reset(struct sock *ss
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
- 	struct sock *sk = subflow->conn;
- 
--	tcp_set_state(ssk, TCP_CLOSE);
- 	tcp_send_active_reset(ssk, GFP_ATOMIC);
- 	tcp_done(ssk);
- 	if (!test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &mptcp_sk(sk)->flags) &&
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index 2d46a0b04f345..f6b726359a1cc 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -4351,7 +4351,11 @@ void mpi3mr_free_mem(struct mpi3mr_ioc *mrioc)
+ 		    mrioc->admin_req_base, mrioc->admin_req_dma);
+ 		mrioc->admin_req_base = NULL;
+ 	}
+-
++	if (mrioc->cfg_page) {
++		dma_free_coherent(&mrioc->pdev->dev, mrioc->cfg_page_sz,
++		    mrioc->cfg_page, mrioc->cfg_page_dma);
++		mrioc->cfg_page = NULL;
++	}
+ 	if (mrioc->pel_seqnum_virt) {
+ 		dma_free_coherent(&mrioc->pdev->dev, mrioc->pel_seqnum_sz,
+ 		    mrioc->pel_seqnum_virt, mrioc->pel_seqnum_dma);
+-- 
+2.39.2
+
 
 
