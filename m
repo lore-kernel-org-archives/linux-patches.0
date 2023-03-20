@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C48D1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F757C433D2;
-	Mon, 20 Mar 2023 15:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEACD1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4123AC433D2;
+	Mon, 20 Mar 2023 15:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324730;
-	bh=QDwoXgZDijdmpcRWnIajuGKiBMHlgCXxJLLpxsZ3yJU=;
+	s=korg; t=1679324733;
+	bh=0vGVffKTWvcvF7+SWzA/RlrcWvpEwqtW4CZqnlnVuOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SrgfEJshUFy8r1t/BS7O8BcRAEjCD7iws+hy9Qb6oISOaPTIWDG4vbv4/s6KBTZPD
-	 /FL/46A/2Kq1ZJBMSqi/Qi/WAAOeGdeaQ7t2jiBkqrGsWMhZHJM0zZIgW4jvOrnJ3O
-	 M5k4jx+i0/3XVIgIexbX29w8jUKMYYVh3BQjkRH4=
+	b=HFGJnYTW/wkJG8Amoh2XP1B2WmQgFnHEBuMKGckFBd315r3wewmKc+ND2c64g6V5P
+	 YUWWKB2KEOzsVt972EIHSg17Fe9fAmpC//UTWpEiRn3+8YX9P9BVegKEd0vLIlyoZg
+	 SgzDlSAf8AZCv5svzazFlojlm9EUmfVWeOfbjMjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Tobias Schramm <t.schramm@manjaro.org>,
+	Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 30/99] nvmet: avoid potential UAF in nvmet_req_complete()
-Date: Mon, 20 Mar 2023 15:54:08 +0100
-Message-Id: <20230320145444.643692998@linuxfoundation.org>
+Subject: [PATCH 5.10 48/99] mmc: atmel-mci: fix race between stop command and start of next command
+Date: Mon, 20 Mar 2023 15:54:26 +0100
+Message-Id: <20230320145445.396972481@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
 References: <20230320145443.333824603@linuxfoundation.org>
@@ -36,44 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Tobias Schramm <t.schramm@manjaro.org>
 
-[ Upstream commit 6173a77b7e9d3e202bdb9897b23f2a8afe7bf286 ]
+[ Upstream commit eca5bd666b0aa7dc0bca63292e4778968241134e ]
 
-An nvme target ->queue_response() operation implementation may free the
-request passed as argument. Such implementation potentially could result
-in a use after free of the request pointer when percpu_ref_put() is
-called in nvmet_req_complete().
+This commit fixes a race between completion of stop command and start of a
+new command.
+Previously the command ready interrupt was enabled before stop command
+was written to the command register. This caused the command ready
+interrupt to fire immediately since the CMDRDY flag is asserted constantly
+while there is no command in progress.
+Consequently the command state machine will immediately advance to the
+next state when the tasklet function is executed again, no matter
+actual completion state of the stop command.
+Thus a new command can then be dispatched immediately, interrupting and
+corrupting the stop command on the CMD line.
+Fix that by dropping the command ready interrupt enable before calling
+atmci_send_stop_cmd. atmci_send_stop_cmd does already enable the
+command ready interrupt, no further writes to ATMCI_IER are necessary.
 
-Avoid such problem by using a local variable to save the sq pointer
-before calling __nvmet_req_complete(), thus avoiding dereferencing the
-req pointer after that function call.
-
-Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Tobias Schramm <t.schramm@manjaro.org>
+Acked-by: Ludovic Desroches <ludovic.desroches@microchip.com>
+Link: https://lore.kernel.org/r/20221230194315.809903-2-t.schramm@manjaro.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mmc/host/atmel-mci.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index bc88ff2912f56..a82a0796a6148 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -749,8 +749,10 @@ static void __nvmet_req_complete(struct nvmet_req *req, u16 status)
- 
- void nvmet_req_complete(struct nvmet_req *req, u16 status)
- {
-+	struct nvmet_sq *sq = req->sq;
-+
- 	__nvmet_req_complete(req, status);
--	percpu_ref_put(&req->sq->ref);
-+	percpu_ref_put(&sq->ref);
- }
- EXPORT_SYMBOL_GPL(nvmet_req_complete);
- 
+diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
+index af85b32c6c1c8..c468f9a02ef6b 100644
+--- a/drivers/mmc/host/atmel-mci.c
++++ b/drivers/mmc/host/atmel-mci.c
+@@ -1818,7 +1818,6 @@ static void atmci_tasklet_func(unsigned long priv)
+ 				atmci_writel(host, ATMCI_IER, ATMCI_NOTBUSY);
+ 				state = STATE_WAITING_NOTBUSY;
+ 			} else if (host->mrq->stop) {
+-				atmci_writel(host, ATMCI_IER, ATMCI_CMDRDY);
+ 				atmci_send_stop_cmd(host, data);
+ 				state = STATE_SENDING_STOP;
+ 			} else {
+@@ -1851,8 +1850,6 @@ static void atmci_tasklet_func(unsigned long priv)
+ 				 * command to send.
+ 				 */
+ 				if (host->mrq->stop) {
+-					atmci_writel(host, ATMCI_IER,
+-					             ATMCI_CMDRDY);
+ 					atmci_send_stop_cmd(host, data);
+ 					state = STATE_SENDING_STOP;
+ 				} else {
 -- 
 2.39.2
 
