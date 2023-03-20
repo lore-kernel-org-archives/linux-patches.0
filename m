@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1B01C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4153C433D2;
-	Mon, 20 Mar 2023 15:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132CF1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F10C4339B;
+	Mon, 20 Mar 2023 15:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324791;
-	bh=YfOucrZJZAdAFK0SRVWq7To0DrxSk/BHLnV7C8c6PLg=;
+	s=korg; t=1679324793;
+	bh=xFSLdZOACkhihy+V/IXgg4S5DYfJ2N7/nOv37+1Do2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GxYNsKmzkKhJFJCWSKo5I/NNd5I5IDAGA2NiQ4LPMhdHErUT1m9I2I2HVzuZzesA+
-	 tQ+ivj9S0AeOoW/QqCGVo9OZi+SoMIa1HYibBXwuxBsMDkJC/+TNZP9tLewCvfpE00
-	 5CboBuPlsi1X16hbP/65MYPoqfvYJtLPgkoOByzA=
+	b=h86j9UZ/CE/dAMZU9+mQUr0mHA13ewqRupZspyXDZ67hZ9JfZrgvl1VabUfb/IZfj
+	 MhphprL/laohtOz1l1n7F4AYp76IDtl5RZRrEB1nSqWcZfqHTHxuTijg3bxZHI7SZg
+	 oewcdgkSc3m4QgXn1/UFT2hqyU1uXEp0N8mqliU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Steve French <stfrench@microsoft.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Jan Karcher <jaka@linux.ibm.com>,
+	Karsten Graul <kgraul@linux.ibm.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/198] cifs: Move the in_send statistic to __smb_send_rqst()
-Date: Mon, 20 Mar 2023 15:52:24 +0100
-Message-Id: <20230320145507.722649900@linuxfoundation.org>
+Subject: [PATCH 5.15 034/115] net/smc: fix deadlock triggered by cancel_delayed_work_syn()
+Date: Mon, 20 Mar 2023 15:54:06 +0100
+Message-Id: <20230320145450.888821164@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,115 +38,162 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Wenjia Zhang <wenjia@linux.ibm.com>
 
-[ Upstream commit d0dc41119905f740e8d5594adce277f7c0de8c92 ]
+[ Upstream commit 13085e1b5cab8ad802904d72e6a6dae85ae0cd20 ]
 
-When send SMB_COM_NT_CANCEL and RFC1002_SESSION_REQUEST, the
-in_send statistic was lost.
+The following LOCKDEP was detected:
+		Workqueue: events smc_lgr_free_work [smc]
+		WARNING: possible circular locking dependency detected
+		6.1.0-20221027.rc2.git8.56bc5b569087.300.fc36.s390x+debug #1 Not tainted
+		------------------------------------------------------
+		kworker/3:0/176251 is trying to acquire lock:
+		00000000f1467148 ((wq_completion)smc_tx_wq-00000000#2){+.+.}-{0:0},
+			at: __flush_workqueue+0x7a/0x4f0
+		but task is already holding lock:
+		0000037fffe97dc8 ((work_completion)(&(&lgr->free_work)->work)){+.+.}-{0:0},
+			at: process_one_work+0x232/0x730
+		which lock already depends on the new lock.
+		the existing dependency chain (in reverse order) is:
+		-> #4 ((work_completion)(&(&lgr->free_work)->work)){+.+.}-{0:0}:
+		       __lock_acquire+0x58e/0xbd8
+		       lock_acquire.part.0+0xe2/0x248
+		       lock_acquire+0xac/0x1c8
+		       __flush_work+0x76/0xf0
+		       __cancel_work_timer+0x170/0x220
+		       __smc_lgr_terminate.part.0+0x34/0x1c0 [smc]
+		       smc_connect_rdma+0x15e/0x418 [smc]
+		       __smc_connect+0x234/0x480 [smc]
+		       smc_connect+0x1d6/0x230 [smc]
+		       __sys_connect+0x90/0xc0
+		       __do_sys_socketcall+0x186/0x370
+		       __do_syscall+0x1da/0x208
+		       system_call+0x82/0xb0
+		-> #3 (smc_client_lgr_pending){+.+.}-{3:3}:
+		       __lock_acquire+0x58e/0xbd8
+		       lock_acquire.part.0+0xe2/0x248
+		       lock_acquire+0xac/0x1c8
+		       __mutex_lock+0x96/0x8e8
+		       mutex_lock_nested+0x32/0x40
+		       smc_connect_rdma+0xa4/0x418 [smc]
+		       __smc_connect+0x234/0x480 [smc]
+		       smc_connect+0x1d6/0x230 [smc]
+		       __sys_connect+0x90/0xc0
+		       __do_sys_socketcall+0x186/0x370
+		       __do_syscall+0x1da/0x208
+		       system_call+0x82/0xb0
+		-> #2 (sk_lock-AF_SMC){+.+.}-{0:0}:
+		       __lock_acquire+0x58e/0xbd8
+		       lock_acquire.part.0+0xe2/0x248
+		       lock_acquire+0xac/0x1c8
+		       lock_sock_nested+0x46/0xa8
+		       smc_tx_work+0x34/0x50 [smc]
+		       process_one_work+0x30c/0x730
+		       worker_thread+0x62/0x420
+		       kthread+0x138/0x150
+		       __ret_from_fork+0x3c/0x58
+		       ret_from_fork+0xa/0x40
+		-> #1 ((work_completion)(&(&smc->conn.tx_work)->work)){+.+.}-{0:0}:
+		       __lock_acquire+0x58e/0xbd8
+		       lock_acquire.part.0+0xe2/0x248
+		       lock_acquire+0xac/0x1c8
+		       process_one_work+0x2bc/0x730
+		       worker_thread+0x62/0x420
+		       kthread+0x138/0x150
+		       __ret_from_fork+0x3c/0x58
+		       ret_from_fork+0xa/0x40
+		-> #0 ((wq_completion)smc_tx_wq-00000000#2){+.+.}-{0:0}:
+		       check_prev_add+0xd8/0xe88
+		       validate_chain+0x70c/0xb20
+		       __lock_acquire+0x58e/0xbd8
+		       lock_acquire.part.0+0xe2/0x248
+		       lock_acquire+0xac/0x1c8
+		       __flush_workqueue+0xaa/0x4f0
+		       drain_workqueue+0xaa/0x158
+		       destroy_workqueue+0x44/0x2d8
+		       smc_lgr_free+0x9e/0xf8 [smc]
+		       process_one_work+0x30c/0x730
+		       worker_thread+0x62/0x420
+		       kthread+0x138/0x150
+		       __ret_from_fork+0x3c/0x58
+		       ret_from_fork+0xa/0x40
+		other info that might help us debug this:
+		Chain exists of:
+		  (wq_completion)smc_tx_wq-00000000#2
+	  	  --> smc_client_lgr_pending
+		  --> (work_completion)(&(&lgr->free_work)->work)
+		 Possible unsafe locking scenario:
+		       CPU0                    CPU1
+		       ----                    ----
+		  lock((work_completion)(&(&lgr->free_work)->work));
+		                   lock(smc_client_lgr_pending);
+		                   lock((work_completion)
+					(&(&lgr->free_work)->work));
+		  lock((wq_completion)smc_tx_wq-00000000#2);
+		 *** DEADLOCK ***
+		2 locks held by kworker/3:0/176251:
+		 #0: 0000000080183548
+			((wq_completion)events){+.+.}-{0:0},
+				at: process_one_work+0x232/0x730
+		 #1: 0000037fffe97dc8
+			((work_completion)
+			 (&(&lgr->free_work)->work)){+.+.}-{0:0},
+				at: process_one_work+0x232/0x730
+		stack backtrace:
+		CPU: 3 PID: 176251 Comm: kworker/3:0 Not tainted
+		Hardware name: IBM 8561 T01 701 (z/VM 7.2.0)
+		Call Trace:
+		 [<000000002983c3e4>] dump_stack_lvl+0xac/0x100
+		 [<0000000028b477ae>] check_noncircular+0x13e/0x160
+		 [<0000000028b48808>] check_prev_add+0xd8/0xe88
+		 [<0000000028b49cc4>] validate_chain+0x70c/0xb20
+		 [<0000000028b4bd26>] __lock_acquire+0x58e/0xbd8
+		 [<0000000028b4cf6a>] lock_acquire.part.0+0xe2/0x248
+		 [<0000000028b4d17c>] lock_acquire+0xac/0x1c8
+		 [<0000000028addaaa>] __flush_workqueue+0xaa/0x4f0
+		 [<0000000028addf9a>] drain_workqueue+0xaa/0x158
+		 [<0000000028ae303c>] destroy_workqueue+0x44/0x2d8
+		 [<000003ff8029af26>] smc_lgr_free+0x9e/0xf8 [smc]
+		 [<0000000028adf3d4>] process_one_work+0x30c/0x730
+		 [<0000000028adf85a>] worker_thread+0x62/0x420
+		 [<0000000028aeac50>] kthread+0x138/0x150
+		 [<0000000028a63914>] __ret_from_fork+0x3c/0x58
+		 [<00000000298503da>] ret_from_fork+0xa/0x40
+		INFO: lockdep is turned off.
+===================================================================
 
-Let's move the in_send statistic to the send function to avoid
-this scenario.
+This deadlock occurs because cancel_delayed_work_sync() waits for
+the work(&lgr->free_work) to finish, while the &lgr->free_work
+waits for the work(lgr->tx_wq), which needs the sk_lock-AF_SMC, that
+is already used under the mutex_lock.
 
-Fixes: 7ee1af765dfa ("[CIFS]")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+The solution is to use cancel_delayed_work() instead, which kills
+off a pending work.
+
+Fixes: a52bcc919b14 ("net/smc: improve termination processing")
+Signed-off-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Reviewed-by: Jan Karcher <jaka@linux.ibm.com>
+Reviewed-by: Karsten Graul <kgraul@linux.ibm.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/transport.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ net/smc/smc_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/cifs/transport.c b/fs/cifs/transport.c
-index 3851d0aaa2886..c961b90f92b9f 100644
---- a/fs/cifs/transport.c
-+++ b/fs/cifs/transport.c
-@@ -297,7 +297,7 @@ static int
- __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 		struct smb_rqst *rqst)
- {
--	int rc = 0;
-+	int rc;
- 	struct kvec *iov;
- 	int n_vec;
- 	unsigned int send_length = 0;
-@@ -308,6 +308,7 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 	struct msghdr smb_msg = {};
- 	__be32 rfc1002_marker;
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index 2eafefa15a1ae..f08fcc50fad3c 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1297,7 +1297,7 @@ static void __smc_lgr_terminate(struct smc_link_group *lgr, bool soft)
+ 	if (lgr->terminating)
+ 		return;	/* lgr already terminating */
+ 	/* cancel free_work sync, will terminate when lgr->freeing is set */
+-	cancel_delayed_work_sync(&lgr->free_work);
++	cancel_delayed_work(&lgr->free_work);
+ 	lgr->terminating = 1;
  
-+	cifs_in_send_inc(server);
- 	if (cifs_rdma_enabled(server)) {
- 		/* return -EAGAIN when connecting or reconnecting */
- 		rc = -EAGAIN;
-@@ -316,14 +317,17 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 		goto smbd_done;
- 	}
- 
-+	rc = -EAGAIN;
- 	if (ssocket == NULL)
--		return -EAGAIN;
-+		goto out;
- 
-+	rc = -ERESTARTSYS;
- 	if (fatal_signal_pending(current)) {
- 		cifs_dbg(FYI, "signal pending before send request\n");
--		return -ERESTARTSYS;
-+		goto out;
- 	}
- 
-+	rc = 0;
- 	/* cork the socket */
- 	tcp_sock_set_cork(ssocket->sk, true);
- 
-@@ -434,7 +438,8 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 			 rc);
- 	else if (rc > 0)
- 		rc = 0;
--
-+out:
-+	cifs_in_send_dec(server);
- 	return rc;
- }
- 
-@@ -853,9 +858,7 @@ cifs_call_async(struct TCP_Server_Info *server, struct smb_rqst *rqst,
- 	 * I/O response may come back and free the mid entry on another thread.
- 	 */
- 	cifs_save_when_sent(mid);
--	cifs_in_send_inc(server);
- 	rc = smb_send_rqst(server, 1, rqst, flags);
--	cifs_in_send_dec(server);
- 
- 	if (rc < 0) {
- 		revert_current_mid(server, mid->credits);
-@@ -1146,9 +1149,7 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
- 		else
- 			midQ[i]->callback = cifs_compound_last_callback;
- 	}
--	cifs_in_send_inc(server);
- 	rc = smb_send_rqst(server, num_rqst, rqst, flags);
--	cifs_in_send_dec(server);
- 
- 	for (i = 0; i < num_rqst; i++)
- 		cifs_save_when_sent(midQ[i]);
-@@ -1398,9 +1399,7 @@ SendReceive(const unsigned int xid, struct cifs_ses *ses,
- 
- 	midQ->mid_state = MID_REQUEST_SUBMITTED;
- 
--	cifs_in_send_inc(server);
- 	rc = smb_send(server, in_buf, len);
--	cifs_in_send_dec(server);
- 	cifs_save_when_sent(midQ);
- 
- 	if (rc < 0)
-@@ -1541,9 +1540,7 @@ SendReceiveBlockingLock(const unsigned int xid, struct cifs_tcon *tcon,
- 	}
- 
- 	midQ->mid_state = MID_REQUEST_SUBMITTED;
--	cifs_in_send_inc(server);
- 	rc = smb_send(server, in_buf, len);
--	cifs_in_send_dec(server);
- 	cifs_save_when_sent(midQ);
- 
- 	if (rc < 0)
+ 	/* kill remaining link group connections */
 -- 
 2.39.2
 
