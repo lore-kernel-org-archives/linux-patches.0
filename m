@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178731C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654D3C433D2;
-	Mon, 20 Mar 2023 15:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B511C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2906FC433D2;
+	Mon, 20 Mar 2023 15:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325188;
-	bh=K/d7B1d5nJmC3yZ09eO/+KaCt5Sa6DnyLc22sCCMx/Y=;
+	s=korg; t=1679325191;
+	bh=PE5s1Fo+Q2JjH/l2rPGwlQObIGxSqZFvr8EUgKzEocw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sABqwgcrHbFSYUGCqFph/CEe7qgyW9HioOcr1d/euACq7XjXoMY/qe0rZFStJnwzQ
-	 KkL7dQA7zNiDkwgLye9Kxe35pPwBk47alK/vi1rpLzU4+67cZZOeV1yau2BwfiRQd3
-	 n5j1VDkAq7nrwtLSbBO3+XmHzyN1DmwowfJaPTRY=
+	b=JcUEfbX1JEvFgnG1SlViyniV6Gjok8bn+rEQGYBLEqaJXyzDzsgh+nPjA7+UkcWyN
+	 s0f8j42HSpC82ejL6abX1apGxJ/gJfO/aO3lZXFcyCatw697KIEhMcnDnStW7hM4PQ
+	 3ujQXd4uizrwDsfgPvgqqzME64uMURROgiAa9l3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Patalano <mpatalan@redhat.com>,
-	Chris Leech <cleech@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Glenn Washburn <development@efficientek.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/198] blk-mq: fix "bad unlock balance detected" on q->srcu in __blk_mq_run_dispatch_ops
-Date: Mon, 20 Mar 2023 15:53:11 +0100
-Message-Id: <20230320145509.733169434@linuxfoundation.org>
+Subject: [PATCH 6.2 015/211] docs: Correct missing "d_" prefix for dentry_operations member d_weak_revalidate
+Date: Mon, 20 Mar 2023 15:52:30 +0100
+Message-Id: <20230320145513.929373311@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,49 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Leech <cleech@redhat.com>
+From: Glenn Washburn <development@efficientek.com>
 
-[ Upstream commit 00e885efcfbb8712d3e1bfc1ae30639c15ca1d3b ]
+[ Upstream commit 74596085796fae0cfce3e42ee46bf4f8acbdac55 ]
 
-The 'q' parameter of the macro __blk_mq_run_dispatch_ops may not be one
-local variable, such as, it is rq->q, then request queue pointed by
-this variable could be changed to another queue in case of
-BLK_MQ_F_TAG_QUEUE_SHARED after 'dispatch_ops' returns, then
-'bad unlock balance' is triggered.
+The details for struct dentry_operations member d_weak_revalidate is
+missing a "d_" prefix.
 
-Fixes the issue by adding one local variable for doing srcu lock/unlock.
-
-Fixes: 2a904d00855f ("blk-mq: remove hctx_lock and hctx_unlock")
-Cc: Marco Patalano <mpatalan@redhat.com>
-Signed-off-by: Chris Leech <cleech@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20230310010913.1014789-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: af96c1e304f7 ("docs: filesystems: vfs: Convert vfs.txt to RST")
+Signed-off-by: Glenn Washburn <development@efficientek.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://lore.kernel.org/r/20230227184042.2375235-1-development@efficientek.com
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ Documentation/filesystems/vfs.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-mq.h b/block/blk-mq.h
-index ef59fee62780d..a7482d2cc82e7 100644
---- a/block/blk-mq.h
-+++ b/block/blk-mq.h
-@@ -378,12 +378,13 @@ static inline bool hctx_may_queue(struct blk_mq_hw_ctx *hctx,
- #define __blk_mq_run_dispatch_ops(q, check_sleep, dispatch_ops)	\
- do {								\
- 	if ((q)->tag_set->flags & BLK_MQ_F_BLOCKING) {		\
-+		struct blk_mq_tag_set *__tag_set = (q)->tag_set; \
- 		int srcu_idx;					\
- 								\
- 		might_sleep_if(check_sleep);			\
--		srcu_idx = srcu_read_lock((q)->tag_set->srcu);	\
-+		srcu_idx = srcu_read_lock(__tag_set->srcu);	\
- 		(dispatch_ops);					\
--		srcu_read_unlock((q)->tag_set->srcu, srcu_idx);	\
-+		srcu_read_unlock(__tag_set->srcu, srcu_idx);	\
- 	} else {						\
- 		rcu_read_lock();				\
- 		(dispatch_ops);					\
+diff --git a/Documentation/filesystems/vfs.rst b/Documentation/filesystems/vfs.rst
+index 2c15e70531137..2f54e725bd743 100644
+--- a/Documentation/filesystems/vfs.rst
++++ b/Documentation/filesystems/vfs.rst
+@@ -1222,7 +1222,7 @@ defined:
+ 	return
+ 	-ECHILD and it will be called again in ref-walk mode.
+ 
+-``_weak_revalidate``
++``d_weak_revalidate``
+ 	called when the VFS needs to revalidate a "jumped" dentry.  This
+ 	is called when a path-walk ends at dentry that was not acquired
+ 	by doing a lookup in the parent directory.  This includes "/",
 -- 
 2.39.2
 
