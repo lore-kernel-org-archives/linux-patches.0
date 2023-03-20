@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895E71C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0778EC433EF;
-	Mon, 20 Mar 2023 15:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3177D1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AADA8C4339C;
+	Mon, 20 Mar 2023 15:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325953;
-	bh=AY/Ig6/D6B8kAit4w8uSAEvPz3sYAX7+kRJBXfUowsI=;
+	s=korg; t=1679325956;
+	bh=hFcIikj1mDKjeQuTUK9pVgnuAW8pKQ8py83+y1206JM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G4m6pydmUqt9wGJLVT/NpuspCbncck1eyxHjW2zinlLPcql1BwwlGvstlTtTZdPLB
-	 R83mghO3iIW5oxCQnLBrpVoZVMJtH7ckJyzO9nUSgnBQcyMLcvsJgj5pCR5LF8xGRu
-	 1pD1BJ0mIBXs50Pq53dPPOa/o18GP9fw+kFBNFKM=
+	b=fcJelWwLWAfaBCRs2UZ+w1ACXybSOP3bVN1RqEiyooHPaQiS+pgTjlNTU/V/qNeHw
+	 oO83WaMuHmr9Phuy8/s7HGSg5dx6PBhNfCJ2PCSRGGMDRO1Lo8kvLVjV1z1cjM9Ahc
+	 lawi+upc/NSYSSdJKWF0cZ8RF9AQ8r9XoYHHzLBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>
-Subject: [PATCH 6.2 113/211] sh: intc: Avoid spurious sizeof-pointer-div warning
-Date: Mon, 20 Mar 2023 15:54:08 +0100
-Message-Id: <20230320145518.041389823@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: [PATCH 6.2 131/211] interconnect: fix provider registration API
+Date: Mon, 20 Mar 2023 15:54:26 +0100
+Message-Id: <20230320145518.909502554@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -36,51 +36,149 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 250870824c1cf199b032b1ef889c8e8d69d9123a ]
+commit eb59eca0d8ac15f8c1b7f1cd35999455a90292c0 upstream.
 
-GCC warns about the pattern sizeof(void*)/sizeof(void), as it looks like
-the abuse of a pattern to calculate the array size. This pattern appears
-in the unevaluated part of the ternary operator in _INTC_ARRAY if the
-parameter is NULL.
+The current interconnect provider interface is inherently racy as
+providers are expected to be added before being fully initialised.
 
-The replacement uses an alternate approach to return 0 in case of NULL
-which does not generate the pattern sizeof(void*)/sizeof(void), but still
-emits the warning if _INTC_ARRAY is called with a nonarray parameter.
+Specifically, nodes are currently not added and the provider data is not
+initialised until after registering the provider which can cause racing
+DT lookups to fail.
 
-This patch is required for successful compilation with -Werror enabled.
+Add a new provider API which will be used to fix up the interconnect
+drivers.
 
-The idea to use _Generic for type distinction is taken from Comment #7
-in https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108483 by Jakub Jelinek
+The old API is reimplemented using the new interface and will be removed
+once all drivers have been fixed.
 
-Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
-Acked-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
-Link: https://lore.kernel.org/r/619fa552-c988-35e5-b1d7-fe256c46a272@mkarcher.dialup.fu-berlin.de
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 11f1ceca7031 ("interconnect: Add generic on-chip interconnect API")
+Fixes: 87e3031b6fbd ("interconnect: Allow endpoints translation via DT")
+Cc: stable@vger.kernel.org      # 5.1
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # i.MX8MP MSC SM2-MB-EP1 Board
+Link: https://lore.kernel.org/r/20230306075651.2449-4-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sh_intc.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/interconnect/core.c           |   52 ++++++++++++++++++++++++----------
+ include/linux/interconnect-provider.h |   12 +++++++
+ 2 files changed, 50 insertions(+), 14 deletions(-)
 
-diff --git a/include/linux/sh_intc.h b/include/linux/sh_intc.h
-index c255273b02810..37ad81058d6ae 100644
---- a/include/linux/sh_intc.h
-+++ b/include/linux/sh_intc.h
-@@ -97,7 +97,10 @@ struct intc_hw_desc {
- 	unsigned int nr_subgroups;
- };
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -1029,44 +1029,68 @@ int icc_nodes_remove(struct icc_provider
+ EXPORT_SYMBOL_GPL(icc_nodes_remove);
  
--#define _INTC_ARRAY(a) a, __same_type(a, NULL) ? 0 : sizeof(a)/sizeof(*a)
-+#define _INTC_SIZEOF_OR_ZERO(a) (_Generic(a,                 \
-+                                 typeof(NULL):  0,           \
-+                                 default:       sizeof(a)))
-+#define _INTC_ARRAY(a) a, _INTC_SIZEOF_OR_ZERO(a)/sizeof(*a)
+ /**
+- * icc_provider_add() - add a new interconnect provider
+- * @provider: the interconnect provider that will be added into topology
++ * icc_provider_init() - initialize a new interconnect provider
++ * @provider: the interconnect provider to initialize
++ *
++ * Must be called before adding nodes to the provider.
++ */
++void icc_provider_init(struct icc_provider *provider)
++{
++	WARN_ON(!provider->set);
++
++	INIT_LIST_HEAD(&provider->nodes);
++}
++EXPORT_SYMBOL_GPL(icc_provider_init);
++
++/**
++ * icc_provider_register() - register a new interconnect provider
++ * @provider: the interconnect provider to register
+  *
+  * Return: 0 on success, or an error code otherwise
+  */
+-int icc_provider_add(struct icc_provider *provider)
++int icc_provider_register(struct icc_provider *provider)
+ {
+-	if (WARN_ON(!provider->set))
+-		return -EINVAL;
+ 	if (WARN_ON(!provider->xlate && !provider->xlate_extended))
+ 		return -EINVAL;
  
- #define INTC_HW_DESC(vectors, groups, mask_regs,	\
- 		     prio_regs,	sense_regs, ack_regs)	\
--- 
-2.39.2
-
+ 	mutex_lock(&icc_lock);
+-
+-	INIT_LIST_HEAD(&provider->nodes);
+ 	list_add_tail(&provider->provider_list, &icc_providers);
+-
+ 	mutex_unlock(&icc_lock);
+ 
+-	dev_dbg(provider->dev, "interconnect provider added to topology\n");
++	dev_dbg(provider->dev, "interconnect provider registered\n");
+ 
+ 	return 0;
+ }
+-EXPORT_SYMBOL_GPL(icc_provider_add);
++EXPORT_SYMBOL_GPL(icc_provider_register);
+ 
+ /**
+- * icc_provider_del() - delete previously added interconnect provider
+- * @provider: the interconnect provider that will be removed from topology
++ * icc_provider_deregister() - deregister an interconnect provider
++ * @provider: the interconnect provider to deregister
+  */
+-void icc_provider_del(struct icc_provider *provider)
++void icc_provider_deregister(struct icc_provider *provider)
+ {
+ 	mutex_lock(&icc_lock);
+ 	WARN_ON(provider->users);
+-	WARN_ON(!list_empty(&provider->nodes));
+ 
+ 	list_del(&provider->provider_list);
+ 	mutex_unlock(&icc_lock);
+ }
++EXPORT_SYMBOL_GPL(icc_provider_deregister);
++
++int icc_provider_add(struct icc_provider *provider)
++{
++	icc_provider_init(provider);
++
++	return icc_provider_register(provider);
++}
++EXPORT_SYMBOL_GPL(icc_provider_add);
++
++void icc_provider_del(struct icc_provider *provider)
++{
++	WARN_ON(!list_empty(&provider->nodes));
++
++	icc_provider_deregister(provider);
++}
+ EXPORT_SYMBOL_GPL(icc_provider_del);
+ 
+ static int of_count_icc_providers(struct device_node *np)
+--- a/include/linux/interconnect-provider.h
++++ b/include/linux/interconnect-provider.h
+@@ -122,6 +122,9 @@ int icc_link_destroy(struct icc_node *sr
+ void icc_node_add(struct icc_node *node, struct icc_provider *provider);
+ void icc_node_del(struct icc_node *node);
+ int icc_nodes_remove(struct icc_provider *provider);
++void icc_provider_init(struct icc_provider *provider);
++int icc_provider_register(struct icc_provider *provider);
++void icc_provider_deregister(struct icc_provider *provider);
+ int icc_provider_add(struct icc_provider *provider);
+ void icc_provider_del(struct icc_provider *provider);
+ struct icc_node_data *of_icc_get_from_provider(struct of_phandle_args *spec);
+@@ -167,6 +170,15 @@ static inline int icc_nodes_remove(struc
+ 	return -ENOTSUPP;
+ }
+ 
++static inline void icc_provider_init(struct icc_provider *provider) { }
++
++static inline int icc_provider_register(struct icc_provider *provider)
++{
++	return -ENOTSUPP;
++}
++
++static inline void icc_provider_deregister(struct icc_provider *provider) { }
++
+ static inline int icc_provider_add(struct icc_provider *provider)
+ {
+ 	return -ENOTSUPP;
 
 
