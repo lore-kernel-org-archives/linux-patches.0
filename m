@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEE61C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3439C433D2;
-	Mon, 20 Mar 2023 15:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567911C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFFC4C4339B;
+	Mon, 20 Mar 2023 15:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325000;
-	bh=qwzzc7IUl5Ap/rYytx2BqjtS/FBf0q1OKaIPdxZcs/E=;
+	s=korg; t=1679325003;
+	bh=KU6C0BViPI5LkPsInh07pVx/7bCkN7O27OXrX0iH5WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fB+q2ffhNjDfDyW7NTRXCHq+rWG6G9SsQpge5VqxPRtRbGQ+LrBvMXJtUXbuSB4Hw
-	 I/kNg6clw/RzgfZYIYbkvauh+SQWmqS7PBcAueGVr81cTciuT3CkS5AxaVVDip7+Vh
-	 jXQWY+lbZGyM0KpLj4JmR6iyiQeex6jlRIcLZBgo=
+	b=VHuQWtOyfbDtTS7rpPt8Z3ydTCN7OApsqbYr7wqVLV5o0em/yLRcy8hE49+Tr7+vU
+	 wQ1MaHNfFrjm12R0HawuuT6m+uEzGhMuh/m3MGd/GuZb7wdKidDGbAARobVOu+jemg
+	 K8lfNIA77xCZsw3YXFgN6y5eSWwNY+ZZeeJ99W0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravi Kishore Koppuravuri <ravi.kishore.koppuravuri@intel.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 5.10 82/99] PCI/DPC: Await readiness of secondary bus after reset
-Date: Mon, 20 Mar 2023 15:55:00 +0100
-Message-Id: <20230320145446.853479416@linuxfoundation.org>
+	Jurica Vukadin <jura@vukad.in>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 059/115] kconfig: Update config changed flag before calling callback
+Date: Mon, 20 Mar 2023 15:54:31 +0100
+Message-Id: <20230320145451.889982368@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,81 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Jurica Vukadin <jura@vukad.in>
 
-commit 53b54ad074de1896f8b021615f65b27f557ce874 upstream.
+[ Upstream commit ee06a3ef7e3cddb62b90ac40aa661d3c12f7cabc ]
 
-pci_bridge_wait_for_secondary_bus() is called after a Secondary Bus
-Reset, but not after a DPC-induced Hot Reset.
+Prior to commit 5ee546594025 ("kconfig: change sym_change_count to a
+boolean flag"), the conf_updated flag was set to the new value *before*
+calling the callback. xconfig's save action depends on this behaviour,
+because xconfig calls conf_get_changed() directly from the callback and
+now sees the old value, thus never enabling the save button or the
+shortcut.
 
-As a result, the delays prescribed by PCIe r6.0 sec 6.6.1 are not
-observed and devices on the secondary bus may be accessed before
-they're ready.
+Restore the previous behaviour.
 
-One affected device is Intel's Ponte Vecchio HPC GPU.  It comprises a
-PCIe switch whose upstream port is not immediately ready after reset.
-Because its config space is restored too early, it remains in
-D0uninitialized, its subordinate devices remain inaccessible and DPC
-recovery fails with messages such as:
-
-  i915 0000:8c:00.0: can't change power state from D3cold to D0 (config space inaccessible)
-  intel_vsec 0000:8e:00.1: can't change power state from D3cold to D0 (config space inaccessible)
-  pcieport 0000:89:02.0: AER: device recovery failed
-
-Fix it.
-
-Link: https://lore.kernel.org/r/9f5ff00e1593d8d9a4b452398b98aa14d23fca11.1673769517.git.lukas@wunner.de
-Tested-by: Ravi Kishore Koppuravuri <ravi.kishore.koppuravuri@intel.com>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5ee546594025 ("kconfig: change sym_change_count to a boolean flag")
+Signed-off-by: Jurica Vukadin <jura@vukad.in>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c      |    3 ---
- drivers/pci/pci.h      |    6 ++++++
- drivers/pci/pcie/dpc.c |    4 ++--
- 3 files changed, 8 insertions(+), 5 deletions(-)
+ scripts/kconfig/confdata.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -157,9 +157,6 @@ static int __init pcie_port_pm_setup(cha
+diff --git a/scripts/kconfig/confdata.c b/scripts/kconfig/confdata.c
+index 4a828bca071e8..797c8bad3837a 100644
+--- a/scripts/kconfig/confdata.c
++++ b/scripts/kconfig/confdata.c
+@@ -1124,10 +1124,12 @@ static void (*conf_changed_callback)(void);
+ 
+ void conf_set_changed(bool val)
+ {
+-	if (conf_changed_callback && conf_changed != val)
+-		conf_changed_callback();
++	bool changed = conf_changed != val;
+ 
+ 	conf_changed = val;
++
++	if (conf_changed_callback && changed)
++		conf_changed_callback();
  }
- __setup("pcie_port_pm=", pcie_port_pm_setup);
  
--/* Time to wait after a reset for device to become responsive */
--#define PCIE_RESET_READY_POLL_MS 60000
--
- /**
-  * pci_bus_max_busnr - returns maximum PCI bus number of given bus' children
-  * @bus: pointer to PCI bus structure to search
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -53,6 +53,12 @@ int pci_bus_error_reset(struct pci_dev *
-  * Reset (PCIe r6.0 sec 5.8).
-  */
- #define PCI_RESET_WAIT		1000	/* msec */
-+/*
-+ * Devices may extend the 1 sec period through Request Retry Status completions
-+ * (PCIe r6.0 sec 2.3.1).  The spec does not provide an upper limit, but 60 sec
-+ * ought to be enough for any device to become responsive.
-+ */
-+#define PCIE_RESET_READY_POLL_MS 60000	/* msec */
- 
- /**
-  * struct pci_platform_pm_ops - Firmware PM callbacks
---- a/drivers/pci/pcie/dpc.c
-+++ b/drivers/pci/pcie/dpc.c
-@@ -170,8 +170,8 @@ pci_ers_result_t dpc_reset_link(struct p
- 	pci_write_config_word(pdev, cap + PCI_EXP_DPC_STATUS,
- 			      PCI_EXP_DPC_STATUS_TRIGGER);
- 
--	if (!pcie_wait_for_link(pdev, true)) {
--		pci_info(pdev, "Data Link Layer Link Active not set in 1000 msec\n");
-+	if (pci_bridge_wait_for_secondary_bus(pdev, "DPC",
-+					      PCIE_RESET_READY_POLL_MS)) {
- 		clear_bit(PCI_DPC_RECOVERED, &pdev->priv_flags);
- 		ret = PCI_ERS_RESULT_DISCONNECT;
- 	} else {
+ bool conf_get_changed(void)
+-- 
+2.39.2
+
 
 
