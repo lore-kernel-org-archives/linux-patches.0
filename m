@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3FA1C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198DAC4339E;
-	Mon, 20 Mar 2023 15:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A1E1C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9A0C433A8;
+	Mon, 20 Mar 2023 15:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326074;
-	bh=z5JdMzoyqaviNtDUtWFGBzWOFoKTmwzxPP1F1otT6BY=;
+	s=korg; t=1679326077;
+	bh=WZcpLRaJ38rETLsEeDRuOU7hG1w5FdMNAeoi3tqxS4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K2TASm+UmQgMHKJFb0NjgH6qlCIm5E8MRhZEk0DOaQbrLmW+F73PKsPZTuGKdrnE2
-	 EwQVuxmrpfLXYBNw/yIYCR8fxjH89PB2iPFJkTigxjwvnsReoG6pXKI9CmWh5yuQ1M
-	 3+MWxCKA4gDjp17rOksTKqe42J102/6YqIZdaZJ4=
+	b=IMdcLaq4hor1PSqcMP+x36r9C+2o0yWD4Jrqr6U8BpwTWVdqENEg+ZqS3kn6GRgxL
+	 Onj16iQx109tWdILvjMyuZcLZ2fzKcXRC1P52NW8msETzI9jxHS6M+Z0E/sQ/VKZC9
+	 tKoFNFsdas6mHineGg3JpzMUcirMjWl6To2suZEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.2 154/211] KVM: SVM: Modify AVIC GATag to support max number of 512 vCPUs
-Date: Mon, 20 Mar 2023 15:54:49 +0100
-Message-Id: <20230320145519.890900719@linuxfoundation.org>
+	"Radu Pirea (OSS)" <radu-nicolae.pirea@oss.nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 182/198] net: phy: nxp-c45-tja11xx: fix MII_BASIC_CONFIG_REV bit
+Date: Mon, 20 Mar 2023 15:55:20 +0100
+Message-Id: <20230320145515.117223052@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,76 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+From: Radu Pirea (OSS) <radu-nicolae.pirea@oss.nxp.com>
 
-commit 5999715922c5a3ede5d8fe2a6b17aba58a157d41 upstream.
+commit 8ba572052a4b8fe5b205854d27e54e3486049b71 upstream.
 
-Define AVIC_VCPU_ID_MASK based on AVIC_PHYSICAL_MAX_INDEX, i.e. the mask
-that effectively controls the largest guest physical APIC ID supported by
-x2AVIC, instead of hardcoding the number of bits to 8 (and the number of
-VM bits to 24).
+According to the TJA1103 user manual, the bit for the reversed role in MII
+or RMII modes is bit 4.
 
-The AVIC GATag is programmed into the AMD IOMMU IRTE to provide a
-reference back to KVM in case the IOMMU cannot inject an interrupt into a
-non-running vCPU.  In such a case, the IOMMU notifies software by creating
-a GALog entry with the corresponded GATag, and KVM then uses the GATag to
-find the correct VM+vCPU to kick.  Dropping bit 8 from the GATag results
-in kicking the wrong vCPU when targeting vCPUs with x2APIC ID > 255.
-
-Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
-Cc: stable@vger.kernel.org
-Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Co-developed-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Tested-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Message-Id: <20230207002156.521736-3-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Cc: <stable@vger.kernel.org> # 5.15+
+Fixes: b050f2f15e04 ("phy: nxp-c45: add driver for tja1103")
+Signed-off-by: Radu Pirea (OSS) <radu-nicolae.pirea@oss.nxp.com>
+Link: https://lore.kernel.org/r/20230309100111.1246214-1-radu-nicolae.pirea@oss.nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |   26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ drivers/net/phy/nxp-c45-tja11xx.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -27,19 +27,29 @@
- #include "irq.h"
- #include "svm.h"
+--- a/drivers/net/phy/nxp-c45-tja11xx.c
++++ b/drivers/net/phy/nxp-c45-tja11xx.c
+@@ -79,7 +79,7 @@
+ #define SGMII_ABILITY			BIT(0)
  
--/* AVIC GATAG is encoded using VM and VCPU IDs */
--#define AVIC_VCPU_ID_BITS		8
--#define AVIC_VCPU_ID_MASK		((1 << AVIC_VCPU_ID_BITS) - 1)
-+/*
-+ * Encode the arbitrary VM ID and the vCPU's default APIC ID, i.e the vCPU ID,
-+ * into the GATag so that KVM can retrieve the correct vCPU from a GALog entry
-+ * if an interrupt can't be delivered, e.g. because the vCPU isn't running.
-+ *
-+ * For the vCPU ID, use however many bits are currently allowed for the max
-+ * guest physical APIC ID (limited by the size of the physical ID table), and
-+ * use whatever bits remain to assign arbitrary AVIC IDs to VMs.  Note, the
-+ * size of the GATag is defined by hardware (32 bits), but is an opaque value
-+ * as far as hardware is concerned.
-+ */
-+#define AVIC_VCPU_ID_MASK		AVIC_PHYSICAL_MAX_INDEX_MASK
- 
--#define AVIC_VM_ID_BITS			24
--#define AVIC_VM_ID_NR			(1 << AVIC_VM_ID_BITS)
--#define AVIC_VM_ID_MASK			((1 << AVIC_VM_ID_BITS) - 1)
-+#define AVIC_VM_ID_SHIFT		HWEIGHT32(AVIC_PHYSICAL_MAX_INDEX_MASK)
-+#define AVIC_VM_ID_MASK			(GENMASK(31, AVIC_VM_ID_SHIFT) >> AVIC_VM_ID_SHIFT)
- 
--#define AVIC_GATAG(x, y)		(((x & AVIC_VM_ID_MASK) << AVIC_VCPU_ID_BITS) | \
-+#define AVIC_GATAG(x, y)		(((x & AVIC_VM_ID_MASK) << AVIC_VM_ID_SHIFT) | \
- 						(y & AVIC_VCPU_ID_MASK))
--#define AVIC_GATAG_TO_VMID(x)		((x >> AVIC_VCPU_ID_BITS) & AVIC_VM_ID_MASK)
-+#define AVIC_GATAG_TO_VMID(x)		((x >> AVIC_VM_ID_SHIFT) & AVIC_VM_ID_MASK)
- #define AVIC_GATAG_TO_VCPUID(x)		(x & AVIC_VCPU_ID_MASK)
- 
-+static_assert(AVIC_GATAG(AVIC_VM_ID_MASK, AVIC_VCPU_ID_MASK) == -1u);
-+
- static bool force_avic;
- module_param_unsafe(force_avic, bool, 0444);
- 
+ #define VEND1_MII_BASIC_CONFIG		0xAFC6
+-#define MII_BASIC_CONFIG_REV		BIT(8)
++#define MII_BASIC_CONFIG_REV		BIT(4)
+ #define MII_BASIC_CONFIG_SGMII		0x9
+ #define MII_BASIC_CONFIG_RGMII		0x7
+ #define MII_BASIC_CONFIG_RMII		0x5
 
 
