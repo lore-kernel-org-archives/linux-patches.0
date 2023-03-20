@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0E11C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954B0C433D2;
-	Mon, 20 Mar 2023 15:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1681C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:24:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800B5C433EF;
+	Mon, 20 Mar 2023 15:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325866;
-	bh=CrlgYa5+8GUkSasgpBUKSlDHJhu07CrQBRkPfPGcSoc=;
+	s=korg; t=1679325868;
+	bh=WTBquJUY5omJgPWIN2Sl0TNOhyXMIAVEYZNjaxwF7ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pYVtXGbjon0cDrkh1aLMpUz7ndgLHWEmgr2DcyvlACg8zkjNurvs7xh525eo+PPsN
-	 HlXajRNJCw69ynbP4hJFHlxG0TwGEeTkUKLJiC+ELbyX0KtOWW+3n6Gr07juCBbHrn
-	 0vW12x/rM9WpDgZDMuTXZoKduhl+0jRC5fAfYoSw=
+	b=EaVFDVAw6N5YmiaOPSB8+THNzHw7OFw46jf02lDOyto0DWMDUAlud5Yib0e2pKJb+
+	 +/myzYF587Pj98eCF3ERQ72aVW7b1rc8dDv0mgklwjgiODvggfs3TTt8lXES2gII4b
+	 L5a9yzcKXwnI489yZuM9FWYAE2kd+7qaJ6HaVuLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	syzbot+0c73d1d8b952c5f3d714@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.2 116/211] ext4: fix possible double unlock when moving a directory
-Date: Mon, 20 Mar 2023 15:54:11 +0100
-Message-Id: <20230320145518.185628193@linuxfoundation.org>
+	Matt Fagnani <matt.fagnani@bell.net>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	"Linux regression tracking (Thorsten Leemhuis)" <regressions@leemhuis.info>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 159/198] drm/amdgpu: Dont resume IOMMU after incomplete init
+Date: Mon, 20 Mar 2023 15:54:57 +0100
+Message-Id: <20230320145514.201960007@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,33 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Felix Kuehling <Felix.Kuehling@amd.com>
 
-commit 70e42feab2e20618ddd0cbfc4ab4b08628236ecd upstream.
+commit f3921a9a641483784448fb982b2eb738b383d9b9 upstream.
 
-Fixes: 0813299c586b ("ext4: Fix possible corruption when moving a directory")
-Link: https://lore.kernel.org/r/5efbe1b9-ad8b-4a4f-b422-24824d2b775c@kili.mountain
-Reported-by: Dan Carpenter <error27@gmail.com>
-Reported-by: syzbot+0c73d1d8b952c5f3d714@syzkaller.appspotmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Check kfd->init_complete in kgd2kfd_iommu_resume, consistent with other
+kgd2kfd calls. This should fix IOMMU errors on resume from suspend when
+KFD IOMMU initialization failed.
+
+Reported-by: Matt Fagnani <matt.fagnani@bell.net>
+Link: https://lore.kernel.org/r/4a3b225c-2ffd-e758-4de1-447375e34cad@bell.net/
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217170
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2454
+Cc: Vasant Hegde <vasant.hegde@amd.com>
+Cc: Linux regression tracking (Thorsten Leemhuis) <regressions@leemhuis.info>
+Cc: stable@vger.kernel.org
+Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Tested-by: Matt Fagnani <matt.fagnani@bell.net>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -3884,10 +3884,8 @@ static int ext4_rename(struct user_names
- 				goto end_rename;
- 		}
- 		retval = ext4_rename_dir_prepare(handle, &old);
--		if (retval) {
--			inode_unlock(old.inode);
-+		if (retval)
- 			goto end_rename;
--		}
- 	}
- 	/*
- 	 * If we're renaming a file within an inline_data dir and adding or
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+@@ -59,6 +59,7 @@ static int kfd_gtt_sa_init(struct kfd_de
+ 				unsigned int chunk_size);
+ static void kfd_gtt_sa_fini(struct kfd_dev *kfd);
+ 
++static int kfd_resume_iommu(struct kfd_dev *kfd);
+ static int kfd_resume(struct kfd_dev *kfd);
+ 
+ static void kfd_device_info_set_sdma_info(struct kfd_dev *kfd)
+@@ -634,7 +635,7 @@ bool kgd2kfd_device_init(struct kfd_dev
+ 
+ 	svm_migrate_init(kfd->adev);
+ 
+-	if (kgd2kfd_resume_iommu(kfd))
++	if (kfd_resume_iommu(kfd))
+ 		goto device_iommu_error;
+ 
+ 	if (kfd_resume(kfd))
+@@ -783,6 +784,14 @@ int kgd2kfd_resume(struct kfd_dev *kfd,
+ 
+ int kgd2kfd_resume_iommu(struct kfd_dev *kfd)
+ {
++	if (!kfd->init_complete)
++		return 0;
++
++	return kfd_resume_iommu(kfd);
++}
++
++static int kfd_resume_iommu(struct kfd_dev *kfd)
++{
+ 	int err = 0;
+ 
+ 	err = kfd_iommu_resume(kfd);
 
 
