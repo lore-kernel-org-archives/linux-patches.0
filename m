@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F5C1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:57:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B586C4339B;
-	Mon, 20 Mar 2023 14:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D1E1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:57:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D41EC4339B;
+	Mon, 20 Mar 2023 14:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324271;
-	bh=Cf59l1IgW7fja5Gr2YvK74jHZ3rqehXnTdjiyxwmEVA=;
+	s=korg; t=1679324273;
+	bh=33MTQM26p6quW6Ms0/EsPafZcx84hHLDhaysCRbTYCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kilNxVrD/uqgqizw6NHrRzGE2EtGlDbv1egOVtDAARUbAsAEL/ZMTWXeYH7LYXFkj
-	 Rio3L3gpg/2rt9viaff+jxLaMNFoQA5SOAuX+TO4dwj19aPbihyZJGsgvNgFXLzUxq
-	 PgGvugoDXDIi50TnS0JOv3Um6XCivKF9irerXqYg=
+	b=1uKQOdYdMfFWMgJ18zMwJlzlUTXPwnRjQaOkmiNtsLxgtSAvLRzxNreAQISoBNIkl
+	 1ElHstuLilRgTKRfTFNTkhuGzZC196pkDuJ7YFyniCVA1L4jVvezf9ILjRCdspOJmv
+	 aBNFDpNwPgzyVAn/WdAb/E1ZcOokc5EYhHqy11Yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	intel-gfx@lists.freedesktop.org,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 4.14 27/30] drm/i915: Dont use stolen memory for ring buffers with LLC
-Date: Mon, 20 Mar 2023 15:54:51 +0100
-Message-Id: <20230320145421.261418118@linuxfoundation.org>
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 10/30] nvmet: avoid potential UAF in nvmet_req_complete()
+Date: Mon, 20 Mar 2023 15:54:34 +0100
+Message-Id: <20230320145420.622482218@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145420.204894191@linuxfoundation.org>
 References: <20230320145420.204894191@linuxfoundation.org>
@@ -42,50 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-commit 690e0ec8e63da9a29b39fedc6ed5da09c7c82651 upstream.
+[ Upstream commit 6173a77b7e9d3e202bdb9897b23f2a8afe7bf286 ]
 
-Direction from hardware is that stolen memory should never be used for
-ring buffer allocations on platforms with LLC. There are too many
-caching pitfalls due to the way stolen memory accesses are routed. So
-it is safest to just not use it.
+An nvme target ->queue_response() operation implementation may free the
+request passed as argument. Such implementation potentially could result
+in a use after free of the request pointer when percpu_ref_put() is
+called in nvmet_req_complete().
 
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Fixes: c58b735fc762 ("drm/i915: Allocate rings from stolen")
-Cc: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: intel-gfx@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v4.9+
-Tested-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230216011101.1909009-2-John.C.Harrison@Intel.com
-(cherry picked from commit f54c1f6c697c4297f7ed94283c184acc338a5cf8)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Avoid such problem by using a local variable to save the sq pointer
+before calling __nvmet_req_complete(), thus avoiding dereferencing the
+req pointer after that function call.
+
+Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/intel_ringbuffer.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/target/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/intel_ringbuffer.c
-+++ b/drivers/gpu/drm/i915/intel_ringbuffer.c
-@@ -1359,10 +1359,11 @@ static struct i915_vma *
- intel_ring_create_vma(struct drm_i915_private *dev_priv, int size)
- {
- 	struct i915_address_space *vm = &dev_priv->ggtt.base;
--	struct drm_i915_gem_object *obj;
-+	struct drm_i915_gem_object *obj = NULL;
- 	struct i915_vma *vma;
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index e02423d7b3b92..3d2dedd118a71 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -418,8 +418,10 @@ static void __nvmet_req_complete(struct nvmet_req *req, u16 status)
  
--	obj = i915_gem_object_create_stolen(dev_priv, size);
-+	if (!HAS_LLC(dev_priv))
-+		obj = i915_gem_object_create_stolen(dev_priv, size);
- 	if (!obj)
- 		obj = i915_gem_object_create_internal(dev_priv, size);
- 	if (IS_ERR(obj))
+ void nvmet_req_complete(struct nvmet_req *req, u16 status)
+ {
++	struct nvmet_sq *sq = req->sq;
++
+ 	__nvmet_req_complete(req, status);
+-	percpu_ref_put(&req->sq->ref);
++	percpu_ref_put(&sq->ref);
+ }
+ EXPORT_SYMBOL_GPL(nvmet_req_complete);
+ 
+-- 
+2.39.2
+
 
 
