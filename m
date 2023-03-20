@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC801C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE6BC433D2;
-	Mon, 20 Mar 2023 15:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8851C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D89EC433D2;
+	Mon, 20 Mar 2023 15:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324969;
-	bh=WaPvSlBJZcFujpY1vhJURYO2urHV40NGcoFnk+qFrn4=;
+	s=korg; t=1679324972;
+	bh=EW3IUZy7H/oEoRo7wEwIx5XU9yzKL1a/g34Sm7XYNn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O2siNMHovkhm8t801qKSzoy/gfHCQMh41Y1qijoMJAz6m7FgbjZCODdHsN40OvtZ9
-	 z5PEykXVFsIMBLvAdBPQ9MH6tDKye1b+2HvqjWESMNF4AEUlvt+Nh6vNr0g3Apb+b/
-	 elAoNEN+r7LWCGGXL8K9jyMeRWl4UIADWq7WHmAE=
+	b=acytCLOGNccCUFkzzqNmjcVrQ06rcgyxC0L2cDNlc1Huv2VPp666yVGpYknPkzLng
+	 7T9ZvBFG7a5n4TKVPe/rV2rx7LDwYnD0CVveGwGBeXbWQW6HLy/l30nqGJnPrjpvzT
+	 Ll+oROpRwZyfqev1BsOwvKplWjF6QqsGnw4MrTMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Wilck <mwilck@suse.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Lee Duncan <lduncan@suse.com>,
-	Srikar Dronamraju <srikar@linux.vnet.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/198] scsi: core: Add BLIST_NO_VPD_SIZE for some VDASD
-Date: Mon, 20 Mar 2023 15:52:47 +0100
-Message-Id: <20230320145508.705832077@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>
+Subject: [PATCH 5.10 79/99] io_uring: avoid null-ptr-deref in io_arm_poll_handler
+Date: Mon, 20 Mar 2023 15:54:57 +0100
+Message-Id: <20230320145446.714163290@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,135 +33,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Duncan <lduncan@suse.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 4b1a2c2a8e0ddcb89c5f6c5003bd9b53142f69e3 ]
+No upstream commit exists for this commit.
 
-Some storage, such as AIX VDASD (virtual storage) and IBM 2076 (front
-end), fail as a result of commit c92a6b5d6335 ("scsi: core: Query VPD
-size before getting full page").
+The issue was introduced with backporting upstream commit c16bda37594f
+("io_uring/poll: allow some retries for poll triggering spuriously").
 
-That commit changed getting SCSI VPD pages so that we now read just
-enough of the page to get the actual page size, then read the whole
-page in a second read. The problem is that the above mentioned
-hardware returns zero for the page size, because of a firmware
-error. In such cases, until the firmware is fixed, this new blacklist
-flag says to revert to the original method of reading the VPD pages,
-i.e. try to read a whole buffer's worth on the first try.
+Memory allocation can possibly fail causing invalid pointer be
+dereferenced just before comparing it to NULL value.
 
-[mkp: reworked somewhat]
+Move the pointer check in proper place (upstream has the similar location
+of the check). In case the request has REQ_F_POLLED flag up, apoll can't
+be NULL so no need to check there.
 
-Fixes: c92a6b5d6335 ("scsi: core: Query VPD size before getting full page")
-Reported-by: Martin Wilck <mwilck@suse.com>
-Suggested-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Lee Duncan <lduncan@suse.com>
-Link: https://lore.kernel.org/r/20220928181350.9948-1-leeman.duncan@gmail.com
-Tested-by: Srikar Dronamraju <srikar@linux.vnet.ibm.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi.c         | 3 +++
- drivers/scsi/scsi_devinfo.c | 3 ++-
- drivers/scsi/scsi_scan.c    | 3 +++
- include/scsi/scsi_device.h  | 2 ++
- include/scsi/scsi_devinfo.h | 6 +++---
- 5 files changed, 13 insertions(+), 4 deletions(-)
+ io_uring/io_uring.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/scsi.c b/drivers/scsi/scsi.c
-index c59eac7a32f2a..24c4c92543599 100644
---- a/drivers/scsi/scsi.c
-+++ b/drivers/scsi/scsi.c
-@@ -326,6 +326,9 @@ static int scsi_get_vpd_size(struct scsi_device *sdev, u8 page)
- 	unsigned char vpd_header[SCSI_VPD_HEADER_SIZE] __aligned(4);
- 	int result;
- 
-+	if (sdev->no_vpd_size)
-+		return SCSI_DEFAULT_VPD_LEN;
-+
- 	/*
- 	 * Fetch the VPD page header to find out how big the page
- 	 * is. This is done to prevent problems on legacy devices
-diff --git a/drivers/scsi/scsi_devinfo.c b/drivers/scsi/scsi_devinfo.c
-index c7080454aea99..bc9d280417f6a 100644
---- a/drivers/scsi/scsi_devinfo.c
-+++ b/drivers/scsi/scsi_devinfo.c
-@@ -134,7 +134,7 @@ static struct {
- 	{"3PARdata", "VV", NULL, BLIST_REPORTLUN2},
- 	{"ADAPTEC", "AACRAID", NULL, BLIST_FORCELUN},
- 	{"ADAPTEC", "Adaptec 5400S", NULL, BLIST_FORCELUN},
--	{"AIX", "VDASD", NULL, BLIST_TRY_VPD_PAGES},
-+	{"AIX", "VDASD", NULL, BLIST_TRY_VPD_PAGES | BLIST_NO_VPD_SIZE},
- 	{"AFT PRO", "-IX CF", "0.0>", BLIST_FORCELUN},
- 	{"BELKIN", "USB 2 HS-CF", "1.95",  BLIST_FORCELUN | BLIST_INQUIRY_36},
- 	{"BROWNIE", "1200U3P", NULL, BLIST_NOREPORTLUN},
-@@ -188,6 +188,7 @@ static struct {
- 	{"HPE", "OPEN-", "*", BLIST_REPORTLUN2 | BLIST_TRY_VPD_PAGES},
- 	{"IBM", "AuSaV1S2", NULL, BLIST_FORCELUN},
- 	{"IBM", "ProFibre 4000R", "*", BLIST_SPARSELUN | BLIST_LARGELUN},
-+	{"IBM", "2076", NULL, BLIST_NO_VPD_SIZE},
- 	{"IBM", "2105", NULL, BLIST_RETRY_HWERROR},
- 	{"iomega", "jaz 1GB", "J.86", BLIST_NOTQ | BLIST_NOLUN},
- 	{"IOMEGA", "ZIP", NULL, BLIST_NOTQ | BLIST_NOLUN},
-diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index d149b218715e5..d12f2dcb4040a 100644
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -1056,6 +1056,9 @@ static int scsi_add_lun(struct scsi_device *sdev, unsigned char *inq_result,
- 	else if (*bflags & BLIST_SKIP_VPD_PAGES)
- 		sdev->skip_vpd_pages = 1;
- 
-+	if (*bflags & BLIST_NO_VPD_SIZE)
-+		sdev->no_vpd_size = 1;
-+
- 	transport_configure_device(&sdev->sdev_gendev);
- 
- 	if (sdev->host->hostt->slave_configure) {
-diff --git a/include/scsi/scsi_device.h b/include/scsi/scsi_device.h
-index c36656d8ac6c7..006858ed04e8c 100644
---- a/include/scsi/scsi_device.h
-+++ b/include/scsi/scsi_device.h
-@@ -145,6 +145,7 @@ struct scsi_device {
- 	const char * model;		/* ... after scan; point to static string */
- 	const char * rev;		/* ... "nullnullnullnull" before scan */
- 
-+#define SCSI_DEFAULT_VPD_LEN	255	/* default SCSI VPD page size (max) */
- 	struct scsi_vpd __rcu *vpd_pg0;
- 	struct scsi_vpd __rcu *vpd_pg83;
- 	struct scsi_vpd __rcu *vpd_pg80;
-@@ -214,6 +215,7 @@ struct scsi_device {
- 					 * creation time */
- 	unsigned ignore_media_change:1; /* Ignore MEDIA CHANGE on resume */
- 	unsigned silence_suspend:1;	/* Do not print runtime PM related messages */
-+	unsigned no_vpd_size:1;		/* No VPD size reported in header */
- 
- 	unsigned int queue_stopped;	/* request queue is quiesced */
- 	bool offline_already;		/* Device offline message logged */
-diff --git a/include/scsi/scsi_devinfo.h b/include/scsi/scsi_devinfo.h
-index 5d14adae21c78..6b548dc2c4965 100644
---- a/include/scsi/scsi_devinfo.h
-+++ b/include/scsi/scsi_devinfo.h
-@@ -32,7 +32,8 @@
- #define BLIST_IGN_MEDIA_CHANGE	((__force blist_flags_t)(1ULL << 11))
- /* do not do automatic start on add */
- #define BLIST_NOSTARTONADD	((__force blist_flags_t)(1ULL << 12))
--#define __BLIST_UNUSED_13	((__force blist_flags_t)(1ULL << 13))
-+/* do not ask for VPD page size first on some broken targets */
-+#define BLIST_NO_VPD_SIZE	((__force blist_flags_t)(1ULL << 13))
- #define __BLIST_UNUSED_14	((__force blist_flags_t)(1ULL << 14))
- #define __BLIST_UNUSED_15	((__force blist_flags_t)(1ULL << 15))
- #define __BLIST_UNUSED_16	((__force blist_flags_t)(1ULL << 16))
-@@ -74,8 +75,7 @@
- #define __BLIST_HIGH_UNUSED (~(__BLIST_LAST_USED | \
- 			       (__force blist_flags_t) \
- 			       ((__force __u64)__BLIST_LAST_USED - 1ULL)))
--#define __BLIST_UNUSED_MASK (__BLIST_UNUSED_13 | \
--			     __BLIST_UNUSED_14 | \
-+#define __BLIST_UNUSED_MASK (__BLIST_UNUSED_14 | \
- 			     __BLIST_UNUSED_15 | \
- 			     __BLIST_UNUSED_16 | \
- 			     __BLIST_UNUSED_24 | \
--- 
-2.39.2
-
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -5792,10 +5792,10 @@ static int io_arm_poll_handler(struct io
+ 		}
+ 	} else {
+ 		apoll = kmalloc(sizeof(*apoll), GFP_ATOMIC);
++		if (unlikely(!apoll))
++			return IO_APOLL_ABORTED;
+ 		apoll->poll.retries = APOLL_MAX_RETRY;
+ 	}
+-	if (unlikely(!apoll))
+-		return IO_APOLL_ABORTED;
+ 	apoll->double_poll = NULL;
+ 	req->apoll = apoll;
+ 	req->flags |= REQ_F_POLLED;
 
 
