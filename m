@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139E21C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89FB4C433EF;
-	Mon, 20 Mar 2023 15:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD20D1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD41C433EF;
+	Mon, 20 Mar 2023 15:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325583;
-	bh=Ed3pU383HVMS7+m2FVX1Tx39zViPKwp/B/wTTwKwH/M=;
+	s=korg; t=1679325586;
+	bh=buCx7DgLLXAZXSLEG++4s4YjHOZteRL7W9HfjOAGJsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wO2Mrs37YHTuOQOofY6539+Z+3QM4k4p5Vy9nUPNuI8nQJs/qhI9RNk1IGzuNDieo
-	 2UD+4HCkVTpj6ya4VWmxSg6mEa6cpaUXOSJVPFBlas+SduId2j6/VayzIh1haeNSK3
-	 DZmlnJSWxrW2Ry6sAFAjQzulq3i4OlR/VPtuZmqA=
+	b=ZmMH0rjMzph8hrlfkCLbuTP9eqKPRwncwigvSzLZAvLysrqUu5ggF2ZMXwF9gj8AA
+	 QzcHYACeZaQim57EXOYcPvoQG9+eFMByFMBcM57gg5qnxYd5PEmTrE/GuJM97c72QE
+	 +08cfnpqfAt2cLpzGPrv+JpfOinneKPthxroMISA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	David Gow <davidgow@google.com>,
+	=?UTF-8?q?Sergio=20Gonz=C3=A1lez=20Collado?= <sergio.collado@gmail.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/198] hwmon: (ucd90320) Add minimum delay between bus accesses
-Date: Mon, 20 Mar 2023 15:53:55 +0100
-Message-Id: <20230320145511.640090287@linuxfoundation.org>
+Subject: [PATCH 6.1 106/198] rust: arch/um: Disable FP/SIMD instruction to match x86
+Date: Mon, 20 Mar 2023 15:54:04 +0100
+Message-Id: <20230320145512.035054245@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
 References: <20230320145507.420176832@linuxfoundation.org>
@@ -35,146 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: David Gow <davidgow@google.com>
 
-[ Upstream commit 8d655e65237643c48ada2c131b83679bf1105373 ]
+[ Upstream commit 8849818679478933dd1d9718741f4daa3f4e8b86 ]
 
-When probing the ucd90320 access to some of the registers randomly fails.
-Sometimes it NACKs a transfer, sometimes it returns just random data and
-the PEC check fails.
+The kernel disables all SSE and similar FP/SIMD instructions on
+x86-based architectures (partly because we shouldn't be using floats in
+the kernel, and partly to avoid the need for stack alignment, see:
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=53383 )
 
-Experimentation shows that this seems to be triggered by a register access
-directly back to back with a previous register write. Experimentation also
-shows that inserting a small delay after register writes makes the issue go
-away.
+UML does not do the same thing, which isn't in itself a problem, but
+does add to the list of differences between UML and "normal" x86 builds.
 
-Use a similar solution to what the max15301 driver does to solve the same
-problem. Create a custom set of bus read and write functions that make sure
-that the delay is added.
+In addition, there was a crash bug with LLVM < 15 / rustc < 1.65 when
+building with SSE, so disabling it fixes rust builds with earlier
+compiler versions, see:
+https://github.com/Rust-for-Linux/linux/pull/881
 
-Fixes: a470f11c5ba2 ("hwmon: (pmbus/ucd9000) Add support for UCD90320 Power Sequencer")
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Link: https://lore.kernel.org/r/20230312160312.2227405-1-lars@metafoo.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: David Gow <davidgow@google.com>
+Reviewed-by: Sergio González Collado <sergio.collado@gmail.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/ucd9000.c | 75 +++++++++++++++++++++++++++++++++++
- 1 file changed, 75 insertions(+)
+ arch/x86/Makefile.um | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/hwmon/pmbus/ucd9000.c b/drivers/hwmon/pmbus/ucd9000.c
-index 75fc770c9e403..3daaf22378322 100644
---- a/drivers/hwmon/pmbus/ucd9000.c
-+++ b/drivers/hwmon/pmbus/ucd9000.c
-@@ -7,6 +7,7 @@
-  */
+diff --git a/arch/x86/Makefile.um b/arch/x86/Makefile.um
+index b3c1ae084180d..d2e95d1d4db77 100644
+--- a/arch/x86/Makefile.um
++++ b/arch/x86/Makefile.um
+@@ -1,6 +1,12 @@
+ # SPDX-License-Identifier: GPL-2.0
+ core-y += arch/x86/crypto/
  
- #include <linux/debugfs.h>
-+#include <linux/delay.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of_device.h>
-@@ -16,6 +17,7 @@
- #include <linux/i2c.h>
- #include <linux/pmbus.h>
- #include <linux/gpio/driver.h>
-+#include <linux/timekeeping.h>
- #include "pmbus.h"
++#
++# Disable SSE and other FP/SIMD instructions to match normal x86
++#
++KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx
++KBUILD_RUSTFLAGS += -Ctarget-feature=-sse,-sse2,-sse3,-ssse3,-sse4.1,-sse4.2,-avx,-avx2
++
+ ifeq ($(CONFIG_X86_32),y)
+ START := 0x8048000
  
- enum chips { ucd9000, ucd90120, ucd90124, ucd90160, ucd90320, ucd9090,
-@@ -65,6 +67,7 @@ struct ucd9000_data {
- 	struct gpio_chip gpio;
- #endif
- 	struct dentry *debugfs;
-+	ktime_t write_time;
- };
- #define to_ucd9000_data(_info) container_of(_info, struct ucd9000_data, info)
- 
-@@ -73,6 +76,73 @@ struct ucd9000_debugfs_entry {
- 	u8 index;
- };
- 
-+/*
-+ * It has been observed that the UCD90320 randomly fails register access when
-+ * doing another access right on the back of a register write. To mitigate this
-+ * make sure that there is a minimum delay between a write access and the
-+ * following access. The 250us is based on experimental data. At a delay of
-+ * 200us the issue seems to go away. Add a bit of extra margin to allow for
-+ * system to system differences.
-+ */
-+#define UCD90320_WAIT_DELAY_US 250
-+
-+static inline void ucd90320_wait(const struct ucd9000_data *data)
-+{
-+	s64 delta = ktime_us_delta(ktime_get(), data->write_time);
-+
-+	if (delta < UCD90320_WAIT_DELAY_US)
-+		udelay(UCD90320_WAIT_DELAY_US - delta);
-+}
-+
-+static int ucd90320_read_word_data(struct i2c_client *client, int page,
-+				   int phase, int reg)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct ucd9000_data *data = to_ucd9000_data(info);
-+
-+	if (reg >= PMBUS_VIRT_BASE)
-+		return -ENXIO;
-+
-+	ucd90320_wait(data);
-+	return pmbus_read_word_data(client, page, phase, reg);
-+}
-+
-+static int ucd90320_read_byte_data(struct i2c_client *client, int page, int reg)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct ucd9000_data *data = to_ucd9000_data(info);
-+
-+	ucd90320_wait(data);
-+	return pmbus_read_byte_data(client, page, reg);
-+}
-+
-+static int ucd90320_write_word_data(struct i2c_client *client, int page,
-+				    int reg, u16 word)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct ucd9000_data *data = to_ucd9000_data(info);
-+	int ret;
-+
-+	ucd90320_wait(data);
-+	ret = pmbus_write_word_data(client, page, reg, word);
-+	data->write_time = ktime_get();
-+
-+	return ret;
-+}
-+
-+static int ucd90320_write_byte(struct i2c_client *client, int page, u8 value)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct ucd9000_data *data = to_ucd9000_data(info);
-+	int ret;
-+
-+	ucd90320_wait(data);
-+	ret = pmbus_write_byte(client, page, value);
-+	data->write_time = ktime_get();
-+
-+	return ret;
-+}
-+
- static int ucd9000_get_fan_config(struct i2c_client *client, int fan)
- {
- 	int fan_config = 0;
-@@ -598,6 +668,11 @@ static int ucd9000_probe(struct i2c_client *client)
- 		info->read_byte_data = ucd9000_read_byte_data;
- 		info->func[0] |= PMBUS_HAVE_FAN12 | PMBUS_HAVE_STATUS_FAN12
- 		  | PMBUS_HAVE_FAN34 | PMBUS_HAVE_STATUS_FAN34;
-+	} else if (mid->driver_data == ucd90320) {
-+		info->read_byte_data = ucd90320_read_byte_data;
-+		info->read_word_data = ucd90320_read_word_data;
-+		info->write_byte = ucd90320_write_byte;
-+		info->write_word_data = ucd90320_write_word_data;
- 	}
- 
- 	ucd9000_probe_gpio(client, mid, data);
 -- 
 2.39.2
 
