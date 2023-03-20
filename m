@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04421C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41CFAC433EF;
-	Mon, 20 Mar 2023 15:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868681C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BA0C433D2;
+	Mon, 20 Mar 2023 15:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325797;
-	bh=H4qY2TbkHitOr7C2UAql4BrVsYvI8u8pPbSbikkSMnc=;
+	s=korg; t=1679325800;
+	bh=lTz+5AFy/jELT6czLvUxdm6WsyIvvXg3gLGmy6nRE7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WZgOspGJ4L9xyXwb2ZkQiAUUGkZVuVfppRa2r+aYPlLh48rrbF/CTbrpyb2XO+vjX
-	 7D0LJq+mTEAFxesw5U2yt/dBrv4K5+HGtFtUiVYNY+FSGwgTMj/K9elZ5nfvkt9gsv
-	 C9vC0IVsGnHWQHybcmW6BH2xcSrfgnXgRMv2RX68=
+	b=yMshjJyr8g6+2SCXAGIZgOe+aBF3YUy2DVveYeiSVKhMlPIdfnKbKzyksB217+YxW
+	 Ec4fys1vS5taxPvP6Zh4dRyJ5fok7M7bJMi4YQnJxV9aJcPGg3eKXeMle2jWBohwaz
+	 XpiqvdeBaLBP6ubgmQiBUKeBBHt3FaeR8bIQvn+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	gaoxingwang <gaoxingwang1@huawei.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 085/211] ipv4: Fix incorrect table ID in IOCTL path
-Date: Mon, 20 Mar 2023 15:53:40 +0100
-Message-Id: <20230320145516.866896435@linuxfoundation.org>
+Subject: [PATCH 6.2 103/211] hwmon: tmp512: drop of_match_ptr for ID table
+Date: Mon, 20 Mar 2023 15:53:58 +0100
+Message-Id: <20230320145517.604964542@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -37,72 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 8a2618e14f81604a9b6ad305d57e0c8da939cd65 ]
+[ Upstream commit 00d85e81796b17a29a0e096c5a4735daa47adef8 ]
 
-Commit f96a3d74554d ("ipv4: Fix incorrect route flushing when source
-address is deleted") started to take the table ID field in the FIB info
-structure into account when determining if two structures are identical
-or not. This field is initialized using the 'fc_table' field in the
-route configuration structure, which is not set when adding a route via
-IOCTL.
+The driver will match mostly by DT table (even thought there is regular
+ID table) so there is little benefit in of_match_ptr (this also allows
+ACPI matching via PRP0001, even though it might not be relevant here).
+This also fixes !CONFIG_OF error:
 
-The above can result in user space being able to install two identical
-routes that only differ in the table ID field of their associated FIB
-info.
+  drivers/hwmon/tmp513.c:610:34: error: ‘tmp51x_of_match’ defined but not used [-Werror=unused-const-variable=]
 
-Fix by initializing the table ID field in the route configuration
-structure in the IOCTL path.
-
-Before the fix:
-
- # ip route add default via 192.0.2.2
- # route add default gw 192.0.2.2
- # ip -4 r show default
- # default via 192.0.2.2 dev dummy10
- # default via 192.0.2.2 dev dummy10
-
-After the fix:
-
- # ip route add default via 192.0.2.2
- # route add default gw 192.0.2.2
- SIOCADDRT: File exists
- # ip -4 r show default
- default via 192.0.2.2 dev dummy10
-
-Audited the code paths to ensure there are no other paths that do not
-properly initialize the route configuration structure when installing a
-route.
-
-Fixes: 5a56a0b3a45d ("net: Don't delete routes in different VRFs")
-Fixes: f96a3d74554d ("ipv4: Fix incorrect route flushing when source address is deleted")
-Reported-by: gaoxingwang <gaoxingwang1@huawei.com>
-Link: https://lore.kernel.org/netdev/20230314144159.2354729-1-gaoxingwang1@huawei.com/
-Tested-by: gaoxingwang <gaoxingwang1@huawei.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20230315124009.4015212-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230312193723.478032-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_frontend.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hwmon/tmp513.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/fib_frontend.c b/net/ipv4/fib_frontend.c
-index b5736ef16ed2d..390f4be7f7bec 100644
---- a/net/ipv4/fib_frontend.c
-+++ b/net/ipv4/fib_frontend.c
-@@ -576,6 +576,9 @@ static int rtentry_to_fib_config(struct net *net, int cmd, struct rtentry *rt,
- 			cfg->fc_scope = RT_SCOPE_UNIVERSE;
- 	}
- 
-+	if (!cfg->fc_table)
-+		cfg->fc_table = RT_TABLE_MAIN;
-+
- 	if (cmd == SIOCDELRT)
- 		return 0;
- 
+diff --git a/drivers/hwmon/tmp513.c b/drivers/hwmon/tmp513.c
+index 47bbe47e062fd..7d5f7441aceb1 100644
+--- a/drivers/hwmon/tmp513.c
++++ b/drivers/hwmon/tmp513.c
+@@ -758,7 +758,7 @@ static int tmp51x_probe(struct i2c_client *client)
+ static struct i2c_driver tmp51x_driver = {
+ 	.driver = {
+ 		.name	= "tmp51x",
+-		.of_match_table = of_match_ptr(tmp51x_of_match),
++		.of_match_table = tmp51x_of_match,
+ 	},
+ 	.probe_new	= tmp51x_probe,
+ 	.id_table	= tmp51x_id,
 -- 
 2.39.2
 
