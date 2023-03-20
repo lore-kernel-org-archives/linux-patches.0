@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30891C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33BECC433D2;
-	Mon, 20 Mar 2023 15:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859721C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078E6C4339C;
+	Mon, 20 Mar 2023 15:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325008;
-	bh=Mz6bGC4ZNvI9XpQAN6UiioEOAv0yyJhVmXWhQxp97tc=;
+	s=korg; t=1679325011;
+	bh=XhpReMj36BlNDK3+s+oxR1RtENo0vBcfeNHemoNRg9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OH0I4642gFvtWDCDK7eWy/XuGywwsmMi5LFWUEOgBlhRZ8dnqtU5UgmrXMlJxO/u/
-	 FtU3HmKjVHPSciKYm0FvgauX0UQEuzh36HmtcnmK8F1AddcMhi1XfpPRbi3SGdS6yy
-	 Gf995AShMTtBNM4lT+9ROSGD0gygijsLfjf2Qngw=
+	b=0bYzlCEHy1WG/VvJGrwygAM1bDCjnpyX1+5OS9GX0F6Rw+6BYbAfZ7il/bo86t7gV
+	 bLXHW29Tog+cKkdcJwTQ44JtF93SAi2ccByVmPS3sVbQxabqvpMbhJfWqLap8L6xTv
+	 WxCrFzS1bRW4RJ+rhpzhEzJcjDlfnuHjE482gn04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Dave Chinner <david@fromorbit.com>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 5.10 83/99] xfs: dont assert fail on perag references on teardown
-Date: Mon, 20 Mar 2023 15:55:01 +0100
-Message-Id: <20230320145446.903286352@linuxfoundation.org>
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 060/115] hwmon: (adm1266) Set `can_sleep` flag for GPIO chip
+Date: Mon, 20 Mar 2023 15:54:32 +0100
+Message-Id: <20230320145451.939486416@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,49 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-commit 5b55cbc2d72632e874e50d2e36bce608e55aaaea upstream.
+[ Upstream commit a5bb73b3f5db1a4e91402ad132b59b13d2651ed9 ]
 
-[backport for 5.10.y, prior to perag refactoring in v5.14]
+The adm1266 driver uses I2C bus access in its GPIO chip `set` and `get`
+implementation. This means these functions can sleep and the GPIO chip
+should set the `can_sleep` property to true.
 
-Not fatal, the assert is there to catch developer attention. I'm
-seeing this occasionally during recoveryloop testing after a
-shutdown, and I don't want this to stop an overnight recoveryloop
-run as it is currently doing.
+This will ensure that a warning is printed when trying to set or get the
+GPIO value from a context that potentially can't sleep.
 
-Convert the ASSERT to a XFS_IS_CORRUPT() check so it will dump a
-corruption report into the log and cause a test failure that way,
-but it won't stop the machine dead.
-
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Dave Chinner <david@fromorbit.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d98dfad35c38 ("hwmon: (pmbus/adm1266) Add support for GPIOs")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Link: https://lore.kernel.org/r/20230314093146.2443845-1-lars@metafoo.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_mount.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/hwmon/pmbus/adm1266.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/xfs/xfs_mount.c
-+++ b/fs/xfs/xfs_mount.c
-@@ -126,7 +126,6 @@ __xfs_free_perag(
- {
- 	struct xfs_perag *pag = container_of(head, struct xfs_perag, rcu_head);
- 
--	ASSERT(atomic_read(&pag->pag_ref) == 0);
- 	kmem_free(pag);
- }
- 
-@@ -145,7 +144,7 @@ xfs_free_perag(
- 		pag = radix_tree_delete(&mp->m_perag_tree, agno);
- 		spin_unlock(&mp->m_perag_lock);
- 		ASSERT(pag);
--		ASSERT(atomic_read(&pag->pag_ref) == 0);
-+		XFS_IS_CORRUPT(pag->pag_mount, atomic_read(&pag->pag_ref) != 0);
- 		xfs_iunlink_destroy(pag);
- 		xfs_buf_hash_destroy(pag);
- 		call_rcu(&pag->rcu_head, __xfs_free_perag);
+diff --git a/drivers/hwmon/pmbus/adm1266.c b/drivers/hwmon/pmbus/adm1266.c
+index ec5f932fc6f0f..1ac2b2f4c5705 100644
+--- a/drivers/hwmon/pmbus/adm1266.c
++++ b/drivers/hwmon/pmbus/adm1266.c
+@@ -301,6 +301,7 @@ static int adm1266_config_gpio(struct adm1266_data *data)
+ 	data->gc.label = name;
+ 	data->gc.parent = &data->client->dev;
+ 	data->gc.owner = THIS_MODULE;
++	data->gc.can_sleep = true;
+ 	data->gc.base = -1;
+ 	data->gc.names = data->gpio_names;
+ 	data->gc.ngpio = ARRAY_SIZE(data->gpio_names);
+-- 
+2.39.2
+
 
 
