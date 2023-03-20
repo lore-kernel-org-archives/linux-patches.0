@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF591C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B162DC433EF;
-	Mon, 20 Mar 2023 15:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019A61C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711AFC433D2;
+	Mon, 20 Mar 2023 15:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325025;
-	bh=9GAwBgvf3WQf/+27mvDYiZpbjGFD1ES/2tLRn/VvdKA=;
+	s=korg; t=1679325027;
+	bh=gwi4qgfkSnuoIiJJcxMq7HAed2DLyUpGGxuCINhs1L0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jjj0NYvycwFSqGEnyDNLe4AYnFLp1FnslnY2mxIslVao3nUvy50P04t0aPfCYMR5u
-	 XzNO3id7dY80hXmlCRGt/9wBB10shv+aJYKeKpENxTfalX40BBFLGh8+EaWzGwbxaG
-	 r+QugX3Ls3Z5g91691ldUFFu/esxnhLZqnm5rNM0=
+	b=FZ98eXx8qp44l4XResvO9y+DZMCsh8f/hWxKh14znkEi5hDrtG3m+AIGr7Da5T+n/
+	 zhjIpHIHczBRWq5KYXWhtXz5BNN/TfaUUK7rHmp00LZNGMomkCLUAqfbb9OAXjEXeJ
+	 LohWf++MrlWQGUFUGpImx18nzpDKxIYSVZ7lv+TY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Sowden <jeremy@azazel.net>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/198] netfilter: nft_masq: correct length for loading protocol registers
-Date: Mon, 20 Mar 2023 15:52:44 +0100
-Message-Id: <20230320145508.603917002@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Dave Chinner <dchinner@redhat.com>,
+	Dave Chinner <david@fromorbit.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 5.10 85/99] xfs: dont leak btree cursor when insrec fails after a split
+Date: Mon, 20 Mar 2023 15:55:03 +0100
+Message-Id: <20230320145446.977379316@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,39 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Sowden <jeremy@azazel.net>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit ec2c5917eb858428b2083d1c74f445aabbe8316b ]
+commit a54f78def73d847cb060b18c4e4a3d1d26c9ca6d upstream.
 
-The values in the protocol registers are two bytes wide.  However, when
-parsing the register loads, the code currently uses the larger 16-byte
-size of a `union nf_inet_addr`.  Change it to use the (correct) size of
-a `union nf_conntrack_man_proto` instead.
+The recent patch to improve btree cycle checking caused a regression
+when I rebased the in-memory btree branch atop the 5.19 for-next branch,
+because in-memory short-pointer btrees do not have AG numbers.  This
+produced the following complaint from kmemleak:
 
-Fixes: 8a6bf5da1aef ("netfilter: nft_masq: support port range")
-Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+unreferenced object 0xffff88803d47dde8 (size 264):
+  comm "xfs_io", pid 4889, jiffies 4294906764 (age 24.072s)
+  hex dump (first 32 bytes):
+    90 4d 0b 0f 80 88 ff ff 00 a0 bd 05 80 88 ff ff  .M..............
+    e0 44 3a a0 ff ff ff ff 00 df 08 06 80 88 ff ff  .D:.............
+  backtrace:
+    [<ffffffffa0388059>] xfbtree_dup_cursor+0x49/0xc0 [xfs]
+    [<ffffffffa029887b>] xfs_btree_dup_cursor+0x3b/0x200 [xfs]
+    [<ffffffffa029af5d>] __xfs_btree_split+0x6ad/0x820 [xfs]
+    [<ffffffffa029b130>] xfs_btree_split+0x60/0x110 [xfs]
+    [<ffffffffa029f6da>] xfs_btree_make_block_unfull+0x19a/0x1f0 [xfs]
+    [<ffffffffa029fada>] xfs_btree_insrec+0x3aa/0x810 [xfs]
+    [<ffffffffa029fff3>] xfs_btree_insert+0xb3/0x240 [xfs]
+    [<ffffffffa02cb729>] xfs_rmap_insert+0x99/0x200 [xfs]
+    [<ffffffffa02cf142>] xfs_rmap_map_shared+0x192/0x5f0 [xfs]
+    [<ffffffffa02cf60b>] xfs_rmap_map_raw+0x6b/0x90 [xfs]
+    [<ffffffffa0384a85>] xrep_rmap_stash+0xd5/0x1d0 [xfs]
+    [<ffffffffa0384dc0>] xrep_rmap_visit_bmbt+0xa0/0xf0 [xfs]
+    [<ffffffffa0384fb6>] xrep_rmap_scan_iext+0x56/0xa0 [xfs]
+    [<ffffffffa03850d8>] xrep_rmap_scan_ifork+0xd8/0x160 [xfs]
+    [<ffffffffa0385195>] xrep_rmap_scan_inode+0x35/0x80 [xfs]
+    [<ffffffffa03852ee>] xrep_rmap_find_rmaps+0x10e/0x270 [xfs]
+
+I noticed that xfs_btree_insrec has a bunch of debug code that return
+out of the function immediately, without freeing the "new" btree cursor
+that can be returned when _make_block_unfull calls xfs_btree_split.  Fix
+the error return in this function to free the btree cursor.
+
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Dave Chinner <david@fromorbit.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_masq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/libxfs/xfs_btree.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nft_masq.c b/net/netfilter/nft_masq.c
-index 2a0adc497bbb4..026b4f87d96cc 100644
---- a/net/netfilter/nft_masq.c
-+++ b/net/netfilter/nft_masq.c
-@@ -43,7 +43,7 @@ static int nft_masq_init(const struct nft_ctx *ctx,
- 			 const struct nft_expr *expr,
- 			 const struct nlattr * const tb[])
- {
--	u32 plen = sizeof_field(struct nf_nat_range, min_addr.all);
-+	u32 plen = sizeof_field(struct nf_nat_range, min_proto.all);
- 	struct nft_masq *priv = nft_expr_priv(expr);
- 	int err;
+--- a/fs/xfs/libxfs/xfs_btree.c
++++ b/fs/xfs/libxfs/xfs_btree.c
+@@ -3190,7 +3190,7 @@ xfs_btree_insrec(
+ 	struct xfs_btree_block	*block;	/* btree block */
+ 	struct xfs_buf		*bp;	/* buffer for block */
+ 	union xfs_btree_ptr	nptr;	/* new block ptr */
+-	struct xfs_btree_cur	*ncur;	/* new btree cursor */
++	struct xfs_btree_cur	*ncur = NULL;	/* new btree cursor */
+ 	union xfs_btree_key	nkey;	/* new block key */
+ 	union xfs_btree_key	*lkey;
+ 	int			optr;	/* old key/record index */
+@@ -3270,7 +3270,7 @@ xfs_btree_insrec(
+ #ifdef DEBUG
+ 	error = xfs_btree_check_block(cur, block, level, bp);
+ 	if (error)
+-		return error;
++		goto error0;
+ #endif
  
--- 
-2.39.2
-
+ 	/*
+@@ -3290,7 +3290,7 @@ xfs_btree_insrec(
+ 		for (i = numrecs - ptr; i >= 0; i--) {
+ 			error = xfs_btree_debug_check_ptr(cur, pp, i, level);
+ 			if (error)
+-				return error;
++				goto error0;
+ 		}
+ 
+ 		xfs_btree_shift_keys(cur, kp, 1, numrecs - ptr + 1);
+@@ -3375,6 +3375,8 @@ xfs_btree_insrec(
+ 	return 0;
+ 
+ error0:
++	if (ncur)
++		xfs_btree_del_cursor(ncur, error);
+ 	return error;
+ }
+ 
 
 
