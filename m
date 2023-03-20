@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD231C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16D4C433D2;
-	Mon, 20 Mar 2023 15:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2301C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE93C4339B;
+	Mon, 20 Mar 2023 15:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324747;
-	bh=ERsc99xAh4cxNfhLGd0MSLhrJQwmE+3XfHiZEDwNR1A=;
+	s=korg; t=1679324750;
+	bh=b1cBRilY8meb1jiuE+62OGNw2dHYBAVSdXbDVX1nFAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=urHbDjxTKyjlaVfwrSgWmSODm7/zEooo7y9jjgGlqjenR2t9I7fc+ITerY/SR+wL+
-	 /iSM8qUyq4o9K+gsEr5mjxDzphitnurfbk+jtIo+Y+B7hbJwOHOJCliEpQYqKdX4TY
-	 BTEqgfoKLK91mkqtdrFokPGJFRhAE1LwV+DmuGhk=
+	b=hmr/qouY/TGQBQPbY8JthpGipAGsjno0qPdsiUAL28zxjI1Wpu3tYFMYfu1WCO6lT
+	 Ty6Ca+vcNOdugVtp90dOcKOK5rM2eePr92t+t2YK+/oL9NP4nRCV++ITschcuDaYkZ
+	 2av5gl+PiEE6hlI648PuED10R58uQaMMvStl6w0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
+	Theodore Tso <tytso@mit.edu>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/115] qed/qed_dev: guard against a possible division by zero
-Date: Mon, 20 Mar 2023 15:53:59 +0100
-Message-Id: <20230320145450.569555432@linuxfoundation.org>
+Subject: [PATCH 5.10 51/99] ext4: fail ext4_iget if special inode unallocated
+Date: Mon, 20 Mar 2023 15:54:29 +0100
+Message-Id: <20230320145445.527526287@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 1a9dc5610ef89d807acdcfbff93a558f341a44da ]
+[ Upstream commit 5cd740287ae5e3f9d1c46f5bfe8778972fd6d3fe ]
 
-Previously we would divide total_left_rate by zero if num_vports
-happened to be 1 because non_requested_count is calculated as
-num_vports - req_count. Guard against this by validating num_vports at
-the beginning and returning an error otherwise.
+In ext4_fill_super(), EXT4_ORPHAN_FS flag is cleared after
+ext4_orphan_cleanup() is executed. Therefore, when __ext4_iget() is
+called to get an inode whose i_nlink is 0 when the flag exists, no error
+is returned. If the inode is a special inode, a null pointer dereference
+may occur. If the value of i_nlink is 0 for any inodes (except boot loader
+inodes) got by using the EXT4_IGET_SPECIAL flag, the current file system
+is corrupted. Therefore, make the ext4_iget() function return an error if
+it gets such an abnormal special inode.
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE
-static analysis tool.
-
-Fixes: bcd197c81f63 ("qed: Add vport WFQ configuration APIs")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230309201556.191392-1-d-tatianin@yandex-team.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=199179
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216541
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216539
+Reported-by: Luís Henriques <lhenriques@suse.de>
+Suggested-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230107032126.4165860-2-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qed/qed_dev.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ext4/inode.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qed/qed_dev.c b/drivers/net/ethernet/qlogic/qed/qed_dev.c
-index 0410c3604abdb..ba445724ee65e 100644
---- a/drivers/net/ethernet/qlogic/qed/qed_dev.c
-+++ b/drivers/net/ethernet/qlogic/qed/qed_dev.c
-@@ -5022,6 +5022,11 @@ static int qed_init_wfq_param(struct qed_hwfn *p_hwfn,
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 1a654a1f3f46b..6ba185b46ba39 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4721,13 +4721,6 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 		goto bad_inode;
+ 	raw_inode = ext4_raw_inode(&iloc);
  
- 	num_vports = p_hwfn->qm_info.num_vports;
- 
-+	if (num_vports < 2) {
-+		DP_NOTICE(p_hwfn, "Unexpected num_vports: %d\n", num_vports);
-+		return -EINVAL;
-+	}
-+
- 	/* Accounting for the vports which are configured for WFQ explicitly */
- 	for (i = 0; i < num_vports; i++) {
- 		u32 tmp_speed;
+-	if ((ino == EXT4_ROOT_INO) && (raw_inode->i_links_count == 0)) {
+-		ext4_error_inode(inode, function, line, 0,
+-				 "iget: root inode unallocated");
+-		ret = -EFSCORRUPTED;
+-		goto bad_inode;
+-	}
+-
+ 	if ((flags & EXT4_IGET_HANDLE) &&
+ 	    (raw_inode->i_links_count == 0) && (raw_inode->i_mode == 0)) {
+ 		ret = -ESTALE;
+@@ -4800,11 +4793,16 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 	 * NeilBrown 1999oct15
+ 	 */
+ 	if (inode->i_nlink == 0) {
+-		if ((inode->i_mode == 0 ||
++		if ((inode->i_mode == 0 || flags & EXT4_IGET_SPECIAL ||
+ 		     !(EXT4_SB(inode->i_sb)->s_mount_state & EXT4_ORPHAN_FS)) &&
+ 		    ino != EXT4_BOOT_LOADER_INO) {
+-			/* this inode is deleted */
+-			ret = -ESTALE;
++			/* this inode is deleted or unallocated */
++			if (flags & EXT4_IGET_SPECIAL) {
++				ext4_error_inode(inode, function, line, 0,
++						 "iget: special inode unallocated");
++				ret = -EFSCORRUPTED;
++			} else
++				ret = -ESTALE;
+ 			goto bad_inode;
+ 		}
+ 		/* The only unlinked inodes we let through here have
 -- 
 2.39.2
 
