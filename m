@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8956C1C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7F0C433D2;
-	Mon, 20 Mar 2023 15:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEF71C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0255C433EF;
+	Mon, 20 Mar 2023 15:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326044;
-	bh=R169yCGc1/xa7EkigUBiCu0PO0c+VH5hmyqfigFUq0E=;
+	s=korg; t=1679326047;
+	bh=XXgsjh20dOOAVU9aBn8zTTQ9u5yTkBonbr3FD3pyifw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AAhfuWOhSfaq3Wo2SQHo6kpoyUIvpMvr/KGPASV/HZ4Zv9P8cVaYh1PmSWCklFcjb
-	 3tT2N30t9UyPuYSmYRwHc/8W4bEZ8qi1gMVx3p5jUPnZ/lzOvAYoCt5KekWHH1V+1+
-	 XvKbvhvWlhk79NmMsnHGkWiGMjtixKjuKMTxqgYs=
+	b=QVOMPooO4qd7uYn1guvQr8qd/L5ykr6iIidZ58h/QDnR5Nj7ihl+QjhZptHOtnGKW
+	 uR2WQhgFx8fkTEOfWN4KLF9b8T10/tmQ4QfLhWKNWtGSTkHGM1AbCL9yetu7Ale77M
+	 HwKbFRQml+8gTv2HlTbUu7pbXsKsTmU2CRhsAmxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.2 149/211] cifs: set DFS root session in cifs_get_smb_ses()
-Date: Mon, 20 Mar 2023 15:54:44 +0100
-Message-Id: <20230320145519.675529152@linuxfoundation.org>
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.2 141/211] interconnect: exynos: fix registration race
+Date: Mon, 20 Mar 2023 15:54:36 +0100
+Message-Id: <20230320145519.339447976@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -34,124 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit b56bce502f55505a97e381d546ee881928183126 upstream.
+commit c9e46ca612cfbb0cf890f7ae7389b742e90efe64 upstream.
 
-Set the DFS root session pointer earlier when creating a new SMB
-session to prevent racing with smb2_reconnect(), cifs_reconnect_tcon()
-and DFS cache refresher.
+The current interconnect provider registration interface is inherently
+racy as nodes are not added until the after adding the provider. This
+can specifically cause racing DT lookups to trigger a NULL-pointer
+deference when either a NULL pointer or not fully initialised node is
+returned from exynos_generic_icc_xlate().
 
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Cc: stable@vger.kernel.org # 6.2
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Switch to using the new API where the provider is not registered until
+after it has been fully initialised.
+
+Fixes: 2f95b9d5cf0b ("interconnect: Add generic interconnect driver for Exynos SoCs")
+Cc: stable@vger.kernel.org      # 5.11
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230306075651.2449-16-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifs_dfs_ref.c |    1 +
- fs/cifs/cifsglob.h     |    1 -
- fs/cifs/connect.c      |    1 +
- fs/cifs/dfs.c          |   19 ++++++++-----------
- fs/cifs/dfs.h          |    3 ++-
- fs/cifs/fs_context.h   |    1 +
- 6 files changed, 13 insertions(+), 13 deletions(-)
+ drivers/interconnect/samsung/exynos.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/fs/cifs/cifs_dfs_ref.c
-+++ b/fs/cifs/cifs_dfs_ref.c
-@@ -179,6 +179,7 @@ static struct vfsmount *cifs_dfs_do_auto
- 	tmp.source = full_path;
- 	tmp.leaf_fullpath = NULL;
- 	tmp.UNC = tmp.prepath = NULL;
-+	tmp.dfs_root_ses = NULL;
+--- a/drivers/interconnect/samsung/exynos.c
++++ b/drivers/interconnect/samsung/exynos.c
+@@ -98,12 +98,13 @@ static int exynos_generic_icc_remove(str
+ 	struct exynos_icc_priv *priv = platform_get_drvdata(pdev);
+ 	struct icc_node *parent_node, *node = priv->node;
  
- 	rc = smb3_fs_context_dup(ctx, &tmp);
- 	if (rc) {
---- a/fs/cifs/cifsglob.h
-+++ b/fs/cifs/cifsglob.h
-@@ -1767,7 +1767,6 @@ struct cifs_mount_ctx {
- 	struct TCP_Server_Info *server;
- 	struct cifs_ses *ses;
- 	struct cifs_tcon *tcon;
--	struct cifs_ses *root_ses;
- 	uuid_t mount_id;
- 	char *origin_fullpath, *leaf_fullpath;
- };
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -2278,6 +2278,7 @@ cifs_get_smb_ses(struct TCP_Server_Info
- 	 * need to lock before changing something in the session.
- 	 */
- 	spin_lock(&cifs_tcp_ses_lock);
-+	ses->dfs_root_ses = ctx->dfs_root_ses;
- 	list_add(&ses->smb_ses_list, &server->smb_ses_list);
- 	spin_unlock(&cifs_tcp_ses_lock);
- 
---- a/fs/cifs/dfs.c
-+++ b/fs/cifs/dfs.c
-@@ -95,25 +95,22 @@ static int get_session(struct cifs_mount
- 	ctx->leaf_fullpath = (char *)full_path;
- 	rc = cifs_mount_get_session(mnt_ctx);
- 	ctx->leaf_fullpath = NULL;
--	if (!rc) {
--		struct cifs_ses *ses = mnt_ctx->ses;
- 
--		mutex_lock(&ses->session_mutex);
--		ses->dfs_root_ses = mnt_ctx->root_ses;
--		mutex_unlock(&ses->session_mutex);
--	}
- 	return rc;
- }
- 
- static void set_root_ses(struct cifs_mount_ctx *mnt_ctx)
- {
--	if (mnt_ctx->ses) {
-+	struct smb3_fs_context *ctx = mnt_ctx->fs_ctx;
-+	struct cifs_ses *ses = mnt_ctx->ses;
++	icc_provider_deregister(&priv->provider);
 +
-+	if (ses) {
- 		spin_lock(&cifs_tcp_ses_lock);
--		mnt_ctx->ses->ses_count++;
-+		ses->ses_count++;
- 		spin_unlock(&cifs_tcp_ses_lock);
--		dfs_cache_add_refsrv_session(&mnt_ctx->mount_id, mnt_ctx->ses);
-+		dfs_cache_add_refsrv_session(&mnt_ctx->mount_id, ses);
+ 	parent_node = exynos_icc_get_parent(priv->dev->parent->of_node);
+ 	if (parent_node && !IS_ERR(parent_node))
+ 		icc_link_destroy(node, parent_node);
+ 
+ 	icc_nodes_remove(&priv->provider);
+-	icc_provider_del(&priv->provider);
+ 
+ 	return 0;
+ }
+@@ -132,15 +133,11 @@ static int exynos_generic_icc_probe(stru
+ 	provider->inter_set = true;
+ 	provider->data = priv;
+ 
+-	ret = icc_provider_add(provider);
+-	if (ret < 0)
+-		return ret;
++	icc_provider_init(provider);
+ 
+ 	icc_node = icc_node_create(pdev->id);
+-	if (IS_ERR(icc_node)) {
+-		ret = PTR_ERR(icc_node);
+-		goto err_prov_del;
+-	}
++	if (IS_ERR(icc_node))
++		return PTR_ERR(icc_node);
+ 
+ 	priv->node = icc_node;
+ 	icc_node->name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%pOFn",
+@@ -171,14 +168,17 @@ static int exynos_generic_icc_probe(stru
+ 			goto err_pmqos_del;
  	}
--	mnt_ctx->root_ses = mnt_ctx->ses;
-+	ctx->dfs_root_ses = mnt_ctx->ses;
+ 
++	ret = icc_provider_register(provider);
++	if (ret < 0)
++		goto err_pmqos_del;
++
+ 	return 0;
+ 
+ err_pmqos_del:
+ 	dev_pm_qos_remove_request(&priv->qos_req);
+ err_node_del:
+ 	icc_nodes_remove(provider);
+-err_prov_del:
+-	icc_provider_del(provider);
++
+ 	return ret;
  }
  
- static int get_dfs_conn(struct cifs_mount_ctx *mnt_ctx, const char *ref_path, const char *full_path,
-@@ -260,7 +257,7 @@ int dfs_mount_share(struct cifs_mount_ct
- 	rc = get_session(mnt_ctx, NULL);
- 	if (rc)
- 		return rc;
--	mnt_ctx->root_ses = mnt_ctx->ses;
-+	ctx->dfs_root_ses = mnt_ctx->ses;
- 	/*
- 	 * If called with 'nodfs' mount option, then skip DFS resolving.  Otherwise unconditionally
- 	 * try to get an DFS referral (even cached) to determine whether it is an DFS mount.
---- a/fs/cifs/dfs.h
-+++ b/fs/cifs/dfs.h
-@@ -22,9 +22,10 @@ static inline char *dfs_get_path(struct
- static inline int dfs_get_referral(struct cifs_mount_ctx *mnt_ctx, const char *path,
- 				   struct dfs_info3_param *ref, struct dfs_cache_tgt_list *tl)
- {
-+	struct smb3_fs_context *ctx = mnt_ctx->fs_ctx;
- 	struct cifs_sb_info *cifs_sb = mnt_ctx->cifs_sb;
- 
--	return dfs_cache_find(mnt_ctx->xid, mnt_ctx->root_ses, cifs_sb->local_nls,
-+	return dfs_cache_find(mnt_ctx->xid, ctx->dfs_root_ses, cifs_sb->local_nls,
- 			      cifs_remap(cifs_sb), path, ref, tl);
- }
- 
---- a/fs/cifs/fs_context.h
-+++ b/fs/cifs/fs_context.h
-@@ -265,6 +265,7 @@ struct smb3_fs_context {
- 	bool rootfs:1; /* if it's a SMB root file system */
- 	bool witness:1; /* use witness protocol */
- 	char *leaf_fullpath;
-+	struct cifs_ses *dfs_root_ses;
- };
- 
- extern const struct fs_parameter_spec smb3_fs_parameters[];
 
 
