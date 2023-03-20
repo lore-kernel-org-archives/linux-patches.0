@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9607A1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1BBC433EF;
-	Mon, 20 Mar 2023 15:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552311C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C909DC433EF;
+	Mon, 20 Mar 2023 15:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325767;
-	bh=Zt0F8K9xw+LBfNYnsGFYvo4d4YcwJ3XHMOiNvxl5bh4=;
+	s=korg; t=1679325770;
+	bh=oK5MJPzq1Xqz++Q9EthFW8wcKK8XobRv6OQhXVGxmWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nDxOilumgwKufReo6JuYFBJw14OhrLNSUpyiall33ZAgpHjcc3ZhAaqga7a9BPXht
-	 q3JLRGtjHk2vjncNcYquvup/pzeBXPBJiCPCe9gzoszxDP5NYzAPR1BgRitizDcWJA
-	 OhL5s3J7iIp+2QVs8McTld8iPxJdZUjPC/HdsYcU=
+	b=ytkwbhceajetvEFt3fcKcHU9Z12PM9GAdB2FNg9FAXJwQfTUQEGQeoTGT5JIvSWHe
+	 vDy8X0scTebrDEbzuF3BzkhVm9tOjnfMkd9zF24+H6l+Cm+u8vUyl3YZ1abildcuIo
+	 UnPhyP6fU9bJpDD0mxYUi/za5UJ0CfxZmtn9xfFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Osipenko <digetx@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.1 126/198] memory: tegra30-emc: fix interconnect registration race
-Date: Mon, 20 Mar 2023 15:54:24 +0100
-Message-Id: <20230320145512.818410553@linuxfoundation.org>
+	Tony OBrien <tony.obrien@alliedtelesis.co.nz>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 098/211] hwmon: (adt7475) Display smoothing attributes in correct order
+Date: Mon, 20 Mar 2023 15:53:53 +0100
+Message-Id: <20230320145517.399440506@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,65 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
 
-commit 9db481c909dd6312ccfbdc7e343b50e41c727483 upstream.
+[ Upstream commit 5f8d1e3b6f9b5971f9c06d5846ce00c49e3a8d94 ]
 
-The current interconnect provider registration interface is inherently
-racy as nodes are not added until the after adding the provider. This
-can specifically cause racing DT lookups to fail.
+Throughout the ADT7475 driver, attributes relating to the temperature
+sensors are displayed in the order Remote 1, Local, Remote 2.  Make
+temp_st_show() conform to this expectation so that values set by
+temp_st_store() can be displayed using the correct attribute.
 
-Switch to using the new API where the provider is not registered until
-after it has been fully initialised.
-
-Fixes: d5ef16ba5fbe ("memory: tegra20: Support interconnect framework")
-Cc: stable@vger.kernel.org      # 5.11
-Cc: Dmitry Osipenko <digetx@gmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-21-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8f05bcc33e74 ("hwmon: (adt7475) temperature smoothing")
+Signed-off-by: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
+Link: https://lore.kernel.org/r/20230222005228.158661-2-tony.obrien@alliedtelesis.co.nz
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/tegra/tegra30-emc.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/hwmon/adt7475.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/memory/tegra/tegra30-emc.c
-+++ b/drivers/memory/tegra/tegra30-emc.c
-@@ -1546,15 +1546,13 @@ static int tegra_emc_interconnect_init(s
- 	emc->provider.aggregate = soc->icc_ops->aggregate;
- 	emc->provider.xlate_extended = emc_of_icc_xlate_extended;
- 
--	err = icc_provider_add(&emc->provider);
--	if (err)
--		goto err_msg;
-+	icc_provider_init(&emc->provider);
- 
- 	/* create External Memory Controller node */
- 	node = icc_node_create(TEGRA_ICC_EMC);
- 	if (IS_ERR(node)) {
- 		err = PTR_ERR(node);
--		goto del_provider;
-+		goto err_msg;
+diff --git a/drivers/hwmon/adt7475.c b/drivers/hwmon/adt7475.c
+index 51b3d16c32233..77222c35a38ec 100644
+--- a/drivers/hwmon/adt7475.c
++++ b/drivers/hwmon/adt7475.c
+@@ -556,11 +556,11 @@ static ssize_t temp_st_show(struct device *dev, struct device_attribute *attr,
+ 		val = data->enh_acoustics[0] & 0xf;
+ 		break;
+ 	case 1:
+-		val = (data->enh_acoustics[1] >> 4) & 0xf;
++		val = data->enh_acoustics[1] & 0xf;
+ 		break;
+ 	case 2:
+ 	default:
+-		val = data->enh_acoustics[1] & 0xf;
++		val = (data->enh_acoustics[1] >> 4) & 0xf;
+ 		break;
  	}
  
- 	node->name = "External Memory Controller";
-@@ -1575,12 +1573,14 @@ static int tegra_emc_interconnect_init(s
- 	node->name = "External Memory (DRAM)";
- 	icc_node_add(node, &emc->provider);
- 
-+	err = icc_provider_register(&emc->provider);
-+	if (err)
-+		goto remove_nodes;
-+
- 	return 0;
- 
- remove_nodes:
- 	icc_nodes_remove(&emc->provider);
--del_provider:
--	icc_provider_del(&emc->provider);
- err_msg:
- 	dev_err(emc->dev, "failed to initialize ICC: %d\n", err);
- 
+-- 
+2.39.2
+
 
 
