@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859721C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078E6C4339C;
-	Mon, 20 Mar 2023 15:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449CA1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87EBC433D2;
+	Mon, 20 Mar 2023 15:10:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325011;
-	bh=XhpReMj36BlNDK3+s+oxR1RtENo0vBcfeNHemoNRg9o=;
+	s=korg; t=1679325014;
+	bh=Xbe1oM/fLhz5DJgieCwDPwhiHBv1kaJo1BTD3GSqR5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bYzlCEHy1WG/VvJGrwygAM1bDCjnpyX1+5OS9GX0F6Rw+6BYbAfZ7il/bo86t7gV
-	 bLXHW29Tog+cKkdcJwTQ44JtF93SAi2ccByVmPS3sVbQxabqvpMbhJfWqLap8L6xTv
-	 WxCrFzS1bRW4RJ+rhpzhEzJcjDlfnuHjE482gn04=
+	b=fuMgKnRrdMgQvT6S64VgyXXEbdTQ5WvBjfBFqwGNB3vT8bE3y151Kf4/wXNmU7Frd
+	 g0aVP5rBlaRv/KM2qoDYBPDLT08+Ov/VVwmFcuOCjDGO0t5xuEq2pkPe0laAtBGEd0
+	 ulqUCvA7qFuG4CaSdl8LZNVWrOb5tGprA0Ei3lq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/115] hwmon: (adm1266) Set `can_sleep` flag for GPIO chip
-Date: Mon, 20 Mar 2023 15:54:32 +0100
-Message-Id: <20230320145451.939486416@linuxfoundation.org>
+Subject: [PATCH 6.1 034/198] wifi: nl80211: fix NULL-ptr deref in offchan check
+Date: Mon, 20 Mar 2023 15:52:52 +0100
+Message-Id: <20230320145508.905764435@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit a5bb73b3f5db1a4e91402ad132b59b13d2651ed9 ]
+[ Upstream commit f624bb6fad23df3270580b4fcef415c6e7bf7705 ]
 
-The adm1266 driver uses I2C bus access in its GPIO chip `set` and `get`
-implementation. This means these functions can sleep and the GPIO chip
-should set the `can_sleep` property to true.
+If, e.g. in AP mode, the link was already created by userspace
+but not activated yet, it has a chandef but the chandef isn't
+valid and has no channel. Check for this and ignore this link.
 
-This will ensure that a warning is printed when trying to set or get the
-GPIO value from a context that potentially can't sleep.
-
-Fixes: d98dfad35c38 ("hwmon: (pmbus/adm1266) Add support for GPIOs")
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Link: https://lore.kernel.org/r/20230314093146.2443845-1-lars@metafoo.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 7b0a0e3c3a88 ("wifi: cfg80211: do some rework towards MLO link APIs")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230301115906.71bd4803fbb9.Iee39c0f6c2d3a59a8227674dc55d52e38b1090cf@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/adm1266.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/nl80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/pmbus/adm1266.c b/drivers/hwmon/pmbus/adm1266.c
-index ec5f932fc6f0f..1ac2b2f4c5705 100644
---- a/drivers/hwmon/pmbus/adm1266.c
-+++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -301,6 +301,7 @@ static int adm1266_config_gpio(struct adm1266_data *data)
- 	data->gc.label = name;
- 	data->gc.parent = &data->client->dev;
- 	data->gc.owner = THIS_MODULE;
-+	data->gc.can_sleep = true;
- 	data->gc.base = -1;
- 	data->gc.names = data->gpio_names;
- 	data->gc.ngpio = ARRAY_SIZE(data->gpio_names);
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 4d4de49f7ab65..4c6748aa6a1c1 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -8815,7 +8815,7 @@ static bool cfg80211_off_channel_oper_allowed(struct wireless_dev *wdev,
+ 		struct cfg80211_chan_def *chandef;
+ 
+ 		chandef = wdev_chandef(wdev, link_id);
+-		if (!chandef)
++		if (!chandef || !chandef->chan)
+ 			continue;
+ 
+ 		/*
 -- 
 2.39.2
 
