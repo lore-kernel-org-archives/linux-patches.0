@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412021C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6428C433D2;
-	Mon, 20 Mar 2023 15:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3E51C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2C2C433EF;
+	Mon, 20 Mar 2023 15:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325740;
-	bh=aP7ZhqkntXOOhpmOQ/ACI9SzaGuvqaKGFtLWZ8YVvWc=;
+	s=korg; t=1679325745;
+	bh=Ni8Z1ZlKn7EI803JA2UDDFE06j2UcC85v+ImFSY+3Rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DRjhQQUGQXj3BkPeP4r0tkZvBpkX7FQbsdoZdgQfqVfygnAKLwS5gPLSlFC3O+PRM
-	 Q1s0H3fBBktEhTO7P/1jCkA/0BtLb/npJnE29/hxNffzKyTGG3YAPn2erNTuOMBxyb
-	 KWtXnPOnTWVRSgw/nvXyNljMbYoV2KVNBfsMP8jA=
+	b=YrHWC5qss9tsrrBlMdBPP0TeVzYShCqcDRNWi9Q/M5T5JonN/NHaISvOfdFS9ldHO
+	 jA/kFhZ5+RvQJYlNVqdwIrii2hB7vw+tYmi5rXRJ20Qi4cS6ROPg/a+/GtFbJx8dpY
+	 QSpsWsPBeeMTQHAPvRqb0GZVK7fK4WqQC1vPJJCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Piotr Raczynski <piotr.raczynski@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 093/211] ethernet: sun: add check for the mdesc_grab()
-Date: Mon, 20 Mar 2023 15:53:48 +0100
-Message-Id: <20230320145517.193571703@linuxfoundation.org>
+Subject: [PATCH 6.2 094/211] net: renesas: rswitch: Rename rings in struct rswitch_gwca_queue
+Date: Mon, 20 Mar 2023 15:53:49 +0100
+Message-Id: <20230320145517.231730552@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -36,53 +36,232 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 90de546d9a0b3c771667af18bb3f80567eabb89b ]
+[ Upstream commit 251eadcc640a0b5fd2767aaeb22a6f1ebf9b3c96 ]
 
-In vnet_port_probe() and vsw_port_probe(), we should
-check the return value of mdesc_grab() as it may
-return NULL which can caused NPD bugs.
+To add a new ring which is really related to timestamp (ts_ring)
+in the future, rename the following members to improve readability:
 
-Fixes: 5d01fa0c6bd8 ("ldmvsw: Add ldmvsw.c driver code")
-Fixes: 43fdf27470b2 ("[SPARC64]: Abstract out mdesc accesses for better MD update handling.")
-Signed-off-by: Liang He <windhl@126.com>
-Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+    ring --> tx_ring
+    ts_ring --> rx_ring
+
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e05bb97d9c9d ("net: renesas: rswitch: Fix the output value of quote from rswitch_rx()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/ldmvsw.c  | 3 +++
- drivers/net/ethernet/sun/sunvnet.c | 3 +++
- 2 files changed, 6 insertions(+)
+ drivers/net/ethernet/renesas/rswitch.c | 64 +++++++++++++-------------
+ drivers/net/ethernet/renesas/rswitch.h |  4 +-
+ 2 files changed, 34 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/net/ethernet/sun/ldmvsw.c b/drivers/net/ethernet/sun/ldmvsw.c
-index 8addee6d04bd8..734a817d3c945 100644
---- a/drivers/net/ethernet/sun/ldmvsw.c
-+++ b/drivers/net/ethernet/sun/ldmvsw.c
-@@ -287,6 +287,9 @@ static int vsw_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+diff --git a/drivers/net/ethernet/renesas/rswitch.c b/drivers/net/ethernet/renesas/rswitch.c
+index 2370c7797a0aa..847b1f161fc66 100644
+--- a/drivers/net/ethernet/renesas/rswitch.c
++++ b/drivers/net/ethernet/renesas/rswitch.c
+@@ -241,7 +241,7 @@ static int rswitch_get_num_cur_queues(struct rswitch_gwca_queue *gq)
  
- 	hp = mdesc_grab();
+ static bool rswitch_is_queue_rxed(struct rswitch_gwca_queue *gq)
+ {
+-	struct rswitch_ext_ts_desc *desc = &gq->ts_ring[gq->dirty];
++	struct rswitch_ext_ts_desc *desc = &gq->rx_ring[gq->dirty];
  
-+	if (!hp)
-+		return -ENODEV;
-+
- 	rmac = mdesc_get_property(hp, vdev->mp, remote_macaddr_prop, &len);
- 	err = -ENODEV;
- 	if (!rmac) {
-diff --git a/drivers/net/ethernet/sun/sunvnet.c b/drivers/net/ethernet/sun/sunvnet.c
-index fe86fbd585861..e220620d0ffc9 100644
---- a/drivers/net/ethernet/sun/sunvnet.c
-+++ b/drivers/net/ethernet/sun/sunvnet.c
-@@ -433,6 +433,9 @@ static int vnet_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+ 	if ((desc->desc.die_dt & DT_MASK) != DT_FEMPTY)
+ 		return true;
+@@ -284,13 +284,13 @@ static void rswitch_gwca_queue_free(struct net_device *ndev,
+ 	if (gq->gptp) {
+ 		dma_free_coherent(ndev->dev.parent,
+ 				  sizeof(struct rswitch_ext_ts_desc) *
+-				  (gq->ring_size + 1), gq->ts_ring, gq->ring_dma);
+-		gq->ts_ring = NULL;
++				  (gq->ring_size + 1), gq->rx_ring, gq->ring_dma);
++		gq->rx_ring = NULL;
+ 	} else {
+ 		dma_free_coherent(ndev->dev.parent,
+ 				  sizeof(struct rswitch_ext_desc) *
+-				  (gq->ring_size + 1), gq->ring, gq->ring_dma);
+-		gq->ring = NULL;
++				  (gq->ring_size + 1), gq->tx_ring, gq->ring_dma);
++		gq->tx_ring = NULL;
+ 	}
  
- 	hp = mdesc_grab();
+ 	if (!gq->dir_tx) {
+@@ -322,14 +322,14 @@ static int rswitch_gwca_queue_alloc(struct net_device *ndev,
+ 		rswitch_gwca_queue_alloc_skb(gq, 0, gq->ring_size);
  
-+	if (!hp)
-+		return -ENODEV;
-+
- 	vp = vnet_find_parent(hp, vdev->mp, vdev);
- 	if (IS_ERR(vp)) {
- 		pr_err("Cannot find port parent vnet\n");
+ 	if (gptp)
+-		gq->ts_ring = dma_alloc_coherent(ndev->dev.parent,
++		gq->rx_ring = dma_alloc_coherent(ndev->dev.parent,
+ 						 sizeof(struct rswitch_ext_ts_desc) *
+ 						 (gq->ring_size + 1), &gq->ring_dma, GFP_KERNEL);
+ 	else
+-		gq->ring = dma_alloc_coherent(ndev->dev.parent,
+-					      sizeof(struct rswitch_ext_desc) *
+-					      (gq->ring_size + 1), &gq->ring_dma, GFP_KERNEL);
+-	if (!gq->ts_ring && !gq->ring)
++		gq->tx_ring = dma_alloc_coherent(ndev->dev.parent,
++						 sizeof(struct rswitch_ext_desc) *
++						 (gq->ring_size + 1), &gq->ring_dma, GFP_KERNEL);
++	if (!gq->rx_ring && !gq->tx_ring)
+ 		goto out;
+ 
+ 	i = gq->index / 32;
+@@ -362,14 +362,14 @@ static int rswitch_gwca_queue_format(struct net_device *ndev,
+ 				     struct rswitch_private *priv,
+ 				     struct rswitch_gwca_queue *gq)
+ {
+-	int tx_ring_size = sizeof(struct rswitch_ext_desc) * gq->ring_size;
++	int ring_size = sizeof(struct rswitch_ext_desc) * gq->ring_size;
+ 	struct rswitch_ext_desc *desc;
+ 	struct rswitch_desc *linkfix;
+ 	dma_addr_t dma_addr;
+ 	int i;
+ 
+-	memset(gq->ring, 0, tx_ring_size);
+-	for (i = 0, desc = gq->ring; i < gq->ring_size; i++, desc++) {
++	memset(gq->tx_ring, 0, ring_size);
++	for (i = 0, desc = gq->tx_ring; i < gq->ring_size; i++, desc++) {
+ 		if (!gq->dir_tx) {
+ 			dma_addr = dma_map_single(ndev->dev.parent,
+ 						  gq->skbs[i]->data, PKT_BUF_SZ,
+@@ -398,7 +398,7 @@ static int rswitch_gwca_queue_format(struct net_device *ndev,
+ 
+ err:
+ 	if (!gq->dir_tx) {
+-		for (i--, desc = gq->ring; i >= 0; i--, desc++) {
++		for (i--, desc = gq->tx_ring; i >= 0; i--, desc++) {
+ 			dma_addr = rswitch_desc_get_dptr(&desc->desc);
+ 			dma_unmap_single(ndev->dev.parent, dma_addr, PKT_BUF_SZ,
+ 					 DMA_FROM_DEVICE);
+@@ -408,9 +408,9 @@ static int rswitch_gwca_queue_format(struct net_device *ndev,
+ 	return -ENOMEM;
+ }
+ 
+-static int rswitch_gwca_queue_ts_fill(struct net_device *ndev,
+-				      struct rswitch_gwca_queue *gq,
+-				      int start_index, int num)
++static int rswitch_gwca_queue_ext_ts_fill(struct net_device *ndev,
++					  struct rswitch_gwca_queue *gq,
++					  int start_index, int num)
+ {
+ 	struct rswitch_device *rdev = netdev_priv(ndev);
+ 	struct rswitch_ext_ts_desc *desc;
+@@ -419,7 +419,7 @@ static int rswitch_gwca_queue_ts_fill(struct net_device *ndev,
+ 
+ 	for (i = 0; i < num; i++) {
+ 		index = (i + start_index) % gq->ring_size;
+-		desc = &gq->ts_ring[index];
++		desc = &gq->rx_ring[index];
+ 		if (!gq->dir_tx) {
+ 			dma_addr = dma_map_single(ndev->dev.parent,
+ 						  gq->skbs[index]->data, PKT_BUF_SZ,
+@@ -443,7 +443,7 @@ static int rswitch_gwca_queue_ts_fill(struct net_device *ndev,
+ 	if (!gq->dir_tx) {
+ 		for (i--; i >= 0; i--) {
+ 			index = (i + start_index) % gq->ring_size;
+-			desc = &gq->ts_ring[index];
++			desc = &gq->rx_ring[index];
+ 			dma_addr = rswitch_desc_get_dptr(&desc->desc);
+ 			dma_unmap_single(ndev->dev.parent, dma_addr, PKT_BUF_SZ,
+ 					 DMA_FROM_DEVICE);
+@@ -453,21 +453,21 @@ static int rswitch_gwca_queue_ts_fill(struct net_device *ndev,
+ 	return -ENOMEM;
+ }
+ 
+-static int rswitch_gwca_queue_ts_format(struct net_device *ndev,
+-					struct rswitch_private *priv,
+-					struct rswitch_gwca_queue *gq)
++static int rswitch_gwca_queue_ext_ts_format(struct net_device *ndev,
++					    struct rswitch_private *priv,
++					    struct rswitch_gwca_queue *gq)
+ {
+-	int tx_ts_ring_size = sizeof(struct rswitch_ext_ts_desc) * gq->ring_size;
++	int ring_size = sizeof(struct rswitch_ext_ts_desc) * gq->ring_size;
+ 	struct rswitch_ext_ts_desc *desc;
+ 	struct rswitch_desc *linkfix;
+ 	int err;
+ 
+-	memset(gq->ts_ring, 0, tx_ts_ring_size);
+-	err = rswitch_gwca_queue_ts_fill(ndev, gq, 0, gq->ring_size);
++	memset(gq->rx_ring, 0, ring_size);
++	err = rswitch_gwca_queue_ext_ts_fill(ndev, gq, 0, gq->ring_size);
+ 	if (err < 0)
+ 		return err;
+ 
+-	desc = &gq->ts_ring[gq->ring_size];	/* Last */
++	desc = &gq->rx_ring[gq->ring_size];	/* Last */
+ 	rswitch_desc_set_dptr(&desc->desc, gq->ring_dma);
+ 	desc->desc.die_dt = DT_LINKFIX;
+ 
+@@ -595,7 +595,7 @@ static int rswitch_rxdmac_init(struct rswitch_private *priv, int index)
+ 	struct rswitch_device *rdev = priv->rdev[index];
+ 	struct net_device *ndev = rdev->ndev;
+ 
+-	return rswitch_gwca_queue_ts_format(ndev, priv, rdev->rx_queue);
++	return rswitch_gwca_queue_ext_ts_format(ndev, priv, rdev->rx_queue);
+ }
+ 
+ static int rswitch_gwca_hw_init(struct rswitch_private *priv)
+@@ -676,7 +676,7 @@ static bool rswitch_rx(struct net_device *ndev, int *quota)
+ 	boguscnt = min_t(int, gq->ring_size, *quota);
+ 	limit = boguscnt;
+ 
+-	desc = &gq->ts_ring[gq->cur];
++	desc = &gq->rx_ring[gq->cur];
+ 	while ((desc->desc.die_dt & DT_MASK) != DT_FEMPTY) {
+ 		if (--boguscnt < 0)
+ 			break;
+@@ -704,14 +704,14 @@ static bool rswitch_rx(struct net_device *ndev, int *quota)
+ 		rdev->ndev->stats.rx_bytes += pkt_len;
+ 
+ 		gq->cur = rswitch_next_queue_index(gq, true, 1);
+-		desc = &gq->ts_ring[gq->cur];
++		desc = &gq->rx_ring[gq->cur];
+ 	}
+ 
+ 	num = rswitch_get_num_cur_queues(gq);
+ 	ret = rswitch_gwca_queue_alloc_skb(gq, gq->dirty, num);
+ 	if (ret < 0)
+ 		goto err;
+-	ret = rswitch_gwca_queue_ts_fill(ndev, gq, gq->dirty, num);
++	ret = rswitch_gwca_queue_ext_ts_fill(ndev, gq, gq->dirty, num);
+ 	if (ret < 0)
+ 		goto err;
+ 	gq->dirty = rswitch_next_queue_index(gq, false, num);
+@@ -738,7 +738,7 @@ static int rswitch_tx_free(struct net_device *ndev, bool free_txed_only)
+ 
+ 	for (; rswitch_get_num_cur_queues(gq) > 0;
+ 	     gq->dirty = rswitch_next_queue_index(gq, false, 1)) {
+-		desc = &gq->ring[gq->dirty];
++		desc = &gq->tx_ring[gq->dirty];
+ 		if (free_txed_only && (desc->desc.die_dt & DT_MASK) != DT_FEMPTY)
+ 			break;
+ 
+@@ -1416,7 +1416,7 @@ static netdev_tx_t rswitch_start_xmit(struct sk_buff *skb, struct net_device *nd
+ 	}
+ 
+ 	gq->skbs[gq->cur] = skb;
+-	desc = &gq->ring[gq->cur];
++	desc = &gq->tx_ring[gq->cur];
+ 	rswitch_desc_set_dptr(&desc->desc, dma_addr);
+ 	desc->desc.info_ds = cpu_to_le16(skb->len);
+ 
+diff --git a/drivers/net/ethernet/renesas/rswitch.h b/drivers/net/ethernet/renesas/rswitch.h
+index 49efb0f31c77a..0584670abead5 100644
+--- a/drivers/net/ethernet/renesas/rswitch.h
++++ b/drivers/net/ethernet/renesas/rswitch.h
+@@ -915,8 +915,8 @@ struct rswitch_gwca_queue {
+ 	bool dir_tx;
+ 	bool gptp;
+ 	union {
+-		struct rswitch_ext_desc *ring;
+-		struct rswitch_ext_ts_desc *ts_ring;
++		struct rswitch_ext_desc *tx_ring;
++		struct rswitch_ext_ts_desc *rx_ring;
+ 	};
+ 	dma_addr_t ring_dma;
+ 	int ring_size;
 -- 
 2.39.2
 
