@@ -1,34 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4B71C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF979C433EF;
-	Mon, 20 Mar 2023 15:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443621C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8080C4339B;
+	Mon, 20 Mar 2023 15:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324854;
-	bh=sFh+slsaerm0TBFtv1wg/yGEi4mxAKvEZDoV0mTpmvk=;
+	s=korg; t=1679324857;
+	bh=fOl6ipfcv2phHEvl35dX4b+oB0uLTQsz1KS8/AbIa6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VeL/4MgbTwyFaufDEJV7NeBtF6GCWDwB7rSV3LO5eUuRGtX8jMSt6Oijv06byNmPx
-	 uR/uYdUzlvf+5/2xFZQex7Dz0TWXX89ICfuVM5ObSGDGeBn91Lupf9aWvtWzJ9EmsU
-	 MgbnCj1Yl4tzXj+OokvbCeF7M1IT6P7kLAjXzZR0=
+	b=jIFCSrlOiJ3AAtSZS+bNUC4b9wNQrbYHLB5NV2jqq07WDoAiCEVi/cyZANWoaRH8d
+	 hbx9bbRrGBostCfiIWjdTcvKAnuzsV7Kmo+Svi2gUvjSAActMXUr64p6TZ1KJHKzv2
+	 SU/4Xmj391K9FnOA5NQ3Ji4SSfQSZ4JtYiVZAWIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaska Uimonen <jaska.uimonen@linux.intel.com>,
-	Adrian Bonislawski <adrian.bonislawski@intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/198] ASoC: SOF: ipc4-topology: set dmic dai index from copier
-Date: Mon, 20 Mar 2023 15:52:31 +0100
-Message-Id: <20230320145508.045557908@linuxfoundation.org>
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	Chandan Kumar Rout <chandanx.rout@intel.com>
+Subject: [PATCH 5.15 041/115] ice: xsk: disable txq irq before flushing hw
+Date: Mon, 20 Mar 2023 15:54:13 +0100
+Message-Id: <20230320145451.173734569@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,40 +40,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaska Uimonen <jaska.uimonen@linux.intel.com>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit c99e48f4ce9b986ab7992ec7283a06dae875f668 ]
+[ Upstream commit b830c9642386867863ac64295185f896ff2928ac ]
 
-Dmic dai index was set incorrectly to bits 5-7, when it is actually using
-just the lowest 3. Fix the macro for setting the bits.
+ice_qp_dis() intends to stop a given queue pair that is a target of xsk
+pool attach/detach. One of the steps is to disable interrupts on these
+queues. It currently is broken in a way that txq irq is turned off
+*after* HW flush which in turn takes no effect.
 
-Fixes: aa84ffb72158 ("ASoC: SOF: ipc4-topology: Add support for SSP/DMIC DAI's")
-Signed-off-by: Jaska Uimonen <jaska.uimonen@linux.intel.com>
-Reviewed-by: Adrian Bonislawski <adrian.bonislawski@intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20230307110730.1995-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+ice_qp_dis():
+-> ice_qvec_dis_irq()
+--> disable rxq irq
+--> flush hw
+-> ice_vsi_stop_tx_ring()
+-->disable txq irq
+
+Below splat can be triggered by following steps:
+- start xdpsock WITHOUT loading xdp prog
+- run xdp_rxq_info with XDP_TX action on this interface
+- start traffic
+- terminate xdpsock
+
+[  256.312485] BUG: kernel NULL pointer dereference, address: 0000000000000018
+[  256.319560] #PF: supervisor read access in kernel mode
+[  256.324775] #PF: error_code(0x0000) - not-present page
+[  256.329994] PGD 0 P4D 0
+[  256.332574] Oops: 0000 [#1] PREEMPT SMP NOPTI
+[  256.337006] CPU: 3 PID: 32 Comm: ksoftirqd/3 Tainted: G           OE      6.2.0-rc5+ #51
+[  256.345218] Hardware name: Intel Corporation S2600WFT/S2600WFT, BIOS SE5C620.86B.02.01.0008.031920191559 03/19/2019
+[  256.355807] RIP: 0010:ice_clean_rx_irq_zc+0x9c/0x7d0 [ice]
+[  256.361423] Code: b7 8f 8a 00 00 00 66 39 ca 0f 84 f1 04 00 00 49 8b 47 40 4c 8b 24 d0 41 0f b7 45 04 66 25 ff 3f 66 89 04 24 0f 84 85 02 00 00 <49> 8b 44 24 18 0f b7 14 24 48 05 00 01 00 00 49 89 04 24 49 89 44
+[  256.380463] RSP: 0018:ffffc900088bfd20 EFLAGS: 00010206
+[  256.385765] RAX: 000000000000003c RBX: 0000000000000035 RCX: 000000000000067f
+[  256.393012] RDX: 0000000000000775 RSI: 0000000000000000 RDI: ffff8881deb3ac80
+[  256.400256] RBP: 000000000000003c R08: ffff889847982710 R09: 0000000000010000
+[  256.407500] R10: ffffffff82c060c0 R11: 0000000000000004 R12: 0000000000000000
+[  256.414746] R13: ffff88811165eea0 R14: ffffc9000d255000 R15: ffff888119b37600
+[  256.421990] FS:  0000000000000000(0000) GS:ffff8897e0cc0000(0000) knlGS:0000000000000000
+[  256.430207] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  256.436036] CR2: 0000000000000018 CR3: 0000000005c0a006 CR4: 00000000007706e0
+[  256.443283] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  256.450527] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  256.457770] PKRU: 55555554
+[  256.460529] Call Trace:
+[  256.463015]  <TASK>
+[  256.465157]  ? ice_xmit_zc+0x6e/0x150 [ice]
+[  256.469437]  ice_napi_poll+0x46d/0x680 [ice]
+[  256.473815]  ? _raw_spin_unlock_irqrestore+0x1b/0x40
+[  256.478863]  __napi_poll+0x29/0x160
+[  256.482409]  net_rx_action+0x136/0x260
+[  256.486222]  __do_softirq+0xe8/0x2e5
+[  256.489853]  ? smpboot_thread_fn+0x2c/0x270
+[  256.494108]  run_ksoftirqd+0x2a/0x50
+[  256.497747]  smpboot_thread_fn+0x1c1/0x270
+[  256.501907]  ? __pfx_smpboot_thread_fn+0x10/0x10
+[  256.506594]  kthread+0xea/0x120
+[  256.509785]  ? __pfx_kthread+0x10/0x10
+[  256.513597]  ret_from_fork+0x29/0x50
+[  256.517238]  </TASK>
+
+In fact, irqs were not disabled and napi managed to be scheduled and run
+while xsk_pool pointer was still valid, but SW ring of xdp_buff pointers
+was already freed.
+
+To fix this, call ice_qvec_dis_irq() after ice_vsi_stop_tx_ring(). Also
+while at it, remove redundant ice_clean_rx_ring() call - this is handled
+in ice_qp_clean_rings().
+
+Fixes: 2d4238f55697 ("ice: Add support for AF_XDP")
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc4-topology.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_xsk.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/sof/ipc4-topology.h b/sound/soc/sof/ipc4-topology.h
-index 0aa87a8add5d3..2363a7cc0b57d 100644
---- a/sound/soc/sof/ipc4-topology.h
-+++ b/sound/soc/sof/ipc4-topology.h
-@@ -46,7 +46,7 @@
- #define SOF_IPC4_NODE_INDEX_INTEL_SSP(x) (((x) & 0xf) << 4)
+diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
+index 60d8ef0c88595..070be30cbaa91 100644
+--- a/drivers/net/ethernet/intel/ice/ice_xsk.c
++++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
+@@ -166,8 +166,6 @@ static int ice_qp_dis(struct ice_vsi *vsi, u16 q_idx)
+ 	}
+ 	netif_tx_stop_queue(netdev_get_tx_queue(vsi->netdev, q_idx));
  
- /* Node ID for DMIC type DAI copiers */
--#define SOF_IPC4_NODE_INDEX_INTEL_DMIC(x) (((x) & 0x7) << 5)
-+#define SOF_IPC4_NODE_INDEX_INTEL_DMIC(x) ((x) & 0x7)
- 
- #define SOF_IPC4_GAIN_ALL_CHANNELS_MASK 0xffffffff
- #define SOF_IPC4_VOL_ZERO_DB	0x7fffffff
+-	ice_qvec_dis_irq(vsi, rx_ring, q_vector);
+-
+ 	ice_fill_txq_meta(vsi, tx_ring, &txq_meta);
+ 	err = ice_vsi_stop_tx_ring(vsi, ICE_NO_RESET, 0, tx_ring, &txq_meta);
+ 	if (err)
+@@ -182,6 +180,8 @@ static int ice_qp_dis(struct ice_vsi *vsi, u16 q_idx)
+ 		if (err)
+ 			return err;
+ 	}
++	ice_qvec_dis_irq(vsi, rx_ring, q_vector);
++
+ 	err = ice_vsi_ctrl_one_rx_ring(vsi, false, q_idx, true);
+ 	if (err)
+ 		return err;
 -- 
 2.39.2
 
