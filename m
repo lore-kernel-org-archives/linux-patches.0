@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC5F1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA77C433D2;
-	Mon, 20 Mar 2023 15:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1011C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAC6C433D2;
+	Mon, 20 Mar 2023 15:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325775;
-	bh=bRb6TR5KYwtr9MR7+KocAOUsZL7ovGjeYKku9GQ4Ra4=;
+	s=korg; t=1679325778;
+	bh=jiYlifzQ/nQU/22g0bAxSe9qhgfWxDJRdMiz0zNYx50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NAfsMP6X2UrJHM2Q6h/fPIFMtGekg1NzJ6z8xUb/KPSilBFL6Z1Jgzh2GkBRlfyAi
-	 3Uh7dJSKkqqPsbd/3TmOv92sMI8ckxgqaTLaAWDYJRh5kYpPEn3TrzGDVbN2aRphdO
-	 hBNLwWGz/iy9/1mTFJqCNO5DxKUaJ7NrbFNAO02c=
+	b=iviBwmDKL5zAQhAPnyJKNDkErQCH8qP3f6IBV/2zz6oWBw12sOn/OR05u+Opd/D5l
+	 psrH8pkTg1WdcEAR4h+zuLtfc4ACzPSvvTVY9DL/3AtAZYgrtMFkQ8pFcd69khmaf5
+	 2BVuQLSFoRQ5e0FknT+Gl/XzFKk74KWjaXKJY8+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony OBrien <tony.obrien@alliedtelesis.co.nz>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 099/211] hwmon: (adt7475) Fix masking of hysteresis registers
-Date: Mon, 20 Mar 2023 15:53:54 +0100
-Message-Id: <20230320145517.441443834@linuxfoundation.org>
+	NeilBrown <neilb@suse.de>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.1 141/198] md: select BLOCK_LEGACY_AUTOLOAD
+Date: Mon, 20 Mar 2023 15:54:39 +0100
+Message-Id: <20230320145513.462373612@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,42 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 48e8186870d9d0902e712d601ccb7098cb220688 ]
+commit 6c0f5898836c05c6d850a750ed7940ba29e4e6c5 upstream.
 
-The wrong bits are masked in the hysteresis register; indices 0 and 2
-should zero bits [7:4] and preserve bits [3:0], and index 1 should zero
-bits [3:0] and preserve bits [7:4].
+When BLOCK_LEGACY_AUTOLOAD is not enable, mdadm is not able to
+activate new arrays unless "CREATE names=yes" appears in
+mdadm.conf
 
-Fixes: 1c301fc5394f ("hwmon: Add a driver for the ADT7475 hardware monitoring chip")
-Signed-off-by: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
-Link: https://lore.kernel.org/r/20230222005228.158661-3-tony.obrien@alliedtelesis.co.nz
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+As this is a regression we need to always enable BLOCK_LEGACY_AUTOLOAD
+for when MD is selected - at least until mdadm is updated and the
+updates widely available.
+
+Cc: stable@vger.kernel.org # v5.18+
+Fixes: fbdee71bb5d8 ("block: deprecate autoloading based on dev_t")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/adt7475.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/Kconfig |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/hwmon/adt7475.c b/drivers/hwmon/adt7475.c
-index 77222c35a38ec..6e4c92b500b8e 100644
---- a/drivers/hwmon/adt7475.c
-+++ b/drivers/hwmon/adt7475.c
-@@ -488,10 +488,10 @@ static ssize_t temp_store(struct device *dev, struct device_attribute *attr,
- 		val = (temp - val) / 1000;
- 
- 		if (sattr->index != 1) {
--			data->temp[HYSTERSIS][sattr->index] &= 0xF0;
-+			data->temp[HYSTERSIS][sattr->index] &= 0x0F;
- 			data->temp[HYSTERSIS][sattr->index] |= (val & 0xF) << 4;
- 		} else {
--			data->temp[HYSTERSIS][sattr->index] &= 0x0F;
-+			data->temp[HYSTERSIS][sattr->index] &= 0xF0;
- 			data->temp[HYSTERSIS][sattr->index] |= (val & 0xF);
- 		}
- 
--- 
-2.39.2
-
+--- a/drivers/md/Kconfig
++++ b/drivers/md/Kconfig
+@@ -16,6 +16,10 @@ if MD
+ config BLK_DEV_MD
+ 	tristate "RAID support"
+ 	select BLOCK_HOLDER_DEPRECATED if SYSFS
++	# BLOCK_LEGACY_AUTOLOAD requirement should be removed
++	# after relevant mdadm enhancements - to make "names=yes"
++	# the default - are widely available.
++	select BLOCK_LEGACY_AUTOLOAD
+ 	help
+ 	  This driver lets you combine several hard disk partitions into one
+ 	  logical block device. This can be used to simply append one
 
 
