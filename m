@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF911C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F024C433EF;
-	Mon, 20 Mar 2023 15:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0151C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EDEC433D2;
+	Mon, 20 Mar 2023 15:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324807;
-	bh=UeW1CQAAoSJChSLO401v/ThGrxNP3MJwVrLenSBvI1U=;
+	s=korg; t=1679324810;
+	bh=eBgYG1dKWuYXje9cjaG0yInKIaujqpzwI+C874yfPyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wSe0a56afta0j38V8Kx0QHTkqyo3RsXH5ni4fuIPKbTb90gVpv+gj5P1mW8mH6iFr
-	 lZhxQC8APHGGEZe8uplUfjtwdKRbChzF3vOyN0y6i1C+QK/e2SqPrErqyPKWmk7DUH
-	 MG58ZSSXfGvQExrhRRHBJ3YniAfNIj3DxIX33sPU=
+	b=vM5JvlCGnpuPkW5224vyH1uhakAlVM9o6ziht0DO6RP88PAPEWqYbr3CE+QWo2DGI
+	 w/HnLFW/eOZPXL0+BeakadCDq2D1XX4aUJ7qY625mP1YUSBq49+GnNQqPJeVD92DmH
+	 LBSjQze6pFK2Aq8kFgmvm4HWYYs76kxRtaLEiAII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Riku Voipio <riku.voipio@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	linux-clk@vger.kernel.org,
+	Liu Ying <victor.liu@nxp.com>,
+	Robert Foss <rfoss@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/198] clk: HI655X: select REGMAP instead of depending on it
-Date: Mon, 20 Mar 2023 15:52:26 +0100
-Message-Id: <20230320145507.814907681@linuxfoundation.org>
+Subject: [PATCH 5.15 036/115] drm/bridge: Fix returned array size name for atomic_get_input_bus_fmts kdoc
+Date: Mon, 20 Mar 2023 15:54:08 +0100
+Message-Id: <20230320145450.973140436@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,45 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Liu Ying <victor.liu@nxp.com>
 
-[ Upstream commit 0ffad67784a097beccf34d297ddd1b0773b3b8a3 ]
+[ Upstream commit 0d3c9333d976af41d7dbc6bf4d9d2e95fbdf9c89 ]
 
-REGMAP is a hidden (not user visible) symbol. Users cannot set it
-directly thru "make *config", so drivers should select it instead of
-depending on it if they need it.
+The returned array size for input formats is set through
+atomic_get_input_bus_fmts()'s 'num_input_fmts' argument, so use
+'num_input_fmts' to represent the array size in the function's kdoc,
+not 'num_output_fmts'.
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
-
-Therefore, change the use of "depends on REGMAP" to "select REGMAP".
-
-Fixes: 3a49afb84ca0 ("clk: enable hi655x common clk automatically")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Riku Voipio <riku.voipio@linaro.org>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>
-Cc: linux-clk@vger.kernel.org
-Link: https://lore.kernel.org/r/20230226053953.4681-3-rdunlap@infradead.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 91ea83306bfa ("drm/bridge: Fix the bridge kernel doc")
+Fixes: f32df58acc68 ("drm/bridge: Add the necessary bits to support bus format negotiation")
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230314055035.3731179-1-victor.liu@nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/drm/drm_bridge.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
-index d79905f3e1744..5da82f2bdd211 100644
---- a/drivers/clk/Kconfig
-+++ b/drivers/clk/Kconfig
-@@ -92,7 +92,7 @@ config COMMON_CLK_RK808
- config COMMON_CLK_HI655X
- 	tristate "Clock driver for Hi655x" if EXPERT
- 	depends on (MFD_HI655X_PMIC || COMPILE_TEST)
--	depends on REGMAP
-+	select REGMAP
- 	default MFD_HI655X_PMIC
- 	help
- 	  This driver supports the hi655x PMIC clock. This
+diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
+index 1648ce265cba0..c84783cd5abd7 100644
+--- a/include/drm/drm_bridge.h
++++ b/include/drm/drm_bridge.h
+@@ -447,11 +447,11 @@ struct drm_bridge_funcs {
+ 	 *
+ 	 * The returned array must be allocated with kmalloc() and will be
+ 	 * freed by the caller. If the allocation fails, NULL should be
+-	 * returned. num_output_fmts must be set to the returned array size.
++	 * returned. num_input_fmts must be set to the returned array size.
+ 	 * Formats listed in the returned array should be listed in decreasing
+ 	 * preference order (the core will try all formats until it finds one
+ 	 * that works). When the format is not supported NULL should be
+-	 * returned and num_output_fmts should be set to 0.
++	 * returned and num_input_fmts should be set to 0.
+ 	 *
+ 	 * This method is called on all elements of the bridge chain as part of
+ 	 * the bus format negotiation process that happens in
 -- 
 2.39.2
 
