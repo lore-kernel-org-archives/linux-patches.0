@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869FD1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065ABC433EF;
-	Mon, 20 Mar 2023 15:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320AE1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78B9C433EF;
+	Mon, 20 Mar 2023 15:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325246;
-	bh=ctkKQZb+NgfzP5BglC2zreygbsHxkPBU5AP+3z0K7Sk=;
+	s=korg; t=1679325249;
+	bh=BEv8/iSKoK73RPz9OD7bGTIKJw7pgok0xUVDzJq5W/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zTSHBd569suq1rGQ1cv/Uf1ZIVZrdOJ2YCIt801h2/6vaOohh77im75H7LYDBdWfc
-	 qLwjqvGYPOC1NcUxSGufLt5n2GYcpIB5Ku+djqQZraRb1pSAvW9rUoLaetaAOOnEOY
-	 nnsuke24Du/EwhEKtTyuXzut9Nh5N4wPHhUtRumY=
+	b=ksiICQi/SdUZYKgJOk+Xd9DCYn3C1da+n0sI+88odif/LIiGn2IBrvRzDQSm6Xx4j
+	 voP9BTNVgxMzLaLitTCcy55aVzKnSM6bdkNBpErvwnkv3YismR3uPujioPGnnoFpIT
+	 z65cYYvfb+MZJtUfmbyyVLOCdMFcYanUc8H9eKe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 082/115] tracing: Check field value in hist_field_name()
-Date: Mon, 20 Mar 2023 15:54:54 +0100
-Message-Id: <20230320145452.868837389@linuxfoundation.org>
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 021/211] scsi: mpi3mr: Return proper values for failures in firmware init path
+Date: Mon, 20 Mar 2023 15:52:36 +0100
+Message-Id: <20230320145514.182483390@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,43 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-commit 9f116f76fa8c04c81aef33ad870dbf9a158e5b70 upstream.
+[ Upstream commit ba8a9ba41fbde250fd8b0ed1e5dad0dc9318df46 ]
 
-The function hist_field_name() cannot handle being passed a NULL field
-parameter. It should never be NULL, but due to a previous bug, NULL was
-passed to the function and the kernel crashed due to a NULL dereference.
-Mark Rutland reported this to me on IRC.
+Return proper non-zero return values for all the cases when the controller
+initialization and re-initialization fails.
 
-The bug was fixed, but to prevent future bugs from crashing the kernel,
-check the field and add a WARN_ON() if it is NULL.
-
-Link: https://lkml.kernel.org/r/20230302020810.762384440@goodmis.org
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Mark Rutland <mark.rutland@arm.com>
-Fixes: c6afad49d127f ("tracing: Add hist trigger 'sym' and 'sym-offset' modifiers")
-Tested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Signed-off-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Link: https://lore.kernel.org/r/20230228140835.4075-5-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: c798304470ca ("scsi: mpi3mr: Fix memory leaks in mpi3mr_init_ioc()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -1127,6 +1127,9 @@ static const char *hist_field_name(struc
- {
- 	const char *field_name = "";
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index 77282ad5688da..e702911e8e934 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -3816,8 +3816,10 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc)
+ 	dprint_init(mrioc, "allocating config page buffers\n");
+ 	mrioc->cfg_page = dma_alloc_coherent(&mrioc->pdev->dev,
+ 	    MPI3MR_DEFAULT_CFG_PAGE_SZ, &mrioc->cfg_page_dma, GFP_KERNEL);
+-	if (!mrioc->cfg_page)
++	if (!mrioc->cfg_page) {
++		retval = -1;
+ 		goto out_failed_noretry;
++	}
  
-+	if (WARN_ON_ONCE(!field))
-+		return field_name;
-+
- 	if (level > 1)
- 		return field_name;
+ 	mrioc->cfg_page_sz = MPI3MR_DEFAULT_CFG_PAGE_SZ;
  
+@@ -3879,8 +3881,10 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc)
+ 		dprint_init(mrioc, "allocating memory for throttle groups\n");
+ 		sz = sizeof(struct mpi3mr_throttle_group_info);
+ 		mrioc->throttle_groups = kcalloc(mrioc->num_io_throttle_group, sz, GFP_KERNEL);
+-		if (!mrioc->throttle_groups)
++		if (!mrioc->throttle_groups) {
++			retval = -1;
+ 			goto out_failed_noretry;
++		}
+ 	}
+ 
+ 	retval = mpi3mr_enable_events(mrioc);
+@@ -3900,6 +3904,7 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc)
+ 		mpi3mr_memset_buffers(mrioc);
+ 		goto retry_init;
+ 	}
++	retval = -1;
+ out_failed_noretry:
+ 	ioc_err(mrioc, "controller initialization failed\n");
+ 	mpi3mr_issue_reset(mrioc, MPI3_SYSIF_HOST_DIAG_RESET_ACTION_DIAG_FAULT,
+@@ -4012,6 +4017,7 @@ int mpi3mr_reinit_ioc(struct mpi3mr_ioc *mrioc, u8 is_resume)
+ 		ioc_err(mrioc,
+ 		    "cannot create minimum number of operational queues expected:%d created:%d\n",
+ 		    mrioc->shost->nr_hw_queues, mrioc->num_op_reply_q);
++		retval = -1;
+ 		goto out_failed_noretry;
+ 	}
+ 
+@@ -4078,6 +4084,7 @@ int mpi3mr_reinit_ioc(struct mpi3mr_ioc *mrioc, u8 is_resume)
+ 		mpi3mr_memset_buffers(mrioc);
+ 		goto retry_init;
+ 	}
++	retval = -1;
+ out_failed_noretry:
+ 	ioc_err(mrioc, "controller %s is failed\n",
+ 	    (is_resume)?"resume":"re-initialization");
+-- 
+2.39.2
+
 
 
