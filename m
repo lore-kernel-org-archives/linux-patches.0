@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1ED1C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2537C433EF;
-	Mon, 20 Mar 2023 15:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2151A1C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99612C433D2;
+	Mon, 20 Mar 2023 15:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326170;
-	bh=QqVdNMNLWecEslc40J9dloYu41XCnkxFQGxd2WQaHTI=;
+	s=korg; t=1679326173;
+	bh=NB1Q7IulvQPniPP+4NCmMV/y61f7GD5w4fbuVKrTEzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CmCmCIZqeuZ01sXBxekr9IYzye8amw77vkT725fm5vnxh6dJ4lzQD8+ZT2XbMWzKV
-	 6xqiBC3DdvVExw5h89MSMtcnnST5k4nHsvHKPwRa6w8i5yXWuNPhm5J07GyqXbvHxs
-	 WmjjRXkTMoRqlJHYN5O17OJxfI/b7rdl1hNoFcTk=
+	b=fkGBQX/lf1H7EzOYBtaWcaHz5alkrvjjUFZkOt8B+AOIPS3zzd+c2F8oesMiMViIb
+	 Pgku7HhG7i56VJzvsG5NMW4nrE3OLvlLeC1gpsEPU1gRdfCqkQ1wakwC8CvAvu26kL
+	 pPzRGD+b4nAgCx1BK/X3e1kRth0OeIaDB0cFlYo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.2 187/211] powerpc/64: Set default CPU in Kconfig
-Date: Mon, 20 Mar 2023 15:55:22 +0100
-Message-Id: <20230320145521.343938830@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Jun Lei <Jun.Lei@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Wesley Chalmers <Wesley.Chalmers@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.2 170/211] drm/amd/display: Do not set DRR on pipe Commit
+Date: Mon, 20 Mar 2023 15:55:05 +0100
+Message-Id: <20230320145520.564490628@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -35,127 +38,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Wesley Chalmers <Wesley.Chalmers@amd.com>
 
-commit 45f7091aac3546ef8112bf62836650ca0bbf0b79 upstream.
+commit 56574f89dbd84004c3fd6485bcaafb5aa9b8be14 upstream.
 
-Since commit 0069f3d14e7a ("powerpc/64e: Tie PPC_BOOK3E_64 to
-PPC_E500MC"), the only possible BOOK3E/64 are E500, so no need of a
-default CPU over the E5500.
+[WHY]
+Writing to DRR registers such as OTG_V_TOTAL_MIN on the same frame as a
+pipe commit can cause underflow.
 
-When the user selects book3e, they must have an e500 compatible
-compiler, and it won't work anymore with the default -mcpu=power64, see
-commit d6b551b8f90c ("powerpc/64e: Fix build failure with GCC
-12 (unrecognized opcode: `wrteei')").
-
-For book3s/64, replace GENERIC_CPU by POWERPC64_CPU to match the PPC32
-POWERPC_CPU, and set a default mpcu value in Kconfig directly.
-
-When a user selects a particular CPU, they must ensure the compiler has
-the requested capability. Therefore, remove hidden fallback, instead
-offer user the possibility to say they want to use the toolchain
-default.
-
-Fixes: d6b551b8f90c ("powerpc/64e: Fix build failure with GCC 12 (unrecognized opcode: `wrteei')")
-Reported-by: Pali Rohár <pali@kernel.org>
-Tested-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/76c11197b058193dcb8e8b26adffba09cfbdab11.1674632329.git.christophe.leroy@csgroup.eu
+Cc: stable@vger.kernel.org
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Jun Lei <Jun.Lei@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Wesley Chalmers <Wesley.Chalmers@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/Makefile                  |   22 +++++-----------------
- arch/powerpc/platforms/Kconfig.cputype |   12 +++++++-----
- 2 files changed, 12 insertions(+), 22 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/arch/powerpc/Makefile
-+++ b/arch/powerpc/Makefile
-@@ -146,19 +146,6 @@ CFLAGS-$(CONFIG_PPC32)	+= $(call cc-opti
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
+@@ -992,8 +992,5 @@ void dcn30_prepare_bandwidth(struct dc *
+ 			dc->clk_mgr->funcs->set_max_memclk(dc->clk_mgr, dc->clk_mgr->bw_params->clk_table.entries[dc->clk_mgr->bw_params->clk_table.num_entries - 1].memclk_mhz);
  
- CFLAGS-$(CONFIG_PPC32)	+= $(call cc-option,-mno-readonly-in-sdata)
- 
--ifdef CONFIG_PPC_BOOK3S_64
--ifdef CONFIG_CPU_LITTLE_ENDIAN
--CFLAGS-$(CONFIG_GENERIC_CPU) += -mcpu=power8
--else
--CFLAGS-$(CONFIG_GENERIC_CPU) += -mcpu=power4
--endif
--CFLAGS-$(CONFIG_GENERIC_CPU) += $(call cc-option,-mtune=power10,	\
--				  $(call cc-option,-mtune=power9,	\
--				  $(call cc-option,-mtune=power8)))
--else ifdef CONFIG_PPC_BOOK3E_64
--CFLAGS-$(CONFIG_GENERIC_CPU) += -mcpu=powerpc64
--endif
+ 	dcn20_prepare_bandwidth(dc, context);
 -
- ifdef CONFIG_FUNCTION_TRACER
- CC_FLAGS_FTRACE := -pg
- ifdef CONFIG_MPROFILE_KERNEL
-@@ -166,11 +153,12 @@ CC_FLAGS_FTRACE += -mprofile-kernel
- endif
- endif
+-	dc_dmub_srv_p_state_delegate(dc,
+-		context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching, context);
+ }
  
--CFLAGS-$(CONFIG_TARGET_CPU_BOOL) += $(call cc-option,-mcpu=$(CONFIG_TARGET_CPU))
--AFLAGS-$(CONFIG_TARGET_CPU_BOOL) += $(call cc-option,-mcpu=$(CONFIG_TARGET_CPU))
-+CFLAGS-$(CONFIG_TARGET_CPU_BOOL) += -mcpu=$(CONFIG_TARGET_CPU)
-+AFLAGS-$(CONFIG_TARGET_CPU_BOOL) += -mcpu=$(CONFIG_TARGET_CPU)
- 
--CFLAGS-$(CONFIG_E5500_CPU) += $(call cc-option,-mcpu=e500mc64,-mcpu=powerpc64)
--CFLAGS-$(CONFIG_E6500_CPU) += $(call cc-option,-mcpu=e6500,$(E5500_CPU))
-+CFLAGS-$(CONFIG_POWERPC64_CPU) += $(call cc-option,-mtune=power10,	\
-+				  $(call cc-option,-mtune=power9,	\
-+				  $(call cc-option,-mtune=power8)))
- 
- asinstr := $(call as-instr,lis 9$(comma)foo@high,-DHAVE_AS_ATHIGH=1)
- 
---- a/arch/powerpc/platforms/Kconfig.cputype
-+++ b/arch/powerpc/platforms/Kconfig.cputype
-@@ -118,19 +118,18 @@ endchoice
- 
- choice
- 	prompt "CPU selection"
--	default GENERIC_CPU
- 	help
- 	  This will create a kernel which is optimised for a particular CPU.
- 	  The resulting kernel may not run on other CPUs, so use this with care.
- 
- 	  If unsure, select Generic.
- 
--config GENERIC_CPU
-+config POWERPC64_CPU
- 	bool "Generic (POWER5 and PowerPC 970 and above)"
- 	depends on PPC_BOOK3S_64 && !CPU_LITTLE_ENDIAN
- 	select PPC_64S_HASH_MMU
- 
--config GENERIC_CPU
-+config POWERPC64_CPU
- 	bool "Generic (POWER8 and above)"
- 	depends on PPC_BOOK3S_64 && CPU_LITTLE_ENDIAN
- 	select ARCH_HAS_FAST_MULTIPLIER
-@@ -233,13 +232,12 @@ config E500MC_CPU
- 
- config TOOLCHAIN_DEFAULT_CPU
- 	bool "Rely on the toolchain's implicit default CPU"
--	depends on PPC32
- 
- endchoice
- 
- config TARGET_CPU_BOOL
- 	bool
--	default !GENERIC_CPU && !TOOLCHAIN_DEFAULT_CPU
-+	default !TOOLCHAIN_DEFAULT_CPU
- 
- config TARGET_CPU
- 	string
-@@ -251,6 +249,10 @@ config TARGET_CPU
- 	default "power8" if POWER8_CPU
- 	default "power9" if POWER9_CPU
- 	default "power10" if POWER10_CPU
-+	default "e500mc64" if E5500_CPU
-+	default "e6500" if E6500_CPU
-+	default "power4" if POWERPC64_CPU && !CPU_LITTLE_ENDIAN
-+	default "power8" if POWERPC64_CPU && CPU_LITTLE_ENDIAN
- 	default "405" if 405_CPU
- 	default "440" if 440_CPU
- 	default "464" if 464_CPU
 
 
