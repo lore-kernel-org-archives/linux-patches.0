@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC82D1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD11C433EF;
-	Mon, 20 Mar 2023 15:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4B71C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF979C433EF;
+	Mon, 20 Mar 2023 15:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324851;
-	bh=pMg80H108ZnXFkQEBUO+XhK1yVzB2dQGtQ3ly/ZV6Zs=;
+	s=korg; t=1679324854;
+	bh=sFh+slsaerm0TBFtv1wg/yGEi4mxAKvEZDoV0mTpmvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOobjPLcmnLeZclREQy0eAQ6PaajC3fCdH8W+PLlG3SMBEdyXSqC6Jd+O5HafuSaQ
-	 JdcxTbWga8kSkVDB4tTD4rtArXkw6Yr10I1h/4Y/Q4vo76twNW/Nh3O4Fn+ya92jP5
-	 VUmrAoN3rZaxvbGgQlTCAhWu19JoEfQxLZj5E1Xw=
+	b=VeL/4MgbTwyFaufDEJV7NeBtF6GCWDwB7rSV3LO5eUuRGtX8jMSt6Oijv06byNmPx
+	 uR/uYdUzlvf+5/2xFZQex7Dz0TWXX89ICfuVM5ObSGDGeBn91Lupf9aWvtWzJ9EmsU
+	 MgbnCj1Yl4tzXj+OokvbCeF7M1IT6P7kLAjXzZR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5.10 65/99] KVM: nVMX: add missing consistency checks for CR0 and CR4
-Date: Mon, 20 Mar 2023 15:54:43 +0100
-Message-Id: <20230320145446.122864603@linuxfoundation.org>
+	Jaska Uimonen <jaska.uimonen@linux.intel.com>,
+	Adrian Bonislawski <adrian.bonislawski@intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 013/198] ASoC: SOF: ipc4-topology: set dmic dai index from copier
+Date: Mon, 20 Mar 2023 15:52:31 +0100
+Message-Id: <20230320145508.045557908@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,57 +39,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Jaska Uimonen <jaska.uimonen@linux.intel.com>
 
-commit 112e66017bff7f2837030f34c2bc19501e9212d5 upstream.
+[ Upstream commit c99e48f4ce9b986ab7992ec7283a06dae875f668 ]
 
-The effective values of the guest CR0 and CR4 registers may differ from
-those included in the VMCS12.  In particular, disabling EPT forces
-CR4.PAE=1 and disabling unrestricted guest mode forces CR0.PG=CR0.PE=1.
+Dmic dai index was set incorrectly to bits 5-7, when it is actually using
+just the lowest 3. Fix the macro for setting the bits.
 
-Therefore, checks on these bits cannot be delegated to the processor
-and must be performed by KVM.
-
-Reported-by: Reima ISHII <ishiir@g.ecc.u-tokyo.ac.jp>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: aa84ffb72158 ("ASoC: SOF: ipc4-topology: Add support for SSP/DMIC DAI's")
+Signed-off-by: Jaska Uimonen <jaska.uimonen@linux.intel.com>
+Reviewed-by: Adrian Bonislawski <adrian.bonislawski@intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20230307110730.1995-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/nested.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ sound/soc/sof/ipc4-topology.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -2998,7 +2998,7 @@ static int nested_vmx_check_guest_state(
- 					struct vmcs12 *vmcs12,
- 					enum vm_entry_failure_code *entry_failure_code)
- {
--	bool ia32e;
-+	bool ia32e = !!(vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE);
+diff --git a/sound/soc/sof/ipc4-topology.h b/sound/soc/sof/ipc4-topology.h
+index 0aa87a8add5d3..2363a7cc0b57d 100644
+--- a/sound/soc/sof/ipc4-topology.h
++++ b/sound/soc/sof/ipc4-topology.h
+@@ -46,7 +46,7 @@
+ #define SOF_IPC4_NODE_INDEX_INTEL_SSP(x) (((x) & 0xf) << 4)
  
- 	*entry_failure_code = ENTRY_FAIL_DEFAULT;
+ /* Node ID for DMIC type DAI copiers */
+-#define SOF_IPC4_NODE_INDEX_INTEL_DMIC(x) (((x) & 0x7) << 5)
++#define SOF_IPC4_NODE_INDEX_INTEL_DMIC(x) ((x) & 0x7)
  
-@@ -3024,6 +3024,13 @@ static int nested_vmx_check_guest_state(
- 					   vmcs12->guest_ia32_perf_global_ctrl)))
- 		return -EINVAL;
- 
-+	if (CC((vmcs12->guest_cr0 & (X86_CR0_PG | X86_CR0_PE)) == X86_CR0_PG))
-+		return -EINVAL;
-+
-+	if (CC(ia32e && !(vmcs12->guest_cr4 & X86_CR4_PAE)) ||
-+	    CC(ia32e && !(vmcs12->guest_cr0 & X86_CR0_PG)))
-+		return -EINVAL;
-+
- 	/*
- 	 * If the load IA32_EFER VM-entry control is 1, the following checks
- 	 * are performed on the field for the IA32_EFER MSR:
-@@ -3035,7 +3042,6 @@ static int nested_vmx_check_guest_state(
- 	 */
- 	if (to_vmx(vcpu)->nested.nested_run_pending &&
- 	    (vmcs12->vm_entry_controls & VM_ENTRY_LOAD_IA32_EFER)) {
--		ia32e = (vmcs12->vm_entry_controls & VM_ENTRY_IA32E_MODE) != 0;
- 		if (CC(!kvm_valid_efer(vcpu, vmcs12->guest_ia32_efer)) ||
- 		    CC(ia32e != !!(vmcs12->guest_ia32_efer & EFER_LMA)) ||
- 		    CC(((vmcs12->guest_cr0 & X86_CR0_PG) &&
+ #define SOF_IPC4_GAIN_ALL_CHANNELS_MASK 0xffffffff
+ #define SOF_IPC4_VOL_ZERO_DB	0x7fffffff
+-- 
+2.39.2
+
 
 
