@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81C01C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2779CC4339B;
-	Mon, 20 Mar 2023 15:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0381C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8274C433D2;
+	Mon, 20 Mar 2023 15:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325328;
-	bh=YAq+Bf7ra3cq1nrDi5rHRjehqZChJcH6ijEaUwTFk00=;
+	s=korg; t=1679325331;
+	bh=EzEDQA1kSzFYQz1avXhL1t6pYR6T7JWiXlanbeMZ358=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aDcgsp0Gok/B4h+HWZuIKB/vpEEVVDxih8x0Mk8K3dHuSbFgpxmlggGhz/qC7AxgS
-	 lQu5/bTvhpcujhMpScx6UzX5thcnKkz7xB/PXYCLjf1J9crPjtwvyBUvJ9DtrkU5Be
-	 8sV4UfIxTwjI3psEzc6XyzUfFkWJeaxcieV9+kTk=
+	b=1rPS/wn08d1yohXV79mpnUpdOGZSOBaEfDA0XmlaN06a/+pZ4JX1XEb9fbRG7UyoK
+	 s/PVfnCEhKau0dMurqjxs7FkM6wMDstyCaL2fu0k6cPCTZbMfwabaDP5uCbDs0+WCt
+	 6w7LOiSYvnZ6JQGvGtbawEHLAm8QO4louf2rXmVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Maxime Ripard <maxime@cerno.tech>
-Subject: [PATCH 5.15 091/115] drm/sun4i: fix missing component unbind on bind errors
-Date: Mon, 20 Mar 2023 15:55:03 +0100
-Message-Id: <20230320145453.230740845@linuxfoundation.org>
+	Parav Pandit <parav@nvidia.com>,
+	Daniel Jurgens <danielj@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 069/198] net/mlx5: Fix setting ec_function bit in MANAGE_PAGES
+Date: Mon, 20 Mar 2023 15:53:27 +0100
+Message-Id: <20230320145510.429036562@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,49 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Parav Pandit <parav@nvidia.com>
 
-commit c22f2ff8724b49dce2ae797e9fbf4bc0fa91112f upstream.
+[ Upstream commit ba5d8f72b82cc197355c9340ef89dab813815865 ]
 
-Make sure to unbind all subcomponents when binding the aggregate device
-fails.
+When ECPF is a page supplier, reclaim pages missed to honor the
+ec_function bit provided by the firmware. It always used the ec_function
+to true during driver unload flow for ECPF. This is incorrect.
 
-Fixes: 9026e0d122ac ("drm: Add Allwinner A10 Display Engine support")
-Cc: stable@vger.kernel.org      # 4.7
-Cc: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230306103242.4775-1-johan+linaro@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Honor the ec_function bit provided by device during page allocation
+request event.
+
+Fixes: d6945242f45d ("net/mlx5: Hold pages RB tree per VF")
+Signed-off-by: Parav Pandit <parav@nvidia.com>
+Signed-off-by: Daniel Jurgens <danielj@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_drv.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ .../ethernet/mellanox/mlx5/core/pagealloc.c   | 22 ++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/sun4i/sun4i_drv.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_drv.c
-@@ -94,12 +94,12 @@ static int sun4i_drv_bind(struct device
- 	/* drm_vblank_init calls kcalloc, which can fail */
- 	ret = drm_vblank_init(drm, drm->mode_config.num_crtc);
- 	if (ret)
--		goto cleanup_mode_config;
-+		goto unbind_all;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
+index 64d4e7125e9bb..95dc67fb30015 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
+@@ -82,6 +82,16 @@ static u16 func_id_to_type(struct mlx5_core_dev *dev, u16 func_id, bool ec_funct
+ 	return func_id <= mlx5_core_max_vfs(dev) ?  MLX5_VF : MLX5_SF;
+ }
  
- 	/* Remove early framebuffers (ie. simplefb) */
- 	ret = drm_aperture_remove_framebuffers(false, &sun4i_drv_driver);
- 	if (ret)
--		goto cleanup_mode_config;
-+		goto unbind_all;
++static u32 mlx5_get_ec_function(u32 function)
++{
++	return function >> 16;
++}
++
++static u32 mlx5_get_func_id(u32 function)
++{
++	return function & 0xffff;
++}
++
+ static struct rb_root *page_root_per_function(struct mlx5_core_dev *dev, u32 function)
+ {
+ 	struct rb_root *root;
+@@ -665,20 +675,22 @@ static int optimal_reclaimed_pages(void)
+ }
  
- 	sun4i_framebuffer_init(drm);
+ static int mlx5_reclaim_root_pages(struct mlx5_core_dev *dev,
+-				   struct rb_root *root, u16 func_id)
++				   struct rb_root *root, u32 function)
+ {
+ 	u64 recl_pages_to_jiffies = msecs_to_jiffies(mlx5_tout_ms(dev, RECLAIM_PAGES));
+ 	unsigned long end = jiffies + recl_pages_to_jiffies;
  
-@@ -118,6 +118,8 @@ static int sun4i_drv_bind(struct device
+ 	while (!RB_EMPTY_ROOT(root)) {
++		u32 ec_function = mlx5_get_ec_function(function);
++		u32 function_id = mlx5_get_func_id(function);
+ 		int nclaimed;
+ 		int err;
  
- finish_poll:
- 	drm_kms_helper_poll_fini(drm);
-+unbind_all:
-+	component_unbind_all(dev, NULL);
- cleanup_mode_config:
- 	drm_mode_config_cleanup(drm);
- 	of_reserved_mem_device_release(dev);
+-		err = reclaim_pages(dev, func_id, optimal_reclaimed_pages(),
+-				    &nclaimed, false, mlx5_core_is_ecpf(dev));
++		err = reclaim_pages(dev, function_id, optimal_reclaimed_pages(),
++				    &nclaimed, false, ec_function);
+ 		if (err) {
+-			mlx5_core_warn(dev, "failed reclaiming pages (%d) for func id 0x%x\n",
+-				       err, func_id);
++			mlx5_core_warn(dev, "reclaim_pages err (%d) func_id=0x%x ec_func=0x%x\n",
++				       err, function_id, ec_function);
+ 			return err;
+ 		}
+ 
+-- 
+2.39.2
+
 
 
