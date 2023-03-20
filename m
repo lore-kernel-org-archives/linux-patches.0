@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EED1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F066DC433EF;
-	Mon, 20 Mar 2023 15:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37ABB1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3C6C433EF;
+	Mon, 20 Mar 2023 15:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325967;
-	bh=0YqCqh+Qg+2o7MkvMn8iGQ1yHulaS9ofUuDEMfWzGW0=;
+	s=korg; t=1679325970;
+	bh=rsc6DeU+Ch57SmvyZGQKPDccSe/DsX+OxfnQCkjRClk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XIE5XFXf6bigRQHMr/kDcUjBU+TBT5+ndyiX9lPvksIWtFEXRF3CQemWPHXNjFeQh
-	 bAC+p/O55e1jd7v1kVXeB60bPTvT9LBx7PbLkhOE6XKl6LkI75eU6r5Fth8bGCpZG1
-	 6mMcff8wbFabgkceAC+HhfOXd7d4Iv3ke4r9YRu8=
+	b=eTkKFndQ+So9mwmYvPIyRbvcohhxixFv0+7EBYprMLFY5i28QO5nFaGlXs/SZbLS7
+	 nTelv/qsvaxD/wPRlmKjkceSmoYJvv8+3EhPnvY2ux5mjk1w4Az5k4hg9sFVeT1kTg
+	 32aOwpRv10OW1kfX08gBjzWUiMT/moNeaYKp02nI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.2 133/211] interconnect: fix mem leak when freeing nodes
-Date: Mon, 20 Mar 2023 15:54:28 +0100
-Message-Id: <20230320145519.008590481@linuxfoundation.org>
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.1 176/198] powerpc/boot: Dont always pass -mcpu=powerpc when building 32-bit uImage
+Date: Mon, 20 Mar 2023 15:55:14 +0100
+Message-Id: <20230320145514.888704299@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Pali Rohár <pali@kernel.org>
 
-commit a5904f415e1af72fa8fe6665aa4f554dc2099a95 upstream.
+commit ff7c76f66d8bad4e694c264c789249e1d3a8205d upstream.
 
-The node link array is allocated when adding links to a node but is not
-deallocated when nodes are destroyed.
+When CONFIG_TARGET_CPU is specified then pass its value to the compiler
+-mcpu option. This fixes following build error when building kernel with
+powerpc e500 SPE capable cross compilers:
 
-Fixes: 11f1ceca7031 ("interconnect: Add generic on-chip interconnect API")
-Cc: stable@vger.kernel.org      # 5.1
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # i.MX8MP MSC SM2-MB-EP1 Board
-Link: https://lore.kernel.org/r/20230306075651.2449-2-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+    BOOTAS  arch/powerpc/boot/crt0.o
+  powerpc-linux-gnuspe-gcc: error: unrecognized argument in option ‘-mcpu=powerpc’
+  powerpc-linux-gnuspe-gcc: note: valid arguments to ‘-mcpu=’ are: 8540 8548 native
+  make[1]: *** [arch/powerpc/boot/Makefile:231: arch/powerpc/boot/crt0.o] Error 1
+
+Similar change was already introduced for the main powerpc Makefile in
+commit 446cda1b21d9 ("powerpc/32: Don't always pass -mcpu=powerpc to the
+compiler").
+
+Fixes: 40a75584e526 ("powerpc/boot: Build wrapper for an appropriate CPU")
+Cc: stable@vger.kernel.org # v5.19+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/2ae3ae5887babfdacc34435bff0944b3f336100a.1674632329.git.christophe.leroy@csgroup.eu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/interconnect/core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/powerpc/boot/Makefile |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -850,6 +850,10 @@ void icc_node_destroy(int id)
+--- a/arch/powerpc/boot/Makefile
++++ b/arch/powerpc/boot/Makefile
+@@ -39,13 +39,19 @@ BOOTCFLAGS    := -Wall -Wundef -Wstrict-
+ 		 $(LINUXINCLUDE)
  
- 	mutex_unlock(&icc_lock);
- 
-+	if (!node)
-+		return;
+ ifdef CONFIG_PPC64_BOOT_WRAPPER
+-ifdef CONFIG_CPU_LITTLE_ENDIAN
+-BOOTCFLAGS	+= -m64 -mcpu=powerpc64le
++BOOTCFLAGS	+= -m64
+ else
+-BOOTCFLAGS	+= -m64 -mcpu=powerpc64
++BOOTCFLAGS	+= -m32
+ endif
 +
-+	kfree(node->links);
- 	kfree(node);
- }
- EXPORT_SYMBOL_GPL(icc_node_destroy);
++ifdef CONFIG_TARGET_CPU_BOOL
++BOOTCFLAGS	+= -mcpu=$(CONFIG_TARGET_CPU)
++else ifdef CONFIG_PPC64_BOOT_WRAPPER
++ifdef CONFIG_CPU_LITTLE_ENDIAN
++BOOTCFLAGS	+= -mcpu=powerpc64le
+ else
+-BOOTCFLAGS	+= -m32 -mcpu=powerpc
++BOOTCFLAGS	+= -mcpu=powerpc64
++endif
+ endif
+ 
+ BOOTCFLAGS	+= -isystem $(shell $(BOOTCC) -print-file-name=include)
 
 
