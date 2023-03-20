@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD151C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC42C4339B;
-	Mon, 20 Mar 2023 15:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73A41C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B3CC433D2;
+	Mon, 20 Mar 2023 15:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324958;
-	bh=rEzDGNZMJOr22C/pfGJunXDJWsvBlZz/NIE1o+SClOY=;
+	s=korg; t=1679324961;
+	bh=AY/Ig6/D6B8kAit4w8uSAEvPz3sYAX7+kRJBXfUowsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rSGrce44sxGSziMcJWV4JKk7QODY5yoM9JPz8sPn6DSB2FhtGsxjBvS80NJwCR2Rs
-	 pyni9ZkhaYrbMAQqBFRTwxO+nDfap8sbe3zXC9tGsZX26YrwfNP4IRlCp/28F3nOZj
-	 w7cXpQpvhZliaY/yPlgm/+x/1RmSXrXobJNuAKvw=
+	b=HkdqM3B75lhJuaDZqlVALC6FZAYcrYv6jBTVyiNDatp9JRtv/zSv2NzkQ0YcxApO7
+	 LQe0wkCYEKJlJyKNDFEEHLj0JVFjjnSTJ4bNR4MTYrNYWJmTC9YpxZIOhJ8U9CIQxq
+	 xKrt7FmmETA5eYH8tUjttcxNWdFUQo931a8uzEPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/115] nfc: st-nci: Fix use after free bug in ndlc_remove due to race condition
-Date: Mon, 20 Mar 2023 15:54:05 +0100
-Message-Id: <20230320145450.839788742@linuxfoundation.org>
+	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH 5.10 54/99] sh: intc: Avoid spurious sizeof-pointer-div warning
+Date: Mon, 20 Mar 2023 15:54:32 +0100
+Message-Id: <20230320145445.649160654@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,69 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
 
-[ Upstream commit 5000fe6c27827a61d8250a7e4a1d26c3298ef4f6 ]
+[ Upstream commit 250870824c1cf199b032b1ef889c8e8d69d9123a ]
 
-This bug influences both st_nci_i2c_remove and st_nci_spi_remove.
-Take st_nci_i2c_remove as an example.
+GCC warns about the pattern sizeof(void*)/sizeof(void), as it looks like
+the abuse of a pattern to calculate the array size. This pattern appears
+in the unevaluated part of the ternary operator in _INTC_ARRAY if the
+parameter is NULL.
 
-In st_nci_i2c_probe, it called ndlc_probe and bound &ndlc->sm_work
-with llt_ndlc_sm_work.
+The replacement uses an alternate approach to return 0 in case of NULL
+which does not generate the pattern sizeof(void*)/sizeof(void), but still
+emits the warning if _INTC_ARRAY is called with a nonarray parameter.
 
-When it calls ndlc_recv or timeout handler, it will finally call
-schedule_work to start the work.
+This patch is required for successful compilation with -Werror enabled.
 
-When we call st_nci_i2c_remove to remove the driver, there
-may be a sequence as follows:
+The idea to use _Generic for type distinction is taken from Comment #7
+in https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108483 by Jakub Jelinek
 
-Fix it by finishing the work before cleanup in ndlc_remove
-
-CPU0                  CPU1
-
-                    |llt_ndlc_sm_work
-st_nci_i2c_remove   |
-  ndlc_remove       |
-     st_nci_remove  |
-     nci_free_device|
-     kfree(ndev)    |
-//free ndlc->ndev   |
-                    |llt_ndlc_rcv_queue
-                    |nci_recv_frame
-                    |//use ndlc->ndev
-
-Fixes: 35630df68d60 ("NFC: st21nfcb: Add driver for STMicroelectronics ST21NFCB NFC chip")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230312160837.2040857-1-zyytlz.wz@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
+Acked-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+Link: https://lore.kernel.org/r/619fa552-c988-35e5-b1d7-fe256c46a272@mkarcher.dialup.fu-berlin.de
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/st-nci/ndlc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/linux/sh_intc.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/st-nci/ndlc.c b/drivers/nfc/st-nci/ndlc.c
-index e9dc313b333e2..3564e3335a988 100644
---- a/drivers/nfc/st-nci/ndlc.c
-+++ b/drivers/nfc/st-nci/ndlc.c
-@@ -286,13 +286,15 @@ EXPORT_SYMBOL(ndlc_probe);
+diff --git a/include/linux/sh_intc.h b/include/linux/sh_intc.h
+index c255273b02810..37ad81058d6ae 100644
+--- a/include/linux/sh_intc.h
++++ b/include/linux/sh_intc.h
+@@ -97,7 +97,10 @@ struct intc_hw_desc {
+ 	unsigned int nr_subgroups;
+ };
  
- void ndlc_remove(struct llt_ndlc *ndlc)
- {
--	st_nci_remove(ndlc->ndev);
--
- 	/* cancel timers */
- 	del_timer_sync(&ndlc->t1_timer);
- 	del_timer_sync(&ndlc->t2_timer);
- 	ndlc->t2_active = false;
- 	ndlc->t1_active = false;
-+	/* cancel work */
-+	cancel_work_sync(&ndlc->sm_work);
-+
-+	st_nci_remove(ndlc->ndev);
+-#define _INTC_ARRAY(a) a, __same_type(a, NULL) ? 0 : sizeof(a)/sizeof(*a)
++#define _INTC_SIZEOF_OR_ZERO(a) (_Generic(a,                 \
++                                 typeof(NULL):  0,           \
++                                 default:       sizeof(a)))
++#define _INTC_ARRAY(a) a, _INTC_SIZEOF_OR_ZERO(a)/sizeof(*a)
  
- 	skb_queue_purge(&ndlc->rcv_q);
- 	skb_queue_purge(&ndlc->send_q);
+ #define INTC_HW_DESC(vectors, groups, mask_regs,	\
+ 		     prio_regs,	sense_regs, ack_regs)	\
 -- 
 2.39.2
 
