@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F48F1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E679CC433A0;
-	Mon, 20 Mar 2023 15:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C551C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2CFC4339B;
+	Mon, 20 Mar 2023 15:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325216;
-	bh=BMLcc+mUHeTIoO5u5A7EYOK8rN40SjGFz855VtVqF6A=;
+	s=korg; t=1679325219;
+	bh=0YqCqh+Qg+2o7MkvMn8iGQ1yHulaS9ofUuDEMfWzGW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ob6cWxezep5oQdpysGvTWo7o1ShJyOsR7CYVjAtdmYxYYiEbn/zlWoWUXV9/+F6/k
-	 KL9QKQOBB2r0UIEjjyAbOGH4rgSZvFoNTnq+PwX7TQOVfwUHvpGUEjEAY1gUPy4im7
-	 e9GkrvqZJDFjslpuSs/6HNQxzb3RuAOE/A4LXxcA=
+	b=FkSZ815FMczF7MWViphQ96W7LA7pDs675IZkpiHtk6NiZqTdd9WCHJ+HcKlNityki
+	 J8d3kFlHpL2JTyc0tiIBdm1hK06cz+nag0+g3WHZZI9tvAVhWDXdHe83l4D9Qz3gyz
+	 8Flj8KmiGjRB+0A26xLBsNXQN49+/dr1avc/Sj48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paul Holzinger <pholzing@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/198] tcp: Fix bind() conflict check for dual-stack wildcard address.
-Date: Mon, 20 Mar 2023 15:53:14 +0100
-Message-Id: <20230320145509.871432969@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: [PATCH 5.15 079/115] interconnect: fix mem leak when freeing nodes
+Date: Mon, 20 Mar 2023 15:54:51 +0100
+Message-Id: <20230320145452.739962310@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,69 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit d9ba9934285514f1f95d96326a82398a22dc77f2 ]
+commit a5904f415e1af72fa8fe6665aa4f554dc2099a95 upstream.
 
-Paul Holzinger reported [0] that commit 5456262d2baa ("net: Fix
-incorrect address comparison when searching for a bind2 bucket")
-introduced a bind() regression.  Paul also gave a nice repro that
-calls two types of bind() on the same port, both of which now
-succeed, but the second call should fail:
+The node link array is allocated when adding links to a node but is not
+deallocated when nodes are destroyed.
 
-  bind(fd1, ::, port) + bind(fd2, 127.0.0.1, port)
-
-The cited commit added address family tests in three functions to
-fix the uninit-value KMSAN report. [1]  However, the test added to
-inet_bind2_bucket_match_addr_any() removed a necessary conflict
-check; the dual-stack wildcard address no longer conflicts with
-an IPv4 non-wildcard address.
-
-If tb->family is AF_INET6 and sk->sk_family is AF_INET in
-inet_bind2_bucket_match_addr_any(), we still need to check
-if tb has the dual-stack wildcard address.
-
-Note that the IPv4 wildcard address does not conflict with
-IPv6 non-wildcard addresses.
-
-[0]: https://lore.kernel.org/netdev/e21bf153-80b0-9ec0-15ba-e04a4ad42c34@redhat.com/
-[1]: https://lore.kernel.org/netdev/CAG_fn=Ud3zSW7AZWXc+asfMhZVL5ETnvuY44Pmyv4NPv-ijN-A@mail.gmail.com/
-
-Fixes: 5456262d2baa ("net: Fix incorrect address comparison when searching for a bind2 bucket")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reported-by: Paul Holzinger <pholzing@redhat.com>
-Link: https://lore.kernel.org/netdev/CAG_fn=Ud3zSW7AZWXc+asfMhZVL5ETnvuY44Pmyv4NPv-ijN-A@mail.gmail.com/
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Tested-by: Paul Holzinger <pholzing@redhat.com>
-Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 11f1ceca7031 ("interconnect: Add generic on-chip interconnect API")
+Cc: stable@vger.kernel.org      # 5.1
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # i.MX8MP MSC SM2-MB-EP1 Board
+Link: https://lore.kernel.org/r/20230306075651.2449-2-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_hashtables.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/interconnect/core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index cd8b2f7a8f341..f0750c06d5ffc 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -828,8 +828,14 @@ bool inet_bind2_bucket_match_addr_any(const struct inet_bind2_bucket *tb, const
- #if IS_ENABLED(CONFIG_IPV6)
- 	struct in6_addr addr_any = {};
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -850,6 +850,10 @@ void icc_node_destroy(int id)
  
--	if (sk->sk_family != tb->family)
-+	if (sk->sk_family != tb->family) {
-+		if (sk->sk_family == AF_INET)
-+			return net_eq(ib2_net(tb), net) && tb->port == port &&
-+				tb->l3mdev == l3mdev &&
-+				ipv6_addr_equal(&tb->v6_rcv_saddr, &addr_any);
+ 	mutex_unlock(&icc_lock);
+ 
++	if (!node)
++		return;
 +
- 		return false;
-+	}
- 
- 	if (sk->sk_family == AF_INET6)
- 		return net_eq(ib2_net(tb), net) && tb->port == port &&
--- 
-2.39.2
-
++	kfree(node->links);
+ 	kfree(node);
+ }
+ EXPORT_SYMBOL_GPL(icc_node_destroy);
 
 
