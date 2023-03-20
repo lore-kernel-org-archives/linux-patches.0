@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752441C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7267C433D2;
-	Mon, 20 Mar 2023 15:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383641C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC8CC4339B;
+	Mon, 20 Mar 2023 15:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325715;
-	bh=gVDUWofQpGjrvDcWpgA6d4EKOgvTcNdL4WkyriL8SBc=;
+	s=korg; t=1679325718;
+	bh=FwEafGK3MCe9FJYti0DvSQD0dVjCiZOHkwLeXBPnFSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUyzZGKV9Zviihk80sBD9/0k/IQok4pEEiZtiMWtnWm+6KJi7UUoimT8eXAKGMhUn
-	 2qd8Tuxckwzl23WHy0sWgBqEr8jrysfTaMIZObABf05Txl7G+LXenb2s0uk7JHTm8v
-	 emjqJkk9Kwsza7RjGVevwfKRdvWSk59O8H5ZE6do=
+	b=xCmxo2drslNnMQT+A5hiMAjDGz2qu4tHSeM2mzTH93Bz+4LNmqj6LwvA/8XqsLzBW
+	 sOkns+yYCM70anquHDr1oE1sGGH6onKE5ylsd3aSYUpWT4WdCtdkocYZsEgi4pu1Ub
+	 kCOo7LKNICfu0D8q/MQJQdVzYHIo3jXsXWvpk+Lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 089/211] i825xx: sni_82596: use eth_hw_addr_set()
-Date: Mon, 20 Mar 2023 15:53:44 +0100
-Message-Id: <20230320145517.035138995@linuxfoundation.org>
+	Alexandre Bailon <abailon@baylibre.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: [PATCH 6.1 131/198] interconnect: imx: fix registration race
+Date: Mon, 20 Mar 2023 15:54:29 +0100
+Message-Id: <20230320145513.033777620@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,57 +37,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit f38373345c65529639a01fba3675eb8cb4c579c3 ]
+commit 9fbd35520f1f7f3cbe1873939a27ad9b009f21f9 upstream.
 
-netdev->dev_addr is now const, we can't write to it directly.
-Copy scrambled mac address octects into an array then eth_hw_addr_set().
+The current interconnect provider registration interface is inherently
+racy as nodes are not added until the after adding the provider. This
+can specifically cause racing DT lookups to fail.
 
-Fixes: adeef3e32146 ("net: constify netdev->dev_addr")
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://lore.kernel.org/r/20230315134117.79511-1-tsbogend@alpha.franken.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Switch to using the new API where the provider is not registered until
+after it has been fully initialised.
+
+Fixes: f0d8048525d7 ("interconnect: Add imx core driver")
+Cc: stable@vger.kernel.org      # 5.8
+Cc: Alexandre Bailon <abailon@baylibre.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # i.MX8MP MSC SM2-MB-EP1 Board
+Link: https://lore.kernel.org/r/20230306075651.2449-5-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/i825xx/sni_82596.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/interconnect/imx/imx.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/i825xx/sni_82596.c b/drivers/net/ethernet/i825xx/sni_82596.c
-index daec9ce04531b..54bb4d9a0d1ea 100644
---- a/drivers/net/ethernet/i825xx/sni_82596.c
-+++ b/drivers/net/ethernet/i825xx/sni_82596.c
-@@ -78,6 +78,7 @@ static int sni_82596_probe(struct platform_device *dev)
- 	void __iomem *mpu_addr;
- 	void __iomem *ca_addr;
- 	u8 __iomem *eth_addr;
-+	u8 mac[ETH_ALEN];
+--- a/drivers/interconnect/imx/imx.c
++++ b/drivers/interconnect/imx/imx.c
+@@ -295,6 +295,9 @@ int imx_icc_register(struct platform_dev
+ 	provider->xlate = of_icc_xlate_onecell;
+ 	provider->data = data;
+ 	provider->dev = dev->parent;
++
++	icc_provider_init(provider);
++
+ 	platform_set_drvdata(pdev, imx_provider);
  
- 	res = platform_get_resource(dev, IORESOURCE_MEM, 0);
- 	ca = platform_get_resource(dev, IORESOURCE_MEM, 1);
-@@ -109,12 +110,13 @@ static int sni_82596_probe(struct platform_device *dev)
- 		goto probe_failed;
+ 	if (settings) {
+@@ -306,20 +309,18 @@ int imx_icc_register(struct platform_dev
+ 		}
+ 	}
  
- 	/* someone seems to like messed up stuff */
--	netdevice->dev_addr[0] = readb(eth_addr + 0x0b);
--	netdevice->dev_addr[1] = readb(eth_addr + 0x0a);
--	netdevice->dev_addr[2] = readb(eth_addr + 0x09);
--	netdevice->dev_addr[3] = readb(eth_addr + 0x08);
--	netdevice->dev_addr[4] = readb(eth_addr + 0x07);
--	netdevice->dev_addr[5] = readb(eth_addr + 0x06);
-+	mac[0] = readb(eth_addr + 0x0b);
-+	mac[1] = readb(eth_addr + 0x0a);
-+	mac[2] = readb(eth_addr + 0x09);
-+	mac[3] = readb(eth_addr + 0x08);
-+	mac[4] = readb(eth_addr + 0x07);
-+	mac[5] = readb(eth_addr + 0x06);
-+	eth_hw_addr_set(netdevice, mac);
- 	iounmap(eth_addr);
+-	ret = icc_provider_add(provider);
+-	if (ret) {
+-		dev_err(dev, "error adding interconnect provider: %d\n", ret);
++	ret = imx_icc_register_nodes(imx_provider, nodes, nodes_count, settings);
++	if (ret)
+ 		return ret;
+-	}
  
- 	if (netdevice->irq < 0) {
--- 
-2.39.2
-
+-	ret = imx_icc_register_nodes(imx_provider, nodes, nodes_count, settings);
++	ret = icc_provider_register(provider);
+ 	if (ret)
+-		goto provider_del;
++		goto err_unregister_nodes;
+ 
+ 	return 0;
+ 
+-provider_del:
+-	icc_provider_del(provider);
++err_unregister_nodes:
++	imx_icc_unregister_nodes(&imx_provider->provider);
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(imx_icc_register);
+@@ -328,9 +329,8 @@ void imx_icc_unregister(struct platform_
+ {
+ 	struct imx_icc_provider *imx_provider = platform_get_drvdata(pdev);
+ 
++	icc_provider_deregister(&imx_provider->provider);
+ 	imx_icc_unregister_nodes(&imx_provider->provider);
+-
+-	icc_provider_del(&imx_provider->provider);
+ }
+ EXPORT_SYMBOL_GPL(imx_icc_unregister);
+ 
 
 
