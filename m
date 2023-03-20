@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5761C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC590C433D2;
-	Mon, 20 Mar 2023 15:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365221C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF274C4339B;
+	Mon, 20 Mar 2023 15:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325978;
-	bh=/aqFsJCHdW9UaPjqze/Vnzhzi+ssZM7JpgAU3CEntIg=;
+	s=korg; t=1679325981;
+	bh=v81g5Ju93yPkz3l72tZo5MVgoURquqy4Asl0YshQPVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zd9xsDcXfSIpvJ06BPmk1Xx+fYJTIRlm8rb+vbLLWtPLI5El4h82uk6+KJid0wwj/
-	 S4SHi49bAfKT1sxAbwH0uxtnp5y7tmfGahg8WCvhTk9Vm2cR+KmA+DqU8qnd14SC2z
-	 IYETcXvbX/kr0ccteQQrRB/rjgURPThf6npkR+MQ=
+	b=S3KvYiH3+GYO/Q+/+PaW0wZ1beX97O4KQKPnm2eeKdWFpC/Cs9Bzh473QmluQQ38D
+	 N7JT56ys+yaTFNozdzJqnTy1SZ/U/v6B+pMtR7rfp2i2nH9h0vY+4MbfAXF5wNk+kM
+	 YSwbgz/zl6moxBlRuxs6keZMUewAURXo9bwUjOiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.2 135/211] interconnect: qcom: rpm: fix probe child-node error handling
-Date: Mon, 20 Mar 2023 15:54:30 +0100
-Message-Id: <20230320145519.099098916@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 178/198] fbdev: stifb: Provide valid pixelclock and add fb_check_var() checks
+Date: Mon, 20 Mar 2023 15:55:16 +0100
+Message-Id: <20230320145514.952107318@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +33,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Helge Deller <deller@gmx.de>
 
-commit bc463201f60803fa6bf2741d59441031cd0910e4 upstream.
+commit 203873a535d627c668f293be0cb73e26c30f9cc7 upstream.
 
-Make sure to clean up and release resources properly also in case probe
-fails when populating child devices.
+Find a valid modeline depending on the machine graphic card
+configuration and add the fb_check_var() function to validate
+Xorg provided graphics settings.
 
-Fixes: e39bf2972c6e ("interconnect: icc-rpm: Support child NoC device probe")
-Cc: stable@vger.kernel.org      # 5.17
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-7-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/interconnect/qcom/icc-rpm.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/stifb.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
---- a/drivers/interconnect/qcom/icc-rpm.c
-+++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -541,8 +541,11 @@ regmap_done:
- 	platform_set_drvdata(pdev, qp);
+--- a/drivers/video/fbdev/stifb.c
++++ b/drivers/video/fbdev/stifb.c
+@@ -922,6 +922,28 @@ SETUP_HCRX(struct stifb_info *fb)
+ /* ------------------- driver specific functions --------------------------- */
  
- 	/* Populate child NoC devices if any */
--	if (of_get_child_count(dev->of_node) > 0)
--		return of_platform_populate(dev->of_node, NULL, NULL, dev);
-+	if (of_get_child_count(dev->of_node) > 0) {
-+		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-+		if (ret)
-+			goto err;
-+	}
+ static int
++stifb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
++{
++	struct stifb_info *fb = container_of(info, struct stifb_info, info);
++
++	if (var->xres != fb->info.var.xres ||
++	    var->yres != fb->info.var.yres ||
++	    var->bits_per_pixel != fb->info.var.bits_per_pixel)
++		return -EINVAL;
++
++	var->xres_virtual = var->xres;
++	var->yres_virtual = var->yres;
++	var->xoffset = 0;
++	var->yoffset = 0;
++	var->grayscale = fb->info.var.grayscale;
++	var->red.length = fb->info.var.red.length;
++	var->green.length = fb->info.var.green.length;
++	var->blue.length = fb->info.var.blue.length;
++
++	return 0;
++}
++
++static int
+ stifb_setcolreg(u_int regno, u_int red, u_int green,
+ 	      u_int blue, u_int transp, struct fb_info *info)
+ {
+@@ -1145,6 +1167,7 @@ stifb_init_display(struct stifb_info *fb
  
- 	return 0;
- err:
+ static const struct fb_ops stifb_ops = {
+ 	.owner		= THIS_MODULE,
++	.fb_check_var	= stifb_check_var,
+ 	.fb_setcolreg	= stifb_setcolreg,
+ 	.fb_blank	= stifb_blank,
+ 	.fb_fillrect	= stifb_fillrect,
+@@ -1164,6 +1187,7 @@ static int __init stifb_init_fb(struct s
+ 	struct stifb_info *fb;
+ 	struct fb_info *info;
+ 	unsigned long sti_rom_address;
++	char modestr[32];
+ 	char *dev_name;
+ 	int bpp, xres, yres;
+ 
+@@ -1342,6 +1366,9 @@ static int __init stifb_init_fb(struct s
+ 	info->flags = FBINFO_HWACCEL_COPYAREA | FBINFO_HWACCEL_FILLRECT;
+ 	info->pseudo_palette = &fb->pseudo_palette;
+ 
++	scnprintf(modestr, sizeof(modestr), "%dx%d-%d", xres, yres, bpp);
++	fb_find_mode(&info->var, info, modestr, NULL, 0, NULL, bpp);
++
+ 	/* This has to be done !!! */
+ 	if (fb_alloc_cmap(&info->cmap, NR_PALETTE, 0))
+ 		goto out_err1;
 
 
