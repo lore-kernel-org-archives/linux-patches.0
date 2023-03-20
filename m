@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC431C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB3EC433EF;
-	Mon, 20 Mar 2023 15:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8956C1C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:27:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7F0C433D2;
+	Mon, 20 Mar 2023 15:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326041;
-	bh=JGoVHzgVWqTkRaEk8LYC+vjk6fqlImbqLIvIF5tP868=;
+	s=korg; t=1679326044;
+	bh=R169yCGc1/xa7EkigUBiCu0PO0c+VH5hmyqfigFUq0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IdoTTTmPQuqnZf5dm86EeroEq7nRQfV7w8RJZgVPzZggZ9aD107fEsWRoJDBr2Trx
-	 J9InQOieV5v/2+xR4+G/WR/F7Wlhsv2/FTDlNjcru2TO1da43Myv9LyrtxBoCR3Tq5
-	 xXFwgv43ZxyuxsO+vSb1YCBaou7YLAuYnwkjjw4w=
+	b=AAhfuWOhSfaq3Wo2SQHo6kpoyUIvpMvr/KGPASV/HZ4Zv9P8cVaYh1PmSWCklFcjb
+	 3tT2N30t9UyPuYSmYRwHc/8W4bEZ8qi1gMVx3p5jUPnZ/lzOvAYoCt5KekWHH1V+1+
+	 XvKbvhvWlhk79NmMsnHGkWiGMjtixKjuKMTxqgYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 190/198] powerpc: Pass correct CPU reference to assembler
-Date: Mon, 20 Mar 2023 15:55:28 +0100
-Message-Id: <20230320145515.427843068@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.2 149/211] cifs: set DFS root session in cifs_get_smb_ses()
+Date: Mon, 20 Mar 2023 15:54:44 +0100
+Message-Id: <20230320145519.675529152@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,74 +34,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit bfb03af71a3798b5a88a945a9c19ad67e1c4986d upstream.
+commit b56bce502f55505a97e381d546ee881928183126 upstream.
 
-Jan-Benedict reported issue with building ppc64e_defconfig
-with mainline GCC work:
+Set the DFS root session pointer earlier when creating a new SMB
+session to prevent racing with smb2_reconnect(), cifs_reconnect_tcon()
+and DFS cache refresher.
 
-  powerpc64-linux-gcc -Wp,-MMD,arch/powerpc/kernel/vdso/.gettimeofday-64.o.d -nostdinc -I./arch/powerpc/include -I./arch/powerpc/include/generated  -I./include -I./arch/powerpc/include/uapi -I./arch/powerpc/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/compiler-version.h -include ./include/linux/kconfig.h -D__KERNEL__ -I ./arch/powerpc -DHAVE_AS_ATHIGH=1 -fmacro-prefix-map=./= -D__ASSEMBLY__ -fno-PIE -m64 -Wl,-a64 -mabi=elfv1 -Wa,-me500 -Wa,-me500mc -mabi=elfv1 -mbig-endian    -Wl,-soname=linux-vdso64.so.1 -D__VDSO64__ -s -c -o arch/powerpc/kernel/vdso/gettimeofday-64.o arch/powerpc/kernel/vdso/gettimeofday.S
-	arch/powerpc/kernel/vdso/gettimeofday.S: Assembler messages:
-	arch/powerpc/kernel/vdso/gettimeofday.S:72: Error: unrecognized opcode: `stdu'
-	arch/powerpc/kernel/vdso/gettimeofday.S:72: Error: unrecognized opcode: `stdu'
-	arch/powerpc/kernel/vdso/gettimeofday.S:72: Error: unrecognized opcode: `std'
-	arch/powerpc/kernel/vdso/gettimeofday.S:72: Error: unrecognized opcode: `std'
-	arch/powerpc/kernel/vdso/gettimeofday.S:72: Error: unrecognized opcode: `ld'
-	arch/powerpc/kernel/vdso/gettimeofday.S:72: Error: unrecognized opcode: `ld'
-	...
-	make[1]: *** [arch/powerpc/kernel/vdso/Makefile:76: arch/powerpc/kernel/vdso/gettimeofday-64.o] Error 1
-	make: *** [arch/powerpc/Makefile:387: vdso_prepare] Error 2
-
-This is due to assembler being called with -me500mc which is
-a 32 bits target.
-
-The problem comes from the fact that CONFIG_PPC_E500MC is selected for
-both the e500mc (32 bits) and the e5500 (64 bits), and therefore the
-following makefile rule is wrong:
-
-  cpu-as-$(CONFIG_PPC_E500MC)    += $(call as-option,-Wa$(comma)-me500mc)
-
-Today we have CONFIG_TARGET_CPU which provides the identification of the
-expected CPU, it is used for GCC. Once GCC knows the target CPU, it adds
-the correct CPU option to assembler, no need to add it explicitly.
-
-With that change (And also commit 45f7091aac35 ("powerpc/64: Set default
-CPU in Kconfig")), it now is:
-
-  powerpc64-linux-gcc -Wp,-MMD,arch/powerpc/kernel/vdso/.gettimeofday-64.o.d -nostdinc -I./arch/powerpc/include -I./arch/powerpc/include/generated  -I./include -I./arch/powerpc/include/uapi -I./arch/powerpc/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/compiler-version.h -include ./include/linux/kconfig.h -D__KERNEL__ -I ./arch/powerpc -DHAVE_AS_ATHIGH=1 -fmacro-prefix-map=./= -D__ASSEMBLY__ -fno-PIE -m64 -Wl,-a64 -mabi=elfv1 -mcpu=e500mc64 -mabi=elfv1 -mbig-endian    -Wl,-soname=linux-vdso64.so.1 -D__VDSO64__ -s -c -o arch/powerpc/kernel/vdso/gettimeofday-64.o arch/powerpc/kernel/vdso/gettimeofday.S
-
-Reported-by: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Acked-by: Pali Rohár <pali@kernel.org>
-[mpe: Retain -Wa,-mpower4 -Wa,-many for Book3S 64 builds for now]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/758ad54128fa9dd2fdedc4c511592111cbded900.1671475543.git.christophe.leroy@csgroup.eu
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Cc: stable@vger.kernel.org # 6.2
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/Makefile |    4 ----
- 1 file changed, 4 deletions(-)
+ fs/cifs/cifs_dfs_ref.c |    1 +
+ fs/cifs/cifsglob.h     |    1 -
+ fs/cifs/connect.c      |    1 +
+ fs/cifs/dfs.c          |   19 ++++++++-----------
+ fs/cifs/dfs.h          |    3 ++-
+ fs/cifs/fs_context.h   |    1 +
+ 6 files changed, 13 insertions(+), 13 deletions(-)
 
---- a/arch/powerpc/Makefile
-+++ b/arch/powerpc/Makefile
-@@ -201,10 +201,7 @@ KBUILD_CFLAGS += -fno-asynchronous-unwin
- # often slow when they are implemented at all
- KBUILD_CFLAGS		+= $(call cc-option,-mno-string)
+--- a/fs/cifs/cifs_dfs_ref.c
++++ b/fs/cifs/cifs_dfs_ref.c
+@@ -179,6 +179,7 @@ static struct vfsmount *cifs_dfs_do_auto
+ 	tmp.source = full_path;
+ 	tmp.leaf_fullpath = NULL;
+ 	tmp.UNC = tmp.prepath = NULL;
++	tmp.dfs_root_ses = NULL;
  
--cpu-as-$(CONFIG_40x)		+= -Wa,-m405
--cpu-as-$(CONFIG_44x)		+= -Wa,-m440
- cpu-as-$(CONFIG_ALTIVEC)	+= $(call as-option,-Wa$(comma)-maltivec)
--cpu-as-$(CONFIG_PPC_E500)		+= -Wa,-me500
+ 	rc = smb3_fs_context_dup(ctx, &tmp);
+ 	if (rc) {
+--- a/fs/cifs/cifsglob.h
++++ b/fs/cifs/cifsglob.h
+@@ -1767,7 +1767,6 @@ struct cifs_mount_ctx {
+ 	struct TCP_Server_Info *server;
+ 	struct cifs_ses *ses;
+ 	struct cifs_tcon *tcon;
+-	struct cifs_ses *root_ses;
+ 	uuid_t mount_id;
+ 	char *origin_fullpath, *leaf_fullpath;
+ };
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -2278,6 +2278,7 @@ cifs_get_smb_ses(struct TCP_Server_Info
+ 	 * need to lock before changing something in the session.
+ 	 */
+ 	spin_lock(&cifs_tcp_ses_lock);
++	ses->dfs_root_ses = ctx->dfs_root_ses;
+ 	list_add(&ses->smb_ses_list, &server->smb_ses_list);
+ 	spin_unlock(&cifs_tcp_ses_lock);
  
- # When using '-many -mpower4' gas will first try and find a matching power4
- # mnemonic and failing that it will allow any valid mnemonic that GAS knows
-@@ -212,7 +209,6 @@ cpu-as-$(CONFIG_PPC_E500)		+= -Wa,-me500
- # LLVM IAS doesn't understand either flag: https://github.com/ClangBuiltLinux/linux/issues/675
- # but LLVM IAS only supports ISA >= 2.06 for Book3S 64 anyway...
- cpu-as-$(CONFIG_PPC_BOOK3S_64)	+= $(call as-option,-Wa$(comma)-mpower4) $(call as-option,-Wa$(comma)-many)
--cpu-as-$(CONFIG_PPC_E500MC)	+= $(call as-option,-Wa$(comma)-me500mc)
+--- a/fs/cifs/dfs.c
++++ b/fs/cifs/dfs.c
+@@ -95,25 +95,22 @@ static int get_session(struct cifs_mount
+ 	ctx->leaf_fullpath = (char *)full_path;
+ 	rc = cifs_mount_get_session(mnt_ctx);
+ 	ctx->leaf_fullpath = NULL;
+-	if (!rc) {
+-		struct cifs_ses *ses = mnt_ctx->ses;
  
- KBUILD_AFLAGS += $(cpu-as-y)
- KBUILD_CFLAGS += $(cpu-as-y)
+-		mutex_lock(&ses->session_mutex);
+-		ses->dfs_root_ses = mnt_ctx->root_ses;
+-		mutex_unlock(&ses->session_mutex);
+-	}
+ 	return rc;
+ }
+ 
+ static void set_root_ses(struct cifs_mount_ctx *mnt_ctx)
+ {
+-	if (mnt_ctx->ses) {
++	struct smb3_fs_context *ctx = mnt_ctx->fs_ctx;
++	struct cifs_ses *ses = mnt_ctx->ses;
++
++	if (ses) {
+ 		spin_lock(&cifs_tcp_ses_lock);
+-		mnt_ctx->ses->ses_count++;
++		ses->ses_count++;
+ 		spin_unlock(&cifs_tcp_ses_lock);
+-		dfs_cache_add_refsrv_session(&mnt_ctx->mount_id, mnt_ctx->ses);
++		dfs_cache_add_refsrv_session(&mnt_ctx->mount_id, ses);
+ 	}
+-	mnt_ctx->root_ses = mnt_ctx->ses;
++	ctx->dfs_root_ses = mnt_ctx->ses;
+ }
+ 
+ static int get_dfs_conn(struct cifs_mount_ctx *mnt_ctx, const char *ref_path, const char *full_path,
+@@ -260,7 +257,7 @@ int dfs_mount_share(struct cifs_mount_ct
+ 	rc = get_session(mnt_ctx, NULL);
+ 	if (rc)
+ 		return rc;
+-	mnt_ctx->root_ses = mnt_ctx->ses;
++	ctx->dfs_root_ses = mnt_ctx->ses;
+ 	/*
+ 	 * If called with 'nodfs' mount option, then skip DFS resolving.  Otherwise unconditionally
+ 	 * try to get an DFS referral (even cached) to determine whether it is an DFS mount.
+--- a/fs/cifs/dfs.h
++++ b/fs/cifs/dfs.h
+@@ -22,9 +22,10 @@ static inline char *dfs_get_path(struct
+ static inline int dfs_get_referral(struct cifs_mount_ctx *mnt_ctx, const char *path,
+ 				   struct dfs_info3_param *ref, struct dfs_cache_tgt_list *tl)
+ {
++	struct smb3_fs_context *ctx = mnt_ctx->fs_ctx;
+ 	struct cifs_sb_info *cifs_sb = mnt_ctx->cifs_sb;
+ 
+-	return dfs_cache_find(mnt_ctx->xid, mnt_ctx->root_ses, cifs_sb->local_nls,
++	return dfs_cache_find(mnt_ctx->xid, ctx->dfs_root_ses, cifs_sb->local_nls,
+ 			      cifs_remap(cifs_sb), path, ref, tl);
+ }
+ 
+--- a/fs/cifs/fs_context.h
++++ b/fs/cifs/fs_context.h
+@@ -265,6 +265,7 @@ struct smb3_fs_context {
+ 	bool rootfs:1; /* if it's a SMB root file system */
+ 	bool witness:1; /* use witness protocol */
+ 	char *leaf_fullpath;
++	struct cifs_ses *dfs_root_ses;
+ };
+ 
+ extern const struct fs_parameter_spec smb3_fs_parameters[];
 
 
