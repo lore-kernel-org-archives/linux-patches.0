@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34001C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:03:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50872C433D2;
-	Mon, 20 Mar 2023 15:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BBA1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:03:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A883C433D2;
+	Mon, 20 Mar 2023 15:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324634;
-	bh=6mnJ02aYnibZUK89exexsNsvgLET+QSfQH75tsMeHe8=;
+	s=korg; t=1679324637;
+	bh=tBw9+bRQetQ6U/3eEzL4oQkjCyHAA6mvTeS2bMVuCe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b0lvtqfB4RejOsUGYcNRFQldl3lqI8uwylwRYHPCC09+InV8jPvV0C0WbPpQefwOb
-	 Aez1r7S+PSUCCiSLDfKfi//GkZXVW/KR+tKUmtdoIj7ZJZVyyzSbAlvDW2Dj7GiBrJ
-	 XOzyGjUVICeT+J+bDe+Z/TEY838hDnIrezh/hYPk=
+	b=T2M/zeRX9TLaYRKtN05vOIsStOTUxmFiDg+v77M6QYTxa6ObDB2QSCz6bwzjkEU24
+	 oklBzKvDXzoN08F8QCsQtyZb0kFNR4SKkm8qXOZWbZrBi+0SrA+bYsAwKAebPbmCu3
+	 9MX1haJ5GV7WOvmhSRZRhF4k0UBVxE5tJkqhHIJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Huang <qu.huang@linux.dev>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Tobias Schramm <t.schramm@manjaro.org>,
+	Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 42/60] drm/amdkfd: Fix an illegal memory access
-Date: Mon, 20 Mar 2023 15:54:51 +0100
-Message-Id: <20230320145432.659999937@linuxfoundation.org>
+Subject: [PATCH 5.4 37/60] mmc: atmel-mci: fix race between stop command and start of next command
+Date: Mon, 20 Mar 2023 15:54:46 +0100
+Message-Id: <20230320145432.474307479@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
 References: <20230320145430.861072439@linuxfoundation.org>
@@ -36,80 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qu Huang <qu.huang@linux.dev>
+From: Tobias Schramm <t.schramm@manjaro.org>
 
-[ Upstream commit 4fc8fff378b2f2039f2a666d9f8c570f4e58352c ]
+[ Upstream commit eca5bd666b0aa7dc0bca63292e4778968241134e ]
 
-In the kfd_wait_on_events() function, the kfd_event_waiter structure is
-allocated by alloc_event_waiters(), but the event field of the waiter
-structure is not initialized; When copy_from_user() fails in the
-kfd_wait_on_events() function, it will enter exception handling to
-release the previously allocated memory of the waiter structure;
-Due to the event field of the waiters structure being accessed
-in the free_waiters() function, this results in illegal memory access
-and system crash, here is the crash log:
+This commit fixes a race between completion of stop command and start of a
+new command.
+Previously the command ready interrupt was enabled before stop command
+was written to the command register. This caused the command ready
+interrupt to fire immediately since the CMDRDY flag is asserted constantly
+while there is no command in progress.
+Consequently the command state machine will immediately advance to the
+next state when the tasklet function is executed again, no matter
+actual completion state of the stop command.
+Thus a new command can then be dispatched immediately, interrupting and
+corrupting the stop command on the CMD line.
+Fix that by dropping the command ready interrupt enable before calling
+atmci_send_stop_cmd. atmci_send_stop_cmd does already enable the
+command ready interrupt, no further writes to ATMCI_IER are necessary.
 
-localhost kernel: RIP: 0010:native_queued_spin_lock_slowpath+0x185/0x1e0
-localhost kernel: RSP: 0018:ffffaa53c362bd60 EFLAGS: 00010082
-localhost kernel: RAX: ff3d3d6bff4007cb RBX: 0000000000000282 RCX: 00000000002c0000
-localhost kernel: RDX: ffff9e855eeacb80 RSI: 000000000000279c RDI: ffffe7088f6a21d0
-localhost kernel: RBP: ffffe7088f6a21d0 R08: 00000000002c0000 R09: ffffaa53c362be64
-localhost kernel: R10: ffffaa53c362bbd8 R11: 0000000000000001 R12: 0000000000000002
-localhost kernel: R13: ffff9e7ead15d600 R14: 0000000000000000 R15: ffff9e7ead15d698
-localhost kernel: FS:  0000152a3d111700(0000) GS:ffff9e855ee80000(0000) knlGS:0000000000000000
-localhost kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-localhost kernel: CR2: 0000152938000010 CR3: 000000044d7a4000 CR4: 00000000003506e0
-localhost kernel: Call Trace:
-localhost kernel: _raw_spin_lock_irqsave+0x30/0x40
-localhost kernel: remove_wait_queue+0x12/0x50
-localhost kernel: kfd_wait_on_events+0x1b6/0x490 [hydcu]
-localhost kernel: ? ftrace_graph_caller+0xa0/0xa0
-localhost kernel: kfd_ioctl+0x38c/0x4a0 [hydcu]
-localhost kernel: ? kfd_ioctl_set_trap_handler+0x70/0x70 [hydcu]
-localhost kernel: ? kfd_ioctl_create_queue+0x5a0/0x5a0 [hydcu]
-localhost kernel: ? ftrace_graph_caller+0xa0/0xa0
-localhost kernel: __x64_sys_ioctl+0x8e/0xd0
-localhost kernel: ? syscall_trace_enter.isra.18+0x143/0x1b0
-localhost kernel: do_syscall_64+0x33/0x80
-localhost kernel: entry_SYSCALL_64_after_hwframe+0x44/0xa9
-localhost kernel: RIP: 0033:0x152a4dff68d7
-
-Allocate the structure with kcalloc, and remove redundant 0-initialization
-and a redundant loop condition check.
-
-Signed-off-by: Qu Huang <qu.huang@linux.dev>
-Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Tobias Schramm <t.schramm@manjaro.org>
+Acked-by: Ludovic Desroches <ludovic.desroches@microchip.com>
+Link: https://lore.kernel.org/r/20221230194315.809903-2-t.schramm@manjaro.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_events.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/mmc/host/atmel-mci.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-index adbb2fec2e0f2..4fd7dcef2e382 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-@@ -529,16 +529,13 @@ static struct kfd_event_waiter *alloc_event_waiters(uint32_t num_events)
- 	struct kfd_event_waiter *event_waiters;
- 	uint32_t i;
- 
--	event_waiters = kmalloc_array(num_events,
--					sizeof(struct kfd_event_waiter),
--					GFP_KERNEL);
-+	event_waiters = kcalloc(num_events, sizeof(struct kfd_event_waiter),
-+				GFP_KERNEL);
- 	if (!event_waiters)
- 		return NULL;
- 
--	for (i = 0; (event_waiters) && (i < num_events) ; i++) {
-+	for (i = 0; i < num_events; i++)
- 		init_wait(&event_waiters[i].wait);
--		event_waiters[i].activated = false;
--	}
- 
- 	return event_waiters;
- }
+diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
+index 9c084f64f7dba..4d8f2778d8f9a 100644
+--- a/drivers/mmc/host/atmel-mci.c
++++ b/drivers/mmc/host/atmel-mci.c
+@@ -1812,7 +1812,6 @@ static void atmci_tasklet_func(unsigned long priv)
+ 				atmci_writel(host, ATMCI_IER, ATMCI_NOTBUSY);
+ 				state = STATE_WAITING_NOTBUSY;
+ 			} else if (host->mrq->stop) {
+-				atmci_writel(host, ATMCI_IER, ATMCI_CMDRDY);
+ 				atmci_send_stop_cmd(host, data);
+ 				state = STATE_SENDING_STOP;
+ 			} else {
+@@ -1845,8 +1844,6 @@ static void atmci_tasklet_func(unsigned long priv)
+ 				 * command to send.
+ 				 */
+ 				if (host->mrq->stop) {
+-					atmci_writel(host, ATMCI_IER,
+-					             ATMCI_CMDRDY);
+ 					atmci_send_stop_cmd(host, data);
+ 					state = STATE_SENDING_STOP;
+ 				} else {
 -- 
 2.39.2
 
