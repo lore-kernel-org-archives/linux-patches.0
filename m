@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63281C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246CBC433EF;
-	Mon, 20 Mar 2023 15:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E89E1C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2026C433D2;
+	Mon, 20 Mar 2023 15:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326115;
-	bh=Lp+Eg4VK8rObcKndcZEw48ieVuAJl9AgoRCjAquKAxs=;
+	s=korg; t=1679326118;
+	bh=qiPPvstn9iDse4oCkEy7I1GK5Guy0SDOGAs8XIcXX3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z4kWmA2TBo2o+CNq0i07NQUINffuHmLsDh4WQf7Cp5G+GkYHVUXd0iUjLhgIbsPGv
-	 D8cbVKy4lJtO31az7RwY8EQkI15FERTTCU9wxv7wfvHBcLDfY7rWr7qripy/k3n+Lu
-	 CefboWhb38FAsdLKa5c5gT715ckLMPuBwpvValWM=
+	b=w1Q5ziYQ+b2S1wPFXrGMuXbTOqf2h5YqV8knue8AYmBnVenCetto2A+4welfAq2ur
+	 z8+2GKj01k5laeWoVZ9B5wbwfgE23MEZTin7DVl+m/TliFkK+g0ZEX0nhApsXlwPJE
+	 MBhfRPNHaM46BM0Fr9mrKJqe8bAhsG4vFxzlJhkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.2 164/211] drm/i915/active: Fix misuse of non-idle barriers as fence trackers
-Date: Mon, 20 Mar 2023 15:54:59 +0100
-Message-Id: <20230320145520.302249679@linuxfoundation.org>
+Subject: [PATCH 6.2 165/211] drm/i915/dg2: Add HDMI pixel clock frequencies 267.30 and 319.89 MHz
+Date: Mon, 20 Mar 2023 15:55:00 +0100
+Message-Id: <20230320145520.346847077@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -36,121 +35,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+From: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
 
-commit e0e6b416b25ee14716f3549e0cbec1011b193809 upstream.
+commit 46bc23dcd94569270d02c4c1f7e62ae01ebd53bb upstream.
 
-Users reported oopses on list corruptions when using i915 perf with a
-number of concurrently running graphics applications.  Root cause analysis
-pointed at an issue in barrier processing code -- a race among perf open /
-close replacing active barriers with perf requests on kernel context and
-concurrent barrier preallocate / acquire operations performed during user
-context first pin / last unpin.
+Add snps phy table values for HDMI pixel clocks 267.30 MHz and
+319.89 MHz. Values are based on the Bspec algorithm for
+PLL programming for HDMI.
 
-When adding a request to a composite tracker, we try to reuse an existing
-fence tracker, already allocated and registered with that composite.  The
-tracker we obtain may already track another fence, may be an idle barrier,
-or an active barrier.
-
-If the tracker we get occurs a non-idle barrier then we try to delete that
-barrier from a list of barrier tasks it belongs to.  However, while doing
-that we don't respect return value from a function that performs the
-barrier deletion.  Should the deletion ever fail, we would end up reusing
-the tracker still registered as a barrier task.  Since the same structure
-field is reused with both fence callback lists and barrier tasks list,
-list corruptions would likely occur.
-
-Barriers are now deleted from a barrier tasks list by temporarily removing
-the list content, traversing that content with skip over the node to be
-deleted, then populating the list back with the modified content.  Should
-that intentionally racy concurrent deletion attempts be not serialized,
-one or more of those may fail because of the list being temporary empty.
-
-Related code that ignores the results of barrier deletion was initially
-introduced in v5.4 by commit d8af05ff38ae ("drm/i915: Allow sharing the
-idle-barrier from other kernel requests").  However, all users of the
-barrier deletion routine were apparently serialized at that time, then the
-issue didn't exhibit itself.  Results of git bisect with help of a newly
-developed igt@gem_barrier_race@remote-request IGT test indicate that list
-corruptions might start to appear after commit 311770173fac ("drm/i915/gt:
-Schedule request retirement when timeline idles"), introduced in v5.5.
-
-Respect results of barrier deletion attempts -- mark the barrier as idle
-only if successfully deleted from the list.  Then, before proceeding with
-setting our fence as the one currently tracked, make sure that the tracker
-we've got is not a non-idle barrier.  If that check fails then don't use
-that tracker but go back and try to acquire a new, usable one.
-
-v3: use unlikely() to document what outcome we expect (Andi),
-  - fix bad grammar in commit description.
-v2: no code changes,
-  - blame commit 311770173fac ("drm/i915/gt: Schedule request retirement
-    when timeline idles"), v5.5, not commit d8af05ff38ae ("drm/i915: Allow
-    sharing the idle-barrier from other kernel requests"), v5.4,
-  - reword commit description.
-
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/6333
-Fixes: 311770173fac ("drm/i915/gt: Schedule request retirement when timeline idles")
-Cc: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: stable@vger.kernel.org # v5.5
-Cc: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230302120820.48740-1-janusz.krzysztofik@linux.intel.com
-(cherry picked from commit 506006055769b10d1b2b4e22f636f3b45e0e9fc7)
+Cc: stable@vger.kernel.org
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8008
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Uma Shankar <uma.shankar@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230223043619.3941382-1-ankit.k.nautiyal@intel.com
+(cherry picked from commit d46746b8b13cbd377ffc733e465d25800459a31b)
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_active.c |   27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/i915/display/intel_snps_phy.c |   62 ++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
---- a/drivers/gpu/drm/i915/i915_active.c
-+++ b/drivers/gpu/drm/i915/i915_active.c
-@@ -422,12 +422,12 @@ replace_barrier(struct i915_active *ref,
- 	 * we can use it to substitute for the pending idle-barrer
- 	 * request that we want to emit on the kernel_context.
- 	 */
--	__active_del_barrier(ref, node_from_active(active));
--	return true;
-+	return __active_del_barrier(ref, node_from_active(active));
- }
+--- a/drivers/gpu/drm/i915/display/intel_snps_phy.c
++++ b/drivers/gpu/drm/i915/display/intel_snps_phy.c
+@@ -1419,6 +1419,36 @@ static const struct intel_mpllb_state dg
+ 		REG_FIELD_PREP(SNPS_PHY_MPLLB_SSC_UP_SPREAD, 1),
+ };
  
- int i915_active_add_request(struct i915_active *ref, struct i915_request *rq)
- {
-+	u64 idx = i915_request_timeline(rq)->fence_context;
- 	struct dma_fence *fence = &rq->fence;
- 	struct i915_active_fence *active;
- 	int err;
-@@ -437,16 +437,19 @@ int i915_active_add_request(struct i915_
- 	if (err)
- 		return err;
- 
--	active = active_instance(ref, i915_request_timeline(rq)->fence_context);
--	if (!active) {
--		err = -ENOMEM;
--		goto out;
--	}
--
--	if (replace_barrier(ref, active)) {
--		RCU_INIT_POINTER(active->fence, NULL);
--		atomic_dec(&ref->count);
--	}
-+	do {
-+		active = active_instance(ref, idx);
-+		if (!active) {
-+			err = -ENOMEM;
-+			goto out;
-+		}
++static const struct intel_mpllb_state dg2_hdmi_267300 = {
++	.clock = 267300,
++	.ref_control =
++		REG_FIELD_PREP(SNPS_PHY_REF_CONTROL_REF_RANGE, 3),
++	.mpllb_cp =
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_INT, 7) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_PROP, 14) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_INT_GS, 64) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_PROP_GS, 124),
++	.mpllb_div =
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_DIV5_CLK_EN, 1) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_TX_CLK_DIV, 1) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_PMIX_EN, 1) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_V2I, 2) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_FREQ_VCO, 3),
++	.mpllb_div2 =
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_REF_CLK_DIV, 1) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_MULTIPLIER, 74) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_HDMI_DIV, 1),
++	.mpllb_fracn1 =
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_CGG_UPDATE_EN, 1) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_EN, 1) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_DEN, 65535),
++	.mpllb_fracn2 =
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_QUOT, 30146) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_REM, 36699),
++	.mpllb_sscen =
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_SSC_UP_SPREAD, 1),
++};
 +
-+		if (replace_barrier(ref, active)) {
-+			RCU_INIT_POINTER(active->fence, NULL);
-+			atomic_dec(&ref->count);
-+		}
-+	} while (unlikely(is_barrier(active)));
-+
- 	if (!__i915_active_fence_set(active, fence))
- 		__i915_active_acquire(ref);
+ static const struct intel_mpllb_state dg2_hdmi_268500 = {
+ 	.clock = 268500,
+ 	.ref_control =
+@@ -1509,6 +1539,36 @@ static const struct intel_mpllb_state dg
+ 		REG_FIELD_PREP(SNPS_PHY_MPLLB_SSC_UP_SPREAD, 1),
+ };
  
++static const struct intel_mpllb_state dg2_hdmi_319890 = {
++	.clock = 319890,
++	.ref_control =
++		REG_FIELD_PREP(SNPS_PHY_REF_CONTROL_REF_RANGE, 3),
++	.mpllb_cp =
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_INT, 6) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_PROP, 14) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_INT_GS, 64) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_CP_PROP_GS, 124),
++	.mpllb_div =
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_DIV5_CLK_EN, 1) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_TX_CLK_DIV, 1) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_PMIX_EN, 1) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_V2I, 2) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_FREQ_VCO, 2),
++	.mpllb_div2 =
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_REF_CLK_DIV, 1) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_MULTIPLIER, 94) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_HDMI_DIV, 1),
++	.mpllb_fracn1 =
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_CGG_UPDATE_EN, 1) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_EN, 1) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_DEN, 65535),
++	.mpllb_fracn2 =
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_QUOT, 64094) |
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_FRACN_REM, 13631),
++	.mpllb_sscen =
++		REG_FIELD_PREP(SNPS_PHY_MPLLB_SSC_UP_SPREAD, 1),
++};
++
+ static const struct intel_mpllb_state dg2_hdmi_497750 = {
+ 	.clock = 497750,
+ 	.ref_control =
+@@ -1696,8 +1756,10 @@ static const struct intel_mpllb_state *
+ 	&dg2_hdmi_209800,
+ 	&dg2_hdmi_241500,
+ 	&dg2_hdmi_262750,
++	&dg2_hdmi_267300,
+ 	&dg2_hdmi_268500,
+ 	&dg2_hdmi_296703,
++	&dg2_hdmi_319890,
+ 	&dg2_hdmi_497750,
+ 	&dg2_hdmi_592000,
+ 	&dg2_hdmi_593407,
 
 
