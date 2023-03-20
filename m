@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3641C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC46C4339B;
-	Mon, 20 Mar 2023 15:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4113A1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B637CC433D2;
+	Mon, 20 Mar 2023 15:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325284;
-	bh=Yq5xMHiMzweEfu/LfB+RmNNgp5aMAbF9pPi9Rhd7t50=;
+	s=korg; t=1679325287;
+	bh=YTwt102BhJc/wmok+1eqBlZgfszbAecEam3vPLOa1oQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=APE45M6ejij8dacSBu6TyltJmTeijO/rHp6ODQ4tHHaC+eQFBU2llMkXmbjzxpClh
-	 vzcRUgx1t9RJtQ3MhB4u3lzw9yWUIP/zon0OYtVxc0Jc+XuiZVf+UzwPH5bi3kUBHq
-	 jzvp7qxQMRHZ2LyM8w0n6RMe+ZjsUCimplyle/KA=
+	b=wZi4RzNGITkKr+3VN65ZSg3DOQ5UMv+hPBDX1F+iQr37ymUtsQkAgRx9nBFGghZBF
+	 9rgRxci4ZiLPtf28PDJlTePU7XSY5xMce/Xp36K6K8L9o915KlO8wBgR1Utyyg7QD3
+	 /sa4QDBvgEpMr9tmRNjmrTa6GiHph7MD0RCa4bTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 025/211] ALSA: hda: Match only Intel devices with CONTROLLER_IN_GPU()
-Date: Mon, 20 Mar 2023 15:52:40 +0100
-Message-Id: <20230320145514.326744930@linuxfoundation.org>
+Subject: [PATCH 6.1 064/198] nvme: fix handling single range discard request
+Date: Mon, 20 Mar 2023 15:53:22 +0100
+Message-Id: <20230320145510.230823799@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,48 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit ff447886e675979d66b2bc01810035d3baea1b3a ]
+[ Upstream commit 37f0dc2ec78af0c3f35dd05578763de059f6fe77 ]
 
-CONTROLLER_IN_GPU() is clearly intended to match only Intel devices, but
-previously it checked only the PCI Device ID, not the Vendor ID, so it
-could match devices from other vendors that happened to use the same Device
-ID.
+When investigating one customer report on warning in nvme_setup_discard,
+we observed the controller(nvme/tcp) actually exposes
+queue_max_discard_segments(req->q) == 1.
 
-Update CONTROLLER_IN_GPU() so it matches only Intel devices.
+Obviously the current code can't handle this situation, since contiguity
+merge like normal RW request is taken.
 
-Fixes: 535115b5ff51 ("ALSA: hda - Abort the probe without i915 binding for HSW/B")
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/r/20230307214054.886721-1-helgaas@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix the issue by building range from request sector/nr_sectors directly.
+
+Fixes: b35ba01ea697 ("nvme: support ranged discard requests")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/host/core.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 81c4a45254ff2..77a592f219472 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -328,14 +328,15 @@ enum {
- #define needs_eld_notify_link(chip)	false
- #endif
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 2031fd960549c..a95e48b51da66 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -779,16 +779,26 @@ static blk_status_t nvme_setup_discard(struct nvme_ns *ns, struct request *req,
+ 		range = page_address(ns->ctrl->discard_page);
+ 	}
  
--#define CONTROLLER_IN_GPU(pci) (((pci)->device == 0x0a0c) || \
-+#define CONTROLLER_IN_GPU(pci) (((pci)->vendor == 0x8086) &&         \
-+				       (((pci)->device == 0x0a0c) || \
- 					((pci)->device == 0x0c0c) || \
- 					((pci)->device == 0x0d0c) || \
- 					((pci)->device == 0x160c) || \
- 					((pci)->device == 0x490d) || \
- 					((pci)->device == 0x4f90) || \
- 					((pci)->device == 0x4f91) || \
--					((pci)->device == 0x4f92))
-+					((pci)->device == 0x4f92)))
+-	__rq_for_each_bio(bio, req) {
+-		u64 slba = nvme_sect_to_lba(ns, bio->bi_iter.bi_sector);
+-		u32 nlb = bio->bi_iter.bi_size >> ns->lba_shift;
+-
+-		if (n < segments) {
+-			range[n].cattr = cpu_to_le32(0);
+-			range[n].nlb = cpu_to_le32(nlb);
+-			range[n].slba = cpu_to_le64(slba);
++	if (queue_max_discard_segments(req->q) == 1) {
++		u64 slba = nvme_sect_to_lba(ns, blk_rq_pos(req));
++		u32 nlb = blk_rq_sectors(req) >> (ns->lba_shift - 9);
++
++		range[0].cattr = cpu_to_le32(0);
++		range[0].nlb = cpu_to_le32(nlb);
++		range[0].slba = cpu_to_le64(slba);
++		n = 1;
++	} else {
++		__rq_for_each_bio(bio, req) {
++			u64 slba = nvme_sect_to_lba(ns, bio->bi_iter.bi_sector);
++			u32 nlb = bio->bi_iter.bi_size >> ns->lba_shift;
++
++			if (n < segments) {
++				range[n].cattr = cpu_to_le32(0);
++				range[n].nlb = cpu_to_le32(nlb);
++				range[n].slba = cpu_to_le64(slba);
++			}
++			n++;
+ 		}
+-		n++;
+ 	}
  
- #define IS_BXT(pci) ((pci)->vendor == 0x8086 && (pci)->device == 0x5a98)
- 
+ 	if (WARN_ON_ONCE(n != segments)) {
 -- 
 2.39.2
 
