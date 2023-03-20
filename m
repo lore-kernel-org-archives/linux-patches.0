@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274CB1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BADCC433D2;
-	Mon, 20 Mar 2023 15:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29141C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:20:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19035C4339B;
+	Mon, 20 Mar 2023 15:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325644;
-	bh=lTz+5AFy/jELT6czLvUxdm6WsyIvvXg3gLGmy6nRE7o=;
+	s=korg; t=1679325649;
+	bh=Y9VJDuw6Pu/7exTlBKzxswDlLOxoUi9Nwz60jblsduE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yNOyCQ1Wkk8vosk6aZdyvwfnUv/bFVqeBgTBd9PAbkSQ2RVzKCJPFV5jVGt0f/Sw2
-	 2HRDrAN9wIlQpW7qquyrWpVQmtPA5jciRmPHHZ1SiMnUxLgaXum+OZ5/Jd52/qi1gQ
-	 9gyuywyp5e6H9+AsW2We44vnOUgZAvG7IPshFf7M=
+	b=c2J30xbewhsUFUfQATxjTZmDoAPP3+gI3w8ctIdHl6pe/CNVEU84gfuX5b70o3xb/
+	 NMpQMrFsvwxsKhwzCWxzp/MAvHPI4uBAnCzioAGaCdIYnzPCah10LXJfFqTHpcBlZd
+	 quGRtZS9IDyzEDyqlLuXjlL0GEtCkjMgopt66iSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Maor Dickman <maord@nvidia.com>,
+	Roi Dayan <roid@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/198] hwmon: tmp512: drop of_match_ptr for ID table
-Date: Mon, 20 Mar 2023 15:53:56 +0100
-Message-Id: <20230320145511.679044269@linuxfoundation.org>
+Subject: [PATCH 6.2 076/211] net/mlx5: E-switch, Fix missing set of split_count when forward to ovs internal port
+Date: Mon, 20 Mar 2023 15:53:31 +0100
+Message-Id: <20230320145516.453307703@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Maor Dickman <maord@nvidia.com>
 
-[ Upstream commit 00d85e81796b17a29a0e096c5a4735daa47adef8 ]
+[ Upstream commit 28d3815a629cbdee660dd1c9de28d77cb3d77917 ]
 
-The driver will match mostly by DT table (even thought there is regular
-ID table) so there is little benefit in of_match_ptr (this also allows
-ACPI matching via PRP0001, even though it might not be relevant here).
-This also fixes !CONFIG_OF error:
+Rules with mirror actions are split to two FTEs when the actions after the mirror
+action contains pedit, vlan push/pop or ct. Forward to ovs internal port adds
+implicit header rewrite (pedit) but missing trigger to do split.
 
-  drivers/hwmon/tmp513.c:610:34: error: ‘tmp51x_of_match’ defined but not used [-Werror=unused-const-variable=]
+Fix by setting split_count when forwarding to ovs internal port which
+will trigger split in mirror rules.
 
-Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230312193723.478032-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 27484f7170ed ("net/mlx5e: Offload tc rules that redirect to ovs internal port")
+Signed-off-by: Maor Dickman <maord@nvidia.com>
+Reviewed-by: Roi Dayan <roid@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/tmp513.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_tc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/tmp513.c b/drivers/hwmon/tmp513.c
-index 47bbe47e062fd..7d5f7441aceb1 100644
---- a/drivers/hwmon/tmp513.c
-+++ b/drivers/hwmon/tmp513.c
-@@ -758,7 +758,7 @@ static int tmp51x_probe(struct i2c_client *client)
- static struct i2c_driver tmp51x_driver = {
- 	.driver = {
- 		.name	= "tmp51x",
--		.of_match_table = of_match_ptr(tmp51x_of_match),
-+		.of_match_table = tmp51x_of_match,
- 	},
- 	.probe_new	= tmp51x_probe,
- 	.id_table	= tmp51x_id,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+index 243d5d7750beb..6a07242b5d5ef 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+@@ -4240,6 +4240,7 @@ int mlx5e_set_fwd_to_int_port_actions(struct mlx5e_priv *priv,
+ 
+ 	esw_attr->dest_int_port = dest_int_port;
+ 	esw_attr->dests[out_index].flags |= MLX5_ESW_DEST_CHAIN_WITH_SRC_PORT_CHANGE;
++	esw_attr->split_count = out_index;
+ 
+ 	/* Forward to root fdb for matching against the new source vport */
+ 	attr->dest_chain = 0;
 -- 
 2.39.2
 
