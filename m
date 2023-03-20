@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638701C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7793C4339B;
-	Mon, 20 Mar 2023 15:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8881C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CA6C433EF;
+	Mon, 20 Mar 2023 15:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324865;
-	bh=wv45BkMcQBcG5+iN04l4657c69dYI6IDIjD3QNhW55I=;
+	s=korg; t=1679324868;
+	bh=XoXp1zVDk8va1TV4vbn3meuLr7xQcugivYD1jQqMmJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CI0hMOzqaOifbN5/2Q6zrgb9nAa2kNF7H42rFG0PihoiDI9UaLabuLvYQkHSvRNNV
-	 0Iuwhsd/Uv9dpf7FIK8q/hz2mcvjDnQ6jiiAvErx9ZqVj3ABUIWJMnWVK86R7TYRg9
-	 NPDEPpOKwC0fo0LmqKKSnx2Y84YPjlzVZI5do2hU=
+	b=fdRUJkIjqS80v8mdLm9BQ/JN3TBieq6Plwh1+7IdiIWJKwjnQD0JUb0vmL1p5PZF2
+	 w3Jegv7q22d+ZLDyFsY3YC99kgKQd3VsWzbuXeJWr4O3IYcNQiNRLDtDkok9ZczG13
+	 prvI0MJO3pxQNuQCDYDzUrb2qrrUVVqS6tHrAI9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/115] net: dsa: mv88e6xxx: fix max_mtu of 1492 on 6165, 6191, 6220, 6250, 6290
-Date: Mon, 20 Mar 2023 15:54:14 +0100
-Message-Id: <20230320145451.212181374@linuxfoundation.org>
+	"Hamidreza H. Fard" <nitocris@posteo.net>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 67/99] ALSA: hda/realtek: Fix the speaker output on Samsung Galaxy Book2 Pro
+Date: Mon, 20 Mar 2023 15:54:45 +0100
+Message-Id: <20230320145446.207063476@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,109 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Hamidreza H. Fard <nitocris@posteo.net>
 
-[ Upstream commit 7e9517375a14f44ee830ca1c3278076dd65fcc8f ]
+commit a86e79e3015f5dd8e1b01ccfa49bd5c6e41047a1 upstream.
 
-There are 3 classes of switch families that the driver is aware of, as
-far as mv88e6xxx_change_mtu() is concerned:
+Samsung Galaxy Book2 Pro (13" 2022 NP930XED-KA1DE) with codec SSID
+144d:c868 requires the same workaround for enabling the speaker amp
+like other Samsung models with ALC298 code.
 
-- MTU configuration is available per port. Here, the
-  chip->info->ops->port_set_jumbo_size() method will be present.
-
-- MTU configuration is global to the switch. Here, the
-  chip->info->ops->set_max_frame_size() method will be present.
-
-- We don't know how to change the MTU. Here, none of the above methods
-  will be present.
-
-Switch families MV88E6165, MV88E6191, MV88E6220, MV88E6250 and MV88E6290
-fall in category 3.
-
-The blamed commit has adjusted the MTU for all 3 categories by EDSA_HLEN
-(8 bytes), resulting in a new maximum MTU of 1492 being reported by the
-driver for these switches.
-
-I don't have the hardware to test, but I do have a MV88E6390 switch on
-which I can simulate this by commenting out its .port_set_jumbo_size
-definition from mv88e6390_ops. The result is this set of messages at
-probe time:
-
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 1
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 2
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 3
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 4
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 5
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 6
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 7
-mv88e6085 d0032004.mdio-mii:10: nonfatal error -34 setting MTU to 1500 on port 8
-
-It is highly implausible that there exist Ethernet switches which don't
-support the standard MTU of 1500 octets, and this is what the DSA
-framework says as well - the error comes from dsa_slave_create() ->
-dsa_slave_change_mtu(slave_dev, ETH_DATA_LEN).
-
-But the error messages are alarming, and it would be good to suppress
-them.
-
-As a consequence of this unlikeliness, we reimplement mv88e6xxx_get_max_mtu()
-and mv88e6xxx_change_mtu() on switches from the 3rd category as follows:
-the maximum supported MTU is 1500, and any request to set the MTU to a
-value larger than that fails in dev_validate_mtu().
-
-Fixes: b9c587fed61c ("dsa: mv88e6xxx: Include tagger overhead when setting MTU for DSA and CPU ports")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Hamidreza H. Fard <nitocris@posteo.net>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230307163741.3878-1-nitocris@posteo.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index f9efd0c8bab8d..99c4e45c62e33 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -3054,7 +3054,7 @@ static int mv88e6xxx_get_max_mtu(struct dsa_switch *ds, int port)
- 		return 10240 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
- 	else if (chip->info->ops->set_max_frame_size)
- 		return 1632 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
--	return 1522 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
-+	return ETH_DATA_LEN;
- }
- 
- static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
-@@ -3062,6 +3062,17 @@ static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
- 	struct mv88e6xxx_chip *chip = ds->priv;
- 	int ret = 0;
- 
-+	/* For families where we don't know how to alter the MTU,
-+	 * just accept any value up to ETH_DATA_LEN
-+	 */
-+	if (!chip->info->ops->port_set_jumbo_size &&
-+	    !chip->info->ops->set_max_frame_size) {
-+		if (new_mtu > ETH_DATA_LEN)
-+			return -EINVAL;
-+
-+		return 0;
-+	}
-+
- 	if (dsa_is_dsa_port(ds, port) || dsa_is_cpu_port(ds, port))
- 		new_mtu += EDSA_HLEN;
- 
-@@ -3070,9 +3081,6 @@ static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
- 		ret = chip->info->ops->port_set_jumbo_size(chip, port, new_mtu);
- 	else if (chip->info->ops->set_max_frame_size)
- 		ret = chip->info->ops->set_max_frame_size(chip, new_mtu);
--	else
--		if (new_mtu > 1522)
--			ret = -EINVAL;
- 	mv88e6xxx_reg_unlock(chip);
- 
- 	return ret;
--- 
-2.39.2
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9091,6 +9091,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x144d, 0xc830, "Samsung Galaxy Book Ion (NT950XCJ-X716A)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc832, "Samsung Galaxy Book Flex Alpha (NP730QCJ)", ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
+ 	SND_PCI_QUIRK(0x144d, 0xca03, "Samsung Galaxy Book2 Pro 360 (NP930QED)", ALC298_FIXUP_SAMSUNG_AMP),
++	SND_PCI_QUIRK(0x144d, 0xc868, "Samsung Galaxy Book2 Pro (NP930XED)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x1458, 0xfa53, "Gigabyte BXBT-2807", ALC283_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1462, 0xb120, "MSI Cubi MS-B120", ALC283_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1462, 0xb171, "Cubi N 8GL (MS-B171)", ALC283_FIXUP_HEADSET_MIC),
 
 
