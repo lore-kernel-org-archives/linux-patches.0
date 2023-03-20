@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AC81C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77732C433D2;
-	Mon, 20 Mar 2023 15:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2DA1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDD6C433EF;
+	Mon, 20 Mar 2023 15:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325594;
-	bh=+psffvvgRpplZzvH+ZTHSdvUD3tVH+sIXJ2aiFUMSAM=;
+	s=korg; t=1679325597;
+	bh=Hv7uNwv1335ZkhvGONfKBtSAlwto6F95Sx8jlnD/bHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e64sKC523lyvNl4kejLWxClDKMG61KPJxrT6ZrVf1M7iXA3gt6NwwhIGxikroZCMA
-	 wDXQypSMsjKf4N9nC0h7yXCrBCpU9dPcHh4TWkBvSuPthGYqQJ6yuhlqacxQibsXgZ
-	 vxattp+iJBkvGSfwcO48eFv2jJQmOnbcc42IC3+k=
+	b=jQgFQH6Y7TgpCnXw5GH+BFDv7G6nJvAhhag56cEUCX0qxKz8De964afLZssdJwcSb
+	 3JbWRm/xjESMqkQN1/jtwkqbT3nZUby7ozcXQUbhaKJqfAdQ/jGvLhybzD0UOyTk6v
+	 ACtBj5akoBZf7YDVIdrHIsVzqQ52m1Ip/GwbZpZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
+	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 067/211] nvme: fix handling single range discard request
-Date: Mon, 20 Mar 2023 15:53:22 +0100
-Message-Id: <20230320145516.033095504@linuxfoundation.org>
+Subject: [PATCH 6.1 108/198] ext4: update s_journal_inum if it changes after journal replay
+Date: Mon, 20 Mar 2023 15:54:06 +0100
+Message-Id: <20230320145512.113876752@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,68 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 37f0dc2ec78af0c3f35dd05578763de059f6fe77 ]
+[ Upstream commit 3039d8b8692408438a618fac2776b629852663c3 ]
 
-When investigating one customer report on warning in nvme_setup_discard,
-we observed the controller(nvme/tcp) actually exposes
-queue_max_discard_segments(req->q) == 1.
+When mounting a crafted ext4 image, s_journal_inum may change after journal
+replay, which is obviously unreasonable because we have successfully loaded
+and replayed the journal through the old s_journal_inum. And the new
+s_journal_inum bypasses some of the checks in ext4_get_journal(), which
+may trigger a null pointer dereference problem. So if s_journal_inum
+changes after the journal replay, we ignore the change, and rewrite the
+current journal_inum to the superblock.
 
-Obviously the current code can't handle this situation, since contiguity
-merge like normal RW request is taken.
-
-Fix the issue by building range from request sector/nr_sectors directly.
-
-Fixes: b35ba01ea697 ("nvme: support ranged discard requests")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216541
+Reported-by: Luís Henriques <lhenriques@suse.de>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230107032126.4165860-3-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ fs/ext4/super.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index fbed8d1a02ef4..70b5e891f6b3b 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -781,16 +781,26 @@ static blk_status_t nvme_setup_discard(struct nvme_ns *ns, struct request *req,
- 		range = page_address(ns->ctrl->discard_page);
- 	}
- 
--	__rq_for_each_bio(bio, req) {
--		u64 slba = nvme_sect_to_lba(ns, bio->bi_iter.bi_sector);
--		u32 nlb = bio->bi_iter.bi_size >> ns->lba_shift;
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 8011600999586..2528e8216c334 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5967,8 +5967,11 @@ static int ext4_load_journal(struct super_block *sb,
+ 	if (!really_read_only && journal_devnum &&
+ 	    journal_devnum != le32_to_cpu(es->s_journal_dev)) {
+ 		es->s_journal_dev = cpu_to_le32(journal_devnum);
 -
--		if (n < segments) {
--			range[n].cattr = cpu_to_le32(0);
--			range[n].nlb = cpu_to_le32(nlb);
--			range[n].slba = cpu_to_le64(slba);
-+	if (queue_max_discard_segments(req->q) == 1) {
-+		u64 slba = nvme_sect_to_lba(ns, blk_rq_pos(req));
-+		u32 nlb = blk_rq_sectors(req) >> (ns->lba_shift - 9);
-+
-+		range[0].cattr = cpu_to_le32(0);
-+		range[0].nlb = cpu_to_le32(nlb);
-+		range[0].slba = cpu_to_le64(slba);
-+		n = 1;
-+	} else {
-+		__rq_for_each_bio(bio, req) {
-+			u64 slba = nvme_sect_to_lba(ns, bio->bi_iter.bi_sector);
-+			u32 nlb = bio->bi_iter.bi_size >> ns->lba_shift;
-+
-+			if (n < segments) {
-+				range[n].cattr = cpu_to_le32(0);
-+				range[n].nlb = cpu_to_le32(nlb);
-+				range[n].slba = cpu_to_le64(slba);
-+			}
-+			n++;
- 		}
--		n++;
+-		/* Make sure we flush the recovery flag to disk. */
++		ext4_commit_super(sb);
++	}
++	if (!really_read_only && journal_inum &&
++	    journal_inum != le32_to_cpu(es->s_journal_inum)) {
++		es->s_journal_inum = cpu_to_le32(journal_inum);
+ 		ext4_commit_super(sb);
  	}
  
- 	if (WARN_ON_ONCE(n != segments)) {
 -- 
 2.39.2
 
