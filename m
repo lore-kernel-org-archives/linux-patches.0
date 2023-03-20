@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8661C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1E8C433D2;
-	Mon, 20 Mar 2023 15:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582F51C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD95C433EF;
+	Mon, 20 Mar 2023 15:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326000;
-	bh=ZGs7l5Ud+ipwYBmxK3XJqmyjDv9jr2SVhfE3o9Fp42E=;
+	s=korg; t=1679326003;
+	bh=QvcSXIXmzvexRS2Gq4ddVraMPszs0S4VB18ZYyuUotU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sNEWs9yH77ueoNbh4kxdcozVPFNmPlMSeVJFlGm/2CYKYDtFDQdoa6rYscd/XyWAL
-	 c4LcNrrz0oOm9DvcSt8x9yPkT40JDQOMR6/PnwOfnpEQK+5ss/4Uo7+FQi229QJ+cV
-	 cW5iheDXqUonSgj3yP2w7+jbcpRGkXApqxsW2GqY=
+	b=YG5Lp8MlqSEKqduDRet14IxIoF0wXFceBYGr5lLpsFrE4sK6GG8Ojo2ENxLT2Vflh
+	 cEQpuHqv0LlQsbhes80hZQ5iei5pmTy8k//IWPxNmBqyzTKeyaPkwolRo4U95U/6ai
+	 tmiTz36+xBs7x4wdeWZrciZ7IWk9D6mU2BX6Km7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aishwarya TCV <aishwarya.tcv@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 181/198] ACPI: PPTT: Fix to avoid sleep in the atomic context when PPTT is absent
-Date: Mon, 20 Mar 2023 15:55:19 +0100
-Message-Id: <20230320145515.078459248@linuxfoundation.org>
+	Horatio Zhang <Hongkun.Zhang@amd.com>,
+	longlyao <Longlong.Yao@amd.com>,
+	Guchun Chen <guchun.chen@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 114/211] drm/amdgpu: fix ttm_bo calltrace warning in psp_hw_fini
+Date: Mon, 20 Mar 2023 15:54:09 +0100
+Message-Id: <20230320145518.088107355@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,92 +37,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Horatio Zhang <Hongkun.Zhang@amd.com>
 
-commit 91d7b60a65d9f71230ea09b86d2058a884a3c2af upstream.
+[ Upstream commit 23f4a2d29ba57bf88095f817de5809d427fcbe7e ]
 
-Commit 0c80f9e165f8 ("ACPI: PPTT: Leave the table mapped for the runtime usage")
-enabled to map PPTT once on the first invocation of acpi_get_pptt() and
-never unmapped the same allowing it to be used at runtime with out the
-hassle of mapping and unmapping the table. This was needed to fetch LLC
-information from the PPTT in the cpuhotplug path which is executed in
-the atomic context as the acpi_get_table() might sleep waiting for a
-mutex.
+The call trace occurs when the amdgpu is removed after
+the mode1 reset. During mode1 reset, from suspend to resume,
+there is no need to reinitialize the ta firmware buffer
+which caused the bo pin_count increase redundantly.
 
-However it missed to handle the case when there is no PPTT on the system
-which results in acpi_get_pptt() being called from all the secondary
-CPUs attempting to fetch the LLC information in the atomic context
-without knowing the absence of PPTT resulting in the splat like below:
+[  489.885525] Call Trace:
+[  489.885525]  <TASK>
+[  489.885526]  amdttm_bo_put+0x34/0x50 [amdttm]
+[  489.885529]  amdgpu_bo_free_kernel+0xe8/0x130 [amdgpu]
+[  489.885620]  psp_free_shared_bufs+0xb7/0x150 [amdgpu]
+[  489.885720]  psp_hw_fini+0xce/0x170 [amdgpu]
+[  489.885815]  amdgpu_device_fini_hw+0x2ff/0x413 [amdgpu]
+[  489.885960]  ? blocking_notifier_chain_unregister+0x56/0xb0
+[  489.885962]  amdgpu_driver_unload_kms+0x51/0x60 [amdgpu]
+[  489.886049]  amdgpu_pci_remove+0x5a/0x140 [amdgpu]
+[  489.886132]  ? __pm_runtime_resume+0x60/0x90
+[  489.886134]  pci_device_remove+0x3e/0xb0
+[  489.886135]  __device_release_driver+0x1ab/0x2a0
+[  489.886137]  driver_detach+0xf3/0x140
+[  489.886138]  bus_remove_driver+0x6c/0xf0
+[  489.886140]  driver_unregister+0x31/0x60
+[  489.886141]  pci_unregister_driver+0x40/0x90
+[  489.886142]  amdgpu_exit+0x15/0x451 [amdgpu]
 
- | BUG: sleeping function called from invalid context at kernel/locking/semaphore.c:164
- | in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/1
- | preempt_count: 1, expected: 0
- | RCU nest depth: 0, expected: 0
- | no locks held by swapper/1/0.
- | irq event stamp: 0
- | hardirqs last  enabled at (0): 0x0
- | hardirqs last disabled at (0): copy_process+0x61c/0x1b40
- | softirqs last  enabled at (0): copy_process+0x61c/0x1b40
- | softirqs last disabled at (0): 0x0
- | CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.3.0-rc1 #1
- | Call trace:
- |  dump_backtrace+0xac/0x138
- |  show_stack+0x30/0x48
- |  dump_stack_lvl+0x60/0xb0
- |  dump_stack+0x18/0x28
- |  __might_resched+0x160/0x270
- |  __might_sleep+0x58/0xb0
- |  down_timeout+0x34/0x98
- |  acpi_os_wait_semaphore+0x7c/0xc0
- |  acpi_ut_acquire_mutex+0x58/0x108
- |  acpi_get_table+0x40/0xe8
- |  acpi_get_pptt+0x48/0xa0
- |  acpi_get_cache_info+0x38/0x140
- |  init_cache_level+0xf4/0x118
- |  detect_cache_attributes+0x2e4/0x640
- |  update_siblings_masks+0x3c/0x330
- |  store_cpu_topology+0x88/0xf0
- |  secondary_start_kernel+0xd0/0x168
- |  __secondary_switched+0xb8/0xc0
-
-Update acpi_get_pptt() to consider the fact that PPTT is once checked and
-is not available on the system and return NULL avoiding any attempts to
-fetch PPTT and thereby avoiding any possible sleep waiting for a mutex
-in the atomic context.
-
-Fixes: 0c80f9e165f8 ("ACPI: PPTT: Leave the table mapped for the runtime usage")
-Reported-by: Aishwarya TCV <aishwarya.tcv@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Tested-by: Pierre Gondois <pierre.gondois@arm.com>
-Cc: 6.0+ <stable@vger.kernel.org> # 6.0+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Horatio Zhang <Hongkun.Zhang@amd.com>
+Signed-off-by: longlyao <Longlong.Yao@amd.com>
+Reviewed-by: Guchun Chen <guchun.chen@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pptt.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/acpi/pptt.c
-+++ b/drivers/acpi/pptt.c
-@@ -537,16 +537,19 @@ static int topology_get_acpi_cpu_tag(str
- static struct acpi_table_header *acpi_get_pptt(void)
- {
- 	static struct acpi_table_header *pptt;
-+	static bool is_pptt_checked;
- 	acpi_status status;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+index ba092072308fa..1b4105110f398 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -1685,7 +1685,7 @@ static int psp_hdcp_initialize(struct psp_context *psp)
+ 	psp->hdcp_context.context.mem_context.shared_mem_size = PSP_HDCP_SHARED_MEM_SIZE;
+ 	psp->hdcp_context.context.ta_load_type = GFX_CMD_ID_LOAD_TA;
  
- 	/*
- 	 * PPTT will be used at runtime on every CPU hotplug in path, so we
- 	 * don't need to call acpi_put_table() to release the table mapping.
- 	 */
--	if (!pptt) {
-+	if (!pptt && !is_pptt_checked) {
- 		status = acpi_get_table(ACPI_SIG_PPTT, 0, &pptt);
- 		if (ACPI_FAILURE(status))
- 			acpi_pptt_warn_missing();
-+
-+		is_pptt_checked = true;
- 	}
+-	if (!psp->hdcp_context.context.initialized) {
++	if (!psp->hdcp_context.context.mem_context.shared_buf) {
+ 		ret = psp_ta_init_shared_buf(psp, &psp->hdcp_context.context.mem_context);
+ 		if (ret)
+ 			return ret;
+@@ -1752,7 +1752,7 @@ static int psp_dtm_initialize(struct psp_context *psp)
+ 	psp->dtm_context.context.mem_context.shared_mem_size = PSP_DTM_SHARED_MEM_SIZE;
+ 	psp->dtm_context.context.ta_load_type = GFX_CMD_ID_LOAD_TA;
  
- 	return pptt;
+-	if (!psp->dtm_context.context.initialized) {
++	if (!psp->dtm_context.context.mem_context.shared_buf) {
+ 		ret = psp_ta_init_shared_buf(psp, &psp->dtm_context.context.mem_context);
+ 		if (ret)
+ 			return ret;
+@@ -1820,7 +1820,7 @@ static int psp_rap_initialize(struct psp_context *psp)
+ 	psp->rap_context.context.mem_context.shared_mem_size = PSP_RAP_SHARED_MEM_SIZE;
+ 	psp->rap_context.context.ta_load_type = GFX_CMD_ID_LOAD_TA;
+ 
+-	if (!psp->rap_context.context.initialized) {
++	if (!psp->rap_context.context.mem_context.shared_buf) {
+ 		ret = psp_ta_init_shared_buf(psp, &psp->rap_context.context.mem_context);
+ 		if (ret)
+ 			return ret;
+-- 
+2.39.2
+
 
 
