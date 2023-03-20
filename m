@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082401C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F42FC433EF;
-	Mon, 20 Mar 2023 15:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC5F1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA77C433D2;
+	Mon, 20 Mar 2023 15:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325772;
-	bh=XXgsjh20dOOAVU9aBn8zTTQ9u5yTkBonbr3FD3pyifw=;
+	s=korg; t=1679325775;
+	bh=bRb6TR5KYwtr9MR7+KocAOUsZL7ovGjeYKku9GQ4Ra4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k5j+xx4cm1ajRcnGMykDyGzdTkldQfLAbV4VfO3M2QuZ0Ox48kYskd4VYlbgPMCJA
-	 P8U7Vnqxk+CYBvyW/RUKnSQduanOGC8WejWICYGugBk2nsxbOlaMji+1ugYn6mT0wL
-	 5LE0zr0tFXKGhrKM5u+Ss5/Z+gAaJFcLO+mDECWI=
+	b=NAfsMP6X2UrJHM2Q6h/fPIFMtGekg1NzJ6z8xUb/KPSilBFL6Z1Jgzh2GkBRlfyAi
+	 3Uh7dJSKkqqPsbd/3TmOv92sMI8ckxgqaTLaAWDYJRh5kYpPEn3TrzGDVbN2aRphdO
+	 hBNLwWGz/iy9/1mTFJqCNO5DxKUaJ7NrbFNAO02c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.1 140/198] interconnect: exynos: fix registration race
-Date: Mon, 20 Mar 2023 15:54:38 +0100
-Message-Id: <20230320145513.418422689@linuxfoundation.org>
+	Tony OBrien <tony.obrien@alliedtelesis.co.nz>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 099/211] hwmon: (adt7475) Fix masking of hysteresis registers
+Date: Mon, 20 Mar 2023 15:53:54 +0100
+Message-Id: <20230320145517.441443834@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,86 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
 
-commit c9e46ca612cfbb0cf890f7ae7389b742e90efe64 upstream.
+[ Upstream commit 48e8186870d9d0902e712d601ccb7098cb220688 ]
 
-The current interconnect provider registration interface is inherently
-racy as nodes are not added until the after adding the provider. This
-can specifically cause racing DT lookups to trigger a NULL-pointer
-deference when either a NULL pointer or not fully initialised node is
-returned from exynos_generic_icc_xlate().
+The wrong bits are masked in the hysteresis register; indices 0 and 2
+should zero bits [7:4] and preserve bits [3:0], and index 1 should zero
+bits [3:0] and preserve bits [7:4].
 
-Switch to using the new API where the provider is not registered until
-after it has been fully initialised.
-
-Fixes: 2f95b9d5cf0b ("interconnect: Add generic interconnect driver for Exynos SoCs")
-Cc: stable@vger.kernel.org      # 5.11
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-16-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1c301fc5394f ("hwmon: Add a driver for the ADT7475 hardware monitoring chip")
+Signed-off-by: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
+Link: https://lore.kernel.org/r/20230222005228.158661-3-tony.obrien@alliedtelesis.co.nz
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/samsung/exynos.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/hwmon/adt7475.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/interconnect/samsung/exynos.c
-+++ b/drivers/interconnect/samsung/exynos.c
-@@ -98,12 +98,13 @@ static int exynos_generic_icc_remove(str
- 	struct exynos_icc_priv *priv = platform_get_drvdata(pdev);
- 	struct icc_node *parent_node, *node = priv->node;
+diff --git a/drivers/hwmon/adt7475.c b/drivers/hwmon/adt7475.c
+index 77222c35a38ec..6e4c92b500b8e 100644
+--- a/drivers/hwmon/adt7475.c
++++ b/drivers/hwmon/adt7475.c
+@@ -488,10 +488,10 @@ static ssize_t temp_store(struct device *dev, struct device_attribute *attr,
+ 		val = (temp - val) / 1000;
  
-+	icc_provider_deregister(&priv->provider);
-+
- 	parent_node = exynos_icc_get_parent(priv->dev->parent->of_node);
- 	if (parent_node && !IS_ERR(parent_node))
- 		icc_link_destroy(node, parent_node);
+ 		if (sattr->index != 1) {
+-			data->temp[HYSTERSIS][sattr->index] &= 0xF0;
++			data->temp[HYSTERSIS][sattr->index] &= 0x0F;
+ 			data->temp[HYSTERSIS][sattr->index] |= (val & 0xF) << 4;
+ 		} else {
+-			data->temp[HYSTERSIS][sattr->index] &= 0x0F;
++			data->temp[HYSTERSIS][sattr->index] &= 0xF0;
+ 			data->temp[HYSTERSIS][sattr->index] |= (val & 0xF);
+ 		}
  
- 	icc_nodes_remove(&priv->provider);
--	icc_provider_del(&priv->provider);
- 
- 	return 0;
- }
-@@ -132,15 +133,11 @@ static int exynos_generic_icc_probe(stru
- 	provider->inter_set = true;
- 	provider->data = priv;
- 
--	ret = icc_provider_add(provider);
--	if (ret < 0)
--		return ret;
-+	icc_provider_init(provider);
- 
- 	icc_node = icc_node_create(pdev->id);
--	if (IS_ERR(icc_node)) {
--		ret = PTR_ERR(icc_node);
--		goto err_prov_del;
--	}
-+	if (IS_ERR(icc_node))
-+		return PTR_ERR(icc_node);
- 
- 	priv->node = icc_node;
- 	icc_node->name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%pOFn",
-@@ -171,14 +168,17 @@ static int exynos_generic_icc_probe(stru
- 			goto err_pmqos_del;
- 	}
- 
-+	ret = icc_provider_register(provider);
-+	if (ret < 0)
-+		goto err_pmqos_del;
-+
- 	return 0;
- 
- err_pmqos_del:
- 	dev_pm_qos_remove_request(&priv->qos_req);
- err_node_del:
- 	icc_nodes_remove(provider);
--err_prov_del:
--	icc_provider_del(provider);
-+
- 	return ret;
- }
- 
+-- 
+2.39.2
+
 
 
