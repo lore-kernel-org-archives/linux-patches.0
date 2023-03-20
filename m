@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552851C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCA5C433EF;
-	Mon, 20 Mar 2023 15:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162EE1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C379C433D2;
+	Mon, 20 Mar 2023 15:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324931;
-	bh=cNQZ9ftb0SQWKViY9vleiOOLSisslUlS21d/t6KwPJ0=;
+	s=korg; t=1679324933;
+	bh=ZoihgBCB7rET4pBCs/jDiS3kdfArkE05Mmc1Tn/m0Yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DHA8CYg2jyiKhzmkqowEnedBz2lkViGZOz/op1A92syv0dfLsGejnRNlRV/ED4Cph
-	 1PSZ9QRK4nYfOHcuyk9srZzKrJ/kNyjZDJUi8aDei/njlT5v8srC1YJMxUTDmvVt16
-	 YtGpx+5w7lj5n2AEq/avisQ5DVxTXVkXdCbyPLYI=
+	b=hyBYDuzcQXvh37f1k2dlPevfA32LLYJUkogrA6YGlqPNmKdTu4NIe703bY/7GuqWs
+	 brhwrzmDxK/SNdw0R9XXGaqzeu4lxThFUdF9DMH1Uiam5wF3e4tRGOLCLY++ze+RQ2
+	 lCxj633qFjSofaNl3LOXzV78f4FtOTjWjAaKzoEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Shawn Guo <shawn.guo@linaro.org>,
-	"Rafael J. Wysocki" <rjw@rjwysocki.net>
-Subject: [PATCH 5.10 74/99] cpuidle: psci: Iterate backwards over list in psci_pd_remove()
-Date: Mon, 20 Mar 2023 15:54:52 +0100
-Message-Id: <20230320145446.506652483@linuxfoundation.org>
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 022/198] scsi: mpi3mr: ioctl timeout when disabling/enabling interrupt
+Date: Mon, 20 Mar 2023 15:52:40 +0100
+Message-Id: <20230320145508.424877368@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,62 +36,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shawn Guo <shawn.guo@linaro.org>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-commit 6b0313c2fa3d2cf991c9ffef6fae6e7ef592ce6d upstream.
+[ Upstream commit 02ca7da2919ada525fb424640205110e24646b50 ]
 
-In case that psci_pd_init_topology() fails for some reason,
-psci_pd_remove() will be responsible for deleting provider and removing
-genpd from psci_pd_providers list.  There will be a failure when removing
-the cluster PD, because the cpu (child) PDs haven't been removed.
+As part of Task Management handling, the driver will disable and enable the
+MSIx index zero which belongs to the Admin reply queue. During this
+transition the driver loses some interrupts and this leads to Admin request
+and ioctl timeouts.
 
-[    0.050232] CPUidle PSCI: init PM domain cpu0
-[    0.050278] CPUidle PSCI: init PM domain cpu1
-[    0.050329] CPUidle PSCI: init PM domain cpu2
-[    0.050370] CPUidle PSCI: init PM domain cpu3
-[    0.050422] CPUidle PSCI: init PM domain cpu-cluster0
-[    0.050475] PM: genpd_remove: unable to remove cpu-cluster0
-[    0.051412] PM: genpd_remove: removed cpu3
-[    0.051449] PM: genpd_remove: removed cpu2
-[    0.051499] PM: genpd_remove: removed cpu1
-[    0.051546] PM: genpd_remove: removed cpu0
+After enabling the interrupts, poll the Admin reply queue to avoid
+timeouts.
 
-Fix the problem by iterating the provider list reversely, so that parent
-PD gets removed after child's PDs like below.
-
-[    0.029052] CPUidle PSCI: init PM domain cpu0
-[    0.029076] CPUidle PSCI: init PM domain cpu1
-[    0.029103] CPUidle PSCI: init PM domain cpu2
-[    0.029124] CPUidle PSCI: init PM domain cpu3
-[    0.029151] CPUidle PSCI: init PM domain cpu-cluster0
-[    0.029647] PM: genpd_remove: removed cpu0
-[    0.029666] PM: genpd_remove: removed cpu1
-[    0.029690] PM: genpd_remove: removed cpu2
-[    0.029714] PM: genpd_remove: removed cpu3
-[    0.029738] PM: genpd_remove: removed cpu-cluster0
-
-Fixes: a65a397f2451 ("cpuidle: psci: Add support for PM domains by using genpd")
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-Cc: 5.10+ <stable@vger.kernel.org> # 5.10+
-Signed-off-by: Rafael J. Wysocki <rjw@rjwysocki.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Signed-off-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Link: https://lore.kernel.org/r/20230228140835.4075-2-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: ce756daa36e1 ("scsi: mpi3mr: Fix expander node leak in mpi3mr_remove()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/cpuidle-psci-domain.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/mpi3mr/mpi3mr.h    |  3 +++
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 12 ++++++++++--
+ drivers/scsi/mpi3mr/mpi3mr_os.c |  1 +
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
---- a/drivers/cpuidle/cpuidle-psci-domain.c
-+++ b/drivers/cpuidle/cpuidle-psci-domain.c
-@@ -182,7 +182,8 @@ static void psci_pd_remove(void)
- 	struct psci_pd_provider *pd_provider, *it;
- 	struct generic_pm_domain *genpd;
+diff --git a/drivers/scsi/mpi3mr/mpi3mr.h b/drivers/scsi/mpi3mr/mpi3mr.h
+index 8a438f248a820..68f29ffb05b82 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr.h
++++ b/drivers/scsi/mpi3mr/mpi3mr.h
+@@ -903,6 +903,7 @@ struct scmd_priv {
+  * @admin_reply_ephase:Admin reply queue expected phase
+  * @admin_reply_base: Admin reply queue base virtual address
+  * @admin_reply_dma: Admin reply queue base dma address
++ * @admin_reply_q_in_use: Queue is handled by poll/ISR
+  * @ready_timeout: Controller ready timeout
+  * @intr_info: Interrupt cookie pointer
+  * @intr_info_count: Number of interrupt cookies
+@@ -1056,6 +1057,7 @@ struct mpi3mr_ioc {
+ 	u8 admin_reply_ephase;
+ 	void *admin_reply_base;
+ 	dma_addr_t admin_reply_dma;
++	atomic_t admin_reply_q_in_use;
  
--	list_for_each_entry_safe(pd_provider, it, &psci_pd_providers, link) {
-+	list_for_each_entry_safe_reverse(pd_provider, it,
-+					 &psci_pd_providers, link) {
- 		of_genpd_del_provider(pd_provider->node);
+ 	u32 ready_timeout;
  
- 		genpd = of_genpd_remove_last(pd_provider->node);
+@@ -1391,4 +1393,5 @@ void mpi3mr_add_event_wait_for_device_refresh(struct mpi3mr_ioc *mrioc);
+ void mpi3mr_flush_drv_cmds(struct mpi3mr_ioc *mrioc);
+ void mpi3mr_flush_cmds_for_unrecovered_controller(struct mpi3mr_ioc *mrioc);
+ void mpi3mr_free_enclosure_list(struct mpi3mr_ioc *mrioc);
++int mpi3mr_process_admin_reply_q(struct mpi3mr_ioc *mrioc);
+ #endif /*MPI3MR_H_INCLUDED*/
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index 1a404d71b88cf..74fa7f90399e3 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -415,7 +415,7 @@ static void mpi3mr_process_admin_reply_desc(struct mpi3mr_ioc *mrioc,
+ 		    le64_to_cpu(scsi_reply->sense_data_buffer_address));
+ }
+ 
+-static int mpi3mr_process_admin_reply_q(struct mpi3mr_ioc *mrioc)
++int mpi3mr_process_admin_reply_q(struct mpi3mr_ioc *mrioc)
+ {
+ 	u32 exp_phase = mrioc->admin_reply_ephase;
+ 	u32 admin_reply_ci = mrioc->admin_reply_ci;
+@@ -423,12 +423,17 @@ static int mpi3mr_process_admin_reply_q(struct mpi3mr_ioc *mrioc)
+ 	u64 reply_dma = 0;
+ 	struct mpi3_default_reply_descriptor *reply_desc;
+ 
++	if (!atomic_add_unless(&mrioc->admin_reply_q_in_use, 1, 1))
++		return 0;
++
+ 	reply_desc = (struct mpi3_default_reply_descriptor *)mrioc->admin_reply_base +
+ 	    admin_reply_ci;
+ 
+ 	if ((le16_to_cpu(reply_desc->reply_flags) &
+-	    MPI3_REPLY_DESCRIPT_FLAGS_PHASE_MASK) != exp_phase)
++	    MPI3_REPLY_DESCRIPT_FLAGS_PHASE_MASK) != exp_phase) {
++		atomic_dec(&mrioc->admin_reply_q_in_use);
+ 		return 0;
++	}
+ 
+ 	do {
+ 		if (mrioc->unrecoverable)
+@@ -454,6 +459,7 @@ static int mpi3mr_process_admin_reply_q(struct mpi3mr_ioc *mrioc)
+ 	writel(admin_reply_ci, &mrioc->sysif_regs->admin_reply_queue_ci);
+ 	mrioc->admin_reply_ci = admin_reply_ci;
+ 	mrioc->admin_reply_ephase = exp_phase;
++	atomic_dec(&mrioc->admin_reply_q_in_use);
+ 
+ 	return num_admin_replies;
+ }
+@@ -2605,6 +2611,7 @@ static int mpi3mr_setup_admin_qpair(struct mpi3mr_ioc *mrioc)
+ 	mrioc->admin_reply_ci = 0;
+ 	mrioc->admin_reply_ephase = 1;
+ 	mrioc->admin_reply_base = NULL;
++	atomic_set(&mrioc->admin_reply_q_in_use, 0);
+ 
+ 	if (!mrioc->admin_req_base) {
+ 		mrioc->admin_req_base = dma_alloc_coherent(&mrioc->pdev->dev,
+@@ -4168,6 +4175,7 @@ void mpi3mr_memset_buffers(struct mpi3mr_ioc *mrioc)
+ 		memset(mrioc->admin_req_base, 0, mrioc->admin_req_q_sz);
+ 	if (mrioc->admin_reply_base)
+ 		memset(mrioc->admin_reply_base, 0, mrioc->admin_reply_q_sz);
++	atomic_set(&mrioc->admin_reply_q_in_use, 0);
+ 
+ 	if (mrioc->init_cmds.reply) {
+ 		memset(mrioc->init_cmds.reply, 0, sizeof(*mrioc->init_cmds.reply));
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index 5698e7b90f852..2e546c80d98ce 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -3720,6 +3720,7 @@ int mpi3mr_issue_tm(struct mpi3mr_ioc *mrioc, u8 tm_type,
+ 		mpi3mr_poll_pend_io_completions(mrioc);
+ 		mpi3mr_ioc_enable_intr(mrioc);
+ 		mpi3mr_poll_pend_io_completions(mrioc);
++		mpi3mr_process_admin_reply_q(mrioc);
+ 	}
+ 	switch (tm_type) {
+ 	case MPI3_SCSITASKMGMT_TASKTYPE_TARGET_RESET:
+-- 
+2.39.2
+
 
 
