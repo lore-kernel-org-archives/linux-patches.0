@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3501C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E4EC4339B;
-	Mon, 20 Mar 2023 15:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B0C1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:12:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD45C433D2;
+	Mon, 20 Mar 2023 15:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325163;
-	bh=w7ncPlp2FMxPWW8bhuvD7WOkeGLvgIrCC3mbaCLn7j0=;
+	s=korg; t=1679325160;
+	bh=Hr9VKbCEh5dpIQ9mXWc9ZNs6Ogo1h4vKSR3ROQm6D60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g4M765DdxXDrIhf2qOS1rpJDzk+7OLX5Qs2llblytmrInPfxqd5/fangPK7P3TzWM
-	 dosbue09fQhCNyMivbJZdVb0S4O45SnRdi7PUWM7K7HxJJ/HpbumcdFGVBO22YHV0p
-	 KaY+WKX82AS98rfnHZkvA5ZpXrsgCE0cBZfRFwiU=
+	b=Ihu0bfqYYdV0fNo0pBIAKuQstuhe11YZHeKJ6KTd8xpbyukb9GYFY2B4jqFQNnpRd
+	 QrTFPAxeBFtJgB6PsenlQhJQ5cvzPQRkitLDffIms6hBpCJyjmgo/atiSS2petYibY
+	 NxDZgpzH6Fq9WZ+3RiI3MRNutG7JGBl+QJSXaCag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	syzbot+0c73d1d8b952c5f3d714@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 073/115] ext4: fix possible double unlock when moving a directory
-Date: Mon, 20 Mar 2023 15:54:45 +0100
-Message-Id: <20230320145452.492954755@linuxfoundation.org>
+	Miklos Szeredi <miklos@szeredi.hu>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 5.10 96/99] fs: use consistent setgid checks in is_sxid()
+Date: Mon, 20 Mar 2023 15:55:14 +0100
+Message-Id: <20230320145447.445372729@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,33 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 70e42feab2e20618ddd0cbfc4ab4b08628236ecd upstream.
+commit 8d84e39d76bd83474b26cb44f4b338635676e7e8 upstream.
 
-Fixes: 0813299c586b ("ext4: Fix possible corruption when moving a directory")
-Link: https://lore.kernel.org/r/5efbe1b9-ad8b-4a4f-b422-24824d2b775c@kili.mountain
-Reported-by: Dan Carpenter <error27@gmail.com>
-Reported-by: syzbot+0c73d1d8b952c5f3d714@syzkaller.appspotmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Now that we made the VFS setgid checking consistent an inode can't be
+marked security irrelevant even if the setgid bit is still set. Make
+this function consistent with all other helpers.
+
+Note that enforcing consistent setgid stripping checks for file
+modification and mode- and ownership changes will cause the setgid bit
+to be lost in more cases than useed to be the case. If an unprivileged
+user wrote to a non-executable setgid file that they don't have
+privilege over the setgid bit will be dropped. This will lead to
+temporary failures in some xfstests until they have been updated.
+
+Reported-by: Miklos Szeredi <miklos@szeredi.hu>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ include/linux/fs.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -3898,10 +3898,8 @@ static int ext4_rename(struct user_names
- 				goto end_rename;
- 		}
- 		retval = ext4_rename_dir_prepare(handle, &old);
--		if (retval) {
--			inode_unlock(old.inode);
-+		if (retval)
- 			goto end_rename;
--		}
- 	}
- 	/*
- 	 * If we're renaming a file within an inline_data dir and adding or
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -3408,7 +3408,7 @@ int __init get_filesystem_list(char *buf
+ 
+ static inline bool is_sxid(umode_t mode)
+ {
+-	return (mode & S_ISUID) || ((mode & S_ISGID) && (mode & S_IXGRP));
++	return mode & (S_ISUID | S_ISGID);
+ }
+ 
+ static inline int check_sticky(struct inode *dir, struct inode *inode)
 
 
