@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750E81C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72B4C433D2;
-	Mon, 20 Mar 2023 15:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B0C1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08C9C433D2;
+	Mon, 20 Mar 2023 15:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325089;
-	bh=oTkMxnXuko8TXXzRkNHaUt4E6AnzdUrHuKh7d1vYKMI=;
+	s=korg; t=1679325092;
+	bh=H86i0pfEXKyVRTLsGvt2vGQ3Xc0J3lDRY8JaftqgaI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0us3P9tSGnhOuqKGw8lM/h7zoDjbcZh3T2NgA6yp3dihOUan1JznwpgVEJfD0hTWJ
-	 ag7jn3O/+7TijeeKzINYXErg0hp1y2U/DlTilFoWIvan88/1F50uFJAGsFXDm4DDGZ
-	 NXgQWvk/X9OrWTaUfjXcQ6DUYxUbDNtTQ95IalTY=
+	b=2oeQNlNG4EjjFV0DEjKI2vNDTrUy5YwZWGQX7fP2qOL/VQvbCRplMIdB1e8p5L43d
+	 BQAZMSoXwZMPsuBGCiGssCLkPV+ihj0dcGRIdt/tp9qsrErW/91gD1OPU7R5P6AwaB
+	 Hi9/xEtgHFuA1O1rZpnsRT6oc+DLo+rdAr/WJZ8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Sowden <jeremy@azazel.net>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 027/198] netfilter: nft_redir: correct length for loading protocol registers
-Date: Mon, 20 Mar 2023 15:52:45 +0100
-Message-Id: <20230320145508.637082280@linuxfoundation.org>
+Subject: [PATCH 5.15 067/115] ext4: update s_journal_inum if it changes after journal replay
+Date: Mon, 20 Mar 2023 15:54:39 +0100
+Message-Id: <20230320145452.221260026@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Sowden <jeremy@azazel.net>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 1f617b6b4c7a3d5ea7a56abb83a4c27733b60c2f ]
+[ Upstream commit 3039d8b8692408438a618fac2776b629852663c3 ]
 
-The values in the protocol registers are two bytes wide.  However, when
-parsing the register loads, the code currently uses the larger 16-byte
-size of a `union nf_inet_addr`.  Change it to use the (correct) size of
-a `union nf_conntrack_man_proto` instead.
+When mounting a crafted ext4 image, s_journal_inum may change after journal
+replay, which is obviously unreasonable because we have successfully loaded
+and replayed the journal through the old s_journal_inum. And the new
+s_journal_inum bypasses some of the checks in ext4_get_journal(), which
+may trigger a null pointer dereference problem. So if s_journal_inum
+changes after the journal replay, we ignore the change, and rewrite the
+current journal_inum to the superblock.
 
-Fixes: d07db9884a5f ("netfilter: nf_tables: introduce nft_validate_register_load()")
-Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216541
+Reported-by: Luís Henriques <lhenriques@suse.de>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230107032126.4165860-3-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_redir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/super.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_redir.c b/net/netfilter/nft_redir.c
-index 5086adfe731cb..7ae330d75ac7b 100644
---- a/net/netfilter/nft_redir.c
-+++ b/net/netfilter/nft_redir.c
-@@ -48,7 +48,7 @@ static int nft_redir_init(const struct nft_ctx *ctx,
- 	unsigned int plen;
- 	int err;
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 802ca160d31ed..6df4da084190f 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5385,8 +5385,11 @@ static int ext4_load_journal(struct super_block *sb,
+ 	if (!really_read_only && journal_devnum &&
+ 	    journal_devnum != le32_to_cpu(es->s_journal_dev)) {
+ 		es->s_journal_dev = cpu_to_le32(journal_devnum);
+-
+-		/* Make sure we flush the recovery flag to disk. */
++		ext4_commit_super(sb);
++	}
++	if (!really_read_only && journal_inum &&
++	    journal_inum != le32_to_cpu(es->s_journal_inum)) {
++		es->s_journal_inum = cpu_to_le32(journal_inum);
+ 		ext4_commit_super(sb);
+ 	}
  
--	plen = sizeof_field(struct nf_nat_range, min_addr.all);
-+	plen = sizeof_field(struct nf_nat_range, min_proto.all);
- 	if (tb[NFTA_REDIR_REG_PROTO_MIN]) {
- 		err = nft_parse_register_load(tb[NFTA_REDIR_REG_PROTO_MIN],
- 					      &priv->sreg_proto_min, plen);
 -- 
 2.39.2
 
