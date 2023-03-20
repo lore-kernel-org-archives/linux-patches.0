@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5C51C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F0CC4339E;
-	Mon, 20 Mar 2023 15:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3001C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCA3C4339C;
+	Mon, 20 Mar 2023 15:07:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324824;
-	bh=ghHOHF33ops7wK5zf6a9R3UJFMM+qLEv91iTDRCxLc0=;
+	s=korg; t=1679324826;
+	bh=n4GtEvqKkRv2yfdFJkXa8qv4syimoEUT00jPaqUSvJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BbTL3x/5bPRn46sqViYBjcuknHmGKhYPyAkuhNO9owmT6PXV38/G/c7p+5mCSftnb
-	 EDpwy04/qFonHGpsmWb8HYp47esMgWjZ5c8mRAg92s6PJbnYpU9poThz5dvBj1ojGG
-	 Cg9SNtuzV12XG4FUyaltdSqTWalv9NrUQbrHKhKY=
+	b=Y8g/b/j91BSNlJc2olEW1CahtD9l4l0OUilCUJTonVXA7vIS7FgR3YJragoQhQvXA
+	 eVocfZu/KVXPS7frTpE+HnihO3Vxw+Ylp5NVYjL394PT1oysjcmYd3aIeAIVZ+t+Cv
+	 lbans3IF0ryO+RWJXyGFchmMbH/kKyfQamb34u5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 62/99] tracing: Check field value in hist_field_name()
-Date: Mon, 20 Mar 2023 15:54:40 +0100
-Message-Id: <20230320145445.988471697@linuxfoundation.org>
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 010/198] ASoC: SOF: Intel: HDA: Fix device description
+Date: Mon, 20 Mar 2023 15:52:28 +0100
+Message-Id: <20230320145507.912136853@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,43 +38,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 
-commit 9f116f76fa8c04c81aef33ad870dbf9a158e5b70 upstream.
+[ Upstream commit 9eb2b4cac223095d2079a6d52b8bbddc6e064288 ]
 
-The function hist_field_name() cannot handle being passed a NULL field
-parameter. It should never be NULL, but due to a previous bug, NULL was
-passed to the function and the kernel crashed due to a NULL dereference.
-Mark Rutland reported this to me on IRC.
+Add the missing ops_free callback for APL/CNL/CML/JSL/TGL/EHL platforms.
 
-The bug was fixed, but to prevent future bugs from crashing the kernel,
-check the field and add a WARN_ON() if it is NULL.
+Fixes: 1da51943725f ("ASoC: SOF: Intel: hda: init NHLT for IPC4")
 
-Link: https://lkml.kernel.org/r/20230302020810.762384440@goodmis.org
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Mark Rutland <mark.rutland@arm.com>
-Fixes: c6afad49d127f ("tracing: Add hist trigger 'sym' and 'sym-offset' modifiers")
-Tested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20230307093914.25409-3-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/sof/intel/pci-apl.c | 1 +
+ sound/soc/sof/intel/pci-cnl.c | 2 ++
+ sound/soc/sof/intel/pci-icl.c | 1 +
+ sound/soc/sof/intel/pci-tgl.c | 5 +++++
+ 4 files changed, 9 insertions(+)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -1087,6 +1087,9 @@ static const char *hist_field_name(struc
- {
- 	const char *field_name = "";
+diff --git a/sound/soc/sof/intel/pci-apl.c b/sound/soc/sof/intel/pci-apl.c
+index 998e219011f01..ad8431b13125d 100644
+--- a/sound/soc/sof/intel/pci-apl.c
++++ b/sound/soc/sof/intel/pci-apl.c
+@@ -72,6 +72,7 @@ static const struct sof_dev_desc glk_desc = {
+ 	.nocodec_tplg_filename = "sof-glk-nocodec.tplg",
+ 	.ops = &sof_apl_ops,
+ 	.ops_init = sof_apl_ops_init,
++	.ops_free = hda_ops_free,
+ };
  
-+	if (WARN_ON_ONCE(!field))
-+		return field_name;
-+
- 	if (level > 1)
- 		return field_name;
+ /* PCI IDs */
+diff --git a/sound/soc/sof/intel/pci-cnl.c b/sound/soc/sof/intel/pci-cnl.c
+index c797356f7028b..33677ce8de41d 100644
+--- a/sound/soc/sof/intel/pci-cnl.c
++++ b/sound/soc/sof/intel/pci-cnl.c
+@@ -45,6 +45,7 @@ static const struct sof_dev_desc cnl_desc = {
+ 	.nocodec_tplg_filename = "sof-cnl-nocodec.tplg",
+ 	.ops = &sof_cnl_ops,
+ 	.ops_init = sof_cnl_ops_init,
++	.ops_free = hda_ops_free,
+ };
  
+ static const struct sof_dev_desc cfl_desc = {
+@@ -102,6 +103,7 @@ static const struct sof_dev_desc cml_desc = {
+ 	.nocodec_tplg_filename = "sof-cnl-nocodec.tplg",
+ 	.ops = &sof_cnl_ops,
+ 	.ops_init = sof_cnl_ops_init,
++	.ops_free = hda_ops_free,
+ };
+ 
+ /* PCI IDs */
+diff --git a/sound/soc/sof/intel/pci-icl.c b/sound/soc/sof/intel/pci-icl.c
+index 48f24f8ace261..9a42a4ea1a5ea 100644
+--- a/sound/soc/sof/intel/pci-icl.c
++++ b/sound/soc/sof/intel/pci-icl.c
+@@ -73,6 +73,7 @@ static const struct sof_dev_desc jsl_desc = {
+ 	.nocodec_tplg_filename = "sof-jsl-nocodec.tplg",
+ 	.ops = &sof_cnl_ops,
+ 	.ops_init = sof_cnl_ops_init,
++	.ops_free = hda_ops_free,
+ };
+ 
+ /* PCI IDs */
+diff --git a/sound/soc/sof/intel/pci-tgl.c b/sound/soc/sof/intel/pci-tgl.c
+index 4cfe4f242fc5e..19e2d68dcb20a 100644
+--- a/sound/soc/sof/intel/pci-tgl.c
++++ b/sound/soc/sof/intel/pci-tgl.c
+@@ -45,6 +45,7 @@ static const struct sof_dev_desc tgl_desc = {
+ 	.nocodec_tplg_filename = "sof-tgl-nocodec.tplg",
+ 	.ops = &sof_tgl_ops,
+ 	.ops_init = sof_tgl_ops_init,
++	.ops_free = hda_ops_free,
+ };
+ 
+ static const struct sof_dev_desc tglh_desc = {
+@@ -101,6 +102,7 @@ static const struct sof_dev_desc ehl_desc = {
+ 	.nocodec_tplg_filename = "sof-ehl-nocodec.tplg",
+ 	.ops = &sof_tgl_ops,
+ 	.ops_init = sof_tgl_ops_init,
++	.ops_free = hda_ops_free,
+ };
+ 
+ static const struct sof_dev_desc adls_desc = {
+@@ -129,6 +131,7 @@ static const struct sof_dev_desc adls_desc = {
+ 	.nocodec_tplg_filename = "sof-adl-nocodec.tplg",
+ 	.ops = &sof_tgl_ops,
+ 	.ops_init = sof_tgl_ops_init,
++	.ops_free = hda_ops_free,
+ };
+ 
+ static const struct sof_dev_desc adl_desc = {
+@@ -157,6 +160,7 @@ static const struct sof_dev_desc adl_desc = {
+ 	.nocodec_tplg_filename = "sof-adl-nocodec.tplg",
+ 	.ops = &sof_tgl_ops,
+ 	.ops_init = sof_tgl_ops_init,
++	.ops_free = hda_ops_free,
+ };
+ 
+ static const struct sof_dev_desc adl_n_desc = {
+@@ -185,6 +189,7 @@ static const struct sof_dev_desc adl_n_desc = {
+ 	.nocodec_tplg_filename = "sof-adl-nocodec.tplg",
+ 	.ops = &sof_tgl_ops,
+ 	.ops_init = sof_tgl_ops_init,
++	.ops_free = hda_ops_free,
+ };
+ 
+ static const struct sof_dev_desc rpls_desc = {
+-- 
+2.39.2
+
 
 
