@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8F01C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C489EC433EF;
-	Mon, 20 Mar 2023 15:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA951C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6AE4C4339B;
+	Mon, 20 Mar 2023 15:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325205;
-	bh=g7eLk0dgrMHSZMRUydLwJ7iTR3XUh4/ZboFmQQkTgbY=;
+	s=korg; t=1679325208;
+	bh=r1HWeWs3tt9Qp8gcbLAB2F/pmP6xy0RSAWUsD8jirjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1myXP0xEvf449C3b6t6lLDD0MCzdOsAwMM+LXn5pP+1L0k/SqhrhEVYpagP4OT0dl
-	 u59xSHzx+bccM0K0fWGeXXzJWyz1bkzfI5Ct7umYpi/qV317vB3YLk9UZuH7T4d4Bw
-	 uyxs3P73n8d1SW0oAtQ1lBG9FdRpNKDUfIzZJxus=
+	b=i5OlCfnzfmPEoTDZ7EKEbPVx24kqQ/QMZlhL/smE6uDJXEl1V1eM8+7xHPa4+LWvV
+	 RVuBAm672F7YrR3oy1tHdaXLGOG4lfzZCmKTQz20prIcvsXJeDYq8hX8/ipifgOkiM
+	 +z2ZVFEiuOelja1IN50DA8+ci/Cx2y/ZQSlWudlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/198] net: dsa: mt7530: set PLL frequency and trgmii only when trgmii is used
-Date: Mon, 20 Mar 2023 15:53:07 +0100
-Message-Id: <20230320145509.547976837@linuxfoundation.org>
+Subject: [PATCH 6.1 055/198] net: phy: smsc: bail out in lan87xx_read_status if genphy_read_status fails
+Date: Mon, 20 Mar 2023 15:53:13 +0100
+Message-Id: <20230320145509.823389030@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
 References: <20230320145507.420176832@linuxfoundation.org>
@@ -35,114 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 0b086d76e7b011772b0ac214c6e5fd5816eff2df ]
+[ Upstream commit c22c3bbf351e4ce905f082649cffa1ff893ea8c1 ]
 
-As my testing on the MCM MT7530 switch on MT7621 SoC shows, setting the PLL
-frequency does not affect MII modes other than trgmii on port 5 and port 6.
-So the assumption is that the operation here called "setting the PLL
-frequency" actually sets the frequency of the TRGMII TX clock.
+If genphy_read_status fails then further access to the PHY may result
+in unpredictable behavior. To prevent this bail out immediately if
+genphy_read_status fails.
 
-Make it so that it and the rest of the trgmii setup run only when the
-trgmii mode is used.
-
-Tested rgmii and trgmii modes of port 6 on MCM MT7530 on MT7621AT Unielec
-U7621-06 and standalone MT7530 on MT7623NI Bananapi BPI-R2.
-
-Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
-Tested-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Link: https://lore.kernel.org/r/20230310073338.5836-2-arinc.unal@arinc9.com
+Fixes: 4223dbffed9f ("net: phy: smsc: Re-enable EDPD mode for LAN87xx")
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/026aa4f2-36f5-1c10-ab9f-cdb17dda6ac4@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 62 ++++++++++++++++++++--------------------
- 1 file changed, 31 insertions(+), 31 deletions(-)
+ drivers/net/phy/smsc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 4306782bf2257..1757d6a2c72ae 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -430,8 +430,6 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
- 	switch (interface) {
- 	case PHY_INTERFACE_MODE_RGMII:
- 		trgint = 0;
--		/* PLL frequency: 125MHz */
--		ncpo1 = 0x0c80;
- 		break;
- 	case PHY_INTERFACE_MODE_TRGMII:
- 		trgint = 1;
-@@ -462,38 +460,40 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
- 	mt7530_rmw(priv, MT7530_P6ECR, P6_INTF_MODE_MASK,
- 		   P6_INTF_MODE(trgint));
+diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
+index 00d9eff91dcfa..df2c5435c5c49 100644
+--- a/drivers/net/phy/smsc.c
++++ b/drivers/net/phy/smsc.c
+@@ -199,8 +199,11 @@ static int lan95xx_config_aneg_ext(struct phy_device *phydev)
+ static int lan87xx_read_status(struct phy_device *phydev)
+ {
+ 	struct smsc_phy_priv *priv = phydev->priv;
++	int err;
  
--	/* Lower Tx Driving for TRGMII path */
--	for (i = 0 ; i < NUM_TRGMII_CTRL ; i++)
--		mt7530_write(priv, MT7530_TRGMII_TD_ODT(i),
--			     TD_DM_DRVP(8) | TD_DM_DRVN(8));
--
--	/* Disable MT7530 core and TRGMII Tx clocks */
--	core_clear(priv, CORE_TRGMII_GSW_CLK_CG,
--		   REG_GSWCK_EN | REG_TRGMIICK_EN);
--
--	/* Setup the MT7530 TRGMII Tx Clock */
--	core_write(priv, CORE_PLL_GROUP5, RG_LCDDS_PCW_NCPO1(ncpo1));
--	core_write(priv, CORE_PLL_GROUP6, RG_LCDDS_PCW_NCPO0(0));
--	core_write(priv, CORE_PLL_GROUP10, RG_LCDDS_SSC_DELTA(ssc_delta));
--	core_write(priv, CORE_PLL_GROUP11, RG_LCDDS_SSC_DELTA1(ssc_delta));
--	core_write(priv, CORE_PLL_GROUP4,
--		   RG_SYSPLL_DDSFBK_EN | RG_SYSPLL_BIAS_EN |
--		   RG_SYSPLL_BIAS_LPF_EN);
--	core_write(priv, CORE_PLL_GROUP2,
--		   RG_SYSPLL_EN_NORMAL | RG_SYSPLL_VODEN |
--		   RG_SYSPLL_POSDIV(1));
--	core_write(priv, CORE_PLL_GROUP7,
--		   RG_LCDDS_PCW_NCPO_CHG | RG_LCCDS_C(3) |
--		   RG_LCDDS_PWDB | RG_LCDDS_ISO_EN);
--
--	/* Enable MT7530 core and TRGMII Tx clocks */
--	core_set(priv, CORE_TRGMII_GSW_CLK_CG,
--		 REG_GSWCK_EN | REG_TRGMIICK_EN);
--
--	if (!trgint)
-+	if (trgint) {
-+		/* Lower Tx Driving for TRGMII path */
-+		for (i = 0 ; i < NUM_TRGMII_CTRL ; i++)
-+			mt7530_write(priv, MT7530_TRGMII_TD_ODT(i),
-+				     TD_DM_DRVP(8) | TD_DM_DRVN(8));
-+
-+		/* Disable MT7530 core and TRGMII Tx clocks */
-+		core_clear(priv, CORE_TRGMII_GSW_CLK_CG,
-+			   REG_GSWCK_EN | REG_TRGMIICK_EN);
-+
-+		/* Setup the MT7530 TRGMII Tx Clock */
-+		core_write(priv, CORE_PLL_GROUP5, RG_LCDDS_PCW_NCPO1(ncpo1));
-+		core_write(priv, CORE_PLL_GROUP6, RG_LCDDS_PCW_NCPO0(0));
-+		core_write(priv, CORE_PLL_GROUP10, RG_LCDDS_SSC_DELTA(ssc_delta));
-+		core_write(priv, CORE_PLL_GROUP11, RG_LCDDS_SSC_DELTA1(ssc_delta));
-+		core_write(priv, CORE_PLL_GROUP4,
-+			   RG_SYSPLL_DDSFBK_EN | RG_SYSPLL_BIAS_EN |
-+			   RG_SYSPLL_BIAS_LPF_EN);
-+		core_write(priv, CORE_PLL_GROUP2,
-+			   RG_SYSPLL_EN_NORMAL | RG_SYSPLL_VODEN |
-+			   RG_SYSPLL_POSDIV(1));
-+		core_write(priv, CORE_PLL_GROUP7,
-+			   RG_LCDDS_PCW_NCPO_CHG | RG_LCCDS_C(3) |
-+			   RG_LCDDS_PWDB | RG_LCDDS_ISO_EN);
-+
-+		/* Enable MT7530 core and TRGMII Tx clocks */
-+		core_set(priv, CORE_TRGMII_GSW_CLK_CG,
-+			 REG_GSWCK_EN | REG_TRGMIICK_EN);
-+	} else {
- 		for (i = 0 ; i < NUM_TRGMII_CTRL; i++)
- 			mt7530_rmw(priv, MT7530_TRGMII_RD(i),
- 				   RD_TAP_MASK, RD_TAP(16));
-+	}
-+
- 	return 0;
- }
+-	int err = genphy_read_status(phydev);
++	err = genphy_read_status(phydev);
++	if (err)
++		return err;
  
+ 	if (!phydev->link && priv->energy_enable && phydev->irq == PHY_POLL) {
+ 		/* Disable EDPD to wake up PHY */
 -- 
 2.39.2
 
