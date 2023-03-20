@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E711C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39504C433EF;
-	Mon, 20 Mar 2023 15:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8661C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1E8C433D2;
+	Mon, 20 Mar 2023 15:26:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325997;
-	bh=oinfXLo2mn+fp3UP3KORY6Jo907fJHxz+HjgO9B2WCg=;
+	s=korg; t=1679326000;
+	bh=ZGs7l5Ud+ipwYBmxK3XJqmyjDv9jr2SVhfE3o9Fp42E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+uL1+wQ0JzAOieEuBjxwvfZr/Uy0fe7VtNrbEwrQjOSkpHpW2hbaRATPR2PxMWJy
-	 PTr5xvBGMPmWCOj7/9Rb4oT7OdA8kJKKnSmEETkx+a6BhWhhTIGO/y67bHBUGyOF0M
-	 r+YT8xl4Jo/7oVLkQWpGyjWPEA44cijVw4cNVgZg=
+	b=sNEWs9yH77ueoNbh4kxdcozVPFNmPlMSeVJFlGm/2CYKYDtFDQdoa6rYscd/XyWAL
+	 c4LcNrrz0oOm9DvcSt8x9yPkT40JDQOMR6/PnwOfnpEQK+5ss/4Uo7+FQi229QJ+cV
+	 cW5iheDXqUonSgj3yP2w7+jbcpRGkXApqxsW2GqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.2 138/211] interconnect: qcom: rpmh: fix registration race
-Date: Mon, 20 Mar 2023 15:54:33 +0100
-Message-Id: <20230320145519.211532787@linuxfoundation.org>
+	Aishwarya TCV <aishwarya.tcv@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Pierre Gondois <pierre.gondois@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 181/198] ACPI: PPTT: Fix to avoid sleep in the atomic context when PPTT is absent
+Date: Mon, 20 Mar 2023 15:55:19 +0100
+Message-Id: <20230320145515.078459248@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,102 +36,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-commit 74240a5bebd48d8b843c6d0f1acfaa722a5abeb7 upstream.
+commit 91d7b60a65d9f71230ea09b86d2058a884a3c2af upstream.
 
-The current interconnect provider registration interface is inherently
-racy as nodes are not added until the after adding the provider. This
-can specifically cause racing DT lookups to fail.
+Commit 0c80f9e165f8 ("ACPI: PPTT: Leave the table mapped for the runtime usage")
+enabled to map PPTT once on the first invocation of acpi_get_pptt() and
+never unmapped the same allowing it to be used at runtime with out the
+hassle of mapping and unmapping the table. This was needed to fetch LLC
+information from the PPTT in the cpuhotplug path which is executed in
+the atomic context as the acpi_get_table() might sleep waiting for a
+mutex.
 
-Switch to using the new API where the provider is not registered until
-after it has been fully initialised.
+However it missed to handle the case when there is no PPTT on the system
+which results in acpi_get_pptt() being called from all the secondary
+CPUs attempting to fetch the LLC information in the atomic context
+without knowing the absence of PPTT resulting in the splat like below:
 
-Fixes: 976daac4a1c5 ("interconnect: qcom: Consolidate interconnect RPMh support")
-Cc: stable@vger.kernel.org      # 5.7
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-11-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+ | BUG: sleeping function called from invalid context at kernel/locking/semaphore.c:164
+ | in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/1
+ | preempt_count: 1, expected: 0
+ | RCU nest depth: 0, expected: 0
+ | no locks held by swapper/1/0.
+ | irq event stamp: 0
+ | hardirqs last  enabled at (0): 0x0
+ | hardirqs last disabled at (0): copy_process+0x61c/0x1b40
+ | softirqs last  enabled at (0): copy_process+0x61c/0x1b40
+ | softirqs last disabled at (0): 0x0
+ | CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.3.0-rc1 #1
+ | Call trace:
+ |  dump_backtrace+0xac/0x138
+ |  show_stack+0x30/0x48
+ |  dump_stack_lvl+0x60/0xb0
+ |  dump_stack+0x18/0x28
+ |  __might_resched+0x160/0x270
+ |  __might_sleep+0x58/0xb0
+ |  down_timeout+0x34/0x98
+ |  acpi_os_wait_semaphore+0x7c/0xc0
+ |  acpi_ut_acquire_mutex+0x58/0x108
+ |  acpi_get_table+0x40/0xe8
+ |  acpi_get_pptt+0x48/0xa0
+ |  acpi_get_cache_info+0x38/0x140
+ |  init_cache_level+0xf4/0x118
+ |  detect_cache_attributes+0x2e4/0x640
+ |  update_siblings_masks+0x3c/0x330
+ |  store_cpu_topology+0x88/0xf0
+ |  secondary_start_kernel+0xd0/0x168
+ |  __secondary_switched+0xb8/0xc0
+
+Update acpi_get_pptt() to consider the fact that PPTT is once checked and
+is not available on the system and return NULL avoiding any attempts to
+fetch PPTT and thereby avoiding any possible sleep waiting for a mutex
+in the atomic context.
+
+Fixes: 0c80f9e165f8 ("ACPI: PPTT: Leave the table mapped for the runtime usage")
+Reported-by: Aishwarya TCV <aishwarya.tcv@arm.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Tested-by: Pierre Gondois <pierre.gondois@arm.com>
+Cc: 6.0+ <stable@vger.kernel.org> # 6.0+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/interconnect/qcom/icc-rpmh.c |   25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ drivers/acpi/pptt.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/interconnect/qcom/icc-rpmh.c
-+++ b/drivers/interconnect/qcom/icc-rpmh.c
-@@ -192,9 +192,10 @@ int qcom_icc_rpmh_probe(struct platform_
- 	provider->pre_aggregate = qcom_icc_pre_aggregate;
- 	provider->aggregate = qcom_icc_aggregate;
- 	provider->xlate_extended = qcom_icc_xlate_extended;
--	INIT_LIST_HEAD(&provider->nodes);
- 	provider->data = data;
- 
-+	icc_provider_init(provider);
-+
- 	qp->dev = dev;
- 	qp->bcms = desc->bcms;
- 	qp->num_bcms = desc->num_bcms;
-@@ -203,10 +204,6 @@ int qcom_icc_rpmh_probe(struct platform_
- 	if (IS_ERR(qp->voter))
- 		return PTR_ERR(qp->voter);
- 
--	ret = icc_provider_add(provider);
--	if (ret)
--		return ret;
--
- 	for (i = 0; i < qp->num_bcms; i++)
- 		qcom_icc_bcm_init(qp->bcms[i], dev);
- 
-@@ -218,7 +215,7 @@ int qcom_icc_rpmh_probe(struct platform_
- 		node = icc_node_create(qn->id);
- 		if (IS_ERR(node)) {
- 			ret = PTR_ERR(node);
--			goto err;
-+			goto err_remove_nodes;
- 		}
- 
- 		node->name = qn->name;
-@@ -232,19 +229,27 @@ int qcom_icc_rpmh_probe(struct platform_
- 	}
- 
- 	data->num_nodes = num_nodes;
-+
-+	ret = icc_provider_register(provider);
-+	if (ret)
-+		goto err_remove_nodes;
-+
- 	platform_set_drvdata(pdev, qp);
- 
- 	/* Populate child NoC devices if any */
- 	if (of_get_child_count(dev->of_node) > 0) {
- 		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
- 		if (ret)
--			goto err;
-+			goto err_deregister_provider;
- 	}
- 
- 	return 0;
--err:
-+
-+err_deregister_provider:
-+	icc_provider_deregister(provider);
-+err_remove_nodes:
- 	icc_nodes_remove(provider);
--	icc_provider_del(provider);
-+
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(qcom_icc_rpmh_probe);
-@@ -253,8 +258,8 @@ int qcom_icc_rpmh_remove(struct platform
+--- a/drivers/acpi/pptt.c
++++ b/drivers/acpi/pptt.c
+@@ -537,16 +537,19 @@ static int topology_get_acpi_cpu_tag(str
+ static struct acpi_table_header *acpi_get_pptt(void)
  {
- 	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
+ 	static struct acpi_table_header *pptt;
++	static bool is_pptt_checked;
+ 	acpi_status status;
  
-+	icc_provider_deregister(&qp->provider);
- 	icc_nodes_remove(&qp->provider);
--	icc_provider_del(&qp->provider);
+ 	/*
+ 	 * PPTT will be used at runtime on every CPU hotplug in path, so we
+ 	 * don't need to call acpi_put_table() to release the table mapping.
+ 	 */
+-	if (!pptt) {
++	if (!pptt && !is_pptt_checked) {
+ 		status = acpi_get_table(ACPI_SIG_PPTT, 0, &pptt);
+ 		if (ACPI_FAILURE(status))
+ 			acpi_pptt_warn_missing();
++
++		is_pptt_checked = true;
+ 	}
  
- 	return 0;
- }
+ 	return pptt;
 
 
