@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAFE1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDAEC433D2;
-	Mon, 20 Mar 2023 15:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC021C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BFD0C433EF;
+	Mon, 20 Mar 2023 15:01:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324481;
-	bh=1BPBZ5ylqobCPmNGb2yrq3fPue+2OLQTZEm7AWgA4Gg=;
+	s=korg; t=1679324484;
+	bh=oQD1KaG1hFPnaDkZrdO4C3iXxytV1OLuHQdlZ2Q9yxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0YyIg6EvLdX52MQf5qNFfw2NHV+J7eiMws6OfKVwAd5GnhHTMHzPjgx0Vrzs6X9hh
-	 /G3CQM/csv3Rz7est9lXaDT/vQ0csXvtII+MifAEeeUVcBWoTVNVNn322dSog1BeOr
-	 /JqCqGkD0yJX7QCx8pc+9eY4/Rzp9lN5w6iOHjPA=
+	b=guIuLtr7RiyB2jc9+9KAPeeVCzh33JNhETgjB0Uk+vjJfjpyJuIl1qjACEoiFseX5
+	 yez0LVa3ok6L9vOEbB7jqczXliuQ6p5zEwXUoQKdXZCxKWVl97unrOvlYsrLVvrTSw
+	 sKpYgnI56zVouLHM8HAK9AGzyXW2XY7mvXPpXUnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Steve French <stfrench@microsoft.com>,
+	Wenchao Hao <haowenchao2@huawei.com>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 03/99] cifs: Move the in_send statistic to __smb_send_rqst()
-Date: Mon, 20 Mar 2023 15:53:41 +0100
-Message-Id: <20230320145443.494269153@linuxfoundation.org>
+Subject: [PATCH 5.4 08/60] scsi: mpt3sas: Fix NULL pointer access in mpt3sas_transport_port_add()
+Date: Mon, 20 Mar 2023 15:54:17 +0100
+Message-Id: <20230320145431.228471446@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
+References: <20230320145430.861072439@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,115 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Wenchao Hao <haowenchao2@huawei.com>
 
-[ Upstream commit d0dc41119905f740e8d5594adce277f7c0de8c92 ]
+[ Upstream commit d3c57724f1569311e4b81e98fad0931028b9bdcd ]
 
-When send SMB_COM_NT_CANCEL and RFC1002_SESSION_REQUEST, the
-in_send statistic was lost.
+Port is allocated by sas_port_alloc_num() and rphy is allocated by either
+sas_end_device_alloc() or sas_expander_alloc(), all of which may return
+NULL. So we need to check the rphy to avoid possible NULL pointer access.
 
-Let's move the in_send statistic to the send function to avoid
-this scenario.
+If sas_rphy_add() returned with failure, rphy is set to NULL. We would
+access the rphy in the following lines which would also result NULL pointer
+access.
 
-Fixes: 7ee1af765dfa ("[CIFS]")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 78316e9dfc24 ("scsi: mpt3sas: Fix possible resource leaks in mpt3sas_transport_port_add()")
+Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
+Link: https://lore.kernel.org/r/20230225100135.2109330-1-haowenchao2@huawei.com
+Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/transport.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ drivers/scsi/mpt3sas/mpt3sas_transport.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/fs/cifs/transport.c b/fs/cifs/transport.c
-index b137006f0fd25..4409f56fc37e6 100644
---- a/fs/cifs/transport.c
-+++ b/fs/cifs/transport.c
-@@ -312,7 +312,7 @@ static int
- __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 		struct smb_rqst *rqst)
- {
--	int rc = 0;
-+	int rc;
- 	struct kvec *iov;
- 	int n_vec;
- 	unsigned int send_length = 0;
-@@ -323,6 +323,7 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 	struct msghdr smb_msg = {};
- 	__be32 rfc1002_marker;
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+index b909cf100ea48..ebe78ec42da8b 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+@@ -670,7 +670,7 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
+ 		goto out_fail;
+ 	}
+ 	port = sas_port_alloc_num(sas_node->parent_dev);
+-	if ((sas_port_add(port))) {
++	if (!port || (sas_port_add(port))) {
+ 		ioc_err(ioc, "failure at %s:%d/%s()!\n",
+ 			__FILE__, __LINE__, __func__);
+ 		goto out_fail;
+@@ -695,6 +695,12 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
+ 		rphy = sas_expander_alloc(port,
+ 		    mpt3sas_port->remote_identify.device_type);
  
-+	cifs_in_send_inc(server);
- 	if (cifs_rdma_enabled(server)) {
- 		/* return -EAGAIN when connecting or reconnecting */
- 		rc = -EAGAIN;
-@@ -331,14 +332,17 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 		goto smbd_done;
++	if (!rphy) {
++		ioc_err(ioc, "failure at %s:%d/%s()!\n",
++			__FILE__, __LINE__, __func__);
++		goto out_delete_port;
++	}
++
+ 	rphy->identify = mpt3sas_port->remote_identify;
+ 
+ 	if (mpt3sas_port->remote_identify.device_type == SAS_END_DEVICE) {
+@@ -714,6 +720,7 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
+ 			__FILE__, __LINE__, __func__);
+ 		sas_rphy_free(rphy);
+ 		rphy = NULL;
++		goto out_delete_port;
  	}
  
-+	rc = -EAGAIN;
- 	if (ssocket == NULL)
--		return -EAGAIN;
-+		goto out;
+ 	if (mpt3sas_port->remote_identify.device_type == SAS_END_DEVICE) {
+@@ -741,7 +748,10 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
+ 		    rphy_to_expander_device(rphy));
+ 	return mpt3sas_port;
  
-+	rc = -ERESTARTSYS;
- 	if (fatal_signal_pending(current)) {
- 		cifs_dbg(FYI, "signal pending before send request\n");
--		return -ERESTARTSYS;
-+		goto out;
- 	}
- 
-+	rc = 0;
- 	/* cork the socket */
- 	tcp_sock_set_cork(ssocket->sk, true);
- 
-@@ -449,7 +453,8 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 			 rc);
- 	else if (rc > 0)
- 		rc = 0;
--
-+out:
-+	cifs_in_send_dec(server);
- 	return rc;
- }
- 
-@@ -826,9 +831,7 @@ cifs_call_async(struct TCP_Server_Info *server, struct smb_rqst *rqst,
- 	 * I/O response may come back and free the mid entry on another thread.
- 	 */
- 	cifs_save_when_sent(mid);
--	cifs_in_send_inc(server);
- 	rc = smb_send_rqst(server, 1, rqst, flags);
--	cifs_in_send_dec(server);
- 
- 	if (rc < 0) {
- 		revert_current_mid(server, mid->credits);
-@@ -1117,9 +1120,7 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
- 		else
- 			midQ[i]->callback = cifs_compound_last_callback;
- 	}
--	cifs_in_send_inc(server);
- 	rc = smb_send_rqst(server, num_rqst, rqst, flags);
--	cifs_in_send_dec(server);
- 
- 	for (i = 0; i < num_rqst; i++)
- 		cifs_save_when_sent(midQ[i]);
-@@ -1356,9 +1357,7 @@ SendReceive(const unsigned int xid, struct cifs_ses *ses,
- 
- 	midQ->mid_state = MID_REQUEST_SUBMITTED;
- 
--	cifs_in_send_inc(server);
- 	rc = smb_send(server, in_buf, len);
--	cifs_in_send_dec(server);
- 	cifs_save_when_sent(midQ);
- 
- 	if (rc < 0)
-@@ -1495,9 +1494,7 @@ SendReceiveBlockingLock(const unsigned int xid, struct cifs_tcon *tcon,
- 	}
- 
- 	midQ->mid_state = MID_REQUEST_SUBMITTED;
--	cifs_in_send_inc(server);
- 	rc = smb_send(server, in_buf, len);
--	cifs_in_send_dec(server);
- 	cifs_save_when_sent(midQ);
- 
- 	if (rc < 0)
+- out_fail:
++out_delete_port:
++	sas_port_delete(port);
++
++out_fail:
+ 	list_for_each_entry_safe(mpt3sas_phy, next, &mpt3sas_port->phy_list,
+ 	    port_siblings)
+ 		list_del(&mpt3sas_phy->port_siblings);
 -- 
 2.39.2
 
