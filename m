@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738931C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:03:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06D2C4339C;
-	Mon, 20 Mar 2023 15:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142CE1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:03:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7E2C433D2;
+	Mon, 20 Mar 2023 15:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324599;
-	bh=xCmItfak/Ee3pijQvtPOXKezg1qLH8Yi/tBnF8gDm+c=;
+	s=korg; t=1679324601;
+	bh=je3jEpuUDfWuHy3kdIJipJ3SBjkS+AB+Lpd8j4yLdeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BE79otu1C2vn3zC9WbMzRu0l9RnpGXcfQUGBwvhbtVAOgZbIFzR6fLr7V9S/6KPdM
-	 pylygaO61RqtafbEEWOvBkcS5g83la+tUIOifr5SfbQxQzwPqSONXHTHyypLfG8opC
-	 z5x43lDXix5/h0mqh0vyIOXPEyXIf4FWSgvl1PJg=
+	b=ESyWcQjMEN9rGLQsYVR6R2pWKKy32Vix3GQILgCymdJ2nCrBjFIEJdNKHDW6ldYLp
+	 cCZgD3zA/nQKwWbTGfuITe4a9FIWXocRirihDyizK2oMIrrRKrfc7iDnGH0E/RnL8n
+	 Yb9Sj8bDU6BnXhppKvZQQa/wuMuO/wP5GOIB3rmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 23/99] nfc: st-nci: Fix use after free bug in ndlc_remove due to race condition
-Date: Mon, 20 Mar 2023 15:54:01 +0100
-Message-Id: <20230320145444.354789776@linuxfoundation.org>
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 5.4 59/60] HID: core: Provide new max_buffer_size attribute to over-ride the default
+Date: Mon, 20 Mar 2023 15:55:08 +0100
+Message-Id: <20230320145433.381698416@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
+References: <20230320145430.861072439@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,71 +34,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 5000fe6c27827a61d8250a7e4a1d26c3298ef4f6 ]
+commit b1a37ed00d7908a991c1d0f18a8cba3c2aa99bdc upstream.
 
-This bug influences both st_nci_i2c_remove and st_nci_spi_remove.
-Take st_nci_i2c_remove as an example.
+Presently, when a report is processed, its proposed size, provided by
+the user of the API (as Report Size * Report Count) is compared against
+the subsystem default HID_MAX_BUFFER_SIZE (16k).  However, some
+low-level HID drivers allocate a reduced amount of memory to their
+buffers (e.g. UHID only allocates UHID_DATA_MAX (4k) buffers), rending
+this check inadequate in some cases.
 
-In st_nci_i2c_probe, it called ndlc_probe and bound &ndlc->sm_work
-with llt_ndlc_sm_work.
+In these circumstances, if the received report ends up being smaller
+than the proposed report size, the remainder of the buffer is zeroed.
+That is, the space between sizeof(csize) (size of the current report)
+and the rsize (size proposed i.e. Report Size * Report Count), which can
+be handled up to HID_MAX_BUFFER_SIZE (16k).  Meaning that memset()
+shoots straight past the end of the buffer boundary and starts zeroing
+out in-use values, often resulting in calamity.
 
-When it calls ndlc_recv or timeout handler, it will finally call
-schedule_work to start the work.
+This patch introduces a new variable into 'struct hid_ll_driver' where
+individual low-level drivers can over-ride the default maximum value of
+HID_MAX_BUFFER_SIZE (16k) with something more sympathetic to the
+interface.
 
-When we call st_nci_i2c_remove to remove the driver, there
-may be a sequence as follows:
-
-Fix it by finishing the work before cleanup in ndlc_remove
-
-CPU0                  CPU1
-
-                    |llt_ndlc_sm_work
-st_nci_i2c_remove   |
-  ndlc_remove       |
-     st_nci_remove  |
-     nci_free_device|
-     kfree(ndev)    |
-//free ndlc->ndev   |
-                    |llt_ndlc_rcv_queue
-                    |nci_recv_frame
-                    |//use ndlc->ndev
-
-Fixes: 35630df68d60 ("NFC: st21nfcb: Add driver for STMicroelectronics ST21NFCB NFC chip")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230312160837.2040857-1-zyytlz.wz@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+[Lee: Backported to v5.10.y]
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/st-nci/ndlc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/hid/hid-core.c |   18 +++++++++++++-----
+ include/linux/hid.h    |    3 +++
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/nfc/st-nci/ndlc.c b/drivers/nfc/st-nci/ndlc.c
-index 5d74c674368a5..8ccf5a86ad1bb 100644
---- a/drivers/nfc/st-nci/ndlc.c
-+++ b/drivers/nfc/st-nci/ndlc.c
-@@ -286,13 +286,15 @@ EXPORT_SYMBOL(ndlc_probe);
- 
- void ndlc_remove(struct llt_ndlc *ndlc)
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -258,6 +258,7 @@ static int hid_add_field(struct hid_pars
  {
--	st_nci_remove(ndlc->ndev);
--
- 	/* cancel timers */
- 	del_timer_sync(&ndlc->t1_timer);
- 	del_timer_sync(&ndlc->t2_timer);
- 	ndlc->t2_active = false;
- 	ndlc->t1_active = false;
-+	/* cancel work */
-+	cancel_work_sync(&ndlc->sm_work);
-+
-+	st_nci_remove(ndlc->ndev);
+ 	struct hid_report *report;
+ 	struct hid_field *field;
++	unsigned int max_buffer_size = HID_MAX_BUFFER_SIZE;
+ 	unsigned int usages;
+ 	unsigned int offset;
+ 	unsigned int i;
+@@ -288,8 +289,11 @@ static int hid_add_field(struct hid_pars
+ 	offset = report->size;
+ 	report->size += parser->global.report_size * parser->global.report_count;
  
- 	skb_queue_purge(&ndlc->rcv_q);
- 	skb_queue_purge(&ndlc->send_q);
--- 
-2.39.2
-
++	if (parser->device->ll_driver->max_buffer_size)
++		max_buffer_size = parser->device->ll_driver->max_buffer_size;
++
+ 	/* Total size check: Allow for possible report index byte */
+-	if (report->size > (HID_MAX_BUFFER_SIZE - 1) << 3) {
++	if (report->size > (max_buffer_size - 1) << 3) {
+ 		hid_err(parser->device, "report is too long\n");
+ 		return -1;
+ 	}
+@@ -1745,6 +1749,7 @@ int hid_report_raw_event(struct hid_devi
+ 	struct hid_report_enum *report_enum = hid->report_enum + type;
+ 	struct hid_report *report;
+ 	struct hid_driver *hdrv;
++	int max_buffer_size = HID_MAX_BUFFER_SIZE;
+ 	unsigned int a;
+ 	u32 rsize, csize = size;
+ 	u8 *cdata = data;
+@@ -1761,10 +1766,13 @@ int hid_report_raw_event(struct hid_devi
+ 
+ 	rsize = hid_compute_report_size(report);
+ 
+-	if (report_enum->numbered && rsize >= HID_MAX_BUFFER_SIZE)
+-		rsize = HID_MAX_BUFFER_SIZE - 1;
+-	else if (rsize > HID_MAX_BUFFER_SIZE)
+-		rsize = HID_MAX_BUFFER_SIZE;
++	if (hid->ll_driver->max_buffer_size)
++		max_buffer_size = hid->ll_driver->max_buffer_size;
++
++	if (report_enum->numbered && rsize >= max_buffer_size)
++		rsize = max_buffer_size - 1;
++	else if (rsize > max_buffer_size)
++		rsize = max_buffer_size;
+ 
+ 	if (csize < rsize) {
+ 		dbg_hid("report %d is too short, (%d < %d)\n", report->id,
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -796,6 +796,7 @@ struct hid_driver {
+  * @raw_request: send raw report request to device (e.g. feature report)
+  * @output_report: send output report to device
+  * @idle: send idle request to device
++ * @max_buffer_size: over-ride maximum data buffer size (default: HID_MAX_BUFFER_SIZE)
+  */
+ struct hid_ll_driver {
+ 	int (*start)(struct hid_device *hdev);
+@@ -820,6 +821,8 @@ struct hid_ll_driver {
+ 	int (*output_report) (struct hid_device *hdev, __u8 *buf, size_t len);
+ 
+ 	int (*idle)(struct hid_device *hdev, int report, int idle, int reqtype);
++
++	unsigned int max_buffer_size;
+ };
+ 
+ extern struct hid_ll_driver i2c_hid_ll_driver;
 
 
