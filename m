@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0C21C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116A5C433EF;
-	Mon, 20 Mar 2023 15:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE911C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:23:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F07C433D2;
+	Mon, 20 Mar 2023 15:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325789;
-	bh=SFLnrdPpk2zHTaeF0/fgroT11We0DBvjC2ruRHfABDk=;
+	s=korg; t=1679325792;
+	bh=Ed3pU383HVMS7+m2FVX1Tx39zViPKwp/B/wTTwKwH/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=juepg941k9/T7eq5JS0o+FAMCryn3LFtoO9G9AP3c0CxALNg1OD67v0uZcDg34sy/
-	 hwCAVBO03liPngy06Lh7eZsACT09OYlF1S6scHofjlpfT9dcJ2CGfgC3gqbVjQYgES
-	 Snp2v9/CbOVy4+P9i1FMLEX5r26t6XMv7wnixzJ4=
+	b=xJ1g/QhNjeFDZyo37wldCK9dYuMVMJFRkTT39TNj3nRo2kW6Sl8CfX8oQ/vrcaSbq
+	 Pf+c63k6kX5tMjfcOnE7Eu15xNjp23A2v6ZR3bFWI+FKVhuAPHISFK4nDHee+p1l+W
+	 W6Mueyv33s3p7c6yErkpPK+lbJ7Cn3q2dGvpqeIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung-hun Kim <sfoon.kim@samsung.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 143/198] tracing: Make splice_read available again
-Date: Mon, 20 Mar 2023 15:54:41 +0100
-Message-Id: <20230320145513.559499694@linuxfoundation.org>
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 102/211] hwmon: (ucd90320) Add minimum delay between bus accesses
+Date: Mon, 20 Mar 2023 15:53:57 +0100
+Message-Id: <20230320145517.556592924@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,40 +35,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sung-hun Kim <sfoon.kim@samsung.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-commit e400be674a1a40e9dcb2e95f84d6c1fd2d88f31d upstream.
+[ Upstream commit 8d655e65237643c48ada2c131b83679bf1105373 ]
 
-Since the commit 36e2c7421f02 ("fs: don't allow splice read/write
-without explicit ops") is applied to the kernel, splice() and
-sendfile() calls on the trace file (/sys/kernel/debug/tracing
-/trace) return EINVAL.
+When probing the ucd90320 access to some of the registers randomly fails.
+Sometimes it NACKs a transfer, sometimes it returns just random data and
+the PEC check fails.
 
-This patch restores these system calls by initializing splice_read
-in file_operations of the trace file. This patch only enables such
-functionalities for the read case.
+Experimentation shows that this seems to be triggered by a register access
+directly back to back with a previous register write. Experimentation also
+shows that inserting a small delay after register writes makes the issue go
+away.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230314013707.28814-1-sfoon.kim@samsung.com
+Use a similar solution to what the max15301 driver does to solve the same
+problem. Create a custom set of bus read and write functions that make sure
+that the delay is added.
 
-Cc: stable@vger.kernel.org
-Fixes: 36e2c7421f02 ("fs: don't allow splice read/write without explicit ops")
-Signed-off-by: Sung-hun Kim <sfoon.kim@samsung.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a470f11c5ba2 ("hwmon: (pmbus/ucd9000) Add support for UCD90320 Power Sequencer")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Link: https://lore.kernel.org/r/20230312160312.2227405-1-lars@metafoo.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/pmbus/ucd9000.c | 75 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 75 insertions(+)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -5120,6 +5120,8 @@ loff_t tracing_lseek(struct file *file,
- static const struct file_operations tracing_fops = {
- 	.open		= tracing_open,
- 	.read		= seq_read,
-+	.read_iter	= seq_read_iter,
-+	.splice_read	= generic_file_splice_read,
- 	.write		= tracing_write_stub,
- 	.llseek		= tracing_lseek,
- 	.release	= tracing_release,
+diff --git a/drivers/hwmon/pmbus/ucd9000.c b/drivers/hwmon/pmbus/ucd9000.c
+index 75fc770c9e403..3daaf22378322 100644
+--- a/drivers/hwmon/pmbus/ucd9000.c
++++ b/drivers/hwmon/pmbus/ucd9000.c
+@@ -7,6 +7,7 @@
+  */
+ 
+ #include <linux/debugfs.h>
++#include <linux/delay.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/of_device.h>
+@@ -16,6 +17,7 @@
+ #include <linux/i2c.h>
+ #include <linux/pmbus.h>
+ #include <linux/gpio/driver.h>
++#include <linux/timekeeping.h>
+ #include "pmbus.h"
+ 
+ enum chips { ucd9000, ucd90120, ucd90124, ucd90160, ucd90320, ucd9090,
+@@ -65,6 +67,7 @@ struct ucd9000_data {
+ 	struct gpio_chip gpio;
+ #endif
+ 	struct dentry *debugfs;
++	ktime_t write_time;
+ };
+ #define to_ucd9000_data(_info) container_of(_info, struct ucd9000_data, info)
+ 
+@@ -73,6 +76,73 @@ struct ucd9000_debugfs_entry {
+ 	u8 index;
+ };
+ 
++/*
++ * It has been observed that the UCD90320 randomly fails register access when
++ * doing another access right on the back of a register write. To mitigate this
++ * make sure that there is a minimum delay between a write access and the
++ * following access. The 250us is based on experimental data. At a delay of
++ * 200us the issue seems to go away. Add a bit of extra margin to allow for
++ * system to system differences.
++ */
++#define UCD90320_WAIT_DELAY_US 250
++
++static inline void ucd90320_wait(const struct ucd9000_data *data)
++{
++	s64 delta = ktime_us_delta(ktime_get(), data->write_time);
++
++	if (delta < UCD90320_WAIT_DELAY_US)
++		udelay(UCD90320_WAIT_DELAY_US - delta);
++}
++
++static int ucd90320_read_word_data(struct i2c_client *client, int page,
++				   int phase, int reg)
++{
++	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
++	struct ucd9000_data *data = to_ucd9000_data(info);
++
++	if (reg >= PMBUS_VIRT_BASE)
++		return -ENXIO;
++
++	ucd90320_wait(data);
++	return pmbus_read_word_data(client, page, phase, reg);
++}
++
++static int ucd90320_read_byte_data(struct i2c_client *client, int page, int reg)
++{
++	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
++	struct ucd9000_data *data = to_ucd9000_data(info);
++
++	ucd90320_wait(data);
++	return pmbus_read_byte_data(client, page, reg);
++}
++
++static int ucd90320_write_word_data(struct i2c_client *client, int page,
++				    int reg, u16 word)
++{
++	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
++	struct ucd9000_data *data = to_ucd9000_data(info);
++	int ret;
++
++	ucd90320_wait(data);
++	ret = pmbus_write_word_data(client, page, reg, word);
++	data->write_time = ktime_get();
++
++	return ret;
++}
++
++static int ucd90320_write_byte(struct i2c_client *client, int page, u8 value)
++{
++	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
++	struct ucd9000_data *data = to_ucd9000_data(info);
++	int ret;
++
++	ucd90320_wait(data);
++	ret = pmbus_write_byte(client, page, value);
++	data->write_time = ktime_get();
++
++	return ret;
++}
++
+ static int ucd9000_get_fan_config(struct i2c_client *client, int fan)
+ {
+ 	int fan_config = 0;
+@@ -598,6 +668,11 @@ static int ucd9000_probe(struct i2c_client *client)
+ 		info->read_byte_data = ucd9000_read_byte_data;
+ 		info->func[0] |= PMBUS_HAVE_FAN12 | PMBUS_HAVE_STATUS_FAN12
+ 		  | PMBUS_HAVE_FAN34 | PMBUS_HAVE_STATUS_FAN34;
++	} else if (mid->driver_data == ucd90320) {
++		info->read_byte_data = ucd90320_read_byte_data;
++		info->read_word_data = ucd90320_read_word_data;
++		info->write_byte = ucd90320_write_byte;
++		info->write_word_data = ucd90320_write_word_data;
+ 	}
+ 
+ 	ucd9000_probe_gpio(client, mid, data);
+-- 
+2.39.2
+
 
 
