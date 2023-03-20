@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95721C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:00:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8E2C433D2;
-	Mon, 20 Mar 2023 15:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843121C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:00:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0361AC4339B;
+	Mon, 20 Mar 2023 15:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324442;
-	bh=fSNPGaO9G6SKEj6KTrGd/NYKQOgHOuba4TYZZFTQS18=;
+	s=korg; t=1679324445;
+	bh=tFz0OmXFy/F5X3/97+Pjr0LL8IRvbKfgCWbsIC9jsbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=moUHnRpTa3Y8jNa5rEGctVB1d4zW1JbRZviqAtiJ25/WCTNGOj2TTJQ5U9chKmEb5
-	 K17jYX0Ihn6xTyOdvJHQ82tv/hQdNPXu13x8JkiED7KFkBcdTHV+fqX0BVn2KTUqN2
-	 LtrkJvCXSRTFf13juArXIOjcfjAjqI2433bCPRXI=
+	b=lyPz9S/mwrAwdlF5+sM9PF8dJIrr3s0z1ncnU9Wp7L6izT76L4DVSpePL4AUyLKH4
+	 2Lqzwr2+RfickwovFLus/5fwcChixaap7ZzUlhe9ZHUwbQXWu92qj8UD17iNYFO80l
+	 TizVvSRu6xVIX3hE0UFAsWAK1zPYa6TZsVD9N1ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szymon Heidrich <szymon.heidrich@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 25/60] net: usb: smsc75xx: Limit packet length to skb->len
-Date: Mon, 20 Mar 2023 15:54:34 +0100
-Message-Id: <20230320145431.963932245@linuxfoundation.org>
+Subject: [PATCH 5.4 26/60] nvmet: avoid potential UAF in nvmet_req_complete()
+Date: Mon, 20 Mar 2023 15:54:35 +0100
+Message-Id: <20230320145432.004209856@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
 References: <20230320145430.861072439@linuxfoundation.org>
@@ -35,37 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Szymon Heidrich <szymon.heidrich@gmail.com>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-[ Upstream commit d8b228318935044dafe3a5bc07ee71a1f1424b8d ]
+[ Upstream commit 6173a77b7e9d3e202bdb9897b23f2a8afe7bf286 ]
 
-Packet length retrieved from skb data may be larger than
-the actual socket buffer length (up to 9026 bytes). In such
-case the cloned skb passed up the network stack will leak
-kernel memory contents.
+An nvme target ->queue_response() operation implementation may free the
+request passed as argument. Such implementation potentially could result
+in a use after free of the request pointer when percpu_ref_put() is
+called in nvmet_req_complete().
 
-Fixes: d0cad871703b ("smsc75xx: SMSC LAN75xx USB gigabit ethernet adapter driver")
-Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Avoid such problem by using a local variable to save the sq pointer
+before calling __nvmet_req_complete(), thus avoiding dereferencing the
+req pointer after that function call.
+
+Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc75xx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvme/target/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
-index aa848be459ec7..229ff92e41cd9 100644
---- a/drivers/net/usb/smsc75xx.c
-+++ b/drivers/net/usb/smsc75xx.c
-@@ -2210,7 +2210,8 @@ static int smsc75xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 				dev->net->stats.rx_frame_errors++;
- 		} else {
- 			/* MAX_SINGLE_PACKET_SIZE + 4(CRC) + 2(COE) + 4(Vlan) */
--			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12))) {
-+			if (unlikely(size > (MAX_SINGLE_PACKET_SIZE + ETH_HLEN + 12) ||
-+				     size > skb->len)) {
- 				netif_dbg(dev, rx_err, dev->net,
- 					  "size err rx_cmd_a=0x%08x\n",
- 					  rx_cmd_a);
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index ff206faae775c..d109333b95b81 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -728,8 +728,10 @@ static void __nvmet_req_complete(struct nvmet_req *req, u16 status)
+ 
+ void nvmet_req_complete(struct nvmet_req *req, u16 status)
+ {
++	struct nvmet_sq *sq = req->sq;
++
+ 	__nvmet_req_complete(req, status);
+-	percpu_ref_put(&req->sq->ref);
++	percpu_ref_put(&sq->ref);
+ }
+ EXPORT_SYMBOL_GPL(nvmet_req_complete);
+ 
 -- 
 2.39.2
 
