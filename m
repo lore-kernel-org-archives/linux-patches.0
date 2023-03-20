@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA571C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42FBC433D2;
-	Mon, 20 Mar 2023 15:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47471C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B4DC433EF;
+	Mon, 20 Mar 2023 15:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324898;
-	bh=K5mT/tC3s5t1REc3OS5XLcWOKLHvHLvdJGS7ZCUliq8=;
+	s=korg; t=1679324895;
+	bh=HkMszIBiciwf2d4Lw0HrTjWlu/rJIyAuWzHz7NRO9PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LvqaAoAWV0yyPkszHQgxqIPC6l7aRrwpQymw/j54yy5wkBkn41xWFmHP1hdXl98u5
-	 NIVOxJz+8eY0kMVcUzvziIhkSqK6skz4tcspZtOsLRXZ4jYk4/rnYg/uYR8WBXYHpa
-	 P6+2hX9/LBRcut7ia2xNpbQfhaGUymZwZL1aztwI=
+	b=K4W8waoOqCHNvP/MZd4iRiCV1y6VUwpsqAY7vfSp8GN1Zk9LjrW+x3Sb3lyRpjZbB
+	 vZ+r3fX5rQbVy4+ajIf9oZsLll2R3OiE+VVIXXJB9EU4Z6/C9RwoossIHlRml/mTM9
+	 FtKwwnYoo0yTCbVPLzgvOwGnGHFSMw/E8pLRVR/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/198] scsi: mpi3mr: Fix mpi3mr_hba_port memory leak in mpi3mr_remove()
-Date: Mon, 20 Mar 2023 15:52:36 +0100
-Message-Id: <20230320145508.266940847@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>
+Subject: [PATCH 5.10 70/99] ftrace: Fix invalid address access in lookup_rec() when index is 0
+Date: Mon, 20 Mar 2023 15:54:48 +0100
+Message-Id: <20230320145446.324161318@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,53 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit d0f3c3728da8af76dfe435f7f0cfa2b9d9e43ef0 ]
+commit ee92fa443358f4fc0017c1d0d325c27b37802504 upstream.
 
-Free mpi3mr_hba_port at .remove.
+KASAN reported follow problem:
 
-Fixes: 42fc9fee116f ("scsi: mpi3mr: Add helper functions to manage device's port")
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://lore.kernel.org/r/20230302234336.25456-4-thenzl@redhat.com
-Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ BUG: KASAN: use-after-free in lookup_rec
+ Read of size 8 at addr ffff000199270ff0 by task modprobe
+ CPU: 2 Comm: modprobe
+ Call trace:
+  kasan_report
+  __asan_load8
+  lookup_rec
+  ftrace_location
+  arch_check_ftrace_location
+  check_kprobe_address_safe
+  register_kprobe
+
+When checking pg->records[pg->index - 1].ip in lookup_rec(), it can get a
+pg which is newly added to ftrace_pages_start in ftrace_process_locs().
+Before the first pg->index++, index is 0 and accessing pg->records[-1].ip
+will cause this problem.
+
+Don't check the ip when pg->index is 0.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230309080230.36064-1-chenzhongjin@huawei.com
+
+Cc: stable@vger.kernel.org
+Fixes: 9644302e3315 ("ftrace: Speed up search by skipping pages by address")
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ kernel/trace/ftrace.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 6eaeba41072cb..5032b0b5186d4 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -5077,6 +5077,7 @@ static void mpi3mr_remove(struct pci_dev *pdev)
- 	struct workqueue_struct	*wq;
- 	unsigned long flags;
- 	struct mpi3mr_tgt_dev *tgtdev, *tgtdev_next;
-+	struct mpi3mr_hba_port *port, *hba_port_next;
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -1538,7 +1538,8 @@ static struct dyn_ftrace *lookup_rec(uns
+ 	key.flags = end;	/* overload flags, as it is unsigned long */
  
- 	if (!shost)
- 		return;
-@@ -5116,6 +5117,16 @@ static void mpi3mr_remove(struct pci_dev *pdev)
- 	mpi3mr_free_mem(mrioc);
- 	mpi3mr_cleanup_resources(mrioc);
- 
-+	spin_lock_irqsave(&mrioc->sas_node_lock, flags);
-+	list_for_each_entry_safe(port, hba_port_next, &mrioc->hba_port_table_list, list) {
-+		ioc_info(mrioc,
-+		    "removing hba_port entry: %p port: %d from hba_port list\n",
-+		    port, port->port_id);
-+		list_del(&port->list);
-+		kfree(port);
-+	}
-+	spin_unlock_irqrestore(&mrioc->sas_node_lock, flags);
-+
- 	spin_lock(&mrioc_list_lock);
- 	list_del(&mrioc->list);
- 	spin_unlock(&mrioc_list_lock);
--- 
-2.39.2
-
+ 	for (pg = ftrace_pages_start; pg; pg = pg->next) {
+-		if (end < pg->records[0].ip ||
++		if (pg->index == 0 ||
++		    end < pg->records[0].ip ||
+ 		    start >= (pg->records[pg->index - 1].ip + MCOUNT_INSN_SIZE))
+ 			continue;
+ 		rec = bsearch(&key, pg->records, pg->index,
 
 
