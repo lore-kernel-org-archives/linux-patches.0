@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300BF1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A606AC4339B;
-	Mon, 20 Mar 2023 15:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB511C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D41CC433EF;
+	Mon, 20 Mar 2023 15:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325334;
-	bh=7+E4MrdQ5GjkQx6N+UjMGjQ1swkXXvr3D7dXhvnfl3Q=;
+	s=korg; t=1679325336;
+	bh=cu8KAXnHTm7sqjT7q12dH0X+OYUeQPqKJEzdCvHjg7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VKibA32owCHK8IcGadN81XVuCGVwxbWMjcWk0oD9g2XMDKB8P6rxXki4wxibbC5Bg
-	 Ew2UORGUABd3tuwMJQ/kx1WrHRz1n6LOlL8lZgeyRB3Q8LrfNXW2kzZ2cUlv6va78d
-	 b1Ayu3wNKj02puhlFLYv1Vp9lCRpVBTF6qwP7FyU=
+	b=SAMTODCLeD5YZ5hi9eYow7Mjis/GYvlN9ZOeBkEXJuhrVJ1o4ckU78cAMtr9byu7N
+	 e4L42fCdft0W/XrOjL3DczKMDD4HDT3+wwEKBMj/3XhLYangoCY18KSs4j7Ni6ADT+
+	 O98sD2cWqTdg/Galn2M7G6Vo2T75voi3ifHJH4TY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Wilck <mwilck@suse.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Lee Duncan <lduncan@suse.com>,
-	Srikar Dronamraju <srikar@linux.vnet.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 030/211] scsi: core: Add BLIST_NO_VPD_SIZE for some VDASD
-Date: Mon, 20 Mar 2023 15:52:45 +0100
-Message-Id: <20230320145514.522308364@linuxfoundation.org>
+	Evan Quan <evan.quan@amd.com>,
+	=?UTF-8?q?B=C5=82a=C5=BCej=20Szczygie=C5=82?= <mumei6102@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 092/115] drm/amd/pm: Fix sienna cichlid incorrect OD volage after resume
+Date: Mon, 20 Mar 2023 15:55:04 +0100
+Message-Id: <20230320145453.279827316@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,135 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Duncan <lduncan@suse.com>
+From: Błażej Szczygieł <mumei6102@gmail.com>
 
-[ Upstream commit 4b1a2c2a8e0ddcb89c5f6c5003bd9b53142f69e3 ]
+commit a9386ee9681585794dbab95d4ce6826f73d19af6 upstream.
 
-Some storage, such as AIX VDASD (virtual storage) and IBM 2076 (front
-end), fail as a result of commit c92a6b5d6335 ("scsi: core: Query VPD
-size before getting full page").
+Always setup overdrive tables after resume. Preserve only some
+user-defined settings in user_overdrive_table if they're set.
 
-That commit changed getting SCSI VPD pages so that we now read just
-enough of the page to get the actual page size, then read the whole
-page in a second read. The problem is that the above mentioned
-hardware returns zero for the page size, because of a firmware
-error. In such cases, until the firmware is fixed, this new blacklist
-flag says to revert to the original method of reading the VPD pages,
-i.e. try to read a whole buffer's worth on the first try.
+Copy restored user_overdrive_table into od_table to get correct
+values.
 
-[mkp: reworked somewhat]
+On cold boot, BTC was triggered and GfxVfCurve was calibrated. We
+got VfCurve settings (a). On resuming back, BTC will be triggered
+again and GfxVfCurve will be recalibrated. VfCurve settings (b)
+got may be different from those of cold boot.  So if we reuse
+those VfCurve settings (a) got on cold boot on suspend, we can
+run into discrepencies.
 
-Fixes: c92a6b5d6335 ("scsi: core: Query VPD size before getting full page")
-Reported-by: Martin Wilck <mwilck@suse.com>
-Suggested-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Lee Duncan <lduncan@suse.com>
-Link: https://lore.kernel.org/r/20220928181350.9948-1-leeman.duncan@gmail.com
-Tested-by: Srikar Dronamraju <srikar@linux.vnet.ibm.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/1897
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2276
+Reviewed-by: Evan Quan <evan.quan@amd.com>
+Signed-off-by: Błażej Szczygieł <mumei6102@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi.c         | 3 +++
- drivers/scsi/scsi_devinfo.c | 3 ++-
- drivers/scsi/scsi_scan.c    | 3 +++
- include/scsi/scsi_device.h  | 2 ++
- include/scsi/scsi_devinfo.h | 6 +++---
- 5 files changed, 13 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c |   43 ++++++++++++----
+ 1 file changed, 33 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/scsi/scsi.c b/drivers/scsi/scsi.c
-index 9feb0323bc44a..dff1d692e756a 100644
---- a/drivers/scsi/scsi.c
-+++ b/drivers/scsi/scsi.c
-@@ -326,6 +326,9 @@ static int scsi_get_vpd_size(struct scsi_device *sdev, u8 page)
- 	unsigned char vpd_header[SCSI_VPD_HEADER_SIZE] __aligned(4);
- 	int result;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
+@@ -2013,16 +2013,9 @@ static int sienna_cichlid_set_default_od
+ 		(OverDriveTable_t *)smu->smu_table.boot_overdrive_table;
+ 	OverDriveTable_t *user_od_table =
+ 		(OverDriveTable_t *)smu->smu_table.user_overdrive_table;
++	OverDriveTable_t user_od_table_bak;
+ 	int ret = 0;
  
-+	if (sdev->no_vpd_size)
-+		return SCSI_DEFAULT_VPD_LEN;
+-	/*
+-	 * For S3/S4/Runpm resume, no need to setup those overdrive tables again as
+-	 *   - either they already have the default OD settings got during cold bootup
+-	 *   - or they have some user customized OD settings which cannot be overwritten
+-	 */
+-	if (smu->adev->in_suspend)
+-		return 0;
+-
+ 	ret = smu_cmn_update_table(smu, SMU_TABLE_OVERDRIVE,
+ 				   0, (void *)boot_od_table, false);
+ 	if (ret) {
+@@ -2033,7 +2026,23 @@ static int sienna_cichlid_set_default_od
+ 	sienna_cichlid_dump_od_table(smu, boot_od_table);
+ 
+ 	memcpy(od_table, boot_od_table, sizeof(OverDriveTable_t));
+-	memcpy(user_od_table, boot_od_table, sizeof(OverDriveTable_t));
 +
- 	/*
- 	 * Fetch the VPD page header to find out how big the page
- 	 * is. This is done to prevent problems on legacy devices
-diff --git a/drivers/scsi/scsi_devinfo.c b/drivers/scsi/scsi_devinfo.c
-index c7080454aea99..bc9d280417f6a 100644
---- a/drivers/scsi/scsi_devinfo.c
-+++ b/drivers/scsi/scsi_devinfo.c
-@@ -134,7 +134,7 @@ static struct {
- 	{"3PARdata", "VV", NULL, BLIST_REPORTLUN2},
- 	{"ADAPTEC", "AACRAID", NULL, BLIST_FORCELUN},
- 	{"ADAPTEC", "Adaptec 5400S", NULL, BLIST_FORCELUN},
--	{"AIX", "VDASD", NULL, BLIST_TRY_VPD_PAGES},
-+	{"AIX", "VDASD", NULL, BLIST_TRY_VPD_PAGES | BLIST_NO_VPD_SIZE},
- 	{"AFT PRO", "-IX CF", "0.0>", BLIST_FORCELUN},
- 	{"BELKIN", "USB 2 HS-CF", "1.95",  BLIST_FORCELUN | BLIST_INQUIRY_36},
- 	{"BROWNIE", "1200U3P", NULL, BLIST_NOREPORTLUN},
-@@ -188,6 +188,7 @@ static struct {
- 	{"HPE", "OPEN-", "*", BLIST_REPORTLUN2 | BLIST_TRY_VPD_PAGES},
- 	{"IBM", "AuSaV1S2", NULL, BLIST_FORCELUN},
- 	{"IBM", "ProFibre 4000R", "*", BLIST_SPARSELUN | BLIST_LARGELUN},
-+	{"IBM", "2076", NULL, BLIST_NO_VPD_SIZE},
- 	{"IBM", "2105", NULL, BLIST_RETRY_HWERROR},
- 	{"iomega", "jaz 1GB", "J.86", BLIST_NOTQ | BLIST_NOLUN},
- 	{"IOMEGA", "ZIP", NULL, BLIST_NOTQ | BLIST_NOLUN},
-diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index f9b18fdc7b3c8..6042a5587bc37 100644
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -1055,6 +1055,9 @@ static int scsi_add_lun(struct scsi_device *sdev, unsigned char *inq_result,
- 	else if (*bflags & BLIST_SKIP_VPD_PAGES)
- 		sdev->skip_vpd_pages = 1;
++	/*
++	 * For S3/S4/Runpm resume, we need to setup those overdrive tables again,
++	 * but we have to preserve user defined values in "user_od_table".
++	 */
++	if (!smu->adev->in_suspend) {
++		memcpy(user_od_table, boot_od_table, sizeof(OverDriveTable_t));
++		smu->user_dpm_profile.user_od = false;
++	} else if (smu->user_dpm_profile.user_od) {
++		memcpy(&user_od_table_bak, user_od_table, sizeof(OverDriveTable_t));
++		memcpy(user_od_table, boot_od_table, sizeof(OverDriveTable_t));
++		user_od_table->GfxclkFmin = user_od_table_bak.GfxclkFmin;
++		user_od_table->GfxclkFmax = user_od_table_bak.GfxclkFmax;
++		user_od_table->UclkFmin = user_od_table_bak.UclkFmin;
++		user_od_table->UclkFmax = user_od_table_bak.UclkFmax;
++		user_od_table->VddGfxOffset = user_od_table_bak.VddGfxOffset;
++	}
  
-+	if (*bflags & BLIST_NO_VPD_SIZE)
-+		sdev->no_vpd_size = 1;
+ 	return 0;
+ }
+@@ -2243,6 +2252,20 @@ static int sienna_cichlid_od_edit_dpm_ta
+ 	return ret;
+ }
+ 
++static int sienna_cichlid_restore_user_od_settings(struct smu_context *smu)
++{
++	struct smu_table_context *table_context = &smu->smu_table;
++	OverDriveTable_t *od_table = table_context->overdrive_table;
++	OverDriveTable_t *user_od_table = table_context->user_overdrive_table;
++	int res;
 +
- 	transport_configure_device(&sdev->sdev_gendev);
- 
- 	if (sdev->host->hostt->slave_configure) {
-diff --git a/include/scsi/scsi_device.h b/include/scsi/scsi_device.h
-index 3642b8e3928b7..15169d75c251e 100644
---- a/include/scsi/scsi_device.h
-+++ b/include/scsi/scsi_device.h
-@@ -145,6 +145,7 @@ struct scsi_device {
- 	const char * model;		/* ... after scan; point to static string */
- 	const char * rev;		/* ... "nullnullnullnull" before scan */
- 
-+#define SCSI_DEFAULT_VPD_LEN	255	/* default SCSI VPD page size (max) */
- 	struct scsi_vpd __rcu *vpd_pg0;
- 	struct scsi_vpd __rcu *vpd_pg83;
- 	struct scsi_vpd __rcu *vpd_pg80;
-@@ -215,6 +216,7 @@ struct scsi_device {
- 					 * creation time */
- 	unsigned ignore_media_change:1; /* Ignore MEDIA CHANGE on resume */
- 	unsigned silence_suspend:1;	/* Do not print runtime PM related messages */
-+	unsigned no_vpd_size:1;		/* No VPD size reported in header */
- 
- 	unsigned int queue_stopped;	/* request queue is quiesced */
- 	bool offline_already;		/* Device offline message logged */
-diff --git a/include/scsi/scsi_devinfo.h b/include/scsi/scsi_devinfo.h
-index 5d14adae21c78..6b548dc2c4965 100644
---- a/include/scsi/scsi_devinfo.h
-+++ b/include/scsi/scsi_devinfo.h
-@@ -32,7 +32,8 @@
- #define BLIST_IGN_MEDIA_CHANGE	((__force blist_flags_t)(1ULL << 11))
- /* do not do automatic start on add */
- #define BLIST_NOSTARTONADD	((__force blist_flags_t)(1ULL << 12))
--#define __BLIST_UNUSED_13	((__force blist_flags_t)(1ULL << 13))
-+/* do not ask for VPD page size first on some broken targets */
-+#define BLIST_NO_VPD_SIZE	((__force blist_flags_t)(1ULL << 13))
- #define __BLIST_UNUSED_14	((__force blist_flags_t)(1ULL << 14))
- #define __BLIST_UNUSED_15	((__force blist_flags_t)(1ULL << 15))
- #define __BLIST_UNUSED_16	((__force blist_flags_t)(1ULL << 16))
-@@ -74,8 +75,7 @@
- #define __BLIST_HIGH_UNUSED (~(__BLIST_LAST_USED | \
- 			       (__force blist_flags_t) \
- 			       ((__force __u64)__BLIST_LAST_USED - 1ULL)))
--#define __BLIST_UNUSED_MASK (__BLIST_UNUSED_13 | \
--			     __BLIST_UNUSED_14 | \
-+#define __BLIST_UNUSED_MASK (__BLIST_UNUSED_14 | \
- 			     __BLIST_UNUSED_15 | \
- 			     __BLIST_UNUSED_16 | \
- 			     __BLIST_UNUSED_24 | \
--- 
-2.39.2
-
++	res = smu_v11_0_restore_user_od_settings(smu);
++	if (res == 0)
++		memcpy(od_table, user_od_table, sizeof(OverDriveTable_t));
++
++	return res;
++}
++
+ static int sienna_cichlid_run_btc(struct smu_context *smu)
+ {
+ 	return smu_cmn_send_smc_msg(smu, SMU_MSG_RunDcBtc, NULL);
+@@ -3980,7 +4003,7 @@ static const struct pptable_funcs sienna
+ 	.set_soft_freq_limited_range = smu_v11_0_set_soft_freq_limited_range,
+ 	.set_default_od_settings = sienna_cichlid_set_default_od_settings,
+ 	.od_edit_dpm_table = sienna_cichlid_od_edit_dpm_table,
+-	.restore_user_od_settings = smu_v11_0_restore_user_od_settings,
++	.restore_user_od_settings = sienna_cichlid_restore_user_od_settings,
+ 	.run_btc = sienna_cichlid_run_btc,
+ 	.set_power_source = smu_v11_0_set_power_source,
+ 	.get_pp_feature_mask = smu_cmn_get_pp_feature_mask,
 
 
