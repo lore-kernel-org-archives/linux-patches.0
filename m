@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484DB1C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0AAC433D2;
-	Mon, 20 Mar 2023 15:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059A01C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3A2C433D2;
+	Mon, 20 Mar 2023 15:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326181;
-	bh=v81g5Ju93yPkz3l72tZo5MVgoURquqy4Asl0YshQPVI=;
+	s=korg; t=1679326183;
+	bh=2H03kPlgVZ9UReKwuHr8cdjhGt7MIJ9YvOECSJbxdBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h6vPjiyWDk67hzgyvEXCwHrWdfg7+1hlgC/wlgT58sYIHj8ACaTYyUUYRivKQUKPN
-	 14R3QUaNeQIoOmz4kFcVoDQIRweyTcp+WS9OphUOpry4N8zrzKUmgPdBGZgIYb72kh
-	 QXRm8ygSSfkec1hmCbJ7hup8XZB6bw35V9qQ+tn0=
+	b=OK92DCjU5DJpBxBACugRN2XPeEXiXvA8hGQ9sw6VneeFrQ/RRkUaATRVpma03KN0P
+	 XJDcIc1vebQV0HlvNz49qqc1BxtgqKr0OsptmBDIaW7XCHGV2bCXxldaWhwMF8z9h7
+	 uU2R83Z/KuMMPlymvnTrKVAW5k2f1WHkrtkzf/P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.2 190/211] fbdev: stifb: Provide valid pixelclock and add fb_check_var() checks
-Date: Mon, 20 Mar 2023 15:55:25 +0100
-Message-Id: <20230320145521.477476574@linuxfoundation.org>
+	Tero Kristo <tero.kristo@linux.intel.com>,
+	Daniel Bristot de Oliveira <bristot@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.2 191/211] trace/hwlat: Do not wipe the contents of per-cpu thread data
+Date: Mon, 20 Mar 2023 15:55:26 +0100
+Message-Id: <20230320145521.516810984@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -33,77 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Tero Kristo <tero.kristo@linux.intel.com>
 
-commit 203873a535d627c668f293be0cb73e26c30f9cc7 upstream.
+commit 4c42f5f0d1dd20bddd9f940beb1e6ccad60c4498 upstream.
 
-Find a valid modeline depending on the machine graphic card
-configuration and add the fb_check_var() function to validate
-Xorg provided graphics settings.
+Do not wipe the contents of the per-cpu kthread data when starting the
+tracer, as this will completely forget about already running instances
+and can later start new additional per-cpu threads.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
+Link: https://lore.kernel.org/all/20230302113654.2984709-1-tero.kristo@linux.intel.com/
+Link: https://lkml.kernel.org/r/20230310100451.3948583-2-tero.kristo@linux.intel.com
+
 Cc: stable@vger.kernel.org
+Fixes: f46b16520a087 ("trace/hwlat: Implement the per-cpu mode")
+Signed-off-by: Tero Kristo <tero.kristo@linux.intel.com>
+Acked-by: Daniel Bristot de Oliveira <bristot@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/stifb.c |   27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ kernel/trace/trace_hwlat.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/video/fbdev/stifb.c
-+++ b/drivers/video/fbdev/stifb.c
-@@ -922,6 +922,28 @@ SETUP_HCRX(struct stifb_info *fb)
- /* ------------------- driver specific functions --------------------------- */
+--- a/kernel/trace/trace_hwlat.c
++++ b/kernel/trace/trace_hwlat.c
+@@ -584,9 +584,6 @@ static int start_per_cpu_kthreads(struct
+ 	 */
+ 	cpumask_and(current_mask, cpu_online_mask, tr->tracing_cpumask);
  
- static int
-+stifb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
-+{
-+	struct stifb_info *fb = container_of(info, struct stifb_info, info);
-+
-+	if (var->xres != fb->info.var.xres ||
-+	    var->yres != fb->info.var.yres ||
-+	    var->bits_per_pixel != fb->info.var.bits_per_pixel)
-+		return -EINVAL;
-+
-+	var->xres_virtual = var->xres;
-+	var->yres_virtual = var->yres;
-+	var->xoffset = 0;
-+	var->yoffset = 0;
-+	var->grayscale = fb->info.var.grayscale;
-+	var->red.length = fb->info.var.red.length;
-+	var->green.length = fb->info.var.green.length;
-+	var->blue.length = fb->info.var.blue.length;
-+
-+	return 0;
-+}
-+
-+static int
- stifb_setcolreg(u_int regno, u_int red, u_int green,
- 	      u_int blue, u_int transp, struct fb_info *info)
- {
-@@ -1145,6 +1167,7 @@ stifb_init_display(struct stifb_info *fb
- 
- static const struct fb_ops stifb_ops = {
- 	.owner		= THIS_MODULE,
-+	.fb_check_var	= stifb_check_var,
- 	.fb_setcolreg	= stifb_setcolreg,
- 	.fb_blank	= stifb_blank,
- 	.fb_fillrect	= stifb_fillrect,
-@@ -1164,6 +1187,7 @@ static int __init stifb_init_fb(struct s
- 	struct stifb_info *fb;
- 	struct fb_info *info;
- 	unsigned long sti_rom_address;
-+	char modestr[32];
- 	char *dev_name;
- 	int bpp, xres, yres;
- 
-@@ -1342,6 +1366,9 @@ static int __init stifb_init_fb(struct s
- 	info->flags = FBINFO_HWACCEL_COPYAREA | FBINFO_HWACCEL_FILLRECT;
- 	info->pseudo_palette = &fb->pseudo_palette;
- 
-+	scnprintf(modestr, sizeof(modestr), "%dx%d-%d", xres, yres, bpp);
-+	fb_find_mode(&info->var, info, modestr, NULL, 0, NULL, bpp);
-+
- 	/* This has to be done !!! */
- 	if (fb_alloc_cmap(&info->cmap, NR_PALETTE, 0))
- 		goto out_err1;
+-	for_each_online_cpu(cpu)
+-		per_cpu(hwlat_per_cpu_data, cpu).kthread = NULL;
+-
+ 	for_each_cpu(cpu, current_mask) {
+ 		retval = start_cpu_kthread(cpu);
+ 		if (retval)
 
 
