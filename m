@@ -1,30 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A101C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42AFAC433A0;
-	Mon, 20 Mar 2023 15:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F601C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89AEC433EF;
+	Mon, 20 Mar 2023 15:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324475;
-	bh=xf4f5BERhyDYDzXs9lsbFW0WgQexkMBrEJV1kKqc3ok=;
+	s=korg; t=1679324478;
+	bh=5NVLHIXonwLawaQOp/IdY2KPXsBtefrxB6wCE7yhmS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tG+7tpQcISjkM7h/5PJ80Ih6iPIL8kR9uhAYnYNcaUgwRuiIUJyJP8nNB5NmepuI+
-	 qiJo0V4873SzOnbTTig1MydwzxUiBYEtubWMDmjMIxfECFPNxJtac7w8jmkkutuYS6
-	 RG6+l5YnGhzdYKrxt2aENYuz7U+S5uDTpNO0rBJM=
+	b=HbqEpEi2eokwn4vgvmHApJUo/9ezdynxkinuSsIU1RYOFD4JuIDEzGu96cgksOwbG
+	 Uph3TQbCMr91y5DGgrofyGgxkz8KWRPwJQbEUw+xYcqKllPCziNCvup9C/8nAo9Rrz
+	 Ga7hWGBj+nkgDWtpGTD6Zr59TmuYWZTIAHipFxD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Price <steven.price@arm.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 02/99] drm/panfrost: Dont sync rpm suspension after mmu flushing
-Date: Mon, 20 Mar 2023 15:53:40 +0100
-Message-Id: <20230320145443.443201637@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"HeungJun, Kim" <riverful.kim@samsung.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Mauro Carvalho Chehab <mchehab@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	HeungJun
+Subject: [PATCH 5.4 36/60] media: m5mols: fix off-by-one loop termination error
+Date: Mon, 20 Mar 2023 15:54:45 +0100
+Message-Id: <20230320145432.427629610@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
+References: <20230320145430.861072439@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +42,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit ba3be66f11c3c49afaa9f49b99e21d88756229ef ]
+[ Upstream commit efbcbb12ee99f750c9f25c873b55ad774871de2a ]
 
-Lockdep warns about potential circular locking dependency of devfreq
-with the fs_reclaim caused by immediate device suspension when mapping is
-released by shrinker. Fix it by doing the suspension asynchronously.
+The __find_restype() function loops over the m5mols_default_ffmt[]
+array, and the termination condition ends up being wrong: instead of
+stopping when the iterator becomes the size of the array it traverses,
+it stops after it has already overshot the array.
 
-Reviewed-by: Steven Price <steven.price@arm.com>
-Fixes: ec7eba47da86 ("drm/panfrost: Rework page table flushing and runtime PM interaction")
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://lore.kernel.org/all/20230108210445.3948344-3-dmitry.osipenko@collabora.com/
+Now, in practice this doesn't likely matter, because the code will
+always find the entry it looks for, and will thus return early and never
+hit that last extra iteration.
+
+But it turns out that clang will unroll the loop fully, because it has
+only two iterations (well, three due to the off-by-one bug), and then
+clang will end up just giving up in the middle of the loop unrolling
+when it notices that the code walks past the end of the array.
+
+And that made 'objtool' very unhappy indeed, because the generated code
+just falls off the edge of the universe, and ends up falling through to
+the next function, causing this warning:
+
+   drivers/media/i2c/m5mols/m5mols.o: warning: objtool: m5mols_set_fmt() falls through to next function m5mols_get_frame_desc()
+
+Fix the loop ending condition.
+
+Reported-by: Jens Axboe <axboe@kernel.dk>
+Analyzed-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Analyzed-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/linux-block/CAHk-=wgTSdKYbmB1JYM5vmHMcD9J9UZr0mn7BOYM_LudrP+Xvw@mail.gmail.com/
+Fixes: bc125106f8af ("[media] Add support for M-5MOLS 8 Mega Pixel camera ISP")
+Cc: HeungJun, Kim <riverful.kim@samsung.com>
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Mauro Carvalho Chehab <mchehab@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_mmu.c | 2 +-
+ drivers/media/i2c/m5mols/m5mols_core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-index 13596961ae17f..5ff856ef7d88c 100644
---- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-@@ -236,7 +236,7 @@ static void panfrost_mmu_flush_range(struct panfrost_device *pfdev,
- 	if (pm_runtime_active(pfdev->dev))
- 		mmu_hw_do_operation(pfdev, mmu, iova, size, AS_COMMAND_FLUSH_PT);
+diff --git a/drivers/media/i2c/m5mols/m5mols_core.c b/drivers/media/i2c/m5mols/m5mols_core.c
+index 21666d705e372..dcf9e4d4ee6b8 100644
+--- a/drivers/media/i2c/m5mols/m5mols_core.c
++++ b/drivers/media/i2c/m5mols/m5mols_core.c
+@@ -488,7 +488,7 @@ static enum m5mols_restype __find_restype(u32 code)
+ 	do {
+ 		if (code == m5mols_default_ffmt[type].code)
+ 			return type;
+-	} while (type++ != SIZE_DEFAULT_FFMT);
++	} while (++type != SIZE_DEFAULT_FFMT);
  
--	pm_runtime_put_sync_autosuspend(pfdev->dev);
-+	pm_runtime_put_autosuspend(pfdev->dev);
+ 	return 0;
  }
- 
- static int mmu_map_sg(struct panfrost_device *pfdev, struct panfrost_mmu *mmu,
 -- 
 2.39.2
 
