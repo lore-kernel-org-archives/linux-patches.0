@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC741C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC8CC433D2;
-	Mon, 20 Mar 2023 15:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F356C1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CF5C433EF;
+	Mon, 20 Mar 2023 15:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325081;
-	bh=fKwRQx3/9sCFxAbi+E9QknKmOWeqSWL9Rq9UYTcIkNk=;
+	s=korg; t=1679325083;
+	bh=UhbWfDo4aa049H3Fc/KzDMnX6UzczZvujkPWPefrYfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=giUZ2ZsWAphkCtwbGDgwVdouq6KDvimoKiP9tJsEOuyXBcTsiaJX+Yf+cDKhyOGP7
-	 SQFXRFO7qRYFCQsFnuni8hcD1AZmIsKEIQRiuhJUKcX1H/w6/4S65iYWfWttiI7cFl
-	 Pr4UYbs0JGLtwj5muFf/iUz2zAUTKnh6JP7Wu+vI=
+	b=EJEGeuvEE9wrwwJXefoLLBN+8u/mj2pMT0P3R/5qUSVoBdPoIplwnUmE42R2m4PEn
+	 Sid9K7U9FRyFPoQ/eQ94KlOmhtePD5MujlPubv4trF//FRXQZVlQS2rxFA4nZnfZWt
+	 LOBbX72s5/LuY/GIZeHybksVqJiiO6aYjNxz8JAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gautam Dawar <gautam.dawar@amd.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/198] vhost-vdpa: free iommu domain after last use during cleanup
-Date: Mon, 20 Mar 2023 15:52:58 +0100
-Message-Id: <20230320145509.139711606@linuxfoundation.org>
+Subject: [PATCH 6.2 005/211] fbdev: chipsfb: Fix error codes in chipsfb_pci_init()
+Date: Mon, 20 Mar 2023 15:52:20 +0100
+Message-Id: <20230320145513.524234003@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,63 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gautam Dawar <gautam.dawar@amd.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 5a522150093a0eabae9470a70a37a6e436bfad08 ]
+[ Upstream commit 77bc762451c2dc72bdbea07b857c916c9e7f4952 ]
 
-Currently vhost_vdpa_cleanup() unmaps the DMA mappings by calling
-`iommu_unmap(v->domain, map->start, map->size);`
-from vhost_vdpa_general_unmap() when the parent vDPA driver doesn't
-provide DMA config operations.
+The error codes are not set on these error paths.
 
-However, the IOMMU domain referred to by `v->domain` is freed in
-vhost_vdpa_free_domain() before vhost_vdpa_cleanup() in
-vhost_vdpa_release() which results in NULL pointer de-reference.
-Accordingly, moving the call to vhost_vdpa_free_domain() in
-vhost_vdpa_cleanup() would makes sense. This will also help
-detaching the dma device in error handling of vhost_vdpa_alloc_domain().
-
-This issue was observed on terminating QEMU with SIGQUIT.
-
-Fixes: 037d4305569a ("vhost-vdpa: call vhost_vdpa_cleanup during the release")
-Signed-off-by: Gautam Dawar <gautam.dawar@amd.com>
-Message-Id: <20230301163203.29883-1-gautam.dawar@amd.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Fixes: 145eed48de27 ("fbdev: Remove conflicting devices on PCI bus")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/Y/yG+sm2mhdJeTZW@kili
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/chipsfb.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index ec32f785dfdec..b7657984dd8df 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -1134,6 +1134,7 @@ static int vhost_vdpa_alloc_domain(struct vhost_vdpa *v)
+diff --git a/drivers/video/fbdev/chipsfb.c b/drivers/video/fbdev/chipsfb.c
+index cc37ec3f8fc1f..7799d52a651f3 100644
+--- a/drivers/video/fbdev/chipsfb.c
++++ b/drivers/video/fbdev/chipsfb.c
+@@ -358,16 +358,21 @@ static int chipsfb_pci_init(struct pci_dev *dp, const struct pci_device_id *ent)
+ 	if (rc)
+ 		return rc;
  
- err_attach:
- 	iommu_domain_free(v->domain);
-+	v->domain = NULL;
- 	return ret;
- }
- 
-@@ -1178,6 +1179,7 @@ static void vhost_vdpa_cleanup(struct vhost_vdpa *v)
- 			vhost_vdpa_remove_as(v, asid);
+-	if (pci_enable_device(dp) < 0) {
++	rc = pci_enable_device(dp);
++	if (rc < 0) {
+ 		dev_err(&dp->dev, "Cannot enable PCI device\n");
+ 		goto err_out;
  	}
  
-+	vhost_vdpa_free_domain(v);
- 	vhost_dev_cleanup(&v->vdev);
- 	kfree(v->vdev.vqs);
- }
-@@ -1250,7 +1252,6 @@ static int vhost_vdpa_release(struct inode *inode, struct file *filep)
- 	vhost_vdpa_clean_irq(v);
- 	vhost_vdpa_reset(v);
- 	vhost_dev_stop(&v->vdev);
--	vhost_vdpa_free_domain(v);
- 	vhost_vdpa_config_put(v);
- 	vhost_vdpa_cleanup(v);
- 	mutex_unlock(&d->mutex);
+-	if ((dp->resource[0].flags & IORESOURCE_MEM) == 0)
++	if ((dp->resource[0].flags & IORESOURCE_MEM) == 0) {
++		rc = -ENODEV;
+ 		goto err_disable;
++	}
+ 	addr = pci_resource_start(dp, 0);
+-	if (addr == 0)
++	if (addr == 0) {
++		rc = -ENODEV;
+ 		goto err_disable;
++	}
+ 
+ 	p = framebuffer_alloc(0, &dp->dev);
+ 	if (p == NULL) {
+@@ -417,7 +422,8 @@ static int chipsfb_pci_init(struct pci_dev *dp, const struct pci_device_id *ent)
+ 
+ 	init_chips(p, addr);
+ 
+-	if (register_framebuffer(p) < 0) {
++	rc = register_framebuffer(p);
++	if (rc < 0) {
+ 		dev_err(&dp->dev,"C&T 65550 framebuffer failed to register\n");
+ 		goto err_unmap;
+ 	}
 -- 
 2.39.2
 
