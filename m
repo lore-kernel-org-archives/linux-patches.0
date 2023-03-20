@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428501C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6ED4C433D2;
-	Mon, 20 Mar 2023 15:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05A41C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72350C433EF;
+	Mon, 20 Mar 2023 15:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325441;
-	bh=tHYxFuyyBF0EusOg1uA7zaeTUEMIded575RY6dtTM7Q=;
+	s=korg; t=1679325443;
+	bh=cNQZ9ftb0SQWKViY9vleiOOLSisslUlS21d/t6KwPJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d6kf9d3MntBzFLkYRRyAzAa9qJA8gm5/AFvV+x4drUnjuAB2UL1XVShkCMTkhIM/T
-	 yDw22r+0DUBUUjoduL7Fiqkoi0Lra46lSsIz5Cs3XzsWAJt604ouTKjp84Ml3FOA2a
-	 +/M/kEnyB5kVD+xWRtAbce4ck8j9R2diw4xhr4EQ=
+	b=Y+bjuW3Nvqt24/2uV9XtyPUNANOJ1Qy4rEJqkLXfYQoxER8Y8h+iOaLEXFEMAMp2K
+	 kpyWaoJy5N59gtnPThQwkmPwUXUtjljjJOp/32cMIXSRdUh4b/cPnvJsn3+K9kvK5S
+	 NxB26rQmdY1Sfps7ZGyPAW/zCo7HbF4Jr+VvKUZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/198] net/iucv: Fix size of interrupt data
-Date: Mon, 20 Mar 2023 15:53:43 +0100
-Message-Id: <20230320145511.104169794@linuxfoundation.org>
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Shawn Guo <shawn.guo@linaro.org>,
+	"Rafael J. Wysocki" <rjw@rjwysocki.net>
+Subject: [PATCH 5.15 105/115] cpuidle: psci: Iterate backwards over list in psci_pd_remove()
+Date: Mon, 20 Mar 2023 15:55:17 +0100
+Message-Id: <20230320145453.840088331@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,105 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Shawn Guo <shawn.guo@linaro.org>
 
-[ Upstream commit 3d87debb8ed2649608ff432699e7c961c0c6f03b ]
+commit 6b0313c2fa3d2cf991c9ffef6fae6e7ef592ce6d upstream.
 
-iucv_irq_data needs to be 4 bytes larger.
-These bytes are not used by the iucv module, but written by
-the z/VM hypervisor in case a CPU is deconfigured.
+In case that psci_pd_init_topology() fails for some reason,
+psci_pd_remove() will be responsible for deleting provider and removing
+genpd from psci_pd_providers list.  There will be a failure when removing
+the cluster PD, because the cpu (child) PDs haven't been removed.
 
-Reported as:
-BUG dma-kmalloc-64 (Not tainted): kmalloc Redzone overwritten
------------------------------------------------------------------------------
-0x0000000000400564-0x0000000000400567 @offset=1380. First byte 0x80 instead of 0xcc
-Allocated in iucv_cpu_prepare+0x44/0xd0 age=167839 cpu=2 pid=1
-__kmem_cache_alloc_node+0x166/0x450
-kmalloc_node_trace+0x3a/0x70
-iucv_cpu_prepare+0x44/0xd0
-cpuhp_invoke_callback+0x156/0x2f0
-cpuhp_issue_call+0xf0/0x298
-__cpuhp_setup_state_cpuslocked+0x136/0x338
-__cpuhp_setup_state+0xf4/0x288
-iucv_init+0xf4/0x280
-do_one_initcall+0x78/0x390
-do_initcalls+0x11a/0x140
-kernel_init_freeable+0x25e/0x2a0
-kernel_init+0x2e/0x170
-__ret_from_fork+0x3c/0x58
-ret_from_fork+0xa/0x40
-Freed in iucv_init+0x92/0x280 age=167839 cpu=2 pid=1
-__kmem_cache_free+0x308/0x358
-iucv_init+0x92/0x280
-do_one_initcall+0x78/0x390
-do_initcalls+0x11a/0x140
-kernel_init_freeable+0x25e/0x2a0
-kernel_init+0x2e/0x170
-__ret_from_fork+0x3c/0x58
-ret_from_fork+0xa/0x40
-Slab 0x0000037200010000 objects=32 used=30 fp=0x0000000000400640 flags=0x1ffff00000010200(slab|head|node=0|zone=0|
-Object 0x0000000000400540 @offset=1344 fp=0x0000000000000000
-Redzone  0000000000400500: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  0000000000400510: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  0000000000400520: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  0000000000400530: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Object   0000000000400540: 00 01 00 03 00 00 00 00 00 00 00 00 00 00 00 00  ................
-Object   0000000000400550: f3 86 81 f2 f4 82 f8 82 f0 f0 f0 f0 f0 f0 f0 f2  ................
-Object   0000000000400560: 00 00 00 00 80 00 00 00 cc cc cc cc cc cc cc cc  ................
-Object   0000000000400570: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  0000000000400580: cc cc cc cc cc cc cc cc                          ........
-Padding  00000000004005d4: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a  ZZZZZZZZZZZZZZZZ
-Padding  00000000004005e4: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a  ZZZZZZZZZZZZZZZZ
-Padding  00000000004005f4: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a              ZZZZZZZZZZZZ
-CPU: 6 PID: 121030 Comm: 116-pai-crypto. Not tainted 6.3.0-20230221.rc0.git4.99b8246b2d71.300.fc37.s390x+debug #1
-Hardware name: IBM 3931 A01 704 (z/VM 7.3.0)
-Call Trace:
-[<000000032aa034ec>] dump_stack_lvl+0xac/0x100
-[<0000000329f5a6cc>] check_bytes_and_report+0x104/0x140
-[<0000000329f5aa78>] check_object+0x370/0x3c0
-[<0000000329f5ede6>] free_debug_processing+0x15e/0x348
-[<0000000329f5f06a>] free_to_partial_list+0x9a/0x2f0
-[<0000000329f5f4a4>] __slab_free+0x1e4/0x3a8
-[<0000000329f61768>] __kmem_cache_free+0x308/0x358
-[<000000032a91465c>] iucv_cpu_dead+0x6c/0x88
-[<0000000329c2fc66>] cpuhp_invoke_callback+0x156/0x2f0
-[<000000032aa062da>] _cpu_down.constprop.0+0x22a/0x5e0
-[<0000000329c3243e>] cpu_device_down+0x4e/0x78
-[<000000032a61dee0>] device_offline+0xc8/0x118
-[<000000032a61e048>] online_store+0x60/0xe0
-[<000000032a08b6b0>] kernfs_fop_write_iter+0x150/0x1e8
-[<0000000329fab65c>] vfs_write+0x174/0x360
-[<0000000329fab9fc>] ksys_write+0x74/0x100
-[<000000032aa03a5a>] __do_syscall+0x1da/0x208
-[<000000032aa177b2>] system_call+0x82/0xb0
-INFO: lockdep is turned off.
-FIX dma-kmalloc-64: Restoring kmalloc Redzone 0x0000000000400564-0x0000000000400567=0xcc
-FIX dma-kmalloc-64: Object at 0x0000000000400540 not freed
+[    0.050232] CPUidle PSCI: init PM domain cpu0
+[    0.050278] CPUidle PSCI: init PM domain cpu1
+[    0.050329] CPUidle PSCI: init PM domain cpu2
+[    0.050370] CPUidle PSCI: init PM domain cpu3
+[    0.050422] CPUidle PSCI: init PM domain cpu-cluster0
+[    0.050475] PM: genpd_remove: unable to remove cpu-cluster0
+[    0.051412] PM: genpd_remove: removed cpu3
+[    0.051449] PM: genpd_remove: removed cpu2
+[    0.051499] PM: genpd_remove: removed cpu1
+[    0.051546] PM: genpd_remove: removed cpu0
 
-Fixes: 2356f4cb1911 ("[S390]: Rewrite of the IUCV base code, part 2")
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230315131435.4113889-1-wintera@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix the problem by iterating the provider list reversely, so that parent
+PD gets removed after child's PDs like below.
+
+[    0.029052] CPUidle PSCI: init PM domain cpu0
+[    0.029076] CPUidle PSCI: init PM domain cpu1
+[    0.029103] CPUidle PSCI: init PM domain cpu2
+[    0.029124] CPUidle PSCI: init PM domain cpu3
+[    0.029151] CPUidle PSCI: init PM domain cpu-cluster0
+[    0.029647] PM: genpd_remove: removed cpu0
+[    0.029666] PM: genpd_remove: removed cpu1
+[    0.029690] PM: genpd_remove: removed cpu2
+[    0.029714] PM: genpd_remove: removed cpu3
+[    0.029738] PM: genpd_remove: removed cpu-cluster0
+
+Fixes: a65a397f2451 ("cpuidle: psci: Add support for PM domains by using genpd")
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+Cc: 5.10+ <stable@vger.kernel.org> # 5.10+
+Signed-off-by: Rafael J. Wysocki <rjw@rjwysocki.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/iucv/iucv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpuidle/cpuidle-psci-domain.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/iucv/iucv.c b/net/iucv/iucv.c
-index eb0295d900395..fc3fddeb6f36d 100644
---- a/net/iucv/iucv.c
-+++ b/net/iucv/iucv.c
-@@ -83,7 +83,7 @@ struct iucv_irq_data {
- 	u16 ippathid;
- 	u8  ipflags1;
- 	u8  iptype;
--	u32 res2[8];
-+	u32 res2[9];
- };
+--- a/drivers/cpuidle/cpuidle-psci-domain.c
++++ b/drivers/cpuidle/cpuidle-psci-domain.c
+@@ -182,7 +182,8 @@ static void psci_pd_remove(void)
+ 	struct psci_pd_provider *pd_provider, *it;
+ 	struct generic_pm_domain *genpd;
  
- struct iucv_irq_list {
--- 
-2.39.2
-
+-	list_for_each_entry_safe(pd_provider, it, &psci_pd_providers, link) {
++	list_for_each_entry_safe_reverse(pd_provider, it,
++					 &psci_pd_providers, link) {
+ 		of_genpd_del_provider(pd_provider->node);
+ 
+ 		genpd = of_genpd_remove_last(pd_provider->node);
 
 
