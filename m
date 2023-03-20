@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37ABB1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3C6C433EF;
-	Mon, 20 Mar 2023 15:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B661C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706D9C433D2;
+	Mon, 20 Mar 2023 15:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325970;
-	bh=rsc6DeU+Ch57SmvyZGQKPDccSe/DsX+OxfnQCkjRClk=;
+	s=korg; t=1679325972;
+	bh=GS3vC1HSyP509DsI5J5BgQArdPm/3fW+Px4gFqejFw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eTkKFndQ+So9mwmYvPIyRbvcohhxixFv0+7EBYprMLFY5i28QO5nFaGlXs/SZbLS7
-	 nTelv/qsvaxD/wPRlmKjkceSmoYJvv8+3EhPnvY2ux5mjk1w4Az5k4hg9sFVeT1kTg
-	 32aOwpRv10OW1kfX08gBjzWUiMT/moNeaYKp02nI=
+	b=aqBwvFbAL6Xp+g3ouLC3VxKZczs9f9s3/W/85ONmeWogQCpg1ML9JjGzBPCc+gFpa
+	 5lDYuSh4ju1wWlw7Dw9D7gUHKQR3Os4G36Pir7zHLFDki8SCqyDZjG2A+AdHrT0lHg
+	 PVtZj3JpAaagSK021O81LGi83Uqg9i2WUwkn8mkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 176/198] powerpc/boot: Dont always pass -mcpu=powerpc when building 32-bit uImage
-Date: Mon, 20 Mar 2023 15:55:14 +0100
-Message-Id: <20230320145514.888704299@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.2 134/211] interconnect: qcom: osm-l3: fix registration race
+Date: Mon, 20 Mar 2023 15:54:29 +0100
+Message-Id: <20230320145519.059138262@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit ff7c76f66d8bad4e694c264c789249e1d3a8205d upstream.
+commit 174941ed28a3573db075da46d95b4dcf9d4c49c2 upstream.
 
-When CONFIG_TARGET_CPU is specified then pass its value to the compiler
--mcpu option. This fixes following build error when building kernel with
-powerpc e500 SPE capable cross compilers:
+The current interconnect provider registration interface is inherently
+racy as nodes are not added until the after adding the provider. This
+can specifically cause racing DT lookups to fail:
 
-    BOOTAS  arch/powerpc/boot/crt0.o
-  powerpc-linux-gnuspe-gcc: error: unrecognized argument in option ‘-mcpu=powerpc’
-  powerpc-linux-gnuspe-gcc: note: valid arguments to ‘-mcpu=’ are: 8540 8548 native
-  make[1]: *** [arch/powerpc/boot/Makefile:231: arch/powerpc/boot/crt0.o] Error 1
+	of_icc_xlate_onecell: invalid index 0
+	cpu cpu0: error -EINVAL: error finding src node
+	cpu cpu0: dev_pm_opp_of_find_icc_paths: Unable to get path0: -22
+	qcom-cpufreq-hw: probe of 18591000.cpufreq failed with error -22
 
-Similar change was already introduced for the main powerpc Makefile in
-commit 446cda1b21d9 ("powerpc/32: Don't always pass -mcpu=powerpc to the
-compiler").
+Switch to using the new API where the provider is not registered until
+after it has been fully initialised.
 
-Fixes: 40a75584e526 ("powerpc/boot: Build wrapper for an appropriate CPU")
-Cc: stable@vger.kernel.org # v5.19+
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/2ae3ae5887babfdacc34435bff0944b3f336100a.1674632329.git.christophe.leroy@csgroup.eu
+Fixes: 5bc9900addaf ("interconnect: qcom: Add OSM L3 interconnect provider support")
+Cc: stable@vger.kernel.org      # 5.7
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230306075651.2449-6-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/boot/Makefile |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/interconnect/qcom/osm-l3.c |   14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
---- a/arch/powerpc/boot/Makefile
-+++ b/arch/powerpc/boot/Makefile
-@@ -39,13 +39,19 @@ BOOTCFLAGS    := -Wall -Wundef -Wstrict-
- 		 $(LINUXINCLUDE)
+--- a/drivers/interconnect/qcom/osm-l3.c
++++ b/drivers/interconnect/qcom/osm-l3.c
+@@ -158,8 +158,8 @@ static int qcom_osm_l3_remove(struct pla
+ {
+ 	struct qcom_osm_l3_icc_provider *qp = platform_get_drvdata(pdev);
  
- ifdef CONFIG_PPC64_BOOT_WRAPPER
--ifdef CONFIG_CPU_LITTLE_ENDIAN
--BOOTCFLAGS	+= -m64 -mcpu=powerpc64le
-+BOOTCFLAGS	+= -m64
- else
--BOOTCFLAGS	+= -m64 -mcpu=powerpc64
-+BOOTCFLAGS	+= -m32
- endif
++	icc_provider_deregister(&qp->provider);
+ 	icc_nodes_remove(&qp->provider);
+-	icc_provider_del(&qp->provider);
+ 
+ 	return 0;
+ }
+@@ -245,14 +245,9 @@ static int qcom_osm_l3_probe(struct plat
+ 	provider->set = qcom_osm_l3_set;
+ 	provider->aggregate = icc_std_aggregate;
+ 	provider->xlate = of_icc_xlate_onecell;
+-	INIT_LIST_HEAD(&provider->nodes);
+ 	provider->data = data;
+ 
+-	ret = icc_provider_add(provider);
+-	if (ret) {
+-		dev_err(&pdev->dev, "error adding interconnect provider\n");
+-		return ret;
+-	}
++	icc_provider_init(provider);
+ 
+ 	for (i = 0; i < num_nodes; i++) {
+ 		size_t j;
+@@ -275,12 +270,15 @@ static int qcom_osm_l3_probe(struct plat
+ 	}
+ 	data->num_nodes = num_nodes;
+ 
++	ret = icc_provider_register(provider);
++	if (ret)
++		goto err;
 +
-+ifdef CONFIG_TARGET_CPU_BOOL
-+BOOTCFLAGS	+= -mcpu=$(CONFIG_TARGET_CPU)
-+else ifdef CONFIG_PPC64_BOOT_WRAPPER
-+ifdef CONFIG_CPU_LITTLE_ENDIAN
-+BOOTCFLAGS	+= -mcpu=powerpc64le
- else
--BOOTCFLAGS	+= -m32 -mcpu=powerpc
-+BOOTCFLAGS	+= -mcpu=powerpc64
-+endif
- endif
+ 	platform_set_drvdata(pdev, qp);
  
- BOOTCFLAGS	+= -isystem $(shell $(BOOTCC) -print-file-name=include)
+ 	return 0;
+ err:
+ 	icc_nodes_remove(provider);
+-	icc_provider_del(provider);
+ 
+ 	return ret;
+ }
 
 
