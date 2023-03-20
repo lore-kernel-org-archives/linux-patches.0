@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552311C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C909DC433EF;
-	Mon, 20 Mar 2023 15:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082401C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F42FC433EF;
+	Mon, 20 Mar 2023 15:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325770;
-	bh=oK5MJPzq1Xqz++Q9EthFW8wcKK8XobRv6OQhXVGxmWA=;
+	s=korg; t=1679325772;
+	bh=XXgsjh20dOOAVU9aBn8zTTQ9u5yTkBonbr3FD3pyifw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ytkwbhceajetvEFt3fcKcHU9Z12PM9GAdB2FNg9FAXJwQfTUQEGQeoTGT5JIvSWHe
-	 vDy8X0scTebrDEbzuF3BzkhVm9tOjnfMkd9zF24+H6l+Cm+u8vUyl3YZ1abildcuIo
-	 UnPhyP6fU9bJpDD0mxYUi/za5UJ0CfxZmtn9xfFY=
+	b=k5j+xx4cm1ajRcnGMykDyGzdTkldQfLAbV4VfO3M2QuZ0Ox48kYskd4VYlbgPMCJA
+	 P8U7Vnqxk+CYBvyW/RUKnSQduanOGC8WejWICYGugBk2nsxbOlaMji+1ugYn6mT0wL
+	 5LE0zr0tFXKGhrKM5u+Ss5/Z+gAaJFcLO+mDECWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony OBrien <tony.obrien@alliedtelesis.co.nz>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 098/211] hwmon: (adt7475) Display smoothing attributes in correct order
-Date: Mon, 20 Mar 2023 15:53:53 +0100
-Message-Id: <20230320145517.399440506@linuxfoundation.org>
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.1 140/198] interconnect: exynos: fix registration race
+Date: Mon, 20 Mar 2023 15:54:38 +0100
+Message-Id: <20230320145513.418422689@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 5f8d1e3b6f9b5971f9c06d5846ce00c49e3a8d94 ]
+commit c9e46ca612cfbb0cf890f7ae7389b742e90efe64 upstream.
 
-Throughout the ADT7475 driver, attributes relating to the temperature
-sensors are displayed in the order Remote 1, Local, Remote 2.  Make
-temp_st_show() conform to this expectation so that values set by
-temp_st_store() can be displayed using the correct attribute.
+The current interconnect provider registration interface is inherently
+racy as nodes are not added until the after adding the provider. This
+can specifically cause racing DT lookups to trigger a NULL-pointer
+deference when either a NULL pointer or not fully initialised node is
+returned from exynos_generic_icc_xlate().
 
-Fixes: 8f05bcc33e74 ("hwmon: (adt7475) temperature smoothing")
-Signed-off-by: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
-Link: https://lore.kernel.org/r/20230222005228.158661-2-tony.obrien@alliedtelesis.co.nz
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Switch to using the new API where the provider is not registered until
+after it has been fully initialised.
+
+Fixes: 2f95b9d5cf0b ("interconnect: Add generic interconnect driver for Exynos SoCs")
+Cc: stable@vger.kernel.org      # 5.11
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230306075651.2449-16-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/adt7475.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/interconnect/samsung/exynos.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/hwmon/adt7475.c b/drivers/hwmon/adt7475.c
-index 51b3d16c32233..77222c35a38ec 100644
---- a/drivers/hwmon/adt7475.c
-+++ b/drivers/hwmon/adt7475.c
-@@ -556,11 +556,11 @@ static ssize_t temp_st_show(struct device *dev, struct device_attribute *attr,
- 		val = data->enh_acoustics[0] & 0xf;
- 		break;
- 	case 1:
--		val = (data->enh_acoustics[1] >> 4) & 0xf;
-+		val = data->enh_acoustics[1] & 0xf;
- 		break;
- 	case 2:
- 	default:
--		val = data->enh_acoustics[1] & 0xf;
-+		val = (data->enh_acoustics[1] >> 4) & 0xf;
- 		break;
+--- a/drivers/interconnect/samsung/exynos.c
++++ b/drivers/interconnect/samsung/exynos.c
+@@ -98,12 +98,13 @@ static int exynos_generic_icc_remove(str
+ 	struct exynos_icc_priv *priv = platform_get_drvdata(pdev);
+ 	struct icc_node *parent_node, *node = priv->node;
+ 
++	icc_provider_deregister(&priv->provider);
++
+ 	parent_node = exynos_icc_get_parent(priv->dev->parent->of_node);
+ 	if (parent_node && !IS_ERR(parent_node))
+ 		icc_link_destroy(node, parent_node);
+ 
+ 	icc_nodes_remove(&priv->provider);
+-	icc_provider_del(&priv->provider);
+ 
+ 	return 0;
+ }
+@@ -132,15 +133,11 @@ static int exynos_generic_icc_probe(stru
+ 	provider->inter_set = true;
+ 	provider->data = priv;
+ 
+-	ret = icc_provider_add(provider);
+-	if (ret < 0)
+-		return ret;
++	icc_provider_init(provider);
+ 
+ 	icc_node = icc_node_create(pdev->id);
+-	if (IS_ERR(icc_node)) {
+-		ret = PTR_ERR(icc_node);
+-		goto err_prov_del;
+-	}
++	if (IS_ERR(icc_node))
++		return PTR_ERR(icc_node);
+ 
+ 	priv->node = icc_node;
+ 	icc_node->name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%pOFn",
+@@ -171,14 +168,17 @@ static int exynos_generic_icc_probe(stru
+ 			goto err_pmqos_del;
  	}
  
--- 
-2.39.2
-
++	ret = icc_provider_register(provider);
++	if (ret < 0)
++		goto err_pmqos_del;
++
+ 	return 0;
+ 
+ err_pmqos_del:
+ 	dev_pm_qos_remove_request(&priv->qos_req);
+ err_node_del:
+ 	icc_nodes_remove(provider);
+-err_prov_del:
+-	icc_provider_del(provider);
++
+ 	return ret;
+ }
+ 
 
 
