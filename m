@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB87B1C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C69C433D2;
-	Mon, 20 Mar 2023 15:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29B11C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4B8C433D2;
+	Mon, 20 Mar 2023 15:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326145;
-	bh=+uiV5kfF9esV5EuJ4u3NmFuikr8zHD6XWepcUrvqLRU=;
+	s=korg; t=1679326148;
+	bh=gEDx00ZHI1W5+7EmwywD5A7Yth3rsoluJpC1DbAHEeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cP219Ehr8gZ5oWUIXyZOfzGh3UpT2bL+7+XY3t8EhDJRupxUX0ZVNaUYY3BJAIUKc
-	 5PdhctzmNrMtAXJWkIlACI6u2EpVHtSKRg1g02Omd30imAkDGva6tllEqXwWSQp7Bk
-	 XcweBEmQLbw/Y4TjzVlIYYa3SVdiMlsZRifOSqS4=
+	b=iSVt34iwGutOhIUZ5iKRfW2F2nV0/se2eoJKRDkFCTViCMjcjaIoSvTcMCg7tHUPN
+	 a1Y/vIj+udaM0Itgk34d+9gaLpR/d3eSU321r7ypE7U8nKfaAXg0p9Jqky7B3ItxvH
+	 3gghYLR+RPFNXenvuzLXC9dajXJRP98aQYvdLf/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Christoph Paasch <cpaasch@apple.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.2 178/211] mptcp: avoid setting TCP_CLOSE state twice
-Date: Mon, 20 Mar 2023 15:55:13 +0100
-Message-Id: <20230320145520.930128589@linuxfoundation.org>
+Subject: [PATCH 6.2 179/211] mptcp: fix lockdep false positive in mptcp_pm_nl_create_listen_socket()
+Date: Mon, 20 Mar 2023 15:55:14 +0100
+Message-Id: <20230320145520.979186221@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -35,35 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 3ba14528684f528566fb7d956bfbfb958b591d86 upstream.
+commit cee4034a3db1d30c3243dd51506a9d4ab1a849fa upstream.
 
-tcp_set_state() is called from tcp_done() already.
+Christoph reports a lockdep splat in the mptcp_subflow_create_socket()
+error path, when such function is invoked by
+mptcp_pm_nl_create_listen_socket().
 
-There is then no need to first set the state to TCP_CLOSE, then call
-tcp_done().
+Such code path acquires two separates, nested socket lock, with the
+internal lock operation lacking the "nested" annotation. Adding that
+in sock_release() for mptcp's sake only could be confusing.
 
-Fixes: d582484726c4 ("mptcp: fix fallback for MP_JOIN subflows")
+Instead just add a new lockclass to the in-kernel msk socket,
+re-initializing the lockdep infra after the socket creation.
+
+Fixes: ad2171009d96 ("mptcp: fix locking for in-kernel listener creation")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/362
-Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/354
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Tested-by: Christoph Paasch <cpaasch@apple.com>
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/subflow.c |    1 -
- 1 file changed, 1 deletion(-)
+ net/mptcp/pm_netlink.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -405,7 +405,6 @@ void mptcp_subflow_reset(struct sock *ss
- 	/* must hold: tcp_done() could drop last reference on parent */
- 	sock_hold(sk);
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -993,9 +993,13 @@ out:
+ 	return ret;
+ }
  
--	tcp_set_state(ssk, TCP_CLOSE);
- 	tcp_send_active_reset(ssk, GFP_ATOMIC);
- 	tcp_done(ssk);
- 	if (!test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &mptcp_sk(sk)->flags) &&
++static struct lock_class_key mptcp_slock_keys[2];
++static struct lock_class_key mptcp_keys[2];
++
+ static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
+ 					    struct mptcp_pm_addr_entry *entry)
+ {
++	bool is_ipv6 = sk->sk_family == AF_INET6;
+ 	int addrlen = sizeof(struct sockaddr_in);
+ 	struct sockaddr_storage addr;
+ 	struct socket *ssock;
+@@ -1012,6 +1016,18 @@ static int mptcp_pm_nl_create_listen_soc
+ 	if (!newsk)
+ 		return -EINVAL;
+ 
++	/* The subflow socket lock is acquired in a nested to the msk one
++	 * in several places, even by the TCP stack, and this msk is a kernel
++	 * socket: lockdep complains. Instead of propagating the _nested
++	 * modifiers in several places, re-init the lock class for the msk
++	 * socket to an mptcp specific one.
++	 */
++	sock_lock_init_class_and_name(newsk,
++				      is_ipv6 ? "mlock-AF_INET6" : "mlock-AF_INET",
++				      &mptcp_slock_keys[is_ipv6],
++				      is_ipv6 ? "msk_lock-AF_INET6" : "msk_lock-AF_INET",
++				      &mptcp_keys[is_ipv6]);
++
+ 	lock_sock(newsk);
+ 	ssock = __mptcp_nmpc_socket(mptcp_sk(newsk));
+ 	release_sock(newsk);
 
 
