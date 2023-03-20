@@ -1,31 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04411C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E14CC4339C;
-	Mon, 20 Mar 2023 15:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232D51C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F306C433EF;
+	Mon, 20 Mar 2023 15:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325931;
-	bh=b5VncdZaxgydxyf+1cnfDOc304PpFgupO0P6WkYaWzQ=;
+	s=korg; t=1679325929;
+	bh=9Xb1X+eCfpt1O8VSp5RPvD6LlkSs1EUj6S7eNTdQrh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJN4DrZf4l/1oceIq8YVm95VZnkE/QruktpXIkKGIW+z2EKXjgN5kHZCgvZcN7yLS
-	 KJpeUbULwI2158p985vFNu4XEnMF3xdIWx85jPs1KvCFlWhrxc0HicbQ54t2kRVdkm
-	 EpCSM5dk+PZYhwuyZIOwYtoCfKh5LFGCvXRGIk+0=
+	b=KXNVOs6YY0MfQzgncT3rY2o19lL6thhytRYY+iHkARAlFMTfrKklJkiOEMC1dAdAc
+	 8UGmr98hLdjWsxH6/7kbAr4E5F44yHJZKR52kz1wiCdPhDNuMMw2XB4TvUrMfBNU2c
+	 XZ4p+bmWo5VZIy4ZBIhqFm6emwpzBBRfT2JollU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Osipenko <digetx@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.2 127/211] memory: tegra30-emc: fix interconnect registration race
-Date: Mon, 20 Mar 2023 15:54:22 +0100
-Message-Id: <20230320145518.707833857@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 169/198] ocfs2: fix data corruption after failed write
+Date: Mon, 20 Mar 2023 15:55:07 +0100
+Message-Id: <20230320145514.609274857@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,65 +41,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jan Kara via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
 
-commit 9db481c909dd6312ccfbdc7e343b50e41c727483 upstream.
+commit 90410bcf873cf05f54a32183afff0161f44f9715 upstream.
 
-The current interconnect provider registration interface is inherently
-racy as nodes are not added until the after adding the provider. This
-can specifically cause racing DT lookups to fail.
+When buffered write fails to copy data into underlying page cache page,
+ocfs2_write_end_nolock() just zeroes out and dirties the page.  This can
+leave dirty page beyond EOF and if page writeback tries to write this page
+before write succeeds and expands i_size, page gets into inconsistent
+state where page dirty bit is clear but buffer dirty bits stay set
+resulting in page data never getting written and so data copied to the
+page is lost.  Fix the problem by invalidating page beyond EOF after
+failed write.
 
-Switch to using the new API where the provider is not registered until
-after it has been fully initialised.
-
-Fixes: d5ef16ba5fbe ("memory: tegra20: Support interconnect framework")
-Cc: stable@vger.kernel.org      # 5.11
-Cc: Dmitry Osipenko <digetx@gmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-21-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Link: https://lkml.kernel.org/r/20230302153843.18499-1-jack@suse.cz
+Fixes: 6dbf7bb55598 ("fs: Don't invalidate page buffers in block_write_full_page()")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memory/tegra/tegra30-emc.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/ocfs2/aops.c |   19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
---- a/drivers/memory/tegra/tegra30-emc.c
-+++ b/drivers/memory/tegra/tegra30-emc.c
-@@ -1533,15 +1533,13 @@ static int tegra_emc_interconnect_init(s
- 	emc->provider.aggregate = soc->icc_ops->aggregate;
- 	emc->provider.xlate_extended = emc_of_icc_xlate_extended;
- 
--	err = icc_provider_add(&emc->provider);
--	if (err)
--		goto err_msg;
-+	icc_provider_init(&emc->provider);
- 
- 	/* create External Memory Controller node */
- 	node = icc_node_create(TEGRA_ICC_EMC);
- 	if (IS_ERR(node)) {
- 		err = PTR_ERR(node);
--		goto del_provider;
-+		goto err_msg;
+--- a/fs/ocfs2/aops.c
++++ b/fs/ocfs2/aops.c
+@@ -1977,11 +1977,26 @@ int ocfs2_write_end_nolock(struct addres
  	}
  
- 	node->name = "External Memory Controller";
-@@ -1562,12 +1560,14 @@ static int tegra_emc_interconnect_init(s
- 	node->name = "External Memory (DRAM)";
- 	icc_node_add(node, &emc->provider);
- 
-+	err = icc_provider_register(&emc->provider);
-+	if (err)
-+		goto remove_nodes;
+ 	if (unlikely(copied < len) && wc->w_target_page) {
++		loff_t new_isize;
 +
- 	return 0;
+ 		if (!PageUptodate(wc->w_target_page))
+ 			copied = 0;
  
- remove_nodes:
- 	icc_nodes_remove(&emc->provider);
--del_provider:
--	icc_provider_del(&emc->provider);
- err_msg:
- 	dev_err(emc->dev, "failed to initialize ICC: %d\n", err);
- 
+-		ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
+-				       start+len);
++		new_isize = max_t(loff_t, i_size_read(inode), pos + copied);
++		if (new_isize > page_offset(wc->w_target_page))
++			ocfs2_zero_new_buffers(wc->w_target_page, start+copied,
++					       start+len);
++		else {
++			/*
++			 * When page is fully beyond new isize (data copy
++			 * failed), do not bother zeroing the page. Invalidate
++			 * it instead so that writeback does not get confused
++			 * put page & buffer dirty bits into inconsistent
++			 * state.
++			 */
++			block_invalidate_folio(page_folio(wc->w_target_page),
++						0, PAGE_SIZE);
++		}
+ 	}
+ 	if (wc->w_target_page)
+ 		flush_dcache_page(wc->w_target_page);
 
 
