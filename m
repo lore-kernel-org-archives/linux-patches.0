@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF741C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C5DC433D2;
-	Mon, 20 Mar 2023 15:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF09F1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71425C433EF;
+	Mon, 20 Mar 2023 15:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324890;
-	bh=QBTVzXkEmgZMK00TO/lAoTF1TCKogf4wzNTQyGugT6g=;
+	s=korg; t=1679324892;
+	bh=zlN508Fi0NcHY/eBZD2njxP9Q5YOKyTcbGGcmkIN9b8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5czpAwfm1IVO3tjhzLBVn+YpTM6S9cAidFq3rhKtBlA3dmDFqw0KcTGeiOCH9M3I
-	 sixcoYqYVNdFUv5Bp4QkHYaUSvgjtf4zNEyclDbJaefchX0zFxQxz8HJEm8//MwAc4
-	 Es8ImYSqnsEIFdToK34KvNauuQoCeFEarqe6azTE=
+	b=GP18bdVlzf278Tv2NI0p/dYL72HNl+fh0GC8fBYjI1bqZwfrp+Tmi6131j9rmACwE
+	 7t11z05XOqbndCquR+A60GlIoTk2OblCYx6D0Ie2NVHrMLkJNIZxiMIwurwxpIl/bf
+	 2UUWq77kdKfv2e6HaHkF03Dnnn3UfcgCBNNNFpac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	gaoxingwang <gaoxingwang1@huawei.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/198] scsi: mpi3mr: Fix config page DMA memory leak
-Date: Mon, 20 Mar 2023 15:52:35 +0100
-Message-Id: <20230320145508.227640527@linuxfoundation.org>
+Subject: [PATCH 5.15 045/115] ipv4: Fix incorrect table ID in IOCTL path
+Date: Mon, 20 Mar 2023 15:54:17 +0100
+Message-Id: <20230320145451.313772540@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,41 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 7d2b02172b6a2ae6aecd7ef6480b9c4bf3dc59f4 ]
+[ Upstream commit 8a2618e14f81604a9b6ad305d57e0c8da939cd65 ]
 
-A fix for:
+Commit f96a3d74554d ("ipv4: Fix incorrect route flushing when source
+address is deleted") started to take the table ID field in the FIB info
+structure into account when determining if two structures are identical
+or not. This field is initialized using the 'fc_table' field in the
+route configuration structure, which is not set when adding a route via
+IOCTL.
 
-DMA-API: pci 0000:83:00.0: device driver has pending DMA allocations while released from device [count=1]
+The above can result in user space being able to install two identical
+routes that only differ in the table ID field of their associated FIB
+info.
 
-Fixes: 32d457d5a2af ("scsi: mpi3mr: Add framework to issue config requests")
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://lore.kernel.org/r/20230302234336.25456-3-thenzl@redhat.com
-Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fix by initializing the table ID field in the route configuration
+structure in the IOCTL path.
+
+Before the fix:
+
+ # ip route add default via 192.0.2.2
+ # route add default gw 192.0.2.2
+ # ip -4 r show default
+ # default via 192.0.2.2 dev dummy10
+ # default via 192.0.2.2 dev dummy10
+
+After the fix:
+
+ # ip route add default via 192.0.2.2
+ # route add default gw 192.0.2.2
+ SIOCADDRT: File exists
+ # ip -4 r show default
+ default via 192.0.2.2 dev dummy10
+
+Audited the code paths to ensure there are no other paths that do not
+properly initialize the route configuration structure when installing a
+route.
+
+Fixes: 5a56a0b3a45d ("net: Don't delete routes in different VRFs")
+Fixes: f96a3d74554d ("ipv4: Fix incorrect route flushing when source address is deleted")
+Reported-by: gaoxingwang <gaoxingwang1@huawei.com>
+Link: https://lore.kernel.org/netdev/20230314144159.2354729-1-gaoxingwang1@huawei.com/
+Tested-by: gaoxingwang <gaoxingwang1@huawei.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20230315124009.4015212-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/ipv4/fib_frontend.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index 2d46a0b04f345..f6b726359a1cc 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -4351,7 +4351,11 @@ void mpi3mr_free_mem(struct mpi3mr_ioc *mrioc)
- 		    mrioc->admin_req_base, mrioc->admin_req_dma);
- 		mrioc->admin_req_base = NULL;
+diff --git a/net/ipv4/fib_frontend.c b/net/ipv4/fib_frontend.c
+index 75c88d4863276..c21d57f02c651 100644
+--- a/net/ipv4/fib_frontend.c
++++ b/net/ipv4/fib_frontend.c
+@@ -573,6 +573,9 @@ static int rtentry_to_fib_config(struct net *net, int cmd, struct rtentry *rt,
+ 			cfg->fc_scope = RT_SCOPE_UNIVERSE;
  	}
--
-+	if (mrioc->cfg_page) {
-+		dma_free_coherent(&mrioc->pdev->dev, mrioc->cfg_page_sz,
-+		    mrioc->cfg_page, mrioc->cfg_page_dma);
-+		mrioc->cfg_page = NULL;
-+	}
- 	if (mrioc->pel_seqnum_virt) {
- 		dma_free_coherent(&mrioc->pdev->dev, mrioc->pel_seqnum_sz,
- 		    mrioc->pel_seqnum_virt, mrioc->pel_seqnum_dma);
+ 
++	if (!cfg->fc_table)
++		cfg->fc_table = RT_TABLE_MAIN;
++
+ 	if (cmd == SIOCDELRT)
+ 		return 0;
+ 
 -- 
 2.39.2
 
