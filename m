@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F016D1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73706C4339B;
-	Mon, 20 Mar 2023 15:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB141C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38039C433D2;
+	Mon, 20 Mar 2023 15:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325720;
-	bh=sXo8mBoKZYZFAHqbPaF7n1eHMzEnof++Sw1JW5lceJI=;
+	s=korg; t=1679325723;
+	bh=0YqCqh+Qg+2o7MkvMn8iGQ1yHulaS9ofUuDEMfWzGW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b/Zd5irywwH22lgRM26c1PDYyGTj5LVe8G7zwcgbp4gOlvaGgIo9kdeedtmzuJyAo
-	 djVQnM1ujkoU4WUXOPdjBj0uxJuIAZCS0a1x1f4wLlJ9WwNRgiGmYp2WV7zFsj6xHR
-	 KZRQX2W7yjKZ5dR3+3lhcgDJG8f/sYVnAn4ZviDQ=
+	b=Zf9/O9BchGC+cldX31+/wnVZ+N1wsrGX9uW6S8mA6Ga0/yIFO5cFw//apeKdCOwpo
+	 CRpJNjwHu12J8hrPbLgpUkqzFlyVCwzY1gM6kObY/o4+tueYcdTF9xqqZfgCSxaevB
+	 kCtaJX0QM3c9RHvDPJqe2FN0IpogEcs9UgDl2HVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Po-Hsu Lin <po-hsu.lin@canonical.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 090/211] selftests: net: devlink_port_split.py: skip test if no suitable device available
-Date: Mon, 20 Mar 2023 15:53:45 +0100
-Message-Id: <20230320145517.073381213@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: [PATCH 6.1 132/198] interconnect: fix mem leak when freeing nodes
+Date: Mon, 20 Mar 2023 15:54:30 +0100
+Message-Id: <20230320145513.082513285@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,119 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Po-Hsu Lin <po-hsu.lin@canonical.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 24994513ad13ff2c47ba91d2b5df82c3d496c370 ]
+commit a5904f415e1af72fa8fe6665aa4f554dc2099a95 upstream.
 
-The `devlink -j port show` command output may not contain the "flavour"
-key, an example from Ubuntu 22.10 s390x LPAR(5.19.0-37-generic), with
-mlx4 driver and iproute2-5.15.0:
-  {"port":{"pci/0001:00:00.0/1":{"type":"eth","netdev":"ens301"},
-           "pci/0001:00:00.0/2":{"type":"eth","netdev":"ens301d1"},
-           "pci/0002:00:00.0/1":{"type":"eth","netdev":"ens317"},
-           "pci/0002:00:00.0/2":{"type":"eth","netdev":"ens317d1"}}}
+The node link array is allocated when adding links to a node but is not
+deallocated when nodes are destroyed.
 
-This will cause a KeyError exception.
-
-Create a validate_devlink_output() to check for this "flavour" from
-devlink command output to avoid this KeyError exception. Also let
-it handle the check for `devlink -j dev show` output in main().
-
-Apart from this, if the test was not started because the max lanes of
-the designated device is 0. The script will still return 0 and thus
-causing a false-negative test result.
-
-Use a found_max_lanes flag to determine if these tests were skipped
-due to this reason and return KSFT_SKIP to make it more clear.
-
-Link: https://bugs.launchpad.net/bugs/1937133
-Fixes: f3348a82e727 ("selftests: net: Add port split test")
-Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
-Link: https://lore.kernel.org/r/20230315165353.229590-1-po-hsu.lin@canonical.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 11f1ceca7031 ("interconnect: Add generic on-chip interconnect API")
+Cc: stable@vger.kernel.org      # 5.1
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # i.MX8MP MSC SM2-MB-EP1 Board
+Link: https://lore.kernel.org/r/20230306075651.2449-2-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../selftests/net/devlink_port_split.py       | 36 ++++++++++++++++---
- 1 file changed, 31 insertions(+), 5 deletions(-)
+ drivers/interconnect/core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/net/devlink_port_split.py b/tools/testing/selftests/net/devlink_port_split.py
-index 2b5d6ff873738..2d84c7a0be6b2 100755
---- a/tools/testing/selftests/net/devlink_port_split.py
-+++ b/tools/testing/selftests/net/devlink_port_split.py
-@@ -59,6 +59,8 @@ class devlink_ports(object):
-         assert stderr == ""
-         ports = json.loads(stdout)['port']
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -850,6 +850,10 @@ void icc_node_destroy(int id)
  
-+        validate_devlink_output(ports, 'flavour')
+ 	mutex_unlock(&icc_lock);
+ 
++	if (!node)
++		return;
 +
-         for port in ports:
-             if dev in port:
-                 if ports[port]['flavour'] == 'physical':
-@@ -220,6 +222,27 @@ def split_splittable_port(port, k, lanes, dev):
-     unsplit(port.bus_info)
- 
- 
-+def validate_devlink_output(devlink_data, target_property=None):
-+    """
-+    Determine if test should be skipped by checking:
-+      1. devlink_data contains values
-+      2. The target_property exist in devlink_data
-+    """
-+    skip_reason = None
-+    if any(devlink_data.values()):
-+        if target_property:
-+            skip_reason = "{} not found in devlink output, test skipped".format(target_property)
-+            for key in devlink_data:
-+                if target_property in devlink_data[key]:
-+                    skip_reason = None
-+    else:
-+        skip_reason = 'devlink output is empty, test skipped'
-+
-+    if skip_reason:
-+        print(skip_reason)
-+        sys.exit(KSFT_SKIP)
-+
-+
- def make_parser():
-     parser = argparse.ArgumentParser(description='A test for port splitting.')
-     parser.add_argument('--dev',
-@@ -240,12 +263,9 @@ def main(cmdline=None):
-         stdout, stderr = run_command(cmd)
-         assert stderr == ""
- 
-+        validate_devlink_output(json.loads(stdout))
-         devs = json.loads(stdout)['dev']
--        if devs:
--            dev = list(devs.keys())[0]
--        else:
--            print("no devlink device was found, test skipped")
--            sys.exit(KSFT_SKIP)
-+        dev = list(devs.keys())[0]
- 
-     cmd = "devlink dev show %s" % dev
-     stdout, stderr = run_command(cmd)
-@@ -255,6 +275,7 @@ def main(cmdline=None):
- 
-     ports = devlink_ports(dev)
- 
-+    found_max_lanes = False
-     for port in ports.if_names:
-         max_lanes = get_max_lanes(port.name)
- 
-@@ -277,6 +298,11 @@ def main(cmdline=None):
-                 split_splittable_port(port, lane, max_lanes, dev)
- 
-                 lane //= 2
-+        found_max_lanes = True
-+
-+    if not found_max_lanes:
-+        print(f"Test not started, no port of device {dev} reports max_lanes")
-+        sys.exit(KSFT_SKIP)
- 
- 
- if __name__ == "__main__":
--- 
-2.39.2
-
++	kfree(node->links);
+ 	kfree(node);
+ }
+ EXPORT_SYMBOL_GPL(icc_node_destroy);
 
 
