@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAB71C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3E2C433EF;
-	Mon, 20 Mar 2023 15:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDE11C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23466C433EF;
+	Mon, 20 Mar 2023 15:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325553;
-	bh=r1HWeWs3tt9Qp8gcbLAB2F/pmP6xy0RSAWUsD8jirjM=;
+	s=korg; t=1679325556;
+	bh=f+ukSv2m3v8o7lzRsmVB/195V/CPiXrA7klvqDt9pbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kC6Ui8NgbaUofN1UMfM3bVqdG3FECSm85SXYUb5I5CXCrXhFCjtPPGk9DzS5Njcvm
-	 mUyvd55BZQjPnna4H7wGFFH8uzk0h3j6pi7ekN1hJWI3b8eZ7JCrI8xy7U2imgZkm5
-	 gocUDcsgEszhfZvSe92N6s5oI4EPERHoo2srmLJ4=
+	b=EQitRUrIiDo22qbbAI5FnuB9Yu/iydhGCxUmRwh9RfaDOnuhqf7hAXavWr81tDqoq
+	 u1uZ2cfPsFUsWjedddEyk+4jUKICjJwi2wBnYKZxr05Z6ua4gAzC6tcMEkP7wLLRwF
+	 DIxZigMWjYaStBXRbcvATV/bSrjaBfK9D6zS6uAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 056/211] net: phy: smsc: bail out in lan87xx_read_status if genphy_read_status fails
-Date: Mon, 20 Mar 2023 15:53:11 +0100
-Message-Id: <20230320145515.578364728@linuxfoundation.org>
+Subject: [PATCH 6.1 101/198] hwmon: (ltc2992) Set `can_sleep` flag for GPIO chip
+Date: Mon, 20 Mar 2023 15:53:59 +0100
+Message-Id: <20230320145511.811679470@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,41 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-[ Upstream commit c22c3bbf351e4ce905f082649cffa1ff893ea8c1 ]
+[ Upstream commit ab00709310eedcd8dae0df1f66d332f9bc64c99e ]
 
-If genphy_read_status fails then further access to the PHY may result
-in unpredictable behavior. To prevent this bail out immediately if
-genphy_read_status fails.
+The ltc2992 drivers uses a mutex and I2C bus access in its GPIO chip `set`
+and `get` implementation. This means these functions can sleep and the GPIO
+chip should set the `can_sleep` property to true.
 
-Fixes: 4223dbffed9f ("net: phy: smsc: Re-enable EDPD mode for LAN87xx")
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/026aa4f2-36f5-1c10-ab9f-cdb17dda6ac4@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This will ensure that a warning is printed when trying to set or get the
+GPIO value from a context that potentially can't sleep.
+
+Fixes: 9ca26df1ba25 ("hwmon: (ltc2992) Add support for GPIOs.")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Link: https://lore.kernel.org/r/20230314093146.2443845-2-lars@metafoo.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/smsc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/hwmon/ltc2992.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
-index 00d9eff91dcfa..df2c5435c5c49 100644
---- a/drivers/net/phy/smsc.c
-+++ b/drivers/net/phy/smsc.c
-@@ -199,8 +199,11 @@ static int lan95xx_config_aneg_ext(struct phy_device *phydev)
- static int lan87xx_read_status(struct phy_device *phydev)
- {
- 	struct smsc_phy_priv *priv = phydev->priv;
-+	int err;
- 
--	int err = genphy_read_status(phydev);
-+	err = genphy_read_status(phydev);
-+	if (err)
-+		return err;
- 
- 	if (!phydev->link && priv->energy_enable && phydev->irq == PHY_POLL) {
- 		/* Disable EDPD to wake up PHY */
+diff --git a/drivers/hwmon/ltc2992.c b/drivers/hwmon/ltc2992.c
+index 72489d5d7eaf9..d88e883c7492c 100644
+--- a/drivers/hwmon/ltc2992.c
++++ b/drivers/hwmon/ltc2992.c
+@@ -323,6 +323,7 @@ static int ltc2992_config_gpio(struct ltc2992_state *st)
+ 	st->gc.label = name;
+ 	st->gc.parent = &st->client->dev;
+ 	st->gc.owner = THIS_MODULE;
++	st->gc.can_sleep = true;
+ 	st->gc.base = -1;
+ 	st->gc.names = st->gpio_names;
+ 	st->gc.ngpio = ARRAY_SIZE(st->gpio_names);
 -- 
 2.39.2
 
