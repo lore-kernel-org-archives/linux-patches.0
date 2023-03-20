@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E8B1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6847C433D2;
-	Mon, 20 Mar 2023 15:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D9B1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C344C433EF;
+	Mon, 20 Mar 2023 15:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324503;
-	bh=v6nTogP6iEQ2uww4dLnsRnckbyhaQOz1zvK0D9le53s=;
+	s=korg; t=1679324505;
+	bh=ZQN08Rvj9vkrfXEuFNFt+YOWfpT0AYb6Ef2EKp6lOWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mrhr1hkJUYYF818ytHLoZeDgkPHF93JwLCZKjwldC/FscXhAOmwTDM4BYWgWWuCFi
-	 uZYsKjSM5OIhzgeablFof5dwH7/s6Ef1dwUh9RX9ZCKfsyiAnXaT/UY0tSDdg96gAg
-	 B8eewQ5XzKEuxN6I69sqTnRCXVxhBVJ8V/VfELz0=
+	b=zAOzy9DL4ignE4/I684z6lsmOkFOgEI12BLwe/2meRXZ+oDLd2jwQGQIzExn4Hd69
+	 kYZ27PJQevbIfCt9BrAQ6yVM6bTeJicUJFs/3Dq+Ik3W09XKzy12GAYQYfU5Xj7n4L
+	 fLIxFsP/6HYmof1vQCtL+Wi0/kea9WpZ/NzT1WcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifei Liu <yifeliu@cs.stonybrook.edu>,
-	Erez Zadok <ezk@cs.stonybrook.edu>,
-	Manish Adkar <madkar@cs.stonybrook.edu>,
-	Richard Weinberger <richard@nod.at>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 38/60] jffs2: correct logic when creating a hole in jffs2_write_begin
-Date: Mon, 20 Mar 2023 15:54:47 +0100
-Message-Id: <20230320145432.513808756@linuxfoundation.org>
+Subject: [PATCH 5.10 08/99] ALSA: hda: Match only Intel devices with CONTROLLER_IN_GPU()
+Date: Mon, 20 Mar 2023 15:53:46 +0100
+Message-Id: <20230320145443.704928264@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
-References: <20230320145430.861072439@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,112 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yifei Liu <yifeliu@cs.stonybrook.edu>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit 23892d383bee15b64f5463bd7195615734bb2415 ]
+[ Upstream commit ff447886e675979d66b2bc01810035d3baea1b3a ]
 
-Bug description and fix:
+CONTROLLER_IN_GPU() is clearly intended to match only Intel devices, but
+previously it checked only the PCI Device ID, not the Vendor ID, so it
+could match devices from other vendors that happened to use the same Device
+ID.
 
-1. Write data to a file, say all 1s from offset 0 to 16.
+Update CONTROLLER_IN_GPU() so it matches only Intel devices.
 
-2. Truncate the file to a smaller size, say 8 bytes.
-
-3. Write new bytes (say 2s) from an offset past the original size of the
-file, say at offset 20, for 4 bytes.  This is supposed to create a "hole"
-in the file, meaning that the bytes from offset 8 (where it was truncated
-above) up to the new write at offset 20, should all be 0s (zeros).
-
-4. Flush all caches using "echo 3 > /proc/sys/vm/drop_caches" (or unmount
-and remount) the f/s.
-
-5. Check the content of the file.  It is wrong.  The 1s that used to be
-between bytes 9 and 16, before the truncation, have REAPPEARED (they should
-be 0s).
-
-We wrote a script and helper C program to reproduce the bug
-(reproduce_jffs2_write_begin_issue.sh, write_file.c, and Makefile).  We can
-make them available to anyone.
-
-The above example is shown when writing a small file within the same first
-page.  But the bug happens for larger files, as long as steps 1, 2, and 3
-above all happen within the same page.
-
-The problem was traced to the jffs2_write_begin code, where it goes into an
-'if' statement intended to handle writes past the current EOF (i.e., writes
-that may create a hole).  The code computes a 'pageofs' that is the floor
-of the write position (pos), aligned to the page size boundary.  In other
-words, 'pageofs' will never be larger than 'pos'.  The code then sets the
-internal jffs2_raw_inode->isize to the size of max(current inode size,
-pageofs) but that is wrong: the new file size should be the 'pos', which is
-larger than both the current inode size and pageofs.
-
-Similarly, the code incorrectly sets the internal jffs2_raw_inode->dsize to
-the difference between the pageofs minus current inode size; instead it
-should be the current pos minus the current inode size.  Finally,
-inode->i_size was also set incorrectly.
-
-The patch below fixes this bug.  The bug was discovered using a new tool
-for finding f/s bugs using model checking, called MCFS (Model Checking File
-Systems).
-
-Signed-off-by: Yifei Liu <yifeliu@cs.stonybrook.edu>
-Signed-off-by: Erez Zadok <ezk@cs.stonybrook.edu>
-Signed-off-by: Manish Adkar <madkar@cs.stonybrook.edu>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: 535115b5ff51 ("ALSA: hda - Abort the probe without i915 binding for HSW/B")
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/r/20230307214054.886721-1-helgaas@kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jffs2/file.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ sound/pci/hda/hda_intel.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/jffs2/file.c b/fs/jffs2/file.c
-index 34880a4c21732..94bd4bbd37875 100644
---- a/fs/jffs2/file.c
-+++ b/fs/jffs2/file.c
-@@ -137,19 +137,18 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
- 	struct jffs2_inode_info *f = JFFS2_INODE_INFO(inode);
- 	struct jffs2_sb_info *c = JFFS2_SB_INFO(inode->i_sb);
- 	pgoff_t index = pos >> PAGE_SHIFT;
--	uint32_t pageofs = index << PAGE_SHIFT;
- 	int ret = 0;
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index 494bfd2135a9e..de1fe604905f3 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -365,14 +365,15 @@ enum {
+ #define needs_eld_notify_link(chip)	false
+ #endif
  
- 	jffs2_dbg(1, "%s()\n", __func__);
+-#define CONTROLLER_IN_GPU(pci) (((pci)->device == 0x0a0c) || \
++#define CONTROLLER_IN_GPU(pci) (((pci)->vendor == 0x8086) &&         \
++				       (((pci)->device == 0x0a0c) || \
+ 					((pci)->device == 0x0c0c) || \
+ 					((pci)->device == 0x0d0c) || \
+ 					((pci)->device == 0x160c) || \
+ 					((pci)->device == 0x490d) || \
+ 					((pci)->device == 0x4f90) || \
+ 					((pci)->device == 0x4f91) || \
+-					((pci)->device == 0x4f92))
++					((pci)->device == 0x4f92)))
  
--	if (pageofs > inode->i_size) {
--		/* Make new hole frag from old EOF to new page */
-+	if (pos > inode->i_size) {
-+		/* Make new hole frag from old EOF to new position */
- 		struct jffs2_raw_inode ri;
- 		struct jffs2_full_dnode *fn;
- 		uint32_t alloc_len;
- 
--		jffs2_dbg(1, "Writing new hole frag 0x%x-0x%x between current EOF and new page\n",
--			  (unsigned int)inode->i_size, pageofs);
-+		jffs2_dbg(1, "Writing new hole frag 0x%x-0x%x between current EOF and new position\n",
-+			  (unsigned int)inode->i_size, (uint32_t)pos);
- 
- 		ret = jffs2_reserve_space(c, sizeof(ri), &alloc_len,
- 					  ALLOC_NORMAL, JFFS2_SUMMARY_INODE_SIZE);
-@@ -169,10 +168,10 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
- 		ri.mode = cpu_to_jemode(inode->i_mode);
- 		ri.uid = cpu_to_je16(i_uid_read(inode));
- 		ri.gid = cpu_to_je16(i_gid_read(inode));
--		ri.isize = cpu_to_je32(max((uint32_t)inode->i_size, pageofs));
-+		ri.isize = cpu_to_je32((uint32_t)pos);
- 		ri.atime = ri.ctime = ri.mtime = cpu_to_je32(JFFS2_NOW());
- 		ri.offset = cpu_to_je32(inode->i_size);
--		ri.dsize = cpu_to_je32(pageofs - inode->i_size);
-+		ri.dsize = cpu_to_je32((uint32_t)pos - inode->i_size);
- 		ri.csize = cpu_to_je32(0);
- 		ri.compr = JFFS2_COMPR_ZERO;
- 		ri.node_crc = cpu_to_je32(crc32(0, &ri, sizeof(ri)-8));
-@@ -202,7 +201,7 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
- 			goto out_err;
- 		}
- 		jffs2_complete_reservation(c);
--		inode->i_size = pageofs;
-+		inode->i_size = pos;
- 		mutex_unlock(&f->sem);
- 	}
+ #define IS_BXT(pci) ((pci)->vendor == 0x8086 && (pci)->device == 0x5a98)
  
 -- 
 2.39.2
