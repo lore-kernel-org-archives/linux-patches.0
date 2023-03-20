@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3856C1C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACEEEC433D2;
-	Mon, 20 Mar 2023 15:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17B21C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:31:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D09C433EF;
+	Mon, 20 Mar 2023 15:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326258;
-	bh=orGOcuNB8yRQycwBV6Rxh+wBQ8VNirJbz1ktO1JsfFU=;
+	s=korg; t=1679326260;
+	bh=1otGdFx6iiLUrvIdNEbbydIeJ0Txsn/Beh1/ie3gto8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RcU4/V9AQx9QyZHXNGheBqrSBQ4LKbiiazkEh5TqEYqPsIcVMSAlvdtWSSws4oDk6
-	 HCg2KzuYMUSbpsdOwPV682TXaD+MOoSIxaTYaZFdO1UioMKwr/arVtkcxhndTjzB3a
-	 ldJXEGF7lV0yjYiwL4esDMs3pfMuJNWYm6JNVkCc=
+	b=xUMBSYyCy3lcWLMLmS7TdBIpsw37pHaWnspSh07tB5XlQvdsGLQDD6gtcQg0cJwAP
+	 KWHFWRgZUM/iP4ElPHNAuJzlFeymdtU5Yfdvo4flEtDSYzu/CTUU9mq+Z3IqRifGHd
+	 U9VivYITr6y0ZX9kc1kZbyHRWPV2O6vSgy1oSosc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dionna Glaze <dionnaglaze@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 6.2 211/211] virt/coco/sev-guest: Add throttling awareness
-Date: Mon, 20 Mar 2023 15:55:46 +0100
-Message-Id: <20230320145522.357791480@linuxfoundation.org>
+	Xin Hao <xhao@linux.alibaba.com>,
+	Shawn Wang <shawnwang@linux.alibaba.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.2 203/211] x86/resctrl: Clear staged_config[] before and after it is used
+Date: Mon, 20 Mar 2023 15:55:38 +0100
+Message-Id: <20230320145522.044590144@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -36,138 +36,165 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dionna Glaze <dionnaglaze@google.com>
+From: Shawn Wang <shawnwang@linux.alibaba.com>
 
-commit 72f7754dcf31c87c92c0c353dcf747814cc5ce10 upstream.
+commit 0424a7dfe9129b93f29b277511a60e87f052ac6b upstream.
 
-A potentially malicious SEV guest can constantly hammer the hypervisor
-using this driver to send down requests and thus prevent or at least
-considerably hinder other guests from issuing requests to the secure
-processor which is a shared platform resource.
+As a temporary storage, staged_config[] in rdt_domain should be cleared
+before and after it is used. The stale value in staged_config[] could
+cause an MSR access error.
 
-Therefore, the host is permitted and encouraged to throttle such guest
-requests.
+Here is a reproducer on a system with 16 usable CLOSIDs for a 15-way L3
+Cache (MBA should be disabled if the number of CLOSIDs for MB is less than
+16.) :
+	mount -t resctrl resctrl -o cdp /sys/fs/resctrl
+	mkdir /sys/fs/resctrl/p{1..7}
+	umount /sys/fs/resctrl/
+	mount -t resctrl resctrl /sys/fs/resctrl
+	mkdir /sys/fs/resctrl/p{1..8}
 
-Add the capability to handle the case when the hypervisor throttles
-excessive numbers of requests issued by the guest. Otherwise, the VM
-platform communication key will be disabled, preventing the guest from
-attesting itself.
+An error occurs when creating resource group named p8:
+    unchecked MSR access error: WRMSR to 0xca0 (tried to write 0x00000000000007ff) at rIP: 0xffffffff82249142 (cat_wrmsr+0x32/0x60)
+    Call Trace:
+     <IRQ>
+     __flush_smp_call_function_queue+0x11d/0x170
+     __sysvec_call_function+0x24/0xd0
+     sysvec_call_function+0x89/0xc0
+     </IRQ>
+     <TASK>
+     asm_sysvec_call_function+0x16/0x20
 
-Realistically speaking, a well-behaved guest should not even care about
-throttling. During its lifetime, it would end up issuing a handful of
-requests which the hardware can easily handle.
+When creating a new resource control group, hardware will be configured
+by the following process:
+    rdtgroup_mkdir()
+      rdtgroup_mkdir_ctrl_mon()
+        rdtgroup_init_alloc()
+          resctrl_arch_update_domains()
 
-This is more to address the case of a malicious guest. Such guest should
-get throttled and if its VMPCK gets disabled, then that's its own
-wrongdoing and perhaps that guest even deserves it.
+resctrl_arch_update_domains() iterates and updates all resctrl_conf_type
+whose have_new_ctrl is true. Since staged_config[] holds the same values as
+when CDP was enabled, it will continue to update the CDP_CODE and CDP_DATA
+configurations. When group p8 is created, get_config_index() called in
+resctrl_arch_update_domains() will return 16 and 17 as the CLOSIDs for
+CDP_CODE and CDP_DATA, which will be translated to an invalid register -
+0xca0 in this scenario.
 
-To the implementation: the hypervisor signals with SNP_GUEST_REQ_ERR_BUSY
-that the guest requests should be throttled. That error code is returned
-in the upper 32-bit half of exitinfo2 and this is part of the GHCB spec
-v2.
+Fix it by clearing staged_config[] before and after it is used.
 
-So the guest is given a throttling period of 1 minute in which it
-retries the request every 2 seconds. This is a good default but if it
-turns out to not pan out in practice, it can be tweaked later.
+[reinette: re-order commit tags]
 
-For safety, since the encryption algorithm in GHCBv2 is AES_GCM, control
-must remain in the kernel to complete the request with the current
-sequence number. Returning without finishing the request allows the
-guest to make another request but with different message contents. This
-is IV reuse, and breaks cryptographic protections.
-
-  [ bp:
-    - Rewrite commit message and do a simplified version.
-    - The stable tags are supposed to denote that a cleanup should go
-      upfront before backporting this so that any future fixes to this
-      can preserve the sanity of the backporter(s). ]
-
-Fixes: d5af44dde546 ("x86/sev: Provide support for SNP guest request NAEs")
-Signed-off-by: Dionna Glaze <dionnaglaze@google.com>
-Co-developed-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org> # d6fd48eff750 ("virt/coco/sev-guest: Check SEV_SNP attribute at probe time")
-Cc: <stable@kernel.org> # 970ab823743f (" virt/coco/sev-guest: Simplify extended guest request handling")
-Cc: <stable@kernel.org> # c5a338274bdb ("virt/coco/sev-guest: Remove the disable_vmpck label in handle_guest_request()")
-Cc: <stable@kernel.org> # 0fdb6cc7c89c ("virt/coco/sev-guest: Carve out the request issuing logic into a helper")
-Cc: <stable@kernel.org> # d25bae7dc7b0 ("virt/coco/sev-guest: Do some code style cleanups")
-Cc: <stable@kernel.org> # fa4ae42cc60a ("virt/coco/sev-guest: Convert the sw_exit_info_2 checking to a switch-case")
-Link: https://lore.kernel.org/r/20230214164638.1189804-2-dionnaglaze@google.com
+Fixes: 75408e43509e ("x86/resctrl: Allow different CODE/DATA configurations to be staged")
+Suggested-by: Xin Hao <xhao@linux.alibaba.com>
+Signed-off-by: Shawn Wang <shawnwang@linux.alibaba.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Reinette Chatre <reinette.chatre@intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/2fad13f49fbe89687fc40e9a5a61f23a28d1507a.1673988935.git.reinette.chatre%40intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/sev-common.h       |    3 ++-
- arch/x86/kernel/sev.c                   |    4 ++++
- drivers/virt/coco/sev-guest/sev-guest.c |   19 ++++++++++++++++++-
- 3 files changed, 24 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/resctrl/ctrlmondata.c |    7 ++-----
+ arch/x86/kernel/cpu/resctrl/internal.h    |    1 +
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c    |   25 +++++++++++++++++++++----
+ 3 files changed, 24 insertions(+), 9 deletions(-)
 
---- a/arch/x86/include/asm/sev-common.h
-+++ b/arch/x86/include/asm/sev-common.h
-@@ -128,8 +128,9 @@ struct snp_psc_desc {
- 	struct psc_entry entries[VMGEXIT_PSC_MAX_ENTRY];
- } __packed;
- 
--/* Guest message request error code */
-+/* Guest message request error codes */
- #define SNP_GUEST_REQ_INVALID_LEN	BIT_ULL(32)
-+#define SNP_GUEST_REQ_ERR_BUSY		BIT_ULL(33)
- 
- #define GHCB_MSR_TERM_REQ		0x100
- #define GHCB_MSR_TERM_REASON_SET_POS	12
---- a/arch/x86/kernel/sev.c
-+++ b/arch/x86/kernel/sev.c
-@@ -2214,6 +2214,10 @@ int snp_issue_guest_request(u64 exit_cod
- 	case 0:
- 		break;
- 
-+	case SNP_GUEST_REQ_ERR_BUSY:
-+		ret = -EAGAIN;
-+		break;
-+
- 	case SNP_GUEST_REQ_INVALID_LEN:
- 		/* Number of expected pages are returned in RBX */
- 		if (exit_code == SVM_VMGEXIT_EXT_GUEST_REQUEST) {
---- a/drivers/virt/coco/sev-guest/sev-guest.c
-+++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -31,6 +31,9 @@
- #define AAD_LEN		48
- #define MSG_HDR_VER	1
- 
-+#define SNP_REQ_MAX_RETRY_DURATION	(60*HZ)
-+#define SNP_REQ_RETRY_DELAY		(2*HZ)
-+
- struct snp_guest_crypto {
- 	struct crypto_aead *tfm;
- 	u8 *iv, *authtag;
-@@ -320,7 +323,8 @@ static int enc_payload(struct snp_guest_
- 
- static int __handle_guest_request(struct snp_guest_dev *snp_dev, u64 exit_code, __u64 *fw_err)
+--- a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
++++ b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+@@ -373,7 +373,6 @@ ssize_t rdtgroup_schemata_write(struct k
  {
--	unsigned long err, override_err = 0;
-+	unsigned long err = 0xff, override_err = 0;
-+	unsigned long req_start = jiffies;
- 	unsigned int override_npages = 0;
- 	int rc;
- 
-@@ -360,6 +364,19 @@ retry_request:
- 		 * user as an ioctl() return code.
- 		 */
- 		goto retry_request;
-+
-+	/*
-+	 * The host may return SNP_GUEST_REQ_ERR_EBUSY if the request has been
-+	 * throttled. Retry in the driver to avoid returning and reusing the
-+	 * message sequence number on a different message.
-+	 */
-+	case -EAGAIN:
-+		if (jiffies - req_start > SNP_REQ_MAX_RETRY_DURATION) {
-+			rc = -ETIMEDOUT;
-+			break;
-+		}
-+		schedule_timeout_killable(SNP_REQ_RETRY_DELAY);
-+		goto retry_request;
+ 	struct resctrl_schema *s;
+ 	struct rdtgroup *rdtgrp;
+-	struct rdt_domain *dom;
+ 	struct rdt_resource *r;
+ 	char *tok, *resname;
+ 	int ret = 0;
+@@ -402,10 +401,7 @@ ssize_t rdtgroup_schemata_write(struct k
+ 		goto out;
  	}
  
- 	/*
+-	list_for_each_entry(s, &resctrl_schema_all, list) {
+-		list_for_each_entry(dom, &s->res->domains, list)
+-			memset(dom->staged_config, 0, sizeof(dom->staged_config));
+-	}
++	rdt_staged_configs_clear();
+ 
+ 	while ((tok = strsep(&buf, "\n")) != NULL) {
+ 		resname = strim(strsep(&tok, ":"));
+@@ -450,6 +446,7 @@ ssize_t rdtgroup_schemata_write(struct k
+ 	}
+ 
+ out:
++	rdt_staged_configs_clear();
+ 	rdtgroup_kn_unlock(of->kn);
+ 	cpus_read_unlock();
+ 	return ret ?: nbytes;
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -527,5 +527,6 @@ bool has_busy_rmid(struct rdt_resource *
+ void __check_limbo(struct rdt_domain *d, bool force_free);
+ void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
+ void __init thread_throttle_mode_init(void);
++void rdt_staged_configs_clear(void);
+ 
+ #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -78,6 +78,19 @@ void rdt_last_cmd_printf(const char *fmt
+ 	va_end(ap);
+ }
+ 
++void rdt_staged_configs_clear(void)
++{
++	struct rdt_resource *r;
++	struct rdt_domain *dom;
++
++	lockdep_assert_held(&rdtgroup_mutex);
++
++	for_each_alloc_capable_rdt_resource(r) {
++		list_for_each_entry(dom, &r->domains, list)
++			memset(dom->staged_config, 0, sizeof(dom->staged_config));
++	}
++}
++
+ /*
+  * Trivial allocator for CLOSIDs. Since h/w only supports a small number,
+  * we can keep a bitmap of free CLOSIDs in a single integer.
+@@ -2851,7 +2864,9 @@ static int rdtgroup_init_alloc(struct rd
+ {
+ 	struct resctrl_schema *s;
+ 	struct rdt_resource *r;
+-	int ret;
++	int ret = 0;
++
++	rdt_staged_configs_clear();
+ 
+ 	list_for_each_entry(s, &resctrl_schema_all, list) {
+ 		r = s->res;
+@@ -2862,20 +2877,22 @@ static int rdtgroup_init_alloc(struct rd
+ 		} else {
+ 			ret = rdtgroup_init_cat(s, rdtgrp->closid);
+ 			if (ret < 0)
+-				return ret;
++				goto out;
+ 		}
+ 
+ 		ret = resctrl_arch_update_domains(r, rdtgrp->closid);
+ 		if (ret < 0) {
+ 			rdt_last_cmd_puts("Failed to initialize allocations\n");
+-			return ret;
++			goto out;
+ 		}
+ 
+ 	}
+ 
+ 	rdtgrp->mode = RDT_MODE_SHAREABLE;
+ 
+-	return 0;
++out:
++	rdt_staged_configs_clear();
++	return ret;
+ }
+ 
+ static int mkdir_rdt_prepare(struct kernfs_node *parent_kn,
 
 
