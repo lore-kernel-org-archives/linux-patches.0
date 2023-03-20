@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AE11C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8475FC4339B;
-	Mon, 20 Mar 2023 15:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAA41C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2E1C4339E;
+	Mon, 20 Mar 2023 15:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325410;
-	bh=d81WpvGHXcAaGO6+jdo5a6M6e5BWfqqEcbhXTx3AZ70=;
+	s=korg; t=1679325413;
+	bh=H4qY2TbkHitOr7C2UAql4BrVsYvI8u8pPbSbikkSMnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yJvjyFncSOsOXIn/SP3fD/A+ELLEYuPCEbprEv1mACIc6x81LHtewcLBtYDcSuHj2
-	 TRKMGFSmbd4oRYEoERChfXXprBTIg4w63MsG3u9X2n4U4JIFizxSMdBk8CpHpy4Cm3
-	 Et/nymCtRryvb1VMTBTsAr7mxG1D03/wO+7D8pmE=
+	b=lKgCO5mjryOAW2Ld1E72HhlFlV38Rcgrrz4yqMYTsUMa/HbV2NeftYoA8/nwV8naD
+	 rv6QWvm+7rAVq4b4taEHg9wfCC93dgENpptAO9O0I0Lif+kXR6WFvq5TDOG2tGI9PG
+	 k+a5MNBDWo2qQBNGTOBdAww8sb4eMwatzKAgfwsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 101/115] mmc: sdhci_am654: lower power-on failed message severity
-Date: Mon, 20 Mar 2023 15:55:13 +0100
-Message-Id: <20230320145453.664548141@linuxfoundation.org>
+	gaoxingwang <gaoxingwang1@huawei.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 082/198] ipv4: Fix incorrect table ID in IOCTL path
+Date: Mon, 20 Mar 2023 15:53:40 +0100
+Message-Id: <20230320145510.963255378@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +37,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 11440da77d6020831ee6f9ce4551b545dea789ee upstream.
+[ Upstream commit 8a2618e14f81604a9b6ad305d57e0c8da939cd65 ]
 
-Lower the power-on failed message severity from warn to info when the
-controller does not power-up. It's normal to have this situation when
-the SD card slot is empty, therefore we should not warn the user about
-it.
+Commit f96a3d74554d ("ipv4: Fix incorrect route flushing when source
+address is deleted") started to take the table ID field in the FIB info
+structure into account when determining if two structures are identical
+or not. This field is initialized using the 'fc_table' field in the
+route configuration structure, which is not set when adding a route via
+IOCTL.
 
-Fixes: 7ca0f166f5b2 ("mmc: sdhci_am654: Add workaround for card detect debounce timer")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230306162751.163369-1-francesco@dolcini.it
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The above can result in user space being able to install two identical
+routes that only differ in the table ID field of their associated FIB
+info.
+
+Fix by initializing the table ID field in the route configuration
+structure in the IOCTL path.
+
+Before the fix:
+
+ # ip route add default via 192.0.2.2
+ # route add default gw 192.0.2.2
+ # ip -4 r show default
+ # default via 192.0.2.2 dev dummy10
+ # default via 192.0.2.2 dev dummy10
+
+After the fix:
+
+ # ip route add default via 192.0.2.2
+ # route add default gw 192.0.2.2
+ SIOCADDRT: File exists
+ # ip -4 r show default
+ default via 192.0.2.2 dev dummy10
+
+Audited the code paths to ensure there are no other paths that do not
+properly initialize the route configuration structure when installing a
+route.
+
+Fixes: 5a56a0b3a45d ("net: Don't delete routes in different VRFs")
+Fixes: f96a3d74554d ("ipv4: Fix incorrect route flushing when source address is deleted")
+Reported-by: gaoxingwang <gaoxingwang1@huawei.com>
+Link: https://lore.kernel.org/netdev/20230314144159.2354729-1-gaoxingwang1@huawei.com/
+Tested-by: gaoxingwang <gaoxingwang1@huawei.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20230315124009.4015212-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci_am654.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/fib_frontend.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -369,7 +369,7 @@ static void sdhci_am654_write_b(struct s
- 					MAX_POWER_ON_TIMEOUT, false, host, val,
- 					reg);
- 		if (ret)
--			dev_warn(mmc_dev(host->mmc), "Power on failed\n");
-+			dev_info(mmc_dev(host->mmc), "Power on failed\n");
+diff --git a/net/ipv4/fib_frontend.c b/net/ipv4/fib_frontend.c
+index b5736ef16ed2d..390f4be7f7bec 100644
+--- a/net/ipv4/fib_frontend.c
++++ b/net/ipv4/fib_frontend.c
+@@ -576,6 +576,9 @@ static int rtentry_to_fib_config(struct net *net, int cmd, struct rtentry *rt,
+ 			cfg->fc_scope = RT_SCOPE_UNIVERSE;
  	}
- }
  
++	if (!cfg->fc_table)
++		cfg->fc_table = RT_TABLE_MAIN;
++
+ 	if (cmd == SIOCDELRT)
+ 		return 0;
+ 
+-- 
+2.39.2
+
 
 
