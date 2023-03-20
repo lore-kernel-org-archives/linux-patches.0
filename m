@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF06C1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF33C433D2;
-	Mon, 20 Mar 2023 15:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BDB1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1A8C433D2;
+	Mon, 20 Mar 2023 15:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325224;
-	bh=PXp5j+ALokzbLKBLLigXN3I/5ANpeeJQCz0iKoZ58nQ=;
+	s=korg; t=1679325227;
+	bh=hRCGny6RTst0Quh3CPsdx1tjLZSo1tA48HZCKGXoM2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s509FFfiiDweQ3fpPLIDG6HMbXLGovWpUt2/B/DmuPcCoYmpK/HyXDHjYF2QTjqsY
-	 RMZk6I2B2IjdP2OfvA9yZBlTsCLV4SGOArBEW8tbPsyXvp+8zamVlKB9bFDiIOB3LH
-	 x8r8i6rKvo2huvEAjU40sElyovtWCWTofkzdDA8U=
+	b=UyQvn7JWWb89RBy3HTdK80wVYh3c+5T6Tk4/f5vdfQ0lOzXN9ps2MAkPrv8Atfv4i
+	 31TIWegHM0br9e/WhfqLCCfp8aE778nmyHfPZaBnLWZ4ZNNdFmGMTWnXS7CqtOj8ZS
+	 611ojGiaueW1CO2iYxazlI394fX8lXS9kG/VWq0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/198] nfc: st-nci: Fix use after free bug in ndlc_remove due to race condition
-Date: Mon, 20 Mar 2023 15:53:15 +0100
-Message-Id: <20230320145509.911823241@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 5.15 080/115] interconnect: exynos: fix node leak in probe PM QoS error path
+Date: Mon, 20 Mar 2023 15:54:52 +0100
+Message-Id: <20230320145452.779257488@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,71 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 5000fe6c27827a61d8250a7e4a1d26c3298ef4f6 ]
+commit 3aab264875bf3c915ea2517fae1eec213e0b4987 upstream.
 
-This bug influences both st_nci_i2c_remove and st_nci_spi_remove.
-Take st_nci_i2c_remove as an example.
+Make sure to add the newly allocated interconnect node to the provider
+before adding the PM QoS request so that the node is freed on errors.
 
-In st_nci_i2c_probe, it called ndlc_probe and bound &ndlc->sm_work
-with llt_ndlc_sm_work.
-
-When it calls ndlc_recv or timeout handler, it will finally call
-schedule_work to start the work.
-
-When we call st_nci_i2c_remove to remove the driver, there
-may be a sequence as follows:
-
-Fix it by finishing the work before cleanup in ndlc_remove
-
-CPU0                  CPU1
-
-                    |llt_ndlc_sm_work
-st_nci_i2c_remove   |
-  ndlc_remove       |
-     st_nci_remove  |
-     nci_free_device|
-     kfree(ndev)    |
-//free ndlc->ndev   |
-                    |llt_ndlc_rcv_queue
-                    |nci_recv_frame
-                    |//use ndlc->ndev
-
-Fixes: 35630df68d60 ("NFC: st21nfcb: Add driver for STMicroelectronics ST21NFCB NFC chip")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Fixes: 2f95b9d5cf0b ("interconnect: Add generic interconnect driver for Exynos SoCs")
+Cc: stable@vger.kernel.org      # 5.11
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230312160837.2040857-1-zyytlz.wz@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230306075651.2449-15-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/st-nci/ndlc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/interconnect/samsung/exynos.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nfc/st-nci/ndlc.c b/drivers/nfc/st-nci/ndlc.c
-index 755460a73c0dc..d2aa9f766738e 100644
---- a/drivers/nfc/st-nci/ndlc.c
-+++ b/drivers/nfc/st-nci/ndlc.c
-@@ -282,13 +282,15 @@ EXPORT_SYMBOL(ndlc_probe);
+--- a/drivers/interconnect/samsung/exynos.c
++++ b/drivers/interconnect/samsung/exynos.c
+@@ -149,6 +149,9 @@ static int exynos_generic_icc_probe(stru
+ 				 &priv->bus_clk_ratio))
+ 		priv->bus_clk_ratio = EXYNOS_ICC_DEFAULT_BUS_CLK_RATIO;
  
- void ndlc_remove(struct llt_ndlc *ndlc)
- {
--	st_nci_remove(ndlc->ndev);
--
- 	/* cancel timers */
- 	del_timer_sync(&ndlc->t1_timer);
- 	del_timer_sync(&ndlc->t2_timer);
- 	ndlc->t2_active = false;
- 	ndlc->t1_active = false;
-+	/* cancel work */
-+	cancel_work_sync(&ndlc->sm_work);
++	icc_node->data = priv;
++	icc_node_add(icc_node, provider);
 +
-+	st_nci_remove(ndlc->ndev);
+ 	/*
+ 	 * Register a PM QoS request for the parent (devfreq) device.
+ 	 */
+@@ -157,9 +160,6 @@ static int exynos_generic_icc_probe(stru
+ 	if (ret < 0)
+ 		goto err_node_del;
  
- 	skb_queue_purge(&ndlc->rcv_q);
- 	skb_queue_purge(&ndlc->send_q);
--- 
-2.39.2
-
+-	icc_node->data = priv;
+-	icc_node_add(icc_node, provider);
+-
+ 	icc_parent_node = exynos_icc_get_parent(bus_dev->of_node);
+ 	if (IS_ERR(icc_parent_node)) {
+ 		ret = PTR_ERR(icc_parent_node);
 
 
