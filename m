@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533161C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54F8C433D2;
-	Mon, 20 Mar 2023 15:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66B61C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:28:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6699CC433EF;
+	Mon, 20 Mar 2023 15:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326088;
-	bh=N7eoYudBbjL6k7958QC2rfm95vzjkqFZEI3efbhH/C8=;
+	s=korg; t=1679326090;
+	bh=XEIL89TGnfcFjyp706sAMEL4q4pULuaGN8w/nvuROlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fjfPk0sHBU4dDcS26Nq52WkKSxXtORpkxc82JPF6Gz3WWDMoJ3aNwmpz6okYh3Rqf
-	 A38dl+gGxyh0FScPU0CGWM1Ix2iI6ZCPTSj+Y8kDNIgImy4UEIKzHMLhfkFJ4Uoxue
-	 XPxAymYspKkwxE8xPLymXfHFiuxK+A+QkFR3X2/Y=
+	b=bHewd3RF53WRe4+A7TOeFlrSs5DiG+q80xYxZmmrwTqaIip5vhrmgt+NNph27qe6m
+	 gngbmnPpL/WjLYWwkZUMPXQk8/u2CTpTnG4+6i62gGePHC8wi2rcXg8hdojNhY/oal
+	 60UoSapuBy+S0ceXJHYe5nv3jlOJQjKnM2SlLh2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Gongjun Song <gongjun.song@intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.2 156/211] ALSA: hda: intel-dsp-config: add MTL PCI id
-Date: Mon, 20 Mar 2023 15:54:51 +0100
-Message-Id: <20230320145519.968681825@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 198/198] io_uring/msg_ring: let target know allocated index
+Date: Mon, 20 Mar 2023 15:55:36 +0100
+Message-Id: <20230320145515.762603682@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,40 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit bbdf904b13a62bb8b1272d92a7dde082dff86fbb upstream.
+commit 5da28edd7bd5518f97175ecea77615bb729a7a28 upstream.
 
-Use SOF as default audio driver.
+msg_ring requests transferring files support auto index selection via
+IORING_FILE_INDEX_ALLOC, however they don't return the selected index
+to the target ring and there is no other good way for the userspace to
+know where is the receieved file.
 
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Gongjun Song <gongjun.song@intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230306074101.3906707-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Return the index for allocated slots and 0 otherwise, which is
+consistent with other fixed file installing requests.
+
+Cc: stable@vger.kernel.org # v6.0+
+Fixes: e6130eba8a848 ("io_uring: add support for passing fixed file descriptors")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://github.com/axboe/liburing/issues/809
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/intel-dsp-config.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ io_uring/msg_ring.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/hda/intel-dsp-config.c
-+++ b/sound/hda/intel-dsp-config.c
-@@ -472,6 +472,15 @@ static const struct config_entry config_
- 	},
- #endif
+--- a/io_uring/msg_ring.c
++++ b/io_uring/msg_ring.c
+@@ -84,6 +84,8 @@ static int io_msg_send_fd(struct io_kioc
+ 	struct file *src_file;
+ 	int ret;
  
-+/* Meteor Lake */
-+#if IS_ENABLED(CONFIG_SND_SOC_SOF_METEORLAKE)
-+	/* Meteorlake-P */
-+	{
-+		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
-+		.device = 0x7e28,
-+	},
-+#endif
-+
- };
- 
- static const struct config_entry *snd_intel_dsp_find_config
++	if (msg->len)
++		return -EINVAL;
+ 	if (target_ctx == ctx)
+ 		return -EINVAL;
+ 	if (target_ctx->flags & IORING_SETUP_R_DISABLED)
+@@ -120,7 +122,7 @@ static int io_msg_send_fd(struct io_kioc
+ 	 * completes with -EOVERFLOW, then the sender must ensure that a
+ 	 * later IORING_OP_MSG_RING delivers the message.
+ 	 */
+-	if (!io_post_aux_cqe(target_ctx, msg->user_data, msg->len, 0, true))
++	if (!io_post_aux_cqe(target_ctx, msg->user_data, ret, 0, true))
+ 		ret = -EOVERFLOW;
+ out_unlock:
+ 	io_double_unlock_ctx(ctx, target_ctx, issue_flags);
 
 
