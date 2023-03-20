@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA031C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCFC4C43443;
-	Mon, 20 Mar 2023 15:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AC81C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77732C433D2;
+	Mon, 20 Mar 2023 15:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325592;
-	bh=sH9b01NC63yCX24kX2fqUSwg8jkcNDHWvLl1bHqB9Ns=;
+	s=korg; t=1679325594;
+	bh=+psffvvgRpplZzvH+ZTHSdvUD3tVH+sIXJ2aiFUMSAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MQ7+v9iWS124TgReNEbfOq/3RqupQkK98+6XD+umWLnR3nkxuy+GK/HxcIebXYzzJ
-	 7Rz9eWbV50SUVq6RjDQfBoyTaU4dodpWrBZy8S40MpGG9vWFOlyDxpvXI1qDUimDtx
-	 JU4XLwCBUdy7SXGZVE46z0CbXQw/tphyabE3oK0o=
+	b=e64sKC523lyvNl4kejLWxClDKMG61KPJxrT6ZrVf1M7iXA3gt6NwwhIGxikroZCMA
+	 wDXQypSMsjKf4N9nC0h7yXCrBCpU9dPcHh4TWkBvSuPthGYqQJ6yuhlqacxQibsXgZ
+	 vxattp+iJBkvGSfwcO48eFv2jJQmOnbcc42IC3+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
-	Theodore Tso <tytso@mit.edu>,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	Ming Lei <ming.lei@redhat.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/198] ext4: fail ext4_iget if special inode unallocated
-Date: Mon, 20 Mar 2023 15:54:05 +0100
-Message-Id: <20230320145512.081649027@linuxfoundation.org>
+Subject: [PATCH 6.2 067/211] nvme: fix handling single range discard request
+Date: Mon, 20 Mar 2023 15:53:22 +0100
+Message-Id: <20230320145516.033095504@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,71 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 5cd740287ae5e3f9d1c46f5bfe8778972fd6d3fe ]
+[ Upstream commit 37f0dc2ec78af0c3f35dd05578763de059f6fe77 ]
 
-In ext4_fill_super(), EXT4_ORPHAN_FS flag is cleared after
-ext4_orphan_cleanup() is executed. Therefore, when __ext4_iget() is
-called to get an inode whose i_nlink is 0 when the flag exists, no error
-is returned. If the inode is a special inode, a null pointer dereference
-may occur. If the value of i_nlink is 0 for any inodes (except boot loader
-inodes) got by using the EXT4_IGET_SPECIAL flag, the current file system
-is corrupted. Therefore, make the ext4_iget() function return an error if
-it gets such an abnormal special inode.
+When investigating one customer report on warning in nvme_setup_discard,
+we observed the controller(nvme/tcp) actually exposes
+queue_max_discard_segments(req->q) == 1.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=199179
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216541
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216539
-Reported-by: Luís Henriques <lhenriques@suse.de>
-Suggested-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230107032126.4165860-2-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Obviously the current code can't handle this situation, since contiguity
+merge like normal RW request is taken.
+
+Fix the issue by building range from request sector/nr_sectors directly.
+
+Fixes: b35ba01ea697 ("nvme: support ranged discard requests")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ drivers/nvme/host/core.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 34c87fcfd0617..eea11ad84e680 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4807,13 +4807,6 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
- 		goto bad_inode;
- 	raw_inode = ext4_raw_inode(&iloc);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index fbed8d1a02ef4..70b5e891f6b3b 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -781,16 +781,26 @@ static blk_status_t nvme_setup_discard(struct nvme_ns *ns, struct request *req,
+ 		range = page_address(ns->ctrl->discard_page);
+ 	}
  
--	if ((ino == EXT4_ROOT_INO) && (raw_inode->i_links_count == 0)) {
--		ext4_error_inode(inode, function, line, 0,
--				 "iget: root inode unallocated");
--		ret = -EFSCORRUPTED;
--		goto bad_inode;
--	}
+-	__rq_for_each_bio(bio, req) {
+-		u64 slba = nvme_sect_to_lba(ns, bio->bi_iter.bi_sector);
+-		u32 nlb = bio->bi_iter.bi_size >> ns->lba_shift;
 -
- 	if ((flags & EXT4_IGET_HANDLE) &&
- 	    (raw_inode->i_links_count == 0) && (raw_inode->i_mode == 0)) {
- 		ret = -ESTALE;
-@@ -4886,11 +4879,16 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
- 	 * NeilBrown 1999oct15
- 	 */
- 	if (inode->i_nlink == 0) {
--		if ((inode->i_mode == 0 ||
-+		if ((inode->i_mode == 0 || flags & EXT4_IGET_SPECIAL ||
- 		     !(EXT4_SB(inode->i_sb)->s_mount_state & EXT4_ORPHAN_FS)) &&
- 		    ino != EXT4_BOOT_LOADER_INO) {
--			/* this inode is deleted */
--			ret = -ESTALE;
-+			/* this inode is deleted or unallocated */
-+			if (flags & EXT4_IGET_SPECIAL) {
-+				ext4_error_inode(inode, function, line, 0,
-+						 "iget: special inode unallocated");
-+				ret = -EFSCORRUPTED;
-+			} else
-+				ret = -ESTALE;
- 			goto bad_inode;
+-		if (n < segments) {
+-			range[n].cattr = cpu_to_le32(0);
+-			range[n].nlb = cpu_to_le32(nlb);
+-			range[n].slba = cpu_to_le64(slba);
++	if (queue_max_discard_segments(req->q) == 1) {
++		u64 slba = nvme_sect_to_lba(ns, blk_rq_pos(req));
++		u32 nlb = blk_rq_sectors(req) >> (ns->lba_shift - 9);
++
++		range[0].cattr = cpu_to_le32(0);
++		range[0].nlb = cpu_to_le32(nlb);
++		range[0].slba = cpu_to_le64(slba);
++		n = 1;
++	} else {
++		__rq_for_each_bio(bio, req) {
++			u64 slba = nvme_sect_to_lba(ns, bio->bi_iter.bi_sector);
++			u32 nlb = bio->bi_iter.bi_size >> ns->lba_shift;
++
++			if (n < segments) {
++				range[n].cattr = cpu_to_le32(0);
++				range[n].nlb = cpu_to_le32(nlb);
++				range[n].slba = cpu_to_le64(slba);
++			}
++			n++;
  		}
- 		/* The only unlinked inodes we let through here have
+-		n++;
+ 	}
+ 
+ 	if (WARN_ON_ONCE(n != segments)) {
 -- 
 2.39.2
 
