@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247431C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA3BC433D2;
-	Mon, 20 Mar 2023 15:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75BC1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3890FC433EF;
+	Mon, 20 Mar 2023 15:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325094;
-	bh=hO22jz36PVa0rP3aqafck/3Njl/82iGYwwUmUrv3lnA=;
+	s=korg; t=1679325097;
+	bh=YfOucrZJZAdAFK0SRVWq7To0DrxSk/BHLnV7C8c6PLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oev2C7SyIc+pEVwMroGg35ByIhRgyYIia3uTlEjm58T8gRvjzBmtKnQUQ84S7ydDP
-	 +JCQiuJ4jr634N6/p7Bits4VBXIL2esSEpw7f8xjqxL2AgQhtQkXIOcTWpx26GdPNh
-	 ZppwAXHn6NqBKcZG4mF270V3q/oeHKV15mUtH9Rg=
+	b=b65nRPIYXaP429KuRptOW31UPkby5X7uOrfYzFO1Y4kdelIfbYMPaUDk6U+Dm5wGL
+	 b8QOzhZn77Nl1NlhSaloBtrtsKpv3voUKQWfq4OaqmTSeH6JJoueSa7LPCSz/rOex9
+	 dpNTLDFIVqY6Y+eynxlCqAI2tu1HWB5aOy7QezqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Lei Yang <leiyang@redhat.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/198] vdpa_sim: not reset state in vdpasim_queue_ready
-Date: Mon, 20 Mar 2023 15:52:59 +0100
-Message-Id: <20230320145509.187982304@linuxfoundation.org>
+Subject: [PATCH 6.2 006/211] cifs: Move the in_send statistic to __smb_send_rqst()
+Date: Mon, 20 Mar 2023 15:52:21 +0100
+Message-Id: <20230320145513.561375000@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,49 +35,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eugenio Pérez <eperezma@redhat.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 0e84f918fac8ae61dcb790534fad5e3555ca2930 ]
+[ Upstream commit d0dc41119905f740e8d5594adce277f7c0de8c92 ]
 
-vdpasim_queue_ready calls vringh_init_iotlb, which resets split indexes.
-But it can be called after setting a ring base with
-vdpasim_set_vq_state.
+When send SMB_COM_NT_CANCEL and RFC1002_SESSION_REQUEST, the
+in_send statistic was lost.
 
-Fix it by stashing them. They're still resetted in vdpasim_vq_reset.
+Let's move the in_send statistic to the send function to avoid
+this scenario.
 
-This was discovered and tested live migrating the vdpa_sim_net device.
-
-Fixes: 2c53d0f64c06 ("vdpasim: vDPA device simulator")
-Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
-Message-Id: <20230118164359.1523760-2-eperezma@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
+Fixes: 7ee1af765dfa ("[CIFS]")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_sim/vdpa_sim.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/cifs/transport.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-index cb88891b44a8c..8839232a3fcbc 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-@@ -66,6 +66,7 @@ static void vdpasim_vq_notify(struct vringh *vring)
- static void vdpasim_queue_ready(struct vdpasim *vdpasim, unsigned int idx)
+diff --git a/fs/cifs/transport.c b/fs/cifs/transport.c
+index 3851d0aaa2886..c961b90f92b9f 100644
+--- a/fs/cifs/transport.c
++++ b/fs/cifs/transport.c
+@@ -297,7 +297,7 @@ static int
+ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
+ 		struct smb_rqst *rqst)
  {
- 	struct vdpasim_virtqueue *vq = &vdpasim->vqs[idx];
-+	uint16_t last_avail_idx = vq->vring.last_avail_idx;
+-	int rc = 0;
++	int rc;
+ 	struct kvec *iov;
+ 	int n_vec;
+ 	unsigned int send_length = 0;
+@@ -308,6 +308,7 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
+ 	struct msghdr smb_msg = {};
+ 	__be32 rfc1002_marker;
  
- 	vringh_init_iotlb(&vq->vring, vdpasim->features, vq->num, false,
- 			  (struct vring_desc *)(uintptr_t)vq->desc_addr,
-@@ -74,6 +75,7 @@ static void vdpasim_queue_ready(struct vdpasim *vdpasim, unsigned int idx)
- 			  (struct vring_used *)
- 			  (uintptr_t)vq->device_addr);
++	cifs_in_send_inc(server);
+ 	if (cifs_rdma_enabled(server)) {
+ 		/* return -EAGAIN when connecting or reconnecting */
+ 		rc = -EAGAIN;
+@@ -316,14 +317,17 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
+ 		goto smbd_done;
+ 	}
  
-+	vq->vring.last_avail_idx = last_avail_idx;
- 	vq->vring.notify = vdpasim_vq_notify;
++	rc = -EAGAIN;
+ 	if (ssocket == NULL)
+-		return -EAGAIN;
++		goto out;
+ 
++	rc = -ERESTARTSYS;
+ 	if (fatal_signal_pending(current)) {
+ 		cifs_dbg(FYI, "signal pending before send request\n");
+-		return -ERESTARTSYS;
++		goto out;
+ 	}
+ 
++	rc = 0;
+ 	/* cork the socket */
+ 	tcp_sock_set_cork(ssocket->sk, true);
+ 
+@@ -434,7 +438,8 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
+ 			 rc);
+ 	else if (rc > 0)
+ 		rc = 0;
+-
++out:
++	cifs_in_send_dec(server);
+ 	return rc;
  }
  
+@@ -853,9 +858,7 @@ cifs_call_async(struct TCP_Server_Info *server, struct smb_rqst *rqst,
+ 	 * I/O response may come back and free the mid entry on another thread.
+ 	 */
+ 	cifs_save_when_sent(mid);
+-	cifs_in_send_inc(server);
+ 	rc = smb_send_rqst(server, 1, rqst, flags);
+-	cifs_in_send_dec(server);
+ 
+ 	if (rc < 0) {
+ 		revert_current_mid(server, mid->credits);
+@@ -1146,9 +1149,7 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
+ 		else
+ 			midQ[i]->callback = cifs_compound_last_callback;
+ 	}
+-	cifs_in_send_inc(server);
+ 	rc = smb_send_rqst(server, num_rqst, rqst, flags);
+-	cifs_in_send_dec(server);
+ 
+ 	for (i = 0; i < num_rqst; i++)
+ 		cifs_save_when_sent(midQ[i]);
+@@ -1398,9 +1399,7 @@ SendReceive(const unsigned int xid, struct cifs_ses *ses,
+ 
+ 	midQ->mid_state = MID_REQUEST_SUBMITTED;
+ 
+-	cifs_in_send_inc(server);
+ 	rc = smb_send(server, in_buf, len);
+-	cifs_in_send_dec(server);
+ 	cifs_save_when_sent(midQ);
+ 
+ 	if (rc < 0)
+@@ -1541,9 +1540,7 @@ SendReceiveBlockingLock(const unsigned int xid, struct cifs_tcon *tcon,
+ 	}
+ 
+ 	midQ->mid_state = MID_REQUEST_SUBMITTED;
+-	cifs_in_send_inc(server);
+ 	rc = smb_send(server, in_buf, len);
+-	cifs_in_send_dec(server);
+ 	cifs_save_when_sent(midQ);
+ 
+ 	if (rc < 0)
 -- 
 2.39.2
 
