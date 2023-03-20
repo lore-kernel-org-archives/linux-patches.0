@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FE71C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5137C433EF;
-	Mon, 20 Mar 2023 15:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B6B1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC08C433EF;
+	Mon, 20 Mar 2023 15:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325056;
-	bh=SFBggJYkVHnCEZcZfLMB/8VKkg2NrKqNkLzN9FgAHNk=;
+	s=korg; t=1679325058;
+	bh=ndJFkBeA2/4wV708lATbYm9Cp5/7gI/txncBHpg3Tik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YV23UDvYdDBz5IkxDwJuFEDHLZOYrreDPOsJZ5itWUGRW/9bs7AVQvVP2QN21W+FN
-	 0cJs3A56q8+0oWMT8Ium84liqRFhNcR43hD/wCrKDL/fEEBSTylfodilWF8FoqMqDv
-	 uN0LORHuhaijgDbMy6R1Sa4Ml0YrDRf9nMzvF9js=
+	b=k5bnk3llosyd0DO76fgb8EUe7rBty2LHO0Z8U2+8B4gIQnYzqotlwms7/TlzDhuGL
+	 iVJahBCASia4ZuJiIz/P1EIGorIqNI+NecMF+s/abFWzo9AV9aEvpCGh44zhKrOnA1
+	 xaEpZDIJqnkym7AURhZCdBh517x0CUlu3lHDK5iI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianguo Wu <wujianguo@chinatelecom.cn>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tony OBrien <tony.obrien@alliedtelesis.co.nz>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/198] ipvlan: Make skb->skb_iif track skb->dev for l3s mode
-Date: Mon, 20 Mar 2023 15:52:56 +0100
-Message-Id: <20230320145509.064585439@linuxfoundation.org>
+Subject: [PATCH 5.15 053/115] hwmon: (adt7475) Display smoothing attributes in correct order
+Date: Mon, 20 Mar 2023 15:54:25 +0100
+Message-Id: <20230320145451.641081038@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,47 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jianguo Wu <wujianguo@chinatelecom.cn>
+From: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
 
-[ Upstream commit 59a0b022aa249e3f5735d93de0849341722c4754 ]
+[ Upstream commit 5f8d1e3b6f9b5971f9c06d5846ce00c49e3a8d94 ]
 
-For l3s mode, skb->dev is set to ipvlan interface in ipvlan_nf_input():
-  skb->dev = addr->master->dev
-but, skb->skb_iif remain unchanged, this will cause socket lookup failed
-if a target socket is bound to a interface, like the following example:
+Throughout the ADT7475 driver, attributes relating to the temperature
+sensors are displayed in the order Remote 1, Local, Remote 2.  Make
+temp_st_show() conform to this expectation so that values set by
+temp_st_store() can be displayed using the correct attribute.
 
-  ip link add ipvlan0 link eth0 type ipvlan mode l3s
-  ip addr add dev ipvlan0 192.168.124.111/24
-  ip link set ipvlan0 up
-
-  ping -c 1 -I ipvlan0 8.8.8.8
-  100% packet loss
-
-This is because there is no match sk in __raw_v4_lookup() as sk->sk_bound_dev_if != dif(skb->skb_iif).
-Fix this by make skb->skb_iif track skb->dev in ipvlan_nf_input().
-
-Fixes: c675e06a98a4 ("ipvlan: decouple l3s mode dependencies from other modes")
-Signed-off-by: Jianguo Wu <wujianguo@chinatelecom.cn>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/29865b1f-6db7-c07a-de89-949d3721ea30@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8f05bcc33e74 ("hwmon: (adt7475) temperature smoothing")
+Signed-off-by: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
+Link: https://lore.kernel.org/r/20230222005228.158661-2-tony.obrien@alliedtelesis.co.nz
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_l3s.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/adt7475.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_l3s.c b/drivers/net/ipvlan/ipvlan_l3s.c
-index 943d26cbf39f5..71712ea25403d 100644
---- a/drivers/net/ipvlan/ipvlan_l3s.c
-+++ b/drivers/net/ipvlan/ipvlan_l3s.c
-@@ -101,6 +101,7 @@ static unsigned int ipvlan_nf_input(void *priv, struct sk_buff *skb,
- 		goto out;
+diff --git a/drivers/hwmon/adt7475.c b/drivers/hwmon/adt7475.c
+index 9d5b019651f2d..c7f19a1ca0a59 100644
+--- a/drivers/hwmon/adt7475.c
++++ b/drivers/hwmon/adt7475.c
+@@ -554,11 +554,11 @@ static ssize_t temp_st_show(struct device *dev, struct device_attribute *attr,
+ 		val = data->enh_acoustics[0] & 0xf;
+ 		break;
+ 	case 1:
+-		val = (data->enh_acoustics[1] >> 4) & 0xf;
++		val = data->enh_acoustics[1] & 0xf;
+ 		break;
+ 	case 2:
+ 	default:
+-		val = data->enh_acoustics[1] & 0xf;
++		val = (data->enh_acoustics[1] >> 4) & 0xf;
+ 		break;
+ 	}
  
- 	skb->dev = addr->master->dev;
-+	skb->skb_iif = skb->dev->ifindex;
- 	len = skb->len + ETH_HLEN;
- 	ipvlan_count_rx(addr->master, len, true, false);
- out:
 -- 
 2.39.2
 
