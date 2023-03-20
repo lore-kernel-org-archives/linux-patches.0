@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27671C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53681C4339B;
-	Mon, 20 Mar 2023 15:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0021C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB55C433D2;
+	Mon, 20 Mar 2023 15:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326175;
-	bh=rsc6DeU+Ch57SmvyZGQKPDccSe/DsX+OxfnQCkjRClk=;
+	s=korg; t=1679326178;
+	bh=d81WpvGHXcAaGO6+jdo5a6M6e5BWfqqEcbhXTx3AZ70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BgqrcAqA1dg/URaaQUbzBSIUPniFUtsKnlpfI9qIocq2Lcp8D1H3Cai1FvUG4t4Wf
-	 TeqP4O2BaCQj9FQ+/3dKICPx4VGjIJ7c9/6zW3Dg/DY6s3YYZ2GspBOyaaTrhmBbqs
-	 wScTPvU99Uepl27aTWhRCxjrzr6lV3ea7vOLc6uo=
+	b=NFGP7rhN8KcdXRlC8jNzIZA4oyAziZ5kGtv6ZEpPnPihBUXD2qcprVh4NvBk1xf/r
+	 LcFJ/F62BSGULV5qtdP7lThbSD6Jqxlq59RAmPGtOT2Fak+nN4/6AJB6KDvb5zAicG
+	 73UrSXLA2Wp8p8t4kGiUdsD3wasYJI+WFe9yHpyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.2 188/211] powerpc/boot: Dont always pass -mcpu=powerpc when building 32-bit uImage
-Date: Mon, 20 Mar 2023 15:55:23 +0100
-Message-Id: <20230320145521.392170709@linuxfoundation.org>
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.2 189/211] mmc: sdhci_am654: lower power-on failed message severity
+Date: Mon, 20 Mar 2023 15:55:24 +0100
+Message-Id: <20230320145521.434354126@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -35,59 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-commit ff7c76f66d8bad4e694c264c789249e1d3a8205d upstream.
+commit 11440da77d6020831ee6f9ce4551b545dea789ee upstream.
 
-When CONFIG_TARGET_CPU is specified then pass its value to the compiler
--mcpu option. This fixes following build error when building kernel with
-powerpc e500 SPE capable cross compilers:
+Lower the power-on failed message severity from warn to info when the
+controller does not power-up. It's normal to have this situation when
+the SD card slot is empty, therefore we should not warn the user about
+it.
 
-    BOOTAS  arch/powerpc/boot/crt0.o
-  powerpc-linux-gnuspe-gcc: error: unrecognized argument in option ‘-mcpu=powerpc’
-  powerpc-linux-gnuspe-gcc: note: valid arguments to ‘-mcpu=’ are: 8540 8548 native
-  make[1]: *** [arch/powerpc/boot/Makefile:231: arch/powerpc/boot/crt0.o] Error 1
-
-Similar change was already introduced for the main powerpc Makefile in
-commit 446cda1b21d9 ("powerpc/32: Don't always pass -mcpu=powerpc to the
-compiler").
-
-Fixes: 40a75584e526 ("powerpc/boot: Build wrapper for an appropriate CPU")
-Cc: stable@vger.kernel.org # v5.19+
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/2ae3ae5887babfdacc34435bff0944b3f336100a.1674632329.git.christophe.leroy@csgroup.eu
+Fixes: 7ca0f166f5b2 ("mmc: sdhci_am654: Add workaround for card detect debounce timer")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230306162751.163369-1-francesco@dolcini.it
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/boot/Makefile |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/mmc/host/sdhci_am654.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/powerpc/boot/Makefile
-+++ b/arch/powerpc/boot/Makefile
-@@ -39,13 +39,19 @@ BOOTCFLAGS    := -Wall -Wundef -Wstrict-
- 		 $(LINUXINCLUDE)
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -369,7 +369,7 @@ static void sdhci_am654_write_b(struct s
+ 					MAX_POWER_ON_TIMEOUT, false, host, val,
+ 					reg);
+ 		if (ret)
+-			dev_warn(mmc_dev(host->mmc), "Power on failed\n");
++			dev_info(mmc_dev(host->mmc), "Power on failed\n");
+ 	}
+ }
  
- ifdef CONFIG_PPC64_BOOT_WRAPPER
--ifdef CONFIG_CPU_LITTLE_ENDIAN
--BOOTCFLAGS	+= -m64 -mcpu=powerpc64le
-+BOOTCFLAGS	+= -m64
- else
--BOOTCFLAGS	+= -m64 -mcpu=powerpc64
-+BOOTCFLAGS	+= -m32
- endif
-+
-+ifdef CONFIG_TARGET_CPU_BOOL
-+BOOTCFLAGS	+= -mcpu=$(CONFIG_TARGET_CPU)
-+else ifdef CONFIG_PPC64_BOOT_WRAPPER
-+ifdef CONFIG_CPU_LITTLE_ENDIAN
-+BOOTCFLAGS	+= -mcpu=powerpc64le
- else
--BOOTCFLAGS	+= -m32 -mcpu=powerpc
-+BOOTCFLAGS	+= -mcpu=powerpc64
-+endif
- endif
- 
- BOOTCFLAGS	+= -isystem $(shell $(BOOTCC) -print-file-name=include)
 
 
