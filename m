@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA391C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:58:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0BCC433EF;
-	Mon, 20 Mar 2023 14:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459EB1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:58:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96EDC433EF;
+	Mon, 20 Mar 2023 14:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324323;
-	bh=GhIq9p3fhcBSqSWvatTGDVBKVJdhLIo5so0Hp5PKEnY=;
+	s=korg; t=1679324326;
+	bh=5CwHsCcGzNU8a/RYkeZI2+tTFWllO4HWpq3S2rPJF0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VA/VN+7PZ/MALx6CYeNLffHF6JAMqalnjQEeeyYsPAdRQuDeb110KD7uVDbzf1Prz
-	 cgnp5zXZ1rNo/mhV4Lo1FCY8utpTLwRkBb8EwDkkDMx16DrcxsE3FZwuxMahvVFJYv
-	 ja+0przHyrTnVjN6RWymbRdrDZzHG+OwiJjI1jxk=
+	b=1d4U7glxknu3aMElak7/OlYVA4G1ZHjL5WUhNmxJIUIACuyDwZEOyCiXrxzAulUKe
+	 F8l0sJNQRgeGOjGGm+Gw7HSBl4AW/gJIr7XMop2ZS3bdMwGz7ZlLdzvtLbuoGLIp6T
+	 0DCRIWuw7sRoxh1AM+sc8B6r/r+ZXRJcOFC6XPxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony OBrien <tony.obrien@alliedtelesis.co.nz>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 17/36] hwmon: (adt7475) Display smoothing attributes in correct order
-Date: Mon, 20 Mar 2023 15:54:43 +0100
-Message-Id: <20230320145424.885008752@linuxfoundation.org>
+Subject: [PATCH 4.19 18/36] hwmon: (adt7475) Fix masking of hysteresis registers
+Date: Mon, 20 Mar 2023 15:54:44 +0100
+Message-Id: <20230320145424.914868984@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -37,16 +37,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
 
-[ Upstream commit 5f8d1e3b6f9b5971f9c06d5846ce00c49e3a8d94 ]
+[ Upstream commit 48e8186870d9d0902e712d601ccb7098cb220688 ]
 
-Throughout the ADT7475 driver, attributes relating to the temperature
-sensors are displayed in the order Remote 1, Local, Remote 2.  Make
-temp_st_show() conform to this expectation so that values set by
-temp_st_store() can be displayed using the correct attribute.
+The wrong bits are masked in the hysteresis register; indices 0 and 2
+should zero bits [7:4] and preserve bits [3:0], and index 1 should zero
+bits [3:0] and preserve bits [7:4].
 
-Fixes: 8f05bcc33e74 ("hwmon: (adt7475) temperature smoothing")
+Fixes: 1c301fc5394f ("hwmon: Add a driver for the ADT7475 hardware monitoring chip")
 Signed-off-by: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
-Link: https://lore.kernel.org/r/20230222005228.158661-2-tony.obrien@alliedtelesis.co.nz
+Link: https://lore.kernel.org/r/20230222005228.158661-3-tony.obrien@alliedtelesis.co.nz
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -54,22 +53,21 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/hwmon/adt7475.c b/drivers/hwmon/adt7475.c
-index 0a87c5b512862..bde5fe10a95a5 100644
+index bde5fe10a95a5..2db2665dcd4dc 100644
 --- a/drivers/hwmon/adt7475.c
 +++ b/drivers/hwmon/adt7475.c
-@@ -554,11 +554,11 @@ static ssize_t show_temp_st(struct device *dev, struct device_attribute *attr,
- 		val = data->enh_acoustics[0] & 0xf;
- 		break;
- 	case 1:
--		val = (data->enh_acoustics[1] >> 4) & 0xf;
-+		val = data->enh_acoustics[1] & 0xf;
- 		break;
- 	case 2:
- 	default:
--		val = data->enh_acoustics[1] & 0xf;
-+		val = (data->enh_acoustics[1] >> 4) & 0xf;
- 		break;
- 	}
+@@ -485,10 +485,10 @@ static ssize_t set_temp(struct device *dev, struct device_attribute *attr,
+ 		val = (temp - val) / 1000;
+ 
+ 		if (sattr->index != 1) {
+-			data->temp[HYSTERSIS][sattr->index] &= 0xF0;
++			data->temp[HYSTERSIS][sattr->index] &= 0x0F;
+ 			data->temp[HYSTERSIS][sattr->index] |= (val & 0xF) << 4;
+ 		} else {
+-			data->temp[HYSTERSIS][sattr->index] &= 0x0F;
++			data->temp[HYSTERSIS][sattr->index] &= 0xF0;
+ 			data->temp[HYSTERSIS][sattr->index] |= (val & 0xF);
+ 		}
  
 -- 
 2.39.2
