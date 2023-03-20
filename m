@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7991C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F015CC433EF;
-	Mon, 20 Mar 2023 15:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0A51C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:10:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0558C433EF;
+	Mon, 20 Mar 2023 15:10:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325039;
-	bh=itsdBSsZuZQchIHMp91AhtheSQCQbjR2HIoL5bDPqO8=;
+	s=korg; t=1679325042;
+	bh=PdDc1Hv3nbqGwkbM4vBctW45/i+X5IwF5iipD1i2uAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HIPEVDI0SuSy7x9/C6RK+wFjRDEd5Cxc/byQ+XPbpPKkltjLEoULk8d5yE7x89Cae
-	 FbEXvefAHkUwwCLeQCSlHrdqiFZPvDk9sxBafh0bGBsg+KrmPuxbls9/+7DzW5Fu1H
-	 j0pAkHiZqo7N9qDT2ZXohk2xptrgyreipnsRooog=
+	b=SsbuR0XIYDKdvUuNlh/UPDINK88rrUoeIM42AEpQlWRUn60bGlOQ08ox9konWX6L8
+	 kS2uZVXkLiHLjRKZEUYV12BDqbt6hQRVE+5upBtYTIDPFZfgmekN8wi1fUhz13qv7t
+	 XGLbr4YmV/PPMMoDwAOGkSP6y0tdJd1Bck7nrQuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Schramm <t.schramm@manjaro.org>,
-	Ludovic Desroches <ludovic.desroches@microchip.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	syzbot+1e608ba4217c96d1952f@syzkaller.appspotmail.com,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 063/115] mmc: atmel-mci: fix race between stop command and start of next command
-Date: Mon, 20 Mar 2023 15:54:35 +0100
-Message-Id: <20230320145452.062353883@linuxfoundation.org>
+Subject: [PATCH 6.1 037/198] nfc: pn533: initialize struct pn533_out_arg properly
+Date: Mon, 20 Mar 2023 15:52:55 +0100
+Message-Id: <20230320145509.026788938@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,55 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tobias Schramm <t.schramm@manjaro.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit eca5bd666b0aa7dc0bca63292e4778968241134e ]
+[ Upstream commit 484b7059796e3bc1cb527caa61dfc60da649b4f6 ]
 
-This commit fixes a race between completion of stop command and start of a
-new command.
-Previously the command ready interrupt was enabled before stop command
-was written to the command register. This caused the command ready
-interrupt to fire immediately since the CMDRDY flag is asserted constantly
-while there is no command in progress.
-Consequently the command state machine will immediately advance to the
-next state when the tasklet function is executed again, no matter
-actual completion state of the stop command.
-Thus a new command can then be dispatched immediately, interrupting and
-corrupting the stop command on the CMD line.
-Fix that by dropping the command ready interrupt enable before calling
-atmci_send_stop_cmd. atmci_send_stop_cmd does already enable the
-command ready interrupt, no further writes to ATMCI_IER are necessary.
+struct pn533_out_arg used as a temporary context for out_urb is not
+initialized properly. Its uninitialized 'phy' field can be dereferenced in
+error cases inside pn533_out_complete() callback function. It causes the
+following failure:
 
-Signed-off-by: Tobias Schramm <t.schramm@manjaro.org>
-Acked-by: Ludovic Desroches <ludovic.desroches@microchip.com>
-Link: https://lore.kernel.org/r/20221230194315.809903-2-t.schramm@manjaro.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.2.0-rc3-next-20230110-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+RIP: 0010:pn533_out_complete.cold+0x15/0x44 drivers/nfc/pn533/usb.c:441
+Call Trace:
+ <IRQ>
+ __usb_hcd_giveback_urb+0x2b6/0x5c0 drivers/usb/core/hcd.c:1671
+ usb_hcd_giveback_urb+0x384/0x430 drivers/usb/core/hcd.c:1754
+ dummy_timer+0x1203/0x32d0 drivers/usb/gadget/udc/dummy_hcd.c:1988
+ call_timer_fn+0x1da/0x800 kernel/time/timer.c:1700
+ expire_timers+0x234/0x330 kernel/time/timer.c:1751
+ __run_timers kernel/time/timer.c:2022 [inline]
+ __run_timers kernel/time/timer.c:1995 [inline]
+ run_timer_softirq+0x326/0x910 kernel/time/timer.c:2035
+ __do_softirq+0x1fb/0xaf6 kernel/softirq.c:571
+ invoke_softirq kernel/softirq.c:445 [inline]
+ __irq_exit_rcu+0x123/0x180 kernel/softirq.c:650
+ irq_exit_rcu+0x9/0x20 kernel/softirq.c:662
+ sysvec_apic_timer_interrupt+0x97/0xc0 arch/x86/kernel/apic/apic.c:1107
+
+Initialize the field with the pn533_usb_phy currently used.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 9dab880d675b ("nfc: pn533: Wait for out_urb's completion in pn533_usb_send_frame()")
+Reported-by: syzbot+1e608ba4217c96d1952f@syzkaller.appspotmail.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230309165050.207390-1-pchelkin@ispras.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/atmel-mci.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/nfc/pn533/usb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
-index 6f971a3e7e494..493ed8c824195 100644
---- a/drivers/mmc/host/atmel-mci.c
-+++ b/drivers/mmc/host/atmel-mci.c
-@@ -1818,7 +1818,6 @@ static void atmci_tasklet_func(struct tasklet_struct *t)
- 				atmci_writel(host, ATMCI_IER, ATMCI_NOTBUSY);
- 				state = STATE_WAITING_NOTBUSY;
- 			} else if (host->mrq->stop) {
--				atmci_writel(host, ATMCI_IER, ATMCI_CMDRDY);
- 				atmci_send_stop_cmd(host, data);
- 				state = STATE_SENDING_STOP;
- 			} else {
-@@ -1851,8 +1850,6 @@ static void atmci_tasklet_func(struct tasklet_struct *t)
- 				 * command to send.
- 				 */
- 				if (host->mrq->stop) {
--					atmci_writel(host, ATMCI_IER,
--					             ATMCI_CMDRDY);
- 					atmci_send_stop_cmd(host, data);
- 					state = STATE_SENDING_STOP;
- 				} else {
+diff --git a/drivers/nfc/pn533/usb.c b/drivers/nfc/pn533/usb.c
+index ed9c5e2cf3ad4..a187f0e0b0f7d 100644
+--- a/drivers/nfc/pn533/usb.c
++++ b/drivers/nfc/pn533/usb.c
+@@ -175,6 +175,7 @@ static int pn533_usb_send_frame(struct pn533 *dev,
+ 	print_hex_dump_debug("PN533 TX: ", DUMP_PREFIX_NONE, 16, 1,
+ 			     out->data, out->len, false);
+ 
++	arg.phy = phy;
+ 	init_completion(&arg.done);
+ 	cntx = phy->out_urb->context;
+ 	phy->out_urb->context = &arg;
 -- 
 2.39.2
 
