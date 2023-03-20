@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407F81C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6397C433D2;
-	Mon, 20 Mar 2023 15:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCC11C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709BAC4339B;
+	Mon, 20 Mar 2023 15:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325183;
-	bh=v3WmhsKYQj2brYwY24PrxhsCZptd76ru0komQ8l7e8k=;
+	s=korg; t=1679325185;
+	bh=9rquQIIV8+GqmTmFonBBAhWkmGTUPetbziXMm31iBjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oThIq8uvJYXzQtIfB+iBNho6M3IKcITZ3IKDqZee6U7klfdPyLDz+9G8sMSQy1Ax+
-	 dqIXCFvwz8LdpJppP0Oi+hypZ4H/Bu5MKXr8VmHcKyTnK1LuYKPyPG4i17MhvhIky7
-	 2PvCmE2jLI1LgeVLC2pLorvrUBVjvMV6g1tamBGQ=
+	b=KY4GfR4lQwKAesyDXJBSkNUBbdO/qqE02BZb98OEu80YJVtiG9caMohbmTbBdovIu
+	 H9QRIIRoPinBR/EfKwA2LZOIKkX6aJZNTF2alDC7/f1KuybSNr5TIksEfadKYij/O5
+	 lr6MqHUJfvirpVc+aLethLJcY95L/kGxTQwGgn/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>
-Subject: [PATCH 5.15 075/115] serial: 8250_em: Fix UART port type
-Date: Mon, 20 Mar 2023 15:54:47 +0100
-Message-Id: <20230320145452.571561353@linuxfoundation.org>
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 5.10 99/99] HID: uhid: Over-ride the default maximum data buffer value with our own
+Date: Mon, 20 Mar 2023 15:55:17 +0100
+Message-Id: <20230320145447.568331266@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,36 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Lee Jones <lee@kernel.org>
 
-commit 32e293be736b853f168cd065d9cbc1b0c69f545d upstream.
+commit 1c5d4221240a233df2440fe75c881465cdf8da07 upstream.
 
-As per HW manual for  EMEV2 "R19UH0040EJ0400 Rev.4.00", the UART
-IP found on EMMA mobile SoC is Register-compatible with the
-general-purpose 16750 UART chip. Fix UART port type as 16750 and
-enable 64-bytes fifo support.
+The default maximum data buffer size for this interface is UHID_DATA_MAX
+(4k).  When data buffers are being processed, ensure this value is used
+when ensuring the sanity, rather than a value between the user provided
+value and HID_MAX_BUFFER_SIZE (16k).
 
-Fixes: 22886ee96895 ("serial8250-em: Emma Mobile UART driver V2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/r/20230227114152.22265-2-biju.das.jz@bp.renesas.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_em.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/uhid.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/serial/8250/8250_em.c
-+++ b/drivers/tty/serial/8250/8250_em.c
-@@ -106,8 +106,8 @@ static int serial8250_em_probe(struct pl
- 	memset(&up, 0, sizeof(up));
- 	up.port.mapbase = regs->start;
- 	up.port.irq = irq;
--	up.port.type = PORT_UNKNOWN;
--	up.port.flags = UPF_BOOT_AUTOCONF | UPF_FIXED_PORT | UPF_IOREMAP;
-+	up.port.type = PORT_16750;
-+	up.port.flags = UPF_FIXED_PORT | UPF_IOREMAP | UPF_FIXED_TYPE;
- 	up.port.dev = &pdev->dev;
- 	up.port.private_data = priv;
+--- a/drivers/hid/uhid.c
++++ b/drivers/hid/uhid.c
+@@ -395,6 +395,7 @@ struct hid_ll_driver uhid_hid_driver = {
+ 	.parse = uhid_hid_parse,
+ 	.raw_request = uhid_hid_raw_request,
+ 	.output_report = uhid_hid_output_report,
++	.max_buffer_size = UHID_DATA_MAX,
+ };
+ EXPORT_SYMBOL_GPL(uhid_hid_driver);
  
 
 
