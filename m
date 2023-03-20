@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC1D1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA89C433EF;
-	Mon, 20 Mar 2023 15:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E941C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A02AC433EF;
+	Mon, 20 Mar 2023 15:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325759;
-	bh=op+ATlGITwr+eaPzzd4SHgYZEGMEJafQ3vBMJ5bUrSM=;
+	s=korg; t=1679325764;
+	bh=hRCGny6RTst0Quh3CPsdx1tjLZSo1tA48HZCKGXoM2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wijXPgWqXoMiosN9GhPP7Hb3F3EPGnGxmJGbyMS8rzhgk0rzhwaIcGZBLOL2Et7qe
-	 NpsTtqzGyHnRSFErtrx+YZgsBuJAOa+TPUg9U8gkEwkeNycyT0RaSmln4R7Roka97k
-	 Fse0As3nSedPiNMro2tfhCp9u5eZ39xqK5HdTxgE=
+	b=jM0ZQedD/DV34i2MvRnUXDrFJSu1Got8kJmWOwu9Zny30EfZz4W2fJ0VLUIaOvFX9
+	 4sLJ4BaCfl29jNLRzgZHT9iX6ARjnqu4nywcIMpYUxGQRJ6djwRQ+7RiMuBZvahycF
+	 t3IEXg67wRiCVAFENQZncYlrNdTeZkLZyl3dWEFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.1 138/198] interconnect: qcom: msm8974: fix registration race
-Date: Mon, 20 Mar 2023 15:54:36 +0100
-Message-Id: <20230320145513.336441908@linuxfoundation.org>
+Subject: [PATCH 6.1 139/198] interconnect: exynos: fix node leak in probe PM QoS error path
+Date: Mon, 20 Mar 2023 15:54:37 +0100
+Message-Id: <20230320145513.375043713@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
 References: <20230320145507.420176832@linuxfoundation.org>
@@ -38,90 +38,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit bfe7bcd2b9f5215de2144f097f39971180e7ea54 upstream.
+commit 3aab264875bf3c915ea2517fae1eec213e0b4987 upstream.
 
-The current interconnect provider registration interface is inherently
-racy as nodes are not added until the after adding the provider. This
-can specifically cause racing DT lookups to fail.
+Make sure to add the newly allocated interconnect node to the provider
+before adding the PM QoS request so that the node is freed on errors.
 
-Switch to using the new API where the provider is not registered until
-after it has been fully initialised.
-
-Fixes: 4e60a9568dc6 ("interconnect: qcom: add msm8974 driver")
-Cc: stable@vger.kernel.org      # 5.5
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Fixes: 2f95b9d5cf0b ("interconnect: Add generic interconnect driver for Exynos SoCs")
+Cc: stable@vger.kernel.org      # 5.11
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-12-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20230306075651.2449-15-johan+linaro@kernel.org
 Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/interconnect/qcom/msm8974.c |   20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/interconnect/samsung/exynos.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/interconnect/qcom/msm8974.c
-+++ b/drivers/interconnect/qcom/msm8974.c
-@@ -692,7 +692,6 @@ static int msm8974_icc_probe(struct plat
- 		return ret;
+--- a/drivers/interconnect/samsung/exynos.c
++++ b/drivers/interconnect/samsung/exynos.c
+@@ -149,6 +149,9 @@ static int exynos_generic_icc_probe(stru
+ 				 &priv->bus_clk_ratio))
+ 		priv->bus_clk_ratio = EXYNOS_ICC_DEFAULT_BUS_CLK_RATIO;
  
- 	provider = &qp->provider;
--	INIT_LIST_HEAD(&provider->nodes);
- 	provider->dev = dev;
- 	provider->set = msm8974_icc_set;
- 	provider->aggregate = icc_std_aggregate;
-@@ -700,11 +699,7 @@ static int msm8974_icc_probe(struct plat
- 	provider->data = data;
- 	provider->get_bw = msm8974_get_bw;
- 
--	ret = icc_provider_add(provider);
--	if (ret) {
--		dev_err(dev, "error adding interconnect provider: %d\n", ret);
--		goto err_disable_clks;
--	}
-+	icc_provider_init(provider);
- 
- 	for (i = 0; i < num_nodes; i++) {
- 		size_t j;
-@@ -712,7 +707,7 @@ static int msm8974_icc_probe(struct plat
- 		node = icc_node_create(qnodes[i]->id);
- 		if (IS_ERR(node)) {
- 			ret = PTR_ERR(node);
--			goto err_del_icc;
-+			goto err_remove_nodes;
- 		}
- 
- 		node->name = qnodes[i]->name;
-@@ -729,15 +724,16 @@ static int msm8974_icc_probe(struct plat
- 	}
- 	data->num_nodes = num_nodes;
- 
-+	ret = icc_provider_register(provider);
-+	if (ret)
-+		goto err_remove_nodes;
++	icc_node->data = priv;
++	icc_node_add(icc_node, provider);
 +
- 	platform_set_drvdata(pdev, qp);
+ 	/*
+ 	 * Register a PM QoS request for the parent (devfreq) device.
+ 	 */
+@@ -157,9 +160,6 @@ static int exynos_generic_icc_probe(stru
+ 	if (ret < 0)
+ 		goto err_node_del;
  
- 	return 0;
- 
--err_del_icc:
-+err_remove_nodes:
- 	icc_nodes_remove(provider);
--	icc_provider_del(provider);
+-	icc_node->data = priv;
+-	icc_node_add(icc_node, provider);
 -
--err_disable_clks:
- 	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
- 
- 	return ret;
-@@ -747,9 +743,9 @@ static int msm8974_icc_remove(struct pla
- {
- 	struct msm8974_icc_provider *qp = platform_get_drvdata(pdev);
- 
-+	icc_provider_deregister(&qp->provider);
- 	icc_nodes_remove(&qp->provider);
- 	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
--	icc_provider_del(&qp->provider);
- 
- 	return 0;
- }
+ 	icc_parent_node = exynos_icc_get_parent(bus_dev->of_node);
+ 	if (IS_ERR(icc_parent_node)) {
+ 		ret = PTR_ERR(icc_parent_node);
 
 
