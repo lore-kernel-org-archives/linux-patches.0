@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED951C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AC6C433EF;
-	Mon, 20 Mar 2023 15:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F8B1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989CEC433EF;
+	Mon, 20 Mar 2023 15:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324714;
-	bh=lTz+5AFy/jELT6czLvUxdm6WsyIvvXg3gLGmy6nRE7o=;
+	s=korg; t=1679324717;
+	bh=EqRirIe3wSEM13Qk+Ni5ipVtNOSlnkRWbG/B2wN215M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FTWkkvLjs/hL2p50pByXM6YXYu3Mu7umTXI5E8ssi5rXOWPdIRSVATwGAzKPXy1KY
-	 zaCinGVIHaNe1bl+v+relvUNKHrHmZT2FPv+Z84bA9sUW0BhrfIbVdKVhWVPxScWL7
-	 7OmNQ+61xzC4vynqwvWLcoILP1IZZVzRvBGUTuSo=
+	b=igcdRJEIvsuOMfFy7PbuBShCWu2H89Kcgm4cLqAtodn5yqCdOUjcnb9oukgqNtuIu
+	 3xFMkgSutz3BUKrm7qDPejvIUMcDug975hmUmgifQZ+Mt37NCeNxbz/9icZ7gIhELi
+	 RhwgLR6LMPk4feWBWjOzieNs4cIaCcwsLJ66EI7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 45/99] hwmon: tmp512: drop of_match_ptr for ID table
-Date: Mon, 20 Mar 2023 15:54:23 +0100
-Message-Id: <20230320145445.266294906@linuxfoundation.org>
+Subject: [PATCH 5.15 022/115] drm/i915/display/psr: Use drm damage helpers to calculate plane damaged area
+Date: Mon, 20 Mar 2023 15:53:54 +0100
+Message-Id: <20230320145450.339742681@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +36,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: José Roberto de Souza <jose.souza@intel.com>
 
-[ Upstream commit 00d85e81796b17a29a0e096c5a4735daa47adef8 ]
+[ Upstream commit af7ea1e22afc7ce7773b2e4562df4370c8c711ea ]
 
-The driver will match mostly by DT table (even thought there is regular
-ID table) so there is little benefit in of_match_ptr (this also allows
-ACPI matching via PRP0001, even though it might not be relevant here).
-This also fixes !CONFIG_OF error:
+drm_atomic_helper_damage_iter_init() + drm_atomic_for_each_plane_damage()
+returns the full plane area in case no damaged area was set by
+userspace or it was discarted by driver.
 
-  drivers/hwmon/tmp513.c:610:34: error: ‘tmp51x_of_match’ defined but not used [-Werror=unused-const-variable=]
+This is important to fix the rendering of userspace applications that
+does frontbuffer rendering and notify driver about dirty areas but do
+not set any dirty clips.
 
-Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230312193723.478032-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+With this we don't need to worry about to check and mark the whole
+area as damaged in page flips.
+
+Another important change here is the move of
+drm_atomic_add_affected_planes() call, it needs to called late
+otherwise the area of all the planes would be added to pipe_clip and
+not saving power.
+
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Reviewed-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20210914212507.177511-4-jose.souza@intel.com
+Stable-dep-of: 71c602103c74 ("drm/i915/psr: Use calculated io and fast wake lines")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/tmp513.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_psr.c | 37 +++++++++---------------
+ 1 file changed, 13 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/hwmon/tmp513.c b/drivers/hwmon/tmp513.c
-index 47bbe47e062fd..7d5f7441aceb1 100644
---- a/drivers/hwmon/tmp513.c
-+++ b/drivers/hwmon/tmp513.c
-@@ -758,7 +758,7 @@ static int tmp51x_probe(struct i2c_client *client)
- static struct i2c_driver tmp51x_driver = {
- 	.driver = {
- 		.name	= "tmp51x",
--		.of_match_table = of_match_ptr(tmp51x_of_match),
-+		.of_match_table = tmp51x_of_match,
- 	},
- 	.probe_new	= tmp51x_probe,
- 	.id_table	= tmp51x_id,
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index b4b193c2bc32e..5e7827b076028 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -22,6 +22,7 @@
+  */
+ 
+ #include <drm/drm_atomic_helper.h>
++#include <drm/drm_damage_helper.h>
+ 
+ #include "display/intel_dp.h"
+ 
+@@ -1636,10 +1637,6 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 	if (!crtc_state->enable_psr2_sel_fetch)
+ 		return 0;
+ 
+-	ret = drm_atomic_add_affected_planes(&state->base, &crtc->base);
+-	if (ret)
+-		return ret;
+-
+ 	/*
+ 	 * Calculate minimal selective fetch area of each plane and calculate
+ 	 * the pipe damaged area.
+@@ -1649,8 +1646,8 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 	for_each_oldnew_intel_plane_in_state(state, plane, old_plane_state,
+ 					     new_plane_state, i) {
+ 		struct drm_rect src, damaged_area = { .y1 = -1 };
+-		struct drm_mode_rect *damaged_clips;
+-		u32 num_clips, j;
++		struct drm_atomic_helper_damage_iter iter;
++		struct drm_rect clip;
+ 
+ 		if (new_plane_state->uapi.crtc != crtc_state->uapi.crtc)
+ 			continue;
+@@ -1670,8 +1667,6 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 			break;
+ 		}
+ 
+-		num_clips = drm_plane_get_damage_clips_count(&new_plane_state->uapi);
+-
+ 		/*
+ 		 * If visibility or plane moved, mark the whole plane area as
+ 		 * damaged as it needs to be complete redraw in the new and old
+@@ -1695,14 +1690,8 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 			cursor_area_workaround(new_plane_state, &damaged_area,
+ 					       &pipe_clip);
+ 			continue;
+-		} else if (new_plane_state->uapi.alpha != old_plane_state->uapi.alpha ||
+-			   (!num_clips &&
+-			    new_plane_state->uapi.fb != old_plane_state->uapi.fb)) {
+-			/*
+-			 * If the plane don't have damaged areas but the
+-			 * framebuffer changed or alpha changed, mark the whole
+-			 * plane area as damaged.
+-			 */
++		} else if (new_plane_state->uapi.alpha != old_plane_state->uapi.alpha) {
++			/* If alpha changed mark the whole plane area as damaged */
+ 			damaged_area.y1 = new_plane_state->uapi.dst.y1;
+ 			damaged_area.y2 = new_plane_state->uapi.dst.y2;
+ 			clip_area_update(&pipe_clip, &damaged_area);
+@@ -1710,15 +1699,11 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 		}
+ 
+ 		drm_rect_fp_to_int(&src, &new_plane_state->uapi.src);
+-		damaged_clips = drm_plane_get_damage_clips(&new_plane_state->uapi);
+-
+-		for (j = 0; j < num_clips; j++) {
+-			struct drm_rect clip;
+ 
+-			clip.x1 = damaged_clips[j].x1;
+-			clip.y1 = damaged_clips[j].y1;
+-			clip.x2 = damaged_clips[j].x2;
+-			clip.y2 = damaged_clips[j].y2;
++		drm_atomic_helper_damage_iter_init(&iter,
++						   &old_plane_state->uapi,
++						   &new_plane_state->uapi);
++		drm_atomic_for_each_plane_damage(&iter, &clip) {
+ 			if (drm_rect_intersect(&clip, &src))
+ 				clip_area_update(&damaged_area, &clip);
+ 		}
+@@ -1734,6 +1719,10 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 	if (full_update)
+ 		goto skip_sel_fetch_set_loop;
+ 
++	ret = drm_atomic_add_affected_planes(&state->base, &crtc->base);
++	if (ret)
++		return ret;
++
+ 	intel_psr2_sel_fetch_pipe_alignment(crtc_state, &pipe_clip);
+ 
+ 	/*
 -- 
 2.39.2
 
