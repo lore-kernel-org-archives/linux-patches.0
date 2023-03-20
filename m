@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB8D1C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA981C433EF;
-	Mon, 20 Mar 2023 15:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA881C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D5BC433D2;
+	Mon, 20 Mar 2023 15:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326211;
-	bh=ba6L21C3hPRAFcDmsnPxAcMMAGQ4TxPfN8sCtncYEAQ=;
+	s=korg; t=1679326214;
+	bh=t10baPFMjYxnBT9DtwzxrADo+aZVsP3beoyuFEEIX1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tGKsn7trhtFmVre0tV/WnxzmtyUBRY5e2oWUN8DxHExeuIuaMFTqObF9RWxiQT578
-	 6IVJiZfInysxz1MdFx8vIWGvUfvGBMdrDjMRGjG1XlrMHoXpvVW8bI1f7v2MV6aKcO
-	 fBldHIs7WSYF5NAuaySxahG7aRUXs08uEvO5tDiU=
+	b=tKihCAxK7U4+okLu0ruXFzZ+rRxafD06UTsAMQmL8jna8regSdQ1GsrA19I0L1odi
+	 CCAe9t6pQGpyn5MKY7wfiFJccxscogR1fOkma4LWqG0SIIbVGPSIo4czFw6kPZp4Qg
+	 Sv0/xFWi1E/ZAJRwr9mnn8DQH6EgqS0DMcgcrhuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.2 200/211] ASoC: qcom: q6prm: fix incorrect clk_root passed to ADSP
-Date: Mon, 20 Mar 2023 15:55:35 +0100
-Message-Id: <20230320145521.912483569@linuxfoundation.org>
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH 6.2 201/211] x86/mce: Make sure logged MCEs are processed after sysfs update
+Date: Mon, 20 Mar 2023 15:55:36 +0100
+Message-Id: <20230320145521.962338964@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -35,42 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-commit 65882134bc622a1e57bd5928ac588855ea2e3ddd upstream.
+commit 4783b9cb374af02d49740e00e2da19fd4ed6dec4 upstream.
 
-The second to last argument is clk_root (root of the clock), however the
-code called q6prm_request_lpass_clock() with clk_attr instead
-(copy-paste error).  This effectively was passing value of 1 as root
-clock which worked on some of the SoCs (e.g. SM8450) but fails on
-others, depending on the ADSP.  For example on SM8550 this "1" as root
-clock is not accepted and results in errors coming from ADSP.
+A recent change introduced a flag to queue up errors found during
+boot-time polling. These errors will be processed during late init once
+the MCE subsystem is fully set up.
 
-Fixes: 2f20640491ed ("ASoC: qdsp6: qdsp6: q6prm: handle clk disable correctly")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230302122908.221398-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+A number of sysfs updates call mce_restart() which goes through a subset
+of the CPU init flow. This includes polling MCA banks and logging any
+errors found. Since the same function is used as boot-time polling,
+errors will be queued. However, the system is now past late init, so the
+errors will remain queued until another error is found and the workqueue
+is triggered.
+
+Call mce_schedule_work() at the end of mce_restart() so that queued
+errors are processed.
+
+Fixes: 3bff147b187d ("x86/mce: Defer processing of early errors")
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230301221420.2203184-1-yazen.ghannam@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6prm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/mce/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/qcom/qdsp6/q6prm.c
-+++ b/sound/soc/qcom/qdsp6/q6prm.c
-@@ -183,9 +183,9 @@ int q6prm_set_lpass_clock(struct device
- 			  unsigned int freq)
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -2365,6 +2365,7 @@ static void mce_restart(void)
  {
- 	if (freq)
--		return q6prm_request_lpass_clock(dev, clk_id, clk_attr, clk_attr, freq);
-+		return q6prm_request_lpass_clock(dev, clk_id, clk_attr, clk_root, freq);
- 
--	return q6prm_release_lpass_clock(dev, clk_id, clk_attr, clk_attr, freq);
-+	return q6prm_release_lpass_clock(dev, clk_id, clk_attr, clk_root, freq);
+ 	mce_timer_delete_all();
+ 	on_each_cpu(mce_cpu_restart, NULL, 1);
++	mce_schedule_work();
  }
- EXPORT_SYMBOL_GPL(q6prm_set_lpass_clock);
  
+ /* Toggle features for corrected errors */
 
 
