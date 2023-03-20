@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EAF81C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:08:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F237CC433EF;
-	Mon, 20 Mar 2023 15:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4440B1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:09:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C98C433EF;
+	Mon, 20 Mar 2023 15:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324939;
-	bh=WKWGOh7P8dwbtyzqCjRU4JbokhqyWKBW6VLePktxMuI=;
+	s=korg; t=1679324942;
+	bh=qOx0NylQ5SqAsnJQQ9dOPNOihNCwU44HtqiZPA15SuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cPiki6vqwxxDIAUXaG7gP720tvZMEXG/vcC3f/QJ8IWeL2M/9RSLF1UBh5Jw9Mgct
-	 ojT3neVRqJCYArKQfSLqosjoMGL0G240cY32YVVvxkqYwuuSCUsta7zT2wzb5SWY+F
-	 lg02Qd+6lqR40S13iJKyr/ZjbQ+NeaveQbVGVJQs=
+	b=DoHli+bLn/b7RSZSD6I9h8m/AppHEhgfmRmDoYQVGo/EeSydYFcKYlZqezXx+r1GT
+	 ZRg+xdeR85n9DuCz5zqnSRU/1K+MdDgE1dh+sS9L2Z8OiCJSl3ED2Kx3dvJ/xwovdV
+	 T56PpLz5Ha4hV8ak36TYAHaq07i5Zzg8gt6gVnZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Piotr Raczynski <piotr.raczynski@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 050/115] ethernet: sun: add check for the mdesc_grab()
-Date: Mon, 20 Mar 2023 15:54:22 +0100
-Message-Id: <20230320145451.503282399@linuxfoundation.org>
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH 5.10 75/99] x86/mce: Make sure logged MCEs are processed after sysfs update
+Date: Mon, 20 Mar 2023 15:54:53 +0100
+Message-Id: <20230320145446.547035823@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,55 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-[ Upstream commit 90de546d9a0b3c771667af18bb3f80567eabb89b ]
+commit 4783b9cb374af02d49740e00e2da19fd4ed6dec4 upstream.
 
-In vnet_port_probe() and vsw_port_probe(), we should
-check the return value of mdesc_grab() as it may
-return NULL which can caused NPD bugs.
+A recent change introduced a flag to queue up errors found during
+boot-time polling. These errors will be processed during late init once
+the MCE subsystem is fully set up.
 
-Fixes: 5d01fa0c6bd8 ("ldmvsw: Add ldmvsw.c driver code")
-Fixes: 43fdf27470b2 ("[SPARC64]: Abstract out mdesc accesses for better MD update handling.")
-Signed-off-by: Liang He <windhl@126.com>
-Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A number of sysfs updates call mce_restart() which goes through a subset
+of the CPU init flow. This includes polling MCA banks and logging any
+errors found. Since the same function is used as boot-time polling,
+errors will be queued. However, the system is now past late init, so the
+errors will remain queued until another error is found and the workqueue
+is triggered.
+
+Call mce_schedule_work() at the end of mce_restart() so that queued
+errors are processed.
+
+Fixes: 3bff147b187d ("x86/mce: Defer processing of early errors")
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230301221420.2203184-1-yazen.ghannam@amd.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/sun/ldmvsw.c  | 3 +++
- drivers/net/ethernet/sun/sunvnet.c | 3 +++
- 2 files changed, 6 insertions(+)
+ arch/x86/kernel/cpu/mce/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/sun/ldmvsw.c b/drivers/net/ethernet/sun/ldmvsw.c
-index 50bd4e3b0af9d..cde65f76e5cef 100644
---- a/drivers/net/ethernet/sun/ldmvsw.c
-+++ b/drivers/net/ethernet/sun/ldmvsw.c
-@@ -290,6 +290,9 @@ static int vsw_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -2309,6 +2309,7 @@ static void mce_restart(void)
+ {
+ 	mce_timer_delete_all();
+ 	on_each_cpu(mce_cpu_restart, NULL, 1);
++	mce_schedule_work();
+ }
  
- 	hp = mdesc_grab();
- 
-+	if (!hp)
-+		return -ENODEV;
-+
- 	rmac = mdesc_get_property(hp, vdev->mp, remote_macaddr_prop, &len);
- 	err = -ENODEV;
- 	if (!rmac) {
-diff --git a/drivers/net/ethernet/sun/sunvnet.c b/drivers/net/ethernet/sun/sunvnet.c
-index 58ee89223951e..dcdfc1fd3d2ca 100644
---- a/drivers/net/ethernet/sun/sunvnet.c
-+++ b/drivers/net/ethernet/sun/sunvnet.c
-@@ -431,6 +431,9 @@ static int vnet_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
- 
- 	hp = mdesc_grab();
- 
-+	if (!hp)
-+		return -ENODEV;
-+
- 	vp = vnet_find_parent(hp, vdev->mp, vdev);
- 	if (IS_ERR(vp)) {
- 		pr_err("Cannot find port parent vnet\n");
--- 
-2.39.2
-
+ /* Toggle features for corrected errors */
 
 
