@@ -1,31 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4AAC1C29
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42550C4339C;
-	Mon, 20 Mar 2023 15:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD691C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D639CC433A7;
+	Mon, 20 Mar 2023 15:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324722;
-	bh=twfeNMEA/AEjofChvTfbFfr4i3JY2jbEtlz7oDHFlrA=;
+	s=korg; t=1679324725;
+	bh=5NVLHIXonwLawaQOp/IdY2KPXsBtefrxB6wCE7yhmS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bgraU6r8uE8CEurkaYHGwgcMo+L8lHK1QQIr/jzEu8vaSsA3iceKxhP/VPF1tQkS4
-	 pg7X/m1+mFj+UZFXjJdMSMw2xNQmujqHN+BxMYpklMqcbLG56BsSB3gCMQn2COXZa1
-	 OijSjpG4OvTP2BnR8Ucya9y4Le1ykb/ZhGZaCWTc=
+	b=eElyH7X67IJ2sA44weSCKkEjGcIV0H4QuEIBXO2BOeRulfBhYfxxJCaTavj3R8gNZ
+	 M7ANcNVNjKRp9uCkZHLYM1gaMe8M5RDYv/WvII1poVmHhlR/zU1I1FMxPKkEz5bKmi
+	 VpLMGdPxH+946/Y5rkb6IPKjKay6Eexw8CyEBmUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 023/115] drm/i915/display/psr: Handle plane and pipe restrictions at every page flip
-Date: Mon, 20 Mar 2023 15:53:55 +0100
-Message-Id: <20230320145450.384848084@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"HeungJun, Kim" <riverful.kim@samsung.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Mauro Carvalho Chehab <mchehab@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	HeungJun
+Subject: [PATCH 5.10 47/99] media: m5mols: fix off-by-one loop termination error
+Date: Mon, 20 Mar 2023 15:54:25 +0100
+Message-Id: <20230320145445.356264094@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,156 +42,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: José Roberto de Souza <jose.souza@intel.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit ac220f5f754b1d2f4a69428f515c3f1b10d1fad0 ]
+[ Upstream commit efbcbb12ee99f750c9f25c873b55ad774871de2a ]
 
-PSR2 selective is not supported over rotated and scaled planes.
-We had the rotation check in intel_psr2_sel_fetch_config_valid()
-but that code path is only execute when a modeset is needed and
-those plane parameters can change without a modeset.
+The __find_restype() function loops over the m5mols_default_ffmt[]
+array, and the termination condition ends up being wrong: instead of
+stopping when the iterator becomes the size of the array it traverses,
+it stops after it has already overshot the array.
 
-Pipe selective fetch restrictions are also needed, it could be added
-in intel_psr_compute_config() but pippe scaling is computed after
-it is executed, so leaving as is for now.
-There is no much loss in this approach as it would cause selective
-fetch to not enabled as for alderlake-P and newer will cause it to
-switch to PSR1 that will have the same power-savings as do full pipe
-fetch.
+Now, in practice this doesn't likely matter, because the code will
+always find the entry it looks for, and will thus return early and never
+hit that last extra iteration.
 
-Also need to check those restricions in the second
-for_each_oldnew_intel_plane_in_state() loop because the state could
-only have a plane that is not affected by those restricitons but
-the damaged area intersect with planes that has those restrictions,
-so a full pipe fetch is required.
+But it turns out that clang will unroll the loop fully, because it has
+only two iterations (well, three due to the off-by-one bug), and then
+clang will end up just giving up in the middle of the loop unrolling
+when it notices that the code walks past the end of the array.
 
-v2:
-- also handling pipe restrictions
+And that made 'objtool' very unhappy indeed, because the generated code
+just falls off the edge of the universe, and ends up falling through to
+the next function, causing this warning:
 
-BSpec: 55229
-Reviewed-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com> # v1
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
-Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20210930001409.254817-1-jose.souza@intel.com
-Stable-dep-of: 71c602103c74 ("drm/i915/psr: Use calculated io and fast wake lines")
+   drivers/media/i2c/m5mols/m5mols.o: warning: objtool: m5mols_set_fmt() falls through to next function m5mols_get_frame_desc()
+
+Fix the loop ending condition.
+
+Reported-by: Jens Axboe <axboe@kernel.dk>
+Analyzed-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Analyzed-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/linux-block/CAHk-=wgTSdKYbmB1JYM5vmHMcD9J9UZr0mn7BOYM_LudrP+Xvw@mail.gmail.com/
+Fixes: bc125106f8af ("[media] Add support for M-5MOLS 8 Mega Pixel camera ISP")
+Cc: HeungJun, Kim <riverful.kim@samsung.com>
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Mauro Carvalho Chehab <mchehab@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 65 +++++++++++++++++-------
- 1 file changed, 46 insertions(+), 19 deletions(-)
+ drivers/media/i2c/m5mols/m5mols_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 5e7827b076028..21d58d22c82ee 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -756,11 +756,7 @@ tgl_dc3co_exitline_compute_config(struct intel_dp *intel_dp,
- static bool intel_psr2_sel_fetch_config_valid(struct intel_dp *intel_dp,
- 					      struct intel_crtc_state *crtc_state)
- {
--	struct intel_atomic_state *state = to_intel_atomic_state(crtc_state->uapi.state);
- 	struct drm_i915_private *dev_priv = dp_to_i915(intel_dp);
--	struct intel_plane_state *plane_state;
--	struct intel_plane *plane;
--	int i;
+diff --git a/drivers/media/i2c/m5mols/m5mols_core.c b/drivers/media/i2c/m5mols/m5mols_core.c
+index 21666d705e372..dcf9e4d4ee6b8 100644
+--- a/drivers/media/i2c/m5mols/m5mols_core.c
++++ b/drivers/media/i2c/m5mols/m5mols_core.c
+@@ -488,7 +488,7 @@ static enum m5mols_restype __find_restype(u32 code)
+ 	do {
+ 		if (code == m5mols_default_ffmt[type].code)
+ 			return type;
+-	} while (type++ != SIZE_DEFAULT_FFMT);
++	} while (++type != SIZE_DEFAULT_FFMT);
  
- 	if (!dev_priv->params.enable_psr2_sel_fetch &&
- 	    intel_dp->psr.debug != I915_PSR_DEBUG_ENABLE_SEL_FETCH) {
-@@ -775,14 +771,6 @@ static bool intel_psr2_sel_fetch_config_valid(struct intel_dp *intel_dp,
- 		return false;
- 	}
- 
--	for_each_new_intel_plane_in_state(state, plane, plane_state, i) {
--		if (plane_state->uapi.rotation != DRM_MODE_ROTATE_0) {
--			drm_dbg_kms(&dev_priv->drm,
--				    "PSR2 sel fetch not enabled, plane rotated\n");
--			return false;
--		}
--	}
--
- 	/* Wa_14010254185 Wa_14010103792 */
- 	if (IS_TGL_DISPLAY_STEP(dev_priv, STEP_A0, STEP_C0)) {
- 		drm_dbg_kms(&dev_priv->drm,
-@@ -1624,6 +1612,41 @@ static void cursor_area_workaround(const struct intel_plane_state *new_plane_sta
- 	clip_area_update(pipe_clip, damaged_area);
+ 	return 0;
  }
- 
-+/*
-+ * TODO: Not clear how to handle planes with negative position,
-+ * also planes are not updated if they have a negative X
-+ * position so for now doing a full update in this cases
-+ *
-+ * Plane scaling and rotation is not supported by selective fetch and both
-+ * properties can change without a modeset, so need to be check at every
-+ * atomic commmit.
-+ */
-+static bool psr2_sel_fetch_plane_state_supported(const struct intel_plane_state *plane_state)
-+{
-+	if (plane_state->uapi.dst.y1 < 0 ||
-+	    plane_state->uapi.dst.x1 < 0 ||
-+	    plane_state->scaler_id >= 0 ||
-+	    plane_state->uapi.rotation != DRM_MODE_ROTATE_0)
-+		return false;
-+
-+	return true;
-+}
-+
-+/*
-+ * Check for pipe properties that is not supported by selective fetch.
-+ *
-+ * TODO: pipe scaling causes a modeset but skl_update_scaler_crtc() is executed
-+ * after intel_psr_compute_config(), so for now keeping PSR2 selective fetch
-+ * enabled and going to the full update path.
-+ */
-+static bool psr2_sel_fetch_pipe_state_supported(const struct intel_crtc_state *crtc_state)
-+{
-+	if (crtc_state->scaler_state.scaler_id >= 0)
-+		return false;
-+
-+	return true;
-+}
-+
- int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 				struct intel_crtc *crtc)
- {
-@@ -1637,6 +1660,11 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 	if (!crtc_state->enable_psr2_sel_fetch)
- 		return 0;
- 
-+	if (!psr2_sel_fetch_pipe_state_supported(crtc_state)) {
-+		full_update = true;
-+		goto skip_sel_fetch_set_loop;
-+	}
-+
- 	/*
- 	 * Calculate minimal selective fetch area of each plane and calculate
- 	 * the pipe damaged area.
-@@ -1656,13 +1684,7 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 		    !old_plane_state->uapi.visible)
- 			continue;
- 
--		/*
--		 * TODO: Not clear how to handle planes with negative position,
--		 * also planes are not updated if they have a negative X
--		 * position so for now doing a full update in this cases
--		 */
--		if (new_plane_state->uapi.dst.y1 < 0 ||
--		    new_plane_state->uapi.dst.x1 < 0) {
-+		if (!psr2_sel_fetch_plane_state_supported(new_plane_state)) {
- 			full_update = true;
- 			break;
- 		}
-@@ -1741,6 +1763,11 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 		if (!drm_rect_intersect(&inter, &new_plane_state->uapi.dst))
- 			continue;
- 
-+		if (!psr2_sel_fetch_plane_state_supported(new_plane_state)) {
-+			full_update = true;
-+			break;
-+		}
-+
- 		sel_fetch_area = &new_plane_state->psr2_sel_fetch_area;
- 		sel_fetch_area->y1 = inter.y1 - new_plane_state->uapi.dst.y1;
- 		sel_fetch_area->y2 = inter.y2 - new_plane_state->uapi.dst.y1;
 -- 
 2.39.2
 
