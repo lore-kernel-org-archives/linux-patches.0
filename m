@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0381C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8274C433D2;
-	Mon, 20 Mar 2023 15:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300BF1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A606AC4339B;
+	Mon, 20 Mar 2023 15:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325331;
-	bh=EzEDQA1kSzFYQz1avXhL1t6pYR6T7JWiXlanbeMZ358=;
+	s=korg; t=1679325334;
+	bh=7+E4MrdQ5GjkQx6N+UjMGjQ1swkXXvr3D7dXhvnfl3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1rPS/wn08d1yohXV79mpnUpdOGZSOBaEfDA0XmlaN06a/+pZ4JX1XEb9fbRG7UyoK
-	 s/PVfnCEhKau0dMurqjxs7FkM6wMDstyCaL2fu0k6cPCTZbMfwabaDP5uCbDs0+WCt
-	 6w7LOiSYvnZ6JQGvGtbawEHLAm8QO4louf2rXmVc=
+	b=VKibA32owCHK8IcGadN81XVuCGVwxbWMjcWk0oD9g2XMDKB8P6rxXki4wxibbC5Bg
+	 Ew2UORGUABd3tuwMJQ/kx1WrHRz1n6LOlL8lZgeyRB3Q8LrfNXW2kzZ2cUlv6va78d
+	 b1Ayu3wNKj02puhlFLYv1Vp9lCRpVBTF6qwP7FyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parav Pandit <parav@nvidia.com>,
-	Daniel Jurgens <danielj@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Martin Wilck <mwilck@suse.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Lee Duncan <lduncan@suse.com>,
+	Srikar Dronamraju <srikar@linux.vnet.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/198] net/mlx5: Fix setting ec_function bit in MANAGE_PAGES
-Date: Mon, 20 Mar 2023 15:53:27 +0100
-Message-Id: <20230320145510.429036562@linuxfoundation.org>
+Subject: [PATCH 6.2 030/211] scsi: core: Add BLIST_NO_VPD_SIZE for some VDASD
+Date: Mon, 20 Mar 2023 15:52:45 +0100
+Message-Id: <20230320145514.522308364@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,75 +38,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Parav Pandit <parav@nvidia.com>
+From: Lee Duncan <lduncan@suse.com>
 
-[ Upstream commit ba5d8f72b82cc197355c9340ef89dab813815865 ]
+[ Upstream commit 4b1a2c2a8e0ddcb89c5f6c5003bd9b53142f69e3 ]
 
-When ECPF is a page supplier, reclaim pages missed to honor the
-ec_function bit provided by the firmware. It always used the ec_function
-to true during driver unload flow for ECPF. This is incorrect.
+Some storage, such as AIX VDASD (virtual storage) and IBM 2076 (front
+end), fail as a result of commit c92a6b5d6335 ("scsi: core: Query VPD
+size before getting full page").
 
-Honor the ec_function bit provided by device during page allocation
-request event.
+That commit changed getting SCSI VPD pages so that we now read just
+enough of the page to get the actual page size, then read the whole
+page in a second read. The problem is that the above mentioned
+hardware returns zero for the page size, because of a firmware
+error. In such cases, until the firmware is fixed, this new blacklist
+flag says to revert to the original method of reading the VPD pages,
+i.e. try to read a whole buffer's worth on the first try.
 
-Fixes: d6945242f45d ("net/mlx5: Hold pages RB tree per VF")
-Signed-off-by: Parav Pandit <parav@nvidia.com>
-Signed-off-by: Daniel Jurgens <danielj@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+[mkp: reworked somewhat]
+
+Fixes: c92a6b5d6335 ("scsi: core: Query VPD size before getting full page")
+Reported-by: Martin Wilck <mwilck@suse.com>
+Suggested-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Lee Duncan <lduncan@suse.com>
+Link: https://lore.kernel.org/r/20220928181350.9948-1-leeman.duncan@gmail.com
+Tested-by: Srikar Dronamraju <srikar@linux.vnet.ibm.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/pagealloc.c   | 22 ++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/scsi/scsi.c         | 3 +++
+ drivers/scsi/scsi_devinfo.c | 3 ++-
+ drivers/scsi/scsi_scan.c    | 3 +++
+ include/scsi/scsi_device.h  | 2 ++
+ include/scsi/scsi_devinfo.h | 6 +++---
+ 5 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-index 64d4e7125e9bb..95dc67fb30015 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-@@ -82,6 +82,16 @@ static u16 func_id_to_type(struct mlx5_core_dev *dev, u16 func_id, bool ec_funct
- 	return func_id <= mlx5_core_max_vfs(dev) ?  MLX5_VF : MLX5_SF;
- }
+diff --git a/drivers/scsi/scsi.c b/drivers/scsi/scsi.c
+index 9feb0323bc44a..dff1d692e756a 100644
+--- a/drivers/scsi/scsi.c
++++ b/drivers/scsi/scsi.c
+@@ -326,6 +326,9 @@ static int scsi_get_vpd_size(struct scsi_device *sdev, u8 page)
+ 	unsigned char vpd_header[SCSI_VPD_HEADER_SIZE] __aligned(4);
+ 	int result;
  
-+static u32 mlx5_get_ec_function(u32 function)
-+{
-+	return function >> 16;
-+}
++	if (sdev->no_vpd_size)
++		return SCSI_DEFAULT_VPD_LEN;
 +
-+static u32 mlx5_get_func_id(u32 function)
-+{
-+	return function & 0xffff;
-+}
+ 	/*
+ 	 * Fetch the VPD page header to find out how big the page
+ 	 * is. This is done to prevent problems on legacy devices
+diff --git a/drivers/scsi/scsi_devinfo.c b/drivers/scsi/scsi_devinfo.c
+index c7080454aea99..bc9d280417f6a 100644
+--- a/drivers/scsi/scsi_devinfo.c
++++ b/drivers/scsi/scsi_devinfo.c
+@@ -134,7 +134,7 @@ static struct {
+ 	{"3PARdata", "VV", NULL, BLIST_REPORTLUN2},
+ 	{"ADAPTEC", "AACRAID", NULL, BLIST_FORCELUN},
+ 	{"ADAPTEC", "Adaptec 5400S", NULL, BLIST_FORCELUN},
+-	{"AIX", "VDASD", NULL, BLIST_TRY_VPD_PAGES},
++	{"AIX", "VDASD", NULL, BLIST_TRY_VPD_PAGES | BLIST_NO_VPD_SIZE},
+ 	{"AFT PRO", "-IX CF", "0.0>", BLIST_FORCELUN},
+ 	{"BELKIN", "USB 2 HS-CF", "1.95",  BLIST_FORCELUN | BLIST_INQUIRY_36},
+ 	{"BROWNIE", "1200U3P", NULL, BLIST_NOREPORTLUN},
+@@ -188,6 +188,7 @@ static struct {
+ 	{"HPE", "OPEN-", "*", BLIST_REPORTLUN2 | BLIST_TRY_VPD_PAGES},
+ 	{"IBM", "AuSaV1S2", NULL, BLIST_FORCELUN},
+ 	{"IBM", "ProFibre 4000R", "*", BLIST_SPARSELUN | BLIST_LARGELUN},
++	{"IBM", "2076", NULL, BLIST_NO_VPD_SIZE},
+ 	{"IBM", "2105", NULL, BLIST_RETRY_HWERROR},
+ 	{"iomega", "jaz 1GB", "J.86", BLIST_NOTQ | BLIST_NOLUN},
+ 	{"IOMEGA", "ZIP", NULL, BLIST_NOTQ | BLIST_NOLUN},
+diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
+index f9b18fdc7b3c8..6042a5587bc37 100644
+--- a/drivers/scsi/scsi_scan.c
++++ b/drivers/scsi/scsi_scan.c
+@@ -1055,6 +1055,9 @@ static int scsi_add_lun(struct scsi_device *sdev, unsigned char *inq_result,
+ 	else if (*bflags & BLIST_SKIP_VPD_PAGES)
+ 		sdev->skip_vpd_pages = 1;
+ 
++	if (*bflags & BLIST_NO_VPD_SIZE)
++		sdev->no_vpd_size = 1;
 +
- static struct rb_root *page_root_per_function(struct mlx5_core_dev *dev, u32 function)
- {
- 	struct rb_root *root;
-@@ -665,20 +675,22 @@ static int optimal_reclaimed_pages(void)
- }
+ 	transport_configure_device(&sdev->sdev_gendev);
  
- static int mlx5_reclaim_root_pages(struct mlx5_core_dev *dev,
--				   struct rb_root *root, u16 func_id)
-+				   struct rb_root *root, u32 function)
- {
- 	u64 recl_pages_to_jiffies = msecs_to_jiffies(mlx5_tout_ms(dev, RECLAIM_PAGES));
- 	unsigned long end = jiffies + recl_pages_to_jiffies;
+ 	if (sdev->host->hostt->slave_configure) {
+diff --git a/include/scsi/scsi_device.h b/include/scsi/scsi_device.h
+index 3642b8e3928b7..15169d75c251e 100644
+--- a/include/scsi/scsi_device.h
++++ b/include/scsi/scsi_device.h
+@@ -145,6 +145,7 @@ struct scsi_device {
+ 	const char * model;		/* ... after scan; point to static string */
+ 	const char * rev;		/* ... "nullnullnullnull" before scan */
  
- 	while (!RB_EMPTY_ROOT(root)) {
-+		u32 ec_function = mlx5_get_ec_function(function);
-+		u32 function_id = mlx5_get_func_id(function);
- 		int nclaimed;
- 		int err;
++#define SCSI_DEFAULT_VPD_LEN	255	/* default SCSI VPD page size (max) */
+ 	struct scsi_vpd __rcu *vpd_pg0;
+ 	struct scsi_vpd __rcu *vpd_pg83;
+ 	struct scsi_vpd __rcu *vpd_pg80;
+@@ -215,6 +216,7 @@ struct scsi_device {
+ 					 * creation time */
+ 	unsigned ignore_media_change:1; /* Ignore MEDIA CHANGE on resume */
+ 	unsigned silence_suspend:1;	/* Do not print runtime PM related messages */
++	unsigned no_vpd_size:1;		/* No VPD size reported in header */
  
--		err = reclaim_pages(dev, func_id, optimal_reclaimed_pages(),
--				    &nclaimed, false, mlx5_core_is_ecpf(dev));
-+		err = reclaim_pages(dev, function_id, optimal_reclaimed_pages(),
-+				    &nclaimed, false, ec_function);
- 		if (err) {
--			mlx5_core_warn(dev, "failed reclaiming pages (%d) for func id 0x%x\n",
--				       err, func_id);
-+			mlx5_core_warn(dev, "reclaim_pages err (%d) func_id=0x%x ec_func=0x%x\n",
-+				       err, function_id, ec_function);
- 			return err;
- 		}
- 
+ 	unsigned int queue_stopped;	/* request queue is quiesced */
+ 	bool offline_already;		/* Device offline message logged */
+diff --git a/include/scsi/scsi_devinfo.h b/include/scsi/scsi_devinfo.h
+index 5d14adae21c78..6b548dc2c4965 100644
+--- a/include/scsi/scsi_devinfo.h
++++ b/include/scsi/scsi_devinfo.h
+@@ -32,7 +32,8 @@
+ #define BLIST_IGN_MEDIA_CHANGE	((__force blist_flags_t)(1ULL << 11))
+ /* do not do automatic start on add */
+ #define BLIST_NOSTARTONADD	((__force blist_flags_t)(1ULL << 12))
+-#define __BLIST_UNUSED_13	((__force blist_flags_t)(1ULL << 13))
++/* do not ask for VPD page size first on some broken targets */
++#define BLIST_NO_VPD_SIZE	((__force blist_flags_t)(1ULL << 13))
+ #define __BLIST_UNUSED_14	((__force blist_flags_t)(1ULL << 14))
+ #define __BLIST_UNUSED_15	((__force blist_flags_t)(1ULL << 15))
+ #define __BLIST_UNUSED_16	((__force blist_flags_t)(1ULL << 16))
+@@ -74,8 +75,7 @@
+ #define __BLIST_HIGH_UNUSED (~(__BLIST_LAST_USED | \
+ 			       (__force blist_flags_t) \
+ 			       ((__force __u64)__BLIST_LAST_USED - 1ULL)))
+-#define __BLIST_UNUSED_MASK (__BLIST_UNUSED_13 | \
+-			     __BLIST_UNUSED_14 | \
++#define __BLIST_UNUSED_MASK (__BLIST_UNUSED_14 | \
+ 			     __BLIST_UNUSED_15 | \
+ 			     __BLIST_UNUSED_16 | \
+ 			     __BLIST_UNUSED_24 | \
 -- 
 2.39.2
 
