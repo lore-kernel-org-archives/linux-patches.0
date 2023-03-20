@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0151C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EDEC433D2;
-	Mon, 20 Mar 2023 15:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFDB1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F8FC433D2;
+	Mon, 20 Mar 2023 15:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324810;
-	bh=eBgYG1dKWuYXje9cjaG0yInKIaujqpzwI+C874yfPyk=;
+	s=korg; t=1679324813;
+	bh=BCmNvDMhrMkhlmJKS0+v/dzhSURA4nc1L1BFv8Z3Rfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vM5JvlCGnpuPkW5224vyH1uhakAlVM9o6ziht0DO6RP88PAPEWqYbr3CE+QWo2DGI
-	 w/HnLFW/eOZPXL0+BeakadCDq2D1XX4aUJ7qY625mP1YUSBq49+GnNQqPJeVD92DmH
-	 LBSjQze6pFK2Aq8kFgmvm4HWYYs76kxRtaLEiAII=
+	b=sxdCPuydw7dNZ0gYnARlvIJgOO2gVJDlJj9U4ZtST84X1097yIcgvtpEhxbRZO1fq
+	 pIg56VFo7SkrV5CmivGX0SGE6NPOePGeGgYkAuxdkCpP5IQOLSVXnhFA9WqF7FuRlF
+	 6kSO2tgV7DbOSke8DqZUuEXybggoQBPYKhZsFza8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Ying <victor.liu@nxp.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/115] drm/bridge: Fix returned array size name for atomic_get_input_bus_fmts kdoc
-Date: Mon, 20 Mar 2023 15:54:08 +0100
-Message-Id: <20230320145450.973140436@linuxfoundation.org>
+	Sung-hun Kim <sfoon.kim@samsung.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 61/99] tracing: Make splice_read available again
+Date: Mon, 20 Mar 2023 15:54:39 +0100
+Message-Id: <20230320145445.941093832@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Ying <victor.liu@nxp.com>
+From: Sung-hun Kim <sfoon.kim@samsung.com>
 
-[ Upstream commit 0d3c9333d976af41d7dbc6bf4d9d2e95fbdf9c89 ]
+commit e400be674a1a40e9dcb2e95f84d6c1fd2d88f31d upstream.
 
-The returned array size for input formats is set through
-atomic_get_input_bus_fmts()'s 'num_input_fmts' argument, so use
-'num_input_fmts' to represent the array size in the function's kdoc,
-not 'num_output_fmts'.
+Since the commit 36e2c7421f02 ("fs: don't allow splice read/write
+without explicit ops") is applied to the kernel, splice() and
+sendfile() calls on the trace file (/sys/kernel/debug/tracing
+/trace) return EINVAL.
 
-Fixes: 91ea83306bfa ("drm/bridge: Fix the bridge kernel doc")
-Fixes: f32df58acc68 ("drm/bridge: Add the necessary bits to support bus format negotiation")
-Signed-off-by: Liu Ying <victor.liu@nxp.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230314055035.3731179-1-victor.liu@nxp.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch restores these system calls by initializing splice_read
+in file_operations of the trace file. This patch only enables such
+functionalities for the read case.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230314013707.28814-1-sfoon.kim@samsung.com
+
+Cc: stable@vger.kernel.org
+Fixes: 36e2c7421f02 ("fs: don't allow splice read/write without explicit ops")
+Signed-off-by: Sung-hun Kim <sfoon.kim@samsung.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/drm/drm_bridge.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/trace.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
-index 1648ce265cba0..c84783cd5abd7 100644
---- a/include/drm/drm_bridge.h
-+++ b/include/drm/drm_bridge.h
-@@ -447,11 +447,11 @@ struct drm_bridge_funcs {
- 	 *
- 	 * The returned array must be allocated with kmalloc() and will be
- 	 * freed by the caller. If the allocation fails, NULL should be
--	 * returned. num_output_fmts must be set to the returned array size.
-+	 * returned. num_input_fmts must be set to the returned array size.
- 	 * Formats listed in the returned array should be listed in decreasing
- 	 * preference order (the core will try all formats until it finds one
- 	 * that works). When the format is not supported NULL should be
--	 * returned and num_output_fmts should be set to 0.
-+	 * returned and num_input_fmts should be set to 0.
- 	 *
- 	 * This method is called on all elements of the bridge chain as part of
- 	 * the bus format negotiation process that happens in
--- 
-2.39.2
-
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -4705,6 +4705,8 @@ loff_t tracing_lseek(struct file *file,
+ static const struct file_operations tracing_fops = {
+ 	.open		= tracing_open,
+ 	.read		= seq_read,
++	.read_iter	= seq_read_iter,
++	.splice_read	= generic_file_splice_read,
+ 	.write		= tracing_write_stub,
+ 	.llseek		= tracing_lseek,
+ 	.release	= tracing_release,
 
 
