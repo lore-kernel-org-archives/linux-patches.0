@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53371C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B8EC433EF;
-	Mon, 20 Mar 2023 15:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EED1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:26:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F066DC433EF;
+	Mon, 20 Mar 2023 15:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325964;
-	bh=oNs5CYJKvPO/tjHt1S2z8Hzv0790wMQ3H0YGEJLrCg0=;
+	s=korg; t=1679325967;
+	bh=0YqCqh+Qg+2o7MkvMn8iGQ1yHulaS9ofUuDEMfWzGW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rYsH6un780UJN96XSZ8ntXtIzeQBWtjgvDmeGTM7wuFKIZ16sRGloBF7XW4bxKtdJ
-	 cWoG4INkpUPKo/wtHZ1sAU3vJ1nDcww3TVkL03LNSQ2cQgsq/rvDQ2EtGPENuB8OHb
-	 BJbsEjp/ImXxyzeK+fNtEb2BB9p4PPsCkX76dLF4=
+	b=XIE5XFXf6bigRQHMr/kDcUjBU+TBT5+ndyiX9lPvksIWtFEXRF3CQemWPHXNjFeQh
+	 bAC+p/O55e1jd7v1kVXeB60bPTvT9LBx7PbLkhOE6XKl6LkI75eU6r5Fth8bGCpZG1
+	 6mMcff8wbFabgkceAC+HhfOXd7d4Iv3ke4r9YRu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 175/198] powerpc/64: Set default CPU in Kconfig
-Date: Mon, 20 Mar 2023 15:55:13 +0100
-Message-Id: <20230320145514.858877805@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: [PATCH 6.2 133/211] interconnect: fix mem leak when freeing nodes
+Date: Mon, 20 Mar 2023 15:54:28 +0100
+Message-Id: <20230320145519.008590481@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,127 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 45f7091aac3546ef8112bf62836650ca0bbf0b79 upstream.
+commit a5904f415e1af72fa8fe6665aa4f554dc2099a95 upstream.
 
-Since commit 0069f3d14e7a ("powerpc/64e: Tie PPC_BOOK3E_64 to
-PPC_E500MC"), the only possible BOOK3E/64 are E500, so no need of a
-default CPU over the E5500.
+The node link array is allocated when adding links to a node but is not
+deallocated when nodes are destroyed.
 
-When the user selects book3e, they must have an e500 compatible
-compiler, and it won't work anymore with the default -mcpu=power64, see
-commit d6b551b8f90c ("powerpc/64e: Fix build failure with GCC
-12 (unrecognized opcode: `wrteei')").
-
-For book3s/64, replace GENERIC_CPU by POWERPC64_CPU to match the PPC32
-POWERPC_CPU, and set a default mpcu value in Kconfig directly.
-
-When a user selects a particular CPU, they must ensure the compiler has
-the requested capability. Therefore, remove hidden fallback, instead
-offer user the possibility to say they want to use the toolchain
-default.
-
-Fixes: d6b551b8f90c ("powerpc/64e: Fix build failure with GCC 12 (unrecognized opcode: `wrteei')")
-Reported-by: Pali Rohár <pali@kernel.org>
-Tested-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/76c11197b058193dcb8e8b26adffba09cfbdab11.1674632329.git.christophe.leroy@csgroup.eu
+Fixes: 11f1ceca7031 ("interconnect: Add generic on-chip interconnect API")
+Cc: stable@vger.kernel.org      # 5.1
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # i.MX8MP MSC SM2-MB-EP1 Board
+Link: https://lore.kernel.org/r/20230306075651.2449-2-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/Makefile                  |   22 +++++-----------------
- arch/powerpc/platforms/Kconfig.cputype |   12 +++++++-----
- 2 files changed, 12 insertions(+), 22 deletions(-)
+ drivers/interconnect/core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/powerpc/Makefile
-+++ b/arch/powerpc/Makefile
-@@ -146,19 +146,6 @@ CFLAGS-$(CONFIG_PPC32)	+= $(call cc-opti
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -850,6 +850,10 @@ void icc_node_destroy(int id)
  
- CFLAGS-$(CONFIG_PPC32)	+= $(call cc-option,-mno-readonly-in-sdata)
+ 	mutex_unlock(&icc_lock);
  
--ifdef CONFIG_PPC_BOOK3S_64
--ifdef CONFIG_CPU_LITTLE_ENDIAN
--CFLAGS-$(CONFIG_GENERIC_CPU) += -mcpu=power8
--else
--CFLAGS-$(CONFIG_GENERIC_CPU) += -mcpu=power4
--endif
--CFLAGS-$(CONFIG_GENERIC_CPU) += $(call cc-option,-mtune=power10,	\
--				  $(call cc-option,-mtune=power9,	\
--				  $(call cc-option,-mtune=power8)))
--else ifdef CONFIG_PPC_BOOK3E_64
--CFLAGS-$(CONFIG_GENERIC_CPU) += -mcpu=powerpc64
--endif
--
- ifdef CONFIG_FUNCTION_TRACER
- CC_FLAGS_FTRACE := -pg
- ifdef CONFIG_MPROFILE_KERNEL
-@@ -166,11 +153,12 @@ CC_FLAGS_FTRACE += -mprofile-kernel
- endif
- endif
- 
--CFLAGS-$(CONFIG_TARGET_CPU_BOOL) += $(call cc-option,-mcpu=$(CONFIG_TARGET_CPU))
--AFLAGS-$(CONFIG_TARGET_CPU_BOOL) += $(call cc-option,-mcpu=$(CONFIG_TARGET_CPU))
-+CFLAGS-$(CONFIG_TARGET_CPU_BOOL) += -mcpu=$(CONFIG_TARGET_CPU)
-+AFLAGS-$(CONFIG_TARGET_CPU_BOOL) += -mcpu=$(CONFIG_TARGET_CPU)
- 
--CFLAGS-$(CONFIG_E5500_CPU) += $(call cc-option,-mcpu=e500mc64,-mcpu=powerpc64)
--CFLAGS-$(CONFIG_E6500_CPU) += $(call cc-option,-mcpu=e6500,$(E5500_CPU))
-+CFLAGS-$(CONFIG_POWERPC64_CPU) += $(call cc-option,-mtune=power10,	\
-+				  $(call cc-option,-mtune=power9,	\
-+				  $(call cc-option,-mtune=power8)))
- 
- asinstr := $(call as-instr,lis 9$(comma)foo@high,-DHAVE_AS_ATHIGH=1)
- 
---- a/arch/powerpc/platforms/Kconfig.cputype
-+++ b/arch/powerpc/platforms/Kconfig.cputype
-@@ -118,19 +118,18 @@ endchoice
- 
- choice
- 	prompt "CPU selection"
--	default GENERIC_CPU
- 	help
- 	  This will create a kernel which is optimised for a particular CPU.
- 	  The resulting kernel may not run on other CPUs, so use this with care.
- 
- 	  If unsure, select Generic.
- 
--config GENERIC_CPU
-+config POWERPC64_CPU
- 	bool "Generic (POWER5 and PowerPC 970 and above)"
- 	depends on PPC_BOOK3S_64 && !CPU_LITTLE_ENDIAN
- 	select PPC_64S_HASH_MMU
- 
--config GENERIC_CPU
-+config POWERPC64_CPU
- 	bool "Generic (POWER8 and above)"
- 	depends on PPC_BOOK3S_64 && CPU_LITTLE_ENDIAN
- 	select ARCH_HAS_FAST_MULTIPLIER
-@@ -228,13 +227,12 @@ config E500MC_CPU
- 
- config TOOLCHAIN_DEFAULT_CPU
- 	bool "Rely on the toolchain's implicit default CPU"
--	depends on PPC32
- 
- endchoice
- 
- config TARGET_CPU_BOOL
- 	bool
--	default !GENERIC_CPU && !TOOLCHAIN_DEFAULT_CPU
-+	default !TOOLCHAIN_DEFAULT_CPU
- 
- config TARGET_CPU
- 	string
-@@ -246,6 +244,10 @@ config TARGET_CPU
- 	default "power8" if POWER8_CPU
- 	default "power9" if POWER9_CPU
- 	default "power10" if POWER10_CPU
-+	default "e500mc64" if E5500_CPU
-+	default "e6500" if E6500_CPU
-+	default "power4" if POWERPC64_CPU && !CPU_LITTLE_ENDIAN
-+	default "power8" if POWERPC64_CPU && CPU_LITTLE_ENDIAN
- 	default "405" if 405_CPU
- 	default "440" if 440_CPU
- 	default "464" if 464_CPU
++	if (!node)
++		return;
++
++	kfree(node->links);
+ 	kfree(node);
+ }
+ EXPORT_SYMBOL_GPL(icc_node_destroy);
 
 
