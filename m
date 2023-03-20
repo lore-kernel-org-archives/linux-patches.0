@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF201C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E27EC433D2;
-	Mon, 20 Mar 2023 15:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD721C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3C1C433EF;
+	Mon, 20 Mar 2023 15:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325679;
-	bh=wnXLSYdOtPwWTzOW70MLofEFjxHN6DtpqNqEXo76lb8=;
+	s=korg; t=1679325682;
+	bh=whCBsYSpfT8Fg3mVeUSV+UNbIi6U/xFKJGj1jZAxL8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pwaGA04+yRgbZPE/qO0JnViQA6nJvyisNoJvYRjIfckxuzcY2pRFMNE0HuNS+gvHw
-	 NC9DyPJ1tNbS3flR6y+DOt1PmKj9EAmpIxzpQUt1PJfOZuVt036bIDcoUhDoHe4GuT
-	 tbTwJ0JuBfXJUDerqncEYsokx7vtx8nHk1J3WT54=
+	b=cTayiMx/xf2jdy2P6mQmJpk0IZ/lHMLJbpHx3hyhlm3Xfthsu+XGC2FFGsjCKDLzT
+	 yug8b4F/dAibQdkDeY+91KRQYolz0Oi7bv9AkMuzUGvScEbjNcvb1ZIKJ0+koYUSz6
+	 l8+3YK2rMB+tq99oyeB9RtS7r9DSm81kgOyfFkMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 081/211] net: dsa: dont error out when drivers return ETH_DATA_LEN in .port_max_mtu()
-Date: Mon, 20 Mar 2023 15:53:36 +0100
-Message-Id: <20230320145516.687581662@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Amit Sunil Dhamne <amit.sunil.dhamne@xilinx.com>,
+	Michal Simek <michal.simek@xilinx.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 6.1 122/198] firmware: xilinx: dont make a sleepable memory allocation from an atomic context
+Date: Mon, 20 Mar 2023 15:54:20 +0100
+Message-Id: <20230320145512.662071519@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,81 +38,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Roman Gushchin <roman.gushchin@linux.dev>
 
-[ Upstream commit 636e8adf7878eab3614250234341bde45537f47a ]
+commit 38ed310c22e7a0fc978b1f8292136a4a4a8b3051 upstream.
 
-Currently, when dsa_slave_change_mtu() is called on a user port where
-dev->max_mtu is 1500 (as returned by ds->ops->port_max_mtu()), the code
-will stumble upon this check:
+The following issue was discovered using lockdep:
+[    6.691371] BUG: sleeping function called from invalid context at include/linux/sched/mm.h:209
+[    6.694602] in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 1, name: swapper/0
+[    6.702431] 2 locks held by swapper/0/1:
+[    6.706300]  #0: ffffff8800f6f188 (&dev->mutex){....}-{3:3}, at: __device_driver_lock+0x4c/0x90
+[    6.714900]  #1: ffffffc009a2abb8 (enable_lock){....}-{2:2}, at: clk_enable_lock+0x4c/0x140
+[    6.723156] irq event stamp: 304030
+[    6.726596] hardirqs last  enabled at (304029): [<ffffffc008d17ee0>] _raw_spin_unlock_irqrestore+0xc0/0xd0
+[    6.736142] hardirqs last disabled at (304030): [<ffffffc00876bc5c>] clk_enable_lock+0xfc/0x140
+[    6.744742] softirqs last  enabled at (303958): [<ffffffc0080904f0>] _stext+0x4f0/0x894
+[    6.752655] softirqs last disabled at (303951): [<ffffffc0080e53b8>] irq_exit+0x238/0x280
+[    6.760744] CPU: 1 PID: 1 Comm: swapper/0 Tainted: G     U            5.15.36 #2
+[    6.768048] Hardware name: xlnx,zynqmp (DT)
+[    6.772179] Call trace:
+[    6.774584]  dump_backtrace+0x0/0x300
+[    6.778197]  show_stack+0x18/0x30
+[    6.781465]  dump_stack_lvl+0xb8/0xec
+[    6.785077]  dump_stack+0x1c/0x38
+[    6.788345]  ___might_sleep+0x1a8/0x2a0
+[    6.792129]  __might_sleep+0x6c/0xd0
+[    6.795655]  kmem_cache_alloc_trace+0x270/0x3d0
+[    6.800127]  do_feature_check_call+0x100/0x220
+[    6.804513]  zynqmp_pm_invoke_fn+0x8c/0xb0
+[    6.808555]  zynqmp_pm_clock_getstate+0x90/0xe0
+[    6.813027]  zynqmp_pll_is_enabled+0x8c/0x120
+[    6.817327]  zynqmp_pll_enable+0x38/0xc0
+[    6.821197]  clk_core_enable+0x144/0x400
+[    6.825067]  clk_core_enable+0xd4/0x400
+[    6.828851]  clk_core_enable+0xd4/0x400
+[    6.832635]  clk_core_enable+0xd4/0x400
+[    6.836419]  clk_core_enable+0xd4/0x400
+[    6.840203]  clk_core_enable+0xd4/0x400
+[    6.843987]  clk_core_enable+0xd4/0x400
+[    6.847771]  clk_core_enable+0xd4/0x400
+[    6.851555]  clk_core_enable_lock+0x24/0x50
+[    6.855683]  clk_enable+0x24/0x40
+[    6.858952]  fclk_probe+0x84/0xf0
+[    6.862220]  platform_probe+0x8c/0x110
+[    6.865918]  really_probe+0x110/0x5f0
+[    6.869530]  __driver_probe_device+0xcc/0x210
+[    6.873830]  driver_probe_device+0x64/0x140
+[    6.877958]  __driver_attach+0x114/0x1f0
+[    6.881828]  bus_for_each_dev+0xe8/0x160
+[    6.885698]  driver_attach+0x34/0x50
+[    6.889224]  bus_add_driver+0x228/0x300
+[    6.893008]  driver_register+0xc0/0x1e0
+[    6.896792]  __platform_driver_register+0x44/0x60
+[    6.901436]  fclk_driver_init+0x1c/0x28
+[    6.905220]  do_one_initcall+0x104/0x590
+[    6.909091]  kernel_init_freeable+0x254/0x2bc
+[    6.913390]  kernel_init+0x24/0x130
+[    6.916831]  ret_from_fork+0x10/0x20
 
-	if (new_master_mtu > mtu_limit)
-		return -ERANGE;
+Fix it by passing the GFP_ATOMIC gfp flag for the corresponding
+memory allocation.
 
-because new_master_mtu is adjusted for the tagger overhead but mtu_limit
-is not.
-
-But it would be good if the logic went through, for example if the DSA
-master really depends on an MTU adjustment to accept DSA-tagged frames.
-
-To make the code pass through the check, we need to adjust mtu_limit for
-the overhead as well, if the minimum restriction was caused by the DSA
-user port's MTU (dev->max_mtu). A DSA user port MTU and a DSA master MTU
-are always offset by the protocol overhead.
-
-Currently no drivers return 1500 .port_max_mtu(), but this is only
-temporary and a bug in itself - mv88e6xxx should have done that, but
-since commit b9c587fed61c ("dsa: mv88e6xxx: Include tagger overhead when
-setting MTU for DSA and CPU ports") it no longer does. This is a
-preparation for fixing that.
-
-Fixes: bfcb813203e6 ("net: dsa: configure the MTU for switch ports")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: acfdd18591ea ("firmware: xilinx: Use hash-table for api feature check")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Amit Sunil Dhamne <amit.sunil.dhamne@xilinx.com>
+Cc: Michal Simek <michal.simek@xilinx.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Link: https://lore.kernel.org/r/20230308222602.123866-1-roman.gushchin@linux.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dsa/slave.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/firmware/xilinx/zynqmp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/dsa/slave.c b/net/dsa/slave.c
-index aab79c3552249..6711ddc0a3c7d 100644
---- a/net/dsa/slave.c
-+++ b/net/dsa/slave.c
-@@ -1899,6 +1899,7 @@ int dsa_slave_change_mtu(struct net_device *dev, int new_mtu)
- 	int new_master_mtu;
- 	int old_master_mtu;
- 	int mtu_limit;
-+	int overhead;
- 	int cpu_mtu;
- 	int err;
- 
-@@ -1927,9 +1928,10 @@ int dsa_slave_change_mtu(struct net_device *dev, int new_mtu)
- 			largest_mtu = slave_mtu;
+--- a/drivers/firmware/xilinx/zynqmp.c
++++ b/drivers/firmware/xilinx/zynqmp.c
+@@ -206,7 +206,7 @@ static int do_feature_check_call(const u
  	}
  
--	mtu_limit = min_t(int, master->max_mtu, dev->max_mtu);
-+	overhead = dsa_tag_protocol_overhead(cpu_dp->tag_ops);
-+	mtu_limit = min_t(int, master->max_mtu, dev->max_mtu + overhead);
- 	old_master_mtu = master->mtu;
--	new_master_mtu = largest_mtu + dsa_tag_protocol_overhead(cpu_dp->tag_ops);
-+	new_master_mtu = largest_mtu + overhead;
- 	if (new_master_mtu > mtu_limit)
- 		return -ERANGE;
+ 	/* Add new entry if not present */
+-	feature_data = kmalloc(sizeof(*feature_data), GFP_KERNEL);
++	feature_data = kmalloc(sizeof(*feature_data), GFP_ATOMIC);
+ 	if (!feature_data)
+ 		return -ENOMEM;
  
-@@ -1964,8 +1966,7 @@ int dsa_slave_change_mtu(struct net_device *dev, int new_mtu)
- 
- out_port_failed:
- 	if (new_master_mtu != old_master_mtu)
--		dsa_port_mtu_change(cpu_dp, old_master_mtu -
--				    dsa_tag_protocol_overhead(cpu_dp->tag_ops));
-+		dsa_port_mtu_change(cpu_dp, old_master_mtu - overhead);
- out_cpu_failed:
- 	if (new_master_mtu != old_master_mtu)
- 		dev_set_mtu(master, old_master_mtu);
--- 
-2.39.2
-
 
 
