@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049341C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783B6C433D2;
-	Mon, 20 Mar 2023 15:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28161C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:29:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 332F3C433EF;
+	Mon, 20 Mar 2023 15:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326164;
-	bh=XKzXgn7MWV3F+pb/RehuvX47Xv7UkDLbdR497ogiueA=;
+	s=korg; t=1679326167;
+	bh=Fc2LY8kg5erkMKI8YX4205Af+z97dWI42SPFrBSVEqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSVkYgf82DhMV/mzE9Y/3WX4+w8X19lpKjCDQ4krcg8XulS++vZQpR2lkmwziX0MO
-	 EJFSuyWlXFse5jFP6CZCmTFDq3jRpUlmW0ZLs8TBhRShIR92tzWvEJPFPJmsrTjkbn
-	 HVZNx4pmZJGGORfjvF12n5OuP6c6MbskVvM2Yb5o=
+	b=jtlwtlD6v059aCRbH0LlD1TJxxSTAPy6j/Lf+rGdIUWm02NOTS8jtYIMtBIn93UQM
+	 0ZO7NiBZ4gaPvV0eJ7l0s9r9UfTKiNjqj6r0k8aHm7/+zKkZU9rhNwSOiRuwYS8Yj/
+	 URQEB6dwIbW53aEGuT3I8MvGSQ7Dpu1CF0maBpiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
+	James Houghton <jthoughton@google.com>,
 	Peter Xu <peterx@redhat.com>,
-	Mike Rapoport <rppt@linux.vnet.ibm.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Jerome Glisse <jglisse@redhat.com>,
-	Shaohua Li <shli@fb.com>,
+	David Hildenbrand <david@redhat.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 185/211] mm/userfaultfd: propagate uffd-wp bit when PTE-mapping the huge zeropage
-Date: Mon, 20 Mar 2023 15:55:20 +0100
-Message-Id: <20230320145521.245483628@linuxfoundation.org>
+Subject: [PATCH 6.2 186/211] mm: teach mincore_hugetlb about pte markers
+Date: Mon, 20 Mar 2023 15:55:21 +0100
+Message-Id: <20230320145521.293151991@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -39,223 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Hildenbrand <david@redhat.com>
+From: James Houghton <jthoughton@google.com>
 
-commit 42b2af2c9b7eede8ef21d0943f84d135e21a32a3 upstream.
+commit 63cf584203f3367c8b073d417c8e5cbbfc450506 upstream.
 
-Currently, we'd lose the userfaultfd-wp marker when PTE-mapping a huge
-zeropage, resulting in the next write faults in the PMD range not
-triggering uffd-wp events.
+By checking huge_pte_none(), we incorrectly classify PTE markers as
+"present".  Instead, check huge_pte_none_mostly(), classifying PTE markers
+the same as if the PTE were completely blank.
 
-Various actions (partial MADV_DONTNEED, partial mremap, partial munmap,
-partial mprotect) could trigger this.  However, most importantly,
-un-protecting a single sub-page from the userfaultfd-wp handler when
-processing a uffd-wp event will PTE-map the shared huge zeropage and lose
-the uffd-wp bit for the remainder of the PMD.
+PTE markers, unlike other kinds of swap entries, don't reference any
+physical page and don't indicate that a physical page was mapped
+previously.  As such, treat them as non-present for the sake of mincore().
 
-Let's properly propagate the uffd-wp bit to the PMDs.
-
- #define _GNU_SOURCE
- #include <stdio.h>
- #include <stdlib.h>
- #include <stdint.h>
- #include <stdbool.h>
- #include <inttypes.h>
- #include <fcntl.h>
- #include <unistd.h>
- #include <errno.h>
- #include <poll.h>
- #include <pthread.h>
- #include <sys/mman.h>
- #include <sys/syscall.h>
- #include <sys/ioctl.h>
- #include <linux/userfaultfd.h>
-
- static size_t pagesize;
- static int uffd;
- static volatile bool uffd_triggered;
-
- #define barrier() __asm__ __volatile__("": : :"memory")
-
- static void uffd_wp_range(char *start, size_t size, bool wp)
- {
- 	struct uffdio_writeprotect uffd_writeprotect;
-
- 	uffd_writeprotect.range.start = (unsigned long) start;
- 	uffd_writeprotect.range.len = size;
- 	if (wp) {
- 		uffd_writeprotect.mode = UFFDIO_WRITEPROTECT_MODE_WP;
- 	} else {
- 		uffd_writeprotect.mode = 0;
- 	}
- 	if (ioctl(uffd, UFFDIO_WRITEPROTECT, &uffd_writeprotect)) {
- 		fprintf(stderr, "UFFDIO_WRITEPROTECT failed: %d\n", errno);
- 		exit(1);
- 	}
- }
-
- static void *uffd_thread_fn(void *arg)
- {
- 	static struct uffd_msg msg;
- 	ssize_t nread;
-
- 	while (1) {
- 		struct pollfd pollfd;
- 		int nready;
-
- 		pollfd.fd = uffd;
- 		pollfd.events = POLLIN;
- 		nready = poll(&pollfd, 1, -1);
- 		if (nready == -1) {
- 			fprintf(stderr, "poll() failed: %d\n", errno);
- 			exit(1);
- 		}
-
- 		nread = read(uffd, &msg, sizeof(msg));
- 		if (nread <= 0)
- 			continue;
-
- 		if (msg.event != UFFD_EVENT_PAGEFAULT ||
- 		    !(msg.arg.pagefault.flags & UFFD_PAGEFAULT_FLAG_WP)) {
- 			printf("FAIL: wrong uffd-wp event fired\n");
- 			exit(1);
- 		}
-
- 		/* un-protect the single page. */
- 		uffd_triggered = true;
- 		uffd_wp_range((char *)(uintptr_t)msg.arg.pagefault.address,
- 			      pagesize, false);
- 	}
- 	return arg;
- }
-
- static int setup_uffd(char *map, size_t size)
- {
- 	struct uffdio_api uffdio_api;
- 	struct uffdio_register uffdio_register;
- 	pthread_t thread;
-
- 	uffd = syscall(__NR_userfaultfd,
- 		       O_CLOEXEC | O_NONBLOCK | UFFD_USER_MODE_ONLY);
- 	if (uffd < 0) {
- 		fprintf(stderr, "syscall() failed: %d\n", errno);
- 		return -errno;
- 	}
-
- 	uffdio_api.api = UFFD_API;
- 	uffdio_api.features = UFFD_FEATURE_PAGEFAULT_FLAG_WP;
- 	if (ioctl(uffd, UFFDIO_API, &uffdio_api) < 0) {
- 		fprintf(stderr, "UFFDIO_API failed: %d\n", errno);
- 		return -errno;
- 	}
-
- 	if (!(uffdio_api.features & UFFD_FEATURE_PAGEFAULT_FLAG_WP)) {
- 		fprintf(stderr, "UFFD_FEATURE_WRITEPROTECT missing\n");
- 		return -ENOSYS;
- 	}
-
- 	uffdio_register.range.start = (unsigned long) map;
- 	uffdio_register.range.len = size;
- 	uffdio_register.mode = UFFDIO_REGISTER_MODE_WP;
- 	if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) < 0) {
- 		fprintf(stderr, "UFFDIO_REGISTER failed: %d\n", errno);
- 		return -errno;
- 	}
-
- 	pthread_create(&thread, NULL, uffd_thread_fn, NULL);
-
- 	return 0;
- }
-
- int main(void)
- {
- 	const size_t size = 4 * 1024 * 1024ull;
- 	char *map, *cur;
-
- 	pagesize = getpagesize();
-
- 	map = mmap(NULL, size, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, -1, 0);
- 	if (map == MAP_FAILED) {
- 		fprintf(stderr, "mmap() failed\n");
- 		return -errno;
- 	}
-
- 	if (madvise(map, size, MADV_HUGEPAGE)) {
- 		fprintf(stderr, "MADV_HUGEPAGE failed\n");
- 		return -errno;
- 	}
-
- 	if (setup_uffd(map, size))
- 		return 1;
-
- 	/* Read the whole range, populating zeropages. */
- 	madvise(map, size, MADV_POPULATE_READ);
-
- 	/* Write-protect the whole range. */
- 	uffd_wp_range(map, size, true);
-
- 	/* Make sure uffd-wp triggers on each page. */
- 	for (cur = map; cur < map + size; cur += pagesize) {
- 		uffd_triggered = false;
-
- 		barrier();
- 		/* Trigger a write fault. */
- 		*cur = 1;
- 		barrier();
-
- 		if (!uffd_triggered) {
- 			printf("FAIL: uffd-wp did not trigger\n");
- 			return 1;
- 		}
- 	}
-
- 	printf("PASS: uffd-wp triggered\n");
- 	return 0;
- }
-
-Link: https://lkml.kernel.org/r/20230302175423.589164-1-david@redhat.com
-Fixes: e06f1e1dd499 ("userfaultfd: wp: enabled write protection in userfaultfd API")
-Signed-off-by: David Hildenbrand <david@redhat.com>
+Link: https://lkml.kernel.org/r/20230302222404.175303-1-jthoughton@google.com
+Fixes: 5c041f5d1f23 ("mm: teach core mm about pte markers")
+Signed-off-by: James Houghton <jthoughton@google.com>
 Acked-by: Peter Xu <peterx@redhat.com>
-Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Jerome Glisse <jglisse@redhat.com>
-Cc: Shaohua Li <shli@fb.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: James Houghton <jthoughton@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ mm/mincore.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2046,7 +2046,7 @@ static void __split_huge_zero_page_pmd(s
- {
- 	struct mm_struct *mm = vma->vm_mm;
- 	pgtable_t pgtable;
--	pmd_t _pmd;
-+	pmd_t _pmd, old_pmd;
- 	int i;
- 
- 	/*
-@@ -2057,7 +2057,7 @@ static void __split_huge_zero_page_pmd(s
- 	 *
- 	 * See Documentation/mm/mmu_notifier.rst
+--- a/mm/mincore.c
++++ b/mm/mincore.c
+@@ -33,7 +33,7 @@ static int mincore_hugetlb(pte_t *pte, u
+ 	 * Hugepages under user process are always in RAM and never
+ 	 * swapped out, but theoretically it needs to be checked.
  	 */
--	pmdp_huge_clear_flush(vma, haddr, pmd);
-+	old_pmd = pmdp_huge_clear_flush(vma, haddr, pmd);
- 
- 	pgtable = pgtable_trans_huge_withdraw(mm, pmd);
- 	pmd_populate(mm, &_pmd, pgtable);
-@@ -2066,6 +2066,8 @@ static void __split_huge_zero_page_pmd(s
- 		pte_t *pte, entry;
- 		entry = pfn_pte(my_zero_pfn(haddr), vma->vm_page_prot);
- 		entry = pte_mkspecial(entry);
-+		if (pmd_uffd_wp(old_pmd))
-+			entry = pte_mkuffd_wp(entry);
- 		pte = pte_offset_map(&_pmd, haddr);
- 		VM_BUG_ON(!pte_none(*pte));
- 		set_pte_at(mm, haddr, pte, entry);
+-	present = pte && !huge_pte_none(huge_ptep_get(pte));
++	present = pte && !huge_pte_none_mostly(huge_ptep_get(pte));
+ 	for (; addr != end; vec++, addr += PAGE_SIZE)
+ 		*vec = present;
+ 	walk->private = vec;
 
 
