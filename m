@@ -1,70 +1,90 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01B16D1B
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 19:41:08 +0000 (UTC)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id B40FA1C0DC0; Mon, 20 Mar 2023 20:40:59 +0100 (CET)
-Date: Mon, 20 Mar 2023 20:40:59 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, davidgow@google.com
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 00/99] 5.10.176-rc1 review
-Message-ID: <ZBi2y4cQRKnTAAFS@duo.ucw.cz>
-References: <20230320145443.333824603@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDAC6FA6
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 20:00:36 +0000 (UTC)
+Received: by mail-qv1-f50.google.com with SMTP id cu4so8383822qvb.3
+        for <patches@lists.linux.dev>; Mon, 20 Mar 2023 13:00:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679342436;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ncz9Qy4DSOSCtDPPMkaguFx8M2v82pbbx+KqBVH+Vb0=;
+        b=gAPOvuv09IB4axFEdbyMK3ydCNXCZXJtfNDpwG6dRc0HQr2dSuf305SgVyvjMnYc1R
+         YbaB8kQebWgxMOjcDa1aHm5yngb4QshND5iFZTzhsx9I3vxym2vxn3x9P75UQ7gTMlya
+         4y6ewvkqMy/pPKtgOhGEEV1S+BeNyEsle27jf76KrZyDV+4tfoX3jEIWtAP0LJHLbezh
+         jOnAArgxUw9M76LDMDHPuXtb12b8xK6jxb9lPxP6z9iZfTUyk+hUr9rM4mHwBGn1oQU5
+         KGN8BqEcoeFvdZR0rFG2TzTbvou6SPzgu3lkbb4NiXcF7z5s6TpUpP5tRAb82T6xhHae
+         t4lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679342436;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ncz9Qy4DSOSCtDPPMkaguFx8M2v82pbbx+KqBVH+Vb0=;
+        b=ccwyB7Sdodym7XP0KRTb2p1bY0YxdCd8xAvgBZ9XcYaDVxYwnIa7CtrnFpneJtphzm
+         915xKRS9fXkKUhVQwGNllJhF8fhAMu1OJa5d7SAKech0inMy8dZd5+UdJ/Oila7hCpuq
+         Xpxs65+1mxBfRolJi0dyj8+BF+UmixqIHNMsEsJXzcWlyntgduGpEl89je+dzjMzt0dh
+         fevWk/zuheGbipk8nSRbz1AgajA4ZmTR2bgWmzX7bWYJBW19Cif3qCPSOD4qPfrYia3D
+         6lPcqVwHyhf0JSAxpVast8BqsT8wV8LCP2AB5QYIVB+QYnGmOLI7C+UK1MgLt6OtNofc
+         a6CQ==
+X-Gm-Message-State: AO0yUKV4O6hgVJeXf5ht8VYPJpHLSyTd+1GM/571GUKCMTIy0UtOaUsv
+	7hFZgKutMiQyhulvg82OiHg=
+X-Google-Smtp-Source: AK7set8Q76Ke19mD1eHBAf6ZxetIGPmwhUCjXNxaGno2+4Ts2TcGIxYnSIxXmeU5A5fFxWpUoZSzVA==
+X-Received: by 2002:ad4:5bce:0:b0:5ab:c25f:9791 with SMTP id t14-20020ad45bce000000b005abc25f9791mr225772qvt.29.1679342435939;
+        Mon, 20 Mar 2023 13:00:35 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id bk12-20020a05620a1a0c00b0074357a6529asm7960294qkb.105.2023.03.20.13.00.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Mar 2023 13:00:35 -0700 (PDT)
+Message-ID: <f6679e32-3c77-dcfd-cf34-2b41a845d71c@gmail.com>
+Date: Mon, 20 Mar 2023 13:00:27 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="iaVLeYsRAx45gDPJ"
-Content-Disposition: inline
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 5.15 000/115] 5.15.104-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230320145449.336983711@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
---iaVLeYsRAx45gDPJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-> This is the start of the stable review cycle for the 5.10.176 release.
-> There are 99 patches in this series, all will be posted as a response
+On 3/20/23 07:53, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.104 release.
+> There are 115 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
+> 
+> Responses should be made by Wed, 22 Mar 2023 14:54:26 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.104-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-> David Gow <davidgow@google.com>
->     rust: arch/um: Disable FP/SIMD instruction to match x86
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Why is this patch here? It does not make sense for stable, it was only
-in AUTOSEL for less than a week, and I already explained why it is
-bad.
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
 
-"git grep KBUILD_RUSTFLAGS" if in doubt.
-
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---iaVLeYsRAx45gDPJ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZBi2ywAKCRAw5/Bqldv6
-8us9AKCl6DQOOqkO66UXPEgQYG7PFx+esgCeLEFphO1uqB1D4D351QwjaTT0hl4=
-=LG53
------END PGP SIGNATURE-----
-
---iaVLeYsRAx45gDPJ--
