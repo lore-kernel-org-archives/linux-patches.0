@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1D31C08
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:56:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA52C4339E;
-	Mon, 20 Mar 2023 14:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6CE1C08
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:57:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C563FC4331E;
+	Mon, 20 Mar 2023 14:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324196;
-	bh=a1KPJkflHWD0JIEyXxwWbSMNHI7iIWc1mdqqOdskrG0=;
+	s=korg; t=1679324226;
+	bh=BIJ7USZPbTLz86WbWaFqVVWpC6buoOH4vTO64kmYc3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CgnYKMwcXU2Rc4t04KFZh6j2m5qkVk22rsNCcC3EyQKauM0g2e6u/qdExKL+KHun6
-	 TUZylXQilLYHTvT3UdNaiyQ56U+rCTXdC3g6RfVxHNluogTEuiGIXs1I0scMNnr74J
-	 DCGRlQhrZkNxGa+/hfXl2bjW0O+3lK8upp3qhlxw=
+	b=vTb8WBfYtaM/2qQOyTWP0cksyGhsQDuwXXC3G8GBvyO6SBw5qyL+DUVCOdX/pvI5U
+	 QMCKyAnyRZbZoap/NpyF2x+PdFPq/vpkgqtxJkp+XTPk2In3ThkWID9A2a3SXDkNvB
+	 c8XhHfTgLsOZV94dq/j7tf7YraFM8S1tqWedbWyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David George <David.George@sophos.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Breno Leitao <leitao@debian.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 001/211] xfrm: Allow transport-mode states with AF_UNSPEC selector
-Date: Mon, 20 Mar 2023 15:52:16 +0100
-Message-Id: <20230320145513.365055571@linuxfoundation.org>
+Subject: [PATCH 4.14 03/30] tcp: tcp_make_synack() can be called from process context
+Date: Mon, 20 Mar 2023 15:54:27 +0100
+Message-Id: <20230320145420.360091550@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145420.204894191@linuxfoundation.org>
+References: <20230320145420.204894191@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,44 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit c276a706ea1f51cf9723ed8484feceaf961b8f89 ]
+[ Upstream commit bced3f7db95ff2e6ca29dc4d1c9751ab5e736a09 ]
 
-xfrm state selectors are matched against the inner-most flow
-which can be of any address family.  Therefore middle states
-in nested configurations need to carry a wildcard selector in
-order to work at all.
+tcp_rtx_synack() now could be called in process context as explained in
+0a375c822497 ("tcp: tcp_rtx_synack() can be called from process
+context").
 
-However, this is currently forbidden for transport-mode states.
+tcp_rtx_synack() might call tcp_make_synack(), which will touch per-CPU
+variables with preemption enabled. This causes the following BUG:
 
-Fix this by removing the unnecessary check.
+    BUG: using __this_cpu_add() in preemptible [00000000] code: ThriftIO1/5464
+    caller is tcp_make_synack+0x841/0xac0
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x10d/0x1a0
+     check_preemption_disabled+0x104/0x110
+     tcp_make_synack+0x841/0xac0
+     tcp_v6_send_synack+0x5c/0x450
+     tcp_rtx_synack+0xeb/0x1f0
+     inet_rtx_syn_ack+0x34/0x60
+     tcp_check_req+0x3af/0x9e0
+     tcp_rcv_state_process+0x59b/0x2030
+     tcp_v6_do_rcv+0x5f5/0x700
+     release_sock+0x3a/0xf0
+     tcp_sendmsg+0x33/0x40
+     ____sys_sendmsg+0x2f2/0x490
+     __sys_sendmsg+0x184/0x230
+     do_syscall_64+0x3d/0x90
 
-Fixes: 13996378e658 ("[IPSEC]: Rename mode to outer_mode and add inner_mode")
-Reported-by: David George <David.George@sophos.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Avoid calling __TCP_INC_STATS() with will touch per-cpu variables. Use
+TCP_INC_STATS() which is safe to be called from context switch.
+
+Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230308190745.780221-1-leitao@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 5 -----
- 1 file changed, 5 deletions(-)
+ net/ipv4/tcp_output.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 00afe831c71c4..f238048bf786e 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -2815,11 +2815,6 @@ int __xfrm_init_state(struct xfrm_state *x, bool init_replay, bool offload,
- 			goto error;
- 		}
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 2a9e55411ac42..8b2d49120ce23 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3300,7 +3300,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
+ 	th->window = htons(min(req->rsk_rcv_wnd, 65535U));
+ 	tcp_options_write((__be32 *)(th + 1), NULL, &opts);
+ 	th->doff = (tcp_header_size >> 2);
+-	__TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
++	TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
  
--		if (!(inner_mode->flags & XFRM_MODE_FLAG_TUNNEL)) {
--			NL_SET_ERR_MSG(extack, "Only tunnel modes can accommodate an AF_UNSPEC selector");
--			goto error;
--		}
--
- 		x->inner_mode = *inner_mode;
- 
- 		if (x->props.family == AF_INET)
+ #ifdef CONFIG_TCP_MD5SIG
+ 	/* Okay, we have all we need - do the md5 hash if needed */
 -- 
 2.39.2
 
