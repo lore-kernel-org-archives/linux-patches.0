@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED8D1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951B1C433EF;
-	Mon, 20 Mar 2023 15:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F421C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:14:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 504DDC4339B;
+	Mon, 20 Mar 2023 15:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325279;
-	bh=wKnpnxL9QTJ5czvm9+PJmIVxjbfMHMoHXrKWKzVRTWk=;
+	s=korg; t=1679325281;
+	bh=QucI+lPLHMALOt2SRM2/N/YsxLotuoqqqeylfsHIpx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bA2dW2tWYBnz4PA1QMdRDp58HWyid0naOyj02PDBzMYAAwusqU7wW6e7oVLSZUehz
-	 XPx2IPur0vXob5B0UGYhgpODtGPmhIGnJDkPTZpQdDbIVK2Z7UCa+stujrF+Yz3fyy
-	 c4Tg8MzTNVo6poTe7uWAzWPkeotwj68qyiHAEz/M=
+	b=jT/sF11uMJvMVkaOxqaOtVJ8jzpIfC+HkeY66GV5y4uy+DwRmVtcLFR4NCFZYBVdd
+	 p2orttBOXUm2cAuJK67QAW65zA68ClDKgj39mAx43IgycO4mQlZUz9LEr0Q0QL7tlU
+	 UhoHzA244D+WdqDDm4TR0kZtWqipX3odoIs72rfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/198] block: null_blk: Fix handling of fake timeout request
-Date: Mon, 20 Mar 2023 15:53:21 +0100
-Message-Id: <20230320145510.182171823@linuxfoundation.org>
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Gongjun Song <gongjun.song@intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 086/115] ALSA: hda: intel-dsp-config: add MTL PCI id
+Date: Mon, 20 Mar 2023 15:54:58 +0100
+Message-Id: <20230320145453.024789535@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,57 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 63f886597085f346276e3b3c8974de0100d65f32 ]
+commit bbdf904b13a62bb8b1272d92a7dde082dff86fbb upstream.
 
-When injecting a fake timeout into the null_blk driver using
-fail_io_timeout, the request timeout handler does not execute
-blk_mq_complete_request(), so the complete callback is never executed
-for a timedout request.
+Use SOF as default audio driver.
 
-The null_blk driver also has a driver-specific fake timeout mechanism
-which does not have this problem. Fix the problem with fail_io_timeout
-by using the same meachanism as null_blk internal timeout feature, using
-the fake_timeout field of null_blk commands.
-
-Reported-by: Akinobu Mita <akinobu.mita@gmail.com>
-Fixes: de3510e52b0a ("null_blk: fix command timeout completion handling")
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20230314041106.19173-2-damien.lemoal@opensource.wdc.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Gongjun Song <gongjun.song@intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230306074101.3906707-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/null_blk/main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/hda/intel-dsp-config.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 1f154f92f4c27..af419af9a0f4a 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -1393,8 +1393,7 @@ static inline void nullb_complete_cmd(struct nullb_cmd *cmd)
- 	case NULL_IRQ_SOFTIRQ:
- 		switch (cmd->nq->dev->queue_mode) {
- 		case NULL_Q_MQ:
--			if (likely(!blk_should_fake_timeout(cmd->rq->q)))
--				blk_mq_complete_request(cmd->rq);
-+			blk_mq_complete_request(cmd->rq);
- 			break;
- 		case NULL_Q_BIO:
- 			/*
-@@ -1655,7 +1654,8 @@ static blk_status_t null_queue_rq(struct blk_mq_hw_ctx *hctx,
- 	cmd->rq = bd->rq;
- 	cmd->error = BLK_STS_OK;
- 	cmd->nq = nq;
--	cmd->fake_timeout = should_timeout_request(bd->rq);
-+	cmd->fake_timeout = should_timeout_request(bd->rq) ||
-+		blk_should_fake_timeout(bd->rq->q);
+--- a/sound/hda/intel-dsp-config.c
++++ b/sound/hda/intel-dsp-config.c
+@@ -376,6 +376,15 @@ static const struct config_entry config_
+ 	},
+ #endif
  
- 	blk_mq_start_request(bd->rq);
++/* Meteor Lake */
++#if IS_ENABLED(CONFIG_SND_SOC_SOF_METEORLAKE)
++	/* Meteorlake-P */
++	{
++		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
++		.device = 0x7e28,
++	},
++#endif
++
+ };
  
--- 
-2.39.2
-
+ static const struct config_entry *snd_intel_dsp_find_config
 
 
