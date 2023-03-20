@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142CE1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:03:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7E2C433D2;
-	Mon, 20 Mar 2023 15:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9CC1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:03:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E80FC433D2;
+	Mon, 20 Mar 2023 15:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324601;
-	bh=je3jEpuUDfWuHy3kdIJipJ3SBjkS+AB+Lpd8j4yLdeg=;
+	s=korg; t=1679324604;
+	bh=Z+sQXRxUhjKAqZ7ovGFK74OegnZv+YnJQM3Wdd8orIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ESyWcQjMEN9rGLQsYVR6R2pWKKy32Vix3GQILgCymdJ2nCrBjFIEJdNKHDW6ldYLp
-	 cCZgD3zA/nQKwWbTGfuITe4a9FIWXocRirihDyizK2oMIrrRKrfc7iDnGH0E/RnL8n
-	 Yb9Sj8bDU6BnXhppKvZQQa/wuMuO/wP5GOIB3rmY=
+	b=dkeFOp0hmCcybNz6sGtzJbVjTfCh0Sy4MkENghnbSvFt+QZXm2NcbFpiZuE5qBxo0
+	 5gvA2ENwsHuFgwBcBQEAbQCFVwFyv85BNPLOifpCgUN7Y5kydORgxfGi9rbzwkBz3A
+	 NnqzUVDmnWdEwNkHwW1nUBm1qv5lMqaD1EoNF+Uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	lee@kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 5.4 59/60] HID: core: Provide new max_buffer_size attribute to over-ride the default
-Date: Mon, 20 Mar 2023 15:55:08 +0100
-Message-Id: <20230320145433.381698416@linuxfoundation.org>
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Jan Karcher <jaka@linux.ibm.com>,
+	Karsten Graul <kgraul@linux.ibm.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 24/99] net/smc: fix deadlock triggered by cancel_delayed_work_syn()
+Date: Mon, 20 Mar 2023 15:54:02 +0100
+Message-Id: <20230320145444.395346385@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
-References: <20230320145430.861072439@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,107 +38,164 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee@kernel.org>
+From: Wenjia Zhang <wenjia@linux.ibm.com>
 
-commit b1a37ed00d7908a991c1d0f18a8cba3c2aa99bdc upstream.
+[ Upstream commit 13085e1b5cab8ad802904d72e6a6dae85ae0cd20 ]
 
-Presently, when a report is processed, its proposed size, provided by
-the user of the API (as Report Size * Report Count) is compared against
-the subsystem default HID_MAX_BUFFER_SIZE (16k).  However, some
-low-level HID drivers allocate a reduced amount of memory to their
-buffers (e.g. UHID only allocates UHID_DATA_MAX (4k) buffers), rending
-this check inadequate in some cases.
+The following LOCKDEP was detected:
+		Workqueue: events smc_lgr_free_work [smc]
+		WARNING: possible circular locking dependency detected
+		6.1.0-20221027.rc2.git8.56bc5b569087.300.fc36.s390x+debug #1 Not tainted
+		------------------------------------------------------
+		kworker/3:0/176251 is trying to acquire lock:
+		00000000f1467148 ((wq_completion)smc_tx_wq-00000000#2){+.+.}-{0:0},
+			at: __flush_workqueue+0x7a/0x4f0
+		but task is already holding lock:
+		0000037fffe97dc8 ((work_completion)(&(&lgr->free_work)->work)){+.+.}-{0:0},
+			at: process_one_work+0x232/0x730
+		which lock already depends on the new lock.
+		the existing dependency chain (in reverse order) is:
+		-> #4 ((work_completion)(&(&lgr->free_work)->work)){+.+.}-{0:0}:
+		       __lock_acquire+0x58e/0xbd8
+		       lock_acquire.part.0+0xe2/0x248
+		       lock_acquire+0xac/0x1c8
+		       __flush_work+0x76/0xf0
+		       __cancel_work_timer+0x170/0x220
+		       __smc_lgr_terminate.part.0+0x34/0x1c0 [smc]
+		       smc_connect_rdma+0x15e/0x418 [smc]
+		       __smc_connect+0x234/0x480 [smc]
+		       smc_connect+0x1d6/0x230 [smc]
+		       __sys_connect+0x90/0xc0
+		       __do_sys_socketcall+0x186/0x370
+		       __do_syscall+0x1da/0x208
+		       system_call+0x82/0xb0
+		-> #3 (smc_client_lgr_pending){+.+.}-{3:3}:
+		       __lock_acquire+0x58e/0xbd8
+		       lock_acquire.part.0+0xe2/0x248
+		       lock_acquire+0xac/0x1c8
+		       __mutex_lock+0x96/0x8e8
+		       mutex_lock_nested+0x32/0x40
+		       smc_connect_rdma+0xa4/0x418 [smc]
+		       __smc_connect+0x234/0x480 [smc]
+		       smc_connect+0x1d6/0x230 [smc]
+		       __sys_connect+0x90/0xc0
+		       __do_sys_socketcall+0x186/0x370
+		       __do_syscall+0x1da/0x208
+		       system_call+0x82/0xb0
+		-> #2 (sk_lock-AF_SMC){+.+.}-{0:0}:
+		       __lock_acquire+0x58e/0xbd8
+		       lock_acquire.part.0+0xe2/0x248
+		       lock_acquire+0xac/0x1c8
+		       lock_sock_nested+0x46/0xa8
+		       smc_tx_work+0x34/0x50 [smc]
+		       process_one_work+0x30c/0x730
+		       worker_thread+0x62/0x420
+		       kthread+0x138/0x150
+		       __ret_from_fork+0x3c/0x58
+		       ret_from_fork+0xa/0x40
+		-> #1 ((work_completion)(&(&smc->conn.tx_work)->work)){+.+.}-{0:0}:
+		       __lock_acquire+0x58e/0xbd8
+		       lock_acquire.part.0+0xe2/0x248
+		       lock_acquire+0xac/0x1c8
+		       process_one_work+0x2bc/0x730
+		       worker_thread+0x62/0x420
+		       kthread+0x138/0x150
+		       __ret_from_fork+0x3c/0x58
+		       ret_from_fork+0xa/0x40
+		-> #0 ((wq_completion)smc_tx_wq-00000000#2){+.+.}-{0:0}:
+		       check_prev_add+0xd8/0xe88
+		       validate_chain+0x70c/0xb20
+		       __lock_acquire+0x58e/0xbd8
+		       lock_acquire.part.0+0xe2/0x248
+		       lock_acquire+0xac/0x1c8
+		       __flush_workqueue+0xaa/0x4f0
+		       drain_workqueue+0xaa/0x158
+		       destroy_workqueue+0x44/0x2d8
+		       smc_lgr_free+0x9e/0xf8 [smc]
+		       process_one_work+0x30c/0x730
+		       worker_thread+0x62/0x420
+		       kthread+0x138/0x150
+		       __ret_from_fork+0x3c/0x58
+		       ret_from_fork+0xa/0x40
+		other info that might help us debug this:
+		Chain exists of:
+		  (wq_completion)smc_tx_wq-00000000#2
+	  	  --> smc_client_lgr_pending
+		  --> (work_completion)(&(&lgr->free_work)->work)
+		 Possible unsafe locking scenario:
+		       CPU0                    CPU1
+		       ----                    ----
+		  lock((work_completion)(&(&lgr->free_work)->work));
+		                   lock(smc_client_lgr_pending);
+		                   lock((work_completion)
+					(&(&lgr->free_work)->work));
+		  lock((wq_completion)smc_tx_wq-00000000#2);
+		 *** DEADLOCK ***
+		2 locks held by kworker/3:0/176251:
+		 #0: 0000000080183548
+			((wq_completion)events){+.+.}-{0:0},
+				at: process_one_work+0x232/0x730
+		 #1: 0000037fffe97dc8
+			((work_completion)
+			 (&(&lgr->free_work)->work)){+.+.}-{0:0},
+				at: process_one_work+0x232/0x730
+		stack backtrace:
+		CPU: 3 PID: 176251 Comm: kworker/3:0 Not tainted
+		Hardware name: IBM 8561 T01 701 (z/VM 7.2.0)
+		Call Trace:
+		 [<000000002983c3e4>] dump_stack_lvl+0xac/0x100
+		 [<0000000028b477ae>] check_noncircular+0x13e/0x160
+		 [<0000000028b48808>] check_prev_add+0xd8/0xe88
+		 [<0000000028b49cc4>] validate_chain+0x70c/0xb20
+		 [<0000000028b4bd26>] __lock_acquire+0x58e/0xbd8
+		 [<0000000028b4cf6a>] lock_acquire.part.0+0xe2/0x248
+		 [<0000000028b4d17c>] lock_acquire+0xac/0x1c8
+		 [<0000000028addaaa>] __flush_workqueue+0xaa/0x4f0
+		 [<0000000028addf9a>] drain_workqueue+0xaa/0x158
+		 [<0000000028ae303c>] destroy_workqueue+0x44/0x2d8
+		 [<000003ff8029af26>] smc_lgr_free+0x9e/0xf8 [smc]
+		 [<0000000028adf3d4>] process_one_work+0x30c/0x730
+		 [<0000000028adf85a>] worker_thread+0x62/0x420
+		 [<0000000028aeac50>] kthread+0x138/0x150
+		 [<0000000028a63914>] __ret_from_fork+0x3c/0x58
+		 [<00000000298503da>] ret_from_fork+0xa/0x40
+		INFO: lockdep is turned off.
+===================================================================
 
-In these circumstances, if the received report ends up being smaller
-than the proposed report size, the remainder of the buffer is zeroed.
-That is, the space between sizeof(csize) (size of the current report)
-and the rsize (size proposed i.e. Report Size * Report Count), which can
-be handled up to HID_MAX_BUFFER_SIZE (16k).  Meaning that memset()
-shoots straight past the end of the buffer boundary and starts zeroing
-out in-use values, often resulting in calamity.
+This deadlock occurs because cancel_delayed_work_sync() waits for
+the work(&lgr->free_work) to finish, while the &lgr->free_work
+waits for the work(lgr->tx_wq), which needs the sk_lock-AF_SMC, that
+is already used under the mutex_lock.
 
-This patch introduces a new variable into 'struct hid_ll_driver' where
-individual low-level drivers can over-ride the default maximum value of
-HID_MAX_BUFFER_SIZE (16k) with something more sympathetic to the
-interface.
+The solution is to use cancel_delayed_work() instead, which kills
+off a pending work.
 
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-[Lee: Backported to v5.10.y]
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a52bcc919b14 ("net/smc: improve termination processing")
+Signed-off-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Reviewed-by: Jan Karcher <jaka@linux.ibm.com>
+Reviewed-by: Karsten Graul <kgraul@linux.ibm.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c |   18 +++++++++++++-----
- include/linux/hid.h    |    3 +++
- 2 files changed, 16 insertions(+), 5 deletions(-)
+ net/smc/smc_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -258,6 +258,7 @@ static int hid_add_field(struct hid_pars
- {
- 	struct hid_report *report;
- 	struct hid_field *field;
-+	unsigned int max_buffer_size = HID_MAX_BUFFER_SIZE;
- 	unsigned int usages;
- 	unsigned int offset;
- 	unsigned int i;
-@@ -288,8 +289,11 @@ static int hid_add_field(struct hid_pars
- 	offset = report->size;
- 	report->size += parser->global.report_size * parser->global.report_count;
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index bf485a2017a4e..e84241ff4ac4f 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -912,7 +912,7 @@ static void __smc_lgr_terminate(struct smc_link_group *lgr, bool soft)
+ 	if (lgr->terminating)
+ 		return;	/* lgr already terminating */
+ 	/* cancel free_work sync, will terminate when lgr->freeing is set */
+-	cancel_delayed_work_sync(&lgr->free_work);
++	cancel_delayed_work(&lgr->free_work);
+ 	lgr->terminating = 1;
  
-+	if (parser->device->ll_driver->max_buffer_size)
-+		max_buffer_size = parser->device->ll_driver->max_buffer_size;
-+
- 	/* Total size check: Allow for possible report index byte */
--	if (report->size > (HID_MAX_BUFFER_SIZE - 1) << 3) {
-+	if (report->size > (max_buffer_size - 1) << 3) {
- 		hid_err(parser->device, "report is too long\n");
- 		return -1;
- 	}
-@@ -1745,6 +1749,7 @@ int hid_report_raw_event(struct hid_devi
- 	struct hid_report_enum *report_enum = hid->report_enum + type;
- 	struct hid_report *report;
- 	struct hid_driver *hdrv;
-+	int max_buffer_size = HID_MAX_BUFFER_SIZE;
- 	unsigned int a;
- 	u32 rsize, csize = size;
- 	u8 *cdata = data;
-@@ -1761,10 +1766,13 @@ int hid_report_raw_event(struct hid_devi
- 
- 	rsize = hid_compute_report_size(report);
- 
--	if (report_enum->numbered && rsize >= HID_MAX_BUFFER_SIZE)
--		rsize = HID_MAX_BUFFER_SIZE - 1;
--	else if (rsize > HID_MAX_BUFFER_SIZE)
--		rsize = HID_MAX_BUFFER_SIZE;
-+	if (hid->ll_driver->max_buffer_size)
-+		max_buffer_size = hid->ll_driver->max_buffer_size;
-+
-+	if (report_enum->numbered && rsize >= max_buffer_size)
-+		rsize = max_buffer_size - 1;
-+	else if (rsize > max_buffer_size)
-+		rsize = max_buffer_size;
- 
- 	if (csize < rsize) {
- 		dbg_hid("report %d is too short, (%d < %d)\n", report->id,
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -796,6 +796,7 @@ struct hid_driver {
-  * @raw_request: send raw report request to device (e.g. feature report)
-  * @output_report: send output report to device
-  * @idle: send idle request to device
-+ * @max_buffer_size: over-ride maximum data buffer size (default: HID_MAX_BUFFER_SIZE)
-  */
- struct hid_ll_driver {
- 	int (*start)(struct hid_device *hdev);
-@@ -820,6 +821,8 @@ struct hid_ll_driver {
- 	int (*output_report) (struct hid_device *hdev, __u8 *buf, size_t len);
- 
- 	int (*idle)(struct hid_device *hdev, int report, int idle, int reqtype);
-+
-+	unsigned int max_buffer_size;
- };
- 
- extern struct hid_ll_driver i2c_hid_ll_driver;
+ 	/* kill remaining link group connections */
+-- 
+2.39.2
+
 
 
