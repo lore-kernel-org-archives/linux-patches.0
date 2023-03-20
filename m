@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A801C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:00:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89460C433EF;
-	Mon, 20 Mar 2023 15:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32DC1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:00:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473F4C4339C;
+	Mon, 20 Mar 2023 15:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324417;
-	bh=NAfC+89Fccylu2Jlb+unKngKAY1JsXQtXNOwi25qIC8=;
+	s=korg; t=1679324420;
+	bh=fKU+o/GrTSSANMFnO8chfQ/iNctHaj92Nb4Xai2uJL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JpMGhNveIAOjFZZwj/srKbhPO4wwwz79LXnTuwmXsdjFX4pDHyF9XR5tQlzPCf+kG
-	 2wvmhViUGdEDOh0E6NGVStJHgEas6WWzMd7g3z32MO9k9TysW0pDneJyCUT1EQ5TP0
-	 1wxTDA/d2KCQ+AUK/DNIibqM4cd7A9Al1UxPtppY=
+	b=TbE8R08QrOxP+HkOKjEipZ6g2KiijxPxb7wbommNJInH5lSuyte/pvCAOrsytrDc2
+	 mixociP1NOh6kQv6TMfN0RCg2ICvAV4ja+Injjva0c8e7zyLmM0cxNwFdfxmOOZJY3
+	 KnYYLmSj9z1+Ya6bKL4OUnPnIlsCj7udzOw6HHoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Eric Dumazet <edumazet@google.com>,
+	syzbot+1e608ba4217c96d1952f@syzkaller.appspotmail.com,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 17/60] tcp: tcp_make_synack() can be called from process context
-Date: Mon, 20 Mar 2023 15:54:26 +0100
-Message-Id: <20230320145431.599599464@linuxfoundation.org>
+Subject: [PATCH 5.4 18/60] nfc: pn533: initialize struct pn533_out_arg properly
+Date: Mon, 20 Mar 2023 15:54:27 +0100
+Message-Id: <20230320145431.636533081@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
 References: <20230320145430.861072439@linuxfoundation.org>
@@ -36,62 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Breno Leitao <leitao@debian.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit bced3f7db95ff2e6ca29dc4d1c9751ab5e736a09 ]
+[ Upstream commit 484b7059796e3bc1cb527caa61dfc60da649b4f6 ]
 
-tcp_rtx_synack() now could be called in process context as explained in
-0a375c822497 ("tcp: tcp_rtx_synack() can be called from process
-context").
+struct pn533_out_arg used as a temporary context for out_urb is not
+initialized properly. Its uninitialized 'phy' field can be dereferenced in
+error cases inside pn533_out_complete() callback function. It causes the
+following failure:
 
-tcp_rtx_synack() might call tcp_make_synack(), which will touch per-CPU
-variables with preemption enabled. This causes the following BUG:
+general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.2.0-rc3-next-20230110-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+RIP: 0010:pn533_out_complete.cold+0x15/0x44 drivers/nfc/pn533/usb.c:441
+Call Trace:
+ <IRQ>
+ __usb_hcd_giveback_urb+0x2b6/0x5c0 drivers/usb/core/hcd.c:1671
+ usb_hcd_giveback_urb+0x384/0x430 drivers/usb/core/hcd.c:1754
+ dummy_timer+0x1203/0x32d0 drivers/usb/gadget/udc/dummy_hcd.c:1988
+ call_timer_fn+0x1da/0x800 kernel/time/timer.c:1700
+ expire_timers+0x234/0x330 kernel/time/timer.c:1751
+ __run_timers kernel/time/timer.c:2022 [inline]
+ __run_timers kernel/time/timer.c:1995 [inline]
+ run_timer_softirq+0x326/0x910 kernel/time/timer.c:2035
+ __do_softirq+0x1fb/0xaf6 kernel/softirq.c:571
+ invoke_softirq kernel/softirq.c:445 [inline]
+ __irq_exit_rcu+0x123/0x180 kernel/softirq.c:650
+ irq_exit_rcu+0x9/0x20 kernel/softirq.c:662
+ sysvec_apic_timer_interrupt+0x97/0xc0 arch/x86/kernel/apic/apic.c:1107
 
-    BUG: using __this_cpu_add() in preemptible [00000000] code: ThriftIO1/5464
-    caller is tcp_make_synack+0x841/0xac0
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x10d/0x1a0
-     check_preemption_disabled+0x104/0x110
-     tcp_make_synack+0x841/0xac0
-     tcp_v6_send_synack+0x5c/0x450
-     tcp_rtx_synack+0xeb/0x1f0
-     inet_rtx_syn_ack+0x34/0x60
-     tcp_check_req+0x3af/0x9e0
-     tcp_rcv_state_process+0x59b/0x2030
-     tcp_v6_do_rcv+0x5f5/0x700
-     release_sock+0x3a/0xf0
-     tcp_sendmsg+0x33/0x40
-     ____sys_sendmsg+0x2f2/0x490
-     __sys_sendmsg+0x184/0x230
-     do_syscall_64+0x3d/0x90
+Initialize the field with the pn533_usb_phy currently used.
 
-Avoid calling __TCP_INC_STATS() with will touch per-cpu variables. Use
-TCP_INC_STATS() which is safe to be called from context switch.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230308190745.780221-1-leitao@debian.org
+Fixes: 9dab880d675b ("nfc: pn533: Wait for out_urb's completion in pn533_usb_send_frame()")
+Reported-by: syzbot+1e608ba4217c96d1952f@syzkaller.appspotmail.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230309165050.207390-1-pchelkin@ispras.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nfc/pn533/usb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index b4a9f6948cb52..6ac84b273ffbb 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -3374,7 +3374,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
- 	th->window = htons(min(req->rsk_rcv_wnd, 65535U));
- 	tcp_options_write((__be32 *)(th + 1), NULL, &opts);
- 	th->doff = (tcp_header_size >> 2);
--	__TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
-+	TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTSEGS);
+diff --git a/drivers/nfc/pn533/usb.c b/drivers/nfc/pn533/usb.c
+index 82e5b7dbaee9f..2021a9d31f4ab 100644
+--- a/drivers/nfc/pn533/usb.c
++++ b/drivers/nfc/pn533/usb.c
+@@ -175,6 +175,7 @@ static int pn533_usb_send_frame(struct pn533 *dev,
+ 	print_hex_dump_debug("PN533 TX: ", DUMP_PREFIX_NONE, 16, 1,
+ 			     out->data, out->len, false);
  
- #ifdef CONFIG_TCP_MD5SIG
- 	/* Okay, we have all we need - do the md5 hash if needed */
++	arg.phy = phy;
+ 	init_completion(&arg.done);
+ 	cntx = phy->out_urb->context;
+ 	phy->out_urb->context = &arg;
 -- 
 2.39.2
 
