@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADC71C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:15:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A03BC433EF;
-	Mon, 20 Mar 2023 15:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42441C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271BEC4339B;
+	Mon, 20 Mar 2023 15:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325358;
-	bh=0bV14CpeIMk+YDJdnqk7WHg/F4i6Ld/mxbQjtUu1iuk=;
+	s=korg; t=1679325361;
+	bh=dI9JaAYOs0w71v+6rSKG9q/MAsU3XjONAj/TUZMcmqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ztGcuTXTq44ccWWZEi0K7USjC+D9yHsmoxGbOJepLQ/Qau56yQHWMMMZ8wbQGHOti
-	 /Ii1aV7EPov6SsDUS2JQ19b3L8Kb+dMQVQ5wi/TjW28xuu4afZU2YNEuYP0vMrM8m8
-	 J/KJU5wrM/FRnyftfIUml49Vqa9xjl9EvOa8ki9g=
+	b=M24qMky61w0rr2tuPVNt2qmBswD+s2ecYj+UnqqptKViOTzGgIKR47H2zM+Lo3d37
+	 GoDUKlMAoRJb2oVnMzoUFYO0MdDhAHshKQCfhiDsBjku1fx9USjZJm6wksxX7wRMk4
+	 domdQt9OT2Qvpp7e85J8k4xyaAaJdivxTaGpID/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sherry Sun <sherry.sun@nxp.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 074/115] tty: serial: fsl_lpuart: skip waiting for transmission complete when UARTCTRL_SBK is asserted
-Date: Mon, 20 Mar 2023 15:54:46 +0100
-Message-Id: <20230320145452.531986076@linuxfoundation.org>
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 5.10 98/99] HID: core: Provide new max_buffer_size attribute to over-ride the default
+Date: Mon, 20 Mar 2023 15:55:16 +0100
+Message-Id: <20230320145447.535492716@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,46 +34,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Lee Jones <lee@kernel.org>
 
-commit 2411fd94ceaa6e11326e95d6ebf876cbfed28d23 upstream.
+commit b1a37ed00d7908a991c1d0f18a8cba3c2aa99bdc upstream.
 
-According to LPUART RM, Transmission Complete Flag becomes 0 if queuing
-a break character by writing 1 to CTRL[SBK], so here need to skip
-waiting for transmission complete when UARTCTRL_SBK is asserted,
-otherwise the kernel may stuck here.
-And actually set_termios() adds transmission completion waiting to avoid
-data loss or data breakage when changing the baud rate, but we don't
-need to worry about this when queuing break characters.
+Presently, when a report is processed, its proposed size, provided by
+the user of the API (as Report Size * Report Count) is compared against
+the subsystem default HID_MAX_BUFFER_SIZE (16k).  However, some
+low-level HID drivers allocate a reduced amount of memory to their
+buffers (e.g. UHID only allocates UHID_DATA_MAX (4k) buffers), rending
+this check inadequate in some cases.
 
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230223093941.31790-1-sherry.sun@nxp.com
+In these circumstances, if the received report ends up being smaller
+than the proposed report size, the remainder of the buffer is zeroed.
+That is, the space between sizeof(csize) (size of the current report)
+and the rsize (size proposed i.e. Report Size * Report Count), which can
+be handled up to HID_MAX_BUFFER_SIZE (16k).  Meaning that memset()
+shoots straight past the end of the buffer boundary and starts zeroing
+out in-use values, often resulting in calamity.
+
+This patch introduces a new variable into 'struct hid_ll_driver' where
+individual low-level drivers can over-ride the default maximum value of
+HID_MAX_BUFFER_SIZE (16k) with something more sympathetic to the
+interface.
+
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+[Lee: Backported to v5.10.y]
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/fsl_lpuart.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/hid/hid-core.c |   18 +++++++++++++-----
+ include/linux/hid.h    |    3 +++
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -2201,9 +2201,15 @@ lpuart32_set_termios(struct uart_port *p
- 	/* update the per-port timeout */
- 	uart_update_timeout(port, termios->c_cflag, baud);
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -258,6 +258,7 @@ static int hid_add_field(struct hid_pars
+ {
+ 	struct hid_report *report;
+ 	struct hid_field *field;
++	unsigned int max_buffer_size = HID_MAX_BUFFER_SIZE;
+ 	unsigned int usages;
+ 	unsigned int offset;
+ 	unsigned int i;
+@@ -288,8 +289,11 @@ static int hid_add_field(struct hid_pars
+ 	offset = report->size;
+ 	report->size += parser->global.report_size * parser->global.report_count;
  
--	/* wait transmit engin complete */
--	lpuart32_write(&sport->port, 0, UARTMODIR);
--	lpuart32_wait_bit_set(&sport->port, UARTSTAT, UARTSTAT_TC);
-+	/*
-+	 * LPUART Transmission Complete Flag may never be set while queuing a break
-+	 * character, so skip waiting for transmission complete when UARTCTRL_SBK is
-+	 * asserted.
-+	 */
-+	if (!(old_ctrl & UARTCTRL_SBK)) {
-+		lpuart32_write(&sport->port, 0, UARTMODIR);
-+		lpuart32_wait_bit_set(&sport->port, UARTSTAT, UARTSTAT_TC);
-+	}
++	if (parser->device->ll_driver->max_buffer_size)
++		max_buffer_size = parser->device->ll_driver->max_buffer_size;
++
+ 	/* Total size check: Allow for possible report index byte */
+-	if (report->size > (HID_MAX_BUFFER_SIZE - 1) << 3) {
++	if (report->size > (max_buffer_size - 1) << 3) {
+ 		hid_err(parser->device, "report is too long\n");
+ 		return -1;
+ 	}
+@@ -1752,6 +1756,7 @@ int hid_report_raw_event(struct hid_devi
+ 	struct hid_report_enum *report_enum = hid->report_enum + type;
+ 	struct hid_report *report;
+ 	struct hid_driver *hdrv;
++	int max_buffer_size = HID_MAX_BUFFER_SIZE;
+ 	unsigned int a;
+ 	u32 rsize, csize = size;
+ 	u8 *cdata = data;
+@@ -1768,10 +1773,13 @@ int hid_report_raw_event(struct hid_devi
  
- 	/* disable transmit and receive */
- 	lpuart32_write(&sport->port, old_ctrl & ~(UARTCTRL_TE | UARTCTRL_RE),
+ 	rsize = hid_compute_report_size(report);
+ 
+-	if (report_enum->numbered && rsize >= HID_MAX_BUFFER_SIZE)
+-		rsize = HID_MAX_BUFFER_SIZE - 1;
+-	else if (rsize > HID_MAX_BUFFER_SIZE)
+-		rsize = HID_MAX_BUFFER_SIZE;
++	if (hid->ll_driver->max_buffer_size)
++		max_buffer_size = hid->ll_driver->max_buffer_size;
++
++	if (report_enum->numbered && rsize >= max_buffer_size)
++		rsize = max_buffer_size - 1;
++	else if (rsize > max_buffer_size)
++		rsize = max_buffer_size;
+ 
+ 	if (csize < rsize) {
+ 		dbg_hid("report %d is too short, (%d < %d)\n", report->id,
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -798,6 +798,7 @@ struct hid_driver {
+  * @raw_request: send raw report request to device (e.g. feature report)
+  * @output_report: send output report to device
+  * @idle: send idle request to device
++ * @max_buffer_size: over-ride maximum data buffer size (default: HID_MAX_BUFFER_SIZE)
+  */
+ struct hid_ll_driver {
+ 	int (*start)(struct hid_device *hdev);
+@@ -822,6 +823,8 @@ struct hid_ll_driver {
+ 	int (*output_report) (struct hid_device *hdev, __u8 *buf, size_t len);
+ 
+ 	int (*idle)(struct hid_device *hdev, int report, int idle, int reqtype);
++
++	unsigned int max_buffer_size;
+ };
+ 
+ extern struct hid_ll_driver i2c_hid_ll_driver;
 
 
