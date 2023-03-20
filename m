@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC921C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841BCC433D2;
-	Mon, 20 Mar 2023 15:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAE81C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:13:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32165C433D2;
+	Mon, 20 Mar 2023 15:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325210;
-	bh=DOR/OUJcQUzxeUxsGCXdByuSyMzEfLD57lwI9SxAzQ4=;
+	s=korg; t=1679325213;
+	bh=qxMJbuTffKRO/gwxIhhTMKwdCZG9qWZx7vkthIRAxaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DBBoEsf20v4ULZtGHTZKZvf2ZzwiQvyfYZi8Nxkr+afoAxIb1S/5cAQiSaXlbtuBx
-	 zvr+oeo73iEbAO4av/B797V4L/SG9z8K6DC8YMImLgo2+D2ChQxOj56QWtN9Z1XFrX
-	 og9grsOj5wSSgD8cPHyUWLmBGf5p8nmzpYA+HP2Q=
+	b=qkui+Y3rNBn3I4jOPBIbgAHuQSwvVp4rRup4RNJy3UhfbaAWN2qw7+3FXq6zkslsM
+	 6NOZVZm5cIR2aaS/Oh0/CjA3u327hHDaHAhh1YiijDL2awUzoohWAWcZvhkWXVozYH
+	 zflFSTm9CYqJC3nFUzeTQQcYrHQF0ub/GbnTaaCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 5.15 078/115] s390/ipl: add missing intersection check to ipl_report handling
-Date: Mon, 20 Mar 2023 15:54:50 +0100
-Message-Id: <20230320145452.698926204@linuxfoundation.org>
+	Tomas Henzl <thenzl@redhat.com>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 017/211] scsi: mpi3mr: Fix throttle_groups memory leak
+Date: Mon, 20 Mar 2023 15:52:32 +0100
+Message-Id: <20230320145514.029517029@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,50 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Tomas Henzl <thenzl@redhat.com>
 
-commit a52e5cdbe8016d4e3e6322fd93d71afddb9a5af9 upstream.
+[ Upstream commit f305a7b6ca21a665e8d0cf70b5936991a298c93c ]
 
-The code which handles the ipl report is searching for a free location
-in memory where it could copy the component and certificate entries to.
-It checks for intersection between the sections required for the kernel
-and the component/certificate data area, but fails to check whether
-the data structures linking these data areas together intersect.
+Add a missing kfree().
 
-This might cause the iplreport copy code to overwrite the iplreport
-itself. Fix this by adding two addtional intersection checks.
-
-Cc: <stable@vger.kernel.org>
-Fixes: 9641b8cc733f ("s390/ipl: read IPL report at early boot")
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f10af057325c ("scsi: mpi3mr: Resource Based Metering")
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Link: https://lore.kernel.org/r/20230302234336.25456-2-thenzl@redhat.com
+Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/ipl_report.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/s390/boot/ipl_report.c
-+++ b/arch/s390/boot/ipl_report.c
-@@ -57,11 +57,19 @@ repeat:
- 	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && initrd_data.start && initrd_data.size &&
- 	    intersects(initrd_data.start, initrd_data.size, safe_addr, size))
- 		safe_addr = initrd_data.start + initrd_data.size;
-+	if (intersects(safe_addr, size, (unsigned long)comps, comps->len)) {
-+		safe_addr = (unsigned long)comps + comps->len;
-+		goto repeat;
-+	}
- 	for_each_rb_entry(comp, comps)
- 		if (intersects(safe_addr, size, comp->addr, comp->len)) {
- 			safe_addr = comp->addr + comp->len;
- 			goto repeat;
- 		}
-+	if (intersects(safe_addr, size, (unsigned long)certs, certs->len)) {
-+		safe_addr = (unsigned long)certs + certs->len;
-+		goto repeat;
-+	}
- 	for_each_rb_entry(cert, certs)
- 		if (intersects(safe_addr, size, cert->addr, cert->len)) {
- 			safe_addr = cert->addr + cert->len;
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index 758f7ca9e0ee8..9c716d92c2564 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -4357,6 +4357,9 @@ void mpi3mr_free_mem(struct mpi3mr_ioc *mrioc)
+ 		mrioc->pel_seqnum_virt = NULL;
+ 	}
+ 
++	kfree(mrioc->throttle_groups);
++	mrioc->throttle_groups = NULL;
++
+ 	kfree(mrioc->logdata_buf);
+ 	mrioc->logdata_buf = NULL;
+ 
+-- 
+2.39.2
+
 
 
