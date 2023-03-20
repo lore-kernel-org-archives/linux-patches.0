@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8881C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CA6C433EF;
-	Mon, 20 Mar 2023 15:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E243E1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:07:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BFA5C433EF;
+	Mon, 20 Mar 2023 15:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324868;
-	bh=XoXp1zVDk8va1TV4vbn3meuLr7xQcugivYD1jQqMmJs=;
+	s=korg; t=1679324870;
+	bh=8oT5Qks2GUmGIWwxRKF0xeqvKQH4iV8Xqvz3XCm+TxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fdRUJkIjqS80v8mdLm9BQ/JN3TBieq6Plwh1+7IdiIWJKwjnQD0JUb0vmL1p5PZF2
-	 w3Jegv7q22d+ZLDyFsY3YC99kgKQd3VsWzbuXeJWr4O3IYcNQiNRLDtDkok9ZczG13
-	 prvI0MJO3pxQNuQCDYDzUrb2qrrUVVqS6tHrAI9g=
+	b=IXNFi/IsMs9oappiEDGPAbdFGwBWEydLP7k8xwAskIw+1wAv/3mqRUhkbpgx+KRix
+	 bYo5AqrvtWDWqPX/pqhbUriDmG3CHs89gI1LS63ky0YEneqGH/5B22nl0iTrtfkyA0
+	 /WiGLd1gEcZoDQpBMMXqBx2e+wkqppdwRXrE6y5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Hamidreza H. Fard" <nitocris@posteo.net>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 67/99] ALSA: hda/realtek: Fix the speaker output on Samsung Galaxy Book2 Pro
-Date: Mon, 20 Mar 2023 15:54:45 +0100
-Message-Id: <20230320145446.207063476@linuxfoundation.org>
+	Wenchao Hao <haowenchao2@huawei.com>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 015/198] scsi: mpt3sas: Fix NULL pointer access in mpt3sas_transport_port_add()
+Date: Mon, 20 Mar 2023 15:52:33 +0100
+Message-Id: <20230320145508.133700150@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,32 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hamidreza H. Fard <nitocris@posteo.net>
+From: Wenchao Hao <haowenchao2@huawei.com>
 
-commit a86e79e3015f5dd8e1b01ccfa49bd5c6e41047a1 upstream.
+[ Upstream commit d3c57724f1569311e4b81e98fad0931028b9bdcd ]
 
-Samsung Galaxy Book2 Pro (13" 2022 NP930XED-KA1DE) with codec SSID
-144d:c868 requires the same workaround for enabling the speaker amp
-like other Samsung models with ALC298 code.
+Port is allocated by sas_port_alloc_num() and rphy is allocated by either
+sas_end_device_alloc() or sas_expander_alloc(), all of which may return
+NULL. So we need to check the rphy to avoid possible NULL pointer access.
 
-Signed-off-by: Hamidreza H. Fard <nitocris@posteo.net>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230307163741.3878-1-nitocris@posteo.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If sas_rphy_add() returned with failure, rphy is set to NULL. We would
+access the rphy in the following lines which would also result NULL pointer
+access.
+
+Fixes: 78316e9dfc24 ("scsi: mpt3sas: Fix possible resource leaks in mpt3sas_transport_port_add()")
+Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
+Link: https://lore.kernel.org/r/20230225100135.2109330-1-haowenchao2@huawei.com
+Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/mpt3sas/mpt3sas_transport.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9091,6 +9091,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x144d, 0xc830, "Samsung Galaxy Book Ion (NT950XCJ-X716A)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc832, "Samsung Galaxy Book Flex Alpha (NP730QCJ)", ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
- 	SND_PCI_QUIRK(0x144d, 0xca03, "Samsung Galaxy Book2 Pro 360 (NP930QED)", ALC298_FIXUP_SAMSUNG_AMP),
-+	SND_PCI_QUIRK(0x144d, 0xc868, "Samsung Galaxy Book2 Pro (NP930XED)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x1458, 0xfa53, "Gigabyte BXBT-2807", ALC283_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1462, 0xb120, "MSI Cubi MS-B120", ALC283_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1462, 0xb171, "Cubi N 8GL (MS-B171)", ALC283_FIXUP_HEADSET_MIC),
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+index e5ecd6ada6cdd..e8a4750f6ec47 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+@@ -785,7 +785,7 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
+ 		goto out_fail;
+ 	}
+ 	port = sas_port_alloc_num(sas_node->parent_dev);
+-	if ((sas_port_add(port))) {
++	if (!port || (sas_port_add(port))) {
+ 		ioc_err(ioc, "failure at %s:%d/%s()!\n",
+ 			__FILE__, __LINE__, __func__);
+ 		goto out_fail;
+@@ -824,6 +824,12 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
+ 			    mpt3sas_port->remote_identify.sas_address;
+ 	}
+ 
++	if (!rphy) {
++		ioc_err(ioc, "failure at %s:%d/%s()!\n",
++			__FILE__, __LINE__, __func__);
++		goto out_delete_port;
++	}
++
+ 	rphy->identify = mpt3sas_port->remote_identify;
+ 
+ 	if ((sas_rphy_add(rphy))) {
+@@ -831,6 +837,7 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
+ 			__FILE__, __LINE__, __func__);
+ 		sas_rphy_free(rphy);
+ 		rphy = NULL;
++		goto out_delete_port;
+ 	}
+ 
+ 	if (mpt3sas_port->remote_identify.device_type == SAS_END_DEVICE) {
+@@ -857,7 +864,10 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
+ 		    rphy_to_expander_device(rphy), hba_port->port_id);
+ 	return mpt3sas_port;
+ 
+- out_fail:
++out_delete_port:
++	sas_port_delete(port);
++
++out_fail:
+ 	list_for_each_entry_safe(mpt3sas_phy, next, &mpt3sas_port->phy_list,
+ 	    port_siblings)
+ 		list_del(&mpt3sas_phy->port_siblings);
+-- 
+2.39.2
+
 
 
