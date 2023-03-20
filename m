@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1B31C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A039C433EF;
-	Mon, 20 Mar 2023 15:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1651C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E9EC433EF;
+	Mon, 20 Mar 2023 15:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325734;
-	bh=Rdp0lPLgZfuXrqNugPBx0+te+ciYiE3AY757693/yxE=;
+	s=korg; t=1679325737;
+	bh=dEE6EScu5wy7FVRSUXQsJDJO876k6Yavlg6XkgkwBuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YlQ/SvNRhSTwijgqyls5KkzjhPd+J0W1KD4yv9oYOgf2TN54+Zny8MDHnsYq+oA6q
-	 WdIoNr75ZzAlFU0zU5Zr6dDvh+Cjz4L/7T4Z6c7B1NhHglkYRcfiaWBPTwGepdFjIq
-	 oUvqVFwjI20BrQyEEeY5gvBm79ClC103DmVux/u8=
+	b=O/PNACtDjmjTjqZ94TFVfLFhtbDbgFLLLg3db/v8P+KCV+f57QhGlPDXR/XycEJjP
+	 WK3VgcjHKy3mTXlFCKxdFtzd7DfwB1j5eAvrw+/nkMSCkvgVf2Hc8l6hPO+alpIiRQ
+	 FvyGs7nzi7HUXqGgVcOOoySAQjNAKQruw8B55S9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.1 134/198] interconnect: qcom: rpm: fix probe child-node error handling
-Date: Mon, 20 Mar 2023 15:54:32 +0100
-Message-Id: <20230320145513.161517290@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 084/211] sh_eth: avoid PHY being resumed when interface is not up
+Date: Mon, 20 Mar 2023 15:53:39 +0100
+Message-Id: <20230320145516.819337041@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +38,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-commit bc463201f60803fa6bf2741d59441031cd0910e4 upstream.
+[ Upstream commit c6be7136afb224a01d4cde2983ddebac8da98693 ]
 
-Make sure to clean up and release resources properly also in case probe
-fails when populating child devices.
+SH_ETH doesn't need mdiobus suspend/resume, that's why it sets
+'mac_managed_pm'. However, setting it needs to be moved from init to
+probe, so mdiobus PM functions will really never be called (e.g. when
+the interface is not up yet during suspend/resume).
 
-Fixes: e39bf2972c6e ("interconnect: icc-rpm: Support child NoC device probe")
-Cc: stable@vger.kernel.org      # 5.17
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-7-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6a1dbfefdae4 ("net: sh_eth: Fix PHY state warning splat during system resume")
+Suggested-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/icc-rpm.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/renesas/sh_eth.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/interconnect/qcom/icc-rpm.c
-+++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -544,8 +544,11 @@ regmap_done:
- 	platform_set_drvdata(pdev, qp);
+diff --git a/drivers/net/ethernet/renesas/sh_eth.c b/drivers/net/ethernet/renesas/sh_eth.c
+index 71a4991133080..14dc5833c465c 100644
+--- a/drivers/net/ethernet/renesas/sh_eth.c
++++ b/drivers/net/ethernet/renesas/sh_eth.c
+@@ -2029,8 +2029,6 @@ static int sh_eth_phy_init(struct net_device *ndev)
+ 	if (mdp->cd->register_type != SH_ETH_REG_GIGABIT)
+ 		phy_set_max_speed(phydev, SPEED_100);
  
- 	/* Populate child NoC devices if any */
--	if (of_get_child_count(dev->of_node) > 0)
--		return of_platform_populate(dev->of_node, NULL, NULL, dev);
-+	if (of_get_child_count(dev->of_node) > 0) {
-+		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-+		if (ret)
-+			goto err;
-+	}
+-	/* Indicate that the MAC is responsible for managing PHY PM */
+-	phydev->mac_managed_pm = true;
+ 	phy_attached_info(phydev);
  
  	return 0;
- err:
+@@ -3074,6 +3072,8 @@ static int sh_mdio_init(struct sh_eth_private *mdp,
+ 	struct bb_info *bitbang;
+ 	struct platform_device *pdev = mdp->pdev;
+ 	struct device *dev = &mdp->pdev->dev;
++	struct phy_device *phydev;
++	struct device_node *pn;
+ 
+ 	/* create bit control struct for PHY */
+ 	bitbang = devm_kzalloc(dev, sizeof(struct bb_info), GFP_KERNEL);
+@@ -3108,6 +3108,14 @@ static int sh_mdio_init(struct sh_eth_private *mdp,
+ 	if (ret)
+ 		goto out_free_bus;
+ 
++	pn = of_parse_phandle(dev->of_node, "phy-handle", 0);
++	phydev = of_phy_find_device(pn);
++	if (phydev) {
++		phydev->mac_managed_pm = true;
++		put_device(&phydev->mdio.dev);
++	}
++	of_node_put(pn);
++
+ 	return 0;
+ 
+ out_free_bus:
+-- 
+2.39.2
+
 
 
