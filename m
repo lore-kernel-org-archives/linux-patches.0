@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EED1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56EB7C433EF;
-	Mon, 20 Mar 2023 15:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19DA1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26642C433EF;
+	Mon, 20 Mar 2023 15:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324708;
-	bh=V6o0mKdEE6DP4puFvbACNC1IySZkWdo0PgIygbXeUnI=;
+	s=korg; t=1679324711;
+	bh=6cxS4m80Ezf2GPjn4+YCuF9rMU5fZ9CAwz9Ntc5fLro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EqUEDbh7mucdMlyXry0mioCnpTOoSv8i6jY6Us0TgUYlrAHV7x1fa1sGtCqdG2Ggn
-	 HrB+CtkgNcq7iuNF+5Zd+nlW5QizvRaLP8OIBhhyRStsQI+j+vzEYmbrYX/v+nVrt7
-	 05b9XhKKVcL3V+incl8iuMRqoXKmf39uTC4J3LI4=
+	b=hlHFtwE7z6qNKmai/v5aalhvbxBN+w2gThQoV+HSD2xSv/KkgMRLhElZfG8+etvPj
+	 mVS7idDKtf9dhTUWzGmkWA+Gw6FCh1xG2OM1s2h1dpjITLR1RRoWJpBD/cHbFQneeq
+	 Qs5u8B5KJOSvJNrseLQliU1BJKf5gpZsLBb4gIkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 44/99] hwmon: (ucd90320) Add minimum delay between bus accesses
-Date: Mon, 20 Mar 2023 15:54:22 +0100
-Message-Id: <20230320145445.218226317@linuxfoundation.org>
+Subject: [PATCH 5.15 021/115] drm/i915/display: Workaround cursor left overs with PSR2 selective fetch enabled
+Date: Mon, 20 Mar 2023 15:53:53 +0100
+Message-Id: <20230320145450.300784720@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
-References: <20230320145443.333824603@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,146 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: José Roberto de Souza <jose.souza@intel.com>
 
-[ Upstream commit 8d655e65237643c48ada2c131b83679bf1105373 ]
+[ Upstream commit 1f3a11c341ab211d6ba55ef3d58026b7b5319945 ]
 
-When probing the ucd90320 access to some of the registers randomly fails.
-Sometimes it NACKs a transfer, sometimes it returns just random data and
-the PEC check fails.
+Not sure why but when moving the cursor fast it causes some artifacts
+of the cursor to be left in the cursor path, adding some pixels above
+the cursor to the damaged area fixes the issue, so leaving this as a
+workaround until proper fix is found.
 
-Experimentation shows that this seems to be triggered by a register access
-directly back to back with a previous register write. Experimentation also
-shows that inserting a small delay after register writes makes the issue go
-away.
+This is reproducile on TGL and ADL-P.
 
-Use a similar solution to what the max15301 driver does to solve the same
-problem. Create a custom set of bus read and write functions that make sure
-that the delay is added.
-
-Fixes: a470f11c5ba2 ("hwmon: (pmbus/ucd9000) Add support for UCD90320 Power Sequencer")
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Link: https://lore.kernel.org/r/20230312160312.2227405-1-lars@metafoo.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Cc: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Reviewed-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20210914212507.177511-3-jose.souza@intel.com
+Stable-dep-of: 71c602103c74 ("drm/i915/psr: Use calculated io and fast wake lines")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/ucd9000.c | 75 +++++++++++++++++++++++++++++++++++
- 1 file changed, 75 insertions(+)
+ drivers/gpu/drm/i915/display/intel_psr.c | 25 ++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/drivers/hwmon/pmbus/ucd9000.c b/drivers/hwmon/pmbus/ucd9000.c
-index f8017993e2b4d..9e26cc084a176 100644
---- a/drivers/hwmon/pmbus/ucd9000.c
-+++ b/drivers/hwmon/pmbus/ucd9000.c
-@@ -7,6 +7,7 @@
-  */
- 
- #include <linux/debugfs.h>
-+#include <linux/delay.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of_device.h>
-@@ -16,6 +17,7 @@
- #include <linux/i2c.h>
- #include <linux/pmbus.h>
- #include <linux/gpio/driver.h>
-+#include <linux/timekeeping.h>
- #include "pmbus.h"
- 
- enum chips { ucd9000, ucd90120, ucd90124, ucd90160, ucd90320, ucd9090,
-@@ -65,6 +67,7 @@ struct ucd9000_data {
- 	struct gpio_chip gpio;
- #endif
- 	struct dentry *debugfs;
-+	ktime_t write_time;
- };
- #define to_ucd9000_data(_info) container_of(_info, struct ucd9000_data, info)
- 
-@@ -73,6 +76,73 @@ struct ucd9000_debugfs_entry {
- 	u8 index;
- };
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index a3d0c57ec0f0b..b4b193c2bc32e 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -1601,6 +1601,28 @@ static void intel_psr2_sel_fetch_pipe_alignment(const struct intel_crtc_state *c
+ 		drm_warn(&dev_priv->drm, "Missing PSR2 sel fetch alignment with DSC\n");
+ }
  
 +/*
-+ * It has been observed that the UCD90320 randomly fails register access when
-+ * doing another access right on the back of a register write. To mitigate this
-+ * make sure that there is a minimum delay between a write access and the
-+ * following access. The 250us is based on experimental data. At a delay of
-+ * 200us the issue seems to go away. Add a bit of extra margin to allow for
-+ * system to system differences.
++ * FIXME: Not sure why but when moving the cursor fast it causes some artifacts
++ * of the cursor to be left in the cursor path, adding some pixels above the
++ * cursor to the damaged area fixes the issue.
 + */
-+#define UCD90320_WAIT_DELAY_US 250
-+
-+static inline void ucd90320_wait(const struct ucd9000_data *data)
++static void cursor_area_workaround(const struct intel_plane_state *new_plane_state,
++				   struct drm_rect *damaged_area,
++				   struct drm_rect *pipe_clip)
 +{
-+	s64 delta = ktime_us_delta(ktime_get(), data->write_time);
++	const struct intel_plane *plane = to_intel_plane(new_plane_state->uapi.plane);
++	int height;
 +
-+	if (delta < UCD90320_WAIT_DELAY_US)
-+		udelay(UCD90320_WAIT_DELAY_US - delta);
++	if (plane->id != PLANE_CURSOR)
++		return;
++
++	height = drm_rect_height(&new_plane_state->uapi.dst) / 2;
++	damaged_area->y1 -=  height;
++	damaged_area->y1 = max(damaged_area->y1, 0);
++
++	clip_area_update(pipe_clip, damaged_area);
 +}
 +
-+static int ucd90320_read_word_data(struct i2c_client *client, int page,
-+				   int phase, int reg)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct ucd9000_data *data = to_ucd9000_data(info);
-+
-+	if (reg >= PMBUS_VIRT_BASE)
-+		return -ENXIO;
-+
-+	ucd90320_wait(data);
-+	return pmbus_read_word_data(client, page, phase, reg);
-+}
-+
-+static int ucd90320_read_byte_data(struct i2c_client *client, int page, int reg)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct ucd9000_data *data = to_ucd9000_data(info);
-+
-+	ucd90320_wait(data);
-+	return pmbus_read_byte_data(client, page, reg);
-+}
-+
-+static int ucd90320_write_word_data(struct i2c_client *client, int page,
-+				    int reg, u16 word)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct ucd9000_data *data = to_ucd9000_data(info);
-+	int ret;
-+
-+	ucd90320_wait(data);
-+	ret = pmbus_write_word_data(client, page, reg, word);
-+	data->write_time = ktime_get();
-+
-+	return ret;
-+}
-+
-+static int ucd90320_write_byte(struct i2c_client *client, int page, u8 value)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct ucd9000_data *data = to_ucd9000_data(info);
-+	int ret;
-+
-+	ucd90320_wait(data);
-+	ret = pmbus_write_byte(client, page, value);
-+	data->write_time = ktime_get();
-+
-+	return ret;
-+}
-+
- static int ucd9000_get_fan_config(struct i2c_client *client, int fan)
+ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 				struct intel_crtc *crtc)
  {
- 	int fan_config = 0;
-@@ -598,6 +668,11 @@ static int ucd9000_probe(struct i2c_client *client)
- 		info->read_byte_data = ucd9000_read_byte_data;
- 		info->func[0] |= PMBUS_HAVE_FAN12 | PMBUS_HAVE_STATUS_FAN12
- 		  | PMBUS_HAVE_FAN34 | PMBUS_HAVE_STATUS_FAN34;
-+	} else if (mid->driver_data == ucd90320) {
-+		info->read_byte_data = ucd90320_read_byte_data;
-+		info->read_word_data = ucd90320_read_word_data;
-+		info->write_byte = ucd90320_write_byte;
-+		info->write_word_data = ucd90320_write_word_data;
- 	}
- 
- 	ucd9000_probe_gpio(client, mid, data);
+@@ -1669,6 +1691,9 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 				damaged_area.y2 = new_plane_state->uapi.dst.y2;
+ 				clip_area_update(&pipe_clip, &damaged_area);
+ 			}
++
++			cursor_area_workaround(new_plane_state, &damaged_area,
++					       &pipe_clip);
+ 			continue;
+ 		} else if (new_plane_state->uapi.alpha != old_plane_state->uapi.alpha ||
+ 			   (!num_clips &&
 -- 
 2.39.2
 
