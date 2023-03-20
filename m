@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD20D1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD41C433EF;
-	Mon, 20 Mar 2023 15:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C6F1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:19:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3ECAC433D2;
+	Mon, 20 Mar 2023 15:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325586;
-	bh=buCx7DgLLXAZXSLEG++4s4YjHOZteRL7W9HfjOAGJsk=;
+	s=korg; t=1679325589;
+	bh=BuR7NKzkajkPZTvxr6pF9S92otsa5NYAbZzXxo83uRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZmMH0rjMzph8hrlfkCLbuTP9eqKPRwncwigvSzLZAvLysrqUu5ggF2ZMXwF9gj8AA
-	 QzcHYACeZaQim57EXOYcPvoQG9+eFMByFMBcM57gg5qnxYd5PEmTrE/GuJM97c72QE
-	 +08cfnpqfAt2cLpzGPrv+JpfOinneKPthxroMISA=
+	b=qWugfVUa6/NhgK0DFB/FdkCR6GjPPf1NErXKYqECY2Kf7y7FBEWg7M4BgEHV9wQS5
+	 2V0a/UfajmHox2g0vz31wiIOQEvHP4GO2A38A19vR8ZTxX/d5KCd8XP9VL2JyUkVKz
+	 dL//sZ9nAiUAGrIdflqH4MTVKIQTn/ppBtBqZydw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
-	=?UTF-8?q?Sergio=20Gonz=C3=A1lez=20Collado?= <sergio.collado@gmail.com>,
-	Richard Weinberger <richard@nod.at>,
+	Akinobu Mita <akinobu.mita@gmail.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/198] rust: arch/um: Disable FP/SIMD instruction to match x86
-Date: Mon, 20 Mar 2023 15:54:04 +0100
-Message-Id: <20230320145512.035054245@linuxfoundation.org>
+Subject: [PATCH 6.2 066/211] block: null_blk: Fix handling of fake timeout request
+Date: Mon, 20 Mar 2023 15:53:21 +0100
+Message-Id: <20230320145515.986021976@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,47 +37,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Gow <davidgow@google.com>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-[ Upstream commit 8849818679478933dd1d9718741f4daa3f4e8b86 ]
+[ Upstream commit 63f886597085f346276e3b3c8974de0100d65f32 ]
 
-The kernel disables all SSE and similar FP/SIMD instructions on
-x86-based architectures (partly because we shouldn't be using floats in
-the kernel, and partly to avoid the need for stack alignment, see:
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=53383 )
+When injecting a fake timeout into the null_blk driver using
+fail_io_timeout, the request timeout handler does not execute
+blk_mq_complete_request(), so the complete callback is never executed
+for a timedout request.
 
-UML does not do the same thing, which isn't in itself a problem, but
-does add to the list of differences between UML and "normal" x86 builds.
+The null_blk driver also has a driver-specific fake timeout mechanism
+which does not have this problem. Fix the problem with fail_io_timeout
+by using the same meachanism as null_blk internal timeout feature, using
+the fake_timeout field of null_blk commands.
 
-In addition, there was a crash bug with LLVM < 15 / rustc < 1.65 when
-building with SSE, so disabling it fixes rust builds with earlier
-compiler versions, see:
-https://github.com/Rust-for-Linux/linux/pull/881
-
-Signed-off-by: David Gow <davidgow@google.com>
-Reviewed-by: Sergio González Collado <sergio.collado@gmail.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Reported-by: Akinobu Mita <akinobu.mita@gmail.com>
+Fixes: de3510e52b0a ("null_blk: fix command timeout completion handling")
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20230314041106.19173-2-damien.lemoal@opensource.wdc.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Makefile.um | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/block/null_blk/main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/Makefile.um b/arch/x86/Makefile.um
-index b3c1ae084180d..d2e95d1d4db77 100644
---- a/arch/x86/Makefile.um
-+++ b/arch/x86/Makefile.um
-@@ -1,6 +1,12 @@
- # SPDX-License-Identifier: GPL-2.0
- core-y += arch/x86/crypto/
+diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
+index 7d28e3aa406c2..a200aba02e436 100644
+--- a/drivers/block/null_blk/main.c
++++ b/drivers/block/null_blk/main.c
+@@ -1413,8 +1413,7 @@ static inline void nullb_complete_cmd(struct nullb_cmd *cmd)
+ 	case NULL_IRQ_SOFTIRQ:
+ 		switch (cmd->nq->dev->queue_mode) {
+ 		case NULL_Q_MQ:
+-			if (likely(!blk_should_fake_timeout(cmd->rq->q)))
+-				blk_mq_complete_request(cmd->rq);
++			blk_mq_complete_request(cmd->rq);
+ 			break;
+ 		case NULL_Q_BIO:
+ 			/*
+@@ -1675,7 +1674,8 @@ static blk_status_t null_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	cmd->rq = bd->rq;
+ 	cmd->error = BLK_STS_OK;
+ 	cmd->nq = nq;
+-	cmd->fake_timeout = should_timeout_request(bd->rq);
++	cmd->fake_timeout = should_timeout_request(bd->rq) ||
++		blk_should_fake_timeout(bd->rq->q);
  
-+#
-+# Disable SSE and other FP/SIMD instructions to match normal x86
-+#
-+KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx
-+KBUILD_RUSTFLAGS += -Ctarget-feature=-sse,-sse2,-sse3,-ssse3,-sse4.1,-sse4.2,-avx,-avx2
-+
- ifeq ($(CONFIG_X86_32),y)
- START := 0x8048000
+ 	blk_mq_start_request(bd->rq);
  
 -- 
 2.39.2
