@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD141C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8E7C433D2;
-	Mon, 20 Mar 2023 15:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95681C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:17:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364E0C433EF;
+	Mon, 20 Mar 2023 15:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325468;
-	bh=nyD/biSwnmE61lrtW18J5H7Y6qPC96aP9J9xqE3FVJI=;
+	s=korg; t=1679325471;
+	bh=aHnvVvftlidUe7YbELa/tjO4vAvn7+JvlAjaZ+jlFQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m1sn6OVneF/HGvpHNqRJwk6zGLJ+3A7W5Ob9z2aNH5ic2b/1Vt9uoqFIklhMd54O9
-	 3e8AeLEXko8DeyGQC23aGcb0MC2nn7QpwtsynNoi0j/fE64/Y5bPt0ZIMJD6AkYX+6
-	 cMAuPS2JEaBHXAl9l0I78Up8RDsRKAO5AIzI90Sw=
+	b=OlE5uN6eQOeDKBqGJ4OfDqdaUOzZ5iCU/NLft4Im8cOAA2XgGxuKlZ7YdlF7pmkoq
+	 1FgL1mo6YjXcEbs/KuKju5M4CzoadZoNUpegQaVfFB2mymS4vBgrKSmkQ/7YtIH4Q6
+	 qpCD7bwwiEFEUExZfPUf+RG5WbLQnnxzPZlHcQHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 088/198] qed/qed_mng_tlv: correctly zero out ->min instead of ->hour
-Date: Mon, 20 Mar 2023 15:53:46 +0100
-Message-Id: <20230320145511.222271620@linuxfoundation.org>
+	Xin Hao <xhao@linux.alibaba.com>,
+	Shawn Wang <shawnwang@linux.alibaba.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 5.15 108/115] x86/resctrl: Clear staged_config[] before and after it is used
+Date: Mon, 20 Mar 2023 15:55:20 +0100
+Message-Id: <20230320145453.967947750@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
+References: <20230320145449.336983711@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +36,165 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Shawn Wang <shawnwang@linux.alibaba.com>
 
-[ Upstream commit 470efd68a4653d9819d391489886432cd31bcd0b ]
+commit 0424a7dfe9129b93f29b277511a60e87f052ac6b upstream.
 
-This fixes an issue where ->hour would erroneously get zeroed out
-instead of ->min because of a bad copy paste.
+As a temporary storage, staged_config[] in rdt_domain should be cleared
+before and after it is used. The stale value in staged_config[] could
+cause an MSR access error.
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE
-static analysis tool.
+Here is a reproducer on a system with 16 usable CLOSIDs for a 15-way L3
+Cache (MBA should be disabled if the number of CLOSIDs for MB is less than
+16.) :
+	mount -t resctrl resctrl -o cdp /sys/fs/resctrl
+	mkdir /sys/fs/resctrl/p{1..7}
+	umount /sys/fs/resctrl/
+	mount -t resctrl resctrl /sys/fs/resctrl
+	mkdir /sys/fs/resctrl/p{1..8}
 
-Fixes: f240b6882211 ("qed: Add support for processing fcoe tlv request.")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Link: https://lore.kernel.org/r/20230315194618.579286-1-d-tatianin@yandex-team.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+An error occurs when creating resource group named p8:
+    unchecked MSR access error: WRMSR to 0xca0 (tried to write 0x00000000000007ff) at rIP: 0xffffffff82249142 (cat_wrmsr+0x32/0x60)
+    Call Trace:
+     <IRQ>
+     __flush_smp_call_function_queue+0x11d/0x170
+     __sysvec_call_function+0x24/0xd0
+     sysvec_call_function+0x89/0xc0
+     </IRQ>
+     <TASK>
+     asm_sysvec_call_function+0x16/0x20
+
+When creating a new resource control group, hardware will be configured
+by the following process:
+    rdtgroup_mkdir()
+      rdtgroup_mkdir_ctrl_mon()
+        rdtgroup_init_alloc()
+          resctrl_arch_update_domains()
+
+resctrl_arch_update_domains() iterates and updates all resctrl_conf_type
+whose have_new_ctrl is true. Since staged_config[] holds the same values as
+when CDP was enabled, it will continue to update the CDP_CODE and CDP_DATA
+configurations. When group p8 is created, get_config_index() called in
+resctrl_arch_update_domains() will return 16 and 17 as the CLOSIDs for
+CDP_CODE and CDP_DATA, which will be translated to an invalid register -
+0xca0 in this scenario.
+
+Fix it by clearing staged_config[] before and after it is used.
+
+[reinette: re-order commit tags]
+
+Fixes: 75408e43509e ("x86/resctrl: Allow different CODE/DATA configurations to be staged")
+Suggested-by: Xin Hao <xhao@linux.alibaba.com>
+Signed-off-by: Shawn Wang <shawnwang@linux.alibaba.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Reinette Chatre <reinette.chatre@intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/2fad13f49fbe89687fc40e9a5a61f23a28d1507a.1673988935.git.reinette.chatre%40intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/resctrl/ctrlmondata.c |    7 ++-----
+ arch/x86/kernel/cpu/resctrl/internal.h    |    1 +
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c    |   25 +++++++++++++++++++++----
+ 3 files changed, 24 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c b/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
-index 6190adf965bca..f55eed092f25d 100644
---- a/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
-+++ b/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
-@@ -422,7 +422,7 @@ qed_mfw_get_tlv_time_value(struct qed_mfw_tlv_time *p_time,
- 	if (p_time->hour > 23)
- 		p_time->hour = 0;
- 	if (p_time->min > 59)
--		p_time->hour = 0;
-+		p_time->min = 0;
- 	if (p_time->msec > 999)
- 		p_time->msec = 0;
- 	if (p_time->usec > 999)
--- 
-2.39.2
-
+--- a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
++++ b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+@@ -353,7 +353,6 @@ ssize_t rdtgroup_schemata_write(struct k
+ {
+ 	struct resctrl_schema *s;
+ 	struct rdtgroup *rdtgrp;
+-	struct rdt_domain *dom;
+ 	struct rdt_resource *r;
+ 	char *tok, *resname;
+ 	int ret = 0;
+@@ -382,10 +381,7 @@ ssize_t rdtgroup_schemata_write(struct k
+ 		goto out;
+ 	}
+ 
+-	list_for_each_entry(s, &resctrl_schema_all, list) {
+-		list_for_each_entry(dom, &s->res->domains, list)
+-			memset(dom->staged_config, 0, sizeof(dom->staged_config));
+-	}
++	rdt_staged_configs_clear();
+ 
+ 	while ((tok = strsep(&buf, "\n")) != NULL) {
+ 		resname = strim(strsep(&tok, ":"));
+@@ -422,6 +418,7 @@ ssize_t rdtgroup_schemata_write(struct k
+ 	}
+ 
+ out:
++	rdt_staged_configs_clear();
+ 	rdtgroup_kn_unlock(of->kn);
+ 	cpus_read_unlock();
+ 	return ret ?: nbytes;
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -550,5 +550,6 @@ bool has_busy_rmid(struct rdt_resource *
+ void __check_limbo(struct rdt_domain *d, bool force_free);
+ void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
+ void __init thread_throttle_mode_init(void);
++void rdt_staged_configs_clear(void);
+ 
+ #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -78,6 +78,19 @@ void rdt_last_cmd_printf(const char *fmt
+ 	va_end(ap);
+ }
+ 
++void rdt_staged_configs_clear(void)
++{
++	struct rdt_resource *r;
++	struct rdt_domain *dom;
++
++	lockdep_assert_held(&rdtgroup_mutex);
++
++	for_each_alloc_capable_rdt_resource(r) {
++		list_for_each_entry(dom, &r->domains, list)
++			memset(dom->staged_config, 0, sizeof(dom->staged_config));
++	}
++}
++
+ /*
+  * Trivial allocator for CLOSIDs. Since h/w only supports a small number,
+  * we can keep a bitmap of free CLOSIDs in a single integer.
+@@ -2813,7 +2826,9 @@ static int rdtgroup_init_alloc(struct rd
+ {
+ 	struct resctrl_schema *s;
+ 	struct rdt_resource *r;
+-	int ret;
++	int ret = 0;
++
++	rdt_staged_configs_clear();
+ 
+ 	list_for_each_entry(s, &resctrl_schema_all, list) {
+ 		r = s->res;
+@@ -2822,20 +2837,22 @@ static int rdtgroup_init_alloc(struct rd
+ 		} else {
+ 			ret = rdtgroup_init_cat(s, rdtgrp->closid);
+ 			if (ret < 0)
+-				return ret;
++				goto out;
+ 		}
+ 
+ 		ret = resctrl_arch_update_domains(r, rdtgrp->closid);
+ 		if (ret < 0) {
+ 			rdt_last_cmd_puts("Failed to initialize allocations\n");
+-			return ret;
++			goto out;
+ 		}
+ 
+ 	}
+ 
+ 	rdtgrp->mode = RDT_MODE_SHAREABLE;
+ 
+-	return 0;
++out:
++	rdt_staged_configs_clear();
++	return ret;
+ }
+ 
+ static int mkdir_rdt_prepare(struct kernfs_node *parent_kn,
 
 
