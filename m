@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16FF1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75470C4339B;
-	Mon, 20 Mar 2023 15:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA331C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:06:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9B6C433EF;
+	Mon, 20 Mar 2023 15:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324815;
-	bh=XwhxWQK96IbIIQiLsXR79yWBP+OjTwppm1bSSb70sI4=;
+	s=korg; t=1679324818;
+	bh=6CY8/h/BtKhLqmiRAwAyxq2h3595MxNwyEdjotDUwDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qrcdwwWFPxwSAtDcgVwIWVLuedxy8Mc6mPvYV+sr/8oIHXRIc5xz+ZuWjjyfAE3SR
-	 Os4SOZMoFM1JmEtFZaxv+xOyqdc/kY1lCg9t4mbdGvwJ8oAsE1QAjXJJ16GtTdI3YO
-	 +E5R6+vSYtpn9LcXafqiJayvOYFn5h47K+gFx2ZE=
+	b=G89Tqj8BQjOOuO+tzps16JnRYHTHBV1DRsyesTG475gWl/RfP66DQf7T/Ud/sfv3t
+	 L1uT3c0V48yGB0TtwSxzxHGMny0/DwxAHeZ1t27ubAdYCSnBTglIUOiT+zGIrw6kqI
+	 MK4fMs1AwEZUPze3eAQKl1QHsCgGrWEL3LOFusFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/198] drm/msm/gem: Prevent blocking within shrinker loop
-Date: Mon, 20 Mar 2023 15:52:21 +0100
-Message-Id: <20230320145507.583738689@linuxfoundation.org>
+Subject: [PATCH 6.1 009/198] ASoC: SOF: Intel: MTL: Fix the device description
+Date: Mon, 20 Mar 2023 15:52:27 +0100
+Message-Id: <20230320145507.864466139@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
 References: <20230320145507.420176832@linuxfoundation.org>
@@ -36,144 +38,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 
-[ Upstream commit 9630b585b607bd26f505d34620b14d75b9a5af7d ]
+[ Upstream commit a659e35ca0af2765f567bdfdccfa247eff0cdab8 ]
 
-Consider this scenario:
+Add the missing ops_free callback.
 
-1. APP1 continuously creates lots of small GEMs
-2. APP2 triggers `drop_caches`
-3. Shrinker starts to evict APP1 GEMs, while APP1 produces new purgeable
-   GEMs
-4. msm_gem_shrinker_scan() returns non-zero number of freed pages
-   and causes shrinker to try shrink more
-5. msm_gem_shrinker_scan() returns non-zero number of freed pages again,
-   goto 4
-6. The APP2 is blocked in `drop_caches` until APP1 stops producing
-   purgeable GEMs
+Fixes: 064520e8aeaa ("ASoC: SOF: Intel: Add support for MeteorLake (MTL)")
 
-To prevent this blocking scenario, check number of remaining pages
-that GPU shrinker couldn't release due to a GEM locking contention
-or shrinking rejection. If there are no remaining pages left to shrink,
-then there is no need to free up more pages and shrinker may break out
-from the loop.
-
-This problem was found during shrinker/madvise IOCTL testing of
-virtio-gpu driver. The MSM driver is affected in the same way.
-
-Reviewed-by: Rob Clark <robdclark@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: b352ba54a820 ("drm/msm/gem: Convert to using drm_gem_lru")
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://lore.kernel.org/all/20230108210445.3948344-2-dmitry.osipenko@collabora.com/
+Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20230307093914.25409-2-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_gem.c              |  9 +++++++--
- drivers/gpu/drm/msm/msm_gem_shrinker.c | 11 +++++++++--
- include/drm/drm_gem.h                  |  4 +++-
- 3 files changed, 19 insertions(+), 5 deletions(-)
+ sound/soc/sof/intel/pci-mtl.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-index 8b68a3c1e6ab6..b87ed4238fc83 100644
---- a/drivers/gpu/drm/drm_gem.c
-+++ b/drivers/gpu/drm/drm_gem.c
-@@ -1351,10 +1351,13 @@ EXPORT_SYMBOL(drm_gem_lru_move_tail);
-  *
-  * @lru: The LRU to scan
-  * @nr_to_scan: The number of pages to try to reclaim
-+ * @remaining: The number of pages left to reclaim, should be initialized by caller
-  * @shrink: Callback to try to shrink/reclaim the object.
-  */
- unsigned long
--drm_gem_lru_scan(struct drm_gem_lru *lru, unsigned nr_to_scan,
-+drm_gem_lru_scan(struct drm_gem_lru *lru,
-+		 unsigned int nr_to_scan,
-+		 unsigned long *remaining,
- 		 bool (*shrink)(struct drm_gem_object *obj))
- {
- 	struct drm_gem_lru still_in_lru;
-@@ -1393,8 +1396,10 @@ drm_gem_lru_scan(struct drm_gem_lru *lru, unsigned nr_to_scan,
- 		 * hit shrinker in response to trying to get backing pages
- 		 * for this obj (ie. while it's lock is already held)
- 		 */
--		if (!dma_resv_trylock(obj->resv))
-+		if (!dma_resv_trylock(obj->resv)) {
-+			*remaining += obj->size >> PAGE_SHIFT;
- 			goto tail;
-+		}
+diff --git a/sound/soc/sof/intel/pci-mtl.c b/sound/soc/sof/intel/pci-mtl.c
+index 9f39da984e9fa..4dae256536bf4 100644
+--- a/sound/soc/sof/intel/pci-mtl.c
++++ b/sound/soc/sof/intel/pci-mtl.c
+@@ -43,6 +43,7 @@ static const struct sof_dev_desc mtl_desc = {
+ 	.nocodec_tplg_filename = "sof-mtl-nocodec.tplg",
+ 	.ops = &sof_mtl_ops,
+ 	.ops_init = sof_mtl_ops_init,
++	.ops_free = hda_ops_free,
+ };
  
- 		if (shrink(obj)) {
- 			freed += obj->size >> PAGE_SHIFT;
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index 1de14e67f96b0..31f054c903a43 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -107,6 +107,7 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
- 		bool (*shrink)(struct drm_gem_object *obj);
- 		bool cond;
- 		unsigned long freed;
-+		unsigned long remaining;
- 	} stages[] = {
- 		/* Stages of progressively more aggressive/expensive reclaim: */
- 		{ &priv->lru.dontneed, purge,        true },
-@@ -116,14 +117,18 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
- 	};
- 	long nr = sc->nr_to_scan;
- 	unsigned long freed = 0;
-+	unsigned long remaining = 0;
- 
- 	for (unsigned i = 0; (nr > 0) && (i < ARRAY_SIZE(stages)); i++) {
- 		if (!stages[i].cond)
- 			continue;
- 		stages[i].freed =
--			drm_gem_lru_scan(stages[i].lru, nr, stages[i].shrink);
-+			drm_gem_lru_scan(stages[i].lru, nr,
-+					&stages[i].remaining,
-+					 stages[i].shrink);
- 		nr -= stages[i].freed;
- 		freed += stages[i].freed;
-+		remaining += stages[i].remaining;
- 	}
- 
- 	if (freed) {
-@@ -132,7 +137,7 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
- 				     stages[3].freed);
- 	}
- 
--	return (freed > 0) ? freed : SHRINK_STOP;
-+	return (freed > 0 && remaining > 0) ? freed : SHRINK_STOP;
- }
- 
- #ifdef CONFIG_DEBUG_FS
-@@ -182,10 +187,12 @@ msm_gem_shrinker_vmap(struct notifier_block *nb, unsigned long event, void *ptr)
- 		NULL,
- 	};
- 	unsigned idx, unmapped = 0;
-+	unsigned long remaining = 0;
- 
- 	for (idx = 0; lrus[idx] && unmapped < vmap_shrink_limit; idx++) {
- 		unmapped += drm_gem_lru_scan(lrus[idx],
- 					     vmap_shrink_limit - unmapped,
-+					     &remaining,
- 					     vmap_shrink);
- 	}
- 
-diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
-index bd42f25e449c2..60b2dda8d964b 100644
---- a/include/drm/drm_gem.h
-+++ b/include/drm/drm_gem.h
-@@ -472,7 +472,9 @@ int drm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
- void drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock);
- void drm_gem_lru_remove(struct drm_gem_object *obj);
- void drm_gem_lru_move_tail(struct drm_gem_lru *lru, struct drm_gem_object *obj);
--unsigned long drm_gem_lru_scan(struct drm_gem_lru *lru, unsigned nr_to_scan,
-+unsigned long drm_gem_lru_scan(struct drm_gem_lru *lru,
-+			       unsigned int nr_to_scan,
-+			       unsigned long *remaining,
- 			       bool (*shrink)(struct drm_gem_object *obj));
- 
- #endif /* __DRM_GEM_H__ */
+ /* PCI IDs */
 -- 
 2.39.2
 
