@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043681C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A516C433D2;
-	Mon, 20 Mar 2023 15:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1B31C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A039C433EF;
+	Mon, 20 Mar 2023 15:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325731;
-	bh=4AVLU78PKiAjpzcJawbcdu3hsuRz4FfSa0DymU9gJkA=;
+	s=korg; t=1679325734;
+	bh=Rdp0lPLgZfuXrqNugPBx0+te+ciYiE3AY757693/yxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SXWIATtuQSCKZfSHn/iIycnS8rzozHbD0DBdyP1DPcSnMgiGVttjGHxWSI+yGNWDI
-	 graET7piCgby1IZ1Ui4xEDYFvWAYJZdg2e7mAO4KUdWoDdsa9MxA/IR5n//sfeeVZY
-	 4fpqW9Sb13AwA6GDhzvkWlxGI1zEXl6QYv/oALdA=
+	b=YlQ/SvNRhSTwijgqyls5KkzjhPd+J0W1KD4yv9oYOgf2TN54+Zny8MDHnsYq+oA6q
+	 WdIoNr75ZzAlFU0zU5Zr6dDvh+Cjz4L/7T4Z6c7B1NhHglkYRcfiaWBPTwGepdFjIq
+	 oUvqVFwjI20BrQyEEeY5gvBm79ClC103DmVux/u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Arun Ramadoss <arun.ramadoss@microchip.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 092/211] net: dsa: microchip: fix RGMII delay configuration on KSZ8765/KSZ8794/KSZ8795
-Date: Mon, 20 Mar 2023 15:53:47 +0100
-Message-Id: <20230320145517.151476176@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.1 134/198] interconnect: qcom: rpm: fix probe child-node error handling
+Date: Mon, 20 Mar 2023 15:54:32 +0100
+Message-Id: <20230320145513.161517290@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,72 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 5ae06327a3a5bad4ee246d81df203b1b00a7b390 ]
+commit bc463201f60803fa6bf2741d59441031cd0910e4 upstream.
 
-The blamed commit has replaced a ksz_write8() call to address
-REG_PORT_5_CTRL_6 (0x56) with a ksz_set_xmii() -> ksz_pwrite8() call to
-regs[P_XMII_CTRL_1], which is also defined as 0x56 for ksz8795_regs[].
+Make sure to clean up and release resources properly also in case probe
+fails when populating child devices.
 
-The trouble is that, when compared to ksz_write8(), ksz_pwrite8() also
-adjusts the register offset with the port base address. So in reality,
-ksz_pwrite8(offset=0x56) accesses register 0x56 + 0x50 = 0xa6, which in
-this switch appears to be unmapped, and the RGMII delay configuration on
-the CPU port does nothing.
-
-So if the switch wasn't fine with the RGMII delay configuration done
-through pin strapping and relied on Linux to apply a different one in
-order to pass traffic, this is now broken.
-
-Using the offset translation logic imposed by ksz_pwrite8(), the correct
-value for regs[P_XMII_CTRL_1] should have been 0x6 on ksz8795_regs[], in
-order to really end up accessing register 0x56.
-
-Static code analysis shows that, despite there being multiple other
-accesses to regs[P_XMII_CTRL_1] in this driver, the only code path that
-is applicable to ksz8795_regs[] and ksz8_dev_ops is ksz_set_xmii().
-Therefore, the problem is isolated to RGMII delays.
-
-In its current form, ksz8795_regs[] contains the same value for
-P_XMII_CTRL_0 and for P_XMII_CTRL_1, and this raises valid suspicions
-that writes made by the driver to regs[P_XMII_CTRL_0] might overwrite
-writes made to regs[P_XMII_CTRL_1] or vice versa.
-
-Again, static analysis shows that the only accesses to P_XMII_CTRL_0
-from the driver are made from code paths which are not reachable with
-ksz8_dev_ops. So the accesses made by ksz_set_xmii() are safe for this
-switch family.
-
-[ vladimiroltean: rewrote commit message ]
-
-Fixes: c476bede4b0f ("net: dsa: microchip: ksz8795: use common xmii function")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Acked-by: Arun Ramadoss <arun.ramadoss@microchip.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230315231916.2998480-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e39bf2972c6e ("interconnect: icc-rpm: Support child NoC device probe")
+Cc: stable@vger.kernel.org      # 5.17
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230306075651.2449-7-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/microchip/ksz_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/interconnect/qcom/icc-rpm.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
-index 9b20c2ee6d62a..19cd05762ab77 100644
---- a/drivers/net/dsa/microchip/ksz_common.c
-+++ b/drivers/net/dsa/microchip/ksz_common.c
-@@ -310,7 +310,7 @@ static const u16 ksz8795_regs[] = {
- 	[S_BROADCAST_CTRL]		= 0x06,
- 	[S_MULTICAST_CTRL]		= 0x04,
- 	[P_XMII_CTRL_0]			= 0x06,
--	[P_XMII_CTRL_1]			= 0x56,
-+	[P_XMII_CTRL_1]			= 0x06,
- };
+--- a/drivers/interconnect/qcom/icc-rpm.c
++++ b/drivers/interconnect/qcom/icc-rpm.c
+@@ -544,8 +544,11 @@ regmap_done:
+ 	platform_set_drvdata(pdev, qp);
  
- static const u32 ksz8795_masks[] = {
--- 
-2.39.2
-
+ 	/* Populate child NoC devices if any */
+-	if (of_get_child_count(dev->of_node) > 0)
+-		return of_platform_populate(dev->of_node, NULL, NULL, dev);
++	if (of_get_child_count(dev->of_node) > 0) {
++		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
++		if (ret)
++			goto err;
++	}
+ 
+ 	return 0;
+ err:
 
 
