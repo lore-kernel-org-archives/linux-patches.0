@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFED11C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:58:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70897C433EF;
-	Mon, 20 Mar 2023 14:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA2F1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:58:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF67C433A0;
+	Mon, 20 Mar 2023 14:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324309;
-	bh=o2hpUV/LrZtVQY7zxmX65BWU523veHaTCYm0Y21b8Ic=;
+	s=korg; t=1679324312;
+	bh=oOGjtHVQlShPTmRbcsRwdxsSQ2066yZFR7o9tahG9Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1vzylsp3li4d8J2so8hRx3Tf+PFUbeSzydSgA5Z6oVkc0F4Si/NMCgAPrqDAqGoU
-	 /yalgPLQS5NkExXxntk+SRVAS3eA2b2+fmTIc/vBAuxZc3vQTJb3XXrgWw1xgZZ9mS
-	 l6+Fa/alYO+GCuCfoxpm3CMljAsGs68Ty2WnmN88=
+	b=fQCgmEWySO1VOfX6aVZHlXLrXeC136zYlixh4MtdFVevwf9GWi4TlwmrpBiYzN7+t
+	 cBCwfnaWOLcbMwLhU3+o9rsE2YX9L4/Y4Zkp6w+XeJtUsa5b2tj8Qh+fGUeibuHraP
+	 MJVBVZZPk42MRk8K25X2Z5ZFOiIct/S6B0mEhsxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony OBrien <tony.obrien@alliedtelesis.co.nz>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 17/30] hwmon: (adt7475) Fix masking of hysteresis registers
-Date: Mon, 20 Mar 2023 15:54:41 +0100
-Message-Id: <20230320145420.851818238@linuxfoundation.org>
+Subject: [PATCH 4.14 08/30] nfc: st-nci: Fix use after free bug in ndlc_remove due to race condition
+Date: Mon, 20 Mar 2023 15:54:32 +0100
+Message-Id: <20230320145420.550559709@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145420.204894191@linuxfoundation.org>
 References: <20230320145420.204894191@linuxfoundation.org>
@@ -35,40 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 48e8186870d9d0902e712d601ccb7098cb220688 ]
+[ Upstream commit 5000fe6c27827a61d8250a7e4a1d26c3298ef4f6 ]
 
-The wrong bits are masked in the hysteresis register; indices 0 and 2
-should zero bits [7:4] and preserve bits [3:0], and index 1 should zero
-bits [3:0] and preserve bits [7:4].
+This bug influences both st_nci_i2c_remove and st_nci_spi_remove.
+Take st_nci_i2c_remove as an example.
 
-Fixes: 1c301fc5394f ("hwmon: Add a driver for the ADT7475 hardware monitoring chip")
-Signed-off-by: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
-Link: https://lore.kernel.org/r/20230222005228.158661-3-tony.obrien@alliedtelesis.co.nz
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+In st_nci_i2c_probe, it called ndlc_probe and bound &ndlc->sm_work
+with llt_ndlc_sm_work.
+
+When it calls ndlc_recv or timeout handler, it will finally call
+schedule_work to start the work.
+
+When we call st_nci_i2c_remove to remove the driver, there
+may be a sequence as follows:
+
+Fix it by finishing the work before cleanup in ndlc_remove
+
+CPU0                  CPU1
+
+                    |llt_ndlc_sm_work
+st_nci_i2c_remove   |
+  ndlc_remove       |
+     st_nci_remove  |
+     nci_free_device|
+     kfree(ndev)    |
+//free ndlc->ndev   |
+                    |llt_ndlc_rcv_queue
+                    |nci_recv_frame
+                    |//use ndlc->ndev
+
+Fixes: 35630df68d60 ("NFC: st21nfcb: Add driver for STMicroelectronics ST21NFCB NFC chip")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230312160837.2040857-1-zyytlz.wz@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7475.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nfc/st-nci/ndlc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/adt7475.c b/drivers/hwmon/adt7475.c
-index 0b964b40d322b..51bc70e6ec3fe 100644
---- a/drivers/hwmon/adt7475.c
-+++ b/drivers/hwmon/adt7475.c
-@@ -480,10 +480,10 @@ static ssize_t set_temp(struct device *dev, struct device_attribute *attr,
- 		val = (temp - val) / 1000;
+diff --git a/drivers/nfc/st-nci/ndlc.c b/drivers/nfc/st-nci/ndlc.c
+index 9477994cf9753..a3dfb3d120210 100644
+--- a/drivers/nfc/st-nci/ndlc.c
++++ b/drivers/nfc/st-nci/ndlc.c
+@@ -302,13 +302,15 @@ EXPORT_SYMBOL(ndlc_probe);
  
- 		if (sattr->index != 1) {
--			data->temp[HYSTERSIS][sattr->index] &= 0xF0;
-+			data->temp[HYSTERSIS][sattr->index] &= 0x0F;
- 			data->temp[HYSTERSIS][sattr->index] |= (val & 0xF) << 4;
- 		} else {
--			data->temp[HYSTERSIS][sattr->index] &= 0x0F;
-+			data->temp[HYSTERSIS][sattr->index] &= 0xF0;
- 			data->temp[HYSTERSIS][sattr->index] |= (val & 0xF);
- 		}
+ void ndlc_remove(struct llt_ndlc *ndlc)
+ {
+-	st_nci_remove(ndlc->ndev);
+-
+ 	/* cancel timers */
+ 	del_timer_sync(&ndlc->t1_timer);
+ 	del_timer_sync(&ndlc->t2_timer);
+ 	ndlc->t2_active = false;
+ 	ndlc->t1_active = false;
++	/* cancel work */
++	cancel_work_sync(&ndlc->sm_work);
++
++	st_nci_remove(ndlc->ndev);
  
+ 	skb_queue_purge(&ndlc->rcv_q);
+ 	skb_queue_purge(&ndlc->send_q);
 -- 
 2.39.2
 
