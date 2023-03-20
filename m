@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8236B1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00750C433D2;
-	Mon, 20 Mar 2023 15:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFA51C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:05:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4111C4339B;
+	Mon, 20 Mar 2023 15:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324736;
-	bh=GEfrb+5ONX0q7ZCoedmIIX8jolUzN6u2QVFLAC6nq58=;
+	s=korg; t=1679324739;
+	bh=UZ/pKeFho25nxzsR7ToDZuBnj1qqvUk5s71vj7Pfj7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gMjReHSVm5mdx5rYDZkOzQ34IVB7lkGCF1ieFxpYR48IRlKw1yF91PLV227xJEOYA
-	 Iv5FpNMUp7KdppaQq8zi9EeFhNGRewrDLr+fuEV2HCnhWZ0kFc33z7/Jz/oIsrx26y
-	 3EyKwepSLAa2A2V37fBmKvtumcxo2mT/yuUm8KYg=
+	b=Yvfp78NYyPzgI/IMx62WPe1SyvN5xUL3aBXevSpgOoXf7KyLTR5B+2vuIHXQby2ya
+	 aO3dfaDHbcukNi1gkZcVlyS4dRi5zI0jCKGfirGlHa5qEBTA9SoslK2HYa/CczBmpt
+	 4CDo7rY3mtfvcoCbUWbzG4ivJxMRVVzHMb3d5Rk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Kahola <mika.kahola@intel.com>,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Yifei Liu <yifeliu@cs.stonybrook.edu>,
+	Erez Zadok <ezk@cs.stonybrook.edu>,
+	Manish Adkar <madkar@cs.stonybrook.edu>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/115] drm/i915/psr: Use calculated io and fast wake lines
-Date: Mon, 20 Mar 2023 15:53:57 +0100
-Message-Id: <20230320145450.486672818@linuxfoundation.org>
+Subject: [PATCH 5.10 49/99] jffs2: correct logic when creating a hole in jffs2_write_begin
+Date: Mon, 20 Mar 2023 15:54:27 +0100
+Message-Id: <20230320145445.440352068@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145449.336983711@linuxfoundation.org>
-References: <20230320145449.336983711@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,169 +37,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Yifei Liu <yifeliu@cs.stonybrook.edu>
 
-[ Upstream commit 71c602103c74b277bef3d20a308874a33ec8326d ]
+[ Upstream commit 23892d383bee15b64f5463bd7195615734bb2415 ]
 
-Currently we are using hardcoded 7 for io and fast wake lines.
+Bug description and fix:
 
-According to Bspec io and fast wake times are both 42us for
-DISPLAY_VER >= 12 and 50us and 32us for older platforms.
+1. Write data to a file, say all 1s from offset 0 to 16.
 
-Calculate line counts for these and configure them into PSR2_CTL
-accordingly
+2. Truncate the file to a smaller size, say 8 bytes.
 
-Use 45 us for the fast wake calculation as 42 seems to be too
-tight based on testing.
+3. Write new bytes (say 2s) from an offset past the original size of the
+file, say at offset 20, for 4 bytes.  This is supposed to create a "hole"
+in the file, meaning that the bytes from offset 8 (where it was truncated
+above) up to the new write at offset 20, should all be 0s (zeros).
 
-Bspec: 49274, 4289
+4. Flush all caches using "echo 3 > /proc/sys/vm/drop_caches" (or unmount
+and remount) the f/s.
 
-Cc: Mika Kahola <mika.kahola@intel.com>
-Cc: José Roberto de Souza <jose.souza@intel.com>
-Fixes: 64cf40a125ff ("drm/i915/psr: Program default IO buffer Wake and Fast Wake")
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/7725
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230221085304.3382297-1-jouni.hogander@intel.com
-(cherry picked from commit cb42e8ede5b475c096e473b86c356b1158b4bc3b)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+5. Check the content of the file.  It is wrong.  The 1s that used to be
+between bytes 9 and 16, before the truncation, have REAPPEARED (they should
+be 0s).
+
+We wrote a script and helper C program to reproduce the bug
+(reproduce_jffs2_write_begin_issue.sh, write_file.c, and Makefile).  We can
+make them available to anyone.
+
+The above example is shown when writing a small file within the same first
+page.  But the bug happens for larger files, as long as steps 1, 2, and 3
+above all happen within the same page.
+
+The problem was traced to the jffs2_write_begin code, where it goes into an
+'if' statement intended to handle writes past the current EOF (i.e., writes
+that may create a hole).  The code computes a 'pageofs' that is the floor
+of the write position (pos), aligned to the page size boundary.  In other
+words, 'pageofs' will never be larger than 'pos'.  The code then sets the
+internal jffs2_raw_inode->isize to the size of max(current inode size,
+pageofs) but that is wrong: the new file size should be the 'pos', which is
+larger than both the current inode size and pageofs.
+
+Similarly, the code incorrectly sets the internal jffs2_raw_inode->dsize to
+the difference between the pageofs minus current inode size; instead it
+should be the current pos minus the current inode size.  Finally,
+inode->i_size was also set incorrectly.
+
+The patch below fixes this bug.  The bug was discovered using a new tool
+for finding f/s bugs using model checking, called MCFS (Model Checking File
+Systems).
+
+Signed-off-by: Yifei Liu <yifeliu@cs.stonybrook.edu>
+Signed-off-by: Erez Zadok <ezk@cs.stonybrook.edu>
+Signed-off-by: Manish Adkar <madkar@cs.stonybrook.edu>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/i915/display/intel_display_types.h    |  2 +
- drivers/gpu/drm/i915/display/intel_psr.c      | 78 +++++++++++++++----
- 2 files changed, 63 insertions(+), 17 deletions(-)
+ fs/jffs2/file.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_display_types.h b/drivers/gpu/drm/i915/display/intel_display_types.h
-index b56850d964919..90e055f056994 100644
---- a/drivers/gpu/drm/i915/display/intel_display_types.h
-+++ b/drivers/gpu/drm/i915/display/intel_display_types.h
-@@ -1520,6 +1520,8 @@ struct intel_psr {
- 	bool psr2_sel_fetch_enabled;
- 	bool req_psr2_sdp_prior_scanline;
- 	u8 sink_sync_latency;
-+	u8 io_wake_lines;
-+	u8 fast_wake_lines;
- 	ktime_t last_entry_attempt;
- 	ktime_t last_exit;
- 	bool sink_not_reliable;
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 5f9894e3c7aa7..cf1e92486cbc9 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -549,6 +549,14 @@ static void hsw_activate_psr2(struct intel_dp *intel_dp)
- 	val |= EDP_PSR2_FRAME_BEFORE_SU(intel_dp->psr.sink_sync_latency + 1);
- 	val |= intel_psr2_get_tp_time(intel_dp);
+diff --git a/fs/jffs2/file.c b/fs/jffs2/file.c
+index bd7d58d27bfc6..97a3c09fd96b6 100644
+--- a/fs/jffs2/file.c
++++ b/fs/jffs2/file.c
+@@ -138,19 +138,18 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
+ 	struct jffs2_inode_info *f = JFFS2_INODE_INFO(inode);
+ 	struct jffs2_sb_info *c = JFFS2_SB_INFO(inode->i_sb);
+ 	pgoff_t index = pos >> PAGE_SHIFT;
+-	uint32_t pageofs = index << PAGE_SHIFT;
+ 	int ret = 0;
  
-+	if (DISPLAY_VER(dev_priv) >= 12) {
-+		if (intel_dp->psr.io_wake_lines < 9 &&
-+		    intel_dp->psr.fast_wake_lines < 9)
-+			val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_2;
-+		else
-+			val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_3;
-+	}
-+
- 	/* Wa_22012278275:adl-p */
- 	if (IS_ADLP_DISPLAY_STEP(dev_priv, STEP_A0, STEP_E0)) {
- 		static const u8 map[] = {
-@@ -565,31 +573,21 @@ static void hsw_activate_psr2(struct intel_dp *intel_dp)
- 		 * Still using the default IO_BUFFER_WAKE and FAST_WAKE, see
- 		 * comments bellow for more information
- 		 */
--		u32 tmp, lines = 7;
-+		u32 tmp;
+ 	jffs2_dbg(1, "%s()\n", __func__);
  
--		val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_2;
--
--		tmp = map[lines - TGL_EDP_PSR2_IO_BUFFER_WAKE_MIN_LINES];
-+		tmp = map[intel_dp->psr.io_wake_lines - TGL_EDP_PSR2_IO_BUFFER_WAKE_MIN_LINES];
- 		tmp = tmp << TGL_EDP_PSR2_IO_BUFFER_WAKE_SHIFT;
- 		val |= tmp;
+-	if (pageofs > inode->i_size) {
+-		/* Make new hole frag from old EOF to new page */
++	if (pos > inode->i_size) {
++		/* Make new hole frag from old EOF to new position */
+ 		struct jffs2_raw_inode ri;
+ 		struct jffs2_full_dnode *fn;
+ 		uint32_t alloc_len;
  
--		tmp = map[lines - TGL_EDP_PSR2_FAST_WAKE_MIN_LINES];
-+		tmp = map[intel_dp->psr.fast_wake_lines - TGL_EDP_PSR2_FAST_WAKE_MIN_LINES];
- 		tmp = tmp << TGL_EDP_PSR2_FAST_WAKE_MIN_SHIFT;
- 		val |= tmp;
- 	} else if (DISPLAY_VER(dev_priv) >= 12) {
--		/*
--		 * TODO: 7 lines of IO_BUFFER_WAKE and FAST_WAKE are default
--		 * values from BSpec. In order to setting an optimal power
--		 * consumption, lower than 4k resolution mode needs to decrease
--		 * IO_BUFFER_WAKE and FAST_WAKE. And higher than 4K resolution
--		 * mode needs to increase IO_BUFFER_WAKE and FAST_WAKE.
--		 */
--		val |= TGL_EDP_PSR2_BLOCK_COUNT_NUM_2;
--		val |= TGL_EDP_PSR2_IO_BUFFER_WAKE(7);
--		val |= TGL_EDP_PSR2_FAST_WAKE(7);
-+		val |= TGL_EDP_PSR2_IO_BUFFER_WAKE(intel_dp->psr.io_wake_lines);
-+		val |= TGL_EDP_PSR2_FAST_WAKE(intel_dp->psr.fast_wake_lines);
- 	} else if (DISPLAY_VER(dev_priv) >= 9) {
--		val |= EDP_PSR2_IO_BUFFER_WAKE(7);
--		val |= EDP_PSR2_FAST_WAKE(7);
-+		val |= EDP_PSR2_IO_BUFFER_WAKE(intel_dp->psr.io_wake_lines);
-+		val |= EDP_PSR2_FAST_WAKE(intel_dp->psr.fast_wake_lines);
+-		jffs2_dbg(1, "Writing new hole frag 0x%x-0x%x between current EOF and new page\n",
+-			  (unsigned int)inode->i_size, pageofs);
++		jffs2_dbg(1, "Writing new hole frag 0x%x-0x%x between current EOF and new position\n",
++			  (unsigned int)inode->i_size, (uint32_t)pos);
+ 
+ 		ret = jffs2_reserve_space(c, sizeof(ri), &alloc_len,
+ 					  ALLOC_NORMAL, JFFS2_SUMMARY_INODE_SIZE);
+@@ -170,10 +169,10 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
+ 		ri.mode = cpu_to_jemode(inode->i_mode);
+ 		ri.uid = cpu_to_je16(i_uid_read(inode));
+ 		ri.gid = cpu_to_je16(i_gid_read(inode));
+-		ri.isize = cpu_to_je32(max((uint32_t)inode->i_size, pageofs));
++		ri.isize = cpu_to_je32((uint32_t)pos);
+ 		ri.atime = ri.ctime = ri.mtime = cpu_to_je32(JFFS2_NOW());
+ 		ri.offset = cpu_to_je32(inode->i_size);
+-		ri.dsize = cpu_to_je32(pageofs - inode->i_size);
++		ri.dsize = cpu_to_je32((uint32_t)pos - inode->i_size);
+ 		ri.csize = cpu_to_je32(0);
+ 		ri.compr = JFFS2_COMPR_ZERO;
+ 		ri.node_crc = cpu_to_je32(crc32(0, &ri, sizeof(ri)-8));
+@@ -203,7 +202,7 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
+ 			goto out_err;
+ 		}
+ 		jffs2_complete_reservation(c);
+-		inode->i_size = pageofs;
++		inode->i_size = pos;
+ 		mutex_unlock(&f->sem);
  	}
  
- 	if (intel_dp->psr.req_psr2_sdp_prior_scanline)
-@@ -842,6 +840,46 @@ static bool _compute_psr2_sdp_prior_scanline_indication(struct intel_dp *intel_d
- 	return true;
- }
- 
-+static bool _compute_psr2_wake_times(struct intel_dp *intel_dp,
-+				     struct intel_crtc_state *crtc_state)
-+{
-+	struct drm_i915_private *i915 = dp_to_i915(intel_dp);
-+	int io_wake_lines, io_wake_time, fast_wake_lines, fast_wake_time;
-+	u8 max_wake_lines;
-+
-+	if (DISPLAY_VER(i915) >= 12) {
-+		io_wake_time = 42;
-+		/*
-+		 * According to Bspec it's 42us, but based on testing
-+		 * it is not enough -> use 45 us.
-+		 */
-+		fast_wake_time = 45;
-+		max_wake_lines = 12;
-+	} else {
-+		io_wake_time = 50;
-+		fast_wake_time = 32;
-+		max_wake_lines = 8;
-+	}
-+
-+	io_wake_lines = intel_usecs_to_scanlines(
-+		&crtc_state->uapi.adjusted_mode, io_wake_time);
-+	fast_wake_lines = intel_usecs_to_scanlines(
-+		&crtc_state->uapi.adjusted_mode, fast_wake_time);
-+
-+	if (io_wake_lines > max_wake_lines ||
-+	    fast_wake_lines > max_wake_lines)
-+		return false;
-+
-+	if (i915->params.psr_safest_params)
-+		io_wake_lines = fast_wake_lines = max_wake_lines;
-+
-+	/* According to Bspec lower limit should be set as 7 lines. */
-+	intel_dp->psr.io_wake_lines = max(io_wake_lines, 7);
-+	intel_dp->psr.fast_wake_lines = max(fast_wake_lines, 7);
-+
-+	return true;
-+}
-+
- static bool intel_psr2_config_valid(struct intel_dp *intel_dp,
- 				    struct intel_crtc_state *crtc_state)
- {
-@@ -939,6 +977,12 @@ static bool intel_psr2_config_valid(struct intel_dp *intel_dp,
- 		return false;
- 	}
- 
-+	if (!_compute_psr2_wake_times(intel_dp, crtc_state)) {
-+		drm_dbg_kms(&dev_priv->drm,
-+			    "PSR2 not enabled, Unable to use long enough wake times\n");
-+		return false;
-+	}
-+
- 	if (HAS_PSR2_SEL_FETCH(dev_priv)) {
- 		if (!intel_psr2_sel_fetch_config_valid(intel_dp, crtc_state) &&
- 		    !HAS_PSR_HW_TRACKING(dev_priv)) {
 -- 
 2.39.2
 
