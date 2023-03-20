@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AB51C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69820C433EF;
-	Mon, 20 Mar 2023 15:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DEA1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:21:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330C5C433D2;
+	Mon, 20 Mar 2023 15:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325687;
-	bh=yJ+vsaZMKxn5vdwyAOZuPKPz0Uww03nMVYoFS4Qa8RI=;
+	s=korg; t=1679325690;
+	bh=S+v12j4azPgfadyEmIsZ7mUkp4E+LD/c/oGnsJ48BCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AEG7hPCu/lsCaieb11NOWb5vJzWfQdxTDhjn0neX3jBqL59/UQNGfcYpM+i2DV7Aa
-	 DjU2tg3Ng+VGjY2ctWbsWkg5AVa3d6MgG4a9MPKtGTrT3x87e6fLDyP9vRnjkrzfI9
-	 Yy2Z6UHIo67TDBBH0e5GapiNcF+RBemECzPbrCqI=
+	b=ynbS6W1zmewJmcY+tNlIA9yvTwe8kKO/pRTUjkF0RPAsEngGgrWXaZqI1ONFXhRSM
+	 BuPYA/2OazrghaQZRN51WK841/NyUKYDCyY3kcx9GoaMenZOg+i0UrXmGxEBAqDDwg
+	 uBCeDt3JDqbeukP8w4YONyl95yHY9GJ/GzYrUGz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Osipenko <digetx@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.1 123/198] memory: tegra: fix interconnect registration race
-Date: Mon, 20 Mar 2023 15:54:21 +0100
-Message-Id: <20230320145512.711634116@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 083/211] ravb: avoid PHY being resumed when interface is not up
+Date: Mon, 20 Mar 2023 15:53:38 +0100
+Message-Id: <20230320145516.769313766@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,67 +39,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-commit 5553055c62683ce339f9ef5fb2a26c8331485d68 upstream.
+[ Upstream commit 7f5ebf5dae42e710162f1c481ebcf28ab7b741c7 ]
 
-The current interconnect provider registration interface is inherently
-racy as nodes are not added until the after adding the provider. This
-can specifically cause racing DT lookups to fail.
+RAVB doesn't need mdiobus suspend/resume, that's why it sets
+'mac_managed_pm'. However, setting it needs to be moved from init to
+probe, so mdiobus PM functions will really never be called (e.g. when
+the interface is not up yet during suspend/resume).
 
-Switch to using the new API where the provider is not registered until
-after it has been fully initialised.
-
-Fixes: 06f079816d4c ("memory: tegra-mc: Add interconnect framework")
-Cc: stable@vger.kernel.org      # 5.11
-Cc: Dmitry Osipenko <digetx@gmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230306075651.2449-18-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4924c0cdce75 ("net: ravb: Fix PHY state warning splat during system resume")
+Suggested-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/tegra/mc.c |   16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/renesas/ravb_main.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/memory/tegra/mc.c
-+++ b/drivers/memory/tegra/mc.c
-@@ -769,16 +769,12 @@ static int tegra_mc_interconnect_setup(s
- 	mc->provider.aggregate = mc->soc->icc_ops->aggregate;
- 	mc->provider.xlate_extended = mc->soc->icc_ops->xlate_extended;
- 
--	err = icc_provider_add(&mc->provider);
--	if (err)
--		return err;
-+	icc_provider_init(&mc->provider);
- 
- 	/* create Memory Controller node */
- 	node = icc_node_create(TEGRA_ICC_MC);
--	if (IS_ERR(node)) {
--		err = PTR_ERR(node);
--		goto del_provider;
--	}
-+	if (IS_ERR(node))
-+		return PTR_ERR(node);
- 
- 	node->name = "Memory Controller";
- 	icc_node_add(node, &mc->provider);
-@@ -805,12 +801,14 @@ static int tegra_mc_interconnect_setup(s
- 			goto remove_nodes;
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index 0f54849a38235..894e2690c6437 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -1455,8 +1455,6 @@ static int ravb_phy_init(struct net_device *ndev)
+ 		phy_remove_link_mode(phydev, ETHTOOL_LINK_MODE_100baseT_Half_BIT);
  	}
  
-+	err = icc_provider_register(&mc->provider);
-+	if (err)
-+		goto remove_nodes;
+-	/* Indicate that the MAC is responsible for managing PHY PM */
+-	phydev->mac_managed_pm = true;
+ 	phy_attached_info(phydev);
+ 
+ 	return 0;
+@@ -2379,6 +2377,8 @@ static int ravb_mdio_init(struct ravb_private *priv)
+ {
+ 	struct platform_device *pdev = priv->pdev;
+ 	struct device *dev = &pdev->dev;
++	struct phy_device *phydev;
++	struct device_node *pn;
+ 	int error;
+ 
+ 	/* Bitbang init */
+@@ -2400,6 +2400,14 @@ static int ravb_mdio_init(struct ravb_private *priv)
+ 	if (error)
+ 		goto out_free_bus;
+ 
++	pn = of_parse_phandle(dev->of_node, "phy-handle", 0);
++	phydev = of_phy_find_device(pn);
++	if (phydev) {
++		phydev->mac_managed_pm = true;
++		put_device(&phydev->mdio.dev);
++	}
++	of_node_put(pn);
 +
  	return 0;
  
- remove_nodes:
- 	icc_nodes_remove(&mc->provider);
--del_provider:
--	icc_provider_del(&mc->provider);
- 
- 	return err;
- }
+ out_free_bus:
+-- 
+2.39.2
+
 
 
