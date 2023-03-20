@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140B41C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B54EC433D2;
-	Mon, 20 Mar 2023 15:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3401C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:16:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42079C433EF;
+	Mon, 20 Mar 2023 15:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325366;
-	bh=/IA41X6jVd4qri3IP5JsJS9aTdiSEyZvBtQ7Tq1RG8Y=;
+	s=korg; t=1679325369;
+	bh=H96fpcwqJceqRaitYxcT5Jbq/71e4nWY0B1FohBm9rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=chdLph4DCdQwggPl4qz9DYVMZnkJAtZqzNzTkf2PScBjUFLVA/xEbmC9I3EyAaO7r
-	 tTdJBsVCMvJTqclDp2OU400Q1k8SzppnMJBrJbxLlX7SB2/pTaS56yXIV8JCJqTvJE
-	 yKnRg4Qv4GfE5VTuifd1T306TvCmiCubMMsECXow=
+	b=JHBFhwQRALh0Iki9zS3dZ3btl4YnKdQ+2rinkxMgJF7Ouslspht7jiCxFHODZVE+7
+	 hALAlKqIyAhy2AK9ncW/8HUuIx2EJQh8r7pdG4Oq11Bn9owwzuxXzAS8J1M4HTaBto
+	 Oy9o73G3hvSJNDqTdXeP1EwjMCs+rPXhe18qaPoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maor Dickman <maord@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 073/198] net/mlx5: E-switch, Fix missing set of split_count when forward to ovs internal port
-Date: Mon, 20 Mar 2023 15:53:31 +0100
-Message-Id: <20230320145510.604776282@linuxfoundation.org>
+Subject: [PATCH 6.2 036/211] wifi: cfg80211: fix MLO connection ownership
+Date: Mon, 20 Mar 2023 15:52:51 +0100
+Message-Id: <20230320145514.756007627@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,38 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maor Dickman <maord@nvidia.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 28d3815a629cbdee660dd1c9de28d77cb3d77917 ]
+[ Upstream commit 96c069508377547f913e7265a80fffe9355de592 ]
 
-Rules with mirror actions are split to two FTEs when the actions after the mirror
-action contains pedit, vlan push/pop or ct. Forward to ovs internal port adds
-implicit header rewrite (pedit) but missing trigger to do split.
+When disconnecting from an MLO connection we need the AP
+MLD address, not an arbitrary BSSID. Fix the code to do
+that.
 
-Fix by setting split_count when forwarding to ovs internal port which
-will trigger split in mirror rules.
-
-Fixes: 27484f7170ed ("net/mlx5e: Offload tc rules that redirect to ovs internal port")
-Signed-off-by: Maor Dickman <maord@nvidia.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 9ecff10e82a5 ("wifi: nl80211: refactor BSS lookup in nl80211_associate()")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230301115906.4c1b3b18980e.I008f070c7f3b8e8bde9278101ef9e40706a82902@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_tc.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/nl80211.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-index 53b7d3775e8dc..a71eaa0601149 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-@@ -4054,6 +4054,7 @@ int mlx5e_set_fwd_to_int_port_actions(struct mlx5e_priv *priv,
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 326c6e50e9db5..e34491e63133d 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -10700,8 +10700,7 @@ static int nl80211_crypto_settings(struct cfg80211_registered_device *rdev,
  
- 	esw_attr->dest_int_port = dest_int_port;
- 	esw_attr->dests[out_index].flags |= MLX5_ESW_DEST_CHAIN_WITH_SRC_PORT_CHANGE;
-+	esw_attr->split_count = out_index;
+ static struct cfg80211_bss *nl80211_assoc_bss(struct cfg80211_registered_device *rdev,
+ 					      const u8 *ssid, int ssid_len,
+-					      struct nlattr **attrs,
+-					      const u8 **bssid_out)
++					      struct nlattr **attrs)
+ {
+ 	struct ieee80211_channel *chan;
+ 	struct cfg80211_bss *bss;
+@@ -10728,7 +10727,6 @@ static struct cfg80211_bss *nl80211_assoc_bss(struct cfg80211_registered_device
+ 	if (!bss)
+ 		return ERR_PTR(-ENOENT);
  
- 	/* Forward to root fdb for matching against the new source vport */
- 	attr->dest_chain = 0;
+-	*bssid_out = bssid;
+ 	return bss;
+ }
+ 
+@@ -10738,7 +10736,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
+ 	struct net_device *dev = info->user_ptr[1];
+ 	struct cfg80211_assoc_request req = {};
+ 	struct nlattr **attrs = NULL;
+-	const u8 *bssid, *ssid;
++	const u8 *ap_addr, *ssid;
+ 	unsigned int link_id;
+ 	int err, ssid_len;
+ 
+@@ -10875,6 +10873,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
+ 			return -EINVAL;
+ 
+ 		req.ap_mld_addr = nla_data(info->attrs[NL80211_ATTR_MLD_ADDR]);
++		ap_addr = req.ap_mld_addr;
+ 
+ 		attrs = kzalloc(attrsize, GFP_KERNEL);
+ 		if (!attrs)
+@@ -10900,8 +10899,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
+ 				goto free;
+ 			}
+ 			req.links[link_id].bss =
+-				nl80211_assoc_bss(rdev, ssid, ssid_len, attrs,
+-						  &bssid);
++				nl80211_assoc_bss(rdev, ssid, ssid_len, attrs);
+ 			if (IS_ERR(req.links[link_id].bss)) {
+ 				err = PTR_ERR(req.links[link_id].bss);
+ 				req.links[link_id].bss = NULL;
+@@ -10952,10 +10950,10 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
+ 		if (req.link_id >= 0)
+ 			return -EINVAL;
+ 
+-		req.bss = nl80211_assoc_bss(rdev, ssid, ssid_len, info->attrs,
+-					    &bssid);
++		req.bss = nl80211_assoc_bss(rdev, ssid, ssid_len, info->attrs);
+ 		if (IS_ERR(req.bss))
+ 			return PTR_ERR(req.bss);
++		ap_addr = req.bss->bssid;
+ 	}
+ 
+ 	err = nl80211_crypto_settings(rdev, info, &req.crypto, 1);
+@@ -10968,7 +10966,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
+ 			dev->ieee80211_ptr->conn_owner_nlportid =
+ 				info->snd_portid;
+ 			memcpy(dev->ieee80211_ptr->disconnect_bssid,
+-			       bssid, ETH_ALEN);
++			       ap_addr, ETH_ALEN);
+ 		}
+ 
+ 		wdev_unlock(dev->ieee80211_ptr);
 -- 
 2.39.2
 
