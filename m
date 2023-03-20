@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB141C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38039C433D2;
-	Mon, 20 Mar 2023 15:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763121C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:22:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0EFC433D2;
+	Mon, 20 Mar 2023 15:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325723;
-	bh=0YqCqh+Qg+2o7MkvMn8iGQ1yHulaS9ofUuDEMfWzGW0=;
+	s=korg; t=1679325726;
+	bh=nyD/biSwnmE61lrtW18J5H7Y6qPC96aP9J9xqE3FVJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zf9/O9BchGC+cldX31+/wnVZ+N1wsrGX9uW6S8mA6Ga0/yIFO5cFw//apeKdCOwpo
-	 CRpJNjwHu12J8hrPbLgpUkqzFlyVCwzY1gM6kObY/o4+tueYcdTF9xqqZfgCSxaevB
-	 kCtaJX0QM3c9RHvDPJqe2FN0IpogEcs9UgDl2HVs=
+	b=S8G8NH3hD+NeVNcPZrXkEU5Ku82ZWjAniC9x+S57lf22rLcv7pYZXmwy4RSYGzc9D
+	 8ms4ZEVP2avPEqYu/I/khL4pc5DF7VAVGKitt1+THG7Zti0csLeov2RVuWh53PyZDX
+	 mZZBJTxW0urmMZ48wFYYZWYMO2aH8bDselZJAH2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.1 132/198] interconnect: fix mem leak when freeing nodes
-Date: Mon, 20 Mar 2023 15:54:30 +0100
-Message-Id: <20230320145513.082513285@linuxfoundation.org>
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 091/211] qed/qed_mng_tlv: correctly zero out ->min instead of ->hour
+Date: Mon, 20 Mar 2023 15:53:46 +0100
+Message-Id: <20230320145517.112408824@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
-References: <20230320145507.420176832@linuxfoundation.org>
+In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
+References: <20230320145513.305686421@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-commit a5904f415e1af72fa8fe6665aa4f554dc2099a95 upstream.
+[ Upstream commit 470efd68a4653d9819d391489886432cd31bcd0b ]
 
-The node link array is allocated when adding links to a node but is not
-deallocated when nodes are destroyed.
+This fixes an issue where ->hour would erroneously get zeroed out
+instead of ->min because of a bad copy paste.
 
-Fixes: 11f1ceca7031 ("interconnect: Add generic on-chip interconnect API")
-Cc: stable@vger.kernel.org      # 5.1
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # i.MX8MP MSC SM2-MB-EP1 Board
-Link: https://lore.kernel.org/r/20230306075651.2449-2-johan+linaro@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
+
+Fixes: f240b6882211 ("qed: Add support for processing fcoe tlv request.")
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Link: https://lore.kernel.org/r/20230315194618.579286-1-d-tatianin@yandex-team.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -850,6 +850,10 @@ void icc_node_destroy(int id)
- 
- 	mutex_unlock(&icc_lock);
- 
-+	if (!node)
-+		return;
-+
-+	kfree(node->links);
- 	kfree(node);
- }
- EXPORT_SYMBOL_GPL(icc_node_destroy);
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c b/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
+index 6190adf965bca..f55eed092f25d 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_mng_tlv.c
+@@ -422,7 +422,7 @@ qed_mfw_get_tlv_time_value(struct qed_mfw_tlv_time *p_time,
+ 	if (p_time->hour > 23)
+ 		p_time->hour = 0;
+ 	if (p_time->min > 59)
+-		p_time->hour = 0;
++		p_time->min = 0;
+ 	if (p_time->msec > 999)
+ 		p_time->msec = 0;
+ 	if (p_time->usec > 999)
+-- 
+2.39.2
+
 
 
