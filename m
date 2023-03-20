@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DD11C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7AEAC433EF;
-	Mon, 20 Mar 2023 14:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3040B1C08
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 14:59:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5400C433D2;
+	Mon, 20 Mar 2023 14:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324359;
-	bh=PYKl2p9x8LzqiYUjc00/bMQ1npPgmr1QZT64TRi7qZI=;
+	s=korg; t=1679324362;
+	bh=/sbV8/U3lzvTQiVjFvqgWvrz8+76hWtMaQJCtTwhqvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wir2FRpZ0el/J69qCbl0gkHgnMiVxB+50Pu4v7KFtMnk/vrmbj7/+4xNZzq9wE7c1
-	 nY4zgMtUTuWtedA7WpCJU+8POVw/Kv4z9N7zTGuLI3jmpIRmBjWG0OULYi8MpuLrJh
-	 /Ey1Hf6jSPtiqHoXK75URhCLstIDab2VhXJTf/0c=
+	b=KEPL+XG4tb/yEEuFcZjzTGjZ0hfq/lsuA1F2LOeF4MOU46ftKYHO0dPELt4Hl2q2x
+	 ECOvsJDbffnRhluxi45mAKGQ607sUe3dslALKAqbcRVKzfByT7RZCYOsNwhubzqGP8
+	 U4IYUNamHg/zaHnfA+iZlGWKfLXq+h2GHJC+NIYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.19 29/36] tracing: Make tracepoint lockdep check actually test something
-Date: Mon, 20 Mar 2023 15:54:55 +0100
-Message-Id: <20230320145425.324846463@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>
+Subject: [PATCH 4.19 30/36] ftrace: Fix invalid address access in lookup_rec() when index is 0
+Date: Mon, 20 Mar 2023 15:54:56 +0100
+Message-Id: <20230320145425.364453359@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145424.191578432@linuxfoundation.org>
 References: <20230320145424.191578432@linuxfoundation.org>
@@ -39,86 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-commit c2679254b9c9980d9045f0f722cf093a2b1f7590 upstream.
+commit ee92fa443358f4fc0017c1d0d325c27b37802504 upstream.
 
-A while ago where the trace events had the following:
+KASAN reported follow problem:
 
-   rcu_read_lock_sched_notrace();
-   rcu_dereference_sched(...);
-   rcu_read_unlock_sched_notrace();
+ BUG: KASAN: use-after-free in lookup_rec
+ Read of size 8 at addr ffff000199270ff0 by task modprobe
+ CPU: 2 Comm: modprobe
+ Call trace:
+  kasan_report
+  __asan_load8
+  lookup_rec
+  ftrace_location
+  arch_check_ftrace_location
+  check_kprobe_address_safe
+  register_kprobe
 
-If the tracepoint is enabled, it could trigger RCU issues if called in
-the wrong place. And this warning was only triggered if lockdep was
-enabled. If the tracepoint was never enabled with lockdep, the bug would
-not be caught. To handle this, the above sequence was done when lockdep
-was enabled regardless if the tracepoint was enabled or not (although the
-always enabled code really didn't do anything, it would still trigger a
-warning).
+When checking pg->records[pg->index - 1].ip in lookup_rec(), it can get a
+pg which is newly added to ftrace_pages_start in ftrace_process_locs().
+Before the first pg->index++, index is 0 and accessing pg->records[-1].ip
+will cause this problem.
 
-But a lot has changed since that lockdep code was added. One is, that
-sequence no longer triggers any warning. Another is, the tracepoint when
-enabled doesn't even do that sequence anymore.
+Don't check the ip when pg->index is 0.
 
-The main check we care about today is whether RCU is "watching" or not.
-So if lockdep is enabled, always check if rcu_is_watching() which will
-trigger a warning if it is not (tracepoints require RCU to be watching).
-
-Note, that old sequence did add a bit of overhead when lockdep was enabled,
-and with the latest kernel updates, would cause the system to slow down
-enough to trigger kernel "stalled" warnings.
-
-Link: http://lore.kernel.org/lkml/20140806181801.GA4605@redhat.com
-Link: http://lore.kernel.org/lkml/20140807175204.C257CAC5@viggo.jf.intel.com
-Link: https://lore.kernel.org/lkml/20230307184645.521db5c9@gandalf.local.home/
-Link: https://lore.kernel.org/linux-trace-kernel/20230310172856.77406446@gandalf.local.home
+Link: https://lore.kernel.org/linux-trace-kernel/20230309080230.36064-1-chenzhongjin@huawei.com
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Paul E. McKenney <paulmck@kernel.org>
-Fixes: e6753f23d961 ("tracepoint: Make rcuidle tracepoint callers use SRCU")
+Fixes: 9644302e3315 ("ftrace: Speed up search by skipping pages by address")
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/tracepoint.h |   15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ kernel/trace/ftrace.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/linux/tracepoint.h
-+++ b/include/linux/tracepoint.h
-@@ -233,12 +233,11 @@ static inline struct tracepoint *tracepo
-  * not add unwanted padding between the beginning of the section and the
-  * structure. Force alignment to the same alignment as the section start.
-  *
-- * When lockdep is enabled, we make sure to always do the RCU portions of
-- * the tracepoint code, regardless of whether tracing is on. However,
-- * don't check if the condition is false, due to interaction with idle
-- * instrumentation. This lets us find RCU issues triggered with tracepoints
-- * even when this tracepoint is off. This code has no purpose other than
-- * poking RCU a bit.
-+ * When lockdep is enabled, we make sure to always test if RCU is
-+ * "watching" regardless if the tracepoint is enabled or not. Tracepoints
-+ * require RCU to be active, and it should always warn at the tracepoint
-+ * site if it is not watching, as it will need to be active when the
-+ * tracepoint is enabled.
-  */
- #define __DECLARE_TRACE(name, proto, args, cond, data_proto, data_args) \
- 	extern struct tracepoint __tracepoint_##name;			\
-@@ -250,9 +249,7 @@ static inline struct tracepoint *tracepo
- 				TP_ARGS(data_args),			\
- 				TP_CONDITION(cond), 0);			\
- 		if (IS_ENABLED(CONFIG_LOCKDEP) && (cond)) {		\
--			rcu_read_lock_sched_notrace();			\
--			rcu_dereference_sched(__tracepoint_##name.funcs);\
--			rcu_read_unlock_sched_notrace();		\
-+			WARN_ON_ONCE(!rcu_is_watching());		\
- 		}							\
- 	}								\
- 	__DECLARE_TRACE_RCU(name, PARAMS(proto), PARAMS(args),		\
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -1581,7 +1581,8 @@ unsigned long ftrace_location_range(unsi
+ 	key.flags = end;	/* overload flags, as it is unsigned long */
+ 
+ 	for (pg = ftrace_pages_start; pg; pg = pg->next) {
+-		if (end < pg->records[0].ip ||
++		if (pg->index == 0 ||
++		    end < pg->records[0].ip ||
+ 		    start >= (pg->records[pg->index - 1].ip + MCOUNT_INSN_SIZE))
+ 			continue;
+ 		rec = bsearch(&key, pg->records, pg->index,
 
 
