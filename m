@@ -1,41 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A3F1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EB7C4339B;
-	Mon, 20 Mar 2023 15:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A491C29
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:25:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71017C433D2;
+	Mon, 20 Mar 2023 15:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325937;
-	bh=6DntsOsD5o9L4KQWCR+51YyGazQ+SlIpyTP/7rWUeKQ=;
+	s=korg; t=1679325939;
+	bh=XQtFvuJs4LXlUvPVo2QTIzAptzFOk2td0n4ImZNUIWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I9RsKRI3vdwdhQp2S455m/2InKNOxWaWQDmxjSxP5Fs7zbu1aHuwDcTsGhpY5zZab
-	 bTL+lzkLRsuybdXNmIsNSL85PAqR4k5d9Fe7oiEPl47Is0lpfHC2Izoy01t0fE0QaH
-	 qqUBRg5aFXnoAPkyq7VVQucxbhSQAkN6zqeVFv44=
+	b=ZK3imXLTKIC0EsUvg3qJVfUdWZ21rArDWOCp+4a7hjn93nz88MBGmhZX6Vxu01nLk
+	 rMUigHXosmS8ZRxtBiHN1nTQzAgGMX/olxSo2Ref2s3Fv2d8D+ftO7td8JnCD2KqNS
+	 cftmGxPhHXcR+Ik1QV9LMZaZJPsFq/n6dgJdJNLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Huang Rui <ray.huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Philip Yang <Philip.Yang@amd.com>,
-	Qiang Yu <qiang.yu@amd.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Anshuman Gupta <anshuman.gupta@intel.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.2 128/211] drm/ttm: Fix a NULL pointer dereference
-Date: Mon, 20 Mar 2023 15:54:23 +0100
-Message-Id: <20230320145518.756840440@linuxfoundation.org>
+	Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>,
+	Dave Ertman <david.m.ertman@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Arpana Arland <arpanax.arland@intel.com>
+Subject: [PATCH 6.1 171/198] ice: avoid bonding causing auxiliary plug/unplug under RTNL lock
+Date: Mon, 20 Mar 2023 15:55:09 +0100
+Message-Id: <20230320145514.692687227@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145507.420176832@linuxfoundation.org>
+References: <20230320145507.420176832@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -46,55 +38,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Dave Ertman <david.m.ertman@intel.com>
 
-commit 9a9a8fe26751334b7739193a94eba741073b8a55 upstream.
+commit 248401cb2c4612d83eb0c352ee8103b78b8eb365 upstream.
 
-The LRU mechanism may look up a resource in the process of being removed
-from an object. The locking rules here are a bit unclear but it looks
-currently like res->bo assignment is protected by the LRU lock, whereas
-bo->resource is protected by the object lock, while *clearing* of
-bo->resource is also protected by the LRU lock. This means that if
-we check that bo->resource points to the LRU resource under the LRU
-lock we should be safe.
-So perform that check before deciding to swap out a bo. That avoids
-dereferencing a NULL bo->resource in ttm_bo_swapout().
+RDMA is not supported in ice on a PF that has been added to a bonded
+interface. To enforce this, when an interface enters a bond, we unplug
+the auxiliary device that supports RDMA functionality.  This unplug
+currently happens in the context of handling the netdev bonding event.
+This event is sent to the ice driver under RTNL context.  This is causing
+a deadlock where the RDMA driver is waiting for the RTNL lock to complete
+the removal.
 
-Fixes: 6a9b02899402 ("drm/ttm: move the LRU into resource handling v4")
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Christian Koenig <christian.koenig@amd.com>
-Cc: Huang Rui <ray.huang@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Felix Kuehling <Felix.Kuehling@amd.com>
-Cc: Philip Yang <Philip.Yang@amd.com>
-Cc: Qiang Yu <qiang.yu@amd.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Nirmoy Das <nirmoy.das@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
-Cc: Anshuman Gupta <anshuman.gupta@intel.com>
-Cc: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.19+
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230307144621.10748-2-thomas.hellstrom@linux.intel.com
+Defer the unplugging/re-plugging of the auxiliary device to the service
+task so that it is not performed under the RTNL lock context.
+
+Cc: stable@vger.kernel.org # 6.1.x
+Reported-by: Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>
+Link: https://lore.kernel.org/netdev/CAK8fFZ6A_Gphw_3-QMGKEFQk=sfCw1Qmq0TVZK3rtAi7vb621A@mail.gmail.com/
+Fixes: 5cb1ebdbc434 ("ice: Fix race condition during interface enslave")
+Fixes: 4eace75e0853 ("RDMA/irdma: Report the correct link speed")
+Signed-off-by: Dave Ertman <david.m.ertman@intel.com>
+Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20230310194833.3074601-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ttm/ttm_device.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice.h      |   14 +++++---------
+ drivers/net/ethernet/intel/ice/ice_main.c |   19 ++++++++-----------
+ 2 files changed, 13 insertions(+), 20 deletions(-)
 
---- a/drivers/gpu/drm/ttm/ttm_device.c
-+++ b/drivers/gpu/drm/ttm/ttm_device.c
-@@ -158,7 +158,7 @@ int ttm_device_swapout(struct ttm_device
- 			struct ttm_buffer_object *bo = res->bo;
- 			uint32_t num_pages;
+--- a/drivers/net/ethernet/intel/ice/ice.h
++++ b/drivers/net/ethernet/intel/ice/ice.h
+@@ -485,6 +485,7 @@ enum ice_pf_flags {
+ 	ICE_FLAG_VF_VLAN_PRUNING,
+ 	ICE_FLAG_LINK_LENIENT_MODE_ENA,
+ 	ICE_FLAG_PLUG_AUX_DEV,
++	ICE_FLAG_UNPLUG_AUX_DEV,
+ 	ICE_FLAG_MTU_CHANGED,
+ 	ICE_FLAG_GNSS,			/* GNSS successfully initialized */
+ 	ICE_PF_FLAGS_NBITS		/* must be last */
+@@ -926,16 +927,11 @@ static inline void ice_set_rdma_cap(stru
+  */
+ static inline void ice_clear_rdma_cap(struct ice_pf *pf)
+ {
+-	/* We can directly unplug aux device here only if the flag bit
+-	 * ICE_FLAG_PLUG_AUX_DEV is not set because ice_unplug_aux_dev()
+-	 * could race with ice_plug_aux_dev() called from
+-	 * ice_service_task(). In this case we only clear that bit now and
+-	 * aux device will be unplugged later once ice_plug_aux_device()
+-	 * called from ice_service_task() finishes (see ice_service_task()).
++	/* defer unplug to service task to avoid RTNL lock and
++	 * clear PLUG bit so that pending plugs don't interfere
+ 	 */
+-	if (!test_and_clear_bit(ICE_FLAG_PLUG_AUX_DEV, pf->flags))
+-		ice_unplug_aux_dev(pf);
+-
++	clear_bit(ICE_FLAG_PLUG_AUX_DEV, pf->flags);
++	set_bit(ICE_FLAG_UNPLUG_AUX_DEV, pf->flags);
+ 	clear_bit(ICE_FLAG_RDMA_ENA, pf->flags);
+ }
+ #endif /* _ICE_H_ */
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -2326,18 +2326,15 @@ static void ice_service_task(struct work
+ 		}
+ 	}
  
--			if (!bo)
-+			if (!bo || bo->resource != res)
- 				continue;
+-	if (test_bit(ICE_FLAG_PLUG_AUX_DEV, pf->flags)) {
+-		/* Plug aux device per request */
+-		ice_plug_aux_dev(pf);
++	/* unplug aux dev per request, if an unplug request came in
++	 * while processing a plug request, this will handle it
++	 */
++	if (test_and_clear_bit(ICE_FLAG_UNPLUG_AUX_DEV, pf->flags))
++		ice_unplug_aux_dev(pf);
  
- 			num_pages = PFN_UP(bo->base.size);
+-		/* Mark plugging as done but check whether unplug was
+-		 * requested during ice_plug_aux_dev() call
+-		 * (e.g. from ice_clear_rdma_cap()) and if so then
+-		 * plug aux device.
+-		 */
+-		if (!test_and_clear_bit(ICE_FLAG_PLUG_AUX_DEV, pf->flags))
+-			ice_unplug_aux_dev(pf);
+-	}
++	/* Plug aux device per request */
++	if (test_and_clear_bit(ICE_FLAG_PLUG_AUX_DEV, pf->flags))
++		ice_plug_aux_dev(pf);
+ 
+ 	if (test_and_clear_bit(ICE_FLAG_MTU_CHANGED, pf->flags)) {
+ 		struct iidc_event *event;
 
 
