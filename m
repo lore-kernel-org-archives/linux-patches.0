@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA451C32
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E62EC433EF;
-	Mon, 20 Mar 2023 15:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1451C32
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:30:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C47EC433EF;
+	Mon, 20 Mar 2023 15:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679326241;
-	bh=TyN5NO7EWyDXC/jJe/OBArE6iGCuFaNI5iV2RfuG0DY=;
+	s=korg; t=1679326244;
+	bh=4NgtUsg/Q2lOSKKQaoBTHaDt4aa3nA2cB2IgJwU3Z7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nVD2L/JXep12jeyBFA+nv0OOHjxR03M19H609fGmN4/qdN1BIym9nfvjPGpsFCK51
-	 RSJsuQDgppqgu1JxqJPJpjKe76GVSVXtSorSTcEl4dJLZb+SQYb0K4ZLm1+L+H3bS+
-	 NKrc9Qjsrcv59t8tENSfuu03dBgceg987uwj+7QY=
+	b=SPuQosN7Zb56ZwXhDr986s+VzmiTjrZJT88a7kx4qTwUzjysPTgjMx45wHI0GgmDz
+	 nb4XNa9TyHMhn7uLji4Wbup+eqLiNjShri6W2v2dYR8CLks9rluSpFgFEXJqLMfYfX
+	 fi+cRuBd4PWKhQH5YpaEecjIw/YydI8o5BsAkFpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Tom Lendacky <thomas.lendacky@amd.com>
-Subject: [PATCH 6.2 205/211] virt/coco/sev-guest: Check SEV_SNP attribute at probe time
-Date: Mon, 20 Mar 2023 15:55:40 +0100
-Message-Id: <20230320145522.125165448@linuxfoundation.org>
+Subject: [PATCH 6.2 206/211] virt/coco/sev-guest: Simplify extended guest request handling
+Date: Mon, 20 Mar 2023 15:55:41 +0100
+Message-Id: <20230320145522.162740531@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
 References: <20230320145513.305686421@linuxfoundation.org>
@@ -36,46 +36,142 @@ Content-Transfer-Encoding: 8bit
 
 From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit d6fd48eff7506bb866a54e40369df8899f2078a9 upstream.
+commit 970ab823743fb54b42002ec76c51481f67436444 upstream.
 
-No need to check it on every ioctl. And yes, this is a common SEV driver
-but it does only SNP-specific operations currently. This can be
-revisited later, when more use cases appear.
+Return a specific error code - -ENOSPC - to signal the too small cert
+data buffer instead of checking exit code and exitinfo2.
 
-No functional changes.
+While at it, hoist the *fw_err assignment in snp_issue_guest_request()
+so that a proper error value is returned to the callers.
+
+  [ Tom: check override_err instead of err. ]
 
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/20230307192449.24732-3-bp@alien8.de
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230307192449.24732-4-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/sev.c                   |    3 ---
- drivers/virt/coco/sev-guest/sev-guest.c |    3 +++
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/kernel/sev.c                   |   11 ++++---
+ drivers/virt/coco/sev-guest/sev-guest.c |   48 +++++++++++++++++---------------
+ 2 files changed, 32 insertions(+), 27 deletions(-)
 
 --- a/arch/x86/kernel/sev.c
 +++ b/arch/x86/kernel/sev.c
-@@ -2183,9 +2183,6 @@ int snp_issue_guest_request(u64 exit_cod
- 	struct ghcb *ghcb;
- 	int ret;
+@@ -2209,15 +2209,16 @@ int snp_issue_guest_request(u64 exit_cod
+ 	if (ret)
+ 		goto e_put;
  
--	if (!cc_platform_has(CC_ATTR_GUEST_SEV_SNP))
--		return -ENODEV;
++	*fw_err = ghcb->save.sw_exit_info_2;
+ 	if (ghcb->save.sw_exit_info_2) {
+ 		/* Number of expected pages are returned in RBX */
+ 		if (exit_code == SVM_VMGEXIT_EXT_GUEST_REQUEST &&
+-		    ghcb->save.sw_exit_info_2 == SNP_GUEST_REQ_INVALID_LEN)
++		    ghcb->save.sw_exit_info_2 == SNP_GUEST_REQ_INVALID_LEN) {
+ 			input->data_npages = ghcb_get_rbx(ghcb);
 -
- 	if (!fw_err)
- 		return -EINVAL;
+-		*fw_err = ghcb->save.sw_exit_info_2;
+-
+-		ret = -EIO;
++			ret = -ENOSPC;
++		} else {
++			ret = -EIO;
++		}
+ 	}
  
+ e_put:
 --- a/drivers/virt/coco/sev-guest/sev-guest.c
 +++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -703,6 +703,9 @@ static int __init sev_guest_probe(struct
- 	void __iomem *mapping;
- 	int ret;
+@@ -322,7 +322,8 @@ static int handle_guest_request(struct s
+ 				u8 type, void *req_buf, size_t req_sz, void *resp_buf,
+ 				u32 resp_sz, __u64 *fw_err)
+ {
+-	unsigned long err;
++	unsigned long err, override_err = 0;
++	unsigned int override_npages = 0;
+ 	u64 seqno;
+ 	int rc;
  
-+	if (!cc_platform_has(CC_ATTR_GUEST_SEV_SNP))
-+		return -ENODEV;
+@@ -338,6 +339,7 @@ static int handle_guest_request(struct s
+ 	if (rc)
+ 		return rc;
+ 
++retry_request:
+ 	/*
+ 	 * Call firmware to process the request. In this function the encrypted
+ 	 * message enters shared memory with the host. So after this call the
+@@ -346,17 +348,24 @@ static int handle_guest_request(struct s
+ 	 */
+ 	rc = snp_issue_guest_request(exit_code, &snp_dev->input, &err);
+ 
+-	/*
+-	 * If the extended guest request fails due to having too small of a
+-	 * certificate data buffer, retry the same guest request without the
+-	 * extended data request in order to increment the sequence number
+-	 * and thus avoid IV reuse.
+-	 */
+-	if (exit_code == SVM_VMGEXIT_EXT_GUEST_REQUEST &&
+-	    err == SNP_GUEST_REQ_INVALID_LEN) {
+-		const unsigned int certs_npages = snp_dev->input.data_npages;
++	switch (rc) {
++	case -ENOSPC:
++		/*
++		 * If the extended guest request fails due to having too
++		 * small of a certificate data buffer, retry the same
++		 * guest request without the extended data request in
++		 * order to increment the sequence number and thus avoid
++		 * IV reuse.
++		 */
++		override_npages = snp_dev->input.data_npages;
++		exit_code	= SVM_VMGEXIT_GUEST_REQUEST;
+ 
+-		exit_code = SVM_VMGEXIT_GUEST_REQUEST;
++		/*
++		 * Override the error to inform callers the given extended
++		 * request buffer size was too small and give the caller the
++		 * required buffer size.
++		 */
++		override_err	= SNP_GUEST_REQ_INVALID_LEN;
+ 
+ 		/*
+ 		 * If this call to the firmware succeeds, the sequence number can
+@@ -366,15 +375,7 @@ static int handle_guest_request(struct s
+ 		 * of the VMPCK and the error code being propagated back to the
+ 		 * user as an ioctl() return code.
+ 		 */
+-		rc = snp_issue_guest_request(exit_code, &snp_dev->input, &err);
+-
+-		/*
+-		 * Override the error to inform callers the given extended
+-		 * request buffer size was too small and give the caller the
+-		 * required buffer size.
+-		 */
+-		err = SNP_GUEST_REQ_INVALID_LEN;
+-		snp_dev->input.data_npages = certs_npages;
++		goto retry_request;
+ 	}
+ 
+ 	/*
+@@ -386,7 +387,10 @@ static int handle_guest_request(struct s
+ 	snp_inc_msg_seqno(snp_dev);
+ 
+ 	if (fw_err)
+-		*fw_err = err;
++		*fw_err = override_err ?: err;
 +
- 	if (!dev->platform_data)
- 		return -ENODEV;
++	if (override_npages)
++		snp_dev->input.data_npages = override_npages;
  
+ 	/*
+ 	 * If an extended guest request was issued and the supplied certificate
+@@ -394,7 +398,7 @@ static int handle_guest_request(struct s
+ 	 * prevent IV reuse. If the standard request was successful, return -EIO
+ 	 * back to the caller as would have originally been returned.
+ 	 */
+-	if (!rc && err == SNP_GUEST_REQ_INVALID_LEN)
++	if (!rc && override_err == SNP_GUEST_REQ_INVALID_LEN)
+ 		return -EIO;
+ 
+ 	if (rc) {
 
 
