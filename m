@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B1C1C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47DBEC433EF;
-	Mon, 20 Mar 2023 15:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906F01C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:11:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F25AC433EF;
+	Mon, 20 Mar 2023 15:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679325061;
-	bh=0F/Q+SMEWFXuaBlr+iU1Saimzq5MFwcZETJcObmyn3g=;
+	s=korg; t=1679325064;
+	bh=VkHMa47L2h1xX4F8Uw59EGaSfMB79Vyl875/V6L7XXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qE3vTg3tAC0t6g8eXp5KcoNxMrp3b1YGDlcuNHnzRNl0o9LjbR4xoO+jHacGDxcIp
-	 jcUzNUqo+Er41mjURXWbELvlzcKHdySUVGDCp2Q2NbCWjWQFLvfiTpHhfxmEFQGfth
-	 C7mhFKKby5/pA1/VuXtdEjT4FFj5c5KU8qUhhbmA=
+	b=S4fkOf6XT4GGrTsWNgLNd5+/cFESTJ3M6aMjmh+9OFrf7Vl5SAnwjTM/0Ny+wi5NN
+	 f4M0MlcOjBT2OL9FmxUUeXf68WpDAkUuM3pLlWcyraMNlK+28djOmlYhoBqXRZVsiW
+	 aKWHOxaVyEM9sVNVX8SgRXqWUKs7c7loDas4YBzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 003/211] drm/msm/gem: Prevent blocking within shrinker loop
-Date: Mon, 20 Mar 2023 15:52:18 +0100
-Message-Id: <20230320145513.441904224@linuxfoundation.org>
+	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 5.10 88/99] xfs: set prealloc flag in xfs_alloc_file_space()
+Date: Mon, 20 Mar 2023 15:55:06 +0100
+Message-Id: <20230320145447.101095235@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320145513.305686421@linuxfoundation.org>
-References: <20230320145513.305686421@linuxfoundation.org>
+In-Reply-To: <20230320145443.333824603@linuxfoundation.org>
+References: <20230320145443.333824603@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,146 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 9630b585b607bd26f505d34620b14d75b9a5af7d ]
+commit 0b02c8c0d75a738c98c35f02efb36217c170d78c upstream.
 
-Consider this scenario:
+[backport for 5.10.y]
 
-1. APP1 continuously creates lots of small GEMs
-2. APP2 triggers `drop_caches`
-3. Shrinker starts to evict APP1 GEMs, while APP1 produces new purgeable
-   GEMs
-4. msm_gem_shrinker_scan() returns non-zero number of freed pages
-   and causes shrinker to try shrink more
-5. msm_gem_shrinker_scan() returns non-zero number of freed pages again,
-   goto 4
-6. The APP2 is blocked in `drop_caches` until APP1 stops producing
-   purgeable GEMs
+Now that we only call xfs_update_prealloc_flags() from
+xfs_file_fallocate() in the case where we need to set the
+preallocation flag, do this in xfs_alloc_file_space() where we
+already have the inode joined into a transaction and get
+rid of the call to xfs_update_prealloc_flags() from the fallocate
+code.
 
-To prevent this blocking scenario, check number of remaining pages
-that GPU shrinker couldn't release due to a GEM locking contention
-or shrinking rejection. If there are no remaining pages left to shrink,
-then there is no need to free up more pages and shrinker may break out
-from the loop.
+This also means that we now correctly avoid setting the
+XFS_DIFLAG_PREALLOC flag when xfs_is_always_cow_inode() is true, as
+these inodes will never have preallocated extents.
 
-This problem was found during shrinker/madvise IOCTL testing of
-virtio-gpu driver. The MSM driver is affected in the same way.
-
-Reviewed-by: Rob Clark <robdclark@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: b352ba54a820 ("drm/msm/gem: Convert to using drm_gem_lru")
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://lore.kernel.org/all/20230108210445.3948344-2-dmitry.osipenko@collabora.com/
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_gem.c              |  9 +++++++--
- drivers/gpu/drm/msm/msm_gem_shrinker.c | 11 +++++++++--
- include/drm/drm_gem.h                  |  4 +++-
- 3 files changed, 19 insertions(+), 5 deletions(-)
+ fs/xfs/xfs_bmap_util.c |    9 +++------
+ fs/xfs/xfs_file.c      |    8 --------
+ 2 files changed, 3 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-index b8db675e7fb5e..b0246a8480068 100644
---- a/drivers/gpu/drm/drm_gem.c
-+++ b/drivers/gpu/drm/drm_gem.c
-@@ -1375,10 +1375,13 @@ EXPORT_SYMBOL(drm_gem_lru_move_tail);
-  *
-  * @lru: The LRU to scan
-  * @nr_to_scan: The number of pages to try to reclaim
-+ * @remaining: The number of pages left to reclaim, should be initialized by caller
-  * @shrink: Callback to try to shrink/reclaim the object.
-  */
- unsigned long
--drm_gem_lru_scan(struct drm_gem_lru *lru, unsigned nr_to_scan,
-+drm_gem_lru_scan(struct drm_gem_lru *lru,
-+		 unsigned int nr_to_scan,
-+		 unsigned long *remaining,
- 		 bool (*shrink)(struct drm_gem_object *obj))
- {
- 	struct drm_gem_lru still_in_lru;
-@@ -1417,8 +1420,10 @@ drm_gem_lru_scan(struct drm_gem_lru *lru, unsigned nr_to_scan,
- 		 * hit shrinker in response to trying to get backing pages
- 		 * for this obj (ie. while it's lock is already held)
- 		 */
--		if (!dma_resv_trylock(obj->resv))
-+		if (!dma_resv_trylock(obj->resv)) {
-+			*remaining += obj->size >> PAGE_SHIFT;
- 			goto tail;
-+		}
+--- a/fs/xfs/xfs_bmap_util.c
++++ b/fs/xfs/xfs_bmap_util.c
+@@ -800,9 +800,6 @@ xfs_alloc_file_space(
+ 			quota_flag = XFS_QMOPT_RES_REGBLKS;
+ 		}
  
- 		if (shrink(obj)) {
- 			freed += obj->size >> PAGE_SHIFT;
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index 051bdbc093cf9..f38296ad87434 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -107,6 +107,7 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
- 		bool (*shrink)(struct drm_gem_object *obj);
- 		bool cond;
- 		unsigned long freed;
-+		unsigned long remaining;
- 	} stages[] = {
- 		/* Stages of progressively more aggressive/expensive reclaim: */
- 		{ &priv->lru.dontneed, purge,        true },
-@@ -116,14 +117,18 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
- 	};
- 	long nr = sc->nr_to_scan;
- 	unsigned long freed = 0;
-+	unsigned long remaining = 0;
+-		/*
+-		 * Allocate and setup the transaction.
+-		 */
+ 		error = xfs_trans_alloc(mp, &M_RES(mp)->tr_write, resblks,
+ 				resrtextents, 0, &tp);
  
- 	for (unsigned i = 0; (nr > 0) && (i < ARRAY_SIZE(stages)); i++) {
- 		if (!stages[i].cond)
- 			continue;
- 		stages[i].freed =
--			drm_gem_lru_scan(stages[i].lru, nr, stages[i].shrink);
-+			drm_gem_lru_scan(stages[i].lru, nr,
-+					&stages[i].remaining,
-+					 stages[i].shrink);
- 		nr -= stages[i].freed;
- 		freed += stages[i].freed;
-+		remaining += stages[i].remaining;
+@@ -830,9 +827,9 @@ xfs_alloc_file_space(
+ 		if (error)
+ 			goto error0;
+ 
+-		/*
+-		 * Complete the transaction
+-		 */
++		ip->i_d.di_flags |= XFS_DIFLAG_PREALLOC;
++		xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
++
+ 		error = xfs_trans_commit(tp);
+ 		xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 		if (error)
+--- a/fs/xfs/xfs_file.c
++++ b/fs/xfs/xfs_file.c
+@@ -850,7 +850,6 @@ xfs_file_fallocate(
+ 	struct inode		*inode = file_inode(file);
+ 	struct xfs_inode	*ip = XFS_I(inode);
+ 	long			error;
+-	enum xfs_prealloc_flags	flags = 0;
+ 	uint			iolock = XFS_IOLOCK_EXCL | XFS_MMAPLOCK_EXCL;
+ 	loff_t			new_size = 0;
+ 	bool			do_file_insert = false;
+@@ -948,8 +947,6 @@ xfs_file_fallocate(
+ 		}
+ 		do_file_insert = true;
+ 	} else {
+-		flags |= XFS_PREALLOC_SET;
+-
+ 		if (!(mode & FALLOC_FL_KEEP_SIZE) &&
+ 		    offset + len > i_size_read(inode)) {
+ 			new_size = offset + len;
+@@ -1000,11 +997,6 @@ xfs_file_fallocate(
+ 			if (error)
+ 				goto out_unlock;
+ 		}
+-
+-		error = xfs_update_prealloc_flags(ip, XFS_PREALLOC_SET);
+-		if (error)
+-			goto out_unlock;
+-
  	}
  
- 	if (freed) {
-@@ -132,7 +137,7 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
- 				     stages[3].freed);
- 	}
- 
--	return (freed > 0) ? freed : SHRINK_STOP;
-+	return (freed > 0 && remaining > 0) ? freed : SHRINK_STOP;
- }
- 
- #ifdef CONFIG_DEBUG_FS
-@@ -182,10 +187,12 @@ msm_gem_shrinker_vmap(struct notifier_block *nb, unsigned long event, void *ptr)
- 		NULL,
- 	};
- 	unsigned idx, unmapped = 0;
-+	unsigned long remaining = 0;
- 
- 	for (idx = 0; lrus[idx] && unmapped < vmap_shrink_limit; idx++) {
- 		unmapped += drm_gem_lru_scan(lrus[idx],
- 					     vmap_shrink_limit - unmapped,
-+					     &remaining,
- 					     vmap_shrink);
- 	}
- 
-diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
-index a17c2f903f81e..b46ade8124436 100644
---- a/include/drm/drm_gem.h
-+++ b/include/drm/drm_gem.h
-@@ -475,7 +475,9 @@ int drm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
- void drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock);
- void drm_gem_lru_remove(struct drm_gem_object *obj);
- void drm_gem_lru_move_tail(struct drm_gem_lru *lru, struct drm_gem_object *obj);
--unsigned long drm_gem_lru_scan(struct drm_gem_lru *lru, unsigned nr_to_scan,
-+unsigned long drm_gem_lru_scan(struct drm_gem_lru *lru,
-+			       unsigned int nr_to_scan,
-+			       unsigned long *remaining,
- 			       bool (*shrink)(struct drm_gem_object *obj));
- 
- #endif /* __DRM_GEM_H__ */
--- 
-2.39.2
-
+ 	/* Change file size if needed */
 
 
