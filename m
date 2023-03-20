@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB851C03
-	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E202DC433D2;
-	Mon, 20 Mar 2023 15:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E8B1C03
+	for <patches@lists.linux.dev>; Mon, 20 Mar 2023 15:01:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6847C433D2;
+	Mon, 20 Mar 2023 15:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1679324500;
-	bh=Hno1DLqX4JwKi+VHSkCA1FMVyyBG6qsTWWn4gSb+15Y=;
+	s=korg; t=1679324503;
+	bh=v6nTogP6iEQ2uww4dLnsRnckbyhaQOz1zvK0D9le53s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=obp39yxB4FKL5qfhAT+OQUa1WgB9EBUvhEubiXnMeTDmrpIOq+VIGZznritH879Pw
-	 rvrp9a1BMM5IvTJGtXIwIPmuwFm1/k7cty5+6n8Mc5mbTtP+VRDaVNJlllG80RBBrf
-	 5k3tw3lFAPFRxzkyvGCD9f2tg6TDDTF7bFayk0B4=
+	b=Mrhr1hkJUYYF818ytHLoZeDgkPHF93JwLCZKjwldC/FscXhAOmwTDM4BYWgWWuCFi
+	 uZYsKjSM5OIhzgeablFof5dwH7/s6Ef1dwUh9RX9ZCKfsyiAnXaT/UY0tSDdg96gAg
+	 B8eewQ5XzKEuxN6I69sqTnRCXVxhBVJ8V/VfELz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Steve French <stfrench@microsoft.com>,
+	Yifei Liu <yifeliu@cs.stonybrook.edu>,
+	Erez Zadok <ezk@cs.stonybrook.edu>,
+	Manish Adkar <madkar@cs.stonybrook.edu>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 04/60] cifs: Move the in_send statistic to __smb_send_rqst()
-Date: Mon, 20 Mar 2023 15:54:13 +0100
-Message-Id: <20230320145431.056374081@linuxfoundation.org>
+Subject: [PATCH 5.4 38/60] jffs2: correct logic when creating a hole in jffs2_write_begin
+Date: Mon, 20 Mar 2023 15:54:47 +0100
+Message-Id: <20230320145432.513808756@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230320145430.861072439@linuxfoundation.org>
 References: <20230320145430.861072439@linuxfoundation.org>
@@ -35,115 +37,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Yifei Liu <yifeliu@cs.stonybrook.edu>
 
-[ Upstream commit d0dc41119905f740e8d5594adce277f7c0de8c92 ]
+[ Upstream commit 23892d383bee15b64f5463bd7195615734bb2415 ]
 
-When send SMB_COM_NT_CANCEL and RFC1002_SESSION_REQUEST, the
-in_send statistic was lost.
+Bug description and fix:
 
-Let's move the in_send statistic to the send function to avoid
-this scenario.
+1. Write data to a file, say all 1s from offset 0 to 16.
 
-Fixes: 7ee1af765dfa ("[CIFS]")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+2. Truncate the file to a smaller size, say 8 bytes.
+
+3. Write new bytes (say 2s) from an offset past the original size of the
+file, say at offset 20, for 4 bytes.  This is supposed to create a "hole"
+in the file, meaning that the bytes from offset 8 (where it was truncated
+above) up to the new write at offset 20, should all be 0s (zeros).
+
+4. Flush all caches using "echo 3 > /proc/sys/vm/drop_caches" (or unmount
+and remount) the f/s.
+
+5. Check the content of the file.  It is wrong.  The 1s that used to be
+between bytes 9 and 16, before the truncation, have REAPPEARED (they should
+be 0s).
+
+We wrote a script and helper C program to reproduce the bug
+(reproduce_jffs2_write_begin_issue.sh, write_file.c, and Makefile).  We can
+make them available to anyone.
+
+The above example is shown when writing a small file within the same first
+page.  But the bug happens for larger files, as long as steps 1, 2, and 3
+above all happen within the same page.
+
+The problem was traced to the jffs2_write_begin code, where it goes into an
+'if' statement intended to handle writes past the current EOF (i.e., writes
+that may create a hole).  The code computes a 'pageofs' that is the floor
+of the write position (pos), aligned to the page size boundary.  In other
+words, 'pageofs' will never be larger than 'pos'.  The code then sets the
+internal jffs2_raw_inode->isize to the size of max(current inode size,
+pageofs) but that is wrong: the new file size should be the 'pos', which is
+larger than both the current inode size and pageofs.
+
+Similarly, the code incorrectly sets the internal jffs2_raw_inode->dsize to
+the difference between the pageofs minus current inode size; instead it
+should be the current pos minus the current inode size.  Finally,
+inode->i_size was also set incorrectly.
+
+The patch below fixes this bug.  The bug was discovered using a new tool
+for finding f/s bugs using model checking, called MCFS (Model Checking File
+Systems).
+
+Signed-off-by: Yifei Liu <yifeliu@cs.stonybrook.edu>
+Signed-off-by: Erez Zadok <ezk@cs.stonybrook.edu>
+Signed-off-by: Manish Adkar <madkar@cs.stonybrook.edu>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/transport.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ fs/jffs2/file.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/fs/cifs/transport.c b/fs/cifs/transport.c
-index b98ae69edb8fe..60141a7468b00 100644
---- a/fs/cifs/transport.c
-+++ b/fs/cifs/transport.c
-@@ -312,7 +312,7 @@ static int
- __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 		struct smb_rqst *rqst)
- {
--	int rc = 0;
-+	int rc;
- 	struct kvec *iov;
- 	int n_vec;
- 	unsigned int send_length = 0;
-@@ -324,6 +324,7 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 	int val = 1;
- 	__be32 rfc1002_marker;
+diff --git a/fs/jffs2/file.c b/fs/jffs2/file.c
+index 34880a4c21732..94bd4bbd37875 100644
+--- a/fs/jffs2/file.c
++++ b/fs/jffs2/file.c
+@@ -137,19 +137,18 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
+ 	struct jffs2_inode_info *f = JFFS2_INODE_INFO(inode);
+ 	struct jffs2_sb_info *c = JFFS2_SB_INFO(inode->i_sb);
+ 	pgoff_t index = pos >> PAGE_SHIFT;
+-	uint32_t pageofs = index << PAGE_SHIFT;
+ 	int ret = 0;
  
-+	cifs_in_send_inc(server);
- 	if (cifs_rdma_enabled(server)) {
- 		/* return -EAGAIN when connecting or reconnecting */
- 		rc = -EAGAIN;
-@@ -332,14 +333,17 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 		goto smbd_done;
+ 	jffs2_dbg(1, "%s()\n", __func__);
+ 
+-	if (pageofs > inode->i_size) {
+-		/* Make new hole frag from old EOF to new page */
++	if (pos > inode->i_size) {
++		/* Make new hole frag from old EOF to new position */
+ 		struct jffs2_raw_inode ri;
+ 		struct jffs2_full_dnode *fn;
+ 		uint32_t alloc_len;
+ 
+-		jffs2_dbg(1, "Writing new hole frag 0x%x-0x%x between current EOF and new page\n",
+-			  (unsigned int)inode->i_size, pageofs);
++		jffs2_dbg(1, "Writing new hole frag 0x%x-0x%x between current EOF and new position\n",
++			  (unsigned int)inode->i_size, (uint32_t)pos);
+ 
+ 		ret = jffs2_reserve_space(c, sizeof(ri), &alloc_len,
+ 					  ALLOC_NORMAL, JFFS2_SUMMARY_INODE_SIZE);
+@@ -169,10 +168,10 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
+ 		ri.mode = cpu_to_jemode(inode->i_mode);
+ 		ri.uid = cpu_to_je16(i_uid_read(inode));
+ 		ri.gid = cpu_to_je16(i_gid_read(inode));
+-		ri.isize = cpu_to_je32(max((uint32_t)inode->i_size, pageofs));
++		ri.isize = cpu_to_je32((uint32_t)pos);
+ 		ri.atime = ri.ctime = ri.mtime = cpu_to_je32(JFFS2_NOW());
+ 		ri.offset = cpu_to_je32(inode->i_size);
+-		ri.dsize = cpu_to_je32(pageofs - inode->i_size);
++		ri.dsize = cpu_to_je32((uint32_t)pos - inode->i_size);
+ 		ri.csize = cpu_to_je32(0);
+ 		ri.compr = JFFS2_COMPR_ZERO;
+ 		ri.node_crc = cpu_to_je32(crc32(0, &ri, sizeof(ri)-8));
+@@ -202,7 +201,7 @@ static int jffs2_write_begin(struct file *filp, struct address_space *mapping,
+ 			goto out_err;
+ 		}
+ 		jffs2_complete_reservation(c);
+-		inode->i_size = pageofs;
++		inode->i_size = pos;
+ 		mutex_unlock(&f->sem);
  	}
  
-+	rc = -EAGAIN;
- 	if (ssocket == NULL)
--		return -EAGAIN;
-+		goto out;
- 
-+	rc = -ERESTARTSYS;
- 	if (fatal_signal_pending(current)) {
- 		cifs_dbg(FYI, "signal pending before send request\n");
--		return -ERESTARTSYS;
-+		goto out;
- 	}
- 
-+	rc = 0;
- 	/* cork the socket */
- 	kernel_setsockopt(ssocket, SOL_TCP, TCP_CORK,
- 				(char *)&val, sizeof(val));
-@@ -453,7 +457,8 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 			 rc);
- 	else if (rc > 0)
- 		rc = 0;
--
-+out:
-+	cifs_in_send_dec(server);
- 	return rc;
- }
- 
-@@ -830,9 +835,7 @@ cifs_call_async(struct TCP_Server_Info *server, struct smb_rqst *rqst,
- 	 * I/O response may come back and free the mid entry on another thread.
- 	 */
- 	cifs_save_when_sent(mid);
--	cifs_in_send_inc(server);
- 	rc = smb_send_rqst(server, 1, rqst, flags);
--	cifs_in_send_dec(server);
- 
- 	if (rc < 0) {
- 		revert_current_mid(server, mid->credits);
-@@ -1095,9 +1098,7 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
- 		else
- 			midQ[i]->callback = cifs_compound_last_callback;
- 	}
--	cifs_in_send_inc(server);
- 	rc = smb_send_rqst(server, num_rqst, rqst, flags);
--	cifs_in_send_dec(server);
- 
- 	for (i = 0; i < num_rqst; i++)
- 		cifs_save_when_sent(midQ[i]);
-@@ -1332,9 +1333,7 @@ SendReceive(const unsigned int xid, struct cifs_ses *ses,
- 
- 	midQ->mid_state = MID_REQUEST_SUBMITTED;
- 
--	cifs_in_send_inc(server);
- 	rc = smb_send(server, in_buf, len);
--	cifs_in_send_dec(server);
- 	cifs_save_when_sent(midQ);
- 
- 	if (rc < 0)
-@@ -1471,9 +1470,7 @@ SendReceiveBlockingLock(const unsigned int xid, struct cifs_tcon *tcon,
- 	}
- 
- 	midQ->mid_state = MID_REQUEST_SUBMITTED;
--	cifs_in_send_inc(server);
- 	rc = smb_send(server, in_buf, len);
--	cifs_in_send_dec(server);
- 	cifs_save_when_sent(midQ);
- 
- 	if (rc < 0)
 -- 
 2.39.2
 
